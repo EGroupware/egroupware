@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="addressbook.index.right_add" template="" lang="" group="0" version="1.7.001">
-		<hbox>
-			<menulist>
-				<menupopup align="right" label="Type" id="col_filter[tid]" empty_label="All"/>
-			</menulist>
-		</hbox>
+		<et2-hbox>
+			<et2-select  align="right" label="Type" id="col_filter[tid]" emptyLabel="All"></et2-select>
+		</et2-hbox>
 	</template>
 	<template id="addressbook.index.rows" template="" lang="" group="0" version="1.9.005">
 		<grid width="100%">
@@ -20,17 +17,17 @@
 				<row class="th">
 				</row>
 				<row class="$row_cont[class]" valign="top">
-					<description class=" cat_$row_cont[cat_id] mobile_cat_col"/>
-					<vbox class="addressbookCol1">
+					<et2-description  class="cat_$row_cont[cat_id] mobile_cat_col"></et2-description>
+					<et2-vbox  class="addressbookCol1">
 						<customfields-list id="$row" class="customfields" app="addressbook" disabled="true"/>
-						<vbox id="${row}[id]">
-							<description id="${row}[line2]" no_lang="1" />
-							<description id="${row}[line1]" no_lang="1" />
-						</vbox>
-					</vbox>
-					<vbox class="addressbookCol3">
-						<lavatar src="$row_cont[photo]" contactId="$row_cont[id]" lname="$row_cont[n_family]" fname="$row_cont[n_given]"/>
-					</vbox>
+						<et2-vbox  id="${row}[id]">
+							<et2-description  id="${row}[line2]" noLang="1"></et2-description>
+							<et2-description  id="${row}[line1]" noLang="1"></et2-description>
+						</et2-vbox>
+					</et2-vbox>
+					<et2-vbox  class="addressbookCol3">
+						<et2-lavatar  src="$row_cont[photo]" contactId="$row_cont[id]" lname="$row_cont[n_family]" fname="$row_cont[n_given]"></et2-lavatar>
+					</et2-vbox>
 				</row>
 			</rows>
 		</grid>
@@ -50,33 +47,33 @@
 			</columns>
 			<rows>
 				<row disabled="!@msg">
-					<description align="center" id="msg" no_lang="1" span="all" class="redItalic"/>
-					<description/>
-					<description/>
-					<description/>
-					<description/>
-					<description/>
-					<description/>
-					<description/>
-					<description/>
+					<et2-description  align="center" id="msg" span="all" class="redItalic" noLang="1"></et2-description>
+					<et2-description></et2-description>
+					<et2-description></et2-description>
+					<et2-description></et2-description>
+					<et2-description></et2-description>
+					<et2-description></et2-description>
+					<et2-description></et2-description>
+					<et2-description></et2-description>
+					<et2-description></et2-description>
 				</row>
 				<row disabled="1">
 					<template align="right" id="addressbook.index.right_add"/>
 				</row>
 				<row>
-					<hbox>
-						<buttononly class="plus_button" size="large" statustext="Add a new contact" id="plus_button" onclick="egw(window).openPopup(egw::link('/index.php','menuaction=addressbook.addressbook_ui.edit'),'850','440','_blank','addressbook',null,true); return false;"/>
-					</hbox>
+					<et2-hbox>
+						<et2-button  class="plus_button" size="large" statustext="Add a new contact" id="plus_button" onclick="egw(window).openPopup(egw::link('/index.php','menuaction=addressbook.addressbook_ui.edit'),'850','440','_blank','addressbook',null,true); return false;" noSubmit="true"></et2-button>
+					</et2-hbox>
 				</row>
 				<row>
 					<nextmatch id="nm" template="addressbook.index.rows" header_right="addressbook.index.right_add" span="all"/>
 				</row>
 				<row class="noPrint dialogFooterToolbar" disabled="!@nm[selectcols]=/legacy_actions/">
-					<button statustext="Add a new contact" label="Add" id="add" onclick="window.open(egw::link('/index.php','menuaction=addressbook.addressbook_ui.edit'),'_blank','dependent=yes,width=850,height=440,scrollbars=yes,status=yes'); return false;"/>
-					<hbox align="right" span="all">
-						<buttononly statustext="Select action" label="Select action" id="legacy_actions" onclick="if (!egw_globalObjectManager.getObjectById('addressbook.index.rows').executeActionImplementation(this, 'popup')) alert(egw::lang('You need to select some entries first!')); return false;;"/>
-						<button statustext="Check all" label="Check all" id="check_all" needed="1" onclick="egw_globalObjectManager.getObjectById('addressbook.index.rows').toggleAllSelected(); return false;" image="arrow_ltr" class="checkAllArrow"/>
-					</hbox>
+					<et2-button  statustext="Add a new contact" label="Add" id="add" onclick="window.open(egw::link('/index.php','menuaction=addressbook.addressbook_ui.edit'),'_blank','dependent=yes,width=850,height=440,scrollbars=yes,status=yes'); return false;"></et2-button>
+					<et2-hbox  align="right" span="all">
+						<et2-button  statustext="Select action" label="Select action" id="legacy_actions" onclick="if (!egw_globalObjectManager.getObjectById('addressbook.index.rows').executeActionImplementation(this, 'popup')) alert(egw::lang('You need to select some entries first!')); return false;;" noSubmit="true"></et2-button>
+						<et2-button  statustext="Check all" label="Check all" id="check_all" onclick="egw_globalObjectManager.getObjectById('addressbook.index.rows').toggleAllSelected(); return false;" image="arrow_ltr" class="checkAllArrow" required="1"></et2-button>
+					</et2-hbox>
 				</row>
 			</rows>
 		</grid>

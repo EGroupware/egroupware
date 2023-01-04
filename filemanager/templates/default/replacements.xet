@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <!-- This template adds the extra bits to the replacements list UI -->
 <overlay>
     <template id="filemanager.replacements">
-        <vbox>
-            <description class="title" value="Application fields"/>
-            <description
-                    value="For files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available.  See the specific application for a list of available placeholders."/>
-        </vbox>
+        <et2-vbox>
+            <et2-description  class="title" value="Application fields"></et2-description>
+            <et2-description  value="For files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available.  See the specific application for a list of available placeholders."></et2-description>
+        </et2-vbox>
     </template>
 </overlay>

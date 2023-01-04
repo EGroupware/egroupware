@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="importexport.export_dialog.general_tab_content" template="" lang="" group="0" version="">
         <grid width="100%">
@@ -10,31 +9,24 @@
             </columns>
             <rows>
                 <row>
-                    <description span="all"/>
+                    <et2-description  span="all"></et2-description>
                 </row>
                 <row class="select_appname ">
-                    <description value="Select application"/>
-                    <menulist>
-                        <menupopup id="appname" no_lang="1" onchange="1"/>
-                    </menulist>
+                    <et2-description  value="Select application"></et2-description>
+                    <et2-select  id="appname" onchange="1" noLang="1"></et2-select>
                 </row>
                 <row class="select_definition">
-                    <description value="Select definition"/>
-                    <menulist>
-                        <menupopup id="definition" no_lang="1"
-                                   onchange="widget.getInstanceManager().postSubmit(); return false;"/>
-                    </menulist>
+                    <et2-description  value="Select definition"></et2-description>
+                    <et2-select  id="definition" onchange="widget.getInstanceManager().postSubmit(); return false;" noLang="1"></et2-select>
                 </row>
                 <row class="select_plugin">
-                    <description value="Select plugin"/>
-                    <menulist>
-                        <menupopup id="plugin" no_lang="1" onchange="1"/>
-                    </menulist>
+                    <et2-description  value="Select plugin"></et2-description>
+                    <et2-select  id="plugin" onchange="1" noLang="1"></et2-select>
                 </row>
                 <row>
-                    <box id="plugin_description" span="all">
-                        <description id="description" no_lang="1" span="all"/>
-                    </box>
+                    <et2-box  id="plugin_description" span="all">
+                        <et2-description  id="description" span="all" noLang="1"></et2-description>
+                    </et2-box>
                 </row>
             </rows>
         </grid>
@@ -47,7 +39,7 @@
             </columns>
             <rows>
                 <row valign="top">
-                    <image src="export"/>
+                    <et2-image  src="export"></et2-image>
                     <template id="importexport.export_dialog.general_tab_content"/>
                 </row>
             </rows>
@@ -61,24 +53,24 @@
 			</columns>
 			<rows>
 				<row class="th" height="20" disabled="@plugin_selectors_template">
-					<description/>
-					<description value="Definition filter"/>
+					<et2-description></et2-description>
+					<et2-description  value="Definition filter"></et2-description>
 				</row>
 				<row valign="top" disabled="@plugin_selectors_template">
 					<html id="plugin_selectors_html" no_lang="1"/>
-					<box class="filters">
+					<et2-box  class="filters">
 						<filter id="filter_html"/>
-					</box>
+					</et2-box>
 				</row>
 				<row class="th" height="20" disabled="!@plugin_selectors_template">
-					<description/>
-					<description value="Definition filter"/>
+					<et2-description></et2-description>
+					<et2-description  value="Definition filter"></et2-description>
 				</row>
 				<row valign="top" disabled="!@plugin_selectors_template">
 					<template id="@plugin_selectors_template"/>
-					<box onclick="jQuery('input[value=\'filter\']').not(':checked').attr('checked',true).parent().effect('highlight',{},2000);" class="filters">
+					<et2-box  onclick="jQuery('input[value=\'filter\']').not(':checked').attr('checked',true).parent().effect('highlight',{},2000);" class="filters">
 						<filter id="filter_tpl"/>
-					</box>
+					</et2-box>
 				</row>
 			</rows>
 		</grid>
@@ -107,13 +99,11 @@
 						</columns>
 						<rows>
 							<row>
-								<description value="Delimiter"/>
-								<hbox no_lang="1">
-									<menulist>
-										<menupopup id="delimiter" no_lang="1" onchange="var _this = jQuery(this); var text = _this.parent().parent().find('input'); if(_this.val() =='') {text.val('');text.show(); text.focus();} else {text.hide();}"/>
-									</menulist>
-									<textbox id="other_delimiter" size="2" class="hide"/>
-								</hbox>
+								<et2-description  value="Delimiter"></et2-description>
+								<et2-hbox  noLang="1">
+									<et2-select  id="delimiter" onchange="var _this = jQuery(this); var text = _this.parent().parent().find('input'); if(_this.val() =='') {text.val('');text.show(); text.focus();} else {text.hide();}" noLang="1"></et2-select>
+									<et2-textbox  id="other_delimiter" class="hide"></et2-textbox>
+								</et2-hbox>
 							</row>
 						</rows>
 					</grid>
@@ -139,10 +129,10 @@
 			</columns>
             <rows>
                 <row>
-                    <description id="msg"/>
+                    <et2-description  id="msg"></et2-description>
                 </row>
                 <row>
-                    <tabbox id="general_tab|selection_tab|options_tab">
+                    <et2-tabbox  id="general_tab|selection_tab|options_tab">
                         <tabs>
                             <tab id="general_tab" label="General"/>
                             <tab id="selection_tab" label="Selection"/>
@@ -153,30 +143,27 @@
                             <template id="importexport.export_dialog.selection_tab"/>
                             <template id="importexport.export_dialog.options_tab"/>
                         </tabpanels>
-                    </tabbox>
+                    </et2-tabbox>
                 </row>
                 <row class="save_definition dialog-operators high">
-                    <checkbox label="Save as definition" id="save_as_definition"/>
+                    <et2-checkbox  label="Save as definition" id="save_as_definition"></et2-checkbox>
                 </row>
                 <row class="dialog-footer-toolbar">
-                    <hbox span="all">
-                        <hbox>
-                            <button label="Export" id="export" image="export" background_image="1"/>
-                            <button label="Preview" id="preview" onclick="app.importexport.export_preview"
-                                    image="prieview" background_image="1"/>
-                        </hbox>
-                        <button class="cancel" align="right" label="Cancel" id="cancel"
-                                onclick="window.close(); return false;" image="cancel" background_image="1"/>
-                    </hbox>
+                    <et2-hbox  span="all">
+                        <et2-hbox>
+                            <et2-button  label="Export" id="export" image="export"></et2-button>
+                            <et2-button  label="Preview" id="preview" onclick="app.importexport.export_preview" image="prieview"></et2-button>
+                        </et2-hbox>
+                        <et2-button  class="cancel" align="right" label="Cancel" id="cancel" onclick="window.close(); return false;" image="cancel"></et2-button>
+                    </et2-hbox>
                 </row>
                 <row>
-                    <vbox id="preview_box" span="all" class="preview">
+                    <et2-vbox  id="preview_box" span="all" class="preview">
                         <html id="preview-box" class="content"/>
-                        <box align="center" id="preview-box-buttons" class="preview-box-buttons">
-                            <button align="center" label="OK"
-                                    onclick="jQuery(this).parents('.preview').css('display','none'); return false;"/>
-                        </box>
-                    </vbox>
+                        <et2-box  align="center" id="preview-box-buttons" class="preview-box-buttons">
+                            <et2-button  align="center" label="OK" onclick="jQuery(this).parents('.preview').css('display','none'); return false;"></et2-button>
+                        </et2-box>
+                    </et2-vbox>
                 </row>
             </rows>
 		</grid>

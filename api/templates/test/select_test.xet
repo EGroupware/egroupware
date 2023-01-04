@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <!-- This template is used in automated testing -->
 <overlay>
 	<template id="api.select_test" template="" lang="" group="0" version="16.1">
-		<select id="widget"/>
-		<select id="widget_readonly" readonly="true"/>
-		<select id="widget_multiple" multiple="true"/>
+		<et2-select  id="widget"></et2-select>
+		<et2-select  id="widget_readonly" readonly="true"></et2-select>
+		<et2-select  id="widget_multiple" multiple="true"></et2-select>
 	</template>
 </overlay>

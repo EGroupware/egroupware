@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="calendar.list.dates" template="" lang="" group="0" version="1.3.001">
-		<hbox>
-			<description value="Start"/>
-			<date id="startdate"/>
-			<description value="End"/>
-			<date id="enddate"/>
-		</hbox>
+		<et2-hbox>
+			<et2-description  value="Start"></et2-description>
+			<et2-date  id="startdate"></et2-date>
+			<et2-description  value="End"></et2-description>
+			<et2-date  id="enddate"></et2-date>
+		</et2-hbox>
 	</template>
 </overlay>

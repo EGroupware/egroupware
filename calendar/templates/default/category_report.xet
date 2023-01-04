@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <!--
 Egroupware
 @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
@@ -11,9 +11,9 @@ Egroupware
 -->
 <overlay>
 	<template id="calendar.category_report" template="" lang="" group="0" version="16.2">
-		<hbox class="dialogHeader" height="28">
-			<description value="Category Report"/>
-		</hbox>
+		<et2-hbox  class="dialogHeader" height="28">
+			<et2-description  value="Category Report"></et2-description>
+		</et2-hbox>
 		<grid width="100%" class="Category_report_cats">
 			<columns>
 				<column width="10%"/>
@@ -22,7 +22,7 @@ Egroupware
 			<rows>
 
 				<row>
-					<description value="Categories"/>
+					<et2-description  value="Categories"></et2-description>
 					<grid id="grid" width="100%">
 						<columns>
 							<column width="60"/>
@@ -34,40 +34,38 @@ Egroupware
 						</columns>
 						<rows>
 							<row class="th">
-								<checkbox id="cat_all" label="Select" onchange="app.calendar.category_report_selectAll"/>
-								<description value="Category"/>
-								<description align="center" statustext="Exclude weekend events from counting" value="Exclude Weekend"/>
-								<description align="center" statustext="Include holidays as counting days" value="Holidays"/>
-								<description align="center" statustext="Minimum days to count as a week" value="Min days"/>
-								<description align="center" statustext="Output unit" value="Output unit"/>
+								<et2-checkbox  id="cat_all" label="Select" onchange="app.calendar.category_report_selectAll"></et2-checkbox>
+								<et2-description  value="Category"></et2-description>
+								<et2-description  align="center" statustext="Exclude weekend events from counting" value="Exclude Weekend"></et2-description>
+								<et2-description  align="center" statustext="Include holidays as counting days" value="Holidays"></et2-description>
+								<et2-description  align="center" statustext="Minimum days to count as a week" value="Min days"></et2-description>
+								<et2-description  align="center" statustext="Output unit" value="Output unit"></et2-description>
 							</row>
 							<row class="row">
-								<checkbox id="${row}[enable]" onchange="app.calendar.category_report_enable"/>
-								<taglist-cat id="${row}[cat_id]" readonly="true" width="500" class="select-cat"/>
-								<checkbox align="center" id="${row}[weekend]"/>
-								<checkbox align="center" id="${row}[holidays]"/>
-								<textbox type="integer" align="center" id="${row}[min_days]"/>
-								<menulist>
-									<menupopup  align="center" id="${row}[unit]"/>
-								</menulist>
+								<et2-checkbox  id="${row}[enable]" onchange="app.calendar.category_report_enable"></et2-checkbox>
+								<et2-select-cat  id="${row}[cat_id]" readonly="true" width="500" class="select-cat" multiple="true"></et2-select-cat>
+								<et2-checkbox  align="center" id="${row}[weekend]"></et2-checkbox>
+								<et2-checkbox  align="center" id="${row}[holidays]"></et2-checkbox>
+								<et2-number  align="center" id="${row}[min_days]" precision="0"></et2-number>
+								<et2-select  align="center" id="${row}[unit]"></et2-select>
 							</row>
 						</rows>
 					</grid>
 				</row>
 			</rows>
 		</grid>
-		<hbox class="dialogFooterToolbar">
-			<description value="Date range"/>
-			<date id="start" label="Start"/>
-			<date id="end" label="End"/>
-			<hbox>
-				<description value="sort by" label="%s:"/>
-				<vbox>
-					<radio id="sort_key" label="Last name" options="n_family"/>
-					<radio id="sort_key" label="First name" options="n_given"/>
-				</vbox>
-			</hbox>
-			<button id="button[report]" label="Report" onclick="app.calendar.category_report_submit" background_image="1" image="template"/>
-		</hbox>
+		<et2-hbox  class="dialogFooterToolbar">
+			<et2-description  value="Date range"></et2-description>
+			<et2-date  id="start" label="Start"></et2-date>
+			<et2-date  id="end" label="End"></et2-date>
+			<et2-hbox>
+				<et2-description  value="sort by" label="%s:"></et2-description>
+				<et2-vbox>
+					<radio id="sort_key" label="Last name" set_value="n_family" />
+					<radio id="sort_key" label="First name" set_value="n_given" />
+				</et2-vbox>
+			</et2-hbox>
+			<et2-button  id="button[report]" label="Report" onclick="app.calendar.category_report_submit" image="template"></et2-button>
+		</et2-hbox>
 	</template>
 </overlay>

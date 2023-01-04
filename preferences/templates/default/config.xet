@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="preferences.config" template="" lang="" group="0" version="16.1">
 		<grid width="100%" class="admin-config egwGridView_grid">
@@ -10,20 +9,20 @@
 			</columns>
 			<rows>
 				<row>
-					<description value="Deny following groups access to preferences" label="%s:"/>
-					<select-account id="newsettings[deny_prefs]" account_type="groups" multiple="true" tags="true" width="100%"/>
+					<et2-description  value="Deny following groups access to preferences" label="%s:"></et2-description>
+					<et2-select-account  id="newsettings[deny_prefs]" multiple="true" width="100%" accountType="groups"></et2-select-account>
 				</row>
 				<row>
-					<description value="Deny following groups access to ACL (grant access)" label="%s:"/>
-					<select-account id="newsettings[deny_acl]" account_type="groups" multiple="true" tags="true" width="100%"/>
+					<et2-description  value="Deny following groups access to ACL (grant access)" label="%s:"></et2-description>
+					<et2-select-account  id="newsettings[deny_acl]" multiple="true" width="100%" accountType="groups"></et2-select-account>
 				</row>
 				<row>
-					<description value="Deny following groups access to edit categories" label="%s:"/>
-					<select-account id="newsettings[deny_cats]" account_type="groups" multiple="true" tags="true" width="100%"/>
+					<et2-description  value="Deny following groups access to edit categories" label="%s:"></et2-description>
+					<et2-select-account  id="newsettings[deny_cats]" multiple="true" width="100%" accountType="groups"></et2-select-account>
 				</row>
 				<row>
-					<description value="Deny following groups access to security popup" label="%s:"/>
-					<select-account id="newsettings[deny_security]" account_type="groups" multiple="true" tags="true" width="100%"/>
+					<et2-description  value="Deny following groups access to security popup" label="%s:"></et2-description>
+					<et2-select-account  id="newsettings[deny_security]" multiple="true" width="100%" accountType="groups"></et2-select-account>
 				</row>
 			</rows>
 		</grid>

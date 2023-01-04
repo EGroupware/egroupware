@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="importexport.wizardbox" template="" lang="" group="0" version="0.0.2">
         <grid width="100%" height="600">
@@ -9,24 +8,24 @@
             </columns>
             <rows>
                 <row valign="top">
-                    <hbox no_lang="1">
-                        <vbox width="100%">
-                            <description id="text"/>
-                            <box class="wizard_content">
+                    <et2-hbox  noLang="1">
+                        <et2-vbox  width="100%">
+                            <et2-description  id="text"></et2-description>
+                            <et2-box  class="wizard_content">
                                 <template id="@wizard_content"/>
-                            </box>
-                        </vbox>
-                    </hbox>
+                            </et2-box>
+                        </et2-vbox>
+                    </et2-hbox>
                 </row>
                 <row valign="bottom" class="dialog-footer-toolbar">
-                    <hbox span="all">
-                        <hbox>
-                            <button label="previous" id="button[previous]" image="previous" background_image="1"/>
-                            <button label="next" id="button[next]" image="next" background_image="1"/>
-                            <button label="finish" id="button[finish]" image="finish" background_image="1"/>
-						</hbox>
-						<button align="right" label="cancel" id="button[cancel]" onclick="window.close(); return false;" image="cancel" background_image="1"/>
-					</hbox>
+                    <et2-hbox  span="all">
+                        <et2-hbox>
+                            <et2-button  label="previous" id="button[previous]" image="previous"></et2-button>
+                            <et2-button  label="next" id="button[next]" image="next"></et2-button>
+                            <et2-button  label="finish" id="button[finish]" image="finish"></et2-button>
+						</et2-hbox>
+						<et2-button  align="right" label="cancel" id="button[cancel]" onclick="window.close(); return false;" image="cancel"></et2-button>
+					</et2-hbox>
 				</row>
 			</rows>
 		</grid>

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="timesheet.importexport_wizard_chooseowner" template="" lang="" group="0" version="1.9.002">
 		<grid>
@@ -9,23 +8,19 @@
 			</columns>
 			<rows>
 				<row>
-					<description id="msg" no_lang="1"/>
+					<et2-description  id="msg" noLang="1"></et2-description>
 				</row>
 				<row class="th">
-					<description value="Owner"/>
+					<et2-description  value="Owner"></et2-description>
 				</row>
 				<row disabled="@no_owner_map">
-					<checkbox label="Use field from CSV if possible" id="owner_from_csv"/>
+					<et2-checkbox  label="Use field from CSV if possible" id="owner_from_csv"></et2-checkbox>
 				</row>
 				<row>
-					<menulist>
-						<menupopup type="select-account" id="record_owner" options="Select"/>
-					</menulist>
+					<et2-select-account  id="record_owner" emptyLabel="Select"></et2-select-account>
 				</row>
 				<row>
-					<menulist>
-						<menupopup type="select-bool" label="Change owner when updating" id="change_owner"/>
-					</menulist>
+					<et2-select-bool  label="Change owner when updating" id="change_owner"></et2-select-bool>
 				</row>
 			</rows>
 		</grid>

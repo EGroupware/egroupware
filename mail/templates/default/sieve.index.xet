@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="mail.sieve.index.rows" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%" id="rg" sortable="mail.mail_sieve.ajax_moveRule" class="egwGridView_grid">
@@ -11,27 +10,27 @@
 			</columns>
 			<rows>
 				<row class="th">
-					<description value="Rule priority position"/>
-					<description value="Status"/>
-					<description value="rules"/>
+					<et2-description  value="Rule priority position"></et2-description>
+					<et2-description  value="Status"></et2-description>
+					<et2-description  value="rules"></et2-description>
 				</row>
 				<row class="row $row_cont[class]">
-					<description id="${row}[ruleID]" />
-					<select id="${row}[status]" readonly="true"/>
-					<description id="${row}[rules]" />
+					<et2-description  id="${row}[ruleID]"></et2-description>
+					<et2-select  id="${row}[status]" readonly="true"></et2-select>
+					<et2-description  id="${row}[rules]"></et2-description>
 				</row>
 			</rows>
 		</grid>
 	</template>
 	<template id="mail.sieve.index" template="" lang="" group="0" version="1.9.001">
-		<description id="msg" no_lang="1" class="message" span="all"/>
+		<et2-description  id="msg" class="message" span="all" noLang="1"></et2-description>
 		<grid width="100%">
 			<columns>
 				<column width="100%"/>
 			</columns>
 			<rows>
 				<row class="nextmatch_header_row">
-					<buttononly class="$cont[hideIfSieveDisabled] et2_toolbar" align="left" id="add" onclick="window.open(egw::link('/index.php','menuaction=mail.mail_sieve.edit'),'_blank','dependent=yes,width=600,height=680,scrollbars=yes,status=yes'); return false;"/>
+					<et2-button  class="$cont[hideIfSieveDisabled] et2_toolbar" align="left" id="add" onclick="window.open(egw::link('/index.php','menuaction=mail.mail_sieve.edit'),'_blank','dependent=yes,width=600,height=680,scrollbars=yes,status=yes'); return false;" noSubmit="true"></et2-button>
 				</row>
 				<row>
 					<template id="rows"/>

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="admin.categories.edit" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
@@ -10,57 +9,51 @@
 			</columns>
 			<rows>
 				<row class="dialogHeadbar" >
-					<hbox span="all">
-						<button id="button[save]" onclick="return app.admin.check_owner(widget);" image="save"/>
-						<button  id="button[apply]" onclick="return app.admin.check_owner(widget);" image="apply"/>
-						<buttononly id="button[cancel]" onclick="window.close();" image="cancel"/>
-						<buttononly statustext="Delete this category"  id="button[delete]" onclick="egw.open_link('admin.admin_categories.delete','_browser','450x400');window.close();" image="delete"/>
-					</hbox>
+					<et2-hbox  span="all">
+						<et2-button-icon  id="button[save]" onclick="return app.admin.check_owner(widget);" image="save"></et2-button-icon>
+						<et2-button-icon  id="button[apply]" onclick="return app.admin.check_owner(widget);" image="apply"></et2-button-icon>
+						<et2-button-icon  id="button[cancel]" onclick="window.close();" image="cancel" noSubmit="true"></et2-button-icon>
+						<et2-button-icon  statustext="Delete this category" id="button[delete]" onclick="egw.open_link('admin.admin_categories.delete','_browser','450x400');window.close();" image="delete" noSubmit="true"></et2-button-icon>
+					</et2-hbox>
 				</row>
 				<row>
-					<description value="Name" for="name"/>
-					<textbox id="name" needed="1" size="50" maxlength="150" class="et2_fullWidth"/>
+					<et2-description  value="Name" for="name"></et2-description>
+					<et2-textbox  id="name" maxlength="150" required="1"></et2-textbox>
 				</row>
 				<row>
-					<description value="Parent category" for="parent"/>
-					<menulist>
-						<menupopup type="select-cat" id="parent" options="None,$cont[all_cats],,$cont[appname]"/>
-					</menulist>
+					<et2-description  value="Parent category" for="parent"></et2-description>
+					<et2-select-cat  id="parent" application="$cont[appname]" emptyLabel="None" globalCategories="$cont[all_cats]"></et2-select-cat>
 				</row>
 				<row valign="top">
-					<description value="Description" for="description"/>
-					<textbox multiline="true" id="description" rows="5" cols="10" class="et2_fullWidth" resize_ratio="0" height="200"/>
+					<et2-description  value="Description" for="description"></et2-description>
+					<et2-textarea  id="description" rows="5" cols="10" height="200" resizeRatio="0"></et2-textarea>
 				</row>
 				<row class="nmr" disabled="@no_private">
-					<description value="Private"/>
-					<checkbox id="access" options="private,public"/>
+					<et2-description  value="Private"></et2-description>
+					<et2-checkbox  id="access" selectedValue="private" unselectedValue="public" ></et2-checkbox>
 				</row>
 				<row>
-					<description value="Color" for="cat_data[color]"/>
-					<colorpicker id="data[color]"/>
+					<et2-description  value="Color" for="cat_data[color]"></et2-description>
+					<et2-colorpicker  id="data[color]"></et2-colorpicker>
 				</row>
 				<row>
-					<description value="Icon" for="data[icon]"/>
-					<hbox options="0,0">
-						<menulist>
-							<menupopup id="data[icon]" onchange="app.admin.change_icon(widget);" options="None"/>
-						</menulist>
-						<image src="icon_url" id="icon_url"/>
-					</hbox>
+					<et2-description  value="Icon" for="data[icon]"></et2-description>
+					<et2-hbox  cellpadding="0" cellspacing="0" >
+						<et2-select  id="data[icon]" onchange="app.admin.change_icon(widget);" emptyLabel="None"></et2-select>
+						<et2-image  src="icon_url" id="icon_url"></et2-image>
+					</et2-hbox>
 				</row>
 				<row disabled="@appname=phpgw" height="30">
-					<description value="Application"/>
-					<menulist>
-						<menupopup type="select-app" id="appname" readonly="true" options="All applications"/>
-					</menulist>
+					<et2-description  value="Application"></et2-description>
+					<et2-select-app  id="appname" readonly="true" emptyLabel="All applications"></et2-select-app>
 				</row>
 				<row>
-					<description value="Category owner" for="owner"/>
-					<listbox statustext="Limit global category to members of a certain group" id="owner" needed="1" rows="6" height="150"/>
+					<et2-description  value="Category owner" for="owner"></et2-description>
+					<et2-select  statustext="Limit global category to members of a certain group" id="owner" rows="6" height="150" multiple="1" required="1"></et2-select>
 				</row>
 				<row disabled="!@last_mod">
-					<description value="Modified"/>
-					<date-time id="last_mod" readonly="true"/>
+					<et2-description  value="Modified"></et2-description>
+					<et2-date-time  id="last_mod" readonly="true"></et2-date-time>
 				</row>
 			</rows>
 		</grid>

@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="resources.show.nm_right" template="" lang="" group="0" version="1.9.002">
-		<buttononly class="plus_button" parent_node="resources-show_plus_button_container" id="add_button" onclick="window.open(egw::link('/index.php','menuaction=resources.resources_ui.edit'),'','dependent=yes,width=800,height=600,location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes'); return false; return false;"/>
+		<et2-button  class="plus_button" id="add_button" onclick="window.open(egw::link('/index.php','menuaction=resources.resources_ui.edit'),'','dependent=yes,width=800,height=600,location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes'); return false; return false;" noSubmit="true" parentId="resources-show_plus_button_container"></et2-button>
 	</template>
 	<template id="resources.show.rows" template="" lang="" group="0" version="1.9.003">
 		<grid width="100%">
@@ -18,43 +17,41 @@
 
 				</row>
 				<row class="$row_cont[class]">
-					<description class="cat_$row_cont[cat_id] mobile_cat_col"/>
-					<vbox>
+					<et2-description  class="cat_$row_cont[cat_id] mobile_cat_col"></et2-description>
+					<et2-vbox>
 						<customfields-list id="$row" class="customfields" app="resources" disabled="true"/>
-						<description id="${row}[name]" no_lang="1"/>
-						<description id="${row}[short_description]" no_lang="1"/>
-						<hbox>
-							<description extra_link_popup="850x600" href="resources.resources_ui.edit&amp;res_id=$row_cont[accessory_of]" id="${row}[accessory_of_label]" no_lang="1"/>
+						<et2-description  id="${row}[name]" noLang="1"></et2-description>
+						<et2-description  id="${row}[short_description]" noLang="1"></et2-description>
+						<et2-hbox>
+							<et2-description  href="resources.resources_ui.edit&amp;res_id=$row_cont[accessory_of]" id="${row}[accessory_of_label]" extraLinkPopup="850x600" noLang="1"></et2-description>
 							<grid width="100%" id="${row}[accessories]">
 								<columns>
 									<column/>
 								</columns>
 								<rows>
 									<row>
-										<description extra_link_popup="850x600" href="resources.resources_ui.edit&amp;res_id=$row_cont[acc_id]" id="${row}[name]" no_lang="1"/>
+										<et2-description  href="resources.resources_ui.edit&amp;res_id=$row_cont[acc_id]" id="${row}[name]" extraLinkPopup="850x600" noLang="1"></et2-description>
 									</row>
 								</rows>
 							</grid>
-						</hbox>
-					</vbox>
-					<vbox class="resourcesCol2">
-						<hbox>
-							<label value="Useable"/>
-							<description align="left" id="${row}[useable]" no_lang="1"/>
-						</hbox>
-						<hbox>
-							<label value="Quantity"/>
-							<description align="left" id="${row}[quantity]" no_lang="1"/>
-						</hbox>
-						<menulist>
-							<menupopup type="select-cat" id="{$row}[cat_id]" no_lang="1" readonly="true"/>
-						</menulist>
-					</vbox>
-					<vbox>
-						<hbox class="avatar">
-							<image id="${row}[picture_thumb]" width="50px" height="50px" expose_view="true" href="$row_cont[picture_original]" src="${row}[picture_thumb]" />
-						</hbox>
-					</vbox>
+						</et2-hbox>
+					</et2-vbox>
+					<et2-vbox  class="resourcesCol2">
+						<et2-hbox>
+							<et2-label  value="Useable"></et2-label>
+							<et2-description  align="left" id="${row}[useable]" noLang="1"></et2-description>
+						</et2-hbox>
+						<et2-hbox>
+							<et2-label  value="Quantity"></et2-label>
+							<et2-description  align="left" id="${row}[quantity]" noLang="1"></et2-description>
+						</et2-hbox>
+						<et2-select-cat  id="{$row}[cat_id]" readonly="true" noLang="1"></et2-select-cat>
+					</et2-vbox>
+					<et2-vbox>
+						<et2-hbox  class="avatar">
+							<et2-image-expose  id="${row}[picture_thumb]" width="50px" height="50px" href="$row_cont[picture_original]" src="${row}[picture_thumb]" ></et2-image-expose>
+						</et2-hbox>
+					</et2-vbox>
 				</row>
 			</rows>
 		</grid>
@@ -66,39 +63,39 @@
 			</columns>
 			<rows>
 				<row disabled="!@msg">
-						<description align="center" id="msg" span="all" class="message"/>
+						<et2-description  align="center" id="msg" span="all" class="message"></et2-description>
 				</row>
 				<row>
-					<description id="plus_button_container"/>
+					<et2-description  id="plus_button_container"></et2-description>
 				</row>
 				<row>
 					<nextmatch id="nm" no_lang="1" template="resources.show.rows"/>
 				</row>
 				<row>
-					<box id="delete_popup" class="action_popup prompt">
-						<vbox class="prompt">
-							<description value="Delete" class="promptheader"/>
-							<description value="Delete accessories of selected resources too?"/>
-							<hbox>
-								<button label="Yes - Delete accessories too" id="delete" onclick="nm_submit_popup(this); return false;"/>
-								<button label="No - Make them resources" id="delete_promote" onclick="nm_popup_action.id = 'delete_promote'; nm_submit_popup(this); return false;"/>
-								<buttononly label="Cancel" onclick="nm_hide_popup(this,'delete_popup');"/>
-							</hbox>
-						</vbox>
-					</box>
+					<et2-box  id="delete_popup" class="action_popup prompt">
+						<et2-vbox  class="prompt">
+							<et2-description  value="Delete" class="promptheader"></et2-description>
+							<et2-description  value="Delete accessories of selected resources too?"></et2-description>
+							<et2-hbox>
+								<et2-button  label="Yes - Delete accessories too" id="delete" onclick="nm_submit_popup(this); return false;"></et2-button>
+								<et2-button  label="No - Make them resources" id="delete_promote" onclick="nm_popup_action.id = 'delete_promote'; nm_submit_popup(this); return false;"></et2-button>
+								<et2-button  label="Cancel" onclick="nm_hide_popup(this,'delete_popup');" noSubmit="true"></et2-button>
+							</et2-hbox>
+						</et2-vbox>
+					</et2-box>
 				</row>
 				<row>
-					<box id="restore_popup" class="action_popup prompt">
-						<vbox class="prompt">
-							<description value="Un-delete" class="promptheader"/>
-							<description value="Un-delete accessories of selected resources too?"/>
-							<hbox>
-								<button label="Yes - Un-delete accessories too" id="restore_accessories" onclick="nm_popup_action.id = 'restore_accessories';nm_submit_popup(this); return false;"/>
-								<button label="No - Leave them" id="restore" onclick="nm_popup_action.id = 'restore'; nm_submit_popup(this); return false;"/>
-								<buttononly label="Cancel" onclick="nm_hide_popup(this,'restore_popup');"/>
-							</hbox>
-						</vbox>
-					</box>
+					<et2-box  id="restore_popup" class="action_popup prompt">
+						<et2-vbox  class="prompt">
+							<et2-description  value="Un-delete" class="promptheader"></et2-description>
+							<et2-description  value="Un-delete accessories of selected resources too?"></et2-description>
+							<et2-hbox>
+								<et2-button  label="Yes - Un-delete accessories too" id="restore_accessories" onclick="nm_popup_action.id = 'restore_accessories';nm_submit_popup(this); return false;"></et2-button>
+								<et2-button  label="No - Leave them" id="restore" onclick="nm_popup_action.id = 'restore'; nm_submit_popup(this); return false;"></et2-button>
+								<et2-button  label="Cancel" onclick="nm_hide_popup(this,'restore_popup');" noSubmit="true"></et2-button>
+							</et2-hbox>
+						</et2-vbox>
+					</et2-box>
 				</row>
 			</rows>
 		</grid>

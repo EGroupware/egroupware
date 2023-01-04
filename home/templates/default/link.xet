@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="home.link" template="" lang="" group="0" version="1.9.001">
-		<image id="image" src="image"/>
-		<link id="entry"/>
+		<et2-image  id="image" src="image"></et2-image>
+		<et2-link  id="entry" app=""></et2-link>
 		<!--
 			It's the tooltip class that does it, id might cause problems so
 			best to remove it if you're customizing.  The actual widget used is

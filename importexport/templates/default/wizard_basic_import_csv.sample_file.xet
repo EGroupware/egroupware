@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="importexport.wizard_basic_import_csv.sample_file" template="" lang="" group="0" version="0.0.1">
 		<grid>
@@ -9,7 +8,7 @@
 			</columns>
 			<rows>
 				<row>
-					<description id="msg" no_lang="1"/>
+					<et2-description  id="msg" noLang="1"></et2-description>
 				</row>
 				<row>
 					<file id="file"/>

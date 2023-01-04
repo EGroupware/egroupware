@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="home.set_default" template="" version="1.9.001">
-		<vbox>
-			<description value="Add as default for"/>
-			<listbox type="select-account" id="group" account_type="groups"/>
-		</vbox>
+		<et2-vbox>
+			<et2-description  value="Add as default for"></et2-description>
+			<et2-select-account  id="group" accountType="groups"></et2-select-account>
+		</et2-vbox>
 	</template>
 	<template id="home.index" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
@@ -18,10 +17,10 @@
 					<html id="mainscreen_message"/>
 				</row>
 				<row>
-					<box id="portlets">
+					<et2-box  id="portlets">
 						<!-- Box wrapper needed to get box to auto-repeat -->
-						<box id="${row}"><portlet id="${_cont[id]}" title="$_cont[title]" color="@color" parent_node="home-index_portlets" settings="@settings" width="@width" height="@height" row="@row" col="@col" value="@content" class="@class"/></box>
-					</box>
+						<et2-box  id="${row}"><portlet id="${_cont[id]}" title="$_cont[title]" color="@color" parent_node="home-index_portlets" settings="@settings" width="@width" height="@height" row="@row" col="@col" value="@content" class="@class"/></et2-box>
+					</et2-box>
 				</row>
 			</rows>
 		</grid>

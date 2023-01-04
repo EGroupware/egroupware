@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="calendar.meeting" template="" lang="" group="0" version="1.9.002">
 		<grid border="0" width="100%">
@@ -16,45 +16,42 @@
 						</columns>
 						<rows>
 							<row class="th">
-								<description value="Attention"/>
+								<et2-description  value="Attention"></et2-description>
 							</row>
 							<row class="row">
-								<description id="sender_warning" class="meetingRequestError"/>
+								<et2-description  id="sender_warning" class="meetingRequestError"></et2-description>
 							</row>
 						</rows>
 					</grid>
 				</row>
 				<row disabled="!@ics_method=request">
-					<description value="This mail contains a meeting request" class="meetingRequestMessage"/>
-					<hbox>
-						<button label="Apply" id="button[apply]" class="leftPad5" hideOnReadonly="true"/>
-						<button label="Accept" id="button[accept]" class="leftPad5" background_image="true" image="calendar/accepted"/>
-						<button label="Tentative" id="button[tentativ]" class="leftPad5" background_image="true" image="calendar/tentative"/>
-						<button label="Reject" id="button[reject]" class="leftPad5" background_image="true" image="calendar/rejected"/>
-						<buttononly statustext="Edit event in calendar" label="Edit" id="button[edit]"  background_image="true" image="edit" hideOnReadonly="true"
-							onclick="window.open(egw::link('/index.php','menuaction=calendar.calendar_uiforms.edit&amp;cal_id=$cont[id]'),'_blank','dependent=yes,width=750,height=410,scrollbars=yes,status=yes'); return false;" class="leftPad5"/>
-					</hbox>
-					<description id="error" class="meetingRequestError" align="right"/>
+					<et2-description  value="This mail contains a meeting request" class="meetingRequestMessage"></et2-description>
+					<et2-hbox>
+						<et2-button  label="Apply" id="button[apply]" class="leftPad5" hideOnReadonly="true"></et2-button>
+						<et2-button  label="Accept" id="button[accept]" class="leftPad5" image="calendar/accepted"></et2-button>
+						<et2-button  label="Tentative" id="button[tentativ]" class="leftPad5" image="calendar/tentative"></et2-button>
+						<et2-button  label="Reject" id="button[reject]" class="leftPad5" image="calendar/rejected"></et2-button>
+						<et2-button  statustext="Edit event in calendar" label="Edit" id="button[edit]" image="edit" hideOnReadonly="true" onclick="window.open(egw::link('/index.php','menuaction=calendar.calendar_uiforms.edit&amp;cal_id=$cont[id]'),'_blank','dependent=yes,width=750,height=410,scrollbars=yes,status=yes'); return false;" class="leftPad5" noSubmit="true"></et2-button>
+					</et2-hbox>
+					<et2-description  id="error" class="meetingRequestError" align="right"></et2-description>
 				</row>
 				<row disabled="!@ics_method=reply">
-					<description value="This mail contains a reply to a meeting request" class="meetingRequestMessage"/>
-					<button label="Apply" id="button[apply]" class="leftPad5"/>
-					<description id="error" class="meetingRequestError" align="right"/>
+					<et2-description  value="This mail contains a reply to a meeting request" class="meetingRequestMessage"></et2-description>
+					<et2-button  label="Apply" id="button[apply]" class="leftPad5"></et2-button>
+					<et2-description  id="error" class="meetingRequestError" align="right"></et2-description>
 				</row>
 				<row disabled="!@ics_method=cancel">
-					<description value="This mail cancels a meeting" class="meetingRequestMessage"/>
-					<hbox>
-						<button label="Apply" statustext="Removes the event from my calendar" id="button[cancel]" class="leftPad5"/>
-						<button label="Delete" statustext="Delete this meeting for all participants" id="button[delete]" class="leftPad5"
-								onclick="et2_dialog.confirm(widget,'Delete this meeting for all participants','Delete')"/>
-						<button statustext="Edit event in calendar" label="Edit" id="button[edit]" background_image="true" image="edit"
-									onclick="window.open(egw::link('/index.php','menuaction=calendar.calendar_uiforms.edit&amp;cal_id=$cont[id]'),'_blank','dependent=yes,width=750,height=410,scrollbars=yes,status=yes'); return false;" class="leftPad5"/>
-					</hbox>
-					<description id="error" class="meetingRequestError" align="right"/>
+					<et2-description  value="This mail cancels a meeting" class="meetingRequestMessage"></et2-description>
+					<et2-hbox>
+						<et2-button  label="Apply" statustext="Removes the event from my calendar" id="button[cancel]" class="leftPad5"></et2-button>
+						<et2-button  label="Delete" statustext="Delete this meeting for all participants" id="button[delete]" class="leftPad5" onclick="et2_dialog.confirm(widget,'Delete this meeting for all participants','Delete')"></et2-button>
+						<et2-button  statustext="Edit event in calendar" label="Edit" id="button[edit]" image="edit" onclick="window.open(egw::link('/index.php','menuaction=calendar.calendar_uiforms.edit&amp;cal_id=$cont[id]'),'_blank','dependent=yes,width=750,height=410,scrollbars=yes,status=yes'); return false;" class="leftPad5"></et2-button>
+					</et2-hbox>
+					<et2-description  id="error" class="meetingRequestError" align="right"></et2-description>
 				</row>
 			</rows>
 		</grid>
-		<description/>
+		<et2-description></et2-description>
 		<grid width="100%" class="meetingRequest">
 			<columns>
 				<column width="100"/>
@@ -62,42 +59,42 @@
 			</columns>
 			<rows>
 				<row class="th">
-					<description id="ics_method_label" span="all"/>
+					<et2-description  id="ics_method_label" span="all"></et2-description>
 				</row>
 				<row class="row">
-					<description value="Title"/>
-					<description id="title" no_lang="1"/>
+					<et2-description  value="Title"></et2-description>
+					<et2-description  id="title" noLang="1"></et2-description>
 				</row>
 				<row class="row">
-					<description value="Location"/>
-					<hbox>
-						<description id="location" no_lang="1"/>
-						<description class="et2_link" value="Videoconference" disabled="!@##videoconference" onclick="app.calendar.joinVideoConference(widget.getArrayMgr('content').getEntry('##videoconference'), widget.getArrayMgr('content').data);"/>
-						<image src="videoconference" disabled="!@##videoconference"/>
-					</hbox>
+					<et2-description  value="Location"></et2-description>
+					<et2-hbox>
+						<et2-description  id="location" noLang="1"></et2-description>
+						<et2-description  class="et2_link" value="Videoconference" disabled="!@##videoconference" onclick="app.calendar.joinVideoConference(widget.getArrayMgr('content').getEntry('##videoconference'), widget.getArrayMgr('content').data);"></et2-description>
+						<et2-image  src="videoconference" disabled="!@##videoconference"></et2-image>
+					</et2-hbox>
 				</row>
 				<row class="row">
-					<description value="Date"/>
-					<hbox>
-						<date-time id="start" readonly="true"/>
-						<date-time label="-" id="end" readonly="true" class="leftPad5"/>
-					</hbox>
+					<et2-description  value="Date"></et2-description>
+					<et2-hbox>
+						<et2-date-time  id="start" readonly="true"></et2-date-time>
+						<et2-date-time  label="-" id="end" readonly="true" class="leftPad5"></et2-date-time>
+					</et2-hbox>
 				</row>
 				<row class="row" disabled="!@recure">
-					<description value="Recurrence"/>
-					<description id="recure" no_lang="1"/>
+					<et2-description  value="Recurrence"></et2-description>
+					<et2-description  id="recure" noLang="1"></et2-description>
 				</row>
 				<row class="row">
-					<description value="Organizer"/>
-					<url-email id="organizer" readonly="true"/>
+					<et2-description  value="Organizer"></et2-description>
+					<et2-url-email  id="organizer" readonly="true"></et2-url-email>
 				</row>
 				<row class="row" valign="top">
-					<description value="Description"/>
-					<description id="description" no_lang="ture" activate_links="true"/>
+					<et2-description  value="Description"></et2-description>
+					<et2-description  id="description" noLang="ture" activateLinks="true"></et2-description>
 				</row>
 				<row class="row" valign="top">
-					<description value="Participants"/>
-					<description id="all_participants"/>
+					<et2-description  value="Participants"></et2-description>
+					<et2-description  id="all_participants"></et2-description>
 				</row>
 			</rows>
 		</grid>

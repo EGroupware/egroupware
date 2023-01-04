@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="preferences.settings.tab1" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%" class="prefTable egwGridView_grid">
@@ -10,14 +9,14 @@
 			</columns>
 			<rows>
 				<row class="prefRow">
-					<box class="prefName">
-						<description for="@${row}[name]" id="${row}[label]"/>
+					<et2-box  class="prefName">
+						<et2-description  for="@${row}[name]" id="${row}[label]"></et2-description>
 						<html id="${row}[help]" class="prefHelp"/>
-					</box>
-					<box>
+					</et2-box>
+					<et2-box>
 						<widget type="@${row}[type]" id="@${row}[name]" onchange="@${row}[onchange]" size="@${row}[size]"  no_lang="1" class="prefValue"/>
-						<description id="${row}[default]" no_lang="1" class="prefDefault"/>
-					</box>
+						<et2-description  id="${row}[default]" class="prefDefault" noLang="1"></et2-description>
+					</et2-box>
 				</row>
 			</rows>
 		</grid>
@@ -30,32 +29,25 @@
 			</columns>
 			<rows>
 				<row class="dialogHeadbar" >
-					<hbox width="100%">
-						<button  id="button[save]"/>
-						<button  id="button[apply]"/>
-						<button  id="button[cancel]" onclick="window.close();"/>
-					</hbox>
+					<et2-hbox  width="100%">
+						<et2-button  id="button[save]"></et2-button>
+						<et2-button  id="button[apply]"></et2-button>
+						<et2-button  id="button[cancel]" onclick="window.close();"></et2-button>
+					</et2-hbox>
 
 				</row>
 				<row>
-					<hbox width="100%">
-						<menulist>
-							<menupopup id="appname" onchange="1" options="Common preferences" class="prefApp"/>
-						</menulist>
-						<menulist>
-							<menupopup id="type" onchange="1" class="prefType"/>
-						</menulist>
-					</hbox>
+					<et2-hbox  width="100%">
+						<et2-select  id="appname" onchange="1" class="prefApp" emptyLabel="Common preferences"></et2-select>
+						<et2-select  id="type" onchange="1" class="prefType"></et2-select>
+					</et2-hbox>
 				</row>
 				<row>
-					<tabbox id="tabs" align_tabs="v">
-						<tabs>
-							<tab id="tab1" label="Settings"/>
-						</tabs>
-						<tabpanels>
+					<et2-vbox  id="tabs">
+						<et2-details  id="tab1" summary="Settings" title="">
 							<template id="preferences.settings.tab1" content="tab1"/>
-						</tabpanels>
-					</tabbox>
+						</et2-details>
+					</et2-vbox>
 				</row>
 			</rows>
 		</grid>

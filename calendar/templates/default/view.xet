@@ -9,7 +9,7 @@ Egroupware
 @version $Id$
 -->
 
-<!DOCTYPE overlay PUBLIC '-//EGroupware GmbH//eTemplate 2//EN' 'http://www.egroupware.org/etemplate2.dtd'>
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 
 <overlay>
     <template id="calendar.view">

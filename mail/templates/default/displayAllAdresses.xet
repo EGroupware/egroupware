@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="mail.displayAllAdresses" template="" lang="" group="0" version="1.9.001">
-		<description value="All Adresses:" />
-		<vbox class="maildisplayAllAdresses">
+		<et2-description  value="All Adresses:"></et2-description>
+		<et2-vbox  class="maildisplayAllAdresses">
 			<grid disabled="@no_griddata" id="displayallAdresses">
 			  <columns>
 			   <column width="10%" />
@@ -12,11 +11,11 @@
 			  </columns>
 			  <rows>
 			   <row >
-				<description id="${row}[type]" />
-				<url-email align="left" id="${row}[address]" readonly='true'/>
+				<et2-description  id="${row}[type]"></et2-description>
+				<et2-url-email  align="left" id="${row}[address]" readonly="true"></et2-url-email>
 			   </row>
 			  </rows>
 			</grid>
-		</vbox>
+		</et2-vbox>
 	</template>
 </overlay>

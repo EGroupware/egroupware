@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="mail.moveFolder" template="" lang="" group="0" version="1.9.001">
-		<hbox><description value="Move Folder:" /><textbox readonly="true" id="selectedLeaf"/></hbox>
-		<textbox class="mail-index_quotaDisplayNone" readonly="true" id="selectedNode"/>
-		<vbox class="mailChooseFolder">
-			<taglist id="folder" width="88%" maxSelection="1" autocomplete_url='mail.mail_compose.ajax_searchFolder' autocomplete_params='' allowFreeEntries="false" onclick="app.mail.address_click"/>
-			<description value="The folder will be copied as a new child to the node selected above, and on sucess deleted." />
-		</vbox>
+		<et2-hbox><et2-description  value="Move Folder:"></et2-description><et2-textbox  readonly="true" id="selectedLeaf"></et2-textbox></et2-hbox>
+		<et2-textbox  class="mail-index_quotaDisplayNone" readonly="true" id="selectedNode"></et2-textbox>
+		<et2-vbox  class="mailChooseFolder">
+			<et2-select  id="folder" width="88%" allowFreeEntries="false" onclick="app.mail.address_click" searchUrl="mail.mail_compose.ajax_searchFolder" searchOptions=""></et2-select>
+			<et2-description  value="The folder will be copied as a new child to the node selected above, and on sucess deleted."></et2-description>
+		</et2-vbox>
 	</template>
 </overlay>

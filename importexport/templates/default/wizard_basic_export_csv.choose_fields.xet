@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="importexport.wizard_basic_export_csv.choose_fields" template="" lang="" group="0" version="1.9.001">
 		<grid>
@@ -9,7 +8,7 @@
 			</columns>
 			<rows>
 				<row>
-					<description id="msg" span="all"/>
+					<et2-description  id="msg" span="all"></et2-description>
 				</row>
 				<row>
 					<grid overflow="auto" id="fields">
@@ -19,17 +18,15 @@
 						</columns>
 						<rows>
 							<row class="th">
-								<description value="Field"/>
-								<hbox>
-                                    <description value="Export"/>
-                                    <buttononly statustext="Check all" label="Check all" id="check_all"
-                                                onclick="jQuery('input:checkbox').attr('checked', !jQuery('input:checkbox').attr('checked')); return false;"
-                                                image="check"/>
-                                </hbox>
+								<et2-description  value="Field"></et2-description>
+								<et2-hbox>
+                                    <et2-description  value="Export"></et2-description>
+                                    <et2-button  statustext="Check all" label="Check all" id="check_all" onclick="jQuery('input:checkbox').attr('checked', !jQuery('input:checkbox').attr('checked')); return false;" image="check" noSubmit="true"></et2-button>
+                                </et2-hbox>
 							</row>
 							<row>
-								<description id="${row}[name]" no_lang="1"/>
-								<checkbox id="export[${row}]" no_lang="1" options="$row_cont[field]"/>
+								<et2-description  id="${row}[name]" noLang="1"></et2-description>
+								<et2-checkbox  id="export[${row}]" noLang="1" selectedValue="$row_cont[field]" ></et2-checkbox>
 							</row>
 						</rows>
 					</grid>

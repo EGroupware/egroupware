@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="admin.mailwizard.folder" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
@@ -10,53 +9,43 @@
 			</columns>
 			<rows>
 				<row disabled="@hidebuttons" class="dialogHeadbar" >
-					<hbox span="all">
-						<button label="Continue" id="button[continue]" onclick="app.admin.wizard_detect" image="continue" background_image="1"/>
-						<button label="Back" id="button[back]" image="back" background_image="1"/>
-					</hbox>
+					<et2-hbox  span="all">
+						<et2-button  label="Continue" id="button[continue]" onclick="app.admin.wizard_detect" image="continue"></et2-button>
+						<et2-button  label="Back" id="button[back]" image="back"></et2-button>
+					</et2-hbox>
 				</row>
 				<row disabled="!@showsearchbuttons" class="dialogHeadbar">
-					<hbox span="all" width="100%">
-						<button label="Search" id="button[search]" image="search" background_image="1"/>
-						<button label="Cancel" id="button[cancelsearch]" image="cancel" background_image="1"/>
-					</hbox>
+					<et2-hbox  span="all" width="100%">
+						<et2-button  label="Search" id="button[search]" image="search"></et2-button>
+						<et2-button  label="Cancel" id="button[cancelsearch]" image="cancel"></et2-button>
+					</et2-hbox>
 				</row>
 				<row>
-					<description value="Step 2: Folder" span="all" class="emailadmin_header"/>
-					<description/>
+					<et2-description  value="Step 2: Folder" span="all" class="emailadmin_header"></et2-description>
+					<et2-description></et2-description>
 				</row>
 				<row>
-					<description value="Sent folder" for="acc_folder_sent"/>
-					<menulist>
-						<menupopup id="acc_folder_sent" options="Select one ..." class="et2_fullWidth"/>
-					</menulist>
+					<et2-description  value="Sent folder" for="acc_folder_sent"></et2-description>
+					<et2-select  id="acc_folder_sent" emptyLabel="Select one ..."></et2-select>
 				</row>
 				<row>
-					<description value="Trash folder" for="acc_folder_trash"/>
-					<menulist>
-						<menupopup id="acc_folder_trash" options="Select one ..." class="et2_fullWidth"/>
-					</menulist>
+					<et2-description  value="Trash folder" for="acc_folder_trash"></et2-description>
+					<et2-select  id="acc_folder_trash" emptyLabel="Select one ..."></et2-select>
 				</row>
 				<row>
-					<description value="Drafts folder" for="acc_folder_draft"/>
-					<menulist>
-						<menupopup id="acc_folder_draft" options="Select one ..." class="et2_fullWidth"/>
-					</menulist>
+					<et2-description  value="Drafts folder" for="acc_folder_draft"></et2-description>
+					<et2-select  id="acc_folder_draft" emptyLabel="Select one ..."></et2-select>
 				</row>
 				<row>
-					<description value="Templates folder" for="acc_folder_template"/>
-					<menulist>
-						<menupopup id="acc_folder_template" options="Select one ..." class="et2_fullWidth"/>
-					</menulist>
+					<et2-description  value="Templates folder" for="acc_folder_template"></et2-description>
+					<et2-select  id="acc_folder_template" emptyLabel="Select one ..."></et2-select>
 				</row>
 				<row>
-					<description value="Junk folder" for="acc_folder_junk"/>
-					<menulist>
-						<menupopup id="acc_folder_junk" options="Select one ..." class="et2_fullWidth"/>
-					</menulist>
+					<et2-description  value="Junk folder" for="acc_folder_junk"></et2-description>
+					<et2-select  id="acc_folder_junk" emptyLabel="Select one ..."></et2-select>
 				</row>
 				<row>
-					<textbox multiline="true" id="folder_output" readonly="true" span="all"/>
+					<et2-textarea  id="folder_output" readonly="true" span="all"></et2-textarea>
 				</row>
 			</rows>
 		</grid>

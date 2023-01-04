@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="addressbook.index.org_rows" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
@@ -20,51 +19,49 @@
 					<nextmatch-sortheader id="org_name" label="Organisation"/>
 					<nextmatch-header label="Department" id="org_unit"/>
 					<nextmatch-header label="Business address" id="business"/>
-					<vbox>
+					<et2-vbox>
 						<nextmatch-header label="Business phone" id="tel_work"/>
 						<nextmatch-header label="Mobile phone" id="tel_cell"/>
 						<nextmatch-header label="Home phone" id="tel_home"/>
-						<description value="Fax"/>
-					</vbox>
-					<vbox>
+						<et2-description  value="Fax"></et2-description>
+					</et2-vbox>
+					<et2-vbox>
 						<nextmatch-header label="Url" id="url"/>
 						<nextmatch-header label="Business email" id="email"/>
 						<nextmatch-header label="Home email" id="email_home"/>
-					</vbox>
+					</et2-vbox>
 				</row>
 				<row class="$row_cont[cat_id] $row_cont[class]" valign="top">
-					<image label="$row_cont[type_label]" src="${row}[type]" align="center" no_lang="1"/>
-					<int id="${row}[org_count]" readonly="true" align="center"/>
-					<vbox>
-						<description id="${row}[org_name]" no_lang="1"/>
-						<description id="${row}[line2]" no_lang="1"/>
-					</vbox>
-					<description id="${row}[org_unit]" no_lang="1"/>
-					<vbox>
-						<description id="${row}[adr_one_street]" no_lang="1"/>
-						<description id="${row}[adr_one_street2]" no_lang="1"/>
-						<hbox>
-							<description id="${row}[adr_one_postalcode]" no_lang="1"/>
-							<description value=" " id="${row}[adr_one_locality]" no_lang="1" class="leftPad5"/>
-							<description id="${row}[adr_one_region]" no_lang="1" class="leftPad5"/>
-						</hbox>
-						<description id="${row}[adr_one_countryname]" no_lang="1"/>
-						<menulist>
-							<menupopup type="select-country" id="${row}[adr_one_countrycode]" readonly="true"/>
-						</menulist>
-					</vbox>
-					<vbox>
-						<url-phone id="${row}[tel_work]" readonly="true" class="telNumbers"/>
-						<url-phone id="${row}[tel_cell]" readonly="true" class="telNumbers"/>
-						<url-phone id="${row}[tel_home]" readonly="true" class="telNumbers"/>
-						<url-phone id="${row}[tel_fax]" readonly="true"/>
-						<description id="${row}[tel_prefered]" no_lang="1" href="$row_cont[tel_prefered_link]" extra_link_target="calling" extra_link_popup="$cont[call_popup]"/>
-					</vbox>
-					<vbox>
-						<url id="${row}[url]" readonly="true" class="fixedHeight"/>
-						<url-email id="${row}[email]" readonly="true" class="fixedHeight"/>
-						<url-email id="${row}[email_home]" readonly="true" class="fixedHeight"/>
-					</vbox>
+					<et2-image  label="$row_cont[type_label]" src="${row}[type]" align="center" noLang="1"></et2-image>
+					<et2-number  id="${row}[org_count]" readonly="true" align="center" precision="0"></et2-number>
+					<et2-vbox>
+						<et2-description  id="${row}[org_name]" noLang="1"></et2-description>
+						<et2-description  id="${row}[line2]" noLang="1"></et2-description>
+					</et2-vbox>
+					<et2-description  id="${row}[org_unit]" noLang="1"></et2-description>
+					<et2-vbox>
+						<et2-description  id="${row}[adr_one_street]" noLang="1"></et2-description>
+						<et2-description  id="${row}[adr_one_street2]" noLang="1"></et2-description>
+						<et2-hbox>
+							<et2-description  id="${row}[adr_one_postalcode]" noLang="1"></et2-description>
+							<et2-description  value=" " id="${row}[adr_one_locality]" class="leftPad5" noLang="1"></et2-description>
+							<et2-description  id="${row}[adr_one_region]" class="leftPad5" noLang="1"></et2-description>
+						</et2-hbox>
+						<et2-description  id="${row}[adr_one_countryname]" noLang="1"></et2-description>
+						<et2-select-country  id="${row}[adr_one_countrycode]" readonly="true"></et2-select-country>
+					</et2-vbox>
+					<et2-vbox>
+						<et2-url-phone  id="${row}[tel_work]" readonly="true" class="telNumbers"></et2-url-phone>
+						<et2-url-phone  id="${row}[tel_cell]" readonly="true" class="telNumbers"></et2-url-phone>
+						<et2-url-phone  id="${row}[tel_home]" readonly="true" class="telNumbers"></et2-url-phone>
+						<et2-url-phone  id="${row}[tel_fax]" readonly="true"></et2-url-phone>
+						<et2-description  id="${row}[tel_prefered]" href="$row_cont[tel_prefered_link]" noLang="1" extraLinkTarget="calling" extraLinkPopup="$cont[call_popup]"></et2-description>
+					</et2-vbox>
+					<et2-vbox>
+						<et2-url  id="${row}[url]" readonly="true" class="fixedHeight"></et2-url>
+						<et2-url-email  id="${row}[email]" readonly="true" class="fixedHeight"></et2-url-email>
+						<et2-url-email  id="${row}[email_home]" readonly="true" class="fixedHeight"></et2-url-email>
+					</et2-vbox>
 				</row>
 			</rows>
 		</grid>

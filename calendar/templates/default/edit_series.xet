@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="calendar.edit_series" template="" lang="" group="0" version="1.7.003">
-		<vbox rows="1" cols="1" id="edit_series">
-			<hbox id="dialogHeader" class="promptheader">
-				<description value="This event is part of a series"/>
-			</hbox>
-			<vbox class="prompt" id="dialog-content">
-				<description value="Do you want to edit this event as an exception or the whole series?"/>
-				<hbox align="center">
-					<buttononly label="Edit exception" onclick="app.calendar.open_edit(false);" image="edit" background_image="1"/>
-					<buttononly label="Edit series" onclick="app.calendar.open_edit(true);" image="edit" background_image="1"/>
-					<buttononly label="Cancel" onclick="document.getElementById('edit_series').style.display = 'none';" image="cancel" background_image="1"/>
-				</hbox>
-			</vbox>
-		</vbox>
+		<et2-vbox  rows="1" cols="1" id="edit_series">
+			<et2-hbox  id="dialogHeader" class="promptheader">
+				<et2-description  value="This event is part of a series"></et2-description>
+			</et2-hbox>
+			<et2-vbox  class="prompt" id="dialog-content">
+				<et2-description  value="Do you want to edit this event as an exception or the whole series?"></et2-description>
+				<et2-hbox  align="center">
+					<et2-button  label="Edit exception" onclick="app.calendar.open_edit(false);" image="edit" noSubmit="true"></et2-button>
+					<et2-button  label="Edit series" onclick="app.calendar.open_edit(true);" image="edit" noSubmit="true"></et2-button>
+					<et2-button  label="Cancel" onclick="document.getElementById('edit_series').style.display = 'none';" image="cancel" noSubmit="true"></et2-button>
+				</et2-hbox>
+			</et2-vbox>
+		</et2-vbox>
 	</template>
 </overlay>

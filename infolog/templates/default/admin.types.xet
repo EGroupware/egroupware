@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="infolog.customfields.status" template="" lang="" group="0" version="1.2.001">
 		<grid>
@@ -14,29 +13,29 @@
 			</columns>
 			<rows>
 				<row class="th">
-					<description value="Name"/>
-					<description value="Label"/>
-					<description value="Translation"/>
-					<description value="Default"/>
-					<description value="Disabled"/>
-					<description align="center" value="Action"/>
+					<et2-description  value="Name"></et2-description>
+					<et2-description  value="Label"></et2-description>
+					<et2-description  value="Translation"></et2-description>
+					<et2-description  value="Default"></et2-description>
+					<et2-description  value="Disabled"></et2-description>
+					<et2-description  align="center" value="Action"></et2-description>
 				</row>
 				<row class="row">
-					<textbox statustext="the name used internaly (&lt;= 10 chars), changeing it makes existing data unavailible" id="${row}[name]" size="10" maxlength="40"/>
-					<textbox statustext="the text displayed to the user" id="${row}[label]" size="40"/>
-					<description id="${row}[label]"/>
-					<radio align="center" statustext="default status for a new log entry" id="default" options="$row_cont[name]"/>
-					<checkbox align="center" statustext="disables a status without deleting it" id="${row}[disabled]"/>
-					<hbox>
-						<button statustext="deletes this status" label="Delete" id="delete[$row_cont[name]]"/>
-						<button statustext="creates a new status with the given values" label="Create" id="create$row_cont[name]"/>
-					</hbox>
+					<et2-textbox  statustext="the name used internaly (&lt;= 10 chars), changeing it makes existing data unavailible" id="${row}[name]" maxlength="40"></et2-textbox>
+					<et2-textbox  statustext="the text displayed to the user" id="${row}[label]"></et2-textbox>
+					<et2-description  id="${row}[label]"></et2-description>
+					<radio align="center" statustext="default status for a new log entry" id="default" set_value="$row_cont[name]" />
+					<et2-checkbox  align="center" statustext="disables a status without deleting it" id="${row}[disabled]"></et2-checkbox>
+					<et2-hbox>
+						<et2-button  statustext="deletes this status" label="Delete" id="delete[$row_cont[name]]"></et2-button>
+						<et2-button  statustext="creates a new status with the given values" label="Create" id="create$row_cont[name]"></et2-button>
+					</et2-hbox>
 				</row>
 			</rows>
 		</grid>
 	</template>
 	<template id="infolog.admin.types" template="" lang="" group="0" version="">
-		<vbox>
+		<et2-vbox>
 			<template id="admin.customfields.types" content="content_types"/>
 			<grid id="content_type_options">
 				<columns>
@@ -46,25 +45,23 @@
 				</columns>
 				<rows>
 					<row>
-						<hbox span="all">
-							<description value="Group owner for" class="header"/>
-							<description id="type" class="header"/>
-							<menulist class="infolog_lpadding5">
-								<menupopup type="select-account" statustext="If a type has a group owner, all entries of that type will be owned by the given group and NOT the user who created it!" id="group_owner" options="None,groups"/>
-							</menulist>
-						</hbox>
+						<et2-hbox  span="all">
+							<et2-description  value="Group owner for" class="header"></et2-description>
+							<et2-description  id="type" class="header"></et2-description>
+							<et2-select-account  class="infolog_lpadding5" statustext="If a type has a group owner, all entries of that type will be owned by the given group and NOT the user who created it!" id="group_owner" emptyLabel="None" accountType="groups"></et2-select-account>
+						</et2-hbox>
 					</row>
 					<row class="header">
-						<description value="Custom status for typ" id="typ" span="all"/>
+						<et2-description  value="Custom status for typ" id="typ" span="all"></et2-description>
 					</row>
 					<row>
 						<template id="infolog.customfields.status" content="status" span="all"/>
 					</row>
 				</rows>
 			</grid>
-			<button label="Save" id="save"/>
-			<description value="Custom fields" span="all" class="header"/>
-		</vbox>
+			<et2-button  label="Save" id="save"></et2-button>
+			<et2-description  value="Custom fields" span="all" class="header"></et2-description>
+		</et2-vbox>
 		<styles>.header{
 font-weight: bold;
 }</styles>

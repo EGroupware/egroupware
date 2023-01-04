@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="timesheet.index.dates" template="" lang="" group="0" version="1.2.001" >
-		<hbox>
-			<description value="Start"/>
-			<date id="startdate"/>
-			<description value="End"/>
-			<date statustext="Leave it empty for a full week" id="enddate"/>
-		</hbox>
+		<et2-hbox>
+			<et2-description  value="Start"></et2-description>
+			<et2-date  id="startdate"></et2-date>
+			<et2-description  value="End"></et2-description>
+			<et2-date  statustext="Leave it empty for a full week" id="enddate"></et2-date>
+		</et2-hbox>
 	</template>
 	<template id="timesheet.index.rows" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
@@ -22,34 +21,32 @@
 
 				</row>
 				<row class="$row_cont[class] timesheetRow">
-					<description class=" cat_$row_cont[cat_id] mobile_cat_col"/>
-					<vbox>
+					<et2-description  class="cat_$row_cont[cat_id] mobile_cat_col"></et2-description>
+					<et2-vbox>
 						<customfields-list id="$row" class="customfields" app="timesheet" disabled="true"/>
-						<description id="${row}[ts_title]" no_lang="1" class="ts_title $row_cont[titleClass]"/>
-						<description id="${row}[ts_description]" class="ts_description" no_lang="1"/>
-						<link id="${row}[ts_link]" no_lang="1"/>
-					</vbox>
-					<vbox class="timesheet3Col">
-						<hbox>
-							<time_or_date id="${row}[ts_start]" readonly="true" options=",8" align="left"/>
-						</hbox>
+						<et2-description  id="${row}[ts_title]" class="ts_title $row_cont[titleClass]" noLang="1"></et2-description>
+						<et2-description  id="${row}[ts_description]" class="ts_description" noLang="1"></et2-description>
+						<et2-link  id="${row}[ts_link]" app="" noLang="1"></et2-link>
+					</et2-vbox>
+					<et2-vbox  class="timesheet3Col">
+						<et2-hbox>
+							<et2-date-time-today  id="${row}[ts_start]" readonly="true" options=",8" align="left"></et2-date-time-today>
+						</et2-hbox>
 
-						<hbox>
-							<menulist class="$cont[ownerClass]">
-								<menupopup type="select-account" id="${row}[ts_owner]" readonly="true"/>
-							</menulist>
-						</hbox>
-						<hbox>
-							<date-duration id="${row}[ts_duration]" readonly="true" options=",h,,,1"/>
-						</hbox>
-					</vbox>
+						<et2-hbox>
+							<et2-select-account  class="$cont[ownerClass]" id="${row}[ts_owner]" readonly="true"></et2-select-account>
+						</et2-hbox>
+						<et2-hbox>
+							<et2-date-duration  id="${row}[ts_duration]" readonly="true" ></et2-date-duration>
+						</et2-hbox>
+					</et2-vbox>
 				</row>
 			</rows>
 		</grid>
 	</template>
 	<template id="timesheet.index" template="" lang="" group="0" version="1.9.001">
-		<description id="plus_button_container"/>
+		<et2-description  id="plus_button_container"></et2-description>
 		<nextmatch id="nm" options="timesheet.index.rows" header_left="timesheet.index.dates"/>
-		<buttononly id="add"  class="plus_button" onclick="egw.open('timesheet');" />
+		<et2-button  id="add" class="plus_button" onclick="egw.open('timesheet');" noSubmit="true"></et2-button>
 	</template>
 </overlay>

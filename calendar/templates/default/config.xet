@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="calendar.config" template="" lang="" group="0" version="16.1">
 		<grid width="100%" class="admin-config egwGridView_grid">
@@ -10,68 +9,68 @@
 			</columns>
 			<rows>
 				<row>
-					<vbox>
-						<description value="Custom URL for iCal with holidays for all users" label="%s:"/>
-						<description label="(Without a custom URL we use nation of user preference to load holidays from %s)" href="https://www.mozilla.org/en-US/projects/calendar/holidays/" value="Mozilla Holiday Calendars" extra_link_target="_blank"/>
-					</vbox>
-					<url id="newsettings[ical_holiday_url]" size="64"/>
+					<et2-vbox>
+						<et2-description  value="Custom URL for iCal with holidays for all users" label="%s:"></et2-description>
+						<et2-description  label="(Without a custom URL we use nation of user preference to load holidays from %s)" href="https://www.mozilla.org/en-US/projects/calendar/holidays/" value="Mozilla Holiday Calendars" extraLinkTarget="_blank"></et2-description>
+					</et2-vbox>
+					<et2-url  id="newsettings[ical_holiday_url]"></et2-url>
 				</row>
 				<row>
-					<description value="setting lock time calender" label="%s:"/>
-					<textbox id="newsettings[Lock_Time_Calender]" size="40"/>
+					<et2-description  value="setting lock time calender" label="%s:"></et2-description>
+					<et2-textbox  id="newsettings[Lock_Time_Calender]"></et2-textbox>
 				</row>
 				<row>
-					<description value="Deny Resources reservation for private events" label="%s:"/>
-					<select id="newsettings[no_ressources_private]">
+					<et2-description  value="Deny Resources reservation for private events" label="%s:"></et2-description>
+					<et2-select  id="newsettings[no_ressources_private]">
 						<option value="">No</option>
 						<option value="yes">Yes</option>
-					</select>
+					</et2-select>
 				</row>
 				<row>
-					<description value="Require an ACL grant to invite other users and groups" label="%s:"/>
-					<select id="newsettings[require_acl_invite]">
+					<et2-description  value="Require an ACL grant to invite other users and groups" label="%s:"></et2-description>
+					<et2-select  id="newsettings[require_acl_invite]">
 						<option value="">{No}: {Every user can invite other users and groups}</option>
 						<option value="groups">Groups: other users can always be invited, only groups require an invite grant</option>
 						<option value="all">Users + groups: inviting both always requires an invite grant</option>
-					</select>
+					</et2-select>
 				</row>
 				<row>
-					<description value="Allow users to prevent change notifications ('Do not notify')" label="%s:"/>
-					<select id="newsettings[calendar_allow_no_notification]">
+					<et2-description  value="Allow users to prevent change notifications ('Do not notify')" label="%s:"></et2-description>
+					<et2-select  id="newsettings[calendar_allow_no_notification]">
 						<option value="">No</option>
 						<option value="True">Yes</option>
-					</select>
+					</et2-select>
 				</row>
 				<row>
-					<description value="Use range-views to optimise calendar queries?"/>
-					<select id="newsettings[no_timerange_views]">
+					<et2-description  value="Use range-views to optimise calendar queries?"></et2-description>
+					<et2-select  id="newsettings[no_timerange_views]">
 						<option value="">Yes</option>
 						<option value="true">No</option>
-					</select>
+					</et2-select>
 				</row>
 				<row>
-					<description value="Security" span="all" class="subHeader"/>
+					<et2-description  value="Security" span="all" class="subHeader"></et2-description>
 				</row>
 				<row>
-					<vbox>
-						<description value="How many appointments should non-admins be able to export"/>
-						<description value="(empty = use global limit, no = no export at all)"/>
-					</vbox>
-					<textbox id="newsettings[calendar_export_limit]" size="5"/>
+					<et2-vbox>
+						<et2-description  value="How many appointments should non-admins be able to export"></et2-description>
+						<et2-description  value="(empty = use global limit, no = no export at all)"></et2-description>
+					</et2-vbox>
+					<et2-textbox  id="newsettings[calendar_export_limit]"></et2-textbox>
 				</row>
 				<row>
-					<description value="History logging" span="all" class="subHeader"/>
+					<et2-description  value="History logging" span="all" class="subHeader"></et2-description>
 				</row>
 				<row>
-					<description value="Prevent deleting of entries"/>
-					<select id="newsettings[calendar_delete_history]">
+					<et2-description  value="Prevent deleting of entries"></et2-description>
+					<et2-select  id="newsettings[calendar_delete_history]">
 						<option value="">Yes, only admins can purge deleted items</option>
 						<option value="userpurge">Yes, users can purge their deleted items</option>
-					</select>
+					</et2-select>
 				</row>
 				<row>
-					<description value="Automatically purge old events after"/>
-					<select id="newsettings[calendar_purge_old]">
+					<et2-description  value="Automatically purge old events after"></et2-description>
+					<et2-select  id="newsettings[calendar_purge_old]">
 						<option value="0ff">No automatic purging</option>
 						<option value=".5">0.5 {years}</option>
 						<option value="1">1 {year}</option>
@@ -80,54 +79,54 @@
 						<option value="4">4 {years}</option>
 						<option value="5">5 {years}</option>
 						<option value="10">10 {years}</option>
-					</select>
+					</et2-select>
 				</row>
 				<row>
-					<description value="Addressbook" span="all" class="subHeader"/>
+					<et2-description  value="Addressbook" span="all" class="subHeader"></et2-description>
 				</row>
 				<row>
-					<description value="Show birthdays from addressbook" label="%s:"/>
-					<select id="newsettings[hide_birthdays]">
+					<et2-description  value="Show birthdays from addressbook" label="%s:"></et2-description>
+					<et2-select  id="newsettings[hide_birthdays]">
 						<option value="">Yes</option>
 						<option value="dateonly">Show only the date, not the year</option>
 						<option value="age">Show year and age</option>
 						<option value="yes">No</option>
-					</select>
+					</et2-select>
 				</row>
 				<row>
-					<description value="Create links for participants from addressbook" label="%s:"/>
-					<select id="newsettings[link_contacts]">
+					<et2-description  value="Create links for participants from addressbook" label="%s:"></et2-description>
+					<et2-select  id="newsettings[link_contacts]">
 						<option value="">No</option>
 						<option value="yes">Yes</option>
-					</select>
+					</et2-select>
 				</row>
 				<row>
-					<description value="Recurrences and conflict check" span="all" class="subHeader"/>
+					<et2-description  value="Recurrences and conflict check" span="all" class="subHeader"></et2-description>
 				</row>
 				<row>
-					<description value="Calendar recurrence horizont in days (default 1000)"/>
-					<textbox id="newsettings[calendar_horizont]" size="5"/>
+					<et2-description  value="Calendar recurrence horizont in days (default 1000)"></et2-description>
+					<et2-textbox  id="newsettings[calendar_horizont]"></et2-textbox>
 				</row>
 				<row>
-					<description value="Please note: conflict check is never done in the past and always limited by above recurrence horizont." span="all"/>
+					<et2-description  value="Please note: conflict check is never done in the past and always limited by above recurrence horizont." span="all"></et2-description>
 				</row>
 				<row>
-					<description value="Limit search for conflicts in recurrences to given time in seconds (default 3)"/>
-					<float id="newsettings[conflict_max_check_time]" min="1" max="30"/>
+					<et2-description  value="Limit search for conflicts in recurrences to given time in seconds (default 3)"></et2-description>
+					<et2-number  id="newsettings[conflict_max_check_time]" min="1" max="30"></et2-number>
 				</row>
 				<row>
-					<description value="Limit search for conflicts in recurrences to given number of recurrences"/>
-					<float id="newsettings[conflict_max_checked]"/>
+					<et2-description  value="Limit search for conflicts in recurrences to given number of recurrences"></et2-description>
+					<et2-number  id="newsettings[conflict_max_checked]"></et2-number>
 				</row>
 				<row>
-					<description value="Email address migration" span="all" class="subHeader"/>
+					<et2-description  value="Email address migration" span="all" class="subHeader"></et2-description>
 				</row>
 				<row>
-					<description value="Change domain of participants in CalDAV requests"/>
-					<hbox>
-						<textbox id="newsettings[calendar_domain_replace]" blur="replace" size="48"/>
-						<textbox id="newsettings[calendar_domain_replace_with]" blur="with" size="48"/>
-					</hbox>
+					<et2-description  value="Change domain of participants in CalDAV requests"></et2-description>
+					<et2-hbox>
+						<et2-textbox  id="newsettings[calendar_domain_replace]" placeholder="replace"></et2-textbox>
+						<et2-textbox  id="newsettings[calendar_domain_replace_with]" placeholder="with"></et2-textbox>
+					</et2-hbox>
 				</row>
 			</rows>
 		</grid>

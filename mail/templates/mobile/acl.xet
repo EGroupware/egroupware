@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="mail.acl" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%" height="100%">
@@ -9,14 +8,14 @@
 			</columns>
 			<rows>
 				<row class="dialogHeadbar">
-					<hbox span="all">
-						<button id="button[save]" class="$cont[hideIfSieveDisabled]"/>
-						<button id="button[apply]" class="$cont[hideIfSieveDisabled]"/>
-						<button id="button[cancel]" onclick="window.close();" class="$cont[hideIfSieveDisabled]"/>
-					</hbox>
+					<et2-hbox  span="all">
+						<et2-button  id="button[save]" class="$cont[hideIfSieveDisabled]"></et2-button>
+						<et2-button  id="button[apply]" class="$cont[hideIfSieveDisabled]"></et2-button>
+						<et2-button  id="button[cancel]" onclick="window.close();" class="$cont[hideIfSieveDisabled]"></et2-button>
+					</et2-hbox>
 				</row>
 				<row>
-					<taglist id="mailbox" width="100%" maxSelection="1" empty_label="Folder" autocomplete_params='' allowFreeEntries="false" onchange='app.mail.acl_folderChange'/>
+					<et2-select  id="mailbox" width="100%" allowFreeEntries="false" onchange="app.mail.acl_folderChange" searchUrl="EGroupware\Api\Etemplate\Widget\Taglist::ajax_search" searchOptions="" emptyLabel="Folder"></et2-select>
 				</row>
 				<row>
 					<grid id="grid" width="100%">
@@ -25,31 +24,29 @@
 						</columns>
 						<rows>
 							<row class="th">
-								<description value="Rights"/>
+								<et2-description  value="Rights"></et2-description>
 							</row>
 							<row class="row"  valign="top">
-								<vbox>
-									<taglist-account id="${row}[acc_id]" allowFreeEntries="true" maxSelection="1" account_type="@account_type" empty_label="Add user or email" />
-									<hbox>
-										<menulist>
-											<menupopup id="${row}[acl]" label="Rights" onchange="app.mail.acl_common_rights_selector"/>
-										</menulist>
-										<checkbox align="center" label="Recursively" id="${row}[acl_recursive]"/>
-										<button align="right" statustext="Delete this ACL" id="delete[${row}]" value="${row}" image="delete" onclick="et2_dialog.confirm(widget,'Do you really want to remove all rights from this account?','Remove')"/>
-									</hbox>
+								<et2-vbox>
+									<et2-select-account  id="${row}[acc_id]" allowFreeEntries="true" accountType="@account_type" emptyLabel="Add user or email"></et2-select-account>
+									<et2-hbox>
+										<et2-select  id="${row}[acl]" label="Rights" onchange="app.mail.acl_common_rights_selector"></et2-select>
+										<et2-checkbox  align="center" label="Recursively" id="${row}[acl_recursive]"></et2-checkbox>
+										<et2-button-icon  align="right" statustext="Delete this ACL" id="delete[${row}]" value="${row}" image="delete" onclick="et2_dialog.confirm(widget,'Do you really want to remove all rights from this account?','Remove')"></et2-button-icon>
+									</et2-hbox>
 
-									<hbox class="aclDetails">
-										<checkbox align="center" id="${row}[acl_l]" onchange="app.mail.acl_common_rights" label="L"/>
-										<checkbox align="center" id="${row}[acl_r]" onchange="app.mail.acl_common_rights" label="R"/>
-										<checkbox align="center" id="${row}[acl_s]" onchange="app.mail.acl_common_rights" label="S"/>
-										<checkbox align="center" id="${row}[acl_w]" onchange="app.mail.acl_common_rights" label="W"/>
-										<checkbox align="center" id="${row}[acl_i]" onchange="app.mail.acl_common_rights" label="I"/>
-										<checkbox align="center" id="${row}[acl_p]" onchange="app.mail.acl_common_rights" label="P"/>
-										<checkbox align="center" id="${row}[acl_c]" onchange="app.mail.acl_common_rights" label="C"/>
-										<checkbox align="center" id="${row}[acl_d]" onchange="app.mail.acl_common_rights" label="D"/>
-										<checkbox align="center" id="${row}[acl_a]" onchange="app.mail.acl_common_rights" label="A"/>
-									</hbox>
-								</vbox>
+									<et2-hbox  class="aclDetails">
+										<et2-checkbox  align="center" id="${row}[acl_l]" onchange="app.mail.acl_common_rights" label="L"></et2-checkbox>
+										<et2-checkbox  align="center" id="${row}[acl_r]" onchange="app.mail.acl_common_rights" label="R"></et2-checkbox>
+										<et2-checkbox  align="center" id="${row}[acl_s]" onchange="app.mail.acl_common_rights" label="S"></et2-checkbox>
+										<et2-checkbox  align="center" id="${row}[acl_w]" onchange="app.mail.acl_common_rights" label="W"></et2-checkbox>
+										<et2-checkbox  align="center" id="${row}[acl_i]" onchange="app.mail.acl_common_rights" label="I"></et2-checkbox>
+										<et2-checkbox  align="center" id="${row}[acl_p]" onchange="app.mail.acl_common_rights" label="P"></et2-checkbox>
+										<et2-checkbox  align="center" id="${row}[acl_c]" onchange="app.mail.acl_common_rights" label="C"></et2-checkbox>
+										<et2-checkbox  align="center" id="${row}[acl_d]" onchange="app.mail.acl_common_rights" label="D"></et2-checkbox>
+										<et2-checkbox  align="center" id="${row}[acl_a]" onchange="app.mail.acl_common_rights" label="A"></et2-checkbox>
+									</et2-hbox>
+								</et2-vbox>
 							</row>
 						</rows>
 					</grid>

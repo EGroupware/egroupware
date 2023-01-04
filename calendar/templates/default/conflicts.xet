@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="calendar.conflicts" template="" lang="" group="0" version="1.0.1.001">
-		<description value="Scheduling conflict" class="calendar_size120b"/>
-		<box class="calendar_conflicts">
+		<et2-description  value="Scheduling conflict" class="calendar_size120b"></et2-description>
+		<et2-box  class="calendar_conflicts">
 			<grid>
 				<columns>
 					<column/>
@@ -14,11 +13,11 @@
 				</columns>
 				<rows>
 					<row valign="top">
-						<image src="conflicts[$row][icon_participants]" statustext_html="true" statustext="@conflicts[$row][tooltip_participants]" no_lang="1"/>
-						<image src="conflicts[$row][icon_recur]" label="@conflicts[$row][text_recur]" no_lang="1"/>
-						<description id="conflicts[$row][time]" no_lang="1"/>
-						<vbox statustext="conflict[$row][tooltip]" statustext_html="true" orient=",0,0">
-							<description id="conflicts[$row][title]" no_lang="1" options="b"/>
+						<et2-image  src="conflicts[$row][icon_participants]" statustext="@conflicts[$row][tooltip_participants]" statustextHtml="true" noLang="1"></et2-image>
+						<et2-image  src="conflicts[$row][icon_recur]" label="@conflicts[$row][text_recur]" noLang="1"></et2-image>
+						<et2-description  id="conflicts[$row][time]" noLang="1"></et2-description>
+						<et2-vbox  statustext="conflict[$row][tooltip]" orient=",0,0" statustextHtml="true">
+							<et2-description  id="conflicts[$row][title]" noLang="1" boldItalic="b"></et2-description>
 							<grid id="conflicts[$row][conflicting_participants]">
 								<columns>
 									<column width="30"/>
@@ -26,23 +25,23 @@
 								</columns>
 								<rows>
 									<row class="$row_cont[type]">
-										<hbox>
-											<appicon src="$row_cont[app]" disabled="$row_cont[type]=u"/>
-										</hbox>
-										<description value="$row_cont[name]"  no_lang="1"/>
+										<et2-hbox>
+											<et2-appicon  src="$row_cont[app]" disabled="$row_cont[type]=u"></et2-appicon>
+										</et2-hbox>
+										<et2-description  value="$row_cont[name]" noLang="1"></et2-description>
 
 									</row>
 								</rows>
 							</grid>
-						</vbox>
+						</et2-vbox>
 					</row>
 				</rows>
 			</grid>
-		</box>
-		<hbox class="dialogFooterToolbar">
-			<button label="Ignore conflict" id="button[ignore]" image="check" background_image="1" statustext="Saves the event ignoring the conflict"/>
-			<button id="button[reedit]" label="Re-Edit event" image="edit" background_image="1" statustext="Allows to edit the event again"/>
-			<button label="Freetime search" id="button[freetime]" image="search" background_image="1" statustext="Find free timeslots where the selected participants are available for the given timespan"/>
-		</hbox>
+		</et2-box>
+		<et2-hbox  class="dialogFooterToolbar">
+			<et2-button  label="Ignore conflict" id="button[ignore]" image="check" statustext="Saves the event ignoring the conflict"></et2-button>
+			<et2-button  id="button[reedit]" label="Re-Edit event" image="edit" statustext="Allows to edit the event again"></et2-button>
+			<et2-button  label="Freetime search" id="button[freetime]" image="search" statustext="Find free timeslots where the selected participants are available for the given timespan"></et2-button>
+		</et2-hbox>
 	</template>
 </overlay>

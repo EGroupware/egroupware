@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="preferences.settings.tab1" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%" class="prefTable egwGridView_grid">
@@ -11,42 +10,38 @@
 			</columns>
 			<rows>
 				<row class="prefRow">
-					<vbox class="prefName">
-						<description for="@${row}[name]" id="${row}[label]"/>
-						<description id="${row}[default]" no_lang="1" class="prefDefault"/>
-					</vbox>
-					<box class="prefValueColumn">
+					<et2-vbox  class="prefName">
+						<et2-description  for="@${row}[name]" id="${row}[label]"></et2-description>
+						<et2-description  id="${row}[default]" class="prefDefault" noLang="1"></et2-description>
+					</et2-vbox>
+					<et2-box  class="prefValueColumn">
 						<widget type="@${row}[type]" id="@${row}[name]" onchange="@${row}[onchange]" no_lang="1"
                                 class="prefValue"/>
-					</box>
-					<box class="prefHelpColumn">
+					</et2-box>
+					<et2-box  class="prefHelpColumn">
 						<html id="${row}[help]" class="prefHelp"/>
-					</box>
+					</et2-box>
 				</row>
 			</rows>
 		</grid>
 	</template>
 	<template id="preferences.settings" template="" lang="" group="0" version="1.9.002">
-		<hbox class="dialogHeader">
-			<menulist>
-				<menupopup id="appname" onchange="1" options="Common preferences" class="prefApp"/>
-			</menulist>
-			<menulist>
-				<menupopup id="type" onchange="1" class="prefType"/>
-			</menulist>
-		</hbox>
-		<tabbox id="tabs" tab_height="450">
+		<et2-hbox  class="dialogHeader">
+			<et2-select  id="appname" onchange="1" class="prefApp" emptyLabel="Common preferences"></et2-select>
+			<et2-select  id="type" onchange="1" class="prefType"></et2-select>
+		</et2-hbox>
+		<et2-tabbox  id="tabs" tabHeight="450">
 			<tabs>
 				<tab id="tab1" label="Settings"/>
 			</tabs>
 			<tabpanels>
 				<template id="preferences.settings.tab1" content="tab1"/>
 			</tabpanels>
-		</tabbox>
-		<hbox class="dialogFooterToolbar">
-			<button label="Save" id="button[save]"/>
-			<button label="Apply" id="button[apply]"/>
-			<button label="Cancel" id="button[cancel]" onclick="window.close();"/>
-		</hbox>
+		</et2-tabbox>
+		<et2-hbox  class="dialogFooterToolbar">
+			<et2-button  label="Save" id="button[save]"></et2-button>
+			<et2-button  label="Apply" id="button[apply]"></et2-button>
+			<et2-button  label="Cancel" id="button[cancel]" onclick="window.close();"></et2-button>
+		</et2-hbox>
 	</template>
 </overlay>

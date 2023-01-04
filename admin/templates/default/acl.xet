@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="admin.acl.add" template="" lang="" group="0" version="1.9.001">
-		<buttononly statustext="Add" id="add" onclick="app.admin.acl({id:'add'},[{id:''}])"/>
+		<et2-button  statustext="Add" id="add" onclick="app.admin.acl({id:'add'},[{id:''}])" noSubmit="true"></et2-button>
 	</template>
 	<template id="admin.acl.rows" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
@@ -23,7 +22,7 @@
 			</columns>
 			<rows>
 				<row>
-					<description/>
+					<et2-description></et2-description>
 					<nextmatch-sortheader label="Application" id="acl_appname"/>
 					<nextmatch-sortheader label="Data from" id="acl_account"/>
 					<nextmatch-sortheader label="Access by" id="acl_location"/>
@@ -37,18 +36,18 @@
 					<nextmatch-header label="Custom 3" id="custom3"/>
 				</row>
 				<row class="$row_cont[class]">
-					<appicon align="center" src="$row_cont[acl_appname]" class="admin_aclApp"/>
-					<select id="${row}[acl_appname]" readonly="true"/>
-					<select-account id="${row}[acl_account]" readonly="true"/>
-					<select-account id="${row}[acl_location]" readonly="true"/>
-					<description id="${row}[acl1]"/>
-					<description id="${row}[acl2]"/>
-					<description id="${row}[acl4]"/>
-					<description id="${row}[acl8]"/>
-					<description id="${row}[acl16]"/>
-					<description id="${row}[acl64]"/>
-					<description id="${row}[acl128]"/>
-					<description id="${row}[acl256]"/>
+					<et2-appicon  align="center" src="$row_cont[acl_appname]" class="admin_aclApp"></et2-appicon>
+					<et2-select  id="${row}[acl_appname]" readonly="true"></et2-select>
+					<et2-select-account  id="${row}[acl_account]" readonly="true"></et2-select-account>
+					<et2-select-account  id="${row}[acl_location]" readonly="true"></et2-select-account>
+					<et2-description  id="${row}[acl1]"></et2-description>
+					<et2-description  id="${row}[acl2]"></et2-description>
+					<et2-description  id="${row}[acl4]"></et2-description>
+					<et2-description  id="${row}[acl8]"></et2-description>
+					<et2-description  id="${row}[acl16]"></et2-description>
+					<et2-description  id="${row}[acl64]"></et2-description>
+					<et2-description  id="${row}[acl128]"></et2-description>
+					<et2-description  id="${row}[acl256]"></et2-description>
 				</row>
 			</rows>
 		</grid>
@@ -63,9 +62,9 @@
 					<nextmatch id="nm" template="admin.acl.rows" header_left="admin.acl.add" height="600"/>
 				</row>
 				<row class="dialogFooterToolbar">
-					<hbox>
-						<button label="Close" id="cancel" onclick="window.close();"/>
-					</hbox>
+					<et2-hbox>
+						<et2-button  label="Close" id="cancel" onclick="window.close();"></et2-button>
+					</et2-hbox>
 				</row>
 			</rows>
 		</grid>

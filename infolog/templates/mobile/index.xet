@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="infolog.index.dates" template="" lang="" group="0" version="1.9.001">
-		<hbox>
-			<date id="startdate" label="Start"/>
-			<date statustext="Leave it empty for a full week" id="enddate" label="End"/>
-		</hbox>
+		<et2-hbox>
+			<et2-date  id="startdate" label="Start"></et2-date>
+			<et2-date  statustext="Leave it empty for a full week" id="enddate" label="End"></et2-date>
+		</et2-hbox>
 	</template>
 	<template id="infolog.index.rows" template="" lang="" group="0" version="1.9.005">
 		<grid width="100%" >
@@ -20,36 +19,36 @@
 
 				</row>
 				<row class="$row_cont[class]" valign="top">
-					<description class=" cat_$row_cont[info_cat] mobile_cat_col"/>
-					<vbox class="infolog_fullWidth">
+					<et2-description  class="cat_$row_cont[info_cat] mobile_cat_col"></et2-description>
+					<et2-vbox  class="infolog_fullWidth">
 						<customfields-list id="$row" class="customfields" app="infolog" disabled="true"/>
-						<hbox class="infoSubRow">
-							<description id="${row}[info_subject]" no_lang="1" class="$row_cont[sub_class] et2_ellipsis" overflow="hidden" width="100%" />
-						</hbox>
-						<box class="infoDescRow">
-							<description id="${row}[info_des]" no_lang="1" activate_links="1"/>
+						<et2-hbox  class="infoSubRow">
+							<et2-description  id="${row}[info_subject]" class="$row_cont[sub_class] et2_ellipsis" overflow="hidden" width="100%" noLang="1"></et2-description>
+						</et2-hbox>
+						<et2-box  class="infoDescRow">
+							<et2-description  id="${row}[info_des]" noLang="1" activateLinks="1"></et2-description>
 
-						</box>
-					</vbox>
-					<vbox class="infolog_CompletedClmn">
-						<time_or_date id="${row}[info_startdate]" readonly="true" options=",8"/>
-						<vbox>
-							<hbox class="infoType">
-								<image label="$row_cont[info_type]" src="${row}[info_type]" default_src="infolog/navbar"/>
-							</hbox>
+						</et2-box>
+					</et2-vbox>
+					<et2-vbox  class="infolog_CompletedClmn">
+						<et2-date-time-today  id="${row}[info_startdate]" readonly="true" options=",8"></et2-date-time-today>
+						<et2-vbox>
+							<et2-hbox  class="infoType">
+								<et2-image  label="$row_cont[info_type]" src="${row}[info_type]" defaultSrc="infolog/navbar"></et2-image>
+							</et2-hbox>
 
-							<hbox class="infoPercent">
+							<et2-hbox  class="infoPercent">
 								<progress label="$row_cont[info_percent]" id="{$row}[info_percent2]" href="javascript:egw.open($row_cont[info_id],'infolog');"/>
-							</hbox>
-						</vbox>
-						<time_or_date id="${row}[info_enddate]" readonly="true" options=",8" class="$row_cont[end_class]" width="64"/>
-					</vbox>
+							</et2-hbox>
+						</et2-vbox>
+						<et2-date-time-today  id="${row}[info_enddate]" readonly="true" options=",8" class="$row_cont[end_class]" width="64"></et2-date-time-today>
+					</et2-vbox>
 				</row>
 			</rows>
 		</grid>
 	</template>
 	<template id="infolog.index" template="" lang="" group="0" version="1.9.005">
-		<button class="plus_button" statustext="Add a new ToDo" id="add[task]" onclick="app.infolog.add_with_extras(widget,'task','$cont[action]','$cont[action_id]');"/>
+		<et2-button  class="plus_button" statustext="Add a new ToDo" id="add[task]" onclick="app.infolog.add_with_extras(widget,'task','$cont[action]','$cont[action_id]');"></et2-button>
 		<grid width="100%" border="0" spacing="0" padding="0">
 			<columns>
 				<column width="70%"/>
@@ -60,7 +59,7 @@
 					<html id="css" span="all"/>
 				</row>
 				<row>
-					<description align="center" id="msg" no_lang="1" span="all" class="message"/>
+					<et2-description  align="center" id="msg" span="all" class="message" noLang="1"></et2-description>
 				</row>
 				<row disabled="1">
 					<template id="dates"/>
@@ -70,43 +69,43 @@
 					<nextmatch id="nm" template="infolog.index.rows" header_left="infolog.index.dates" span="all"/>
 				</row>
 				<row>
-					<hbox class=" ">
-						<box id="responsible_popup" class="action_popup prompt">
-							<vbox>
-								<description value="Change responsible" class="promptheader"/>
-								<description value="Select users or groups"/>
-								<listbox type="select-account" id="responsible" rows="5" account_type="both" class="action_popup-content"/>
-								<hbox>
-									<button label="Add" id="responsible_action[add]" onclick="nm_submit_popup(this); return false;"/>
-									<button label="Delete" id="responsible_action[delete]" onclick="nm_submit_popup(this); return false;"/>
-									<buttononly label="Cancel" onclick="nm_hide_popup(this,'responsible_popup');"/>
-								</hbox>
-							</vbox>
-						</box>
-						<box id="delete_popup" class="action_popup prompt">
-							<vbox>
-								<description value="Delete" class="promptheader"/>
-								<description value="Delete selected entries?" id="delete_prompt"/>
-								<hbox>
-									<button label="Yes - Delete" id="delete" onclick="nm_submit_popup(this); return false;"/>
-									<button label="Yes - Delete including sub-entries" id="delete_sub" onclick="nm_popup_action.id = 'delete_sub'; nm_submit_popup(this); return false;"/>
-									<buttononly label="No - Cancel" onclick="nm_hide_popup(this,'delete_popup');"/>
-								</hbox>
-							</vbox>
-						</box>
-						<box id="link_popup" class="action_popup prompt">
-							<vbox>
-								<description value="Add / Remove link" class="promptheader"/>
-								<link-entry id="link" class="action_popup-content"/>
-								<hbox>
-									<button label="Add" id="link_action[add]" onclick="nm_submit_popup(this); return false;"/>
-									<button label="Delete" id="link_action[delete]" onclick="nm_submit_popup(this); return false;"/>
-									<buttononly label="Cancel" onclick="nm_hide_popup(this,'link_popup');"/>
-								</hbox>
-							</vbox>
-						</box>
-					</hbox>
-					<description/>
+					<et2-hbox >
+						<et2-box  id="responsible_popup" class="action_popup prompt">
+							<et2-vbox>
+								<et2-description  value="Change responsible" class="promptheader"></et2-description>
+								<et2-description  value="Select users or groups"></et2-description>
+								<et2-select-account  id="responsible" rows="5" class="action_popup-content" multiple="1" accountType="both"></et2-select-account>
+								<et2-hbox>
+									<et2-button  label="Add" id="responsible_action[add]" onclick="nm_submit_popup(this); return false;"></et2-button>
+									<et2-button  label="Delete" id="responsible_action[delete]" onclick="nm_submit_popup(this); return false;"></et2-button>
+									<et2-button  label="Cancel" onclick="nm_hide_popup(this,'responsible_popup');" noSubmit="true"></et2-button>
+								</et2-hbox>
+							</et2-vbox>
+						</et2-box>
+						<et2-box  id="delete_popup" class="action_popup prompt">
+							<et2-vbox>
+								<et2-description  value="Delete" class="promptheader"></et2-description>
+								<et2-description  value="Delete selected entries?" id="delete_prompt"></et2-description>
+								<et2-hbox>
+									<et2-button  label="Yes - Delete" id="delete" onclick="nm_submit_popup(this); return false;"></et2-button>
+									<et2-button  label="Yes - Delete including sub-entries" id="delete_sub" onclick="nm_popup_action.id = 'delete_sub'; nm_submit_popup(this); return false;"></et2-button>
+									<et2-button  label="No - Cancel" onclick="nm_hide_popup(this,'delete_popup');" noSubmit="true"></et2-button>
+								</et2-hbox>
+							</et2-vbox>
+						</et2-box>
+						<et2-box  id="link_popup" class="action_popup prompt">
+							<et2-vbox>
+								<et2-description  value="Add / Remove link" class="promptheader"></et2-description>
+								<et2-link-entry  id="link" class="action_popup-content"></et2-link-entry>
+								<et2-hbox>
+									<et2-button  label="Add" id="link_action[add]" onclick="nm_submit_popup(this); return false;"></et2-button>
+									<et2-button  label="Delete" id="link_action[delete]" onclick="nm_submit_popup(this); return false;"></et2-button>
+									<et2-button  label="Cancel" onclick="nm_hide_popup(this,'link_popup');" noSubmit="true"></et2-button>
+								</et2-hbox>
+							</et2-vbox>
+						</et2-box>
+					</et2-hbox>
+					<et2-description></et2-description>
 				</row>
 			</rows>
 		</grid>

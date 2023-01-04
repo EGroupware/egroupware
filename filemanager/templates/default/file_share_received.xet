@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="filemanager.file_share_received" template="" lang="" group="0" version="20.1">
 		<grid width="100%">
@@ -10,21 +9,21 @@
 			</columns>
 			<rows>
 				<row>
-					<label value="Location"/>
-					<description id="share_root" />
+					<et2-label  value="Location"></et2-label>
+					<et2-description  id="share_root"></et2-description>
 				</row>
 				<row>
-					<label value="Name"/>
-					<textbox id="mount_location"/>
+					<et2-label  value="Name"></et2-label>
+					<et2-textbox  id="mount_location"></et2-textbox>
 				</row>
 				<row>
-				 	<label value="Mount permanently" for="permanent"/>
-					<checkbox id="permanent"/>
+				 	<et2-label  value="Mount permanently" for="permanent"></et2-label>
+					<et2-checkbox  id="permanent"></et2-checkbox>
 				</row>
 				<row class="dialogFooterToolbar">
-					<hbox>
-						<button label="Ok" id="ok" image="ok" background_image="1" align="center"/>
-					</hbox>
+					<et2-hbox>
+						<et2-button  label="Ok" id="ok" image="ok" align="center"></et2-button>
+					</et2-hbox>
 				</row>
 			</rows>
 		</grid>

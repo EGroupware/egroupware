@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="etemplate.pgp_installation" template="" lang="" group="" version="15.1">
 		<grid height="300" width="450">
@@ -8,13 +8,13 @@
 			</columns>
 			<rows>
 				<row part="header">
-					<description value="You need to install Mailvelope plugin available for Chrome and Firefox from www.mailvelope.com or by clicking on install button."/>
+					<et2-description  value="You need to install Mailvelope plugin available for Chrome and Firefox from www.mailvelope.com or by clicking on install button."></et2-description>
 				</row>
 				<row>
-					<description value="$row_cont[domain]"/>
+					<et2-description  value="$row_cont[domain]"></et2-description>
 				</row>
 				<row>
-					<description value="Before proceeding further, we do highly recommend you to watch this short video, to see how mailvelope plugin works with EGroupware."/>
+					<et2-description  value="Before proceeding further, we do highly recommend you to watch this short video, to see how mailvelope plugin works with EGroupware."></et2-description>
 				</row>
 				<row>
 					<video video_src="https://www.egroupware.org/videos/pgp/mailvelope_only_EN.mp4" controls="true" height="260" width="60%"/>

@@ -1,29 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="mail.compose" template="" lang="" group="0" version="1.9.001">
-		<vbox class="mailCompose mailComposeHeaderSection" width="100%">
-			<hbox class="dialogHeadbar">
-				<hbox>
+		<et2-vbox  class="mailCompose mailComposeHeaderSection" width="100%">
+			<et2-hbox  class="dialogHeadbar">
+				<et2-hbox>
 					<toolbar class="et2_head_toolbar" id="composeToolbar" width="100%" view_range="2" flat_list="false"/>
-					<description/>
-				</hbox>
-			</hbox>
-			<hbox class="mail-compose_toolbar_assist" width="100%">
+					<et2-description></et2-description>
+				</et2-hbox>
+			</et2-hbox>
+			<et2-hbox  class="mail-compose_toolbar_assist" width="100%">
 				<vfs-select class="$cont[vfsNotAvailable] compose_egw_icons" id="selectFromVFSForCompose" onchange="app.mail.vfsUploadForCompose" button_caption=""/>
-				<file class="mail-compose_fileselector" statustext="Select file to attach to message" multiple='true' progress='attachments' onFinish="app.mail.uploadForCompose" onStart="app.mail.composeUploadStart" id="uploadForCompose" drop_target ="mail-compose"/>
-				<checkbox statustext="check to save as infolog on send" id="to_infolog" options="on,off"/>
-				<checkbox statustext="check to save as tracker entry on send" id="to_tracker" options="on,off"/>
-				<checkbox statustext="check to save as calendar event on send" id="to_calendar" options="on,off"/>
-				<checkbox statustext="check to receive a notification when the message is read (note: not all clients support this and/or the receiver may not authorize the notification)" id="disposition" options="on,off"/>
-				<checkbox statustext="check to sign the message on send" id="smime_sign" options="on,off"/>
-				<checkbox statustext="check to encrypt the message on send" id="smime_encrypt" options="on,off"/>
-				<passwd id="smime_passphrase"/>
-				<menulist>
-					<menupopup id="priority"/>
-				</menulist>
-			</hbox>
+				<file class="mail-compose_fileselector" statustext="Select file to attach to message" multiple="true" progress="attachments" onFinish="app.mail.uploadForCompose" onStart="app.mail.composeUploadStart" id="uploadForCompose" drop_target ="mail-compose"/>
+				<et2-checkbox  statustext="check to save as infolog on send" id="to_infolog" selectedValue="on" unselectedValue="off" ></et2-checkbox>
+				<et2-checkbox  statustext="check to save as tracker entry on send" id="to_tracker" selectedValue="on" unselectedValue="off" ></et2-checkbox>
+				<et2-checkbox  statustext="check to save as calendar event on send" id="to_calendar" selectedValue="on" unselectedValue="off" ></et2-checkbox>
+				<et2-checkbox  statustext="check to receive a notification when the message is read (note: not all clients support this and/or the receiver may not authorize the notification)" id="disposition" selectedValue="on" unselectedValue="off" ></et2-checkbox>
+				<et2-checkbox  statustext="check to sign the message on send" id="smime_sign" selectedValue="on" unselectedValue="off" ></et2-checkbox>
+				<et2-checkbox  statustext="check to encrypt the message on send" id="smime_encrypt" selectedValue="on" unselectedValue="off" ></et2-checkbox>
+				<et2-password  id="smime_passphrase"></et2-password>
+				<et2-select  id="priority"></et2-select>
+			</et2-hbox>
 
 			<grid  width="100%" resize_ratio="0">
 				<columns>
@@ -33,71 +30,71 @@
 				</columns>
 				<rows>
 					<row class="mailComposeHeaders" >
-						<description value="From"/>
-						<menupopup id="mailaccount" onchange="app.mail.submitOnChange" class="et2_fullWidth"/>
-						<vbox>
-							<description id="replyto_expander" value="Reply to" class="et2_button_text" onclick="app.mail.compose_fieldExpander"/>
-							<description id="folder_expander" value="Folder" class="et2_button_text" onclick="app.mail.compose_fieldExpander"/>
-							<textbox class="mail-index_quotaDisplayNone" readonly="true" id="composeID"/>
-							<textbox class="mail-index_quotaDisplayNone" readonly="true" id="serverID"/>
-							<textbox class="mail-index_quotaDisplayNone" readonly="true" id="processedmail_id"/>
-							<textbox class="mail-index_quotaDisplayNone" readonly="true" id="mode"/>
-							<textbox class="mail-index_quotaDisplayNone" id="lastDrafted"/>
-							<textbox class="mail-index_quotaDisplayNone" readonly="true" id="references"/>
-							<textbox class="mail-index_quotaDisplayNone" readonly="true" id="in-reply-to"/>
-							<textbox class="mail-index_quotaDisplayNone" readonly="true" id="thread-topic"/>
-							<textbox class="mail-index_quotaDisplayNone" readonly="true" id="thread-index"/>
-							<textbox class="mail-index_quotaDisplayNone" readonly="true" id="list-id"/>
-						</vbox>
+						<et2-description  value="From"></et2-description>
+						<et2-select  id="mailaccount" onchange="app.mail.submitOnChange"></et2-select>
+						<et2-vbox>
+							<et2-description  id="replyto_expander" value="Reply to" class="et2_button_text" onclick="app.mail.compose_fieldExpander"></et2-description>
+							<et2-description  id="folder_expander" value="Folder" class="et2_button_text" onclick="app.mail.compose_fieldExpander"></et2-description>
+							<et2-textbox  class="mail-index_quotaDisplayNone" readonly="true" id="composeID"></et2-textbox>
+							<et2-textbox  class="mail-index_quotaDisplayNone" readonly="true" id="serverID"></et2-textbox>
+							<et2-textbox  class="mail-index_quotaDisplayNone" readonly="true" id="processedmail_id"></et2-textbox>
+							<et2-textbox  class="mail-index_quotaDisplayNone" readonly="true" id="mode"></et2-textbox>
+							<et2-textbox  class="mail-index_quotaDisplayNone" id="lastDrafted"></et2-textbox>
+							<et2-textbox  class="mail-index_quotaDisplayNone" readonly="true" id="references"></et2-textbox>
+							<et2-textbox  class="mail-index_quotaDisplayNone" readonly="true" id="in-reply-to"></et2-textbox>
+							<et2-textbox  class="mail-index_quotaDisplayNone" readonly="true" id="thread-topic"></et2-textbox>
+							<et2-textbox  class="mail-index_quotaDisplayNone" readonly="true" id="thread-index"></et2-textbox>
+							<et2-textbox  class="mail-index_quotaDisplayNone" readonly="true" id="list-id"></et2-textbox>
+						</et2-vbox>
 					</row>
 					<row class="mailComposeHeaders mailComposeJQueryReplyto">
-						<description value="Reply to"/>
-						<taglist-email id="replyto" width="100%" maxSelection="1" onclick="app.mail.address_click"/>
-						<description/>
+						<et2-description  value="Reply to"></et2-description>
+						<et2-select-email  id="replyto" width="100%" onclick="app.mail.address_click" searchUrl="EGroupware\Api\Etemplate\Widget\Taglist::ajax_email"></et2-select-email>
+						<et2-description></et2-description>
 					</row>
 					<row class="mailComposeHeaders mailComposeJQueryFolder">
-						<description value="Folder"/>
-						<taglist id="folder" autocomplete_url="mail.mail_compose.ajax_searchFolder" autocomplete_params="" allowFreeEntries="false" onclick="app.mail.address_click"/>
-						<description/>
+						<et2-description  value="Folder"></et2-description>
+						<et2-select  id="folder" allowFreeEntries="false" onclick="app.mail.address_click" multiple="true" searchUrl="mail.mail_compose.ajax_searchFolder" searchOptions=""></et2-select>
+						<et2-description></et2-description>
 					</row>
 					<row class="mailComposeHeaders" >
-						<description value="To"/>
-						<taglist-email id="to" width="100%" onclick="app.mail.address_click" include_lists="true" onchange="app.mail.recipients_onchange"/>
-						<vbox>
-							<description id="cc_expander" value="Cc" class="et2_button_text" onclick="app.mail.compose_fieldExpander"/>
-							<description id="bcc_expander" value="Bcc" class="et2_button_text" onclick="app.mail.compose_fieldExpander"/>
-						</vbox>
+						<et2-description  value="To"></et2-description>
+						<et2-select-email  id="to" width="100%" onclick="app.mail.address_click" onchange="app.mail.recipients_onchange" multiple="true" searchUrl="EGroupware\Api\Etemplate\Widget\Taglist::ajax_email" includeLists="true"></et2-select-email>
+						<et2-vbox>
+							<et2-description  id="cc_expander" value="Cc" class="et2_button_text" onclick="app.mail.compose_fieldExpander"></et2-description>
+							<et2-description  id="bcc_expander" value="Bcc" class="et2_button_text" onclick="app.mail.compose_fieldExpander"></et2-description>
+						</et2-vbox>
 					</row>
 					<row class="mailComposeHeaders mailComposeJQueryCc">
-						<description value="Cc"/>
-						<taglist-email id="cc" width="100%" onclick="app.mail.address_click" include_lists="true" onchange="app.mail.recipients_onchange"/>
-						<description/>
+						<et2-description  value="Cc"></et2-description>
+						<et2-select-email  id="cc" width="100%" onclick="app.mail.address_click" onchange="app.mail.recipients_onchange" multiple="true" searchUrl="EGroupware\Api\Etemplate\Widget\Taglist::ajax_email" includeLists="true"></et2-select-email>
+						<et2-description></et2-description>
 					</row>
 					<row  class="mailComposeHeaders mailComposeJQueryBcc">
-						<description value="Bcc"/>
-						<taglist-email id="bcc" width="100%" onclick="app.mail.address_click" include_lists="true" onchange="app.mail.recipients_onchange"/>
-						<description/>
+						<et2-description  value="Bcc"></et2-description>
+						<et2-select-email  id="bcc" width="100%" onclick="app.mail.address_click" onchange="app.mail.recipients_onchange" multiple="true" searchUrl="EGroupware\Api\Etemplate\Widget\Taglist::ajax_email" includeLists="true"></et2-select-email>
+						<et2-description></et2-description>
 					</row>
 					<row class="mailComposeHeaders subjectContainer">
-						<textbox span="2" align="left" width="100%" id="subject" blur="Subject" height="25" onchange="app.mail.subject2title"/>
-						<checkbox statustext="Change editor type" label="HTML" id="mimeType" onchange="app.mail.submitOnChange" options=",, ,disable" tabindex="7"/>
+						<et2-textbox  span="2" align="left" width="100%" id="subject" height="25" onchange="app.mail.subject2title" placeholder="Subject"></et2-textbox>
+						<et2-checkbox  statustext="Change editor type" label="HTML" id="mimeType" onchange="app.mail.submitOnChange" tabindex="7" roTrue=" " roFalse="disable"></et2-checkbox>
 					</row>
 				</rows>
 			</grid>
-		</vbox>
-		<vbox class="mailComposeBodySection" width="99%">
-			<hbox disabled="@is_plain" class="mailComposeBody mailComposeHtmlContainer">
+		</et2-vbox>
+		<et2-vbox  class="mailComposeBodySection" width="99%">
+			<et2-hbox  disabled="@is_plain" class="mailComposeBody mailComposeHtmlContainer">
 				<htmlarea span="all" name="mail_htmltext" id="mail_htmltext" statusbar="false" menubar="false" mode="simple" imageUpload="link_to"  height="478px" width="100%" resize_ratio="0"/>
-			</hbox>
-			<hbox disabled="@is_html" class="mailComposeBody mailComposeTextContainer">
-				<textbox multiline="true" rows="40" cols="120" width="100%" span="all" height="100%" no_lang="1" name="mail_plaintext" id="mail_plaintext" resize_ratio="0"/>
-			</hbox>
-			<vbox class="et2_file mailUploadSection" disabled="@no_griddata">
-				<vbox>
-					<select id="filemode" label="Send files as" onchange="app.mail.check_sharing_filemode"/>
-					<date id="expiration" label="Expiration" blur="EPL only" data_format="Y-m-d"/>
-					<passwd id="password" blur="password protect" statustext="Only makes sense, if you transport password through a different channel / outside of this mail to recipients!"/>
-				</vbox>
+			</et2-hbox>
+			<et2-hbox  disabled="@is_html" class="mailComposeBody mailComposeTextContainer">
+				<et2-textarea  rows="40" cols="120" width="100%" span="all" height="100%" name="mail_plaintext" id="mail_plaintext" noLang="1" resizeRatio="0"></et2-textarea>
+			</et2-hbox>
+			<et2-vbox  class="et2_file mailUploadSection" disabled="@no_griddata">
+				<et2-vbox>
+					<et2-select  id="filemode" label="Send files as" onchange="app.mail.check_sharing_filemode"></et2-select>
+					<et2-date  id="expiration" label="Expiration" placeholder="EPL only" dataFormat="Y-m-d"></et2-date>
+					<et2-password  id="password" statustext="Only makes sense, if you transport password through a different channel / outside of this mail to recipients!" placeholder="password protect"></et2-password>
+				</et2-vbox>
 				<grid id="attachments" width="100%" maxheight="165" class="egwGridView_grid" resize_ratio="0">
 					<columns>
 						<column disabled="!@showtempname" width="10%"/>
@@ -107,14 +104,14 @@
 					</columns>
 					<rows>
 						<row class="row attachmentRow">
-							<description id="${row}[tmp_name]"/>
-							<description class="useEllipsis et2_link" id="${row}[name]" no_lang="1" onclick="app.mail.displayUploadedFile"/>
+							<et2-description  id="${row}[tmp_name]"></et2-description>
+							<et2-description  class="useEllipsis et2_link" id="${row}[name]" onclick="app.mail.displayUploadedFile" noLang="1"></et2-description>
 							<vfs-size align="right" id="${row}[size]" />
-							<button id="delete[$row_cont[tmp_name]]" value="Delete" image="delete"/>
+							<et2-button-icon  id="delete[$row_cont[tmp_name]]" value="Delete" image="delete"></et2-button-icon>
 						</row>
 					</rows>
 				</grid>
-			</vbox>
-		</vbox>
+			</et2-vbox>
+		</et2-vbox>
 	</template>
 </overlay>

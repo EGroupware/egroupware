@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
     <template id="etemplate.placeholder_snippet" template="" lang="" group="0" version="21.1.001">
-        <vbox id="outer_box">
-            <vbox id="selects">
-                <select id="app"/>
-                <et2-listbox id="placeholder_list" rows="10"/>
-            </vbox>
+        <et2-vbox  id="outer_box">
+            <et2-vbox  id="selects">
+                <et2-select  id="app"></et2-select>
+                <et2-listbox  id="placeholder_list" rows="10"/>
+            </et2-vbox>
             <hrule/>
-            <link-entry id="entry" label="Select entry" only_app="addressbook"/>
-            <hbox class="preview">
-                <description id="preview_content"/>
-            </hbox>
-        </vbox>
+            <et2-link-entry  id="entry" label="Select entry" onlyApp="addressbook"></et2-link-entry>
+            <et2-hbox  class="preview">
+                <et2-description  id="preview_content"></et2-description>
+            </et2-hbox>
+        </et2-vbox>
         <styles>
             #placeholder_snippet {
             min-width: 500px;

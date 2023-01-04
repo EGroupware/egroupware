@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="home.edit" template="" lang="" group="0" version="1.9.001">
 		<grid>
@@ -10,7 +9,7 @@
 			</columns>
 			<rows>
 				<row>
-					<label for="@${row}[name]" value="@${row}[label]"/>
+					<et2-label  for="@${row}[name]" value="@${row}[label]"></et2-label>
 					<widget type="@${row}[type]" id="@${row}[name]" no_lang="1" select_options="@${row}[select_options]"/>
 				</row>
 			</rows>

@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="admin.index.add" template="" lang="" group="0" version="1.9.001">
-		<buttononly label="Add" image="add" id="add" onclick="app.admin.account({id:'add'})"/>
+		<et2-button  label="Add" image="add" id="add" onclick="app.admin.account({id:'add'})" noSubmit="true"></et2-button>
 	</template>
 	<template id="admin.index.rows" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
@@ -37,18 +36,18 @@
 					<nextmatch-sortheader label="Last password change" id="account_lastpwd_change"/>
 				</row>
 				<row class="$row_cont[status_class]">
-					<description id="${row}[account_lid]" no_lang="1"/>
-					<description id="${row}[account_id]" no_lang="1"/>
-					<description id="${row}[account_firstname]" no_lang="1"/>
-					<description id="${row}[account_lastname]" no_lang="1"/>
-					<url-email id="${row}[account_email]" readonly="true" class="adminOverflowEllipsis"/>
-					<select-account id="${row}[account_primary_group]" no_lang="1" readonly="true"/>
-					<description id="${row}[status]" no_lang="1" class="adminStatus"/>
-					<date-time id="${row}[account_created]" readonly="true"/>
-					<date-time id="${row}[account_modified]" readonly="true"/>
-					<date-time id="${row}[account_lastlogin]" readonly="true"/>
-					<description id="${row}[account_lastloginfrom]" no_lang="1"/>
-					<date-time id="${row}[account_lastpwd_change]" readonly="true"/>
+					<et2-description  id="${row}[account_lid]" noLang="1"></et2-description>
+					<et2-description  id="${row}[account_id]" noLang="1"></et2-description>
+					<et2-description  id="${row}[account_firstname]" noLang="1"></et2-description>
+					<et2-description  id="${row}[account_lastname]" noLang="1"></et2-description>
+					<et2-url-email  id="${row}[account_email]" readonly="true" class="adminOverflowEllipsis"></et2-url-email>
+					<et2-select-account  id="${row}[account_primary_group]" readonly="true" noLang="1"></et2-select-account>
+					<et2-description  id="${row}[status]" class="adminStatus" noLang="1"></et2-description>
+					<et2-date-time  id="${row}[account_created]" readonly="true"></et2-date-time>
+					<et2-date-time  id="${row}[account_modified]" readonly="true"></et2-date-time>
+					<et2-date-time  id="${row}[account_lastlogin]" readonly="true"></et2-date-time>
+					<et2-description  id="${row}[account_lastloginfrom]" noLang="1"></et2-description>
+					<et2-date-time  id="${row}[account_lastpwd_change]" readonly="true"></et2-date-time>
 				</row>
 			</rows>
 		</grid>
@@ -63,22 +62,22 @@
 			</columns>
 			<rows>
 				<row>
-					<vbox>
+					<et2-vbox>
 						<nextmatch-sortheader label="Group name" id="account_lid"/>
 						<nextmatch-sortheader label="Description" id="account_description"/>
-					</vbox>
+					</et2-vbox>
 					<nextmatch-sortheader label="EMail" id="email"/>
 					<nextmatch-header label="Members" id="account_members"/>
 					<nextmatch-header label="Applications" id="apps"/>
 				</row>
 				<row class="$row_cont[status_class]">
-					<vbox>
-						<description id="${row}[account_lid]" no_lang="1"/>
-						<description id="${row}[account_description]" no_lang="1"/>
-					</vbox>
-					<url-email id="${row}[account_email]" readonly="true" no_lang="1" class="adminOverflowEllipsis"/>
-					<select-account id="${row}[members]" no_lang="1" readonly="true"/>
-					<select-app id="${row}[apps]" tags="true" readonly="true"/>
+					<et2-vbox>
+						<et2-description  id="${row}[account_lid]" noLang="1"></et2-description>
+						<et2-description  id="${row}[account_description]" noLang="1"></et2-description>
+					</et2-vbox>
+					<et2-url-email  id="${row}[account_email]" readonly="true" class="adminOverflowEllipsis" noLang="1"></et2-url-email>
+					<et2-select-account  id="${row}[members]" readonly="true" noLang="1"></et2-select-account>
+					<et2-select-app  id="${row}[apps]" readonly="true" multiple="true"></et2-select-app>
 				</row>
 			</rows>
 		</grid>
@@ -88,6 +87,6 @@
 		<nextmatch id="nm" template="admin.index.rows" header_left="admin.index.add"/>
 		<nextmatch id="groups" template="admin.index.group" class="hide"/>
 		<iframe frameborder="1" height="100%" id="iframe" scrolling="auto" width="100%" disabled="true"/>
-		<box id="ajax_target" height="99%" disabled="true"/>
+		<et2-box  id="ajax_target" height="99%" disabled="true"></et2-box>
 	</template>
 </overlay>

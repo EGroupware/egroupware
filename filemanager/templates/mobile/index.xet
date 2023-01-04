@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="filemanager.index.rows" template="" lang="" group="0" version="1.7.002">
 		<grid width="100%">
@@ -14,44 +13,44 @@
 				<row class="th">
 				</row>
 				<row class="row $row_cont[class]">
-					<vbox></vbox>
-					<vbox>
-						<vfs-mime align="center" id="$row"/>
-					</vbox>
-					<vbox>
+					<et2-vbox></et2-vbox>
+					<et2-vbox>
+						<et2-vfs-mime  align="center" id="$row"></et2-vfs-mime>
+					</et2-vbox>
+					<et2-vbox>
 						<vfs-name id="${row}[name]" no_lang="1" readonly="true"/>
-						<description id="${row}[comment]"/>
-					</vbox>
-					<vbox>
+						<et2-description  id="${row}[comment]"></et2-description>
+					</et2-vbox>
+					<et2-vbox>
 						<vfs-size align="right" id="${row}[size]"/>
-						<time_or_date id="${row}[mtime]" readonly="true"/>
-					</vbox>
+						<et2-date-time-today  id="${row}[mtime]" readonly="true"></et2-date-time-today>
+					</et2-vbox>
 				</row>
 			</rows>
 		</grid>
 	</template>
 	<template id="filemanager.index.header_right" template="" lang="" group="0" version="1.9.002">
-		<hbox class="buttons">
-			<buttononly statustext="Rename, change permissions or ownership" label="Edit settings" id="button[edit]" onclick="app.filemanager.editprefs();" options="edit"/>
-			<buttononly label="Create directory" id="button[createdir]" onclick="app.filemanager.createdir();" options="button_createdir,createdir_disabled"/>
-			<buttononly label="Create a link" id="button[symlink]" onclick="app.filemanager.symlink();" options="link,link_disabled"/>
-			<buttononly label="Paste" id="button[paste]" onclick="app.filemanager.paste('paste');" options="editpaste,editpaste_disabled"/>
-			<buttononly label="Paste link" id="button[linkpaste]" onclick="app.filemanager.paste('linkpaste');" options="linkpaste,linkpaste_disabled"/>
-			<buttononly label="Mail paste" id="button[mailpaste]" onclick="app.filemanager.paste('mailpaste');" options="mailpaste,mailpaste_disabled"/>
-			<image label="Go to your home directory" src="gohome" onclick="app.filemanager.change_dir('~',widget);" id="home"/>
-			<buttononly label="Tile view" id="button[change_view]" onclick="app.filemanager.change_view" options="list_tile"/>
-			<button label="File a file" onclick="window.open(egw::link('/index.php','menuaction=stylite.stylite_filemanager.upload'),'_blank','dependent=yes,width=550,height=350,scrollbars=yes,status=yes'); return false;" image="upload"/>
-		</hbox>
-		<dropdown_button id="new" onchange="app.filemanager.create_new" label="New" onclick="app.filemanager.create_new"/>
+		<et2-hbox  class="buttons">
+			<et2-button  statustext="Rename, change permissions or ownership" label="Edit settings" id="button[edit]" onclick="app.filemanager.editprefs();" image="edit" noSubmit="true"></et2-button>
+			<et2-button  label="Create directory" id="button[createdir]" onclick="app.filemanager.createdir();" image="button_createdir" noSubmit="true" roImage="createdir_disabled"></et2-button>
+			<et2-button  label="Create a link" id="button[symlink]" onclick="app.filemanager.symlink();" image="link" noSubmit="true" roImage="link_disabled"></et2-button>
+			<et2-button  label="Paste" id="button[paste]" onclick="app.filemanager.paste('paste');" image="editpaste" noSubmit="true" roImage="editpaste_disabled"></et2-button>
+			<et2-button  label="Paste link" id="button[linkpaste]" onclick="app.filemanager.paste('linkpaste');" image="linkpaste" noSubmit="true" roImage="linkpaste_disabled"></et2-button>
+			<et2-button  label="Mail paste" id="button[mailpaste]" onclick="app.filemanager.paste('mailpaste');" image="mailpaste" noSubmit="true" roImage="mailpaste_disabled"></et2-button>
+			<et2-image  label="Go to your home directory" src="gohome" onclick="app.filemanager.change_dir('~',widget);" id="home"></et2-image>
+			<et2-button  label="Tile view" id="button[change_view]" onclick="app.filemanager.change_view" image="list_tile" noSubmit="true"></et2-button>
+			<et2-button  label="File a file" onclick="window.open(egw::link('/index.php','menuaction=stylite.stylite_filemanager.upload'),'_blank','dependent=yes,width=550,height=350,scrollbars=yes,status=yes'); return false;" image="upload"></et2-button>
+		</et2-hbox>
+		<et2-dropdown-button  id="new" onchange="app.filemanager.create_new" label="New" onclick="app.filemanager.create_new"></et2-dropdown-button>
 	</template>
 	<template id="filemanager.index.header_left" template="" lang="" group="0" version="1.9.002">
-		<hbox span="all" class="filemanager_navigation">
-			<hbox>
-				<image label="Up" src="goup" onclick="app.filemanager.change_dir('..',widget);" id="up"/>
-			</hbox>
+		<et2-hbox  span="all" class="filemanager_navigation">
+			<et2-hbox>
+				<et2-image  label="Up" src="goup" onclick="app.filemanager.change_dir('..',widget);" id="up"></et2-image>
+			</et2-hbox>
 			<vfs-name id="path" onchange="if(widget.getValue() == '') { app.filemanager.change_dir('~',widget);} return true;" size="80" class="address"/>
 			<file label="" statustext="Select file to upload in current directory" class="plus_button" id="upload" progress_dropdownlist = "true" drop_target ="divAppbox" multiple="true" onFinishOne="app.filemanager.uploadOnOne"/>
-		</hbox>
+		</et2-hbox>
 	</template>
 	<template id="filemanager.index" template="" lang="" group="0" version="1.9.003">
 		<nextmatch id="nm" template="filemanager.index.rows" header_left="filemanager.index.header_left" header_right="filemanager.index.header_right" />

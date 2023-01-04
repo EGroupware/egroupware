@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="mail.subscribe" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
@@ -9,24 +8,24 @@
 			</columns>
 			<rows>
 				<row disabled="@hidebuttons" class="dialogHeadbar" >
-					<hbox  span="all" width="100%">
-						<button statustext="Saves this entry" id="button[save]" image="save"/>
-						<button statustext="Apply the changes" id="button[apply]" image="apply"/>
-					</hbox>
+					<et2-hbox  span="all" width="100%">
+						<et2-button-icon  statustext="Saves this entry" id="button[save]" image="save"></et2-button-icon>
+						<et2-button-icon  statustext="Apply the changes" id="button[apply]" image="apply"></et2-button-icon>
+					</et2-hbox>
 				</row>
 				<row disabled="!@showsearchbuttons" class="dialogHeadbar">
-					<hbox span="all" width="100%">
-						<button label="Search" id="button[search]" image="search"/>
-						<button label="Cancel" id="button[cancelsearch]" image="cancel"/>
-					</hbox>
+					<et2-hbox  span="all" width="100%">
+						<et2-button  label="Search" id="button[search]" image="search"></et2-button>
+						<et2-button  label="Cancel" id="button[cancelsearch]" image="cancel"></et2-button>
+					</et2-hbox>
 				</row>	
 				<row>
-					<description value="Subscription folders" class="mail_subscription_header"/>
+					<et2-description  value="Subscription folders" class="mail_subscription_header"></et2-description>
 				</row>
 				<row>
-					<box scrolling="auto">
+					<et2-box  scrolling="auto">
 						<tree id="foldertree" multiple="true" autoloading="mail_ui::ajax_tree_autoloading" onopenstart="app.mail.subscription_autoloadingStart" onopenend="app.mail.subscription_autoloadingEnd"/>
-					</box>
+					</et2-box>
 				</row>
 			</rows>
 		</grid>

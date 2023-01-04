@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="resources.showdetails" template="" lang="" group="0" version="1.5.001">
 		<grid width="750" height="480">
@@ -10,7 +9,7 @@
 			</columns>
 			<rows>
 				<row class="nmh" height="240px">
-					<image src="resource_picture" align="center"/>
+					<et2-image  src="resource_picture" align="center"></et2-image>
 					<grid>
 						<columns>
 							<column/>
@@ -18,73 +17,69 @@
 						</columns>
 						<rows>
 							<row>
-								<description options="b" value="Name:"/>
-								<description options="b" no_lang="1" id="name"/>
+								<et2-description  value="Name:" boldItalic="b"></et2-description>
+								<et2-description  id="name" boldItalic="b" noLang="1"></et2-description>
 							</row>
 							<row>
-								<description value="Inventory number:"/>
-								<description no_lang="1" id="inventory_number"/>
+								<et2-description  value="Inventory number:"></et2-description>
+								<et2-description  id="inventory_number" noLang="1"></et2-description>
 							</row>
 							<row>
-								<description value="Category:"/>
-								<menulist>
-									<menupopup type="select-cat" id="cat_id" readonly="true"/>
-								</menulist>
+								<et2-description  value="Category:"></et2-description>
+								<et2-select-cat  id="cat_id" readonly="true"></et2-select-cat>
 							</row>
 							<row>
-								<description value="Responsible: "/>
-								<menulist>
-									<menupopup type="select-account" id="cat_admin" readonly="true"/>
-								</menulist>
+								<et2-description  value="Responsible: "></et2-description>
+								<et2-select-account  id="cat_admin" readonly="true"></et2-select-account>
 							</row>
 							<row valign="top">
-								<description value="Quantity: "/>
-								<description id="quantity"/>
+								<et2-description  value="Quantity: "></et2-description>
+								<et2-description  id="quantity"></et2-description>
 							</row>
 							<row>
-								<description value="Useable:"/>
-								<description id="useable"/>
+								<et2-description  value="Useable:"></et2-description>
+								<et2-description  id="useable"></et2-description>
 							</row>
 							<row>
-								<description value="Location:"/>
-								<description no_lang="1" id="location"/>
+								<et2-description  value="Location:"></et2-description>
+								<et2-description  id="location" noLang="1"></et2-description>
 							</row>
 							<row>
-								<description value="Storage information:"/>
-								<description id="storage_info"/>
+								<et2-description  value="Storage information:"></et2-description>
+								<et2-description  id="storage_info"></et2-description>
 							</row>
 						</rows>
 					</grid>
 				</row>
 				<row>
-					<description/>
-					<description/>
+					<et2-description></et2-description>
+					<et2-description></et2-description>
 				</row>
 				<row height="1%">
 					<html span="2" id="description" readonly="true"/>
 				</row>
 				<row>
-					<description/>
-					<description/>
+					<et2-description></et2-description>
+					<et2-description></et2-description>
 				</row>
 				<row class="th" disabled="@!link_to">
-					<description span="2" rows="1" cols="4" value="Related links"/>
+					<et2-description  span="2" rows="1" cols="4" value="Related links"></et2-description>
 				</row>
 				<row class="row_off" valign="top">
-					<link-list span="all" id="link_to" readonly="true"/>
+					<et2-link-list  span="all" id="link_to" readonly="true"></et2-link-list>
 				</row>
 				<row>
-					<hbox label="Cancel" span="2">
-						<hbox label="Edit" span="2" id="btn_edit">
-							<button label="Edit" span="2" id="btn_edit" statustext="Buy this article"/>
-							<button label="Cancel" onclick="window.close()"/>
-							<button label="Calendar" span="2" id="btn_calendar" statustext="Show calendar of resource" onclick="opener.location=egw::link('/index.php','menuaction=calendar.calendar_uiviews.month&amp;owner=r$cont[res_id]'); return false;"/>
-							<button label="Book" onclick="window.open(egw::link('/index.php','menuaction=calendar.calendar_uiforms.edit&amp;participants=r$cont[res_id]'),'','dependent=yes,width=750,height=400,location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes');" id="btn_book" statustext="Book this resource"/>
-						</hbox>
-						<hbox align="right">
-							<button label="Delete" onclick="return confirm('Do you really want to delete this resource?');" id="btn_delete"/>
-						</hbox>
-					</hbox>
+					<et2-hbox  label="Cancel" span="2">
+						<et2-hbox  label="Edit" span="2" id="btn_edit">
+							<et2-button  label="Edit" span="2" id="btn_edit" statustext="Buy this article"></et2-button>
+							<et2-button  label="Cancel" onclick="window.close()"></et2-button>
+							<et2-button  label="Calendar" span="2" id="btn_calendar" statustext="Show calendar of resource" onclick="opener.location=egw::link('/index.php','menuaction=calendar.calendar_uiviews.month&amp;owner=r$cont[res_id]'); return false;"></et2-button>
+							<et2-button  label="Book" onclick="window.open(egw::link('/index.php','menuaction=calendar.calendar_uiforms.edit&amp;participants=r$cont[res_id]'),'','dependent=yes,width=750,height=400,location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes');" id="btn_book" statustext="Book this resource"></et2-button>
+						</et2-hbox>
+						<et2-hbox  align="right">
+							<et2-button  label="Delete" onclick="return confirm('Do you really want to delete this resource?');" id="btn_delete"></et2-button>
+						</et2-hbox>
+					</et2-hbox>
 				</row>
 			</rows>
 		</grid>

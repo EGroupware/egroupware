@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="addressbook.display.rows" template="" lang="" group="0" version="1.5.001">
 		<grid width="100%" overflow="auto">
@@ -41,32 +40,32 @@
 					<nextmatch-header label="Region" id="adr_one_region"/>
 					<nextmatch-header label="@customlabel[1]" id="custom1"/>
 					<nextmatch-header label="@customlabel[2]" id="custom2"/>
-					<vbox options="0,0">
+					<et2-vbox  cellpadding="0" cellspacing="0" >
 						<nextmatch-header label="select country" id="country"/>
 						<nextmatch-customfilter id="adr_one_countryname" options="select-country,Country,1" class="countrySelect"/>
-					</vbox>
+					</et2-vbox>
 				</row>
 				<row class="row" valign="top">
-					<image options="1" src="${row}[type]" readonly="true" label="$row_cont[type_label]"/>
-					<description id="${row}[org_name]"/>
-					<description id="${row}[org_unit]"/>
-					<description id="${row}[line1]"/>
-					<description id="${row}[email]"/>
-					<description id="${row}[tel_work]"/>
-					<description id="${row}[tel_cell]"/>
-					<description id="${row}[tel_fax]"/>
-					<description id="${row}[tel_home]"/>
-					<description id="${row}[url]"/>
-					<vbox>
-						<description id="${row}[adr_one_street]"/>
-						<description id="${row}[adr_one_street2]"/>
-					</vbox>
-					<description id="${row}[adr_one_postalcode]"/>
-					<description id="${row}[adr_one_locality]"/>
-					<description id="${row}[adr_one_region]"/>
-					<description id="${row}[custom1]"/>
-					<description id="${row}[custom2]"/>
-					<description id="${row}[adr_one_countryname]"/>
+					<et2-image  options="1" src="${row}[type]" readonly="true" label="$row_cont[type_label]"></et2-image>
+					<et2-description  id="${row}[org_name]"></et2-description>
+					<et2-description  id="${row}[org_unit]"></et2-description>
+					<et2-description  id="${row}[line1]"></et2-description>
+					<et2-description  id="${row}[email]"></et2-description>
+					<et2-description  id="${row}[tel_work]"></et2-description>
+					<et2-description  id="${row}[tel_cell]"></et2-description>
+					<et2-description  id="${row}[tel_fax]"></et2-description>
+					<et2-description  id="${row}[tel_home]"></et2-description>
+					<et2-description  id="${row}[url]"></et2-description>
+					<et2-vbox>
+						<et2-description  id="${row}[adr_one_street]"></et2-description>
+						<et2-description  id="${row}[adr_one_street2]"></et2-description>
+					</et2-vbox>
+					<et2-description  id="${row}[adr_one_postalcode]"></et2-description>
+					<et2-description  id="${row}[adr_one_locality]"></et2-description>
+					<et2-description  id="${row}[adr_one_region]"></et2-description>
+					<et2-description  id="${row}[custom1]"></et2-description>
+					<et2-description  id="${row}[custom2]"></et2-description>
+					<et2-description  id="${row}[adr_one_countryname]"></et2-description>
 				</row>
 			</rows>
 		</grid>
@@ -79,12 +78,12 @@
 			</columns>
 			<rows>
 				<row disabled="!@msg">
-					<description span="all" class="redItalic" align="center" id="msg" no_lang="1"/>
-					<description/>
+					<et2-description  span="all" class="redItalic" align="center" id="msg" noLang="1"></et2-description>
+					<et2-description></et2-description>
 				</row>
 				<row disabled="1">
-					<description/>
-					<description/>
+					<et2-description></et2-description>
+					<et2-description></et2-description>
 				</row>
 				<row>
 					<nextmatch options="addressbook.display.rows" id="nm1" span="all"/>

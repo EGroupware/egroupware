@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<!--
 	This is used as a tiled template for nextmatch.  Note only 1 column, and
@@ -19,11 +18,11 @@
 					<nextmatch-header/>
 				</row>
 				<row class="tile $row_cont[class]">
-					<vbox class="file_tile" width="135px" height="100px" data="mime:$row_cont[mime]">
-						<vfs-mime align="center" id="$row" thumb_mime_size="image,128"/>
+					<et2-vbox  class="file_tile" width="135px" height="100px" data="mime:$row_cont[mime]">
+						<et2-vfs-mime  align="center" id="$row" thumbMimeSize="image,128"></et2-vfs-mime>
 						<vfs-name id="${row}[name]" no_lang="1" readonly="true"/>
-						<description id="${row}[comment]"/>
-					</vbox>
+						<et2-description  id="${row}[comment]"></et2-description>
+					</et2-vbox>
 				</row>
 			</rows>
 		</grid>

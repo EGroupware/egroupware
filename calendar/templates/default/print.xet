@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="calendar.print.participants" template="" lang="" group="0" version="1.6.001">
 		<grid width="100%" overflow="auto" id="participants">
@@ -13,24 +12,24 @@
 			</columns>
 			<rows>
 				<row>
-					<description span="all"/>
+					<et2-description  span="all"></et2-description>
 				</row>
 				<row>
-					<description span="all"/>
+					<et2-description  span="all"></et2-description>
 				</row>
 				<row class="th">
-					<description value="Type"/>
-					<description value="Participants"/>
-					<description value="Quantity"/>
-					<description value="All future"/>
-					<description value="Status"/>
+					<et2-description  value="Type"></et2-description>
+					<et2-description  value="Participants"></et2-description>
+					<et2-description  value="Quantity"></et2-description>
+					<et2-description  value="All future"></et2-description>
+					<et2-description  value="Status"></et2-description>
 				</row>
 				<row>
-					<description id="${row}[app]"/>
-					<description rows="1" cols="2" id="${row}[title]" no_lang="1"/>
-					<int id="${row}[quantity]" options="1,,3" readonly="true"/>
-					<checkbox id="${row}[status_recurrence]" align="center" readonly="true"/>
-					<select id="${row}[status]"  onchange="app.calendar.print_participants_status" readonly="true"/>
+					<et2-description  id="${row}[app]"></et2-description>
+					<et2-description  rows="1" cols="2" id="${row}[title]" noLang="1"></et2-description>
+					<et2-number  id="${row}[quantity]" options="1,,3" readonly="true" precision="0"></et2-number>
+					<et2-checkbox  id="${row}[status_recurrence]" align="center" readonly="true"></et2-checkbox>
+					<et2-select  id="${row}[status]" onchange="app.calendar.print_participants_status" readonly="true"></et2-select>
 				</row>
 			</rows>
 		</grid>
@@ -43,10 +42,10 @@
 			</columns>
 			<rows>
 				<row class="th" height="28">
-					<description span="all" value="Existing links"/>
+					<et2-description  span="all" value="Existing links"></et2-description>
 				</row>
 				<row class="row_off" valign="top">
-					<link-list span="all" id="link_to"/>
+					<et2-link-list  span="all" id="link_to"></et2-link-list>
 				</row>
 			</rows>
 		</grid>
@@ -59,62 +58,56 @@
 			</columns>
 			<rows>
 				<row>
-					<hbox>
-						<image src="print" onclick="window.print();" class="calendar_print_button"/>
-						<appicon class="calendar_print_appicon"/>
-					</hbox>
+					<et2-hbox>
+						<et2-image  src="print" onclick="window.print();" class="calendar_print_button"></et2-image>
+						<et2-appicon  class="calendar_print_appicon"></et2-appicon>
+					</et2-hbox>
 				</row>
 				<row class="th" height="28">
-					<description value="Title" class="bold" options="bold"/>
-					<textbox id="title" size="80" maxlength="255" readonly="true" span="all" class="bold"/>
+					<et2-description  value="Title" class="bold" boldItalic="bold"></et2-description>
+					<et2-textbox  id="title" maxlength="255" readonly="true" span="all" class="bold"></et2-textbox>
 				</row>
 				<row class="row">
-					<description width="95" options=",,,start" value="Start"/>
-					<date-time id="start" readonly="true"/>
+					<et2-description  width="95" value="Start" labelFor="start"></et2-description>
+					<et2-date-time  id="start" readonly="true"></et2-date-time>
 				</row>
 				<row class="row">
-					<description width="0" options=",,,whole_day" value="whole day"/>
-					<checkbox id="whole_day" options=",, ," statustext="Event will occupy the whole day" readonly="true"/>
+					<et2-description  width="0" value="whole day" labelFor="whole_day"></et2-description>
+					<et2-checkbox  id="whole_day" statustext="Event will occupy the whole day" readonly="true" roTrue=" "></et2-checkbox>
 				</row>
 				<row class="row">
-					<description width="0" options=",,,duration" value="Duration"/>
-					<hbox options="0,0">
-						<menulist>
-							<menupopup no_lang="1" onchange="set_style_by_class('table','end_hide','visibility',this.value == '' ? 'visible' : 'hidden'); if (this.value == '') document.getElementById(form::name('end[str]')).value = document.getElementById(form::name('start[str]')).value;" id="duration" options="Use end date" statustext="Duration of the meeting" readonly="true"/>
-						</menulist>
-						<date-time id="end" class="end_hide" readonly="true"/>
-					</hbox>
+					<et2-description  width="0" value="Duration" labelFor="duration"></et2-description>
+					<et2-hbox  cellpadding="0" cellspacing="0" >
+						<et2-select  onchange="set_style_by_class('table','end_hide','visibility',this.value == '' ? 'visible' : 'hidden'); if (this.value == '') document.getElementById(form::name('end[str]')).value = document.getElementById(form::name('start[str]')).value;" id="duration" statustext="Duration of the meeting" readonly="true" noLang="1" emptyLabel="Use end date"></et2-select>
+						<et2-date-time  id="end" class="end_hide" readonly="true"></et2-date-time>
+					</et2-hbox>
 				</row>
 				<row class="row">
-					<description options=",,,location" value="Location" width="0"/>
-					<textbox maxlength="255" id="location" class="calendar_inputFullWidth" readonly="true"/>
+					<et2-description  value="Location" width="0" labelFor="location"></et2-description>
+					<et2-textbox  maxlength="255" id="location" class="calendar_inputFullWidth" readonly="true"></et2-textbox>
 				</row>
 				<row class="row">
-					<description options=",,,priority" value="Priority" width="0"/>
-					<menulist>
-						<menupopup type="select-priority" id="priority" readonly="true"/>
-					</menulist>
+					<et2-description  value="Priority" width="0" labelFor="priority"></et2-description>
+					<et2-select-priority  id="priority" readonly="true"></et2-select-priority>
 				</row>
 				<row class="row">
-					<description value="Non blocking" width="0"/>
-					<checkbox id="non_blocking" options="1,0, ," statustext="A non blocking event will not conflict with other events" readonly="true"/>
+					<et2-description  value="Non blocking" width="0"></et2-description>
+					<et2-checkbox  id="non_blocking" statustext="A non blocking event will not conflict with other events" readonly="true" selectedValue="1" unselectedValue="0" roTrue=" "></et2-checkbox>
 				</row>
 				<row class="row">
-					<description value="Private"/>
-					<checkbox id="public" options="0,1" readonly="true"/>
+					<et2-description  value="Private"></et2-description>
+					<et2-checkbox  id="public" readonly="true" selectedValue="0" unselectedValue="1"></et2-checkbox>
 				</row>
 				<row class="row calendar_print_cat">
-					<description value="Categories"/>
-					<menulist>
-						<menupopup type="select-cat" id="category" readonly="true"/>
-					</menulist>
+					<et2-description  value="Categories"></et2-description>
+					<et2-select-cat  id="category" readonly="true"></et2-select-cat>
 				</row>
 				<row valign="top">
-					<description value="Description"/>
-					<textbox multiline="true" id="description" readonly="true"/>
+					<et2-description  value="Description"></et2-description>
+					<et2-textarea  id="description" readonly="true"></et2-textarea>
 				</row>
 				<row class="th">
-					<description value="custom fields" span="all"/>
+					<et2-description  value="custom fields" span="all"></et2-description>
 				</row>
 				<row>
 					<customfields span="all" readonly="true"/>

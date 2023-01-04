@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="addressbook.config" template="" lang="" group="0" version="16.1">
 		<grid width="100%" class="admin-config egwGridView_grid">
@@ -10,160 +9,160 @@
 			</columns>
 			<rows>
 				<row>
-					<description value="Telephony integration" span="all" class="subHeader"/>
+					<et2-description  value="Telephony integration" span="all" class="subHeader"></et2-description>
 				</row>
 				<row>
-					<description value="URL to link telephone numbers to (use %1 = number to call, %u = account name, %t = account phone)" label="%s:"/>
-					<textbox id="newsettings[call_link]" class="et2_fullWidth"/>
+					<et2-description  value="URL to link telephone numbers to (use %1 = number to call, %u = account name, %t = account phone)" label="%s:"></et2-description>
+					<et2-textbox  id="newsettings[call_link]"></et2-textbox>
 				</row>
 				<row>
-					<description value="Size of popup (WxH, eg.400x300, if a popup should be used)" label="%s:"/>
-					<textbox id="newsettings[call_popup]" size="10"/>
+					<et2-description  value="Size of popup (WxH, eg.400x300, if a popup should be used)" label="%s:"></et2-description>
+					<et2-textbox  id="newsettings[call_popup]"></et2-textbox>
 				</row>
 				<row>
-					<description value="Send fax via email by replacing fax number with an email address" label="%s:"/>
-					<hbox>
-						<textbox id="newsettings[fax_email_regexp]" blur="(.*)"/>
-						<textbox id="newsettings[fax_email]" blur="$1@fax.local"/>
-					</hbox>
+					<et2-description  value="Send fax via email by replacing fax number with an email address" label="%s:"></et2-description>
+					<et2-hbox>
+						<et2-textbox  id="newsettings[fax_email_regexp]" placeholder="(.*)"></et2-textbox>
+						<et2-textbox  id="newsettings[fax_email]" placeholder="$1@fax.local"></et2-textbox>
+					</et2-hbox>
 				</row>
 				<row>
-					<description value="GeoLocation integration" span="all" class="subHeader"/>
+					<et2-description  value="GeoLocation integration" span="all" class="subHeader"></et2-description>
 				</row>
 				<row>
-					<description value="Choose pre-defined map source or use custom URL (use %r = street, %t = city, %c = country, %z = zipcode)" label="%s:"/>
-					<taglist id="newsettings[geolocation_url]" maxSelection="1" empty_label="Select a map or write an URL"/>
+					<et2-description  value="Choose pre-defined map source or use custom URL (use %r = street, %t = city, %c = country, %z = zipcode)" label="%s:"></et2-description>
+					<et2-select  id="newsettings[geolocation_url]" allowFreeEntries="true" editModeEnabled="true" searchUrl="EGroupware\Api\Etemplate\Widget\Taglist::ajax_search" emptyLabel="Select a map or write an URL"></et2-select>
 				</row>
 				<row>
-					<description value="Calendar integration" span="all" class="subHeader"/>
+					<et2-description  value="Calendar integration" span="all" class="subHeader"></et2-description>
 				</row>
 				<row>
-					<description value="Disable Last/Next Event column"/>
-					<select id="newsettings[disable_event_column]">
+					<et2-description  value="Disable Last/Next Event column"></et2-description>
+					<et2-select  id="newsettings[disable_event_column]">
 						<option value="">Allow</option>
 						<option value="contacts">Allow for contacts only</option>
 						<option value="True">Disabled</option>
-					</select>
+					</et2-select>
 				</row>
 				<row>
-					<description value="Allow users to maintain their own account-data" span="all" class="subHeader"/>
+					<et2-description  value="Allow users to maintain their own account-data" span="all" class="subHeader"></et2-description>
 				</row>
 				<row>
-					<description value="Fields the user is allowed to edit himself"/>
-					<select id="newsettings[own_account_acl]" multiple="true" tags="true" class="et2_fullWidth"/>
+					<et2-description  value="Fields the user is allowed to edit himself"></et2-description>
+					<et2-select  id="newsettings[own_account_acl]" multiple="true"></et2-select>
 				</row>
 				<row>
-					<description value="General" span="all" class="subHeader"/>
+					<et2-description  value="General" span="all" class="subHeader"></et2-description>
 				</row>
 				<row>
-					<description value="Use a category tree?"/>
-					<select id="newsettings[cat_tab]">
+					<et2-description  value="Use a category tree?"></et2-description>
+					<et2-select  id="newsettings[cat_tab]">
 						<option value="True">No</option>
 						<option value="Tree">Yes</option>
-					</select>
+					</et2-select>
 				</row>
 				<row>
-					<description value="Use an extra tab for private custom fields?"/>
-					<select id="newsettings[private_cf_tab]">
+					<et2-description  value="Use an extra tab for private custom fields?"></et2-description>
+					<et2-select  id="newsettings[private_cf_tab]">
 						<option value="">No</option>
 						<option value="True">Yes</option>
-					</select>
+					</et2-select>
 				</row>
 				<row>
-					<description value="Load custom fields in index, even if custom field column is off (eg. to display them in a specific index column)"/>
-					<select id="newsettings[index_load_cfs]" multiple="true" tags="true" class="et2_fullWidth"/>
+					<et2-description  value="Load custom fields in index, even if custom field column is off (eg. to display them in a specific index column)"></et2-description>
+					<et2-select  id="newsettings[index_load_cfs]" multiple="true"></et2-select>
 				</row>
 				<row>
-					<description value="Update Fields by edited organisations?"/>
-					<select id="newsettings[org_fileds_to_update]" multiple="true" tags="true" class="et2_fullWidth"/>
+					<et2-description  value="Update Fields by edited organisations?"></et2-description>
+					<et2-select  id="newsettings[org_fileds_to_update]" multiple="true"></et2-select>
 				</row>
 				<row>
-					<description value="Fields to copy when copying an address?"/>
-					<select id="newsettings[copy_fields]" multiple="true" tags="true" class="et2_fullWidth"/>
+					<et2-description  value="Fields to copy when copying an address?"></et2-description>
+					<et2-select  id="newsettings[copy_fields]" multiple="true"></et2-select>
 				</row>
 				<row>
-					<description value="Security" span="all" class="subHeader"/>
+					<et2-description  value="Security" span="all" class="subHeader"></et2-description>
 				</row>
 				<row>
-					<vbox>
-						<description value="How many contacts should non-admins be able to export"/>
-						<description value="(empty = use global limit, no = no export at all)"/>
-					</vbox>
-					<textbox id="newsettings[contact_export_limit]" size="5"/>
+					<et2-vbox>
+						<et2-description  value="How many contacts should non-admins be able to export"></et2-description>
+						<et2-description  value="(empty = use global limit, no = no export at all)"></et2-description>
+					</et2-vbox>
+					<et2-textbox  id="newsettings[contact_export_limit]"></et2-textbox>
 				</row>
 				<row>
-					<description value="Allow members of following groups to edit contact-data of accounts" label="%s:"/>
-					<select-account id="newsettings[allow_account_edit]" account_type="groups" multiple="true" tags="true" width="100%"/>
+					<et2-description  value="Allow members of following groups to edit contact-data of accounts" label="%s:"></et2-description>
+					<et2-select-account  id="newsettings[allow_account_edit]" multiple="true" width="100%" accountType="groups"></et2-select-account>
 				</row>
 				<row>
-					<description value="History logging" span="all" class="subHeader"/>
+					<et2-description  value="History logging" span="all" class="subHeader"></et2-description>
 				</row>
 				<row>
-					<description value="Prevent deleting of contacts"/>
-					<select id="newsettings[history]">
+					<et2-description  value="Prevent deleting of contacts"></et2-description>
+					<et2-select  id="newsettings[history]">
 						<option value="">Yes, only admins can purge deleted items</option>
 						<option value="userpurge">Yes, users can purge their deleted items</option>
-					</select>
+					</et2-select>
 				</row>
 				<row>
-					<description value="Contact maintenance" span="all" class="subHeader"/>
+					<et2-description  value="Contact maintenance" span="all" class="subHeader"></et2-description>
 				</row>
 				<row>
-					<description value="Set full name and file as field in contacts of all users (either all or only empty values)" label="%s:"/>
-					<hbox>
-						<select id="fileas" empty_label="Set only full name" width="70%"/>
-						<button onclick="document.location.href='index.php?menuaction=addressbook.addressbook_ui.admin_set_fileas&amp;all=1&amp;type='+this.form.fileas.value;" label="All"/>
-						<button onclick="document.location.href='index.php?menuaction=addressbook.addressbook_ui.admin_set_fileas&amp;type='+this.form.fileas.value;" label="Empty"/>
-					</hbox>
+					<et2-description  value="Set full name and file as field in contacts of all users (either all or only empty values)" label="%s:"></et2-description>
+					<et2-hbox>
+						<et2-select  id="fileas" width="70%" emptyLabel="Set only full name"></et2-select>
+						<et2-button  onclick="document.location.href='index.php?menuaction=addressbook.addressbook_ui.admin_set_fileas&amp;all=1&amp;type='+this.form.fileas.value;" label="All"></et2-button>
+						<et2-button  onclick="document.location.href='index.php?menuaction=addressbook.addressbook_ui.admin_set_fileas&amp;type='+this.form.fileas.value;" label="Empty"></et2-button>
+					</et2-hbox>
 				</row>
 				<row>
-					<description value="Cleanup addressbook fields (apply if synchronization creates duplicates)" label="%s:"/>
-					<button onclick="document.location.href='index.php?menuaction=addressbook.addressbook_ui.admin_set_all_cleanup'" label="Start"/>
+					<et2-description  value="Cleanup addressbook fields (apply if synchronization creates duplicates)" label="%s:"></et2-description>
+					<et2-button  onclick="document.location.href='index.php?menuaction=addressbook.addressbook_ui.admin_set_all_cleanup'" label="Start"></et2-button>
 				</row>
 				<row>
-					<description value="Contact repository" span="all" class="subHeader"/>
+					<et2-description  value="Contact repository" span="all" class="subHeader"></et2-description>
 				</row>
 				<row>
-					<description value="Select where you want to store / retrieve contacts" label="%s:"/>
-					<select id="newsettings[contact_repository]"/>
+					<et2-description  value="Select where you want to store / retrieve contacts" label="%s:"></et2-description>
+					<et2-select  id="newsettings[contact_repository]"></et2-select>
 				</row>
 				<row>
-					<description value="You can only use LDAP as contact repository if the accounts are stored in LDAP too!" span="all"/>
+					<et2-description  value="You can only use LDAP as contact repository if the accounts are stored in LDAP too!" span="all"></et2-description>
 				</row>
 				<row>
-					<description value="Account repository" label="%s:"/>
-					<hbox>
-						<description id="newsettings[account_repository]" class="subHeader"/>
-						<description value="Can be changed via Setup &gt;&gt; Configuration"/>
-					</hbox>
+					<et2-description  value="Account repository" label="%s:"></et2-description>
+					<et2-hbox>
+						<et2-description  id="newsettings[account_repository]" class="subHeader"></et2-description>
+						<et2-description  value="Can be changed via Setup &gt;&gt; Configuration"></et2-description>
+					</et2-hbox>
 				</row>
 				<row>
-					<description value="LDAP settings for contacts" span="all" class="subHeader"/>
+					<et2-description  value="LDAP settings for contacts" span="all" class="subHeader"></et2-description>
 				</row>
 				<row>
-					<description value="LDAP host for contacts" label="%s:"/>
-					<textbox id="newsettings[ldap_contact_host]"/>
+					<et2-description  value="LDAP host for contacts" label="%s:"></et2-description>
+					<et2-textbox  id="newsettings[ldap_contact_host]"></et2-textbox>
 				</row>
 				<row>
-					<description value="LDAP context for contacts" label="%s:"/>
-					<textbox id="newsettings[ldap_contact_context]" class="et2_fullWidth"/>
+					<et2-description  value="LDAP context for contacts" label="%s:"></et2-description>
+					<et2-textbox  id="newsettings[ldap_contact_context]"></et2-textbox>
 				</row>
 				<row>
-					<description value="Additional information about using LDAP as contact repository" class="subHeader"/>
-					<description value="README" href="/doc/ldap/README.contacts" extra_link_target="_blank"/>
+					<et2-description  value="Additional information about using LDAP as contact repository" class="subHeader"></et2-description>
+					<et2-description  value="README" href="/doc/ldap/README.contacts" extraLinkTarget="_blank"></et2-description>
 				</row>
 				<row>
-					<description value="Migration to LDAP"/>
-					<hbox>
-						<select id="migrate">
+					<et2-description  value="Migration to LDAP"></et2-description>
+					<et2-hbox>
+						<et2-select  id="migrate">
 							<option value="">Select migration type</option>
 							<option value="contacts" title="if accounts are already in LDAP">contacts to LDAP</option>
 							<option value="contacts,accounts" title="use setup for a full account-migration">contacts and account contact-data to LDAP</option>
 							<option value="contacts,accounts-back" title="for read only LDAP">contacts to LDAP, account contact-data to SQL</option>
 							<option value="sql" title="for read only LDAP">contacts and account contact-data to SQL</option>
-						</select>
-						<button onclick="if (this.form.migrate.value) document.location.href='index.php?menuaction=addressbook.addressbook_ui.migrate2ldap&amp;type='+this.form.migrate.value;" label="Start"/>
-					</hbox>
+						</et2-select>
+						<et2-button  onclick="if (this.form.migrate.value) document.location.href='index.php?menuaction=addressbook.addressbook_ui.migrate2ldap&amp;type='+this.form.migrate.value;" label="Start"></et2-button>
+					</et2-hbox>
 				</row>
 			</rows>
 		</grid>

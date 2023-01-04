@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="admin.cmds.rows" template="" lang="" group="0" version="1.5.001">
 		<grid width="100%">
@@ -20,56 +20,56 @@
 			<rows>
 				<row class="th">
 					<nextmatch-header label="Title" id="title"/>
-					<nextmatch-customfilter type="select-app" empty_label="All applications" id="app"/>
-					<nextmatch-accountfilter empty_label="All accounts" id="account"/>
-					<nextmatch-filterheader empty_label="Type" id="type"/>
-					<nextmatch-accountfilter empty_label="Requested" id="requested"/>
+					<et2-nextmatch-header-custom  id="app" emptyLabel="All applications" widgetType="select-app"/>
+					<et2-nextmatch-header-account  id="account" emptyLabel="All accounts"/>
+					<et2-nextmatch-header-filter  id="type" emptyLabel="Type"/>
+					<et2-nextmatch-header-account  id="requested" emptyLabel="Requested"/>
 					<nextmatch-header label="Comment" id="comment"/>
 					<nextmatch-sortheader label="Scheduled" id="cmd_scheduled"/>
-					<nextmatch-filterheader empty_label="Periodic" id="periodic"/>
-					<nextmatch-filterheader options="Remote" id="remote_id"/>
-					<vbox>
+					<et2-nextmatch-header-filter  id="periodic" emptyLabel="Periodic"/>
+					<et2-nextmatch-header-filter  id="remote_id" emptyLabel="Remote"/>
+					<et2-vbox>
 						<nextmatch-sortheader label="Created" id="cmd_created"/>
-						<nextmatch-accountfilter empty_label="Creator" id="creator"/>
-					</vbox>
-					<nextmatch-filterheader empty_label="Status" id="status"/>
-					<vbox>
+						<et2-nextmatch-header-account  id="creator" emptyLabel="Creator"/>
+					</et2-vbox>
+					<et2-nextmatch-header-filter  id="status" emptyLabel="Status"/>
+					<et2-vbox>
 						<nextmatch-sortheader label="Modified" id="cmd_modified"/>
-						<nextmatch-accountfilter options="Modifier" id="modifier"/>
-					</vbox>
+						<et2-nextmatch-header-account  id="modifier" emptyLabel="Modifier"/>
+					</et2-vbox>
 				</row>
 				<row class="row $row_cont[class]">
-					<description id="${row}[title]"/>
-					<select-app id="${row}[app]" readonly="true"/>
-					<select-account id="${row}[account]" readonly="true"/>
-					<select id="${row}[type]" readonly="true"/>
-					<url-email id="${row}[requested_email]" readonly="true"/>
-					<description id="${row}[comment]"/>
-					<date-time id="${row}[scheduled]" readonly="true"/>
-					<description id="${row}[rrule]"/>
-					<select id="${row}[remote_id]" readonly="true"/>
-					<vbox>
-						<date-time id="${row}[created]" readonly="true"/>
-						<select-account id="${row}[creator]" readonly="true"/>
-					</vbox>
-					<vbox>
-						<select id="${row}[status]" readonly="true"/>
-						<description id="${row}[error]" class="redItalic"/>
-						<description id="${row}[value]"/>
-					</vbox>
-					<vbox>
-						<date-time id="${row}[modified]" readonly="true"/>
-						<select-account id="${row}[modifier]" readonly="true"/>
-					</vbox>
+					<et2-description  id="${row}[title]"></et2-description>
+					<et2-select-app  id="${row}[app]" readonly="true"></et2-select-app>
+					<et2-select-account  id="${row}[account]" readonly="true"></et2-select-account>
+					<et2-select  id="${row}[type]" readonly="true"></et2-select>
+					<et2-url-email  id="${row}[requested_email]" readonly="true"></et2-url-email>
+					<et2-description  id="${row}[comment]"></et2-description>
+					<et2-date-time  id="${row}[scheduled]" readonly="true"></et2-date-time>
+					<et2-description  id="${row}[rrule]"></et2-description>
+					<et2-select  id="${row}[remote_id]" readonly="true"></et2-select>
+					<et2-vbox>
+						<et2-date-time  id="${row}[created]" readonly="true"></et2-date-time>
+						<et2-select-account  id="${row}[creator]" readonly="true"></et2-select-account>
+					</et2-vbox>
+					<et2-vbox>
+						<et2-select  id="${row}[status]" readonly="true"></et2-select>
+						<et2-description  id="${row}[error]" class="redItalic"></et2-description>
+						<et2-description  id="${row}[value]"></et2-description>
+					</et2-vbox>
+					<et2-vbox>
+						<et2-date-time  id="${row}[modified]" readonly="true"></et2-date-time>
+						<et2-select-account  id="${row}[modifier]" readonly="true"></et2-select-account>
+					</et2-vbox>
 				</row>
 			</rows>
 		</grid>
 	</template>
 	<template id="admin.cmds.splitter" template="" lang="" height="100%" group="0" version="19.01">
-		<split orientation="h" height="100%" id="splitter" dock_side="bottomDock">
+		<et2-split  orientation="h" height="100%" id="splitter" vertical="true" primary="start">
 			<nextmatch options="admin.cmds.rows" id="nm" onselect="app.admin.cmds_onselect"/>
 			<template id="admin.cmds.preview"/>
-		</split>
+		</et2-split>
 	</template>
 
 	<template id="admin.cmds" template="" lang="" height="100%" group="0" version="1.5.001">
@@ -84,33 +84,33 @@
 			</columns>
 			<rows>
 				<row>
-					<vbox>
-						<hbox class="row">
-							<hbox class="et2_hbox_left"><description value="Title" label="%s:"/></hbox>
-							<description value="$row_cont[title]"/>
-						</hbox>
-						<hbox class="row dialogFooterToolbar">
-							<hbox class="et2_hbox_left">
-								<description value="Comment" label="%s:" class="et2_hbox_left"/>
-							</hbox>
-							<description value="$row_cont[comment]"/>
-						</hbox>
-						<hbox class="row">
-							<hbox class="et2_hbox_left">
-								<description value="Creator" label="%s:" class="et2_hbox_left"/>
-							</hbox>
-							<hbox>
-								<description value="$row_cont[creator]" label="%s("/>
-								<description value="$row_cont[creator_email]" label="%s)"/>
-							</hbox>
-						</hbox>
-						<hbox class="row">
-							<hbox class="et2_hbox_left">
-								<description value="Data" label="%s:" align="left" class="et2_hbox_left"/>
-							</hbox>
-							<description value="$row_cont[data]"/>
-						</hbox>
-					</vbox>
+					<et2-vbox>
+						<et2-hbox  class="row">
+							<et2-hbox  class="et2_hbox_left"><et2-description  value="Title" label="%s:"></et2-description></et2-hbox>
+							<et2-description  value="$row_cont[title]"></et2-description>
+						</et2-hbox>
+						<et2-hbox  class="row dialogFooterToolbar">
+							<et2-hbox  class="et2_hbox_left">
+								<et2-description  value="Comment" label="%s:" class="et2_hbox_left"></et2-description>
+							</et2-hbox>
+							<et2-description  value="$row_cont[comment]"></et2-description>
+						</et2-hbox>
+						<et2-hbox  class="row">
+							<et2-hbox  class="et2_hbox_left">
+								<et2-description  value="Creator" label="%s:" class="et2_hbox_left"></et2-description>
+							</et2-hbox>
+							<et2-hbox>
+								<et2-description  value="$row_cont[creator]" label="%s("></et2-description>
+								<et2-description  value="$row_cont[creator_email]" label="%s)"></et2-description>
+							</et2-hbox>
+						</et2-hbox>
+						<et2-hbox  class="row">
+							<et2-hbox  class="et2_hbox_left">
+								<et2-description  value="Data" label="%s:" align="left" class="et2_hbox_left"></et2-description>
+							</et2-hbox>
+							<et2-description  value="$row_cont[data]"></et2-description>
+						</et2-hbox>
+					</et2-vbox>
 				</row>
 			</rows>
 		</grid>

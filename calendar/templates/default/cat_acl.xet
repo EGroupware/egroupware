@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="calendar.cat_acl" template="" lang="" group="0" version="1.7.001">
 		<groupbox>
 			<caption label="Category ACL"/>
-			<description value="Category ACL only restrict adding a category to an event or changing status of a participant. It does NOT change the visibility of an event!"/>
+			<et2-description  value="Category ACL only restrict adding a category to an event or changing status of a participant. It does NOT change the visibility of an event!"></et2-description>
 		</groupbox>
 		<grid>
 			<columns>
@@ -15,23 +14,21 @@
 			</columns>
 			<rows>
 				<row class="th">
-					<description value="Category"/>
-					<description value="Restrict add category to"/>
-					<description value="Restrict set status to"/>
+					<et2-description  value="Category"></et2-description>
+					<et2-description  value="Restrict add category to"></et2-description>
+					<et2-description  value="Restrict set status to"></et2-description>
 				</row>
 				<row class="row" valign="top">
-					<menulist>
-						<menupopup type="select-cat" id="${row}[cat_id]" options="Select one"/>
-					</menulist>
-					<listbox type="select-account" rows="5" options="both" id="${row}[add]"/>
-					<listbox type="select-account" rows="5" options="both" id="${row}[status]"/>
+					<et2-select-cat  id="${row}[cat_id]" emptyLabel="Select one"></et2-select-cat>
+					<et2-select-account  rows="5" id="${row}[add]" multiple="1" placeholder="both"></et2-select-account>
+					<et2-select-account  rows="5" id="${row}[status]" multiple="1" placeholder="both"></et2-select-account>
 				</row>
 			</rows>
 		</grid>
-		<hbox>
-			<button label="Save" id="button[save]"/>
-			<button id="button[apply]" label="Apply"/>
-			<button id="button[cancel]" label="Cancel"/>
-		</hbox>
+		<et2-hbox>
+			<et2-button  label="Save" id="button[save]"></et2-button>
+			<et2-button  id="button[apply]" label="Apply"></et2-button>
+			<et2-button  id="button[cancel]" label="Cancel"></et2-button>
+		</et2-hbox>
 	</template>
 </overlay>

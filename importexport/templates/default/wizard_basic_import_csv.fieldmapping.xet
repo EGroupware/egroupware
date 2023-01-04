@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="importexport.wizard_basic_import_csv.fieldmapping" template="" lang="" group="0" version="1.9.001">
 		<grid>
@@ -9,7 +8,7 @@
 			</columns>
 			<rows>
 				<row>
-					<description id="msg" no_lang="1" span="all"/>
+					<et2-description  id="msg" span="all" noLang="1"></et2-description>
 				</row>
 				<row>
 					<grid overflow="auto" id="mapping">
@@ -22,16 +21,16 @@
                         </columns>
                         <rows>
                             <row class="th">
-                                <description/>
-                                <description value="CSV Field"/>
-                                <description value="Target Field"/>
-                                <description value="Translation"/>
+                                <et2-description></et2-description>
+                                <et2-description  value="CSV Field"></et2-description>
+                                <et2-description  value="Target Field"></et2-description>
+                                <et2-description  value="Translation"></et2-description>
                             </row>
                             <row>
-                                <description value="$row_cont[index]" no_lang="1"/>
-                                <description value="$row_cont[title]" no_lang="1"/>
-                                <listbox id="{$row}[field]" no_lang="1"/>
-                                <textbox id="{$row}[conversion]"/>
+                                <et2-description  value="$row_cont[index]" noLang="1"></et2-description>
+                                <et2-description  value="$row_cont[title]" noLang="1"></et2-description>
+                                <et2-select  id="{$row}[field]" noLang="1"></et2-select>
+                                <et2-textbox  id="{$row}[conversion]"></et2-textbox>
                             </row>
                         </rows>
                     </grid>

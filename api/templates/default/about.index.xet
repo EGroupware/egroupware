@@ -1,5 +1,4 @@
 <?xml version="1.0"?>
-<!-- $Id$ -->
 <overlay>
 	<template id="api.about.index.general" template="" lang="" group="0" version="1.8.001">
 		<grid width="600" height="100%" spacing="5" overflow="auto">
@@ -8,7 +7,7 @@
 			</columns>
 			<rows>
 				<row>
-					<image src="logo"/>
+					<et2-image  src="logo"></et2-image>
 				</row>
 				<row>
 					<html id="apiVersion"/>
@@ -43,20 +42,20 @@
 						</columns>
 						<rows>
 							<row class="th">
-								<description id="applications"/>
-								<description value="name"/>
-								<description value="author"/>
-								<description value="maintainer"/>
-								<description value="version"/>
-								<description value="license"/>
+								<et2-description  id="applications"></et2-description>
+								<et2-description  value="name"></et2-description>
+								<et2-description  value="author"></et2-description>
+								<et2-description  value="maintainer"></et2-description>
+								<et2-description  value="version"></et2-description>
+								<et2-description  value="license"></et2-description>
 							</row>
 							<row class="row" valign="top">
-								<appicon align="center" src="$row_cont[app]" id="${row}[app]"/>
-								<description id="${row}[title]"/>
+								<et2-appicon  align="center" src="$row_cont[app]" id="${row}[app]"></et2-appicon>
+								<et2-description  id="${row}[title]"></et2-description>
 								<html id="${row}[author]" no_lang="1"/>
 								<html id="${row}[maintainer]" no_lang="1"/>
-								<description id="${row}[version]" no_lang="1"/>
-								<description id="${row}[license]" statustext="$row_cont[license_title]" href="$row_cont[license_url]" extra_link_target="_blank" no_lang="1"/>
+								<et2-description  id="${row}[version]" noLang="1"></et2-description>
+								<et2-description  id="${row}[license]" statustext="$row_cont[license_title]" href="$row_cont[license_url]" extraLinkTarget="_blank" noLang="1"></et2-description>
 							</row>
 						</rows>
 					</grid>
@@ -71,13 +70,13 @@
 			</columns>
 			<rows>
 				<row>
-					<textbox multiline="true" id="changelog" readonly="true"/>
+					<et2-textarea  id="changelog" readonly="true"></et2-textarea>
 				</row>
 			</rows>
 		</grid>
 	</template>
 	<template id="api.about.index" template="" lang="" group="0" version="1.8.001">
-		<tabbox id="general|applications|templates|languages|changelog">
+		<et2-tabbox  id="general|applications|templates|languages|changelog">
 			<tabs>
 				<tab id="changelog" label="Changelog"/>
 				<tab id="general" label="About EGroupware"/>
@@ -88,6 +87,6 @@
 				<template id="api.about.index.general"/>
 				<template id="api.about.index.applications"/>
 			</tabpanels>
-		</tabbox>
+		</et2-tabbox>
 	</template>
 </overlay>

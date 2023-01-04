@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="addressbook.importexport_wizard_vcard_charset" template="" lang="" group="0" version="1.9.001">
 		<grid>
@@ -10,13 +9,11 @@
 			</columns>
 			<rows>
 				<row>
-					<description id="msg" no_lang="1" span="all"/>
+					<et2-description  id="msg" span="all" noLang="1"></et2-description>
 				</row>
 				<row>
-					<description value="Charset of file"/>
-					<menulist class="width180">
-						<menupopup id="charset" no_lang="1"/>
-					</menulist>
+					<et2-description  value="Charset of file"></et2-description>
+					<et2-select  class="width180" id="charset" noLang="1"></et2-select>
 				</row>
 			</rows>
 		</grid>

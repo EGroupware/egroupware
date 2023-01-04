@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="admin.account" template="" lang="" group="0" version="1.9.003">
 		<grid width="100%">
@@ -10,64 +9,64 @@
 			</columns>
 			<rows>
 				<row>
-					<description value="Login ID" for="account_lid"/>
-					<textbox id="account_lid" class="et2_fullWidth" onchange="app.addressbook.account_change" needed="true"/>
+					<et2-description  value="Login ID" for="account_lid"></et2-description>
+					<et2-textbox  id="account_lid" onchange="app.addressbook.account_change" required="true"></et2-textbox>
 				</row>
 				<row>
-					<description value="Expires" for="account_expires"/>
-					<vbox>
-						<date id="account_expires"/>
-						<checkbox id="account_status" selected_value="A" label="Account active"/>
-					</vbox>
+					<et2-description  value="Expires" for="account_expires"></et2-description>
+					<et2-vbox>
+						<et2-date  id="account_expires"></et2-date>
+						<et2-checkbox  id="account_status" label="Account active" selectedValue="A"></et2-checkbox>
+					</et2-vbox>
 				</row>
 				<row>
-					<description value="Password" for="account_passwd"/>
-					<passwd id="account_passwd" class="et2_fullWidth"/>
+					<et2-description  value="Password" for="account_passwd"></et2-description>
+					<et2-password  id="account_passwd"></et2-password>
 				</row>
 				<row>
-					<description value="Re-enter password" for="account_passwd_2"/>
-					<passwd id="account_passwd_2" class="et2_fullWidth" onchange="app.addressbook.account_change"/>
+					<et2-description  value="Re-enter password" for="account_passwd_2"></et2-description>
+					<et2-password  id="account_passwd_2" onchange="app.addressbook.account_change"></et2-password>
 				</row>
 				<row valign="top">
-					<description/>
-					<hbox>
-						<vbox span="3">
-							<checkbox id="mustchangepassword" label="Must change password upon next login"/>
-							<checkbox id="changepassword" label="Can change password"/>
-						</vbox>
-					</hbox>
+					<et2-description></et2-description>
+					<et2-hbox>
+						<et2-vbox  span="3">
+							<et2-checkbox  id="mustchangepassword" label="Must change password upon next login"></et2-checkbox>
+							<et2-checkbox  id="changepassword" label="Can change password"></et2-checkbox>
+						</et2-vbox>
+					</et2-hbox>
 				</row>
 				<row>
-					<description/>
-					<checkbox id="anonymous" label="Anonymous user. Not shown in list sessions."/>
+					<et2-description></et2-description>
+					<et2-checkbox  id="anonymous" label="Anonymous user. Not shown in list sessions."></et2-checkbox>
 				</row>
 				<row disabled="!@ldap_extra_attributes">
-					<description value="Home directory" for="homedirectory"/>
-					<textbox id="homedirectory" class="et2_fullWidth"/>
+					<et2-description  value="Home directory" for="homedirectory"></et2-description>
+					<et2-textbox  id="homedirectory"></et2-textbox>
 				</row>
 				<row disabled="!@ldap_extra_attributes">
-					<description value="Login shell" for="loginshell"/>
-					<textbox id="loginshell" class="et2_fullWidth"/>
+					<et2-description  value="Login shell" for="loginshell"></et2-description>
+					<et2-textbox  id="loginshell"></et2-textbox>
 				</row>
 
 				<row>
-					<description value="Primary group" for="account_primary_group"/>
-					<select-account id="account_primary_group" account_type="groups" class="et2_fullWidth"/>
+					<et2-description  value="Primary group" for="account_primary_group"></et2-description>
+					<et2-select-account  id="account_primary_group" accountType="groups"></et2-select-account>
 				</row>
 				<row>
-					<description value="Groups" for="groups"/>
-					<select-account account_type="groups" id="memberships" multiple="true" class="et2_fullWidth" span="4" tags="true"/>
+					<et2-description  value="Groups" for="groups"></et2-description>
+					<et2-select-account  id="memberships" multiple="true" span="4" accountType="groups"></et2-select-account>
 				</row>
 				<row disabled="!@account_id">
-					<description value="Last login"/>
-					<hbox>
-						<date-time id="account_lastlogin" readonly="true"/>
-						<description id="account_lastloginfrom" readonly="true" align="right"/>
-					</hbox>
+					<et2-description  value="Last login"></et2-description>
+					<et2-hbox>
+						<et2-date-time  id="account_lastlogin" readonly="true"></et2-date-time>
+						<et2-description  id="account_lastloginfrom" readonly="true" align="right"></et2-description>
+					</et2-hbox>
 				</row>
 				<row disabled="!@account_id">
-					<description value="Last password change"/>
-					<date-time id="account_lastpwd_change" readonly="true"/>
+					<et2-description  value="Last password change"></et2-description>
+					<et2-date-time  id="account_lastpwd_change" readonly="true"></et2-date-time>
 				</row>
 			</rows>
 		</grid>

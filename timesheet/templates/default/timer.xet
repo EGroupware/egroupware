@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="timesheet.timer.change" template="" lang="" group="0" version="1.7.002">
-		<et2-date-time id="time" required="true"/>
+		<et2-date-time  id="time" required="true"/>
 	</template>
 	<template id="timesheet.timer" template="" lang="" group="0" version="1.7.002">
 		<grid width="100%" >
@@ -15,32 +15,32 @@
 			</columns>
 			<rows>
 				<row disabled="@disable=/specific/">
-					<description value="Timer"/>
+					<et2-description  value="Timer"></et2-description>
 					<old-box id="specific_timer" value="00:00" class="timesheet_timer"/>
-					<et2-button id="specific[start]" label="Start" image="timesheet/play-blue" onclick="egw.timer_button"/>
-					<et2-button id="specific[pause]" label="Pause" image="timesheet/pause-orange" disabled="true" onclick="egw.timer_button"/>
-					<et2-button id="specific[stop]" label="Stop" image="timesheet/stop" disabled="true" onclick="egw.timer_button"/>
+					<et2-button  id="specific[start]" label="Start" image="timesheet/play-blue" onclick="egw.timer_button"/>
+					<et2-button  id="specific[pause]" label="Pause" image="timesheet/pause-orange" disabled="true" onclick="egw.timer_button"/>
+					<et2-button  id="specific[stop]" label="Stop" image="timesheet/stop" disabled="true" onclick="egw.timer_button"/>
 				</row>
 				<row disabled="@disable=/specific/">
-					<description />
-					<description/>
-					<et2-date-time-today id="times[specific][start]" onclick="egw.change_timer"/>
-					<et2-date-time-today id="times[specific][paused]" onclick="egw.change_timer"/>
-					<et2-date-time-today id="times[specific][stop]" onclick="egw.change_timer"/>
+					<et2-description></et2-description>
+					<et2-description></et2-description>
+					<et2-date-time-today  id="times[specific][start]" onclick="egw.change_timer"/>
+					<et2-date-time-today  id="times[specific][paused]" onclick="egw.change_timer"/>
+					<et2-date-time-today  id="times[specific][stop]" onclick="egw.change_timer"/>
 				</row>
 				<row disabled="@disable=/overall/">
-					<description value="Working time"/>
+					<et2-description  value="Working time"></et2-description>
 					<old-box id="overall_timer" value="00:00" class="timesheet_timer overall"/>
-					<et2-button id="overall[start]" label="Start" image="timesheet/play" onclick="egw.timer_button"/>
-					<et2-button id="overall[pause]" label="Pause" image="timesheet/pause-orange" disabled="true" onclick="egw.timer_button"/>
-					<et2-button id="overall[stop]" label="Stop" image="timesheet/stop" disabled="true" onclick="egw.timer_button"/>
+					<et2-button  id="overall[start]" label="Start" image="timesheet/play" onclick="egw.timer_button"/>
+					<et2-button  id="overall[pause]" label="Pause" image="timesheet/pause-orange" disabled="true" onclick="egw.timer_button"/>
+					<et2-button  id="overall[stop]" label="Stop" image="timesheet/stop" disabled="true" onclick="egw.timer_button"/>
 				</row>
 				<row disabled="@disable=/overall/">
-					<description />
-					<description/>
-					<et2-date-time-today id="times[overall][start]" onclick="egw.change_timer"/>
-					<et2-date-time-today id="times[overall][paused]" onclick="egw.change_timer"/>
-					<et2-date-time-today id="times[overall][stop]" onclick="egw.change_timer"/>
+					<et2-description></et2-description>
+					<et2-description></et2-description>
+					<et2-date-time-today  id="times[overall][start]" onclick="egw.change_timer"/>
+					<et2-date-time-today  id="times[overall][paused]" onclick="egw.change_timer"/>
+					<et2-date-time-today  id="times[overall][stop]" onclick="egw.change_timer"/>
 				</row>
 			</rows>
 		</grid>

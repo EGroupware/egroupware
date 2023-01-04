@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="admin.account.delete.delete" template="" lang="" group="0" version="18.1.001">
 		<grid width="100%" height="100%">
@@ -10,18 +9,18 @@
 			</columns>
 			<rows>
 				<row>
-					<description value="Who would you like to transfer records owned by the deleted user to?" class="dialogHeader2"/>
-					<select-account id="new_owner" empty_label="Delete all records" class="dialogHeader3"/>
+					<et2-description  value="Who would you like to transfer records owned by the deleted user to?" class="dialogHeader2"></et2-description>
+					<et2-select-account  id="new_owner" class="dialogHeader3" emptyLabel="Delete all records"></et2-select-account>
 				</row>
 				<row>
-					<vbox>
-						<description value="Automatically transfer entries owned by the user:"/>
-						<select id="delete_apps" rows="6" multiple="true" span="2"/>
-					</vbox>
+					<et2-vbox>
+						<et2-description  value="Automatically transfer entries owned by the user:"></et2-description>
+						<et2-select  id="delete_apps" rows="6" multiple="1" span="2"></et2-select>
+					</et2-vbox>
 				</row>
 				<row>
-					<vbox>
-						<description value="Please manually deal with entries owned by the user:"/>
+					<et2-vbox>
+						<et2-description  value="Please manually deal with entries owned by the user:"></et2-description>
 						<grid id="counts" disabled="!@counts">
 							<columns>
 								<column width="150"/>
@@ -29,8 +28,8 @@
 							</columns>
 							<rows>
 								<row>
-									<select-app id="${row}[app]" readonly="true"/>
-									<description id="${row}[count]"/>
+									<et2-select-app  id="${row}[app]" readonly="true"></et2-select-app>
+									<et2-description  id="${row}[count]"></et2-description>
 								</row>
 							</rows>
 						</grid>
@@ -41,17 +40,17 @@
 							</columns>
 							<rows>
 								<row>
-									<select-app value="filemanager" readonly="true"/>
-									<description value="Change owner of found files to the new user, and move the home folder to /home/new-user/old-home-username."/>
+									<et2-select-app  value="filemanager" readonly="true"></et2-select-app>
+									<et2-description  value="Change owner of found files to the new user, and move the home folder to /home/new-user/old-home-username."></et2-description>
 								</row>
 								<row>
-									<select-app value="mail" readonly="true"/>
-									<description value="Please check email.  It gets automatically deleted if email integration is used."/>
+									<et2-select-app  value="mail" readonly="true"></et2-select-app>
+									<et2-description  value="Please check email.  It gets automatically deleted if email integration is used."></et2-description>
 								</row>
 							</rows>
 						</grid>
-						<description value="If you delete the user without selecting an account to move the data to, all entries get deleted!" font_style="b"/>
-					</vbox>
+						<et2-description  value="If you delete the user without selecting an account to move the data to, all entries get deleted!" fontStyle="b"></et2-description>
+					</et2-vbox>
 				</row>
 			</rows>
 		</grid>
@@ -63,23 +62,23 @@
 	        </columns>
 	        <rows>
 	            <row class="dialogHeader">
-                   	<select-account id="account_id" readonly="true" label="Delete" onchange="var apps = widget.getRoot().getWidgetById('delete_apps'); apps.set_enabled(widget.getValue());"/>
+                   	<et2-select-account  id="account_id" readonly="true" label="Delete" onchange="var apps = widget.getRoot().getWidgetById('delete_apps'); apps.set_enabled(widget.getValue());"></et2-select-account>
 	            </row>
 	            <row>
-	                <tabbox id="tabs" width="100%" tab_height="400px">
+	                <et2-tabbox  id="tabs" width="100%" tabHeight="400px">
                     	<tabs>
                     		<tab id="main" label="Delete"/>
                     	</tabs>
                     	<tabpanels>
                     		<template template="admin.account.delete.delete" width="100%"/>
                     	</tabpanels>
-                    </tabbox>
+                    </et2-tabbox>
 	            </row>
 	            <row class="dialogFooterToolbar">
-	                <hbox>
-                        <button id="delete" label="Delete"/>
-                        <button id="cancel" label="Cancel" onclick="window.close()"/>
-                    </hbox>
+	                <et2-hbox>
+                        <et2-button  id="delete" label="Delete"></et2-button>
+                        <et2-button  id="cancel" label="Cancel" onclick="window.close()"></et2-button>
+                    </et2-hbox>
 	            </row>
 	        </rows>
 	    </grid>

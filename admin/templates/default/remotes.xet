@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="admin.remotes.edit" template="" lang="" group="0" version="1.5.001">
 		<grid>
@@ -10,39 +9,39 @@
 			</columns>
 			<rows>
 				<row disabled="@remote_id">
-					<description span="all" class="redItalic" value="Remote administration need to be enabled in the remote instance under Admin &gt; Site configuration!"/>
-					<description/>
+					<et2-description  span="all" class="redItalic" value="Remote administration need to be enabled in the remote instance under Admin &gt; Site configuration!"></et2-description>
+					<et2-description></et2-description>
 				</row>
 				<row class="th">
-					<description options=",,,remote_name" value="Name" needed="1"/>
-					<textbox size="64" maxlength="64" id="remote_name" needed="1"/>
+					<et2-description  value="Name" labelFor="remote_name" required="1"></et2-description>
+					<et2-textbox  maxlength="64" id="remote_name" required="1"></et2-textbox>
 				</row>
 				<row class="row">
-					<description options=",,,install_id" value="Install ID"/>
-					<textbox size="40" maxlength="32" validator="/^[a-f0-9]{0,32}$/" id="install_id" statustext="The install ID of an instance can be found under Admin &gt; Site configuration"/>
+					<et2-description  value="Install ID" labelFor="install_id"></et2-description>
+					<et2-textbox  maxlength="32" validator="/^[a-f0-9]{0,32}$/" id="install_id" statustext="The install ID of an instance can be found under Admin &gt; Site configuration"></et2-textbox>
 				</row>
 				<row class="row">
-					<description options=",,,config_passwd" value="Password"/>
-					<textbox size="40" maxlength="32" id="config_passwd" statustext="Config password or md5 hash from the header.inc.php"/>
+					<et2-description  value="Password" labelFor="config_passwd"></et2-description>
+					<et2-textbox  maxlength="32" id="config_passwd" statustext="Config password or md5 hash from the header.inc.php"></et2-textbox>
 				</row>
 				<row class="row" disabled="!@remote_hash">
-					<description value="Hash"/>
-					<description id="remote_hash"/>
+					<et2-description  value="Hash"></et2-description>
+					<et2-description  id="remote_hash"></et2-description>
 				</row>
 				<row class="row">
-					<description options=",,,remote_url" value="URL"/>
-					<textbox size="64" maxlength="128" validator="/^https?:\/\/[a-z0-9._-]+(\:[0-9]+)?(\/[a-z0-9._-]+)*$/" id="remote_url" needed="1" statustext="URL of the eGroupWare installation, eg. http://domain.com/egroupware"/>
+					<et2-description  value="URL" labelFor="remote_url"></et2-description>
+					<et2-textbox  maxlength="128" validator="/^https?:\/\/[a-z0-9._-]+(\:[0-9]+)?(\/[a-z0-9._-]+)*$/" id="remote_url" statustext="URL of the eGroupWare installation, eg. http://domain.com/egroupware" required="1"></et2-textbox>
 				</row>
 				<row class="row">
-					<description options=",,,remote_domain" value="Instance"/>
-					<textbox size="64" maxlength="64" id="remote_domain" statustext="Name of the eGroupWare instance, eg. default"/>
+					<et2-description  value="Instance" labelFor="remote_domain"></et2-description>
+					<et2-textbox  maxlength="64" id="remote_domain" statustext="Name of the eGroupWare instance, eg. default"></et2-textbox>
 				</row>
 				<row>
-					<hbox span="all">
-						<button label="Save" id="button[save]" statustext="Saves this entry"/>
-						<button id="button[apply]" label="Apply" statustext="Apply the changes"/>
-						<button label="Cancel" id="button[cancel]" statustext="leave without saveing the entry" novalidate="true"/>
-					</hbox>
+					<et2-hbox  span="all">
+						<et2-button  label="Save" id="button[save]" statustext="Saves this entry"></et2-button>
+						<et2-button  id="button[apply]" label="Apply" statustext="Apply the changes"></et2-button>
+						<et2-button  label="Cancel" id="button[cancel]" statustext="leave without saveing the entry" novalidate="true"></et2-button>
+					</et2-hbox>
 				</row>
 			</rows>
 		</grid>
@@ -61,15 +60,15 @@
 					<nextmatch-sortheader label="Instance" id="remote_domain"/>
 				</row>
 				<row class="row">
-					<description id="${row}[remote_name]"/>
-					<description options=",$row_cont[remote_url]/?domain=$row_cont[remote_domain],,,_blank" id="${row}[remote_url]"/>
-					<description id="${row}[remote_domain]" no_lang="1"/>
+					<et2-description  id="${row}[remote_name]"></et2-description>
+					<et2-description  link="$row_cont[remote_url]/?domain=$row_cont[remote_domain]" id="${row}[remote_url]" linkTarget="_blank"></et2-description>
+					<et2-description  id="${row}[remote_domain]" noLang="1"></et2-description>
 				</row>
 			</rows>
 		</grid>
 	</template>
 	<template id="admin.remotes.header_left" template="" lang="" group="0" version="1.5.001">
-		<button id="add" label="Add" statustext="Add a new remote instance"/>
+		<et2-button  id="add" label="Add" statustext="Add a new remote instance"></et2-button>
 	</template>
 	<template id="admin.remotes" template="" lang="" group="0" version="1.5.001">
 		<grid width="100%">

@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="resources.calendar_sidebox" template="" lang="" group="0" version="16.1">
-		<vbox parent_node="calendar-resources-et2_target">
+		<et2-vbox  parentId="calendar-resources-et2_target">
 			<tree id="owner" autoloading="resources_ui::ajax_tree" multiple="true" onchange="app.resources.sidebox_change"/>
-		</vbox>
+		</et2-vbox>
 		<styles>
 			#resources-calendar_sidebox {
 				display: none;

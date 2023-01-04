@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="etemplate.long_task" template="" lang="" group="0" version="1.9.001">
-		<hbox class="long_task">
-			<image class="dialog_icon"/>
-			<vbox class="ui-dialog-content">
-				<label id="message"/>
+		<et2-hbox  class="long_task">
+			<et2-image  class="dialog_icon"></et2-image>
+			<et2-vbox  class="ui-dialog-content">
+				<et2-label  id="message"></et2-label>
 				<progress id="progressbar"/>
-				<label id="totals"/>
-				<vbox class="log" id="log"/>
-			</vbox>
-		</hbox>
+				<et2-label  id="totals"></et2-label>
+				<et2-vbox  class="log" id="log"></et2-vbox>
+			</et2-vbox>
+		</et2-hbox>
 		<styles>
 			.long_task .ui-dialog-content {
 				width: 90%;

@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="mail.predefinedAddressesDialog" template="" lang="" group="0" version="17.1">
-		<hbox class="et2_prompt">
+		<et2-hbox  class="et2_prompt">
 			<grid width="390">
 				<columns>
 					<column width="60"/>
@@ -11,26 +10,26 @@
 				</columns>
 				<rows>
 					<row>
-						<description value="Configured values will be set automatically on compose dialog for respected field when composing a new email."/>
+						<et2-description  value="Configured values will be set automatically on compose dialog for respected field when composing a new email."></et2-description>
 					</row>
 					<row>
-						<description value="Reply to"/>
-						<taglist-email id="replyto" width="100%"/>
+						<et2-description  value="Reply to"></et2-description>
+						<et2-select-email  id="replyto" width="100%" multiple="true" searchUrl="EGroupware\Api\Etemplate\Widget\Taglist::ajax_email"></et2-select-email>
 					</row>
 					<row>
-						<description value="Folder"/>
-						<taglist id="folder" autocomplete_url="mail.mail_compose.ajax_searchFolder" autocomplete_params="" allowFreeEntries="false"/>
+						<et2-description  value="Folder"></et2-description>
+						<et2-select  id="folder" allowFreeEntries="false" multiple="true" searchUrl="mail.mail_compose.ajax_searchFolder" searchOptions=""></et2-select>
 					</row>
 					<row>
-						<description label= "%s:" value="Cc"/>
-						<taglist-email id="cc" allowFreeEntries="true" include_lists="true"/>
+						<et2-description  value="Cc"></et2-description>
+						<et2-select-email  id="cc" allowFreeEntries="true" multiple="true" searchUrl="EGroupware\Api\Etemplate\Widget\Taglist::ajax_email" includeLists="true"></et2-select-email>
 					</row>
 					<row>
-						<description label= "%s:" value="Bcc"/>
-						<taglist-email id="bcc" allowFreeEntries="true" include_lists="true"/>
+						<et2-description  value="Bcc"></et2-description>
+						<et2-select-email  id="bcc" allowFreeEntries="true" multiple="true" searchUrl="EGroupware\Api\Etemplate\Widget\Taglist::ajax_email" includeLists="true"></et2-select-email>
 					</row>
 				</rows>
 			</grid>
-		</hbox>
+		</et2-hbox>
 	</template>
 </overlay>

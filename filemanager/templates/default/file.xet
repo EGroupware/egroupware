@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="filemanager.file.general" template="" lang="" group="0" version="1.7.002">
 		<grid width="100%" spacing="10">
@@ -10,39 +9,39 @@
 			</columns>
 			<rows>
 				<row height="30">
-					<image align="center" src="icon" class="mimeIcon"/>
+					<et2-image  align="center" src="icon" class="mimeIcon"></et2-image>
 					<vfs-name id="name" needed="1" class="fileName et2_fullWidth"/>
 				</row>
 				<row>
 					<hrule span="all"/>
 				</row>
 				<row disabled="!@is_link">
-					<description for="symlink" value="Link"/>
-					<textbox id="symlink" readonly="true" class="fileName"/>
+					<et2-description  for="symlink" value="Link"></et2-description>
+					<et2-textbox  id="symlink" readonly="true" class="fileName"></et2-textbox>
 				</row>
 				<row>
-					<description value="Type"/>
-					<description id="mime"/>
+					<et2-description  value="Type"></et2-description>
+					<et2-description  id="mime"></et2-description>
 				</row>
 				<row>
-					<description value="Directory"/>
-					<description id="dir"/>
+					<et2-description  value="Directory"></et2-description>
+					<et2-description  id="dir"></et2-description>
 				</row>
 				<row disabled="@is_link">
-					<description value="Size"/>
+					<et2-description  value="Size"></et2-description>
 					<vfs-size id="size" options="1"/>
 				</row>
 				<row>
-					<description value="Created"/>
-					<date-time id="ctime" readonly="true"/>
+					<et2-description  value="Created"></et2-description>
+					<et2-date-time  id="ctime" readonly="true"></et2-date-time>
 				</row>
 				<row>
-					<description value="Modified"/>
-					<date-time id="mtime" readonly="true"/>
+					<et2-description  value="Modified"></et2-description>
+					<et2-date-time  id="mtime" readonly="true"></et2-date-time>
 				</row>
 				<row>
-					<description for="comment" value="Comment"/>
-					<textbox multiline="true" id="comment" class="et2_fullWidth" height="100"/>
+					<et2-description  for="comment" value="Comment"></et2-description>
+					<et2-textarea  id="comment" height="100"></et2-textarea>
 				</row>
 			</rows>
 		</grid>
@@ -63,30 +62,24 @@
                             </columns>
                             <rows>
                                 <row>
-                                    <description value="Owner"/>
-                                    <menulist>
-                                        <menupopup id="perms[owner]"/>
-                                    </menulist>
+                                    <et2-description  value="Owner"></et2-description>
+                                    <et2-select  id="perms[owner]"></et2-select>
 								</row>
 								<row>
-									<description value="Group"/>
-									<menulist>
-										<menupopup id="perms[group]"/>
-									</menulist>
+									<et2-description  value="Group"></et2-description>
+									<et2-select  id="perms[group]"></et2-select>
 								</row>
 								<row>
-									<description value="Other"/>
-									<menulist>
-										<menupopup id="perms[other]"/>
-									</menulist>
+									<et2-description  value="Other"></et2-description>
+									<et2-select  id="perms[other]"></et2-select>
 								</row>
 								<row disabled="@is_dir">
-									<description/>
-									<checkbox label="Executable" id="perms[executable]"/>
+									<et2-description></et2-description>
+									<et2-checkbox  label="Executable" id="perms[executable]"></et2-checkbox>
 								</row>
 								<row disabled="1">
-									<description/>
-									<checkbox label="Only owner can rename or delete the content" id="perms[sticky]"/>
+									<et2-description></et2-description>
+									<et2-checkbox  label="Only owner can rename or delete the content" id="perms[sticky]"></et2-checkbox>
 								</row>
 							</rows>
 						</grid>
@@ -102,19 +95,19 @@
 							</columns>
 							<rows>
 								<row>
-									<description value="User"/>
-									<select-account label="@ro_uid_root" id="uid" empty_label="root" account_type="accounts"/>
+									<et2-description  value="User"></et2-description>
+									<et2-select-account  label="@ro_uid_root" id="uid" emptyLabel="root" accountType="accounts"></et2-select-account>
 								</row>
 								<row>
-									<description value="Group"/>
-									<select-account label="@ro_gid_root" id="gid" empty_label="root" account_type="groups"/>
+									<et2-description  value="Group"></et2-description>
+									<et2-select-account  label="@ro_gid_root" id="gid" emptyLabel="root" accountType="groups"></et2-select-account>
 								</row>
 							</rows>
 						</grid>
 					</groupbox>
 				</row>
 				<row disabled="!@is_dir">
-					<checkbox label="Modify all Subdirectories and their content" id="modify_subs"/>
+					<et2-checkbox  label="Modify all Subdirectories and their content" id="modify_subs"></et2-checkbox>
 				</row>
 			</rows>
 		</grid>
@@ -139,31 +132,25 @@
 							</columns>
 							<rows>
 								<row class="th">
-									<description value="Owner"/>
-									<description value="Rights"/>
-									<description value="Inherited"/>
-									<description/>
+									<et2-description  value="Owner"></et2-description>
+									<et2-description  value="Rights"></et2-description>
+									<et2-description  value="Inherited"></et2-description>
+									<et2-description></et2-description>
 								</row>
 								<row class="row" disabled="!@1">
-									<menulist>
-										<menupopup type="select-account" id="${row}[owner]" readonly="true"/>
-									</menulist>
-									<menulist>
-										<menupopup id="${row}[rights]" readonly="true"/>
-									</menulist>
-									<description id="${row}[path]"/>
-									<button label="Delete" id="delete[$row_cont[ino]-$row_cont[owner]]" onclick="et2_dialog.confirm(widget,'Delete this extended ACL?','Delete')" image="delete"/>
+									<et2-select-account  id="${row}[owner]" readonly="true"></et2-select-account>
+									<et2-select  id="${row}[rights]" readonly="true"></et2-select>
+									<et2-description  id="${row}[path]"></et2-description>
+									<et2-button  label="Delete" id="delete[$row_cont[ino]-$row_cont[owner]]" onclick="et2_dialog.confirm(widget,'Delete this extended ACL?','Delete')" image="delete"></et2-button>
 								</row>
 							</rows>
 						</grid>
 					</groupbox>
 				</row>
 				<row valign="bottom" disabled="!@is_owner">
-						<select-account class="filemanager-file_filemanager-file-eaclowner eaclAccount" label="Owner" id="eacl_owner" empty_label="select one" account_type="both"/>
-						<menulist>
-							<menupopup class="eaclRights" statustext="You can only grant additional rights, you can NOT take rights away!" label="Rights" id="eacl[rights]"/>
-						</menulist>
-					<button label="Add" id="button[eacl]" image="add" background_image="1"/>
+						<et2-select-account  class="filemanager-file_filemanager-file-eaclowner eaclAccount" label="Owner" id="eacl_owner" emptyLabel="select one" accountType="both"></et2-select-account>
+						<et2-select  class="eaclRights" statustext="You can only grant additional rights, you can NOT take rights away!" label="Rights" id="eacl[rights]"></et2-select>
+					<et2-button  label="Add" id="button[eacl]" image="add"></et2-button>
 				</row>
 			</rows>
 		</grid>
@@ -175,13 +162,13 @@
 			</columns>
 			<rows>
 				<row valign="top" disabled="!@mime=/^image/">
-					<image src="link" class="previewImage"/>
+					<et2-image  src="link" class="previewImage"></et2-image>
 				</row>
 				<row valign="top" height="280" disabled="!@text_content">
-					<textbox multiline="true" id="text_content" readonly="true" class="previewText"/>
+					<et2-textarea  id="text_content" readonly="true" class="previewText"></et2-textarea>
 				</row>
 				<row disabled="@mime=/^(image|text)/">
-					<description value="No preview available"/>
+					<et2-description  value="No preview available"></et2-description>
 				</row>
 			</rows>
 		</grid>
@@ -205,9 +192,9 @@
 			</columns>
 			<rows>
 				<row disabled="@mergeapp_itempicker_disabled">
-					<hbox>
+					<et2-hbox>
 						<itempicker id="itempicker_merge" application="@mergeapp_effective" action="itempickerDocumentAction" action_label="Merge"/>
-					</hbox>
+					</et2-hbox>
 				</row>
 				<row>
 					<groupbox>
@@ -219,16 +206,12 @@
 							</columns>
 							<rows>
 								<row disabled="@is_dir">
-									<description value="Items of the selected application can be inserted into this document"/>
-									<menulist>
-										<menupopup id="mergeapp"/>
-									</menulist>
+									<et2-description  value="Items of the selected application can be inserted into this document"></et2-description>
+									<et2-select  id="mergeapp"></et2-select>
 								</row>
 								<row disabled="!@is_dir">
-									<description value="Items of the selected application can be inserted into files of this directory"/>
-									<menulist>
-										<menupopup id="mergeapp"/>
-									</menulist>
+									<et2-description  value="Items of the selected application can be inserted into files of this directory"></et2-description>
+									<et2-select  id="mergeapp"></et2-select>
 								</row>
 							</rows>
 						</grid>
@@ -244,10 +227,10 @@
 			</columns>
 			<rows>
 				<row disabled="!@msg">
-					<description id="msg" span="all" class="redItalic"/>
+					<et2-description  id="msg" span="all" class="redItalic"></et2-description>
 				</row>
 				<row class="dialogTabs">
-					<tabbox id="tabs" span="all" tab_height="330">
+					<et2-tabbox  id="tabs" span="all" tabHeight="330">
 						<tabs>
 							<tab id="filemanager.file.general" label="General"/>
 							<tab id="filemanager.file.perms" label="Permissions"/>
@@ -262,17 +245,17 @@
 							<template id="filemanager.file.preview"/>
 							<template id="filemanager.file.custom"/>
 						</tabpanels>
-					</tabbox>
+					</et2-tabbox>
 				</row>
 				<row class="dialogFooterToolbar">
-					<hbox>
-						<hbox>
-							<button label="Save" id="button[save]" image="save" background_image="1"/>
-							<button label="Apply" id="button[apply]" image="apply" background_image="1"/>
-							<buttononly label="Cancel" id="button[cancel]" onclick="window.close();" image="cancel" background_image="1"/>
-						</hbox>
-						<buttononly align="right" statustext="Enter setup user and password to get root rights" label="Superuser" id="sudouser" onclick="jQuery('.superuser').css('display','inline'); document.getElementById(form::name('sudo[user]')).focus();" image="superuser" background_image="1"/>
-					</hbox>
+					<et2-hbox>
+						<et2-hbox>
+							<et2-button  label="Save" id="button[save]" image="save"></et2-button>
+							<et2-button  label="Apply" id="button[apply]" image="apply"></et2-button>
+							<et2-button  label="Cancel" id="button[cancel]" onclick="window.close();" image="cancel" noSubmit="true"></et2-button>
+						</et2-hbox>
+						<et2-button  align="right" statustext="Enter setup user and password to get root rights" label="Superuser" id="sudouser" onclick="jQuery('.superuser').css('display','inline'); document.getElementById(form::name('sudo[user]')).focus();" image="superuser" noSubmit="true"></et2-button>
+					</et2-hbox>
 				</row>
 				<row>
 					<groupbox class="superuser">
@@ -284,19 +267,19 @@
 							</columns>
 							<rows>
 								<row>
-									<description for="sudo[user]" value="User"/>
-									<textbox id="sudo[user]"/>
+									<et2-description  for="sudo[user]" value="User"></et2-description>
+									<et2-textbox  id="sudo[user]"></et2-textbox>
 								</row>
 								<row>
-									<description for="sudo[passwd]" value="Password"/>
-									<passwd id="sudo[passwd]" autocomplete="on"/>
+									<et2-description  for="sudo[passwd]" value="Password"></et2-description>
+									<et2-password  id="sudo[passwd]" autocomplete="on"></et2-password>
 								</row>
 								<row>
-									<description/>
-									<hbox>
-										<button label="Submit" id="button[setup]"/>
-										<buttononly label="Cancel" onclick="jQuery('.superuser').hide();"/>
-									</hbox>
+									<et2-description></et2-description>
+									<et2-hbox>
+										<et2-button  label="Submit" id="button[setup]"></et2-button>
+										<et2-button  label="Cancel" onclick="jQuery('.superuser').hide();" noSubmit="true"></et2-button>
+									</et2-hbox>
 
 								</row>
 							</rows>

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="admin.accesslog.rows" template="" lang="" group="0" version="1.9.003">
 		<grid width="100%">
@@ -18,7 +17,7 @@
 			</columns>
 			<rows>
 				<row class="th">
-					<nextmatch-accountfilter id="account_id" options="LoginID"/>
+					<et2-nextmatch-header-account  id="account_id" emptyLabel="LoginID"/>
 					<nextmatch-header label="Login-Status" id="sessionstatus"/>
 					<nextmatch-sortheader label="Loginid" id="loginid"/>
 					<nextmatch-sortheader label="IP" id="ip"/>
@@ -30,21 +29,19 @@
 					<nextmatch-header label="Action" id="session_action"/>
 				</row>
 				<row class="row $row_cont[class]">
-					<hbox>
-						<menulist>
-							<menupopup type="select-account" label="" id="${row}[account_id]" readonly="true"/>
-						</menulist>
-						<description id="${row}[alt_loginid]"/>
-					</hbox>
-					<description id="${row}[sessionstatus]"/>
-					<description id="${row}[loginid]"/>
-					<description id="${row}[ip]"/>
-					<date-time id="${row}[li]" readonly="true"/>
-					<date-time id="${row}[lo]" readonly="true"/>
-					<date-duration id="${row}[total]" readonly="true" options=",hm,24"/>
-					<date-since id="${row}[session_dla]" readonly="true"/>
-					<description statustext="$row_cont[user_agent]" id="${row}[os_browser]" class="admin_userAgent"/>
-					<description id="${row}[session_action]"/>
+					<et2-hbox>
+						<et2-select-account  label="" id="${row}[account_id]" readonly="true"></et2-select-account>
+						<et2-description  id="${row}[alt_loginid]"></et2-description>
+					</et2-hbox>
+					<et2-description  id="${row}[sessionstatus]"></et2-description>
+					<et2-description  id="${row}[loginid]"></et2-description>
+					<et2-description  id="${row}[ip]"></et2-description>
+					<et2-date-time  id="${row}[li]" readonly="true"></et2-date-time>
+					<et2-date-time  id="${row}[lo]" readonly="true"></et2-date-time>
+					<et2-date-duration  id="${row}[total]" readonly="true" ></et2-date-duration>
+					<et2-date-since  id="${row}[session_dla]" readonly="true"></et2-date-since>
+					<et2-description  statustext="$row_cont[user_agent]" id="${row}[os_browser]" class="admin_userAgent"></et2-description>
+					<et2-description  id="${row}[session_action]"></et2-description>
 				</row>
 			</rows>
 		</grid>
@@ -57,17 +54,17 @@
 			</columns>
 			<rows>
 				<row disabled="!@msg">
-					<description align="center" id="msg" span="all" class="message"/>
-					<description/>
+					<et2-description  align="center" id="msg" span="all" class="message"></et2-description>
+					<et2-description></et2-description>
 				</row>
 				<row>
 					<nextmatch id="nm" options="admin.accesslog.rows" span="all"/>
 				</row>
 				<row>
-					<hbox options="0,0">
-						<description value="Percent of users that logged out" readonly="true"/>
-						<textbox type="float" label=": %s %" id="percent" precision="1" readonly="true"/>
-					</hbox>
+					<et2-hbox  cellpadding="0" cellspacing="0" >
+						<et2-description  value="Percent of users that logged out" readonly="true"></et2-description>
+						<et2-number  label=": %s %" id="percent" precision="1" readonly="true"></et2-number>
+					</et2-hbox>
 				</row>
 			</rows>
 		</grid>

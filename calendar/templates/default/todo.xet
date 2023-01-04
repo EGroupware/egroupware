@@ -9,16 +9,16 @@ Egroupware
 @version $Id$
 -->
 
-<!DOCTYPE overlay PUBLIC '-//EGroupware GmbH//eTemplate 2//EN' 'http://www.egroupware.org/etemplate2.dtd'>
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 
 <overlay>
 	<template id="calendar.todo" width="30%">
-		<box class="calendar_calDayTodos">
-			<box class="calendar_calDayTodosHeader" width="100%">
-				<button align="left" statustext="Add" id="add" image="add" background_image="true" onclick="egw.open('','infolog','add',{action: 'new',type:'task'});"/>
-				<label id="label" class="calendar_calDayTodosHeader" width="100%" />
-			</box>
-			<box class="calendar_calDayTodosTable">
+		<et2-box  class="calendar_calDayTodos">
+			<et2-box  class="calendar_calDayTodosHeader" width="100%">
+				<et2-button  align="left" statustext="Add" id="add" image="add" onclick="egw.open('','infolog','add',{action: 'new',type:'task'});"></et2-button>
+				<et2-label  id="label" class="calendar_calDayTodosHeader" width="100%" ></et2-label>
+			</et2-box>
+			<et2-box  class="calendar_calDayTodosTable">
 				<grid id="todos" width="100%">
 					<columns>
 						<column/>
@@ -28,11 +28,11 @@ Egroupware
 						<row class="todo_row">
 							<html id="{$row}[icons]" />
 
-							<description value="$row_cont[title]" href="$row_cont[edit]" extra_link_popup="$row_cont[edit_size]"/>
+							<et2-description  value="$row_cont[title]" href="$row_cont[edit]" extraLinkPopup="$row_cont[edit_size]"></et2-description>
 						</row>
 					</rows>
 				</grid>
-			</box>
-		</box>
+			</et2-box>
+		</et2-box>
 	</template>
 </overlay>

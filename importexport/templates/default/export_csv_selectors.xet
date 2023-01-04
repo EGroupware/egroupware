@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="importexport.export_csv_selectors" template="" lang="" group="0" version="1.9.002">
 		<grid>
@@ -9,13 +8,13 @@
 			</columns>
 			<rows>
 				<row>
-					<radio label="Use all" id="selection" options="all"/>
+					<radio label="Use all" id="selection" set_value="all" />
 				</row>
 				<row disabled="@no_search">
-					<radio label="Use search results" id="selection" options="search"/>
+					<radio label="Use search results" id="selection" set_value="search" />
 				</row>
 				<row disabled="@no_filter">
-					<radio label="Use definition filter" id="selection" onclick="jQuery('div.filters').show();" options="filter"/>
+					<radio label="Use definition filter" id="selection" onclick="jQuery('div.filters').show();" set_value="filter" />
 				</row>
 			</rows>
 		</grid>

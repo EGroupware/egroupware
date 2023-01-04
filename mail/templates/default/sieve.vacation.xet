@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="mail.sieve.vacation" template="" lang="" group="0" version="1.9.002">
 		<grid width="100%" height="100%">
@@ -12,55 +11,51 @@
 			</columns>
 			<rows>
 				<row valign="top" class="dialogHeader">
-					<description value="Edit vacation settings" class="et2_fullWidth"/>
-					<description align="right" disabled="!@is_admin_vac" for="acc_id" value="Mail account"/>
-					<menulist>
-						<menupopup id="acc_id" disabled="!@is_admin_vac" onchange="app.mail.vacation_change_account" class="et2_fullWidth"/>
-					</menulist>
-					<description/>
+					<et2-description  value="Edit vacation settings"></et2-description>
+					<et2-description  align="right" disabled="!@is_admin_vac" for="acc_id" value="Mail account"></et2-description>
+					<et2-select  id="acc_id" disabled="!@is_admin_vac" onchange="app.mail.vacation_change_account"></et2-select>
+					<et2-description></et2-description>
 				</row>
 				<row>
-					<description value="Status:"/>
-					<hbox span="all">
-						<menulist>
-							<menupopup id="status" onchange='app.mail.vacationFilterStatusChange'/>
-						</menulist>
-						<date id="start_date"/>
-						<date id="end_date" />
-					</hbox>
+					<et2-description  value="Status:"></et2-description>
+					<et2-hbox  span="all">
+						<et2-select  id="status" onchange="app.mail.vacationFilterStatusChange"></et2-select>
+						<et2-date  id="start_date"></et2-date>
+						<et2-date  id="end_date" ></et2-date>
+					</et2-hbox>
 				</row>
 				<row>
-					<description value="Respond to mail sent to:"/>
-					<taglist-email rows="3" id="addresses" needed="true" class="et2_required" allowFreeEntries="true" empty_label="all my email addresses" span="2"/>
-					<button class="$cont[hideIfSieveDisabled] et2_fullWidth"  label="Add all my aliases" id="AllAddresses" onclick='app.mail.sieve_vac_all_aliases()'/>
+					<et2-description  value="Respond to mail sent to:"></et2-description>
+					<et2-select-email  rows="3" id="addresses" class="et2_required" allowFreeEntries="true" span="2" multiple="1" searchUrl="EGroupware\Api\Etemplate\Widget\Taglist::ajax_email" placeholder="all my email addresses" required="true"></et2-select-email>
+					<et2-button  class="$cont[hideIfSieveDisabled]" label="Add all my aliases" id="AllAddresses" onclick="app.mail.sieve_vac_all_aliases()"></et2-button>
 				</row>
 				<row>
-					<description value="Forward messages to:"/>
-					<taglist-email id="forwards" allowFreeEntries="true" width="100%" empty_label="do not forward"/>
+					<et2-description  value="Forward messages to:"></et2-description>
+					<et2-select-email  id="forwards" allowFreeEntries="true" width="100%" multiple="true" searchUrl="EGroupware\Api\Etemplate\Widget\Taglist::ajax_email" placeholder="do not forward"></et2-select-email>
 				</row>
 				<row>
-					<description value="Resend after how many days?"/>
-					<textbox type="integer" id="days" min="1" max="31"/>
+					<et2-description  value="Resend after how many days?"></et2-description>
+					<et2-number  id="days" min="1" max="31" precision="0"></et2-number>
 				</row>
 				<row>
-					<description value="With message:"/>
-					<vbox span="all">
-						<textbox multiline="true" id="text" rows="10" needed="1" class="et2_required"/>
-						<description id="by_date_label" value="You can use $$start$$ for the above start date and $$end$$ for the end date."/>
-					</vbox>
+					<et2-description  value="With message:"></et2-description>
+					<et2-vbox  span="all">
+						<et2-textarea  id="text" rows="10" class="et2_required" required="1"></et2-textarea>
+						<et2-description  id="by_date_label" value="You can use $$start$$ for the above start date and $$end$$ for the end date."></et2-description>
+					</et2-vbox>
 				</row>
 				<row>
-					<description value="Set it as default:" disabled="@is_not_admin_user"/>
-					<checkbox id="set_as_default"/>
-					<description value="Validate addresses on submit:"/>
-					<checkbox id="check_mail_sent_to"/>
+					<et2-description  value="Set it as default:" disabled="@is_not_admin_user"></et2-description>
+					<et2-checkbox  id="set_as_default"></et2-checkbox>
+					<et2-description  value="Validate addresses on submit:"></et2-description>
+					<et2-checkbox  id="check_mail_sent_to"></et2-checkbox>
 				</row>
 				<row class="dialogFooterToolbar">
-					<hbox span="all">
-						<button label="Save" id="button[save]" class="$cont[hideIfSieveDisabled]"/>
-						<button label="Apply" id="button[apply]" class="$cont[hideIfSieveDisabled]"/>
-						<button label="Cancel" id="button[cancel]" onclick="window.close();" class="$cont[hideIfSieveDisabled]"/>
-					</hbox>
+					<et2-hbox  span="all">
+						<et2-button  label="Save" id="button[save]" class="$cont[hideIfSieveDisabled]"></et2-button>
+						<et2-button  label="Apply" id="button[apply]" class="$cont[hideIfSieveDisabled]"></et2-button>
+						<et2-button  label="Cancel" id="button[cancel]" onclick="window.close();" class="$cont[hideIfSieveDisabled]"></et2-button>
+					</et2-hbox>
 				</row>
 			</rows>
 		</grid>

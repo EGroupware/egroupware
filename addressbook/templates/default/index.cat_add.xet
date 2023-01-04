@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="addressbook.index.cat_add" template="" lang="" group="0" version="1.5.001">
 		<grid width="100%" height="300" overflow="auto">
@@ -12,17 +11,16 @@
 			</columns>
 			<rows>
 				<row valign="top">
-					<image src="folder"/>
-					<description value="Categories"/>
-					<listbox type="select-cat" id="cat_id" rows="013" options=",width:99%"/>
+					<et2-image  src="folder"></et2-image>
+					<et2-description  value="Categories"></et2-description>
+					<et2-select-cat  id="cat_id" rows="013" multiple="1" globalCategories="width:99%"></et2-select-cat>
 					<tree-cat id="cat_id" options="13,,width:99%"/>
 				</row>
 				<row>
-					<hbox span="all">
-						<button label="add" id="cat_add"/ image="add" background_image="1">
-						<button label="delete" id="cat_delete" image="delete" background_image="1"/>
-						<button label="cancel" id="cat_cancel" onclick="window.close();" image="cancel" background_image="1"/>
-					</hbox>
+					<et2-hbox  span="all">
+						<et2-button  label="delete" id="cat_delete" image="delete"></et2-button>
+						<et2-button  label="cancel" id="cat_cancel" onclick="window.close();" image="cancel"></et2-button>
+					</et2-hbox>
 				</row>
 			</rows>
 		</grid>

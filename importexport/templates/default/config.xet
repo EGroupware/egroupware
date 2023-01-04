@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="importexport.config" template="" lang="" group="0" version="1.9.001">
 		<grid>
@@ -10,16 +9,16 @@
 			</columns>
 			<rows>
 				<row>
-					<description value="Users allowed to create their own definitions"/>
-					<checkbox id="newsettings[users_create_definitions]"/>
+					<et2-description  value="Users allowed to create their own definitions"></et2-description>
+					<et2-checkbox  id="newsettings[users_create_definitions]"></et2-checkbox>
 				</row>
 				<row valign="top">
-					<description value="Users allowed to share their own definitions"/>
-					<listbox type="select-account" id="newsettings[share_definition]" rows="5" options="both"/>
+					<et2-description  value="Users allowed to share their own definitions"></et2-description>
+					<et2-select-account  id="newsettings[share_definition]" rows="5" multiple="1" placeholder="both"></et2-select-account>
 				</row>
 				<row valign="top">
-					<description value="Extra charsets for import / export"/>
-					<listbox id="newsettings[import_charsets]" rows="5"/>
+					<et2-description  value="Extra charsets for import / export"></et2-description>
+					<et2-select  id="newsettings[import_charsets]" rows="5" multiple="1"></et2-select>
 				</row>
 			</rows>
 		</grid>

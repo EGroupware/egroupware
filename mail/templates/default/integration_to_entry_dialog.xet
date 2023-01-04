@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="mail.integration_to_entry_dialog" template="" lang="" group="0" version="1.9.001">
-		<vbox width="100%">
-			<description value="Select an existing entry in order to append mail content to it"/>
-			<description/>
-			<link-entry id="id" only_app="@appName" class="et2_fullWidth"/>
-		</vbox>
+		<et2-vbox  width="100%">
+			<et2-description  value="Select an existing entry in order to append mail content to it"></et2-description>
+			<et2-description></et2-description>
+			<et2-link-entry  id="id" onlyApp="@appName"></et2-link-entry>
+		</et2-vbox>
 		<styles>
 			#_id {width: 100%;}
 		</styles>

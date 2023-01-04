@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="calendar.import" template="" lang="" group="0" version="1.0.1.001">
 		<grid>
@@ -10,19 +9,19 @@
 			</columns>
 			<rows>
 				<row>
-					<description span="all" class="message" id="msg" no_lang="1" align="center"/>
-					<description/>
+					<et2-description  span="all" class="message" id="msg" align="center" noLang="1"></et2-description>
+					<et2-description></et2-description>
 				</row>
 				<row>
-					<description value="iCal file"/>
+					<et2-description  value="iCal file"></et2-description>
 					<file id="ical_file" needed="1"/>
 				</row>
 				<row>
-					<description/>
-					<button label="Import" id="import"/>
+					<et2-description></et2-description>
+					<et2-button  label="Import" id="import"></et2-button>
 				</row>
 				<row>
-					<description span="all"/>
+					<et2-description  span="all"></et2-description>
 				</row>
 			</rows>
 		</grid>

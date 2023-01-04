@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="mail.subscribe" template="" lang="" group="0" version="1.9.001">
-		<hbox class="dialogHeader" >
-			<description value="Subscription folders" class="mail_subscription_header"/>
-		</hbox>
-		<hbox class="treeContainer">
+		<et2-hbox  class="dialogHeader" >
+			<et2-description  value="Subscription folders" class="mail_subscription_header"></et2-description>
+		</et2-hbox>
+		<et2-hbox  class="treeContainer">
 			<tree id="foldertree" multiple="true" autoloading="mail_ui::ajax_tree_autoloading" onopenstart="app.mail.subscription_autoloadingStart" onopenend="app.mail.subscription_autoloadingEnd" multimarking="strict" highlighting="true" oncheck="app.mail.folderMgmt_onCheck" onselect="app.mail.folderMgmt_onSelect"/>
-		</hbox>
-		<hbox  class="dialogFooterToolbar">
-			<button statustext="Saves subscription changes" label="Save" id="button[save]"/>
-			<button statustext="Applies the changes made" label="Apply" id="button[apply]" onclick="app.mail.subscription_apply"/>
-			<button label="Cancel" id="button[cancel]" onclick="window.close()"/>
-		</hbox>
+		</et2-hbox>
+		<et2-hbox  class="dialogFooterToolbar">
+			<et2-button  statustext="Saves subscription changes" label="Save" id="button[save]"></et2-button>
+			<et2-button  statustext="Applies the changes made" label="Apply" id="button[apply]" onclick="app.mail.subscription_apply"></et2-button>
+			<et2-button  label="Cancel" id="button[cancel]" onclick="window.close()"></et2-button>
+		</et2-hbox>
 	</template>
 </overlay>

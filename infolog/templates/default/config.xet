@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="infolog.config.configuration" template="" lang="" group="0" version="">
 		<grid width="100%">
@@ -10,69 +9,65 @@
 			</columns>
 			<rows>
 				<row class="th">
-					<description value="Rights for the responsible" span="all"/>
+					<et2-description  value="Rights for the responsible" span="all"></et2-description>
 				</row>
 				<row>
-					<description value="Which implicit ACL rights should the responsible get"/>
-					<menulist>
-						<menupopup id="implicit_rights"/>
-					</menulist>
+					<et2-description  value="Which implicit ACL rights should the responsible get"></et2-description>
+					<et2-select  id="implicit_rights"></et2-select>
 				</row>
 				<row>
-					<vbox>
-						<description value="Which additional fields should the responsible be allowed to edit without having edit rights?"/>
-						<description value="Status, percent and date completed are always allowed."/>
-					</vbox>
-					<listbox id="responsible_edit" rows="6" options=",,,,,,0"/>
+					<et2-vbox>
+						<et2-description  value="Which additional fields should the responsible be allowed to edit without having edit rights?"></et2-description>
+						<et2-description  value="Status, percent and date completed are always allowed."></et2-description>
+					</et2-vbox>
+					<et2-select  id="responsible_edit" rows="6" options=",,,,,,0" multiple="1"></et2-select>
 				</row>
 				<row class="th">
-					<description value="History logging" span="all"/>
+					<et2-description  value="History logging" span="all"></et2-description>
 				</row>
 				<row>
-					<description value="History logging and deleting of items"/>
-					<menulist>
-						<menupopup id="history"/>
-					</menulist>
+					<et2-description  value="History logging and deleting of items"></et2-description>
+					<et2-select  id="history"></et2-select>
 				</row>
 				<row class="th">
-					<description value="Other configurations" span="all"/>
+					<et2-description  value="Other configurations" span="all"></et2-description>
 				</row>
 				<row>
-					<description value="Fields to exclude when copying an infolog:"/>
-					<listbox id="copy_excludefields" rows="6"/>
+					<et2-description  value="Fields to exclude when copying an infolog:"></et2-description>
+					<et2-select  id="copy_excludefields" rows="6" multiple="1"></et2-select>
 				</row>
 				<row>
-					<description value="Load custom fields in index, if filtered by selected types (eg. to display them in a type-specific index template)"/>
-					<listbox id="index_load_cfs" rows="6" options=",,,,,,1"/>
+					<et2-description  value="Load custom fields in index, if filtered by selected types (eg. to display them in a type-specific index template)"></et2-description>
+					<et2-select  id="index_load_cfs" rows="6" options=",,,,,,1" multiple="1"></et2-select>
 				</row>
 				<row>
-					<description value="Prefix for sub-entries (default: Re:)"/>
-					<textbox id="sub_prefix" no_lang="1"/>
+					<et2-description  value="Prefix for sub-entries (default: Re:)"></et2-description>
+					<et2-textbox  id="sub_prefix" noLang="1"></et2-textbox>
 				</row>
 				<row>
-					<description value="Fields to exclude when creating a sub-entry:"/>
-					<listbox id="sub_excludefields" rows="6"/>
+					<et2-description  value="Fields to exclude when creating a sub-entry:"></et2-description>
+					<et2-select  id="sub_excludefields" rows="6" multiple="1"></et2-select>
 				</row>
 				<row>
-					<description value="Allow to save entries with due date in the past" label="%s:"/>
-					<select id="allow_past_due_date">
+					<et2-description  value="Allow to save entries with due date in the past" label="%s:"></et2-description>
+					<et2-select  id="allow_past_due_date">
 						<option value="1">Yes</option>
 						<option value="0">No</option>
-					</select>
+					</et2-select>
 				</row>
 				<row>
-					<vbox>
-						<description value="Performance optimization for huge InfoLog tables" label="%s:"/>
-						<description value="Limit list to last N month, if ordering by last-modified and not searching."/>
-						<description value="Can not return an exact number of rows and therefore hides the count."/>
-					</vbox>
-					<select id="limit_modified_n_month">
+					<et2-vbox>
+						<et2-description  value="Performance optimization for huge InfoLog tables" label="%s:"></et2-description>
+						<et2-description  value="Limit list to last N month, if ordering by last-modified and not searching."></et2-description>
+						<et2-description  value="Can not return an exact number of rows and therefore hides the count."></et2-description>
+					</et2-vbox>
+					<et2-select  id="limit_modified_n_month">
 						<option value="">{Disabled} ({Default})</option>
 						<option value="1">1 {Month}</option>
 						<option value="3">3 {Month}</option>
 						<option value="6">6 {Month}</option>
 						<option value="12">12 {Month}</option>
-					</select>
+					</et2-select>
 				</row>
 			</rows>
 		</grid>
@@ -85,26 +80,23 @@
             </columns>
             <rows>
                 <row>
-                    <menulist>
-                        <menupopup label="Type" id="notification_type" onchange="1"/>
-                    </menulist>
-                    <checkbox label="Use custom notification message" id="notification[use_custom]"/>
+                    <et2-select  label="Type" id="notification_type" onchange="1"></et2-select>
+                    <et2-checkbox  label="Use custom notification message" id="notification[use_custom]"></et2-checkbox>
                 </row>
                 <row>
                     <htmlarea id="notification[message]" height="180px" width="100%" toolbar="false" span="all"/>
                 </row>
                 <row>
-                    <description value="Full list of placeholder names" href="infolog.infolog_merge.show_replacements"
-                                 extra_link_target="_blank"/>
-                    <description/>
+                    <et2-description  value="Full list of placeholder names" href="infolog.infolog_merge.show_replacements" extraLinkTarget="_blank"></et2-description>
+                    <et2-description></et2-description>
                 </row>
             </rows>
         </grid>
     </template>
     <template id="infolog.config" template="" lang="" group="0" version="1.9.001">
-        <vbox>
-            <description id="msg" span="all" class="message"/>
-            <tabbox id="configuration|notification">
+        <et2-vbox>
+            <et2-description  id="msg" span="all" class="message"></et2-description>
+            <et2-tabbox  id="configuration|notification">
                 <tabs>
                     <tab id="configuration" label="Configuration"/>
                     <tab id="notification" label="Notification"/>
@@ -113,13 +105,13 @@
                     <template id="infolog.config.configuration"/>
                     <template id="infolog.config.notification"/>
                 </tabpanels>
-            </tabbox>
-            <hbox class="dialogFooterToolbar" id="button">
-                <button statustext="Save the changes made" label="Save" id="save"/>
-                <button statustext="apply the changes" label="Apply" id="apply"/>
-                <button statustext="Exit without saving" label="Cancel" id="cancel" noValidation="true"/>
-            </hbox>
-        </vbox>
+            </et2-tabbox>
+            <et2-hbox  class="dialogFooterToolbar" id="button">
+                <et2-button  statustext="Save the changes made" label="Save" id="save"></et2-button>
+                <et2-button  statustext="apply the changes" label="Apply" id="apply"></et2-button>
+                <et2-button  statustext="Exit without saving" label="Cancel" id="cancel" noValidation="true"></et2-button>
+            </et2-hbox>
+        </et2-vbox>
         <styles>select {
             min-width: 30em;
             }

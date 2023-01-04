@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="admin.mailwizard.smtp" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
@@ -10,44 +9,42 @@
 			</columns>
 			<rows>
 				<row class="dialogHeader">
-					<description value="Step 4: SMTP - outgoing mail" span="all" class="emailadmin_header"/>
-					<description/>
+					<et2-description  value="Step 4: SMTP - outgoing mail" span="all" class="emailadmin_header"></et2-description>
+					<et2-description></et2-description>
 				</row>
 				<row class="@manual_class">
-					<description value="Username" for="acc_smtp_username"/>
-					<textbox blur="if authentication required" id="acc_smtp_username" size="32" maxlength="128" autocomplete="off"/>
+					<et2-description  value="Username" for="acc_smtp_username"></et2-description>
+					<et2-textbox  id="acc_smtp_username" maxlength="128" autocomplete="off" placeholder="if authentication required"></et2-textbox>
 				</row>
 				<row class="@manual_class">
-					<description value="Password" for="acc_smtp_password"/>
-					<passwd id="acc_smtp_password" size="32" maxlength="128" autocomplete="off"/>
+					<et2-description  value="Password" for="acc_smtp_password"></et2-description>
+					<et2-password  id="acc_smtp_password" maxlength="128" autocomplete="off"></et2-password>
 				</row>
 				<row class="@manual_class">
-					<description value="SMTP server" for="acc_smtp_host"/>
-					<textbox blur="Hostname or IP" id="acc_smtp_host" size="32" maxlength="128"/>
+					<et2-description  value="SMTP server" for="acc_smtp_host"></et2-description>
+					<et2-textbox  id="acc_smtp_host" maxlength="128" placeholder="Hostname or IP"></et2-textbox>
 				</row>
 				<row class="@manual_class">
-					<description value="Secure connection" for="acc_smtp_ssl"/>
-					<hbox>
-						<menulist>
-							<menupopup id="acc_smtp_ssl" onchange="app.admin.wizard_smtp_ssl_onchange" class="emailadmin_ssl"/>
-						</menulist>
-						<textbox type="integer" label="Port" id="acc_smtp_port" class="emailadmin_port"/>
-					</hbox>
+					<et2-description  value="Secure connection" for="acc_smtp_ssl"></et2-description>
+					<et2-hbox>
+						<et2-select  id="acc_smtp_ssl" onchange="app.admin.wizard_smtp_ssl_onchange" class="emailadmin_ssl"></et2-select>
+						<et2-number  label="Port" id="acc_smtp_port" class="emailadmin_port" precision="0"></et2-number>
+					</et2-hbox>
 				</row>
 				<row class="dialogFooterToolbar">
-					<hbox span="all">
-						<button label="Continue" id="button[continue]" onclick="app.admin.wizard_detect" image="continue" background_image="1"/>
-						<button label="Back" id="button[back]" image="back" background_image="1"/>
-						<button label="Manual entry" id="button[manual]" onclick="app.admin.wizard_manual" image="edit" background_image="1"/>
-						<buttononly label="Cancel" id="button[cancel]" onclick="window.close();" image="cancel" background_image="1"/>
-					</hbox>
+					<et2-hbox  span="all">
+						<et2-button  label="Continue" id="button[continue]" onclick="app.admin.wizard_detect" image="continue"></et2-button>
+						<et2-button  label="Back" id="button[back]" image="back"></et2-button>
+						<et2-button  label="Manual entry" id="button[manual]" onclick="app.admin.wizard_manual" image="edit"></et2-button>
+						<et2-button  label="Cancel" id="button[cancel]" onclick="window.close();" image="cancel" noSubmit="true"></et2-button>
+					</et2-hbox>
 				</row>
 				<row>
-					<image src="admin/progress" span="all" class="emailadmin_progress"/>
-					<description/>
+					<et2-image  src="admin/progress" span="all" class="emailadmin_progress"></et2-image>
+					<et2-description></et2-description>
 				</row>
 				<row>
-					<textbox multiline="true" id="smtp_output" readonly="true" span="all"/>
+					<et2-textarea  id="smtp_output" readonly="true" span="all"></et2-textarea>
 				</row>
 			</rows>
 		</grid>

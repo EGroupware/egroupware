@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="infolog.index.add" template="" lang="" group="0" version="1.9.001">
-		<button statustext="Add" id="add" image="add" background_image="true" onclick="app.infolog.add_with_extras(widget,'','$cont[action]','$cont[action_id]');"/>
+		<et2-button  statustext="Add" id="add" image="add" onclick="app.infolog.add_with_extras(widget,'','$cont[action]','$cont[action_id]');"></et2-button>
 	</template>
 	<template id="infolog.index.dates" template="" lang="" group="0" version="1.9.001">
-		<hbox>
-			<date id="startdate" label="Start" onchange="widget.getParent().getWidgetById('enddate').set_min(widget.getValue());return true;"/>
-			<date id="enddate" label="End" onchange="widget.getParent().getWidgetById('startdate').set_max(widget.getValue());return true;"/>
-		</hbox>
+		<et2-hbox>
+			<et2-date  id="startdate" label="Start" onchange="widget.getParent().getWidgetById('enddate').set_min(widget.getValue());return true;"></et2-date>
+			<et2-date  id="enddate" label="End" onchange="widget.getParent().getWidgetById('startdate').set_max(widget.getValue());return true;"></et2-date>
+		</et2-hbox>
 	</template>
 	<template id="infolog.index.rows" template="" lang="" group="0" version="1.9.005">
 		<grid width="100%">
@@ -26,11 +25,11 @@
 			</columns>
 			<rows>
 				<row class="th">
-					<vbox>
-						<nextmatch-filterheader id="info_type" no_lang="1" options="Type"/>
-						<nextmatch-filterheader align="center" id="info_status" options="Status" class="selectboxFullWidth"/>
+					<et2-vbox>
+						<et2-nextmatch-header-filter  id="info_type" noLang="1" emptyLabel="Type"/>
+						<et2-nextmatch-header-filter  align="center" id="info_status" class="selectboxFullWidth" emptyLabel="Status"/>
 						<nextmatch-sortheader align="right" label="Completed" id="info_percent"/>
-					</vbox>
+					</et2-vbox>
 					<grid width="100%" spacing="0" padding="0">
 						<columns>
 							<column/>
@@ -53,82 +52,81 @@
 					</grid>
 					<nextmatch-customfields id="customfields" app="infolog"/>
 					<nextmatch-header label="Category" id="cat_id"/>
-					<vbox>
+					<et2-vbox>
 						<nextmatch-sortheader label="Startdate" id="info_startdate" sortmode="DESC"/>
 						<nextmatch-sortheader label="Enddate" id="info_enddate" sortmode="DESC"/>
 						<nextmatch-sortheader label="Date completed" id="info_datecompleted" sortmode="DESC"/>
-					</vbox>
-					<vbox>
+					</et2-vbox>
+					<et2-vbox>
 						<nextmatch-sortheader label="Times" id="info_used_time"/>
 						<nextmatch-sortheader label="planned" id="info_planned_time" class="infolog_planned"/>
-					</vbox>
-					<vbox>
+					</et2-vbox>
+					<et2-vbox>
 						<nextmatch-sortheader label="Times" id="info_used_time"/>
 						<nextmatch-sortheader label="planned" id="info_planned_time" class="infolog_planned"/>
 						<nextmatch-sortheader label="Re-planned" id="info_replanned_time" class="replanned"/>
-					</vbox>
-					<vbox>
-						<nextmatch-accountfilter statustext="Select to filter by owner" id="info_owner" options="Owner,both" class="infolog_user_filter"/>
-						<nextmatch-accountfilter statustext="Select to filter by responsible" id="info_responsible" options="Responsible,both" class="infolog_user_filter"/>
-					</vbox>
+					</et2-vbox>
+					<et2-vbox>
+						<et2-nextmatch-header-account  statustext="Select to filter by owner" id="info_owner" class="infolog_user_filter" emptyLabel="Owner" accountType="both"/>
+						<et2-nextmatch-header-account  statustext="Select to filter by responsible" id="info_responsible" class="infolog_user_filter" emptyLabel="Responsible" accountType="both"/>
+					</et2-vbox>
 					<nextmatch-sortheader label="last changed" id="info_datemodified" options="DESC"/>
 				</row>
 				<row class="$row_cont[info_cat] $row_cont[class]" valign="top">
-					<hbox align="center"  class="infolog_CompletedClmn">
-						<image label="$row_cont[info_type]" src="infolog/$row_cont[info_type]" default_src="infolog/navbar"/>
-						<image label="$row_cont[info_status_label]" id="edit_status[$row_cont[info_id]]" href="javascript:egw.open($row_cont[info_id],'infolog');" src="infolog/$row_cont[info_status_label]" default_src="status"/>
-						<image label="$row_cont[info_percent]" id="edit_percent[$row_cont[info_id]]" href="javascript:egw.open($row_cont[info_id],'infolog');" src="$row_cont[info_percent]"/>
+					<et2-hbox  align="center" class="infolog_CompletedClmn">
+						<et2-image  label="$row_cont[info_type]" src="infolog/$row_cont[info_type]" defaultSrc="infolog/navbar"></et2-image>
+						<et2-image  label="$row_cont[info_status_label]" id="edit_status[$row_cont[info_id]]" href="javascript:egw.open($row_cont[info_id],'infolog');" src="infolog/$row_cont[info_status_label]" defaultSrc="status"></et2-image>
+						<et2-image  label="$row_cont[info_percent]" id="edit_percent[$row_cont[info_id]]" href="javascript:egw.open($row_cont[info_id],'infolog');" src="$row_cont[info_percent]"></et2-image>
 						<progress label="$row_cont[info_percent]" id="{$row}[info_percent2]" href="javascript:egw.open($row_cont[info_id],'infolog');"/>
-					</hbox>
-					<vbox class="infolog_fullWidth">
-						<link label="%s $row_cont[info_addr]" id="${row}[info_link]" options="b"/>
-						<hbox>
-							<description id="${row}[info_subject]" no_lang="1" class="$row_cont[sub_class] et2_ellipsis" overflow="hidden" width="85%"/>
-							<description align="right" id="{$row}[info_number]" no_lang="1" class="infolog_infoId"/>
-						</hbox>
-						<box class="infoDes">
-							<description id="${row}[info_des]" no_lang="1" activate_links="1"/>
-						</box>
-						<link-string id="${row}[filelinks]"/>
-					</vbox>
+					</et2-hbox>
+					<et2-vbox  class="infolog_fullWidth">
+						<et2-link  label="%s $row_cont[info_addr]" id="${row}[info_link]" app=""></et2-link>
+						<et2-hbox>
+							<et2-description  id="${row}[info_subject]" class="$row_cont[sub_class] et2_ellipsis" overflow="hidden" width="85%" noLang="1"></et2-description>
+							<et2-description  align="right" id="{$row}[info_number]" class="infolog_infoId" noLang="1"></et2-description>
+						</et2-hbox>
+						<et2-box  class="infoDes">
+							<et2-description  id="${row}[info_des]" noLang="1" activateLinks="1"></et2-description>
+						</et2-box>
+						<et2-link-string  id="${row}[filelinks]"></et2-link-string>
+					</et2-vbox>
 					<customfields-list id="$row" class="customfields" app="infolog"/>
-					<select-cat id="${row}[info_cat]" readonly="true"/>
-					<vbox>
-						<date-time id="${row}[info_startdate]" readonly="true" options=",8" class="infolog_fixedHeight"/>
-						<date-time id="${row}[info_enddate]" readonly="true" options=",8" class="$row_cont[end_class] infolog_fixedHeight"/>
-						<date-time id="${row}[info_datecompleted]" readonly="true" class="infolog_fixedHeight"/>
-					</vbox>
-					<vbox>
-						<hbox>
-							<date-duration id="${row}[info_used_time]" readonly="true" select_unit="true" display_format="@@duration_format" disabled="!$row_cont[info_used_time]"/>
-                            <date-duration id="${row}[info_sum_timesheets]" readonly="true" select_unit="true" display_format="@@duration_format" class="timesheet"/>
- 						</hbox>
-                        <date-duration id="${row}[info_planned_time]" readonly="true" display_format="@@duration_format" select_unit="true" span="all" class="infolog_planned"/>
-					</vbox>
-					<vbox>
-                        <hbox id="r_used_time">
-                            <image label="Times" src="timesheet"/>
-                            <date-duration id="${row}[info_used_time]" readonly="true" select_unit="true" display_format="@@duration_format" disabled="!$row_cont[info_used_time]"/>
-                            <date-duration id="${row}[info_sum_timesheets]" readonly="true" select_unit="true" display_format="@@duration_format" class="timesheet"/>
-                        </hbox>
-						<hbox id="planified">
-							<image label="planned time" src="k_alarm.png"/>
-                            <date-duration id="${row}[info_planned_time]" readonly="true"
-                                           display_format="@@duration_format" span="all" class="infolog_planned"/>
-						</hbox>
-						<hbox id="replanified">
-							<image label="Re-planned time" src="agt_reload.png"/>
-                            <date-duration id="${row}[info_replanned_time]" readonly="true" select_unit="true" display_format="@@duration_format" span="all" class="replanned"/>
-						</hbox>
-					</vbox>
-					<vbox>
-                        <select-account id="${row}[info_owner]" readonly="true"/>
-                        <select-account id="${row}[info_responsible]" readonly="true" rows="5"/>
-                    </vbox>
-					<vbox>
-						<date-time id="${row}[info_datemodified]" readonly="true"/>
-						<select-account id="${row}[info_modifier]" readonly="true"/>
-					</vbox>
+					<et2-select-cat  id="${row}[info_cat]" readonly="true"></et2-select-cat>
+					<et2-vbox>
+						<et2-date-time  id="${row}[info_startdate]" readonly="true" class="infolog_fixedHeight"></et2-date-time>
+						<et2-date-time  id="${row}[info_enddate]" readonly="true" class="$row_cont[end_class] infolog_fixedHeight"></et2-date-time>
+						<et2-date-time  id="${row}[info_datecompleted]" readonly="true" class="infolog_fixedHeight"></et2-date-time>
+					</et2-vbox>
+					<et2-vbox>
+						<et2-hbox>
+							<et2-date-duration  id="${row}[info_used_time]" readonly="true" disabled="!$row_cont[info_used_time]" selectUnit="true" displayFormat="@@duration_format"></et2-date-duration>
+                            <et2-date-duration  id="${row}[info_sum_timesheets]" readonly="true" class="timesheet" selectUnit="true" displayFormat="@@duration_format"></et2-date-duration>
+ 						</et2-hbox>
+                        <et2-date-duration  id="${row}[info_planned_time]" readonly="true" span="all" class="infolog_planned" displayFormat="@@duration_format" selectUnit="true"></et2-date-duration>
+					</et2-vbox>
+					<et2-vbox>
+                        <et2-hbox  id="r_used_time">
+                            <et2-image  label="Times" src="timesheet"></et2-image>
+                            <et2-date-duration  id="${row}[info_used_time]" readonly="true" disabled="!$row_cont[info_used_time]" selectUnit="true" displayFormat="@@duration_format"></et2-date-duration>
+                            <et2-date-duration  id="${row}[info_sum_timesheets]" readonly="true" class="timesheet" selectUnit="true" displayFormat="@@duration_format"></et2-date-duration>
+                        </et2-hbox>
+						<et2-hbox  id="planified">
+							<et2-image  label="planned time" src="k_alarm.png"></et2-image>
+                            <et2-date-duration  id="${row}[info_planned_time]" readonly="true" span="all" class="infolog_planned" displayFormat="@@duration_format"></et2-date-duration>
+						</et2-hbox>
+						<et2-hbox  id="replanified">
+							<et2-image  label="Re-planned time" src="agt_reload.png"></et2-image>
+                            <et2-date-duration  id="${row}[info_replanned_time]" readonly="true" span="all" class="replanned" selectUnit="true" displayFormat="@@duration_format"></et2-date-duration>
+						</et2-hbox>
+					</et2-vbox>
+					<et2-vbox>
+                        <et2-select-account  id="${row}[info_owner]" readonly="true"></et2-select-account>
+                        <et2-select-account  id="${row}[info_responsible]" readonly="true" rows="5" multiple="1"></et2-select-account>
+                    </et2-vbox>
+					<et2-vbox>
+						<et2-date-time  id="${row}[info_datemodified]" readonly="true"></et2-date-time>
+						<et2-select-account  id="${row}[info_modifier]" readonly="true"></et2-select-account>
+					</et2-vbox>
 				</row>
 			</rows>
 		</grid>
@@ -147,68 +145,68 @@
 					<nextmatch id="nm" template="infolog.index.rows"  header_left="infolog.index.add" header_right="infolog.index.dates" span="all"/>
 				</row>
 				<row>
-					<hbox class=" ">
-						<box id="responsible_popup" class="action_popup prompt">
-							<vbox>
-								<description value="Change responsible" class="promptheader"/>
-								<vbox class="action_popup-content">
-									<description id="responsible_action[title]"/>
-									<description value="Select users or groups"/>
-									<taglist-account id="responsible" rows="5" account_type="both" class=" et2_fullWidth" empty_label="Delegation"/>
-								</vbox>
-								<hbox>
-									<button label="Ok" id="responsible_action[ok]" onclick="nm_submit_popup(this); return false;" image="check" background_image="true"/>
-									<button label="Add" id="responsible_action[add]" onclick="nm_submit_popup(this); return false;"/>
-									<button label="Delete" id="responsible_action[delete]" onclick="nm_submit_popup(this); return false;"/>
-									<button label="Cancel" id="responsible_cancel" onclick="nm_hide_popup(this,'responsible_popup');" image="cancelled" background_image="true"/>
-								</hbox>
-							</vbox>
-						</box>
-						<box id="delete_popup" class="action_popup prompt">
-							<vbox>
-								<description value="Delete" class="promptheader"/>
-								<description value="Delete selected entries?" id="delete_prompt"/>
-								<hbox>
-									<button label="Yes - Delete" id="delete" onclick="app.infolog.actionCallback('delete'); return false;" image="check" background_image="true"/>
-									<button label="Yes - Delete including sub-entries" id="delete_sub" onclick="app.infolog.actionCallback('delete_sub'); return false;" image="check" background_image="true"/>
-									<button label="No - Cancel" id="delete_cancel" onclick="nm_hide_popup(this,'delete_popup');" image="cancelled" background_image="true"/>
-								</hbox>
-							</vbox>
-						</box>
-						<box id="link_popup" class="action_popup prompt">
-							<vbox>
-								<description value="Add / Remove link" class="promptheader"/>
-								<link-entry id="link" class="action_popup-content"/>
-								<hbox>
-									<button label="Add" id="link_action[add]" onclick="nm_submit_popup(this); return false;"/>
-									<button label="Delete" id="link_action[delete]" onclick="nm_submit_popup(this); return false;"/>
-									<button label="Cancel" id="link_cancel" onclick="nm_hide_popup(this,'link_popup');" image="cancelled" background_image="true"/>
-								</hbox>
-							</vbox>
-						</box>
-						<box id="startdate_popup" class="action_popup prompt">
-							<vbox>
-								<description value="Start date" class="promptheader"/>
-								<description id="startdate_action[title]"/>
-								<date-time id="startdate" class="action_popup-content"/>
-								<hbox>
-									<button label="Ok" id="startdate_action[ok]" onclick="nm_submit_popup(this); return false;" image="check" background_image="true"/>
-									<button label="Cancel" id="startdate_cancel" onclick="nm_hide_popup(this,'link_popup');" image="cancelled" background_image="true"/>
-								</hbox>
-							</vbox>
-						</box>
-						<box id="enddate_popup" class="action_popup prompt">
-							<vbox>
-								<description value="Due date" class="promptheader"/>
-								<description id="enddate_action[title]"/>
-								<date-time id="enddate" class="action_popup-content"/>
-								<hbox>
-									<button label="Ok" id="enddate_action[ok]" onclick="nm_submit_popup(this); return false;" image="check" background_image="true"/>
-									<button label="Cancel" id="enddate_cancel" onclick="nm_hide_popup(this,'link_popup');" image="cancelled" background_image="true"/>
-								</hbox>
-							</vbox>
-						</box>
-					</hbox>
+					<et2-hbox>
+						<et2-box id="responsible_popup" class="action_popup prompt">
+							<et2-vbox>
+								<et2-description  value="Change responsible" class="promptheader"></et2-description>
+								<et2-vbox  class="action_popup-content">
+									<et2-description  id="responsible_action[title]"></et2-description>
+									<et2-description  value="Select users or groups"></et2-description>
+									<et2-select-account  id="responsible" rows="5" multiple="1" placeholder="Delegation" accountType="both"></et2-select-account>
+								</et2-vbox>
+								<et2-hbox>
+									<et2-button  label="Ok" id="responsible_action[ok]" onclick="nm_submit_popup(this); return false;" image="check"></et2-button>
+									<et2-button  label="Add" id="responsible_action[add]" onclick="nm_submit_popup(this); return false;"></et2-button>
+									<et2-button  label="Delete" id="responsible_action[delete]" onclick="nm_submit_popup(this); return false;"></et2-button>
+									<et2-button  label="Cancel" id="responsible_cancel" onclick="nm_hide_popup(this,'responsible_popup');" image="cancelled"></et2-button>
+								</et2-hbox>
+							</et2-vbox>
+						</et2-box>
+						<et2-box  id="delete_popup" class="action_popup prompt">
+							<et2-vbox>
+								<et2-description  value="Delete" class="promptheader"></et2-description>
+								<et2-description  value="Delete selected entries?" id="delete_prompt"></et2-description>
+								<et2-hbox>
+									<et2-button  label="Yes - Delete" id="delete" onclick="app.infolog.actionCallback('delete'); return false;" image="check"></et2-button>
+									<et2-button  label="Yes - Delete including sub-entries" id="delete_sub" onclick="app.infolog.actionCallback('delete_sub'); return false;" image="check"></et2-button>
+									<et2-button  label="No - Cancel" id="delete_cancel" onclick="nm_hide_popup(this,'delete_popup');" image="cancelled"></et2-button>
+								</et2-hbox>
+							</et2-vbox>
+						</et2-box>
+						<et2-box  id="link_popup" class="action_popup prompt">
+							<et2-vbox>
+								<et2-description  value="Add / Remove link" class="promptheader"></et2-description>
+								<et2-link-entry  id="link" class="action_popup-content"></et2-link-entry>
+								<et2-hbox>
+									<et2-button  label="Add" id="link_action[add]" onclick="nm_submit_popup(this); return false;"></et2-button>
+									<et2-button  label="Delete" id="link_action[delete]" onclick="nm_submit_popup(this); return false;"></et2-button>
+									<et2-button  label="Cancel" id="link_cancel" onclick="nm_hide_popup(this,'link_popup');" image="cancelled"></et2-button>
+								</et2-hbox>
+							</et2-vbox>
+						</et2-box>
+						<et2-box  id="startdate_popup" class="action_popup prompt">
+							<et2-vbox>
+								<et2-description  value="Start date" class="promptheader"></et2-description>
+								<et2-description  id="startdate_action[title]"></et2-description>
+								<et2-date-time  id="startdate" class="action_popup-content"></et2-date-time>
+								<et2-hbox>
+									<et2-button  label="Ok" id="startdate_action[ok]" onclick="nm_submit_popup(this); return false;" image="check"></et2-button>
+									<et2-button  label="Cancel" id="startdate_cancel" onclick="nm_hide_popup(this,'link_popup');" image="cancelled"></et2-button>
+								</et2-hbox>
+							</et2-vbox>
+						</et2-box>
+						<et2-box  id="enddate_popup" class="action_popup prompt">
+							<et2-vbox>
+								<et2-description  value="Due date" class="promptheader"></et2-description>
+								<et2-description  id="enddate_action[title]"></et2-description>
+								<et2-date-time  id="enddate" class="action_popup-content"></et2-date-time>
+								<et2-hbox>
+									<et2-button  label="Ok" id="enddate_action[ok]" onclick="nm_submit_popup(this); return false;" image="check"></et2-button>
+									<et2-button  label="Cancel" id="enddate_cancel" onclick="nm_hide_popup(this,'link_popup');" image="cancelled"></et2-button>
+								</et2-hbox>
+							</et2-vbox>
+						</et2-box>
+					</et2-hbox>
 				</row>
 			</rows>
 		</grid>

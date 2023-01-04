@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="importexport.wizard_basic_import_csv.conditions" template="" lang="" group="0" version="1.9.002">
-		<vbox cols="4" rows="1">
-			<description value="How to merge with existing data? For each record, all conditions are evaluated from top to bottom, or stop. For blind insert, leave blank." class="condition_help"/>
+		<et2-vbox  cols="4" rows="1">
+			<et2-description  value="How to merge with existing data? For each record, all conditions are evaluated from top to bottom, or stop. For blind insert, leave blank." class="condition_help"></et2-description>
 			<grid id="conditions">
 				<columns>
 					<column/>
@@ -16,46 +15,38 @@
 				</columns>
 				<rows>
 					<row class="th">
-						<description value="Field"/>
-						<description value="Condition"/>
-						<vbox span="2">
-							<description align="center" value="True" span="2"/>
-							<hbox options="2,0">
-								<description value="Action"/>
-								<description align="right" value="Stop"/>
-							</hbox>
-						</vbox>
-						<vbox span="2">
-							<description align="center" value="False" span="2"/>
-							<hbox options="2,0">
-								<description value="Action"/>
-								<description align="right" value="Stop"/>
-							</hbox>
-						</vbox>
+						<et2-description  value="Field"></et2-description>
+						<et2-description  value="Condition"></et2-description>
+						<et2-vbox  span="2">
+							<et2-description  align="center" value="True" span="2"></et2-description>
+							<et2-hbox  cellpadding="2" cellspacing="0" >
+								<et2-description  value="Action"></et2-description>
+								<et2-description  align="right" value="Stop"></et2-description>
+							</et2-hbox>
+						</et2-vbox>
+						<et2-vbox  span="2">
+							<et2-description  align="center" value="False" span="2"></et2-description>
+							<et2-hbox  cellpadding="2" cellspacing="0" >
+								<et2-description  value="Action"></et2-description>
+								<et2-description  align="right" value="Stop"></et2-description>
+							</et2-hbox>
+						</et2-vbox>
 					</row>
 					<row>
-						<menulist>
-							<menupopup id="${row}[string]" no_lang="1" options="Select"/>
-						</menulist>
-						<hbox options="0,0">
-							<menulist>
-								<menupopup id="${row}[type]" no_lang="1"/>
-							</menulist>
-							<textbox id="${row}[op_2]" no_lang="1"/>
-						</hbox>
-						<menulist>
-							<menupopup id="${row}[true][action]" no_lang="1" options="Select"/>
-						</menulist>
-						<checkbox align="center" id="${row}[true][stop]"/>
-						<menulist>
-							<menupopup id="${row}[false][action]" no_lang="1" options="Select"/>
-						</menulist>
-						<checkbox align="center" id="${row}[false][stop]"/>
+						<et2-select  id="${row}[string]" noLang="1" emptyLabel="Select"></et2-select>
+						<et2-hbox  cellpadding="0" cellspacing="0" >
+							<et2-select  id="${row}[type]" noLang="1"></et2-select>
+							<et2-textbox  id="${row}[op_2]" noLang="1"></et2-textbox>
+						</et2-hbox>
+						<et2-select  id="${row}[true][action]" noLang="1" emptyLabel="Select"></et2-select>
+						<et2-checkbox  align="center" id="${row}[true][stop]"></et2-checkbox>
+						<et2-select  id="${row}[false][action]" noLang="1" emptyLabel="Select"></et2-select>
+						<et2-checkbox  align="center" id="${row}[false][stop]"></et2-checkbox>
 					</row>
 				</rows>
 			</grid>
-			<button statustext="Add an additional condition" label="add" id="button[add]"/>
-		</vbox>
+			<et2-button  statustext="Add an additional condition" label="add" id="button[add]"></et2-button>
+		</et2-vbox>
 		<styles>
 			.condition_help {
 	white-space: normal;

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="infolog.widget.infolog-value" template="" lang="" group="0" version="1.7.001">
 		<grid>
@@ -14,45 +13,39 @@
 			</columns>
 			<rows>
 				<row class="row">
-					<description options=",,,type" value="Type"/>
-					<menulist>
-						<menupopup id="type" onchange="1" statustext="type of the field (select Label if field should be empty)"/>
-					</menulist>
+					<et2-description  value="Type" labelFor="type"></et2-description>
+					<et2-select  id="type" onchange="1" statustext="type of the field (select Label if field should be empty)"></et2-select>
 					<infolog-fields id="options[0]" statustext="Contact field to show" span="all" label="Field"/>
 				</row>
 				<row class="row">
-					<description value="Compare"/>
-					<textbox id="options[1]" statustext="show a X if content equals this compare value, otherwise show nothing"/>
-					<textbox size="40" span="all" label="Alternatives" id="options[2]" statustext="colon (:) separated list of field names to use if value is empty or to sum up"/>
+					<et2-description  value="Compare"></et2-description>
+					<et2-textbox  id="options[1]" statustext="show a X if content equals this compare value, otherwise show nothing"></et2-textbox>
+					<et2-textbox  span="all" label="Alternatives" id="options[2]" statustext="colon (:) separated list of field names to use if value is empty or to sum up"></et2-textbox>
 				</row>
 				<row class="row">
-					<description value="Contactfield"/>
+					<et2-description  value="Contactfield"></et2-description>
 					<contact-fields id="options[3]"/>
-					<textbox span="2" label="Regular expression " id="options[4]" statustext="first argument for preg_replace"/>
-					<textbox span="2" label="Replacement" id="options[5]" statustext="second parameter for preg_replace"/>
+					<et2-textbox  span="2" label="Regular expression " id="options[4]" statustext="first argument for preg_replace"></et2-textbox>
+					<et2-textbox  span="2" label="Replacement" id="options[5]" statustext="second parameter for preg_replace"></et2-textbox>
 				</row>
 				<row class="row">
-					<description options=",,,label" value="Label"/>
-					<textbox id="label" statustext="displayed in front of input or input is inserted for a '%s' in the label (label of the Submitbutton or Image-filename)"/>
-					<textbox size="10" id="span" statustext="number of colums the field/cell should span or 'all' for the remaining columns, CSS-class name (for the TD tag)" label="Span, Class" span="2"/>
-					<description value="Align" align="center"/>
-					<menulist>
-						<menupopup id="align" statustext="alignment of label and input-field in table-cell"/>
-					</menulist>
+					<et2-description  value="Label" labelFor="label"></et2-description>
+					<et2-textbox  id="label" statustext="displayed in front of input or input is inserted for a '%s' in the label (label of the Submitbutton or Image-filename)"></et2-textbox>
+					<et2-textbox  id="span" statustext="number of colums the field/cell should span or 'all' for the remaining columns, CSS-class name (for the TD tag)" label="Span, Class" span="2"></et2-textbox>
+					<et2-description  value="Align" align="center"></et2-description>
+					<et2-select  id="align" statustext="alignment of label and input-field in table-cell"></et2-select>
 				</row>
 				<row class="row">
-					<description options=",,,name" value="Name"/>
-					<textbox id="name" statustext="index/name of returned content (name of the Template, Link / Method for Image)"/>
-					<checkbox label="%s disabled" id="disabled" statustext="if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell" span="all"/>
+					<et2-description  value="Name" labelFor="name"></et2-description>
+					<et2-textbox  id="name" statustext="index/name of returned content (name of the Template, Link / Method for Image)"></et2-textbox>
+					<et2-checkbox  label="%s disabled" id="disabled" statustext="if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell" span="all"></et2-checkbox>
 				</row>
 				<row class="row" disabled="!@type=button">
-					<description options="onclick" value="onClick"/>
-					<hbox options="0,0" span="all">
-						<menulist>
-							<menupopup id="onclick_type" statustext="confirmation necesary or custom java-script"/>
-						</menulist>
-						<textbox size="53" span="all" class="leftPad5 inputFullWidth" id="onclick" statustext="confirmation message or custom javascript (returning true or false)" align="right"/>
-					</hbox>
+					<et2-description  value="onClick" boldItalic="onclick"></et2-description>
+					<et2-hbox  cellpadding="0" cellspacing="0" span="all">
+						<et2-select  id="onclick_type" statustext="confirmation necesary or custom java-script"></et2-select>
+						<et2-textbox  span="all" class="leftPad5 inputFullWidth" id="onclick" statustext="confirmation message or custom javascript (returning true or false)" align="right"></et2-textbox>
+					</et2-hbox>
 				</row>
 			</rows>
 		</grid>

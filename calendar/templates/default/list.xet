@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="calendar.list.dates" template="" lang="" group="0" version="1.3.001">
-		<hbox>
-			<description value="Start"/>
-			<date id="startdate" onchange="widget.getParent().getWidgetById('enddate').set_min(widget.getValue()); app.calendar.update_state({date: widget.getValue()}); return false;"/>
-			<description value="End"/>
-			<date id="enddate" onchange="widget.getParent().getWidgetById('startdate').set_max(widget.getValue()); app.calendar.update_state({end_date: widget.getValue()}); return false;"/>
-		</hbox>
+		<et2-hbox>
+			<et2-description  value="Start"></et2-description>
+			<et2-date  id="startdate" onchange="widget.getParent().getWidgetById('enddate').set_min(widget.getValue()); app.calendar.update_state({date: widget.getValue()}); return false;"></et2-date>
+			<et2-description  value="End"></et2-description>
+			<et2-date  id="enddate" onchange="widget.getParent().getWidgetById('startdate').set_max(widget.getValue()); app.calendar.update_state({end_date: widget.getValue()}); return false;"></et2-date>
+		</et2-hbox>
 	</template>
 	<template id="calendar.list.rows" template="" lang="" group="0" version="1.9.004">
 		<grid>
@@ -28,74 +27,66 @@
 			</columns>
 			<rows>
 				<row class="th">
-					<vbox>
+					<et2-vbox>
 						<nextmatch-sortheader label="Start" id="cal_start"/>
 						<nextmatch-sortheader label="End" id="cal_end"/>
-					</vbox>
-					<vbox>
+					</et2-vbox>
+					<et2-vbox>
 						<nextmatch-sortheader label="Title" id="cal_title"/>
 						<nextmatch-sortheader label="Description" id="cal_description"/>
-					</vbox>
+					</et2-vbox>
 					<nextmatch-sortheader label="Title" id="cal_title"/>
 					<nextmatch-sortheader label="Description" id="cal_description"/>
 					<nextmatch-sortheader label="Recurrence" id="recure"/>
 					<nextmatch-header label="Category" id="cat_id"/>
-					<vbox>
+					<et2-vbox>
 						<nextmatch-sortheader label="Owner" id="cal_owner" readonly="true"/>
 						<nextmatch-sortheader label="Location" id="cal_location"/>
-					</vbox>
+					</et2-vbox>
 					<nextmatch-sortheader label="Owner" id="cal_owner" readonly="true"/>
 					<nextmatch-sortheader label="Location" id="cal_location"/>
 					<nextmatch-header label="Participants" id="participant" statustext="Use side menu to filter participants"/>
-					<vbox>
+					<et2-vbox>
 						<nextmatch-sortheader label="Created" id="cal_created" sortmode="DESC"/>
 						<nextmatch-header label="Creator" id="cal_creator" options="Creator"/>
-						<description value="Last changed"/>
-					</vbox>
+						<et2-description  value="Last changed"></et2-description>
+					</et2-vbox>
 					<nextmatch-customfields label="Custom fields" id="cfs" readonly="true"/>
 				</row>
 				<row class="$row_cont[category] $row_cont[class]" valign="top">
-					<vbox id="start">
-						<date-time id="${row}[start]" readonly="true" options=",$cont[format]" class="noWrap"/>
-						<date-time id="${row}[end]" readonly="true" options=",$cont[format]" class="noWrap"/>
-					</vbox>
-					<vbox class="listVbox">
-						<hbox no_lang="1" readonly="true">
-							<description id="${row}[title]" no_lang="1" readonly="true" font_style="b"/>
-							<description align="right" value="#%s" id="${row}[id]" font_style="b"/>
-						</hbox>
-						<box no_lang="1" class="listDescription">
-							<description id="${row}[description]" no_lang="1" activate_links="1"/>
-						</box>
-						<description id="${row}[recure]" no_lang="1"/>
-					</vbox>
-					<hbox>
-						<description id="${row}[title]"/>
-						<description align="right" value="#%s" id="${row}[id]" font_style="b"/>
-					</hbox>
-					<description id="${row}[description]" no_lang="1" activate_links="1"/>
-					<description id="${row}[recure]"/>
-					<menulist>
-						<menupopup type="select-cat" id="${row}[category]" readonly="true"/>
-					</menulist>
-					<vbox>
-						<menulist>
-							<menupopup type="select-account" class="noWrap" id="${row}[owner]" readonly="true"/>
-						</menulist>
-						<description id="${row}[location]" no_lang="1" activate_links="1"/>
-					</vbox>
-					<menulist>
-						<menupopup type="select-account" class="noWrap" id="${row}[owner]" readonly="true"/>
-					</menulist>
-					<description id="${row}[location]" no_lang="1" activate_links="1"/>
+					<et2-vbox  id="start">
+						<et2-date-time  id="${row}[start]" readonly="true" class="noWrap"></et2-date-time>
+						<et2-date-time  id="${row}[end]" readonly="true" class="noWrap"></et2-date-time>
+					</et2-vbox>
+					<et2-vbox  class="listVbox">
+						<et2-hbox  readonly="true" noLang="1">
+							<et2-description  id="${row}[title]" readonly="true" noLang="1" fontStyle="b"></et2-description>
+							<et2-description  align="right" value="#%s" id="${row}[id]" fontStyle="b"></et2-description>
+						</et2-hbox>
+						<et2-box  class="listDescription" noLang="1">
+							<et2-description  id="${row}[description]" noLang="1" activateLinks="1"></et2-description>
+						</et2-box>
+						<et2-description  id="${row}[recure]" noLang="1"></et2-description>
+					</et2-vbox>
+					<et2-hbox>
+						<et2-description  id="${row}[title]"></et2-description>
+						<et2-description  align="right" value="#%s" id="${row}[id]" fontStyle="b"></et2-description>
+					</et2-hbox>
+					<et2-description  id="${row}[description]" noLang="1" activateLinks="1"></et2-description>
+					<et2-description  id="${row}[recure]"></et2-description>
+					<et2-select-cat  id="${row}[category]" readonly="true"></et2-select-cat>
+					<et2-vbox>
+						<et2-select-account  class="noWrap" id="${row}[owner]" readonly="true"></et2-select-account>
+						<et2-description  id="${row}[location]" noLang="1" activateLinks="1"></et2-description>
+					</et2-vbox>
+					<et2-select-account  class="noWrap" id="${row}[owner]" readonly="true"></et2-select-account>
+					<et2-description  id="${row}[location]" noLang="1" activateLinks="1"></et2-description>
 					<html id="${row}[parts]" no_lang="1" readonly="true"/>
-					<vbox>
-						<date-time id="${row}[created]" readonly="true"/>
-						<menulist>
-							<menupopup type="select-account" id="${row}[creator]" readonly="true"/>
-						</menulist>
-						<date-time id="${row}[modified]" readonly="true"/>
-					</vbox>
+					<et2-vbox>
+						<et2-date-time  id="${row}[created]" readonly="true"></et2-date-time>
+						<et2-select-account  id="${row}[creator]" readonly="true"></et2-select-account>
+						<et2-date-time  id="${row}[modified]" readonly="true"></et2-date-time>
+					</et2-vbox>
 					<customfields-list id="$row"/>
 				</row>
 			</rows>
@@ -109,38 +100,38 @@
 			</columns>
 			<rows>
 				<row disabled="!@css">
-					<description/>
+					<et2-description></et2-description>
 					<html id="css" span="all"/>
 				</row>
 				<row>
 					<nextmatch id="nm" template="calendar.list.rows" header_right="calendar.list.dates" span="all"/>
 				</row>
 				<row>
-					<hbox>
-						<box class="action_popup prompt" id="delete_popup">
-							<vbox>
-								<description value="Delete" class="promptheader"/>
-								<description value="This is a recurring event. Do you want to delete just this recurrence or the whole series?"/>
-								<hbox>
-									<button label="Delete this recurrence" id="delete" onclick="nm_submit_popup(this); return false;"/>
-									<button label="Delete series" id="delete_series" onclick="nm_popup_action.id = 'delete_series'; nm_submit_popup(this); return false;"/>
-									<buttononly label="Cancel" onclick="nm_hide_popup(this,'delete_popup');"/>
-								</hbox>
-							</vbox>
-						</box>
-						<box class="action_popup prompt" id="undelete_popup">
-							<vbox>
-								<description value="Un-delete" class="promptheader"/>
-								<description value="This is a recurring event. Do you want to Un-delete just this recurrence or the whole series?"/>
-								<hbox>
-									<button label="Un-delete this recurrence" id="undelete" onclick="nm_submit_popup(this); return false;"/>
-									<button label="Un-delete series" id="undelete_series" onclick="nm_popup_action.id = 'undelete_series'; nm_submit_popup(this); return false;"/>
-									<buttononly label="Cancel" onclick="nm_hide_popup(this,'undelete_popup');"/>
-								</hbox>
-							</vbox>
-						</box>
-					</hbox>
-					<description/>
+					<et2-hbox>
+						<et2-box  class="action_popup prompt" id="delete_popup">
+							<et2-vbox>
+								<et2-description  value="Delete" class="promptheader"></et2-description>
+								<et2-description  value="This is a recurring event. Do you want to delete just this recurrence or the whole series?"></et2-description>
+								<et2-hbox>
+									<et2-button  label="Delete this recurrence" id="delete" onclick="nm_submit_popup(this); return false;"></et2-button>
+									<et2-button  label="Delete series" id="delete_series" onclick="nm_popup_action.id = 'delete_series'; nm_submit_popup(this); return false;"></et2-button>
+									<et2-button  label="Cancel" onclick="nm_hide_popup(this,'delete_popup');" noSubmit="true"></et2-button>
+								</et2-hbox>
+							</et2-vbox>
+						</et2-box>
+						<et2-box  class="action_popup prompt" id="undelete_popup">
+							<et2-vbox>
+								<et2-description  value="Un-delete" class="promptheader"></et2-description>
+								<et2-description  value="This is a recurring event. Do you want to Un-delete just this recurrence or the whole series?"></et2-description>
+								<et2-hbox>
+									<et2-button  label="Un-delete this recurrence" id="undelete" onclick="nm_submit_popup(this); return false;"></et2-button>
+									<et2-button  label="Un-delete series" id="undelete_series" onclick="nm_popup_action.id = 'undelete_series'; nm_submit_popup(this); return false;"></et2-button>
+									<et2-button  label="Cancel" onclick="nm_hide_popup(this,'undelete_popup');" noSubmit="true"></et2-button>
+								</et2-hbox>
+							</et2-vbox>
+						</et2-box>
+					</et2-hbox>
+					<et2-description></et2-description>
 				</row>
 			</rows>
 		</grid>

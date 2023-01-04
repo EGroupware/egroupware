@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="mail.checkmailbox" template="" lang="" group="0" version="1.9.001">
 		<grid>
@@ -12,33 +11,33 @@
 			</columns>
 			<rows>
 				<row class="th">
-					<vbox options="0,0">
-						<description value="Folder" readonly="true"/>
-					</vbox>
-					<vbox options="0,0">
-						<description value="Subject" readonly="true"/>
-					</vbox>
-					<vbox options="0,0">
-						<description value="From" readonly="true"/>
-					</vbox>
-					<vbox options="0,0">
-						<description value="Received" readonly="true"/>
-					</vbox>
+					<et2-vbox  cellpadding="0" cellspacing="0" >
+						<et2-description  value="Folder" readonly="true"></et2-description>
+					</et2-vbox>
+					<et2-vbox  cellpadding="0" cellspacing="0" >
+						<et2-description  value="Subject" readonly="true"></et2-description>
+					</et2-vbox>
+					<et2-vbox  cellpadding="0" cellspacing="0" >
+						<et2-description  value="From" readonly="true"></et2-description>
+					</et2-vbox>
+					<et2-vbox  cellpadding="0" cellspacing="0" >
+						<et2-description  value="Received" readonly="true"></et2-description>
+					</et2-vbox>
 				</row>
 				<row class="row" valign="top">
-					<vbox options="0,0">
-						<description id="${row}[mail_folder]"/>
-					</vbox>
-					<vbox options="0,0">
+					<et2-vbox  cellpadding="0" cellspacing="0" >
+						<et2-description  id="${row}[mail_folder]"></et2-description>
+					</et2-vbox>
+					<et2-vbox  cellpadding="0" cellspacing="0" >
 						<!-- description id="${row}[mail_subject]" no_lang="1" font_style="b" href="mail.mail_ui.displayMessage&amp;uid=$row_cont[mail_uid]&amp;mailbox=$row_cont[mail_folder_base64]" extra_link_popup="750x500"/ -->
-						<description id="${row}[mail_subject]" no_lang="1" font_style="b"/>
-					</vbox>
-					<vbox options="0,0">
-						<url-email id="${row}[mail_from]" no_lang="1" readonly="true"/>
-					</vbox>
-					<vbox options="0,0">
-						<date-time id="${row}[mail_received]" readonly="true" options=",8"/>
-					</vbox>
+						<et2-description  id="${row}[mail_subject]" noLang="1" fontStyle="b"></et2-description>
+					</et2-vbox>
+					<et2-vbox  cellpadding="0" cellspacing="0" >
+						<et2-url-email  id="${row}[mail_from]" readonly="true" noLang="1"></et2-url-email>
+					</et2-vbox>
+					<et2-vbox  cellpadding="0" cellspacing="0" >
+						<et2-date-time  id="${row}[mail_received]" readonly="true" ></et2-date-time>
+					</et2-vbox>
 				</row>
 			</rows>
 		</grid>

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="addressbook.contactform" template="" lang="" group="0" version="1.5.001">
 		<grid border="0">
@@ -15,140 +14,140 @@
 			</columns>
 			<rows>
 				<row disabled="!@show[org_name]">
-					<image src="home"/>
-					<description value="Company"/>
-					<textbox size="64" maxlength="64" id="org_name" span="4"/>
-					<description/>
+					<et2-image  src="home"></et2-image>
+					<et2-description  value="Company"></et2-description>
+					<et2-textbox  maxlength="64" id="org_name" span="4"></et2-textbox>
+					<et2-description></et2-description>
 				</row>
 				<row disabled="!@show[org_unit]">
-					<description/>
-					<description value="Department"/>
-					<textbox size="64" maxlength="64" span="4" id="org_unit"/>
-					<description/>
+					<et2-description></et2-description>
+					<et2-description  value="Department"></et2-description>
+					<et2-textbox  maxlength="64" span="4" id="org_unit"></et2-textbox>
+					<et2-description></et2-description>
 				</row>
 				<row valign="top" disabled="!@show[n_fn]">
-					<image src="accounts"/>
-					<description value="Contact"/>
-					<textbox size="10" maxlength="64" id="n_prefix" blur="Prefix"/>
-					<textbox id="n_given" size="20" maxlength="64" align="center"/>
-					<textbox id="n_family" align="right" size="22" maxlength="64" span="2" needed="1"/>
-					<description class="redItalic" value="*"/>
+					<et2-image  src="accounts"></et2-image>
+					<et2-description  value="Contact"></et2-description>
+					<et2-textbox  maxlength="64" id="n_prefix" placeholder="Prefix"></et2-textbox>
+					<et2-textbox  id="n_given" maxlength="64" align="center"></et2-textbox>
+					<et2-textbox  id="n_family" align="right" maxlength="64" span="2" required="1"></et2-textbox>
+					<et2-description  class="redItalic" value="*"></et2-description>
 				</row>
 				<row disabled="!@show[sep1]">
 					<hrule span="all"/>
 				</row>
 				<row disabled="!@show[email]">
-					<image src="email.png"/>
-					<description value="Email"/>
-					<textbox size="64" maxlength="64" validator="/^[a-z0-9._-]+@[a-z0-9-]+(\.[a-z0-9-]+)+$/i" span="4" id="email" needed="1"/>
-					<description class="redItalic" value="*"/>
+					<et2-image  src="email.png"></et2-image>
+					<et2-description  value="Email"></et2-description>
+					<et2-textbox  maxlength="64" validator="/^[a-z0-9._-]+@[a-z0-9-]+(\.[a-z0-9-]+)+$/i" span="4" id="email" required="1"></et2-textbox>
+					<et2-description  class="redItalic" value="*"></et2-description>
 				</row>
 				<row disabled="!@show[tel_work]">
-					<image src="phone"/>
-					<description value="Business phone"/>
-					<textbox size="64" maxlength="64" span="4" id="tel_work"/>
-					<description/>
+					<et2-image  src="phone"></et2-image>
+					<et2-description  value="Business phone"></et2-description>
+					<et2-textbox  maxlength="64" span="4" id="tel_work"></et2-textbox>
+					<et2-description></et2-description>
 				</row>
 				<row disabled="!@show[tel_cell]">
-					<description/>
-					<description value="Mobile phone"/>
-					<textbox size="64" maxlength="64" span="4" id="tel_cell"/>
-					<description/>
+					<et2-description></et2-description>
+					<et2-description  value="Mobile phone"></et2-description>
+					<et2-textbox  maxlength="64" span="4" id="tel_cell"></et2-textbox>
+					<et2-description></et2-description>
 				</row>
 				<row disabled="!@show[tel_fax]">
-					<description/>
-					<description value="Fax"/>
-					<textbox size="64" maxlength="64" span="4" id="tel_fax"/>
-					<description/>
+					<et2-description></et2-description>
+					<et2-description  value="Fax"></et2-description>
+					<et2-textbox  maxlength="64" span="4" id="tel_fax"></et2-textbox>
+					<et2-description></et2-description>
 				</row>
 				<row disabled="!@show[tel_home]">
-					<description/>
-					<description value="Home phone"/>
-					<textbox size="64" maxlength="64" span="4" id="tel_home"/>
-					<description/>
+					<et2-description></et2-description>
+					<et2-description  value="Home phone"></et2-description>
+					<et2-textbox  maxlength="64" span="4" id="tel_home"></et2-textbox>
+					<et2-description></et2-description>
 				</row>
 				<row disabled="!@show[url]">
-					<image src="internet"/>
-					<description value="Internet"/>
-					<textbox size="64" maxlength="64" span="4" id="url"/>
-					<description/>
+					<et2-image  src="internet"></et2-image>
+					<et2-description  value="Internet"></et2-description>
+					<et2-textbox  maxlength="64" span="4" id="url"></et2-textbox>
+					<et2-description></et2-description>
 				</row>
 				<row disabled="!@show[sep2]">
 					<hrule span="all"/>
 				</row>
 				<row disabled="!@show[adr_one_street]">
-					<image src="home"/>
-					<description value="Street"/>
-					<textbox size="64" maxlength="64" span="4" id="adr_one_street" needed="1"/>
-					<description class="redItalic" value="*"/>
+					<et2-image  src="home"></et2-image>
+					<et2-description  value="Street"></et2-description>
+					<et2-textbox  maxlength="64" span="4" id="adr_one_street" required="1"></et2-textbox>
+					<et2-description  class="redItalic" value="*"></et2-description>
 				</row>
 				<row disabled="!@show[adr_one_street2]">
-					<description/>
-					<description/>
-					<textbox size="64" maxlength="64" span="4" id="adr_one_street2"/>
-					<description/>
+					<et2-description></et2-description>
+					<et2-description></et2-description>
+					<et2-textbox  maxlength="64" span="4" id="adr_one_street2"></et2-textbox>
+					<et2-description></et2-description>
 				</row>
 				<row valign="top" disabled="!@show[adr_one_locality]=postcode_city">
-					<description/>
-					<description value="City"/>
-					<textbox size="10" maxlength="64" id="adr_one_postalcode" needed="1"/>
-					<textbox size="48" maxlength="64" span="3" id="adr_one_locality" align="right" needed="1"/>
-					<description class="redItalic" value="*"/>
+					<et2-description></et2-description>
+					<et2-description  value="City"></et2-description>
+					<et2-textbox  maxlength="64" id="adr_one_postalcode" required="1"></et2-textbox>
+					<et2-textbox  maxlength="64" span="3" id="adr_one_locality" align="right" required="1"></et2-textbox>
+					<et2-description  class="redItalic" value="*"></et2-description>
 				</row>
 				<row valign="top" disabled="!@show[adr_one_locality]=city_state_postcode">
-					<description/>
-					<description value="Stadt"/>
-					<textbox size="36" maxlength="64" span="2" id="adr_one_locality" needed="1"/>
-					<textbox size="8" maxlength="64" id="adr_one_region" align="center"/>
-					<textbox size="8" maxlength="64" id="adr_one_postalcode" align="right" needed="1"/>
-					<description class="redItalic" value="*"/>
+					<et2-description></et2-description>
+					<et2-description  value="Stadt"></et2-description>
+					<et2-textbox  maxlength="64" span="2" id="adr_one_locality" required="1"></et2-textbox>
+					<et2-textbox  maxlength="64" id="adr_one_region" align="center"></et2-textbox>
+					<et2-textbox  maxlength="64" id="adr_one_postalcode" align="right" required="1"></et2-textbox>
+					<et2-description  class="redItalic" value="*"></et2-description>
 				</row>
 				<row disabled="!@show[sep3]">
 					<hrule span="all"/>
 				</row>
 				<row disabled="!@show[custom1]">
-					<image src="gear"/>
-					<description value="@customlabel[1]"/>
-					<textbox id="@customfield[1]" span="4" needed="1" size="64"/>
-					<description class="redItalic" value="*"/>
+					<et2-image  src="gear"></et2-image>
+					<et2-description  value="@customlabel[1]"></et2-description>
+					<et2-textbox  id="@customfield[1]" span="4" required="1"></et2-textbox>
+					<et2-description  class="redItalic" value="*"></et2-description>
 				</row>
 				<row disabled="!@show[custom2]">
-					<description/>
-					<description value="@customlabel[2]"/>
-					<textbox id="@customfield[2]" span="4" size="64"/>
-					<description/>
+					<et2-description></et2-description>
+					<et2-description  value="@customlabel[2]"></et2-description>
+					<et2-textbox  id="@customfield[2]" span="4"></et2-textbox>
+					<et2-description></et2-description>
 				</row>
 				<row disabled="!@show[sep4]">
 					<hrule span="all"/>
 				</row>
 				<row valign="top" disabled="!@show[note]">
-					<image src="edit.png"/>
-					<description value="Message"/>
-					<textbox multiline="true" rows="5" cols="45" span="4" class="width100" needed="1" id="note"/>
+					<et2-image  src="edit.png"></et2-image>
+					<et2-description  value="Message"></et2-description>
+					<et2-textarea  rows="5" cols="45" span="4" class="width100" id="note" required="1"></et2-textarea>
 				</row>
 				<row disabled="!@show[sep5]">
 					<hrule span="all"/>
 				</row>
 				<row disabled="!@show[recaptcha]">
-					<description span="2"/>
+					<et2-description  span="2"></et2-description>
 					<html id="recaptcha"/>
-					<description/>
+					<et2-description></et2-description>
 				</row>
 				<row disabled="!@show[captcha]">
-					<image src="private.svg"/>
-					<description value="Verification"/>
-					<description value="@captcha_task"/>
-					<textbox label="%s please calculate the result" needed="1" span="3" id="captcha" size="3"/>
-					<description class="redItalic" value="*"/>
+					<et2-image  src="private.svg"></et2-image>
+					<et2-description  value="Verification"></et2-description>
+					<et2-description  value="@captcha_task"></et2-description>
+					<et2-textbox  label="%s please calculate the result" span="3" id="captcha" required="1"></et2-textbox>
+					<et2-description  class="redItalic" value="*"></et2-description>
 				</row>
 				<row>
-					<description/>
-					<description/>
-					<button label="Submit" id="submitit"/>
-					<description span="all" class="redItalic" value="required fields *" align="right"/>
-					<description/>
-					<description/>
-					<description/>
+					<et2-description></et2-description>
+					<et2-description></et2-description>
+					<et2-button  label="Submit" id="submitit"></et2-button>
+					<et2-description  span="all" class="redItalic" value="required fields *" align="right"></et2-description>
+					<et2-description></et2-description>
+					<et2-description></et2-description>
+					<et2-description></et2-description>
 				</row>
 			</rows>
 		</grid>

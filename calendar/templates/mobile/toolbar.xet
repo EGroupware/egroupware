@@ -9,15 +9,15 @@ Egroupware
 @version $Id$
 -->
 
-<!DOCTYPE overlay PUBLIC '-//EGroupware GmbH//eTemplate 2//EN' 'http://www.egroupware.org/etemplate2.dtd'>
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 
 <overlay>
 	<template id="calendar.toolbar">
-		<hbox class="et2_nextmatch" >
-			<box class="search nm-mob-header" width="100%">
-				<searchbox id="keywords" blur="Search" overlay="false" size="large" fix="false" onchange="app.calendar.update_state({view: 'listview',search: widget.getValue()});return false;"/>
+		<et2-hbox  class="et2_nextmatch" >
+			<et2-box  class="search nm-mob-header" width="100%">
+				<et2-searchbox  id="keywords" overlay="false" size="large" fix="false" onchange="app.calendar.update_state({view: 'listview',search: widget.getValue()});return false;" placeholder="Search"></et2-searchbox>
 				<toolbar id="toolbar" flat_list="false"/>
-			</box>
-		</hbox>
+			</et2-box>
+		</et2-hbox>
 	</template>
 </overlay>

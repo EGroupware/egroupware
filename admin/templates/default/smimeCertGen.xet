@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="mail.smimeCertGen" template="" lang="" group="0" version="17.1">
 		<grid width="100%">
@@ -11,26 +10,26 @@
 				<row>
 					<groupbox>
 						<caption label="Certificate details"/>
-						<vbox>
-							<textbox id="countryName" class="et2_fullWidth" blur="Country name"/>
-							<textbox id="stateOrProvinceName" class="et2_fullWidth" blur="State or province name"/>
-							<textbox id="localityName" class="et2_fullWidth" blur="Locality name"/>
-							<textbox id="organizationName" class="et2_fullWidth" blur="Organization name"/>
-							<textbox id="organizationalUnitName" class="et2_fullWidth" blur="Organizational unit name"/>
-							<textbox id="commonName" class="et2_fullWidth" blur="Common name"/>
-							<textbox id="emailAddress" class="et2_fullWidth" blur="Email address"/>
-							<textbox id="validation" type="integer" label="Certificate validation in days" blur="365"/>
-						</vbox>
+						<et2-vbox>
+							<et2-textbox  id="countryName" placeholder="Country name"></et2-textbox>
+							<et2-textbox  id="stateOrProvinceName" placeholder="State or province name"></et2-textbox>
+							<et2-textbox  id="localityName" placeholder="Locality name"></et2-textbox>
+							<et2-textbox  id="organizationName" placeholder="Organization name"></et2-textbox>
+							<et2-textbox  id="organizationalUnitName" placeholder="Organizational unit name"></et2-textbox>
+							<et2-textbox  id="commonName" placeholder="Common name"></et2-textbox>
+							<et2-textbox  id="emailAddress" placeholder="Email address"></et2-textbox>
+							<et2-textbox  id="validation" type="integer" label="Certificate validation in days" placeholder="365"></et2-textbox>
+						</et2-vbox>
 					</groupbox>
 				</row>
 				<row>
 					<groupbox>
 						<caption label="passphrase"/>
-						<description value="Enter a passphrase if you would like to protect your private key by password."/>
-						<vbox>
-							<passwd id="passphrase" blur="Enter a passphrase" class="et2_fullWidth"/>
-							<passwd id="passphraseConf" blur="Repeat the passphrase" class="et2_fullWidth"/>
-						</vbox>
+						<et2-description  value="Enter a passphrase if you would like to protect your private key by password."></et2-description>
+						<et2-vbox>
+							<et2-password  id="passphrase" placeholder="Enter a passphrase"></et2-password>
+							<et2-password  id="passphraseConf" placeholder="Repeat the passphrase"></et2-password>
+						</et2-vbox>
 					</groupbox>
 				</row>
 			</rows>

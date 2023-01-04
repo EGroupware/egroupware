@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="addressbook.importexport_wizard_chooseowner" template="" lang="" group="0" version="1.9.001">
 		<grid>
@@ -9,26 +8,22 @@
 			</columns>
 			<rows>
 				<row>
-					<description id="msg" no_lang="1"/>
+					<et2-description  id="msg" noLang="1"></et2-description>
 				</row>
 				<row disabled="@no_owner_map">
-					<checkbox label="Use field from CSV if possible" id="owner_from_csv"/>
+					<et2-checkbox  label="Use field from CSV if possible" id="owner_from_csv"></et2-checkbox>
 				</row>
 				<row>
-					<menulist>
-						<menupopup id="contact_owner"/>
-					</menulist>
+					<et2-select  id="contact_owner"></et2-select>
 				</row>
 				<row>
-					<description/>
+					<et2-description></et2-description>
 				</row>
 				<row>
-					<menulist>
-						<menupopup type="select-bool" label="Change addressbook when updating" id="change_owner"/>
-					</menulist>
+					<et2-select-bool  label="Change addressbook when updating" id="change_owner"></et2-select-bool>
 				</row>
 				<row>
-					<checkbox label="Empty addressbook before importing" id="empty_addressbook"/>
+					<et2-checkbox  label="Empty addressbook before importing" id="empty_addressbook"></et2-checkbox>
 				</row>
 			</rows>
 		</grid>

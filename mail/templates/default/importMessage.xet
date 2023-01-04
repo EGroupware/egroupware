@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="mail.importMessage" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
@@ -10,21 +9,21 @@
 			</columns>
 			<rows>
 				<row class="dialogHeader">
-					<description value="Import message" align="center" span="all" class="et2_fullWidth"/>
+					<et2-description  value="Import message" align="center" span="all"></et2-description>
 				</row>
 				<row>
-					<description value="Store to Folder"/>
-					<taglist id="FOLDER" autocomplete_url='mail.mail_compose.ajax_searchFolder' autocomplete_params='' maxSelection="1" allowFreeEntries="false" onclick="app.mail.address_click"/>
+					<et2-description  value="Store to Folder"></et2-description>
+					<et2-select  id="FOLDER" allowFreeEntries="false" onclick="app.mail.address_click" searchUrl="mail.mail_compose.ajax_searchFolder" searchOptions=""></et2-select>
 				</row>
 				<row>
-					<description value="Choose file"/>
-					<hbox>
+					<et2-description  value="Choose file"></et2-description>
+					<et2-hbox>
 						<vfs-select id="vfsfile" button_caption = "" mode="open" mime="message/rfc822" onchange="app.mail.vfsUploadForImport"/>
 						<file statustext="Select file to import into Folder" onFinish="app.mail.uploadForImport" mime="/^message\//i" id="uploadForImport" drop_target ="mail-importMessage" class="mail_importMessageFile"/>
-					</hbox>
+					</et2-hbox>
 				</row>
 				<row class="dialogFooterToolbar">
-					<buttononly statustext="Closes this window" label="Close" onclick="window.close();" image="close" background_image="1"/>
+					<et2-button  statustext="Closes this window" label="Close" onclick="window.close();" image="close" noSubmit="true"></et2-button>
 				</row>
 			</rows>
 		</grid>

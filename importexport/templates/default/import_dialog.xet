@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="importexport.import_dialog.csv" template="" lang="" group="0" version="1.9.005">
 		<grid>
@@ -10,13 +9,11 @@
 			</columns>
 			<rows>
 				<row>
-					<description value="Delimiter"/>
-					<hbox no_lang="1" options="0,0">
-						<menulist>
-							<menupopup id="delimiter" no_lang="1" onchange="var _this = jQuery(this); var text = _this.parent().parent().find('input'); if(_this.val() =='other') {text.val('');text.show(); text.focus();} else {text.hide();}"/>
-						</menulist>
-						<textbox id="other_delimiter" size="2" maxlength="1" class="hide"/>
-					</hbox>
+					<et2-description  value="Delimiter"></et2-description>
+					<et2-hbox  cellpadding="0" cellspacing="0" noLang="1" >
+						<et2-select  id="delimiter" onchange="var _this = jQuery(this); var text = _this.parent().parent().find('input'); if(_this.val() =='other') {text.val('');text.show(); text.focus();} else {text.hide();}" noLang="1"></et2-select>
+						<et2-textbox  id="other_delimiter" maxlength="1" class="hide"></et2-textbox>
+					</et2-hbox>
 				</row>
 			</rows>
 		</grid>
@@ -30,44 +27,39 @@
             <rows>
                 <row disabled="!@message">
                     <html id="message" span="all" class="message"/>
-                    <description/>
+                    <et2-description></et2-description>
                 </row>
                 <row>
-                    <description value="Application"/>
-                    <menulist>
-                        <menupopup id="appname" onchange="1"/>
-                    </menulist>
+                    <et2-description  value="Application"></et2-description>
+                    <et2-select  id="appname" onchange="1"></et2-select>
                 </row>
                 <row>
-                    <description value="Import definition"/>
-                    <menulist>
-                        <menupopup id="definition" onchange="1"/>
-                    </menulist>
+                    <et2-description  value="Import definition"></et2-description>
+                    <et2-select  id="definition" onchange="1"></et2-select>
                 </row>
                 <row>
-                    <description value="Please select file to import"/>
+                    <et2-description  value="Please select file to import"></et2-description>
                     <file id="file" accept="@file_type"/>
                 </row>
                 <row disabled="!@plugin_options_template">
                     <template template="@plugin_options_template"/>
                 </row>
                 <row>
-                    <vbox id="preview_box" span="all" class="preview">
+                    <et2-vbox  id="preview_box" span="all" class="preview">
                         <html id="preview" class="content"/>
-                        <box align="center" id="buttons">
-                            <buttononly align="center" label="OK"
-                                        onclick="jQuery(this).parents('.preview').css('display','none'); return false;"/>
-                        </box>
-                    </vbox>
-					<description/>
+                        <et2-box  align="center" id="buttons">
+                            <et2-button  align="center" label="OK" onclick="jQuery(this).parents('.preview').css('display','none'); return false;" noSubmit="true"></et2-button>
+                        </et2-box>
+                    </et2-vbox>
+					<et2-description></et2-description>
 				</row>
 				<row>
-					<hbox span="all">
-						<button label="Import" id="import" onclick="app.importexport.import_preview" image="import" background_image="1"/>
-						<button label="Cancel" id="cancel" onclick="window.close();" image="cancel" background_image="1"/>
-						<checkbox align="right" label="No notifications" id="no_notifications" />
-						<checkbox align="right" label="Test only" id="dry-run"/>
-					</hbox>
+					<et2-hbox  span="all">
+						<et2-button  label="Import" id="import" onclick="app.importexport.import_preview" image="import"></et2-button>
+						<et2-button  label="Cancel" id="cancel" onclick="window.close();" image="cancel"></et2-button>
+						<et2-checkbox  align="right" label="No notifications" id="no_notifications" ></et2-checkbox>
+						<et2-checkbox  align="right" label="Test only" id="dry-run"></et2-checkbox>
+					</et2-hbox>
 				</row>
 			</rows>
 		</grid>

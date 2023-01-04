@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
     <template id="filemanager.quota" template="" lang="" group="0" version="1.9.004">
-        <vbox>
-            <textbox label="User home quota" id="quota" blur="(EPL Only)" disabled="true" class="et2-label-fixed"/>
-            <textbox label="Group home quota" id="group_quota" blur="(EPL Only)" disabled="true"
-                     class="et2-label-fixed"
-                     help-text="Enter a file size, e.g. 100K, 200M or 2G"/>
-            <button label="Recalculate" id="button[recalculate]" statustext="Recalculate directory sizes"/>
+        <et2-vbox>
+            <et2-textbox  label="User home quota" id="quota" disabled="true" class="et2-label-fixed" placeholder="(EPL Only)"></et2-textbox>
+            <et2-textbox  label="Group home quota" id="group_quota" disabled="true" class="et2-label-fixed" placeholder="(EPL Only)" helpText="Enter a file size, e.g. 100K, 200M or 2G"></et2-textbox>
+            <et2-button  label="Recalculate" id="button[recalculate]" statustext="Recalculate directory sizes"></et2-button>
             <grid id="oversize" disabled="!@oversize">
                 <columns>
                     <column/>
@@ -18,24 +15,24 @@
                 </columns>
                 <rows>
                     <row class="th">
-                        <description value="Path"/>
-                        <description value="quota"/>
-                        <description value="Size"/>
+                        <et2-description  value="Path"></et2-description>
+                        <et2-description  value="quota"></et2-description>
+                        <et2-description  value="Size"></et2-description>
                     </row>
                     <row>
                         <vfs id="${row}"/>
                         <vfs-size id="${row}[quota]"/>
                         <vfs-size id="${row}[size]"/>
-                        <url-email id="${row}[account_email]" readonly="true" class="adminOverflowEllipsis"/>
+                        <et2-url-email  id="${row}[account_email]" readonly="true" class="adminOverflowEllipsis"></et2-url-email>
                     </row>
                 </rows>
             </grid>
-            <hbox span="2" class="dialogFooterToolbar">
-                <button label="Save" id="button[save]"/>
-                <button label="Apply" id="button[apply]"/>
-                <button label="Cancel" id="button[cancel]"/>
-            </hbox>
-        </vbox>
+            <et2-hbox  span="2" class="dialogFooterToolbar">
+                <et2-button  label="Save" id="button[save]"></et2-button>
+                <et2-button  label="Apply" id="button[apply]"></et2-button>
+                <et2-button  label="Cancel" id="button[cancel]"></et2-button>
+            </et2-hbox>
+        </et2-vbox>
         <styles>
             #filemanager-quota_quota::part(form-control-input),
             #filemanager-quota_group_quota::part(form-control-input){

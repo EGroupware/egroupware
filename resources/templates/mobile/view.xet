@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="resources.view.page" template="" lang="" group="0" version="">
-		<textbox statustext="Short description of resource" id="short_description"  size="50" maxlength="100" class="et2_fullWidth"/>
+		<et2-textbox  statustext="Short description of resource" id="short_description" maxlength="100"></et2-textbox>
 	</template>
 	<template id="resources.view.custom" template="" lang="" group="0" version="">
 		<grid width="100%" height="245" class="row_on" spacing="0" padding="0" overflow="auto">
@@ -12,7 +11,7 @@
 			</columns>
 			<rows>
 				<row class="th" height="20">
-					<description value="Custom fields"/>
+					<et2-description  value="Custom fields"></et2-description>
 				</row>
 				<row valign="top">
 					<customfields/>
@@ -28,21 +27,17 @@
 			</columns>
 			<rows>
 				<row class="dialogOperators">
-					<description value="Created by"/>
-					<hbox>
-						<menulist>
-							<menupopup type="select-account" id="res_creator" readonly="true"/>
-						</menulist>
-						<date-time id="res_created" readonly="true" align="right"/>
-					</hbox>
-					<description/>
-					<description value="Last modified"/>
-					<hbox>
-						<menulist>
-							<menupopup type="select-account" id="res_modifier" readonly="true"/>
-						</menulist>
-							<date-time  id="res_modified" readonly="true" align="right"/>
-					</hbox>
+					<et2-description  value="Created by"></et2-description>
+					<et2-hbox>
+						<et2-select-account  id="res_creator" readonly="true"></et2-select-account>
+						<et2-date-time  id="res_created" readonly="true" align="right"></et2-date-time>
+					</et2-hbox>
+					<et2-description></et2-description>
+					<et2-description  value="Last modified"></et2-description>
+					<et2-hbox>
+						<et2-select-account  id="res_modifier" readonly="true"></et2-select-account>
+							<et2-date-time  id="res_modified" readonly="true" align="right"></et2-date-time>
+					</et2-hbox>
 				</row>
 			</rows>
 		</grid>
@@ -55,52 +50,49 @@
 			</columns>
 			<rows>
 				<row  class="dialogHeadbar" >
-					<hbox>
-						<textbox type="integer" id="res_id" readonly="true" class="entry_id"/>
-					</hbox>
+					<et2-hbox>
+						<et2-number  id="res_id" readonly="true" class="entry_id" precision="0"></et2-number>
+					</et2-hbox>
 				</row>
 				<row>
-					<box>
-						<hbox class="avatar">
-							<image src="picture_thumb" href="$cont[picture_original]" expose_view="true" align="center"/>
-						</hbox>
-					</box>
+					<et2-box>
+						<et2-hbox  class="avatar">
+							<et2-image-expose  src="picture_thumb" href="$cont[picture_original]" align="center"></et2-image-expose>
+						</et2-hbox>
+					</et2-box>
 				</row>
 				<row class="dialogHeader">
-					<description value="Name"/>
-					<textbox statustext="Name of resource" id="name" needed="1" class="et2_fullWidth et2_required" span="4"/>
+					<et2-description  value="Name"></et2-description>
+					<et2-textbox  statustext="Name of resource" id="name" class="et2_required" span="4" required="1"></et2-textbox>
 				</row>
 				<row>
-					<description value="Quantity"/>
-					<textbox statustext="Quantity of resource" id="quantity" size="5" maxlength="10" class="et2_fullWidth"/>
+					<et2-description  value="Quantity"></et2-description>
+					<et2-textbox  statustext="Quantity of resource" id="quantity" maxlength="10"></et2-textbox>
 				</row>
 				<row>
-					<description value="Category"/>
-					<menulist span="3">
-						<menupopup align="right" statustext="Which category does this resource belong to?" id="cat_id" needed="1" no_lang="1" class="et2_fullWidth" />
-					</menulist>
+					<et2-description  value="Category"></et2-description>
+					<et2-select  span="3" align="right" statustext="Which category does this resource belong to?" id="cat_id" required="1" noLang="1"></et2-select>
 				</row>
 				<row>
-					<description value="Usable"/>
-					<textbox statustext="How many of them are useable?" id="useable" size="5" maxlength="10" class="et2_fullWidth"/>
+					<et2-description  value="Usable"></et2-description>
+					<et2-textbox  statustext="How many of them are useable?" id="useable" maxlength="10"></et2-textbox>
 				</row>
 				<row>
-					<description value="Bookable"/>
-					<checkbox statustext="Is resource bookable?" id="bookable" span="3"/>
+					<et2-description  value="Bookable"></et2-description>
+					<et2-checkbox  statustext="Is resource bookable?" id="bookable" span="3"></et2-checkbox>
 				</row>
 				<row>
-					<tabbox id="tabs" span="all" width="100%" tab_height="250" align_tabs="v">
-						<tabs>
-							<tab id="page" label="Description (short)" statustext="Informations about the location of resource"/>
-							<tab id="custom" label="Custom" statustext="Pictures or resource"/>
-							<tab id="ownership" label="Ownership"/>
-						</tabs>
-						<tabpanels>
+					<et2-vbox  id="tabs" span="all" width="100%" tabHeight="250">
+						<et2-details  id="page" summary="Description (short)" title="Informations about the location of resource">
 							<template id="resources.view.page"/>
+						</et2-details>
+						<et2-details  id="custom" summary="Custom" title="Pictures or resource">
 							<template id="resources.view.custom"/>
+						</et2-details>
+						<et2-details  id="ownership" summary="Ownership" title="">
 							<template id="resources.view.ownership"/>
-						</tabpanels>
-					</tabbox>
+						</et2-details>
+					</et2-vbox>
 				</row>
 			</rows>
 		</grid>

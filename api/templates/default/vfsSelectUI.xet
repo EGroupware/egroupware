@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="api.vfsSelectUI" template="" lang="" group="0" version="1.9.002">
 		<grid width="100%" class="vfs-select-container" resize_ratio="0">
@@ -9,24 +8,24 @@
 			</columns>
 			<rows >
 				<row class="et2_toolbar" disabled="@mode=/(open-multiple|select-dir)/">
-					<textbox id="name" class="et2_fullWidth" blur="enter your file name"/>
+					<et2-textbox  id="name" placeholder="enter your file name"></et2-textbox>
 				</row>
 				<row class="nextmatch_header_row">
-					<vbox>
-						<box class="et2_toolbar">
-							<buttononly statustext="Go to your home directory" id="home" onclick="app.vfsSelectUI.do_action('home', widget)" image="filemanager/gohome" background_image="1"/>
-							<buttononly statustext="Up" id="up" onclick="app.vfsSelectUI.change_dir('..', widget);" image="filemanager/goup" background_image="1"/>
-							<buttononly statustext="Favorites" id="favorites" onclick="app.vfsSelectUI.change_dir('/apps/favorites', widget);" image="filemanager/fav_filter" background_image="1"/>
-							<select width="175" id="app" empty_label="Applications" no_lang="1" onchange="app.vfsSelectUI.do_action('app', widget)"/>
-							<buttononly statustext="Create directory" id="createdir" class="createDir" onclick="app.vfsSelectUI.createdir" image="filemanager/button_createdir" ro_image="filemanager/createdir_disabled" background_image="1"/>
-							<file id='upload_file' statustext="upload file" progress_dropdownlist = "true" multiple="true" onFinish="app.vfsSelectUI.storeFile"/>
-							<searchbox id="search" onchange="app.vfsSelectUI.search"/>
-						</box>
+					<et2-vbox>
+						<et2-box  class="et2_toolbar">
+							<et2-button  statustext="Go to your home directory" id="home" onclick="app.vfsSelectUI.do_action('home', widget)" image="filemanager/gohome" noSubmit="true"></et2-button>
+							<et2-button  statustext="Up" id="up" onclick="app.vfsSelectUI.change_dir('..', widget);" image="filemanager/goup" noSubmit="true"></et2-button>
+							<et2-button  statustext="Favorites" id="favorites" onclick="app.vfsSelectUI.change_dir('/apps/favorites', widget);" image="filemanager/fav_filter" noSubmit="true"></et2-button>
+							<et2-select  width="175" id="app" onchange="app.vfsSelectUI.do_action('app', widget)" emptyLabel="Applications" noLang="1"></et2-select>
+							<et2-button  statustext="Create directory" id="createdir" class="createDir" onclick="app.vfsSelectUI.createdir" image="filemanager/button_createdir" noSubmit="true" roImage="filemanager/createdir_disabled"></et2-button>
+							<file id="upload_file" statustext="upload file" progress_dropdownlist = "true" multiple="true" onFinish="app.vfsSelectUI.storeFile"/>
+							<et2-searchbox  id="search" onchange="app.vfsSelectUI.search"></et2-searchbox>
+						</et2-box>
 						<vfs-path id="path" class="et2_fullWidth selectPath" align="left" onchange="app.vfsSelectUI.do_action('path', widget)" width="99.2%"/>
-					</vbox>
+					</et2-vbox>
 				</row>
 				<row>
-					<hbox class="selectFiles">
+					<et2-hbox  class="selectFiles">
 						<grid width="100%" id="dir">
 							<columns>
 								<column width="20"/>
@@ -35,16 +34,16 @@
 							</columns>
 							<rows>
 								<row class="row">
-									<vfs-mime align="center" id="$row" width="16px" class="selectIcon"/>
+									<et2-vfs-mime  align="center" id="$row" width="16px" class="selectIcon"></et2-vfs-mime>
 									<vfs id="$row" onclick="app.vfsSelectUI.select_clicked"/>
-									<checkbox align="right" id="selected[]" selected_value="$row_cont[name]"/>
+									<et2-checkbox  align="right" id="selected[]" selectedValue="$row_cont[name]"></et2-checkbox>
 								</row>
 							</rows>
 						</grid>
-					</hbox>
+					</et2-hbox>
 				</row>
 				<row disabled="!@showmime">
-					<select id="mime" onchange="app.vfsSelectUI.do_action('mime', widget)" empty_label="All files" class="et2_fullWidth"/>
+					<et2-select  id="mime" onchange="app.vfsSelectUI.do_action('mime', widget)" emptyLabel="All files"></et2-select>
 				</row>
 			</rows>
 		</grid>

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
     <template id="mail.index.rows.vertical" template="" lang="" group="0" version="1.9.001">
         <grid width="100%">
@@ -20,27 +19,27 @@
                     <nextmatch-header statustext="security" label="Security" id="security"/>
                 </row>
                 <row class="$row_cont[class]">
-                    <hbox class="$row_cont[class] mobile_cat_col">
-                        <lavatar image="$row_cont[avatar]" fname="$row_cont[address]" size="2.75em" shape="rounded"/>
-                        <vbox>
-                            <url-email id="${row}[address]" class="$row_cont[class]" readonly="true"/>
-                            <hbox>
+                    <et2-hbox  class="$row_cont[class] mobile_cat_col">
+                        <et2-lavatar  image="$row_cont[avatar]" fname="$row_cont[address]" size="2.75em" shape="rounded"></et2-lavatar>
+                        <et2-vbox>
+                            <et2-url-email  id="${row}[address]" class="$row_cont[class]" readonly="true"></et2-url-email>
+                            <et2-hbox>
 
-                                <description id="${row}[subject]" no_lang="1" class="$row_cont[class]" />
-                            </hbox>
-                            <description id="${row}[bodypreview]" no_lang="1" class='et2_label bodypreview'/>
-                        </vbox>
-                    </hbox>
-                    <vbox>
-                        <hbox>
-                            <date-time_today align="center"  class="$row_cont[class]" id="${row}[date]" readonly="true"/>
-                        </hbox>
-                        <hbox>
-                            <image src="$row_cont[smime]" height="16px"/>
+                                <et2-description  id="${row}[subject]" class="$row_cont[class]" noLang="1"></et2-description>
+                            </et2-hbox>
+                            <et2-description  id="${row}[bodypreview]" class="et2_label bodypreview" noLang="1"></et2-description>
+                        </et2-vbox>
+                    </et2-hbox>
+                    <et2-vbox>
+                        <et2-hbox>
+                            <et2-date-time-today  align="center" class="$row_cont[class]" id="${row}[date]" readonly="true"></et2-date-time-today>
+                        </et2-hbox>
+                        <et2-hbox>
+                            <et2-image  src="$row_cont[smime]" height="16px"></et2-image>
                             <html id="${row}[attachments]"/>
-                            <description  class="status_img $row_cont[class]"/>
-                        </hbox>
-                    </vbox>
+                            <et2-description  class="status_img $row_cont[class]"></et2-description>
+                        </et2-hbox>
+                    </et2-vbox>
                 </row>
             </rows>
         </grid>

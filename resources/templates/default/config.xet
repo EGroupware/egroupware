@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="resources.config" template="" lang="" group="0" version="16.1">
 		<grid width="100%" class="admin-config egwGridView_grid">
@@ -10,33 +9,33 @@
 			</columns>
 			<rows>
 				<row>
-					<description value="Allow ignore conflicts"/>
-					<select id="newsettings[ignoreconflicts]">
+					<et2-description  value="Allow ignore conflicts"></et2-description>
+					<et2-select  id="newsettings[ignoreconflicts]">
 						<option value="">Yes, only users with direct booking permission</option>
 						<option value="allusers">Yes, all users can ignore conflicts</option>
 						<option value="no">No</option>
-					</select>
+					</et2-select>
 				</row>
 				<row>
-					<description value="Booking requests" span="all" class="subHeader"/>
+					<et2-description  value="Booking requests" span="all" class="subHeader"></et2-description>
 				</row>
 				<row>
-					<description value="Allow booking requests from any user when creating events?"/>
-					<select id="newsettings[bookingrequests]">
+					<et2-description  value="Allow booking requests from any user when creating events?"></et2-description>
+					<et2-select  id="newsettings[bookingrequests]">
 						<option value="disabled">No, users will need to contact users with direct booking permission</option>
 						<option value="">Yes</option>
-					</select>
+					</et2-select>
 				</row>
 				<row>
-					<description value="History logging" span="all" class="subHeader"/>
+					<et2-description  value="History logging" span="all" class="subHeader"></et2-description>
 				</row>
 				<row>
-					<description value="Prevent deleting"/>
-					<select id="newsettings[history]">
+					<et2-description  value="Prevent deleting"></et2-description>
+					<et2-select  id="newsettings[history]">
 						<option value="">No</option>
 						<option value="history">Yes, only admins can purge deleted items</option>
 						<option value="userpurge">Yes, users can purge their deleted items</option>
-					</select>
+					</et2-select>
 				</row>
 			</rows>
 		</grid>

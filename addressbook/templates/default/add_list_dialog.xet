@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="addressbook.add_list_dialog" template="" lang="" group="0" version="">
 		<grid>
@@ -10,12 +9,12 @@
 			</columns>
 			<rows>
 			<row>
-				<description value="Name for the distribution list"/>
-				<textbox id="name"/>
+				<et2-description  value="Name for the distribution list"></et2-description>
+				<et2-textbox  id="name"></et2-textbox>
 			</row>
 			<row>
-			<description value="Addressbook"/>
-			<select id="owner"/>
+			<et2-description  value="Addressbook"></et2-description>
+			<et2-select  id="owner"></et2-select>
 			</row>
 			</rows>
 		</grid>

@@ -1,54 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="mail.display" template="" lang="" group="0" version="1.9.001">
-		<appicon class="onlyPrint"/>
+		<et2-appicon  class="onlyPrint"></et2-appicon>
 		<html id="msg"/>
-		<vbox class="mailDisplay">
-			<hbox class="dialogHeadbar">
-				<hbox>
+		<et2-vbox  class="mailDisplay">
+			<et2-hbox  class="dialogHeadbar">
+				<et2-hbox>
 					<toolbar class="et2_head_toolbar" id="displayToolbar" width="100%" view_range="6" flat_list="true"/>
-					<description/>
-				</hbox>
-			</hbox>
-			<hbox  class="mail-d-h1" width="100%">
-				<description align="left" id="mail_displaysubject" no_lang="1" readonly="true"/>
-			</hbox>
+					<et2-description></et2-description>
+				</et2-hbox>
+			</et2-hbox>
+			<et2-hbox  class="mail-d-h1" width="100%">
+				<et2-description  align="left" id="mail_displaysubject" readonly="true" noLang="1"></et2-description>
+			</et2-hbox>
 
-			<hbox class="mail-d-h2" id="mailDisplayHeadersFrom" disabled="!@FROM" width="100%">
-				<url-email id="FROM" readonly="true"/>
-			</hbox>
-			<hbox class="mail-d-h2" align="right" width="100%">
-				<date-time id="mail_displaydate" readonly="true"/>
-			</hbox>
-			<hbox class="mail-d-h2" id="mailDisplayHeadersTo" disabled="!@TO" width="100%">
-				<description value="To"/>
-				<hbox id="TO" class="mail_extraEmails">
-				</hbox>
-				<buttononly class="et2_button ui-button" label="Show all Addresses" image="foldertree_nolines_plus" onclick="app.mail.showAllHeader"/>
-			</hbox>
-			<hbox>
-				<details title="show details" toggle_align="left">
-					<hbox class="mail-d-h2" id="mailDisplayHeadersSender" disabled="!@SENDER" width="100%">
-						<description value="on behalf of"/>
-						<url-email id="SENDER" readonly="true"/>
-					</hbox>
-					<hbox class="mail-d-h2" id="mailDisplayHeadersCc" disabled="!@CC"  width="100%">
-						<description value="Cc"/>
-						<hbox id="CC" class="mail_extraEmails">
-						</hbox>
-						<buttononly class="et2_button ui-button" label="Show all Addresses" image="foldertree_nolines_plus" onclick="app.mail.showAllHeader"/>
-					</hbox>
-					<hbox class="mail-d-h2" id="mailDisplayHeadersBcc" disabled="!@BCC" width="100%">
-						<description value="Bcc"/>
-						<hbox id="BCC" class="mail_extraEmails">
-						</hbox>
-						<buttononly class="et2_button ui-button" label="Show all Addresses" image="foldertree_nolines_plus" onclick="app.mail.showAllHeader"/>
-					</hbox>
-				</details>
-				<details title="show attachments" toggle_align="left" class="attachments">
-					<box class="$cont[mailDisplayAttachmentsClass]">
+			<et2-hbox  class="mail-d-h2" id="mailDisplayHeadersFrom" disabled="!@FROM" width="100%">
+				<et2-url-email  id="FROM" readonly="true"></et2-url-email>
+			</et2-hbox>
+			<et2-hbox  class="mail-d-h2" align="right" width="100%">
+				<et2-date-time  id="mail_displaydate" readonly="true"></et2-date-time>
+			</et2-hbox>
+			<et2-hbox  class="mail-d-h2" id="mailDisplayHeadersTo" disabled="!@TO" width="100%">
+				<et2-description  value="To"></et2-description>
+				<et2-hbox  id="TO" class="mail_extraEmails">
+				</et2-hbox>
+				<et2-button  class="et2_button ui-button" label="Show all Addresses" image="foldertree_nolines_plus" onclick="app.mail.showAllHeader" noSubmit="true"></et2-button>
+			</et2-hbox>
+			<et2-hbox>
+				<et2-details  summary="show details" toggleAlign="left">
+					<et2-hbox  class="mail-d-h2" id="mailDisplayHeadersSender" disabled="!@SENDER" width="100%">
+						<et2-description  value="on behalf of"></et2-description>
+						<et2-url-email  id="SENDER" readonly="true"></et2-url-email>
+					</et2-hbox>
+					<et2-hbox  class="mail-d-h2" id="mailDisplayHeadersCc" disabled="!@CC" width="100%">
+						<et2-description  value="Cc"></et2-description>
+						<et2-hbox  id="CC" class="mail_extraEmails">
+						</et2-hbox>
+						<et2-button  class="et2_button ui-button" label="Show all Addresses" image="foldertree_nolines_plus" onclick="app.mail.showAllHeader" noSubmit="true"></et2-button>
+					</et2-hbox>
+					<et2-hbox  class="mail-d-h2" id="mailDisplayHeadersBcc" disabled="!@BCC" width="100%">
+						<et2-description  value="Bcc"></et2-description>
+						<et2-hbox  id="BCC" class="mail_extraEmails">
+						</et2-hbox>
+						<et2-button  class="et2_button ui-button" label="Show all Addresses" image="foldertree_nolines_plus" onclick="app.mail.showAllHeader" noSubmit="true"></et2-button>
+					</et2-hbox>
+				</et2-details>
+				<et2-details  class="attachments" summary="show attachments" toggleAlign="left">
+					<et2-box  class="$cont[mailDisplayAttachmentsClass]">
 						<grid disabled="@no_griddata" id="mail_displayattachments" class="egwGridView_grid" width="100%">
 							<columns>
 								<column disabled="!@showtempname"/>
@@ -64,28 +63,28 @@
 							</columns>
 							<rows>
 								<row class="row attachmentRow" >
-									<description id="${row}[attachment_number]" />
-									<description id="${row}[partID]" />
-									<description id="${row}[type]" />
-									<description id="${row}[winmailFlag]" />
-									<description class="useEllipsis et2_link" id="${row}[filename]" expose_view="true" mime="$row_cont[type]" no_lang="1" mime_data="$row_cont[mime_data]" href="$row_cont[mime_url]"/>
-									<description align="right" id="${row}[size]" />
-									<buttononly id="${row}[save]" value="save" image="fileexport" onclick="app.mail.saveAttachmentHandler(widget,'downloadOneAsFile', ${row})"/>
-									<buttononly id="${row}[saveAsVFS]" value="save" image="filemanager/navbar" onclick="app.mail.saveAttachmentHandler(widget,'saveOneToVfs', ${row})"/>
-									<buttononly class="$row_cont[classSaveAllPossiblyDisabled]" id="${row}[save_all]" value="save_all" image="mail/save_all" onclick="app.mail.saveAttachmentHandler(widget,'saveAllToVfs', ${row})"/>
-									<buttononly class="$row_cont[classSaveAllPossiblyDisabled]" id="${row}[save_zip]" value="save_zip" image="mail/save_zip" onclick="app.mail.saveAttachmentHandler(widget,'downloadAllToZip', ${row})" label="Save as Zip"/>
+									<et2-description  id="${row}[attachment_number]"></et2-description>
+									<et2-description  id="${row}[partID]"></et2-description>
+									<et2-description  id="${row}[type]"></et2-description>
+									<et2-description  id="${row}[winmailFlag]"></et2-description>
+									<et2-description-expose  class="useEllipsis et2_link" id="${row}[filename]" mime="$row_cont[type]" href="$row_cont[mime_url]" noLang="1" mimeData="$row_cont[mime_data]"></et2-description-expose>
+									<et2-description  align="right" id="${row}[size]"></et2-description>
+									<et2-button-icon  id="${row}[save]" value="save" image="fileexport" onclick="app.mail.saveAttachmentHandler(widget,'downloadOneAsFile', ${row})" noSubmit="true"></et2-button-icon>
+									<et2-button-icon  id="${row}[saveAsVFS]" value="save" image="filemanager/navbar" onclick="app.mail.saveAttachmentHandler(widget,'saveOneToVfs', ${row})" noSubmit="true"></et2-button-icon>
+									<et2-button-icon  class="$row_cont[classSaveAllPossiblyDisabled]" id="${row}[save_all]" value="save_all" image="mail/save_all" onclick="app.mail.saveAttachmentHandler(widget,'saveAllToVfs', ${row})" noSubmit="true"></et2-button-icon>
+									<et2-button  class="$row_cont[classSaveAllPossiblyDisabled]" id="${row}[save_zip]" value="save_zip" image="mail/save_zip" onclick="app.mail.saveAttachmentHandler(widget,'downloadAllToZip', ${row})" label="Save as Zip" noSubmit="true"></et2-button>
 								</row>
 							</rows>
 						</grid>
-					</box>
-				</details>
-			</hbox>
+					</et2-box>
+				</et2-details>
+			</et2-hbox>
 
 
-		</vbox>
-		<vbox class="mailDisplay">
+		</et2-vbox>
+		<et2-vbox  class="mailDisplay">
 			<iframe frameborder="1" class="mail_displaybody" id="mailDisplayBodySrc" name="mailDisplayBodySrc" scrolling="auto" width="100%"/>
 
-		</vbox>
+		</et2-vbox>
 	</template>
 </overlay>

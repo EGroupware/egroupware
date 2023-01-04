@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="filemanager.admin" template="" lang="" group="0" version="1.7.001">
 		<groupbox disabled="!@percent_size">
@@ -13,27 +13,27 @@
 				</columns>
 				<rows>
 					<row>
-						<description value="All files"/>
-						<int id="total_files" readonly="true" align="right"/>
-						<description value="Files"/>
+						<et2-description  value="All files"></et2-description>
+						<et2-number  id="total_files" readonly="true" align="right" precision="0"></et2-number>
+						<et2-description  value="Files"></et2-description>
 						<vfs-size id="total_size" class="bold"/>
 					</row>
 					<row>
-						<description value="Older versions or deleted files"/>
-						<int id="version_files" readonly="true" align="right"/>
-						<description value="Files"/>
+						<et2-description  value="Older versions or deleted files"></et2-description>
+						<et2-number  id="version_files" readonly="true" align="right" precision="0"></et2-number>
+						<et2-description  value="Files"></et2-description>
 						<vfs-size id="version_size" align="right" class="bold"/>
 					</row>
 					<row>
-						<description value="Percentage"/>
-						<description id="percent_files" align="right" class="bold"/>
-						<description/>
-						<description id="percent_size" align="right" class="bold"/>
+						<et2-description  value="Percentage"></et2-description>
+						<et2-description  id="percent_files" align="right" class="bold"></et2-description>
+						<et2-description></et2-description>
+						<et2-description  id="percent_size" align="right" class="bold"></et2-description>
 					</row>
 				</rows>
 			</grid>
 		</groupbox>
-		<description value="Mountpoints" class="filemanager_header"/>
+		<et2-description  value="Mountpoints" class="filemanager_header"></et2-description>
 		<grid id="mounts" class="egwGridView_grid">
 			<columns>
 				<column/>
@@ -43,55 +43,53 @@
 			</columns>
 			<rows>
 				<row class="th" part="header">
-					<description value="Path"/>
-					<description value="Backend URL"/>
-					<description value="Versioning" align="center"/>
-					<description value="Mount" align="center"/>
+					<et2-description  value="Path"></et2-description>
+					<et2-description  value="Backend URL"></et2-description>
+					<et2-description  value="Versioning" align="center"></et2-description>
+					<et2-description  value="Mount" align="center"></et2-description>
 				</row>
 				<row disabled="!@@is_root" part="footer" valign="bottom">
-					<textbox id="path" size="48"/>
-					<vbox width="100%">
+					<et2-textbox  id="path"></et2-textbox>
+					<et2-vbox  width="100%">
 						<groupbox>
 							<caption label="Protocols"/>
-							<vbox class="filemanager_protocols">
-								<description value="WebDAVs: mount EGroupware or *Cloud shares"/>
-								<description value="SMB: mount Samba or Windows fileserver shares"/>
-								<description value="{Versioning}: {Versioning requires EGroupware EPL}"
-									extra_link_target="_blank" href="https://www.egroupware.org/EPL"/>
-								<description value="Filesystem: mount directory (inside /var/lib/egroupware!) from host filesystem"
-									extra_link_target="_blank" href="https://github.com/EGroupware/egroupware/blob/master/api/src/Vfs/Filesystem/StreamWrapper.php#L20"/>
-							</vbox>
+							<et2-vbox  class="filemanager_protocols">
+								<et2-description  value="WebDAVs: mount EGroupware or *Cloud shares"></et2-description>
+								<et2-description  value="SMB: mount Samba or Windows fileserver shares"></et2-description>
+								<et2-description  value="{Versioning}: {Versioning requires EGroupware EPL}" href="https://www.egroupware.org/EPL" extraLinkTarget="_blank"></et2-description>
+								<et2-description  value="Filesystem: mount directory (inside /var/lib/egroupware!) from host filesystem" href="https://github.com/EGroupware/egroupware/blob/master/api/src/Vfs/Filesystem/StreamWrapper.php#L20" extraLinkTarget="_blank"></et2-description>
+							</et2-vbox>
 						</groupbox>
-						<hbox width="100%">
-							<select id="url[scheme]" statustext="Protocol to use" onchange="app.filemanager.changeMountScheme"/>
-							<description value="://"/>
-							<textbox id="url[user]" blur="user" statustext="Username for WebDAV and SMB, use $user for name of logged in user" size="12"/>
-							<description id="colon" value=":"/>
-							<passwd id="url[pass]" blur="password" statustext="Password for WebDAV and SMB, use $pass for password of logged in user" class="filemanager_password" size="12"/>
-							<description id="at"/>
-							<textbox id="url[host]" blur="host" statustext="Hostname/IP for WebDAV and SMB"/>
-							<textbox id="url[path]" blur="Path and query-parameters, SMB: share and optional path (with /)" size="64"/>
-						</hbox>
-					</vbox>
-					<button label="Enable" id="enable" statustext="Enable versioning for given mountpoint" class="filemanager_smallButton" align="center"/>
-					<button label="Mount" id="mount" class="filemanager_smallButton" align="center"/>
+						<et2-hbox  width="100%">
+							<et2-select  id="url[scheme]" statustext="Protocol to use" onchange="app.filemanager.changeMountScheme"></et2-select>
+							<et2-description  value="://"></et2-description>
+							<et2-textbox  id="url[user]" statustext="Username for WebDAV and SMB, use $user for name of logged in user" placeholder="user"></et2-textbox>
+							<et2-description  id="colon" value=":"></et2-description>
+							<et2-password  id="url[pass]" statustext="Password for WebDAV and SMB, use $pass for password of logged in user" class="filemanager_password" placeholder="password"></et2-password>
+							<et2-description  id="at"></et2-description>
+							<et2-textbox  id="url[host]" statustext="Hostname/IP for WebDAV and SMB" placeholder="host"></et2-textbox>
+							<et2-textbox  id="url[path]" placeholder="Path and query-parameters, SMB: share and optional path (with /)"></et2-textbox>
+						</et2-hbox>
+					</et2-vbox>
+					<et2-button  label="Enable" id="enable" statustext="Enable versioning for given mountpoint" class="filemanager_smallButton" align="center"></et2-button>
+					<et2-button  label="Mount" id="mount" class="filemanager_smallButton" align="center"></et2-button>
 				</row>
 				<row class="row">
-					<description id="${row}[path]"/>
-					<description id="${row}[url]"/>
-					<button label="Disable" id="disable[$row_cont[path]]" statustext="Disable versioning for this mountpoint" class="filemanager_smallButton" align="center"/>
-					<button label="Unmount" id="umount[$row_cont[path]]" class="filemanager_smallButton" align="center"/>
+					<et2-description  id="${row}[path]"></et2-description>
+					<et2-description  id="${row}[url]"></et2-description>
+					<et2-button  label="Disable" id="disable[$row_cont[path]]" statustext="Disable versioning for this mountpoint" class="filemanager_smallButton" align="center"></et2-button>
+					<et2-button  label="Unmount" id="umount[$row_cont[path]]" class="filemanager_smallButton" align="center"></et2-button>
 				</row>
 			</rows>
 		</grid>
-		<vbox class="filemanager_config">
-			<button label="Mount /etemplates to allow customizing of eTemplates" id="etemplates" class="et2_buttonFitContent"/>
-			<select id="allow_delete_versions" onchange="1" label="Who should be allowed to finally delete deleted files or old versions of a file:" empty_label="Noone" disabled="!@versioning"/>
-			<hbox disabled="!@versioning">
-				<integer id="mtime" label="Delete all older versions and deleted files older then %s days" statustext="0 means all, -N newer then N days"/>
-				<textbox size="30" label="under directory" id="versionedpath" statustext="/ = everywhere"/>
-				<button id="delete-versions" label="Finally delete" onclick="et2_dialog.confirm(widget,'Finally delete all older versions and deleted files under given directory.\n\nThis can NOT be undone!','Confirm final delete');" image="delete" background_image="1"/>
-			</hbox>
+		<et2-vbox  class="filemanager_config">
+			<et2-button  label="Mount /etemplates to allow customizing of eTemplates" id="etemplates" class="et2_buttonFitContent"></et2-button>
+			<et2-select  id="allow_delete_versions" onchange="1" label="Who should be allowed to finally delete deleted files or old versions of a file:" disabled="!@versioning" emptyLabel="Noone"></et2-select>
+			<et2-hbox  disabled="!@versioning">
+				<et2-number  id="mtime" label="Delete all older versions and deleted files older then %s days" statustext="0 means all, -N newer then N days" precision="0"></et2-number>
+				<et2-textbox  label="under directory" id="versionedpath" statustext="/ = everywhere"></et2-textbox>
+				<et2-button  id="delete-versions" label="Finally delete" onclick="et2_dialog.confirm(widget,'Finally delete all older versions and deleted files under given directory.\n\nThis can NOT be undone!','Confirm final delete');" image="delete"></et2-button>
+			</et2-hbox>
 			<grid>
 				<columns>
 					<column/>
@@ -99,23 +97,23 @@
 				</columns>
 				<rows>
 					<row disabled="@is_root">
-						<description span="all" value="Some functionalities require superuser permissions, please login here as filemanager superuser - allowed users are defined in setup."/>
+						<et2-description  span="all" value="Some functionalities require superuser permissions, please login here as filemanager superuser - allowed users are defined in setup."></et2-description>
 					</row>
 					<row disabled="@is_root">
-						<description value="User"/>
-						<textbox id="user"/>
+						<et2-description  value="User"></et2-description>
+						<et2-textbox  id="user"></et2-textbox>
 					</row>
 					<row disabled="@is_root">
-						<description value="Password"/>
-						<passwd id="password" autocomplete="on"/>
+						<et2-description  value="Password"></et2-description>
+						<et2-password  id="password" autocomplete="on"></et2-password>
 					</row>
 					<row disabled="@is_root">
-						<description/>
-						<button label="Submit" id="sudo"/>
+						<et2-description></et2-description>
+						<et2-button  label="Submit" id="sudo"></et2-button>
 					</row>
 				</rows>
 			</grid>
-			<button id="logout" label="Logout" statustext="Log out as superuser"/>
-		</vbox>
+			<et2-button  id="logout" label="Logout" statustext="Log out as superuser"></et2-button>
+		</et2-vbox>
 	</template>
 </overlay>

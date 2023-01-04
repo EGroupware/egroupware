@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="admin.customtranslation" template="" lang="" group="0" version="1.9.001">
 		<grid id="rows">
@@ -11,21 +10,21 @@
 			</columns>
 			<rows>
 				<row class="th">
-					<description value="Phrase"/>
-					<description value="Translation"/>
-					<description value="Action"/>
+					<et2-description  value="Phrase"></et2-description>
+					<et2-description  value="Translation"></et2-description>
+					<et2-description  value="Action"></et2-description>
 				</row>
 				<row>
-					<textbox id="${row}[phrase]" size="64"/>
-					<textbox id="${row}[translation]" size="64"/>
-					<button align="center" label="Delete" id="delete[$row]" onclick="et2_dialog.confirm(widget,'Delete','Delete')" image="delete"/>
+					<et2-textbox  id="${row}[phrase]"></et2-textbox>
+					<et2-textbox  id="${row}[translation]"></et2-textbox>
+					<et2-button  align="center" label="Delete" id="delete[$row]" onclick="et2_dialog.confirm(widget,'Delete','Delete')" image="delete"></et2-button>
 				</row>
 			</rows>
 		</grid>
-		<hbox>
-			<button label="Save" id="button[save]"/>
-			<button label="Apply" id="button[apply]"/>
-			<button label="Cancel" id="button[cancel]"/>
-		</hbox>
+		<et2-hbox>
+			<et2-button  label="Save" id="button[save]"></et2-button>
+			<et2-button  label="Apply" id="button[apply]"></et2-button>
+			<et2-button  label="Cancel" id="button[cancel]"></et2-button>
+		</et2-hbox>
 	</template>
 </overlay>

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="admin.categories.index.rows" template="" lang="" group="0" version="1.9.002">
 		<grid width="100%">
@@ -20,9 +19,9 @@
 				<row class="th">
 					<nextmatch-sortheader label="Name" id="name"/>
 					<nextmatch-sortheader label="Description" id="description"/>
-					<nextmatch-filterheader label="Application" id="app"/>
-					<nextmatch-accountfilter label="Owner" id="owner" options="all,both"/>
-					<nextmatch-filterheader label="Private" id="access" options="All"/>
+					<et2-nextmatch-header-filter  label="Application" id="app"/>
+					<et2-nextmatch-header-account  label="Owner" id="owner" emptyLabel="all" accountType="both"/>
+					<et2-nextmatch-header-filter  label="Private" id="access" emptyLabel="All"/>
 					<nextmatch-header align="center" label="Icon" id="icon"/>
 					<nextmatch-header label="Color" id="color"/>
 					<nextmatch-sortheader label="Modified" id="last_mod"/>
@@ -30,49 +29,45 @@
 					<nextmatch-header label="Actions" id="legacy_actions"/>
 				</row>
 				<row class="$row_cont[id] $row_cont[class]">
-					<hbox options="0,0">
+					<et2-hbox  cellpadding="0" cellspacing="0" >
 						<html id="${row}[level_spacer]" class="level_spacer"/>
-						<description id="${row}[name]" class="$row_cont[class]"/>
-					</hbox>
-					<description id="${row}[description]"/>
-					<menulist>
-						<menupopup id="${row}[appname]" readonly="true"/>
-					</menulist>
-					<menulist>
-						<menupopup type="select-account" id="${row}[owner]" readonly="true" options="All users,groups"/>
-					</menulist>
-					<checkbox align="center" id="${row}[access]" readonly="true" options="private,public"/>
-					<image align="center" label="{$row_cont['data']['icon']}" src="${row}[icon_url]"/>
-					<description id="${row}[data][color]"/>
-					<date-time id="${row}[last_mod]" readonly="true"/>
-					<description align="center" id="${row}[subs]"/>
-					<hbox options="0,0">
-						<buttononly label="Edit" id="edit[$row_cont[id]]" onclick="window.open(egw::link('/index.php','menuaction=$cont[edit_link]&amp;cat_id=$row_cont[id]&amp;appname=$cont[appname]'),'_blank','dependent=yes,width=600,height=380,scrollbars=yes,status=yes'); return false;" options="edit"/>
-						<buttononly label="Add sub" id="add[$row_cont[id]]" onclick="window.open(egw::link('/index.php','menuaction=$cont[edit_link]&amp;parent=$row_cont[id]&amp;appname=$cont[appname]'),'_blank','dependent=yes,width=600,height=380,scrollbars=yes,status=yes'); return false;" options="new"/>
-						<buttononly statustext="Delete this category" label="Delete" id="delete[$row_cont[id]]" onclick="document.getElementById('exec[delete][cat_id]').value='$row_cont[id]'; set_style_by_class('tr','confirmSubs','visibility','$row_cont[children]'?'visible':'collapse'); set_style_by_class('fieldset','confirmDelete','display','block'); return false;" options="delete" class="leftPad5"/>
-					</hbox>
+						<et2-description  id="${row}[name]" class="$row_cont[class]"></et2-description>
+					</et2-hbox>
+					<et2-description  id="${row}[description]"></et2-description>
+					<et2-select  id="${row}[appname]" readonly="true"></et2-select>
+					<et2-select-account  id="${row}[owner]" readonly="true" emptyLabel="All users" accountType="groups"></et2-select-account>
+					<et2-checkbox  align="center" id="${row}[access]" readonly="true" selectedValue="private" unselectedValue="public" ></et2-checkbox>
+					<et2-image  align="center" label="{$row_cont['data']['icon']}" src="${row}[icon_url]"></et2-image>
+					<et2-description  id="${row}[data][color]"></et2-description>
+					<et2-date-time  id="${row}[last_mod]" readonly="true"></et2-date-time>
+					<et2-description  align="center" id="${row}[subs]"></et2-description>
+					<et2-hbox  cellpadding="0" cellspacing="0" >
+						<et2-button  label="Edit" id="edit[$row_cont[id]]" onclick="window.open(egw::link('/index.php','menuaction=$cont[edit_link]&amp;cat_id=$row_cont[id]&amp;appname=$cont[appname]'),'_blank','dependent=yes,width=600,height=380,scrollbars=yes,status=yes'); return false;" image="edit" noSubmit="true"></et2-button>
+						<et2-button  label="Add sub" id="add[$row_cont[id]]" onclick="window.open(egw::link('/index.php','menuaction=$cont[edit_link]&amp;parent=$row_cont[id]&amp;appname=$cont[appname]'),'_blank','dependent=yes,width=600,height=380,scrollbars=yes,status=yes'); return false;" image="new" noSubmit="true"></et2-button>
+						<et2-button  statustext="Delete this category" label="Delete" id="delete[$row_cont[id]]" onclick="document.getElementById('exec[delete][cat_id]').value='$row_cont[id]'; set_style_by_class('tr','confirmSubs','visibility','$row_cont[children]'?'visible':'collapse'); set_style_by_class('fieldset','confirmDelete','display','block'); return false;" image="delete" class="leftPad5" noSubmit="true"></et2-button>
+					</et2-hbox>
 				</row>
 			</rows>
 		</grid>
 	</template>
 	<template id="admin.categories.index.add" template="" lang="" group="0" version="1.9.001">
-		<buttononly label="Add" id="add" onclick="window.open('$cont[add_link]','_blank','dependent=yes,width=600,height=380,scrollbars=yes,status=yes'); return false;"/>
+		<et2-button  label="Add" id="add" onclick="window.open('$cont[add_link]','_blank','dependent=yes,width=600,height=380,scrollbars=yes,status=yes'); return false;" noSubmit="true"></et2-button>
 	</template>
 	<template id="admin.categories.index" template="" lang="" group="0" version="1.9.001">
 		<nextmatch id="nm" options="admin.categories.index.rows" span="all" header_left="admin.categories.index.add"/>
-		<box class="action_popup prompt" id="owner_popup">
-			<vbox>
-				<description value="Change owner" class="promptheader"/>
-				<description value="Select owner"/>
-				<listbox id="owner" no_lang="1" rows="4" class="action_popup-content"/>
-				<hbox>
-					<button label="Add" id="owner_action[add]" onclick="nm_submit_popup(this); return false;"/>
-					<button label="Delete" id="owner_action[delete]" onclick="nm_submit_popup(this); return false;"/>
-					<button disabled="true" label="OK" onclick="nm_submit_popup(this); return false;"/>
-					<button label="Cancel" id="owner_action[cancel]" onclick="nm_hide_popup(this,'owner_popup');"/>
-				</hbox>
-			</vbox>
-		</box>
+		<et2-box  class="action_popup prompt" id="owner_popup">
+			<et2-vbox>
+				<et2-description  value="Change owner" class="promptheader"></et2-description>
+				<et2-description  value="Select owner"></et2-description>
+				<et2-select  id="owner" rows="4" class="action_popup-content" multiple="1" noLang="1"></et2-select>
+				<et2-hbox>
+					<et2-button  label="Add" id="owner_action[add]" onclick="nm_submit_popup(this); return false;"></et2-button>
+					<et2-button  label="Delete" id="owner_action[delete]" onclick="nm_submit_popup(this); return false;"></et2-button>
+					<et2-button  disabled="true" label="OK" onclick="nm_submit_popup(this); return false;"></et2-button>
+					<et2-button  label="Cancel" id="owner_action[cancel]" onclick="nm_hide_popup(this,'owner_popup');"></et2-button>
+				</et2-hbox>
+			</et2-vbox>
+		</et2-box>
 		<styles>
             .level0 { font-weight: bold; }
             .level_spacer { flex: 0 0 auto;}

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="mail.acl" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%" height="100%">
@@ -10,16 +9,14 @@
 			</columns>
 			<rows>
 				<row class="dialogHeader">
-					<description value="Mail ACL"  />
+					<et2-description  value="Mail ACL"></et2-description>
 				</row>
 				<row>
-					<description value="Folder"/>
-					<taglist id="mailbox" width="100%" maxSelection="1" height="150" multiple="false"
-                             allowFreeEntries="false" searchUrl="mail.mail_compose.ajax_searchFolder"
-                             onchange='app.mail.acl_folderChange'/>
+					<et2-description  value="Folder"></et2-description>
+					<et2-select  id="mailbox" width="100%" height="150" allowFreeEntries="false" searchUrl="EGroupware\Api\Etemplate\Widget\Taglist::ajax_search" onchange="app.mail.acl_folderChange"></et2-select>
 				</row>
 				<row>
-					<description value="Rights"/>
+					<et2-description  value="Rights"></et2-description>
 					<grid id="grid" width="100%">
 						<columns>
 							<column/>
@@ -42,46 +39,44 @@
 						</columns>
 						<rows>
 							<row class="th">
-								<description value="Name"/>
-								<description value="Common ACL"/>
-								<description align="center" statustext="Lookup (mailbox is visible to LIST/LSUB commands, SUBSCRIBE mailbox)" value="L"/>
-								<description align="center" statustext="Read (SELECT the mailbox, perform STATUS)" value="R"/>
-								<description align="center" statustext="Keep seen/unseen information across sessions (set or clear \SEEN flag via STORE, also set \SEEN during APPEND/COPY/ FETCH BODY[...])" value="S"/>
-								<description align="center" statustext="Write (set or clear flags other than \SEEN and \DELETED via STORE, also set them during APPEND/COPY)" value="W"/>
-								<description align="center" statustext="Insert (perform APPEND, COPY into mailbox)" value="I"/>
-								<description align="center" statustext="Post (send mail to submission address for mailbox, not enforced by IMAP4 itself)" value="P"/>
-								<description align="center" statustext="Obsolet create right, combination rights of K and X" value="C"/>
-								<description align="center" statustext="Obsolete delete right, combination rights of E, T and X" value="D"/>
-								<description align="center" statustext="Create mailboxes (CREATE new sub-mailboxes in any implementation-defined hierarchy, parent mailbox for the new mailb" value="K"/>
-								<description align="center" statustext="Delete mailbox (DELETE mailbox, old mailbox name in RENAME)" value="X"/>
-								<description align="center" statustext="Delete messages (set or clear \DELETED flag via STORE, set \DELETED flag during APPEND/COPY)" value="T"/>
-								<description align="center" statustext="Perform EXPUNGE and expunge as a part of CLOSE" value="E"/>
-								<description align="center" statustext="Administer (perform SETACL/DELETEACL/GETACL/LISTRIGHTS)" value="A"/>
-								<description align="center" statustext="Apply rights recursively to sub-folders" value="Recursively"/>
-								<description value="Action"/>
+								<et2-description  value="Name"></et2-description>
+								<et2-description  value="Common ACL"></et2-description>
+								<et2-description  align="center" statustext="Lookup (mailbox is visible to LIST/LSUB commands, SUBSCRIBE mailbox)" value="L"></et2-description>
+								<et2-description  align="center" statustext="Read (SELECT the mailbox, perform STATUS)" value="R"></et2-description>
+								<et2-description  align="center" statustext="Keep seen/unseen information across sessions (set or clear \SEEN flag via STORE, also set \SEEN during APPEND/COPY/ FETCH BODY[...])" value="S"></et2-description>
+								<et2-description  align="center" statustext="Write (set or clear flags other than \SEEN and \DELETED via STORE, also set them during APPEND/COPY)" value="W"></et2-description>
+								<et2-description  align="center" statustext="Insert (perform APPEND, COPY into mailbox)" value="I"></et2-description>
+								<et2-description  align="center" statustext="Post (send mail to submission address for mailbox, not enforced by IMAP4 itself)" value="P"></et2-description>
+								<et2-description  align="center" statustext="Obsolet create right, combination rights of K and X" value="C"></et2-description>
+								<et2-description  align="center" statustext="Obsolete delete right, combination rights of E, T and X" value="D"></et2-description>
+								<et2-description  align="center" statustext="Create mailboxes (CREATE new sub-mailboxes in any implementation-defined hierarchy, parent mailbox for the new mailb" value="K"></et2-description>
+								<et2-description  align="center" statustext="Delete mailbox (DELETE mailbox, old mailbox name in RENAME)" value="X"></et2-description>
+								<et2-description  align="center" statustext="Delete messages (set or clear \DELETED flag via STORE, set \DELETED flag during APPEND/COPY)" value="T"></et2-description>
+								<et2-description  align="center" statustext="Perform EXPUNGE and expunge as a part of CLOSE" value="E"></et2-description>
+								<et2-description  align="center" statustext="Administer (perform SETACL/DELETEACL/GETACL/LISTRIGHTS)" value="A"></et2-description>
+								<et2-description  align="center" statustext="Apply rights recursively to sub-folders" value="Recursively"></et2-description>
+								<et2-description  value="Action"></et2-description>
 							</row>
 							<row class="row">
-								<taglist-account id="${row}[acc_id]" allowFreeEntries="true" maxSelection="1" height="70" account_type="@account_type" />
-								<menulist>
-									<menupopup id="${row}[acl]"  onchange="app.mail.acl_common_rights_selector"/>
-								</menulist>
-								<checkbox align="center" id="${row}[acl_l]" onchange="app.mail.acl_common_rights"/>
-								<checkbox align="center" id="${row}[acl_r]" onchange="app.mail.acl_common_rights"/>
-								<checkbox align="center" id="${row}[acl_s]" onchange="app.mail.acl_common_rights"/>
-								<checkbox align="center" id="${row}[acl_w]" onchange="app.mail.acl_common_rights"/>
-								<checkbox align="center" id="${row}[acl_i]" onchange="app.mail.acl_common_rights"/>
-								<checkbox align="center" id="${row}[acl_p]" onchange="app.mail.acl_common_rights"/>
-								<checkbox align="center" id="${row}[acl_c]" onchange="app.mail.acl_common_rights"/>
-								<checkbox align="center" id="${row}[acl_d]" onchange="app.mail.acl_common_rights"/>
-								<checkbox align="center" id="${row}[acl_k]" onchange="app.mail.acl_common_rights"/>
-								<checkbox align="center" id="${row}[acl_x]" onchange="app.mail.acl_common_rights"/>
-								<checkbox align="center" id="${row}[acl_t]" onchange="app.mail.acl_common_rights"/>
-								<checkbox align="center" id="${row}[acl_e]" onchange="app.mail.acl_common_rights"/>
-								<checkbox align="center" id="${row}[acl_a]" onchange="app.mail.acl_common_rights"/>
-								<checkbox align="center" id="${row}[acl_recursive]"/>
-								<hbox orient=",0,0">
-									<button align="right" statustext="Delete this ACL" label="Delete" id="delete[${row}]" value="${row}" image="delete" onclick="et2_dialog.confirm(widget,'Do you really want to remove all rights from this account?','Remove')"/>
-								</hbox>
+								<et2-select-account  id="${row}[acc_id]" allowFreeEntries="true" height="70" accountType="@account_type"></et2-select-account>
+								<et2-select  id="${row}[acl]" onchange="app.mail.acl_common_rights_selector"></et2-select>
+								<et2-checkbox  align="center" id="${row}[acl_l]" onchange="app.mail.acl_common_rights"></et2-checkbox>
+								<et2-checkbox  align="center" id="${row}[acl_r]" onchange="app.mail.acl_common_rights"></et2-checkbox>
+								<et2-checkbox  align="center" id="${row}[acl_s]" onchange="app.mail.acl_common_rights"></et2-checkbox>
+								<et2-checkbox  align="center" id="${row}[acl_w]" onchange="app.mail.acl_common_rights"></et2-checkbox>
+								<et2-checkbox  align="center" id="${row}[acl_i]" onchange="app.mail.acl_common_rights"></et2-checkbox>
+								<et2-checkbox  align="center" id="${row}[acl_p]" onchange="app.mail.acl_common_rights"></et2-checkbox>
+								<et2-checkbox  align="center" id="${row}[acl_c]" onchange="app.mail.acl_common_rights"></et2-checkbox>
+								<et2-checkbox  align="center" id="${row}[acl_d]" onchange="app.mail.acl_common_rights"></et2-checkbox>
+								<et2-checkbox  align="center" id="${row}[acl_k]" onchange="app.mail.acl_common_rights"></et2-checkbox>
+								<et2-checkbox  align="center" id="${row}[acl_x]" onchange="app.mail.acl_common_rights"></et2-checkbox>
+								<et2-checkbox  align="center" id="${row}[acl_t]" onchange="app.mail.acl_common_rights"></et2-checkbox>
+								<et2-checkbox  align="center" id="${row}[acl_e]" onchange="app.mail.acl_common_rights"></et2-checkbox>
+								<et2-checkbox  align="center" id="${row}[acl_a]" onchange="app.mail.acl_common_rights"></et2-checkbox>
+								<et2-checkbox  align="center" id="${row}[acl_recursive]"></et2-checkbox>
+								<et2-hbox  orient=",0,0">
+									<et2-button  align="right" statustext="Delete this ACL" label="Delete" id="delete[${row}]" value="${row}" image="delete" onclick="et2_dialog.confirm(widget,'Do you really want to remove all rights from this account?','Remove')"></et2-button>
+								</et2-hbox>
 							</row>
 						</rows>
 					</grid>
@@ -95,11 +90,11 @@
 					</grid>
 				</row>
 				<row class="dialogFooterToolbar">
-					<hbox>
-						<button label="Save" id="button[save]"/>
-						<button label="Apply" id="button[apply]"/>
-						<buttononly label="Cancel" id="button[cancel]" onclick="window.close()"/>
-					</hbox>
+					<et2-hbox>
+						<et2-button  label="Save" id="button[save]"></et2-button>
+						<et2-button  label="Apply" id="button[apply]"></et2-button>
+						<et2-button  label="Cancel" id="button[cancel]" onclick="window.close()" noSubmit="true"></et2-button>
+					</et2-hbox>
 				</row>
 			</rows>
 		</grid>

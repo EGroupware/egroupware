@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="importexport.import_definition" template="" lang="" group="0" version="1.9.001">
 		<grid>
@@ -9,16 +8,16 @@
 			</columns>
 			<rows>
 				<row>
-					<description value="Import definitions (Attension: Existing definitions with equal names will be overwritten!!!)"/>
+					<et2-description  value="Import definitions (Attension: Existing definitions with equal names will be overwritten!!!)"></et2-description>
 				</row>
 				<row>
 					<file id="import_file"/>
 				</row>
 				<row>
-					<hbox>
-						<button label="Import" id="import" image="import" background_image="1"/>
-						<button label="Update default-definitions" id="update" image="update" background_image="1"/>
-					</hbox>
+					<et2-hbox>
+						<et2-button  label="Import" id="import" image="import"></et2-button>
+						<et2-button  label="Update default-definitions" id="update" image="update"></et2-button>
+					</et2-hbox>
 				</row>
 			</rows>
 		</grid>

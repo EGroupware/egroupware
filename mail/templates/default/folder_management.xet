@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="mail.folder_management" template="" lang="" group="0" version="1.9.001">
-		<hbox class="dialogHeader" >
-			<description value="Folder Management" class="mail_folder_management_header"/>
-		</hbox>
-		<hbox class="treeContainer">
+		<et2-hbox  class="dialogHeader" >
+			<et2-description  value="Folder Management" class="mail_folder_management_header"></et2-description>
+		</et2-hbox>
+		<et2-hbox  class="treeContainer">
 			<tree id="tree" multiple="true" autoloading="mail_ui::ajax_folderMgmtTree_autoloading" multimarking="strict" oncheck="app.mail.folderMgmt_onCheck" onselect="app.mail.folderMgmt_onSelect" onopenstart="app.mail.folderMgmt_autoloadingStart" onopenend="app.mail.folderMgmt_autoloadingEnd" highlighting="true"/>
-		</hbox>
-		<hbox  class="dialogFooterToolbar">
-			<button statustext="Delete" label="Delete" id="button[delete]" onclick="app.mail.folderMgmt_deleteBtn"/>
-			<button label="Cancel" id="button[cancel]" onclick="window.close()"/>
-		</hbox>
+		</et2-hbox>
+		<et2-hbox  class="dialogFooterToolbar">
+			<et2-button  statustext="Delete" label="Delete" id="button[delete]" onclick="app.mail.folderMgmt_deleteBtn"></et2-button>
+			<et2-button  label="Cancel" id="button[cancel]" onclick="window.close()"></et2-button>
+		</et2-hbox>
 	</template>
 </overlay>

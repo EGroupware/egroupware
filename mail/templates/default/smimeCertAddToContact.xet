@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="mail.smimeCertAddToContact" template="" lang="" group="0" version="17.1">
 		<grid width="100%">
@@ -11,39 +10,39 @@
 			</columns>
 			<rows>
 				<row class="dialogHeader">
-					<description span="2" id="message"/>
-					<image src="smime_sign" class="@class"/>
+					<et2-description  span="2" id="message"></et2-description>
+					<et2-image  src="smime_sign" class="@class"></et2-image>
 				</row>
 				<row>
-					<description id="message2"/>
+					<et2-description  id="message2"></et2-description>
 				</row>
 				<row>
-					<description value="Signed by" label="%s:"/>
-					<description id="certDetails[subject][commonName]"/>
+					<et2-description  value="Signed by" label="%s:"></et2-description>
+					<et2-description  id="certDetails[subject][commonName]"></et2-description>
 				</row>
 				<row>
-					<description value="Email address" label="%s:"/>
-					<description id="certDetails[subject][emailAddress]"/>
+					<et2-description  value="Email address" label="%s:"></et2-description>
+					<et2-description  id="certDetails[subject][emailAddress]"></et2-description>
 				</row>
 				<row>
-					<description value="Country" label="%s:"/>
-					<description id="certDetails[subject][countryName]"/>
+					<et2-description  value="Country" label="%s:"></et2-description>
+					<et2-description  id="certDetails[subject][countryName]"></et2-description>
 				</row>
 				<row>
-					<description value="Certificate issued by" label="%s:"/>
-					<description id="certDetails[issuer][commonName]"/>
+					<et2-description  value="Certificate issued by" label="%s:"></et2-description>
+					<et2-description  id="certDetails[issuer][commonName]"></et2-description>
 				</row>
 				<row>
-					<tabbox id="tabs" class="et2_nowrap" tab_height="250" width="100%" align_tabs="h">
+					<et2-tabbox  id="tabs" class="et2_nowrap" width="100%" tabHeight="250" alignTabs="h">
 						<tabs>
 							<tab id="details" label="Certificate Details"/>
 							<tab id="certificate" label="Certificate in text"/>
 						</tabs>
 						<tabpanels>
 							<html multiline="true" id="certHtml" readonly="true"/>
-							<textbox id="cert" readonly="true" multiline="true" class="et2_fullWidth" />
+							<et2-textarea  id="cert" readonly="true" ></et2-textarea>
 						</tabpanels>
-					</tabbox>
+					</et2-tabbox>
 				</row>
 			</rows>
 		</grid>

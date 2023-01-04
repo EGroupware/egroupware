@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="resources.sitemgr_book" template="" lang="" group="0" version="1.9.001">
-		<box cols="1" rows="1">
+		<et2-box  cols="1" rows="1">
 			<grid width="100%">
 				<columns>
 					<column/>
@@ -12,66 +11,62 @@
 				<rows>
 					<row>
 						<hidden id="res_id"/>
-						<description/>
+						<et2-description></et2-description>
 					</row>
 					<row disabled="!@msg">
 						<html id="msg" span="all" class="message"/>
-						<description/>
+						<et2-description></et2-description>
 					</row>
 					<row>
-						<description id="name" class="name"/>
-						<image align="right" src="picture" class="resource_thumb"/>
+						<et2-description  id="name" class="name"></et2-description>
+						<et2-image  align="right" src="picture" class="resource_thumb"></et2-image>
 					</row>
 					<row disabled="!@short_description">
-						<description id="short_description" span="all" class="description"/>
-						<description/>
+						<et2-description  id="short_description" span="all" class="description"></et2-description>
+						<et2-description></et2-description>
 					</row>
 					<row disabled="!@long_description">
 						<html id="long_description" span="all" class="description"/>
-						<description/>
+						<et2-description></et2-description>
 					</row>
 					<row>
-						<description value="Date"/>
-						<hbox options="0,0">
-							<date id="date" onchange="var request = new egw_json_request('resources.resources_reserve.ajax_update_planner',[document.getElementById('exec[res_id]').value, Math.round(window.calendar.date.getTime()/1000)]);request.sendRequest(); return false;"/>
-							<menulist>
-								<menupopup id="time[hour]"/>
-							</menulist>
-							<description value=":"/>
-							<menulist>
-								<menupopup type="select-number" id="time[minute]" options=",0,59,$cont[duration]"/>
-							</menulist>
-						</hbox>
+						<et2-description  value="Date"></et2-description>
+						<et2-hbox  cellpadding="0" cellspacing="0" >
+							<et2-date  id="date" onchange="var request = new egw_json_request('resources.resources_reserve.ajax_update_planner',[document.getElementById('exec[res_id]').value, Math.round(window.calendar.date.getTime()/1000)]);request.sendRequest(); return false;"></et2-date>
+							<et2-select  id="time[hour]"></et2-select>
+							<et2-description  value=":"></et2-description>
+							<et2-select-number  id="time[minute]" min="0" max="59" interval="$cont[duration]"></et2-select-number>
+						</et2-hbox>
 					</row>
 					<row disabled="!@contact_form">
 						<template id="@contact_form" span="all"/>
 					</row>
 					<row disabled="!@show_contact">
-						<description value="Name"/>
-						<hbox options="0,0">
-							<textbox id="n_given"/>
-							<textbox id="n_family"/>
-						</hbox>
+						<et2-description  value="Name"></et2-description>
+						<et2-hbox  cellpadding="0" cellspacing="0" >
+							<et2-textbox  id="n_given"></et2-textbox>
+							<et2-textbox  id="n_family"></et2-textbox>
+						</et2-hbox>
 					</row>
 					<row disabled="!@show_contact">
-						<description value="Email"/>
-						<url-email id="email" needed="1" options="48"/>
+						<et2-description  value="Email"></et2-description>
+						<et2-url-email  id="email" options="48" required="1"></et2-url-email>
 					</row>
 					<row>
-						<description value="Party size"/>
-						<hbox>
-							<textbox type="integer" id="quantity"/>
-							<button align="right" label="Book" id="book"/>
-						</hbox>
+						<et2-description  value="Party size"></et2-description>
+						<et2-hbox>
+							<et2-number  id="quantity" precision="0"></et2-number>
+							<et2-button  align="right" label="Book" id="book"></et2-button>
+						</et2-hbox>
 					</row>
 					<row>
-						<box id="planner_div" span="all">
+						<et2-box  id="planner_div" span="all">
 							<html id="planner" span="all"/>
-						</box>
+						</et2-box>
 					</row>
 				</rows>
 			</grid>
-		</box>
+		</et2-box>
 		<styles>
 			.resource_thumb img  {
 float:right;

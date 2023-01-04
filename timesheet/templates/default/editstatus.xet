@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="timesheet.editstatus" template="" lang="" group="0" version="1.7.004">
         <grid width="100%" height="450" overflow="auto">
@@ -19,7 +18,7 @@
                             </columns>
                             <rows>
                                 <row class="row" valign="top">
-                                    <description value="Status"/>
+                                    <et2-description  value="Status"></et2-description>
                                     <grid width="100%" overflow="auto" id="statis">
                                         <columns>
                                             <column/>
@@ -30,24 +29,18 @@
                                         </columns>
                                         <rows>
                                             <row class="th">
-                                                <description value="ID"/>
-                                                <description value="Name"/>
-                                                <description value="Parent"/>
-                                                <description value="Only Admin"/>
-                                                <description value="Actions"/>
+                                                <et2-description  value="ID"></et2-description>
+                                                <et2-description  value="Name"></et2-description>
+                                                <et2-description  value="Parent"></et2-description>
+                                                <et2-description  value="Only Admin"></et2-description>
+                                                <et2-description  value="Actions"></et2-description>
                                             </row>
                                             <row class="row">
-                                                <description id="${row}[id]"/>
-                                                <textbox size="80" maxlength="150" blur="--&gt; enter new name"
-                                                         id="${row}[name]"/>
-                                                <menulist>
-                                                    <menupopup id="${row}[parent]" options="Select one ..."/>
-                                                </menulist>
-                                                <checkbox id="${row}[admin]"
-                                                          statustext="Only admin can edit this status"/>
-                                                <button image="delete" label="Delete" align="center"
-                                                        id="delete[$row_cont[id]]" statustext="Delete this status"
-                                                        onclick="et2_dialog.confirm(widget,'Delete this status','Delete')"/>
+                                                <et2-description  id="${row}[id]"></et2-description>
+                                                <et2-textbox  maxlength="150" id="${row}[name]" placeholder="--&gt; enter new name"></et2-textbox>
+                                                <et2-select  id="${row}[parent]" emptyLabel="Select one ..."></et2-select>
+                                                <et2-checkbox  id="${row}[admin]" statustext="Only admin can edit this status"></et2-checkbox>
+                                                <et2-button  image="delete" label="Delete" align="center" id="delete[$row_cont[id]]" statustext="Delete this status" onclick="et2_dialog.confirm(widget,'Delete this status','Delete')"></et2-button>
                                             </row>
                                         </rows>
                                     </grid>
@@ -58,10 +51,10 @@
                 </row>
             </rows>
         </grid>
-        <hbox class="dialogFooterToolbar">
-            <button label="Save" id="button[save]"/>
-            <button id="button[apply]" label="Apply"/>
-            <button label="Cancel" id="button[cancel]"/>
-        </hbox>
+        <et2-hbox  class="dialogFooterToolbar">
+            <et2-button  label="Save" id="button[save]"></et2-button>
+            <et2-button  id="button[apply]" label="Apply"></et2-button>
+            <et2-button  label="Cancel" id="button[cancel]"></et2-button>
+        </et2-hbox>
     </template>
 </overlay>

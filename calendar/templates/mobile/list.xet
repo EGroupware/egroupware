@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <!-- $Id: list.xet 54765 2016-01-19 00:48:21Z nathangray $ -->
 <overlay>
 	<template id="calendar.list.add" template="" lang="" group="0" version="16.1.001">
-		<button id="add" parent_node="calendar-list_plus_button_container"  class="plus_button"  onclick="egw.open('calendar');"/>
+		<et2-button  id="add" class="plus_button" onclick="egw.open('calendar');" parentId="calendar-list_plus_button_container"></et2-button>
 	</template>
 	<template id="calendar.list.dates" template="" lang="" group="0" version="1.3.001">
-		<hbox>
-			<description value="Start"/>
-			<date id="startdate" onchange="app.calendar.update_state({date: widget.getValue()}); return false;"/>
-			<description value="End"/>
-			<date id="enddate" onchange="app.calendar.update_state({end_date: widget.getValue()}); return false;"/>
-		</hbox>
+		<et2-hbox>
+			<et2-description  value="Start"></et2-description>
+			<et2-date  id="startdate" onchange="app.calendar.update_state({date: widget.getValue()}); return false;"></et2-date>
+			<et2-description  value="End"></et2-description>
+			<et2-date  id="enddate" onchange="app.calendar.update_state({end_date: widget.getValue()}); return false;"></et2-date>
+		</et2-hbox>
 	</template>
 	<template id="calendar.list.rows" template="" lang="" group="0" version="1.9.004">
 		<grid width="100%" >
@@ -25,18 +25,18 @@
 
 				</row>
 				<row class="$row_cont[class]" valign="top">
-					<description class=" cat_$row_cont[cat_id] mobile_cat_col"/>
-					<vbox class="calendar_fullWidth">
+					<et2-description  class="cat_$row_cont[cat_id] mobile_cat_col"></et2-description>
+					<et2-vbox  class="calendar_fullWidth">
 						<customfields-list id="$row" class="customfields" app="calendar" disabled="true"/>
-						<hbox class="calTitleRow">
-							<description id="${row}[title]" no_lang="1" class="$row_cont[sub_class] et2_ellipsis" overflow="hidden" width="100%" />
-						</hbox>
-						<hbox class="calDates">
-							<time_or_date id="${row}[start]" readonly="true" options=",$cont[format]" class="noWrap"/>
-							<description class="dash" value="-"/>
-							<time_or_date id="${row}[end]" readonly="true" options=",$cont[format]" class="noWrap"/>
-						</hbox>
-					</vbox>
+						<et2-hbox  class="calTitleRow">
+							<et2-description  id="${row}[title]" class="$row_cont[sub_class] et2_ellipsis" overflow="hidden" width="100%" noLang="1"></et2-description>
+						</et2-hbox>
+						<et2-hbox  class="calDates">
+							<et2-date-time-today  id="${row}[start]" readonly="true" options=",$cont[format]" class="noWrap"></et2-date-time-today>
+							<et2-description  class="dash" value="-"></et2-description>
+							<et2-date-time-today  id="${row}[end]" readonly="true" options=",$cont[format]" class="noWrap"></et2-date-time-today>
+						</et2-hbox>
+					</et2-vbox>
 				</row>
 			</rows>
 		</grid>
@@ -52,40 +52,40 @@
 					<html id="css" span="all"/>
 				</row>
 				<row>
-					<description align="center" id="msg" no_lang="1" span="all" class="message"/>
+					<et2-description  align="center" id="msg" span="all" class="message" noLang="1"></et2-description>
 				</row>
 				<row>
-					<description id="plus_button_container"/>
+					<et2-description  id="plus_button_container"></et2-description>
 				</row>
 				<row>
 					<nextmatch id="nm" template="calendar.list.rows" header_right="calendar.list.add" header_left="calendar.list.dates" span="all"/>
 				</row>
 				<row>
-					<hbox>
-						<box class="action_popup prompt" id="delete_popup">
-							<vbox>
-								<description value="Delete" class="promptheader"/>
-								<description value="This is a recurring event. Do you want to delete just this recurrence or the whole series?"/>
-								<hbox>
-									<button label="Delete this recurrence" id="delete" onclick="nm_submit_popup(this); return false;"/>
-									<button label="Delete series" id="delete_series" onclick="nm_popup_action.id = 'delete_series'; nm_submit_popup(this); return false;"/>
-									<buttononly label="Cancel" onclick="nm_hide_popup(this,'delete_popup');"/>
-								</hbox>
-							</vbox>
-						</box>
-						<box class="action_popup prompt" id="undelete_popup">
-							<vbox>
-								<description value="Un-delete" class="promptheader"/>
-								<description value="This is a recurring event. Do you want to Un-delete just this recurrence or the whole series?"/>
-								<hbox>
-									<button label="Un-delete this recurrence" id="undelete" onclick="nm_submit_popup(this); return false;"/>
-									<button label="Un-delete series" id="undelete_series" onclick="nm_popup_action.id = 'undelete_series'; nm_submit_popup(this); return false;"/>
-									<buttononly label="Cancel" onclick="nm_hide_popup(this,'undelete_popup');"/>
-								</hbox>
-							</vbox>
-						</box>
-					</hbox>
-					<description/>
+					<et2-hbox>
+						<et2-box  class="action_popup prompt" id="delete_popup">
+							<et2-vbox>
+								<et2-description  value="Delete" class="promptheader"></et2-description>
+								<et2-description  value="This is a recurring event. Do you want to delete just this recurrence or the whole series?"></et2-description>
+								<et2-hbox>
+									<et2-button  label="Delete this recurrence" id="delete" onclick="nm_submit_popup(this); return false;"></et2-button>
+									<et2-button  label="Delete series" id="delete_series" onclick="nm_popup_action.id = 'delete_series'; nm_submit_popup(this); return false;"></et2-button>
+									<et2-button  label="Cancel" onclick="nm_hide_popup(this,'delete_popup');" noSubmit="true"></et2-button>
+								</et2-hbox>
+							</et2-vbox>
+						</et2-box>
+						<et2-box  class="action_popup prompt" id="undelete_popup">
+							<et2-vbox>
+								<et2-description  value="Un-delete" class="promptheader"></et2-description>
+								<et2-description  value="This is a recurring event. Do you want to Un-delete just this recurrence or the whole series?"></et2-description>
+								<et2-hbox>
+									<et2-button  label="Un-delete this recurrence" id="undelete" onclick="nm_submit_popup(this); return false;"></et2-button>
+									<et2-button  label="Un-delete series" id="undelete_series" onclick="nm_popup_action.id = 'undelete_series'; nm_submit_popup(this); return false;"></et2-button>
+									<et2-button  label="Cancel" onclick="nm_hide_popup(this,'undelete_popup');" noSubmit="true"></et2-button>
+								</et2-hbox>
+							</et2-vbox>
+						</et2-box>
+					</et2-hbox>
+					<et2-description></et2-description>
 				</row>
 			</rows>
 		</grid>

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="admin.index.rows" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
@@ -13,25 +12,25 @@
 
 				</row>
 				<row class="$row_cont[status_class]">
-					<vbox>
-						<description id="${row}[account_lid]" no_lang="1"/>
-						<hbox>
-							<description id="${row}[account_lastname]" no_lang="1"/>
-							<description id="${row}[account_firstname]" no_lang="1"/>
-						</hbox>
-						<url-email id="${row}[account_email]" readonly="true" class="adminOverflowEllipsis"/>
-					</vbox>
-					<vbox class="adminCol2">
-						<hbox>
-							<time_or_date id="${row}[account_created]" readonly="true"/>
-						</hbox>
-						<hbox>
-							<description id="${row}[status]" no_lang="1" class="adminStatus"/>
-						</hbox>
-						<hbox>
-							<time_or_date id="${row}[account_modified]" readonly="true"/>
-						</hbox>
-					</vbox>
+					<et2-vbox>
+						<et2-description  id="${row}[account_lid]" noLang="1"></et2-description>
+						<et2-hbox>
+							<et2-description  id="${row}[account_lastname]" noLang="1"></et2-description>
+							<et2-description  id="${row}[account_firstname]" noLang="1"></et2-description>
+						</et2-hbox>
+						<et2-url-email  id="${row}[account_email]" readonly="true" class="adminOverflowEllipsis"></et2-url-email>
+					</et2-vbox>
+					<et2-vbox  class="adminCol2">
+						<et2-hbox>
+							<et2-date-time-today  id="${row}[account_created]" readonly="true"></et2-date-time-today>
+						</et2-hbox>
+						<et2-hbox>
+							<et2-description  id="${row}[status]" class="adminStatus" noLang="1"></et2-description>
+						</et2-hbox>
+						<et2-hbox>
+							<et2-date-time-today  id="${row}[account_modified]" readonly="true"></et2-date-time-today>
+						</et2-hbox>
+					</et2-vbox>
 				</row>
 			</rows>
 		</grid>
@@ -47,28 +46,28 @@
 
 				</row>
 				<row class="$row_cont[status_class]">
-					<vbox>
-						<description id="${row}[account_lid]" no_lang="1"/>
-						<hbox>
-							<description id="${row}[account_description]" no_lang="1"/>
-						</hbox>
-						<url-email id="${row}[account_email]" readonly="true" no_lang="1" class="adminOverflowEllipsis"/>
-					</vbox>
-					<vbox class="adminCol2">
-						<date id="${row}[account_created]" readonly="true"/>
-						<date id="${row}[account_modified]" readonly="true"/>
-					</vbox>
+					<et2-vbox>
+						<et2-description  id="${row}[account_lid]" noLang="1"></et2-description>
+						<et2-hbox>
+							<et2-description  id="${row}[account_description]" noLang="1"></et2-description>
+						</et2-hbox>
+						<et2-url-email  id="${row}[account_email]" readonly="true" class="adminOverflowEllipsis" noLang="1"></et2-url-email>
+					</et2-vbox>
+					<et2-vbox  class="adminCol2">
+						<et2-date  id="${row}[account_created]" readonly="true"></et2-date>
+						<et2-date  id="${row}[account_modified]" readonly="true"></et2-date>
+					</et2-vbox>
 				</row>
 			</rows>
 		</grid>
 	</template>
 	<template id="admin.index" template="" lang="" group="0" version="1.9.001">
 		<tree autoloading="admin_ui::ajax_tree" id="tree" onclick="app.admin.run" parent_node="admin_tree_target" std_images="bullet"/>
-		<description id="plus_button_container"/>
-		<buttononly class="plus_button" id="add" onclick='app.admin.account({id:"add"})'/>
+		<et2-description  id="plus_button_container"></et2-description>
+		<et2-button  class="plus_button" id="add" onclick="app.admin.account({id:&quot;add&quot;})" noSubmit="true"></et2-button>
 		<nextmatch id="nm" template="admin.index.rows"/>
 		<nextmatch id="groups" template="admin.index.group"/>
 		<iframe frameborder="1" height="100%" id="iframe" scrolling="auto" width="100%" disabled="true"/>
-		<box id="ajax_target" height="99%" disabled="true"/>
+		<et2-box  id="ajax_target" height="99%" disabled="true"></et2-box>
 	</template>
 </overlay>

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="infolog.edit.print.project" template="" lang="" group="0" version="1.7.001">
 		<grid width="100%" height="245">
@@ -10,30 +9,30 @@
 			</columns>
 			<rows>
 				<row class="th">
-					<description span="all" value="Projectmanager"/>
+					<et2-description  span="all" value="Projectmanager"></et2-description>
 				</row>
 				<row class="row">
-					<description value="Project"/>
-					<description id="pm_id" onchange="1" options="None" readonly="true"/>
+					<et2-description  value="Project"></et2-description>
+					<et2-description  id="pm_id" onchange="1" readonly="true" boldItalic="None"></et2-description>
 				</row>
 				<row class="row">
-					<description value="Price"/>
-					<hbox span="all">
-						<description id="pl_id" options="None" onchange="this.form['exec[info_price]'].value=this.options[this.selectedIndex].text.lastIndexOf('(') &lt; 0 ? '' : this.options[this.selectedIndex].text.slice(this.options[this.selectedIndex].text.lastIndexOf('(')+1,-1);" readonly="true"/>
-						<textbox type="float" id="info_price" span="all" readonly="true"/>
-					</hbox>
+					<et2-description  value="Price"></et2-description>
+					<et2-hbox  span="all">
+						<et2-description  id="pl_id" onchange="this.form['exec[info_price]'].value=this.options[this.selectedIndex].text.lastIndexOf('(') &lt; 0 ? '' : this.options[this.selectedIndex].text.slice(this.options[this.selectedIndex].text.lastIndexOf('(')+1,-1);" readonly="true" boldItalic="None"></et2-description>
+						<et2-number  id="info_price" span="all" readonly="true"></et2-number>
+					</et2-hbox>
 				</row>
 				<row class="row">
-					<description options=",,,info_planned_time" value="planned time"/>
-					<date-duration id="info_planned_time" options=",$cont[duration_format]" readonly="true"/>
+					<et2-description  value="planned time" labelFor="info_planned_time"></et2-description>
+					<et2-date-duration  id="info_planned_time" readonly="true"></et2-date-duration>
 				</row>
 				<row class="row">
-					<description options=",,,info_replanned_time" value="Re-planned time"/>
-					<date-duration id="info_replanned_time" options=",$cont[duration_format]" readonly="true"/>
+					<et2-description  value="Re-planned time" labelFor="info_replanned_time"></et2-description>
+					<et2-date-duration  id="info_replanned_time" readonly="true"></et2-date-duration>
 				</row>
 				<row class="row" valign="top" height="60%">
-					<description options=",,,info_used_time" value="used time" statustext="Leave blank to get the used time calculated by timesheet entries"/>
-					<date-duration id="info_used_time" readonly="true"/>
+					<et2-description  value="used time" statustext="Leave blank to get the used time calculated by timesheet entries" labelFor="info_used_time"></et2-description>
+					<et2-date-duration  id="info_used_time" readonly="true"></et2-date-duration>
 				</row>
 			</rows>
 		</grid>
@@ -46,10 +45,10 @@
 			</columns>
 			<rows>
 				<row class="th">
-					<description span="all" value="Existing links"/>
+					<et2-description  span="all" value="Existing links"></et2-description>
 				</row>
 				<row class="row_off" valign="top">
-					<link-list span="all" id="link_to" readonly="true"/>
+					<et2-link-list  span="all" id="link_to" readonly="true"></et2-link-list>
 				</row>
 			</rows>
 		</grid>
@@ -62,30 +61,26 @@
 			</columns>
 			<rows>
 				<row class="th" height="10">
-					<description span="all" value="General"/>
+					<et2-description  span="all" value="General"></et2-description>
 				</row>
 				<row class="row">
-					<description options=",,,info_priority" value="Priority"/>
-					<menulist>
-						<menupopup id="info_priority" statustext="select a priority for this task" readonly="true"/>
-					</menulist>
+					<et2-description  value="Priority" labelFor="info_priority"></et2-description>
+					<et2-select  id="info_priority" statustext="select a priority for this task" readonly="true"></et2-select>
 				</row>
 				<row class="row">
-					<description options=",,,info_location" value="Location" readonly="true"/>
-					<textbox size="80" maxlength="255" id="info_location" readonly="true"/>
+					<et2-description  value="Location" readonly="true" labelFor="info_location"></et2-description>
+					<et2-textbox  maxlength="255" id="info_location" readonly="true"></et2-textbox>
 				</row>
 				<row class="th" height="10">
-					<description span="all" value="Delegation"/>
+					<et2-description  span="all" value="Delegation"></et2-description>
 				</row>
 				<row class="row" valign="top">
-					<description options=",,,info_responsible" value="Responsible" readonly="true"/>
-					<listbox type="select-account" id="info_responsible" rows="10" options="both" statustext="select a responsible user: a person you want to delegate this task" readonly="true"/>
+					<et2-description  value="Responsible" readonly="true" labelFor="info_responsible"></et2-description>
+					<et2-select-account  id="info_responsible" rows="10" statustext="select a responsible user: a person you want to delegate this task" readonly="true" multiple="1" placeholder="both"></et2-select-account>
 				</row>
 				<row class="row" disabled="1">
-					<description options=",,,info_confirm" value="Confirm"/>
-					<menulist>
-						<menupopup id="info_confirm" statustext="do you want a confirmation of the responsible on: accepting, finishing the task or both" readonly="true"/>
-					</menulist>
+					<et2-description  value="Confirm" labelFor="info_confirm"></et2-description>
+					<et2-select  id="info_confirm" statustext="do you want a confirmation of the responsible on: accepting, finishing the task or both" readonly="true"></et2-select>
 				</row>
 			</rows>
 		</grid>
@@ -101,74 +96,70 @@
 			<rows>
 				<row disabled="!@msg">
 					<html span="all" class="message" align="center" id="msg" no_lang="1"/>
-					<description/>
-					<description/>
-					<description/>
+					<et2-description></et2-description>
+					<et2-description></et2-description>
+					<et2-description></et2-description>
 				</row>
 				<row class="th" height="28">
-					<hbox>
-						<image src="print" onclick="window.print();"/>
-						<description value="Type" options=",,,info_type" readonly="true"/>
-					</hbox>
-					<hbox span="all" options="0,0">
-						<menulist>
-							<menupopup id="info_type" onchange="1" statustext="Type of the log-entry: Note, Phonecall or ToDo" no_lang="1" readonly="true"/>
-						</menulist>
-						<int id="info_number" class="infolog_infoId" readonly="true"/>
-					</hbox>
+					<et2-hbox>
+						<et2-image  src="print" onclick="window.print();"></et2-image>
+						<et2-description  value="Type" readonly="true" labelFor="info_type"></et2-description>
+					</et2-hbox>
+					<et2-hbox  span="all" cellpadding="0" cellspacing="0" >
+						<et2-select  id="info_type" onchange="1" statustext="Type of the log-entry: Note, Phonecall or ToDo" readonly="true" noLang="1"></et2-select>
+						<et2-number  id="info_number" class="infolog_infoId" readonly="true" precision="0"></et2-number>
+					</et2-hbox>
 				</row>
 				<row class="row">
-					<description value="Category" options=",,,info_cat"/>
-					<menulist>
-						<menupopup type="select-cat" options="None" id="info_cat" statustext="select a category for this entry" readonly="true"/>
-					</menulist>
-					<hbox span="all">
-						<description value="Parent"/>
-						<link-entry options="infolog" id="info_id_parent" align="right" class="noWrap" readonly="true"/>
-					</hbox>
+					<et2-description  value="Category" labelFor="info_cat"></et2-description>
+					<et2-select-cat  id="info_cat" statustext="select a category for this entry" readonly="true" emptyLabel="None"></et2-select-cat>
+					<et2-hbox  span="all">
+						<et2-description  value="Parent"></et2-description>
+						<et2-link  id="info_id_parent" align="right" class="noWrap" app="infolog"></et2-link>
+					</et2-hbox>
 				</row>
 				<row class="row">
-					<description value="Contact" options=",,,info_from"/>
-					<vbox options="0,0">
-						<hbox options="0,0">
-							<link-entry id="info_contact" class="noWrap" readonly="true"/>
-							<checkbox id="info_custom_from" onchange="document.getElementById(form::name('info_from')).style.display=this.checked?'block':'none';" statustext="Check to specify custom contact" readonly="true"/>
-						</hbox>
-						<textbox size="36" maxlength="255" id="info_from" statustext="Custom contact-information, leave emtpy to use information from most recent link" blur="@blur_title" class="$cont[hide_from_css]" readonly="true"/>
-					</vbox>
+					<et2-description  value="Contact" labelFor="info_from"></et2-description>
+					<et2-vbox  cellpadding="0" cellspacing="0" >
+						<et2-hbox  cellpadding="0" cellspacing="0" >
+							<et2-link  id="info_contact" class="noWrap" app=""></et2-link>
+							<et2-checkbox  id="info_custom_from" onchange="document.getElementById(form::name('info_from')).style.display=this.checked?'block':'none';" statustext="Check to specify custom contact" readonly="true"></et2-checkbox>
+						</et2-hbox>
+						<et2-textbox  maxlength="255" id="info_from" statustext="Custom contact-information, leave emtpy to use information from most recent link" class="$cont[hide_from_css]" readonly="true" placeholder="@blur_title"></et2-textbox>
+					</et2-vbox>
 				</row>
 				<row class="row">
-					<description value="Subject" options=",,,info_subject"/>
-					<textbox size="80" maxlength="255" span="all" class="b" id="info_subject" statustext="a short subject for the entry" readonly="true"/>
-					<description/>
-					<description/>
+					<et2-description  value="Subject" labelFor="info_subject"></et2-description>
+					<et2-textbox  maxlength="255" span="all" class="b" id="info_subject" statustext="a short subject for the entry" readonly="true"></et2-textbox>
+					<et2-description></et2-description>
+					<et2-description></et2-description>
 				</row>
 				<row>
-					<description/>
-					<description/>
-					<description/>
-					<description/>
+					<et2-description></et2-description>
+					<et2-description></et2-description>
+					<et2-description></et2-description>
+					<et2-description></et2-description>
 				</row>
 				<row class="th" height="10">
-					<description span="all" value="Description"/>
+					<et2-description  span="all" value="Description"></et2-description>
 				</row>
 				<row>
-					<textbox multiline="true" no_lang="1" id="info_des" statustext="enter a textual description of the log-entry" span="all" class="description" readonly="true"/>
-					<description/>
-					<description/>
-					<description/>
+					<et2-textarea  id="info_des" statustext="enter a textual description of the log-entry" span="all" class="description" readonly="true" noLang="1"></et2-textarea>
+					<et2-description></et2-description>
+					<et2-description></et2-description>
+					<et2-description></et2-description>
 				</row>
 				<row>
-					<description/>
-					<description/>
-					<description/>
-					<description/>
+					<et2-description></et2-description>
+					<et2-description></et2-description>
+					<et2-description></et2-description>
+					<et2-description></et2-description>
 				</row>
 				<row class="th">
-					<description span="all" value="customfields"/>
+					<et2-description  span="all" value="customfields"></et2-description>
 				</row>
 				<row>
-					<customfields span="all" options="@info_type" readonly="true"/>
+					<customfields span="all" sub-type="@info_type"  readonly="true"/>
 				</row>
 				<row>
 					<template span="all" id="infolog.edit.print.project"/>
@@ -177,57 +168,49 @@
 					<template id="infolog.edit.print.links" span="all"/>
 				</row>
 				<row>
-					<description/>
-					<description/>
-					<description/>
-					<description/>
+					<et2-description></et2-description>
+					<et2-description></et2-description>
+					<et2-description></et2-description>
+					<et2-description></et2-description>
 				</row>
 				<row>
 					<template id="infolog.edit.print.delegation" span="all"/>
 				</row>
 				<row>
-					<description/>
-					<description/>
-					<description/>
-					<description/>
+					<et2-description></et2-description>
+					<et2-description></et2-description>
+					<et2-description></et2-description>
+					<et2-description></et2-description>
 				</row>
 				<row class="th" height="10">
-					<description span="all" value="Dates, Status, Access"/>
+					<et2-description  span="all" value="Dates, Status, Access"></et2-description>
 				</row>
 				<row class="row_on">
-					<description value="Startdate" options=",,,info_startdate" readonly="true"/>
-					<date-time options=",2" id="info_startdate" statustext="when should the ToDo or Phonecall be started, it shows up from that date in the filter open or own open (startpage)" readonly="true"/>
-					<description value="Enddate" options=",,,info_enddate"/>
-					<date id="info_enddate" statustext="til when should the ToDo or Phonecall be finished" readonly="true"/>
+					<et2-description  value="Startdate" readonly="true" labelFor="info_startdate"></et2-description>
+					<et2-date-time  id="info_startdate" statustext="when should the ToDo or Phonecall be started, it shows up from that date in the filter open or own open (startpage)" readonly="true"></et2-date-time>
+					<et2-description  value="Enddate" labelFor="info_enddate"></et2-description>
+					<et2-date  id="info_enddate" statustext="til when should the ToDo or Phonecall be finished" readonly="true"></et2-date>
 				</row>
 				<row class="row">
-					<description value="Status" options=",,,info_status"/>
-					<menulist>
-						<menupopup id="info_status" statustext="@status_help" onchange="if (this.value=='done' || this.value=='billed') set_element(this.form,'exec[info_percent]','100'); else if (this.value=='not-started') set_element(this.form,'exec[info_percent]','0');" readonly="true"/>
-					</menulist>
-					<description value="Completed" options=",,,info_percent"/>
-					<menulist>
-						<menupopup type="select-percent" id="info_percent" statustext="Percent completed" onchange="if (this.value==100 &amp;&amp; this.form['exec[info_status]'].value != 'done' &amp;&amp; this.form['exec[info_status]'].value != 'billed' &amp;&amp; this.form['exec[info_status]'].value != 'cancelled') this.form['exec[info_status]'].value='done'; else if (this.value != 100 &amp;&amp; this.form['exec[info_status]'].value != 'cancelled') this.form['exec[info_status]'].value=this.value != 0 ? 'ongoing' : 'not-started'; else if (this.value==0 &amp;&amp; this.form['exec[info_status]'].value != 'cancelled' &amp;&amp; this.form['exec[info_status]'].value != 'offer') this.form['exec[info_status]'].value='not-started'; " readonly="true"/>
-					</menulist>
+					<et2-description  value="Status" labelFor="info_status"></et2-description>
+					<et2-select  id="info_status" statustext="@status_help" onchange="if (this.value=='done' || this.value=='billed') set_element(this.form,'exec[info_percent]','100'); else if (this.value=='not-started') set_element(this.form,'exec[info_percent]','0');" readonly="true"></et2-select>
+					<et2-description  value="Completed" labelFor="info_percent"></et2-description>
+					<et2-select-percent  id="info_percent" statustext="Percent completed" onchange="if (this.value==100 &amp;&amp; this.form['exec[info_status]'].value != 'done' &amp;&amp; this.form['exec[info_status]'].value != 'billed' &amp;&amp; this.form['exec[info_status]'].value != 'cancelled') this.form['exec[info_status]'].value='done'; else if (this.value != 100 &amp;&amp; this.form['exec[info_status]'].value != 'cancelled') this.form['exec[info_status]'].value=this.value != 0 ? 'ongoing' : 'not-started'; else if (this.value==0 &amp;&amp; this.form['exec[info_status]'].value != 'cancelled' &amp;&amp; this.form['exec[info_status]'].value != 'offer') this.form['exec[info_status]'].value='not-started'; " readonly="true"></et2-select-percent>
 				</row>
 				<row class="row">
-					<description options=",,,info_datecompleted" value="Date completed" readonly="true"/>
-					<date-time id="info_datecompleted" statustext="Date completed (leave it empty to have it automatic set if status is done or billed)" readonly="true"/>
-					<description value="Private" options=",,,info_access"/>
-					<checkbox options="private,public" id="info_access" statustext="should this entry only be visible to you and people you grant privat access via the ACL" readonly="true"/>
+					<et2-description  value="Date completed" readonly="true" labelFor="info_datecompleted"></et2-description>
+					<et2-date-time  id="info_datecompleted" statustext="Date completed (leave it empty to have it automatic set if status is done or billed)" readonly="true"></et2-date-time>
+					<et2-description  value="Private" labelFor="info_access"></et2-description>
+					<et2-checkbox  id="info_access" statustext="should this entry only be visible to you and people you grant privat access via the ACL" readonly="true" selectedValue="private" unselectedValue="public"></et2-checkbox>
 				</row>
 				<row class="row" disabled="!@info_owner">
-					<description value="Owner"/>
-					<menulist>
-						<menupopup type="select-account" id="info_owner" readonly="true"/>
-					</menulist>
-					<description value="Last modified"/>
-					<hbox options="0" orient="0">
-						<menulist>
-							<menupopup type="select-account" id="info_modifier" readonly="true"/>
-						</menulist>
-						<date-time class="infolog_lpadding5" id="info_datemodified" readonly="true"/>
-					</hbox>
+					<et2-description  value="Owner"></et2-description>
+					<et2-select-account  id="info_owner" readonly="true"></et2-select-account>
+					<et2-description  value="Last modified"></et2-description>
+					<et2-hbox  cellpadding="0" orient="0">
+						<et2-select-account  id="info_modifier" readonly="true"></et2-select-account>
+						<et2-date-time  class="infolog_lpadding5" id="info_datemodified" readonly="true"></et2-date-time>
+					</et2-hbox>
 				</row>
 			</rows>
 		</grid>

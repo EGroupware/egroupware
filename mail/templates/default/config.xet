@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="mail.config" template="" lang="" group="0" version="16.1">
 		<grid width="100%" class="admin-config egwGridView_grid">
@@ -10,123 +9,122 @@
 			</columns>
 			<rows>
 				<row>
-					<description value="Deny certain groups access to following features" span="all" class="subHeader"/>
+					<et2-description  value="Deny certain groups access to following features" span="all" class="subHeader"></et2-description>
 				</row>
 				<row>
-					<description value="Create new account"/>
-					<select-account id="newsettings[deny_createaccount]" account_type="groups" multiple="true" tags="true" width="100%"/>
+					<et2-description  value="Create new account"></et2-description>
+					<et2-select-account  id="newsettings[deny_createaccount]" multiple="true" width="100%" accountType="groups"></et2-select-account>
 				</row>
 				<row>
-					<vbox>
-						<description value="Prevent managing folders"/>
-						<description value="Do you want to prevent the managing of folders (creation, accessrights AND subscribtion)?"/>
-					</vbox>
-					<select-account id="newsettings[deny_managefolders]" account_type="groups" multiple="true" tags="true" width="100%"/>
+					<et2-vbox>
+						<et2-description  value="Prevent managing folders"></et2-description>
+						<et2-description  value="Do you want to prevent the managing of folders (creation, accessrights AND subscribtion)?"></et2-description>
+					</et2-vbox>
+					<et2-select-account  id="newsettings[deny_managefolders]" multiple="true" width="100%" accountType="groups"></et2-select-account>
 				</row>
 				<row>
-					<vbox>
-						<description value="Prevent managing notifications"/>
-						<description value="Do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if SIEVE is enabled)?"/>
-					</vbox>
-					<select-account id="newsettings[deny_notificationformailviaemail]" account_type="groups" multiple="true" tags="true" width="100%"/>
+					<et2-vbox>
+						<et2-description  value="Prevent managing notifications"></et2-description>
+						<et2-description  value="Do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if SIEVE is enabled)?"></et2-description>
+					</et2-vbox>
+					<et2-select-account  id="newsettings[deny_notificationformailviaemail]" multiple="true" width="100%" accountType="groups"></et2-select-account>
 				</row>
 				<row>
-					<vbox>
-						<description value="Prevent managing filters"/>
-						<description value="Do you want to prevent the editing/setup of filter rules (, even if SIEVE is enabled)?"/>
-					</vbox>
-					<select-account id="newsettings[deny_editfilterrules]" account_type="groups" multiple="true" tags="true" width="100%"/>
+					<et2-vbox>
+						<et2-description  value="Prevent managing filters"></et2-description>
+						<et2-description  value="Do you want to prevent the editing/setup of filter rules (, even if SIEVE is enabled)?"></et2-description>
+					</et2-vbox>
+					<et2-select-account  id="newsettings[deny_editfilterrules]" multiple="true" width="100%" accountType="groups"></et2-select-account>
 				</row>
 				<row>
-					<vbox>
-						<description value="Prevent managing vacation notice"/>
-						<description value="Do you want to prevent the editing/setup of the absent/vacation notice (, even if SIEVE is enabled)?"/>
-					</vbox>
-					<select-account id="newsettings[deny_absentnotice]" account_type="groups" multiple="true" tags="true" width="100%"/>
+					<et2-vbox>
+						<et2-description  value="Prevent managing vacation notice"></et2-description>
+						<et2-description  value="Do you want to prevent the editing/setup of the absent/vacation notice (, even if SIEVE is enabled)?"></et2-description>
+					</et2-vbox>
+					<et2-select-account  id="newsettings[deny_absentnotice]" multiple="true" width="100%" accountType="groups"></et2-select-account>
 				</row>
 				<row>
-					<vbox>
-						<description value="restrict acl management"/>
-						<description value="effective only if server supports ACL at all"/>
-					</vbox>
-					<select-account id="newsettings[deny_aclmanagement]" account_type="groups" multiple="true" tags="true" width="100%"/>
+					<et2-vbox>
+						<et2-description  value="restrict acl management"></et2-description>
+						<et2-description  value="effective only if server supports ACL at all"></et2-description>
+					</et2-vbox>
+					<et2-select-account  id="newsettings[deny_aclmanagement]" multiple="true" width="100%" accountType="groups"></et2-select-account>
 				</row>
 				<row height="25px" valign="bottom">
-					<description value="Push notifications" span="all" class="subHeader"/>
+					<et2-description  value="Push notifications" span="all" class="subHeader"></et2-description>
 				</row>
 				<row>
-					<url label="The IMAP server need to meet certain requirements AND be configured for it:" span="all"
-						 value="https://github.com/EGroupware/egroupware/wiki/IMAP-Push-Notifications" readonly="true"/>
+					<et2-url  label="The IMAP server need to meet certain requirements AND be configured for it:" span="all" value="https://github.com/EGroupware/egroupware/wiki/IMAP-Push-Notifications" readonly="true"></et2-url>
 				</row>
 				<row>
-					<description value="Name of IMAP servers (space separated host or host:port)" for="newsettings[imap_hosts_with_push]"/>
-					<textbox id="newsettings[imap_hosts_with_push]" class="et2_fullWidth"/>
+					<et2-description  value="Name of IMAP servers (space separated host or host:port)" for="newsettings[imap_hosts_with_push]"></et2-description>
+					<et2-textbox  id="newsettings[imap_hosts_with_push]"></et2-textbox>
 				</row>
 				<row>
-					<description value="Sieve" span="all" class="subHeader"/>
+					<et2-description  value="Sieve" span="all" class="subHeader"></et2-description>
 				</row>
 				<row>
-					<description value="provide a default vacation text, (used on new vacation messages when there was no message set up previously)"/>
-					<textbox id="newsettings[default_vacation_text]" cols="50" rows="8"/>
+					<et2-description  value="provide a default vacation text, (used on new vacation messages when there was no message set up previously)"></et2-description>
+					<et2-textarea  id="newsettings[default_vacation_text]" cols="50" rows="8"></et2-textarea>
 				</row>
 				<row>
-					<description value="Handling of external http images / mixed content in mails" span="all" class="subHeader"/>
+					<et2-description  value="Handling of external http images / mixed content in mails" span="all" class="subHeader"></et2-description>
 				</row>
 				<row>
-					<description value="By default 'http://' is just replaced with 'https://'. Feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http." span="all"/>
+					<et2-description  value="By default 'http://' is just replaced with 'https://'. Feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http." span="all"></et2-description>
 				</row>
 				<row>
-					<description value="Replace 'http://' in image urls with (trailing / required!)"/>
-					<textbox id="newsettings[http_image_proxy]" blur="https://" class="et2_fullWidth" validator="/^(https:[\/]{2}(.+\/)?)?$/"/>
+					<et2-description  value="Replace 'http://' in image urls with (trailing / required!)"></et2-description>
+					<et2-textbox  id="newsettings[http_image_proxy]" validator="/^(https:[\/]{2}(.+\/)?)?$/" placeholder="https://"></et2-textbox>
 				</row>
 				<row>
-					<description value="Miscellaneous" span="all" class="subHeader"/>
+					<et2-description  value="Miscellaneous" span="all" class="subHeader"></et2-description>
 				</row>
 				<row>
-					<description value="Limit mailing list results when searching for addresses"/>
-					<integer max="100" min="5" id="newsettings[address_list_limit]"/>
+					<et2-description  value="Limit mailing list results when searching for addresses"></et2-description>
+					<et2-number  max="100" min="5" id="newsettings[address_list_limit]" precision="0"></et2-number>
 				</row>
 				<row>
-                    <description value="Default toolbar actions shown in mail's HTML editor"/>
-                    <taglist id="newsettings[html_toolbar]" allowFreeEntries="false"  autocomplete_url=''  editModeEnabled="false"/>
+                    <et2-description  value="Default toolbar actions shown in mail's HTML editor"></et2-description>
+                    <et2-select  id="newsettings[html_toolbar]" allowFreeEntries="false" editModeEnabled="false" multiple="true" searchUrl=""></et2-select>
                 </row>
 				<row>
-					<vbox>
-						<description value="examine namespace to retrieve folders in others and shared"/>
-						<description value="only needed for some servers, that do not return all folders on root level queries to retrieve all folders for that level"/>
-					</vbox>
-					<select id="newsettings[examineNamespace]">
+					<et2-vbox>
+						<et2-description  value="examine namespace to retrieve folders in others and shared"></et2-description>
+						<et2-description  value="only needed for some servers, that do not return all folders on root level queries to retrieve all folders for that level"></et2-description>
+					</et2-vbox>
+					<et2-select  id="newsettings[examineNamespace]">
 						<option value="">No</option>
 						<option value="True">Yes</option>
-					</select>
+					</et2-select>
 				</row>
 				<row>
-					<vbox>
-						<description value="Caching of flags"/>
-						<description value="Required to disable if you use Dovecot with private seen flags on shared or user folder!"/>
-					</vbox>
-					<select id="newsettings[disble_caching]">
+					<et2-vbox>
+						<et2-description  value="Caching of flags"></et2-description>
+						<et2-description  value="Required to disable if you use Dovecot with private seen flags on shared or user folder!"></et2-description>
+					</et2-vbox>
+					<et2-select  id="newsettings[disble_caching]">
 						<option value="">{Enabled} ({default})</option>
 						<option value="flags">Disable caching of flags</option>
-					</select>
+					</et2-select>
 				</row>
 				<row>
-					<vbox>
-						<description value="Disable use of flowed lines in plain text mails (RFC3676)"/>
-						<description value="Some clients fail to detect correct charset, if flowed lines are enabled."/>
-					</vbox>
-					<select id="newsettings[disable_rfc3676_flowed]">
+					<et2-vbox>
+						<et2-description  value="Disable use of flowed lines in plain text mails (RFC3676)"></et2-description>
+						<et2-description  value="Some clients fail to detect correct charset, if flowed lines are enabled."></et2-description>
+					</et2-vbox>
+					<et2-select  id="newsettings[disable_rfc3676_flowed]">
 						<option value="">No</option>
 						<option value="True">Yes</option>
-					</select>
+					</et2-select>
 				</row>
 				<row>
-					<description value="Quota limit warning in MegaByte (recommended value is 30 MB)."/>
-					<textbox id="newsettings[quota_limit_warning]"/>
+					<et2-description  value="Quota limit warning in MegaByte (recommended value is 30 MB)."></et2-description>
+					<et2-textbox  id="newsettings[quota_limit_warning]"></et2-textbox>
 				</row>
 				<row>
-					<description value="Default value for remembering S/MIME passphrase in minutes"/>
-					<textbox id="newsettings[smime_pass_exp]"/>
+					<et2-description  value="Default value for remembering S/MIME passphrase in minutes"></et2-description>
+					<et2-textbox  id="newsettings[smime_pass_exp]"></et2-textbox>
 				</row>
 			</rows>
 		</grid>

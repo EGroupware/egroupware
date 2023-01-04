@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
     <template id="nm_print_dialog" template="" lang="" group="0" version="22.1">
-        <vbox>
-            <et2-textbox id="name" label="Name" class="et2-label-fixed"/>
-            <et2-select-account id="group" label="Groups" empty_label="Just me" account_type="groups"
-                                class="et2-label-fixed"/>
-            <et2-details summary="Details">
+        <et2-vbox>
+            <et2-textbox  id="name" label="Name" class="et2-label-fixed"/>
+            <et2-select-account  id="group" label="Groups" class="et2-label-fixed" emptyLabel="Just me" accountType="groups"/>
+            <et2-details  summary="Details">
                 <grid id="current_filters">
                     <columns>
                         <column/>
@@ -15,12 +13,12 @@
                     </columns>
                     <rows>
                         <row>
-                            <et2-description id="${row}[label]"/>
-                            <et2-description id="${row}[value]"/>
+                            <et2-description  id="${row}[label]"/>
+                            <et2-description  id="${row}[value]"/>
                         </row>
                     </rows>
                 </grid>
             </et2-details>
-        </vbox>
+        </et2-vbox>
     </template>
 </overlay>

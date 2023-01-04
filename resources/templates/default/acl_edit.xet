@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="resources.acl_edit" template="" lang="" group="0" version="16.1">
 		<grid width="100%">
@@ -10,20 +9,20 @@
 			</columns>
 			<rows>
 				<row class="dialogHeader">
-					<description value="Category" for="name"/>
-					<description id="name" class="et2_fullWidth"/>
+					<et2-description  value="Category" for="name"></et2-description>
+					<et2-description  id="name"></et2-description>
 				</row>
 				<row valign="top">
-					<description value="Description" for="description"/>
-					<textbox multiline="true" id="description" rows="5" cols="50" readonly="true"/>
+					<et2-description  value="Description" for="description"></et2-description>
+					<et2-textarea  id="description" rows="5" cols="50" readonly="true"></et2-textarea>
 				</row>
 				<row>
-					<description value="Category admin" for="admin"/>
-					<select-account id="admin" account_type="accounts" tags="true" empty_label="Choose category admin"/>
+					<et2-description  value="Category admin" for="admin"></et2-description>
+					<et2-select-account  id="admin" multiple="true" placeholder="Choose category admin" accountType="accounts"></et2-select-account>
 				</row>
 				<row class="nmr" disabled="@no_private">
-					<description value="Locations / rooms"/>
-					<checkbox id="location"/>
+					<et2-description  value="Locations / rooms"></et2-description>
+					<et2-checkbox  id="location"></et2-checkbox>
 				</row>
 				<row>
 					<grid span="all" class="permissions">
@@ -35,32 +34,32 @@
 						</columns>
 						<rows>
 							<row class="th">
-								<description label="Read permissions" />
-								<vbox>
-									<description label="Write permissions" />
-									<description label="implies read permission"/>
-								</vbox>
-								<description label="Read Calendar permissions" />
-								<vbox>
-									<description label="Direct booking permissions" />
-									<description label="implies booking permission"/>
-								</vbox>
+								<et2-description  label="Read permissions"></et2-description>
+								<et2-vbox>
+									<et2-description  label="Write permissions"></et2-description>
+									<et2-description  label="implies read permission"></et2-description>
+								</et2-vbox>
+								<et2-description  label="Read Calendar permissions"></et2-description>
+								<et2-vbox>
+									<et2-description  label="Direct booking permissions"></et2-description>
+									<et2-description  label="implies booking permission"></et2-description>
+								</et2-vbox>
 							</row>
 							<row valign="top">
-								<select-account account_type="both" id="read" multiple="true" tags="true"/>
-								<select-account account_type="both" id="write" multiple="true" tags="true"/>
-								<select-account account_type="both" id="calread" multiple="true" tags="true"/>
-								<select-account account_type="both" id="calwrite" multiple="true" tags="true"/>
+								<et2-select-account  id="read" multiple="true" accountType="both"></et2-select-account>
+								<et2-select-account  id="write" multiple="true" accountType="both"></et2-select-account>
+								<et2-select-account  id="calread" multiple="true" accountType="both"></et2-select-account>
+								<et2-select-account  id="calwrite" multiple="true" accountType="both"></et2-select-account>
 							</row>
 						</rows>
 					</grid>
 				</row>
 				<row  class="dialogFooterToolbar">
-					<hbox span="all">
-						<button label="Save" id="button[save]" image="save" background_image="1"/>
-						<button label="Apply" id="button[apply]" image="apply" background_image="1"/>
-						<buttononly label="Cancel" id="button[cancel]" onclick="window.close();" image="cancel" background_image="1"/>
-					</hbox>
+					<et2-hbox  span="all">
+						<et2-button  label="Save" id="button[save]" image="save"></et2-button>
+						<et2-button  label="Apply" id="button[apply]" image="apply"></et2-button>
+						<et2-button  label="Cancel" id="button[cancel]" onclick="window.close();" image="cancel" noSubmit="true"></et2-button>
+					</et2-hbox>
 				</row>
 			</rows>
 		</grid>

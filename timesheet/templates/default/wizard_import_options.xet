@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="timesheet.wizard_import_options" template="" lang="" group="0" version="1.9.001">
 		<grid>
@@ -10,23 +9,19 @@
 			</columns>
 			<rows>
 				<row disabled="!@message">
-					<description id="message" span="all" class="message"/>
-					<description/>
+					<et2-description  id="message" span="all" class="message"></et2-description>
+					<et2-description></et2-description>
 				</row>
 				<row>
-					<description value="What should be done with unknown values?" span="all"/>
+					<et2-description  value="What should be done with unknown values?" span="all"></et2-description>
 				</row>
 				<row>
-					<description value="Status"/>
-					<menulist>
-						<menupopup id="translate_status"/>
-					</menulist>
+					<et2-description  value="Status"></et2-description>
+					<et2-select  id="translate_status"></et2-select>
 				</row>
 				<row>
-					<description value="Category"/>
-					<menulist>
-						<menupopup id="translate_cat_id"/>
-					</menulist>
+					<et2-description  value="Category"></et2-description>
+					<et2-select  id="translate_cat_id"></et2-select>
 				</row>
 			</rows>
 		</grid>

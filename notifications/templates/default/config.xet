@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="notifications.config" template="" lang="" group="0" version="16.1">
 		<grid width="100%" class="admin-config egwGridView_grid">
@@ -10,33 +9,33 @@
 			</columns>
 			<rows>
 				<row>
-					<description value="EGroupware-Popup backend" span="all" class="subHeader"/>
+					<et2-description  value="EGroupware-Popup backend" span="all" class="subHeader"></et2-description>
 				</row>
 				<row>
-					<description value="Poll interval"/>
-					<select id="newsettings[popup_poll_interval]">
+					<et2-description  value="Poll interval"></et2-description>
+					<et2-select  id="newsettings[popup_poll_interval]">
 						<option value="5">5 seconds</option>
 						<option value="60">1 {minute}</option>
 						<option value="120">2 {minutes}</option>
 						<option value="300">5 {minutes}</option>
-					</select>
+					</et2-select>
 				</row>
 				<row>
-					<description value="Windows-Popup backend" span="all" class="subHeader"/>
+					<et2-description  value="Windows-Popup backend" span="all" class="subHeader"></et2-description>
 				</row>
 				<row>
-					<description value="Enable Windows-Popup backend"/>
-					<select id="newsettings[winpopup_enable]">
+					<et2-description  value="Enable Windows-Popup backend"></et2-description>
+					<et2-select  id="newsettings[winpopup_enable]">
 						<option value="">No</option>
 						<option value="True">Yes</option>
-					</select>
+					</et2-select>
 				</row>
 				<row>
-					<description value="Account" span="all" class="subHeader"/>
+					<et2-description  value="Account" span="all" class="subHeader"></et2-description>
 				</row>
 				<row>
-                    <description value="Mail account to use for notifications"/>
-                    <select id="newsettings[async_identity]"/>
+                    <et2-description  value="Mail account to use for notifications"></et2-description>
+                    <et2-select  id="newsettings[async_identity]"></et2-select>
                 </row>
 			</rows>
 		</grid>

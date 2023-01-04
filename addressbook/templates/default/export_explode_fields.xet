@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="addressbook.export_explode_fields" template="" lang="" group="0" version="1.9.001">
 		<grid>
@@ -9,7 +8,7 @@
 			</columns>
 			<rows>
 				<row>
-					<description value="List as seperate columns"/>
+					<et2-description  value="List as seperate columns"></et2-description>
 				</row>
 				<row disabled="!@explode_multiselects">
 					<grid width="100%" id="explode_multiselects">
@@ -19,20 +18,18 @@
 						</columns>
 						<rows>
 							<row class="th">
-								<description value="Field"/>
-								<description value="Style"/>
+								<et2-description  value="Field"></et2-description>
+								<et2-description  value="Style"></et2-description>
 							</row>
 							<row>
-								<description id="${row}[name]"/>
-								<menulist>
-									<menupopup id="${row}[explode]"/>
-								</menulist>
+								<et2-description  id="${row}[name]"></et2-description>
+								<et2-select  id="${row}[explode]"></et2-select>
 							</row>
 						</rows>
 					</grid>
 				</row>
 				<row disabled="@explode_multiselects">
-					<description value="No multi-select columns selected for export"/>
+					<et2-description  value="No multi-select columns selected for export"></et2-description>
 				</row>
 			</rows>
 		</grid>

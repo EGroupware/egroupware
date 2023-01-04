@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="calendar.notify_dialog" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
@@ -12,18 +12,18 @@
 			</columns>
 			<rows>
 			<row class="dialogHeader" height="28">
-				<description id="title" class="et2_fullWidth" span="4"/>
-				<hbox>
-					<description font_style="n" id="id"/>
-					<appicon/>
-				</hbox>
+				<et2-description  id="title" span="4"></et2-description>
+				<et2-hbox>
+					<et2-description  id="id" fontStyle="n"></et2-description>
+					<et2-appicon></et2-appicon>
+				</et2-hbox>
 			</row>
 			<row class="dialogHeader2" height="28" >
-				<description for="start" value="Start" width="88"/>
-				<date-time id="start" readonly="true"/>
-				<description for="duration" value="Duration" id="calendar_edit_duration" />
-				<select statustext="Duration of the meeting" class="et2_fullWidth" id="duration" no_lang="1" readonly="true" options="Use end date,,,,,,,false"/>
-				<date-time id="end" readonly="true"/>
+				<et2-description  for="start" value="Start" width="88"></et2-description>
+				<et2-date-time  id="start" readonly="true"></et2-date-time>
+				<et2-description  for="duration" value="Duration" id="calendar_edit_duration"></et2-description>
+				<et2-select  statustext="Duration of the meeting" id="duration" readonly="true" noLang="1" emptyLabel="Use end date"></et2-select>
+				<et2-date-time  id="end" readonly="true"></et2-date-time>
 			</row>
 			</rows>
 		</grid>
@@ -39,25 +39,25 @@
 				<row></row>
 				<row></row>
 				<row class="th thb">
-					<description value="Type"/>
-					<description value="Participants"/>
-					<description value="Role"/>
-					<description value="Status"/>
-					<description/>
+					<et2-description  value="Type"></et2-description>
+					<et2-description  value="Participants"></et2-description>
+					<et2-description  value="Role"></et2-description>
+					<et2-description  value="Status"></et2-description>
+					<et2-description></et2-description>
 				</row>
 				<row valign="top">
-					<description id="${row}[app]"/>
-					<description id="${row}[title]" no_lang="1"/>
-					<description id="${row}[role_label]"/>
-					<select id="${row}[status]" readonly="true"/>
-					<checkbox align="center" label="Notify" id="notify[$row_cont[delete_id]]"/>
+					<et2-description  id="${row}[app]"></et2-description>
+					<et2-description  id="${row}[title]" noLang="1"></et2-description>
+					<et2-description  id="${row}[role_label]"></et2-description>
+					<et2-select  id="${row}[status]" readonly="true"></et2-select>
+					<et2-checkbox  align="center" label="Notify" id="notify[$row_cont[delete_id]]"></et2-checkbox>
 				</row>
 			</rows>
 		</grid>
-		<hbox class="dialogFooterToolbar">
-			<button label="OK" id="button[save]" image="mail" background_image="1"/>
-			<button statustext="Close the window" label="Cancel" id="button[cancel]" onclick="window.close();" image="cancel" background_image="1"/>
-		</hbox>
+		<et2-hbox  class="dialogFooterToolbar">
+			<et2-button  label="OK" id="button[save]" image="mail"></et2-button>
+			<et2-button  statustext="Close the window" label="Cancel" id="button[cancel]" onclick="window.close();" image="cancel"></et2-button>
+		</et2-hbox>
 		<styles>
 			.selectRole select { width: 100%; }
 		</styles>

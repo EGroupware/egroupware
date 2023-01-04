@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <!-- This template is in a seperate file so etemplate can find it for home -->
 <overlay>
 	<template id="filemanager.home.header_left" template="" lang="" group="0" version="1.9.002">
-		<hbox span="all" class="filemanager_navigation">
-			<image label="Up" src="goup" onclick="app.filemanager.change_dir('..',widget);" id="up"/>
-			<image label="Go to your home directory" src="gohome" onclick="app.filemanager.change_dir('~',widget);" id="home"/>
+		<et2-hbox  span="all" class="filemanager_navigation">
+			<et2-image  label="Up" src="goup" onclick="app.filemanager.change_dir('..',widget);" id="up"></et2-image>
+			<et2-image  label="Go to your home directory" src="gohome" onclick="app.filemanager.change_dir('~',widget);" id="home"></et2-image>
 			<vfs-name label="Path" id="path" onchange="if(widget.getValue() == '') { app.filemanager.change_dir('~',widget);} return true;" size="80" class="address"/>
-		</hbox>
+		</et2-hbox>
 	</template>
 	<template id="filemanager.home.rows" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
@@ -38,15 +37,15 @@
 					<nextmatch-customfields id="customfields" readonly="true"/>
 				</row>
 				<row class="row $row_cont[class]">
-					<vfs-mime align="center" id="$row"/>
+					<et2-vfs-mime  align="center" id="$row"></et2-vfs-mime>
 					<vfs-name id="${row}[name]" no_lang="1" readonly="true"/>
 					<vfs-size align="right" id="${row}[size]"/>
-					<date-time id="${row}[mtime]" readonly="true"/>
-					<date-time id="${row}[ctime]" readonly="true"/>
+					<et2-date-time  id="${row}[mtime]" readonly="true"></et2-date-time>
+					<et2-date-time  id="${row}[ctime]" readonly="true"></et2-date-time>
 					<vfs-mode id="${row}[mode]"/>
-					<vfs-uid id="${row}[uid]" no_lang="1"/>
-					<vfs-gid id="${row}[gid]" no_lang="1"/>
-					<description id="${row}[comment]"/>
+					<et2-vfs-uid  id="${row}[uid]" noLang="1"></et2-vfs-uid>
+					<et2-vfs-gid  id="${row}[gid]" noLang="1"></et2-vfs-gid>
+					<et2-description  id="${row}[comment]"></et2-description>
 					<customfields-list id="$row" class="customfields"/>
 				</row>
 			</rows>

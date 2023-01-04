@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//Stylite AG//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
     <template id="filemanager.share_dialog" template="" lang="" group="0" version="1.9.003"
               onload="widget = widget.widgetContainer.getWidgetById('share_link'); app.filemanager.copy_share_link(ev,widget)">
-        <textbox id="share_link" no_lang="1" class="et2_fullWidth"
-                 onclick="app.filemanager.copy_share_link">
+        <et2-textbox  id="share_link" onclick="app.filemanager.copy_share_link" noLang="1">
             <!-- just let this click bubble -->
-            <et2-button slot="suffix" image="copy" noSubmit="true" statustext="Copy to clipboard"/>
-        </textbox>
+            <et2-button  slot="suffix" image="copy" noSubmit="true" statustext="Copy to clipboard"/>
+        </et2-textbox>
         <styles>
             et2-button[slot='suffix'] {
             padding-inline-end: 0;

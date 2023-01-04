@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="calendar.add" template="" lang="" group="0" version="19.1.000">
 		<grid width="100%">
@@ -13,31 +12,21 @@
 			</columns>
 			<rows>
 				<row class="dialogHeader" height="28">
-					<appicon/>
-					<textbox id="title" maxlength="255" tabindex="1" class="et2_required" span="4" blur="Title"/>
+					<et2-appicon></et2-appicon>
+					<et2-textbox  id="title" maxlength="255" tabindex="1" class="et2_required" span="4" placeholder="Title"></et2-textbox>
 				</row>
 				<row class="dialogHeader2" height="28">
-                    <description for="start" value="Start" width="88"/>
-                    <date-time id="start" needed="1" class="required" onchange="app.calendar.edit_start_change"/>
-                    <description for="duration" value="Duration" id="calendar_edit_duration"/>
-                    <menulist>
-                        <menupopup statustext="Duration of the meeting" class="et2_fullWidth" id="duration" no_lang="1"
-                                   onchange="app.calendar.set_enddate_visibility" options="Use end date,,,,,,,false"/>
-                    </menulist>
-                    <date-time id="end" onchange="app.calendar.edit_update_participant" freeMinuteEntry="true"/>
+                    <et2-description  for="start" value="Start" width="88"></et2-description>
+                    <et2-date-time  id="start" class="required" onchange="app.calendar.edit_start_change" required="1"></et2-date-time>
+                    <et2-description  for="duration" value="Duration" id="calendar_edit_duration"></et2-description>
+                    <et2-select  statustext="Duration of the meeting" id="duration" onchange="app.calendar.set_enddate_visibility" noLang="1" emptyLabel="Use end date"></et2-select>
+                    <et2-date-time  id="end" onchange="app.calendar.edit_update_participant" freeMinuteEntry="true"></et2-date-time>
                 </row>
             </rows>
         </grid>
-        <button statustext="saves the changes made" label="Save" id="button[save]" image="save" background_image="1"
-                onclick="return app.calendar.add_dialog_save(ev, widget); " slot="footer" default="true"/>
-        <button statustext="Full edit dialog" label="Edit" id="button[edit]" image="edit" background_image="1"
-                onclick="return app.calendar.add_dialog_edit(ev, widget);" slot="footer"/>
-        <button statustext="Close the window" label="Cancel" id="button[cancel]"
-                onclick="document.querySelector('et2-dialog#quick_add').hide()" image="cancel"
-                background_image="1" slot="footer"/>
-        <checkbox label="Always use full edit dialog" id="new_event_dialog"
-                  statustext="Always use the full edit dialog, not this little dialog"
-                  onchange="egw.set_preference('calendar',widget.id,widget.get_value() ? 'edit' : 'add');"
-                  slot="footer"/>
+        <et2-button  statustext="saves the changes made" label="Save" id="button[save]" image="save" onclick="return app.calendar.add_dialog_save(ev, widget); " slot="footer" default="true"></et2-button>
+        <et2-button  statustext="Full edit dialog" label="Edit" id="button[edit]" image="edit" onclick="return app.calendar.add_dialog_edit(ev, widget);" slot="footer"></et2-button>
+        <et2-button  statustext="Close the window" label="Cancel" id="button[cancel]" onclick="document.querySelector('et2-dialog#quick_add').hide()" image="cancel" slot="footer"></et2-button>
+        <et2-checkbox  label="Always use full edit dialog" id="new_event_dialog" statustext="Always use the full edit dialog, not this little dialog" onchange="egw.set_preference('calendar',widget.id,widget.get_value() ? 'edit' : 'add');" slot="footer"></et2-checkbox>
     </template>
 </overlay>

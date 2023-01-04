@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="admin.mailwizard.sieve" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
@@ -10,47 +9,43 @@
 			</columns>
 			<rows>
 				<row disabled="@hidebuttons" class="dialogHeadbar" >
-					<hbox span="all">
-						<button label="Continue" id="button[continue]" onclick="app.admin.wizard_detect" image="continue" background_image="1"/>
-						<button label="Back" id="button[back]" image="back" background_image="1"/>
-						<button label="Manual entry" id="button[manual]" onclick="app.admin.wizard_manual" image="manual" background_image="1"/>
-					</hbox>
+					<et2-hbox  span="all">
+						<et2-button  label="Continue" id="button[continue]" onclick="app.admin.wizard_detect" image="continue"></et2-button>
+						<et2-button  label="Back" id="button[back]" image="back"></et2-button>
+						<et2-button  label="Manual entry" id="button[manual]" onclick="app.admin.wizard_manual" image="manual"></et2-button>
+					</et2-hbox>
 				</row>
 				<row disabled="!@showsearchbuttons" class="dialogHeadbar">
-					<hbox span="all" width="100%">
-						<button label="Search" id="button[search]" image="search" background_image="1"/>
-						<button label="Cancel" id="button[cancelsearch]" image="cancel" background_image="1"/>
-					</hbox>
+					<et2-hbox  span="all" width="100%">
+						<et2-button  label="Search" id="button[search]" image="search"></et2-button>
+						<et2-button  label="Cancel" id="button[cancelsearch]" image="cancel"></et2-button>
+					</et2-hbox>
 				</row>
 				<row>
-					<description value="Step 3: Sieve - server side mail filtering" span="all" class="emailadmin_header"/>
-					<description/>
+					<et2-description  value="Step 3: Sieve - server side mail filtering" span="all" class="emailadmin_header"></et2-description>
+					<et2-description></et2-description>
 				</row>
 				<row>
-					<description value="Enable Sieve" for="acc_sieve_enabled"/>
-					<menulist>
-						<menupopup type="select-bool" id="acc_sieve_enabled" class="et2_fullWidth"/>
-					</menulist>
+					<et2-description  value="Enable Sieve" for="acc_sieve_enabled"></et2-description>
+					<et2-select-bool  id="acc_sieve_enabled"></et2-select-bool>
 				</row>
 				<row class="@manual_class">
-					<description value="Sieve server" for="acc_sieve_host"/>
-					<textbox blur="Hostname or IP" id="acc_sieve_host" onchange="app.admin.wizard_sieve_onchange" maxlength="128" class="et2_fullWidth"/>
+					<et2-description  value="Sieve server" for="acc_sieve_host"></et2-description>
+					<et2-textbox  id="acc_sieve_host" onchange="app.admin.wizard_sieve_onchange" maxlength="128" placeholder="Hostname or IP"></et2-textbox>
 				</row>
 				<row class="@manual_class">
-					<description value="Secure connection" for="acc_sieve_ssl"/>
-					<hbox>
-						<menulist>
-							<menupopup id="acc_sieve_ssl" onchange="app.admin.wizard_sieve_ssl_onchange" class="emailadmin_ssl"/>
-						</menulist>
-						<textbox type="integer" label="Port" id="acc_sieve_port" onchange="app.admin.wizard_sieve_onchange" class="emailadmin_port"/>
-					</hbox>
+					<et2-description  value="Secure connection" for="acc_sieve_ssl"></et2-description>
+					<et2-hbox>
+						<et2-select  id="acc_sieve_ssl" onchange="app.admin.wizard_sieve_ssl_onchange" class="emailadmin_ssl"></et2-select>
+						<et2-number  label="Port" id="acc_sieve_port" onchange="app.admin.wizard_sieve_onchange" class="emailadmin_port" precision="0"></et2-number>
+					</et2-hbox>
 				</row>
 				<row>
-					<image src="admin/progress" span="all" class="emailadmin_progress"/>
-					<description/>
+					<et2-image  src="admin/progress" span="all" class="emailadmin_progress"></et2-image>
+					<et2-description></et2-description>
 				</row>
 				<row>
-					<textbox multiline="true" id="sieve_output" readonly="true" span="all"/>
+					<et2-textarea  id="sieve_output" readonly="true" span="all"></et2-textarea>
 				</row>
 			</rows>
 		</grid>

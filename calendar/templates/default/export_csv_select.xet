@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="calendar.export_csv_select" template="" lang="" group="0" version="1.9.003">
 		<grid>
@@ -10,17 +9,17 @@
 			</columns>
 			<rows>
 				<row disabled="!@msg">
-					<description id="msg" span="all" class="message"/>
-					<description/>
+					<et2-description  id="msg" span="all" class="message"></et2-description>
+					<et2-description></et2-description>
 				</row>
 				<row>
-					<radio label="Use search results" id="selection" onclick="jQuery('.criteria').hide();jQuery('div.filters').hide();"  options="search_results" span="all"/>
+					<radio label="Use search results" id="selection" onclick="jQuery('.criteria').hide();jQuery('div.filters').hide();"  set_value="search_results"  span="all"/>
 				</row>
 				<row disabled="@no_filter">
-					<radio label="Use definition filter" id="selection" onclick="jQuery('div.filters').show();jQuery('.criteria').hide();" options="filter" span="all"/>
+					<radio label="Use definition filter" id="selection" onclick="jQuery('div.filters').show();jQuery('.criteria').hide();" set_value="filter"  span="all"/>
 				</row>
 				<row>
-					<radio label="Use given criteria:" id="selection" onchange="jQuery('.criteria').show();jQuery('div.filters').hide();" options="criteria" span="all"/>
+					<radio label="Use given criteria:" id="selection" onchange="jQuery('.criteria').show();jQuery('div.filters').hide();" set_value="criteria"  span="all"/>
 				</row>
 				<row>
 					<grid class="criteria" id="criteria">
@@ -30,12 +29,12 @@
 						</columns>
 						<rows>
 							<row>
-								<description value="Start" font_style="1"/>
-								<date statustext="Startdate of the export" id="start"/>
+								<et2-description  value="Start" fontStyle="1"></et2-description>
+								<et2-date  statustext="Startdate of the export" id="start"></et2-date>
 							</row>
 							<row>
-								<description value="End"/>
-								<date statustext="Enddate of the export" id="end"/>
+								<et2-description  value="End"></et2-description>
+								<et2-date  statustext="Enddate of the export" id="end"></et2-date>
 							</row>
 							<row>
 								<calendar-owner id="owner" empty_label="Owner" span="2" class="shorter" allowFreeEntries="false" autocomplete_url="calendar.calendar_owner_etemplate_widget.ajax_owner"/>
@@ -44,8 +43,8 @@
 					</grid>
 				</row>
 				<row>
-					<description/>
-					<description/>
+					<et2-description></et2-description>
+					<et2-description></et2-description>
 				</row>
 			</rows>
 		</grid>

@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="mail.modifyMessageSubjectDialog" template="" lang="" group="0" version="17.1">
-		<hbox class="et2_prompt">
+		<et2-hbox  class="et2_prompt">
 			<grid width="100%">
 				<columns>
 					<column width="120"/>
@@ -11,15 +10,15 @@
 				</columns>
 				<rows>
 					<row>
-						<description label= "%s:" value="Current subject"/>
-						<description value="@value"/>
+						<et2-description  value="Current subject"></et2-description>
+						<et2-description  value="@value"></et2-description>
 					</row>
 					<row>
-						<description label= "%s:" value="New subject"/>
-						<textbox multiline="true" id="value" width="400"/>
+						<et2-description  value="New subject"></et2-description>
+						<et2-textarea  id="value" width="400"></et2-textarea>
 					</row>
 				</rows>
 			</grid>
-		</hbox>
+		</et2-hbox>
 	</template>
 </overlay>

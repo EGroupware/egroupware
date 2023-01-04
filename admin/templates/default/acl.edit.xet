@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="admin.acl.edit.acl" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%" resize_ratio="0">
@@ -10,53 +9,47 @@
 			</columns>
 			<rows>
 				<row disabled="@acl_location=run" part="header">
-					<description value="Application"/>
-					<menulist>
-						<!-- app.admin doesn't exist (for unknown reason), but accessing it through etemplate2 works -->
-						<menupopup id="acl_appname" needed="1" onchange="etemplate2.getById('admin-acl').app_obj.admin.acl_reopen_dialog();" options="Select one"/>
-					</menulist>
+					<et2-description  value="Application"></et2-description>
+					<!-- app.admin doesn't exist (for unknown reason), but accessing it through etemplate2 works -->
+						<et2-select  id="acl_appname" onchange="etemplate2.getById('admin-acl').app_obj.admin.acl_reopen_dialog();" required="1" emptyLabel="Select one"></et2-select>
 				</row>
 				<row part="header">
-					<description value="Data from" for="acl_account"/>
-					<menulist>
-						<!-- app.admin doesn't exist (for unknown reason), but accessing it through etemplate2 works -->
-						<menupopup type="select-account" id="acl_account" account_type="both" needed="1" onchange="etemplate2.getById('admin-acl').app_obj.admin.acl_reopen_dialog();"/>
-					</menulist>
+					<et2-description  value="Data from" for="acl_account"></et2-description>
+					<!-- app.admin doesn't exist (for unknown reason), but accessing it through etemplate2 works -->
+						<et2-select-account  id="acl_account" onchange="etemplate2.getById('admin-acl').app_obj.admin.acl_reopen_dialog();" accountType="both" required="1"></et2-select-account>
 				</row>
 				<row disabled="@acl_location=run" part="header">
-					<description value="Access by" for="acl_location"/>
-					<menulist>
-						<menupopup type="select-account" id="acl_location" account_type="both"/>
-					</menulist>
+					<et2-description  value="Access by" for="acl_location"></et2-description>
+					<et2-select-account  id="acl_location" accountType="both"></et2-select-account>
 				</row>
 				<row valign="top" disabled="@acl_location=run">
-					<description value="Rights"/>
+					<et2-description  value="Rights"></et2-description>
 					<grid>
 						<columns>
 							<column/>
 						</columns>
 						<rows>
 							<row>
-								<checkbox label="@label[$row]" id="acl[$row]" options="{$cont['right'][$row]},0" span="all"/>
+								<et2-checkbox  label="@label[$row]" id="acl[$row]" span="all" selectedValue="{$cont['right'][$row]}" unselectedValue="0"></et2-checkbox>
 							</row>
 						</rows>
 					</grid>
 				</row>
 				<row disabled="!@acl_location=run">
-					<description value="Applications" for="apps"/>
-					<listbox type="select-app" id="apps" rows="8" options=",enabled,,,,,0"/>
+					<et2-description  value="Applications" for="apps"></et2-description>
+					<et2-select-app  id="apps" rows="8" multiple="1"></et2-select-app>
 				</row>
 			</rows>
 		</grid>
 	</template>
 	<template id="admin.acl.edit" template="" lang="" group="0" version="1.9.001">
-		<tabbox id="tabs" class="et2_nowrap" span="all" width="100%" tab_height="250px">
+		<et2-tabbox  id="tabs" class="et2_nowrap" span="all" width="100%" tabHeight="250px">
 			<tabs>
 				<tab id="acl" label="Access" statustext="Access"/>
 			</tabs>
 				<tabpanels>
 				<template id="admin.acl.edit.acl"/>
 			</tabpanels>
-		</tabbox>
+		</et2-tabbox>
 	</template>
 </overlay>

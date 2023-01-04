@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="mail.signatures.index.rows" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%" id="sig" class="egwGridView_grid">
@@ -11,27 +10,27 @@
 			</columns>
 			<rows>
 				<row class="th">
-					<description value="ID"/>
-					<description value="Description"/>
-					<description align="center" value="Default"/>
+					<et2-description  value="ID"></et2-description>
+					<et2-description  value="Description"></et2-description>
+					<et2-description  align="center" value="Default"></et2-description>
 				</row>
 				<row class="row"  >
-					<description id="${row}[fm_signatureid]" readonly="true"/>
-					<description id="${row}[fm_description]" no_lang="1"/>
-					<description align="center" id="${row}[fm_defaultsignature]" no_lang="1" readonly="true"/>
+					<et2-description  id="${row}[fm_signatureid]" readonly="true"></et2-description>
+					<et2-description  id="${row}[fm_description]" noLang="1"></et2-description>
+					<et2-description  align="center" id="${row}[fm_defaultsignature]" readonly="true" noLang="1"></et2-description>
 				</row>
 			</rows>
 		</grid>
 	</template>
 	<template id="mail.signatures.index" template="" lang="" group="0" version="1.9.001">
-		<description id="msg" no_lang="1" class="message" span="all"/>
+		<et2-description  id="msg" class="message" span="all" noLang="1"></et2-description>
 		<grid width="100%">
 			<columns>
 				<column width="100%"/>
 			</columns>
 			<rows>
 				<row>
-					<buttononly class="$cont[hideIfSigDisabled]" align="right" label="Add" id="add" onclick="window.open(egw::link('/index.php','menuaction=mail.mail_signatures.edit'),'_blank','dependent=yes,width=600,height=400,scrollbars=yes,status=yes'); return false;"/>
+					<et2-button  class="$cont[hideIfSigDisabled]" align="right" label="Add" id="add" onclick="window.open(egw::link('/index.php','menuaction=mail.mail_signatures.edit'),'_blank','dependent=yes,width=600,height=400,scrollbars=yes,status=yes'); return false;" noSubmit="true"></et2-button>
 				</row>
 				<row>
 					<template id="rows"/>

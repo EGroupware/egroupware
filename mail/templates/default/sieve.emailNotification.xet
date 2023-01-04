@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="mail.sieve.emailNotification" template="" lang="" group="0" version="1.9.002">
 		<grid>
@@ -10,36 +9,32 @@
 			</columns>
 			<rows>
 				<row disabled="!@msg" part="header">
-					<description align="center" id="msg" span="all" class="message"/>
-					<description/>
+					<et2-description  align="center" id="msg" span="all" class="message"></et2-description>
+					<et2-description></et2-description>
 				</row>
 				<row class="th" valign="top" part="header">
-					<description value="email notification settings"/>
-					<description/>
+					<et2-description  value="email notification settings"></et2-description>
+					<et2-description></et2-description>
 				</row>
 				<row>
-					<description value="Status:"/>
-					<menulist>
-						<menupopup id="status"/>
-					</menulist>
+					<et2-description  value="Status:"></et2-description>
+					<et2-select  id="status"></et2-select>
 				</row>
 				<row>
-					<description value="External email address:"/>
-					<taglist-email id="externalEmail" required="true" width="40%" allowFreeEntries="true" maxSelection="1" />
+					<et2-description  value="External email address:"></et2-description>
+					<et2-select-email  id="externalEmail" required="true" width="40%" allowFreeEntries="true" searchUrl="EGroupware\Api\Etemplate\Widget\Taglist::ajax_email"></et2-select-email>
 				</row>
 				<row>
-					<description value="Display mail subject in notification:	"/>
-					<menulist>
-						<menupopup id="displaySubject"/>
-					</menulist>
+					<et2-description  value="Display mail subject in notification:	"></et2-description>
+					<et2-select  id="displaySubject"></et2-select>
 				</row>
 				<row>
-					<hbox>
-						<button class="$cont[hideIfSieveDisabled]" label="Save" id="button[save]"/>
-						<button class="$cont[hideIfSieveDisabled]" label="Apply" id="button[apply]"/>
-						<button class="$cont[hideIfSieveDisabled]" label="Cancel" id="button[cancel]"/>
-					</hbox>
-					<description/>
+					<et2-hbox>
+						<et2-button  class="$cont[hideIfSieveDisabled]" label="Save" id="button[save]"></et2-button>
+						<et2-button  class="$cont[hideIfSieveDisabled]" label="Apply" id="button[apply]"></et2-button>
+						<et2-button  class="$cont[hideIfSieveDisabled]" label="Cancel" id="button[cancel]"></et2-button>
+					</et2-hbox>
+					<et2-description></et2-description>
 				</row>
 			</rows>
 		</grid>

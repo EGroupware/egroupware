@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="addressbook.dupconfirmdialog" template="" lang="" group="0" version="">
 		<grid id="grid">
@@ -10,8 +9,8 @@
 			</columns>
 			<rows>
 				<row>
-					<checkbox id="${row}[confirm]"/>
-					<description id="${row}[name]"/>
+					<et2-checkbox  id="${row}[confirm]"></et2-checkbox>
+					<et2-description  id="${row}[name]"></et2-description>
 				</row>
 			</rows>
 		</grid>

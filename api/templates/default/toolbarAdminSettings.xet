@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="api.toolbarAdminSettings" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
@@ -10,14 +9,12 @@
 			</columns>
 			<rows>
                 <row>
-                    <description value="default visible actions" label="%s:"/>
-                    <taglist id="actions" editModeEnabled="false" allowFreeEntries="false" autocomplete_url=' '
-                             class="et2_fullWidth"/>
+                    <et2-description  value="default visible actions" label="%s:"></et2-description>
+                    <et2-select  id="actions" editModeEnabled="false" allowFreeEntries="false" multiple="true" searchUrl="EGroupware\Api\Etemplate\Widget\Taglist::ajax_search"></et2-select>
                 </row>
                 <row>
-                    <description value="reset all to default" label="%s:"/>
-                    <checkbox id="reset"
-                              statustext="This will reset toolbar preferences for all users and set them to configured default prefs."/>
+                    <et2-description  value="reset all to default" label="%s:"></et2-description>
+                    <et2-checkbox  id="reset" statustext="This will reset toolbar preferences for all users and set them to configured default prefs."></et2-checkbox>
                 </row>
             </rows>
         </grid>

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="calendar.export" template="" lang="" group="0" version="1.0.1.001">
 		<grid>
@@ -10,32 +9,30 @@
 			</columns>
 			<rows>
 				<row>
-					<description span="all"/>
+					<et2-description  span="all"></et2-description>
 				</row>
 				<row>
-					<description options=",,,start" value="Start"/>
-					<date id="start" statustext="Startdate of the export"/>
+					<et2-description  value="Start" labelFor="start"></et2-description>
+					<et2-date  id="start" statustext="Startdate of the export"></et2-date>
 				</row>
 				<row>
-					<description options=",,,end" value="End"/>
-					<date id="end" statustext="Enddate of the export"/>
+					<et2-description  value="End" labelFor="end"></et2-description>
+					<et2-date  id="end" statustext="Enddate of the export"></et2-date>
 				</row>
 				<row>
-					<description options=",,,file" value="Filename"/>
-					<textbox id="file" statustext="Filename of the download"/>
+					<et2-description  value="Filename" labelFor="file"></et2-description>
+					<et2-textbox  id="file" statustext="Filename of the download"></et2-textbox>
 				</row>
 				<row disabled="1">
-					<description options=",,,version" value="Version"/>
-					<menulist>
-						<menupopup id="version"/>
-					</menulist>
+					<et2-description  value="Version" labelFor="version"></et2-description>
+					<et2-select  id="version"></et2-select>
 				</row>
 				<row>
-					<description/>
-					<button label="Download" id="download" image="download" background_image="1"/>
+					<et2-description></et2-description>
+					<et2-button  label="Download" id="download" image="download"></et2-button>
 				</row>
 				<row>
-					<description span="all"/>
+					<et2-description  span="all"></et2-description>
 				</row>
 			</rows>
 		</grid>

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="importexport.definition_index.row" template="" lang="" group="0" version="1.9.002">
 		<grid width="100%">
@@ -14,23 +13,18 @@
 			</columns>
 			<rows>
 				<row class="th">
-					<nextmatch-filterheader id="type" options="importexport" class="lr_padding"/>
+					<et2-nextmatch-header-filter  id="type" class="lr_padding" emptyLabel="importexport"/>
 					<nextmatch-sortheader label="Name" id="name" class="lr_padding"/>
-					<nextmatch-filterheader id="application" options="Application" class="lr_padding"/>
-					<nextmatch-accountfilter align="center" id="allowed_users" options="Allowed users,groups" class="lr_padding"/>
-					<nextmatch-accountfilter empty_label="Owner" id="owner"/>
+					<et2-nextmatch-header-filter  id="application" class="lr_padding" emptyLabel="Application"/>
+					<et2-nextmatch-header-account  align="center" id="allowed_users" class="lr_padding" emptyLabel="Allowed users" accountType="groups"/>
+					<et2-nextmatch-header-account  id="owner" emptyLabel="Owner"/>
 				</row>
 				<row class="row $row_cont[class]">
-                    <image src="${row_cont[type]}" no_lang="1"
-                           onclick="window.open(egw::link('/index.php','menuaction=importexport.importexport_${row_cont[type]}_ui.${row_cont[type]}_dialog&amp;appname=${row_cont[application]}&amp;definition=${row_cont[definition_id]}'),'_blank','dependent=yes,width=850,height=440,scrollbars=yes,status=yes'); return false;"
-                           class="lr_padding button"/>
-                    <description id="${row}[name]" no_lang="1" class="lr_padding"/>
-                    <description id="${row}[application]" class="lr_padding"/>
-                    <listbox type="select-account" id="${row}[allowed_users]" no_lang="1" readonly="true" rows="5"
-                             empty_label='Private' class="lr_padding"/>
-                    <menulist>
-                        <menupopup type="select-account" id="${row}[owner]" readonly="true"/>
-                    </menulist>
+                    <et2-image  src="${row_cont[type]}" onclick="window.open(egw::link('/index.php','menuaction=importexport.importexport_${row_cont[type]}_ui.${row_cont[type]}_dialog&amp;appname=${row_cont[application]}&amp;definition=${row_cont[definition_id]}'),'_blank','dependent=yes,width=850,height=440,scrollbars=yes,status=yes'); return false;" class="lr_padding button" noLang="1"></et2-image>
+                    <et2-description  id="${row}[name]" class="lr_padding" noLang="1"></et2-description>
+                    <et2-description  id="${row}[application]" class="lr_padding"></et2-description>
+                    <et2-select-account  id="${row}[allowed_users]" readonly="true" rows="5" class="lr_padding" multiple="1" placeholder="Private" noLang="1"></et2-select-account>
+                    <et2-select-account  id="${row}[owner]" readonly="true"></et2-select-account>
                 </row>
 			</rows>
 		</grid>
@@ -43,34 +37,34 @@
 		</styles>
 	</template>
 	<template id="importexport.definition_index.add" template="" lang="" group="0" version="1.9.002">
-		<buttononly statustext="Add a new definition" label="Add" id="add" onclick="egw(window).open_link('importexport.importexport_definitions_ui.edit','_blank','500x500'); return false;"/>
+		<et2-button  statustext="Add a new definition" label="Add" id="add" onclick="egw(window).open_link('importexport.importexport_definitions_ui.edit','_blank','500x500'); return false;" noSubmit="true"></et2-button>
 	</template>
 	<template id="importexport.definition_index" template="" lang="" group="0" version="1.9.002">
 		<nextmatch id="nm" template="importexport.definition_index.row" header_left="importexport.definition_index.add"/>
-		<box id="owner_popup" class="action_popup prompt">
-			<description value="Change owner" class="promptheader"/>
-			<vbox class="action_popup-content">
-				<description value="Select owner"/>
-				<listbox type="select-account" id="owner" options="None,accounts"/>
-			</vbox>
-			<hbox>
-				<button id="save_owner" label="Save" onclick="nm_submit_popup(this); return false;" image="save" background_image="1"/>
-				<buttononly id="cancel_owner" label="Cancel" onclick="nm_hide_popup(this,'owner_popup');" image="cancel" background_image="1"/>
-			</hbox>
-		</box>
-		<box id="allowed_popup" class="action_popup prompt">
-			<description value="Change allowed users" class="promptheader"/>
-			<vbox class="action_popup-content">
-				<description value="Select groups"/>
-				<checkbox label="%s Just me" id="allowed_private"/>
-				<checkbox label="%s All users" id="all_users"/>
-				<listbox type="select-account" id="allowed" rows="5" account_type="groups"/>
-			</vbox>
-			<hbox>
-				<button id="save_allowed" label="Save" onclick="nm_submit_popup(this); return false;" image="save" background_image="1"/>
-				<buttononly id="cancel_allowed" label="Cancel" onclick="nm_hide_popup(this,'allowed_popup');" image="cancel" background_image="1"/>
-			</hbox>
-		</box>
+		<et2-box  id="owner_popup" class="action_popup prompt">
+			<et2-description  value="Change owner" class="promptheader"></et2-description>
+			<et2-vbox  class="action_popup-content">
+				<et2-description  value="Select owner"></et2-description>
+				<et2-select-account  id="owner" emptyLabel="None" accountType="accounts"></et2-select-account>
+			</et2-vbox>
+			<et2-hbox>
+				<et2-button  id="save_owner" label="Save" onclick="nm_submit_popup(this); return false;" image="save"></et2-button>
+				<et2-button  id="cancel_owner" label="Cancel" onclick="nm_hide_popup(this,'owner_popup');" image="cancel" noSubmit="true"></et2-button>
+			</et2-hbox>
+		</et2-box>
+		<et2-box  id="allowed_popup" class="action_popup prompt">
+			<et2-description  value="Change allowed users" class="promptheader"></et2-description>
+			<et2-vbox  class="action_popup-content">
+				<et2-description  value="Select groups"></et2-description>
+				<et2-checkbox  label="%s Just me" id="allowed_private"></et2-checkbox>
+				<et2-checkbox  label="%s All users" id="all_users"></et2-checkbox>
+				<et2-select-account  id="allowed" rows="5" multiple="1" accountType="groups"></et2-select-account>
+			</et2-vbox>
+			<et2-hbox>
+				<et2-button  id="save_allowed" label="Save" onclick="nm_submit_popup(this); return false;" image="save"></et2-button>
+				<et2-button  id="cancel_allowed" label="Cancel" onclick="nm_hide_popup(this,'allowed_popup');" image="cancel" noSubmit="true"></et2-button>
+			</et2-hbox>
+		</et2-box>
 		<styles>
 			td.lr_padding { padding-left: 5px; padding-right: 5px; }
 

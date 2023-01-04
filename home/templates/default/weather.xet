@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="home.weather" template="" lang="" group="0" version="1.9.001">
 		<grid id="current" disabled="!@current" width="100%">
@@ -12,40 +11,40 @@
 			</columns>
 			<rows>
 				<row>
-					<image class="weather_icon" src="weather[0][icon]"/>
-					<hbox id="temp">
-						<description class="current temperature" id="temp" no_lang="true"/>
-					</hbox>
-					<vbox id="temp" disabled="@no_current_temp">
-						<description class="high_low temperature" id="max" no_lang="true"/>
-						<description class="high_low temperature" id="min" no_lang="true"/>
-					</vbox>
+					<et2-image  class="weather_icon" src="weather[0][icon]"></et2-image>
+					<et2-hbox  id="temp">
+						<et2-description  class="current temperature" id="temp" noLang="true"></et2-description>
+					</et2-hbox>
+					<et2-vbox  id="temp" disabled="@no_current_temp">
+						<et2-description  class="high_low temperature" id="max" noLang="true"></et2-description>
+						<et2-description  class="high_low temperature" id="min" noLang="true"></et2-description>
+					</et2-vbox>
 				</row>
 				<row disabled="!@weather[0][description]">
-					<description id="weather[0][description]" no_lang="true"/>
+					<et2-description  id="weather[0][description]" noLang="true"></et2-description>
 				</row>
 			</rows>
 		</grid>
-		<box id="list" class="forecast" disabled="!@list" width="100%">
+		<et2-box  id="list" class="forecast" disabled="!@list" width="100%">
 			<!-- Box wrapper needed to get box to auto-repeat -->
-			<box id="${row}">
+			<et2-box  id="${row}">
 				<grid width="100%">
 					<columns>
 						<column/>
 					</columns>
 					<rows>
-						<row><description align="center" id="day"/></row>
-						<row class="weather_icon"><image align="center" class="weather_icon" src="weather[0][icon]"/></row>
+						<row><et2-description  align="center" id="day"></et2-description></row>
+						<row class="weather_icon"><et2-image  align="center" class="weather_icon" src="weather[0][icon]"></et2-image></row>
 						<row>
-							<vbox align="center" id="temp">
-								<description class="high_low temperature" id="max" no_lang="true"/>
-								<description class="high_low temperature" id="min" no_lang="true"/>
-							</vbox>
+							<et2-vbox  align="center" id="temp">
+								<et2-description  class="high_low temperature" id="max" noLang="true"></et2-description>
+								<et2-description  class="high_low temperature" id="min" noLang="true"></et2-description>
+							</et2-vbox>
 						</row>
 					</rows>
 				</grid>
-			</box>
-		</box>
-		<description activate_links="true" align="center" class="attribution" extra_link_target="_blank" href="@attribution" value="openweathermap.org"/>
+			</et2-box>
+		</et2-box>
+		<et2-description  align="center" class="attribution" href="@attribution" value="openweathermap.org" activateLinks="true" extraLinkTarget="_blank"></et2-description>
 	</template>
 </overlay>

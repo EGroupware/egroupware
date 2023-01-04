@@ -9,11 +9,11 @@ Egroupware
 @version $Id$
 -->
 
-<!DOCTYPE overlay PUBLIC '-//EGroupware GmbH//eTemplate 2//EN' 'http://www.egroupware.org/etemplate2.dtd'>
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 
 <overlay>
     <template id="calendar.view">
-		<label id="header_dateIndicator"/>
+		<et2-label  id="header_dateIndicator"></et2-label>
 		<grid id="view" width="100%">
 			<columns>
 				<column/>
@@ -30,6 +30,6 @@ Egroupware
 
 			</rows>
 		</grid>
-		<button class="plus_button" id="add" onclick="egw.open(null,'calendar','add')"/>
+		<et2-button  class="plus_button" id="add" onclick="egw.open(null,'calendar','add')"></et2-button>
 	</template>
 </overlay>

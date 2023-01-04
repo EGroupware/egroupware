@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="calendar.import.conditions" template="" lang="" group="0" version="16.1">
 		<template id="importexport.wizard_basic_import_csv.conditions" disabled="@no_conditions"/>
-		<hbox>
-			<description value="Do not import conflicting events"/>
-			<checkbox id="skip_conflicts" />
-		</hbox>
+		<et2-hbox>
+			<et2-description  value="Do not import conflicting events"></et2-description>
+			<et2-checkbox  id="skip_conflicts" ></et2-checkbox>
+		</et2-hbox>
 	</template>
 </overlay>

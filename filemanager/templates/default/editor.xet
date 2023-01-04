@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="filemanager.editor" template="" lang="" group="0" version="16.1">
 		<grid width="100%" height="100%">
@@ -9,10 +8,10 @@
 			</columns>
 			<rows>
 				<row height="45">
-					<box height="30">
+					<et2-box  height="30">
 						<toolbar id="tools"/>
-						<textbox id="file_path" readonly="true"/>
-					</box>
+						<et2-textbox  id="file_path" readonly="true"></et2-textbox>
+					</et2-box>
 				</row>
 				<row>
 					<grid height="700" width="100%" resize_ratio="1">
@@ -21,7 +20,7 @@
 						</columns>
 						<rows>
 							<row>
-								<box id = "odfEditor" height="100%" width="100%"></box>
+								<et2-box  height="100%" width="100%"></et2-box>
 							</row>
 						</rows>
 					</grid>

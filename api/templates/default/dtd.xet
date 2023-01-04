@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="etemplate.dtd" template="" lang="" group="0" version="1.9.001">
-		<vbox>
-			<label id="message"/>
-			<textbox multiline="true" id="value" rows="20" class="dtdContent"/>
-		</vbox>
+		<et2-vbox>
+			<et2-label  id="message"></et2-label>
+			<et2-textarea  id="value" rows="20" class="dtdContent"></et2-textarea>
+		</et2-vbox>
 		<styles>
 			.dtdContent {
 				width: 550px;

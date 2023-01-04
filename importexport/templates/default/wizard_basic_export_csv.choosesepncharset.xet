@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="importexport.wizard_basic_export_csv.choosesepncharset" template="" lang="" group="0" version="1.9.001">
 		<grid>
@@ -10,29 +9,23 @@
 			</columns>
 			<rows>
 				<row>
-					<description id="msg" no_lang="1" span="all"/>
+					<et2-description  id="msg" span="all" noLang="1"></et2-description>
 				</row>
 				<row>
-					<description value="Fieldseperator"/>
-					<textbox id="delimiter" no_lang="1" size="1"/>
+					<et2-description  value="Fieldseperator"></et2-description>
+					<et2-textbox  id="delimiter" noLang="1"></et2-textbox>
 				</row>
 				<row>
-					<description value="Charset of file"/>
-					<menulist class="width180">
-						<menupopup id="charset" no_lang="1"/>
-					</menulist>
+					<et2-description  value="Charset of file"></et2-description>
+					<et2-select  class="width180" id="charset" noLang="1"></et2-select>
 				</row>
 				<row>
-					<description value="Include header"/>
-					<menulist>
-						<menupopup id="begin_with_fieldnames"/>
-					</menulist>
+					<et2-description  value="Include header"></et2-description>
+					<et2-select  id="begin_with_fieldnames"></et2-select>
 				</row>
 				<row>
-					<description value="Export data as"/>
-					<menulist>
-						<menupopup id="convert"/>
-					</menulist>
+					<et2-description  value="Export data as"></et2-description>
+					<et2-select  id="convert"></et2-select>
 				</row>
 			</rows>
 		</grid>

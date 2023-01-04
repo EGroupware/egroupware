@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <!--
 This template is used for client-side testing, and needs these custom fields to work properly:
 Infolog:
@@ -13,28 +13,28 @@ Include it into the normal edit template with:
 -->
 <overlay>
 	<template id="infolog.entry_test.Thorsby.locality">
-		<vbox>
-			<description value="THORSBY"/>
+		<et2-vbox>
+			<et2-description  value="THORSBY"></et2-description>
 			<contact-account value="info_modifier" id="info_modifier_fn" options="n_fn" label="Modifier full name:"/>
-		</vbox>
+		</et2-vbox>
 	</template>
 	<template id="infolog.entry_test.Kaiserslautern.locality">
-		<vbox>
-			<description value="KAISERSLAUTERN"/>
+		<et2-vbox>
+			<et2-description  value="KAISERSLAUTERN"></et2-description>
 			<contact-account value="info_modifier" id="info_modifier_fn" options="n_fn" label="Modifier full name:"/>
-		</vbox>
+		</et2-vbox>
 	</template>
 	<template id="infolog.entry_test" lang="" group="0" version="1.9">
-		<vbox>
+		<et2-vbox>
 		<!-- These are all the same -->
-		<description value="Contact's Email:"/>
+		<et2-description  value="Contact's Email:"></et2-description>
 		<contact-value id="info_contact_email" value="info_contact" options="email"/>
 		<contact-value id="info_contact_email" value="info_contact" field="email"/>
 		<contact-value id="info_contact" options="email"/>
 		<hrule/>
 
 		<!-- These use some of the other attributes -->
-		<description value="Entry alternate field attribute using numeric custom fields #chrgs1 &amp; #chrgs2 and #date:"/>
+		<et2-description  value="Entry alternate field attribute using numeric custom fields #chrgs1 &amp; #chrgs2 and #date:"></et2-description>
 		<infolog-value id="info_id"  options=",,#chrgs1:#chrgs2" label="First non-empty:"/>
 		<infolog-value id="info_id" field="sum" alternate_fields="#chrgs1:#chrgs2" label="Sum:"/>
 		<infolog-value id="info_id" field="sum" options=",,#chrgs1:#chrgs2" label="Sum:"/>
@@ -43,15 +43,15 @@ Include it into the normal edit template with:
 		<hrule/>
 
 		<!-- Accessing other application info -->
-		<description value="Values from other applications using Infolog cf #tracker and Tracker cf #gender"/>
+		<et2-description  value="Values from other applications using Infolog cf #tracker and Tracker cf #gender"></et2-description>
 		<infolog-value id="is_tracker_male" value="info_id" field="#tracker/#gender" label="Tracker gender cf:"/>
 		<tracker-value id="#tracker" field="#gender" compare="Male" class="bill_11m" label="Tracker gender is Male:"/>
 		<tracker-value id="#tracker" field="#gender" compare="Female" class="bill_11f" label="Tracker gender is Female:"/>
 		<hrule/>
 
-		<description value="A whole template based on modifier's town (Thorsby or Kaiserslautern)"/>
+		<et2-description  value="A whole template based on modifier's town (Thorsby or Kaiserslautern)"></et2-description>
 		<contact-template label="infolog.entry_test.%s.locality" id="info_modifier_versicherung" field="adr_one_locality" value="info_modifier" span="all"/>
 
-		</vbox>
+		</et2-vbox>
 	</template>
 </overlay>

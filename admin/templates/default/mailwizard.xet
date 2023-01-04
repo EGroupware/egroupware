@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="admin.mailwizard" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
@@ -10,48 +9,46 @@
 			</columns>
 			<rows>
 				<row class="dialogHeader">
-					<description value="Step 1: IMAP - incoming mail" span="all" class="emailadmin_header"/>
-					<description/>
+					<et2-description  value="Step 1: IMAP - incoming mail" span="all" class="emailadmin_header"></et2-description>
+					<et2-description></et2-description>
 				</row>
 				<row>
-					<description value="EMail address"/>
-					<url-email id="ident_email" needed="1"  size="32" maxlength="128" autocomplete="off"/>
+					<et2-description  value="EMail address"></et2-description>
+					<et2-url-email  id="ident_email" maxlength="128" autocomplete="off" required="1"></et2-url-email>
 				</row>
 				<row class="@manual_class">
-					<description value="Username" for="acc_imap_username"/>
-					<textbox blur="if different from EMail address" id="acc_imap_username" size="32" maxlength="128" autocomplete="off"/>
+					<et2-description  value="Username" for="acc_imap_username"></et2-description>
+					<et2-textbox  id="acc_imap_username" maxlength="128" autocomplete="off" placeholder="if different from EMail address"></et2-textbox>
 				</row>
 				<row>
-					<description value="Password" for="acc_imap_password"/>
-					<passwd id="acc_imap_password" size="32" maxlength="128" autocomplete="off"  blur="Leave empty to use OAuth, if supported" class="et2_required"/>
+					<et2-description  value="Password" for="acc_imap_password"></et2-description>
+					<et2-password  id="acc_imap_password" maxlength="128" autocomplete="off" class="et2_required" placeholder="Leave empty to use OAuth, if supported"></et2-password>
 				</row>
 				<row class="@manual_class">
-					<description value="IMAP server" for="acc_imap_host"/>
-					<textbox blur="Hostname or IP" id="acc_imap_host" size="32" maxlength="128"/>
+					<et2-description  value="IMAP server" for="acc_imap_host"></et2-description>
+					<et2-textbox  id="acc_imap_host" maxlength="128" placeholder="Hostname or IP"></et2-textbox>
 				</row>
 				<row class="@manual_class">
-					<description value="Secure connection" for="acc_imap_ssl"/>
-					<hbox>
-						<menulist>
-							<menupopup id="acc_imap_ssl" onchange="app.admin.wizard_imap_ssl_onchange" class="emailadmin_ssl"/>
-						</menulist>
-						<textbox type="integer" label="Port" id="acc_imap_port" class="emailadmin_port"/>
-					</hbox>
+					<et2-description  value="Secure connection" for="acc_imap_ssl"></et2-description>
+					<et2-hbox>
+						<et2-select  id="acc_imap_ssl" onchange="app.admin.wizard_imap_ssl_onchange" class="emailadmin_ssl"></et2-select>
+						<et2-number  label="Port" id="acc_imap_port" class="emailadmin_port" precision="0"></et2-number>
+					</et2-hbox>
 				</row>
 				<row class="dialogFooterToolbar">
-					<hbox span="all">
-						<button label="Continue" id="button[continue]" onclick="app.admin.wizard_detect" image="continue" background_image="1"/>
-						<button label="Manual entry" id="button[manual]" onclick="app.admin.wizard_manual" image="edit" background_image="1"/>
-						<button label="Skip IMAP" id="button[skip_imap]" class="@manual_class" novalidate="1" image="bullet" background_image="1"/>
-						<buttononly label="Cancel" id="button[cancel]" onclick="window.close();" image="cancel" background_image="1"/>
-					</hbox>
+					<et2-hbox  span="all">
+						<et2-button  label="Continue" id="button[continue]" onclick="app.admin.wizard_detect" image="continue"></et2-button>
+						<et2-button  label="Manual entry" id="button[manual]" onclick="app.admin.wizard_manual" image="edit"></et2-button>
+						<et2-button  label="Skip IMAP" id="button[skip_imap]" class="@manual_class" novalidate="1" image="bullet"></et2-button>
+						<et2-button  label="Cancel" id="button[cancel]" onclick="window.close();" image="cancel" noSubmit="true"></et2-button>
+					</et2-hbox>
 				</row>
 				<row>
-					<image src="admin/progress" span="all" class="emailadmin_progress"/>
-					<description/>
+					<et2-image  src="admin/progress" span="all" class="emailadmin_progress"></et2-image>
+					<et2-description></et2-description>
 				</row>
 				<row>
-					<textbox multiline="true" id="output" readonly="true" span="all"/>
+					<et2-textarea  id="output" readonly="true" span="all"></et2-textarea>
 				</row>
 			</rows>
 		</grid>

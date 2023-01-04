@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="admin.statistics" template="" lang="" group="0" version="1.7.001">
 		<groupbox span="all" class="bigger">
 			<caption label="Official EGroupware usage statistic"/>
-			<vbox>
-				<description value="We ask for the data to improve our profile in the press and to get a better understanding of EGroupware's user base and it's needs."/>
-				<url label="The cumulated and anonymised data will be publically available:" id="statistic_url" readonly="true"/>
-				<description value="We hope you understand the importance for this voluntary statistic and not deny it lightly." class="bold"/>
-				<description label="Only below displayed information is directly submitted to %s." id="submit_host"/>
-				<textbox label="To allow us to track the growth of your individual installation use this submit ID, otherwise delete it:" id="submit_id" size="42" maxlength="40"/>
-			</vbox>
+			<et2-vbox>
+				<et2-description  value="We ask for the data to improve our profile in the press and to get a better understanding of EGroupware's user base and it's needs."></et2-description>
+				<et2-url  label="The cumulated and anonymised data will be publically available:" id="statistic_url" readonly="true"></et2-url>
+				<et2-description  value="We hope you understand the importance for this voluntary statistic and not deny it lightly." class="bold"></et2-description>
+				<et2-description  label="Only below displayed information is directly submitted to %s." id="submit_host"></et2-description>
+				<et2-textbox  label="To allow us to track the growth of your individual installation use this submit ID, otherwise delete it:" id="submit_id" maxlength="40"></et2-textbox>
+			</et2-vbox>
 		</groupbox>
 		<grid>
 			<columns>
@@ -20,61 +19,59 @@
 			</columns>
 			<rows>
 				<row>
-					<description/>
-					<description/>
+					<et2-description></et2-description>
+					<et2-description></et2-description>
 				</row>
 				<row>
-					<description options=",,,country" value="Country"/>
-					<select type="select-country" id="country" options="International use"/>
+					<et2-description  value="Country" labelFor="country"></et2-description>
+					<et2-select-country  id="country" emptyLabel="International use"></et2-select-country>
 				</row>
 				<row>
-					<description value="Usage" options=",,,usage_type"/>
-					<select id="usage_type"/>
+					<et2-description  value="Usage" labelFor="usage_type"></et2-description>
+					<et2-select  id="usage_type"></et2-select>
 				</row>
 				<row>
-					<description value="Number of users" options=",,,users"/>
-					<textbox id="users" statustext="number of active users" size="-8" readonly="true"/>
+					<et2-description  value="Number of users" labelFor="users"></et2-description>
+					<et2-textbox  id="users" statustext="number of active users" readonly="true"></et2-textbox>
 				</row>
 				<row>
-					<description options=",,,sessions" value="Sessions last 30 days"/>
-					<textbox id="sessions" statustext="Number of sessions / EGroupware logins in the last 30 days" size="-8" readonly="true"/>
+					<et2-description  value="Sessions last 30 days" labelFor="sessions"></et2-description>
+					<et2-textbox  id="sessions" statustext="Number of sessions / EGroupware logins in the last 30 days" readonly="true"></et2-textbox>
 				</row>
 				<row>
-					<description value="EGroupware Version"/>
-					<textbox id="version" size="-64" readonly="true"/>
+					<et2-description  value="EGroupware Version"></et2-description>
+					<et2-textbox  id="version" readonly="true"></et2-textbox>
 				</row>
 				<row>
-					<description value="Operating System"/>
-					<textbox id="os" size="-64" readonly="true"/>
+					<et2-description  value="Operating System"></et2-description>
+					<et2-textbox  id="os" readonly="true"></et2-textbox>
 				</row>
 				<row>
-					<description value="PHP Version"/>
-					<textbox id="php" size="-64" readonly="true"/>
+					<et2-description  value="PHP Version"></et2-description>
+					<et2-textbox  id="php" readonly="true"></et2-textbox>
 				</row>
 				<row>
-					<description value="Installation Type"/>
-					<menulist>
-						<menupopup id="install_type"/>
-					</menulist>
+					<et2-description  value="Installation Type"></et2-description>
+					<et2-select  id="install_type"></et2-select>
 				</row>
 				<row valign="top">
-					<description value="Applications"/>
-					<textbox multiline="true" rows="10" cols="40" id="apps" statustext="Installed applications, percentage of allowed users and total number of entries."/>
+					<et2-description  value="Applications"></et2-description>
+					<et2-textarea  rows="10" cols="40" id="apps" statustext="Installed applications, percentage of allowed users and total number of entries."></et2-textarea>
 				</row>
 				<row disabled="!@last_submitted">
-					<description value="Last submission:"/>
-					<date-time readonly="true" id="last_submitted"/>
+					<et2-description  value="Last submission:"></et2-description>
+					<et2-date-time  readonly="true" id="last_submitted"></et2-date-time>
 				</row>
 				<row disabled="!@msg">
-					<description span="all" class="redItalic" align="center" id="msg"/>
-					<description/>
+					<et2-description  span="all" class="redItalic" align="center" id="msg"></et2-description>
+					<et2-description></et2-description>
 				</row>
 				<row>
-					<button label="Submit" statustext="Submit to egroupware.org" onclick="$cont[onclick]" id="submit"/>
-					<hbox>
-						<select id="postpone" options="Postpone for" onchange="1"/>
-						<button id="cancel" label="Cancel" statustext="Go directly to admin menu, returning here the next time you click on administration." align="right"/>
-					</hbox>
+					<et2-button  label="Submit" statustext="Submit to egroupware.org" onclick="$cont[onclick]" id="submit"></et2-button>
+					<et2-hbox>
+						<et2-select  id="postpone" onchange="1" emptyLabel="Postpone for"></et2-select>
+						<et2-button  id="cancel" label="Cancel" statustext="Go directly to admin menu, returning here the next time you click on administration." align="right"></et2-button>
+					</et2-hbox>
 				</row>
 			</rows>
 		</grid>

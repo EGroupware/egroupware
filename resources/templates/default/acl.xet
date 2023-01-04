@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="resources.acl.rows">
 		<grid width="100%">
@@ -22,33 +22,29 @@
 					<nextmatch-header statustext="Category admin" id="owner" label="Category owner"/>
 					<nextmatch-header id="location" label="Locations / rooms"/>
 					<nextmatch-header label="Read permissions" id="read"/>
-					<vbox>
+					<et2-vbox>
 						<nextmatch-header label="Write permissions" id="write" />
-						<description label="implies read permission"/>
-					</vbox>
+						<et2-description  label="implies read permission"></et2-description>
+					</et2-vbox>
 					<nextmatch-header label="Read Calendar permissions" id="calread"/>
-					<vbox>
+					<et2-vbox>
 						<nextmatch-header label="Direct booking permissions" id="calwrite"/>
-						<description label="implies booking permission"/>
-					</vbox>
+						<et2-description  label="implies booking permission"></et2-description>
+					</et2-vbox>
 				</row>
 				<row class="$row_cont[id] $row_cont[class]">
-					<hbox>
+					<et2-hbox>
 						<html id="${row}[level_spacer]"/>
-						<description id="${row}[name]" class="$row_cont[class]"/>
-					</hbox>
-					<image align="center" src="${row}[icon_url]"/>
-					<menulist>
-						<menupopup type="select-account" id="${row}[admin]" readonly="true" options="All users,groups"/>
-					</menulist>
-					<menulist>
-						<menupopup type="select-account" id="${row}[owner]" readonly="true" options="All users,groups"/>
-					</menulist>
-					<checkbox align="center" id="${row}[location]" readonly="true"/>
-					<listbox type="select-account" id="${row}[read]" readonly="true" rows="5"/>
-					<listbox type="select-account" id="${row}[write]" readonly="true" rows="5"/>
-					<listbox type="select-account" id="${row}[calread]" readonly="true" rows="5"/>
-					<listbox type="select-account" id="${row}[calwrite]" readonly="true" rows="5"/>
+						<et2-description  id="${row}[name]" class="$row_cont[class]"></et2-description>
+					</et2-hbox>
+					<et2-image  align="center" src="${row}[icon_url]"></et2-image>
+					<et2-select-account  id="${row}[admin]" readonly="true" emptyLabel="All users" accountType="groups"></et2-select-account>
+					<et2-select-account  id="${row}[owner]" readonly="true" emptyLabel="All users" accountType="groups"></et2-select-account>
+					<et2-checkbox  align="center" id="${row}[location]" readonly="true"></et2-checkbox>
+					<et2-select-account  id="${row}[read]" readonly="true" rows="5" multiple="1"></et2-select-account>
+					<et2-select-account  id="${row}[write]" readonly="true" rows="5" multiple="1"></et2-select-account>
+					<et2-select-account  id="${row}[calread]" readonly="true" rows="5" multiple="1"></et2-select-account>
+					<et2-select-account  id="${row}[calwrite]" readonly="true" rows="5" multiple="1"></et2-select-account>
 				</row>
 			</rows>
 		</grid>

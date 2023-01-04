@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <!-- $Id:$ -->
 <overlay>
 	<template id="infolog.home.link" template="" lang="" group="0" version="1.9.001">
-		<hbox class="infolog_CompletedClmn" height="45px">
-			<image label="$cont[info_status]" id="edit_status[$cont[info_id]]" href="javascript:egw.open($cont[info_id],'infolog');" src="image" default_src="status"/>
-			<vbox>
-				<link id="entry"/>
-				<image label="$cont[info_percent]" id="edit_percent[$cont[info_id]]" href="javascript:egw.open($cont[info_id],'infolog');" src="info_percent"/>
+		<et2-hbox  class="infolog_CompletedClmn" height="45px">
+			<et2-image  label="$cont[info_status]" id="edit_status[$cont[info_id]]" href="javascript:egw.open($cont[info_id],'infolog');" src="image" defaultSrc="status"></et2-image>
+			<et2-vbox>
+				<et2-link  id="entry" app=""></et2-link>
+				<et2-image  label="$cont[info_percent]" id="edit_percent[$cont[info_id]]" href="javascript:egw.open($cont[info_id],'infolog');" src="info_percent"></et2-image>
 				<progress label="$cont[info_percent]" id="info_percent2" href="javascript:egw.open($cont[info_id],'infolog');"/>
-			</vbox>
-		</hbox>
+			</et2-vbox>
+		</et2-hbox>
 		<grid class="tooltip" readonly="true" width="100%">
 			<columns>
 				<column width="70"/>
@@ -18,10 +18,10 @@
 			</columns>
 			<rows>
 				<row>
-					<link label="%s $cont[info_from]" id="info_link" options="b" span="all"/>
+					<et2-link  label="%s $cont[info_from]" id="info_link" app="" span="all"></et2-link>
 				</row>
 				<row>
-					<description id="info_des" no_lang="1" span="all"/>
+					<et2-description  id="info_des" span="all" noLang="1"></et2-description>
 				</row>
 			</rows>
 		</grid>
