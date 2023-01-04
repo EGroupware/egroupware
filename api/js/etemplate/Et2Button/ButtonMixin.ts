@@ -145,7 +145,7 @@ export const ButtonMixin = <T extends Constructor>(superclass : T) => class exte
 	{
 		return {
 			...super.properties,
-			image: {type: String},
+			image: {type: String, noAccessor: true},
 
 			/**
 			 * If button is set to readonly, do we want to hide it completely (old behaviour) or show it as disabled

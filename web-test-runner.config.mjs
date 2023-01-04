@@ -46,7 +46,7 @@ export default {
 		[
 			{
 				name: 'api',
-				files: 'api/js/etemplate/**/test/*.test.js'
+				files: 'api/js/etemplate/**/test/*.test.ts'
 			}
 		].concat(
 			appJS.map(app =>

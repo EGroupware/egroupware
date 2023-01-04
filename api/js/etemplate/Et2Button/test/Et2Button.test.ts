@@ -55,12 +55,14 @@ describe("Button widget", () =>
 
 	it("gets an icon", async() =>
 	{
+		// Wait for the render to finish
+		await element.updateComplete;
+
 		element.image = "check";
 
 		// Wait for the render to finish
 		await element.updateComplete;
-
-		let image = element.querySelectorAll("img");
+		let image = element.querySelectorAll("et2-image");
 		assert.equal(image.length, 1);
 		assert.equal(image[0].src, element.egw().image("check"));
 	})
