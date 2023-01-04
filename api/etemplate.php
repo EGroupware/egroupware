@@ -154,7 +154,8 @@ function send_template()
 				'link'                    => 'app',
 				'link-entry'              => 'only_app,application_list',
 				'nextmatch-filterheader'  => 'empty_label',
-				'nextmatch-customfilter'  => 'widget_type,widget_options',
+				// disable legacy-options conversation for nm-customfilter as it breaks infolog and addressbook index templates
+				//'nextmatch-customfilter'  => 'widget_type,widget_options',
 				'nextmatch-accountfilter' => 'empty_label,account_type,ignore',
 			);
 			// prefer more specific type-subtype over just type
