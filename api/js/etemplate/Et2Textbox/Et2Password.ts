@@ -55,7 +55,10 @@ export class Et2Password extends Et2InvokerMixin(Et2Textbox)
 
 	transformAttributes(attrs)
 	{
-		attrs.suggest = parseInt(attrs.suggest);
+		if(typeof attrs.suggest !== "undefined")
+		{
+			attrs.suggest = parseInt(attrs.suggest);
+		}
 		attrs.type = 'password';
 
 		if (attrs.viewable)
