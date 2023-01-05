@@ -89,7 +89,7 @@ class Date extends Transformer
 	 */
 	public function set_row_value($cname, array $expand, array &$data)
 	{
-		if($this->type == 'et2-date-duration')
+		if(in_array($this->type, ['et2-date-duration', 'date-duration']))
 		{
 			return;
 		}

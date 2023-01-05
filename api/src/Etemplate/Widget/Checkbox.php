@@ -68,7 +68,7 @@ class Checkbox extends Etemplate\Widget
 			// defaults for set and unset values
 			$selected_value = true;
 			$unselected_value = false;
-			if(array_key_exists($value_attr, $this->attrs) || array_key_exists('unselectedValue', $this->attrs))
+			if(array_key_exists($value_attr, $this->attrs) || array_key_exists('unselectedValue', $this->attrs) || array_key_exists('unselected_value', $this->attrs))
 			{
 				if(array_key_exists($value_attr, $this->attrs))
 				{
@@ -130,4 +130,5 @@ class Checkbox extends Etemplate\Widget
 	}
 }
 
-Etemplate\Widget::registerWidget(__NAMESPACE__ . '\\Checkbox', array('et2-checkbox', 'et2-radio', 'et2-switch'));
+Etemplate\Widget::registerWidget(__NAMESPACE__ . '\\Checkbox', array('et2-checkbox', 'et2-radio', 'et2-switch',
+																	 'checkbox', 'radio'));
