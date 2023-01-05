@@ -310,9 +310,9 @@ export const ButtonMixin = <T extends Constructor>(superclass : T) => class exte
 
 		if(!this.image)
 		{
-			for(const image in Et2Button.default_background_images)
+			for(const image in ButtonMixin.default_background_images)
 			{
-				if(check_id.match(Et2Button.default_background_images[image]))
+				if(check_id.match(ButtonMixin.default_background_images[image]))
 				{
 					return image;
 				}
@@ -333,9 +333,9 @@ export const ButtonMixin = <T extends Constructor>(superclass : T) => class exte
 		{
 			return "";
 		}
-		for(var name in Et2Button.default_classes)
+		for(var name in ButtonMixin.default_classes)
 		{
-			if(check_id.match(Et2Button.default_classes[name]))
+			if(check_id.match(ButtonMixin.default_classes[name]))
 			{
 				return name;
 			}
