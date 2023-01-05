@@ -434,6 +434,7 @@ class Customfields extends Transformer
 
 		$all_readonly = $this->is_readonly($cname, $form_name);
 		$value_in = self::get_array($content, $form_name);
+		$use_private = self::expand_name($this->attrs['use-private'] ?? null, 0, 0, '', '', self::$cont);
 		// if we have no id / use self::GLOBAL_ID, we have to set $value_in in global namespace for regular widgets validation to find
 		if (!$this->id) $content = array_merge($content, (array)$value_in);
 		//error_log(__METHOD__."($cname, ...) form_name=$form_name, use-private={$this->attrs['use-private']}, value_in=".array2string($value_in));
@@ -449,10 +450,10 @@ class Customfields extends Transformer
 		{
 			foreach(array_keys($value_in) as $field)
 			{
-				$field_settings = $customfields[$fname=substr($field,strlen($this->attrs['prefix']))];
+				$field_settings = $customfields[$fname = substr($field, strlen($this->attrs['prefix']))];
 
-				if ((string)$this->attrs['use-private'] !== '' &&	// are only (non-)private fields requested
-					(boolean)$field_settings['private'] != ($this->attrs['use-private'] != '0'))
+				if((string)$use_private !== '' &&    // are only (non-)private fields requested
+					(boolean)$field_settings['private'] != ($use_private != '0'))
 				{
 					continue;
 				}
@@ -460,7 +461,7 @@ class Customfields extends Transformer
 				// check if single field is set readonly, used in apps as it was only way to make cfs readonly in old eT
 				// single fields set to false in $readonly overwrite a global __ALL__
 				$cf_readonly = $this->is_readonly($form_name != self::GLOBAL_ID ? $form_name : $cname, $field);
-				if ($cf_readonly || $all_readonly && $cf_readonly !== false)
+				if($cf_readonly || $all_readonly && $cf_readonly !== false)
 				{
 					continue;
 				}
