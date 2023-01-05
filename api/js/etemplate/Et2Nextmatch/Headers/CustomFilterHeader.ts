@@ -58,6 +58,11 @@ export class Et2CustomFilterHeader extends FilterMixin(Et2InputWidget(LitElement
 					this.widgetType = "et2-" + this.widgetType;
 				}
 		}
+		if(!window.customElements.get(this.widgetType))
+		{
+			console.error("Unknown widget type '%s'", this.widgetType);
+			this.widgetType = 'et2-select';
+		}
 		// @ts-ignore TS doesn't know about this.getParent()
 		this.filter_node = <LitElement>loadWebComponent(this.widgetType, {...attrs, ...this.widgetOptions}, this);
 		if(this.filter_node instanceof Et2Select)
