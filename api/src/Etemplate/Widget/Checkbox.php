@@ -64,20 +64,20 @@ class Checkbox extends Etemplate\Widget
 				self::set_validation_error($form_name,lang('Field must not be empty !!!'),'');
 			}
 			$type = $this->type ? $this->type : $this->attrs['type'];
-			$value_attr = $type == 'radio' ? 'set_value' : 'selected_value';
+			$value_attr = $type == 'radio' ? 'set_value' : 'selectedValue';
 			// defaults for set and unset values
 			$selected_value = true;
 			$unselected_value = false;
-			if (array_key_exists($value_attr, $this->attrs) || array_key_exists('unselected_value',$this->attrs))
+			if(array_key_exists($value_attr, $this->attrs) || array_key_exists('unselectedValue', $this->attrs))
 			{
 				if(array_key_exists($value_attr, $this->attrs))
 				{
 					// Expand any content stuff
-					$selected_value = self::expand_name($this->attrs[$value_attr], $expand['c'], $expand['row'], $expand['c_'], $expand['row_'],$expand['cont']);
+					$selected_value = self::expand_name($this->attrs[$value_attr], $expand['c'], $expand['row'], $expand['c_'], $expand['row_'], $expand['cont']);
 				}
-				if(array_key_exists('unselectedValue',$this->attrs) || array_key_exists('unselected_value',$this->attrs))
+				if(array_key_exists('unselectedValue', $this->attrs) || array_key_exists('unselected_value', $this->attrs))
 				{
-					$unselected_value = self::expand_name($this->attrs['unselectedValue'] ?? $this->attrs['unselected_value'], $expand['c'], $expand['row'], $expand['c_'], $expand['row_'],$expand['cont']);
+					$unselected_value = self::expand_name($this->attrs['unselectedValue'] ?? $this->attrs['unselected_value'], $expand['c'], $expand['row'], $expand['c_'], $expand['row_'], $expand['cont']);
 				}
 			}
 			if ($type == 'radio')
@@ -129,4 +129,5 @@ class Checkbox extends Etemplate\Widget
 		}
 	}
 }
-Etemplate\Widget::registerWidget(__NAMESPACE__.'\\Checkbox', array('checkbox', 'radio'));
+
+Etemplate\Widget::registerWidget(__NAMESPACE__ . '\\Checkbox', array('et2-checkbox', 'et2-radio', 'et2-switch'));

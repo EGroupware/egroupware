@@ -87,32 +87,32 @@ export class Et2Switch extends Et2InputWidget(SlotMixin(SlSwitch))
 		this.toggleOff = '';
 	}
 
-	firstUpdated()
+	updated(changedProperties)
 	{
-		if (!this.toggleOn && !this.toggleOff)
+		if(changedProperties.has("toggleOn") || changedProperties.has("toggleOff") || changedProperties.has("label"))
 		{
-			this._labelNode.children().remove();
+			if(!this.toggleOn && !this.toggleOff && this._labelNode)
+			{
+				this._labelNode.childNodes.forEach(c => c.remove());
+			}
+			else
+			{
+				if(this._labelNode)
+				{
+					this._labelNode.querySelector('.on').textContent = this.toggleOn;
+					this._labelNode.querySelector('.off').textContent = this.toggleOff;
+				}
+				this.shadowRoot.querySelector('.switch__label').classList.add('toggle__label');
+			}
 		}
-		else
-		{
-			this._labelNode.querySelector('.on').textContent = this.toggleOn;
-			this._labelNode.querySelector('.off').textContent = this.toggleOff;
-			this.shadowRoot.querySelector('.switch__label').classList.add('toggle__label');
-		}
-	}
-
-	connectedCallback()
-	{
-		super.connectedCallback();
-
 	}
 
 	set value(new_value : string | boolean)
 	{
 		this.requestUpdate("checked");
-		if (this.toggleOn || this.toggleOf)
+		if(this.toggleOn || this.toggleOf)
 		{
-			if (new_value)
+			if(new_value)
 			{
 				this._labelNode?.classList.add('on');
 				this.checked = true;
@@ -140,8 +140,8 @@ export class Et2Switch extends Et2InputWidget(SlotMixin(SlSwitch))
 	{
 		return html`
             <span class="label" aria-label="${this.label}">
-				<span class="on"></span>
-				<span class="off"></span>
+				<span class="on">${this.toggleOn}</span>
+				<span class="off">${this.toggleOff}</span>
 			</span>
 		`;
 	}
