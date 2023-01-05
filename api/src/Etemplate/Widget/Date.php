@@ -89,7 +89,7 @@ class Date extends Transformer
 	 */
 	public function set_row_value($cname, array $expand, array &$data)
 	{
-		if($this->type == 'date-duration')
+		if($this->type == 'et2-date-duration')
 		{
 			return;
 		}
@@ -161,7 +161,8 @@ class Date extends Transformer
 	{
 		$form_name = self::form_name($cname, $this->id, $expand);
 
-		if(!$this->is_readonly($cname, $form_name) && $this->type != 'date-since')    // date-since is always readonly
+		if(!$this->is_readonly($cname, $form_name) && !in_array($this->type, ['et2-date-since',
+																			  'date-since']))    // date-since is always readonly
 		{
 			$value = self::get_array($content, $form_name);
 			$valid =& self::get_array($validated, $form_name, true);
