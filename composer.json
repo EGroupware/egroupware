@@ -117,7 +117,7 @@
 		"egroupware/translation": "^2.3.0",
 		"egroupware/url": "^2.3.0",
 		"egroupware/util": "^2.7.0",
-		"egroupware/webdav": "^0.3.7",
+		"egroupware/webdav": "^0.4.0",
 		"egroupware/z-push-dev": "2.5.0.1",
 		"giggsey/libphonenumber-for-php": "^8.12",
 		"guzzlehttp/guzzle": "^7.4.1",
