@@ -505,14 +505,23 @@ class preferences_settings
 					switch($type)
 					{
 						case 'user':
-							$setting['values'] = array(['value'=>'','label' => lang('Use default')])+$setting['values'];
+							$setting['values'] = array_merge(
+								array(['value' => '', 'label' => lang('Use default')]),
+								$setting['values']
+							);
 							break;
 						case 'default':
 						case 'group':
-							$setting['values'] = array(['value'=>'','label' => lang('No default')])+$setting['values'];
+							$setting['values'] = array_merge(
+								array(['value' => '', 'label' => lang('No default')]),
+								$setting['values']
+							);
 							break;
 						case 'forced';
-							$setting['values'] = array(['value'=> '**NULL**','label' => lang('Users choice')])+$setting['values'];
+							$setting['values'] = array_merge(
+								array(['value' => '**NULL**', 'label' => lang('Users choice')]),
+								$setting['values']
+							);
 							break;
 					}
 				}
