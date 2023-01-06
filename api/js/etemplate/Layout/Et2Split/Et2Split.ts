@@ -89,7 +89,7 @@ export class Et2Split extends Et2Widget(SlotMixin(SlSplitPanel))
 
 	public static PREF_PREFIX = "splitter-size-";
 	protected static PANEL_NAMES = ["start", "end"];
-	private _resize_timeout : NodeJS.Timeout = null;
+	private _resize_timeout : ReturnType<typeof setTimeout> = null;
 	private _undock_position : number = undefined;
 
 	// To hold troublesome elements we need to hide while resizing
@@ -309,7 +309,7 @@ export class Et2Split extends Et2Widget(SlotMixin(SlSplitPanel))
 	 *
 	 * @param e
 	 */
-	_handleResize(e)
+	_handleResize(e, timeout = 100)
 	{
 		// Update where we would undock to
 		if(this.position != 0 && this.position != 100)
@@ -330,12 +330,12 @@ export class Et2Split extends Et2Widget(SlotMixin(SlSplitPanel))
 			// Tell widgets that manually resize about it
 			this.iterateOver(function(_widget)
 			{
-				if (typeof _widget.resize === 'function')
+				if(typeof _widget.resize === 'function')
 				{
 					_widget.resize();
 				}
 			}, self, et2_IResizeable);
-		}.bind(this), 100);
+		}.bind(this), timeout);
 	}
 
 	/**
@@ -360,9 +360,18 @@ export class Et2Split extends Et2Widget(SlotMixin(SlSplitPanel))
 			for(let h of hide)
 			{
 				h.style.visibility = "hidden";
-				egw.loading_prompt(this.id,true,egw.lang('Recalculating frame size...'), h.parentElement)
+				this.egw().loading_prompt(this.id, true, this.egw().lang('Recalculating frame size...'), h.parentElement)
 			}
 		}
+
+		// If they move quickly, the mouse can leave the divider and we won't get the mouseup
+		// On firefox, this causes incorrect sizes
+		const listener = (e) =>
+		{
+			this._handleMouseUp(e);
+			this.getRootNode().removeEventListener("mouseup", listener);
+		}
+		this.getRootNode().addEventListener("mouseup", listener);
 	}
 
 	/**
@@ -373,8 +382,10 @@ export class Et2Split extends Et2Widget(SlotMixin(SlSplitPanel))
 		for(let h of this._hidden)
 		{
 			h.style.visibility = "initial";
-			egw.loading_prompt(this.id, false);
+			this.egw().loading_prompt(this.id, false);
 		}
+		// Do resize a little later for fast draggers using firefox
+		this._handleResize(e, 500);
 	}
 
 	/**
