@@ -918,9 +918,10 @@ export class et2_tree extends et2_inputWidget
 	 */
 	setImages(_leaf? : string, _closed? : string, _open? : string, _id? : string)
 	{
-		let images = [_leaf || 'dhtmlxtree/leaf', _closed || 'dhtmlxtree/folderClosed', _open || 'dhtmlxtree/folderOpen'];
+		// NOTE: The image order for open/closed as documented in dhtmltree is backwards
+		let images = [_leaf || 'dhtmlxtree/leaf', _open || 'dhtmlxtree/folderOpen', _closed || 'dhtmlxtree/folderClosed'];
 		let image_extensions = /\.(gif|png|jpe?g|svg)/i;
-		for(let i=0; i < 3; ++i)
+		for(let i = 0; i < 3; ++i)
 		{
 			let image = images[i];
 			if (!image.match(image_extensions))
