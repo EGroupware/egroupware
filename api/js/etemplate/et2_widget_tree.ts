@@ -218,16 +218,20 @@ export class et2_tree extends et2_inputWidget
 	createTree(widget)
 	{
 		widget.input = new dhtmlXTreeObject({
-			parent:		widget.div[0],
-			width:		'100%',
-			height:		'100%',
-			image_path:	widget.options.image_path,
-			checkbox:	widget.options.multiple
+			parent: widget.div[0],
+			width: '100%',
+			height: '100%',
+			image_path: widget.options.image_path,
+			checkbox: widget.options.multiple
 		});
+		// Allow controlling icon size by CSS
+		widget.input.def_img_x = "";
+		widget.input.def_img_y = "";
+
 		// to allow "," in value, eg. folder-names, IF value is specified as array
 		widget.input.dlmtr = ':}-*(';
 
-		if (widget.options.std_images)
+		if(widget.options.std_images)
 		{
 			widget.setImages.apply(widget, widget.options.std_images.split(','));
 		}

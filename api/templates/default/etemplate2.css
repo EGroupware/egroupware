@@ -4112,6 +4112,9 @@ button.shortcut-buttons-flatpickr-button {
     font-weight: 700;
 }
 
+.standartTreeImage img {
+	width: 16px;
+}
 
 .selectedTreeRow {
     background-color: rgba(102, 153, 204, 0.7);
