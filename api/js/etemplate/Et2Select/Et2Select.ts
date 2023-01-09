@@ -403,6 +403,19 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 	}
 
 	/**
+	 * Override Et2InputWidget blur handler to avoid doing our blur stuff when internal controls blur
+	 *
+	 * @param {FocusEvent} ev
+	 */
+	handleBlur(ev : FocusEvent)
+	{
+		if(ev.target == this)
+		{
+			super.handleBlur(ev);
+		}
+	}
+
+	/**
 	 * Tag used for rendering options
 	 * Used for finding & filtering options, they're created by the mixed-in class
 	 * @returns {string}

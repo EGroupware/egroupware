@@ -56,6 +56,8 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 		protected defaultValidators : Validator[];
 		// Promise used during validation
 		protected validateComplete : Promise<undefined>;
+		// Hold on to any server messages while the user edits
+		private _messagesHeldWhileFocused : Validator[];
 
 		protected isSlComponent = false;
 
@@ -65,24 +67,27 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 			return [
 				...super.styles,
 				css`
-                  /* Allow actually disabled inputs */
-                  :host([disabled]) {
-                    display: initial;
-                  }
+				  /* Allow actually disabled inputs */
 
-                  /* Needed so required can show through */
-                  ::slotted(input), input {
-                    background-color: transparent;
-                  }
+				  :host([disabled]) {
+					display: initial;
+				  }
 
-                  /* Used to allow auto-sizing on slotted inputs */
-                  .input-group__container > .input-group__input ::slotted(.form-control) {
-                    width: 100%;
-                  }
+				  /* Needed so required can show through */
 
-                  .form-field__feedback {
-                    position: relative;
-                  }
+				  ::slotted(input), input {
+					background-color: transparent;
+				  }
+
+				  /* Used to allow auto-sizing on slotted inputs */
+
+				  .input-group__container > .input-group__input ::slotted(.form-control) {
+					width: 100%;
+				  }
+
+				  .form-field__feedback {
+					position: relative;
+				  }
 				`
 			];
 		}
@@ -162,10 +167,14 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 
 			this.validators = [];
 			this.defaultValidators = [];
+			this._messagesHeldWhileFocused = [];
 
 			this.__readonly = false;
 
 			this.isSlComponent = typeof (<any>this).handleChange === 'function';
+
+			this.handleFocus = this.handleFocus.bind(this);
+			this.handleBlur = this.handleBlur.bind(this);
 		}
 
 		connectedCallback()
@@ -177,12 +186,17 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 			{
 				this.addEventListener(this.isSlComponent ? 'sl-change' : 'change', this._oldChange);
 			});
+			this.addEventListener("focus", this.handleFocus);
+			this.addEventListener("blur", this.handleBlur);
 		}
 
 		disconnectedCallback()
 		{
 			super.disconnectedCallback();
 			this.removeEventListener(this.isSlComponent ? 'sl-change' : 'change', this._oldChange);
+
+			this.removeEventListener("focus", this.handleFocus);
+			this.removeEventListener("blur", this.handleBlur);
 		}
 
 		/**
@@ -234,6 +248,41 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 			}
 
 			return true;
+		}
+
+		/**
+		 * When input receives focus, clear any validation errors.
+		 *
+		 * If the value is the same on blur, we'll put them back
+		 * The ones from the server (ManualMessage) can interfere with submitting.
+		 * @param {FocusEvent} _ev
+		 */
+		handleFocus(_ev : FocusEvent)
+		{
+			if(this._messagesHeldWhileFocused.length > 0)
+			{
+				return;
+			}
+			this._oldValue = this.value;
+
+			// Collect any ManualMessages
+			this._messagesHeldWhileFocused = (this.validators || []).filter((validator) => (validator instanceof ManualMessage));
+
+			this.set_validation_error(false);
+		}
+
+		/**
+		 * If the value is unchanged, put any held validation messages back
+		 * @param {FocusEvent} _ev
+		 */
+		handleBlur(_ev : FocusEvent)
+		{
+			if(this._messagesHeldWhileFocused.length > 0 && this.value == this._oldValue)
+			{
+				this.validators = this.validators.concat(this._messagesHeldWhileFocused);
+				this._messagesHeldWhileFocused = [];
+				this.validate();
+			}
 		}
 
 		set_value(new_value)
