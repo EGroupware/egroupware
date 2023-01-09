@@ -669,36 +669,40 @@ class Select extends Etemplate\Widget
 				$no_lang = True;
 				break;
 
-			case 'select-cat':	// !$type == globals cats too, $type2: extraStyleMultiselect, $type3: application, if not current-app, $type4: parent-id, $type5=owner (-1=global),$type6=show missing
-				if ((!$type3 || $type3 === $GLOBALS['egw']->categories->app_name) &&
-					(!$type5 || $type5 ==  $GLOBALS['egw']->categories->account_id))
+			case 'select-cat':
+				// !$type == globals cats too, $type2: extraStyleMultiselect, $type3: application, if not current-app, $type4: parent-id, $type5=owner (-1=global),$type6=show missing
+				$application = self::expand_name($widget->attrs['application'], 0, 0, '', '', self::$cont) ?? $type3;
+				$globalCategories = self::expand_name($widget->attrs['globalCategories'], 0, 0, '', '', self::$cont) ?? $type;
+
+				if((!$application || $application === $GLOBALS['egw']->categories->app_name) &&
+					(!$type5 || $type5 == $GLOBALS['egw']->categories->account_id))
 				{
 					$categories = $GLOBALS['egw']->categories;
 				}
-				else	// we need to instanciate a new cat object for the correct application
+				else    // we need to instanciate a new cat object for the correct application
 				{
-					$categories = new Api\Categories($type5,$type3);
+					$categories = new Api\Categories($type5, $application);
 				}
 				// Allow text for global
-				$type = ($type && strlen($type) > 1 ? $type : !$type);
+				$globalCategories = ($globalCategories && strlen($globalCategories) > 1 ? $globalCategories : !$globalCategories);
 				// we cast $type4 (parent) to int, to get default of 0 if omitted
-				foreach((array)$categories->return_sorted_array(0,False,'','','',$type,(int)$type4,true) as $cat)
+				foreach((array)$categories->return_sorted_array(0, False, '', '', '', $globalCategories, (int)$type4, true) as $cat)
 				{
-					$s = str_repeat('&nbsp;',$cat['level']) . stripslashes($cat['name']);
+					$s = str_repeat('&nbsp;', $cat['level']) . stripslashes($cat['name']);
 
-					if (Api\Categories::is_global($cat))
+					if(Api\Categories::is_global($cat))
 					{
 						$s .= Api\Categories::$global_marker;
 					}
 					$options[$cat['id']] = array(
-						'label' => $s,
-						'title' => $cat['description'],
+						'label'    => $s,
+						'title'    => $cat['description'],
 						// These are extra info for easy dealing with categories
 						// client side, without extra loading
-						'main'  => (int)$cat['main'],
-						'children'	=> $cat['children'] ?? null,
+						'main'     => (int)$cat['main'],
+						'children' => $cat['children'] ?? null,
 						//add different class per level to allow different styling for each category level:
-						'class' => "cat_level" . $cat['level'] . " cat_{$cat['id']}"
+						'class'    => "cat_level" . $cat['level'] . " cat_{$cat['id']}"
 					);
 					// Send data too
 					if(is_array($cat['data']))
