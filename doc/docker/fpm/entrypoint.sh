@@ -2,7 +2,7 @@
 set -e
 
 VERSION=${VERSION:-dev-master}
-PHP_VERSION=${PHP_VERSION:-7.4}
+PHP_VERSION=${PHP_VERSION:-8.1}
 
 # if EGW_APC_SHM_SIZE is set in environment, propagate value to apcu.ini, otherwise set default of 128M
 grep "apc.shm_size" /etc/php/$PHP_VERSION/fpm/conf.d/20-apcu.ini >/dev/null && \
@@ -59,6 +59,12 @@ LOG=/var/lib/egroupware/egroupware-docker-install.log
 touch $LOG
 chmod 600 $LOG
 
+# run rollup / npm run build, to include extra apps JS in rollup build
+ls /usr/share/egroupware-extra/*/js >/dev/null 2>&1 && {
+  cd /usr/share/egroupware
+#exit  npm run build
+}
+
 max_retries=10
 export try=0
 # EGW_SKIP_INSTALL=true skips initial installation (no header.inc.php yet)
@@ -85,7 +91,7 @@ do
 done 2>&1 | tee -a $LOG
 
 # as we can NOT exit from until (runs a subshell), we need to check and do it here
-[ "$(tail -1 $LOG)" = "Installing of EGroupware failed!" ] && exit 1
+#[ "$(tail -1 $LOG)" = "Installing of EGroupware failed!" ] && exit 1
 
 # fix cron entries in case docker uses "overlay" storage driver (eg. Univention 4.4)
 # cron does NOT executing scripts with "NUMBER OF HARD LINKS > 1"
@@ -96,6 +102,7 @@ for f in /etc/crontab /etc/cron.*/*; do
   }
 done
 # to run async jobs
-service cron start
+#service cron start
+/etc/init.d/cron start
 
 exec "$@"
