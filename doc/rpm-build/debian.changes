@@ -1,4 +1,4 @@
-egroupware-docker (21.1.20221202) hardy; urgency=low
+egroupware-docker (23.1.20221202) hardy; urgency=low
 
   * first 23.1 release-candidate
   * new web-components based eTemplate2 widgets derived from Shoelace (https://shoelace.style)
