@@ -18,13 +18,13 @@ date_default_timezone_set('Europe/Berlin');	// to get ride of 5.3 warnings
 $verbose = 0;
 $config = array(
 	'packagename' => 'egroupware-docker',
-	'version' => '22.1',
+	'version' => '23.1',
 	'packaging' => date('Ymd'), // '20160520'
 	'branch'  => 'master',        // checked out branch
 	'tag' => '$version.$packaging',	// name of tag
-	'checkoutdir' => '~/epl-22.1-checkout',	//realpath(__DIR__.'/../..'),
-	'egw_buildroot' => '/tmp/build_root/epl_22.1_buildroot',
-	'sourcedir' => '~/download/archives/egroupware-22.1',
+	'checkoutdir' => '~/epl-23.1-checkout',	//realpath(__DIR__.'/../..'),
+	'egw_buildroot' => '/tmp/build_root/epl_23.1_buildroot',
+	'sourcedir' => '~/download/archives/egroupware-23.1',
 	/* svn-config no longer used
 	'svntag' => 'tags/$version.$packaging',
 	'svnbase' => 'svn+ssh://svn@dev.egroupware.org/egroupware',
