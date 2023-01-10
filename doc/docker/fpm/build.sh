@@ -3,7 +3,7 @@
 
 cd $(dirname $0)
 
-DEFAULT_PHP_VERSION=7.4
+DEFAULT_PHP_VERSION=8.1
 PHP_VERSION=$DEFAULT_PHP_VERSION
 
 if [[ $1 =~ ^[78]\.[0-9]$ ]]
@@ -31,8 +31,8 @@ BRANCH=$(echo $VERSION|sed 's/\.[0-9]\{8\}$//')
 # add PHP_VERSION to TAG, if not the default PHP version
 [ $PHP_VERSION != $DEFAULT_PHP_VERSION ] && TAG=$TAG-$PHP_VERSION
 
-docker pull ubuntu:20.04
-docker build --no-cache --build-arg "VERSION=$VERSION" --build-arg "PHP_VERSION=$PHP_VERSION" -t egroupware/egroupware:$TAG . && {
+docker pull ubuntu:22.04
+docker build --build-arg "VERSION=$VERSION" --build-arg "PHP_VERSION=$PHP_VERSION" -t egroupware/egroupware:$TAG . && {
 	docker push egroupware/egroupware:$TAG
 	# further tags are only for the default PHP version
 	[ $PHP_VERSION != $DEFAULT_PHP_VERSION ] && exit

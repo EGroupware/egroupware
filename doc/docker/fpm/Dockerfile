@@ -52,10 +52,9 @@ RUN apt-get update \
 	&& mkdir -p /run/php \
 	# send logs to stderr to be viewed by docker logs
 	&& ln -s /dev/stderr /var/log/php$PHP_VERSION-fpm.log \
-	&& update-alternatives --install /usr/sbin/php-fpm php-fpm /usr/sbin/php-fpm$PHP_VERSION 5 \
+	&& update-alternatives --install /usr/sbin/php-fpm php-fpm /usr/sbin/php-fpm$PHP_VERSION 5
 	# install tools to build EGroupware
-	&& apt-get install -y rsync npm zip curl sudo cron patch \
-	&& npm install -g grunt-cli \
+RUN apt-get install -y rsync zip curl sudo cron patch \
 	&& bash -c \
 'EXPECTED_SIGNATURE=$(curl https://composer.github.io/installer.sig); \
 curl https://getcomposer.org/installer > composer-setup.php; \
@@ -74,16 +73,23 @@ exit $RESULT' \
     # not all dependencies already allow PHP 8.x, thought what we use from them works
     && bash -c "[[ $PHP_VERSION  =~ ^8\..* ]]" && COMPOSER_EXTRA=--ignore-platform-reqs || true \
 	&& composer.phar create-project $COMPOSER_EXTRA --prefer-dist --no-scripts --no-dev egroupware/egroupware:$VERSION \
-	&& cd egroupware \
-	&& npm install \
-	&& grunt \
 	# clean up and remove caches
 	&& composer.phar clear-cache \
-	&& rm -f /usr/local/bin/composer.phar \
+	&& rm -f /usr/local/bin/composer.phar
+RUN cd /usr/share/egroupware \
+    # install nodejs 16.x PPA (Shoelace requires >= 14.17, Ubuntu 22.04 only has 12.x)
+    && curl -fsSL https://deb.nodesource.com/setup_16.x | bash - && apt update \
+    && apt-get install -y nodejs \
+	&& npm install -g grunt-cli \
+	&& npm install \
+	&& grunt \
+    && mkdir chunks && npm run build \
+	# clean up and remove caches
 	&& npm uninstall -g grunt-cli \
 	&& npm cache clear --force \
-	&& apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false npm zip \
-	&& apt-get clean \
+	&& apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false zip \
+	&& apt-get clean
+RUN cd /usr/share/egroupware \
 	# create data directory
 	&& mkdir -p /var/lib/egroupware/default/files/sqlfs \
 	&& mkdir -p /var/lib/egroupware/default/backup \
@@ -96,9 +102,10 @@ exit $RESULT' \
     && ln -s /var/lib/egroupware-push/config.inc.php /usr/share/egroupware/swoolepush \
 	# install cron-job and disable fallback async service and ability to switch them off in admin
 	&& sed 's/apache/www-data/' doc/rpm-build/egroupware.cron > /etc/cron.d/egroupware \
-	&& patch -p1 < doc/rpm-build/asyncservice.patch \
+	&& patch -p1 < doc/rpm-build/asyncservice.patch
 	# disable certificate checks for LDAP as most LDAP and AD servers have no "valid" cert
-	&& echo "TLS_REQCERT never" >> /etc/ldap/ldap.conf \
+RUN ls /etc/ldap/ldap.conf || apt-get install -y libldap-common \
+    && echo "TLS_REQCERT never" >> /etc/ldap/ldap.conf \
 	# mv sources to a different directory so entrypoint can rsync them to volumn for both nginx and fpm
 	&& mv /usr/share/egroupware /usr/share/egroupware-sources
 
