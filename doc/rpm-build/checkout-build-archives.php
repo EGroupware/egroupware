@@ -925,7 +925,7 @@ function update_changelog($content)
 	global $config;
 
 	list($header) = explode("\n", $content);
-	$new_header = preg_replace('/\('.preg_quote($config['version']).'\.[0-9.]+[0-9](.*)\)/','('.$config['version'].'.'.$config['packaging'].'\\1)', $header);
+	$new_header = preg_replace('/\([0-9]+\.[0-9]+\.[0-9.]+[0-9](.*)\)/','('.$config['version'].'.'.$config['packaging'].'\\1)', $header);
 	if (substr($config['changelog'],0,2) != '  ') $config['changelog'] = '  '.implode("\n  ",explode("\n",$config['changelog']));
 	$content = $new_header."\n\n".$config['changelog'].
 		"\n\n -- ".$config['changelog_packager'].'  '.date('r')."\n\n".$content;
