@@ -295,7 +295,7 @@ function get_last_git_tag()
 	run_cmd($cmd, $output);
 	array_shift($output);
 
-	return trim(array_pop($output));
+	return trim(array_pop($output) ?? '');
 }
 
 /**
@@ -435,7 +435,7 @@ function do_release()
 		'prerelease' => true,	// create as prerelease first, as we need it for testing
 	);
 	$response = github_api("/repos/EGroupware/egroupware/releases", $data);
-	$config['upload_url'] = preg_replace('/{\?[^}]+}$/', '', $response['upload_url']);	// remove {?name,label} template
+	$config['upload_url'] = preg_replace('/{\?[^}]+}$/', '', $response['upload_url'] ?? '');	// remove {?name,label} template
 
 	do_upload();
 }
