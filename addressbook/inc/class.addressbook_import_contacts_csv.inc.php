@@ -446,7 +446,20 @@ class addressbook_import_contacts_csv extends importexport_basic_import_csv  {
 	 */
 	public function get_options_etpl(importexport_definition &$definition=null)
 	{
-		// lets do it!
+		$contacts = new EGroupware\Api\Contacts();
+		$options = array(
+			'name'        => 'addressbook.import_csv',
+			'content'     => array(
+				'owner_from_csv' => $definition->plugin_options['owner_from_csv'],
+				'owner'          => $definition->plugin_options['contact_owner'] == 'personal' ?
+					$GLOBALS['egw_info']['user']['account_id'] :
+					$definition->plugin_options['contact_owner']
+			),
+			'sel_options' => array(
+				'owner' => $contacts->get_addressbooks(Api\Acl::ADD)
+			)
+		);
+		return $options;
 	}
 
 	/**

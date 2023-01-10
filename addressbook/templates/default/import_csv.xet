@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
+<overlay>
+    <template id="addressbook.import_csv" template="" lang="" group="0" version="1.9.001">
+        <et2-select id="owner" label="Addressbook" class="et2-label-fixed"></et2-select>
+        <et2-checkbox id="owner_from_csv" label="Use field from CSV if possible"></et2-checkbox>
+        <template id="importexport.import_dialog.csv"/>
+    </template>
+</overlay>
