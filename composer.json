@@ -1,6 +1,6 @@
 {
 	"name": "egroupware/egroupware",
-	"version": "dev-master",
+	"version": "23.1.20230110",
 	"description": "EGroupware extends a classic groupware with an integrated CRM-system, a secure file-server and Collabora Online Office.",
 	"keywords": [
 		"groupware",
