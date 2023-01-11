@@ -11,6 +11,7 @@
  */
 
 use EGroupware\Api;
+use EGroupware\Api\Etemplate\Widget\Select;
 use EGroupware\Api\Framework;
 use EGroupware\Api\Egw;
 use EGroupware\Api\Image;
@@ -500,6 +501,7 @@ class preferences_settings
 			// move values/options to sel_options array
 			if (isset($setting['values']) && is_array($setting['values']) && !$setting['no_sel_options'])
 			{
+				Select::fix_encoded_options($setting['values'], true);
 				if ($old_type != 'multiselect' && $old_type != 'notify')
 				{
 					switch($type)
