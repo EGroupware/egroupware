@@ -567,16 +567,17 @@ class preferences_settings
 		// defining used tabs on run-time
 		if ($tabs)
 		{
-			$tpl->setElementAttribute('tabs', 'tabs', $tabs);
+			$tpl->setElementAttribute('tabs', 'extraTabs', $tabs);
 		}
 		else
 		{
 			// Modifications are kept in the request, so reset to just one
-			$tpl->setElementAttribute('tabs', 'tabs', array(array(
-				'id' => 'tab1',
-				'template' => 'preferences.settings.tab1',
-				'label' => 'general settings'
-			)));
+			$tpl->setElementAttribute('tabs', 'extraTabs', array(
+				array(
+					'id'       => 'tab1',
+					'template' => 'preferences.settings.tab1',
+					'label'    => 'general settings'
+				)));
 		}
 
 		$content['appname'] = $appname;

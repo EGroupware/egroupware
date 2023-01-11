@@ -2791,7 +2791,7 @@ class addressbook_ui extends addressbook_bo
 		$preserve['old_owner'] = $content['owner'];
 		unset($preserve['jpegphoto'], $content['jpegphoto']);	// unused and messes up json encoding (not utf-8)
 		$this->tmpl->setElementAttribute('tabs', 'add_tabs', true);
-		$tabs =& $this->tmpl->getElementAttribute('tabs', 'tabs');
+		$tabs =& $this->tmpl->getElementAttribute('tabs', 'extraTabs');
 		if (($first_call = !isset($tabs)))
 		{
 			$tabs = array();

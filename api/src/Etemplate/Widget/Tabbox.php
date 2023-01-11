@@ -47,11 +47,6 @@ class Tabbox extends Etemplate\Widget
 		$form_name = self::form_name($params[0], $this->id, $params[1]);
 
 		// Make sure additional tabs are processed for any method
-		if($tabs = self::getElementAttribute($form_name, 'tabs'))
-		{
-			// tabs is not usable in webComponent, need to use extraTabs
-			self::setElementAttribute($form_name, 'extraTabs', $tabs);
-		}
 		if(!($tabs =& self::getElementAttribute($form_name, 'extraTabs')))
 		{
 			$tabs = $this->attrs['extraTabs'];
