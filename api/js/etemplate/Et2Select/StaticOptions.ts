@@ -311,7 +311,7 @@ export class StaticOptions
 		return options;
 	}
 
-	app(widget : Et2SelectWidgets | Et2Select, attrs) : SelectOption[]
+	app(widget : Et2SelectWidgets | Et2Select, attrs) : SelectOption[] | Promise<SelectOption[]>
 	{
 		var options = ',' + (attrs.other || []).join(',');
 		return this.cached_server_side(widget, 'select-app', options);
@@ -319,7 +319,7 @@ export class StaticOptions
 
 	cat(widget : Et2SelectWidgets) : Promise<SelectOption[]>
 	{
-		var options = [widget.global_categories, /*?*/, widget.application, widget.parent_cat];
+		var options = [widget.globalCategories, /*?*/, widget.application, widget.parentCat];
 
 		if(typeof options[3] == 'undefined')
 		{
@@ -337,25 +337,25 @@ export class StaticOptions
 		return this.cached_server_side(widget, 'select-country', options, return_promise);
 	}
 
-	state(widget : Et2SelectWidgets, attrs) : SelectOption[]
+	state(widget : Et2SelectWidgets, attrs) : SelectOption[] | Promise<SelectOption[]>
 	{
 		var options = attrs.country_code ? attrs.country_code : 'de';
 		return this.cached_server_side(widget, 'select-state', options);
 	}
 
-	dow(widget : Et2SelectWidgets, attrs) : SelectOption[]
+	dow(widget : Et2SelectWidgets, attrs) : SelectOption[] | Promise<SelectOption[]>
 	{
 		var options = ',' + (attrs.other || []).join(',');
 		return this.cached_server_side(widget, 'select-dow', options);
 	}
 
-	lang(widget : Et2SelectWidgets, attrs) : SelectOption[]
+	lang(widget : Et2SelectWidgets, attrs) : SelectOption[] | Promise<SelectOption[]>
 	{
 		var options = ',' + (attrs.other || []).join(',');
 		return this.cached_server_side(widget, 'select-lang', options);
 	}
 
-	timezone(widget : Et2SelectWidgets, attrs) : SelectOption[]
+	timezone(widget : Et2SelectWidgets, attrs) : SelectOption[] | Promise<SelectOption[]>
 	{
 		var options = ',' + (attrs.other || []).join(',');
 		return this.cached_server_side(widget, 'select-timezone', options);

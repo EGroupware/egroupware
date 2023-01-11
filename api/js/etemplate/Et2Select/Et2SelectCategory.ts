@@ -43,7 +43,7 @@ export class Et2SelectCategory extends Et2StaticSelectMixin(Et2Select)
 			/**
 			 * Include global categories
 			 */
-			global_categories: {type: Boolean},
+			globalCategories: {type: Boolean},
 			/**
 			 * Show categories from this application.  If not set, will be the current application
 			 */

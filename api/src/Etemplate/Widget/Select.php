@@ -158,11 +158,15 @@ class Select extends Etemplate\Widget
 		{
 			$value = $value_in = self::get_array($content, $form_name);
 
-			$allowed2 = self::selOptions($form_name, true);	// true = return array of option-values
-			$type_options = self::typeOptions($this,
+			$allowed2 = self::selOptions($form_name, true);    // true = return array of option-values
+			$false = false;
+			$type_options = self::typeOptions(
+				$this,
 				// typeOptions thinks # of rows is the first thing in options
-				($this->attrs['rows'] && strpos($this->attrs['options'], $this->attrs['rows']) !== 0 ? $this->attrs['rows'].','.$this->attrs['options'] : $this->attrs['options']));
-			$allowed = array_merge($allowed2,array_keys($type_options));
+				($this->attrs['rows'] && strpos($this->attrs['options'], $this->attrs['rows']) !== 0 ? $this->attrs['rows'] . ',' . $this->attrs['options'] : $this->attrs['options']),
+				$false, $false, $value_in
+			);
+			$allowed = array_merge($allowed2, array_keys($type_options));
 
 			// add option children's values too, "" is not read, therefore we cast to string
 			foreach($this->children as $child)
@@ -618,16 +622,16 @@ class Select extends Etemplate\Widget
 		$options = array();
 		switch ($widget_type)
 		{
-			case 'select-percent':	// options: #row,decrement(default=10)
-				$decr = $type > 0 ? $type : 10;
-				for ($i=0; $i <= 100; $i += $decr)
+			case 'select-percent':
+				$decr = self::expand_name($widget->attrs['interval'], 0, 0, '', '', self::$cont) ?? 10;
+				for($i = 0; $i <= 100; $i += $decr)
 				{
-					$options[(int)$i] = (int)$i.'%';
+					$options[(int)$i] = (int)$i . '%';
 				}
 				$options[100] = '100%';
-				if (!$rows || !empty($value))
+				if(!empty($value))
 				{
-					$value = intval(($value+($decr/2)) / $decr) * $decr;
+					$value = intval(($value + ($decr / 2)) / $decr) * $decr;
 				}
 				$no_lang = True;
 				break;
@@ -673,6 +677,7 @@ class Select extends Etemplate\Widget
 				// !$type == globals cats too, $type2: extraStyleMultiselect, $type3: application, if not current-app, $type4: parent-id, $type5=owner (-1=global),$type6=show missing
 				$application = self::expand_name($widget->attrs['application'], 0, 0, '', '', self::$cont) ?? $type3;
 				$globalCategories = self::expand_name($widget->attrs['globalCategories'], 0, 0, '', '', self::$cont) ?? $type;
+				$parentCat = self::expand_name($widget->attrs['parentCat'], 0, 0, '', '', self::$cont) ?? $type4;
 
 				if((!$application || $application === $GLOBALS['egw']->categories->app_name) &&
 					(!$type5 || $type5 == $GLOBALS['egw']->categories->account_id))
@@ -686,7 +691,7 @@ class Select extends Etemplate\Widget
 				// Allow text for global
 				$globalCategories = ($globalCategories && strlen($globalCategories) > 1 ? $globalCategories : !$globalCategories);
 				// we cast $type4 (parent) to int, to get default of 0 if omitted
-				foreach((array)$categories->return_sorted_array(0, False, '', '', '', $globalCategories, (int)$type4, true) as $cat)
+				foreach((array)$categories->return_sorted_array(0, False, '', '', '', $globalCategories, (int)$parentCat, true) as $cat)
 				{
 					$s = str_repeat('&nbsp;', $cat['level']) . stripslashes($cat['name']);
 
@@ -718,28 +723,45 @@ class Select extends Etemplate\Widget
 				if (isset(self::$request) && $value && ($unavailable = array_diff(is_array($value) ? $value : explode(',',$value),array_keys((array)$options))))
 				{
 					// unavailable cats need to be merged in again
-					$unavailable_name = $form_name.self::UNAVAILABLE_CAT_POSTFIX;
+					$unavailable_name = $form_name . self::UNAVAILABLE_CAT_POSTFIX;
 					self::$request->preserv[$unavailable_name] = $unavailable;
 				}
 				$no_lang = True;
 				break;
 
-			case 'select-year':	// options: #rows,#before(default=3),#after(default=2)
+			case 'select-year':    // options: #rows,#before(default=3),#after(default=2)
+				$before = self::expand_name($widget->attrs['min'], 0, 0, '', '', self::$cont) ?? 3;
+				$after = self::expand_name($widget->attrs['max'], 0, 0, '', '', self::$cont) ?? 2;
+
 				$options[''] = '';
-				if ($type <= 0)  $type  = 3;
-				if ($type2 <= 0) $type2 = 2;
-				if ($type > 100 && $type2 > 100 && $type > $type) { $y = $type; $type=$type2; $type2=$y; }
-				if ($value && $value-$type < $y || $type > 100)
+				if($before <= 0)
 				{
-					$y = $type > 100 ? $type : $value-$type;
+					$before = 3;
+				}
+				if($after <= 0)
+				{
+					$after = 2;
+				}
+				if($before > 100 && $after > 100 && $before > $after)
+				{
+					$y = $before;
+					$before = $after;
+					$after = $y;
+				}
+				if($value && $value - $before < $y || $before > 100)
+				{
+					$y = $before > 100 ? $before : $value - $before;
 				}
 				else
 				{
-					$y = (int)date('Y')-$type;
+					$y = (int)date('Y') - $before;
 				}
-				$to = date('Y')+$type2;
-				if ($value && $value+$type2 > $to || $type2 > 100) $to = $type2 > 100 ? $type2 : $value+$type2;
-				for ($n = 0; $y <= $to && $n < 200; ++$n)
+				$to = date('Y') + $after;
+				if($value && $value + $after > $to || $after > 100)
+				{
+					$to = $after > 100 ? $after : $value + $after;
+				}
+				for($n = 0; $y <= $to && $n < 200; ++$n)
 				{
 					$options[$y] = $y++;
 				}
