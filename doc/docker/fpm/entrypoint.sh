@@ -62,7 +62,7 @@ chmod 600 $LOG
 # run rollup / npm run build, to include extra apps JS in rollup build
 ls /usr/share/egroupware-extra/*/js >/dev/null 2>&1 && {
   cd /usr/share/egroupware
-#exit  npm run build
+  npm run build
 }
 
 max_retries=10
@@ -102,7 +102,6 @@ for f in /etc/crontab /etc/cron.*/*; do
   }
 done
 # to run async jobs
-#service cron start
-/etc/init.d/cron start
+service cron start
 
 exec "$@"

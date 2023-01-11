@@ -3,7 +3,7 @@
 ## EGroupware FPM container using Ubuntu 18.04 and PHP 7.3 from ondrej/php PPA
 ##
 ################################################################################
-FROM ubuntu:22.04
+FROM ubuntu:20.04
 MAINTAINER rb@egroupware.org
 
 ARG VERSION=dev-master
@@ -78,7 +78,7 @@ exit $RESULT' \
 	&& rm -f /usr/local/bin/composer.phar
 RUN cd /usr/share/egroupware \
     # install nodejs 16.x PPA (Shoelace requires >= 14.17, Ubuntu 22.04 only has 12.x)
-    && curl -fsSL https://deb.nodesource.com/setup_16.x | bash - && apt update \
+    && curl -fsSL https://deb.nodesource.com/setup_16.x | bash - \
     && apt-get install -y nodejs \
 	&& npm install -g grunt-cli \
 	&& npm install \
@@ -104,7 +104,7 @@ RUN cd /usr/share/egroupware \
 	&& sed 's/apache/www-data/' doc/rpm-build/egroupware.cron > /etc/cron.d/egroupware \
 	&& patch -p1 < doc/rpm-build/asyncservice.patch
 	# disable certificate checks for LDAP as most LDAP and AD servers have no "valid" cert
-RUN ls /etc/ldap/ldap.conf || apt-get install -y libldap-common \
+RUN ls /etc/ldap/ldap.conf >/dev/null 2>&1 || apt-get install -y libldap-common \
     && echo "TLS_REQCERT never" >> /etc/ldap/ldap.conf \
 	# mv sources to a different directory so entrypoint can rsync them to volumn for both nginx and fpm
 	&& mv /usr/share/egroupware /usr/share/egroupware-sources
