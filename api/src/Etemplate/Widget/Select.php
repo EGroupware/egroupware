@@ -820,25 +820,28 @@ class Select extends Etemplate\Widget
 				$type = 1;
 				$type2 = 31;
 				$type3 = 1;
-				// fall-through
+			// fall-through
 
-			case 'select-number':	// options: rows,min,max,decrement,suffix
-				$type = $type === '' ? 1 : (int)$type;		// min
-				$type2 = $type2 === '' ? 10 : (int)$type2;	// max
-				$format = '%d';
-				if (!empty($type3) && $type3[0] == '0')			// leading zero
+			case 'select-number':    // options: rows,min,max,decrement,suffix
+				$min = (int)(self::expand_name($widget->attrs['min'], 0, 0, '', '', self::$cont) ?? $type ?? 1);
+				$max = (int)(self::expand_name($widget->attrs['max'], 0, 0, '', '', self::$cont) ?? $type2 ?? 10);
+				$format = self::expand_name($widget->attrs['format'], 0, 0, '', '', self::$cont) ?? '%d';
+				$decrement = (int)(self::expand_name($widget->attrs['interval'], 0, 0, '', '', self::$cont) ?? 1);
+				if(!empty($type3) && $type3[0] == '0')            // leading zero
 				{
-					$format = '%0'.strlen($type3).'d';
+					$format = '%0' . strlen($type3) . 'd';
 				}
-				$type3 = !$type3 ? 1 : (int)$type3;			// decrement
-				if (($type <= $type2) != ($type3 > 0))
+				if(($min <= $max) != ($decrement > 0))
 				{
-					$type3 = -$type3;	// void infinite loop
+					$decrement = -$decrement;    // void infinite loop
 				}
-				if (!empty($type4)) $format .= lang($type4);
-				for ($i=0,$n=$type; $n <= $type2 && $i <= 100; $n += $type3,++$i)
+				if(!empty($type4))
 				{
-					$options[$n] = sprintf($format,$n);
+					$format .= lang($type4);
+				}
+				for($i = 0, $n = $min; $n <= $max && $i <= 100; $n += $decrement, ++$i)
+				{
+					$options[$n] = sprintf($format, $n);
 				}
 				$no_lang = True;
 				break;
