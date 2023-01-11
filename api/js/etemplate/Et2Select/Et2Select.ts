@@ -182,6 +182,12 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 	{
 		super.connectedCallback();
 
+		// Re-bind focus/blur to after show/hide to avoid buggy behaviour like menu won't hide
+		this.removeEventListener("blur", this.et2HandleBlur);
+		this.removeEventListener("focus", this.et2HandleFocus);
+		this.addEventListener("sl-after-show", this.et2HandleFocus);
+		this.addEventListener("sl-after-hide", this.et2HandleBlur);
+
 		this.addEventListener("mousewheel", this._handleMouseWheel);
 
 		this.updateComplete.then(() =>
@@ -199,6 +205,8 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		this.removeEventListener("sl-clear", this._triggerChange)
 		this.removeEventListener("sl-change", this._triggerChange);
 		this.removeEventListener("sl-after-show", this._doResize);
+		this.removeEventListener("sl-after-show", this.et2HandleFocus);
+		this.removeEventListener("sl-after-hide", this.et2HandleBlur);
 	}
 
 	firstUpdated(changedProperties?)
@@ -402,18 +410,6 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
             <sl-menu-item value="">${this.emptyLabel}</sl-menu-item>`;
 	}
 
-	/**
-	 * Override Et2InputWidget blur handler to avoid doing our blur stuff when internal controls blur
-	 *
-	 * @param {FocusEvent} ev
-	 */
-	handleBlur(ev : FocusEvent)
-	{
-		if(ev.target == this)
-		{
-			super.handleBlur(ev);
-		}
-	}
 
 	/**
 	 * Tag used for rendering options

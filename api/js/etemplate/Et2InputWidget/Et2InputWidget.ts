@@ -170,11 +170,12 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 			this._messagesHeldWhileFocused = [];
 
 			this.__readonly = false;
+			this._oldValue = this.getValue();
 
 			this.isSlComponent = typeof (<any>this).handleChange === 'function';
 
-			this.handleFocus = this.handleFocus.bind(this);
-			this.handleBlur = this.handleBlur.bind(this);
+			this.et2HandleFocus = this.et2HandleFocus.bind(this);
+			this.et2HandleBlur = this.et2HandleBlur.bind(this);
 		}
 
 		connectedCallback()
@@ -186,8 +187,8 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 			{
 				this.addEventListener(this.isSlComponent ? 'sl-change' : 'change', this._oldChange);
 			});
-			this.addEventListener("focus", this.handleFocus);
-			this.addEventListener("blur", this.handleBlur);
+			this.addEventListener("focus", this.et2HandleFocus);
+			this.addEventListener("blur", this.et2HandleBlur);
 		}
 
 		disconnectedCallback()
@@ -195,8 +196,8 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 			super.disconnectedCallback();
 			this.removeEventListener(this.isSlComponent ? 'sl-change' : 'change', this._oldChange);
 
-			this.removeEventListener("focus", this.handleFocus);
-			this.removeEventListener("blur", this.handleBlur);
+			this.removeEventListener("focus", this.et2HandleFocus);
+			this.removeEventListener("blur", this.et2HandleBlur);
 		}
 
 		/**
@@ -255,39 +256,53 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 		 *
 		 * If the value is the same on blur, we'll put them back
 		 * The ones from the server (ManualMessage) can interfere with submitting.
+		 *
+		 * Named et2HandleFocus to avoid overwriting handleFocus() in Shoelace components
+		 *
 		 * @param {FocusEvent} _ev
 		 */
-		handleFocus(_ev : FocusEvent)
+		et2HandleFocus(_ev : FocusEvent)
 		{
 			if(this._messagesHeldWhileFocused.length > 0)
 			{
 				return;
 			}
-			this._oldValue = this.value;
 
 			// Collect any ManualMessages
 			this._messagesHeldWhileFocused = (this.validators || []).filter((validator) => (validator instanceof ManualMessage));
 
-			this.set_validation_error(false);
+			this.updateComplete.then(() =>
+			{
+				this.set_validation_error(false);
+			});
 		}
 
 		/**
 		 * If the value is unchanged, put any held validation messages back
+		 *
+		 * Named et2HandleBlur to avoid overwriting handleBlur() in Shoelace components
+		 *
 		 * @param {FocusEvent} _ev
 		 */
-		handleBlur(_ev : FocusEvent)
+		et2HandleBlur(_ev : FocusEvent)
 		{
-			if(this._messagesHeldWhileFocused.length > 0 && this.value == this._oldValue)
+			if(this._messagesHeldWhileFocused.length > 0 && this.getValue() == this._oldValue)
 			{
 				this.validators = this.validators.concat(this._messagesHeldWhileFocused);
 				this._messagesHeldWhileFocused = [];
-				this.validate();
+				this.updateComplete.then(() =>
+				{
+					this.validate();
+				});
 			}
 		}
 
 		set_value(new_value)
 		{
 			this.value = new_value;
+
+			// Save this so we can compare against any user changes
+			this._oldValue = this.getValue();
 
 			if(typeof this._callParser == "function")
 			{
