@@ -120,12 +120,12 @@ class calendar_hooks
 	 */
 	static function admin()
 	{
-		$file = Array(
-			'Site Configuration' => Egw::link('/index.php','menuaction=admin.admin_config.index&appname=calendar&ajax=true'),
-			'Custom fields' => Egw::link('/index.php','menuaction=admin.admin_customfields.index&appname=calendar&ajax=true'),
-			'Global Categories' => Egw::link('/index.php','menuaction=admin.admin_categories.index&appname=calendar&ajax=true'),
-			'Category ACL' => Egw::link('/index.php','menuaction=calendar.calendar_uiforms.cat_acl'),
-			'Update timezones' => Egw::link('/index.php','menuaction=calendar.calendar_timezones.update'),
+		$file = array(
+			'Site Configuration' => Egw::link('/index.php', 'menuaction=admin.admin_config.index&appname=calendar&ajax=true'),
+			'Custom fields'      => Egw::link('/index.php', 'menuaction=admin.admin_customfields.index&appname=calendar&ajax=true'),
+			'Global Categories'  => Egw::link('/index.php', 'menuaction=admin.admin_categories.index&appname=calendar&ajax=true'),
+			'Category ACL'       => Egw::link('/index.php', 'menuaction=calendar.calendar_uiforms.cat_acl&appname=calendar&ajax=true'),
+			'Update timezones'   => Egw::link('/index.php', 'menuaction=calendar.calendar_timezones.update'),
 		);
 		display_section('calendar','calendar',$file);
 	}
