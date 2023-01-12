@@ -23,8 +23,8 @@
 					<menulist>
 						<menupopup type="select-cat" id="${row}[cat_id]" options="Select one"/>
 					</menulist>
-					<listbox type="select-account" rows="5" options="both" id="${row}[add]"/>
-					<listbox type="select-account" rows="5" options="both" id="${row}[status]"/>
+					<select-account rows="5"  multiple="true" account_type="both" id="${row}[add]"/>
+					<select-account rows="5" multiple="true" account_type="both" id="${row}[status]"/>
 				</row>
 			</rows>
 		</grid>
