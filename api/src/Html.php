@@ -1,5 +1,4 @@
-<?php /** @noinspection SuspiciousLoopInspection */
-
+<?php
 /**
  * EGroupware API: generates html with methods representing html-tags or higher widgets
  *
@@ -216,7 +215,7 @@ class Html
 		if($enhanced) {
 			Framework::includeJS('/api/js/jquery/chosen/chosen.jquery.js');
 			Framework::includeCSS('/api/js/jquery/chosen/chosen.css',null,false);
-			$out .= "<script>top.egw_ready.then(() => { const egw=top.egw, jQuery=top.jQuery; jQuery(function() {if(jQuery().chosen) jQuery('select[name=\"$name\"]').chosen({width: '100%'});});})</script>\n";
+			$out .= "<script>var lab = egw_LAB || \$LAB; lab.wait(function() {jQuery(function() {if(jQuery().chosen) jQuery('select[name=\"$name\"]').chosen({width: '100%'});});})</script>\n";
 		}
 		return $out;
 	}
@@ -470,8 +469,8 @@ class Html
 '
 <script type="text/javascript">
 
-top.egw_ready.then(() => { 
-const egw=top.egw, jQuery=top.jQuery, tinymce=top.tinymce; 
+egw_LAB.wait(function() {
+
 var imageUpload = egw.ajaxUrl("EGroupware\\Api\\Etemplate\\Widget\\Vfs::ajax_htmlarea_upload")+"&type=htmlarea";
 imageUpload = imageUpload.substr(egw.webserverUrl.length+1);
 var font_size_formats = {
@@ -1230,7 +1229,7 @@ tinymce.init({
 		$html = self::div("\n",'id="'.$tree.'"',$_divClass);
 		$html .= "<script type='text/javascript'>\n";
 		$html .= "var $tree;";
-		$html .= "top.egw_ready.then(() => { const egw=top.egw, dhtmlXTreeObject=top.dhtmlXTreeObject; ";
+		$html .= "egw_LAB.wait(function() {";
 		$html .= "$tree = new"." dhtmlXTreeObject('$tree','100%','100%',0);\n";
 		$html .= "$tree.parentObject.style.overflow='auto';\n";	// dhtmlXTree constructor has hidden hardcoded
 		if (Translation::charset() == 'utf-8') $html .= "if ($tree.setEscapingMode) $tree.setEscapingMode('utf8');\n";
