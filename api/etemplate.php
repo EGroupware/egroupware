@@ -267,7 +267,7 @@ function send_template()
 			if ($tag === 'et2-link-entry' && !empty($attrs['readonly']) || $tag === 'et2-link')
 			{
 				$tag = 'et2-link';
-				$attrs['app'] = $attrs['only_app'];
+				$attrs['app'] = $attrs['app'] ?? $attrs['only_app'];
 				unset($attrs['only_app'], $attrs['readonly']);
 			}
 			return "<$tag" . stringAttrs($attrs) . "></$tag>";
