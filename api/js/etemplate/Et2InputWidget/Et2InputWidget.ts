@@ -273,7 +273,8 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 
 			this.updateComplete.then(() =>
 			{
-				this.set_validation_error(false);
+				// Remove all messages.  Manual will be explicitly replaced, other validators will be re-run on blur.
+				this.querySelectorAll("lion-validation-feedback").forEach(e => e.remove());
 			});
 		}
 
@@ -290,11 +291,11 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 			{
 				this.validators = this.validators.concat(this._messagesHeldWhileFocused);
 				this._messagesHeldWhileFocused = [];
-				this.updateComplete.then(() =>
-				{
-					this.validate();
-				});
 			}
+			this.updateComplete.then(() =>
+			{
+				this.validate();
+			});
 		}
 
 		set_value(new_value)
