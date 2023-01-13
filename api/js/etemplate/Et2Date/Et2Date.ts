@@ -677,6 +677,8 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(LitFlatpickr))
 
 		if(value === "" && this._instance.selectedDates.length > 0)
 		{
+			// Update the et2-textbox so it will fail a required validation check
+			this._inputNode.value = '';
 			return this._instance.clear();
 		}
 		let parsedDate = null
@@ -698,6 +700,9 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(LitFlatpickr))
 			{
 				this._instance.setDate(value, true, this._instance.config.altFormat)
 			}
+			// Update the et2-textbox so it has current value for any (required) validation
+			this._inputNode.value = formattedDate;
+			(<Et2Textbox>this._inputNode).validate();
 		}
 	}
 
