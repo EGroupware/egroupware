@@ -33,7 +33,7 @@ class admin_mail
 	/**
 	 * Enable logging of IMAP communication to given path, eg. /tmp/autoconfig.log
 	 */
-	const DEBUG_LOG = null;
+	const DEBUG_LOG = '/var/lib/egroupware/imap.log';
 	/**
 	 * Connection timeout in seconds used in autoconfig, can and should be really short!
 	 */
@@ -233,14 +233,7 @@ class admin_mail
 		{
 			$content['output'] .= lang('Using IMAP:%1, SMTP:%2, OAUTH:%3:', $oauth['imap'], $oauth['smtp'], $oauth['provider'])."\n";
 			$hosts[$oauth['imap']] = true;
-			$content['acc_smpt_host'] = $oauth['smtp'];
-			$content['acc_sieve_enabled'] = false;
-			$content['acc_oauth_provider_url'] = $oauth['provider'];
-			$content['acc_oauth_client_id'] = $oauth['client'];
-			$content['acc_oauth_client_secret'] = $oauth['secret'];
-			$content['acc_oauth_scopes'] = $oauth['scopes'];
-			$content[OpenIDConnectClient::ADD_CLIENT_TO_WELL_KNOWN] = $oauth[OpenIDConnectClient::ADD_CLIENT_TO_WELL_KNOWN] ?? null;
-			$content[OpenIDConnectClient::ADD_AUTH_PARAM] = $oauth[OpenIDConnectClient::ADD_AUTH_PARAM] ?? null;
+			$content += self::oauth2content($oauth);
 		}
 		elseif (!empty($content['acc_imap_host']))
 		{
@@ -292,6 +285,11 @@ class admin_mail
 		// iterate over all hosts and try to connect
 		foreach(!isset($connected) ? $hosts : [] as $host => $data)
 		{
+			// check if we support OAuth for the (manual) configured mail-server
+			if (empty($content['acc_oauth_provider_url']) && ($oauth = OpenIDConnectClient::providerByDomain($content['acc_imap_username'], $host)))
+			{
+				$content += self::oauth2content($oauth);
+			}
 			$content['acc_imap_host'] = $host;
 			// by default we check SSL, STARTTLS and at last an insecure connection
 			if (!is_array($data)) $data = array('TLS' => 993, 'SSL' => 993, 'STARTTLS' => 143, 'insecure' => 143);
@@ -373,6 +371,26 @@ class admin_mail
 		$sel_options['acc_imap_ssl'] = self::$ssl_types;
 		$tpl->exec(static::APP_CLASS.'autoconfig', $content, $sel_options, $readonlys,
 			array_diff_key($content, ['output'=>true]), 2);
+	}
+
+	/**
+	 * Convert OAuth provider data to our content-names
+	 *
+	 * @param array $oauth
+	 * @return array
+	 */
+	protected static function oauth2content(array $oauth)
+	{
+		return [
+			'acc_smpt_host' => $oauth['smtp'],
+			'acc_sieve_enabled' => false,
+			'acc_oauth_provider_url' => $oauth['provider'],
+			'acc_oauth_client_id' => $oauth['client'],
+			'acc_oauth_client_secret' => $oauth['secret'],
+			'acc_oauth_scopes' => $oauth['scopes'],
+			OpenIDConnectClient::ADD_CLIENT_TO_WELL_KNOWN => $oauth[OpenIDConnectClient::ADD_CLIENT_TO_WELL_KNOWN] ?? null,
+			OpenIDConnectClient::ADD_AUTH_PARAM => $oauth[OpenIDConnectClient::ADD_AUTH_PARAM] ?? null,
+		];
 	}
 
 	/**
@@ -1492,7 +1510,7 @@ class admin_mail
 		// Google requires access_type=offline&prompt=consent to return a refresh-token
 		if (!empty($content[OpenIDConnectClient::ADD_AUTH_PARAM]))
 		{
-			$oidc->addAuthParam($content[OpenIDConnectClient::ADD_AUTH_PARAM]);
+			$oidc->addAuthParam(str_replace('$username', $content['acc_oauth_username'] ?? $content['acc_imap_username'], $content[OpenIDConnectClient::ADD_AUTH_PARAM]));
 		}
 
 		// we need to use response_code=query / GET request to keep our session token!

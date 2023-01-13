@@ -51,15 +51,22 @@ class OpenIDConnectClient extends \Jumbojett\OpenIDConnectClient
 	 * @var array[] email-regexp => [imap-host, smtp-host, oauth-provider, client-id, client-secret, scopes] pairs
 	 */
 	public static $oauth_domain_regexps = [
-		'/(^|@)([^.@]+\.onmicrosoft\.com)$/i' => ['outlook.office365.com', 'smtp.office365.com', 'login.microsoftonline.com/$2',
+		// MS domains from https://www.internetearnings.com/how-to-register-live-or-hotmail-e-mail-address/
+		'/(^|@)([^.@]+\.onmicrosoft\.com|'.
+				'outlook\.(sa|com|com\.(ar|au|cz|gr|in|tw|tr|vn)|co\.(in|th)|at|cl|fr|de|hu|ie|it|jp|kr|lv|my|ph|pt|sg|sk|es)|'.
+				'hotmail\.(com|com\.(ar|au|br|hk|tr|vn)|co\.(in|il|jp|kr|za|th|uk)|be|ca|cz|cl|dk|fi|fr|gr|de|hu|it|lv|lt|my|nl|no|ph|rs|sg|sk|es|se)|'.
+				'live\.(com|com\.(ar|br|my|mx|ph|pt|sg)|co\.(il|kr|za|uk)|at|be|ca|cl|cn|dk|fi|fr|de|hk|ie|it|jp|nl|no|ru|se)|'.
+				'windowslive\.com|livemail\.tw)$/i' => ['outlook.office365.com', 'smtp.office365.com', 'login.microsoftonline.com/common',
 			'e09fe57b-ffc5-496e-9ef8-3e6c7d628c09', 'Hd18Q~t-8_-ImvPFXlh8DSFjWKYyvpUTqURRJc7i',
-			'https://outlook.office.com/IMAP.AccessAsUser.All https://outlook.office.com/POP.AccessAsUser.All https://outlook.office.com/SMTP.Send offline_access email',
-			[self::ADD_CLIENT_TO_WELL_KNOWN => 'appid']],
+			'https://outlook.office.com/IMAP.AccessAsUser.All https://outlook.office.com/SMTP.Send offline_access email',
+			[/*self::ADD_CLIENT_TO_WELL_KNOWN => 'appid',*/ self::ADD_AUTH_PARAM => ['login_hint' => '$username', 'approval_prompt' => 'auto']],
+			null],
 		'/(^|@)g(oogle)?mail\.com$/i' => ['imap.gmail.com', 'smtp.gmail.com', 'accounts.google.com',
 			'581021931838-unqjf9tivr9brnmo34rbsoj179ojp79p.apps.googleusercontent.com', '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',
 			'https://mail.google.com/ https://www.googleapis.com/auth/userinfo.email',
 			// https://stackoverflow.com/questions/10827920/not-receiving-google-oauth-refresh-token
-			[self::ADD_AUTH_PARAM => ['access_type' => 'offline', 'prompt' => 'consent']]],
+			[self::ADD_AUTH_PARAM => ['access_type' => 'offline', 'prompt' => 'consent']],
+			'/^(imap|smtp|mail)\.g(oogle)?mail\.com$/i'],
 	];
 
 	public function __construct($provider_url = null, $client_id = null, $client_secret = null, $issuer = null)
@@ -71,19 +78,27 @@ class OpenIDConnectClient extends \Jumbojett\OpenIDConnectClient
 
 		// ToDo: set proxy, if configured in EGroupware
 		//$this->setHttpProxy("http://my.proxy.com:80/");
+
+		// login.microsoftonline.com/common returns as issuer an URL with {tenantid}
+		if ($this->getProviderURL() === 'https://login.microsoftonline.com/common')
+		{
+			$this->setIssuerValidator(new MicrosoftIssuerValidator($this));
+		}
 	}
 
 	/**
 	 * Find server config by email-domain incl. oauth data
 	 *
 	 * @param string $domain domain or email address
+	 * @param string $mailserver option name of imap or smtp server to identify the provider
 	 * @return array|null for keys provider, client, secret, scopes, imap, smtp
 	 */
-	public static function providerByDomain($domain)
+	public static function providerByDomain($domain, $mailserver=null)
 	{
-		foreach(self::$oauth_domain_regexps as $regexp => [$imap, $smtp, $provider, $client, $secret, $scopes, $extra])
+		foreach(self::$oauth_domain_regexps as $regexp => [$imap, $smtp, $provider, $client, $secret, $scopes, $extra, $server_regexp])
 		{
-			if (preg_match($regexp, $domain, $matches))
+			if (preg_match($regexp, $domain, $matches) ||
+				!empty($mailserver) && (in_array($mailserver, [$imap, $smtp]) || !empty($server_regexp) && preg_match($server_regexp, $mailserver)))
 			{
 				return [
 						'imap' => $imap,
@@ -124,7 +139,7 @@ class OpenIDConnectClient extends \Jumbojett\OpenIDConnectClient
 		// Google requires access_type=offline to return a refresh-token
 		if (!empty($provider[self::ADD_AUTH_PARAM]))
 		{
-			$oidc->addAuthParam($provider[self::ADD_AUTH_PARAM]);
+			$oidc->addAuthParam(str_replace('$username', $domain, $provider[self::ADD_AUTH_PARAM]));
 		}
 
 		$oidc->addScope($provider['scopes']);
@@ -207,5 +222,37 @@ class OpenIDConnectClient extends \Jumbojett\OpenIDConnectClient
 			throw new OpenIDConnectClientException("Missing OpenIDConnectClient state!");
 		}
 		call_user_func_array([$oidc, 'authenticateThen'], $authenticateThenParams);
+	}
+}
+
+/**
+ * login.microsoftonline.com/common returns as issuer an URL with {tenantid}
+ *
+ * We currently only check the there is some reasonable tenantid, not necessary the correct one, for which we would need to know the tenant.
+ */
+class MicrosoftIssuerValidator
+{
+	/**
+	 * @var OpenIDConnectClient
+	 */
+	private $oidc;
+
+	public function __construct(OpenIDConnectClient $oidc)
+	{
+		$this->oidc = $oidc;
+	}
+
+	/**
+	 * Validator for Microsoft issuer
+	 *
+	 * @param string $iss
+	 * @return bool
+	 * @throws OpenIDConnectClientException
+	 */
+	public function __invoke($iss)
+	{
+		$issuer_regexp = '#^'.str_replace('{tenantid}', '[a-f0-9-]+', $this->oidc->getWellKnownIssuer()).'$#';
+
+		return (bool)preg_match($issuer_regexp, $iss);
 	}
 }
