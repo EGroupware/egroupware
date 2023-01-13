@@ -1,3 +1,12 @@
+egroupware-docker (23.1.20230114) hardy; urgency=low
+
+  * 2nd release candiate for 23.1
+  * fixed some regression with select boxes
+  * EPL: automatic loading of 23.1 license
+  * KnowledgeBase: fix loading tabs and TinyMCE for 23.1, also requires a phpbrain update via git
+
+ -- Ralf Becker <rb@egroupware.org>  Fri, 13 Jan 2023 03:32:15 +0100
+
 egroupware-docker (23.1.20221202) hardy; urgency=low
 
   * first 23.1 release-candidate
