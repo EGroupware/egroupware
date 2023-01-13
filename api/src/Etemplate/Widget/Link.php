@@ -358,10 +358,6 @@ class Link extends Etemplate\Widget
 	 *
 	 * Following attributes get checked:
 	 * - needed: value must NOT be empty
-	 * - min, max: int and float widget only
-	 * - maxlength: maximum length of string (longer strings get truncated to allowed size)
-	 * - preg: perl regular expression incl. delimiters (set by default for int, float and colorpicker)
-	 * - int and float get casted to their type
 	 *
 	 * @param string $cname current namespace
 	 * @param array $expand values for keys 'c', 'row', 'c_', 'row_', 'cont'
@@ -377,23 +373,30 @@ class Link extends Etemplate\Widget
 			$value = $value_in =& self::get_array($content, $form_name);
 
 			// keep values added into request by other ajax-functions, eg. files draged into htmlarea (Vfs)
-			if ((!$value || is_array($value) && !$value['to_id']) && is_array($expand['cont'][$this->id]) && !empty($expand['cont'][$this->id]['to_id']))
+			if((!$value || is_array($value) && !$value['to_id']) && is_array($expand['cont'][$this->id]) && !empty($expand['cont'][$this->id]['to_id']))
 			{
-				if (!is_array($value)) $value = array(
-					'to_app' => $expand['cont'][$this->id]['to_app'],
-				);
+				if(!is_array($value))
+				{
+					$value = array(
+						'to_app' => $expand['cont'][$this->id]['to_app'],
+					);
+				}
 				$value['to_id'] = $expand['cont'][$this->id]['to_id'];
 			}
-
+			if((string)$value === '' && $this->required)
+			{
+				self::set_validation_error($form_name, lang('Field must not be empty !!!'), '');
+				return;
+			}
 			// Link widgets can share IDs, make sure to preserve values from others
-			$already = self::get_array($validated,$form_name);
+			$already = self::get_array($validated, $form_name);
 			if($already != null)
 			{
-				$value = array_merge((array)$value,  $already);
+				$value = array_merge((array)$value, $already);
 			}
 			// Automatically do link if user selected entry but didn't click 'Link' button
 			$link = self::get_array($content, self::form_name($cname, $this->id . '_link_entry'));
-			if($this->type =='link-to' && is_array($link) && $link['app'] && $link['id'] )
+			if($this->type == 'link-to' && is_array($link) && $link['app'] && $link['id'])
 			{
 				// Do we have enough information to link automatically?
 				if(is_array($value) && $value['to_id'])

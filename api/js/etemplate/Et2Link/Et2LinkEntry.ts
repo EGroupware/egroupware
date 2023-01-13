@@ -10,7 +10,7 @@
 import {css, html, LitElement, PropertyValues, SlotMixin} from "@lion/core";
 import {Et2LinkAppSelect} from "./Et2LinkAppSelect";
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
-import {FormControlMixin, ValidateMixin} from "@lion/form-core";
+import {FormControlMixin} from "@lion/form-core";
 import {Et2LinkSearch} from "./Et2LinkSearch";
 import {Et2Link, LinkInfo} from "./Et2Link";
 
@@ -19,23 +19,25 @@ import {Et2Link, LinkInfo} from "./Et2Link";
  *
  *
  */
-export class Et2LinkEntry extends Et2InputWidget(FormControlMixin(ValidateMixin(SlotMixin(LitElement))))
+export class Et2LinkEntry extends Et2InputWidget(FormControlMixin(SlotMixin(LitElement)))
 {
 	static get styles()
 	{
 		return [
 			...super.styles,
 			css`
-			:host {
+			  :host {
 				display: block;
-			}
-			:host(.hideApp) ::slotted([slot="app"]) {
+			  }
+
+			  :host(.hideApp) ::slotted([slot="app"]) {
 				display: none;
-			}
-			.input-group__input {
+			  }
+
+			  .input-group__input {
 				gap: 0.5rem;
-			}
-			
+			  }
+
 			`
 		];
 	}
@@ -155,6 +157,10 @@ export class Et2LinkEntry extends Et2InputWidget(FormControlMixin(ValidateMixin(
 	updated(changedProperties : PropertyValues)
 	{
 		super.updated(changedProperties);
+		if(changedProperties.has("required"))
+		{
+			this._searchNode.required = this.required;
+		}
 		if(changedProperties.has("readonly"))
 		{
 			this._appNode.readonly = this.readonly;
@@ -266,6 +272,8 @@ export class Et2LinkEntry extends Et2InputWidget(FormControlMixin(ValidateMixin(
 		this._searchNode.value = "";
 		this._searchNode.clearSearch();
 		this._searchNode.focus();
+
+		this.requestUpdate('value');
 	}
 
 	/**
@@ -277,6 +285,9 @@ export class Et2LinkEntry extends Et2InputWidget(FormControlMixin(ValidateMixin(
 	{
 		this.classList.add("hideApp");
 		this.dispatchEvent(new Event("change"));
+		this.requestUpdate('value');
+
+		this.validate();
 	}
 
 
@@ -291,6 +302,9 @@ export class Et2LinkEntry extends Et2InputWidget(FormControlMixin(ValidateMixin(
 		this._searchNode.focus();
 
 		this.dispatchEvent(new Event("change"));
+		this.requestUpdate('value');
+
+		this.validate();
 	}
 
 
@@ -388,7 +402,7 @@ export class Et2LinkEntry extends Et2InputWidget(FormControlMixin(ValidateMixin(
 	_inputGroupInputTemplate()
 	{
 		return html`
-            <div class="input-group__input">
+            <div class="input-group__input" part="control">
                 <slot name="app"></slot>
                 <slot name="select"></slot>
             </div>

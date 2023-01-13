@@ -133,6 +133,11 @@ export class Et2LinkSearch extends Et2Select
 			}
 		});
 	}
+
+	public validate()
+	{
+		// Do not validate
+	}
 }
 
 // @ts-ignore TypeScript is not recognizing that this widget is a LitElement

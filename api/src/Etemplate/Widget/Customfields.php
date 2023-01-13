@@ -295,8 +295,8 @@ class Customfields extends Transformer
 				$type = 'link-to';
 			}
 		}
-		$xml = '<'.$type.' type="'.$type.'" id="'.self::$prefix.$fname.'"/>';
-		$widget = self::factory($type, $xml, self::$prefix.$fname);
+		$xml = '<' . $type . ' type="' . $type . '" id="' . self::$prefix . $fname . '" required="' . $field['needed'] . '"/>';
+		$widget = self::factory($type, $xml, self::$prefix . $fname);
 		$widget->id = self::$prefix.$fname;
 		$widget->attrs['type'] = $type;
 		$widget->set_attrs($xml);
