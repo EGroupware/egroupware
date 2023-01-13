@@ -75,7 +75,8 @@ exit $RESULT' \
 	&& composer.phar create-project $COMPOSER_EXTRA --prefer-dist --no-scripts --no-dev egroupware/egroupware:$VERSION \
 	# clean up and remove caches
 	&& composer.phar clear-cache \
-	&& rm -f /usr/local/bin/composer.phar \
+	&& rm -f /usr/local/bin/composer.phar
+RUN cd /usr/share/egroupware \
     # install nodejs 16.x PPA (Shoelace requires >= 14.17, Ubuntu 22.04 only has 12.x)
     && curl -fsSL https://deb.nodesource.com/setup_16.x | bash - \
     && apt-get install -y nodejs \
@@ -87,7 +88,8 @@ exit $RESULT' \
 	&& npm uninstall -g grunt-cli \
 	&& npm cache clear --force \
 	&& apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false zip \
-	&& apt-get clean \
+	&& apt-get clean
+RUN cd /usr/share/egroupware \
 	# create data directory
 	&& mkdir -p /var/lib/egroupware/default/files/sqlfs \
 	&& mkdir -p /var/lib/egroupware/default/backup \
@@ -100,9 +102,9 @@ exit $RESULT' \
     && ln -s /var/lib/egroupware-push/config.inc.php /usr/share/egroupware/swoolepush \
 	# install cron-job and disable fallback async service and ability to switch them off in admin
 	&& sed 's/apache/www-data/' doc/rpm-build/egroupware.cron > /etc/cron.d/egroupware \
-	&& patch -p1 < doc/rpm-build/asyncservice.patch \
+	&& patch -p1 < doc/rpm-build/asyncservice.patch
 	# disable certificate checks for LDAP as most LDAP and AD servers have no "valid" cert
-    && ls /etc/ldap/ldap.conf >/dev/null 2>&1 || apt-get install -y libldap-common \
+RUN ls /etc/ldap/ldap.conf >/dev/null 2>&1 || apt-get install -y libldap-common \
     && echo "TLS_REQCERT never" >> /etc/ldap/ldap.conf \
 	# mv sources to a different directory so entrypoint can rsync them to volumn for both nginx and fpm
 	&& mv /usr/share/egroupware /usr/share/egroupware-sources
