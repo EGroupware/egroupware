@@ -469,7 +469,8 @@ class Html
 '
 <script type="text/javascript">
 
-egw_LAB.wait(function() {
+window.setTimeout(function() {
+    window.egw_ready.wait(function() {
 
 var imageUpload = egw.ajaxUrl("EGroupware\\Api\\Etemplate\\Widget\\Vfs::ajax_htmlarea_upload")+"&type=htmlarea";
 imageUpload = imageUpload.substr(egw.webserverUrl.length+1);
@@ -503,6 +504,7 @@ var language_code = {
 	"zh-tw": "zh_TW"
 };
 tinymce.init({
+			base_url: egw.webserverUrl + "/vendor/tinymce/tinymce",
 			selector: name,
 			menubar: parseInt('. $rte_menubar.')? true : false,
 			branding: false,
@@ -575,7 +577,8 @@ tinymce.init({
 			fontsize_formats:font_size_formats["'. $font_size_unit.'"],
 		});
 		'.($_executeJSAfterInit?$_executeJSAfterInit:'').'
-});
+	});
+}, 200);
 </script>
 ';
 	}

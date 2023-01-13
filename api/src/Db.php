@@ -828,6 +828,7 @@ class Db
 		{
 			fwrite($f,'['.(isset($GLOBALS['egw_setup']) ? $GLOBALS['egw_setup']->ConfigDomain : $GLOBALS['egw_info']['user']['domain']).'] ');
 			fwrite($f,date('Y-m-d H:i:s ').$Query_String.($inputarr ? "\n".print_r($inputarr,true) : '')."\n");
+			fwrite($f, function_backtrace()."\n");
 			if (!$rs)
 			{
 				fwrite($f,"*** Error $this->Errno: $this->Error\n".function_backtrace()."\n");
