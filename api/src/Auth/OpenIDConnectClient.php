@@ -56,7 +56,7 @@ class OpenIDConnectClient extends \Jumbojett\OpenIDConnectClient
 				'outlook\.(sa|com|com\.(ar|au|cz|gr|in|tw|tr|vn)|co\.(in|th)|at|cl|fr|de|hu|ie|it|jp|kr|lv|my|ph|pt|sg|sk|es)|'.
 				'hotmail\.(com|com\.(ar|au|br|hk|tr|vn)|co\.(in|il|jp|kr|za|th|uk)|be|ca|cz|cl|dk|fi|fr|gr|de|hu|it|lv|lt|my|nl|no|ph|rs|sg|sk|es|se)|'.
 				'live\.(com|com\.(ar|br|my|mx|ph|pt|sg)|co\.(il|kr|za|uk)|at|be|ca|cl|cn|dk|fi|fr|de|hk|ie|it|jp|nl|no|ru|se)|'.
-				'windowslive\.com|livemail\.tw)$/i' => ['outlook.office365.com', 'smtp.office365.com', 'login.microsoftonline.com/common',
+				'windowslive\.com|livemail\.tw)$/i' => ['outlook.office365.com', 'smtp.office365.com', 'login.microsoftonline.com/common/v2.0',
 			'e09fe57b-ffc5-496e-9ef8-3e6c7d628c09', 'Hd18Q~t-8_-ImvPFXlh8DSFjWKYyvpUTqURRJc7i',
 			'https://outlook.office.com/IMAP.AccessAsUser.All https://outlook.office.com/SMTP.Send offline_access email',
 			[/*self::ADD_CLIENT_TO_WELL_KNOWN => 'appid',*/ self::ADD_AUTH_PARAM => ['login_hint' => '$username', 'approval_prompt' => 'auto']],
@@ -76,11 +76,16 @@ class OpenIDConnectClient extends \Jumbojett\OpenIDConnectClient
 		// set https://proxy.egroupware.org/oauth as redirect URL, which redirects to host and path given in nonce parameter plus /api/oauth.php
 		$this->setRedirectURL(self::EGROUPWARE_OAUTH_PROXY);
 
-		// ToDo: set proxy, if configured in EGroupware
-		//$this->setHttpProxy("http://my.proxy.com:80/");
+		// set proxy, if configured in EGroupware
+		if (!empty($GLOBALS['egw_info']['server']['httpproxy_server']))
+		{
+			$this->setHttpProxy('http://'.(!empty($GLOBALS['egw_info']['server']['httpproxy_server_username']) ?
+				urlencode($GLOBALS['egw_info']['server']['httpproxy_server_username']).':'.urlencode($GLOBALS['egw_info']['server']['httpproxy_server_password']).'@' : '').
+				$GLOBALS['egw_info']['server']['httpproxy_server'].':'.($GLOBALS['egw_info']['server']['httpproxy_port'] ?? 8080).'/');
+		}
 
 		// login.microsoftonline.com/common returns as issuer an URL with {tenantid}
-		if ($this->getProviderURL() === 'https://login.microsoftonline.com/common')
+		if ($this->getProviderURL() === 'https://login.microsoftonline.com/common/v2.0')
 		{
 			$this->setIssuerValidator(new MicrosoftIssuerValidator($this));
 		}
