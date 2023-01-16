@@ -1,4 +1,4 @@
-#!/bin/bash -x
+#!/bin/bash -xe
 
 REPO=egroupware
 IMAGE=development
@@ -7,7 +7,7 @@ RECOMMENDED_PHP_VERSION=8.1
 
 PHP_VERSION=${1:-8.1}
 
-TAG=$(docker run --rm -i --entrypoint bash $REPO/$IMAGE:$PHP_VERSION -c "apt update && apt search php$PHP_VERSION-fpm" 2>/dev/null|grep php$PHP_VERSION-fpm|sed "s|^php$PHP_VERSION-fpm/[^ ]* \([78]\.[0-9]*\.[0-9]*\).*|\1|g")
+TAG=$(docker run --rm -i --entrypoint bash $REPO/$IMAGE:latest -c "apt update && apt search php$PHP_VERSION-fpm" 2>/dev/null|grep php$PHP_VERSION-fpm|sed "s|^php$PHP_VERSION-fpm/[^ ]* .*\([78]\.[0-9]*\.[0-9]*\).*|\1|g")
 test -z "$TAG" && {
 	echo "Can't get new tag of $REPO/$IMAGE container --> existing"
 	exit 1
@@ -26,7 +26,7 @@ echo -e "\nbuilding $REPO/$IMAGE:$TAG\n"
 cd $(dirname $0)
 
 docker pull $BASE
-docker build --build-arg "VERSION=$VERSION" --build-arg="PHP_VERSION=$PHP_VERSION" -t $REPO/$IMAGE:$TAG . && {
+docker build --no-cache --build-arg "VERSION=$VERSION" --build-arg="PHP_VERSION=$PHP_VERSION" -t $REPO/$IMAGE:$TAG . && {
 	docker push $REPO/$IMAGE:$TAG
 
 	# tag master by major PHP version eg. 8.1
