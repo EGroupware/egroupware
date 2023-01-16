@@ -444,6 +444,11 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 		 */
 		async validate()
 		{
+			if(this.readonly)
+			{
+				// Don't validate if the widget is read-only, there's nothing the user can do about it
+				return Promise.resolve();
+			}
 			let validators = [...(this.validators || []), ...(this.defaultValidators || [])];
 			let fieldName = this.id;
 			let feedbackData = [];
