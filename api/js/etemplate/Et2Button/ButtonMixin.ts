@@ -310,9 +310,11 @@ export const ButtonMixin = <T extends Constructor>(superclass : T) => class exte
 
 		if(!this.image)
 		{
-			for(const image in ButtonMixin.default_background_images)
+			// @ts-ignore
+			for(const image in this.constructor.default_background_images)
 			{
-				if(check_id.match(ButtonMixin.default_background_images[image]))
+				// @ts-ignore
+				if(check_id.match(this.constructor.default_background_images[image]))
 				{
 					return image;
 				}
