@@ -182,14 +182,38 @@ class resources_hooks
 	 */
 	public static function categories($data)
 	{
-		if ($GLOBALS['egw_info']['user']['apps']['admin'])
+		if($GLOBALS['egw_info']['user']['apps']['admin'])
 		{
 			return array(
-				'menuaction' => 'admin.admin_categories.index',
-				'appname'    => $appname,
-				'global_cats'=> true
+				'menuaction'  => 'admin.admin_categories.index',
+				'appname'     => $appname,
+				'global_cats' => true
 			);
 		}
 		return false;
+	}
+
+	/**
+	 * populates $settings for the Api\Preferences
+	 *
+	 * @return array
+	 */
+	static function settings()
+	{
+		$settings[] = array(
+			'type'    => 'section',
+			'title'   => lang('Data exchange settings'),
+			'no_lang' => true,
+			'xmlrpc'  => False,
+			'admin'   => False
+		);
+
+		// Merge print
+		if($GLOBALS['egw_info']['user']['apps']['filemanager'])
+		{
+			$merge = new resources_merge();
+			$settings += $merge->merge_preferences();
+		}
+		return $settings;
 	}
 }

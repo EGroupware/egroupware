@@ -187,16 +187,17 @@ class resources_ui
 	 */
 	public function get_actions()
 	{
+		$prefs = $GLOBALS['egw_info']['user']['preferences']['resources'];
 		$actions = array(
-			'edit' => array(
-				'default' => true,
-				'caption' => 'open',
-				'allowOnMultiple' => false,
-				'url' => 'menuaction=resources.resources_ui.edit&res_id=$id',
-				'popup' => Link::get_registry('resources', 'add_popup'),
-				'group' => $group=1,
-				'disableClass' => 'rowNoEdit',
-				'onExecute' => Api\Header\UserAgent::mobile()?'javaScript:app.resources.viewEntry':'',
+			'edit'     => array(
+				'default'            => true,
+				'caption'            => 'open',
+				'allowOnMultiple'    => false,
+				'url'                => 'menuaction=resources.resources_ui.edit&res_id=$id',
+				'popup'              => Link::get_registry('resources', 'add_popup'),
+				'group'              => $group = 1,
+				'disableClass'       => 'rowNoEdit',
+				'onExecute'          => Api\Header\UserAgent::mobile() ? 'javaScript:app.resources.viewEntry' : '',
 				'mobileViewTemplate' => 'view?'.filemtime(Api\Etemplate\Widget\Template::rel2path('/resources/templates/mobile/view.xet'))
 			),
 			'add' => array(
@@ -247,8 +248,8 @@ class resources_ui
 				'onExecute' => 'javaScript:app.resources.book',
 			),
 			'documents'=> resources_merge::document_action(
-				$this->prefs['document_dir'], ++$group, 'Insert in document', 'document_',
-				$this->prefs['default_document']
+				$prefs['document_dir'], ++$group, 'Insert in document', 'document_',
+				$prefs['default_document']
 			),
 			'delete' => array(
 				'caption' => 'Delete',

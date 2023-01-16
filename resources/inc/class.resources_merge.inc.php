@@ -96,17 +96,17 @@ class resources_merge extends Api\Storage\Merge
 		$array = $record->get_record_array();
 
 		// Set any missing custom fields, or the marker will stay
-		foreach($this->bo->customfields as $name => $field)
+		foreach(\EGroupware\Api\Storage\Customfields::get('resources') as $name => $field)
 		{
-			if (empty($array['#'.$name]))
+			if(empty($array['#' . $name]))
 			{
-				$array['#'.$name] = '';
+				$array['#' . $name] = '';
 			}
 			// Format date cfs per user Api\Preferences
-			if($array['#'.$name] && ($field['type'] == 'date' || $field['type'] == 'date-time'))
+			if($array['#' . $name] && ($field['type'] == 'date' || $field['type'] == 'date-time'))
 			{
-				$this->date_fields[] = '#'.$name;
-				$array['#'.$name] = Api\DateTime::to($array['#'.$name], $field['type'] == 'date' ? true : '');
+				$this->date_fields[] = '#' . $name;
+				$array['#' . $name] = Api\DateTime::to($array['#' . $name], $field['type'] == 'date' ? true : '');
 			}
 		}
 
