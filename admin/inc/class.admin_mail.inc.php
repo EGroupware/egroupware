@@ -1243,7 +1243,7 @@ class admin_mail
 			$sel_options['acc_smtp_ssl'] = self::$ssl_types;
 
 		// admin access to account with no credentials available
-		if ($this->is_admin && (empty($content['acc_imap_username']) || empty($content['acc_imap_host']) || $content['called_for']))
+		if ($this->is_admin && (!empty($content['called_for']) || empty($content['acc_imap_host']) || $content['called_for']))
 		{
 			// can't connection to imap --> allow free entries in taglists
 			foreach(array('acc_folder_sent', 'acc_folder_trash', 'acc_folder_draft', 'acc_folder_template', 'acc_folder_junk') as $folder)
@@ -1254,6 +1254,11 @@ class admin_mail
 		else
 		{
 			try {
+				if (empty($content['acc_imap_username']) && ($oauth = OpenIDConnectClient::providerByDomain(
+					$content['acc_oauth_username'] ?? $content['acc_imap_username'] ?? $content['ident_email'], $content['acc_imap_host'])))
+				{
+					$content += self::oauth2content($oauth);
+				}
 				$sel_options['acc_folder_sent'] = $sel_options['acc_folder_trash'] =
 					$sel_options['acc_folder_draft'] = $sel_options['acc_folder_template'] =
 					$sel_options['acc_folder_junk'] = $sel_options['acc_folder_archive'] =
@@ -1482,9 +1487,10 @@ class admin_mail
 			'timeout' => $timeout > 0 ? $timeout : Mail\Imap::getTimeOut(),
 			'debug' => self::DEBUG_LOG,
 		];
-		if (!empty($content['acc_oauth_provider_url']))
+		if (!empty($content['acc_oauth_provider_url']) || !empty($content['acc_oauth_access_token']))
 		{
 			$config['xoauth2_token'] = self::oauthToken($content);
+			$config['username'] = $content['acc_oauth_username'] ?? $content['acc_imap_username'];
 			if (empty($config['password'])) $config['password'] = '**oauth**';    // some password is required, even if not used
 		}
 		return new Horde_Imap_Client_Socket($config);
@@ -1495,28 +1501,36 @@ class admin_mail
 	 */
 	protected static function oauthToken(array &$content, bool $smtp=false)
 	{
-		if (empty($content['acc_oauth_client_secret']))
+		if (empty($content['acc_oauth_access_token']))
 		{
-			throw new Exception(lang("No OAuth client secret for provider '%1'!", $content['acc_oauth_provider_url']));
-		}
-		$oidc = new OpenIDConnectClient($content['acc_oauth_provider_url'],
-			$content['acc_oauth_client_id'], $content['acc_oauth_client_secret']);
+			if (empty($content['acc_oauth_client_secret']) &&
+				($oauth = OpenIDConnectClient::providerByDomain($content['acc_oauth_username'] ?? $content['acc_imap_username'] ?? $content['ident_email'], $content['acc_imap_host'])))
+			{
+				$content += self::oauth2content($oauth);
+			}
+			if (empty($content['acc_oauth_client_secret']))
+			{
+				throw new Exception(lang("No OAuth client secret for provider '%1'!", $content['acc_oauth_provider_url']));
+			}
+			$oidc = new OpenIDConnectClient($content['acc_oauth_provider_url'],
+				$content['acc_oauth_client_id'], $content['acc_oauth_client_secret']);
 
-		// Office365 requires client-ID as appid GET parameter (https://github.com/jumbojett/OpenID-Connect-PHP/issues/190)
-		if (!empty($content[OpenIDConnectClient::ADD_CLIENT_TO_WELL_KNOWN]))
-		{
-			$oidc->setWellKnownConfigParameters([$content[OpenIDConnectClient::ADD_CLIENT_TO_WELL_KNOWN] => $content['acc_oauth_client_id']]);
-		}
-		// Google requires access_type=offline&prompt=consent to return a refresh-token
-		if (!empty($content[OpenIDConnectClient::ADD_AUTH_PARAM]))
-		{
-			$oidc->addAuthParam(str_replace('$username', $content['acc_oauth_username'] ?? $content['acc_imap_username'], $content[OpenIDConnectClient::ADD_AUTH_PARAM]));
-		}
+			// Office365 requires client-ID as appid GET parameter (https://github.com/jumbojett/OpenID-Connect-PHP/issues/190)
+			if (!empty($content[OpenIDConnectClient::ADD_CLIENT_TO_WELL_KNOWN]))
+			{
+				$oidc->setWellKnownConfigParameters([$content[OpenIDConnectClient::ADD_CLIENT_TO_WELL_KNOWN] => $content['acc_oauth_client_id']]);
+			}
+			// Google requires access_type=offline&prompt=consent to return a refresh-token
+			if (!empty($content[OpenIDConnectClient::ADD_AUTH_PARAM]))
+			{
+				$oidc->addAuthParam(str_replace('$username', $content['acc_oauth_username'] ?? $content['acc_imap_username'], $content[OpenIDConnectClient::ADD_AUTH_PARAM]));
+			}
 
-		// we need to use response_code=query / GET request to keep our session token!
-		$oidc->setResponseTypes(['code']);  // to be able to use query, not 'id_token'
-		//$oidc->setAllowImplicitFlow(true);
-		$oidc->addScope($content['acc_oauth_scopes']);
+			// we need to use response_code=query / GET request to keep our session token!
+			$oidc->setResponseTypes(['code']);  // to be able to use query, not 'id_token'
+			//$oidc->setAllowImplicitFlow(true);
+			$oidc->addScope($content['acc_oauth_scopes']);
+		}
 
 		if (!empty($content['acc_oauth_access_token']) || !empty($content['acc_oauth_refresh_token']))
 		{
@@ -1545,7 +1559,7 @@ class admin_mail
 	{
 		if (empty($content['acc_oauth_username']))
 		{
-			$content['acc_oauth_username'] = $content['acc_imap_username'];
+			$content['acc_oauth_username'] = $content['acc_imap_username'] ?? $oidc->getVerifiedClaims('email') ?? $content['ident_email'];
 		}
 		if (empty($content['acc_oauth_refresh_token'] = $oidc->getRefreshToken()))
 		{
@@ -1557,7 +1571,14 @@ class admin_mail
 		$GLOBALS['egw_info']['flags']['currentapp'] = 'admin';
 
 		$obj = new self;
-		$obj->autoconfig($content);
+		if (!empty($content['acc_id']))
+		{
+			$obj->edit($content, lang('Use save or apply to store the received OAuth token!'), 'info');
+		}
+		else
+		{
+			$obj->autoconfig($content);
+		}
 	}
 
 	/**
@@ -1568,12 +1589,20 @@ class admin_mail
 	 */
 	public static function oauthFailure(Throwable  $exception=null, array $content)
 	{
-		$content['output'] .= lang('OAuth Authentiction').': '.($exception ? $exception->getMessage() : lang('failed'));
-		$content['connected'] = false;
-
 		$GLOBALS['egw_info']['flags']['currentapp'] = 'admin';
 
 		$obj = new self;
+		if (!empty($content['acc_id']))
+		{
+			$obj->edit($content, lang('OAuth Authentiction').': '.($exception ? $exception->getMessage() : lang('failed')), 'error');
+		}
+		else
+		{
+			$content['output'] .= lang('OAuth Authentiction').': '.($exception ? $exception->getMessage() : lang('failed'));
+			$content['connected'] = false;
+
+			$obj->autoconfig($content);
+		}
 		$obj->autoconfig($content);
 	}
 

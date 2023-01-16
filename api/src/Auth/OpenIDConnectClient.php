@@ -122,11 +122,12 @@ class OpenIDConnectClient extends \Jumbojett\OpenIDConnectClient
 	 * Get OIDC client object for the given domain/email
 	 *
 	 * @param string $domain domain or email address
+	 * @param string|null $mailserver
 	 * @return self|null
 	 */
-	public static function byDomain($domain)
+	public static function byDomain($domain, $mailserver=null)
 	{
-		if (!($provider = self::providerByDomain($domain)))
+		if (!($provider = self::providerByDomain($domain, $mailserver)))
 		{
 			return null;
 		}

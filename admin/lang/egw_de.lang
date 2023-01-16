@@ -949,6 +949,7 @@ use default	admin	de	Vorgabe verwenden
 use ldap defaults	admin	de	LDAP Standardeinstellungen benutzen
 use predefined username and password defined below	admin	de	Verwende den unten vordefinierten Benutzernamen und Passwort
 use pure html compliant code (not fully working yet)	admin	de	Vollständig HTML kompatiblen Code verwenden (nicht vollständig implementiert)
+use save or apply to store the received oauth token!	admin	de	Benutze Speicher oder Übernehmen um das erhaltene OAuth Token zu speichern!
 use secure cookies (transmitted only via https)	admin	de	Benutze sichere Cookies (werden nur per https übertragen)
 use smtp auth	admin	de	SMTP Authentifizierung benutzen
 use theme	admin	de	Benutztes Farbschema

@@ -59,7 +59,7 @@ abstract class Extra
 		// if we have real push available and a regular single-entry refresh of a push supporting app, no need to refresh
 		if (!Json\Push::onlyFallback() &&
 			!empty($type) && !empty($id) &&	// $type === null --> full reload
-			Link::get_registry($app, 'push_data') !== null)
+			Link::get_registry($app, 'push_data'))
 		{
 			$app = 'msg-only-push-refresh';
 		}

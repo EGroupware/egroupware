@@ -952,6 +952,7 @@ use default	admin	en	use default
 use ldap defaults	admin	en	Use LDAP defaults
 use predefined username and password defined below	admin	en	Use predefined username and password defined below
 use pure html compliant code (not fully working yet)	admin	en	Use pure HTML compliant code
+use save or apply to store the received oauth token!	admin	en	Use save or apply to store the received OAuth token!
 use secure cookies (transmitted only via https)	admin	en	Use secure cookies (transmitted only via https)
 use smtp auth	admin	en	Use SMTP authentication
 use theme	admin	en	Use theme

@@ -469,9 +469,16 @@ class Account implements \ArrayAccess
 	 */
 	public function is_imap($try_connect=true)
 	{
-		if (empty($this->acc_imap_host) || ( empty($this->acc_imap_username) && empty($this->acc_imap_password) ) )
+		if (empty($this->acc_imap_host) ||
+			empty($this->acc_imap_username) && empty($this->acc_imap_password) &&
+				!($oauth = Api\Auth\OpenIDConnectClient::providerByDomain($this->acc_imap_username ?: $this->ident_email, $this->acc_imap_host)))
 		{
 			return false;	// no imap host or credentials
+		}
+		if (isset($oauth))
+		{
+			$this->params['acc_imap_username'] = $this->acc_imap_username ?: $this->ident_email;
+			$this->params['acc_imap_password'] = '**oauth**';
 		}
 		// if we are not managing the mail-server, we do NOT need to check deliveryMode and accountStatus
 		if ($this->acc_smtp_type == __NAMESPACE__.'\\Smtp')
