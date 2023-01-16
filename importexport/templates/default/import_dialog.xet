@@ -9,12 +9,13 @@
 			</columns>
 			<rows>
 				<row>
-					<et2-description  value="Delimiter"></et2-description>
-					<et2-hbox  cellpadding="0" cellspacing="0" noLang="1" >
-						<et2-select  id="delimiter" onchange="var _this = jQuery(this); var text = _this.parent().parent().find('input'); if(_this.val() =='other') {text.val('');text.show(); text.focus();} else {text.hide();}" noLang="1"></et2-select>
-						<et2-textbox  id="other_delimiter" maxlength="1" class="hide"></et2-textbox>
-					</et2-hbox>
-				</row>
+                    <et2-hbox cellpadding="0" cellspacing="0" noLang="1">
+                        <et2-select id="delimiter" label="Delimiter" class="et2-label-fixed"
+                                    onchange="let text = widget.getParent().getWidgetById('other_delimiter'); if(widget.value =='other') {text.value ='';text.classList.remove('hide'); text.focus();} else {text.classList.add('hide');}"
+                                    noLang="1"></et2-select>
+                        <et2-textbox id="other_delimiter" maxlength="1" class="hide"></et2-textbox>
+                    </et2-hbox>
+                </row>
 			</rows>
 		</grid>
 	</template>

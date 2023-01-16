@@ -12,6 +12,7 @@
  */
 
 use EGroupware\Api;
+use EGroupware\Api\Framework;
 use EGroupware\Api\Link;
 
 /**
@@ -49,22 +50,22 @@ class calendar_import_csv extends importexport_basic_import_csv  {
 	protected function init(importexport_definition $definition, importexport_import_csv $import_csv=NULL)
 	{
 		// fetch the addressbook bo
-		$this->bo= new calendar_boupdate();
+		$this->bo = new calendar_boupdate();
 
 		// Get the tracker for changes
 		$this->tracking = new calendar_tracking();
 
 		// Used for participants
-		$this->status_map = array_flip(array_map('lang',$this->bo->verbose_status));
+		$this->status_map = array_flip(array_map('lang', $this->bo->verbose_status));
 		$this->role_map = array_flip($this->bo->roles);
 
 		$this->lookups = array(
-			'priority'	=> Array(
+			'priority'   => array(
 				0 => lang('None'),
 				1 => lang('Low'),
 				2 => lang('Normal'),
 				3 => lang('High')
-	 		),
+			),
 			'recurrence' => $this->bo->recur_types
 		);
 	}
@@ -80,14 +81,30 @@ class calendar_import_csv extends importexport_basic_import_csv  {
 	 */
 	public function import_record(importexport_iface_egw_record &$record, &$import_csv)
 	{
-		if (!is_a($record, calendar_egw_record::class)) throw new TypeError();
+		if(!is_a($record, calendar_egw_record::class))
+		{
+			throw new TypeError();
+		}
 		// set eventOwner
 		$options =& $this->definition->plugin_options;
-		$options['owner'] = $options['owner'] ? $options['owner'] : $this->user;
+
+		// Check options & set target calendar
+		// Make sure Owner from import dialog is not array
+		if(is_array($options['owner']))
+		{
+			$options['owner'] = array_pop($options['owner']);
+		}
+		if($options['owner'] == '')
+		{
+			$options['owner_from_csv'] = true;
+		}
+		$options['owner'] = $options['owner'] ?? $this->user;
 
 		// Set owner, unless it's supposed to come from CSV file
-		if($options['owner_from_csv']) {
-			if(!is_numeric($record['owner'])) {
+		if($options['owner_from_csv'])
+		{
+			if(!is_numeric($record->owner))
+			{
 				$this->errors[$import_csv->get_current_position()] = lang(
 					'Invalid owner ID: %1.  Might be a bad field translation.  Used %2 instead.',
 					$record->owner,
@@ -430,7 +447,36 @@ class calendar_import_csv extends importexport_basic_import_csv  {
 	 */
 	protected function row_preview(importexport_iface_egw_record &$row_entry)
 	{
-		$row_entry->participants = implode('<br />', $this->bo->participants(array('participants' => $row_entry->participants),true));
+		$row_entry->participants = implode('<br />', $this->bo->participants(array('participants' => $row_entry->participants), true));
 	}
 
+
+	/**
+	 * return etemplate components for options.
+	 * @abstract We can't deal with etemplate objects here, as an uietemplate
+	 * objects itself are scipt orientated and not "dialog objects"
+	 *
+	 * @return array (
+	 *        name        => string,
+	 *        content        => array,
+	 *        sel_options => array,
+	 *        preserv        => array,
+	 * )
+	 */
+	public function get_options_etpl(importexport_definition &$definition = null)
+	{
+		$owner = $definition->plugin_options['owner'] ?? $GLOBALS['egw_info']['user']['account_id'];
+		// Make sure Owner from import dialog is not array
+		if(is_array($owner))
+		{
+			$owner = array_pop($owner);
+		}
+		$options = array(
+			'name'    => 'calendar.import_csv',
+			'content' => array(
+				'owner' => $owner ? $owner : null
+			)
+		);
+		return $options;
+	}
 }

@@ -249,9 +249,13 @@ use EGroupware\Api\Etemplate;
 			}
 
 			$data['message'] = $this->message;
-			Framework::includeJS('.','importexport','importexport');
+			Framework::includeJS('.', 'importexport', 'importexport');
+			Framework::includeJS('.', 'app', $data['appname']);
 
-			if($_GET['appname']) $readonlys['appname'] = true;
+			if($_GET['appname'])
+			{
+				$readonlys['appname'] = true;
+			}
 
 			$template->exec('importexport.importexport_import_ui.import_dialog', $data, $sel_options, $readonlys, $preserve, 2);
 		}
