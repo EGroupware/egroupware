@@ -206,7 +206,7 @@ export class Et2ColumnSelection extends Et2InputWidget(LitElement)
 	{
 		let value = [];
 
-		this.sort.toArray().forEach((val) =>
+		this.sort?.toArray().forEach((val) =>
 		{
 			let column = this.__columns.find((col) => col.id == val);
 			let menuItem = <SlMenuItem>this.shadowRoot.querySelector("[value='" + val + "']");
@@ -227,7 +227,7 @@ export class Et2ColumnSelection extends Et2InputWidget(LitElement)
 		});
 
 		// Add in letters
-		this.shadowRoot.querySelectorAll("[part='columns'] > :not(.column)").forEach((i : SlMenuItem) =>
+		this.shadowRoot?.querySelectorAll("[part='columns'] > :not(.column)").forEach((i : SlMenuItem) =>
 		{
 			if(i.checked)
 			{
