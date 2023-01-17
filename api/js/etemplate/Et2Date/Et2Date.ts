@@ -246,7 +246,9 @@ export function formatDate(date : Date, options = {dateFormat: ""}) : string
 	let replace_map = {
 		d: (date.getUTCDate() < 10 ? "0" : "") + date.getUTCDate(),
 		m: (date.getUTCMonth() < 9 ? "0" : "") + (date.getUTCMonth() + 1),
-		Y: "" + date.getUTCFullYear()
+		Y: "" + date.getUTCFullYear(),
+		H: ("0" + date.getUTCHours()).slice(-2),
+		i: ("0" + date.getUTCMinutes()).slice(-2)
 	}
 	if(dateformat.indexOf("M") != -1)
 	{
@@ -460,6 +462,10 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(LitFlatpickr))
 				{
 					this.findInputField().setAttribute("data-input", "");
 				}
+				if(this.defaultDate)
+				{
+					this._inputNode.value = flatpickr.formatDate(<Date>this.defaultDate, this.getOptions().dateFormat);
+				}
 			}
 
 			this.initializeComponent();
@@ -618,12 +624,18 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(LitFlatpickr))
 		{
 			this.setDate(formatDate);
 		}
+
+		this.requestUpdate("value", this._oldValue);
 	}
 
 	get value()
 	{
 		if(!this._inputElement)
 		{
+			if(this.defaultDate)
+			{
+				return flatpickr.formatDate(<Date>this.defaultDate, this.getOptions().dateFormat);
+			}
 			return this._inputNode?.value || '';
 		}
 		let value = this._inputElement.value;
