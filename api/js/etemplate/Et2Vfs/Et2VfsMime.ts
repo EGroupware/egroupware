@@ -212,6 +212,18 @@ export class Et2VfsMime extends Et2ImageExpose
 		this.symlink = typeof _value.mode !== "undefined" && ((_value.mode & et2_vfsMode.types.l) == et2_vfsMode.types.l)
 	}
 
+	get value()
+	{
+		return {
+			mime: this.mime,
+			symlink: this.__symlink,
+			href: this.href,
+			path: this.href,
+			download_url: this.__download_url ?? '',
+			src: this.src
+		}
+	}
+
 	get src()
 	{
 		return super.src;
