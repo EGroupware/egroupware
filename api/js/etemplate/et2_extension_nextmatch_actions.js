@@ -442,14 +442,14 @@ export function nm_open_popup(_action, _selected)
 	}
 
 	// Find the popup div
-	var popup = document.body.querySelector("et2-dialog[id*='" + _action.id + "_popup']") || document.body.querySelector("#" + (uid || "") + "_" + _action.id + "_popup") || document.body.querySelector("[id*='" + _action.id + "_popup']");
+	let nm = _action.data.nextmatch;
+	var popup = (nm?.getInstanceManager().DOMContainer || document.body).querySelector("et2-dialog[id*='" + _action.id + "_popup']") || document.body.querySelector("#" + (uid || "") + "_" + _action.id + "_popup") || document.body.querySelector("[id*='" + _action.id + "_popup']");
 	if (popup && popup instanceof Et2Dialog)
 	{
 		popup.show();
 	}
 	else if (popup)
 	{
-		let nm = _action.data.nextmatch;
 		let dialog = new Et2Dialog(nm?.egw());
 		dialog.destroyOnClose = false;
 		dialog.id = popup.id;
