@@ -186,18 +186,31 @@ class Link extends Etemplate\Widget
 	public static function ajax_link_list($value)
 	{
 		$app = $value['to_app'];
-		$id  = $value['to_id'];
+		$id = $value['to_id'];
 
-		$links = Api\Link::get_links($app,$id,$value['only_app'],'link_lastmod DESC',true, $value['show_deleted']);
-		foreach($links as &$link)
+		$links = Api\Link::get_links($app, $id, $value['only_app'], 'link_lastmod DESC', true, $value['show_deleted']);
+		$only_links = [];
+		if($value['only_app'])
 		{
-			$link['title'] = Api\Link::title($link['app'],$link['id'],$link);
-			if ($link['app'] == Api\Link::VFS_APPNAME)
+			$only_links = Api\Link::get_links_multiple($value['only_app'], $links);
+		}
+		foreach($links as $link_id => &$link)
+		{
+			if(!is_array($link) && array_key_exists($link, $only_links))
+			{
+				$only_id = $link;
+				$link = array_merge(
+					$only_links[$link][$link_id],
+					['id' => $only_id, 'app' => $value['only_app']]
+				);
+			}
+			$link['title'] = Api\Link::title($link['app'], $link['id'], $link);
+			if($link['app'] == Api\Link::VFS_APPNAME)
 			{
 				$link['target'] = '_blank';
 				$link['help'] = lang('Delete this file');
 				$link['title'] = Api\Vfs::decodePath($link['title']);
-				$link['icon'] = Api\Link::vfs_path($link['app2'],$link['id2'],$link['id'],true);
+				$link['icon'] = Api\Link::vfs_path($link['app2'], $link['id2'], $link['id'], true);
 
 				$link['download_url'] = Api\Vfs::download_url($link['icon']);
 				// Make links to directories load in filemanager

@@ -536,7 +536,7 @@ class Link extends Link\Storage
 			$app_ids = array();
 			foreach($ids as $link)
 			{
-				$app_ids[$link['app']][] = $link['id'];
+				$app_ids[$only_app ? $only_app : $link['app']][] = is_array($link) ? $link['id'] : $link;
 			}
 			foreach($app_ids as $appname => $a_ids)
 			{
@@ -545,7 +545,7 @@ class Link extends Link\Storage
 			// remove links, current user has no access, from result
 			foreach($ids as $key => $link)
 			{
-				if (!self::title($link['app'],$link['id']))
+				if(!self::title(is_array($link) ? $link['app'] : $only_app, is_array($link) ? $link['id'] : $link))
 				{
 					unset($ids[$key]);
 				}

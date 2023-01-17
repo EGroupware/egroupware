@@ -10,7 +10,7 @@
  */
 
 
-import {css, html, LitElement, render, TemplateResult, until} from "@lion/core";
+import {css, html, LitElement, PropertyValues, render, TemplateResult, until} from "@lion/core";
 import {Et2Widget} from "../Et2Widget/Et2Widget";
 import {Et2Link, LinkInfo} from "./Et2Link";
 import {et2_IDetachedDOM} from "../et2_core_interfaces";
@@ -158,6 +158,19 @@ export class Et2LinkString extends Et2Widget(LitElement) implements et2_IDetache
 		super.requestUpdate();
 	}
 
+	public updated(changedProperties : PropertyValues)
+	{
+		super.updated(changedProperties);
+
+		if((changedProperties.has("application") || changedProperties.has("entryId") || changedProperties.has("onlyApp") || changedProperties.has("linkType")) &&
+			this.application && this.entryId
+		)
+		{
+			// Something changed, and we have the information needed to get the matching links
+			this.get_links();
+		}
+	}
+
 	public render() : TemplateResult
 	{
 		// This shows loading template until loadingPromise resolves, then shows _listTemplate
@@ -253,8 +266,8 @@ export class Et2LinkString extends Et2Widget(LitElement) implements et2_IDetache
 		let _value = {
 			to_app: this.application,
 			to_id: this.entryId,
-			onlyApp: this.onlyApp,
-			showDeleted: this.showDeleted
+			only_app: this.onlyApp,
+			show_deleted: this.showDeleted
 		};
 		if(this._loadingPromise)
 		{
