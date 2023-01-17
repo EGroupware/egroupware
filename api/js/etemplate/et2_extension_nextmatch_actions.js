@@ -456,6 +456,7 @@ export function nm_open_popup(_action, _selected)
 		popup.removeAttribute("id");
 		// Remove class that hides
 		popup.classList.remove("prompt");
+		popup.classList.remove("action_popup");
 
 		// Set title
 		let title = popup.querySelector(".promptheader")
