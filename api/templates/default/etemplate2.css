@@ -2779,7 +2779,7 @@ table.egwGridView_outer thead tr th.noResize:hover {
 	padding-inline-start: 0;
 }
 
-.et2_toolbar et2-button:not(.et2_toolbar_hasCaption)::part(label) {
+.et2_toolbar et2-button:not(.et2_toolbar_onlyCaption):not(.et2_toolbar_hasCaption)::part(label) {
 	position: absolute;
 	top: 100%;
 }
@@ -2788,10 +2788,6 @@ table.egwGridView_outer thead tr th.noResize:hover {
 	padding: 0;
 }
 
-.et2_toolbar et2-button.et2_toolbar_onlyCaption::part(label) {
-	position: absolute;
-	left: -999px;
-}
 
 div.et2_toolbar.ui-widget-header {
     background: none;
