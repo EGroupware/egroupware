@@ -2,7 +2,23 @@
 /**
  * EGgroupware administration PHP FPM status page
  *
- * 1. The status page needs to be enabled in EGroupware's Nginx talking to PHP FPM (/etc/egroupware-docker/egroupware-nginx.conf):
+ * 1a. The status page needs to be enabled in the Nginx reverse proxy on the host (/etc/egroupware-docker/nginx.conf):
+ *
+ *      location = /status {
+ *          proxy_pass http://127.0.0.1:8080;
+ *          include proxy_params;
+ *      }
+ *
+ *     And Nginx need to be restarted: nginx -s reload
+ *
+ * 1b. If you use Apache2 on the host instead, you need to add it there (/etc/egroupware-docker/apache.conf):
+ *
+ *      ProxyPass /status http://127.0.0.1:8080/status timeout=4000 connectiontimeout=600 acquire=3000 retry=6
+ *      ProxyPassReverse /status http://127.0.0.1:8080/status
+ *
+ *     And Apache need to be restarted: systemctl reload apache2 # httpd for RHEL/CentOS
+ *
+ * 2. The status page needs to be enabled in EGroupware's Nginx talking to PHP FPM (/etc/egroupware-docker/egroupware-nginx.conf):
  *
  *      location = /status {
  *          if ($http_referer !~ /admin/fpm-status.php$) {
@@ -14,9 +30,7 @@
  *          fastcgi_pass $egroupware:9000;
  *      }
  *
- * 2. The Nginx need to be restarted:
- *
- *      docker restart egroupware-nginx
+ *    And Nginx need to be restarted: docker restart egroupware-nginx
  *
  * 3. FPM need to be configured to serve status under /status
  *
