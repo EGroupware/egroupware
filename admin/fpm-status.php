@@ -20,7 +20,8 @@
  *
  * 3. FPM need to be configured to serve status under /status
  *
- *      docker exec -i egroupware sed -i /etc/php/\*/fpm/pool.d/www.conf 's/^;pm.status_page/pm.status_page/'
+ *      docker exec -it egroupware bash
+ *      cd /etc/php/*; sed -i cd fpm/pool.d/www.conf -e 's/^;pm.status_path/pm.status_path/'; exit
  *      docker restart egroupware
  *
  * Please note: the next EGroupware update will disable it again, and it's a good idea to do that even before!
