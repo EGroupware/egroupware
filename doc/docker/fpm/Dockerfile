@@ -52,9 +52,9 @@ RUN apt-get update \
 	&& mkdir -p /run/php \
 	# send logs to stderr to be viewed by docker logs
 	&& ln -s /dev/stderr /var/log/php$PHP_VERSION-fpm.log \
-	&& update-alternatives --install /usr/sbin/php-fpm php-fpm /usr/sbin/php-fpm$PHP_VERSION 5
+	&& update-alternatives --install /usr/sbin/php-fpm php-fpm /usr/sbin/php-fpm$PHP_VERSION 5 \
 	# install tools to build EGroupware
-RUN apt-get install -y rsync zip curl sudo cron patch \
+	&& apt-get install -y rsync zip curl sudo cron patch \
 	&& bash -c \
 'EXPECTED_SIGNATURE=$(curl https://composer.github.io/installer.sig); \
 curl https://getcomposer.org/installer > composer-setup.php; \
@@ -75,8 +75,8 @@ exit $RESULT' \
 	&& composer.phar create-project $COMPOSER_EXTRA --prefer-dist --no-scripts --no-dev egroupware/egroupware:$VERSION \
 	# clean up and remove caches
 	&& composer.phar clear-cache \
-	&& rm -f /usr/local/bin/composer.phar
-RUN cd /usr/share/egroupware \
+	&& rm -f /usr/local/bin/composer.phar \
+	&& cd /usr/share/egroupware \
     # install nodejs 16.x PPA (Shoelace requires >= 14.17, Ubuntu 22.04 only has 12.x)
     && curl -fsSL https://deb.nodesource.com/setup_16.x | bash - \
     && apt-get install -y nodejs \
@@ -88,8 +88,7 @@ RUN cd /usr/share/egroupware \
 	&& npm uninstall -g grunt-cli \
 	&& npm cache clear --force \
 	&& apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false zip \
-	&& apt-get clean
-RUN cd /usr/share/egroupware \
+	&& apt-get clean \
 	# create data directory
 	&& mkdir -p /var/lib/egroupware/default/files/sqlfs \
 	&& mkdir -p /var/lib/egroupware/default/backup \
@@ -102,11 +101,11 @@ RUN cd /usr/share/egroupware \
     && ln -s /var/lib/egroupware-push/config.inc.php /usr/share/egroupware/swoolepush \
 	# install cron-job and disable fallback async service and ability to switch them off in admin
 	&& sed 's/apache/www-data/' doc/rpm-build/egroupware.cron > /etc/cron.d/egroupware \
-	&& patch -p1 < doc/rpm-build/asyncservice.patch
+	&& patch -p1 < doc/rpm-build/asyncservice.patch \
 	# disable certificate checks for LDAP as most LDAP and AD servers have no "valid" cert
-RUN ls /etc/ldap/ldap.conf >/dev/null 2>&1 || apt-get install -y libldap-common \
+	&& ls /etc/ldap/ldap.conf >/dev/null 2>&1 || apt-get install -y libldap-common \
     && echo "TLS_REQCERT never" >> /etc/ldap/ldap.conf \
-	# mv sources to a different directory so entrypoint can rsync them to volumn for both nginx and fpm
+	# mv sources to a different directory so entrypoint can rsync them to volume for both nginx and fpm
 	&& mv /usr/share/egroupware /usr/share/egroupware-sources
 
 VOLUME /usr/share/egroupware
