@@ -904,14 +904,14 @@ export class et2_vfsUpload extends et2_file
 		if (file_data && (typeof file_data.download_url != 'undefined'))
 		{
 			var fe_mime = egw.file_editor_prefered_mimes(file_data.mime);
-			// Check if the link entry is mime with media type, in order to open it in expose view
-			if (typeof file_data.mime === 'string' &&
-				(file_data.mime.match(mime.mime_regexp,'ig') || (fe_mime && fe_mime.mime[file_data.mime])))
+			// Pass off opening responsibility to the Et2VfsMime widget
+			if(typeof file_data.mime === 'string' && mime.isExposable())
 			{
-				vfs_attrs.onclick = function(ev) {
+				vfs_attrs.onclick = function(ev)
+				{
 					ev.stopPropagation();
 					// Pass it off to the associated vfsMime widget
-					jQuery('img',this.parentNode.parentNode).trigger("click");
+					jQuery('img', this.parentNode.parentNode).trigger("click");
 					return false;
 				};
 			}
