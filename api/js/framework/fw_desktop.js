@@ -549,12 +549,12 @@ import "sortablejs/Sortable.min.js";
 			if (state == 1)
 			{
 				node.firstElementChild.classList.remove('darkmode_on');
-				node.firstElementChild.title = egw.lang('light mode');
+				node.firstElementChild.title = egw.lang('dark mode');
 			}
 			else
 			{
 				node.firstElementChild.classList.add('darkmode_on');
-				node.firstElementChild.title = egw.lang('dark mode');
+				node.firstElementChild.title = egw.lang('light mode');
 			}
 		}
 	});

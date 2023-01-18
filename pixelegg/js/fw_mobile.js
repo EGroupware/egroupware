@@ -1059,12 +1059,12 @@ import {tapAndSwipe} from "../../api/js/tapandswipe";
 			{
 				node.classList.remove('darkmode_on');
 				if (node.hasChildNodes()) node.children[0].classList.remove('darkmode_on');
-				node.title = egw.lang('light mode');
+				node.title = egw.lang('dark mode');
 			}
 			else
 			{
 				node.classList.add('darkmode_on');
-				node.title = egw.lang('dark mode');
+				node.title = egw.lang('light mode');
 				if (node.hasChildNodes()) node.children[0].classList.add('darkmode_on');
 			}
 		}
