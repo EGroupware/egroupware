@@ -10,7 +10,7 @@ et2-select-country sl-menu-item::part(prefix), et2-select-country .flag {
 }
 /* No country selected*/
 et2-select-country[value=""] .flag, et2-select-country [value=""]::part(prefix) {
-    background-image: url(../images/internet.png);
+    background-image: url(../images/internet.svg);
     background-position: center;
     background-size: 20px;
     background-repeat: no-repeat;
