@@ -170,27 +170,27 @@
 					<et2-select-percent  span="4" statustext="Percent completed" id="info_percent"></et2-select-percent>
 				</row>
 				<row>
-					<et2-vbox  id="tabs" span="all" width="100%">
-						<et2-details  id="description" summary="Description" title="longer textual description">
-							<template id="infolog.view.description"/>
-						</et2-details>
-						<et2-details  id="details" summary="Details" title="Location, priority , ...">
-							<template id="infolog.view.details"/>
-						</et2-details>
-						<et2-details  id="links" summary="Links" title="Links of this entry">
-							<template id="infolog.view.links"/>
-						</et2-details>
-						<et2-details  id="project" summary="Projectmanager" title="Project settings: price, times">
-							<template id="infolog.view.project"/>
-						</et2-details>
-						<et2-details  id="customfields" summary="Customfields" title="Custom fields">
-							<template id="infolog.view.customfields"/>
-						</et2-details>
-						<et2-details  id="ownership" summary="Ownership" title="Ownership">
-							<template id="infolog.view.ownership"/>
-						</et2-details>
-					</et2-vbox>
-				</row>
+                    <et2-vbox span="all" width="100%">
+                        <et2-details id="description" summary="Description" title="longer textual description">
+                            <template id="infolog.view.description"/>
+                        </et2-details>
+                        <et2-details id="details" summary="Details" title="Location, priority , ...">
+                            <template id="infolog.view.details"/>
+                        </et2-details>
+                        <et2-details id="links" summary="Links" title="Links of this entry">
+                            <template id="infolog.view.links"/>
+                        </et2-details>
+                        <et2-details id="project" summary="Projectmanager" title="Project settings: price, times">
+                            <template id="infolog.view.project"/>
+                        </et2-details>
+                        <et2-details id="customfields" summary="Customfields" title="Custom fields">
+                            <template id="infolog.view.customfields"/>
+                        </et2-details>
+                        <et2-details id="ownership" summary="Ownership" title="Ownership">
+                            <template id="infolog.view.ownership"/>
+                        </et2-details>
+                    </et2-vbox>
+                </row>
 			</rows>
 		</grid>
 	</template>

@@ -185,7 +185,7 @@
 					<et2-select-percent  span="4" statustext="Percent completed" id="info_percent" onchange="app.infolog.statusChanged"></et2-select-percent>
 				</row>
 				<row>
-					<et2-vbox  id="tabs" span="all" width="100%">
+					<et2-vbox span="all" width="100%">
 						<et2-details  id="description" summary="Description" title="longer textual description">
 							<template id="infolog.edit.description"/>
 						</et2-details>
