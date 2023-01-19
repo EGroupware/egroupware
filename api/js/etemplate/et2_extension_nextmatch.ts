@@ -3705,6 +3705,7 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 				const set = {};
 				set[select.id] = select.getValue();
 				this.nextmatch.applyFilters(set);
+				select.resetDirty();
 			});
 		}
 		// Sometimes the filter does not display the current value
