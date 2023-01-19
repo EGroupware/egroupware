@@ -203,6 +203,27 @@ class ImportExportApp extends EgwApp
 			widget.set_value(value);
 		}
 	}
+
+	/**
+	 * Open a specific import/export definition dialog by clicking on the icon from the list
+	 * @param widget
+	 */
+	open_definition(event, widget)
+	{
+		const mgr = widget.getArrayMgr("content");
+		const data = mgr.getEntry(mgr.perspectiveData.row) || {};
+		const type = data.type || "";
+		const application = data.application || "";
+		const definition_id = data.definition_id || "";
+		this.egw.openPopup(
+			this.egw.link("/index.php", {
+				menuaction: "importexport.importexport_" + type + "_ui." + type + "_dialog",
+				appname: application,
+				definition: definition_id
+			}),
+			850, 440
+		)
+	}
 }
 
 app.classes.importexport = ImportExportApp;

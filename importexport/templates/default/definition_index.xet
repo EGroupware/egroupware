@@ -20,7 +20,8 @@
 					<et2-nextmatch-header-account  id="owner" emptyLabel="Owner"/>
 				</row>
 				<row class="row $row_cont[class]">
-                    <et2-image  src="${row_cont[type]}" onclick="window.open(egw::link('/index.php','menuaction=importexport.importexport_${row_cont[type]}_ui.${row_cont[type]}_dialog&amp;appname=${row_cont[application]}&amp;definition=${row_cont[definition_id]}'),'_blank','dependent=yes,width=850,height=440,scrollbars=yes,status=yes'); return false;" class="lr_padding button" noLang="1"></et2-image>
+                    <et2-image src="${row_cont[type]}" onclick="app.importexport.open_definition"
+                               class="lr_padding button" noLang="1"></et2-image>
                     <et2-description  id="${row}[name]" class="lr_padding" noLang="1"></et2-description>
                     <et2-description  id="${row}[application]" class="lr_padding"></et2-description>
                     <et2-select-account  id="${row}[allowed_users]" readonly="true" rows="5" class="lr_padding" multiple="1" placeholder="Private" noLang="1"></et2-select-account>
