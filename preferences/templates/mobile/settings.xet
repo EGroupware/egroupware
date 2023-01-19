@@ -43,7 +43,7 @@
 					</et2-hbox>
 				</row>
 				<row>
-					<et2-vbox  id="tabs">
+					<et2-vbox>
 						<et2-details  id="tab1" summary="Settings" title="">
 							<template id="preferences.settings.tab1" content="tab1"/>
 						</et2-details>

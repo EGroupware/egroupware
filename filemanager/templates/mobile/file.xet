@@ -196,7 +196,7 @@
 					</et2-hbox>
 				</row>
 				<row class="dialogTabs">
-					<et2-vbox  id="tabs" span="all" width="100%">
+					<et2-vbox span="all" width="100%">
 						<et2-details  id="filemanager.file.general" summary="General" title="">
 							<template id="filemanager.file.general"/>
 						</et2-details>

@@ -394,7 +394,7 @@
 					<et2-url  id="url" autocomplete="url" ></et2-url>
 				</row>
 				<row>
-					<et2-vbox  id="tabs" span="all" width="100%">
+					<et2-vbox span="all" width="100%">
 						<et2-details  id="general" summary="Organisation" title="">
 							<template id="addressbook.edit.general"/>
 						</et2-details>

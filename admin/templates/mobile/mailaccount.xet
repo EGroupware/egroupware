@@ -330,7 +330,7 @@
 					<et2-checkbox  label="account editable by user" id="acc_user_editable"></et2-checkbox>
 				</row>
 				<row>
-					<et2-vbox  id="tabs" span="all" width="100%">
+					<et2-vbox span="all" width="100%">
 						<et2-details  id="admin.mailaccount.identity" summary="Identity+Signature" title="Identity&amp;Signature">
 							<template id="admin.mailaccount.identity"/>
 						</et2-details>

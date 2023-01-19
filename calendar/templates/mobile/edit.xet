@@ -243,7 +243,7 @@
 					<et2-select-cat  id="category" multiple="true"></et2-select-cat>
 				</row>
 				<row>
-					<et2-vbox  id="tabs" span="all" width="100%">
+					<et2-vbox span="all" width="100%">
 						<et2-details  id="description" summary="Description" title="">
 							<template id="calendar.edit.description"/>
 						</et2-details>

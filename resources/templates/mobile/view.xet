@@ -82,7 +82,7 @@
 					<et2-checkbox  statustext="Is resource bookable?" id="bookable" span="3"></et2-checkbox>
 				</row>
 				<row>
-					<et2-vbox  id="tabs" span="all" width="100%" tabHeight="250">
+					<et2-vbox span="all" width="100%" tabHeight="250">
 						<et2-details  id="page" summary="Description (short)" title="Informations about the location of resource">
 							<template id="resources.view.page"/>
 						</et2-details>
