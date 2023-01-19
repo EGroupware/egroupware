@@ -192,3 +192,13 @@ function notifications_upgrade20_1()
 {
 	return $GLOBALS['setup_info']['notifications']['currentver'] = '21.1';
 }
+
+function notifications_upgrade21_1()
+{
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_notificationpopup','notify_message',array(
+		'type' => 'longtext',
+		'comment' => 'notification message'
+	));
+
+	return $GLOBALS['setup_info']['notifications']['currentver'] = '23.1';
+}
