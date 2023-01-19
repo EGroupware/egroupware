@@ -435,6 +435,7 @@ function send_template()
 						unset($tab_attrs['label'], $tab_attrs['statustext']);
 						$details[] = $indent."\t".'<et2-details'.stringAttrs($tab_attrs).'>'."\n$indent\t\t".$panels[0][$n]."\n$indent\t</et2-details>";
 					}
+					unset($tabbox_attrs['id']);
 					return $indent.'<vbox'.stringAttrs($tabbox_attrs).">\n".implode("\n", $details)."\n$indent</vbox>";
 				}, $str);
 		}
