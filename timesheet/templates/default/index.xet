@@ -27,6 +27,7 @@
 				<column width="50"/>
 				<column width="10%" disabled="@no_ts_status"/>
 				<column width="15%"/>
+                <column width="120"/>
 			</columns>
 			<rows>
 				<row class="th">
@@ -69,6 +70,7 @@
 					<nextmatch-sortheader label="ID" id="ts_id"/>
 					<et2-nextmatch-header-filter  id="ts_status" emptyLabel="Status"/>
 					<nextmatch-customfields id="customfields"/>
+                    <nextmatch-header label="Kanban"/>
 				</row>
 				<row class="$row_cont[cat_id] $row_cont[class]">
                     <et2-date-time  id="${row}[ts_start]" readonly="true" ></et2-date-time>
@@ -77,16 +79,20 @@
                         <et2-description  id="${row}[ts_title]" class="ts_title $row_cont[titleClass]" noLang="1"></et2-description>
                         <et2-description  id="${row}[ts_description]" class="ts_description" noLang="1"></et2-description>
                     </et2-vbox>
-                    <et2-select-cat  class="noWrap" id="${row}[cat_id]" readonly="true"></et2-select-cat>
-                    <et2-date-duration  id="${row}[ts_duration]" readonly="true" align="right" displayFormat="hm" selectUnit="false"></et2-date-duration>
-                    <et2-number  id="${row}[ts_quantity]" readonly="true" precision="3" noLang="1"></et2-number>
-                    <et2-description  id="${row}[ts_unitprice]" noLang="1"></et2-description>
-                    <et2-number  id="${row}[ts_total]" readonly="true" precision="2" noLang="1"></et2-number>
-                    <et2-select-account  class="$cont[ownerClass]" id="${row}[ts_owner]" readonly="true"></et2-select-account>
-                    <et2-date-time  id="${row}[ts_created]" readonly="true"></et2-date-time>
-                    <et2-description  id="${row}[ts_id]"></et2-description>
-                    <et2-select  id="${row}[ts_status]" readonly="true"></et2-select>
+                    <et2-select-cat class="noWrap" id="${row}[cat_id]" readonly="true"></et2-select-cat>
+                    <et2-date-duration id="${row}[ts_duration]" readonly="true" align="right" displayFormat="hm"
+                                       selectUnit="false"></et2-date-duration>
+                    <et2-number id="${row}[ts_quantity]" readonly="true" precision="3" noLang="1"></et2-number>
+                    <et2-description id="${row}[ts_unitprice]" noLang="1"></et2-description>
+                    <et2-number id="${row}[ts_total]" readonly="true" precision="2" noLang="1"></et2-number>
+                    <et2-select-account class="$cont[ownerClass]" id="${row}[ts_owner]"
+                                        readonly="true"></et2-select-account>
+                    <et2-date-time id="${row}[ts_created]" readonly="true"></et2-date-time>
+                    <et2-description id="${row}[ts_id]"></et2-description>
+                    <et2-select id="${row}[ts_status]" readonly="true"></et2-select>
                     <customfields-list id="$row" readonly="true"/>
+                    <et2-link-string entryId="${row_cont[ts_id]}" application="timesheet"
+                                     onlyApp="kanban"></et2-link-string>
                 </row>
 			</rows>
 		</grid>

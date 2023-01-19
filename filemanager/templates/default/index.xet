@@ -15,6 +15,7 @@
 				<column width="100"/>
 				<column width="30%"/>
 				<column width="20%"/>
+                <column width="120"/>
 			</columns>
 			<rows>
 				<row class="th">
@@ -29,20 +30,23 @@
 					<nextmatch-sortheader label="Group" id="gid"/>
 					<nextmatch-header label="Comment" id="comment"/>
 					<nextmatch-customfields id="customfields" readonly="true"/>
+                    <nextmatch-header label="Kanban"/>
 				</row>
-				<row class="row $row_cont[class]">
-					<et2-vfs-mime  align="center" id="$row"></et2-vfs-mime>
-                    <et2-image  src="${row}[locked]" statustext="$row_cont[locked_status]"></et2-image>
-					<vfs id="$row" no_lang="1"/>
-					<vfs-size align="right" id="${row}[size]"/>
-					<et2-date-time  id="${row}[mtime]" readonly="true"></et2-date-time>
-					<et2-date-time  id="${row}[ctime]" readonly="true"></et2-date-time>
-					<vfs-mode id="${row}[mode]"/>
-					<et2-vfs-uid  id="${row}[uid]" noLang="1"></et2-vfs-uid>
-					<et2-vfs-gid  id="${row}[gid]" noLang="1"></et2-vfs-gid>
-					<et2-description  id="${row}[comment]"></et2-description>
-					<customfields-list id="$row" class="customfields"/>
-				</row>
+                <row class="row $row_cont[class]">
+                    <et2-vfs-mime align="center" id="$row"></et2-vfs-mime>
+                    <et2-image src="${row}[locked]" statustext="$row_cont[locked_status]"></et2-image>
+                    <vfs id="$row" no_lang="1"/>
+                    <vfs-size align="right" id="${row}[size]"/>
+                    <et2-date-time id="${row}[mtime]" readonly="true"></et2-date-time>
+                    <et2-date-time id="${row}[ctime]" readonly="true"></et2-date-time>
+                    <vfs-mode id="${row}[mode]"/>
+                    <et2-vfs-uid id="${row}[uid]" noLang="1"></et2-vfs-uid>
+                    <et2-vfs-gid id="${row}[gid]" noLang="1"></et2-vfs-gid>
+                    <et2-description id="${row}[comment]"></et2-description>
+                    <customfields-list id="$row" class="customfields"/>
+                    <et2-link-string entryId="${row_cont[path]}" application="filemanager"
+                                     onlyApp="kanban"></et2-link-string>
+                </row>
 			</rows>
 		</grid>
 	</template>

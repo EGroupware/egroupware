@@ -16,6 +16,7 @@
 				<column width="180"/>
 				<column width="40"/>
 				<column width="80" disabled="@no_customfields"/>
+                <column width="120"/>
 				<column width="60%" minWidth="100"/>
 				<column width="80" disabled="@no_distribution_list"/>
 				<column width="80"/>
@@ -82,6 +83,7 @@
 					</et2-vbox>
 					<nextmatch-header label="Room" id="room"/>
 					<nextmatch-customfields id="customfields"/>
+                    <nextmatch-header label="Kanban"/>
 					<nextmatch-header label="Note" id="note"/>
 					<nextmatch-header label="Distribution lists" id="distribution_list"/>
 					<et2-vbox>
@@ -138,26 +140,30 @@
 						<et2-url-phone  id="${row}[tel_cell]" readonly="true" class="telNumbers" statustext="Mobile phone"></et2-url-phone>
 						<et2-url-phone  id="${row}[tel_home]" readonly="true" class="telNumbers" statustext="Home phone"></et2-url-phone>
 						<et2-url-phone  id="${row}[tel_cell_private]" readonly="true" class="telNumbers" statustext="Mobile phone (private)"></et2-url-phone>
-						<et2-url-fax  id="${row}[tel_fax]" readonly="true" statustext="Fax"></et2-url-fax>
-						<et2-url-phone  id="${row}[tel_prefered]" readonly="true" class="telNumbers" statustext="$row_cont[tel_prefer_label]"></et2-url-phone>
-					</et2-vbox>
-					<et2-vbox>
-						<et2-url  id="${row}[url]" readonly="true" class="fixedHeight"></et2-url>
-						<et2-url-email  id="${row}[email]" readonly="true" class="fixedHeight"></et2-url-email>
-						<et2-url-email  id="${row}[email_home]" readonly="true" class="fixedHeight"></et2-url-email>
-					</et2-vbox>
-					<et2-description  id="${row}[room]"></et2-description>
-					<customfields-list id="$row" class="customfields"/>
-					<et2-textarea  id="${row}[note]" readonly="true" noLang="1"></et2-textarea>
-					<et2-description  id="${row}[distrib_lists]"></et2-description>
-					<et2-vbox>
-						<et2-select-account  id="${row}[owner]" readonly="true"></et2-select-account>
-						<et2-select-account  id="${row}[shared_with]" readonly="true" multiple="true"></et2-select-account>
-					</et2-vbox>
-					<et2-description  id="${row}[id]" class="contactid"></et2-description>
-					<et2-vbox>
-                        <et2-link  id="${row}[last_link]" app=""></et2-link>
-                        <et2-link  id="${row}[next_link]" app=""></et2-link>
+                        <et2-url-fax id="${row}[tel_fax]" readonly="true" statustext="Fax"></et2-url-fax>
+                        <et2-url-phone id="${row}[tel_prefered]" readonly="true" class="telNumbers"
+                                       statustext="$row_cont[tel_prefer_label]"></et2-url-phone>
+                    </et2-vbox>
+                    <et2-vbox>
+                        <et2-url id="${row}[url]" readonly="true" class="fixedHeight"></et2-url>
+                        <et2-url-email id="${row}[email]" readonly="true" class="fixedHeight"></et2-url-email>
+                        <et2-url-email id="${row}[email_home]" readonly="true" class="fixedHeight"></et2-url-email>
+                    </et2-vbox>
+                    <et2-description id="${row}[room]"></et2-description>
+                    <customfields-list id="$row" class="customfields"/>
+                    <et2-link-string entryId="${row_cont[id]}" application="addressbook"
+                                     onlyApp="kanban"></et2-link-string>
+                    <et2-textarea id="${row}[note]" readonly="true" noLang="1"></et2-textarea>
+                    <et2-description id="${row}[distrib_lists]"></et2-description>
+                    <et2-vbox>
+                        <et2-select-account id="${row}[owner]" readonly="true"></et2-select-account>
+                        <et2-select-account id="${row}[shared_with]" readonly="true"
+                                            multiple="true"></et2-select-account>
+                    </et2-vbox>
+                    <et2-description id="${row}[id]" class="contactid"></et2-description>
+                    <et2-vbox>
+                        <et2-link id="${row}[last_link]" app=""></et2-link>
+                        <et2-link id="${row}[next_link]" app=""></et2-link>
                     </et2-vbox>
 					<et2-vbox>
 						<et2-date-time  id="${row}[created]" readonly="true" class="noWrap"></et2-date-time>

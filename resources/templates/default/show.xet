@@ -12,6 +12,7 @@
                 <column width="15%"/>
                 <column width="15%"/>
                 <column width="15%" disabled="@no_customfields"/>
+                <column width="120"/>
             </columns>
 			<rows>
 				<row class="th">
@@ -36,6 +37,7 @@
                     <nextmatch-sortheader label="Inventory Number" id="inventory_number"/>
 					<nextmatch-header label="Resource / Accessories"/>
 					<nextmatch-customfields id="customfields"/>
+                    <nextmatch-header label="Kanban"/>
 				</row>
 				<row class="$row_cont[class]">
 					<et2-image-expose  id="${row}[picture_thumb]" href="$row_cont[picture_original]" src="$row_cont[picture_thumb]" class="thumbnailImage"></et2-image-expose>
@@ -61,17 +63,21 @@
 						<et2-description  href="resources.resources_ui.edit&amp;res_id=$row_cont[accessory_of]" id="${row}[accessory_of_label]" extraLinkPopup="850x600" noLang="1"></et2-description>
 						<grid width="100%" id="${row}[accessories]">
 							<columns>
-								<column/>
-							</columns>
-							<rows>
-								<row>
-									<et2-description  href="resources.resources_ui.edit&amp;res_id=$row_cont[acc_id]" id="${row}[name]" extraLinkPopup="850x600" noLang="1"></et2-description>
-								</row>
-							</rows>
-						</grid>
-					</et2-vbox>
-					<customfields-list id="$row"/>
-				</row>
+                                <column/>
+                            </columns>
+                            <rows>
+                                <row>
+                                    <et2-description href="resources.resources_ui.edit&amp;res_id=$row_cont[acc_id]"
+                                                     id="${row}[name]" extraLinkPopup="850x600"
+                                                     noLang="1"></et2-description>
+                                </row>
+                            </rows>
+                        </grid>
+                    </et2-vbox>
+                    <customfields-list id="$row"/>
+                    <et2-link-string entryId="${row_cont[res_id]}" application="resources"
+                                     onlyApp="kanban"></et2-link-string>
+                </row>
 			</rows>
 		</grid>
 	</template>

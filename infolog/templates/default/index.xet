@@ -16,6 +16,7 @@
 				<column width="120"/>
 				<column width="45%"/>
 				<column width="15%" disabled="@no_customfields"/>
+                <column width="120"/>
 				<column/>
 				<column width="120"/>
 				<column/>
@@ -51,6 +52,7 @@
 						</rows>
 					</grid>
 					<nextmatch-customfields id="customfields" app="infolog"/>
+                    <nextmatch-header label="Kanban"/>
 					<nextmatch-header label="Category" id="cat_id"/>
 					<et2-vbox>
 						<nextmatch-sortheader label="Startdate" id="info_startdate" sortmode="DESC"/>
@@ -81,26 +83,36 @@
 					</et2-hbox>
 					<et2-vbox  class="infolog_fullWidth">
 						<et2-link  label="%s $row_cont[info_addr]" id="${row}[info_link]" app=""></et2-link>
-						<et2-hbox>
-							<et2-description  id="${row}[info_subject]" class="$row_cont[sub_class] et2_ellipsis" overflow="hidden" width="85%" noLang="1"></et2-description>
-							<et2-description  align="right" id="{$row}[info_number]" class="infolog_infoId" noLang="1"></et2-description>
-						</et2-hbox>
-						<et2-box  class="infoDes">
-							<et2-description  id="${row}[info_des]" noLang="1" activateLinks="1"></et2-description>
-						</et2-box>
-						<et2-link-string  id="${row}[filelinks]"></et2-link-string>
-					</et2-vbox>
-					<customfields-list id="$row" class="customfields" app="infolog"/>
-					<et2-select-cat  id="${row}[info_cat]" readonly="true"></et2-select-cat>
-					<et2-vbox>
-						<et2-date-time  id="${row}[info_startdate]" readonly="true" class="infolog_fixedHeight"></et2-date-time>
-						<et2-date-time  id="${row}[info_enddate]" readonly="true" class="$row_cont[end_class] infolog_fixedHeight"></et2-date-time>
-						<et2-date-time  id="${row}[info_datecompleted]" readonly="true" class="infolog_fixedHeight"></et2-date-time>
-					</et2-vbox>
-					<et2-vbox>
-						<et2-hbox>
-							<et2-date-duration  id="${row}[info_used_time]" readonly="true" disabled="!$row_cont[info_used_time]" selectUnit="true" displayFormat="@@duration_format"></et2-date-duration>
-                            <et2-date-duration  id="${row}[info_sum_timesheets]" readonly="true" class="timesheet" selectUnit="true" displayFormat="@@duration_format"></et2-date-duration>
+                        <et2-hbox>
+                            <et2-description id="${row}[info_subject]" class="$row_cont[sub_class] et2_ellipsis"
+                                             overflow="hidden" width="85%" noLang="1"></et2-description>
+                            <et2-description align="right" id="{$row}[info_number]" class="infolog_infoId"
+                                             noLang="1"></et2-description>
+                        </et2-hbox>
+                        <et2-box class="infoDes">
+                            <et2-description id="${row}[info_des]" noLang="1" activateLinks="1"></et2-description>
+                        </et2-box>
+                        <et2-link-string id="${row}[filelinks]"></et2-link-string>
+                    </et2-vbox>
+                    <customfields-list id="$row" class="customfields" app="infolog"/>
+                    <et2-link-string entryId="${row_cont[info_id]}" application="infolog"
+                                     onlyApp="kanban"></et2-link-string>
+                    <et2-select-cat id="${row}[info_cat]" readonly="true"></et2-select-cat>
+                    <et2-vbox>
+                        <et2-date-time id="${row}[info_startdate]" readonly="true"
+                                       class="infolog_fixedHeight"></et2-date-time>
+                        <et2-date-time id="${row}[info_enddate]" readonly="true"
+                                       class="$row_cont[end_class] infolog_fixedHeight"></et2-date-time>
+                        <et2-date-time id="${row}[info_datecompleted]" readonly="true"
+                                       class="infolog_fixedHeight"></et2-date-time>
+                    </et2-vbox>
+                    <et2-vbox>
+                        <et2-hbox>
+                            <et2-date-duration id="${row}[info_used_time]" readonly="true"
+                                               disabled="!$row_cont[info_used_time]" selectUnit="true"
+                                               displayFormat="@@duration_format"></et2-date-duration>
+                            <et2-date-duration id="${row}[info_sum_timesheets]" readonly="true" class="timesheet"
+                                               selectUnit="true" displayFormat="@@duration_format"></et2-date-duration>
  						</et2-hbox>
                         <et2-date-duration  id="${row}[info_planned_time]" readonly="true" span="all" class="infolog_planned" displayFormat="@@duration_format" selectUnit="true"></et2-date-duration>
 					</et2-vbox>
