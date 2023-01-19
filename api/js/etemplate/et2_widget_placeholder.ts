@@ -136,11 +136,10 @@ export class et2_placeholder_select extends et2_inputWidget
 			content: {app: '', group: '', entry: {}},
 			sel_options: {app: [], group: []},
 			modifications: {
-				outer_box: {
 					entry: {
 						application_list: []
 					}
-				}
+
 			}
 		};
 
@@ -156,13 +155,13 @@ export class et2_placeholder_select extends et2_inputWidget
 		data.content.app = data.sel_options.app[0].value;
 		data.content.group = data.sel_options.group[0]?.value;
 		data.content.entry = {app: data.content.app};
-		data.modifications.outer_box.entry.application_list = Object.keys(_data);
+		data.modifications.entry.application_list = Object.keys(_data);
 		// Remove non-app placeholders (user & general)
 		let non_apps = ['user', 'general'];
 		for(let i = 0; i < non_apps.length; i++)
 		{
-			let index = data.modifications.outer_box.entry.application_list.indexOf(non_apps[i]);
-			data.modifications.outer_box.entry.application_list.splice(index, 1);
+			let index = data.modifications.entry.application_list.indexOf(non_apps[i]);
+			data.modifications.entry.application_list.splice(index, 1);
 		}
 
 		// callback for dialog

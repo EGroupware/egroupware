@@ -117,9 +117,13 @@ export class Et2Listbox extends RowLimitedMixin(Et2widgetWithSelectMixin(SlMenu)
 
 	get value()
 	{
-		let value = this.getAllItems()
-			.filter((item) => item.checked)
-			.map((item) => item.value);
+		let value = [];
+		if(this.defaultSlot)
+		{
+			value = this.getAllItems()
+				.filter((item) => item.checked)
+				.map((item) => item.value);
+		}
 		return this.multiple ? value : value.pop();
 	}
 

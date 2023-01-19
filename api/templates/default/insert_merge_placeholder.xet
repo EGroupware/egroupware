@@ -2,18 +2,19 @@
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
     <template id="etemplate.insert_merge_placeholder" template="" lang="" group="0" version="21.1.001">
-        <et2-vbox  id="outer_box">
-            <et2-hbox  id="selects">
+        <et2-vbox class="outer_box">
+            <et2-hbox class="selects">
                 <et2-vbox>
-                    <et2-select  id="app"></et2-select>
-                    <et2-select  id="group"></et2-select>
+                    <et2-select id="app"></et2-select>
+                    <et2-select id="group"></et2-select>
 
                 </et2-vbox>
-                <et2-listbox  id="placeholder_list" rows="10"/>
+                <et2-listbox id="placeholder_list" rows="10"/>
             </et2-hbox>
-            <et2-hbox  class="preview">
-                <et2-description  id="preview_placeholder"></et2-description>
-                <et2-button  id="insert_placeholder" label="Insert" statustext="Insert placeholder" align="right" image="export"></et2-button>
+            <et2-hbox class="preview">
+                <et2-description id="preview_placeholder"></et2-description>
+                <et2-button id="insert_placeholder" label="Insert" statustext="Insert placeholder" align="right"
+                            image="export"></et2-button>
             </et2-hbox>
             <hrule/>
             <et2-link-entry  id="entry" label="Preview with entry"></et2-link-entry>
@@ -24,13 +25,13 @@
         </et2-vbox>
         <styles>
             /** Structural stuff **/
-            #insert_merge_placeholder #_outer_box > #api\.insert_merge_placeholder_selects {
+            #insert_merge_placeholder ._outer_box > .selects {
             flex: 1 1 80%;
             }
-            #insert_merge_placeholder #_outer_box > label.et2_label {
+            #insert_merge_placeholder ._outer_box > label.et2_label {
             flex: 0 1 auto;
             }
-            #insert_merge_placeholder #_outer_box .preview {
+            #insert_merge_placeholder ._outer_box .preview {
             flex: 1 1 2em;
             font-size: larger;
             }
@@ -81,7 +82,7 @@
             min-width: 500px;
             min-height: 250px;
             }
-            #_outer_box option:first-letter {
+            ._outer_box option:first-letter {
             text-transform: capitalize;
             }
         </styles>
