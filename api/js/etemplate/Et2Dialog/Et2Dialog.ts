@@ -309,7 +309,11 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 			...super.slots,
 			'': () =>
 			{
-				return this._contentTemplate();
+				// to fix problem with Safari 16.2 of NOT displaying the content, we have to use the following,
+				// instead of just return this._contentTemplate()
+				let div = document.createElement("div");
+				render(this._contentTemplate(), div);
+				return div.children[0];
 			}
 		}
 	}
