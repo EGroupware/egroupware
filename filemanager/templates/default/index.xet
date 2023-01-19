@@ -30,7 +30,7 @@
 					<nextmatch-sortheader label="Group" id="gid"/>
 					<nextmatch-header label="Comment" id="comment"/>
 					<nextmatch-customfields id="customfields" readonly="true"/>
-                    <nextmatch-header label="Kanban"/>
+                    <nextmatch-header label="Kanban" id="kanban"/>
 				</row>
                 <row class="row $row_cont[class]">
                     <et2-vfs-mime align="center" id="$row"></et2-vfs-mime>

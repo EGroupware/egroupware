@@ -52,7 +52,7 @@
 						</rows>
 					</grid>
 					<nextmatch-customfields id="customfields" app="infolog"/>
-                    <nextmatch-header label="Kanban"/>
+                    <nextmatch-header label="Kanban" id="kanban"/>
 					<nextmatch-header label="Category" id="cat_id"/>
 					<et2-vbox>
 						<nextmatch-sortheader label="Startdate" id="info_startdate" sortmode="DESC"/>

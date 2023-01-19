@@ -37,7 +37,7 @@
                     <nextmatch-sortheader label="Inventory Number" id="inventory_number"/>
 					<nextmatch-header label="Resource / Accessories"/>
 					<nextmatch-customfields id="customfields"/>
-                    <nextmatch-header label="Kanban"/>
+                    <nextmatch-header label="Kanban" id="kanban"/>
 				</row>
 				<row class="$row_cont[class]">
 					<et2-image-expose  id="${row}[picture_thumb]" href="$row_cont[picture_original]" src="$row_cont[picture_thumb]" class="thumbnailImage"></et2-image-expose>
