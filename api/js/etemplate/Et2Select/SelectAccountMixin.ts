@@ -58,10 +58,28 @@ export const SelectAccountMixin = <T extends Constructor<LitElement>>(superclass
 				return;
 			}
 			let val = Array.isArray(this.value) ? this.value : [this.value];
+
+			if(this.isConnected)
+			{
+				this._find_options(val)
+			}
+			else
+			{
+				// If not already connected, wait until any provided select_options have been found
+				this.updateComplete.then(() =>
+				{
+					this._find_options(val);
+					this.requestUpdate('select_options');
+				});
+			}
+		}
+
+		_find_options(val)
+		{
 			for(let id of val)
 			{
 				// Don't add if it's already there
-				if(this.account_options.findIndex(o => o.value == id) != -1)
+				if(this.select_options.findIndex(o => o.value == id) != -1)
 				{
 					continue;
 				}
@@ -69,7 +87,7 @@ export const SelectAccountMixin = <T extends Constructor<LitElement>>(superclass
 				let account_name = null;
 				let option = <SelectOption>{value: id, label: id + " ..."};
 				this.account_options.push(option);
-				if(new_value && (account_name = this.egw().link_title('api-accounts', id, false)))
+				if(this.value && (account_name = this.egw().link_title('api-accounts', id, false)))
 				{
 					option.label = account_name;
 				}

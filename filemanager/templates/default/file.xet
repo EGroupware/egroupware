@@ -88,20 +88,22 @@
 				<row>
 					<groupbox>
 						<caption label="Owner"/>
-						<grid>
-							<columns>
-								<column width="80"/>
-								<column/>
-							</columns>
-							<rows>
-								<row>
-									<et2-description  value="User"></et2-description>
-									<et2-select-account  label="@ro_uid_root" id="uid" emptyLabel="root" accountType="accounts"></et2-select-account>
-								</row>
-								<row>
-									<et2-description  value="Group"></et2-description>
-									<et2-select-account  label="@ro_gid_root" id="gid" emptyLabel="root" accountType="groups"></et2-select-account>
-								</row>
+						<grid width="100%">
+                            <columns>
+                                <column width="80"/>
+                                <column/>
+                            </columns>
+                            <rows>
+                                <row>
+                                    <et2-description value="User"></et2-description>
+                                    <et2-select-account label="@ro_uid_root" id="uid"
+                                                        accountType="accounts"></et2-select-account>
+                                </row>
+                                <row>
+                                    <et2-description value="Group"></et2-description>
+                                    <et2-select-account label="@ro_gid_root" id="gid"
+                                                        accountType="groups"></et2-select-account>
+                                </row>
 							</rows>
 						</grid>
 					</groupbox>

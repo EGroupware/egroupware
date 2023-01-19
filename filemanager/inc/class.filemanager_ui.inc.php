@@ -1520,17 +1520,21 @@ class filemanager_ui
 		}
 		else
 		{
-			$sel_options['owner']=$sel_options['group']=$sel_options['other'] = array(
+			$sel_options['owner'] = $sel_options['group'] = $sel_options['other'] = array(
 				6 => lang('Read & write access'),
 				4 => lang('Read access only'),
 				0 => lang('No access'),
 			);
 		}
+		// Use 'root' for ID 0
+		$sel_options['gid'] = $sel_options['uid'] = array(
+			['value' => '0', 'label' => lang("root")]
+		);
 
 		// Times are in server time, convert to user timezone
-		foreach(['mtime','ctime'] as $date_field)
+		foreach(['mtime', 'ctime'] as $date_field)
 		{
-			$time = new Api\DateTime($content[$date_field],Api\DateTime::$server_timezone);
+			$time = new Api\DateTime($content[$date_field], Api\DateTime::$server_timezone);
 			$time->setUser();
 			$content[$date_field] = $time->format('ts');
 		}
