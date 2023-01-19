@@ -889,6 +889,9 @@ class AdminApp extends EgwApp
 		if(this.acl_dialog != null)
 		{
 			content = this.acl_dialog.get_value() || {};
+			// returning tabs as content seems to screw up recreating the dialog
+			// @todo: maybe this should be investigated further in et2Tabs widget
+			delete(content.tabs);
 
 			// Destroy the dialog
 			this.acl_dialog.destroy();
