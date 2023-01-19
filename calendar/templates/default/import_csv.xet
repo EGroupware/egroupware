@@ -2,7 +2,7 @@
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
     <template id="calendar.import_csv" template="" lang="" group="0" version="1.9.001">
-        <calendar-owner id="owner" label="Import into" emptyLabel="From file" multiple="false"
+        <calendar-owner id="cal_owner" label="Import into" emptyLabel="From file" multiple="false"
                         class="et2-label-fixed"></calendar-owner>
         <template id="importexport.import_dialog.csv"/>
     </template>

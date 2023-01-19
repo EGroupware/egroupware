@@ -134,7 +134,7 @@ class calendar_import_ical implements importexport_iface_import_plugin  {
 		}
 		// switch off notifications by default
 		$plugin_options = $_definition->plugin_options;
-		if (!array_key_exists('no_notification', $_definition->plugin_options))
+		if(!array_key_exists('no_notification', $_definition->plugin_options))
 		{
 			$plugin_options['no_notification'] = true;
 			$_definition->plugin_options = $plugin_options;
@@ -142,6 +142,10 @@ class calendar_import_ical implements importexport_iface_import_plugin  {
 
 		// Set owner, if not set will be null (current user)
 		$owner = $plugin_options['cal_owner'];
+		if(is_array($owner))
+		{
+			$owner = array_pop($owner);
+		}
 
 		// Purge
 		if($plugin_options['empty_before_import'])
@@ -149,9 +153,9 @@ class calendar_import_ical implements importexport_iface_import_plugin  {
 			$remove_past = new Api\DateTime();
 			$remove_future = new Api\DateTime();
 			$plugin_options = array_merge(array('remove_past' => 100, 'remove_future' => 365), $plugin_options);
-			foreach(array('remove_past','remove_future') as $date)
+			foreach(array('remove_past', 'remove_future') as $date)
 			{
-				${$date}->add( (($date == 'remove_past' ? -1 : 1) * (int)$plugin_options[$date]) . ' days');
+				${$date}->add((($date == 'remove_past' ? -1 : 1) * (int)$plugin_options[$date]) . ' days');
 			}
 			$this->purge_calendar(
 					$owner,
@@ -295,15 +299,16 @@ class calendar_import_ical implements importexport_iface_import_plugin  {
 	public function get_options_etpl(importexport_definition &$definition=null)
 	{
 		return array(
-			'name' => 'addressbook.import_vcard',
-			'content' => array(
+			'name'        => 'calendar.import_ical',
+			'content'     => array(
 				'file_type' => 'ical',
-				'charset' => $GLOBALS['egw_info']['user']['preferences']['common']['csv_charset']
+				'charset'   => $GLOBALS['egw_info']['user']['preferences']['common']['csv_charset'],
+				'cal_owner' => $definition->plugin_options['cal_owner'] ?? $GLOBALS['egw_info']['user']['account_id']
 			),
 			'sel_options' => array(
 				'charset' => Api\Translation::get_installed_charsets()
 			),
-			'preserv' => array()
+			'preserv'     => array()
 		);
 	}
 

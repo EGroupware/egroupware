@@ -307,6 +307,7 @@ how much entries to skip	calendar	en	How much entries to skip?
 html link to the current record	calendar	en	HTML link to the current record
 ical	calendar	en	iCal
 ical / rfc2445	calendar	en	iCal / rfc2445
+iCal cannot change the owner of an existing event.  This applies to new events only.	calendar	en	iCal cannot change the owner of an existing event.  This applies to new events only.
 ical export	calendar	en	iCal export
 ical file	calendar	en	iCal file
 ical import	calendar	en	iCal import

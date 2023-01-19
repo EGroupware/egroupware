@@ -91,20 +91,20 @@ class addressbook_import_vcard implements importexport_iface_import_plugin  {
 		$this->definition = $_definition;
 
 		// user, is admin ?
-		$this->is_admin = isset( $GLOBALS['egw_info']['user']['apps']['admin'] ) && $GLOBALS['egw_info']['user']['apps']['admin'];
+		$this->is_admin = isset($GLOBALS['egw_info']['user']['apps']['admin']) && $GLOBALS['egw_info']['user']['apps']['admin'];
 		$this->user = $GLOBALS['egw_info']['user']['account_id'];
 
-                // set contact owner
-                $contact_owner = isset( $_definition->plugin_options['contact_owner'] ) ?
-                        $_definition->plugin_options['contact_owner'] : $this->user;
-                // Import into importer's personal addressbook
-                if($contact_owner == 'personal')
-                {
-                        $contact_owner = $this->user;
-                }
+		// set contact owner
+		$contact_owner = isset($_definition->plugin_options['contact_owner']) ?
+			$_definition->plugin_options['contact_owner'] : $this->user;
+		// Import into importer's personal addressbook
+		if($contact_owner == 'personal')
+		{
+			$contact_owner = $this->user;
+		}
 
 		// dry run?
-		$this->dry_run = isset( $_definition->plugin_options['dry_run'] ) ? $_definition->plugin_options['dry_run'] :  false;
+		$this->dry_run = isset($_definition->plugin_options['dry_run']) ? $_definition->plugin_options['dry_run'] : false;
 
 		// Needed for categories to work right
 		$GLOBALS['egw_info']['flags']['currentapp'] = 'addressbook';
@@ -352,16 +352,21 @@ class addressbook_import_vcard implements importexport_iface_import_plugin  {
 	 */
 	public function get_options_etpl(importexport_definition &$definition=null)
 	{
+		$contacts = new EGroupware\Api\Contacts();
 		$charset = $definition->plugin_options['charset'];
 		if($charset == 'user') $charset = $GLOBALS['egw_info']['user']['preferences']['addressbook']['vcard_charset'];
 		return array(
 			'name' => 'addressbook.import_vcard',
 			'content' => array(
-				'file_type' => 'vcard,ical,vcf',
-				'charset' => $charset
+				'file_type'     => 'vcard,ical,vcf',
+				'charset'       => $charset,
+				'contact_owner' => $definition->plugin_options['contact_owner'] == 'personal' ?
+					$GLOBALS['egw_info']['user']['account_id'] :
+					$definition->plugin_options['contact_owner']
 			),
 			'sel_options' => array(
-				'charset' => Api\Translation::get_installed_charsets()
+				'charset'       => Api\Translation::get_installed_charsets(),
+				'contact_owner' => $contacts->get_addressbooks(Api\Acl::ADD)
 			),
 			'preserv' => array()
 		);

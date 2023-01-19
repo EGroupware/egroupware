@@ -2,20 +2,10 @@
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="calendar.import_ical" template="" lang="" group="0" version="1.9.001">
-		<grid>
-			<columns>
-				<column/>
-				<column width="180px"/>
-			</columns>
-			<rows>
-				<row>
-					<et2-description  value="Charset of file"></et2-description>
-					<et2-select  class="width180" id="charset" noLang="1"></et2-select>
-				</row>
-			</rows>
-		</grid>
-		<styles>
-			.width180 select { width:150px;}
-		</styles>
-	</template>
+        <et2-select class="et2-label-fixed" id="charset" noLang="1" label="Charset of file"></et2-select>
+        <calendar-owner id="cal_owner" label="Import into" emptyLabel="From file" multiple="false"
+                        class="et2-label-fixed"
+                        helpText="iCal cannot change the owner of an existing event.  This applies to new events only.">
+        </calendar-owner>
+    </template>
 </overlay>
