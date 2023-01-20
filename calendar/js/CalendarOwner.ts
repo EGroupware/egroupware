@@ -113,4 +113,7 @@ export class CalendarOwner extends Et2Select
 	}
 }
 
-customElements.define("et2-calendar-owner", CalendarOwner);
+if(!customElements.get("et2-calendar-owner"))
+{
+	customElements.define("et2-calendar-owner", CalendarOwner);
+}
