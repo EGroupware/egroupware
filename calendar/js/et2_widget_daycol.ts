@@ -478,12 +478,13 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 				if(typeof fetched_holidays[i]['birthyear'] !== 'undefined')
 				{
 					// Show birthdays as events on mobile or by preference
-					if(birthdays_as_events)
+					if(birthdays_as_events && this.getWidgetById("event_" + escape(fetched_holidays[i].name)) == null)
 					{
 						// Create event
 						var event = et2_createWidget('calendar-event', {
 							id: 'event_' + fetched_holidays[i].name,
 							value: {
+								row_id: escape(fetched_holidays[i].name),
 								title: fetched_holidays[i].name,
 								whole_day: true,
 								whole_day_on_top: true,
