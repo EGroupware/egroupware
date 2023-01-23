@@ -83,7 +83,7 @@ EGroupware can be integrated easily into existing authentication solutions such 
 <p><b>Support is available</b> via the following options:
 <ul>
 <li><a href="https://www.egroupware.org/egroupware-support/" target="_blank">Commercial support and consulting</a> from EGroupware GmbH</li>
-<li><a href="https://www.egroupware.org/happy-people/partners/" target="_blank">EGroupware partners</a></li>
+<li><a href="https://www.egroupware.org/egroupware-reseller/" target="_blank">EGroupware partners</a></li>
 <li><a href="https://help.egroupware.org/" target="_blank">Community forum</a></li>
 </ul>
 </p>');
