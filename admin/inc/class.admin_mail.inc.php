@@ -228,8 +228,8 @@ class admin_mail
 		{
 			$content['acc_imap_username'] = $content['ident_email'];
 		}
-		// supported oauth providers
-		if (($oauth = OpenIDConnectClient::providerByDomain($content['acc_imap_username'])))
+		// supported oauth provider or mail-server of them for custom domains
+		if (($oauth = OpenIDConnectClient::providerByDomain($content['acc_imap_username'], $content['acc_imap_host'])))
 		{
 			$content['output'] .= lang('Using IMAP:%1, SMTP:%2, OAUTH:%3:', $oauth['imap'], $oauth['smtp'], $oauth['provider'])."\n";
 			$hosts[$oauth['imap']] = true;
