@@ -2182,15 +2182,16 @@ lion-validation-feedback[type] {
     text-align: center;
     border-radius: 3px;
     position: relative;
-    min-width: 40px;
     order: 99;
+    display: flex;
+    align-items: center;
 }
 
 .nextmatch_header .header_count span {
     position: relative;
-    top: 8px;
     font-size: 12px;
     color: gray;
+    display: contents;
 }
 
 .nextmatch_header_row .filtersContainer {
