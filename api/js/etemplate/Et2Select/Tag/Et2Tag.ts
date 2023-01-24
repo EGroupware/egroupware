@@ -42,6 +42,12 @@ export class Et2Tag extends Et2Widget(SlTag)
 			  text-overflow: ellipsis;
 			}
 
+			.tag__edit {
+			  flex: 10 1 auto;
+			  min-width: 20ex;
+			  width: 60ex;
+			}
+
 			/* Avoid button getting truncated by right side of button */
 
 			.tag__remove {
@@ -160,7 +166,7 @@ export class Et2Tag extends Et2Widget(SlTag)
 	_editTemplate() : TemplateResult
 	{
 		return html`
-            <span part="content">
+            <span part="content" class="tag__content tag__edit">
 				<et2-textbox value="${this.value}"
                              @sl-change=${this.handleChange}
                              @blur=${this.stopEdit}
