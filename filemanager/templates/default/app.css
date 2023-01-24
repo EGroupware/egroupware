@@ -34,6 +34,11 @@ input#filemanager-index_path {
 	text-indent: 100px;
 }
 
+/* Let path have more space */
+#filemanager-index_filemanager-index-header_row {
+	flex: 20 1 auto;
+}
+
 /**
  * Tile view
  */

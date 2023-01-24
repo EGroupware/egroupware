@@ -1324,7 +1324,9 @@ et2-link-list et2-link:hover {
 }
 
 div.et2_vfsPath {
-    position: relative;
+	position: relative;
+	flex: 20 1 auto;
+
 }
 
 div.et2_vfsPath ul {
@@ -1398,11 +1400,12 @@ li.vfsPath.et2_clickable:not(:first-child):after {
 }
 
 .et2_vfsPath input.et2_textbox.et2_vfs {
-    background-image: url(images/edit.png);
-    background-repeat: no-repeat;
-    background-size: 16px;
-    background-position: center;
-    background-position-x: 98%;
+	background-image: url(images/edit.png);
+	background-repeat: no-repeat;
+	background-size: 16px;
+	background-position: center;
+	background-position-x: 98%;
+	width: calc(100% - 1ex);
 }
 
 div.et2_vfsPath li:hover {
