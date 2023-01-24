@@ -3674,6 +3674,11 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 		{
 			select.select_options = options;
 		}
+		if(select.disabled)
+		{
+			// Don't just disable, hide completely
+			select.classList.add("hideme");
+		}
 
 		// Set value
 		select.set_value(value);
