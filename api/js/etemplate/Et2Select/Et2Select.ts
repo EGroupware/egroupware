@@ -443,7 +443,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 	 * @see createTagNode()
 	 * @returns {string}
 	 */
-	public get tagTag()
+	public get tagTag() : string
 	{
 		return "et2-tag";
 	}
@@ -458,7 +458,15 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 	 */
 	protected _createTagNode(item)
 	{
-		const tag = <Et2Tag>document.createElement(this.tagTag);
+		let tag;
+		if(typeof super._createTagNode == "function")
+		{
+			tag = super._createTagNode(item);
+		}
+		else
+		{
+			tag = <Et2Tag>document.createElement(this.tagTag);
+		}
 		tag.value = item.value;
 		tag.textContent = item.getTextLabel().trim();
 		tag.class = item.classList.value + " search_tag";

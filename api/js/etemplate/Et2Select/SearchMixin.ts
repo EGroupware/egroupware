@@ -13,6 +13,7 @@ import {cleanSelectOptions, SelectOption} from "./FindSelectOptions";
 import {Validator} from "@lion/form-core";
 import {Et2Tag} from "./Tag/Et2Tag";
 import {SlMenuItem} from "@shoelace-style/shoelace";
+import {waitForEvent} from "@shoelace-style/shoelace/dist/internal/event";
 
 // Otherwise import gets stripped
 let keep_import : Et2Tag;
@@ -292,6 +293,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 
 			this.handleMenuSelect = this.handleMenuSelect.bind(this);
 			this._handleChange = this._handleChange.bind(this);
+			this.handleTagEdit = this.handleTagEdit.bind(this);
 			this._handleAfterShow = this._handleAfterShow.bind(this);
 			this._handleSearchBlur = this._handleSearchBlur.bind(this);
 			this._handleClear = this._handleClear.bind(this);
@@ -361,6 +363,11 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 				// Normally this should be handled in render(), but we have to add our nodes in
 				this._addNodes();
 			}
+			// Update any tags if edit mode changes
+			if(changedProperties.has("editModeEnabled"))
+			{
+				this.shadowRoot.querySelectorAll(this.tagTag).forEach(tag => tag.editable = this.editModeEnabled);
+			}
 		}
 
 		/**
@@ -391,6 +398,21 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 				let control = this.shadowRoot.querySelector(".form-control-input");
 				control.append(div);
 			});
+		}
+
+		/**
+		 * Customise how tags are rendered.
+		 * Override to add edit
+		 *
+		 * @param item
+		 * @protected
+		 */
+		protected _createTagNode(item)
+		{
+			let tag = <Et2Tag>document.createElement(this.tagTag);
+			tag.editable = this.editModeEnabled;
+
+			return tag;
 		}
 
 		protected _searchInputTemplate()
@@ -581,6 +603,8 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 
 				this._searchInputNode?.removeEventListener("change", this._searchInputNode.handleChange);
 				this._searchInputNode?.addEventListener("change", this._handleSearchChange);
+
+				this.dropdown.querySelector('.select__label').addEventListener("change", this.handleTagEdit);
 			});
 		}
 
@@ -726,7 +750,11 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			// Find the tag
 			const path = event.composedPath();
 			const tag = <Et2Tag>path.find((el) => el instanceof Et2Tag);
-			this.startEdit(tag);
+			this.dropdown.hide();
+			this.updateComplete.then(() =>
+			{
+				tag.startEdit(event);
+			});
 		}
 
 		/**
@@ -1197,8 +1225,8 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			if(!this.querySelector("[value='" + text.replace(/'/g, "\\\'") + "']") && !this.__select_options.find(o => o.value == text))
 			{
 				this.__select_options.push(<SelectOption>{
-					value: text,
-					label: text,
+					value: text.trim(),
+					label: text.trim(),
 					class: "freeEntry"
 				});
 				this.requestUpdate('select_options');
@@ -1239,8 +1267,41 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			return validators.length > 0 && result.length == 0 || validators.length == 0;
 		}
 
+		public handleTagEdit(event)
+		{
+			let value = event.target.value;
+			let original = event.target.dataset.original_value;
+
+			if(!value || !this.allowFreeEntries || !this.validateFreeEntry(value))
+			{
+				// Not a good value, reset it.
+				event.target.variant = "danger"
+				return false;
+			}
+
+			event.target.variant = "success";
+
+			// Add to internal list
+			this.createFreeEntry(value);
+
+			// Remove original from value & DOM
+			if(value != original)
+			{
+				if(this.multiple)
+				{
+					this.value = this.value.filter(v => v !== original);
+				}
+				else
+				{
+					this.value = value;
+				}
+				this.querySelector("[value='" + original.replace(/'/g, "\\\'") + "']")?.remove();
+				this.__select_options = this.__select_options.filter(v => v.value !== original);
+			}
+		}
+
 		/**
-		 * Start editing an existing (free) tag, or the current value if multiple=false
+		 * Start editing the current value if multiple=false
 		 *
 		 * @param {Et2Tag} tag
 		 */
@@ -1249,23 +1310,21 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			const tag_value = tag ? tag.value : this.value;
 
 			// hide the menu
-			//this.dropdown.hide()
+			this.dropdown.hide()
 
-			// Turn on edit UI
-			this._activeControls.classList.add("editing", "active");
-
-			// Pre-set value to tag value
-			this._editInputNode.style.display = "";
-			this._editInputNode.value = tag_value
-			this._editInputNode.focus();
-
-			if(tag)
+			waitForEvent(this, "sl-after-hide").then(() =>
 			{
-				tag.remove();
-			}
+				// Turn on edit UI
+				this._activeControls.classList.add("editing", "active");
 
-			// If they abort the edit, they'll want the original back.
-			this._editInputNode.dataset.initial = tag_value;
+				// Pre-set value to tag value
+				this._editInputNode.style.display = "";
+				this._editInputNode.value = tag_value
+				this._editInputNode.focus();
+
+				// If they abort the edit, they'll want the original back.
+				this._editInputNode.dataset.initial = tag_value;
+			})
 		}
 
 		protected stopEdit(abort = false)

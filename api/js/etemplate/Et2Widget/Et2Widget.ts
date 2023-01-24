@@ -1304,7 +1304,6 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 			{
 				return (<et2_widget>this.getParent()).egw();
 			}
-
 			// Get the window this object belongs to
 			let wnd = null;
 			// @ts-ignore Technically this doesn't have implements(), but it's mixed in
@@ -1318,7 +1317,7 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 			}
 
 			// If we're the root object, return the phpgwapi API instance
-			return typeof egw === "function" ? egw('phpgwapi', wnd) : null;
+			return typeof egw === "function" ? egw('phpgwapi', wnd) : (window['egw'] ? window['egw'] : null);
 		}
 	}
 
