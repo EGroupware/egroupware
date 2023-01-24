@@ -664,7 +664,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			// I haven't found an event or Promise to hook on to
 			window.setTimeout(() =>
 			{
-				if(this.dropdown?.getAttribute("distance") && this.dropdown?.positioner.getAttribute("data-placement") == "top")
+				if(this.dropdown?.getAttribute("distance") && this.dropdown?.popup?.dataset.currentPlacement == "top")
 				{
 					this.dropdown.setAttribute("distance", 0);
 					this.dropdown.reposition();
