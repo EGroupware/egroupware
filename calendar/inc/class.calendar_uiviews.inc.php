@@ -406,14 +406,14 @@ class calendar_uiviews extends calendar_ui
 				$img = self::integration_get_icons($app, null, [])[0];
 				preg_match('/<img src=\"(.*?)\".*\/>/', $img, $results);
 				$actions['integration_'.$app] = array(
-					'caption' => $app,
-					'iconUrl' => $results[1] ?: "$app\navbar",
-					'checkbox' => true,
-					'hint' => lang("show %1 from %2",lang(Link::get_registry($app,'entries') ?: 'entries'),lang(Link::get_registry($app,'name'))),
-					'group' => 'integration',
+					'caption'   => $data['selects']['caption'] ?? $app,
+					'iconUrl'   => $results[1] ?: "$app\navbar",
+					'checkbox'  => true,
+					'hint'      => lang("show %1 from %2", lang(Link::get_registry($app, 'entries') ?: 'entries'), lang(Link::get_registry($app, 'name'))),
+					'group'     => 'integration',
 					'onExecute' => 'javaScript:app.calendar.toolbar_integration_action',
-					'checked' => in_array($app, (array)$this->cal_prefs['integration_toggle']),
-					'data' => array('toggle_off' => '0', 'toggle_on' => '1')
+					'checked'   => in_array($app, (array)$this->cal_prefs['integration_toggle']),
+					'data'      => array('toggle_off' => '0', 'toggle_on' => '1')
 				);
 
 			}
