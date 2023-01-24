@@ -1478,7 +1478,7 @@ img.calendar_print_button, img.calendar_print_appicon {
 	background-size: 20px;
 	background-repeat: no-repeat;
 	background-position: center;
-	filter: grayscale(1) contrast(0.9999) opacity(0.7);
+	filter: brightness(0) contrast(0.3) opacity(0.7);
 }
 et2-switch#calendar-toolbar_toolbar-weekend {
 	background-image: none !important;
