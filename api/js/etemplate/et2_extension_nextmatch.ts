@@ -3633,7 +3633,7 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 		// Set select options
 		// Check in content for options-<name>
 		const mgr = this.nextmatch.getArrayMgr("content");
-		let options = false
+		let options = false;
 		// Sometimes legacy stuff puts it in here
 		options = mgr.getEntry('rows[sel_options][' + name + ']');
 
@@ -3660,7 +3660,9 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 			}
 		}
 		// Legacy: Add in 'All' option for cat_id, if not provided.
-		if(name == 'cat_id' && (options == null || options != null && (typeof options[''] == 'undefined' && typeof options[0] != 'undefined' && options[0].value != '')))
+		if(name == 'cat_id' && (options == null || options != null && (typeof options[''] == 'undefined' && typeof options[0] != 'undefined' && options[0].value != ''))
+			// Not mail, since it needs to be different
+			&& !['mail'].includes(this.getInstanceManager().app))
 		{
 			widget_options.empty_label = this.egw().lang('All categories');
 		}
