@@ -435,7 +435,7 @@ export class et2_historylog extends et2_valueWidget implements et2_IDataProvider
 				for(let i in field)
 				{
 					let type = field[i];
-					const child_attrs = jQuery.extend({}, attrs);
+					const child_attrs = jQuery.extend({readonly: true}, attrs);
 					if(typeof type === 'object')
 					{
 						child_attrs['select_options'] = cleanSelectOptions(field[i]);
