@@ -626,7 +626,7 @@ class Base
 			{
 				if (!$this->autoinc_id || $db_col != $this->autoinc_id)	// not write auto-inc-id
 				{
-					if (!array_key_exists($col,$this->data) && 	// handling of unset columns in $this->data
+					if (!array_key_exists($col,$this->data ?: []) && 	// handling of unset columns in $this->data
 						(isset($this->table_def['fd'][$db_col]['default']) ||	// we have a default value
 						 !isset($this->table_def['fd'][$db_col]['nullable']) || $this->table_def['fd'][$db_col]['nullable']))	// column is nullable
 					{
