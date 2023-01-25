@@ -35,7 +35,7 @@
                             <et2-vbox>
                                 <et2-hbox>
                                     <et2-details  class="details" toggleOnHover="true" hoist="true" toggleAlign="left">
-                                        <et2-select-email  slot="summary" id="fromaddress" readonly="true" multiple="true" onclick="app.mail.onclickCompose"/>
+                                        <et2-select-email  slot="summary" id="fromaddress" readonly="true" multiple="true" onclick="app.mail.onclickCompose"></et2-select-email>
                                         <et2-hbox>
                                             <et2-description  value="From" class="firstColumnTitle"></et2-description>
                                             <et2-select-email  id="additionalfromaddress" readonly="true" multiple="true" onclick="app.mail.onclickCompose"></et2-select-email>
