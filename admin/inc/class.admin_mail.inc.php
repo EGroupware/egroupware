@@ -33,7 +33,7 @@ class admin_mail
 	/**
 	 * Enable logging of IMAP communication to given path, eg. /tmp/autoconfig.log
 	 */
-	const DEBUG_LOG = '/var/lib/egroupware/imap.log';
+	const DEBUG_LOG = null; //'/var/lib/egroupware/imap.log';
 	/**
 	 * Connection timeout in seconds used in autoconfig, can and should be really short!
 	 */
@@ -1243,7 +1243,9 @@ class admin_mail
 			$sel_options['acc_smtp_ssl'] = self::$ssl_types;
 
 		// admin access to account with no credentials available
-		if ($this->is_admin && (!empty($content['called_for']) || empty($content['acc_imap_host']) || $content['called_for']))
+		if ($this->is_admin && (!empty($content['called_for']) || empty($content['acc_imap_host']) || $content['called_for']) ||
+			// if OAuth failed, do not try to connect and trigger next authentication(-failure), but show failure message
+			!empty($content['oauth_failure']))
 		{
 			// can't connection to imap --> allow free entries in taglists
 			foreach(array('acc_folder_sent', 'acc_folder_trash', 'acc_folder_draft', 'acc_folder_template', 'acc_folder_junk') as $folder)
@@ -1523,7 +1525,7 @@ class admin_mail
 			// Google requires access_type=offline&prompt=consent to return a refresh-token
 			if (!empty($content[OpenIDConnectClient::ADD_AUTH_PARAM]))
 			{
-				$oidc->addAuthParam(str_replace('$username', $content['acc_oauth_username'] ?? $content['acc_imap_username'], $content[OpenIDConnectClient::ADD_AUTH_PARAM]));
+				$oidc->addAuthParam(str_replace('$username', $content['acc_oauth_username'] ?? $content['acc_imap_username'] ?? $content['ident_email'], $content[OpenIDConnectClient::ADD_AUTH_PARAM]));
 			}
 
 			// we need to use response_code=query / GET request to keep our session token!
@@ -1571,8 +1573,10 @@ class admin_mail
 		$GLOBALS['egw_info']['flags']['currentapp'] = 'admin';
 
 		$obj = new self;
+		unset($content['oauth_failure']);
 		if (!empty($content['acc_id']))
 		{
+			$content['button'] = ['save' => true];  // automatic save token, refresh mail app and close popup
 			$obj->edit($content, lang('Use save or apply to store the received OAuth token!'), 'info');
 		}
 		else
@@ -1592,6 +1596,7 @@ class admin_mail
 		$GLOBALS['egw_info']['flags']['currentapp'] = 'admin';
 
 		$obj = new self;
+		$content['oauth_failure'] = $exception ?: true;
 		if (!empty($content['acc_id']))
 		{
 			$obj->edit($content, lang('OAuth Authentiction').': '.($exception ? $exception->getMessage() : lang('failed')), 'error');

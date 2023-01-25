@@ -192,6 +192,21 @@ class mail_ui
 				'msg_type' => $msg_type
 			);
 
+		// if we already called the wizard, ignore further calls for 5min = 300s
+		if (!Api\Cache::getSession(__CLASS__, $id='call-wizzard-'.self::$icServerID))
+		{
+			Api\Cache::setSession(__CLASS__, $id, self::$icServerID, 300);
+		}
+		// ignore further calls / one popup is enough
+		elseif($exit)
+		{
+			exit;
+		}
+		else
+		{
+			return;
+		}
+
 		if (Api\Json\Response::isJSONResponse())
 		{
 			$response = Api\Json\Response::get();
