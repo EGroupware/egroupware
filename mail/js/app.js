@@ -214,10 +214,19 @@ app.classes.mail = AppJS.extend(
 				if(nm != null && (typeof jQuery._data(nm).events=='undefined'||typeof jQuery._data(nm).events.refresh == 'undefined'))
 				{
 					var self = this;
-					jQuery(nm).on('refresh',function(_event, _widget, _row_id, _type) {
+					jQuery(nm).on('refresh', (_event, _widget, _row_id, _type) =>
+					{
 						if (!self.push_active[_widget.settings.foldertree.split("::")[0]])
 						{
-							self.mail_refreshFolderStatus.call(self,undefined,undefined,false);
+							// defer calls to mail_refreshFolderStatus for 2s, to accumulate updates of multiple rows e.g. deleting multiple emails
+							if (typeof self.refresh_timeout === 'undefined')
+							{
+								self.refresh_timeout = window.setTimeout(() =>
+								{
+									delete self.refresh_timeout;
+									self.mail_refreshFolderStatus.call(self, undefined, undefined, false);
+								}, 2000);
+							}
 						}
 					});
 				}
