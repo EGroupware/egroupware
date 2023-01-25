@@ -85,7 +85,7 @@ export const SelectAccountMixin = <T extends Constructor<LitElement>>(superclass
 				}
 
 				let account_name = null;
-				let option = <SelectOption>{value: id, label: id + " ..."};
+				let option = <SelectOption>{value: "" + id, label: id + " ..."};
 				this.account_options.push(option);
 				if(this.value && (account_name = this.egw().link_title('api-accounts', id, false)))
 				{
