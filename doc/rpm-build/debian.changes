@@ -1,3 +1,14 @@
+egroupware-docker (23.1.20230125) hardy; urgency=low
+
+  * 3rd release candidate for upcomming 23.1
+  * to test simply change the tag in your /etc/egroupware-docker/docker-composer.override.yml to 23.1
+  * Mail: OAuth authentication for Microsoft (Office365, outlook.com, ...) and GMail
+  * Admin: added PHP FPM status page and documented how to enabled it
+  * Rocketchat: fix realtime api not wokring becase of CSP error
+  * eTemplate: many small bugfixes in several of the widgets/webcomponents
+
+ -- Ralf Becker <rb@egroupware.org>  Wed, 25 Jan 2023 14:21:51 +0100
+
 egroupware-docker (23.1.20230114) hardy; urgency=low
 
   * 2nd release candiate for 23.1
