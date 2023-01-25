@@ -186,7 +186,7 @@ li {
 	_readonlyRender(option : SelectOption) : TemplateResult
 	{
 		return html`
-            <li>${option.label}</li>
+            <li>${this.noLang ? option.label : this.egw().lang(option.label + "")}</li>
 		`;
 	}
 
