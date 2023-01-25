@@ -32,7 +32,7 @@
                     </et2-hbox>
                     <et2-vbox>
                         <et2-hbox>
-                            <et2-date-time-today  align="center" class="$row_cont[class]" id="${row}[date]" readonly="true"></et2-date-time-today>
+                            <et2-date-time align="center" class="$row_cont[class]" id="${row}[date]" readonly="true"></et2-date-time>
                         </et2-hbox>
                         <et2-hbox>
                             <et2-image  src="$row_cont[smime]" height="16px"></et2-image>

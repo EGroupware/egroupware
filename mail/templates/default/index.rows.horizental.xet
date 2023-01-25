@@ -39,7 +39,7 @@
                         <et2-description  id="${row}[bodypreview]" class="et2_label bodypreview" noLang="1"></et2-description>
                     </et2-vbox>
                     <et2-hbox>
-                        <et2-date-time-today  align="center" id="${row}[date]" readonly="true"></et2-date-time-today>
+                        <et2-date-time  align="center" id="${row}[date]" readonly="true"></et2-date-time>
                     </et2-hbox>
                     <et2-date-time-today  align="center" id="${row}[modified]" readonly="true"></et2-date-time-today>
                     <et2-url-email  id="${row}[address]" readonly="true"></et2-url-email>

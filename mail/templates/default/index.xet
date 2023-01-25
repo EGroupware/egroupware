@@ -49,7 +49,7 @@
                                             <et2-select-email  id="ccaddress" readonly="true" multiple="true"></et2-select-email>
                                         </et2-hbox>
                                     </et2-details>
-                                    <et2-date-time-today  align="right" id="date" readonly="true"></et2-date-time-today>
+                                    <et2-date-time align="right" id="date" readonly="true"></et2-date-time>
                                 </et2-hbox>
                                 <et2-details  toggleAlign="left" title="@attachmentsBlockTitle" toggleOnHover="true" hoist="true" class="attachments" disabled="!@attachmentsBlock">
                                     <et2-hbox  slot="summary">

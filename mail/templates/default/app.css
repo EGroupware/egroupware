@@ -502,6 +502,7 @@ et2-details.details::part(summary),
 et2-details.attachments::part(summary){
 	padding-left: 1em;
 }
+et2-details.details {width: 100%}
 
 .mailDisplay et2-details::part(base),
 .previewWrapper et2-details::part(base){
