@@ -6239,5 +6239,15 @@ app.classes.mail = AppJS.extend(
 			template: egw.webserverUrl + '/mail/templates/default/predefinedAddressesDialog.xet?',
 			resizable: false,
 		}, et2_dialog._create_parent('mail'));
+	},
+
+	/**
+	 * open
+	 * @param _node
+	 * @param _address
+	 */
+	onclickCompose(_node, _address)
+	{
+		egw.open_link('mailto:'+_address.value);
 	}
 });
