@@ -361,7 +361,7 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 				// Cancel drag to create, we're dragging an existing event
 				timegrid.drag_create.start = null;
 				timegrid._drag_create_end();
-				timegrid.div.on("drag.timegrid", (e) =>
+				timegrid.div.on("dragover.timegrid", (e) =>
 				{
 					timegrid._get_time_from_position(e.clientX, e.clientY);
 				})
