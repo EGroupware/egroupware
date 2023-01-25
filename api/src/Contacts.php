@@ -2732,7 +2732,7 @@ class Contacts extends Contacts\Storage
 			if(is_array($contact))
 			{
 				header('Content-type: image/jpeg');
-				$contact['jpegphoto'] =  \EGroupware\Api\avatar::lavatar(array(
+				$contact['jpegphoto'] =  Contacts\Lavatar::generate(array(
 					'id' => $contact['id'],
 					'firstname' => $contact['n_given'],
 					'lastname' => $contact['n_family'])

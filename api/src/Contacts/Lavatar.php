@@ -7,19 +7,18 @@
  * @package api
  * @subpackage avatar
  * @author Hadi Nategh <hn@egroupware.de>
- * @version $Id$
  */
 
-namespace EGroupware\Api;
+namespace EGroupware\Api\Contacts;
 
 /**
  * Creating letter avatar
  *
- * lavatar class designed for creating avatar image from given
+ * Lavatar class designed for creating avatar image from given
  * user firstname.lastname and outputs them as in image consist of
  * first letter of the firstname plus first letter of the lastname.
  */
-class avatar
+class Lavatar
 {
 	// background colors
 	private static $BG_COLORS = array(
@@ -67,7 +66,7 @@ class avatar
 	 *		)
 	 * @param int $_size = 128 image size, default size is 128
 	 */
-	public static function lavatar ($_content = null, $_color = null, $_size = 128)
+	public static function generate($_content = null, $_color = null, $_size = 128)
 	{
 		// firstname
 		$firstname = isset($_content['firstname'])? $_content['firstname'] : '';

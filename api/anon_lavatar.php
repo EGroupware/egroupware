@@ -34,7 +34,7 @@ function send_image()
 	header('Content-type: image/jpeg');
 	header('Etag: '.md5(json_encode($params)));
 
-	if (($image = Api\avatar::lavatar($params)) !== false)
+	if (($image = Api\Contacts\Lavatar::generate($params)) !== false)
 	{
 		echo $image;
 	}
