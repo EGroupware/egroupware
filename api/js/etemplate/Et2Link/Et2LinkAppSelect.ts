@@ -105,7 +105,7 @@ export class Et2LinkAppSelect extends SlotMixin(Et2Select)
 		super.connectedCallback();
 
 		// Set icon
-		this.querySelector(":scope > [slot='prefix']").setAttribute("src", this.value + "/navbar");
+		this.querySelector(":scope > [slot='prefix']").setAttribute("src", this.egw().link_get_registry(this.value, 'icon') ?? this.value + "/navbar");
 
 		if(!this.value)
 		{
@@ -176,7 +176,7 @@ export class Et2LinkAppSelect extends SlotMixin(Et2Select)
 	_handleChange(e)
 	{
 		// Set icon
-		this.querySelector(":scope > [slot='prefix']").setAttribute("src", this.value + "/navbar");
+		this.querySelector(":scope > [slot='prefix']").setAttribute("src", this.egw().link_get_registry(this.value, 'icon'));
 
 		// update preference
 		let appname = "";
@@ -235,7 +235,7 @@ export class Et2LinkAppSelect extends SlotMixin(Et2Select)
 
 	_iconTemplate(appname)
 	{
-		let url = appname ? this.egw().image('navbar', appname) : "";
+		let url = appname ? this.egw().link_get_registry(appname, 'icon') : "";
 		return html`
             <et2-image style="width: var(--icon-width)" slot="prefix" src="${url}"></et2-image>`;
 	}
