@@ -348,10 +348,10 @@ class setup_cmd_config extends setup_cmd
 	 */
 	function _save_mail_account(array $data)
 	{
-		// convert ssl textual values to nummerical ones used in Api\Mail\Account
+		// convert ssl textual values to numerical ones used in Api\Mail\Account
 		foreach(array('acc_imap_ssl', 'acc_sieve_ssl', 'acc_smtp_ssl') as $name)
 		{
-			switch(strtolower($data[$name]))
+			switch(strtolower($data[$name] ?? ''))
 			{
 				case 'no':       $data[$name] = Api\Mail\Account::SSL_NONE; break;
 				case 'starttls': $data[$name] = Api\Mail\Account::SSL_STARTTLS; break;

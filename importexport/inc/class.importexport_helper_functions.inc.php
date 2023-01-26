@@ -127,7 +127,7 @@ class importexport_helper_functions {
 	 * @return mixed comma seperated list or array with ids
 	 */
 	public static function account_name2id( &$_account_lids ) {
-		$account_lids = is_array( $_account_lids ) ? $_account_lids : explode( ',', $_account_lids );
+		$account_lids = is_array( $_account_lids ) ? $_account_lids : explode( ',', $_account_lids ?? '' );
 		$skip = false;
 		foreach ( $account_lids as $key => $account_lid ) {
 			if($skip) {

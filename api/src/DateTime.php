@@ -189,11 +189,11 @@ class DateTime extends \DateTime
 	 *
 	 * @param DateInterval|string $interval eg. '1 day', '-2 weeks'
 	 */
-	public function add($interval)
+	public function add($interval) : \DateTime
 	{
 		if (is_string($interval)) $interval = DateInterval::createFromDateString($interval);
 
-		parent::add($interval);
+		return parent::add($interval);
 	}
 
 	/**
@@ -344,6 +344,7 @@ class DateTime extends \DateTime
 	 * 		true = date only, false = time only as in user prefs, '' = date+time as in user prefs, 'utc'=regular timestamp in UTC
 	 * @return int|string|array|datetime see $type
 	 */
+	#[\ReturnTypeWillChange]
 	public function format($type='')
 	{
 		switch((string)$type)

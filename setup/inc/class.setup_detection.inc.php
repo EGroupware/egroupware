@@ -199,7 +199,7 @@ class setup_detection
 						{
 							$major_depsvalue = $GLOBALS['egw_setup']->get_major($depsvalue);
 							$tmp = explode('.',$depsvalue); $minor_depsvalue = array_pop($tmp);
-							$tmp2 = explode('.',$currentver); $minor = array_pop($tmp2);
+							$tmp2 = explode('.', $currentver ?? ''); $minor = array_pop($tmp2);
 							if ($major == $major_depsvalue && $minor <= $minor_depsvalue)
 							{
 								$setup_info['depends'][$depkey]['status'] = True;

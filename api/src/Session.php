@@ -1582,7 +1582,7 @@ class Session
 				}
 				else
 				{
-					$query[] = $key.'='.urlencode($value);
+					$query[] = $key.'='.urlencode($value ?? '');
 				}
 			}
 			$ret_url .= '?' . implode('&',$query);

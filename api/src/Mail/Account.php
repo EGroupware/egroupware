@@ -1245,7 +1245,7 @@ class Account implements \ArrayAccess
 		$backup = array();
 		foreach(array('acc_smtp_type', 'acc_imap_type') as $attr)
 		{
-			if (substr($data[$attr], 0, $ns_len) == __NAMESPACE__.'\\')
+			if (substr($data[$attr] ?? '', 0, $ns_len) == __NAMESPACE__.'\\')
 			{
 				$backup[$attr] = $data[$attr];
 				$data[$attr] = substr($data[$attr], $ns_len);

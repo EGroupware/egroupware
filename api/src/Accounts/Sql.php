@@ -436,12 +436,12 @@ class Sql
 		);
 
 		// fetch order of account_fullname from Api\Accounts::format_username
-		if (strpos($param['order'],'account_fullname') !== false)
+		if (strpos($param['order'] ?? '','account_fullname') !== false)
 		{
 			$param['order'] = str_replace('account_fullname', preg_replace('/[ ,]+/',',',str_replace(array('[',']'),'',
 				Api\Accounts::format_username('account_lid','account_firstname','account_lastname'))), $param['order']);
 		}
-		$order = str_replace(array_keys($order2contact),array_values($order2contact),$param['order']);
+		$order = str_replace(array_keys($order2contact),array_values($order2contact),$param['order'] ?? '');
 
 		// allways add 'account_lid'
 		if (strpos($order, 'account_lid') === false)

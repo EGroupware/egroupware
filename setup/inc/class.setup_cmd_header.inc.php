@@ -341,7 +341,7 @@ class setup_cmd_header extends setup_cmd
 		}
 		elseif ($value !== '')
 		{
-			self::_set_global(str_replace('@', $domain, $type), $name, $value);
+			self::_set_global(str_replace('@', $domain ?? '', $type), $name, $value);
 			if ($type == 'egw_info/server/server_root')
 			{
 				self::_set_global('egw_info/server/include_root', $name, $value);

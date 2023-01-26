@@ -250,7 +250,7 @@ class importexport_definitions_bo {
 			$definition = new importexport_definition( $definition_data['name'] );
 
 			// Only update if the imported is newer
-			if(strtotime($definition->modified) < strtotime($definition_data['modified']) || $definition->modified == 0)
+			if(!$definition->modified || strtotime($definition->modified) < strtotime($definition_data['modified']))
 			{
 				$definition_id = $definition->get_identifier() ? $definition->get_identifier() : NULL;
 
@@ -359,4 +359,3 @@ class importexport_definitions_bo {
 
 
 }
-

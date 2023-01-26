@@ -2062,7 +2062,7 @@ abstract class Merge
 	 * @return string with error-message on error
 	 * @throws Api\Exception
 	 */
-	public function merge_file($document, $ids, &$name = '', $dirs = '', &$header)
+	public function merge_file($document, $ids, &$name = '', $dirs = '', &$header = null)
 	{
 		//error_log(__METHOD__."('$document', ".array2string($ids).", '$name', dirs='$dirs') ->".function_backtrace());
 		if(($error = $this->check_document($document, $dirs)))

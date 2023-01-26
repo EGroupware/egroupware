@@ -1603,7 +1603,7 @@ class Db
 			$value = DateTime::user2server($value,'string');
 		}
 		// truncate to long strings for varchar(X) columns as PostgreSQL and newer MySQL/MariaDB given an error otherwise
-		if (!is_null($length) && mb_strlen($value) > $length)
+		if (isset($length) && isset($value) && mb_strlen($value) > $length)
 		{
 			$value = mb_substr($value, 0, $length);
 		}
@@ -1615,7 +1615,7 @@ class Db
 		// (MariaDB 10.1 does the replacement automatic, 10.0 cuts everything off behind and MySQL gives an error)
 		// (MariaDB 10.3 gives an error too: Incorrect string value: '\xF0\x9F\x98\x8A\x0AW...')
 		// Changing charset to utf8mb4 requires schema update, shortening of some indexes and probably have negative impact on performace!
-		if (substr($this->Type, 0, 5) == 'mysql')
+		if (isset($value) && substr($this->Type, 0, 5) === 'mysql')
 		{
 			$value = preg_replace('/[\x{10000}-\x{10FFFF}]/u', "\xEF\xBF\xBD", $value);
 		}

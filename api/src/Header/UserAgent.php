@@ -98,9 +98,9 @@ class UserAgent
 	{
 		// should be Ok for all HTML 4 compatible browsers
 		$parts = $all_parts = null;
-		if(!preg_match('/compatible; ([a-z]+)[\/ ]+([0-9.]+)/i',$_SERVER['HTTP_USER_AGENT'],$parts))
+		if(!preg_match('/compatible; ([a-z]+)[\/ ]+([0-9.]+)/i',$_SERVER['HTTP_USER_AGENT'] ?? '',$parts))
 		{
-			preg_match_all('/([a-z]+)\/([0-9.]+)/i',$_SERVER['HTTP_USER_AGENT'],$all_parts,PREG_SET_ORDER);
+			preg_match_all('/([a-z]+)\/([0-9.]+)/i',$_SERVER['HTTP_USER_AGENT'] ?? '',$all_parts,PREG_SET_ORDER);
 			$parts = array_pop($all_parts);
 			foreach($all_parts as $p)
 			{
@@ -112,7 +112,7 @@ class UserAgent
 			}
 		}
 		list(,self::$user_agent,self::$ua_version) = $parts;
-		if ((self::$user_agent = strtolower(self::$user_agent)) == 'version') self::$user_agent = 'opera';
+		if ((self::$user_agent = strtolower(self::$user_agent ?? '')) == 'version') self::$user_agent = 'opera';
 		// IE no longer reports MSIE, but "Trident/7.0; rv:11.0"
 		if (self::$user_agent=='trident')
 		{
@@ -133,7 +133,7 @@ class UserAgent
 			self::$ua_version = '12.0';
 		}
 		self::$ua_mobile = preg_match('/(iPhone|iPod|iPad|Android|SymbianOS|Blackberry|Kindle|Opera Mobi|Windows Phone)/i',
-			$_SERVER['HTTP_USER_AGENT'], $matches) ? strtolower($matches[1]) : null;
+			$_SERVER['HTTP_USER_AGENT'] ?? '', $matches) ? strtolower($matches[1]) : null;
 
 		//error_log("HTTP_USER_AGENT='$_SERVER[HTTP_USER_AGENT]', UserAgent: '".self::$user_agent."', Version: '".self::$ua_version."', isMobile=".array2string(self::$ua_mobile));
 	}
