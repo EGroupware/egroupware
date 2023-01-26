@@ -39,6 +39,9 @@
             </old-box>
         </vbox>
         <styles>
+            body {
+            overflow-y: auto;
+            }
             .et2_details_title, .title {
             display: inline-block;
             font-weight: bold;
