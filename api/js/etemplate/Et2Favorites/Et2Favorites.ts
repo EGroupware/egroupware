@@ -51,38 +51,52 @@ export class Et2Favorites extends Et2DropdownButton implements et2_INextmatchHea
 		return [
 			...super.styles,
 			css`
-			:host {
+			  :host {
 				min-width: 8ex;
-			}
-			et2-image {
-				height: ${egwIsMobile() ? 6 : 2}ex;
-				padding: 0px;
-				margin-top: ${egwIsMobile() ? -6 : -13}px;
-				vertical-align: middle;
-			}
-			et2-image[src="trash"] {
-				display:none;
-			}
-			sl-menu {
+			  }
+
+			  et2-image {
+				${egwIsMobile() ?
+				  css`
+					width: 6ex;
+					margin-top: 1.2ex;
+				  ` :
+				  css`
+					width: 20px;
+					margin-top: 4px;
+				  `
+				}
+			  }
+
+			  et2-image[src="trash"] {
+				display: none;
+			  }
+
+			  sl-menu {
 				min-width: 15em;
-			}
-			sl-menu-item:hover et2-image[src="trash"] {
-				display:initial;
-			}
-			/* Add star icons - radio button is already in prefix */
-			sl-menu-item::part(base) {
+			  }
+
+			  sl-menu-item:hover et2-image[src="trash"] {
+				display: initial;
+			  }
+
+			  /* Add star icons - radio button is already in prefix */
+
+			  sl-menu-item::part(base) {
 				background-image: ${cssImage("fav_filter")};
 				background-repeat: no-repeat;
 				background-size: 16px 16px;
 				background-position: 5px center;
-			}
-			sl-menu-item[checked]::part(base) {
+			  }
+
+			  sl-menu-item[checked]::part(base) {
 				background-image: ${cssImage("favorites")};
-			}
-			sl-menu-item:last-child::part(base) {
+			  }
+
+			  sl-menu-item:last-child::part(base) {
 				background-image: none;
-			}
-            `,
+			  }
+			`,
 		];
 	}
 
