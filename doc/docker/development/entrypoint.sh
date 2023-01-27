@@ -25,6 +25,7 @@ git config --global user.email || git config --global user.email "you@example.co
 	&& ln -sf egroupware/api/templates/default/images/favicon.ico \
 	&& composer.phar create-project --prefer-source --keep-vcs --no-scripts $COMPOSER_EXTRA egroupware/egroupware:$VERSION \
 	&& cd egroupware \
+	&& mkdir chunks \
 	&& ./install-cli.php \
 	&& ln -sf /var/lib/egroupware/header.inc.php \
 	&& sed -e 's/apache/www-data/' -e 's|/usr/share|/var/www|g' doc/rpm-build/egroupware.cron > /etc/cron.d/egroupware
@@ -43,21 +44,6 @@ do
 		|| true # do not stop, if one clone fails
 	}
 done
-
-# install phpMyAdmin sources, if not already there
-[ -d /var/www/phpmyadmin ] || {
-	cd /var/www \
-	&& composer.phar create-project --prefer-source --keep-vcs --no-scripts phpmyadmin/phpmyadmin \
-	&& cd phpmyadmin \
-	&& yarn install || true
-}
-[ -f /var/www/phpmyadmin/config.inc.php ] || {
-	cd /var/www/phpmyadmin \
-	&& blowfish_secret=$(php -r "echo base64_encode(random_bytes(24));") \
-	&& sed -e "s/localhost/db/g" \
-		-e "s/cfg\['blowfish_secret'\] = '';/cfg['blowfish_secret'] = '$blowfish_secret';/g" \
-		config.sample.inc.php > config.inc.php
-}
 
 # create data directory
 [ -d /var/lib/egroupware/default ] || {

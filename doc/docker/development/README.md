@@ -1,13 +1,13 @@
 # EGroupware development enviroment as Docker container
 
-The container and docker-compose.yml file in this directory are the most easy way to get a full development enviroment for EGroupware.
+The container and docker-compose.yml file in this directory are the easiest way to get a full development enviroment for EGroupware.
 
 ### It defines and uses the following volumes:
 * sources: document root of the webserver, by default $PWD/sources subdirectory, can also be your existing document root
-* data: EGroupware stores it's files here, by default $PWD/data subdirectory, can also be your existing /var/lib/egroupware
-* db: volume for MariaDB (should be NOT a directory under Mac OS and Windows for performance reasons!)
+* data: EGroupware stores its files here, by default $PWD/data subdirectory, can also be your existing /var/lib/egroupware
+* db: volume for MariaDB (should be NOT a directory under macOS and Windows for performance reasons!)
 * sessions: volume for sessions, internal no need to change
-* sources-push: swoolpush sub-directory of sources
+* sources-push: swoolpush subdirectory of sources
 * collabora-config: /etc/loolwsd for Collabora container, by default $PWD/data/default/loolwsd
 * rocketchat-uploads: Upload directory for Rocket.Chat, by default $PWD/data/default/rocketchat/uploads
 * rocketchat-dumps: Dump directory for MongoDB, by default $PWD/data/default/rocketchat/dump
@@ -18,6 +18,7 @@ The container and docker-compose.yml file in this directory are the most easy wa
 * egroupware-db: MariaDB
 * egroupware-push: PHP Swoole based push server
 * egroupware-watchtower: to automatic keeps the containers up to date
+* phpmyadmin: phpMyAdmin to administrate your MariaDB
 * collabora: Collabora Online Office
 * rocketchat: Rocket.Chat
 * rocketchat-mongo: MongoDB for Rocket.Chat
@@ -76,3 +77,9 @@ service:
   - localhost in each container is NOT the host system, but the container itself!
   - give you development system a name and add it to the hosts ```/etc/hosts``` as: ```127.0.0.1   devbox.egroupware.org```
   - add it as ```extra_host: - "devbox.egroupware.org:172.17.0.1"``` to each service which as a commented out extra_host
+* Ubuntu 22.04 docker adds firewall rules disabling access to docker0 / 172.17.0.1 from within the containers.
+Stopping eg. FPM to access IDE/PHPStorm debug port or a MariaDB running on the host bound to 172.17.0.1. 
+To fix that, you have to create an explicit firewall rule to allow containers to acces 172.17.0.1:
+```bash
+sudo ufw allow from 172.16.0.1/12 to 172.17.0.1/32 port 9001,3306
+```

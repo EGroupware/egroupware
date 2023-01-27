@@ -207,9 +207,6 @@ services:
     - collabora-config:/etc/loolwsd
       # support for Collabora/CODE 21.11+
     - collabora-config:/etc/coolwsd
-    # don't try to regenerate the (not used certificate) as volume is readonly
-    environment:
-    - DONT_GEN_SSL_CERT=1
     restart: always
     container_name: collabora-key
     # set the ip-address of your docker host AND your official DNS name so Collabora

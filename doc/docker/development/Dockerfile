@@ -48,8 +48,10 @@ RUN apt-get update \
 	&& mkdir -p /run/php \
 	# send logs to stderr to be viewed by docker logs
 	&& ln -s /dev/stderr /var/log/php$PHP_VERSION-fpm.log \
+	# install nodejs 16.x PPA (Shoelace requires >= 14.17, Ubuntu 22.04 only has 12.x)
+	&& curl -fsSL https://deb.nodesource.com/setup_16.x | bash - \
 	# install tools to build EGroupware
-	&& apt-get install -y rsync npm zip curl sudo cron patch \
+	&& apt-get install -y rsync nodejs zip curl sudo cron patch \
 	&& npm install -g grunt-cli \
 	&& bash -c \
 'EXPECTED_SIGNATURE=$(curl https://composer.github.io/installer.sig); \
