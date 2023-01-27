@@ -2132,18 +2132,26 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			if ($_folderType)
 			{
 				$fromcontact = self::getContactFromAddress($data['fromaddress']);
-				if (!empty($fromcontact))
+				if(!empty($fromcontact) && $fromcontact[0]['photo'])
 				{
-					$data['fromavatar'] = self::getContactFromAddress($data['fromaddress'])[0]['photo'];
+					$data['fromavatar'] = $fromcontact[0]['photo'];
 				}
 			}
 			$data['address'] = ($_folderType ? $data["toaddress"] : $data["fromaddress"]);
+			$data['lavatar'] = ['fname' => $data['address']];
 
 			$contact = self::getContactFromAddress($data['address']);
-			if (!empty($contact))
+			if(!empty($contact))
 			{
-				$data['avatar'] = $contact[0]['photo'];
-				if (!$_folderType) $data['fromavatar'] = $data['avatar'];
+				$data['lavatar'] = ['fname' => $contact[0]['n_given'], 'lname' => $contact[0]['n_family']];
+				if($contact[0]['photo'])
+				{
+					$data['avatar'] = $contact[0]['photo'];
+				}
+				if(!$_folderType)
+				{
+					$data['fromavatar'] = $data['avatar'];
+				}
 			}
 
 			if (in_array("bodypreview", $cols)&&$header['bodypreview'])
@@ -2372,7 +2380,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 
 		return $GLOBALS['egw']->contacts->search(
 			array('contact_email' => $email[0], 'contact_email_home' => $email[0]),
-			array('contact_id', 'email', 'email_home', 'n_fn'),
+			array('contact_id', 'email', 'email_home', 'n_fn', 'n_given', 'n_family'),
 			'', '', '', false, 'OR', false
 		);
 	}
