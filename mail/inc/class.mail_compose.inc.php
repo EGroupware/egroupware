@@ -3692,17 +3692,24 @@ class mail_compose
 					$args[] = trim($contact['n_fn'] ? $contact['n_fn'] : $contact['fn']);
 					$completeMailString = call_user_func_array('imap_rfc822_write_address', $args);
 					if(!empty($email) && in_array($completeMailString ,$results) === false) {
-						$results[] = array(
+						$result = array(
 							'value' => $completeMailString,
 							'label' => $completeMailString,
 							// Add just name for nice display, with title for hover
-							'name' => $contact['n_fn'],
+							'name'  => $contact['n_fn'],
 							'title' => $email,
-							'icon' => Egw::link('/api/avatar.php', array(
+							'lname' => $contact['n_family'],
+							'fname' => $contact['n_given']
+						);
+						// TODO: Ralf find a cheap way to get this
+						if($actual_picture)
+						{
+							$result['icon'] = Egw::link('/api/avatar.php', array(
 								'contact_id' => $contact['id'],
-								'etag' => $contact['etag']
-							))
-						 );
+								'etag'       => $contact['etag']
+							));
+						}
+						$results[] = $result;
 					}
 				}
 			}

@@ -424,15 +424,13 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 
 	_optionTemplate(option : SelectOption) : TemplateResult
 	{
-		let icon = option.icon ? html`
-            <et2-image slot="prefix" part="icon" style="width: var(--icon-width)"
-                       src="${option.icon}"></et2-image>` : "";
-
 		// Tag used must match this.optionTag, but you can't use the variable directly.
 		// Pass option along so SearchMixin can grab it if needed
 		return html`
-            <sl-menu-item value="${option.value}" title="${!option.title || this.noLang ? option.title : this.egw().lang(option.title)}" class="${option.class}" .option=${option}>
-                ${icon}
+            <sl-menu-item value="${option.value}"
+                          title="${!option.title || this.noLang ? option.title : this.egw().lang(option.title)}"
+                          class="${option.class}" .option=${option}>
+                ${this._iconTemplate(option)}
                 ${this.noLang ? option.label : this.egw().lang(option.label)}
             </sl-menu-item>`;
 	}
@@ -500,6 +498,24 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 			tag.prepend(image);
 		}
 		return tag;
+	}
+
+	/**
+	 * Get the icon for the select option
+	 *
+	 * @param option
+	 * @protected
+	 */
+	protected _iconTemplate(option)
+	{
+		if(!option.icon)
+		{
+			return html``;
+		}
+
+		return html`
+            <et2-image slot="prefix" part="icon" style="width: var(--icon-width)"
+                       src="${option.icon}"></et2-image>`
 	}
 
 	protected _createImage(item)

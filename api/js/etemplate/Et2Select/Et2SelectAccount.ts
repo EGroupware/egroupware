@@ -12,6 +12,7 @@ import {cleanSelectOptions, SelectOption} from "./FindSelectOptions";
 import {Et2Image} from "../Et2Image/Et2Image";
 import {SelectAccountMixin} from "./SelectAccountMixin";
 import {Et2StaticSelectMixin} from "./StaticOptions";
+import {html, nothing} from "@lion/core";
 
 export type AccountType = 'accounts'|'groups'|'both'|'owngroups';
 
@@ -116,6 +117,26 @@ export class Et2SelectAccount extends SelectAccountMixin(Et2StaticSelectMixin(Et
 	}
 
 	/**
+	 * Override icon for the select option
+	 *
+	 * @param option
+	 * @protected
+	 */
+	protected _iconTemplate(option)
+	{
+		// lavatar uses a size property, not a CSS variable
+		let style = getComputedStyle(this);
+
+		return html`
+            <et2-lavatar slot="prefix" part="icon" .size=${style.getPropertyValue("--icon-width")}
+                         lname=${option.lname || nothing}
+                         fname=${option.fname || nothing}
+                         image=${option.icon || nothing}
+            >
+            </et2-lavatar>`;
+	}
+
+	/**
 	 * Override the prefix image for tags (multiple=true)
 	 * The default is probably fine, but we're being explicit here.
 	 * @param item
@@ -125,11 +146,23 @@ export class Et2SelectAccount extends SelectAccountMixin(Et2StaticSelectMixin(Et
 	 */
 	protected _createImage(item) : Et2Image
 	{
-		const image = super._createImage(item);
-		if(image)
+		const image = document.createElement("et2-lavatar");
+		image.contactId = item.value;
+		if(item.lname)
 		{
-			image.src = "/egroupware/api/avatar.php?account_id=" + item.value + "&etag=1";
+			image.lname = item.lname;
 		}
+		if(item.fname)
+		{
+			image.fname = item.fname;
+		}
+
+		// If there's an actual image associated with the account, use that image instead of initials
+		if(item.src)
+		{
+			image.src = item.src;
+		}
+
 		return image;
 	}
 }

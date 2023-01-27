@@ -439,14 +439,22 @@ class Accounts
 
 			if (!empty($options['tag_list']))
 			{
-				$accounts[] = [
+				$result = [
 					'value' => $account['account_id'],
 					'label' => $displayName,
-					'icon'  => Framework::link('/api/avatar.php', [
+					// Send what lavatar needs to skip a server-side request
+					'lname' => $account['account_id'] < 0 ? $account['account_lid'] : $account['account_lastname'],
+					'fname' => $account['account_id'] < 0 ? lang('group') : $account['account_firstname']
+				];
+				// TODO: Ralf find a cheap way to get this
+				if($actual_picture)
+				{
+					$result['icon'] = Framework::link('/api/avatar.php', [
 						'account_id' => $account['account_id'],
 						'modified'   => $account['account_modified'],
-					]),
-				];
+					]);
+				}
+				$accounts[] = $result;
 			}
 			else
 			{

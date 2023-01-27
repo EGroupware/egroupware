@@ -1705,7 +1705,9 @@ class Contacts extends Contacts\Storage
 				if ($contact['cat_id'] && ($color = Categories::cats2color($contact['cat_id'])))
 				{
 					$result[$contact['id']] = array(
-						'label' => $result[$contact['id']],
+						'lname'                 => $contact['n_family'],
+						'fname'                 => $contact['n_given'],
+						'label'                 => $result[$contact['id']],
 						'style.backgroundColor' => $color,
 					);
 				}
