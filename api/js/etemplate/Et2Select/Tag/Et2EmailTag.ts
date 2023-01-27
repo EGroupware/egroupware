@@ -6,10 +6,9 @@
  * @link https://www.egroupware.org
  * @author Nathan Gray
  */
-import {css, PropertyValues} from "@lion/core";
+import {classMap, css, html, nothing, PropertyValues, TemplateResult} from "@lion/core";
 import shoelace from "../../Styles/shoelace";
 import {Et2Tag} from "./Et2Tag";
-import {cssImage} from "../../Et2Widget/Et2Widget";
 
 /**
  * Display a single email address
@@ -30,43 +29,34 @@ export class Et2EmailTag extends Et2Tag
 			super.styles,
 			shoelace, css`
 			.tag {
-				position: relative;
+			  position: relative;
 			}
-			.tag__prefix {				
-				width: 20px;
-				height: 20px;
-				flex: 0 1 auto;
-				
-				background-color: initial;
-				background-repeat: no-repeat;
-				background-size: contain;
-				background-position-y: center;
-				
-				opacity: 30%;
-				cursor: pointer;
+
+			.tag__prefix {
+			  flex: 0 1 auto;
+
+			  opacity: 30%;
+			  cursor: pointer;
 			}
-			
-			.contact_plus .tag__prefix {
-				opacity: 100%;
+
+			.tag__has_plus et2-button-icon {
+			  visibility: visible;
 			}
-			.tag__prefix.loading {
-				opacity: 100%;
-				background-image: ${cssImage("loading")};
+
+			:host(:hover) .tag__has_plus {
+			  opacity: 100%;
 			}
-		
-			.tag__prefix.contact_plus_add {
-				height: 80%;
-				background-image: ${cssImage("add")};
-			}
+
 			/* Address is for a contact - always show */
-			.tag__prefix.contact_plus_contact {
-				opacity: 100%;
-				background-image: ${cssImage("contact")};
+
+			.tag__prefix.tag__has_contact {
+			  opacity: 100%;
 			}
+
 			.tag__remove {
-				order: 3;
+			  order: 3;
 			}
-		`];
+			`];
 	}
 
 	static get properties()
@@ -143,37 +133,6 @@ export class Et2EmailTag extends Et2Tag
 		this.shadowRoot.querySelector(".tag").classList.remove("contact_plus");
 	}
 
-	/**
-	 * We either have a contact ID, or false.  If false, show the add button.
-	 * @param {false | ContactInfo} data
-	 */
-	handleContactResponse(data : false | ContactInfo)
-	{
-		this._contactPlusNode.classList.remove("loading");
-		if(data)
-		{
-			this._contactPlusNode.classList.add("contact_plus_contact");
-			// Add name in if missing
-			if(!this.fullEmail && data.n_fn && !this.splitEmail(this.value).name)
-			{
-				// Append current value as email, data may have work & home email in it
-				this.textContent = data.n_fn + " <" + this.value + ">"
-			}
-			if(data.photo)
-			{
-				this._contactPlusNode.style.backgroundImage = "url(" + data.photo + ")";
-			}
-			this._contactPlusNode.addEventListener("click", this.handleContactClick);
-			this.egw().tooltipBind(this._contactPlusNode, this.egw().lang("Open existing contact") + ":\n" + data.n_fn, false, {});
-		}
-		else
-		{
-			this._contactPlusNode.classList.add("contact_plus_add");
-			this._contactPlusNode.addEventListener("click", this.handleClick);
-			this.egw().tooltipBind(this._contactPlusNode, this.egw().lang("Add a new contact"), false, {});
-		}
-	}
-
 	handleClick(e : MouseEvent)
 	{
 		e.stopPropagation();
@@ -216,37 +175,74 @@ export class Et2EmailTag extends Et2Tag
 			// Send the request
 			this.checkContact(this.value).then((result) =>
 			{
-				this.handleContactResponse(result);
+				this.requestUpdate();
 			});
 		}
 	}
 
-
-	/**
-	 * Check the content for name <email>.
-	 * If there's a name, just show the name, otherwise show the email
-	 *
-	 * @param {string} new_content
-	 */
-	set textContent(new_content)
+	public _contentTemplate() : TemplateResult
 	{
-		if(this.fullEmail)
+		let content = this.value;
+		// If there's a name, just show the name, otherwise show the email
+		if(Et2EmailTag.email_cache[this.value])
 		{
-			super.textContent = new_content;
-			return;
+			// Append current value as email, data may have work & home email in it
+			content = (Et2EmailTag.email_cache[this.value]?.n_fn || "") + " <" + this.value + ">"
 		}
-
-		const split = this.splitEmail(new_content);
-		super.textContent = split.name || split.email;
-
-		// Show full email in tooltip.
-		// We could do better here for known contacts
-		this.egw().tooltipBind(this, new_content.trim(), false, {});
+		if(!this.fullEmail)
+		{
+			const split = this.splitEmail(content);
+			content = split.name || split.email;
+		}
+		return html`
+            <span part="content" class="tag__content">
+          ${content}
+        </span>`;
 	}
 
-	get textContent()
+	public _prefixTemplate() : TemplateResult
 	{
-		return super.textContent;
+		let classes = {
+			"tag__prefix": true,
+		}
+		let button_or_avatar;
+
+		// Show the lavatar for the contact
+		if(this.value && Et2EmailTag.email_cache[this.value])
+		{
+			classes['tag__has_contact'] = true;
+			// lavatar uses a size property, not a CSS variable
+			let style = getComputedStyle(this);
+			const option = Et2EmailTag.email_cache[this.value];
+
+			button_or_avatar = html`
+                <et2-lavatar slot="prefix" part="icon"
+                             @click=${this.handleContactClick}
+                             .size=${style.getPropertyValue("--icon-width")}
+                             lname=${option.lname || nothing}
+                             fname=${option.fname || nothing}
+                             image=${option.photo || nothing}
+                             statustext="${this.egw().lang("Open existing contact") + ":<br/>" + option.n_fn}"
+                >
+                </et2-lavatar>`;
+		}
+		else
+		{
+			// Show a button to add as new contact
+			classes['tag__has_plus'] = true;
+			button_or_avatar = html`
+                <et2-button-icon image="add" @click=${this.handleClick}
+                                 label="${this.egw().lang("Add a new contact")}"
+                                 statustext="${this.egw().lang("Add a new contact")}">
+                </et2-button-icon>`;
+		}
+
+		return html`
+            <span part="prefix" class=${classMap(classes)}>
+				<slot name="prefix">
+				</slot>
+				${button_or_avatar}
+		</span>`;
 	}
 
 	/**

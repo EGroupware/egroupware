@@ -8,7 +8,7 @@
  */
 
 import {Et2Select} from "./Et2Select";
-import {css} from "@lion/core";
+import {css, html, nothing} from "@lion/core";
 import {IsEmail} from "../Validators/IsEmail";
 import interact from "@interactjs/interact";
 
@@ -31,9 +31,6 @@ export class Et2SelectEmail extends Et2Select
 				display: block;
 				flex: 1 1 auto;
 				min-width: 200px;
-			}
-			::part(icon), .select__icon {
-				display: none;
 			}
 			::slotted(sl-icon[slot="suffix"]) {
 				display: none;
@@ -190,6 +187,26 @@ export class Et2SelectEmail extends Et2Select
 			draggable.parent_node = this;
 		}
 		return tag;
+	}
+
+	/**
+	 * Override icon for the select option to use lavatar, same as Et2SelectAccount
+	 *
+	 * @param option
+	 * @protected
+	 */
+	protected _iconTemplate(option)
+	{
+		// lavatar uses a size property, not a CSS variable
+		let style = getComputedStyle(this);
+
+		return html`
+            <et2-lavatar slot="prefix" part="icon" .size=${style.getPropertyValue("--icon-width")}
+                         lname=${option.lname || nothing}
+                         fname=${option.fname || nothing}
+                         image=${option.icon || nothing}
+            >
+            </et2-lavatar>`;
 	}
 
 	/**

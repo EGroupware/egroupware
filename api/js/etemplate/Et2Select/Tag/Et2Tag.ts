@@ -147,9 +147,7 @@ export class Et2Tag extends Et2Widget(SlTag)
                         'tag--removable': this.removable
                     })}
             >
-		  <span part="prefix" class="tag__prefix">
-			  <slot name="prefix"></slot>
-		  </span>
+				${this._prefixTemplate()}
 			${content}
       </span>
 		`;
@@ -175,6 +173,14 @@ export class Et2Tag extends Et2Widget(SlTag)
                 ></et2-textbox>
 			</span>
 		`;
+	}
+
+	_prefixTemplate() : TemplateResult
+	{
+		return html`
+            <span part="prefix" class="tag__prefix">
+				<slot name="prefix"></slot>
+		</span>`;
 	}
 
 	startEdit(event? : MouseEvent)
