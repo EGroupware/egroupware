@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "15c496848bf3adeca66331419fbae480",
+    "content-hash": "d4ac8ab47046aa77e434bbed3d2de49b",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -799,16 +799,16 @@
         },
         {
             "name": "egroupware/adodb-php",
-            "version": "5.20.7",
+            "version": "5.20.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/ADOdb.git",
-                "reference": "2bc7b262d9739c2869d53a120822fc6efeb63a44"
+                "reference": "663565fbcde887deb61260013daf198d4c5d2f60"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/ADOdb/zipball/2bc7b262d9739c2869d53a120822fc6efeb63a44",
-                "reference": "2bc7b262d9739c2869d53a120822fc6efeb63a44",
+                "url": "https://api.github.com/repos/EGroupware/ADOdb/zipball/663565fbcde887deb61260013daf198d4c5d2f60",
+                "reference": "663565fbcde887deb61260013daf198d4c5d2f60",
                 "shasum": ""
             },
             "require": {
@@ -853,7 +853,7 @@
                 "issues": "https://github.com/ADOdb/ADOdb/issues",
                 "source": "https://github.com/ADOdb/ADOdb"
             },
-            "time": "2022-11-01T17:36:51+00:00"
+            "time": "2023-01-30T10:19:28+00:00"
         },
         {
             "name": "egroupware/bookmarks",
