@@ -366,7 +366,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			// Update any tags if edit mode changes
 			if(changedProperties.has("editModeEnabled"))
 			{
-				this.shadowRoot.querySelectorAll(this.tagTag).forEach(tag => tag.editable = this.editModeEnabled);
+				this.shadowRoot.querySelectorAll(".select__tags > *").forEach(tag => tag.editable = this.editModeEnabled);
 			}
 		}
 

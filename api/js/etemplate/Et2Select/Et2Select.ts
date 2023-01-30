@@ -520,7 +520,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 
 	protected _createImage(item)
 	{
-		let image = item.querySelector("et2-image");
+		let image = item.querySelector("et2-image") || item.querySelector("[slot='prefix']");
 		if(image)
 		{
 			image = image.clone();

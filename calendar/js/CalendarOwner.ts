@@ -9,7 +9,7 @@
  */
 
 import {Et2Select} from "../../api/js/etemplate/Et2Select/Et2Select";
-import {css} from "@lion/core";
+import {css, html, nothing} from "@lion/core";
 import {IsEmail} from "../../api/js/etemplate/Validators/IsEmail";
 
 /**
@@ -94,6 +94,31 @@ export class CalendarOwner extends Et2Select
 				}, this, true, this).sendRequest();
 			}
 		});
+	}
+
+	/**
+	 * Override icon for the select option to use lavatar
+	 *
+	 * @param option
+	 * @protected
+	 */
+	protected _iconTemplate(option)
+	{
+		// Not a user / contact, no icon - use app image
+		if(!option.fname && !option.lname && !option.icon && option.app)
+		{
+			return html`
+                <et2-image src="${option.app}/navbar"></et2-image>`;
+		}
+		// lavatar uses a size property, not a CSS variable
+		let style = getComputedStyle(this);
+		return html`
+            <et2-lavatar slot="prefix" part="icon" .size=${style.getPropertyValue("--icon-width")}
+                         lname=${option.lname || nothing}
+                         fname=${option.fname || nothing}
+                         image=${option.icon || nothing}
+            >
+            </et2-lavatar>`;
 	}
 
 	/**

@@ -63,6 +63,7 @@ describe("Select widget", () =>
 			// @ts-ignore TypeScript is not recognizing that this widget is a LitElement
 			await elementUpdated(container);
 			element = <Et2Select>container.getWidgetById('select');
+			await element.updateComplete;
 
 			/** TESTING **/
 			assert.isNotNull(element.querySelector("[value='option']"), "Missing static option");
@@ -82,6 +83,7 @@ describe("Select widget", () =>
 			// @ts-ignore TypeScript is not recognizing that this widget is a LitElement
 			await elementUpdated(container);
 			element = <Et2Select>container.getWidgetById('select');
+			await element.updateComplete;
 
 			/** TESTING **/
 			assert.equal(element.querySelectorAll("sl-menu-item").length, 2);
@@ -102,6 +104,7 @@ describe("Select widget", () =>
 			// @ts-ignore TypeScript is not recognizing that this widget is a LitElement
 			await elementUpdated(container);
 			element = <Et2Select>container.getWidgetById('select');
+			await element.updateComplete;
 
 			/** TESTING **/
 

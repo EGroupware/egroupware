@@ -303,7 +303,7 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 		$value = array(
 			'value' => substr($id, 0, 1) == $type ? $id : $type . $id,
 			'label' => $title,
-			'app'   => lang($data['app'])
+			'app' => $data['app']
 		);
 		if(is_array($value['label']))
 		{

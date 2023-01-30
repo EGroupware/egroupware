@@ -9,7 +9,6 @@
 
 import {Et2Select} from "./Et2Select";
 import {cleanSelectOptions, SelectOption} from "./FindSelectOptions";
-import {Et2Image} from "../Et2Image/Et2Image";
 import {SelectAccountMixin} from "./SelectAccountMixin";
 import {Et2StaticSelectMixin} from "./StaticOptions";
 import {html, nothing} from "@lion/core";
@@ -103,7 +102,7 @@ export class Et2SelectAccount extends SelectAccountMixin(Et2StaticSelectMixin(Et
 		{
 			return [];
 		}
-		let select_options : Array<SelectOption> = [...super.select_options] || [];
+		let select_options : Array<SelectOption> = [...(this.static_options || []), ...super.select_options];
 
 		return select_options.filter((value, index, self) =>
 		{
@@ -134,36 +133,6 @@ export class Et2SelectAccount extends SelectAccountMixin(Et2StaticSelectMixin(Et
                          image=${option.icon || nothing}
             >
             </et2-lavatar>`;
-	}
-
-	/**
-	 * Override the prefix image for tags (multiple=true)
-	 * The default is probably fine, but we're being explicit here.
-	 * @param item
-	 * @returns {TemplateResult<1>}
-	 * @protected
-	 *
-	 */
-	protected _createImage(item) : Et2Image
-	{
-		const image = document.createElement("et2-lavatar");
-		image.contactId = item.value;
-		if(item.lname)
-		{
-			image.lname = item.lname;
-		}
-		if(item.fname)
-		{
-			image.fname = item.fname;
-		}
-
-		// If there's an actual image associated with the account, use that image instead of initials
-		if(item.src)
-		{
-			image.src = item.src;
-		}
-
-		return image;
 	}
 }
 
