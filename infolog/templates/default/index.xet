@@ -124,7 +124,7 @@
                         </et2-hbox>
 						<et2-hbox  id="planified">
 							<et2-image  label="planned time" src="k_alarm.png"></et2-image>
-                            <et2-date-duration  id="${row}[info_planned_time]" readonly="true" span="all" class="infolog_planned" displayFormat="@@duration_format"></et2-date-duration>
+                            <et2-date-duration  id="${row}[info_planned_time]" readonly="true" span="all" class="infolog_planned" selectUnit="true" displayFormat="@@duration_format"></et2-date-duration>
 						</et2-hbox>
 						<et2-hbox  id="replanified">
 							<et2-image  label="Re-planned time" src="agt_reload.png"></et2-image>

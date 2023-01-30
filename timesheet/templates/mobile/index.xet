@@ -37,7 +37,7 @@
 							<et2-select-account  class="$cont[ownerClass]" id="${row}[ts_owner]" readonly="true"></et2-select-account>
 						</et2-hbox>
 						<et2-hbox>
-							<et2-date-duration  id="${row}[ts_duration]" readonly="true" ></et2-date-duration>
+							<et2-date-duration  id="${row}[ts_duration]"  selectUnit="true" readonly="true" ></et2-date-duration>
 						</et2-hbox>
 					</et2-vbox>
 				</row>
