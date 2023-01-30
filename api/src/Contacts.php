@@ -772,7 +772,9 @@ class Contacts extends Contacts\Storage
 				$data[$name] = DateTime::server2user($data[$name], $date_format);
 			}
 		}
-		$data['photo'] = $this->photo_src($data['id'] ?? null, self::hasPhoto($data), '', $data['etag'] ?? null);
+		$data['photo'] = $this->photo_src($data['id'] ?? null,
+			// do NOT replace with self::hasPhoto($data) as it also checks file is non-empty in VFS and breaks
+			!empty($data['jpegphoto']) || (($data['files']??0) & self::FILES_BIT_PHOTO), '', $data['etag'] ?? null);
 
 		// set freebusy_uri for accounts
 		if (empty($data['freebusy_uri']) && empty($data['owner']) && !empty($data['account_id']) && empty($GLOBALS['egw_setup']))
