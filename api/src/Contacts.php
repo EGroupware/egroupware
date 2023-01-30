@@ -772,7 +772,7 @@ class Contacts extends Contacts\Storage
 				$data[$name] = DateTime::server2user($data[$name], $date_format);
 			}
 		}
-		$data['photo'] = $this->photo_src($data['id'] ?? null,!empty($data['jpegphoto']) || (($data['files']??0) & self::FILES_BIT_PHOTO), '', $data['etag'] ?? null);
+		$data['photo'] = $this->photo_src($data['id'] ?? null, self::hasPhoto($data), '', $data['etag'] ?? null);
 
 		// set freebusy_uri for accounts
 		if (empty($data['freebusy_uri']) && empty($data['owner']) && !empty($data['account_id']) && empty($GLOBALS['egw_setup']))
@@ -1706,8 +1706,7 @@ class Contacts extends Contacts\Storage
 					$result[$contact['id']] = ['label' => $result[$contact['id']]];
 				}
 				// if we have a real photo, add avatar.php URL
-				if (!empty($contact['jpegphoto']) || ($contact['files'] & self::FILES_BIT_PHOTO) &&
-					filesize($url= Api\Link::vfs_path('addressbook', $contact['id'], self::FILES_PHOTO)))
+				if (self::hasPhoto($contact))
 				{
 					$result[$contact['id']] += [
 						'icon' => Framework::link('/api/avatar.php', [
@@ -2731,7 +2730,7 @@ class Contacts extends Contacts\Storage
 	public static function hasPhoto(array $contact, string &$url=null, int &$size=null)
 	{
 		return !empty($contact['jpegphoto']) ||                           // LDAP/AD (not updated SQL)
-			($contact['files'] & self::FILES_BIT_PHOTO) && // new SQL in VFS
+			(($contact['files'] ?? 0) & self::FILES_BIT_PHOTO) && // new SQL in VFS
 				($size = filesize($url = Link::vfs_path('addressbook', $contact['id'], self::FILES_PHOTO)));
 	}
 
