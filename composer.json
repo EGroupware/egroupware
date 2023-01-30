@@ -79,7 +79,7 @@
 		"bower-asset/jquery": "^1.12.4",
 		"bower-asset/jquery-touchswipe": "1.6.*",
 		"egroupware/activesync": "self.version",
-		"egroupware/adodb-php": "^5.20.4",
+		"egroupware/adodb-php": "^5.20.8",
 		"egroupware/bookmarks": "self.version",
 		"egroupware/collabora": "self.version",
 		"egroupware/compress": "^2.3.0",
