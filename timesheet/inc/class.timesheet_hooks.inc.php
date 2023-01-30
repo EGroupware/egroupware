@@ -230,6 +230,11 @@ class timesheet_hooks
 
 	public static function add_timer($data)
 	{
+		// hook is called without check if user has permissions for timesheet app
+		if (empty($GLOBALS['egw_info']['user']['apps']['timesheet']))
+		{
+			return;
+		}
 		$state = Events::timerState();
 		// only send/display if at least one timer is not disabled
 		if (array_diff(['specific', 'overall'], $state['disable'] ?? []))
