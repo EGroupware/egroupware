@@ -446,15 +446,15 @@ class Accounts
 					'lname' => $account['account_id'] < 0 ? $account['account_lid'] : $account['account_lastname'],
 					'fname' => $account['account_id'] < 0 ? lang('group') : $account['account_firstname']
 				];
-				// TODO: Ralf find a cheap way to get this
-				if($actual_picture)
+				// only if we have a real photo, send avatar-url, otherwise we use the above set lavatar (f|l)name
+				if(!empty($account['account_has_photo']))
 				{
 					$result['icon'] = Framework::link('/api/avatar.php', [
 						'account_id' => $account['account_id'],
 						'modified'   => $account['account_modified'],
 					]);
 				}
-				$accounts[] = $result;
+				$accounts[$account['account_id']] = $result;
 			}
 			else
 			{
@@ -516,7 +516,7 @@ class Accounts
 	function json($id)
 	{
 		static $keys = array(
-			'account_id','account_lid','person_id','account_status','memberships',
+			'account_id','account_lid','person_id','account_status','memberships','account_has_photo',
 			'account_firstname','account_lastname','account_email','account_fullname','account_phone',
 		);
 		if (($account = $this->read($id)))

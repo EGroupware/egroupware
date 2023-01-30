@@ -501,7 +501,7 @@ class Sql
 				$filter[] = "(egw_addressbook.contact_owner=0 OR egw_addressbook.contact_owner IS NULL)";
 				break;
 		}
-		// fix ambigous account_id (used in accounts and contacts table)
+		// fix ambiguous account_id (used in accounts and contacts table)
 		if (array_key_exists('account_id', $filter))
 		{
 			if (!$filter['account_id'])	// eg. group without members (would give SQL error)
@@ -561,13 +561,13 @@ class Sql
 		if (!isset($this->contacts)) $this->contacts = new Api\Contacts();
 
 		$accounts = array();
-		foreach((array) $this->contacts->search($criteria,
-			array_merge(array(1,'n_given','n_family','id','created','modified',$this->table.'.account_id AS account_id'),$email_cols),
+		foreach($this->contacts->search($criteria,
+			array_merge(array(1,'n_given','n_family','id','created','modified','files',$this->table.'.account_id AS account_id'),$email_cols),
 			$order, "account_lid,account_type,account_status,account_expires,account_primary_group,account_description".
 			",account_lastlogin,account_lastloginfrom,account_lastpwd_change",
 			$wildcard,false,$query[0] == '!' ? 'AND' : 'OR',
 			!empty($param['offset']) ? array($param['start'], $param['offset']) : $param['start'] ?? false,
-			$filter,$join) as $contact)
+			$filter,$join) ?? [] as $contact)
 		{
 			if ($contact)
 			{
@@ -592,6 +592,7 @@ class Sql
 					'account_lastpwd_change'	=> $contact['account_lastpwd_change'] ?
 						Api\DateTime::user2server($contact['account_lastpwd_change']) : null,
 					'account_description' => $contact['account_description'],
+					'account_has_photo' => Api\Contacts::hasPhoto($contact),
 				);
 			}
 		}

@@ -1701,15 +1701,35 @@ class Contacts extends Contacts\Storage
 					$args[] = $result[$contact['id']];
 					$result[$contact['id']] = call_user_func_array('imap_rfc822_write_address', $args);
 				}
+				if (!is_array($result[$contact['id']]))
+				{
+					$result[$contact['id']] = ['label' => $result[$contact['id']]];
+				}
+				// if we have a real photo, add avatar.php URL
+				if (!empty($contact['jpegphoto']) || ($contact['files'] & self::FILES_BIT_PHOTO) &&
+					filesize($url= Api\Link::vfs_path('addressbook', $contact['id'], self::FILES_PHOTO)))
+				{
+					$result[$contact['id']] += [
+						'icon' => Framework::link('/api/avatar.php', [
+							'contact_id' => $contact['id'],
+							'modified'   => $contact['modified'],
+						])
+					];
+				}
+				// else add Lavatar information lname and fname
+				else
+				{
+					$result[$contact['id']] += [
+						'lname' => $contact['n_family'],
+						'fname' => $contact['n_given'],
+					];
+				}
 				// show category color
 				if ($contact['cat_id'] && ($color = Categories::cats2color($contact['cat_id'])))
 				{
-					$result[$contact['id']] = array(
-						'lname'                 => $contact['n_family'],
-						'fname'                 => $contact['n_given'],
-						'label'                 => $result[$contact['id']],
+					$result[$contact['id']] += [
 						'style.backgroundColor' => $color,
-					);
+					];
 				}
 			}
 		}
@@ -1854,14 +1874,14 @@ class Contacts extends Contacts\Storage
 				'app' => 'calendar',
 				'title' => $bocal->link_title($cal_id . ($start ? '-'.$start : '')),
 				'extra_args' => array(
-					'date' => \EGroupware\Api\DateTime::server2user($start,\EGroupware\Api\DateTime::ET2),
+					'date' => DateTime::server2user($start,DateTime::ET2),
 					'exception'=> 1
 				),
 			);
 			if ($extra_title)
 			{
 				$link['extra_title'] = $link['title'];
-				$link['title'] = \EGroupware\Api\DateTime::server2user($start, true);
+				$link['title'] = DateTime::server2user($start, true);
 			}
 			$user_id = ($type == 'u' ? '' : $type) . $contact['user_id'];
 			$calendars[$user_id][$key.'_event'] = $start;
@@ -2701,6 +2721,21 @@ class Contacts extends Contacts\Storage
 	}
 
 	/**
+	 * Check if given contact has a real photo attached
+	 *
+	 * @param array $contact
+	 * @param string|null &$url on return vfs URL of photo
+	 * @param int|null &$size on return size of photo
+	 * @return bool
+	 */
+	public static function hasPhoto(array $contact, string &$url=null, int &$size=null)
+	{
+		return !empty($contact['jpegphoto']) ||                           // LDAP/AD (not updated SQL)
+			($contact['files'] & self::FILES_BIT_PHOTO) && // new SQL in VFS
+				($size = filesize($url = Link::vfs_path('addressbook', $contact['id'], self::FILES_PHOTO)));
+	}
+
+	/**
 	 * download photo of the given ($_GET['contact_id'] or $_GET['account_id']) contact
 	 */
 	function photo()
@@ -2718,10 +2753,7 @@ class Contacts extends Contacts\Storage
 
 		$contact = $this->read($contact_id);
 
-		if (!($contact) ||
-			empty($contact['jpegphoto']) &&                           // LDAP/AD (not updated SQL)
-			!(($contact['files'] & \EGroupware\Api\Contacts::FILES_BIT_PHOTO) && // new SQL in VFS
-				($size = filesize($url= \EGroupware\Api\Link::vfs_path('addressbook', $contact_id, \EGroupware\Api\Contacts::FILES_PHOTO)))))
+		if (!$contact || !self::hasPhoto($contact, $url, $size))
 		{
 			if(!$contact_id && $id < 0)
 			{
@@ -2752,7 +2784,7 @@ class Contacts extends Contacts\Storage
 			// different url with different etag parameter will force a reload
 			if (isset($_GET['etag']))
 			{
-				\EGroupware\Api\Session::cache_control(30*86400);	// cache for 30 days
+				Session::cache_control(30*86400);	// cache for 30 days
 			}
 			// if servers send a If-None-Match header, response with 304 Not Modified, if etag matches
 			if (isset($_SERVER['HTTP_IF_NONE_MATCH']) && $_SERVER['HTTP_IF_NONE_MATCH'] === $etag)
@@ -2771,7 +2803,7 @@ class Contacts extends Contacts\Storage
 			}
 			exit();
 		}
-		Egw::redirect(\EGroupware\Api\Image::find('addressbook','photo'));
+		Egw::redirect(Image::find('addressbook','photo'));
 	}
 
 	/**

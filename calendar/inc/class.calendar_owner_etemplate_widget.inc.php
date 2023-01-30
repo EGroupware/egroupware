@@ -164,6 +164,8 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 
 	public static function ajax_search($search_text=null, array $search_options = [])
 	{
+		// close session now, to not block other user actions
+		$GLOBALS['egw']->session->commit_session();
 
 		$bo = new calendar_bo();
 
@@ -193,7 +195,7 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 			{
 				$owngroup_options = $options+array('account_type'=>'owngroups');
 				$own_groups = Api\Accounts::link_query('',$owngroup_options);
-				$account_options = $options + array('account_type' => 'both');
+				$account_options = $options + ['account_type' => 'both', 'tag_list' => true];
 				$_results += $remove_contacts = Api\Accounts::link_query($search_text, $account_options);
 				$total += $account_options['total'];
 				if (!empty($_REQUEST['checkgrants']))
@@ -314,11 +316,23 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 				break;
 			case 'c':
 			case '':
-				$contact = $contacts_obj->read($type === '' ? 'account:'.$id : $id, true);
-				if (is_array($contact)) $value['icon'] = Api\Framework::link('/api/avatar.php', array(
-					'contact_id' => $contact['id'],
-					'etag' => $contact['etag'] ? $contact['etag'] : 1
-				));
+				// check if link-search already returned either icon or (l|f)name and only if not, query contact again
+				if (!(isset($value['icon']) || isset($value['lname']) && isset($value['fname'])) &&
+					($contact = $contacts_obj->read($type === '' ? 'account:'.$id : $id, true)))
+				{
+					if (Api\Contacts::hasPhoto($contact))
+					{
+						$value['icon'] = Api\Framework::link('/api/avatar.php', array(
+							'contact_id' => $contact['id'],
+							'etag' => $contact['etag'] ? $contact['etag'] : 1
+						));
+					}
+					else
+					{
+						$value['lname'] = $contact['n_family'];
+						$value['fname'] = $contact['n_given'];
+					}
+				}
 				if($id < 0)
 				{
 					$value['resources'] = array_map('strval',$GLOBALS['egw']->accounts->members($id, true));

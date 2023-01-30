@@ -2046,7 +2046,7 @@ class addressbook_ui extends addressbook_bo
 				{
 					$row[$name] .= ' '.($row['tel_prefer'] == $name ? $prefer_marker : '');		// .' ' to NOT remove the field
 				}
-				// allways show the prefered phone, if not already shown
+				// always show the prefered phone, if not already shown
 				if (!in_array($row['tel_prefer'],$tel2show) && $row[$row['tel_prefer']])
 				{
 					$row['tel_prefered'] = $row[$row['tel_prefer']].$prefer_marker;
@@ -2070,6 +2070,12 @@ class addressbook_ui extends addressbook_bo
 				}
 				$row['class'] .= 'contact_contact ';
 
+				if (!self::hasPhoto($row))
+				{
+					$row['lname'] = $row['n_family'];
+					$row['fname'] = $row['n_given'];
+					unset($row['photo']);   // no need to send, as there is no photo
+				}
 				unset($row['jpegphoto']);	// unused and messes up json encoding (not utf-8)
 
 				if (isset($customfields[$row['id']]))
