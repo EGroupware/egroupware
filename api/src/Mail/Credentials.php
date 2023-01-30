@@ -170,9 +170,10 @@ class Credentials
 	 * @param int|array $account_id =null default use current user or all (in that order)
 	 * @param array& $on_login =null on return array with callable and further arguments
 	 *	to run on successful login to trigger password migration
+	 * @param string|null $mailserver mailserver to detect oauth hosts
 	 * @return array with values for (imap|smtp|admin)_(username|password|cred_id)
 	 */
-	public static function read($acc_id, $type=null, $account_id=null, &$on_login=null)
+	public static function read($acc_id, $type=null, $account_id=null, &$on_login=null, $mailserver=null)
 	{
 		if (is_null($type)) $type = self::ALL;
 		if (is_null($account_id))
@@ -243,7 +244,7 @@ class Credentials
 					{
 						unset($results[$prefix.'password']);
 						$results[$prefix.'refresh_token'] = self::UNAVAILABLE;  // no need to make it available
-						$results[$prefix.'access_token'] = self::getAccessToken($row['cred_username'], $password);
+						$results[$prefix.'access_token'] = self::getAccessToken($row['cred_username'], $password, $mailserver);
 						// if no extra imap&smtp username set, set the oauth one
 						foreach(['acc_imap_', 'acc_smtp_'] as $pre)
 						{
@@ -265,13 +266,14 @@ class Credentials
 	 *
 	 * @param string $username
 	 * @param string $refresh_token
+	 * @param string|null $mailserver mailserver to detect oauth hosts
 	 * @return string|null
 	 */
-	static protected function getAccessToken($username, $refresh_token)
+	static protected function getAccessToken($username, $refresh_token, $mailserver=null)
 	{
-		return Api\Cache::getInstance(__CLASS__, 'access-token-'.$username.'-'.md5($refresh_token), static function() use ($username, $refresh_token)
+		return Api\Cache::getInstance(__CLASS__, 'access-token-'.$username.'-'.md5($refresh_token), static function() use ($username, $refresh_token, $mailserver)
 		{
-			if (!($oidc = Api\Auth\OpenIDConnectClient::byDomain($username)))
+			if (!($oidc = Api\Auth\OpenIDConnectClient::byDomain($username, $mailserver)))
 			{
 				return null;
 			}

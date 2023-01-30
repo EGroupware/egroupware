@@ -256,7 +256,8 @@ class Account implements \ArrayAccess
 		if ((int)$params['acc_id'] > 0)
 		{
 			// read credentials from database
-			$params += Credentials::read($params['acc_id'], null, $called_for ? array(0, $called_for) : $called_for, $this->on_login);
+			$params += Credentials::read($params['acc_id'], null, $called_for ? array(0, $called_for) : $called_for,
+				$this->on_login, $params['acc_imap_host']);
 
 			if (isset($params['acc_imap_admin_username']) && $params['acc_imap_admin_username'][0] === '*')
 			{
