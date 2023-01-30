@@ -860,7 +860,8 @@ class Ldap
 				if ($param['type'] !== 'groups')
 				{
 					$allValues = $this->vlvSortQuery($this->user_context, $filter,
-						['uid', 'uidNumber', 'givenname', 'sn', static::MAIL_ATTR, 'shadowExpire', 'createtimestamp', 'modifytimestamp', 'objectclass', 'gidNumber'],
+						['uid', 'uidNumber', 'givenname', 'sn', static::MAIL_ATTR, 'shadowExpire', 'createtimestamp',
+							'modifytimestamp', 'objectclass', 'gidNumber', 'jpegphoto'],
 						$order_by, $start, $offset, $totalcount);
 
 					$utc_diff = date('Z');
@@ -881,6 +882,7 @@ class Ldap
 								'account_created' => isset($allVals['createtimestamp'][0]) ? self::accounts_ldap2ts($allVals['createtimestamp'][0]) : null,
 								'account_modified' => isset($allVals['modifytimestamp'][0]) ? self::accounts_ldap2ts($allVals['modifytimestamp'][0]) : null,
 								'account_primary_group' => (string)-$allVals['gidnumber'][0],
+								'account_has_photo' => !empty($allVals['jpegphoto'][0])
 							);
 							//error_log(__METHOD__."() ldap=".array2string($allVals)." --> account=".array2string($account));
 							if ($param['active'] && !$this->frontend->is_active($account))

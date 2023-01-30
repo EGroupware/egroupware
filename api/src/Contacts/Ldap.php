@@ -1310,6 +1310,10 @@ class Ldap
 				$bin = ldap_get_values_len($this->ds,ldap_first_entry($this->ds,$result),'jpegphoto');
 				$contact['jpegphoto'] = $bin[0];
 			}
+			else
+			{
+				$contact['jpegphoto'] = isset($entry['jpegphoto'][0]);
+			}
 			$matches = null;
 			if(preg_match('/cn=([^,]+),'.preg_quote($this->personalContactsDN,'/').'$/i',$entry['dn'],$matches))
 			{
