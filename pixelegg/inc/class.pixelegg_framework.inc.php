@@ -123,7 +123,7 @@ class pixelegg_framework extends Api\Framework\Ajax
 		$textsize = $GLOBALS['egw_info']['user']['preferences']['common']['textsize'];
 		if (!empty($textsize) && is_numeric($textsize) && $textsize != '12')
 		{
-			$iconSize = $textsize+4;
+			$iconSize = $textsize+2;
 			$ret['app_css'] .= "
 			/*
 			sharing
@@ -143,6 +143,7 @@ class pixelegg_framework extends Api\Framework\Ajax
 				width: {$iconSize}px !important;
 				height: {$iconSize}px !important;
 			}
+			#egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul a {background-position:left;background-size:{$iconSize}px}
 		";
 		}
 		if (preg_match('/^(#[0-9A-F]+|[A-Z]+)$/i',$color) || preg_match('/^(#[0-9A-F]+|[A-Z]+)$/i',$loginbox_color))	// a little xss check
