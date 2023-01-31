@@ -33,7 +33,7 @@ class Lavatar
 	);
 
 	// ratio of font size to size
-	private static $_FONT_SIZE_RATIO = 3.2;
+	private static $_FONT_SIZE_RATIO = 3.6;
 
 	// ratio of text Y position to size
 	private static $_TEXT_Y_RATIO = 1.6;
