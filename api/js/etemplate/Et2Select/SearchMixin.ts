@@ -302,6 +302,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			this._handleSearchChange = this._handleSearchChange.bind(this);
 			this._handleSearchKeyDown = this._handleSearchKeyDown.bind(this);
 			this._handleEditKeyDown = this._handleEditKeyDown.bind(this);
+			this._handlePaste = this._handlePaste.bind(this);
 		}
 
 		connectedCallback()
@@ -594,6 +595,11 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			// Need our own change to catch the change event from search input
 			this.addEventListener("change", this._handleChange);
 
+			if(this.allowFreeEntries)
+			{
+				this.addEventListener("paste", this._handlePaste);
+			}
+
 			this.updateComplete.then(() =>
 			{
 				// Search messes up event order.  Since it throws its own bubbling change event,
@@ -614,6 +620,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			this.removeEventListener("sl-after-show", this._handleAfterShow);
 			this.removeEventListener("sl-clear", this._handleClear)
 			this.removeEventListener("change", this._handleChange);
+			this.removeEventListener("paste", this._handlePaste);
 
 			this._searchInputNode?.removeEventListener("change", this._handleSearchChange);
 		}
@@ -923,6 +930,35 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			{
 				this.stopEdit(true);
 			}
+		}
+
+		/**
+		 * Sometimes users paste multiple comma separated values at once.  Split them then handle normally.
+		 *
+		 * @param {ClipboardEvent} event
+		 * @protected
+		 */
+		protected _handlePaste(event : ClipboardEvent)
+		{
+			event.preventDefault();
+
+			let paste = event.clipboardData.getData('text');
+			if(!paste)
+			{
+				return;
+			}
+			const selection = window.getSelection();
+			if(selection.rangeCount)
+			{
+				selection.deleteFromDocument();
+			}
+			let values = paste.split(/,\t/);
+
+			values.forEach(v =>
+			{
+				this.createFreeEntry(v.trim());
+			});
+			this.dropdown.hide();
 		}
 
 		/**

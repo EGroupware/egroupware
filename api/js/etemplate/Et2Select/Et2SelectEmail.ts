@@ -242,6 +242,39 @@ export class Et2SelectEmail extends Et2Select
 		}
 		super.set_value(val);
 	}
+
+
+	/**
+	 * Sometimes users paste multiple comma separated values at once.  Split them then handle normally.
+	 * Overridden here to handle email addresses that may have commas using the regex from the validator.
+	 *
+	 * @param {ClipboardEvent} event
+	 * @protected
+	 */
+	protected _handlePaste(event : ClipboardEvent)
+	{
+		event.preventDefault();
+
+		let paste = event.clipboardData.getData('text');
+		if(!paste)
+		{
+			return;
+		}
+		const selection = window.getSelection();
+		if(selection.rangeCount)
+		{
+			selection.deleteFromDocument();
+		}
+
+		// Trim line start / end anchors off validation regex, make global
+		let regex = new RegExp(IsEmail.EMAIL_PREG.toString().substring(2, IsEmail.EMAIL_PREG.toString().length - 3), 'g');
+		let values = paste.match(regex);
+		values.forEach(v =>
+		{
+			this.createFreeEntry(v.trim());
+		});
+		this.dropdown.hide();
+	}
 }
 
 // @ts-ignore TypeScript is not recognizing that this widget is a LitElement
