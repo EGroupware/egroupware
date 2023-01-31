@@ -1102,14 +1102,14 @@ app.classes.mail = AppJS.extend(
 			const actions = [
 				{
 					id: 'downloadOneAsFile',
-					label:'Download',
-					icon:'fileexport',
-					value:'downloadOneAsFile'
+					label: 'Download',
+					icon: 'fileexport',
+					value: 'downloadOneAsFile'
 				},
 				{
 					id: 'saveOneToVfs',
 					label: 'Save in Filemanager',
-					icon: 'filemanager/navbar.svg',
+					icon: 'filemanager/navbar',
 					value: 'saveOneToVfs'
 				},
 				{
@@ -1125,14 +1125,24 @@ app.classes.mail = AppJS.extend(
 					value: 'downloadAllToZip'
 				}
 			];
+			if (typeof this.egw.user('apps')['collabora'] !== "undefined")
+			{
+				actions.push({
+					id: 'collabora',
+					label: 'Open',
+					icon: 'collabora/navbar',
+					value: 'collabora'
+				});
+			}
 			data.attachmentsBlockTitle = `${data.attachmentsBlock.length} attachments`;
-			data.attachmentsBlock.forEach(_item => {
-				_item.actions='downloadOneAsFile';
+			data.attachmentsBlock.forEach(_item =>
+			{
+				_item.actions = 'downloadOneAsFile';
 				// for some reason label needs to be set explicitly for the dropdown button. It needs more investigation.
-				_item.actionsDefaultLabel='Download';
+				_item.actionsDefaultLabel = 'Download';
 			});
 
-			sel_options.attachmentsBlock = {actions:actions};
+			sel_options.attachmentsBlock = {actions: actions};
 		}
 
 		mailPreview.set_value({content:data, sel_options:sel_options});
@@ -3127,10 +3137,35 @@ app.classes.mail = AppJS.extend(
 					method: 'mail.mail_ui.ajax_vfsSave',
 					button_label: this.egw.lang(action === 'saveOneToVfs' ? 'Save' : 'Save all'),
 					dialog_title: this.egw.lang(action === 'saveOneToVfs' ? 'Save attachment' : 'Save attachments'),
-					method_id: ids.length > 1 ?	{ids:ids, action:'attachment'} : {ids: ids[0], action: 'attachment'},
+					method_id: ids.length > 1 ? {ids: ids, action: 'attachment'} : {ids: ids[0], action: 'attachment'},
 					name: action === 'saveOneToVfs' ? attachments[0]['filename'] : null
 				});
 				vfs_select.click();
+				break;
+			case 'collabora':
+				attachment = attachments[row_id];
+				let id = mail_id + '::' + attachment.partID + '::' + attachment.winmailFlag + '::' + attachment.filename;
+
+				// This can take a few seconds, show loader
+				this.egw.loading_prompt('mail_open_file', true, attachment.filename);
+
+				// Temp save to VFS
+				this.egw.request('mail.mail_ui.ajax_vfsOpen', [id, attachment.filename]).then((temp_path) =>
+				{
+					if (temp_path)
+					{
+						// Open in Collabora
+						window.open(this.egw.link('/index.php', {
+							'menuaction': 'collabora.EGroupware\\collabora\\Ui.editor',
+							'path': temp_path,
+							'cd': 'no'	// needed to not reload framework in sharing
+						}));
+					}
+				}).finally(() =>
+				{
+					// Hide load prompt
+					this.egw.loading_prompt('mail_open_file', false);
+				});
 				break;
 
 			case 'downloadOneAsFile':

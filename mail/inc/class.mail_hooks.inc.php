@@ -794,27 +794,33 @@ class mail_hooks
 	{
 		return [
 			'downloadOneAsFile' => [
-				'id' => 'downloadOneAsFile',
+				'id'    => 'downloadOneAsFile',
 				'label' => 'Download',
-				'icon' => 'fileexport',
+				'icon'  => 'fileexport',
 				'value' => 'downloadOneAsFile'
 			],
-			'saveOneToVfs' => [
-				'id' => 'saveOneToVfs',
+			'collabora'         => [
+				'id'    => 'collabora',
+				'label' => 'Open with Collabora',
+				'icon'  => 'open',
+				'value' => 'collabora'
+			],
+			'saveOneToVfs'      => [
+				'id'    => 'saveOneToVfs',
 				'label' => 'Save in Filemanager',
-				'icon' => 'filemanager/navbar.svg',
+				'icon'  => 'filemanager/navbar',
 				'value' => 'saveOneToVfs'
 			],
-			'saveAllToVfs' => [
-				'id' => 'saveAllToVfs',
+			'saveAllToVfs'      => [
+				'id'    => 'saveAllToVfs',
 				'label' => 'Save all to Filemanager',
-				'icon' => 'mail/save_all',
+				'icon'  => 'mail/save_all',
 				'value' => 'saveAllToVfs'
 			],
-			'downloadAllToZip' => [
-				'id' => 'downloadAllToZip',
+			'downloadAllToZip'  => [
+				'id'    => 'downloadAllToZip',
 				'label' => 'Save as ZIP',
-				'icon' => 'mail/save_zip',
+				'icon'  => 'mail/save_zip',
 				'value' => 'downloadAllToZip'
 			]
 		];

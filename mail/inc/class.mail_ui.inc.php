@@ -2924,20 +2924,44 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		else
 		{
 			$subject = Api\Mail::clean_subject_for_filename($subject);
-			$mime='text/html'; $size=0;
-			Api\Header\Content::safe($message, $subject.".eml", $mime, $size, true, false);
-			print '<pre>'. htmlspecialchars($message, ENT_NOQUOTES|ENT_SUBSTITUTE, 'utf-8') .'</pre>';
+			$mime = 'text/html';
+			$size = 0;
+			Api\Header\Content::safe($message, $subject . ".eml", $mime, $size, true, false);
+			print '<pre>' . htmlspecialchars($message, ENT_NOQUOTES | ENT_SUBSTITUTE, 'utf-8') . '</pre>';
 		}
 	}
 
 	/**
 	 * Ajax function to save message(s)/attachment(s) in the vfs
 	 *
+	 * @param string $attachment_id
+	 * @param string $filename
+	 *
+	 * @return string Temporary path to open
+	 */
+	function ajax_vfsOpen($attachment_id, $filename)
+	{
+		// Use a sub-dir so we can give a nice filename
+		$temp_path = '/home/' . $GLOBALS['egw_info']['user']['account_lid'] . "/.mail/";
+		if(!Vfs::is_dir($temp_path))
+		{
+			Vfs::mkdir($temp_path);
+		}
+
+		$result = $this->vfsSaveAttachments([$attachment_id], $temp_path . $filename, 'rename');
+
+		$response = Api\Json\Response::get();
+		$response->data($result['savepath'][$attachment_id] ?? "");
+	}
+
+	/**
+	 * Ajax function to save message(s)/attachment(s) in the vfs
+	 *
 	 * @param array $params array of mail ids and action name
-	 *			params = array (
-	 *				ids => array of string
-	 *				action => string
-	 *			)
+	 *            params = array (
+	 *                ids => array of string
+	 *                action => string
+	 *            )
 	 * @param string $path path to save the emails
 	 * @param string $submit_button_id dialog button id of triggered submit
 	 * @param string $savemode save mode: 'overwrite' or 'rename'
@@ -3191,6 +3215,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			{
 				fclose($fp);
 			}
+			$res['savepath'][$id] = $file;
 		}
 
 		$this->mail_bo->closeConnection();
