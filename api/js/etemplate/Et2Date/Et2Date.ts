@@ -26,6 +26,7 @@ import {LitFlatpickr} from "lit-flatpickr";
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
 import shoelace from "../Styles/shoelace";
 
+const textbox = new Et2Textbox();
 const button = new Et2ButtonIcon();
 // Request this year's holidays now
 holidays(new Date().getFullYear());
@@ -454,6 +455,7 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(LitFlatpickr))
 
 				// Wait for everything to be there before we start flatpickr
 				await this.updateComplete;
+				await this._inputNode.updateComplete;
 				this._inputNode.requestUpdate();
 				await this._inputNode.updateComplete;
 
@@ -706,10 +708,10 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(LitFlatpickr))
 		// If they typed a valid date/time, try to update flatpickr
 		if(parsedDate)
 		{
-			const formattedDate = this._instance.formatDate(parsedDate, this.getOptions().altFormat)
+			const formattedDate = flatpickr.formatDate(parsedDate, this.getOptions().altFormat)
 			if(value === formattedDate &&
 				// Avoid infinite loop of setting the same value back triggering another change
-				this._instance.input.value !== this._instance.formatDate(parsedDate, this.getOptions().dateFormat))
+				this._instance.input.value !== flatpickr.formatDate(parsedDate, this.getOptions().dateFormat))
 			{
 				this._instance.setDate(value, true, this._instance.config.altFormat)
 			}

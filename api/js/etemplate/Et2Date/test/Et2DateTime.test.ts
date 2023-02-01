@@ -30,13 +30,7 @@ describe("DateTime widget", () =>
             <et2-date-time label="I'm a date-time"></et2-date-time>
 		`);
 
-		// Create an element to test with, and wait until it's ready
-		// @ts-ignore
-		element = await fixture<Et2DateTime>(html`
-            <et2-date-time label="I'm a date-time"></et2-date-time>
-		`);
-
-
+		await element.updateComplete;
 	});
 
 	// Make sure it works
@@ -54,7 +48,7 @@ describe("DateTime widget", () =>
 
 	it('Readonly does not return a value', async() =>
 	{
-		element.readOnly = true;
+		element.readonly = true;
 		let test_time_string = '2008-09-22T12:00:00.000Z';
 
 		element.set_value(test_time_string);

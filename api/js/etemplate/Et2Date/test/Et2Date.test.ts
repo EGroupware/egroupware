@@ -35,6 +35,8 @@ async function before()
         <et2-date label="I'm a date"></et2-date>
 	`);
 
+	await element.updateComplete;
+	
 	return element;
 };
 
