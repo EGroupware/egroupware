@@ -49,7 +49,7 @@ export class Et2Description extends Et2Widget(LitElement) implements et2_IDetach
 			 * Scan the value, and if there are any links (URL, mailto:) then wrap them in a clickable
 			 * <a/> tag
 			 */
-			activeLinks: {
+			activateLinks: {
 				type: Boolean,
 				reflect: true
 			},
@@ -88,7 +88,7 @@ export class Et2Description extends Et2Widget(LitElement) implements et2_IDetach
 		super();
 
 		// Initialize properties
-		this.activeLinks = false;
+		this.activateLinks = false;
 		this.extraLinkPopup = "";
 		this.extraLinkTarget = "_browser";
 		// Don't initialize this to avoid href(unknown) when rendered
@@ -148,7 +148,7 @@ export class Et2Description extends Et2Widget(LitElement) implements et2_IDetach
 		super.requestUpdate(...arguments);
 		// Due to how we do the rendering into the light DOM (not sure it's right) we need this after
 		// value change or it won't actually show up
-		if(["value", "href", "activeLinks"].indexOf(attribute) != -1 && this.parentNode)
+		if(["value", "href", "activateLinks"].indexOf(attribute) != -1 && this.parentNode)
 		{
 			this.updateComplete.then(() => render(this._renderContent(), <HTMLElement><unknown>this));
 		}
@@ -171,7 +171,7 @@ export class Et2Description extends Et2Widget(LitElement) implements et2_IDetach
 			render = this.wrapLink(this.href, this.value);
 		}
 		// If we want to activate links inside, do that
-		else if(this.activeLinks && this.value)
+		else if(this.activateLinks && this.value)
 		{
 			render = this.getActivatedValue(this.value, this.href ? this.extraLinkTarget : '_blank');
 		}
