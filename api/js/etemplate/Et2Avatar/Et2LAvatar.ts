@@ -65,16 +65,29 @@ export class Et2LAvatar extends Et2Avatar
 	{
 		super.updated(changedProperties);
 
-		if (changedProperties.has("lname") || changedProperties.has("fname") || changedProperties.has("contact_id") || changedProperties.has("src")) {
-			if (!this.src || decodeURIComponent(this.src).match("lavatar=1") && (this.fname || this.lname) && this.contact_id)
+		if(changedProperties.has("lname") || changedProperties.has("fname") || changedProperties.has("contact_id") || changedProperties.has("src"))
+		{
+			if(!this.src || decodeURIComponent(this.src).match("lavatar=1") && (this.fname || this.lname) && this.contact_id)
 			{
 				let lavatar = Et2LAvatar.lavatar(this.fname, this.lname, this.contact_id);
 				this.initials = lavatar.initials;
 				this._baseNode.style.backgroundColor = lavatar.background;
 			}
-			else if (this.src)
+			else if(this.src)
 			{
 				this.image = this.src;
+			}
+
+			if(this.lname || this.fname)
+			{
+				// Update tooltip - we don't have enough info for more than name but we can put it in the right order
+				let label = (this.egw().preference("account_display", "common") || "firstname").includes("first") || !this.lname || !this.fname ?
+							this.fname + " " + this.lname :
+							this.lname + ", " + this.fname;
+				if(label != this.statustext)
+				{
+					this.statustext = label.trim();
+				}
 			}
 		}
 
