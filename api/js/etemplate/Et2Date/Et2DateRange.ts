@@ -1,6 +1,6 @@
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
 import {FormControlMixin} from "@lion/form-core";
-import {classMap, css, html, ifDefined, LitElement, render, TemplateResult} from "@lion/core";
+import {classMap, css, html, ifDefined, LitElement, TemplateResult} from "@lion/core";
 import shoelace from "../Styles/shoelace";
 import {dateStyles} from "./DateStyles";
 import flatpickr from "flatpickr";
@@ -130,13 +130,15 @@ export class Et2DateRange extends Et2InputWidget(FormControlMixin(LitElement))
 	 */
 	protected _inputRelativeTemplate() : TemplateResult
 	{
-		return html`<et2-select
-              	name="relative"
-                ?disabled=${this.disabled}
-                ?readonly=${this.readonly}
-                ?required=${this.required}
-                placeholder=${ifDefined(this.placeholder)}
-				.select_options=${Et2DateRange.relative_dates}></et2-select>`;
+		return html`
+            <et2-select
+                    name="relative"
+                    ?disabled=${this.disabled}
+                    ?readonly=${this.readonly}
+                    ?required=${this.required}
+                    placeholder=${ifDefined(this.placeholder)}
+                    emptyLabel=${ifDefined(this.emptyLabel)}
+                    .select_options=${Et2DateRange.relative_dates}></et2-select>`;
 	}
 
 	/**
@@ -197,14 +199,55 @@ export class Et2DateRange extends Et2InputWidget(FormControlMixin(LitElement))
 
 	public set value(new_value : {to:string,from:string}|string)
 	{
+		if(!this.isConnected)
+		{
+			this.updateComplete.then(() =>
+			{
+				this.value = new_value;
+			});
+			return;
+		}
 		if(this.relative)
 		{
 			this.relativeElement.value = new_value;
 		}
-		else if (this.fromElement && this.toElement)
+		else if(this.fromElement && this.toElement)
 		{
-			this.fromElement._instance.setDate( [new_value?.from, new_value?.to],true);
+			if(typeof new_value == "string")
+			{
+				// Relative -> absolute
+				new_value = Et2DateRange.relativeToAbsolute(new_value);
+
+			}
+			if(this.fromElement._instance)
+			{
+				this.fromElement._instance.setDate([new_value?.from, new_value?.to], true);
+			}
+			else
+			{
+				this.fromElement.value = new_value?.from.toJSON() || "";
+				this.toElement.value = new_value?.to.toJSON() || "";
+			}
 		}
+	}
+
+	static relativeToAbsolute(date)
+	{
+		let absolute = {from: '', to: ''};
+		let relative = Et2DateRange.relative_dates.find(e => e.value.toLowerCase() == date.toLowerCase());
+		let tempDate = new Date();
+		let today = new Date(tempDate.getFullYear(), tempDate.getMonth(), tempDate.getDate(), 0, -tempDate.getTimezoneOffset(), 0);
+
+		Object.keys(absolute).forEach(k =>
+		{
+			let value = today.toJSON();
+			if(relative && typeof relative[k] == "function")
+			{
+				absolute[k] = relative[k](new Date(value));
+			}
+		});
+
+		return absolute;
 	}
 
 	// Class Constants
