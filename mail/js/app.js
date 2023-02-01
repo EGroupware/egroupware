@@ -1125,24 +1125,27 @@ app.classes.mail = AppJS.extend(
 					value: 'downloadAllToZip'
 				}
 			];
-			if (typeof this.egw.user('apps')['collabora'] !== "undefined")
-			{
-				actions.push({
-					id: 'collabora',
-					label: 'Open',
-					icon: 'collabora/navbar',
-					value: 'collabora'
-				});
-			}
+			const collabora = {
+				id: 'collabora',
+				label: 'Open',
+				icon: 'collabora/navbar',
+				value: 'collabora'
+			};
 			data.attachmentsBlockTitle = `${data.attachmentsBlock.length} attachments`;
+			sel_options.attachmentsBlock = {};
 			data.attachmentsBlock.forEach(_item =>
 			{
 				_item.actions = 'downloadOneAsFile';
 				// for some reason label needs to be set explicitly for the dropdown button. It needs more investigation.
 				_item.actionsDefaultLabel = 'Download';
+
+				if (typeof this.egw.user('apps')['collabora'] !== "undefined" && this.egw.isEditable(_item.type))
+				{
+					sel_options.attachmentsBlock[_item.attachment_number + "[actions]"] = [...actions, collabora];
+				}
 			});
 
-			sel_options.attachmentsBlock = {actions: actions};
+			sel_options.attachmentsBlock.actions = actions;
 		}
 
 		mailPreview.set_value({content:data, sel_options:sel_options});
