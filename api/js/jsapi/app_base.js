@@ -1365,8 +1365,6 @@ export const AppJS = (function(){ "use strict"; return Class.extend(
 					initialSetup:initSetup
 				};
 				_keyring.createKeyBackupContainer(selector, options).then(function(_popupId){
-					var $backup_selector = jQuery('iframe[src^="chrome-extension"],iframe[src^="about:blank?mvelo"]');
-					$backup_selector.css({position:'absolute', "z-index":1});
 					_popupId.isReady().then(function(result){
 						egw.message('Your key has been backedup into  .PGP-Key-Backup successfully.');
 						jQuery(selector).empty();
@@ -1489,7 +1487,8 @@ export const AppJS = (function(){ "use strict"; return Class.extend(
 						},
 						template: egw.webserverUrl+'/api/templates/default/pgp_backup_restore.xet',
 						class: "pgp_backup_restore",
-						modal:true
+						modal:true,
+						width: 700
 			});
 		};
 		if (typeof mailvelope != 'undefined')

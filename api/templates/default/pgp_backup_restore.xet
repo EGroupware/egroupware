@@ -14,18 +14,22 @@
 					</row>
 					<row>
 						<et2-image  src="$row_cont[image]"></et2-image>
-						<et2-description  onclick="$row_cont[onclick]" class="click"></et2-description>
+						<et2-description value="$row_cont[label]" onclick="$row_cont[onclick]" class="click"></et2-description>
 					</row>
 				</rows>
 			</grid>
-			<et2-hbox  id="mvelo" width="500px" height="300" class="mveloFrame"></et2-hbox>
+			<et2-hbox  id="mvelo" class="mveloFrame"></et2-hbox>
 		</et2-hbox>
 		<styles>
 			#_mvelo.mveloFrame {
 				border:1px solid silver;
 				display: inline-block;
 				float:right;
-				position:absolute;
+				width: 550px;
+				height: 300px;
+			}
+			#_mvelo.mveloFrame iframe {
+				position: relative !important;
 			}
 			div#_mvelo:before {
 				content: "Select an operation from menu";
