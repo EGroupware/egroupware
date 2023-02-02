@@ -195,7 +195,7 @@ export class Et2EmailTag extends Et2Tag
 			content = split.name || split.email;
 		}
 		return html`
-            <span part="content" class="tag__content">
+            <span part="content" class="tag__content" title="${this.value}">
           ${content}
         </span>`;
 	}
