@@ -3004,8 +3004,11 @@ et2-button.transparent-button::part(container) {
 }
 
 .et2_toolbar et2-button.toolbar_toggled::part(base), .et2_searchbox button.et2_button.toolbar_toggled {
-    background-color: lightgray;
-    box-shadow: inset 1px 1px 1px 1px gray !important;
+	box-shadow: inset 1px 1px 1px 1px gray !important;
+}
+
+.et2_toolbar et2-button.toolbar_toggle:not(.toolbar_toggled) img {
+	filter: brightness(0) contrast(0.3) opacity(0.7);
 }
 
 .ui-toolbar-menulist et2-button.toolbar_toggled::part(base) {

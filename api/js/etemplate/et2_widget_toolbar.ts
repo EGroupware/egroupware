@@ -646,6 +646,7 @@ export class et2_toolbar extends et2_DOMWidget implements et2_IInput
 			}, this);
 			if (isCheckbox)
 			{
+				widget.classList.add('toolbar_toggle');
 				if (this.checkbox(action.id)) widget.classList.add('toolbar_toggled'+ (typeof action.toggledClass != 'undefined'?" "+action.toggledClass:''));
 			}
 			widget.onclick = actionHandler;
