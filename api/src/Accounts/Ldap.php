@@ -615,8 +615,10 @@ class Ldap
 	{
 		$to_write['gidnumber'] = abs($data['account_id']);
 		$to_write['cn'] = $data['account_lid'];
-		// do not overwrite exitsting description, if non is given
-		if (isset($data['account_description']))
+		// do not overwrite existing description, if non is given
+		if (isset($data['account_description']) &&
+			// make sure NOT to unset description for new groups, give a "Protocol error"
+			(!empty($data['account_id']) || !empty($data['account_description'])))
 		{
 			$to_write['description'] = !empty($data['account_description']) ? $data['account_description'] : array();
 		}
