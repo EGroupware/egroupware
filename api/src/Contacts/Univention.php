@@ -23,9 +23,14 @@ class Univention extends Ldap
 {
 	function __construct($ldap_config = null, $ds = null)
 	{
-		$this->schema2egw['univentionmail'] = array(
-			'email'			=> Accounts\Univention::MAIL_ATTR,
-		);
+		$this->schema2egw += [
+			'univentionmail' => [
+				'email' => Accounts\Univention::MAIL_ATTR,
+			],
+			'univentionperson' => [
+				'bday' => 'univentionbirthday',
+			],
+		];
 		parent::__construct($ldap_config, $ds);
 	}
 
