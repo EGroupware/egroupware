@@ -513,7 +513,7 @@ class Session
 			}
 
 			if (($blocked = $this->login_blocked($login,$user_ip)) ||	// too many unsuccessful attempts
-				$GLOBALS['egw_info']['server']['global_denied_users'][$this->account_lid] ||
+				!empty($GLOBALS['egw_info']['server']['global_denied_users'][$this->account_lid]) ||
 				$auth_check && !$GLOBALS['egw']->auth->authenticate($this->account_lid, $this->passwd, $this->passwd_type) ||
 				$this->account_id && $GLOBALS['egw']->accounts->get_type($this->account_id) == 'g')
 			{
@@ -547,7 +547,7 @@ class Session
 			$GLOBALS['egw_info']['user']['account_id'] = $this->account_id;
 
 			// for *DAV and eSync we use a pseudo sessionid created from md5(user:passwd)
-			// --> allows this stateless protocolls which use basic auth to use sessions!
+			// --> allows this stateless protocols which use basic auth to use sessions!
 			if (($this->sessionid = self::get_sessionid(true)))
 			{
 				if (session_status() !== PHP_SESSION_ACTIVE)	// gives warning including password
