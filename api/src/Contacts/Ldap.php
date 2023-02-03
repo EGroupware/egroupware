@@ -31,6 +31,11 @@ class Ldap
 	const PERSONAL = 2;
 	const GROUP = 3;
 
+	/**
+	 * Pseudo objectclass used for LDAP attributes made available to use as custom fields
+	 */
+	const CF_OBJECTCLASS = 'egwcustomfields';
+
 	var $data;
 
 	/**
@@ -344,6 +349,15 @@ class Ldap
 			$this->connect();
 		}
 		$this->ldapServerInfo = $GLOBALS['egw']->ldap->getLDAPServerInfo($this->ldap_config['ldap_contact_host']);
+
+		// check if there are any attributes defined via custom-fields
+		foreach(Api\Storage\Customfields::get('addressbook') as $cf)
+		{
+			if (substr($cf['name'], 0, 5) === 'ldap_')
+			{
+				$this->schema2egw[self::CF_OBJECTCLASS]['#'.$cf['name']] = strtolower(substr($cf['name'], 5));
+			}
+		}
 
 		foreach($this->schema2egw as $attributes)
 		{
@@ -1284,6 +1298,10 @@ class Ldap
 				'id'  => $entry['uid'][0] ?? $entry['entryuuid'][0],
 				'tid' => 'n',	// the type id for the addressbook
 			);
+			if (!empty($this->schema2egw[self::CF_OBJECTCLASS]))
+			{
+				$entry['objectclass'][] = self::CF_OBJECTCLASS;
+			}
 			foreach($entry['objectclass'] as $ii => $objectclass)
 			{
 				$objectclass = strtolower($objectclass);

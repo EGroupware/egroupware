@@ -2730,7 +2730,13 @@ class addressbook_ui extends addressbook_bo
 		if (isset($readonlys['n_fileas'])) $readonlys['fileas_type'] = $readonlys['n_fileas'];
 		// disable not needed tabs
 		$readonlys['tabs']['cats'] = !($content['cat_tab'] = $this->config['cat_tab']);
-		$readonlys['tabs']['custom'] = !$this->customfields || $this->get_backend($content['id'],$content['owner']) == $this->so_accounts;
+		$readonlys['tabs']['custom'] = !$this->customfields ||
+			// only show custom fields tab for LDAP, if we have LDAP CF's defined and an existing contact (as no schema defined)
+			$this->get_backend($content['id'],$content['owner']) == $this->so_accounts &&
+				(empty($content['id']) || !array_filter($this->customfields, static function($cf)
+				{
+					return substr($cf['name'], 0, 5) === 'ldap_';
+				}));
 		$readonlys['tabs']['custom_private'] = $readonlys['tabs']['custom'] || !$this->config['private_cf_tab'];
 		$readonlys['tabs']['distribution_list'] = !$content['distrib_lists'];#false;
 		$readonlys['tabs']['history'] = $this->contact_repository != 'sql' || !$content['id'] ||
