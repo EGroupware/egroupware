@@ -141,7 +141,7 @@ class Auth
 			Session::egw_setcookie(Session::EGW_SESSION_NAME, session_id());
 		}
 
-		$backend = self::backend($type ?? null);
+		$backend = self::backend($type ?? null, false);
 
 		return $backend instanceof  Auth\BackendSSO ? $backend->login() : null;
 	}
