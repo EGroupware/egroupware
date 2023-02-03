@@ -28,6 +28,9 @@ async function before(editable = true)
 	sinon.stub(element, "egw").returns(window.egw);
 
 	await element.updateComplete;
+	let tags = [];
+	element.shadowRoot.querySelectorAll(element.tagTag).forEach((t : Et2Tag) => tags.push(t.updateComplete));
+	await Promise.all(tags);
 
 	return element;
 }
@@ -120,6 +123,21 @@ describe("Editable tag", () =>
 		assert.equal(element.value, "change select too", "Tag change did not cause value change in parent select (allowFreeEntries was on)");
 
 	});
+
+	it("Does not have edit button when readonly", async() =>
+	{
+		element.readonly = true;
+		await element.updateComplete;
+
+		let tag = element.shadowRoot.querySelectorAll(element.tagTag);
+		assert.isAbove(tag.length, 0, "No tags found");
+
+		let wait = [];
+		tag.forEach((t : Et2Tag) => wait.push(t.updateComplete))
+		await Promise.all(wait);
+
+		assert.isNull(tag[0].shadowRoot.querySelector("et2-button-icon[label='edit*']"), "Unexpected edit button");
+	});
 });
 describe("Select is not editable", () =>
 {
@@ -130,6 +148,8 @@ describe("Select is not editable", () =>
 	{
 		let tag = element.shadowRoot.querySelectorAll(element.tagTag);
 		assert.isAbove(tag.length, 0, "No tags found");
+
 		assert.isNull(tag[0].shadowRoot.querySelector("et2-button-icon[label='edit*']"), "Unexpected edit button");
 	});
+
 });

@@ -365,9 +365,14 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 				this._addNodes();
 			}
 			// Update any tags if edit mode changes
-			if(changedProperties.has("editModeEnabled"))
+			if(changedProperties.has("editModeEnabled") || changedProperties.has("readonly"))
 			{
-				this.shadowRoot.querySelectorAll(".select__tags > *").forEach(tag => tag.editable = this.editModeEnabled);
+				// Required because we explicitly create tags instead of doing it in render()
+				this.shadowRoot.querySelectorAll(".select__tags > *").forEach((tag : Et2Tag) =>
+				{
+					tag.editable = this.editModeEnabled && !this.readonly;
+					tag.removable = !this.readonly;
+				});
 			}
 		}
 
@@ -411,7 +416,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 		protected _createTagNode(item)
 		{
 			let tag = <Et2Tag>document.createElement(this.tagTag);
-			tag.editable = this.editModeEnabled;
+			tag.editable = this.editModeEnabled && !this.readonly;
 
 			return tag;
 		}

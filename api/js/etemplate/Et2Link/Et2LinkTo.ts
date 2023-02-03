@@ -139,6 +139,7 @@ export class Et2LinkTo extends Et2InputWidget(ScopedElementsMixin(FormControlMix
 		return html`
             <et2-link-entry .onlyApp="${this.onlyApp}"
                             .applicationList="${this.applicationList}"
+                            .readonly=${this.readonly}
                             @sl-select=${this.handleEntrySelected}
                             @sl-clear="${this.handleEntryCleared}">
             </et2-link-entry>

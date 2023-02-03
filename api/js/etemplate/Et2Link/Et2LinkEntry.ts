@@ -163,7 +163,7 @@ export class Et2LinkEntry extends Et2InputWidget(FormControlMixin(SlotMixin(LitE
 		}
 		if(changedProperties.has("readonly"))
 		{
-			this._appNode.readonly = this.readonly;
+			this._appNode.readonly = this._appNode.disabled = this.readonly;
 			this._searchNode.readonly = this.readonly;
 		}
 		// Pass some properties on to app selection

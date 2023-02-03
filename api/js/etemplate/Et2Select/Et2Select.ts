@@ -88,36 +88,51 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 			.select__label {
 				display: block;
     			text-overflow: ellipsis;
-    			/* This is usually not used due to flex, but is the basis for ellipsis calculation */
-    			width: 10ex;
+			  /* This is usually not used due to flex, but is the basis for ellipsis calculation */
+			  width: 10ex;
 			}
 
-			/** multiple=true uses tags for each value **/
-			/* styling for icon inside tag (not option) */
-			.tag_image {
+			  /** multiple=true uses tags for each value **/
+			  /* styling for icon inside tag (not option) */
+
+			  .tag_image {
 				margin-right: var(--sl-spacing-x-small);
-			}
-			/* Maximum height + scrollbar on tags (+ other styling) */
-			.select__tags {
+			  }
+
+			  /* Maximum height + scrollbar on tags (+ other styling) */
+
+			  .select__tags {
 				margin-left: 0px;
 				max-height: initial;
 				overflow-y: auto;
 				gap: 0.1rem 0.5rem;
-			}
-			.select--medium .select__tags {
+			  }
+
+			  .select--medium .select__tags {
 				padding-top: 2px;
 				padding-bottom: 2px;
-			}
-			:host([rows]) .select__tags {
+			  }
+
+			  :host([rows]) .select__tags {
 				max-height: calc(var(--rows, 5) * 1.35rem);
-			}
-			/* Keep overflow tag right-aligned.  It's the only sl-tag. */
-			 .select__tags sl-tag {
+			  }
+
+			  /* Keep overflow tag right-aligned.  It's the only sl-tag. */
+
+			  .select__tags sl-tag {
 				margin-left: auto;
-			}	
-			select:hover {
+			  }
+
+			  select:hover {
 				box-shadow: 1px 1px 1px rgb(0 0 0 / 60%);
-			}`
+			  }
+
+			  /* Hide dropdown trigger when multiple & readonly */
+
+			  :host([readonly][multiple]) .select__icon {
+				display: none;
+			  }
+			`
 		];
 	}
 
