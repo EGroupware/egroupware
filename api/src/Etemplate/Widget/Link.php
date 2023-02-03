@@ -67,16 +67,17 @@ class Link extends Etemplate\Widget
 	{
 		$attrs = $this->attrs;
 		$form_name = self::form_name($cname, $this->id, $expand);
-		$value =& self::get_array(self::$request->content, $form_name, true);
+		$value = self::get_array(self::$request->content, $form_name, false, true);
 
 		if($value && !is_array($value) && !($this->attrs['onlyApp'] ?? $this->attrs['only_app']))
 		{
 			// Try to explode
-			if(count(explode(':',$value)) < 2)
+			if(count(explode(':', $value)) < 2)
 			{
-				throw new Api\Exception\WrongParameter("Wrong value sent to $this, needs to be an array. ".array2string($value));
+				throw new Api\Exception\WrongParameter("Wrong value sent to $this, needs to be an array. " . array2string($value));
 			}
-			list($app, $id) = explode(':', $value,2);
+			$value =& self::get_array(self::$request->content, $form_name, true);
+			list($app, $id) = explode(':', $value, 2);
 			$value = array('app' => $app, 'id' => $id);
 		}
 		elseif (!$value)
@@ -383,7 +384,7 @@ class Link extends Etemplate\Widget
 
 		if (!$this->is_readonly($cname, $form_name))
 		{
-			$value = $value_in =& self::get_array($content, $form_name);
+			$value = $value_in =& self::get_array($content, $form_name, false, true);
 
 			// keep values added into request by other ajax-functions, eg. files draged into htmlarea (Vfs)
 			if((!$value || is_array($value) && !$value['to_id']) && is_array($expand['cont'][$this->id]) && !empty($expand['cont'][$this->id]['to_id']))
@@ -402,7 +403,7 @@ class Link extends Etemplate\Widget
 				return;
 			}
 			// Link widgets can share IDs, make sure to preserve values from others
-			$already = self::get_array($validated, $form_name);
+			$already = self::get_array($validated, $form_name, false, true);
 			if($already != null)
 			{
 				$value = array_merge((array)$value, $already);
@@ -450,7 +451,7 @@ class Link extends Etemplate\Widget
 					);
 				}
 			}
-			$valid =& self::get_array($validated, $form_name, true);
+			$valid =& self::get_array($validated, $form_name, true, is_null($value));
 			if (true) $valid = $value;
 			//error_log($this);
 			//error_log("   " . array2string($valid));

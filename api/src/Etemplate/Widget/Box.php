@@ -52,7 +52,7 @@ class Box extends Etemplate\Widget
 		if ($this->id && $this->type != 'groupbox') $cname = self::form_name($cname, $this->id, $params[1]);
 		if (($expand['cname'] ?? null) !== $cname && trim($cname))
 		{
-			$expand['cont'] =& self::get_array(self::$request->content, $cname);
+			$expand['cont'] =& self::get_array(self::$request->content, $cname, false, true);
 			$expand['cname'] = $cname;
 		}
 		if ($respect_disabled && isset($this->attrs['disabled']) && self::check_disabled($this->attrs['disabled'], $expand))

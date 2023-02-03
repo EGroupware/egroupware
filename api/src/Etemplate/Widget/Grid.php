@@ -207,11 +207,11 @@ class Grid extends Box
 						default:
 							return false;
 					}
-					if ($Ok && ($fname=self::form_name($cname, $child->id, $expand)) &&
+					if($Ok && ($fname = self::form_name($cname, $child->id, $expand)) &&
 						// need to break if fname ends in [] as get_array() will ignore it and returns whole array
 						// for an id like "run[$row_cont[appname]]"
 						substr($fname, -2) != '[]' &&
-						($value = self::get_array(self::$request->content,$fname)) !== null)	// null = not found (can be false!)
+						($value = self::get_array(self::$request->content, $fname, false, true)) !== null)    // null = not found (can be false!)
 					{
 						//error_log(__METHOD__."('$cname', ) $this autorepeating row $expand[row] because of $child->id = '$fname' is ".array2string($value));
 						unset($value);

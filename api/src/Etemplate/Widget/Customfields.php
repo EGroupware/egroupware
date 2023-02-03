@@ -433,7 +433,7 @@ class Customfields extends Transformer
 		}
 
 		$all_readonly = $this->is_readonly($cname, $form_name);
-		$value_in = self::get_array($content, $form_name);
+		$value_in = self::get_array($content, $form_name, false, true);
 		$use_private = self::expand_name($this->attrs['use-private'] ?? null, 0, 0, '', '', self::$cont);
 		// if we have no id / use self::GLOBAL_ID, we have to set $value_in in global namespace for regular widgets validation to find
 		if (!$this->id) $content = array_merge($content, (array)$value_in);
