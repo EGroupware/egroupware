@@ -159,7 +159,7 @@
 					<et2-description  span="all" value="customfields"></et2-description>
 				</row>
 				<row>
-					<customfields span="all" sub-type="@info_type"  readonly="true"/>
+					<customfields span="all" type_filter="@info_type"  readonly="true"/>
 				</row>
 				<row>
 					<template span="all" id="infolog.edit.print.project"/>

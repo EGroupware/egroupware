@@ -270,7 +270,7 @@
 			<rows>
 				<row>
 					<et2-box  width="100%" overflow="auto">
-						<customfields use-private="$cont[no_private_cfs]"  type_filter="$cont[tid]"/>
+						<customfields private="$cont[no_private_cfs]"  type_filter="$cont[tid]"/>
 					</et2-box>
 				</row>
 			</rows>
@@ -285,7 +285,7 @@
 			<rows>
 				<row>
 					<et2-box  width="100%" overflow="auto">
-						<customfields id="private_cfs" use-private="1"  type_filter="$cont[tid]"/>
+						<customfields id="private_cfs" private="1"  type_filter="$cont[tid]"/>
 					</et2-box>
 				</row>
 			</rows>

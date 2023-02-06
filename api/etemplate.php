@@ -145,7 +145,7 @@ function send_template()
 				'groupbox'                => 'cellpadding,cellspacing,keep',
 				'checkbox'                => 'selected_value,unselected_value,ro_true,ro_false',
 				'radio'                   => 'set_value,ro_true,ro_false',
-				'customfields'            => 'sub-type,use-private,field-names',
+				'customfields'            => 'type_filter,private,fields',
 				'date'                    => 'data_format,ignore',
 				// Legacy option "mode" was never implemented in et2
 				'description'             => 'bold-italic,link,activate_links,label_for,link_target,link_popup_size,link_title',

@@ -316,12 +316,12 @@
     </template>
     <template id="addressbook.edit.custom" template="" lang="" group="0" version="1.9.001">
         <et2-box  width="100%" overflow="auto">
-            <customfields use-private="$cont[no_private_cfs]"  type_filter="$cont[tid]"/>
+            <customfields private="$cont[no_private_cfs]"  type_filter="$cont[tid]"/>
         </et2-box>
     </template>
     <template id="addressbook.edit.custom_private" template="" lang="" group="0" version="1.9.001">
         <et2-box  width="100%" overflow="auto">
-            <customfields id="private_cfs" use-private="1"  type_filter="$cont[tid]"/>
+            <customfields id="private_cfs" private="1"  type_filter="$cont[tid]"/>
         </et2-box>
     </template>
     <template id="addressbook.edit.history" template="" lang="" group="0" version="1.9.001">

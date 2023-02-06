@@ -44,7 +44,7 @@
 		<et2-textarea  id="ts_description" rows="9" cols="70" height="250" resizeRatio="0"></et2-textarea>
 	</template>
 	<template id="timesheet.view.customfields" template="" lang="" group="0" version="1.5.001">
-		<customfields sub-type="@info_type" />
+		<customfields type_filter="@info_type" />
 	</template>
 	<template id="timesheet.view.ownership" template="" lang="" group="0" version="16.1.00">
 		<grid width="100%">
