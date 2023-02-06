@@ -896,3 +896,16 @@ export class Et2SelectYear extends Et2SelectNumber
 
 // @ts-ignore TypeScript is not recognizing that this widget is a LitElement
 customElements.define("et2-select-year", Et2SelectYear);
+
+export class Et2SelectLang extends Et2StaticSelectMixin(Et2Select)
+{
+	constructor()
+	{
+		super();
+
+		this.static_options = so.lang(this, {other: this.other || []});
+	}
+}
+
+// @ts-ignore TypeScript is not recognizing that this widget is a LitElement
+customElements.define("et2-select-lang", Et2SelectLang);
