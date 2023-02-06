@@ -687,7 +687,7 @@ div.mailDisplayHeaders div.mail_extraEmails.visible {
 }
 
 .mailPreviewHeaders :first-child, .mailDisplayHeaders :first-child {
-   color: #7a7a7a;
+   color: var(--sl-color-neutral-800);
 }
 .mailPreviewHeaders et2-lavatar {
 	flex: 0 0 auto;
@@ -1084,4 +1084,13 @@ div#mail-index_nm.splitter-pane {min-height: 100px;}
 	border-color: #0f65968f;
 	border-width: 1px;
 	height: 2.6em;
+}
+
+et2-hbox.mailPreviewHeaders {
+	margin-bottom: 0px;
+}
+
+et2-description#mail-index_mailPreview_subject {
+	margin-bottom: 0;
+	margin-top: 0.3em;
 }
