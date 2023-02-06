@@ -472,9 +472,17 @@ class calendar_import_csv extends importexport_basic_import_csv  {
 			$owner = array_pop($owner);
 		}
 		$options = array(
-			'name'    => 'calendar.import_csv',
-			'content' => array(
-				'owner' => $owner ? $owner : null
+			'name'        => 'calendar.import_csv',
+			'content'     => array(
+				'owner' => $owner ? [$owner] : null
+			),
+			'sel_options' => array(
+				'cal_owner' => [
+					[
+						'value' => $GLOBALS['egw_info']['user']['account_id'],
+						'label' => calendar_owner_etemplate_widget::get_owner_label($GLOBALS['egw_info']['user']['account_id'])
+					]
+				]
 			)
 		);
 		return $options;

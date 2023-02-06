@@ -303,10 +303,16 @@ class calendar_import_ical implements importexport_iface_import_plugin  {
 			'content'     => array(
 				'file_type' => 'ical',
 				'charset'   => $GLOBALS['egw_info']['user']['preferences']['common']['csv_charset'],
-				'cal_owner' => $definition->plugin_options['cal_owner'] ?: $GLOBALS['egw_info']['user']['account_id']
+				'cal_owner' => [$definition->plugin_options['cal_owner'] ?: $GLOBALS['egw_info']['user']['account_id']]
 			),
 			'sel_options' => array(
-				'charset' => Api\Translation::get_installed_charsets()
+				'charset'   => Api\Translation::get_installed_charsets(),
+				'cal_owner' => [
+					[
+						'value' => $GLOBALS['egw_info']['user']['account_id'],
+						'label' => calendar_owner_etemplate_widget::get_owner_label($GLOBALS['egw_info']['user']['account_id'])
+					]
+				]
 			),
 			'preserv'     => array()
 		);
