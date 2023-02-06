@@ -146,9 +146,11 @@ class Customfields extends Transformer
 			$customfields = $this->attrs['customfields'];
 		}
 		// Filter fields
+		$field_filters = $negate_fields = [];
 		if (!empty($this->attrs['fields']))
 		{
-			$fields_name = explode(',', $this->attrs['fields']);
+			$fields_name = is_array($this->attrs['fields']) ? $this->attrs['fields'] :
+				explode(',', $this->attrs['fields']);
 			foreach($fields_name as &$f)
 			{
 				if ($f[0] == "!")
