@@ -64,7 +64,7 @@ class Customfields extends Transformer
 	// Used if there's no ID provided
 	const GLOBAL_ID = 'custom_fields';
 
-	protected $legacy_options = 'sub-type,use-private,field-names';
+	protected $legacy_options = 'type_filter,private,fields';
 
 	protected static $transformation = array(
 		'type' => array(
@@ -146,9 +146,9 @@ class Customfields extends Transformer
 			$customfields = $this->attrs['customfields'];
 		}
 		// Filter fields
-		if (!empty($this->attrs['field-names']))
+		if (!empty($this->attrs['fields']))
 		{
-			$fields_name = explode(',', $this->attrs['field-names']);
+			$fields_name = explode(',', $this->attrs['fields']);
 			foreach($fields_name as &$f)
 			{
 				if ($f[0] == "!")
@@ -162,8 +162,8 @@ class Customfields extends Transformer
 
 		$fields = $customfields;
 
-		$use_private = self::expand_name($this->attrs['use-private'] ?? null,0,0,'','',self::$cont);
-		$this->attrs['sub-type'] = self::expand_name($this->attrs['sub-type'] ?? null,0,0,'','',self::$cont);
+		$use_private = self::expand_name($this->attrs['private'] ?? null,0,0,'','',self::$cont);
+		$this->attrs['type_filter'] = self::expand_name($this->attrs['type_filter'] ?? null,0,0,'','',self::$cont);
 
 		foreach((array)$fields as $key => $field)
 		{
@@ -221,7 +221,7 @@ class Customfields extends Transformer
 			case 'customfields-list':
 				foreach(array_reverse($fields) as $lname => $field)
 				{
-					if (!empty($this->attrs['sub-type']) && !empty($field['type2']) &&
+					if (!empty($this->attrs['type_filter']) && !empty($field['type2']) &&
 						strpos(','.$field['type2'].',',','.$field['type2'].',') === false) continue;    // not for our content type//
 					if (isset($value[$this->attrs['prefix'].$lname]) && $value[$this->attrs['prefix'].$lname] !== '') //break;
 					{
@@ -434,10 +434,10 @@ class Customfields extends Transformer
 
 		$all_readonly = $this->is_readonly($cname, $form_name);
 		$value_in = self::get_array($content, $form_name, false, true);
-		$use_private = self::expand_name($this->attrs['use-private'] ?? null, 0, 0, '', '', self::$cont);
+		$use_private = self::expand_name($this->attrs['private'] ?? null, 0, 0, '', '', self::$cont);
 		// if we have no id / use self::GLOBAL_ID, we have to set $value_in in global namespace for regular widgets validation to find
 		if (!$this->id) $content = array_merge($content, (array)$value_in);
-		//error_log(__METHOD__."($cname, ...) form_name=$form_name, use-private={$this->attrs['use-private']}, value_in=".array2string($value_in));
+		//error_log(__METHOD__."($cname, ...) form_name=$form_name, private={$this->attrs['private']}, value_in=".array2string($value_in));
 		if($this->getElementAttribute($form_name, 'customfields'))
 		{
 			$customfields =& $this->getElementAttribute($form_name, 'customfields');
