@@ -451,17 +451,18 @@ class setup
 	 * Return X.X.X major version from X.X.X.X versionstring
 	 *
 	 * @param string $versionstring
+	 * @return string major version or '' for !$versionstring, e.g. for null
 	 */
 	function get_major($versionstring)
 	{
 		if(!$versionstring)
 		{
-			return False;
+			return '';
 		}
 
-		$version = str_replace('pre','.',$versionstring);
-		$varray  = explode('.',$version);
-		$major   = implode('.',array($varray[0],$varray[1],$varray[2]));
+		$version = str_replace('pre','.', $versionstring);
+		$varray  = explode('.', $version);
+		$major   = implode('.', array_slice($varray, 0, 3));
 
 		return $major;
 	}

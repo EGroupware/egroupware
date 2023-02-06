@@ -185,7 +185,7 @@ class setup_detection
 
 					foreach($depvalue['versions'] as $depsvalue)
 					{
-						$currentver = $setup_info[$depvalue['appname']]['currentver'];
+						$currentver = $setup_info[$depvalue['appname']]['currentver'] ?? '';
 						if ($depvalue['appname'] == 'phpgwapi' && substr($currentver,0,6) == '0.9.99')
 						{
 							$currentver = '0.9.14.508';
