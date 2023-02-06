@@ -171,6 +171,7 @@ export class Et2SelectEmail extends Et2Select
 						let dragPosition = {x:e.page.x, y:e.page.y};
 						e.target.setAttribute('style', `width:${e.target.clientWidth}px !important`);
 						e.target.style.position = 'fixed';
+						e.target.style.zIndex = 10;
 						e.target.style.transform =
 							`translate(${dragPosition.x}px, ${dragPosition.y}px)`;
 					},
