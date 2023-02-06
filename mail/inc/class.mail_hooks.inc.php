@@ -792,18 +792,12 @@ class mail_hooks
 	 */
 	public static function attachmentsBlockActions()
 	{
-		return [
+		$actions = [
 			'downloadOneAsFile' => [
 				'id'    => 'downloadOneAsFile',
 				'label' => 'Download',
 				'icon'  => 'fileexport',
 				'value' => 'downloadOneAsFile'
-			],
-			'collabora'         => [
-				'id'    => 'collabora',
-				'label' => 'Open with Collabora',
-				'icon'  => 'open',
-				'value' => 'collabora'
 			],
 			'saveOneToVfs'      => [
 				'id'    => 'saveOneToVfs',
@@ -824,5 +818,15 @@ class mail_hooks
 				'value' => 'downloadAllToZip'
 			]
 		];
+		if (file_exists(EGW_SERVER_ROOT.'/collabora'))
+		{
+			$actions['collabora'] = [
+				'id'    => 'collabora',
+				'label' => 'Open with Collabora',
+				'icon'  => 'open',
+				'value' => 'collabora'
+			];
+		}
+		return $actions;
 	}
 }

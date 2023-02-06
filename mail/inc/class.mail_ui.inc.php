@@ -2525,7 +2525,8 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 				$attachmentHTML[$key]['mail_id'] = $rowID;
 				$attachmentHTML[$key]['winmailFlag']=$value['is_winmail'];
 				$attachmentHTML[$key]['smime_type'] = $value['smime_type'];
-				$attachmentHTML[$key]['actions'] = 'downloadOneAsFile';
+				$attachmentHTML[$key]['actions'] = $GLOBALS['egw_info']['user']['preferences']['filemanager']['document_doubleclick_action'] === 'collabora' ?
+					'collabora' : 'downloadOneAsFile';
 				$attachmentHTML[$key]['actionsDefaultLabel'] = 'Download';
 
 				// reset mode array as it should be considered differently for

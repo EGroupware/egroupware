@@ -1141,6 +1141,11 @@ app.classes.mail = AppJS.extend(
 
 				if (typeof this.egw.user('apps')['collabora'] !== "undefined" && this.egw.isEditable(_item.type))
 				{
+					if (egw.preference('document_doubleclick_action', 'filemanager') === 'collabora')
+					{
+						_item.actions = 'downloadOneAsFile';
+						_item.actionsDefaultLabel = 'Collabora';
+					}
 					sel_options.attachmentsBlock[_item.attachment_number + "[actions]"] = [...actions, collabora];
 				}
 			});
