@@ -114,7 +114,8 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 			  }
 
 			  :host([rows]) .select__tags {
-				max-height: calc(var(--rows, 5) * 1.35rem);
+				max-height: calc(var(--rows, 5) * 2.45em);
+				overflow: hidden;
 			  }
 
 			  /* Keep overflow tag right-aligned.  It's the only sl-tag. */
@@ -131,6 +132,23 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 
 			  :host([readonly][multiple]) .select__icon {
 				display: none;
+			  }
+
+			  /* Show all rows on hover if rows=1 */
+
+			  :host([readonly][multiple][rows]):hover .select__tags {
+				width: -webkit-fill-available;
+				width: -moz-fill-available;
+				width: fill-available;
+			  }
+
+			  /* Style for the popup */
+
+			  ::part(popup) {
+				z-index: 1;
+				background: var(--sl-input-background-color);
+				padding: var(--sl-input-spacing-small);
+				padding-left: 0;
 			  }
 			`
 		];
@@ -191,6 +209,8 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		this._triggerChange = this._triggerChange.bind(this);
 		this._doResize = this._doResize.bind(this);
 		this._handleMouseWheel = this._handleMouseWheel.bind(this);
+		this._handleMouseEnter = this._handleMouseEnter.bind(this);
+		this._handleMouseLeave = this._handleMouseLeave.bind(this);
 	}
 
 	connectedCallback()
@@ -204,6 +224,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		this.addEventListener("sl-after-hide", this.et2HandleBlur);
 
 		this.addEventListener("mousewheel", this._handleMouseWheel);
+		this.addEventListener("mouseenter", this._handleMouseEnter);
 
 		this.updateComplete.then(() =>
 		{
@@ -261,6 +282,65 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 	private _handleMouseWheel(e : MouseEvent)
 	{
 		e.stopPropagation();
+	}
+
+	/**
+	 * If maxTagsVisible=1 and rows=1 and multiple=true, when they put the mouse over the widget show all tags
+	 * @param {MouseEvent} e
+	 * @private
+	 */
+	private _handleMouseEnter(e : MouseEvent)
+	{
+		if(this.maxTagsVisible == 1 && this.rows == 1 && this.multiple == true)
+		{
+			e.stopPropagation();
+
+			// Show all tags
+			this.maxTagsVisible = 0;
+			this._oldRows = this.rows;
+			this.rows = 10;
+			this.syncItemsFromValue();
+
+			// Bind to turn this all off
+			this.addEventListener("mouseleave", this._handleMouseLeave);
+
+			// Popup - this might get wiped out next render(), might not
+			this.updateComplete.then(() =>
+			{
+				let label = this.dropdown.querySelector(".select__label");
+				let popup = document.createElement("sl-popup");
+				popup.strategy = "fixed";
+				popup.active = true;
+				popup.sync = "width";
+				popup.classList.add("hover__popup");
+				label.parentNode.insertBefore(popup, label);
+				popup.appendChild(label);
+				label.style.width = "35ex";
+			});
+		}
+	}
+
+	/**
+	 * If we're showing all rows because of _handleMouseEnter, reset when mouse leaves
+	 * @param {MouseEvent} e
+	 * @private
+	 */
+	private _handleMouseLeave(e : MouseEvent)
+	{
+		let popup = this.dropdown.querySelector("sl-popup");
+		if(popup)
+		{
+			// Popup still here.  Remove it
+			let label = popup.firstChild;
+			popup.parentNode.insertBefore(label, popup);
+			popup.remove();
+		}
+		this.maxTagsVisible = 1;
+		this.rows = this._oldRows;
+		delete this._oldRows;
+		this.syncItemsFromValue();
+		this.removeEventListener("mouseleave", this._handleMouseLeave);
+		this.dropdown.requestUpdate();
 	}
 
 	/**
@@ -497,15 +577,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 			tag.addEventListener("dblclick", this._handleDoubleClick);
 			tag.addEventListener("click", this.handleTagInteraction);
 			tag.addEventListener("keydown", this.handleTagInteraction);
-			tag.addEventListener("sl-remove", (event) =>
-			{
-				event.stopPropagation();
-				if(!this.disabled)
-				{
-					item.checked = false;
-					this.syncValueFromItems();
-				}
-			});
+			tag.addEventListener("sl-remove", (event : CustomEvent) => this.handleTagRemove(event, item));
 		}
 		let image = this._createImage(item);
 		if(image)
