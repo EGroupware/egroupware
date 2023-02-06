@@ -110,7 +110,7 @@ describe("Textbox widget", () =>
 		assert.isNull(element.querySelector("a"), "Links got activated when activate_links property is false");
 
 		// Turn it on
-		element.activate_links = true;
+		element.activateLinks = true;
 
 		// wait for asynchronous changes to the DOM
 		// @ts-ignore TypeScript doesn't recognize widgets as Elements
