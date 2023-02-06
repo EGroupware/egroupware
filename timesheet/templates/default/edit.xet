@@ -98,8 +98,8 @@
 					<et2-description  value="Duration"></et2-description>
 					<et2-description  value="Sum"></et2-description>
 				</row>
-				<row>
-					<et2-date-time  id="${row}[tse_time]" readonly="true"></et2-date-time>
+				<row id="timesheet-events::$row_cont[tse_id]">
+					<et2-date-time  id="${row}[tse_time]" readonly="true" class="et2_clickable" onclick="app.timesheet.editEventTime"></et2-date-time>
 					<et2-date-time  id="${row}[tse_timestamp]" readonly="true"></et2-date-time>
 					<et2-select  id="${row}[tse_type]" readonly="true"></et2-select>
 					<et2-date-duration  id="${row}[time]" readonly="true" displayFormat="h:m" dataFormat="s"></et2-date-duration>
@@ -107,6 +107,9 @@
 				</row>
 			</rows>
 		</grid>
+	</template>
+	<template id="timesheet.edit.events.change" template="" lang="" group="0" version="1.7.002">
+		<et2-date-time  id="time" required="true"/>
 	</template>
 	<template id="timesheet.edit" template="" lang="" group="0" version="1.9.002">
 		<grid width="100%">

@@ -376,6 +376,7 @@ class timesheet_ui extends timesheet_bo
 			'start_time' => isset($this->data['start_time']) ? $this->data['start_time'] : $this->data['ts_start'],
 			'pm_integration' => $this->pm_integration,
 			'no_ts_status' => !$this->status_labels && ($this->data['ts_status'] != self::DELETED_STATUS),
+			'tabs' => $_GET['tabs'] ?? 'general',
 		));
 		$links = array();
 		// create links specified in the REQUEST (URL)

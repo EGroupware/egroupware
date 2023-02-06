@@ -15,6 +15,10 @@ import '../../api/js/jsapi/egw_global';
 
 import {EgwApp} from '../../api/js/jsapi/egw_app';
 import {egw} from "../../api/js/jsapi/egw_global";
+import {Et2DateTimeReadonly} from "../../api/js/etemplate/Et2Date/Et2DateTimeReadonly";
+import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";
+import {Et2DateTime} from "../../api/js/etemplate/Et2Date/Et2DateTime";
+import {et2_grid} from "../../api/js/etemplate/et2_widget_grid";
 
 /**
  * UI for timesheet
@@ -212,6 +216,67 @@ class TimesheetApp extends EgwApp
 			ids.push(_senders[i].id.split("::").pop());
 		}
 		egw.json("timesheet.timesheet_ui.ajax_action",[_action.id, ids, all]).sendRequest(true);
+	}
+
+	/**
+	 * Edit time of an event in events tab of edit timesheet
+	 *
+	 * @param MouseEvent _ev
+	 * @param Et2DateTimeReadonly _widget
+	 */
+	editEventTime(_ev : MouseEvent, _widget : Et2DateTimeReadonly)
+	{
+		_ev.stopPropagation();	// tab-panel somehow also gets the event
+		if (this.et2.getInstanceManager().isDirty())
+		{
+			Et2Dialog.alert(this.egw.lang('You have unsaved changes, you need save them before editing events!'), this.egw.lang('Unsaved changes'));
+			return;
+		}
+		const tse_id = _widget.closest('tr')?.id?.replace('timesheet-events::', '');
+		const grid = <et2_grid>_widget.getParent();
+		const tse_type = parseInt(grid.getWidgetById(_widget.id.replace('[tse_time]', '[tse_type]')).value[0]);
+		const dialog = new Et2Dialog(this.egw);
+		dialog.getUpdateComplete().then(() =>
+		{
+			const time = <Et2DateTime><any>dialog.template.widgetContainer.getWidgetById('time');
+			// start-time set end-time as max
+			if (0+tse_type & 1)
+			{
+				time.set_max((<Et2DateTimeReadonly><any>grid.getWidgetById(_widget.id.replace(/^(\d+)/,
+					n => (parseInt(n)+1).toString()))).value);
+			}
+			// stop- or pause-time, set start-time as min
+			else
+			{
+				time.set_min((<Et2DateTimeReadonly><any>grid.getWidgetById(_widget.id.replace(/^(\d+)/,
+					n => (parseInt(n)-1).toString()))).value);
+			}
+		});
+		// Set attributes.  They can be set in any way, but this is convenient.
+		dialog.transformAttributes({
+			callback: (_button, _values) => {
+				const change = (new Date(_widget.value)).valueOf() - (new Date(_values.time)).valueOf();
+				if (_button === Et2Dialog.OK_BUTTON && change)
+				{
+					_widget.value = _values.time;
+					egw.request('timesheet.EGroupware\\Timesheet\\Events.ajax_updateTime',
+						[tse_id, new Date((new Date(_values.time)).valueOf() + egw.getTimezoneOffset() * 60000)])
+						.then(_data =>
+						{
+							// reload the whole dialog
+							window.location.href = window.location.href+'&tabs=events';
+						});
+				}
+			},
+			title: egw.lang('Change time'),
+			template: 'timesheet.edit.events.change',
+			buttons: Et2Dialog.BUTTONS_OK_CANCEL,
+			value: {
+				content: { time: _widget.value }
+			}
+		});
+		// Add to DOM, dialog will auto-open
+		document.body.appendChild(dialog);
 	}
 }
 
