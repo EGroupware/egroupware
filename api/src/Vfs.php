@@ -1118,13 +1118,13 @@ class Vfs extends Vfs\Base
 		}
 		if($size < 1024 * 1024)
 		{
-			return sprintf('%3.2Gk', (float)$size / 1024);
+			return sprintf('%3.2fk', (float)$size / 1024);
 		}
 		if($size < 1024 * 1024 * 1024)
 		{
-			return sprintf('%3.4GM', (float)$size / (1024 * 1024));
+			return sprintf('%3.4fM', (float)$size / (1024 * 1024));
 		}
-		return sprintf('%3.4GG', (float)$size / (1024 * 1024 * 1024));
+		return sprintf('%3.4fG', (float)$size / (1024 * 1024 * 1024));
 	}
 
 	/**
