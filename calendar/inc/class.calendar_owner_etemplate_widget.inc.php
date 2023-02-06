@@ -281,6 +281,11 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 	 */
 	protected static function format_owner($id, $title, $data = array())
 	{
+		if(!$id)
+		{
+			return "";
+		}
+
 		static $contacts_obj = null;
 		if(is_null($contacts_obj))
 		{

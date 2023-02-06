@@ -303,7 +303,7 @@ class calendar_import_ical implements importexport_iface_import_plugin  {
 			'content'     => array(
 				'file_type' => 'ical',
 				'charset'   => $GLOBALS['egw_info']['user']['preferences']['common']['csv_charset'],
-				'cal_owner' => $definition->plugin_options['cal_owner'] ?? $GLOBALS['egw_info']['user']['account_id']
+				'cal_owner' => $definition->plugin_options['cal_owner'] ?: $GLOBALS['egw_info']['user']['account_id']
 			),
 			'sel_options' => array(
 				'charset' => Api\Translation::get_installed_charsets()
