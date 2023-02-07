@@ -63,6 +63,11 @@ export class Et2Details extends Et2Widget(SlDetails)
                 max-height: 15em;
                 overflow-y: auto;
               }
+              .details.hoist .details__body.overlaySummary {
+				top: 0;
+				left: 2em;
+				width: calc(100% - 2em);
+			  }
 			`,
 		];
 	}
@@ -91,6 +96,13 @@ export class Et2Details extends Et2Widget(SlDetails)
 			 */
 			toggleAlign: {
 				type: String
+			},
+
+			/**
+			 * Overlay summary container with the details container when in open state
+			 */
+			overlaySummaryOnOpen: {
+				type: Boolean
 			}
 		}
 	}
@@ -115,6 +127,7 @@ export class Et2Details extends Et2Widget(SlDetails)
 		this.toggleOnHover = false;
 		this.toggleAlign = 'right';
 		this.hoist = false;
+		this.overlaySummaryOnOpen = false;
 	}
 
 	connectedCallback()
@@ -133,6 +146,10 @@ export class Et2Details extends Et2Widget(SlDetails)
 			if (this.toggleAlign === 'left')
 			{
 				this.shadowRoot.querySelector('.details__summary-icon').style.order = -1;
+			}
+			if (this.overlaySummaryOnOpen)
+			{
+				this.shadowRoot.querySelector('.details__body').classList.add('overlaySummary');
 			}
 		});
 	}
