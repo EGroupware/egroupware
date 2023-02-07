@@ -1,3 +1,9 @@
+import {Et2Tag} from "../Tag/Et2Tag";
+import {assert, elementUpdated, fixture, html, oneEvent} from '@open-wc/testing';
+import * as sinon from 'sinon';
+import {inputBasicTests} from "../../Et2InputWidget/test/InputBasicTests";
+import {Et2Select} from "../Et2Select";
+
 /**
  * Test file for Etemplate webComponent Select
  *
@@ -11,11 +17,6 @@ window.egw = {
 	tooltipUnbind: () => {},
 	webserverUrl: ""
 };
-
-import {assert, elementUpdated, fixture, html} from '@open-wc/testing';
-import * as sinon from 'sinon';
-import {inputBasicTests} from "../../Et2InputWidget/test/InputBasicTests";
-import {Et2Select} from "../Et2Select";
 
 let element : Et2Select;
 
@@ -59,4 +60,65 @@ describe("Select widget basics", () =>
 		assert.deepEqual(element.select_options, [], "Unexpected option(s)");
 	})
 });
+
+describe("Multiple", () =>
+{
+	beforeEach(async() =>
+	{
+		// Create an element to test with, and wait until it's ready
+		// @ts-ignore
+		element = await fixture<Et2Select>(html`
+            <et2-select label="I'm a select" multiple="true">
+                <sl-menu-item value="one">One</sl-menu-item>
+                <sl-menu-item value="two">Two</sl-menu-item>
+            </et2-select>
+		`);
+		element.set_value("one,two");
+
+		// Stub egw()
+		sinon.stub(element, "egw").returns(window.egw);
+
+		return element;
+	});
+
+	it("Can remove tags", async() =>
+	{
+		assert.equal(element.querySelectorAll("sl-menu-item").length, 2, "Did not find options");
+
+		assert.sameMembers(element.value, ["one", "two"]);
+		let tags = element.shadowRoot.querySelectorAll('.select__tags > *');
+
+		// Await tags to render
+		let tag_updates = []
+		element.shadowRoot.querySelectorAll(element.tagTag).forEach((t : Et2Tag) => tag_updates.push(t.updateComplete));
+		await Promise.all(tag_updates);
+
+		assert.equal(tags.length, 2);
+		assert.equal(tags[0].value, "one");
+		assert.equal(tags[1].value, "two");
+
+		// Set up listener
+		const listener = oneEvent(element, "change");
+
+		// Click to remove first tag
+		let removeButton = tags[0].shadowRoot.querySelector("[part='remove-button']");
+		assert.exists(removeButton, "Could not find tag remove button");
+		removeButton.dispatchEvent(new Event("click"));
+
+		await listener;
+
+		// Wait for widget to update
+		await element.updateComplete;
+		tag_updates = []
+		element.shadowRoot.querySelectorAll(element.tagTag).forEach((t : Et2Tag) => tag_updates.push(t.updateComplete));
+		await Promise.all(tag_updates);
+
+		// Check
+		assert.sameMembers(element.value, ["two"], "Removing tag did not remove value");
+		tags = element.shadowRoot.querySelectorAll('.select__tags > *');
+		assert.equal(tags.length, 1, "Removed tag is still there");
+	});
+
+});
+
 inputBasicTests(before, "", "select");

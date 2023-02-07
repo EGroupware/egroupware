@@ -211,6 +211,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		this._handleMouseWheel = this._handleMouseWheel.bind(this);
 		this._handleMouseEnter = this._handleMouseEnter.bind(this);
 		this._handleMouseLeave = this._handleMouseLeave.bind(this);
+		this.handleTagRemove = this.handleTagRemove.bind(this);
 	}
 
 	connectedCallback()
@@ -585,6 +586,24 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 			tag.prepend(image);
 		}
 		return tag;
+	}
+
+	private handleTagRemove(event : CustomEvent, option)
+	{
+		event.stopPropagation();
+
+		if(!this.disabled)
+		{
+			option.selected = false;
+			let index = this.value.indexOf(option.value);
+			if(index > -1)
+			{
+				this.value.splice(index, 1);
+			}
+			this.dispatchEvent(new CustomEvent('sl-input'));
+			this.dispatchEvent(new CustomEvent('sl-change'));
+			this.syncItemsFromValue();
+		}
 	}
 
 	/**
