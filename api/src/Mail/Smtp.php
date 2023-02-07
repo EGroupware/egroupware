@@ -244,13 +244,12 @@ class Smtp
 	 * If $account is an array (with values for keys account_(id|lid|email), it does NOT call accounts class
 	 *
 	 * @param int|array $account account_id or whole account array with values for keys
-	 * @param string $domain domain
+	 * @param string $domain|null domain
 	 * @param string $mail_login_type=null standard(uid), vmailmgr(uid@domain), email or uidNumber
-	 * @return string
+	 * @return string|null null if no domain given but required by $mail_login_type
 	 */
-	static public function mailbox_address($account, string $domain, string $mail_login_type=null)
+	static public function mailbox_address($account, string $domain=null, string $mail_login_type=null)
 	{
-
 		switch($mail_login_type)
 		{
 			case 'email':
@@ -258,6 +257,7 @@ class Smtp
 				break;
 
 			case 'uidNumber':
+				if (empty($domain)) return null;
 				if (is_array($account)) $account = $account['account_id'];
 				$mbox = 'u'.$account.'@'.$domain;
 				break;
@@ -268,6 +268,7 @@ class Smtp
 
 			case 'vmailmgr':
 			default:
+				if (empty($domain)) return null;
 				$mbox = is_array($account) ? $account['account_lid'] : $GLOBALS['egw']->accounts->id2name($account);
 				$mbox .= '@'.$domain;
 				break;

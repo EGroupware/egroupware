@@ -251,9 +251,9 @@ class Ldap extends Mail\Smtp
 				$mailLocalAddress : static::MAIL_ENABLED;
 		}
 		// does schema support an explicit mailbox name --> set it
-		if (static::MAILBOX_ATTR)
+		if (static::MAILBOX_ATTR && !empty($mailbox = self::mailbox_addr($_hookValues)))
 		{
-			$newData[static::MAILBOX_ATTR] = self::mailbox_addr($_hookValues);
+			$newData[static::MAILBOX_ATTR] = $mailbox;
 		}
 
 		// allow extending classes to add extra data
