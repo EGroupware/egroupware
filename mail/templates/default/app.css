@@ -1069,6 +1069,7 @@ div#mail-index_nm.splitter-pane {min-height: 100px;}
 	max-width: 4em;
 	text-align: end;
 	min-width: 4em;
+	color: darkgrey;
 }
 .mailPreviewHeaders et2-select-email::part(control) {
 	border: none;
