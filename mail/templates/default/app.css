@@ -1095,3 +1095,22 @@ et2-description#mail-index_mailPreview_subject {
 	margin-bottom: 0;
 	margin-top: 0.3em;
 }
+
+/* Make +N tag in email look like text, not tag */
+et2-select-email::part(tags) {
+	width: 100%;
+}
+
+et2-select-email::part(tag) {
+	flex: 10 0 auto;
+}
+
+et2-select-email::part(tag__base) {
+	font-weight: bold;
+	border: none;
+	background: inherit;
+}
+
+et2-select-email::part(tag__content) {
+	margin-left: auto;
+}

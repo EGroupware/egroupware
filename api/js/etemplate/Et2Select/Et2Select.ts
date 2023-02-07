@@ -148,7 +148,18 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 				z-index: 1;
 				background: var(--sl-input-background-color);
 				padding: var(--sl-input-spacing-small);
-				padding-left: 0;
+				padding-left: 2px;
+
+				box-shadow: var(--sl-shadow-large);
+				min-width: fit-content;
+				border-radius: var(--sl-border-radius-small);
+				border: 1px solid var(--sl-color-neutral-200);
+				max-height: 15em;
+				overflow-y: auto;
+			  }
+
+			  ::part(display-label) {
+				margin: 0;
 			  }
 			`
 		];
@@ -292,9 +303,10 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 	 */
 	private _handleMouseEnter(e : MouseEvent)
 	{
-		if(this.maxTagsVisible == 1 && this.rows == 1 && this.multiple == true)
+		if(this.maxTagsVisible == 1 && this.rows == 1 && this.multiple == true && this.value.length > 1)
 		{
 			e.stopPropagation();
+			let distance = (-1 * parseInt(getComputedStyle(this).height)) - 1;
 
 			// Show all tags
 			this.maxTagsVisible = 0;
@@ -310,13 +322,17 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 			{
 				let label = this.dropdown.querySelector(".select__label");
 				let popup = document.createElement("sl-popup");
+				popup.anchor = this;
+				popup.distance = distance;
+				popup.placement = "bottom";
 				popup.strategy = "fixed";
 				popup.active = true;
 				popup.sync = "width";
-				popup.classList.add("hover__popup");
+				popup.classList.add("hover__popup", "details", "hoist", "details__body");
 				label.parentNode.insertBefore(popup, label);
 				popup.appendChild(label);
-				label.style.width = "35ex";
+				label.style.width = getComputedStyle(this).width;
+				label.style.margin = 0;
 			});
 		}
 	}
