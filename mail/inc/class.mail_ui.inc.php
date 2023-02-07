@@ -2333,7 +2333,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		if (!empty($attachmentHTMLBlock))
 		{
 			$content['mail_displayattachments'] = $attachmentHTMLBlock;
-			$content['attachmentsBlockTitle'] = count($attachmentHTMLBlock).' '.Lang('attachments');
+			$content['attachmentsBlockTitle'] = count($attachmentHTMLBlock) > 1 ? '+'.(count($attachmentHTMLBlock)-1) : '';
 			$sel_options['mail_displayattachments']['actions'] = mail_hooks::attachmentsBlockActions();
 		}
 

@@ -1072,7 +1072,7 @@ app.classes.mail = AppJS.extend(
 					if (typeof _data == 'object')
 					{
 						data.attachmentsBlock = _data;
-						data.attachmentsBlockTitle = `${_data.length} attachments`;
+						data.attachmentsBlockTitle = _data.length > 1 ? `+${_data.length-1}` : '';
 						// Update client cache to avoid resolving winmail.dat attachment again
 						egw.dataStoreUID(data.uid, data);
 						mailPreview.set_value({content:data});
@@ -1131,7 +1131,7 @@ app.classes.mail = AppJS.extend(
 				icon: 'collabora/navbar',
 				value: 'collabora'
 			};
-			data.attachmentsBlockTitle = `${data.attachmentsBlock.length} attachments`;
+			data.attachmentsBlockTitle = data.attachmentsBlock.length > 1 ? `+${data.attachmentsBlock.length-1}` : '';
 			sel_options.attachmentsBlock = {};
 			data.attachmentsBlock.forEach(_item =>
 			{

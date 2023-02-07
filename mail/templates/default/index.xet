@@ -33,28 +33,25 @@
                         <et2-hbox  width="100%" class="mailPreviewHeaders">
                             <et2-lavatar  src="@fromavatar" lname="@fromaddress" shape="rounded" size="2.75em"></et2-lavatar>
                             <et2-vbox>
-                                <et2-hbox>
-                                    <et2-details  class="details" toggleOnHover="true" hoist="true" toggleAlign="left">
-                                        <et2-select-email  slot="summary" id="fromaddress" readonly="true" multiple="true" onclick="app.mail.onclickCompose"></et2-select-email>
-                                        <et2-hbox>
-                                            <et2-description  value="From" class="firstColumnTitle"></et2-description>
-                                            <et2-select-email  id="additionalfromaddress" readonly="true" multiple="true" onclick="app.mail.onclickCompose"></et2-select-email>
-                                        </et2-hbox>
-                                        <et2-hbox disabled="!@toaddress" width="100%">
-                                            <et2-description value="To" class="firstColumnTitle"></et2-description>
-                                            <et2-select-email id="additionaltoaddress" readonly="true" multiple="true"
-                                                              rows="1" maxTagsVisible="1"
-                                                              onclick="app.mail.onclickCompose"></et2-select-email>
-                                        </et2-hbox>
-                                        <et2-hbox disabled="!@ccaddress" width="100%">
-                                            <et2-description value="Cc" class="firstColumnTitle"></et2-description>
-                                            <et2-select-email id="ccaddress" readonly="true" multiple="true"
-                                                              rows="1" maxTagsVisible="1"
-                                                              onclick="app.mail.onclickCompose"></et2-select-email>
-                                        </et2-hbox>
-                                    </et2-details>
+                                <et2-vbox>
+                                    <et2-hbox>
+                                        <et2-description  value="From" class="firstColumnTitle"></et2-description>
+                                        <et2-select-email  id="additionalfromaddress" readonly="true" multiple="true" onclick="app.mail.onclickCompose"></et2-select-email>
+                                    </et2-hbox>
+                                    <et2-hbox disabled="!@toaddress" width="100%">
+                                        <et2-description value="To" class="firstColumnTitle"></et2-description>
+                                        <et2-select-email id="additionaltoaddress" readonly="true" multiple="true"
+                                                          rows="1" maxTagsVisible="1"
+                                                          onclick="app.mail.onclickCompose"></et2-select-email>
+                                    </et2-hbox>
+                                    <et2-hbox disabled="!@ccaddress" width="100%">
+                                        <et2-description value="Cc" class="firstColumnTitle"></et2-description>
+                                        <et2-select-email id="ccaddress" readonly="true" multiple="true"
+                                                          rows="1" maxTagsVisible="1"
+                                                          onclick="app.mail.onclickCompose"></et2-select-email>
+                                    </et2-hbox>
                                     <et2-date-time align="right" id="date" readonly="true"></et2-date-time>
-                                </et2-hbox>
+                                </et2-vbox>
                                 <et2-details  toggleAlign="left" title="@attachmentsBlockTitle" toggleOnHover="true" hoist="true" class="attachments" disabled="!@attachmentsBlock">
                                     <et2-hbox  slot="summary">
                                         <grid class="previewAttachmentArea egwGridView_grid" >
