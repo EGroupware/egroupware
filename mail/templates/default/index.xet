@@ -37,6 +37,7 @@
                                     <et2-hbox>
                                         <et2-description  value="From" class="firstColumnTitle"></et2-description>
                                         <et2-select-email  id="additionalfromaddress" readonly="true" multiple="true" onclick="app.mail.onclickCompose"></et2-select-email>
+                                        <et2-date-time align="right" id="date" readonly="true"></et2-date-time>
                                     </et2-hbox>
                                     <et2-hbox disabled="!@toaddress" width="100%">
                                         <et2-description value="To" class="firstColumnTitle"></et2-description>
@@ -50,7 +51,6 @@
                                                           rows="1" maxTagsVisible="1"
                                                           onclick="app.mail.onclickCompose"></et2-select-email>
                                     </et2-hbox>
-                                    <et2-date-time align="right" id="date" readonly="true"></et2-date-time>
                                 </et2-vbox>
                                 <et2-details  toggleAlign="left" title="@attachmentsBlockTitle" toggleOnHover="true" hoist="true" class="attachments" disabled="!@attachmentsBlock">
                                     <et2-hbox  slot="summary">
