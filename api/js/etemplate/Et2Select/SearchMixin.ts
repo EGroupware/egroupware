@@ -434,12 +434,12 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			}
 			// I can't figure out how to get this full width via CSS
 			return html`
-                <et2-searchbox id="search" type="text" part="input" clearable
-                               placeholder="${this.egw().lang("search")}"
+                <et2-textbox id="search" type="text" part="input" clearable
+                             placeholder="${this.egw().lang("search")}"
                                style="width:100%"
                                @keydown=${this._handleSearchKeyDown}
                                @blur=${this._handleSearchBlur}
-                ></et2-searchbox>
+                ></et2-textbox>
                 ${edit}
 			`;
 		}
@@ -882,6 +882,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			{
 				return this.handleKeyDown(event);
 			}
+			event.stopPropagation();
 
 			// Don't allow event to bubble or it will interact with select
 			event.stopImmediatePropagation();
@@ -913,7 +914,8 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			}
 
 			// Start the search automatically if they have enough letters
-			if(this._searchInputNode.value.length >= Et2WidgetWithSearch.MIN_CHARS)
+			// -1 because we're in keyDown handler, and value is from _before_ this key was pressed
+			if(this._searchInputNode.value.length >= Et2WidgetWithSearch.MIN_CHARS - 1)
 			{
 				this._searchTimeout = window.setTimeout(() => {this.startSearch()}, Et2WidgetWithSearch.SEARCH_TIMEOUT);
 			}

@@ -7,6 +7,9 @@ import {assert, elementUpdated, fixture, html} from '@open-wc/testing';
 import * as sinon from 'sinon';
 import {Et2Box} from "../../Layout/Et2Box/Et2Box";
 import {Et2Select} from "../Et2Select";
+import {Et2Textbox} from "../../Et2Textbox/Et2Textbox";
+
+let keep_import : Et2Textbox = new Et2Textbox();
 
 // Stub global egw for cssImage to find
 // @ts-ignore
@@ -20,6 +23,7 @@ window.egw = {
 
 let parser = new window.DOMParser();
 let container : Et2Box;
+
 const options = [
 	<SelectOption>{value: "1", label: "Option 1"},
 	<SelectOption>{value: "2", label: "Option 2"}
@@ -75,4 +79,93 @@ describe("Search actions", () =>
 		// For some reason in the test change gets called twice, even though in normal operation it gets called once.
 		sinon.assert.called(change);
 	});
+})
+
+describe("Trigger search", () =>
+{
+
+	let element : Et2Select;
+	let clock;
+
+	// Setup run before each test
+	beforeEach(async() =>
+	{
+		// Mess with time
+		clock = sinon.useFakeTimers()
+
+		// Create an element to test with, and wait until it's ready
+		// @ts-ignore
+		element = await fixture<Et2Select>(html`
+            <et2-select label="I'm a select" search=true>
+                <sl-menu-item value="one">One</sl-menu-item>
+                <sl-menu-item value="two">Two</sl-menu-item>
+                <sl-menu-item value="three">Three</sl-menu-item>
+                <sl-menu-item value="four">Four</sl-menu-item>
+                <sl-menu-item value="five">Five</sl-menu-item>
+                <sl-menu-item value="six">Six</sl-menu-item>
+                <sl-menu-item value="seven">Seven</sl-menu-item>
+            </et2-select>
+		`);
+		// Stub egw()
+		sinon.stub(element, "egw").returns(window.egw);
+
+		await element.updateComplete;
+		await element._searchInputNode.updateComplete;
+	});
+
+	afterEach(() =>
+	{
+		clock.restore();
+	})
+
+	it("Searches after 2 characters", () =>
+	{
+
+		// Set up spy
+		let searchSpy = sinon.spy(element, "startSearch");
+
+		// Send two keypresses, but we need to explicitly set the value
+		element._searchInputNode.dispatchEvent(new KeyboardEvent("keydown", {"key": "o"}));
+		element._searchInputNode.value = "o";
+		assert(searchSpy.notCalled);
+		element._searchInputNode.dispatchEvent(new KeyboardEvent("keydown", {"key": "n"}));
+		element._searchInputNode.value = "on";
+		assert(searchSpy.notCalled);
+
+		// Skip the timeout
+		clock.runAll();
+
+		assert(searchSpy.calledOnce, "startSearch() was not called");
+
+	});
+
+	it("Searches on enter", () =>
+	{
+		// Set up spy
+		let searchSpy = sinon.spy(element, "startSearch");
+
+		// Send two keypresses, but we need to explicitly set the value
+		element._searchInputNode.dispatchEvent(new KeyboardEvent("keydown", {"key": "o"}));
+		element._searchInputNode.value = "t";
+		assert(searchSpy.notCalled);
+		element._searchInputNode.dispatchEvent(new KeyboardEvent("keydown", {"key": "Enter"}));
+
+		// Search starts immediately
+		assert(searchSpy.calledOnce, "startSearch() was not called");
+	});
+
+	it("Aborts search when escape pressed", () =>
+	{
+		// Set up spy
+		let abortSpy = sinon.spy(element, "_handleSearchAbort");
+		let searchSpy = sinon.spy(element, "startSearch");
+
+		// Send two keypresses, but we need to explicitly set the value
+		element._searchInputNode.dispatchEvent(new KeyboardEvent("keydown", {"key": "t"}));
+		element._searchInputNode.value = "t";
+		element._searchInputNode.dispatchEvent(new KeyboardEvent("keydown", {"key": "Escape"}));
+
+		assert(searchSpy.notCalled, "startSearch() was called");
+		assert(abortSpy.calledOnce, "_handleSearchAbort() was not called");
+	})
 });
