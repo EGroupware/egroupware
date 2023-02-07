@@ -818,7 +818,7 @@ class mail_hooks
 				'value' => 'downloadAllToZip'
 			]
 		];
-		if (file_exists(EGW_SERVER_ROOT.'/collabora'))
+		if (!empty($GLOBALS['egw_info']['user']['apps']['collabora']))
 		{
 			$actions['collabora'] = [
 				'id'    => 'collabora',
