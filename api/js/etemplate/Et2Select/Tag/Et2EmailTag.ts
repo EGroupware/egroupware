@@ -222,7 +222,7 @@ export class Et2EmailTag extends Et2Tag
                              lname=${option.lname || nothing}
                              fname=${option.fname || nothing}
                              image=${option.photo || nothing}
-                             statustext="${this.egw().lang("Open existing contact") + option.n_fn}"
+                             statustext="${this.egw().lang("Open existing contact") + ": " + option.n_fn}"
                 >
                 </et2-lavatar>`;
 		}
