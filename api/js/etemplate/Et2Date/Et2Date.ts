@@ -376,7 +376,14 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(LitFlatpickr))
 			 * If false (default), it is impossible to have a time that is not a multiple of minuteIncrement.
 			 * Does not affect scroll, which always goes to nearest multiple.
 			 */
-			freeMinuteEntry: {type: Boolean}
+			freeMinuteEntry: {type: Boolean},
+
+			/**
+			 * The preferred placement of the calendar popup can be set with the placement attribute.  The default
+			 * is "auto".  Note that the actual position may vary to ensure the calendar remains in the viewport.
+			 * Valid placements are "top", "bottom" or "auto".
+			 */
+			placement: {type: String, noAccessor: true}
 		}
 	}
 
@@ -505,6 +512,10 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(LitFlatpickr))
 		if(this.inline)
 		{
 			options.inline = this.inline;
+		}
+		if(this.placement)
+		{
+			options.position = this._convert_placement(this.placement);
 		}
 
 		options.plugins = [
@@ -842,6 +853,36 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(LitFlatpickr))
 				this._instance.set("maxDate", "")
 			}
 		}
+	}
+
+
+	private _convert_placement(position : "top" | "bottom" | "auto" | "") : "above" | "below" | "auto"
+	{
+		let placement = "auto";
+		switch(position)
+		{
+			case "top":
+				placement = "above";
+				break;
+			case "bottom":
+				placement = "below";
+				break;
+		}
+		return placement;
+	}
+
+	get placement() : "top" | "bottom" | "auto"
+	{
+		return this.__placement;
+	}
+
+	set placement(new_placement : "top" | "bottom" | "auto")
+	{
+		if(this._instance)
+		{
+			this._instance.set("position", this._convert_placement(new_placement))
+		}
+		this.__placement = new_placement;
 	}
 
 	/**
