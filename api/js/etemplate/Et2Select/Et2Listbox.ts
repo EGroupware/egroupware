@@ -1,4 +1,4 @@
-import {SlMenu, SlMenuItem} from "@shoelace-style/shoelace";
+import {SlMenu} from "@shoelace-style/shoelace";
 import {Et2widgetWithSelectMixin} from "./Et2WidgetWithSelectMixin";
 import {RowLimitedMixin} from "../Layout/RowLimitedMixin";
 import shoelace from "../Styles/shoelace";
@@ -69,6 +69,8 @@ export class Et2Listbox extends RowLimitedMixin(Et2widgetWithSelectMixin(SlMenu)
 		}
 	}
 
+	private __value : String[] | null;
+
 	constructor(...args : any[])
 	{
 		super();
@@ -134,16 +136,8 @@ export class Et2Listbox extends RowLimitedMixin(Et2widgetWithSelectMixin(SlMenu)
 		{
 			new_value = [new_value]
 		}
+		this.__value = <String[]>new_value;
 		this.requestUpdate("value", oldValue);
-		this.updateComplete.then(() =>
-		{
-			this.getAllItems().forEach((item) => item.checked = false);
-			for(let i = 0; i < new_value.length; i++)
-			{
-				const value = new_value[i];
-				(<SlMenuItem>this.querySelector("[value='" + value + "']")).checked = true;
-			}
-		});
 	}
 
 	_optionTemplate(option : SelectOption) : TemplateResult
@@ -152,6 +146,10 @@ export class Et2Listbox extends RowLimitedMixin(Et2widgetWithSelectMixin(SlMenu)
             <et2-image slot="prefix" part="icon" style="width: var(--icon-width)"
                        src="${option.icon}"></et2-image>` : "";
 
+		let checked = this.__value == null ?
+					  option.value === this.value || this.multiple && this.value.indexOf(option.value) >= 0 :
+					  this.__value.indexOf(option.value) >= 0;
+
 		// Tag used must match this.optionTag, but you can't use the variable directly.
 		// Pass option along so SearchMixin can grab it if needed
 		return html`
@@ -159,7 +157,7 @@ export class Et2Listbox extends RowLimitedMixin(Et2widgetWithSelectMixin(SlMenu)
                     value="${option.value}"
                     title="${!option.title || this.noLang ? option.title : this.egw().lang(option.title)}"
                     class="${option.class}" .option=${option}
-                    ?checked=${option.value === this.value || this.multiple && this.value.indexOf(option.value) >= 0}
+                    ?checked=${checked}
             >
                 ${icon}
                 ${this.noLang ? option.label : this.egw().lang(option.label)}
