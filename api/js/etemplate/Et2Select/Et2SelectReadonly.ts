@@ -472,3 +472,18 @@ export class Et2SelectYearReadonly extends Et2SelectReadonly
 
 // @ts-ignore TypeScript is not recognizing that this widget is a LitElement
 customElements.define("et2-select-year_ro", Et2SelectYearReadonly);
+
+export class Et2SelectLangReadonly extends Et2SelectReadonly
+{
+	constructor()
+	{
+		super();
+
+		this.select_options = so.lang(this, {other: this.other || []});
+	}
+
+	protected find_select_options(_attrs) {}
+}
+
+// @ts-ignore TypeScript is not recognizing that this widget is a LitElement
+customElements.define("et2-select-lang_ro", Et2SelectLangReadonly);
