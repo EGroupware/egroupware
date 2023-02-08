@@ -1114,3 +1114,6 @@ et2-select-email::part(tag__base) {
 et2-select-email::part(tag__content) {
 	margin-left: auto;
 }
+et2-vbox.addresses::part(base) {
+	gap: 0px;
+}
