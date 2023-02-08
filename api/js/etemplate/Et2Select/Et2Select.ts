@@ -175,6 +175,14 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 			multiple: {
 				type: Boolean,
 				reflect: true,
+			},
+
+			/**
+			 * Click handler for individual tags instead of the select as a whole.
+			 * Only used if multiple=true so we have tags
+			 */
+			onTagClick: {
+				type: Function,
 			}
 		}
 	}
@@ -595,6 +603,11 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 			tag.addEventListener("click", this.handleTagInteraction);
 			tag.addEventListener("keydown", this.handleTagInteraction);
 			tag.addEventListener("sl-remove", (event : CustomEvent) => this.handleTagRemove(event, item));
+		}
+		// Allow click handler even if read only
+		if(typeof this.onTagClick == "function")
+		{
+			tag.addEventListener("click", (e) => this.onTagClick(e, e.target));
 		}
 		let image = this._createImage(item);
 		if(image)
