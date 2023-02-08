@@ -12,7 +12,7 @@
 				<row class="th">
 
 				</row>
-				<row>
+				<row class="$row_cont[class]">
 					<et2-hbox>
 						<et2-description  class="$row_cont[class] mobile_cat_col"></et2-description>
 						<et2-lavatar  src="$row_cont[avatar]" lname="$row_cont[address]" shape="rounded" size="2.75em"></et2-lavatar>
