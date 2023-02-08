@@ -52,58 +52,56 @@
                                                           onclick="app.mail.onclickCompose"></et2-select-email>
                                     </et2-hbox>
                                 </et2-vbox>
-                                <et2-details overlaySummaryOnOpen="true" toggleAlign="left" toggleOnHover="true" hoist="true" class="attachments" disabled="!@attachmentsBlock">
-                                    <et2-hbox  slot="summary">
-                                        <grid class="previewAttachmentArea egwGridView_grid" >
-                                            <columns>
-                                                <column disabled="!@showtempname"/>
-                                                <column disabled="!@showtempname"/>
-                                                <column disabled="!@showtempname"/>
-                                                <column disabled="!@showtempname"/>
-                                                <column width="70%" />
-                                                <column width="20%" />
-                                            </columns>
-                                            <rows>
-                                                <row class="row attachmentRow">
-                                                    <et2-description  id="attachmentsBlock[0][attachment_number]"></et2-description>
-                                                    <et2-description  id="attachmentsBlock[0][partID]"></et2-description>
-                                                    <et2-description  id="attachmentsBlock[0][type]"></et2-description>
-                                                    <et2-description  id="attachmentsBlock[0][winmailFlag]"></et2-description>
-                                                    <et2-description-expose  class="et2_link useEllipsis" id="attachmentsBlock[0][filename]" mime="@attachmentsBlock[0][type]" href="@attachmentsBlock[0][mime_url]" noLang="1" mimeData="@attachmentsBlock[0][mime_data]"></et2-description-expose>
-                                                    <et2-description align="right" value="@attachmentsBlockTitle" class="et2_bold"></et2-description>
-                                                </row>
-                                            </rows>
-                                        </grid>
-                                    </et2-hbox>
 
-                                    <grid id="attachmentsBlock" class="previewAttachmentArea egwGridView_grid">
-                                        <columns>
-                                            <column disabled="!@showtempname"/>
-                                            <column disabled="!@showtempname"/>
-                                            <column disabled="!@showtempname"/>
-                                            <column disabled="!@showtempname"/>
-                                            <column width="70%" />
-                                            <column width="11%" />
-                                            <column width="10%"/>
-                                        </columns>
-                                        <rows>
-                                            <row class="row attachmentRow" id="${row}">
-                                                <et2-description  id="${row}[attachment_number]"></et2-description>
-                                                <et2-description  id="${row}[partID]"></et2-description>
-                                                <et2-description  id="${row}[type]"></et2-description>
-                                                <et2-description  id="${row}[winmailFlag]"></et2-description>
-                                                <et2-description-expose  class="et2_link useEllipsis" id="${row}[filename]" mime="$row_cont[type]" href="$row_cont[mime_url]" noLang="1" mimeData="$row_cont[mime_data]"></et2-description-expose>
-                                                <et2-description  align="right" id="${row}[size]"></et2-description>
-                                                <et2-dropdown-button  id="${row}[actions]" label="$row_cont[actionsDefaultLabel]" onchange="app.mail.attachmentsBlockActions" onclick="app.mail.attachmentsBlockActions"/>
-                                            </row>
-                                        </rows>
-                                    </grid>
-                                </et2-details>
                             </et2-vbox>
-
                         </et2-hbox>
+                        <et2-details overlaySummaryOnOpen="true" toggleAlign="left" toggleOnHover="true" hoist="true" class="attachments" disabled="!@attachmentsBlock">
+                            <et2-hbox  slot="summary">
+                                <grid class="previewAttachmentArea egwGridView_grid" >
+                                    <columns>
+                                        <column disabled="!@showtempname"/>
+                                        <column disabled="!@showtempname"/>
+                                        <column disabled="!@showtempname"/>
+                                        <column disabled="!@showtempname"/>
+                                        <column width="70%" />
+                                        <column width="20%" />
+                                    </columns>
+                                    <rows>
+                                        <row class="row attachmentRow">
+                                            <et2-description  id="attachmentsBlock[0][attachment_number]"></et2-description>
+                                            <et2-description  id="attachmentsBlock[0][partID]"></et2-description>
+                                            <et2-description  id="attachmentsBlock[0][type]"></et2-description>
+                                            <et2-description  id="attachmentsBlock[0][winmailFlag]"></et2-description>
+                                            <et2-description-expose  class="et2_link useEllipsis" id="attachmentsBlock[0][filename]" mime="@attachmentsBlock[0][type]" href="@attachmentsBlock[0][mime_url]" noLang="1" mimeData="@attachmentsBlock[0][mime_data]"></et2-description-expose>
+                                            <et2-description align="right" value="@attachmentsBlockTitle" class="et2_bold"></et2-description>
+                                        </row>
+                                    </rows>
+                                </grid>
+                            </et2-hbox>
 
-
+                            <grid id="attachmentsBlock" class="previewAttachmentArea egwGridView_grid">
+                                <columns>
+                                    <column disabled="!@showtempname"/>
+                                    <column disabled="!@showtempname"/>
+                                    <column disabled="!@showtempname"/>
+                                    <column disabled="!@showtempname"/>
+                                    <column width="70%" />
+                                    <column width="11%" />
+                                    <column width="10%"/>
+                                </columns>
+                                <rows>
+                                    <row class="row attachmentRow" id="${row}">
+                                        <et2-description  id="${row}[attachment_number]"></et2-description>
+                                        <et2-description  id="${row}[partID]"></et2-description>
+                                        <et2-description  id="${row}[type]"></et2-description>
+                                        <et2-description  id="${row}[winmailFlag]"></et2-description>
+                                        <et2-description-expose  class="et2_link useEllipsis" id="${row}[filename]" mime="$row_cont[type]" href="$row_cont[mime_url]" noLang="1" mimeData="$row_cont[mime_data]"></et2-description-expose>
+                                        <et2-description  align="right" id="${row}[size]"></et2-description>
+                                        <et2-dropdown-button  id="${row}[actions]" label="$row_cont[actionsDefaultLabel]" onchange="app.mail.attachmentsBlockActions" onclick="app.mail.attachmentsBlockActions"/>
+                                    </row>
+                                </rows>
+                            </grid>
+                        </et2-details>
                     </et2-vbox>
                 </row>
             </rows>
