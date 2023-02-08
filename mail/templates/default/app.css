@@ -676,7 +676,10 @@ div.mailDisplayHeaders div.mail_extraEmails.visible {
 .mailComposeBody {
     white-space: normal !important;
 }
-
+.mailComposeBody iframe {
+	position: absolute;
+	height: 70% !important;
+}
 #mail-compose_mail_plaintext {
     white-space: pre-wrap !important;
 }
