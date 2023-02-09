@@ -17,6 +17,7 @@
 %s notranslation	common	pl	%s bez tłumaczenia
 %s onchange	common	pl	%s onChange (JS)
 %s readonly	common	pl	%s tylko do odczytu
+'%1' copied to clipboard	common	pl	'%1' skopiowane do schowka
 '%1' has an invalid format !!!	common	pl	'%1' jest w nieprawidłowym formacie!
 '%1' is no php file in the egw server root (%2)!	common	pl	'%1' to nie plik php w katalogu głównym serwera (%2)
 '%1' is not a valid date !!!	common	pl	'%1' nie jest datą w poprawnym formacie!
@@ -30,8 +31,10 @@
 1 month	common	pl	jeden miesiąc
 1 week	common	pl	jeden tydzień
 13 (ntp)	admin	pl	13 (ntp)
+2-factor-authentication	common	pl	2-Factor-Autentykacja
 80 (http)	admin	pl	80 (http)
 a pattern to be searched for	common	pl	wzorzec do wyszukania
+abort	common	pl	Przerwij
 about	common	pl	O aplikacji
 about %1	common	pl	O aplikacji %1
 about egroupware	common	pl	O EGroupware
@@ -708,6 +711,7 @@ new caledonia	common	pl	NOWA KALEDONIA
 new entry added sucessfully	common	pl	Nowy wpis został dodany
 new favorite	common	pl	Nowy ulubiony
 new main category	common	pl	Nowa kategoria główna
+new password	common	pl	Nowe hasło
 new search	common	pl	Nowe wyszukiwanie
 new table created	common	pl	Utworzono nową tabelę
 new value	common	pl	Nowa wartość
@@ -870,6 +874,7 @@ remove selected accounts	common	pl	usuń wybrane konta
 remove shortcut	common	pl	Usuń skrót
 remove this link (not the entry itself)	common	pl	usuń ten odnośnik (ale nie wpis)
 rename	common	pl	Zmień nazwę
+repeat password	common	pl	Powtórzenie hasła
 replace	common	pl	Zastąp
 replace with	common	pl	Zastąp
 required	common	pl	Wymagane

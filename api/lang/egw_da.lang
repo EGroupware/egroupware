@@ -2,9 +2,12 @@
 %1 is not executable by the webserver !!!	common	da	%1 kan ikke udføres af Web server
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	da	%1Vælg en anden folder%2<br/>eller gør %3 skrivbar for Web server
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	da	%1EGroupware%2 er et multi-bruger, web-baseret sammenarbejds værktøj skrevet i %3PHP%4.
+'%1' copied to clipboard	common	da	'%1' kopieret til udklipsholderen
 00 (disable)	admin	da	00 (deaktiveret)
 13 (ntp)	admin	da	13 (ntp)
+2-factor-authentication	common	da	2-faktor-autentificering
 80 (http)	admin	da	80 (http)
+abort	common	da	Afbryd
 about	common	da	Om
 about %1	common	da	Om %1
 about egroupware	common	da	Om EGroupware
@@ -26,12 +29,13 @@ add sub	common	da	Tilføj underkategori
 addressbook	common	da	Adressebog
 admin	common	da	Admin
 administration	common	da	Administration
+advanced search	common	da	Avanceretsøgning
 afghanistan	common	da	Afghanistan
 albania	common	da	Albanien
 algeria	common	da	Algeriet
 all	common	da	Alle
 all fields	common	da	alle felter
-alphabet	common	da	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,w,x,y,z
+all users	common	da	Alle brugere
 alternate style-sheet:	common	da	Alternativt style-sheet
 american samoa	common	da	Amerikansk Samoa
 and	common	da	Og
@@ -41,6 +45,7 @@ anguilla	common	da	Anguilla
 antarctica	common	da	Antarktis
 antigua and barbuda	common	da	Antigua og Barbuda
 application	common	da	Applikation
+applications	common	da	Applikationer
 apply	common	da	Anvend
 april	common	da	April
 are you sure you want to delete these entries ?	common	da	Vil du virkelige slette disse felter?
@@ -48,6 +53,7 @@ are you sure you want to delete this entry ?	common	da	Vil Du virkelig slette de
 argentina	common	da	Argentina
 armenia	common	da	Armenien
 aruba	common	da	Aruba
+attach file	common	da	Vedhæft fil
 august	common	da	August
 australia	common	da	Australien
 austria	common	da	Østrig
@@ -105,9 +111,11 @@ centered	common	da	Centreret
 central african republic	common	da	Centralafrikanske Republik
 chad	common	da	Chad
 change	common	da	Ændre
+changed	common	da	Ændret
 charset	common	da	utf-8
 check installation	common	da	Kontroller installation
 check now	common	da	Check nu
+checkbox	common	da	Afkrydsningsboks
 chile	common	da	Chile
 china	common	da	Kina
 choose a background color	common	da	Vælg en baggrundsfarve
@@ -121,17 +129,23 @@ christmas island	common	da	Juleøen
 clear	common	da	Slet
 clear form	common	da	Slet formular
 click	common	da	Klik
+click here to create the link	common	da	klik her for at oprette linket
+click here to start the search	common	da	klik her for at starte søgningen
 click or mouse over to show menus	common	da	Klik eller før musen over til sidemenuen
 click or mouse over to show menus?	common	da	Klik eller før musen over til sidemenuen?
 close	common	da	Luk
 cocos (keeling) islands	common	da	Cocos (Keeling) øerne
 colombia	common	da	Columbia
+comment	common	da	Kommentar
 common preferences	common	da	Fælles præferencer
 comoros	common	da	Comoros
 company	common	da	Firma
+confirm	common	da	Bekræft
 congo	common	da	Congo
 congo, the democratic republic of the	common	da	Congo, Den Demokratiske Republik
+contact	common	da	Kontakt
 contacting server...	common	da	Kontakter server...
+contains	common	da	indeholder
 cook islands	common	da	Cook øerne
 copy	common	da	Kopiér
 costa rica	common	da	Costa Rica
@@ -144,12 +158,17 @@ cuba	common	da	Cuba
 currency	common	da	Valutaenhed
 current	common	da	Nuværende
 current users	common	da	Nuværende antal brugere
+custom	common	da	Valgfri
+custom fields	common	da	Valgfri Felter
 cyprus	common	da	Cupern
 czech republic	common	da	Tjekkiet
 date	common	da	Dato
 date due	common	da	Skal være færdig
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	da	Daytime port.<br>Hvis port 13 bruges, åben venligst din firewall før denne side gemmes.<br>(Port: 13 / Host: 129.6.15.28)
+day	common	da	Dag
+days	common	da	dage
 december	common	da	December
+default	common	da	Standard
 default category	common	da	Standard Kategori
 default height for the windows	common	da	Standard højde for vinduer
 default width for the windows	common	da	Standard bredde for vinduer
@@ -174,6 +193,8 @@ do you also want to delete all subcategories ?	common	da	Ønsker du at slette al
 doctype:	common	da	Dokument type:
 document properties	common	da	Dokument egenskaber
 document title:	common	da	Dokument titel:
+documentation	common	da	Dokumentation
+doesn't matter	common	da	det gør ikke noget
 domain	common	da	Domæne
 domain name for mail-address, eg. "%1"	common	da	domænenavn til e-mail adresser, f.eks "%1"
 domestic	common	da	Indenrigs
@@ -181,6 +202,7 @@ dominica	common	da	Dominica
 dominican republic	common	da	Dominikanske Republik
 done	common	da	Udført
 download	common	da	Download
+duration	common	da	Varighed
 e-mail	common	da	E-mail
 east timor	common	da	Øst Timor
 ecuador	common	da	Ecuador
@@ -216,6 +238,7 @@ fax number	common	da	Fax nummer
 february	common	da	Februar
 fields	common	da	Felter
 fiji	common	da	Fiji
+file	common	da	Fil
 files	common	da	Filer
 filter	common	da	Filter
 finland	common	da	Finland
@@ -261,6 +284,7 @@ guatemala	common	da	Guatemala
 guinea	common	da	Guinea
 guinea-bissau	common	da	Guinea-Bissau
 guyana	common	da	Guyana
+h	common	da	h
 haiti	common	da	Haiti
 heard island and mcdonald islands	common	da	Heard Øen og McDonald øerne
 height	common	da	Højde
@@ -270,12 +294,17 @@ highest	common	da	Højeste
 holy see (vatican city state)	common	da	Vatikanet
 home	common	da	Startside
 home email	common	da	privat e-mail
+home screen	common	da	Hovedside
 honduras	common	da	Honduras
 hong kong	common	da	Hong Kong
+hours	common	da	timer
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	da	Hvor mange ikoner skal der vises i navigations bjælken (øverst på siden). Evt. overskydende ikoner vil være tilgængelig i en slags pulldown menu, ved at trykke på ikonet helt til højre i navigations bjælken.
+html	common	da	HTML
 hungary	common	da	Ungarn
 iceland	common	da	Island
+id	common	da	ID
 image url	common	da	Billedets adresse
+import	common	da	Importer
 india	common	da	Indien
 indonesia	common	da	Indonesien
 insert all %1 addresses of the %2 contacts in %3	common	da	Indsæt alle %1 adresserne fra %2 kontakterne i %3
@@ -309,8 +338,10 @@ korea, democratic peoples republic of	common	da	Korea, Det Demokratiske Folks Re
 korea, republic of	common	da	Korea, Republikken
 kuwait	common	da	Kuwait
 kyrgyzstan	common	da	Kyrgystan
+label	common	da	Mærkat
 language	common	da	Sprog
 lao peoples democratic republic	common	da	Lao, Folkets Demokratiske Republik
+last	common	da	sidste
 last modified	common	da	Sidst opdateret
 last name	common	da	Efternavn
 last name of the user, eg. "%1"	common	da	efternavn på brugeren, f.eks. "%1"
@@ -324,6 +355,7 @@ liberia	common	da	Liberia
 libyan arab jamahiriya	common	da	Libyen
 license	common	da	Licens
 liechtenstein	common	da	Liechenstein
+link	common	da	Link
 list	common	da	Liste
 lithuania	common	da	Lithuania
 load	common	da	Indlæs
@@ -339,7 +371,6 @@ macedonia, the former yugoslav republic of	common	da	Makedonien, Tidl. Jugoslavi
 madagascar	common	da	Madagaskar
 mail domain, eg. "%1"	common	da	post domæne, f.eks. "%1"
 main category	common	da	Hovedkategori
-home screen	common	da	Hovedside
 maintainer	common	da	Vedligeholder
 malawi	common	da	Malawi
 malaysia	common	da	Malaysia
@@ -360,11 +391,14 @@ message	common	da	Besked
 mexico	common	da	Mexico
 micronesia, federated states of	common	da	Mikronesien, Den Føderale Stat
 minute	common	da	Minut
+minutes	common	da	Minutter
 moldova, republic of	common	da	Moldova, Republikken
 monaco	common	da	Monaco
 monday	common	da	Mandag
 mongolia	common	da	Mongoliet
+month	common	da	Måned
 montserrat	common	da	Montserrat
+more	common	da	Flere
 morocco	common	da	Morokko
 mozambique	common	da	Mozambique
 myanmar	common	da	Myanmar
@@ -376,9 +410,12 @@ nepal	common	da	Nepal
 netherlands	common	da	Holland
 netherlands antilles	common	da	Hollandsk Antilles
 never	common	da	Aldrig
+new	common	da	Ny
 new caledonia	common	da	Ny Caledonien
 new entry added sucessfully	common	da	Nyt punkt succesrigt tilføjet
 new main category	common	da	Ny hovedkategori
+new password	common	da	Ny adgangskode
+new search	common	da	Ny søgning
 new value	common	da	Ny Værdi
 new zealand	common	da	New Zealand
 next	common	da	Næste
@@ -390,7 +427,9 @@ niue	common	da	Niue
 no	common	da	Nej
 no - cancel	common	da	No - Annullere
 no entries found, try again ...	common	da	ingen resultater fundet, prøv igen....
+no file	common	da	ingen fil
 no history for this record	common	da	Ingen historie fundet for denne post
+no matches found	common	da	Ingen resultater fundet
 no subject	common	da	Intet Emne
 none	common	da	Ingen
 norfolk island	common	da	Norfolk Øen
@@ -416,6 +455,7 @@ only yours	common	da	Kun Din
 open	common	da	åben
 open notify window	common	da	Åben Notificer Vindue
 open popup window	common	da	åben popup vindue
+options	common	da	indstillinger
 or	common	da	eller
 ordered list	common	da	Nummerliste
 original	common	da	Original
@@ -464,10 +504,18 @@ public	common	da	offentlig
 puerto rico	common	da	Puerto Rico
 qatar	common	da	Qatar
 read	common	da	Læs
+read a list of entries.	common	da	Læs en liste af indtastninger
+read a single entry by passing the id and fieldlist.	common	da	Læs et enkelt element ved at give id og fil-liste
 read this list of methods.	common	da	Læs denne liste over metoder
 reading	common	da	læser
+readonly	common	da	læs-kun
+refresh	common	da	Opdater
 reject	common	da	Afvis
+remove this link (not the entry itself)	common	da	Fjern dette link (ikke opgaven selv)
 rename	common	da	Omdøb
+repeat password	common	da	Gentag adgangskode
+required	common	da	Krævet
+reset	common	da	Nulstil
 resources	common	da	Ressourcer
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	da	Returnere en fuld liste over alle brugere på systemet. Advarsel: Den kan være ret stor
 returns an array of todo items	common	da	Returnere et array af opgaver
@@ -488,12 +536,16 @@ sao tome and principe	common	da	Sao Tome og Principe
 saturday	common	da	Lørdag
 saudi arabia	common	da	Saudi Arabien
 save	common	da	Gem
+save all	common	da	Gem alle
 search	common	da	Søg
 search accounts	common	da	Søg kontoer
 section	common	da	Sektion
 select	common	da	Vælg
+select a category	common	da	Vælg en kategori
 select all	common	da	Vælg alle
 select all %1 %2 for %3	common	da	Vælg alle %1 %2 for %3
+select an app to search in	common	da	Vælg en appilkation at søge i
+select an entry to link with	common	da	Vælg en opgave at linke med
 select category	common	da	Vælg Kategori
 select date	common	da	Vælg dato
 select group	common	da	Vælg gruppe
@@ -501,6 +553,7 @@ select home email address	common	da	Vælg privat e-mail adresse
 select one	common	da	Vælg en
 select user	common	da	Vælg bruger
 select work email address	common	da	Vælg arbejds e-mail adresse
+selectbox	common	da	Selectboks
 send	common	da	Send
 senegal	common	da	Senegal
 september	common	da	September
@@ -510,6 +563,7 @@ session has been killed	common	da	Sessionen er afsluttet
 setup	common	da	Setup
 setup main menu	common	da	Setup Hoved menu
 seychelles	common	da	Seychellerne
+show	common	da	Vis
 show all	common	da	Vis alt
 show all categorys	common	da	Vis alle kategorier
 show menu	common	da	vis menu
@@ -531,6 +585,7 @@ south africa	common	da	Syd Afrika
 south georgia and the south sandwich islands	common	da	Syd Georgien og De Sydlige Sandwich Øer
 spain	common	da	Spanien
 sri lanka	common	da	Sri Lanka
+start a new search, cancel this link	common	da	start en ny søgning, annullere dette link
 start date	common	da	Startdato
 start time	common	da	Starttid
 status	common	da	Status
@@ -548,6 +603,8 @@ table properties	common	da	Table properties
 taiwan	common	da	Taiwan/Taipei
 tajikistan	common	da	Tajikistan
 tanzania, united republic of	common	da	Tanzania, Den forenede Republik
+text	common	da	Tekst
+textarea	common	da	Tekstområde
 thailand	common	da	Thailand
 the following applications require upgrades	common	da	Følgende applikationer skal opdateres
 the mail server returned	common	da	Postserveren retunerede
@@ -584,7 +641,9 @@ united kingdom	common	da	England
 united states	common	da	USA
 united states minor outlying islands	common	da	USA Mindre omkringliggende øer
 unknown	common	da	Ukendt
+unlink	common	da	Fjern link
 update	common	da	Opdater
+update a single entry by passing the fields.	common	da	opdater et enkelt element ve at sende felter.
 upload	common	da	Upload
 url	common	da	URL
 uruguay	common	da	Uruguay
@@ -604,6 +663,7 @@ venezuela	common	da	Venezuela
 version	common	da	Version
 viet nam	common	da	Viet Nam
 view	common	da	Se
+view this linked entry in its application	common	da	se det linkede emne i dets program
 virgin islands, british	common	da	Jomfru Øer, De Britiske
 virgin islands, u.s.	common	da	Jomfru Øer, De Amerikanske
 wallis and futuna	common	da	Wallis og Futuna
@@ -613,6 +673,7 @@ western sahara	common	da	Vest Sahara
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	da	Hvis du siger ja, bliver hjem og logout knapperne vist som applikationer i hoved applikations linien.
 which groups	common	da	Hvilke grupper
 width	common	da	Bredde
+wk	common	da	Uge
 work email	common	da	arbejds e-mail
 writing	common	da	skriver
 written by:	common	da	Skrevet af:
@@ -637,66 +698,3 @@ your search returned 1 match	common	da	Søgningen leverede 1 resultat
 your settings have been updated	common	da	Dine indstillinger er opdateret
 zambia	common	da	Zambia
 zimbabwe	common	da	Zimbabwe
-advanced search	common	da	Avanceretsøgning
-all users	common	da	Alle brugere
-and	common	da	Og
-applications	common	da	Applikationer
-attach file	common	da	Vedhæft fil
-changed	common	da	Ændret
-checkbox	common	da	Afkrydsningsboks
-click here to create the link	common	da	klik her for at oprette linket
-click here to start the search	common	da	klik her for at starte søgningen
-comment	common	da	Kommentar
-confirm	common	da	Bekræft
-contact	common	da	Kontakt
-contains	common	da	indeholder
-custom	common	da	Valgfri
-custom fields	common	da	Valgfri Felter
-day	common	da	Dag
-days	common	da	dage
-default	common	da	Standard
-documentation	common	da	Dokumentation
-doesn't matter	common	da	det gør ikke noget
-duration	common	da	Varighed
-file	common	da	Fil
-h	common	da	h
-hours	common	da	timer
-html	common	da	HTML
-id	common	da	ID
-import	common	da	Importer
-label	common	da	Mærkat
-last	common	da	sidste
-link	common	da	Link
-minute	common	da	Minut
-minutes	common	da	Minutter
-month	common	da	Måned
-more	common	da	Flere
-new	common	da	Ny
-new search	common	da	Ny søgning
-no file	common	da	ingen fil
-no matches found	common	da	Ingen resultater fundet
-options	common	da	indstillinger
-or	common	da	eller
-read a list of entries.	common	da	Læs en liste af indtastninger
-read a single entry by passing the id and fieldlist.	common	da	Læs et enkelt element ved at give id og fil-liste
-readonly	common	da	læs-kun
-refresh	common	da	Opdater
-remove this link (not the entry itself)	common	da	Fjern dette link (ikke opgaven selv)
-required	common	da	Krævet
-reset	common	da	Nulstil
-save all	common	da	Gem alle
-select a category	common	da	Vælg en kategori
-select an app to search in	common	da	Vælg en appilkation at søge i
-select an entry to link with	common	da	Vælg en opgave at linke med
-selectbox	common	da	Selectboks
-show	common	da	Vis
-start a new search, cancel this link	common	da	start en ny søgning, annullere dette link
-text	common	da	Tekst
-textarea	common	da	Tekstområde
-type	common	da	type
-unlink	common	da	Fjern link
-update a single entry by passing the fields.	common	da	opdater et enkelt element ve at sende felter.
-upload	common	da	Upload
-view this linked entry in its application	common	da	se det linkede emne i dets program
-wk	common	da	Uge
-id	common	da	ID

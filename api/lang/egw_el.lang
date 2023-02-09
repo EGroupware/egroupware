@@ -2,9 +2,12 @@
 %1 is not executable by the webserver !!!	common	el	%1 δεν είναι εκτελέσιμο από τον webserver !!!
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	el	%1Επιλέξτε έναν άλλο κατάλογο%2<br />ή κάντε %3 εγγράψιμο από τον webserver
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	el	%1EGroupware%2 είναι ένα multi-user, web-based groupware suite γραμμένο σε %3PHP%4.
+'%1' copied to clipboard	common	el	'%1' αντιγράφεται στο πρόχειρο
 00 (disable)	admin	el	00 (Απενεργοποίηση)
 13 (ntp)	admin	el	13 (ntp)
+2-factor-authentication	common	el	Πιστοποίηση 2 παραγόντων
 80 (http)	admin	el	80 (http)
+abort	common	el	Ματαίωση
 about	common	el	Πληροφορίες
 about %1	common	el	Πληροφορίες %1
 about egroupware	common	el	Πληροφορίες για το EGroupware
@@ -448,6 +451,7 @@ new	common	el	Νέο
 new caledonia	common	el	ΝΕΑ ΚΑΛΗΔΟΝΙΑ
 new entry added sucessfully	common	el	Επιτυχής προσθήκη νέας εισαγωγής
 new main category	common	el	Νέα βασική κατηγορία
+new password	common	el	Νέος κωδικός πρόσβασης
 new search	common	el	Νέα αναζήτηση
 new value	common	el	Νέα τιμή
 new zealand	common	el	ΝΕΑ ΖΗΛΑΝΔΙΑ
@@ -552,6 +556,7 @@ remove selected accounts	common	el	Αφαίρεση επιλεγμένων λο�
 remove shortcut	common	el	Αφαίρεση Συντόμευσης
 remove this link (not the entry itself)	common	el	Αφαιρέστε το σύνδεσμο (όχι την ίδια την καταχώρηση)
 rename	common	el	Μετονομασία
+repeat password	common	el	Επανάληψη κωδικού πρόσβασης
 replace	common	el	Αντικατάσταση
 replace with	common	el	Αντικατάσταση με
 reset	common	el	Επανακαθορισμός

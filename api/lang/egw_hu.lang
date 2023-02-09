@@ -3,6 +3,7 @@
 %1 is not executable by the webserver !!!	common	hu	%1 nem futtatható a webszerver által!
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	hu	%1Válasszon egy másik könyvtárat%2<br />vagy tegye írhatóvá a %3 könyvtárat a webszerver számára.
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	hu	Az %1EGroupware%2 egy php nyelven írt webalapú, többfelhasználós csoportmunkát támogató alkalmazáscsomag.
+'%1' copied to clipboard	common	hu	'%1' másolva a vágólapra
 (session restored in %1 seconds)	common	hu	(munkafázis visszaállítva %1 másodperc alatt)
 00 (disable)	admin	hu	00 (tiltva)
 1 day	common	hu	1 nap
@@ -10,7 +11,9 @@
 1 month	common	hu	1 hónap
 1 week	common	hu	1 hét
 13 (ntp)	admin	hu	13 (ntp)
+2-factor-authentication	common	hu	2-faktoros hitelesítés
 80 (http)	admin	hu	80 (http)
+abort	common	hu	Megszakítás
 about	common	hu	Névjegy
 about %1	common	hu	%1 névjegye
 about egroupware	common	hu	EGroupware névjegye
@@ -502,6 +505,7 @@ new	common	hu	Új
 new caledonia	common	hu	Újkaledónia
 new entry added sucessfully	common	hu	Új bejegyzés hozzáadva
 new main category	common	hu	Új főkategória
+new password	common	hu	Új jelszó
 new search	common	hu	Új keresés
 new value	common	hu	Új érték
 new zealand	common	hu	Újzéland
@@ -627,6 +631,7 @@ remove selected accounts	common	hu	kiválasztott hozzáférések törlése
 remove shortcut	common	hu	Gyorsbillentyű eltávolítása
 remove this link (not the entry itself)	common	hu	Hivatkozás eltávolítása (nem a bejegyzést magát)
 rename	common	hu	Átnevez
+repeat password	common	hu	Jelszó megismétlése
 replace	common	hu	Csere
 replace with	common	hu	Csere a következőre:
 required	common	hu	Szükséges

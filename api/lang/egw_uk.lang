@@ -1,8 +1,11 @@
 %1 email addresses inserted	common	uk	Додано %1 email адрес
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	uk	%1EGroupware%2 is a multi-user, web-based groupware suite written in %3PHP%4.
+'%1' copied to clipboard	common	uk	'%1' скопійовано в буфер обміну
 00 (disable)	admin	uk	00 (disable)
 13 (ntp)	admin	uk	13 (ntp)
+2-factor-authentication	common	uk	2-факторна аутентифікація
 80 (http)	admin	uk	80 (http)
+abort	common	uk	Перервати
 about	common	uk	Щодо
 about %1	common	uk	Щодо "%1"
 access	common	uk	Доступ
@@ -26,15 +29,18 @@ afghanistan	common	uk	АФГАНІСТАН
 albania	common	uk	АЛБАНІЯ
 algeria	common	uk	АЛЖИР
 all	common	uk	Все
+all users	common	uk	Всі користувачі
 andorra	common	uk	АНДОРРА
 angola	common	uk	АНГОЛА
 application	common	uk	Приложення
+applications	common	uk	Приложення
 apply	common	uk	Застосувати
 april	common	uk	Квітень
 are you sure you want to delete these entries ?	common	uk	Ви впевнені, що хочете видалити ці записи?
 are you sure you want to delete this entry ?	common	uk	Ви впевнені, що хочете видалити цей запис?
 argentina	common	uk	АРГЕНТИНА
 armenia	common	uk	ВІРМЕНІЯ
+attach file	common	uk	Прикласти файл
 august	common	uk	Серпень
 australia	common	uk	АВСТРАЛІЯ
 austria	common	uk	АВСТРІЯ
@@ -79,10 +85,15 @@ choose the parent category	common	uk	Виберіть вищестоячу ка�
 clear	common	uk	Очистити
 clear form	common	uk	Очистити форму
 click	common	uk	Натискати
+click here to create the link	common	uk	натисніть тут для створення Посилання
+click here to start the search	common	uk	натисніть тут щоб почати пошук
 close	common	uk	Закрити
 colombia	common	uk	КОЛУМБІЯ
+comment	common	uk	Коментувати
 company	common	uk	Компанія
+confirm	common	uk	Підтвердити
 congo	common	uk	КОНГО
+contact	common	uk	Контакт
 copy	common	uk	Копія
 create	common	uk	Створити
 created by	common	uk	Створено
@@ -91,14 +102,20 @@ cuba	common	uk	КУБА
 currency	common	uk	Валюта
 current	common	uk	Поточний
 current users	common	uk	Поточні (діючі) користувачі
+custom	common	uk	Власне
+custom fields	common	uk	Власні поля
 cyprus	common	uk	КІПР
 czech republic	common	uk	ЧЕСЬКА РЕСПУБЛІКА
 date	common	uk	Число
 date due	common	uk	Очікуване число
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	uk	Datetime port.<br>If using port 13, please set firewall rules appropriately before submitting this page.<br>(Port: 13 / Host: 129.6.15.28)
+day	common	uk	День
+days	common	uk	Дні
 december	common	uk	Грудень
+default	common	uk	По замовченню
 default category	common	uk	Категорія по замовчуванню
 delete	common	uk	Видалити
+delete a single entry by passing the id.	common	uk	Видалити один запис по id.
 delete category	common	uk	Видалити категорію
 delete this entry	common	uk	видалити цей запис
 denmark	common	uk	ДАНІЯ
@@ -116,6 +133,7 @@ domestic	common	uk	Місцевий
 dominica	common	uk	ДОМІНІКА
 done	common	uk	Зроблено
 download	common	uk	Загрузити
+duration	common	uk	Тривалість
 e-mail	common	uk	E-Mail
 ecuador	common	uk	ЕКВАДОР
 edit	common	uk	Редагувати
@@ -182,10 +200,14 @@ high	common	uk	Високий
 highest	common	uk	Найвищий
 home	common	uk	Додому
 home email	common	uk	домашній email
+home screen	common	uk	Основний екран
 honduras	common	uk	ГОНДУРАС
+hours	common	uk	години
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	uk	Скільки ікон показувати в навігаційній панелі. Додаткові ікони будуть в випадаючому меню в правій частині панелі.
 hungary	common	uk	УГОРЩИНА
+id	common	uk	Id
 image url	common	uk	URL зображення
+import	common	uk	Імпорт
 insert all %1 addresses of the %2 contacts in %3	common	uk	Вставити всі %1 адресів %2 контактів в %3
 international	common	uk	Міжнародний
 invalid filename	common	uk	невірне ім'я файлу
@@ -205,7 +227,9 @@ june	common	uk	Червень
 kenya	common	uk	КЕНІЯ
 keywords	common	uk	Ключові слова
 kuwait	common	uk	КУВЕЙТ
+label	common	uk	Примітки
 language	common	uk	Мова
+last	common	uk	Останній
 last modified	common	uk	Востаннє змінено
 last name	common	uk	Прізвище
 last name of the user, eg. "%1"	common	uk	Прізвище користувача, тобто "%1"
@@ -217,6 +241,7 @@ lesotho	common	uk	ЛЕСОТО
 liberia	common	uk	ЛІБЕРІЯ
 license	common	uk	Ліцензія
 liechtenstein	common	uk	ЛІХТЕНШТЕЙН
+link	common	uk	Посилання
 list	common	uk	Перелік
 lithuania	common	uk	ЛИТВА
 load	common	uk	Вгрузити
@@ -229,7 +254,6 @@ lowest	common	uk	Найнижчий
 luxembourg	common	uk	ЛЮКСЕМБУРГ
 mail domain, eg. "%1"	common	uk	mail domain, наприклад, "%1"
 main category	common	uk	Базова категорія
-home screen	common	uk	Основний екран
 maintainer	common	uk	Супроводжує
 malaysia	common	uk	МАЛАЙЗІЯ
 malta	common	uk	МАЛЬТА
@@ -243,8 +267,10 @@ menu	common	uk	Меню
 message	common	uk	Повідомлення
 mexico	common	uk	МЕКСІКА
 minute	common	uk	Хвилина
+minutes	common	uk	хвилини
 monday	common	uk	Понеділок
 mongolia	common	uk	МОНГОЛІЯ
+month	common	uk	Місяць
 morocco	common	uk	МАРОККО
 mozambique	common	uk	МОЗАМБІК
 name	common	uk	Ім'я
@@ -254,6 +280,8 @@ nepal	common	uk	НЕПАЛ
 never	common	uk	Ніколи
 new entry added sucessfully	common	uk	Новий запис додано успішно
 new main category	common	uk	Нова основна категорія
+new password	common	uk	Новий пароль
+new search	common	uk	Новий пошук
 new value	common	uk	Нове значення
 next	common	uk	Наступний
 next page	common	uk	Наступна сторінка
@@ -263,7 +291,9 @@ nigeria	common	uk	НІГЕРІЯ
 no	common	uk	Ні
 no - cancel	common	uk	Ні - Відмовитись
 no entries found, try again ...	common	uk	Записів не знайдено, спробуйте ще...
+no file	common	uk	файлу немає
 no history for this record	common	uk	Немає історії для цього запису
+no matches found	common	uk	Відповідностей не знайдено
 no subject	common	uk	Немає теми
 none	common	uk	Немає
 normal	common	uk	Нормальний
@@ -322,9 +352,15 @@ private	common	uk	Особисте
 project	common	uk	Проект
 public	common	uk	публічне
 read	common	uk	Читати
+read a list of entries.	common	uk	Прочитати перелік записів
+read a single entry by passing the id and fieldlist.	common	uk	Прочитати один запис по id та переліку полів.
 read this list of methods.	common	uk	Прочитати цей перелік методів.
+refresh	common	uk	Поновити
 reject	common	uk	Відмовити
+remove this link (not the entry itself)	common	uk	Видалити це посилання (не сам запис)
 rename	common	uk	Перейменувати
+repeat password	common	uk	Повторити пароль
+reset	common	uk	Переввести
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	uk	Повертає повний перелік рахунків в системі. Це може бути дуже великим.
 returns an array of todo items	common	uk	Повертає масив завдань.
 returns struct of users application access	common	uk	Повертає структуру доступу користувачів до приложень
@@ -341,6 +377,8 @@ search accounts	common	uk	Шукати рахунки
 section	common	uk	Розділ
 select	common	uk	Вибрати
 select all %1 %2 for %3	common	uk	Вибрати всі %1 %2 для %3
+select an app to search in	common	uk	Виберіть приложення в якому шукати
+select an entry to link with	common	uk	Виберіть запис для Посилання
 select category	common	uk	Виберіть категорію
 select date	common	uk	Виберіть дату
 select group	common	uk	Виберіть групу
@@ -348,6 +386,7 @@ select home email address	common	uk	Виберіть домашню email адр
 select one	common	uk	Виберіть одне
 select user	common	uk	Виберіть користувача
 select work email address	common	uk	Виберіть робочу email адресу
+selectbox	common	uk	Selectbox
 send	common	uk	Відіслати
 senegal	common	uk	Сенегал
 september	common	uk	Вересень
@@ -373,6 +412,7 @@ somalia	common	uk	СОМАЛІ
 sorry, your login has expired	login	uk	Вибачте, Ваше право входу вичерпано
 spain	common	uk	ІСПАНІЯ
 sri lanka	common	uk	ШРІ ЛАНКА
+start a new search, cancel this link	common	uk	Розпочати новий пошук, покинути це посилання
 start date	common	uk	Дата початку
 start time	common	uk	Час початку
 status	common	uk	Статус
@@ -387,6 +427,7 @@ sweden	common	uk	ШВЕЦІЯ
 switzerland	common	uk	ШВЕЙЦАРІЯ
 taiwan	common	uk	ТАЙВАНЬ
 tajikistan	common	uk	ТАДЖИКИСТАН
+text	common	uk	Текст
 thailand	common	uk	ТАЇЛАНД
 the following applications require upgrades	common	uk	Наступні приложення потребують поновлення
 the mail server returned	common	uk	Поштовий сервер повернув
@@ -415,7 +456,9 @@ uganda	common	uk	УГАНДА
 ukraine	common	uk	УКРАЇНА
 united states	common	uk	США
 unknown	common	uk	Невідомо
+unlink	common	uk	Викинути
 update	common	uk	Поновити
+update a single entry by passing the fields.	common	uk	Змінити один запис шляхом заповнення полів.
 url	common	uk	URL
 uruguay	common	uk	УРУГВАЙ
 use button to search for	common	uk	Використовуйте Кнопку для пошуку в
@@ -433,6 +476,7 @@ venezuela	common	uk	ВЕНЕСУЕЛА
 version	common	uk	Версія
 viet nam	common	uk	В'ЄТНАМ
 view	common	uk	Перегляд
+view this linked entry in its application	common	uk	переглянути посилання в відповідному приложенні
 wednesday	common	uk	Середа
 welcome	common	uk	Вітаємо
 which groups	common	uk	Котрі групи
@@ -458,48 +502,3 @@ your search returned 1 match	common	uk	Знайдено одну відпові�
 your settings have been updated	common	uk	Параметри поновлено
 zambia	common	uk	ЗАМБІЯ
 zimbabwe	common	uk	ЗІМБАБВЕ
-all users	common	uk	Всі користувачі
-application	common	uk	Приложення
-applications	common	uk	Приложення
-attach file	common	uk	Прикласти файл
-bottom	common	uk	низ
-click here to create the link	common	uk	натисніть тут для створення Посилання
-click here to start the search	common	uk	натисніть тут щоб почати пошук
-comment	common	uk	Коментувати
-confirm	common	uk	Підтвердити
-contact	common	uk	Контакт
-custom	common	uk	Власне
-custom fields	common	uk	Власні поля
-day	common	uk	День
-days	common	uk	Дні
-default	common	uk	По замовченню
-delete a single entry by passing the id.	common	uk	Видалити один запис по id.
-duration	common	uk	Тривалість
-hours	common	uk	години
-id	common	uk	Id
-import	common	uk	Імпорт
-label	common	uk	Примітки
-last	common	uk	Останній
-link	common	uk	Посилання
-minute	common	uk	Хвилина
-minutes	common	uk	хвилини
-month	common	uk	Місяць
-new search	common	uk	Новий пошук
-no file	common	uk	файлу немає
-no matches found	common	uk	Відповідностей не знайдено
-read a list of entries.	common	uk	Прочитати перелік записів
-read a single entry by passing the id and fieldlist.	common	uk	Прочитати один запис по id та переліку полів.
-refresh	common	uk	Поновити
-remove this link (not the entry itself)	common	uk	Видалити це посилання (не сам запис)
-reset	common	uk	Переввести
-select an app to search in	common	uk	Виберіть приложення в якому шукати
-select an entry to link with	common	uk	Виберіть запис для Посилання
-selectbox	common	uk	Selectbox
-start a new search, cancel this link	common	uk	Розпочати новий пошук, покинути це посилання
-text	common	uk	Текст
-top	common	uk	зверху
-type	common	uk	Тип
-unlink	common	uk	Викинути
-update a single entry by passing the fields.	common	uk	Змінити один запис шляхом заповнення полів.
-view this linked entry in its application	common	uk	переглянути посилання в відповідному приложенні
-id	common	uk	Id

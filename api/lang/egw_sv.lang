@@ -13,14 +13,17 @@
 %s notranslation	common	sv	%s Inte översatt
 %s onchange	common	sv	%s onChange
 %s readonly	common	sv	%s Skrivskyddad
+'%1' copied to clipboard	common	sv	"%1" kopieras till urklipp
 '%1' has an invalid format !!!	common	sv	'%1' har ett ogiltigt format
 '%1' is not a valid date !!!	common	sv	'%1' är ett ogiltigt datum
 '%1' is not a valid floatingpoint number !!!	common	sv	'%1' är inte ett giltigt flyttalsnummer
 '%1' is not a valid integer !!!	common	sv	'%1' är inte ett giltig heltal
 00 (disable)	admin	sv	00 (inaktivera)
 13 (ntp)	admin	sv	13 (ntp)
+2-factor-authentication	common	sv	2-faktorsautentisering
 80 (http)	admin	sv	80 (http)
 a pattern to be searched for	common	sv	Sökord att söka efter
+abort	common	sv	Avbryt
 about	common	sv	Om
 about %1	common	sv	Om %1
 about egroupware	common	sv	Om EGroupware
@@ -637,6 +640,7 @@ new	common	sv	Nytt
 new caledonia	common	sv	NYA KALEDONIEN
 new entry added sucessfully	common	sv	Ny post tillagd
 new main category	common	sv	Ny huvudkategori
+new password	common	sv	Nytt lösenord
 new search	common	sv	Ny sökning
 new table created	common	sv	Tabell skapad
 new value	common	sv	Nytt värde
@@ -785,6 +789,7 @@ remove selected accounts	common	sv	Radera valda konton
 remove shortcut	common	sv	Radera genväg
 remove this link (not the entry itself)	common	sv	Radera länk (inte posten i sig)
 rename	common	sv	Byt namn
+repeat password	common	sv	Upprepa lösenordet
 replace	common	sv	Ersätt
 replace with	common	sv	Ersätt med
 required	common	sv	Krävs

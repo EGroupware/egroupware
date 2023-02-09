@@ -919,6 +919,7 @@ new egroupware release %1 available	common	en	New EGroupware release %1 availabl
 new entry added sucessfully	common	en	New entry added successfully.
 new favorite	common	en	New favorite
 new main category	common	en	New main category
+new password	common	en	New password
 new search	common	en	New search
 new table created	common	en	New table created
 new value	common	en	New Value
@@ -1125,6 +1126,7 @@ remove this link (not the entry itself)	common	en	Remove link
 removed (now) empty directory fs_id=%1	admin	en	Removed (now) empty folder fs_id=%1
 removeformat	common	en	Removeformat
 rename	common	en	Rename
+repeat password	common	en	Repeat password
 replace	common	en	Replace
 replace with	common	en	Replace with
 request could not be processed, please reload your window (press f5 or cmd r)!	common	en	Request could not be processed, please reload your window (press F5 or Cmd R)!

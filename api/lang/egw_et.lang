@@ -2,13 +2,16 @@
 %1 is not executable by the webserver !!!	common	et	%1 pole veebiserverijaoks käivitatav !!!
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	et	%1Vali teine kaust%2<br />või tee %3 veebiserverijaoks kirjutatavaks
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	et	%1EGroupware%2 on multi-kasutaja, veebipõhine grupitöö vahend mis on kirjutatud %3PHP%4.
+'%1' copied to clipboard	common	et	'%1' kopeeritud lõikelauale
 00 (disable)	admin	et	00 (keela)
 1 day	common	et	1 Päev
 1 hour	common	et	1 Tund
 1 month	common	et	1 Kuu
 1 week	common	et	1 Nädal
 13 (ntp)	admin	et	13 (ntp)
+2-factor-authentication	common	et	2-faktoriline autentimine
 80 (http)	admin	et	80 (http)
+abort	common	et	Katkesta
 about	common	et	Üldiselt
 about %1	common	et	Üldiselt %1
 about egroupware	common	et	Üldiselt EGroupware
@@ -350,6 +353,7 @@ multiple	common	et	mitmik
 name	common	et	Nimi
 never	common	et	Mittekunagi
 new	common	et	Uus
+new password	common	et	Uus parool
 new search	common	et	Uus otsing
 new value	common	et	Uus Väärtus
 new zealand	common	et	UUS MEREMAA
@@ -419,6 +423,7 @@ regular	common	et	Regulaarne
 reject	common	et	Lükka tagasi
 remove selected accounts	common	et	eemalda märgitud kontod
 rename	common	et	Nimeta ümber
+repeat password	common	et	Parooli kordamine
 replace	common	et	Asenda
 required	common	et	Nõutav
 reset	common	et	Tühista

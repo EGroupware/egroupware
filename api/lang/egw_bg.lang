@@ -2,6 +2,7 @@
 %1 is not executable by the webserver !!!	common	bg	%1 не е изпълним за WEB сървъра!!!
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	bg	%1Изберете друга директория%2<br />или позволете в %3 запис на WEB сървъра
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	bg	%1EGroupware%2 е многопотребителска, web-базирана система за работа в екип, написана на %3PHP%4.
+'%1' copied to clipboard	common	bg	'%1' е копирано в клипборда
 (session restored in %1 seconds)	common	bg	(сесията възстановена за %1 секунди)
 00 (disable)	admin	bg	00 (забранен)
 1 day	common	bg	1 ден
@@ -9,7 +10,9 @@
 1 month	common	bg	1 месец
 1 week	common	bg	1 седмица
 13 (ntp)	admin	bg	13 (ntp)
+2-factor-authentication	common	bg	Удостоверяване с 2 фактора
 80 (http)	admin	bg	80 (http)
+abort	common	bg	Прекъсване на
 about	common	bg	За
 about %1	common	bg	За %1
 about egroupware	common	bg	За EGroupware
@@ -461,6 +464,7 @@ new	common	bg	Нова
 new caledonia	common	bg	Нова Каледония
 new entry added sucessfully	common	bg	Новият запис е добавен успешно
 new main category	common	bg	Нова основна категория
+new password	common	bg	Нова парола
 new search	common	bg	Ново търсене
 new value	common	bg	Нова стойност
 new zealand	common	bg	Нова Зеландия
@@ -575,6 +579,7 @@ remove selected accounts	common	bg	премахване на избраните 
 remove shortcut	common	bg	Премахване на Shortcut-и
 remove this link (not the entry itself)	common	bg	Премахване на връзката (не и на записа)
 rename	common	bg	Преименуване
+repeat password	common	bg	Повтаряне на паролата
 replace	common	bg	Замяна
 replace with	common	bg	Замяна с
 reset	common	bg	Нулиране

@@ -21,6 +21,7 @@
 %s notranslation	common	ru	%s непереведено
 %s onchange	common	ru	%s изменяется
 %s readonly	common	ru	%s только для чтения
+'%1' copied to clipboard	common	ru	'%1' скопировано в буфер обмена
 '%1' has an invalid format	common	ru	Неверный формат '%1'
 '%1' has an invalid format !!!	common	ru	'%1' имеет неверный формат!
 '%1' is no php file in the egw server root (%2)!	common	ru	'%1' нет файла php в корневом каталоге eGW (%2)!
@@ -35,8 +36,10 @@
 1 month	common	ru	1 Месяц
 1 week	common	ru	1 Неделя
 13 (ntp)	admin	ru	13 (ntp)
+2-factor-authentication	common	ru	Двухфакторная аутентификация
 80 (http)	admin	ru	80 (http)
 a pattern to be searched for	common	ru	Шаблон для поиска
+abort	common	ru	Прервать
 about	common	ru	О программе
 about %1	common	ru	О %1
 about egroupware	common	ru	Об EGroupware
@@ -771,6 +774,7 @@ new caledonia	common	ru	Новая Каледония
 new entry added sucessfully	common	ru	Новая запись успешно добавлена
 new favorite	common	ru	Новое избранное
 new main category	common	ru	Новая основная категория
+new password	common	ru	Новый пароль
 new search	common	ru	Новый поиск
 new table created	common	ru	Новая таблица создана
 new value	common	ru	Новое значение
@@ -941,6 +945,7 @@ remove shortcut	common	ru	Удалить ярлычок
 remove this link (not the entry itself)	common	ru	Убрать эту ссылку (не запись по ней)
 removed (now) empty directory fs_id=%1	admin	ru	Удалить (теперь) пустой каталог fs_id=%1
 rename	common	ru	Переименовать
+repeat password	common	ru	Повторить пароль
 replace	common	ru	Замена
 replace with	common	ru	Заменить на
 requests and full responses to files directory	common	ru	Запросы и полные ответы на файловые каталоги

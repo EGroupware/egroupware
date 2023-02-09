@@ -20,6 +20,7 @@
 %s notranslation	common	nl	%s GeenVertaling
 %s onchange	common	nl	%s bij Wijziging
 %s readonly	common	nl	%s alleen lezen
+'%1' copied to clipboard	common	nl	'%1' gekopieerd naar klembord
 '%1' has an invalid format !!!	common	nl	'%1' heeft een ongeldig formaat !!!
 '%1' is no php file in the egw server root (%2)!	common	nl	'%1' is geen php bestand in de eGW server rootdirectory (%2)
 '%1' is not a valid date !!!	common	nl	'%1' is geen geldige datum !!!
@@ -33,8 +34,10 @@
 1 month	common	nl	1 maand
 1 week	common	nl	1 week
 13 (ntp)	admin	nl	13 (ntp)
+2-factor-authentication	common	nl	2-factor-authenticatie
 80 (http)	admin	nl	80 (http)
 a pattern to be searched for	common	nl	een patroon waarnaar gezocht moet worden
+abort	common	nl	Afbreken
 about	common	nl	Over
 about %1	common	nl	Over %1
 about egroupware	common	nl	Over EGroupware
@@ -769,6 +772,7 @@ new caledonia	common	nl	NIEUW-CALEDONIË
 new entry added sucessfully	common	nl	Nieuw item succesvol toegevoegd
 new favorite	common	nl	Nieuwe Favoriet
 new main category	common	nl	Nieuwe hoofdcategorie
+new password	common	nl	Nieuw wachtwoord
 new search	common	nl	Nieuwe zoekopdracht
 new table created	common	nl	Nieuwe tabel gemaakt
 new value	common	nl	Nieuwe waarde
@@ -946,6 +950,7 @@ remove shortcut	common	nl	Snelkoppeling verwijderen
 remove this link (not the entry itself)	common	nl	Verwijder deze link (niet de entry zelf)
 removed (now) empty directory fs_id=%1	admin	nl	Verwijdert (nu) lege map fs_id=%1
 rename	common	nl	Hernoemen
+repeat password	common	nl	Herhaal wachtwoord
 replace	common	nl	Vervangen
 replace with	common	nl	Vervangen met
 requests and full responses to files directory	common	nl	Vraag en volledige reactie op bestanden in map

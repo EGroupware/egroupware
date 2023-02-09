@@ -365,7 +365,7 @@ custom javascript for onchange	common	de	Benutzerdefiniertes Javascript für onC
 cut	common	de	Ausschneiden
 cyprus	common	de	ZYPERN
 czech republic	common	de	TSCHECHISCHE REPUBLIK
-dark mode	common	de	Dark Mode
+dark mode	common	de	Dunkler Modus
 dark moono theme	common	de	Dunkles Moono Theme
 data type	common	de	Datentyp
 database error	common	de	Datenbank Fehler
@@ -802,7 +802,7 @@ liberia	common	de	LYBIEN
 libyan arab jamahiriya	common	de	LIBYAN ARAB JAMAHIRIYA
 license	common	de	Lizenz
 liechtenstein	common	de	LIECHTENSTEIN
-light mode	common	de	Light Mode
+light mode	common	de	Heller Modus
 line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>	common	de	Zeile %1: '%2'<br /><b>CSV enthalten ##last-check-run## der Tabelle %3 ==> ignoriert</b>
 line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	de	Zeile %1: '%2'<br /><b>CSV haben andere Spaltenanzahl als Tabelle %3 ==> ignoriert</b>
 link	common	de	Verknüpfung
@@ -919,6 +919,7 @@ new egroupware release %1 available	common	de	Neues EGroupware Release %1 verfü
 new entry added sucessfully	common	de	Neuer Eintrag wurde erfolgreich hinzugefügt
 new favorite	common	de	Neuer Favorit
 new main category	common	de	neue Hauptkategorie
+new password	common	de	Neues Passwort
 new search	common	de	Neue Suche
 new table created	common	de	Neue Tabelle erzeugt
 new value	common	de	Neuer Wert
@@ -1125,6 +1126,7 @@ remove this link (not the entry itself)	common	de	entfernt diese Verknüpfung (n
 removed (now) empty directory fs_id=%1	admin	de	Leerer Ordner fs_id=%1 wurde jetzt gelöscht
 removeformat	common	de	Formatierung entfernen
 rename	common	de	Umbenennen
+repeat password	common	de	Passwort wiederholen
 replace	common	de	Ersetzen
 replace with	common	de	Ersetzen durch
 request could not be processed, please reload your window (press f5 or cmd r)!	common	de	Anfrage konnte nicht verarbeitet werden, bitte laden Sie Ihr Fenster neu (F5 oder Cmd R drücken)!

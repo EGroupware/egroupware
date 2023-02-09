@@ -1,7 +1,10 @@
 %1 email addresses inserted	common	lt	įkelta el. pašto adresų: %1
+'%1' copied to clipboard	common	lt	'%1' nukopijuota į iškarpinę
 00 (disable)	admin	lt	00 (išjungti)
 13 (ntp)	admin	lt	13 (ntp)
+2-factor-authentication	common	lt	2 veiksnių autentiškumo patvirtinimas
 80 (http)	admin	lt	80 (http)
+abort	common	lt	Abort
 about	common	lt	Apie
 about %1	common	lt	% - apie
 about egroupware	common	lt	Apie EGroupware
@@ -131,6 +134,7 @@ namibia	common	lt	NAMIBIJA
 nepal	common	lt	NEPALAS
 netherlands	common	lt	OLANDIJA
 never	common	lt	Niekada
+new password	common	lt	Naujas slaptažodis
 new zealand	common	lt	NAUJOJI ZELANDIJA
 next	common	lt	Kitas
 next page	common	lt	Kitas puslapis
@@ -154,6 +158,7 @@ postal	common	lt	Pašto kodas
 print	common	lt	Spausdinti
 project	common	lt	Projektas
 qatar	common	lt	KATARAS
+repeat password	common	lt	Pakartoti slaptažodį
 show/hide	common	lt	rodyti/paslėpti šoninę juostą
 yemen	common	lt	JEMENAS
 zimbabwe	common	lt	ZIMBABVĖ
