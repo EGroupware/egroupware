@@ -125,17 +125,21 @@ export class tapAndSwipe {
 		this._isTapAndHold = false;
 		this._fingercount = event.touches.length;
 
-		const scrolledItem = event.path.filter(_item => {
-			return _item instanceof HTMLElement && this.element.contains(_item) && (_item.scrollTop != 0 || _item.scrollLeft !=0);
-		});
-		if (scrolledItem.length>0)
+		if(event.path)
 		{
-			this._scrolledElementObj = {el: scrolledItem[0], scrollTop: scrolledItem[0].scrollTop, scrollLeft: scrolledItem[0].scrollLeft};
+			const scrolledItem = event.path.filter(_item => {
+				return _item instanceof HTMLElement && this.element.contains(_item) && (_item.scrollTop != 0 || _item.scrollLeft !=0);
+			});
+			if (scrolledItem.length>0)
+			{
+				this._scrolledElementObj = {el: scrolledItem[0], scrollTop: scrolledItem[0].scrollTop, scrollLeft: scrolledItem[0].scrollLeft};
+			}
+			else
+			{
+				this._scrolledElementObj = null;
+			}
 		}
-		else
-		{
-			this._scrolledElementObj = null;
-		}
+
 
 
 		this._tapHoldTimeout = window.setTimeout(_=>{
