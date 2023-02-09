@@ -24,6 +24,7 @@
 %s notranslation	common	sl	%s brez prevoda
 %s onchange	common	sl	%s ob spremembi
 %s readonly	common	sl	%s samo za branje
+'%1' copied to clipboard	common	sl	'%1' se kopira v odložišče
 '%1' has an invalid format	common	sl	'%1' ima nepravilen format
 '%1' has an invalid format !!!	common	sl	'%1' ima nepravilen format
 '%1' is no php file in the egw server root (%2)!	common	sl	'%1' ni datoteka php v koraku eGW strežnika (%2)!
@@ -42,6 +43,7 @@
 1 week	common	sl	1 teden
 13 (ntp)	admin	sl	13 (ntp)
 15 minutes	common	sl	15 Minut
+2-factor-authentication	common	sl	2-faktorska avtentikacija
 30 minutes	common	sl	30 Minut
 30 seconds	common	sl	30 sekund
 5 minutes	common	sl	5 minut
@@ -856,6 +858,7 @@ new egroupware release %1 available	common	sl	Na voljo je nova izdaja programa E
 new entry added sucessfully	common	sl	Nov vnos je uspešno dodan.
 new favorite	common	sl	Nov priljubljeni
 new main category	common	sl	Nova glavna kategorija
+new password	common	sl	Novo geslo
 new search	common	sl	Novo iskanje
 new table created	common	sl	Nova tabela ustvarjena
 new value	common	sl	Nova vrednost
@@ -1048,6 +1051,7 @@ remove shortcut	common	sl	Odstrani bližnjico
 remove this link (not the entry itself)	common	sl	Odstrani to povezavo (ne samega vnosa)
 removed (now) empty directory fs_id=%1	admin	sl	Odstranjen (zdaj) prazen imenik fs_id =%1
 rename	common	sl	Preimenuj
+repeat password	common	sl	Ponovitev gesla
 replace	common	sl	Zamenjaj
 replace with	common	sl	Zamenjaj z
 requests and full responses to files directory	common	sl	Zahteve in popoln odgovor na imenik datotek

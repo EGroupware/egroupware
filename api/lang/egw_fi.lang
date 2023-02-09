@@ -18,6 +18,7 @@
 %s notranslation	common	fi	%s Ei käännöstä
 %s onchange	common	fi	%s onChange
 %s readonly	common	fi	%s vain lukuoikeus
+'%1' copied to clipboard	common	fi	'%1' kopioitu leikepöydälle
 '%1' has an invalid format !!!	common	fi	%1 on väärässä muodossa!
 '%1' is no php file in the egw server root (%2)!	common	fi	'%1' ei ole PHP tiedosto EGroupwaren server rootissa (%2)!
 '%1' is not a valid date !!!	common	fi	%1 on epäkelpo päiväys!
@@ -31,8 +32,10 @@
 1 month	common	fi	1 Kuukausi
 1 week	common	fi	1 Viikko
 13 (ntp)	admin	fi	13 (ntp)
+2-factor-authentication	common	fi	2-tekijä-tunnistus
 80 (http)	admin	fi	80 (http)
 a pattern to be searched for	common	fi	Hakuehdot
+abort	common	fi	Keskeytä
 about	common	fi	Tietoja
 about %1	common	fi	Tietoja sovelluksesta %1
 about egroupware	common	fi	Tietoja EGroupwaresta
@@ -735,6 +738,7 @@ new caledonia	common	fi	UUSI KALEDONIA
 new entry added sucessfully	common	fi	Uusi tietue lisätty
 new favorite	common	fi	Uusi suosikki
 new main category	common	fi	Uusi pääkategoria
+new password	common	fi	Uusi salasana
 new search	common	fi	Uusi haku
 new table created	common	fi	Uusi taulukon nimi
 new value	common	fi	Uusi arvo
@@ -895,6 +899,7 @@ remove selected accounts	common	fi	Poista valitut käyttäjättilit
 remove shortcut	common	fi	Poista pikakuvake
 remove this link (not the entry itself)	common	fi	Poista tämä linkki (ei poista itse merkintää)
 rename	common	fi	Nimeä uudelleen
+repeat password	common	fi	Toista salasana
 replace	common	fi	Korvaa
 replace with	common	fi	Korvataan merkkijonolla:
 required	common	fi	Vaaditut

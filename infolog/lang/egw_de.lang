@@ -59,7 +59,7 @@ always show them	infolog	de	Immer anzeigen
 application mail expected but got: %1	infolog	de	Mail-Applikation erwartet aber %1 erhalten
 apply the action on the whole query, not only the shown entries!!!	infolog	de	Wendet den Befehl auf die gesamte Abfrage an, NICHT nur auf die angezeigten Datensätze !!
 apply the changes	infolog	de	Übernimmt die Änderungen
-archive	infolog	de	Archiviert
+archive	infolog	de	archiviert
 are you shure you want to close this entry ?	infolog	de	Wollen Sie wirklich den InfoLog schliessen?
 are you shure you want to delete this entry ?	infolog	de	Wollen Sie diesen InfoLog wirklich löschen?
 attach a file	infolog	de	Datei anhängen
@@ -313,7 +313,7 @@ no entries found, try again ...	infolog	de	Kein Einträge gefunden, nochmal vers
 no filter	infolog	de	kein Filter
 no links or attachments	infolog	de	keine Verknüpfungen oder Anhänge
 no project	infolog	de	Kein Projekt
-nonactive	infolog	de	Nicht aktiv
+nonactive	infolog	de	nicht aktiv
 none	infolog	de	keine
 normal	infolog	de	normal
 not	infolog	de	nicht
@@ -409,7 +409,7 @@ rows	infolog	de	Zeilen
 same day	infolog	de	gleichen Tag
 save	infolog	de	Speichern
 saves the changes made and leaves	infolog	de	speichert die Änderungen und beendet
-saves this entry	infolog	de	diesen Eintrag speichern
+saves this entry	infolog	de	Diesen Eintrag speichern
 schedule appointment	infolog	de	Termin planen
 search	infolog	de	Suchen
 search for:	infolog	de	Suchen nach:
@@ -497,7 +497,7 @@ type	infolog	de	Typ
 type ...	infolog	de	Typ ...
 type of customfield	infolog	de	Typ des benutzerdefinierten Feldes
 type of field	infolog	de	Art des Feldes
-type of the log-entry: note, phonecall or todo	infolog	de	Typ der InfoLog-Eintrages: Aufgabe, Notiz oder Anruf
+type of the log-entry: note, phonecall or todo	infolog	de	Typ des InfoLog-Eintrages: Aufgabe, Notiz oder Anruf
 unable to link to %3 by custom field "%1": "%4".  %2 matches.	infolog	de	Verknüpfung zu  %3 eines Benutzerdefinierten Feldes "%1": "%4" nicht möglich. %2 würde passen
 unknown type: %1	infolog	de	Unbekannter Typ %1
 unlink	infolog	de	Verknüpfung lösen
@@ -519,7 +519,7 @@ view parent with children	infolog	de	Elterneintrag mit Untereinträgen anzeigen
 view subs	infolog	de	Untereinträge anzeigen
 view the parent of this entry and all his subs	infolog	de	übergeordneter Eintrag mit allen seinen Untereinträgen anzeigen
 view this linked entry in its application	infolog	de	diesen verknüpfen Eintrag in seiner Anwendung anzeigen
-when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	de	wann soll mit der Aufgabe oder dem Anruf begonnen werden, ab diesem Datum wird er beim Filter offen oder eigene offen angezeigt (Startseite)
+when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	de	Wann soll mit der Aufgabe oder dem Anruf begonnen werden, ab diesem Datum wird er beim Filter offen oder eigene offen angezeigt (Startseite).
 which additional fields should the responsible be allowed to edit without having edit rights?	infolog	de	Welche zusätzlichen Felder soll der Verantwortliche bearbeiten können ohne Bearbeitungsrechte zu haben?
 which implicit acl rights should the responsible get	infolog	de	Welche impliziten Zugriffsrechte soll der Verantwortliche bekommen?
 which participants should be preselected when scheduling an appointment.	infolog	de	Welche Teilnehmer sollen als Vorgabe ausgewählt sein bei Termin planen.

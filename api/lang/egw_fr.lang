@@ -26,6 +26,7 @@
 %s notranslation	common	fr	%s PasDeTraduction
 %s onchange	common	fr	%s onChange
 %s readonly	common	fr	%s LectureSeule
+'%1' copied to clipboard	common	fr	'%1' copié dans le presse-papiers
 '%1' has an invalid format	common	fr	'%1' a un format invalide
 '%1' has an invalid format !!!	common	fr	'%1' a un format invalide !!!
 '%1' is no php file in the egw server root (%2)!	common	fr	'%1' n'est pas un fichier php dans l'arborescence racine d'egw (%2) !
@@ -887,6 +888,7 @@ new egroupware release %1 available	common	fr	La nouvelle version %1 de EGroupwa
 new entry added sucessfully	common	fr	Nouvelle entrée ajoutée avec succès
 new favorite	common	fr	Nouveau favoris
 new main category	common	fr	Nouvelle catégorie principale
+new password	common	fr	Nouveau mot de passe
 new search	common	fr	Nouvelle recherche
 new table created	common	fr	Nouvelle table créée
 new value	common	fr	Nouvelle valeur
@@ -1087,6 +1089,7 @@ remove shortcut	common	fr	Supprimer le raccourci
 remove this link (not the entry itself)	common	fr	Enlever ce lien (pas l'entrée elle-même)
 removed (now) empty directory fs_id=%1	admin	fr	Répertoire vide fs_id=%1 a été supprimé (maintenant)
 rename	common	fr	Renommer
+repeat password	common	fr	Répéter le mot de passe
 replace	common	fr	Remplacer
 replace with	common	fr	Remplacer par
 requests and full responses to files directory	common	fr	Requêtes et réponses complète sur les répertoires de fichiers

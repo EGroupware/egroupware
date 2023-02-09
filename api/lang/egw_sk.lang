@@ -25,6 +25,7 @@
 %s notranslation	common	sk	%s BezPrekladu
 %s onchange	common	sk	%s saMení
 %s readonly	common	sk	%s lenNaČítanie
+'%1' copied to clipboard	common	sk	'%1' skopírované do schránky
 '%1' has an invalid format	common	sk	'%1' má nesprávny formát!
 '%1' has an invalid format !!!	common	sk	'%1' má nesprávny formát!
 '%1' is no php file in the egw server root (%2)!	common	sk	'%1' nie je php súborom v root adresári eGW servera (%2)!
@@ -865,6 +866,7 @@ new egroupware release %1 available	common	sk	K dispozícii je nová verzia EGro
 new entry added sucessfully	common	sk	Nový záznam bol úspešne pridaný
 new favorite	common	sk	Nové obľúbené
 new main category	common	sk	Nová hlavná kategória
+new password	common	sk	Nové heslo
 new search	common	sk	Nové hľadanie
 new table created	common	sk	Nová tabuľka vytvorená
 new value	common	sk	Nová hodnota
@@ -1045,6 +1047,7 @@ remove shortcut	common	sk	Odstrániť skratku
 remove this link (not the entry itself)	common	sk	Odstrániť tento odkaz (nie záznam samotný)
 removed (now) empty directory fs_id=%1	admin	sk	Odstránený (v súčasnosti) prázdny priečinok fs_id=%1
 rename	common	sk	Premenovať
+repeat password	common	sk	Zopakovať heslo
 replace	common	sk	Nahradiť
 replace with	common	sk	Zameniť za
 requests and full responses to files directory	common	sk	Požiadavky a plné odpovede do priečinka súborov

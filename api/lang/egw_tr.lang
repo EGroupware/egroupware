@@ -1,3 +1,6 @@
+'%1' copied to clipboard	common	tr	'%1' panoya kopyalandı
+2-factor-authentication	common	tr	2 Faktörlü Kimlik Doğrulama
+abort	common	tr	İptal
 account has been created	common	tr	Hesap oluþturuldu
 account has been deleted	common	tr	Hesap silindi
 account has been updated	common	tr	Hesap güncellendi
@@ -43,6 +46,7 @@ lowest	common	tr	En düþük
 message	common	tr	Mesaj
 minute	common	tr	Dakika
 name	common	tr	Ýsim
+new password	common	tr	Yeni şifre
 ok	common	tr	Tamam
 or	common	tr	ya da
 original	common	tr	Orjinal
@@ -56,6 +60,7 @@ preferences	common	tr	Ayarlar
 primary group	common	tr	ana grup
 project	common	tr	Proje
 read this list of methods.	common	tr	Method listesini oku
+repeat password	common	tr	Şifreyi tekrarla
 search accounts	common	tr	Hesaplarý ara
 select all	common	tr	Tamam?n? seç
 site configuration	common	tr	Site Ayarlarý

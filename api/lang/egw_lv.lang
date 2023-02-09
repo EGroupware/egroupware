@@ -12,13 +12,16 @@
 %s notranslation	common	lv	%s Nav tulkojuma
 %s onchange	common	lv	%s Mainās
 %s readonly	common	lv	%s tikai lasāms
+'%1' copied to clipboard	common	lv	'%1' nokopēts uz starpliktuvi
 '%1' has an invalid format !!!	common	lv	%1' nav derīgs formāts!!!
 '%1' is not a valid floatingpoint number !!!	common	lv	%1' nav derīgs peldošā komata skaitlis!!!
 '%1' is not a valid integer !!!	common	lv	%1' nav derīgs vesels skaitlis
 00 (disable)	admin	lv	00 (disable)
 13 (ntp)	admin	lv	3 (ntp)
+2-factor-authentication	common	lv	Autentifikācija ar 2 faktoriem
 80 (http)	admin	lv	80 (http)
 a pattern to be searched for	common	lv	meklējamais paraugs
+abort	common	lv	Abort
 about	common	lv	Par
 about %1	common	lv	Par %1
 access	common	lv	Piekļuve
@@ -520,6 +523,7 @@ new	common	lv	Jauna
 new caledonia	common	lv	JAUNKALEDONIJA
 new entry added sucessfully	common	lv	Jaunais ieraksts tika veiksmīgi pievienots
 new main category	common	lv	Jauna galvenā kategorija
+new password	common	lv	Jauna parole
 new search	common	lv	Jauna meklēšana
 new table created	common	lv	Izveidota jauna tabula
 new value	common	lv	Jauna Vērtība
@@ -637,6 +641,7 @@ remove row (can not be undone!!!)	common	lv	izdzēst rindiņu (nevar but nepabei
 remove selected accounts	common	lv	Likvidēt izvēlētos kontus
 remove this link (not the entry itself)	common	lv	Izdzēst šo saiti (ne pašu ierakstu)
 rename	common	lv	Pārsaukt
+repeat password	common	lv	Atkārtot paroli
 required	common	lv	Pieprasīts
 reset	common	lv	Atiestate
 resources	common	lv	resursi

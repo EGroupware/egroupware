@@ -24,6 +24,7 @@
 %s notranslation	common	ja	%s（訳語無し）
 %s onchange	common	ja	%s onChange
 %s readonly	common	ja	%s 読み取り専用
+'%1' copied to clipboard	common	ja	'%1' がクリップボードにコピーされました。
 '%1' has an invalid format	common	ja	'%1' のフォーマットが不正です。
 '%1' has an invalid format !!!	common	ja	'%1' のフォーマットが不正です!
 '%1' is no php file in the egw server root (%2)!	common	ja	'%1' is no php file in the eGW server root (%2)!
@@ -42,11 +43,11 @@
 1 week	common	ja	1 週間
 13 (ntp)	admin	ja	13 (ntp)
 15 minutes	common	ja	15 分
+2-factor-authentication	common	ja	2要素認証
 30 minutes	common	ja	30 分
 30 seconds	common	ja	30 秒
 5 minutes	common	ja	5 分
 80 (http)	admin	ja	80 (http)
-Åland Islands	common	ja	オーランド諸島
 a pattern to be searched for	common	ja	検索パターン
 a request to the egroupware server returned with an error	common	ja	EGroupware サーバーに対するリクエストでエラーが発生しました。
 abcdefghijklmnopqrstuvwxyz	common	ja	ABCDEFGHIJKLMNOPQRSTUVWXYZ
@@ -70,7 +71,6 @@ action when category is an email address	groupdav	ja	カテゴリが電子メー
 actions	common	ja	アクション
 actions...	common	ja	アクション...
 active	common	ja	アクティブ
-active application tab	common	ja	アクティブ・アプリケーション・タブ
 active directory requires ssl or tls to change passwords!	common	ja	アクティブ・ディレクトリ環境でパスワードを変更するには、SSLまたはTLSが必要です!
 add	common	ja	追加
 add %1	common	ja	%1を追加
@@ -113,8 +113,6 @@ all operations save the template!	common	ja	All operations save the template!
 all users	common	ja	全ユーザ
 allowed file type: %1	common	ja	利用可能なファイル・タイプ: %1
 allows to modify responsible users from devices not supporting them, by setting email address of a user as category.	groupdav	ja	電子メール・アドレスをカテゴリとして設定することにより、機能を持たないデバイスからでも責任者を変更することを許可します。
-Allows to set a default or force the active application tab for new logins.	common	ja	ログイン時に選択するアクティブ・アプリケーション・タブを設定します。
-Allows to set a default or force the open application tabs.	common	ja	ログイン時に開いておくアプリケーション・タブを設定します。
 alt	common	ja	Alt
 alternate style-sheet:	common	ja	代替スタイルシート:
 am	common	ja	午前
@@ -188,8 +186,6 @@ blocked, too many attempts	common	ja	ブロックされました（試行回数�
 blue moono theme	common	ja	blue moono theme
 blurtext	common	ja	blurText
 bold	common	ja	太字
-Bolivia, Plurinational State of	common	ja	ボリビア
-Bonaire, Sint Eustatius and Saba	common	ja	ボネール、シント・ユースタティウスおよびサバ
 border	common	ja	ボーダー
 border-line-thickness for the table-tag	common	ja	テーブル・タグのボーダー線の太さ
 bosnia and herzegovina	common	ja	ボスニア・ヘルツェゴビナ
@@ -230,7 +226,6 @@ category	common	ja	カテゴリ
 category %1 has been added !	common	ja	カテゴリ %1 を追加しました!
 category %1 has been updated !	common	ja	カテゴリ %1 を更新しました!
 category owner	common	ja	カテゴリ所有者
-category report	common	ja	カテゴリー・レポート
 category tree	common	ja	カテゴリ・ツリー
 cayman islands	common	ja	ケイマン初等
 cc	common	ja	Cc
@@ -288,7 +283,6 @@ cocos (keeling) islands	common	ja	ココス諸島
 collection empty.	common	ja	Collection empty.
 collection listing	common	ja	Collection listing
 colombia	common	ja	コロンビア
-Color used in template for active user interface elements. You need to reload (F5) after storing the preferences.	common	ja	アクティブな要素の表示に用いる色を指定します。変更・保存した後、画面をリロード（F5）する必要があります。
 column...	common	ja	カラム...
 columnname	common	ja	カラム名
 columns to print	common	ja	印刷するカラム
@@ -315,14 +309,12 @@ copy	common	ja	コピー
 copy "%1"	common	ja	"%1"をコピー
 copy to clipboard	common	ja	クリップボードにコピー
 costa rica	common	ja	コスタリカ
-Côte d'Ivoire	common	ja	コートジボアール
 could not contact server. operation timed out!	common	ja	サーバーに接続できませんでした。（タイムアウト）
 create	common	ja	作成
 create a new table for the application	common	ja	アプリケーション用のテーブルを新規作成する
 create link	common	ja	リンクを作成
 created by	common	ja	作成者
 created by %1	common	ja	作成者: %1
-creates an english ('ja') langfile from label and helptexts (for application in name)	common	ja	Creates an English ('ja') langfile from label and help texts (for application in Name)
 creator	preferences	ja	作成者
 croatia	common	ja	クロアチア
 css class for the table-tag	common	ja	テーブル・タグ用CSS クラス
@@ -332,12 +324,10 @@ css-class name for this row, preset: 'th' = header, 'row' = alternating row, 'ro
 css-styles	common	ja	CSS スタイル
 ctrl	common	ja	Ctrl
 cuba	common	ja	キューバ
-Curaçao	common	ja	キュラソー島
 currency	common	ja	通貨
 current	common	ja	現在
 current users	common	ja	現在のユーザ
 custom	common	ja	カスタム
-custom color	common	ja	カスタム色
 custom fields	common	ja	カスタム項目
 custom javascript for onchange	common	ja	Custom javascript for onChange
 cut	common	ja	切り取り
@@ -509,15 +499,12 @@ etemplate tutorial	common	ja	eTemplate チュートリアル
 ethiopia	common	ja	エチオピア
 everything	common	ja	Everything
 exact	common	ja	Exact
-Example {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - search the field "n_prefix", for "Mr", if found, write Hello Mr., else write Hello Ms.	preferences	ja	例 {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - 項目 "n_prefix" を "Mr" で検索し, もし見つかれば「Hello Mr.」と出力し、見つからなければ「Hello Ms.」と出力。
-Example {{LETTERPREFIX}} - Gives a letter prefix without double spaces, if the title is emty for  example	preferences	ja	例 {{LETTERPREFIX}} - ダブル・スペースを挟まずに接頭字を出力(タイトルが空の場合など）。
-Example {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Example: Mr Dr. James Miller	calendar	ja	例 {{LETTERPREFIXCUSTOM n_prefix title n_family}} - 例: Mr Dr. James Miller
-Example {{NELF role}} - if field role is not empty, you will get a new line with the value of field role	preferences	ja	例 {{NELF role}} - 項目のロールが空でない場合、項目ロールの値と改行を出力。
-Example {{NENVLF role}} - if field role is not empty, set a LF without any value of the field	preferences	ja	例 {{nenvlf role}} - 項目のロールが空でない場合、項目の値でなく改行を出力。
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	preferences	ja	例 {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - 項目 "n_prefix" を "Mr" で検索し, もし見つかれば「Hello Mr.」と出力し、見つからなければ「Hello Ms.」と出力。
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	preferences	ja	例 {{NELF role}} - 項目のロールが空でない場合、項目ロールの値と改行を出力。
+example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	preferences	ja	例 {{nenvlf role}} - 項目のロールが空でない場合、項目の値でなく改行を出力。
 exchange this row with the one above	common	ja	この行を直上の行と入れ換える
 exchange this two columns	common	ja	選択された2カラムを入れ換える
 expiration	common	ja	有効期限
-export	common	ja	エクスポート
 export the loaded etemplate into a xml-file	common	ja	ロード済み eTemplate を XML ファイルにエクスポート
 export xml	common	ja	XMLにエクスポート
 extensions loaded:	common	ja	拡張がロードされました:
@@ -573,7 +560,6 @@ french guiana	common	ja	仏領ギアナ
 french polynesia	common	ja	仏領ポリネシア
 french southern territories	common	ja	フランス領南方・南極地域
 friday	common	ja	金
-from	common	ja	開始日
 ftp	common	ja	FTP
 fullname	common	ja	氏名
 fullscreen	common	ja	全画面表示
@@ -616,7 +602,6 @@ groups without permission for %1	common	ja	Groups without permission for %1
 guadeloupe	common	ja	グアドループ
 guam	common	ja	グアム
 guatemala	common	ja	グアテマラ
-Guernsey	common	ja	ガーンジー
 guinea	common	ja	ギニア
 guinea-bissau	common	ja	ギニアビサウ
 guyana	common	ja	ガイアナ
@@ -638,6 +623,7 @@ hold [%1] key to select text eg. to copy it	common	ja	Hold [%1] key to select te
 holy see (vatican city state)	common	ja	バチカン市国
 home	common	ja	ホーム
 home email	common	ja	個人電子メール
+home screen	common	ja	メイン画面
 honduras	common	ja	ホンジュラス
 hong kong	common	ja	香港
 horizontal rule	common	ja	水平ルーラー
@@ -676,6 +662,7 @@ indexoptions	common	ja	インデックス・オプション
 india	common	ja	インド
 indonesia	common	ja	インドネシア
 infolog types to sync	common	ja	同期するインフォログのタイプ
+initial	common	ja	初期
 input required	common	ja	入力してください
 insert a column before	common	ja	Insert a column before
 insert a column behind	common	ja	Insert a column after
@@ -704,7 +691,6 @@ invalid password	common	ja	パスワードが不正です。
 iran, islamic republic of	common	ja	イラン
 iraq	common	ja	イラク
 ireland	common	ja	アイルランド
-Isle of Man	common	ja	マン島
 israel	common	ja	イスラエル
 it has been more then %1 days since you changed your password	common	ja	It has been more than %1 days since you have changed your password.
 it is recommended that you run setup to upgrade your tables to the current version	common	ja	It is recommended that you run setup to upgrade your tables to the current version.
@@ -715,7 +701,6 @@ jamaica	common	ja	ジャマイカ
 january	common	ja	1月
 japan	common	ja	日本
 japanese	common	ja	日本語
-jersey	common	ja	ジャージー代官管轄区
 jordan	common	ja	ヨルダン
 july	common	ja	7月
 jun	common	ja	6月
@@ -725,12 +710,10 @@ justify full	common	ja	両端揃え
 justify left	common	ja	左揃え
 justify right	common	ja	右揃え
 kama theme	common	ja	kama theme
-Kazakhstan	common	ja	カザフスタン
 kenya	common	ja	ケニア
 key	common	ja	キー
 keywords	common	ja	キーワード
 kiribati	common	ja	キリバス
-korea, democratic people's republic of	common	ja	北朝鮮
 korea, republic of	common	ja	韓国
 korean	common	ja	韓国語
 kuwait	common	ja	クウェート
@@ -739,9 +722,7 @@ label	common	ja	ラベル
 label:[bold][italic] text:[len][,max] numbers:[min][,[max][,len]] t.area:[rows][,cols] radiob.:value h.rule:[width] templ.:[indexincontent] select:[multiselect] date:[values: eg. 'y-m-d']	common	ja	Label:[bold][italic] Text:[len][,max] Numbers:[min][,[max][,len]] T.area:[rows][,cols] Radiob.:value H.Rule:[width] Templ.:[IndexInContent] Select:[multiselect] Date:[values: eg. 'Y-m-d']
 lang	common	ja	言語
 language	common	ja	言語
-language-short (eg. 'ja' for english) for language-dependent template ('' reads your pref. languages or the default, us 'default' to read the default template '')	common	ja	Language short (eg. 'ja' for English) for language dependent template ('' reads your pref. languages or the default, us 'default' to read the default template '')
 language_direction_rtl	common	ja	language_direction_rtl
-lao people's democratic republic	common	ja	ラオス
 last	common	ja	最後
 last modified	common	ja	最終更新日時
 last name	common	ja	姓
@@ -755,7 +736,6 @@ left	common	ja	左
 length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8	common	ja	Length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8
 lesotho	common	ja	レソト
 liberia	common	ja	リベリア
-libya	common	ja	リビア
 license	common	ja	ライセンス
 liechtenstein	common	ja	リヒテンシュタイン
 line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>	common	ja	Line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>
@@ -793,14 +773,12 @@ low	common	ja	低
 lowercase letters	common	ja	小文字
 lowest	common	ja	最低
 luxembourg	common	ja	ルクセンブルク
-macao	common	ja	マカオ
 macedonia, the former yugoslav republic of	common	ja	マケドニア
 madagascar	common	ja	マダガスカル
 mail domain, eg. "%1"	common	ja	メール・ドメイン（例: "%1"）
 mailvelope addon installation failed! please try again.	common	ja	Mailvelope addon installation failed! Please try again.
 mailvelope addon installation succeded. now you may configure the options.	common	ja	Mailvelope addon installation succeded. Now you may configure the options.
 main category	common	ja	メイン・カテゴリ
-home screen	common	ja	メイン画面
 maintainer	common	ja	Maintainer
 malawi	common	ja	マラウィ
 malaysia	common	ja	マレーシア
@@ -873,6 +851,7 @@ new egroupware release %1 available	common	ja	EGroupware の新リリース %1 �
 new entry added sucessfully	common	ja	新規項目を追加しました。
 new favorite	common	ja	新規お気に入り
 new main category	common	ja	新規メイン・カテゴリ
+new password	common	ja	新しいパスワード
 new search	common	ja	新規検索
 new table created	common	ja	新規テーブルを作成しました。
 new value	common	ja	新しい値
@@ -947,12 +926,10 @@ onchange	common	ja	onChange
 onclick	common	ja	onClick
 only an other version found !!!	common	ja	Other version found!
 only private	common	ja	プライベートのみ
-Only supported by a few fully conformant clients (eg. from Apple). If you have to enter a URL, it will most likly not be suppored!	groupdav	ja	プロトコルを完全実装した、数少ないクライアント（Apple製等）でのみサポートされます。URLを入力するようなクライアントはサポートされません。
-Only supported by a few fully conformant clients (eg. from Apple). If you have to enter a URL, it will most likely not be supported!	groupdav	ja	プロトコルを完全実装した、数少ないクライアント（Apple製等）でのみサポートされます。URLを入力するようなクライアントはサポートされません。
+only supported by a few fully conformant clients (eg. from apple). if you have to enter a url, it will most likely not be supported!	groupdav	ja	プロトコルを完全実装した、数少ないクライアント（Apple製等）でのみサポートされます。URLを入力するようなクライアントはサポートされません。
 only yours	common	ja	自分自身のみ
 oops! you caught us in the middle of system maintainance.	common	ja	Oops! You caught us in the middle of system maintenance.
 open	common	ja	開く
-open application tabs	common	ja	あらかじめ開いておくアプリケーション・タブ
 open notify window	common	ja	通知ウィンドウを開く
 open popup window	common	ja	ポップアップ・ウィンドウを開く
 open sidebox	common	ja	サイド・ボックスを開く
@@ -974,7 +951,6 @@ page	common	ja	ページ
 page was generated in %1 seconds	common	ja	Page was generated in %1 seconds
 pakistan	common	ja	パキスタン
 palau	common	ja	パラオ
-palestine, state of	common	ja	パレスチナ
 panama	common	ja	パナマ
 papua new guinea	common	ja	パプア・ニューギニア
 paraguay	common	ja	パラグアイ
@@ -1013,7 +989,6 @@ please enter table-name first !!!	common	ja	テーブル名を入力してくだ
 please reload the egroupware desktop (f5 / cmd+r).	common	ja	デスクトップをリロードしてください（F5 または Cmd+r）。
 please run setup to become current	common	ja	Run setup to become current
 please select	common	ja	選択してください
-please select application name	common	ja	アプリケーション名を選択してください
 please set your global preferences	common	ja	全体設定を設定してください!
 please set your preferences for this application	common	ja	アプリケーション用設定を設定してください!
 please type %1 more characters	common	ja	%1 文字以上必要です
@@ -1040,7 +1015,6 @@ primary key	common	ja	プライマリ・キー
 primary key for the table, gets automaticaly indexed	common	ja	Primary key for the table, gets automatically indexed
 primary style-sheet:	common	ja	プライマリ・スタイルシート:
 print	common	ja	印刷
-print current view	common	ja	この画面を印刷
 priority	common	ja	優先順位
 private	common	ja	プライベート
 programs	common	ja	プログラム
@@ -1070,6 +1044,7 @@ remove shortcut	common	ja	ショートカットを削除
 remove this link (not the entry itself)	common	ja	リンクを削除
 removed (now) empty directory fs_id=%1	admin	ja	Removed (now) empty directory fs_id=%1
 rename	common	ja	名前の変更
+repeat password	common	ja	パスワードを繰り返す
 replace	common	ja	置換
 replace with	common	ja	置換:
 requests and full responses to files directory	common	ja	要求と応答（完全）をファイルに記録
@@ -1093,7 +1068,6 @@ returns a full list of accounts on the system.  warning: this is return can be q
 returns an array of todo items	common	ja	Returns an array of todo items
 returns savely, without deleting	common	ja	Returns WITHOUT deleting
 returns struct of users application access	common	ja	Returns struct of users application access
-Réunion	common	ja	レユニオン
 right	common	ja	右
 romania	common	ja	ルーマニア
 rotate left	common	ja	左回転
@@ -1103,11 +1077,8 @@ russian	common	ja	ロシア語
 russian federation	common	ja	ロシア
 rwanda	common	ja	ルワンダ
 sa	common	ja	土
-Saint Barthélemy	common	ja	サン・バルテルミー島
-Saint Helena, Ascension and Tristan da Cunha	common	ja	セントヘレナ
 saint kitts and nevis	common	ja	セントクリストファー・ネイビス
 saint lucia	common	ja	セントルシア
-Saint Martin (French part)	common	ja	サン・マルタン
 saint pierre and miquelon	common	ja	サンピエール島・ミクロン島
 saint vincent and the grenadines	common	ja	セントビンセント・グレナディーン
 samoa	common	ja	サモア
@@ -1127,7 +1098,6 @@ saves changes to tables_current.inc.php	common	ja	Saves changes to tables_curren
 saves the template with given version number and closes the window	common	ja	Saves the template with version number and closes the window.
 scale	common	ja	スケール
 scale for float	common	ja	Scale for float
-schedule	common	ja	スケジュール
 scheduling inbox	common	ja	Scheduling inbox
 scheduling outbox	common	ja	Scheduling outbox
 search	common	ja	検索
@@ -1245,7 +1215,6 @@ shows / allows you to enter values into the etemplate for testing	common	ja	Show
 shows/displays etemplate for testing, does not save it before	common	ja	Shows / displays eTemplate for testing, does NOT save it
 sierra leone	common	ja	シエラレオネ
 simple	common	ja	Simple
-Sint Maarten (Dutch part)	common	ja	シント・マールテン
 singapore	common	ja	シンガポール
 site configuration	common	ja	サイト構成
 size	common	ja	サイズ
@@ -1257,7 +1226,6 @@ somalia	common	ja	ソマリア
 sorry, your login has expired	login	ja	ログイン有効期限が切れました
 south africa	common	ja	南アフリカ
 south georgia and the south sandwich islands	common	ja	サウスジョージア・サウスサンドウィッチ諸島
-south sudan	common	ja	南スーダン
 space	common	ja	スペース
 spacing	common	ja	スペーシング
 spain	common	ja	スペイン
@@ -1267,7 +1235,6 @@ special characters	common	ja	特殊文字
 sri lanka	common	ja	スリランカ
 stack	common	ja	Stack
 start a new search, cancel this link	common	ja	新規検索(このリンクをキャンセル）
-start	common	ja	開始日
 start date	common	ja	開始日
 start directory for image browser of rich text editor in egroupware vfs (filemanager).	common	ja	Start directory for image browser of rich text editor in EGroupware File Manager
 start new search for the above pattern	common	ja	上記パターンで再検索
@@ -1307,11 +1274,9 @@ table properties	common	ja	テーブル・プロパティ
 table unchanged, no write necessary !!!	common	ja	Table unchanged, no write necessary!
 tablename	common	ja	テーブル名
 tabs	common	ja	タブ
-taiwan, province of china	common	ja	台湾
 tajikistan	common	ja	タジキスタン
 tanzania, united republic of	common	ja	タンザニア
 template	common	ja	テンプレート
-template color	common	ja	テンプレート色
 template deleted	common	ja	テンプレートを削除しました。
 template saved	common	ja	テンプレートを保存しました。
 text	common	ja	テキスト
@@ -1334,7 +1299,6 @@ tiled	common	ja	タイル
 time	common	ja	時間
 time zone	common	ja	タイムゾーン
 time zone offset	common	ja	タイムゾーン・オフセット
-Timor-Leste	common	ja	東ティモール
 title	common	ja	タイトル
 titles of any entries linked to the current record, excluding attached files	preferences	ja	このレコードにリンクする項目のタイトル（添付ファイルを除く）
 to	common	ja	終了日
@@ -1398,7 +1362,6 @@ use button to search for	common	ja	検索ボタン
 use button to search for address	common	ja	アドレス検索ボタン
 use button to search for calendarevent	common	ja	カレンダー・イベント検索ボタン
 use button to search for project	common	ja	プロジェクト検索ボタン
-Use eg. #FF0000 or orange	common	ja	色は、例えば #FF0000、または orange のように指定します。
 user	common	ja	ユーザ
 user accounts	common	ja	ユーザ・アカウント
 user groups	common	ja	ユーザ・グループ
@@ -1413,7 +1376,6 @@ value has to be at least '%1' !!!	common	ja	値は最低でも '%1' でなけれ
 value has to be at maximum '%1' !!!	common	ja	値は最大でも '%1' でなければなりません!
 vanuatu	common	ja	バヌアツ
 vbox	common	ja	VBox
-Venezuela, Bolivarian Republic of	common	ja	ベネズエラ
 version	common	ja	バージョン
 version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)	common	ja	Version number, should be in the form: major.minor.revision.number e.g. 0.9.13.001 all numbers filled up with zeros
 vertical alignment of row	common	ja	Vertical alignment of row
@@ -1508,5 +1470,3 @@ your settings have been updated	common	ja	設定が更新されました。
 zambia	common	ja	ザンビア
 zimbabwe	common	ja	ジンバブエ
 zoom	common	ja	ズーム
-initial	common	ja	初期
-id	common	ja	ID

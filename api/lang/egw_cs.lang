@@ -24,6 +24,7 @@
 %s notranslation	common	cs	%s bez překladu
 %s onchange	common	cs	%s onChange (při změně)
 %s readonly	common	cs	%s jen ke čtení
+'%1' copied to clipboard	common	cs	'%1' zkopírováno do schránky
 '%1' has an invalid format	common	cs	'%1' má nesprávný formát !
 '%1' has an invalid format !!!	common	cs	'%1' má nesprávný formát !!!
 '%1' is no php file in the egw server root (%2)!	common	cs	'%1' není php souborem v server root EGw (%2)!
@@ -42,6 +43,7 @@
 1 week	common	cs	1 týden
 13 (ntp)	admin	cs	13 (ntp)
 15 minutes	common	cs	15 minut
+2-factor-authentication	common	cs	Ověřování pomocí 2 faktorů
 30 minutes	common	cs	30 minut
 30 seconds	common	cs	30 vteřin
 5 minutes	common	cs	5 minut
@@ -852,6 +854,7 @@ new caledonia	common	cs	NOVÁ KALEDONIE
 new entry added sucessfully	common	cs	Nový záznam byl úspěšně přidán
 new favorite	common	cs	Nový oblíbený
 new main category	common	cs	Nová hlavní kategorie
+new password	common	cs	Nové heslo
 new search	common	cs	Nové hledání
 new table created	common	cs	Nová tabulka vytvořena
 new value	common	cs	Nová hodnota
@@ -1041,6 +1044,7 @@ remove shortcut	common	cs	Odstranit zástupce
 remove this link (not the entry itself)	common	cs	Odstranit tento odkaz (ne celý záznam)
 removed (now) empty directory fs_id=%1	admin	cs	Odstraněna (nyní) prázdná složka fs_id=%1
 rename	common	cs	Přejmenovat
+repeat password	common	cs	Opakování hesla
 replace	common	cs	Nahradit
 replace with	common	cs	Nahradit s
 requests and full responses to files directory	common	cs	Dotazy a plné odpovědi pro složku se soubory

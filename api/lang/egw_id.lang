@@ -1,18 +1,44 @@
+%1 (%2 new) messages writen for application '%3' and languages '%4'	common	id	%1 (%2 baru) Pesan dituliskan untuk Aplikasi '%3' dan Bahasa '%4'
 %1 email addresses inserted	common	id	%1 alamat email disisipkan
+%1 entries found, select one ...	common	id	%1 entri ditemukan, pilih satu ...
+%1 etemplates deleted	common	id	%1 eTemplat dihapus
+%1 etemplates for application '%2' dumped to '%3'	common	id	%1 eTemplat untuk Aplikasi '%2' dituang ke '%3'
+%1 etemplates found	common	id	%1 eTemplat ditemukan
 %1 file	common	id	berkas %1
+%1 matches on search criteria	common	id	cocok %1 sesuai kriteria pencarian
+%1 more...	common	id	%1 more...
+%1 new etemplates imported for application '%2'	common	id	%1 eTemplat baru diimpor untuk Aplikasi '%2'
+%1 not implemented for %2!	common	id	%1 tidak di-implementasikan untuk %2!
+%s disabled	common	id	%s disabled
+%s needed	common	id	%s needed
+%s notranslation	common	id	%s NoTranslation
+%s onchange	common	id	%s onChange
+%s readonly	common	id	%s readonly
+'%1' copied to clipboard	common	id	'%1' disalin ke clipboard
+'%1' has an invalid format !!!	common	id	'%1' has an invalid format !!!
 '%1' is no php file in the egw server root (%2)!	common	id	'%1' is no php file in the eGW server root (%2)!
+'%1' is not a valid date !!!	common	id	'%1' is not a valid date !!!
+'%1' is not a valid floatingpoint number !!!	common	id	'%1' is not a valid floatingpoint number !!!
+'%1' is not a valid integer !!!	common	id	'%1' is not a valid integer !!!
+'%1' is not allowed ('%2')!	common	id	'%1' TIDAK dibolehkan ('%2')!
 00 (disable)	admin	id	00 (disable)
 1 day	common	id	1 Hari
 1 hour	common	id	1 Jam
 1 month	common	id	1 Bulan
 1 week	common	id	1 Minggu
 13 (ntp)	admin	id	13 (ntp)
+2-factor-authentication	common	id	2-Faktor-Autentikasi
 80 (http)	admin	id	80 (http)
+a pattern to be searched for	common	id	pola untuk pencarian
+abort	common	id	Batalkan
 about	common	id	Tentang
 about %1	common	id	Tentang %1
 about egroupware	common	id	Tentang EGroupware
 access	common	id	Akses
 access not permitted	common	id	Akses tidak diijinkan
+accesskey	common	id	Accesskey
+accesskeys can also be specified with an & in the label (eg. &name)	common	id	Accesskeys can also be specified with an & in the label (eg. &Name)
+account contactdata	common	id	Datakontak Akoun
 account has been created	common	id	Akoun telah dibuat
 account has been deleted	common	id	Akoun telah dihapus
 account has been updated	common	id	Akoun telah dikinikan
@@ -21,24 +47,34 @@ accounts	common	id	Akoun
 acl	common	id	ACL
 action	common	id	Tindakan
 actions	common	id	Tindakan
+actions...	common	id	Tindakan...
 active	common	id	Aktif
 add	common	id	Tambah
 add %1 category for	common	id	Tambah %1 kategori untuk
 add a new contact	common	id	Tambah kontak baru
 add category	common	id	Tambah kategori
+add column	common	id	Add Column
+add index	common	id	Add Index
+add new	common	id	Tambah baru
 add shortcut	common	id	Tambah Shortcut
 add sub	common	id	Tambah sub
+add table	common	id	Add Index
 addressbook	common	id	Buku Alamat
 admin	common	id	Admin
 administration	common	id	Administrasi
+advanced search	common	id	Pencarian Canggih
 afghanistan	common	id	AFGHANISTAN
 albania	common	id	ALBANIA
 algeria	common	id	ALJAZAIR
+align	common	id	Align
 all	common	id	Semua
+all days	common	id	seharian
 all fields	common	id	semua field
 all languages	common	id	semua bahasa
-alphabet	common	id	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
+all users	common	id	Semua pengguna
+allowed file type: %1	common	id	Tipe yang dibolehkan: %1
 alternate style-sheet:	common	id	Alternate style-sheet:
+am	common	id	am
 american samoa	common	id	SAMOA AMERIKA
 an error happened	common	id	Terjadi kesalahan
 and	common	id	Dan
@@ -47,12 +83,19 @@ angola	common	id	ANGOLA
 anguilla	common	id	ANGUILA
 antarctica	common	id	ANTARTIKA
 antigua and barbuda	common	id	ANTIGUA DAN BARBUDA
+api	common	id	EGroupware API
 application	common	id	Aplikasi
+application name needed to write a langfile or dump the etemplates !!!	common	id	Perlu nama Aplikasi untuk menuliskan berkas bahasa atau menuangkan eTemplat !!!
+applications	common	id	Aplikasi
+applies the changes made	common	id	terapkan perubahan
 apply	common	id	Terapkan
 april	common	id	April
 argentina	common	id	ARGENTINA
 armenia	common	id	ARMENIA
 aruba	common	id	ARUBA
+as default	common	id	sebagai bawaan
+attach	common	id	Lampiran
+attach file	common	id	lampirkan berkas
 august	common	id	Agustus
 australia	common	id	AUSTRALIA
 austria	common	id	AUSTRIA
@@ -65,6 +108,7 @@ bahamas	common	id	BAHAMA
 bahrain	common	id	BAHRAIN
 bangladesh	common	id	BANGLADESH
 barbados	common	id	BARBADOS
+baseline	common	id	Baseline
 bcc	common	id	BCC
 belarus	common	id	BELARUSIA
 belgium	common	id	BELGIA
@@ -72,13 +116,16 @@ belize	common	id	BELIZE
 benin	common	id	BENIN
 bermuda	common	id	BERMUDA
 bhutan	common	id	BHUTAN
+blurtext	common	id	blurText
 bold	common	id	Bold
 bolivia	common	id	BOLIVIA
 border	common	id	Border
 bosnia and herzegovina	common	id	BOSNIA DAN HERZEGOVINA
 botswana	common	id	BOTSWANA
-bottom	common	id	Bawah
+bottom	common	id	Bottom
 bouvet island	common	id	KEPULAUAN BOUVET
+box	common	id	Box
+box...	common	id	Kotak...
 brazil	common	id	BRASIL
 british indian ocean territory	common	id	TERITORI SAMUDERA INDIA INGGRIS
 brunei darussalam	common	id	BRUNEI DARUSALAM
@@ -98,58 +145,103 @@ categories for	common	id	kategori untuk
 category	common	id	Kategori
 category %1 has been added !	common	id	Kategori %1 telah ditambahkan!
 category %1 has been updated !	common	id	Kategori %1 telah dikinikan!
+category tree	common	id	Pohon Kategori
 cayman islands	common	id	KEPULAUAN CAYMAN
 cc	common	id	CC
+cells	common	id	Cells
+center	common	id	Tengah
 centered	common	id	tengah
 central african republic	common	id	REPUBLIK AFRIKA TENGAH
 chad	common	id	CHAD
 change	common	id	Perubahan
+changed	common	id	Diubah
 charset	common	id	utf-8
+check all	common	id	Contreng semua
 check installation	common	id	Cek instalasi
 check now	common	id	Cek Sekarang
+checkbox	common	id	Checkbox
 chile	common	id	CHILI
 china	common	id	CHINA
 choose the category	common	id	Pilih kategori
 christmas island	common	id	KEPULAUAN NATAL
+class	common	id	Class
+class, valign	common	id	class, Valign
 clear	common	id	Bersihkan
 clear form	common	id	Kosongkan Form
 click	common	id	Klik
+click here to attach the file	common	id	klik disini untuk melampirkan berkas
+click here to create the link	common	id	klik disini untuk membuat tautan
+click here to start the search	common	id	Klik disini untuk memulai pencarian
+click here to upload the file	common	id	Klik disini untuk mengunggah berkas
+clickable path	common	id	clickable path
 close	common	id	Tutup
 close sidebox	common	id	Tutup sidebox
+closes the window without saving the changes	common	id	tutup jendela tanpa menyimpan perubahan
 cocos (keeling) islands	common	id	KEPULAUAN COCOS (KEELING)
 collection empty.	common	id	Koleksi kosong.
 collection listing	common	id	Daftar Koleksi
 colombia	common	id	KOLOMBIA
+column...	common	id	Kolom...
+columnname	common	id	Nama Kolom
+comment	common	id	Komentar
 common preferences	common	id	Kesukaan Bersama
 comoros	common	id	KOMORO
 company	common	id	Kompani
+confirm	common	id	konfirmasi
 congo	common	id	KONGO
 congo, the democratic republic of the	common	id	REPUBLIK DEMOKRATIK KONGO
+contact	common	id	Kontak
+contact field to show	common	id	Field Kontak untuk ditampilkan
+contact fields	common	id	Field Kontak
 contacting server...	common	id	Menghubungi Server...
+contains	common	id	mengandung
 content type	common	id	Content type
 cook islands	common	id	KEPULAUAN COOK
 copy	common	id	Salin
+copy to clipboard	common	id	Salin ke klipbord
 costa rica	common	id	KOSTA RIKA
 cote d ivoire	common	id	PANTAI GADING
 create	common	id	Bikin
 created by	common	id	Dibikin Oleh
+creator	preferences	id	Creator
 croatia	common	id	KROASIA
+css properties	common	id	properti CSS
+css-styles	common	id	Gaya-CSS
 cuba	common	id	KUBA
 currency	common	id	Matauang
 current	common	id	Current
 current users	common	id	Pengguna saat ini
+custom	common	id	custom
+custom fields	common	id	custom fields
+cut	common	id	Cut
 cyprus	common	id	SIPRUS
 czech republic	common	id	REPUBLIK CESNYA
 database error	common	id	Database error
 database error!	common	id	Database error!
 date	common	id	Tanggal
 date due	common	id	Tanggal Berakhir
+date+time	common	id	Date+Time
+day	common	id	Hari
+days	common	id	hari
+db-tools	common	id	DB-Tools
 december	common	id	Desember
+deck	common	id	Deck (internal)
+default	common	id	Bawaan
 default category	common	id	Kategori Bawaan
 delete	common	id	Hapus
 delete category	common	id	Hapus kategori
+delete column	common	id	Hapus Kolom
+delete index	common	id	Hapus Indeks
 delete row	common	id	Hapus baris
+delete the spezified etemplate	common	id	Hapus eTemplat tersebut
+delete this column	common	id	hapus kolom ini
 delete this entry	common	id	Hapus entri ini
+delete this etemplate	common	id	hapus eTemplat ini
+delete this file	common	id	Hapus berkas ini
+delete this row	common	id	hapus baris ini
+delete whole column (can not be undone!!!)	common	id	hapus seluruh kolom (tidak bisa dibatalkan!!!)
+deletes this column	common	id	Hapus kolom ini
+deletes this index	common	id	Hapus indeks ini
 denmark	common	id	DENMARK
 description	common	id	Uraian
 detail	common	id	Detil
@@ -157,16 +249,24 @@ details	common	id	Detil
 directory	common	id	Direktori
 disable slider effects	common	id	Disable slider effects
 disabled	common	id	Disabled
+discard changes	common	id	buang pengubahan
 djibouti	common	id	DJIBOUTI
+do you want to save the changes you made in table %s?	common	id	Anda ingin menyimpan perubahan ke tabel %s?
 doctype:	common	id	DOCTYPE:
+document '%1' does not exist or is not readable for you!	preferences	id	Dokumen '%1' tidak ada atau tidak terbaca oleh anda!
 document properties	common	id	Properti Dokumen
 document title:	common	id	Judul Dokumen:
+documentation	common	id	Dokumentasi
+doesn't matter	common	id	tidak penting
 domain	common	id	Domain
 domestic	common	id	Domestik
 dominica	common	id	DOMINIKA
 dominican republic	common	id	REPUBLIK DOMINIKA
 done	common	id	Selesai
 download	common	id	Unduh
+drop table	common	id	Buang Tabel
+dump4setup	common	id	Dump4Setup
+duration	common	id	Durasi
 e-mail	common	id	E-Mail
 east timor	common	id	TIMOR LESTE
 eastern european	common	id	Eropa Timur
@@ -175,6 +275,7 @@ edit	common	id	Edit
 edit %1 category for	common	id	Edit kategori %1 untuk
 edit categories	common	id	Edit Kategori
 edit category	common	id	Edit kategori
+edit...	common	id	Edit...
 egroupware	common	id	EGroupware
 egroupware api version	common	id	Versi API EGroupware
 egroupware version	common	id	Versi EGroupware
@@ -184,34 +285,54 @@ email	common	id	E-Mail
 enabled	common	id	Enabled
 end date	common	id	Tanggal berakhir
 end time	common	id	Waktu berakhir
+enter a search pattern	common	id	Masukan pola pencarian
 entry not found!	common	id	Entri tidak ditemukan!
+entry saved	common	id	Entri disimpan
 entry updated sucessfully	common	id	Entri sukses dikinikan
 equatorial guinea	common	id	GUINEA KHATULISTIWA
 eritrea	common	id	ERITREA
 error	common	id	Error
 estonia	common	id	ESTONIA
 etag	common	id	ETag
+etemplate	common	id	eTemplat
+etemplate '%1' imported, use save to put it in the database	common	id	eTemplat '%1' diimpor, gunakan [Simpan] untuk menyimpan ke database
+etemplate '%1' written to '%2'	common	id	eTemplat '%1' dituliskan ke '%2'
+etemplate editor	common	id	Editor eTemplat
+etemplate reference	common	id	Referensi eTemplat
+etemplate tutorial	common	id	Tutorial eTemplat
 ethiopia	common	id	ETHIOPIA
 everything	common	id	Segalanya
 exact	common	id	eksak
+export xml	common	id	Ekspor XML
+extensions loaded:	common	id	Ekstensi dimuat:
 failed to change password.	common	id	Gagal mengubah password.
 falkland islands (malvinas)	common	id	KEPULAUAN FALKLAND (MALVINAS)
 faroe islands	common	id	KEPULAUAN FAROE
 favorites	common	id	Favorit
 fax number	common	id	nomor fax
 february	common	id	Pebruari
+field	common	id	Field
+field must not be empty !!!	common	id	Field tidak boleh kosong !!!
 fields	common	id	Field
 fiji	common	id	FIJI
+file	common	id	Berkas
+file '%1' not found!	common	id	Berkas '%1' tidak ditemukan!
+file is of wrong type (%1 != %2)!	common	id	Salah tipe berkas (%1 != %2 )!
+file writen	common	id	Berkas dituliskan
 files	common	id	Berkas
+fileupload	common	id	Unggah Berkas
 filter	common	id	Saringan
 finland	common	id	FINLANDIA
+first	common	id	Awal
 first name	common	id	Nama depan
 first name of the user, eg. "%1"	common	id	nama depan pengguna, mis. "%1"
 first page	common	id	Halaman awal
 firstname	common	id	Namadepan
 fixme!	common	id	FIXME!
+floating point	common	id	Floating Point
 folder already exists.	common	id	Folder sudah ada.
 force selectbox	common	id	Force SelectBox
+foreign key	common	id	Foreign Key
 forever	common	id	Selamanya
 france	common	id	PERANCIS
 french guiana	common	id	GUYANA PERANCIS
@@ -223,6 +344,7 @@ fullname	common	id	Namalengkap
 fullscreen mode	common	id	Mode Layarpenuh
 gabon	common	id	GABON
 gambia	common	id	GAMBIA
+general fields:	preferences	id	Field Umum:
 general menu	common	id	Menu Umum
 georgia	common	id	GEORGIA
 german	common	id	Jerman
@@ -236,6 +358,7 @@ greece	common	id	YUNANI
 greek	common	id	Yunani
 greenland	common	id	GREENLAND
 grenada	common	id	GRENADA
+grid	common	id	Grid
 group	common	id	Kelompok
 group access	common	id	Akses Kelompok
 group has been added	common	id	Kelompok telah dibuat
@@ -243,6 +366,7 @@ group has been deleted	common	id	Kelompok telah dihapus
 group has been updated	common	id	Kelompok telah dikinikan
 group name	common	id	Nama kelompok
 group public	common	id	Kelompok Publik
+groupbox	common	id	GroupBox
 groups	common	id	Kelompok
 guadeloupe	common	id	GUADELOUPE
 guam	common	id	GUAM
@@ -250,26 +374,44 @@ guatemala	common	id	GUATEMALA
 guinea	common	id	GUINEA
 guinea-bissau	common	id	GUINEA-BISSAU
 guyana	common	id	GUYANA
+h	common	id	h
 haiti	common	id	HAITI
+hbox	common	id	HBox
 heard island and mcdonald islands	common	id	PULAU HEARD DAN KEPULAUAN MCDONALD
-height	common	id	Tinggi (H)
+height	common	id	Height
+height, disabled	common	id	Height, Disabled
 help	common	id	Bantuan
 high	common	id	Tinggi
 highest	common	id	Tertinggi
+history log	common	id	Log Riwayat
 holy see (vatican city state)	common	id	HOLY SEE (NEGARA KOTA VATICAN)
 home	common	id	Beranda
 home email	common	id	email rumah
+home screen	common	id	Layar Utama
 honduras	common	id	HONDURAS
 hong kong	common	id	HONG KONG
+horizontal rule	common	id	Horizontal Rule
+hour	common	id	Jam
+hours	common	id	jam
+html	common	id	HTML
 hungary	common	id	HONGARIA
 iceland	common	id	ISLANDIA
+id	common	id	ID
+image	common	id	Image
 image url	common	id	Image URL
+import	common	id	Impor
+import xml	common	id	Impor XML
+indexed	common	id	Indexed
+indexoptions	common	id	Indexoptions
 india	common	id	INDIA
 indonesia	common	id	INDONESIA
+initial	common	id	Initial
 insert column after	common	id	Sisipkan kolom setelah
 insert column before	common	id	Sisipkan kolom sebelum
+insert in document	common	id	Sisipkan dalam dokumen
 insert row after	common	id	Sisipkan baris setelah
 insert row before	common	id	Sisipkan baris sebelum
+integer	common	id	Integer
 international	common	id	Internasional
 invalid filename	common	id	Nama berkas salah
 invalid ip address	common	id	Alamat IP salah
@@ -294,6 +436,7 @@ justify left	common	id	Rata Kiri
 justify right	common	id	Rata Kanan
 kazakstan	common	id	KAZAKSTAN
 kenya	common	id	KENYA
+key	common	id	Key
 keywords	common	id	Katakunci
 kiribati	common	id	KIRIBATI
 korea, democratic peoples republic of	common	id	KOREA UTARA
@@ -301,8 +444,11 @@ korea, republic of	common	id	KOREA SELATAN
 korean	common	id	Korea
 kuwait	common	id	KUWAIT
 kyrgyzstan	common	id	KYRGYZSTAN
+label	common	id	Label
+lang	common	id	Bahasa
 language	common	id	Bahasa
 lao peoples democratic republic	common	id	LAOS
+last	common	id	Akhir
 last modified	common	id	Pengubahan terakhir
 last name	common	id	Nama belakang
 last name of the user, eg. "%1"	common	id	nama belakang pengguna, mis. "%1"
@@ -317,10 +463,18 @@ liberia	common	id	LIBERIA
 libyan arab jamahiriya	common	id	LIBYAN ARAB JAMAHIRIYA
 license	common	id	Lisensi
 liechtenstein	common	id	LIECHTENSTEIN
+link	common	id	Tautan
+linkapps	common	id	LinkApps
+linkentry	common	id	LinkEntry
+linklist	common	id	LinkList
+linkstring	common	id	LinkString
+linkto	common	id	LinkTo
 list	common	id	Daftar
 list members	common	id	Daftar anggota
 lithuania	common	id	LITHUANIA
 load	common	id	Muatkan
+load this template into the editor	common	id	muatkan templat ini ke editor
+loading	common	id	memuatkan
 local	common	id	Lokal
 locations	common	id	lokasi
 login	common	id	Masuk
@@ -335,7 +489,6 @@ macau	common	id	MACAU
 macedonia, the former yugoslav republic of	common	id	MACEDONIA, BEKAS REPUBLIK YUGOSLAVIA
 madagascar	common	id	MADAGASKAR
 main category	common	id	Kategori Utama
-home screen	common	id	Layar Utama
 maintainer	common	id	Pemelihara
 malawi	common	id	MALAWI
 malaysia	common	id	MALAYSIA
@@ -348,22 +501,30 @@ martinique	common	id	MARTINIQUE
 mauritania	common	id	MAURITANIA
 mauritius	common	id	MAURITIUS
 max number of icons in navbar	common	id	Maks. jumlah ikon pada baris navigasi
+maximum size for uploads	filemanager	id	Ukuran unggah maksimum
 may	common	id	Mei
 mayotte	common	id	MAYOTTE
 medium	common	id	Medium
 menu	common	id	Menu
 message	common	id	Pesan
+message ...	common	id	Pesan...
 mexico	common	id	MEKSIKO
 micronesia, federated states of	common	id	FEDERASI NEGARA MICRONESIA
-minute	common	id	menit
+middle	common	id	Middle
+minute	common	id	Menit
+minutes	common	id	Menit
 moldova, republic of	common	id	REPUBLIK MOLDOVA
 monaco	common	id	MONACO
 monday	common	id	Senin
 mongolia	common	id	MONGOLIA
 montenegro	common	id	MONTENEGRO
+month	common	id	Bulan
 montserrat	common	id	MONTSERRAT
+more	common	id	Lagi
+more than 1 match for '%1'	common	id	Lebih dari 1 kecocokan untuk '%1'
 morocco	common	id	MAROKO
 mozambique	common	id	MOZAMBIQUE
+multicolumn indices	common	id	Multicolumn Indices
 multiple	common	id	jamak
 myanmar	common	id	MYANMAR
 name	common	id	Nama
@@ -374,12 +535,23 @@ nepal	common	id	NEPAL
 netherlands	common	id	BELANDA
 netherlands antilles	common	id	ANTILLES BELANDA
 never	common	id	Never*
+new	common	id	Baru
 new caledonia	common	id	KALEDONIA BARU
 new main category	common	id	Kategori Utama baru
+new password	common	id	Kata sandi baru
+new search	common	id	Pencarian baru
+new table created	common	id	Tabel baru dibuat
 new value	common	id	Nilai Baru
 new zealand	common	id	SELANDIA BARU
+newer version '%1' exists !!!	common	id	tersedia versi '%1' terbaru !!!
 next	common	id	Lanjut
 next page	common	id	Halaman selanjutnya
+nextmatch	common	id	Nextmatch
+nextmatch accountfilter	common	id	Nextmatch Accountfilter
+nextmatch custom filterheader	common	id	Nextmatch Custom Filterheader
+nextmatch filterheader	common	id	Nextmatch Filterheader
+nextmatch header	common	id	Nextmatch Header
+nextmatch sortheader	common	id	Nextmatch Sortheader
 nicaragua	common	id	NIKARAGUA
 niger	common	id	NIGER
 nigeria	common	id	NIGERIA
@@ -387,6 +559,8 @@ niue	common	id	NIUE
 no	common	id	Tidak
 no - cancel	common	id	Tidak - Batal
 no entries found, try again ...	common	id	tiada entri ditemukan, coba lagi ...
+no file	common	id	tiada berkas
+no matches found	common	id	Tiada yang cocok
 no subject	common	id	Tanpa Subyek
 none	common	id	Tiada
 norfolk island	common	id	KEPULAUAN NORFOLK
@@ -395,28 +569,39 @@ northern mariana islands	common	id	KEPULAUAN MARIANA UTARA
 norway	common	id	NORWEGIA
 not	common	id	not
 not assigned	common	id	not assigned
+not null	common	id	NOT NULL
 note	common	id	Catatan
 notes	common	id	Catatan
+nothing	common	id	tiada
+nothing found - try again !!!	common	id	Tiada ditemukan - coba lagi !!!
 notifications	common	id	notifikasi
 notify window	common	id	Jendela Pemberitahuan
 november	common	id	November
+now	common	id	Sekarang
 october	common	id	Oktober
+of	common	id	dari
 ok	common	id	OK
 old value	common	id	Nilai Lama
 oman	common	id	OMAN
 on mouse over	common	id	On Mouse Over
+onchange	common	id	onChange
+onclick	common	id	onClick
 only private	common	id	hanya privat
 only yours	common	id	hanya milik anda
 open	common	id	Open
 open notify window	common	id	Buka jendela pemberitahuan
 open popup window	common	id	Buka jendela popup
 open sidebox	common	id	Buka sidebox
+operator	common	id	Operator
+options	common	id	Options
 or	common	id	or
 ordered list	common	id	Daftar Teratur
 original	common	id	Asal-Muasal
 other	common	id	Lainnya
+overflow	common	id	Overflow
 overview	common	id	Sekilas
 owner	common	id	Pemilik
+padding	common	id	Padding
 page	common	id	Halaman
 pakistan	common	id	PAKISTAN
 palau	common	id	PALAU
@@ -426,24 +611,29 @@ papua new guinea	common	id	PAPUA NUGINI
 paraguay	common	id	PARAGUAY
 parcel	common	id	Parsel
 password	common	id	Password
+paste	common	id	Tempel
+path	common	id	Path
 permission denied!	common	id	Ijin ditolak!
 personal	common	id	Pribadi
 peru	common	id	PERU
 philippines	common	id	FILIPINA
 phone number	common	id	nomor telepon
-api	common	id	EGroupware API
 pitcairn	common	id	PITCAIRN
 please enter a name	common	id	Mohon masukan nama
 please select	common	id	Pilihlah
 please wait...	common	id	Tunggu...
+pm	common	id	pm
 poland	common	id	POLANDIA
+popup	common	id	Popup
 popup with search	common	id	Popup dengan pencarian
 portugal	common	id	PORTUGAL
 postal	common	id	Pos
 powered by	common	id	Digerakan oleh
+precision	common	id	Precision
 preferences	common	id	Kesukaan
 previous page	common	id	Halaman Sebelumnya
 primary group	common	id	Kelompok utama
+primary key	common	id	Primary Key
 primary style-sheet:	common	id	Primary style-sheet:
 print	common	id	Cetak
 priority	common	id	Prioritas
@@ -454,8 +644,11 @@ properties	common	id	Properti
 public	common	id	publik
 puerto rico	common	id	PUERTO RICO
 qatar	common	id	QATAR
+radiobutton	common	id	Radiobutton
 read	common	id	Baca
 reading	common	id	membaca
+readonly	common	id	hanyabaca
+refresh	common	id	Refresh
 register	common	id	Daftar
 regular	common	id	Reguler
 reject	common	id	Tolak
@@ -463,13 +656,17 @@ remember me	common	id	Ingat saya
 remove selected accounts	common	id	buang akoun terpilih
 remove shortcut	common	id	Buang Shortcut
 rename	common	id	Ubah
+repeat password	common	id	Ulangi kata sandi
 replace	common	id	Ganti
 replace with	common	id	Ganti dengan
+required	common	id	Diperlukan
+reset	common	id	Reset
 resources	common	id	Sumberdaya
 restore failed	common	id	Restore failed
 reunion	common	id	REUNION
 right	common	id	Kanan
 romania	common	id	RUMANIA
+row...	common	id	Baris...
 russian	common	id	Rusia
 russian federation	common	id	FEDERASI RUSIA
 rwanda	common	id	RWANDA
@@ -484,40 +681,67 @@ sao tome and principe	common	id	SAO TOME DAN PRINCIPE
 saturday	common	id	Sabtu
 saudi arabia	common	id	ARAB SAUDI
 save	common	id	Simpan
+save all	common	id	Simpan semuanya
+scale	common	id	Skala
 search	common	id	Cari
 search %1 '%2'	common	id	Mencari %1 '%2'
 search accounts	common	id	Cari akoun
+search for '%1'	common	id	Mencari '%1'
 search or select accounts	common	id	cari atau pilih akoun
 second	common	id	detik
 section	common	id	Seksi
 select	common	id	Pilih
+select a category	common	id	pilih Kategori
+select access	common	id	Pilih Akses
+select account	common	id	Pilih Akoun
 select action	common	id	Pilih tindakan
 select all	common	id	Pilih semua
 select all %1 %2 for %3	common	id	Pilih semua %1 %2 untuk %3
+select application	common	id	Pilih Aplikasi
 select category	common	id	Pilih Kategori
+select columns	common	id	Pilih kolom
+select country	common	id	Pilih Negara
 select date	common	id	Pilih tanggal
+select day	common	id	Pilih Hari
+select entry	common	id	Pilih entri
 select group	common	id	Pilih kelompok
 select home email address	common	id	Pilih alamat email rumah
+select hour	common	id	Pilih jam
+select language	common	id	Pilih Bahasa
+select month	common	id	Pilih Bulan
 select multiple accounts	common	id	Pilih beberapa akoun
+select number	common	id	Pilih Angka
 select one	common	id	Pilih satu
+select one ...	common	id	Pilih Satu...
+select percentage	common	id	Pilih Persentasi
+select priority	common	id	Pilih Prioritas
+select state	common	id	Pilih Provinsi
 select user	common	id	Pilih pengguna
 select work email address	common	id	Pilih alamat email kerja
+select year	common	id	Pilih Tahun
+selectbox	common	id	Selectbox
 selection	common	id	Pemilihan
 send	common	id	Kirim
 senegal	common	id	SENEGAL
 september	common	id	September
 serbia	common	id	SERBIA
 server name	common	id	Nama Server
+set as default	common	id	Tetapkan sbg bawaan
 setup	common	id	Setup
 setup main menu	common	id	Menu Utama Setup
 seychelles	common	id	SEYCHELLES
+show	common	id	Tampilkan
+show (no save)	common	id	Tampilkan (tanpa menyimpan)
 show all	common	id	tampilkan semua
+show all / cancel filter	common	id	Tamplikan semua / batalkan saringan
 show all categorys	common	id	Tampilkan semua kategori
 show as topmenu	common	id	Tampilkan sebagai Topmenu
 show clock?	common	id	Tampilkan Jam?
 show in sidebox	common	id	Tampilkan pada sidebox
 show menu	common	id	tampilkan menu
+show values	common	id	Tampilkan Nilai
 show_more_apps	common	id	Tunjukan Lebih banyak Aplikasi
+showing	common	id	menampilkan
 showing %1	common	id	menampilkan %1
 showing %1 - %2 of %3	common	id	menampilkan %1 - %2 dari %3
 sierra leone	common	id	SIERRA LEONE
@@ -531,8 +755,13 @@ somalia	common	id	SOMALIA
 sorry, your login has expired	login	id	Sorry, your login has expired
 south africa	common	id	AFRIKA SELATAN
 south georgia and the south sandwich islands	common	id	GEORGIA SELATAN DAN KEPULAUAN SANDWICH SELATAN
+spacing	common	id	Spacing
 spain	common	id	SPANYOL
+span	common	id	Span
+span, class	common	id	Span, Class
 sri lanka	common	id	SRI LANKA
+stack	common	id	Stack
+start a new search, cancel this link	common	id	memulai pencarian baru, batalkan tautan ini
 start date	common	id	Tanggal memulai
 start time	common	id	Jam memulai
 start with	common	id	Memulai dengan
@@ -540,23 +769,34 @@ starting up...	common	id	Memulai...
 status	common	id	Status
 subject	common	id	Subyek
 submit	common	id	Kirimkan
+submit form	common	id	kirim formulir
+submitbutton	common	id	Submitbutton
 sudan	common	id	SUDAN
 sunday	common	id	Minggu
 suriname	common	id	SURINAME
 svalbard and jan mayen	common	id	SVALBARD DAN JAN MAYEN
+swap	common	id	swap
 swaziland	common	id	SWAZILAND
 sweden	common	id	SWEDIA
 switzerland	common	id	SWISS
 syrian arab republic	common	id	REPUBLIK ARAB SYRIA
+tabindex	common	id	Tabindex
 table properties	common	id	Properti Tabel
+tablename	common	id	TableName
+tabs	common	id	Tabs
 taiwan	common	id	TAIWAN/TAIPEI
 tajikistan	common	id	TAJIKISTAN
 tanzania, united republic of	common	id	REPUBLIK TANZANIA
+template	common	id	Template
+template deleted	common	id	Template dihapus
+template saved	common	id	Template disimpan
+text	common	id	Text
 text color:	common	id	Warna Teks:
+textarea	common	id	Textarea
 thailand	common	id	THAILAND
 thursday	common	id	Kamis
 tiled	common	id	tiled
-time	common	id	Waktu
+time	common	id	Time
 time zone	common	id	Zonawaktu
 time zone offset	common	id	Offset zonawaktu
 title	common	id	Judul
@@ -566,8 +806,9 @@ todays date, eg. "%1"	common	id	tanggal sekarang, mis. "%1"
 togo	common	id	TOGO
 tokelau	common	id	TOKELAU
 tonga	common	id	TONGA
-top	common	id	Atas
+top	common	id	Top
 total	common	id	Total
+tree	common	id	Tree
 trinidad and tobago	common	id	TRINIDAD DAN TOBAGO
 tuesday	common	id	Selasa
 tunisia	common	id	TUNISIA
@@ -575,14 +816,16 @@ turkey	common	id	TURKI
 turkmenistan	common	id	TURKMENISTAN
 turks and caicos islands	common	id	KEPULAUAN TURKS DAN CAICOS
 tuvalu	common	id	TUVALU
-type	common	id	Tipe
+type	common	id	Type
 uganda	common	id	UGANDA
 ukraine	common	id	UKRANIA
+unique	common	id	Unique
 united arab emirates	common	id	UNI EMIRAT ARAB
 united kingdom	common	id	KERAJAAN INGGRIS
 united states	common	id	AMERIKA SERIKAT
 united states minor outlying islands	common	id	AMERIKA SERIKAT TANPA KEPULAUAN LUAR
 unknown	common	id	Takdikenal
+unlink	common	id	Batalkan tautan
 update	common	id	Perbarui
 upload	common	id	Unggah
 url	common	id	URL
@@ -594,313 +837,46 @@ username	common	id	Pengguna
 users	common	id	pengguna
 users choice	common	id	Pilihan pengguna
 uzbekistan	common	id	UZBEKISTAN
-value	common	id	Nilai
+valign	common	id	vAlign
+value	common	id	Value
 vanuatu	common	id	VANUATU
+vbox	common	id	VBox
 venezuela	common	id	VENEZUELA
 version	common	id	Versi
 viet nam	common	id	VIETNAM
 view	common	id	View
+view this etemplate	common	id	lihat eTemplat ini
 virgin islands, british	common	id	KEPULAUAN VIRGIN, INGGRIS
 virgin islands, u.s.	common	id	KEPULAUAN VIRGIN, AS.
 wallis and futuna	common	id	WALLIS AND FUTUNA
 wednesday	common	id	Rabu
+weekend	common	id	akhir minggu
 welcome	common	id	Selamat Datang
 western european	common	id	Eropa Barat
 western sahara	common	id	SAHARA BARAT
 whole query	common	id	seluruh query
-width	common	id	Lebar (W)
+width	common	id	Width
+width, disabled	common	id	Width, Disabled
+wk	common	id	Mg
 work email	common	id	email kerja
+working days	common	id	hari kerja
+write <app>/setup/tables_current.inc.php	common	id	Tulis <app>/setup/tables_current.inc.php
+write langfile	common	id	Tulis berkas bahasa
+write tables	common	id	Tulis tabel
+writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of the app	common	id	tulis berkas 'etemplates.inc.php' (sesuai Nama aplikasi) pada direktori setup dari aplikasi
 writing	common	id	Menulis
 written by:	common	id	Ditulis oleh:
+xml-file to import	common	id	berkas xml untuk impor
+xslt template	common	id	Templat XSLT
 year	common	id	Tahun
 yemen	common	id	YAMAN
 yes	common	id	Ya
 yes - delete	common	id	Ya - Hapus
 yes - delete including sub-entries	common	id	Ya - Hapus berikut sub-entrinya
+you can respond by visiting:	common	id	Untuk melihatnya, kunjungi:
 you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	id	Anda mencoba Aplikasi EGroupware: %1, namun anda tidak memiliki ijin untuk mengakses aplikasi ini.
 your message could <b>not</b> be sent!<br>	common	id	Pesan anda <b>tidak</b> dapat dikirimkan!<br>
 your message has been sent	common	id	Pesan telah terkirim
 zambia	common	id	ZAMBIA
 zimbabwe	common	id	ZIMBABWE
 zoom	common	id	Zoom
-search for '%1'	common	id	Mencari '%1'
-%1 (%2 new) messages writen for application '%3' and languages '%4'	common	id	%1 (%2 baru) Pesan dituliskan untuk Aplikasi '%3' dan Bahasa '%4'
-%1 entries found, select one ...	common	id	%1 entri ditemukan, pilih satu ...
-%1 etemplates deleted	common	id	%1 eTemplat dihapus
-%1 etemplates for application '%2' dumped to '%3'	common	id	%1 eTemplat untuk Aplikasi '%2' dituang ke '%3'
-%1 etemplates found	common	id	%1 eTemplat ditemukan
-%1 matches on search criteria	common	id	cocok %1 sesuai kriteria pencarian
-%1 more...	common	id	%1 more...
-%1 new etemplates imported for application '%2'	common	id	%1 eTemplat baru diimpor untuk Aplikasi '%2'
-%1 not implemented for %2!	common	id	%1 tidak di-implementasikan untuk %2!
-%s disabled	common	id	%s disabled
-%s needed	common	id	%s needed
-%s notranslation	common	id	%s NoTranslation
-%s onchange	common	id	%s onChange
-%s readonly	common	id	%s readonly
-'%1' has an invalid format !!!	common	id	'%1' has an invalid format !!!
-'%1' is no php file in the egw server root (%2)!	common	id	'%1' is no php file in the eGW server root (%2)!
-'%1' is not a valid date !!!	common	id	'%1' is not a valid date !!!
-'%1' is not a valid floatingpoint number !!!	common	id	'%1' is not a valid floatingpoint number !!!
-'%1' is not a valid integer !!!	common	id	'%1' is not a valid integer !!!
-'%1' is not allowed ('%2')!	common	id	'%1' TIDAK dibolehkan ('%2')!
-a pattern to be searched for	common	id	pola untuk pencarian
-accesskey	common	id	Accesskey
-accesskeys can also be specified with an & in the label (eg. &name)	common	id	Accesskeys can also be specified with an & in the label (eg. &Name)
-account contactdata	common	id	Datakontak Akoun
-actions...	common	id	Tindakan...
-add column	common	id	Add Column
-add index	common	id	Add Index
-add new	common	id	Tambah baru
-add table	common	id	Add Index
-advanced search	common	id	Pencarian Canggih
-align	common	id	Align
-all days	common	id	seharian
-all users	common	id	Semua pengguna
-allowed file type: %1	common	id	Tipe yang dibolehkan: %1
-am	common	id	am
-and	common	id	Dan
-application	common	id	Aplikasi
-application name needed to write a langfile or dump the etemplates !!!	common	id	Perlu nama Aplikasi untuk menuliskan berkas bahasa atau menuangkan eTemplat !!!
-applications	common	id	Aplikasi
-applies the changes made	common	id	terapkan perubahan
-as default	common	id	sebagai bawaan
-attach	common	id	Lampiran
-attach file	common	id	lampirkan berkas
-baseline	common	id	Baseline
-blurtext	common	id	blurText
-border	common	id	Border
-bottom	common	id	Bottom
-box	common	id	Box
-box...	common	id	Kotak...
-cancel	common	id	Batal
-category	common	id	Kategori
-category tree	common	id	Pohon Kategori
-cells	common	id	Cells
-center	common	id	Tengah
-changed	common	id	Diubah
-check all	common	id	Contreng semua
-checkbox	common	id	Checkbox
-class	common	id	Class
-class, valign	common	id	class, Valign
-click here to attach the file	common	id	klik disini untuk melampirkan berkas
-click here to create the link	common	id	klik disini untuk membuat tautan
-click here to start the search	common	id	Klik disini untuk memulai pencarian
-click here to upload the file	common	id	Klik disini untuk mengunggah berkas
-clickable path	common	id	clickable path
-closes the window without saving the changes	common	id	tutup jendela tanpa menyimpan perubahan
-column...	common	id	Kolom...
-columnname	common	id	Nama Kolom
-comment	common	id	Komentar
-confirm	common	id	konfirmasi
-contact	common	id	Kontak
-contact field to show	common	id	Field Kontak untuk ditampilkan
-contact fields	common	id	Field Kontak
-contains	common	id	mengandung
-copy to clipboard	common	id	Salin ke klipbord
-creator	preferences	id	Creator
-css properties	common	id	properti CSS
-css-styles	common	id	Gaya-CSS
-custom	common	id	custom
-custom fields	common	id	custom fields
-cut	common	id	Cut
-date+time	common	id	Date+Time
-day	common	id	Hari
-days	common	id	hari
-db-tools	common	id	DB-Tools
-deck	common	id	Deck (internal)
-default	common	id	Bawaan
-delete column	common	id	Hapus Kolom
-delete index	common	id	Hapus Indeks
-delete the spezified etemplate	common	id	Hapus eTemplat tersebut
-delete this column	common	id	hapus kolom ini
-delete this etemplate	common	id	hapus eTemplat ini
-delete this file	common	id	Hapus berkas ini
-delete this row	common	id	hapus baris ini
-delete whole column (can not be undone!!!)	common	id	hapus seluruh kolom (tidak bisa dibatalkan!!!)
-deletes this column	common	id	Hapus kolom ini
-deletes this index	common	id	Hapus indeks ini
-discard changes	common	id	buang pengubahan
-do you want to save the changes you made in table %s?	common	id	Anda ingin menyimpan perubahan ke tabel %s?
-document '%1' does not exist or is not readable for you!	preferences	id	Dokumen '%1' tidak ada atau tidak terbaca oleh anda!
-documentation	common	id	Dokumentasi
-doesn't matter	common	id	tidak penting
-drop table	common	id	Buang Tabel
-dump4setup	common	id	Dump4Setup
-duration	common	id	Durasi
-edit	common	id	Edit
-edit...	common	id	Edit...
-enter a search pattern	common	id	Masukan pola pencarian
-entry saved	common	id	Entri disimpan
-etemplate	common	id	eTemplat
-etemplate '%1' imported, use save to put it in the database	common	id	eTemplat '%1' diimpor, gunakan [Simpan] untuk menyimpan ke database
-etemplate '%1' written to '%2'	common	id	eTemplat '%1' dituliskan ke '%2'
-etemplate editor	common	id	Editor eTemplat
-etemplate reference	common	id	Referensi eTemplat
-etemplate tutorial	common	id	Tutorial eTemplat
-export xml	common	id	Ekspor XML
-extensions loaded:	common	id	Ekstensi dimuat:
-field	common	id	Field
-field must not be empty !!!	common	id	Field tidak boleh kosong !!!
-file	common	id	Berkas
-file '%1' not found!	common	id	Berkas '%1' tidak ditemukan!
-file is of wrong type (%1 != %2)!	common	id	Salah tipe berkas (%1 != %2 )!
-file writen	common	id	Berkas dituliskan
-fileupload	common	id	Unggah Berkas
-first	common	id	Awal
-floating point	common	id	Floating Point
-foreign key	common	id	Foreign Key
-general fields:	preferences	id	Field Umum:
-grid	common	id	Grid
-groupbox	common	id	GroupBox
-h	common	id	h
-hbox	common	id	HBox
-height	common	id	Height
-height, disabled	common	id	Height, Disabled
-help	common	id	Bantuan
-history log	common	id	Log Riwayat
-horizontal rule	common	id	Horizontal Rule
-hour	common	id	Jam
-hours	common	id	jam
-html	common	id	HTML
-id	common	id	ID
-image	common	id	Image
-import	common	id	Impor
-import xml	common	id	Impor XML
-indexed	common	id	Indexed
-indexoptions	common	id	Indexoptions
-insert in document	common	id	Sisipkan dalam dokumen
-integer	common	id	Integer
-key	common	id	Key
-label	common	id	Label
-lang	common	id	Bahasa
-last	common	id	Akhir
-left	common	id	Kiri
-link	common	id	Tautan
-linkapps	common	id	LinkApps
-linkentry	common	id	LinkEntry
-linklist	common	id	LinkList
-linkstring	common	id	LinkString
-linkto	common	id	LinkTo
-load this template into the editor	common	id	muatkan templat ini ke editor
-loading	common	id	memuatkan
-maximum size for uploads	filemanager	id	Ukuran unggah maksimum
-message ...	common	id	Pesan...
-middle	common	id	Middle
-minute	common	id	Menit
-minutes	common	id	Menit
-month	common	id	Bulan
-more	common	id	Lagi
-more than 1 match for '%1'	common	id	Lebih dari 1 kecocokan untuk '%1'
-multicolumn indices	common	id	Multicolumn Indices
-name	common	id	Nama
-new	common	id	Baru
-new search	common	id	Pencarian baru
-new table created	common	id	Tabel baru dibuat
-newer version '%1' exists !!!	common	id	tersedia versi '%1' terbaru !!!
-nextmatch	common	id	Nextmatch
-nextmatch accountfilter	common	id	Nextmatch Accountfilter
-nextmatch custom filterheader	common	id	Nextmatch Custom Filterheader
-nextmatch filterheader	common	id	Nextmatch Filterheader
-nextmatch header	common	id	Nextmatch Header
-nextmatch sortheader	common	id	Nextmatch Sortheader
-no file	common	id	tiada berkas
-no matches found	common	id	Tiada yang cocok
-not null	common	id	NOT NULL
-nothing	common	id	tiada
-nothing found - try again !!!	common	id	Tiada ditemukan - coba lagi !!!
-now	common	id	Sekarang
-of	common	id	dari
-onchange	common	id	onChange
-onclick	common	id	onClick
-operator	common	id	Operator
-options	common	id	Options
-or	common	id	or
-overflow	common	id	Overflow
-padding	common	id	Padding
-paste	common	id	Tempel
-path	common	id	Path
-pm	common	id	pm
-popup	common	id	Popup
-precision	common	id	Precision
-primary key	common	id	Primary Key
-radiobutton	common	id	Radiobutton
-read	common	id	Baca
-readonly	common	id	hanyabaca
-refresh	common	id	Refresh
-required	common	id	Diperlukan
-reset	common	id	Reset
-right	common	id	Kanan
-row...	common	id	Baris...
-save all	common	id	Simpan semuanya
-scale	common	id	Skala
-search	common	id	Cari
-select a category	common	id	pilih Kategori
-select access	common	id	Pilih Akses
-select account	common	id	Pilih Akoun
-select application	common	id	Pilih Aplikasi
-select category	common	id	Pilih Kategori
-select columns	common	id	Pilih kolom
-select country	common	id	Pilih Negara
-select day	common	id	Pilih Hari
-select entry	common	id	Pilih entri
-select hour	common	id	Pilih jam
-select language	common	id	Pilih Bahasa
-select month	common	id	Pilih Bulan
-select number	common	id	Pilih Angka
-select one ...	common	id	Pilih Satu...
-select percentage	common	id	Pilih Persentasi
-select priority	common	id	Pilih Prioritas
-select state	common	id	Pilih Provinsi
-select year	common	id	Pilih Tahun
-selectbox	common	id	Selectbox
-set as default	common	id	Tetapkan sbg bawaan
-show	common	id	Tampilkan
-show (no save)	common	id	Tampilkan (tanpa menyimpan)
-show all / cancel filter	common	id	Tamplikan semua / batalkan saringan
-show values	common	id	Tampilkan Nilai
-showing	common	id	menampilkan
-spacing	common	id	Spacing
-span	common	id	Span
-span, class	common	id	Span, Class
-stack	common	id	Stack
-start a new search, cancel this link	common	id	memulai pencarian baru, batalkan tautan ini
-submit form	common	id	kirim formulir
-submitbutton	common	id	Submitbutton
-swap	common	id	swap
-tabindex	common	id	Tabindex
-tablename	common	id	TableName
-tabs	common	id	Tabs
-template	common	id	Template
-template deleted	common	id	Template dihapus
-template saved	common	id	Template disimpan
-text	common	id	Text
-textarea	common	id	Textarea
-time	common	id	Time
-today	common	id	Hari ini
-top	common	id	Top
-tree	common	id	Tree
-type	common	id	Type
-unique	common	id	Unique
-unlink	common	id	Batalkan tautan
-upload	common	id	Unggah
-valign	common	id	vAlign
-value	common	id	Value
-vbox	common	id	VBox
-version	common	id	Versi
-view this etemplate	common	id	lihat eTemplat ini
-weekend	common	id	akhir minggu
-width	common	id	Width
-width, disabled	common	id	Width, Disabled
-wk	common	id	Mg
-working days	common	id	hari kerja
-write <app>/setup/tables_current.inc.php	common	id	Tulis <app>/setup/tables_current.inc.php
-write langfile	common	id	Tulis berkas bahasa
-write tables	common	id	Tulis tabel
-writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of the app	common	id	tulis berkas 'etemplates.inc.php' (sesuai Nama aplikasi) pada direktori setup dari aplikasi
-xml-file to import	common	id	berkas xml untuk impor
-xslt template	common	id	Templat XSLT
-year	common	id	Tahun
-you can respond by visiting:	common	id	Untuk melihatnya, kunjungi:
-initial	common	id	Initial
-id	common	id	ID

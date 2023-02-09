@@ -24,6 +24,7 @@
 %s notranslation	common	it	%s NoTranslation
 %s onchange	common	it	%s onChange
 %s readonly	common	it	%s sola lettura
+'%1' copied to clipboard	common	it	'%1' copiato negli appunti
 '%1' has an invalid format	common	it	'%1' ha un formato non valido
 '%1' has an invalid format !!!	common	it	'%1' ha un formato non valido
 '%1' is no php file in the egw server root (%2)!	common	it	'%1' non è un file php nella root del server EGroupware (%2)
@@ -897,6 +898,7 @@ new egroupware release %1 available	common	it	È disponibile una nuova release d
 new entry added sucessfully	common	it	Nuova voce aggiunto con successo
 new favorite	common	it	Nuovo preferito
 new main category	common	it	Nuova categoria principale
+new password	common	it	Nuova password
 new search	common	it	Nuova ricerca
 new table created	common	it	Nuova tabella creata
 new value	common	it	Nuovo Valore
@@ -1095,6 +1097,7 @@ remove shortcut	common	it	Rimuovi scorciatoie
 remove this link (not the entry itself)	common	it	Remove this link (not the entry itself)
 removed (now) empty directory fs_id=%1	admin	it	Rimossa (adesso) cartella vuota fs_id=%1
 rename	common	it	Rinomina
+repeat password	common	it	Ripeti la password
 replace	common	it	Sostituisci
 replace with	common	it	Stostituisci con
 requests and full responses to files directory	common	it	Richieste e risposte alla cartella dei file

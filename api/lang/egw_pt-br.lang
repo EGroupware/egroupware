@@ -18,6 +18,7 @@
 %s notranslation	common	pt-br	%s Sem tradução
 %s onchange	common	pt-br	%s Sobre alteração
 %s readonly	common	pt-br	%s apenas leitura
+'%1' copied to clipboard	common	pt-br	%1' copiado para prancheta
 '%1' has an invalid format !!!	common	pt-br	'%1' está em um formato inválido !!!
 '%1' is no php file in the egw server root (%2)!	common	pt-br	'%1' não é um arquivo php na pasta raiz do servidor eGW (%2)!
 '%1' is not a valid date !!!	common	pt-br	'%1' não é uma data válida !!!
@@ -31,8 +32,10 @@
 1 month	common	pt-br	1 Mês
 1 week	common	pt-br	1 Semana
 13 (ntp)	admin	pt-br	13 (ntp)
+2-factor-authentication	common	pt-br	2-Fator-Autenticação
 80 (http)	admin	pt-br	80 (http)
 a pattern to be searched for	common	pt-br	um padrão a ser procurado
+abort	common	pt-br	Abortar
 about	common	pt-br	Sobre
 about %1	common	pt-br	Sobre %1
 about egroupware	common	pt-br	Sobre EGroupware
@@ -738,6 +741,7 @@ new	common	pt-br	Novo
 new caledonia	common	pt-br	NOVA CALEDONIA
 new entry added sucessfully	common	pt-br	Entrada adicionada com sucesso
 new main category	common	pt-br	Nova categoria principal
+new password	common	pt-br	Nova senha
 new search	common	pt-br	Nova pesquisa
 new table created	common	pt-br	Nova tabela criada
 new value	common	pt-br	Novo Valor
@@ -913,6 +917,7 @@ remove shortcut	common	pt-br	Remover tecla de atalho
 remove this link (not the entry itself)	common	pt-br	Remover este link (não a própria entrada)
 removed (now) empty directory fs_id=%1	admin	pt-br	Removido (agora) diretório vazio fs_id =% 1
 rename	common	pt-br	Renomear
+repeat password	common	pt-br	Repita a senha
 replace	common	pt-br	Substituir
 replace with	common	pt-br	Substituir por
 requests and full responses to files directory	common	pt-br	Os pedidos e as respostas completas para diretório de arquivos

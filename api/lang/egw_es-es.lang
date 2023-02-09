@@ -26,6 +26,7 @@
 %s notranslation	common	es-es	%s sin traducción
 %s onchange	common	es-es	%s al cambiar
 %s readonly	common	es-es	%s de sólo lectura
+'%1' copied to clipboard	common	es-es	%1' copiado en el portapapeles
 '%1' has an invalid format	common	es-es	'%1' no tiene un formato válido
 '%1' has an invalid format !!!	common	es-es	¡'%1' no tiene un formato válido!
 '%1' is no php file in the egw server root (%2)!	common	es-es	¡'%1' no es un archivo php en el directorio raíz de EGroupware (%2)!
@@ -1103,6 +1104,7 @@ remove this link (not the entry itself)	common	es-es	Borrar este enlace (no la e
 removed (now) empty directory fs_id=%1	admin	es-es	Se eliminó (ahora) el directorio vacío fs_id = %1
 removeformat	common	es-es	Eliminar formato
 rename	common	es-es	Renombrar
+repeat password	common	es-es	Repetir contraseña
 replace	common	es-es	Sustituir
 replace with	common	es-es	Sustituir por
 requests and full responses to files directory	common	es-es	Solicitudes y respuestas completas al directorio de archivos
