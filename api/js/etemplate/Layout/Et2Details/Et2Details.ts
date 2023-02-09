@@ -63,11 +63,14 @@ export class Et2Details extends Et2Widget(SlDetails)
                 max-height: 15em;
                 overflow-y: auto;
               }
-              .details.hoist .details__body.overlaySummary {
+              .details.hoist .details__body.overlaySummaryLeftAligned {
 				top: 0;
 				left: 2em;
 				width: calc(100% - 2em);
 			  }
+              .details.hoist .details__body.overlaySummaryRightAligned {
+                top: 0;
+              }
 			`,
 		];
 	}
@@ -149,7 +152,8 @@ export class Et2Details extends Et2Widget(SlDetails)
 			}
 			if (this.overlaySummaryOnOpen)
 			{
-				this.shadowRoot.querySelector('.details__body').classList.add('overlaySummary');
+				this.shadowRoot.querySelector('.details__body').classList.add(this.toggleAlign === 'left' ?
+					'overlaySummaryLeftAligend' : 'overlaySummaryRightAligned');
 			}
 		});
 	}
