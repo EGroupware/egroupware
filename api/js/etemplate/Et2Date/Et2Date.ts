@@ -419,6 +419,7 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(LitFlatpickr))
 
 		this._onDayCreate = this._onDayCreate.bind(this);
 		this._handleInputChange = this._handleInputChange.bind(this);
+		this._onReady = this._onReady.bind(this);
 		this.handleScroll = this.handleScroll.bind(this);
 	}
 
@@ -532,7 +533,8 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(LitFlatpickr))
 
 
 		// Listen for flatpickr change so we can update internal value, needed for validation
-		options.onChange = options.onReady = this._updateValueOnChange;
+		options.onChange = this._updateValueOnChange;
+		options.onReady = this._onReady;
 
 		// Remove Lion's inert attribute so we can work in Et2Dialog
 		options.onOpen = [() =>
@@ -742,6 +744,14 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(LitFlatpickr))
 	_updateValueOnChange(selectedDates : Date[], dateStr : string, instance : Instance)
 	{
 		this.modelValue = this.getValue();
+	}
+
+	_onReady(selectedDates : Date[], dateStr : string, instance : Instance)
+	{
+		this._updateValueOnChange(selectedDates, dateStr, instance);
+
+		// Add any classes we have to the instance
+		instance.calendarContainer.classList.add(...this.classList.values())
 	}
 
 	/**
