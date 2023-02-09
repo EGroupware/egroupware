@@ -1127,7 +1127,7 @@ app.classes.mail = AppJS.extend(
 			];
 			const collabora = {
 				id: 'collabora',
-				label: 'Open',
+				label: 'Open with Collabora Office',
 				icon: 'collabora/navbar',
 				value: 'collabora'
 			};
@@ -1139,14 +1139,18 @@ app.classes.mail = AppJS.extend(
 				// for some reason label needs to be set explicitly for the dropdown button. It needs more investigation.
 				_item.actionsDefaultLabel = 'Download';
 
-				if (typeof this.egw.user('apps')['collabora'] !== "undefined" && this.egw.isEditable(_item.type))
+				if (typeof this.egw.user('apps')['collabora'] !== "undefined" && this.egw.isCollaborable(_item.type))
 				{
+					// Start with download on top, Collabora on bottom
+					sel_options.attachmentsBlock[_item.attachment_number + "[actions]"] = [...actions, collabora];
+
 					if (egw.preference('document_doubleclick_action', 'filemanager') === 'collabora')
 					{
 						_item.actions = 'collabora';
 						_item.actionsDefaultLabel = 'Collabora';
+						// Put Collabora on top
+						sel_options.attachmentsBlock[_item.attachment_number + "[actions]"] = [collabora, ...actions];
 					}
-					sel_options.attachmentsBlock[_item.attachment_number + "[actions]"] = [...actions, collabora];
 				}
 			});
 

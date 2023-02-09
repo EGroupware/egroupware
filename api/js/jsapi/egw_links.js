@@ -545,6 +545,24 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 				return false;
 			}
 			return ['edit'].indexOf(fe.mime[mime].name) !== -1;
+		},
+
+		/**
+		 * Check if a mimetype is openable in Collabora
+		 * (without needing to have Collabora JS loaded)
+		 *
+		 * @param mime
+		 *
+		 * @return string|false
+		 */
+		isCollaborable: function (mime)
+		{
+			// Additional check to see if Collabora can open the file at all, not just edit it
+			let fe = this.file_editor_prefered_mimes(mime);
+			if (fe && fe.mime && fe.mime[mime] && fe.mime[mime].name || this.isEditable(mime))
+			{
+				return fe.mime[mime].name;
+			}
 		}
 	}
 });

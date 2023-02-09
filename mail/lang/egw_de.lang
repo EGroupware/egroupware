@@ -414,6 +414,7 @@ only one window	mail	de	nur ein einziges Fenster
 only send message, do not copy a version of the message to the configured sent folder	mail	de	Versende Nachricht, kopiere sie nicht in den konfigurierten Gesendet Ordner
 open in html mode	mail	de	In HTML-Modus öffnen
 open in text mode	mail	de	In Text-Modus öffnen
+open with collabora office	mail	de	Mit Collabora Online öffnen
 organisation	admin	de	Organisation
 organization	mail	de	Organisation
 original message	mail	de	ursprüngliche Nachricht
