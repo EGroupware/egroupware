@@ -498,10 +498,6 @@ div.mail-compose_fileselector {
 	margin-bottom: 0.5em;
 	font-size: 1.2em;
 }
-et2-details.details::part(summary),
-et2-details.attachments::part(summary){
-	padding-left: 1em;
-}
 et2-details.details {width: 100%}
 
 .mailDisplay et2-details::part(base),
@@ -1069,9 +1065,9 @@ div#mail-index_nm.splitter-pane {min-height: 100px;}
 #mail-index_nm tbody tr et2-lavatar {max-width: 3.7em; min-width:3.7em !important;}
 
 .previewWrapper .firstColumnTitle {
-	max-width: 4em;
+	max-width: 6em;
 	text-align: end;
-	min-width: 4em;
+	min-width: 6em;
 	color: darkgrey;
 }
 .mailPreviewHeaders et2-select-email::part(control) {
