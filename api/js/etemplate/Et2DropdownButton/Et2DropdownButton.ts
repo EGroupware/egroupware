@@ -144,7 +144,7 @@ export class Et2DropdownButton extends Et2widgetWithSelectMixin(Et2Button)
 		return html`
             <sl-menu-item value="${option.value}">
                 ${icon}
-                ${option.label}
+                ${this.noLang ? option.label : this.egw().lang(option.label)}
             </sl-menu-item>`;
 	}
 

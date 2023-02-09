@@ -275,7 +275,8 @@ export const Et2widgetWithSelectMixin = <T extends Constructor<LitElement>>(supe
 				return this._optionTemplate(option);
 			}
 			return html`
-                <sl-menu-label>${option.label}</sl-menu-label>
+
+                <sl-menu-label>${this.noLang ? option.label : this.egw().lang(option.label)}</sl-menu-label>
                 ${option.value.map(this._optionTemplate.bind(this))}
                 <sl-divider></sl-divider>
 			`;
