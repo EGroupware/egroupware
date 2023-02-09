@@ -165,6 +165,11 @@ export class Et2Favorites extends Et2DropdownButton implements et2_INextmatchHea
 		}
 	}
 
+	get preferred() : string
+	{
+		return this._preferred;
+	}
+
 	_optionTemplate(option : SelectOption) : TemplateResult
 	{
 		let radio = html`<input type="radio" slot="prefix" name="favorite" value="${option.value}"
@@ -279,7 +284,15 @@ export class Et2Favorites extends Et2DropdownButton implements et2_INextmatchHea
 		{
 			options.push({value: Et2Favorites.ADD_VALUE, label: this.egw().lang('Add current')});
 		}
+
+		this.requestUpdate("select_options");
 		return options;
+	}
+
+	public load_favorites(app)
+	{
+		this.__select_options = this._load_favorites(app);
+		this.requestUpdate("select_options");
 	}
 
 	/**
@@ -362,7 +375,9 @@ export class Et2Favorites extends Et2DropdownButton implements et2_INextmatchHea
 		this.egw().set_preference(this.app, this.defaultPref, pref);
 		this._preferred = pref;
 		this.dropdownNode.hide();
-		this.requestUpdate();
+		this.requestUpdate("select_options");
+
+		this.dispatchEvent(new Event("change", {bubbles: true}));
 	}
 
 	_handleDelete(_ev : MouseEvent)
@@ -481,5 +496,4 @@ export class Et2Favorites extends Et2DropdownButton implements et2_INextmatchHea
 	}
 }
 
-// @ts-ignore TypeScript is not recognizing that this is a LitElement
 customElements.define("et2-favorites", Et2Favorites);

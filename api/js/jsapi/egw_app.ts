@@ -861,6 +861,23 @@ export abstract class EgwApp
 					{
 						self.highlight_favorite();
 					});
+				egw_fw.applications[this.appname].browser.baseDiv.addEventListener("change", (e) =>
+				{
+					if(e.target.localName == "et2-favorites")
+					{
+						sidebox[0].querySelectorAll("li:not([data-id='add']) > a > div:first-child").forEach(f =>
+						{
+							f.classList.add("sideboxstar");
+							f.classList.remove('ui-icon', 'ui-heart');
+						});
+						const new_pref = sidebox[0].querySelector("li[data-id='" + e.target.preferred + "'] > a > div:first-child");
+						if(new_pref)
+						{
+							new_pref.classList.add('ui-icon', 'ui-icon-heart');
+							new_pref.classList.remove("sideboxstar");
+						}
+					}
+				})
 			}
 			return true;
 		}
@@ -904,7 +921,6 @@ export abstract class EgwApp
 				et2[i].widgetContainer.iterateOver(function(_widget)
 				{
 					_widget.stored_filters = _widget.load_favorites(self.appname);
-					_widget.init_filters(_widget);
 				}, self, Et2Favorites);
 			}
 		}
