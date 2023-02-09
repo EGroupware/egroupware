@@ -18,7 +18,7 @@ import {egwAction, egwActionImplementation, egwActionObject} from './egw_action.
 import {egwFnct} from './egw_action_common.js';
 import {egwMenu, _egw_active_menu} from "./egw_menu.js";
 import {EGW_KEY_ENTER, EGW_KEY_MENU} from "./egw_action_constants.js";
-import {tapAndSwipe} from "../tapandswipe";
+import {tapAndSwipe} from "../tapandswipe.js";
 
 if (typeof window._egwActionClasses == "undefined")
 	window._egwActionClasses = {};
