@@ -511,19 +511,22 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 		{
 			let options = [];
 
-			if(this.allowFreeEntries)
-			{
-				this.freeEntries.forEach((item) =>
-				{
-					options.push({value: item.value, label: item.textContent, class: item.classList.toString()});
-				})
-			}
 			// Any provided options
 			options = options.concat(this.__select_options);
 
 			// Any kept remote options
 			options = options.concat(this._selected_remote);
 
+			if(this.allowFreeEntries)
+			{
+				this.freeEntries.forEach((item : SlMenuItem) =>
+				{
+					if(!options.some(i => i.value == item.value))
+					{
+						options.push({value: item.value, label: item.textContent, class: item.classList.toString()});
+					}
+				})
+			}
 			return options;
 		}
 

@@ -97,14 +97,12 @@ export class Et2SelectEmail extends Et2Select
 			accept: `.et2-select-draggable`,
 			ondrop: function(e)
 			{
+				// Add in as free entry
 				e.target.createFreeEntry(e.draggable.target.value);
-				e.target.classList.remove('et2_toolbarDropArea');
+				e.target.classList.remove('et2_dropZone');
 
 				// remove the dragged value from its origin source
 				e.draggable.parent_node.value = e.draggable.parent_node.value.filter(_item => {return e.draggable.target.value !== _item;})
-
-				// set value for newly dropped target
-				e.target.value.push(e.draggable.target.value);
 			},
 			ondragenter: function(e)
 			{
