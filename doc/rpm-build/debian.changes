@@ -1,3 +1,19 @@
+egroupware-docker (23.1.20230210) hardy; urgency=low
+
+  * 4th release candidate for upcomming 23.1, final released scheduled for March 1st 2023
+  * Mail/OAuth: fix not working auth with custom Office365 domains outside mail wizard
+  * TimeSheet: allow to update times in events tab rows by clicking on the time
+  * LDAP: fix LDAP protocol error creating new groups without a description
+  * LDAP/Addressbook: make further LDAP attributes available as custom-fields using "ldap_<attribute>" as name for accounts in LDAP
+  * LDAP/Univention: make birthday of users available in addressbook (univentionPerson.univentionBirthday attribute)
+  * KnowledgeBase: get maintain articles and questions working (requires git pull on old etemplate repo too!)
+  * Mail: slight rework of preview to make more information available without hover (not yet fully finished)
+  * PostgreSQL: fixed PHP 8.1 problems (affected rows always returning false, not allowing to update entries)
+  * All apps: generate letter-avatars client-side to avoid big request peaks for big installation eg. on search in calendar
+  * for a full list of check: https://github.com/EGroupware/egroupware/compare/23.1.20230210...23.1.20230125
+
+ -- Ralf Becker <rb@egroupware.org>  Fri, 10 Feb 2023 09:18:18 +0100
+
 egroupware-docker (23.1.20230125) hardy; urgency=low
 
   * 3rd release candidate for upcomming 23.1
