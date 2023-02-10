@@ -1127,7 +1127,7 @@ app.classes.mail = AppJS.extend(
 			];
 			const collabora = {
 				id: 'collabora',
-				label: 'Open with Collabora Office',
+				label: 'Collabora',
 				icon: 'collabora/navbar',
 				value: 'collabora'
 			};
