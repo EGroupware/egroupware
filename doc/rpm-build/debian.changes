@@ -1,3 +1,13 @@
+egroupware-docker (21.1.20230210) hardy; urgency=low
+
+  * LDAP: fix LDAP protocol error creating new groups without a description
+  * Rocketchat: fix realtime api not wokring becase of CSP error
+  * PostgreSQL: fixed PHP 8.1 problems (affected rows always returning false, not allowing to update entries)
+  * All apps: several PHP 8.1 fixes
+  * full list of fixes check: https://github.com/EGroupware/egroupware/compare/21.1.20221202...21.1.20230210
+
+ -- Ralf Becker <rb@egroupware.org>  Fri, 10 Feb 2023 10:31:59 +0100
+
 egroupware-docker (21.1.20221202) hardy; urgency=low
 
   * PHP 8.1: our standard container uses now PHP 8.1, as 7.4 no longer receives security updates from PHP project itself
