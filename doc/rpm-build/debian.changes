@@ -10,7 +10,7 @@ egroupware-docker (23.1.20230210) hardy; urgency=low
   * Mail: slight rework of preview to make more information available without hover (not yet fully finished)
   * PostgreSQL: fixed PHP 8.1 problems (affected rows always returning false, not allowing to update entries)
   * All apps: generate letter-avatars client-side to avoid big request peaks for big installation eg. on search in calendar
-  * for a full list of check: https://github.com/EGroupware/egroupware/compare/23.1.20230210...23.1.20230125
+  * for a full list of check: https://github.com/EGroupware/egroupware/compare/23.1.20230125...23.1.20230210
 
  -- Ralf Becker <rb@egroupware.org>  Fri, 10 Feb 2023 09:18:18 +0100
 
