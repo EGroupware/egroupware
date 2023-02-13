@@ -2614,17 +2614,21 @@ class addressbook_ui extends addressbook_bo
 		}
 		// set $content[shared_options/_values] from $content[shared]
 		$content['shared_options'] = [];
+		$content['shared_values'] = [];
 		foreach((array)$content['shared'] as $shared)
 		{
-			$content['shared_options'][$shared['shared_id'].':'.$shared['shared_with'].':'.$shared['shared_by'].':'.$shared['shared_writable']] = [
+			$shared_value = $shared['shared_id'] . ':' . $shared['shared_with'] . ':' . $shared['shared_by'] . ':' . $shared['shared_writable'];
+			$content['shared_values'][] = $shared_value;
+			$sel_options['shared_values'][] = [
+				'value' => $shared_value,
 				'label' => Api\Accounts::username($shared['shared_with']),
 				'title' => lang('%1 shared this contact on %2 with %3 %4',
-					Api\Accounts::username($shared['shared_by']), Api\DateTime::to($shared['shared_at']),
-					Api\Accounts::username($shared['shared_with']), $shared['shared_writable'] ? lang('writable') : lang('readonly')),
-				'icon' => $shared['shared_writable'] ? 'edit' : 'view',
+								Api\Accounts::username($shared['shared_by']), Api\DateTime::to($shared['shared_at']),
+								Api\Accounts::username($shared['shared_with']), $shared['shared_writable'] ? lang('writable') : lang('readonly')
+				),
+				'icon'  => $shared['shared_writable'] ? 'edit' : 'view',
 			];
 		}
-		$content['shared_values'] = array_keys($content['shared_options']);
 		// disable shared with UI for non-SQL backends
 		$content['shared_disabled'] = !is_a($this->get_backend($content['id'], $content['owner']), Api\Contacts\Sql::class);
 

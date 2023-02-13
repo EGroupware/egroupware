@@ -130,7 +130,9 @@
                         <et2-description  for="shared" value="Shared with"></et2-description>
                         <et2-checkbox  id="shared_writable" label="writable" statustext="Create new shares writable"></et2-checkbox>
                     </et2-vbox>
-                    <et2-select-account  id="shared_values" multiple="true" span="all" onchange="app.addressbook.shared_changed" accountType="both" selectOptions="@shared_options"></et2-select-account>
+                    <et2-select-account id="shared_values" multiple="true" span="all"
+                                        onchange="app.addressbook.shared_changed"
+                                        accountType="both"></et2-select-account>
                 </row>
             </rows>
 		</grid>
