@@ -158,11 +158,11 @@ abstract class Handler
 	 * Propfind callback, if interator is used
 	 *
 	 * @param string $path
-	 * @param array $filter
+	 * @param array &$filter
 	 * @param array|boolean $start false=return all or array(start,num)
 	 * @return array with "files" array with values for keys path and props
 	 */
-	function &propfind_callback($path, array $filter, $start)
+	function &propfind_callback($path, array &$filter, $start)
 	{
 		unset($path, $filter, $start);	// not used, but required by function signature
 	}

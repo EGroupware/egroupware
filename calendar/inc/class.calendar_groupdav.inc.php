@@ -326,11 +326,11 @@ class calendar_groupdav extends Api\CalDAV\Handler
 	 * Callback for profind interator
 	 *
 	 * @param string $path
-	 * @param array $filter
+	 * @param array &$filter
 	 * @param array|boolean $start =false false=return all or array(start,num)
 	 * @return array with "files" array with values for keys path and props
 	 */
-	function &propfind_callback($path,array $filter,$start=false)
+	function &propfind_callback($path, array &$filter, $start=false)
 	{
 		if ($this->debug) $starttime = microtime(true);
 
@@ -344,7 +344,7 @@ class calendar_groupdav extends Api\CalDAV\Handler
 			$filter['offset'] = $start[0];
 			$filter['num_rows'] = $start[1];
 		}
-		$requested_multiget_ids = (array)$filter['query'][self::$path_attr];
+		$requested_multiget_ids =& $filter['query'][self::$path_attr];
 		$sync_collection = $filter['sync-collection'];
 
 		$events =& $this->bo->search($filter);
