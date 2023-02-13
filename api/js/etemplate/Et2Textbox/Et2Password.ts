@@ -11,6 +11,11 @@
 import {Et2InvokerMixin} from "../Et2Url/Et2InvokerMixin";
 import {Et2Textbox} from "./Et2Textbox";
 import {Et2Dialog} from "../Et2Dialog/Et2Dialog";
+import {classMap, html, ifDefined} from "@lion/core";
+import {egw} from "../../jsapi/egw_global";
+
+const isChromium = navigator.userAgentData?.brands.some(b => b.brand.includes('Chromium'));
+const isFirefox = isChromium ? false : navigator.userAgent.includes('Firefox');
 
 /**
  * @customElement et2-password
@@ -53,6 +58,16 @@ export class Et2Password extends Et2InvokerMixin(Et2Textbox)
 		};
 	}
 
+	connectedCallback()
+	{
+		super.connectedCallback();
+		this.autocomplete = "new-password";
+		this.updateComplete.then(() =>
+		{
+			this.shadowRoot.querySelector("[type='password']").autocomplete = "new-password";
+		});
+	}
+
 	transformAttributes(attrs)
 	{
 		if(typeof attrs.suggest !== "undefined")
@@ -61,7 +76,7 @@ export class Et2Password extends Et2InvokerMixin(Et2Textbox)
 		}
 		attrs.type = 'password';
 
-		if (attrs.viewable)
+		if(attrs.viewable)
 		{
 			attrs['toggle-password'] = true;
 		}
@@ -181,6 +196,157 @@ export class Et2Password extends Et2InvokerMixin(Et2Textbox)
 			this.egw().lang("Authenticate")
 		);
 	}
+
+	render()
+	{
+		const hasLabelSlot = this.hasSlotController.test('label');
+		const hasHelpTextSlot = this.hasSlotController.test('help-text');
+		const hasLabel = this.label ? true : !!hasLabelSlot;
+		const hasHelpText = this.helpText ? true : !!hasHelpTextSlot;
+		const hasClearIcon =
+			this.clearable && !this.disabled && !this.readonly && (typeof this.value === 'number' || this.value.length > 0);
+
+		return html`
+            <div
+                    part="form-control"
+                    class=${classMap({
+                        'form-control': true,
+                        'form-control--small': this.size === 'small',
+                        'form-control--medium': this.size === 'medium',
+                        'form-control--large': this.size === 'large',
+                        'form-control--has-label': hasLabel,
+                        'form-control--has-help-text': hasHelpText
+                    })}
+            >
+                <label
+                        part="form-control-label"
+                        class="form-control__label"
+                        for="input"
+                        aria-hidden=${hasLabel ? 'false' : 'true'}
+                >
+                    <slot name="label">${this.label}</slot>
+                </label>
+                <div part="form-control-input" class="form-control-input">
+                    <div
+                            part="base"
+                            class=${classMap({
+                                input: true,
+                                // Sizes
+                                'input--small': this.size === 'small',
+                                'input--medium': this.size === 'medium',
+                                'input--large': this.size === 'large',
+                                // States
+                                'input--pill': this.pill,
+                                'input--standard': !this.filled,
+                                'input--filled': this.filled,
+                                'input--disabled': this.disabled,
+                                'input--focused': this.hasFocus,
+                                'input--empty': !this.value,
+                                'input--no-spin-buttons': this.noSpinButtons,
+                                'input--is-firefox': isFirefox
+                            })}
+                    >
+                        <slot name="prefix" part="prefix" class="input__prefix"></slot>
+                        <input
+                                part="input"
+                                id="input"
+                                class="input__control"
+                                type=${this.type === 'password' && this.passwordVisible ? 'text' : this.type}
+                                title=${this.title /* An empty title prevents browser validation tooltips from appearing on hover */}
+                                name=${ifDefined(this.name)}
+                                ?disabled=${this.disabled}
+                                readonly
+                                ?required=${this.required}
+                                placeholder=${ifDefined(this.placeholder)}
+                                minlength=${ifDefined(this.minlength)}
+                                maxlength=${ifDefined(this.maxlength)}
+                                min=${ifDefined(this.min)}
+                                max=${ifDefined(this.max)}
+                                step=${ifDefined(this.step as number)}
+                                .value=${this.value}
+                                autocapitalize=${ifDefined(this.type === 'password' ? 'off' : this.autocapitalize)}
+                                autocomplete=${ifDefined(this.type === 'password' ? 'off' : this.autocomplete)}
+                                autocorrect=${ifDefined(this.type === 'password' ? 'new-password' : this.autocorrect)}
+                                ?autofocus=${this.autofocus}
+                                spellcheck=${this.spellcheck}
+                                pattern=${ifDefined(this.pattern)}
+                                enterkeyhint=${ifDefined(this.enterkeyhint)}
+                                inputmode=${ifDefined(this.inputmode)}
+                                aria-describedby="help-text"
+                                @change=${this.handleChange}
+                                @input=${this.handleInput}
+                                @invalid=${this.handleInvalid}
+                                @keydown=${this.handleKeyDown}
+                                @focus=${this.handleFocus}
+                                @blur=${this.handleBlur}
+                        />
+                        ${
+                                hasClearIcon
+                                ? html`
+                                    <button
+                                            part="clear-button"
+                                            class="input__clear"
+                                            type="button"
+                                            aria-label=${this.localize.term('clearEntry')}
+                                            @click=${this.handleClearClick}
+                                            tabindex="-1"
+                                    >
+                                        <slot name="clear-icon">
+                                            <sl-icon name="x-circle-fill" library="system"></sl-icon>
+                                        </slot>
+                                    </button>
+                                `
+                                : ''
+                        }
+                        ${
+                                this.passwordToggle && !this.disabled
+                                ? html`
+                                    <button
+                                            part="password-toggle-button"
+                                            class="input__password-toggle"
+                                            type="button"
+                                            aria-label=${this.localize.term(this.passwordVisible ? 'hidePassword' : 'showPassword')}
+                                            @click=${this.handlePasswordToggle}
+                                            tabindex="-1"
+                                    >
+                                        ${this.passwordVisible
+                                          ? html`
+                                                    <slot name="show-password-icon">
+                                                        <sl-icon name="eye-slash" library="system"></sl-icon>
+                                                    </slot>
+                                                `
+                                          : html`
+                                                    <slot name="hide-password-icon">
+                                                        <sl-icon name="eye" library="system"></sl-icon>
+                                                    </slot>
+                                                `}
+                                    </button>
+                                `
+                                : ''
+                        }
+                        <slot name="suffix" part="suffix" class="input__suffix"></slot>
+                    </div>
+                </div>
+                <slot
+                        name="help-text"
+                        part="form-control-help-text"
+                        id="help-text"
+                        class="form-control__help-text"
+                        aria-hidden=${hasHelpText ? 'false' : 'true'}
+                >
+                    ${this.helpText}
+                </slot>
+            </div>
+            </div>
+		`;
+	}
+
+	handleFocus(e)
+	{
+		this.shadowRoot.querySelector("input[type='password']").removeAttribute("readonly");
+		super.handleFocus(e);
+	}
+
 }
 // @ts-ignore TypeScript is not recognizing that this is a LitElement
 customElements.define("et2-password", Et2Password);
