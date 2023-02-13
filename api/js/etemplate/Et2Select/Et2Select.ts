@@ -441,7 +441,8 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		}
 		if(Array.isArray(val))
 		{
-			val = val.map(v => typeof v === 'number' ? v.toString() : v || '');
+			// Make sure value has no duplicates, and values are strings
+			val = [...new Set(val.map(v => typeof v === 'number' ? v.toString() : v || ''))];
 		}
 		this.value = val || '';
 	}
