@@ -126,7 +126,7 @@ class Password extends Etemplate\Widget\Textbox
 	public static function ajax_suggest($size = 12)
 	{
 		$config = Api\Config::read('phpgwapi');
-		$size = max(min((int)$size, (int)$config['force_pwd_length']), 6);
+		$size =  max((int)$size, (int)$config['force_pwd_length'], 6);
 		$password = Auth::randomstring($size, $config['force_pwd_strength'] == 4);
 
 		$response = \EGroupware\Api\Json\Response::get();
