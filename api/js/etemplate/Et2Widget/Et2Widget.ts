@@ -151,20 +151,17 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 				 */
 				statustext: {
 					type: String,
-					reflect: true,
-					translate: true
+					reflect: true
 				},
 
 				/**
 				 * The label of the widget
 				 * This is usually displayed in some way.  It's also important for accessability.
 				 * This is defined in the parent somewhere, and re-defining it causes labels to disappear
-				 *
-				label: {
-					type: String,
-					translate: true
-				},
 				 */
+				label: {
+					type: String
+				},
 
 				onclick: {
 					type: Function

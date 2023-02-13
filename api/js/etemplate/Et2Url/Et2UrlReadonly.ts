@@ -8,10 +8,8 @@
  */
 
 /* eslint-disable import/no-extraneous-dependencies */
-import {IsEmail} from "../Validators/IsEmail";
 import {Et2Description} from "../Et2Description/Et2Description";
-import {Et2UrlEmail} from "./Et2UrlEmail";
-import {css} from "@lion/core";
+import {css, TemplateResult} from "@lion/core";
 import {Et2Url} from "./Et2Url";
 
 /**
@@ -37,13 +35,29 @@ export class Et2UrlReadonly extends Et2Description
 		{
 			attrs.onclick = () =>
 			{
-				if (this.value)
+				if(this.value)
 				{
 					Et2Url.action(this.value);
 				}
 			}
 		}
 		super.transformAttributes(attrs);
+	}
+
+	/**
+	 * Override parent render so we can have the special case where label is used as link text
+	 *
+	 * @returns {TemplateResult<1>}
+	 * @protected
+	 */
+	protected render() : TemplateResult
+	{
+		if(this.label && !this.href && this.value)
+		{
+			// We have label & value, use label as link text
+			return this.wrapLink(this.value, this.label);
+		}
+		return super.render();
 	}
 }
 // @ts-ignore TypeScript is not recognizing that this is a LitElement
