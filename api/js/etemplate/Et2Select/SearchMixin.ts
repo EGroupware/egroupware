@@ -426,7 +426,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			let edit = null;
 			if(this.editModeEnabled)
 			{
-				edit = html`<input id="edit" type="text" part="input" style="width:100%"
+				edit = html`<input id="edit" type="text" part="input" autocomplete="off" style="width:100%"
                                    @keydown=${this._handleEditKeyDown}
                                    @click=${(e) => e.stopPropagation()}
                                    @blur=${this.stopEdit.bind(this)}
@@ -435,6 +435,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			// I can't figure out how to get this full width via CSS
 			return html`
                 <et2-textbox id="search" type="text" part="input" clearable
+                             autocomplete="off"
                              placeholder="${this.egw().lang("search")}"
                                style="width:100%"
                                @keydown=${this._handleSearchKeyDown}
