@@ -3435,7 +3435,7 @@ class addressbook_ui extends addressbook_bo
 					if(!isset($data['values'][''])) $sel_options['#'.$name][''] = lang('Select one');
 				}
 				// Make them not required, otherwise you can't search
-				$this->tmpl->setElementAttribute('#'.$name, 'needed', FALSE);
+				$this->tmpl->setElementAttribute('#' . $name, 'required', FALSE);
 			}
 		}
 		// configure edit template as search dialog
