@@ -139,8 +139,8 @@ class PropfindIterator implements \Iterator
 			if ($this->debug) error_log(__METHOD__."() returning TRUE");
 			return true;
 		}
-		// check if previous query gave less then CHUNK_SIZE entries --> we're done
-		if ($this->start && count($this->files) < self::CHUNK_SIZE)
+		// check if previous query gave not equal CHUNK_SIZE entries (or the last one is a not-found entry with just path / count()===1) --> we're done
+		if ($this->start && (count($this->files) != self::CHUNK_SIZE || count($this->files[self::CHUNK_SIZE-1]) === 1))
 		{
 			if ($this->debug) error_log(__METHOD__."() returning FALSE (no more entries)");
 			return false;

@@ -248,6 +248,12 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 		{
 			if (!is_array($filter[self::$path_attr])) $filter[self::$path_attr] = (array)$filter[self::$path_attr];
 			$requested_multiget_ids =& $filter[self::$path_attr];
+
+			// stop output buffering switched on to log the response, if we should return more than 200 entries
+			if (ob_get_level() && count($requested_multiget_ids) > 200)
+			{
+				ob_end_flush();
+			}
 		}
 
 		$files = array();
