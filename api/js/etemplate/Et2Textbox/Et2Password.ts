@@ -255,7 +255,7 @@ export class Et2Password extends Et2InvokerMixin(Et2Textbox)
                                 title=${this.title /* An empty title prevents browser validation tooltips from appearing on hover */}
                                 name=${ifDefined(this.name)}
                                 ?disabled=${this.disabled}
-                                readonly
+                                ?readonly=${this.readonly || this.autocomplete == "new-password"}
                                 ?required=${this.required}
                                 placeholder=${ifDefined(this.placeholder)}
                                 minlength=${ifDefined(this.minlength)}
@@ -265,8 +265,8 @@ export class Et2Password extends Et2InvokerMixin(Et2Textbox)
                                 step=${ifDefined(this.step as number)}
                                 .value=${this.value}
                                 autocapitalize=${ifDefined(this.type === 'password' ? 'off' : this.autocapitalize)}
-                                autocomplete=${ifDefined(this.type === 'password' ? 'off' : this.autocomplete)}
-                                autocorrect=${ifDefined(this.type === 'password' ? 'new-password' : this.autocorrect)}
+                                autocomplete=${ifDefined(this.autocomplete)}
+                                autocorrect=${ifDefined(this.autocorrect)}
                                 ?autofocus=${this.autofocus}
                                 spellcheck=${this.spellcheck}
                                 pattern=${ifDefined(this.pattern)}
@@ -341,9 +341,12 @@ export class Et2Password extends Et2InvokerMixin(Et2Textbox)
 		`;
 	}
 
-	handleFocus(e)
+	handleFocus(e : FocusEvent)
 	{
-		this.shadowRoot.querySelector("input[type='password']").removeAttribute("readonly");
+		if(!this.readonly)
+		{
+			this.shadowRoot.querySelector("input[type='password']").removeAttribute("readonly");
+		}
 		super.handleFocus(e);
 	}
 
