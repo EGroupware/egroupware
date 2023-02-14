@@ -5393,11 +5393,10 @@ app.classes.mail = AppJS.extend(
 			{
 				var title = egw.lang('Select') + ' ' + egw.lang(integApps[index]) + ' ' + (egw.link_get_registry(integApps[index], 'entry') ? egw.link_get_registry(integApps[index], 'entry') : egw.lang('entry'));
 				this.integrate_checkAppEntry(title, integApps[index].substr(3), subject.get_value(), '', mail_import_hook , function (args){
-					var value = {};
-					value[integApps[index]] = args.entryid;
-					var oldValue = to_integrate_ids.get_value()[0];
-					to_integrate_ids.set_value(jQuery.extend(value,oldValue));
-					index = index<integApps.length? ++index:false;
+
+					var oldValue = to_integrate_ids.get_value() || [];
+					to_integrate_ids.set_value([integApps[index] + ":" + args.entryid, ...oldValue]);
+					index = index < integApps.length ? ++index : false;
 					self.compose_integrate_submit(index);
 				});
 				return true;

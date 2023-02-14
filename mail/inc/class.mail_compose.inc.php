@@ -3413,7 +3413,7 @@ class mail_compose
 
 			foreach(array('to_infolog','to_tracker','to_calendar') as $app_key)
 			{
-				$entryid = $_formData['to_integrate_ids'][0][$app_key] ?? null;
+				list(, $entryid) = explode(":", $_formData['to_integrate_ids'][0]) ?? null;
 				if ($_formData[$app_key] == 'on')
 				{
 					$app_name = substr($app_key,3);
