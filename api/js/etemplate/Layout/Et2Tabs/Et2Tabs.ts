@@ -355,7 +355,9 @@ export class Et2Tabs extends Et2InputWidget(SlTabGroup) implements et2_IResizeab
 			id: tab.id,
 			name: tab.id,
 			active: active,
-			hidden: tab.hidden
+			hidden: tab.hidden,
+			// Set readonly so it gets passed on to children
+			readonly: tab.hidden
 		}, this);
 
 		// Tab content

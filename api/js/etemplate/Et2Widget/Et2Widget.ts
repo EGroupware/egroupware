@@ -849,7 +849,7 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 
 		iterateOver(_callback : Function, _context, _type)
 		{
-			if (typeof _type === "undefined" || _type === et2_widget || _type === Et2Widget ||
+			if(typeof _type === "undefined" || _type === et2_widget || _type === Et2Widget ||
 				typeof _type === 'function' && this instanceof _type ||
 				et2_implements_registry[_type] && et2_implements_registry[_type](this))
 			{
@@ -1371,7 +1371,7 @@ export function loadWebComponent(_nodeName : string, _template_node : Element|{[
 	const readonly = parent?.getArrayMgr("readonlys") ?
 					 (<any>parent.getArrayMgr("readonlys")).isReadOnly(
 						 attrs["id"], attrs["readonly"],
-						 typeof parent?.readonly !== "undefined" ? parent.readonly : false) : false;
+						 typeof parent?.readonly !== "undefined" ? parent.readonly : parent.options?.readonly || false) : false;
 	if(readonly === true && typeof window.customElements.get(_nodeName + "_ro") != "undefined")
 	{
 		_nodeName += "_ro";
