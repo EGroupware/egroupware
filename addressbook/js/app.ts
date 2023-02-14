@@ -716,15 +716,20 @@ class AddressbookApp extends EgwApp
 	 */
 	check_value(widget, own_id)
 	{
+		// Skip check in advanced search
+		if(this.et2.getArrayMgr("content").getEntry("showsearchbuttons") === true)
+		{
+			return;
+		}
 		// if we edit an account, call account_change to let it do it's stuff too
-		if (this.et2.getWidgetById('account_lid'))
+		if(this.et2.getWidgetById('account_lid'))
 		{
 			this.account_change(null, widget);
 		}
 
 		var values = this.et2._inst.getValues(this.et2);
 
-		if (widget.id.match(/n_/))
+		if(widget.id.match(/n_/))
 		{
 			var value = '';
 			if (values.n_prefix) value += values.n_prefix+" ";
