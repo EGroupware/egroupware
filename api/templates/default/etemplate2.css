@@ -833,14 +833,12 @@ which caused click on free space infront of a tag stops nm row selection*/
 /*
 Nextmatch print dialog
 */
-#nm_print_dialog-xet .slideSwitch_container .on {
-    background-image: url('images/portrait.svg');
-    background-position: 5px 0px;
+#nm_print_dialog et2-switch#_orientation .label .on {
+	background-image: url('images/portrait.svg');
 }
 
-#nm_print_dialog-xet .slideSwitch_container .off {
-    background-image: url('images/landscape.svg');
-    background-position: 5px -2px;
+#nm_print_dialog et2-switch#_orientation .label .off {
+	background-image: url('images/landscape.svg');
 }
 
 /*
@@ -3281,25 +3279,40 @@ span.et2_checkbox_slideSwitch > span.slideSwitch_container a {
 }
 
 span.et2_checkbox_slideSwitch > input {
-    opacity: 0;
-    position: absolute;
-    z-index: 7;
-    width: 100%;
-    height: 100%;
-    cursor: pointer;
+	opacity: 0;
+	position: absolute;
+	z-index: 7;
+	width: 100%;
+	height: 100%;
+	cursor: pointer;
 }
 
 span.et2_checkbox_slideSwitch.switchOn > span.slideSwitch_container a {
-    right: 50%;
+	right: 50%;
+}
+
+.et2SlideSwitch .label > * {
+	background-size: contain;
+	height: 75%;
+	width: 50%;
+	background-repeat: no-repeat;
+	background-position: center;
+	height: 28px;
+	top: 0;
+	color: transparent;
+}
+
+.et2SlideSwitch[checked] .label .on, .et2SlideSwitch:not([checked]) .label .off {
+	filter: invert(1);
 }
 
 /* Slide switch in a toolbar */
 .et2_toolbar_actionlist span.et2_checkbox_slideSwitch {
-    vertical-align: bottom;
-    margin: 1px;
-    margin-right: 3px;
-    border-radius: 3px;
-    cursor: pointer;
+	vertical-align: bottom;
+	margin: 1px;
+	margin-right: 3px;
+	border-radius: 3px;
+	cursor: pointer;
 }
 
 .et2_toolbar_more span.et2_checkbox_slideSwitch {

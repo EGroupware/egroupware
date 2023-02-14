@@ -2941,13 +2941,14 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 					return;
 				}
 
+				const orientation = value.orientation ? "landscape" : "portrait";
 				// Set CSS for orientation
-				this.div.addClass(value.orientation);
-				this.egw().set_preference(app, pref + '_orientation', value.orientation);
+				this.div.addClass(orientation);
+				this.egw().set_preference(app, pref + '_orientation', orientation);
 
 
 				// Try to tell browser about orientation
-				const css = '@page { size: ' + value.orientation + '; }',
+				const css = '@page { size: ' + orientation + '; }',
 					head = document.head || document.getElementsByTagName('head')[0],
 					style = document.createElement('style');
 
@@ -3107,7 +3108,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 				content: {
 					row_count: Math.min(100, total),
 					columns: this.egw().preference(pref, app) || columns_selected,
-					orientation: this.egw().preference(pref + '_orientation', app)
+					orientation: this.egw().preference(pref + '_orientation', app) == "landscape"
 				},
 				modifications: {
 					autoRefresh: {

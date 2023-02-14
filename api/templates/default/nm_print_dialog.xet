@@ -2,11 +2,15 @@
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="nm_print_dialog" template="" lang="" group="0" version="16.1">
-		<et2-vbox>
-			<et2-description  value="Columns to print"></et2-description>
-            <et2-nextmatch-columnselection  id="columns"></et2-nextmatch-columnselection>
-			<et2-number  id="row_count" label="How many rows to print" precision="0"></et2-number>
-			<et2-checkbox  id="orientation" toggleOn="Portrait" toggleOff="Landscape" selectedValue="portrait" unselectedValue="landscape"></et2-checkbox>
-		</et2-vbox>
-	</template>
+        <et2-vbox>
+            <et2-description value="Columns to print"></et2-description>
+            <et2-nextmatch-columnselection id="columns"></et2-nextmatch-columnselection>
+            <et2-number id="row_count" label="How many rows to print" precision="0"></et2-number>
+            <et2-hbox>
+                <et2-description value="Print orientation"/>
+                <et2-switch id="orientation" label="Print orientation" toggleOn="Portrait" toggleOff="Landscape"
+                            class="et2SlideSwitch"></et2-switch>
+            </et2-hbox>
+        </et2-vbox>
+    </template>
 </overlay>
