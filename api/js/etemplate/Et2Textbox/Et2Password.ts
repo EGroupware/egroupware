@@ -266,7 +266,7 @@ export class Et2Password extends Et2InvokerMixin(Et2Textbox)
                                 .value=${this.value}
                                 autocapitalize=${ifDefined(this.type === 'password' ? 'off' : this.autocapitalize)}
                                 autocomplete=${ifDefined(this.autocomplete)}
-                                autocorrect=${ifDefined(this.autocorrect)}
+                                autocorrect="off"
                                 ?autofocus=${this.autofocus}
                                 spellcheck=${this.spellcheck}
                                 pattern=${ifDefined(this.pattern)}
