@@ -4026,7 +4026,8 @@ span.et2_countdown_seconds {
 
 /** Hide flatpickr calendar when initially created */
 body .flatpickr-calendar {
-    display: none;
+	display: none;
+	box-shadow: 0 2px 8px hsl(240 3.8% 46.1% / 12%);
 }
 
 .flatpickr-calendar.open {
