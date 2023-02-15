@@ -217,10 +217,10 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 	 * @param array $extra extra resources like the collection itself
 	 * @param int|null $nresults option limit of number of results to report
 	 * @param boolean $report_not_found_multiget_ids=true
-	 * @return array with "files" array with values for keys path and props
+	 * @return Generator<array with values for keys path and props>
 	 * @ToDo also use CHUNK_SIZE when querying lists
 	 */
-	function propfind_generator($path, array &$filter, array $extra, $nresults=null, $report_not_found_multiget_ids=true)
+	function propfind_generator($path, array &$filter, array $extra=[], $nresults=null, $report_not_found_multiget_ids=true)
 	{
 		//error_log(__METHOD__."('$path', ".array2string($filter).", ".array2string($start).", $report_not_found_multiget_ids)");
 		$starttime = microtime(true);
@@ -259,6 +259,7 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 		// stop output buffering switched on to log the response, if we should return more than 200 entries
 		if (!empty($this->requested_multiget_ids) && ob_get_level() && count($this->requested_multiget_ids) > 200)
 		{
+			$this->caldav->log("### ".count($this->requested_multiget_ids)." resources requested in multiget REPORT --> turning logging off to allow streaming of the response");
 			ob_end_flush();
 		}
 
@@ -307,7 +308,11 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 				// sync-collection report: deleted entry need to be reported without properties
 				if ($contact['tid'] == Api\Contacts::DELETED_TYPE)
 				{
-					$files[] = array('path' => $path.urldecode($this->get_path($contact)));
+					if (++$yielded && isset($nresults) && $yielded > $nresults)
+					{
+						return;
+					}
+					yield ['path' => $path.urldecode($this->get_path($contact))];
 					continue;
 				}
 				$props = array(

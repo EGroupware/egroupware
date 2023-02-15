@@ -57,6 +57,13 @@ class infolog_groupdav extends Api\CalDAV\Handler
 	static $path_attr = 'info_id';
 
 	/**
+	 * Contains IDs for multiget REPORT to be able to report missing ones
+	 *
+	 * @var string[]
+	 */
+	var $requested_multiget_ids;
+
+	/**
 	 * Constructor
 	 *
 	 * @param string $app 'calendar', 'addressbook' or 'infolog'
@@ -204,10 +211,10 @@ class infolog_groupdav extends Api\CalDAV\Handler
 
 		if (isset($nresults))
 		{
-			$files['files'] = $this->propfind_callback($path, $filter, array(0, (int)$nresults));
+			$files['files'] = $this->propfind_generator($path, $filter, [], $nresults);
 
 			// hack to support limit with sync-collection report: contacts are returned in modified ASC order (oldest first)
-			// if limit is smaller then full result, return modified-1 as sync-token, so client requests next chunk incl. modified
+			// if limit is smaller than full result, return modified-1 as sync-token, so client requests next chunk incl. modified
 			// (which might contain further entries with identical modification time)
 			if ($options['root']['name'] == 'sync-collection' && $this->bo->total > $nresults)
 			{
@@ -217,21 +224,26 @@ class infolog_groupdav extends Api\CalDAV\Handler
 		}
 		else
 		{
-			// return iterator, calling ourself to return result in chunks
-			$files['files'] = new Api\CalDAV\PropfindIterator($this,$path,$filter,$files['files']);
+			$files['files'] = $this->propfind_generator($path,$filter, $files['files']);
 		}
 		return true;
 	}
 
 	/**
-	 * Callback for profind interator
+	 * Chunk-size for DB queries of profind_generator
+	 */
+	const CHUNK_SIZE = 500;
+
+	/**
+	 * Generator for propfind with ability to skip reporting not found ids
 	 *
 	 * @param string $path
-	 * @param array &$filter
-	 * @param array|boolean $start =false false=return all or array(start,num)
-	 * @return array with "files" array with values for keys path and props
+	 * @param array& $filter
+	 * @param array $extra extra resources like the collection itself
+	 * @param int|null $nresults option limit of number of results to report
+	 * @return Generator<array with values for keys path and props>
 	 */
-	function &propfind_callback($path,array &$filter,$start=false)
+	function propfind_generator($path, array &$filter, array $extra=[], $nresults=null)
 	{
 		if ($this->debug) $starttime = microtime(true);
 
@@ -242,6 +254,17 @@ class infolog_groupdav extends Api\CalDAV\Handler
 		unset($filter['calendar_data']);
 		$task_filter = $filter['filter'];
 		unset($filter['filter']);
+
+		// yield extra resources like the root itself
+		$yielded = 0;
+		foreach($extra as $resource)
+		{
+			if (++$yielded && isset($nresults) && $yielded > $nresults)
+			{
+				return;
+			}
+			yield $resource;
+		}
 
 		$order = 'info_datemodified';
 		$sort = 'DESC';
@@ -272,32 +295,19 @@ class infolog_groupdav extends Api\CalDAV\Handler
 			$query['cols'] = array('main.info_id AS info_id', 'info_datemodified', 'info_uid', 'caldav_name', 'info_subject', 'info_status', 'info_owner');
 		}
 
-		if (is_array($start))
-		{
-			$query['start'] = $offset = $start[0];
-			$query['num_rows'] = $start[1];
-		}
-		else
-		{
-			$offset = 0;
-		}
-
-		if (!empty($filter[self::$path_attr]))
-		{
-			$requested_multiget_ids =& $filter[self::$path_attr];
-		}
-
 		$files = array();
 		// ToDo: add parameter to only return id & etag
-		$tasks =& $this->bo->search($query);
-		if ($tasks && $offset == $query['start'])
+		for($chunk=0; ($params = $query+[
+			'start' => $chunk*self::CHUNK_SIZE,
+			'num_rows' => self::CHUNK_SIZE,
+		]) && ($tasks =& $this->bo->search($params)); ++$chunk)
 		{
 			foreach($tasks as $task)
 			{
 				// remove task from requested multiget ids, to be able to report not found urls
-				if (!empty($requested_multiget_ids) && ($k = array_search($task[self::$path_attr], $requested_multiget_ids)) !== false)
+				if (!empty($this->requested_multiget_ids) && ($k = array_search($task[self::$path_attr], $this->requested_multiget_ids)) !== false)
 				{
-					unset($requested_multiget_ids[$k]);
+					unset($this->requested_multiget_ids[$k]);
 				}
 				// sync-collection report: deleted entry need to be reported without properties
 				if ($task['info_status'] == 'deleted' ||
@@ -305,7 +315,11 @@ class infolog_groupdav extends Api\CalDAV\Handler
 					$check_responsible && $task['info_owner'] != $check_responsible &&
 						!infolog_so::is_responsible_user($task, $check_responsible))
 				{
-					$files[] = array('path' => $path.urldecode($this->get_path($task)));
+					if (++$yielded && isset($nresults) && $yielded > $nresults)
+					{
+						return;
+					}
+					yield ['path' => $path.urldecode($this->get_path($task))];
 					continue;
 				}
 				$props = array(
@@ -319,15 +333,23 @@ class infolog_groupdav extends Api\CalDAV\Handler
 					$props['getcontentlength'] = bytes($content);
 					$props[] = Api\CalDAV::mkprop(Api\CalDAV::CALDAV,'calendar-data',$content);
 				}
-				$files[] = $this->add_resource($path, $task, $props);
+				if (++$yielded && isset($nresults) && $yielded > $nresults)
+				{
+					return;
+				}
+				yield $this->add_resource($path, $task, $props);
 			}
 		}
 		// report not found multiget urls
-		if (!empty($requested_multiget_ids))
+		if (!empty($this->requested_multiget_ids))
 		{
-			foreach($requested_multiget_ids as $id)
+			foreach($this->requested_multiget_ids as $id)
 			{
-				$files[] = array('path' => $path.$id.self::$path_extension);
+				if (++$yielded && isset($nresults) && $yielded > $nresults)
+				{
+					return;
+				}
+				yield ['path' => $path.$id.self::$path_extension];
 			}
 		}
 		// sync-collection report --> return modified of last contact as sync-token
@@ -335,17 +357,11 @@ class infolog_groupdav extends Api\CalDAV\Handler
 		if ($sync_collection_report)
 		{
 			$this->sync_collection_token = $task['date_modified'];
-
-			// hack to support limit with sync-collection report: tasks are returned in modified ASC order (oldest first)
-			// if limit is smaller then full result, return modified-1 as sync-token, so client requests next chunk incl. modified
-			// (which might contain further entries with identical modification time)
-			if ($start[0] == 0 && $start[1] != Api\CalDAV\PropfindIterator::CHUNK_SIZE && $this->bo->total > $start[1])
-			{
-				--$this->sync_collection_token;
-			}
 		}
-		if ($this->debug) error_log(__METHOD__."($path) took ".(microtime(true) - $starttime).' to return '.count($files).' items');
-		return $files;
+		if ($this->debug)
+		{
+			error_log(__METHOD__."($path) took ".(microtime(true) - $starttime)." to return $yielded resources");
+		}
 	}
 
 	/**
@@ -445,10 +461,9 @@ class infolog_groupdav extends Api\CalDAV\Handler
 			}
 		}
 		// multiget or propfind on a given id
-		//error_log(__FILE__ . __METHOD__ . "multiget of propfind:");
+		$this->requested_multiget_ids = null;
 		if ($options['root']['name'] == 'calendar-multiget' || $id)
 		{
-			$ids = array();
 			if ($id)
 			{
 				$cal_filters[self::$path_attr] = self::$path_extension ?
@@ -456,6 +471,7 @@ class infolog_groupdav extends Api\CalDAV\Handler
 			}
 			else	// fetch all given url's
 			{
+				$this->requested_multiget_ids = [];
 				foreach($options['other'] as $option)
 				{
 					if ($option['name'] == 'href')
@@ -463,13 +479,14 @@ class infolog_groupdav extends Api\CalDAV\Handler
 						$parts = explode('/',$option['data']);
 						if (($id = basename(urldecode(array_pop($parts)))))
 						{
-							$cal_filters[self::$path_attr][] = self::$path_extension ?
+							$this->requested_multiget_ids[] = self::$path_extension ?
 								basename($id,self::$path_extension) : $id;
 						}
 					}
 				}
+				$cal_filters[self::$path_attr] = $this->requested_multiget_ids;
 			}
-			if ($this->debug > 1) error_log(__METHOD__ ."($options[path],...,$id) calendar-multiget: ids=".implode(',',$ids));
+			if ($this->debug > 1) error_log(__METHOD__ ."($options[path],...,$id) calendar-multiget: ids=".implode(',', $this->requested_multiget_ids));
 		}
 		return true;
 	}

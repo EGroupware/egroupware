@@ -86,6 +86,13 @@ class calendar_groupdav extends Api\CalDAV\Handler
 	static $path_attr = 'id';
 
 	/**
+	 * Contains IDs for multiget REPORT to be able to report missing ones
+	 *
+	 * @var string[]
+	 */
+	var $requested_multiget_ids;
+
+	/**
 	 * Constructor
 	 *
 	 * @param string $app 'calendar', 'addressbook' or 'infolog'
@@ -252,10 +259,10 @@ class calendar_groupdav extends Api\CalDAV\Handler
 		if (isset($nresults))
 		{
 			unset($filter['no_total']);	// we need the total!
-			$files['files'] = $this->propfind_callback($path, $filter, array(0, (int)$nresults));
+			$files['files'] = $this->propfind_generator($path, $filter, [], (int)$nresults);
 
 			// hack to support limit with sync-collection report: events are returned in modified ASC order (oldest first)
-			// if limit is smaller then full result, return modified-1 as sync-token, so client requests next chunk incl. modified
+			// if limit is smaller than full result, return modified-1 as sync-token, so client requests next chunk incl. modified
 			// (which might contain further entries with identical modification time)
 			if ($options['root']['name'] == 'sync-collection' && $this->bo->total > $nresults)
 			{
@@ -265,8 +272,7 @@ class calendar_groupdav extends Api\CalDAV\Handler
 		}
 		else
 		{
-			// return iterator, calling ourself to return result in chunks
-			$files['files'] = new Api\CalDAV\PropfindIterator($this,$path,$filter,$files['files']);
+			$files['files'] = $this->propfind_generator($path, $filter, $files['files']);
 		}
 		if (isset($_GET['download']))
 		{
@@ -323,48 +329,58 @@ class calendar_groupdav extends Api\CalDAV\Handler
 	}
 
 	/**
-	 * Callback for profind interator
+	 * Chunk-size for DB queries of profind_generator
+	 */
+	const CHUNK_SIZE = 500;
+
+	/**
+	 * Generator for propfind with ability to skip reporting not found ids
 	 *
 	 * @param string $path
-	 * @param array &$filter
-	 * @param array|boolean $start =false false=return all or array(start,num)
-	 * @return array with "files" array with values for keys path and props
+	 * @param array& $filter
+	 * @param array $extra extra resources like the collection itself
+	 * @param int|null $nresults option limit of number of results to report
+	 * @return Generator<array with values for keys path and props>
 	 */
-	function &propfind_callback($path, array &$filter, $start=false)
+	function propfind_generator($path, array &$filter, array $extra=[], $nresults=null)
 	{
 		if ($this->debug) $starttime = microtime(true);
 
 		$calendar_data = $this->caldav->prop_requested('calendar-data', Api\CalDAV::CALDAV, true);
 		if (!is_array($calendar_data)) $calendar_data = false;	// not in allprop or autoindex
 
-		$files = array();
-
-		if (is_array($start))
+		// yield extra resources like the root itself
+		$yielded = 0;
+		foreach($extra as $resource)
 		{
-			$filter['offset'] = $start[0];
-			$filter['num_rows'] = $start[1];
-		}
-		if (!empty($filter['query'][self::$path_attr]))
-		{
-			$requested_multiget_ids =& $filter['query'][self::$path_attr];
+			if (++$yielded && isset($nresults) && $yielded > $nresults)
+			{
+				return;
+			}
+			yield $resource;
 		}
 		$sync_collection = $filter['sync-collection'];
 
-		$events =& $this->bo->search($filter);
-
-		if ($events)
+		for($chunk=0; $events =& $this->bo->search($filter+[
+			'offset' => $chunk*self::CHUNK_SIZE,
+			'num_rows' => self::CHUNK_SIZE,
+		]); ++$chunk)
 		{
 			foreach($events as $event)
 			{
 				// remove event from requested multiget ids, to be able to report not found urls
-				if (!empty($requested_multiget_ids) && ($k = array_search($event[self::$path_attr], $requested_multiget_ids)) !== false)
+				if (!empty($this->requested_multiget_ids) && ($k = array_search($event[self::$path_attr], $this->requested_multiget_ids)) !== false)
 				{
-					unset($requested_multiget_ids[$k]);
+					unset($this->requested_multiget_ids[$k]);
 				}
 				// sync-collection report: deleted entries need to be reported without properties, same for rejected or deleted invitations
 				if ($sync_collection && ($event['deleted'] && !$event['cal_reference'] || in_array($event['participants'][$filter['users']][0], array('R','X'))))
 				{
-					$files[] = array('path' => $path.urldecode($this->get_path($event)));
+					if (++$yielded && isset($nresults) && $yielded > $nresults)
+					{
+						return;
+					}
+					yield ['path' => $path.urldecode($this->get_path($event))];
 					continue;
 				}
 				$schedule_tag = null;
@@ -406,15 +422,23 @@ class calendar_groupdav extends Api\CalDAV\Handler
 						)),
 					));
 				}*/
-				$files[] = $this->add_resource($path, $event, $props);
+				if (++$yielded && isset($nresults) && $yielded > $nresults)
+				{
+					return;
+				}
+				yield  $this->add_resource($path, $event, $props);
 			}
 		}
 		// report not found multiget urls
-		if (!empty($requested_multiget_ids))
+		if (!empty($this->requested_multiget_ids))
 		{
-			foreach($requested_multiget_ids as $id)
+			foreach($this->requested_multiget_ids as $id)
 			{
-				$files[] = array('path' => $path.$id.self::$path_extension);
+				if (++$yielded && isset($nresults) && $yielded > $nresults)
+				{
+					return;
+				}
+				yield ['path' => $path.$id.self::$path_extension];
 			}
 		}
 		// sync-collection report --> return modified of last contact as sync-token
@@ -426,9 +450,8 @@ class calendar_groupdav extends Api\CalDAV\Handler
 		if ($this->debug)
 		{
 			error_log(__METHOD__."($path) took ".(microtime(true) - $starttime).
-				' to return '.count($files['files']).' items');
+				" to return $yielded resources");
 		}
-		return $files;
 	}
 
 	/**
@@ -595,13 +618,12 @@ class calendar_groupdav extends Api\CalDAV\Handler
 		}
 		// multiget or propfind on a given id
 		//error_log(__FILE__ . __METHOD__ . "multiget of propfind:");
+		$this->requested_multiget_ids = null;
 		if ($options['root']['name'] == 'calendar-multiget' || $id)
 		{
 			// no standard time-range!
 			unset($cal_filters['start']);
 			unset($cal_filters['end']);
-
-			$ids = array();
 
 			if ($id)
 			{
@@ -610,6 +632,7 @@ class calendar_groupdav extends Api\CalDAV\Handler
 			}
 			else	// fetch all given url's
 			{
+				$this->requested_multiget_ids = [];
 				foreach($options['other'] as $option)
 				{
 					if ($option['name'] == 'href')
@@ -617,11 +640,12 @@ class calendar_groupdav extends Api\CalDAV\Handler
 						$parts = explode('/',$option['data']);
 						if (($id = urldecode(array_pop($parts))))
 						{
-							$cal_filters['query'][self::$path_attr][] = self::$path_extension ?
+							$this->requested_multiget_ids[] = self::$path_extension ?
 								basename($id,self::$path_extension) : $id;
 						}
 					}
 				}
+				$cal_filters['query'][self::$path_attr] = $this->requested_multiget_ids;
 			}
 
 			if ($this->debug > 1) error_log(__FILE__ . __METHOD__ ."($options[path],...,$id) calendar-multiget: ids=".implode(',',$ids).', cal_filters='.array2string($cal_filters));
