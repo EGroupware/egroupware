@@ -134,6 +134,24 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 				display: none;
 			  }
 
+			  /* Style for tag count if rows=1 */
+
+			  :host([readonly][multiple][rows]) .select__tags sl-tag {
+				position: absolute;
+				right: 0px;
+				top: 1px;
+				box-shadow: rgb(0 0 0/50%) -1.5ex 0px 1ex -1ex, rgb(0 0 0 / 0%) 0px 0px 0px 0px;
+			  }
+
+			  :host([readonly][multiple][rows]) .select__tags sl-tag::part(base) {
+				background-color: var(--sl-input-background-color);
+				border-top-left-radius: 0;
+				border-bottom-left-radius: 0;
+				font-weight: bold;
+				min-width: 3em;
+				justify-content: center;
+			  }
+
 			  /* Show all rows on hover if rows=1 */
 
 			  :host([readonly][multiple][rows]):hover .select__tags {
@@ -305,18 +323,19 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 	}
 
 	/**
-	 * If maxTagsVisible=1 and rows=1 and multiple=true, when they put the mouse over the widget show all tags
+	 * If rows=1 and multiple=true, when they put the mouse over the widget show all tags
 	 * @param {MouseEvent} e
 	 * @private
 	 */
 	private _handleMouseEnter(e : MouseEvent)
 	{
-		if(this.maxTagsVisible == 1 && this.rows == 1 && this.multiple == true && this.value.length > 1)
+		if(this.rows == 1 && this.multiple == true && this.value.length > 1)
 		{
 			e.stopPropagation();
 			let distance = (-1 * parseInt(getComputedStyle(this).height)) - 1;
 
 			// Show all tags
+			this._oldMaxTagsVisible = this.maxTagsVisible;
 			this.maxTagsVisible = 0;
 			this._oldRows = this.rows;
 			this.rows = 10;
@@ -360,7 +379,8 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 			popup.parentNode.insertBefore(label, popup);
 			popup.remove();
 		}
-		this.maxTagsVisible = 1;
+		this.maxTagsVisible = this._oldMaxTagsVisible;
+		delete this._oldMaxTagsVisible;
 		this.rows = this._oldRows;
 		delete this._oldRows;
 		this.syncItemsFromValue();
@@ -510,6 +530,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		{
 			overflow = this.displayTags.pop();
 		}
+
 		const checkedItems = Object.values(this._menuItems).filter(item => this.value.includes(item.value));
 		this.displayTags = checkedItems.map(item => this._createTagNode(item));
 
@@ -518,6 +539,12 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		{
 			this.displayTags = this.displayTags.slice(0, this.maxTagsVisible);
 			this.displayTags.push(overflow);
+		}
+		else if(this.multiple && this.rows == 1 && this.readonly && this.value.length > 1)
+		{
+			// Maybe more tags than we can show, show the count
+			this.displayTags.push(html`
+                <sl-tag class="multiple_tag" size=${this.size}>${this.value.length}</sl-tag> `);
 		}
 	}
 
