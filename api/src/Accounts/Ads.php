@@ -125,6 +125,7 @@ class Ads
 		'objectsid', 'samaccounttype', 'samaccountname',
 		'primarygroupid', 'givenname', 'sn', 'mail', 'displayname', 'telephonenumber',
 		'objectguid', 'useraccountcontrol', 'accountexpires', 'pwdlastset', 'whencreated', 'whenchanged', 'lastlogon',
+		'jpegphoto',
 	);
 
 	/**
@@ -582,6 +583,7 @@ class Ads
 				self::_when2ts($data['whencreated'][0]),
 			'account_modified' => !isset($data['whenchanged'][0]) ? null :
 				self::_when2ts($data['whenchanged'][0]),
+			'account_has_photo' => !empty($data['jpegphoto'][0])
 		);
 		// expired accounts are NOT active
 		if ($user['account_expires'] !== -1 && $user['account_expires'] < time())
