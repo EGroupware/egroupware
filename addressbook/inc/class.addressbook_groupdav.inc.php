@@ -244,7 +244,7 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 		$sync_collection_report = $filter['sync-collection'];
 		unset($filter['sync-collection']);
 
-		if (isset($filter[self::$path_attr]))
+		if (!empty($filter[self::$path_attr]))
 		{
 			if (!is_array($filter[self::$path_attr])) $filter[self::$path_attr] = (array)$filter[self::$path_attr];
 			$requested_multiget_ids =& $filter[self::$path_attr];
@@ -293,7 +293,7 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 			foreach($contacts as &$contact)
 			{
 				// remove contact from requested multiget ids, to be able to report not found urls
-				if ($requested_multiget_ids && ($k = array_search($contact[self::$path_attr], $requested_multiget_ids)) !== false)
+				if (!empty($requested_multiget_ids) && ($k = array_search($contact[self::$path_attr], $requested_multiget_ids)) !== false)
 				{
 					unset($requested_multiget_ids[$k]);
 				}
@@ -386,7 +386,7 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 						$files[] = $this->add_resource($path, $list, $props);
 
 						// remove list from requested multiget ids, to be able to report not found urls
-						if ($requested_multiget_ids && ($k = array_search($list[self::$path_attr], $requested_multiget_ids)) !== false)
+						if (!empty($requested_multiget_ids) && ($k = array_search($list[self::$path_attr], $requested_multiget_ids)) !== false)
 						{
 							unset($requested_multiget_ids[$k]);
 						}
@@ -399,7 +399,7 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 				}
 			}
 			// report not found multiget urls
-			if ($report_not_found_multiget_ids && $requested_multiget_ids)
+			if ($report_not_found_multiget_ids && !empty($requested_multiget_ids))
 			{
 				foreach($requested_multiget_ids as $id)
 				{

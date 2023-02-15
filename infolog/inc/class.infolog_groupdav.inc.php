@@ -282,7 +282,10 @@ class infolog_groupdav extends Api\CalDAV\Handler
 			$offset = 0;
 		}
 
-		$requested_multiget_ids =& $filter[self::$path_attr];
+		if (!empty($filter[self::$path_attr]))
+		{
+			$requested_multiget_ids =& $filter[self::$path_attr];
+		}
 
 		$files = array();
 		// ToDo: add parameter to only return id & etag
@@ -292,7 +295,7 @@ class infolog_groupdav extends Api\CalDAV\Handler
 			foreach($tasks as $task)
 			{
 				// remove task from requested multiget ids, to be able to report not found urls
-				if ($requested_multiget_ids && ($k = array_search($task[self::$path_attr], $requested_multiget_ids)) !== false)
+				if (!empty($requested_multiget_ids) && ($k = array_search($task[self::$path_attr], $requested_multiget_ids)) !== false)
 				{
 					unset($requested_multiget_ids[$k]);
 				}
@@ -320,7 +323,7 @@ class infolog_groupdav extends Api\CalDAV\Handler
 			}
 		}
 		// report not found multiget urls
-		if ($requested_multiget_ids)
+		if (!empty($requested_multiget_ids))
 		{
 			foreach($requested_multiget_ids as $id)
 			{

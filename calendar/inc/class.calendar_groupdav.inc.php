@@ -344,7 +344,10 @@ class calendar_groupdav extends Api\CalDAV\Handler
 			$filter['offset'] = $start[0];
 			$filter['num_rows'] = $start[1];
 		}
-		$requested_multiget_ids =& $filter['query'][self::$path_attr];
+		if (!empty($filter['query'][self::$path_attr]))
+		{
+			$requested_multiget_ids =& $filter['query'][self::$path_attr];
+		}
 		$sync_collection = $filter['sync-collection'];
 
 		$events =& $this->bo->search($filter);
@@ -354,7 +357,7 @@ class calendar_groupdav extends Api\CalDAV\Handler
 			foreach($events as $event)
 			{
 				// remove event from requested multiget ids, to be able to report not found urls
-				if ($requested_multiget_ids && ($k = array_search($event[self::$path_attr], $requested_multiget_ids)) !== false)
+				if (!empty($requested_multiget_ids) && ($k = array_search($event[self::$path_attr], $requested_multiget_ids)) !== false)
 				{
 					unset($requested_multiget_ids[$k]);
 				}
@@ -407,7 +410,7 @@ class calendar_groupdav extends Api\CalDAV\Handler
 			}
 		}
 		// report not found multiget urls
-		if ($requested_multiget_ids)
+		if (!empty($requested_multiget_ids))
 		{
 			foreach($requested_multiget_ids as $id)
 			{
