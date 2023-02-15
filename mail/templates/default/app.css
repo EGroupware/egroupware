@@ -1126,3 +1126,9 @@ et2-searchbox#mail-index_nm_search {
 .nextmatch_header_row>.filtersContainer>et2-select, .nextmatch_header_row>.filtersContainer>et2-select-cat {
 	width: 80px;
 }
+et2-split#mail-index_mailSplitter.limitted .header_count {
+	display: none;
+}
+et2-split#mail-index_mailSplitter.squeezed .mail-index_quotabox{
+	display: none;
+}
