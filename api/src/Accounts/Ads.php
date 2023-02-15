@@ -228,7 +228,7 @@ class Ads
 	 * @param int $account_id
 	 * @return string|NULL
 	 */
-	protected function get_sid($account_id=null)
+	public function get_sid($account_id=null)
 	{
 		static $domain_sid = null;
 		if (!isset($domain_sid))

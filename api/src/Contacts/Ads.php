@@ -172,6 +172,31 @@ class Ads extends Ldap
 	}
 
 	/**
+	 * Return LDAP filter for (multiple) account ids
+	 *
+	 * @param int|int[]|null $ids
+	 * @return string
+	 */
+	protected function account_ids_filter($ids)
+	{
+		$filter = '';
+		if (is_null($ids))
+		{
+			$filter = '(!(objectsid=*))';
+		}
+		elseif ($ids)
+		{
+			if (is_array($ids)) $filter = '(|';
+			foreach((array)$ids as $account_id)
+			{
+				$filter .= '(objectsid='.$this->accounts_ads->get_sid($account_id).')';
+			}
+			if (is_array($ids)) $filter .= ')';
+		}
+		return $filter;
+	}
+
+	/**
 	 * Reads contact data
 	 *
 	 * @param string|array $_contact_id contact_id or array with values for id or account_id
@@ -202,7 +227,7 @@ class Ads extends Ldap
 	}
 
 	/**
-	 * Special handling for mapping data of ADA user objectclass to eGW contact
+	 * Special handling for mapping data of ADS user objectclass to eGW contact
 	 *
 	 * Please note: all regular fields are already copied!
 	 *

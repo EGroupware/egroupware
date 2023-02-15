@@ -481,6 +481,29 @@ class Ldap
 	}
 
 	/**
+	 * Return LDAP filter for (multiple) account ids
+	 *
+	 * @param int|int[]|null $ids
+	 * @return string
+	 */
+	protected function account_ids_filter($ids)
+	{
+		$filter = '';
+		if (is_null($ids))
+		{
+			$filter = '(!(uidNumber=*))';
+		}
+		elseif ($ids)
+		{
+			$filter = $this->ids_filter(array_map(static function($account_id)
+			{
+				return $GLOBALS['egw']->accounts->id2name($account_id, 'person_id');
+			}, (array)$ids));
+		}
+		return $filter;
+	}
+
+	/**
 	 * reads contact data
 	 *
 	 * @param string|array $contact_id contact_id or array with values for id or account_id
@@ -1030,19 +1053,7 @@ class Ldap
 					break;
 
 				case 'account_id':
-					if (is_null($value))
-					{
-						$filters .= '(!(uidNumber=*))';
-					}
-					elseif ($value)
-					{
-						if (is_array($value)) $filters .= '(|';
-						foreach((array)$value as $val)
-						{
-							$filters .= '(uidNumber='.(int)$val.')';
-						}
-						if (is_array($value)) $filters .= ')';
-					}
+					$filters .= $this->account_ids_filter($value);
 					break;
 
 				case 'cat_id':
