@@ -5,11 +5,13 @@
         <et2-vbox>
             <et2-description value="Columns to print"></et2-description>
             <et2-nextmatch-columnselection id="columns"></et2-nextmatch-columnselection>
-            <et2-number id="row_count" label="How many rows to print" precision="0"></et2-number>
             <et2-hbox>
-                <et2-description value="Print orientation"/>
-                <et2-switch id="orientation" label="Print orientation" toggleOn="Portrait" toggleOff="Landscape"
-                            class="et2SlideSwitch"></et2-switch>
+                <et2-number id="row_count" label="How many rows to print" precision="0"></et2-number>
+                <et2-box>
+                    <et2-description value="Print orientation"/>
+                    <et2-switch id="orientation" label="Print orientation" toggleOn="Portrait" toggleOff="Landscape"
+                                class="et2SlideSwitch"></et2-switch>
+                </et2-box>
             </et2-hbox>
         </et2-vbox>
     </template>

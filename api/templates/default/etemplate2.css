@@ -833,6 +833,10 @@ which caused click on free space infront of a tag stops nm row selection*/
 /*
 Nextmatch print dialog
 */
+#nm_print_dialog et2-number::part(base) {
+	width: 5em;
+}
+
 #nm_print_dialog et2-switch#_orientation .label .on {
 	background-image: url('images/portrait.svg');
 }
