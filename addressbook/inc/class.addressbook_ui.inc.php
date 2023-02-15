@@ -3433,13 +3433,24 @@ class addressbook_ui extends addressbook_bo
 		{
 			foreach($this->customfields as $name => $data)
 			{
-				if (substr($data['type'], 0, 6) == 'select' && !($data['rows'] > 1))
+				if(substr($data['type'], 0, 6) == 'select' && !($data['rows'] > 1))
 				{
-					if (!isset($content['#'.$name])) $content['#'.$name] = '';
-					if(!isset($data['values'][''])) $sel_options['#'.$name][''] = lang('Select one');
+					if(!isset($content['#' . $name]))
+					{
+						$content['#' . $name] = '';
+					}
+					if(!isset($data['values']['']))
+					{
+						$sel_options['#' . $name][''] = lang('Select one');
+					}
 				}
 				// Make them not required, otherwise you can't search
 				$this->tmpl->setElementAttribute('#' . $name, 'required', FALSE);
+				if($this->config['private_cf_tab'] == 'True' && $data['private'])
+				{
+					// Private CF tab results in a different ID, turn required off there too
+					$this->tmpl->setElementAttribute('private_cfs[#' . $name . ']', 'required', FALSE);
+				}
 			}
 		}
 		// configure edit template as search dialog
