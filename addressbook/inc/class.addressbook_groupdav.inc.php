@@ -67,6 +67,13 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 	const JS_CARDGROUP_ID_PREFIX = 'list-';
 
 	/**
+	 * Contains IDs for multiget REPORT to be able to report missing ones
+	 *
+	 * @var string[]
+	 */
+	var $requested_multiget_ids;
+
+	/**
 	 * Constructor
 	 *
 	 * @param string $app 'calendar', 'addressbook' or 'infolog'
@@ -178,10 +185,10 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 
 		if (isset($nresults))
 		{
-			$files['files'] = $this->propfind_callback2($path, $filter, array(0, (int)$nresults));
+			$files['files'] = $this->propfind_generator($path, $filter, $files['files'], (int)$nresults);
 
 			// hack to support limit with sync-collection report: contacts are returned in modified ASC order (oldest first)
-			// if limit is smaller then full result, return modified-1 as sync-token, so client requests next chunk incl. modified
+			// if limit is smaller than full result, return modified-1 as sync-token, so client requests next chunk incl. modified
 			// (which might contain further entries with identical modification time)
 			if ($options['root']['name'] == 'sync-collection' && $this->bo->total > $nresults)
 			{
@@ -192,38 +199,43 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 		else
 		{
 			// return iterator, calling ourselves to return result in chunks
-			$files['files'] = new Api\CalDAV\PropfindIterator($this,$path,$filter,$files['files']);
+			$files['files'] = $this->propfind_generator($path,$filter, $files['files']);
 		}
 		return true;
 	}
 
 	/**
-	 * Callback for propfind iterator
-	 *
-	 * @param string $path
-	 * @param array& $filter
-	 * @param array|boolean $start =false false=return all or array(start,num)
-	 * @return array with "files" array with values for keys path and props
+	 * Chunk-size for DB queries of profind_generator
 	 */
-	function &propfind_callback($path, array &$filter, $start=false)
-	{
-		return $this->propfind_callback2($path, $filter, $start);
-	}
+	const CHUNK_SIZE = 50;
 
 	/**
-	 * Callback for propfind iterator with ability to skip reporting not found ids
+	 * Generator for propfind with ability to skip reporting not found ids
 	 *
 	 * @param string $path
 	 * @param array& $filter
-	 * @param array|boolean $start =false false=return all or array(start,num)
+	 * @param array $extra extra resources like the collection itself
+	 * @param int|null $nresults option limit of number of results to report
 	 * @param boolean $report_not_found_multiget_ids=true
 	 * @return array with "files" array with values for keys path and props
+	 * @ToDo also use CHUNK_SIZE when querying lists
 	 */
-	function &propfind_callback2($path, array &$filter, $start=false, $report_not_found_multiget_ids=true)
+	function propfind_generator($path, array &$filter, array $extra, $nresults=null, $report_not_found_multiget_ids=true)
 	{
 		//error_log(__METHOD__."('$path', ".array2string($filter).", ".array2string($start).", $report_not_found_multiget_ids)");
 		$starttime = microtime(true);
 		$filter_in = $filter;
+
+		// yield extra resources like the root itself
+		$yielded = 0;
+		foreach($extra as $resource)
+		{
+			if (++$yielded && isset($nresults) && $yielded > $nresults)
+			{
+				return;
+			}
+			yield $resource;
+		}
 
 		if (($address_data = $filter['address_data']))
 		{
@@ -244,16 +256,10 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 		$sync_collection_report = $filter['sync-collection'];
 		unset($filter['sync-collection']);
 
-		if (!empty($filter[self::$path_attr]))
+		// stop output buffering switched on to log the response, if we should return more than 200 entries
+		if (!empty($this->requested_multiget_ids) && ob_get_level() && count($this->requested_multiget_ids) > 200)
 		{
-			if (!is_array($filter[self::$path_attr])) $filter[self::$path_attr] = (array)$filter[self::$path_attr];
-			$requested_multiget_ids =& $filter[self::$path_attr];
-
-			// stop output buffering switched on to log the response, if we should return more than 200 entries
-			if (ob_get_level() && count($requested_multiget_ids) > 200)
-			{
-				ob_end_flush();
-			}
+			ob_end_flush();
 		}
 
 		$files = array();
@@ -262,7 +268,8 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 		if (!in_array(self::$path_attr,$cols)) $cols[] = self::$path_attr;
 		// we need tid for sync-collection report
 		if (array_key_exists('tid', $filter) && !isset($filter['tid']) && !in_array('tid', $cols)) $cols[] = 'tid';
-		if (($contacts =& $this->bo->search(array(),$cols,$order,'','',False,'AND',$start,$filter)))
+		for($chunk=0; ($contacts =& $this->bo->search([], $cols, $order, '', '', False, 'AND',
+			[$chunk*self::CHUNK_SIZE, self::CHUNK_SIZE], $filter)); ++$chunk)
 		{
 			// filter[tid] === null also returns no longer shared contacts, to remove them from devices, we need to mark them here as deleted
 			// to do so we need to read not deleted sharing info of potential candidates (not deleted and no regular access), as search does NOT
@@ -293,9 +300,9 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 			foreach($contacts as &$contact)
 			{
 				// remove contact from requested multiget ids, to be able to report not found urls
-				if (!empty($requested_multiget_ids) && ($k = array_search($contact[self::$path_attr], $requested_multiget_ids)) !== false)
+				if (!empty($this->requested_multiget_ids) && ($k = array_search($contact[self::$path_attr], $this->requested_multiget_ids)) !== false)
 				{
-					unset($requested_multiget_ids[$k]);
+					unset($this->requested_multiget_ids[$k]);
 				}
 				// sync-collection report: deleted entry need to be reported without properties
 				if ($contact['tid'] == Api\Contacts::DELETED_TYPE)
@@ -315,7 +322,11 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 					$props['getcontentlength'] = bytes(is_array($content) ? json_encode($content) : $content);
 					$props['address-data'] = Api\CalDAV::mkprop(Api\CalDAV::CARDDAV, 'address-data', $content);
 				}
-				$files[] = $this->add_resource($path, $contact, $props);
+				if (++$yielded && isset($nresults) && $yielded > $nresults)
+				{
+					return;
+				}
+				yield $this->add_resource($path, $contact, $props);
 			}
 			// sync-collection report --> return modified of last contact as sync-token
 			if ($sync_collection_report)
@@ -323,93 +334,110 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 				$this->sync_collection_token = $contact['modified'];
 			}
 		}
-		// last chunk or no chunking: add accounts from different repo and report missing multiget urls
-		if (!$start || (empty($contact)?0:count($contacts)) < $start[1])
+
+		// add accounts after contacts, if enabled and stored in different repository
+		if ($this->bo->so_accounts && is_array($filter['owner']) && in_array('0', $filter['owner']))
 		{
-			//error_log(__METHOD__."('$path', ".array2string($filter).", ".array2string($start)."; $report_not_found_multiget_ids) last chunk detected: count()=".count($contacts)." < $start[1]");
-			// add accounts after contacts, if enabled and stored in different repository
-			if ($this->bo->so_accounts && is_array($filter['owner']) && in_array('0', $filter['owner']))
+			$accounts_filter = $filter_in;
+			$accounts_filter['owner'] = '0';
+			if ($sync_collection_report) $token_was = $this->sync_collection_token;
+			self::$path_attr = 'id';
+			self::$path_extension = '.vcf';
+			foreach($this->propfind_generator($path, $accounts_filter, [], $nresults, false) as $resource)
 			{
-				$accounts_filter = $filter_in;
-				$accounts_filter['owner'] = '0';
-				if ($sync_collection_report) $token_was = $this->sync_collection_token;
-				self::$path_attr = 'id';
-				self::$path_extension = '.vcf';
-				$files = array_merge($files, $this->propfind_callback2($path, $accounts_filter, false, false));
-				self::$path_attr = 'carddav_name';
-				self::$path_extension = '';
-				if ($sync_collection_report && $token_was > $this->sync_collection_token)
+				if (++$yielded && isset($nresults) && $yielded > $nresults)
 				{
-					$this->sync_collection_token = $token_was;
+					return;
 				}
+				yield $resource;
 			}
-			// add groups after contacts, but only if enabled and NOT for '/addressbook/' (!isset($filter['owner'])
-			if (in_array('D',$this->home_set_pref) && (string)$filter['owner'] !== '0')
+			self::$path_attr = 'carddav_name';
+			self::$path_extension = '';
+			if ($sync_collection_report && $token_was > $this->sync_collection_token)
 			{
-				$where = array(
-					'list_owner' => isset($filter['owner'])?$filter['owner']:array_keys($this->bo->grants)
-				);
-				// add sync-token to support sync-collection report
-				if ($sync_collection_report)
+				$this->sync_collection_token = $token_was;
+			}
+		}
+
+		// add groups after contacts, but only if enabled and NOT for '/addressbook/' (!isset($filter['owner'])
+		if (in_array('D',$this->home_set_pref) && (string)$filter['owner'] !== '0')
+		{
+			$where = array(
+				'list_owner' => isset($filter['owner'])?$filter['owner']:array_keys($this->bo->grants)
+			);
+			// add sync-token to support sync-collection report
+			if ($sync_collection_report)
+			{
+				list(,$sync_token) = explode('>', $filter[0]);
+				if ((int)$sync_token) $where[] = 'list_modified>'.$GLOBALS['egw']->db->from_unixtime((int)$sync_token);
+			}
+			if (isset($filter[self::$path_attr]))	// multiget report?
+			{
+				$where['list_'.self::$path_attr] = $filter[self::$path_attr];
+			}
+			//error_log(__METHOD__."() filter=".array2string($filter).", do_groups=".in_array('D',$this->home_set_pref).", where=".array2string($where));
+			if(($lists = $this->bo->read_lists($where,'contact_uid',$where['list_owner'])))	// limit to contacts in same AB!
+			{
+				foreach($lists as $list)
 				{
-					list(,$sync_token) = explode('>', $filter[0]);
-					if ((int)$sync_token) $where[] = 'list_modified>'.$GLOBALS['egw']->db->from_unixtime((int)$sync_token);
-				}
-				if (isset($filter[self::$path_attr]))	// multiget report?
-				{
-					$where['list_'.self::$path_attr] = $filter[self::$path_attr];
-				}
-				//error_log(__METHOD__."() filter=".array2string($filter).", do_groups=".in_array('D',$this->home_set_pref).", where=".array2string($where));
-				if (($lists = $this->bo->read_lists($where,'contact_uid',$where['list_owner'])))	// limit to contacts in same AB!
-				{
-					foreach($lists as $list)
+					$list[self::$path_attr] = $is_jscontact ? self::JS_CARDGROUP_ID_PREFIX.$list['list_id'] : $list['list_carddav_name'];
+					$etag = $list['list_id'].':'.$list['list_etag'];
+					// for all-in-one addressbook, add selected ABs to etag
+					if (isset($filter['owner']) && is_array($filter['owner']))
 					{
-						$list[self::$path_attr] = $is_jscontact ? self::JS_CARDGROUP_ID_PREFIX.$list['list_id'] : $list['list_carddav_name'];
-						$etag = $list['list_id'].':'.$list['list_etag'];
-						// for all-in-one addressbook, add selected ABs to etag
-						if (isset($filter['owner']) && is_array($filter['owner']))
-						{
-							$etag .= ':'.implode('-',$filter['owner']);
-						}
-						$props = array(
-							'getcontenttype' => Api\CalDAV::mkprop('getcontenttype', $is_jscontact ? JsContact::MIME_TYPE_JSCARDGROUP : 'text/vcard'),
-							'getlastmodified' => Api\DateTime::to($list['list_modified'],'ts'),
-							'displayname' => $list['list_name'],
-							'getetag' => '"'.$etag.'"',
-						);
-						if ($address_data)
-						{
-							$content = $is_jscontact ? JsContact::getJsCardGroup($list, false) : $handler->getGroupVCard($list);
-							$props['getcontentlength'] = bytes(is_array($content) ? json_encode($content) : $content);
-							$props['address-data'] = Api\CalDAV::mkprop(Api\CalDAV::CARDDAV, 'address-data', $content);
-						}
-						$files[] = $this->add_resource($path, $list, $props);
-
-						// remove list from requested multiget ids, to be able to report not found urls
-						if (!empty($requested_multiget_ids) && ($k = array_search($list[self::$path_attr], $requested_multiget_ids)) !== false)
-						{
-							unset($requested_multiget_ids[$k]);
-						}
-
-						if ($sync_collection_report && $this->sync_collection_token < ($ts=$GLOBALS['egw']->db->from_timestamp($list['list_modified'])))
-						{
-							$this->sync_collection_token = $ts;
-						}
+						$etag .= ':'.implode('-',$filter['owner']);
 					}
-				}
-			}
-			// report not found multiget urls
-			if ($report_not_found_multiget_ids && !empty($requested_multiget_ids))
-			{
-				foreach($requested_multiget_ids as $id)
-				{
-					$files[] = array('path' => $path.$id.self::$path_extension);
+					$props = array(
+						'getcontenttype' => Api\CalDAV::mkprop('getcontenttype', $is_jscontact ? JsContact::MIME_TYPE_JSCARDGROUP : 'text/vcard'),
+						'getlastmodified' => Api\DateTime::to($list['list_modified'],'ts'),
+						'displayname' => $list['list_name'],
+						'getetag' => '"'.$etag.'"',
+					);
+					if ($address_data)
+					{
+						$content = $is_jscontact ? JsContact::getJsCardGroup($list, false) : $handler->getGroupVCard($list);
+						$props['getcontentlength'] = bytes(is_array($content) ? json_encode($content) : $content);
+						$props['address-data'] = Api\CalDAV::mkprop(Api\CalDAV::CARDDAV, 'address-data', $content);
+					}
+					if (++$yielded && isset($nresults) && $yielded > $nresults)
+					{
+						return;
+					}
+					yield $this->add_resource($path, $list, $props);
+
+					// remove list from requested multiget ids, to be able to report not found urls
+					if (!empty($this->requested_multiget_ids) && ($k = array_search($list[self::$path_attr], $this->requested_multiget_ids)) !== false)
+					{
+						unset($this->requested_multiget_ids[$k]);
+					}
+
+					if ($sync_collection_report && $this->sync_collection_token < ($ts=$GLOBALS['egw']->db->from_timestamp($list['list_modified'])))
+					{
+						$this->sync_collection_token = $ts;
+					}
 				}
 			}
 		}
 
-		if ($this->debug) error_log(__METHOD__."($path,".array2string($filter).','.array2string($start).") took ".(microtime(true) - $starttime).' to return '.count($files).' items');
-		return $files;
+		// report not found multiget urls
+		if ($report_not_found_multiget_ids && !empty($this->requested_multiget_ids))
+		{
+			foreach($this->requested_multiget_ids as $id)
+			{
+				if (++$yielded && isset($nresults) && $yielded > $nresults)
+				{
+					return;
+				}
+				yield ['path' => $path.$id.self::$path_extension];
+			}
+		}
+
+		if ($this->debug)
+		{
+			error_log(__METHOD__."($path, filter=".json_encode($filter).', extra='.json_encode($extra).
+				", nresults=$nresults, report_not_found=$report_not_found_multiget_ids) took ".
+				(microtime(true) - $starttime)." to return $yielded resources");
+		}
 	}
 
 	/**
@@ -569,9 +597,10 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 			}
 		}
 		// multiget --> fetch the url's
+		$this->requested_multiget_ids = null;
 		if ($options['root']['name'] == 'addressbook-multiget')
 		{
-			$ids = array();
+			$this->requested_multiget_ids = [];
 			foreach($options['other'] as $option)
 			{
 				if ($option['name'] == 'href')
@@ -579,12 +608,12 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 					$parts = explode('/',$option['data']);
 					if (($id = urldecode(array_pop($parts))))
 					{
-						$ids[] = self::$path_extension ? basename($id,self::$path_extension) : $id;
+						$this->requested_multiget_ids[] = self::$path_extension ? basename($id,self::$path_extension) : $id;
 					}
 				}
 			}
-			if ($ids) $filters[self::$path_attr] = $ids;
-			if ($this->debug) error_log(__METHOD__."(...) addressbook-multiget: ids=".implode(',',$ids));
+			if ($this->requested_multiget_ids) $filters[self::$path_attr] = $this->requested_multiget_ids;
+			if ($this->debug) error_log(__METHOD__."(...) addressbook-multiget: ids=".implode(',', $this->requested_multiget_ids));
 		}
 		elseif ($id)
 		{
