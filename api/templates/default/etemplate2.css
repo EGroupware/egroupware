@@ -2876,33 +2876,46 @@ div.et2_toolbar.ui-widget-header {
 }
 
 .et2_toolbar .et2_toolbar_actionlist button.et2_button_with_image, .nextmatch_header_row .et2_button {
-    width: 24px;
-    height: 24px;
-    background-position: center;
-    background-size: 16px 16px;
-    padding-left: 0;
-    background-color: #fafafa;
+	width: 24px;
+	height: 24px;
+	background-position: center;
+	background-size: 16px 16px;
+	padding-left: 0;
+	background-color: #fafafa;
 }
 
 .et2_toolbar .et2_toolbar_actionlist et2-button,
 .et2_toolbar .et2_toolbar_actionlist et2-switch {
-    margin-right: 1ex;
-    min-width: 32px;
+	margin-right: 1ex;
+	min-width: 32px;
 }
-.et2_toolbar .ui-toolbar-menulist > *:hover{
-    outline: none;
-    background-color: var(--sl-color-primary-600);
-    color: var(--sl-color-neutral-0);
+
+/* Make toolbar switches clickable everywhere, not just the top half */
+.et2_toolbar .et2_toolbar_actionlist et2-switch::part(base) {
+	height: 100%;
 }
-.et2_toolbar .ui-toolbar-menulist > *:hover::part(prefix) {filter:invert(1) brightness(5);}
-.et2_toolbar .ui-toolbar-menulist > *:hover::part(label){color: var(--sl-color-neutral-0);}
+
+.et2_toolbar .ui-toolbar-menulist > *:hover {
+	outline: none;
+	background-color: var(--sl-color-primary-600);
+	color: var(--sl-color-neutral-0);
+}
+
+.et2_toolbar .ui-toolbar-menulist > *:hover::part(prefix) {
+	filter: invert(1) brightness(5);
+}
+
+.et2_toolbar .ui-toolbar-menulist > *:hover::part(label) {
+	color: var(--sl-color-neutral-0);
+}
+
 .nextmatch_header_row et2-button::part(container) {
-    height: 18px;
+	height: 18px;
 }
 
 et2-button.transparent-button {
-    border: none;
-    background: transparent;
+	border: none;
+	background: transparent;
 }
 
 et2-button.transparent-button::part(container) {
