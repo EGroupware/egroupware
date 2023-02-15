@@ -207,7 +207,7 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 	/**
 	 * Chunk-size for DB queries of profind_generator
 	 */
-	const CHUNK_SIZE = 50;
+	const CHUNK_SIZE = 500;
 
 	/**
 	 * Generator for propfind with ability to skip reporting not found ids
