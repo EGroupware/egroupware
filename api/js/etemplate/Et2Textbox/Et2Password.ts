@@ -57,17 +57,7 @@ export class Et2Password extends Et2InvokerMixin(Et2Textbox)
 			this.suggestPassword();
 		};
 	}
-
-	connectedCallback()
-	{
-		super.connectedCallback();
-		this.autocomplete = "new-password";
-		this.updateComplete.then(() =>
-		{
-			this.shadowRoot.querySelector("[type='password']").autocomplete = "new-password";
-		});
-	}
-
+	
 	transformAttributes(attrs)
 	{
 		if(typeof attrs.suggest !== "undefined")
