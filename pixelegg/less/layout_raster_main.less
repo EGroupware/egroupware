@@ -62,7 +62,6 @@
 			background-repeat: repeat-x;
 			background-color: transparent;
 			height: 39px;
-			display: flex;
 			align-items: baseline;
 			h1 {
 				display: inline;
@@ -161,24 +160,31 @@
 						top: 2px;
 					}
 				}
-				// aktive Bilder
-				img.egw_fw_ui_tab_icon {
-					padding-top: 3px;
-					display: inline-block;
-					.dimension_width_height_s;
-				}
+
+			  // aktive Bilder
+			  img.egw_fw_ui_tab_icon {
+				padding-top: 3px;
+				display: inline-block;
+				.dimension_width_height_s;
+			  }
 			}
 		}
 
-		// #################
-		// #       close x #
-		// #               #
-		// #################
-		.egw_fw_ui_tab_close_button {
-			right: 3px;
-			top: 3px;
-			display: inline-block;
-			.dimension_width_height_xs;
+	  @media screen {
+		.egw_fw_ui_tabs_header {
+		  display: flex;
+		}
+	  }
+
+	  // #################
+	  // #       close x #
+	  // #               #
+	  // #################
+	  .egw_fw_ui_tab_close_button {
+		right: 3px;
+		top: 3px;
+		display: inline-block;
+		.dimension_width_height_xs;
 			margin-left: 0px;
 			background-repeat: no-repeat;
 			background-position: center;

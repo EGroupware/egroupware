@@ -4524,7 +4524,6 @@ span.overlayContainer img.overlay {
   background-repeat: repeat-x;
   background-color: transparent;
   height: 39px;
-  display: flex;
   align-items: baseline;
   /*active Tabs*/
 }
@@ -4632,6 +4631,11 @@ span.overlayContainer img.overlay {
   display: inline-block;
   width: 16px;
   height: 16px;
+}
+@media screen {
+  #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header {
+    display: flex;
+  }
 }
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tab_close_button {
   right: 3px;
