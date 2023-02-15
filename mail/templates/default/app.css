@@ -332,7 +332,7 @@ pre {
 	display: none !important;
 }
 .mail-index_QuotaGreen, .mail-index_QuotaYellow, .mail-index_QuotaRed {
-	width:100px !important;
+	width: 5em !important;
 }
 .mail-index_QuotaGreen > div {
 	background-color: green !important;
@@ -1118,4 +1118,11 @@ et2-vbox.addresses::part(base) {
 .mailPreviewHeaders et2-lavatar {
 	margin-top: 3px;
 	position: absolute;
+}
+et2-searchbox#mail-index_nm_search {
+	width: 100%;
+	min-width: 5em;
+}
+.nextmatch_header_row>.filtersContainer>et2-select, .nextmatch_header_row>.filtersContainer>et2-select-cat {
+	width: 80px;
 }
