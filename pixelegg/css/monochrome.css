@@ -73,12 +73,11 @@
   html[data-darkmode='1'] et2-lavatar[image=""]::part(base),
   html[data-darkmode='1'] et2-avatar-group,
   html[data-darkmode='1'] .blueimp-gallery .slide {
-	  filter: invert(1) hue-rotate(180deg) !important;
+    filter: invert(1) hue-rotate(180deg) !important;
   }
-
-	html[data-darkmode='1'] .dtree img {
-		filter: invert(0) hue-rotate(180deg) !important;
-	}
+  html[data-darkmode='1'] .dtree img {
+    filter: invert(0) hue-rotate(180deg) !important;
+  }
   html[data-darkmode='1'] #blueimp-gallery video,
   html[data-darkmode='1'] #blueimp-gallery .video-content {
     filter: invert(0) hue-rotate(180deg) !important;
@@ -903,25 +902,27 @@
     padding: 2px 1px;
   }
   .sidebox-favorites ul.favorites li.ui-menu-item a div.ui-icon-heart {
+    width: 9px;
+    height: 16px;
     background-image: url(../../api/templates/default/images/favorites.svg);
-    background-size: 12px 12px;
+    background-size: 16px 16px;
     background-position: 1px 0;
     margin-right: 9px;
     margin-left: 3px;
   }
   .sidebox-favorites ul.favorites li.ui-menu-item a div.sideboxstar {
-    width: 4px;
-    height: 12px;
+    width: 9px;
+    height: 16px;
     margin-left: 4px;
     margin-right: 10px;
     background-image: url(../../api/templates/default/images/fav_filter.svg);
-    background-size: 12px 12px;
+    background-size: 16px 16px;
     background-position: 0 0;
     background-repeat: no-repeat;
   }
   .sidebox-favorites ul.favorites li.ui-menu-item img {
-    width: 12px;
-    height: 12px;
+    width: 16px;
+    height: 16px;
     margin-left: 5px;
     margin-right: 10px;
     margin-top: -3px;
@@ -933,8 +934,8 @@
     border: none;
   }
   .favorites img {
-    width: 12px;
-    height: 12px;
+    width: 16px;
+    height: 16px;
   }
   .nextmatch_sortheader {
     /*    background-position: right center;
@@ -4623,11 +4624,10 @@ span.overlayContainer img.overlay {
   width: 16px;
   height: 16px;
 }
-
 @media screen {
-	#egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header {
-		display: flex;
-	}
+  #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header {
+    display: flex;
+  }
 }
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tab_close_button {
   right: 3px;
@@ -5103,8 +5103,8 @@ span.overlayContainer img.overlay {
 }
 .egw_fw_ui_sidemenu_listitem img.egw_fw_ui_sidemenu_listitem_icon {
   /*display: none;*/
-  width: 12px;
-  height: 12px;
+  width: 16px;
+  height: 16px;
   padding: 0px;
   margin: 0px 5px;
   float: left;

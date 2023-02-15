@@ -49,12 +49,12 @@ tr.prefRow > td.prefValueColumn {
 .prefHelp {
   position: absolute;
   display: none;
-  width: 255px;
+  width: 250px;
   max-height: 99%;
-  height: calc(99% - 150px);
-  background-color: #f0f0ff;
+  height: calc(99% - 157px);
+  background-color: var(--sl-color-neutral-50);
   padding: 5px;
-  top: 80px;
+  top: 95px;
   overflow-y: auto;
   z-index: 1;
 }
@@ -162,4 +162,3 @@ div#preferences-settings_tabs {
     background-position: center !important;
   }
 }
-/*# sourceMappingURL=app.css.map */

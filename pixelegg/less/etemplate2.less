@@ -747,27 +747,29 @@ div.header_row_right{
 				padding: 2px 1px;
 				// Heart
 				div.ui-icon-heart {
-                  background-image: url(../../api/templates/default/images/favorites.svg);
-                  background-size: 12px 12px;
-                  background-position: 1px 0;
-                  margin-right: 9px;
-                  margin-left: 3px;
-                }
+				  width: 9px;
+				  height: @mass_s;
+				  background-image: url(../../api/templates/default/images/favorites.svg);
+				  background-size: @mass_s @mass_s;
+				  background-position: 1px 0;
+				  margin-right: 9px;
+				  margin-left: 3px;
+				}
 				// Bulltpoints
 				div.sideboxstar {
-					width: 4px;
-					height: 12px;
-					margin-left: 4px;
-					margin-right: 10px;
-					background-image: url(../../api/templates/default/images/fav_filter.svg);
-					background-size: 12px 12px;
-					background-position: 0 0;
-					background-repeat: no-repeat;
+				  width: 9px;
+				  height: @mass_s;
+				  margin-left: 4px;
+				  margin-right: 10px;
+				  background-image: url(../../api/templates/default/images/fav_filter.svg);
+				  background-size: @mass_s @mass_s;
+				  background-position: 0 0;
+				  background-repeat: no-repeat;
 				}
 
 			}
 			// Aktuelle Ansicht als Favorit
-			img {.dimension_width_height_xs; margin-left: 5px;margin-right:10px;margin-top:-3px;}
+			img {.dimension_width_height_s; margin-left: 5px;margin-right:10px;margin-top:-3px;}
 
 		} // Ende li
 		li.ui-menu-item.ui-state-highlight {
@@ -782,7 +784,9 @@ div.header_row_right{
 // Favorites in nextmatch Header
 .favorites{
 
-    img {.dimension_width_height_xs;}
+  img {
+	.dimension_width_height_s;
+  }
 
 }
 
