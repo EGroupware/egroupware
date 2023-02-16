@@ -114,7 +114,10 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 			  }
 
 			  :host([rows]) .select__tags {
-				max-height: calc(var(--rows, 5) * 2.45em);
+				max-height: calc(var(--rows, 5) * 29px);
+			  }
+
+			  :host([rows='1']) .select__tags {
 				overflow: hidden;
 			  }
 
@@ -332,7 +335,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		if(this.rows == 1 && this.multiple == true && this.value.length > 1)
 		{
 			e.stopPropagation();
-			let distance = (-1 * parseInt(getComputedStyle(this).height)) - 1;
+			let distance = (-1 * parseInt(getComputedStyle(this).height)) - 2;
 
 			// Show all tags
 			this._oldMaxTagsVisible = this.maxTagsVisible;
