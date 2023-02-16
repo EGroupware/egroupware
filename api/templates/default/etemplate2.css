@@ -4005,6 +4005,7 @@ tr.disableIfNoEPL {
     background-size: 20%;
     background-repeat: no-repeat;
     border: 2px dashed silver;
+    z-index: 1;
 }
 
 .colselection {
