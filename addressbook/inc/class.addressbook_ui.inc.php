@@ -3375,10 +3375,20 @@ class addressbook_ui extends addressbook_bo
 			}
 			else
 			{
-				$query['advanced_search'] = array_intersect_key($_content,array_flip(array_merge($this->get_contact_columns(),array('operator','meth_select'))));
-				foreach ($query['advanced_search'] as $key => $value)
+				if($this->config['private_cf_tab'])
 				{
-					if(!$value) unset($query['advanced_search'][$key]);
+					$_content = array_merge($_content, $_content['private_cfs']);
+				}
+				$query['advanced_search'] = array_intersect_key(
+					$_content,
+					array_flip(array_merge($this->get_contact_columns(), array('operator', 'meth_select')))
+				);
+				foreach($query['advanced_search'] as $key => $value)
+				{
+					if(!$value)
+					{
+						unset($query['advanced_search'][$key]);
+					}
 				}
 				// Skip n_fn, it causes problems in sql
 				unset($query['advanced_search']['n_fn']);
