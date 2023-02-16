@@ -52,10 +52,16 @@ export class Et2Button extends ButtonMixin(Et2InputWidget(SlButton))
 			{
 				const textNode = document.createTextNode(new_label);
 				this.appendChild(textNode);
+				// for some reason button doesn't get resized properly without a forced rendereing therefore the
+				// requestUpdate is used to trigger a refresh.
+				this.requestUpdate();
 			}
 			else
 			{
 				this._labelNode.textContent = new_label;
+				// for some reason button doesn't get resized properly without a forced rendereingtherefore the
+				// requestUpdate is used to trigger a refresh.
+				this.requestUpdate();
 			}
 		});
 	}
