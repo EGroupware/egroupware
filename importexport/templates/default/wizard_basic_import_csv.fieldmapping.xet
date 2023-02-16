@@ -29,7 +29,7 @@
                             <row>
                                 <et2-description  value="$row_cont[index]" noLang="1"></et2-description>
                                 <et2-description  value="$row_cont[title]" noLang="1"></et2-description>
-                                <et2-select  id="{$row}[field]" noLang="1"></et2-select>
+                                <et2-select id="{$row}[field]"></et2-select>
                                 <et2-textbox  id="{$row}[conversion]"></et2-textbox>
                             </row>
                         </rows>
