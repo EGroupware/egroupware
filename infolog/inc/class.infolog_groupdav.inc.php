@@ -282,6 +282,8 @@ class infolog_groupdav extends Api\CalDAV\Handler
 			'date_format'	=> 'server',
 			'col_filter'	=> $filter,
 			'custom_fields' => true,	// otherwise custom fields get NOT loaded!
+			'start'         => 0,
+			'num_rows'      => self::CHUNK_SIZE,
 		);
 		$check_responsible = false;
 		if (substr($task_filter, -8) == '+deleted')
@@ -297,10 +299,8 @@ class infolog_groupdav extends Api\CalDAV\Handler
 
 		$files = array();
 		// ToDo: add parameter to only return id & etag
-		for($chunk=0; ($params = $query+[
-			'start' => $chunk*self::CHUNK_SIZE,
-			'num_rows' => self::CHUNK_SIZE,
-		]) && ($tasks =& $this->bo->search($params)); ++$chunk)
+		// Please note: $query['start'] get incremented automatically by bo->search() with number of returned rows!
+		while(($tasks =& $this->bo->search($query)))
 		{
 			foreach($tasks as $task)
 			{
@@ -338,6 +338,12 @@ class infolog_groupdav extends Api\CalDAV\Handler
 					return;
 				}
 				yield $this->add_resource($path, $task, $props);
+			}
+			// Please note: $query['start'] get incremented automatically by bo->search() with number of returned rows!
+			// --> we need to break here, if start is further then total
+			if ($query['start'] < $query['total'])
+			{
+				break;
 			}
 		}
 		// report not found multiget urls
