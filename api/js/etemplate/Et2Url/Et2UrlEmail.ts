@@ -43,7 +43,7 @@ export class Et2UrlEmail extends Et2InvokerMixin(Et2Textbox)
 		this._invokerTitle = 'Compose mail to';
 		this._invokerAction = () =>
 		{
-			if (!this._isEmpty() && !this.hasFeedbackFor.length)
+			if(this.value.length > 0 && !this.hasFeedbackFor.length)
 			{
 				Et2UrlEmail.action(this.value);
 			}
