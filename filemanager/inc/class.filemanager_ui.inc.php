@@ -243,8 +243,7 @@ class filemanager_ui
 			// DRAG and DROP events
 			'file_drag' => array(
 				'dragType' => array('file','link'),
-				'type' => 'drag',
-				'onExecute' => 'javaScript:app.filemanager.drag'
+				'type' => 'drag'
 			),
 			'file_drop_mail' => array(
 				'type' => 'drop',
