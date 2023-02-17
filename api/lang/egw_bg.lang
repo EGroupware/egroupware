@@ -7,10 +7,19 @@
 00 (disable)	admin	bg	00 (забранен)
 1 day	common	bg	1 ден
 1 hour	common	bg	1 час
+1 minute	common	bg	1 минута
 1 month	common	bg	1 месец
 1 week	common	bg	1 седмица
 13 (ntp)	admin	bg	13 (ntp)
+15 minutes	common	bg	15 минути
+2-factor authentication code required	common	bg	Изисква се код за двуфакторно удостоверяване
 2-factor-authentication	common	bg	Удостоверяване с 2 фактора
+2-factor-authentication required	common	bg	Изисква се удостоверяване с 2 фактора
+3 minutes	common	bg	3 минути
+30 minutes	common	bg	30 минути
+30 seconds	common	bg	30 секунди
+5 minutes	common	bg	5 минути
+5 seconds	common	bg	5 секунди
 80 (http)	admin	bg	80 (http)
 abort	common	bg	Прекъсване на
 about	common	bg	За
@@ -63,9 +72,11 @@ argentina	common	bg	Аржентина
 armenia	common	bg	Армения
 aruba	common	bg	Аруба
 attach file	common	bg	Приложи файл
+attention: action will be applied to all rows, not only visible ones!	api	bg	Внимание: действието ще се приложи към всички редове, а не само към видимите!
 august	common	bg	Август
 australia	common	bg	Австралия
 austria	common	bg	Автсрия
+authenticate	common	bg	Удостоверяване на
 author	common	bg	Автор
 autohide sidebox menu's	common	bg	Автоматично скриване на страничното меню
 autohide sidebox menus	common	bg	Автоматично скриване на страничните менюта
@@ -136,6 +147,7 @@ choose a background image.	common	bg	Изберете изображение з�
 choose a background style.	common	bg	Изберете стил за фона
 choose a text color for the icons	common	bg	Изберете цвят на текста за иконите
 choose the category	common	bg	Изберете категорията
+choose the default filename for merged documents.	preferences	bg	Изберете името на файла по подразбиране за обединените документи.
 choose the parent category	common	bg	Изберете 'родителска' категория
 christmas island	common	bg	Великденски острови
 clear	common	bg	Изчистване
@@ -151,6 +163,7 @@ close	common	bg	Затвори
 close sidebox	common	bg	Затвори стр.кутия (sidebox)
 cocos (keeling) islands	common	bg	Кокосови острови (о-ви Кийлинг)
 colombia	common	bg	Колумбия
+colour	common	bg	Цвят
 comment	common	bg	Коментар
 common preferences	common	bg	Общи настройки
 comoros	common	bg	Коморски оствори
@@ -163,12 +176,19 @@ contacting server...	common	bg	Свързване със сървъра...
 contains	common	bg	съдържа
 cook islands	common	bg	Острови Кук
 copy	common	bg	Копиране
+copy "%1"	common	bg	Копиране "%1"
+copy of:	common	bg	Копие на:
+copy to	common	bg	Копие до
 copy to clipboard	common	bg	Копиране в клипборд
 costa rica	common	bg	Коста Рика
 cote d ivoire	common	bg	Бряг на Слоновата Кост
 could not contact server. operation timed out!	common	bg	Неуспех при връзка със сървъра поради таймаут!
 create	common	bg	Създаване
+create directory	common	bg	Създаване на папка
+create link	common	bg	Създаване на връзка
+created	common	bg	Създадена
 created by	common	bg	Създадено от
+created by %1	common	bg	Създаден от %1
 croatia	common	bg	Хърватска
 cuba	common	bg	Куба
 currency	common	bg	Валута
@@ -179,6 +199,7 @@ custom fields	common	bg	Полета по избор
 cut	common	bg	преместен(и)
 cyprus	common	bg	Кипър
 czech republic	common	bg	Чешка Република
+dark mode	common	bg	Тъмен режим
 database error	common	bg	Грешка в базата данни
 database error!	common	bg	Грешка в базата данни!
 date	common	bg	Дата
@@ -348,6 +369,7 @@ insert column before	common	bg	Вмъкни колона преди
 insert in document	common	bg	Вмъкване в документа
 insert row after	common	bg	Вмъкни ред след
 insert row before	common	bg	Вмъкни ред преди
+insert timestamp into description field	common	bg	Вмъкване на времеви печат в полето за описание
 international	common	bg	Международен
 invalid filename	common	bg	Грешно име на файл
 invalid ip address	common	bg	Невалиден IP адрес
@@ -397,6 +419,7 @@ liberia	common	bg	Либерия
 libyan arab jamahiriya	common	bg	Либийска Арабска Джамахирия
 license	common	bg	Лиценз
 liechtenstein	common	bg	Лихтенщайн
+light mode	common	bg	Светъл режим
 line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>	common	bg	Ред %1: '%2'<br><b>данните в csv съдържат ##last-check-run## на таблица %3 ==> игнориран</b>
 line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	bg	Ред %1: '%2'<br><b>данните в csv не съвпадат с броя на колоните в таблицата %3 ==> игнориран</b>
 link	common	bg	Връзка
@@ -603,6 +626,7 @@ sao tome and principe	common	bg	Сао Томе и Принсипе
 saturday	common	bg	Събота
 saudi arabia	common	bg	Саудитска Арабия
 save	common	bg	Запис
+saved column sizes to preferences.	common	bg	Запазете размерите на колоните в предпочитанията.
 search	common	bg	Търсене
 search %1 '%2'	common	bg	Търсене на %1 '%2'
 search accounts	common	bg	Търсене в акаунтите
@@ -795,8 +819,14 @@ you need to be an egroupware administrator to access this functionality!	common	
 you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	bg	Опитахте да отворите приложение на EGroupware: %1, но нямате права за достъп до него.
 your message could <b>not</b> be sent!<br>	common	bg	Писмото ви <b>не може</b> да бъде изпратено!<br>
 your message has been sent	common	bg	Писмото ви беше изпратено
+your password does not have required strength of %1 character classes and minimum length of %2 characters.	common	bg	Вашата парола няма необходимата сила от класове символи %1 и минимална дължина от %2 символа.
+your password does not have required strength:	common	bg	Вашата парола не притежава необходимата сила:
+your password failed the following criteria:	common	bg	Вашата парола не отговаря на следните критерии:
+your password is about to expire in %1 days, you may change your password now	common	bg	Вашата парола изтича след %1 дни, можете да смените паролата си сега.
+your password might not match the password policy.	common	bg	Вашата парола изтича след %1 дни, можете да смените паролата си сега.
 your search returned %1 matchs	common	bg	търсенето ви върна %1 съвпадения
 your search returned 1 match	common	bg	търсенето ви върна 1 съвпадение
+your session timed out, please log in again	login	bg	Сесията ви е прекратена, моля, влезте отново.
 your settings have been updated	common	bg	Настройките ви са обновени
 zambia	common	bg	Замбия
 zimbabwe	common	bg	Зимбабве

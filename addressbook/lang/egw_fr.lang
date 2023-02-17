@@ -1,7 +1,12 @@
+#	addressbook	fr	#
 %1 added	addressbook	fr	%1 ajouté
 %1 contact(s) %2	addressbook	fr	%1 contact(s) %2
+%1 contact(s) %2, %3 failed because of %4 !!!	addressbook	fr	%1 contact(s) %2, %3 en échec pour %4 !!!
 %1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	fr	%1 contact(s) %2, %3 en erreur (droits d'accès insuffisants).
+%1 contact(s) added as %2	addressbook	fr	%1 contact(s) ajouté(s) comme %2
 %1 contacts updated (%2 errors).	addressbook	fr	%1 contacts mis à jour (%2 erreurs).
+%1 entries %2, %3 failed.	addressbook	fr	%1 événement(s) %2, %3 en échec.
+%1 event(s) %2	addressbook	fr	%1 événement(s) %2
 %1 fields in %2 other organisation member(s) changed	addressbook	fr	Le champ %1 dans %2 autre(s) membre(s) de l'organisation a changé.
 %1 key(s) added to public keyserver "%2".	addressbook	fr	%1 clé(s) publique(s) ajoutée(s) au serveur de clés publiques "%2".
 %1 not implemented for %2!	addressbook	fr	%1 non implémenté pour %2 !
@@ -78,6 +83,7 @@ are you shure you want to delete this contact?	addressbook	fr	Etes-vous sûr de 
 are you sure you want to delete this field?	addressbook	fr	Etes-vous sûr de vouloir effacer ce champ ?
 assistent	addressbook	fr	Assistant(e)
 assistent phone	addressbook	fr	Téléphone assistant(e)
+audio call	addressbook	fr	Appel audio
 birthday	common	fr	Anniversaire
 birthdays	common	fr	Anniversaires
 blank	addressbook	fr	Vide
@@ -109,6 +115,7 @@ category tree	admin	fr	Arborescence de la catégorie
 cell phone	addressbook	fr	Téléphone portable
 change addressbook when updating	addressbook	fr	Changer le carnet d'adresse à la mise à jour
 change all organisation members	addressbook	fr	Modifier tous les membres de l'organisation
+changed type to %1	addressbook	fr	Type changé en %1
 charset for the csv export	addressbook	fr	Jeu de caractères pour l'export CSV
 charset for the vcard export	addressbook	fr	Jeu de caractères pour l'export vCard
 charset for the vcard import and export	addressbook	fr	Jeu de caractères pour l'export et l'import vCard

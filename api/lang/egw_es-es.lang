@@ -275,6 +275,7 @@ choose a background style.	common	es-es	Elegir un estilo para el fondo
 choose a text color for the icons	common	es-es	Elegir un color del texto para los iconos
 choose file...	common	es-es	Elija el archivo...
 choose the category	common	es-es	Elija la categoría
+choose the default filename for merged documents.	preferences	es-es	Elegir el nombre de archivo por defecto para los documentos fusionados.
 choose the parent category	common	es-es	Elija la categoría superior
 choose time	common	es-es	Elegir hora
 chosen parent category no longer exists	common	es-es	La categoría superior elegida ya no existe
@@ -305,6 +306,7 @@ code	common	es-es	Código
 collection empty.	common	es-es	La colección está vacía
 collection listing	common	es-es	Listado de colecciones
 colombia	common	es-es	COLOMBIA
+colour	common	es-es	Color
 column...	common	es-es	Columna...
 columnname	common	es-es	Nombre de la columna
 columns to print	common	es-es	Columnas a imprimir
@@ -329,6 +331,7 @@ cook islands	common	es-es	COOK ISLANDS
 cookies are required to login to this site	login	es-es	Se requieren cookies para iniciar sesión en este sitio
 copy	common	es-es	Copiar
 copy "%1"	common	es-es	Copiar "%1"
+copy of:	common	es-es	Copia de:
 copy to	common	es-es	Copiar a
 copy to clipboard	common	es-es	Copiar al portapapeles
 costa rica	common	es-es	COSTA RICA
@@ -336,7 +339,9 @@ cote d ivoire	common	es-es	COSTA DE MARFIL
 could not contact server. operation timed out!	common	es-es	No se pudo conectar con el servidor. La operación superó el tiempo límite de espera
 create	common	es-es	Crear
 create a new table for the application	common	es-es	Crear una tabla nueva para la aplicación
+create directory	common	es-es	Crear carpeta
 create link	common	es-es	Crear enlace
+created	common	es-es	Creado
 created by	common	es-es	Creado por
 created by %1	common	es-es	Creado por %1
 creates an english ('en') langfile from label and helptexts (for application in name)	common	es-es	Crea un archivo de idioma en inglés ('en') a partir de la etiqueta y textos de ayuda (para la aplicación indicada en Nombre)
@@ -358,6 +363,7 @@ custom javascript for onchange	common	es-es	javascript personalizado para onChan
 cut	common	es-es	Cortar
 cyprus	common	es-es	CHIPRE
 czech republic	common	es-es	REPUBLICA CHECA
+dark mode	common	es-es	Modo oscuro
 dark moono theme	common	es-es	tema moono oscuro
 data type	common	es-es	Tipo de dato
 database error	common	es-es	Error en la base de datos
@@ -788,6 +794,7 @@ liberia	common	es-es	LIBERIA
 libyan arab jamahiriya	common	es-es	LIBYAN ARAB JAMAHIRIYA
 license	common	es-es	Licencia
 liechtenstein	common	es-es	LIECHTENSTEIN
+light mode	common	es-es	Modo claro
 line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>	common	es-es	Línea %1: '%2'<br><b>los datos csv contienen ##last-check-run## de la tabla %3 ==> ignorado</b>
 line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	es-es	Línea %1: '%2'<br><b>los datos csv no coinciden con el número de columnas de la tabla %3 ==> ignorado</b>
 link	common	es-es	Enlace
@@ -1156,6 +1163,7 @@ save as zip	common	es-es	Guardar como Zip
 save selected columns as default preference for all users.	common	es-es	Guardar las columnas seleccionadas como preferencia predeterminada para todos los usuarios.
 save the changes made and close the window	common	es-es	Guardar los cambios realizados y cerrar la ventana
 save the etemplate under the above keys (name, ...), change them for a saveas	common	es-es	Guardar la plantilla bajo las claves de arriba (nombre, etc). Cámbielas para Guardar como.
+saved column sizes to preferences.	common	es-es	Guardar el tamaño de las columnas en las preferencias.
 saves changes to tables_current.inc.php	common	es-es	Guarda los cambios en tables_current.inc.php
 saves the template with given version number and closes the window	common	es-es	Guarda la plantilla con el número de versión indicado y cierra la ventana
 scale	common	es-es	Escala

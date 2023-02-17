@@ -1,5 +1,18 @@
 '%1' copied to clipboard	common	tr	'%1' panoya kopyalandı
+1 day	common	tr	1 gün
+1 hour	common	tr	1 saat
+1 minute	common	tr	1 dakika
+1 month	common	tr	1 ay
+1 week	common	tr	1 hafta
+15 minutes	common	tr	15 dakika
+2-factor authentication code required	common	tr	2 Faktörlü Kimlik Doğrulama kodu gerekli
 2-factor-authentication	common	tr	2 Faktörlü Kimlik Doğrulama
+2-factor-authentication required	common	tr	2 Faktörlü Kimlik Doğrulama gerekli
+3 minutes	common	tr	3 dakika
+30 minutes	common	tr	30 dakika
+30 seconds	common	tr	30 saniye
+5 minutes	common	tr	5 dakika
+5 seconds	common	tr	5 saniye
 abort	common	tr	İptal
 account has been created	common	tr	Hesap oluþturuldu
 account has been deleted	common	tr	Hesap silindi
@@ -14,14 +27,30 @@ administration	common	tr	Yönetim
 and	common	tr	Ve
 application	common	tr	Uygulama
 apply	common	tr	uygula
+attention: action will be applied to all rows, not only visible ones!	api	tr	Dikkat: eylem yalnızca görünen satırlara değil, tüm satırlara uygulanacaktır!
+authenticate	common	tr	Kimlik Doğrulama
 back	common	tr	Geri
 bottom	common	tr	taban
 calendar	common	tr	Takvim
 cancel	common	tr	Ýptal
 change	common	tr	Deðiþtir
 charset	common	tr	utf-8
+choose the default filename for merged documents.	preferences	tr	Birleştirilen belgeler için varsayılan dosya adını seçin.
+colour	common	tr	Renk
 company	common	tr	?irket
+copy	common	tr	Anlaşıldı
+copy "%1"	common	tr	Kopyala "%1"
+copy of:	common	tr	Kopyası:
+copy to	common	tr	Kopyası
+copy to clipboard	common	tr	Panoya kopyala
+create	common	tr	Oluştur
+create directory	common	tr	Klasör oluştur
+create link	common	tr	Bağlantı oluştur
+created	common	tr	Oluşturuldu
 created by	common	tr	Oluþturan
+created by %1	common	tr	%1 tarafından oluşturuldu
+creator	preferences	tr	Yaratıcı
+dark mode	common	tr	Karanlık mod
 delete category	common	tr	Kategori sil
 description	common	tr	Açýklama
 disabled	common	tr	engellendi
@@ -39,7 +68,9 @@ group has been updated	common	tr	Grup güncellendi
 group name	common	tr	Grup Ýsmi
 highest	common	tr	En yüksek
 home email	common	tr	Ev E-mail
+insert timestamp into description field	common	tr	Açıklama alanına zaman damgası ekle
 international	common	tr	Uluslararas?
+light mode	common	tr	Işık modu
 load	common	tr	Yükle
 loginid	common	tr	Kullanýcý Adý
 lowest	common	tr	En düþük
@@ -61,6 +92,7 @@ primary group	common	tr	ana grup
 project	common	tr	Proje
 read this list of methods.	common	tr	Method listesini oku
 repeat password	common	tr	Şifreyi tekrarla
+saved column sizes to preferences.	common	tr	Sütun boyutlarını tercihlere kaydedin.
 search accounts	common	tr	Hesaplarý ara
 select all	common	tr	Tamam?n? seç
 site configuration	common	tr	Site Ayarlarý
@@ -77,3 +109,9 @@ you have not entered a title	common	tr	Bir baþlýk girmediniz
 you have not entered a valid date	common	tr	Geçerli bir tarih girmediniz
 you have not entered a valid time of day	common	tr	Geçerli bir gün saati girmediniz
 you have not entered participants	common	tr	Katýlýmcýlarý girmediniz
+your password does not have required strength of %1 character classes and minimum length of %2 characters.	common	tr	Parolanız %1 karakter sınıfının gerekli gücüne ve %2 karakterlik minimum uzunluğa sahip değil.
+your password does not have required strength:	common	tr	Parolanız gerekli güce sahip değil:
+your password failed the following criteria:	common	tr	Parolanız aşağıdaki kriterlerde başarısız oldu:
+your password is about to expire in %1 days, you may change your password now	common	tr	Parolanızın süresi %1 gün içinde dolmak üzere, parolanızı şimdi değiştirebilirsiniz.
+your password might not match the password policy.	common	tr	Parolanız parola ilkesiyle eşleşmeyebilir.
+your session timed out, please log in again	login	tr	Oturumunuz zaman aşımına uğradı, lütfen tekrar giriş yapın.

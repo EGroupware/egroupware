@@ -18,7 +18,10 @@
 '%1' is not a valid integer !!!	common	lv	%1' nav derīgs vesels skaitlis
 00 (disable)	admin	lv	00 (disable)
 13 (ntp)	admin	lv	3 (ntp)
+2-factor authentication code required	common	lv	Nepieciešams 2 faktoru autentifikācijas kods
 2-factor-authentication	common	lv	Autentifikācija ar 2 faktoriem
+2-factor-authentication required	common	lv	Nepieciešama 2 faktoru autentifikācija
+3 minutes	common	lv	3 minūtes
 80 (http)	admin	lv	80 (http)
 a pattern to be searched for	common	lv	meklējamais paraugs
 abort	common	lv	Abort
@@ -80,9 +83,11 @@ armenia	common	lv	ARMĒNIJA
 aruba	common	lv	ARUBA
 attach	common	lv	Pievienot
 attach file	common	lv	pievienot datni
+attention: action will be applied to all rows, not only visible ones!	api	lv	Uzmanību: darbība tiks piemērota visām rindām, ne tikai redzamajām!
 august	common	lv	Augusts
 australia	common	lv	AUSTRĀLIJA
 austria	common	lv	AUSTRIJA
+authenticate	common	lv	Autentificēt
 author	common	lv	Autors
 autohide sidebox menus	common	lv	Slēpt izvēlnes automātiski
 automatically hide the sidebox menus?	common	lv	Slēpt izvēlnes automātiski?
@@ -151,6 +156,7 @@ checkbox	common	lv	izvēles rūtiņa <i>Checkbox</i>
 chile	common	lv	ČĪLE
 china	common	lv	ĶĪNA
 choose the category	common	lv	Izvēlies kategoriju
+choose the default filename for merged documents.	preferences	lv	Izvēlieties apvienoto dokumentu noklusējuma faila nosaukumu.
 choose the parent category	common	lv	Izvēlies tēva kategoriju
 christmas island	common	lv	ZIEMASSVĒTKU SALA
 class	common	lv	Klase
@@ -167,6 +173,7 @@ click to order after that criteria	common	lv	uzklikšķini, lai sakārtotu pēc 
 close	common	lv	Aizvērt
 cocos (keeling) islands	common	lv	KOKOSU (KĪLINGA) SALAS
 colombia	common	lv	KOLUMBIJA
+colour	common	lv	Krāsa
 columnname	common	lv	Kolonnas nosaukums
 comment	common	lv	Komentārs
 comoros	common	lv	KOMORU SALAS
@@ -178,11 +185,19 @@ contact	common	lv	Kontakts
 contains	common	lv	satur
 cook islands	common	lv	KUKA SALAS
 copy	common	lv	Kopēt
+copy "%1"	common	lv	Kopēt "%1"
+copy of:	common	lv	Kopija:
+copy to	common	lv	Kopēt uz
+copy to clipboard	common	lv	Kopēt uz starpliktuvi
 costa rica	common	lv	KOSTARIKA
 cote d ivoire	common	lv	KOTDIVUĀRA
 create	common	lv	Izveidot
 create a new table for the application	common	lv	Izveidot jaunu tabulu aplikācijai
+create directory	common	lv	Izveidot mapi
+create link	common	lv	Izveidot saiti
+created	common	lv	Izveidota
 created by	common	lv	Pateicoties
+created by %1	common	lv	Izveidoja %1
 creates an english ('en') langfile from label and helptexts (for application in name)	common	lv	izveido angļu ('en')<i>langfile</i> no iezīmes un palīgtekstiem
 croatia	common	lv	HORVĀTIJA
 css class for the table-tag	common	lv	CSS klase tabulas tagam
@@ -195,6 +210,7 @@ custom	common	lv	Mainīt
 custom fields	common	lv	Mainīti lauki
 cyprus	common	lv	KIPRA
 czech republic	common	lv	ČEHIJAS REPUBLIKA
+dark mode	common	lv	Tumšais režīms
 date	common	lv	Datums
 date due	common	lv	Datums paredzēts
 date+time	common	lv	Datums+Laiks
@@ -401,6 +417,7 @@ insert new column behind this one	common	lv	ievieto jaunu kolonnu aiz šīs
 insert new column in front of all	common	lv	pirms visām kolonnām ievieto jaunu kolonnu
 insert new row after this one	common	lv	pēc šīs rindiņas ievieto jaunu rindiņu
 insert new row in front of first line	common	lv	pierms pirmās līnijas ievieto jaunu rindiņu
+insert timestamp into description field	common	lv	Ievietot laika zīmogu apraksta laukā
 integer	common	lv	Vesels skaitlis
 international	common	lv	Internacionāls
 invalid filename	common	lv	Nederīgs lauka nosaukums
@@ -453,6 +470,7 @@ liberia	common	lv	LIBĒRIJA
 libyan arab jamahiriya	common	lv	LĪBIJAS SOCIĀLISTISKĀ ARĀBU TAUTAS DŽAMAHĪRIJA
 license	common	lv	Licence
 liechtenstein	common	lv	LIHTENŠTEINA
+light mode	common	lv	Gaismas režīms
 link	common	lv	Saite
 linklist	common	lv	Saistīt sarakstu
 linkstring	common	lv	Saistīt virkni
@@ -668,6 +686,7 @@ saudi arabia	common	lv	SAŪDA ARĀBIJA
 save	common	lv	Saglabāt
 save all	common	lv	Saglabāt visus
 save the etemplate under the above keys (name, ...), change them for a saveas	common	lv	saglabā eVeidni ar minētajām atslēgām (vārds,...)Save As lai nomainītu
+saved column sizes to preferences.	common	lv	Saglabāt kolonnu izmērus preferencēs.
 saves changes to tables_current.inc.php	common	lv	saglabā izmaiņas tables_current.inc.php
 scale	common	lv	Skala
 scale for float	common	lv	slīdēšanas skala
@@ -887,8 +906,14 @@ you have successfully logged out	common	lv	Jūs veiksmīgi beidzāt darbu
 you need to add the webserver user '%1' to the group '%2'.	common	lv	Jums ir jāpievieno web servera lietotājs '%1' grupai '%2'.
 your message could <b>not</b> be sent!<br>	common	lv	Jūsu ziņa <b>netika<b> nosūtita!<br>
 your message has been sent	common	lv	Jūsu ziņa tika nosūtīta
+your password does not have required strength of %1 character classes and minimum length of %2 characters.	common	lv	Jūsu parolei nav nepieciešamās %1 rakstzīmju klases stipruma un minimālā garuma %2 rakstzīmju.
+your password does not have required strength:	common	lv	Jūsu parolei nav nepieciešamās stiprības:
+your password failed the following criteria:	common	lv	Jūsu parole neatbilst šādiem kritērijiem:
+your password is about to expire in %1 days, you may change your password now	common	lv	Jūsu paroles derīguma termiņš beigsies pēc %1 dienas, varat mainīt paroli tagad.
+your password might not match the password policy.	common	lv	Jūsu parole var neatbilst paroles politikai.
 your search returned %1 matchs	common	lv	atradu %1 ierakstus
 your search returned 1 match	common	lv	atradu 1 ierakstu
+your session timed out, please log in again	login	lv	Jūsu sesija beidzās, lūdzu, piesakieties vēlreiz.
 your settings have been updated	common	lv	Iestādījumi tika saglabāti
 zambia	common	lv	ZAMBIJA
 zimbabwe	common	lv	ZIMBABVE

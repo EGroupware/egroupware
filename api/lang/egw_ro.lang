@@ -1,9 +1,47 @@
 '%1' copied to clipboard	common	ro	'%1' copiat în clipboard
+1 day	common	ro	1 zi
+1 hour	common	ro	1 oră
+1 minute	common	ro	1 minut
+1 month	common	ro	1 lună
+1 week	common	ro	1 săptămână
+15 minutes	common	ro	15 minute
+2-factor authentication code required	common	ro	Cod de autentificare cu 2 factori necesar
 2-factor-authentication	common	ro	Autentificare cu 2 factori
+2-factor-authentication required	common	ro	2-Factor-Autentificare necesară
+3 minutes	common	ro	3 minute
+30 minutes	common	ro	30 de minute
+30 seconds	common	ro	30 de secunde
+5 minutes	common	ro	5 minute
+5 seconds	common	ro	5 secunde
 abort	common	ro	Abandonați
+attention: action will be applied to all rows, not only visible ones!	api	ro	Atenție: acțiunea se va aplica tuturor rândurilor, nu numai celor vizibile!
+authenticate	common	ro	Autentificare
 cancel	common	ro	Renunţă
 charset	common	ro	utf-8
+choose the default filename for merged documents.	preferences	ro	Alegeți numele de fișier implicit pentru documentele fuzionate.
+colour	common	ro	Culoare
+copy	common	ro	Copiați
+copy "%1"	common	ro	Copiați "%1"
+copy of:	common	ro	Copie de:
+copy to	common	ro	Copie la
+copy to clipboard	common	ro	Copiați în clipboard
+create	common	ro	Creați
+create directory	common	ro	Creați dosar
+create link	common	ro	Creați o legătură
+created	common	ro	Creat
+created by	common	ro	Creat de
+created by %1	common	ro	Creat de %1
+dark mode	common	ro	Mod întunecat
+insert timestamp into description field	common	ro	Introduceți data și ora în câmpul de descriere
+light mode	common	ro	Mod deschis
 new password	common	ro	Parolă nouă
 ok	common	ro	Acceptă
 repeat password	common	ro	Repetarea parolei
+saved column sizes to preferences.	common	ro	Salvat dimensiunile coloanelor în preferințe.
 show/hide	common	ro	afișați / ascundeți bara laterală
+your password does not have required strength of %1 character classes and minimum length of %2 characters.	common	ro	Parola dvs. nu are puterea necesară de %1 clase de caractere și lungimea minimă de %2 caractere.
+your password does not have required strength:	common	ro	Parola dvs. nu are puterea necesară:
+your password failed the following criteria:	common	ro	Parola dumneavoastră nu a îndeplinit următoarele criterii:
+your password is about to expire in %1 days, you may change your password now	common	ro	Parola dumneavoastră urmează să expire în %1 zile, puteți să vă schimbați parola acum.
+your password might not match the password policy.	common	ro	Este posibil ca parola dvs. să nu corespundă politicii privind parolele.
+your session timed out, please log in again	login	ro	Sesiunea dvs. a expirat, vă rugăm să vă conectați din nou.

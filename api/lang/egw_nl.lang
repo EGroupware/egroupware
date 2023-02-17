@@ -31,10 +31,19 @@
 00 (disable)	admin	nl	00 (uitschakelen)
 1 day	common	nl	1 dag
 1 hour	common	nl	1 uur
+1 minute	common	nl	1 minuut
 1 month	common	nl	1 maand
 1 week	common	nl	1 week
 13 (ntp)	admin	nl	13 (ntp)
+15 minutes	common	nl	15 minuten
+2-factor authentication code required	common	nl	2-Factor-Authenticatie code vereist
 2-factor-authentication	common	nl	2-factor-authenticatie
+2-factor-authentication required	common	nl	2-Factor-Authenticatie vereist
+3 minutes	common	nl	3 minuten
+30 minutes	common	nl	30 minuten
+30 seconds	common	nl	30 seconden
+5 minutes	common	nl	5 minuten
+5 seconds	common	nl	5 seconden
 80 (http)	admin	nl	80 (http)
 a pattern to be searched for	common	nl	een patroon waarnaar gezocht moet worden
 abort	common	nl	Afbreken
@@ -128,9 +137,11 @@ as default	common	nl	als standaard
 attach	common	nl	Bijsluiten
 attach file	common	nl	Bestand bijsluiten
 attachment	common	nl	Bijlage
+attention: action will be applied to all rows, not only visible ones!	api	nl	Let op: de actie wordt toegepast op alle rijen, niet alleen op de zichtbare!
 august	common	nl	Augustus
 australia	common	nl	AUSTRALIË
 austria	common	nl	OOSTENRIJK
+authenticate	common	nl	Authenticeren
 author	common	nl	Auteur
 autohide sidebox menu's	common	nl	Automatisch menu's in de zijlijn verbergen
 autohide sidebox menus	common	nl	Automatisch menu's in de zijlijn verbergen
@@ -228,6 +239,7 @@ choose a background style.	common	nl	Kies een achtergrondstijl.
 choose a text color for the icons	common	nl	KIes een tekstkleur voor de pictogrammen
 choose file...	common	nl	Kies bestand...
 choose the category	common	nl	Kies de categorie
+choose the default filename for merged documents.	preferences	nl	Kies de standaard bestandsnaam voor samengevoegde documenten.
 choose the parent category	common	nl	Kies bovenliggende categorie
 choose time	common	nl	Kies tijd
 chosen parent category no longer exists	common	nl	De gekozen hoofd categorie bestaat niet meer
@@ -256,6 +268,7 @@ cocos (keeling) islands	common	nl	COCOS (KEELING) EILANDEN
 collection empty.	common	nl	Verzameling leeg.
 collection listing	common	nl	Verzameling overzicht
 colombia	common	nl	COLOMBIA
+colour	common	nl	Kleur
 column...	common	nl	Kolom...
 columnname	common	nl	Kolomnaam
 command ⌘	common	nl	Command x
@@ -278,13 +291,20 @@ content type	common	nl	Type Inhoud
 cook islands	common	nl	COOKEILANDEN
 cookies are required to login to this site	login	nl	Cookies zijn nodig om aan te melden op deze site
 copy	common	nl	Kopiëren
+copy "%1"	common	nl	Kopieer "%1"
+copy of:	common	nl	Kopie van:
+copy to	common	nl	Kopiëren naar
 copy to clipboard	common	nl	Kopieer naar klembord
 costa rica	common	nl	COSTA RICA
 cote d ivoire	common	nl	IVOORKUST
 could not contact server. operation timed out!	common	nl	Kon geen verbinding met server maken. Bewerkingstijd is overschreden!
 create	common	nl	Maken
 create a new table for the application	common	nl	Maak een nieuwe tabel voor de applicatie
+create directory	common	nl	Map aanmaken
+create link	common	nl	Link maken
+created	common	nl	Gemaakt
 created by	common	nl	Gemaakt door
+created by %1	common	nl	Gemaakt door %1
 creates an english ('en') langfile from label and helptexts (for application in name)	common	nl	creëert een engels ('en') taalbestand van label en helpteksten (voor applicatie in Naam)
 creator	preferences	nl	Melder
 croatia	common	nl	KROATIË
@@ -304,6 +324,7 @@ custom javascript for onchange	common	nl	aangepaste javascript voor onChange
 cut	common	nl	Knippen
 cyprus	common	nl	CYPRUS
 czech republic	common	nl	TSJECHIË
+dark mode	common	nl	Donkere modus
 database error	common	nl	Database fout
 database error!	common	nl	Database fout!
 date	common	nl	Datum
@@ -618,6 +639,7 @@ insert new row after this one	common	nl	voeg een nieuwe rij onder deze rij in
 insert new row in front of first line	common	nl	voeg een nieuwe rij boven de eerste rij in
 insert row after	common	nl	Rij invoegen onder
 insert row before	common	nl	Rij invoegen boven
+insert timestamp into description field	common	nl	Tijdstempel invoegen in beschrijvingsveld
 integer	common	nl	Geheel getal
 international	common	nl	Internationaal
 invalid filename	common	nl	Ongelde bestandsnaam
@@ -676,6 +698,7 @@ liberia	common	nl	LIBERIE
 libyan arab jamahiriya	common	nl	LIBIË
 license	common	nl	Licentie
 liechtenstein	common	nl	LIECHTENSTEIN
+light mode	common	nl	Lichte modus
 line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>	common	nl	Regel %1: '%2'<br /><b>csv gegevens bevat ##last-check-run## van tabel %3 ==> overgeslagen</b>
 line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	nl	Regel %1: '%2'<br /><b>csv gegevens klopt niet met het aantal kolommen van tabel %3 ==> genegeerd</b>
 link	common	nl	Link
@@ -993,6 +1016,7 @@ save as zip	common	nl	Bewaar als Zip
 save selected columns as default preference for all users.	common	nl	Bewaar geselecteerde kolommen als voorkeursstandaard voor alle gebruikers.
 save the changes made and close the window	common	nl	Bewaar de gemaakte wijzigingen en sluit het venster
 save the etemplate under the above keys (name, ...), change them for a saveas	common	nl	bewaar de eTemaplate onder de hierboven genoemde sleutels (naam, ...), wijzig ze om Opslaan Als uit te voeren
+saved column sizes to preferences.	common	nl	Opgeslagen kolomgroottes naar voorkeuren.
 saves changes to tables_current.inc.php	common	nl	bewaart de wijzigingen in tables_current_inc.php
 saves the template with given version number and closes the window	common	nl	bewaart de template met het opgegeven versienummer en sluit het venster
 scale	common	nl	Schaal

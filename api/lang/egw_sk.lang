@@ -44,7 +44,10 @@
 1 week	common	sk	1 týždeň
 13 (ntp)	admin	sk	13 (ntp)
 15 minutes	common	sk	15 minút
+2-factor authentication code required	common	sk	Vyžaduje sa 2-faktorový overovací kód
 2-factor-authentication	common	sk	2-faktorová autentifikácia
+2-factor-authentication required	common	sk	Vyžaduje sa 2-faktorové overenie
+3 minutes	common	sk	3 minúty
 30 minutes	common	sk	30 minút
 30 seconds	common	sk	30 sekúnd
 5 minutes	common	sk	5 minút
@@ -153,9 +156,11 @@ as default	common	sk	Ako predvolené
 attach	common	sk	Priložiť
 attach file	common	sk	Priložiť súbor
 attachment	common	sk	Príloha
+attention: action will be applied to all rows, not only visible ones!	api	sk	Pozor: akcia sa použije na všetky riadky, nielen na viditeľné!
 august	common	sk	August
 australia	common	sk	AUSTRÁLIA
 austria	common	sk	RAKÚSKO
+authenticate	common	sk	Overenie
 author	common	sk	Autor
 autohide sidebox menu's	common	sk	Automaticky skrývať ponuku bočného panelu
 autohide sidebox menus	common	sk	Automaticky skrývať ponuku bočného panelu
@@ -261,6 +266,7 @@ choose a background style.	common	sk	Vyberte štýl pozadia.
 choose a text color for the icons	common	sk	Vyberte farbu textu pre ikonky
 choose file...	common	sk	Vyberte súbor...
 choose the category	common	sk	Vyberte kategóriu
+choose the default filename for merged documents.	preferences	sk	Vyberte predvolený názov súboru pre zlúčené dokumenty.
 choose the parent category	common	sk	Vyberte rodičovskú kategóriu
 choose time	common	sk	Vyberte čas
 chosen parent category no longer exists	common	sk	Vybraná rodičovská kategória už neexistuje
@@ -291,6 +297,7 @@ code	common	sk	Kód
 collection empty.	common	sk	Výber je prázdny.
 collection listing	common	sk	Výpis výberu
 colombia	common	sk	KOLUMBIA
+colour	common	sk	Farba
 column...	common	sk	Stĺpec...
 columnname	common	sk	Názov stĺpca
 columns to print	common	sk	Stĺpce určené pre tlač
@@ -315,13 +322,17 @@ cook islands	common	sk	COOKOVE OSTROVY
 cookies are required to login to this site	login	sk	Prihlásenie na túto stránku vyžaduje cookie
 copy	common	sk	Kopírovať
 copy "%1"	common	sk	Kopírovať "%1"
+copy of:	common	sk	Kópia:
+copy to	common	sk	Kopírovať do
 copy to clipboard	common	sk	Kopírovať do schránky
 costa rica	common	sk	KOSTARIKA
 cote d ivoire	common	sk	POBREŽIE SLONOVINY
 could not contact server. operation timed out!	common	sk	Nedá sa pripojiť na server. Čas operácie vypršal!
 create	common	sk	Vytvoriť
 create a new table for the application	common	sk	Vytvoriť novú tabuľku pre aplikáciu
+create directory	common	sk	Vytvoriť priečinok
 create link	common	sk	Vytvoriť odkaz
+created	common	sk	Vytvorený
 created by	common	sk	Vytvoril
 created by %1	common	sk	Vytvoril %1
 creates an english ('en') langfile from label and helptexts (for application in name)	common	sk	Vytvorí anglický ('en') jazykový súbor z označenia a pomocných textov (pre aplikáciu uvedenú v Názve)
@@ -341,6 +352,7 @@ custom javascript for onchange	common	sk	Vlastný javaskript pre onChange
 cut	common	sk	Vystrihnúť
 cyprus	common	sk	CYPRUS
 czech republic	common	sk	ČESKÁ REPUBLIKA
+dark mode	common	sk	Tmavý režim
 dark moono theme	common	sk	tmavá moono téma
 data type	common	sk	Typ dát
 database error	common	sk	Chyba databázy
@@ -755,6 +767,7 @@ liberia	common	sk	LIBÉRIA
 libyan arab jamahiriya	common	sk	LÍBIA
 license	common	sk	Licencia
 liechtenstein	common	sk	LICHTENŠTAJNSKO
+light mode	common	sk	Svetlý režim
 line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>	common	sk	Riadok %1: '%2'<br><b>csv dáta obsahujú ##last-check-run## tabuľky %3 ==> ignorované</b>
 line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	sk	Riadok %1: '%2'<br><B>csv dáta nesúhlasia s počtom stĺpcov tabuľky %3 ==> ignorované</b>
 link	common	sk	Odkaz
@@ -1100,6 +1113,7 @@ save as zip	common	sk	Uložiť ako ZIP
 save selected columns as default preference for all users.	common	sk	Uložiť vybrané stĺpce ako predvolené nastavenie pre všetkých používateľov.
 save the changes made and close the window	common	sk	Uložiť vykonané zmeny a zavrieť okno
 save the etemplate under the above keys (name, ...), change them for a saveas	common	sk	Uložiť eŠablónu pod uvedenými hodnotami (názov,...), zmente ich ak chcete Uložiť Ako
+saved column sizes to preferences.	common	sk	Uložené veľkosti stĺpcov do predvolieb.
 saves changes to tables_current.inc.php	common	sk	Uloží zmeny do tables_current.inc.php
 saves the template with given version number and closes the window	common	sk	Uloží šablónu s uvedeným číslom verzie a zavrie okno.
 scale	common	sk	Prispôsobiť

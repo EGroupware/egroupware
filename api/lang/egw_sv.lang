@@ -19,8 +19,21 @@
 '%1' is not a valid floatingpoint number !!!	common	sv	'%1' är inte ett giltigt flyttalsnummer
 '%1' is not a valid integer !!!	common	sv	'%1' är inte ett giltig heltal
 00 (disable)	admin	sv	00 (inaktivera)
+1 day	common	sv	1 dag
+1 hour	common	sv	1 timme
+1 minute	common	sv	1 minut
+1 month	common	sv	1 månad
+1 week	common	sv	1 vecka
 13 (ntp)	admin	sv	13 (ntp)
+15 minutes	common	sv	15 minuter
+2-factor authentication code required	common	sv	Kod för 2-faktorsautentisering krävs
 2-factor-authentication	common	sv	2-faktorsautentisering
+2-factor-authentication required	common	sv	2-Faktor-autentisering krävs
+3 minutes	common	sv	3 minuter
+30 minutes	common	sv	30 minuter
+30 seconds	common	sv	30 sekunder
+5 minutes	common	sv	5 minuter
+5 seconds	common	sv	5 sekunder
 80 (http)	admin	sv	80 (http)
 a pattern to be searched for	common	sv	Sökord att söka efter
 abort	common	sv	Avbryt
@@ -94,9 +107,11 @@ armenia	common	sv	ARMENIEN
 aruba	common	sv	ARUBA
 attach	common	sv	Bifoga
 attach file	common	sv	Bifoga fil
+attention: action will be applied to all rows, not only visible ones!	api	sv	Uppmärksamhet: åtgärden tillämpas på alla rader, inte bara på de synliga!
 august	common	sv	Augusti
 australia	common	sv	AUSTRALIEN
 austria	common	sv	ÖSTERIKE
+authenticate	common	sv	Autentisera
 author	common	sv	Författare
 autohide sidebox menu's	common	sv	Autogöm Länkboxen
 autohide sidebox menus	common	sv	Autogöm Länkboxen
@@ -183,6 +198,7 @@ choose a background image.	common	sv	Välj bakgrundsbild
 choose a background style.	common	sv	Välj bakgrundsstil
 choose a text color for the icons	common	sv	Välj text till ikonen
 choose the category	common	sv	Välj kategori
+choose the default filename for merged documents.	preferences	sv	Välj standardfilnamn för sammanslagna dokument.
 choose the parent category	common	sv	Välj huvudkategori
 christmas island	common	sv	JULÖN
 class	common	sv	Klass
@@ -203,6 +219,7 @@ close sidebox	common	sv	Stäng Länkbox
 closes the window without saving the changes	common	sv	Stänger fönstret utan att spara ändringar
 cocos (keeling) islands	common	sv	KOKOSÖARNA
 colombia	common	sv	COLOMBIA
+colour	common	sv	Färg
 column...	common	sv	Kolumn
 columnname	common	sv	Kolumn namn
 comment	common	sv	Kommentar
@@ -220,13 +237,22 @@ contacting server...	common	sv	Kontaktar server ...
 contains	common	sv	Innehåller
 cook islands	common	sv	COOKÖARNA
 copy	common	sv	Kopiera
+copy "%1"	common	sv	Kopiera "%1"
+copy of:	common	sv	Kopia av:
+copy to	common	sv	Kopiera till
+copy to clipboard	common	sv	Kopiera till klippbordet
 costa rica	common	sv	COSTA RICA
 cote d ivoire	common	sv	ELFENBENSKUSTEN
 could not contact server. operation timed out!	common	sv	Kunde inte kontakta server.
 create	common	sv	Skapa
 create a new table for the application	common	sv	Skapa ny tabell för applikationen
+create directory	common	sv	Skapa en mapp
+create link	common	sv	Skapa en länk
+created	common	sv	Skapat
 created by	common	sv	Skapad av
+created by %1	common	sv	Skapad av %1
 creates an english ('en') langfile from label and helptexts (for application in name)	common	sv	Skapa engelsk ('en') språkfil från etikett och hjälptexter (för applikation i Namn)
+creator	preferences	sv	Skapare
 croatia	common	sv	KROATIEN
 css class for the table-tag	common	sv	CSS klass för tabell kod
 css properties	common	sv	CSS alternativ
@@ -243,6 +269,7 @@ custom javascript for onchange	common	sv	Anpassat javaskript för onChange
 cut	common	sv	Klipp ut
 cyprus	common	sv	CYPERN
 czech republic	common	sv	TJEKISKA REPUBLIKEN
+dark mode	common	sv	Mörkt läge
 date	common	sv	Datum
 date due	common	sv	Förfallodatum
 date+time	common	sv	Datum+Tid
@@ -505,6 +532,7 @@ insert new row after this one	common	sv	Skapa rad efter denna
 insert new row in front of first line	common	sv	Skapa rad före första raden
 insert row after	common	sv	Infoga rad efter
 insert row before	common	sv	Infoga rad före
+insert timestamp into description field	common	sv	Infoga tidsstämpel i beskrivningsfältet
 integer	common	sv	Heltal
 international	common	sv	Internationell
 invalid filename	common	sv	Ogiltigt filnamn
@@ -561,6 +589,7 @@ liberia	common	sv	LIBERIA
 libyan arab jamahiriya	common	sv	LIBYEN
 license	common	sv	Licens
 liechtenstein	common	sv	LIECHTENSTEIN
+light mode	common	sv	Ljust läge
 line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	sv	Rad %1: '%2'<br><b>CSV data motsvarar inte antalet kolumner i tabellen %3 ==> ignoreras</b>
 link	common	sv	Länk
 linkapps	common	sv	LinkApps
@@ -821,6 +850,7 @@ save	common	sv	Spara
 save all	common	sv	Spara alla
 save the changes made and close the window	common	sv	Spara ändringar och stäng fönster
 save the etemplate under the above keys (name, ...), change them for a saveas	common	sv	Spara eTemplate under ovanstående nycklar (namn, ....), ändra för att Spara Som.
+saved column sizes to preferences.	common	sv	Sparade kolumnstorlekar till inställningar.
 saves changes to tables_current.inc.php	common	sv	Spara ändringar i tables_current.inc.php
 saves the template with given version number and closes the window	common	sv	Spara mall med givet versionsnummer och stänger fönstret
 scale	common	sv	Skala
@@ -1095,8 +1125,14 @@ you have successfully logged out	common	sv	Du är utloggad
 you need to add the webserver user '%1' to the group '%2'.	common	sv	Du behöver lägga till webbserver användare '%1' till gruppen '%2'.
 your message could <b>not</b> be sent!<br>	common	sv	Meddelandet <b>inte</b> skickat<br>
 your message has been sent	common	sv	Meddelandet skickat
+your password does not have required strength of %1 character classes and minimum length of %2 characters.	common	sv	Lösenordet har inte den styrka som krävs av %1 teckenklasser och den minsta längden av %2 tecken.
+your password does not have required strength:	common	sv	Ditt lösenord har inte den styrka som krävs:
+your password failed the following criteria:	common	sv	Lösenordet uppfyllde inte följande kriterier:
+your password is about to expire in %1 days, you may change your password now	common	sv	Ditt lösenord löper ut om %1 dagar, du kan ändra ditt lösenord nu.
+your password might not match the password policy.	common	sv	Ditt lösenord kanske inte stämmer överens med lösenordspolicyn.
 your search returned %1 matchs	common	sv	Sökning gav %1 träffar
 your search returned 1 match	common	sv	Sökning gav 1 träff
+your session timed out, please log in again	login	sv	Din session tog slut, vänligen logga in igen.
 your settings have been updated	common	sv	Inställningarna uppdaterade
 zambia	common	sv	ZAMBIA
 zimbabwe	common	sv	ZIMBABWE

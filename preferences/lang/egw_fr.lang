@@ -15,6 +15,7 @@ audio effect	preferences	fr	Effet audio
 audio effect enables|disables sound effects used in the theme	preferences	fr	Effets Audio : active|désactive les effets sonores utilisés dans le thème
 automatically start with this font	preferences	fr	Démarrer automatiquement avec cette police
 automatically start with this font size	preferences	fr	Démarrer automatiquement avec cette taille de police
+automatically start with this format block. small paragraph adds less line space between new lines.	preferences	fr	Démarrer automatiquement avec ce format de bloc.<br/><b>Petit paragraphe</b> ce qui ajoute moins d'espace entre les nouvelles lignes.
 br	preferences	fr	br
 change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	fr	Change un mot de passe en fournissant l'ancien et le nouveau mot de passe. Retourne TRUE en cas de réussite, FALSE en cas d'échec.
 change password	preferences	fr	Changer votre mot de passe
@@ -104,6 +105,7 @@ it sets content size (text only) according to selected size.	preferences	fr	Il d
 just clicking on the line, like a checkbox	preferences	fr	cliquer juste sur la ligne, comme sur un case à cocher
 kama theme	preferences	fr	Thème Kama
 language	preferences	fr	Langue
+large	preferences	fr	grand
 look & feel	preferences	fr	Ergonomie
 lowercase letters	preferences	fr	lettres minuscules
 make applications list scrollable with up/down scroll buttons (usefull for users working with mouse with no scrollwheel)	preferences	fr	Rendre la liste d'applications scrollable avec les boutons haut/bas (utile pour les utilisateurs avec une souris sans molette)
@@ -170,6 +172,7 @@ show qrcode	preferences	fr	Afficher le QRCode
 show qrcode to enable on an additional device.	preferences	fr	Afficher le QRCode pour ajouter un périphérique
 show text on navigation icons	preferences	fr	Montrer le texte sur les icônes de navigation
 show_more_apps	common	fr	Montrer plus d'Applications
+small	preferences	fr	petit
 small paragraph	preferences	fr	Paragraphe petit
 special characters	preferences	fr	caractères spéciaux
 spellchecker language	addressbook	fr	Language de correcteur orthographique
@@ -197,6 +200,8 @@ when you say yes the home and logout buttons are presented as applications in th
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	fr	Quel jeu de caractères faut-il utiliser pour l'exportation CSV. Le paramétrage par défaut est celui utilisé lors de l'installation d'EGroupware.
 which currency symbol or name should be used in egroupware.	preferences	fr	Quel symbole de monnaie ou nom devrait être utilisé dans EGroupware.
 write prefs for the specified application.	preferences	fr	Ecrire les préférences pour l'apllication spécifiée.
+x-large	preferences	fr	x-large
+x-small	preferences	fr	x-small
 you can show the applications as icons only, icons with app-name or both.	preferences	fr	Vous pouvez montrer les applications comme des icônes seulement, des icônes avec le nom de l'application ou les deux.
 you can show the linked entries with icons only, icons with app-name or both.	common	fr	Monter les applications avec des icônes seulement, icônes avec des noms d'application ou les deux.
 you do not have permission to set acl's in this mode!	preferences	fr	Vous n'avez pas les droits pour régler les ACLs dans ce mode!

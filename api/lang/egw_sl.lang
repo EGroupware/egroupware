@@ -43,10 +43,14 @@
 1 week	common	sl	1 teden
 13 (ntp)	admin	sl	13 (ntp)
 15 minutes	common	sl	15 Minut
+2-factor authentication code required	common	sl	Zahtevana je koda 2-faktorske avtentikacije
 2-factor-authentication	common	sl	2-faktorska avtentikacija
+2-factor-authentication required	common	sl	Zahtevana je 2-faktorska avtentikacija
+3 minutes	common	sl	3 minute
 30 minutes	common	sl	30 Minut
 30 seconds	common	sl	30 sekund
 5 minutes	common	sl	5 minut
+5 seconds	common	sl	5 sekund
 80 (http)	admin	sl	80 (http)
 a pattern to be searched for	common	sl	Iskani vzorec
 a request to the egroupware server returned with an error	common	sl	Zahteva za strežnik EGroupware se je vrnila z napako
@@ -149,9 +153,11 @@ as default	common	sl	Kot privzeto
 attach	common	sl	Pripni
 attach file	common	sl	Pripni datoteko
 attachment	common	sl	Priponka
+attention: action will be applied to all rows, not only visible ones!	api	sl	Pozor: akcija bo uporabljena za vse vrstice, ne le za vidne!
 august	common	sl	Avgust
 australia	common	sl	AVSTRALIJA
 austria	common	sl	AVSTRIJA
+authenticate	common	sl	Preverjanje pristnosti
 author	common	sl	Avtor
 autohide sidebox menu's	common	sl	Samodejno skrij stranske menije
 autohide sidebox menus	common	sl	Samodejno skrivanje stranskih menijev
@@ -255,6 +261,7 @@ choose a background style.	common	sl	Izberite slog ozadja.
 choose a text color for the icons	common	sl	Izberite barvo besedila za ikoneozadja
 choose file...	common	sl	Izberi datoteko...
 choose the category	common	sl	Izberi kategorijo
+choose the default filename for merged documents.	preferences	sl	Izberite privzeto ime datoteke za združene dokumente.
 choose the parent category	common	sl	Izberi nadrejeno kategorijo
 choose time	common	sl	Izberi čas
 chosen parent category no longer exists	common	sl	Izbrana nadrejena kategorija ne obstaja več
@@ -283,6 +290,7 @@ cocos (keeling) islands	common	sl	KOKOSOVI (KEELINGOVI) OTOKI
 collection empty.	common	sl	Zbiranje prazno.
 collection listing	common	sl	Zbirni seznam
 colombia	common	sl	KOLUMBIJA
+colour	common	sl	Barva
 column...	common	sl	Stolpec ...
 columnname	common	sl	Ime stolpca
 columns to print	common	sl	Stolpci za tiskanje
@@ -307,13 +315,17 @@ cook islands	common	sl	COOKOVI OTOKI
 cookies are required to login to this site	login	sl	Piškotki se morajo prijaviti na to spletno mesto
 copy	common	sl	Kopiraj
 copy "%1"	common	sl	Kopiraj "%1"
+copy of:	common	sl	Kopija:
+copy to	common	sl	Kopiraj v
 copy to clipboard	common	sl	Kopiraj v odložišče
 costa rica	common	sl	KOSTARIKA
 cote d ivoire	common	sl	SLONOKOŠČENA OBALA
 could not contact server. operation timed out!	common	sl	Nisem mogel vzpostaviti povezave s strežnikom. Časovna omejitev se je iztekla!
 create	common	sl	Ustvari
 create a new table for the application	common	sl	Naredi novo tabelo za program
+create directory	common	sl	Ustvari mapo
 create link	common	sl	Ustvari povezavo
+created	common	sl	Ustvarjena
 created by	common	sl	Ustvaril
 created by %1	common	sl	Ustvarjeno z %1
 creates an english ('en') langfile from label and helptexts (for application in name)	common	sl	naredi angleško ('en') jezikovno datoteko iz napisov in besedila za pomoč (za program v polju Ime)
@@ -335,6 +347,7 @@ custom javascript for onchange	common	sl	Javascript za onChange po meri
 cut	common	sl	Izreži
 cyprus	common	sl	CIPER
 czech republic	common	sl	ČEŠKA REPUBLIKA
+dark mode	common	sl	Temni način
 dark moono theme	common	sl	temna mono tema
 data type	common	sl	Podatkovni tip
 database error	common	sl	Napaka zbirke podatkov
@@ -684,6 +697,7 @@ insert new row after this one	common	sl	Vstavi novo vrstico za to
 insert new row in front of first line	common	sl	Vstavi novo vrstico pred prvo vrstico
 insert row after	common	sl	Vstavi vrstico za izbranim
 insert row before	common	sl	Vstavi vrstico pred izbrano
+insert timestamp into description field	common	sl	Vstavljanje časovnega žiga v polje z opisom
 integer	common	sl	Celo število
 international	common	sl	Mednarodni
 introduction	common	sl	Uvod
@@ -745,6 +759,7 @@ liberia	common	sl	LIBERIJA
 libyan arab jamahiriya	common	sl	LIBIJA
 license	common	sl	Licenca
 liechtenstein	common	sl	LICHTENSTEIN
+light mode	common	sl	Svetli način
 line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>	common	sl	Vrstica %1: '%2'<br><b>Podatki csv vsebujejo ## zadnje preverjanje delovanja ## tabele %3 ==> prezrto</ b>
 line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	sl	Vrstica %1: '%2'<br><b>CSV podatki se ne ujemajo s številom stolpcev v tabeli %3==>zavrnjen</b>
 link	common	sl	Povezava
@@ -1103,6 +1118,7 @@ save as zip	common	sl	Shrani kot Zip
 save selected columns as default preference for all users.	common	sl	Shrani izbrane stolpce kot privzeto nastavitev za vse uporabnike.
 save the changes made and close the window	common	sl	Shrani spremembe in zapri okno
 save the etemplate under the above keys (name, ...), change them for a saveas	common	sl	Shrani ePredlogo pod gornjimi ključi (ime,...), spremeni jih za Shrani kot
+saved column sizes to preferences.	common	sl	Shranjene velikosti stolpcev v nastavitvah.
 saves changes to tables_current.inc.php	common	sl	Shrani spremembe v tables_current.inc.php
 saves the template with given version number and closes the window	common	sl	Shrani predlogo z dano številko različice in zapre okno
 scale	common	sl	Stopnja

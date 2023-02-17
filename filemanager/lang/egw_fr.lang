@@ -42,6 +42,7 @@ allow a maximum of the above configured folderlinks to be configured in settings
 and all it's childeren	filemanager	fr	et tous ses sous-éléments
 application fields	filemanager	fr	Champs de l'application
 applications	common	fr	Applications
+apply the changes	filemanager	fr	Appliquer les changements
 backend	filemanager	fr	Backend
 backend url	filemanager	fr	URL du Backend
 backend url to mount	filemanager	fr	URL du Backend à monter
@@ -51,8 +52,11 @@ cancel editing %1 without saving	filemanager	fr	Annuler les modifications de "%1
 cannot create directory because it begins or ends in a space	filemanager	fr	Ne peut créér le répertoire car il commence ou finit sur un espace
 check all	filemanager	fr	Vérifier tout
 check virtual filesystem	common	fr	Vérifier le système de fichiers virtuel
+classic	filemanager	fr	Barres de tâche standard
 clear search	filemanager	fr	réinitialiser termes de la recherche
 clipboard is empty!	filemanager	fr	Le presse-papier est vide !
+collab editor settings	filemanager	fr	Paramètres de l'éditeur Collab
+collabora online	filemanager	fr	Collabora Online
 comment	filemanager	fr	Commentaire
 configuration changed.	filemanager	fr	La configuration a été modifiée
 confirm final delete	filemanager	fr	Confirmer la suppression finale
@@ -142,6 +146,7 @@ file deleted.	filemanager	fr	Fichier supprimé
 file names cannot contain "%1"	filemanager	fr	Les noms de fichier ne peuvent contenir "%1"
 file or directory not found!	filemanager	fr	Fichier ou répertoire non trouvé !
 file successful uploaded.	filemanager	fr	Fichier uploadé avec succès !
+file upload	filemanager	fr	Fichier uploadé
 filemanager	common	fr	Gestionnaire de fichiers
 filemanager configuration	admin	fr	Configuration du gestionnaire de fichiers
 filemanager fields:	filemanager	fr	Champs du gestionnaire de fichiers
@@ -150,7 +155,9 @@ files	common	fr	Fichiers
 files from links	filemanager	fr	Fichiers des liens
 files from subdirectories	filemanager	fr	Fichier des sous-répertoires
 files in this directory	filemanager	fr	Fichiers dans ce répertoire
+filesystem	filemanager	fr	Système de fichiers
 filesystem check reported no problems.	filemanager	fr	La vérification du système de fichiers n'a trouvé aucun problème.
+filesystem: mount directory (inside /var/lib/egroupware!) from host filesystem	filemanager	fr	Système de fichiers : dossier de montage (dans /var/lib/egroupware) sur le serveur hôte
 finally delete	filemanager	fr	Suppression finale
 finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	fr	Supprimer définitivement toutes les anciennes versions et supprimer les fichiers dans ce répertoire.\n\nAction irrévocable!
 finally delete this version	filemanager	fr	Supprimer définitivement cette version
@@ -159,10 +166,12 @@ folder up	filemanager	fr	Répertoire parent
 for serial letter use this tag. put the content, you want to repeat between two tags.	filemanager	fr	Pour les lettres en série utiliser cette balise. Placer le contenu que vous voulez répéter entre deux balises.
 general	filemanager	fr	Général
 general fields:	filemanager	fr	Champs généraux :
+general settings	filemanager	fr	Paramètres généraux
 go home	filemanager	fr	Répertoire personnel
 go to	filemanager	fr	Aller dans
 go to your home directory	filemanager	fr	Aller dans votre répertoire "home" (maison)
 go up	filemanager	fr	Remonter
+group home quota	filemanager	fr	Quota de groupe accueil
 hidden upload	filemanager	fr	Upload masqués
 hidden uploads	filemanager	fr	Uploads masqués
 id	filemanager	fr	Id
@@ -176,18 +185,23 @@ link %1: %2	filemanager	fr	Lien %1: %2
 link into folder	filemanager	fr	Lien vers le dossier
 link target	filemanager	fr	Cible du lien
 link target %1 not found!	filemanager	fr	Cible du lien %1 non trouvé
+links	filemanager	fr	Liens
 list view	filemanager	fr	Vue en liste
 location	filemanager	fr	Emplacement
 lock	filemanager	fr	Verrouiller
 log out as superuser	filemanager	fr	Log out du profil super-utilisateur
+mail	filemanager	fr	Email
 mail files	filemanager	fr	Envoyer des fichiers par email
 mail paste	filemanager	fr	Coller un mail
 max folderlinks	admin	fr	Nombre de liens de dossiers max
+merge	filemanager	fr	Fusionner
+merge settings	filemanager	fr	Paramètre de fusion
 mime type	filemanager	fr	Type MIME
 modified	filemanager	fr	Modifié
 modified between	filemanager	fr	Modifié entre
 modify all subdirectories and their content	filemanager	fr	Modifier tous les sous-répertoires et leurs contenus
 mount	filemanager	fr	Monter
+mount /etemplates to allow customizing of etemplates	filemanager	fr	Monter /etemplates pour permettre la personnalisation des eTemplates
 mountpoints	filemanager	fr	Points de montage
 move	filemanager	fr	Déplacer
 move into folder	filemanager	fr	Déplacer vers un dossier
@@ -200,6 +214,7 @@ no files in this directory.	filemanager	fr	Pas de fichiers dans ce répertoire.
 no preview available	filemanager	fr	Aucune prévisualisation disponible.
 no version history for this file/directory	filemanager	fr	Pas d'historique de versions pour ce fichier/répertoire
 noone	filemanager	fr	Personne
+notebookbar	filemanager	fr	Avec des onglets
 older versions or deleted files	filemanager	fr	Anciennes versions ou fichiers supprimés
 only owner can rename or delete the content	filemanager	fr	Seul le propriétaire peut renommer ou supprimer le contenu.
 open	filemanager	fr	Ouvrir
@@ -209,6 +224,7 @@ operation	filemanager	fr	Opération
 paste link	filemanager	fr	Coller le lien
 path %1 not found or not a directory!	filemanager	fr	Chemin %1 non trouvé ou n'est pas un répertoire
 percentage	filemanager	fr	Pourcentage
+permission denied	filemanager	fr	Permission refusée
 permission denied!	filemanager	fr	Permission refusée !
 permissions	filemanager	fr	Permissions
 permissions of %1 changed.	filemanager	fr	Permissions de %1 modifiées !
@@ -218,10 +234,16 @@ preview %1	filemanager	fr	Prévisualisation %1
 preview of %1	filemanager	fr	Prévisualisation de %1
 projectmanager	filemanager	fr	Gestionnaire de projets
 properties saved.	filemanager	fr	Propriétés enregistrées.
+protocol to use	filemanager	fr	Protocoles à utiliser
+protocols	filemanager	fr	Protocoles
 quick jump to	filemanager	fr	Aller à
+quota	filemanager	fr	Quota
+quota exceeded	filemanager	fr	Quota dépassé
 read & write access	filemanager	fr	Accès en lecture-écriture
 read access only	filemanager	fr	Accès en lecture seule
 readonly share link	filemanager	fr	Lien de partage en lecture seule
+recalculate	filemanager	fr	Recalculer
+recalculate directory sizes	filemanager	fr	Recalculer la taille de dossiers
 reload	filemanager	fr	Recharger
 rename of %1 to %2 failed!	filemanager	fr	Renommage de %1 en %2 en échec !
 rename, change permissions or ownership	filemanager	fr	Renommage, changements de permissions et de propriétaire
@@ -237,7 +259,8 @@ save %1	filemanager	fr	Enregistrer %1
 save %1, and go back to file listing	filemanager	fr	Enregistrer %1, et retour au listing
 save as zip	filemanager	fr	Sauvegarder en zip
 save changes	filemanager	fr	Enregistrer les changements
-saved %1	filemanager	fr	%1 enregistré
+saved %1	filemanager	fr	%1 enregistré(s)
+saves this entry	filemanager	fr	Enregistre cette entrée
 saving properties failed!	filemanager	fr	Echec de l'enregistrement des propriétés !
 search for '%1'	filemanager	fr	Recherche de '%1'
 searchstring	filemanager	fr	Chaine de recherche
@@ -250,14 +273,19 @@ shared with	filemanager	fr	Partagés avec
 show	filemanager	fr	Afficher
 show hidden files	filemanager	fr	Afficher les fichiers cachés
 show link "%1" in side box menu?	filemanager	fr	Afficher un lien "%1" dans le menu latéral
+show link "users and groups" in side box menu?	filemanager	fr	Afficher le lien "Utilisateurs et groupes" dans le menu latéral
 show link "users and groups*" in side box menu?*	filemanager	fr	Afficher le lien "utilisateurs et groupes*" dans le menu latéral ?
 show link "your home directory*" in side box menu?*	filemanager	fr	Afficher le lien "Votre dossier home*" dans le menu latéral ?
 show link to filemanagers basedirectory (/) in side box menu?	filemanager	fr	Afficher un lien vers la racine (/) du gestionnaire de fichiers dans le menu latéral
 size	filemanager	fr	Taille
+smb, webdavs and vfs require a username!	filemanager	fr	SMB, WebDAVs et VFS nécessitent un code utilisateur !
+smb: mount samba or windows fileserver shares	filemanager	fr	SMB : montage de partages Samba et Windows
+sqlfs statistics	filemanager	fr	Statistiques sqlFS
 start search	filemanager	fr	Début de la recherche
 startfolder	filemanager	fr	Dossier de début
 successful mounted %1 on %2.	filemanager	fr	%1 monté avec succès sur %2.
 superuser	filemanager	fr	Super-utilisateur
+superuser (root)	filemanager	fr	Superuser (root)
 symlink to %1 created.	filemanager	fr	Lien symbolique vers %1 créé
 tag to mark positions for address labels	filemanager	fr	Balise pour marquer les positions des étiquettes d'adresses
 the following document-types are supported:	filemanager	fr	Les types de documents suivant sont autorisés :
@@ -266,7 +294,9 @@ there's already a directory with that name!	filemanager	fr	Il y a déjà un rép
 there's already a file with that name!	filemanager	fr	Il y a déjà un fichier avec ce nom !
 tile view	filemanager	fr	Vue tuile
 total files	filemanager	fr	Nombre de Fichiers
+ui mode	filemanager	fr	Barre d'outils par défaut
 under directory	filemanager	fr	sous le répertoire
+unlock	filemanager	fr	Débloquer
 unmount	filemanager	fr	Démonter
 unused space	filemanager	fr	Espace inutilisé
 up	filemanager	fr	Haut
@@ -276,9 +306,13 @@ upload files	filemanager	fr	Fichiers à envoyer
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	filemanager	fr	Utiliser cette balise pour les étiquettes d'adresse. Placer le contenu que vous voulez répéter entre deux balises.
 used space	filemanager	fr	Espace utilisé
 user color indicator	filemanager	fr	Indicateur de couleur de l'utilisateur
+user home quota	filemanager	fr	Quota de l'accueil utilisateur
 users and groups	filemanager	fr	Utilisateurs et groupes
 versioning	filemanager	fr	Versioning
+versioning requires egroupware epl	filemanager	fr	La gestions des version nécessite EGroupware EPL
+vfs mounts and versioning	common	fr	Montages VFS et versions
 view link	filemanager	fr	Voir le lien
+webdav link copied into clipboard	filemanager	fr	Lien WebDAV copiés dans le presse-papier
 writable share link	filemanager	fr	Lien de partage accessible en écriture
 wrong username or password!	filemanager	fr	Mauvais login ou mot de passe !
 you are not allowed to finally delete older versions and deleted files!	filemanager	fr	Vous êtes pas autorisés à supprimer définitivement les anciennes versions et les fichiers supprimés !

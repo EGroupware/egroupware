@@ -31,9 +31,15 @@
 1 month	common	pt	1 Mês
 1 week	common	pt	1 Semana
 13 (ntp)	admin	pt	13 (ntp)
+15 minutes	common	pt	15 minutos
+2-factor authentication code required	common	pt	Código de autenticação de 2-factores requerido
 2-factor-authentication	common	pt	2-Factor-Autenticação
+2-factor-authentication required	common	pt	2-Factor-Autenticação necessária
+3 minutes	common	pt	3 minutos
+30 minutes	common	pt	30 minutos
 30 seconds	common	pt	30 segundo
 5 minutes	common	pt	5 Minutos
+5 seconds	common	pt	5 segundos
 80 (http)	admin	pt	80 (http)
 a pattern to be searched for	common	pt	Um padrão a pesquisar
 abort	common	pt	Abortar
@@ -111,9 +117,11 @@ as default	common	pt	Como padrão
 attach	common	pt	Anexar
 attach file	common	pt	Anexar ficheiro
 attachment	common	pt	Acessório
+attention: action will be applied to all rows, not only visible ones!	api	pt	Atenção: a acção será aplicada a todas as filas, e não apenas às visíveis!
 august	common	pt	Agosto
 australia	common	pt	Austrália
 austria	common	pt	Áustria
+authenticate	common	pt	Autenticar
 author	common	pt	Autor
 autohide sidebox menu's	common	pt	Esconder automaticamente menus da caixa lateral
 autohide sidebox menus	common	pt	Esconder automaticamente menus da caixa lateral
@@ -202,6 +210,7 @@ choose a background image.	common	pt	Escolha uma imagem de fundo.
 choose a background style.	common	pt	Escolha um estilo de fundo.
 choose a text color for the icons	common	pt	Escolha uma cor de texto para os ícones
 choose the category	common	pt	Escolha a categoria
+choose the default filename for merged documents.	preferences	pt	Escolha o nome de ficheiro por defeito para os documentos fundidos.
 choose the parent category	common	pt	Escolha a categoria principal
 christmas island	common	pt	Ilha Natal
 class	common	pt	Classe
@@ -222,6 +231,7 @@ close sidebox	common	pt	Fechar caixa lateral
 closes the window without saving the changes	common	pt	Fecha a janela sem guardar as alterações
 cocos (keeling) islands	common	pt	Ilhas Cocos (Keeling)
 colombia	common	pt	Colômbia
+colour	common	pt	Cor
 column...	common	pt	Coluna...
 columnname	common	pt	Nome da coluna
 comment	common	pt	Comentário
@@ -241,12 +251,20 @@ contacting server...	common	pt	A ligar ao servidor...
 contains	common	pt	Contém
 cook islands	common	pt	Ilhas Cook
 copy	common	pt	Copiar
+copy "%1"	common	pt	Cópia "%1"
+copy of:	common	pt	Cópia de:
+copy to	common	pt	Cópia para
+copy to clipboard	common	pt	Cópia para prancheta
 costa rica	common	pt	Costa Rica
 cote d ivoire	common	pt	Costa do Marfim
 could not contact server. operation timed out!	common	pt	Não foi possível ligar ao servidor. Sessão expirou!
 create	common	pt	Criar
 create a new table for the application	common	pt	Criar uma nova tabela para a aplicação
+create directory	common	pt	Criar pasta
+create link	common	pt	Criar link
+created	common	pt	Criado em
 created by	common	pt	Criado por
+created by %1	common	pt	Criado por %1
 creates an english ('en') langfile from label and helptexts (for application in name)	common	pt	Cria um ficheiro de idioma inglês ('en') a partir de etiquetas ou textos de ajuda (para aplicar no Nome)
 creator	preferences	pt	Criador
 croatia	common	pt	Croácia
@@ -265,6 +283,7 @@ custom javascript for onchange	common	pt	Javascript personalizado para onChange
 cut	common	pt	Cortar
 cyprus	common	pt	Chipre
 czech republic	common	pt	República Checa
+dark mode	common	pt	Modo escuro
 date	common	pt	Data
 date due	common	pt	Até
 date+time	common	pt	Data+Hora
@@ -541,6 +560,7 @@ insert new row after this one	common	pt	Inserir uma coluna depois desta
 insert new row in front of first line	common	pt	Inserir uma linha à frente de todas
 insert row after	common	pt	Inserir linha depois
 insert row before	common	pt	Inserir linha antes
+insert timestamp into description field	common	pt	Inserir carimbo da hora no campo de descrição
 integer	common	pt	Inteiro
 international	common	pt	Internacional
 invalid filename	common	pt	Nome de ficheiro inválido
@@ -597,6 +617,7 @@ liberia	common	pt	Libéria
 libyan arab jamahiriya	common	pt	Líbia
 license	common	pt	Licença
 liechtenstein	common	pt	Liechtenstein
+light mode	common	pt	Modo de luz
 line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	pt	Linha %1:'%2'<br><b>dados csv não coincidem com o número de colunas da tabela %3 ==> ignorado</b>
 link	common	pt	Ligação
 link target %1 not found!	common	pt	Destino do link% 1 não encontrado!
@@ -879,6 +900,7 @@ save all	common	pt	Salve todo
 save as	common	pt	Salvar como
 save the changes made and close the window	common	pt	Guardar as alterações efectuadas e fechar a janela
 save the etemplate under the above keys (name, ...), change them for a saveas	common	pt	Guardar o modelo Web com as chaves de cima (nome, ...). Terá de alterá-las para "Guardar como..."
+saved column sizes to preferences.	common	pt	Guarde os tamanhos das colunas de acordo com as preferências.
 saves changes to tables_current.inc.php	common	pt	Guarda as alterações em tables_current.inc.php
 saves the template with given version number and closes the window	common	pt	Guarda o modelo com determinado número de versão e fecha a janela
 scale	common	pt	Escala
@@ -1173,8 +1195,14 @@ you need to select a file first!	common	pt	Selecione um arquivo primeiro!
 your code is incorrect !!!	common	pt	Código é incorreto!
 your message could <b>not</b> be sent!<br>	common	pt	<b>Não</b> foi possível enviar sua mensagem!<br>
 your message has been sent	common	pt	A sua mensagem foi enviada
+your password does not have required strength of %1 character classes and minimum length of %2 characters.	common	pt	A sua palavra-passe não requer força de %1 classes de caracteres e comprimento mínimo de %2 caracteres.
+your password does not have required strength:	common	pt	A sua palavra-passe não tem a força necessária:
+your password failed the following criteria:	common	pt	A sua palavra-passe falhou os seguintes critérios:
+your password is about to expire in %1 days, you may change your password now	common	pt	A sua palavra-passe está prestes a expirar em %1 dias, pode alterar a sua palavra-passe agora.
+your password might not match the password policy.	common	pt	A sua palavra-passe pode não corresponder à política de palavras-passe.
 your search returned %1 matchs	common	pt	A sua pesquisa resultou em %1 ocorrências
 your search returned 1 match	common	pt	A sua pesquisa resultou em 1 ocorrência
+your session timed out, please log in again	login	pt	A sua sessão expirou, por favor inicie novamente a sessão.
 your settings have been updated	common	pt	As suas preferências foram actualizadas
 zambia	common	pt	Zâmbia
 zimbabwe	common	pt	Zimbabwe

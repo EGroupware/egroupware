@@ -21,10 +21,19 @@
 00 (disable)	admin	zh	00 (禁用)
 1 day	common	zh	1 天
 1 hour	common	zh	1 小时
+1 minute	common	zh	5 секунди
 1 month	common	zh	1 个月
 1 week	common	zh	1 星期
 13 (ntp)	admin	zh	13 (NTP)
+15 minutes	common	zh	15分钟
+2-factor authentication code required	common	zh	需要双因素验证码
 2-factor-authentication	common	zh	2-Factor-Authentication
+2-factor-authentication required	common	zh	需要双因素认证
+3 minutes	common	zh	3分钟
+30 minutes	common	zh	30分钟
+30 seconds	common	zh	30秒
+5 minutes	common	zh	5分钟
+5 seconds	common	zh	5分钟
 80 (http)	admin	zh	80 (http)
 a pattern to be searched for	common	zh	一搜索模式用于
 abort	common	zh	终止
@@ -103,9 +112,11 @@ aruba	common	zh	阿鲁巴岛
 as default	common	zh	默认
 attach	common	zh	附加
 attach file	common	zh	附加文件
+attention: action will be applied to all rows, not only visible ones!	api	zh	注意：行动将应用于所有的行，而不仅仅是可见的行。
 august	common	zh	八月
 australia	common	zh	澳大利亚
 austria	common	zh	奥地利
+authenticate	common	zh	认证
 author	common	zh	作者
 autohide sidebox menu's	common	zh	自动隐藏侧栏菜单
 autohide sidebox menus	common	zh	自动隐藏侧边栏菜单
@@ -193,6 +204,7 @@ choose a background image.	common	zh	选择背景图片。
 choose a background style.	common	zh	选择背景风格。
 choose a text color for the icons	common	zh	选择图标文字颜色
 choose the category	common	zh	选择类别
+choose the default filename for merged documents.	preferences	zh	为合并后的文件选择默认的文件名。
 choose the parent category	common	zh	选择父类别
 christmas island	common	zh	圣诞岛
 class	common	zh	类
@@ -215,6 +227,7 @@ close sidebox	common	zh	关闭侧边栏
 closes the window without saving the changes	common	zh	关闭窗口不保存任何更改
 cocos (keeling) islands	common	zh	科科斯(基灵)群岛
 colombia	common	zh	哥伦比亚
+colour	common	zh	颜色
 column...	common	zh	列...
 columnname	common	zh	列_名称
 comment	common	zh	备注
@@ -233,13 +246,20 @@ contacting server...	common	zh	正在联系服务器...
 contains	common	zh	包含
 cook islands	common	zh	库克群岛
 copy	common	zh	复制
+copy "%1"	common	zh	复制"%1"
+copy of:	common	zh	复制到。
+copy to	common	zh	复制到
 copy to clipboard	common	zh	复制到剪贴板
 costa rica	common	zh	哥斯达黎加
 cote d ivoire	common	zh	科特迪瓦
 could not contact server. operation timed out!	common	zh	无法连接服务器，操作超时！
 create	common	zh	创建
 create a new table for the application	common	zh	为这个应用程序创建一新数据表
+create directory	common	zh	创建文件夹
+create link	common	zh	创建链接
+created	common	zh	已创建
 created by	common	zh	创建者
+created by %1	common	zh	由%1创建
 creates an english ('en') langfile from label and helptexts (for application in name)	common	zh	从标签和帮助文本创建一个英文('en')语言文件(用于应用程序名称)
 creator	preferences	zh	创建者
 croatia	common	zh	克罗地亚
@@ -258,6 +278,7 @@ custom javascript for onchange	common	zh	为 onChange 自定义 javascript
 cut	common	zh	剪切
 cyprus	common	zh	塞浦路斯
 czech republic	common	zh	捷克斯洛伐克共和国
+dark mode	common	zh	深色模式
 database error	common	zh	数据库错误
 database error!	common	zh	数据库错误！
 date	common	zh	日期
@@ -533,6 +554,7 @@ insert new row after this one	common	zh	在这一行之后插入新行
 insert new row in front of first line	common	zh	在第一行之前插入新行
 insert row after	common	zh	在之后插入行
 insert row before	common	zh	在之前插入行
+insert timestamp into description field	common	zh	在描述栏中插入时间戳
 integer	common	zh	整数
 international	common	zh	国际
 invalid filename	common	zh	文件名不正确
@@ -587,6 +609,7 @@ liberia	common	zh	利比里亚
 libyan arab jamahiriya	common	zh	利比亚
 license	common	zh	许可证
 liechtenstein	common	zh	列支敦士登
+light mode	common	zh	浅色模式
 line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	zh	第%1行：'%2'<br><b>csv 数据与数据表%3栏数不匹配 ==> 忽略</b>
 link	common	zh	链接
 linkapps	common	zh	链接应用程序
@@ -861,6 +884,7 @@ save all	common	zh	保存所有
 save selected columns as default preference for all users.	common	zh	保存所选列作为所有用户默认首选。
 save the changes made and close the window	common	zh	保存所作更改并且关闭窗口
 save the etemplate under the above keys (name, ...), change them for a saveas	common	zh	在上面的键值(name,...)之下保存模板，把它们改为另存将
+saved column sizes to preferences.	common	zh	将列的大小保存到首选项中。
 saves changes to tables_current.inc.php	common	zh	保存到 tables_current.inc.php
 saves the template with given version number and closes the window	common	zh	使用给定的版本号保存模板并关闭窗口
 scale	common	zh	比例
@@ -1148,8 +1172,14 @@ you need to be an egroupware administrator to access this functionality!	common	
 you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	zh	你试图打开EGroupware应用程序：%1，但您没有访问该应用程序的权限。
 your message could <b>not</b> be sent!<br>	common	zh	您的邮件<b>无法</b>发送！<br>
 your message has been sent	common	zh	您的邮件已发送
+your password does not have required strength of %1 character classes and minimum length of %2 characters.	common	zh	您的密码没有达到要求的强度%1和最小长度%2的字符数。
+your password does not have required strength:	common	zh	您的密码没有达到要求的强度。
+your password failed the following criteria:	common	zh	您的密码不符合以下标准。
+your password is about to expire in %1 days, you may change your password now	common	zh	您的密码将在 %1 天后过期，您现在可以更改您的密码。
+your password might not match the password policy.	common	zh	您的会话超时了，请重新登录。
 your search returned %1 matchs	common	zh	您的搜索返回%1个匹配结果
 your search returned 1 match	common	zh	您的搜索返回1个匹配结果
+your session timed out, please log in again	login	zh	您的会话超时了，请重新登录。
 your settings have been updated	common	zh	您的设置已更新
 zambia	common	zh	赞比亚
 zimbabwe	common	zh	津巴布韦

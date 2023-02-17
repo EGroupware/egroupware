@@ -1,8 +1,21 @@
 %1 email addresses inserted	common	lt	įkelta el. pašto adresų: %1
 '%1' copied to clipboard	common	lt	'%1' nukopijuota į iškarpinę
 00 (disable)	admin	lt	00 (išjungti)
+1 day	common	lt	1 diena
+1 hour	common	lt	1 valanda
+1 minute	common	lt	1 minutė
+1 month	common	lt	1 mėnuo
+1 week	common	lt	1 savaitė
 13 (ntp)	admin	lt	13 (ntp)
+15 minutes	common	lt	15 minučių
+2-factor authentication code required	common	lt	Reikalingas 2 veiksnių autentifikavimo kodas
 2-factor-authentication	common	lt	2 veiksnių autentiškumo patvirtinimas
+2-factor-authentication required	common	lt	Reikalingas 2 veiksnių autentiškumo nustatymas
+3 minutes	common	lt	3 minutės
+30 minutes	common	lt	30 minučių
+30 seconds	common	lt	30 sekundžių
+5 minutes	common	lt	5 minutės
+5 seconds	common	lt	5 sekundės
 80 (http)	admin	lt	80 (http)
 abort	common	lt	Abort
 about	common	lt	Apie
@@ -22,9 +35,11 @@ april	common	lt	Balandis
 argentina	common	lt	ARGENTINA
 armenia	common	lt	ARMĖNIJA
 aruba	common	lt	ARUBA
+attention: action will be applied to all rows, not only visible ones!	api	lt	Dėmesio: veiksmas bus taikomas visoms eilutėms, ne tik matomoms!
 august	common	lt	Rugpjūtis
 australia	common	lt	AUSTRALIJA
 austria	common	lt	AUSTRIJA
+authenticate	common	lt	Autentiškumo nustatymas
 author	common	lt	Autorius
 back	common	lt	Atgal
 bcc	common	lt	Bcc
@@ -47,12 +62,26 @@ chad	common	lt	ČADAS
 charset	common	lt	utf-8
 chile	common	lt	ČILĖ
 china	common	lt	KINIJA
+choose the default filename for merged documents.	preferences	lt	Pasirinkite numatytąjį sujungtų dokumentų failo pavadinimą.
 colombia	common	lt	KOLUMBIJA
+colour	common	lt	Spalva
+copy	common	lt	Kopijuoti
+copy "%1"	common	lt	Kopijuoti "%1"
+copy of:	common	lt	Kopija:
+copy to	common	lt	Kopijuoti į
+copy to clipboard	common	lt	Kopijuoti į iškarpinę
+create	common	lt	Sukurti
+create directory	common	lt	Sukurti aplanką
+create link	common	lt	Sukurti nuorodą
+created	common	lt	Sukurtas
+created by	common	lt	Sukūrė
+created by %1	common	lt	Sukūrė %1
 croatia	common	lt	KROATIJA
 cuba	common	lt	KUBA
 currency	common	lt	Valiuta
 cyprus	common	lt	KIPRAS
 czech republic	common	lt	ČEKIJA
+dark mode	common	lt	Tamsus režimas
 date	common	lt	Data
 december	common	lt	Gruodis
 default category	common	lt	Numatyta kategorija
@@ -96,6 +125,7 @@ hungary	common	lt	VENGRIJA
 iceland	common	lt	ISLANDIJA
 india	common	lt	INDIJA
 indonesia	common	lt	INDONEZIJA
+insert timestamp into description field	common	lt	Laiko žymos įterpimas į aprašymo lauką
 iran, islamic republic of	common	lt	IRANAS
 iraq	common	lt	IRAKAS
 ireland	common	lt	AIRIJA
@@ -115,6 +145,7 @@ last name	common	lt	Pavardė
 lastname	common	lt	Pavardė
 latvia	common	lt	LATVIJA
 liberia	common	lt	LIBERIJA
+light mode	common	lt	Šviesus režimas
 lithuania	common	lt	LIETUVA
 luxembourg	common	lt	LIUKSEMBURGAS
 madagascar	common	lt	MADAGASKARAS
@@ -159,6 +190,13 @@ print	common	lt	Spausdinti
 project	common	lt	Projektas
 qatar	common	lt	KATARAS
 repeat password	common	lt	Pakartoti slaptažodį
+saved column sizes to preferences.	common	lt	Išsaugoti stulpelių dydžius nustatymuose.
 show/hide	common	lt	rodyti/paslėpti šoninę juostą
 yemen	common	lt	JEMENAS
+your password does not have required strength of %1 character classes and minimum length of %2 characters.	common	lt	Jūsų slaptažodis neatitinka reikalaujamos %1 simbolių klasės stiprumo ir minimalaus %2 simbolių ilgio.
+your password does not have required strength:	common	lt	Jūsų slaptažodis neturi reikalaujamo stiprumo:
+your password failed the following criteria:	common	lt	Jūsų slaptažodis neatitinka šių kriterijų:
+your password is about to expire in %1 days, you may change your password now	common	lt	Jūsų slaptažodis nustos galioti po %1 dienų, galite pasikeisti slaptažodį dabar.
+your password might not match the password policy.	common	lt	Jūsų slaptažodis gali neatitikti slaptažodžių politikos.
+your session timed out, please log in again	login	lt	Jūsų sesija baigėsi, prašome prisijungti dar kartą.
 zimbabwe	common	lt	ZIMBABVĖ

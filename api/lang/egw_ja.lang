@@ -43,10 +43,14 @@
 1 week	common	ja	1 週間
 13 (ntp)	admin	ja	13 (ntp)
 15 minutes	common	ja	15 分
+2-factor authentication code required	common	ja	2ファクタ認証コードが必要
 2-factor-authentication	common	ja	2要素認証
+2-factor-authentication required	common	ja	2ファクター認証が必要
+3 minutes	common	ja	3分
 30 minutes	common	ja	30 分
 30 seconds	common	ja	30 秒
 5 minutes	common	ja	5 分
+5 seconds	common	ja	5秒
 80 (http)	admin	ja	80 (http)
 a pattern to be searched for	common	ja	検索パターン
 a request to the egroupware server returned with an error	common	ja	EGroupware サーバーに対するリクエストでエラーが発生しました。
@@ -150,9 +154,11 @@ as default	common	ja	既定に設定
 attach	common	ja	添付
 attach file	common	ja	ファイルを添付
 attachment	common	ja	添付
+attention: action will be applied to all rows, not only visible ones!	api	ja	注意: アクションはすべての行に適用されます。
 august	common	ja	8月
 australia	common	ja	オーストラリア
 austria	common	ja	オーストリア
+authenticate	common	ja	認証
 author	common	ja	著者
 autohide sidebox menu's	common	ja	サイドメニューを自動的に隠す
 autohide sidebox menus	common	ja	サイドメニューを自動的に隠す
@@ -255,6 +261,7 @@ choose a background style.	common	ja	背景スタイルを選択
 choose a text color for the icons	common	ja	アイコン用のテキスト色を選択
 choose file...	common	ja	ファイルを選択...
 choose the category	common	ja	カテゴリを選択
+choose the default filename for merged documents.	preferences	ja	マージされたドキュメントのデフォルトファイル名を選択。
 choose the parent category	common	ja	親カテゴリを選択
 choose time	common	ja	時間を選択
 chosen parent category no longer exists	common	ja	親カテゴリが存在しません
@@ -283,6 +290,7 @@ cocos (keeling) islands	common	ja	ココス諸島
 collection empty.	common	ja	Collection empty.
 collection listing	common	ja	Collection listing
 colombia	common	ja	コロンビア
+colour	common	ja	カラー
 column...	common	ja	カラム...
 columnname	common	ja	カラム名
 columns to print	common	ja	印刷するカラム
@@ -307,12 +315,16 @@ cook islands	common	ja	クック諸島
 cookies are required to login to this site	login	ja	このサイトにログインするにはクッキーが必要です
 copy	common	ja	コピー
 copy "%1"	common	ja	"%1"をコピー
+copy of:	common	ja	をコピーします。
+copy to	common	ja	コピー先
 copy to clipboard	common	ja	クリップボードにコピー
 costa rica	common	ja	コスタリカ
 could not contact server. operation timed out!	common	ja	サーバーに接続できませんでした。（タイムアウト）
 create	common	ja	作成
 create a new table for the application	common	ja	アプリケーション用のテーブルを新規作成する
+create directory	common	ja	フォルダーの作成
 create link	common	ja	リンクを作成
+created	common	ja	作成
 created by	common	ja	作成者
 created by %1	common	ja	作成者: %1
 creator	preferences	ja	作成者
@@ -333,6 +345,7 @@ custom javascript for onchange	common	ja	Custom javascript for onChange
 cut	common	ja	切り取り
 cyprus	common	ja	キプロス
 czech republic	common	ja	チェコ
+dark mode	common	ja	ダークモード
 dark moono theme	common	ja	dark moono theme
 data type	common	ja	データ・タイプ
 database error	common	ja	データベース・エラー
@@ -682,6 +695,7 @@ insert new row after this one	common	ja	Insert new row after
 insert new row in front of first line	common	ja	Insert new row before first line
 insert row after	common	ja	Insert row after
 insert row before	common	ja	Insert row before
+insert timestamp into description field	common	ja	説明欄にタイムスタンプを挿入
 integer	common	ja	整数
 international	common	ja	国際
 introduction	common	ja	紹介
@@ -738,6 +752,7 @@ lesotho	common	ja	レソト
 liberia	common	ja	リベリア
 license	common	ja	ライセンス
 liechtenstein	common	ja	リヒテンシュタイン
+light mode	common	ja	ライトモード
 line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>	common	ja	Line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>
 line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	ja	Line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>
 link	common	ja	リンク
@@ -1094,6 +1109,7 @@ save as zip	common	ja	圧縮して保存
 save selected columns as default preference for all users.	common	ja	Save columns as default preference for all users.
 save the changes made and close the window	common	ja	Save changes and close
 save the etemplate under the above keys (name, ...), change them for a saveas	common	ja	Save eTemplate under the above keys (name, ...), change them for a SaveAs
+saved column sizes to preferences.	common	ja	列のサイズを環境設定に保存します。
 saves changes to tables_current.inc.php	common	ja	Saves changes to tables_current.inc.php
 saves the template with given version number and closes the window	common	ja	Saves the template with version number and closes the window.
 scale	common	ja	スケール

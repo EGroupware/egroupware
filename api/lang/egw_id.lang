@@ -24,10 +24,19 @@
 00 (disable)	admin	id	00 (disable)
 1 day	common	id	1 Hari
 1 hour	common	id	1 Jam
+1 minute	common	id	1 menit
 1 month	common	id	1 Bulan
 1 week	common	id	1 Minggu
 13 (ntp)	admin	id	13 (ntp)
-2-factor-authentication	common	id	2-Faktor-Autentikasi
+15 minutes	common	id	15 menit
+2-factor authentication code required	common	id	Diperlukan kode Autentikasi 2 Faktor
+2-factor-authentication	common	id	2 Faktor Autentikasi
+2-factor-authentication required	common	id	Diperlukan Autentikasi 2 Faktor
+3 minutes	common	id	3 menit
+30 minutes	common	id	30 menit
+30 seconds	common	id	30 detik
+5 minutes	common	id	5 menit
+5 seconds	common	id	5 detik
 80 (http)	admin	id	80 (http)
 a pattern to be searched for	common	id	pola untuk pencarian
 abort	common	id	Batalkan
@@ -96,9 +105,11 @@ aruba	common	id	ARUBA
 as default	common	id	sebagai bawaan
 attach	common	id	Lampiran
 attach file	common	id	lampirkan berkas
+attention: action will be applied to all rows, not only visible ones!	api	id	Perhatian: tindakan akan diterapkan ke semua baris, tidak hanya yang terlihat!
 august	common	id	Agustus
 australia	common	id	AUSTRALIA
 austria	common	id	AUSTRIA
+authenticate	common	id	Autentikasi
 author	common	id	Penulis
 autosave default category	common	id	Simpan otomatis Kategori Bawaan
 azerbaijan	common	id	AZERBAIJAN
@@ -163,6 +174,7 @@ checkbox	common	id	Checkbox
 chile	common	id	CHILI
 china	common	id	CHINA
 choose the category	common	id	Pilih kategori
+choose the default filename for merged documents.	preferences	id	Memilih nama file default untuk dokumen yang digabungkan.
 christmas island	common	id	KEPULAUAN NATAL
 class	common	id	Class
 class, valign	common	id	class, Valign
@@ -181,6 +193,7 @@ cocos (keeling) islands	common	id	KEPULAUAN COCOS (KEELING)
 collection empty.	common	id	Koleksi kosong.
 collection listing	common	id	Daftar Koleksi
 colombia	common	id	KOLOMBIA
+colour	common	id	Warna
 column...	common	id	Kolom...
 columnname	common	id	Nama Kolom
 comment	common	id	Komentar
@@ -198,11 +211,18 @@ contains	common	id	mengandung
 content type	common	id	Content type
 cook islands	common	id	KEPULAUAN COOK
 copy	common	id	Salin
+copy "%1"	common	id	Salin "%1"
+copy of:	common	id	Salinan dari:
+copy to	common	id	Salin ke
 copy to clipboard	common	id	Salin ke klipbord
 costa rica	common	id	KOSTA RIKA
 cote d ivoire	common	id	PANTAI GADING
 create	common	id	Bikin
-created by	common	id	Dibikin Oleh
+create directory	common	id	Membuat folder
+create link	common	id	Membuat tautan
+created	common	id	Membuat
+created by	common	id	Dibuat oleh
+created by %1	common	id	Dibuat oleh %1
 creator	preferences	id	Creator
 croatia	common	id	KROASIA
 css properties	common	id	properti CSS
@@ -216,6 +236,7 @@ custom fields	common	id	custom fields
 cut	common	id	Cut
 cyprus	common	id	SIPRUS
 czech republic	common	id	REPUBLIK CESNYA
+dark mode	common	id	Mode gelap
 database error	common	id	Database error
 database error!	common	id	Database error!
 date	common	id	Tanggal
@@ -411,6 +432,7 @@ insert column before	common	id	Sisipkan kolom sebelum
 insert in document	common	id	Sisipkan dalam dokumen
 insert row after	common	id	Sisipkan baris setelah
 insert row before	common	id	Sisipkan baris sebelum
+insert timestamp into description field	common	id	Masukkan cap waktu ke dalam bidang deskripsi
 integer	common	id	Integer
 international	common	id	Internasional
 invalid filename	common	id	Nama berkas salah
@@ -463,6 +485,7 @@ liberia	common	id	LIBERIA
 libyan arab jamahiriya	common	id	LIBYAN ARAB JAMAHIRIYA
 license	common	id	Lisensi
 liechtenstein	common	id	LIECHTENSTEIN
+light mode	common	id	Mode terang
 link	common	id	Tautan
 linkapps	common	id	LinkApps
 linkentry	common	id	LinkEntry
@@ -682,6 +705,7 @@ saturday	common	id	Sabtu
 saudi arabia	common	id	ARAB SAUDI
 save	common	id	Simpan
 save all	common	id	Simpan semuanya
+saved column sizes to preferences.	common	id	Menyimpan ukuran kolom ke preferensi.
 scale	common	id	Skala
 search	common	id	Cari
 search %1 '%2'	common	id	Mencari %1 '%2'
@@ -877,6 +901,12 @@ you can respond by visiting:	common	id	Untuk melihatnya, kunjungi:
 you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	id	Anda mencoba Aplikasi EGroupware: %1, namun anda tidak memiliki ijin untuk mengakses aplikasi ini.
 your message could <b>not</b> be sent!<br>	common	id	Pesan anda <b>tidak</b> dapat dikirimkan!<br>
 your message has been sent	common	id	Pesan telah terkirim
+your password does not have required strength of %1 character classes and minimum length of %2 characters.	common	id	Kata sandi Anda tidak memiliki kekuatan yang disyaratkan yaitu kelas karakter %1 dan panjang minimum %2 karakter.
+your password does not have required strength:	common	id	Kata sandi Anda tidak memiliki kekuatan yang disyaratkan:
+your password failed the following criteria:	common	id	Kata sandi Anda tidak memenuhi kriteria berikut:
+your password is about to expire in %1 days, you may change your password now	common	id	Kata sandi Anda akan kedaluwarsa dalam %1 hari, Anda dapat mengubah kata sandi sekarang.
+your password might not match the password policy.	common	id	Kata sandi Anda mungkin tidak sesuai dengan kebijakan kata sandi.
+your session timed out, please log in again	login	id	Sesi Anda telah habis, silakan masuk lagi.
 zambia	common	id	ZAMBIA
 zimbabwe	common	id	ZIMBABWE
 zoom	common	id	Zoom

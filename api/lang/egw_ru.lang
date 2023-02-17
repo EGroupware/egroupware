@@ -33,10 +33,19 @@
 00 (disable)	admin	ru	00 (выкл)
 1 day	common	ru	1 День
 1 hour	common	ru	1 Час
+1 minute	common	ru	1 минута
 1 month	common	ru	1 Месяц
 1 week	common	ru	1 Неделя
 13 (ntp)	admin	ru	13 (ntp)
+15 minutes	common	ru	15 минут
+2-factor authentication code required	common	ru	Требуется код 2-факторной аутентификации
 2-factor-authentication	common	ru	Двухфакторная аутентификация
+2-factor-authentication required	common	ru	Требуется 2-факторная аутентификация
+3 minutes	common	ru	3 минуты
+30 minutes	common	ru	30 минут
+30 seconds	common	ru	30 секунд
+5 minutes	common	ru	5 минут
+5 seconds	common	ru	5 секунд
 80 (http)	admin	ru	80 (http)
 a pattern to be searched for	common	ru	Шаблон для поиска
 abort	common	ru	Прервать
@@ -129,9 +138,11 @@ aruba	common	ru	Аруба
 as default	common	ru	по-умолчанию
 attach	common	ru	Вложить
 attach file	common	ru	вложить файл
+attention: action will be applied to all rows, not only visible ones!	api	ru	Внимание: действие будет применено ко всем строкам, а не только к видимым!
 august	common	ru	Август
 australia	common	ru	Австралия
 austria	common	ru	Австрия
+authenticate	common	ru	Аутентифицировать
 author	common	ru	Автор
 autohide sidebox menu's	common	ru	Автоматически скрывать боковые подменю(menu's)
 autohide sidebox menus	common	ru	Автоматически скрывать боковые меню
@@ -227,6 +238,7 @@ choose a background image.	common	ru	Выбрать фоновое изобра�
 choose a background style.	common	ru	Выбрать стиль фона.
 choose a text color for the icons	common	ru	Выбрать цвет текста для пиктограмм
 choose the category	common	ru	Выберите категорию
+choose the default filename for merged documents.	preferences	ru	Выбор имени файла по умолчанию для объединенных документов.
 choose the parent category	common	ru	Выберите родительскую категорию
 chosen parent category no longer exists	common	ru	выбранная родительская категория больше не существует
 christmas island	common	ru	О-в Рождества
@@ -254,6 +266,7 @@ cocos (keeling) islands	common	ru	Кокосовые О-ва
 collection empty.	common	ru	коллекция пуста.
 collection listing	common	ru	список коллекций
 colombia	common	ru	Колумбия
+colour	common	ru	Цвет
 column...	common	ru	Столбец...
 columnname	common	ru	ИмяСтолбца
 comment	common	ru	Комментарий
@@ -273,13 +286,20 @@ contains	common	ru	содержит
 content type	common	ru	Тип содержимого
 cook islands	common	ru	О-ва Кука
 copy	common	ru	Копировать
+copy "%1"	common	ru	Копия "%1"
+copy of:	common	ru	Копировать:
+copy to	common	ru	Копировать в
 copy to clipboard	common	ru	Копировать в буфер обмена
 costa rica	common	ru	Коста-Рика
 cote d ivoire	common	ru	Кот'д'Ивуар
 could not contact server. operation timed out!	common	ru	Невозможно соединиться с сервером. Прервано по таймауту!
 create	common	ru	Создать
 create a new table for the application	common	ru	Создать новую таблицу для приложения
+create directory	common	ru	Создать папку
+create link	common	ru	Создать ссылку
+created	common	ru	Создано
 created by	common	ru	Создано
+created by %1	common	ru	Создано %1
 creates an english ('en') langfile from label and helptexts (for application in name)	common	ru	создает английский ('en') файл перевода из меток и текстов помощи (для приложения по Имени)
 creator	preferences	ru	Создатель
 croatia	common	ru	Хорватия
@@ -299,6 +319,7 @@ custom javascript for onchange	common	ru	пользовательский java-�
 cut	common	ru	Вырезать
 cyprus	common	ru	Кипр
 czech republic	common	ru	Чехия
+dark mode	common	ru	Темный режим
 database error	common	ru	Ошибка Базы Данных
 database error!	common	ru	Ошибка Базы Данных!
 date	common	ru	Дата
@@ -616,6 +637,7 @@ insert new row after this one	common	ru	вставить новую строку
 insert new row in front of first line	common	ru	вставить новую строку перед  первой Строкой
 insert row after	common	ru	Вставить строку после
 insert row before	common	ru	Вставить строку перед
+insert timestamp into description field	common	ru	Вставка метки времени в поле описания
 integer	common	ru	Целое
 international	common	ru	Международный
 invalid filename	common	ru	Неправильное имя файла
@@ -674,6 +696,7 @@ liberia	common	ru	Либерия
 libyan arab jamahiriya	common	ru	Ливия
 license	common	ru	Лицензия
 liechtenstein	common	ru	Лихтенштейн
+light mode	common	ru	Светлый режим
 line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>	common	ru	Строка %1: '%2'<br><b>csv данных действительно содержит ##запуск последней проверки##таблицы %3 ==> игнорируется</b>
 line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	ru	Строка %1: '%2'<br><b>данных CSV не соответствует количеству столбцов таблицы %3 ==> игнорируется</b>
 link	common	ru	Ссылка
@@ -986,6 +1009,7 @@ save as	common	ru	Сохранить как
 save selected columns as default preference for all users.	common	ru	Записать выбранные столбцы как настройки по-умолчанию для всех пользователей.
 save the changes made and close the window	common	ru	Сохранить изменения и закрыть окно
 save the etemplate under the above keys (name, ...), change them for a saveas	common	ru	записать еШаблон под вышеуказанными ключами (имя, ...), изменить их для СохранитьКак
+saved column sizes to preferences.	common	ru	Сохранение размеров столбцов в настройках.
 saves changes to tables_current.inc.php	common	ru	сохраняет изменения в tables_current.inc.php
 saves the template with given version number and closes the window	common	ru	записывает шаблон с данной версией и закрывает окно
 scale	common	ru	Масштаб
@@ -1309,9 +1333,14 @@ you've tried to open the egroupware application: %1, but you have no permission 
 your code is incorrect !!!	common	ru	Код неправильный!
 your message could <b>not</b> be sent!<br>	common	ru	Ваше сообщение <b>не может</b> быть отправлено !<br>
 your message has been sent	common	ru	Ваше сообщение отправлено
+your password does not have required strength of %1 character classes and minimum length of %2 characters.	common	ru	Ваш пароль не имеет требуемой силы %1 класса символов и минимальной длины %2 символов.
+your password does not have required strength:	common	ru	Ваш пароль не имеет требуемой силы:
+your password failed the following criteria:	common	ru	Ваш пароль не соответствует следующим критериям:
 your password is about to expire in %1 days, you may change your password now	common	ru	Ваш пароль заканчивается через %1 дней, вы можете изменить его сейчас.
+your password might not match the password policy.	common	ru	Ваш пароль может не соответствовать политике паролей.
 your search returned %1 matchs	common	ru	ваш поиск вернул %1 совпадений
 your search returned 1 match	common	ru	ваш поиск вернул 1 совпадение
+your session timed out, please log in again	login	ru	Ваша сессия завершилась, пожалуйста, войдите снова.
 your settings have been updated	common	ru	Ваши установки обновлены
 zambia	common	ru	Замбия
 zimbabwe	common	ru	Зимбабве

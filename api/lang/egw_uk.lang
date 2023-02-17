@@ -2,8 +2,21 @@
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	uk	%1EGroupware%2 is a multi-user, web-based groupware suite written in %3PHP%4.
 '%1' copied to clipboard	common	uk	'%1' скопійовано в буфер обміну
 00 (disable)	admin	uk	00 (disable)
+1 day	common	uk	1 день
+1 hour	common	uk	1 година
+1 minute	common	uk	1 хвилина
+1 month	common	uk	1 місяць
+1 week	common	uk	1 тиждень
 13 (ntp)	admin	uk	13 (ntp)
+15 minutes	common	uk	15 хвилин
+2-factor authentication code required	common	uk	Потрібен код 2-факторної автентифікації
 2-factor-authentication	common	uk	2-факторна аутентифікація
+2-factor-authentication required	common	uk	Потрібна 2-факторна автентифікація
+3 minutes	common	uk	3 хвилини
+30 minutes	common	uk	30 хвилин
+30 seconds	common	uk	30 секунд
+5 minutes	common	uk	5 хвилин
+5 seconds	common	uk	5 секунд
 80 (http)	admin	uk	80 (http)
 abort	common	uk	Перервати
 about	common	uk	Щодо
@@ -41,9 +54,11 @@ are you sure you want to delete this entry ?	common	uk	Ви впевнені, щ
 argentina	common	uk	АРГЕНТИНА
 armenia	common	uk	ВІРМЕНІЯ
 attach file	common	uk	Прикласти файл
+attention: action will be applied to all rows, not only visible ones!	api	uk	Увага: дія буде застосована до всіх рядків, а не тільки до видимих!
 august	common	uk	Серпень
 australia	common	uk	АВСТРАЛІЯ
 austria	common	uk	АВСТРІЯ
+authenticate	common	uk	Автентифікація
 author	common	uk	Автор
 autohide sidebox menu's	common	uk	Приховувати бокове меню
 autosave default category	common	uk	Автоматично зберегти категорію по замовченню
@@ -81,6 +96,7 @@ check installation	common	uk	Перевірити інсталяцію
 chile	common	uk	Чілі
 china	common	uk	Китай
 choose the category	common	uk	Виберіть категорію
+choose the default filename for merged documents.	preferences	uk	Виберіть ім'я файлу за замовчуванням для об'єднаних документів.
 choose the parent category	common	uk	Виберіть вищестоячу категорію
 clear	common	uk	Очистити
 clear form	common	uk	Очистити форму
@@ -89,14 +105,24 @@ click here to create the link	common	uk	натисніть тут для ств�
 click here to start the search	common	uk	натисніть тут щоб почати пошук
 close	common	uk	Закрити
 colombia	common	uk	КОЛУМБІЯ
+colour	common	uk	Колір
 comment	common	uk	Коментувати
 company	common	uk	Компанія
 confirm	common	uk	Підтвердити
 congo	common	uk	КОНГО
 contact	common	uk	Контакт
 copy	common	uk	Копія
+copy "%1"	common	uk	Копія "%1"
+copy of:	common	uk	Копія:
+copy to	common	uk	Копіювати в
+copy to clipboard	common	uk	Копіювати в буфер обміну
 create	common	uk	Створити
+create directory	common	uk	Створити папку
+create link	common	uk	Створити посилання
+created	common	uk	Створено
 created by	common	uk	Створено
+created by %1	common	uk	Створено %1
+creator	preferences	uk	Творець
 croatia	common	uk	ХОРВАТІЯ
 cuba	common	uk	КУБА
 currency	common	uk	Валюта
@@ -106,6 +132,7 @@ custom	common	uk	Власне
 custom fields	common	uk	Власні поля
 cyprus	common	uk	КІПР
 czech republic	common	uk	ЧЕСЬКА РЕСПУБЛІКА
+dark mode	common	uk	Темний режим
 date	common	uk	Число
 date due	common	uk	Очікуване число
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	uk	Datetime port.<br>If using port 13, please set firewall rules appropriately before submitting this page.<br>(Port: 13 / Host: 129.6.15.28)
@@ -209,6 +236,7 @@ id	common	uk	Id
 image url	common	uk	URL зображення
 import	common	uk	Імпорт
 insert all %1 addresses of the %2 contacts in %3	common	uk	Вставити всі %1 адресів %2 контактів в %3
+insert timestamp into description field	common	uk	Вставте мітку часу в поле опису
 international	common	uk	Міжнародний
 invalid filename	common	uk	невірне ім'я файлу
 invalid ip address	common	uk	Невірна IP адреса
@@ -241,6 +269,7 @@ lesotho	common	uk	ЛЕСОТО
 liberia	common	uk	ЛІБЕРІЯ
 license	common	uk	Ліцензія
 liechtenstein	common	uk	ЛІХТЕНШТЕЙН
+light mode	common	uk	Світлий режим
 link	common	uk	Посилання
 list	common	uk	Перелік
 lithuania	common	uk	ЛИТВА
@@ -372,6 +401,7 @@ san marino	common	uk	САН-МАРІНО
 saturday	common	uk	Субота
 saudi arabia	common	uk	САУДІВСЬКА АРАВІЯ
 save	common	uk	Зберегти
+saved column sizes to preferences.	common	uk	Збережені розміри стовпців у налаштуваннях.
 search	common	uk	Шукати
 search accounts	common	uk	Шукати рахунки
 section	common	uk	Розділ
@@ -497,8 +527,14 @@ you have selected an invalid main category	common	uk	Ви вибрали нев�
 you have successfully logged out	common	uk	Ви успішно вийшли
 your message could <b>not</b> be sent!<br>	common	uk	Ваше повідомлення <b>не може</b> бути відіслано!<br>
 your message has been sent	common	uk	Ваше повідомлення відіслано
+your password does not have required strength of %1 character classes and minimum length of %2 characters.	common	uk	Ваш пароль не має необхідної надійності %1 класів символів та мінімальної довжини %2 символів.
+your password does not have required strength:	common	uk	Ваш пароль не має необхідної надійності:
+your password failed the following criteria:	common	uk	Ваш пароль не відповідає наступним критеріям:
+your password is about to expire in %1 days, you may change your password now	common	uk	Термін дії вашого пароля закінчується через %1 день, ви можете змінити його зараз.
+your password might not match the password policy.	common	uk	Ваш пароль може не відповідати політиці використання паролів.
 your search returned %1 matchs	common	uk	Знайдено %1 відповідностей
 your search returned 1 match	common	uk	Знайдено одну відповідность
+your session timed out, please log in again	login	uk	Термін дії вашого сеансу закінчився, будь ласка, увійдіть знову.
 your settings have been updated	common	uk	Параметри поновлено
 zambia	common	uk	ЗАМБІЯ
 zimbabwe	common	uk	ЗІМБАБВЕ

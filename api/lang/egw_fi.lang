@@ -29,10 +29,19 @@
 00 (disable)	admin	fi	00 (ei käytössä)
 1 day	common	fi	1 Päivä
 1 hour	common	fi	1 Tunti
+1 minute	common	fi	1 minuutti
 1 month	common	fi	1 Kuukausi
 1 week	common	fi	1 Viikko
 13 (ntp)	admin	fi	13 (ntp)
+15 minutes	common	fi	15 minuuttia
+2-factor authentication code required	common	fi	2-tekijätodennuskoodi vaaditaan
 2-factor-authentication	common	fi	2-tekijä-tunnistus
+2-factor-authentication required	common	fi	2-tekijätodennus vaaditaan
+3 minutes	common	fi	3 minuuttia
+30 minutes	common	fi	30 minuuttia
+30 seconds	common	fi	30 sekuntia
+5 minutes	common	fi	5 minuuttia
+5 seconds	common	fi	5 sekuntia
 80 (http)	admin	fi	80 (http)
 a pattern to be searched for	common	fi	Hakuehdot
 abort	common	fi	Keskeytä
@@ -123,9 +132,11 @@ aruba	common	fi	ARUBA
 as default	common	fi	Oletuksena
 attach	common	fi	Liitä
 attach file	common	fi	Liitä tiedosto
+attention: action will be applied to all rows, not only visible ones!	api	fi	Huomio: toiminto kohdistuu kaikkiin riveihin, ei vain näkyviin riveihin!
 august	common	fi	Elokuu
 australia	common	fi	AUSTRALIA
 austria	common	fi	ITÄVALTA
+authenticate	common	fi	Todentaa
 author	common	fi	Tekijä
 autohide sidebox menu's	common	fi	Piilota sivupalkin valikot automaattisesti
 autohide sidebox menus	common	fi	Piilota sivupalkin valikot automaattisesti
@@ -220,6 +231,7 @@ choose a background image.	common	fi	Valitse taustakuva
 choose a background style.	common	fi	Valitse taustan tyyli
 choose a text color for the icons	common	fi	Valitse ikoneiden tekstien väri
 choose the category	common	fi	Valitse kategoria
+choose the default filename for merged documents.	preferences	fi	Valitse yhdistettyjen asiakirjojen oletustiedostonimi.
 choose the parent category	common	fi	Valitse yläkategoria
 chosen parent category no longer exists	common	fi	Valistemaasi pääkategoriaa ei ole olemassa
 christmas island	common	fi	JOULUSAARI
@@ -244,6 +256,7 @@ close sidebox	common	fi	Sulje sivuvalikko
 closes the window without saving the changes	common	fi	Sulje ikkuna tallentamatta muutoksia
 cocos (keeling) islands	common	fi	KOOKOSSAARET
 colombia	common	fi	KOLUMBIA
+colour	common	fi	Väri
 column...	common	fi	Sarake...
 columnname	common	fi	Sarakkeen nimi
 comment	common	fi	Kommentti
@@ -263,13 +276,20 @@ contains	common	fi	Sisältää
 content type	common	fi	Sisällön tyyppi
 cook islands	common	fi	COOKSAARET
 copy	common	fi	Kopioi
+copy "%1"	common	fi	Kopioi "%1"
+copy of:	common	fi	Kopioi:
+copy to	common	fi	Kopioi kohteeseen
 copy to clipboard	common	fi	Kopioi leikepöydälle
 costa rica	common	fi	COSTA RICA
 cote d ivoire	common	fi	NORSUNLUURANNIKKO
 could not contact server. operation timed out!	common	fi	Palvelimeen ei saatu yhteyttä. Pyyntö aikakatkaistiin!
 create	common	fi	Luo
 create a new table for the application	common	fi	Luo uusi taulukko sovellukselle
+create directory	common	fi	Luo kansio
+create link	common	fi	Luo linkki
+created	common	fi	Luotu
 created by	common	fi	Luonut
+created by %1	common	fi	Luonut %1
 creates an english ('en') langfile from label and helptexts (for application in name)	common	fi	Luodaan englanninkielinen ('en') kielitiedosto otsikosta ja ohjetekstit
 creator	preferences	fi	Luoja
 croatia	common	fi	KROATIA
@@ -289,6 +309,7 @@ custom javascript for onchange	common	fi	Oma javascripti kohtaan onChange
 cut	common	fi	Leikkaa
 cyprus	common	fi	KYPROS
 czech republic	common	fi	TSEKKI
+dark mode	common	fi	Tumma tila
 database error	common	fi	Virhe tietokannassa
 database error!	common	fi	Virhe tietokannassa!
 date	common	fi	Päiväys
@@ -589,6 +610,7 @@ insert new row after this one	common	fi	Lisää uusi rivi valitun jälkeen
 insert new row in front of first line	common	fi	Lisää uusi rivi ensimmäisen rivin eteen
 insert row after	common	fi	Lisää rivi jälkeen
 insert row before	common	fi	Lisää rivi eteen
+insert timestamp into description field	common	fi	Lisää aikaleima kuvauskenttään
 integer	common	fi	Kokonaisluku
 international	common	fi	Kansainvälinen
 invalid filename	common	fi	Virheellinen tiedostonnimi.
@@ -644,6 +666,7 @@ liberia	common	fi	LIBERIA
 libyan arab jamahiriya	common	fi	LIBYAN ARAB JAMAHIRIYA
 license	common	fi	Lisenssi
 liechtenstein	common	fi	LICHTENSTEIN
+light mode	common	fi	Vaalea tila
 line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>	common	fi	Rivi %1: '%2'<br><b>csv tiedot sisältävät ##last-check-run## taulukon %3 ==> ohita</b>
 line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	fi	Rivi %1: '%2'<br><b>csv tiedot eivät täsmää taulukon laskettuihin sarakkeisiin %3 ==> ohita</b>
 link	common	fi	Linkki
@@ -938,6 +961,7 @@ save as	common	fi	Tallenna nimellä
 save selected columns as default preference for all users.	common	fi	Tallenna valitut sarakkeet oletusasetuksiksi kaikille käyttäjille.
 save the changes made and close the window	common	fi	Tallenna muutokset ja sulje ikkuna.
 save the etemplate under the above keys (name, ...), change them for a saveas	common	fi	Tallenna mallipohja yllä olevien avaimien (nimi,...) alle, muuta ne "tallenna nimellä..."
+saved column sizes to preferences.	common	fi	Tallenna sarakekoot asetuksiin.
 saves changes to tables_current.inc.php	common	fi	Tallenna muutokset taulukkojen_current.inc.php
 saves the template with given version number and closes the window	common	fi	Tallenna mallipohja annetulla versionumerolla ja sulje ikkuna.
 scale	common	fi	Skaalaa
@@ -1248,9 +1272,14 @@ you've tried to open the egroupware application: %1, but you have no permission 
 your code is incorrect !!!	common	fi	Virheellinen koodi!
 your message could <b>not</b> be sent!<br>	common	fi	Viestiä <b>ei</b> voitu lähettää!<br>
 your message has been sent	common	fi	Viesti on lähetetty
-your password is about to expire in %1 days, you may change your password now	common	fi	Salasanasi täytyy vaihtaa %1 päivän kuluessa!
+your password does not have required strength of %1 character classes and minimum length of %2 characters.	common	fi	Salasanallasi ei ole vaadittua %1 merkkiluokan vahvuutta ja %2 merkin vähimmäispituutta.
+your password does not have required strength:	common	fi	Salasanallasi ei ole vaadittua vahvuutta:
+your password failed the following criteria:	common	fi	Salasanasi ei täyttänyt seuraavia kriteerejä:
+your password is about to expire in %1 days, you may change your password now	common	fi	Salasanasi vanhenee %1 päivän kuluttua, voit vaihtaa salasanasi nyt.
+your password might not match the password policy.	common	fi	Salasanasi ei ehkä vastaa salasanakäytäntöä.
 your search returned %1 matchs	common	fi	Haku palautti %1 osumaa
 your search returned 1 match	common	fi	Haku palautti yhden osuman
+your session timed out, please log in again	login	fi	Istuntosi on päättynyt, kirjaudu uudelleen.
 your settings have been updated	common	fi	Asetukset päivitetty
 zambia	common	fi	ZAMBIA
 zimbabwe	common	fi	ZIMBABWE

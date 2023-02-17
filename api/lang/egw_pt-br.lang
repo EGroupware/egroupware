@@ -29,10 +29,19 @@
 00 (disable)	admin	pt-br	00 (desabilitado)
 1 day	common	pt-br	1 Dia
 1 hour	common	pt-br	1 Hora
+1 minute	common	pt-br	1 minuto
 1 month	common	pt-br	1 Mês
 1 week	common	pt-br	1 Semana
 13 (ntp)	admin	pt-br	13 (ntp)
+15 minutes	common	pt-br	15 minutos
+2-factor authentication code required	common	pt-br	Código de autenticação de 2 fatores necessário
 2-factor-authentication	common	pt-br	2-Fator-Autenticação
+2-factor-authentication required	common	pt-br	2-Fator-Autenticação necessária
+3 minutes	common	pt-br	3 minutos
+30 minutes	common	pt-br	30 minutos
+30 seconds	common	pt-br	30 segundos
+5 minutes	common	pt-br	5 minutos
+5 seconds	common	pt-br	5 segundos
 80 (http)	admin	pt-br	80 (http)
 a pattern to be searched for	common	pt-br	um padrão a ser procurado
 abort	common	pt-br	Abortar
@@ -119,9 +128,11 @@ as default	common	pt-br	como padrão
 attach	common	pt-br	anexo
 attach file	common	pt-br	arquivo anexo
 attachment	common	pt-br	acessório
+attention: action will be applied to all rows, not only visible ones!	api	pt-br	Atenção: a ação será aplicada a todas as filas, não apenas às visíveis!
 august	common	pt-br	Agosto
 australia	common	pt-br	AUSTRALIA
 austria	common	pt-br	AUSTRIA
+authenticate	common	pt-br	Autenticar
 author	common	pt-br	Autor
 autohide sidebox menu's	common	pt-br	Auto ocultar caixa de menus laterais
 autohide sidebox menus	common	pt-br	Auto ocultar caixa de menus laterais
@@ -216,6 +227,7 @@ choose a background style.	common	pt-br	Escolha um estilo de fundo
 choose a text color for the icons	common	pt-br	Escolha uma cor de texto para os ícones
 choose file...	common	pt-br	Escolher arquivo ...
 choose the category	common	pt-br	Escolha a categoria
+choose the default filename for merged documents.	preferences	pt-br	Escolha o nome de arquivo padrão para os documentos fundidos.
 choose the parent category	common	pt-br	Escolha a categoria pai
 choose time	common	pt-br	Escolha Tempo
 chosen parent category no longer exists	common	pt-br	Categoria pai escolhido não existe mais
@@ -243,6 +255,7 @@ cocos (keeling) islands	common	pt-br	COCOS (KEELING) ISLANDS
 collection empty.	common	pt-br	Coleção vazio.
 collection listing	common	pt-br	Lista Coleção
 colombia	common	pt-br	COLÔMBIA
+colour	common	pt-br	Cor
 column...	common	pt-br	Coluna...
 columnname	common	pt-br	Nome da Coluna
 comment	common	pt-br	Comentário
@@ -263,13 +276,20 @@ contains	common	pt-br	contém
 content type	common	pt-br	Tipo de conteúdo
 cook islands	common	pt-br	ILHAS COOK
 copy	common	pt-br	Copiar
+copy "%1"	common	pt-br	Cópia "%1
+copy of:	common	pt-br	Cópia de:
+copy to	common	pt-br	Cópia para
 copy to clipboard	common	pt-br	Copiar para a área de transferência
 costa rica	common	pt-br	COSTA RICA
 cote d ivoire	common	pt-br	COTE D IVOIRE
 could not contact server. operation timed out!	common	pt-br	Tentativa de contactar servidor falhou. Tempo limite de operação estourou.
 create	common	pt-br	Criar
 create a new table for the application	common	pt-br	Criar uma nova tabela para aplicação
+create directory	common	pt-br	Criar pasta
+create link	common	pt-br	Criar link
+created	common	pt-br	Criado em
 created by	common	pt-br	Criado por
+created by %1	common	pt-br	Criado por %1
 creates an english ('en') langfile from label and helptexts (for application in name)	common	pt-br	criados em um arquivo de idioma inglês ('en') da etiqueta e arquivos de ajuda (para a aplicação em nome)
 creator	preferences	pt-br	Criador
 croatia	common	pt-br	CROÁCIA
@@ -289,6 +309,7 @@ custom javascript for onchange	common	pt-br	Javascript personalizado para OnChan
 cut	common	pt-br	Recortar
 cyprus	common	pt-br	CHIPRE
 czech republic	common	pt-br	REPÚBLICA CHECA
+dark mode	common	pt-br	Modo escuro
 database error	common	pt-br	Erro de banco de dados
 database error!	common	pt-br	Erro de banco de dados!
 date	common	pt-br	Data
@@ -591,6 +612,7 @@ insert new row after this one	common	pt-br	inserir uma nova linha após esta
 insert new row in front of first line	common	pt-br	inserir uma nova linha antes da primeira linha
 insert row after	common	pt-br	Inserir linha depois
 insert row before	common	pt-br	Inserir linha antes
+insert timestamp into description field	common	pt-br	Insira o carimbo da hora no campo de descrição
 integer	common	pt-br	Inteiro
 international	common	pt-br	Internacional
 invalid filename	common	pt-br	Nome de arquivo inválido
@@ -648,6 +670,7 @@ liberia	common	pt-br	LIBERIA
 libyan arab jamahiriya	common	pt-br	LÍBIA
 license	common	pt-br	Licença
 liechtenstein	common	pt-br	LIECHTENSTEIN
+light mode	common	pt-br	Modo leve
 line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	pt-br	Linha %1: '%2'<br><b>dados csv não combinam com a quantidade de coluna da tabela %3 ==> ignorada</b>
 link	common	pt-br	Link
 link target %1 not found!	common	pt-br	Destino do link% 1 não encontrado!
@@ -957,6 +980,7 @@ save as zip	common	pt-br	Salvar como Zip
 save selected columns as default preference for all users.	common	pt-br	Salvar colunas selecionadas como padrão para todos os usuários.
 save the changes made and close the window	common	pt-br	Salvar as alterações feitas e fechar a janela
 save the etemplate under the above keys (name, ...), change them for a saveas	common	pt-br	salvar o eModelo sobre as chaves (nome, ...), alterando e salvando como
+saved column sizes to preferences.	common	pt-br	Salve os tamanhos das colunas de acordo com as preferências.
 saves changes to tables_current.inc.php	common	pt-br	salvar alterações para o arquivo tables_current.inc.php
 saves the template with given version number and closes the window	common	pt-br	salvar o modelo com o número de versão informado e fechar a janela.
 scale	common	pt-br	Escala
@@ -1269,11 +1293,14 @@ you need to select some entries first!	common	pt-br	Você precisa selecionar alg
 you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	pt-br	Você tentou abrir a aplicação: %1, mas você não possui permissão para acessá-la.
 your message could <b>not</b> be sent!<br>	common	pt-br	<b>Não</b> foi possível enviar sua mensagem!<br>
 your message has been sent	common	pt-br	Sua mensagem foi enviada.
+your password does not have required strength of %1 character classes and minimum length of %2 characters.	common	pt-br	Sua senha não requer força de %1 classes de caracteres e comprimento mínimo de %2 caracteres.
 your password does not have required strength:	common	pt-br	Sua senha não ter exigido a força:
 your password failed the following criteria:	common	pt-br	Sua senha falhou os seguintes critérios:
+your password is about to expire in %1 days, you may change your password now	common	pt-br	Sua senha está prestes a expirar em %1 dias, você pode alterar sua senha agora.
 your password might not match the password policy.	common	pt-br	Sua senha pode não coincidir com a política de senha.
 your search returned %1 matchs	common	pt-br	Sua pesquisa retornou %1 ocorrências
 your search returned 1 match	common	pt-br	Sua pesquisa retornou 1 ocorrência
+your session timed out, please log in again	login	pt-br	Sua sessão expirou, faça o login novamente.
 your settings have been updated	common	pt-br	Suas preferências foram atualizadas
 zambia	common	pt-br	ZÂMBIA
 zimbabwe	common	pt-br	ZIMBABUE

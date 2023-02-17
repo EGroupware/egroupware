@@ -28,10 +28,19 @@
 00 (disable)	admin	pl	00 (wyłączony)
 1 day	common	pl	jeden dzień
 1 hour	common	pl	jedna godzina
+1 minute	common	pl	1 minuta
 1 month	common	pl	jeden miesiąc
 1 week	common	pl	jeden tydzień
 13 (ntp)	admin	pl	13 (ntp)
+15 minutes	common	pl	15 minut
+2-factor authentication code required	common	pl	Wymagany kod uwierzytelniania 2-factor
 2-factor-authentication	common	pl	2-Factor-Autentykacja
+2-factor-authentication required	common	pl	Wymagane uwierzytelnienie 2-faktor
+3 minutes	common	pl	3 minuty
+30 minutes	common	pl	30 minut
+30 seconds	common	pl	30 sekund
+5 minutes	common	pl	5 minut
+5 seconds	common	pl	5 sekund
 80 (http)	admin	pl	80 (http)
 a pattern to be searched for	common	pl	wzorzec do wyszukania
 abort	common	pl	Przerwij
@@ -114,9 +123,11 @@ aruba	common	pl	ARUBA
 as default	common	pl	jako domyślny
 attach	common	pl	Dołącz
 attach file	common	pl	dołącz plik
+attention: action will be applied to all rows, not only visible ones!	api	pl	Uwaga: akcja zostanie zastosowana do wszystkich wierszy, nie tylko tych widocznych!
 august	common	pl	Sierpień
 australia	common	pl	AUSTRALIA
 austria	common	pl	AUSTRIA
+authenticate	common	pl	Uwierzytelnij
 author	common	pl	Autor
 autohide sidebox menu's	common	pl	Automatycznie ukrywaj menu boczne
 autohide sidebox menus	common	pl	Automatyczne ukrywanie bocznych menu
@@ -206,6 +217,7 @@ choose a background image.	common	pl	Wybierz obrazek tła
 choose a background style.	common	pl	Wybierz styl tła
 choose a text color for the icons	common	pl	Wybierz kolor tekstu dla ikon
 choose the category	common	pl	Wybierz kategorię
+choose the default filename for merged documents.	preferences	pl	Wybierz domyślną nazwę pliku dla scalonych dokumentów.
 choose the parent category	common	pl	Wybierz kategorię nadrzędną
 christmas island	common	pl	WYSPA BOŻEGO NARODZENIA
 class	common	pl	Klasa
@@ -230,6 +242,7 @@ cocos (keeling) islands	common	pl	WYSPY KOKOSOWE
 collection empty.	common	pl	Kolekcja pusta.
 collection listing	common	pl	Zawartość kolekcji.
 colombia	common	pl	KOLUMBIA
+colour	common	pl	Kolor
 column...	common	pl	Kolumna...
 columnname	common	pl	Nazwa kolumny
 comment	common	pl	Komentarz
@@ -251,13 +264,19 @@ content type	common	pl	Typ zawartości
 cook islands	common	pl	WYSPY COOKA
 copy	common	pl	Kopiuj
 copy "%1"	common	pl	Kopiuj "%1"
+copy of:	common	pl	Kopia z:
+copy to	common	pl	Kopiuj do
 copy to clipboard	common	pl	Kopiuj do schowka
 costa rica	common	pl	KOSTARYKA
 cote d ivoire	common	pl	WYBRZEŻE KOŚCI SŁONIOWEJ
 could not contact server. operation timed out!	common	pl	Brak połączenia z serwerem. Czas operacji przekroczony.
 create	common	pl	Utwórz
 create a new table for the application	common	pl	Tworzy nową tabelę dla aplikacji
+create directory	common	pl	Utwórz folder
+create link	common	pl	Utwórz link
+created	common	pl	Utworzono
 created by	common	pl	Utworzone przez
+created by %1	common	pl	Utworzony przez %1
 creates an english ('en') langfile from label and helptexts (for application in name)	common	pl	tworzy angielski plik językowy ('en') z etykiet i tekstów pomocy (dla aplikacji z pola 'Name')
 creator	preferences	pl	Twórca
 croatia	common	pl	CHORWACJA
@@ -276,6 +295,7 @@ custom javascript for onchange	common	pl	niestandardowy kod JS dla zdarzenia onC
 cut	common	pl	Wytnij
 cyprus	common	pl	CYPR
 czech republic	common	pl	REPUBLIKA CZESKA
+dark mode	common	pl	Tryb ciemny
 database error	common	pl	Bład bazy danych
 database error!	common	pl	Błąd bazy danych!
 date	common	pl	Data
@@ -566,6 +586,7 @@ insert new row after this one	common	pl	wstaw nowy wiersz za bieżącym
 insert new row in front of first line	common	pl	wstaw nowy wiersz na początku
 insert row after	common	pl	Wstaw wiersz po
 insert row before	common	pl	Wstaw wiersz przed
+insert timestamp into description field	common	pl	Wstaw znacznik czasu do pola opisu
 integer	common	pl	Liczba całkowita
 international	common	pl	Międzynarodowy
 invalid filename	common	pl	Niepoprawna nazwa pliku
@@ -624,6 +645,7 @@ liberia	common	pl	LIBERIA
 libyan arab jamahiriya	common	pl	LIBIA
 license	common	pl	Licencja
 liechtenstein	common	pl	LIECHTENSTEIN
+light mode	common	pl	Tryb jasny
 line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>	common	pl	Linia %1: '%2'<br /><b>dane CSV zawiera ###last-check-run##  dla tabeli %3  ==> ZIGNOROWANO</b>
 line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	pl	Linia %1: '%2'<br /><b>dane CSV mają złą liczbę kolumn dla tabeli %3 ==> ZIGNOROWANO</b>
 link	common	pl	Odnośnik
@@ -909,6 +931,7 @@ save all	common	pl	Zapisz wszystko
 save selected columns as default preference for all users.	common	pl	Zachowaj wybrane kolumny w formie domyślnej preferencji dla wszystkich użytkowników.
 save the changes made and close the window	common	pl	Zachowuje zmiany i zamyka okno
 save the etemplate under the above keys (name, ...), change them for a saveas	common	pl	zapisz eSzablon pod następującymi kluczami (nazwa, ...), zmień je aby zapisać pod inną nazwą
+saved column sizes to preferences.	common	pl	Zapisz rozmiary kolumn do preferencji.
 saves changes to tables_current.inc.php	common	pl	zapisz zmiany do pliku tables_current.inc.php
 saves the template with given version number and closes the window	common	pl	zapisuje szablon z podanym numerem wersji i zamyka okno
 scale	common	pl	Skala
@@ -1208,8 +1231,14 @@ you need to select a file first!	common	pl	Musisz najpierw wybrać plik!
 you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	pl	Próba otworzenia aplikacji %1 nie powiodła się, gdyż nie masz uprawnień dostępu to tej aplikacji.
 your message could <b>not</b> be sent!<br>	common	pl	Twoja wiadomość <b>nie</b> została wysłana!<br>
 your message has been sent	common	pl	Wiadomość została wysłana
+your password does not have required strength of %1 character classes and minimum length of %2 characters.	common	pl	Twoje hasło nie ma wymaganej siły klas znaków %1 i minimalnej długości %2 znaków.
+your password does not have required strength:	common	pl	Twoje hasło nie ma wymaganej siły:
+your password failed the following criteria:	common	pl	Twoje hasło nie spełniło następujących kryteriów:
+your password is about to expire in %1 days, you may change your password now	common	pl	Twoje hasło wygasa za %1 dni, możesz zmienić swoje hasło już teraz.
+your password might not match the password policy.	common	pl	Twoje hasło może nie być zgodne z polityką haseł.
 your search returned %1 matchs	common	pl	wyszukiwanie zwróciło %1 trafień
 your search returned 1 match	common	pl	wyszukiwanie zwróciło 1 trafienie
+your session timed out, please log in again	login	pl	Twoja sesja zakończyła się, zaloguj się ponownie.
 your settings have been updated	common	pl	Twoje ustawienia zostały uaktualnione
 zambia	common	pl	ZAMBIA
 zimbabwe	common	pl	ZIMBABWE

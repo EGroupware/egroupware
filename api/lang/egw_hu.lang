@@ -8,10 +8,19 @@
 00 (disable)	admin	hu	00 (tiltva)
 1 day	common	hu	1 nap
 1 hour	common	hu	1 óra
+1 minute	common	hu	1 perc
 1 month	common	hu	1 hónap
 1 week	common	hu	1 hét
 13 (ntp)	admin	hu	13 (ntp)
+15 minutes	common	hu	15 perc
+2-factor authentication code required	common	hu	2-faktoros hitelesítési kód szükséges
 2-factor-authentication	common	hu	2-faktoros hitelesítés
+2-factor-authentication required	common	hu	2-Faktoros hitelesítés szükséges
+3 minutes	common	hu	3 perc
+30 minutes	common	hu	30 perc
+30 seconds	common	hu	30 másodperc
+5 minutes	common	hu	5 perc
+5 seconds	common	hu	5 másodperc
 80 (http)	admin	hu	80 (http)
 abort	common	hu	Megszakítás
 about	common	hu	Névjegy
@@ -74,9 +83,11 @@ armenia	common	hu	Örményország
 aruba	common	hu	Aruba
 attach	common	hu	Csatol
 attach file	common	hu	Állomány csatolása
+attention: action will be applied to all rows, not only visible ones!	api	hu	Figyelem: a művelet minden sorra vonatkozik, nem csak a látható sorokra!
 august	common	hu	Augusztus
 australia	common	hu	Ausztrália
 austria	common	hu	Ausztria
+authenticate	common	hu	Hitelesítés
 author	common	hu	Szerző
 autohide sidebox menu's	common	hu	Oldalmenük automatikus elrejtése
 autohide sidebox menus	common	hu	Oldalmenük automatikus elrejtése
@@ -152,6 +163,7 @@ choose a background image.	common	hu	Háttérkép kiválasztása
 choose a background style.	common	hu	Háttér stílus kiválasztása
 choose a text color for the icons	common	hu	Ikon szövegszín kiválasztása
 choose the category	common	hu	Kategória választás
+choose the default filename for merged documents.	preferences	hu	Válassza ki az egyesített dokumentumok alapértelmezett fájlnevét.
 choose the parent category	common	hu	Szülő kategória választás
 christmas island	common	hu	Karácsony szigetek
 class	common	hu	Osztály
@@ -168,6 +180,7 @@ close	common	hu	Bezár
 close sidebox	common	hu	Oldalmenü bezárása
 cocos (keeling) islands	common	hu	Kókusz (Keeling)-szigetek
 colombia	common	hu	Kolumbia
+colour	common	hu	Színes
 comment	common	hu	Hozzászólás
 common preferences	common	hu	Általános beállítások
 comoros	common	hu	Comore-szigetek
@@ -180,12 +193,20 @@ contacting server...	common	hu	Csatlakozás szerverhez...
 contains	common	hu	tartalmaz
 cook islands	common	hu	Cook-szigetek
 copy	common	hu	Másol
+copy "%1"	common	hu	"%1" másolása
+copy of:	common	hu	Másolat:
+copy to	common	hu	Másolás a következőre
 copy to clipboard	common	hu	Vágólapra másol
 costa rica	common	hu	Costa Rica
 cote d ivoire	common	hu	Elefántcsontpart
 could not contact server. operation timed out!	common	hu	Szerverhez csatlakozás nem sikerült. Időtúllépés.
 create	common	hu	Létrehoz
+create directory	common	hu	Mappa létrehozása
+create link	common	hu	Link létrehozása
+created	common	hu	Created
 created by	common	hu	Készítette
+created by %1	common	hu	Létrehozta %1
+creator	preferences	hu	Teremtő
 croatia	common	hu	Horvátország
 cuba	common	hu	Kuba
 currency	common	hu	Pénznem
@@ -196,6 +217,7 @@ custom fields	common	hu	egyedi mezők
 cut	common	hu	Kivág
 cyprus	common	hu	Ciprus
 czech republic	common	hu	Cseh Köztársaság
+dark mode	common	hu	Sötét üzemmód
 database error	common	hu	Adatbázis hiba
 database error!	common	hu	Adatbázis hiba!
 date	common	hu	Dátum
@@ -381,6 +403,7 @@ insert column after	common	hu	Oszlop szúrása utána
 insert column before	common	hu	Oszlop beszúrása elé
 insert row after	common	hu	Sor beszúrása utána
 insert row before	common	hu	Sor beszúrása elé
+insert timestamp into description field	common	hu	Időbélyegző beillesztése a leírás mezőbe
 international	common	hu	Nemzetközi
 invalid filename	common	hu	Érvénytelen állománynév
 invalid ip address	common	hu	Érvénytelen IP cím
@@ -435,6 +458,7 @@ liberia	common	hu	Libéria
 libyan arab jamahiriya	common	hu	Líbia
 license	common	hu	Licensz
 liechtenstein	common	hu	Liechtenstein
+light mode	common	hu	Világos mód
 line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>	common	hu	A sor %1: '%2'<br><b>csv adat nem tartalmazza ##last-check-run## a tábla %3 ==> figyelmen kívül hagyva/b>
 line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	hu	%1 sor: '%2'<br><b>a csv adatok nem egyeznek a(z) %3 táblázat oszlopszámaival ==> kihagyva</b>
 link	common	hu	Hivatkozás
@@ -659,6 +683,7 @@ saudi arabia	common	hu	Szaúd Arábia
 savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	hu	A Savant2 verziója és wrappere különbözik. <br/>Ez a verzió: %1 <br/>Savant verzió: %2
 save	common	hu	Elment
 save all	common	hu	Összes mentése
+saved column sizes to preferences.	common	hu	Elmentett oszlopméretek a preferenciákhoz.
 search	common	hu	Keres
 search %1 '%2'	common	hu	Keres %1 '%2'
 search accounts	common	hu	Felhasználói hozzáférések keresése
@@ -861,8 +886,14 @@ you need to be an egroupware administrator to access this functionality!	common	
 you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	hu	Megpróbáltad elindítani %1 alkalmazást, de nincs jogosultságod hozzá.
 your message could <b>not</b> be sent!<br>	common	hu	Az üzenet <b>nem<b> került elküldésre!<br>
 your message has been sent	common	hu	Üzenet elküldve
+your password does not have required strength of %1 character classes and minimum length of %2 characters.	common	hu	A jelszava nem rendelkezik az előírt %1 karakterosztályok erősségével és %2 karakter minimális hosszával.
+your password does not have required strength:	common	hu	A jelszava nem rendelkezik az előírt erősséggel:
+your password failed the following criteria:	common	hu	A jelszava nem teljesítette a következő kritériumokat:
+your password is about to expire in %1 days, you may change your password now	common	hu	A jelszava %1 nap múlva lejár, most megváltoztathatja jelszavát.
+your password might not match the password policy.	common	hu	A jelszava esetleg nem felel meg a jelszószabályzatnak.
 your search returned %1 matchs	common	hu	Keresés végeredménye: %1 találat
 your search returned 1 match	common	hu	Keresés végeredménye: 1 találat
+your session timed out, please log in again	login	hu	A munkamenete lejárt, kérjük, jelentkezzen be újra.
 your settings have been updated	common	hu	A beállításai módosításra kerültek
 zambia	common	hu	Zambia
 zimbabwe	common	hu	Zimbabwe

@@ -42,13 +42,14 @@ create new accessory for this resource	resources	fr	Créer de nouveaux accessoir
 create new links	resources	fr	Créer de nouveaux liens
 custom etemplate for the contactform	resources	fr	eTemplate personnalisé pour le formulaire contact
 custom fields	resources	fr	Champs personnalisés
+data exchange settings	resources	fr	Paramètres d'échange de données
 days	resources	fr	jours
-delete accessories of selected resources too?	resources	fr	Supprimer aussi les accessoires des ressources sélectionnées ?
 delete selected resources	resources	fr	Supprimer les ressources selectionnées
 delete this entry	resources	fr	Supprimer cette entrée
 deleted	resources	fr	supprimé
 description (short)	resources	fr	Description (courte)
 direct booking permissions	resources	fr	Permissions directes de réservation
+do you really want to delete this resource?	resources	fr	Souhaitez-vous vraiment supprimer cette ressource ?
 don't use vfs (this will need a symlink --> see readme)	resources	fr	Ne pas utilisé VFS (ceci nécessitera un lien symbolique --> voir README)
 edit this entry	resources	fr	Modifier cette entrée
 event start	resources	fr	Début de l'événement
@@ -80,8 +81,10 @@ inventory number	resources	fr	Numéro d'inventaire
 inventory number:	resources	fr	Numéro d'inventaire :
 is resource bookable?	resources	fr	Peut-on réserver les ressources ?
 is resource buyable?	resources	fr	Peut-on acheter les ressources ?
+is the ressource bookable?	resources	fr	Peut-on réserver cette ressource ?
 is this resource bookable?	resources	fr	Peut-on réserver cette ressource ?
 is this resource buyable?	resources	fr	Peut on acheter cette ressource ?
+kanban	resources	fr	Kanban
 links	resources	fr	Liens
 location	resources	fr	Emplacement
 location of resource	resources	fr	Emplacementde la ressource
@@ -100,7 +103,6 @@ no matches	resources	fr	pas de résutlat
 no resources selected	resources	fr	Aucune ressource choisie
 no, users will need to contact users with direct booking permission	resources	fr	Non, les utilisateurs devront contacter les utilisateurs ayant les droits de réservation directe
 notify your administrator to correct this situation	resources	fr	Informez votre administrateur afin qu'il corrige cette situation.
-party size	resources	fr	Taille de la partie
 picture	resources	fr	Image
 picture source	resources	fr	Source de l'image
 picture type is not supported, sorry!	resources	fr	Type d'image non supporté, désolé !
@@ -122,6 +124,7 @@ require confirmation	resources	fr	Confirmation requise
 reserve	resources	fr	Reserve
 resource	resources	fr	Ressource
 resource %1 deleted!	resources	fr	Ressource %1 supprimée !
+resource %1 faild to be deleted!	resources	fr	Echec à la suppression de la ressource %1 !
 resource %1 saved!	resources	fr	Ressource %1 enregistrée !
 resource / accessories	resources	fr	Ressources / accessoires
 resource id	resources	fr	ID de ressource
@@ -152,12 +155,11 @@ this module displays the resources app	resources	fr	Ce module montre l'applicati
 too many matches	resources	fr	trop de résultats
 unable to link to %1 "%2"	resources	fr	Incapable de lier %1 "%2"
 unable to process confirmation.	resources	fr	Incapable de procéder à la confirmation
-usable	resources	fr	Utilisable
+unwilling to save category with current settings. check for inconsistency:	resources	fr	Impossible de sauvegarder cette catégorie, vérifier les incohérences :
 use general resources icon	resources	fr	Utilisez  l'icône de la ressource générale
 use own picture	resources	fr	Utilisez  votre propre propre image
 use the category's icon	resources	fr	Utilisez l'icône de la catégorie
 useable	resources	fr	utilisable
-useable:	resources	fr	Utilisable:
 view accessories	resources	fr	Voir les accessoires
 view calendar	resources	fr	Voir le calendrier
 view this entry	resources	fr	Voir cette entrée

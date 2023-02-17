@@ -4,8 +4,21 @@
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	el	%1EGroupware%2 είναι ένα multi-user, web-based groupware suite γραμμένο σε %3PHP%4.
 '%1' copied to clipboard	common	el	'%1' αντιγράφεται στο πρόχειρο
 00 (disable)	admin	el	00 (Απενεργοποίηση)
+1 day	common	el	5 sekuntia
+1 hour	common	el	1 ώρα
+1 minute	common	el	1 λεπτό
+1 month	common	el	1 μήνας
+1 week	common	el	1 εβδομάδα
 13 (ntp)	admin	el	13 (ntp)
+15 minutes	common	el	15 λεπτά
+2-factor authentication code required	common	el	Απαιτείται κωδικός ελέγχου ταυτότητας 2 παραγόντων
 2-factor-authentication	common	el	Πιστοποίηση 2 παραγόντων
+2-factor-authentication required	common	el	Απαιτείται έλεγχος ταυτότητας 2 παραγόντων
+3 minutes	common	el	3 λεπτά
+30 minutes	common	el	30 λεπτά
+30 seconds	common	el	30 δευτερόλεπτα
+5 minutes	common	el	5 λεπτά
+5 seconds	common	el	5 δευτερόλεπτα
 80 (http)	admin	el	80 (http)
 abort	common	el	Ματαίωση
 about	common	el	Πληροφορίες
@@ -61,9 +74,11 @@ armenia	common	el	ΑΡΜΕΝΙΑ
 aruba	common	el	ΑΡΟΥΜΠΑ
 attach file	common	el	Επισύναψη αρχείου
 attachment	common	el	Συνημμένο
+attention: action will be applied to all rows, not only visible ones!	api	el	Προσοχή: η ενέργεια θα εφαρμοστεί σε όλες τις γραμμές, όχι μόνο στις ορατές!
 august	common	el	Αύγουστος
 australia	common	el	ΑΥΣΤΡΑΛΙΑ
 austria	common	el	ΑΥΣΤΡΙΑ
+authenticate	common	el	Πιστοποίηση ταυτότητας
 author	common	el	Συγγραφέας
 autohide sidebox menu's	common	el	Αυτόματη απόκρυψη μενού
 autohide sidebox menus	common	el	Αυτόματη απόκρυψη μενού
@@ -134,6 +149,7 @@ choose a background image.	common	el	Επιλέξτε μία εικόνα φόν
 choose a background style.	common	el	Επιλέξτε ένα στυλ φόντου
 choose a text color for the icons	common	el	Επιλέξτε ένα χρώμα κειμένου για τις εικόνες
 choose the category	common	el	Επιλέξτε κατηγορία
+choose the default filename for merged documents.	preferences	el	Επιλέξτε το προεπιλεγμένο όνομα αρχείου για τα συγχωνευμένα έγγραφα.
 choose the parent category	common	el	Επιλέξτε γονική κατηγορία
 christmas island	common	el	ΝΗΣΟΙ ΧΡΙΣΤΟΥΓΕΝΝΩΝ
 clear	common	el	Εκκαθάριση
@@ -147,6 +163,7 @@ close	common	el	Κλείσιμο
 close sidebox	common	el	Κλείσιμο μενού
 cocos (keeling) islands	common	el	ΝΗΣΟΙ ΚΟΚΟΣ (ΚΙΛΙΓΚ)
 colombia	common	el	ΚΟΛΟΜΒΙΑ
+colour	common	el	Χρώμα
 comment	common	el	Σχόλιο
 common preferences	common	el	Κοινές προτιμήσεις
 comoros	common	el	ΚΟΜΟΡΑ
@@ -159,11 +176,19 @@ contacting server...	common	el	Επικοινωνία με τον Server
 contains	common	el	περιέχει
 cook islands	common	el	ΝΗΣΟΙ ΚΟΥΚ
 copy	common	el	Αντιγραφή
+copy "%1"	common	el	Αντιγραφή "%1"
+copy of:	common	el	Αντίγραφο του:
+copy to	common	el	Αντιγραφή σε
+copy to clipboard	common	el	Αντιγραφή στο πρόχειρο
 costa rica	common	el	ΚΟΣΤΑ ΡΙΚΑ
 cote d ivoire	common	el	ΑΚΤΗ ΕΛΕΦΑΝΤΟΣΤΟΥ
 could not contact server. operation timed out!	common	el	Δεν κατέστει δυνατή η επικοινωνία με τον Server.
 create	common	el	Δημιουργία
+create directory	common	el	Δημιουργία φακέλου
+create link	common	el	Δημιουργία συνδέσμου
+created	common	el	Δημιουργήθηκε το
 created by	common	el	Δημιουργία από
+created by %1	common	el	Δημιουργήθηκε από %1
 croatia	common	el	ΚΡΟΑΤΙΑ
 cuba	common	el	ΚΟΥΒΑ
 currency	common	el	Νόμισμα
@@ -173,6 +198,7 @@ custom	common	el	Προσαρμογή
 custom fields	common	el	Προσαρμοσμένα πεδία
 cyprus	common	el	ΚΥΠΡΟΣ
 czech republic	common	el	ΤΣΕΧΙΑ
+dark mode	common	el	Σκοτεινή λειτουργία
 date	common	el	Ημερομηνία
 date due	common	el	Ημερομηνία ολοκλήρωσης
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	el	Datetime port.<br> Aν χρησιμοποιείται τη θύρα 13, παρακαλώ ορίστε καταλλήλως τους κανόνες του firewall πριν υποβάλετε αυτή τη σελίδα.<br>(Port: 13 / Host: 129.6.15.28)
@@ -337,6 +363,7 @@ insert column after	common	el	Εισαγωγή στήλης μετά
 insert column before	common	el	Εισαγωγή στήλης πριν
 insert row after	common	el	Εισαγωγή σειράς μετά
 insert row before	common	el	Εισαγωγή σειράς πριν
+insert timestamp into description field	common	el	Εισαγωγή χρονοσφραγίδας στο πεδίο περιγραφής
 international	common	el	Διεθνείς
 invalid filename	common	el	Άκυρο όνομα αρχείου
 invalid ip address	common	el	Ακυρη διεύθυνση ΙΡ
@@ -387,6 +414,7 @@ liberia	common	el	ΛΙΒΕΡΙΑ
 libyan arab jamahiriya	common	el	ΛΙΒΥΚΑ ΑΡΑΒΙΚΑ ΕΜΙΡΑΤΑ
 license	common	el	Αδεια
 liechtenstein	common	el	ΛΙΧΤΕΝΣΤΑΪΝ
+light mode	common	el	Φωτεινή λειτουργία
 line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	el	Γραμμή 1: '%2'<br>csv δεδομένα δεν αντιστοιχούν με τη στήλη-αρίθμηση τραπεζιού %3 ==>αγνοήθηκε</b>
 link	common	el	Σύνδεσμος
 list	common	el	Λίστα
@@ -582,6 +610,7 @@ saudi arabia	common	el	ΣΑΟΥΔΙΚΗ ΑΡΑΒΙΑ
 savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	el	Savant2 έκδοση διαφέρει από Savant2 περιτύλιγμα. <br/>Αυτή η έκδοση:%1 <br/>Έκδοση Savant:%2
 save	common	el	Αποθήκευση
 save all	common	el	Αποθήκευση όλων
+saved column sizes to preferences.	common	el	Αποθηκευμένα μεγέθη στηλών στις προτιμήσεις.
 search	common	el	Αναζήτηση
 search %1 '%2'	common	el	Αναζήτηση %1 '%2'
 search accounts	common	el	Αναζήτηση λογαριασμών
@@ -773,8 +802,14 @@ you have successfully logged out	common	el	Επιτυχής έξοδος
 you need to add the webserver user '%1' to the group '%2'.	common	el	Πρέπει να προσθέσετε τον webserver χρήστη '%1' στην ομάδα '%2'.
 your message could <b>not</b> be sent!<br>	common	el	Το μήνυμά σας <b>δεν</b> μπόρεσε να σταλεί!<br>
 your message has been sent	common	el	To μήνυμά σας εστάλει
+your password does not have required strength of %1 character classes and minimum length of %2 characters.	common	el	Ο κωδικός πρόσβασής σας δεν έχει την απαιτούμενη ισχύ των κατηγοριών χαρακτήρων %1 και το ελάχιστο μήκος των χαρακτήρων %2.
+your password does not have required strength:	common	el	Ο κωδικός πρόσβασής σας δεν έχει την απαιτούμενη ισχύ:
+your password failed the following criteria:	common	el	Ο κωδικός πρόσβασής σας απέτυχε στα ακόλουθα κριτήρια:
+your password is about to expire in %1 days, you may change your password now	common	el	Ο κωδικός πρόσβασής σας πρόκειται να λήξει σε %1 ημέρες, μπορείτε να αλλάξετε τον κωδικό πρόσβασής σας τώρα.
+your password might not match the password policy.	common	el	Ο κωδικός πρόσβασής σας ενδέχεται να μην ταιριάζει με την πολιτική κωδικών πρόσβασης.
 your search returned %1 matchs	common	el	η αναζήτηση επέστρεψε %1 αποτελέσματα
 your search returned 1 match	common	el	η αναζήτηση επέστρεψε 1 αποτέλεσμα
+your session timed out, please log in again	login	el	Η συνεδρία σας έχει λήξει, παρακαλούμε συνδεθείτε ξανά.
 your settings have been updated	common	el	Οι ρυθμίσεις σας έχουν ενημερωθεί
 zambia	common	el	ΖΑΜΠΙΑ
 zimbabwe	common	el	ΖΙΜΠΑΜΠΟΥΕ

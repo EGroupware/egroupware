@@ -12,6 +12,9 @@
 %1 you are responsible for is starting at %2	infolog	fr	%1 dont vous êtes responsables commence le %2
 %1 you delegated is due at %2	infolog	fr	%1 que vous avez délégué est dû le %2
 %1 you delegated is starting at %2	infolog	fr	%1 que vous avez délégué commence le %2
+%s $cont[info_from]	infolog	fr	%s $cont[info_from]
+%s $row_cont[info_addr]	infolog	fr	%s $row_cont[info_addr]
+%s $row_cont[info_from]	infolog	fr	%s $row_cont[info_from]
 (and children) deleted	infolog	fr	(et sous-entrées) supprimés.
 (no subject)	infolog	fr	(pas de sujet)
 - subprojects from	infolog	fr	- Sous-projets de
@@ -28,7 +31,6 @@
 90%	infolog	fr	90%
 <b>file-attachments via symlinks</b> instead of uploads and retrieval via file:/path for direct lan-clients	infolog	fr	<b>Attachement de fichiers via des liens symboliques</b> à la place du dépôt de fichiers et récupération via fichier:/chemin pour les clients avec accès réseau direct
 a short subject for the entry	infolog	fr	Un court sujet pour l'entrée
-a whole template based on modifier's town (thorsby or kaiserslautern)	infolog	fr	Un template entier basé sur la ville de son éditeur (Thorsby ou Kaiserslautern)
 abort without deleting	infolog	fr	Annuler sans supprimer
 accept	infolog	fr	Accepte
 action	infolog	fr	Action
@@ -73,6 +75,7 @@ billed	infolog	fr	Facturé
 both	infolog	fr	Les deux
 call	infolog	fr	Appel
 can be used to show further infolog types in the calendar or limit it to show eg. only tasks.	infolog	fr	Peut être utilisé pour montrer plus de types d'Infolog dans le calendrier ou les limiter par ex aux tâches seulement
+can not return an exact number of rows and therefore hides the count.	admin	fr	Impossible de récupérer le nombre exacts de lignes, total masqué.
 cancel	infolog	fr	Annuler
 cancelled	infolog	fr	Annulé
 categories	infolog	fr	Catégories
@@ -107,7 +110,6 @@ confirm	infolog	fr	Confirmer
 contact	infolog	fr	Contact
 contact cf	infolog	fr	Contact CP
 contact fields	infolog	fr	Champs de contact
-contact's email:	infolog	fr	Email du contact :
 contactfield	infolog	fr	Champ de contact
 convert to a ticket	infolog	fr	Convertir en ticket
 copy of:	infolog	fr	Copie de :
@@ -203,6 +205,7 @@ error: the entry has been updated since you opened it for editing!	infolog	fr	Er
 execute a further action for this entry	infolog	fr	Exécuter une action de plus pour cette entrée
 existing links	infolog	fr	Liens existants
 exists	infolog	fr	Existe
+exit without saving	infolog	fr	Sortir sans sauvegarder
 export definition to use for nextmatch export	infolog	fr	Définition de l'export à utiliser pour l'export "nextmatch"
 exports in ical format.	infolog	fr	Exportes au format iCal.
 exports infolog entries into a csv file.	infolog	fr	Exporter les entrées d'Infolog dans un fichier CSV.
@@ -219,9 +222,7 @@ for infolog type %1, %2 is required	infolog	fr	Pour un infolog de type %1, %2 es
 for serial letter use this tag. put the content, you want to repeat between two tags.	infolog	fr	Pour les lettres en série utiliser cette balise. Placer le contenu que vous voulez répéter entre deux balises.
 for which types should this field be used	infolog	fr	pour quels types ce champ devrait être utilisé
 from	infolog	fr	De
-from file	infolog	fr	Depuis le fichier
 full list of placeholder names	infolog	fr	Liste complète de mots clé
-general	infolog	fr	Général
 general fields:	infolog	fr	Champs généraux :
 general settings	infolog	fr	Paramètres généraux
 global categories	infolog	fr	Catégories globales
@@ -272,7 +273,7 @@ insert timestamp into description field	infolog	fr	Insérer une ligne de temps d
 invalid filename	infolog	fr	Nom de fichier invalide
 invalid owner id: %1.  might be a bad field translation.  used %2 instead.	infolog	fr	Id de propriétaire invalide: %1. %2 utilisé à la place.
 invalid status for entry type %1.	infolog	fr	Statut invalide pour l'entrée de type %1.
-kaiserslautern	infolog	fr	KAISERSLAUTERN
+kanban	infolog	fr	Kanban
 label<br>helptext	infolog	fr	Label<br>Texte d´aide
 last changed	infolog	fr	Dernière modification
 last modified	infolog	fr	Dernière modification
@@ -282,6 +283,7 @@ leave it empty for a full week	infolog	fr	Laisser vide pour une semaine complèt
 leave without saveing the entry	infolog	fr	quitter sans enregistrer l'entrée
 leaves without saveing	infolog	fr	quitte sans enregistrer
 length	infolog	fr	Longueur
+limit list to last n month, if ordering by last-modified and not searching.	admin	fr	Limiter la liste aux N derniers mois, en cas de tri par la date de modification et non par une recherche
 limit number of description lines (default 5, 0 for no limit)	infolog	fr	Limiter le nombre de lignes de description. Défaut = 5, 0 = pas de limite.
 limit width of description column ((effective only if lines limit is set), 0 for no limit)	infolog	fr	Limiter la largeur de la colonne de description. Ne fonctionne que si le nombre de ligne est défini. 0 = pas de limite.
 link	infolog	fr	Lien
@@ -363,6 +365,7 @@ path to user and group files has to be outside of the webservers document-root!!
 pattern for search in addressbook	infolog	fr	Chaîne de caractères à rechercher dans le carnet d'adresses
 pattern for search in projects	infolog	fr	Chaîne de caractères à rechercher dans les projets
 percent completed	infolog	fr	Pourcentage complété
+performance optimization for huge infolog tables	admin	fr	Optimisation de la perfromance pour les grandes tables InfoLog
 permission denied	infolog	fr	Permission refusée
 permissions error - %1 could not %2	infolog	fr	Error de permission - %1 ne peut %2
 phone	infolog	fr	Appel téléphonique
@@ -415,6 +418,7 @@ rights for the responsible	infolog	fr	Droits pour le responsable
 rows	infolog	fr	Lignes
 same day	infolog	fr	Même jour
 save	infolog	fr	Enregistrer
+save the changes made	infolog	fr	Enregistrer les modifications faites
 saves the changes made and leaves	infolog	fr	enregistre les modifications et quitte
 saves this entry	infolog	fr	Enregistre cette entrée
 schedule appointment	infolog	fr	Programmer une réunion
@@ -490,7 +494,6 @@ the name used internaly (<= 10 chars), changeing it makes existing data unavaili
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	infolog	fr	le nom est utilisé en interne (<= 20 caractères), si vous le modifiez vous rendez les données indisponibles
 the text displayed to the user	infolog	fr	le texte affiché pour l´utilisateur
 this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	fr	Ceci est le filtre qu'InfoLog utilise quand vous entrez dans l'application. Les filtres limitent les entrées à montrer dans la  vue actuelle. Il y a des filtres pour montrer seulement ceux temrminés, encore ouverts ou les futures entrées de vous-même ou de tous les utilisateurs.
-thorsby	infolog	fr	THORSBY
 til when should the todo or phonecall be finished	infolog	fr	Quand la tâche ou l'appel téléphonique devrait être terminé
 times	infolog	fr	Heures
 timesheet	infolog	fr	feuille de temps
@@ -500,7 +503,6 @@ to what should the startdate of new entries be set.	infolog	fr	A quoi devrait ê
 today	infolog	fr	Aujourd'hui
 todays date	infolog	fr	date du jour
 todo	infolog	fr	Tâche
-translation	infolog	fr	Traduction
 typ	infolog	fr	Type
 typ '%1' already exists !!!	infolog	fr	Le type '%1' existe déjà !
 type	infolog	fr	Type
@@ -523,7 +525,6 @@ use field from csv if possible	infolog	fr	Utiliser le champ du CSV si possible
 use search results	infolog	fr	Utiliser les résultats de la recherche
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	infolog	fr	Utiliser cette balise pour les étiquettes d'adresse. Placer le contenu que vous voulez répéter entre deux balises.
 used time	infolog	fr	Temps utilisé
-user or group	infolog	fr	Utilisateur ou groupe
 values for selectbox	infolog	fr	Valeurs des boîtes de sélection
 view all subs of this entry	infolog	fr	Voir tous les sous-entrées
 view other subs	infolog	fr	Voir les autres sous-entrées

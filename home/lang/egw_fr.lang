@@ -1,5 +1,4 @@
 a quick note	home	fr	Une note rapide
-add as default for	home	fr	Ajouter comme défaut pour
 apply the changes	home	fr	Appliquer les changements
 birthday reminders	home	fr	Rappel des anniversaires
 color	home	fr	Couleur
@@ -14,12 +13,10 @@ in %1 days (%2) is %3's birthday.	home	fr	L'anniversaire de %3 est dans %1 jours
 leave without saveing the entry	home	fr	quitter sans sauvegarder
 list of entries	home	fr	Liste des entrées
 location	home	fr	Emplacement
-openweathermap.org	home	fr	openweathermap.org
 remove	home	fr	Supprimer
 remove as default for %1	home	fr	Supprimer %1 comme valeur par défaut
 remove default %1	home	fr	Supprimer %1 par défaut
 removed default	home	fr	Supprimer le défaut
-row	home	fr	ligne
 saves this entry	home	fr	Sauvegarder cette entrée
 set as default	home	fr	Définir par défaut
 set default	home	fr	Définir par défaut

@@ -43,10 +43,14 @@
 1 week	common	cs	1 týden
 13 (ntp)	admin	cs	13 (ntp)
 15 minutes	common	cs	15 minut
+2-factor authentication code required	common	cs	Vyžaduje se dvoufaktorový ověřovací kód
 2-factor-authentication	common	cs	Ověřování pomocí 2 faktorů
+2-factor-authentication required	common	cs	Vyžaduje se dvoufaktorové ověřování
+3 minutes	common	cs	3 minuty
 30 minutes	common	cs	30 minut
 30 seconds	common	cs	30 vteřin
 5 minutes	common	cs	5 minut
+5 seconds	common	cs	5 sekund
 80 (http)	admin	cs	80 (http)
 a pattern to be searched for	common	cs	hledaný výraz
 a request to the egroupware server returned with an error	common	cs	Požadavek na server EGroupware se vrátil s chybou
@@ -148,9 +152,11 @@ as default	common	cs	jako výchozí
 attach	common	cs	Připojit
 attach file	common	cs	připojit soubor
 attachment	common	cs	Příloha
+attention: action will be applied to all rows, not only visible ones!	api	cs	Pozor: akce se použije na všechny řádky, nejen na ty viditelné!
 august	common	cs	srpen
 australia	common	cs	AUSTRÁLIE
 austria	common	cs	RAKOUSKO
+authenticate	common	cs	Ověřit
 author	common	cs	Autor
 autohide sidebox menu's	common	cs	Automaticky skrývat menu postranního panelu
 autohide sidebox menus	common	cs	Automaticky skrývat menu postranního panelu
@@ -254,6 +260,7 @@ choose a background style.	common	cs	Vyberte styl pozadí
 choose a text color for the icons	common	cs	Vyberte barvu textu pro ikony
 choose file...	common	cs	vyberte soubory ...
 choose the category	common	cs	Vyberte kategorii
+choose the default filename for merged documents.	preferences	cs	Vyberte výchozí název souboru pro sloučené dokumenty.
 choose the parent category	common	cs	Vyberte nadřazenou kategorii
 choose time	common	cs	Vyberte čas
 chosen parent category no longer exists	common	cs	Vybraná kategorie již neexistuje
@@ -282,6 +289,7 @@ cocos (keeling) islands	common	cs	KOKOSOVÉ OSTROVY
 collection empty.	common	cs	Prázdná kolekce.
 collection listing	common	cs	Výpis kolekce
 colombia	common	cs	KOLUMBIE
+colour	common	cs	Barva
 column...	common	cs	Sloupec...
 columnname	common	cs	Jméno sloupce
 columns to print	common	cs	Tisknuté sloupce
@@ -306,13 +314,17 @@ cook islands	common	cs	COOKOVY OSTROVY
 cookies are required to login to this site	login	cs	Pro přihlášení je vyžadováno povolení cookies
 copy	common	cs	Kopírovat
 copy "%1"	common	cs	Kopie "%1"
+copy of:	common	cs	Kopie:
+copy to	common	cs	Kopírovat do
 copy to clipboard	common	cs	Kopírovat do clipboardu
 costa rica	common	cs	KOSTARIKA
 cote d ivoire	common	cs	REPUBLIKA POBŘEŹÍ SLONOVINY
 could not contact server. operation timed out!	common	cs	Nemohu kontaktovat server. Časový limit vypršel!
 create	common	cs	Vytvořit
 create a new table for the application	common	cs	Vytvořit novou tabulku pro aplikaci
+create directory	common	cs	Vytvořit složku
 create link	common	cs	Vytvořit propojení
+created	common	cs	Vytvořeno
 created by	common	cs	Vytvořil(a)
 created by %1	common	cs	Vytvořil(a) %1
 creates an english ('en') langfile from label and helptexts (for application in name)	common	cs	vytvoří nový anglický jazykový soubor ('en') z označení a pomocných textů (pro aplikaci uvedenou v Názvu)
@@ -334,6 +346,7 @@ custom javascript for onchange	common	cs	uživatelsky definovaný javaskript pro
 cut	common	cs	Vyjmout
 cyprus	common	cs	KYPR
 czech republic	common	cs	ČESKÁ REPUBLIKA
+dark mode	common	cs	Tmavý režim
 dark moono theme	common	cs	téma temný měsíc
 data type	common	cs	Datový typ
 database error	common	cs	Databázová chyba
@@ -681,6 +694,7 @@ insert new row after this one	common	cs	vložit nový řádek za tento
 insert new row in front of first line	common	cs	vložit nový řádek před první řádek
 insert row after	common	cs	Vložit řádek za
 insert row before	common	cs	Vložit řádek před
+insert timestamp into description field	common	cs	Vložení časového razítka do pole popisu
 integer	common	cs	Celé číslo
 international	common	cs	Mezinárodní
 introduction	common	cs	Úvod
@@ -742,6 +756,7 @@ liberia	common	cs	LIBÉRIE
 libyan arab jamahiriya	common	cs	LIBYE
 license	common	cs	Licence
 liechtenstein	common	cs	LICHTENŠTEJNSKO
+light mode	common	cs	Světlý režim
 line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>	common	cs	Řádek %1: '%2'<br><b>csv data neobsahují ##last-check-run## tabulky %3 ==> ignorován</b>
 line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	cs	Řádek %1: '%2'<br><b>csv data neodpovídají počtu sloupců v tabulce %3 ==> ignorován</b>
 link	common	cs	Odkaz
@@ -1094,6 +1109,7 @@ save as zip	common	cs	Uložit jako ZIP soubor
 save selected columns as default preference for all users.	common	cs	Uložit vybrané sloupce jako výchozí předvolbu pro všechny uživatele.
 save the changes made and close the window	common	cs	Uložit provedené změny a zavřít okno
 save the etemplate under the above keys (name, ...), change them for a saveas	common	cs	uložit eŠablonu pod výše uvedenými klíči (název, ...), změnit je pro Uložit jako
+saved column sizes to preferences.	common	cs	Uložení velikosti sloupců do předvoleb.
 saves changes to tables_current.inc.php	common	cs	uloží změny do tables_current.inc.php
 saves the template with given version number and closes the window	common	cs	uloží šablonu s daným číslem verze a zavře okno
 scale	common	cs	Škála

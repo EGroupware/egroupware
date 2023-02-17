@@ -4,8 +4,21 @@
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	da	%1EGroupware%2 er et multi-bruger, web-baseret sammenarbejds værktøj skrevet i %3PHP%4.
 '%1' copied to clipboard	common	da	'%1' kopieret til udklipsholderen
 00 (disable)	admin	da	00 (deaktiveret)
+1 day	common	da	1 hour
+1 hour	common	da	1 time
+1 minute	common	da	1 minut
+1 month	common	da	1 month
+1 week	common	da	1 week
 13 (ntp)	admin	da	13 (ntp)
+15 minutes	common	da	15 minutter
+2-factor authentication code required	common	da	Kode til 2-faktor-autentifikation påkrævet
 2-factor-authentication	common	da	2-faktor-autentificering
+2-factor-authentication required	common	da	2-Factor-autentificering påkrævet
+3 minutes	common	da	3 minutter
+30 minutes	common	da	30 minutter
+30 seconds	common	da	30 sekunder
+5 minutes	common	da	5 minutter
+5 seconds	common	da	5 sekunder
 80 (http)	admin	da	80 (http)
 abort	common	da	Afbryd
 about	common	da	Om
@@ -54,9 +67,11 @@ argentina	common	da	Argentina
 armenia	common	da	Armenien
 aruba	common	da	Aruba
 attach file	common	da	Vedhæft fil
+attention: action will be applied to all rows, not only visible ones!	api	da	Opmærksomhed: handlingen vil blive anvendt på alle rækker, ikke kun på de synlige rækker!
 august	common	da	August
 australia	common	da	Australien
 austria	common	da	Østrig
+authenticate	common	da	Godkend
 author	common	da	Forfatter
 autohide sidebox menus	common	da	Gem automatisk sidemenuen
 automatically hide the sidebox menus?	common	da	Skal sidemenuen automatisk gemmes?
@@ -124,6 +139,7 @@ choose a background image.	common	da	Vælg et baggrundsbillede.
 choose a background style.	common	da	Vælg en baggrundsstil.
 choose a text color for the icons	common	da	Vælg ikonernes tekstfarve
 choose the category	common	da	Vælg kategorien
+choose the default filename for merged documents.	preferences	da	Vælg standardfilnavnet for sammenlagte dokumenter.
 choose the parent category	common	da	Vælg ovenstående kategori
 christmas island	common	da	Juleøen
 clear	common	da	Slet
@@ -136,6 +152,7 @@ click or mouse over to show menus?	common	da	Klik eller før musen over til side
 close	common	da	Luk
 cocos (keeling) islands	common	da	Cocos (Keeling) øerne
 colombia	common	da	Columbia
+colour	common	da	Farve
 comment	common	da	Kommentar
 common preferences	common	da	Fælles præferencer
 comoros	common	da	Comoros
@@ -148,11 +165,19 @@ contacting server...	common	da	Kontakter server...
 contains	common	da	indeholder
 cook islands	common	da	Cook øerne
 copy	common	da	Kopiér
+copy "%1"	common	da	Kopier "%1"
+copy of:	common	da	Kopi af:
+copy to	common	da	Kopier til
+copy to clipboard	common	da	Kopier til udklipsholderen
 costa rica	common	da	Costa Rica
 cote d ivoire	common	da	Elfenbenskysten
 could not contact server. operation timed out!	common	da	Kan ikke kontakte server. Operationen fik time-out!
 create	common	da	Opret
-created by	common	da	Lavet af
+create directory	common	da	Opret mappe
+create link	common	da	Opret link
+created	common	da	Oprettet
+created by	common	da	Oprettet af
+created by %1	common	da	Oprettet af %1
 croatia	common	da	Kroatien
 cuba	common	da	Cuba
 currency	common	da	Valutaenhed
@@ -162,6 +187,7 @@ custom	common	da	Valgfri
 custom fields	common	da	Valgfri Felter
 cyprus	common	da	Cupern
 czech republic	common	da	Tjekkiet
+dark mode	common	da	Mørk tilstand
 date	common	da	Dato
 date due	common	da	Skal være færdig
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	da	Daytime port.<br>Hvis port 13 bruges, åben venligst din firewall før denne side gemmes.<br>(Port: 13 / Host: 129.6.15.28)
@@ -312,6 +338,7 @@ insert column after	common	da	Indslt kolonne efter
 insert column before	common	da	Indsæt kolonne foran
 insert row after	common	da	Indsæt række efter
 insert row before	common	da	Indsæt række foran
+insert timestamp into description field	common	da	Insert timestamp into description field
 international	common	da	International
 invalid filename	common	da	Ugyldigt filnavn
 invalid ip address	common	da	Ugyldig IP
@@ -355,6 +382,7 @@ liberia	common	da	Liberia
 libyan arab jamahiriya	common	da	Libyen
 license	common	da	Licens
 liechtenstein	common	da	Liechenstein
+light mode	common	da	Lys tilstand
 link	common	da	Link
 list	common	da	Liste
 lithuania	common	da	Lithuania
@@ -537,6 +565,7 @@ saturday	common	da	Lørdag
 saudi arabia	common	da	Saudi Arabien
 save	common	da	Gem
 save all	common	da	Gem alle
+saved column sizes to preferences.	common	da	Gemte kolonnestørrelser til præferencer.
 search	common	da	Søg
 search accounts	common	da	Søg kontoer
 section	common	da	Sektion
@@ -693,8 +722,14 @@ you have selected an invalid main category	common	da	Du har valgt en ugyldig hov
 you have successfully logged out	common	da	Du har logget ud
 your message could <b>not</b> be sent!<br>	common	da	Din besked kunne <b>ikke</b> sendes!
 your message has been sent	common	da	Din besked er afsendt
+your password does not have required strength of %1 character classes and minimum length of %2 characters.	common	da	Din adgangskode har ikke den krævede styrke på %1 tegnklasser og en minimumslængde på %2 tegn.
+your password does not have required strength:	common	da	Din adgangskode har ikke den krævede styrke:
+your password failed the following criteria:	common	da	Dit kodeord opfylder ikke følgende kriterier:
+your password is about to expire in %1 days, you may change your password now	common	da	Din adgangskode udløber om %1 dage, du kan ændre din adgangskode nu.
+your password might not match the password policy.	common	da	Din adgangskode passer muligvis ikke til adgangskodepolitikken.
 your search returned %1 matchs	common	da	Søgningen leverede %1 resultater
 your search returned 1 match	common	da	Søgningen leverede 1 resultat
+your session timed out, please log in again	login	da	Din session er gået ud af tid, log ind igen.
 your settings have been updated	common	da	Dine indstillinger er opdateret
 zambia	common	da	Zambia
 zimbabwe	common	da	Zimbabwe

@@ -6,10 +6,19 @@
 00 (disable)	admin	et	00 (keela)
 1 day	common	et	1 Päev
 1 hour	common	et	1 Tund
+1 minute	common	et	1 minut
 1 month	common	et	1 Kuu
 1 week	common	et	1 Nädal
 13 (ntp)	admin	et	13 (ntp)
+15 minutes	common	et	15 minutit
+2-factor authentication code required	common	et	Vajalik 2-faktoorse autentimise kood
 2-factor-authentication	common	et	2-faktoriline autentimine
+2-factor-authentication required	common	et	2-teguriga autentimine nõutav
+3 minutes	common	et	3 minutit
+30 minutes	common	et	30 minutit
+30 seconds	common	et	30 sekundit
+5 minutes	common	et	5 minutit
+5 seconds	common	et	5 sekundit
 80 (http)	admin	et	80 (http)
 abort	common	et	Katkesta
 about	common	et	Üldiselt
@@ -60,9 +69,11 @@ argentina	common	et	ARGENTIINA
 armenia	common	et	ARMEENIA
 aruba	common	et	ARUBA
 attach file	common	et	Kaasa fail
+attention: action will be applied to all rows, not only visible ones!	api	et	Tähelepanu: toimingut rakendatakse kõikidele ridadele, mitte ainult nähtavatele!
 august	common	et	August
 australia	common	et	AUSTRAALIA
 austria	common	et	AUSTRIA
+authenticate	common	et	Autentimine
 author	common	et	Autor
 autosave default category	common	et	Salvesta Automaatlselt Vaikimisi Kategooria
 azerbaijan	common	et	ASERBAIDŽAAN
@@ -126,6 +137,7 @@ choose a background image.	common	et	Vali taustapilt.
 choose a background style.	common	et	Vali taustastiil
 choose a text color for the icons	common	et	Vali teksti värv ikoonidel
 choose the category	common	et	Vali kategooria
+choose the default filename for merged documents.	preferences	et	Valige ühendatud dokumentide vaikimisi failinimi.
 choose the parent category	common	et	Vali ülem kategooria
 christmas island	common	et	Jõulusaar
 clear	common	et	Puhasta
@@ -135,6 +147,7 @@ click here to create the link	common	et	vajuta siia tegemaks Link
 click here to start the search	common	et	vajuta siia alustamaks otsingut
 close	common	et	Sule
 colombia	common	et	KOLUMBIA
+colour	common	et	Värv
 comment	common	et	Kommentaar
 common preferences	common	et	Üldised eelistused
 comoros	common	et	KOMOORID
@@ -147,11 +160,19 @@ contacting server...	common	et	Ühendan Serveriga...
 contains	common	et	sisaldab
 cook islands	common	et	COOKI SAARED
 copy	common	et	Kopeeri
+copy "%1"	common	et	Kopeeri "%1"
+copy of:	common	et	Koopia:
+copy to	common	et	Kopeeri aadressile
+copy to clipboard	common	et	Kopeeri lõikelauale
 costa rica	common	et	KOSTARIIKA
 cote d ivoire	common	et	COTE D IVOIRE
 could not contact server. operation timed out!	common	et	Ei saa ühendust serveriga. Operatsiooni aeg sai otsa!
 create	common	et	Loo
+create directory	common	et	Looge kaust
+create link	common	et	Loo link
+created	common	et	Loodud
 created by	common	et	Loodud
+created by %1	common	et	Loonud %1
 croatia	common	et	HORVAATIA
 cuba	common	et	KUUBA
 currency	common	et	Valuuta
@@ -160,6 +181,7 @@ current users	common	et	Aktiivseid kasutajaid
 cut	common	et	Lõika
 cyprus	common	et	KÜPROS
 czech republic	common	et	TŠEHHOSLOVAKKIA
+dark mode	common	et	Tume režiim
 date	common	et	Kuupäev
 date due	common	et	Tähtaeg
 date+time	common	et	Kuupäev+Aeg
@@ -303,6 +325,7 @@ insert column after	common	et	Sisesta veerg enne
 insert column before	common	et	Sisesta veerg peale
 insert row after	common	et	Sisesta rida enne
 insert row before	common	et	Sisesta rida peale
+insert timestamp into description field	common	et	Lisage ajatempel kirjeldusväljale
 international	common	et	rahvusvaheline
 invalid filename	common	et	Vigane failinimi
 invalid ip address	common	et	Vigane IP aadress
@@ -324,6 +347,7 @@ latvia	common	et	LÄTI
 left	common	et	Vasak
 liberia	common	et	LIBEERIA
 license	common	et	Litsents
+light mode	common	et	Heledas režiimis
 link	common	et	Link
 list	common	et	Nimekiri
 lithuania	common	et	LEEDU
@@ -436,6 +460,7 @@ row...	common	et	Rida ...
 russian federation	common	et	VENEMAA
 saturday	common	et	Laupäev
 save	common	et	Salvesta
+saved column sizes to preferences.	common	et	Salvesta veerusuurused eelistustesse.
 search	common	et	Otsi
 search %1 '%2'	common	et	Otsi %1 '%2'
 search accounts	common	et	Otsi kontosid
@@ -580,8 +605,14 @@ you have selected an invalid date	common	et	Sisestasid vigase kuupäeva !
 you have selected an invalid main category	common	et	Sisestasid vigase pea kategooria !
 you have successfully logged out	common	et	Oled õnnelikult välja loginud
 your message has been sent	common	et	Sinu kiri on saadetud
+your password does not have required strength of %1 character classes and minimum length of %2 characters.	common	et	Teie salasõna ei vasta %1 tähemärkide klassile ja %2 tähemärkide minimaalsele pikkusele.
+your password does not have required strength:	common	et	Teie salasõna ei ole nõutava tugevusega:
+your password failed the following criteria:	common	et	Teie parool ei vasta järgmistele kriteeriumidele:
+your password is about to expire in %1 days, you may change your password now	common	et	Teie parool aegub %1 päeva pärast, võite oma parooli nüüd muuta.
+your password might not match the password policy.	common	et	Teie parool ei pruugi vastata paroolitingimustele.
 your search returned %1 matchs	common	et	Sinu otsing andis %1 tulemust
 your search returned 1 match	common	et	Sinu otsing andis 1 tulemuse
+your session timed out, please log in again	login	et	Teie seanss aegus, palun logige uuesti sisse.
 your settings have been updated	common	et	Sinu seadistused on Uuendatud
 zambia	common	et	SAMBIA
 zimbabwe	common	et	ZIMBABWE
