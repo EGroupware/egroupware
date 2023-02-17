@@ -29,7 +29,7 @@
 					<row class="mailComposeHeaders" >
 						<et2-description  value="From"></et2-description>
 						<et2-select  id="mailaccount" onchange="app.mail.submitOnChange"></et2-select>
-						<et2-vbox>
+						<et2-vbox class="expanderFirstRow">
 							<et2-description  id="replyto_expander" value="Reply to" class="et2_button_text" onclick="app.mail.compose_fieldExpander"></et2-description>
 							<et2-description  id="folder_expander" value="Folder" class="et2_button_text" onclick="app.mail.compose_fieldExpander"></et2-description>
 							<et2-textbox  class="mail-index_quotaDisplayNone" readonly="true" id="composeID"></et2-textbox>

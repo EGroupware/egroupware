@@ -1132,3 +1132,6 @@ et2-split#mail-index_mailSplitter.limitted .header_count {
 et2-split#mail-index_mailSplitter.squeezed .mail-index_quotabox{
 	display: none;
 }
+.expanderFirstRow {
+	position: absolute;
+}
