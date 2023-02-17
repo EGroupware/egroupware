@@ -8318,6 +8318,9 @@ table.egwGridView_grid img.et2_appicon {
     border-radius: 0;
     position: fixed;
   }
+  body et2-dialog {
+    --width: 100%;
+  }
   body div.ui-dialog {
     width: 100% !important;
     height: 100% !important;
