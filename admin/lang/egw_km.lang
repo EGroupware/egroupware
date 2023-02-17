@@ -1,0 +1,1040 @@
+%1 %2 rights for %3 on %4 to %5	admin	km	សិទ្ធិ %1 %2 សម្រាប់ %3 លើ %4 ដល់ %5
+%1 - %2 of %3 user accounts	admin	km	%1 - %2 នៃគណនីអ្នកប្រើប្រាស់ %3
+%1 - %2 of %3 user groups	admin	km	%1 - %2 នៃក្រុមអ្នកប្រើប្រាស់ %3
+%1 access to other data	admin	km	%1 ចូលប្រើទិន្នន័យផ្សេងទៀត។
+%1 accounts being activated	admin	km	គណនី %1 កំពុងត្រូវបានធ្វើឱ្យសកម្ម
+%1 acl entries deleted.	admin	km	បានលុបធាតុ ACL %1 ។
+%1 acl records of not (longer) existing accounts deleted.	admin	km	%1 កំណត់ត្រា ACL នៃគណនីដែលមិនមានស្រាប់ត្រូវបានលុប។
+%1 categories of not (longer) existing accounts deleted.	admin	km	%1 ប្រភេទ​នៃ​គណនី​ដែល​មិន​មាន​ស្រាប់ (យូរ​ជាង​នេះ) ត្រូវ​បាន​លុប។
+%1 category '%2' %3	admin	km	%1 ប្រភេទ '%2' %3
+%1 category(s) %2	admin	km	%1 ប្រភេទ %2
+%1 category(s) %2, %3 failed because of insufficent rights !!!	admin	km	%1 ប្រភេទ(s) %2, %3 បានបរាជ័យ ដោយសារសិទ្ធិមិនគ្រប់គ្រាន់ !!!
+%1 class not instanciated	admin	km	ថ្នាក់ %1 មិន​បាន​រំជួល​ចិត្ត
+%1 entries deleted.	admin	km	ធាតុ %1 ត្រូវ​បាន​លុប។
+%1 group %2	admin	km	%1 ក្រុម %2
+%1 is no command!	admin	km	%1 គឺគ្មានពាក្យបញ្ជាទេ!
+%1 log entries deleted.	admin	km	ធាតុ​កំណត់​ហេតុ %1 ត្រូវ​បាន​លុប។
+%1 not found or not executable !!!	admin	km	រកមិនឃើញ%1 ឬមិនអាចប្រតិបត្តិបាន!
+%1 phrases saved.	admin	km	ឃ្លា %1 បានរក្សាទុក។
+%1 rights for %2 and applications %3	admin	km	សិទ្ធិ %1 សម្រាប់ %2 និងកម្មវិធី %3 ។
+%1 run rights for applications	admin	km	%1 ដំណើរការសិទ្ធិសម្រាប់កម្មវិធី
+%1 sessions killed	admin	km	%1 វគ្គត្រូវបានសម្លាប់។
+%1 user %2	admin	km	%1 អ្នកប្រើប្រាស់ %2
+(de)activate mail accounts	admin	km	(មិន)ធ្វើឱ្យគណនីអ៊ីមែលសកម្ម
+(default no, leave it off if you dont use it)	admin	km	លំនាំដើម = ទេ ទុកវាចោល ប្រសិនបើអ្នកមិនប្រើវា។
+(imapclass must support this feature by querying the corresponding config value and pass it as defaultquota to the imapserver)	admin	km	(imapclass ត្រូវ​តែ​គាំទ្រ​លក្ខណៈ​ពិសេស​នេះ​ដោយ​សួរ​តម្លៃ​កំណត់​ដែល​ត្រូវ​គ្នា​ហើយ​បញ្ជូន​វា​ជា​កូតា​លំនាំដើម​ទៅ imapserver)
+(no subject)	admin	km	(គ្មាន​ប្រធាន)
+(stored password will not be shown here)	admin	km	ពាក្យសម្ងាត់ដែលបានរក្សាទុកនឹងមិនត្រូវបានបង្ហាញនៅទីនេះទេ!
+(to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	km	ដើម្បីដំឡើងកម្មវិធីថ្មី សូមប្រើ<br><a href="setup/" target="setup">ដំឡើង</a> [គ្រប់គ្រងកម្មវិធី]!
+-  type	admin	km	- ប្រភេទ
+1 year	admin	km	1 ឆ្នាំ
+2 month	admin	km	2 ខែ
+2 weeks	admin	km	2 ស​ប្ដា​ហ៏
+2-factor-authentication for interactive login	admin	km	2-Factor-Authentication សម្រាប់ការចូលអន្តរកម្ម
+3 month	admin	km	3 ខែ
+6 month	admin	km	6 ខែ
+access by	admin	km	ចូលប្រើដោយ
+access control	admin	km	ការគ្រប់គ្រងការចូលប្រើ
+access to %1 data by others	admin	km	ចូលប្រើទិន្នន័យ %1 ដោយអ្នកដទៃ
+accesslog and bruteforce defense	admin	km	AccessLog និង BruteForce ការពារ
+account	admin	km	គណនី
+account "%1" has no email address --> not notified!	admin	km	គណនី "%1" មិនមានអាសយដ្ឋានអ៊ីមែល --> មិនត្រូវបានជូនដំណឹងទេ!
+account "%1" has no plaintext password!	admin	km	គណនី "%1" មិនមានពាក្យសម្ងាត់អត្ថបទធម្មតាទេ!
+account %1 %2	admin	km	គណនី%1 %2
+account '%1' deleted.	admin	km	គណនី '%1' ត្រូវបានលុប។
+account '%1' not found !!!	admin	km	រកមិនឃើញគណនី '%1' ទេ!
+account active	admin	km	គណនីសកម្ម
+account deleted.	admin	km	គណនីត្រូវបានលុប។
+account has been created	common	km	គណនីត្រូវបានបង្កើតឡើង។
+account has been deleted	common	km	គណនីត្រូវបានលុប។
+account has been updated	common	km	គណនីត្រូវបានធ្វើបច្ចុប្បន្នភាព។
+account id	admin	km	លេខសម្គាល់គណនី
+account list	admin	km	បញ្ជីគណនី
+account not found!	common	km	រកមិនឃើញគណនី!
+account permissions	admin	km	ការអនុញ្ញាតគណនី
+account preferences	admin	km	ចំណូលចិត្តគណនី
+account saved.	admin	km	គណនីត្រូវបានរក្សាទុក។
+account-id's have to be integers!	admin	km	លេខសម្គាល់គណនីត្រូវតែជាចំនួនគត់!
+acl added.	admin	km	ACL បន្ថែម។
+acl csv export	admin	km	ការនាំចេញ ACL CSV
+acl deleted.	admin	km	ACL ត្រូវបានលុប។
+acl entry deleted.	admin	km	ធាតុ ACL ត្រូវបានលុប។
+acl entry not found!	admin	km	រកមិនឃើញធាតុ ACL!
+acl manager	admin	km	អ្នកគ្រប់គ្រង ACL
+acl rights	common	km	សិទ្ធិ ACL
+acl updated	admin	km	ACL បានធ្វើបច្ចុប្បន្នភាព
+acl updated.	admin	km	ACL បានធ្វើបច្ចុប្បន្នភាព។
+action	admin	km	សកម្មភាព
+actions	admin	km	សកម្មភាព
+activate	admin	km	ធ្វើឱ្យសកម្ម
+activate wysiwyg-editor	admin	km	ធ្វើឱ្យកម្មវិធីនិពន្ធ WYSIWYG សកម្ម
+activated	admin	km	បានធ្វើឱ្យសកម្ម
+active mail accounts	admin	km	គណនីអ៊ីមែលសកម្ម
+active templates	admin	km	គំរូសកម្ម
+add a category	admin	km	បន្ថែមប្រភេទមួយ។
+add a group	admin	km	បន្ថែមក្រុម
+add a new account.	admin	km	បន្ថែមគណនីថ្មី។
+add a new remote instance	admin	km	បន្ថែមឧទាហរណ៍ពីចម្ងាយថ្មី។
+add a subcategory	admin	km	បន្ថែមប្រភេទរង
+add a user	admin	km	បន្ថែមអ្នកប្រើប្រាស់
+add account	admin	km	បន្ថែមគណនី
+add application	admin	km	បន្ថែមកម្មវិធី
+add auto-created users to this group ('default' will be attempted if this is empty.)	admin	km	បន្ថែមអ្នកប្រើប្រាស់ដែលបង្កើតដោយស្វ័យប្រវត្តិទៅក្នុងក្រុមនេះ។ 'លំនាំដើម' នឹងត្រូវបានព្យាយាមប្រសិនបើវាទទេ។
+add global category	admin	km	បន្ថែមប្រភេទសកល
+add global category for %1	admin	km	បន្ថែមប្រភេទសកលសម្រាប់%1
+add group	admin	km	បន្ថែមក្រុម
+add new account	admin	km	បន្ថែមគណនីថ្មី។
+add new application	admin	km	បន្ថែមកម្មវិធីថ្មី។
+add new email address:	admin	km	បន្ថែមអាសយដ្ឋានអ៊ីមែលថ្មី៖
+add peer server	admin	km	បន្ថែមម៉ាស៊ីនមេ Peer
+add profile	admin	km	បន្ថែមប្រវត្តិរូប
+add sub-category	admin	km	បន្ថែមប្រភេទរង
+add user	admin	km	បន្ថែមអ្នកប្រើប្រាស់
+add user or group	admin	km	បន្ថែមអ្នកប្រើប្រាស់ ឬក្រុម
+added	admin	km	បន្ថែម
+admin dn	admin	km	Admin និង
+admin email	admin	km	អ៊ីមែលអ្នកគ្រប់គ្រង
+admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	km	អាសយដ្ឋានអ៊ីមែលអ្នកគ្រប់គ្រង ដែលបំបែកដោយសញ្ញាក្បៀស ដើម្បីឱ្យមានការជូនដំណឹងអំពីគណនីអ្នកប្រើប្រាស់ និង IP ដែលត្រូវបានទប់ស្កាត់។ ទទេ = គ្មានការជូនដំណឹង។
+admin name	admin	km	ឈ្មោះអ្នកគ្រប់គ្រង
+admin password	admin	km	ពាក្យសម្ងាត់អ្នកគ្រប់គ្រង
+admin queue and history	admin	km	ជួរគ្រប់គ្រងនិងប្រវត្តិ
+admin username	admin	km	ឈ្មោះអ្នកប្រើអ្នកគ្រប់គ្រង
+administration	admin	km	រដ្ឋបាល
+admins	admin	km	អ្នកគ្រប់គ្រង
+advanced options	admin	km	ជម្រើសកម្រិតខ្ពស់
+after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	km	បន្ទាប់​ពី​ការ​ព្យាយាម​ចូល​គណនី​មិន​បាន​ជោគជ័យ​ប៉ុន្មាន​ដង​ត្រូវ​បាន​រារាំង។ លំនាំដើម = ៣
+after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	km	បន្ទាប់ពីការប៉ុនប៉ងមិនជោគជ័យប៉ុន្មានដងក្នុងការចូល IP គួរតែត្រូវបានរារាំង។ លំនាំដើម = ១៥
+aliases	admin	km	ឈ្មោះក្លែងក្លាយ
+all accounts	admin	km	គណនីទាំងអស់។
+all acls	admin	km	ACLs ទាំងអស់។
+all applications	admin	km	កម្មវិធីទាំងអស់។
+all categories	admin	km	ប្រភេទ​ទាំងអស់
+all groups	admin	km	ក្រុមទាំងអស់។
+all records and account information will be lost!	admin	km	រាល់កំណត់ត្រា និងព័ត៌មានគណនីនឹងត្រូវបាត់បង់!
+all users	admin	km	អ្នក​ប្រើ​ទាំងអស់
+allow anonymous access to this app	admin	km	អនុញ្ញាតឱ្យចូលប្រើកម្មវិធីអនាមិក
+allow remote administration from following install id's (comma separated)	admin	km	អនុញ្ញាតឱ្យការគ្រប់គ្រងពីចម្ងាយពីការធ្វើតាមការដំឡើងលេខសម្គាល់ដោយសញ្ញាក្បៀសបំបែក។
+allow user to set 'remember me' token	admin	km	អនុញ្ញាតឱ្យអ្នកប្រើកំណត់សញ្ញាសម្ងាត់ 'ចងចាំខ្ញុំ'
+allow users to change forwards	admin	km	អនុញ្ញាតឱ្យអ្នកប្រើផ្លាស់ប្តូរទៅមុខ
+allow users to create identities for aliases	admin	km	អនុញ្ញាតឱ្យអ្នកប្រើបង្កើតអត្តសញ្ញាណសម្រាប់ឈ្មោះក្លែងក្លាយ
+allowed for get requests, default in modern browsers, if attribute is not set	admin	km	អនុញ្ញាតសម្រាប់ការទទួលបានសំណើ លំនាំដើមនៅក្នុងកម្មវិធីរុករកតាមអ៊ីនធឺណិតទំនើប ប្រសិនបើគុណលក្ខណៈមិនត្រូវបានកំណត់
+allowed just as second factor	admin	km	អនុញ្ញាតគ្រាន់តែជាកត្តាទីពីរ
+alternate email address	admin	km	អាសយដ្ឋានអ៊ីមែលជំនួស
+and logged in	admin	km	និងចូល
+anonymous user	admin	km	អ្នកប្រើប្រាស់អនាមិក
+anonymous user (not shown in list sessions)	admin	km	អ្នកប្រើប្រាស់អនាមិក។ មិនត្រូវបានបង្ហាញនៅក្នុងវគ្គបញ្ជីទេ។
+anonymous user does not exist!	admin	km	អ្នកប្រើប្រាស់អនាមិកមិនមានទេ!
+anonymous user has no run-rights for the application!	admin	km	អ្នកប្រើប្រាស់អនាមិកមិនមានសិទ្ធិដំណើរការសម្រាប់កម្មវិធីទេ!
+anonymous user. not shown in list sessions.	admin	km	អ្នកប្រើប្រាស់អនាមិក។ មិនត្រូវបានបង្ហាញនៅក្នុងវគ្គបញ្ជីទេ។
+any application	admin	km	កម្មវិធីណាមួយ។
+any group	admin	km	ក្រុមណាមួយ។
+any user	admin	km	អ្នកប្រើប្រាស់ណាមួយ។
+appearance	admin	km	រូបរាង
+application	admin	km	ការដាក់ពាក្យ
+application '%1' not found (maybe not installed or misspelled)!	admin	km	កម្មវិធី '%1' រកមិនឃើញទេ។ ប្រហែល​ជា​មិន​បាន​ដំឡើង ឬ​សរសេរ​ខុស!
+application name	admin	km	ឈ្មោះកម្មវិធី
+application title	admin	km	ចំណងជើងកម្មវិធី
+applications	admin	km	កម្មវិធី
+applications available on mobile devices	admin	km	កម្មវិធីដែលមាននៅលើឧបករណ៍ចល័ត
+applications list	admin	km	បញ្ជីកម្មវិធី
+applications run rights updated.	admin	km	កម្មវិធីដំណើរការសិទ្ធិធ្វើបច្ចុប្បន្នភាព។
+applies the changes	admin	km	អនុវត្តការផ្លាស់ប្តូរ
+apply changes	admin	km	អនុវត្តការផ្លាស់ប្តូរ
+apply the changes	admin	km	អនុវត្តការផ្លាស់ប្តូរ
+archive: zip or tar	admin	km	បណ្ណសារ៖ zip ឬ tar
+are you sure you want to %1 mail for selected accounts?	admin	km	តើ​អ្នក​ប្រាកដ​ជា​ចង់​ផ្ញើ%1 សំបុត្រ​សម្រាប់​គណនី​ដែល​បាន​ជ្រើសរើស​ឬ?
+are you sure you want to delete the application %1 ?	admin	km	តើ​អ្នក​ប្រាកដ​ជា​ចង់​លុប​កម្មវិធី%1 មែនទេ?
+are you sure you want to delete this account ?	admin	km	តើអ្នកប្រាកដថាចង់លុបគណនីនេះទេ?
+are you sure you want to delete this application ?	admin	km	តើអ្នកប្រាកដថាចង់លុបកម្មវិធីនេះទេ?
+are you sure you want to delete this category ?	common	km	តើអ្នកប្រាកដថាចង់លុបប្រភេទនេះទេ?
+are you sure you want to delete this global category ?	admin	km	តើអ្នកប្រាកដថាចង់លុបប្រភេទសកលនេះទេ?
+are you sure you want to delete this group ?	admin	km	តើអ្នកប្រាកដថាចង់លុបក្រុមនេះទេ?
+are you sure you want to delete this server?	admin	km	តើអ្នកប្រាកដថាចង់លុបម៉ាស៊ីនមេនេះទេ?
+are you sure you want to kill this session ?	admin	km	តើអ្នកប្រាកដថាចង់សម្លាប់វគ្គនេះទេ?
+async services last executed	admin	km	សេវាកម្ម Async ត្រូវបានប្រតិបត្តិចុងក្រោយ
+asynchronous timed services	admin	km	សេវាកម្មកំណត់ពេលអសមកាល
+asyncservices not yet installed or other error (%1) !!!	admin	km	សេវាកម្ម Async មិន​ទាន់​បាន​ដំឡើង ឬ​មាន​បញ្ហា​ផ្សេង​ទៀត (%1) !
+attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	km	ព្យាយាមប្រើប្រភេទ mime ត្រឹមត្រូវសម្រាប់ FTP ជំនួសឱ្យ 'application/octet-stream' លំនាំដើម។
+attribute accountstatus explained	admin	km	វាគ្រប់គ្រងគុណលក្ខណៈ <b><i>-accountStatus-</i></b> ពីគ្រោងការណ៍ QMAIL ។
+attribute mail explained	admin	km	វាគ្រប់គ្រងគុណលក្ខណៈ <b><i>-mail-</i></b> ពីគ្រោងការណ៍ QMAIL ហើយមិនគួរទទេឡើយ។ វាក៏ជាវាលអ៊ីមែលខាងក្នុង EGw ផងដែរ។
+attribute mailalternateaddress explained	admin	km	វាគ្រប់គ្រងគុណលក្ខណៈ <b><i>-mailAlternateAddress-</i></b> ពីគ្រោងការណ៍ QMAIL ហើយអាចត្រូវបានគ្រប់គ្រងជាផែនទីនិម្មិត ឬឈ្មោះក្លែងក្លាយ។
+attribute mailforwardingaddress explained	admin	km	វាគ្រប់គ្រងគុណលក្ខណៈ <b><i>-mailForwardingAddress-</i></b> ពី QMAIL Schema ហើយមិនត្រូវទទេទេប្រសិនបើបានកំណត់។
+attributes	admin	km	គុណលក្ខណៈ
+authentication	admin	km	ការផ្ទៀងផ្ទាត់ភាពត្រឹមត្រូវ
+authentication / accounts	admin	km	ការផ្ទៀងផ្ទាត់ភាពត្រឹមត្រូវ | គណនី
+auto create account records for authenticated users	admin	km	បង្កើតកំណត់ត្រាគណនីដោយស្វ័យប្រវត្តិសម្រាប់អ្នកប្រើប្រាស់ដែលបានផ្ទៀងផ្ទាត់។
+automatically transfer entries owned by the user:	admin	km	ផ្ទេរធាតុដែលគ្រប់គ្រងដោយអ្នកប្រើប្រាស់ដោយស្វ័យប្រវត្តិ៖
+available placeholders	admin	km	កន្លែងដាក់ដែលមាន
+back to admin/grouplist	admin	km	ត្រលប់ទៅបញ្ជីអ្នកគ្រប់គ្រង / ក្រុម
+back to admin/userlist	admin	km	ត្រលប់ទៅបញ្ជីអ្នកគ្រប់គ្រង / អ្នកប្រើប្រាស់
+back to the list	admin	km	ត្រឡប់ទៅបញ្ជីវិញ។
+backup directory %1 mounted as %2	admin	km	ថតបម្រុងទុក%1 បានម៉ោនជា%2
+bad login name or password.	admin	km	ឈ្មោះចូល ឬពាក្យសម្ងាត់មិនល្អ។
+bad or malformed request. server responded: %s	admin	km	សំណើមិនត្រឹមត្រូវ ឬមិនប្រក្រតី។ %s
+bad request: %s	admin	km	សំណើមិនល្អ៖ %s
+bi-dir passthrough	admin	km	ផ្លូវឆ្លងកាត់ bi-dir
+bi-directional	admin	km	ទ្វេទិស
+blocking after wrong password	admin	km	Blocking after wrong password
+bottom	admin	km	Bottom
+bulk password reset	admin	km	Bulk password reset
+calculate next run	admin	km	Calculate next run
+calendar recurrence horizont in days (default 1000)	admin	km	ការកើតឡើងវិញនៃប្រតិទិនគិតជាថ្ងៃ។ លំនាំដើម = 1000 ។
+can be used by application	admin	km	Can be used by application
+can be used by group	admin	km	Can be used by group
+can be used by user	admin	km	Can be used by user
+can change password	admin	km	Can change password
+can not change users into groups, same sign required!	admin	km	មិនអាចប្តូរអ្នកប្រើប្រាស់ទៅជាក្រុមបានទេ ត្រូវមានសញ្ញាដូចគ្នា!
+cancel changes	admin	km	Cancel changes
+cancel testjob!	admin	km	Cancel TestJob!
+cancel this scheduled command	admin	km	Cancel this scheduled command
+categories list	admin	km	Categories list
+category %1 has been saved !	admin	km	Category %1 has been saved!
+category '%1' deleted	admin	km	Category '%1' deleted
+category deleted.	admin	km	Category deleted.
+category list	admin	km	Category list
+category saved.	admin	km	Category saved.
+certificate	admin	km	Certificate
+certificate details	admin	km	Certificate details
+certificate validation in days	admin	km	Certificate validation in days
+change account_id	admin	km	ផ្លាស់ប្តូរលេខសម្គាល់គណនី
+change acl rights	admin	km	ផ្លាស់ប្តូរសិទ្ធិ ACL
+change config settings	admin	km	ផ្លាស់ប្តូរការកំណត់រចនាសម្ព័ន្ធ
+change domain of email address and aliases	admin	km	ផ្លាស់ប្តូរដែននៃអាសយដ្ឋានអ៊ីមែល និងឈ្មោះក្លែងក្លាយ
+change login screen message	admin	km	ផ្លាស់ប្តូរសារអេក្រង់ចូល
+change owner	admin	km	ផ្លាស់ប្តូរម្ចាស់
+change owner of found files to the new user, and move the home folder to /home/new-user/old-home-username.	admin	km	ឯកសារនៅក្នុង /home នឹងមានម្ចាស់ប្តូរទៅអ្នកប្រើប្រាស់ថ្មី។ ថតផ្ទះនឹងត្រូវបានផ្លាស់ទីទៅ /home/new-user/old-home-username។
+change password for %1	admin	km	ផ្លាស់ប្តូរពាក្យសម្ងាត់សម្រាប់%1
+change password hash to	admin	km	ប្តូរលេខសម្ងាត់ទៅជាលេខសម្ងាត់
+changed password hash for %1 to %2.	admin	km	បានផ្លាស់ប្តូរលេខសម្ងាត់សម្រាប់ %1 ទៅ %2 ។
+changelog	admin	km	កំណត់ហេតុផ្លាស់ប្តូរ
+changelog and versions	admin	km	Changelog និងកំណែ
+check acl for entries of not (longer) existing accounts	admin	km	ពិនិត្យ ACL សម្រាប់ធាតុនៃគណនីដែលមិនមានស្រាប់។
+check categories for not (longer) existing accounts	admin	km	ពិនិត្យប្រភេទសម្រាប់គណនីដែលមានស្រាប់ (មិនយូរជាងនេះ)
+check ip address of all sessions	admin	km	ពិនិត្យអាសយដ្ឋាន IP នៃវគ្គទាំងអស់។
+check items to <b>%1</b> to %2 for %3	admin	km	ពិនិត្យធាតុទៅ <b>%1</b> ទៅ %2 សម្រាប់ %3
+children	admin	km	កុមារ
+clear cache and register hooks	admin	km	សម្អាតឃ្លាំងសម្ងាត់ និងចុះឈ្មោះទំពក់
+clear credentials	admin	km	ជម្រះលិខិតសម្គាល់
+clear mail credentials	admin	km	សម្អាតលិខិតសម្គាល់សំបុត្រ
+clear security tokens	admin	km	សម្អាតនិមិត្តសញ្ញាសុវត្ថិភាព
+click to select a color	admin	km	ចុចដើម្បីជ្រើសរើសពណ៌
+color	admin	km	ពណ៌
+comma-separated ip addresses white-listed from above blocking (:optional number of attempts)	admin	km	អាសយដ្ឋាន IP ដែលបំបែកដោយសញ្ញាក្បៀស ដែលត្រូវបានរាយបញ្ជីសពីការទប់ស្កាត់ខាងលើ (: ចំនួននៃការព្យាយាមជាជម្រើស)
+command scheduled to run at %1	admin	km	ពាក្យ​បញ្ជា​ត្រូវ​បាន​កំណត់​ពេល​ដើម្បី​រត់​នៅ%1
+command was run %1 on %2	admin	km	ពាក្យបញ្ជាត្រូវបានដំណើរការ%1 នៅលើ%2
+commercial: all sorts of companies	admin	km	ពាណិជ្ជកម្ម៖ ក្រុមហ៊ុនគ្រប់ប្រភេទ
+config password or md5 hash from the header.inc.php	admin	km	កំណត់រចនាសម្ព័ន្ធពាក្យសម្ងាត់ ឬ md5 hash ពី header.inc.php ។
+configuration	admin	km	ការកំណត់​រចនាសម្ព័ន្ធ
+configuration saved.	admin	km	ការកំណត់រចនាសម្ព័ន្ធត្រូវបានរក្សាទុក។
+connection dropped by imap server.	admin	km	ការតភ្ជាប់បានធ្លាក់ចុះដោយម៉ាស៊ីនមេ IMAP ។
+connection is not secure! everyone can read eg. your credentials.	admin	km	ការតភ្ជាប់មិនមានសុវត្ថិភាពទេ! មនុស្សគ្រប់គ្នាអាចអាន ឧ. លិខិតសម្គាល់របស់អ្នក។
+continue	admin	km	បន្ត
+cookie domain (default empty means use full domain name, for sitemgr eg. ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com)	admin	km	ដែនខូគី។ ទទេលំនាំដើមប្រើឈ្មោះដែនពេញលេញ។ ឧទាហរណ៍នៅក្នុងកម្មវិធីគ្រប់គ្រងគេហទំព័រ ".domain.com" អនុញ្ញាតឱ្យប្រើខូគីដូចគ្នាសម្រាប់ egw.domain.com និង www.domain.com ។
+cookie path (allows multiple egw sessions with different directories, has problemes with sitemgr!)	admin	km	ផ្លូវខូគី។ អនុញ្ញាតឱ្យវគ្គ EGroupware ច្រើនជាមួយថតផ្សេងៗគ្នា។
+could not append message:	admin	km	Could not append Message:
+could not complete request. reason given: %s	admin	km	Could not complete request. %s
+could not extract private key from given p12 file. either the p12 file is broken or password is wrong!	admin	km	មិនអាចទាញយកសោឯកជនចេញពីឯកសារ p12 ដែលបានផ្តល់ឱ្យទេ។ ទាំងឯកសារ p12 ខូច ឬពាក្យសម្ងាត់ខុស!
+could not open secure connection to the imap server. %s : %s.	admin	km	មិនអាចបើកការតភ្ជាប់សុវត្ថិភាពទៅម៉ាស៊ីនមេ IMAP បានទេ។ %s៖ %s
+could not remote execute the command	admin	km	Could not remote execute the command
+country	admin	km	Country
+country selection	admin	km	Country selection
+cram-md5 or digest-md5 requires the auth_sasl package to be installed.	admin	km	CRAM-MD5 ឬ DIGEST-MD5 ទាមទារកញ្ចប់ Auth_SASL ដើម្បីដំឡើង។
+create group	admin	km	Create group
+create new account	admin	km	Create new account
+create new identity	admin	km	Create new identity
+created	admin	km	Created
+created with id #%1	admin	km	Created with id #%1
+creates / updates user accounts from csv file	admin	km	Creates / updates user accounts from CSV file
+creates / updates user groups from csv file	admin	km	Creates / updates user groups from CSV file
+creates a new field	admin	km	Creates a new field
+crontab only (recomended)	admin	km	Crontab only (recommended)
+current certificate	admin	km	វិញ្ញាបនបត្របច្ចុប្បន្ន
+current default	admin	km	លំនាំដើមបច្ចុប្បន្ន
+current hash	admin	km	សញ្ញាបច្ចុប្បន្ន៖
+currently:	admin	km	បច្ចុប្បន្ន៖
+custom 1	admin	km	ផ្ទាល់ខ្លួន 1
+custom 2	admin	km	ផ្ទាល់ខ្លួន ២
+custom 3	admin	km	ផ្ទាល់ខ្លួន 3
+custom fields	admin	km	វាលផ្ទាល់ខ្លួន
+custom translation	admin	km	ការបកប្រែផ្ទាល់ខ្លួន
+customfield '%1' added	admin	km	វាលផ្ទាល់ខ្លួន '%1' បានបន្ថែម
+customfield '%1' deleted	admin	km	វាលផ្ទាល់ខ្លួន '%1' ត្រូវបានលុប
+customfield '%1' modified	admin	km	វាលផ្ទាល់ខ្លួន '%1' បានកែប្រែ
+customfield deleted	admin	km	Customfield ត្រូវបានលុប
+customfield saved.	admin	km	វាលផ្ទាល់ខ្លួនត្រូវបានរក្សាទុក។
+cyrus imap server	admin	km	ម៉ាស៊ីនមេ Cyrus IMAP
+cyrus imap server administration	admin	km	ការគ្រប់គ្រងម៉ាស៊ីនមេ Cyrus IMAP
+data	admin	km	ទិន្នន័យ
+data from	admin	km	ទិន្នន័យពី
+day	admin	km	ថ្ងៃ
+day of week<br>(0-6, 0=sun)	admin	km	ថ្ងៃនៃសប្តាហ៍<br>(0-6, 0=ព្រះអាទិត្យ)
+db backup and restore	admin	km	ការបម្រុងទុកនិងស្តារ DB
+deactivate	admin	km	អសកម្ម
+deactivated	admin	km	បិទដំណើរការ
+debug	admin	km	បំបាត់កំហុស
+default	admin	km	លំនាំដើម
+default file system space per user	admin	km	ទំហំប្រព័ន្ធឯកសារលំនាំដើមសម្រាប់អ្នកប្រើប្រាស់
+default file system space per user/group ?	admin	km	ទំហំប្រព័ន្ធឯកសារលំនាំដើមសម្រាប់អ្នកប្រើប្រាស់/ក្រុម?
+default of currently	admin	km	លំនាំដើមនៃបច្ចុប្បន្ន
+deinstall crontab	admin	km	លុប crontab
+delete account	admin	km	លុប​គណនី
+delete account %1	admin	km	លុបគណនី%1
+delete account %s	admin	km	លុបគណនី %s
+delete all records	admin	km	លុបកំណត់ត្រាទាំងអស់។
+delete application	admin	km	លុបកម្មវិធី
+delete category	admin	km	លុបប្រភេទ
+delete certificate	admin	km	លុបវិញ្ញាបនបត្រ
+delete group	admin	km	លុបក្រុម
+delete identity	admin	km	លុបអត្តសញ្ញាណ
+delete including sub-entries	admin	km	លុបរួមទាំងធាតុរង
+delete peer server	admin	km	លុបម៉ាស៊ីនមេ
+delete selected entries	admin	km	លុបធាតុដែលបានជ្រើសរើស
+delete the category	admin	km	លុបប្រភេទ
+delete the group	admin	km	លុបក្រុម
+delete the selected entries	admin	km	លុបធាតុដែលបានជ្រើសរើស
+delete this access control	admin	km	លុបការគ្រប់គ្រងការចូលប្រើនេះ។
+delete this account	admin	km	លុបគណនីនេះ។
+delete this category	admin	km	លុបប្រភេទនេះ។
+delete this group	admin	km	លុបក្រុមនេះ។
+delete this log entry	admin	km	លុបធាតុកំណត់ហេតុនេះ។
+delete this user	admin	km	លុបអ្នកប្រើប្រាស់នេះ។
+deleted	admin	km	បានលុប
+deletes this field	admin	km	លុបវាលនេះ។
+deliver extern	admin	km	ចែកចាយខាងក្រៅ
+deny access	admin	km	បាន​បដិសេធ​ការ​ចូល​ដំណើរការ
+deny access to access log	admin	km	បដិសេធការចូលប្រើកំណត់ហេតុ
+deny access to application registery	admin	km	បដិសេធការចូលប្រើការចុះឈ្មោះកម្មវិធី
+deny access to applications	admin	km	បដិសេធការចូលប្រើកម្មវិធី
+deny access to asynchronous timed services	admin	km	បដិសេធការចូលប្រើសេវាកម្មកំណត់ពេលអសមកាល
+deny access to current sessions	admin	km	បដិសេធការចូលប្រើវគ្គបច្ចុប្បន្ន
+deny access to db backup and restore	admin	km	បដិសេធការចូលប្រើការបម្រុងទុក DB និងស្ដារ
+deny access to error log	admin	km	បដិសេធការចូលប្រើកំណត់ហេតុកំហុស
+deny access to global categories	admin	km	បដិសេធការចូលប្រើប្រភេទសកល
+deny access to groups	admin	km	បដិសេធការចូលប្រើក្រុម
+deny access to home screen message	admin	km	បដិសេធការចូលប្រើសារអេក្រង់ដើម
+deny access to peer servers	admin	km	បដិសេធការចូលប្រើម៉ាស៊ីនមេ
+deny access to phpinfo	admin	km	បដិសេធការចូលប្រើ phpinfo
+deny access to site configuration	admin	km	បដិសេធការចូលទៅកាន់ការកំណត់រចនាសម្ព័ន្ធគេហទំព័រ
+deny access to user accounts	admin	km	បដិសេធការចូលប្រើគណនីអ្នកប្រើប្រាស់
+deny all users access to create and manage private categories ?	admin	km	បដិសេធការចូលប្រើរបស់អ្នកប្រើប្រាស់ទាំងអស់ដើម្បីបង្កើត និងគ្រប់គ្រងប្រភេទឯកជន
+deny all users access to grant other users access to their entries ?	admin	km	បដិសេធ​សិទ្ធិ​សម្រាប់​អ្នក​ប្រើ​ទាំងអស់​ក្នុង​ការ​ផ្តល់​សិទ្ធិ​ចូល​ដំណើរការ​ទៅ​ធាតុ​របស់​ពួកគេ។
+deny all users access to preferences ?	admin	km	បដិសេធ​អ្នក​ប្រើ​ទាំងអស់​ចូល​ប្រើប្រាស់​ចំណូលចិត្ត
+description can not exceed 255 characters in length !	admin	km	ការពិពណ៌នាមិនអាចលើសពី 255 តួអក្សរទេ!
+destination account #%1 does exist and is not renamed itself! can not merge accounts, it will violate unique contains. delete with transfer of data instead.	admin	km	គណនី​គោលដៅ #%1 មាន​ហើយ​មិន​ត្រូវ​បាន​ប្តូរ​ឈ្មោះ​ខ្លួន​វា​ទេ! មិន​អាច​បញ្ចូល​គណនី​បាន​ទេ វា​នឹង​បំពាន​លើ​មាន​តែ​មួយ​គត់។ លុបដោយការផ្ទេរទិន្នន័យជំនួសវិញ។
+determines the order the fields are displayed	admin	km	កំណត់លំដាប់ដែលវាលត្រូវបានបង្ហាញ
+direct login without password or second factor	admin	km	ការចូលដោយផ្ទាល់ដោយគ្មានពាក្យសម្ងាត់ ឬកត្តាទីពីរ
+disable	admin	km	បិទ
+disable "auto completion" of the login form	admin	km	បិទ "ការបំពេញដោយស្វ័យប្រវត្តិ" នៃទម្រង់ចូល
+disable all	admin	km	បិទ​ទាំងអស់
+disable minifying of javascript and css files	admin	km	បិទការបង្រួមតូចនៃឯកសារ javascript និង CSS
+disable pgp encryption (mailvelope)	admin	km	បិទការអ៊ិនគ្រីប PGP (Mailvelope)
+disable wysiwyg-editor	admin	km	បិទកម្មវិធីនិពន្ធ WYSIWYG
+disabled	admin	km	ពិការ
+disabled (not recomended)	admin	km	បានបិទ (មិនត្រូវបានណែនាំ)
+disabled, do not show on login page	admin	km	បានបិទ សូមកុំបង្ហាញនៅលើទំព័រចូល
+display	admin	km	បង្ហាញ
+displayed length of input field (set rows=1 to limit length)	admin	km	បង្ហាញប្រវែងនៃវាលបញ្ចូល (កំណត់ជួរ = 1 ដល់ប្រវែងកំណត់)
+displaying html messages is disabled	admin	km	ការបង្ហាញសារ html ត្រូវបានបិទ
+displaying plain messages is disabled	admin	km	ការបង្ហាញសារធម្មតាត្រូវបានបិទ
+do not delete the category and return back to the list	admin	km	កុំលុបប្រភេទ ហើយត្រឡប់ទៅបញ្ជីវិញ។
+do not generate email addresses	admin	km	កុំបង្កើតអាសយដ្ឋានអ៊ីមែល
+do not offer introduction video	admin	km	កុំផ្តល់វីដេអូណែនាំ
+do not send cookie	admin	km	កុំផ្ញើខូឃី
+do not set attribute	admin	km	កុំកំណត់គុណលក្ខណៈ
+do not validate certificate	admin	km	កុំធ្វើឱ្យមានសុពលភាពវិញ្ញាបនបត្រ
+do you also want to delete all global subcategories ?	admin	km	តើអ្នកចង់លុបប្រភេទរងសកលទាំងអស់ដែរទេ?
+do you really want to delete this profile	admin	km	តើអ្នកពិតជាចង់លុបកម្រងព័ត៌មាននេះមែនទេ?
+do you really want to reset the filter for the profile listing	admin	km	តើអ្នកពិតជាចង់កំណត់តម្រងឡើងវិញសម្រាប់ការចុះបញ្ជីកម្រងព័ត៌មានមែនទេ?
+do you want to delete all global subcategories ?	admin	km	តើអ្នកចង់លុបប្រភេទរងសកលទាំងអស់ទេ?
+do you want to move all global subcategories one level down ?	admin	km	តើ​អ្នក​ចង់​ផ្លាស់ទី​ប្រភេទ​រង​សកល​ទាំងអស់​ចុះ​មួយ​កម្រិត​ដែរ​ឬ​ទេ?
+document root (default)	admin	km	ឫសឯកសារ (លំនាំដើម)
+domainname	admin	km	ឈ្មោះដែន
+down	admin	km	ចុះ
+download csv	admin	km	ទាញយក CSV
+each value is a line like id[=label], or use @path to read options from a file in egroupware directory	admin	km	តម្លៃនីមួយៗគឺជាបន្ទាត់ដូចជា id[=label] ឬប្រើ @path ដើម្បីអានជម្រើសពីឯកសារនៅក្នុងថត EGroupware
+each value is a line like label=[javascript]	admin	km	តម្លៃនីមួយៗគឺជាបន្ទាត់ដូចជា label=[javascript]
+edit account	admin	km	កែសម្រួលគណនី
+edit application	admin	km	កែសម្រួលកម្មវិធី
+edit email settings	admin	km	កែសម្រួលការកំណត់អ៊ីមែល
+edit global category	admin	km	កែសម្រួលប្រភេទសកល
+edit global category for %1	admin	km	កែសម្រួលប្រភេទសកលសម្រាប់%1
+edit group	admin	km	កែសម្រួលក្រុម
+edit group acl's	admin	km	កែសម្រួលក្រុម ACL
+edit peer server	admin	km	កែសម្រួលម៉ាស៊ីនមេ Peer
+edit table format	admin	km	កែទម្រង់តារាង
+edit this category	admin	km	កែសម្រួលប្រភេទនេះ។
+edit this group	admin	km	កែសម្រួលក្រុមនេះ។
+edit this user	admin	km	កែសម្រួលអ្នកប្រើប្រាស់នេះ។
+edit user	admin	km	កែសម្រួលអ្នកប្រើប្រាស់
+edit user account	admin	km	កែសម្រួលគណនីអ្នកប្រើប្រាស់
+edited	admin	km	បានកែសម្រួល
+educational: universities, schools, ...	admin	km	ការអប់រំ៖ សាកលវិទ្យាល័យ សាលារៀន...
+egroupware directory	admin	km	ថតឯកសារ EGroupware
+egroupware tutorial	admin	km	ការបង្រៀន EGroupware
+egroupware version	admin	km	កំណែ EGroupware
+either install id and config password needed or the remote hash!	admin	km	ទាំង​ដំឡើង​លេខ​សម្គាល់​និង​ពាក្យ​សម្ងាត់​កំណត់​ដែល​ត្រូវ​ការ​ឬ​សញ្ញា​ពី​ចម្ងាយ​!
+email account active	admin	km	គណនីអ៊ីមែលសកម្ម
+email address	admin	km	អាស័យ​ដ្ឋាន​អ៊ី​ម៉េ​ល
+email settings	common	km	ការកំណត់អ៊ីមែល
+emailadmin	admin	km	អ៊ីមែលអ្នកគ្រប់គ្រង
+emailadmin: group assigned profile	common	km	eMailAdmin៖ ទម្រង់ដែលបានកំណត់ក្រុម
+emailadmin: user assigned profile	common	km	eMailAdmin៖ ទម្រង់ដែលបានកំណត់ដោយអ្នកប្រើប្រាស់
+empty to not change	admin	km	ទទេដើម្បីមិនផ្លាស់ប្តូរ
+enable	admin	km	បើក
+enable cyrus imap server administration	admin	km	បើកដំណើរការការគ្រប់គ្រងម៉ាស៊ីនមេ Cyrus IMAP
+enable debug-messages	admin	km	បើកដំណើរការសារបំបាត់កំហុស។
+enable sieve	admin	km	បើក Sieve
+enable spellcheck in rich text editor	admin	km	បើកការពិនិត្យអក្ខរាវិរុទ្ធនៅក្នុងកម្មវិធីនិពន្ធអត្ថបទសម្បូរបែប
+enable the soap service	admin	km	បើកសេវាកម្មសាប៊ូ។
+enable the xmlrpc service	admin	km	បើកសេវាកម្ម xmlrpc ។
+enabled	admin	km	បានបើក
+enabled - hidden from navbar	admin	km	បានបើក - លាក់ពីរបាររុករក
+enabled - popup window	admin	km	បានបើក - បង្អួចលេចឡើង
+encrypted connection	admin	km	ការតភ្ជាប់ដែលបានអ៊ិនគ្រីប
+encryption	admin	km	ការអ៊ិនគ្រីប
+encryption settings	admin	km	ការកំណត់ការអ៊ិនគ្រីប
+enter a description for the category	admin	km	បញ្ចូលការពិពណ៌នាសម្រាប់ប្រភេទ
+enter a passphrase if you would like to protect your private key by password.	admin	km	បញ្ចូលឃ្លាសម្ងាត់ប្រសិនបើអ្នកចង់ការពារសោឯកជនរបស់អ្នកដោយពាក្យសម្ងាត់។
+enter some random text for app_session <br>encryption (requires mcrypt)	admin	km	បញ្ចូលអត្ថបទចៃដន្យមួយចំនួនសម្រាប់ការអ៊ិនគ្រីប app_session <br> ទាមទារ mcrypt
+enter the background color for the login page	admin	km	បញ្ចូលពណ៌ផ្ទៃខាងក្រោយសម្រាប់ទំព័រចូល
+enter the background color for the site title	admin	km	បញ្ចូលពណ៌ផ្ទៃខាងក្រោយសម្រាប់ចំណងជើងគេហទំព័រ
+enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	km	បញ្ចូលផ្លូវពេញលេញសម្រាប់ឯកសារបណ្តោះអាសន្ន។<br>ឧទាហរណ៍៖ /tmp, C:\TEMP
+enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	km	បញ្ចូលផ្លូវពេញលេញសម្រាប់ឯកសារបណ្តោះអាសន្ន។<br>ឧទាហរណ៍៖ /tmp, C:\TEMP
+enter the full path for users and group files.<br>examples: /files, e:\files	admin	km	បញ្ចូលផ្លូវពេញលេញសម្រាប់អ្នកប្រើប្រាស់ និងឯកសារក្រុម។<br>ឧទាហរណ៍៖ /files, E:\FILES
+enter the full path for users and group files.<br>examples: /files, e:files	admin	km	បញ្ចូលផ្លូវពេញលេញសម្រាប់អ្នកប្រើប្រាស់ និងឯកសារក្រុម។<br>ឧទាហរណ៍៖ /files, E:\FILES
+enter the hostname of the machine on which this server is running	admin	km	បញ្ចូលឈ្មោះម៉ាស៊ីនរបស់ម៉ាស៊ីនដែលម៉ាស៊ីនមេនេះកំពុងដំណើរការ
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	km	បញ្ចូលទីតាំងនៃ URL របស់ EGroupware។<br>ឧទាហរណ៍៖ http://www.domain.com/egroupware ឬ /egroupware<br><b>គ្មានសញ្ញាបន្តបន្ទាប់</b>
+enter the search string. to show all entries, empty this field and press the submit button again	admin	km	បញ្ចូលខ្សែអក្សរស្វែងរក។ ដើម្បីបង្ហាញធាតុទាំងអស់ សូមលុបវាលនេះ ហើយចុចប៊ូតុង បញ្ជូនម្តងទៀត
+enter the site password for peer servers	admin	km	បញ្ចូលពាក្យសម្ងាត់គេហទំព័រសម្រាប់ម៉ាស៊ីនមេ
+enter the site username for peer servers	admin	km	បញ្ចូលឈ្មោះអ្នកប្រើប្រាស់គេហទំព័រសម្រាប់ម៉ាស៊ីនមេ
+enter the title for your site	admin	km	បញ្ចូលចំណងជើងសម្រាប់គេហទំព័រ
+enter the title of your logo	admin	km	បញ្ចូលចំណងជើងនៃនិមិត្តសញ្ញា
+enter the url where your logo should link to	admin	km	បញ្ចូល URL ដែលនិមិត្តសញ្ញាគួរភ្ជាប់ទៅ
+enter the vfs-path where additional images, icons or logos can be placed (and found by egroupwares applications). the path must start with /,and be readable by all users	admin	km	បញ្ចូលផ្លូវ VFS ដែលរូបភាព រូបតំណាង ឬនិមិត្តសញ្ញាបន្ថែមអាចត្រូវបានដាក់ និងរកឃើញដោយកម្មវិធីរបស់ EGroupware។<br>ផ្លូវត្រូវតែចាប់ផ្តើមដោយ / និងអាចអានបានដោយអ្នកប្រើប្រាស់ទាំងអស់
+enter your default ftp server	admin	km	បញ្ចូលម៉ាស៊ីនមេ FTP លំនាំដើមរបស់អ្នក។
+enter your default mail domain ( from: user@domain )	admin	km	បញ្ចូលដែនសំបុត្រលំនាំដើមរបស់អ្នក (ពី៖ user@domain)
+enter your default mail domain (from: user@domain)	admin	km	បញ្ចូលដែនសំបុត្រលំនាំដើមរបស់អ្នកពី៖ user@domain
+enter your http proxy server	admin	km	បញ្ចូលម៉ាស៊ីនមេប្រូកស៊ី HTTP របស់អ្នក។
+enter your http proxy server port	admin	km	បញ្ចូលច្រកម៉ាស៊ីនមេប្រូកស៊ី HTTP របស់អ្នក។
+enter your smtp server hostname or ip address	admin	km	បញ្ចូលឈ្មោះម៉ាស៊ីនមេ SMTP ឬអាសយដ្ឋាន IP របស់អ្នក។
+enter your smtp server port	admin	km	បញ្ចូលច្រកម៉ាស៊ីនមេ SMTP របស់អ្នក។
+entries	admin	km	ធាតុ
+entries owned by the user:	admin	km	ធាតុដែលគ្រប់គ្រងដោយអ្នកប្រើប្រាស់៖
+entry saved	admin	km	បានរក្សាទុកធាតុ
+error canceling timer, maybe there's none set !!!	admin	km	កំហុសក្នុងការបោះបង់កម្មវិធីកំណត់ម៉ោង ប្រហែលជាមិនមានការកំណត់ទេ!
+error changing the password for %1 !!!	admin	km	មាន​បញ្ហា​ក្នុង​ការ​ផ្លាស់ប្ដូរ​ពាក្យ​សម្ងាត់​សម្រាប់ %1 !
+error connecting to imap server. %s : %s.	admin	km	កំហុសក្នុងការតភ្ជាប់ទៅម៉ាស៊ីនមេ IMAP ។ %s៖ %s
+error connecting to imap server: [%s] %s.	admin	km	កំហុសក្នុងការតភ្ជាប់ទៅម៉ាស៊ីនមេ IMAP៖ [%s] %s ។
+error deleting entry!	admin	km	កំហុសក្នុងការលុបធាតុ!
+error deleting log entry!	admin	km	កំហុសក្នុងការលុបធាតុកំណត់ហេតុ!
+error saving	admin	km	កំហុសក្នុងការរក្សាទុក!
+error saving account!	admin	km	កំហុសក្នុងការរក្សាទុកគណនី!
+error saving the command!	admin	km	កំហុសក្នុងការរក្សាទុកពាក្យបញ្ជា!
+error saving the entry!!!	admin	km	កំហុសក្នុងការរក្សាទុកធាតុ!
+error saving to db:	admin	km	កំហុសក្នុងការរក្សាទុកទៅ db៖
+error setting timer, wrong syntax or maybe there's one already running !!!	admin	km	កំហុស​ក្នុង​ការ​កំណត់​ម៉ោង​កំណត់ វាក្យសម្ព័ន្ធ​ខុស ឬ​ប្រហែល​ជា​មាន​កម្មវិធី​មួយ​កំពុង​ដំណើរការ​ហើយ!
+error! no appname found	admin	km	កំហុស៖ រកមិនឃើញឈ្មោះកម្មវិធីទេ!
+error, no username!	admin	km	កំហុស គ្មានឈ្មោះអ្នកប្រើប្រាស់!
+error: %1 not found or other error !!!	admin	km	កំហុស៖ រកមិនឃើញ%1 ឬកំហុសផ្សេងទៀត!
+event details follow	admin	km	ព័ត៌មានលម្អិតអំពីព្រឹត្តិការណ៍
+exists	admin	km	មាន
+expired	admin	km	ផុតកំណត់
+expires	admin	km	ផុតកំណត់
+explanation of ldapman	admin	km	ម៉ូឌុលនេះត្រូវបានសាកល្បងរហូតមកដល់ពេលនេះសម្រាប់ POSTFIX, LDAP, Courier-IMAP ហើយត្រូវការគ្រោងការណ៍ CORE និង QMAIL (OID7914) ។ ព័ត៌មានលម្អិតបន្ថែមអំពីការប្រើប្រាស់ និងកំណត់រចនាសម្ព័ន្ធប្រព័ន្ធនេះអាចរកបាននៅក្នុង README.ldapman នៅក្នុងថតឯកសាររបស់ ADMIN ។
+export certificate as p12	admin	km	វិញ្ញាបនបត្រនាំចេញជា p12
+exports groups into a csv file.	admin	km	នាំចេញក្រុមទៅជាឯកសារ CSV ។
+exports permission settings into a csv file.	admin	km	នាំចេញការកំណត់ការអនុញ្ញាតទៅក្នុងឯកសារ CSV ។
+exports users into a csv file.	admin	km	នាំចេញអ្នកប្រើប្រាស់ទៅក្នុងឯកសារ CSV ។
+failed to change password for account "%1"!	admin	km	បរាជ័យក្នុងការផ្លាស់ប្តូរពាក្យសម្ងាត់សម្រាប់គណនី "%1"!
+failed to change password.	admin	km	បរាជ័យក្នុងការផ្លាស់ប្តូរពាក្យសម្ងាត់។
+failed to delete account!	admin	km	បរាជ័យក្នុងការលុបគណនី!
+failed to mount backup directory!	admin	km	បរាជ័យក្នុងការដំឡើងថតចម្លង!
+failed to save user!	admin	km	បរាជ័យក្នុងការរក្សាទុកអ្នកប្រើប្រាស់!
+failed to upload %1	admin	km	បានបរាជ័យក្នុងការបង្ហោះ%1
+fallback (after each pageview)	admin	km	ថយក្រោយ បន្ទាប់ពីមើលទំព័រនីមួយៗ។
+false	admin	km	មិនពិត
+field '%1' already exists !!!	admin	km	វាល '%1' មាន​ហើយ!
+file rejected, no %2. is:%1	admin	km	ឯកសារត្រូវបានច្រានចោល គ្មាន%2។ គឺ៖%1
+file space	admin	km	ទំហំឯកសារ
+file space must be an integer	admin	km	ទំហំឯកសារត្រូវតែជាចំនួនគត់
+filtered by account	admin	km	ត្រងតាមគណនី
+filtered by group	admin	km	ត្រងតាមក្រុម
+folder acl	admin	km	ថតឯកសារ ACL
+for the times above	admin	km	សម្រាប់ពេលវេលាខាងលើ
+for the times below (empty values count as '*', all empty = every minute)	admin	km	សម្រាប់ពេលវេលាខាងក្រោម៖ តម្លៃទទេរាប់ជា '*' ទាំងអស់ទទេ = រាល់នាទី។
+forbid users to create identities	admin	km	ហាមអ្នកប្រើប្រាស់បង្កើតអត្តសញ្ញាណ
+force selectbox	admin	km	បង្ខំជ្រើសរើសប្រអប់
+force users to change their password regularily?(empty for no,number for after that number of days	admin	km	កំណត់ការផ្លាស់ប្តូរពាក្យសម្ងាត់ដោយបង្ខំម្តងហើយម្តងទៀត។ កំណត់ចំនួនថ្ងៃ។ ទទេ = ទេ។
+forward also to	admin	km	បញ្ជូនបន្តទៅ
+forward email's to	admin	km	បញ្ជូនបន្តអ៊ីមែលទៅ
+forward emails to	admin	km	បញ្ជូនបន្តអ៊ីមែលទៅ
+forward only	admin	km	ទៅមុខតែប៉ុណ្ណោះ
+forward only disables imap mailbox / storing of mails and just forwards them to given address.	admin	km	បញ្ជូនបន្តបិទតែប្រអប់សំបុត្រ IMAP / ការរក្សាទុកសំបុត្រ ហើយគ្រាន់តែបញ្ជូនបន្តទៅអាសយដ្ឋានដែលបានផ្តល់ឱ្យ។
+full name	admin	km	ឈ្មោះ​ពេញ
+general	admin	km	ទូទៅ
+generate certificate	admin	km	បង្កើតវិញ្ញាបនបត្រ
+git clone	admin	km	ក្លូន
+global categories	common	km	ប្រភេទសកល
+global options	admin	km	ជម្រើសសកល
+go directly to admin menu, returning here the next time you click on administration.	admin	km	ចូលទៅកាន់ម៉ឺនុយគ្រប់គ្រងដោយផ្ទាល់ ដោយត្រឡប់មកទីនេះ នៅពេលដែលអ្នកចុចលើការគ្រប់គ្រងបន្ទាប់។
+google recaptcha	admin	km	Google recaptcha
+google recaptcha secret key	admin	km	Google recaptcha សោសម្ងាត់
+google recaptcha site key	admin	km	Google recaptcha គន្លឹះគេហទំព័រ
+governmental: incl. state or municipal authorities or services	admin	km	រដ្ឋាភិបាល៖ រួមបញ្ចូល។ អាជ្ញាធររដ្ឋ ឬក្រុង ឬសេវាកម្ម
+grant	admin	km	ជំនួយ
+group #%1 must have negative sign!	admin	km	ក្រុម #%1 ត្រូវតែមានសញ្ញាអវិជ្ជមាន!
+group %1 %2	admin	km	ក្រុម%1 %2
+group '%1' deleted.	admin	km	ក្រុម '%1' ត្រូវបានលុប។
+group ?	admin	km	ក្រុម?
+group csv export	admin	km	ការនាំចេញ CSV ជាក្រុម
+group csv import	admin	km	ការនាំចូល CSV ជាក្រុម
+group excepted from above export limit (admins are always excepted)	admin	km	ក្រុម​ដែល​លើក​លែង​ពី​ដែន​កំណត់​នាំ​ចេញ​លើស​ពី​នេះ (អ្នក​គ្រប់គ្រង​តែង​តែ​លើក​លែង)
+group has been added	common	km	ក្រុមត្រូវបានបន្ថែម។
+group has been deleted	common	km	ក្រុម​ត្រូវ​បាន​លុប។
+group has been updated	common	km	ក្រុមត្រូវបានធ្វើបច្ចុប្បន្នភាព។
+group list	admin	km	បញ្ជីក្រុម
+group manager	admin	km	អ្នកគ្រប់គ្រងក្រុម
+group name	admin	km	ឈ្មោះ​ក្រុម
+hash	admin	km	ហាស
+hide php information	admin	km	លាក់ព័ត៌មាន php
+hide sidebox video tutorials	admin	km	លាក់ការបង្រៀនវីដេអូប្រអប់ចំហៀង
+home directory	admin	km	ថតផ្ទះ
+home screen message	admin	km	សារអេក្រង់ដើម
+host information	admin	km	ព័ត៌មានម្ចាស់ផ្ទះ
+hostname or ip	admin	km	ឈ្មោះម៉ាស៊ីន ឬ IP
+hour<br>(0-23)	admin	km	ម៉ោង<br>(0-23)
+how big should thumbnails for linked images be (maximum in pixels) ?	admin	km	ទំហំភីកសែលអតិបរមានៃរូបភាពតូចៗសម្រាប់រូបភាពដែលបានភ្ជាប់។
+how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	km	តើ​ធាតុ​គួរ​នៅ​សល់​ប៉ុន្មាន​ថ្ងៃ​ក្នុង​កំណត់​ហេតុ​ចូល​ដំណើរ​ការ​មុន​ពេល​គេ​លុប។ លំនាំដើម = 90
+how many entries should non-admins be able to export (empty = no limit, no = no export)	admin	km	តើចំនួនធាតុដែលមិនមែនជាអ្នកគ្រប់គ្រងគួរអាចនាំចេញបានប៉ុន្មាន។ ទទេ = គ្មានដែនកំណត់ គ្មាន = គ្មានការនាំចេញ
+how many minutes should an account or ip be blocked (default 1) ?	admin	km	តើត្រូវបិទគណនី ឬ IP ប៉ុន្មាននាទី។ លំនាំដើម = 30
+how should email addresses for new users be constructed?	admin	km	ជ្រើសរើសទម្រង់អាសយដ្ឋានអ៊ីមែលលំនាំដើមសម្រាប់គណនីអ្នកប្រើប្រាស់ថ្មី។
+how username get constructed	admin	km	របៀបបង្កើតឈ្មោះអ្នកប្រើប្រាស់
+html/plaintext	admin	km	html/អត្ថបទធម្មតា។
+icon	admin	km	រូបតំណាង
+identity	admin	km	អត្តសញ្ញាណ
+identity deleted	admin	km	អត្តសញ្ញាណត្រូវបានលុប
+identity saved.	admin	km	អត្តសញ្ញាណត្រូវបានរក្សាទុក។
+idle	admin	km	ទំនេរ
+if different from email address	admin	km	ប្រសិនបើខុសពីអាសយដ្ឋានអ៊ីមែល
+if disabled existing tokens immediatly stop working.	admin	km	ប្រសិនបើបិទសញ្ញាសម្ងាត់ដែលមានស្រាប់ ឈប់ដំណើរការភ្លាមៗ។
+if no acl records for user or any group the user is a member of	admin	km	ប្រសិនបើគ្មានកំណត់ត្រា ACL សម្រាប់អ្នកប្រើប្រាស់ ឬក្រុមណាមួយដែលអ្នកប្រើប្រាស់ជាសមាជិក
+if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	km	ប្រសិនបើប្រើ LDAP តើអ្នកចង់គ្រប់គ្រង home directory និង loginshell attributes ដែរឬទេ?
+if using ssl or tls, you must have the php openssl extension loaded.	admin	km	ប្រសិនបើប្រើ SSL ឬ TLS អ្នកត្រូវតែផ្ទុកផ្នែកបន្ថែម PHP openssl ។
+if you delete the user without selecting an account to move the data to, all entries get deleted!	admin	km	ប្រសិនបើអ្នកលុបអ្នកប្រើប្រាស់ដោយមិនជ្រើសរើសគណនីដើម្បីផ្លាស់ទីទិន្នន័យទៅ ធាតុទាំងអស់នឹងត្រូវបានលុប!
+if you ignore that error as admin, you should check "%1"!	admin	km	ប្រសិនបើអ្នកមិនអើពើនឹងកំហុសនោះក្នុងនាមជាអ្នកគ្រប់គ្រង អ្នកគួរតែពិនិត្យមើល "%1"!
+if you specify port 5190 as sieve server port, you enforce ssl for sieve (server must support that)	admin	km	ប្រសិនបើអ្នកបញ្ជាក់ច្រក 5190 ជាច្រក Sieve server អ្នកអនុវត្ត ssl សម្រាប់ Sieve (ម៉ាស៊ីនមេត្រូវតែគាំទ្រវា)
+if you wish to have randomly selected images you may upload multiple images.	admin	km	ប្រសិនបើអ្នកចង់មានរូបភាពដែលបានជ្រើសរើសដោយចៃដន្យ អ្នកអាចបង្ហោះរូបភាពច្រើន។
+imap admin password	admin	km	ពាក្យសម្ងាត់អ្នកគ្រប់គ្រង IMAP
+imap admin user	admin	km	អ្នកប្រើប្រាស់គ្រប់គ្រង IMAP
+imap c-client version < 2001	admin	km	IMAP C-Client Version < 2001
+imap server	admin	km	ម៉ាស៊ីនមេ IMAP
+imap server closed the connection.	admin	km	ម៉ាស៊ីនមេ IMAP បានបិទការតភ្ជាប់។
+imap server closed the connection. server responded: %s	admin	km	ម៉ាស៊ីនមេ IMAP បានបិទការភ្ជាប់។ ម៉ាស៊ីនមេបានឆ្លើយតប៖ %s
+imap server hostname or ip address	admin	km	ឈ្មោះម៉ាស៊ីនមេ IMAP ឬអាសយដ្ឋាន ip
+imap server logintyp	admin	km	ប្រភេទចូលម៉ាស៊ីនមេ IMAP
+imap server name	admin	km	ឈ្មោះម៉ាស៊ីនមេ IMAP
+imap server port	admin	km	ច្រកម៉ាស៊ីនមេ IMAP
+imap/pop3 server name	admin	km	ឈ្មោះម៉ាស៊ីនមេ IMAP/POP3
+importance	admin	km	សារៈសំខាន់
+in mbyte	admin	km	ក្នុង MByte
+inactive	admin	km	អសកម្ម
+inbound	admin	km	ចូល
+initial	admin	km	ដើម
+install crontab	admin	km	ដំឡើង crontab
+install id	admin	km	ដំឡើងលេខសម្គាល់
+installation type	admin	km	ប្រភេទនៃការដំឡើង
+installed applications	common	km	កម្មវិធីដែលបានដំឡើង
+installed applications, percentage of allowed users and total number of entries.	admin	km	កម្មវិធីដែលបានដំឡើង ភាគរយនៃអ្នកប្រើប្រាស់ដែលបានអនុញ្ញាត និងចំនួនសរុបនៃធាតុចូល។
+installed crontab	admin	km	បានដំឡើង crontab
+instance	admin	km	ឧ
+interface	admin	km	ចំណុចប្រទាក់
+international use	admin	km	ការប្រើប្រាស់អន្តរជាតិ
+invalid argument '%1' !!!	admin	km	អាគុយម៉ង់​មិន​ត្រឹមត្រូវ '%1' !!!
+invalid email	admin	km	អ៊ីមែលមិនត្រឹមត្រូវ
+invalid formated date "%1"!	admin	km	កាលបរិច្ឆេទ​ដែល​បាន​ធ្វើ​ទ្រង់ទ្រាយ​មិន​ត្រឹមត្រូវ "%1"!
+invalid remote id or name "%1"!	admin	km	លេខសម្គាល់ពីចម្ងាយមិនត្រឹមត្រូវ ឬឈ្មោះ "%1"!
+invalid type "%1"!	admin	km	ប្រភេទ "%1" មិនត្រឹមត្រូវ!
+invalid value "%1" use yes or no!	admin	km	តម្លៃមិនត្រឹមត្រូវ "%1" ប្រើបាទ ឬទេ!
+invalid value "%1", use only:	admin	km	តម្លៃមិនត្រឹមត្រូវ "%1" ប្រើតែ៖
+ip	admin	km	អាយភី
+jobs	admin	km	ការងារ
+kill	admin	km	សម្លាប់
+kill session	admin	km	វគ្គសម្លាប់
+kill these sessions	admin	km	សម្លាប់វគ្គទាំងនេះ
+kill this session	admin	km	សម្លាប់វគ្គនេះ។
+languages	admin	km	ភាសា
+last %1 logins	admin	km	ការចូល %1 ចុងក្រោយ
+last %1 logins for %2	admin	km	ការចូល%1ចុងក្រោយសម្រាប់%2
+last action	admin	km	សកម្មភាពចុងក្រោយ
+last ip	admin	km	IP ចុងក្រោយ
+last login	admin	km	ការចូលចុងក្រោយ
+last login from	admin	km	ការចូលចុងក្រោយពី
+last password change	admin	km	ការផ្លាស់ប្តូរពាក្យសម្ងាត់ចុងក្រោយ
+last submission:	admin	km	ការដាក់ស្នើចុងក្រោយ៖
+last time read	admin	km	អានលើកចុងក្រោយ
+ldap accounts context	admin	km	បរិបទគណនី LDAP
+ldap basedn	admin	km	LDAP ផ្អែកលើ
+ldap default homedirectory prefix (e.g. /home for /home/username)	admin	km	បុព្វបទថតផ្ទះលំនាំដើម LDAP (ឧ. /home for /home/username)
+ldap default shell (e.g. /bin/bash)	admin	km	សែលលំនាំដើម LDAP (ឧទាហរណ៍ /bin/bash)
+ldap encryption type	admin	km	ប្រភេទការអ៊ិនគ្រីប LDAP
+ldap groups context	admin	km	បរិបទក្រុម LDAP
+ldap host	admin	km	ម៉ាស៊ីន LDAP
+ldap root password	admin	km	ពាក្យសម្ងាត់ root LDAP
+ldap rootdn	admin	km	LDAP rootdn
+ldap server	admin	km	ម៉ាស៊ីនមេ LDAP
+ldap server accounts dn	admin	km	LDAP គណនីម៉ាស៊ីនមេ DN
+ldap server admin dn	admin	km	អ្នកគ្រប់គ្រងម៉ាស៊ីនមេ LDAP DN
+ldap server admin password	admin	km	ពាក្យសម្ងាត់អ្នកគ្រប់គ្រងម៉ាស៊ីនមេ LDAP
+ldap server hostname or ip address	admin	km	ឈ្មោះម៉ាស៊ីនមេ LDAP ឬអាសយដ្ឋាន IP
+ldap settings	admin	km	ការកំណត់ LDAP
+leave empty for no quota	admin	km	ទុក​ទទេ​ដោយ​គ្មាន​កូតា
+leave empty to use oauth, if supported	admin	km	ទុកទទេដើម្បីប្រើ OAuth ប្រសិនបើគាំទ្រ
+leave the category untouched and return back to the list	admin	km	ទុក​ប្រភេទ​នេះ​ឱ្យ​នៅ​ដដែល ហើយ​ត្រឡប់​ទៅ​បញ្ជី​វិញ។
+leave the group untouched and return back to the list	admin	km	ទុកក្រុមដោយមិនប៉ះ ហើយត្រឡប់ទៅបញ្ជីវិញ។
+leave unchanged	admin	km	ទុកឱ្យមិនផ្លាស់ប្តូរ
+leave without saveing the entry	admin	km	ចាកចេញដោយមិនរក្សាទុកការចូល
+leaves without saveing	admin	km	ស្លឹកដោយមិនរក្សាទុក
+length	admin	km	ប្រវែង
+length<br>rows	admin	km	ប្រវែង<br>ជួរដេក
+lifetime of 'remember me' token	admin	km	អាយុកាលនៃនិមិត្តសញ្ញា 'ចងចាំខ្ញុំ'
+limit global category to members of a certain group	admin	km	ដាក់កម្រិតប្រភេទសកលចំពោះសមាជិកនៃក្រុមជាក់លាក់មួយ។
+limit to members of	admin	km	កំណត់ចំពោះសមាជិកនៃ
+list config settings	admin	km	បញ្ជីការកំណត់រចនាសម្ព័ន្ធ
+list current sessions	admin	km	រាយវគ្គបច្ចុប្បន្ន
+list of current users	admin	km	បញ្ជីអ្នកប្រើប្រាស់បច្ចុប្បន្ន
+log user-agent and action of changes in history-log of entries	admin	km	កត់ត្រាអ្នកប្រើប្រាស់-ភ្នាក់ងារ និងសកម្មភាពនៃការផ្លាស់ប្តូរនៅក្នុងប្រវត្តិ-កំណត់ហេតុនៃធាតុ
+logged out	admin	km	ចាកចេញ
+login history	admin	km	ប្រវត្តិចូល
+login id	admin	km	លេខ​សម្គាល់​ការ​ចូល
+login message	admin	km	សារចូល
+login screen	admin	km	អេក្រង់ចូល
+login shell	admin	km	សែលចូល
+login time	admin	km	ពេលវេលាចូល
+login-id	admin	km	លេខ​សម្គាល់​ការ​ចូល
+login-status	admin	km	ស្ថានភាពចូល
+loginid	admin	km	លេខ​សម្គាល់​ការ​ចូល
+logintime	admin	km	ពេលវេលាចូល
+logoutime	admin	km	ពេលវេលាចេញ
+lowercase email addresses	admin	km	អាសយដ្ឋានអ៊ីមែលអក្សរតូច
+mail account	admin	km	គណនីអ៊ីមែល
+mail settings	admin	km	ការកំណត់សំបុត្រ
+main email-address	admin	km	អាសយដ្ឋានអ៊ីមែលចម្បង
+main screen message	admin	km	សារអេក្រង់មេ
+manage mapping	admin	km	គ្រប់គ្រងការធ្វើផែនទី
+manage stationery templates	admin	km	គ្រប់គ្រងគំរូសម្ភារៈការិយាល័យ
+manager	admin	km	អ្នកគ្រប់គ្រង
+manual entry	admin	km	ការចូលដោយដៃ
+maximum account id (e.g. 65535 or 1000000)	admin	km	លេខសម្គាល់គណនីអតិបរមា ឧទាហរណ៍ 65535 ឬ 1000000
+maximum entries in click path history	admin	km	ធាតុអតិបរមានៅក្នុងប្រវត្តិផ្លូវចុច
+mb used	admin	km	MB បានប្រើ
+members	admin	km	សមាជិក
+message has been updated	admin	km	សារត្រូវបានធ្វើបច្ចុប្បន្នភាព
+method	admin	km	វិធីសាស្រ្ត
+minimum account id (e.g. 500 or 100, etc.)	admin	km	លេខសម្គាល់គណនីអប្បបរមា ឧទាហរណ៍ 500 ឬ 100
+minute	admin	km	នាទី
+mode	admin	km	របៀប
+modified	admin	km	កែប្រែ
+month	admin	km	ខែ
+more secure	admin	km	កាន់តែមានសុវត្ថិភាព
+mount backup directory to %1	admin	km	ដំឡើងថតចម្លងទៅ%1
+must change password upon next login	admin	km	ត្រូវតែផ្លាស់ប្តូរពាក្យសម្ងាត់នៅពេលចូលបន្ទាប់
+name must not be empty !!!	admin	km	ឈ្មោះមិនត្រូវទទេ!
+name of account	admin	km	ឈ្មោះគណនី
+name of organisation	admin	km	ឈ្មោះអង្គការ
+name of the egroupware instance, eg. default	admin	km	ឈ្មោះនៃឧទាហរណ៍ EGroupware
+new group name	admin	km	ឈ្មោះក្រុមថ្មី។
+new name	admin	km	ឈ្មោះថ្មី។
+new password	admin	km	ពាក្យសម្ងាត់​ថ្មី
+new password [ leave blank for no change ]	admin	km	ពាក្យ​សម្ងាត់​ថ្មី [ទុក​ឱ្យ​នៅ​ទទេ​សម្រាប់​ការ​ផ្លាស់​ប្តូ​រ​]
+next run	admin	km	ការរត់បន្ទាប់
+no algorithms available	admin	km	មិនមានក្បួនដោះស្រាយទេ!
+no alternate email address	admin	km	មិនមានអាសយដ្ឋានអ៊ីមែលជំនួសទេ។
+no default account found!	admin	km	រកមិនឃើញគណនីលំនាំដើមទេ!
+no encryption	admin	km	គ្មានការអ៊ិនគ្រីបទេ។
+no forwarding email address	admin	km	មិនមានអាសយដ្ឋានអ៊ីមែលបញ្ជូនបន្តទេ។
+no jobs in the database !!!	admin	km	មិនមានការងារនៅក្នុងមូលដ្ឋានទិន្នន័យទេ!
+no login history exists for this user	admin	km	មិនមានប្រវត្តិចូលសម្រាប់អ្នកប្រើប្រាស់នេះទេ!
+no matches found	admin	km	រកមិនឃើញការប្រកួតទេ!
+no message returned.	admin	km	គ្មានសារត្រឡប់មកវិញទេ។
+no modes available	admin	km	គ្មាន​ម៉ូដ​ដែល​អាច​ប្រើ​បាន!
+no oauth client secret for provider '%1'!	admin	km	គ្មានការសម្ងាត់អតិថិជន OAuth សម្រាប់អ្នកផ្តល់សេវា '%1'!
+no permission to add groups	admin	km	គ្មានការអនុញ្ញាតក្នុងការបន្ថែមក្រុម!
+no permission to add users	admin	km	គ្មានសិទ្ធិបន្ថែមអ្នកប្រើប្រាស់ទេ!
+no permission to create groups	admin	km	គ្មានសិទ្ធិបង្កើតក្រុមទេ!
+no plain text part found	admin	km	រកមិនឃើញផ្នែកអត្ថបទធម្មតាទេ។
+no profile defined for user %1	admin	km	គ្មាន​ទម្រង់​ដែល​បាន​កំណត់​សម្រាប់​អ្នក​ប្រើ%1
+no sieve support detected, either fix configuration manually or leave it switched off.	admin	km	គ្មានការគាំទ្រ Sieve ត្រូវបានរកឃើញទេ ទាំងជួសជុលការកំណត់រចនាសម្ព័ន្ធដោយដៃ ឬទុកវាឱ្យបិទ។
+no supported imap authentication method could be found.	admin	km	រកមិនឃើញវិធីសាស្ត្រផ្ទៀងផ្ទាត់ IMAP ដែលគាំទ្រទេ។
+non profit: clubs, associations, ...	admin	km	មិនរកប្រាក់ចំណេញ៖ ក្លឹប សមាគម...
+not enabled	admin	km	មិនបានបើក
+note: ssl available only if php is compiled with curl support	admin	km	ចំណាំ៖ SSL អាចប្រើបានលុះត្រាតែ PHP ត្រូវបានចងក្រងដោយការគាំទ្រ curl ។
+notification mail	admin	km	សំបុត្រជូនដំណឹង
+notify user by email	admin	km	ជូនដំណឹងដល់អ្នកប្រើប្រាស់តាមអ៊ីមែល
+notifying account "%1" %2 failed!	admin	km	ការជូនដំណឹងគណនី "%1" %2 បានបរាជ័យ!
+number applications serially	admin	km	កម្មវិធីលេខជាស៊េរី
+number of active users	admin	km	ចំនួនអ្នកប្រើប្រាស់សកម្ម
+number of row for a multiline inputfield or line of a multi-select-box	admin	km	ចំនួន​ជួរ​ដេក​សម្រាប់​វាល​បញ្ចូល​ច្រើន​បន្ទាត់ ឬ​បន្ទាត់​នៃ​ប្រអប់​ជ្រើសរើស​ច្រើន​
+number of sessions / egroupware logins in the last 30 days	admin	km	ចំនួនវគ្គ/ការចូលរបស់ EGroupware ក្នុងរយៈពេល 30 ថ្ងៃចុងក្រោយ
+number of users	admin	km	ចំនួនអ្នកប្រើប្រាស់
+number the applications serially. if they are not numbered serially, sorting the applications could work wrong. this will not change the application's order.	admin	km	ដាក់លេខកម្មវិធីជាស៊េរី។ ប្រសិនបើ​ពួកវា​មិន​ត្រូវ​បាន​ដាក់​លេខ​ជា​ស៊េរី ការ​តម្រៀប​កម្មវិធី​អាច​ដំណើរការ​ខុស។ វានឹងមិនផ្លាស់ប្តូរលំដាប់នៃកម្មវិធីនោះទេ។
+nummeric account id	admin	km	លេខសម្គាល់គណនី
+oauth authentiction	admin	km	ការផ្ទៀងផ្ទាត់ OAuth
+offer to installing egroupware as mail-handler	admin	km	ផ្តល់ជូនការដំឡើង EGroupware ជាអ្នកដោះស្រាយសំបុត្រ
+official egroupware usage statistic	admin	km	ស្ថិតិប្រើប្រាស់ EGroupware ផ្លូវការ
+one day	admin	km	មួយថ្ងៃ
+one hour	admin	km	មួយ​ម៉ោង
+one month	admin	km	មួយ​ខែ
+one week	admin	km	មួយ​ស​ប្តា​ហ៍
+only below displayed information is directly submitted to %s.	admin	km	មានតែព័ត៌មានដែលបង្ហាញខាងក្រោមប៉ុណ្ណោះដែលត្រូវបានបញ្ជូនដោយផ្ទាល់ទៅ %s ។
+operating system	admin	km	ប្រព័ន្ធ​ប្រតិបត្តិការ
+order	admin	km	បញ្ជាទិញ
+organisation	admin	km	អង្គការ
+other security configuration	admin	km	ការកំណត់រចនាសម្ព័ន្ធសុវត្ថិភាពផ្សេងទៀត។
+outbound	admin	km	ចេញ
+own categories	admin	km	ប្រភេទផ្ទាល់ខ្លួន
+own install id	admin	km	លេខសម្គាល់ការដំឡើងផ្ទាល់ខ្លួន
+own install id:	admin	km	លេខសម្គាល់ការដំឡើងផ្ទាល់ខ្លួន៖
+owner "%1" removed, please select group-owner	admin	km	ម្ចាស់ "%1" ត្រូវបានដកចេញ សូមជ្រើសរើសម្ចាស់ក្រុម
+passphrase	admin	km	ឃ្លាសម្ងាត់
+passthrough	admin	km	ឆ្លង​តាម​រយៈ
+password for smtp-authentication	admin	km	ពាក្យសម្ងាត់សម្រាប់ការផ្ទៀងផ្ទាត់ SMTP
+password to unlock encrypted p12	admin	km	ពាក្យសម្ងាត់ដើម្បីដោះសោដែលបានអ៊ិនគ្រីប p12
+password updated	admin	km	បានធ្វើបច្ចុប្បន្នភាពពាក្យសម្ងាត់។
+passwords	admin	km	ពាក្យសម្ងាត់
+passwords and/or attributes of %1 accounts changed	admin	km	ពាក្យសម្ងាត់ និង/ឬគុណលក្ខណៈនៃគណនី %1 បានផ្លាស់ប្តូរ
+passwords require a minimum number of characters	admin	km	ពាក្យសម្ងាត់ទាមទារចំនួនតួអក្សរអប្បបរមា
+passwords requires this number of different character classes	admin	km	ពាក្យ​សម្ងាត់​តម្រូវ​ឱ្យ​មាន​ចំនួន​នៃ​ថ្នាក់​តួអក្សរ​ផ្សេង​គ្នា​នេះ។
+path information	admin	km	ព័ត៌មានផ្លូវ
+peer server list	admin	km	បញ្ជីម៉ាស៊ីនមេ
+peer servers	admin	km	ម៉ាស៊ីនមេ
+percent of users that logged out	admin	km	ភាគរយនៃអ្នកប្រើប្រាស់ដែលបានចេញពីគណនី
+percent this user has logged out	admin	km	ភាគរយអ្នកប្រើប្រាស់នេះបានចេញពីគណនី
+periodic	admin	km	តាមកាលកំណត់
+permission denied	admin	km	ការអនុញ្ញាតត្រូវបានបដិសេធ
+permission denied !!!	admin	km	ការអនុញ្ញាតត្រូវបានបដិសេធ!
+permission denied!!!	admin	km	ការអនុញ្ញាតត្រូវបានបដិសេធ !!!
+permissions	admin	km	ការអនុញ្ញាត
+permissions this group has	admin	km	ការអនុញ្ញាតដែលក្រុមនេះមាន
+personal: eg. within a family	admin	km	ផ្ទាល់ខ្លួន៖ ឧ. នៅក្នុងគ្រួសារមួយ។
+php version	admin	km	កំណែ PHP
+phpinfo	admin	km	ព័ត៌មាន PHP
+phrase	admin	km	ឃ្លា
+phrase deleted	admin	km	បានលុបឃ្លា
+please check email.  it gets automatically deleted if email integration is used.	admin	km	សូមពិនិត្យមើលអ៊ីមែល។ វានឹងត្រូវបានលុបដោយស្វ័យប្រវត្តិ ប្រសិនបើការរួមបញ្ចូលអ៊ីមែលត្រូវបានប្រើប្រាស់។
+please enter a name	admin	km	បញ្ចូលឈ្មោះ
+please enter a name for that server !	admin	km	បញ្ចូលឈ្មោះសម្រាប់ម៉ាស៊ីនមេ!
+please manually deal with entries owned by the user:	admin	km	សូមដោះស្រាយដោយដៃជាមួយធាតុដែលគ្រប់គ្រងដោយអ្នកប្រើប្រាស់៖
+please run setup to become current	admin	km	ដំណើរការការដំឡើងដើម្បីក្លាយជាបច្ចុប្បន្ន
+please select	admin	km	Please select
+please submit (or postpone) statistic first	admin	km	Please submit (or postpone) statistic first
+plesk can't rename users --> request ignored	admin	km	Plesk can't rename users --> request ignored
+plesk imap server (courier)	admin	km	Plesk IMAP Server (Courier)
+plesk mail script '%1' not found !!!	admin	km	Plesk mail script '%1' not found!
+plesk requires passwords to have at least 5 characters and not contain the account-name --> password not set!!!	admin	km	Plesk តម្រូវ​ឱ្យ​មាន​ពាក្យ​សម្ងាត់​ឱ្យ​មាន​យ៉ាង​ហោច​ណាស់ 5 តួអក្សរ​និង​មិន​មាន​ឈ្មោះ​គណនី --> ពាក្យ​សម្ងាត់​មិន​បាន​កំណត់​!
+plesk smtp-server (qmail)	admin	km	Plesk SMTP-Server (Qmail)
+pop3 server hostname or ip address	admin	km	ឈ្មោះម៉ាស៊ីនមេ POP3 ឬអាសយដ្ឋាន IP
+pop3 server port	admin	km	ច្រកម៉ាស៊ីនមេ POP3
+port	admin	km	ច្រក
+postfix with ldap	admin	km	Postfix ជាមួយ LDAP
+postpone for	admin	km	ពន្យារពេលសម្រាប់
+preferences	admin	km	ចំណូលចិត្ត
+primary group	admin	km	ក្រុមបឋម
+processing of file %1 failed. failed to meet basic restrictions.	admin	km	ដំណើរការឯកសារ%1 បានបរាជ័យ។ បរាជ័យក្នុងការបំពេញតាមកម្រិតមូលដ្ឋាន។
+profile access rights	admin	km	សិទ្ធិចូលប្រើកម្រងព័ត៌មាន
+profile is active	admin	km	កម្រងព័ត៌មានគឺសកម្ម
+profile list	admin	km	បញ្ជីប្រវត្តិរូប
+profile name	admin	km	ឈ្មោះប្រវត្តិរូប
+qmaildotmode	admin	km	qmaildotmode
+quota settings	admin	km	ការកំណត់កូតា
+quota size in mbyte	admin	km	ទំហំកូតាគិតជា MByte
+re-enter password	admin	km	បញ្ចូល​លេខសំងាត់​ម្តង​ទៀត
+read this list of methods.	admin	km	អានបញ្ជីវិធីសាស្រ្តនេះ។
+register application hooks	admin	km	ចុះឈ្មោះភ្ជាប់ពាក្យសុំ
+reject passwords containing part of username or full name (3 or more characters long)	admin	km	បដិសេធ​ពាក្យ​សម្ងាត់​ដែល​មាន​ផ្នែក​នៃ​ឈ្មោះ​អ្នក​ប្រើ​ឬ​ឈ្មោះ​ពេញ (3 ឬ​ច្រើន​តួអក្សរ​វែង)
+relay access checked	admin	km	បានពិនិត្យការចូលប្រើបញ្ជូនត
+remote administration instances	admin	km	ករណីរដ្ឋបាលពីចម្ងាយ
+remote administration need to be enabled in the remote instance under admin &gt; site configuration!	admin	km	ការគ្រប់គ្រងពីចម្ងាយចាំបាច់ត្រូវបើកនៅក្នុងឧទាហរណ៍ពីចម្ងាយនៅក្រោមអ្នកគ្រប់គ្រង > ការកំណត់រចនាសម្ព័ន្ធគេហទំព័រ!
+remote administration need to be enabled in the remote instance under admin > site configuration!	admin	km	ការគ្រប់គ្រងពីចម្ងាយចាំបាច់ត្រូវបើកនៅក្នុងឧទាហរណ៍ពីចម្ងាយនៅក្រោមអ្នកគ្រប់គ្រង > ការកំណត់រចនាសម្ព័ន្ធគេហទំព័រ!
+remote instance saved	admin	km	បានរក្សាទុកឧទាហរណ៍ពីចម្ងាយ។
+remove	admin	km	ដកចេញ
+remove all users from this group	admin	km	លុបអ្នកប្រើប្រាស់ទាំងអស់ចេញពីក្រុមនេះ។
+remove all users from this group ?	admin	km	លុបអ្នកប្រើប្រាស់ទាំងអស់ចេញពីក្រុមនេះ?
+removing access for groups may cause problems for data in this category.  are you sure?  users in these groups may no longer have access:	admin	km	ការដកសិទ្ធិចូលប្រើសម្រាប់ក្រុមអាចបណ្តាលឱ្យមានបញ្ហាសម្រាប់ទិន្នន័យនៅក្នុងប្រភេទនេះ។ តើ​អ្នក​ប្រាកដ​ឬ​អត់? អ្នក​ប្រើ​ក្នុង​ក្រុម​ទាំង​នេះ​ប្រហែល​មិន​អាច​ចូល​ប្រើ​បាន​ទៀត​ទេ៖
+renaming user 'anonymous' will break file sharing and collabora online office!	admin	km	ការប្តូរឈ្មោះអ្នកប្រើប្រាស់ 'អនាមិក' នឹងបំបែកការចែករំលែកឯកសារ និង Collabora Online Office!
+requested	admin	km	បានស្នើសុំ
+required pear class mail/mimedecode.php not found.	admin	km	រកមិនឃើញ PEAR class Mail/mimeDecode.php ទេ។
+required to embed egroupware via iframe eg. for lti	admin	km	តម្រូវឱ្យបង្កប់ EGroupware តាមរយៈ iframe ឧ. សម្រាប់ LTI
+requires 'openid / oauth2 server' app.	admin	km	ទាមទារកម្មវិធី 'OpenID / OAuth2 Server' ។
+reset filter	admin	km	កំណត់តម្រងឡើងវិញ
+rights	admin	km	សិទ្ធិ
+route all mails to	admin	km	បញ្ជូនសំបុត្រទាំងអស់ទៅ
+rows	admin	km	ជួរដេក
+rpm or debian package	admin	km	កញ្ចប់ RPM ឬ Debian
+run	admin	km	រត់
+run asynchronous services	admin	km	ដំណើរការសេវាកម្ម Asynchronous
+samesite cookie attribute (send cookie if browser addressbar show a different domain)	admin	km	គុណលក្ខណៈខូគី SameSite (ផ្ញើខូគីប្រសិនបើរបារអាសយដ្ឋានកម្មវិធីរុករកបង្ហាញដែនផ្សេង)
+save as default	admin	km	រក្សាទុកជាលំនាំដើម
+save changes	admin	km	រក្សាទុកការផ្លាស់ប្តូរ
+save of message %1 failed. could not save message to folder %2 due to: %3	admin	km	ការរក្សាទុកសារ%1 បានបរាជ័យ។ មិន​អាច​រក្សា​ទុក​សារ​ទៅ​ថត%2 ដោយសារ៖ %3
+save the category	admin	km	រក្សាទុកប្រភេទ។
+save the category and return back to the list	admin	km	រក្សាទុកប្រភេទ ហើយត្រឡប់ទៅបញ្ជីវិញ។
+saves the changes made and leaves	admin	km	រក្សាទុកការផ្លាស់ប្តូរដែលបានធ្វើហើយចាកចេញ។
+saves this entry	admin	km	រក្សាទុកធាតុនេះ។
+saving of message %1 failed. destination folder %2 does not exist.	admin	km	ការរក្សាទុកសារ%1 បានបរាជ័យ។ ថតទិសដៅ%2 មិនមានទេ។
+scheduled	admin	km	បានកំណត់ពេល
+search accounts	admin	km	ស្វែងរកគណនី
+search categories	admin	km	ស្វែងរកប្រភេទ
+search groups	admin	km	ស្វែងរកក្រុម
+search peer servers	admin	km	ស្វែងរកម៉ាស៊ីនមេ
+secure connection	admin	km	ការតភ្ជាប់សុវត្ថិភាព
+security	admin	km	សន្តិសុខ
+select accounts for which the custom field should be visible	admin	km	ជ្រើសរើសគណនីដែលវាលផ្ទាល់ខ្លួនគួរតែអាចមើលឃើញ។
+select group managers	admin	km	ជ្រើសរើសអ្នកគ្រប់គ្រងក្រុម
+select language to define language based message. language 'english' is default page for all languages therefore for setting a general message across all languages you only need to set the 'english' page.	admin	km	ជ្រើសរើសភាសាដើម្បីកំណត់សារដែលផ្អែកលើភាសា។ ភាសា 'ភាសាអង់គ្លេស' គឺជាទំព័រលំនាំដើមសម្រាប់គ្រប់ភាសា ដូច្នេះសម្រាប់ការកំណត់សារទូទៅនៅគ្រប់ភាសាទាំងអស់ អ្នកគ្រាន់តែត្រូវកំណត់ទំព័រ 'ភាសាអង់គ្លេស' ប៉ុណ្ណោះ។
+select multiple	admin	km	ជ្រើសរើសច្រើន។
+select owner	admin	km	ជ្រើសរើសម្ចាស់
+select permissions this group will have	admin	km	ជ្រើសរើសការអនុញ្ញាតសម្រាប់ក្រុមនេះ។
+select the parent category. if this is a main category select no category	admin	km	ជ្រើសរើសប្រភេទមេ។ ប្រសិនបើនេះជាប្រភេទចម្បង សូមជ្រើសរើស NO CATEGORY។
+select type of imap server	admin	km	ជ្រើសរើសប្រភេទម៉ាស៊ីនមេ IMAP
+select type of imap/pop3 server	admin	km	ជ្រើសរើសប្រភេទម៉ាស៊ីនមេ IMAP/POP3
+select type of smtp server	admin	km	ជ្រើសរើសប្រភេទម៉ាស៊ីនមេ SMTP
+select users	admin	km	ជ្រើសរើសអ្នកប្រើប្រាស់
+select users for inclusion	admin	km	ជ្រើសរើសអ្នកប្រើប្រាស់សម្រាប់ការរួមបញ្ចូល
+select where you want to store/retrieve filesystem information	admin	km	ជ្រើសរើសកន្លែងដែលអ្នកចង់រក្សាទុក/ទាញយកព័ត៌មានប្រព័ន្ធឯកសារ។
+select where you want to store/retrieve user accounts	admin	km	ជ្រើសរើសកន្លែងដែលអ្នកចង់រក្សាទុក/ទាញយកគណនីអ្នកប្រើប្រាស់។
+select which location this app should appear on the navbar, lowest (left) to highest (right)	admin	km	ជ្រើសរើសទីតាំងណាមួយដែលកម្មវិធីនេះគួរតែបង្ហាញនៅលើរបាររុករក ទាបបំផុត (ពីឆ្វេង) ទៅខ្ពស់បំផុត (ស្តាំ)។
+selectbox	admin	km	ជ្រើសរើសប្រអប់
+send using this email-address	admin	km	ផ្ញើដោយប្រើអាសយដ្ឋានអ៊ីមែលនេះ។
+server %1 has been updated	admin	km	ម៉ាស៊ីនមេ%1 ត្រូវបានធ្វើបច្ចុប្បន្នភាព
+server list	admin	km	បញ្ជីម៉ាស៊ីនមេ
+server password	admin	km	ពាក្យសម្ងាត់ម៉ាស៊ីនមេ
+server settings	admin	km	ការកំណត់ម៉ាស៊ីនមេ
+server type(mode)	admin	km	ប្រភេទម៉ាស៊ីនមេ (របៀប)
+server url	admin	km	URL ម៉ាស៊ីនមេ
+server username	admin	km	ឈ្មោះអ្នកប្រើប្រាស់ម៉ាស៊ីនមេ
+sessions	admin	km	វគ្គ
+sessions last 30 days	admin	km	វគ្គមានរយៈពេល 30 ថ្ងៃ។
+set a random password	admin	km	កំណត់ពាក្យសម្ងាត់ចៃដន្យ។
+set preference values.	admin	km	កំណត់តម្លៃចំណូលចិត្ត។
+settings	admin	km	ការកំណត់
+should exceptions contain a trace (including function arguments)	admin	km	ករណីលើកលែងគួរមានដាន រួមទាំងអាគុយម៉ង់មុខងារ។
+should the login page include a language selectbox (useful for demo-sites) ?	admin	km	បង្ហាញប្រអប់ជ្រើសរើសភាសានៅលើទំព័រចូល?
+show 'powered by' logo on	admin	km	បង្ហាញនិមិត្តសញ្ញា 'ផ្តល់ថាមពលដោយ' នៅលើ
+show access log	admin	km	បង្ហាញកំណត់ហេតុចូលប្រើ
+show as optional, but required once user has it setup	admin	km	បង្ហាញ​ជា​ជម្រើស ប៉ុន្តែ​ត្រូវ​ការ​នៅ​ពេល​ដែល​អ្នក​ប្រើ​បាន​ដំឡើង​វា។
+show as required, but only once user has it setup	admin	km	បង្ហាញ​តាម​តម្រូវ​ការ ប៉ុន្តែ​ពេល​ដែល​អ្នក​ប្រើ​បាន​ដំឡើង​វា​ប៉ុណ្ណោះ។
+show current action	admin	km	បង្ហាញសកម្មភាពបច្ចុប្បន្ន
+show error log	admin	km	បង្ហាញកំណត់ហេតុកំហុស
+show members	admin	km	បង្ហាញសមាជិក
+show phpinfo()	admin	km	បង្ហាញ phpinfo()
+show session ip address	admin	km	បង្ហាញអាសយដ្ឋាន IP វគ្គ
+sieve server hostname or ip address	admin	km	ឈ្មោះម៉ាស៊ីនមេ ឬអាសយដ្ឋាន IP របស់ Sieve
+sieve server port	admin	km	ច្រកម៉ាស៊ីនមេ Sieve
+sieve settings	admin	km	ការកំណត់ Sieve
+site	admin	km	គេហទំព័រ
+skip imap	admin	km	រំលង IMAP
+skipping imap configuration!	admin	km	រំលងការកំណត់ IMAP!
+smtp authentication	admin	km	ការផ្ទៀងផ្ទាត់ SMTP
+smtp options	admin	km	ជម្រើស SMTP
+smtp server	admin	km	ម៉ាស៊ីនមេ SMTP
+smtp server name	admin	km	ឈ្មោះម៉ាស៊ីនមេ SMTP
+smtp settings	admin	km	ការកំណត់ SMTP
+smtp-server hostname or ip address	admin	km	ឈ្មោះម៉ាស៊ីនមេ SMTP ឬអាសយដ្ឋាន IP
+smtp-server port	admin	km	ច្រកម៉ាស៊ីនមេ SMTP
+soap	admin	km	សាប៊ូ
+sorry, that group name has already been taken.	admin	km	សូមទោស ឈ្មោះក្រុមនេះត្រូវបានគេយករួចហើយ។
+sorry, the above users are still a member of the group %1	admin	km	សូមអភ័យទោស អ្នកប្រើប្រាស់ខាងលើនៅតែជាសមាជិកនៃក្រុម%1។
+sorry, the follow users are still a member of the group %1	admin	km	សូមអភ័យទោស អ្នកប្រើប្រាស់ដែលតាមដាននៅតែជាសមាជិកនៃក្រុម %1 ។
+sort the entries	admin	km	តម្រៀបធាតុ
+source account #%1 does not exist!	admin	km	គណនីប្រភព #%1 មិនមានទេ!
+ssl	admin	km	ssl
+standard	admin	km	ស្តង់ដារ
+standard identity	admin	km	អត្តសញ្ញាណស្តង់ដារ
+standard imap server	admin	km	ម៉ាស៊ីនមេ IMAP ស្តង់ដារ
+standard pop3 server	admin	km	ម៉ាស៊ីនមេ POP3 ស្តង់ដារ
+standard smtp-server	admin	km	ម៉ាស៊ីនមេ SMTP ស្តង់ដារ
+start	admin	km	ចាប់ផ្តើម
+start testjob!	admin	km	ចាប់ផ្តើម TestJob!
+starts with	admin	km	ចាប់ផ្តើមជាមួយ
+stationery	admin	km	សម្ភារៈការិយាល័យ
+strictly required, user can not login without	admin	km	ទាមទារយ៉ាងតឹងរ៉ឹង អ្នកប្រើប្រាស់មិនអាចចូលដោយគ្មាន
+submit changes	admin	km	ដាក់ស្នើការផ្លាស់ប្តូរ
+submit displayed information?	admin	km	បញ្ជូនព័ត៌មានដែលបានបង្ហាញ
+submit statistic information	admin	km	បញ្ជូនព័ត៌មានស្ថិតិ
+submit the search string	admin	km	បញ្ជូនខ្សែអក្សរស្វែងរក
+submit to egroupware.org	admin	km	ដាក់ស្នើទៅ egroupware.org
+subtype	admin	km	ប្រភេទរង
+subversion checkout	admin	km	ការដកប្រាក់ចេញពីការបំផ្លិចបំផ្លាញ
+success	admin	km	ជោគជ័យ
+successful connected to %1 server%2.	admin	km	បានភ្ជាប់ទៅ%1 server%2 ដោយជោគជ័យ។
+successfull, but no refresh-token received!	admin	km	ជោគជ័យ ប៉ុន្តែ​មិន​បាន​ទទួល​ថូខឹន​ថ្មី​ទេ!
+switch back to standard identity to save account.	admin	km	ប្តូរទៅអត្តសញ្ញាណស្តង់ដារវិញ ដើម្បីរក្សាទុកគណនី។
+switch back to standard identity to save other account data.	admin	km	ប្តូរទៅអត្តសញ្ញាណស្តង់ដារវិញ ដើម្បីរក្សាទុកទិន្នន័យគណនីផ្សេងទៀត។
+switch it off, if users are randomly thrown out	admin	km	បិទវា ប្រសិនបើអ្នកប្រើប្រាស់ត្រូវបានចេញដោយចៃដន្យ
+template selection	admin	km	ការជ្រើសរើសគំរូ
+templates	admin	km	គំរូ
+text entry	admin	km	ការបញ្ចូលអត្ថបទ
+that application name already exists.	admin	km	ឈ្មោះកម្មវិធីនោះមានរួចហើយ។
+that application order must be a number.	admin	km	លំដាប់ពាក្យសុំនោះត្រូវតែជាលេខ។
+that loginid has already been taken	admin	km	លេខសម្គាល់ចូលនោះត្រូវបានយករួចហើយ។
+that name has been used already	admin	km	ឈ្មោះនេះត្រូវបានប្រើប្រាស់រួចហើយ។
+that server name has been used already !	admin	km	ឈ្មោះ​ម៉ាស៊ីន​បម្រើ​នោះ​ត្រូវ​បាន​ប្រើ​រួច​ហើយ!
+the api is current	admin	km	API គឺបច្ចុប្បន្ន
+the api requires an upgrade	admin	km	API ទាមទារការអាប់ដេត
+the cumulated and anonymised data will be publically available:	admin	km	ទិន្នន័យដែលប្រមូលបាន និងអនាមិកនឹងមានជាសាធារណៈ៖
+the groups must include the primary group	admin	km	ក្រុមត្រូវតែរួមបញ្ចូលក្រុមចម្បង។
+the imap server does not appear to support the authentication method selected. please contact your system administrator.	admin	km	ម៉ាស៊ីនមេ IMAP ហាក់ដូចជាមិនគាំទ្រវិធីសាស្ត្រផ្ទៀងផ្ទាត់ដែលបានជ្រើសរើសទេ។ ទាក់ទងអ្នកគ្រប់គ្រងប្រព័ន្ធរបស់អ្នក។
+the install id of an instance can be found under admin &gt; site configuration	admin	km	លេខសម្គាល់ដំឡើងរបស់វត្ថុមួយអាចត្រូវបានរកឃើញនៅក្រោមអ្នកគ្រប់គ្រង > ការកំណត់រចនាសម្ព័ន្ធគេហទំព័រ
+the install id of an instance can be found under admin > site configuration	admin	km	លេខសម្គាល់ដំឡើងរបស់វត្ថុមួយអាចត្រូវបានរកឃើញនៅក្រោមអ្នកគ្រប់គ្រង > ការកំណត់រចនាសម្ព័ន្ធគេហទំព័រ
+the login and password can not be the same	admin	km	ការចូល និងពាក្យសម្ងាត់មិនអាចដូចគ្នាបានទេ។
+the loginid can not be more then 8 characters	admin	km	លេខសម្គាល់ចូលមិនអាចលើសពី 8 តួអក្សរទេ។
+the mimeparser can not parse this message.	admin	km	mimeparser មិនអាចញែកសារនេះបានទេ។
+the name used internaly (&lt;= 20 chars), changeing it makes existing data unavailible	admin	km	ឈ្មោះដែលបានប្រើខាងក្នុង (<= 20 តួអក្សរ) ការផ្លាស់ប្តូរវាធ្វើឱ្យទិន្នន័យដែលមានស្រាប់មិនអាចប្រើបាន
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	admin	km	ឈ្មោះដែលបានប្រើនៅខាងក្នុង <= 20 តួអក្សរ ការផ្លាស់ប្តូរវាធ្វើឱ្យទិន្នន័យដែលមានស្រាប់មិនអាចប្រើបាន។
+the testjob sends you a mail everytime it is called.	admin	km	TestJob ផ្ញើសំបុត្រទៅអ្នករាល់ពេលដែលវាត្រូវបានហៅ។
+the text displayed to the user	admin	km	អត្ថបទបង្ហាញដល់អ្នកប្រើប្រាស់
+the two passwords are not the same	admin	km	ពាក្យសម្ងាត់មិនដូចគ្នាទេ។
+the users bellow are still members of group %1	admin	km	អ្នកប្រើប្រាស់ខាងក្រោមនៅតែជាសមាជិកនៃក្រុម%1
+there already is a group with this name. userid's can not have the same name as a groupid	admin	km	មានក្រុមដែលមានឈ្មោះនេះរួចហើយ។ លេខសម្គាល់អ្នកប្រើប្រាស់មិនអាចមានឈ្មោះដូចគ្នានឹងលេខសម្គាល់ក្រុមទេ។
+they must be removed before you can continue	admin	km	ពួកគេត្រូវតែដកចេញមុនពេលអ្នកអាចបន្តបាន។
+this application is current	admin	km	កម្មវិធីនេះគឺបច្ចុប្បន្ន។
+this application requires an upgrade	admin	km	កម្មវិធីនេះទាមទារការអាប់ដេត។
+this category is currently being used by applications as a parent category	admin	km	ប្រភេទនេះកំពុងត្រូវបានប្រើប្រាស់ដោយកម្មវិធីជាប្រភេទមេ។
+this controls exports and merging.	admin	km	វាគ្រប់គ្រងការនាំចេញ និងការបោះពុម្ពបញ្ចូលគ្នា។
+this is not a personal mail account!\n\naccount will be deleted for all users!\n\nare you really sure you want to do that?	admin	km	នេះមិនមែនជាគណនីអ៊ីមែលផ្ទាល់ខ្លួនទេ!\n\nគណនីនឹងត្រូវបានលុបសម្រាប់អ្នកប្រើប្រាស់ទាំងអស់!\n\nតើអ្នកពិតជាចង់ធ្វើវាមែនទេ?
+this key used in the html code your site serves to users.	admin	km	គន្លឹះនេះប្រើក្នុងកូដ HTML គេហទំព័ររបស់អ្នកបម្រើដល់អ្នកប្រើប្រាស់។
+this php has no imap support compiled in!!	admin	km	PHP នេះមិនមានការគាំទ្រ IMAP ដែលត្រូវបានចងក្រងនៅក្នុង !!
+this secret key used for communication between your site and google. be sure to keep it a secret.	admin	km	សោសម្ងាត់នេះប្រើសម្រាប់ការទំនាក់ទំនងរវាងគេហទំព័ររបស់អ្នក និង Google ។ ត្រូវប្រាកដថារក្សាវាសម្ងាត់។
+timeout for application session data in seconds (default 86400 = 1 day)	admin	km	អស់ពេលសម្រាប់ទិន្នន័យសម័យកម្មវិធីគិតជាវិនាទី។ លំនាំដើម 86400 = 1 ថ្ងៃ។
+timeout for sessions in seconds (default 14400 = 4 hours)	admin	km	អស់ពេលសម្រាប់វគ្គគិតជាវិនាទី។ លំនាំដើម 14400 = 4 ម៉ោង។
+times	admin	km	ដង
+to allow us to track the growth of your individual installation use this submit id, otherwise delete it:	admin	km	ដើម្បីអនុញ្ញាតឱ្យយើងតាមដានកំណើននៃការដំឡើងបុគ្គលរបស់អ្នក ប្រើលេខសម្គាល់ដាក់ស្នើនេះ បើមិនដូច្នេះទេលុបវាចោល៖
+to use a tls connection, you must be running a version of php 5.1.0 or higher.	admin	km	ដើម្បីប្រើការតភ្ជាប់ TLS អ្នកត្រូវតែដំណើរការកំណែ PHP 5.1.0 ឬខ្ពស់ជាងនេះ។
+top	admin	km	កំពូល
+total of %1 accounts deleted.	admin	km	គណនី %1 សរុបត្រូវបានលុប។
+total of %1 id's changed.	admin	km	លេខសម្គាល់ %1 សរុបត្រូវបានផ្លាស់ប្តូរ។
+total records	admin	km	កំណត់ត្រាសរុប
+translation	admin	km	ការបកប្រែ
+true	admin	km	ពិត
+trust level	admin	km	កម្រិតទំនុកចិត្ត
+trust relationship	admin	km	ទំនាក់ទំនងជឿទុកចិត្ត
+two days	admin	km	ពីរ​ថ្ងៃ
+two hours	admin	km	ពីរ​ម៉ោង
+two months	admin	km	ពីរ​ខែ
+two weeks	admin	km	ពីរ​ស​ប្តា​ហ៍
+type '%1' already exists !!!	admin	km	ប្រភេទ '%1' មានរួចហើយ!
+type of customfield	admin	km	Type of custom field
+type of field	admin	km	Type of field
+under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	km	នៅក្រោម windows អ្នកត្រូវដំឡើងសេវាកម្ម async%1manually%2 ឬប្រើមុខងារ fallback។ Fallback មានន័យថាការងារត្រូវបានត្រួតពិនិត្យបន្ទាប់ពីមើលទំព័រនីមួយៗ!
+unexpected response from server to authenticate command.	admin	km	ការឆ្លើយតបដែលមិនរំពឹងទុកពីម៉ាស៊ីនមេទៅកាន់ពាក្យបញ្ជា AUTHENTICATE ។
+unexpected response from server to digest-md5 response.	admin	km	ការឆ្លើយតបដែលមិនរំពឹងទុកពីម៉ាស៊ីនមេទៅការឆ្លើយតប Digest-MD5 ។
+unexpected response from server to login command.	admin	km	ការឆ្លើយតបដែលមិនរំពឹងទុកពីម៉ាស៊ីនមេទៅកាន់ពាក្យបញ្ជា LOGIN ។
+unknown account: %1 !!!	admin	km	គណនីមិនស្គាល់៖ %1 !
+unknown command %1!	admin	km	មិនស្គាល់ពាក្យបញ្ជា%1!
+unknown imap response from the server. server responded: %s	admin	km	មិនស្គាល់ការឆ្លើយតប IMAP ពីម៉ាស៊ីនមេ។ %s
+unknown option %1	admin	km	ជម្រើសដែលមិនស្គាល់%1 !
+unsupported action '%1' !!!	admin	km	សកម្មភាពមិនគាំទ្រ '%1' !
+unwilling to save category with current settings. check for inconsistency:	admin	km	មិនអាចរក្សាទុកប្រភេទជាមួយការកំណត់បច្ចុប្បន្នបានទេ។ ពិនិត្យភាពមិនស៊ីសង្វាក់គ្នា៖
+up	admin	km	ឡើង
+update current email address:	admin	km	ធ្វើបច្ចុប្បន្នភាពអាសយដ្ឋានអ៊ីមែលបច្ចុប្បន្ន៖
+updated	admin	km	បានធ្វើបច្ចុប្បន្នភាព
+upload your background image or enter the url	admin	km	បង្ហោះរូបភាពផ្ទៃខាងក្រោយរបស់អ្នក ឬបញ្ចូល URL
+upload your certificate .p12/.pfx file	admin	km	ផ្ទុកឡើងឯកសារ .p12/.pfx វិញ្ញាបនបត្ររបស់អ្នក។
+upload your favicon or enter the url	admin	km	ផ្ទុកឡើង favicon របស់អ្នក ឬបញ្ចូល URL
+upload your header logo or enter the url (leave it empty if it is the same as login logo)	admin	km	បង្ហោះរូបសញ្ញាបឋមកថារបស់អ្នក ឬបញ្ចូល URL (ទុកវាឱ្យនៅទទេ ប្រសិនបើវាដូចគ្នានឹងនិមិត្តសញ្ញាចូល)
+upload your logo or enter the url	admin	km	បង្ហោះរូបសញ្ញារបស់អ្នក ឬបញ្ចូល URL
+uppercase, lowercase, number, special char	admin	km	អក្សរធំ អក្សរតូច លេខ តួអក្សរពិសេស
+url of the egroupware installation, eg. http://domain.com/egroupware	admin	km	URL នៃការដំឡើង EGroupware ឧ. http://domain.com/egroupware
+usage	admin	km	ការប្រើប្រាស់
+use admin credentials to connect without a session-password, e.g. for sso	admin	km	ប្រើលិខិតសម្គាល់អ្នកគ្រប់គ្រងដើម្បីភ្ជាប់ដោយគ្មាន session-password ឧទាហរណ៍សម្រាប់ SSO
+use cookies to pass sessionid	admin	km	ប្រើខូគីដើម្បីឆ្លងកាត់លេខសម្គាល់សម័យ
+use default	admin	km	ការ​ប្រើ​ប្រាស់​លំនាំ​ដើម
+use ldap defaults	admin	km	ប្រើលំនាំដើម LDAP
+use predefined username and password defined below	admin	km	ប្រើឈ្មោះអ្នកប្រើដែលបានកំណត់ជាមុន និងពាក្យសម្ងាត់ដែលបានកំណត់ខាងក្រោម
+use pure html compliant code (not fully working yet)	admin	km	ប្រើកូដ HTML សុទ្ធ
+use save or apply to store the received oauth token!	admin	km	ប្រើរក្សាទុក ឬអនុវត្តដើម្បីរក្សាទុកនិមិត្តសញ្ញា OAuth ដែលទទួលបាន!
+use secure cookies (transmitted only via https)	admin	km	ប្រើខូគីសុវត្ថិភាព (បញ្ជូនតែតាមរយៈ https)
+use smtp auth	admin	km	ប្រើការផ្ទៀងផ្ទាត់ SMTP
+use theme	admin	km	ប្រើប្រធានបទ
+use tls authentication	admin	km	ប្រើការផ្ទៀងផ្ទាត់ TLS
+use tls encryption	admin	km	ប្រើការអ៊ិនគ្រីប TLS
+use users email-address (as seen in useraccount)	admin	km	ប្រើអាសយដ្ឋានអ៊ីមែលអ្នកប្រើប្រាស់ ដូចដែលបានកំណត់ក្នុងគណនីអ្នកប្រើប្រាស់
+user accounts	admin	km	គណនីអ្នកប្រើប្រាស់
+user can edit forwarding address	admin	km	អ្នកប្រើប្រាស់អាចកែសម្រួលអាសយដ្ឋានបញ្ជូនបន្ត
+user choice	admin	km	ការជ្រើសរើសអ្នកប្រើប្រាស់
+user csv export	admin	km	អ្នកប្រើប្រាស់ CSV នាំចេញ
+user csv import	admin	km	អ្នកប្រើប្រាស់ CSV នាំចូល
+user data	common	km	ទិន្នន័យអ្នកប្រើប្រាស់
+user for smtp-authentication (leave it empty if no auth required)	admin	km	អ្នកប្រើប្រាស់សម្រាប់ការផ្ទៀងផ្ទាត់ SMTP ។ ទុកវាឱ្យនៅទទេ ប្រសិនបើមិនទាមទារការផ្ទៀងផ្ទាត់។
+user groups	admin	km	ក្រុមអ្នកប្រើប្រាស់
+user-agent	admin	km	ភ្នាក់ងារ​អ្នក​ប្រើ
+userdata	admin	km	ទិន្នន័យអ្នកប្រើប្រាស់
+userid@domain eg. u1234@domain	admin	km	UserId@domain ឧ. u1234@domain
+username (standard)	admin	km	ឈ្មោះអ្នកប្រើ (ស្តង់ដារ)
+username specified below for all	admin	km	ឈ្មោះអ្នកប្រើប្រាស់ដែលបានបញ្ជាក់ខាងក្រោមសម្រាប់ទាំងអស់គ្នា
+username/password defined by admin	admin	km	ឈ្មោះអ្នកប្រើ / ពាក្យសម្ងាត់កំណត់ដោយអ្នកគ្រប់គ្រង
+username@domainname (virtual mail manager)	admin	km	username@domainname (Virtual MAIL ManaGeR)
+users can define their own emailaccounts	admin	km	អ្នកប្រើប្រាស់អាចកំណត់គណនីអ៊ីមែលផ្ទាល់ខ្លួនរបស់ពួកគេ។
+users can define their own identities	admin	km	អ្នកប្រើប្រាស់អាចកំណត់អត្តសញ្ញាណផ្ទាល់ខ្លួនរបស់ពួកគេ។
+users can define their own signatures	admin	km	អ្នកប្រើប្រាស់អាចកំណត់ហត្ថលេខាផ្ទាល់ខ្លួនរបស់ពួកគេ។
+users can utilize these stationery templates	admin	km	អ្នកប្រើប្រាស់អាចប្រើប្រាស់គំរូសម្ភារៈការិយាល័យទាំងនេះ
+users choice	admin	km	ការជ្រើសរើសអ្នកប្រើប្រាស់
+using data from mozilla ispdb for provider %1	admin	km	ការប្រើប្រាស់ទិន្នន័យពី Mozilla ISPDB សម្រាប់អ្នកផ្តល់សេវា%1
+using imap:%1, smtp:%2, oauth:%3:	admin	km	ការប្រើប្រាស់ IMAP:%1, SMTP:%2, OAUTH:%3៖
+vacation messages with start- and end-date require an admin account to be set	admin	km	សារ​វិស្សមកាល​ជាមួយ​នឹង​ថ្ងៃ​ចាប់​ផ្ដើម និង​ថ្ងៃ​បញ្ចប់​តម្រូវ​ឱ្យ​មាន​គណនី​អ្នក​គ្រប់គ្រង​ដើម្បី​កំណត់!
+vacation notice	admin	km	សេចក្តីជូនដំណឹងអំពីវិស្សមកាល
+value for column %1 is not unique!	admin	km	តម្លៃ​សម្រាប់​ជួរ​ឈរ%1 គឺ​មិន​ខុស​គ្នា​ទេ!
+vfs directory "%1" not found!	admin	km	រកមិនឃើញថត VFS "%1" ទេ!
+view access log	admin	km	មើលកំណត់ហេតុចូលប្រើ
+view account	admin	km	មើលគណនី
+view category	admin	km	មើលប្រភេទ
+view error log	admin	km	មើលកំណត់ហេតុកំហុស
+view sessions	admin	km	មើលវគ្គ
+view this user	admin	km	មើលអ្នកប្រើប្រាស់នេះ។
+view user account	admin	km	មើលគណនីអ្នកប្រើប្រាស់
+virtual mail manager	admin	km	ម៉ែលនិម្មិត ManaGeR
+warn users about the need to change their password? the number set here should be lower than the value used to enforce the change of passwords every x days. only effective when enforcing of password change is enabled. (empty for no,number for number of days before they must change)	admin	km	កំណត់ចំនួនថ្ងៃដើម្បីជូនដំណឹងដល់អ្នកប្រើប្រាស់ជាមុនអំពីការផ្លាស់ប្តូរពាក្យសម្ងាត់ដោយបង្ខំនាពេលខាងមុខ។ ទទេ = គ្មានព័ត៌មាន
+we ask for the data to improve our profile in the press and to get a better understanding of egroupware's user base and it's needs.	admin	km	ព័ត៌មានត្រូវបានសួរដើម្បីទទួលបានទិដ្ឋភាពទូទៅអំពីការប្រើប្រាស់ EGroupware ទូទាំងពិភពលោក។
+we hope you understand the importance for this voluntary statistic and not deny it lightly.	admin	km	យើងមិនរក្សាទុកទិន្នន័យណាមួយទាក់ទងនឹងអត្តសញ្ញាណរបស់អ្នកទេ។
+who would you like to transfer all records owned by the deleted user to?	admin	km	តើអ្នកចង់ផ្ទេរកំណត់ត្រាទាំងអស់ដែលជាកម្មសិទ្ធិរបស់អ្នកប្រើប្រាស់ដែលបានលុបទៅអ្នកណា?
+who would you like to transfer records owned by the deleted user to?	admin	km	តើអ្នកចង់ផ្ទេរកំណត់ត្រាដែលគ្រប់គ្រងដោយអ្នកប្រើប្រាស់ដែលបានលុបទៅអ្នកណា?
+would you like egroupware to cache the egw info array ?	admin	km	រក្សាទុកអារេព័ត៌មាន EGroupware ។
+would you like egroupware to check for a new version<br>when admins login ?	admin	km	ពិនិត្យមើលកំណែអាប់ដេតនៅពេលអ្នកគ្រប់គ្រងចូល។
+would you like egroupware to check for new application versions when admins login ?	admin	km	ពិនិត្យមើលការអាប់ដេតកម្មវិធី នៅពេលអ្នកគ្រប់គ្រងចូល។
+would you like to automaticaly load new langfiles (at login-time) ?	admin	km	ផ្ទុកឯកសារភាសាថ្មីដោយស្វ័យប្រវត្តិនៅពេលចូល។
+would you like to show each application's upgrade status ?	admin	km	បង្ហាញស្ថានភាពអាប់ដេតរបស់កម្មវិធីនីមួយៗ។
+wrong account type: %1 is no %2 !!!	admin	km	ប្រភេទគណនីខុស៖ %1 គឺ NO %2 !
+wrong admin-account or -password !!!	admin	km	គណនី admin ឬពាក្យសម្ងាត់ខុស!
+wrong credentials to access the header.inc.php file!	admin	km	លិខិតសម្គាល់មិនត្រឹមត្រូវក្នុងការចូលប្រើឯកសារ header.inc.php!
+xml-rpc	admin	km	XML-RPC
+yes, but no scayt	admin	km	បាទ/ចាស ប៉ុន្តែមិនមានការពិនិត្យអក្ខរាវិរុទ្ធដូចដែលអ្នកវាយបញ្ចូលទេ (តាមអ៊ីនធឺណិត)
+yes, use browser based spell checking engine	admin	km	បាទ/ចាស ប្រើម៉ាស៊ីនពិនិត្យអក្ខរាវិរុទ្ធផ្អែកលើកម្មវិធីរុករក
+yes, use credentials below only for alarms and notifications, otherwise use credentials of current user	admin	km	បាទ/ចាស ប្រើព័ត៌មានសម្គាល់ខាងក្រោមសម្រាប់តែម៉ោងរោទិ៍ និងការជូនដំណឹងប៉ុណ្ណោះ បើមិនដូច្នេះទេ ប្រើព័ត៌មានសម្ងាត់របស់អ្នកប្រើប្រាស់បច្ចុប្បន្ន
+yes, use credentials of current user or if given credentials below	admin	km	បាទ/ចាស ប្រើព័ត៌មានសម្ងាត់របស់អ្នកប្រើប្រាស់បច្ចុប្បន្ន ឬប្រសិនបើផ្តល់លិខិតសម្គាល់ខាងក្រោម
+yes, use webspellchecker	admin	km	បាទ/ចាស ប្រើ WebSpellChecker តាមអ៊ីនធឺណិត
+you can not use --dry-run together with --skip-checks!	admin	km	អ្នកមិនអាចប្រើ --dry-run រួមគ្នាជាមួយ --skip-checks!
+you can only change the hash, if you set a random password or currently use plaintext passwords!	admin	km	អ្នកអាចផ្លាស់ប្តូរលេខសម្ងាត់បានតែប្រសិនបើអ្នកកំណត់ពាក្យសម្ងាត់ចៃដន្យ ឬបច្ចុប្បន្នប្រើពាក្យសម្ងាត់អត្ថបទធម្មតា!
+you can use wizard to fix account settings or delete account.	admin	km	អ្នកអាចប្រើអ្នកជំនួយដើម្បីជួសជុលការកំណត់គណនី ឬលុបគណនី។
+you have entered an invalid expiration date	admin	km	អ្នកបានបញ្ចូលកាលបរិច្ឆេទផុតកំណត់មិនត្រឹមត្រូវ!
+you have no email address for your user set !!!	admin	km	អ្នកមិនមានអាសយដ្ឋានអ៊ីមែលសម្រាប់អ្នកប្រើប្រាស់របស់អ្នកទេ!
+you have received a new message on the	admin	km	អ្នកបានទទួលសារថ្មីនៅលើ
+you have to enter a name, to create a new field!!!	admin	km	អ្នកត្រូវតែបញ្ចូលឈ្មោះ ដើម្បីបង្កើតវាលថ្មីមួយ!
+you have to enter a name, to create a new type!	admin	km	អ្នកត្រូវតែបញ្ចូលឈ្មោះ ដើម្បីបង្កើតប្រភេទថ្មី!
+you must add at least 1 permission or group to this account	admin	km	អ្នកត្រូវតែបន្ថែមការអនុញ្ញាតយ៉ាងហោចណាស់ 1 ឬក្រុមទៅក្នុងគណនីនេះ!
+you must enter a group name.	admin	km	អ្នកត្រូវតែបញ្ចូលឈ្មោះក្រុម។
+you must enter a lastname	admin	km	អ្នកត្រូវតែបញ្ចូលនាមត្រកូល។
+you must enter a loginid	admin	km	អ្នកត្រូវតែបញ្ចូលលេខសម្គាល់ចូល។
+you must enter an application name and title.	admin	km	អ្នកត្រូវតែបញ្ចូលឈ្មោះកម្មវិធី និងចំណងជើង។
+you must enter an application name.	admin	km	អ្នកត្រូវតែបញ្ចូលឈ្មោះកម្មវិធី។
+you must enter an application title.	admin	km	អ្នកត្រូវតែបញ្ចូលចំណងជើងកម្មវិធី។
+you must select a file type	admin	km	អ្នកត្រូវតែជ្រើសរើសប្រភេទឯកសារ។
+you must select at least one group member.	admin	km	អ្នកត្រូវតែជ្រើសរើសសមាជិកក្រុមយ៉ាងតិចមួយ។
+you need to enter install id and password!	admin	km	អ្នក​ត្រូវ​បញ្ចូល​លេខ​សម្គាល់​និង​លេខ​សម្ងាត់​ដំឡើង!
+you need to select as least one action!	admin	km	អ្នកត្រូវជ្រើសរើសសកម្មភាពយ៉ាងហោចណាស់មួយ!
+you need to select some users first!	admin	km	អ្នកត្រូវជ្រើសរើសអ្នកប្រើប្រាស់មួយចំនួនជាមុនសិន!
+you need to specify a forwarding address, when checking "%1"!	admin	km	អ្នកត្រូវបញ្ជាក់អាសយដ្ឋានបញ្ជូនបន្ត នៅពេលពិនិត្យ "%1"!
+you will need to remove the subcategories before you can delete this category	admin	km	ដកប្រភេទរងមុននឹងលុបប្រភេទនេះចេញ!
+your last submission was less then %1 days ago!	admin	km	ការដាក់ស្នើចុងក្រោយរបស់អ្នកគឺតិចជាង %1 ថ្ងៃមុន!
+your message to  %1 was displayed.	admin	km	សាររបស់អ្នកទៅកាន់%1 ត្រូវបានបង្ហាញ។
+your name	admin	km	ឈ្មោះ​របស់​អ្នក
+your session could not be verified.	admin	km	សម័យរបស់អ្នកមិនអាចផ្ទៀងផ្ទាត់បានទេ។

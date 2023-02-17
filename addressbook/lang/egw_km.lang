@@ -1,0 +1,584 @@
+%1 added	addressbook	km	%1 បានបន្ថែម
+%1 contact(s) %2	addressbook	km	%1 អ្នកទំនាក់ទំនង %2
+%1 contact(s) %2, %3 failed because of %4 !!!	addressbook	km	%1 contact(s) %2, %3 បានបរាជ័យដោយសារតែ %4 !!!
+%1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	km	%1 contact(s) %2, %3 បានបរាជ័យដោយសារតែសិទ្ធិមិនគ្រប់គ្រាន់!
+%1 contacts updated (%2 errors).	addressbook	km	ទំនាក់ទំនង %1 បានធ្វើបច្ចុប្បន្នភាព (%2 កំហុស) ។
+%1 fields in %2 other organisation member(s) changed	addressbook	km	វាល %1 ក្នុង %2 សមាជិកស្ថាប័នផ្សេងទៀតបានផ្លាស់ប្តូរ។
+%1 key(s) added to public keyserver "%2".	addressbook	km	%1 key(s) បានបន្ថែមទៅម៉ាស៊ីនបម្រើសោសាធារណៈ "%2"។
+%1 not implemented for %2!	addressbook	km	%1 មិនត្រូវបានអនុវត្តសម្រាប់ %2!
+%1 public keys added.	addressbook	km	%1 នៃកូនសោសាធារណៈបានបន្ថែម។
+%1 records imported	addressbook	km	%1 កំណត់ត្រាបាននាំចូល។
+%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	km	%1 នៃកំណត់ត្រាបានអាន។ មិន​ទាន់​បាន​នាំ​ចូល​ទេ អ្នក​អាច​ចូល​ទៅ %2back%3 ហើយ​បិទ​ ការ​នាំចូល​សាកល្បង។
+%1 shared this contact on %2 with %3 %4	addressbook	km	%1 បានចែករំលែកអ្នកទំនាក់ទំនងនេះជាមួយ %2 និង %3 %4
+%1 starts with '%2'	addressbook	km	%1 ចាប់ផ្តើមជាមួយ '%2'
+%s please calculate the result	addressbook	km	%s សូមធ្វើការគណនាលទ្ធផល
+(e.g. 1969)	addressbook	km	(ឧទាហរណ៍ 1969)
+(empty = use global limit, no = no export at all)	admin	km	Empty = ប្រើដែនកំណត់សកល, no = មិនធ្វើការនាំចូលទាំងអស់
+<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	km	<b>គ្មានការបម្លែងប្រភេទ <none> អាចធ្វើការផ្លាស់ប្តូរទីតាំង </b> ជ្រើសរើសប្រភេទនៃការបម្លែងពីក្នុងបញ្ជឺ
+@-eval() is only availible to admins!!!	addressbook	km	@-eval() អាចធ្វើការរកបានដោយអ្នកគ្រប់គ្រងតែប៉ុណ្ណោះ!
+account id	addressbook	km	លេខសម្គាល់គណនី
+account repository	admin	km	ឃ្លាំងគណនី
+accounts	addressbook	km	គណនី
+actions	addressbook	km	សកម្មភាព
+add %1	addressbook	km	បន្ថែម 1%
+add a contact to this organisation	addressbook	km	បន្ថែមអ្នកទំនាក់ទំនងម្នាក់ចូលក្នុងស្ថាប៏ននេះ
+add a customfield to link title	addressbook	km	បន្ថែមវាលពិសេសចូលតំណចំណងជើង
+add a new contact	addressbook	km	បន្ថែមអ្នកទំនាក់ទំនងថ្មីម្នាក់
+add a new infolog	addressbook	km	បន្ថែមកំណត់ហេតុទិន្នន័យថ្មីមួយ
+add a new list	addressbook	km	បន្ថែមបញ្ជីថ្មីមួយ
+add a single entry by passing the fields.	addressbook	km	បន្ថែមធាតុតែមួយដោយឆ្លងកាត់វាល
+add appointment	addressbook	km	បន្ថែមការណាត់ជួប
+add business email of whole distribution list?	addressbook	km	បន្ថែមអុីមែលអាជិវកម្មទាំងអស់នៃបញ្ជីចែកចាយ?
+add custom field	addressbook	km	បន្ថែមវាលផ្ទាល់ខ្លួន
+add customfield to links of addressbook, which displays in other applications. the default value is none customfield.	addressbook	km	បន្ថែមវាលផ្ទាល់ខ្លួនទៅកាន់តំណនៃសៀវភៅអាសយដ្ឋានដែលបង្ហាញនៅក្នុងកម្មវិធីផ្សេង។ តម្លៃនៃលំនាំដើមគ្មានវាលផ្ទាល់ខ្លួននោះទេ។
+add emails of whole distribution list?	addressbook	km	បន្ថែមអុីមែលទាំងអស់នៃបញ្ជីចែកចាយ?
+add or delete categories	addressbook	km	បន្ថែម ឬលុបកាតាឡុក
+add to bcc	addressbook	km	បន្ថែមទៅ BCc
+add to cc	addressbook	km	បន្ថែមទៅ Cc
+add to distribution list	addressbook	km	បន្ថែមទៅបញ្ជីចែកចាយ
+add to distribution list:	addressbook	km	បន្ថែមទៅបញ្ជីចែកចាយ:
+add to to	addressbook	km	បន្ថែមទៅ
+added	addressbook	km	បានបន្ថែម
+added by synchronisation	addressbook	km	បានបន្ថែមដោយសមកាលកម្ម
+added to distribution list	addressbook	km	បានបន្ថែមទៅបញ្ជីចែកចាយ
+additional information about using ldap as contact repository	admin	km	ព័ត៌មានបន្ថែមអំពីការប្រើ LDAP ជាឃ្លាំងទំនាក់ទំនង
+address book	common	km	សៀវភៅអាសយដ្ឋាន
+address book - vcard in	addressbook	km	សៀវភៅអាសយដ្ឋាន - vCard ចូល
+address book - view	addressbook	km	សៀវភៅអាសយដ្ឋាន - ទិដ្ឋភាព
+address line 2	addressbook	km	ខ្សែអាសយដ្ឋាន ២
+address line 2 (private)	addressbook	km	ខ្សែអាសយដ្ឋាន ២(ឯកជន)
+address type	addressbook	km	ប្រភេទអាសយដ្ឋាន
+addressbook	common	km	សៀវភៅអាសយដ្ឋាន
+addressbook csv export	addressbook	km	សៀវភៅអាសយដ្ឋាន CSV នាំចេញ
+addressbook csv import	addressbook	km	សៀវភៅអាសយដ្ឋាន CSV នាំចូល
+addressbook field	addressbook	km	វាលនៃសៀវភៅអាសយដ្ឋាន
+addressbook list	addressbook	km	បញ្ជីនៃសៀវភៅអាសយដ្ឋាន
+addressbook menu	addressbook	km	មុឺនុយនៃសៀវភៅអាសយដ្ឋាន
+addressbook of	addressbook	km	សៀវភៅអាសយដ្ឋាននៃ
+addressbook preferences	addressbook	km	ការកំណត់នៃសៀវភៅអាសយដ្ឋាន
+addressbook the contact should be saved to	addressbook	km	សៀវភៅអាសយដ្ឋាននៃការទំនាក់ទំនងគួរតែត្រូវបានរក្សាទុក
+addressbook the contact should be shown	addressbook	km	សៀវភៅអាសយដ្ឋាននៃការទំនាក់ទំនងគួរតែត្រូវបានបង្ហាញ
+addressbook vcard export	addressbook	km	សៀវភៅអាសយដ្ឋាន vCard នាំចេញ
+addressbook vcard import	addressbook	km	សៀវភៅអាសយដ្ឋាន vCard នាំចូល
+addressbook-fieldname	addressbook	km	សៀវភៅអាសយដ្ឋានវាលបញ្ចូលឈ្មោះ
+addvcard	addressbook	km	បន្ថែម vCard
+advanced search	addressbook	km	ការស្វែងរកកម្រិតខ្ពស់
+all addressbooks	addressbook	km	សៀវភៅអាសយដ្ឋានទាំងអស់
+all contacts	addressbook	km	អ្នកទំនាក់ទំនងទាំងអស់
+all in one field	addressbook	km	ក្នុងវាលតែមួយទាំងអស់
+all types	addressbook	km	គ្រប់ប្រភេទ
+allow	addressbook	km	អនុញ្ញាត
+allow for contacts only	addressbook	km	អនុញ្ញាតសម្រាប់អ្នកទំនាក់ទំនងតែប៉ុណ្ណោះ
+allow members of following groups to edit contact-data of accounts	addressbook	km	អនុញ្ញាតអោយសមាជិកនៃក្រុមនេះអាចកែទិន្នន័យអ្នកទំនាក់ទំនងរបស់គណនីណាមួយ
+allow users to maintain their own account-data	admin	km	អនុញ្ញាតឲ្យអ្នកប្រើប្រាស់ថែទាំទិន្នន័យរបស់ខ្លួន
+alt. csv import	addressbook	km	Alt. CSV នាំចូល
+always	addressbook	km	តែងតែ
+apply changes to all members, whose fields have the same previous content	addressbook	km	អនុវត្តការផ្លាស់ប្តូរទៅគ្រប់សមាជិកទាំងអស់ដែលមានវាលដូចមាតិកាមុន។
+apply the action on the whole query, not only the shown contacts!!!	addressbook	km	អនុវត្តការផ្លាស់ប្តូរទៅគ្រប់សំណួរ មិនគ្រាន់តែអ្នកទំនាក់ទំនងដែលបានបង្ហាញនេះទេ!
+are you shure you want to delete this contact?	addressbook	km	តើអ្នកប្រាកដថាចង់លុបទំនាក់ទំនងនេះទេ?
+are you sure you want to delete this field?	addressbook	km	តើអ្នកប្រាកដថាចង់លុបវាលនេះទេ?
+assistent	addressbook	km	ជំនួយការ
+assistent phone	addressbook	km	ជំនួយការទូរស័ព្ទ
+birthday	common	km	ថ្ងៃកំណើត
+birthdays	common	km	ថ្ងៃកំណើត
+blank	addressbook	km	ទទេ
+browser location	addressbook	km	ទីតាំងកម្មវិធីរុករក
+business	common	km	អាជីវកម្ម
+business address	addressbook	km	អាស័យដ្ឋានអាជីវកម្ម
+business address line 2	addressbook	km	បន្ទាត់អាសយដ្ឋានអាជីវកម្ម 2
+business city	addressbook	km	ទីក្រុងពាណិជ្ជកម្ម
+business country	addressbook	km	ប្រទេសអាជីវកម្ម
+business country code	addressbook	km	លេខកូដប្រទេសអាជីវកម្ម
+business email	addressbook	km	អុីមែលអាជីវកម្ម
+business fax	addressbook	km	ទូរសារអាជីវកម្ម
+business phone	addressbook	km	ទូរស័ព្ទអាជីវកម្ម
+business state	addressbook	km	ស្ថានភាពអាជីវកម្ម
+business street	addressbook	km	ផ្លូវអាជីវកម្ម
+business zip code	addressbook	km	លេខកូដប្រៃសណីយ៍អាជីវកម្ម
+calendar fields:	addressbook	km	វាល​ប្រតិទិន៖
+calendar integration	addressbook	km	ការរួមបញ្ចូលប្រតិទិន
+calendar uri	addressbook	km	URI ប្រតិទិន
+can be changed via setup >> configuration	admin	km	អាចផ្លាស់ប្តូរបានតាមរយៈ Setup >> Configuration
+can't create dn %1	addressbook	km	មិនអាចបង្កើត dn %1 បានទេ។
+car phone	addressbook	km	ទូរស័ព្ទឡាន
+categorie	addressbook	km	កាតាឡុក
+categorie added	addressbook	km	បានបន្ថែមកាតាឡុក។
+categorie delete	addressbook	km	កាតាឡុកត្រូវបានលុប។
+categories, notes, ...	addressbook	km	កាតាឡុក, កំណត់ចំណាំ, ...
+category path	addressbook	km	ផ្លូវកាតាឡុក
+category tree	admin	km	កាតាឡុកដើមឈើ
+cell phone	addressbook	km	ទូរស័ព្ទចល័ត
+change addressbook when updating	addressbook	km	ផ្លាស់ប្តូរសៀវភៅអាសយដ្ឋាននៅពេលធ្វើបច្ចុប្បន្នភាព
+change all organisation members	addressbook	km	ផ្លាស់ប្តូរសមាជិកអង្គការទាំងអស់។
+charset for the csv export	addressbook	km	សំណុំតួអក្សរសម្រាប់ការនាំចេញ CSV
+charset for the vcard export	addressbook	km	សំណុំតួអក្សរសម្រាប់ការនាំចេញ vCard
+charset for the vcard import and export	addressbook	km	សំណុំតួអក្សរសម្រាប់ការនាំចូល និងនាំចេញ vCard
+charset of file	addressbook	km	សំណុំនៃឯកសារ
+check all	addressbook	km	ពិនិត្យ​ទាំងអស់
+choose an icon for this contact type	admin	km	ជ្រើសរើសរូបតំណាងសម្រាប់ប្រភេទទំនាក់ទំនងនេះ។
+choose charset	addressbook	km	ជ្រើសរើសសំណុំតួអក្សរ
+choose owner of imported data	addressbook	km	ជ្រើសរើសម្ចាស់ទិន្នន័យដែលបាននាំចូល
+choose pre-defined map source or use custom url (use %r = street, %t = city, %c = country, %z = zipcode)	admin	km	ជ្រើសរើសប្រភពផែនទីដែលបានកំណត់ជាមុន ឬប្រើ URL ផ្ទាល់ខ្លួន (ប្រើ %r = street, %t = city, %c = country, %z = zipcode)
+chosse an etemplate for this contact type	admin	km	ជ្រើសរើស eTemplate សម្រាប់ប្រភេទទំនាក់ទំនងនេះ។
+city	common	km	ទីក្រុង
+city (private)	addressbook	km	ទីក្រុង (ឯកជន)
+cleanup addressbook fields (apply if synchronization creates duplicates)	addressbook	km	សម្អាតវាលសៀវភៅអាសយដ្ឋាន អនុវត្តប្រសិនបើការធ្វើសមកាលកម្មបង្កើតស្ទួន។
+company	common	km	ក្រុមហ៊ុន
+company name	addressbook	km	ឈ្មោះ​ក្រុម​ហ៊ុន
+configuration	common	km	ការកំណត់​រចនាសម្ព័ន្ធ
+contact	common	km	ទំនាក់ទំនង
+contact application	admin	km	ការដាក់ពាក្យទំនាក់ទំនង
+contact data	addressbook	km	ទិន្នន័យទំនាក់ទំនង
+contact deleted	addressbook	km	បានលុបទំនាក់ទំនង។
+contact fields to show	addressbook	km	វាលទំនាក់ទំនងដើម្បីបង្ហាញ
+contact fields:	addressbook	km	វាលទំនាក់ទំនង៖
+contact id	addressbook	km	លេខសម្គាល់ទំនាក់ទំនង
+contact id cannot be changed by import	addressbook	km	លេខសម្គាល់ទំនាក់ទំនងមិនអាចផ្លាស់ប្តូរដោយការនាំចូលបានទេ។
+contact maintenance	admin	km	ទាក់ទងការថែទាំ
+contact modified by %1 at %2	addressbook	km	ទំនាក់ទំនងបានកែប្រែដោយ%1 នៅ% 2 ។
+contact not found!	addressbook	km	រកមិនឃើញទំនាក់ទំនង!
+contact repository	admin	km	ឃ្លាំងទំនាក់ទំនង
+contact saved	addressbook	km	បានរក្សាទុកទំនាក់ទំនង
+contact settings	admin	km	ការកំណត់ទំនាក់ទំនង
+contactform	addressbook	km	ទម្រង់ទំនាក់ទំនង
+contacts	common	km	ទំនាក់ទំនង
+contacts and account contact-data to ldap	admin	km	ទំនាក់ទំនង និងទិន្នន័យទំនាក់ទំនងរបស់គណនីទៅ LDAP
+contacts and account contact-data to sql	admin	km	ទំនាក់ទំនង និងទិន្នន័យទំនាក់ទំនងរបស់គណនីទៅ SQL
+contacts to ldap	admin	km	ទំនាក់ទំនងទៅកាន់ LDAP
+contacts to ldap, account contact-data to sql	admin	km	ទំនាក់ទំនងទៅ LDAP ទិន្នន័យទំនាក់ទំនងគណនីទៅ SQL
+contains	addressbook	km	មាន
+copied	addressbook	km	ចម្លង
+copied by %1, from record #%2.	addressbook	km	ចម្លងដោយ %1 ពីកំណត់ត្រា #%2 ។
+copy a contact and edit the copy	addressbook	km	ចម្លងទំនាក់ទំនង និងកែសម្រួលច្បាប់ចម្លង
+copy instead of move	addressbook	km	ចម្លងជំនួសឱ្យការផ្លាស់ទី
+copy your changes to the clipboard, %1reload the entry%2 and merge them.	addressbook	km	ចម្លងការផ្លាស់ប្ដូររបស់អ្នកទៅក្ដារតម្បៀតខ្ទាស់ %1 ផ្ទុកធាតុឡើងវិញ %2 ហើយបញ្ចូលពួកវាចូលគ្នា។
+country	common	km	ប្រទេស
+country (private)	addressbook	km	ប្រទេស (ឯកជន)
+country code	addressbook	km	លេខ​កូដ​ប្រទេស
+country code (private)	addressbook	km	លេខកូដប្រទេស (ឯកជន)
+create new links	addressbook	km	បង្កើតតំណថ្មី
+created	addressbook	km	បានបង្កើត
+credit	addressbook	km	ឥណទាន
+crm view list	addressbook	km	បញ្ជីទិដ្ឋភាព CRM
+crm-view	addressbook	km	CRM-ទិដ្ឋភាព
+csv-fieldname	addressbook	km	ឈ្មោះវាល CSV
+csv-filename	addressbook	km	ឈ្មោះឯកសារ CSV
+custom	addressbook	km	ផ្ទាល់ខ្លួន
+custom etemplate for the contactform	addressbook	km	គំរូ eTemplate ផ្ទាល់ខ្លួនសម្រាប់ទម្រង់ទំនាក់ទំនង
+custom fields	addressbook	km	វាលផ្ទាល់ខ្លួន
+data exchange settings	addressbook	km	ការកំណត់ការផ្លាស់ប្តូរទិន្នន័យ
+debug output in browser	addressbook	km	ជួសជុលកំហុសលទ្ធផលនៅក្នុងកម្មវិធីរុករក
+default	addressbook	km	លំនាំដើម
+default action on double-click	addressbook	km	សកម្មភាពលំនាំដើមនៅពេលចុចពីរដង
+default address format	addressbook	km	ទម្រង់អាសយដ្ឋានលំនាំដើម
+default addressbook for adding contacts	addressbook	km	សៀវភៅអាសយដ្ឋានលំនាំដើម
+default document to insert contacts	addressbook	km	ឯកសារលំនាំដើមដើម្បីបញ្ចូលទំនាក់ទំនង
+default file as format	addressbook	km	ឯកសារលំនាំដើមជាទម្រង់
+default filter	addressbook	km	តម្រងលំនាំដើម
+default format for fileas, eg. for new entries.	addressbook	km	ទម្រង់លំនាំដើមសម្រាប់ fileas ឧ. សម្រាប់ធាតុថ្មី។
+default geolocation source address	addressbook	km	អាសយដ្ឋានប្រភព GeoLocation លំនាំដើម
+default is to open email addresses in egroupware email application, if user has access to it.	addressbook	km	លំនាំដើមគឺត្រូវបើកអាសយដ្ឋានអុីមែលនៅក្នុងកម្មវិធី EGroupware EMail ប្រសិនបើអ្នកប្រើមានសិទ្ធិចូលប្រើវា។
+defines which email address (business or home) to use as the preferred one for distribution lists in mail.	addressbook	km	អាសយដ្ឋាន​អុីមែល​មួយ​ណា​ត្រូវ​បាន​ប្រើ​ជា​អាសយដ្ឋាន​ដែល​ពេញ​ចិត្ត​សម្រាប់​បញ្ជី​ចែកចាយ។
+delete a single entry by passing the id.	addressbook	km	លុបធាតុតែមួយដោយឆ្លងកាត់លេខសម្គាល់។
+delete selected distribution list!	addressbook	km	លុបបញ្ជីចែកចាយដែលបានជ្រើសរើស!
+delete this contact	addressbook	km	លុបទំនាក់ទំនងនេះ
+delete this organisation including all its contacts	addressbook	km	លុបស្ថាប័ននេះ រួមទាំងទំនាក់ទំនងទាំងអស់របស់វា
+deleted	addressbook	km	បានលុប
+deletes the photo	addressbook	km	លុបរូបថត
+department	common	km	នាយកដ្ឋាន
+departments	addressbook	km	នាយកដ្ឋាន
+directory with documents to insert contacts	addressbook	km	ថតជាមួយឯកសារដើម្បីបញ្ចូលទំនាក់ទំនង
+disable	addressbook	km	បិទ
+disable last/next event column	addressbook	km	បិទជួរឈរព្រឹត្តិការណ៍ចុងក្រោយ/បន្ទាប់
+display contact	addressbook	km	បង្ហាញទំនាក់ទំនង
+displays a remider for birthdays on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	km	បង្ហាញថ្ងៃកំណើតនៅលើទំព័រដើម។
+distribution list deleted	addressbook	km	បញ្ជីចែកចាយត្រូវបានលុប
+distribution list renamed	addressbook	km	បានប្តូរឈ្មោះបញ្ជីចែកចាយ
+distribution lists	addressbook	km	បញ្ជីចែកចាយ
+distribution lists as groups	addressbook	km	បញ្ជីចែកចាយជាក្រុម
+distribution lists, ...	addressbook	km	បញ្ជីចែកចាយ, ...
+do you really want to delete this contact?	addressbook	km	តើអ្នកពិតជាចង់លុបទំនាក់ទំនងនេះមែនទេ?
+do you want a private addressbook, which can not be viewed by users, you grant access to your personal addressbook?	addressbook	km	តើ​អ្នក​ចង់​បាន​សៀវភៅ​អាសយដ្ឋាន​ឯកជន​មួយ​ទៀត ដែល​មិន​អាច​មើល​ដោយ​អ្នក​ប្រើ​ផ្សេង​ទៀត​ទេ ប្រសិន​បើ​អ្នក​អនុញ្ញាត​ឱ្យ​ចូល​ទៅ​កាន់​សៀវភៅ​អាសយដ្ឋាន​ផ្ទាល់​ខ្លួន​របស់​អ្នក?
+do your really want to delete this contact?	addressbook	km	តើអ្នកពិតជាចង់លុបទំនាក់ទំនងនេះមែនទេ?
+doesn't matter	addressbook	km	មិនសំខាន់ទេ
+domestic	addressbook	km	ក្នុងស្រុក
+don't hide empty columns	addressbook	km	លាក់ជួរឈរដែលទទេ
+download	addressbook	km	ទាញយក
+download export file (uncheck to debug output in browser)	addressbook	km	ទាញយកឯកសារនាំចេញ។ ដោះធីកដើម្បីជួសជុលកំហុសលទ្ធផលនៅក្នុងកម្មវិធីរុករក។
+download this contact as vcard file	addressbook	km	ទាញយកទំនាក់ទំនងនេះជាឯកសារ vCard
+duplicate threshold	addressbook	km	ស្ទួនកម្រិត
+duplicate warning	addressbook	km	ការព្រមានស្ទួន
+duplicates	addressbook	km	ស្ទួន
+duration	addressbook	km	រយៈពេល
+each category in its own field	addressbook	km	ប្រភេទនីមួយៗនៅក្នុងវិស័យរបស់ខ្លួន។
+each option in its own field	addressbook	km	ជម្រើសនីមួយៗនៅក្នុងវិស័យរបស់ខ្លួន។
+edit contact	addressbook	km	កែសម្រួលទំនាក់ទំនង
+edit custom field	addressbook	km	កែសម្រួលវាលផ្ទាល់ខ្លួន
+edit custom fields	admin	km	កែសម្រួលវាលផ្ទាល់ខ្លួន
+edit extra account-data in the addressbook	admin	km	កែសម្រួលទិន្នន័យគណនីបន្ថែមនៅក្នុងសៀវភៅអាសយដ្ឋាន
+edit phonenumbers	addressbook	km	កែសម្រួលលេខទូរស័ព្ទ
+edit phonenumbers -	addressbook	km	កែសម្រួលលេខទូរស័ព្ទ -
+either the configured email addesses are wrong or the mail configuration.	addressbook	km	ទាំងអាសយដ្ឋានអុីមែលដែលបានកំណត់រចនាសម្ព័ន្ធខុស ឬការកំណត់រចនាសម្ព័ន្ធសំបុត្រ។
+email & internet	addressbook	km	អុីមែល និងអុីនធឺណិត
+email (private)	addressbook	km	អុីមែល (ឯកជន)
+email addresses (comma separated) to send the contact data	addressbook	km	អាសយដ្ឋានអុីមែល សញ្ញាក្បៀសបំបែក ដើម្បីផ្ញើទិន្នន័យទំនាក់ទំនង។
+empty	admin	km	ទទេ
+empty addressbook before importing	addressbook	km	លុបធាតុសៀវភៅអាសយដ្ឋានមិននៅក្នុងបញ្ជី CSV
+empty for all	addressbook	km	ទទេសម្រាប់ទាំងអស់គ្នា
+enable an extra private addressbook	addressbook	km	សៀវភៅអាសយដ្ឋានឯកជនបន្ថែម
+enclosure	addressbook	km	ការរុំព័ទ្ធ
+end	addressbook	km	ចប់
+enter the path to the exported file here	addressbook	km	បញ្ចូលផ្លូវទៅកាន់ឯកសារដែលបាននាំចេញ
+error deleting the contact !!!	addressbook	km	កំហុសក្នុងការលុបទំនាក់ទំនង!
+error saving the contact !!!	addressbook	km	កំហុសក្នុងការរក្សាទុកទំនាក់ទំនង!
+error: the entry has been updated since you opened it for editing!	addressbook	km	កំហុស៖ ធាតុត្រូវបានធ្វើបច្ចុប្បន្នភាពចាប់តាំងពីអ្នកបើកវាកែសម្រួលមក!
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	addressbook	km	ឧទាហរណ៍ {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - ស្វែករកក្នុងវាល "n_prefix", សម្រាប់ "Mr", បើរកឃើញ, សរសេរ Hello Mr., ឬសរសេរ Hello Ms.
+example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	preferences	km	ឧទាហរណ៍ {{LETTERPREFIXCUSTOM n_prefix title n_family}} - ឧទាហរណ៍៖ លោកបណ្ឌិត James Miller
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	addressbook	km	ឧទាហរណ៍ {{NELF role}} - ប្រសិនបើវាលតួនាទីមិនទទេ អ្នកនឹងទទួលបានបន្ទាត់ថ្មីជាមួយនឹងតម្លៃនៃវាលតួនាទី
+example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	addressbook	km	ឧទាហរណ៍ {{nenvlf role}} - ប្រសិនបើវាលតួនាទីមិនទទេ កំណត់ LF ដោយគ្មានតម្លៃណាមួយនៃវាលនោះ
+existing links	addressbook	km	តំណភ្ជាប់ដែលមានស្រាប់
+exists	addressbook	km	មាន
+export as csv	addressbook	km	នាំចេញជា CSV
+export as vcard	addressbook	km	នាំចេញជា vCard
+export contacts	addressbook	km	នាំចេញទំនាក់ទំនង
+export definition to use for nextmatch export	addressbook	km	នាំចេញនិយមន័យដែលត្រូវប្រើសម្រាប់ការនាំចេញការប្រកួតបន្ទាប់
+export definitition to use for nextmatch export	addressbook	km	នាំចេញនិយមន័យដែលត្រូវប្រើសម្រាប់ការនាំចេញការប្រកួតបន្ទាប់
+export file name	addressbook	km	នាំចេញឈ្មោះឯកសារ
+export from addressbook	addressbook	km	នាំចេញពីសៀវភៅអាសយដ្ឋាន
+export selection	addressbook	km	នាំចេញជម្រើស
+exported	addressbook	km	នាំចេញ
+exports contacts from your addressbook into a csv file.	addressbook	km	នាំចេញទំនាក់ទំនងពីសៀវភៅអាសយដ្ឋានទៅជាឯកសារ CSV ។
+exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	km	នាំចេញទំនាក់ទំនងពីសៀវភៅអាសយដ្ឋានទៅជាឯកសារ CSV ។ CSV មានន័យថា 'តម្លៃបំបែកដោយសញ្ញាក្បៀស'។ នៅក្នុងផ្ទាំងជម្រើស អ្នកក៏អាចជ្រើសរើសសញ្ញាបំបែកផ្សេងទៀត។
+exports contacts from your addressbook into a vcard file.	addressbook	km	នាំចេញទំនាក់ទំនងពីសៀវភៅអាសយដ្ឋានរបស់អ្នកទៅជាឯកសារ vCard ។
+extra	addressbook	km	ការបន្ថែម
+extra encodings	addressbook	km	ការអុិនកូដបន្ថែម
+extra private	addressbook	km	ឯកជនភាពបន្ថែម
+failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	km	បរាជ័យក្នុងការផ្លាស់ប្តូរសមាជិក %1 របស់ស្ថាប័ន សិទ្ធិមិនគ្រប់គ្រាន់!
+favorite phone	addressbook	km	ទូរស័ព្ទដែលចូលចិត្ត
+favorites	addressbook	km	ចំណូលចិត្ត
+fax	addressbook	km	ទូរសារ
+fax (private)	addressbook	km	ទូរសារ (ឯកជន)
+fax number	common	km	លេខទូរសារ
+field %1 has been added !	addressbook	km	វាល %1 ត្រូវបានបន្ថែម!
+field %1 has been updated !	addressbook	km	វាល %1 ត្រូវ​បាន​ធ្វើ​បច្ចុប្បន្នភាព!
+field name	addressbook	km	ឈ្មោះវាល
+fields for the csv export	addressbook	km	វាលសម្រាប់ការនាំចេញ CSV
+fields the user is allowed to edit himself	admin	km	វាលដែលអ្នកប្រើប្រាស់ត្រូវបានអនុញ្ញាតឱ្យកែសម្រួលខ្លួនឯង
+fields to check for duplicates	addressbook	km	វាលដើម្បីពិនិត្យមើលការស្ទួន
+fields to consider when looking for duplicate contacts.	addressbook	km	វាលដែលត្រូវពិចារណានៅពេលស្វែងរកទំនាក់ទំនងស្ទួន។
+fields to copy when copying an address?	admin	km	វាលដែលត្រូវចម្លងនៅពេលចម្លងអាសយដ្ឋាន
+fields to show in address list	addressbook	km	វាលដែលត្រូវបង្ហាញក្នុងបញ្ជីអាសយដ្ឋាន
+fieldseparator	addressbook	km	អ្នកបំបែកវាល
+for read only ldap	admin	km	សម្រាប់ LDAPដែលអានបានប៉ុណ្ណោះ។
+for serial letter use this tag. put the content, you want to repeat between two tags.	addressbook	km	ប្រើស្លាកនេះសម្រាប់អក្សរសៀរៀល។ ដាក់មាតិកាដែលអ្នកចង់ធ្វើម្តងទៀតរវាងស្លាកពីរ។
+freebusy uri	addressbook	km	FreeBusy URI
+full name	addressbook	km	ឈ្មោះ​ពេញ
+general	admin	km	ទូទៅ
+general fields:	addressbook	km	វាលទូទៅ៖
+general settings	addressbook	km	ការកំណត់​ទូទៅ
+geo	addressbook	km	GEO
+geolocation	addressbook	km	ទីតាំងភូមិសាស្ត្រ
+geolocation integration	admin	km	ការរួមបញ្ចូលទីតាំងភូមិសាស្ត្រ
+global categories	addressbook	km	ប្រភេទសកល
+grant addressbook access	common	km	ផ្តល់សិទ្ធិចូលប្រើសៀវភៅអាសយដ្ឋាន
+group %1	addressbook	km	ក្រុម %1
+h	addressbook	km	h
+hide accounts from addressbook	addressbook	km	លាក់គណនីអ្នកប្រើប្រាស់
+hide all accounts	addressbook	km	លាក់គណនីទាំងអស់។
+hide user groups as distribution lists	addressbook	km	លាក់ក្រុមអ្នកប្រើប្រាស់ជាបញ្ជីចែកចាយ
+hides accounts completly from the adressbook.	addressbook	km	លាក់គណនីអ្នកប្រើប្រាស់ទាំងស្រុងពីសៀវភៅអាសយដ្ឋាន។
+history logging	admin	km	ការកត់ត្រាប្រវត្តិសាស្ត្រ
+home address	addressbook	km	អាសយដ្ឋានផ្ទះ
+home address, birthday, ...	addressbook	km	អាស័យដ្ឋាន ខួបកំណើត...
+home city	addressbook	km	ទីក្រុង
+home country	addressbook	km	ប្រទេសដើម
+home email	addressbook	km	អុីមែលផ្ទះ
+home email if given, else work email	addressbook	km	អុីមែលផ្ទះ ប្រសិនបើត្រូវបានផ្តល់ឱ្យ ឬអុីមែលការងារផ្សេងទៀត។
+home phone	addressbook	km	ទូរស័ព្ទផ្ទះ
+home state	addressbook	km	រដ្ឋ
+home street	addressbook	km	ផ្លូវ
+home zip code	addressbook	km	លេខ​កូដ​តំបន់​
+how many contacts should non-admins be able to export	admin	km	តើទំនាក់ទំនងប៉ុន្មានដែលមិនមែនជាអ្នកគ្រប់គ្រងគួរតែអាចនាំចេញបាន។
+how many fields must match for the record to be considered a duplicate.	addressbook	km	តើមានវាលប៉ុន្មានដែលត្រូវគ្នាសម្រាប់កំណត់ត្រាដែលត្រូវចាត់ទុកថាស្ទួន។
+html link to the current record	addressbook	km	តំណភ្ជាប់ HTML ទៅកំណត់ត្រាបច្ចុប្បន្ន
+icon	addressbook	km	រូបតំណាង
+if accounts are already in ldap	admin	km	ប្រសិនបើគណនីមាននៅក្នុង LDAP រួចហើយ
+ignore first line	addressbook	km	មិនអើពើជួរទីមួយ
+import	addressbook	km	នាំចូល
+import contacts	addressbook	km	នាំចូលទំនាក់ទំនង
+import csv-file into addressbook	addressbook	km	នាំចូលឯកសារ CSV ទៅក្នុងសៀវភៅអាសយដ្ឋាន
+import file	addressbook	km	នាំចូលឯកសារ
+import from	addressbook	km	នាំចូលពី
+import from ldif, csv, or vcard	addressbook	km	នាំចូលពី LDIF, CSV, ឬ vCard
+import from outlook	addressbook	km	នាំចូលពី Outlook
+import multiple vcard	addressbook	km	នាំចូល vCard ច្រើន។
+import next set	addressbook	km	នាំចូលឈុតបន្ទាប់
+import_instructions	addressbook	km	នៅក្នុង Netscape បើកសៀវភៅអាសយដ្ឋាន ហើយជ្រើសរើស <b>នាំចេញ</b> ពីម៉ឺនុយ <b>File</b> ។ ឯកសារដែលបាននាំចេញនឹងមានទម្រង់ LDIF ។<p>ឬនៅក្នុង Outlook ជ្រើសរើសថតទំនាក់ទំនងរបស់អ្នក ជ្រើសរើស <b>នាំចូល និងនាំចេញ...</b> ពីម៉ឺនុយ <b>ឯកសារ</b> ហើយនាំចេញរបស់អ្នក ទំនាក់ទំនងទៅក្នុងឯកសារអត្ថបទបំបែកដោយសញ្ញាក្បៀស (CSV) ។ <p>ឬនៅក្នុង Palm Desktop 4.0 ឬខ្ពស់ជាងនេះ សូមចូលទៅកាន់សៀវភៅអាសយដ្ឋានរបស់អ្នក ហើយជ្រើសរើស <b>នាំចេញ</b> ពីម៉ឺនុយ <b>File</b> ។ ឯកសារដែលបាននាំចេញនឹងមានទម្រង់ vCard ។
+importer's personal	addressbook	km	ផ្ទាល់ខ្លួនរបស់អ្នកនាំចូល
+imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	km	នាំចូលទំនាក់ទំនងទៅក្នុងសៀវភៅអាសយដ្ឋានពីឯកសារ CSV ។ CSV មានន័យថា 'តម្លៃបំបែកដោយសញ្ញាក្បៀស'។ នៅក្នុងផ្ទាំងជម្រើស អ្នកក៏អាចជ្រើសរើសសញ្ញាបំបែកផ្សេងទៀត។
+imports contacts into your addressbook from a vcard file.	addressbook	km	នាំចូលទំនាក់ទំនងទៅក្នុងសៀវភៅអាសយដ្ឋានរបស់អ្នកពីឯកសារ vCard ។
+in %1 days (%2) is %3's birthday.	addressbook	km	ក្នុង %1 ថ្ងៃ (%2) គឺជាថ្ងៃកំណើតរបស់ %3 ។
+income	addressbook	km	ចំណូល
+infolog	addressbook	km	ទំនាក់ទំនង InfoLog
+infolog-organisation	addressbook	km	អង្គការ InfoLog
+insert	addressbook	km	បញ្ចូល
+insufficent rights to delete this list!	addressbook	km	សិទ្ធិមិនគ្រប់គ្រាន់ក្នុងការលុបបញ្ជីនេះ!
+insufficent rights to edit this list!	addressbook	km	សិទ្ធិមិនគ្រប់គ្រាន់ដើម្បីកែសម្រួលបញ្ជីនេះ!
+international	addressbook	km	អន្តរជាតិ
+internet	addressbook	km	អុីនធឺណិត
+label	addressbook	km	ស្លាក​សញ្ញា
+last date	addressbook	km	កាលបរិច្ឆេទចុងក្រោយ
+last modified	addressbook	km	កែប្រែចុងក្រោយ
+last modified by	addressbook	km	កែប្រែចុងក្រោយដោយ
+ldap context for contacts	admin	km	បរិបទ LDAP សម្រាប់ទំនាក់ទំនង
+ldap host for contacts	admin	km	ម៉ាស៊ីន LDAP សម្រាប់ទំនាក់ទំនង
+ldap settings for contacts	admin	km	ការកំណត់ LDAP សម្រាប់ទំនាក់ទំនង
+ldif	addressbook	km	LDIF
+line 2	addressbook	km	ជួរទី 2
+link title for contacts show	addressbook	km	ចំណងជើងតំណសម្រាប់ទំនាក់ទំនង
+links	addressbook	km	តំណភ្ជាប់
+links and attached files	addressbook	km	តំណភ្ជាប់និងឯកសារភ្ជាប់
+links to specified application.  example: {{links/infolog}}	addressbook	km	តំណភ្ជាប់ទៅកម្មវិធីដែលបានបញ្ជាក់។ ឧទាហរណ៍៖ {{links/infolog}}
+list all categories	addressbook	km	រាយប្រភេទទាំងអស់។
+list all customfields	addressbook	km	រាយបញ្ជីវាលផ្ទាល់ខ្លួនទាំងអស់។
+list already exists!	addressbook	km	បញ្ជីមានរួចហើយ!
+list created	addressbook	km	បញ្ជីត្រូវបានបង្កើតឡើង។
+list creation failed, no rights!	addressbook	km	ការបង្កើតបញ្ជីបានបរាជ័យ គ្មានសិទ្ធិទេ!
+list of files linked to the current record	addressbook	km	បញ្ជីឯកសារដែលភ្ជាប់ទៅកំណត់ត្រាបច្ចុប្បន្ន
+load custom fields in index, even if custom field column is off (eg. to display them in a specific index column)	addressbook	km	ផ្ទុកវាលផ្ទាល់ខ្លួនជាលិបិក្រម ទោះបីជាជួរឈរវាលផ្ទាល់ខ្លួនត្រូវបានបិទ (ឧ. ដើម្បីបង្ហាញពួកវាក្នុងជួរឈរលិបិក្រមជាក់លាក់)
+load vcard	addressbook	km	ផ្ទុក vCard
+location	addressbook	km	ទីតាំង
+locations	addressbook	km	ទីតាំង
+mail vcard	addressbook	km	សំបុត្រ vCard
+main categories in their own field	addressbook	km	ប្រភេទសំខាន់ៗនៅក្នុងវាលរបស់ពួកគេ។
+manage mapping	addressbook	km	គ្រប់គ្រងការធ្វើផែនទី
+mark records as private	addressbook	km	សម្គាល់កំណត់ត្រាជាឯកជន
+merge contacts	addressbook	km	បញ្ចូលទំនាក់ទំនងចូលគ្នា
+merge duplicates	addressbook	km	បញ្ចូល​ការស្ទួនចូលគ្នា
+merge into first or account, deletes all other!	addressbook	km	បញ្ចូលចូលគ្នាទៅក្នុងគណនីដំបូង ឬគណនីលុបផ្សេងទៀតទាំងអស់!
+merged	addressbook	km	បញ្ចូលចូលគ្នា
+message after submitting the form	addressbook	km	សារបន្ទាប់ពីការបញ្ជូនទម្រង់
+message phone	addressbook	km	សារទូរស័ព្ទ
+middle name	addressbook	km	ឈ្មោះ​ក​ណ្តា​ល
+migration finished	addressbook	km	ការប្តូរទីកន្លែងបានបញ្ចប់
+migration to ldap	admin	km	ការផ្លាស់ប្តូរទៅ LDAP
+mobile	addressbook	km	ទូរស័ព្ទ
+mobile phone	addressbook	km	ទូរស័ព្ទចល័ត
+mobile phone (private)	addressbook	km	ទូរស័ព្ទចល័ត (ឯកជន)
+modem phone	addressbook	km	ទូរស័ព្ទម៉ូឌឹម
+more ...	addressbook	km	ច្រើនទៀត...
+move to addressbook	addressbook	km	ផ្លាស់ទីទៅសៀវភៅអាសយដ្ឋាន
+moved	addressbook	km	ផ្លាស់ទី
+multiple vcard	addressbook	km	vCard ច្រើន
+name for the distribution list	addressbook	km	ឈ្មោះសម្រាប់បញ្ជីចែកចាយ
+name of current user, all other contact fields are valid too	addressbook	km	ឈ្មោះអ្នកប្រើប្រាស់បច្ចុប្បន្ន វាលទំនាក់ទំនងផ្សេងទៀតទាំងអស់ក៏មានសុពលភាពផងដែរ។
+name, address	addressbook	km	ឈ្មោះ, អាស័យដ្ឋាន
+name, email, phone	addressbook	km	ឈ្មោះ អុីមែល ទូរស័ព្ទ
+new contact submitted by %1 at %2	addressbook	km	ទំនាក់ទំនងថ្មីបានដាក់ជូនដោយ %1 នៅ %2 ។
+new window opened to edit infolog for your selection	addressbook	km	បង្អួចថ្មីបានបើកដើម្បីកែសម្រួល InfoLog ។
+next date	addressbook	km	កាលបរិច្ឆេទបន្ទាប់
+no categories selected	addressbook	km	គ្មានកាតាឡុកបានជ្រើសរើសទេ
+no country selected	addressbook	km	គ្មានប្រទេសដែលបានជ្រើសរើសទេ
+no distribution list	addressbook	km	មិនមានបញ្ជីចែកចាយទេ។
+no fallback	addressbook	km	គ្មានការថយក្រោយទេ។
+no vcard	addressbook	km	គ្មាន vCard
+not shared	addressbook	km	មិនបានចែករំលែក
+number	addressbook	km	ចំនួន
+number of records to read (%1)	addressbook	km	ចំនួនកំណត់ត្រាដែលត្រូវអាន (%1)
+open %1 crm view	addressbook	km	បើកទិដ្ឋភាព %1 CRM
+open email addresses in external mail program	addressbook	km	បើកអាសយដ្ឋានអុីមែលនៅក្នុងកម្មវិធីសំបុត្រខាងក្រៅ
+open for editing?	addressbook	km	បើកសម្រាប់ការកែសម្រួល?
+open infolog crm view	preferences	km	បើកទិដ្ឋភាព InfoLog CRM នៃទំនាក់ទំនង
+open tracking system crm view	preferences	km	បើកប្រព័ន្ធតាមដានទិដ្ឋភាព CRM
+options for type	admin	km	ជម្រើសសម្រាប់ប្រភេទ
+organisation	addressbook	km	អង្គការ
+organisations	addressbook	km	អង្គការ
+organisations by departments	addressbook	km	អង្គការតាមនាយកដ្ឋាន
+organisations by location	addressbook	km	អង្គការតាមទីតាំង
+other number	addressbook	km	លេខផ្សេងទៀត
+other phone	addressbook	km	ទូរស័ព្ទផ្សេងទៀត
+own sorting	addressbook	km	ការតម្រៀបផ្ទាល់ខ្លួន
+pager	common	km	ទំព័រ
+parcel	addressbook	km	កញ្ចប់
+participants	addressbook	km	អ្នកចូលរួម
+permission denied !!!	addressbook	km	ការអនុញ្ញាតត្រូវបានបដិសេធ!
+permissiong denied! ask your administrator to allow regular uses to update their public keys.	addressbook	km	ការអនុញ្ញាតត្រូវបានបដិសេធ! សួរអ្នកគ្រប់គ្រងរបស់អ្នកឱ្យអនុញ្ញាតឱ្យប្រើជាប្រចាំដើម្បីធ្វើបច្ចុប្បន្នភាពសោសាធារណៈរបស់ពួកគេ។
+pgp key	addressbook	km	គ្រាប់ចុច PGP
+phone number	common	km	លេខទូរសព្ទ
+phone numbers	common	km	លេខទូរសព្ទ
+photo	addressbook	km	រូបថត
+please enter a name for that field !	addressbook	km	បញ្ចូលឈ្មោះទៅក្នុងវាលនោះ!
+please select only one category	addressbook	km	ជ្រើសរើសកាតាឡុកមួយប៉ុណ្ណោះ
+postal	common	km	ប្រៃសណីយ៍
+pref	addressbook	km	បុព្វបទ
+preferred email address to use in distribution lists	addressbook	km	អាសយដ្ឋានអុីមែលដែលពេញចិត្ត
+preferred phone	addressbook	km	ទូរស័ព្ទដែលពេញចិត្ត
+preferred type of email address to add for distribution lists	addressbook	km	ប្រភេទអាសយដ្ឋានអុីមែលដែលពេញចិត្តសម្រាប់បញ្ជីចែកចាយ។
+prefix	addressbook	km	បុព្វបទ
+prevent deleting of contacts	admin	km	ការពារការលុបទំនាក់ទំនង
+private address	addressbook	km	អាសយដ្ឋានឯកជន
+private custom fields	addressbook	km	វាលផ្ទាល់ខ្លួនផ្ទាល់ខ្លួន
+public key	addressbook	km	សោសាធារណៈ
+public sharing url	addressbook	km	URL ចែករំលែកជាសាធារណៈ
+publish into groups:	addressbook	km	ផ្សព្វផ្សាយជាក្រុម៖
+read a list / search for entries.	addressbook	km	អានបញ្ជី / ស្វែងរកធាតុ។
+read a list of entries.	addressbook	km	អានបញ្ជីនៃធាតុ។
+read a single entry by passing the id and fieldlist.	addressbook	km	អានធាតុតែមួយដោយឆ្លងកាត់លេខសម្គាល់ និងបញ្ជីវាល។
+read only	addressbook	km	អាច​បាន​តែ​អាន
+record access	addressbook	km	ការចូលកំណត់ត្រា
+record owner	addressbook	km	ម្ចាស់កំណត់ត្រា
+recovered	addressbook	km	យកបានវិញ
+region	addressbook	km	តំបន់
+remove from distribution list	addressbook	km	លុបចេញពីបញ្ជីចែកចាយ
+remove selected contacts from distribution list	addressbook	km	លុបទំនាក់ទំនងដែលបានជ្រើសរើសចេញពីបញ្ជីចែកចាយ។
+removed from distribution list	addressbook	km	បានដកចេញពីបញ្ជីចែកចាយ។
+rename list	addressbook	km	ប្តូរឈ្មោះបញ្ជី
+rename selected distribution list	addressbook	km	ប្តូរឈ្មោះបញ្ជីចែកចាយដែលបានជ្រើសរើស
+repetition	addressbook	km	ពាក្យដដែលៗ
+replacements for inserting contacts into documents	addressbook	km	ការជំនួសសម្រាប់ការបញ្ចូលទំនាក់ទំនងទៅក្នុងឯកសារ
+required fields *	addressbook	km	វាលដែលត្រូវការ *
+role	addressbook	km	មុខរបរ
+room	addressbook	km	បន្ទប់
+search letter	addressbook	km	ស្វែងរកសំបុត្រ
+select a portrait format jpeg photo. it will be resized to 60 pixel width.	addressbook	km	ជ្រើសរើសទម្រង់បញ្ឈររូបថត jpeg ។ វានឹងមានទំហំឡើងវិញដល់ទទឹង 60 ភីកសែល។
+select a source address to be used in geolocation routing system	addressbook	km	ជ្រើសរើសអាសយដ្ឋានប្រភពដែលត្រូវប្រើនៅក្នុងប្រព័ន្ធកំណត់ទីតាំងភូមិសាស្ត្រ
+select a view	addressbook	km	ជ្រើសរើសទិដ្ឋភាព
+select addressbook type	addressbook	km	ជ្រើសរើសប្រភេទសៀវភៅអាសយដ្ឋាន
+select all	addressbook	km	ជ្រើសរើស​ទាំងអស់
+select an action or addressbook to move to	addressbook	km	ជ្រើសរើសសកម្មភាព ឬសៀវភៅអាសយដ្ឋានដើម្បីផ្លាស់ទីទៅ
+select an action or addressbook to move to...	addressbook	km	ជ្រើសរើសសកម្មភាព ឬសៀវភៅអាសយដ្ឋាន ដើម្បីផ្លាស់ទីទៅ...
+select an opened dialog	addressbook	km	ជ្រើសរើសប្រអប់ដែលបានបើក
+select migration type	admin	km	ជ្រើសរើសប្រភេទការផ្លាស់ប្តូរទីតាំង
+select multiple contacts for a further action	addressbook	km	ជ្រើសរើសទំនាក់ទំនងច្រើនសម្រាប់សកម្មភាពបន្ថែម
+select phone number as prefered way of contact	addressbook	km	ជ្រើសរើសលេខទូរស័ព្ទជាមធ្យោបាយទំនាក់ទំនងដែលពេញចិត្ត
+select the type of conversion	addressbook	km	ជ្រើសរើសប្រភេទនៃការបំប្លែង
+select the type of conversion:	addressbook	km	ជ្រើសរើសប្រភេទនៃការបំប្លែង៖
+select where you want to store / retrieve contacts	admin	km	ជ្រើសរើសកន្លែងដែលទំនាក់ទំនងគួរតែត្រូវបានរក្សាទុក / ទាញយក។
+selected contacts	addressbook	km	ទំនាក់ទំនងដែលបានជ្រើសរើស
+send emailcopy to receiver	addressbook	km	ផ្ញើច្បាប់ចម្លងអុីមែលទៅអ្នកទទួល
+send fax via email by replacing fax number with an email address	addressbook	km	ផ្ញើទូរសារតាមអុីមែលដោយជំនួសលេខទូរសារជាមួយអាសយដ្ឋានអុីមែល
+send succeeded to %1	common	km	ការផ្ញើបានជោគជ័យទៅ %1
+seperator	addressbook	km	សញ្ញាបំបែក
+set full name and file as field in contacts of all users (either all or only empty values)	admin	km	កំណត់ឈ្មោះពេញ និងវាល 'fileas' នៅក្នុងទំនាក់ទំនងរបស់អ្នកប្រើប្រាស់ទាំងអស់។ ទាំងតម្លៃទាំងអស់ ឬតែទទេ។
+set only full name	addressbook	km	កំណត់តែឈ្មោះពេញ
+share into addressbook	addressbook	km	ចែករំលែកទៅក្នុងសៀវភៅអាសយដ្ឋាន
+share writable	addressbook	km	ចែករំលែកអាចសរសេរបាន។
+shared	addressbook	km	ចែករំលែក
+shared by me	addressbook	km	ចែករំលែកដោយខ្ញុំ
+shared into addressbook %1	addressbook	km	ចែករំលែកទៅក្នុងសៀវភៅអាសយដ្ឋាន %1
+shared with	addressbook	km	ចែករំលែកជាមួយ
+should the columns photo and home address always be displayed, even if they are empty.	addressbook	km	តើរូបថត និងអាសយដ្ឋានផ្ទះត្រូវបានបង្ហាញជានិច្ច បើទោះបីជាជួរឈរទទេក៏ដោយ។
+show	addressbook	km	បង្ហាញ
+show active accounts	addressbook	km	បង្ហាញគណនីសកម្ម
+show all accounts	addressbook	km	បង្ហាញគណនីទាំងអស់
+show infolog entries for this organisation	addressbook	km	បង្ហាញធាតុ InfoLog សម្រាប់ស្ថាប័ននេះ
+show the contacts of this organisation	addressbook	km	បង្ហាញទំនាក់ទំនងរបស់ស្ថាប័ននេះ
+similar contacts found:	addressbook	km	ទំនាក់ទំនងស្រដៀងគ្នាបានរកឃើញ៖
+size of popup (wxh, eg.400x300, if a popup should be used)	admin	km	ទំហំនៃការលេចឡើង។ ទទឹង x កម្ពស់ ឧទាហរណ៍ ៤០០x៣០០
+smime key	addressbook	km	សោ S/MIME
+special	addressbook	km	ពិសេស
+stadt	addressbook	km	ទីក្រុង
+start	admin	km	ចាប់ផ្តើម
+startrecord	addressbook	km	ចាប់ផ្តើមកំណត់ត្រា
+state	common	km	រដ្ឋ
+state (private)	addressbook	km	រដ្ឋ (ឯកជន)
+street	common	km	ផ្លូវ
+street (private)	addressbook	km	ផ្លូវ (ឯកជន)
+subject for email	addressbook	km	ប្រធានបទសម្រាប់អុីមែល
+successfully imported %1 records into your addressbook.	addressbook	km	បាននាំចូល %1 record(s) ដោយជោគជ័យទៅក្នុងសៀវភៅអាសយដ្ឋាន។
+suffix	addressbook	km	បច្ច័យ
+tag to mark positions for address labels	addressbook	km	ដាក់ស្លាកដើម្បីសម្គាល់ទីតាំងសម្រាប់ស្លាកអាសយដ្ឋាន
+tel home	addressbook	km	ទូរស័ព្ទផ្ទះ
+telephony integration	admin	km	ការរួមបញ្ចូលទូរស័ព្ទ
+test import (show importable records <u>only</u> in browser)	addressbook	km	សាកល្បងការនាំចូល បង្ហាញកំណត់ត្រាដែលអាចនាំចូលបាន <u>តែ</u> នៅក្នុងកម្មវិធីរុករក
+thank you for contacting us.	addressbook	km	សូមអរគុណសម្រាប់ការទាក់ទងមកយើងខ្ញុំ។
+that field name has been used already !	addressbook	km	ឈ្មោះវាលត្រូវបានប្រើប្រាស់រួចហើយ!
+the anonymous user has probably no add rights for this addressbook.	addressbook	km	អ្នកប្រើប្រាស់អនាមិកមិនមានសិទ្ធិបន្ថែមសម្រាប់សៀវភៅអាសយដ្ឋាននេះទេ។
+the anonymous user needs add rights for it!	addressbook	km	អ្នកប្រើប្រាស់អនាមិកត្រូវការសិទ្ធិបន្ថែម!
+the anonymous user needs read it!	addressbook	km	អ្នកប្រើប្រាស់អនាមិកត្រូវការសិទ្ធិអាន!
+the following document-types are supported:	addressbook	km	ប្រភេទឯកសារខាងក្រោមត្រូវបានគាំទ្រ៖
+the zip extension is needed, to insert contact data in openoffice or msoffice documents.	addressbook	km	ត្រូវការផ្នែកបន្ថែម zip ដើម្បីបញ្ចូលទិន្នន័យទំនាក់ទំនងក្នុងឯកសារ OpenOffice ឬ MSOffice ។
+there was an error saving your data :-(	addressbook	km	កំហុសក្នុងការរក្សាទុកទិន្នន័យ!
+this module displays a contactform, that stores direct into the addressbook.	addressbook	km	ម៉ូឌុលនេះបង្ហាញទម្រង់ទំនាក់ទំនង ដែលរក្សាទុកដោយផ្ទាល់ទៅក្នុងសៀវភៅអាសយដ្ឋាន។
+this module displays block from a adddressbook group.	addressbook	km	ម៉ូឌុលនេះបង្ហាញប្លុកពីក្រុមសៀវភៅអាសយដ្ឋាន។
+this person's first name was not in the address book.	addressbook	km	ឈ្មោះរបស់បុគ្គលនេះមិនមាននៅក្នុងសៀវភៅអាសយដ្ឋានទេ។
+this person's last name was not in the address book.	addressbook	km	នាមត្រកូលរបស់មនុស្សនេះមិនមាននៅក្នុងសៀវភៅអាសយដ្ឋានទេ។
+timezone	addressbook	km	ល្វែងម៉ោង
+title	addressbook	km	ចំណងជើងការងារ
+titles of any entries linked to the current record, excluding attached files	addressbook	km	ចំណងជើងនៃធាតុណាមួយដែលភ្ជាប់ទៅនឹងកំណត់ត្រាបច្ចុប្បន្ន ដោយមិនរាប់បញ្ចូលឯកសារដែលបានភ្ជាប់
+to many might exceed your execution-time-limit	addressbook	km	ចំនួនច្រើនពេកអាចលើសពីដែនកំណត់ពេលវេលាប្រតិបត្តិរបស់អ្នក។
+today is %1's birthday!	common	km	ថ្ងៃ​នេះ​ជា​ថ្ងៃ​ខួប​កំណើត​របស់ %1!
+tomorrow is %1's birthday.	common	km	ថ្ងៃស្អែកជាថ្ងៃកំណើតរបស់ %1។
+translation	addressbook	km	ការបកប្រែ
+two of: %1	addressbook	km	ពីរនៃ៖ %1
+type	addressbook	km	ប្រភេទ
+un-delete	addressbook	km	លុប
+unable to convert "%1" to account id.  using plugin setting (%2) for owner.	addressbook	km	មិនអាចបំប្លែង "%1" ទៅជាលេខសម្គាល់គណនីបានទេ។ ការប្រើប្រាស់ការកំណត់កម្មវិធីជំនួយ (%2) សម្រាប់ម្ចាស់។
+unable to delete	addressbook	km	មិនអាចលុបបានទេ។
+unable to import into %1, using %2	addressbook	km	មិន​អាច​នាំ​ចូល​ទៅ​ក្នុង%1 ដោយ​ប្រើ % 2
+unique id (uid)	addressbook	km	លេខសម្គាល់តែមួយគត់ (UID)
+unique id<br />(to update existing records)	addressbook	km	លេខសម្គាល់តែមួយគត់<br />ដើម្បីធ្វើបច្ចុប្បន្នភាពកំណត់ត្រាដែលមានស្រាប់
+unknown type %1, imported as %2	addressbook	km	មិនស្គាល់ប្រភេទ %1 នាំចូលជា % 2
+unshare	addressbook	km	ឈប់ចែករំលែក
+unshared	addressbook	km	មិនបានចែករំលែក
+update a single entry by passing the fields.	addressbook	km	ធ្វើបច្ចុប្បន្នភាពធាតុតែមួយដោយឆ្លងកាត់វាល។
+update fields by edited organisations?	admin	km	វាលដើម្បីធ្វើបច្ចុប្បន្នភាពនៃអង្គការដែលបានកែសម្រួល
+updated	addressbook	km	បានធ្វើបច្ចុប្បន្នភាព
+upload or delete the photo	addressbook	km	បង្ហោះ ឬលុបរូបថត
+url (business)	addressbook	km	url (អាជីវកម្ម)
+url (private)	addressbook	km	url (ឯកជន)
+url to link telephone numbers to (use %1 = number to call, %u = account name, %t = account phone)	admin	km	URL ដើម្បីភ្ជាប់លេខទូរស័ព្ទទៅ។ ប្រើ %1 = លេខដើម្បីហៅ, %u = ឈ្មោះគណនី, %t = ទូរស័ព្ទគណនី។
+use a category tree?	addressbook	km	ប្រើមែកធាងសម្រាប់ជ្រើសរើសប្រភេទ
+use addressbooks "own sorting" attribute	addressbook	km	ប្រើសៀវភៅអាសយដ្ឋាន "តម្រៀបផ្ទាល់ខ្លួន" គុណលក្ខណៈ
+use an extra tab for private custom fields?	admin	km	ប្រើផ្ទាំងបន្ថែមសម្រាប់វាលផ្ទាល់ខ្លួនឯកជន
+use country list	addressbook	km	ប្រើបញ្ជីប្រទេស
+use setup for a full account-migration	admin	km	ប្រើការដំឡើងសម្រាប់ការផ្ទេរគណនីពេញលេញ
+use this tag for addresslabels. put the content, you want to repeat, between two tags.	addressbook	km	ប្រើស្លាកនេះសម្រាប់ស្លាកអាសយដ្ឋាន។ ដាក់មាតិកាដែលអ្នកចង់ធ្វើម្តងទៀតរវាងស្លាកពីរ។
+used for links and for the own sorting of the list	addressbook	km	ប្រើសម្រាប់តំណភ្ជាប់ និងសម្រាប់ការតម្រៀបបញ្ជីផ្ទាល់ខ្លួន
+user groups are automatically shown as distribution lists.	addressbook	km	ក្រុមអ្នកប្រើប្រាស់ត្រូវបានបង្ហាញដោយស្វ័យប្រវត្តិជាបញ្ជីចែកចាយ។
+user preference	addressbook	km	ចំណូលចិត្តអ្នកប្រើប្រាស់
+vcard	common	km	vCard
+vcards require a first name entry.	addressbook	km	vCards ទាមទារការបញ្ចូលឈ្មោះដំបូង។
+vcards require a last name entry.	addressbook	km	vCards ទាមទារការបញ្ចូលនាមត្រកូល។
+verification	addressbook	km	ការផ្ទៀងផ្ទាត់
+view linked infolog entries	addressbook	km	មើលធាតុ InfoLog ដែលបានភ្ជាប់
+warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	km	ព្រមាន!! LDAP មានសុពលភាពលុះត្រាតែអ្នកមិនប្រើទំនាក់ទំនងសម្រាប់ការផ្ទុកគណនី!
+warning: all contacts found will be deleted!	addressbook	km	ការព្រមាន៖ ទំនាក់ទំនងទាំងអស់ដែលបានរកឃើញនឹងត្រូវបានលុប!
+weekday	addressbook	km	ថ្ងៃសប្តាហ៍
+what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	km	តំណសៀវភៅអាសយដ្ឋានបង្ហាញនៅក្នុងកម្មវិធីផ្សេងទៀត។ តម្លៃទទេនឹងត្រូវបានទុកចោល។ អ្នកត្រូវចូលម្តងទៀត ប្រសិនបើអ្នកប្តូរការកំណត់នេះ!
+when viewing a contact, show linked entries from the selected application	addressbook	km	នៅពេលមើលទំនាក់ទំនង បង្ហាញធាតុដែលបានភ្ជាប់ពីកម្មវិធីដែលបានជ្រើសរើស
+when you merge entries into documents, they will be stored here.  if no directory is provided, they will be stored in your home directory (/home/unverricht)	addressbook	km	នៅពេលអ្នកបញ្ចូលធាតុទៅក្នុងឯកសារ ពួកវានឹងត្រូវបានរក្សាទុកនៅទីនេះ។ ប្រសិនបើ​គ្មាន​ថត​ឯកសារ​ត្រូវ​បាន​ផ្តល់​ទេ ពួកវា​នឹង​ត្រូវ​បាន​រក្សាទុក​ក្នុង​ថត​ផ្ទះ​របស់អ្នក (/home/...)
+where to add the email address	addressbook	km	កន្លែងដែលត្រូវបន្ថែមអាសយដ្ឋានអុីមែល
+which address format should the addressbook use for countries it does not know the address format. if the address format of a country is known, it uses it independent of this setting.	addressbook	km	ជ្រើសរើសទម្រង់អាសយដ្ឋានណាមួយដែលគួរប្រើសម្រាប់ប្រទេសដែលមានទម្រង់អាសយដ្ឋានមិនស្គាល់។
+which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	km	សៀវភៅអាសយដ្ឋានដើម្បីបន្ថែមទំនាក់ទំនង នៅពេលដែលអ្នកគ្មានសិទ្ធិបន្ថែមទៅសៀវភៅអាសយដ្ឋានបច្ចុប្បន្ន។
+which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	km	សំណុំតួអក្សរមួយណាដែលត្រូវប្រើសម្រាប់ការនាំចេញ CSV ។
+which charset should be used for the vcard export.	addressbook	km	សំណុំតួអក្សរមួយណាដែលគួរប្រើសម្រាប់ការនាំចេញ vCard ។
+which charset should be used for the vcard import and export.	addressbook	km	សំណុំតួអក្សរមួយណាដែលគួរប្រើសម្រាប់ការនាំចូល និងនាំចេញ vCard ។
+which fields should be exported. all means every field stored in the addressbook incl. the custom fields. the business or home address only contains name, company and the selected address.	addressbook	km	តើវាលណាដែលត្រូវនាំចេញ។ ទាំងអស់មានន័យថាគ្រប់វាលទាំងអស់ដែលបានរក្សាទុកក្នុងសៀវភៅអាសយដ្ឋានរួមទាំង។ វាលផ្ទាល់ខ្លួន។ អាស័យដ្ឋានអាជីវកម្ម ឬផ្ទះមានតែឈ្មោះ ក្រុមហ៊ុន និងអាសយដ្ឋានដែលបានជ្រើសរើសប៉ុណ្ណោះ។
+whole query	addressbook	km	សំណួរទាំងមូល
+work email if given, else home email	addressbook	km	អុីមែលការងារប្រសិនបើត្រូវបានផ្តល់ឱ្យ អុីមែលផ្ទះផ្សេងទៀត។
+work phone	addressbook	km	ទូរស័ព្ទ​កន្លែងធ្វើការ
+write (update or add) a single entry by passing the fields.	addressbook	km	ធ្វើបច្ចុប្បន្នភាព ឬបន្ថែមធាតុតែមួយដោយឆ្លងកាត់វាល។
+wrong - try again ...	addressbook	km	ខុស - ព្យាយាមម្តងទៀត ...
+yes, for the next three days	addressbook	km	យល់ព្រម សម្រាប់បីថ្ងៃបន្ទាប់
+yes, for the next two weeks	addressbook	km	យល់ព្រម សម្រាប់ពីរសប្តាហ៍បន្ទាប់
+yes, for the next week	addressbook	km	យល់ព្រម សម្រាប់សប្តាហ៍ក្រោយ
+yes, for today and tomorrow	addressbook	km	យល់ព្រម សម្រាប់ថ្ងៃនេះ និងថ្ងៃស្អែក
+yes, only admins can purge deleted items	admin	km	យល់ព្រម មានតែអ្នកគ្រប់គ្រងប៉ុណ្ណោះដែលអាចសម្អាតធាតុដែលបានលុប
+yes, users can purge their deleted items	admin	km	យល់ព្រម អ្នកប្រើប្រាស់អាចសម្អាតធាតុដែលបានលុបរបស់ពួកគេ។
+you are not allowed to share into the addressbook of %1	addressbook	km	អ្នកមិនត្រូវបានអនុញ្ញាតឱ្យចែករំលែកទៅក្នុងសៀវភៅអាសយដ្ឋាននៃ %1 ទេ។
+you are not permitted to delete contact %1	addressbook	km	អ្នកមិនត្រូវបានអនុញ្ញាតឱ្យលុបទំនាក់ទំនង %1 ទេ។
+you are not permittet to delete this contact	addressbook	km	អ្នកមិនត្រូវបានអនុញ្ញាតឱ្យលុបទំនាក់ទំនងនេះទេ។
+you are not permittet to edit this contact	addressbook	km	អ្នកមិនត្រូវបានអនុញ្ញាតឱ្យកែសម្រួលទំនាក់ទំនងនេះទេ។
+you are not permittet to view this contact	addressbook	km	អ្នកមិនត្រូវបានអនុញ្ញាតឱ្យមើលទំនាក់ទំនងនេះទេ។
+you can only use ldap as contact repository if the accounts are stored in ldap too!	admin	km	LDAP អាចត្រូវបានប្រើជាឃ្លាំងទំនាក់ទំនងលុះត្រាតែគណនីត្រូវបានរក្សាទុកនៅក្នុង LDAP ផងដែរ!
+you can respond by visiting:	addressbook	km	ដើម្បីមើលវាសូមចូលទៅកាន់៖
+you must select a vcard. (*.vcf)	addressbook	km	ជ្រើសរើស vCard ។ (*.vcf)
+you must select at least 1 column to display	addressbook	km	ជ្រើសរើសយ៉ាងហោចណាស់ 1 ជួរដើម្បីបង្ហាញ
+you need to select a distribution list	addressbook	km	ជ្រើសរើសបញ្ជីចែកចាយ
+you need to select some contacts first	addressbook	km	ជ្រើសរើសទំនាក់ទំនងមួយចំនួនជាមុនសិន
+you need to select some entries first	addressbook	km	អ្នកត្រូវជ្រើសរើសធាតុមួយចំនួនជាមុនសិន
+your new public key has been stored in accounts addressbook.	addressbook	km	សោសាធារណៈថ្មីរបស់អ្នកត្រូវបានរក្សាទុកក្នុងសៀវភៅអាសយដ្ឋានគណនី។
+zip code	common	km	លេខ​កូដ​តំបន់
+zip code (private)	addressbook	km	លេខ​កូដ​តំបន់ (ឯកជន)
+zip_note	addressbook	km	<p><b>ចំណាំ៖</b> ឯកសារអាចជាឯកសារ zip នៃបណ្តុំឯកសារ .csv, .vcf, ឬ .ldif ។ កុំលាយប្រភេទឯកសារក្នុងមួយការនាំចូល។

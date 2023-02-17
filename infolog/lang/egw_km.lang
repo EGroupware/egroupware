@@ -1,0 +1,546 @@
+%1 days in advance	infolog	km	%1 ថ្ងៃជាមុន
+%1 deleted	infolog	km	%1 បានលុប។
+%1 deleted by %2 at %3	infolog	km	%1 បានលុបដោយ %2 នៅ %3
+%1 entries %2	infolog	km	ធាតុ %1 %2
+%1 entries %2, %3 failed because of insufficent rights !!!	infolog	km	ធាតុ %1 %2, %3 បានបរាជ័យ ដោយសារសិទ្ធិមិនគ្រប់គ្រាន់ !!!
+%1 entries %2, %3 failed.	infolog	km	ធាតុ %1 %2, %3 បានបរាជ័យ។
+%1 modified	infolog	km	%1 បានកែប្រែ
+%1 modified by %2 at %3	infolog	km	%1 បានកែប្រែដោយ %2 នៅ %3
+%1 records imported	infolog	km	បាន​នាំចូល​កំណត់ត្រា %1 ។
+%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	infolog	km	%1 បានអានកំណត់ត្រា។ មិន​ទាន់​បាន​នាំ​ចូល​ទេ អ្នក​អាច​ទៅ %2back%3 ហើយ​ដោះ​ធីក​ការ​នាំចូល​សាកល្បង។
+%1 you are responsible for is due at %2	infolog	km	%1 ដែល​អ្នក​ត្រូវ​ទទួល​ខុស​ត្រូវ​គឺ​ដល់​កំណត់​នៅ %2
+%1 you are responsible for is starting at %2	infolog	km	%1 ដែលអ្នកទទួលខុសត្រូវគឺចាប់ផ្តើមនៅ %2
+%1 you delegated is due at %2	infolog	km	%1 ដែល​អ្នក​បាន​ផ្ទេរ​សិទ្ធិ​ដល់​កំណត់​នៅ %2
+%1 you delegated is starting at %2	infolog	km	%1 ដែលអ្នកបានផ្ទេរសិទ្ធិគឺចាប់ផ្តើមនៅ %2
+(and children) deleted	infolog	km	(និងកុមារ) ត្រូវបានលុប។
+(no subject)	infolog	km	(គ្មាន​ប្រធាន)
+- subprojects from	infolog	km	- គម្រោងរងពី
+0%	infolog	km	0%
+10%	infolog	km	10%
+100%	infolog	km	100%
+20%	infolog	km	20%
+30%	infolog	km	30%
+40%	infolog	km	40%
+50%	infolog	km	50%
+60%	infolog	km	60%
+70%	infolog	km	70%
+80%	infolog	km	80%
+90%	infolog	km	90%
+<b>file-attachments via symlinks</b> instead of uploads and retrieval via file:/path for direct lan-clients	infolog	km	<b>ឯកសារភ្ជាប់តាមរយៈ symlinks</b> ជំនួសឱ្យការអាប់ឡូត និងការទាញយកតាមរយៈឯកសារ:/path សម្រាប់ lan-clients ផ្ទាល់
+a short subject for the entry	infolog	km	ប្រធានបទខ្លីសម្រាប់ការចូល
+abort without deleting	infolog	km	បោះបង់ដោយមិនលុប
+accept	infolog	km	ទទួលយក
+action	infolog	km	សកម្មភាព
+actions...	infolog	km	សកម្មភាព...
+actual date and time	infolog	km	កាលបរិច្ឆេទ និងពេលវេលាជាក់ស្តែង
+add	infolog	km	បន្ថែម
+add / remove link	infolog	km	បន្ថែម / លុបតំណ
+add a file	infolog	km	បន្ថែមឯកសារ
+add a new entry	infolog	km	បន្ថែមធាតុថ្មី
+add a new note	infolog	km	បន្ថែមចំណាំថ្មី
+add a new phonecall	infolog	km	បន្ថែមការហៅទូរសព្ទថ្មី
+add a new sub-task, -note, -call to this entry	infolog	km	បន្ថែមធាតុរងថ្មីទៅក្នុងធាតុនេះ
+add a new todo	infolog	km	បន្ថែម ToDo ថ្មី
+add file	infolog	km	បន្ថែមឯកសារ
+add or delete links	infolog	km	បន្ថែម ឬលុបតំណ
+add sub	infolog	km	បន្ថែមរង
+add timesheet entry	infolog	km	បន្ថែមធាតុតារាងពេលវេលា
+add:	infolog	km	បន្ថែម៖
+added	infolog	km	បន្ថែម
+addressbook placeholders available	infolog	km	មានកន្លែងដាក់សៀវភៅអាសយដ្ឋាន
+all	infolog	km	ទាំងអស់
+all links and attachments	infolog	km	តំណភ្ជាប់ និងឯកសារភ្ជាប់ទាំងអស់
+all other %1 fields are valid	infolog	km	វាល %1 ផ្សេងទៀតទាំងអស់មានសុពលភាព
+all projects	infolog	km	គម្រោងទាំងអស់
+allow to save entries with due date in the past	infolog	km	អនុញ្ញាតឱ្យរក្សាទុកធាតុដែលមានកាលបរិច្ឆេទផុតកំណត់ពីមុន
+allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	km	អនុញ្ញាត​ឱ្យ​កំណត់​ស្ថានភាព​នៃ​ធាតុ​មួយ ឧទាហរណ៍​កំណត់​ការងារ​ត្រូវ​ធ្វើ​ប្រសិន​បើ​វា​បាន​បញ្ចប់។ តម្លៃអាស្រ័យលើប្រភេទធាតុចូល។
+alternatives	infolog	km	ជម្មើសជំនួស
+always show them	infolog	km	បង្ហាញពួកគេ
+application mail expected but got: %1	infolog	km	អ៊ីមែល​កម្មវិធី​ត្រូវ​បាន​រំពឹង​ទុក ប៉ុន្តែ​បាន​ទទួល៖ %1
+apply the action on the whole query, not only the shown entries!!!	infolog	km	អនុវត្តសកម្មភាពលើសំណួរទាំងមូល មិនត្រឹមតែធាតុដែលបានបង្ហាញទេ!!!
+apply the changes	infolog	km	អនុវត្តការផ្លាស់ប្តូរ
+archive	infolog	km	បណ្ណសារ
+are you shure you want to close this entry ?	infolog	km	តើអ្នកប្រាកដថាចង់បិទធាតុនេះទេ?
+are you shure you want to delete this entry ?	infolog	km	តើអ្នកប្រាកដថាចង់លុបធាតុនេះទេ?
+attach a file	infolog	km	ភ្ជាប់ឯកសារ
+attach file	infolog	km	ភ្ជាប់ឯកសារ
+attachments	infolog	km	ឯកសារភ្ជាប់
+attention: no contact with address %1 found.	infolog	km	យកចិត្តទុកដាក់៖ រកមិនឃើញទំនាក់ទំនងជាមួយអាសយដ្ឋាន%1 ទេ។
+automatically check 'do not notify' for these types	infolog	km	ពិនិត្យ 'កុំជូនដំណឹង' ដោយស្វ័យប្រវត្តិសម្រាប់ប្រភេទទាំងនេះ
+back to main list	infolog	km	ត្រឡប់ទៅបញ្ជីមេ
+billed	infolog	km	ចេញវិក្កយបត្រ
+both	infolog	km	ទាំងពីរ
+call	infolog	km	ហៅ
+can be used to show further infolog types in the calendar or limit it to show eg. only tasks.	infolog	km	អាចត្រូវបានប្រើដើម្បីបង្ហាញប្រភេទ InfoLog បន្ថែមទៀតនៅក្នុងប្រតិទិន ឬកំណត់វាឱ្យបង្ហាញឧទាហរណ៍តែកិច្ចការប៉ុណ្ណោះ។
+can not return an exact number of rows and therefore hides the count.	admin	km	មិនអាចត្រឡប់ចំនួនជួរដេកពិតប្រាកដបានទេ ដូច្នេះហើយលាក់ចំនួន។
+cancel	infolog	km	បោះបង់
+cancelled	infolog	km	បានលុបចោល។
+categories	infolog	km	ប្រភេទ
+category	infolog	km	ប្រភេទ
+change	infolog	km	ផ្លាស់ប្តូរ
+change category	infolog	km	ផ្លាស់ប្តូរប្រភេទ
+change completed	infolog	km	ការផ្លាស់ប្តូរបានបញ្ចប់។
+change completion	infolog	km	ផ្លាស់ប្តូរការបញ្ចប់
+change history	infolog	km	ផ្លាស់ប្តូរប្រវត្តិ
+change owner when updating	infolog	km	ផ្លាស់ប្តូរម្ចាស់នៅពេលធ្វើបច្ចុប្បន្នភាព
+change responsible	infolog	km	ផ្លាស់ប្តូរការទទួលខុសត្រូវ
+change the status of an entry, eg. close it	infolog	km	ផ្លាស់ប្តូរស្ថានភាពនៃធាតុមួយ, ឧ។ បិទវា។
+changed category to %1	infolog	km	បានប្តូរប្រភេទទៅជា%1
+changed completion to %1%	infolog	km	បានផ្លាស់ប្តូរការបញ្ចប់ទៅជា%1%
+changed status to %1	infolog	km	បានផ្លាស់ប្តូរស្ថានភាពទៅ%1
+changed type	infolog	km	ប្រភេទដែលបានផ្លាស់ប្តូរ
+check to set startday	infolog	km	ពិនិត្យមើលដើម្បីកំណត់ថ្ងៃចាប់ផ្តើម
+check to specify custom contact	infolog	km	ពិនិត្យដើម្បីបញ្ជាក់ទំនាក់ទំនងផ្ទាល់ខ្លួន
+choose owner of imported data	infolog	km	ជ្រើសរើសម្ចាស់ទិន្នន័យដែលបាននាំចូល
+click here to create the link	infolog	km	ចុចដើម្បីបង្កើតតំណ
+click here to start the search	infolog	km	ចុចដើម្បីចាប់ផ្តើមការស្វែងរក
+close	infolog	km	បិទ
+close all	infolog	km	បិទទាំងអស់។
+close this entry and all listed sub-entries	infolog	km	បិទធាតុនេះ និងធាតុរងដែលបានរាយបញ្ជីទាំងអស់។
+closed	infolog	km	បិទ។
+colon (:) separated list of field names to use if value is empty or to sum up	infolog	km	colon (:) បំបែកបញ្ជីឈ្មោះវាលដែលត្រូវប្រើប្រសិនបើតម្លៃទទេ ឬដើម្បីបូកសរុប
+comment	infolog	km	មតិយោបល់
+compare	infolog	km	ប្រៀបធៀប
+completed	infolog	km	បានបញ្ចប់
+configuration	infolog	km	ការកំណត់​រចនាសម្ព័ន្ធ
+confirm	infolog	km	បញ្ជាក់
+contact	infolog	km	ទំនាក់ទំនង
+contact cf	infolog	km	ទាក់ទង CF
+contact fields	infolog	km	វាលទំនាក់ទំនង
+contactfield	infolog	km	វាលទំនាក់ទំនង
+convert to a ticket	infolog	km	បម្លែងទៅជាសំបុត្រ
+copy of:	infolog	km	ច្បាប់ចម្លងនៃ៖
+copy your changes to the clipboard, %1reload the entry%2 and merge them.	infolog	km	ចម្លងការផ្លាស់ប្ដូររបស់អ្នកទៅក្ដារតម្បៀតខ្ទាស់ %1 ផ្ទុកធាតុឡើងវិញ %2 ហើយបញ្ចូលពួកវាចូលគ្នា។
+create new links	infolog	km	បង្កើតតំណថ្មី។
+created	infolog	km	បានបង្កើត
+creates a new field	infolog	km	បង្កើតវាលថ្មីមួយ
+creates a new status with the given values	infolog	km	បង្កើតស្ថានភាពថ្មីជាមួយនឹងតម្លៃដែលបានផ្តល់ឱ្យ
+creates a new typ with the given name	infolog	km	បង្កើត​ប្រភេទ​ថ្មី​ជាមួយ​នឹង​ឈ្មោះ​ដែល​បាន​ផ្ដល់
+creation	infolog	km	ការបង្កើត
+csv-fieldname	infolog	km	ឈ្មោះវាល CSV
+csv-filename	infolog	km	ឈ្មោះឯកសារ CSV
+csv-import	common	km	ការនាំចូល CSV
+current user	infolog	km	អ្នកប្រើប្រាស់បច្ចុប្បន្ន
+custom	infolog	km	វាលផ្ទាល់ខ្លួន
+custom contact-address, leave empty to use information from most recent link	infolog	km	អាសយដ្ឋានទំនាក់ទំនងផ្ទាល់ខ្លួន សូមទុកទទេដើម្បីប្រើព័ត៌មានពីតំណថ្មីៗបំផុត។
+custom contact-information, leave emtpy to use information from most recent link	infolog	km	ព័ត៌មានទំនាក់ទំនងផ្ទាល់ខ្លួន សូមទុកទទេដើម្បីប្រើព័ត៌មានពីតំណថ្មីៗបំផុត។
+custom fields	infolog	km	វាលផ្ទាល់ខ្លួន
+custom fields, type and status	common	km	វាលផ្ទាល់ខ្លួន ប្រភេទ និងស្ថានភាព
+custom from	infolog	km	ផ្ទាល់ខ្លួនពី
+custom regarding	infolog	km	ផ្ទាល់ខ្លួនទាក់ទងនឹង
+custom status for typ	infolog	km	ស្ថានភាពផ្ទាល់ខ្លួនសម្រាប់ប្រភេទ
+customfields	infolog	km	វាលផ្ទាល់ខ្លួន
+data exchange settings	infolog	km	ការកំណត់ការផ្លាស់ប្តូរទិន្នន័យ
+date completed	infolog	km	កាលបរិច្ឆេទបានបញ្ចប់
+date completed (leave it empty to have it automatic set if status is done or billed)	infolog	km	កាលបរិច្ឆេទបានបញ្ចប់។ ទុកឱ្យទទេដើម្បីឱ្យវាកំណត់ដោយស្វ័យប្រវត្តិប្រសិនបើស្ថានភាពត្រូវបានធ្វើរួច ឬចេញវិក្កយបត្រ។
+datecreated	infolog	km	កាលបរិច្ឆេទបង្កើត
+dates, status, access	infolog	km	កាលបរិច្ឆេទ ស្ថានភាព ការចូលប្រើ
+days	infolog	km	ថ្ងៃ
+default category for new infolog entries	infolog	km	ប្រភេទលំនាំដើមសម្រាប់ធាតុ InfoLog ថ្មី។
+default document to insert entries	infolog	km	ឯកសារលំនាំដើមដើម្បីបញ្ចូលធាតុ
+default filter for infolog	infolog	km	តម្រងលំនាំដើមសម្រាប់ InfoLog
+default status for a new log entry	infolog	km	ស្ថានភាពលំនាំដើមសម្រាប់ធាតុ InfoLlog ថ្មី។
+delegated	infolog	km	ផ្ទេរសិទ្ធិ
+delegated open	infolog	km	បើកដំណើរការ
+delegated open and upcoming	infolog	km	ការផ្ទេរសិទ្ធិបើកនិងនាពេលខាងមុខ
+delegated overdue	infolog	km	ហួសពេលកំណត់
+delegated upcomming	infolog	km	ផ្ទេរសិទ្ធិនាពេលខាងមុខ
+delegation	infolog	km	គណៈប្រតិភូ
+delete	infolog	km	លុប
+delete one record by passing its id.	infolog	km	លុបកំណត់ត្រាមួយដោយឆ្លងកាត់លេខសម្គាល់របស់វា។
+delete selected entries?	infolog	km	លុបធាតុដែលបានជ្រើសរើស?
+delete this entry and all listed sub-entries	infolog	km	លុបធាតុនេះ និងធាតុរងដែលបានរាយបញ្ជីទាំងអស់។
+deleted	infolog	km	បានលុប
+deletes the selected typ	infolog	km	លុបប្រភេទដែលបានជ្រើសរើស
+deletes this field	infolog	km	លុបវាលនេះ
+deletes this status	infolog	km	លុបស្ថានភាពនេះ
+description	infolog	km	ការពិពណ៌នា
+determines the order the fields are displayed	infolog	km	កំណត់លំដាប់ដែលវាលត្រូវបានបង្ហាញ
+directory with documents to insert entries	infolog	km	ថតជាមួយឯកសារដើម្បីបញ្ចូលធាតុ
+disables a status without deleting it	infolog	km	បិទស្ថានភាពដោយមិនលុបវា
+do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	km	តើអ្នកចង់បានការបញ្ជាក់ពីការទទួលខុសត្រូវលើការទទួលយក ការបញ្ចប់កិច្ចការ ឬទាំងពីរ
+do you want a notification if items owned by groups you are part of get updated ?	infolog	km	តើ​អ្នក​ចង់​បាន​ការ​ជូន​ដំណឹង​ប្រសិន​បើ​ធាតុ​ដែល​គ្រប់​គ្រង​ដោយ​ក្រុម​ដែល​អ្នក​ជា​ផ្នែក​នៃ​ការ​ធ្វើ​ឱ្យ​ទាន់​សម័យ?
+do you want a notification, if items get assigned to you or assigned items get updated?	infolog	km	ទទួលបានការជូនដំណឹងប្រសិនបើធាតុត្រូវបានចាត់តាំងឱ្យអ្នក ឬធាតុដែលបានកំណត់ត្រូវបានធ្វើបច្ចុប្បន្នភាព។
+do you want a notification, if items you are responsible for are about to start?	infolog	km	ទទួល​បាន​ការ​ជូន​ដំណឹង​ប្រសិន​បើ​ការ​បញ្ចូល​ប្រសិន​បើ​អ្នក​ទទួល​ខុស​ត្រូវ​សម្រាប់​គឺ​ជិត​នឹង​ចាប់​ផ្តើ​ម​។
+do you want a notification, if items you are responsible for are due?	infolog	km	ទទួល​បាន​ការ​ជូន​ដំណឹង​ប្រសិន​បើ​ធាតុ​ដែល​អ្នក​ត្រូវ​ទទួល​ខុស​ត្រូវ​ដល់​ពេល​កំណត់។
+do you want a notification, if items you created get updated?	infolog	km	ទទួលបានការជូនដំណឹងប្រសិនបើធាតុដែលអ្នកបានបង្កើតត្រូវបានធ្វើបច្ចុប្បន្នភាព។
+do you want a notification, if items you delegated are about to start?	infolog	km	ទទួលបានការជូនដំណឹងប្រសិនបើធាតុដែលអ្នកបានផ្ទេរសិទ្ធិហៀបនឹងចាប់ផ្តើម។
+do you want a notification, if items you delegated are due?	infolog	km	ទទួលបានការជូនដំណឹងប្រសិនបើធាតុដែលអ្នកបានផ្ទេរសិទ្ធិដល់កំណត់
+do you want to receive notifications as html-mails or plain text?	infolog	km	ទទួលការជូនដំណឹងជាសំបុត្រ HTML ឬអត្ថបទធម្មតា។
+don't show infolog	infolog	km	កុំបង្ហាញ InfoLog
+done	infolog	km	រួចរាល់
+download	infolog	km	ទាញយក
+download url for links	infolog	km	ទាញយក url សម្រាប់តំណ
+due %1	infolog	km	ដល់​កំណត់%1
+due date	infolog	km	កាលបរិច្ឆេទ​កំណត់
+duration	infolog	km	រយៈពេល
+e-mail:	infolog	km	អ៊ីមែល៖
+each value is a line like <id>[=<label>]	infolog	km	តម្លៃនីមួយៗគឺជាបន្ទាត់ដូចជា <id>[=<label>]
+edit	infolog	km	កែសម្រួល
+edit or create categories for ingolog	infolog	km	កែសម្រួល ឬបង្កើតប្រភេទសម្រាប់ InfoLog
+edit rights (full edit rights incl. making someone else responsible!)	infolog	km	កែសម្រួលសិទ្ធិ។ សិទ្ធិកែសម្រួលពេញលេញ រួមបញ្ចូល។ ធ្វើឱ្យអ្នកផ្សេងទទួលខុសត្រូវ!
+edit status	infolog	km	កែសម្រួលស្ថានភាព
+edit the entry	infolog	km	កែសម្រួលធាតុ
+edit this entry	infolog	km	កែសម្រួលធាតុនេះ។
+empty for all	infolog	km	ទទេសម្រាប់ទាំងអស់គ្នា
+encrypt description	infolog	km	អ៊ិនគ្រីបការពិពណ៌នា
+end	infolog	km	ចប់
+enddate	infolog	km	កាលបរិច្ឆេទ​កំណត់
+enddate can not be before startdate	infolog	km	កាលបរិច្ឆេទផុតកំណត់មិនអាចមុនកាលបរិច្ឆេទចាប់ផ្តើមបានទេ។
+enter a custom contact, leave empty if linked entry should be used	infolog	km	បញ្ចូលទំនាក់ទំនងផ្ទាល់ខ្លួន ទុកឱ្យទទេប្រសិនបើធាតុដែលបានភ្ជាប់គួរតែត្រូវបានប្រើ
+enter a custom phone/email, leave empty if linked entry should be used	infolog	km	បញ្ចូលទូរសព្ទ/អ៊ីមែលផ្ទាល់ខ្លួន ទុកឱ្យទទេ ប្រសិនបើធាតុដែលបានភ្ជាប់គួរតែត្រូវបានប្រើ
+enter a textual description of the log-entry	infolog	km	បញ្ចូលការពិពណ៌នាអត្ថបទនៃធាតុ InfoLog
+enter the query pattern	infolog	km	បញ្ចូលលំនាំសំណួរ
+entry and all files	infolog	km	ធាតុចូល និងឯកសារទាំងអស់។
+error: importing the ical	infolog	km	កំហុស៖ នាំចូល iCal
+error: no mail (mailbox / uid) given!	infolog	km	កំហុស៖ គ្មានសំបុត្រ (ប្រអប់សំបុត្រ / UID) ត្រូវបានផ្តល់ឱ្យ!
+error: saving the entry	infolog	km	កំហុសក្នុងការរក្សាទុកធាតុ!
+error: the entry has been updated since you opened it for editing!	infolog	km	កំហុស៖ ធាតុត្រូវបានធ្វើបច្ចុប្បន្នភាពចាប់តាំងពីអ្នកបើកវាសម្រាប់កែសម្រួល!
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	infolog	km	ឧទាហរណ៍ {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - search the field "n_prefix", for "Mr", if found, write Hello Mr., else write Hello Ms.
+example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	infolog	km	ឧទាហរណ៍ {{LETTERPREFIXCUSTOM n_prefix title n_family}} - ឧទាហរណ៍៖ លោកបណ្ឌិត James Miller
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	infolog	km	ឧទាហរណ៍ {{NELF role}} - ប្រសិនបើតួនាទីវាលមិនទទេ អ្នកនឹងទទួលបានបន្ទាត់ថ្មីជាមួយនឹងតម្លៃនៃតួនាទីវាល
+example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	infolog	km	ឧទាហរណ៍ {{nenvlf role}} - ប្រសិនបើតួនាទីវាលមិនទទេ កំណត់ LF ដោយគ្មានតម្លៃណាមួយនៃវាល
+execute a further action for this entry	infolog	km	អនុវត្តសកម្មភាពបន្ថែមសម្រាប់ធាតុនេះ។
+existing links	infolog	km	តំណភ្ជាប់ដែលមានស្រាប់
+exists	infolog	km	មាន
+export definition to use for nextmatch export	infolog	km	នាំចេញនិយមន័យដែលត្រូវប្រើសម្រាប់ការនាំចេញការប្រកួតបន្ទាប់
+exports in ical format.	infolog	km	ការនាំចេញជាទម្រង់ iCal ។
+exports infolog entries into a csv file.	infolog	km	នាំចេញធាតុ InfoLog ទៅក្នុងឯកសារ CSV ។
+favorites	infolog	km	ចំណូលចិត្ត
+fax	infolog	km	ទូរសារ
+field must not be empty !!!	infolog	km	វាលមិនត្រូវទទេ!
+fields to exclude when copying an infolog:	infolog	km	វាលដែលត្រូវដកចេញនៅពេលចម្លង InfoLog៖
+fields to exclude when creating a sub-entry:	infolog	km	វាលដែលត្រូវដកចេញនៅពេលបង្កើតធាតុរង៖
+fieldseparator	infolog	km	អ្នកបំបែកវាល
+finish	infolog	km	បញ្ចប់
+first argument for preg_replace	infolog	km	អាគុយម៉ង់ដំបូងសម្រាប់ preg_replace
+for infolog type %1, %2 is required	infolog	km	សម្រាប់ប្រភេទ InfoLog %1, %2 គឺត្រូវបានទាមទារ
+for serial letter use this tag. put the content, you want to repeat between two tags.	infolog	km	សម្រាប់អក្សរសៀរៀលប្រើស្លាកនេះ។ ដាក់មាតិកាដែលអ្នកចង់ធ្វើម្តងទៀតរវាងស្លាកពីរ។
+for which types should this field be used	infolog	km	សម្រាប់ប្រភេទណាដែលគួរប្រើវាលនេះ។
+from	infolog	km	ពី
+full list of placeholder names	infolog	km	បញ្ជីពេញលេញនៃឈ្មោះកន្លែងដាក់
+general fields:	infolog	km	វាលទូទៅ៖
+general settings	infolog	km	ការកំណត់​ទូទៅ
+global categories	infolog	km	ប្រភេទសកល
+group owner for	infolog	km	ម្ចាស់ក្រុមសម្រាប់
+high	infolog	km	ខ្ពស់
+history	infolog	km	ប្រវត្តិសាស្ត្រ
+history logging	infolog	km	ការកត់ត្រាប្រវត្តិសាស្ត្រ
+history logging and deleting of items	infolog	km	ការកត់ត្រាប្រវត្តិ និងការលុបធាតុ
+how many description lines should be directly visible. further lines are available via a scrollbar.	infolog	km	តើ​មាន​បន្ទាត់​ពណ៌នា​ប៉ុន្មាន​ដែល​គួរ​មើល​ឃើញ​ដោយ​ផ្ទាល់។ បន្ទាត់បន្ថែមទៀតអាចរកបានតាមរយៈរបាររមូរ។
+how wide should the description area be. this value is numeric and interpreted as em; 60 works reasonably well.	infolog	km	តើតំបន់ពិពណ៌នាគួរមានទំហំប៉ុនណា។ តម្លៃនេះគឺជាលេខឧទាហរណ៍ 60 ។
+html link to the current record	infolog	km	តំណភ្ជាប់ HTML ទៅកំណត់ត្រាបច្ចុប្បន្ន
+id	infolog	km	លេខសម្គាល់
+id#	infolog	km	លេខសម្គាល់#
+if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	km	ប្រសិនបើប្រភេទមួយមានម្ចាស់ក្រុម ធាតុទាំងអស់នៃប្រភេទនោះនឹងត្រូវបានគ្រប់គ្រងដោយក្រុមដែលបានផ្តល់ឱ្យ ហើយមិនមែនជាអ្នកប្រើប្រាស់ដែលបានបង្កើតវាទេ!
+if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	km	ប្រសិនបើមិនបានកំណត់ទេ បន្ទាត់ដែលមានការស្វែងរក និងតម្រងត្រូវបានលាក់សម្រាប់ធាតុតិចជាង "ការផ្គូផ្គងអតិបរមាក្នុងមួយទំព័រ" ដូចដែលបានកំណត់នៅក្នុងចំណូលចិត្តទូទៅរបស់អ្នក។
+if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	infolog	km	ប្រសិនបើអ្នកបញ្ជាក់ថតមួយ (ផ្លូវ vfs ពេញលេញ) នៅទីនេះ %1 បង្ហាញសកម្មភាពសម្រាប់ឯកសារនីមួយៗ។ សកម្មភាពនោះអនុញ្ញាតឱ្យទាញយកឯកសារដែលបានបញ្ជាក់ជាមួយនឹងទិន្នន័យដែលបានបញ្ចូល។
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	infolog	km	ប្រសិនបើអ្នកបញ្ជាក់ឯកសារ (ផ្លូវ vfs ពេញលេញ) នៅទីនេះ %1 បង្ហាញរូបតំណាងឯកសារបន្ថែមសម្រាប់ធាតុនីមួយៗ។ រូបតំណាងនោះអនុញ្ញាតឱ្យទាញយកឯកសារដែលបានបញ្ជាក់ជាមួយនឹងទិន្នន័យដែលបានបញ្ចូល។
+if you specify an export definition, it will be used when you export	infolog	km	ប្រសិនបើអ្នកបញ្ជាក់និយមន័យនាំចេញ វានឹងត្រូវបានប្រើនៅពេលអ្នកនាំចេញ
+import next set	infolog	km	នាំចូលឈុតបន្ទាប់
+importance	infolog	km	សារៈសំខាន់
+imports entries into the infolog from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	infolog	km	នាំចូលធាតុចូលទៅក្នុង InfoLog ពីឯកសារ CSV ។ CSV មានន័យថា 'តម្លៃបំបែកដោយសញ្ញាក្បៀស'។ នៅក្នុងផ្ទាំងជម្រើស អ្នកក៏អាចជ្រើសរើសសញ្ញាបំបែកផ្សេងទៀត។
+imports todos into infolog from an ical file.	infolog	km	នាំចូល TODOs ទៅក្នុង InfoLog ពីឯកសារ iCal ។
+info log	common	km	InfoLog
+infolog	common	km	InfoLog
+infolog - delete	infolog	km	InfoLog - លុប
+infolog - edit	infolog	km	InfoLog - កែសម្រួល
+infolog - import csv-file	infolog	km	InfoLog - នាំចូលឯកសារ CSV
+infolog - new	infolog	km	InfoLog - ថ្មី។
+infolog - new subproject	infolog	km	InfoLog - គម្រោងរងថ្មី។
+infolog - subprojects from	infolog	km	InfoLog - គម្រោងរងពី
+infolog csv export	infolog	km	ការនាំចេញ InfoLog CSV
+infolog csv import	infolog	km	ការនាំចូល InfoLog CSV
+infolog encryption requires epl subscription	infolog	km	ការអ៊ិនគ្រីប InfoLog តម្រូវឱ្យមានការជាវ EPL
+infolog entry deleted	infolog	km	ធាតុ InfoLog ត្រូវបានលុប
+infolog entry saved	infolog	km	ធាតុ InfoLog ត្រូវបានរក្សាទុក
+infolog fields:	infolog	km	វាល InfoLog៖
+infolog filter for the home screen	infolog	km	តម្រង InfoLog សម្រាប់អេក្រង់ដើម
+infolog ical export	infolog	km	ការនាំចេញ InfoLog iCal
+infolog ical import	infolog	km	នាំចូល InfoLog iCal
+infolog id	infolog	km	លេខសម្គាល់ InfoLog
+infolog list	infolog	km	បញ្ជី InfoLog
+infolog preferences	common	km	ចំណូលចិត្ត InfoLog
+infolog-fieldname	infolog	km	ឈ្មោះវាល InfoLog
+insert	infolog	km	បញ្ចូល
+insert in document	infolog	km	បញ្ចូលក្នុងឯកសារ
+insert timestamp into description field	infolog	km	បញ្ចូលត្រាពេលវេលាទៅក្នុងវាលពិពណ៌នា
+invalid filename	infolog	km	ឈ្មោះឯកសារមិនត្រឹមត្រូវ។
+invalid owner id: %1.  might be a bad field translation.  used %2 instead.	infolog	km	លេខសម្គាល់ម្ចាស់មិនត្រឹមត្រូវ៖ %1។ បានប្រើ%2 ជំនួសវិញ។
+invalid status for entry type %1.	infolog	km	ស្ថានភាព​មិន​ត្រឹមត្រូវ​សម្រាប់​ប្រភេទ​ធាតុ%1។
+label<br>helptext	infolog	km	ស្លាក<br>អត្ថបទជំនួយ
+last changed	infolog	km	បានផ្លាស់ប្តូរចុងក្រោយ
+last modified	infolog	km	កែប្រែចុងក្រោយ
+leave blank to get the used time calculated by timesheet entries	infolog	km	ទុក​ទទេ​ដើម្បី​ទទួល​បាន​ពេល​វេលា​ប្រើ​ប្រាស់​ដែល​គណនា​ដោយ​ធាតុ​សន្លឹក​ពេល​វេលា
+leave it empty	infolog	km	ទុកវាចោល
+leave it empty for a full week	infolog	km	ទុកវាចោលពេញមួយសប្តាហ៍
+leave without saveing the entry	infolog	km	ចាកចេញដោយមិនរក្សាទុកការចូល
+leaves without saveing	infolog	km	ស្លឹកដោយមិនរក្សាទុក
+length	infolog	km	ប្រវែង
+limit list to last n month, if ordering by last-modified and not searching.	admin	km	កំណត់បញ្ជីទៅ N ខែចុងក្រោយ ប្រសិនបើបញ្ជាទិញដោយការកែប្រែចុងក្រោយ និងមិនស្វែងរក។
+limit number of description lines (default 5, 0 for no limit)	infolog	km	កំណត់ចំនួនបន្ទាត់ពិពណ៌នា។ លំនាំដើម = 5, 0 = គ្មានដែនកំណត់។
+limit width of description column ((effective only if lines limit is set), 0 for no limit)	infolog	km	កំណត់ទទឹងនៃជួរឈរពិពណ៌នា។ មានប្រសិទ្ធភាពលុះត្រាតែការកំណត់បន្ទាត់ត្រូវបានកំណត់។ 0 = គ្មានដែនកំណត់។
+link	infolog	km	តំណភ្ជាប់
+linked to %1	infolog	km	បានភ្ជាប់ទៅ%1
+links	infolog	km	តំណភ្ជាប់
+links and attached files	infolog	km	តំណភ្ជាប់និងឯកសារភ្ជាប់
+links of this entry	infolog	km	តំណភ្ជាប់នៃធាតុនេះ។
+links to specified application.  example: {{links/infolog}}	infolog	km	តំណភ្ជាប់ទៅកម្មវិធីដែលបានបញ្ជាក់។ ឧទាហរណ៍៖ {{links/infolog}}
+links wrapped in an href tag with download link	infolog	km	តំណភ្ជាប់ត្រូវបានរុំដោយស្លាក HREF ជាមួយនឹងតំណទាញយក
+list all categories	infolog	km	រាយប្រភេទទាំងអស់។
+list of files linked to the current record	infolog	km	បញ្ជីឯកសារដែលភ្ជាប់ទៅកំណត់ត្រាបច្ចុប្បន្ន
+load custom fields in index, if filtered by selected types (eg. to display them in a type-specific index template)	infolog	km	ផ្ទុកវាលផ្ទាល់ខ្លួននៅក្នុងលិបិក្រម ប្រសិនបើត្រងតាមប្រភេទដែលបានជ្រើសរើស (ឧ. ដើម្បីបង្ហាញពួកវាក្នុងទម្រង់លិបិក្រមប្រភេទជាក់លាក់)
+location	infolog	km	ទីតាំង
+longer textual description	infolog	km	ការពិពណ៌នាអត្ថបទវែងជាង
+low	infolog	km	ទាប
+manage mapping	infolog	km	គ្រប់គ្រងការធ្វើផែនទី
+max length of the input [, length of the inputfield (optional)]	infolog	km	ប្រវែងអតិបរមានៃការបញ្ចូល [, ប្រវែងនៃវាលបញ្ចូល (ជាជម្រើស)]
+modifier	infolog	km	អ្នកកែប្រែ
+modifierer	infolog	km	អ្នកកែប្រែ
+name must not be empty !!!	infolog	km	ឈ្មោះមិនត្រូវទទេ!
+name of current user, all other contact fields are valid too	infolog	km	ឈ្មោះអ្នកប្រើប្រាស់បច្ចុប្បន្ន វាលទំនាក់ទំនងផ្សេងទៀតទាំងអស់ក៏មានសុពលភាពផងដែរ។
+name of new type to create	infolog	km	ឈ្មោះប្រភេទថ្មីដែលត្រូវបង្កើត
+never hide search and filters	infolog	km	កុំលាក់ការស្វែងរក និងតម្រង
+new %1	infolog	km	ថ្មី %1
+new %1 created by %2 at %3	infolog	km	ថ្មី %1 បង្កើតដោយ %2 នៅ %3
+new name	infolog	km	ឈ្មោះថ្មី។
+new search	infolog	km	ការស្វែងរកថ្មី។
+no - cancel	infolog	km	ទេ - បោះបង់
+no custom field "%1" for %2.	infolog	km	មិនមានវាលផ្ទាល់ខ្លួន "%1" សម្រាប់ %2 ។
+no describtion, links or attachments	infolog	km	គ្មានការពិពណ៌នា តំណ ឬឯកសារភ្ជាប់
+no details	infolog	km	មិនមានព័ត៌មានលម្អិតទេ
+no entries found, try again ...	infolog	km	រកមិនឃើញធាតុទេ សូមព្យាយាមម្តងទៀត...
+no filter	infolog	km	មិន​មាន​តម្រង
+no links or attachments	infolog	km	គ្មានតំណ ឬឯកសារភ្ជាប់
+no project	infolog	km	គ្មានគម្រោង
+nonactive	infolog	km	មិនសកម្ម
+none	infolog	km	គ្មាន
+normal	infolog	km	ធម្មតា
+not	infolog	km	ទេ
+not assigned	infolog	km	មិនត្រូវបានចាត់តាំង
+not-started	infolog	km	មិន​បាន​ចាប់​ផ្តើ​ម
+note	infolog	km	ចំណាំ
+notification settings	infolog	km	ការកំណត់ការជូនដំណឹង
+number of records to read (%1)	infolog	km	ចំនួនកំណត់ត្រាដែលត្រូវអាន (%1)
+number of row for a multiline inputfield or line of a multi-select-box	infolog	km	ចំនួន​ជួរ​ដេក​សម្រាប់​វាល​បញ្ចូល​ច្រើន​បន្ទាត់ ឬ​បន្ទាត់​នៃ​ប្រអប់​ជ្រើសរើស​ច្រើន​
+offer	infolog	km	ការផ្តល់ជូន
+old fixed definition	infolog	km	និយមន័យចាស់ថេរ
+one day after	infolog	km	មួយថ្ងៃក្រោយមក
+one day in advance	infolog	km	មួយថ្ងៃជាមុន
+ongoing	infolog	km	កំពុងដំណើរការ
+only for details	infolog	km	សម្រាប់ព័ត៌មានលម្អិតប៉ុណ្ណោះ។
+only if i get assigned or removed	infolog	km	លុះត្រាតែខ្ញុំត្រូវបានចាត់តាំង ឬដកចេញ
+only show them if there is a filter	infolog	km	បង្ហាញពួកវាតែប្រសិនបើមានតម្រង
+only show them while searching	infolog	km	បង្ហាញពួកវានៅពេលស្វែងរកប៉ុណ្ណោះ។
+only the attachments	infolog	km	មានតែឯកសារភ្ជាប់ប៉ុណ្ណោះ។
+only the links	infolog	km	មានតែតំណភ្ជាប់ប៉ុណ្ណោះ។
+open and upcoming	infolog	km	បើកហើយនាពេលខាងមុខ
+open(status)	infolog	km	បើក
+optional note to the link	infolog	km	កំណត់ចំណាំជាជម្រើសទៅកាន់តំណ
+order	infolog	km	បញ្ជាទិញ
+organization	infolog	km	អង្គការ
+other configurations	infolog	km	ការកំណត់រចនាសម្ព័ន្ធផ្សេងទៀត។
+overdue	infolog	km	ហួសកាលកំណត់
+own	infolog	km	ផ្ទាល់ខ្លួន
+own open	infolog	km	បើកផ្ទាល់ខ្លួន
+own open and upcoming	infolog	km	បើកផ្ទាល់ខ្លួន និងនាពេលខាងមុខ
+own overdue	infolog	km	ហួសពេលកំណត់ផ្ទាល់ខ្លួន
+own upcoming	infolog	km	ផ្ទាល់ខ្លួននាពេលខាងមុខ
+owner does not have edit rights	infolog	km	ម្ចាស់មិនមានសិទ្ធិកែសម្រួលទេ។
+owner, responsible	infolog	km	ម្ចាស់, ទទួលខុសត្រូវ
+parent	infolog	km	ឪពុកម្តាយ
+parent infolog	infolog	km	កំណត់ហេតុព័ត៌មានមាតាបិតា
+participants for scheduling an appointment	infolog	km	អ្នកចូលរួមសម្រាប់ការណាត់ជួប
+path on (web-)serverside<br>eg. /var/samba/share	infolog	km	ផ្លូវនៅលើ (web-)serverside<br>ឧ. /var/samba/ចែករំលែក
+path to user and group files has to be outside of the webservers document-root!!!	infolog	km	ផ្លូវទៅកាន់ឯកសារអ្នកប្រើប្រាស់ និងក្រុមត្រូវតែនៅខាងក្រៅនៃម៉ាស៊ីនមេបណ្តាញឯកសារជា root!
+pattern for search in addressbook	infolog	km	លំនាំសម្រាប់ស្វែងរកក្នុងសៀវភៅអាសយដ្ឋាន
+pattern for search in projects	infolog	km	លំនាំសម្រាប់ការស្វែងរកនៅក្នុងគម្រោង
+percent completed	infolog	km	ភាគរយបានបញ្ចប់
+performance optimization for huge infolog tables	admin	km	ការបង្កើនប្រសិទ្ធភាពការអនុវត្តសម្រាប់តារាង InfoLog ដ៏ធំ
+permission denied	infolog	km	ការអនុញ្ញាតត្រូវបានបដិសេធ!
+permissions error - %1 could not %2	infolog	km	កំហុស​ការ​អនុញ្ញាត -%1 មិន​អាច%2
+phone	infolog	km	ការហៅទូរស័ព្ទ
+phone/email	infolog	km	ទូរស័ព្ទ/អ៊ីមែល
+phonecall	infolog	km	ការហៅទូរស័ព្ទ
+planned	infolog	km	បានគ្រោងទុក
+planned time	infolog	km	ពេលវេលាដែលបានគ្រោងទុក
+prefix for sub-entries (default: re:)	infolog	km	បុព្វបទសម្រាប់ធាតុរង (លំនាំដើម៖ Re:)
+price	infolog	km	តម្លៃ
+pricelist	infolog	km	តារាង​តំលៃ
+primary link	infolog	km	តំណភ្ជាប់បឋម
+print this infolog	infolog	km	បោះពុម្ព InfoLog នេះ
+printing...	infolog	km	ការបោះពុម្ព...
+priority	infolog	km	អាទិភាព
+private	infolog	km	ឯកជន
+project	infolog	km	គម្រោង
+project id	infolog	km	លេខសម្គាល់គម្រោង
+project name	infolog	km	ឈ្មោះគម្រោង
+project settings: price, times	infolog	km	ការកំណត់គម្រោង៖ តម្លៃពេលវេលា
+projectmanager	infolog	km	អ្នកគ្រប់គ្រងគម្រោង
+re-planned	infolog	km	គ្រោងឡើងវិញ
+re-planned time	infolog	km	ពេលវេលាដែលបានគ្រោងទុកឡើងវិញ
+re:	infolog	km	Re:
+read one record by passing its id.	infolog	km	អានកំណត់ត្រាមួយដោយឆ្លងកាត់លេខសម្គាល់របស់វា។
+read rights (default)	infolog	km	សិទ្ធិអាន (លំនាំដើម)
+receive notifications about due entries you are responsible for	infolog	km	ទទួល​បាន​ការ​ជូន​ដំណឹង​អំពី​ការ​ចូល​កំណត់​ដែល​អ្នក​ត្រូវ​ទទួល​ខុស​ត្រូវ​សម្រាប់​
+receive notifications about due entries you delegated	infolog	km	ទទួល​បាន​ការ​ជូន​ដំណឹង​អំពី​ធាតុ​ត្រូវ​កំណត់​ដែល​អ្នក​បាន​ផ្ទេរ​សិទ្ធិ
+receive notifications about items assigned to you	infolog	km	ទទួលការជូនដំណឹងអំពីវត្ថុដែលបានចាត់ឱ្យអ្នក
+receive notifications about items of type owned by groups you are part of	infolog	km	ទទួលបានការជូនដំណឹងអំពីធាតុនៃប្រភេទដែលជាកម្មសិទ្ធិដោយក្រុមដែលអ្នកជាផ្នែក
+receive notifications about own items	infolog	km	ទទួលការជូនដំណឹងអំពីវត្ថុផ្ទាល់ខ្លួន
+receive notifications about starting entries you are responsible for	infolog	km	ទទួលបានការជូនដំណឹងអំពីការចាប់ផ្តើមធាតុដែលអ្នកទទួលខុសត្រូវ
+receive notifications about starting entries you delegated	infolog	km	ទទួលបានការជូនដំណឹងអំពីការចាប់ផ្តើមធាតុដែលអ្នកបានផ្ទេរសិទ្ធិ
+receive notifications as html-mails	infolog	km	ទទួលការជូនដំណឹងជាសំបុត្រ HTML ។
+regular expression	infolog	km	ការបញ្ចេញមតិទៀងទាត់
+remark	infolog	km	ចំណាំ
+remove this link (not the entry itself)	infolog	km	ដកតំណនេះចេញ មិនមែនធាតុចូលទេ។
+removed	infolog	km	បានដកចេញ។
+removed category	infolog	km	ប្រភេទដែលបានដកចេញ
+replacement	infolog	km	ការជំនួស
+replacements for inserting entries into documents	infolog	km	ការជំនួសសម្រាប់ការបញ្ចូលធាតុទៅក្នុងឯកសារ
+responsible	infolog	km	ទទួលខុសត្រូវ
+responsible open	infolog	km	ទទួលខុសត្រូវបើកចំហ
+responsible open and upcoming	infolog	km	ទទួលខុសត្រូវដោយបើកចំហ និងនាពេលខាងមុខ
+responsible overdue	infolog	km	ទំនួលខុសត្រូវហួសកាលកំណត់
+responsible upcoming	infolog	km	ទទួលខុសត្រូវនាពេលខាងមុខ
+responsible user, priority	infolog	km	អ្នកប្រើប្រាស់ដែលមានទំនួលខុសត្រូវ, អាទិភាព
+returns a list / search for records.	infolog	km	ត្រឡប់បញ្ជី / ស្វែងរកកំណត់ត្រា។
+rights for the responsible	infolog	km	សិទ្ធិសម្រាប់អ្នកទទួលខុសត្រូវ
+rows	infolog	km	ជួរដេក
+same day	infolog	km	ថ្ងៃដដែល
+save	infolog	km	រក្សាទុក
+saves the changes made and leaves	infolog	km	រក្សាទុកការផ្លាស់ប្តូរនិងស្លឹក
+saves this entry	infolog	km	រក្សាទុកធាតុនេះ។
+schedule appointment	infolog	km	កំណត់ពេលណាត់ជួប
+search	infolog	km	ស្វែងរក
+search for:	infolog	km	ស្វែងរក:
+second parameter for preg_replace	infolog	km	ប៉ារ៉ាម៉ែត្រទីពីរសម្រាប់ preg_replace
+select	infolog	km	ជ្រើសរើស
+select a category for this entry	infolog	km	ជ្រើសរើសប្រភេទសម្រាប់ធាតុនេះ។
+select a price	infolog	km	ជ្រើសរើសតម្លៃ
+select a priority for this task	infolog	km	ជ្រើសរើសអាទិភាព
+select a project	infolog	km	ជ្រើសរើសគម្រោងមួយ។
+select a responsible user: a person you want to delegate this task	infolog	km	ជ្រើសរើសអ្នកប្រើប្រាស់ដែលមានទំនួលខុសត្រូវ៖ មនុស្សម្នាក់ដែលអ្នកចង់ផ្ទេរភារកិច្ចនេះ។
+select a typ to edit it's status-values or delete it	infolog	km	ជ្រើសរើសប្រភេទដើម្បីកែសម្រួលតម្លៃស្ថានភាពរបស់វា ឬលុបវា។
+select an action	infolog	km	ជ្រើសរើសសកម្មភាព
+select an action...	infolog	km	ជ្រើសរើសសកម្មភាព...
+select an app to search in	infolog	km	ជ្រើសរើសកម្មវិធីដើម្បីស្វែងរក
+select an entry to link with	infolog	km	ជ្រើសរើសធាតុដើម្បីភ្ជាប់ជាមួយ
+select multiple contacts for a further action	infolog	km	ជ្រើសរើសទំនាក់ទំនងច្រើនសម្រាប់សកម្មភាពបន្ថែម
+select new category	infolog	km	ជ្រើសរើសប្រភេទថ្មី។
+select to filter by owner	infolog	km	ជ្រើសរើសដើម្បីត្រងដោយម្ចាស់
+select to filter by responsible	infolog	km	ជ្រើសរើសដើម្បីត្រងដោយការទទួលខុសត្រូវ
+select users or groups	infolog	km	ជ្រើសរើសអ្នកប្រើប្រាស់ ឬក្រុម
+selected calendars	infolog	km	ប្រតិទិនដែលបានជ្រើសរើស
+selection cf	infolog	km	ការជ្រើសរើស CF
+sender	infolog	km	អ្នកផ្ញើ
+set status to done	infolog	km	កំណត់ស្ថានភាពដើម្បីធ្វើ
+set status to done for all entries	infolog	km	កំណត់ស្ថានភាពដើម្បីធ្វើរួចរាល់សម្រាប់ធាតុទាំងអស់។
+sets the status of this entry and its subs to done	infolog	km	កំណត់ស្ថានភាពនៃធាតុនេះ និងផ្នែករងរបស់វាដែលត្រូវធ្វើ
+sets the status of this entry to done	infolog	km	កំណត់ស្ថានភាពនៃធាតុនេះដើម្បីធ្វើ
+should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	km	គួរ InfoLog បង្ហាញកិច្ចការរង ការហៅទូរសព្ទ ឬកំណត់ចំណាំក្នុងទិដ្ឋភាពធម្មតាឬអត់។ អ្នកតែងតែអាចមើលការជាវតាមរយៈមេរបស់ពួកគេ។
+should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	km	គួរ InfoLog បង្ហាញតំណទៅកាន់កម្មវិធីផ្សេងទៀត និង/ឬឯកសារភ្ជាប់នៅក្នុងទិដ្ឋភាពបញ្ជី InfoLog ។
+should infolog show up on the home screen and with which filter. works only if you dont selected an application for the home screen (in your preferences).	infolog	km	តើ InfoLog បង្ហាញនៅលើទំព័រដើម និងជាមួយតម្រងមួយណា។ ដំណើរការបានលុះត្រាតែអ្នកមិនបានជ្រើសរើសកម្មវិធីសម្រាប់ទំព័រដើមក្នុងចំណូលចិត្តទូទៅ។
+should infolog use full names (surname and familyname) or just the loginnames.	infolog	km	គួរ InfoLog ប្រើឈ្មោះពេញ ឬគ្រាន់តែឈ្មោះចូល។
+should the infolog list show a unique numerical id, which can be used eg. as ticket id.	infolog	km	ប្រសិនបើបញ្ជី InfoLog បង្ហាញលេខសម្គាល់តែមួយគត់ដែលអាចប្រើឧទាហរណ៍ជាលេខសម្គាល់សំបុត្រ។
+should the infolog list show the column "last modified".	infolog	km	ប្រសិនបើបញ្ជី InfoLog បង្ហាញជួរឈរ "កែប្រែចុងក្រោយ" ។
+should the infolog list show the percent done only for status ongoing or two separate icons.	infolog	km	ប្រសិនបើបញ្ជី InfoLog បង្ហាញភាគរយដែលបានធ្វើសម្រាប់តែស្ថានភាពដែលកំពុងដំណើរការ ឬរូបតំណាងពីរដាច់ដោយឡែកប៉ុណ្ណោះ។
+should this entry only be visible to you and people you grant privat access via the acl	infolog	km	ប្រសិនបើធាតុនេះអាចមើលឃើញតែអ្នក និងមនុស្សដែលអ្នកផ្តល់សិទ្ធិចូលប្រើឯកជនតាមរយៈ ACL
+show a column for used and planned times in the list.	infolog	km	បង្ហាញជួរឈរសម្រាប់ពេលវេលាដែលបានប្រើ និងដែលបានគ្រោងទុកនៅក្នុងបញ្ជី
+show a x if content equals this compare value, otherwise show nothing	infolog	km	បង្ហាញ X ប្រសិនបើមាតិកាស្មើនឹងតម្លៃប្រៀបធៀបនេះ បើមិនដូច្នេះទេ មិនបង្ហាញអ្វីទាំងអស់។
+show full usernames	infolog	km	បង្ហាញឈ្មោះអ្នកប្រើប្រាស់ពេញលេញ
+show in the infolog list	infolog	km	បង្ហាញក្នុងបញ្ជី InfoLog
+show last modified	infolog	km	បង្ហាញការកែប្រែចុងក្រោយ
+show status and percent done separate	infolog	km	បង្ហាញស្ថានភាព និងភាគរយដែលបានធ្វើដោយឡែកពីគ្នា។
+show sub-entries	infolog	km	បង្ហាញធាតុរង
+show ticket id	infolog	km	បង្ហាញលេខសម្គាល់សំបុត្រ
+show times	infolog	km	បង្ហាញម៉ោង
+small view	infolog	km	ទិដ្ឋភាពតូច
+start	infolog	km	ចាប់ផ្តើម
+start a new search, cancel this link	infolog	km	ចាប់ផ្តើមការស្វែងរកថ្មី បោះបង់តំណនេះ។
+startdate	infolog	km	ថ្ងៃ​ចាប់ផ្តើម
+startdate enddate	infolog	km	កាលបរិច្ឆេទចាប់ផ្តើម, កាលបរិច្ឆេទផុតកំណត់
+startdate for new entries	infolog	km	កាលបរិច្ឆេទចាប់ផ្តើមសម្រាប់ធាតុថ្មី។
+startdate must be before enddate!!!	infolog	km	កាលបរិច្ឆេទចាប់ផ្តើមត្រូវតែមុនកាលបរិច្ឆេទ!!!
+starting %1	infolog	km	ចាប់ផ្តើម %1
+startrecord	infolog	km	ចាប់ផ្តើមកំណត់ត្រា
+status	infolog	km	ស្ថានភាព
+status ...	infolog	km	ស្ថានភាព...
+status, percent and date completed are always allowed.	infolog	km	ស្ថានភាព ភាគរយ និងកាលបរិច្ឆេទដែលបានបញ្ចប់ត្រូវបានអនុញ្ញាតជានិច្ច។
+sub	infolog	km	អនុ
+sub-entries become subs of the parent or main entries, if there's no parent	infolog	km	ធាតុរងនឹងក្លាយជាធាតុរងរបស់មេ ឬធាតុសំខាន់ ប្រសិនបើមិនមានមេ
+sub-entries will not be closed	infolog	km	ធាតុរងនឹងមិនត្រូវបានបិទទេ។
+sub-entry	infolog	km	ធាតុរង
+subject	infolog	km	ប្រធានបទ
+sum	infolog	km	ផលបូក
+tag to mark positions for address labels	infolog	km	ដាក់ស្លាកដើម្បីសម្គាល់ទីតាំងសម្រាប់ស្លាកអាសយដ្ឋាន
+task	infolog	km	ធ្វើ
+tasks of	infolog	km	ភារកិច្ចរបស់
+template	infolog	km	គំរូ
+test import (show importable records <u>only</u> in browser)	infolog	km	សាកល្បងនាំចូល។ បង្ហាញកំណត់ត្រាដែលអាចនាំចូលបាន <u>តែ</u> នៅក្នុងកម្មវិធីរុករក។
+the document can contain placeholder like {{%1}}, to be replaced with the data.	infolog	km	ឯកសារអាចមានកន្លែងដាក់ដូចជា {{%1}} ដែលត្រូវជំនួសដោយទិន្នន័យ។
+the following document-types are supported:	infolog	km	ប្រភេទឯកសារខាងក្រោមត្រូវបានគាំទ្រ៖
+the name used internaly (<= 10 chars), changeing it makes existing data unavailible	infolog	km	ឈ្មោះដែលបានប្រើនៅខាងក្នុង <= 10 តួអក្សរ ការផ្លាស់ប្តូរវាធ្វើឱ្យទិន្នន័យដែលមានស្រាប់មិនអាចប្រើបាន។
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	infolog	km	ឈ្មោះដែលបានប្រើនៅខាងក្នុង <= 20 តួអក្សរ ការផ្លាស់ប្តូរវាធ្វើឱ្យទិន្នន័យដែលមានស្រាប់មិនអាចប្រើបាន។
+the text displayed to the user	infolog	km	អត្ថបទបង្ហាញដល់អ្នកប្រើប្រាស់
+this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	km	តម្រងលំនាំដើមនៅពេលបញ្ចូលកម្មវិធី។ តម្រងកំណត់ធាតុដើម្បីបង្ហាញក្នុងទិដ្ឋភាពជាក់ស្តែង។
+til when should the todo or phonecall be finished	infolog	km	តើពេលណាដែលត្រូវធ្វើ ឬការហៅទូរស័ព្ទត្រូវបញ្ចប់
+times	infolog	km	ដង
+titles of any entries linked to the current record, excluding attached files	infolog	km	ចំណងជើងនៃធាតុណាមួយដែលភ្ជាប់ទៅនឹងកំណត់ត្រាបច្ចុប្បន្ន ដោយមិនរាប់បញ្ចូលឯកសារដែលបានភ្ជាប់
+to many might exceed your execution-time-limit	infolog	km	ចំនួនច្រើនពេកអាចលើសពីដែនកំណត់ពេលវេលាប្រតិបត្តិរបស់អ្នក។
+to what should the startdate of new entries be set.	infolog	km	តើកាលបរិច្ឆេទចាប់ផ្តើមនៃធាតុថ្មីគួរត្រូវបានកំណត់ទៅជាអ្វី។
+today	infolog	km	ថ្ងៃនេះ
+todays date	infolog	km	កាលបរិច្ឆេទ​ថ្ងៃ​នេះ
+todo	infolog	km	ធ្វើ
+typ	infolog	km	ប្រភេទ
+typ '%1' already exists !!!	infolog	km	ប្រភេទ '%1' មានរួចហើយ!
+type	infolog	km	ប្រភេទ
+type ...	infolog	km	ប្រភេទ...
+type of customfield	infolog	km	ប្រភេទនៃវាលផ្ទាល់ខ្លួន
+type of field	infolog	km	ប្រភេទនៃវាល
+type of the log-entry: note, phonecall or todo	infolog	km	ប្រភេទនៃធាតុ InfoLog៖ ចំណាំ ការហៅទូរសព្ទ ឬការងារត្រូវធ្វើ
+unable to link to %3 by custom field "%1": "%4".  %2 matches.	infolog	km	មិនអាចភ្ជាប់ទៅ%3 តាមវាលផ្ទាល់ខ្លួន "%1": "%4"។ %2 ត្រូវគ្នា។
+unknown type: %1	infolog	km	ប្រភេទមិនស្គាល់៖ %1
+unlink	infolog	km	ផ្ដាច់
+unlinked from %1	infolog	km	បានផ្ដាច់ពី %1
+upcoming	infolog	km	នាពេលខាងមុខ
+urgency	infolog	km	ភាពបន្ទាន់
+urgent	infolog	km	បន្ទាន់
+use all	infolog	km	ប្រើទាំងអស់
+use custom notification message	infolog	km	ប្រើសារជូនដំណឹងផ្ទាល់ខ្លួន
+use field from csv if possible	infolog	km	ប្រើវាលពី CSV ប្រសិនបើអាចធ្វើបាន
+use search results	infolog	km	ប្រើលទ្ធផលស្វែងរក
+use this tag for addresslabels. put the content, you want to repeat, between two tags.	infolog	km	ប្រើស្លាកនេះសម្រាប់ស្លាកអាសយដ្ឋាន។ ដាក់មាតិកាដែលអ្នកចង់ធ្វើម្តងទៀតរវាងស្លាកពីរ។
+used time	infolog	km	ពេលវេលាប្រើប្រាស់
+values for selectbox	infolog	km	តម្លៃសម្រាប់ប្រអប់ជ្រើសរើស
+view all subs of this entry	infolog	km	មើលរងទាំងអស់នៃធាតុនេះ។
+view other subs	infolog	km	មើល subs ផ្សេងទៀត។
+view parent	infolog	km	មើលឪពុកម្តាយ
+view parent with children	infolog	km	មើលឪពុកម្តាយជាមួយកូន
+view subs	infolog	km	មើលរង
+view the parent of this entry and all his subs	infolog	km	មើលមេនៃធាតុនេះ និងរងផ្សេងទៀតទាំងអស់។
+view this linked entry in its application	infolog	km	មើលធាតុដែលបានភ្ជាប់នេះនៅក្នុងកម្មវិធីរបស់វា។
+when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	km	តើពេលណាដែលគួរធ្វើ ឬការហៅទូរសព្ទត្រូវចាប់ផ្តើម វាបង្ហាញចាប់ពីកាលបរិច្ឆេទនោះនៅក្នុងតម្រងបើក ឬបើកផ្ទាល់ខ្លួន (ទំព័រចាប់ផ្តើម)
+which additional fields should the responsible be allowed to edit without having edit rights?	infolog	km	តើវាលបន្ថែមមួយណាដែលអ្នកទទួលខុសត្រូវគួរត្រូវបានអនុញ្ញាតឱ្យកែសម្រួលដោយមិនមានសិទ្ធិកែសម្រួល?
+which implicit acl rights should the responsible get	infolog	km	សិទ្ធិ ACL ដែលបង្កប់ន័យដែលអ្នកទទួលខុសត្រូវគួរទទួលបាន
+which participants should be preselected when scheduling an appointment.	infolog	km	អ្នកចូលរួមណាមួយគួរតែត្រូវបានជ្រើសរើសជាមុន នៅពេលកំណត់ពេលណាត់ជួប។
+which types should the calendar show	infolog	km	ប្រភេទណាដែលប្រតិទិនគួរបង្ហាញ
+which types should the calendar show like events?	infolog	km	តើប្រតិទិនប្រភេទណាដែលគួរបង្ហាញដូចជាព្រឹត្តិការណ៍?
+will-call	infolog	km	នឹងហៅ
+write (add or update) a record by passing its fields.	infolog	km	សរសេរ បន្ថែម ឬធ្វើបច្ចុប្បន្នភាពកំណត់ត្រាដោយឆ្លងកាត់វាលរបស់វា។
+yes - close	infolog	km	យល់ព្រម - បិទ
+yes - close including sub-entries	infolog	km	យល់ព្រម - បិទរួមទាំងធាតុរង
+yes - delete	infolog	km	យល់ព្រម - លុប
+yes - delete including sub-entries	infolog	km	យល់ព្រម - លុបរួមទាំងធាតុរង
+yes, noone can purge deleted items	infolog	km	យល់ព្រម គ្មាននរណាម្នាក់អាចសម្អាតធាតុដែលបានលុបបានទេ។
+yes, only admins can purge deleted items	infolog	km	យល់ព្រម មានតែអ្នកគ្រប់គ្រងប៉ុណ្ណោះដែលអាចសម្អាតធាតុដែលបានលុប
+yes, with larger fontsize	infolog	km	យល់ព្រម ជាមួយនឹងទំហំពុម្ពអក្សរធំជាង
+yes, with purging of deleted items possible	infolog	km	យល់ព្រម ជាមួយនឹងការសម្អាតធាតុដែលបានលុបអាចធ្វើទៅបាន
+you can choose a categorie to be preselected, when you create a new infolog entry	infolog	km	អ្នកអាចជ្រើសរើសប្រភេទដែលត្រូវជ្រើសរើសជាមុន នៅពេលអ្នកបង្កើតធាតុ InfoLog ថ្មី។
+you can't delete one of the stock types !!!	infolog	km	អ្នកមិនអាចលុបប្រភេទភាគហ៊ុនណាមួយបានទេ!
+you have entered an invalid ending date	infolog	km	អ្នកបានបញ្ចូលកាលបរិច្ឆេទផុតកំណត់មិនត្រឹមត្រូវ!
+you have entered an invalid starting date	infolog	km	អ្នកបានបញ្ចូលកាលបរិច្ឆេទចាប់ផ្តើមមិនត្រឹមត្រូវ!
+you have to enter a name, to create a new type!	infolog	km	អ្នកត្រូវតែបញ្ចូលឈ្មោះ ដើម្បីបង្កើតប្រភេទថ្មី!
+you must enter a subject or a description	infolog	km	អ្នកត្រូវតែបញ្ចូលប្រធានបទឬការពិពណ៌នា។
+you need to select an entry for linking.	infolog	km	អ្នកត្រូវជ្រើសរើសធាតុសម្រាប់ការភ្ជាប់។
+you need to select some entries first	infolog	km	អ្នកត្រូវជ្រើសរើសធាតុមួយចំនួនជាមុនសិន។
+your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	infolog	km	មូលដ្ឋានទិន្នន័យរបស់អ្នកមិនទាន់សម័យទេ (%1 ទល់នឹង %2) សូមដំណើរការ %3setup%4 ដើម្បីធ្វើបច្ចុប្បន្នភាពមូលដ្ឋានទិន្នន័យរបស់អ្នក។

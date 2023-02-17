@@ -1,0 +1,700 @@
+%1 attachments	mail	km	ឯកសារភ្ជាប់ %1
+%1 has been added to blacklisted email addresses	mail	km	%1 ត្រូវ​បាន​បន្ថែម​ទៅ​អាសយដ្ឋាន​អុីមែល​ក្នុង​បញ្ជី​ខ្មៅ
+%1 has been added to whiltelisted email addresses	mail	km	%1 ត្រូវ​បាន​បន្ថែម​ទៅ​អាសយដ្ឋាន​អុីមែល​ដែល​ត្រូវ​បាន​គេ​ដាក់​ក្នុង​បញ្ជី
+%1 has been removed from blacklisted email addresses	mail	km	%1 ត្រូវ​បាន​យក​ចេញ​ពី​អាសយដ្ឋាន​អុីមែល​ក្នុង​បញ្ជី​ខ្មៅ
+%1 has been removed from whiltelisted email addresses	mail	km	%1 ត្រូវ​បាន​យក​ចេញ​ពី​អាសយដ្ឋាន​អុីមែល​ដែល​ត្រូវ​បាន​គេ​រាយ​បញ្ជី
+%1 is not writable by you!	mail	km	%1 មិនអាចសរសេរដោយអ្នកបានទេ!
+%1 mails selected	mail	km	%1 បានជ្រើសរើសសំបុត្រ
+(*) please consider, forward to multiple addresses will not work if number of addresses exceeds the limit. for most mail servers the limit is 4 by default, please contact your mail server administrator for further info.	mail	km	(*) សូមពិចារណា ការបញ្ជូនបន្តទៅកាន់អាសយដ្ឋានច្រើននឹងមិនដំណើរការទេ ប្រសិនបើចំនួនអាសយដ្ឋានលើសពីដែនកំណត់។ សម្រាប់ម៉ាស៊ីនមេសំបុត្រភាគច្រើនដែនកំណត់គឺ 4 តាមលំនាំដើម សូមទាក់ទងអ្នកគ្រប់គ្រងម៉ាស៊ីនមេរបស់អ្នកសម្រាប់ព័ត៌មានបន្ថែម។
+(leave empty for no quota)	mail	km	(ទុកឲ្យទទេ ដោយគ្មានកូតា)
+(no subject)	mail	km	(គ្មាន​ប្រធាន)
+(not connected)	mail	km	(មិនបាន​តភ្ជាប់)
+(select mails by clicking on the line, like a checkbox)	mail	km	(ជ្រើសរើសសំបុត្រដោយចុចលើបន្ទាត់ ដូចជាប្រអប់ធីក)
+(with checkbox enforced)	mail	km	(ជាមួយប្រអប់ធីកត្រូវបានបង្ខំ)
+account editable by user	mail	km	គណនីដែលអាចកែសម្រួលបានដោយអ្នកប្រើប្រាស់
+acl rights retrieve failed, seems there are no rights set!	mail	km	ការទាញយកសិទ្ធិ ACL បានបរាជ័យ ហាក់ដូចជាមិនមានសិទ្ធិកំណត់ទេ!
+acl rights retrieved successfully	mail	km	ទទួលបានសិទ្ធិ ACL ដោយជោគជ័យ
+action	mail	km	សកម្មភាព
+activating by date requires a start- and end-date!	mail	km	ការធ្វើឱ្យសកម្មតាមកាលបរិច្ឆេទតម្រូវឱ្យមានការចាប់ផ្តើម-កាលបរិច្ឆេទបញ្ចប់!
+add "%1" into blacklisted domains	mail	km	បន្ថែម "%1" ទៅក្នុងបញ្ជីខ្មៅនៃដែន
+add "%1" into blacklisted emails	mail	km	បន្ថែម "%1" ទៅក្នុងបញ្ជីខ្មៅអុីមែល
+add "%1" into whiltelisted domains	mail	km	បន្ថែម "%1" ទៅក្នុងដែនដែលមិនបានចុះបញ្ជី
+add "%1" into whitelisted emails	mail	km	បន្ថែម "%1" ទៅក្នុងអុីមែលដែលបានដាក់ក្នុងបញ្ជីស
+add a new folder to %1:	mail	km	បន្ថែមថតឯកសារថ្មីទៅ %1៖
+add all my aliases	mail	km	បន្ថែមឈ្មោះក្លែងក្លាយរបស់ខ្ញុំទាំងអស់។
+add as new	mail	km	បន្ថែមដូចថ្មី។
+add files as %1	mail	km	បន្ថែមឯកសារជា%1
+add folder	mail	km	បន្ថែមថត
+add raw message, ignore mail attachments	mail	km	បំប្លែងសំបុត្រទៅជាធាតុ បន្ថែមសារឆៅ (មិនអើពើឯកសារភ្ជាប់សំបុត្រ)
+add this certificate into contact	mail	km	បន្ថែមវិញ្ញាបនបត្រនេះទៅក្នុងទំនាក់ទំនង
+add to addressbook	mail	km	បន្ថែមទៅសៀវភៅអាសយដ្ឋាន
+add your domain as "%1" in options to list of email providers and enable api.	mail	km	បន្ថែមដែនរបស់អ្នកជា "%1" នៅក្នុងជម្រើសទៅក្នុងបញ្ជីអ្នកផ្តល់អុីមែល និងបើក API ។
+adding %1 to blacklisted email addresses failed because of %2	mail	km	ការបន្ថែម %1 ទៅក្នុងបញ្ជីខ្មៅអាស័យដ្ឋានអុីមែលបានបរាជ័យដោយសារតែ %2
+adding %1 to whiltelisted email addresses failed because of %2	mail	km	ការបន្ថែម %1 ទៅអាសយដ្ឋានអុីមែលដែលជាប់ក្នុងបញ្ជីមិនបានការបានបរាជ័យដោយសារតែ %2
+after reply, visible during compose	mail	km	បន្ទាប់​ពី​ការ​ឆ្លើយ​តប អាច​មើល​ឃើញ​កំឡុង​ពេល​តែង
+aliases+forwards	mail	km	ឈ្មោះក្លែងក្លាយ + បញ្ជូនបន្ត
+all	mail	km	ទាំងអស់។
+all adresses:	mail	km	អាស័យដ្ឋានទាំងអស់៖
+all available info	admin	km	ព័ត៌មានដែលមានទាំងអស់។
+all filtered	mail	km	ត្រងទាំងអស់។
+all messages in the folder will be lost	mail	km	សារទាំងអស់នៅក្នុងថតនឹងបាត់បង់
+all my email addresses	mail	km	អាសយដ្ឋានអុីមែលរបស់ខ្ញុំទាំងអស់។
+all of	mail	km	ទាំងអស់
+all subfolders will be deleted too, and all messages in all affected folders will be lost	mail	km	ថតរងទាំងអស់នឹងត្រូវបានលុបផងដែរ ហើយសារទាំងអស់នៅក្នុងថតដែលរងផលប៉ះពាល់ទាំងអស់នឹងត្រូវបាត់បង់
+allow	mail	km	អនុញ្ញាត
+allow external images	mail	km	អនុញ្ញាតឱ្យរូបភាពខាងក្រៅ
+allow external images from listed domains	mail	km	អនុញ្ញាតឱ្យរូបភាពខាងក្រៅពីដែនដែលបានរាយបញ្ជី
+allow images from external sources in html emails	mail	km	អនុញ្ញាតឱ្យរូបភាពពីប្រភពខាងក្រៅនៅក្នុងអុីមែល HTML
+allow images from listed domains in html emails	mail	km	អនុញ្ញាតឱ្យរូបភាពពីដែនដែលបានរាយក្នុងអុីមែល HTML
+allow users to create further identities	mail	km	អនុញ្ញាតឱ្យអ្នកប្រើប្រាស់បង្កើតអត្តសញ្ញាណបន្ថែម
+allways a new window	mail	km	បង្អួចថ្មីជានិច្ច
+always	mail	km	ជានិច្ច
+always allow external sources from %1	mail	km	តែងតែអនុញ្ញាតប្រភពខាងក្រៅពី%1
+always show html emails	mail	km	តែងតែបង្ហាញអុីមែល HTML
+always show notifiction	mail	km	បង្ហាញការជូនដំណឹងជានិច្ច
+an error happend while trying to remove acl rights from the account %1!	mail	km	កំហុសបានកើតឡើងខណៈពេលព្យាយាមលុបសិទ្ធិ ACL ចេញពីគណនី%1!
+and the rule with priority %1, now got the priority %2	mail	km	ហើយច្បាប់ដែលមានអាទិភាព %1 ឥឡូវនេះទទួលបានអាទិភាព %2
+answered	mail	km	ឆ្លើយ
+any of	mail	km	ណាមួយនៃ
+any status	mail	km	ស្ថានភាពណាមួយ។
+append	mail	km	បន្ថែម
+appended after reply before sending	mail	km	បន្ថែមបន្ទាប់ពីការឆ្លើយតបមុនពេលផ្ញើ
+application mail expected but got: %1	mail	km	អុីមែល​កម្មវិធី​ត្រូវ​បាន​រំពឹង​ទុក ប៉ុន្តែ​បាន​ទទួល៖ %1
+archive folder	mail	km	ថតឯកសារ
+are you sure you want to delete all selected folders?	mail	km	តើអ្នកប្រាកដថាចង់លុបថតដែលបានជ្រើសរើសទាំងអស់មែនទេ?
+are you sure you want to move folder %1 to folder %2?	mail	km	តើ​អ្នក​ប្រាកដ​ថា​អ្នក​ចង់​ផ្លាស់ទី​ថត%1 ទៅ​ថត%2?
+arrival	mail	km	បានទទួល
+ask for permission	mail	km	សុំការអនុញ្ញាត
+attach files	mail	km	ភ្ជាប់ឯកសារ
+attach users vcard at compose to every new mail	mail	km	ភ្ជាប់អ្នកប្រើប្រាស់ VCard នៅពេលសរសេរទៅគ្រប់សំបុត្រថ្មី។
+attach vcard	mail	km	ភ្ជាប់ vCard
+attachment	mail	km	ឯកសារ​ភ្ជាប់
+attachment has been saved successfully.	mail	km	ឯកសារភ្ជាប់ត្រូវបានរក្សាទុកដោយជោគជ័យ។
+attachments	mail	km	ឯកសារភ្ជាប់
+attachments, ...	mail	km	ឯកសារភ្ជាប់, ...
+authentication	mail	km	ការផ្ទៀងផ្ទាត់ភាពត្រឹមត្រូវ
+available personal email-accounts/profiles	mail	km	គណនី/កម្រងព័ត៌មានផ្ទាល់ខ្លួនដែលអាចប្រើបាន
+be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	km	ត្រូវដឹងដោយបន្ថែមឯកសារដែលបានជ្រើសរើសទាំងអស់ជាទម្រង់ %1 វាក៏នឹងផ្លាស់ប្តូរឯកសារភ្ជាប់ដែលមានស្រាប់ទាំងអស់នៅក្នុងបញ្ជីទៅជារបៀប %2 ផងដែរ។ \n \n តើអ្នកចង់បន្តទេ?
+be aware that all attachments will be sent as %1!	mail	km	ត្រូវដឹងថាឯកសារភ្ជាប់ទាំងអស់នឹងត្រូវបានផ្ញើជា%1!
+before reply, visible during compose	mail	km	មុនពេលឆ្លើយតប អាចមើលឃើញក្នុងអំឡុងពេលសរសេរ
+blacklisted mails are marked as spam	mail	km	សំបុត្រក្នុងបញ្ជីខ្មៅត្រូវបានសម្គាល់ថាជាសារឥតបានការ
+but check shared folders	mail	km	ប៉ុន្តែពិនិត្យមើលថតដែលបានចែករំលែក
+by date	mail	km	តាមកាលបរិច្ឆេទ
+by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	km	តាមលំនាំដើម 'http://' គឺគ្រាន់តែជំនួសដោយ 'https://'។ មានអារម្មណ៍សេរីក្នុងការកំណត់ 'https://proxy.egroupware.org/' ដើម្បីផ្ទុករូបភាពដែលមានតែតាមរយៈ http ប៉ុណ្ណោះ។
+caching of flags	mail	km	ការរក្សាទុកទង់ជាតិ
+can not open imap connection	mail	km	មិនអាចបើកការតភ្ជាប់ IMAP បានទេ។
+can not resolve the winmail.dat attachment!	mail	km	មិនអាចដោះស្រាយឯកសារភ្ជាប់ winmail.dat បានទេ!
+canceled deletion due to user interaction	mail	km	បានលុបចោលការលុបដោយសារតែអន្តរកម្មរបស់អ្នកប្រើ
+certificate info for email %1	mail	km	ព័ត៌មានវិញ្ញាបនបត្រសម្រាប់អុីមែល%1
+change editor type	mail	km	ប្តូរកម្មវិធីនិពន្ធទៅជារបៀប HTML
+changed profile	mail	km	បានផ្លាស់ប្តូរទម្រង់
+changing subject failed because of %1	mail	km	ការ​ផ្លាស់​ប្តូ​រ​ប្រធាន​បទ​បាន​បរាជ័យ​ដោយ​សារ​តែ %1
+changing subject failed folder %1 does not exist	mail	km	ការ​ផ្លាស់​ប្តូរ​ប្រធានបទ​ដែល​បាន​បរាជ័យ​ក្នុង​ថត%1 មិន​មាន​ទេ។
+check message against next rule also	mail	km	សូមពិនិត្យមើលសារប្រឆាំងនឹងច្បាប់បន្ទាប់ផងដែរ។
+check to receive a notification when the message is read (note: not all clients support this and/or the receiver may not authorize the notification)	mail	km	ពិនិត្យ​ដើម្បី​ទទួល​បាន​ការ​ជូន​ដំណឹង​នៅ​ពេល​សារ​ត្រូវ​បាន​អាន (ចំណាំ៖ មិន​មែន​អតិថិជន​ទាំង​អស់​គាំទ្រ​វា​ទេ និង/ឬ​អ្នក​ទទួល​មិន​អាច​អនុញ្ញាត​ការ​ជូន​ដំណឹង)
+check to save as calendar event on send	mail	km	ពិនិត្យដើម្បីរក្សាទុកជាព្រឹត្តិការណ៍នៅពេលផ្ញើ
+check to save as infolog on send	mail	km	ពិនិត្យដើម្បីរក្សាទុកជា infolog នៅលើការផ្ញើ
+check to save as tracker entry on send	mail	km	ពិនិត្យដើម្បីរក្សាទុកជាធាតុតាមដាននៅពេលផ្ញើ
+choose file	mail	km	ជ្រើសរើស​ឯកសារ
+common acl	mail	km	ACL ទូទៅ
+compose	mail	km	តែង
+compose as new	mail	km	តែងដូចថ្មី។
+compress folder	mail	km	បង្ហាប់ថត
+condition	mail	km	លក្ខខណ្ឌ
+configuration settings	mail	km	ការកំណត់រចនាសម្ព័ន្ធ
+configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	km	តម្លៃដែលបានកំណត់រចនាសម្ព័ន្ធនឹងត្រូវបានកំណត់ដោយស្វ័យប្រវត្តិនៅលើប្រអប់សរសេរសម្រាប់វាលដែលគោរពនៅពេលសរសេរអុីមែលថ្មី។
+confirm	mail	km	បញ្ជាក់
+confirm attach message	mail	km	បញ្ជាក់ការភ្ជាប់សារ
+confirm move to folder	mail	km	បញ្ជាក់ការផ្លាស់ទីទៅថតឯកសារ
+connect to profile %1	mail	km	ភ្ជាប់ទៅកម្រងព័ត៌មាន%1
+connection status	mail	km	ស្ថានភាពការតភ្ជាប់
+contact label	mail	km	ស្លាកទំនាក់ទំនង
+contains	mail	km	មាន
+contains(*)	mail	km	មាន (*)
+convert mail to item and attach its attachments to this item (standard)	mail	km	បំប្លែងសំបុត្រទៅជាធាតុ ហើយភ្ជាប់ឯកសារភ្ជាប់របស់វាទៅធាតុនេះ (ស្តង់ដារ)
+convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	km	បំប្លែងសំបុត្រទៅជាធាតុ ភ្ជាប់ឯកសារភ្ជាប់របស់វា និងបន្ថែមសារឆៅ (message/rfc822 (.eml)) ជាឯកសារភ្ជាប់
+convert only mail to item (ignore possible attachments)	mail	km	បំប្លែងតែសំបុត្រទៅជាធាតុ (មិនអើពើឯកសារភ្ជាប់ដែលអាចមាន)
+copied %1 message(s) from %2 to %3	mail	km	បានចម្លងសារ %1 ពី %2 ទៅ % 3
+copy to	mail	km	ចម្លង​ទៅ
+could not append message:	mail	km	មិន​អាច​បន្ថែម​សារ៖
+could not save the acl because some names are empty	mail	km	មិនអាចរក្សាទុក ACL បានទេ ដោយសារឈ្មោះខ្លះទទេ
+create new account	mail	km	បង្កើត​គណនី​ថ្មី
+cross account forward attachment is not allowed!	mail	km	ឯកសារភ្ជាប់បញ្ជូនបន្តគណនីឆ្លងមិនត្រូវបានអនុញ្ញាតទេ!
+current folder	mail	km	ថតបច្ចុប្បន្ន
+current subject	mail	km	ប្រធានបទបច្ចុប្បន្ន
+currently:	mail	km	បច្ចុប្បន្ន៖
+date(newest first)	mail	km	កាលបរិច្ឆេទ (ថ្មីបំផុតដំបូង)
+date(oldest first)	mail	km	កាលបរិច្ឆេទ (ចាស់ជាងគេដំបូង)
+deactive	mail	km	សកម្ម
+default sorting order	mail	km	លំដាប់​តម្រៀប​លំនាំដើម
+default toolbar actions shown in mail's html editor	mail	km	មុខងារត្រូវបានបើកនៅក្នុងរបារឧបករណ៍កម្មវិធីនិពន្ធ HTML នៅពេលសរសេរអុីមែល
+default value for remembering s/mime passphrase in minutes	mail	km	តម្លៃលំនាំដើមសម្រាប់ចងចាំឃ្លាសម្ងាត់ S/MIME ក្នុងរយៈពេលប៉ុន្មាននាទី
+default your name and email	common	km	កំណត់ឈ្មោះ និងអុីមែលរបស់អ្នកតាមលំនាំដើម
+defines what to show as contact label for added contact into to/cc/bcc when composing an email. default is firstname lastname and empty means include eveything available.	mail	km	កំណត់អ្វីដែលត្រូវបង្ហាញជាស្លាកទំនាក់ទំនងសម្រាប់ទំនាក់ទំនងដែលបានបន្ថែមទៅក្នុង To/Cc/Bcc នៅពេលសរសេរអុីមែល។ លំនាំដើមគឺនាមត្រកូល នាមត្រកូល និងមធ្យោបាយទទេ រួមបញ្ចូលអ្វីគ្រប់យ៉ាងដែលមាន។
+defines what to show as identity label on mail folder header	common	km	កំណត់អ្វីដែលត្រូវបង្ហាញជាស្លាកអត្តសញ្ញាណនៅលើបឋមកថាថតសំបុត្រ
+delete folder	mail	km	លុបថតឯកសារ
+delete folder %1 ?	mail	km	លុបថត%1?
+delete this acl	mail	km	លុប ACL នេះ។
+deleted	mail	km	បានលុប
+deleted %1 messages in %2	mail	km	បានលុបសារ %1 ក្នុង %2
+deleted!	mail	km	លុបហើយ!
+deleting %1 folders in progress ...	mail	km	កំពុងលុបថត %1 កំពុងដំណើរការ...
+deleting folders	mail	km	ការលុបថតឯកសារ
+deny certain groups access to following features	mail	km	បដិសេធ​ការ​ចូល​ប្រើប្រាស់​ក្រុម​មួយ​ចំនួន​ចំពោះ​មុខងារ​ដូច​ខាង​ក្រោម
+directories have to be shared.	mail	km	ថតឯកសារត្រូវតែចែករំលែក។
+disable	mail	km	បិទ
+disable caching of flags	mail	km	បិទការរក្សាទុកទង់ជាតិ
+disable horizontal rule for separation of mail body from signature	mail	km	បិទក្បួនផ្តេកសម្រាប់ការបំបែកតួសំបុត្រចេញពីហត្ថលេខា
+disable use of flowed lines in plain text mails (rfc3676)	mail	km	បិទ​ការ​ប្រើ​បន្ទាត់​ដែល​បាន​ហូរ​ក្នុង​សំបុត្រ​ធម្មតា (RFC3676)
+disabled!	mail	km	ពិការ!
+discard	mail	km	បោះបង់
+discard message	mail	km	បោះបង់សារ
+display messages in multiple windows	mail	km	បង្ហាញសារនៅក្នុងបង្អួចច្រើន។
+display of html emails	mail	km	ការបង្ហាញអុីមែល HTML
+display of identities	admin	km	បង្ហាញអត្តសញ្ញាណ
+display only when no plain text is available	mail	km	បង្ហាញតែនៅពេលដែលគ្មានអត្ថបទធម្មតាទេ។
+displaying html messages is disabled	mail	km	ការបង្ហាញសារ HTML ត្រូវបានបិទ
+displaying plain messages is disabled	mail	km	ការបង្ហាញសារធម្មតាត្រូវបានបិទ
+do not auto create folders	mail	km	កុំបង្កើតថតដោយស្វ័យប្រវត្តិ
+do not forward	mail	km	កុំបញ្ជូនបន្ត
+do you really want to apply %1 to all messages in the current view?	mail	km	តើ​អ្នក​ពិត​ជា​ចង់​អនុវត្ត%1 ទៅ​សារ​ទាំងអស់​ក្នុង​ទិដ្ឋភាព​បច្ចុប្បន្ន​ឬ?
+do you really want to delete folder %1 ?	mail	km	តើអ្នកពិតជាចង់លុបថត%1 មែនទេ?
+do you really want to delete this rule	mail	km	តើអ្នកពិតជាចង់លុបច្បាប់នេះមែនទេ?
+do you really want to mark all messages as read in the current folder?	mail	km	តើអ្នកពិតជាចង់សម្គាល់សារទាំងអស់ថាបានអាននៅក្នុងថតបច្ចុប្បន្នឬ?
+do you really want to remove all labels from all messages in the current folder?	mail	km	តើអ្នកពិតជាចង់លុបស្លាកទាំងអស់ចេញពីសារទាំងអស់នៅក្នុងថតបច្ចុប្បន្នមែនទេ?
+do you really want to remove all rights from this account?	mail	km	តើអ្នកពិតជាចង់ដកសិទ្ធិទាំងអស់ចេញពីគណនីនេះមែនទេ?
+do you really want to toggle flag %1 for all messages in the current view?	mail	km	តើអ្នកពិតជាចង់បិទ/បើកទង់%1 សម្រាប់សារទាំងអស់នៅក្នុងទិដ្ឋភាពបច្ចុប្បន្នឬ?
+do you really want to toggle label %1 for all messages in the current view?	mail	km	តើ​អ្នក​ពិត​ជា​ចង់​បិទ​បើក​ស្លាក%1 សម្រាប់​សារ​ទាំងអស់​ក្នុង​ទិដ្ឋភាព​បច្ចុប្បន្ន​ឬ?
+do you want to be asked for confirmation before attaching selected messages to new mail?	mail	km	តើ​អ្នក​ចង់​ត្រូវ​បាន​សួរ​រក​ការ​បញ្ជាក់​មុន​ពេល​ភ្ជាប់​សារ​ដែល​បាន​ជ្រើស​ទៅ​សំបុត្រ​ថ្មី​ឬ?
+do you want to be asked for confirmation before moving selected messages to another folder?	mail	km	តើ​អ្នក​ចង់​ត្រូវ​បាន​សួរ​រក​ការ​បញ្ជាក់​មុន​ពេល​ផ្លាស់ទី​សារ​ដែល​បាន​ជ្រើស​ទៅ​ថត​ផ្សេង​ទៀត​ឬ?
+do you want to prevent the editing/setup of filter rules (, even if sieve is enabled)?	mail	km	តើ​អ្នក​ចង់​ការពារ​ការ​កែសម្រួល​/​ការ​រៀបចំ​ច្បាប់​តម្រង (ទោះបីជា​ Sieve ត្រូវ​បាន​បើក​ក៏ដោយ​)?
+do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	mail	km	តើ​អ្នក​ចង់​ការពារ​ការ​កែសម្រួល/រៀបចំ​ការ​ជូន​ដំណឹង​តាម​ប្រៃសណីយ៍​ទៅ​កាន់​អាសយដ្ឋាន​អុីមែល​ផ្សេង​ទៀត​ទេ ប្រសិនបើ​អុីមែល​មក​ដល់ (ទោះ​បី​ជា Sieve ត្រូវ​បាន​បើក) ឬ?
+do you want to prevent the editing/setup of the absent/vacation notice (, even if sieve is enabled)?	mail	km	តើអ្នកចង់ការពារការកែសម្រួល/រៀបចំការជូនដំណឹងអវត្តមាន/វិស្សមកាល (ទោះបីជា Sieve ត្រូវបានបើកក៏ដោយ)?
+do you want to prevent the managing of folders (creation, accessrights and subscribtion)?	mail	km	តើ​អ្នក​ចង់​រារាំង​ការ​គ្រប់​គ្រង​ថត (បង្កើត សិទ្ធិ​ចូល​ដំណើរការ និង​ការ​ជាវ) ដែរ​ឬ​ទេ?
+does not contain	mail	km	មិនមាន
+does not exist on imap server.	mail	km	មិនមាននៅលើម៉ាស៊ីនមេ IMAP ទេ។
+does not match	mail	km	មិនត្រូវគ្នា។
+does not match regexp	mail	km	មិនត្រូវគ្នានឹង regexp
+don't use draft folder	mail	km	កុំប្រើថតព្រាង
+don't use sent	mail	km	កុំប្រើ Sent
+don't use template folder	mail	km	កុំប្រើថតពុម្ព
+don't use trash	mail	km	កុំប្រើធុងសំរាម
+download attachments	mail	km	ទាញយកឯកសារភ្ជាប់
+draft	mail	km	សេចក្តីព្រាង
+draft folder	mail	km	ថតព្រាង
+drafts	mail	km	សេចក្តីព្រាង
+drafts folder	mail	km	ថតឯកសារព្រាង
+edit account	mail	km	កែសម្រួលគណនី
+edit account ...	mail	km	កែសម្រួលគណនី...
+edit folder acl	mail	km	កែសម្រួលថត ACL
+edit folder acl ...	mail	km	កែសម្រួល​ថត ACL...
+edit vacation settings	mail	km	កែសម្រួលការកំណត់វិស្សមកាល
+effective only if server supports acl at all	admin	km	មានប្រសិទ្ធភាពលុះត្រាតែម៉ាស៊ីនមេគាំទ្រ ACL ទាំងអស់។
+email notification successfully updated!	mail	km	បានធ្វើបច្ចុប្បន្នភាពការជូនដំណឹងតាមអុីមែលដោយជោគជ័យ!
+email notification update failed	mail	km	ការធ្វើបច្ចុប្បន្នភាពការជូនដំណឹងតាមអុីមែលបានបរាជ័យ
+email notification update failed! you need to set an email address!	mail	km	ការធ្វើបច្ចុប្បន្នភាពការជូនដំណឹងតាមអុីមែលបានបរាជ័យ! អ្នកត្រូវកំណត់អាសយដ្ឋានអុីមែល!
+emailaddress	admin	km	អាស័យ​ដ្ឋាន​អុី​ម៉េ​ល
+emailadmin: profilemanagement	mail	km	អុីមែលអ្នកគ្រប់គ្រង៖ ការគ្រប់គ្រងទម្រង់
+emails in blacklisted domains are marked as spam	mail	km	អុីមែលក្នុងបញ្ជីខ្មៅត្រូវបានសម្គាល់ថាជាសារឥតបានការ
+emails in whitelisted domains are not marked as spam	mail	km	អុីមែល​ក្នុង​ដែន​ក្នុង​បញ្ជី​ស​មិន​ត្រូវ​បាន​សម្គាល់​ថា​ជា​សារ​ឥត​បានការ​ទេ។
+empty junk	mail	km	ឯកសារឥតបានការ/សារឥតបានការទទេ
+empty trash	mail	km	សំរាមទទេ
+empty trash and junk	mail	km	សម្អាតធុងសំរាម និងសំរាម
+enable	mail	km	បើក
+enabled	mail	km	បានបើក
+enabled!	mail	km	បើកដំណើរការ!
+encrypt	mail	km	អ៊ិនគ្រីប
+encrypt your message with smime certificate	mail	km	អ៊ិនគ្រីបសាររបស់អ្នកជាមួយវិញ្ញាបនបត្រ S/MIME
+encryption	mail	km	ការអ៊ិនគ្រីប
+enter the name for the new folder:	mail	km	បញ្ចូលឈ្មោះសម្រាប់ថតឯកសារថ្មី៖
+error saving %1!	mail	km	កំហុសក្នុងការរក្សាទុក%1!
+error while setting acl for folder %1!	mail	km	កំហុសខណៈពេលកំណត់ ACL សម្រាប់ថត%1!
+error while setting folder	mail	km	កំហុសខណៈពេលកំណត់ថត
+error:	mail	km	កំហុស៖
+error: could not save acl	mail	km	កំហុស៖ មិនអាចរក្សាទុក ACL បានទេ។
+error: could not save message as draft	mail	km	កំហុស៖ មិនអាចរក្សាទុកសារជាសេចក្តីព្រាងបានទេ។
+error: could not save rule	mail	km	កំហុស៖ មិនអាចរក្សាទុកច្បាប់បានទេ។
+error: could not send message.	mail	km	កំហុស៖ មិនអាចផ្ញើសារបានទេ។
+error: message could not be displayed.	mail	km	កំហុស៖ សារមិនអាចបង្ហាញបានទេ។
+esync will fail without a working email configuration!	mail	km	eSync នឹង​បរាជ័យ​ដោយ​គ្មាន​ការ​កំណត់​រចនាសម្ព័ន្ធ​អុីមែល​ដែល​ដំណើរការ​!
+event details follow	mail	km	ព័ត៌មានលម្អិតអំពីព្រឹត្តិការណ៍
+everyone	mail	km	គ្រប់គ្នា
+examine namespace to retrieve folders in others and shared	mail	km	ពិនិត្យលំហឈ្មោះដើម្បីទាញយកថតឯកសារផ្សេងៗ និងចែករំលែក
+extended	mail	km	ពង្រីក
+extra sent folders	mail	km	ថតដែលបានផ្ញើបន្ថែម
+failed to delete %1	mail	km	បានបរាជ័យក្នុងការលុប%1
+failed to delete %1 ! reason: %2	mail	km	បរាជ័យ​ក្នុង​ការ​លុប %1 ! ហេតុផល៖ %2
+failed to delete %1. server responded:	mail	km	បានបរាជ័យក្នុងការលុប%1។ ម៉ាស៊ីនមេបានឆ្លើយតប៖
+failed to move %1 ! reason: %2	mail	km	បានបរាជ័យក្នុងការផ្លាស់ទី%1 ! ហេតុផល៖ %2
+failed to rename %1 ! reason: %2	mail	km	បានបរាជ័យក្នុងការប្តូរឈ្មោះ%1 ! ហេតុផល៖ %2
+failed to subscribe folder %1!	mail	km	បរាជ័យក្នុងការជាវថត %1!
+failed to unsubscribe folder %1!	mail	km	បានបរាជ័យក្នុងការឈប់ជាវថត %1!
+file into	mail	km	ឯកសារចូលទៅក្នុង
+file into:	mail	km	ឯកសារចូលទៅក្នុង៖
+file rejected, no %2. is:%1	mail	km	ឯកសារត្រូវបានច្រានចោល គ្មាន%2។ គឺ៖%1
+filemanager	mail	km	កម្មវិធី​គ្រប់​គ្រង​ឯកសារ
+filemode has been switched to %1	mail	km	របៀបឯកសារត្រូវបានប្តូរទៅ៖ %1
+files	mail	km	ឯកសារ
+flag / unflag	mail	km	Flag / Unflag
+flag or unflag a mail	mail	km	Flag ឬUnflagសំបុត្រ
+flagged	mail	km	flagged
+flagged %1 messages as %2 in %3	mail	km	បានដាក់ទង់សារ %1 ជា%2 ក្នុង % 3
+flagged %1 messages as flagged in %2	mail	km	បាន​ដាក់​ទង់​សារ %1 ដែល​បាន​ដាក់​ទង់​ក្នុង %2
+flagged %1 messages as unflagged in %2	mail	km	បាន​ដាក់​ទង់ %1 សារ​ថា​មិន​បាន​ដាក់​ទង់​នៅ​ក្នុង %2
+flagged / unflagged	mail	km	Flagged / Unflagged
+folder	mail	km	ថតឯកសារ
+folder %1 %2 failed because of %3!	mail	km	ថត %1 %2 បរាជ័យ ដោយសារ % 3!
+folder %1 %2 failed!	mail	km	ថត%1%2 បានបរាជ័យ!
+folder %1 has been created successfully, although the subscription failed because of %2	mail	km	ថត %1 ត្រូវ​បាន​បង្កើត​ដោយ​ជោគជ័យ ទោះ​បី​ជា​ការ​ជាវ​បាន​បរាជ័យ​ដោយ​សារ​%2
+folder %1 is moving to folder %2	mail	km	ថត%1 កំពុងផ្លាស់ទីទៅថត%2
+folder management	mail	km	ការគ្រប់គ្រងថតឯកសារ
+folder management ...	mail	km	ការគ្រប់គ្រងថតឯកសារ...
+folder settings	mail	km	ការកំណត់ថត
+for e.g.: mpeg	mail	km	ឧទាហរណ៍៖ mpeg
+for eg.: mpeg	mail	km	ឧទាហរណ៍៖ mpeg
+force html	mail	km	បង្ខំ HTML
+force plain text	mail	km	បង្ខំអត្ថបទធម្មតា។
+forward	mail	km	ទៅមុខ
+forward as attachment	mail	km	ទៅមុខជាឯកសារភ្ជាប់
+forward inline	mail	km	ទៅមុខក្នុងជួរ
+forward messages to:	mail	km	បញ្ជូនបន្តសារទៅ៖
+forward messages:	mail	km	បញ្ជូនបន្តសារ៖
+forward to	mail	km	ទៅមុខ
+forward to address (*):	mail	km	បញ្ជូនបន្តទៅអាសយដ្ឋាន (*)៖
+forwarding of this message failed because the content of this message seems to be encrypted and can not be decrypted properly. if you still wish to forward content of this encrypted message, you may try to use forward as attachment instead.	mail	km	ការបញ្ជូនបន្តសារនេះបរាជ័យ ដោយសារខ្លឹមសារនៃសារនេះហាក់ដូចជាត្រូវបានអ៊ិនគ្រីប និងមិនអាចឌិគ្រីបបានត្រឹមត្រូវ។ ប្រសិនបើអ្នកនៅតែចង់បញ្ជូនបន្តខ្លឹមសារនៃសារដែលបានអ៊ិនគ្រីបនេះ អ្នកអាចព្យាយាមប្រើការបញ្ជូនបន្តជាឯកសារភ្ជាប់ជំនួសវិញ។
+forwards	mail	km	ទៅមុខ
+from	mail	km	ពី
+from(a->z)	mail	km	ពី (A->Z)
+from(z->a)	mail	km	ពី (Z-> A)
+general	admin	km	ទូទៅ
+general settings	mail	km	ការកំណត់​ទូទៅ
+get acl rights failed from imap server!	mail	km	ទទួលបានសិទ្ធិ ACL បានបរាជ័យពីម៉ាស៊ីនមេ IMAP!
+greater than	mail	km	ធំជាង
+ham folder	mail	km	ថត Ham
+handling of external http images / mixed content in mails	mail	km	ការគ្រប់គ្រងរូបភាព http ខាងក្រៅ / មាតិកាចម្រុះនៅក្នុងសំបុត្រ
+header	mail	km	បឋមកថា
+header lines	mail	km	បន្ទាត់ក្បាល
+high	mail	km	ខ្ពស់
+hold %1 to drag files to your computer	mail	km	សង្កត់%1 ដើម្បីអូសឯកសារទៅកុំព្យូទ័ររបស់អ្នក។
+home page folders	mail	km	ថតទំព័រដើម
+hostname or ip	mail	km	ឈ្មោះម៉ាស៊ីន ឬ IP
+how often to check with the server for new mail	mail	km	តើត្រូវពិនិត្យជាមួយម៉ាស៊ីនមេញឹកញាប់ប៉ុណ្ណាសម្រាប់សំបុត្រថ្មី។
+how should the available information on identities be displayed	admin	km	តើព័ត៌មានដែលមាននៅលើអត្តសញ្ញាណគួរតែត្រូវបានបង្ហាញយ៉ាងដូចម្តេច
+how to forward messages	mail	km	របៀបបញ្ជូនសារ
+html	mail	km	HTML
+html mode	mail	km	របៀប HTML
+ident name	mail	km	ឈ្មោះអត្តសញ្ញាណ
+ident name email	mail	km	ឈ្មោះអត្តសញ្ញាណ [អុីមែល]
+ident name organization email	mail	km	ឈ្មោះអង្គការ [អុីមែល]
+identity	mail	km	អត្តសញ្ញាណ
+identity label	mail	km	ស្លាកសញ្ញា
+identity+signature	mail	km	អត្តសញ្ញាណ+ហត្ថលេខា
+if	mail	km	IF
+if authentication required	mail	km	ប្រសិនបើការផ្ទៀងផ្ទាត់ត្រូវបានទាមទារ
+if different from email address	mail	km	ប្រសិនបើខុសពីអាសយដ្ឋានអុីមែល
+if from contains:(*)	mail	km	ប្រសិនបើមានពី៖ (*)
+if mail body content / attachment type	mail	km	ប្រសិនបើ mail body content / attachment type
+if mail body message type	mail	km	ប្រសិនបើ mail body message ប្រភេទ
+if mail header	mail	km	ប្រសិនបើក្បាលសំបុត្រ
+if message size	mail	km	ប្រសិនបើទំហំសារ
+if shown, which folders should appear on the home page	mail	km	ប្រសិនបើបង្ហាញ ថតណាមួយគួរតែបង្ហាញនៅលើទំព័រដើម
+if subject contains:(*)	mail	km	ប្រសិនបើប្រធានបទមាន៖ (*)
+if to contains:(*)	mail	km	ប្រសិនបើមាន: (*)
+if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	km	ប្រសិនបើអ្នកចង់ឃើញការមើលជាមុននៃសំបុត្រដោយចុចតែម្តងទៅលើប្រធានបទនោះ សូមបើកដំណើរការនេះ។
+if you would like to select multiple folders in one action, you can hold ctrl key then select a folder as start range and another folder within a same level as end range, all folders in between will be selected or unselected based on their current status.	mail	km	ប្រសិនបើអ្នកចង់ជ្រើសរើសថតច្រើនក្នុងសកម្មភាពមួយ អ្នកអាចសង្កត់គ្រាប់ចុច ctrl បន្ទាប់មកជ្រើសរើសថតជាជួរចាប់ផ្តើម និងថតផ្សេងទៀតក្នុងកម្រិតដូចគ្នាជាមួយជួរបញ្ចប់ ថតទាំងអស់នៅចន្លោះនឹងត្រូវបានជ្រើសរើស ឬមិនជ្រើសរើសដោយផ្អែកលើស្ថានភាពបច្ចុប្បន្នរបស់វា។
+imap	mail	km	IMAP
+imap - incoming mail	mail	km	IMAP - សំបុត្រចូល
+imap administration	mail	km	ការគ្រប់គ្រង IMAP
+imap server	mail	km	ម៉ាស៊ីនមេ IMAP
+imap timeout	mail	km	អស់ពេល IMAP
+import message	mail	km	សារនាំចូល
+import of message %1 failed. could not save message to folder %2 due to: %3	mail	km	ការនាំចូលសារ%1 បានបរាជ័យ។ មិន​អាច​រក្សា​ទុក​សារ​ទៅ​ថត%2 ដោយសារ៖ % 3
+import of message %1 failed. destination folder %2 does not exist.	mail	km	ការនាំចូលសារ%1 បានបរាជ័យ។ ថតទិសដៅ%2 មិនមានទេ។
+import of message %1 failed. destination folder not set.	mail	km	ការនាំចូលសារ%1 បានបរាជ័យ។ ថតទិសដៅមិនត្រូវបានកំណត់ទេ។
+import of message %1 failed. no contacts to merge and send to specified.	mail	km	ការនាំចូលសារ%1 បានបរាជ័យ។ គ្មាន​ទំនាក់ទំនង​ដើម្បី​បញ្ចូល​គ្នា និង​ផ្ញើ​ទៅ​កាន់​ការ​បញ្ជាក់។
+importance	mail	km	សារៈសំខាន់
+important	mail	km	សំខាន់
+in mailbox: %1, with id: %2, and partid: %3	mail	km	ក្នុងប្រអប់សំបុត្រ៖ %1 ដែលមានលេខសម្គាល់៖ %2 និងលេខសម្គាល់ផ្នែក៖ % 3
+in order to protect your privacy all external sources within this email are blocked.	mail	km	ដើម្បីការពារភាពឯកជនរបស់អ្នក ប្រភពខាងក្រៅទាំងអស់នៅក្នុងអុីមែលនេះត្រូវបានរារាំង។
+inbox	mail	km	ប្រអប់សំបុត្រ
+initialization of mail failed. please use the wizard to cope with the problem.	mail	km	ការចាប់ផ្តើមនៃម៉ូឌុលសំបុត្របានបរាជ័យ។ សូមប្រើអ្នកជំនួយការកំណត់រចនាសម្ព័ន្ធ ដើម្បីកែតម្រូវការកំណត់។
+inline	mail	km	ក្នុងជួរ
+insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)	mail	km	បញ្ចូលហត្ថលេខានៅផ្នែកខាងលើនៃសារថ្មី (ឬឆ្លើយតប) នៅពេលបើកប្រអប់សរសេរ (អ្នកប្រហែលជាមិនអាចប្តូរហត្ថលេខាបានទេ)
+job	mail	km	ការងារ
+junk	mail	km	សំរាម
+junk folder	mail	km	ថតឯកសារឥតបានការ
+keep a copy of the message in your inbox	mail	km	រក្សាច្បាប់ចម្លងនៃសារនៅក្នុងប្រអប់សំបុត្ររបស់អ្នក។
+kilobytes	mail	km	គីឡូបៃ
+later	mail	km	ពេលក្រោយ
+learning as ham (not spam) failed because of %1	mail	km	ការរៀនជា Ham (មិនមែនជាសារឥតបានការ) បានបរាជ័យដោយសារតែ%1
+learning as spam failed because of %1	mail	km	ការរៀនជាសារឥតបានការបានបរាជ័យដោយសារតែ%1
+less than	mail	km	តិច​ជាង
+limit mailing list results when searching for addresses	mail	km	កំណត់លទ្ធផលបញ្ជីសំបុត្ររួមនៅពេលស្វែងរកអាសយដ្ឋាន
+list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	km	បញ្ជីសកម្មភាពដែលត្រូវប្តូរ/បើកដំណើរការតាមលំនាំដើម (ឧ. សរសេរសំបុត្ររក្សាទុកជាសកម្មភាពព័ត៌មាន)
+mail	common	km	សំបុត្រ
+mail acl	mail	km	អុីមែល ACL
+mail filter	mail	km	តម្រងសំបុត្រ
+mail filter rule	mail	km	ច្បាប់តម្រងសំបុត្រ
+mail settings	mail	km	ការកំណត់សំបុត្រ
+mail source	mail	km	ប្រភពសំបុត្រ
+mail-address	mail	km	អាសយដ្ឋានអុីមែល
+mailaccount	mail	km	គណនីអុីមែល
+mailinglist	mail	km	បញ្ជីសំបុត្ររួម
+mails	common	km	សំបុត្រ
+mails can be copied to that folder via context menu, if folder is configured.	mail	km	សំបុត្រអាចត្រូវបានចម្លងទៅថតនោះតាមរយៈម៉ឺនុយបរិបទ ប្រសិនបើថតត្រូវបានកំណត់រចនាសម្ព័ន្ធ។
+mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	km	Mailserver បានរាយការណ៍៖\n%1 \nតើអ្នកចង់បន្តដោយការលុបសារដែលបានជ្រើសរើសភ្លាមៗទេ (ចុចយល់ព្រម)?\nបើមិនដូច្នេះទេ សូមព្យាយាមលុបថតឯកសាររបស់អ្នកមុនពេលបន្ត។ (ចុចបោះបង់)
+mark all as read	mail	km	សម្គាល់ទាំងអស់ថាបានអាន
+mark all messages in folder as read	mail	km	សម្គាល់សារទាំងអស់នៅក្នុងថតថាបានអានហើយ។
+mark as deleted	mail	km	សម្គាល់ថាបានលុប
+match:	mail	km	ការប្រកួត៖
+matches	mail	km	ការប្រកួត
+matches regexp	mail	km	ផ្គូផ្គង regexp
+mbstring.func_overload=0 is required for correct mail processing!	mail	km	mbstring.func_overload=0 គឺចាំបាច់សម្រាប់ដំណើរការសំបុត្រត្រឹមត្រូវ!
+message body	mail	km	សារ
+message learned as ham (not spam) and moved back to inbox	mail	km	សារបានរៀនថាជា Ham (មិនមែនជាសារឥតបានការ) ហើយបានប្តូរទៅប្រអប់សារវិញ។
+message learned as spam and moved to spam folder	mail	km	សារបានរៀនថាជាសារឥតបានការ ហើយបានផ្លាស់ទីទៅថតសារឥតបានការ
+message preview area	mail	km	តំបន់មើលសារជាមុន
+message saved successfully.	mail	km	សារត្រូវបានរក្សាទុកដោយជោគជ័យ។
+message send failed: %1	mail	km	ការផ្ញើសារបានបរាជ័យ៖ %1
+message send successfully.	mail	km	ផ្ញើសារដោយជោគជ័យ។
+message verified successfully but the signer’s certificate could not be verified.	mail	km	សារបានផ្ទៀងផ្ទាត់ដោយជោគជ័យ ប៉ុន្តែវិញ្ញាបនបត្ររបស់អ្នកចុះហត្ថលេខាមិនអាចផ្ទៀងផ្ទាត់បានទេ។
+message verified successfully.	mail	km	សារបានផ្ទៀងផ្ទាត់ដោយជោគជ័យ។
+miscellaneous	mail	km	ផ្សេងៗ
+modify subject	mail	km	កែប្រែប្រធានបទ
+modify subject of this message	mail	km	កែប្រែប្រធានបទនៃសារនេះ។
+move	mail	km	ផ្លាស់ទី
+move folder	mail	km	ផ្លាស់ទីថត
+move selected mails to archive	mail	km	ផ្លាស់ទីសំបុត្រដែលបានជ្រើសរើសទៅប័ណ្ណសារ
+move selected to	mail	km	ផ្លាស់ទីដែលបានជ្រើសរើសទៅ
+move to	mail	km	ផ្លាស់ទី​ទៅ
+move to archive	mail	km	ផ្លាស់ទីទៅថតឯកសារ
+move to trash	mail	km	ផ្លាស់ទីទៅធុងសំរាម
+moved %1 message(s) from %2 to %3	mail	km	បានផ្លាស់ទីសារ %1 ពី %2 ទៅ % 3
+moving folders from one mailaccount to another is not supported	mail	km	ការផ្លាស់ទីថតឯកសារពីគណនីសំបុត្រមួយទៅគណនីអុីមែលមួយផ្សេងទៀតមិនត្រូវបានគាំទ្រទេ។
+name of account	mail	km	ឈ្មោះគណនី
+name of imap servers (space separated host or host:port)	mail	km	ឈ្មោះម៉ាស៊ីនមេ IMAP (ម៉ាស៊ីនបំបែកចន្លោះ ឬម៉ាស៊ីន៖ ច្រក)
+never display html emails	mail	km	មិនដែលបង្ហាញអុីមែល HTML ទេ។
+never show	mail	km	មិនដែលបង្ហាញ
+never show notification	mail	km	កុំបង្ហាញការជូនដំណឹង
+new mail from %1	mail	km	សំបុត្រថ្មីពី%1
+new mail notification	mail	km	ការជូនដំណឹងសារថ្មី។
+new message type	mail	km	ប្រភេទសារថ្មី។
+new subject	mail	km	ប្រធានបទថ្មី។
+no (valid) send folder set in preferences	mail	km	គ្មាន (ត្រឹមត្រូវ) ផ្ញើថតដែលបានកំណត់ក្នុងចំណូលចិត្ត
+no access	mail	km	គ្មានការចូលប្រើ
+no action defined!	mail	km	គ្មានសកម្មភាពកំណត់!
+no address to/cc/bcc supplied, and no folder to save message to provided.	mail	km	គ្មានអាស័យដ្ឋាន TO/CC/BCC ដែលត្រូវបានផ្គត់ផ្គង់ ហើយគ្មានថតឯកសារដើម្បីរក្សាទុកសារដែលត្រូវផ្តល់។
+no adress, to send this mail to, supplied	mail	km	មិន​មាន​អាសយដ្ឋាន​ត្រូវ​បាន​ផ្តល់​ឱ្យ​អ្នក​ណា​ដើម្បី​ផ្ញើ​សំបុត្រ​នេះ​
+no folder destination supplied, and no folder to save message or other measure to store the mail (save to infolog/tracker) provided, but required.	mail	km	គ្មាន​ទិសដៅ​ថត​ដែល​ត្រូវ​បាន​ផ្តល់​ឱ្យ​ទេ ហើយ​ក៏​គ្មាន​ថត​សម្រាប់​រក្សា​ទុក​សារ ឬ​វិធានការ​ផ្សេង​ទៀត​ដើម្បី​រក្សា​ទុក​សំបុត្រ (រក្សាទុក​ទៅ​ក្នុង infolog/tracker) ដែល​បាន​ផ្តល់​ឱ្យ ប៉ុន្តែ​ទាមទារ។
+no folders	mail	km	គ្មានថត
+no message body supplied	mail	km	មិនមានសារពាង្គកាយត្រូវបានផ្គត់ផ្គង់ទេ។
+no plain text part found	mail	km	រកមិនឃើញផ្នែកអត្ថបទធម្មតាទេ។
+no recipient address given!	mail	km	មិនបានផ្តល់អាសយដ្ឋានអ្នកទទួលទេ!
+no send folder set in preferences	mail	km	គ្មាន​ថត​ផ្ញើ​កំណត់​ក្នុង​ចំណូលចិត្ត
+no signature	mail	km	គ្មានហត្ថលេខា
+no sneak preview in list	mail	km	មិនមានការមើលជាមុននៅក្នុងបញ្ជីទេ។
+no subject given!	mail	km	មិន​បាន​ផ្តល់​ប្រធានបទ​!
+no subject supplied	mail	km	គ្មានប្រធានបទត្រូវបានផ្គត់ផ្គង់ទេ។
+no text body supplied, check attachments for message text	mail	km	មិន​មាន​តួអត្ថបទ​ត្រូវ​បាន​ផ្គត់ផ្គង់​ទេ សូម​ពិនិត្យ​ឯកសារ​ភ្ជាប់​សម្រាប់​អត្ថបទ​សារ
+no vacation notice text provided. please enter a message.	mail	km	មិនមានអត្ថបទជូនដំណឹងវិស្សមកាលទេ។ សូមបញ្ចូលសារ។
+no valid %1 folder configured!	mail	km	គ្មាន​ថត %1 ដែល​បាន​កំណត់​ត្រឹមត្រូវ​ទេ!
+non	mail	km	មិនមែន
+none, create all	mail	km	គ្មាន, បង្កើតទាំងអស់។
+nothing to change.	mail	km	គ្មានអ្វីត្រូវផ្លាស់ប្តូរទេ។
+notify about new mail in this folders	mail	km	ជូនដំណឹងអំពីសំបុត្រថ្មីនៅក្នុងថតឯកសារទាំងនេះ
+notify when new mails arrive in these folders	mail	km	ជូនដំណឹងនៅពេលសំបុត្រថ្មីមកដល់ក្នុងថតឯកសារទាំងនេះ
+on	mail	km	នៅលើ
+on behalf of	mail	km	ក្នុងនាម
+on vacation	mail	km	ក្នុង​ថ្ងៃ​វិស្សមកាល
+one address is not valid	mail	km	អាសយដ្ឋានមួយមិនត្រឹមត្រូវទេ។
+only if currently in an other app	mail	km	លុះត្រាតែបច្ចុប្បន្ននៅក្នុងកម្មវិធីផ្សេង
+only makes sense, if you transport password through a different channel / outside of this mail to recipients!	mail	km	មានតែសមហេតុផលទេ ប្រសិនបើអ្នកដឹកជញ្ជូនពាក្យសម្ងាត់តាមរយៈឆានែលផ្សេង / នៅខាងក្រៅសំបុត្រនេះទៅកាន់អ្នកទទួល!
+only needed for some servers, that do not return all folders on root level queries to retrieve all folders for that level	mail	km	ត្រូវការសម្រាប់តែម៉ាស៊ីនមេមួយចំនួនប៉ុណ្ណោះ ដែលមិនត្រឡប់ថតទាំងអស់នៅលើសំណួរកម្រិត root ដើម្បីទាញយកថតទាំងអស់សម្រាប់កម្រិតនោះ
+only one window	mail	km	បង្អួចតែមួយ
+only send message, do not copy a version of the message to the configured sent folder	mail	km	ផ្ញើសារតែប៉ុណ្ណោះ កុំចម្លងកំណែសារទៅថតដែលបានផ្ញើដែលបានកំណត់រចនាសម្ព័ន្ធ
+open in html mode	mail	km	បើកនៅក្នុងរបៀប HTML
+open in text mode	mail	km	បើកក្នុងទម្រង់អត្ថបទ
+organisation	admin	km	អង្គការ
+organization	mail	km	អង្គការ
+original message	mail	km	សារ​ដើម
+outbox	mail	km	ប្រអប់ចេញ
+password protect	mail	km	ការពារពាក្យសម្ងាត់
+permission denied	mail	km	ការអនុញ្ញាតត្រូវបានបដិសេធ
+please configure access to an existing individual imap account.	mail	km	សូមកំណត់រចនាសម្ព័ន្ធការចូលប្រើគណនី IMAP បុគ្គលដែលមានស្រាប់។
+please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	km	សូមកំណត់រចនាសម្ព័ន្ធវិញ្ញាបនបត្រ S/MIME របស់អ្នកនៅក្នុងផ្ទាំងការអ៊ិនគ្រីបដែលមានទីតាំងនៅប្រអប់កែសម្រួលគណនី។
+please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	km	សូមទាក់ទងអ្នកគ្រប់គ្រងរបស់អ្នកដើម្បីធ្វើសុពលភាពប្រសិនបើម៉ាស៊ីនមេរបស់អ្នកគាំទ្រ Serverside Filterrules និងរបៀបបើកពួកវានៅក្នុង EGroupware សម្រាប់គណនីសកម្មរបស់អ្នក (%1) ដែលមានលេខសម្គាល់៖%2។
+please contact your administrator to validate if your server supports serverside vacationmessages, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	km	សូមទាក់ទងអ្នកគ្រប់គ្រងរបស់អ្នក ដើម្បីធ្វើសុពលភាពប្រសិនបើ Server របស់អ្នកគាំទ្រ Serverside Vacationmessages និងរបៀបបើកពួកវានៅក្នុង EGroupware សម្រាប់គណនីសកម្មរបស់អ្នក (%1) ជាមួយ ID:%2។
+please enter password	mail	km	សូមបញ្ចូលពាក្យសម្ងាត់
+please select a address	mail	km	សូមជ្រើសរើសអាសយដ្ឋាន
+please select the number of days to wait between responses	mail	km	សូមជ្រើសរើសចំនួនថ្ងៃដើម្បីរង់ចាំរវាងការឆ្លើយតប
+please supply the message to send with auto-responses	mail	km	សូមផ្តល់សារដើម្បីផ្ញើជាមួយនឹងការឆ្លើយតបដោយស្វ័យប្រវត្តិ
+please wait while sending your mail	mail	km	សូមរង់ចាំខណៈពេលផ្ញើសំបុត្ររបស់អ្នក។
+post	mail	km	ប្រកាស
+predefined addresses for compose	mail	km	អាសយដ្ឋានដែលបានកំណត់ជាមុនសម្រាប់ការសរសេរ
+prevent managing filters	mail	km	រារាំងការគ្រប់គ្រងតម្រង
+prevent managing folders	mail	km	រារាំងការគ្រប់គ្រងថតឯកសារ
+prevent managing notifications	mail	km	រារាំងការគ្រប់គ្រងការជូនដំណឹង
+prevent managing vacation notice	mail	km	រារាំងការគ្រប់គ្រងការជូនដំណឹងវិស្សមកាល
+preview pane	mail	km	ផ្ទាំងមើលជាមុន
+primary profile	mail	km	កម្រងព័ត៌មានបឋម
+printing	mail	km	ការបោះពុម្ព
+printview	mail	km	ទិដ្ឋភាពបោះពុម្ព
+processing of file %1 failed. failed to meet basic restrictions.	mail	km	ដំណើរការឯកសារ%1 បានបរាជ័យ។ បរាជ័យក្នុងការបំពេញតាមកម្រិតមូលដ្ឋាន។
+provide a default vacation text, (used on new vacation messages when there was no message set up previously)	admin	km	ផ្ដល់​អត្ថបទ​វិស្សមកាល​លំនាំដើម (ប្រើ​លើ​សារ​វិស្សមកាល​ថ្មី​នៅ​ពេល​ដែល​មិន​មាន​សារ​បាន​ដំឡើង​ពីមុន)
+push notifications	mail	km	ជំរុញ​ឱ្យ​មាន​ការ​ជូន​ដំណឹង
+quicksearch	mail	km	ការ​ស្វែង​រក​ឆាប់​រហ័ស
+quicksearch (with cc)	mail	km	ការស្វែងរករហ័ស (រួមបញ្ចូល CC)
+quota limit warning in megabyte (recommended value is 30 mb).	mail	km	ការព្រមានកម្រិតកូតាក្នុងមេហ្គាបៃ (តម្លៃដែលបានណែនាំគឺ 30 មេកាបៃ)។
+quota not provided by server	mail	km	កូតាមិនត្រូវបានផ្តល់ដោយម៉ាស៊ីនមេទេ។
+quota: %1	mail	km	កូតា៖ %1
+read	mail	km	អាន
+read / unread	mail	km	អាន / មិនទាន់អាន
+readable	mail	km	អាចអានបាន។
+real name	mail	km	ឈ្មោះ​ពិត
+real name email	mail	km	ឈ្មោះពិត [អុីមែល]
+real name organization email	mail	km	ឈ្មោះពិតរបស់អង្គការ [អុីមែល]
+reason!	mail	km	ហេតុផល!
+receive notification	mail	km	ទទួលការជូនដំណឹង
+recursively	mail	km	ដដែលៗ
+refresh time in minutes	mail	km	ពេលវេលាផ្ទុកឡើងវិញក្នុងរយៈពេលប៉ុន្មាននាទី
+refused to delete folder inbox	mail	km	បដិសេធមិនលុបថត INBOX
+refused to delete folder with subfolders	mail	km	បដិសេធមិនលុបថតដែលមានថតរង
+reject with	mail	km	បដិសេធជាមួយ
+reloaded account %1	mail	km	គណនីដែលបានផ្ទុកឡើងវិញ %1
+reloaded folder %1	mail	km	បាន​ផ្ទុក​ថត​ឡើងវិញ %1
+remember the password for	mail	km	ចងចាំពាក្យសម្ងាត់សម្រាប់
+remove "%1" from blacklisted domains	mail	km	យក "%1" ចេញពីដែនដែលបានចុះបញ្ជីខ្មៅ
+remove "%1" from blacklisted emails	mail	km	លុប "%1" ចេញពីអុីមែលក្នុងបញ្ជីខ្មៅ
+remove "%1" from whiltelisted domains	mail	km	យក "%1" ចេញពីដែនដែលមិនបានចុះបញ្ជី
+remove "%1" from whiltelisted emails	mail	km	លុប "%1" ចេញពីអុីមែលដែលមិនបានចុះបញ្ជី
+remove all	mail	km	លុបចេញទាំងអស់។
+remove immediately	mail	km	យកចេញភ្លាមៗ
+removed folder %1	mail	km	បានលុបថត%1
+removing %1 from blacklisted email addresses failed because of %2	mail	km	ការដក %1 ចេញពីអាសយដ្ឋានអុីមែលក្នុងបញ្ជីខ្មៅបានបរាជ័យដោយសារតែ %2
+removing %1 from whiltelisted email addresses failed because of %2	mail	km	ការដក %1 ចេញពីអាសយដ្ឋានអុីមែលដែលជាប់ក្នុងបញ្ជីសបានបរាជ័យដោយសារតែ %2
+rename folder	mail	km	ប្តូរឈ្មោះថតឯកសារ
+rename folder %1 ?	mail	km	ប្តូរឈ្មោះថត%1 ?
+rename folder %1 to:	mail	km	ប្តូរឈ្មោះថត%1 ទៅ៖
+renamed folder %1 to %2	mail	km	បានប្តូរឈ្មោះថត%1 ទៅ %2
+replace 'http://' in image urls with (trailing / required!)	mail	km	ជំនួស 'http://' ក្នុង urls រូបភាពជាមួយ (ការបន្ត / ទាមទារ!)
+replied	mail	km	បានឆ្លើយតប
+reply	mail	km	ឆ្លើយតប
+reply all	mail	km	ឆ្លើយតប​ទាំងអស់
+reply message type	mail	km	ឆ្លើយតបប្រភេទសារ
+reply to	mail	km	ឆ្លើយតបទៅ
+replying to this message failed because the content of this message seems to be encrypted and can not be decrypted properly. if you still wish to include content of this encrypted message, you may try to use forward as attachment instead.	mail	km	ការឆ្លើយតបសារនេះបរាជ័យ ដោយសារខ្លឹមសារនៃសារនេះហាក់ដូចជាត្រូវបានអ៊ិនគ្រីប និងមិនអាចឌិគ្រីបបានត្រឹមត្រូវ។ ប្រសិនបើអ្នកនៅតែចង់បញ្ចូលខ្លឹមសារនៃសារដែលបានអ៊ិនគ្រីបនេះ អ្នកអាចព្យាយាមប្រើបញ្ជូនបន្តជាឯកសារភ្ជាប់ជំនួសវិញ។
+replyto	mail	km	ឆ្លើយតប
+report as ham	mail	km	រាយការណ៍ជា Ham
+report as spam	mail	km	រាយការណ៍ថាជាសារឥតបានការ
+report this email content as ham (not spam) - spam solutions like spamtitan will learn	mail	km	រាយការណ៍ខ្លឹមសារអុីមែលនេះជា Ham (មិនមែនជាសារឥតបានការ) - ដំណោះស្រាយសារឥតបានការដូចជា spamTitan នឹងរៀន
+report this email content as spam - spam solutions like spamtitan will learn	mail	km	រាយការណ៍ខ្លឹមសារអុីមែលនេះជាសារឥតបានការ - ដំណោះស្រាយសារឥតបានការដូចជា spamTitan នឹងរៀន
+required pear class mail/mimedecode.php not found.	mail	km	រកមិនឃើញ PEAR class Mail/mimeDecode.php ទេ។
+required to disable if you use dovecot with private seen flags on shared or user folder!	mail	km	តម្រូវឱ្យបិទ ប្រសិនបើអ្នកប្រើ Dovecot ជាមួយនឹងទង់ឯកជនដែលមើលឃើញនៅលើថតដែលបានចែករំលែក ឬអ្នកប្រើប្រាស់!
+resend after how many days?	mail	km	ផ្ញើឡើងវិញប៉ុន្មានថ្ងៃ?
+respond to mail sent to:	mail	km	ឆ្លើយតបទៅសំបុត្រដែលបានផ្ញើទៅ៖
+restrict acl management	admin	km	ដាក់កម្រិតការគ្រប់គ្រង acl
+rights	mail	km	សិទ្ធិ
+row order style	mail	km	រចនាប័ទ្មលំដាប់ជួរ
+rule priority position	mail	km	គោលការណ៍អាទិភាព
+rule with priority	mail	km	គ្រប់គ្រងដោយអាទិភាព
+rules	mail	km	ច្បាប់
+s/mime encryption failed because no certificate has been found for sender address: %1	mail	km	ការអ៊ិនគ្រីប S/MIME បានបរាជ័យព្រោះរកមិនឃើញវិញ្ញាបនបត្រសម្រាប់អាសយដ្ឋានអ្នកផ្ញើ៖%1
+save all	mail	km	រក្សាទុកទាំងអស់។
+save all attachments to filemanager	mail	km	រក្សាទុកឯកសារភ្ជាប់ទាំងអស់ទៅកម្មវិធីគ្រប់គ្រងឯកសារ
+save as calendar	mail	km	រក្សាទុកជាប្រតិទិន
+save as default	mail	km	រក្សាទុកជាលំនាំដើម
+save as draft	mail	km	រក្សាទុកជាសេចក្តីព្រាង
+save as draft and print	mail	km	រក្សាទុកជាសេចក្តីព្រាង និងបោះពុម្ព
+save as infolog	mail	km	រក្សាទុកជា Infolog
+save as infolog on send	mail	km	រក្សាទុកជា Infolog នៅពេលផ្ញើ
+save as ticket	mail	km	រក្សាទុកជាសំបុត្រ
+save as tracker on send	mail	km	រក្សាទុកជាកម្មវិធីតាមដាននៅពេលផ្ញើ
+save attachment	mail	km	រក្សាទុកឯកសារភ្ជាប់
+save attachments	mail	km	រក្សាទុកឯកសារភ្ជាប់
+save email	mail	km	រក្សាទុកអុីមែល
+save message to disk	mail	km	រក្សាទុកសារទៅថាស
+save of message %1 failed. could not save message to folder %2 due to: %3	mail	km	ការរក្សាទុកសារ%1 បានបរាជ័យ។ មិន​អាច​រក្សា​ទុក​សារ​ទៅ​ថត%2 ដោយសារ៖ % 3
+save the drafted message as eml file into vfs	mail	km	រក្សាទុកសារដែលបានព្រាងជាឯកសារ eml ទៅក្នុង VFS
+save to disk	mail	km	រក្សាទុកទៅថាស
+save to filemanager	mail	km	រក្សាទុកទៅកម្មវិធីគ្រប់គ្រងឯកសារ
+save:	mail	km	រក្សាទុក៖
+saves subscription changes	mail	km	រក្សាទុកការផ្លាស់ប្តូរការជាវ
+saves this acl	mail	km	រក្សាទុក ACL នេះ។
+saves this rule	mail	km	រក្សាទុកច្បាប់នេះ។
+saving of message %1 failed. destination folder %2 does not exist.	mail	km	ការរក្សាទុកសារ%1 បានបរាជ័យ។ ថតទិសដៅ%2 មិនមានទេ។
+saving of message %1 succeeded. check folder %2.	mail	km	ការរក្សាទុកសារ%1 បានជោគជ័យ។ ពិនិត្យថត%2 ។
+saving the rule failed:	mail	km	ការរក្សាទុកច្បាប់បានបរាជ័យ៖
+security	mail	km	សន្តិសុខ
+see attachments for content of the orignial mail	mail	km	សូមមើលឯកសារភ្ជាប់សម្រាប់ខ្លឹមសារនៃសំបុត្រដើម
+select a date	mail	km	ជ្រើសរើសកាលបរិច្ឆេទ
+select all	mail	km	ជ្រើសរើស​ទាំងអស់
+select an existing entry in order to append mail content to it	mail	km	ជ្រើសរើសធាតុដែលមានស្រាប់ ដើម្បីបន្ថែមខ្លឹមសារសំបុត្រទៅវា។
+select an item to read	mail	km	ជ្រើសរើសធាតុដែលត្រូវអាន
+select file to attach to message	mail	km	ជ្រើសរើសឯកសារដើម្បីភ្ជាប់ទៅសារ
+select file to import into folder	mail	km	ជ្រើសរើសឯកសារដើម្បីនាំចូលទៅក្នុង Folder
+select file(s) from vfs	mail	km	ជ្រើសរើសឯកសារពី VFS
+select files to upload	mail	km	ជ្រើសរើសឯកសារដែលត្រូវបង្ហោះ
+select multiple	mail	km	ជ្រើសរើសច្រើន។
+select or insert email address	mail	km	ជ្រើសរើស ឬបញ្ចូលអាសយដ្ឋានអុីមែល
+selected	mail	km	បានជ្រើសរើស
+selected date range (with quicksearch)	mail	km	ជួរកាលបរិច្ឆេទដែលបានជ្រើសរើស (ជាមួយការស្វែងរករហ័ស)
+send a reject message:	mail	km	ផ្ញើសារបដិសេធ៖
+send files as	mail	km	ផ្ញើឯកសារជា
+send message and move to send folder (if configured)	mail	km	ផ្ញើសារហើយផ្លាស់ទីទៅថតឯកសារ (ប្រសិនបើបានកំណត់រចនាសម្ព័ន្ធ)
+send message pgp encrypted: requires keys from all recipients!	mail	km	ផ្ញើសារ PGP ដែលបានអ៊ិនគ្រីប៖ ទាមទារសោពីអ្នកទទួលទាំងអស់!
+sender	mail	km	អ្នកផ្ញើ
+sent	mail	km	បានផ្ញើ
+sent folder	mail	km	បានផ្ញើថត
+server supports special-use folders	mail	km	ម៉ាស៊ីនមេគាំទ្រថតឯកសារប្រើប្រាស់ពិសេស
+serverside filterrules (sieve) are not activated	mail	km	Serverside Filterrules (Sieve) មិនដំណើរការទេ។
+serverside vacationnotice (via sieve) are not activated	mail	km	សារជូនដំណឹងអវត្តមានរបស់ Serverside (តាមរយៈ Sieve) មិនដំណើរការទេ។
+set / remove flags	mail	km	កំណត់ / យកទង់ជាតិចេញ
+set / remove labels	mail	km	កំណត់ / លុបស្លាក
+set flags	mail	km	កំណត់ទង់
+set it as default:	mail	km	កំណត់វាជាលំនាំដើម៖
+set predefined values for compose...	mail	km	កំណត់តម្លៃដែលបានកំណត់ជាមុនសម្រាប់ការតែង...
+should new messages show up on the home page	mail	km	ប្រសិនបើសារថ្មីបង្ហាញនៅលើទំព័រដើម
+should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	km	គួរបញ្ចូលហត្ថលេខាបន្ទាប់ពី (ស្តង់ដារ) ឬមុនការឆ្លើយតប ឬក្នុងជួរទៅមុខ ហើយហត្ថលេខាគួរតែអាចមើលឃើញ និងអាចផ្លាស់ប្តូរបានក្នុងអំឡុងពេលសរសេរ។
+show	mail	km	បង្ហាញ
+show all addresses	mail	km	បង្ហាញអាសយដ្ឋានទាំងអស់។
+show all attachments	mail	km	បង្ហាញឯកសារភ្ជាប់ទាំងអស់។
+show all folders	mail	km	បង្ហាញ Folders ទាំងអស់។
+show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	km	បង្ហាញថតទាំងអស់ (បានជាវ និងមិនបានជាវ) នៅក្នុងផ្ទាំងថតអេក្រង់មេ
+show horizontal	mail	km	បង្ហាញផ្ដេក
+show horizontal, hide if none selected	mail	km	បង្ហាញផ្ដេក លាក់ប្រសិនបើមិនបានជ្រើសរើស
+show new messages on home page	mail	km	បង្ហាញសារថ្មីនៅលើទំព័រដើម
+show notification for new arriving mails	mail	km	បង្ហាញការជូនដំណឹងសម្រាប់សំបុត្រមកដល់ថ្មី។
+show test connection section and control the level of info displayed?	mail	km	បង្ហាញផ្នែកតភ្ជាប់សាកល្បង និងគ្រប់គ្រងកម្រិតនៃព័ត៌មានដែលបង្ហាញ?
+show test connection section and control the level of info displayed??	mail	km	បង្ហាញផ្នែកតភ្ជាប់សាកល្បង និងគ្រប់គ្រងកម្រិតនៃព័ត៌មានដែលបង្ហាញ ??
+show them this time only	mail	km	បង្ហាញពួកគេនៅពេលនេះតែប៉ុណ្ណោះ
+show vertical	mail	km	បង្ហាញបញ្ឈរ
+show/hide preview pane in mail list view	mail	km	បង្ហាញ/លាក់ផ្ទាំងមើលជាមុននៅក្នុងទិដ្ឋភាពបញ្ជីសំបុត្រ
+shows a temporary visible notification including from address, subject and a snippet of the mail	mail	km	បង្ហាញការជូនដំណឹងដែលមើលឃើញបណ្តោះអាសន្ន រួមទាំងពីអាសយដ្ឋាន ប្រធានបទ និងព័ត៌មានសង្ខេបនៃសំបុត្រ
+sieve	mail	km	Sieve
+sieve connection status	mail	km	ស្ថានភាពការតភ្ជាប់ Sieve
+sieve not activated	mail	km	Sieve មិនដំណើរការទេ។
+sieve script name	mail	km	ឈ្មោះស្គ្រីប sieve
+sieve server	mail	km	ម៉ាស៊ីនបម្រើ Sieve
+sieve_edit_instructions	mail	km	(*) អក្សរជំនួស (*,?) អាចត្រូវបានប្រើ។ ប្រសិនបើអ្នកកំពុងព្យាយាមផ្គូផ្គង * ឬ ? ដោយខ្លួនវាផ្ទាល់ អ្នកត្រូវតែគេចចេញពីពួកវាដោយប្រើសញ្ញាសម្គាល់ (\) ។ ប្រសិនបើអ្នកធីក "ប្រើកន្សោមធម្មតា" អ្នកត្រូវតែប្រើកន្សោមធម្មតាត្រឹមត្រូវ។ ដើម្បីគេចផុតពីសញ្ញាឧទាន (!) នៅដើមដំបូងមិនត្រូវបានប្រើជា "NO" សូមប្រើ regex និង backslash (\) (ឧ. \!)
+sign your message with smime certificate	mail	km	ចុះហត្ថលេខាលើសាររបស់អ្នកជាមួយវិញ្ញាបនបត្រ S/MIME
+signature	mail	km	ហត្ថលេខា
+signature at top	mail	km	ហត្ថលេខានៅខាងលើ
+signature position and visibility	mail	km	ទីតាំងហត្ថលេខា និងការមើលឃើញ
+size(...->0)	mail	km	ទំហំ (...-> 0)
+size(0->...)	mail	km	ទំហំ (0->...)
+small view	mail	km	ទិដ្ឋភាពតូច
+smtp	mail	km	SMTP
+sneak preview in list	mail	km	លួចមើលជាមុននៅក្នុងបញ្ជី
+some clients fail to detect correct charset, if flowed lines are enabled.	mail	km	ម៉ាស៊ីនភ្ញៀវមួយចំនួនបរាជ័យក្នុងការរកឃើញសំណុំតួអក្សរត្រឹមត្រូវ ប្រសិនបើបន្ទាត់លំហូរត្រូវបានបើក។
+sort order	mail	km	តម្រៀបតាមលំដាប់
+source	mail	km	ប្រភព
+sources	mail	km	ប្រភព
+spamtitan api url	mail	km	SpamTitan API URL
+spamtitan integration requires epl version	mail	km	ការរួមបញ្ចូល SpamTitan ទាមទារកំណែ EPL
+start new messages with mime type plain/text or html?	mail	km	ចាប់ផ្តើមសារថ្មីដោយប្រើប្រភេទ MIME ធម្មតា/អត្ថបទ ឬ HTML?
+start reply messages with mime type plain/text or html or try to use the displayed format (default)?	mail	km	ចាប់ផ្តើមសារឆ្លើយតបជាមួយនឹងប្រភេទ MIME ធម្មតា/អត្ថបទ ឬ HTML ឬព្យាយាមប្រើទម្រង់ដែលបានបង្ហាញ (លំនាំដើម)?
+step 1: imap - incoming mail	mail	km	ជំហានទី 1: IMAP - សំបុត្រចូល
+step 2: folder	mail	km	ជំហានទី 2: ថតឯកសារ
+step 3: sieve - server side mail filtering	mail	km	ជំហានទី 3: Sieve - ត្រងអុីមែលចំហៀងម៉ាស៊ីនមេ
+step 4: smtp - outgoing mail	mail	km	ជំហានទី 4: SMTP - សំបុត្រចេញ
+store to folder	mail	km	រក្សាទុកទៅថតឯកសារ
+subject(a->z)	mail	km	ប្រធានបទ (A->Z)
+subject(z->a)	mail	km	ប្រធានបទ (Z-> A)
+subscribe folder	mail	km	ថតជាវ
+subscribe folder ...	mail	km	ជាវថត ...
+subscribe to folder %1	mail	km	ជាវទៅថត%1
+subscription folders	mail	km	ថតការជាវ
+subscription successfully saved.	mail	km	ការជាវបានរក្សាទុកដោយជោគជ័យ។
+succeeded on %1 folders, failed on %2	mail	km	បាន​ជោគជ័យ​លើ​ថត %1 បរាជ័យ​នៅ​លើ %2
+successfully connected	mail	km	បានភ្ជាប់ដោយជោគជ័យ
+switch off encryption?	mail	km	បិទការអ៊ិនគ្រីប?
+template folder	mail	km	ថតពុម្ព
+templates	mail	km	គំរូ
+templates folder	mail	km	ថតពុម្ព
+test connection	mail	km	ការភ្ជាប់សាកល្បង
+test connection and display basic information about the selected profile	mail	km	សាកល្បងការតភ្ជាប់ និងបង្ហាញព័ត៌មានមូលដ្ឋានអំពីទម្រង់ដែលបានជ្រើសរើស
+text	mail	km	អត្ថបទ
+text mode	mail	km	របៀបអត្ថបទ
+text/plain	mail	km	អត្ថបទ/ធម្មតា។
+the %1 's acl removed from the %2	mail	km	acl របស់ %1 ត្រូវបានដកចេញពី %2
+the %1 's acl, including its subfolders, removed from the %2	mail	km	acl របស់ %1 រួមទាំងថតរងរបស់វា បានដកចេញពី %2
+the entered passphrase is not correct! please try again.	mail	km	ឃ្លាសម្ងាត់ដែលបានបញ្ចូលមិនត្រឹមត្រូវ! សូម​ព្យាយាម​ម្តង​ទៀត។
+the folder %1 's acls saved	mail	km	ACL របស់ Folder %1 ត្រូវបានរក្សាទុក
+the folder <b>%1</b> will be used, if there is nothing set here, and no valid predefine given.	mail	km	ថត <b>%1</b> នឹង​ត្រូវ​បាន​ប្រើ ប្រសិន​បើ​មិន​មាន​អ្វី​ដែល​បាន​កំណត់​នៅ​ទីនេះ និង​មិន​បាន​ផ្តល់​ឱ្យ​កំណត់​ជាមុន​ត្រឹមត្រូវ​ទេ។
+the imap server need to meet certain requirements and be configured for it:	mail	km	ម៉ាស៊ីនមេ IMAP ត្រូវតែបំពេញតាមតម្រូវការជាក់លាក់ និងត្រូវបានកំណត់រចនាសម្ព័ន្ធសម្រាប់វា៖
+the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	mail	km	អ្នកផ្ញើសារបានស្នើសុំការឆ្លើយតប ដើម្បីបង្ហាញថាអ្នកបានអានសារនេះ។ តើអ្នកចង់ផ្ញើបង្កាន់ដៃទេ?
+the mimeparser can not parse this message.	mail	km	mimeparser មិនអាចញែកសារនេះបានទេ។
+the rule with priority %1 successfully saved!	mail	km	ច្បាប់ដែលមានអាទិភាព%1 បានរក្សាទុកដោយជោគជ័យ!
+then	mail	km	បន្ទាប់មក
+there is no imap server configured.	mail	km	មិនមានម៉ាស៊ីនមេ IMAP ដែលបានកំណត់រចនាសម្ព័ន្ធទេ។
+there is no space left to store sieve script, please check sieve_maxscriptsize option on your mailserver's config.	mail	km	មិនមានកន្លែងទំនេរសម្រាប់រក្សាទុកស្គ្រីប sieve ទេ សូមពិនិត្យមើលជម្រើស sieve_maxscriptsize នៅលើ config របស់ mailserver របស់អ្នក។
+this mail contains external images served via insecure http protocol. be aware showing or allowing them can compromise your security!	mail	km	សំបុត្រនេះមានរូបភាពខាងក្រៅដែលបម្រើតាមរយៈពិធីការ HTTP ដែលមិនមានសុវត្ថិភាព។ ប្រយ័ត្នការបង្ហាញ ឬអនុញ្ញាតឱ្យពួកវាអាចប៉ះពាល់ដល់សុវត្ថិភាពរបស់អ្នក!
+this message is smime encrypted and password protected.	mail	km	សារនេះត្រូវបានអ៊ិនគ្រីប S/MIME និងត្រូវបានការពារដោយពាក្យសម្ងាត់។
+timeout on connections to your imap server	mail	km	អស់ពេលលើការតភ្ជាប់ទៅម៉ាស៊ីនមេ IMAP របស់អ្នក។
+to do	mail	km	ធ្វើ
+toggle all folders view for %1	mail	km	បិទ/បើក​ទិដ្ឋភាព​ថត​ទាំងអស់​សម្រាប់ %1
+toggled on actions	mail	km	បានបិទបើកសកម្មភាព
+trash	mail	km	សំរាម
+trash folder	mail	km	ធុងសំរាម
+trust servers seen / unseen info	mail	km	ម៉ាស៊ីនមេទុកចិត្ត SEEN / UNSEEN info
+trust the server when retrieving the folder status. if you select no, we will search for the unseen messages and count them ourselves	mail	km	ជឿជាក់លើម៉ាស៊ីនមេ នៅពេលទាញយកស្ថានភាពថត។ ប្រសិនបើអ្នកជ្រើសរើសទេ យើងនឹងស្វែងរកសារ UNSEEN ហើយរាប់វាដោយខ្លួនឯង។
+trying to recover from session data	mail	km	កំពុងព្យាយាមងើបឡើងវិញពីទិន្នន័យសម័យ
+turn off horizontal line between signature and composed message (this is not according to rfc).<br>if you use templates, this option is only applied to the text part of the message.	mail	km	បិទ​បន្ទាត់​ផ្តេក​រវាង​ហត្ថលេខា និង​សារ​ដែល​បាន​តែង (នេះ​មិន​យោង​ទៅ​តាម RFC)។<br>ប្រសិន​បើ​អ្នក​ប្រើ​ពុម្ព ជម្រើស​នេះ​ត្រូវ​បាន​អនុវត្ត​ចំពោះ​ផ្នែក​អត្ថបទ​នៃ​សារ​ប៉ុណ្ណោះ។
+unable to fetch vacation!	mail	km	មិនអាចទៅយកវិស្សមកាលបានទេ!
+undelete	mail	km	លុប
+unflagged	mail	km	មិនទាន់ដាក់ទង់
+unread	mail	km	មិនទាន់អាន
+unsubscribe folder	mail	km	ឈប់ជាវថតឯកសារ
+unsubscribe from folder %1	mail	km	ឈប់ជាវពីថត %1
+upload files...	mail	km	ផ្ទុកឡើងឯកសារ...
+use default timeout (20 seconds)	mail	km	ប្រើការអស់ពេលលំនាំដើម (20 វិនាទី)
+use regular expressions (see wikipedia for information on posix regular expressions)	mail	km	ប្រើកន្សោមធម្មតា (សូមមើលវិគីភីឌាសម្រាប់ព័ត៌មានអំពីកន្សោមធម្មតា POSIX)
+use source as displayed, if applicable	mail	km	ប្រើប្រភពដូចដែលបានបង្ហាញ ប្រសិនបើអាច
+use username+password from current user	mail	km	ប្រើឈ្មោះអ្នកប្រើ + ពាក្យសម្ងាត់ពីអ្នកប្រើប្រាស់បច្ចុប្បន្ន
+use wizard to detect or verify configuration	mail	km	ប្រើអ្នកជំនួយការដើម្បីស្វែងរក ឬផ្ទៀងផ្ទាត់ការកំណត់រចនាសម្ព័ន្ធ
+vacation messages with start and end date require an admin account to be set!	mail	km	សារ​វិស្សមកាល​ជាមួយ​នឹង​ថ្ងៃ​ចាប់​ផ្ដើម និង​ថ្ងៃ​បញ្ចប់​តម្រូវ​ឱ្យ​មាន​គណនី​អ្នក​គ្រប់គ្រង​ដើម្បី​កំណត់!
+vacation notice	mail	km	សេចក្តីជូនដំណឹងអំពីវិស្សមកាល
+vacation notice is active	mail	km	ការជូនដំណឹងអំពីវិស្សមកាលគឺសកម្ម
+vacation notice is not saved yet! (but we filled in some defaults to cover some of the above errors. please correct and check your settings and save again.)	mail	km	ការជូនដំណឹងអំពីវិស្សមកាលមិនទាន់ត្រូវបានរក្សាទុកនៅឡើយទេ! (ប៉ុន្តែ​យើង​បាន​បំពេញ​តាម​លំនាំដើម​មួយ​ចំនួន​ដើម្បី​គ្រប​ដណ្តប់​លើ​កំហុស​មួយ​ចំនួន​ខាង​លើ។ សូម​កែ​ហើយ​ពិនិត្យ​ការ​កំណត់​របស់​អ្នក ហើយ​រក្សា​ទុក​ម្ដង​ទៀត។)
+vacation notice sucessfully updated.	mail	km	បានធ្វើបច្ចុប្បន្នភាពការជូនដំណឹងអំពីវិស្សមកាលដោយជោគជ័យ។
+vacation notice update failed	mail	km	ការធ្វើបច្ចុប្បន្នភាពការជូនដំណឹងវិស្សមកាលបានបរាជ័យ
+vacation start-date must be before the end-date!	mail	km	កាលបរិច្ឆេទចាប់ផ្តើមវិស្សមកាលត្រូវតែមុនកាលបរិច្ឆេទបញ្ចប់!
+vacation update failed	mail	km	ការអាប់ដេតវិស្សមកាលបានបរាជ័យ
+valid for	mail	km	មានសុពលភាពសម្រាប់
+validate addresses on submit:	mail	km	បញ្ជាក់អាសយដ្ឋាននៅពេលដាក់ស្នើ៖
+validate selected addresses on submit:	mail	km	បញ្ជាក់អាសយដ្ឋានដែលបានជ្រើសរើសនៅពេលដាក់ស្នើ៖
+view full mail source	mail	km	មើលប្រភពសំបុត្រពេញលេញ
+view header lines	mail	km	មើលបន្ទាត់បឋមកថា
+what do do with html email	mail	km	អ្វីដែលត្រូវធ្វើជាមួយអុីមែល HTML
+what order the list columns are in	mail	km	តើ​ជួរ​ឈរ​បញ្ជី​ស្ថិត​ក្នុង​លំដាប់​ណា
+what to do when you delete a message	mail	km	អ្វីដែលត្រូវធ្វើនៅពេលអ្នកលុបសារ
+what to do when you send a message	mail	km	អ្វីដែលត្រូវធ្វើនៅពេលអ្នកផ្ញើសារ
+when deleting messages	mail	km	នៅពេលលុបសារ
+when displaying messages in a popup, re-use the same popup for all or open a new popup for each message	mail	km	នៅពេលបង្ហាញសារនៅក្នុងផ្ទាំងលេចឡើង សូមប្រើការលេចឡើងដដែលសម្រាប់ទាំងអស់ ឬបើកផ្ទាំងលេចឡើងថ្មីសម្រាប់សារនីមួយៗ
+when saving messages as item of a different app	mail	km	នៅពេលរក្សាទុកសារជាធាតុនៃកម្មវិធីផ្សេង
+when sending messages	mail	km	នៅពេលផ្ញើសារ
+which folders (additional to the sent folder) should be displayed using the sent folder view schema	mail	km	ថតមួយណា (បន្ថែមទៅថតដែលបានផ្ញើ) គួរតែត្រូវបានបង្ហាញដោយប្រើ Sent Folder View Schema
+which folders - in general - should not be automatically created, if not existing	mail	km	ថតណាមួយ - ជាទូទៅ - មិនគួរត្រូវបានបង្កើតដោយស្វ័យប្រវត្តិទេ ប្រសិនបើមិនមាន
+which method to use when forwarding a message	mail	km	តើវិធីណាដែលត្រូវប្រើនៅពេលបញ្ជូនបន្តសារ
+whitelisted mails are not marked as spam	mail	km	សំបុត្រក្នុងបញ្ជីសមិនត្រូវបានសម្គាល់ថាជាសារឥតបានការទេ។
+whole message	mail	km	សារទាំងមូល
+with message:	mail	km	ជាមួយសារ៖
+wizard	mail	km	អ្នកជំនួយការ
+writable sharing requires epl version!	mail	km	ការចែករំលែកដែលអាចសរសេរបានទាមទារកំណែ EPL!
+write	mail	km	សរសេរ
+wrote	mail	km	បានសរសេរ
+yes, but mask all passwords	mail	km	យល់ព្រម ប៉ុន្តែបិទបាំងពាក្យសម្ងាត់ទាំងអស់។
+yes, but mask all usernames and passwords	mail	km	យល់ព្រម ប៉ុន្តែបិទបាំងឈ្មោះអ្នកប្រើប្រាស់ និងពាក្យសម្ងាត់ទាំងអស់។
+yes, offer copy option	mail	km	យល់ព្រម ផ្តល់ជម្រើសចម្លង
+yes, only trigger connection reset	mail	km	យល់ព្រម មានតែការកេះការតភ្ជាប់ឡើងវិញប៉ុណ្ណោះ។
+yes, show all debug information available for the user	mail	km	យល់ព្រម បង្ហាញព័ត៌មានបំបាត់កំហុសទាំងអស់ដែលមានសម្រាប់អ្នកប្រើប្រាស់
+yes, show basic info only	mail	km	យល់ព្រម បង្ហាញតែព័ត៌មានមូលដ្ឋានប៉ុណ្ណោះ។
+you can either choose to save as infolog or tracker, not both.	mail	km	អ្នកអាចជ្រើសរើសរក្សាទុកជា infolog ឬកម្មវិធីតាមដាន មិនមែនទាំងពីរទេ។
+you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	km	អ្នកអាចប្រើ $$start$$ សម្រាប់កាលបរិច្ឆេទចាប់ផ្តើមខាងលើ និង $$end$$ សម្រាប់កាលបរិច្ឆេទបញ្ចប់។
+you may add this certificate into your contact, if you trust this signature.	mail	km	អ្នកអាចបន្ថែមវិញ្ញាបនបត្រនេះទៅក្នុងទំនាក់ទំនងរបស់អ្នក ប្រសិនបើអ្នកជឿជាក់លើហត្ថលេខានេះ។
+you need to enter your s/mime passphrase to send this message.	mail	km	អ្នកត្រូវបញ្ចូលឃ្លាសម្ងាត់ S/MIME របស់អ្នក ដើម្បីផ្ញើសារនេះ។
+you need to install mailvelope plugin available for chrome and firefox from %1.	mail	km	អ្នកត្រូវដំឡើងកម្មវិធីជំនួយ Mailvelope ដែលមានសម្រាប់ Chrome និង Firefox ពី %1។
+you need to save the message as draft first before to be able to save it into vfs	mail	km	អ្នកត្រូវរក្សាទុកសារជាសេចក្តីព្រាងជាមុនសិន ទើបអាចរក្សាទុកវាទៅក្នុង VFS
+you will loose current message body, unless you save it to your clipboard!	mail	km	អ្នក​នឹង​បាត់បង់​តួ​សារ​បច្ចុប្បន្ន លុះត្រាតែ​អ្នក​រក្សាទុក​វា​ទៅក្នុង​ក្ដារតម្បៀតខ្ទាស់​របស់អ្នក!
+you've got new mail	mail	km	អ្នក​មាន​សំបុត្រ​ថ្មី
+your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	km	កូតា%1 ដែលនៅសេសសល់របស់អ្នកគឺទាបពេក អ្នកប្រហែលជាមិនអាចផ្ញើ/ទទួលអុីមែលបន្ថែមបានទេ។\n ទោះបីជាការសម្អាតអុីមែលនៅក្នុងធុងសំរាម ឬថតសារឥតបានការ អាចជួយអ្នកក្នុងការទទួលបានទំហំទំនេរមួយចំនួនត្រឡប់មកវិញ។\n ប្រសិនបើវាមិនអាចជួយបាន សូមសួរអ្នកគ្រប់គ្រងរបស់អ្នកសម្រាប់កូតាបន្ថែម។

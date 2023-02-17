@@ -1,0 +1,192 @@
+%1 timesheets(s) %2	តារាងពេលវេលា	km	សន្លឹកពេលវេលា %1 %2
+%1 timesheets(s) %2, %3 failed because of insufficent rights !!!	តារាងពេលវេលា	km	%1 តារាងពេលវេលាs(s) %2, %3 បានបរាជ័យដោយសារតែសិទ្ធិមិនគ្រប់គ្រាន់ !!!
+--> enter new name	admin	km	--> បញ្ចូលឈ្មោះថ្មី
+2 month ago	តារាងពេលវេលា	km	2 ខែមុន
+2 years ago	តារាងពេលវេលា	km	2 ឆ្នាំមុន
+3 years ago	តារាងពេលវេលា	km	3 ឆ្នាំមុន
+all projects	តារាងពេលវេលា	km	គម្រោងទាំងអស់
+and its members	តារាងពេលវេលា	km	និងសមាជិករបស់ខ្លួន
+applies the changes	តារាងពេលវេលា	km	អនុវត្តការផ្លាស់ប្តូរ
+apply the action on the whole query, not only the shown timesheets!!!	តារាងពេលវេលា	km	អនុវត្តសកម្មភាពលើសំណួរទាំងមូល មិនត្រឹមតែតារាងពេលវេលាដែលបានបង្ហាញប៉ុណ្ណោះទេ!
+ask to start and stop working time with session	តារាងពេលវេលា	km	សុំឱ្យចាប់ផ្តើម និងបញ្ឈប់ម៉ោងធ្វើការជាមួយនឹងវគ្គ
+both: allow to use projectmanager and free project-names	admin	km	ទាំងពីរ៖ អនុញ្ញាតឱ្យប្រើកម្មវិធីគ្រប់គ្រងគម្រោង និងឈ្មោះគម្រោងឥតគិតថ្លៃ
+by	តារាងពេលវេលា	km	ដោយ
+category for 'working time'	admin	km	ប្រភេទសម្រាប់ 'ម៉ោងធ្វើការ'
+change category	តារាងពេលវេលា	km	ផ្លាស់ប្តូរប្រភេទ
+change owner when updating	តារាងពេលវេលា	km	ផ្លាស់ប្តូរម្ចាស់នៅពេលធ្វើបច្ចុប្បន្នភាព
+changed category to %1	តារាងពេលវេលា	km	បានប្តូរប្រភេទទៅជា%1
+changed status	តារាងពេលវេលា	km	បានផ្លាស់ប្តូរស្ថានភាព
+check all	តារាងពេលវេលា	km	ពិនិត្យ​ទាំងអស់
+choose 'creator' of imported data	តារាងពេលវេលា	km	ជ្រើសរើស 'អ្នកបង្កើត' នៃទិន្នន័យដែលបាននាំចូល
+comment by %1 at %2:	តារាងពេលវេលា	km	ផ្ដល់មតិដោយ%1 នៅ%2៖
+create a single 'working time' timesheet per	តារាងពេលវេលា	km	បង្កើតតារាងពេលវេលា 'ម៉ោងធ្វើការ' តែមួយក្នុងមួយ
+create new links	តារាងពេលវេលា	km	បង្កើតតំណថ្មី
+creates a new field	តារាងពេលវេលា	km	បង្កើតវាលថ្មីមួយ
+creating new entry	តារាងពេលវេលា	km	ការបង្កើតធាតុថ្មី
+custom fields	តារាងពេលវេលា	km	វាលផ្ទាល់ខ្លួន
+default document to insert entries	តារាងពេលវេលា	km	ឯកសារលំនាំដើមដើម្បីបញ្ចូលធាតុ
+delete this status	admin	km	លុបស្ថានភាពនេះ
+deleted	តារាងពេលវេលា	km	បានលុប
+deletes this field	តារាងពេលវេលា	km	លុបវាលនេះ
+determines the order the fields are displayed	តារាងពេលវេលា	km	កំណត់លំដាប់ដែលវាលត្រូវបានបង្ហាញ
+directory with documents to insert entries	តារាងពេលវេលា	km	ថតជាមួយឯកសារដើម្បីបញ្ចូលធាតុ
+disable timers	តារាងពេលវេលា	km	បិទកម្មវិធីកំណត់ម៉ោង
+do you want to associate it with the selected %1 entry?	common	km	តើអ្នកចង់ភ្ជាប់វាជាមួយធាតុ%1 ដែលបានជ្រើសរើសទេ?
+do you want to start your working time?	common	km	តើអ្នកចង់ចាប់ផ្តើមម៉ោងធ្វើការរបស់អ្នកទេ?
+do you want to stop your working time?	common	km	តើអ្នកចង់បញ្ឈប់ម៉ោងធ្វើការទេ?
+each value is a line like <id>[=<label>]	តារាងពេលវេលា	km	តម្លៃនីមួយៗគឺជាបន្ទាត់ដូចជា <id>[=<label>]
+edit status	common	km	កែសម្រួលស្ថានភាព
+edit this entry	តារាងពេលវេលា	km	កែសម្រួលធាតុនេះ
+empty if identical to duration	តារាងពេលវេលា	km	ទទេប្រសិនបើដូចគ្នាទៅនឹងរយៈពេល
+end	តារាងពេលវេលា	km	ចប់
+entry deleted	តារាងពេលវេលា	km	ធាតុត្រូវបានលុប
+entry saved	តារាងពេលវេលា	km	បានរក្សាទុកធាតុ
+error deleting the entry!!!	តារាងពេលវេលា	km	កំហុសក្នុងការលុបធាតុ!
+error saving the entry!!!	តារាងពេលវេលា	km	កំហុសក្នុងការរក្សាទុកធាតុ!
+error storing working time	តារាងពេលវេលា	km	កំហុសក្នុងការរក្សាទុកពេលវេលាធ្វើការ
+events	តារាងពេលវេលា	km	ព្រឹត្តិការណ៍
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	តារាងពេលវេលា	km	ឧទាហរណ៍ {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - search the field "n_prefix", for "Mr", if found, write Hello Mr., else write Hello Ms.
+example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	តារាងពេលវេលា	km	ឧទាហរណ៍ {{LETTERPREFIXCUSTOM n_prefix title n_family}} - ឧទាហរណ៍៖ លោកបណ្ឌិត James Miller
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	តារាងពេលវេលា	km	ឧទាហរណ៍ {{NELF role}} - ប្រសិនបើតួនាទីវាលមិនទទេ អ្នកនឹងទទួលបានបន្ទាត់ថ្មីជាមួយនឹងតម្លៃនៃតួនាទីវាល
+example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	តារាងពេលវេលា	km	ឧទាហរណ៍ {{nenvlf role}} - ប្រសិនបើតួនាទីវាលមិនទទេ កំណត់ LF ដោយគ្មានតម្លៃណាមួយនៃវាល
+existing links	តារាងពេលវេលា	km	តំណភ្ជាប់ដែលមានស្រាប់
+exists	តារាងពេលវេលា	km	មាន
+export definition to use for nextmatch export	តារាងពេលវេលា	km	នាំចេញនិយមន័យដែលត្រូវប្រើសម្រាប់ការនាំចេញការប្រកួតបន្ទាប់
+export to openoffice spreadsheet	តារាងពេលវេលា	km	នាំចេញទៅសៀវភៅបញ្ជី OpenOffice
+exports entries from your timesheet into a csv file.	តារាងពេលវេលា	km	នាំចេញធាតុពី Time Sheet ទៅជាឯកសារ CSV
+exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	តារាងពេលវេលា	km	នាំចេញធាតុពី Time Sheet ទៅជាឯកសារ CSV  CSV មានន័យថា 'តម្លៃបំបែកដោយសញ្ញាក្បៀស' នៅក្នុងផ្ទាំងជម្រើស អ្នកក៏អាចជ្រើសរើសសញ្ញាបំបែកផ្សេងទៀត
+favorites	តារាងពេលវេលា	km	ចំណូលចិត្ត
+field must not be empty !!!	តារាងពេលវេលា	km	វាលមិនត្រូវទទេ!
+for serial letter use this tag. put the content, you want to repeat between two tags.	តារាងពេលវេលា	km	សម្រាប់អក្សរសៀរៀលប្រើស្លាកនេះ ដាក់មាតិកា អ្នកចង់ធ្វើម្តងទៀតរវាងស្លាកពីរ
+forgot to switch off working time?	common	km	ភ្លេចបិទម៉ោងធ្វើការមែនទេ?
+full: use only projectmanager	admin	km	ពេញ៖ ប្រើតែកម្មវិធីគ្រប់គ្រងគម្រោងប៉ុណ្ណោះ
+general fields:	តារាងពេលវេលា	km	វាលទូទៅ៖
+global categories	តារាងពេលវេលា	km	ប្រភេទសកល
+history	តារាងពេលវេលា	km	ប្រវត្តិសាស្ត្រ
+history logging	admin	km	ការកត់ត្រាប្រវត្តិសាស្ត្រ
+html link to the current record	តារាងពេលវេលា	km	តំណភ្ជាប់ HTML ទៅកំណត់ត្រាបច្ចុប្បន្ន
+id	តារាងពេលវេលា	km	លេខសម្គាល់
+if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	តារាងពេលវេលា	km	ប្រសិនបើអ្នកបញ្ជាក់ថត (ផ្លូវ vfs ពេញលេញ) នៅទីនេះ %1 បង្ហាញសកម្មភាពសម្រាប់ឯកសារនីមួយៗ សកម្មភាពនោះអនុញ្ញាតឱ្យទាញយកឯកសារដែលបានបញ្ជាក់ជាមួយនឹងទិន្នន័យ %1 ដែលបានបញ្ចូល
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	តារាងពេលវេលា	km	ប្រសិនបើអ្នកបញ្ជាក់ឯកសារ (ផ្លូវ vfs ពេញលេញ) នៅទីនេះ %1 បង្ហាញរូបតំណាងឯកសារបន្ថែមសម្រាប់ធាតុនីមួយៗ រូបតំណាងនោះអនុញ្ញាតឱ្យទាញយកឯកសារដែលបានបញ្ជាក់ជាមួយនឹងទិន្នន័យដែលបានបញ្ចូល
+if you specify an export definition, it will be used when you export	តារាងពេលវេលា	km	ប្រសិនបើអ្នកបញ្ជាក់និយមន័យនាំចេញ វានឹងត្រូវបានប្រើនៅពេលអ្នកនាំចេញ
+ignore	តារាងពេលវេលា	km	មិនអើពើ
+import options	តារាងពេលវេលា	km	ជម្រើសនាំចូល
+imports entries into the timesheet from a csv file.	តារាងពេលវេលា	km	នាំចូលធាតុទៅក្នុង Time Sheet ពីឯកសារ CSV
+insert	តារាងពេលវេលា	km	បញ្ចូល
+invalid field: %1 = %2, it needs to be a number.	តារាងពេលវេលា	km	វាលមិនត្រឹមត្រូវ៖ %1 = %2 វាត្រូវតែជាលេខ
+invalid input	common	km	ការ​បញ្ចូល​មិន​ត្រឹមត្រូវ
+invalid owner id: %1.  might be a bad field translation.  used %2 instead.	តារាងពេលវេលា	km	លេខសម្គាល់ម្ចាស់មិនត្រឹមត្រូវ៖ %1 ប្រហែលជាការបកប្រែវាលមិនល្អ បានប្រើ%2 ជំនួសវិញ
+last modified	តារាងពេលវេលា	km	កែប្រែចុងក្រោយ
+last month	តារាងពេលវេលា	km	ខែមុន
+last week	តារាងពេលវេលា	km	សប្ដាហ៍​មុន
+last year	តារាងពេលវេលា	km	ឆ្នាំមុន
+leave it empty for a full week	តារាងពេលវេលា	km	ទុកវាចោលពេញមួយសប្តាហ៍
+leaves without saveing	តារាងពេលវេលា	km	ស្លឹកដោយមិនរក្សាទុក
+length<br>rows	តារាងពេលវេលា	km	ប្រវែង<br>ជួរដេក
+links	តារាងពេលវេលា	km	តំណភ្ជាប់
+links and attached files	តារាងពេលវេលា	km	តំណភ្ជាប់និងឯកសារភ្ជាប់
+links to specified application.  example: {{links/infolog}}	តារាងពេលវេលា	km	តំណភ្ជាប់ទៅកម្មវិធីដែលបានបញ្ជាក់ ឧទាហរណ៍៖ {{links/infolog}}
+list of files linked to the current record	តារាងពេលវេលា	km	បញ្ជីឯកសារដែលភ្ជាប់ទៅកំណត់ត្រាបច្ចុប្បន្ន
+manage mapping	តារាងពេលវេលា	km	គ្រប់គ្រងការធ្វើផែនទី
+max length of the input [, length of the inputfield (optional)]	តារាងពេលវេលា	km	ប្រវែងអតិបរមានៃការបញ្ចូល [, ប្រវែងនៃវាលបញ្ចូល (ជាជម្រើស)]
+mode	តារាងពេលវេលា	km	របៀប
+modified	តារាងពេលវេលា	km	កែប្រែ
+modify status	តារាងពេលវេលា	km	កែប្រែស្ថានភាព
+name of current user, all other contact fields are valid too	តារាងពេលវេលា	km	ឈ្មោះអ្នកប្រើប្រាស់បច្ចុប្បន្ន វាលទំនាក់ទំនងផ្សេងទៀតទាំងអស់ក៏មានសុពលភាពផងដែរ
+new ticket submitted by %1 at %2	តារាងពេលវេលា	km	សំបុត្រថ្មីត្រូវបានដាក់ជូនដោយ%1 នៅ%2
+new timesheet submitted by %1 at %2	តារាងពេលវេលា	km	តារាងពេលវេលាថ្មីបានដាក់ជូនដោយ%1 នៅ%2
+no details	តារាងពេលវេលា	km	មិនមានព័ត៌មានលម្អិតទេ
+no project	តារាងពេលវេលា	km	គ្មានគម្រោង
+no status	តារាងពេលវេលា	km	គ្មានស្ថានភាព
+none: use only free project-names	admin	km	គ្មាន៖ ប្រើតែឈ្មោះគម្រោងឥតគិតថ្លៃ
+number of row for a multiline inputfield or line of a multi-select-box	តារាងពេលវេលា	km	ចំនួន​ជួរ​ដេក​សម្រាប់​វាល​បញ្ចូល​ច្រើន​បន្ទាត់ ឬ​បន្ទាត់​នៃ​ប្រអប់​ជ្រើសរើស​ច្រើន​
+only admin	admin	km	មានតែ admin
+only admin can edit this status	admin	km	មានតែអ្នកគ្រប់គ្រងប៉ុណ្ណោះដែលអាចកែសម្រួលតារាងពេលវេលាជាមួយនឹងស្ថានភាពនេះបាន
+or endtime	តារាងពេលវេលា	km	ឬពេលវេលាបញ្ចប់
+order	តារាងពេលវេលា	km	បញ្ជាទិញ
+overwrite time	common	km	សរសេរជាន់លើពេលវេលា
+overwriting start or stop time	តារាងពេលវេលា	km	ការសរសេរជាន់លើពេលចាប់ផ្តើម ឬបញ្ឈប់
+parent	admin	km	ឪពុកម្តាយ
+pause	common	km	ផ្អាក
+permission denied!!!	តារាងពេលវេលា	km	ការអនុញ្ញាតត្រូវបានបដិសេធ!
+permissions error - %1 could not %2	តារាងពេលវេលា	km	កំហុស​ការ​អនុញ្ញាត -%1 មិន​អាច%2
+prevent deleting	admin	km	រារាំងការលុប
+price	តារាងពេលវេលា	km	តម្លៃ
+project fields	តារាងពេលវេលា	km	វាលគម្រោង
+projectmanager integration	admin	km	ការរួមបញ្ចូលអ្នកគ្រប់គ្រងគម្រោង
+quantity	តារាងពេលវេលា	km	បរិមាណ
+recorded	តារាងពេលវេលា	km	កត់ត្រា
+recovered	តារាងពេលវេលា	km	បានជាសះស្បើយ
+replacements for inserting entries into documents	តារាងពេលវេលា	km	ការជំនួសសម្រាប់ការបញ្ចូលធាតុទៅក្នុងឯកសារ
+restore this entry	តារាងពេលវេលា	km	ស្តារធាតុនេះ
+save & new	តារាងពេលវេលា	km	រក្សាទុក & ថ្មី
+saves the changes made	តារាងពេលវេលា	km	រក្សាទុកការផ្លាស់ប្តូរដែលបានធ្វើ
+saves the changes made and leaves	តារាងពេលវេលា	km	រក្សាទុកការផ្លាស់ប្តូរដែលបានធ្វើហើយចាកចេញ
+saves this entry and add a new one	តារាងពេលវេលា	km	រក្សាទុកធាតុនេះ ហើយបន្ថែមធាតុថ្មី
+select a price	តារាងពេលវេលា	km	ជ្រើសរើសតម្លៃ
+select a project	តារាងពេលវេលា	km	ជ្រើសរើសគម្រោងមួយ
+select a status of the timesheet	តារាងពេលវេលា	km	ជ្រើសរើសស្ថានភាពនៃតារាងពេលវេលា
+select infolog	តារាងពេលវេលា	km	ជ្រើសរើស InfoLog
+select multiple timeshhets for a further action	តារាងពេលវេលា	km	ជ្រើសរើសតារាងពេលវេលាច្រើនសម្រាប់សកម្មភាពបន្ថែម
+select the predefined status, whan creating a new timesheet	preferences	km	ជ្រើសរើសស្ថានភាពដែលបានកំណត់ជាមុន នៅពេលបង្កើតធាតុថ្មី
+select the predefined status, when creating a new timesheet	preferences	km	ជ្រើសរើសស្ថានភាពដែលបានកំណត់ជាមុន នៅពេលបង្កើតធាតុថ្មី
+set to	តារាងពេលវេលា	km	កំណត់​ទៅ
+show a quantity sum (eg. to sum up negative overtime)	admin	km	បង្ហាញបរិមាណ ឧ. ដើម្បីបូកសរុបម៉ោងបន្ថែមអវិជ្ជមាន
+skip record	តារាងពេលវេលា	km	រំលងកំណត់ត្រា
+start	តារាងពេលវេលា	km	ចាប់ផ្តើម
+start & stop timer	common	km	ចាប់ផ្តើម និងបញ្ឈប់កម្មវិធីកំណត់ម៉ោង
+start timer	common	km	ចាប់ផ្តើមកម្មវិធីកំណត់ម៉ោង
+start-time can not be before last stop- or pause-time %1!	common	km	ម៉ោងចាប់ផ្តើមមិនអាចមុនពេលឈប់ចុងក្រោយ ឬពេលផ្អាក%1!
+starttime	តារាងពេលវេលា	km	ពេលវេលាចាប់ផ្តើម
+starttime has to be before endtime !!!	តារាងពេលវេលា	km	ពេលវេលាចាប់ផ្តើមត្រូវតែមុនពេលបញ្ចប់!
+status	តារាងពេលវេលា	km	ស្ថានភាព
+status deleted.	តារាងពេលវេលា	km	ស្ថានភាពត្រូវបានលុប
+status of created timesheets	តារាងពេលវេលា	km	ស្ថានភាពនៃតារាងពេលវេលាដែលបានបង្កើត
+status updated.	តារាងពេលវេលា	km	ស្ថានភាពបានធ្វើបច្ចុប្បន្នភាព
+stop	common	km	ឈប់
+stop- or pause-time can not be before the start-time %1!	common	km	ពេលវេលាឈប់ ឬផ្អាកមិនអាចនៅមុនម៉ោងចាប់ផ្តើម%1!
+sum	តារាងពេលវេលា	km	ផលបូក
+sum %1:	តារាងពេលវេលា	km	ផលបូក%1៖
+tag to mark positions for address labels	តារាងពេលវេលា	km	ដាក់ស្លាកដើម្បីសម្គាល់ទីតាំងសម្រាប់ស្លាកអាសយដ្ឋាន
+the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	តារាងពេលវេលា	km	ឯកសារអាចមានកន្លែងដាក់ដូចជា {{%3}} ដែលត្រូវជំនួសដោយទិន្នន័យ (%1បញ្ជីពេញនៃឈ្មោះកន្លែងដាក់%2)
+the following document-types are supported:	តារាងពេលវេលា	km	ប្រភេទឯកសារខាងក្រោមត្រូវបានគាំទ្រ៖
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	តារាងពេលវេលា	km	ឈ្មោះដែលបានប្រើនៅខាងក្នុង <= 20 តួអក្សរ ការផ្លាស់ប្តូរវាធ្វើឱ្យទិន្នន័យដែលមានស្រាប់មិនអាចប្រើបាន
+the text displayed to the user	តារាងពេលវេលា	km	អត្ថបទត្រូវបានបង្ហាញដល់អ្នកប្រើប្រាស់
+this month	តារាងពេលវេលា	km	ខែ​នេះ
+this week	តារាងពេលវេលា	km	ស​ប្តា​ហ៍​នេះ
+this year	តារាងពេលវេលា	km	ឆ្នាំ​នេះ
+ticket modified by %1 at %2	តារាងពេលវេលា	km	សំបុត្របានកែប្រែដោយ%1 នៅ%2
+timer	common	km	កម្មវិធីកំណត់ម៉ោង
+timer already running or paused	common	km	កម្មវិធីកំណត់ម៉ោងដំណើរការ ឬផ្អាករួចហើយ
+timesheet	common	km	តារាង​ពេលវេលា
+timesheet csv export	តារាងពេលវេលា	km	ការនាំចេញ តារាងពេលវេលា CSV
+timesheet csv import	តារាងពេលវេលា	km	ការនាំចូល តារាងពេលវេលា CSV
+timesheet fields:	តារាងពេលវេលា	km	វាល តារាងពេលវេលា៖
+timesheet id	តារាងពេលវេលា	km	លេខសម្គាល់ តារាងពេលវេលា
+timesheet list	តារាងពេលវេលា	km	តារាងពេលវេលា
+timesheet modified by %1 at %2	តារាងពេលវេលា	km	តារាងពេលវេលា បានកែប្រែដោយ%1 នៅ%2
+timesheet openoffice export	តារាងពេលវេលា	km	ការនាំចេញ តារាងពេលវេលា OpenOffice
+timesheet status-%1 '%2' added.	តារាងពេលវេលា	km	ស្ថានភាព តារាងពេលវេលា-%1 '%2' បានបន្ថែម
+timesheet-%1 '%2' updated.	តារាងពេលវេលា	km	តារាងពេលវេលា-%1 '%2' បានធ្វើបច្ចុប្បន្នភាព
+timesheet-%1 deleted.	តារាងពេលវេលា	km	តារាងពេលវេលា-%1 ត្រូវបានលុប
+titles of any entries linked to the current record, excluding attached files	តារាងពេលវេលា	km	ចំណងជើងនៃធាតុណាមួយដែលភ្ជាប់ទៅនឹងកំណត់ត្រាបច្ចុប្បន្ន ដោយមិនរាប់បញ្ចូលឯកសារដែលបានភ្ជាប់
+unable to convert "%1" to account id.  using plugin setting (%2) for %3.	តារាងពេលវេលា	km	មិនអាចបំប្លែង "%1" ទៅជាលេខសម្គាល់គណនីបានទេ ការប្រើប្រាស់ការកំណត់កម្មវិធីជំនួយ (%2) សម្រាប់ %3
+undelete	តារាងពេលវេលា	km	លុប
+unitprice	តារាងពេលវេលា	km	តម្លៃ​ឯកតា
+use field from csv if possible	តារាងពេលវេលា	km	ប្រើវាលពី CSV ប្រសិនបើអាចធ្វើបាន
+use this tag for addresslabels. put the content, you want to repeat, between two tags.	តារាងពេលវេលា	km	ប្រើស្លាកនេះសម្រាប់ស្លាកអាសយដ្ឋាន ដាក់មាតិកាដែលអ្នកចង់ធ្វើម្តងទៀតរវាងស្លាកពីរ
+values for selectbox	តារាងពេលវេលា	km	តម្លៃសម្រាប់ប្រអប់ជ្រើសរើស
+view this entry	តារាងពេលវេលា	km	មើលធាតុនេះ
+week	តារាងពេលវេលា	km	សប្តាហ៍
+what should be done with unknown values?	តារាងពេលវេលា	km	អ្វីដែលត្រូវធ្វើជាមួយតម្លៃដែលមិនស្គាល់?
+when you merge entries into documents, they will be stored here.  if no directory is provided, they will be stored in your home directory (/home/ralf)	តារាងពេលវេលា	km	នៅពេលអ្នកបញ្ចូលធាតុទៅក្នុងឯកសារ ពួកវានឹងត្រូវបានរក្សាទុកនៅទីនេះ ប្រសិនបើគ្មានបញ្ជីឈ្មោះត្រូវបានផ្តល់ឱ្យទេ ពួកវានឹងត្រូវបានរក្សាទុកនៅក្នុងថតផ្ទះរបស់អ្នក (/home/ralf)
+will be created when saving ...	common	km	នឹងត្រូវបានបង្កើតនៅពេលរក្សាទុក ...
+working time	common	km	ម៉ោង​ធ្វើការ
+working time and timer	តារាងពេលវេលា	km	ពេលវេលាធ្វើការ និងម៉ោងកំណត់
+working time from %1	តារាងពេលវេលា	km	ម៉ោងធ្វើការចាប់ពី%1
+working time of %1 hours stored	តារាងពេលវេលា	km	ពេលវេលាធ្វើការ %1 ម៉ោងត្រូវបានរក្សាទុក
+would you like to be asked, to start and stop working time, when login in or off	តារាងពេលវេលា	km	តើ​អ្នក​ចង់​ត្រូវ​បាន​សួរ​ដើម្បី​ចាប់​ផ្តើ​ម​និង​បញ្ឈប់​ម៉ោង​ធ្វើ​ការ​នៅ​ពេល​ដែល​ចូល​ឬ​បិទ​
+yes, only admins can purge deleted items	admin	km	យល់ព្រម មានតែអ្នកគ្រប់គ្រងប៉ុណ្ណោះដែលអាចសម្អាតធាតុដែលបានលុប
+yes, users can purge their deleted items	admin	km	យល់ព្រម អ្នកប្រើប្រាស់អាចសម្អាតធាតុដែលបានលុបរបស់ពួកគេ
+yesterday	តារាងពេលវេលា	km	ម្សិលមិញ
+your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	តារាងពេលវេលា	km	មូលដ្ឋានទិន្នន័យរបស់អ្នកមិនទាន់សម័យទេ (%1 ទល់នឹង %2) សូមដំណើរការ %3setup%4 ដើម្បីធ្វើបច្ចុប្បន្នភាព

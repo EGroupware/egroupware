@@ -1,0 +1,830 @@
+%1 '%2' does not exist, is not readable by the webserver or contains no egroupware installation!	setup	km	%1 '%2' មិនមានទេ មិនអាចអានបានដោយម៉ាស៊ីនមេគេហទំព័រ ឬមិនមានការដំឡើង EGroupware ទេ!
+%1 accounts to copy found.	setup	km	រកឃើញគណនី %1 ដើម្បីចម្លង។
+%1 already exists in %2.	setup	km	%1 មានរួចហើយនៅក្នុង %2 ។
+%1 created in %2.	setup	km	%1 បាន​បង្កើត​ក្នុង %2 ។
+%1 database %2 on %3 already contains the following tables:	setup	km	%1 មូលដ្ឋានទិន្នន័យ%2 នៅលើ %3 មានតារាងខាងក្រោមរួចហើយ៖
+%1 does not exist !!!	setup	km	%1 មិនមានទេ!
+%1 does not exist in %2.	setup	km	%1 មិនមាននៅក្នុង %2 ទេ។
+%1 does not have a password (userpassword attribute) or we are not allowed to read it!	setup	km	%1 មិនមានពាក្យសម្ងាត់ (userPassword attribute) ឬយើងមិនត្រូវបានអនុញ្ញាតឱ្យអានវាទេ!
+%1 entries modified.	setup	km	ធាតុ %1 បានកែប្រែ។
+%1 entries would have been modified.	setup	km	ធាតុ %1 នឹងត្រូវបានកែប្រែ។
+%1 is %2%3 !!!	setup	km	%1 គឺ %2 %3 !
+%1 is needed by: %2.	setup	km	%1 ត្រូវការដោយ៖ %2 ។
+%1 is set to %2, you will not be able to upload or attach files bigger then that!	setup	km	%1 ត្រូវ​បាន​កំណត់​ទៅ %2 អ្នក​នឹង​មិន​អាច​ផ្ទុក​ឡើង ឬ​ភ្ជាប់​ឯកសារ​ដែល​ធំ​ជាង​នោះ​បាន​ទេ!
+%1 is set to %2. this is not recommeded for a production system, as displayed error messages can contain passwords or other sensitive information!	setup	km	%1 ត្រូវបានកំណត់ទៅ %2 ។ វាមិនត្រូវបានណែនាំសម្រាប់ប្រព័ន្ធផលិតកម្មទេ ព្រោះសារកំហុសដែលបានបង្ហាញអាចមានពាក្យសម្ងាត់ ឬព័ត៌មានរសើបផ្សេងទៀត!
+%1 not allowed to create in univention.	setup	km	%1 មិនអនុញ្ញាតឱ្យបង្កើតនៅក្នុង Univention ទេ។
+%1 password set in %2.	setup	km	ពាក្យសម្ងាត់ %1 បានកំណត់ក្នុង %2 ។
+%1 passwords updated, %3 errors	setup	km	%1 បានធ្វើបច្ចុប្បន្នភាពពាក្យសម្ងាត់ %3 កំហុស
+%1 users and %2 groups created, %3 errors	setup	km	អ្នកប្រើប្រាស់ %1 និងក្រុម %2 បានបង្កើត %3 កំហុស។
+%1, %2 or %3 the configuration file.	setup	km	%1, %2 ឬ %3 ឯកសារកំណត់រចនាសម្ព័ន្ធ។
+'%1' is no valid domain name!	setup	km	'%1' មិនមែនជាឈ្មោះដែនត្រឹមត្រូវទេ!
+'%1' is not allowed as %2. arguments of option %3 !!!	setup	km	'%1' មិនត្រូវបានអនុញ្ញាតជា%2 អាគុយម៉ង់នៃជម្រើស%3 !!!
+'%1' must be integer	setup	km	%1 ត្រូវតែជាតម្លៃចំនួនគត់។
+(searching accounts and changing passwords)	setup	km	ស្វែងរកគណនី និងផ្លាស់ប្តូរពាក្យសម្ងាត់។
+*** do not update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your db in an unrecoverable state (your data is lost) !!!	setup	km	*** កុំធ្វើបច្ចុប្បន្នភាពមូលដ្ឋានទិន្នន័យរបស់អ្នកតាមរយៈការដំឡើង ព្រោះការធ្វើបច្ចុប្បន្នភាពអាចត្រូវបានរំខានដោយ max_execution_time ដែលទុកឱ្យ DB របស់អ្នកស្ថិតក្នុងស្ថានភាពដែលមិនអាចយកមកវិញបាន (ទិន្នន័យរបស់អ្នកត្រូវបានបាត់បង់) !!!
+*** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	km	*** អ្នកត្រូវតែធ្វើការផ្លាស់ប្តូរដោយដៃនៅក្នុង php.ini របស់អ្នក ជាធម្មតានៅក្នុង /etc នៅលើ Linux ដើម្បីទទួលបាន EGw ដំណើរការយ៉ាងពេញលេញ !!!
+00 (disable)	setup	km	00 (បិទ / ណែនាំ)
+13 (ntp)	setup	km	13 (ntp)
+80 (http)	setup	km	80 (http)
+<b>charset to use</b> (use utf-8 if you plan to use languages with different charsets):	setup	km	<b>សំណុំតួអក្សរដែលត្រូវប្រើ។</b> ប្រើ utf-8 ប្រសិនបើអ្នកមានគម្រោងប្រើភាសាដែលមានតួអក្សរផ្សេងៗគ្នា៖
+==> different group '%1' under that gidnumber %2, not setting memberships!	setup	km	==> ក្រុមផ្សេងគ្នា '%1' នៅក្រោម gidNumber %2 មិនកំណត់សមាជិកភាពទេ!
+[header-password],[header-user],[new-password],[new-user]	setup	km	[header-password], [header-user], [new-password], [new-user]
+access denied: wrong username or password for manage-header !!!	setup	km	ការចូលប្រើត្រូវបានបដិសេធ៖ ឈ្មោះអ្នកប្រើខុស ឬពាក្យសម្ងាត់សម្រាប់ការគ្រប់គ្រងបឋមកថា !
+access denied: wrong username or password to configure the domain '%1(%2)' !!!	setup	km	ការចូលប្រើត្រូវបានបដិសេធ៖ ឈ្មោះអ្នកប្រើខុស ឬពាក្យសម្ងាត់ដើម្បីកំណត់រចនាសម្ព័ន្ធដែន '%1(%2)' !
+account repository{sql(default) | ldap},[authentication{sql | ldap | mail | ads | http | ...}],[sql encrypttion{md5 | blowfish_crypt | md5_crypt | crypt}],[check save password{ (default)|true}],[allow cookie auth{ (default)|true}]	setup	km	ឃ្លាំងគណនី{sql(លំនាំដើម) | ldap},[ការផ្ទៀងផ្ទាត់{sql | ldap | សំបុត្រ | ពាណិជ្ជកម្ម | http | ... }],[sql encryption{sha512_crypt(default) | sha256_crypt | blowfish_crypt | md5_crypt | ssha | smd5 | គ្រីប | md5}],[ពិនិត្យរក្សាទុកពាក្យសម្ងាត់{ (លំនាំដើម)|ពិត}],[អនុញ្ញាតការផ្ទៀងផ្ទាត់ខូគី{ (លំនាំដើម)|ពិត}]
+accounts existing	setup	km	គណនីដែលមានស្រាប់
+actions	setup	km	សកម្មភាព
+activate safe password check	setup	km	បើកដំណើរការការត្រួតពិនិត្យពាក្យសម្ងាត់សុវត្ថិភាព
+add auto-created users to this group ('default' will be attempted if this is empty.)	setup	km	បន្ថែមអ្នកប្រើប្រាស់ដែលបង្កើតដោយស្វ័យប្រវត្តិទៅក្នុងក្រុមនេះ ('លំនាំដើម' នឹងត្រូវបានព្យាយាមប្រសិនបើវាទទេ។ )
+add new database instance (egw domain)	setup	km	បន្ថែមឧទាហរណ៍មូលដ្ឋានទិន្នន័យថ្មី (ដែន EGw)
+add or edit a domain: [domain-name(default)],[db-name(egroupware)],[db-user(egroupware)],db-password,[db-type(mysql)],[db-host(localhost)],[db-port(db specific)],[config-user(as header)],[config-passwd(as header)]	setup	km	បន្ថែម ឬកែសម្រួលដែន៖ [ឈ្មោះដែន(លំនាំដើម)], [db-name(egroupware)], [db-user(egroupware)], db-password, [db-type(mysql)], [db-host (localhost)],[db-port(db specific)],[config-user(as header)],[config-passwd(as header)]
+adding, editing or deleting an egroupware domain / database instance:	setup	km	ការបន្ថែម កែសម្រួល ឬលុប EGroupware domain / database instance៖
+additional group filter (optional)	setup	km	តម្រងក្រុមបន្ថែម (ជាជម្រើស)
+additional options and there defaults (in brackets)	setup	km	ជម្រើសបន្ថែម និងមានលំនាំដើម (ក្នុងតង្កៀប)
+additional settings	setup	km	ការកំណត់បន្ថែម
+additional user filter (optional)	setup	km	តម្រងអ្នកប្រើប្រាស់បន្ថែម (ជាជម្រើស)
+admin account successful created.	setup	km	គណនីអ្នកគ្រប់គ្រងត្រូវបានបង្កើតដោយជោគជ័យ។
+admin email address	setup	km	អាសយដ្ឋានអ៊ីមែលអ្នកគ្រប់គ្រង
+admin first name	setup	km	ឈ្មោះ អ្នកគ្រប់គ្រង
+admin last name	setup	km	នាមត្រកូល អ្នកគ្រប់គ្រង
+admin password	setup	km	ពាក្យសម្ងាត់អ្នកគ្រប់គ្រង
+admin password to header manager	setup	km	ពាក្យសម្ងាត់អ្នកគ្រប់គ្រងទៅអ្នកគ្រប់គ្រងបឋមកថា
+admin user	setup	km	អ្នកប្រើប្រាស់អ្នកគ្រប់គ្រង
+admin user for header manager	setup	km	អ្នកគ្រប់គ្រងសម្រាប់អ្នកគ្រប់គ្រងបឋមកថា
+admin username	setup	km	ឈ្មោះអ្នកប្រើអ្នកគ្រប់គ្រង
+admins	setup	km	អ្នកគ្រប់គ្រង
+ads dn "%1" not found!	setup	km	ការផ្សាយពាណិជ្ជកម្ម dn "%1" រកមិនឃើញទេ!
+after backing up your tables first.	setup	km	បន្ទាប់ពីបានបម្រុងទុកតារាងរបស់អ្នកជាមុនសិន។
+after retrieving the file, put it into place as the header.inc.php.  then, click "continue".	setup	km	បន្ទាប់​ពី​ទាញ​យក​ឯកសារ​មក​ដាក់​ក្នុង​កន្លែង​ជា header.inc.php ។ បន្ទាប់មកចុច "បន្ត" ។
+all applications	setup	km	កម្មវិធីទាំងអស់
+all core tables and the admin and preferences applications	setup	km	តារាងស្នូលទាំងអស់ និងកម្មវិធីគ្រប់គ្រង និងចំណូលចិត្ត
+all exit codes of the command line interface	setup	km	លេខកូដចេញទាំងអស់នៃចំណុចប្រទាក់បន្ទាត់ពាក្យបញ្ជា
+all hooks registered	setup	km	ទំពក់ទាំងអស់បានចុះឈ្មោះ
+all languages (incl. not listed ones)	setup	km	ភាសាទាំងអស់ (រាប់បញ្ចូលទាំងភាសាដែលមិនមានក្នុងបញ្ជី)
+all users	setup	km	អ្នក​ប្រើ​ទាំងអស់
+allow authentication via cookie	setup	km	អនុញ្ញាតការផ្ទៀងផ្ទាត់តាមរយៈខូគី
+allow password migration	setup	km	អនុញ្ញាតឱ្យផ្ទេរពាក្យសម្ងាត់
+allow saml logins to join existing accounts	setup	km	អនុញ្ញាតឱ្យចូល SAML ដើម្បីចូលរួមគណនីដែលមានស្រាប់
+allow usernames identical to system users?	setup	km	អនុញ្ញាតឱ្យឈ្មោះអ្នកប្រើប្រាស់ដូចគ្នាបេះបិទទៅនឹងអ្នកប្រើប្រាស់ប្រព័ន្ធ?
+allowed migration types (comma-separated)	setup	km	ប្រភេទ​ការ​ធ្វើ​ចំណាក​ស្រុក​ដែល​បាន​អនុញ្ញាត (បំបែក​ដោយ​សញ្ញាក្បៀស)
+alternatively domains can be accessed by logging in with <i>username@domain</i>.	setup	km	ម្យ៉ាងវិញទៀត ដែនអាចចូលប្រើបានដោយការចូលដោយប្រើ <i>username@domain</i>។
+alternatively you can use %1composer%2 to install all requirements at once. downloading it and run:	setup	km	ជាជម្រើសអ្នកអាចប្រើ%1Composer%2 ដើម្បីដំឡើងតម្រូវការទាំងអស់ក្នុងពេលតែមួយ។ ទាញយកវាហើយដំណើរការ៖
+and is up to date	setup	km	និងទាន់សម័យ
+and reload your webserver, so the above changes take effect !!!	setup	km	និងផ្ទុកម៉ាស៊ីនមេគេហទំព័ររបស់អ្នកឡើងវិញ ដូច្នេះការផ្លាស់ប្តូរខាងលើមានប្រសិទ្ធភាព !!!
+app details	setup	km	ព័ត៌មានលម្អិតអំពីកម្មវិធី
+app install/remove/upgrade	setup	km	ដំឡើង/លុប/អាប់ដេតកម្មវិធី
+app process	setup	km	ដំណើរការកម្មវិធី
+application data	setup	km	ទិន្នន័យ​កម្មវិធី
+application list	setup	km	បញ្ជីពាក្យសុំ
+application management	setup	km	ការគ្រប់គ្រងកម្មវិធី
+application name and status	setup	km	ឈ្មោះកម្មវិធីនិងស្ថានភាព
+application name and status information	setup	km	ឈ្មោះកម្មវិធី និងព័ត៌មានស្ថានភាព
+application title	setup	km	ចំណងជើងកម្មវិធី
+application: %1, file: %2, line: "%3"	setup	km	កម្មវិធី៖ %1 ឯកសារ៖ %2 បន្ទាត់៖ "%3"
+are you sure you want to delete your existing tables and data?	setup	km	តើអ្នកប្រាកដថាចង់លុបតារាង និងទិន្នន័យដែលមានស្រាប់របស់អ្នកមែនទេ?
+are you sure?	setup	km	តើ​អ្នក​ប្រាកដ​ឬ​អត់?
+at your request, this script is going to attempt to create the database and assign the db user rights to it	setup	km	តាមការស្នើសុំរបស់អ្នក ស្គ្រីបនេះនឹងព្យាយាមបង្កើតមូលដ្ឋានទិន្នន័យ និងផ្តល់សិទ្ធិអ្នកប្រើប្រាស់ db ទៅវា។
+at your request, this script is going to attempt to install a previous backup	setup	km	តាមសំណើរបស់អ្នក ស្គ្រីបនេះនឹងព្យាយាមដំឡើងការបម្រុងទុកពីមុន
+at your request, this script is going to attempt to install the core tables and the admin and preferences applications for you	setup	km	តាមសំណើរបស់អ្នក ស្គ្រីបនេះនឹងព្យាយាមដំឡើងតារាងស្នូល និងកម្មវិធីគ្រប់គ្រង និងចំណូលចិត្តសម្រាប់អ្នក។
+at your request, this script is going to attempt to upgrade your old applications to the current versions	setup	km	តាមសំណើរបស់អ្នក ស្គ្រីបនេះនឹងព្យាយាមដំឡើងកំណែកម្មវិធីចាស់របស់អ្នកទៅកំណែបច្ចុប្បន្ន
+at your request, this script is going to attempt to upgrade your old tables to the new format	setup	km	តាមសំណើរបស់អ្នក ស្គ្រីបនេះនឹងព្យាយាមដំឡើងតារាងចាស់របស់អ្នកទៅជាទម្រង់ថ្មី។
+at your request, this script is going to take the evil action of deleting your existing tables and re-creating them in the new format	setup	km	តាមសំណើរបស់អ្នក ស្គ្រីបនេះនឹងចាត់វិធានការអាក្រក់ក្នុងការលុបតារាងដែលមានស្រាប់របស់អ្នក ហើយបង្កើតវាឡើងវិញក្នុងទម្រង់ថ្មី
+at your request, this script is going to take the evil action of uninstalling all your apps, which deletes your existing tables and data	setup	km	តាមសំណើរបស់អ្នក ស្គ្រីបនេះនឹងចាត់វិធានការអាក្រក់ក្នុងការលុបកម្មវិធីរបស់អ្នកទាំងអស់ ដែលលុបតារាង និងទិន្នន័យដែលមានស្រាប់របស់អ្នក
+attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	setup	km	ព្យាយាមប្រើ mimetype ត្រឹមត្រូវសម្រាប់ FTP ជំនួសឱ្យ 'application/octet-stream' លំនាំដើម
+attributes for new users	setup	km	គុណលក្ខណៈសម្រាប់អ្នកប្រើប្រាស់ថ្មី។
+authentication / accounts	setup	km	ការផ្ទៀងផ្ទាត់ / គណនី
+authentication type for application	setup	km	ប្រភេទការផ្ទៀងផ្ទាត់សម្រាប់កម្មវិធី
+authentication type for http host	setup	km	ប្រភេទការផ្ទៀងផ្ទាត់សម្រាប់ HTTP Host
+authentification mode:	setup	km	របៀបផ្ទៀងផ្ទាត់៖
+auto create account records for authenticated users	setup	km	បង្កើតកំណត់ត្រាគណនីដោយស្វ័យប្រវត្តិសម្រាប់អ្នកប្រើប្រាស់ដែលបានផ្ទៀងផ្ទាត់
+auto login anonymous user	setup	km	ចូលដោយស្វ័យប្រវត្តិ អ្នកប្រើប្រាស់អនាមិក
+auto-created user accounts expire	setup	km	គណនីអ្នកប្រើប្រាស់ដែលបង្កើតដោយស្វ័យប្រវត្តិផុតកំណត់
+available version	setup	km	កំណែដែលអាចប្រើបាន
+back to the previous screen	setup	km	ត្រឡប់ទៅអេក្រង់មុន។
+back to user login	setup	km	ត្រលប់ទៅការចូលរបស់អ្នកប្រើ
+back's up your db now, this might take a few minutes	setup	km	បម្រុងទុក DB របស់អ្នកឥឡូវនេះ វាអាចចំណាយពេលពីរបីនាទី
+backup '%1' deleted	setup	km	បានលុបការបម្រុងទុក '%1' ។
+backup '%1' renamed to '%2'	setup	km	ការបម្រុងទុក '%1' បានប្តូរឈ្មោះទៅជា '%2' ។
+backup '%1' restored	setup	km	ការបម្រុងទុក '%1' បានស្ដារឡើងវិញ។
+backup and restore	setup	km	បម្រុងទុក និងស្ដារ
+backup directory %1 mounted as %2	setup	km	ថតបម្រុងទុក%1 បានម៉ោនជា%2
+backup failed	setup	km	ការបម្រុងទុកបានបរាជ័យ។
+backup files (needs ziparchive)	setup	km	ឯកសារបម្រុងទុក (ត្រូវការ ZipArchive)
+backup finished	setup	km	ការបម្រុងទុកបានបញ្ចប់។
+backup housekeeping	setup	km	ការបម្រុងទុកដែលមានឈ្មោះស្តង់ដារអាចត្រូវបានសម្អាតដោយស្វ័យប្រវត្តិ។ ប្តូរឈ្មោះឯកសារបម្រុងទុក ដើម្បីដកពួកវាពីការសម្អាត។
+backup min count	setup	km	ចំនួនអប្បបរមានៃការបម្រុងទុក
+backup now	setup	km	បម្រុងទុកឥឡូវនេះ
+backup sets	setup	km	សំណុំបម្រុងទុក
+backup skipped!	setup	km	បានរំលងការបម្រុងទុក!
+backup started, this might take a few minutes ...	setup	km	ការបម្រុងទុកបានចាប់ផ្តើម វាអាចចំណាយពេលពីរបីនាទី...
+base dn "%1" not found!	setup	km	មូលដ្ឋាន dn "%1" រកមិនឃើញទេ!
+because an application it depends upon was upgraded	setup	km	ដោយសារតែកម្មវិធីដែលវាអាស្រ័យលើត្រូវបានធ្វើឱ្យប្រសើរឡើង
+because it depends upon	setup	km	ព្រោះវាអាស្រ័យលើ
+because it is not a user application, or access is controlled via acl	setup	km	ដោយសារតែវាមិនមែនជាកម្មវិធីអ្នកប្រើប្រាស់ ឬការចូលប្រើត្រូវបានគ្រប់គ្រងតាមរយៈ ACL
+because it requires manual table installation, <br />or the table definition was incorrect	setup	km	ដោយសារតែវាទាមទារការដំឡើងតារាងដោយដៃ <br /> ឬនិយមន័យតារាងមិនត្រឹមត្រូវ
+because it was manually disabled	setup	km	ដោយសារតែវាត្រូវបានបិទដោយដៃ
+because its sources are missing	setup	km	ដោយសារតែប្រភពរបស់វាបាត់
+because of a failed upgrade or install	setup	km	ដោយសារតែការអាប់ដេត ឬដំឡើងមិនបានជោគជ័យ
+because of a failed upgrade, or the database is newer than the installed version of this app	setup	km	ដោយសារការអាប់ដេតមិនបានជោគជ័យ ឬមូលដ្ឋានទិន្នន័យគឺថ្មីជាងកំណែដែលបានដំឡើងរបស់កម្មវិធីនេះ
+because the enable flag for this app is set to 0, or is undefined	setup	km	ដោយសារតែទង់បើកដំណើរការសម្រាប់កម្មវិធីនេះត្រូវបានកំណត់ទៅ 0 ឬមិនត្រូវបានកំណត់
+bottom	setup	km	បាត
+but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br /><strong>these automated scripts can easily destroy your data.</strong>	setup	km	វាត្រូវបាន<u>ផ្តល់អនុសាសន៍យ៉ាងខ្លាំងឱ្យបម្រុងទុក</u>តារាងរបស់អ្នកក្នុងករណីដែលស្គ្រីបធ្វើឱ្យខូចទិន្នន័យរបស់អ្នក។<br /><strong>ស្គ្រីបស្វ័យប្រវត្តិទាំងនេះអាចបំផ្លាញទិន្នន័យរបស់អ្នកយ៉ាងងាយស្រួល។</strong>
+by redirecting to https	setup	km	ដោយបញ្ជូនបន្តទៅ https
+by rewriting links to https (allows eg. sitemgr to run on http)	setup	km	ដោយការសរសេរឡើងវិញនូវតំណភ្ជាប់ទៅកាន់ https (អនុញ្ញាតឱ្យឧ. SiteMgr ដំណើរការលើ http)
+ca certificate	setup	km	វិញ្ញាបនបត្រ CA
+cached cleared	setup	km	បានសម្អាតឃ្លាំងសម្ងាត់
+can not connect to %1 database %2 on host %3 using user %4!	setup	km	មិន​អាច​តភ្ជាប់​ទៅ​មូលដ្ឋាន​ទិន្នន័យ%1%2 នៅ​លើ​ម៉ាស៊ីន%3 ដោយ​ប្រើ​អ្នក​ប្រើ% 4 ទេ!
+can not connect to ldap server on host %1 using dn %2!	setup	km	មិនអាចភ្ជាប់ទៅម៉ាស៊ីនមេ LDAP នៅលើម៉ាស៊ីន%1 ដោយប្រើ DN %2 បានទេ!
+can not create %1 database %2 on %3 for user %4!	setup	km	មិន​អាច​បង្កើត​មូលដ្ឋាន​ទិន្នន័យ%1%2 នៅ​លើ%3 សម្រាប់​អ្នក​ប្រើ %4 ទេ!
+can not create dn %1!	setup	km	មិនអាចបង្កើត DN%1 បានទេ!
+can not instancate accounts object for %1	setup	km	មិនអាចបញ្ចូលវត្ថុគណនីសម្រាប់%1 បានទេ។
+can only be change via setup!	setup	km	អាចផ្លាស់ប្តូរបានតាមរយៈ Setup តែប៉ុណ្ណោះ!
+cancel	setup	km	បោះបង់
+cannot create the header.inc.php due to file permission restrictions.<br /> instead you can %1 or %2 the file.	setup	km	មិន​អាច​បង្កើត header.inc.php ដោយ​សារ​តែ​ការ​រឹត​បន្តឹង​ការ​អនុញ្ញាត​ឯកសារ។<br /> ជំនួស​មក​វិញ អ្នក​អាច %1 ឬ %2 ឯកសារ។
+cas server host name:<br />example: sso-cas.univ-rennes1.fr	setup	km	cas server ឈ្មោះម៉ាស៊ីន៖<br />ឧទាហរណ៍៖ sso-cas.univ-rennes1.fr
+cas server port:<br />example: 443	setup	km	cas server port:<br />ឧទាហរណ៍៖ 443
+cas server uri:	setup	km	cas server uri៖
+certificate (pem or ca):	setup	km	វិញ្ញាបនបត្រ (PEM ឬ CA)៖
+certificate metadata is signed with	setup	km	វិញ្ញាបនប័ត្រទិន្នន័យមេតាត្រូវបានចុះហត្ថលេខាជាមួយ
+change system-charset	setup	km	ផ្លាស់ប្តូរសំណុំតួអក្សរប្រព័ន្ធ
+charset	setup	km	សំណុំតួអក្សរ
+charset to convert to	setup	km	សំណុំតួអក្សរដើម្បីបម្លែងទៅជា
+charsets used by the different languages	setup	km	តួអក្សរដែលប្រើដោយភាសាផ្សេងៗគ្នា
+check can only be performed, if called via a webserver, as the user-id/-name of the webserver is not known.	setup	km	ការត្រួតពិនិត្យអាចត្រូវបានអនុវត្តបានលុះត្រាតែហៅតាមរយៈម៉ាស៊ីនមេគេហទំព័រ ព្រោះមិនស្គាល់អត្តសញ្ញាណអ្នកប្រើប្រាស់/-ឈ្មោះរបស់ម៉ាស៊ីនមេគេហទំព័រ។
+check installation	setup	km	ពិនិត្យការដំឡើង
+check ip address of all sessions	setup	km	ពិនិត្យអាសយដ្ឋាន IP នៃវគ្គទាំងអស់។
+check to backup and restore the files directory (may use a lot of space, make sure to configure housekeeping accordingly)	setup	km	ពិនិត្យមើលការបម្រុងទុក និងស្ដារថតឯកសារ។ អាចប្រើប្រាស់កន្លែងទំនេរច្រើន ត្រូវប្រាកដថាកំណត់រចនាសម្ព័ន្ធការមើលថែទាំតាមផ្ទះ។
+checking dependencies: %1 packages are installed in the required version.	setup	km	ពិនិត្យភាពអាស្រ័យ៖ កញ្ចប់ %1 ត្រូវបានដំឡើងនៅក្នុងកំណែដែលត្រូវការ។
+checking extension %1 is loaded or loadable	setup	km	ការពិនិត្យមើលផ្នែកបន្ថែម%1 គឺត្រូវបានផ្ទុក ឬអាចផ្ទុកបាន។
+checking file-permissions of %1 for %2 %3: %4	setup	km	កំពុងពិនិត្យមើលការអនុញ្ញាតឯកសារនៃ%1 សម្រាប់ %2 %3: % 4
+checking for gd support...	setup	km	កំពុងពិនិត្យមើលការគាំទ្រ GD...
+checking for jpgraph in %1	setup	km	កំពុងពិនិត្យរក JPGraph ក្នុង%1
+checking for tnef application	setup	km	កំពុងពិនិត្យមើលកម្មវិធី tnef
+checking function %1 exists	setup	km	កំពុង​ពិនិត្យ​មើល​មុខងារ%1
+checking if php.ini setting session.save_path='%1' is writable by the webserver	setup	km	កំពុងពិនិត្យមើលថាតើការកំណត់ php.ini session.save_path='%1' អាចត្រូវបានសរសេរដោយម៉ាស៊ីនមេគេហទំព័រ
+checking package %1 is installed	setup	km	ការពិនិត្យមើលកញ្ចប់%1 ត្រូវបានដំឡើង
+checking php.ini	setup	km	កំពុងពិនិត្យ php. ini
+checking required php version %1 (recommended %2)	setup	km	កំពុងពិនិត្យមើលកំណែ PHP ដែលត្រូវការ%1 (បានណែនាំ %2)
+checking the egroupware installation	setup	km	កំពុងពិនិត្យមើលការដំឡើង EGroupware
+checks egroupware's installed, it's versions and necessary upgrads (return values see --exit-codes)	setup	km	ពិនិត្យ EGroupware វាជាកំណែ និងការធ្វើឱ្យប្រសើរចាំបាច់ (តម្លៃត្រឡប់សូមមើល --exit-codes)
+clear cache and register hooks	setup	km	សម្អាតឃ្លាំងសម្ងាត់ និងចុះឈ្មោះទំពក់
+click <a href="index.php">here</a> to return to setup.	setup	km	ចុច <a href="index.php">ទីនេះ</a> ដើម្បីត្រលប់ទៅការដំឡើង។
+click here	setup	km	ចុច​ទីនេះ
+click here to re-run the installation tests	setup	km	ចុចទីនេះដើម្បីដំណើរការការធ្វើតេស្តដំឡើងឡើងវិញ
+comma separated ip-addresses or host-names, default access to setup from everywhere	setup	km	សញ្ញាក្បៀសដែលបំបែកអាសយដ្ឋាន IP ឬឈ្មោះម៉ាស៊ីន ការចូលប្រើលំនាំដើមដើម្បីដំឡើងពីគ្រប់ទីកន្លែង
+comma-separated provider names or json	setup	km	ឈ្មោះអ្នកផ្តល់សេវាដែលបំបែកដោយសញ្ញាក្បៀស ឬ JSON
+commercial support	setup	km	ការគាំទ្រផ្នែកពាណិជ្ជកម្ម
+community forum	setup	km	វេទិកាសហគមន៍
+complete path to aspell program	setup	km	ផ្លូវពេញលេញទៅកាន់កម្មវិធីអក្ខរាវិរុទ្ធ
+completed	setup	km	បានបញ្ចប់
+config password	setup	km	កំណត់ពាក្យសម្ងាត់
+config username	setup	km	កំណត់​ឈ្មោះ​អ្នក​ប្រើ
+configuration	setup	km	ការកំណត់​រចនាសម្ព័ន្ធ
+configuration changed.	setup	km	ការកំណត់រចនាសម្ព័ន្ធបានផ្លាស់ប្តូរ
+configuration completed	setup	km	ការកំណត់រចនាសម្ព័ន្ធបានបញ្ចប់
+configuration errors:	setup	km	កំហុសក្នុងការកំណត់៖
+configuration password	setup	km	ការកំណត់រចនាសម្ព័ន្ធពាក្យសម្ងាត់
+configuration user	setup	km	អ្នកប្រើប្រាស់កំណត់រចនាសម្ព័ន្ធ
+configure now	setup	km	កំណត់រចនាសម្ព័ន្ធឥឡូវនេះ
+confirm to delete this backup?	setup	km	បញ្ជាក់ដើម្បីលុបការបម្រុងទុកនេះ?
+contain	setup	km	ផ្ទុក
+context to create users	setup	km	បរិបទដើម្បីបង្កើតអ្នកប្រើប្រាស់
+continue	setup	km	បន្ត
+continue to the header admin	setup	km	បន្តទៅអ្នកគ្រប់គ្រងបឋមកថា
+convert	setup	km	បម្លែង
+convert backup to charset selected above	setup	km	បម្លែងការបម្រុងទុកទៅជាសំណុំតួអក្សរដែលបានជ្រើសរើសខាងលើ
+could not open header.inc.php for writing!	setup	km	មិនអាចបើក header.inc.php សម្រាប់សរសេរបានទេ!
+country selection	setup	km	ការជ្រើសរើសប្រទេស
+create	setup	km	បង្កើត
+create a backup before upgrading the db	setup	km	បង្កើតការបម្រុងទុកមុនពេលធ្វើបច្ចុប្បន្នភាព DB
+create admin account	setup	km	បង្កើតគណនីអ្នកគ្រប់គ្រង
+create database	setup	km	បង្កើតមូលដ្ឋានទិន្នន័យ
+create demo accounts	setup	km	បង្កើតគណនីសាកល្បង
+create one now	setup	km	បង្កើតឥឡូវនេះ
+create or edit the egroupware configuration file: header.inc.php:	setup	km	បង្កើត ឬកែសម្រួលឯកសារកំណត់រចនាសម្ព័ន្ធ EGroupware៖ header.inc.php៖
+create the empty database -	setup	km	បង្កើតមូលដ្ឋានទិន្នន័យទទេ -
+create the empty database and grant user permissions -	setup	km	បង្កើត​មូលដ្ឋាន​ទិន្នន័យ​ទទេ និង​ផ្តល់​សិទ្ធិ​អ្នក​ប្រើ -
+create your header.inc.php	setup	km	បង្កើត header.inc.php របស់អ្នក។
+created	setup	km	បានបង្កើត
+created header.inc.php!	setup	km	បានបង្កើត header.inc.php!
+creates an admin user: domain(default),[config user(admin)],password,username,password,[first name],[last name],[email]	setup	km	បង្កើត​អ្នក​ប្រើ​គ្រប់គ្រង៖ domain(default),[config user(admin)],password,username,password,[first name],[lastname],[email]
+creating tables	setup	km	ការបង្កើតតារាង។
+creation of %1 in %2 failed !!!	setup	km	ការបង្កើត%1 ក្នុង%2 បានបរាជ័យ!
+current configuration:	setup	km	ការកំណត់រចនាសម្ព័ន្ធបច្ចុប្បន្ន៖
+current system-charset	setup	km	សំណុំតួអក្សរប្រព័ន្ធបច្ចុប្បន្ន
+current system-charset is %1.	setup	km	សំណុំតួអក្សរប្រព័ន្ធបច្ចុប្បន្នគឺ%1។
+current version	setup	km	កំណែបច្ចុប្បន្ន
+currently installed languages: %1 <br />	setup	km	ភាសាដែលបានដំឡើងបច្ចុប្បន្ន៖ %1 <br />
+custom handler: %1	setup	km	កម្មវិធីគ្រប់គ្រងផ្ទាល់ខ្លួន៖%1
+custom oid	setup	km	OID ផ្ទាល់ខ្លួន
+custom set via %1	setup	km	កំណត់ផ្ទាល់ខ្លួនតាមរយៈ%1
+cyrus imap: admin user,password	setup	km	Cyrus IMAP៖ អ្នកប្រើប្រាស់អ្នកគ្រប់គ្រង ពាក្យសម្ងាត់
+daily	setup	km	ប្រចាំថ្ងៃ
+database	setup	km	មូលដ្ឋានទិន្នន័យ
+database instance (egw domain)	setup	km	មូលដ្ឋានទិន្នន័យឧទាហរណ៍ (ដែន EGw)
+database is version %1 and up to date.	setup	km	មូលដ្ឋានទិន្នន័យគឺកំណែ%1 និងចុងក្រោយបង្អស់។
+database successfully converted from '%1' to '%2'	setup	km	មូលដ្ឋានទិន្នន័យត្រូវបានបម្លែងដោយជោគជ័យពី '%1' ទៅ '%2'
+datebase %1 droped.	setup	km	មូលដ្ឋានទិន្នន័យ%1 បានធ្លាក់ចុះ។
+datetime port.<br />if using port 13, please set firewall rules appropriately before submitting this page.<br />(port: 13 / host: 129.6.15.28)	setup	km	ច្រកពេលវេលាកាលបរិច្ឆេទ។<br />ប្រសិនបើប្រើច្រក 13 សូមកំណត់ច្បាប់ជញ្ជាំងភ្លើងឱ្យបានត្រឹមត្រូវមុនពេលបញ្ជូនទំព័រនេះ។<br />(ច្រក: 13 / ម៉ាស៊ីន: 129.6.15.28)
+day	setup	km	ថ្ងៃ
+day of week<br />(0-6, 0=sunday)	setup	km	ថ្ងៃនៃសប្តាហ៍<br />(0 - 6, 0 = ថ្ងៃអាទិត្យ)
+db backup and restore	setup	km	ការបម្រុងទុកនិងស្តារ DB
+db host	setup	km	ម៉ាស៊ីន DB
+db name	setup	km	ឈ្មោះ DB
+db password	setup	km	ពាក្យសម្ងាត់ DB
+db port	setup	km	ច្រក DB
+db root password	setup	km	ពាក្យសម្ងាត់ root DB
+db root username	setup	km	ឈ្មោះអ្នកប្រើ root DB
+db type	setup	km	ប្រភេទ DB
+db user	setup	km	អ្នកប្រើប្រាស់ DB
+deactivate user	setup	km	អសកម្មអ្នកប្រើប្រាស់
+default	setup	km	លំនាំដើមដែលបានណែនាំ
+default file system space per user/group ?	setup	km	ទំហំប្រព័ន្ធឯកសារលំនាំដើមក្នុងមួយអ្នកប្រើប្រាស់/ក្រុម?
+delete	setup	km	លុប
+delete all existing accounts from sql database	setup	km	លុបគណនីដែលមានស្រាប់ទាំងអស់ចេញពីមូលដ្ឋានទិន្នន័យ SQL
+delete all existing sql accounts, groups, acls and preferences (normally not necessary)?	setup	km	លុបគណនី SQL, ក្រុម, ACLs និងចំណូលចិត្តដែលមានស្រាប់ទាំងអស់។ ជាធម្មតាមិនចាំបាច់ទេ។
+delete all my tables and data	setup	km	លុបតារាង និងទិន្នន័យរបស់ខ្ញុំទាំងអស់។
+delete all old languages and install new ones	setup	km	លុបភាសាចាស់ទាំងអស់ ហើយដំឡើងភាសាថ្មី។
+delete user and his data	setup	km	លុបអ្នកប្រើប្រាស់ និងទិន្នន័យរបស់គាត់។
+deleting tables	setup	km	ការលុបតារាង។
+demo server setup	setup	km	ការដំឡើងម៉ាស៊ីនមេសាកល្បង
+deny access	setup	km	បាន​បដិសេធ​ការ​ចូល​ដំណើរការ
+deny all users access to grant other users access to their entries ?	setup	km	បដិសេធ​សិទ្ធិ​សម្រាប់​អ្នក​ប្រើ​ទាំងអស់​ក្នុង​ការ​ផ្តល់​សិទ្ធិ​ចូល​ដំណើរការ​ទៅ​ធាតុ​របស់​ពួកគេ៖
+dependency failure	setup	km	ភាពអាស្រ័យបរាជ័យ
+deregistered	setup	km	បាន​លុប​ឈ្មោះ
+details for admin account	setup	km	ព័ត៌មានលម្អិតសម្រាប់គណនីអ្នកគ្រប់គ្រង
+developers' table schema toy	setup	km	តារាងតុក្តាអ្នកអភិវឌ្ឍន៍
+did not find any valid db support!	setup	km	រកមិនឃើញការគាំទ្រ DB ត្រឹមត្រូវទេ!
+do not check for deleted user	setup	km	កុំពិនិត្យមើលអ្នកប្រើប្រាស់ដែលបានលុប
+do you want persistent connections (higher performance, but consumes more resources)	setup	km	តើ​អ្នក​ចង់​បាន​ការ​តភ្ជាប់​ជាប់​រហូត (ដំណើរការ​ខ្ពស់​ជាង ប៉ុន្តែ​ប្រើប្រាស់​ធនធាន​ច្រើន)
+do you want to manage homedirectory and loginshell attributes?	setup	km	តើ​អ្នក​ចង់​គ្រប់​គ្រង​ថត​ផ្ទះ និង​គុណលក្ខណៈ​សែល​ចូល​ដែរ​ឬ​ទេ?
+documentation	setup	km	ឯកសារ
+does not exist	setup	km	មិន​មាន
+domain	setup	km	ដែន
+domain '%1' does not exist !!!	setup	km	ដែន '%1' មិនមានទេ !!!
+domain name	setup	km	ឈ្មោះដែន
+domain select box on login	setup	km	ប្រអប់ជ្រើសរើសដែននៅពេលចូល
+domain(all),[config user(admin)],password,[file-name(default: backup-dir/db_backup-yyyymmddhhii)]	setup	km	domain(ទាំងអស់),[config user(admin)],password,[file-name(default: backup-dir/db_backup-YYYYMMDDHHii)]
+domain(default),[config user(admin)],password,[backup to install],[charset(default depends on language)]	setup	km	domain(default),[config user(admin)],password,[backup to install],[charset(defaultអាស្រ័យលើភាសា)]
+domain(default),[config user(admin)],password,[name=value,...] sets config values beside:	setup	km	domain(default),[config user(admin)],password,[name=value,...] កំណត់តម្លៃ config នៅក្បែរ៖
+domain-name	setup	km	ឈ្មោះដែន
+don't change, if you already stored files! you will loose them!	setup	km	កុំផ្លាស់ប្តូរ ប្រសិនបើអ្នកបានរក្សាទុកឯកសាររួចហើយ! អ្នកនឹងដោះលែងពួកគេ!
+dont touch my data	setup	km	កុំប៉ះទិន្នន័យរបស់ខ្ញុំ
+download	setup	km	ទាញយក
+easiest way under win2008r2 is to add role "active directory certificate services" and reboot.	setup	km	មធ្យោបាយងាយស្រួលបំផុតនៅក្រោម win2008r2 គឺត្រូវបន្ថែមតួនាទី "សេវាវិញ្ញាបនបត្រថតសកម្ម" ហើយចាប់ផ្ដើមឡើងវិញ។
+edit current configuration	setup	km	កែសម្រួលការកំណត់បច្ចុប្បន្ន
+edit your existing header.inc.php	setup	km	កែសម្រួល header.inc.php ដែលមានស្រាប់របស់អ្នក។
+edit your header.inc.php	setup	km	កែសម្រួល header.inc.php របស់អ្នក។
+eg. "cn=users,dc=domain,dc=com" for ads domain "domain.com"	setup	km	ឧ. "CN=Users,DC=domain,DC=com" សម្រាប់ដែន ADS "domain.com"
+eg. /egroupware or http://domain.com/egroupware, default: %1	setup	km	ឧ. /egroupware ឬ http://domain.com/egroupware លំនាំដើម៖ %1
+egroupware administration manual	setup	km	សៀវភៅណែនាំការគ្រប់គ្រង EGroupware
+egroupware api needs a database (schema) update from version %1 to %2!	setup	km	EGroupware API ត្រូវការការធ្វើបច្ចុប្បន្នភាពមូលដ្ឋានទិន្នន័យ (គ្រោងការណ៍) ពីកំណែ %1 ដល់ %2!
+egroupware api version %1 found.	setup	km	Egroupware API កំណែ%1 បានរកឃើញ។
+egroupware configuration file (header.inc.php) does not exist.	setup	km	ឯកសារកំណត់រចនាសម្ព័ន្ធ EGroupware (header.inc.php) មិនមានទេ។
+egroupware configuration file (header.inc.php) version %1 exists%2	setup	km	ឯកសារកំណត់រចនាសម្ព័ន្ធ EGroupware (header.inc.php) កំណែ %1 មាន%2
+egroupware configuration file header.inc.php already exists, you need to use --edit-header or delete it first!	setup	km	ឯកសារកំណត់រចនាសម្ព័ន្ធ EGroupware header.inc.php មានរួចហើយ អ្នកត្រូវប្រើ --edit-header ឬលុបវាជាមុនសិន!
+egroupware domain/instance %1(%2):	setup	km	Egroupware domain/instance%1(%2)៖
+egroupware is already installed!	setup	km	Egroupware ត្រូវបានដំឡើងរួចហើយ!
+egroupware requires several dependencies installed via: %1	setup	km	EGroupware ទាមទារភាពអាស្រ័យជាច្រើនដែលបានដំឡើងតាមរយៈ៖ %1
+egroupware sources in '%1' are not complete, file '%2' missing !!!	setup	km	ប្រភព EGroupware ក្នុង '%1' មិនពេញលេញទេ ឯកសារ '%2' បាត់ !!!
+email (standard maildomain should be set)	setup	km	អ៊ីមែល (ដែនអ៊ីមែលស្តង់ដារគួរតែត្រូវបានកំណត់)
+email-address	setup	km	អាស័យ​ដ្ឋាន​អ៊ី​ម៉េ​ល
+emailadmin mail account saved:	setup	km	គណនីអ៊ីមែល អ៊ីមែលអ្នកគ្រប់គ្រងត្រូវបានរក្សាទុក៖
+emailadmin profile updated:	setup	km	អាប់ដេតកម្រងព័ត៌មាន eMailAdmin៖
+enable for extra debug-messages	setup	km	បើកសម្រាប់សារបំបាត់កំហុសបន្ថែម
+enable mcrypt	setup	km	បើកដំណើរការ MCrypt
+enforce ssl (allows to specify just a path above)	setup	km	ពង្រឹង SSL (អនុញ្ញាតឱ្យបញ្ជាក់ផ្លូវខាងលើ)
+enter some random text for app session encryption	setup	km	បញ្ចូលអត្ថបទចៃដន្យមួយចំនួនសម្រាប់ការអ៊ិនគ្រីបសម័យកម្មវិធី
+enter some random text for app_session <br />encryption (requires mcrypt)	setup	km	បញ្ចូលអត្ថបទចៃដន្យមួយចំនួនសម្រាប់ app_session <br /> encryption (ទាមទារ mcrypt)
+enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	km	បញ្ចូលផ្លូវពេញលេញសម្រាប់ឯកសារបណ្តោះអាសន្ន។<br />ឧទាហរណ៍៖ /tmp, C:\TEMP
+enter the full path for temporary files.<br />examples: /tmp, c:temp	setup	km	បញ្ចូលផ្លូវពេញលេញសម្រាប់ឯកសារបណ្តោះអាសន្ន។<br />ឧទាហរណ៍៖ /tmp, C:\TEMP
+enter the full path for users and group files.<br />examples: /files, e:\files	setup	km	បញ្ចូលផ្លូវពេញលេញសម្រាប់អ្នកប្រើប្រាស់ និងឯកសារក្រុម។<br />ឧទាហរណ៍៖ /files, E:\FILES
+enter the full path for users and group files.<br />examples: /files, e:files	setup	km	បញ្ចូលផ្លូវពេញលេញសម្រាប់អ្នកប្រើប្រាស់ និងឯកសារក្រុម។<br />ឧទាហរណ៍៖ /files, E:\FILES
+enter the full path to the backup directory.<br />if empty: files directory	setup	km	បញ្ចូលផ្លូវពេញលេញទៅកាន់ថតចម្លង។<br />ប្រសិនបើទទេ៖ ថតឯកសារ
+enter the hostname of the machine on which this server is running	setup	km	បញ្ចូលឈ្មោះម៉ាស៊ីនរបស់ម៉ាស៊ីនដែលម៉ាស៊ីនមេនេះកំពុងដំណើរការ
+enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	km	បញ្ចូលទីតាំង URL របស់ EGroupware។<br />ឧទាហរណ៍៖ http://www.domain.com/egroupware ឬ /egroupware<br /><b>គ្មានសញ្ញាបន្តបន្ទាប់</b>
+enter the site password for peer servers	setup	km	បញ្ចូលពាក្យសម្ងាត់គេហទំព័រសម្រាប់ម៉ាស៊ីនមេ
+enter the site username for peer servers	setup	km	បញ្ចូលឈ្មោះអ្នកប្រើប្រាស់គេហទំព័រសម្រាប់ម៉ាស៊ីនមេ
+enter the title for your site	setup	km	បញ្ចូលចំណងជើងសម្រាប់គេហទំព័ររបស់អ្នក។
+enter your default ftp server	setup	km	បញ្ចូលម៉ាស៊ីនមេ FTP លំនាំដើមរបស់អ្នក។
+enter your http proxy server	setup	km	បញ្ចូលម៉ាស៊ីនមេប្រូកស៊ី HTTP របស់អ្នក។
+enter your http proxy server password	setup	km	បញ្ចូលពាក្យសម្ងាត់ម៉ាស៊ីនមេប្រូកស៊ី HTTP របស់អ្នក។
+enter your http proxy server port	setup	km	បញ្ចូលច្រកម៉ាស៊ីនមេប្រូកស៊ី HTTP របស់អ្នក។
+enter your http proxy server username	setup	km	បញ្ចូលឈ្មោះអ្នកប្រើប្រាស់ម៉ាស៊ីនមេប្រូកស៊ី HTTP របស់អ្នក។
+error deleting "dn=%1"!	setup	km	កំហុសក្នុងការលុប "dn=%1"!
+error dropping user!	setup	km	កំហុសក្នុងការទម្លាក់អ្នកប្រើប្រាស់!
+error in admin-creation !!!	setup	km	កំហុសក្នុងការបង្កើតអ្នកគ្រប់គ្រង!
+error in group-creation !!!	setup	km	កំហុសក្នុងការបង្កើតក្រុម!
+error listing "dn=%1"!	setup	km	កំហុសក្នុងការចុះបញ្ជី "dn=%1"!
+error modifying dn=%1: %2='%3'!	setup	km	កំហុសក្នុងការកែប្រែ dn=%1: %2='%3'!
+error searching "dn=%1" for "%2"!	setup	km	កំហុសក្នុងការស្វែងរក "dn=%1" សម្រាប់ "%2"!
+every	setup	km	រាល់
+export has been completed!	setup	km	ការនាំចេញត្រូវបានបញ្ចប់!
+failed to mount backup directory!	setup	km	បរាជ័យក្នុងការដំឡើងថតចម្លង!
+failed updating user "%1" dn="%2"!	setup	km	បរាជ័យក្នុងការធ្វើបច្ចុប្បន្នភាពអ្នកប្រើប្រាស់ "%1" dn="%2"!
+failed writing configuration file header.inc.php, check the permissions !!!	setup	km	បរាជ័យក្នុងការសរសេរឯកសារកំណត់រចនាសម្ព័ន្ធ header.inc.php សូមពិនិត្យមើលការអនុញ្ញាត!
+false	setup	km	មិនពិត
+file	setup	km	ឯកសារ
+file type, size, version, etc.	setup	km	ប្រភេទឯកសារ ទំហំ កំណែ។ល។
+file uploads are switched off: you can not use any of the filemanagers, nor can you attach files in several applications!	setup	km	ការអាប់ឡូតឯកសារត្រូវបានបិទ៖ អ្នកមិនអាចប្រើកម្មវិធីគ្រប់គ្រងឯកសារណាមួយបានទេ ហើយក៏មិនអាចភ្ជាប់ឯកសារនៅក្នុងកម្មវិធីជាច្រើនបានដែរ!
+filename	setup	km	ឈ្មោះ​ឯកសារ
+filesystem	setup	km	ប្រព័ន្ធ​ឯកសារ
+filesystem (default)	setup	km	ប្រព័ន្ធឯកសារ (លំនាំដើម)
+find and register all application hooks	setup	km	ស្វែងរក និងចុះឈ្មោះកម្មវិធី Hooks ទាំងអស់។
+folders: sent,trash,drafts,templates,junk	setup	km	ថតឯកសារ៖ បានផ្ញើ, ធុងសំរាម, សេចក្តីព្រាង, គំរូ, សារធាតុញៀន
+force selectbox	setup	km	បង្ខំជ្រើសរើសប្រអប់
+found, but unknown version	setup	km	បានរកឃើញ ប៉ុន្តែមិនស្គាល់កំណែ
+give admin access to all installed apps	setup	km	ផ្តល់សិទ្ធិឱ្យអ្នកគ្រប់គ្រងទៅកម្មវិធីដែលបានដំឡើងទាំងអស់។
+give ldap root dn and password, if you need to create an instance specific admin user, user- or group-context	setup	km	ផ្តល់ឱ្យ LDAP root DN និងពាក្យសម្ងាត់ ប្រសិនបើអ្នកត្រូវការបង្កើតឧទាហរណ៍ អ្នកគ្រប់គ្រងជាក់លាក់ អ្នកប្រើប្រាស់ ឬបរិបទក្រុម
+gives further options	setup	km	ផ្តល់ជម្រើសបន្ថែម
+go back	setup	km	ត្រឡប់​ក្រោយ
+go to	setup	km	ទៅ
+grant access	setup	km	ផ្តល់សិទ្ធិចូលប្រើប្រាស់
+group	setup	km	ក្រុម
+group %1 uses identical id %2 as user %3!	setup	km	ក្រុម %1 ប្រើលេខសម្គាល់ដូចគ្នា %2 ជាអ្នកប្រើប្រាស់ %3!
+group memberships will be migrated too.	setup	km	សមាជិកភាពក្រុមនឹងត្រូវបានផ្លាស់ប្តូរផងដែរ។
+has a version mismatch	setup	km	មានកំណែមិនស៊ីគ្នា។
+header admin login	setup	km	បឋមកថាចូលគ្រប់គ្រង
+header password	setup	km	ពាក្យសម្ងាត់បឋមកថា
+header username	setup	km	ឈ្មោះអ្នកប្រើបឋមកថា
+header-password[,header-user(admin)]	setup	km	header-password[,header-user(admin)]
+header.inc.php successful written.	setup	km	header.inc.php សរសេរដោយជោគជ័យ។
+help and support	setup	km	ជួយ​និង​គាំទ្រ
+historylog removed	setup	km	កំណត់ហេតុប្រវត្តិត្រូវបានដកចេញ
+hooks deregistered	setup	km	Hooks ត្រូវបានលុបឈ្មោះ។
+hooks registered	setup	km	Hooks បានចុះឈ្មោះ។
+host information	setup	km	ព័ត៌មានម្ចាស់ផ្ទះ
+host,[smtp port],[smtp user],[smtp password]	setup	km	ម៉ាស៊ីន, [ច្រក smtp], [អ្នកប្រើប្រាស់ smtp], [ពាក្យសម្ងាត់ smtp]
+host,{imap | imaps },[domain],[{standard(default)|vmailmgr = add domain for mailserver login}]	setup	km	ម៉ាស៊ីន {imap | imaps },[domain],[{standard(default)|vmailmgr = add domain for mail server login}]
+host,{imap | pop3 | imaps | pop3s},[domain],[{standard(default)|vmailmgr = add domain for mailserver login}]	setup	km	ម៉ាស៊ីន {imap | pop3 | imaps | pop3s},[domain],[{standard(default)|vmailmgr = add domain for mail server login|email = ប្រើ email របស់អ្នកប្រើ (ស្តង់ដារ Mail domain គួរតែត្រូវបានកំណត់)}]
+host/ip domain controler	setup	km	ឧបករណ៍បញ្ជាដែនម៉ាស៊ីន / IP
+hostname/ip of database server	setup	km	ឈ្មោះម៉ាស៊ីន/IP របស់ម៉ាស៊ីនមេមូលដ្ឋានទិន្នន័យ
+hour (0-24)	setup	km	ម៉ោង (0-24)
+hours at	setup	km	ម៉ោងនៅ
+how frequent should the import run?	setup	km	តើការនាំចូលគួរដំណើរការញឹកញាប់ប៉ុណ្ណា?
+however the tables are still in the database	setup	km	តារាងនៅតែស្ថិតក្នុងមូលដ្ឋានទិន្នន័យ។
+however, the application is otherwise installed	setup	km	កម្មវិធីត្រូវបានដំឡើងបើមិនដូច្នេះទេ។
+however, the application may still work	setup	km	កម្មវិធីអាចនៅតែដំណើរការ
+http auth types (comma-separated) to use without login-page, eg. "ntlm"	setup	km	ប្រភេទ HTTP auth ដែលបំបែកដោយសញ្ញាក្បៀស ដើម្បីប្រើដោយគ្មានទំព័រចូល ឧ។ "NTLM"
+identity provider	setup	km	អ្នកផ្តល់អត្តសញ្ញាណ
+if no acl records for user or any group the user is a member of	setup	km	ប្រសិនបើគ្មានកំណត់ត្រា ACL សម្រាប់អ្នកប្រើប្រាស់ ឬក្រុមណាមួយដែលអ្នកប្រើប្រាស់ជាសមាជិក
+if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	km	ប្រសិនបើ safe_mode ត្រូវបានបើក EGw មិនអាចផ្លាស់ប្តូរការកំណត់ជាក់លាក់នៅលើពេលដំណើរការបានទេ ហើយក៏មិនអាចផ្ទុកម៉ូឌុលដែលមិនទាន់បានផ្ទុកដែរ។
+if the application has no defined tables, selecting upgrade should remedy the problem	setup	km	ប្រសិនបើកម្មវិធីមិនមានតារាងដែលបានកំណត់ទេ ការជ្រើសរើសការធ្វើឱ្យប្រសើរឡើងគួរតែដោះស្រាយបញ្ហា
+if using ads (active directory)	setup	km	ប្រសិនបើប្រើ ADS (Active Directory) ការផ្ទៀងផ្ទាត់ភាពត្រឹមត្រូវ
+if using cas (central authentication service):	setup	km	ប្រសិនបើប្រើ cas (សេវាផ្ទៀងផ្ទាត់កណ្តាល)៖
+if using ldap	setup	km	ប្រសិនបើប្រើ LDAP
+if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	km	ប្រសិនបើប្រើ LDAP តើអ្នកចង់គ្រប់គ្រង home directory និង login attributes ទេ?
+if using mail authentication	setup	km	ប្រសិនបើប្រើការផ្ទៀងផ្ទាត់សំបុត្រ
+if using multiple authentication providers:	setup	km	ប្រសិនបើប្រើអ្នកផ្តល់ការផ្ទៀងផ្ទាត់ច្រើន៖
+if using saml 2.0 / shibboleth / simplesamlphp	setup	km	ប្រសិនបើប្រើ SAML 2.0 / Shibboleth / SimpleSAMLphp
+if you can only access the docroot choose <b>database</b> for where to store the file content and use same path as for temporary files.	setup	km	ប្រសិនបើអ្នកអាចចូលប្រើតែ docroot ជ្រើសរើស <b>មូលដ្ឋានទិន្នន័យ</b> សម្រាប់កន្លែងដែលត្រូវរក្សាទុកមាតិកាឯកសារ ហើយប្រើផ្លូវដូចគ្នាសម្រាប់ឯកសារបណ្តោះអាសន្ន។
+if you did not receive any errors, your applications have been	setup	km	ប្រសិនបើអ្នកមិនបានទទួលកំហុសណាមួយទេ កម្មវិធីរបស់អ្នកត្រូវបាន
+if you did not receive any errors, your tables have been	setup	km	ប្រសិនបើអ្នកមិនបានទទួលកំហុសណាមួយ តារាងរបស់អ្នកត្រូវបាន
+if you running this the first time, don't forget to manualy %1 !!!	setup	km	ប្រសិន​បើ​អ្នក​ដំណើរ​ការ​នេះ​ជា​លើក​ដំបូង សូម​កុំ​ភ្លេច​ធ្វើ %1 ដោយ​ដៃ!
+if you use only languages of the same charset (eg. western european ones) you dont need to set a system-charset!	setup	km	ប្រសិនបើអ្នកប្រើតែភាសានៃសំណុំតួអក្សរដូចគ្នា (ឧ. អឺរ៉ុបខាងលិច) អ្នកមិនចាំបាច់កំណត់តួអក្សរប្រព័ន្ធទេ!
+image type selection order	setup	km	លំដាប់ជ្រើសរើសប្រភេទរូបភាព
+imap: admin user,password,emailadmin_imap(|_cyrus|_dovecot)	setup	km	IMAP៖ អ្នកប្រើប្រាស់អ្នកគ្រប់គ្រង ពាក្យសម្ងាត់ អ៊ីមែលadmin_imap(|_cyrus|_dovecot)
+import has been completed!	setup	km	ការនាំចូលត្រូវបានបញ្ចប់!
+include_path need to contain "." - the current directory	setup	km	include_path ត្រូវមាន "." - ថតបច្ចុប្បន្ន
+incremental import	setup	km	ការនាំចូលបន្ថែម
+initial import	setup	km	ការនាំចូលដំបូង
+install	setup	km	ដំឡើង
+install all	setup	km	ដំឡើងទាំងអស់។
+install applications	setup	km	ដំឡើងកម្មវិធី
+install backup	setup	km	ដំឡើងការបម្រុងទុក
+install language	setup	km	ដំឡើងភាសា
+install or update translations: domain(all),[config user(admin)],password,[[+]lang1[,lang2,...]] + adds, no langs update existing ones	setup	km	ដំឡើង ឬធ្វើបច្ចុប្បន្នភាពការបកប្រែ៖ domain(all),[config user(admin)],password,[[+]lang1[,lang2,...]] + adds, no langs updates ដែលមានស្រាប់
+installation finished	setup	km	ការដំឡើងបានបញ្ចប់។
+installation started, this might take a few minutes ...	setup	km	ការ​ដំឡើង​បាន​ចាប់​ផ្តើ​ម វា​អាច​ចំណាយ​ពេល​ប៉ុន្មាន​នាទី...
+installed	setup	km	បានដំឡើង។
+instructions for creating the database in %1:	setup	km	សេចក្តីណែនាំសម្រាប់បង្កើតមូលដ្ឋានទិន្នន័យក្នុង%1៖
+invalid argument '%1' !!!	setup	km	អាគុយម៉ង់​មិន​ត្រឹមត្រូវ '%1' !
+invalid ip address	setup	km	អាសយដ្ឋាន IP មិនត្រឹមត្រូវ!
+invalid mcrypt algorithm/mode combination	setup	km	ការរួមបញ្ចូលគ្នានៃរបៀប/ក្បួនដោះស្រាយ Mcrypt មិនត្រឹមត្រូវ
+invalid password	setup	km	ពាក្យសម្ងាត់មិនត្រឹមត្រូវ!
+ip or url	setup	km	IP ឬ URL
+is broken	setup	km	ត្រូវបានខូច
+is disabled	setup	km	ត្រូវបានបិទ
+is in the webservers docroot	setup	km	គឺនៅក្នុង web servers docroot
+is not writeable by the webserver	setup	km	មិនអាចសរសេរបានដោយម៉ាស៊ីនមេគេហទំព័រ
+it needs upgrading to version %1! use --update-header <password>[,<user>] to do so (--usage gives more options).	setup	km	វា​ត្រូវ​ការ​ដំឡើង​កំណែ​ទៅ​កំណែ%1! ប្រើ --update-header <password>[,<user>] ដើម្បីធ្វើដូច្នេះ (--usage ផ្តល់ជម្រើសច្រើនទៀត)។
+just now	setup	km	ឥឡូវនេះ
+just users	setup	km	គ្រាន់តែអ្នកប្រើប្រាស់
+label to display as option on login page	setup	km	ដាក់ស្លាកដើម្បីបង្ហាញជាជម្រើសនៅលើទំព័រចូល
+languages updated.	setup	km	ភាសាដែលបានធ្វើបច្ចុប្បន្នភាព។
+ldap accounts configuration	setup	km	ការកំណត់រចនាសម្ព័ន្ធគណនី LDAP
+ldap accounts context	setup	km	បរិបទគណនី LDAP
+ldap config	setup	km	ការកំណត់រចនាសម្ព័ន្ធ LDAP
+ldap default homedirectory prefix (e.g. /home for /home/username)	setup	km	បុព្វបទថតផ្ទះលំនាំដើម LDAP (ឧទាហរណ៍ /home សម្រាប់ /home/username)
+ldap default shell (e.g. /bin/bash)	setup	km	សែលលំនាំដើម LDAP (ឧទាហរណ៍ /bin/bash)
+ldap dn="%1" with %2 entries deleted.	setup	km	LDAP dn="%1" ជាមួយធាតុ %2 ត្រូវបានលុប។
+ldap encryption type	setup	km	ប្រភេទការអ៊ិនគ្រីប LDAP
+ldap groups context	setup	km	បរិបទក្រុម LDAP
+ldap host	setup	km	ម៉ាស៊ីន LDAP
+ldap import	setup	km	LDAP នាំចូល
+ldap root password	setup	km	ពាក្យសម្ងាត់ root LDAP
+ldap rootdn	setup	km	LDAP rootdn
+ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setup	km	តម្រងស្វែងរក LDAP សម្រាប់គណនីលំនាំដើម៖ "(uid=%user)", %domain=EGw-domain
+leave empty to keep current.	setup	km	ទុកឱ្យទទេដើម្បីរក្សាចរន្ត។
+leave empty to use default	setup	km	ទុកឲ្យទទេ ដើម្បីប្រើលំនាំដើម
+limit access	setup	km	កំណត់ការចូលប្រើ
+limit access to setup to the following addresses, networks or hostnames (e.g. 127.0.0.1,10.1.1,myhost.dnydns.org)	setup	km	កំណត់​ការ​ចូល​ប្រើប្រាស់​ក្នុង​ការ​ដំឡើង​ទៅ​កាន់​អាសយដ្ឋាន បណ្តាញ ឬ​ឈ្មោះ​ម៉ាស៊ីន​ខាងក្រោម (ឧ. 127.0.0.1,10.1.1, myhost.dnydns.org)
+list availible values	setup	km	រាយតម្លៃដែលមាន
+list of availible translations	setup	km	បញ្ជីនៃការបកប្រែដែលមាន
+login as user postgres, eg. by using su as root	setup	km	ចូលជាអ្នកប្រើប្រាស់ postgres ឧ. ដោយប្រើ su ជា root
+login to mysql -	setup	km	ចូលទៅ mysql -
+loginname needed for domain configuration	setup	km	ឈ្មោះចូលដែលត្រូវការសម្រាប់ការកំណត់រចនាសម្ព័ន្ធដែន
+logout	setup	km	ចាកចេញ
+logs to	setup	km	កំណត់ហេតុទៅ
+mail account of %1 migraged	setup	km	គណនីអ៊ីមែលនៃ%1 ត្រូវបានផ្ទេរ
+mail account of %1 migrated	setup	km	គណនីអ៊ីមែលនៃ%1 ត្រូវបានផ្ទេរ
+mail domain (for virtual mail manager)	setup	km	ដែនសំបុត្រ (សម្រាប់អ្នកគ្រប់គ្រងអ៊ីមែលនិម្មិត)
+mail server login type	setup	km	ប្រភេទចូលម៉ាស៊ីនមេ
+mail server protocol	setup	km	ពិធីការម៉ាស៊ីនមេ
+make sure that your database is created and the account permissions are set	setup	km	ត្រូវប្រាកដថាមូលដ្ឋានទិន្នន័យរបស់អ្នកត្រូវបានបង្កើត ហើយការអនុញ្ញាតគណនីត្រូវបានកំណត់
+manage applications	setup	km	គ្រប់គ្រងកម្មវិធី
+manage languages	setup	km	គ្រប់គ្រងភាសា
+manual / help	setup	km	សៀវភៅដៃ | ជំនួយ
+match saml usernames to existing ones (use strings or regular expression)	setup	km	ផ្គូផ្គងឈ្មោះអ្នកប្រើប្រាស់ SAML ទៅនឹងឈ្មោះដែលមានស្រាប់ (ប្រើខ្សែអក្សរ ឬកន្សោមធម្មតា)
+max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	km	max_execution_time ត្រូវបានកំណត់តិចជាង 30 (វិនាទី)៖ ជួនកាល EGroupware ត្រូវការពេលវេលាប្រតិបត្តិខ្ពស់ជាងមុន រំពឹងថានឹងមានការបរាជ័យម្តងម្កាល
+maximum account id (e.g. 65535 or 1000000)	setup	km	លេខសម្គាល់គណនីអតិបរមា (ឧទាហរណ៍ 65535 ឬ 1000000)
+may be broken	setup	km	អាចនឹងខូច
+mcrypt algorithm (default tripledes)	setup	km	ក្បួនដោះស្រាយ Mcrypt (លំនាំដើម TRIPLEDES)
+mcrypt initialization vector	setup	km	វ៉ិចទ័រចាប់ផ្តើម MCrypt
+mcrypt mode (default cbc)	setup	km	របៀប Mcrypt (លំនាំដើម CBC)
+mcrypt settings (requires mcrypt php extension)	setup	km	ការកំណត់ Mcrypt (ទាមទារផ្នែកបន្ថែម mcrypt PHP)
+memory_limit is set to less than %1: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	km	memory_limit ត្រូវបានកំណត់ទៅតិចជាង %1៖ កម្មវិធីមួយចំនួននៃ EGroupware ត្រូវការច្រើនជាងការណែនាំ 8M រំពឹងថានឹងមានការបរាជ័យម្តងម្កាល
+metadata	setup	km	ទិន្នន័យមេតា
+metadata url	setup	km	ទិន្នន័យមេតា URL
+migration between egroupware account repositories	setup	km	ការផ្លាស់ប្តូររវាងឃ្លាំងគណនី EGroupware
+migration of group will fail, as sql does not allow identical ids.	setup	km	ការធ្វើចំណាកស្រុកនៃក្រុមនឹងបរាជ័យ ដោយសារ SQL មិនអនុញ្ញាតឱ្យមានលេខសម្គាល់ដូចគ្នា។
+min backup count	setup	km	ចំនួនអតិបរមានៃការបម្រុងទុកត្រូវបានរក្សាទុក (សូន្យ៖ ទាំងអស់)
+minimum account id (e.g. 500 or 100, etc.)	setup	km	លេខសម្គាល់គណនីអប្បបរមា (ឧទាហរណ៍ 500 ឬ 100 ។ល។)
+minute	setup	km	នាទី
+missing or uncomplete mailserver configuration	setup	km	បាត់ ឬមិនពេញលេញ ការកំណត់រចនាសម្ព័ន្ធម៉ាស៊ីនមេសំបុត្រ
+modifications have been completed!	setup	km	ការកែប្រែត្រូវបានបញ្ចប់!
+modified	setup	km	កែប្រែ
+modify	setup	km	កែប្រែ
+month	setup	km	ខែ
+more information	setup	km	ព័ត៌មាន​បន្ថែម
+mount backup directory to %1	setup	km	ដំឡើងថតចម្លងទៅ%1
+multi-language support setup	setup	km	ការដំឡើងការគាំទ្រពហុភាសា
+name for service provider	setup	km	ឈ្មោះសម្រាប់អ្នកផ្តល់សេវា
+name of database	setup	km	ឈ្មោះមូលដ្ឋានទិន្នន័យ
+name of db user egroupware uses to connect	setup	km	ឈ្មោះអ្នកប្រើប្រាស់ db EGroupware ប្រើដើម្បីភ្ជាប់
+needs extra configuration on dc and webserver!	setup	km	ត្រូវការការកំណត់បន្ថែមលើ DC និង webserver!
+never	setup	km	មិនដែល
+new	setup	km	ថ្មី។
+next run	setup	km	ការរត់បន្ទាប់
+no	setup	km	ទេ
+no %1 support found. disabling	setup	km	រកមិនឃើញការគាំទ្រ%1 បិទ
+no accounts existing	setup	km	គ្មានគណនីដែលមានស្រាប់
+no algorithms available	setup	km	មិនមានក្បួនដោះស្រាយទេ។
+no dependencies are installed: you need to run "%1" and either "%2" or "%3"!	setup	km	គ្មានភាពអាស្រ័យត្រូវបានដំឡើងទេ៖ អ្នកត្រូវដំណើរការ "%1" និង "%2" ឬ "%3"!
+no egroupware domains / database instances exist! use --edit-header --domain to add one (--usage gives more options).	setup	km	មិនមាន EGroupware domains / database instances ទេ! ប្រើ --edit-header --domain ដើម្បីបន្ថែមមួយ (--usage ផ្តល់ជម្រើសច្រើនទៀត)។
+no header admin password set! use --edit-header <password>[,<user>] to set one (--usage gives more options).	setup	km	មិន​បាន​កំណត់​ពាក្យ​សម្ងាត់​របស់​អ្នក​គ្រប់គ្រង​ក្បាល​ទេ! ប្រើ --edit-header <password>[,<user>] ដើម្បីកំណត់មួយ (--usage ផ្តល់ជម្រើសច្រើនទៀត)។
+no modes available	setup	km	គ្មាន​ម៉ូដ​ដែល​អាច​ប្រើ​បាន!
+no update necessary, domain %1(%2) is up to date.	setup	km	មិនចាំបាច់ធ្វើបច្ចុប្បន្នភាពទេ ដែន %1(%2) គឺទាន់សម័យ។
+no valid timezone set! ("%1" is not sufficient, you have to use a timezone identifer like "%2", see %3full list of valid identifers%4)	setup	km	មិនបានកំណត់តំបន់ពេលវេលាត្រឹមត្រូវទេ! ("%1" មិនគ្រប់គ្រាន់ទេ អ្នកត្រូវប្រើឧបករណ៍កំណត់តំបន់ពេលវេលាដូចជា "%2" សូមមើល %3 បញ្ជីពេញលេញនៃការកំណត់អត្តសញ្ញាណត្រឹមត្រូវ% 4)
+no xml support found. disabling	setup	km	រកមិនឃើញការគាំទ្រ XML ទេ។ បិទ
+not	setup	km	ទេ។
+not all mcrypt algorithms and modes work with egroupware. if you experience problems try switching it off.	setup	km	មិនមែនគ្រប់ក្បួនដោះស្រាយ និងរបៀប mcrypt ទាំងអស់ដំណើរការជាមួយ EGroupware ទេ។ ប្រសិនបើអ្នកជួបប្រទះបញ្ហា សូមព្យាយាមបិទវា។
+not automatic	setup	km	មិនមែនស្វ័យប្រវត្តិទេ។
+not complete	setup	km	មិនពេញលេញ
+not completed	setup	km	មិនបានបញ្ចប់
+not installed	setup	km	មិនបានដំឡើង
+not ready for this stage yet	setup	km	មិនទាន់រួចរាល់សម្រាប់ដំណាក់កាលនេះនៅឡើយទេ។
+not set	setup	km	មិនបានកំណត់
+note: you will be able to customize this later	setup	km	ចំណាំ៖ អ្នកនឹងអាចប្ដូរវាតាមបំណងនៅពេលក្រោយ
+nothing to change.	setup	km	គ្មានអ្វីត្រូវផ្លាស់ប្តូរទេ។
+now guessing better values for defaults...	setup	km	ឥឡូវនេះ ទាយតម្លៃប្រសើរជាងមុនសម្រាប់លំនាំដើម...
+odbc / maxdb: dsn (data source name) to use	setup	km	ODBC / MaxDB: DSN (ឈ្មោះប្រភពទិន្នន័យ) ដើម្បីប្រើ
+ok	setup	km	យល់ព្រម
+once the database is setup correctly	setup	km	នៅពេលដែលមូលដ្ឋានទិន្នន័យត្រូវបានរៀបចំត្រឹមត្រូវ។
+one month	setup	km	មួយ​ខែ
+one week	setup	km	មួយ​ស​ប្តា​ហ៍
+only add languages that are not in the database already	setup	km	បន្ថែមតែភាសាដែលមិនមាននៅក្នុងមូលដ្ឋានទិន្នន័យរួចហើយ
+only add new phrases	setup	km	បន្ថែមតែឃ្លាថ្មីៗប៉ុណ្ណោះ។
+optional, if only authentication and anonymous search is enabled	setup	km	ជាជម្រើស ប្រសិនបើមានតែការផ្ទៀងផ្ទាត់ និងការស្វែងរកអនាមិកប៉ុណ្ណោះត្រូវបានបើក
+or	setup	km	ឬ
+or %1continue to the header admin%2	setup	km	ឬ%1បន្តទៅកាន់អ្នកគ្រប់គ្រងបឋមកថា%2
+or http://webdav.domain.com (webdav)	setup	km	ឬ http://webdav.domain.com (WebDAV)
+or leave empty and select saml as authentication type above for single sign on	setup	km	ឬទុកទទេ ហើយជ្រើសរើស SAML ជាប្រភេទការផ្ទៀងផ្ទាត់ខាងលើសម្រាប់ការចូលតែមួយ
+or we can attempt to create the database for you:	setup	km	ឬព្យាយាមបង្កើតមូលដ្ឋានទិន្នន័យ៖
+or you can install a previous backup.	setup	km	ឬដំឡើងការបម្រុងទុកពីមុន។
+password	setup	km	ពាក្យសម្ងាត់
+password for smtp-authentication	setup	km	ពាក្យសម្ងាត់សម្រាប់ការផ្ទៀងផ្ទាត់ SMTP
+password needed for domain configuration.	setup	km	ត្រូវការពាក្យសម្ងាត់សម្រាប់ការកំណត់រចនាសម្ព័ន្ធដែន។
+password of db user	setup	km	ពាក្យសម្ងាត់របស់អ្នកប្រើ db
+passwords --> sql	setup	km	ពាក្យសម្ងាត់ --> SQL
+passwords did not match, please re-enter	setup	km	ពាក្យសម្ងាត់មិនត្រូវគ្នាទេ សូមបញ្ចូលម្តងទៀត
+path (not url!) to your egroupware installation.	setup	km	ផ្លូវ (មិនមែន URL!) ទៅការដំឡើង EGroupware របស់អ្នក។
+path information	setup	km	ព័ត៌មានផ្លូវ
+path of egroupware install directory (default auto-detected)	setup	km	ផ្លូវនៃ EGroupware ដំឡើងថត (រកឃើញដោយស្វ័យប្រវត្តិលំនាំដើម)
+path to user and group files has to be outside of the webservers document-root!!!	setup	km	ផ្លូវទៅកាន់ឯកសារអ្នកប្រើប្រាស់ និងក្រុមត្រូវតែនៅខាងក្រៅម៉ាស៊ីនមេគេហទំព័រឯកសារ-root!
+path to various directories: have to exist and be writeable by the webserver	setup	km	ផ្លូវទៅកាន់ថតផ្សេងៗ៖ ត្រូវតែមាន និងអាចសរសេរបានដោយម៉ាស៊ីនមេគេហទំព័រ
+pem certificate	setup	km	វិញ្ញាបនបត្រ PEM
+periodic import from ads or ldap into egroupware database	setup	km	ការនាំចូលតាមកាលកំណត់ពី ADS ឬ LDAP ទៅក្នុងមូលដ្ឋានទិន្នន័យ EGroupware
+persistent connections	setup	km	ការតភ្ជាប់ជាប់លាប់
+php client	setup	km	ម៉ាស៊ីនភ្ញៀវ PHP
+php proxy	setup	km	ប្រូកស៊ី PHP
+php session handler enabled in php.ini	setup	km	កម្មវិធីដោះស្រាយវគ្គ PHP ត្រូវបានបើកនៅក្នុង php.ini
+please check for sql scripts within the application's directory	setup	km	សូមពិនិត្យមើលស្គ្រីប SQL នៅក្នុងថតកម្មវិធី
+please check read/write permissions on directories, or back up and use another option.	setup	km	សូមពិនិត្យមើលការអនុញ្ញាតអាន/សរសេរនៅលើថត ឬបម្រុងទុក ហើយប្រើជម្រើសផ្សេងទៀត។
+please configure egroupware for your environment	setup	km	សូមកំណត់រចនាសម្ព័ន្ធ EGroupware សម្រាប់បរិស្ថានរបស់អ្នក។
+please consult the %1.	setup	km	សូមពិគ្រោះជាមួយ%1។
+please download a recent version from %1 and install it as %2.	setup	km	សូមទាញយកកំណែថ្មីពី%1 ហើយដំឡើងវាជា%2។
+please fix the above errors (%1) and warnings(%2)	setup	km	សូមជួសជុលកំហុសខាងលើ (%1) និងការព្រមាន(%2)
+please install	setup	km	សូមដំឡើង
+please login	setup	km	សូមចូល
+please login to egroupware and run the admin application for additional site configuration	setup	km	សូមចូលទៅកាន់ EGroupware ហើយដំណើរការកម្មវិធីគ្រប់គ្រងសម្រាប់ការកំណត់រចនាសម្ព័ន្ធគេហទំព័របន្ថែម
+please make the following change in your php.ini	setup	km	សូមធ្វើការផ្លាស់ប្តូរខាងក្រោមនៅក្នុង php.ini របស់អ្នក។
+please wait...	setup	km	សូមរង់ចាំ...
+pop/imap mail server hostname or ip address	setup	km	POP/IMAP ឈ្មោះម៉ាស៊ីនមេ ឬអាសយដ្ឋាន IP
+port	setup	km	ច្រក
+possible reasons	setup	km	ហេតុផលដែលអាចកើតមាន
+possible solutions	setup	km	ដំណោះស្រាយដែលអាចកើតមាន
+post-install dependency failure	setup	km	ការបរាជ័យនៃការពឹងផ្អែកក្រោយការដំឡើង
+postfix with ldap: [yes(user edit forwarding)]	setup	km	Postfix ជាមួយ LDAP៖ [បាទ (ការបញ្ជូនបន្តកែសម្រួលអ្នកប្រើប្រាស់)]
+postgres: leave it empty to use the prefered unix domain sockets instead of a tcp/ip connection	setup	km	Postgres៖ ទុកវាឱ្យនៅទទេ ដើម្បីប្រើរន្ធ domain unix ដែលពេញចិត្ត ជំនួសឱ្យការភ្ជាប់ tcp/ip
+potential problem	setup	km	បញ្ហាដែលអាចកើតមាន
+preferences	setup	km	ចំណូលចិត្ត
+problem resolution	setup	km	ដំណោះស្រាយបញ្ហា
+process	setup	km	ដំណើរការ
+re-check my database	setup	km	ពិនិត្យមូលដ្ឋានទិន្នន័យរបស់ខ្ញុំឡើងវិញ
+re-check my installation	setup	km	ពិនិត្យមើលការដំឡើងរបស់ខ្ញុំឡើងវិញ
+re-enter password	setup	km	បញ្ចូល​លេខសំងាត់​ម្តង​ទៀត
+read translations from	setup	km	អានការបកប្រែពី
+readable by the webserver	setup	km	អាចអានបានដោយម៉ាស៊ីនមេគេហទំព័រ
+really uninstall all applications	setup	km	ពិត​ជា​លុប​កម្មវិធី​ទាំង​អស់
+refusing to delete dn "%1"!	setup	km	បដិសេធមិនលុប dn "%1"!
+register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	km	register_globals ត្រូវបានបើក EGroupware មិនទាមទារវាទេ ហើយជាទូទៅវាកាន់តែមានសុវត្ថិភាពក្នុងការបិទវា
+registered	setup	km	បានចុះឈ្មោះ
+rejected lines	setup	km	បន្ទាត់ដែលបដិសេធ
+remove	setup	km	ដកចេញ
+remove all	setup	km	ដក​ចេញ​ទាំង​អស់
+rename	setup	km	ប្តូរឈ្មោះ
+replace username and email	setup	km	ជំនួសឈ្មោះអ្នកប្រើប្រាស់ និងអ៊ីមែល
+replace username and keep email	setup	km	ជំនួសឈ្មោះអ្នកប្រើប្រាស់ និងរក្សាអ៊ីមែល
+required to change passwords	setup	km	តម្រូវឱ្យផ្លាស់ប្តូរពាក្យសម្ងាត់
+requires "reset password" privilege, to change passwords!	setup	km	ទាមទារសិទ្ធិ "កំណត់ពាក្យសម្ងាត់ឡើងវិញ" ដើម្បីផ្លាស់ប្តូរពាក្យសម្ងាត់!
+requires reinstall or manual repair	setup	km	ទាមទារការដំឡើងឡើងវិញ ឬជួសជុលដោយដៃ
+requires saml optional on login page and user to specify username and password	setup	km	ទាមទារជាជម្រើស SAML នៅលើទំព័រចូល និងអ្នកប្រើប្រាស់ដើម្បីបញ្ជាក់ឈ្មោះអ្នកប្រើប្រាស់ និងពាក្យសម្ងាត់
+requires upgrade	setup	km	ទាមទារការអាប់ដេត
+resolve	setup	km	ដោះស្រាយ
+restore	setup	km	ស្តារ
+restore failed	setup	km	ការស្តារឡើងវិញបានបរាជ័យ!
+restore finished	setup	km	ការស្តារឡើងវិញបានបញ្ចប់!
+restore started, this might take a few minutes ...	setup	km	ការស្តារឡើងវិញបានចាប់ផ្តើម វាអាចចំណាយពេលពីរបីនាទី...
+restoring a backup will delete/replace all content in your database. are you sure?	setup	km	ការស្ដារការបម្រុងទុកនឹងលុប/ជំនួសមាតិកាទាំងអស់នៅក្នុងមូលដ្ឋានទិន្នន័យរបស់អ្នក។ តើ​អ្នក​ប្រាកដ​ឬ​អត់?
+result data to add or remove extra membership	setup	km	ទិន្នន័យលទ្ធផលដើម្បីបន្ថែម ឬដកសមាជិកភាពបន្ថែម
+result data to use as username	setup	km	ទិន្នន័យលទ្ធផលដែលត្រូវប្រើជាឈ្មោះអ្នកប្រើប្រាស់
+result values (comma-separated) and group-name to add or remove	setup	km	តម្លៃលទ្ធផល (បំបែកដោយសញ្ញាក្បៀស) និងឈ្មោះក្រុមដែលត្រូវបន្ថែម ឬលុបចេញ
+return to setup	setup	km	ត្រឡប់ទៅការដំឡើងវិញ។
+root dn	setup	km	ឫស DN
+root dn password	setup	km	ពាក្យសម្ងាត់ Root DN
+run a database schema update (if necessary): domain(all),[config user(admin)],password	setup	km	ដំណើរការការធ្វើបច្ចុប្បន្នភាពគ្រោងការណ៍មូលដ្ឋានទិន្នន័យ (ប្រសិនបើចាំបាច់): ដែន(ទាំងអស់), [អ្នកប្រើប្រាស់កំណត់រចនាសម្ព័ន្ធ (អ្នកគ្រប់គ្រង)], ពាក្យសម្ងាត់
+run installation tests	setup	km	ដំណើរការការធ្វើតេស្តដំឡើង
+safe_mode is turned on, which is generaly a good thing as it makes your install more secure.	setup	km	safe_mode ត្រូវបានបើក ដែលជាទូទៅជារឿងល្អព្រោះវាធ្វើឱ្យការដំឡើងរបស់អ្នកកាន់តែមានសុវត្ថិភាព។
+save	setup	km	រក្សាទុក
+save this text as contents of your header.inc.php	setup	km	រក្សាទុកអត្ថបទនេះជាមាតិកានៃ header.inc.php របស់អ្នក។
+schedule	setup	km	កាលវិភាគ
+scheduled backups	setup	km	ការបម្រុងទុកដែលបានគ្រោងទុក
+securest	setup	km	សុវត្ថិភាពបំផុត។
+select an app, enter a target version, then submit to process to that version.<br />if you do not enter a version, only the baseline tables will be installed for the app.<br /><blink>this will drop all of the apps' tables first!</blink>	setup	km	ជ្រើសរើសកម្មវិធីមួយ បញ្ចូលកំណែគោលដៅ បន្ទាប់មកដាក់ស្នើដើម្បីដំណើរការទៅកំណែនោះ។<br />ប្រសិនបើអ្នកមិនបញ្ចូលកំណែទេ មានតែតារាងបន្ទាត់មូលដ្ឋានប៉ុណ្ណោះនឹងត្រូវបានដំឡើងសម្រាប់កម្មវិធី។<br /><blink>វានឹងទម្លាក់ តារាងកម្មវិធីទាំងអស់ដំបូង!</blink>
+select one...	setup	km	ជ្រើសរើស​មួយ...
+select the default applications to which your users will have access	setup	km	ជ្រើសរើសកម្មវិធីលំនាំដើមដែលអ្នកប្រើប្រាស់របស់អ្នកអាចចូលប្រើបាន។
+select the desired action(s) from the available choices	setup	km	ជ្រើសរើសសកម្មភាពដែលចង់បានពីជម្រើសដែលមាន
+select to download file	setup	km	ជ្រើសរើសដើម្បីទាញយកឯកសារ
+select where you want to store/retrieve user accounts	setup	km	ជ្រើសរើសកន្លែងដែលអ្នកចង់រក្សាទុក/ទាញយកគណនីអ្នកប្រើប្រាស់
+select which group(s) will be exported	setup	km	ជ្រើសរើសក្រុមណាមួយនឹងត្រូវបាននាំចេញ
+select which group(s) will be imported (group membership will be maintained)	setup	km	ជ្រើសរើសក្រុមណាមួយនឹងត្រូវបាននាំចូល (សមាជិកភាពក្រុមនឹងត្រូវបានរក្សា)
+select which group(s) will be modified (group membership will be maintained)	setup	km	ជ្រើសរើសក្រុមណាមួយនឹងត្រូវបានកែប្រែ (សមាជិកភាពក្រុមនឹងត្រូវបានរក្សា)
+select which languages you would like to use	setup	km	ជ្រើសរើសភាសាណាមួយដែលអ្នកចង់ប្រើ
+select which method of upgrade you would like to do	setup	km	ជ្រើសរើសវិធីសាស្រ្តនៃការធ្វើឱ្យប្រសើរឡើងដែលអ្នកចង់ធ្វើ
+select which type of authentication you are using	setup	km	ជ្រើសរើសប្រភេទនៃការផ្ទៀងផ្ទាត់ដែលអ្នកកំពុងប្រើ
+select which user(s) will also have admin privileges	setup	km	ជ្រើសរើសអ្នកប្រើប្រាស់ណាដែលមានសិទ្ធិគ្រប់គ្រងផងដែរ។
+select which user(s) will be exported	setup	km	ជ្រើសរើសអ្នកប្រើប្រាស់ណាមួយនឹងត្រូវបាននាំចេញ
+select which user(s) will be imported	setup	km	ជ្រើសរើសអ្នកប្រើប្រាស់ណាមួយនឹងត្រូវបាននាំចូល
+select which user(s) will be modified	setup	km	ជ្រើសរើសអ្នកប្រើប្រាស់ណាមួយនឹងត្រូវបានកែប្រែ
+select which user(s) will have admin privileges	setup	km	ជ្រើសរើសអ្នកប្រើប្រាស់ណាដែលមានសិទ្ធិជាអ្នកគ្រប់គ្រង
+select your old version	setup	km	ជ្រើសរើសកំណែចាស់របស់អ្នក។
+selectbox	setup	km	ជ្រើសរើសប្រអប់
+server root	setup	km	ឫសម៉ាស៊ីនមេ
+session expired	setup	km	សម័យកាល​បាន​ផុតកំណត់
+session handler class used.	setup	km	ថ្នាក់គ្រប់គ្រងវគ្គបានប្រើ។
+sessions handler	setup	km	កម្មវិធីគ្រប់គ្រងវគ្គ
+set	setup	km	កំណត់
+set and not	setup	km	កំណត់ហើយមិនមែនទេ។
+setting the system-charset to utf-8 (unicode) allows the coexistens of data from languages of different charsets.	setup	km	ការកំណត់សំណុំតួអក្សរប្រព័ន្ធទៅជា UTF-8 (យូនីកូដ) អនុញ្ញាតឱ្យមានទិន្នន័យរួមគ្នាពីភាសានៃសំណុំតួអក្សរផ្សេងៗគ្នា។
+settings	setup	km	ការកំណត់
+setup	setup	km	រៀបចំ
+setup main menu	setup	km	ដំឡើងម៉ឺនុយមេ
+setup the database	setup	km	ដំឡើងមូលដ្ឋានទិន្នន័យ
+setup/config admin login	setup	km	ដំឡើង / កំណត់រចនាសម្ព័ន្ធការចូលអ្នកគ្រប់គ្រង
+show 'powered by' logo on	setup	km	បង្ហាញនិមិត្តសញ្ញា 'ផ្តល់ថាមពលដោយ' នៅលើ
+sieve: host[,port(4190)]	setup	km	Sieve: ម៉ាស៊ីន [, ច្រក (4190)]
+size	setup	km	ទំហំ
+skip the installation tests (not recommended)	setup	km	រំលងការធ្វើតេស្តដំឡើង (មិនត្រូវបានណែនាំ)
+smtp server hostname or ip address	setup	km	ឈ្មោះម៉ាស៊ីនមេ SMTP ឬអាសយដ្ឋាន IP
+smtp server port	setup	km	ច្រកម៉ាស៊ីនមេ SMTP
+smtp-authentication required	setup	km	តម្រូវឱ្យមានការផ្ទៀងផ្ទាត់ SMTP
+some information for the own service provider metadata	setup	km	ព័ត៌មានមួយចំនួនសម្រាប់ទិន្នន័យមេតារបស់អ្នកផ្តល់សេវាផ្ទាល់ខ្លួន
+some or all of its tables are missing	setup	km	តារាងខ្លះ ឬទាំងអស់របស់វាបាត់
+source (must be configured above)	setup	km	ប្រភព (ត្រូវតែកំណត់រចនាសម្ព័ន្ធខាងលើ)
+sources deleted/missing	setup	km	ប្រភពបានលុប/បាត់
+sql encryption type	setup	km	ប្រភេទការអ៊ិនគ្រីប SQL សម្រាប់ពាក្យសម្ងាត់
+ssl validation:	setup	km	សុពលភាព SSL៖
+standard (login-name identical to egroupware user-name)	setup	km	ស្តង់ដារ ឈ្មោះចូលគឺដូចគ្នាបេះបិទទៅនឹងឈ្មោះអ្នកប្រើប្រាស់ EGroupware
+standard mailserver settings (used for mail authentication too)	setup	km	ការកំណត់ម៉ាស៊ីនមេសំបុត្រស្តង់ដារ ប្រើសម្រាប់ការផ្ទៀងផ្ទាត់សំបុត្រផងដែរ។
+standard, as defined above	setup	km	ស្តង់ដារដូចដែលបានកំណត់ខាងលើ
+start installing application %1 ...	setup	km	ចាប់ផ្តើមដំឡើងកម្មវិធី%1...
+start the postmaster	setup	km	ចាប់ផ្តើមមេប្រៃសណីយ៍
+start updating languages %1 ...	setup	km	ចាប់ផ្តើមធ្វើបច្ចុប្បន្នភាពភាសា%1...
+start updating the database ...	setup	km	ចាប់ផ្តើមធ្វើបច្ចុប្បន្នភាពមូលដ្ឋានទិន្នន័យ...
+status	setup	km	ស្ថានភាព
+step %1 - admin account	setup	km	ជំហានទី 1 - គណនីអ្នកគ្រប់គ្រង
+step %1 - advanced application management	setup	km	ជំហានទី 1 - ការគ្រប់គ្រងកម្មវិធីកម្រិតខ្ពស់
+step %1 - configuration	setup	km	ជំហានទី 1 - ការកំណត់រចនាសម្ព័ន្ធ
+step %1 - db backup and restore	setup	km	ជំហាន%1 - ការបម្រុងទុក DB និងស្ដារ
+step %1 - language management	setup	km	ជំហានទី 1 - ការគ្រប់គ្រងភាសា
+step %1 - simple application management	setup	km	ជំហានទី 1 - ការគ្រប់គ្រងកម្មវិធីសាមញ្ញ
+succesfully uploaded file %1	setup	km	បាន​ផ្ទុក​ឡើង​ដោយ​ជោគជ័យ​ឯកសារ %1
+successful connected to %1 database %2 on %3 using user %4.	setup	km	បានភ្ជាប់ដោយជោគជ័យទៅ%1 មូលដ្ឋានទិន្នន័យ %2 នៅលើ %3 ដោយប្រើប្រាស់អ្នកប្រើប្រាស់ % 4 ។
+successful connected to %1 on %3 and created database %2 for user %4.	setup	km	បានភ្ជាប់ដោយជោគជ័យទៅ%1 នៅលើ%3 និងបានបង្កើតមូលដ្ឋានទិន្នន័យ%2 សម្រាប់អ្នកប្រើប្រាស់% 4។
+successful connected to ldap server on %1 and created/checked required structur %2.	setup	km	បានភ្ជាប់ដោយជោគជ័យទៅម៉ាស៊ីនមេ LDAP នៅលើ%1 និងបានបង្កើត/ពិនិត្យរចនាសម្ព័ន្ធដែលត្រូវការ%2។
+successful connected to ldap server on %1 using dn %2.	setup	km	បានភ្ជាប់ដោយជោគជ័យទៅម៉ាស៊ីនមេ LDAP នៅលើ%1 ដោយប្រើ DN%2។
+supported node types:	setup	km	ប្រភេទថ្នាំងដែលគាំទ្រ៖
+table change messages	setup	km	តារាងផ្លាស់ប្តូរសារ
+tables dropped	setup	km	តុធ្លាក់ចុះ។
+tables installed, unless there are errors printed above	setup	km	បានដំឡើងតារាង លុះត្រាតែមានកំហុសដែលបានបោះពុម្ពខាងលើ។
+tables upgraded	setup	km	តារាងត្រូវបានធ្វើឱ្យប្រសើរឡើង។
+target version	setup	km	កំណែគោលដៅ
+tcp port number of database server	setup	km	លេខច្រក TCP នៃម៉ាស៊ីនមេមូលដ្ឋានទិន្នន័យ
+technical contact	setup	km	ទំនាក់ទំនងបច្ចេកទេស
+text entry	setup	km	ការបញ្ចូលអត្ថបទ
+the %1 extension is needed from: %2.	setup	km	ផ្នែកបន្ថែម %1 ត្រូវការពី៖ %2 ។
+the %1 extension is needed, if you plan to use a %2 database.	setup	km	ផ្នែកបន្ថែម %1 ត្រូវការជាចាំបាច់ ប្រសិនបើអ្នកមានគម្រោងប្រើមូលដ្ឋានទិន្នន័យ %2 ។
+the ctype extension is needed by htmlpurifier to check content of fckeditor agains cross site skripting.	setup	km	ផ្នែកបន្ថែម ctype ត្រូវការដោយ HTMLpurifier ដើម្បីពិនិត្យមើលមាតិការបស់ FCKeditor ប្រឆាំងនឹង Cross Site Skripting ។
+the db_type in defaults (%1) is not supported on this server. using first supported type.	setup	km	ប្រភេទ db_type ក្នុងលំនាំដើម (%1) មិនត្រូវបានគាំទ្រនៅលើម៉ាស៊ីនមេនេះទេ។ ដោយប្រើប្រភេទដែលបានគាំទ្រដំបូង។
+the file	setup	km	ឯកសារ
+the first step in installing egroupware is to ensure your environment has the necessary settings to correctly run the application.	setup	km	ជំហានដំបូងក្នុងការដំឡើង EGroupware គឺត្រូវធានាថាបរិស្ថានរបស់អ្នកមានការកំណត់ចាំបាច់ដើម្បីដំណើរការកម្មវិធីឱ្យបានត្រឹមត្រូវ។
+the following applications are not installed:	setup	km	កម្មវិធីខាងក្រោមមិនត្រូវបានដំឡើងទេ៖
+the following applications are required, but not installed:	setup	km	កម្មវិធីខាងក្រោមត្រូវបានទាមទារ ប៉ុន្តែមិនត្រូវបានដំឡើងទេ៖
+the following applications need to be upgraded:	setup	km	កម្មវិធីខាងក្រោមត្រូវដំឡើងកំណែ៖
+the function %1 is needed from: %2.	setup	km	អនុគមន៍%1 ត្រូវការពី៖ %2 ។
+the imagecreatefromjpeg function is supplied by the gd extension (complied with jpeg support!). it's needed to upload photos for contacts.	setup	km	មុខងារ imagecreatefromjpeg ត្រូវបានផ្គត់ផ្គង់ដោយផ្នែកបន្ថែម gd (អនុលោមតាមការគាំទ្រ jpeg!) វាចាំបាច់ដើម្បីបង្ហោះរូបថតសម្រាប់ទំនាក់ទំនង។
+the json extension is required by egroupware for ajax.	setup	km	ផ្នែកបន្ថែម json ត្រូវបានទាមទារដោយ EGroupware សម្រាប់ AJAX ។
+the ldap extension is needed, if you use ldap as account or contact storage, authenticate against ldap or active directory. it's not needed for a standard sql installation.	setup	km	ត្រូវការផ្នែកបន្ថែម ldap ប្រសិនបើអ្នកប្រើ ldap ជាគណនី ឬទំនាក់ទំនងផ្ទុក សូមផ្ទៀងផ្ទាត់ភាពត្រឹមត្រូវប្រឆាំងនឹង ldap ឬថតសកម្ម។ វាមិនចាំបាច់សម្រាប់ការដំឡើង SQL ស្តង់ដារទេ។
+the mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	km	ផ្នែកបន្ថែម mbstring គឺត្រូវការដើម្បីគាំទ្រយ៉ាងពេញលេញនូវយូនីកូដ (utf-8) ឬសំណុំតួអក្សរពហុបៃផ្សេងទៀត។
+the mbstring.func_overload = 7 is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	km	mbstring.func_overload = 7 គឺចាំបាច់ដើម្បីគាំទ្រយ៉ាងពេញលេញនូវយូនីកូដ (utf-8) ឬសំណុំតួអក្សរពហុបៃផ្សេងទៀត។
+the mcrypt extension is used, to store etemplate form state on the client, which is the prefered way to store it.	setup	km	ផ្នែកបន្ថែម mcrypt ត្រូវបានប្រើ ដើម្បីរក្សាទុកទម្រង់បែបបទ eTemplate នៅលើម៉ាស៊ីនភ្ញៀវ ដែលជាវិធីដែលពេញចិត្តក្នុងការរក្សាទុកវា។
+the pdo extension plus a database specific driver is needed by the vfs (virtual file system)!	setup	km	ផ្នែកបន្ថែម PDO បូកនឹងកម្មវិធីបញ្ជាជាក់លាក់នៃមូលដ្ឋានទិន្នន័យគឺត្រូវការដោយ VFS (ប្រព័ន្ធឯកសារនិម្មិត)!
+the session extension is needed to use php sessions (db-sessions work without).	setup	km	ផ្នែកបន្ថែមសម័យគឺត្រូវការដើម្បីប្រើសម័យ php (db-sessions ដំណើរការដោយគ្មាន)។
+the session extension is required!	setup	km	តម្រូវ​ឱ្យ​មាន​ការ​បន្ថែម​សម័យ​!
+the table definition was correct, and the tables were installed	setup	km	ការកំណត់តារាងគឺត្រឹមត្រូវ ហើយតារាងត្រូវបានដំឡើង
+the tables	setup	km	តុ
+the tidy extension is need in merge-print to clean up html before inserting it in office documents.	setup	km	ផ្នែកបន្ថែមដែលមានភាពស្អាតស្អំគឺត្រូវការក្នុងការបោះពុម្ពបញ្ចូលគ្នាដើម្បីសម្អាត html មុនពេលបញ្ចូលវានៅក្នុងឯកសារការិយាល័យ។
+the used simplesamlphp allows a lot more configuration / different authentication types via its config files in	setup	km	SimpleSAMLphp ដែលបានប្រើអនុញ្ញាតឱ្យការកំណត់រចនាសម្ព័ន្ធ / ប្រភេទការផ្ទៀងផ្ទាត់ផ្សេងគ្នាជាច្រើនតាមរយៈឯកសារកំណត់រចនាសម្ព័ន្ធរបស់វានៅក្នុង
+the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	km	ឈ្មោះអ្នកប្រើប្រាស់/ពាក្យសម្ងាត់គឺ៖ demo/guest, demo2/guest និង demo3/guest។
+the xmlreader extension is required by egroupware in several applications.	setup	km	ផ្នែកបន្ថែម xmlreader ត្រូវបានទាមទារដោយ EGroupware នៅក្នុងកម្មវិធីជាច្រើន។
+the xsl extension is need in merge-print for processing html and office documents.	setup	km	ផ្នែកបន្ថែម xsl ត្រូវការនៅក្នុងការរួមបញ្ចូលគ្នា-បោះពុម្ពសម្រាប់ដំណើរការ html និងឯកសារការិយាល័យ។
+the zip extension is required for merge-print with office documents.	setup	km	ផ្នែកបន្ថែមហ្ស៊ីបត្រូវបានទាមទារសម្រាប់ការបោះពុម្ពបញ្ចូលគ្នាជាមួយឯកសារការិយាល័យ។
+there was a problem trying to connect to your ldap server. <br />	setup	km	មានបញ្ហាក្នុងការព្យាយាមភ្ជាប់ទៅម៉ាស៊ីនមេ LDAP របស់អ្នក។ <br />
+there was a problem trying to connect to your ldap server. <br />please check your ldap server configuration	setup	km	មានបញ្ហាក្នុងការព្យាយាមភ្ជាប់ទៅម៉ាស៊ីនមេ LDAP របស់អ្នក។ <br />សូមពិនិត្យមើលការកំណត់រចនាសម្ព័ន្ធម៉ាស៊ីនមេ LDAP របស់អ្នក។
+this has to be outside the webservers document-root!!!	setup	km	នេះត្រូវតែនៅខាងក្រៅម៉ាស៊ីនមេគេហទំព័រឯកសារ-root!
+this might take a while, please wait ...	setup	km	វាអាចចំណាយពេលបន្តិច សូមរង់ចាំ...
+this program lets you backup your database, schedule a backup or restore it.	setup	km	កម្មវិធីនេះអនុញ្ញាតឱ្យអ្នកបម្រុងទុកមូលដ្ឋានទិន្នន័យរបស់អ្នក កំណត់ពេលបម្រុងទុក ឬស្ដារវាឡើងវិញ។
+this program will convert your database to a new system-charset.	setup	km	កម្មវិធីនេះនឹងបម្លែងមូលដ្ឋានទិន្នន័យរបស់អ្នកទៅជាសំណុំតួអក្សរប្រព័ន្ធថ្មី។
+this program will help you upgrade or install different languages for egroupware	setup	km	កម្មវិធីនេះនឹងជួយអ្នកឱ្យដំឡើងកំណែ ឬដំឡើងភាសាផ្សេងៗសម្រាប់ EGroupware
+this should be around 30 bytes in length.<br />note: the default has been randomly generated.	setup	km	នេះគួរតែមានប្រវែងប្រហែល 30 បៃ។<br />ចំណាំ៖ លំនាំដើមត្រូវបានបង្កើតដោយចៃដន្យ។
+this stage is completed<br />	setup	km	ដំណាក់កាលនេះត្រូវបានបញ្ចប់<br />
+this will create a first user in egroupware or reset password and admin rights of an exiting user	setup	km	វានឹងបង្កើតអ្នកប្រើប្រាស់ដំបូងនៅក្នុង EGroupware ឬកំណត់ពាក្យសម្ងាត់ឡើងវិញ និងសិទ្ធិគ្រប់គ្រងរបស់អ្នកប្រើប្រាស់ដែលចាកចេញ
+to a version it does not know about	setup	km	ទៅកំណែដែលវាមិនដឹងអំពី
+to allow password authentification add the following line to your pg_hba.conf (above all others) and restart postgres:	setup	km	ដើម្បីអនុញ្ញាតឱ្យការផ្ទៀងផ្ទាត់ពាក្យសម្ងាត់បន្ថែមបន្ទាត់ខាងក្រោមទៅ pg_hba.conf របស់អ្នក (ខាងលើផ្សេងទៀតទាំងអស់) ហើយចាប់ផ្តើម postgres ឡើងវិញ៖
+to change the charset: back up your database, deinstall all applications and re-install the backup with "convert backup to charset selected" checked.	setup	km	ដើម្បីផ្លាស់ប្តូរសំណុំតួអក្សរ៖ បម្រុងទុកមូលដ្ឋានទិន្នន័យរបស់អ្នក លុបកម្មវិធីទាំងអស់ ហើយដំឡើងការបម្រុងទុកឡើងវិញដោយធីក "បម្លែងការបម្រុងទុកទៅជាសំណុំតួអក្សរដែលបានជ្រើសរើស" ។
+to setup 1 admin account and 3 demo accounts.	setup	km	ដើម្បីដំឡើងគណនីអ្នកគ្រប់គ្រង 1 និងគណនីសាកល្បង 3 ។
+top	setup	km	កំពូល
+translations added	setup	km	បានបន្ថែមការបកប្រែ។
+translations removed	setup	km	ការបកប្រែត្រូវបានដកចេញ។
+translations upgraded	setup	km	ការបកប្រែត្រូវបានធ្វើឱ្យប្រសើរឡើង។
+true	setup	km	ពិត
+try to configure your php to support one of the above mentioned dbms, or install egroupware by hand.	setup	km	ព្យាយាមកំណត់រចនាសម្ព័ន្ធ php របស់អ្នកដើម្បីគាំទ្រ DBMS ដែលបានរៀបរាប់ខាងលើ ឬដំឡើង EGroupware ដោយដៃ។
+two weeks	setup	km	ពីរ​ស​ប្តា​ហ៍
+uninstall	setup	km	លុបការដំឡើង
+uninstall all applications	setup	km	លុបកម្មវិធីទាំងអស់។
+uninstalled	setup	km	បានលុប
+university login	setup	km	ការចូលសាកលវិទ្យាល័យ
+unknown option '%1' !!!	setup	km	ជម្រើសមិនស្គាល់ '%1' !!!
+update finished.	setup	km	ការធ្វើបច្ចុប្បន្នភាពបានបញ្ចប់។
+update necessary.	setup	km	ធ្វើបច្ចុប្បន្នភាពចាំបាច់។
+update of %1 in %2 failed !!!	setup	km	ការធ្វើបច្ចុប្បន្នភាព%1 ក្នុង%2 បានបរាជ័យ !!!
+upgrade	setup	km	ធ្វើឱ្យប្រសើរឡើង
+upgrade all	setup	km	ដំឡើងកំណែទាំងអស់។
+upgraded	setup	km	ធ្វើឱ្យប្រសើរឡើង។
+upgrading tables	setup	km	ការធ្វើឱ្យប្រសើរតារាង។
+upload backup	setup	km	ផ្ទុកឡើងការបម្រុងទុក
+uploads a backup and installs it on your db	setup	km	បង្ហោះការបម្រុងទុក ហើយដំឡើងវានៅលើ DB របស់អ្នក។
+uploads a backup to the backup-dir, from where you can restore it	setup	km	ផ្ទុកឡើងការបម្រុងទុកទៅបម្រុងទុក-dir ពីកន្លែងដែលអ្នកអាចស្តារវាបាន
+usage: %1 command [additional options]	setup	km	ការប្រើប្រាស់៖ ពាក្យបញ្ជា %1 [ជម្រើសបន្ថែម]
+use %u for username, leave empty to no set	setup	km	ប្រើ %u សម្រាប់​ឈ្មោះ​អ្នក​ប្រើ ទុក​ទទេ​ដើម្បី​មិន​កំណត់
+use --create-header to create the configuration file (--usage gives more options).	setup	km	ប្រើ --create-header ដើម្បីបង្កើតឯកសារកំណត់រចនាសម្ព័ន្ធ (--usage ផ្តល់ជម្រើសច្រើនទៀត)។
+use --install to install egroupware.	setup	km	ប្រើ --install ដើម្បីដំឡើង EGroupware
+use --update to do so.	setup	km	ប្រើ --update ដើម្បីធ្វើដូច្នេះ
+use account description to store saml username	setup	km	ប្រើការពិពណ៌នាគណនីដើម្បីរក្សាទុកឈ្មោះអ្នកប្រើប្រាស់ SAML
+use cookies to pass sessionid	setup	km	ប្រើខូគីដើម្បីឆ្លងកាត់លេខសម្គាល់សម័យ
+use mcrypt to crypt session-data: {off(default) | on},[mcrypt-init-vector(default randomly generated)],[mcrypt-version]	setup	km	ប្រើ mcrypt ដើម្បី crypt session-data៖ {off(default) | on},[mcrypt-init-vector(defaulted randomly generated)],[mcrypt-version]
+use persistent db connections: {on(default) | off}	setup	km	ប្រើការភ្ជាប់ db ជាប់លាប់៖ {on(default) | បិទ}
+use pure html compliant code (not fully working yet)	setup	km	ប្រើកូដ HTML សុទ្ធ
+use space to separate multiple	setup	km	ប្រើចន្លោះដើម្បីបំបែកច្រើន។
+use tls or ssl encryption	setup	km	ប្រើការអ៊ិនគ្រីប TLS ឬ SSL
+user	setup	km	អ្នក​ប្រើ
+user "%1" dn="%2" successful updated.	setup	km	អ្នកប្រើប្រាស់ "%1" dn="%2" បានធ្វើបច្ចុប្បន្នភាពដោយជោគជ័យ។
+user "%1" not found!	setup	km	រកមិនឃើញអ្នកប្រើប្រាស់ "%1" ទេ!
+user account prefix	setup	km	បុព្វបទគណនីអ្នកប្រើប្រាស់
+user for smtp-authentication (leave it empty if no auth required)	setup	km	អ្នក​ប្រើ​សម្រាប់ SMTP-authentication (ទុក​វា​ឱ្យ​នៅ​ទទេ បើ​មិន​ចាំបាច់​មាន​ការ​ផ្ទៀងផ្ទាត់)
+usernames (comma-separated) which can get vfs root access (beside setup user)	setup	km	ឈ្មោះ​អ្នក​ប្រើ​ដោយ​បំបែក​ដោយ​សញ្ញាក្បៀស ដែល​អាច​ទទួល​បាន​ការ​ចូល​ប្រើ​ជា root VFS (នៅ​ខាង​អ្នក​ប្រើ​ដំឡើង)
+usernames are casesensitive	setup	km	ឈ្មោះអ្នកប្រើគឺប្រកាន់អក្សរតូចធំ
+users choice	setup	km	ការជ្រើសរើសអ្នកប្រើប្រាស់
+users, groups and memberships	setup	km	អ្នកប្រើប្រាស់ ក្រុម និងសមាជិកភាព
+usually more annoying.<br />admins can use admin >> manage accounts or groups to give access to further apps.	setup	km	ជាធម្មតាវាកាន់តែរំខាន។<br />អ្នកគ្រប់គ្រងអាចប្រើ Admin >> គ្រប់គ្រងគណនី ឬក្រុម ដើម្បីផ្តល់សិទ្ធិចូលប្រើកម្មវិធីបន្ថែម។
+utf-8 (unicode)	setup	km	utf-8 (យូនីកូដ)
+validation errors	setup	km	កំហុសក្នុងការផ្ទៀងផ្ទាត់
+version	setup	km	កំណែ
+version mismatch	setup	km	កំណែខុស
+view	setup	km	មើល
+virtual filesystem	setup	km	ប្រព័ន្ធឯកសារនិម្មិត
+virtual mail manager (login-name includes domain)	setup	km	កម្មវិធីគ្រប់គ្រងសំបុត្រនិម្មិត (ឈ្មោះចូលរួមមានដែន)
+warning!	setup	km	ព្រមាន!
+we can proceed	setup	km	យើងអាចបន្តបាន។
+we could not determine the version of %1, please make sure it is at least %2	setup	km	យើងមិនអាចកំណត់កំណែ%1 បានទេ សូមប្រាកដថាវាយ៉ាងហោចណាស់ %2
+we strongly recomment to run a db backup before running the import!	setup	km	យើងសូមផ្តល់អនុសាសន៍យ៉ាងខ្លាំងឱ្យដំណើរការការបម្រុងទុក DB មុនពេលដំណើរការការនាំចូល!
+we will automatically update your tables/records to %1	setup	km	យើងនឹងធ្វើបច្ចុប្បន្នភាពតារាង/កំណត់ត្រារបស់អ្នកដោយស្វ័យប្រវត្តិទៅ%1
+we will now run a series of tests, which may take a few minutes.  click the link below to proceed.	setup	km	ឥឡូវនេះយើងនឹងដំណើរការការធ្វើតេស្តជាបន្តបន្ទាប់ ដែលអាចចំណាយពេលពីរបីនាទី។ សូមចុចតំណខាងក្រោមដើម្បីបន្ត។
+weekly	setup	km	ប្រចាំសប្តាហ៍
+welcome to the egroupware installation	setup	km	សូមស្វាគមន៍មកកាន់ការដំឡើង EGroupware
+what to do in egroupware if an user get deleted?	setup	km	អ្វីដែលត្រូវធ្វើនៅក្នុង EGroupware ប្រសិនបើអ្នកប្រើត្រូវបានលុប?
+what to import?	setup	km	អ្វីដែលត្រូវនាំចូល?
+where should egroupware store file content	setup	km	កន្លែងដែល EGroupware គួររក្សាទុកមាតិកាឯកសារ
+which database type do you want to use with egroupware?	setup	km	តើប្រភេទមូលដ្ឋានទិន្នន័យមួយណាដែលអ្នកចង់ប្រើជាមួយ EGroupware?
+will be downloaded once, unless changed.	setup	km	នឹងត្រូវបានទាញយកម្តង លុះត្រាតែមានការផ្លាស់ប្តូរ។
+with	setup	km	ជាមួយ
+world readable	setup	km	ពិភពលោកដែលអាចអានបាន។
+world writable	setup	km	ពិភពលោកអាចសរសេរបាន។
+would you like egroupware to cache the phpgw info array ?	setup	km	តើអ្នកចង់ឱ្យ EGroupware រក្សាទុកអារេព័ត៌មាន phpgw ទេ?
+would you like egroupware to check for a new version<br />when admins login ?	setup	km	តើអ្នកចង់ឱ្យ EGroupware ពិនិត្យមើលកំណែថ្មី<br />នៅពេលអ្នកគ្រប់គ្រងចូល?
+would you like to show each application's upgrade status ?	setup	km	តើអ្នកចង់បង្ហាញស្ថានភាពអាប់ដេតរបស់កម្មវិធីនីមួយៗទេ?
+writable by the webserver	setup	km	អាចសរសេរបានដោយម៉ាស៊ីនមេគេហទំព័រ
+write	setup	km	សរសេរ
+wrong credentials to access the header.inc.php file!	setup	km	លិខិតសម្គាល់មិនត្រឹមត្រូវក្នុងការចូលប្រើឯកសារ header.inc.php!
+year	setup	km	ឆ្នាំ
+yes	setup	km	បាទ
+yes, with lowercase usernames	setup	km	បាទ/ចាស ជាមួយនឹងឈ្មោះអ្នកប្រើប្រាស់អក្សរតូច
+you appear to be running a pre-beta version of egroupware.<br />these versions are no longer supported, and there is no upgrade path for them in setup.<br /> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.	setup	km	អ្នកហាក់ដូចជាកំពុងដំណើរការកំណែបែតាមុនរបស់ EGroupware។<br />កំណែទាំងនេះមិនត្រូវបានគាំទ្រទៀតទេ ហើយមិនមានផ្លូវធ្វើឱ្យប្រសើរសម្រាប់ពួកវានៅក្នុងការដំឡើងទេ។<br /> អ្នកប្រហែលជាចង់ដំឡើងកំណែជាដំបូងទៅ 0.9.10 ( កំណែចុងក្រោយដើម្បីគាំទ្រការអាប់ដេតមុនបេតា) <br />ហើយបន្ទាប់មកដំឡើងកំណែពីទីនោះជាមួយកំណែបច្ចុប្បន្ន។
+you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version %1	setup	km	អ្នកហាក់ដូចជាកំពុងដំណើរការកំណែចាស់របស់ PHP <br />វាណែនាំឱ្យអ្នកដំឡើងកំណែទៅកំណែថ្មី។ <br />កំណែចាស់របស់ PHP ប្រហែលជាមិនដំណើរការ EGroupware ត្រឹមត្រូវទេ ប្រសិនបើទាំងអស់។ <br /><br />សូមដំឡើងកំណែទៅយ៉ាងហោចណាស់កំណែ %1
+you appear to be running version %1 of egroupware	setup	km	អ្នកហាក់ដូចជាកំពុងដំណើរការកំណែ%1 នៃ EGroupware
+you appear to have %1 support.	setup	km	អ្នកហាក់ដូចជាមានការគាំទ្រ%1
+you appear to have xml support enabled	setup	km	អ្នកហាក់ដូចជាបានបើកដំណើរការជំនួយ XML
+you are ready for this stage, but this stage is not yet written.<br />	setup	km	អ្នក​បាន​ត្រៀម​ខ្លួន​រួច​រាល់​សម្រាប់​ដំណាក់​កាល​នេះ ប៉ុន្តែ​ដំណាក់​កាល​នេះ​មិន​ទាន់​បាន​សរសេរ។<br />
+you are using php version %1. egroupware now requires %2 or later, recommended is php %3.	setup	km	អ្នក​កំពុង​ប្រើ PHP កំណែ %1។ ឥឡូវនេះ EGroupware ទាមទារ%2 ឬក្រោយនេះ ដែលត្រូវបានណែនាំគឺ PHP%3 ។
+you can install it by running:	setup	km	អ្នកអាចដំឡើងវាបានដោយដំណើរការ៖
+you can specify multiple idp on separate lines.	setup	km	អ្នកអាចបញ្ជាក់ IdP ច្រើននៅលើបន្ទាត់ដាច់ដោយឡែក។
+you can use the header user and password for every domain too. if the password is not set via the commandline, it is read from the enviroment variable egw_cli_password or queried from the user.	setup	km	អ្នកក៏អាចប្រើ header user និង password សម្រាប់គ្រប់ domain ផងដែរ។ ប្រសិនបើពាក្យសម្ងាត់មិនត្រូវបានកំណត់តាមរយៈបន្ទាត់ពាក្យបញ្ជា វាត្រូវបានអានពីអថេរបរិស្ថាន EGW_CLI_PASSWORD ឬសួរពីអ្នកប្រើប្រាស់។
+you didn't enter a config password for domain %1	setup	km	អ្នកមិនបានបញ្ចូលពាក្យសម្ងាត់កំណត់រចនាសម្ព័ន្ធសម្រាប់ដែន%1 ទេ។
+you didn't enter a config username for domain %1	setup	km	អ្នកមិនបានបញ្ចូលឈ្មោះអ្នកប្រើប្រាស់កំណត់រចនាសម្ព័ន្ធសម្រាប់ដែន%1 ទេ។
+you didn't enter a header admin password	setup	km	អ្នកមិនបានបញ្ចូលពាក្យសម្ងាត់អ្នកគ្រប់គ្រងបឋមកថាទេ។
+you didn't enter a header admin username	setup	km	អ្នក​មិន​បាន​បញ្ចូល​ឈ្មោះ​អ្នក​ប្រើ​ដែល​គ្រប់គ្រង​បឋមកថា
+you do not have any languages installed. please install one now <br />	setup	km	អ្នកមិនមានភាសាណាមួយដែលបានដំឡើងទេ។ សូមដំឡើងឥឡូវនេះ <br />
+you dont have jpgraph version %1 or higher installed! it is needed from projectmanager for ganttcharts.	setup	km	អ្នកមិនមានកំណែ JPGraph %1 ឬខ្ពស់ជាងនេះទេ! វាត្រូវការពីអ្នកគ្រប់គ្រងគម្រោងសម្រាប់ GanttCharts ។
+you dont have tnef or ytnef installed! it is needed to decode winmail.dat attachments in felamimail.	setup	km	អ្នកមិនបានដំឡើង tnef ឬ ytnef ទេ! វាត្រូវការដើម្បីឌិកូដឯកសារភ្ជាប់ winmail.dat នៅក្នុងអ៊ីមែល។
+you have not created your header.inc.php yet!<br /> you can create it now.	setup	km	អ្នកមិនទាន់បានបង្កើត header.inc.php របស់អ្នកនៅឡើយទេ!<br /> អ្នកអាចបង្កើតវាឥឡូវនេះ។
+you have successfully logged out	setup	km	អ្នកបានចេញដោយជោគជ័យ។
+you must enter a username for the admin	setup	km	អ្នកត្រូវតែបញ្ចូលឈ្មោះអ្នកប្រើប្រាស់សម្រាប់អ្នកគ្រប់គ្រង។
+you must save and run an inital import, before the periodic import will start	setup	km	អ្នកត្រូវតែរក្សាទុក និងដំណើរការការនាំចូលដំបូង មុនពេលការនាំចូលតាមកាលកំណត់នឹងចាប់ផ្តើម
+you need to add at least one egroupware domain / database instance.	setup	km	អ្នកត្រូវបន្ថែមយ៉ាងហោចណាស់ EGroupware domain / database instance ។
+you need to configure egroupware:	setup	km	អ្នកត្រូវកំណត់រចនាសម្ព័ន្ធ EGroupware៖
+you need to fix the above errors, before the configuration file header.inc.php can be written!	setup	km	អ្នកត្រូវជួសជុលកំហុសខាងលើ មុនពេលឯកសារកំណត់រចនាសម្ព័ន្ធ header.inc.php អាចត្រូវបានសរសេរ!
+you need to select your current charset!	setup	km	អ្នកត្រូវជ្រើសរើសសំណុំតួអក្សរបច្ចុប្បន្នរបស់អ្នក!
+you need to specify a password!	setup	km	អ្នកត្រូវបញ្ជាក់ពាក្យសម្ងាត់!
+you should %1log out%2 and in again, to update your current session!	setup	km	អ្នកគួរតែ %1log out%2 ហើយចូលម្តងទៀត ដើម្បីធ្វើបច្ចុប្បន្នភាពវគ្គបច្ចុប្បន្នរបស់អ្នក!
+you should either install the sources or uninstall it, to get rid of the tables	setup	km	អ្នកគួរតែដំឡើងប្រភព ឬលុបវា ដើម្បីកម្ចាត់តារាង។
+you should either uninstall and then reinstall it, or attempt manual repairs	setup	km	អ្នក​គួរ​តែ​លុប​ចោល រួច​ដំឡើង​វា​ឡើង​វិញ ឬ​ព្យាយាម​ជួសជុល​ដោយ​ដៃ។
+you will not be able to log into egroupware using php sessions: "session could not be verified" !!!	setup	km	អ្នកនឹងមិនអាចចូលទៅក្នុង EGroupware ដោយប្រើវគ្គ PHP បានទេ៖ "session cannot be verified" !
+you're using an old configuration file format...	setup	km	អ្នកកំពុងប្រើទម្រង់ឯកសារកំណត់រចនាសម្ព័ន្ធចាស់...
+your applications are current	setup	km	កម្មវិធីរបស់អ្នកគឺបច្ចុប្បន្ន
+your backup directory '%1' %2	setup	km	ថតចម្លងរបស់អ្នក '%1'%2
+your database does not exist	setup	km	មូលដ្ឋានទិន្នន័យរបស់អ្នកមិនមានទេ!
+your database is not working!	setup	km	មូលដ្ឋានទិន្នន័យរបស់អ្នកមិនដំណើរការទេ!
+your database is working, but you dont have any applications installed	setup	km	មូលដ្ឋានទិន្នន័យរបស់អ្នកកំពុងដំណើរការ ប៉ុន្តែអ្នកមិនមានកម្មវិធីណាមួយដែលបានដំឡើងទេ។
+your egroupware api is current	setup	km	Egroupware API របស់អ្នកគឺបច្ចុប្បន្ន
+your files directory '%1' %2	setup	km	ថតឯកសាររបស់អ្នក '%1'%2
+your header admin password is not set. please set it now!	setup	km	ពាក្យសម្ងាត់អ្នកគ្រប់គ្រងបឋមរបស់អ្នកមិនត្រូវបានកំណត់ទេ។ សូមកំណត់វាឥឡូវនេះ!
+your header.inc.php needs upgrading.	setup	km	header.inc.php របស់អ្នកត្រូវការការអាប់ដេត។
+your header.inc.php needs upgrading.<br /><blink><b class="msg">warning!</b></blink><br /><b>make backups!</b>	setup	km	header.inc.php របស់អ្នកត្រូវការការអាប់ដេត។<br /><blink><b class="msg">ការព្រមាន!</b></blink><br /><b>ធ្វើការបម្រុងទុក!</b>
+your installed version of %1 is %2, required is at least %3, please run:	setup	km	កំណែ%1 ដែលបានដំឡើងរបស់អ្នកគឺ%2 ទាមទារយ៉ាងហោចណាស់%3 សូមដំណើរការ៖
+your php installation does not have appropriate gd support. you need gd library version 1.8 or newer to see gantt charts in projects.	setup	km	ការដំឡើង PHP របស់អ្នកមិនមានការគាំទ្រ GD សមស្របទេ។ អ្នកត្រូវការបណ្ណាល័យ gd កំណែ 1.8 ឬថ្មីជាងនេះ ដើម្បីមើល GanttCharts នៅក្នុងគម្រោង។
+your tables are current	setup	km	តារាងរបស់អ្នកគឺបច្ចុប្បន្ន
+your tables will be dropped and you will lose data	setup	km	តារាងរបស់អ្នកនឹងត្រូវទម្លាក់ ហើយអ្នកនឹងបាត់បង់ទិន្នន័យ!
+your temporary directory '%1' %2	setup	km	ថតបណ្តោះអាសន្នរបស់អ្នក '%1' %2
+{db | php(default) | php-restore}	setup	km	{db | php (លំនាំដើម) | php-restore}
+{off(default) | on}	setup	km	{បិទ (លំនាំដើម) | បើក}

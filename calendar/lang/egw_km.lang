@@ -1,0 +1,710 @@
+%1 %2 in %3	calendar	km	%1 %2 ក្នុង %3
+%1 days	calendar	km	%1 ថ្ងៃ
+%1 event(s) %2	calendar	km	%1 ព្រឹត្តិការណ៍ %2
+%1 event(s) %2, %3 failed because of insufficient rights !!!	calendar	km	%1 event(s) %2, %3 បានបរាជ័យដោយសារតែសិទ្ធិមិនគ្រប់គ្រាន់!
+%1 events in ical file, only first one imported and displayed!	calendar	km	ព្រឹត្តិការណ៍ %1 នៅក្នុងឯកសារ iCal មានតែការនាំចូល និងបង្ហាញដំបូងប៉ុណ្ណោះ!
+%1 hours	calendar	km	%1 ម៉ោង
+%1 minutes	calendar	km	%1 នាទី
+%1 participants removed because of missing invite grants	calendar	km	អ្នកចូលរួម %1 ត្រូវបានដកចេញ ដោយសារតែបាត់ជំនួយការអញ្ជើញ។
+%1 records imported	calendar	km	បាន​នាំចូល​កំណត់ត្រា %1 ។
+%1 records read (not yet imported, you may go back and uncheck test import)	calendar	km	%1 បានអានកំណត់ត្រា។ មិន​ទាន់​បាន​នាំ​ចូល សូម​ត្រឡប់​ទៅ​វិញ ហើយ​ដោះ​ធីក​ការ​នាំចូល​សាកល្បង។
+%1 weeks	calendar	km	%1 សប្តាហ៍
+%s the event	calendar	km	%s ព្រឹត្តិការណ៍
+(%1 events in %2 seconds)	calendar	km	(ព្រឹត្តិការណ៍ %1 ក្នុងរយៈពេល %2 វិនាទី)
+(empty = use global limit, no = no export at all)	admin	km	(ទទេ = ប្រើដែនកំណត់សកល គ្មាន = គ្មានការនាំចេញអ្វីទាំងអស់)
+(without a custom url we use nation of user preference to load holidays from %s)	calendar	km	(ដោយគ្មាន URL ផ្ទាល់ខ្លួនទេ យើងប្រើជម្រើសរបស់អ្នកប្រើប្រាស់ដើម្បីផ្ទុកថ្ងៃឈប់សំរាកពី %s)
+, exceptions preserved	calendar	km	, ករណីលើកលែងត្រូវបានរក្សាទុក
+, stati of participants reset	calendar	km	, ស្ថានភាពអ្នកចូលរួមកំណត់ឡើងវិញ
+a list of email addresses of all participants who have not declined	calendar	km	បញ្ជីអាសយដ្ឋានអ៊ីមែលរបស់អ្នកចូលរួមទាំងអស់ដែលមិនបានបដិសេធ
+a non blocking event will not conflict with other events	calendar	km	ព្រឹត្តិការណ៍ដែលមិនរារាំងនឹងមិនប៉ះទង្គិចជាមួយព្រឹត្តិការណ៍ផ្សេងទៀតទេ
+accept	calendar	km	ទទួលយក
+accept or reject an invitation	calendar	km	ទទួលយក ឬបដិសេធការអញ្ជើញ
+accepted	calendar	km	ទទួលយក
+access denied to the calendar of %1 !!!	calendar	km	ការចូលប្រើត្រូវបានបដិសេធចំពោះប្រតិទិននៃ %1 !
+access to calendar of %1 denied!	calendar	km	ការចូលប្រើប្រតិទិននៃ %1 ត្រូវបានបដិសេធ!
+action that caused the notify: added, canceled, accepted, rejected, ...	calendar	km	សកម្មភាពដែលបណ្តាលឱ្យមានការជូនដំណឹង៖ បន្ថែម លុបចោល ទទួលយក ច្រានចោល...
+actions	calendar	km	សកម្មភាព
+actions...	calendar	km	សកម្មភាព...
+add alarm	calendar	km	បន្ថែមសំឡេងរោទិ៍
+add appointments via shortened dialog or complete edit window	calendar	km	បន្ថែមការណាត់ជួបតាមរយៈប្រអប់ខ្លី ឬបំពេញបង្អួចកែសម្រួល
+add current view as favorite	calendar	km	បន្ថែមទិដ្ឋភាពបច្ចុប្បន្នជាចំណូលចិត្ត
+add new alarm	calendar	km	បន្ថែមម៉ោងរោទិ៍ថ្មី
+add new event	calendar	km	បន្ថែមព្រឹត្តិការណ៍ថ្មី
+add new participants or resource	calendar	km	បន្ថែមអ្នកចូលរួម ឬធនធានថ្មី
+add timesheet entry	calendar	km	បន្ថែមធាតុតារាងពេលវេលា
+added	calendar	km	បន្ថែម
+added by synchronization	calendar	km	បន្ថែមដោយការធ្វើសមកាលកម្ម
+after	calendar	km	បន្ទាប់ពី
+after %1	calendar	km	បន្ទាប់ពី %1
+after current date	calendar	km	បន្ទាប់ពីកាលបរិច្ឆេទបច្ចុប្បន្ន
+age:	calendar	km	អាយុ៖
+alarm	calendar	km	សំឡេងរោទិ៍
+alarm added	calendar	km	បានបន្ថែមម៉ោងរោទិ៍។
+alarm added automatic to new events before event start-time	calendar	km	សំឡេងរោទិ៍បានបន្ថែមដោយស្វ័យប្រវត្តិទៅព្រឹត្តិការណ៍ថ្មី មុនពេលព្រឹត្តិការណ៍ចាប់ផ្តើម
+alarm deleted	calendar	km	សំឡេងរោទិ៍ត្រូវបានលុប។
+alarm for %1 at %2 in %3	calendar	km	ការជូនដំណឹងសម្រាប់ %1 នៅ %2 ក្នុង %3
+alarm management	calendar	km	ការគ្រប់គ្រងសំឡេងរោទិ៍
+alarms	calendar	km	សំឡេងរោទិ៍
+all categories	calendar	km	ប្រភេទ​ទាំងអស់
+all day	calendar	km	ពេញមួយថ្ងៃ
+all events	calendar	km	ព្រឹត្តិការណ៍ទាំងអស់
+all exceptions are converted into single events.	calendar	km	ការលើកលែងទាំងអស់ត្រូវបានបំប្លែងទៅជាព្រឹត្តិការណ៍តែមួយ។
+all future	calendar	km	អនាគតទាំងអស់
+all incl. rejected	calendar	km	ទាំងអស់រួមបញ្ចូល។ បដិសេធ
+all participants	calendar	km	អ្នកចូលរួមទាំងអស់
+allow booking requests from any user when creating events?	calendar	km	អនុញ្ញាតសំណើកក់ពីអ្នកប្រើប្រាស់ណាមួយនៅពេលបង្កើតព្រឹត្តិការណ៍?
+allow users to prevent change notifications ('do not notify')	calendar	km	អនុញ្ញាតឱ្យអ្នកប្រើប្រាស់រារាំងការជូនដំណឹងអំពីការផ្លាស់ប្តូរ 'កុំជូនដំណឹង'
+allows to edit the event again	calendar	km	អនុញ្ញាតឱ្យកែសម្រួលព្រឹត្តិការណ៍ម្តងទៀត
+always	calendar	km	ជានិច្ច
+always use full edit dialog	calendar	km	តែងតែប្រើប្រអប់កែសម្រួលពេញលេញ
+always use the full edit dialog, not this little dialog	calendar	km	តែងតែប្រើប្រអប់កែសម្រួលពេញលេញ មិនមែនប្រអប់តូចនេះទេ។
+apply the action on the whole query, not only the shown events	calendar	km	អនុវត្តសកម្មភាពលើសំណួរទាំងមូល មិនត្រឹមតែព្រឹត្តិការណ៍ដែលបានបង្ហាញប៉ុណ្ណោះទេ។
+apply the changes	calendar	km	Apply the changes
+appointment settings	calendar	km	Appointment settings
+as an alternative you can %1download a mysql dump%2 and import it manually into egw_cal_timezones table.	calendar	km	ជាជម្រើសមួយ អ្នកអាច%1ទាញយក MySQL dump%2 ហើយនាំចូលវាដោយដៃទៅក្នុងតារាង egw_cal_timezones ។
+at start of the event	calendar	km	នៅដើមព្រឹត្តិការណ៍
+attention	calendar	km	ការយកចិត្តទុកដាក់
+automatically purge old events after	admin	km	លុប​ព្រឹត្តិការណ៍​ចាស់​ដោយ​ស្វ័យ​ប្រវត្តិ​បន្ទាប់​ពី
+available for the first entry inside each day of week or daily table inside the selected range:	calendar	km	មានសម្រាប់ធាតុដំបូងនៅខាងក្នុងថ្ងៃនីមួយៗនៃសប្តាហ៍ ឬតារាងប្រចាំថ្ងៃនៅក្នុងជួរដែលបានជ្រើសរើស៖
+back half a month	calendar	km	ត្រឡប់មកវិញកន្លះខែ
+back one month	calendar	km	ត្រឡប់មកវិញមួយខែ
+back one year	calendar	km	ត្រឡប់មកវិញមួយឆ្នាំ
+before	calendar	km	ពីមុន
+before %1	calendar	km	មុន %1
+before current date	calendar	km	មុនកាលបរិច្ឆេទបច្ចុប្បន្ន
+before the event	calendar	km	មុនពេលព្រឹត្តិការណ៍
+birthday	calendar	km	ថ្ងៃកំណើត
+birthdays	admin	km	ថ្ងៃកំណើត
+birthdays only	calendar	km	ខួបកំណើតតែប៉ុណ្ណោះ
+both, holidays and birthdays	calendar	km	ទាំងថ្ងៃបុណ្យ និងថ្ងៃកំណើត
+busy	calendar	km	រវល់
+by	calendar	km	ដោយ
+calendar - list	calendar	km	ប្រតិទិន - បញ្ជី
+calendar - multi-weekly	calendar	km	ប្រតិទិន - ច្រើនសប្តាហ៍
+calendar - planner	calendar	km	ប្រតិទិន - អ្នករៀបចំផែនការ
+calendar csv export	calendar	km	ការនាំចេញ CSV ប្រតិទិន
+calendar csv import	calendar	km	ការនាំចូល CSV ប្រតិទិន
+calendar event	calendar	km	ព្រឹត្តិការណ៍ប្រតិទិន
+calendar fields:	calendar	km	វាល​ប្រតិទិន៖
+calendar ical export	calendar	km	ការនាំចេញ iCal ប្រតិទិន
+calendar ical import	calendar	km	ប្រតិទិន iCal នាំចូល
+calendar id	calendar	km	លេខសម្គាល់ប្រតិទិន
+calendar menu	calendar	km	ម៉ឺនុយប្រតិទិន
+calendar preferences	calendar	km	ចំណូលចិត្តប្រតិទិន
+calendar settings	admin	km	ការកំណត់ប្រតិទិន
+calendar-fieldname	calendar	km	ឈ្មោះវាលប្រតិទិន
+can not send any notifications because notifications app is not installed!	calendar	km	មិនអាចផ្ញើការជូនដំណឹងណាមួយបានទេ ដោយសារកម្មវិធីជូនដំណឹងមិនត្រូវបានដំឡើង!
+can't add alarms in the past !!!	calendar	km	មិនអាចបន្ថែមម៉ោងរោទ៍កាលពីមុនបានទេ!!!
+can't aquire lock!	calendar	km	មិនអាចទទួលបានសោ!
+canceled	calendar	km	បានលុបចោល
+category %1 removed because of missing rights	calendar	km	ប្រភេទ %1 ត្រូវ​បាន​យក​ចេញ​ដោយ​សារ​តែ​បាត់​សិទ្ធិ
+category acl	common	km	ប្រភេទ ACL
+category acl only restrict adding a category to an event or changing status of a participant. it does not change the visibility of an event!	calendar	km	ប្រភេទ ACL ដាក់កម្រិតតែការបន្ថែមប្រភេទទៅព្រឹត្តិការណ៍ ឬការផ្លាស់ប្តូរស្ថានភាពរបស់អ្នកចូលរួមប៉ុណ្ណោះ។ វាមិនផ្លាស់ប្តូរការមើលឃើញនៃព្រឹត្តិការណ៍មួយ!
+category automatically added to new events	calendar	km	ប្រភេទត្រូវបានបន្ថែមដោយស្វ័យប្រវត្តិទៅព្រឹត្តិការណ៍ថ្មី។
+chair	calendar	km	កៅអី
+change history	calendar	km	ផ្លាស់ប្តូរប្រវត្តិ
+change your status	calendar	km	ផ្លាស់ប្តូរស្ថានភាពរបស់អ្នក។
+changed event-data applied	calendar	km	បានផ្លាស់ប្តូរទិន្នន័យព្រឹត្តិការណ៍
+charset of file	calendar	km	សំណុំតួអក្សរ
+check all	calendar	km	ពិនិត្យ​ទាំងអស់
+choose a category	calendar	km	ជ្រើសរើសប្រភេទ
+choose owner of imported data	calendar	km	ជ្រើសរើសម្ចាស់ទិន្នន័យដែលបាននាំចូល
+close the window	calendar	km	បិទ​បង្អួច
+compose a mail to all participants after the event is saved	calendar	km	សរសេរសំបុត្រទៅកាន់អ្នកចូលរួមទាំងអស់បន្ទាប់ពីព្រឹត្តិការណ៍ត្រូវបានរក្សាទុក។
+configuration settings	calendar	km	ការកំណត់រចនាសម្ព័ន្ធ
+conflict	calendar	km	ជម្លោះ
+copy this event	calendar	km	ចម្លងព្រឹត្តិការណ៍នេះ
+copy your changes to the clipboard, %1reload the entry%2 and merge them.	calendar	km	ចម្លងការផ្លាស់ប្ដូររបស់អ្នកទៅក្ដារតម្បៀតខ្ទាស់ %1 ផ្ទុកធាតុឡើងវិញ %2 ហើយបញ្ចូលពួកវាចូលគ្នា។
+countries	calendar	km	ប្រទេស
+country	calendar	km	ប្រទេស
+create a new series	calendar	km	បង្កើតស៊េរីថ្មី
+create an exception for the given date	calendar	km	បង្កើតករណីលើកលែងសម្រាប់កាលបរិច្ឆេទដែលបានផ្តល់ឱ្យ
+create an infolog from this event	calendar	km	បង្កើត InfoLog ពីព្រឹត្តិការណ៍នេះ
+create exception	calendar	km	បង្កើតករណីលើកលែង
+create links for participants from addressbook	calendar	km	បង្កើតតំណសម្រាប់អ្នកចូលរួមពីសៀវភៅអាសយដ្ឋាន
+create new links	calendar	km	បង្កើតតំណថ្មី
+created	calendar	km	បានបង្កើត
+creator	calendar	km	អ្នកបង្កើត
+csv	calendar	km	CSV
+csv-fieldname	calendar	km	ឈ្មោះវាល CSV
+csv-filename	calendar	km	ឈ្មោះឯកសារ CSV
+custom	calendar	km	ផ្ទាល់ខ្លួន
+custom color for events without category color	calendar	km	ពណ៌ផ្ទាល់ខ្លួនសម្រាប់ព្រឹត្តិការណ៍ដោយគ្មានពណ៌ប្រភេទ
+custom event color	calendar	km	ពណ៌ព្រឹត្តិការណ៍ផ្ទាល់ខ្លួន
+custom fields	common	km	វាលផ្ទាល់ខ្លួន
+custom url for ical with holidays for all users	calendar	km	URL ផ្ទាល់ខ្លួនសម្រាប់ iCal ជាមួយនឹងថ្ងៃឈប់សម្រាកសម្រាប់អ្នកប្រើប្រាស់ទាំងអស់។
+custom_2	common	km	ទំនេរ/រវល់
+daily	calendar	km	ប្រចាំថ្ងៃ
+daily tables	calendar	km	តារាងប្រចាំថ្ងៃ
+data exchange settings	calendar	km	ការកំណត់ការផ្លាស់ប្តូរទិន្នន័យ
+date for the day of the week	calendar	km	កាលបរិច្ឆេទសម្រាប់ថ្ងៃនៃសប្តាហ៍
+date for the day of the week, available for the first entry inside each day of week or daily table inside the selected range.	calendar	km	កាលបរិច្ឆេទសម្រាប់ថ្ងៃនៃសប្តាហ៍ មានសម្រាប់ធាតុដំបូងនៅខាងក្នុងថ្ងៃនីមួយៗនៃសប្តាហ៍ ឬតារាងប្រចាំថ្ងៃនៅក្នុងជួរដែលបានជ្រើសរើស។
+day	calendar	km	ថ្ងៃ
+day of week tables	calendar	km	តារាងថ្ងៃនៃសប្តាហ៍
+days	calendar	km	ថ្ងៃ
+days of the week for a weekly repeated event	calendar	km	ថ្ងៃនៃសប្តាហ៍សម្រាប់ព្រឹត្តិការណ៍ម្តងហើយម្តងទៀតប្រចាំសប្តាហ៍
+days repeated	calendar	km	ថ្ងៃដដែលៗ
+dayview	calendar	km	ទិដ្ឋភាពពេលថ្ងៃ
+default alarm added for yourself or all participants	calendar	km	ការជូនដំណឹងត្រូវបានបញ្ចូលដោយស្វ័យប្រវត្តិសម្រាប់ការណាត់ជួបថ្មី។<br>សម្រាប់ខ្លួនអ្នក ឬសម្រាប់អ្នកចូលរួមទាំងអស់។
+default alarm for	calendar	km	សំឡេងរោទិ៍លំនាំដើមសម្រាប់
+default alarm for regular events	calendar	km	ការជូនដំណឹងលំនាំដើមសម្រាប់ព្រឹត្តិការណ៍ធម្មតា។
+default alarm for whole-day events	calendar	km	ការជូនដំណឹងលំនាំដើមសម្រាប់ព្រឹត្តិការណ៍ពេញមួយថ្ងៃ
+default appointment length (in minutes)	calendar	km	រយៈពេលណាត់ជួបលំនាំដើមគិតជានាទី
+default calendar filter	calendar	km	តម្រងប្រតិទិនលំនាំដើម
+default calendar view	calendar	km	ទិដ្ឋភាព​ប្រតិទិន​លំនាំដើម
+default document to insert entries	calendar	km	ឯកសារលំនាំដើមដើម្បីបញ្ចូលធាតុ
+default length of newly created events. the length is in minutes, eg. 60 for 1 hour.	calendar	km	ប្រវែងលំនាំដើមនៃព្រឹត្តិការណ៍ដែលបានបង្កើតថ្មី។ ប្រវែងគឺគិតជានាទី ឧទាហរណ៍ 60 សម្រាប់ 1 ម៉ោង។
+default type of resources application selected in the calendar participants research form.	calendar	km	ប្រភេទលំនាំដើមនៃកម្មវិធីធនធានដែលបានជ្រើសរើសនៅក្នុងទម្រង់ស្រាវជ្រាវអ្នកចូលរួមប្រតិទិន។
+default type of resources selection	calendar	km	ប្រភេទលំនាំដើមនៃការជ្រើសរើសធនធាន
+default week view	calendar	km	ទិដ្ឋភាពសប្តាហ៍លំនាំដើម
+delegated	calendar	km	ផ្ទេរសិទ្ធិ
+delete exceptions	calendar	km	លុបករណីលើកលែង
+delete selected events	calendar	km	លុបព្រឹត្តិការណ៍ដែលបានជ្រើសរើស
+delete series	calendar	km	លុបស៊េរី
+delete this alarm	calendar	km	លុបការជូនដំណឹងនេះ
+delete this event	calendar	km	លុបព្រឹត្តិការណ៍នេះ
+delete this exception	calendar	km	លុបករណីលើកលែងនេះ
+delete this meeting for all participants	calendar	km	លុបការប្រជុំនេះសម្រាប់អ្នកចូលរួមទាំងអស់
+delete this recurrence	calendar	km	លុបការកើតឡើងដដែលៗនេះ
+delete this series of recurring events	calendar	km	លុបស៊េរីនៃព្រឹត្តិការណ៍ដែលកើតឡើងដដែលៗនេះ
+deleted	calendar	km	បានលុប។
+deny resources reservation for private events	calendar	km	បដិសេធការកក់ធនធានសម្រាប់ព្រឹត្តិការណ៍ឯកជន
+directory with documents to insert entries	calendar	km	ថតជាមួយឯកសារដើម្បីបញ្ចូលធាតុ
+display holidays or birthdays as events in dayview	calendar	km	បង្ហាញថ្ងៃបុណ្យ ឬថ្ងៃកំណើតជាព្រឹត្តិការណ៍ក្នុងទិដ្ឋភាពពេលថ្ងៃ
+display in header	calendar	km	បង្ហាញនៅក្នុងបឋមកថា
+display status of events	calendar	km	បង្ហាញស្ថានភាពនៃព្រឹត្តិការណ៍
+displayed view	calendar	km	ទិដ្ឋភាពដែលបានបង្ហាញ
+displays this calendar view on the home page (page you get when you enter egroupware or click on the home page icon)?	calendar	km	បង្ហាញទិដ្ឋភាពប្រតិទិននេះនៅលើទំព័រដើម ទំព័រដែលអ្នកទទួលបាននៅពេលអ្នកបញ្ចូល EGroupware ឬចុចលើរូបតំណាងទំព័រដើម?
+distribution list	calendar	km	បញ្ជី​ចែកចាយ
+do not import conflicting events	calendar	km	កុំនាំចូលព្រឹត្តិការណ៍ដែលមានជម្លោះ
+do not include events of group members	calendar	km	កុំរួមបញ្ចូលព្រឹត្តិការណ៍នៃសមាជិកក្រុម
+do not notify externals (non-users) about this event	calendar	km	កុំជូនដំណឹងដល់អ្នកខាងក្រៅ (មិនមែនអ្នកប្រើប្រាស់) អំពីព្រឹត្តិការណ៍នេះ
+do you really want to change the start of this series? if you do, the original series will be terminated as of %1 and a new series for the future reflecting your changes will be created.	calendar	km	តើអ្នកពិតជាចង់ផ្លាស់ប្តូរការចាប់ផ្តើមនៃស៊េរីនេះមែនទេ? ប្រសិនបើអ្នកធ្វើបាន ស៊េរីដើមនឹងត្រូវបានបញ្ចប់ត្រឹម %1 ហើយស៊េរីថ្មីសម្រាប់អនាគតដែលឆ្លុះបញ្ចាំងពីការផ្លាស់ប្តូររបស់អ្នកនឹងត្រូវបានបង្កើត។
+do you want a weekview with or without weekend?	calendar	km	តើអ្នកចង់បានទិដ្ឋភាពសប្តាហ៍ដោយមាន ឬគ្មានចុងសប្តាហ៍?
+do you want non-egroupware participants of events you created to be automatically notified about new or changed appointments?	calendar	km	តើអ្នកចង់ឱ្យអ្នកចូលរួមដែលមិនមែនជា EGroupware នៃព្រឹត្តិការណ៍ដែលអ្នកបានបង្កើតឱ្យទទួលបានការជូនដំណឹងដោយស្វ័យប្រវត្តិអំពីការណាត់ជួបថ្មី ឬផ្លាស់ប្តូរទេ?
+do you want responses from events you created, but are not participating in?	calendar	km	តើអ្នកចង់បានការឆ្លើយតបពីព្រឹត្តិការណ៍ដែលអ្នកបានបង្កើត ប៉ុន្តែមិនបានចូលរួមទេ?
+do you want to be notified about changes of appointments you modified?	calendar	km	តើអ្នកចង់ទទួលបានការជូនដំណឹងអំពីការផ្លាស់ប្តូរការណាត់ជួបដែលអ្នកបានកែប្រែដែរឬទេ?
+do you want to be notified about new or changed appointments? you are not notified about changes you made yourself.<br>you can limit the notifications to certain changes only. each item includes all notifications listed above. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get participant responses like acceptions or rejections too.	calendar	km	តើអ្នកចង់ទទួលបានការជូនដំណឹងអំពីការណាត់ជួបថ្មី ឬផ្លាស់ប្តូរទេ? អ្នកមិនត្រូវបានជូនដំណឹងអំពីការផ្លាស់ប្តូរដែលអ្នកបានធ្វើដោយខ្លួនឯងទេ។<br>អ្នកអាចកំណត់ការជូនដំណឹងចំពោះការផ្លាស់ប្តូរជាក់លាក់តែប៉ុណ្ណោះ។ ធាតុនីមួយៗរួមបញ្ចូលការជូនដំណឹងទាំងអស់ដែលបានរាយខាងលើ។ ការកែប្រែទាំងអស់រួមមានការផ្លាស់ប្តូរចំណងជើង ការពិពណ៌នា អ្នកចូលរួម ប៉ុន្តែមិនមានការឆ្លើយតបពីអ្នកចូលរួមទេ។ ប្រសិនបើម្ចាស់ព្រឹត្តិការណ៍បានស្នើសុំការជូនដំណឹងណាមួយ គាត់នឹងតែងតែទទួលបានការឆ្លើយតបពីអ្នកចូលរួម ដូចជាការទទួលយក ឬការបដិសេធផងដែរ។
+do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	km	តើអ្នកចង់ទទួលបានការជូនដំណឹងអំពីការណាត់ជួបថ្មី ឬផ្លាស់ប្តូរទេ? អ្នកត្រូវបានជូនដំណឹងអំពីការផ្លាស់ប្តូរដែលអ្នកធ្វើដោយខ្លួនឯង។<br>អ្នកអាចកំណត់ការជូនដំណឹងចំពោះការផ្លាស់ប្តូរជាក់លាក់តែប៉ុណ្ណោះ។ ធាតុនីមួយៗរួមបញ្ចូលការជូនដំណឹងទាំងអស់ដែលបានរាយខាងលើវា។ ការកែប្រែទាំងអស់រួមមានការផ្លាស់ប្តូរចំណងជើង ការពិពណ៌នា អ្នកចូលរួម ប៉ុន្តែមិនមានការឆ្លើយតបពីអ្នកចូលរួមទេ។ ប្រសិនបើម្ចាស់ព្រឹត្តិការណ៍បានស្នើសុំការជូនដំណឹងណាមួយ គាត់នឹងតែងតែទទួលបានការឆ្លើយតបពីអ្នកចូលរួម ដូចជាការទទួលយក និងការបដិសេធផងដែរ។
+do you want to be notified about participant responses from events you created, but are not participating in?	calendar	km	តើអ្នកចង់ទទួលបានការជូនដំណឹងអំពីការឆ្លើយតបរបស់អ្នកចូលរួមពីព្រឹត្តិការណ៍ដែលអ្នកបានបង្កើត ប៉ុន្តែមិនបានចូលរួមទេ?
+do you want to edit this event as an exception or the whole series?	calendar	km	តើអ្នកចង់កែសម្រួលព្រឹត្តិការណ៍នេះជាករណីលើកលែង ឬជាស៊េរីទាំងមូលទេ?
+do you want to keep the series exceptions in your calendar?	calendar	km	តើអ្នកចង់រក្សាការលើកលែងស៊េរីនៅក្នុងប្រតិទិនរបស់អ្នកទេ?
+do you want to receive a regularly summary of your appointments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	km	តើ​អ្នក​ចង់​ទទួល​បាន​ការ​សង្ខេប​ទៀងទាត់​នៃ​ការ​ណាត់​ជួប​របស់​អ្នក​តាម​រយៈ​អ៊ី​ម៉ែ​ល​?<br>សេចក្ដី​សង្ខេប​ត្រូវ​បាន​ផ្ញើ​ទៅ​អាសយដ្ឋាន​អ៊ីមែល​ស្ដង់ដារ​របស់​អ្នក​នៅ​ព្រឹក​ថ្ងៃ​នោះ​ឬ​នៅ​ថ្ងៃ​ច័ន្ទ​សម្រាប់​ការ​សង្ខេប​ប្រចាំ​ស​ប្តា​ហ៍​។<br>វា​ត្រូវ​បាន​ផ្ញើ​តែ​នៅ​ពេល​ដែល​អ្នក​មាន ការណាត់ជួបណាមួយនៅថ្ងៃ ឬសប្តាហ៍នោះ។
+download	calendar	km	ទាញយក
+download this event as ical	calendar	km	ទាញយកព្រឹត្តិការណ៍នេះជា iCal
+duration	calendar	km	រយៈពេល
+duration of the meeting	calendar	km	រយៈពេលនៃការប្រជុំ
+edit event in calendar	calendar	km	កែសម្រួលព្រឹត្តិការណ៍នៅក្នុងប្រតិទិន
+edit exception	calendar	km	កែសម្រួលករណីលើកលែង
+edit series	calendar	km	កែសម្រួលស៊េរី
+edit status or alarms for this particular day	calendar	km	កែសម្រួលស្ថានភាព ឬម៉ោងរោទ៍សម្រាប់ថ្ងៃពិសេសនេះ។
+edit this event	calendar	km	កែសម្រួលព្រឹត្តិការណ៍នេះ។
+edit this series of recurring events	calendar	km	កែសម្រួលស៊េរីនៃព្រឹត្តិការណ៍ដែលកើតឡើងដដែលៗនេះ។
+empty = no alarm	calendar	km	ទទេ = គ្មានសំឡេងរោទិ៍
+empty for all	calendar	km	ទទេសម្រាប់ទាំងអស់គ្នា
+empty target calendar before importing	calendar	km	ប្រតិទិនគោលដៅទទេមុនពេលនាំចូល
+end	calendar	km	ចប់
+end date/time	calendar	km	កាលបរិច្ឆេទ/ពេលវេលាបញ្ចប់
+enddate	calendar	km	កាលបរិច្ឆេទបញ្ចប់
+enddate / -time of the meeting, eg. for more then one day	calendar	km	កាលបរិច្ឆេទបញ្ចប់/ពេលវេលានៃកិច្ចប្រជុំ ឧ. លើសពីមួយថ្ងៃ
+enddate of the export	calendar	km	កាលបរិច្ឆេទបញ្ចប់នៃការនាំចេញ
+ends	calendar	km	ចប់
+error adding the alarm	calendar	km	កំហុសក្នុងការបន្ថែមម៉ោងរោទិ៍
+error notifying %1	calendar	km	កំហុសក្នុងការជូនដំណឹង %1
+error saving the event!	calendar	km	កំហុសក្នុងការរក្សាទុកព្រឹត្តិការណ៍!
+error: can't delete original series!	calendar	km	កំហុស៖ មិនអាចលុបស៊េរីដើមបានទេ!
+error: duration of event longer then recurrence interval!	calendar	km	កំហុស៖ រយៈពេលនៃព្រឹត្តិការណ៍យូរជាងចន្លោះពេលកើតឡើងវិញ!
+error: importing the ical	calendar	km	កំហុស៖ នាំចូល iCal!
+error: no participants selected !!!	calendar	km	កំហុស៖ គ្មានអ្នកចូលរួមត្រូវបានជ្រើសរើសទេ!
+error: resources reservation in private events is not allowed!!!	calendar	km	កំហុស៖ ការកក់ធនធាននៅក្នុងព្រឹត្តិការណ៍ឯកជនមិនត្រូវបានអនុញ្ញាតទេ!
+error: saving the event !!!	calendar	km	កំហុសក្នុងការរក្សាទុកព្រឹត្តិការណ៍!
+error: starttime has to be before the endtime !!!	calendar	km	កំហុស៖ ពេលវេលាចាប់ផ្តើមត្រូវតែមុនម៉ោងបញ្ចប់!!!
+error: the entry has been updated since you opened it for editing!	calendar	km	កំហុស៖ ធាតុត្រូវបានធ្វើបច្ចុប្បន្នភាពចាប់តាំងពីអ្នកបើកវាសម្រាប់កែសម្រួល!
+error: you can't shift a series from the past!	calendar	km	កំហុស៖ អ្នកមិនអាចប្តូរស៊េរីពីអតីតកាលបានទេ!
+event	common	km	ព្រឹត្តិការណ៍
+event deleted	calendar	km	បានលុបព្រឹត្តិការណ៍។
+event details follow	calendar	km	ព័ត៌មានលម្អិតអំពីព្រឹត្តិការណ៍
+event has been deleted by organizer!	calendar	km	ព្រឹត្តិការណ៍ត្រូវបានលុបដោយអ្នករៀបចំ!
+event saved	calendar	km	បានរក្សាទុកព្រឹត្តិការណ៍។
+event will occupy the whole day	calendar	km	ព្រឹត្តិការណ៍នឹងកាន់កាប់ពេញមួយថ្ងៃ
+events	common	km	ព្រឹត្តិការណ៍
+every user can invite other users and groups	admin	km	អ្នកប្រើប្រាស់គ្រប់រូបអាចអញ្ជើញអ្នកប្រើប្រាស់ និងក្រុមផ្សេងទៀត។
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	calendar	km	ឧទាហរណ៍ {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - search the field "n_prefix", for "Mr", if found, write Hello Mr., else write Hello Ms.
+example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	calendar	km	ឧទាហរណ៍ {{LETTERPREFIXCUSTOM n_prefix title n_family}} - ឧទាហរណ៍៖ លោកបណ្ឌិត James Miller
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	calendar	km	ឧទាហរណ៍ {{NELF role}} - ប្រសិនបើតួនាទីវាលមិនទទេ អ្នកនឹងទទួលបានបន្ទាត់ថ្មីជាមួយនឹងតម្លៃនៃតួនាទីវាល
+example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	calendar	km	ឧទាហរណ៍ {{nenvlf role}} - ប្រសិនបើតួនាទីវាលមិនទទេ កំណត់ LF ដោយគ្មានតម្លៃណាមួយនៃវាល
+exception	calendar	km	ករណី​លើកលែង
+exception created - you can now edit or delete it	calendar	km	ករណីលើកលែងត្រូវបានបង្កើតឡើង - ឥឡូវនេះអ្នកអាចកែសម្រួល ឬលុបវាបាន។
+exceptions	calendar	km	ករណីលើកលែង
+execute a further action for this entry	calendar	km	អនុវត្តសកម្មភាពបន្ថែមសម្រាប់ធាតុនេះ
+existing links	calendar	km	តំណភ្ជាប់ដែលមានស្រាប់
+exists	calendar	km	មាន
+export definition to use for nextmatch export	calendar	km	នាំចេញនិយមន័យដែលត្រូវប្រើសម្រាប់ការនាំចេញការប្រកួតបន្ទាប់
+exports events from your calendar in ical format.	calendar	km	នាំចេញព្រឹត្តិការណ៍ពីប្រតិទិនរបស់អ្នកជាទម្រង់ iCal ។
+exports events from your calendar into a csv file.	calendar	km	នាំចេញព្រឹត្តិការណ៍ពីប្រតិទិនរបស់អ្នកទៅជាឯកសារ CSV ។
+extended	calendar	km	ពង្រីក
+extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	km	ការអាប់ដេតបន្ថែមតែងតែរួមបញ្ចូលព័ត៌មានលម្អិតនៃព្រឹត្តិការណ៍។ iCal អាច​ត្រូវ​បាន​នាំ​ចូល​ដោយ​កម្មវិធី​ប្រតិទិន​ផ្សេង​ទៀត។
+favorites	calendar	km	ចំណូលចិត្ត
+fieldseparator	calendar	km	អ្នកបំបែកវាល
+filemanager	calendar	km	កម្មវិធី​គ្រប់​គ្រង​ឯកសារ
+filename	calendar	km	ឈ្មោះ​ឯកសារ
+filename of the download	calendar	km	ឈ្មោះឯកសារនៃការទាញយក
+find free timeslots where the selected participants are available for the given timespan	calendar	km	ស្វែងរកចន្លោះពេលទំនេរដែលអ្នកចូលរួមដែលបានជ្រើសរើសអាចរកបានសម្រាប់ចន្លោះពេលដែលបានផ្តល់ឱ្យ។
+firstname of person to notify	calendar	km	ឈ្មោះរបស់បុគ្គលដែលត្រូវជូនដំណឹង
+for	calendar	km	សម្រាប់
+for serial letter use this tag. put the content, you want to repeat between two tags.	calendar	km	សម្រាប់អក្សរសៀរៀលប្រើស្លាកនេះ។ ដាក់មាតិកា អ្នកចង់ធ្វើម្តងទៀតរវាងស្លាកពីរ។
+for which views should calendar just a list of events instead of distinct lines with a fixed time interval.	calendar	km	សម្រាប់​ទិដ្ឋភាព​ណា​ដែល​គួរ​ធ្វើ​ប្រតិទិន​គ្រាន់​តែ​ជា​បញ្ជី​ព្រឹត្តិការណ៍​ជំនួស​ឱ្យ​បន្ទាត់​ដាច់​ដោយ​ឡែក​ដោយ​ចន្លោះ​ពេល​កំណត់។
+for which views should calendar show distinct lines with a fixed time interval.	calendar	km	សម្រាប់​ទិដ្ឋភាព​ណា​ដែល​ប្រតិទិន​គួរ​បង្ហាញ​បន្ទាត់​ដាច់​ដោយ​ឡែក​ជាមួយ​ចន្លោះ​ពេល​កំណត់។
+format of event updates	calendar	km	ទម្រង់នៃការធ្វើបច្ចុប្បន្នភាពព្រឹត្តិការណ៍
+forward half a month	calendar	km	ទៅមុខកន្លះខែ
+forward one month	calendar	km	ទៅមុខមួយខែ
+forward one year	calendar	km	ទៅមុខមួយឆ្នាំ
+four days view	calendar	km	ទិដ្ឋភាពបួនថ្ងៃ
+freebusy	common	km	ទំនេរ/រវល់
+freebusy: unknown user '%1', or not available for unauthenticated users!	calendar	km	ទំនេរ/រវល់៖ អ្នកប្រើប្រាស់មិនស្គាល់ '%1' ឬមិនមានសម្រាប់អ្នកប្រើប្រាស់ដែលមិនបានផ្ទៀងផ្ទាត់!
+freebusy: unknown user '%1', wrong password or not available to not logged in users !!!	calendar	km	ទំនេរ/រវល់៖ អ្នកប្រើប្រាស់មិនស្គាល់ '%1' ពាក្យសម្ងាត់ខុស ឬមិនមានសម្រាប់អ្នកប្រើប្រាស់មិនចូល!
+freetime	calendar	km	ពេលទំនេរ
+freetime search	calendar	km	ការស្វែងរកពេលទំនេរ
+fri	calendar	km	សុក្រ
+full description	calendar	km	ការពិពណ៌នាពេញលេញ
+full edit dialog	calendar	km	ប្រអប់កែសម្រួលពេញលេញ
+fullname of person to notify	calendar	km	ឈ្មោះពេញរបស់បុគ្គលដែលត្រូវជូនដំណឹង
+general fields:	calendar	km	វាលទូទៅ៖
+general settings	calendar	km	ការកំណត់​ទូទៅ
+global categories	calendar	km	ប្រភេទសកល
+global public and group public	calendar	km	សាធារណៈជាសកល និងសាធារណៈជាក្រុម
+global public only	calendar	km	សាធារណជនសកលតែប៉ុណ្ណោះ
+group invitation	calendar	km	ការអញ្ជើញក្រុម
+group planner	calendar	km	អ្នករៀបចំផែនការក្រុម
+group public only	calendar	km	ជាក្រុមសាធារណៈតែប៉ុណ្ណោះ
+group(s) or user(s) to show	calendar	km	ក្រុម ឬអ្នកប្រើប្រាស់ដែលត្រូវបង្ហាញ
+group(s) or user(s) whose calendars to show (if acl exists)	calendar	km	ក្រុម ឬអ្នកប្រើប្រាស់ដែលប្រតិទិនត្រូវបង្ហាញ ប្រសិនបើ ACL មាន។
+groupmember(s) %1 not included, because you have no access.	calendar	km	សមាជិកក្រុម %1 មិនត្រូវបានរាប់បញ្ចូលទេ ដោយសារតែអ្នកមិនមានសិទ្ធិចូលប្រើប្រាស់។
+groups: other users can always be invited, only groups require an invite grant	admin	km	ក្រុម៖ អ្នកប្រើប្រាស់ផ្សេងទៀតអាចត្រូវបានអញ្ជើញជានិច្ច មានតែក្រុមប៉ុណ្ណោះដែលត្រូវការជំនួយការអញ្ជើញ។
+h	calendar	km	h
+here is your requested alarm.	calendar	km	ការជូនដំណឹងដែលអ្នកបានស្នើសុំ។
+hide private events	calendar	km	លាក់ព្រឹត្តិការណ៍ឯកជន
+hide private infos	calendar	km	លាក់ព័ត៌មានឯកជន
+high priority	calendar	km	អាទិភាពខ្ពស់។
+history	calendar	km	ប្រវត្តិសាស្ត្រ
+history logging	admin	km	ការកត់ត្រាប្រវត្តិសាស្ត្រ
+holiday	calendar	km	វិស្សមកាល
+holidays	calendar	km	ថ្ងៃឈប់សម្រាក
+holidays only	calendar	km	ថ្ងៃឈប់សម្រាកតែប៉ុណ្ណោះ
+hours	calendar	km	ម៉ោង
+how far to search (from startdate)	calendar	km	តើត្រូវស្វែងរកចម្ងាយប៉ុន្មាន (ចាប់ពីថ្ងៃចាប់ផ្តើម)
+how many appointments should non-admins be able to export	admin	km	តើការណាត់ជួបប៉ុន្មានដែលមិនមែនជាអ្នកគ្រប់គ្រងគួរតែអាចនាំចេញបាន។
+how many days to be removed in the future (default 365)	calendar	km	តើត្រូវដកចេញប៉ុន្មានថ្ងៃនាពេលអនាគត (លំនាំដើម 365)
+how many days to be removed in the past (default 100)	calendar	km	តើត្រូវលុបចោលប៉ុន្មានថ្ងៃមុន (លំនាំដើម 100)
+how many days to sync in the future (default %1)	calendar	km	រយៈពេលប៉ុន្មានថ្ងៃដើម្បីធ្វើសមកាលកម្មនាពេលអនាគត (លំនាំដើម %1)
+how many days to sync in the past (default %1)	calendar	km	តើត្រូវធ្វើសមកាលកម្មប៉ុន្មានថ្ងៃមុន (លំនាំដើម %1)
+how many description lines should be directly visible. further lines are available via a scrollbar.	calendar	km	តើ​មាន​បន្ទាត់​ពណ៌នា​ប៉ុន្មាន​ដែល​គួរ​មើល​ឃើញ​ដោយ​ផ្ទាល់។ បន្ទាត់បន្ថែមទៀតអាចរកបានតាមរយៈរបាររមូរ។
+how many lines of all day events should be directly visible. further lines are available via a mouseover.	calendar	km	តើមានប៉ុន្មានបន្ទាត់នៃព្រឹត្តិការណ៍ពេញមួយថ្ងៃគួរតែអាចមើលឃើញដោយផ្ទាល់។ បន្ទាត់​បន្ថែម​ទៀត​គឺ​អាច​ប្រើ​បាន​តាម​រយៈ​ការ​ចុច​កណ្ដុរ។
+how many minutes should each interval last?	calendar	km	តើចន្លោះពេលនីមួយៗគួរមានរយៈពេលប៉ុន្មាននាទី?
+how many separate calendars to show before merging them together	calendar	km	ចំនួនអ្នកប្រើប្រាស់អប្បបរមាសម្រាប់ការបង្ហាញទិដ្ឋភាពប្រតិទិនរួម ប្រសិនបើអ្នកប្រើប្រាស់តិចត្រូវបានជ្រើសរើស នោះប្រតិទិនត្រូវបានបង្ហាញដាច់ដោយឡែកសម្រាប់ទិដ្ឋភាពសប្តាហ៍ ឬថ្ងៃ។
+how many weeks should the multiple week view show?	calendar	km	តើការមើលច្រើនសប្តាហ៍គួរបង្ហាញប៉ុន្មានសប្តាហ៍?
+how much entries to skip	calendar	km	តើត្រូវរំលងធាតុប៉ុន្មាន?
+html link to the current record	calendar	km	តំណភ្ជាប់ HTML ទៅកំណត់ត្រាបច្ចុប្បន្ន
+ical	calendar	km	អាយកាល់
+ical / rfc2445	calendar	km	iCal / rfc2445
+ical cannot change the owner of an existing event.  this applies to new events only.	calendar	km	iCal មិនអាចផ្លាស់ប្តូរម្ចាស់ព្រឹត្តិការណ៍ដែលមានស្រាប់បានទេ។ នេះអនុវត្តចំពោះព្រឹត្តិការណ៍ថ្មីៗតែប៉ុណ្ណោះ។
+ical export	calendar	km	ការនាំចេញ iCal
+ical file	calendar	km	ឯកសារ iCal
+ical import	calendar	km	ការនាំចូល iCal
+ical successful imported	calendar	km	iCal បាននាំចូលដោយជោគជ័យ។
+if start day differs	calendar	km	ប្រសិនបើថ្ងៃចាប់ផ្តើមខុសគ្នា
+if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	km	ប្រសិនបើអ្នកមិនកំណត់ពាក្យសម្ងាត់នៅទីនេះទេ ព័ត៌មានគឺអាចរកបានសម្រាប់អ្នកគ្រប់គ្នា ដែលស្គាល់ URL!
+if you select a range (month, week, etc) instead of a list of entries, these extra fields are available	calendar	km	ប្រសិនបើអ្នកជ្រើសរើសជួរ (ខែ សប្តាហ៍។ល។) ជំនួសឱ្យបញ្ជីធាតុ វាលបន្ថែមទាំងនេះអាចរកបាន។
+if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	calendar	km	ប្រសិនបើអ្នកបញ្ជាក់ថតមួយ (ផ្លូវ vfs ពេញលេញ) នៅទីនេះ %1 បង្ហាញសកម្មភាពសម្រាប់ឯកសារនីមួយៗ។ សកម្មភាពនោះអនុញ្ញាតឱ្យទាញយកឯកសារដែលបានបញ្ជាក់ជាមួយនឹងទិន្នន័យដែលបានបញ្ចូល។
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	calendar	km	ប្រសិនបើអ្នកបញ្ជាក់ឯកសារ (ផ្លូវ vfs ពេញលេញ) នៅទីនេះ %1 បង្ហាញរូបតំណាងឯកសារបន្ថែមសម្រាប់ធាតុនីមួយៗ។ រូបតំណាងនោះអនុញ្ញាតឱ្យទាញយកឯកសារដែលបានបញ្ជាក់ជាមួយនឹងទិន្នន័យដែលបានបញ្ចូល។
+if you specify an export definition, it will be used when you export	calendar	km	ប្រសិនបើអ្នកបញ្ជាក់និយមន័យនាំចេញ វានឹងត្រូវបានប្រើនៅពេលអ្នកនាំចេញ
+ignore conflict	calendar	km	មិនអើពើនឹងជម្លោះ
+import	calendar	km	នាំចូល
+import csv-file	common	km	នាំចូលឯកសារ CSV
+imports events into your calendar from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	calendar	km	នាំចូលព្រឹត្តិការណ៍ទៅក្នុងប្រតិទិនរបស់អ្នកពីឯកសារ CSV ។ CSV មានន័យថា 'តម្លៃបំបែកដោយសញ្ញាក្បៀស'។ ទោះយ៉ាងណាក៏ដោយ នៅក្នុងផ្ទាំងជម្រើស អ្នកក៏អាចជ្រើសរើសសញ្ញាបំបែកផ្សេងទៀត។
+imports events into your calendar from an ical file.	calendar	km	នាំចូលព្រឹត្តិការណ៍ពីឯកសារ iCal ទៅក្នុងប្រតិទិនរបស់អ្នក។
+initially year aligned	calendar	km	ឆ្នាំដំបូងត្រូវបានតម្រឹម
+insert	calendar	km	បញ្ចូល
+insert in document	calendar	km	បញ្ចូលក្នុងឯកសារ
+interval	calendar	km	ចន្លោះពេល
+invalid email-address "%1" for user %2	calendar	km	អាសយដ្ឋានអ៊ីមែលមិនត្រឹមត្រូវ "%1" សម្រាប់អ្នកប្រើប្រាស់ %2 ។
+invalid owner id: %1.  might be a bad field translation.  used %2 instead.	calendar	km	លេខសម្គាល់ម្ចាស់មិនត្រឹមត្រូវ៖ %1។ ប្រហែលជាការបកប្រែវាលមិនល្អ។ បានប្រើ %2 ជំនួសវិញ។
+invitations	calendar	km	ការអញ្ជើញ
+invite	common	km	អញ្ជើញ
+it can not read timezones from sqlite database %1!	calendar	km	វាមិនអាចអានតំបន់ពេលវេលាពីមូលដ្ឋានទិន្នន័យ sqlite %1 បានទេ!
+just me	calendar	km	គ្រាន់តែខ្ញុំ
+keep exceptions	calendar	km	រក្សាករណីលើកលែង
+keep the series unchanged.	calendar	km	រក្សាស៊េរីមិនផ្លាស់ប្តូរ។
+last	calendar	km	ចុងក្រោយ
+last changed	calendar	km	បានផ្លាស់ប្តូរចុងក្រោយ
+lastname of person to notify	calendar	km	នាមត្រកូលរបស់បុគ្គលដែលត្រូវជូនដំណឹង
+length of the time interval	calendar	km	ប្រវែងនៃចន្លោះពេល
+limit number of description lines in list view (default 5, 0 for no limit)	calendar	km	កំណត់ចំនួនបន្ទាត់ពិពណ៌នានៅក្នុងទិដ្ឋភាពបញ្ជី។ លំនាំដើមគឺ 5, 0 សម្រាប់គ្មានដែនកំណត់។
+limit number of lines for all day events	calendar	km	កំណត់ចំនួនបន្ទាត់សម្រាប់ព្រឹត្តិការណ៍ពេញមួយថ្ងៃ
+limit search for conflicts in recurrences to given number of recurrences	calendar	km	កំណត់ការស្វែងរកការប៉ះទង្គិចនៅក្នុងការកើតឡើងដដែលៗចំពោះចំនួននៃការកើតឡើងដដែលៗដែលបានផ្តល់ឱ្យ
+limit search for conflicts in recurrences to given time in seconds (default 3)	calendar	km	កំណត់ការស្វែងរកការប៉ះទង្គិចនៅក្នុងការកើតឡើងម្តងទៀតទៅនឹងពេលវេលាដែលបានផ្តល់ឱ្យជាវិនាទី (លំនាំដើម 3)
+link title for events to show	calendar	km	តំណចំណងជើងសម្រាប់ព្រឹត្តិការណ៍ដែលត្រូវបង្ហាញ
+link to view the event	calendar	km	តំណភ្ជាប់ដើម្បីមើលព្រឹត្តិការណ៍
+links	calendar	km	តំណភ្ជាប់
+links and attached files	calendar	km	តំណភ្ជាប់និងឯកសារភ្ជាប់
+links to specified application.  example: {{links/infolog}}	calendar	km	តំណភ្ជាប់ទៅកម្មវិធីដែលបានបញ្ជាក់។ ឧទាហរណ៍៖ {{links/infolog}}
+links, attachments	calendar	km	តំណភ្ជាប់, ឯកសារភ្ជាប់
+list of files linked to the current record	calendar	km	បញ្ជីឯកសារដែលភ្ជាប់ទៅកំណត់ត្រាបច្ចុប្បន្ន
+listview	calendar	km	ទិដ្ឋភាពបញ្ជី
+location	calendar	km	ទីតាំង
+location, start- and endtimes, ...	calendar	km	ទីតាំង ពេលវេលាចាប់ផ្តើម និងបញ្ចប់...
+mail all participants	calendar	km	ផ្ញើសារទៅកាន់អ្នកចូលរួមទាំងអស់។
+make freebusy information available to not logged in persons?	calendar	km	ធ្វើឱ្យមានព័ត៌មានទំនេរ/រវល់ ដើម្បីកុំឱ្យមនុស្សចូល
+manage mapping	calendar	km	គ្រប់គ្រងការធ្វើផែនទី
+mark event as private to hide title and description	calendar	km	សម្គាល់ព្រឹត្តិការណ៍ជាឯកជន ដើម្បីលាក់ចំណងជើង និងការពណ៌នា
+max. number of entries to show (leave empty for no restriction)	calendar	km	អតិបរមា។ ចំនួនធាតុដែលត្រូវបង្ហាញ។ ទុកឱ្យទទេដោយគ្មានការរឹតបន្តឹង។
+maximum available quantity of %1 exceeded!	calendar	km	បរិមាណអតិបរមាដែលអាចប្រើបាននៃ %1 លើសហើយ!
+meeting canceled	calendar	km	ការប្រជុំត្រូវបានលុបចោល
+meeting request	calendar	km	សំណើប្រជុំ
+meetingrequest to all participants	calendar	km	ការប្រជុំសំណូមពរដល់អ្នកចូលរួមទាំងអស់។
+merge document...	calendar	km	បញ្ចូល​ឯកសារ...
+midnight	calendar	km	ក​ណ្តា​ល​អធ្រាត្រ
+minimum number of users for showing day view as consolidated.	calendar	km	ចំនួនអ្នកប្រើប្រាស់អប្បបរមាសម្រាប់បង្ហាញទិដ្ឋភាពថ្ងៃជារួម។
+minimum number of users for showing week view as consolidated.	calendar	km	ចំនួនអ្នកប្រើប្រាស់អប្បបរមាសម្រាប់បង្ហាញទិដ្ឋភាពសប្តាហ៍ជាការរួម។
+minutes	calendar	km	នាទី
+modified	calendar	km	កែប្រែ
+modifier	calendar	km	អ្នកកែប្រែ
+mon	calendar	km	ច័ន្ទ
+month	calendar	km	ខែ
+monthly	calendar	km	ប្រចាំខែ
+monthly (by date)	calendar	km	ប្រចាំខែតាមកាលបរិច្ឆេទ
+monthly (by day)	calendar	km	ប្រចាំខែតាមថ្ងៃ
+monthview	calendar	km	ទិដ្ឋភាពខែ
+multiple participants	calendar	km	អ្នកចូលរួមច្រើន។
+multiple week view	calendar	km	ទិដ្ឋភាពជាច្រើនសប្តាហ៍
+name of current user, all other contact fields are valid too	calendar	km	ឈ្មោះអ្នកប្រើប្រាស់បច្ចុប្បន្ន វាលទំនាក់ទំនងផ្សេងទៀតទាំងអស់ក៏មានសុពលភាពផងដែរ។
+name of the day of the week (ex: monday)	calendar	km	ឈ្មោះថ្ងៃនៃសប្តាហ៍ (ឧទាហរណ៍៖ ថ្ងៃច័ន្ទ)
+name of the week (ex: monday), available for the first entry inside each day of week or daily table inside the selected range.	calendar	km	ឈ្មោះនៃសប្តាហ៍ ឧ៖ ថ្ងៃច័ន្ទ អាចរកបានសម្រាប់ធាតុដំបូងនៅខាងក្នុងថ្ងៃនីមួយៗនៃសប្តាហ៍ ឬតារាងប្រចាំថ្ងៃនៅក្នុងជួរដែលបានជ្រើសរើស។
+needs action	calendar	km	ត្រូវការសកម្មភាព
+never notify externals (non-users) about events i create	calendar	km	កុំជូនដំណឹងទៅខាងក្រៅ (មិនមែនអ្នកប្រើប្រាស់) អំពីព្រឹត្តិការណ៍ដែលខ្ញុំបង្កើត
+new	calendar	km	ថ្មី។
+new event category	calendar	km	ប្រភេទព្រឹត្តិការណ៍ថ្មី។
+new event participants	calendar	km	អ្នកចូលរួមព្រឹត្តិការណ៍ថ្មី។
+new search with the above parameters	calendar	km	ការស្វែងរកថ្មីជាមួយនឹងប៉ារ៉ាម៉ែត្រខាងលើ
+no automatic purging	admin	km	មិនមានការសម្អាតដោយស្វ័យប្រវត្តិទេ។
+no events found	calendar	km	រកមិនឃើញព្រឹត្តិការណ៍ទេ។
+no filter	calendar	km	មិន​មាន​តម្រង
+no matches found	calendar	km	រកមិនឃើញការប្រកួតទេ
+no meeting requests	calendar	km	គ្មាន​សំណើ​ប្រជុំ
+no owner selected	calendar	km	មិនបានជ្រើសរើសម្ចាស់ទេ
+no preview for ical	calendar	km	មិនមានការមើលជាមុនសម្រាប់ iCal ទេ។
+no recurrence	calendar	km	គ្មានការកើតឡើងវិញទេ។
+no response	calendar	km	គ្មានការឆ្លើយតប
+no rights to export more than %1 entries!	calendar	km	គ្មានសិទ្ធិនាំចេញច្រើនជាង %1 ធាតុទេ!
+no, users will need to contact users with direct booking permission	calendar	km	ទេ អ្នកប្រើប្រាស់នឹងត្រូវទាក់ទងអ្នកប្រើប្រាស់ជាមួយនឹងការអនុញ្ញាតការកក់ដោយផ្ទាល់
+non blocking	calendar	km	មិនរារាំង
+not	calendar	km	ទេ
+not rejected	calendar	km	មិនត្រូវបានបដិសេធ
+nothing to update, version is already %1.	calendar	km	មិនមានអ្វីត្រូវអាប់ដេតទេ កំណែគឺ %1 រួចហើយ។
+notification messages for added events	calendar	km	សារជូនដំណឹងសម្រាប់ព្រឹត្តិការណ៍បន្ថែម
+notification messages for canceled events	calendar	km	សារជូនដំណឹងសម្រាប់ព្រឹត្តិការណ៍ដែលបានលុបចោល
+notification messages for modified events	calendar	km	សារជូនដំណឹងសម្រាប់ព្រឹត្តិការណ៍ដែលបានកែប្រែ
+notification messages for uninvited participants	calendar	km	សារជូនដំណឹងសម្រាប់អ្នកចូលរួមដែលមិនបានអញ្ជើញ
+notification messages for your alarms	calendar	km	សារជូនដំណឹងសម្រាប់ការជូនដំណឹងរបស់អ្នក
+notification messages for your responses	calendar	km	សារជូនដំណឹងសម្រាប់ការឆ្លើយតបរបស់អ្នក
+notification settings	calendar	km	ការកំណត់ការជូនដំណឹង
+notify	calendar	km	ជូនដំណឹង
+notify all externals (non-users) about this event	calendar	km	ជូនដំណឹងដល់អ្នកខាងក្រៅទាំងអស់ (មិនមែនអ្នកប្រើប្រាស់) អំពីព្រឹត្តិការណ៍នេះ។
+notify externals	calendar	km	ជូនដំណឹងដល់អ្នកខាងក្រៅ
+notify non-egroupware users about event updates	calendar	km	ជូនដំណឹងដល់អ្នកប្រើប្រាស់ដែលមិនមែនជា EGroupware អំពីបច្ចុប្បន្នភាពព្រឹត្តិការណ៍
+number of records to read (%1)	calendar	km	ចំនួនកំណត់ត្រាដែលត្រូវអាន ( %1)
+number of resources to be booked	calendar	km	ចំនួនធនធានដែលត្រូវកក់
+number of weeks to show	calendar	km	ចំនួនសប្តាហ៍ដែលត្រូវបង្ហាញ
+observance rule	calendar	km	ច្បាប់​ប្រតិបត្តិ
+occurence	calendar	km	ការកើតឡើង
+old fixed definition	calendar	km	និយមន័យចាស់ថេរ
+old startdate	calendar	km	កាលបរិច្ឆេទចាប់ផ្តើមចាស់
+olddate	calendar	km	កាលបរិច្ឆេទដើម
+on %1 %2 %3 your meeting request for %4	calendar	km	នៅលើ %1 %2 %3 សំណើការប្រជុំរបស់អ្នកសម្រាប់ %4
+on all modification, but responses	calendar	km	នៅលើការកែប្រែទាំងអស់ ប៉ុន្តែការឆ្លើយតប
+on any time change too	calendar	km	នៅពេលណាមួយក៏ផ្លាស់ប្តូរដែរ។
+on invitation / cancellation only	calendar	km	នៅលើការអញ្ជើញ / លុបចោលតែប៉ុណ្ណោះ
+on participant responses too	calendar	km	នៅលើការឆ្លើយតបរបស់អ្នកចូលរួមផងដែរ
+on time change of more than 4 hours too	calendar	km	ការផ្លាស់ប្តូរពេលវេលាលើសពី 4 ម៉ោងផងដែរ
+one month	calendar	km	មួយ​ខែ
+one week	calendar	km	មួយ​ស​ប្តា​ហ៍
+one year	calendar	km	មួយ​ឆ្នាំ
+only group-events	calendar	km	ព្រឹត្តិការណ៍ជាក្រុមតែប៉ុណ្ណោះ
+only recurrences until %1 (excluding) have been checked!	calendar	km	មានតែការកើតឡើងដដែលៗរហូតដល់ %1 (មិនរាប់បញ្ចូល) ត្រូវបានពិនិត្យ!
+only supported by a few fully conformant clients (eg. from apple). if you have to enter a url, it will most likly not be suppored!	calendar	km	គាំទ្រដោយអតិថិជនដែលអនុលោមភាពពេញលេញមួយចំនួនប៉ុណ្ណោះ (ឧ. ពី Apple) ។ ប្រសិនបើអ្នកត្រូវបញ្ចូល URL វាទំនងជាមិនត្រូវបានគាំទ្រទេ!
+only the initial date of that recurring event is checked!	calendar	km	មានតែកាលបរិច្ឆេទដំបូងនៃព្រឹត្តិការណ៍ដែលកើតឡើងដដែលៗប៉ុណ្ណោះដែលត្រូវបានពិនិត្យ!
+only used for first viewing of calendar, afterwards last selected view is used.	calendar	km	ប្រើ​សម្រាប់​តែ​ការ​មើល​ប្រតិទិន​ដំបូង​ប៉ុណ្ណោះ បន្ទាប់​មក​ទិដ្ឋភាព​ដែល​បាន​ជ្រើស​ចុងក្រោយ​ត្រូវ​បាន​ប្រើ
+open todo's:	calendar	km	បើក​ការងារ​ត្រូវ​ធ្វើ៖
+optional	calendar	km	ស្រេចចិត្ត
+organizer	calendar	km	អ្នករៀបចំ
+overlap holiday	calendar	km	ថ្ងៃឈប់សម្រាកត្រួតគ្នា
+owner too	calendar	km	ម្ចាស់ផងដែរ
+participant names by type	calendar	km	ឈ្មោះអ្នកចូលរួមតាមប្រភេទ
+participant table	calendar	km	តារាងអ្នកចូលរួម
+participants	calendar	km	អ្នកចូលរួម
+participants automatically added to new events	calendar	km	អ្នកចូលរួមត្រូវបានបន្ថែមដោយស្វ័យប្រវត្តិទៅព្រឹត្តិការណ៍ថ្មី
+participants uninvited from an event	calendar	km	អ្នកចូលរួមមិនត្រូវបានអញ្ជើញពីព្រឹត្តិការណ៍មួយ
+participants, resources, ...	calendar	km	អ្នកចូលរួម, ធនធាន, ...
+password for not loged in users to your freebusy information?	calendar	km	ពាក្យ​សម្ងាត់​សម្រាប់​អ្នក​ប្រើ​មិន​បាន​ចូល​ទៅ​កាន់​ព័ត៌មាន​ទំនេរ/រវល់​របស់​អ្នក
+people holiday	calendar	km	ថ្ងៃឈប់សម្រាករបស់មនុស្ស
+permission denied	calendar	km	ការអនុញ្ញាតត្រូវបានបដិសេធ។
+planner by category	calendar	km	អ្នករៀបចំផែនការតាមប្រភេទ
+planner by user	calendar	km	រៀបចំផែនការដោយអ្នកប្រើប្រាស់
+please first select participants on the left and then use plus button to add them	calendar	km	ដំបូង​សូម​ជ្រើសរើស​អ្នក​ចូលរួម​នៅ​ខាង​ឆ្វេង ហើយ​បន្ទាប់​មក​ប្រើ​ប៊ូតុង​បូក​ដើម្បី​បន្ថែម​ពួកគេ។
+please note: conflict check is never done in the past and always limited by above recurrence horizont.	calendar	km	សូមចំណាំ៖ ការត្រួតពិនិត្យការប៉ះទង្គិចមិនដែលត្រូវបានធ្វើពីមុនទេ ហើយតែងតែកំណត់ដោយកម្រិតខាងលើនៃការកើតឡើងដដែលៗ។
+please note: you can configure the field assignments after you uploaded the file.	calendar	km	ចំណាំ៖ អ្នក​អាច​កំណត់​រចនាសម្ព័ន្ធ​កិច្ចការ​វាល​បន្ទាប់​ពី​អ្នក​បាន​ផ្ទុក​ឯកសារ។
+preselected group for entering the planner	calendar	km	ក្រុមដែលបានជ្រើសរើសជាមុនសម្រាប់ការចូលទៅក្នុងអ្នករៀបចំផែនការ
+prevent deleting of entries	admin	km	រារាំងការលុបធាតុ
+previous	calendar	km	មុន
+private and global public	calendar	km	សាធារណៈឯកជន និងសកល
+private and group public	calendar	km	ឯកជន និងជាក្រុមសាធារណៈ
+private event	calendar	km	ព្រឹត្តិការណ៍ឯកជន
+private only	calendar	km	ឯកជនតែប៉ុណ្ណោះ
+quantity	calendar	km	បរិមាណ
+quick add	calendar	km	បន្ថែមរហ័ស
+range fields	calendar	km	ជួរវាល
+re-edit event	calendar	km	កែសម្រួលព្រឹត្តិការណ៍ឡើងវិញ
+receive email updates	calendar	km	ទទួលព័ត៌មានថ្មីៗតាមអ៊ីមែល
+receive notifications about events you created/modified/deleted	calendar	km	ទទួលបានការជូនដំណឹងអំពីព្រឹត្តិការណ៍ដែលអ្នកបានបង្កើត/កែប្រែ/លុប។
+receive summary of appointments	calendar	km	ទទួលបានសេចក្តីសង្ខេបនៃការណាត់ជួប
+recordings	calendar	km	Recordings
+recover	calendar	km	Recover
+recovered	calendar	km	បានជាសះស្បើយ។
+recurrence	calendar	km	ការកើតឡើងវិញ។
+recurrence enddate	calendar	km	កាលបរិច្ឆេទបញ្ចប់នៃការកើតឡើងវិញ។
+recurrences and conflict check	calendar	km	ការត្រួតពិនិត្យការកើតឡើងវិញ និងការប៉ះទង្គិច
+recurring event	calendar	km	ព្រឹត្តិការណ៍កើតឡើងដដែលៗ
+regular edit	calendar	km	ការកែសម្រួលទៀងទាត់
+reject	calendar	km	បដិសេធ
+rejected	calendar	km	ច្រានចោល
+removes the event from my calendar	calendar	km	យកព្រឹត្តិការណ៍ចេញពីប្រតិទិនរបស់ខ្ញុំ
+repeat days	calendar	km	ធ្វើម្តងទៀតថ្ងៃ
+repeat the event until which date (empty means unlimited)	calendar	km	ធ្វើព្រឹត្តិការណ៍ម្តងទៀតរហូតដល់កាលបរិច្ឆេទ។ ទទេសម្រាប់គ្មានដែនកំណត់។
+repeat type	calendar	km	ប្រភេទម្តងទៀត
+repeating event information	calendar	km	ព័ត៌មានព្រឹត្តិការណ៍ដដែលៗ
+repeating interval, eg. 2 to repeat every second week	calendar	km	ចន្លោះពេលធ្វើម្តងទៀត ឧទាហរណ៍ 2 ដើម្បីធ្វើម្តងទៀតរៀងរាល់សប្តាហ៍ទីពីរ
+repetition	calendar	km	ពាក្យដដែលៗ
+repetitiondetails (or empty)	calendar	km	ព័ត៌មានលម្អិតអំពីពាក្យដដែលៗ (ឬទទេ)
+replacements for inserting events into documents	calendar	km	ការជំនួសសម្រាប់ការបញ្ចូលព្រឹត្តិការណ៍ទៅក្នុងឯកសារ
+reply to meeting request	calendar	km	ឆ្លើយតបទៅនឹងសំណើប្រជុំ
+replying "%1" is not a participant of the event! only continue if you want to add as new participant.	calendar	km	ឆ្លើយតប " %1" មិនមែនជាអ្នកចូលរួមព្រឹត្តិការណ៍ទេ! បន្តប្រសិនបើអ្នកចង់បន្ថែមជាអ្នកចូលរួមថ្មី។
+requested	calendar	km	បានស្នើសុំ
+requested date %1 outside allowed range of %2 days: recurring events obmitted!	calendar	km	កាលបរិច្ឆេទ​ដែល​បាន​ស្នើ %1 នៅ​ខាង​ក្រៅ​ជួរ​ដែល​បាន​អនុញ្ញាត​នៃ %2 ថ្ងៃ៖ ព្រឹត្តិការណ៍​ដែល​កើត​ឡើង​ដដែលៗ​បាន​ទទួល!
+requested meeting is in the past!	calendar	km	ការ​ប្រជុំ​ដែល​បាន​ស្នើ​គឺ​កន្លង​មក!
+require an acl grant to invite other users and groups	admin	km	ទាមទារជំនួយ ACL ដើម្បីអញ្ជើញអ្នកប្រើប្រាស់ និងក្រុមផ្សេងទៀត។
+required information (start, end, title, ...) missing!	calendar	km	ព័ត៌មានចាំបាច់ (ចាប់ផ្តើម, បញ្ចប់, ចំណងជើង, ...) បាត់!
+reset	calendar	km	កំណត់ឡើងវិញ
+reset participant stati on event shifts	calendar	km	កំណត់ស្ថានភាពអ្នកចូលរួមឡើងវិញនៅលើការផ្លាស់ប្តូរព្រឹត្តិការណ៍
+resources	calendar	km	ធនធាន
+resources except conflicting ones	calendar	km	ធនធាន លើកលែងតែមានជម្លោះ
+resources with conflict detection	calendar	km	ធនធានជាមួយនឹងការរកឃើញជម្លោះ
+restrict add category to	calendar	km	ដាក់កម្រិតបន្ថែមប្រភេទទៅ
+restrict set status to	calendar	km	ដាក់កម្រិតកំណត់ស្ថានភាពទៅ
+role	calendar	km	តួនាទី
+rule	calendar	km	ក្បួន
+sat	calendar	km	សៅរ៍
+save event as exception - delete single occurrence - edit status or alarms for this particular day	calendar	km	រក្សាទុកព្រឹត្តិការណ៍ជាករណីលើកលែង - លុបការកើតឡើងតែមួយដង - កែសម្រួលស្ថានភាព ឬម៉ោងរោទ៍សម្រាប់ថ្ងៃពិសេសនេះ។
+saves the changes made	calendar	km	រក្សាទុកការផ្លាស់ប្តូរដែលបានធ្វើ។
+saves the event ignoring the conflict	calendar	km	រក្សាទុកព្រឹត្តិការណ៍ដោយមិនអើពើនឹងជម្លោះ។
+scheduling conflict	calendar	km	កាលវិភាគជម្លោះ
+search string for the events	calendar	km	ស្វែងរកខ្សែអក្សរសម្រាប់ព្រឹត្តិការណ៍
+select a %1	calendar	km	ជ្រើសរើស %1
+select a color for this calendar	calendar	km	ជ្រើសរើសពណ៌សម្រាប់ប្រតិទិន
+select a time	calendar	km	ជ្រើសរើសពេលវេលាមួយ។
+select an action	calendar	km	ជ្រើសរើសសកម្មភាព
+select an action...	calendar	km	ជ្រើសរើសសកម្មភាព...
+select multiple contacts for a further action	calendar	km	ជ្រើសរើសទំនាក់ទំនងច្រើនសម្រាប់សកម្មភាពបន្ថែម
+select resources	calendar	km	ជ្រើសរើសធនធាន
+select whether you want the participant stati reset to unknown, if an event is shifted later on.	calendar	km	ជ្រើសរើសថាតើអ្នកចង់ឱ្យស្ថានភាពអ្នកចូលរួមកំណត់ឡើងវិញទៅជាមិនស្គាល់ ប្រសិនបើព្រឹត្តិការណ៍មួយត្រូវបានផ្លាស់ប្តូរនៅពេលក្រោយ។ សម្រាប់ផ្នែកខាងក្រៅ យើងតែងតែកំណត់ស្ថានភាពអ្នកចូលរួមឡើងវិញទៅជាមិនស្គាល់។
+select who should get the alarm	calendar	km	ជ្រើសរើសអ្នកដែលគួរទទួលបានសំឡេងរោទិ៍
+selected range	calendar	km	ជួរដែលបានជ្រើសរើស
+selected users/groups	calendar	km	អ្នកប្រើប្រាស់/ក្រុមដែលបានជ្រើសរើស
+send meetingrequest to all participants after the event is saved	calendar	km	ផ្ញើសំណើប្រជុំទៅអ្នកចូលរួមទាំងអស់បន្ទាប់ពីព្រឹត្តិការណ៍ត្រូវបានរក្សាទុក
+send notifications	calendar	km	ផ្ញើការជូនដំណឹង
+send notifications to users right now	calendar	km	ផ្ញើការជូនដំណឹងទៅអ្នកចូលរួមឥឡូវនេះ
+series deleted	calendar	km	បានលុបស៊េរី
+set new events to private	calendar	km	កំណត់ព្រឹត្តិការណ៍ថ្មីទៅជាឯកជន
+setting lock time calender	admin	km	កំណត់ពេលវេលាចាក់សោទិន្នន័យសម្រាប់ប្រតិទិន (លំនាំដើម 1 វិនាទី)
+shall the date parameter be accepted (e.g. from calendar module)?	calendar	km	តើប៉ារ៉ាម៉ែត្រកាលបរិច្ឆេទត្រូវបានទទួលយកទេ ឧទាហរណ៍ពីម៉ូឌុលប្រតិទិន?
+should new events created as private by default ?	calendar	km	តើព្រឹត្តិការណ៍ថ្មីគួរត្រូវបានបង្កើតជាឯកជនតាមលំនាំដើមទេ?
+should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is	calendar	km	តើ​អ្នក​មិន​គួរ​ចូល​ក្នុង​មនុស្ស​អាច​មើល​ឃើញ​ព័ត៌មាន FreeBusy របស់​អ្នក? អ្នកអាចកំណត់ពាក្យសម្ងាត់បន្ថែម ខុសពីពាក្យសម្ងាត់ធម្មតារបស់អ្នក ដើម្បីការពារព័ត៌មាននេះ។ ព័ត៌មាន FreeBusy ស្ថិតក្នុងទម្រង់ iCal ហើយរួមបញ្ចូលតែពេលដែលអ្នករវល់ប៉ុណ្ណោះ។ វាមិនរួមបញ្ចូលឈ្មោះព្រឹត្តិការណ៍ ការពណ៌នា ឬទីតាំងទេ។ URL សម្រាប់ព័ត៌មាន FreeBusy របស់អ្នកគឺ
+should the grid be shown in the calendar	calendar	km	គួរបង្ហាញក្រឡាចត្រង្គនៅក្នុងប្រតិទិន
+should the number of weeks be shown on top of the calendar	calendar	km	ប្រសិនបើចំនួនសប្តាហ៍ត្រូវបានបង្ហាញនៅលើកំពូលនៃប្រតិទិន
+should the number of weeks be shown on top of the calendar (only if offset = 0)	calendar	km	តើចំនួនសប្តាហ៍ត្រូវបានបង្ហាញនៅលើកំពូលនៃប្រតិទិន (ប្រសិនបើអុហ្វសិត = 0)
+should the planner display an empty row for users or categories without any appointment.	calendar	km	ប្រសិនបើអ្នករៀបចំផែនការបង្ហាញជួរទទេសម្រាប់អ្នកប្រើប្រាស់ ឬប្រភេទដោយមិនមានការណាត់ជួបណាមួយឡើយ។
+should the status of the event-participants (accept, reject, ...) be shown in brackets after each participants name ?	calendar	km	តើស្ថានភាពរបស់អ្នកចូលរួមព្រឹត្តិការណ៍ (ទទួលយក បដិសេធ...) ត្រូវបានបង្ហាញក្នុងតង្កៀបបន្ទាប់ពីឈ្មោះអ្នកចូលរួមម្នាក់ៗទេ?
+show %1 from %2	calendar	km	បង្ហាញ %1 ពី %2
+show a calendar title	calendar	km	បង្ហាញចំណងជើងប្រតិទិន
+show all events, as if they were private	calendar	km	បង្ហាញព្រឹត្តិការណ៍ទាំងអស់ ដូចជាប្រសិនបើវាជាឯកជន
+show all status incl. rejected events	calendar	km	បង្ហាញស្ថានភាពទាំងអស់រួមទាំង។ ព្រឹត្តិការណ៍ដែលត្រូវបានបដិសេធ
+show all status, but rejected	calendar	km	បង្ហាញស្ថានភាពទាំងអស់ ប៉ុន្តែត្រូវបានបដិសេធ
+show all status, but unknown	calendar	km	បង្ហាញស្ថានភាពទាំងអស់ ប៉ុន្តែមិនស្គាល់
+show also events just owned by selected user	calendar	km	បង្ហាញផងដែរនូវព្រឹត្តិការណ៍ដែលគ្រាន់តែជាកម្មសិទ្ធិរបស់អ្នកប្រើប្រាស់ដែលបានជ្រើសរើស
+show birthdays as all day non-blocking events as well as via mouseover of the date.	calendar	km	បង្ហាញជាព្រឹត្តិការណ៍ដែលមិនរារាំងពេញមួយថ្ងៃ ក៏ដូចជាតាមរយៈ mouseover នៃកាលបរិច្ឆេទ។
+show birthdays as events	calendar	km	បង្ហាញជាព្រឹត្តិការណ៍
+show birthdays from addressbook	admin	km	បង្ហាញថ្ងៃកំណើតពីសៀវភៅអាសយដ្ឋាន
+show empty rows in planner	calendar	km	បង្ហាញជួរទទេនៅក្នុងកម្មវិធីរៀបចំផែនការ
+show events that have been deleted	calendar	km	បង្ហាញព្រឹត្តិការណ៍ដែលត្រូវបានលុប
+show list of upcoming events	calendar	km	បង្ហាញបញ្ជីនៃព្រឹត្តិការណ៍នាពេលខាងមុខ
+show only accepted events	calendar	km	បង្ហាញតែព្រឹត្តិការណ៍ដែលទទួលយកប៉ុណ្ណោះ
+show only delegated events	calendar	km	បង្ហាញតែព្រឹត្តិការណ៍ដែលបានផ្ទេរសិទ្ធិប៉ុណ្ណោះ
+show only events flagged as public, (not checked as private)	calendar	km	បង្ហាញ​តែ​ព្រឹត្តិការណ៍​ដែល​បាន​ដាក់​ទង់​ជា​សាធារណៈ - មិន​ត្រូវ​បាន​ធីក​ជា​ឯកជន
+show only invitations, not yet accepted or rejected	calendar	km	បង្ហាញតែការអញ្ជើញ មិនទាន់ទទួលយក ឬបដិសេធ
+show only rejected events	calendar	km	បង្ហាញតែព្រឹត្តិការណ៍ដែលត្រូវបានបដិសេធ
+show only tentative accepted events	calendar	km	បង្ហាញតែព្រឹត្តិការណ៍ដែលទទួលយកដោយបណ្តោះអាសន្នប៉ុណ្ណោះ
+show only the date, not the year	admin	km	បង្ហាញតែកាលបរិច្ឆេទ មិនមែនឆ្នាំទេ
+show this month	calendar	km	បង្ហាញក្នុងខែនេះ
+show this week	calendar	km	បង្ហាញសប្តាហ៍នេះ
+show year and age	calendar	km	បង្ហាញឆ្នាំនិងអាយុ
+single event	calendar	km	ព្រឹត្តិការណ៍តែមួយ
+single participant	calendar	km	អ្នកចូលរួមតែមួយ
+specify where url of the day links to	calendar	km	បញ្ជាក់កន្លែងដែល URL នៃថ្ងៃភ្ជាប់ទៅ
+start	calendar	km	ចាប់ផ្តើម
+start date/time	calendar	km	កាលបរិច្ឆេទ / ពេលវេលាចាប់ផ្តើម
+start of series event changed	calendar	km	ការចាប់ផ្តើមនៃព្រឹត្តិការណ៍ស៊េរីបានផ្លាស់ប្តូរ។
+startdate	calendar	km	ថ្ងៃ​ចាប់ផ្តើម
+startdate / -time	calendar	km	កាលបរិច្ឆេទ / ពេលវេលាចាប់ផ្តើម
+startdate and -time of the search	calendar	km	ចាប់ផ្តើមកាលបរិច្ឆេទ និងពេលវេលានៃការស្វែងរក
+startdate of the export	calendar	km	កាលបរិច្ឆេទចាប់ផ្តើមនៃការនាំចេញ
+startrecord	calendar	km	ចាប់ផ្តើមកំណត់ត្រា
+status	calendar	km	ស្ថានភាព
+status already applied	calendar	km	ស្ថានភាពបានអនុវត្តរួចហើយ
+status changed	calendar	km	ស្ថានភាពបានផ្លាស់ប្តូរ។
+status for all future scheduled days changed	calendar	km	ស្ថានភាពសម្រាប់ថ្ងៃដែលបានគ្រោងទុកនាពេលអនាគតទាំងអស់បានផ្លាស់ប្តូរ។
+status for this particular day changed	calendar	km	ស្ថានភាពសម្រាប់ថ្ងៃពិសេសនេះបានផ្លាស់ប្តូរ។
+status of participants set to unknown because of missing category rights	calendar	km	ស្ថានភាពនៃអ្នកចូលរួមត្រូវបានកំណត់ទៅមិនស្គាល់ ដោយសារបាត់សិទ្ធិប្រភេទ។
+submit to repository	calendar	km	ដាក់ស្នើទៅឃ្លាំង
+summary of participant status: 3 participants: 1 accepted, 2 unknown	calendar	km	សង្ខេបស្ថានភាពអ្នកចូលរួម៖ 3 អ្នកចូលរួម៖ 1 ទទួលយក, 2 មិនស្គាល់
+sun	calendar	km	ព្រះអាទិត្យ
+tag to mark positions for address labels	calendar	km	ដាក់ស្លាកដើម្បីសម្គាល់ទីតាំងសម្រាប់ស្លាកអាសយដ្ឋាន
+tentative	calendar	km	បណ្តោះអាសន្ន
+test import (show importable records <u>only</u> in browser)	calendar	km	សាកល្បងការនាំចូល បង្ហាញកំណត់ត្រាដែលអាចនាំចូលបាន <u>តែ</u> នៅក្នុងកម្មវិធីរុករក។
+the apple ical apps use this color to display events from this calendar.	calendar	km	កម្មវិធី Apple iCal ប្រើពណ៌នេះដើម្បីបង្ហាញព្រឹត្តិការណ៍ពីប្រតិទិននេះ។
+the document can contain placeholder like {{%1}}, to be replaced with the data.	calendar	km	ឯកសារអាចមានកន្លែងដាក់ដូចជា {{%1}} ដែលត្រូវជំនួសដោយទិន្នន័យ។
+the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	calendar	km	ឯកសារអាចមានកន្លែងដាក់ដូចជា {{%3}} ដែលត្រូវជំនួសដោយទិន្នន័យ (%1បញ្ជីពេញនៃឈ្មោះកន្លែងដាក់%2)។
+the exceptions are deleted together with the series.	calendar	km	ការលើកលែងត្រូវបានលុបរួមជាមួយស៊េរី។
+the extern organizer changed the event!	calendar	km	អ្នករៀបចំខាងក្រៅបានផ្លាស់ប្តូរព្រឹត្តិការណ៍!
+the following document-types are supported:	calendar	km	ប្រភេទឯកសារខាងក្រោមត្រូវបានគាំទ្រ៖
+the original series will be terminated today and a new series be created.	calendar	km	ស៊េរីដើមនឹងត្រូវបានបញ្ចប់នៅថ្ងៃនេះ ហើយស៊េរីថ្មីត្រូវបានបង្កើតឡើង។
+the resource you selected is already overbooked:	calendar	km	ធនធានដែលអ្នកបានជ្រើសរើសគឺត្រូវបានកក់លើសហើយ៖
+the sender "%1" is not the extern organizer "%2", proceed with caution!	calendar	km	អ្នកផ្ញើ "%1" មិនមែនជាអ្នករៀបចំខាងក្រៅ "%2" សូមបន្តដោយប្រុងប្រយ័ត្ន!
+the sender "%1" is not the participant replying "%2", proceed with caution!	calendar	km	អ្នកផ្ញើ "%1" មិនមែនជាអ្នកចូលរួមឆ្លើយតប "%2" សូមបន្តដោយប្រុងប្រយ័ត្ន!
+this day is shown as first day in the week or month view.	calendar	km	ថ្ងៃនេះត្រូវបានបង្ហាញជាថ្ងៃដំបូងក្នុងទិដ្ឋភាពសប្តាហ៍ ឬខែ។
+this defines the end of your dayview. events after this time, are shown below the dayview.	calendar	km	វាកំណត់ការបញ្ចប់នៃទិដ្ឋភាពថ្ងៃរបស់អ្នក។ ព្រឹត្តិការណ៍បន្ទាប់ពីពេលនេះ ត្រូវបានបង្ហាញខាងក្រោមទិដ្ឋភាពថ្ងៃ។
+this defines the start of your dayview. events before this time, are shown above the dayview.<br>this time is also used as a default starttime for new events.	calendar	km	វាកំណត់ការចាប់ផ្តើមនៃទិដ្ឋភាពថ្ងៃរបស់អ្នក។ ព្រឹត្តិការណ៍មុនម៉ោងនេះ ត្រូវបានបង្ហាញនៅខាងលើទិដ្ឋភាពថ្ងៃ។<br>ពេលវេលានេះក៏ត្រូវបានប្រើជាពេលវេលាចាប់ផ្តើមលំនាំដើមសម្រាប់ព្រឹត្តិការណ៍ថ្មីៗផងដែរ។
+this entry is currently opened by %1!	calendar	km	បច្ចុប្បន្នធាតុនេះត្រូវបានបើកដោយ %1!
+this entry is opened by user:	calendar	km	ធាតុនេះត្រូវបានបើកក្នុងចន្លោះពេលកំណត់ដោយអ្នកប្រើប្រាស់៖
+this event is part of a series	calendar	km	ព្រឹត្តិការណ៍នេះគឺជាផ្នែកមួយនៃស៊េរី
+this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	km	ក្រុមនេះដែលត្រូវបានជ្រើសរើសជាមុននៅពេលអ្នកបញ្ចូលអ្នករៀបចំផែនការ។ អ្នកអាចផ្លាស់ប្តូរវានៅក្នុងអ្នករៀបចំផែនការនៅពេលណាក៏បាន។
+this is a recurring event. do you want to delete just this recurrence or the whole series?	calendar	km	នេះគឺជាព្រឹត្តិការណ៍កើតឡើងដដែលៗ។ តើ​អ្នក​ចង់​លុប​តែ​ការ​កើត​ឡើង​នេះ​ឬ​ស៊េរី​ទាំងមូល?
+this mail cancels a meeting	calendar	km	សំបុត្រនេះលុបចោលការប្រជុំ
+this mail contains a meeting request	calendar	km	សំបុត្រនេះមានសំណើប្រជុំ
+this mail contains a reply to a meeting request	calendar	km	សំបុត្រនេះមានការឆ្លើយតបទៅនឹងសំណើប្រជុំ
+this message is sent for canceled or deleted events.	calendar	km	សារនេះត្រូវបានផ្ញើសម្រាប់ព្រឹត្តិការណ៍ដែលបានលុបចោល ឬលុបចោល។
+this message is sent for modified or moved events.	calendar	km	សារនេះត្រូវបានផ្ញើសម្រាប់ព្រឹត្តិការណ៍ដែលបានកែប្រែ ឬផ្លាស់ប្តូរ។
+this message is sent to every participant of events you own, who has requested notifcations about new events.<br>you can use certain variables which get substituted with the data of the event. the first line is the subject of the email.	calendar	km	សារនេះត្រូវបានផ្ញើទៅគ្រប់អ្នកចូលរួមនៃព្រឹត្តិការណ៍ដែលអ្នកជាម្ចាស់ ដែលបានស្នើសុំការជូនដំណឹងអំពីព្រឹត្តិការណ៍ថ្មីៗ។<br>អ្នកអាចប្រើអថេរមួយចំនួនដែលជំនួសដោយទិន្នន័យនៃព្រឹត្តិការណ៍។ ជួរទីមួយគឺជាប្រធានបទនៃអ៊ីមែល។
+this message is sent to uninvited participants.	calendar	km	សារនេះត្រូវបានផ្ញើទៅអ្នកចូលរួមដែលមិនបានអញ្ជើញ។
+this message is sent when you accept, tentative accept or reject an event.	calendar	km	សារនេះត្រូវបានផ្ញើនៅពេលអ្នកទទួលយក ទទួលយក ឬបដិសេធព្រឹត្តិការណ៍ណាមួយ។
+this message is sent when you set an alarm for a certain event. include all information you might need.	calendar	km	សារនេះត្រូវបានផ្ញើនៅពេលអ្នកកំណត់ម៉ោងរោទិ៍សម្រាប់ព្រឹត្តិការណ៍ជាក់លាក់មួយ។ រួមបញ្ចូលព័ត៌មានទាំងអស់ដែលអ្នកប្រហែលជាត្រូវការ។
+this module displays a planner calendar.	calendar	km	ម៉ូឌុលនេះបង្ហាញប្រតិទិនអ្នករៀបចំផែនការ។
+this module displays a user's calendar as multiple weeks. don't give calendar application access to the anon user!	calendar	km	ម៉ូឌុលនេះបង្ហាញប្រតិទិនរបស់អ្នកប្រើជាច្រើនសប្តាហ៍។ កុំផ្តល់សិទ្ធិចូលប្រើកម្មវិធីប្រតិទិនដល់អ្នកប្រើប្រាស់អនាមិក!
+this module displays calendar events as a list.	calendar	km	ម៉ូឌុលនេះបង្ហាញព្រឹត្តិការណ៍ប្រតិទិនជាបញ្ជី។
+this module displays the current month	calendar	km	ម៉ូឌុលនេះបង្ហាញខែបច្ចុប្បន្ន
+three month	calendar	km	បីខែ
+thu	calendar	km	ធូ
+til	calendar	km	ទៅ
+timeframe	calendar	km	ស៊ុមពេលវេលា
+timeframe to search	calendar	km	ពេលវេលាស្វែងរក
+timesheet entries created for	calendar	km	ធាតុតារាងពេលវេលាត្រូវបានបង្កើតឡើងសម្រាប់
+timezone	calendar	km	ល្វែងម៉ោង
+timezone in which recurrences have identical time	calendar	km	តំបន់ពេលវេលាដែលការកើតឡើងដដែលៗមានពេលវេលាដូចគ្នា។
+timezone of event exports	calendar	km	តំបន់ពេលវេលានៃការនាំចេញព្រឹត្តិការណ៍
+timezone of event ical file import/export	calendar	km	តំបន់ពេលវេលានៃព្រឹត្តិការណ៍ iCal ឯកសារនាំចូល|នាំចេញ
+timezones aliases updated to version %1 (%2 records updated).	calendar	km	ឈ្មោះហៅក្រៅតំបន់ពេលវេលាបានធ្វើបច្ចុប្បន្នភាពទៅកំណែ %1 (%2 បានធ្វើបច្ចុប្បន្នភាពកំណត់ត្រា) ។
+timezones updated to version %1 (%2 records updated).	calendar	km	តំបន់ពេលវេលាបានធ្វើបច្ចុប្បន្នភាពទៅកំណែ %1 កំណត់ត្រា %2 បានធ្វើបច្ចុប្បន្នភាព។
+title of the event	calendar	km	ចំណងជើងនៃព្រឹត្តិការណ៍
+titles of any entries linked to the current record, excluding attached files	calendar	km	ចំណងជើងនៃធាតុណាមួយដែលភ្ជាប់ទៅនឹងកំណត់ត្រាបច្ចុប្បន្ន ដោយមិនរាប់បញ្ចូលឯកសារដែលបានភ្ជាប់
+to many might exceed your execution-time-limit	calendar	km	ចំនួនច្រើនពេកអាចលើសពីដែនកំណត់ពេលវេលាប្រតិបត្តិរបស់អ្នក។
+to-firstname	calendar	km	ទៅឈ្មោះដំបូង
+to-fullname	calendar	km	ឈ្មោះពេញ
+to-lastname	calendar	km	ទៅនាមត្រកូល
+toggle weekend	calendar	km	បិទបើកចុងសប្តាហ៍
+tomorrow	calendar	km	ថ្ងៃស្អែក
+translation	calendar	km	ការបកប្រែ
+tue	calendar	km	ថ្ងៃអង្គារ
+two weeks	calendar	km	ពីរ​ស​ប្តា​ហ៍
+type of planner	calendar	km	ប្រភេទអ្នករៀបចំផែនការ
+unable to save	calendar	km	មិនអាចរក្សាទុកបានទេ។
+uninvited	calendar	km	មិនបានអញ្ជើញ។
+update calendar view immediately when navigation calendar in sidebox is changed	calendar	km	ធ្វើបច្ចុប្បន្នភាពទិដ្ឋភាពប្រតិទិនភ្លាមៗ នៅពេលដែលប្រតិទិនរុករកនៅក្នុងរបារចំហៀងត្រូវបានផ្លាស់ប្តូរ
+update timezones	common	km	ធ្វើបច្ចុប្បន្នភាពតំបន់ពេលវេលា
+updated	calendar	km	បានធ្វើបច្ចុប្បន្នភាព
+use end date	calendar	km	ប្រើកាលបរិច្ឆេទបញ្ចប់
+use event tz	calendar	km	ប្រើព្រឹត្តិការណ៍ TZ
+use given criteria:	calendar	km	ប្រើលក្ខណៈវិនិច្ឆ័យដែលបានផ្តល់ឱ្យ៖
+use quick add or full edit dialog when creating a new event	calendar	km	ប្រើប្រអប់បន្ថែមរហ័ស ឬកែសម្រួលពេញលេញ នៅពេលបង្កើតព្រឹត្តិការណ៍ថ្មី
+use range-views to optimise calendar queries?	calendar	km	ប្រើការមើលជួរ ដើម្បីបង្កើនប្រសិទ្ធភាពសំណួរប្រតិទិន?
+use side menu to filter participants	calendar	km	ប្រើម៉ឺនុយចំហៀងដើម្បីត្រងអ្នកចូលរួម
+use the selected time and close the popup	calendar	km	ប្រើពេលវេលាដែលបានជ្រើសរើស ហើយបិទការលេចឡើង
+use this tag for addresslabels. put the content, you want to repeat, between two tags.	calendar	km	ប្រើស្លាកនេះសម្រាប់ស្លាកអាសយដ្ឋាន។ ដាក់មាតិកាដែលអ្នកចង់ធ្វើម្តងទៀតរវាងស្លាកពីរ។
+use this timezone to export calendar data.	calendar	km	ប្រើតំបន់ពេលវេលានេះដើម្បីនាំចេញទិន្នន័យប្រតិទិន។
+use this timezone to import/export calendar data.	calendar	km	ប្រើតំបន់ពេលវេលានេះដើម្បីនាំចូល|នាំចេញទិន្នន័យប្រតិទិន។
+use weekday start	calendar	km	ប្រើការចាប់ផ្តើមថ្ងៃធ្វើការ
+user or group	calendar	km	អ្នកប្រើប្រាស់ ឬក្រុម
+user selectable css file for the calendar setup	calendar	km	ឯកសារ CSS ដែលអាចជ្រើសរើសបានដោយអ្នកប្រើប្រាស់សម្រាប់ការដំឡើងប្រតិទិន
+users + groups: inviting both always requires an invite grant	admin	km	អ្នកប្រើប្រាស់ + ក្រុម៖ ការអញ្ជើញទាំងពីរតែងតែទាមទារការអញ្ជើញ
+using already existing event on server.	calendar	km	ការប្រើប្រាស់ព្រឹត្តិការណ៍ដែលមានស្រាប់នៅលើម៉ាស៊ីនមេ។
+utilities	calendar	km	ឧបករណ៍ប្រើប្រាស់
+view exception	calendar	km	មើលករណីលើកលែង
+view series	calendar	km	មើលស៊េរី
+view settings	calendar	km	មើលការកំណត់
+view this event	calendar	km	មើលព្រឹត្តិការណ៍នេះ។
+views showing a list of events	calendar	km	ទិដ្ឋភាពបង្ហាញបញ្ជីព្រឹត្តិការណ៍
+views with fixed time intervals	calendar	km	មើលជាមួយចន្លោះពេលកំណត់
+wed	calendar	km	ថ្ងៃពុធ
+week	calendar	km	សប្តាហ៍
+weekday	calendar	km	ថ្ងៃសប្តាហ៍
+weekday starts on	calendar	km	ថ្ងៃសប្តាហ៍ចាប់ផ្តើម
+weekdays	calendar	km	ថ្ងៃធ្វើការ
+weekdays to use in search	calendar	km	ថ្ងៃធ្វើការដើម្បីប្រើក្នុងការស្វែងរក
+weekly	calendar	km	ប្រចាំសប្តាហ៍
+weeks in multiple week view	calendar	km	សប្តាហ៍ក្នុងទិដ្ឋភាពច្រើនសប្តាហ៍
+weeks offset (for multi-column display)	calendar	km	អុហ្វសិតប្រចាំសប្តាហ៍សម្រាប់ការបង្ហាញជួរឈរច្រើន។
+weekview	calendar	km	ទិដ្ឋភាពសប្តាហ៍
+weekview with weekend	calendar	km	ទិដ្ឋភាពសប្តាហ៍ជាមួយចុងសប្តាហ៍
+weekview without weekend	calendar	km	ទិដ្ឋភាពសប្តាហ៍ដោយគ្មានចុងសប្តាហ៍
+what should links to the calendar events display in other applications.	calendar	km	អ្វីដែលគួរភ្ជាប់ទៅព្រឹត្តិការណ៍ប្រតិទិនបង្ហាញនៅក្នុងកម្មវិធីផ្សេងទៀត។
+when changing the month	calendar	km	នៅពេលផ្លាស់ប្តូរខែ និងឆ្នាំ។<br>ប្រសិនបើបាទ/ចាស សញ្ញាធីកដែលត្រូវអនុម័តត្រូវបានដកចេញ។
+when selected, birthdays and/or holidays will be displayed as events in your calendar. please note that this option only changes the appereance inside of egroupware, but does not change the information being sent via ical or other calendar interfaces.	calendar	km	នៅពេលជ្រើសរើស ថ្ងៃកំណើត និង/ឬថ្ងៃបុណ្យនឹងត្រូវបានបង្ហាញជាព្រឹត្តិការណ៍នៅក្នុងប្រតិទិនរបស់អ្នក។ សូមចំណាំថាជម្រើសនេះគ្រាន់តែផ្លាស់ប្តូររូបរាងខាងក្នុងរបស់ EGroupware ប៉ុណ្ណោះ ប៉ុន្តែមិនផ្លាស់ប្តូរព័ត៌មានដែលត្រូវបានផ្ញើតាមរយៈ iCal ឬចំណុចប្រទាក់ប្រតិទិនផ្សេងទៀតទេ។
+which view to show on home page	calendar	km	ទិដ្ឋភាពមួយណាដែលត្រូវបង្ហាញនៅលើទំព័រដើម
+while selecting up to x users day- and weekview is not consolidated (5 is used when not set)	admin	km	ចំនួនអ្នកប្រើប្រាស់អប្បបរមាសម្រាប់បង្ហាញការមើលថ្ងៃ និងសប្តាហ៍ជាការរួមបញ្ចូល។ លំនាំដើម = ៥
+whole day	calendar	km	ពេញមួយថ្ងៃ
+with credentials included	calendar	km	រួមបញ្ចូលជាមួយលិខិតសម្គាល់
+wk	calendar	km	Wk
+work day ends on	calendar	km	ថ្ងៃធ្វើការត្រូវបញ្ចប់
+work day starts on	calendar	km	ថ្ងៃធ្វើការចាប់ផ្តើម
+workday	calendar	km	ថ្ងៃធ្វើការ
+workdays	calendar	km	ថ្ងៃធ្វើការ
+yearly	calendar	km	ប្រចាំឆ្នាំ
+yearly planner	calendar	km	អ្នករៀបចំផែនការប្រចាំឆ្នាំ
+years	admin	km	ឆ្នាំ
+yearview	calendar	km	ទិដ្ឋភាពឆ្នាំ
+yes, only admins can purge deleted items	admin	km	បាទ/ចាស មានតែអ្នកគ្រប់គ្រងប៉ុណ្ណោះដែលអាចសម្អាតធាតុដែលបានលុប
+yes, users can purge their deleted items	admin	km	បាទ/ចាស អ្នកប្រើប្រាស់អាចសម្អាតធាតុដែលបានលុបរបស់ពួកគេ។
+you already replied to this invitation with	calendar	km	អ្នកបានឆ្លើយតបទៅនឹងការអញ្ជើញនេះរួចហើយជាមួយ
+you are not allowed to book the resource selected:	calendar	km	អ្នកមិនត្រូវបានអនុញ្ញាតឱ្យកក់ធនធានដែលបានជ្រើសរើសទេ៖
+you are not invited to that event!	calendar	km	អ្នកមិនត្រូវបានអញ្ជើញឱ្យចូលរួមក្នុងព្រឹត្តិការណ៍នោះទេ!
+you attempt to mail a meetingrequest to the recipients above. depending on the client this mail is opened with, the recipient may or may not see the mailbody below, but only see the meeting request attached.	calendar	km	អ្នកព្យាយាមផ្ញើសំណើប្រជុំទៅកាន់អ្នកទទួលខាងលើ។ អាស្រ័យលើអតិថិជនដែលសំបុត្រនេះត្រូវបានបើកជាមួយ អ្នកទទួលអាចឬមិនឃើញសារខាងក្រោម ប៉ុន្តែគ្រាន់តែឃើញសំណើប្រជុំដែលភ្ជាប់មកជាមួយប៉ុណ្ណោះ។
+you can either set a year or a occurrence, not both !!!	calendar	km	អ្នក​អាច​កំណត់​ឆ្នាំ​ឬ​ការ​កើត​មិន​មែន​ទាំង​ពីរ​!
+you can only set a year or a occurrence !!!	calendar	km	អ្នក​អាច​កំណត់​តែ​មួយ​ឆ្នាំ​ឬ​ការ​កើត​ឡើង​!
+you do not have permission to read this record!	calendar	km	អ្នកមិនមានសិទ្ធិអានកំណត់ត្រានេះទេ!
+you have a meeting scheduled for %1	calendar	km	អ្នកមានការប្រជុំដែលបានកំណត់ពេលសម្រាប់ %1
+you have been uninvited from the meeting at %1	calendar	km	អ្នក​ត្រូវ​បាន​គេ​មិន​អញ្ជើញ​ពី​ការ​ប្រជុំ​នៅ %1
+you need to select an account, contact or resource first!	calendar	km	អ្នកត្រូវជ្រើសរើសគណនី ទំនាក់ទំនង ឬធនធានជាមុនសិន!
+you need to select an ical file first	calendar	km	អ្នកត្រូវជ្រើសរើសឯកសារ iCal ជាមុនសិន។
+you need to select some events first	calendar	km	អ្នកត្រូវជ្រើសរើសព្រឹត្តិការណ៍មួយចំនួនជាមុនសិន។
+you need to set either a day or a occurrence !!!	calendar	km	អ្នក​ត្រូវ​កំណត់​ទាំង​ថ្ងៃ​ឬ​ការ​កើត​ឡើង​!
+you requested more than available for the selected resource:	calendar	km	អ្នកបានស្នើសុំច្រើនជាងមានសម្រាប់ធនធានដែលបានជ្រើសរើស៖
+your meeting scheduled for %1 has been canceled	calendar	km	ការប្រជុំរបស់អ្នកដែលបានកំណត់ពេលសម្រាប់ %1 ត្រូវបានលុបចោល
+your meeting that had been scheduled for %1 has been rescheduled to %2	calendar	km	ការប្រជុំរបស់អ្នកដែលបានកំណត់ពេលសម្រាប់ %1 ត្រូវបានកំណត់ពេលឡើងវិញទៅ %2
+your php extension pdo_sqlite is broken!	calendar	km	ផ្នែកបន្ថែម PHP របស់អ្នក pdo_sqlite ត្រូវបានខូច!

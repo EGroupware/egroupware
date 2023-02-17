@@ -1,0 +1,109 @@
+(update in sec. %s)	notifications	km	(ធ្វើបច្ចុប្បន្នភាពក្នុងវិនាទី %s)
+account:	notifications	km	គណនី៖
+all possible notification backends	notifications	km	កម្មវិធីខាងក្រោយការជូនដំណឹងដែលអាចធ្វើបានទាំងអស់។
+are you sure you want to delete all notifications?	notifications	km	តើអ្នកប្រាកដថាចង់លុបការជូនដំណឹងទាំងអស់មែនទេ?
+browser	notifications	km	កម្មវិធីរុករក
+browser is starting.	notifications	km	កម្មវិធីរុករកកំពុងចាប់ផ្តើម។
+cancal settings?	notifications	km	ការកំណត់ Cancal?
+cancal?	notifications	km	Cancal?
+certification-information:	notifications	km	ព័ត៌មានបញ្ជាក់៖
+check both (first try (active) user defined account, if none use emailadmin profile)	admin	km	ពិនិត្យទាំងពីរ។ ដំបូងសាកល្បងគណនីដែលកំណត់ដោយអ្នកប្រើប្រាស់សកម្ម ប្រសិនបើគ្មានទេ ប្រើទម្រង់ eMailAdmin ។
+choose a notification-chain. you will be notified over the backends included in the chain.<br />note: if a notification-chain is marked as "disabled", your administrator does not allow one or more of the backends included in the chain and notifications falls back to "e-mail" while notifying you.	notifications	km	ជ្រើសរើសខ្សែសង្វាក់ជូនដំណឹង។ អ្នកនឹងត្រូវបានជូនដំណឹងអំពីផ្នែកខាងក្រោយដែលរួមបញ្ចូលនៅក្នុងខ្សែសង្វាក់។<br />ចំណាំ៖ ប្រសិនបើខ្សែសង្វាក់ការជូនដំណឹងត្រូវបានសម្គាល់ថា "បិទ" អ្នកគ្រប់គ្រងរបស់អ្នកមិនអនុញ្ញាតឱ្យមានផ្នែកខាងក្រោយមួយ ឬច្រើនរួមបញ្ចូលនៅក្នុងខ្សែសង្វាក់នោះទេ ការជូនដំណឹងនឹងធ្លាក់ ត្រលប់ទៅ "អ៊ីមែល" ខណៈពេលដែលជូនដំណឹងដល់អ្នក។
+choose from mailsettings used for notification	admin	km	ជ្រើសរើសការកំណត់សំបុត្រដែលប្រើសម្រាប់ការជូនដំណឹងតាមអ៊ីមែល
+common chains	notifications	km	ខ្សែសង្វាក់ធម្មតា
+connection error.	notifications	km	កំហុសក្នុងការតភ្ជាប់។
+connection error. please check connection to server.	notifications	km	កំហុសក្នុងការតភ្ជាប់។ សូមពិនិត្យមើលការតភ្ជាប់ទៅម៉ាស៊ីនមេ។
+continue to connect?	notifications	km	បន្តភ្ជាប់?
+cookies are required to login to this site.	notifications	km	ខូគីត្រូវបានតម្រូវឱ្យចូលគេហទំព័រនេះ។
+delete all messages	notifications	km	លុបសារទាំងអស់
+delete notifications	notifications	km	លុបការជូនដំណឹង
+delete this message	notifications	km	លុបសារនេះ
+disabled chains	notifications	km	ខ្សែសង្វាក់ពិការ
+do not notify me at all	notifications	km	កុំជូនដំណឹងខ្ញុំទាល់តែសោះ
+domain not found, please check serveraddress.	notifications	km	រកមិនឃើញដែន សូមពិនិត្យមើលអាសយដ្ឋាន Server ។
+e-mail only	notifications	km	អ៊ីមែលតែប៉ុណ្ណោះ
+egroupware has notifications for you	notifications	km	Egroupware មានការជូនដំណឹងសម្រាប់អ្នក
+egroupware login is starting, please wait.	notifications	km	ការចូល EGroupware កំពុងចាប់ផ្តើម សូមរង់ចាំ។
+egroupware logindomain:	notifications	km	Egroupware Logindomain៖
+egroupware logindomains founds, please select.	notifications	km	បានរកឃើញ EGroupware Logindomains សូមជ្រើសរើស។
+egroupware not found by url or connection lost to server.	notifications	km	EGroupware រកមិនឃើញដោយ URL ឬការតភ្ជាប់ដែលបាត់បង់ទៅម៉ាស៊ីនមេ។
+egroupware not found by url.	notifications	km	រកមិនឃើញ EGroupware ដោយ URL ។
+egroupware-popup and e-mail	notifications	km	លេចឡើង EGroupware និងអ៊ីមែល
+egroupware-popup and windows-popup	notifications	km	លេចឡើង EGroupware និង Windows លេចឡើង
+egroupware-popup backend	admin	km	Egroupware លេចឡើងនៅខាងក្រោយ
+egroupware-popup first, if that fails notify me by e-mail	notifications	km	ការលេចឡើងនៃ EGroupware ជាដំបូងប្រសិនបើវាបរាជ័យ ជូនដំណឹងខ្ញុំតាមអ៊ីមែល
+egroupware-popup only	notifications	km	លេចឡើងតែ EGroupware ប៉ុណ្ណោះ។
+egroupware-popup verbosity	notifications	km	កិរិយាសព្ទលេចឡើង EGroupware
+email notifications only, if user is not logged in	notifications	km	ការជូនដំណឹងតាមអ៊ីមែលតែប៉ុណ្ណោះ ប្រសិនបើអ្នកប្រើមិនបានចូល
+emailadmin profile only (do not use user defined (active) mail profiles for notification)	admin	km	អ៊ីមែលអ្នកគ្រប់គ្រងតែប៉ុណ្ណោះ។ កុំប្រើទម្រង់សំបុត្រសកម្មដែលបានកំណត់ដោយអ្នកប្រើប្រាស់សម្រាប់ការជូនដំណឹង។
+enable egroupware-popup backend	admin	km	បើកដំណើរការផ្នែកខាងក្រោយដែលលេចឡើង EGroupware
+enable windows-popup backend	admin	km	បើកដំណើរការ Windows លេចឡើងខាងក្រោយ
+enabled chains	notifications	km	ខ្សែសង្វាក់ដែលបានបើក
+error browser can`t start.	notifications	km	កម្មវិធីរុករកកំហុសមិនអាចចាប់ផ្តើមបានទេ។
+error on loading tray icon	notifications	km	កំហុសក្នុងការផ្ទុករូបតំណាងថាស
+error ssl	notifications	km	កំហុស SSL
+exit	notifications	km	ចេញ
+folder	notifications	km	ថតឯកសារ
+from	notifications	km	ពី
+host:	notifications	km	ម្ចាស់ផ្ទះ៖
+how verbose should the egroupware-popup behave if a notification is sent to the user:<br />low: just display the notification bell in the topmenu - topmenu must be enabled!<br />medium: bring notification window to front<br />high: bring notification window to front and let the browser do something to announce itself	notifications	km	តើ EGroupware-Popup គួរមានអាកប្បកិរិយាយ៉ាងណា ប្រសិនបើការជូនដំណឹងត្រូវបានផ្ញើទៅអ្នកប្រើប្រាស់៖<br /> ទាប៖ គ្រាន់តែបង្ហាញកណ្តឹងជូនដំណឹងនៅក្នុងម៉ឺនុយកំពូល - ម៉ឺនុយកំពូលត្រូវតែបើក!<br />មធ្យម៖ នាំបង្អួចជូនដំណឹងទៅខាងមុខ <br />កម្រិតខ្ពស់៖ នាំបង្អួចជូនដំណឹងទៅខាងមុខ ហើយអនុញ្ញាតឱ្យកម្មវិធីរុករកធ្វើអ្វីមួយដើម្បីប្រកាសខ្លួនឯង
+if set, embedded links get rendered special for external clients	notifications	km	ប្រសិនបើបានកំណត់ តំណភ្ជាប់ដែលបានបង្កប់នឹងត្រូវបានបង្ហាញជាពិសេសសម្រាប់អតិថិជនខាងក្រៅ
+info on load config file: create config file.	notifications	km	ព័ត៌មានអំពីការផ្ទុកឯកសារកំណត់រចនាសម្ព័ន្ធ៖ បង្កើតឯកសារកំណត់រចនាសម្ព័ន្ធ។
+issuer dn:	notifications	km	អ្នកចេញ DN៖
+java desktop notification app	preferences	km	កម្មវិធីជូនដំណឹងលើតុ Java
+last month	notifications	km	ខែមុន
+linked entries:	common	km	ធាតុដែលបានភ្ជាប់៖
+login aborted, application exit?	notifications	km	ការ​ចូល​ត្រូវ​បាន​បោះបង់ ការ​ចេញ​កម្មវិធី?
+login in egroupware:	notifications	km	ចូលក្នុង EGroupware៖
+mail account to use for notifications	admin	km	គណនីអ៊ីមែលដែលត្រូវប្រើសម្រាប់ការជូនដំណឹង
+mail backend	admin	km	អ៊ីមែលខាងក្រោយ
+mark all as read	notifications	km	សម្គាល់ទាំងអស់ថាបានអាន
+mark as read	notifications	km	សម្គាល់ថាបានអាន
+message from	notifications	km	សារពី
+minutes	notifications	km	នាទី
+more info	notifications	km	ព័​ត៍​មាន​បន្ថែម
+notification	common	km	សេចក្តីជូនដំណឹង
+notifier	notifications	km	ជូនដំណឹង
+notify me by	notifications	km	ជូនដំណឹងខ្ញុំដោយ
+open notified entry	notifications	km	បើកការជូនដំណឹង
+optimize e-mails for external mail client	notifications	km	បង្កើនប្រសិទ្ធភាពអ៊ីមែលសម្រាប់កម្មវិធីអ៊ីមែលខាងក្រៅ
+page not found, please check serveraddress.	notifications	km	រកមិនឃើញទំព័រទេ សូមពិនិត្យមើលអាសយដ្ឋាន Server ។
+password:	notifications	km	ពាក្យសម្ងាត់៖
+permission	notifications	km	ការអនុញ្ញាត
+permission denied for notifications application.	notifications	km	ការអនុញ្ញាតត្រូវបានបដិសេធសម្រាប់កម្មវិធីជូនដំណឹង។
+placeholders with user/ prefix	admin	km	កន្លែងដាក់ជាមួយអ្នកប្រើប្រាស់/បុព្វបទ
+please contact your egroupware admin.	notifications	km	សូមទាក់ទងអ្នកគ្រប់គ្រង EGroupware របស់អ្នក។
+please enter the url of your egroupware.	notifications	km	សូមបញ្ចូល URL នៃ EGroupware របស់អ្នក។
+please enter your egroupware username.	notifications	km	សូមបញ្ចូលឈ្មោះអ្នកប្រើប្រាស់ EGroupware របស់អ្នក។
+please enter your password	notifications	km	សូម​បញ្ចូល​ពាក្យ​សម្ងាត់​របស់​អ្នក
+poll interval	notifications	km	ចន្លោះពេលបោះឆ្នោត
+preferences for notification	notifications	km	ចំណូលចិត្តសម្រាប់ការជូនដំណឹង
+received	notifications	km	បានទទួល
+refresh notifications	notifications	km	ធ្វើឱ្យការជូនដំណឹងឡើងវិញ
+repeat login?	notifications	km	ចូលម្តងទៀត?
+run application	notifications	km	ដំណើរការកម្មវិធី
+save password	notifications	km	រក្សាទុកពាក្យសម្ងាត់
+setting	notifications	km	ការកំណត់
+setting aborted, application exit	notifications	km	ការ​កំណត់​បាន​បោះបង់ ការ​ចេញ​កម្មវិធី
+settings	notifications	km	ការកំណត់
+signature	admin	km	ហត្ថលេខា
+signature added to every change notification	admin	km	ហត្ថលេខាត្រូវបានបន្ថែមទៅរាល់ការជូនដំណឹងអំពីការផ្លាស់ប្តូរ
+sorry, your login has expired	notifications	km	សូមអភ័យទោស ការចូលរបស់អ្នកបានផុតកំណត់ហើយ។
+step	notifications	km	ជំហាន
+subject dn:	notifications	km	ប្រធានបទ DN៖
+the server certificate is not a valid trust center certificate!	notifications	km	វិញ្ញាបនបត្រម៉ាស៊ីនមេមិនមែនជាវិញ្ញាបនបត្រមជ្ឈមណ្ឌលទុកចិត្តត្រឹមត្រូវទេ!
+this egroupware notification has been sent to you by mail because your	notifications	km	ការជូនដំណឹង EGroupware នេះត្រូវបានផ្ញើទៅអ្នកតាមប្រៃសណីយ៍ ដោយសារតែរបស់អ្នក។
+this egroupware notification has been sent to you by mail because your chosen notification-chain has been disabled by the administrator. please choose another notification-chain in your preferences!	notifications	km	ការជូនដំណឹង EGroupware នេះត្រូវបានផ្ញើទៅអ្នកតាមប្រៃសណីយ៍ ដោយសារតែខ្សែសង្វាក់ការជូនដំណឹងដែលអ្នកបានជ្រើសរើសត្រូវបានបិទដោយអ្នកគ្រប់គ្រង។ សូមជ្រើសរើសខ្សែសង្វាក់ជូនដំណឹងមួយផ្សេងទៀតនៅក្នុងចំណូលចិត្តរបស់អ្នក!
+this month	notifications	km	ខែ​នេះ
+user:	notifications	km	អ្នក​ប្រើ:
+warning	notifications	km	ការព្រមាន
+windows-popup and e-mail	notifications	km	បង្អួចលេចឡើង និងអ៊ីមែល
+windows-popup backend	admin	km	វីនដូលេចឡើងខាងក្រោយ
+windows-popup first, if that fails notify me by e-mail	notifications	km	វីនដូលេចឡើងជាមុនសិន ប្រសិនបើវាបរាជ័យ ជូនដំណឹងខ្ញុំតាមអ៊ីមែល
+windows-popup only	notifications	km	វីនដូលេចឡើងតែប៉ុណ្ណោះ
+yesterday	notifications	km	ម្សិលមិញ
+you can also use	admin	km	អ្នកក៏អាចប្រើ
+you have %1 unread notifications	notifications	km	អ្នកមានការជូនដំណឹង %1 ដែលមិនទាន់អាន
+you have been successfully logged out	notifications	km	អ្នក​ត្រូវ​បាន​ចេញ​ដោយ​ជោគជ័យ
+you've got new mail	notifications	km	អ្នក​មាន​សំបុត្រ​ថ្មី
+your session could not be verified.	notifications	km	សម័យរបស់អ្នកមិនអាចផ្ទៀងផ្ទាត់បានទេ។

@@ -1,0 +1,170 @@
+%1 accessories now resources	resources	km	ធនធាន %1 ឥឡូវនេះ
+%1 accessories restored	resources	km	គ្រឿងបន្លាស់ %1 ត្រូវបានស្ដារឡើងវិញ
+%1 resource(s) %2	resources	km	ធនធាន %1 %2
+%1 resource(s) %2, %3 failed	resources	km	%1 ធនធាន %2, %3 បានបរាជ័យ
+%1 resource(s) %2, %3 failed because of insufficent rights !!!	resources	km	%1 ធនធាន %2, %3 បានបរាជ័យដោយសារតែសិទ្ធិមិនគ្រប់គ្រាន់ !!!
+%1 resource(s) booked	resources	km	ធនធាន %1 បានកក់ទុក
+%1 resource(s) view calendar	resources	km	%1 ធនធាន មើលប្រតិទិន
+accessories	resources	km	គ្រឿងបន្លាស់
+accessories of	resources	km	គ្រឿងបន្លាស់របស់
+accessories:	resources	km	គ្រឿង​បន្ថែម៖
+accessory of	resources	km	គ្រឿងបន្លាស់របស់
+actions	resources	km	សកម្មភាព
+add accessory	resources	km	បន្ថែមគ្រឿងបន្លាស់
+add group to event participants	resources	km	បន្ថែមក្រុមទៅអ្នកចូលរួមព្រឹត្តិការណ៍
+add resource	resources	km	បន្ថែមធនធាន
+add resources	resources	km	បន្ថែមធនធាន
+administrator	resources	km	អ្នកគ្រប់គ្រង
+all categories	resources	km	ប្រភេទ​ទាំងអស់
+allow booking requests from any user when creating events?	resources	km	អនុញ្ញាតសំណើកក់ពីអ្នកប្រើប្រាស់ណាមួយនៅពេលបង្កើតព្រឹត្តិការណ៍?
+allow ignore conflicts	admin	km	អនុញ្ញាតឱ្យមិនអើពើនឹងជម្លោះ
+book	resources	km	សៀវភៅ
+book resource	resources	km	ធនធានសៀវភៅ
+book selected resources	resources	km	សៀវភៅធនធានដែលបានជ្រើសរើស
+book this resource	resources	km	កក់ធនធាននេះ។
+bookable	resources	km	អាចកក់បាន។
+booked	resources	km	បានកក់ទុក
+booking requests	resources	km	សំណើកក់ទុក
+buy this article	resources	km	ទិញអត្ថបទនេះ
+buy this resource	resources	km	ទិញធនធាននេះ
+buyable	resources	km	អាចទិញបាន។
+category admin	resources	km	ប្រភេទអ្នកគ្រប់គ្រង
+category:	resources	km	ប្រភេទ៖
+check all	resources	km	ពិនិត្យ​ទាំងអស់
+choose category admin	resources	km	ជ្រើសរើសអ្នកគ្រប់គ្រងប្រភេទ
+clear selection	resources	km	ជម្រះការជ្រើសរើស
+configure access permissions	admin	km	កំណត់រចនាសម្ព័ន្ធ ACL
+confirmation email text	resources	km	អត្ថបទអ៊ីមែលបញ្ជាក់
+confirmed addressbook.	resources	km	សៀវភៅអាសយដ្ឋានដែលបានបញ្ជាក់។
+conflict	resources	km	ជម្លោះ
+create new accessory for this resource	resources	km	បង្កើតគ្រឿងបន្លាស់ថ្មីសម្រាប់ធនធាននេះ។
+create new links	resources	km	បង្កើតតំណថ្មី។
+custom etemplate for the contactform	resources	km	គំរូ eTemplate ផ្ទាល់ខ្លួនសម្រាប់ទម្រង់ទំនាក់ទំនង
+custom fields	resources	km	វាលផ្ទាល់ខ្លួន
+days	resources	km	ថ្ងៃ
+delete selected resources	resources	km	លុបធនធានដែលបានជ្រើសរើស
+delete this entry	resources	km	លុបធាតុនេះ។
+deleted	resources	km	បានលុប
+description (short)	resources	km	ការពិពណ៌នាខ្លី
+direct booking permissions	resources	km	ការអនុញ្ញាតការកក់ដោយផ្ទាល់
+do you really want to delete this resource?	resources	km	តើអ្នកពិតជាចង់លុបធនធាននេះមែនទេ?
+don't use vfs (this will need a symlink --> see readme)	resources	km	កុំប្រើ vfs (វានឹងត្រូវការ symlink --> មើល README)
+edit this entry	resources	km	កែសម្រួលធាតុនេះ។
+event start	resources	km	ព្រឹត្តិការណ៍ចាប់ផ្តើម
+existing links	resources	km	តំណភ្ជាប់ដែលមានស្រាប់
+exists	resources	km	មាន
+expiry	resources	km	ផុតកំណត់
+export definition to use for nextmatch export	resources	km	នាំចេញនិយមន័យដែលត្រូវប្រើសម្រាប់ការនាំចេញការប្រកួតបន្ទាប់
+export definitition to use for nextmatch export	resources	km	នាំចេញនិយមន័យដែលត្រូវប្រើសម្រាប់ការនាំចេញការប្រកួតបន្ទាប់
+exports a list of resources to a csv file.	resources	km	នាំចេញបញ្ជីធនធានទៅឯកសារ CSV ។
+general	resources	km	ទូទៅ
+general informations about resource	resources	km	ព័ត៌មានទូទៅអំពីធនធាន
+gernal resource	resources	km	ធនធានទូទៅ
+global categories	resources	km	ប្រភេទសកល
+history logging	admin	km	ការកត់ត្រាប្រវត្តិសាស្ត្រ
+hours	resources	km	ម៉ោង
+how many of the resources are useable?	resources	km	តើមានប៉ុន្មានដែលអាចប្រើបាន
+how many of them are useable?	resources	km	តើមានប៉ុន្មានដែលអាចប្រើបាន
+how many of this resource are usable	resources	km	តើមានប៉ុន្មានដែលអាចប្រើបាន
+how many of this resource exists	resources	km	តើធនធាននេះមានប៉ុន្មាន
+if you specify an export definition, it will be used when you export	resources	km	ប្រសិនបើអ្នកបញ្ជាក់និយមន័យនាំចេញ វានឹងត្រូវបានប្រើនៅពេលអ្នកនាំចេញ
+implies booking permission	resources	km	បង្កប់ន័យការអនុញ្ញាតការកក់
+implies read permission	resources	km	បង្កប់ន័យការអនុញ្ញាតអាន
+imports a list of resources from a csv file.	resources	km	នាំចូលបញ្ជីធនធានពីឯកសារ CSV ។
+information about storage	resources	km	ព័ត៌មានផ្ទុក
+informations about the location of resource	resources	km	ព័ត៌មានទីតាំង
+insert	resources	km	បញ្ចូល
+inventory number	resources	km	លេខសារពើភ័ណ្ឌ
+inventory number:	resources	km	លេខសារពើភ័ណ្ឌ៖
+is resource bookable?	resources	km	ធនធានអាចកក់ទុកបាន។
+is resource buyable?	resources	km	ធនធានអាចទិញបាន។
+is this resource bookable?	resources	km	តើធនធាននេះអាចកក់ទុកបានដែរឬទេ
+is this resource buyable?	resources	km	តើធនធាននេះអាចទិញបានទេ។
+links	resources	km	តំណភ្ជាប់
+location	resources	km	ទីតាំង
+location of resource	resources	km	ទីតាំងនៃធនធាន
+location:	resources	km	ទីតាំង៖
+locations / rooms	resources	km	ទីតាំង / បន្ទប់
+long description	resources	km	ការពិពណ៌នាវែង
+manage mapping	resources	km	គ្រប់គ្រងការធ្វើផែនទី
+name of resource	resources	km	ឈ្មោះធនធាន
+name:	resources	km	ឈ្មោះ៖
+new accessory	resources	km	គ្រឿងបន្លាស់ថ្មី
+new resource	resources	km	ធនធានថ្មី
+no description available	resources	km	មិនមានការពិពណ៌នាទេ។
+no matches	resources	km	គ្មានការប្រកួត
+no resources selected	resources	km	គ្មានធនធានត្រូវបានជ្រើសរើសទេ។
+no, users will need to contact users with direct booking permission	resources	km	ទេ អ្នកប្រើប្រាស់នឹងត្រូវទាក់ទងអ្នកប្រើប្រាស់ជាមួយនឹងការអនុញ្ញាតការកក់ដោយផ្ទាល់
+notify your administrator to correct this situation	resources	km	ជូនដំណឹងដល់អ្នកគ្រប់គ្រងរបស់អ្នក។
+picture	resources	km	រូបភាព
+picture source	resources	km	ប្រភពរូបភាព
+picture type is not supported, sorry!	resources	km	មិនគាំទ្រប្រភេទរូបភាព សូមអភ័យទោស!
+pictures or resource	resources	km	រូបភាព ឬធនធាន
+planer	resources	km	អ្នករៀបចំផែនការ
+please choose a different time:	resources	km	សូមជ្រើសរើសពេលវេលាផ្សេង៖
+prevent deleting	admin	km	រារាំងការលុប
+prize	resources	km	រង្វាន់
+prizeing information for booking or buying	resources	km	ព័ត៌មានតម្លៃសម្រាប់ការកក់ ឬទិញ
+quantity	resources	km	បរិមាណ
+quantity of resource	resources	km	បរិមាណនៃធនធាន
+quantity:	resources	km	បរិមាណ៖
+read calendar permissions	resources	km	អានការអនុញ្ញាតប្រតិទិន
+read permissions	resources	km	អានការអនុញ្ញាត
+registration confirmed %1	resources	km	ការចុះឈ្មោះបានបញ្ជាក់%1
+related links	resources	km	តំណភ្ជាប់ដែលពាក់ព័ន្ធ
+remove accessories before changing accessory of	resources	km	ដោះគ្រឿងបន្ថែមមុនពេលប្តូរគ្រឿងបន្លាស់
+require confirmation	resources	km	ទាមទារការបញ្ជាក់
+reserve	resources	km	កក់ទុក
+resource	resources	km	ធនធាន
+resource %1 deleted!	resources	km	ធនធាន%1 ត្រូវបានលុប!
+resource %1 faild to be deleted!	resources	km	ធនធាន%1 បានបរាជ័យក្នុងការលុប!
+resource %1 saved!	resources	km	ធនធាន%1 ត្រូវបានរក្សាទុក!
+resource / accessories	resources	km	ធនធាន / គ្រឿងបន្លាស់
+resource id	resources	km	លេខសម្គាល់ធនធាន
+resources	common	km	ធនធាន
+resources and accessories	resources	km	ធនធាន និងគ្រឿងបន្លាស់
+resources csv export	resources	km	ការនាំចេញ CSV ធនធាន
+resources csv import	resources	km	ការនាំចូល CSV ធនធាន
+resources list	resources	km	បញ្ជីធនធាន
+responsible:	resources	km	ទទួលខុសត្រូវ៖
+restored	resources	km	បានស្ដារឡើងវិញ
+saves entry and exits	resources	km	រក្សាទុកការចូលនិងចេញ
+select a category	resources	km	ជ្រើសរើសប្រភេទមួយ។
+select resource	resources	km	ជ្រើសរើសធនធាន
+select resources	common	km	ជ្រើសរើសធនធាន
+select/deselect all	resources	km	ជ្រើសរើស/មិនជ្រើសរើសទាំងអស់។
+short description	resources	km	ការពិពណ៌នាខ្លី
+short description of resource	resources	km	ការពិពណ៌នាសង្ខេបនៃធនធាន
+show calendar of resource	resources	km	បង្ហាញប្រតិទិននៃធនធាន
+simple reservation of a single item	resources	km	ការកក់សាមញ្ញនៃវត្ថុតែមួយ
+something went wrong by deleting resource	resources	km	កំហុសក្នុងការលុបធនធាន!
+something went wrong by saving resource	resources	km	កំហុសក្នុងការរក្សាទុកធនធាន!
+storage	resources	km	ការផ្ទុក
+storage information	resources	km	ការផ្ទុក
+storage information:	resources	km	ព័ត៌មានផ្ទុក៖
+the anonymous user needs add rights for it!	resources	km	អ្នកប្រើប្រាស់អនាមិកត្រូវការបន្ថែមសិទ្ធិសម្រាប់វា!
+the calendar of this resource	resources	km	ប្រតិទិននៃធនធាន
+this module displays the resources app	resources	km	ម៉ូឌុលនេះបង្ហាញកម្មវិធីធនធាន
+too many matches	resources	km	ការប្រកួតច្រើនពេក
+unable to link to %1 "%2"	resources	km	មិនអាចភ្ជាប់ទៅ%1 "%2" បានទេ
+unable to process confirmation.	resources	km	មិនអាចដំណើរការការបញ្ជាក់បានទេ។
+use general resources icon	resources	km	ប្រើរូបតំណាងធនធានទូទៅ
+use own picture	resources	km	ប្រើរូបភាពផ្ទាល់ខ្លួន
+use the category's icon	resources	km	ប្រើរូបតំណាងប្រភេទ
+useable	resources	km	អាចប្រើបាន
+view accessories	resources	km	មើលគ្រឿងបន្ថែម
+view calendar	resources	km	មើលប្រតិទិន
+view this entry	resources	km	មើលធាតុ
+web-page of resource	resources	km	គេហទំព័រធនធាន
+web-site for this resource	resources	km	គេហទំព័រសម្រាប់ធនធាននេះ។
+where to find this resource?	resources	km	ព័ត៌មានទីតាំង
+which category does this resource belong to?	resources	km	ប្រភេទនៃធនធាន
+write permissions	resources	km	សរសេរការអនុញ្ញាត
+yes, all users can ignore conflicts	resources	km	បាទ/ចាស អ្នកប្រើប្រាស់ទាំងអស់អាចមិនអើពើនឹងជម្លោះ
+yes, only admins can purge deleted items	admin	km	បាទ/ចាស មានតែអ្នកគ្រប់គ្រងប៉ុណ្ណោះដែលអាចសម្អាតធាតុដែលបានលុប
+yes, only users with direct booking permission	resources	km	បាទ/ចាស មានតែអ្នកប្រើប្រាស់ដែលមានសិទ្ធិកក់ដោយផ្ទាល់ប៉ុណ្ណោះ។
+yes, users can purge their deleted items	admin	km	បាទ/ចាស អ្នកប្រើប្រាស់អាចសម្អាតធាតុដែលបានលុបរបស់ពួកគេ។
+you are not permitted to delete this resource!	resources	km	អ្នកមិនត្រូវបានអនុញ្ញាតឱ្យលុបធនធាននេះទេ!
+you are not permitted to edit this resource!	resources	km	អ្នកមិនត្រូវបានអនុញ្ញាតឱ្យកែសម្រួលធនធាននេះទេ!
+you are not permitted to get information about this resource!	resources	km	អ្នកមិនត្រូវបានអនុញ្ញាតឱ្យទទួលបានព័ត៌មានអំពីធនធាននេះទេ!
+you chose more resources than available	resources	km	អ្នកបានជ្រើសរើសធនធានច្រើនជាងមាន!

@@ -1,0 +1,348 @@
+%1 already exists as a file	filemanager	km	%1 មានរួចហើយជាឯកសារ។
+%1 already mounted on %2!	filemanager	km	%1 បានដំឡើងរួចហើយនៅលើ %2!
+%1 directories and %2 files copied.	filemanager	km	ថត %1 និង ឯកសារ %2 បានចម្លង។
+%1 directories and %2 files deleted.	filemanager	km	ថត %1 និងឯកសារ %2 ត្រូវបានលុប។
+%1 elements linked.	filemanager	km	ធាតុ %1 ត្រូវបានភ្ជាប់។
+%1 errors copying (%2 diretories and %3 files copied)!	filemanager	km	កំហុស %1 ការចម្លង ថត %2 និងឯកសារ % 3 ត្រូវបានចម្លង!
+%1 errors deleteting (%2 directories and %3 files deleted)!	filemanager	km	កំហុស %1 លុប ថត %2 និង % 3 បានលុប!
+%1 errors deleting!	filemanager	km	%1 កំហុសក្នុងការលុប!
+%1 errors linking (%2)!	filemanager	km	កំហុស %1 ការភ្ជាប់ (%2)!
+%1 errors moving (%2 files moved)!	filemanager	km	%1 កំហុសផ្លាស់ទី។ បាន​ផ្លាស់ទី​ឯកសារ %2!
+%1 failed, %2 succeded	filemanager	km	%1 បានបរាជ័យ %2 បានជោគជ័យ។
+%1 files	common	km	ឯកសារ %1
+%1 files copied.	filemanager	km	ឯកសារ %1 ត្រូវបានចម្លង។
+%1 files deleted.	filemanager	km	ឯកសារ %1 ត្រូវបានលុប។
+%1 files moved.	filemanager	km	ឯកសារ %1 ត្រូវបានផ្លាស់ទី។
+%1 files or directories deleted in %2 seconds.	filemanager	km	ឯកសារ ឬថត %1 ត្រូវបានលុបក្នុងរយៈពេល %2 វិនាទី។
+%1 files unlocked.	filemanager	km	ឯកសារ %1 ត្រូវបានដោះសោ។
+%1 shares deleted.	filemanager	km	បានលុបការចែករំលែក %1 ។
+%1 starts with '%2'	filemanager	km	%1 ចាប់ផ្តើមដោយ '%2'
+%1 successful unmounted.	filemanager	km	បាន​ផ្ដាច់ %1 ដោយ​ជោគជ័យ។
+%1 successful uploaded.	filemanager	km	%1 បានបង្ហោះដោយជោគជ័យ។
+%1 the following files into current directory	filemanager	km	%1 ឯកសារខាងក្រោមទៅក្នុងថតបច្ចុប្បន្ន
+%1 urls %2 to clipboard.	filemanager	km	%1 URLs %2 ទៅក្ដារតម្បៀតខ្ទាស់
+%d errors while copying, %d files successfully copied.	filemanager	km	កំហុស %d ខណៈពេលកំពុងចម្លង ឯកសារ %d ត្រូវបានចម្លងដោយជោគជ័យ។
+%d errors while moving, %d files successfully moved.	filemanager	km	កំហុស %d ពេលកំពុងផ្លាស់ទី ឯកសារ %d ត្រូវបានផ្លាស់ទីដោយជោគជ័យ។
+%d erros while copying, %d files successfully copied.	filemanager	km	កំហុស %d ខណៈពេលកំពុងចម្លង ឯកសារ %d ត្រូវបានចម្លងដោយជោគជ័យ។
+%d erros while moving, %d files successfully moved.	filemanager	km	កំហុស %d ពេលកំពុងផ្លាស់ទី ឯកសារ %d ត្រូវបានផ្លាស់ទីដោយជោគជ័យ។
+%d files successfully copied.	filemanager	km	ឯកសារ %d ត្រូវបានចម្លងដោយជោគជ័យ។
+%d files successfully moved.	filemanager	km	ឯកសារ %d ត្រូវបានផ្លាស់ទីដោយជោគជ័យ។
+/ = everywhere	filemanager	km	/ = គ្រប់ទីកន្លែង
+0 means all, -n newer then n days	filemanager	km	0 មានន័យថាទាំងអស់ -N ថ្មីជាងថ្ងៃ N
+accessrights	filemanager	km	សិទ្ធិចូលប្រើ
+acl added.	filemanager	km	ACL បន្ថែម។
+acl deleted.	filemanager	km	ACL ត្រូវបានលុប។
+actions	filemanager	km	សកម្មភាព
+add to clipboard	filemanager	km	បន្ថែមទៅក្ដារតម្បៀតខ្ទាស់
+administrators	filemanager	km	អ្នកគ្រប់គ្រង
+all files	filemanager	km	ឯកសារ​ទាំងអស់
+all subdirectories	filemanager	km	ថតរងទាំងអស់។
+all types	filemanager	km	គ្រប់ប្រភេទ
+allow a maximum of the above configured folderlinks to be configured in settings	admin	km	ចំនួនអតិបរមានៃតំណភ្ជាប់ថតដែលត្រូវកំណត់រចនាសម្ព័ន្ធតាមចំណូលចិត្ត។
+and all it's childeren	filemanager	km	ហើយទាំងអស់វាជាកូន
+application fields	filemanager	km	វាលកម្មវិធី
+applications	common	km	កម្មវិធី
+backend	filemanager	km	ផ្នែកខាងក្រោយ
+backend url	filemanager	km	URL ខាងក្រោយ
+backend url to mount	filemanager	km	Backend URL ដើម្បីភ្ជាប់
+basedirectory	filemanager	km	ថតឯកសារមូលដ្ឋាន
+can't open directory %1!	filemanager	km	មិនអាចបើកថត %1 បានទេ!
+cancel editing %1 without saving	filemanager	km	បោះបង់ការកែសម្រួល%1 ដោយមិនចាំបាច់រក្សាទុក
+cannot create directory because it begins or ends in a space	filemanager	km	មិន​អាច​បង្កើត​ថត​បាន​ទេ ព្រោះ​វា​ចាប់​ផ្តើម ឬ​បញ្ចប់​ក្នុង​ចន្លោះ។
+cautiously rejecting to remove folder '%1'!	filemanager	km	បដិសេធដោយប្រុងប្រយ័ត្នដើម្បីលុបថត '%1'!
+check all	filemanager	km	ពិនិត្យ​ទាំងអស់
+check virtual filesystem	common	km	ពិនិត្យប្រព័ន្ធឯកសារនិម្មិត
+classic	filemanager	km	របារឧបករណ៍ស្តង់ដារ
+clear search	filemanager	km	ជម្រះការស្វែងរក
+clipboard is empty!	filemanager	km	ក្តារតម្បៀតខ្ទាស់ទទេ!
+collab editor settings	filemanager	km	ការកំណត់កម្មវិធីនិពន្ធសហការ
+comment	filemanager	km	មតិយោបល់
+configuration changed.	filemanager	km	ការកំណត់រចនាសម្ព័ន្ធបានផ្លាស់ប្តូរ។
+confirm final delete	filemanager	km	បញ្ជាក់ការលុបចុងក្រោយ
+copied	filemanager	km	ចម្លង
+copied %1 to %2	filemanager	km	បានចម្លង %1 ទៅ %2
+copy	filemanager	km	ចម្លង
+copy into folder	filemanager	km	ចម្លងចូលទៅក្នុងថតឯកសារ
+copy link address	filemanager	km	ចម្លងអាសយដ្ឋានតំណ
+copy to	filemanager	km	ចម្លង​ទៅ
+copy to clipboard	filemanager	km	ចម្លងទៅក្ដារតម្បៀតខ្ទាស់
+could not copy %1 to %2	filemanager	km	មិនអាចចម្លង %1 ទៅ %2 បានទេ។
+could not create %1	filemanager	km	មិន​អាច​បង្កើត %1
+could not delete %1	filemanager	km	មិន​អាច​លុប %1
+could not move %1 to %2	filemanager	km	មិន​អាច​ផ្លាស់ទី %1 ទៅ %2
+could not rename %1 to %2	filemanager	km	មិនអាចប្តូរឈ្មោះ %1 ទៅ %2 បានទេ។
+create a link	filemanager	km	បង្កើតតំណ
+create directory	filemanager	km	បង្កើតថតឯកសារ
+create file	filemanager	km	បង្កើតឯកសារ
+create folder	filemanager	km	បង្កើតថតឯកសារ
+created	filemanager	km	បានបង្កើត
+created %1,%2	filemanager	km	បាន​បង្កើត %1, %2
+created directory %1	filemanager	km	បាន​បង្កើត​ថត %1
+current directory	filemanager	km	ថតបច្ចុប្បន្ន
+custom fields	filemanager	km	វាលផ្ទាល់ខ្លួន
+cut	filemanager	km	កាត់
+cut to clipboard	filemanager	km	កាត់ទៅក្ដារតម្បៀតខ្ទាស់
+default action on double-click	filemanager	km	សកម្មភាពលំនាំដើមនៅពេលចុចពីរដង
+default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	km	លំនាំដើម = ទេ តំណនឹងមិនត្រូវបានបង្ហាញទេ ប៉ុន្តែអ្នកនៅតែអាចរុករកទៅកាន់ទីតាំងនេះ ឬកំណត់ទីតាំងជាក់លាក់នេះជាឯកសារចាប់ផ្តើម ឬតំណថត។
+default document to insert entries	filemanager	km	ឯកសារលំនាំដើមដើម្បីបញ្ចូលធាតុ
+defines how to handle double click action on a document file. images are always opened in the expose-view and emails with email application. all other mime-types are handled by the browser itself.	filemanager	km	កំណត់របៀបដោះស្រាយសកម្មភាពចុចពីរដងលើឯកសារឯកសារ។ រូបភាពតែងតែត្រូវបានបើកនៅក្នុង expose-view និង email ជាមួយនឹងកម្មវិធីអ៊ីមែល។ ប្រភេទ MIME ផ្សេងទៀតទាំងអស់ត្រូវបានគ្រប់គ្រងដោយកម្មវិធីរុករកខ្លួនឯង។
+defines how to open a merge print document	filemanager	km	កំណត់របៀបបើកឯកសារបោះពុម្ពបញ្ចូលគ្នា
+delete all older versions and deleted files older then %s days	filemanager	km	លុបកំណែចាស់ទាំងអស់ និងឯកសារដែលបានលុបចាស់ជាង %s ថ្ងៃ។
+delete these files or directories?	filemanager	km	លុបឯកសារ ឬថតឯកសារទាំងនេះ?
+delete these shares?	filemanager	km	លុបការចែករំលែកទាំងនេះ?
+delete this extended acl?	filemanager	km	លុប ACL ដែលបានពង្រីកនេះ?
+delete this file or directory	filemanager	km	លុបឯកសារ ឬថតឯកសារនេះ។
+deleted %1	filemanager	km	បានលុប %1
+directories sorted in	filemanager	km	ថត​បាន​តម្រៀប​ក្នុង
+directory	filemanager	km	ថតឯកសារ
+directory "%1" not found!	filemanager	km	រកមិនឃើញថត "%1" ទេ!
+directory %1 already exists	filemanager	km	ថត %1 មានរួចហើយ។
+directory %1 does not exist	filemanager	km	ថត %1 មិនមានទេ។
+directory not found or no permission to access it!	filemanager	km	រកមិនឃើញថតឯកសារ ឬគ្មានសិទ្ធិចូលប្រើវា!
+directory successfully created.	filemanager	km	ថតត្រូវបានបង្កើតដោយជោគជ័យ។
+directory with documents to insert entries	filemanager	km	ថតជាមួយឯកសារដើម្បីបញ្ចូលធាតុ
+disable	filemanager	km	បិទ
+disable versioning for this mountpoint	filemanager	km	បិទដំណើរការកំណែសម្រាប់ចំណុចម៉ោននេះ។
+display and modification of content	filemanager	km	បង្ហាញ និងកែប្រែខ្លឹមសារ
+display of content	filemanager	km	ការបង្ហាញមាតិកា
+do you want more information about epl subscription?	common	km	តើអ្នកចង់បានព័ត៌មានបន្ថែមអំពីការជាវ EPL ទេ?
+do you want to overwrite existing file %1 in directory %2?	filemanager	km	តើ​អ្នក​ចង់​សរសេរ​ជាន់​លើ​ឯកសារ%1 ដែល​មាន​ស្រាប់​ក្នុង​ថត %2 ដែរ​ឬ​ទេ?
+do you want to overwrite the existing file %1?	filemanager	km	តើ​អ្នក​ចង់​សរសេរ​ជាន់​លើ​ឯកសារ​ដែល​មាន​ស្រាប់ %1 ដែរ​ឬ​ទេ?
+download	filemanager	km	ទាញយក
+download documents	filemanager	km	ទាញយកឯកសារ
+edit comments	filemanager	km	កែសម្រួល​មតិ
+edit settings	filemanager	km	កែសម្រួលការកំណត់
+edit share	filemanager	km	កែសម្រួលការចែករំលែក
+enable	filemanager	km	បើក
+enable versioning for given mountpoint	filemanager	km	បើកដំណើរការកំណែសម្រាប់ចំណុចម៉ោនដែលបានផ្តល់ឱ្យ
+enter a file size, e.g. 100k, 200m or 2g	filemanager	km	បញ្ចូលទំហំឯកសារ ឧទាហរណ៍ 100K, 200M ឬ 2G
+enter setup user and password	filemanager	km	បញ្ចូលការកំណត់អ្នកប្រើប្រាស់ និងពាក្យសម្ងាត់
+enter setup user and password to get root rights	filemanager	km	បញ្ចូលការកំណត់អ្នកប្រើប្រាស់ និងពាក្យសម្ងាត់ ដើម្បីទទួលបានសិទ្ធិជា root
+enter the complete vfs path to specify a fast access link to a folder	filemanager	km	បញ្ចូលផ្លូវ VFS ពេញលេញ ដើម្បីបញ្ជាក់តំណចូលដំណើរការរហ័សទៅកាន់ថតឯកសារ
+enter the complete vfs path to specify your desired start folder.	filemanager	km	បញ្ចូលផ្លូវ VFS ពេញលេញដើម្បីបញ្ជាក់ថតចាប់ផ្តើមរបស់អ្នក។
+enter your file name	filemanager	km	បញ្ចូលឈ្មោះឯកសាររបស់អ្នក។
+error adding the acl!	filemanager	km	កំហុសក្នុងការបន្ថែម ACL!
+error creating symlink to target %1!	filemanager	km	មាន​បញ្ហា​ក្នុង​ការ​បង្កើត symlink ដើម្បី​កំណត់​គោលដៅ%1!
+error deleting the acl entry!	filemanager	km	កំហុសក្នុងការលុបធាតុ ACL!
+error mounting %1 on %2!	filemanager	km	មាន​បញ្ហា​ក្នុង​ការ​ដំឡើង%1 នៅ​លើ%2!
+error unmounting %1!	filemanager	km	មាន​បញ្ហា​ក្នុង​ការ​ដក​ការ​ភ្ជាប់%1!
+error uploading file!	filemanager	km	កំហុសក្នុងការបង្ហោះឯកសារ!
+error while creating directory.	filemanager	km	មាន​បញ្ហា​ពេល​បង្កើត​ថត
+everyone	filemanager	km	គ្រប់គ្នា
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	filemanager	km	ឧទាហរណ៍ {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - search the field "n_prefix", for "Mr", if found, write Hello Mr., else write Hello Ms.
+example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	filemanager	km	ឧទាហរណ៍ {{LETTERPREFIXCUSTOM n_prefix title n_family}} - ឧទាហរណ៍៖ លោកបណ្ឌិត James Miller
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	filemanager	km	ឧទាហរណ៍ {{NELF role}} - ប្រសិនបើតួនាទីវាលមិនទទេ អ្នកនឹងទទួលបានបន្ទាត់ថ្មីជាមួយនឹងតម្លៃនៃតួនាទីវាល
+example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	filemanager	km	ឧទាហរណ៍ {{nenvlf role}} - ប្រសិនបើតួនាទីវាលមិនទទេ កំណត់ LF ដោយគ្មានតម្លៃណាមួយនៃវាល
+excludes selected mime types	filemanager	km	មិនរាប់បញ្ចូលប្រភេទ MIME ដែលបានជ្រើសរើស
+excludes selected mime types from being opened by editor	filemanager	km	មិនរាប់បញ្ចូលប្រភេទ MIME ដែលបានជ្រើសរើសពីការបើកដោយកម្មវិធីនិពន្ធ
+executable	filemanager	km	អាចប្រតិបត្តិបាន។
+expires	filemanager	km	ផុតកំណត់
+export definition to use for nextmatch export	filemanager	km	នាំចេញនិយមន័យដែលត្រូវប្រើសម្រាប់ការនាំចេញការប្រកួតបន្ទាប់
+extended access control list	filemanager	km	បញ្ជីត្រួតពិនិត្យការចូលប្រើបន្ថែម
+extended acl	filemanager	km	ACL បន្ថែម
+failed to change permissions of %1!	filemanager	km	បាន​បរាជ័យ​ក្នុង​ការ​ផ្លាស់​ប្តូ​រ​សិទ្ធិ​របស់ %1!
+failed to create directory!	filemanager	km	បរាជ័យក្នុងការបង្កើតថតឯកសារ!
+favorites	filemanager	km	ចំណូលចិត្ត
+file	common	km	ឯកសារ
+file %1 already exists	filemanager	km	ឯកសារ %1 មានរួចហើយ
+file %1 could not be created.	filemanager	km	មិន​អាច​បង្កើត​ឯកសារ %1 បានទេ។
+file %1 may be too big. contact your systemadministrator for further info	filemanager	km	ឯកសារ%1 អាចធំពេក។
+file a file is only available with an epl subscription.	filemanager	km	ឯកសារគឺអាចប្រើបានតែជាមួយការជាវ EPL ប៉ុណ្ណោះ។
+file deleted.	filemanager	km	បានលុបឯកសារ។
+file names cannot contain "%1"	filemanager	km	ឈ្មោះឯកសារមិនអាចមាន "%1" ទេ
+file or directory not found!	filemanager	km	រកមិនឃើញឯកសារ ឬថតឯកសារទេ!
+file successful uploaded.	filemanager	km	ឯកសារត្រូវបានផ្ទុកឡើងដោយជោគជ័យ។
+filemanager	common	km	កម្មវិធី​គ្រប់​គ្រង​ឯកសារ
+filemanager configuration	admin	km	ការកំណត់រចនាសម្ព័ន្ធកម្មវិធីគ្រប់គ្រងឯកសារ
+filemanager fields:	filemanager	km	វាលកម្មវិធីគ្រប់គ្រងឯកសារ៖
+filename must not be empty!	filemanager	km	ឈ្មោះឯកសារមិនត្រូវទទេ!
+files	common	km	ឯកសារ
+files from links	filemanager	km	ឯកសារពីតំណ
+files from subdirectories	filemanager	km	ឯកសារពីថតរង
+files in this directory	filemanager	km	ឯកសារនៅក្នុង Folder នេះ។
+filesystem	filemanager	km	ប្រព័ន្ធ​ឯកសារ
+filesystem check reported no problems.	filemanager	km	ការត្រួតពិនិត្យប្រព័ន្ធឯកសារបានរាយការណ៍ថាមិនមានបញ្ហាទេ។
+filesystem: mount directory (inside /var/lib/egroupware!) from host filesystem	filemanager	km	ប្រព័ន្ធឯកសារ៖ ម៉ោនថត (ខាងក្នុង /var/lib/egroupware!) ពីប្រព័ន្ធឯកសារម៉ាស៊ីន
+finally delete	filemanager	km	ទីបំផុតលុប
+finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	km	ទីបំផុតលុបកំណែចាស់ទាំងអស់ និងឯកសារដែលបានលុបនៅក្រោមថតដែលបានផ្តល់ឱ្យ។\n\nវាមិនអាចត្រឡប់វិញបានទេ!
+finally delete this version	filemanager	km	ទីបំផុតលុបកំណែនេះ។
+fix reported problems	filemanager	km	ដោះស្រាយបញ្ហាដែលបានរាយការណ៍
+folder up	filemanager	km	ថតឯកសារឡើង
+for files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available.  see the specific application for a list of available placeholders.	filemanager	km	សម្រាប់ឯកសារដែលភ្ជាប់ទៅនឹងធាតុកម្មវិធី (ខាងក្នុង /apps/appname/id/) កន្លែងដាក់សម្រាប់កម្មវិធីនោះក៏មានផងដែរ។ សូមមើលកម្មវិធីជាក់លាក់សម្រាប់បញ្ជីកន្លែងដាក់ដែលមាន។
+for files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available. see the specific application for a list of placeholders	filemanager	km	សម្រាប់ឯកសារដែលភ្ជាប់ទៅនឹងធាតុកម្មវិធី (ខាងក្នុង /apps/appname/id/) កន្លែងដាក់សម្រាប់កម្មវិធីនោះក៏មានផងដែរ។ សូមមើលកម្មវិធីជាក់លាក់សម្រាប់បញ្ជីកន្លែងដាក់
+for serial letter use this tag. put the content, you want to repeat between two tags.	filemanager	km	សម្រាប់អក្សរសៀរៀលប្រើស្លាកនេះ។ ដាក់មាតិកា អ្នកចង់ធ្វើម្តងទៀតរវាងស្លាកពីរ។
+general	filemanager	km	ទូទៅ
+general fields:	filemanager	km	វាលទូទៅ៖
+go home	filemanager	km	ទៅផ្ទះ
+go to	filemanager	km	ទៅ
+go to your home directory	filemanager	km	ទៅកាន់ថតឯកសារផ្ទះរបស់អ្នក។
+go up	filemanager	km	ឡើង
+group home quota	filemanager	km	កូតាផ្ទះជាក្រុម
+hidden upload	filemanager	km	ការបង្ហោះដែលលាក់
+hidden uploads	filemanager	km	ការបង្ហោះដែលលាក់
+hostname/ip for webdav and smb	filemanager	km	ឈ្មោះម៉ាស៊ីន/IP សម្រាប់ WebDAV និង SMB
+id	filemanager	km	លេខសម្គាល់
+if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	km	ប្រសិនបើអ្នកបញ្ជាក់ថតមួយ (ផ្លូវ vfs ពេញលេញ) នៅទីនេះ %1 បង្ហាញសកម្មភាពសម្រាប់ឯកសារនីមួយៗ។ សកម្មភាពនោះអនុញ្ញាតឱ្យទាញយកឯកសារដែលបានបញ្ជាក់ជាមួយនឹងទិន្នន័យ %1 ដែលបានបញ្ចូល។
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	km	ប្រសិនបើអ្នកបញ្ជាក់ថតមួយ (ផ្លូវ vfs ពេញលេញ) នៅទីនេះ %1 បង្ហាញរូបតំណាងឯកសារបន្ថែមសម្រាប់ធាតុនីមួយៗ។ រូបតំណាងនោះអនុញ្ញាតឱ្យទាញយកឯកសារដែលបានបញ្ជាក់ជាមួយនឹងទិន្នន័យដែលបានបញ្ចូល។
+if you specify an export definition, it will be used when you export	filemanager	km	ប្រសិនបើអ្នកបញ្ជាក់និយមន័យនាំចេញ វានឹងត្រូវបានប្រើនៅពេលអ្នកនាំចេញ
+if you specify an export definition, it will be used when you export*	filemanager	km	ប្រសិនបើអ្នកបញ្ជាក់និយមន័យនាំចេញ វានឹងត្រូវបានប្រើនៅពេលអ្នកនាំចេញ*
+inherited	filemanager	km	ទទួលមរតក
+last accessed	filemanager	km	បានចូលប្រើចុងក្រោយ
+link	filemanager	km	តំណភ្ជាប់
+link %1: %2	filemanager	km	តំណភ្ជាប់ %1: %2
+link into folder	filemanager	km	ភ្ជាប់ទៅថតឯកសារ
+link target	filemanager	km	តំណភ្ជាប់គោលដៅ
+link target %1 not found!	filemanager	km	រកមិនឃើញតំណភ្ជាប់គោលដៅ%1!
+list view	filemanager	km	ទិដ្ឋភាពបញ្ជី
+location	filemanager	km	ទីតាំង
+lock	filemanager	km	ចាក់សោ
+log out as superuser	filemanager	km	ចេញជាអ្នកប្រើជាន់ខ្ពស់
+mail files	filemanager	km	ឯកសារសំបុត្រ
+mail paste	filemanager	km	បិទភ្ជាប់សំបុត្រ
+max folderlinks	admin	km	តំណភ្ជាប់ថតអតិបរមា
+merge print open handler	filemanager	km	បញ្ចូលឧបករណ៍ដោះស្រាយការបើកបោះពុម្ព
+mime type	filemanager	km	ប្រភេទ MIME
+modified	filemanager	km	កែប្រែ
+modified between	filemanager	km	បានកែប្រែរវាង
+modify all subdirectories and their content	filemanager	km	កែប្រែថតរងទាំងអស់ និងខ្លឹមសាររបស់វា។
+mount	filemanager	km	ម៉ោន
+mount /etemplates to allow customizing of etemplates	filemanager	km	ម៉ោន / etemplates ដើម្បីអនុញ្ញាតឱ្យប្ដូរតាមបំណងនៃ eTemplates
+mountpoints	filemanager	km	ចំណុចភ្នំ
+move	filemanager	km	ផ្លាស់ទី
+move into folder	filemanager	km	ផ្លាស់ទីទៅថត
+move to	filemanager	km	ផ្លាស់ទី​ទៅ
+moved %1 to %2	filemanager	km	បានផ្លាស់ទី%1 ទៅ %2
+name of current user, all other contact fields are valid too	filemanager	km	ឈ្មោះអ្នកប្រើប្រាស់បច្ចុប្បន្ន វាលទំនាក់ទំនងផ្សេងទៀតទាំងអស់ក៏មានសុពលភាពផងដែរ។
+new directory	common	km	ប្រអប់​ឯកសារ​ថ្មី
+no access	filemanager	km	គ្មានការចូលប្រើទេ។
+no files in this directory.	filemanager	km	គ្មានឯកសារនៅក្នុងថតនេះទេ។
+no preview available	filemanager	km	មិនមានការមើលជាមុនទេ។
+no version history for this file/directory	filemanager	km	មិនមានប្រវត្តិកំណែសម្រាប់ឯកសារ/ថតឯកសារនេះទេ។
+noone	filemanager	km	គ្មាន​នរណា​ម្នាក់
+notebookbar	filemanager	km	ផ្ទាំង
+older versions or deleted files	filemanager	km	កំណែចាស់ ឬឯកសារដែលបានលុប
+only owner can rename or delete the content	filemanager	km	មានតែម្ចាស់ទេដែលអាចប្តូរឈ្មោះ ឬលុបខ្លឹមសារបាន។
+open	filemanager	km	បើក
+open documents with collabora, if permissions are given	filemanager	km	បើកឯកសារជាមួយ Collabora ប្រសិនបើមានការអនុញ្ញាត
+open odt documents with collabeditor	filemanager	km	បើកឯកសារ odt ជាមួយ CollabEditor
+operation	filemanager	km	ប្រតិបត្តិការ
+password for webdav and smb, use $pass for password of logged in user	filemanager	km	ពាក្យសម្ងាត់សម្រាប់ WebDAV និង SMB ប្រើ $pass សម្រាប់ពាក្យសម្ងាត់របស់អ្នកប្រើដែលបានចូល
+paste link	filemanager	km	បិទភ្ជាប់តំណ
+path %1 not found or not a directory!	filemanager	km	រក​មិន​ឃើញ​ផ្លូវ %1 ឬ​មិន​មាន​ថត!
+path and query-parameters, smb: share and optional path (with /)	filemanager	km	ផ្លូវ និងប៉ារ៉ាម៉ែត្រសំណួរ SMB៖ ចែករំលែក និងផ្លូវស្រេចចិត្ត (ជាមួយ /)
+percentage	filemanager	km	ភាគរយ
+permission denied!	filemanager	km	ការអនុញ្ញាតត្រូវបានបដិសេធ!
+permissions	filemanager	km	ការអនុញ្ញាត
+permissions of %1 changed.	filemanager	km	ការអនុញ្ញាតនៃ%1 បានផ្លាស់ប្តូរ។
+please select a file to delete.	filemanager	km	សូមជ្រើសរើសឯកសារដែលត្រូវលុប
+preview	filemanager	km	មើលជាមុន
+preview %1	filemanager	km	មើលជាមុន%1
+preview of %1	filemanager	km	ការមើលជាមុននៃ%1
+projectmanager	filemanager	km	អ្នកគ្រប់គ្រងគម្រោង
+properties saved.	filemanager	km	ទ្រព្យសម្បត្តិត្រូវបានរក្សាទុក។
+protocol to use	filemanager	km	ពិធីការដែលត្រូវប្រើ
+protocols	filemanager	km	ពិធីការ
+quick jump to	filemanager	km	លោតយ៉ាងលឿនទៅ
+quota	filemanager	km	កូតា
+quota exceeded	filemanager	km	លើសកូតា
+read & write access	filemanager	km	ការចូលអាន និងសរសេរ
+read access only	filemanager	km	ចូលអានតែប៉ុណ្ណោះ
+readonly share link	filemanager	km	តំណចែករំលែកបានតែអានប៉ុណ្ណោះ។
+recalculate	filemanager	km	គណនាឡើងវិញ
+recalculated %1 directories in %2 iterations and %3 seconds	filemanager	km	បានគណនាឡើងវិញនូវថត%1 ក្នុងការធ្វើឡើងវិញ%2 និង % 3 វិនាទី
+reload	filemanager	km	ផ្ទុកឡើងវិញ
+rename of %1 to %2 failed!	filemanager	km	ការប្តូរឈ្មោះ%1 ទៅ%2 បានបរាជ័យ!
+rename, change permissions or ownership	filemanager	km	ប្តូរឈ្មោះ ផ្លាស់ប្តូរការអនុញ្ញាត ឬកម្មសិទ្ធិ
+renamed %1 to %2	filemanager	km	បានប្តូរឈ្មោះ%1 ទៅ %2
+renamed %1 to %2.	filemanager	km	បានប្តូរឈ្មោះ%1 ទៅ %2
+replaced %1	filemanager	km	ជំនួស%1
+replacements for inserting entries into documents	filemanager	km	ការជំនួសសម្រាប់ការបញ្ចូលធាតុទៅក្នុងឯកសារ
+rights	filemanager	km	សិទ្ធិ
+root	filemanager	km	ឫស
+root access granted.	filemanager	km	ការចូលប្រើជា Root ត្រូវបានផ្តល់។
+root access stopped.	filemanager	km	ការចូលប្រើជា Root ត្រូវបានបញ្ឈប់។
+save %1	filemanager	km	រក្សាទុក%1
+save %1, and go back to file listing	filemanager	km	រក្សាទុក %1 ហើយត្រឡប់ទៅបញ្ជីឯកសារវិញ។
+save as zip	filemanager	km	រក្សាទុកជា Zip
+save changes	filemanager	km	រក្សាទុកការផ្លាស់ប្តូរ
+saved %1	filemanager	km	បានរក្សាទុក%1
+saving properties failed!	filemanager	km	ការរក្សាទុកអចលនទ្រព្យបានបរាជ័យ!
+saving setting for document merge failed!	filemanager	km	ការរក្សាទុកការកំណត់សម្រាប់ការបញ្ចូលឯកសារបានបរាជ័យ!
+search for '%1'	filemanager	km	ស្វែងរក '%1'
+searchstring	filemanager	km	ស្វែងរកខ្សែអក្សរ
+select action...	filemanager	km	ជ្រើសរើសសកម្មភាព...
+select file to upload in current directory	filemanager	km	ជ្រើសរើសឯកសារដើម្បីផ្ទុកឡើងក្នុងថតបច្ចុប្បន្ន
+select file(s) from vfs	common	km	ជ្រើសរើសឯកសារពី VFS
+setting for document merge saved.	filemanager	km	បានរក្សាទុកការកំណត់សម្រាប់ឯកសារបញ្ចូលគ្នា។
+share files	filemanager	km	ចែករំលែកឯកសារ
+share link copied into clipboard	filemanager	km	ចែករំលែកតំណដែលបានចម្លងទៅក្នុងក្ដារតម្បៀតខ្ទាស់
+share mounted at %1.<br/>please close this tab.	filemanager	km	ការចែករំលែកត្រូវបានភ្ជាប់នៅ %1។<br/>សូមបិទផ្ទាំងនេះ។
+shared files	filemanager	km	ឯកសារដែលបានចែករំលែក
+shared with	filemanager	km	ចែករំលែកជាមួយ
+show	filemanager	km	បង្ហាញ
+show hidden files	filemanager	km	បង្ហាញឯកសារដែលលាក់
+show link "%1" in side box menu?	filemanager	km	បង្ហាញតំណ "%1" នៅក្នុងម៉ឺនុយចំហៀង
+show link "users and groups" in side box menu?	filemanager	km	បង្ហាញតំណ "អ្នកប្រើប្រាស់ និងក្រុម" នៅក្នុងម៉ឺនុយប្រអប់ចំហៀង?
+show link "users and groups*" in side box menu?*	filemanager	km	បង្ហាញតំណ "អ្នកប្រើប្រាស់ និងក្រុម*" នៅក្នុងម៉ឺនុយប្រអប់ចំហៀង?*
+show link "your home directory" in side box menu?	filemanager	km	បង្ហាញតំណ "ថតផ្ទះរបស់អ្នក" នៅក្នុងម៉ឺនុយប្រអប់ចំហៀង?
+show link "your home directory*" in side box menu?*	filemanager	km	បង្ហាញតំណ "ថតផ្ទះរបស់អ្នក*" នៅក្នុងម៉ឺនុយប្រអប់ចំហៀង?*
+show link to filemanagers basedirectory (/) in side box menu?	filemanager	km	បង្ហាញតំណទៅថតមូលដ្ឋានរបស់កម្មវិធីគ្រប់គ្រងឯកសារ (/) នៅក្នុងម៉ឺនុយចំហៀង?
+size	filemanager	km	ទំហំ
+smb, webdavs and vfs require a username!	filemanager	km	SMB, WebDAVs និង VFS ទាមទារឈ្មោះអ្នកប្រើប្រាស់!
+smb: mount samba or windows fileserver shares	filemanager	km	SMB៖ ម៉ោន Samba ឬ Windows fileserver shares
+some functionalities require superuser permissions, please login here as filemanager superuser - allowed users are defined in setup.	filemanager	km	មុខងារមួយចំនួនទាមទារការអនុញ្ញាតពីអ្នកប្រើប្រាស់ជាន់ខ្ពស់ សូមចូលទីនេះក្នុងនាមជាអ្នកគ្រប់គ្រងឯកសារជាន់ខ្ពស់ - អ្នកប្រើប្រាស់ដែលត្រូវបានអនុញ្ញាតត្រូវបានកំណត់នៅក្នុងការដំឡើង។
+sqlfs statistics	filemanager	km	sqlFS ស្ថិតិ
+start search	filemanager	km	ចាប់ផ្តើមស្វែងរក
+startfolder	filemanager	km	ចាប់ផ្តើមថត
+successful mounted %1 on %2.	filemanager	km	បានដំឡើង%1 ដោយជោគជ័យនៅលើ %2 ។
+superuser	filemanager	km	អ្នកប្រើប្រាស់ដ៏អស្ចារ្យ
+superuser (root)	filemanager	km	អ្នកប្រើជាន់ខ្ពស់ (ជា root)
+symlink to %1 created.	filemanager	km	Symlink ទៅ %1 បានបង្កើត។
+tag to mark positions for address labels	filemanager	km	ដាក់ស្លាកដើម្បីសម្គាល់ទីតាំងសម្រាប់ស្លាកអាសយដ្ឋាន
+the default start folder is your personal folder. the default is used, if you leave this empty, the path does not exist or you lack the neccessary access permissions.	filemanager	km	ថតចាប់ផ្តើមលំនាំដើមគឺជាថតផ្ទាល់ខ្លួនរបស់អ្នក។ លំនាំដើមត្រូវបានប្រើ ប្រសិនបើអ្នកទុកវាឱ្យទទេ ផ្លូវមិនមានទេ ឬអ្នកខ្វះសិទ្ធិចូលប្រើចាំបាច់។
+the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	filemanager	km	ឯកសារអាចមានកន្លែងដាក់ដូចជា {{%3}} ដែលត្រូវជំនួសដោយទិន្នន័យ (%1បញ្ជីពេញនៃឈ្មោះកន្លែងដាក់%2)។
+the following document-types are supported:	filemanager	km	ប្រភេទឯកសារខាងក្រោមត្រូវបានគាំទ្រ៖
+the requested path %1 is not available.	filemanager	km	ផ្លូវ​ដែល​បាន​ស្នើ %1 មិន​មាន​ទេ!
+the uploaded file is only visible to the person sharing these files with you, not to yourself or other people knowing this sharing link.	filemanager	km	ឯកសារដែលបានបង្ហោះគឺអាចមើលឃើញតែចំពោះអ្នកដែលចែករំលែកឯកសារទាំងនេះជាមួយអ្នកប៉ុណ្ណោះ មិនមែនសម្រាប់ខ្លួនអ្នក ឬអ្នកផ្សេងទៀតដែលដឹងពីតំណចែករំលែកនេះទេ។
+there's already a directory with that name!	filemanager	km	មាន​ថត​ឈ្មោះ​នោះ​ហើយ!
+there's already a file with that name!	filemanager	km	មាន​ឯកសារ​ដែល​មាន​ឈ្មោះ​នោះ​ហើយ!
+tile view	filemanager	km	ទិដ្ឋភាពក្រឡាក្បឿង
+to overwrite the existing file store again.	filemanager	km	ដើម្បីសរសេរជាន់លើកន្លែងផ្ទុកឯកសារដែលមានស្រាប់ម្តងទៀត
+total files	filemanager	km	ឯកសារសរុប
+ui mode	filemanager	km	របារឧបករណ៍ស្តង់ដារ
+under directory	filemanager	km	នៅក្រោមថត
+unlock	filemanager	km	ដោះសោ
+unmount	filemanager	km	មិនម៉ោន
+unused space	filemanager	km	កន្លែងមិនប្រើ
+up	filemanager	km	ឡើង
+updated comment for %1	filemanager	km	បានធ្វើបច្ចុប្បន្នភាពមតិសម្រាប់%1
+upload fields	filemanager	km	ផ្ទុកឡើងវាល
+upload files	filemanager	km	ផ្ទុកឯកសារឡើង
+use this tag for addresslabels. put the content, you want to repeat, between two tags.	filemanager	km	ប្រើស្លាកនេះសម្រាប់ស្លាកអាសយដ្ឋាន។ ដាក់មាតិកាដែលអ្នកចង់ធ្វើម្តងទៀតរវាងស្លាកពីរ។
+used space	filemanager	km	កន្លែងទំនេរ
+user color indicator	filemanager	km	សូចនាករពណ៌អ្នកប្រើប្រាស់
+user home quota	filemanager	km	កូតាផ្ទះអ្នកប្រើប្រាស់
+username for webdav and smb, use $user for name of logged in user	filemanager	km	ឈ្មោះអ្នកប្រើប្រាស់សម្រាប់ WebDAV និង SMB ប្រើ $user សម្រាប់ឈ្មោះអ្នកប្រើប្រាស់ដែលបានចូល
+users and groups	filemanager	km	អ្នកប្រើប្រាស់ និងក្រុម
+versioning	filemanager	km	កំណែ
+versioning requires egroupware epl	filemanager	km	កំណែតម្រូវឱ្យ EGroupware EPL
+vfs mounts and versioning	common	km	ការដំឡើង VFS និងកំណែ
+view link	filemanager	km	មើលតំណ
+webdav link copied into clipboard	filemanager	km	តំណ WebDAV ត្រូវបានចម្លងទៅក្នុងក្ដារតម្បៀតខ្ទាស់
+webdavs: mount egroupware or *cloud shares	filemanager	km	WebDAVs៖ ម៉ោន EGroupware ឬ *ការចែករំលែកពពក
+who should be allowed to finally delete deleted files or old versions of a file:	filemanager	km	តើនរណាគួរត្រូវបានអនុញ្ញាតឱ្យលុបឯកសារដែលបានលុប ឬកំណែចាស់នៃឯកសារមួយ៖
+writable share link	filemanager	km	តំណចែករំលែកដែលអាចសរសេរបាន។
+wrong username or password!	filemanager	km	ឈ្មោះអ្នកប្រើ ឬពាក្យសម្ងាត់ខុស!
+you are not allowed to finally delete older versions and deleted files!	filemanager	km	អ្នកមិនត្រូវបានអនុញ្ញាតឱ្យលុបកំណែចាស់ និងឯកសារដែលបានលុបទេ!
+you are not allowed to upload a script!	filemanager	km	អ្នកមិនត្រូវបានអនុញ្ញាតឱ្យបង្ហោះស្គ្រីបទេ!
+you can either delete some files or get in touch with your administrator to get more space	filemanager	km	អ្នកអាចលុបឯកសារមួយចំនួន ឬទាក់ទងជាមួយអ្នកគ្រប់គ្រងរបស់អ្នក ដើម្បីទទួលបានទំហំបន្ថែម
+you can only grant additional rights, you can not take rights away!	filemanager	km	អ្នកអាចផ្តល់សិទ្ធិបន្ថែម អ្នកមិនអាចយកសិទ្ធិទៅឆ្ងាយបានទេ!
+you can use regular upload [+] button to upload files.	filemanager	km	អ្នកអាចប្រើប៊ូតុង [+] ធម្មតាដើម្បីផ្ទុកឡើងឯកសារ។
+you do not have access to %1	filemanager	km	អ្នកមិនមានសិទ្ធិចូលប្រើ%1 ទេ។
+you need to become root, to enable or disable versioning on a directory!	filemanager	km	អ្នក​ត្រូវ​ក្លាយ​ជា​អ្នក​ប្រើ​ជាន់ខ្ពស់ ដើម្បី​បើក ឬ​បិទ​កំណែ​លើ​ថត!
+you need to select an owner!	filemanager	km	អ្នកត្រូវជ្រើសរើសម្ចាស់!
+you need to select some files first!	filemanager	km	អ្នកត្រូវជ្រើសរើសឯកសារមួយចំនួនជាមុនសិន!
+you will be redirected to your home directory.	filemanager	km	អ្នកនឹងត្រូវបានបញ្ជូនបន្តទៅថតផ្ទះរបស់អ្នក។
+you will be redirected to your start folder.	filemanager	km	អ្នកនឹងត្រូវបានបញ្ជូនបន្តទៅកាន់ថតចាប់ផ្តើមរបស់អ្នក។
+your home dir did not exist, egroupware created a new one.	filemanager	km	Home Dir របស់អ្នកមិនមានទេ EGroupware បានបង្កើតថ្មីមួយ។
+your home directory	filemanager	km	ថតផ្ទះ

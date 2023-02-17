@@ -1,0 +1,1589 @@
+%1 (%2 new) messages writen for application '%3' and languages '%4'	common	km	%1 (%2 ថ្មី) សារដែលសរសេរសម្រាប់កម្មវិធី '%3' និងភាសា '%4'
+%1 active file(s) with same name as directory inactivated!	admin	km	%1 ឯកសារសកម្មដែលមានឈ្មោះដូចគ្នានឹងថតអសកម្ម!
+%1 copied - the copy can now be edited	common	km	%1 បានចម្លង - ឥឡូវនេះ ច្បាប់ចម្លងអាចត្រូវបានកែសម្រួល
+%1 directories %2 found!	admin	km	%1 រក​ឃើញ​ថត %2!
+%1 email addresses inserted	common	km	អាសយដ្ឋានអ៊ីមែល %1 ត្រូវបានបញ្ចូល។
+%1 email(s) added into %2	common	km	%1 អុីមែល បញ្ចូលទៅក្នុង%2
+%1 entries found, select one ...	common	km	រកឃើញធាតុ %1 ជ្រើសរើសមួយ...
+%1 etemplates deleted	common	km	%1 eTemplates ត្រូវបានលុប។
+%1 etemplates for application '%2' dumped to '%3'	common	km	%1 eTemplates សម្រាប់កម្មវិធី '%2' បានបោះចោលទៅ '%3'
+%1 etemplates found	common	km	រកឃើញ %1 eTemplates ។
+%1 file	common	km	ឯកសារ %1
+%1 is not executable by the webserver !!!	common	km	%1 មិនអាចប្រតិបត្តិបានដោយម៉ាស៊ីនមេគេហទំព័រ!
+%1 matches on search criteria	common	km	%1 ត្រូវគ្នានឹងលក្ខណៈវិនិច្ឆ័យស្វែងរក
+%1 more %2 selected ...	common	km	%1 ទៀត %2 បានជ្រើសរើស...
+%1 more...	common	km	%1 ទៀត...
+%1 new etemplates imported for application '%2'	common	km	%1 គំរូ eTemplates ថ្មីត្រូវបាននាំចូលសម្រាប់កម្មវិធី '%2'
+%1 not implemented for %2!	common	km	%1 មិនត្រូវបានអនុវត្តសម្រាប់ %2 ទេ!
+%1 proxy of %2	common	km	ប្រូកស៊ី %1 នៃ %2
+%1 setting "%2" = %3 disallows access via http!	admin	km	%1 ការកំណត់ "%2" = %3 មិនអនុញ្ញាតឱ្យចូលប្រើតាមរយៈ http!
+%1 to sync	groupdav	km	%1 ដើម្បីធ្វើសមកាលកម្ម
+%1, duplicate id	common	km	%1 លេខសម្គាល់ស្ទួន
+%1choose an other directory%2<br />or make %3 writeable by webserver	common	km	%1ជ្រើសរើសថតផ្សេងទៀត%2<br />ឬធ្វើឱ្យ%3អាចសរសេរបានដោយម៉ាស៊ីនមេគេហទំព័រ។
+%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	km	%1EGroupware%2 គឺ​ជា​ឈុត​ក្រុម​ដែល​មាន​មូលដ្ឋាន​លើ​បណ្ដាញ​ច្រើន​អ្នក​ប្រើ​ដែល​បាន​សរសេរ​ក្នុង %3PHP%4 ។
+%s disabled	common	km	%s ត្រូវបានបិទ
+%s needed	common	km	%s ត្រូវការ
+%s notranslation	common	km	%s គ្មានការបកប្រែ
+%s onchange	common	km	%s on Change
+%s readonly	common	km	%s បានតែអាន
+'%1' copied to clipboard	common	km	'%1' បានចម្លងទៅក្ដារតម្បៀតខ្ទាស់
+'%1' has an invalid format	common	km	'%1' មានទម្រង់មិនត្រឹមត្រូវ
+'%1' has an invalid format !!!	common	km	'%1' មានទម្រង់មិនត្រឹមត្រូវ!
+'%1' is no php file in the egw server root (%2)!	common	km	'%1' គឺ​គ្មាន​ឯកសារ php នៅ​ក្នុង​ម៉ាស៊ីន​មេ eGW root (%2) ទេ!
+'%1' is not a valid date !!!	common	km	'%1' មិនមែនជាកាលបរិច្ឆេទត្រឹមត្រូវទេ!
+'%1' is not a valid floatingpoint number !!!	common	km	'%1' មិនមែនជាលេខអណ្តែតទឹកត្រឹមត្រូវទេ!
+'%1' is not a valid integer !!!	common	km	'%1' មិនមែនជាចំនួនគត់ត្រឹមត្រូវទេ!
+'%1' is not a valid timezone!	common	km	'%1' មិនមែនជាតំបន់ពេលវេលាត្រឹមត្រូវទេ!
+'%1' is not allowed ('%2')!	common	km	'%1' មិនត្រូវបានអនុញ្ញាតទេ ('%2')!
+'%1' is not allowed%2)!	common	km	'%1' មិនត្រូវបានអនុញ្ញាត%2)!
+(session restored in %1 seconds)	common	km	វគ្គត្រូវបានស្ដារឡើងវិញក្នុងរយៈពេល %1 វិនាទី។
+00 (disable)	admin	km	00 (បិទ)
+1 day	common	km	1 ថ្ងៃ
+1 hour	common	km	1 ម៉ោង
+1 minute	common	km	1 នាទី
+1 month	common	km	1 ខែ
+1 week	common	km	1 សប្តាហ៍
+13 (ntp)	admin	km	13 (ntp)
+15 minutes	common	km	15 នាទី
+2-factor authentication code required	common	km	កូដនៃ 2-កត្តា-ការផ្ទៀងផ្ទាត់ភាពត្រឹមត្រូវ ទាមទារ
+2-factor-authentication	common	km	2-កត្តា-ការផ្ទៀងផ្ទាត់ភាពត្រឹមត្រូវ
+2-factor-authentication required	common	km	2-កត្តា-ការផ្ទៀងផ្ទាត់ភាពត្រឹមត្រូវ ទាមទារ
+3 minutes	common	km	3 នាទី
+30 minutes	common	km	30 នាទី
+30 seconds	common	km	30 វិនាទី
+5 minutes	common	km	5 នាទី។
+5 seconds	common	km	5 វិនាទី
+80 (http)	admin	km	80 (http)
+a pattern to be searched for	common	km	លំនាំដែលត្រូវស្វែងរក
+a request to the egroupware server returned with an error	common	km	សំណើទៅកាន់ម៉ាស៊ីនមេ EGroupware បានត្រឡប់មកវិញដោយមានកំហុស
+abcdefghijklmnopqrstuvwxyz	common	km	ABCDEFGHIJKLMNOPQRSTUVWXYZ
+abort	common	km	បោះបង់
+about	common	km	អំពី
+about %1	common	km	អំពី %1
+about egroupware	common	km	អំពី EGroupware
+access	common	km	ការចូលប្រើ
+access not permitted	common	km	ការចូលប្រើមិនត្រូវបានអនុញ្ញាតទេ។
+accesskey	common	km	សោចូល
+accesskeys can also be specified with an & in the label (eg. &name)	common	km	គ្រាប់ចុចចូលប្រើក៏អាចត្រូវបានបញ្ជាក់ជាមួយ & ក្នុងស្លាក (ឧ. &ឈ្មោះ)
+account contactdata	common	km	ទិន្នន័យទំនាក់ទំនងគណនី
+account has been created	common	km	គណនីត្រូវបានបង្កើតឡើង។
+account has been deleted	common	km	គណនីត្រូវបានលុប។
+account has been updated	common	km	គណនីត្រូវបានធ្វើបច្ចុប្បន្នភាព។
+account is expired	common	km	គណនីផុតកំណត់។
+accounts	common	km	គណនី
+acl	common	km	ACL
+action	common	km	សកម្មភាព
+action when category is an email address	groupdav	km	សកម្មភាពនៅពេលដែលប្រភេទគឺជាអាសយដ្ឋានអ៊ីមែល
+actions	common	km	សកម្មភាព
+actions...	common	km	សកម្មភាព...
+active	common	km	សកម្ម
+active directory requires ssl or tls to change passwords!	common	km	ថតសកម្មទាមទារ SSL ឬ TLS ដើម្បីប្តូរពាក្យសម្ងាត់!
+add	common	km	បន្ថែម
+add %1	common	km	បន្ថែម %1
+add %1 category for	common	km	បន្ថែមប្រភេទ%1 សម្រាប់
+add a new column (after the existing ones)	common	km	បន្ថែមជួរឈរថ្មី
+add a new contact	common	km	បន្ថែមទំនាក់ទំនងថ្មី
+add a new entry of the selected application	common	km	បន្ថែមធាតុថ្មីនៃកម្មវិធីដែលបានជ្រើសរើស
+add a new multi-column index	common	km	បន្ថែមលិបិក្រមពហុជួរថ្មី
+add category	common	km	បន្ថែមប្រភេទ
+add column	common	km	បន្ថែមជួរឈរ
+add current	common	km	បន្ថែមបច្ចុប្បន្ន
+add index	common	km	បន្ថែមលិបិក្រម
+add new	common	km	បន្ថែម​ថ្មី
+add shortcut	common	km	បន្ថែមផ្លូវកាត់
+add sub	common	km	បន្ថែមរង
+add table	common	km	បន្ថែមតារាង
+add to clipboard	common	km	បន្ថែមទៅក្ដារតម្បៀតខ្ទាស់
+add user to responsibles	groupdav	km	បន្ថែមអ្នកប្រើប្រាស់ទៅការទទួលខុសត្រូវ
+add user to responsibles, removing evtl. previous category user	groupdav	km	បន្ថែមអ្នកប្រើប្រាស់ទៅការទទួលខុសត្រូវ ដោយយក evtl ចេញ។ អ្នកប្រើប្រាស់ប្រភេទមុន។
+add your domain as "%1" in options to list of email providers and enable api.	common	km	បន្ថែមដែនរបស់អ្នកជា "%1" នៅក្នុងជម្រើសទៅក្នុងបញ្ជីអ្នកផ្តល់អ៊ីមែល និងបើក API ។
+addressbook	common	km	សៀវភៅ​អាស័យ​ដ្ឋាន
+addressbooks to sync in addition to personal addressbook	groupdav	km	សៀវភៅអាសយដ្ឋានដើម្បីធ្វើសមកាលកម្មបន្ថែមលើសៀវភៅអាសយដ្ឋានផ្ទាល់ខ្លួន
+admin	common	km	អ្នកគ្រប់គ្រង
+admin settings for %1	common	km	ការកំណត់អ្នកគ្រប់គ្រងសម្រាប់%1
+administration	common	km	រដ្ឋបាល
+advanced search	common	km	ការស្វែងរកកម្រិតខ្ពស់
+afghanistan	common	km	អាហ្វហ្គានីស្ថាន
+albania	common	km	អាល់បានី
+algeria	common	km	អាល់ហ្សេរី
+align	common	km	តម្រឹម
+aligncenter	common	km	តម្រឹម
+alignjustify	common	km	តម្រឹម
+alignleft	common	km	តម្រឹមឆ្វេង
+alignment of label and input-field in table-cell	common	km	ការតម្រឹមស្លាក និងវាលបញ្ចូលក្នុងក្រឡាតារាង
+alignment of the v/hbox containing table-cell	common	km	ការតម្រឹម V/HBox ដែលមានក្រឡាតារាង
+alignright	common	km	តម្រឹម
+all	common	km	ទាំងអស់។
+all addressbooks	groupdav	km	សៀវភៅអាសយដ្ឋានទាំងអស់។
+all categories	common	km	ប្រភេទ​ទាំងអស់
+all days	common	km	រាល់ថ្ងៃ
+all fields	common	km	វាលទាំងអស់។
+all in one	groupdav	km	ដាក់​បញ្ចូល​គ្នា​តែមួយ
+all languages	common	km	គ្រប់ភាសា
+all operations save the template!	common	km	ប្រតិបត្តិការទាំងអស់រក្សាទុកគំរូ!
+all users	common	km	អ្នក​ប្រើ​ទាំងអស់
+allow editing the %1	common	km	អនុញ្ញាតឱ្យកែសម្រួល%1
+allowed file type: %1	common	km	ប្រភេទឯកសារដែលបានអនុញ្ញាត៖ %1
+allows to modify responsible users from devices not supporting them, by setting email address of a user as category.	groupdav	km	អនុញ្ញាតឱ្យកែប្រែអ្នកប្រើប្រាស់ដែលទទួលខុសត្រូវពីឧបករណ៍ដែលមិនគាំទ្រពួកគេ ដោយកំណត់អាសយដ្ឋានអ៊ីមែលរបស់អ្នកប្រើជាប្រភេទ។
+alt	common	km	ជំនួស
+alternate style-sheet:	common	km	សន្លឹករចនាប័ទ្មជំនួស៖
+am	common	km	ព្រឹក
+american samoa	common	km	សាម័រអាមេរិក
+an admin required that you must change your password upon login.	common	km	អ្នកគ្រប់គ្រងតម្រូវឱ្យអ្នកត្រូវតែផ្លាស់ប្តូរពាក្យសម្ងាត់របស់អ្នកនៅពេលចូល។
+an error happened	common	km	កំហុសមួយបានកើតឡើង!
+an existing and by the webserver readable directory enables the image browser and upload.	common	km	AND ដែលមានស្រាប់ដោយម៉ាស៊ីនមេគេហទំព័រ ថតដែលអាចអានបាន បើកកម្មវិធីរុករករូបភាព និងបង្ហោះ។
+an indexed column speeds up querys using that column (cost space on the disk !!!)	common	km	ជួរឈរដែលបានធ្វើលិបិក្រមបង្កើនល្បឿនសំណួរដោយប្រើជួរឈរនោះ ចំណាយទំហំនៅលើថាស!
+and	common	km	និង
+andorra	common	km	អង់ដូរ៉ា
+angola	common	km	អង់ហ្គោឡា
+anguilla	common	km	អង់ហ្គីឡា
+antarctica	common	km	អង់តាក់ទិក
+antigua and barbuda	common	km	អង់ទីហ្គា និងបាប៊ូដា
+api	common	km	EGroupware API
+api-accounts	common	km	គណនីអ្នកប្រើប្រាស់
+application	common	km	ការដាក់ពាក្យ
+application has no etemplates (no file %1) to restore!	common	km	កម្មវិធីមិនមាន eTemplates (គ្មានឯកសារ %1) ដើម្បីស្ដារ!
+application name needed to restore etemplates!	common	km	ឈ្មោះកម្មវិធីដែលត្រូវការដើម្បីស្ដារ eTemplates!
+application name needed to write a langfile or dump the etemplates !!!	common	km	ឈ្មោះកម្មវិធីដែលត្រូវការដើម្បីសរសេរ langfile ឬបោះចោល eTemplates!
+applications	common	km	កម្មវិធី
+applies the changes made	common	km	អនុវត្តការផ្លាស់ប្តូរ
+applies the changes to the given version of the template	common	km	អនុវត្តការផ្លាស់ប្តូរទៅកំណែដែលបានផ្តល់ឱ្យនៃគំរូ
+apply	common	km	អនុវត្ត
+apply the action on the whole query, not only the shown entries	common	km	អនុវត្តសកម្មភាពលើសំណួរទាំងមូល មិនត្រឹមតែធាតុដែលបានបង្ហាញប៉ុណ្ណោះទេ
+apps &amp; license	common	km	កម្មវិធី និងអាជ្ញាប័ណ្ណ
+april	common	km	មេសា
+are you sure you want to delete these entries ?	common	km	តើអ្នកប្រាកដថាចង់លុបធាតុទាំងនេះទេ?
+are you sure you want to delete this entry ?	common	km	តើអ្នកប្រាកដថាចង់លុបធាតុនេះទេ?
+are you sure you want to logout?	common	km	តើ​អ្នក​ប្រាកដ​ជា​ចង់​ចេញ?
+are you sure, you would like to delete the backup key?	common	km	តើអ្នកប្រាកដទេថា អ្នកចង់លុបសោបម្រុងទុក?
+argentina	common	km	អាហ្សង់ទីន
+armenia	common	km	អាមេនី
+aruba	common	km	អារុបា
+as default	common	km	តាមលំនាំដើម
+attach	common	km	ភ្ជាប់
+attach file	common	km	ភ្ជាប់ឯកសារ
+attachment	common	km	ឯកសារ​ភ្ជាប់
+attention: action will be applied to all rows, not only visible ones!	api	km	យកចិត្តទុកដាក់៖ សកម្មភាពនឹងត្រូវបានអនុវត្តចំពោះជួរទាំងអស់ មិនត្រឹមតែអ្នកដែលអាចមើលឃើញប៉ុណ្ណោះទេ!
+august	common	km	សីហា
+australia	common	km	អូស្ត្រាលី
+austria	common	km	អូទ្រីស
+authenticate	common	km	ផ្ទៀងផ្ទាត់ភាពត្រឹមត្រូវ
+author	common	km	អ្នកនិពន្ធ
+autohide sidebox menu's	common	km	លាក់ម៉ឺនុយចំហៀងដោយស្វ័យប្រវត្តិ
+autohide sidebox menus	common	km	លាក់ម៉ឺនុយចំហៀងដោយស្វ័យប្រវត្តិ
+automatic update check failed, you need to check manually!	common	km	ការត្រួតពិនិត្យអាប់ដេតដោយស្វ័យប្រវត្តិបានបរាជ័យ អ្នកត្រូវពិនិត្យមើលដោយដៃ!
+automatically hide the sidebox menu's?	common	km	លាក់ម៉ឺនុយចំហៀងដោយស្វ័យប្រវត្តិ?
+automatically hide the sidebox menus?	common	km	លាក់ម៉ឺនុយចំហៀងដោយស្វ័យប្រវត្តិ?
+automatically refresh list	common	km	ធ្វើឱ្យបញ្ជីឡើងវិញដោយស្វ័យប្រវត្តិ
+autosave default category	common	km	រក្សាទុកប្រភេទលំនាំដើមដោយស្វ័យប្រវត្តិ។
+avatar	common	km	Avatar
+azerbaijan	common	km	អាហ្ស៊ែរបៃហ្សង់
+back	common	km	ត្រឡប់មកវិញ
+back to user login	common	km	ត្រលប់ទៅការចូលរបស់អ្នកប្រើ
+backcolor	common	km	ពណ៌ខាងក្រោយ
+background color:	common	km	ពណ៌ផ្ទៃខាងក្រោយ៖
+backup key	common	km	សោបម្រុងទុក
+backup/restore	common	km	បម្រុងទុក/ស្តារ
+backup/restore ...	common	km	បម្រុងទុក/ស្តារ...
+backupdir '%1' is not writeable by the webserver	common	km	Backupdir '%1' មិនអាចសរសេរបានដោយម៉ាស៊ីនមេគេហទំព័រទេ។
+bad login or password	common	km	ការចូល ឬពាក្យសម្ងាត់មិនល្អ។
+bahamas	common	km	បាហាម៉ាស
+bahrain	common	km	បារ៉ែន
+bangladesh	common	km	បង់ក្លាដេស
+barbados	common	km	បាបាដូស
+baseline	common	km	មូលដ្ឋាន
+bcc	common	km	Bcc
+before proceeding further, we do highly recommend you to watch this short video, to see how mailvelope plugin works with egroupware.	common	km	មុននឹងបន្តទៅមុខទៀត យើងសូមណែនាំអ្នកឱ្យមើលវីដេអូខ្លីនេះ ដើម្បីមើលពីរបៀបដែលកម្មវិធីជំនួយ mailvelope ដំណើរការជាមួយ EGroupware។
+belarus	common	km	បេឡារុស្ស
+belgium	common	km	បែលហ្សិក
+belize	common	km	បេលីហ្ស
+benin	common	km	បេនីន
+bermuda	common	km	ប៊ែរមូដា
+bhutan	common	km	ប៊ូតាន
+blocked, too many attempts	common	km	បានទប់ស្កាត់ ការព្យាយាមច្រើនពេក។
+blue moono theme	common	km	ប្រធានបទព្រះច័ន្ទពណ៌ខៀវ
+blurtext	common	km	អត្ថបទមិនច្បាស់
+bold	common	km	ដិត
+bolivia	common	km	បូលីវី
+border	common	km	ព្រំដែន
+border-line-thickness for the table-tag	common	km	កម្រាស់បន្ទាត់ព្រំដែនសម្រាប់ស្លាកតារាង
+bosnia and herzegovina	common	km	បូសនី និងហឺហ្សេហ្គោវីណា
+botswana	common	km	បូតស្វាណា
+bottom	common	km	បាត
+bouvet island	common	km	កោះ BOUVET
+box	common	km	ប្រអប់
+box...	common	km	ប្រអប់...
+brazil	common	km	ប្រេស៊ីល
+british indian ocean territory	common	km	ដែនដីមហាសមុទ្រឥណ្ឌារបស់អង់គ្លេស
+broken link	common	km	តំណភ្ជាប់ខូច
+browser %1 %2 is not recommended. you may experience issues and not working features. please use the latest version of chrome, firefox or edge. thank you!	common	km	កម្មវិធីរុករក%1%2 មិនត្រូវបានណែនាំទេ។ អ្នកអាចជួបប្រទះបញ្ហា និងមុខងារមិនដំណើរការ។ សូមប្រើកំណែចុងក្រោយបំផុតរបស់ Chrome, Firefox ឬ Edge ។ សូមអរគុណ!
+brunei darussalam	common	km	ប្រទេស​ព្រុយ​ណេ​ដា​រូ​សា​ឡឹម
+bulgaria	common	km	ប៊ុលហ្គារី
+bulgarian	common	km	ប៊ុលហ្គារី
+bullist	common	km	ញញួរ
+burkina faso	common	km	បួគីណា ហ្វាសូ
+burundi	common	km	ប៊ូរុនឌី
+calendar	common	km	ប្រតិទិន
+calendars to sync in addition to personal calendar	groupdav	km	ប្រតិទិនដើម្បីធ្វើសមកាលកម្មបន្ថែមលើប្រតិទិនផ្ទាល់ខ្លួន
+cambodia	common	km	កម្ពុជា។
+cameroon	common	km	កាមេរូន
+can not have special sql-value null	common	km	មិនអាចមាន SQL-value ពិសេស NULL បានទេ។
+can't create directory %1 to connect found unconnected nodes to it!	admin	km	មិន​អាច​បង្កើត​ថត%1 ដើម្បី​តភ្ជាប់​រក​ឃើញ​ថ្នាំង​ដែល​មិន​បាន​តភ្ជាប់​ទៅ​វា​ទេ!
+canada	common	km	កាណាដា
+cancel	common	km	បោះបង់
+cannot replace %1 because it is a directory	common	km	មិន​អាច​ជំនួស%1 ព្រោះ​វា​ជា​ថត។
+cannot set a category as parent, which is part of this categorys subtree!	common	km	មិនអាចកំណត់ប្រភេទជាមេ ដែលជាផ្នែកនៃមែកធាងរងនៃប្រភេទនេះ!
+cannot set this cat as its own parent!	common	km	មិនអាចកំណត់ប្រភេទនេះជាមេរបស់វាបានទេ!
+cant delete a single widget from a grid !!!	common	km	មិនអាចលុបធាតុក្រាហ្វិកតែមួយចេញពីក្រឡាចត្រង្គបានទេ!
+cant delete the only column of a grid !!!	common	km	មិនអាចលុបជួរឈរតែមួយនៃក្រឡាចត្រង្គបានទេ!
+cant delete the only row in a grid !!!	common	km	មិនអាចលុបជួរតែមួយក្នុងក្រឡាចត្រង្គបានទេ!
+cant open %1, needs ziparchive	common	km	មិនអាចបើក%1 បានទេ ត្រូវការ ZipArchive
+cant open '%1' for %2	common	km	មិនអាចបើក '%1' សម្រាប់ %2
+cape verde	common	km	CAPE VERDE
+caption	common	km	ចំណងជើង
+categories	common	km	ប្រភេទ
+categories for	common	km	ប្រភេទសម្រាប់
+category	common	km	ប្រភេទ
+category %1 has been added !	common	km	ប្រភេទ%1ត្រូវបានបន្ថែម!
+category %1 has been updated !	common	km	ប្រភេទ %1 ត្រូវបានធ្វើបច្ចុប្បន្នភាព!
+category owner	common	km	ម្ចាស់​ប្រភេទ
+category tree	common	km	ប្រភេទដើមឈើ
+cayman islands	common	km	កោះ CAYMAN
+cc	common	km	Cc
+cellpadding for the table-tag	common	km	ក្រឡាក្រឡាសម្រាប់ស្លាកតារាង
+cells	common	km	កោសិកា
+cellspacing for the table-tag	common	km	គម្លាតក្រឡាសម្រាប់ស្លាកតារាង
+center	common	km	មជ្ឈមណ្ឌល
+centered	common	km	កណ្តាល
+central african republic	common	km	សាធារណរដ្ឋអាហ្វ្រិកកណ្តាល
+chad	common	km	ឆាដ
+change	common	km	ផ្លាស់ប្តូរ
+change owner	common	km	ផ្លាស់ប្តូរម្ចាស់
+changed	common	km	បានផ្លាស់ប្តូរ
+charset	common	km	សំណុំតួអក្សរ
+check all	common	km	ពិនិត្យ​ទាំងអស់
+check for empty values in if statements.  example {{if url~empty~~website:}} - if url is not empty, writes "website:"	common	km	ពិនិត្យមើលតម្លៃទទេនៅក្នុងសេចក្តីថ្លែងការណ៍ IF ។ ឧទាហរណ៍ {{IF url~EMPTY~~Website:}} - ប្រសិនបើ url មិនទទេ សរសេរ "គេហទំព័រ៖"
+check if content should only be displayed but not altered (the content is not send back then!)	common	km	មាតិកាគួរតែត្រូវបានបង្ហាញតែប៉ុណ្ណោះ ប៉ុន្តែមិនផ្លាស់ប្តូរទេ។
+check if field has to be filled by user	common	km	ពិនិត្យមើលថាតើវាលត្រូវបំពេញដោយអ្នកប្រើប្រាស់ឬអត់
+check installation	common	km	ពិនិត្យការដំឡើង
+check now	common	km	ពិនិត្យឥឡូវនេះ
+checkbox	common	km	ប្រអប់ធីក
+chile	common	km	ឈីលី
+china	common	km	ចិន
+choose a background color	common	km	ជ្រើសរើសពណ៌ផ្ទៃខាងក្រោយ
+choose a background color for the icons	common	km	ជ្រើសរើសពណ៌ផ្ទៃខាងក្រោយសម្រាប់រូបតំណាង
+choose a background image.	common	km	ជ្រើសរើសរូបភាពផ្ទៃខាងក្រោយ
+choose a background style.	common	km	ជ្រើសរើសរចនាប័ទ្មផ្ទៃខាងក្រោយ
+choose a text color for the icons	common	km	ជ្រើសរើសពណ៌អត្ថបទសម្រាប់រូបតំណាង
+choose file...	common	km	ជ្រើសរើស​ឯកសារ...
+choose the category	common	km	ជ្រើសរើសប្រភេទ
+choose the default filename for merged documents.	preferences	km	ជ្រើសរើសឈ្មោះឯកសារលំនាំដើមសម្រាប់ឯកសារដែលបានបញ្ចូលគ្នា។
+choose the parent category	common	km	ជ្រើសរើសប្រភេទមេ
+choose time	common	km	ជ្រើសរើសពេលវេលា
+chosen parent category no longer exists	common	km	ប្រភេទមេដែលបានជ្រើសរើសលែងមានទៀតហើយ
+christmas island	common	km	កោះណូអែល
+class	common	km	ថ្នាក់
+class, valign	common	km	Vlass, Valign
+clear	common	km	ច្បាស់
+clear form	common	km	ទម្រង់បែបបទច្បាស់លាស់
+clear window	common	km	ជម្រះបង្អួច
+click	common	km	ចុច
+click here to attach the file	common	km	ភ្ជាប់ឯកសារ
+click here to create the link	common	km	បង្កើតតំណ
+click here to resume your egroupware session.	common	km	ចុចដើម្បីបន្តវគ្គ EGroupware របស់អ្នក។
+click here to start the search	common	km	ចាប់ផ្តើមការស្វែងរក
+click here to upload the file	common	km	ផ្ទុកឡើងឯកសារ
+click or mouse over to show menus	common	km	ចុច ឬកណ្ដុរលើដើម្បីបង្ហាញម៉ឺនុយ។
+click or mouse over to show menus?	common	km	ចុច ឬកណ្ដុរលើដើម្បីបង្ហាញម៉ឺនុយ។
+click this image on the navbar: %1	common	km	ចុចរូបភាពនេះនៅលើរបាររុករក៖ %1
+click to open colorpicker	common	km	ចុចដើម្បីបើកកម្មវិធីជ្រើសរើសពណ៌
+click to order after that criteria	common	km	បញ្ជាទិញតាមលក្ខណៈវិនិច្ឆ័យ
+clickable path	common	km	ផ្លូវដែលអាចចុចបាន។
+clients not explicitly stating a limit get limited to these many days. a too high limit may cause problems with some clients.	groupdav	km	អតិថិជន​ដែល​មិន​បាន​បញ្ជាក់​ឱ្យ​ច្បាស់​អំពី​ការ​កំណត់​នោះ​បាន​កំណត់​ត្រឹម​រយៈពេល​ជាច្រើន​ថ្ងៃ​នេះ។ ដែនកំណត់ខ្ពស់ពេកអាចបង្កបញ្ហាជាមួយអតិថិជនមួយចំនួន។
+close	common	km	បិទ
+close sidebox	common	km	បិទម៉ឺនុយចំហៀង
+closes the window without saving the changes	common	km	បិទដោយមិនរក្សាទុក
+cocos (keeling) islands	common	km	កោះ COCOS (KEELING)
+code	common	km	កូដ
+collection empty.	common	km	ការប្រមូលទទេ។
+collection listing	common	km	បញ្ជីប្រមូល
+colombia	common	km	កូឡុំប៊ី
+colour	common	km	ពណ៌
+column...	common	km	ជួរ...
+columnname	common	km	ឈ្មោះជួរឈរ
+columns to print	common	km	ជួរឈរដែលត្រូវបោះពុម្ព
+command ⌘	common	km	ពាក្យបញ្ជា ⌘
+comment	common	km	មតិយោបល់
+common preferences	common	km	ចំណូលចិត្តទូទៅ
+comoros	common	km	កូម៉ូរ៉ូស
+company	common	km	ក្រុមហ៊ុន
+confirm	common	km	បញ្ជាក់
+confirmation message or custom javascript (returning true or false)	common	km	សារបញ្ជាក់ ឬ javascript ផ្ទាល់ខ្លួន ត្រឡប់ពិតឬមិនពិត។
+confirmation necesary or custom java-script	common	km	ការបញ្ជាក់ចាំបាច់ ឬ java-script ផ្ទាល់ខ្លួន
+confirmation required	common	km	ទាមទារការបញ្ជាក់
+congo	common	km	កុងហ្គោ
+congo, the democratic republic of the	common	km	កុងហ្គោ សាធារណរដ្ឋប្រជាធិបតេយ្យ
+contact	common	km	ទំនាក់ទំនង
+contact field to show	common	km	កន្លែងទំនាក់ទំនងដើម្បីបង្ហាញ
+contact fields	common	km	វាលទំនាក់ទំនង
+contacting server...	common	km	កំពុងទាក់ទងម៉ាស៊ីនមេ...
+contains	common	km	មាន
+content type	common	km	ប្រភេទមាតិកា
+cook islands	common	km	កោះចំអិន
+cookies are required to login to this site	login	km	ខូគីត្រូវបានតម្រូវឱ្យចូលគេហទំព័រនេះ។
+copy	common	km	ចម្លង
+copy "%1"	common	km	ចម្លង "%1"
+copy of:	common	km	ច្បាប់ចម្លងនៃ៖
+copy to	common	km	ចម្លង​ទៅ
+copy to clipboard	common	km	ចម្លងទៅក្ដារតម្បៀតខ្ទាស់
+costa rica	common	km	កូស្តារីកា
+cote d ivoire	common	km	កូតឌីវ័រ
+could not contact server. operation timed out!	common	km	មិនអាចទាក់ទងម៉ាស៊ីនមេបានទេ។ អស់ពេលដំណើរការហើយ!
+create	common	km	បង្កើត
+create a new table for the application	common	km	បង្កើតតារាងថ្មីសម្រាប់កម្មវិធី
+create directory	common	km	បង្កើតថតឯកសារ
+create link	common	km	បង្កើតតំណ
+created	common	km	បានបង្កើត
+created by	common	km	បង្កើត​ឡើង​ដោយ
+created by %1	common	km	បង្កើត​ដោយ %1
+creates an english ('en') langfile from label and helptexts (for application in name)	common	km	បង្កើតឯកសារភាសាអង់គ្លេស ('en') ពីស្លាក និងអត្ថបទជំនួយ (សម្រាប់កម្មវិធីក្នុងឈ្មោះ)
+creator	preferences	km	អ្នកបង្កើត
+croatia	common	km	ក្រូអាត
+css class for the table-tag	common	km	ថ្នាក់ CSS សម្រាប់ស្លាកតារាង
+css properties	common	km	លក្ខណៈសម្បត្តិ CSS
+css-class name for this row, preset: 'nmh' = nextmatch header, 'nmr' = alternating nm row, 'nmr0'+'nmr1' nm rows	common	km	ឈ្មោះថ្នាក់ CSS សម្រាប់ជួរនេះ កំណត់ជាមុន៖ 'nmh' = បឋមកថា NextMatch, 'nmr' = ជួរដេក NM ជំនួស, ជួរ 'nmr0'+'nmr1' NM
+css-class name for this row, preset: 'th' = header, 'row' = alternating row, 'row_off'+'row_on' rows	common	km	ឈ្មោះថ្នាក់ CSS សម្រាប់ជួរដេកនេះ កំណត់ជាមុន៖ 'th' = បឋមកថា, 'row' = ជួរដេកជំនួស, 'row_off'+'row_on' ជួរដេក
+css-styles	common	km	រចនាប័ទ្ម CSS
+ctrl	common	km	បញ្ជា(Ctrl)
+cuba	common	km	គុយបា
+currency	common	km	រូបិយប័ណ្ណ
+current	common	km	នា​ពេល​បច្ចុប្បន្ន
+current users	common	km	អ្នកប្រើប្រាស់បច្ចុប្បន្ន
+custom	common	km	ផ្ទាល់ខ្លួន
+custom fields	common	km	វាលផ្ទាល់ខ្លួន
+custom javascript for onchange	common	km	javascript ផ្ទាល់ខ្លួនសម្រាប់ onChange
+cut	common	km	កាត់
+cyprus	common	km	ស៊ីប
+czech republic	common	km	សាធារណរដ្ឋ​ឆែក
+dark mode	common	km	របៀបងងឹត
+dark moono theme	common	km	ប្រធានបទព្រះច័ន្ទងងឹត
+data type	common	km	ប្រភេទ​ទិន្នន័យ
+database error	common	km	កំហុសមូលដ្ឋានទិន្នន័យ
+database error!	common	km	កំហុសមូលដ្ឋានទិន្នន័យ!
+date	common	km	កាលបរិច្ឆេទ
+date due	common	km	កាលបរិច្ឆេទ​កំណត់
+date+time	common	km	កាលបរិច្ឆេទ + ពេលវេលា
+datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	km	ច្រកពេលវេលាកាលបរិច្ឆេទ។<br>ប្រសិនបើប្រើច្រក 13 សូមកំណត់ច្បាប់ជញ្ជាំងភ្លើងឱ្យបានត្រឹមត្រូវមុនពេលបញ្ជូនទំព័រនេះ។<br>(ច្រក: 13 / ម៉ាស៊ីន: 129.6.15.28) ។
+day	common	km	ថ្ងៃ
+days	common	km	ថ្ងៃ
+db ensures that every row has a unique value in that column	common	km	DB ធានាថារាល់ជួរនីមួយៗមានតម្លៃពិសេសនៅក្នុងជួរនោះ។
+db-specific index options (comma-sep.), eg. mysql(fulltext) or mysql(100) for the indexed length of a col	common	km	ជម្រើសលិបិក្រមជាក់លាក់របស់ DB, សញ្ញាក្បៀសបំបែក ឧ. mysql(FULLTEXT) ឬ mysql(100) សម្រាប់ប្រវែងដែលបានធ្វើលិបិក្រមនៃជួរឈរ។
+db-tools	common	km	ឧបករណ៍ DB
+december	common	km	ខែធ្នូ
+deck	common	km	បន្ទះ (ខាងក្នុង)
+default	common	km	លំនាំដើម
+default category	common	km	ប្រភេទលំនាំដើម
+default document to insert entries	preferences	km	ឯកសារលំនាំដើមដើម្បីបញ្ចូលធាតុ
+default height for the windows	common	km	កម្ពស់លំនាំដើមសម្រាប់បង្អួច
+default visible actions	common	km	សកម្មភាពដែលមើលឃើញលំនាំដើម
+default width for the windows	common	km	ទទឹងលំនាំដើមសម្រាប់បង្អួច
+del	common	km	នៃ
+delete	common	km	លុប
+delete a single entry by passing the id.	common	km	លុបធាតុតែមួយដោយឆ្លងកាត់លេខសម្គាល់
+delete all selected etemplates, without further inquiry	common	km	លុបគំរូ eTemplates ដែលបានជ្រើសរើសទាំងអស់ ដោយមិនចាំបាច់សាកសួរបន្ថែម
+delete and cut save the template!	common	km	លុប និងកាត់ រក្សាទុកគំរូ!
+delete backup	common	km	លុបការបម្រុងទុក
+delete backup key	common	km	លុបសោបម្រុងទុក
+delete category	common	km	លុបប្រភេទ
+delete column	common	km	លុបជួរឈរ
+delete file	common	km	លុប​ឯកសារ
+delete index	common	km	លុបលិបិក្រម
+delete link	common	km	លុបតំណ
+delete link?	common	km	លុបតំណ?
+delete row	common	km	លុបជួរ
+delete selected entries?	common	km	លុបធាតុដែលបានជ្រើសរើស?
+delete the spezified etemplate	common	km	លុប eTemplate
+delete these entries	common	km	លុបធាតុទាំងនេះ
+delete this column	common	km	លុបជួរឈរ
+delete this entry	common	km	លុបធាតុនេះ។
+delete this etemplate	common	km	លុប eTemplate
+delete this file	common	km	លុប​ឯកសារ
+delete this photo?	common	km	លុបរូបថតនេះ?
+delete this row	common	km	លុបជួរ
+delete whole column (can not be undone!!!)	common	km	លុបជួរឈរទាំងមូល
+deletes the above spez. etemplate from the database, can not be undone	common	km	លុប eTemplate ពីមូលដ្ឋានទិន្នន័យ
+deletes the etemplate spez. above	common	km	លុប eTemplate ។
+deletes this column	common	km	លុប​ជួរ​ឈរ។
+deletes this index	common	km	លុបលិបិក្រម។
+denmark	common	km	ដាណឺម៉ាក
+description	common	km	ការពិពណ៌នា
+detail	common	km	លម្អិត
+details	common	km	ព័ត៌មានលម្អិត
+diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	km	បិទការប្រតិបត្តិស្គ្រីបកែកំហុសសម្រាប់ Internet Explorer 5.5 និងខ្ពស់ជាងនេះ ដើម្បីបង្ហាញតម្លាភាពក្នុងរូបភាព .png?
+direction left to right	common	km	ទិសដៅពីឆ្វេងទៅស្តាំ
+directory	common	km	ថតឯកសារ
+directory does not exist, is not readable by the webserver or is not relative to the document root!	common	km	មិនមានថតឯកសារទេ មិនអាចអានបានដោយម៉ាស៊ីនមេគេហទំព័រ ឬមិនទាក់ទងនឹងឫសឯកសារ!
+directory for storing merged documents	preferences	km	ថតឯកសារសម្រាប់រក្សាទុកឯកសារដែលបានបញ្ចូលគ្នា
+directory with documents to insert entries	preferences	km	ថតជាមួយឯកសារដើម្បីបញ្ចូលធាតុ
+disable internet explorer png-image-bugfix	common	km	បិទដំណើរការកម្មវិធី Internet Explorer png bugfix
+disable slider effects	common	km	បិទផលប៉ះពាល់គ្រាប់រំកិល
+disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	km	បិទដំណើរការបែបផែនគ្រាប់រំកិលដែលមានចលនា នៅពេលបង្ហាញ ឬលាក់ម៉ឺនុយនៅក្នុងទំព័រ។
+disable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	km	បិទដំណើរការដំណើរការស្គ្រីបកែកំហុសសម្រាប់ Internet Explorer 5.5 និងខ្ពស់ជាងនេះ ដើម្បីបង្ហាញតម្លាភាពក្នុងរូបភាព PNG ។
+disabled	common	km	ពិការ
+discard changes	common	km	បោះបង់ការផ្លាស់ប្តូរ
+displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	common	km	បង្ហាញនៅពីមុខធាតុបញ្ចូល ឬបញ្ចូលត្រូវបានបញ្ចូលសម្រាប់ '%s' នៅក្នុងស្លាកនៃប៊ូតុងបញ្ជូន ឬឈ្មោះឯកសាររូបភាព។
+displayed in statusline of browser if input-field gets focus	common	km	បង្ហាញនៅក្នុងបន្ទាត់ស្ថានភាពនៃកម្មវិធីរុករក ប្រសិនបើវាលបញ្ចូលទទួលបានការផ្តោតអារម្មណ៍។
+displayed in the top line of the groupbox (legend)	common	km	បង្ហាញក្នុងជួរខាងលើនៃប្រអប់ក្រុម (រឿងព្រេង)។
+distribution lists as groups	groupdav	km	បញ្ជីចែកចាយជាក្រុម
+djibouti	common	km	ឌីជីប៊ូទី
+do not notify	common	km	កុំជូនដំណឹង
+do not notify of these changes	common	km	កុំផ្ញើការជូនដំណឹងនៅពេលបង្កើត ឬផ្លាស់ប្តូរ
+do not use on public computers!	common	km	កុំប្រើកុំព្យូទ័រសាធារណៈ!
+do you also want to delete all subcategories ?	common	km	តើអ្នកចង់លុបប្រភេទរងទាំងអស់ដែរទេ?
+do you want to save the changes you made in table %s?	common	km	តើអ្នកចង់រក្សាទុកការផ្លាស់ប្តូរដែលអ្នកបានធ្វើនៅក្នុងតារាង %s ទេ?
+do you want to send the message to all selected entries, without further editing?	common	km	តើអ្នកចង់ផ្ញើសារទៅកាន់ធាតុដែលបានជ្រើសរើសទាំងអស់ ដោយមិនចាំបាច់កែសម្រួលបន្ថែមទេ?
+doctype:	common	km	ប្រភេទឯកសារ៖
+document '%1' does not exist or is not readable for you!	preferences	km	ឯកសារ '%1' មិនមានទេ ឬមិនអាចអានបានសម្រាប់អ្នក!
+document properties	common	km	លក្ខណៈសម្បត្តិឯកសារ
+document title:	common	km	ចំណងជើងឯកសារ៖
+documentation	common	km	ឯកសារ
+doesn't matter	common	km	មិនសំខាន់ទេ។
+domain	common	km	ដែន
+domain name for mail-address, eg. "%1"	common	km	ឈ្មោះដែនសម្រាប់អាសយដ្ឋានសំបុត្រ ឧ។ "%1"
+domestic	common	km	ក្នុងស្រុក
+dominica	common	km	ដូមីនីកា
+dominican republic	common	km	សាធារណរដ្ឋ​ដូ​មីនី​កែន
+don't show this again	common	km	កុំបង្ហាញវាម្តងទៀត
+done	common	km	រួចរាល់
+dos international	common	km	DOS អន្តរជាតិ
+download	common	km	ទាញយក
+download link	common	km	តំណទាញយក
+drag markers to pick a color	common	km	អូសសញ្ញាសម្គាល់ដើម្បីជ្រើសរើសពណ៌
+drop a table - this can not be undone	common	km	ទម្លាក់តារាង - វាមិនអាចត្រឡប់វិញបានទេ។
+drop table	common	km	ទម្លាក់តារាង
+dump4setup	common	km	ការដំឡើង Dump4
+duration	common	km	រយៈពេល
+e-mail	common	km	អ៊ីមែល
+east timor	common	km	ទីម័រខាងកើត
+eastern european	common	km	អឺរ៉ុបខាងកើត
+ecuador	common	km	អេក្វាឌ័រ
+edit	common	km	កែសម្រួល
+edit %1 category for	common	km	កែសម្រួល%1 ប្រភេទសម្រាប់
+edit avatar	common	km	កែសម្រួលរូបតំណាង
+edit categories	common	km	កែសម្រួលប្រភេទ
+edit category	common	km	កែសម្រួលប្រភេទ
+edit embeded css styles or of the applications app.css file	common	km	កែសម្រួលរចនាប័ទ្ម CSS ដែលបានបង្កប់ ឬឯកសារកម្មវិធី app.css
+edit the etemplate spez. above	common	km	កែសម្រួល eTemplate
+edit...	common	km	កែសម្រួល...
+editable templates - db-tools	common	km	គំរូដែលអាចកែសម្រួលបាន - DB-Tools
+editable templates - delete template	common	km	ពុម្ពដែលអាចកែសម្រួលបាន - លុបគំរូ
+editable templates - editor	common	km	គំរូដែលអាចកែសម្រួលបាន - កម្មវិធីនិពន្ធ
+editable templates - search	common	km	ពុម្ពដែលអាចកែសម្រួលបាន - ស្វែងរក
+editable templates - show template	common	km	គំរូដែលអាចកែសម្រួលបាន - បង្ហាញគំរូ
+egroupware	common	km	EGroupware
+egroupware administrators group, do not delete	common	km	ក្រុមអ្នកគ្រប់គ្រង EGroupware កុំលុប
+egroupware all users group, do not delete	common	km	EGroupware ក្រុមអ្នកប្រើប្រាស់ទាំងអស់ កុំលុប
+egroupware anonymous users group, do not delete	common	km	ក្រុមអ្នកប្រើប្រាស់អនាមិក EGroupware កុំលុប
+egroupware api version	common	km	កំណែ EGroupware API
+egroupware maintenance update %1 available	common	km	ការអាប់ដេតថែទាំ EGroupware%1 មាន
+egroupware security update %1 needs to be installed!	common	km	ការធ្វើបច្ចុប្បន្នភាពសុវត្ថិភាព EGroupware%1 ចាំបាច់ត្រូវដំឡើង!
+egroupware version	common	km	កំណែ EGroupware
+egroupware: login blocked for user '%1', ip %2	common	km	ការចូលត្រូវបានរារាំងសម្រាប់អ្នកប្រើប្រាស់ '%1', IP %2
+egypt	common	km	អេហ្ស៊ីប
+el salvador	common	km	ព្រះអង្គសង្គ្រោះ
+element role title	common	km	ចំណងជើងតួនាទីធាតុ
+email	common	km	អ៊ីមែល
+email-address of the user, eg. "%1"	common	km	អាសយដ្ឋានអ៊ីមែលរបស់អ្នកប្រើ ឧ. "%1"
+embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	common	km	រចនាប័ទ្ម CSS ដែលបានបង្កប់ឧទាហរណ៍ '.red { ផ្ទៃខាងក្រោយ: ក្រហម; }' (ចំណាំ '.' នៅពីមុខ class-name) ឬ '@import url(...)' (ឈ្មោះថ្នាក់គឺសកលសម្រាប់ទំព័រទាំងមូល!)
+empty file	common	km	ឯកសារទទេ
+enable javascript onchange submit	common	km	បើកដំណើរការ JavaScript onChange ដាក់ស្នើ
+enable logging	groupdav	km	បើកដំណើរការកំណត់ហេតុ
+enabled	common	km	បានបើក
+enables logging of caldav/carddav traffic to diagnose problems with devices.	groupdav	km	បើកដំណើរការការកត់ត្រាចរាចរ CalDAV/CardDAV ដើម្បីវិនិច្ឆ័យបញ្ហាជាមួយឧបករណ៍។
+end date	common	km	កាលបរិច្ឆេទបញ្ចប់
+end time	common	km	ពេលវេលាបញ្ចប់
+enter '' for an empty default, nothing mean no default	common	km	បញ្ចូល '' សម្រាប់លំនាំដើមទទេ គ្មានអ្វីមានន័យថាគ្មានលំនាំដើមទេ។
+enter a search pattern	common	km	បញ្ចូលលំនាំស្វែងរក
+enter filename to upload and attach, use [browse...] to search for it	common	km	បញ្ចូលឈ្មោះឯកសារដើម្បីអាប់ឡូត និងភ្ជាប់ ប្រើ [Browse...] ដើម្បីស្វែងរកវា។
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	km	បញ្ចូលទីតាំងនៃ URL របស់ EGroupware។<br>ឧទាហរណ៍៖ http://www.domain.com/egroupware ឬ /egroupware<br><b>គ្មានសញ្ញាបន្តបន្ទាប់</b>
+enter the new version number here (> old_version), empty for no update-file	common	km	បញ្ចូលលេខកំណែថ្មី > old_version ទទេសម្រាប់គ្មានឯកសារធ្វើបច្ចុប្បន្នភាព
+enter the new version number here (has to be > old_version)	common	km	បញ្ចូលលេខកំណែថ្មី ត្រូវតែជា > old_version
+enter your file name	common	km	បញ្ចូលឈ្មោះឯកសាររបស់អ្នក
+enter your password	common	km	បញ្ចូលពាក្យសម្ងាត់របស់អ្នក
+entry has been deleted sucessfully	common	km	ធាតុត្រូវបានលុបដោយជោគជ័យ។
+entry not found!	common	km	រកមិនឃើញធាតុទេ!
+entry saved	common	km	បានរក្សាទុកធាតុ
+entry updated sucessfully	common	km	បានធ្វើបច្ចុប្បន្នភាពធាតុដោយជោគជ័យ។
+epl only	common	km	EPL ប៉ុណ្ណោះ
+equatorial guinea	common	km	អេក្វាទ័រហ្គីណេ
+eritrea	common	km	អេរីទ្រា
+error	common	km	កំហុស
+error copying uploaded file to vfs!	common	km	កំហុសក្នុងការចម្លងឯកសារដែលបានបង្ហោះទៅ VFS!
+error create parent directory %1!	common	km	កំហុសក្នុងការបង្កើតថតមេ%1!
+error creating %1 %2 directory	common	km	កំហុស​ក្នុង​ការ​បង្កើត​ថត %1 %2!
+error deleting %1 %2 directory	common	km	មាន​បញ្ហា​ក្នុង​ការ​លុប​ថត %1 %2!
+error deleting %1!	common	km	កំហុសក្នុងការលុប%1!
+error renaming %1 %2 directory	common	km	មាន​បញ្ហា​ក្នុង​ការ​ប្តូរ​ឈ្មោះ​ថត %1 %2!
+error uploading file!	filemanager	km	កំហុសក្នុងការបង្ហោះឯកសារ!
+error: template not found !!!	common	km	កំហុស៖ រកមិនឃើញគំរូទេ!
+error: webserver is not allowed to write into '%1' !!!	common	km	កំហុស៖ ម៉ាស៊ីនមេគេហទំព័រមិនត្រូវបានអនុញ្ញាតឱ្យសរសេរទៅក្នុង '%1' !!!
+error: while saving !!!	common	km	កំហុសពេលរក្សាទុក!
+error: writing file (no write-permission for the webserver) !!!	common	km	កំហុស​ក្នុង​ការ​សរសេរ​ឯកសារ គ្មាន​ការ​អនុញ្ញាត​សរសេរ​សម្រាប់​ម៉ាស៊ីន​បម្រើ​បណ្ដាញ!
+estonia	common	km	អេស្តូនី
+et2 rendering took %1s	common	km	ការបង្ហាញ eT2 បានយក %1s
+etag	common	km	អ៊ីតាក
+etemplate	common	km	គំរូ eTemplate
+etemplate '%1' imported, use save to put it in the database	common	km	eTemplate '%1' បាននាំចូល ចុច រក្សាទុក ដើម្បីរក្សាទុកវានៅក្នុងមូលដ្ឋានទិន្នន័យ
+etemplate '%1' written to '%2'	common	km	eTemplate '%1' សរសេរទៅ '%2'
+etemplate editor	common	km	កម្មវិធីនិពន្ធ eTemplate
+etemplate reference	common	km	ឯកសារយោងគំរូ
+etemplate tutorial	common	km	ការបង្រៀន eTemplate
+ethiopia	common	km	អេត្យូពី
+everything	common	km	អ្វីគ្រប់យ៉ាង
+exact	common	km	ពិតប្រាកដ
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	preferences	km	ឧទាហរណ៍ {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - search the field "n_prefix", for "Mr", if found, write Hello Mr., else write Hello Ms.
+example {{letterprefix}} - gives a letter prefix without double spaces, if the title is empty for example	preferences	km	ឧទាហរណ៍ {{LETTERPREFIX}} - ផ្តល់បុព្វបទអក្សរដោយគ្មានចន្លោះទ្វេ ប្រសិនបើចំណងជើងទទេ ឧទាហរណ៍
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	preferences	km	ឧទាហរណ៍ {{NELF role}} - ប្រសិនបើតួនាទីវាលមិនទទេ អ្នកនឹងទទួលបានបន្ទាត់ថ្មីជាមួយនឹងតម្លៃនៃតួនាទីវាល
+example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	preferences	km	ឧទាហរណ៍ {{nenvlf role}} - ប្រសិនបើតួនាទីវាលមិនទទេ កំណត់ LF ដោយគ្មានតម្លៃណាមួយនៃវាល
+exchange this row with the one above	common	km	ផ្លាស់ប្តូរជួរនេះជាមួយជួរខាងលើ
+exchange this two columns	common	km	ផ្លាស់ប្តូរជួរឈរទាំងពីរនេះ។
+expiration	common	km	ផុតកំណត់
+export the loaded etemplate into a xml-file	common	km	នាំចេញ eTemplate ដែលបានផ្ទុកទៅក្នុងឯកសារ xml
+export xml	common	km	នាំចេញ XML
+extensions loaded:	common	km	ផ្នែកបន្ថែមត្រូវបានផ្ទុក៖
+failed to change mode of required directory "%1" to %2!	admin	km	បរាជ័យ​ក្នុង​ការ​ផ្លាស់​ប្តូ​រ​របៀប​នៃ​ថត​ដែល​ត្រូវ​ការ "%1" ទៅ %2!
+failed to change password.	common	km	បរាជ័យក្នុងការផ្លាស់ប្តូរពាក្យសម្ងាត់។
+failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	km	បរាជ័យក្នុងការទាក់ទងម៉ាស៊ីនមេ ឬការឆ្លើយតបមិនត្រឹមត្រូវពីម៉ាស៊ីនមេ។ ព្យាយាមចូលម្តងទៀត។ ទាក់ទងអ្នកគ្រប់គ្រងក្នុងករណីបរាជ័យ។
+failed to create required directory "%1"!	admin	km	បរាជ័យ​ក្នុង​ការ​បង្កើត​ថត "%1" ដែល​ទាមទារ!
+failed to move unconnected %1 %2 to %3!	admin	km	បរាជ័យ​ក្នុង​ការ​ផ្លាស់ទី​មិន​បាន​តភ្ជាប់%1%2 ទៅ %3!
+falkland islands (malvinas)	common	km	កោះ FALKLAND (ម៉ាល់វីណាស)
+faroe islands	common	km	កោះ FAROE
+favorite queries	common	km	សំណួរដែលចូលចិត្ត
+favorites	common	km	ចំណូលចិត្ត
+fax number	common	km	លេខទូរសារ
+features of the editor?	common	km	លក្ខណៈពិសេសនៃកម្មវិធីនិពន្ធ
+february	common	km	ខែកុម្ភៈ
+field	common	km	វាល
+field must not be empty !!!	common	km	វាលមិនត្រូវទទេ!
+fields	common	km	វាល
+fiji	common	km	ហ្វីជី
+file	common	km	ឯកសារ
+file %1 has no content in physical filesystem %2 --> failed to remove file!	admin	km	ឯកសារ %1 មិនមានខ្លឹមសារនៅក្នុងប្រព័ន្ធឯកសារជាក់ស្តែង %2 --> បរាជ័យក្នុងការយកឯកសារចេញ!
+file %1 has no content in physical filesystem %2 --> file removed!	admin	km	ឯកសារ %1 មិនមានខ្លឹមសារនៅក្នុងប្រព័ន្ធឯកសារជាក់ស្តែង %2 --> ឯកសារត្រូវបានដកចេញ!
+file %1 has no content in physical filesystem %2!	admin	km	ឯកសារ %1 មិនមានខ្លឹមសារនៅក្នុងប្រព័ន្ធឯកសារជាក់ស្តែង %2 ទេ!
+file '%1' not found!	common	km	រកមិនឃើញឯកសារ '%1' ទេ!
+file a file	common	km	ដាក់ឯកសារមួយ។
+file contains more than one etemplate, last one is shown !!!	common	km	ឯកសារមានច្រើនជាងមួយ eTemplate ចុងក្រោយត្រូវបានបង្ហាញ!
+file information	common	km	ព័ត៌មានឯកសារ
+file is of wrong type (%1 != %2)!	common	km	ឯកសារគឺខុសប្រភេទ (%1 != %2)!
+file too large.  maximum %1	common	km	ឯកសារធំពេក។ អតិបរមា%1
+file writen	common	km	ឯកសារត្រូវបានសរសេរ។
+files	common	km	ឯកសារ
+files without content in physical filesystem will be removed.	admin	km	ឯកសារដែលគ្មានខ្លឹមសារនៅក្នុងប្រព័ន្ធឯកសាររូបវន្តនឹងត្រូវបានយកចេញ។
+fileupload	common	km	ផ្ទុកឡើងឯកសារ
+filter	common	km	តម្រង
+finland	common	km	ហ្វាំងឡង់
+first	common	km	ទីមួយ
+first name	common	km	ឈ្មោះដំបូង
+first name of the user, eg. "%1"	common	km	ឈ្មោះរបស់អ្នកប្រើ ឧ. "%1"
+first page	common	km	ទំព័រទីមួយ
+firstname	common	km	ឈ្មោះដំបូង
+fixme!	common	km	ជួសជុល!
+floating point	common	km	ចំណុច​អ​ណ្តែ​ត
+folder already exists.	common	km	ថត​រួច​ហើយ!
+fontselect	common	km	ជ្រើសរើសពុម្ពអក្សរ
+fontsizeselect	common	km	ជ្រើសរើសទំហំអក្សរ
+for more than one contact in a document use the tag pagerepeat!	preferences	km	ប្រើទំព័រស្លាកម្តងទៀតសម្រាប់ទំនាក់ទំនងច្រើនជាងមួយនៅក្នុងឯកសារ!
+force	common	km	កម្លាំង
+force selectbox	common	km	បង្ខំជ្រើសរើសប្រអប់
+forecolor	common	km	ពណ៌ខាងមុខ
+foreign key	common	km	សោបរទេស
+forever	common	km	ជារៀងរហូត
+formatselect	common	km	ជ្រើសរើសទម្រង់
+formatted text (html)	common	km	អត្ថបទដែលបានធ្វើទ្រង់ទ្រាយ (HTML)
+found unconnected %1 %2!	admin	km	បានរកឃើញថាមិនបានភ្ជាប់%1%2!
+fr	common	km	ហ្វ្រី
+france	common	km	បារាំង
+french guiana	common	km	ហ្គីយ៉ាណាបារាំង
+french polynesia	common	km	ប៉ូលីណេសៀ បារាំង
+french southern territories	common	km	ទឹកដីភាគខាងត្បូងរបស់បារាំង
+friday	common	km	ថ្ងៃសុក្រ
+ftp	common	km	FTP
+fullname	common	km	ឈ្មោះ​ពេញ
+fullscreen	common	km	ពេញ​អេក្រង់
+fullscreen mode	common	km	របៀបពេញអេក្រង់
+gabon	common	km	ហ្គាប៊ុន
+gambia	common	km	ហ្គាំប៊ី
+general fields:	preferences	km	វាលទូទៅ៖
+general menu	common	km	ម៉ឺនុយទូទៅ
+georgia	common	km	ហ្សកហ្ស៊ី
+german	common	km	អាឡឺម៉ង់
+germany	common	km	អាល្លឺម៉ង់
+ghana	common	km	ហ្គាណា
+gibraltar	common	km	ហ្គីប្រាលតា
+global	common	km	សកល
+global public	common	km	សាធារណៈសកល
+go to the first entry	common	km	ចូលទៅកាន់ធាតុទីមួយ
+go to the last entry	common	km	ចូលទៅកាន់ធាតុចុងក្រោយ
+go to the next page of entries	common	km	ទៅកាន់ទំព័របន្ទាប់នៃធាតុ
+go to the previous page of entries	common	km	ទៅកាន់ទំព័រមុននៃធាតុ
+grant access	common	km	ផ្តល់សិទ្ធិចូលប្រើប្រាស់
+greece	common	km	ប្រទេសក្រិក
+greek	common	km	ក្រិក
+greenland	common	km	ហ្គ្រីនឡែន
+grenada	common	km	ហ្គ្រេនដា
+grid	common	km	ក្រឡាចត្រង្គ
+grid column attributes	common	km	គុណលក្ខណៈជួរឈរក្រឡាចត្រង្គ
+grid row attributes	common	km	គុណលក្ខណៈជួរក្រឡាចត្រង្គ
+group	common	km	ក្រុម
+group access	common	km	ការចូលប្រើជាក្រុម
+group has been added	common	km	ក្រុមត្រូវបានបន្ថែម។
+group has been deleted	common	km	ក្រុម​ត្រូវ​បាន​លុប។
+group has been updated	common	km	ក្រុមត្រូវបានធ្វើបច្ចុប្បន្នភាព។
+group name	common	km	ឈ្មោះ​ក្រុម
+group public	common	km	ក្រុមសាធារណៈ
+groupbox	common	km	ប្រអប់ក្រុម
+groupdav	common	km	ការធ្វើសមកាលកម្ម CalDAV / CardDAV
+groups	common	km	ក្រុម
+groups with permission for %1	common	km	ក្រុមដែលមានការអនុញ្ញាតសម្រាប់%1
+groups without permission for %1	common	km	ក្រុមដោយគ្មានការអនុញ្ញាតសម្រាប់%1
+guadeloupe	common	km	ហ្គូដាលូប
+guam	common	km	ហ្គាម
+guatemala	common	km	ហ្គាតេម៉ាឡា
+guinea	common	km	ហ្គីណេ
+guinea-bissau	common	km	ហ្គីណេ-ប៊ីសា
+guyana	common	km	ហ្គូយ៉ាណា
+h	common	km	h
+haiti	common	km	ហៃទី
+hbox	common	km	HBox
+heard island and mcdonald islands	common	km	កោះលឺ និងកោះ MCDONALD
+height	common	km	កម្ពស់
+height of row (in % or pixel)	common	km	កម្ពស់ជួរ (គិតជា% ឬភីកសែល)
+height of row (in % or pixel), disable row: [! = not]<value>[=<check>] eg: '!@data' disable row if content of data is empty	common	km	កម្ពស់ជួរ (គិតជា % ឬភីកសែល) បិទជួរ៖ [! = not]<value>[=<check>] ឧ៖ '!@data' បិទជួរ ប្រសិនបើមាតិកាទិន្នន័យទទេ
+height of the table in % or pixels for the table-tag and (optional) div	common	km	កម្ពស់តារាងគិតជា % ឬភីកសែលសម្រាប់ស្លាកតារាង និង (ជាជម្រើស) div
+height, disabled	common	km	កម្ពស់, ពិការ
+help	common	km	ជំនួយ
+high	common	km	ខ្ពស់
+highest	common	km	ខ្ពស់បំផុត
+history	common	km	ប្រវត្តិសាស្ត្រ
+history log	common	km	កំណត់ហេតុប្រវត្តិសាស្ត្រ
+hold [%1] and [%2] key to drag %3 to your desktop	common	km	សង្កត់គ្រាប់ចុច [%1] និង [%2] ដើម្បីអូស%3 ទៅកុំព្យូទ័ររបស់អ្នក។
+hold [%1] key to select text eg. to copy it	common	km	សង្កត់គ្រាប់ចុច [%1] ដើម្បីជ្រើសរើសអត្ថបទ ឧ. ដើម្បីចម្លងវា។
+holy see (vatican city state)	common	km	HOLY SEE (រដ្ឋទីក្រុងវ៉ាទីកង់)
+home	common	km	ផ្ទះ
+home email	common	km	អ៊ីមែលផ្ទះ
+home screen	common	km	អេក្រង់ដើម
+honduras	common	km	ហុងឌូរ៉ាស
+hong kong	common	km	ហុងកុង
+horizontal rule	common	km	បន្ទាត់ផ្ដេក
+hour	common	km	ម៉ោង
+hours	common	km	ម៉ោង
+how many days to sync in the future (default %1)	groupdav	km	រយៈពេលប៉ុន្មានថ្ងៃដើម្បីធ្វើសមកាលកម្មនាពេលអនាគត (លំនាំដើម%1)
+how many days to sync in the past (default %1)	groupdav	km	តើត្រូវធ្វើសមកាលកម្មប៉ុន្មានថ្ងៃមុន (លំនាំដើម%1)
+how many entries should the list show	common	km	តើបញ្ជីគួរបង្ហាញចំនួនប៉ុន្មាន
+how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	km	តើរូបតំណាងប៉ុន្មានគួរត្រូវបានបង្ហាញនៅក្នុងរបាររុករកកំពូល។ រូបតំណាងបន្ថែមចូលទៅក្នុងម៉ឺនុយទាញចុះក្រោម អាចហៅបានដោយរូបតំណាងនៅជ្រុងខាងស្តាំនៃរបាររុករក។
+how many rows to print	common	km	តើត្រូវបោះពុម្ពប៉ុន្មានជួរ
+how to show the general egroupware menu ?	common	km	របៀបបង្ហាញម៉ឺនុយ EGroupware ទូទៅ
+html	common	km	HTML
+html link to the current record	common	km	តំណភ្ជាប់ HTML ទៅកំណត់ត្រាបច្ចុប្បន្ន
+hungary	common	km	ហុងគ្រី
+iceland	common	km	អ៊ីស្លង់
+id	common	km	លេខសម្គាល់
+iespell not detected. click ok to go to download page.	common	km	ieSpell មិនត្រូវបានរកឃើញទេ។ ចុចយល់ព្រមដើម្បីចូលទៅកាន់ទំព័រទាញយក។
+if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	common	km	ប្រសិនបើវាលត្រូវបានបិទ ក្រឡាតារាងទទេត្រូវបានបង្ហាញ
+if the clock is enabled would you like it to update it every second or every minute?	common	km	ប្រសិនបើនាឡិកាត្រូវបានបើក តើអ្នកចង់ឱ្យវាអាប់ដេតវារៀងរាល់វិនាទី ឬរៀងរាល់នាទី។
+if the error persists, contact your administrator for help and ask to check the error-log of the webserver.	common	km	ប្រសិនបើកំហុសនៅតែបន្តកើតមាន សូមទាក់ទងអ្នកគ្រប់គ្រងរបស់អ្នកសម្រាប់ជំនួយ ហើយសុំឱ្យពិនិត្យមើលកំហុសនៃម៉ាស៊ីនមេគេហទំព័រ។
+if there are some images in the background folder you can choose the one you would like to see.	common	km	ប្រសិនបើមានរូបភាពមួយចំនួននៅក្នុងថតផ្ទៃខាងក្រោយ អ្នកអាចជ្រើសរើសរូបភាពដែលអ្នកចង់ឃើញ។
+if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	preferences	km	ប្រសិនបើអ្នកបញ្ជាក់ថតមួយ ផ្លូវ vfs ពេញលេញ %1 បង្ហាញសកម្មភាពសម្រាប់ឯកសារនីមួយៗ។ សកម្មភាពនោះអនុញ្ញាតឱ្យទាញយកឯកសារដែលបានបញ្ជាក់ជាមួយនឹងទិន្នន័យដែលបានបញ្ចូល។
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	preferences	km	ប្រសិនបើអ្នកបញ្ជាក់ឯកសារ ផ្លូវ vfs ពេញលេញ %1 បង្ហាញរូបតំណាងឯកសារបន្ថែមសម្រាប់ធាតុនីមួយៗ។ រូបតំណាងនោះអនុញ្ញាតឱ្យទាញយកឯកសារដែលបានបញ្ជាក់ជាមួយនឹងទិន្នន័យដែលបានបញ្ចូល។
+if you use "2-factor-authentication", please enter the code here.	common	km	ប្រសិនបើអ្នកប្រើ "2-Factor-Authentication" សូមបញ្ចូលលេខកូដនៅទីនេះ។
+image	common	km	រូបភាព
+image directory relative to document root (use / !), example:	common	km	ថតរូបភាពទាក់ទងទៅនឹងឯកសារជា root (ប្រើ / !) ឧទាហរណ៍៖
+image url	common	km	URL រូបភាព
+import	common	km	នាំចូល
+import an etemplate from a xml-file	common	km	នាំចូល eTemplate ពីឯកសារ xml
+import table-definitions from existing db-table	common	km	នាំចូលនិយមន័យតារាងពីតារាង DB ដែលមានស្រាប់
+import xml	common	km	នាំចូល XML
+in order to copy to clipboard, you need to allow flash player by clicking on gray box.\nyou can permanently allow flash player for egroupware in your browser settings.	common	km	ដើម្បីចម្លងទៅក្ដារតម្បៀតខ្ទាស់ អ្នកត្រូវអនុញ្ញាត Flash player ដោយចុចលើប្រអប់ពណ៌ប្រផេះ។\nអ្នកអាចអនុញ្ញាត Flash player ជាអចិន្ត្រៃយ៍សម្រាប់ EGroupware នៅក្នុងការកំណត់កម្មវិធីរុករកតាមអ៊ីនធឺណិតរបស់អ្នក។
+include access to any linked files (links tab)	common	km	រួមបញ្ចូលការចូលប្រើឯកសារដែលបានភ្ជាប់ណាមួយ (ផ្ទាំងតំណ)
+increment version to not overwrite the existing template	common	km	បង្កើនកំណែដើម្បីមិនសរសេរជាន់លើគំរូដែលមានស្រាប់។
+indent	common	km	ចូលបន្ទាត់
+index/name of returned content (name of the template, link / method for image)	common	km	លិបិក្រម/ឈ្មោះនៃមាតិកាដែលបានត្រឡប់មកវិញ ឈ្មោះនៃគំរូ តំណភ្ជាប់/វិធីសាស្រ្តសម្រាប់រូបភាព។
+indexed	common	km	លិបិក្រម។
+indexoptions	common	km	ជម្រើសសន្ទស្សន៍
+india	common	km	ឥណ្ឌា
+indonesia	common	km	ឥណ្ឌូណេស៊ី
+infolog types to sync	common	km	ប្រភេទ InfoLog ដើម្បីធ្វើសមកាលកម្ម
+initial	common	km	ដើម
+input required	common	km	តម្រូវឱ្យបញ្ចូល
+insert a column before	common	km	បញ្ចូលជួរមុន។
+insert a column behind	common	km	បញ្ចូលជួរឈរបន្ទាប់ពី
+insert a row above	common	km	បញ្ចូលជួរខាងលើ
+insert a row below	common	km	បញ្ចូលជួរខាងក្រោម
+insert a widget before	common	km	បញ្ចូលធាតុក្រាហ្វិកពីមុន
+insert a widget behind	common	km	បញ្ចូលធាតុក្រាហ្វិកបន្ទាប់ពី
+insert all %1 addresses of the %2 contacts in %3	common	km	បញ្ចូលអាសយដ្ឋាន%1 ទាំងអស់នៃទំនាក់ទំនង %2 ក្នុង %3
+insert column after	common	km	បញ្ចូលជួរឈរបន្ទាប់ពី
+insert column before	common	km	បញ្ចូលជួរមុន។
+insert in %1	common	km	បញ្ចូលក្នុង%1
+insert in document	common	km	បញ្ចូលក្នុងឯកសារ
+insert in dokument	common	km	បញ្ចូលក្នុងឯកសារ
+insert new column behind this one	common	km	បញ្ចូលជួរឈរថ្មីបន្ទាប់ពី
+insert new column in front of all	common	km	បញ្ចូលជួរឈរថ្មីមុនទាំងអស់។
+insert new row after this one	common	km	បញ្ចូលជួរថ្មីបន្ទាប់ពី
+insert new row in front of first line	common	km	បញ្ចូលជួរថ្មីមុនជួរទីមួយ
+insert placeholder	common	km	បញ្ចូលកន្លែងដាក់
+insert row after	common	km	បញ្ចូលជួរបន្ទាប់
+insert row before	common	km	បញ្ចូលជួរមុន។
+insert timestamp into description field	common	km	បញ្ចូលត្រាពេលវេលាទៅក្នុងវាលពិពណ៌នា
+install	common	km	ដំឡើង
+integer	common	km	ចំនួនគត់
+international	common	km	អន្តរជាតិ
+introduction	common	km	សេចក្តីផ្តើម
+invalid 2-factor authentication code	common	km	លេខកូដផ្ទៀងផ្ទាត់កត្តា 2 មិនត្រឹមត្រូវ
+invalid email	common	km	អ៊ីមែលមិនត្រឹមត្រូវ
+invalid filename	common	km	ឈ្មោះឯកសារមិនត្រឹមត្រូវ។
+invalid ip address	common	km	អាសយដ្ឋាន IP មិនត្រឹមត្រូវ។
+invalid or expired 'remember me' token	common	km	និមិត្តសញ្ញា 'ចងចាំខ្ញុំ' មិនត្រឹមត្រូវ ឬផុតកំណត់
+invalid password	common	km	ពាក្យសម្ងាត់មិនត្រឹមត្រូវ។
+iran, islamic republic of	common	km	អ៊ីរ៉ង់ សាធារណរដ្ឋអ៊ីស្លាម
+iraq	common	km	អ៊ីរ៉ាក់
+ireland	common	km	អៀរឡង់
+israel	common	km	អ៊ីស្រាអែល
+it has been more then %1 days since you changed your password	common	km	វាមានរយៈពេលជាង %1 ថ្ងៃហើយចាប់តាំងពីអ្នកបានផ្លាស់ប្តូរពាក្យសម្ងាត់របស់អ្នក។
+it is recommended that you run setup to upgrade your tables to the current version	common	km	វាត្រូវបានណែនាំឱ្យអ្នកដំណើរការការដំឡើង ដើម្បីដំឡើងកំណែតារាងរបស់អ្នកទៅកំណែបច្ចុប្បន្ន។
+it is recommended to store your public key in addressbook, so other users can write you encrypted mails.	common	km	វាត្រូវបានផ្ដល់អនុសាសន៍ឱ្យរក្សាទុកសោសាធារណៈរបស់អ្នកនៅក្នុងសៀវភៅអាសយដ្ឋាន ដូច្នេះអ្នកប្រើប្រាស់ផ្សេងទៀតអាចសរសេរសំបុត្រដែលអ្នកបានអ៊ិនគ្រីប។
+italic	common	km	ទ្រេត
+italy	common	km	អ៊ីតាលី
+jamaica	common	km	ហ្សាម៉ាអ៊ីក
+january	common	km	មករា
+japan	common	km	ប្រទេសជប៉ុន
+japanese	common	km	ជប៉ុន
+jordan	common	km	ហ្ស៊កដានី
+july	common	km	ខែកក្កដា
+jun	common	km	មិថុនា
+june	common	km	ខែមិថុនា
+justify center	common	km	បញ្ជាក់មជ្ឈមណ្ឌល
+justify full	common	km	បង្ហាញភាពត្រឹមត្រូវពេញលេញ
+justify left	common	km	តម្រឹមឆ្វេង
+justify right	common	km	បង្ហាញភាពត្រឹមត្រូវ
+kama theme	common	km	ប្រធានបទ kama
+kazakstan	common	km	កាហ្សាក់ស្ថាន
+kenya	common	km	កេនយ៉ា
+key	common	km	សោ
+keywords	common	km	ពាក្យគន្លឹះ
+kiribati	common	km	គីរីបាទី
+korea, democratic peoples republic of	common	km	កូរ៉េ សាធារណរដ្ឋប្រជាមានិតប្រជាធិបតេយ្យ
+korea, republic of	common	km	កូរ៉េ សាធារណរដ្ឋ
+korean	common	km	កូរ៉េ
+kuwait	common	km	គុយវ៉ែត
+kyrgyzstan	common	km	កៀហ្ស៊ីស៊ីស្ថាន
+label	common	km	ស្លាក​សញ្ញា
+label:[bold][italic] text:[len][,max] numbers:[min][,[max][,len]] t.area:[rows][,cols] radiob.:value h.rule:[width] templ.:[indexincontent] select:[multiselect] date:[values: eg. 'y-m-d']	common	km	Label:[bold][italic] Text:[len][,max] Numbers:[min][,[max][,len]] T.area:[rows][,cols] Radiob.:value H.Rule:[width] Templ.:[IndexInContent] Select:[multiselect] Date:[values: eg. 'Y-m-d']
+landscape	common	km	ទេសភាព
+lang	common	km	ភាសា
+language	common	km	ភាសា
+language-short (eg. 'en' for english) for language-dependent template ('' reads your pref. languages or the default, us 'default' to read the default template '')	common	km	ភាសាខ្លី (ឧ. 'en' សម្រាប់ភាសាអង់គ្លេស) សម្រាប់ពុម្ពដែលពឹងផ្អែកលើភាសា (''អានភាសាបុព្វបទរបស់អ្នក ឬលំនាំដើម យើង 'លំនាំដើម' ដើម្បីអានគំរូលំនាំដើម'')
+language_direction_rtl	common	km	language_direction_rtl
+lao peoples democratic republic	common	km	សាធារណរដ្ឋប្រជាធិបតេយ្យប្រជាមានិតឡាវ
+last	common	km	ចុងក្រោយ
+last modified	common	km	កែប្រែចុងក្រោយ
+last name	common	km	នាមត្រកូល
+last name of the user, eg. "%1"	common	km	នាមត្រកូលរបស់អ្នកប្រើ ឧ. "%1"
+last page	common	km	ទំព័រ​ចុងក្រោយ
+lastname	common	km	នាមត្រកូល
+latvia	common	km	LATVIA
+ldap-mgr	common	km	អ្នកគ្រប់គ្រង LDAP
+lebanon	common	km	លីបង់
+left	common	km	ឆ្វេង
+length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8	common	km	ប្រវែងសម្រាប់ char+varchar, ភាពជាក់លាក់ int: 2, 4, 8 និង float: 4, 8
+lesotho	common	km	ភាសាអង់គ្លេស
+liberia	common	km	លីបេរីយ៉ា
+libyan arab jamahiriya	common	km	លីប៊ីយ៉ាន អារ៉ាប ចាម៉ាហ៊ីរីយ៉ា
+license	common	km	អាជ្ញាប័ណ្ណ
+liechtenstein	common	km	លីកតេនស្ទីន
+light mode	common	km	របៀបពន្លឺ
+line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>	common	km	បន្ទាត់ %1៖ '%2'<br><b>ទិន្នន័យ csv មាន ##last-check-run## នៃតារាង %3 ==> មិនអើពើ</b>
+line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	km	បន្ទាត់ %1៖ '%2'<br><b>ទិន្នន័យ csv មិនត្រូវគ្នានឹងចំនួនជួរឈរនៃតារាង %3 ==> មិនអើពើ</b>
+link	common	km	តំណភ្ជាប់
+link is appended to mail allowing recipients to download currently attached version of files	common	km	តំណត្រូវបានបន្ថែមទៅសំបុត្រដែលអនុញ្ញាតឱ្យអ្នកទទួលទាញយកឯកសារដែលភ្ជាប់មកជាមួយកំណែបច្ចុប្បន្ន
+link is appended to mail allowing recipients to download or modify up to date version of files (epl only)	common	km	តំណត្រូវបានបន្ថែមទៅសំបុត្រដែលអនុញ្ញាតឱ្យអ្នកទទួលទាញយក ឬកែប្រែកំណែចុងក្រោយនៃឯកសារ (EPL តែប៉ុណ្ណោះ)
+link is appended to mail allowing recipients to download up to date version of files	common	km	តំណត្រូវបានបន្ថែមទៅសំបុត្រដែលអនុញ្ញាតឱ្យអ្នកទទួលទាញយកឯកសារកំណែចុងក្រោយ
+link target %1 not found!	common	km	រកមិនឃើញតំណភ្ជាប់គោលដៅ%1!
+linkapps	common	km	ភ្ជាប់កម្មវិធី
+linked	common	km	ភ្ជាប់
+linkentry	common	km	តំណភ្ជាប់ចូល
+linklist	common	km	បញ្ជីតំណ
+links and attached files	preferences	km	តំណភ្ជាប់និងឯកសារភ្ជាប់
+links to specified application.  example: {{links/addressbook}}	common	km	តំណភ្ជាប់ទៅកម្មវិធីដែលបានបញ្ជាក់។ ឧទាហរណ៍៖ {{links/addressbook}}
+linkstring	common	km	ខ្សែអក្សរភ្ជាប់
+linkto	common	km	ភ្ជាប់ទៅ
+list	common	km	បញ្ជី
+list members	common	km	បញ្ជីសមាជិក
+list of files linked to the current record	preferences	km	បញ្ជីឯកសារដែលភ្ជាប់ទៅកំណត់ត្រាបច្ចុប្បន្ន
+lithuania	common	km	លីទុយអានី
+load	common	km	ផ្ទុក
+load this template into the editor	common	km	ផ្ទុកគំរូទៅកម្មវិធីនិពន្ធ
+loading	common	km	កំពុងផ្ទុក
+local	common	km	ក្នុងស្រុក
+location calendars	groupdav	km	ប្រតិទិនទីតាំង
+locations	common	km	ទីតាំង
+logging / debuging	groupdav	km	ការកត់ត្រា / បំបាត់កំហុស
+login	common	km	ចូល
+loginid	common	km	លេខ​សម្គាល់​ការ​ចូល
+logout	common	km	ចាកចេញ
+lost login id	common	km	បាត់លេខសម្គាល់ការចូល
+lost password	common	km	បាត់ពាក្យសម្ងាត់
+low	common	km	ទាប
+lowercase letters	common	km	អក្សរ​តូច
+lowest	common	km	ទាបបំផុត។
+ltr	common	km	ល
+luxembourg	common	km	លុចសំបួរ
+macau	common	km	ម៉ាកាវ
+macedonia, the former yugoslav republic of	common	km	ម៉ាសេដូនី អតីតសាធារណរដ្ឋយូហ្គោស្លាវី
+madagascar	common	km	ម៉ាដាហ្គាស្ការ
+mail domain, eg. "%1"	common	km	ដែនសំបុត្រ ឧ. "%1"
+mailvelope addon installation failed! please try again.	common	km	ការដំឡើង Mailvelope addon បានបរាជ័យ! សូម​ព្យាយាម​ម្តង​ទៀត។
+mailvelope addon installation succeded. now you may configure the options.	common	km	ការដំឡើង Mailvelope addon បានជោគជ័យ។ ឥឡូវនេះអ្នកអាចកំណត់រចនាសម្ព័ន្ធជម្រើស។
+main category	common	km	ប្រភេទចម្បង
+maintainer	common	km	អ្នកថែទាំ
+malawi	common	km	ម៉ាឡាវី
+malaysia	common	km	ម៉ាឡេស៊ី
+maldives	common	km	ម៉ាល់ឌីវ
+mali	common	km	ម៉ាលី
+malta	common	km	ម៉ាល់តា
+march	common	km	ខែមីនា
+marshall islands	common	km	កោះ MARSHALL
+martinique	common	km	ម៉ាទីនីក
+mauritania	common	km	ប្រទេស​ម៉ូរីតានី
+mauritius	common	km	ម៉ូរីស
+max number of icons in navbar	common	km	ចំនួនរូបតំណាងអតិបរមានៅក្នុងរបាររុករក
+maximum size for uploads	filemanager	km	ទំហំផ្ទុកអតិបរមា
+may	common	km	ឧសភា
+maybe	common	km	ប្រហែល
+mayotte	common	km	ម៉ាយធី
+medium	common	km	មធ្យម
+menu	common	km	ម៉ឺនុយ
+merged document filename	preferences	km	បញ្ចូលឈ្មោះឯកសារឯកសារ
+message	common	km	សារ
+message ...	common	km	សារ...
+message prepared for sending.	common	km	សារត្រូវបានរៀបចំសម្រាប់ការផ្ញើ។
+message(s) send failed!	common	km	ការ​ផ្ញើ​សារ​បាន​បរាជ័យ!
+message(s) send ok.	common	km	ផ្ញើសារ យល់ព្រម។
+mexico	common	km	ម៉ិកស៊ិក
+micronesia, federated states of	common	km	MICRONESIA, រដ្ឋសហព័ន្ធ
+middle	common	km	កណ្តាល
+minute	common	km	នាទី
+minutes	common	km	នាទី
+missing: %1	common	km	បាត់៖ %1
+mo	common	km	ម៉ូ
+mode of required directory "%1" changed to %2.	admin	km	របៀបនៃថតដែលត្រូវការ "%1" បានប្តូរទៅ%2។
+modifier	preferences	km	អ្នកកែប្រែ
+moldova, republic of	common	km	ម៉ុលដូវ៉ា សាធារណរដ្ឋ
+monaco	common	km	ម៉ូណាកូ
+monday	common	km	ថ្ងៃច័ន្ទ
+mongolia	common	km	ម៉ុងហ្គោលី
+montenegro	common	km	ម៉ុងតេណេហ្គ្រោ
+month	common	km	ខែ
+montserrat	common	km	ម៉ុងសេរ៉ាត
+moono color theme	common	km	ប្រធានបទពណ៌ព្រះច័ន្ទ
+moono theme (default)	common	km	ប្រធានបទ moono (លំនាំដើម)
+more	common	km	ច្រើនទៀត
+more than 1 match for '%1'	common	km	ការប្រកួតច្រើនជាង 1 សម្រាប់ '%1'
+more then one active file %1 found, inactivating %2 older revisions!	admin	km	រក​ឃើញ​ឯកសារ​សកម្ម​មួយ​ទៀត%1 កំពុង​ធ្វើ​ឱ្យ​ការ​កែប្រែ​ចាស់​ជាង %2 សកម្ម!
+morocco	common	km	ម៉ារ៉ុកកូ
+move	common	km	ផ្លាស់ទី
+moved %1 children from directory fs_id=%2 to %3	admin	km	បានផ្លាស់ទីកុមារ %1 ពីថត fs_id=%2 ទៅ %3
+moved unconnected %1 %2 to %3.	admin	km	បានផ្លាស់ទីមិនភ្ជាប់%1 %2 ទៅ %3 ។
+mozambique	common	km	ម៉ូហ្សាំប៊ិក
+multicolumn indices	common	km	សន្ទស្សន៍ជួរឈរច្រើន។
+multiple	common	km	ច្រើន។
+myanmar	common	km	មីយ៉ាន់ម៉ា
+name	common	km	ឈ្មោះ
+name of other table where column is a key from	common	km	ឈ្មោះ​តារាង​ផ្សេង​ទៀត​ដែល​ជួរឈរ​ជា​កូនសោ​មក​ពី
+name of phpgw-template set (e.g. verdilak): '' = default (will read pref. template, us 'default' to read default template '')	common	km	ឈ្មោះសំណុំគំរូ phpgw (ឧ. verdilak): '' = លំនាំដើម (នឹងអានពុម្ពគំរូ, យើង 'លំនាំដើម' ដើម្បីអានគំរូលំនាំដើម '')
+name of table to add	common	km	ឈ្មោះតារាងដែលត្រូវបន្ថែម
+name of the etemplate, should be in form application.function[.subtemplate]	common	km	ឈ្មោះរបស់ eTemplate គួរតែស្ថិតនៅក្នុងទម្រង់ application.function[.subTemplate]
+name of the user, eg. "%1"	common	km	ឈ្មោះអ្នកប្រើប្រាស់ ឧ. "%1"
+namespace	common	km	ដាក់ឈ្មោះចន្លោះ
+namibia	common	km	ណាមីប៊ី
+nauru	common	km	ណារូ
+need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	common	km	ចាំបាច់ត្រូវមានតែមួយគត់នៅក្នុងតារាង និងគ្មានពាក្យដែលបានបម្រុងទុកពី SQL ទេ បុព្វបទល្អបំផុតទាំងអស់ជាមួយនឹងលេខខ្លី 2 ខ្ទង់ទូទៅសម្រាប់កម្មវិធី ឧ។ 'et_'
+nepal	common	km	នេប៉ាល់
+netherlands	common	km	នេហរឡង់
+netherlands antilles	common	km	ណេតឺលែន ANTILLES
+never	common	km	មិនដែល
+new	common	km	ថ្មី
+new caledonia	common	km	កាលីដូនីថ្មី
+new egroupware release %1 available	common	km	ការចេញផ្សាយ EGroupware ថ្មី%1 មាន
+new entry added sucessfully	common	km	ធាតុថ្មីត្រូវបានបន្ថែមដោយជោគជ័យ។
+new favorite	common	km	ចំណូលចិត្តថ្មី
+new main category	common	km	ប្រភេទសំខាន់ថ្មី
+new password	common	km	ពាក្យសម្ងាត់​ថ្មី
+new search	common	km	ការស្វែងរកថ្មី
+new table created	common	km	តារាងថ្មីត្រូវបានបង្កើតឡើង
+new value	common	km	តម្លៃថ្មី
+new zealand	common	km	នូវែលសេឡង់
+newer version '%1' exists !!!	common	km	កំណែថ្មីជាង '%1' មានហើយ!
+next	common	km	បន្ទាប់
+next page	common	km	ទំ​ព​រ័​បន្ទាប់
+nextmatch	common	km	ការប្រកួតបន្ទាប់
+nextmatch accountfilter	common	km	តម្រងគណនីបន្ទាប់បន្សំ
+nextmatch custom filterheader	common	km	Nextmatch បឋមកថាតម្រងផ្ទាល់ខ្លួន
+nextmatch filterheader	common	km	បឋមកថាតម្រងការប្រកួតបន្ទាប់
+nextmatch header	common	km	បឋមកថាការប្រកួតបន្ទាប់
+nextmatch sortheader	common	km	បឋមកថាតម្រៀបការប្រកួតបន្ទាប់
+nicaragua	common	km	នីការ៉ាហ្គូ
+niger	common	km	នីហ្សេរីយ៉ា
+nigeria	common	km	នីហ្សេរីយ៉ា
+niue	common	km	NIUE
+no	common	km	ទេ
+no - cancel	common	km	ទេ - បោះបង់
+no column to swap with !!!	common	km	គ្មាន​ជួរ​ឈរ​ដើម្បី​ប្ដូរ​ជាមួយ​!
+no default set	common	km	មិនមានការកំណត់លំនាំដើមទេ។
+no entries found, try again ...	common	km	រកមិនឃើញធាតុទេ សូមព្យាយាមម្តងទៀត...
+no file	common	km	គ្មានឯកសារ
+no filename given or selected via browse...	common	km	គ្មានឈ្មោះឯកសារ
+no filters	common	km	គ្មានតម្រង
+no history for this record	common	km	មិនមានប្រវត្តិសម្រាប់កំណត់ត្រានេះទេ។
+no key for recipient:	common	km	គ្មានសោសម្រាប់អ្នកទទួល៖
+no matches found	common	km	រកមិនឃើញការប្រកួតទេ។
+no results match	common	km	គ្មានលទ្ធផលត្រូវគ្នាទេ។
+no rights to export more than %1 entries!	common	km	គ្មានសិទ្ធិនាំចេញច្រើនជាង %1 ធាតុទេ!
+no row to swap with !!!	common	km	គ្មានជួរដើម្បីប្តូរជាមួយ!
+no savant2 template directories were found in:	common	km	រកមិនឃើញថតគំរូ Savant2 នៅក្នុង៖
+no subject	common	km	គ្មាន​ប្រធាន
+no suggestions	common	km	គ្មានការណែនាំទេ។
+no thanks	common	km	អត់អី​ទេ​អរគុណ​ហើយ
+none	common	km	គ្មាន
+none of %1	common	km	គ្មាន %1
+norfolk island	common	km	កោះ NORFOLK
+normal	common	km	ធម្មតា។
+northern mariana islands	common	km	កោះម៉ារីយ៉ាណាខាងជើង
+norway	common	km	ន័រវែស
+not	common	km	ទេ។
+not a user yet? register now	common	km	មិនទាន់ជាអ្នកប្រើប្រាស់មែនទេ? ចុះឈ្មោះ​ឥឡូវនេះ។
+not assigned	common	km	មិនត្រូវបានចាត់តាំង
+not null	common	km	មិនមែន NULL
+not readable %1 entry of user %2	common	km	មិន​អាច​អាន%1 របស់​អ្នក​ប្រើ %2
+not supported by current application!	common	km	មិនត្រូវបានគាំទ្រដោយកម្មវិធីបច្ចុប្បន្ន!
+note	common	km	ចំណាំ
+notes	common	km	កំណត់ចំណាំ
+nothing	common	km	គ្មានអ្វីទេ
+nothing found - try again !!!	common	km	រកមិនឃើញ - ព្យាយាមម្តងទៀត!
+nothing in clipboard to paste !!!	common	km	គ្មានអ្វីនៅក្នុងក្ដារតម្បៀតខ្ទាស់ដើម្បីបិទភ្ជាប់!
+nothing matched search criteria !!!	common	km	គ្មាន​អ្វី​ត្រូវ​នឹង​លក្ខណៈ​វិនិច្ឆ័យ​ការ​ស្វែងរក​ទេ!
+nothing to save.	common	km	គ្មានអ្វីត្រូវរក្សាទុកទេ។
+notifications	common	km	ការជូនដំណឹង
+notify window	common	km	ជូនដំណឹងបង្អួច
+notify your administrator to correct this situation	common	km	ជូនដំណឹងទៅអ្នកគ្រប់គ្រងរបស់អ្នកដើម្បីកែតម្រូវវា។
+november	common	km	ខែវិច្ឆិកា
+now	common	km	ឥឡូវ​នេះ
+number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	common	km	ចំនួនជួរឈរដែលវាល/ក្រឡាគួរតែលាតសន្ធឹង ឬ 'ទាំងអស់' សម្រាប់ជួរឈរដែលនៅសល់ ឈ្មោះថ្នាក់ CSS (សម្រាប់ស្លាក TD)
+number of rows/cols in a v/hbox, cellpadding, cellspacing	common	km	ចំនួនជួរដេក/cols ក្នុង V/HBox, Cellpadding, Cellspacing
+numbers	common	km	លេខ
+numlist	common	km	បញ្ជីលេខ
+october	common	km	តុលា
+of	common	km	នៃ
+off	common	km	បិទ
+ok	common	km	យល់ព្រម
+old value	common	km	តម្លៃចាស់
+oman	common	km	អូម៉ង់
+on *nix systems please type: %1	common	km	នៅលើ *nix systems សូមវាយ: %1
+on mouse over	common	km	នៅលើកណ្តុរ
+onchange	common	km	នៅលើការផ្លាស់ប្តូរ
+onclick	common	km	onClick
+only an other version found !!!	common	km	រកឃើញកំណែផ្សេងទៀត!
+only private	common	km	ឯកជនតែប៉ុណ្ណោះ
+only supported by a few fully conformant clients (eg. from apple). if you have to enter a url, it will most likely not be supported!	groupdav	km	គាំទ្រដោយអតិថិជនដែលអនុលោមភាពពេញលេញមួយចំនួនប៉ុណ្ណោះ (ឧ. ពី Apple) ។ ប្រសិនបើអ្នកត្រូវបញ្ចូល URL វាទំនងជាមិនត្រូវបានគាំទ្រទេ!
+only yours	common	km	មានតែរបស់អ្នក
+oops! you caught us in the middle of system maintainance.	common	km	ឱ! អ្នកចាប់ពួកយើងនៅពាក់កណ្តាលនៃការថែទាំប្រព័ន្ធ។
+open	common	km	បើក
+open notify window	common	km	បើកបង្អួចជូនដំណឹង
+open popup window	common	km	បើកបង្អួចលេចឡើង
+open sidebox	common	km	បើកប្រអប់ចំហៀង
+open the online help.	common	km	បើកជំនួយតាមអ៊ីនធឺណិត
+operator	common	km	ប្រតិបត្តិករ
+optional note about the link	common	km	កំណត់ចំណាំជាជម្រើសសម្រាប់តំណភ្ជាប់
+options	common	km	ជម្រើស
+or	common	km	ឬ
+order to navigating by tab key through the form	common	km	បញ្ជាឱ្យរុករកដោយគ្រាប់ចុចផ្ទាំងតាមរយៈទម្រង់
+ordered list	common	km	បញ្ជីបញ្ជាទិញ
+original	common	km	ដើម
+other	common	km	ផ្សេងទៀត
+outdent	common	km	ហួសសម័យ
+overflow	common	km	ហូរហៀរ
+overview	common	km	ទិដ្ឋភាពលើស
+owner	common	km	ម្ចាស់
+ownership	common	km	កម្មសិទ្ធិ
+padding	common	km	ទ្រនាប់
+page	common	km	ទំព័រ
+page was generated in %1 seconds	common	km	ទំព័រត្រូវបានបង្កើតក្នុងរយៈពេល%1 វិនាទី
+pakistan	common	km	ប៉ាគីស្ថាន
+palau	common	km	ប៉ាឡៅ
+palestinian territory, occupied	common	km	ដែនដីប៉ាឡេស្ទីន, កាន់កាប់
+panama	common	km	ប៉ាណាម៉ា
+papua new guinea	common	km	ប៉ាពួញូហ្គីណេ
+paraguay	common	km	ប៉ារ៉ាហ្គាយ
+parcel	common	km	កញ្ចប់
+parent category	common	km	ប្រភេទមេ
+parent is a '%1' !!!	common	km	មាតាបិតាគឺជា '%1' !
+password	common	km	ពាក្យសម្ងាត់
+password contains only %1 of required %2 character classes: no %3	common	km	ពាក្យ​សម្ងាត់​មាន​តែ %1 នៃ​ថ្នាក់​តួអក្សរ %2 ដែល​ត្រូវ​ការ៖ គ្មាន %3
+password contains with "%1" a parts of your user- or full-name (3 or more characters long)	common	km	ពាក្យ​សម្ងាត់​មាន "%1" ផ្នែក​នៃ​អ្នក​ប្រើ ឬ​ឈ្មោះ​ពេញ​របស់​អ្នក (3 ឬ​ច្រើន​តួ​អក្សរ)
+password could not be changed	common	km	មិនអាចប្តូរលេខសម្ងាត់បានទេ!
+password has been updated	common	km	ពាក្យសម្ងាត់ត្រូវបានធ្វើបច្ចុប្បន្នភាព។
+password must contain at least %1 lowercase letters	common	km	ពាក្យសម្ងាត់ត្រូវតែមានយ៉ាងហោចណាស់ %1 អក្សរតូច។
+password must contain at least %1 numbers	common	km	ពាក្យសម្ងាត់ត្រូវតែមានយ៉ាងហោចណាស់ %1 លេខ។
+password must contain at least %1 special characters	common	km	ពាក្យសម្ងាត់ត្រូវតែមានយ៉ាងហោចណាស់ %1 តួអក្សរពិសេស។
+password must contain at least %1 uppercase letters	common	km	ពាក្យសម្ងាត់ត្រូវតែមានយ៉ាងហោចណាស់ %1 អក្សរធំ។
+password must have at least %1 characters	common	km	ពាក្យសម្ងាត់ត្រូវតែមានយ៉ាងហោចណាស់ %1 តួអក្សរ។
+paste	common	km	បិទភ្ជាប់
+path	common	km	ផ្លូវ
+path to user and group files has to be outside of the webservers document-root!!!	common	km	ផ្លូវទៅកាន់ឯកសារអ្នកប្រើប្រាស់ និងក្រុមត្រូវតែនៅខាងក្រៅនៃម៉ាស៊ីនមេបណ្តាញឯកសារជា root!
+permission denied!	common	km	ការអនុញ្ញាតត្រូវបានបដិសេធ!
+permission denied! this is an administration only feature.	common	km	ការអនុញ្ញាតត្រូវបានបដិសេធ! នេះគឺជាមុខងាររដ្ឋបាលតែប៉ុណ្ណោះ។
+permissions to the files/users directory	common	km	ការអនុញ្ញាតទៅថតឯកសារ/អ្នកប្រើប្រាស់
+permisson denied!	common	km	ការអនុញ្ញាតត្រូវបានបដិសេធ!
+personal	common	km	ផ្ទាល់ខ្លួន
+peru	common	km	ប៉េរូ
+pg down	common	km	Pg ចុះ
+pg up	common	km	pg ឡើង
+pgp encryption	common	km	ការអ៊ិនគ្រីប PGP
+pgp encryption installation	common	km	ការដំឡើងការអ៊ិនគ្រីប PGP
+philippines	common	km	ហ្វីលីពីន
+phone number	common	km	លេខទូរសព្ទ
+pitcairn	common	km	ភីតខេន
+placeholders	common	km	កន្លែងដាក់
+play/pause	common	km	លេង/ផ្អាក
+please %1 by hand	common	km	សូម % 1 ដោយដៃ
+please enter a name	common	km	បញ្ចូលឈ្មោះ!
+please enter table-name first !!!	common	km	បញ្ចូលឈ្មោះតារាងជាមុន!
+please reload the egroupware desktop (f5 / cmd+r).	common	km	សូមផ្ទុកផ្ទៃតុ EGroupware ឡើងវិញ (F5 / Cmd+r) ។
+please remember to use '%1' as username for local login's from now on!	common	km	សូមចងចាំថាត្រូវប្រើ '%1' ជាឈ្មោះអ្នកប្រើប្រាស់សម្រាប់ការចូលក្នុងតំបន់ចាប់ពីពេលនេះតទៅ!
+please run setup to become current	common	km	ដំណើរការការដំឡើងដើម្បីក្លាយជាបច្ចុប្បន្ន
+please select	common	km	សូមជ្រើសរើស
+please set your global preferences	common	km	កំណត់ចំណូលចិត្តសកលរបស់អ្នក!
+please set your preferences for this application	common	km	កំណត់ចំណូលចិត្តរបស់អ្នកសម្រាប់កម្មវិធីនេះ!
+please type %1 more characters	common	km	សូមវាយ %1 តួអក្សរបន្ថែមទៀត
+please type 1 more character	common	km	សូមវាយអក្សរ 1 បន្ថែមទៀត
+please wait...	common	km	សូមរង់ចាំ...
+please, check back with us shortly.	common	km	សូមពិនិត្យមើលឡើងវិញជាមួយពួកយើងក្នុងពេលឆាប់ៗនេះ។
+pm	common	km	ល្ងាច
+poland	common	km	ប្រទេស​ប៉ូឡូញ
+popup	common	km	ផុស​ឡើង
+popup with search	common	km	លេចឡើងជាមួយនឹងការស្វែងរក
+portrait	common	km	រូបបញ្ឈរ
+portugal	common	km	ព័រទុយហ្គាល់
+postal	common	km	ប្រៃសណីយ៍
+powered by	common	km	ដំណើរការដោយ
+pre	common	km	មុន
+precision	common	km	ភាពជាក់លាក់
+preference	common	km	ចំណូលចិត្ត
+preferences	common	km	ចំណូលចិត្ត
+preferences for the %1 template set	preferences	km	ចំណូលចិត្ត​សម្រាប់​សំណុំ​គំរូ%1
+prev	common	km	មុន
+preview with entry	common	km	មើលជាមុនជាមួយធាតុ
+previous	common	km	មុន
+previous page	common	km	ទំព័រ​មុន
+primary group	common	km	ក្រុមបឋម
+primary key	common	km	សោបឋម
+primary key for the table, gets automaticaly indexed	common	km	គន្លឹះសំខាន់សម្រាប់តារាង ទទួលបានលិបិក្រមដោយស្វ័យប្រវត្តិ
+primary style-sheet:	common	km	សន្លឹករចនាប័ទ្មបឋម៖
+print	common	km	បោះពុម្ព
+priority	common	km	អាទិភាព
+private	common	km	ឯកជន
+programs	common	km	កម្មវិធី
+project	common	km	គម្រោង
+properties	common	km	ទ្រព្យសម្បត្តិ
+protocol is required	common	km	ពិធីការត្រូវបានទាមទារ
+public	common	km	សាធារណៈ
+puerto rico	common	km	ព័រតូរីកូ
+qatar	common	km	កាតា
+quick add	common	km	បន្ថែមរហ័ស
+radiobutton	common	km	ប៊ូតុង​វិទ្យុ
+read	common	km	អាន
+read a list of entries.	common	km	អានបញ្ជីនៃធាតុ។
+read a single entry by passing the id and fieldlist.	common	km	អានធាតុតែមួយដោយឆ្លងកាត់លេខសម្គាល់ និងបញ្ជីវាល។
+read etemplate from database (for the keys above)	common	km	អាន eTemplate ពីមូលដ្ឋានទិន្នន័យ (សម្រាប់សោខាងលើ)
+read this list of methods.	common	km	អានបញ្ជីវិធីសាស្រ្តនេះ។
+reading	common	km	ការអាន
+readonly	common	km	អាច​បាន​តែ​អាន
+readonly filemanager directory	common	km	ថតឯកសារកម្មវិធីគ្រប់គ្រងឯកសារតែប៉ុណ្ណោះ
+readonly share	common	km	អានបានតែចែករំលែក
+redo	common	km	ធ្វើឡើងវិញ
+refresh	common	km	ធ្វើ​ឱ្យ​ស្រស់
+register	common	km	ចុះឈ្មោះ
+regular	common	km	ទៀង​ទា​ត
+reject	common	km	បដិសេធ
+remember me	common	km	ចងចាំខ្ញុំ
+remember me for %1	common	km	ចងចាំខ្ញុំសម្រាប់%1
+remove	api	km	ដកចេញ
+remove row (can not be undone!!!)	common	km	ដកជួរ
+remove selected accounts	common	km	លុបគណនីដែលបានជ្រើសរើស
+remove shortcut	common	km	ដកផ្លូវកាត់ចេញ
+remove this link (not the entry itself)	common	km	លុបតំណ
+removed (now) empty directory fs_id=%1	admin	km	បានលុប (ឥឡូវ) ថតទទេ fs_id=%1
+removeformat	common	km	លុបទម្រង់
+rename	common	km	ប្តូរឈ្មោះ
+repeat password	common	km	ពាក្យសម្ងាត់ម្តងទៀត
+replace	common	km	ជំនួស
+replace with	common	km	ជំនួយ​ដោយ
+request could not be processed, please reload your window (press f5 or cmd r)!	common	km	សំណើមិនអាចដំណើរការបានទេ សូមផ្ទុកបង្អួចរបស់អ្នកឡើងវិញ (ចុច F5 ឬ Cmd R)!
+requests and full responses to files directory	common	km	សំណើ និងការឆ្លើយតបពេញលេញចំពោះថតឯកសារ
+requests and truncated responses to apache error-log	groupdav	km	សំណើ និងកាត់បន្ថយការឆ្លើយតបចំពោះ Apache error-log
+required	common	km	ទាមទារ
+required directory "%1" created.	admin	km	ថតឯកសារដែលត្រូវការ "%1" ត្រូវបានបង្កើតឡើង។
+required directory "%1" has wrong mode %2 instead of %3!	admin	km	ថតឯកសារដែលត្រូវការ "%1" មានរបៀប%2 ខុសជំនួសឱ្យ%3!
+required directory "%1" not found!	admin	km	រកមិនឃើញថត "%1" ដែលត្រូវការ!
+reset	common	km	កំណត់ឡើងវិញ
+reset all to default	common	km	កំណត់ឡើងវិញទាំងអស់ទៅជាលំនាំដើម
+reset all user's column preferences	common	km	កំណត់ចំណូលចិត្តជួរឈររបស់អ្នកប្រើទាំងអស់ឡើងវិញ
+resource calendars	groupdav	km	ប្រតិទិនធនធាន
+resource type	common	km	ប្រភេទធនធាន
+resources	common	km	ធនធាន
+restore all	common	km	ស្តារឡើងវិញទាំងអស់។
+restore all application templates, overwriting existing ones with identical version number	common	km	ស្ដារ​គំរូ​កម្មវិធី​ទាំងអស់​ឡើងវិញ ដោយ​សរសេរ​ជាន់លើ​កម្មវិធី​ដែលមាន​ស្រាប់​ជាមួយនឹង​លេខ​កំណែដូចគ្នាបេះបិទ
+restore failed	common	km	ការស្តារឡើងវិញបានបរាជ័យ
+restore key	common	km	ស្តារសោ
+restore password	common	km	ស្ដារពាក្យសម្ងាត់
+retry	common	km	ព្យាយាមម្តងទៀត
+returns a full list of accounts on the system.  warning: this is return can be quite large	common	km	ត្រឡប់បញ្ជីគណនីពេញលេញនៅលើប្រព័ន្ធ។ ការព្រមាន៖ ការត្រឡប់មកវិញនេះអាចមានទំហំធំណាស់។
+returns an array of todo items	common	km	ត្រឡប់អារេនៃធាតុដែលត្រូវធ្វើ
+returns savely, without deleting	common	km	ត្រឡប់​ដោយ​គ្មាន​ការ​លុប
+returns struct of users application access	common	km	ត្រឡប់រចនាសម្ព័ន្ធនៃការចូលប្រើកម្មវិធីអ្នកប្រើប្រាស់
+reunion	common	km	រួបរួម
+right	common	km	ត្រូវហើយ។
+romania	common	km	រ៉ូម៉ានី
+rotate left	common	km	បង្វិលឆ្វេង
+rotate right	common	km	បង្វិលស្តាំ
+row...	common	km	ជួរ...
+rtl	common	km	Rtl
+russian	common	km	រុស្សី
+russian federation	common	km	សហព័ន្ធរុស្ស៊ី
+rwanda	common	km	រវ៉ាន់ដា
+sa	common	km	នៅលើ
+saint helena	common	km	សេន ហេលេណា
+saint kitts and nevis	common	km	Saint KITTS និង NEVIS
+saint lucia	common	km	សាំងលូស៊ី
+saint pierre and miquelon	common	km	លោក Saint Pierre និង MIQUELON
+saint vincent and the grenadines	common	km	សេន វីនសិន និងហ្គ្រីណាឌីន
+samoa	common	km	សាម៉ូអា
+san marino	common	km	សាន ម៉ារីណូ
+sao tome and principe	common	km	SAO TOME និង PRINCIPE
+saturday	common	km	ថ្ងៃសៅរ៍
+saudi arabia	common	km	អារ៉ាប៊ីសាអូឌីត
+savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	km	កំណែ Savant2 ខុសពី Savant2 wrapper ។ <br/>កំណែនេះ៖ %1 <br/>កំណែ Savants៖ %2
+save	common	km	រក្សាទុក
+save all	common	km	រក្សាទុកទាំងអស់។
+save as	common	km	រក្សាទុក​ជា
+save as zip	common	km	រក្សាទុកជា Zip
+save selected columns as default preference for all users.	common	km	រក្សាទុកជួរឈរជាចំណូលចិត្តលំនាំដើមសម្រាប់អ្នកប្រើប្រាស់ទាំងអស់។
+save the changes made and close the window	common	km	រក្សាទុកការផ្លាស់ប្តូរ ហើយបិទ
+save the etemplate under the above keys (name, ...), change them for a saveas	common	km	រក្សាទុក eTemplate នៅក្រោមគ្រាប់ចុចខាងលើ (ឈ្មោះ, ...) ផ្លាស់ប្តូរពួកវាសម្រាប់ SaveAs
+saved column sizes to preferences.	common	km	បានរក្សាទុកទំហំជួរឈរតាមចំណូលចិត្ត។
+saves changes to tables_current.inc.php	common	km	រក្សាទុកការផ្លាស់ប្តូរទៅ tables_current.inc.php
+saves the template with given version number and closes the window	common	km	រក្សាទុកគំរូដោយប្រើលេខកំណែ ហើយបិទបង្អួច។
+scale	common	km	មាត្រដ្ឋាន
+scale for float	common	km	មាត្រដ្ឋានសម្រាប់អណ្ដែត
+scheduling inbox	common	km	ប្រអប់​ទទួល​កាលវិភាគ
+scheduling outbox	common	km	ប្រអប់ចេញកាលវិភាគ
+search	common	km	ស្វែងរក
+search %1 '%2'	common	km	ស្វែងរក%1 '%2'
+search accounts	common	km	ស្វែងរកគណនី
+search for '%1'	common	km	ស្វែងរក '%1'
+search letter	common	km	ស្វែងរកសំបុត្រ
+search or select accounts	common	km	ស្វែងរក ឬជ្រើសរើសគណនី
+search...	common	km	ស្វែងរក...
+searchreplace	common	km	ស្វែងរកជំនួស
+second	common	km	ទីពីរ
+section	common	km	ផ្នែក
+securest	common	km	សុវត្ថិភាពបំផុត។
+security & password	common	km	សុវត្ថិភាព និងពាក្យសម្ងាត់
+select	common	km	ជ្រើសរើស
+select "%1", if your client does not support multiple addressbooks.	groupdav	km	ជ្រើសរើស "%1" ប្រសិនបើអតិថិជនរបស់អ្នកមិនគាំទ្រសៀវភៅអាសយដ្ឋានច្រើន។
+select "%1", if your client support groups, eg. os x or ios addressbook.	groupdav	km	ជ្រើសរើស "%1" ប្រសិនបើក្រុមគាំទ្រអតិថិជនរបស់អ្នក ឧ. សៀវភៅអាសយដ្ឋាន OS X ឬ iOS ។
+select a category	common	km	ជ្រើសរើសប្រភេទ
+select a primary contact, to show in the list	common	km	ជ្រើសរើសទំនាក់ទំនងចម្បង ដើម្បីបង្ហាញក្នុងបញ្ជី
+select access	common	km	ជ្រើសរើសការចូលប្រើ
+select account	common	km	ជ្រើសរើសគណនី
+select action	common	km	ជ្រើសរើសសកម្មភាព
+select all	common	km	ជ្រើសរើស​ទាំងអស់
+select all %1 %2 for %3	common	km	ជ្រើសរើស%1%2ទាំងអស់សម្រាប់%3
+select all entries	common	km	ជ្រើសរើសធាតុទាំងអស់។
+select an app first !!!	common	km	ជ្រើសរើសកម្មវិធីជាមុនសិន!
+select an app to search in	common	km	ជ្រើសរើសកម្មវិធីដើម្បីស្វែងរក
+select an application	common	km	ជ្រើសរើសកម្មវិធី
+select an application, (*) = uninstalled	common	km	ជ្រើសរើសកម្មវិធី, (*) = លុបចោល
+select an entry to link with	common	km	ជ្រើសរើសធាតុដើម្បីភ្ជាប់ជាមួយ
+select an opened dialog	common	km	ជ្រើសរើសប្រអប់ដែលបានបើក
+select an table of the application	common	km	ជ្រើសរើសតារាងកម្មវិធី
+select application	common	km	ជ្រើសរើសកម្មវិធី
+select application to search	common	km	ជ្រើសរើសកម្មវិធីដើម្បីស្វែងរក
+select category	common	km	ជ្រើសរើសប្រភេទ
+select color	common	km	ជ្រើសរើសពណ៌
+select columns	common	km	ជ្រើសរើសជួរឈរ
+select country	common	km	ជ្រើសរើស​ប្រទេស
+select date	common	km	ជ្រើសរើសកាលបរិច្ឆេទ
+select day	common	km	ជ្រើសរើសថ្ងៃ
+select day of week	common	km	ជ្រើសរើសថ្ងៃសប្តាហ៍
+select entry	common	km	ជ្រើសរើសធាតុ
+select file(s) from vfs	common	km	ជ្រើសរើសឯកសារពី VFS
+select files from filemanager ...	common	km	ជ្រើសរើសឯកសារពី Filemanager...
+select group	common	km	ជ្រើសរើសក្រុម
+select home email address	common	km	ជ្រើសរើសអាសយដ្ឋានអ៊ីមែលផ្ទះ
+select hour	common	km	ជ្រើសរើសម៉ោង
+select if content of field should not be translated (label gets always translated)	common	km	ជ្រើសរើសប្រសិនបើមាតិកាវាលមិនគួរត្រូវបានបកប្រែ ស្លាកត្រូវបានបកប្រែជានិច្ច។
+select language	common	km	ជ្រើសរើស​ភាសា
+select month	common	km	ជ្រើសរើសខែ
+select multiple accounts	common	km	ជ្រើសរើសគណនីច្រើន។
+select number	common	km	ជ្រើសរើសលេខ
+select one	common	km	ជ្រើសរើស​មួយ
+select one ...	common	km	ជ្រើសរើស...
+select percentage	common	km	ជ្រើសរើសភាគរយ
+select priority	common	km	ជ្រើសរើសអាទិភាព
+select some options	common	km	ជ្រើសរើសជម្រើសមួយចំនួន
+select state	common	km	ជ្រើសរើសរដ្ឋ
+select the columns to display in the list	common	km	ជ្រើសរើសជួរឈរដែលត្រូវបង្ហាញក្នុងបញ្ជី
+select the default height for the application windows	common	km	ជ្រើសរើសកម្ពស់លំនាំដើមសម្រាប់បង្អួចកម្មវិធី។
+select the default width for the application windows	common	km	ជ្រើសរើសទទឹងលំនាំដើមសម្រាប់បង្អួចកម្មវិធី។
+select the indexed columns in their desired order	common	km	ជ្រើសរើសជួរឈរដែលបានធ្វើលិបិក្រមតាមលំដាប់ដែលចង់បាន
+select this etemplate to delete it	common	km	ជ្រើសរើស eTemplate ដើម្បីលុប
+select user	common	km	ជ្រើសរើសអ្នកប្រើប្រាស់
+select user or group	common	km	ជ្រើសរើសអ្នកប្រើប្រាស់ ឬក្រុម
+select which accounts to show	common	km	ជ្រើសរើសគណនីដែលត្រូវបង្ហាញ
+select which values to show	common	km	ជ្រើសរើសតម្លៃដែលត្រូវបង្ហាញ
+select work email address	common	km	ជ្រើសរើសអាសយដ្ឋានអ៊ីមែលការងារ
+select year	common	km	ជ្រើសរើសឆ្នាំ
+selectbox	common	km	ជ្រើសរើសប្រអប់
+selection	common	km	ការជ្រើសរើស
+send	common	km	ផ្ញើ
+send succeeded to %1	common	km	ការផ្ញើបានជោគជ័យទៅ%1
+senegal	common	km	សេណេហ្គាល់
+september	common	km	ខែកញ្ញា
+serbia	common	km	ស៊ែប៊ី
+server %1 has been added	common	km	ម៉ាស៊ីនមេ%1 ត្រូវបានបន្ថែម។
+server answered. processing response...	common	km	ម៉ាស៊ីនមេបានឆ្លើយ។ កំពុងដំណើរការការឆ្លើយតប...
+server contacted. waiting for response...	common	km	ម៉ាស៊ីនមេបានទាក់ទង។ រង់ចាំការឆ្លើយតប...
+server error	common	km	កំហុសម៉ាស៊ីនមេ
+server is unwilling to perform.	common	km	ម៉ាស៊ីនមេមិនមានឆន្ទៈក្នុងការអនុវត្តទេ។
+server name	common	km	ឈ្មោះម៉ាស៊ីនមេ
+session has been killed	common	km	សម័យត្រូវបានសម្លាប់។
+set as default	common	km	កំណត់ជាលំនាំដើម
+set these columns as the default	common	km	កំណត់ជួរឈរទាំងនេះជាលំនាំដើម
+set user as only responsible user, but keeping groups	groupdav	km	កំណត់អ្នកប្រើប្រាស់ជាអ្នកប្រើប្រាស់ដែលមានទំនួលខុសត្រូវ ប៉ុន្តែរក្សាក្រុម
+set user as only responsible, removing all existing responsibles	groupdav	km	កំណត់ឱ្យអ្នកប្រើប្រាស់ជាអ្នកទទួលខុសត្រូវ ដោយដកការទទួលខុសត្រូវដែលមានស្រាប់ទាំងអស់ចេញ
+sets today as date	common	km	កំណត់ថ្ងៃនេះជាកាលបរិច្ឆេទ
+settings saved.	common	km	ការកំណត់ត្រូវបានរក្សាទុក។
+setup	common	km	រៀបចំ
+setup main menu	common	km	ដំឡើងម៉ឺនុយមេ
+seychelles	common	km	ស៊ីឆេល។
+share	common	km	ចែករំលែក
+share as readonly, but allow uploads.  uploads are hidden, and only accessable by those with an account	common	km	ចែករំលែកជាការអានតែប៉ុណ្ណោះ ប៉ុន្តែអនុញ្ញាតការបង្ហោះ។ ការបង្ហោះត្រូវបានលាក់ ហើយអាចចូលប្រើបានតែអ្នកដែលមានគណនីប៉ុណ្ណោះ។
+share filemanager directory	common	km	ថតឯកសារអ្នកគ្រប់គ្រង
+share files	common	km	ចែករំលែកឯកសារ
+share just the associated filemanager directory, not the %1	common	km	ចែក​រំលែក​គ្រាន់​តែ​ថត​កម្មវិធី​គ្រប់គ្រង​ឯកសារ​ដែល​ពាក់ព័ន្ធ​ប៉ុណ្ណោះ មិន​មែន​%1 ទេ។
+share link	common	km	ចែករំលែកតំណ
+share this %1 via url	common	km	ចែករំលែក %1 នេះតាមរយៈ URL
+shift	common	km	ប្ដូរ
+shift ⇧	common	km	ប្តូរ ⇧
+should the form be submitted or any custom javascript be executed	common	km	ទម្រង់បែបបទគួរតែត្រូវបានដាក់ស្នើ ឬ javascript ផ្ទាល់ខ្លួនណាមួយត្រូវបានប្រតិបត្តិ
+show	common	km	បង្ហាញ
+show (no save)	common	km	បង្ហាញ (មិនរក្សាទុក)
+show all	common	km	បង្ហាញ​ទាំងអស់
+show all / cancel filter	common	km	បង្ហាញទាំងអស់ / បោះបង់តម្រង
+show all categorys	common	km	បង្ហាញប្រភេទទាំងអស់។
+show as topmenu	common	km	បង្ហាញជាម៉ឺនុយកំពូល
+show clock?	common	km	បង្ហាញនាឡិកា
+show home and logout button in main application bar?	common	km	បង្ហាញប៊ូតុង Home និង Logout នៅក្នុងរបារកម្មវិធីសំខាន់។
+show in sidebox	common	km	បង្ហាញនៅក្នុងម៉ឺនុយចំហៀង
+show log of following device	groupdav	km	បង្ហាញកំណត់ហេតុនៃឧបករណ៍ខាងក្រោម
+show logo's on the desktop.	common	km	បង្ហាញរូបសញ្ញានៅលើផ្ទៃតុ។
+show menu	common	km	បង្ហាញម៉ឺនុយ
+show next login	common	km	បង្ហាញការចូលបន្ទាប់
+show now	common	km	បង្ហាញឥឡូវនេះ
+show page generation time	common	km	បង្ហាញពេលវេលាបង្កើតទំព័រ
+show page generation time on the bottom of the page?	common	km	បង្ហាញពេលវេលាបង្កើតទំព័រនៅផ្នែកខាងក្រោមនៃទំព័រ។
+show page generation time?	common	km	បង្ហាញពេលវេលាបង្កើតទំព័រ
+show password	common	km	បង្ហាញពាក្យសម្ងាត់
+show the logo's of egroupware and x-desktop on the desktop.	common	km	បង្ហាញរូបសញ្ញារបស់ EGroupware និង x-desktop នៅលើផ្ទៃតុ។
+show values	common	km	បង្ហាញតម្លៃ
+show/hide	common	km	បង្ហាញ/លាក់របារចំហៀង
+show_more_apps	common	km	show_more_apps
+showing	common	km	ការបង្ហាញ
+showing %1	common	km	បង្ហាញ%1
+showing %1 - %2 of %3	common	km	បង្ហាញ%1 - %2 នៃ %3
+shows / allows you to enter values into the etemplate for testing	common	km	បង្ហាញ / អនុញ្ញាតឱ្យបញ្ចូលតម្លៃទៅក្នុង eTemplate សម្រាប់ការធ្វើតេស្ត
+shows/displays etemplate for testing, does not save it before	common	km	បង្ហាញ / បង្ហាញ eTemplate សម្រាប់ការធ្វើតេស្ត, មិនរក្សាទុកវាទេ។
+sierra leone	common	km	សៀរ៉ាឡេអូន
+sign up	common	km	ចុះ​ឈ្មោះ
+simple	common	km	សាមញ្ញ
+singapore	common	km	សិង្ហបុរី
+site configuration	common	km	ការកំណត់រចនាសម្ព័ន្ធគេហទំព័រ
+size	common	km	ទំហំ
+skip	common	km	រំលង
+slovakia	common	km	ស្លូវ៉ាគី
+slovenia	common	km	ស្លូវេនី
+solomon islands	common	km	កោះសូឡូម៉ូន
+somalia	common	km	សូម៉ាលី
+sorry, your login has expired	login	km	សូមអភ័យទោស ការចូលរបស់អ្នកបានផុតកំណត់ហើយ។
+south africa	common	km	អា​ព្រិច​ខាងត្បូង
+south georgia and the south sandwich islands	common	km	ហ្សកហ្ស៊ីខាងត្បូង និងកោះសាំងវិចខាងត្បូង
+space	common	km	លំហ
+spacing	common	km	គម្លាត
+spain	common	km	អេស្ប៉ាញ
+span	common	km	វិសាលភាព
+span, class	common	km	ចន្លោះ, ថ្នាក់
+special characters	common	km	តួអក្សរពិសេស
+sri lanka	common	km	ស្រី​លង្កា
+stack	common	km	ជង់
+start a new search, cancel this link	common	km	ចាប់ផ្តើមការស្វែងរកថ្មី បោះបង់តំណនេះ។
+start date	common	km	ថ្ងៃ​ចាប់ផ្តើម
+start directory for image browser of rich text editor in egroupware vfs (filemanager).	common	km	ចាប់ផ្តើមថតសម្រាប់កម្មវិធីរុករករូបភាពនៃកម្មវិធីនិពន្ធអត្ថបទសម្បូរបែបនៅក្នុងកម្មវិធីគ្រប់គ្រងឯកសារ EGroupware
+start new search for the above pattern	common	km	ចាប់ផ្តើមការស្វែងរកថ្មីសម្រាប់លំនាំខាងលើ
+start time	common	km	ពេលវេលាចាប់ផ្តើម
+start with	common	km	ចាប់ផ្តើម​ជាមួយ
+starting up...	common	km	ការ​ចាប់​ផ្តើ​ម​ឡើង...
+status	common	km	ស្ថានភាព
+store your public key in addressbook?	common	km	រក្សាទុកសោសាធារណៈរបស់អ្នកនៅក្នុងសៀវភៅអាសយដ្ឋាន?
+stretched	common	km	លាតសន្ធឹង
+strikethrough	common	km	ការវាយឆ្មក់
+su	common	km	ពួកគេ​គឺ
+subject	common	km	ប្រធានបទ
+submit	common	km	ដាក់ស្នើ
+submit form	common	km	ដាក់ស្នើទម្រង់
+submitbutton	common	km	ប៊ូតុងដាក់ស្នើ
+substitutions and their meanings:	common	km	ការជំនួសនិងអត្ថន័យរបស់វា៖
+successful created new directory %1 for unconnected nods.	admin	km	បាន​បង្កើត​ថត​ថ្មី%1 ដោយ​ជោគជ័យ​សម្រាប់​ការ​ងក់​ក្បាល​ដែល​មិន​បាន​តភ្ជាប់។
+sudan	common	km	ស៊ូដង់
+suggest password	common	km	ណែនាំពាក្យសម្ងាត់
+sunday	common	km	ថ្ងៃអាទិត្យ
+sure	common	km	ប្រាកដ
+suriname	common	km	ស៊ូរីណា
+svalbard and jan mayen	common	km	SVALBARD និង JAN MAYEN
+swap	common	km	ប្តូរ
+swap widget with next one	common	km	ប្តូរធាតុក្រាហ្វិកជាមួយធាតុបន្ទាប់
+swap with next column	common	km	ប្តូរជាមួយជួរឈរបន្ទាប់
+swap with next row	common	km	ប្តូរជាមួយជួរបន្ទាប់
+swaziland	common	km	ប្រទេស SWAZILAND
+sweden	common	km	ស៊ុយអែត
+switch to a parent widget	common	km	ប្តូរទៅធាតុក្រាហ្វិកមេ
+switch to an other widgets of that container	common	km	ប្តូរទៅធាតុក្រាហ្វិកផ្សេងទៀតនៃធុងនោះ។
+switzerland	common	km	ប្រទេស​ស្វីស
+sync all selected into one	groupdav	km	ធ្វើសមកាលកម្មដែលបានជ្រើសរើសទាំងអស់ទៅជាមួយ។
+syrian arab republic	common	km	សាធារណរដ្ឋអារ៉ាប់ស៊ីរី
+tab	common	km	ផ្ទាំង
+tabindex	common	km	សន្ទស្សន៍ផ្ទាំង
+table %1 is excluded from backup and restore. data will not be restored.	common	km	តារាង%1 ត្រូវបានដកចេញពីការបម្រុងទុក និងស្ដារ។ ទិន្នន័យនឹងមិនត្រូវបានស្ដារឡើងវិញទេ។
+table properties	common	km	លក្ខណៈសម្បត្តិតារាង
+table unchanged, no write necessary !!!	common	km	តារាងមិនផ្លាស់ប្តូរ មិនចាំបាច់សរសេរ!
+tablename	common	km	ឈ្មោះតារាង
+tabs	common	km	ផ្ទាំង
+taiwan	common	km	តៃវ៉ាន់/តៃប៉ិ
+tajikistan	common	km	តាជីគីស្ថាន
+tanzania, united republic of	common	km	តង់ហ្សានី សាធារណរដ្ឋ យូអិន
+template	common	km	គំរូ
+template deleted	common	km	គំរូត្រូវបានលុប។
+template saved	common	km	គំរូត្រូវបានរក្សាទុក។
+text	common	km	អត្ថបទ
+text color:	common	km	ពណ៌អត្ថបទ៖
+textarea	common	km	តំបន់អត្ថបទ
+th	common	km	Th
+thailand	common	km	ប្រទេសថៃ
+the backup key has been deleted.	common	km	សោ​បម្រុង​ទុក​ត្រូវ​បាន​លុប។
+the browser popup blocker is on. please click on ok button to see the pop-up.\n\nif you would like to not see this message for the next time, allow your browser pop-up blocker to open popups from %1	common	km	កម្មវិធីទប់ស្កាត់ការលេចឡើងនៃកម្មវិធីរុករកបានបើក។ សូមចុចលើប៊ូតុង យល់ព្រម ដើម្បីមើលការលេចឡើង។\n\nប្រសិនបើអ្នកចង់មិនឃើញសារនេះសម្រាប់លើកក្រោយ សូមអនុញ្ញាតឱ្យកម្មវិធីទប់ស្កាត់ការលេចឡើងនៃកម្មវិធីរុករកតាមអ៊ីនធឺណិតរបស់អ្នកបើកការលេចឡើងពី %1
+the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	preferences	km	ឯកសារអាចមានកន្លែងដាក់ដូចជា {{%3}} ដែលត្រូវជំនួសដោយទិន្នន័យ។ %1បញ្ជីពេញនៃឈ្មោះកន្លែងដាក់%2។
+the following applications require upgrades	common	km	កម្មវិធីខាងក្រោមតម្រូវឱ្យមានការអាប់ដេត
+the following document-types are supported:	preferences	km	ប្រភេទឯកសារខាងក្រោមត្រូវបានគាំទ្រ៖
+the mail server returned	common	km	ម៉ាស៊ីនមេបានត្រឡប់មកវិញ
+there already is a system-user with this name. user's should not have the same name as a systemuser	common	km	មានអ្នកប្រើប្រាស់ប្រព័ន្ធដែលមានឈ្មោះនេះរួចហើយ។ សូមជ្រើសរើសឈ្មោះផ្សេងទៀត។
+they will be sub-folders in users home (%1 attribute).	common	km	ពួកវានឹងជាថតរងនៅក្នុងផ្ទះអ្នកប្រើប្រាស់ (គុណលក្ខណៈ%1)។
+this feature is only available in epl version.	common	km	មុខងារនេះមាននៅក្នុងកំណែ EPL ប៉ុណ្ណោះ។
+this is your own share.  to test it, use an anonymous / incognito window.<br/>%1	common	km	នេះជាចំណែកផ្ទាល់ខ្លួនរបស់អ្នក។ ដើម្បីសាកល្បងវា សូមប្រើបង្អួចអនាមិក / អនាមិក។<br/>%1
+this name has been used already	common	km	ឈ្មោះ​នេះ​ត្រូវ​បាន​គេ​ប្រើ​ហើយ!
+this text gets displayed if the input-field is empty and has no focus (blur)	common	km	អត្ថបទត្រូវបានបង្ហាញ ប្រសិនបើវាលបញ្ចូលទទេ ហើយគ្មានការផ្តោតអារម្មណ៍ (ព្រិល)
+this will reset toolbar preferences for all users and set them to configured default prefs.	common	km	វា​នឹង​កំណត់​ចំណូលចិត្ត​របារ​ឧបករណ៍​ឡើងវិញ​សម្រាប់​អ្នក​ប្រើ​ទាំងអស់ ហើយ​កំណត់​ពួកវា​ឱ្យ​កំណត់​រចនាសម្ព័ន្ធ prefs លំនាំដើម។
+thursday	common	km	ថ្ងៃព្រហស្បតិ៍
+tiled	common	km	ក្រឡាក្បឿង
+time	common	km	ពេលវេលា
+time zone	common	km	ល្វែងម៉ោង
+time zone offset	common	km	អុហ្វសិតតំបន់ពេលវេលា
+title	common	km	ចំណងជើង
+titles of any entries linked to the current record, excluding attached files	preferences	km	ចំណងជើងនៃធាតុណាមួយដែលភ្ជាប់ទៅនឹងកំណត់ត្រាបច្ចុប្បន្ន ដោយមិនរាប់បញ្ចូលឯកសារដែលបានភ្ជាប់
+to	common	km	ទៅ
+to correct this error for the future you will need to properly set the	common	km	ដើម្បីកែកំហុសនេះសម្រាប់ពេលអនាគត អ្នកនឹងត្រូវកំណត់ឱ្យបានត្រឹមត្រូវ
+to disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty	common	km	ដើម្បីបិទ៖ [! = not]<value>[=<check>] ឧ: '!@data' បិទប្រសិនបើមាតិកាទិន្នន័យទទេ
+to examine or reinstate inactived files, you might need to turn versioning on.	admin	km	ដើម្បីពិនិត្យមើល ឬបញ្ចូលឯកសារដែលអសកម្មឡើងវិញ អ្នកប្រហែលជាត្រូវបើកកំណែទម្រង់។
+to go back to the msg list, click <a href= %1 >here</a>	common	km	ដើម្បីត្រលប់ទៅបញ្ជីសារ សូមចុច <a href="%1">ទីនេះ</a>
+to start the db-tools	common	km	ដើម្បីចាប់ផ្តើមឧបករណ៍ DB
+to start the etemplate editor	common	km	ដើម្បីចាប់ផ្តើមកម្មវិធីនិពន្ធ eTemplate
+to start the search	common	km	ដើម្បីចាប់ផ្តើមស្វែងរក
+today	common	km	ថ្ងៃនេះ
+todays date, eg. "%1"	common	km	កាលបរិច្ឆេទថ្ងៃនេះ, ឧ។ "%1"
+togo	common	km	តូហ្គោ
+tokelau	common	km	តូក្យូ
+tonga	common	km	តុងហ្គា
+too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	km	ការព្យាយាមចូលមិនជោគជ័យច្រើនពេក៖ %1 សម្រាប់អ្នកប្រើប្រាស់ '%2',%3 សម្រាប់ IP %4
+top	common	km	កំពូល
+total	common	km	សរុប
+total: %1 successful: %2 failed: %3 skipped: %4	common	km	សរុប៖ %1 ជោគជ័យ៖ %2 បរាជ័យ៖ %3 បានរំលង៖ %4
+transparant bg for the icons?	common	km	តម្លាភាព bg សម្រាប់រូបតំណាង
+tree	common	km	ដើមឈើ
+trinidad and tobago	common	km	ទ្រី​នី​ដា​ដ​និង​តូបាហ្គោ
+tu	common	km	Tu
+tuesday	common	km	ថ្ងៃអង្គារ
+tunisia	common	km	ទុយនីស៊ី
+turkey	common	km	ទួរគី
+turkmenistan	common	km	តួកមេនីស្ថាន
+turks and caicos islands	common	km	តួកគី និងកោះ CAICOS
+tuvalu	common	km	ទូវ៉ាលូ
+type	common	km	ប្រភេទ
+type of the column	common	km	ប្រភេទនៃជួរឈរ
+type of the field (select label if field should be empty)	common	km	ប្រភេទនៃវាល។ ជ្រើសរើសស្លាកប្រសិនបើវាលគួរតែទទេ។
+uganda	common	km	អ៊ូហ្កាដា
+ukraine	common	km	ចក្រភពអង់គ្លេស
+un-delete	common	km	លុប-លុប
+uncheck all	common	km	ដោះធីកទាំងអស់។
+unconnected nodes will be moved to %1.	admin	km	ថ្នាំងដែលមិនបានភ្ជាប់នឹងត្រូវបានផ្លាស់ទីទៅ%1។
+undefined	common	km	មិនបានកំណត់
+underline	common	km	គូសបន្ទាត់ពីក្រោម
+undo	common	km	មិនធ្វើវិញ
+unicode	common	km	យូនីកូដ
+unique	common	km	ប្លែក
+united arab emirates	common	km	សហព័ន្ធ​អារ៉ាប់រួម
+united kingdom	common	km	ចក្រភពអង់គ្លេស
+united states	common	km	សហរដ្ឋអាមេរិក
+united states minor outlying islands	common	km	កោះតូចៗនៅឆ្ងាយរបស់សហរដ្ឋអាមេរិក
+unknown	common	km	មិនស្គាល់
+unlink	common	km	ផ្ដាច់
+update	common	km	ធ្វើបច្ចុប្បន្នភាព
+update a single entry by passing the fields.	common	km	ធ្វើបច្ចុប្បន្នភាពធាតុតែមួយដោយឆ្លងកាត់វាល
+update from version '%s' to	common	km	ធ្វើបច្ចុប្បន្នភាពពីកំណែ '%s' ទៅ
+update the clock per minute or per second	common	km	ធ្វើបច្ចុប្បន្នភាពនាឡិកាក្នុងមួយនាទី ឬក្នុងមួយវិនាទី
+updating your account with new data from your identity provider failed!	common	km	ការធ្វើបច្ចុប្បន្នភាពគណនីរបស់អ្នកជាមួយនឹងទិន្នន័យថ្មីពីអ្នកផ្តល់អត្តសញ្ញាណរបស់អ្នកបានបរាជ័យ!
+upload	common	km	ផ្ទុកឡើង
+upload directory does not exist, or is not writeable by webserver	common	km	ថតផ្ទុកឡើងមិនមានទេ ឬមិនអាចសរសេរដោយម៉ាស៊ីនមេគេហទំព័រ។
+upload file(s) from filemanager...	common	km	ផ្ទុកឡើងឯកសារពី Filemanager...
+upload new photo	common	km	បង្ហោះរូបថតថ្មី។
+upload requires the directory to be writable by the webserver!	common	km	ការផ្ទុកឡើងតម្រូវឱ្យថតឯកសារដែលអាចសរសេរបានដោយម៉ាស៊ីនមេគេហទំព័រ!
+uppercase letters	common	km	អក្សរ​ធំ
+url	common	km	URL
+uruguay	common	km	អ៊ុយរូហ្គាយ
+use button to search for	common	km	ប្រើប៊ូតុងដើម្បីស្វែងរក
+use button to search for address	common	km	ប្រើប៊ូតុងដើម្បីស្វែងរកអាសយដ្ឋាន
+use button to search for calendarevent	common	km	ប្រើប៊ូតុងដើម្បីស្វែងរកព្រឹត្តិការណ៍ប្រតិទិន
+use button to search for project	common	km	ប្រើប៊ូតុងដើម្បីស្វែងរកគម្រោង
+user	common	km	អ្នក​ប្រើ
+user accounts	common	km	គណនីអ្នកប្រើប្រាស់
+user groups	common	km	ក្រុមអ្នកប្រើប្រាស់
+user-agent & action	common	km	ភ្នាក់ងារអ្នកប្រើប្រាស់ និងសកម្មភាព
+username	common	km	ឈ្មោះ​អ្នកប្រើប្រាស់
+users	common	km	អ្នកប្រើប្រាស់
+users choice	common	km	ការជ្រើសរើសអ្នកប្រើប្រាស់
+uzbekistan	common	km	អ៊ូសបេគីស្ថាន
+valign	common	km	vតម្រឹម
+value	common	km	តម្លៃ
+value has to be at least '%1' !!!	common	km	តម្លៃត្រូវតែមានយ៉ាងហោចណាស់ '%1' !
+value has to be at maximum '%1' !!!	common	km	តម្លៃត្រូវតែជាអតិបរមា '%1' !
+vanuatu	common	km	វ៉ាន់ណាទូ
+vbox	common	km	VBox
+venezuela	common	km	វេណេហ្ស៊ុយអេឡា
+version	common	km	កំណែ
+version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)	common	km	លេខកំណែ គួរតែជាទម្រង់៖ major.minor.revision.number ឧ 0.9.13.001 លេខទាំងអស់ដែលបំពេញដោយសូន្យ
+vertical alignment of row	common	km	ការតម្រឹមបញ្ឈរនៃជួរដេក
+vfs upload directory	common	km	ថតឯកសារផ្ទុកឡើង VFS
+video tutorials	common	km	ការបង្រៀនវីដេអូ
+viet nam	common	km	វៀតណាម
+view	common	km	មើល
+view linked %1 entries	common	km	មើលធាតុ %1 ដែលបានភ្ជាប់
+view this etemplate	common	km	មើល eTemplate
+view this linked entry in its application	common	km	មើលធាតុដែលបានភ្ជាប់នៅក្នុងកម្មវិធីរបស់វា។
+virgin islands, british	common	km	កោះវឺជីន ប្រទេសអង់គ្លេស
+virgin islands, u.s.	common	km	កោះវឺជីន សហរដ្ឋអាមេរិក
+wallis and futuna	common	km	វ៉ាលីស និងហ្វូទូណា
+was not able to delete the backup key because %1	common	km	មិន​អាច​លុប​សោ​បម្រុង​ទុក​បាន​ទេ ដោយសារ %1
+we	common	km	យើង
+we would like to introduce you to egroupware by showing a short introduction video.	common	km	យើងចង់ណែនាំអ្នកឱ្យស្គាល់ EGroupware ដោយបង្ហាញវីដេអូណែនាំខ្លីមួយ។
+wednesday	common	km	ថ្ងៃពុធ
+weekend	common	km	ចុងសប្តាហ៍
+welcome	common	km	សូមស្វាគមន៍
+western european	common	km	អឺរ៉ុបខាងលិច
+western sahara	common	km	សាហារ៉ាខាងលិច
+what color should all the blank space on the desktop have	common	km	តើ​ទំហំ​ទទេ​ទាំងអស់​នៅ​លើ​ផ្ទៃតុ​គួរ​មាន​ពណ៌​អ្វី?
+what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	km	តើមានអ្វីកើតឡើងជាមួយនឹងមាតិកាដែលហៀរចេញ៖ អាចមើលឃើញ (លំនាំដើម), លាក់, រមូរ, ស្វ័យប្រវត្តិ (កម្មវិធីរុករកសម្រេច)
+what style would you like the image to have?	common	km	រចនាប័ទ្មរូបភាព
+when you merge entries into documents, they will be stored here. if no directory is provided, they will be stored in your home directory (%1)	preferences	km	នៅពេលអ្នកបញ្ចូលធាតុទៅក្នុងឯកសារ ពួកវានឹងត្រូវបានរក្សាទុកនៅទីនេះ។ ប្រសិន​បើ​គ្មាន​ថត​ឯកសារ​ត្រូវ​បាន​ផ្ដល់​ទេ ពួកវា​នឹង​ត្រូវ​បាន​រក្សា​ទុក​ក្នុង​ថត​ផ្ទះ​របស់​អ្នក (%1)
+when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	km	ប្រសិនបើអ្នកនិយាយថាបាទ/ចាស ប៊ូតុងដើម និងចេញពីគណនីត្រូវបានបង្ហាញជាកម្មវិធីនៅក្នុងរបារកម្មវិធីកំពូលចម្បង។
+where and how will the egroupware links like preferences, about and logout be displayed.	common	km	តើតំណ EGroupware ដូចជា Preferences, About និង Log Out នឹងបង្ហាញនៅឯណា និងរបៀបណា។
+which groups	common	km	ក្រុមណា
+which infolog types should be synced with the device, default only tasks.	common	km	ប្រភេទ InfoLog ណាដែលគួរត្រូវបានធ្វើសមកាលកម្មជាមួយឧបករណ៍ មានតែភារកិច្ចលំនាំដើមប៉ុណ្ណោះ។
+whole query	common	km	សំណួរទាំងមូល
+widget copied into clipboard	common	km	ធាតុក្រាហ្វិកត្រូវបានចម្លងទៅក្នុងក្ដារតម្បៀតខ្ទាស់
+width	common	km	ទទឹង
+width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@data' disable col if content of data is empty	common	km	ទទឹង​ជួរ​ឈរ​ជា % ឬ​ភីកសែល បិទ col: [! = not]<value>[=<check>] ឧ៖ '!@data' បិទជួរឈរ ប្រសិនបើមាតិកាទិន្នន័យទទេ
+width of column (in % or pixel)	common	km	ទទឹង​ជួរ​ឈរ​ជា % ឬ​ភីកសែល
+width of the table in % or pixels for the table-tag and (optional) div	common	km	ទទឹងតារាងគិតជា % ឬភីកសែលសម្រាប់ស្លាកតារាង និង (ស្រេចចិត្ត) div
+width, disabled	common	km	ទទឹង, បិទ
+wk	common	km	Wk
+work email	common	km	អ៊ីមែលការងារ
+working days	common	km	ថ្ងៃ​ធ្វើការ
+works reliable for total size up to 1-2 mb, might work for 5-10 mb, most likely to fail for >10mb	common	km	ដំណើរការដែលអាចទុកចិត្តបានសម្រាប់ទំហំសរុបរហូតដល់ 1-2 មេកាបៃ អាចដំណើរការបាន 5-10 មេកាបៃ ដែលភាគច្រើនទំនងជាបរាជ័យសម្រាប់> 10 មេកាបៃ
+would you like to display the page generation time at the bottom of every window?	common	km	បង្ហាញម៉ោងបង្កើតទំព័រនៅផ្នែកខាងក្រោមនៃបង្អួចនីមួយៗ
+writable	common	km	អាចសរសេរបាន។
+writable filemanager directory	common	km	ថតឯកសារកម្មវិធីគ្រប់គ្រងឯកសារដែលអាចសរសេរបាន។
+writable share	common	km	ការចែករំលែកដែលអាចសរសេរបាន។
+write <app>/setup/tables_current.inc.php	common	km	សរសេរ <app>/setup/tables_current.inc.php
+write langfile	common	km	សរសេរឯកសារភាសា
+write tables	common	km	សរសេរតារាង
+writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of the app	common	km	សរសេរឯកសារ 'etemplates.inc.php' (សម្រាប់កម្មវិធីក្នុងឈ្មោះ) នៅក្នុង setup-dir នៃកម្មវិធី
+writing	common	km	ការសរសេរ
+written by:	common	km	សរសេរដោយ៖
+xml-file to import	common	km	ឯកសារ Xml ដើម្បីនាំចូល
+xslt template	common	km	គំរូ XSLT
+year	common	km	ឆ្នាំ
+yemen	common	km	យេម៉ែន
+yes	common	km	បាទ
+yes - delete	common	km	បាទ - លុប
+yes - delete including sub-entries	common	km	បាទ / ចាស - លុបរួមទាំងធាតុរង
+yes and allow non-admin users to do that too (recommended)	common	km	បាទ/ចាស និង​អនុញ្ញាត​ឱ្យ​អ្នក​ប្រើ​ដែល​មិន​មែន​ជា​អ្នក​គ្រប់គ្រង​ធ្វើ​ដូច្នេះ​ផង​ដែរ (បាន​ណែនាំ)
+you are not allowed to export more than %1 entries!	common	km	អ្នកមិនត្រូវបានអនុញ្ញាតឱ្យនាំចេញច្រើនជាង %1 ធាតុទេ!
+you are required to change your password during your first login	common	km	អ្នក​ត្រូវ​បាន​តម្រូវ​ឱ្យ​ផ្លាស់​ប្តូ​រ​ពាក្យ​សម្ងាត់​របស់​អ្នក​ក្នុង​អំឡុង​ពេល​ចូល​ដំបូង​របស់​អ្នក​
+you can customize how many icons and toolbars the editor shows.	common	km	តើមានរូបតំណាង និងរបារឧបករណ៍ប៉ុន្មានដែលអ្នកកែសម្រួលបង្ហាញ។
+you can not choose more then %1 item(s)!	common	km	អ្នក​មិន​អាច​ជ្រើសរើស​ច្រើន​ជាង​%1 item(s) ទេ!
+you can respond by visiting:	common	km	អ្នកអាចឆ្លើយតបដោយការចូលមើល
+you have been successfully logged out	login	km	អ្នក​ត្រូវ​បាន​ចេញ​ដោយ​ជោគជ័យ។
+you have not entered a title	common	km	អ្នកមិនទាន់បានបញ្ចូលចំណងជើងទេ។
+you have not entered a valid date	common	km	អ្នកមិនបានបញ្ចូលកាលបរិច្ឆេទត្រឹមត្រូវទេ។
+you have not entered a valid time of day	common	km	អ្នកមិនបានបញ្ចូលពេលវេលាត្រឹមត្រូវនៃថ្ងៃទេ។
+you have not entered participants	common	km	អ្នកមិនបានបញ្ចូលអ្នកចូលរួមទេ។
+you have selected an invalid date	common	km	អ្នកបានជ្រើសរើសកាលបរិច្ឆេទមិនត្រឹមត្រូវ!
+you have selected an invalid main category	common	km	អ្នក​បាន​ជ្រើសរើស​ប្រភេទ​ចម្បង​មិន​ត្រឹមត្រូវ!
+you have successfully logged out	common	km	អ្នកបានចេញដោយជោគជ័យ។
+you need to %1set your timezone preference%2.	common	km	អ្នក​ត្រូវ​%1កំណត់​ចំណូលចិត្ត​តំបន់​ពេលវេលា​របស់អ្នក%2។
+you need to add the webserver user '%1' to the group '%2'.	common	km	អ្នកត្រូវបន្ថែមអ្នកប្រើប្រាស់បណ្តាញ '%1' ទៅក្រុម '%2'។
+you need to be an egroupware administrator to access this functionality!	common	km	អ្នកត្រូវតែជាអ្នកគ្រប់គ្រង EGroupware ដើម្បីចូលប្រើមុខងារនេះ!
+you need to install mailvelope plugin available for chrome and firefox from www.mailvelope.com or by clicking on install button.	common	km	អ្នកត្រូវដំឡើងកម្មវិធីជំនួយ Mailvelope ដែលមានសម្រាប់ Chrome និង Firefox ពី www.mailvelope.com ឬដោយចុចលើប៊ូតុងដំឡើង។
+you need to select a file first!	common	km	ជ្រើសរើសឯកសារជាមុនសិន!
+you need to select some entries first!	common	km	អ្នកត្រូវជ្រើសរើសធាតុមួយចំនួនជាមុនសិន!
+you need to set enable logging to "%1" to create/update a log.	groupdav	km	អ្នក​ត្រូវ​កំណត់​បើក​ការ​កត់ត្រា​ទៅ "%1" ដើម្បី​បង្កើត/អាប់ដេត​កំណត់ហេតុ។
+you tried to automatically size a flex column, which always takes the rest of the space	common	km	អ្នកបានព្យាយាមកំណត់ទំហំជួរឈរ flex ដោយស្វ័យប្រវត្តិ ដែលតែងតែយកកន្លែងដែលនៅសល់។
+you will not be able to send or receive encrypted mails before completing that step!	common	km	អ្នក​នឹង​មិន​អាច​ផ្ញើ ឬ​ទទួល​អ៊ីមែល​ដែល​បាន​អ៊ិនគ្រីប​មុន​នឹង​បញ្ចប់​ជំហាន​នោះ​ឡើយ!
+you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	km	អ្នកមិនមានសិទ្ធិចូលប្រើកម្មវិធី%1 ទេ!
+your account has been updated with new data from your identity provider.	common	km	គណនីរបស់អ្នកត្រូវបានធ្វើបច្ចុប្បន្នភាពជាមួយនឹងទិន្នន័យថ្មីពីអ្នកផ្តល់អត្តសញ្ញាណរបស់អ្នក។
+your browser is not up-to-date (javascript es6 compatible), you may experience some of the features not working.	common	km	កម្មវិធីរុករកតាមអ៊ីនធឺណិតរបស់អ្នកមិនទាន់សម័យទេ (JavaScript ES6 ដែលត្រូវគ្នា) អ្នកអាចជួបប្រទះនឹងមុខងារមួយចំនួនដែលមិនដំណើរការ។
+your code is incorrect !!!	common	km	លេខកូដមិនត្រឹមត្រូវ!
+your key has been restored successfully.	common	km	សោរបស់អ្នកត្រូវបានស្ដារឡើងវិញដោយជោគជ័យ។
+your message could <b>not</b> be sent!<br>	common	km	សាររបស់អ្នក<b>មិនអាច</b>ផ្ញើបានទេ!<br>
+your message has been sent	common	km	សាររបស់អ្នកត្រូវបានផ្ញើ។
+your password does not have required strength of %1 character classes and minimum length of %2 characters.	common	km	ពាក្យ​សម្ងាត់​របស់​អ្នក​មិន​តម្រូវ​ឱ្យ​មាន​កម្រិត​តួអក្សរ %1 និង​ប្រវែង​អប្បបរមា​នៃ %2 តួអក្សរ​ទេ។
+your password does not have required strength:	common	km	ពាក្យសម្ងាត់របស់អ្នកមិនមានកម្លាំងខ្លាំងទេ៖
+your password failed the following criteria:	common	km	ពាក្យសម្ងាត់របស់អ្នកបានបរាជ័យតាមលក្ខណៈវិនិច្ឆ័យខាងក្រោម៖
+your password is about to expire in %1 days, you may change your password now	common	km	ពាក្យ​សម្ងាត់​របស់​អ្នក​ជិត​ផុត​កំណត់​ក្នុង​រយៈ​ពេល %1 ថ្ងៃ អ្នក​អាច​ប្ដូរ​ពាក្យ​សម្ងាត់​របស់​អ្នក​ឥឡូវ​នេះ។
+your password might not match the password policy.	common	km	ពាក្យសម្ងាត់របស់អ្នកប្រហែលជាមិនត្រូវគ្នានឹងគោលការណ៍ពាក្យសម្ងាត់ទេ។
+your search returned %1 matchs	common	km	ការស្វែងរកបានត្រឡប់មកវិញការផ្គូផ្គង %1
+your search returned 1 match	common	km	ការស្វែងរកបានត្រឡប់មកវិញ 1 ការប្រកួត
+your session timed out, please log in again	login	km	វគ្គរបស់អ្នកអស់ពេល សូមចូលម្តងទៀត
+your settings have been updated	common	km	ការកំណត់របស់អ្នកត្រូវបានធ្វើបច្ចុប្បន្នភាព។
+zambia	common	km	ហ្សាំប៊ី
+zimbabwe	common	km	ហ្ស៊ីមបាវ៉េ
+zoom	common	km	ពង្រីក

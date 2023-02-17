@@ -1,0 +1,159 @@
+%1 definition(s) %2	importexport	km	និយមន័យ %1 %2
+%1 definition(s) %2, %3 failed because of insufficent rights !!!	importexport	km	%1 និយមន័យ %2, % 3 បានបរាជ័យដោយសារតែសិទ្ធិមិនគ្រប់គ្រាន់ !!!
+%1 definitions %2	importexport	km	និយមន័យ %1 %2
+%1 is not a known user or group	importexport	km	%1 មិនមែនជាអ្នកប្រើប្រាស់ ឬក្រុមដែលគេស្គាល់ទេ។
+%1 is not readable	importexport	km	%1 មិនអាចអានបានទេ។
+%1 is not writable	importexport	km	%1 មិនអាចសរសេរបានទេ។
+%1 records processed	importexport	km	បានដំណើរការកំណត់ត្រា %1 ។
+%s all users	importexport	km	%s អ្នកប្រើប្រាស់ទាំងអស់។
+%s just me	importexport	km	%s គ្រាន់តែជាខ្ញុំ
+(* for all)	importexport	km	(* សម្រាប់​ទាំងអស់)
+(0-23)	importexport	km	(0-23)
+(0-6, 0=sun)	importexport	km	(0-6, 0=ព្រះអាទិត្យ)
+*contact id cannot be changed by import	importexport	km	*លេខសម្គាល់ទំនាក់ទំនងមិនអាចផ្លាស់ប្តូរដោយការនាំចូលបានទេ។
+add a new definition	importexport	km	បន្ថែមនិយមន័យថ្មី។
+add an additional condition	importexport	km	បន្ថែមលក្ខខណ្ឌបន្ថែម
+addressbook csv import	importexport	km	ការនាំចូលសៀវភៅអាសយដ្ឋាន CSV
+addressbook vcard import	importexport	km	ការនាំចូល vCard សៀវភៅអាសយដ្ឋាន
+admin disabled exporting	importexport	km	អ្នកគ្រប់គ្រងបានបិទការនាំចេញ
+all custom fields	importexport	km	វាលផ្ទាល់ខ្លួនទាំងអស់។
+all encodings	importexport	km	ការអ៊ិនកូដទាំងអស់។
+all users	importexport	km	អ្នក​ប្រើ​ទាំងអស់
+allowed users	importexport	km	អ្នកប្រើប្រាស់ដែលបានអនុញ្ញាត
+automatically created by importexport	importexport	km	បង្កើតដោយស្វ័យប្រវត្តិដោយ នាំចូល|នាំចេញ
+basic csv import	importexport	km	ការនាំចូល CSV មូលដ្ឋាន
+change allowed users	importexport	km	ផ្លាស់ប្តូរអ្នកប្រើប្រាស់ដែលបានអនុញ្ញាត
+change owner when updating	importexport	km	ផ្លាស់ប្តូរម្ចាស់នៅពេលធ្វើបច្ចុប្បន្នភាព
+changed	importexport	km	បានផ្លាស់ប្តូរ
+changed allowed_users	importexport	km	បានផ្លាស់ប្តូរអ្នកប្រើប្រាស់ដែលបានអនុញ្ញាត
+changed owner	importexport	km	បានផ្លាស់ប្តូរម្ចាស់
+charset of file	importexport	km	សំណុំតួអក្សរ
+check all	importexport	km	ពិនិត្យ​ទាំងអស់
+choose a name for this definition	importexport	km	ជ្រើសរើសឈ្មោះសម្រាប់និយមន័យនេះ។
+choose a plugin	importexport	km	ជ្រើសរើសកម្មវិធីជំនួយ
+choose an application	importexport	km	ជ្រើសរើសកម្មវិធី
+choose fields to export	importexport	km	ជ្រើសរើសវាលដើម្បីនាំចេញ
+choose seperator and charset	importexport	km	ជ្រើសរើសសញ្ញាបំបែក និងសំណុំតួអក្សរ
+column mismatch.  expected %1 columns, your file has %2.	importexport	km	ជួរឈរមិនត្រូវគ្នា។ រំពឹងថានឹងមានជួរឈរ %1 ឯកសាររបស់អ្នកមាន %2។
+column mismatch: %1 should be %2, not %3	importexport	km	ជួរឈរមិនត្រូវគ្នា៖ %1 គួរតែជា %2 មិនមែន %3 ទេ។
+condition	importexport	km	លក្ខខណ្ឌ
+copied	importexport	km	ចម្លង។
+create a <a href="%1">new definition</a> for this file	importexport	km	បង្កើត <a href="%1">និយមន័យថ្មី</a> សម្រាប់ឯកសារនេះ។
+create a matching export definition based on this import definition	importexport	km	បង្កើតនិយមន័យនាំចេញដែលត្រូវគ្នាដោយផ្អែកលើនិយមន័យនៃការនាំចូលនេះ។
+create export	importexport	km	បង្កើតការនាំចេញ
+created	importexport	km	បានបង្កើត
+csv field	importexport	km	វាល CSV
+database values	importexport	km	តម្លៃមូលដ្ឋានទិន្នន័យ
+day of week	importexport	km	ថ្ងៃនៃសប្តាហ៍
+define imports|exports	common	km	កំណត់ការនាំចូល|ការនាំចេញ
+definition	importexport	km	និយមន័យ
+definition filter	importexport	km	តម្រងនិយមន័យ
+delete all selected definitions	importexport	km	លុបនិយមន័យដែលបានជ្រើសរើសទាំងអស់។
+delete files after import	importexport	km	លុបឯកសារបន្ទាប់ពីនាំចូល
+deleted	importexport	km	បានលុប។
+delimiter	importexport	km	កំណត់ព្រំដែន
+duplicate name, please choose another.	importexport	km	ឈ្មោះស្ទួន សូមជ្រើសរើសឈ្មោះផ្សេងទៀត។
+edit conditions	importexport	km	កែសម្រួលលក្ខខណ្ឌ
+edit definition <a href="%1">%2</a> to match your file	importexport	km	កែសម្រួលនិយមន័យ <a href="%1">%2</a> ដើម្បីផ្គូផ្គងឯកសាររបស់អ្នក។
+edit your file to match the definition:	importexport	km	កែសម្រួលឯកសាររបស់អ្នកឱ្យត្រូវនឹងនិយមន័យ៖
+errors	importexport	km	កំហុស
+execute	importexport	km	ប្រតិបត្តិ
+expert options	importexport	km	ជម្រើសអ្នកជំនាញ
+export	importexport	km	នាំចេញ
+export all selected definitions	importexport	km	នាំចេញនិយមន័យដែលបានជ្រើសរើសទាំងអស់។
+export data as	importexport	km	នាំចេញទិន្នន័យជា
+export definition to use for nextmatch export	preferences	km	នាំចេញនិយមន័យដែលត្រូវប្រើសម្រាប់ការនាំចេញការប្រកួតបន្ទាប់
+export spreadsheet	importexport	km	នាំចេញសៀវភៅបញ្ជី
+exported	importexport	km	បាននាំចេញ។
+extra %1	importexport	km	បន្ថែម %1
+extra charsets for import / export	importexport	km	សំណុំតួអក្សរបន្ថែមសម្រាប់ការនាំចូល / នាំចេញ
+extra encodings	importexport	km	ការអ៊ិនកូដបន្ថែម
+false	importexport	km	មិនពិត
+field labels	importexport	km	ស្លាកសញ្ញាវាល
+field names	importexport	km	ឈ្មោះវាល
+fieldseperator	importexport	km	អ្នកបំបែកវាល
+filters	importexport	km	តម្រង
+finish	importexport	km	បញ្ចប់
+from definition	importexport	km	ពីនិយមន័យ
+from file	importexport	km	ពីឯកសារ
+general	preferences	km	ទូទៅ
+general fields:	preferences	km	វាលទូទៅ៖
+header lines to skip	importexport	km	បន្ទាត់បឋមកថាដើម្បីរំលង
+how to merge with existing data? for each record, all conditions are evaluated from top to bottom, or stop. for blind insert, leave blank.	importexport	km	តើធ្វើដូចម្តេចដើម្បីបញ្ចូលគ្នាជាមួយទិន្នន័យដែលមានស្រាប់? សម្រាប់កំណត់ត្រានីមួយៗ លក្ខខណ្ឌទាំងអស់ត្រូវបានវាយតម្លៃពីកំពូលទៅបាត ឬបញ្ឈប់។ សម្រាប់ការបញ្ចូលពិការភ្នែក សូមទុកទទេ។
+human friendly values	importexport	km	តម្លៃមិត្តភាពរបស់មនុស្ស
+if you specify an export definition, it will be used when you export	preferences	km	ប្រសិនបើអ្នកបញ្ជាក់និយមន័យនាំចេញ វានឹងត្រូវបានប្រើនៅពេលអ្នកនាំចេញ។
+import	importexport	km	នាំចូល
+import aborted	importexport	km	ការនាំចូលត្រូវបានលុបចោល
+import data is	importexport	km	ទិន្នន័យនាំចូលគឺ
+import definition	importexport	km	និយមន័យនាំចូល
+import definitions	common	km	នាំចូលនិយមន័យ
+import definitions (attension: existing definitions with equal names will be overwritten!!!)	importexport	km	នាំចូលនិយមន័យ។ យកចិត្តទុកដាក់៖ និយមន័យដែលមានស្រាប់ដែលមានឈ្មោះស្មើគ្នានឹងត្រូវបានសរសេរជាន់ពីលើ!
+imported	importexport	km	នាំចូល
+importexport	common	km	នាំចូល | នាំចេញ
+importexport wizard finished successfully!	importexport	km	អ្នកជំនួយការនាំចូល|នាំចេញបានបញ្ចប់ដោយជោគជ័យ!
+imports information from a csv file.  this is only a base class, and doesn't do anything on its own.	importexport	km	នាំចូលព័ត៌មានពីឯកសារ CSV ។ នេះគ្រាន់តែជាថ្នាក់មូលដ្ឋានប៉ុណ្ណោះ ហើយមិនធ្វើអ្វីដោយខ្លួនឯងទេ។
+include header	importexport	km	រួមបញ្ចូលបឋមកថា
+just me	importexport	km	គ្រាន់តែខ្ញុំ
+last run	importexport	km	ការរត់ចុងក្រោយ
+load sample file	importexport	km	ផ្ទុកឯកសារគំរូ
+lock expired on previous run	importexport	km	ការចាក់សោបានផុតកំណត់នៅពេលដំណើរការមុន។
+manage mapping	importexport	km	គ្រប់គ្រងការធ្វើផែនទី
+next	importexport	km	បន្ទាប់
+next run	importexport	km	ការរត់បន្ទាប់
+no custom field "%1" for %2.	importexport	km	មិនមានវាលផ្ទាល់ខ្លួន "%1" សម្រាប់ %2 ។
+no matches	importexport	km	គ្មានការប្រកួត
+no matching records	importexport	km	មិនមានកំណត់ត្រាដែលត្រូវគ្នា។
+no notifications	importexport	km	គ្មានការជូនដំណឹងទេ។
+no records selected	importexport	km	មិនបានជ្រើសរើសកំណត់ត្រាទេ!
+none found	importexport	km	រកមិនឃើញទេ។
+old fixed definition	preferences	km	និយមន័យចាស់ថេរ
+please select file to import	importexport	km	សូមជ្រើសរើសឯកសារដែលត្រូវនាំចូល
+plugin	importexport	km	កម្មវិធីជំនួយ
+preview	importexport	km	មើលជាមុន
+preview not supported by %1	importexport	km	ការមើលជាមុនមិនត្រូវបានគាំទ្រដោយ%1
+previous	importexport	km	មុន
+problems during import:	importexport	km	បញ្ហាក្នុងពេលនាំចូល៖
+save as definition	importexport	km	រក្សាទុកជានិយមន័យ
+schedule	common	km	កាលវិភាគ
+schedule import / export	common	km	កាលវិភាគនាំចូល | នាំចេញ
+schedule import | export	importexport	km	កាលវិភាគនាំចូល | នាំចេញ
+schedule not found	importexport	km	រកមិនឃើញកាលវិភាគទេ។
+schedule times are server time!  currently %s.	importexport	km	តារាងពេលវេលាគឺជាម៉ោងម៉ាស៊ីនមេ! បច្ចុប្បន្ន %s
+select definition	importexport	km	ជ្រើសរើសនិយមន័យ
+select groups	importexport	km	ជ្រើសរើសក្រុម
+select owner	importexport	km	ជ្រើសរើសម្ចាស់
+select plugin	importexport	km	ជ្រើសរើសកម្មវិធីជំនួយ
+select...	importexport	km	ជ្រើសរើស...
+set import values	importexport	km	កំណត់តម្លៃនាំចូល
+skipped	importexport	km	បានរំលង
+some nice text	importexport	km	អត្ថបទល្អខ្លះ
+some records may not have been imported	importexport	km	កំណត់ត្រាខ្លះប្រហែលជាមិនត្រូវបាននាំចូលទេ។
+stop	importexport	km	ឈប់
+stylite template folder	importexport	km	ថតគំរូរចនាប័ទ្ម
+target	importexport	km	គោលដៅ
+target examples: vfs://default/home/user/export.csv or http://server.net/prices.csv	importexport	km	ឧទាហរណ៍គោលដៅ៖ vfs://default/home/user/export.csv ឬ http://server.net/prices.csv
+target field	importexport	km	វាលគោលដៅ
+test only	importexport	km	សាកល្បងតែប៉ុណ្ណោះ
+too many matches	importexport	km	ការប្រកួតច្រើនពេក
+translation	importexport	km	ការកែប្រែផ្ទាល់ខ្លួន
+true	importexport	km	ពិត
+try	importexport	km	ព្យាយាម
+unable to delete	importexport	km	មិនអាចលុបបានទេ។
+unable to link to %1 "%2"	importexport	km	មិនអាចភ្ជាប់ទៅ%1 "%2" បានទេ
+unable to schedule	importexport	km	មិនអាចកំណត់ពេលបានទេ។
+update categories	importexport	km	ធ្វើបច្ចុប្បន្នភាពប្រភេទ
+update default-definitions	importexport	km	ធ្វើបច្ចុប្បន្នភាពនិយមន័យលំនាំដើម
+use default	importexport	km	ការ​ប្រើ​ប្រាស់​លំនាំ​ដើម
+use definition filter	importexport	km	ប្រើតម្រងនិយមន័យ
+use field from csv if possible	importexport	km	ប្រើវាលពី CSV ប្រសិនបើអាចធ្វើបាន
+use search results	common	km	ប្រើលទ្ធផលស្វែងរក
+user preference	importexport	km	ចំណូលចិត្តអ្នកប្រើប្រាស់
+user template folder	importexport	km	ថតគំរូអ្នកប្រើប្រាស់
+users allowed to create their own definitions	importexport	km	អ្នកប្រើប្រាស់បានអនុញ្ញាតឱ្យបង្កើតនិយមន័យផ្ទាល់ខ្លួនរបស់ពួកគេ។
+users allowed to share their own definitions	importexport	km	អ្នកប្រើប្រាស់បានអនុញ្ញាតឱ្យចែករំលែកនិយមន័យផ្ទាល់ខ្លួនរបស់ពួកគេ។
+warnings	importexport	km	ការព្រមាន
+what should be done with unknown values?	importexport	km	អ្វីដែលត្រូវធ្វើជាមួយតម្លៃដែលមិនស្គាល់?
+which useres are allowed for this definition	importexport	km	អ្នកប្រើប្រាស់ណាដែលត្រូវបានអនុញ្ញាតឱ្យប្រើនិយមន័យនេះ។
+which users are allowed to use this definition	importexport	km	អ្នកប្រើប្រាស់ណាដែលត្រូវបានអនុញ្ញាតឱ្យប្រើនិយមន័យនេះ។
+you may want to <a href="%1" target="_new">backup</a> first.	importexport	km	អ្នកប្រហែលជាចង់ <a href="%1" target="_new">បម្រុងទុក</a> ជាមុនសិន។
+you need to select an app and format first!	importexport	km	អ្នកត្រូវជ្រើសរើសកម្មវិធី និងធ្វើទ្រង់ទ្រាយជាមុនសិន!
