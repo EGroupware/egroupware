@@ -3458,7 +3458,10 @@ class addressbook_ui extends addressbook_bo
 				$this->tmpl->setElementAttribute('#' . $name, 'required', FALSE);
 				if($this->config['private_cf_tab'] == 'True' && $data['private'])
 				{
-					$content['private_cfs']['#' . $name] = $content['#' . $name];
+					if(isset($content['#' . $name]))
+					{
+						$content['private_cfs']['#' . $name] = $content['#' . $name];
+					}
 					// Private CF tab results in a different ID, turn required off there too
 					$this->tmpl->setElementAttribute('private_cfs[#' . $name . ']', 'required', FALSE);
 				}
