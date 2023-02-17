@@ -198,6 +198,7 @@ create link	common	lv	Izveidot saiti
 created	common	lv	Izveidota
 created by	common	lv	Pateicoties
 created by %1	common	lv	Izveidoja %1
+created by	common	lv	Pateicoties
 creates an english ('en') langfile from label and helptexts (for application in name)	common	lv	izveido angļu ('en')<i>langfile</i> no iezīmes un palīgtekstiem
 croatia	common	lv	HORVĀTIJA
 css class for the table-tag	common	lv	CSS klase tabulas tagam
