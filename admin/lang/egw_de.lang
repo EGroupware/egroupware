@@ -584,7 +584,7 @@ ldap server admin dn	admin	de	LDAP-Server Administrator DN
 ldap server admin password	admin	de	LDAP-Server Administrator-Passwort
 ldap server hostname or ip address	admin	de	LDAP-Server Hostname oder IP-Adresse
 ldap settings	admin	de	LDAP-Einstellungen
-leave empty for no quota	admin	de	leer lassen um Quota zu deaktivieren
+leave empty for no quota	admin	de	Leer lassen um Quota zu deaktivieren
 leave empty to use oauth, if supported	admin	de	Leer lassen um OAuth zu benutzen, wenn unterstützt
 leave the category untouched and return back to the list	admin	de	Kategorie unverändert lassen und zur Liste zurückkehren
 leave the group untouched and return back to the list	admin	de	Gruppe unverändert lassen und zur Liste zurückkehren
@@ -742,8 +742,8 @@ profile is active	admin	de	Profil ist aktiv
 profile list	admin	de	Profilliste
 profile name	admin	de	Profilname
 qmaildotmode	admin	de	qmaildotmode
-quota settings	admin	de	Quota Einstellungen
-quota size in mbyte	admin	de	Quota Größe in MByte
+quota settings	admin	de	Quota-Einstellungen
+quota size in mbyte	admin	de	Quota-Größe in MByte
 re-enter password	admin	de	Passwort wiederholen
 read this list of methods.	admin	de	Diese Liste der Methoden lesen
 register application hooks	admin	de	Registrieren der "Hooks" der Anwendungen

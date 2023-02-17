@@ -243,6 +243,7 @@ properties saved.	filemanager	de	Eigenschaften gespeichert
 protocol to use	filemanager	de	Zu benutzendes Protokoll
 protocols	filemanager	de	Protokolle
 quick jump to	filemanager	de	Springe zu
+quota	filemanager	de	Quota
 quota exceeded	filemanager	de	Speicherplatz Quota überschritten
 read & write access	filemanager	de	Lese- und Schreibzugriff
 read access only	filemanager	de	Nur Lesezugriff

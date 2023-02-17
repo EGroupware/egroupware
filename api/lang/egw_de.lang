@@ -1495,7 +1495,7 @@ vfs upload directory	common	de	Dateimanager Upload Ordner
 video tutorials	common	de	Video-Tutorials
 viet nam	common	de	VIETNAM
 view	common	de	Anzeigen
-view linked %1 entries	common	de	Verknüpfte %1 Einträge anzeigen
+view linked %1 entries	common	de	Verknüpfte %1 anzeigen
 view this etemplate	common	de	dieses eTemplate anzeigen
 view this linked entry in its application	common	de	Zeige diesen Eintrag in seiner Anwendung an
 virgin islands, british	common	de	VIRGIN ISLANDS, BRITISH
@@ -1574,7 +1574,7 @@ your browser is not up-to-date (javascript es6 compatible), you may experience s
 your code is incorrect !!!	common	de	Ihr Code ist nicht richtig!!!
 your key has been restored successfully.	common	de	Ihr Schlüssel wurde erfolgreich wiederhergestellt.
 your message could <b>not</b> be sent!<br>	common	de	Ihre Nachricht konnte <b>nicht</b> gesendet werden!<br>
-your message has been sent	common	de	Ihre Nachricht wurde versendet
+your message has been sent	common	de	Ihre Nachricht wurde versendet.
 your password does not have required strength of %1 character classes and minimum length of %2 characters.	common	de	Ihr Passwort hat nicht die benötigte Qualität von %1 Zeichenklassen und Mindestanzahl von %2 Zeichen.
 your password does not have required strength:	common	de	Ihr Passwort hat nicht die erforderliche Stärke:
 your password failed the following criteria:	common	de	Ihr Passwort entspricht nicht den folgenden Kriterien:
@@ -1582,8 +1582,8 @@ your password is about to expire in %1 days, you may change your password now	co
 your password might not match the password policy.	common	de	Ihr Passwort könnte den Richtlinien nicht entsprechen.
 your search returned %1 matchs	common	de	Ihre Suche ergab %1 Treffer
 your search returned 1 match	common	de	Ihre Suche ergab einen Treffer
-your session timed out, please log in again	login	de	Ihre Sitzung ist abgelaufen, bitte melden Sie sich erneut an
-your settings have been updated	common	de	Ihre Einstellungen wurden aktualisiert
+your session timed out, please log in again	login	de	Ihre Sitzung ist abgelaufen, bitte melden Sie sich erneut an.
+your settings have been updated	common	de	Ihre Einstellungen wurden aktualisiert.
 zambia	common	de	ZAMBIA
 zimbabwe	common	de	ZIMBABWE
 zoom	common	de	Zoomen
