@@ -4630,7 +4630,7 @@ app.classes.mail = AppJS.extend(
 					textArea = this.et2.getWidgetById('mail_htmltext');
 				}
 				// Tolerate values base on plain text or html, in order to calculate freespaces
-				var textAreaDelta = textArea.id == "mail_htmltext"?120:40;
+				var textAreaDelta = textArea.id == "mail_htmltext"?20:40;
 
 				// while attachments are in progress take progress visiblity into account
 				// otherwise the attachment progress is finished and consider attachments list
