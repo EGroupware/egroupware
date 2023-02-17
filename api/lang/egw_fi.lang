@@ -290,7 +290,6 @@ create link	common	fi	Luo linkki
 created	common	fi	Luotu
 created by	common	fi	Luonut
 created by %1	common	fi	Luonut %1
-created by	common	fi	Luonut
 creates an english ('en') langfile from label and helptexts (for application in name)	common	fi	Luodaan englanninkielinen ('en') kielitiedosto otsikosta ja ohjetekstit
 creator	preferences	fi	Luoja
 croatia	common	fi	KROATIA

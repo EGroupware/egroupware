@@ -1,7 +1,9 @@
+#	addressbook	fr	#
 %1 added	addressbook	fr	%1 ajouté
 %1 contact(s) %2	addressbook	fr	%1 contact(s) %2
 %1 contact(s) %2, %3 failed because of %4 !!!	addressbook	fr	%1 contact(s) %2, %3 en échec pour %4 !!!
 %1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	fr	%1 contact(s) %2, %3 en erreur (droits d'accès insuffisants).
+%1 contact(s) added as %2	addressbook	fr	%1 contact(s) ajouté(s) comme %2
 %1 contacts updated (%2 errors).	addressbook	fr	%1 contacts mis à jour (%2 erreurs).
 %1 entries %2, %3 failed.	addressbook	fr	%1 événement(s) %2, %3 en échec.
 %1 event(s) %2	addressbook	fr	%1 événement(s) %2
@@ -81,6 +83,7 @@ are you shure you want to delete this contact?	addressbook	fr	Etes-vous sûr de 
 are you sure you want to delete this field?	addressbook	fr	Etes-vous sûr de vouloir effacer ce champ ?
 assistent	addressbook	fr	Assistant(e)
 assistent phone	addressbook	fr	Téléphone assistant(e)
+audio call	addressbook	fr	Appel audio
 birthday	common	fr	Anniversaire
 birthdays	common	fr	Anniversaires
 blank	addressbook	fr	Vide
