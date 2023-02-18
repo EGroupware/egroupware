@@ -813,7 +813,7 @@ class Db
 			{
 				$rs = $this->Link_ID->Execute($Query_String, $inputarr);
 			}
-			$this->Errno  = 2006;
+			$this->Errno  = $this->Link_ID->ErrorNo();
 			$this->Error  = $this->Link_ID->ErrorMsg();
 		}
 		// PHP 8.1 mysqli throws its own exception
@@ -822,8 +822,7 @@ class Db
 			{
 				throw new Db\Exception($e->getMessage(), $e->getCode(), $e);
 			}
-			_egw_log_exception($e);
-			$this->Errno  = $e->getCode();
+			$this->Errno  = 2006;
 			$this->Error  = $e->getMessage();
 		}
 		$this->Row = 0;
