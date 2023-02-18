@@ -754,8 +754,6 @@ class Db
 	*/
 	function query($Query_String, $line = '', $file = '', $offset=0, $num_rows=-1, $inputarr=false, $fetchmode=self::FETCH_BOTH, $reconnect=true)
 	{
-		unset($line, $file);	// not used anymore
-
 		if ($Query_String == '')
 		{
 			return 0;
@@ -793,14 +791,20 @@ class Db
 			{
 				$rs = $this->Link_ID->Execute($Query_String, $inputarr);
 			}
+			$this->Errno  = 2006;
+			$this->Error  = $this->Link_ID->ErrorMsg();
 		}
 		// PHP 8.1 mysqli throws its own exception
 		catch(\mysqli_sql_exception $e) {
-			throw new Db\Exception($e->getMessage(), $e->getCode(), $e);
+			if (!($reconnect && $this->Type == 'mysql' && ($e->getCode() == 2006 || $e->getMessage() === 'MySQL server has gone away')))
+			{
+				throw new Db\Exception($e->getMessage(), $e->getCode(), $e);
+			}
+			_egw_log_exception($e);
+			$this->Errno  = $e->getCode();
+			$this->Error  = $e->getMessage();
 		}
 		$this->Row = 0;
-		$this->Errno  = $this->Link_ID->ErrorNo();
-		$this->Error  = $this->Link_ID->ErrorMsg();
 
 		if ($this->query_log && ($f = @fopen($this->query_log,'a+')))
 		{
