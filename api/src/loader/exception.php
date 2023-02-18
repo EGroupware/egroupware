@@ -79,7 +79,7 @@ function _egw_log_exception($e,&$headline=null)
 	if(isset($_SERVER['HTTP_HOST']) || $GLOBALS['egw_info']['flags']['no_exception_handler'] !== 'cli')
 	{
 		error_log($headline.($e instanceof egw_exception_warning ? ': ' : ' ('.get_class($e).'): ').
-			$e->getMessage().(!empty($e->details) ? ': '.$e->details : ''));
+			$e->getMessage().' ('.$e->getCode().')'.(!empty($e->details) ? ': '.$e->details : ''));
 		error_log('File: '.str_replace(EGW_SERVER_ROOT, '', $e->getFile()).', Line: '.$e->getLine());
 		foreach($trace as $line)
 		{
