@@ -103,7 +103,7 @@ function egw_exception_handler($e)
 	// exception handler for cli (command line interface) clients, no html, no logging
 	if(!isset($_SERVER['HTTP_HOST']) || $GLOBALS['egw_info']['flags']['no_exception_handler'] == 'cli')
 	{
-		echo ($headline ? $headline.': ' : '').$e->getMessage()."\n";
+		echo ($headline ? $headline.': ' : '').$e->getMessage().' ('.$e->getCode().')'."\n";
 		echo $e->getFile().' ('.$e->getLine().")\n";
 		if ($GLOBALS['egw_info']['server']['exception_show_trace'])
 		{
@@ -116,7 +116,7 @@ function egw_exception_handler($e)
 	{
 		header('HTTP/1.1 500 '.$headline);
 		$message = '<h3>'.Api\Html::htmlspecialchars($headline)."</h3>\n".
-			'<pre><b>'.Api\Html::htmlspecialchars($e->getMessage())."</b>\n\n";
+			'<pre><b>'.Api\Html::htmlspecialchars($e->getMessage().' ('.$e->getCode().')')."</b>\n\n";
 
 		echo $e->getFile().' ('.$e->getLine().")\n";
 
@@ -147,7 +147,7 @@ function egw_exception_handler($e)
 	// exception handler sending message back to the client as basic auth message
 	elseif($GLOBALS['egw_info']['flags']['no_exception_handler'] == 'basic_auth')
 	{
-		$error = str_replace(array("\r", "\n"), array('', ' | '), $e->getMessage());
+		$error = str_replace(array("\r", "\n"), array('', ' | '), $e->getMessage().' ('.$e->getCode().')');
 		// to long http header cause Nginx to reject the response with 502 upstream sent too big header while reading response header from upstream
 		if (strlen($error) > 256) $error = substr($error, 0, 256).' ...';
 		header('WWW-Authenticate: Basic realm="'.$headline.' '.$error.'"');
