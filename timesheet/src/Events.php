@@ -318,13 +318,24 @@ class Events extends Api\Storage\Base
 	}
 
 	/**
-	 * Remember for 18h to not ask again to start working time
+	 * Remember for 18h or forever to not ask again to start working time
 	 *
+	 * @param ?bool $never true: never ask again, set preference, otherwise remember in session for 18h
 	 * @return void
 	 */
-	static function ajax_dontAskAgainWorkingTime()
+	static function ajax_dontAskAgainWorkingTime(bool $never=null)
 	{
-		Api\Cache::setSession(__CLASS__, self::DONT_ASK_AGAIN_WORKING_TIME, true, 18*3600);
+		if ($never)
+		{
+			$prefs = new Api\Preferences($GLOBALS['egw_info']['user']['account_id']);
+			$prefs->read_repository();
+			$prefs->user['timesheet']['workingtime_session'] = 'no';
+			$prefs->save_repository();
+		}
+		else
+		{
+			Api\Cache::setSession(__CLASS__, self::DONT_ASK_AGAIN_WORKING_TIME, true, 18*3600);
+		}
 	}
 
 	/**

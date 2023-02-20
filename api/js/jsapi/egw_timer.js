@@ -670,9 +670,13 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 								}
 								else
 								{
-									egw.request('EGroupware\\Timesheet\\Events::ajax_dontAskAgainWorkingTime');
+									egw.request('EGroupware\\Timesheet\\Events::ajax_dontAskAgainWorkingTime', button !== Et2Dialog.NO_BUTTON);
 								}
-							}, 'Do you want to start your working time?', 'Working time', {}, Et2Dialog.BUTTONS_YES_NO);
+							}, 'Do you want to start your working time?', 'Working time', {}, 		[
+								{button_id: Et2Dialog.YES_BUTTON, label: egw.lang('yes'), id: 'dialog[yes]', image: 'check', "default": true},
+								{button_id: Et2Dialog.NO_BUTTON, label: egw.lang('no'), id: 'dialog[no]', image: 'cancel'},
+								{button_id: "dont_ask_again", label: egw.lang("Don't ask again!"), id: 'dialog[dont_ask_again]', image:'save', align: "right"}
+							]);
 						}
 						// overall timer running for more than 16 hours, ask to stop
 						else if (overall?.start && (((new Date()).valueOf() - overall.start.valueOf()) / 3600000) >= 16)
