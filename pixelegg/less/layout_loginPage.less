@@ -23,13 +23,17 @@
 	100% {transform: none}
 }
 /**
- * 19.1 Login page with stock background image
+ * 23.1 Login page with stock background image
  */
 div#loginMainDiv.stockLoginBackground {
+	div#divAppIconBar
+	{
+		postion: relative;
+		top: 5%;
+	}
 	div#divAppIconBar {
 		div#divLogo {
 			position: relative;
-			top: 35%;
 			left: -50px;
 			div.login_logo_container {
 				height: 80px;
@@ -38,14 +42,11 @@ div#loginMainDiv.stockLoginBackground {
 					max-width: 350px;
 				}
 			}
-			div#loginScreenMessage {
-				font-size: 28.5px;
-				font-weight: 500;
-				color: #075ca3;
-				font-family: arial, helvetica, sans-serif;
-				margin: 0;
-				padding-left: 106px;
-			}
+		}
+		div#loginScreenMessage p {
+			font-weight: bold;
+			color: white;
+			font-family: arial, helvetica, sans-serif;
 		}
 	}
 	div#centerBox form {
