@@ -1570,9 +1570,16 @@ class admin_mail
 		}
 		$content['acc_oauth_access_token'] = $oidc->getAccessToken();
 
-		$GLOBALS['egw_info']['flags']['currentapp'] = 'admin';
-
-		$obj = new self;
+		if (empty($GLOBALS['egw_info']['user']['apps']['admin']))
+		{
+			$GLOBALS['egw_info']['flags']['currentapp'] = 'mail';
+			$obj = new mail_wizard();
+		}
+		else
+		{
+			$GLOBALS['egw_info']['flags']['currentapp'] = 'admin';
+			$obj = new self;
+		}
 		unset($content['oauth_failure']);
 		if (!empty($content['acc_id']))
 		{
@@ -1593,9 +1600,16 @@ class admin_mail
 	 */
 	public static function oauthFailure(Throwable  $exception=null, array $content)
 	{
-		$GLOBALS['egw_info']['flags']['currentapp'] = 'admin';
-
-		$obj = new self;
+		if (empty($GLOBALS['egw_info']['user']['apps']['admin']))
+		{
+			$GLOBALS['egw_info']['flags']['currentapp'] = 'mail';
+			$obj = new mail_wizard();
+		}
+		else
+		{
+			$GLOBALS['egw_info']['flags']['currentapp'] = 'admin';
+			$obj = new self;
+		}
 		$content['oauth_failure'] = $exception ?: true;
 		if (!empty($content['acc_id']))
 		{
