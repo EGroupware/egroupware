@@ -31,7 +31,7 @@ export class tapAndSwipe {
 	static readonly _default : TapAndSwipeOptionsType = {
 		threshold : 10,
 		tapHoldThreshold : 3000,
-		allowScrolling : null,
+		allowScrolling : 'both',
 		swipe : function(){},
 		tap : function(){},
 		tapAndHold: function(){}
@@ -125,9 +125,9 @@ export class tapAndSwipe {
 		this._isTapAndHold = false;
 		this._fingercount = event.touches.length;
 
-		if(event.path)
+		if(event.composedPath())
 		{
-			const scrolledItem = event.path.filter(_item => {
+			const scrolledItem = event.composedPath().filter(_item => {
 				return _item instanceof HTMLElement && this.element.contains(_item) && (_item.scrollTop != 0 || _item.scrollLeft !=0);
 			});
 			if (scrolledItem.length>0)
@@ -139,8 +139,6 @@ export class tapAndSwipe {
 				this._scrolledElementObj = null;
 			}
 		}
-
-
 
 		this._tapHoldTimeout = window.setTimeout(_=>{
 			this._isTapAndHold = true;

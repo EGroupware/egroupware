@@ -81,14 +81,16 @@ import {tapAndSwipe} from "../../api/js/tapandswipe";
 								$baseDiv.css('overflow-y','auto');
 							break;
 						case "left":
-							if (distance >= 10)
+							if (distance >= 200)
 							{
 								framework.toggleMenu();
 							}
-
 							break;
 						case "right":
-							framework.toggleMenu();
+							if (distance >= 200)
+							{
+								framework.toggleMenu();
+							}
 					}
 				},
 				allScrolling: 'vertical'
