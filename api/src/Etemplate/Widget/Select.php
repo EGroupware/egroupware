@@ -184,10 +184,34 @@ class Select extends Etemplate\Widget
 			// Add empty as an option, we check for required value later
 			$allowed[] = '';
 
-			foreach((array) $value as $val)
+			switch($widget_type)
+			{
+				case 'select-cat':
+					// unavailable cats need to be merged in again
+					// Needs to be done before validation or it will fail as unavailable
+					$unavailable_name = $form_name . self::UNAVAILABLE_CAT_POSTFIX;
+					if(isset(self::$request->preserv[$unavailable_name]))
+					{
+						$allowed = array_merge($allowed, self::$request->preserv[$unavailable_name]);
+						if($this->attrs['multiple'])
+						{
+							$value = array_unique(array_merge((array)$value, (array)self::$request->preserv[$unavailable_name]));
+						}
+						elseif(!$value)    // for single cat, we only restore unavailable one, if no other was selected
+						{
+							$value = self::$request->preserv[$unavailable_name];
+						}
+					}
+					break;
+			}
+
+			foreach((array)$value as $val)
 			{
 				// handle empty-label for all widget types
-				if ((string)$val === '' && in_array('', $allowed)) continue;
+				if((string)$val === '' && in_array('', $allowed))
+				{
+					continue;
+				}
 
 				// no validation, for allowFreeEntries="true"
 				if ($allowFreeEntries)
@@ -277,21 +301,7 @@ class Select extends Etemplate\Widget
 					}
 					break;
 
-				case 'select-cat':
-					// unavailable cats need to be merged in again
-					$unavailable_name = $form_name.self::UNAVAILABLE_CAT_POSTFIX;
-					if (isset(self::$request->preserv[$unavailable_name]))
-					{
-						if ($this->attrs['multiple'])
-						{
-							$value = array_merge($value, (array)self::$request->preserv[$unavailable_name]);
-						}
-						elseif(!$value)	// for single cat, we only restore unavailable one, if no other was selected
-						{
-							$value = self::$request->preserv[$unavailable_name];
-						}
-					}
-					break;
+
 				case 'select-bitwise':
 					// Sum up into a single value
 					$sum = 0;
@@ -411,6 +421,18 @@ class Select extends Etemplate\Widget
 			{
 				unset(self::$request->sel_options[$options]);
 			}
+		}
+		switch($type)
+		{
+			case 'et2-select-cat':
+			case 'select-cat':
+				// preserve unavailable cats (eg. private user-cats)
+				$type_options = self::typeOptions(
+					$this,
+					'',
+					$no_lang, $this->attrs['readonly'] ?? false, self::get_array(self::$request->content, $form_name), $form_name
+				);
+				break;
 		}
 	}
 
