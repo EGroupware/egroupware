@@ -21,7 +21,6 @@ import '../../api/js/framework/fw_browser.js';
 import '../../api/js/framework/fw_ui.js';
 import '../../api/js/framework/fw_classes.js';
 import '../../api/js/jsapi/egw_inheritance.js';
-import '../../vendor/bower-asset/fastclick/lib/fastclick.js';
 import {tapAndSwipe} from "../../api/js/tapandswipe";
 /**
  *
@@ -945,7 +944,6 @@ import {tapAndSwipe} from "../../api/js/tapandswipe";
 		 */
 		et2_loadingFinished: function (_wnd)
 		{
-			if (egwIsMobile() && this.getUserAgent() == 'iOS') FastClick.attach(document.body);
 			if (typeof this.popups != 'undefined' && this.popups.length > 0)
 			{
 				var i = this.popup_idx(_wnd);
