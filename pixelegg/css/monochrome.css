@@ -1854,7 +1854,7 @@ div#loginMainDiv.stockLoginBackground div#divAppIconBar div#divLogo div.login_lo
   max-width: 350px;
   background-size: 100%;
 }
-div#loginMainDiv.stockLoginBackground div#divAppIconBar div#loginScreenMessage p {
+div#loginMainDiv.stockLoginBackground div#divAppIconBar div#loginScreenMessage {
   font-weight: bold;
   color: white;
   font-family: arial, helvetica, sans-serif;
