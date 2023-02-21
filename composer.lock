@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d4ac8ab47046aa77e434bbed3d2de49b",
+    "content-hash": "7b831b063ff28925a72d4de3072e90f6",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -283,37 +283,11 @@
             "type": "bower-asset-library"
         },
         {
-            "name": "bower-asset/fastclick",
-            "version": "v1.0.6",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:ftlabs/fastclick.git",
-                "reference": "9977a916739360ad4ffd7aa19b0016bf375e934b"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ftlabs/fastclick/zipball/9977a916739360ad4ffd7aa19b0016bf375e934b",
-                "reference": "9977a916739360ad4ffd7aa19b0016bf375e934b"
-            },
-            "type": "bower-asset-library",
-            "extra": {
-                "bower-asset-main": "lib/fastclick.js",
-                "bower-asset-ignore": [
-                    "**/.*",
-                    "component.json",
-                    "package.json",
-                    "Makefile",
-                    "tests",
-                    "examples"
-                ]
-            }
-        },
-        {
             "name": "bower-asset/jquery",
             "version": "1.12.4",
             "source": {
                 "type": "git",
-                "url": "git@github.com:jquery/jquery-dist.git",
+                "url": "https://github.com/jquery/jquery-dist.git",
                 "reference": "5e89585e0121e72ff47de177c5ef604f3089a53d"
             },
             "dist": {
@@ -770,7 +744,6 @@
             "require": {
                 "egroupware/z-push-dev": "^2.5"
             },
-            "default-branch": true,
             "type": "egroupware-app",
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -869,7 +842,6 @@
                 "reference": "b9e664190ef20b6519596d5702898db5b0f4a011",
                 "shasum": ""
             },
-            "default-branch": true,
             "type": "egroupware-app",
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -902,7 +874,6 @@
                 "reference": "1a0b9ba85f1a09b70e617aa01035691c178b6e57",
                 "shasum": ""
             },
-            "default-branch": true,
             "type": "egroupware-app",
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -1814,7 +1785,6 @@
                 "reference": "a72a2b6069ed3338647a806183a5e5a66350520e",
                 "shasum": ""
             },
-            "default-branch": true,
             "type": "egroupware-app",
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -1918,7 +1888,6 @@
                 "psr/http-message": "^1.0",
                 "zendframework/zend-diactoros": "^1.0"
             },
-            "default-branch": true,
             "type": "egroupware-app",
             "autoload": {
                 "psr-4": {
@@ -1959,7 +1928,6 @@
             "require": {
                 "npm-asset/dhtmlx-gantt": "~6.2"
             },
-            "default-branch": true,
             "type": "egroupware-app",
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -2000,7 +1968,6 @@
                 "reference": "3233f957f9c68920f153974e6d38f32dc9aa4d6e",
                 "shasum": ""
             },
-            "default-branch": true,
             "type": "egroupware-app",
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -2050,7 +2017,6 @@
                 "reference": "53103443608aaec89e66e3968c1c966edf7e7fa8",
                 "shasum": ""
             },
-            "default-branch": true,
             "type": "egroupware-app",
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -2151,7 +2117,6 @@
             "require": {
                 "celtic/lti": "^4.4.1"
             },
-            "default-branch": true,
             "type": "egroupware-app",
             "autoload": {
                 "psr-4": {
@@ -2305,7 +2270,6 @@
             "require": {
                 "lcobucci/jwt": "^3.1"
             },
-            "default-branch": true,
             "type": "egroupware-app",
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -2517,7 +2481,6 @@
             "require-dev": {
                 "eaglewu/swoole-ide-helper": "dev-english"
             },
-            "default-branch": true,
             "type": "egroupware-app",
             "autoload": {
                 "psr-4": {
@@ -2661,7 +2624,6 @@
                 "reference": "90f2c7b5e7c7c3f613fd2013856a87f6dd05ad04",
                 "shasum": ""
             },
-            "default-branch": true,
             "type": "egroupware-app",
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -7611,6 +7573,7 @@
                 "issues": "https://github.com/simplesamlphp/twig-configurable-i18n/issues",
                 "source": "https://github.com/simplesamlphp/twig-configurable-i18n"
             },
+            "abandoned": true,
             "time": "2020-08-27T12:51:10+00:00"
         },
         {
@@ -12166,5 +12129,5 @@
     "platform-overrides": {
         "php": "7.4"
     },
-    "plugin-api-version": "2.2.0"
+    "plugin-api-version": "1.1.0"
 }
