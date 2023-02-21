@@ -251,7 +251,7 @@ class Import
 						}
 						else
 						{
-							$this->logger("Error creaing user '$account[account_lid]' (#$account[account_id])", 'error');
+							$this->logger("Error creating user '$account[account_lid]' (#$account[account_id])", 'error');
 							$errors++;
 							continue;
 						}
@@ -284,22 +284,33 @@ class Import
 								$this->logger("Dry-run: would updated user '$account[account_lid]' (#$account_id): " .
 									json_encode($diff, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES), 'detail');
 							}
-							elseif ($this->accounts_sql->save($to_update) > 0)
-							{
-								// run editaccount hook to create eg. home-directory or mail account
-								Api\Hooks::process($to_update+array(
-										'location' => 'editaccount'
-									),False,True);	// called for every app now, not only enabled ones)
-
-								$this->logger("Successful updated user '$account[account_lid]' (#$account_id): " .
-									json_encode($diff, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES), 'detail');
-								if (!$new) $new = false;
-							}
 							else
 							{
-								$this->logger("Error updating user '$account[account_lid]' (#$account_id)", 'error');
-								$errors++;
-								continue;
+								try {
+									if ($this->accounts_sql->save($to_update) > 0)
+									{
+										// run editaccount hook to create eg. home-directory or mail account
+										Api\Hooks::process($to_update+array(
+												'location' => 'editaccount'
+											),False,True);	// called for every app now, not only enabled ones)
+
+										$this->logger("Successful updated user '$account[account_lid]' (#$account_id): " .
+											json_encode($diff, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES), 'detail');
+										if (!$new) $new = false;
+									}
+									else
+									{
+										$this->logger("Error updating user '$account[account_lid]' (#$account_id)", 'error');
+										$errors++;
+										continue;
+									}
+								}
+								catch (\Exception $e) {
+									$this->logger("Error updating user '$account[account_lid]' (#$account_id): ".$e->getMessage().' ('.$e->getCode().')', 'error');
+									$this->logger('$to_update='.json_encode($to_update, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES), 'error');
+									$errors++;
+									continue;
+								}
 							}
 						}
 						else
