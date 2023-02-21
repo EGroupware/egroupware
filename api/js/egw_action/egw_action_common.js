@@ -518,10 +518,3 @@ export function sprintf() {
 	}
 	return o.join('');
 }
-// make some functions global for old eTemplate apps like KnowledgeBase
-if (typeof window.egwPreventSelect === 'undefined')
-{
-	window.egwPreventSelect = egwPreventSelect;
-	window.egwBitIsSet = egwBitIsSet;
-	window.egwUnfocus = egwUnfocus;
-}

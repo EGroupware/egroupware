@@ -26,8 +26,7 @@ import {
 	EGW_KEY_PAGE_DOWN,
 	EGW_AO_EXEC_THIS,
 	EGW_AO_EXEC_SELECTED,
-	EGW_KEY_A, EGW_KEY_SPACE,
-	EGW_AO_FLAG_DEFAULT_FOCUS
+	EGW_KEY_A, EGW_KEY_SPACE
 } from './egw_action_constants.js';
 import {egwFnct, egwActionStoreJSON, egwBitIsSet, egwQueueCallback, egwSetBit, egwObjectLength} from './egw_action_common.js';
 import './egw_action_popup.js';
@@ -2528,18 +2527,4 @@ export function egwActionObjectManager(_id, _manager)
 	ao.triggerCallback = function() {return false;};
 
 	return ao;
-}
-
-// make some functions available globally for old eTemplate apps like KnowledgeBase
-if (typeof window.egw_getActionManager === 'undefined')
-{
-	window.egw_globalObjectManager = egw_globalObjectManager;
-	window.egw_getActionManager = egw_getActionManager;
-	window.egw_getObjectManager = egw_getObjectManager;
-	window.egwActionObjectManager = egwActionObjectManager;
-	window.egwActionObjectInterface = egwActionObjectInterface;
-	window.EGW_AO_FLAG_DEFAULT_FOCUS = EGW_AO_FLAG_DEFAULT_FOCUS;
-	window.EGW_AO_STATE_SELECTED = EGW_AO_STATE_SELECTED;
-	window.EGW_AO_SHIFT_STATE_MULTI = EGW_AO_SHIFT_STATE_MULTI;
-	window.EGW_AO_STATE_FOCUSED = EGW_AO_STATE_FOCUSED;
 }
