@@ -1867,11 +1867,12 @@ div#loginMainDiv.stockLoginBackground div#divAppIconBar div#divLogo {
   left: -50px;
 }
 div#loginMainDiv.stockLoginBackground div#divAppIconBar div#divLogo div.login_logo_container {
-  height: 80px;
+  height: 120px;
 }
 div#loginMainDiv.stockLoginBackground div#divAppIconBar div#divLogo div.login_logo_container div.login_logo {
   width: 350px;
   max-width: 350px;
+  background-size: 100%;
 }
 div#loginMainDiv.stockLoginBackground div#divAppIconBar div#loginScreenMessage p {
   font-weight: bold;
