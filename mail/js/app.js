@@ -253,33 +253,35 @@ app.classes.mail = AppJS.extend(
 				// Show vacation notice on load for the current profile (if not called by mail_searchtype_change())
 				var alreadyrefreshed = this.mail_searchtype_change();
 				if (!alreadyrefreshed) this.mail_callRefreshVacationNotice();
-
-				let splitter = this.et2.getWidgetById('mailSplitter');
-				let composeBtn = this.et2.getWidgetById('button[mailcreate]');
-				let composeBtnLabel = composeBtn.label;
-				if (splitter && !splitter.vertical)
+				if (!egwIsMobile())
 				{
-					splitter.addEventListener('sl-reposition', function(){
-						if (this.position < 44)
-						{
-							this.classList.add('limitted');
-							if (this.position < 30)
+					let splitter = this.et2.getWidgetById('mailSplitter');
+					let composeBtn = this.et2.getWidgetById('button[mailcreate]');
+					let composeBtnLabel = composeBtn.label;
+					if (splitter && !splitter.vertical)
+					{
+						splitter.addEventListener('sl-reposition', function(){
+							if (this.position < 44)
 							{
-								this.classList.add('squeezed');
-								composeBtn.label = '';
+								this.classList.add('limitted');
+								if (this.position < 30)
+								{
+									this.classList.add('squeezed');
+									composeBtn.label = '';
+								}
+								else
+								{
+									this.classList.remove('squeezed');
+								}
 							}
 							else
 							{
+								this.classList.remove('limitted');
 								this.classList.remove('squeezed');
+								composeBtn.label = composeBtnLabel;
 							}
-						}
-						else
-						{
-							this.classList.remove('limitted');
-							this.classList.remove('squeezed');
-							composeBtn.label = composeBtnLabel;
-						}
-					});
+						});
+					}
 				}
 				break;
 			case 'mail.display':
