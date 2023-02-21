@@ -299,11 +299,11 @@
 			<rows>
 				<row disabled="@hidebuttons" class="dialogHeadbar" >
 					<et2-hbox  span="all">
-						<et2-button  id="button[save]"></et2-button>
-						<et2-button  id="button[apply]"></et2-button>
+						<et2-button-icon  id="button[save]"></et2-button-icon>
+						<et2-button-icon  id="button[apply]"></et2-button-icon>
 						<et2-button-icon  statustext="Use wizard to detect or verify configuration" id="button[wizard]" image="magicwand"></et2-button-icon>
-						<et2-button  id="button[delete]" onclick="et2_dialog.confirm(widget,'Delete this account','Delete')"></et2-button>
-						<et2-button  label="Delete identity" id="button[delete_identity]" onclick="et2_dialog.confirm(widget,'Delete identity','Delete')" image="delete"></et2-button>
+						<et2-button-icon  id="button[delete]" onclick="et2_dialog.confirm(widget,'Delete this account','Delete')"></et2-button-icon>
+						<et2-button-icon  label="Delete identity" id="button[delete_identity]" onclick="et2_dialog.confirm(widget,'Delete identity','Delete')" image="delete"></et2-button-icon>
 					</et2-hbox>
 				</row>
 				<row disabled="!@accounts" class="dialogHeader">

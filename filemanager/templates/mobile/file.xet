@@ -185,8 +185,8 @@
 			<rows>
 				<row disabled="@hidebuttons" class="dialogHeadbar" >
 					<et2-hbox  span="all" width="100%">
-						<et2-button  statustext="Saves this entry" id="button[save]" image="save"></et2-button>
-						<et2-button  statustext="Apply the changes" id="button[apply]" image="apply"></et2-button>
+						<et2-button-icon  statustext="Saves this entry" id="button[save]" image="save"></et2-button-icon>
+						<et2-button-icon  statustext="Apply the changes" id="button[apply]" image="apply"></et2-button-icon>
 					</et2-hbox>
 				</row>
 				<row disabled="!@showsearchbuttons" class="dialogHeadbar">

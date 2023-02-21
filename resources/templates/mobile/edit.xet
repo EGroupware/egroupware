@@ -135,8 +135,8 @@
 			<rows>
 				<row  class="dialogHeadbar" >
 					<et2-hbox>
-						<et2-button  id="button[apply]" image="apply"></et2-button>
-						<et2-button  id="button[delete]" onclick="et2_dialog.confirm(widget,'Do you really want to delete this resource?','Delete')" image="delete"></et2-button>
+						<et2-button-icon  id="button[apply]" image="apply"></et2-button-icon>
+						<et2-button-icon  id="button[delete]" onclick="et2_dialog.confirm(widget,'Do you really want to delete this resource?','Delete')" image="delete"></et2-button-icon>
 						<et2-number  id="res_id" readonly="true" class="entry_id" precision="0"></et2-number>
 					</et2-hbox>
 				</row>

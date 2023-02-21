@@ -193,9 +193,9 @@
 			<rows>
 				<row disabled="@hidebuttons" class="dialogHeadbar" >
 					<et2-hbox  span="all" width="100%">
-						<et2-button  statustext="Apply the changes" id="button[apply]" image="apply"></et2-button>
-						<et2-button  statustext="delete this entry" id="button[delete]" onclick="et2_dialog.confirm(widget,'Delete this entry','Delete');" image="delete" span="all"></et2-button>
-						<et2-button  statustext="Find free timeslots where the selected participants are available for the given timespan" id="freetime" label="Freetime" onclick="app.calendar.freetime_search" image="add" noSubmit="true"></et2-button>
+						<et2-button-icon  statustext="Apply the changes" id="button[apply]" image="apply"></et2-button-icon>
+						<et2-button-icon  statustext="delete this entry" id="button[delete]" onclick="et2_dialog.confirm(widget,'Delete this entry','Delete');" image="delete" span="all"></et2-button-icon>
+						<et2-button-icon  statustext="Find free timeslots where the selected participants are available for the given timespan" id="freetime" label="Freetime" onclick="app.calendar.freetime_search" image="add" noSubmit="true"></et2-button-icon>
 						<et2-checkbox  id="no_notifications" class="notification_check" toggleOn=" " toggleOff=" "></et2-checkbox>
 						<et2-textbox  type="hidden" id="delete_exceptions"></et2-textbox>
 					</et2-hbox>
