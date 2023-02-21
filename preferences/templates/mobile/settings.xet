@@ -43,12 +43,15 @@
 					</et2-hbox>
 				</row>
 				<row>
-					<et2-vbox>
-						<et2-details  id="tab1" summary="Settings" title="">
-							<template id="preferences.settings.tab1" content="tab1"/>
-						</et2-details>
-					</et2-vbox>
-				</row>
+                    <et2-tabbox id="tabs">
+                        <tabs>
+                            <tab id="tab1" label="Settings"/>
+                        </tabs>
+                        <tabpanels>
+                            <template id="preferences.settings.tab1" content="tab1"/>
+                        </tabpanels>
+                    </et2-tabbox>
+                </row>
 			</rows>
 		</grid>
 

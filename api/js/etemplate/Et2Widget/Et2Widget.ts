@@ -1352,12 +1352,21 @@ export function loadWebComponent(_nodeName : string, _template_node : Element|{[
 	}
 
 	// Try to find the class for the given node
+	let mobile = (typeof egwIsMobile != "undefined" && egwIsMobile());
+	if(mobile && typeof window.customElements.get(_nodeName + "_mobile") != "undefined")
+	{
+		_nodeName += "_mobile";
+	}
+
 	let widget_class = window.customElements.get(_nodeName);
 	if(!widget_class)
 	{
 		// Given node has no registered class.  Try some of our special things (remove type, fallback to actual node)
 		let tries = [_nodeName.split('-')[0]];
-		if (_template_node.nodeName) tries = tries.concat(_template_node.nodeName.toLowerCase());
+		if(_template_node.nodeName)
+		{
+			tries = tries.concat(_template_node.nodeName.toLowerCase());
+		}
 		for(let i = 0; i < tries.length && !window.customElements.get(_nodeName); i++)
 		{
 			_nodeName = tries[i];
@@ -1365,6 +1374,7 @@ export function loadWebComponent(_nodeName : string, _template_node : Element|{[
 		widget_class = window.customElements.get(_nodeName);
 		if(!widget_class)
 		{
+			debugger;
 			throw Error("Unknown or unregistered WebComponent '" + _nodeName + "', could not find class.  Also checked for " + tries.join(','));
 		}
 	}

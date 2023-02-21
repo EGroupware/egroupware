@@ -413,31 +413,6 @@ function send_template()
 
 		if ($template === 'mobile')
 		{
-			// replace tabs in mobile template with details widgets
-			$str = preg_replace_callback('#^(\s+)<et2-tabbox\s*([^>]*)>\n\s*<tabs>\n(.*)\n\s*</tabs>\n\s*<tabpanels>\n(.*)\n\s*</tabpanels>\n\s*</et2-tabbox>#ms',
-				static function($matches)
-				{
-					$indent = $matches[1];
-					$tabbox_attrs = parseAttrs($matches[2]);
-					unset($tabbox_attrs['align_tabs']);
-					if (preg_match_all('#<tab\s(.*)/>#', $matches[3], $tabs) !==
-						preg_match_all('#<template\s(.*)/>#', $matches[4], $panels))
-					{
-						throw Exception("Error parsing tabbox for mobile template into details");
-					}
-					$details = [];
-					foreach($tabs[1] as $n => $tab)
-					{
-						$tab_attrs = parseAttrs($tab);
-						$tab_attrs['id'] = $tab_attrs['id'] ?? $tabbox_attrs['id'].$n;
-						$tab_attrs['summary'] = $tab_attrs['label'];
-						$tab_attrs['title'] = $tab_attrs['statustext'];
-						unset($tab_attrs['label'], $tab_attrs['statustext']);
-						$details[] = $indent."\t".'<et2-details'.stringAttrs($tab_attrs).'>'."\n$indent\t\t".$panels[0][$n]."\n$indent\t</et2-details>";
-					}
-					unset($tabbox_attrs['id']);
-					return $indent.'<vbox'.stringAttrs($tabbox_attrs).">\n".implode("\n", $details)."\n$indent</vbox>";
-				}, $str);
 		}
 
 		// ^^^^^^^^^^^^^^^^ above widgets get transformed independent of legacy="true" set in overlay ^^^^^^^^^^^^^^^^^^

@@ -27,6 +27,7 @@ import './Layout/Et2Details/Et2Details';
 import './Layout/Et2Tabs/Et2Tab';
 import './Layout/Et2Tabs/Et2Tabs';
 import './Layout/Et2Tabs/Et2TabPanel';
+import './Layout/Et2Tabs/Et2TabsMobile';
 import './Et2Avatar/Et2Avatar';
 import './Et2Avatar/Et2AvatarGroup';
 import './Et2Button/Et2Button';

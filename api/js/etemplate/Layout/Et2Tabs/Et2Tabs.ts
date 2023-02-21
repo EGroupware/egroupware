@@ -315,8 +315,11 @@ export class Et2Tabs extends Et2InputWidget(SlTabGroup) implements et2_IResizeab
 		if(changedProperties.has("tabHeight"))
 		{
 			const body = this.shadowRoot.querySelector(".tab-group__body");
-			body.style.setProperty("height", this.tabHeight == parseInt(this.tabHeight) + "" ? this.tabHeight + "px" : this.tabHeight);
-			body.classList.toggle("tab-group__body-fixed-height", this.tabHeight !== '');
+			if(body)
+			{
+				body.style.setProperty("height", this.tabHeight == parseInt(this.tabHeight) + "" ? this.tabHeight + "px" : this.tabHeight);
+				body.classList.toggle("tab-group__body-fixed-height", this.tabHeight !== '');
+			}
 		}
 	}
 
