@@ -198,7 +198,7 @@ abstract class admin_cmd
 	}
 
 	/**
-	 * runs the command either immediatly ($time=null) or shedules it for the given time
+	 * runs the command either immediately ($time=null) or schedules it for the given time
 	 *
 	 * The command will be written to the database queue, incl. its scheduled start time or execution status
 	 *

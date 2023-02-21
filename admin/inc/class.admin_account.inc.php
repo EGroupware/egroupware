@@ -167,7 +167,7 @@ class admin_account
 			}
 			if($content['account_passwd'])
 			{
-				// Don't put password into history
+				// Don't put password into history, also stops return below to bail out for only password changes
 				$old['account_passwd'] = '';
 			}
 		}
@@ -234,6 +234,7 @@ class admin_account
 		$cmd = new admin_cmd_edit_user(array(
 			'account' => (int)$content['account_id'],
 			'set' => $account,
+			'password' => $account['account_passwd'],
 			'old' => $old,
 		)+(array)$content['admin_cmd']);
 		$cmd->run();
