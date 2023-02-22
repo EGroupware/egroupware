@@ -189,7 +189,7 @@ class Taglist extends Etemplate\Widget
 				}
 				else
 				{
-					if(str_contains($this->type, 'email') && !preg_match(Url::EMAIL_PREG, $val) &&
+					if($val !== '' && str_contains($this->type, 'email') && !preg_match(Url::EMAIL_PREG, $val) &&
 						!($this->attrs['domainOptional'] && preg_match(Taglist::EMAIL_PREG_NO_DOMAIN, $val)) &&
 						// Allow merge placeholders.  Might be a better way to do this though.
 						!preg_match('/{{.+}}|\$\$.+\$\$/', $val)
