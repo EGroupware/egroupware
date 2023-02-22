@@ -170,24 +170,24 @@
 					<et2-checkbox  statustext="Is resource bookable?" id="bookable" span="3"></et2-checkbox>
 				</row>
 				<row>
-					<et2-vbox span="all" width="100%" tabHeight="250">
-						<et2-details  id="page" summary="Description" title="Informations about the location of resource">
-							<template id="resources.edit_tabs.page"/>
-						</et2-details>
-						<et2-details  id="general" summary="Details" title="General informations about resource">
-							<template id="resources.edit_tabs.general"/>
-						</et2-details>
-						<et2-details  id="links" summary="Links" title="Web-Page of resource">
-							<template id="resources.edit_tabs.links"/>
-						</et2-details>
-						<et2-details  id="custom" summary="Custom" title="Pictures or resource">
-							<template id="resources.edit_tabs.custom"/>
-						</et2-details>
-						<et2-details  id="ownership" summary="Ownership" title="">
-							<template id="resources.edit_tabs.ownership"/>
-						</et2-details>
-					</et2-vbox>
-				</row>
+                    <et2-tabbox id="tabs" span="all">
+                        <tabs>
+                            <tab id="page" label="Description"
+                                 statustext="Informations about the location of resource"/>
+                            <tab id="general" label="Details" statustext="General informations about resource"/>
+                            <tab id="links" label="Links" statustext="Web-Page of resource"/>
+                            <tab id="custom" label="Custom" statustext="Pictures or resource"/>
+                            <tab id="ownership" label="Ownership"/>
+                        </tabs>
+                        <tabpanels>
+                            <template id="resources.edit_tabs.page"/>
+                            <template id="resources.edit_tabs.general"/>
+                            <template id="resources.edit_tabs.links"/>
+                            <template id="resources.edit_tabs.custom"/>
+                            <template id="resources.edit_tabs.ownership"/>
+                        </tabpanels>
+                    </et2-tabbox>
+                </row>
 
 
 			</rows>

@@ -136,24 +136,23 @@
 					<et2-select  statustext="select a status of the timesheet" id="ts_status" emptyLabel="please select"></et2-select>
 				</row>
 				<row>
-					<et2-vbox span="all" width="100%">
-						<et2-details id="notes" summary="Description">
-							<template id="timesheet.edit.notes"/>
-						</et2-details>
-						<et2-details id="general" summary="Details">
-							<template id="timesheet.edit.general"/>
-						</et2-details>
-						<et2-details id="links" summary="Links">
-							<template id="timesheet.edit.links"/>
-						</et2-details>
-						<et2-details id="customfields" summary="Custom Fields">
-							<template id="timesheet.edit.customfields"/>
-						</et2-details>
-						<et2-details id="ownership" summary="Ownership">
-							<template id="timesheet.edit.ownership"/>
-						</et2-details>
-					</et2-vbox>
-				</row>
+                    <et2-tabbox id="tabs" class="et2_nowrap" span="all">
+                        <tabs>
+                            <tab id="notes" label="Description"/>
+                            <tab id="general" label="Details"/>
+                            <tab id="links" label="Links"/>
+                            <tab id="customfields" label="Custom Fields"/>
+                            <tab id="ownership" label="Ownership"/>
+                        </tabs>
+                        <tabpanels class="dialog-main-timeframe">
+                            <template id="timesheet.edit.notes"/>
+                            <template id="timesheet.edit.general"/>
+                            <template id="timesheet.edit.links"/>
+                            <template id="timesheet.edit.customfields"/>
+                            <template id="timesheet.edit.ownership"/>
+                        </tabpanels>
+                    </et2-tabbox>
+                </row>
 			</rows>
 		</grid>
 	</template>

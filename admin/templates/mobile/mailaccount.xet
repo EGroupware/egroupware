@@ -330,30 +330,29 @@
 					<et2-checkbox  label="account editable by user" id="acc_user_editable"></et2-checkbox>
 				</row>
 				<row>
-					<et2-vbox span="all" width="100%">
-						<et2-details  id="admin.mailaccount.identity" summary="Identity+Signature" title="Identity&amp;Signature">
-							<template id="admin.mailaccount.identity"/>
-						</et2-details>
-						<et2-details  id="admin.mailaccount.imap" summary="IMAP" title="incoming mail">
-							<template id="admin.mailaccount.imap"/>
-						</et2-details>
-						<et2-details  id="admin.mailaccount.folder" summary="Folder" title="Folder">
-							<template id="admin.mailaccount.folder"/>
-						</et2-details>
-						<et2-details  id="admin.mailaccount.sieve" summary="Sieve" title="serverside filtering">
-							<template id="admin.mailaccount.sieve"/>
-						</et2-details>
-						<et2-details  id="admin.mailaccount.smtp" summary="SMTP" title="outgoing mail">
-							<template id="admin.mailaccount.smtp"/>
-						</et2-details>
-						<et2-details  id="admin.mailaccount.aliases" summary="Aliases+Forwards" title="Aliases, Forwarding, Quota, ...">
-							<template id="admin.mailaccount.aliases"/>
-						</et2-details>
-						<et2-details  id="admin.mailaccount.encryption" summary="Encryption" title="Encryption settings">
-							<template id="admin.mailaccount.encryption"/>
-						</et2-details>
-					</et2-vbox>
-				</row>
+                    <et2-tabbox id="tabs" span="all">
+                        <tabs>
+                            <tab id="admin.mailaccount.identity" label="Identity+Signature"
+                                 statustext="Identity&amp;Signature"/>
+                            <tab id="admin.mailaccount.imap" label="IMAP" statustext="incoming mail"/>
+                            <tab id="admin.mailaccount.folder" label="Folder" statustext="Folder"/>
+                            <tab id="admin.mailaccount.sieve" label="Sieve" statustext="serverside filtering"/>
+                            <tab id="admin.mailaccount.smtp" label="SMTP" statustext="outgoing mail"/>
+                            <tab id="admin.mailaccount.aliases" label="Aliases+Forwards"
+                                 statustext="Aliases, Forwarding, Quota, ..."/>
+                            <tab id="admin.mailaccount.encryption" label="Encryption" statustext="Encryption settings"/>
+                        </tabs>
+                        <tabpanels>
+                            <template id="admin.mailaccount.identity"/>
+                            <template id="admin.mailaccount.imap"/>
+                            <template id="admin.mailaccount.folder"/>
+                            <template id="admin.mailaccount.sieve"/>
+                            <template id="admin.mailaccount.smtp"/>
+                            <template id="admin.mailaccount.aliases"/>
+                            <template id="admin.mailaccount.encryption"/>
+                        </tabpanels>
+                    </et2-tabbox>
+                </row>
 			</rows>
 		</grid>
 	</template>

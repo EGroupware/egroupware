@@ -394,36 +394,30 @@
 					<et2-url  id="url" autocomplete="url" ></et2-url>
 				</row>
 				<row>
-					<et2-vbox span="all" width="100%">
-						<et2-details  id="general" summary="Organisation" title="">
-							<template id="addressbook.edit.general"/>
-						</et2-details>
-						<et2-details  id="home" summary="Private" title="Home address, Birthday, ...">
-							<template id="addressbook.edit.home"/>
-						</et2-details>
-						<et2-details  id="details" summary="Details" title="Categories, Notes, ...">
-							<template id="addressbook.edit.details"/>
-						</et2-details>
-						<et2-details  id="links" summary="Links" title="Links">
-							<template id="addressbook.edit.links"/>
-						</et2-details>
-						<et2-details  id="distribution_list" summary="Distribution lists" title="Distribution lists, ...">
-							<template id="addressbook.edit.distribution_list"/>
-						</et2-details>
-						<et2-details  id="custom" summary="Extra" title="Custom fields">
-							<template id="addressbook.edit.custom"/>
-						</et2-details>
-						<et2-details  id="custom_private" summary="Extra private" title="Private custom fields">
-							<template id="addressbook.edit.custom_private"/>
-						</et2-details>
-						<et2-details  id="ownership" summary="Ownership" title="Ownership">
-							<template id="addressbook.edit.ownership"/>
-						</et2-details>
-					</et2-vbox>
-				</row>
-				<row>
-
-				</row>
+                    <et2-tabbox id="tabs" span="all">
+                        <tabs>
+                            <tab id="general" label="Organisation"/>
+                            <tab id="home" label="Private" statustext="Home address, Birthday, ..."/>
+                            <tab id="details" label="Details" statustext="Categories, Notes, ..."/>
+                            <tab id="links" label="Links" statustext="Links"/>
+                            <tab id="distribution_list" label="Distribution lists"
+                                 statustext="Distribution lists, ..."/>
+                            <tab id="custom" label="Extra" statustext="Custom fields"/>
+                            <tab id="custom_private" label="Extra private" statustext="Private custom fields"/>
+                            <tab id="ownership" label="Ownership"/>
+                        </tabs>
+                        <tabpanels>
+                            <template id="addressbook.edit.general"/>
+                            <template id="addressbook.edit.home"/>
+                            <template id="addressbook.edit.details"/>
+                            <template id="addressbook.edit.links"/>
+                            <template id="addressbook.edit.distribution_list"/>
+                            <template id="addressbook.edit.custom"/>
+                            <template id="addressbook.edit.custom_private"/>
+                            <template id="addressbook.edit.ownership"/>
+                        </tabpanels>
+                    </et2-tabbox>
+                </row>
 			</rows>
 		</grid>
 	</template>

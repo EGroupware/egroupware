@@ -196,24 +196,23 @@
 					</et2-hbox>
 				</row>
 				<row class="dialogTabs">
-					<et2-vbox span="all" width="100%">
-						<et2-details  id="filemanager.file.general" summary="General" title="">
-							<template id="filemanager.file.general"/>
-						</et2-details>
-						<et2-details  id="filemanager.file.perms" summary="Permissions" title="">
-							<template id="filemanager.file.perms"/>
-						</et2-details>
-						<et2-details  id="filemanager.file.eacl" summary="Extended ACL" title="">
-							<template id="filemanager.file.eacl"/>
-						</et2-details>
-						<et2-details  id="filemanager.file.preview" summary="Preview" title="">
-							<template id="filemanager.file.preview"/>
-						</et2-details>
-						<et2-details  id="filemanager.file.custom" summary="Custom fields" title="">
-							<template id="filemanager.file.custom"/>
-						</et2-details>
-					</et2-vbox>
-				</row>
+                    <et2-tabbox id="tabs" span="all">
+                        <tabs>
+                            <tab id="filemanager.file.general" label="General"/>
+                            <tab id="filemanager.file.perms" label="Permissions"/>
+                            <tab id="filemanager.file.eacl" label="Extended ACL"/>
+                            <tab id="filemanager.file.preview" label="Preview"/>
+                            <tab id="filemanager.file.custom" label="Custom fields"/>
+                        </tabs>
+                        <tabpanels>
+                            <template id="filemanager.file.general"/>
+                            <template id="filemanager.file.perms"/>
+                            <template id="filemanager.file.eacl"/>
+                            <template id="filemanager.file.preview"/>
+                            <template id="filemanager.file.custom"/>
+                        </tabpanels>
+                    </et2-tabbox>
+                </row>
 			</rows>
 		</grid>
 		<styles>

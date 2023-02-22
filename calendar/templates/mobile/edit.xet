@@ -243,33 +243,27 @@
 					<et2-select-cat  id="category" multiple="true"></et2-select-cat>
 				</row>
 				<row>
-					<et2-vbox span="all" width="100%">
-						<et2-details  id="description" summary="Description" title="">
-							<template id="calendar.edit.description"/>
-						</et2-details>
-						<et2-details  id="participants" summary="Participants" title="">
-							<template id="calendar.edit.participants"/>
-						</et2-details>
-						<et2-details  id="details" summary="Details" title="">
-							<template id="calendar.edit.details"/>
-						</et2-details>
-						<et2-details  id="recurrence" summary="Recurrence" title="">
-							<template id="calendar.edit.recurrence"/>
-						</et2-details>
-						<et2-details  id="custom" summary="Custom" title="">
-							<template id="calendar.edit.custom"/>
-						</et2-details>
-						<et2-details  id="links" summary="Links" title="">
-							<template id="calendar.edit.links"/>
-						</et2-details>
-						<et2-details  id="ownership" summary="Ownership" title="">
-							<template id="calendar.edit.ownership"/>
-						</et2-details>
-					</et2-vbox>
-				</row>
-				<row>
-
-				</row>
+                    <et2-tabbox id="tabs" span="all">
+                        <tabs>
+                            <tab id="description" label="Description" statustext="Full description"/>
+                            <tab id="participants" label="Participants" statustext="Participants, Resources, ..."/>
+                            <tab id="details" label="Details"/>
+                            <tab id="recurrence" label="Recurrence" statustext="Repeating Event Information"/>
+                            <tab id="custom" label="Custom" statustext="Custom fields"/>
+                            <tab id="links" label="Links" statustext="Links, Attachments"/>
+                            <tab id="ownership" label="Ownership"/>
+                        </tabs>
+                        <tabpanels>
+                            <template id="calendar.edit.description"/>
+                            <template id="calendar.edit.participants"/>
+                            <template id="calendar.edit.details"/>
+                            <template id="calendar.edit.recurrence"/>
+                            <template id="calendar.edit.custom"/>
+                            <template id="calendar.edit.links"/>
+                            <template id="calendar.edit.ownership"/>
+                        </tabpanels>
+                    </et2-tabbox>
+                </row>
 			</rows>
 		</grid>
 	</template>

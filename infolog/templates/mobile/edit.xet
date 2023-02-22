@@ -185,27 +185,25 @@
 					<et2-select-percent  span="4" statustext="Percent completed" id="info_percent" onchange="app.infolog.statusChanged"></et2-select-percent>
 				</row>
 				<row>
-					<et2-vbox span="all" width="100%">
-						<et2-details  id="description" summary="Description" title="longer textual description">
-							<template id="infolog.edit.description"/>
-						</et2-details>
-						<et2-details  id="details" summary="Details" title="Location, priority , ...">
-							<template id="infolog.edit.details"/>
-						</et2-details>
-						<et2-details  id="links" summary="Links" title="Links of this entry">
-							<template id="infolog.edit.links"/>
-						</et2-details>
-						<et2-details  id="project" summary="Projectmanager" title="Project settings: price, times">
-							<template id="infolog.edit.project"/>
-						</et2-details>
-						<et2-details  id="customfields" summary="Customfields" title="Custom fields">
-							<template id="infolog.edit.customfields"/>
-						</et2-details>
-						<et2-details  id="ownership" summary="Ownership" title="Ownership">
-							<template id="infolog.edit.ownership"/>
-						</et2-details>
-					</et2-vbox>
-				</row>
+                    <et2-tabbox id="tabs" span="all">
+                        <tabs>
+                            <tab id="description" label="Description" statustext="longer textual description"/>
+                            <tab id="details" label="Details" statustext="Location, priority , ..."/>
+                            <tab id="links" label="Links" statustext="Links of this entry"/>
+                            <tab id="project" label="Projectmanager" statustext="Project settings: price, times"/>
+                            <tab id="customfields" label="Customfields" statustext="Custom fields"/>
+                            <tab id="ownership" label="Ownership"/>
+                        </tabs>
+                        <tabpanels>
+                            <template id="infolog.edit.description"/>
+                            <template id="infolog.edit.details"/>
+                            <template id="infolog.edit.links"/>
+                            <template id="infolog.edit.project"/>
+                            <template id="infolog.edit.customfields"/>
+                            <template id="infolog.edit.ownership"/>
+                        </tabpanels>
+                    </et2-tabbox>
+                </row>
 			</rows>
 		</grid>
 	</template>
