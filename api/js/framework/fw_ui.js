@@ -358,10 +358,29 @@ window.egw_fw_ui_tab = function(_parent, _contHeaderDiv, _contDiv, _icon, _callb
 
 	// If dragging something over the tab, activate that app
 	var tab = this.headerDiv;
-	this.headerDiv.addEventListener('dragenter', (event) => {
+	this.headerDiv.addEventListener('dragenter', (event) =>
+	{
 		event.stopPropagation();
-		tab._callbackObject.call(tab);
+		if (!this.headerDiv.parentElement.dataset.dragblock)
+		{
+			this.headerDiv.parentElement.dataset.dragblock = true;
+			tab._callbackObject.call(tab);
+		}
+		tab.parentElement.addEventListener("dragend", dragBlockEnd)
+		tab.parentElement.addEventListener("dragleave", dragBlockEnd)
 	});
+	var dragBlockEnd = (e) =>
+	{
+
+
+		tab.parentElement.removeEventListener("dragend", dragBlockEnd);
+		tab.parentElement.removeEventListener("dragleave", dragBlockEnd);
+		window.clearTimeout(tab.parentElement.dataset.dragblock);
+		tab.parentElement.dataset.dragblock = window.setTimeout(() =>
+		{
+			tab.parentElement.removeAttribute("data-dragblock");
+		}, 100);
+	}
 
 
 	//Create the close button and append it to the header div
