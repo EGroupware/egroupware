@@ -8324,63 +8324,47 @@ table.egwGridView_grid img.et2_appicon {
   }
   body et2-dialog::part(panel) {
     max-width: 100%;
+    max-height: 100%;
+    height: 100%;
   }
-  body div.ui-dialog {
-    width: 100% !important;
-    height: 100% !important;
-    left: 0 !important;
-    top: 0 !important;
+  body et2-dialog::part(header) {
+    color: white;
+    background: #0c5da5;
+    height: 35px;
+    padding: 0;
+    padding-left: 5px;
+    padding-top: 15px;
+    border-radius: 0;
   }
-  body div.ui-dialog-content {
-    height: 87% !important;
-    margin-top: 60px !important;
-    padding: 0 !important;
-    font-size: 12pt;
+  body et2-dialog::part(close-button) {
+    display: none;
   }
-  body .ui-dialog .ui-dialog-buttonpane {
-    position: fixed !important;
-    bottom: 0 !important;
-    left: 0 !important;
-    display: block !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    height: 50px;
+  body et2-dialog::part(footer) {
+    order: -1;
     box-shadow: 0px 4px 5px 2px silver;
     width: 100%;
-    z-index: 1;
+    margin-top: 0px;
     background: #0c5da5;
   }
-  body .ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset {
-    float: right;
+  body et2-dialog et2-button[slot="footer"] {
+    padding-left: 500px;
+    width: 50px;
     height: 50px;
   }
-  body .ui-dialog .ui-dialog-buttonpane button {
-    height: 35px;
+  body et2-dialog et2-button[slot="footer"] et2-image {
+    height: 24px;
+    width: 24px;
+    max-width: initial;
+    position: absolute;
+    left: 0;
     -webkit-filter: brightness(0) invert(1) !important;
     filter: brightness(0) invert(1) !important;
     background-color: transparent !important;
     background-size: 24px 24px !important;
     border: none;
-    float: right !important;
   }
-  body .ui-dialog .ui-dialog-buttonpane button span {
+  body et2-dialog et2-button[slot="footer"] et2-image span {
     padding-left: 20px;
-  }
-  body .ui-dialog .ui-dialog-titlebar {
-    position: fixed;
-    color: white;
-    z-index: 100;
-    background: #0c5da5;
-    width: 100%;
-    height: 35px;
-    padding: 0;
-    padding-left: 5px;
-    margin: -3px;
-    padding-top: 15px;
-    border-radius: 0;
-  }
-  body .ui-dialog .ui-dialog-titlebar .ui-dialog-titlebar-close {
-    display: none;
   }
   body et2-button.plus_button {
     position: fixed !important;

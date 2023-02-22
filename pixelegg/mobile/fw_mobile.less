@@ -591,115 +591,124 @@
 
 	  et2-dialog::part(panel) {
 		max-width: 100%;
-	  }
-	  div.ui-dialog {
-		width: 100% !important;
-		height: 100% !important;
-		left: 0 !important;
-		top: 0 !important;
+		max-height: 100%;
+		height: 100%;
 	  }
 
-	  div.ui-dialog-content {
-		height: 87% !important;
-		margin-top: 60px !important;
-		padding: 0 !important;
+	  et2-dialog::part(header) {
+		color: white;
+		background: #0c5da5;
+		height: 35px;
+		padding: 0;
+		padding-left: 5px;
+		padding-top: 15px;
+		border-radius: 0;
+
+	  }
+
+	  et2-dialog::part(close-button) {
+		display: none;
+	  }
+
+	  et2-dialog::part(footer) {
+		order: -1;
+		box-shadow: 0px 4px 5px 2px silver;
+		width: 100%;
+		margin-top: 0px;
+
+		background: #0c5da5;
+	  }
+
+	  et2-dialog et2-button[slot="footer"] {
+		padding-left: 500px;
+		width: 50px;
+		height: 50px;
+
+		et2-image {
+		  height: 24px;
+		  width: 24px;
+		  max-width: initial;
+		  position: absolute;
+		  left: 0;
+		  .white-svg;
+
+		  span {
+			padding-left: 20px;
+		  }
+		}
+	  }
+
+	  et2-button.plus_button {
+		position: fixed !important;
+		right: 15px;
+		bottom: 15px;
+		border-radius: 50%;
+		width: 60px;
+		height: 60px;
+		background-position: center;
+		z-index: 100;
+		background-color: #0c5da5;
+		border: none;
+		background-image: url(../../api/templates/default/images/topmenu_items/mobile/plus_white.svg) !important;
+		background-repeat: no-repeat;
+		background-size: 24px 24px;
+		margin: 0;
+		padding: 0;
+
+		&:hover, &:active {
+		  background-color: #0c5da5;
+		}
+	  }
+
+	  et2-button.plus_button::part(base) {
+		display: none;
+	  }
+
+	  .et2_nextmatch {
+		.nextmatch_sortheader {
+		  padding-right: 0px;
+		  margin-right: 0px;
+		}
+
+		.nextmatch_header_row, .nextmatch_header {
+		  flex-direction: column;
+
+		  div.header_row_right {
+			position: absolute;
+			display: block;
+			top: 0;
+			flex-direction: column;
+		  }
+
+		  .filtersContainer {
+			width: 100%;
+			margin-top: 50px;
+			flex-direction: column;
+
+			et2-select, et2-select-cat {
+			  max-width: 100%
+			}
+		  }
+
+		  background-color: background-color-egw-dark;
+
+		  et2-select, et2-select-cat {
+			display: block;
+			width: 100%;
+			height: @mobile-elem-height;
 			.mob-fontsize-l;
-		}
-		.ui-dialog .ui-dialog-buttonpane {
-			position: fixed !important;
-			bottom:0 !important;
-			left:0 !important;
-			display:block !important;
-			padding:0 !important;
-			margin: 0 !important;
-			height: 50px;
-			box-shadow: 0px 4px 5px 2px silver;
-			width: 100%;
-			z-index:1;
-			.ui-dialog-buttonset {float:right;height:50px;}
-			button {
-				height:35px;
-				.white-svg;
-				float: right !important;
-				span {padding-left: 20px;}
-			}
-			background: #0c5da5;
-		}
-		.ui-dialog .ui-dialog-titlebar {
-			position: fixed;
-			color: white;
-			z-index: 100;
-			background: #0c5da5;
-			width: 100%;
-			height: 35px;
-			padding: 0;
-			padding-left: 5px;
-			margin: -3px;
-			padding-top: 15px;
+			background-size: 32px;
+			border-left: none;
+			border-right: none;
 			border-radius: 0;
-			.ui-dialog-titlebar-close {
-				display: none;
-			}
-		}
-		et2-button.plus_button {
-			position: fixed !important;
-			right: 15px;
-			bottom: 15px;
-			border-radius: 50%;
-			width: 60px;
-			height: 60px;
-			background-position: center;
-			z-index: 100;
-			background-color: #0c5da5;
-			border: none;
-			background-image: url(../../api/templates/default/images/topmenu_items/mobile/plus_white.svg) !important;
-			background-repeat: no-repeat;
-			background-size: 24px 24px;
-			margin: 0;
-			padding: 0;
-			&:hover, &:active {
-				background-color: #0c5da5;
-			}
-		}
-		et2-button.plus_button::part(base) {display: none;}
-		.et2_nextmatch {
-			.nextmatch_sortheader {
-				padding-right: 0px;
-				margin-right: 0px;
-			}
-			.nextmatch_header_row, .nextmatch_header
-			{
-				flex-direction: column;
-				div.header_row_right {
-					position: absolute;
-					display: block;
-					top:0;
-					flex-direction: column;
-				}
-				.filtersContainer {
-					width:100%;
-					margin-top:50px;
-					flex-direction: column;
-					et2-select, et2-select-cat {max-width: 100%}
-				}
-				background-color: background-color-egw-dark;
+			border-bottom: none;
+			padding-left: 10px;
+			max-width: none;
+			background-color: transparent;
+		  }
 
-				et2-select, et2-select-cat {
-					display: block;
-					width: 100%;
-					height: @mobile-elem-height;
-					.mob-fontsize-l;
-					background-size: 32px;
-					border-left: none;
-					border-right: none;
-					border-radius: 0;
-					border-bottom: none;
-					padding-left:10px;
-					max-width:none;
-					background-color: transparent;
-				}
-				label {
-					display:block;
+		  label {
+			display: block;
 					width: 100%;
 					float: left;
 					.mob-fontsize-l;
