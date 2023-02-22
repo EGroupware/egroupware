@@ -231,15 +231,27 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 					border-top: 1px solid silver;
 					margin-top: 0.5em;
 				}
-				
-				/* Non-modal dialogs don't have an overlay */
-				:host(:not([isModal])) .dialog, :host(:not([isModal])) .dialog__overlay {
-					pointer-events: none;
-					background: transparent;
-				}
-				:host(:not([isModal])) .dialog__panel {
-					pointer-events: auto;
-				}
+
+			  /* Non-modal dialogs don't have an overlay */
+
+			  :host(:not([isModal])) .dialog, :host(:not([isModal])) .dialog__overlay {
+				pointer-events: none;
+				background: transparent;
+			  }
+
+			  :host(:not([isModal])) .dialog__panel {
+				pointer-events: auto;
+			  }
+
+			  ::slotted([align="left"]) {
+				margin-right: auto;
+				order: -1;
+			  }
+
+			  ::slotted([align="right"]) {
+				margin-left: auto;
+				order: 1;
+			  }
 			`
 		];
 	}
