@@ -191,6 +191,7 @@ class OpenIDConnectClient extends \Jumbojett\OpenIDConnectClient
 			// authenticate might not return, because it redirected
 			if ($this->authenticate())
 			{
+				$_GET['cd'] = 'popup';  // let framework know we are a popup
 				array_unshift($success_params, $this);
 				return call_user_func_array($success, $success_params);
 			}
@@ -198,6 +199,7 @@ class OpenIDConnectClient extends \Jumbojett\OpenIDConnectClient
 		catch(OpenIDConnectClientException $e) {
 			_egw_log_exception($e);
 		}
+		$_GET['cd'] = 'popup';  // let framework know we are a popup
 		// authentication failure or exception
 		array_unshift($failure_params, $e ?? false);
 		call_user_func_array($failure, $failure_params);
