@@ -2479,7 +2479,9 @@ class infolog_ui
 	public function admin($content = array())
 	{
 		$fields = array(
-			'info_status'       => 'Status',
+			['value' => 'info_status', 'label' => 'Status', 'disabled' => true],
+			['value' => 'info_percent', 'label' => 'Percent', 'disabled' => true],
+			['value' => 'info_datecompleted', 'label' => 'date completed', 'disabled' => true],
 			'info_cat'          => 'Category',
 			'info_from'         => 'Contact',
 			'info_subject'      => 'Subject',
@@ -2491,32 +2493,39 @@ class infolog_ui
 			'info_used_time'    => 'Used time',
 		);
 		$excludefields = array(
-			'info_id'		=> 'ID',
-			'info_cat'      => 'Category',
-			'info_from'     => 'Contact',
-			'info_subject'  => 'Subject',
-			'info_des'      => 'Description',
-			'link_to'       => 'Links',
-			'attachments'   => 'Attachments',
-			'info_priority' => 'Priority',
-			'info_location' => 'Location',
-			'info_planned_time' => 'Planned time',
-			'info_used_time'    => 'Used time',
-			'info_type' => 'Type',
-			'info_owner' => 'Owner',
-			'info_responsible' => 'Responsible',
-			'info_access' => 'Access',
-			'info_startdate' => 'Startdate',
-			'info_enddate' => 'Enddate',
-			'info_id_parent' => 'Parent',
-			'info_status' => 'Status',
-			'info_confirm' => 'Confirm',
-			'pl_id' => 'pricelist',
-			'info_price' => 'price',
-			'info_percent' => 'completed',
-			'info_datecompleted' => 'date completed',
+			'info_cat'            => 'Category',
+			'info_from'           => 'Contact',
+			'info_subject'        => 'Subject',
+			'info_des'            => 'Description',
+			'link_to'             => 'Links',
+			'attachments'         => 'Attachments',
+			'info_priority'       => 'Priority',
+			'info_location'       => 'Location',
+			'info_planned_time'   => 'Planned time',
+			'info_used_time'      => 'Used time',
+			'info_type'           => 'Type',
+			'info_owner'          => 'Owner',
+			'info_responsible'    => 'Responsible',
+			'info_access'         => 'Access',
+			'info_startdate'      => 'Startdate',
+			'info_enddate'        => 'Enddate',
+			'info_id_parent'      => 'Parent',
+			'info_status'         => 'Status',
+			'info_confirm'        => 'Confirm',
+			'pl_id'               => 'pricelist',
+			'info_price'          => 'price',
+			'info_percent'        => 'completed',
+			'info_datecompleted'  => 'date completed',
 			'info_replanned_time' => 're-planned time',
-			'info_cc' => 'CC',
+			'info_cc'             => 'CC',
+			['value' => 'info_id', 'label' => 'ID', 'disabled' => true],
+			['value' => 'info_uid', 'label' => 'UID', 'disabled' => true],
+			['value' => 'info_etag', 'label' => 'ETag', 'disabled' => true],
+			['value' => 'info_created', 'label' => 'Created date', 'disabled' => true],
+			['value' => 'info_creator', 'label' => 'Creator', 'disabled' => true],
+			['value' => 'info_datemodified', 'label' => 'Modified date', 'disabled' => true],
+			['value' => 'info_modifier', 'label' => 'Modified by', 'disabled' => true],
+			['value' => 'caldav_name', 'label' => 'CalDAV name', 'disabled' => true],
 		);
 		// add customfields to field list
 		foreach(Api\Storage\Customfields::get('infolog') as $name => $data)
@@ -2583,20 +2592,20 @@ class infolog_ui
 		}
 		$content['notification'] = $config[infolog_tracking::CUSTOM_NOTIFICATION][$content['notification_type']];
 		$sel_options = array(
-			'implicit_rights' => array(
+			'implicit_rights'    => array(
 				'read' => 'read rights (default)',
 				'edit' => 'edit rights (full edit rights incl. making someone else responsible!)',
 			),
-			'responsible_edit' => $fields,
+			'responsible_edit'   => $fields,
 			'copy_excludefields' => $excludefields,
-			'sub_excludefields' => $sub_excludefields,
-			'history'     => array(
-				'history' => lang('Yes, with purging of deleted items possible'),
+			'sub_excludefields'  => $sub_excludefields,
+			'history'            => array(
+				'history'              => lang('Yes, with purging of deleted items possible'),
 				'history_admin_delete' => lang('Yes, only admins can purge deleted items'),
-				'history_no_delete' => lang('Yes, noone can purge deleted items'),
+				'history_no_delete'    => lang('Yes, noone can purge deleted items'),
 			),
-			'index_load_cfs' => $this->bo->enums['type'],
-			'notification_type' => array('~global~' => 'all') + $this->bo->enums['type']
+			'index_load_cfs'     => $this->bo->enums['type'],
+			'notification_type'  => array('~global~' => 'all') + $this->bo->enums['type']
 		);
 		$preserve['notification_old_type'] = $content['notification_type'];
 		$this->tmpl->read('infolog.config');
