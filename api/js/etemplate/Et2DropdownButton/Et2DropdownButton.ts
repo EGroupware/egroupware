@@ -189,6 +189,16 @@ export class Et2DropdownButton extends Et2widgetWithSelectMixin(Et2Button)
 	{
 		return this.shadowRoot.querySelector("sl-dropdown");
 	}
+
+	blur()
+	{
+		this.shadowRoot.querySelector("sl-button-group")?.dispatchEvent(new Event('blur'));
+	}
+
+	focus()
+	{
+		this.shadowRoot.querySelector("sl-button-group")?.dispatchEvent(new Event('focus'));
+	}
 }
 
 // @ts-ignore TypeScript is not recognizing that Et2Button is a LitElement
