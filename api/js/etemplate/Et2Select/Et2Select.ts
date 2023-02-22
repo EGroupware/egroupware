@@ -580,7 +580,9 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		return html`
             <sl-menu-item value="${option.value}"
                           title="${!option.title || this.noLang ? option.title : this.egw().lang(option.title)}"
-                          class="${option.class}" .option=${option}>
+                          class="${option.class}" .option=${option}
+                          ?disabled=${option.disabled}
+            >
                 ${this._iconTemplate(option)}
                 ${this.noLang ? option.label : this.egw().lang(option.label)}
             </sl-menu-item>`;
@@ -623,7 +625,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		{
 			tag.size = this.size;
 		}
-		if(this.readonly)
+		if(this.readonly || item.option && typeof (item.option.disabled) != "undefined" && item.option.disabled)
 		{
 			tag.removable = false;
 			tag.readonly = true;

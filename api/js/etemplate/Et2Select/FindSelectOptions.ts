@@ -8,6 +8,9 @@ export interface SelectOption
 	icon? : string;
 	// Class applied to node
 	class? : string;
+	// Show the option, but it is not selectable.
+	// If multiple=true and the option is in the value, it is not removable.
+	disabled? : boolean;
 }
 
 /**

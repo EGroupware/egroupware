@@ -1080,7 +1080,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			// Reset remaining options.  It might be faster to re-create instead.
 			this._menuItems.forEach((item) =>
 			{
-				item.disabled = false;
+				item.disabled = item.option?.disabled || false;
 				item.classList.remove("match");
 				item.classList.remove("no-match");
 			});
