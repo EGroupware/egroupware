@@ -113,7 +113,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 				padding-bottom: 2px;
 			  }
 
-			  :host([rows]) .select__tags {
+			  :host([rows]) .select__control > .select__label > .select__tags {
 				max-height: calc(var(--rows, 5) * 29px);
 			  }
 
