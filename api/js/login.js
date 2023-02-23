@@ -10,18 +10,20 @@
 /* if login page is not in top window, set top windows location to it */
 if (top !== window) top.location = window.location;
 
+// check if the browser supports our required JS version and try to warn user
+try {
+	Function ("() => {};");	// ES6 check
+	Function("window?.location;");	// ES2020 check
+	// Function("window<<<test");	// Test which should fail
+}
+catch (exception){
+	alert('Your browser is not up-to-date (JavaScript ES2020 compatible), you may experience some of the features not working.');
+}
+
 egw_ready.then(function()
 {
 	jQuery(document).ready(function()
 	{
-		// check if the browser supports ES6 and try to warn user
-		try {
-			Function ("() => {};");
-		}
-		catch (exception){
-			alert(egw.lang('Your browser is not up-to-date (JavaScript ES6 compatible), you may experience some of the features not working.'));
-		}
-
 		// lock the device orientation in portrait view
 		if (screen.orientation && typeof screen.orientation.lock == 'function') screen.orientation.lock('portrait');
 		jQuery('.close').click(function (){
