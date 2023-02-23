@@ -8332,7 +8332,7 @@ table.egwGridView_grid img.et2_appicon {
   }
   body et2-dialog::part(header) {
     color: white;
-    background: #330066;
+    background: #0c5da5;
     height: 5ex;
     padding: 0;
     padding-left: 5px;
@@ -8346,7 +8346,7 @@ table.egwGridView_grid img.et2_appicon {
     box-shadow: 0px 4px 5px 2px silver;
     width: 100%;
     margin-top: 0px;
-    background: #330066;
+    background: #0c5da5;
   }
   body et2-dialog et2-button[slot="footer"] {
     padding-left: 150%;
@@ -8391,6 +8391,10 @@ table.egwGridView_grid img.et2_appicon {
   }
   body et2-button.plus_button::part(base) {
     display: none;
+  }
+  body et2-dialog#timer_dialog::part(header),
+  body et2-dialog#timer_dialog::part(footer) {
+    background: #330066;
   }
   body .et2_nextmatch .nextmatch_sortheader {
     padding-right: 0px;

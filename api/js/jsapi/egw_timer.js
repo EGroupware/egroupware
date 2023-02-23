@@ -443,6 +443,7 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 			{
 				dialog = undefined;
 			},
+			id: "timer_dialog",
 			title: _title || 'Start & stop timer',
 			template: egw.webserverUrl + '/timesheet/templates/default/timer.xet',
 			buttons: [
