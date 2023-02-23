@@ -271,7 +271,7 @@ class Import
 							return $attr !== null && $attr !== '';
 						});
 						unset($relevant['person_id']);  // is always different as it's the UID, no need to consider
-						$to_update = $relevant + $sql_account;
+						$to_update = ['account_id' => $account_id] + $relevant + $sql_account;
 						// fix accounts without firstname
 						if (!isset($to_update['account_firstname']) && $to_update['account_lastname'] === $to_update['account_fullname'])
 						{
@@ -307,7 +307,7 @@ class Import
 								}
 								catch (\Exception $e) {
 									$this->logger("Error updating user '$account[account_lid]' (#$account_id): ".$e->getMessage().' ('.$e->getCode().')', 'error');
-									$this->logger('$to_update='.json_encode($to_update, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES), 'error');
+									$this->logger('$to_update='.json_encode($to_update, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES), 'detail');
 									$errors++;
 									continue;
 								}
@@ -464,7 +464,7 @@ class Import
 				{
 					foreach($sql_users as $account_id => $account_lid)
 					{
-						if ($this->deleteAccount($account_id, $account_lid, $this->logger))
+						if ($this->deleteAccount($account_id, $account_lid))
 						{
 							$deleted++;
 						}
@@ -657,7 +657,12 @@ class Import
 		{
 			if ($delete === 'yes')
 			{
-				if ($this->deleteAccount($account_id, $account_lid, $dry_run))
+				if ($dry_run)
+				{
+					$this->logger("Dry-run: would delete group '$group[account_lid]' (#$sql_id)", 'detail');
+					$delete++;
+				}
+				elseif ($this->deleteAccount($account_id, $account_lid))
 				{
 					$deleted++;
 				}
