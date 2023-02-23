@@ -15,8 +15,8 @@
 				</tabpanels>
 			</et2-tabbox>
 			<et2-hbox  class="dialogFooterToolbar" id="button">
-				<et2-button  id="cancel" label="Cancel" onclick="window.close()"></et2-button>
 				<et2-button  id="delete" label="Delete"></et2-button>
+				<et2-button  id="cancel" label="Cancel" onclick="window.close()"></et2-button>
 				<et2-button  id="delete_sub" label="Delete including sub-entries"></et2-button>
 			</et2-hbox>
 		</et2-vbox>
