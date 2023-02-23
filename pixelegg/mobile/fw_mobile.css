@@ -1869,6 +1869,9 @@ body {
 /**
  * 23.1 Login page with stock background image
  */
+div#loginMainDiv.stockLoginBackground {
+  background-position-y: 100%;
+}
 div#loginMainDiv.stockLoginBackground div#divAppIconBar {
   postion: relative;
   top: 5%;
@@ -4614,7 +4617,7 @@ span.overlayContainer img.overlay {
   font-size: 12px;
   line-height: 1em;
   margin: 0 15px 2px 2px;
-  vertical-align: super;
+  vertical-align: text-top;
 }
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header .egw_fw_ui_tab_header img.egw_fw_ui_tab_icon {
   display: inline-block;
@@ -8330,10 +8333,9 @@ table.egwGridView_grid img.et2_appicon {
   body et2-dialog::part(header) {
     color: white;
     background: #0c5da5;
-    height: 35px;
+    height: 5ex;
     padding: 0;
     padding-left: 5px;
-    padding-top: 15px;
     border-radius: 0;
   }
   body et2-dialog::part(close-button) {
@@ -8347,7 +8349,7 @@ table.egwGridView_grid img.et2_appicon {
     background: #0c5da5;
   }
   body et2-dialog et2-button[slot="footer"] {
-    padding-left: 500px;
+    padding-left: 150%;
     width: 50px;
     height: 50px;
   }
