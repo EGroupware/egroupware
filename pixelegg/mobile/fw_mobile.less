@@ -1227,15 +1227,29 @@
 			form.et2_container div table.et2_grid tbody tr .row td .et2_box_widget input {margin:0 5px 0 0;}
 		}
 		div#popupMainDiv {padding:0;}
+
 		.dialogHeadbar {
-			et2-button-icon {
-				font-size: 2.3em;
-				.white-svg;
+		  et2-button-icon, et2-button {
+			font-size: 2.3em;
+			flex: 0 0 50px;
+
+			et2-image {
+			  height: 24px;
+			  width: 24px;
+			  max-width: initial;
+			  .white-svg;
 			}
-			button[class*="et2_button_with_image"]:not([class*="et2_toolbar_hasCaption"]) {
-				.white-svg;
-				padding-right: 15px;
-			}
+		  }
+
+		  et2-button::part(base) {
+			background: transparent;
+			border: transparent;
+		  }
+
+		  button[class*="et2_button_with_image"]:not([class*="et2_toolbar_hasCaption"]) {
+			.white-svg;
+			padding-right: 15px;
+		  }
 		}
 		.rowHeader {
 			.mob-fontsize-l;

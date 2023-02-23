@@ -8967,13 +8967,25 @@ table.egwGridView_grid img.et2_appicon {
   body div#popupMainDiv {
     padding: 0;
   }
-  body .dialogHeadbar et2-button-icon {
+  body .dialogHeadbar et2-button-icon,
+  body .dialogHeadbar et2-button {
     font-size: 2.3em;
+    flex: 0 0 50px;
+  }
+  body .dialogHeadbar et2-button-icon et2-image,
+  body .dialogHeadbar et2-button et2-image {
+    height: 24px;
+    width: 24px;
+    max-width: initial;
     -webkit-filter: brightness(0) invert(1) !important;
     filter: brightness(0) invert(1) !important;
     background-color: transparent !important;
     background-size: 24px 24px !important;
     border: none;
+  }
+  body .dialogHeadbar et2-button::part(base) {
+    background: transparent;
+    border: transparent;
   }
   body .dialogHeadbar button[class*="et2_button_with_image"]:not([class*="et2_toolbar_hasCaption"]) {
     -webkit-filter: brightness(0) invert(1) !important;
