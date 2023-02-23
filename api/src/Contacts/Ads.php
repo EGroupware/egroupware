@@ -84,7 +84,7 @@ class Ads extends Ldap
 	 */
 	function __construct(array $ldap_config=null, $ds=null)
 	{
-		if (false) parent::__construct ();	// quiten IDE warning, we are explicitly NOT calling parrent constructor!
+		if (false) parent::__construct ();	// quiten IDE warning, we are explicitly NOT calling parent constructor!
 
 		$this->accountName 		= $GLOBALS['egw_info']['user']['account_lid'];
 
@@ -120,6 +120,15 @@ class Ads extends Ldap
 		}
 		$this->ldapServerInfo = Api\Ldap\ServerInfo::get($this->ds, $this->ldap_config['ads_host']);
 		$this->is_samba4 = $this->ldapServerInfo->serverType == Api\Ldap\ServerInfo::SAMBA4;
+
+		// check if there are any attributes defined via custom-fields
+		foreach(Api\Storage\Customfields::get('addressbook') as $cf)
+		{
+			if (substr($cf['name'], 0, 5) === 'ldap_')
+			{
+				$this->schema2egw[self::CF_OBJECTCLASS]['#'.$cf['name']] = strtolower(substr($cf['name'], 5));
+			}
+		}
 
 		// AD seems to use user, instead of inetOrgPerson
 		unset($this->schema2egw['posixaccount']);

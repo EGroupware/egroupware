@@ -339,6 +339,7 @@ class Import
 					{
 						// photo and public keys are not stored in SQL but in filesystem, fetch it to compare
 						$contact['files'] = 0;
+						if ($contact['jpegphoto'] === false) $contact['jpegphoto'] = null;
 						foreach($this->files2attrs as $file => [$attr, $mask, $regexp])
 						{
 							if (isset($contact[$attr]))
