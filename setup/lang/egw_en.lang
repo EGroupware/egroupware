@@ -271,6 +271,7 @@ domain-name	setup	en	Domain name
 don't change, if you already stored files! you will loose them!	setup	en	Don't change, if you already stored files! You will loose them!
 dont touch my data	setup	en	Don't touch my data
 download	setup	en	Download
+dry-run (only show what would happen)	setup	en	Dry-run (only show what would happen)
 easiest way under win2008r2 is to add role "active directory certificate services" and reboot.	setup	en	Easiest way under win2008r2 is to add role "Active Directory Certificate Services" and reboot.
 edit current configuration	setup	en	Edit current configuration
 edit your existing header.inc.php	setup	en	Edit your existing header.inc.php
@@ -342,6 +343,7 @@ go to	setup	en	Go to
 grant access	setup	en	Grant access
 group	setup	en	Group
 group %1 uses identical id %2 as user %3!	setup	en	Group %1 uses identical ID %2 as user %3!
+group context	setup	en	Group context
 group memberships will be migrated too.	setup	en	Group memberships will be migrated too.
 has a version mismatch	setup	en	Has a version mismatch
 header admin login	setup	en	Header admin login
@@ -431,6 +433,7 @@ limit access	setup	en	Limit access
 limit access to setup to the following addresses, networks or hostnames (e.g. 127.0.0.1,10.1.1,myhost.dnydns.org)	setup	en	Limit access to setup to the following addresses, networks or host names (e.g. 127.0.0.1,10.1.1,myhost.dnydns.org)
 list availible values	setup	en	List available values
 list of availible translations	setup	en	List of available translations
+local groups includes groups and their memberships deleted on the ad/ldap server!	setup	en	Local groups includes groups and their memberships deleted on the AD/LDAP server!
 login as user postgres, eg. by using su as root	setup	en	Login as user postgres, eg. by using su as root
 login to mysql -	setup	en	Login to mysql -
 loginname needed for domain configuration	setup	en	Login name needed for domain configuration
@@ -747,6 +750,7 @@ usernames (comma-separated) which can get vfs root access (beside setup user)	se
 usernames are casesensitive	setup	en	User names are case sensitive
 users choice	setup	en	Users choice
 users, groups and memberships	setup	en	users, groups and memberships
+users, groups and memberships, keep local groups	setup	en	users, groups and memberships, keep local groups
 usually more annoying.<br />admins can use admin >> manage accounts or groups to give access to further apps.	setup	en	Usually more annoying.<br />Admins can use Admin >> Manage accounts or groups to give access to further apps.
 utf-8 (unicode)	setup	en	utf-8 (Unicode)
 validation errors	setup	en	Validation errors

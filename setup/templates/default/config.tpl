@@ -473,6 +473,7 @@
      <select name="newsettings[account_import_type]">
       <option value="users" {selected_account_import_type_users}>{lang_just_users}</option>
       <option value="users+groups" {selected_account_import_type_users+groups}>{lang_users,_groups_and_memberships}</option>
+      <option value="users+local+groups" {selected_account_import_type_users+local+groups} title="{lang_Local_groups_includes_groups_and_their_memberships_deleted_on_the_AD/LDAP_server!}">{lang_users,_groups_and_memberships,_keep_local_groups}</option>
      </select>
     </td>
    </tr>

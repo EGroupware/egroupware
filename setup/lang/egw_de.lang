@@ -270,6 +270,7 @@ domain-name	setup	de	Domainname
 don't change, if you already stored files! you will loose them!	setup	de	Nicht ändern, wenn Sie bereits Dateien gespeichert haben! Sie werden Sie verlieren!
 dont touch my data	setup	de	Meine Daten nicht verändern
 download	setup	de	Herunterladen
+dry-run (only show what would happen)	setup	de	Testlauf (zeige nur an was gemacht würde)
 easiest way under win2008r2 is to add role "active directory certificate services" and reboot.	setup	de	Unter Win2008r2 geht das am einfachsten durch hinzufügen der Rolle "Active Directory-Zertifikatsdienste" und neu starten.
 edit current configuration	setup	de	Gegenwärtige Konfiguration überarbeiten
 edit your existing header.inc.php	setup	de	Bearbeiten Ihrer existierenden header.inc.php
@@ -339,6 +340,7 @@ go to	setup	de	Gehen zu
 grant access	setup	de	Zugriff gewähren
 group	setup	de	Gruppe
 group %1 uses identical id %2 as user %3!	setup	de	Gruppe %1 verwendet die identische ID %2 wie Benutzer %3!
+group context	setup	de	Gruppen Kontext
 group memberships will be migrated too.	setup	de	Gruppenmitgliedschaften werden auch migriert.
 has a version mismatch	setup	de	hat eine falsche Versionsanpassung
 header admin login	setup	de	Login Headerverwaltung
@@ -427,6 +429,7 @@ limit access	setup	de	Zugang beschränken
 limit access to setup to the following addresses, networks or hostnames (e.g. 127.0.0.1,10.1.1,myhost.dnydns.org)	setup	de	Zugang zu Setup auf die folgenden IP Adressen, Netzwerke oder Hostnamen beschränken (z.B. 127.0.0.1,10.1.1,myhost.dnydns.org)
 list availible values	setup	de	Listen der verfügbaren Werte
 list of availible translations	setup	de	Liste der verfügbaren Sprachen
+local groups includes groups and their memberships deleted on the ad/ldap server!	setup	de	Lokale Gruppen enthalten auch Gruppen und deren Mitgliedschaften die auf dem AD/LDAP Server gelöscht wurden!
 login as user postgres, eg. by using su as root	setup	de	Als Benutzer postgres einlogen, zB. durch benutzen von su als root
 login to mysql -	setup	de	mysql aufrufen -
 loginname needed for domain configuration	setup	de	Benutzername für die Konfiguration der Domain
@@ -723,9 +726,11 @@ upload backup	setup	de	Datensicherung hochladen
 uploads a backup and installs it on your db	setup	de	lädt eine Datensicherung hoch und installiert sie auf Ihrer DB
 uploads a backup to the backup-dir, from where you can restore it	setup	de	Laden Sie eine Datensicherung in das Datensicherungsverzeichnis, von wo sie diese zurücksichern können
 usage: %1 command [additional options]	setup	de	Aufruf: %1 Kommando [zusätzliche Optionen]
+use %u for username, leave empty to no set	setup	de	Benutzer %u für den Benutzernamen, leer lassen um nichts zu setzen
 use --create-header to create the configuration file (--usage gives more options).	setup	de	Benutzen Sie --create-header um die Konfigurationsdatei anzulegen (--usage gibt mehr Optionen).
 use --install to install egroupware.	setup	de	Benutzen Sie --install um EGroupware zu installieren.
 use --update to do so.	setup	de	Benutzen Sie --update dafür.
+use account description to store saml username	setup	de	Benutze Beschreibung des Benutzers um den SAML Benutzernamen zu speichern
 use cookies to pass sessionid	setup	de	SitzungsId in einem Cookie speichern
 use mcrypt to crypt session-data: {off(default) | on},[mcrypt-init-vector(default randomly generated)],[mcrypt-version]	setup	de	benutze mcrypt zur Verschlüsselung der Sitzungsdaten: {off(Vorgabe) | on},[mcrypt Initialisierung(Vorgabe ist zufällig erzeugt)],[mcrypt Version]
 use persistent db connections: {on(default) | off}	setup	de	benutze permanente Datenbankverbindung: {on(Vorgabe) | off}
@@ -741,6 +746,7 @@ usernames (comma-separated) which can get vfs root access (beside setup user)	se
 usernames are casesensitive	setup	de	Benutzername mit Unterscheidung zwischen Groß- und Kleinschreibung
 users choice	setup	de	Benutzerauswahl
 users, groups and memberships	setup	de	Benutzer, Gruppen und Mitgliedschaften
+users, groups and memberships, keep local groups	setup	de	Benutzer, Gruppen und Mitgliedschaften, erlaube lokale Gruppen
 usually more annoying.<br />admins can use admin >> manage accounts or groups to give access to further apps.	setup	de	Normalerweise mehr ärgerlich als nützlich<br />
 utf-8 (unicode)	setup	de	utf-8 (Unicode)
 validation errors	setup	de	Fehler bei der Prüfung der Eingaben

@@ -158,7 +158,7 @@ class Import
 			{
 				throw new \InvalidArgumentException("Invalid account_import_source='{$GLOBALS['egw_info']['server']['account_import_source']}'!");
 			}
-			if (!in_array($type = $GLOBALS['egw_info']['server']['account_import_type'], ['users', 'users+groups']))
+			if (!in_array($type = $GLOBALS['egw_info']['server']['account_import_type'], ['users', 'users+groups', 'users+local+groups']))
 			{
 				throw new \InvalidArgumentException("Invalid account_import_type='{$GLOBALS['egw_info']['server']['account_import_type']}'!");
 			}
@@ -183,7 +183,8 @@ class Import
 			if (in_array('groups', explode('+', $type)))
 			{
 				foreach($this->groups($initial_import ? null : $GLOBALS['egw_info']['server']['account_import_lastrun'],
-					$delete, $groups, $set_members, $dry_run) as $name => $val)
+					in_array('local', explode('+', $type)) ? 'no' : $delete,
+					$groups, $set_members, $dry_run) as $name => $val)
 				{
 					$$name += $val;
 				}
@@ -646,11 +647,8 @@ class Import
 			}
 			$groups[$sql_id] = $group['account_lid'];
 
-			// if we only get modified groups, we need to record and return the id's to update members, AFTER users are created/updated
-			if ($modified)
-			{
-				$set_members[$sql_id] = $this->accounts->read($group['account_id'])['members'];
-			}
+			// we need to record and return the id's to update members, AFTER users are created/updated
+			$set_members[$sql_id] = $this->accounts->read($group['account_id'])['members'];
 		}
 
 		// delete the groups not returned from LDAP, groups can NOT be deactivated, we just delete them in the DB
