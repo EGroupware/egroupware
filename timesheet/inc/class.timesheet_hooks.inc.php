@@ -167,7 +167,7 @@ class timesheet_hooks
 				'label'  => 'Ask to start and stop working time with session',
 				'name'   => 'workingtime_session',
 				'values' => [
-					'' => 'yes',
+					'yes' => 'yes',
 					'no' => 'no',
 				],
 				'help'   => 'Would you like to be asked, to start and stop working time, when login in or off',
