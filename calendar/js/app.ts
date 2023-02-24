@@ -1463,7 +1463,8 @@ export class CalendarApp extends EgwApp
 
 		if(duration != null && end != null)
 		{
-			end.set_disabled(duration.get_value()!=='');
+			end.set_disabled(duration.get_value() !== '');
+			end.classList.toggle("hideme", end.disabled);
 
 			// Only set end date if not provided, adding seconds fails with DST
 			// @ts-ignore
