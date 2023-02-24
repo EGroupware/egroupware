@@ -590,12 +590,14 @@
 	  }
 
 	  et2-dialog::part(panel) {
+	  /* make dialog full screen */
 		max-width: 100%;
 		max-height: 100%;
 		height: 100%;
 	  }
 
 	  et2-dialog::part(header) {
+		/* Set header size, color & background */
 		color: white;
 		background: #0c5da5;
 		height: 5ex;
@@ -605,28 +607,38 @@
 	  }
 
 	  et2-dialog::part(close-button) {
-		display: none;
+		/* Move dialog close button up, change color */
+		position: absolute;
+		top: 0px;
+		right: 0px;
+		.white-svg
 	  }
 
 	  et2-dialog::part(footer) {
+		/* Move footer to top, set background color */
 		order: -1;
 		box-shadow: 0px 4px 5px 2px silver;
 		width: 100%;
 		margin-top: 0px;
 
 		background: #0c5da5;
+
+		/* Allow buttons to wrap */
+		flex-wrap: wrap;
+	  }
+
+	  et2-dialog et2-button[slot="footer"]:has(et2-image) {
+		/* Fixed size on footer buttons */
+		width: 50px;
+		height: 50px;
 	  }
 
 	  et2-dialog et2-button[slot="footer"] {
-		padding-left: 150%;
-		width: 50px;
-		height: 50px;
-
 		et2-image {
+		  /* Make icons white, set size */
 		  height: 24px;
 		  width: 24px;
 		  max-width: initial;
-		  position: absolute;
 		  left: 0;
 		  .white-svg;
 
@@ -634,6 +646,28 @@
 			padding-left: 20px;
 		  }
 		}
+	  }
+
+	  et2-dialog et2-button[slot="footer"][id*="cancel"] {
+		/* Hide cancel button, it will look like a duplicated bug so close to dialog close button */
+		display: none;
+	  }
+
+	  et2-dialog et2-button[slot="footer"]:has(et2-image)::part(base), et2-button[slot="footer"]:has(et2-image)::part(base):not(:hover), et2-dialog et2-button[variant=default][slot="footer"]:has(et2-image)::part(base):not(:hover) {
+		/* Have an icon - Hide button style, just show image */
+		border: none;
+		background: transparent;
+		justify-content: center;
+	  }
+
+	  et2-dialog et2-button[slot="footer"]:has(et2-image)::part(label) {
+		/* Visually hide labels but leave them there for accessibility */
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		overflow: hidden;
+		clip: rect(0 0 0 0);
+		flex: 0 1 auto;
 	  }
 
 	  et2-button.plus_button {
