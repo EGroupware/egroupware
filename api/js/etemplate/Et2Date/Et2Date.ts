@@ -322,32 +322,37 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(LitFlatpickr))
 			shoelace,
 			dateStyles,
 			css`
-			:host {
+			  :host {
 				width: auto;
-			}
-			::slotted([slot='input'])
-			{
+			  }
+
+			  ::slotted([slot='input']) {
 				flex: 1 1 auto;
-			}
-			
-			/* Scroll buttons */
-			.input-group__container {
+				min-width: 12ex;
+			  }
+
+			  /* Scroll buttons */
+
+			  .input-group__container {
 				position: relative;
-			}
-			.input-group__container:hover .et2-date-time__scrollbuttons {
+			  }
+
+			  .input-group__container:hover .et2-date-time__scrollbuttons {
 				display: flex;
-			}
-			.et2-date-time__scrollbuttons {
+			  }
+
+			  .et2-date-time__scrollbuttons {
 				display: none;
 				flex-direction: column;
 				width: calc(var(--sl-input-height-medium) / 2);
 				position: absolute;
 				right: 0px;
-			}
-			.et2-date-time__scrollbuttons > * {
+			  }
+
+			  .et2-date-time__scrollbuttons > * {
 				font-size: var(--sl-font-size-2x-small);
 				height: calc(var(--sl-input-height-medium) / 2);
-			}
+			  }
 			.et2-date-time__scrollbuttons > *::part(base) {
 				padding: 3px;
 			}
@@ -621,16 +626,23 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(LitFlatpickr))
 		{
 			date = new Date(value);
 		}
-		// Handle timezone offset, flatpickr uses local time
-		let formatDate = new Date(date.valueOf() + date.getTimezoneOffset() * 60 * 1000);
 		if(typeof egwIsMobile == "function" && egwIsMobile())
 		{
-			this.updateComplete.then(() =>
+			if(this._inputNode)
 			{
-				this._inputNode.value = this.format(formatDate, {dateFormat: 'Y-m-d'});
-			});
+				this._inputNode.value = isNaN(date) ? "" : this.format(date, {dateFormat: 'Y-m-dTH:i'});
+			}
+			else
+			{
+				this.updateComplete.then(() =>
+				{
+					this._inputNode.value = isNaN(date) ? "" : this.format(date, {dateFormat: 'Y-m-dTH:i'});
+				});
+			}
 			return;
 		}
+		// Handle timezone offset, flatpickr uses local time
+		let formatDate = new Date(date.valueOf() + date.getTimezoneOffset() * 60 * 1000);
 		if(!this._instance)
 		{
 			this.defaultDate = formatDate;
@@ -651,7 +663,7 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(LitFlatpickr))
 			{
 				return flatpickr.formatDate(<Date>this.defaultDate, this.getOptions().dateFormat);
 			}
-			return this._inputNode?.value || '';
+			return this._inputNode?.value + "Z" || '';
 		}
 		let value = this._inputElement.value;
 

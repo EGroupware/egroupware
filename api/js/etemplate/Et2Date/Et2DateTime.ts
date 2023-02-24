@@ -21,16 +21,22 @@ export class Et2DateTime extends Et2Date
 		return [
 			...super.styles,
 			css`
-			:host([focused]) ::slotted(button), :host(:hover) ::slotted(button) {
+			  :host([focused]) ::slotted(button), :host(:hover) ::slotted(button) {
 				display: inline-block;
-			}
-            ::slotted(.calendar_button) {
-            	border: none;
-            	background: transparent;
-            	margin-left: -20px;
-                display: none;
-			}
-            `,
+			  }
+
+			  ::slotted([slot='input']) {
+				flex: 1 1 auto;
+				min-width: 17ex;
+			  }
+
+			  ::slotted(.calendar_button) {
+				border: none;
+				background: transparent;
+				margin-left: -20px;
+				display: none;
+			  }
+			`,
 		];
 	}
 
