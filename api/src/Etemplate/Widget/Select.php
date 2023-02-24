@@ -12,6 +12,7 @@
 
 namespace EGroupware\Api\Etemplate\Widget;
 
+use EGroupware\Api\Acl;
 use EGroupware\Api\Etemplate;
 use EGroupware\Api;
 
@@ -86,9 +87,9 @@ class Select extends Etemplate\Widget
 	{
 		$this->bool_attr_default += array(
 			//'multiple' => false,	// handeled in set_attrs, as we additional allow "dynamic"
-			'selected_first' => true,
-			'search' => false,
-			'tags' => false,
+			'selected_first'        => true,
+			'search'                => false,
+			'tags'                  => false,
 			'allow_single_deselect' => true,
 		);
 
@@ -432,6 +433,18 @@ class Select extends Etemplate\Widget
 					'',
 					$no_lang, $this->attrs['readonly'] ?? false, self::get_array(self::$request->content, $form_name), $form_name
 				);
+				// Remove unavailable from value
+				$application = self::expand_name($this->attrs['application'], 0, 0, '', '', self::$cont);
+				if(!$application || $application === $GLOBALS['egw']->categories->app_name)
+				{
+					$categories = $GLOBALS['egw']->categories;
+				}
+				else    // we need to instanciate a new cat object for the correct application
+				{
+					$categories = new Api\Categories('', $application);
+				}
+				$value =& self::get_array(self::$request->content, $form_name, true);
+				$value = $categories->check_list(Acl::READ, $value);
 				break;
 		}
 	}
