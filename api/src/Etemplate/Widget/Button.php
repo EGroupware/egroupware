@@ -76,4 +76,4 @@ class Button extends Etemplate\Widget
 		}
 	}
 }
-Etemplate\Widget::registerWidget(__NAMESPACE__.'\\Button', array('et2-button','button','buttononly'));
+Etemplate\Widget::registerWidget(__NAMESPACE__.'\\Button', array('et2-button','button','buttononly','old-button'));
