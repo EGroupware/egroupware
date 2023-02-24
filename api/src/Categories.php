@@ -573,12 +573,13 @@ class Categories
 		}
 
 		// Check for ACL granted access, the self::GLOBAL_ACCOUNT user must not get access by ACL to keep old behaviour
-		$acl_grant = $this->account_id != self::GLOBAL_ACCOUNT && ($category['appname'] ?? null) == $this->app_name && $this->app_name != 'addressbook';
+		$acl_grant = $this->account_id != self::GLOBAL_ACCOUNT && ($category['appname'] ?? null) == $this->app_name;
 		$owner_grant = false;
 		foreach(!empty($category['owner']) ? explode(',',$category['owner']) : [] as $owner)
 		{
 			$owner_grant = $owner_grant || (is_array($this->grants) && !empty($this->grants[$owner]) && ($this->grants[$owner] & $needed) &&
-					($category['appname'] !== 'addressbook' && $category['access'] === 'public' || ($this->grants[$owner] & Acl::PRIVAT)));
+					(($category['appname'] !== 'addressbook' && $category['access'] === 'public' || ($this->grants[$owner] & Acl::PRIVAT)) ||
+						($category['appname'] == 'addressbook' && $category['access'] === 'public' && ($this->grants[$owner] & $needed))));
 		}
 		return $acl_grant && $owner_grant;
 	}
