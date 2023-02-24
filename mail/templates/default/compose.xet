@@ -22,8 +22,8 @@
 			<grid  width="100%" resize_ratio="0">
 				<columns>
 					<column width="10%"/>
-					<column width="84%"/>
-					<column width="6%"/>
+					<column width="70%"/>
+					<column width="20%"/>
 				</columns>
 				<rows>
 					<row class="mailComposeHeaders" >
