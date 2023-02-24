@@ -264,7 +264,7 @@ app.classes.mail = AppJS.extend(
 							if (this.position < 44)
 							{
 								this.classList.add('limitted');
-								if (this.position < 30)
+								if (this.position < 38)
 								{
 									this.classList.add('squeezed');
 									composeBtn.label = '';
