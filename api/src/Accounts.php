@@ -1488,6 +1488,20 @@ class Accounts
 					}
 					$instance->cache_data($account_id, $account);
 				}
+				// 						'account_lid' => 'Domain Users',
+				elseif ($account_id == -513)
+				{
+					$instance->cache_data($account_id, $account = [
+						'account_id'        => -513,
+						'account_lid' => 'Domain Users',
+						'account_type'      => 'g',
+						'account_firstname' => 'Domain Users',
+						'account_lastname'  => lang('Group'),
+						'account_fullname'  => lang('Group').' Domain Users',
+						'members-active' => [],
+						'members' => [],
+					]);
+				}
 				//error_log(__METHOD__."($account_id) read from backend ".array2string($account));
 			}
 			//else error_log(__METHOD__."($account_id) read from instance cache ".array2string($account));
