@@ -566,18 +566,19 @@ class Categories
 		}
 
 		// Load the application grants
-		if (($category['appname'] ?? null) == $this->app_name && !isset($this->grants))
+		if(($category['appname'] ?? null) == $this->app_name && !isset($this->grants))
 		{
-			$this->grants = $GLOBALS['egw']->acl->get_grants($this->app_name,true);
+			// Addressbook group grant does not grant permission for personal so don't enumerate groups
+			$this->grants = $GLOBALS['egw']->acl->get_grants($this->app_name, $this->app_name != 'addressbook');
 		}
 
 		// Check for ACL granted access, the self::GLOBAL_ACCOUNT user must not get access by ACL to keep old behaviour
-		$acl_grant = $this->account_id != self::GLOBAL_ACCOUNT && ($category['appname'] ?? null) == $this->app_name;
+		$acl_grant = $this->account_id != self::GLOBAL_ACCOUNT && ($category['appname'] ?? null) == $this->app_name && $this->app_name != 'addressbook';
 		$owner_grant = false;
 		foreach(!empty($category['owner']) ? explode(',',$category['owner']) : [] as $owner)
 		{
 			$owner_grant = $owner_grant || (is_array($this->grants) && !empty($this->grants[$owner]) && ($this->grants[$owner] & $needed) &&
-				($category['access'] === 'public' ||  ($this->grants[$owner] & Acl::PRIVAT)));
+					($category['appname'] !== 'addressbook' && $category['access'] === 'public' || ($this->grants[$owner] & Acl::PRIVAT)));
 		}
 		return $acl_grant && $owner_grant;
 	}
