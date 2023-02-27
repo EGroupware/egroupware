@@ -103,12 +103,6 @@ class admin_hooks
 				$file['View Access Log'] = Egw::link('/index.php','menuaction=admin.admin_accesslog.index&ajax=true');
 			}
 
-			/* disable old EGroupware error_log, as it is not used anymore
-			if (! $GLOBALS['egw']->acl->check('error_log_access',1,'admin'))
-			{
-				$file['View Error Log']  = Egw::link('/index.php','menuaction=admin.uilog.list_log');
-			}*/
-
 			if (! $GLOBALS['egw']->acl->check('applications_acc',16,'admin'))
 			{
 				$file['Clear cache and register hooks'] = array(
@@ -141,7 +135,8 @@ class admin_hooks
 			$file['Custom translation'] = Egw::link('/index.php','menuaction=admin.admin_customtranslation.index');
 			$file['Changelog and versions'] = Egw::link('/index.php','menuaction=api.EGroupware\\Api\\Framework\\About.index&ajax=true');
 
-			$file['Submit statistic information'] = Egw::link('/index.php','menuaction=admin.admin_statistics.submit');
+			// disable usage statistic for now, as no more backend
+			//$file['Submit statistic information'] = Egw::link('/index.php','menuaction=admin.admin_statistics.submit');
 
 			if ($location == 'admin')
 			{

@@ -15,6 +15,8 @@ use EGroupware\Api\Etemplate;
 
 /**
  * Submit statistical data to egroupware.org
+ *
+ * Usage statistic is disabled, as there is no more backend currently.
  */
 class admin_statistics
 {

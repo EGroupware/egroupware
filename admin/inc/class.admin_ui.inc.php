@@ -43,12 +43,13 @@ class admin_ui
 	 */
 	public function index(array $content=null)
 	{
+		/* disable usage statistic for now, as no more backend
 		if (admin_statistics::check(false))
 		{
 			$_GET['load'] = 'admin.admin_statistics.submit';
 			$_GET['ajax'] = 'false';
 			$_GET['required'] = 'true';
-		}
+		}*/
 		$tpl = new Etemplate('admin.index');
 
 		if (!is_array($content)) $content = array();
