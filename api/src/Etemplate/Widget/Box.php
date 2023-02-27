@@ -147,4 +147,4 @@ class Box extends Etemplate\Widget
 	}
 }
 // register class for layout widgets, which can have an own namespace
-Etemplate\Widget::registerWidget(__NAMESPACE__.'\\Box', array('box', 'hbox', 'vbox', 'groupbox'));
+Etemplate\Widget::registerWidget(__NAMESPACE__.'\\Box', array('box', 'hbox', 'vbox', 'groupbox', 'old-box', 'old-vbox', 'old-hbox'));
