@@ -182,6 +182,13 @@ export class etemplate2
 	private app_obj : EgwApp;
 	app : string;
 
+	/**
+	 * Flag indicating that all loading is done, and the etemplate is ready to be used by app.js
+	 *
+	 * onChange handler checks this to ignore change events before the etemplate is ready
+	 */
+	private ready : boolean = false;
+
 	constructor(_container : HTMLElement, _menuaction? : string, _uniqueId? : string)
 	{
 		if(typeof _menuaction == "undefined")
@@ -380,6 +387,11 @@ export class etemplate2
 		return this._etemplate_exec_id;
 	}
 
+	get isReady() : boolean
+	{
+		return this.ready;
+	}
+
 	/**
 	 * Creates an associative array containing the data array managers for each part
 	 * of the associative data array. A part is something like "content", "readonlys"
@@ -532,6 +544,7 @@ export class etemplate2
 	 */
 	async load(_name, _url, _data, _callback?, _app?, _no_et2_ready?, _open_target?)
 	{
+		this.ready = false;
 		let app = _app || window.app;
 		this.name = _name;	// store top-level template name to have it available in widgets
 		// store template base url, in case initial template is loaded via webdav, to use that for further loads too
@@ -738,6 +751,9 @@ export class etemplate2
 						{
 							this.focusOnFirstInput();
 						}
+
+						// Now etemplate is ready for others to interact with (eg: app.js)
+						this.ready = true;
 
 						// Tell others about it
 						if(typeof _callback == "function")

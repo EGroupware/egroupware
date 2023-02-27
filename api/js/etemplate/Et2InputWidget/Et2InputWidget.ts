@@ -236,7 +236,10 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 		 */
 		_oldChange(_ev : Event) : boolean
 		{
-			if(typeof this.onchange == 'function')
+			if(typeof this.onchange == 'function' && (
+				// If we have an instanceManager, make sure it's ready.  Otherwise, we ignore the event
+				!this.getInstanceManager() || this.getInstanceManager().isReady
+			))
 			{
 				// Make sure function gets a reference to the widget, splice it in as 2. argument if not
 				let args = Array.prototype.slice.call(arguments);
