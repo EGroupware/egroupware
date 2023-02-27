@@ -100,6 +100,24 @@ li {
 		this.value = value;
 	}
 
+	/**
+	 * @deprecated use value
+	 * @param value
+	 */
+	get_value(value)
+	{
+		return this.value;
+	}
+
+	/**
+	 * @deprecated use value
+	 * @param value
+	 */
+	getValue(value)
+	{
+		return this.value;
+	}
+
 	set value(new_value : string | string[])
 	{
 		// Split anything that is still a CSV
