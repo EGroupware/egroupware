@@ -163,7 +163,7 @@ export function egwDragActionImplementation()
 			node.onselectstart = function () {
 				return false;
 			};
-			if (!(window.FileReader && 'draggable' in document.createElement('span')) )
+			if (!(window.FileReader && 'draggable' in document.createElement('span')))
 			{
 				// No DnD support
 				return;
@@ -172,8 +172,12 @@ export function egwDragActionImplementation()
 			// It shouldn't be so hard to get the action...
 			var action = null;
 			var groups = _context.getActionImplementationGroups();
-			if(!groups.drag) return;
-			for(var i = 0; i < groups.drag.length; i++)
+			if (!groups.drag)
+			{
+				return;
+			}
+			// Disable file drag and drop, it conflicts with normal drag and drop
+			for (var i = 0; false && i < groups.drag.length; i++)
 			{
 				// dragType 'file' says it can be dragged as a file
 				if(groups.drag[i].link.actionObj.dragType == 'file' || groups.drag[i].link.actionObj.dragType.indexOf('file') > -1)
