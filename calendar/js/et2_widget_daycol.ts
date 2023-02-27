@@ -24,7 +24,6 @@ import {et2_no_init} from "../../api/js/etemplate/et2_core_common";
 import {egw} from "../../api/js/jsapi/egw_global";
 import {egwIsMobile, sprintf} from "../../api/js/egw_action/egw_action_common.js";
 import {CalendarApp} from "./app";
-import {holidays} from "../../api/js/etemplate/Et2Date/Holidays";
 import {et2_calendar_view} from "./et2_widget_view";
 import flatpickr from "flatpickr";
 import {formatDate} from "../../api/js/etemplate/Et2Date/Et2Date";
@@ -452,7 +451,7 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 		);
 
 		// Holidays and birthdays
-		let fetched_holidays = await holidays(this.options.date.substring(0, 4));
+		let fetched_holidays = await this.egw().holidays(this.options.date.substring(0, 4));
 		const holiday_list = [];
 		let holiday_pref = (egw.preference('birthdays_as_events', 'calendar') || []);
 		if(typeof holiday_pref === 'string')
@@ -512,12 +511,13 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 				else
 				{
 					// Show holidays as events on mobile
-					if(holidays_as_events)
+					if(holidays_as_events && this.getWidgetById("event_" + escape(fetched_holidays[i].name)) == null)
 					{
 						// Create event
 						var event = et2_createWidget('calendar-event', {
 							id: 'event_' + fetched_holidays[i].name,
 							value: {
+								row_id: escape(fetched_holidays[i].name),
 								title: fetched_holidays[i].name,
 								whole_day: true,
 								whole_day_on_top: true,

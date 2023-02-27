@@ -454,13 +454,27 @@ declare interface IegwGlobal
 	 * @return grant object, false if not (yet) loaded and no callback or undefined
 	 */
 	grants(_app : string) /*, _callback, _context)*/ : any;
+
+	/**
+	 * Get a list of holidays for the given year
+	 *
+	 * Returns a promise that resolves with a list of holidays indexed by date, in Ymd format:
+	 * {20001225: [{day: 14, month: 2, occurence: 2021, name: "Valentinstag"}]}
+	 *
+	 * No need to cache the results, we do it here.
+	 *
+	 * @param year
+	 * @returns Promise<{[key: string]: Array<object>}>
+	 */
+	holidays(fullYear : number) : Promise<{ [key : string] : Array<object> }>;
+
 	/**
 	 * Get mime types supported by file editor AND not excluded by user
 	 *
 	 * @param {string} _mime current mime type
 	 * @returns {object|null} returns object of filemanager editor hook
 	 */
-	file_editor_prefered_mimes(_mime : string) : object|null;
+	file_editor_prefered_mimes(_mime : string) : object | null;
 
 	/**
 	 * implemented in egw_store.js

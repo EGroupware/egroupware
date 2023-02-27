@@ -15,7 +15,6 @@ import {dateStyles} from "./DateStyles";
 import {Instance} from 'flatpickr/dist/types/instance';
 import "flatpickr/dist/plugins/scrollPlugin.js";
 import "shortcut-buttons-flatpickr/dist/shortcut-buttons-flatpickr";
-import {holidays} from "./Holidays";
 import flatpickr from "flatpickr";
 import {egw} from "../../jsapi/egw_global";
 import {HTMLElementWithValue} from "@lion/form-core/types/FormControlMixinTypes";
@@ -28,8 +27,6 @@ import shoelace from "../Styles/shoelace";
 
 const textbox = new Et2Textbox();
 const button = new Et2ButtonIcon();
-// Request this year's holidays now
-holidays(new Date().getFullYear());
 
 // list of existing localizations from node_modules/flatpicker/dist/l10n directory:
 const l10n = [
@@ -812,15 +809,7 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(LitFlatpickr))
 			}
 		}.bind(this);
 
-		let holiday_list = holidays(f_date.getFullYear());
-		if(holiday_list instanceof Promise)
-		{
-			holiday_list.then((h) => {set_holiday(h, dayElement);});
-		}
-		else
-		{
-			set_holiday(holiday_list, dayElement);
-		}
+		egw.holidays(f_date.getFullYear()).then((h) => set_holiday(h, dayElement));
 	}
 
 	/**

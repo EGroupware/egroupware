@@ -36,7 +36,6 @@ import {sprintf} from "../../api/js/egw_action/egw_action_common.js";
 import {et2_dataview_grid} from "../../api/js/etemplate/et2_dataview_view_grid";
 import {et2_selectbox} from "../../api/js/etemplate/et2_widget_selectbox";
 import {formatDate, formatTime} from "../../api/js/etemplate/Et2Date/Et2Date";
-import {holidays} from "../../api/js/etemplate/Et2Date/Holidays";
 import interact from "@interactjs/interactjs/index";
 import type {InteractEvent} from "@interactjs/core/InteractEvent";
 
@@ -1317,7 +1316,7 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 		}
 
 		// Holidays and birthdays
-		const fetched = await holidays(date.getUTCFullYear());
+		const fetched = await this.egw().holidays(date.getUTCFullYear());
 		var day_class = '';
 
 		// Pass a string rather than the date object, to make sure it doesn't get changed

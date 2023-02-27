@@ -18,9 +18,11 @@ import './egw_core.js';
  * @param {string} _app application name object is instanced for
  * @param {object} _wnd window object is instanced for
  */
-egw.extend('calendar', egw.MODULE_WND_LOCAL, function(_app, _wnd)
+egw.extend('calendar', egw.MODULE_GLOBAL, function (_app, _wnd)
 {
 	"use strict";
+
+	let _holiday_cache = {};
 
 	/**
 	 * transform PHP date/time-format to jQuery date/time-format
@@ -103,7 +105,7 @@ egw.extend('calendar', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 					diff = day === 6 ? 0 : day === 0 ? -1 : -(day + 1);
 					break;
 				case 'Monday':
-					diff = day === 0 ? -6 : 1-day;
+					diff = day === 0 ? -6 : 1 - day;
 					break;
 				case 'Sunday':
 				default:
@@ -111,6 +113,39 @@ egw.extend('calendar', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 			}
 			d.setUTCDate(d.getUTCDate() + diff);
 			return d;
+		},
+		/**
+		 * Get a list of holidays for the given year
+		 *
+		 * Returns a promise that resolves with a list of holidays indexed by date, in Ymd format:
+		 * {20001225: [{day: 14, month: 2, occurence: 2021, name: "Valentinstag"}]}
+		 *
+		 * No need to cache the results, we do it here.
+		 *
+		 * @param year
+		 * @returns Promise<{[key: string]: Array<object>}>
+		 */
+		holidays: function holidays(year) //: Promise<{ [key : string] : Array<object> }>
+		{
+			// No country selected causes error, so skip if it's missing
+			if (!egw || !egw.preference('country', 'common'))
+			{
+				return {};
+			}
+
+			if (typeof _holiday_cache[year] === 'undefined')
+			{
+				// Fetch with json instead of jsonq because there may be more than
+				// one widget listening for the response by the time it gets back,
+				// and we can't do that when it's queued.
+				_holiday_cache[year] = window.fetch(
+					egw.link('/calendar/holidays.php', {year: year})
+				).then((response) =>
+				{
+					return _holiday_cache[year] = response.json();
+				});
+			}
+			return Promise.resolve(_holiday_cache[year]);
 		}
 	};
 });
