@@ -367,23 +367,6 @@
 						<option value="True">Yes</option>
 					</et2-select>
 				</row>
-				<row>
-					<et2-description  value="Google recaptcha" span="all" class="subHeader"></et2-description>
-				</row>
-				<row>
-					<et2-vbox>
-						<et2-description  value="Google recaptcha secret key" label="%s:"></et2-description>
-						<et2-description  value="This secret key used for communication between your site and Google. Be sure to keep it a secret."></et2-description>
-					</et2-vbox>
-					<et2-textbox  id="newsettings[recaptcha_secret]"></et2-textbox>
-				</row>
-				<row>
-					<et2-vbox>
-						<et2-description  value="Google recaptcha site key" label="%s:"></et2-description>
-						<et2-description  value="This key used in the HTML code your site serves to users."></et2-description>
-					</et2-vbox>
-					<et2-textbox  id="newsettings[recaptcha_site]"></et2-textbox>
-				</row>
 			</rows>
 		</grid>
 	</template>
