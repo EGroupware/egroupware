@@ -241,6 +241,7 @@ export class Et2LinkTo extends Et2InputWidget(ScopedElementsMixin(FormControlMix
 		}
 		this.vfs_select = <et2_vfsSelect>et2_createWidget("vfs-select", select_attrs, this);
 		this.vfs_select.set_readonly(this.readonly);
+		this.vfs_select.onchange = select_attrs.onchange;
 		this.vfs_select.getDOMNode().slot = "before";
 
 		this.append(this.vfs_select.getDOMNode())
