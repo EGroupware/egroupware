@@ -11,11 +11,11 @@
 				<row class="dialogHeadbar" >
 				</row>
 				<row>
-					<et2-hbox>
-						<et2-hbox  disabled="@hidebuttons" class="avatar">
-							<et2-image  src="photo" onclick="jQuery('table.uploadphoto').css('display','inline'); return false;"></et2-image>
+					<et2-box  align="center">
+						<et2-hbox  disabled="@hidebuttons">
+							<et2-avatar src="$cont[photo]" crop="false" shape="circle" size="4em"></et2-avatar>
 						</et2-hbox>
-					</et2-hbox>
+					</et2-box>
 				</row>
 				<row>
 					<et2-textbox  id="n_fn" tabindex="-1" class="cursorHand" onclick="jQuery('table.editname').css('display','inline'); var focElem = document.getElementById(form::name('n_prefix')); if (!(typeof(focElem) == 'undefined') &amp;&amp; typeof(focElem.focus)=='function') document.getElementById(form::name('n_prefix')).focus();" autocomplete="name" placeholder="Name" noLang="1" ></et2-textbox>
