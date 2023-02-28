@@ -8335,10 +8335,13 @@ table.egwGridView_grid img.et2_appicon {
     /* Set header size, color & background */
     color: white;
     background: #0c5da5;
-    height: 5ex;
+    height: 7ex;
     padding: 0;
     padding-left: 5px;
     border-radius: 0;
+  }
+  body et2-dialog::part(title) {
+    line-height: 5ex;
   }
   body et2-dialog::part(close-button) {
     /* Move dialog close button up, change color */
@@ -8352,8 +8355,7 @@ table.egwGridView_grid img.et2_appicon {
     border: none;
   }
   body et2-dialog::part(footer) {
-    /* Move footer to top, set background color */
-    order: -1;
+    order: 0;
     box-shadow: 0px 4px 5px 2px silver;
     width: 100%;
     margin-top: 0px;
