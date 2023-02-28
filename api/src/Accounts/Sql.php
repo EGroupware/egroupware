@@ -424,6 +424,7 @@ class Sql
 	 *	'lid','firstname','lastname','email' - query only the given field for containing $param[query]
 	 * @param $param['offset'] int - number of matches to return if start given, default use the value in the prefs
 	 * @param $param['objectclass'] boolean return objectclass(es) under key 'objectclass' in each account
+	 * @param $param['account_id'] int[] return only given account_id's
 	 * @return array with account_id => data pairs, data is an array with account_id, account_lid, account_firstname,
 	 *	account_lastname, person_id (id of the linked addressbook entry), account_status, account_expires, account_primary_group
 	 */
@@ -443,7 +444,7 @@ class Sql
 		}
 		$order = str_replace(array_keys($order2contact),array_values($order2contact),$param['order'] ?? '');
 
-		// allways add 'account_lid'
+		// always add 'account_lid'
 		if (strpos($order, 'account_lid') === false)
 		{
 			$order .= ($order?',':'').'account_lid';
@@ -465,7 +466,7 @@ class Sql
 			$join .= ' LEFT JOIN '.Api\Mail\Smtp\Sql::TABLE.' ON '.$this->table.'.account_id=-'.Api\Mail\Smtp\Sql::TABLE.'.account_id AND mail_type='.Api\Mail\Smtp\Sql::TYPE_ALIAS;
 		}
 
-		$filter = array();
+		$filter = empty($param['account_id']) ? [] : ['account_id' => (array)$param['account_id']];
 		switch($param['type'])
 		{
 			case 'accounts':
@@ -487,7 +488,7 @@ class Sql
 					$members = array_unique(array_merge($members, array_keys((array)$this->members($grp))));
 					if ($param['type'] == 'groupmembers+memberships') $members[] = abs($grp);
 				}
-				$filter['account_id'] = $members;
+				$filter['account_id'] = empty($filter['account_id']) ? $members : array_merge($members, $filter['account_id']);
 				break;
 			default:
 				if (is_numeric($param['type']))

@@ -374,6 +374,10 @@ class admin_ui
 			$params['query'] = $query['search'];
 			$params['query_type'] = 'all';
 		}
+		if (!empty($query['account_id']))
+		{
+			$params['account_id'] = (array)$query['account_id'];
+		}
 
 		$rows = array_values(self::$accounts->search($params));
 		//error_log(__METHOD__."() accounts->search(".array2string($params).") total=".self::$accounts->total);

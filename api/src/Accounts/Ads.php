@@ -918,6 +918,7 @@ class Ads
 	 * @param $param['objectclass'] boolean return objectclass(es) under key 'objectclass' in each account
 	 * @param $param['active'] boolean true: only return active / not expired accounts
 	 * @param $param['modified'] int if given minimum modification time
+	 * @param $param['account_id'] int[] return only given account_id's
 	 * @return array with account_id => data pairs, data is an array with account_id, account_lid, account_firstname,
 	 *	account_lastname, person_id (id of the linked addressbook entry), account_status, account_expires, account_primary_group
 	 */
@@ -966,6 +967,11 @@ class Ads
 			{
 				$membership_filter = '(|(memberOf='.$this->id2name((int)$param['type'], 'account_dn').')(PrimaryGroupId='.abs($param['type']).'))';
 				$filter = $filter ? "(&$membership_filter$filter)" : $membership_filter;
+			}
+			if (!empty($param['account_id']))
+			{
+				$account_ids_filter = '(|(objectsid='.implode(')(objectsid=', array_map([$this, 'get_sid'], $param['account_id'])).')';
+				$filter = $filter ? "(&$filter$account_ids_filter)" : $account_ids_filter;
 			}
 			if (!empty($param['modified']))
 			{

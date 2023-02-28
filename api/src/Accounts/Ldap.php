@@ -731,6 +731,7 @@ class Ldap
 	 * @param $param['offset'] int - number of matches to return if start given, default use the value in the prefs
 	 * @param $param['objectclass'] boolean return objectclass(es) under key 'objectclass' in each account
 	 * @param $param['modified'] int if given minimum modification time
+	 * @param $param['account_id'] int[] return only given account_id's
 	 * @return array with account_id => data pairs, data is an array with account_id, account_lid, account_firstname,
 	 *	account_lastname, person_id (id of the linked addressbook entry), account_status, account_expires, account_primary_group
 	 */
@@ -811,6 +812,11 @@ class Ldap
 					{
 						$filter .= '(uidNumber=0)'; // to NOT find any user
 					}
+				}
+				// only return given account_id's
+				if (!empty($param['account_id']))
+				{
+					$filter .= '(|(uidNumber=' . implode(')(uidNumber=', $param['account_id']) . '))';
 				}
 				if (!empty($param['modified']))
 				{

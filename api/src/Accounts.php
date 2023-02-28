@@ -187,6 +187,7 @@ class Accounts
 	{
 		// normalize our cache-key by not storing anything, plus adding default the default sort (if none requested)
 		$keys = array_filter($params)+['order' => 'account_lid', 'sort' => 'ASC'];
+		if (isset($keys['account_id'])) $keys['account_id'] = md5(json_encode($keys['account_id']));
 		// sort keys
 		ksort($keys);
 		$key = json_encode($keys);
@@ -221,6 +222,7 @@ class Accounts
 	 *	'lid','firstname','lastname','email' - query only the given field for containing $param[query]
 	 * @param $param['app'] string with an app-name, to limit result on accounts with run-right for that app
 	 * @param $param['active']=true boolean - true: return only acctive accounts, false: return expired or deactivated too
+	 * @param $param['account_id'] int[] return only given account_id's
 	 * @return array with account_id => data pairs, data is an array with account_id, account_lid, account_firstname,
 	 *	account_lastname, person_id (id of the linked addressbook entry), account_status, account_expires, account_primary_group
 	 */
