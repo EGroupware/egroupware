@@ -9028,7 +9028,15 @@ table.egwGridView_grid img.et2_appicon {
     background-size: 24px 24px !important;
     border: none;
   }
-  body .dialogHeadbar et2-button[disabled] {
+  body .dialogHeadbar et2-button-icon::part(base) {
+    -webkit-filter: brightness(0) invert(1) !important;
+    filter: brightness(0) invert(1) !important;
+    background-color: transparent !important;
+    background-size: 24px 24px !important;
+    border: none;
+  }
+  body .dialogHeadbar et2-button[disabled],
+  body .dialogHeadbar et2-button-icon[disabled] {
     display: none;
   }
   body .dialogHeadbar et2-button::part(base) {

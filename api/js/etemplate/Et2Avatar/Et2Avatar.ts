@@ -70,7 +70,10 @@ export class Et2Avatar extends Et2Widget(SlotMixin(SlAvatar)) implements et2_IDe
 			 */
 			src: {type: String},
 
-
+			/**
+			 * The shape of the avatar
+			 * circle | square | rounded
+			 */
 			shape: {
 				type: String,
 				reflect: true
