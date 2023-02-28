@@ -1,6 +1,6 @@
 egroupware-docker (23.1.20230228) hardy; urgency=low
 
-  * 5th release and hopefulle last candidate for upcomming 23.1
+  * 5th release and hopefully last candidate for upcoming 23.1
   * Addressbook/CardDAV: fix new Thunderbird 110 could not sync big addressbooks
   * Mail/OAuth: fix mail account creation failed for regular EGroupware users / non-admins
   * Timesheet: allow to set preference to never ask again to start working time on login
