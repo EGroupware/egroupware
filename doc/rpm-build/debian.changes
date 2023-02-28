@@ -1,3 +1,18 @@
+egroupware-docker (23.1.20230228) hardy; urgency=low
+
+  * 5th release and hopefulle last candidate for upcomming 23.1
+  * Addressbook/CardDAV: fix new Thunderbird 110 could not sync big addressbooks
+  * Mail/OAuth: fix mail account creation failed for regular EGroupware users / non-admins
+  * Timesheet: allow to set preference to never ask again to start working time on login
+  * AD/LDAP: account import supports now (keeping) local groups and their memberships, if configured to do so
+  * ActiveDirectory: fix making extra AD attributes available via custom fields with "ldap_" prefix
+  * AD/LDAP: fix SQL error "duplicate entry 'X' on egw_accounts.account_lid" when updating an existing account
+  * Status/ActiveDirectory: fix not displayed photo avatar
+  * Status/LDAP/AD/UCS: fix picture of users not stored in DB was not shown
+  * for a full list of fixes check: https://github.com/EGroupware/egroupware/compare/23.1.20230210...23.1.20230228
+
+ -- Ralf Becker <rb@egroupware.org>  Tue, 28 Feb 2023 09:43:20 +0100
+
 egroupware-docker (23.1.20230210) hardy; urgency=low
 
   * 4th release candidate for upcomming 23.1, final released scheduled for March 1st 2023
