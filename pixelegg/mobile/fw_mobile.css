@@ -8404,6 +8404,11 @@ table.egwGridView_grid img.et2_appicon {
     clip: rect(0 0 0 0);
     flex: 0 1 auto;
   }
+  body et2-dialog#delete_popup {
+    position: absolute;
+    z-index: 1000000;
+    display: block;
+  }
   body et2-button.plus_button {
     position: fixed !important;
     right: 15px;
