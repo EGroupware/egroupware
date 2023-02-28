@@ -8,12 +8,19 @@ compress folder	mail	lv	Kompresēt mapi
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	lv	Konfigurētās vērtības tiks automātiski iestatītas sastādīšanas dialoglodziņā respektējamajam laukam, sastādot jaunu e-pastu.
 contains	mail	lv	satur
 copy to	mail	lv	Kopēt Uz:
+cross account forward attachment is not allowed!	mail	lv	Nav atļauts pievienot starpkonta priekšējo pielikumu!
+current subject	mail	lv	Pašreizējais temats
 date(newest first)	mail	lv	Datums (jaunākais pirmais)
 date(oldest first)	mail	lv	Datums (vecākais pirmais)
 default sorting order	mail	lv	Noklusētā kārtošanas secība
+default toolbar actions shown in mail's html editor	mail	lv	HTML redaktora rīkjoslā iespējotās funkcijas, veidojot e-pasta vēstuli
+default value for remembering s/mime passphrase in minutes	mail	lv	S/MIME paroles frāzes atcerēšanās noklusējuma vērtība minūtēs
+defines what to show as contact label for added contact into to/cc/bcc when composing an email. default is firstname lastname and empty means include eveything available.	mail	lv	Nosaka, ko parādīt kā kontakta etiķeti pievienotajam kontaktam sarakstā Kam/Kopēt/ Slepenā kopija, veidojot e-pasta vēstuli. Noklusējuma iestatījums ir vārds uzvārds uzvārds, un tukšs nozīmē, ka jāiekļauj viss pieejamais.
+defines what to show as identity label on mail folder header	common	lv	Nosaka, ko parādīt kā identitātes etiķeti pasta mapes galvenē.
 delete folder	mail	lv	Izdzēst mapi
 deleted	mail	lv	Izdzēsts
 disable	mail	lv	Deaktivizēt
+disable caching of flags	mail	lv	Atslēgt karodziņu kešēšanu
 display of html emails	mail	lv	Parādīt HTML vēstules
 display only when no plain text is available	mail	lv	Parādīt tikai tad, kad pieejams atklāts teksts
 does not contain	mail	lv	nesatur

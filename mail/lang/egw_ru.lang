@@ -43,12 +43,19 @@ convert mail to item, attach its attachments and add raw message (message/rfc822
 copy to	mail	ru	Копировать в
 could not append message:	mail	ru	Не могу добавить сообщение
 create new account	mail	ru	Создать учётную запись
+cross account forward attachment is not allowed!	mail	ru	Крестообразное прикрепление счета вперед запрещено!
+current subject	mail	ru	Текущая тема
 date(newest first)	mail	ru	Дата (новые - первыми)
 date(oldest first)	mail	ru	Дата (старые - первыми)
 default sorting order	mail	ru	Порядок сортировки по умолчанию
+default toolbar actions shown in mail's html editor	mail	ru	Функции, включаемые на панели инструментов HTML-редактора при составлении письма
+default value for remembering s/mime passphrase in minutes	mail	ru	Значение по умолчанию для запоминания парольной фразы S/MIME в минутах
+defines what to show as contact label for added contact into to/cc/bcc when composing an email. default is firstname lastname and empty means include eveything available.	mail	ru	Определяет, что показывать в качестве метки контакта для добавленного контакта в To/Copy/Blind copy при составлении письма. По умолчанию это firstname lastname, а пустое значение означает включать все доступное.
+defines what to show as identity label on mail folder header	common	ru	Определяет, что показывать в качестве идентификационной метки в заголовке почтовой папки
 delete folder	mail	ru	Удалить папку
 deleted	mail	ru	Удалено
 disable	mail	ru	Запретить
+disable caching of flags	mail	ru	Отключить кэширование флагов
 disable horizontal rule for separation of mail body from signature	mail	ru	Отключить правила разделения текста письма и подписи. Если используются шаблоны, эта опция применяется только к текстовой части сообщения
 discard	mail	ru	Отклонить
 discard message	mail	ru	Отклонить сообщение

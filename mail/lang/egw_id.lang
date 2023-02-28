@@ -15,12 +15,18 @@ condition	mail	id	kondisi
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	id	Nilai yang dikonfigurasi akan diatur secara otomatis pada dialog penulisan untuk bidang yang dihormati saat membuat email baru.
 contains	mail	id	mengandung
 copy to	mail	id	Salin ke
+cross account forward attachment is not allowed!	mail	id	Lampiran penerusan lintas akun tidak diperbolehkan!
 date(newest first)	mail	id	Tanggal (terbaru)
 date(oldest first)	mail	id	Tanggal (terkuno)
 default sorting order	mail	id	Pengurutan bawaan
+default toolbar actions shown in mail's html editor	mail	id	Fungsi yang diaktifkan di bilah alat editor HTML saat membuat email
+default value for remembering s/mime passphrase in minutes	mail	id	Nilai default untuk mengingat frasa sandi S/MIME dalam hitungan menit
+defines what to show as contact label for added contact into to/cc/bcc when composing an email. default is firstname lastname and empty means include eveything available.	mail	id	Menentukan apa yang akan ditampilkan sebagai label kontak untuk kontak yang ditambahkan ke dalam Kepada/Salin/Tembusan saat membuat email. Nilai default adalah nama depan nama belakang dan kosong berarti menyertakan semua yang tersedia.
+defines what to show as identity label on mail folder header	common	id	Menentukan apa yang akan ditampilkan sebagai label identitas pada header folder email
 delete folder	mail	id	Hapus Folder
 deleted	mail	id	terhapus
 disable	mail	id	Disable
+disable caching of flags	mail	id	Menonaktifkan penyimpanan bendera di cache
 discard	mail	id	buang
 discard message	mail	id	buang pesan
 draft folder	mail	id	draft folder

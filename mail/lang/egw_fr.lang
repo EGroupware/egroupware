@@ -110,6 +110,7 @@ copy to	mail	fr	Copier vers
 could not append message:	mail	fr	Impossible d'ajouter au message:
 could not save the acl because some names are empty	mail	fr	Echec à l'enregistrement de l'ACL ! Certains noms sont vides !
 create new account	mail	fr	Créer un nouveau compte
+cross account forward attachment is not allowed!	mail	fr	La pièce jointe du compte croisé n'est pas autorisée !
 current folder	mail	fr	Dossier actif
 current subject	mail	fr	Sujet actuel
 currently:	mail	fr	Actuellement :
@@ -117,7 +118,11 @@ date(newest first)	mail	fr	Date (plus récente d'abord)
 date(oldest first)	mail	fr	Date (plus ancienne d'abord)
 deactive	mail	fr	Désactiver
 default sorting order	mail	fr	Ordre de tri par défaut
+default toolbar actions shown in mail's html editor	mail	fr	Fonctions activées dans la barre d'outils de l'éditeur HTML lors de la composition d'un courriel
+default value for remembering s/mime passphrase in minutes	mail	fr	Valeur par défaut pour la mémorisation de la phrase de passe S/MIME en minutes
 default your name and email	common	fr	Votre nom et email par défaut
+defines what to show as contact label for added contact into to/cc/bcc when composing an email. default is firstname lastname and empty means include eveything available.	mail	fr	Définit ce qui doit être affiché comme étiquette de contact pour le contact ajouté dans To/Copy/Blind copy lors de la composition d'un email. La valeur par défaut est prénom nom de famille et vide signifie inclure tout ce qui est disponible.
+defines what to show as identity label on mail folder header	common	fr	Définit ce qui doit être affiché comme étiquette d'identité sur l'en-tête du dossier du courrier électronique
 delete folder	mail	fr	Supprimer le dossier
 delete folder %1 ?	mail	fr	Supprimer le dossier %1
 delete this acl	mail	fr	Supprimer cet ACL
@@ -129,6 +134,7 @@ deleting folders	mail	fr	Suppression de dossier
 deny certain groups access to following features	mail	fr	Refuser à certains groupes l'accès aux fonctions suivantes
 directories have to be shared.	mail	fr	Les dossiers doivent être partagés.
 disable	mail	fr	Désactiver
+disable caching of flags	mail	fr	Désactiver la mise en cache des drapeaux
 disable horizontal rule for separation of mail body from signature	mail	fr	Désactiver la barre de séparation entre le corps et la signature
 disable use of flowed lines in plain text mails (rfc3676)	mail	fr	Désactiver l'utilisation de "flowed lines" dans le mails en texte brut (RFC3676)
 disabled!	mail	fr	désactivé !

@@ -630,6 +630,7 @@ height, disabled	common	cs	Výška, vypnuto
 help	common	cs	Nápověda
 high	common	cs	Vysoká
 highest	common	cs	Nejvyšší
+history	common	cs	Historie
 history log	common	cs	Protokol historie
 hold [%1] and [%2] key to drag %3 to your desktop	common	cs	Stiskněte současně klávesy [%1] a [%2] a pak můžete přetáhnout %3 na vaši plochu
 holy see (vatican city state)	common	cs	VATIKÁN
@@ -692,14 +693,17 @@ insert new column behind this one	common	cs	vložit nový sloupec za tento
 insert new column in front of all	common	cs	vložit nový sloupec před všechny ostatní
 insert new row after this one	common	cs	vložit nový řádek za tento
 insert new row in front of first line	common	cs	vložit nový řádek před první řádek
+insert placeholder	common	cs	Vložit zástupný symbol
 insert row after	common	cs	Vložit řádek za
 insert row before	common	cs	Vložit řádek před
 insert timestamp into description field	common	cs	Vložení časového razítka do pole popisu
 integer	common	cs	Celé číslo
 international	common	cs	Mezinárodní
 introduction	common	cs	Úvod
+invalid 2-factor authentication code	common	cs	Neplatný kód dvoufaktorového ověřování
 invalid filename	common	cs	Neplatné jméno souboru
 invalid ip address	common	cs	Neplatná IP adresa
+invalid or expired 'remember me' token	common	cs	Neplatný nebo prošlý token "zapamatuj si mě"
 invalid password	common	cs	Neplatné heslo
 iran, islamic republic of	common	cs	ÍRÁN
 iraq	common	cs	IRÁK

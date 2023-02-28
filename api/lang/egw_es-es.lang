@@ -727,6 +727,7 @@ insert new column behind this one	common	es-es	Insertar nueva columna detrás de
 insert new column in front of all	common	es-es	Insertar nueva columna al principio de todas
 insert new row after this one	common	es-es	Insertar una nueva fila después de ésta
 insert new row in front of first line	common	es-es	Insertar una nueva fila delante de la primera línea
+insert placeholder	common	es-es	Insertar marcador de posición
 insert row after	common	es-es	Insertar una fila despues
 insert row before	common	es-es	Insertar una fila antes
 insert timestamp into description field	common	es-es	Insertar marca de tiempo en el campo de descripción
@@ -734,9 +735,11 @@ install	common	es-es	Instalar
 integer	common	es-es	Entero
 international	common	es-es	Internacional
 introduction	common	es-es	Introducción
+invalid 2-factor authentication code	common	es-es	Código de autenticación de 2 factores no válido
 invalid email	common	es-es	Correo-e no válido
 invalid filename	common	es-es	Nombre de archivo inválido.
 invalid ip address	common	es-es	Dirección IP inválida.
+invalid or expired 'remember me' token	common	es-es	Token "recuérdame" no válido o caducado
 invalid password	common	es-es	La contraseña inválida.
 iran, islamic republic of	common	es-es	IRAN, ISLAMIC REPUBLIC OF
 iraq	common	es-es	IRAK

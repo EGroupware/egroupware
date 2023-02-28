@@ -130,7 +130,7 @@ default sorting order	mail	de	Wählen Sie die Standard-Sortierreihenfolge aus.
 default toolbar actions shown in mail's html editor	mail	de	Aktivierte Funktionen in der HTML-Editor-Symbolleiste beim E-Mail verfassen
 default value for remembering s/mime passphrase in minutes	mail	de	Standardwert für die Erinnerung an die S/MIME-Passphrase in Minuten
 default your name and email	common	de	z.B. Ihr Name und Ihre E-Mail-Adresse
-defines what to show as contact label for added contact into to/cc/bcc when composing an email. default is firstname lastname and empty means include eveything available.	mail	de	Legt fest, was als Kontaktbeschriftung für hinzugefügte Kontakte in An/Kopie/Blindkopie
+defines what to show as contact label for added contact into to/cc/bcc when composing an email. default is firstname lastname and empty means include eveything available.	mail	de	Legt fest, was beim Verfassen einer E-Mail als Kontaktbezeichnung für den hinzugefügten Kontakt in An/Kopie/Blindkopie angezeigt werden soll. Die Voreinstellung ist Vorname Nachname und leer bedeutet, dass alles Verfügbare angezeigt wird.
 defines what to show as identity label on mail folder header	common	de	Definiert, was im Kopf des E-Mail-Postfach angezeigt werden soll.
 delete folder	mail	de	Ordner löschen
 delete folder %1 ?	mail	de	Ordner %1 löschen?

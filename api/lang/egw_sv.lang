@@ -484,6 +484,7 @@ height, disabled	common	sv	Höjd, inaktiverad
 help	common	sv	Hjälp
 high	common	sv	Hög
 highest	common	sv	Högsta
+history	common	sv	Historia
 history log	common	sv	Historik
 holy see (vatican city state)	common	sv	VATIKANEN
 home	common	sv	Hem
@@ -494,8 +495,12 @@ hong kong	common	sv	HONG KONG
 horizontal rule	common	sv	Horisontell linje
 hour	common	sv	Timme
 hours	common	sv	Timmar
+how many days to sync in the future (default %1)	groupdav	sv	Hur många dagar ska synkroniseringen ske i framtiden (standard %1)
+how many days to sync in the past (default %1)	groupdav	sv	Hur många dagar ska synkroniseras i det förflutna (standard %1)
 how many entries should the list show	common	sv	Hur många poster ska listan visa
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	sv	Hur många ikoner ska visas i Navigeringslisten (överst på sidan). Ikoner utöver dessa visas i Länkboxen som hämtas via ikonen längst till höger.
+how many rows to print	common	sv	Hur många rader som ska skrivas ut
+how to show the general egroupware menu ?	common	sv	Hur den allmänna EGroupware-menyn ska visas
 html	common	sv	Html
 hungary	common	sv	UNGERN
 iceland	common	sv	ISLAND
@@ -530,13 +535,16 @@ insert new column behind this one	common	sv	Skapa kolumn efter denna
 insert new column in front of all	common	sv	Skapa kolumn före alla
 insert new row after this one	common	sv	Skapa rad efter denna
 insert new row in front of first line	common	sv	Skapa rad före första raden
+insert placeholder	common	sv	Infoga en platshållare
 insert row after	common	sv	Infoga rad efter
 insert row before	common	sv	Infoga rad före
 insert timestamp into description field	common	sv	Infoga tidsstämpel i beskrivningsfältet
 integer	common	sv	Heltal
 international	common	sv	Internationell
+invalid 2-factor authentication code	common	sv	Ogiltig kod för 2-faktorsautentisering
 invalid filename	common	sv	Ogiltigt filnamn
 invalid ip address	common	sv	Ogiltig IP adress
+invalid or expired 'remember me' token	common	sv	Ogiltig eller förfallen "Kom ihåg mig"-token
 invalid password	common	sv	Ogiltigt lösenord
 iran, islamic republic of	common	sv	IRAN
 iraq	common	sv	IRAK
@@ -544,6 +552,7 @@ ireland	common	sv	IRLAND
 israel	common	sv	ISRAEL
 it has been more then %1 days since you changed your password	common	sv	Det är mer än %1 dagar sedan du ändrade ditt lösenord
 it is recommended that you run setup to upgrade your tables to the current version	common	sv	Det rekomenderas att du kör installationen för att uppgradera dina tabeller till aktuell version.
+it is recommended to store your public key in addressbook, so other users can write you encrypted mails.	common	sv	Det rekommenderas att du lagrar din offentliga nyckel i adressboken, så att andra användare kan skriva krypterade e-postmeddelanden till dig.
 italic	common	sv	Kursiv
 italy	common	sv	ITALIEN
 jamaica	common	sv	JAMAICA

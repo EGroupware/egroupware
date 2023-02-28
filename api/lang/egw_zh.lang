@@ -503,6 +503,7 @@ height, disabled	common	zh	高度，禁用
 help	common	zh	帮助
 high	common	zh	高
 highest	common	zh	最高
+history	common	zh	История
 history log	common	zh	历史日志
 holy see (vatican city state)	common	zh	罗马教廷(梵蒂冈)
 home	common	zh	首页
@@ -513,8 +514,11 @@ hong kong	common	zh	香港
 horizontal rule	common	zh	水平规则
 hour	common	zh	小时
 hours	common	zh	小时
+how many days to sync in the future (default %1)	groupdav	zh	Колко дни да се синхронизира в бъдеще (по подразбиране %1)
+how many days to sync in the past (default %1)	groupdav	zh	Колко дни да се синхронизира в миналото (по подразбиране %1)
 how many entries should the list show	common	zh	列表将要显示多少个条目
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	zh	将在导航栏(页面顶部)显示多少个图标。其它图标会放入一个下拉菜单中，通过点击导航栏最右侧的下拉图标可显示下拉菜单及其中的这些图标。
+how many rows to print	common	zh	Колко реда да се отпечатат
 how to show the general egroupware menu ?	common	zh	如何显示通用 EGroupware 菜单
 html	common	zh	HTML
 hungary	common	zh	匈牙利
@@ -552,13 +556,16 @@ insert new column behind this one	common	zh	在这一列之后插入新列
 insert new column in front of all	common	zh	在最前面插入新列
 insert new row after this one	common	zh	在这一行之后插入新行
 insert new row in front of first line	common	zh	在第一行之前插入新行
+insert placeholder	common	zh	插入占位符
 insert row after	common	zh	在之后插入行
 insert row before	common	zh	在之前插入行
 insert timestamp into description field	common	zh	在描述栏中插入时间戳
 integer	common	zh	整数
 international	common	zh	国际
+invalid 2-factor authentication code	common	zh	无效的2-Factor Authentication代码
 invalid filename	common	zh	文件名不正确
 invalid ip address	common	zh	IP地址无效
+invalid or expired 'remember me' token	common	zh	无效或过期的 "记住我 "令牌
 invalid password	common	zh	密码无效
 iran, islamic republic of	common	zh	伊朗
 iraq	common	zh	伊拉克
@@ -566,6 +573,7 @@ ireland	common	zh	爱尔兰
 israel	common	zh	以色列
 it has been more then %1 days since you changed your password	common	zh	您的密码已经%1天没有更改了
 it is recommended that you run setup to upgrade your tables to the current version	common	zh	建议您运行安装程序来升级您的数据表至当前版本。
+it is recommended to store your public key in addressbook, so other users can write you encrypted mails.	common	zh	建议在地址簿中存储你的公钥，这样其他用户可以给你写加密的邮件。
 italic	common	zh	斜体
 italy	common	zh	意大利
 jamaica	common	zh	牙买加

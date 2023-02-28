@@ -305,12 +305,18 @@ height	common	et	Kõrgus
 help	common	et	Abi
 high	common	et	Kõrge
 highest	common	et	Kõrgeim
+history	common	et	Ajalugu
+history log	common	et	Versiooni ajalugu
 home	common	et	Kodu
 home email	common	et	kodu email
 honduras	common	et	HONDURAS
 hong kong	common	et	HONG KONG
 hour	common	et	Tund
 hours	common	et	tundi
+how many days to sync in the future (default %1)	groupdav	et	Mitu päeva tulevikus sünkroonida (vaikimisi %1)
+how many days to sync in the past (default %1)	groupdav	et	Mitu päeva sünkroonida minevikus (vaikimisi %1)
+how many rows to print	common	et	Mitu rida printida
+how to show the general egroupware menu ?	common	et	Kuidas näidata EGroupware üldmenüüd
 html	common	et	Html
 hungary	common	et	UNGARI
 iceland	common	et	ISLAND
@@ -323,14 +329,18 @@ india	common	et	INDIA
 indonesia	common	et	INDONEESIA
 insert column after	common	et	Sisesta veerg enne
 insert column before	common	et	Sisesta veerg peale
+insert placeholder	common	et	Sisesta paigutuskoht
 insert row after	common	et	Sisesta rida enne
 insert row before	common	et	Sisesta rida peale
 insert timestamp into description field	common	et	Lisage ajatempel kirjeldusväljale
 international	common	et	rahvusvaheline
+invalid 2-factor authentication code	common	et	2-faktoorse autentimise kood on kehtetu
 invalid filename	common	et	Vigane failinimi
 invalid ip address	common	et	Vigane IP aadress
+invalid or expired 'remember me' token	common	et	Kehtetu või aegunud "mäleta mind" märgis
 invalid password	common	et	Vigane parool
 ireland	common	et	IIRIMAA
+it is recommended to store your public key in addressbook, so other users can write you encrypted mails.	common	et	Soovitatav on salvestada oma avalik võti aadressiraamatusse, et teised kasutajad saaksid teile krüpteeritud kirju kirjutada.
 italy	common	et	ITAALIA
 january	common	et	Jaanuar
 japan	common	et	JAAPAN

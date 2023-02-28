@@ -556,7 +556,8 @@ height, disabled	common	fi	Pituus, Estetty
 help	common	fi	Ohjeet
 high	common	fi	Korkea
 highest	common	fi	Korkein
-history log	common	fi	Historia loki
+history	common	fi	Historia
+history log	common	fi	Versiohistoria
 holy see (vatican city state)	common	fi	VATIKAANI
 home	common	fi	Etusivu
 home email	common	fi	Kotisähköposti
@@ -566,8 +567,11 @@ hong kong	common	fi	HONG KONG
 horizontal rule	common	fi	Vaakasuuntainen viiva
 hour	common	fi	Tunti
 hours	common	fi	Tuntia
+how many days to sync in the future (default %1)	groupdav	fi	Kuinka monta päivää synkronoidaan tulevaisuudessa (oletusarvo %1)
+how many days to sync in the past (default %1)	groupdav	fi	Kuinka monta päivää synkronoidaan menneisyydessä (oletusarvo %1)
 how many entries should the list show	common	fi	Kuinka monta merkintää näytetään listalla
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	fi	Kuinka monta kuvaketta näytetään navigaatiopalkissa. Loput kuvakkeet saa näkyviin oikeasta reunasta avautuvasta pudotusvalikosta.
+how many rows to print	common	fi	Kuinka monta riviä tulostetaan
 how to show the general egroupware menu ?	common	fi	Kuinka päävalikko näytetään?
 html	common	fi	HTML
 hungary	common	fi	UNKARI
@@ -608,13 +612,16 @@ insert new column behind this one	common	fi	Lisää uusi sarake valitun taakse
 insert new column in front of all	common	fi	Lisää uusi sarake kaikkien eteen
 insert new row after this one	common	fi	Lisää uusi rivi valitun jälkeen
 insert new row in front of first line	common	fi	Lisää uusi rivi ensimmäisen rivin eteen
+insert placeholder	common	fi	Aseta paikanvaraaja
 insert row after	common	fi	Lisää rivi jälkeen
 insert row before	common	fi	Lisää rivi eteen
 insert timestamp into description field	common	fi	Lisää aikaleima kuvauskenttään
 integer	common	fi	Kokonaisluku
 international	common	fi	Kansainvälinen
+invalid 2-factor authentication code	common	fi	Virheellinen 2-tekijätodennuskoodi
 invalid filename	common	fi	Virheellinen tiedostonnimi.
 invalid ip address	common	fi	Virheellinen IP-osoite.
+invalid or expired 'remember me' token	common	fi	Virheellinen tai vanhentunut "Muista minut" -merkki.
 invalid password	common	fi	Virheellinen salasana.
 iran, islamic republic of	common	fi	IRANIN ISLAMILAINEN TASAVALTA
 iraq	common	fi	IRAK
@@ -622,6 +629,7 @@ ireland	common	fi	IRLANTI
 israel	common	fi	ISRAEL
 it has been more then %1 days since you changed your password	common	fi	Olet vaihtanut salasanasi viimeksi %1 päivää sitten.
 it is recommended that you run setup to upgrade your tables to the current version	common	fi	On suositeltavaa päivittää tietokannan taulut nykyiseen versioon.
+it is recommended to store your public key in addressbook, so other users can write you encrypted mails.	common	fi	On suositeltavaa tallentaa julkinen avaimesi osoitekirjaan, jotta muut käyttäjät voivat kirjoittaa sinulle salattuja viestejä.
 italic	common	fi	Kursivoi
 italy	common	fi	ITALIA
 jamaica	common	fi	JAMAIKA

@@ -17,12 +17,17 @@ condition	mail	zh	条件
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	zh	在撰写新邮件时，配置的值将在撰写对话框中自动设置，用于尊重的领域。
 contains	mail	zh	包含
 copy to	mail	zh	复制到
+cross account forward attachment is not allowed!	mail	zh	不允许跨账户转发附件!
 date(newest first)	mail	zh	日期 (最近邮件优先)
 date(oldest first)	mail	zh	日期 (最早邮件优先)
 default sorting order	mail	zh	默认排序
+default toolbar actions shown in mail's html editor	mail	zh	写邮件时在HTML编辑器工具栏中启用的功能
+default value for remembering s/mime passphrase in minutes	mail	zh	记忆S/MIME口令的默认值为分钟
+defines what to show as contact label for added contact into to/cc/bcc when composing an email. default is firstname lastname and empty means include eveything available.	mail	zh	定义在写邮件时，在收件人/副本/盲文中添加的联系人标签显示什么。缺省值是firstname lastname，空意味着包括所有可用的东西。
 delete folder	mail	zh	删除邮件夹
 deleted	mail	zh	已删除
 disable	mail	zh	禁用
+disable caching of flags	mail	zh	禁用标志的缓存
 discard	mail	zh	取消
 discard message	mail	zh	取消邮件
 display messages in multiple windows	mail	zh	在多窗口显示邮件

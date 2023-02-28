@@ -1,7 +1,14 @@
 (leave empty for no quota)	mail	uk	(Залишити порожнім за відсутності квоти)
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	uk	Налаштовані значення будуть автоматично встановлені в діалоговому вікні створення листа для відповідного поля при створенні нового листа.
+cross account forward attachment is not allowed!	mail	uk	Перехресне прикріплення форвардного рахунку не допускається!
+current subject	mail	uk	Поточна тема
+default toolbar actions shown in mail's html editor	mail	uk	Функції, які вмикаються на панелі інструментів HTML-редактора під час створення листа
+default value for remembering s/mime passphrase in minutes	mail	uk	Значення за замовчуванням для запам'ятовування S/MIME-пароля в хвилинах
+defines what to show as contact label for added contact into to/cc/bcc when composing an email. default is firstname lastname and empty means include eveything available.	mail	uk	Визначає, що відображати в якості мітки контакту для додавання контакту в поле Кому/Копіювати/Сліпа копія при створенні імейлу. За замовчуванням - ім'я та прізвище, а порожнє значення означає, що виводитиметься все, що є в наявності.
+defines what to show as identity label on mail folder header	common	uk	Визначає, що показувати як мітку ідентифікації у заголовку поштової теки
 deleted	mail	uk	Видалено
 disable	mail	uk	Відключити
+disable caching of flags	mail	uk	Вимкнути кешування прапорів
 edit account	mail	uk	Редагувати рахунок
 enable	mail	uk	Включити
 event details follow	mail	uk	Подробиці події

@@ -535,6 +535,7 @@ height, disabled	common	pl	Wysokość, wyłączono
 help	common	pl	Pomoc
 high	common	pl	Wysoki
 highest	common	pl	Najwyższy
+history	common	pl	Historia
 history log	common	pl	Zapis Historii
 holy see (vatican city state)	common	pl	PAŃSTWO WATYKAN
 home	common	pl	Powrót na stronę główną
@@ -545,9 +546,12 @@ hong kong	common	pl	HONG KONG
 horizontal rule	common	pl	Linia pozioma
 hour	common	pl	Godzina
 hours	common	pl	godziny
+how many days to sync in the future (default %1)	groupdav	pl	Ile dni do synchronizacji w przyszłości (domyślnie %1)
+how many days to sync in the past (default %1)	groupdav	pl	Ile dni do synchronizacji w przeszłości (domyślnie %1)
 how many entries should the list show	common	pl	Jak dużo wpisów powinna pokazywać lista
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	pl	Jak dużo ikon ma się pojawiać w pasku nawigacyjnym (nagłówku strony). Pozostałe ikony znajdą się w menu rozwijanym po prawej stronie paska nawigacyjnego.
-how to show the general egroupware menu ?	common	pl	Jak wyświetlić
+how many rows to print	common	pl	Ile wierszy do wydrukowania
+how to show the general egroupware menu ?	common	pl	Jak wyświetlić ogólne menu EGroupware
 html	common	pl	HTML
 hungary	common	pl	WĘGRY
 iceland	common	pl	ISLANDIA
@@ -584,13 +588,16 @@ insert new column behind this one	common	pl	wstaw nową kolumnę za bieżącą
 insert new column in front of all	common	pl	wstaw nową kolumnę na początku
 insert new row after this one	common	pl	wstaw nowy wiersz za bieżącym
 insert new row in front of first line	common	pl	wstaw nowy wiersz na początku
+insert placeholder	common	pl	Wstaw miejsce
 insert row after	common	pl	Wstaw wiersz po
 insert row before	common	pl	Wstaw wiersz przed
 insert timestamp into description field	common	pl	Wstaw znacznik czasu do pola opisu
 integer	common	pl	Liczba całkowita
 international	common	pl	Międzynarodowy
+invalid 2-factor authentication code	common	pl	Nieprawidłowy kod uwierzytelniania dwuczynnikowego
 invalid filename	common	pl	Niepoprawna nazwa pliku
 invalid ip address	common	pl	Zły adres IP
+invalid or expired 'remember me' token	common	pl	Nieprawidłowy lub wygasły token "zapamiętaj mnie".
 invalid password	common	pl	Złe hasło
 iran, islamic republic of	common	pl	IRAN
 iraq	common	pl	IRAK
@@ -598,6 +605,7 @@ ireland	common	pl	IRLANDIA
 israel	common	pl	IZRAEL
 it has been more then %1 days since you changed your password	common	pl	Upłynęło ponad %1 dni od momentu zmiany hasła
 it is recommended that you run setup to upgrade your tables to the current version	common	pl	Zaleca się uruchomienie instalatora do uaktualnienia tabel do bieżącej wersji
+it is recommended to store your public key in addressbook, so other users can write you encrypted mails.	common	pl	Zaleca się przechowywanie klucza publicznego w Książce adresowej, aby inni użytkownicy mogli pisać do Ciebie zaszyfrowane wiadomości.
 italic	common	pl	Kursywa
 italy	common	pl	WŁOCHY
 jamaica	common	pl	JAMAJKA

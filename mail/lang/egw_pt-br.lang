@@ -57,12 +57,18 @@ copied %1 message(s) from %2 to %3	mail	pt-br	copiados %1 mensagem (s) de% 2 a 3
 copy to	mail	pt-br	copiar para
 could not append message:	mail	pt-br	Não foi possível anexar Mensagem:
 create new account	mail	pt-br	criar nova conta
+cross account forward attachment is not allowed!	mail	pt-br	Não é permitido o envio de contas cruzadas!
+current subject	mail	pt-br	Assunto atual
 currently:	mail	pt-br	Atualmente:
 date(newest first)	mail	pt-br	Data (mais novas primeiro)
 date(oldest first)	mail	pt-br	Data (mais antigas primeiro)
 deactive	mail	pt-br	Desativado
 default sorting order	mail	pt-br	Ordem padrão de classificação
+default toolbar actions shown in mail's html editor	mail	pt-br	Funções habilitadas na barra de ferramentas do editor HTML ao compor um e-mail
+default value for remembering s/mime passphrase in minutes	mail	pt-br	Valor padrão para lembrar a senha S/MIME em minutos
 default your name and email	common	pt-br	padrão o seu nome e e-mail
+defines what to show as contact label for added contact into to/cc/bcc when composing an email. default is firstname lastname and empty means include eveything available.	mail	pt-br	Define o que mostrar como etiqueta de contato para contato adicional na cópia To/Copy/Blind ao compor um e-mail. O padrão é primeiro nome e meios vazios incluem todos os meios disponíveis.
+defines what to show as identity label on mail folder header	common	pt-br	Define o que deve ser mostrado como etiqueta de identidade no cabeçalho da pasta de correio
 delete folder	mail	pt-br	excluir pasta
 delete folder %1 ?	mail	pt-br	Apagar pasta% 1?
 deleted	mail	pt-br	removido
@@ -70,6 +76,7 @@ deleted %1 messages in %2	mail	pt-br	apagado %1 mensagens em 2%
 deleted!	mail	pt-br	apagado
 deny certain groups access to following features	mail	pt-br	Negar o acesso a certos grupos as seguintes características
 disable	mail	pt-br	incapacitar
+disable caching of flags	mail	pt-br	Desativar o cache de bandeiras
 disabled!	mail	pt-br	disabled!
 discard	mail	pt-br	descartar
 discard message	mail	pt-br	Descarte mensagem

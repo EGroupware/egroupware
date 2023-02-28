@@ -30,6 +30,7 @@ add sub	infolog	zh	添加子类别
 add timesheet entry	infolog	zh	添加时间表条目
 add:	infolog	zh	添加:
 added	infolog	zh	已添加
+addressbook placeholders available	infolog	zh	可用的地址簿占位符
 all	infolog	zh	全部
 all links and attachments	infolog	zh	所有关联条目及关联文件
 all projects	infolog	zh	所有项目
@@ -105,6 +106,7 @@ edit status	infolog	zh	Edit Status
 edit the entry	infolog	zh	编辑该事项
 edit this entry	infolog	zh	编辑该事项
 empty for all	infolog	zh	全部清空
+encrypt description	infolog	zh	加密描述
 end	infolog	zh	结束
 enddate	infolog	zh	终止日期
 enddate can not be before startdate	infolog	zh	终止日期必须在起始日期之后
@@ -123,6 +125,7 @@ fieldseparator	infolog	zh	字段分隔符
 finish	infolog	zh	结束
 for which types should this field be used	infolog	zh	请选择字段所属类型, 即字段对哪些类型的事项可见
 from	infolog	zh	寄件人
+full list of placeholder names	infolog	zh	占位符名称的完整列表
 general fields:	infolog	zh	通用字段：
 global categories	infolog	zh	全局类别
 high	infolog	zh	高
@@ -137,10 +140,12 @@ infolog - import csv-file	infolog	zh	记事薄 - 从CSV文件导入
 infolog - new	infolog	zh	记事薄-新建
 infolog - new subproject	infolog	zh	记事薄 - 新建子项目
 infolog - subprojects from	infolog	zh	记事薄 - 子项目来自
+infolog encryption requires epl subscription	infolog	zh	信息记录的加密需要EPL订阅
 infolog list	infolog	zh	浏览事项
 infolog preferences	common	zh	记事薄个性化配置
 infolog-fieldname	infolog	zh	记事薄 - 字段名
 insert in document	infolog	zh	插入文件
+insert timestamp into description field	infolog	zh	在描述字段中插入时间戳
 invalid filename	infolog	zh	文件名无效
 label<br>helptext	infolog	zh	标签<br>提示信息
 last changed	infolog	zh	最近修改记录
@@ -203,6 +208,8 @@ phonecall	infolog	zh	函电
 planned	infolog	zh	计划
 price	infolog	zh	价格
 pricelist	infolog	zh	价格表
+print this infolog	infolog	zh	打印此信息日志
+printing...	infolog	zh	打印...
 priority	infolog	zh	优先级
 private	infolog	zh	私有事项
 project	infolog	zh	项目
@@ -282,6 +289,5 @@ yes, with larger fontsize	infolog	zh	是，使用较大的字体
 you can't delete one of the stock types !!!	infolog	zh	无法删除stock类型!!!
 you have entered an invalid ending date	infolog	zh	输入的终止日期无效
 you have entered an invalid starting date	infolog	zh	输入的起始日期无效
-you have to enter a name, to create a new typ!!!	infolog	zh	必须输入新建类型的名称!!!
 you must enter a subject or a description	infolog	zh	必须输入事项的标题或内容
 your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	infolog	zh	您的数据库没有更新到(%1 vs. %2)，请运行%3安装%4更新您的数据库。

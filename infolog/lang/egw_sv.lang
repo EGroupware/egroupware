@@ -32,6 +32,7 @@ add sub	infolog	sv	Lägg till under
 add timesheet entry	infolog	sv	Lägg till tidredovisnings post
 add:	infolog	sv	Lägg till:
 added	infolog	sv	Skapad
+addressbook placeholders available	infolog	sv	Platshållare i adressboken finns tillgängliga
 all	infolog	sv	Alla
 all links and attachments	infolog	sv	Alla länkar och bilagor
 allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	sv	Tillåter statusändring på post, ex. Sätt uppgift till färdig när klar.
@@ -113,6 +114,7 @@ edit status	infolog	sv	Ändra status
 edit the entry	infolog	sv	Ändra post
 edit this entry	infolog	sv	Ändra posten
 empty for all	infolog	sv	Tom för alla
+encrypt description	infolog	sv	Kryptera beskrivning
 end	infolog	sv	Slut
 enddate	infolog	sv	Slutdatum
 enddate can not be before startdate	infolog	sv	Slutdatum kan inte vara före startdatum
@@ -132,6 +134,7 @@ fieldseparator	infolog	sv	Fältavskiljare
 finish	infolog	sv	Avsluta
 for which types should this field be used	infolog	sv	För vilka typer ska fältet användas?
 from	infolog	sv	Från
+full list of placeholder names	infolog	sv	Fullständig lista över namn på platshållare
 global categories	infolog	sv	Globala kategorier
 high	infolog	sv	Hög
 history	infolog	sv	Historik
@@ -146,12 +149,14 @@ infolog - import csv-file	infolog	sv	InfoLogg - importera CSV fil
 infolog - new	infolog	sv	InfoLogg - Ny
 infolog - new subproject	infolog	sv	InfoLogg - Nytt underprojekt
 infolog - subprojects from	infolog	sv	InfoLogg - Underprojekt till
+infolog encryption requires epl subscription	infolog	sv	Kryptering av InfoLog kräver EPL-prenumeration
 infolog entry deleted	infolog	sv	InfoLogg post raderad
 infolog entry saved	infolog	sv	InfoLogg post sparad
-InfoLog filter for the home screen	infolog	sv	InfoLogg filter för Hemsidan
+infolog filter for the home screen	infolog	sv	InfoLogg filter för Hemsidan
 infolog list	infolog	sv	InfoLogg lista
 infolog preferences	common	sv	InfoLogg alternativ
 infolog-fieldname	infolog	sv	InfoLogg fältnamn
+insert timestamp into description field	infolog	sv	Infoga tidsstämpel i beskrivningsfältet
 invalid filename	infolog	sv	Ogiltigt filnamn
 label<br>helptext	infolog	sv	Etikett<br>Hjälptext
 last changed	infolog	sv	Senaste ändring
@@ -215,6 +220,8 @@ planned	infolog	sv	Planerad
 planned time	infolog	sv	Planerad tid
 price	infolog	sv	Pris
 pricelist	infolog	sv	Prislista
+print this infolog	infolog	sv	Skriv ut denna InfoLog
+printing...	infolog	sv	Utskrift...
 priority	infolog	sv	Prioritet
 private	infolog	sv	Privat
 project	infolog	sv	Projekt
@@ -255,7 +262,7 @@ select to filter by responsible	infolog	sv	Välj för att sortera enl ansvarig
 sets the status of this entry and its subs to done	infolog	sv	Anger status för posten och alla under till färdig
 should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	sv	Ska InfoLogg visa under- Uppgift, Samtal eller Anteckning i normala vyn eller inte? Du kan alltid visa dessa via topobjektet
 should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	sv	Ska InfoLogg visa länkar till andra applikationer och/eller bilaga i InfoLogg vyn (normal vy när du öppnar InfoLogg)
-Should InfoLog show up on the home screen and with which filter. Works only if you dont selected an application for the home screen (in your preferences).	infolog	sv	Ska InfoLogg visas på Startsidan och med vilket filter. Fungerar bara om du inte valt en annan applikation till STartsidan (under alternativ)
+should infolog show up on the home screen and with which filter. works only if you dont selected an application for the home screen (in your preferences).	infolog	sv	Ska InfoLogg visas på Startsidan och med vilket filter. Fungerar bara om du inte valt en annan applikation till STartsidan (under alternativ)
 should infolog use full names (surname and familyname) or just the loginnames.	infolog	sv	Ska InfoLogg visa fullständiga namn (förnamn och efternamn) eller bara inloggningsnamnet?
 should the infolog list show a unique numerical id, which can be used eg. as ticket id.	infolog	sv	Ska InfoLogg visa unika numeriska ID som även kan användas som t.ex. ärende ID
 should the infolog list show the column "last modified".	infolog	sv	Ska InfoLogg visa kolumnen "Senast ändrad"
@@ -276,8 +283,8 @@ startdate enddate	infolog	sv	Start- Slutdatum
 startdate for new entries	infolog	sv	Startdatum för nya poster
 startrecord	infolog	sv	Startposition
 status	infolog	sv	Status
-status, percent and date completed are always allowed.	infolog	sv	Status, procent och datum är alltid tillåtna.
 status ...	infolog	sv	Status ...
+status, percent and date completed are always allowed.	infolog	sv	Status, procent och datum är alltid tillåtna.
 sub	infolog	sv	Under
 sub-entries become subs of the parent or main entries, if there's no parent	infolog	sv	Underposter blir underordnade huvudposten om det inte finns någon förälder
 subject	infolog	sv	Ämne
@@ -315,7 +322,6 @@ view the parent of this entry and all his subs	infolog	sv	Visa rot till denna po
 view this linked entry in its application	infolog	sv	Visa den länkade posten i dess applikation
 when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	sv	När Uppgift och Samtal ska påbörjas visas de från aktuellt datum i Mina eller Mina öppna (Startsidan)
 which additional fields should the responsible be allowed to edit without having edit rights?	infolog	sv	Vilka övriga fält ska ansvariga kunna ändra utan ändringsrättigheter?
-which implicit acl rights should the responsible get?	infolog	sv	Vilka ACL rättigheter ska den ansvarigefå?
 will-call	infolog	sv	Ska ringa
 write (add or update) a record by passing its fields.	infolog	sv	Fyll i fälten för att skapa eller uppdatera post
 yes - delete	infolog	sv	Ja - Radera
@@ -323,6 +329,5 @@ yes - delete including sub-entries	infolog	sv	Ja - Radera inklusive under
 you can't delete one of the stock types !!!	infolog	sv	Du kan inte radera inbyggda typer
 you have entered an invalid ending date	infolog	sv	Ogiltigt Slutdatum
 you have entered an invalid starting date	infolog	sv	Ogiltigt Startdatum
-you have to enter a name, to create a new typ!!!	infolog	sv	Ange namn för att skapa typ
 you must enter a subject or a description	infolog	sv	Ange ämne eller beskrivning
 your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	infolog	sv	Din databas är inte uppdaterad (%1 vs. %2), var god och kör %3installationen%4 för att uppdatera.

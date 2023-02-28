@@ -630,6 +630,7 @@ height, disabled	common	ja	高さ（無効）
 help	common	ja	ヘルプ
 high	common	ja	高
 highest	common	ja	最高
+history	common	ja	歴史
 history log	common	ja	変更履歴
 hold [%1] and [%2] key to drag %3 to your desktop	common	ja	Hold [%1] and [%2] key to drag %3 to your desktop
 hold [%1] key to select text eg. to copy it	common	ja	Hold [%1] key to select text eg. to copy it
@@ -693,14 +694,17 @@ insert new column behind this one	common	ja	Insert new column after
 insert new column in front of all	common	ja	Insert new column before all
 insert new row after this one	common	ja	Insert new row after
 insert new row in front of first line	common	ja	Insert new row before first line
+insert placeholder	common	ja	プレースホルダーを挿入する
 insert row after	common	ja	Insert row after
 insert row before	common	ja	Insert row before
 insert timestamp into description field	common	ja	説明欄にタイムスタンプを挿入
 integer	common	ja	整数
 international	common	ja	国際
 introduction	common	ja	紹介
+invalid 2-factor authentication code	common	ja	2ファクタ認証のコードが無効です。
 invalid filename	common	ja	ファイル名が不正です。
 invalid ip address	common	ja	IP アドレスが不正です。
+invalid or expired 'remember me' token	common	ja	Remember Me トークンが無効、または有効期限が切れている
 invalid password	common	ja	パスワードが不正です。
 iran, islamic republic of	common	ja	イラン
 iraq	common	ja	イラク

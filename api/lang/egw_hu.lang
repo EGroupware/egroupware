@@ -374,6 +374,8 @@ height	common	hu	Magasság
 help	common	hu	Segítség
 high	common	hu	Sürgős
 highest	common	hu	Legmagasabb
+history	common	hu	Történelem
+history log	common	hu	Verziótörténet
 holy see (vatican city state)	common	hu	Vatikán
 home	common	hu	Kezdőlap
 home email	common	hu	otthoni email
@@ -382,7 +384,10 @@ honduras	common	hu	Honduras
 hong kong	common	hu	Hong Kong
 hour	common	hu	Óra
 hours	common	hu	órák
+how many days to sync in the future (default %1)	groupdav	hu	Hány napra szinkronizáljon a jövőben (alapértelmezett %1)
+how many days to sync in the past (default %1)	groupdav	hu	Hány nap szinkronizálás a múltban (alapértelmezett %1)
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	hu	A felső menüsoron látható ikonok maximális száma. A többi alkalmazás ikonja a menüsor jobb oldalán található ikonra kattintva érhető el.
+how many rows to print	common	hu	Hány sort kell kinyomtatni
 how to show the general egroupware menu ?	common	hu	Hogyan legyen az EGroupware menü megjelenítve?
 html	common	hu	HTML
 hungary	common	hu	Magyarország
@@ -401,12 +406,15 @@ initial	common	hu	Kezdeti
 insert all %1 addresses of the %2 contacts in %3	common	hu	A %2 kapcsolat összes %1 címének beillesztése ide %3
 insert column after	common	hu	Oszlop szúrása utána
 insert column before	common	hu	Oszlop beszúrása elé
+insert placeholder	common	hu	Helyőrző beillesztése
 insert row after	common	hu	Sor beszúrása utána
 insert row before	common	hu	Sor beszúrása elé
 insert timestamp into description field	common	hu	Időbélyegző beillesztése a leírás mezőbe
 international	common	hu	Nemzetközi
+invalid 2-factor authentication code	common	hu	Érvénytelen 2-faktoros hitelesítési kód
 invalid filename	common	hu	Érvénytelen állománynév
 invalid ip address	common	hu	Érvénytelen IP cím
+invalid or expired 'remember me' token	common	hu	Érvénytelen vagy lejárt "emlékezz rám" token
 invalid password	common	hu	Érvénytelen jelszó
 iran, islamic republic of	common	hu	Irán
 iraq	common	hu	Irak
@@ -414,6 +422,7 @@ ireland	common	hu	Írország
 israel	common	hu	Izrael
 it has been more then %1 days since you changed your password	common	hu	Több mint %1 nap telt el az utolsó jelszómódosítás óta
 it is recommended that you run setup to upgrade your tables to the current version	common	hu	Erősen javasolt az adatbázis frissítése a legújabb verzióra. Ezt a tartomány konfigurációját ellátó felhasználóként teheti meg.
+it is recommended to store your public key in addressbook, so other users can write you encrypted mails.	common	hu	Ajánlott a nyilvános kulcsát az Addressbookban tárolni, így más felhasználók titkosított leveleket tudnak írni Önnek.
 italic	common	hu	Dőlt
 italy	common	hu	Olaszország
 jamaica	common	hu	Jamaika

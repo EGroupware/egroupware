@@ -1,7 +1,14 @@
 (leave empty for no quota)	mail	tr	(Kota olmaması için boş bırakın)
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	tr	Yapılandırılan değerler, yeni bir e-posta oluşturulurken saygı duyulan alan için oluşturma iletişim kutusunda otomatik olarak ayarlanacaktır.
+cross account forward attachment is not allowed!	mail	tr	Çapraz hesap ileri ekine izin verilmez!
+current subject	mail	tr	Güncel konu
+default toolbar actions shown in mail's html editor	mail	tr	E-posta oluştururken HTML düzenleyici araç çubuğunda etkinleştirilen işlevler
+default value for remembering s/mime passphrase in minutes	mail	tr	Dakika cinsinden S/MIME parolasını hatırlamak için varsayılan değer
+defines what to show as contact label for added contact into to/cc/bcc when composing an email. default is firstname lastname and empty means include eveything available.	mail	tr	Bir e-posta oluştururken Kime/Kopyala/Görüntülü kopya içine eklenen kişi için kişi etiketi olarak neyin gösterileceğini tanımlar. Varsayılan ad soyaddır ve boş, mevcut olan her şeyi dahil et anlamına gelir.
+defines what to show as identity label on mail folder header	common	tr	Posta klasörü başlığında kimlik etiketi olarak neyin gösterileceğini tanımlar
 deleted	mail	tr	Silindi
 disable	mail	tr	Engelle
+disable caching of flags	mail	tr	Bayrakların önbelleğe alınmasını devre dışı bırak
 edit account	mail	tr	Hesap düzenle
 enable	mail	tr	Etkinleştir
 event details follow	mail	tr	Etkinlik Detayları Ektedir

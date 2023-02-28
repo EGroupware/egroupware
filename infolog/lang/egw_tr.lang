@@ -4,6 +4,7 @@ accept	infolog	tr	Kabul Et
 action	infolog	tr	Eylem
 add	infolog	tr	ekle
 added	infolog	tr	Eklendi
+addressbook placeholders available	infolog	tr	Adres defteri yer tutucuları mevcut
 cancel	infolog	tr	İptal
 change	infolog	tr	Değiştir
 configuration	infolog	tr	Ayarlar
@@ -20,17 +21,23 @@ download	infolog	tr	?ndir
 duration	infolog	tr	Süre
 edit	infolog	tr	Düzenle
 empty for all	infolog	tr	Tamam? için bo?
+encrypt description	infolog	tr	Açıklamayı şifrele
 enddate	infolog	tr	BitişTarih
 fax	infolog	tr	Fax
 fieldseparator	infolog	tr	Alan ayrac?
 from	infolog	tr	Nereden
+full list of placeholder names	infolog	tr	Yer tutucu adların tam listesi
 global categories	infolog	tr	Genel kategoriler
 import next set	infolog	tr	S?radaki grubu ithal et
+infolog encryption requires epl subscription	infolog	tr	InfoLog şifrelemesi EPL Aboneliği gerektirir
+insert timestamp into description field	infolog	tr	Açıklama alanına zaman damgası ekle
 link	infolog	tr	Link
 location	infolog	tr	Konum
 number of records to read (%1)	infolog	tr	Okunacak kay?t say?s? (1%)
 order	infolog	tr	Sıralama
 permission denied	infolog	tr	İzin verilmedi
+print this infolog	infolog	tr	Bu InfoLog'u yazdırın
+printing...	infolog	tr	Baskı...
 project	infolog	tr	Proje
 search for:	infolog	tr	Arama yap:
 startdate	infolog	tr	Başlangıç tarihi

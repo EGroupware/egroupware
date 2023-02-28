@@ -580,6 +580,7 @@ height, disabled	common	nl	Hoogte, uitgeschakeld
 help	common	nl	Help
 high	common	nl	Hoog
 highest	common	nl	Hoogste
+history	common	nl	Geschiedenis
 history log	common	nl	Historie log
 hold [%1] and [%2] key to drag %3 to your desktop	common	nl	Houd [%1] en [%2] toets vast om %3 naar uw desktop te slepen
 holy see (vatican city state)	common	nl	VATICAANSTAD
@@ -595,6 +596,7 @@ how many days to sync in the future (default %1)	groupdav	nl	Hoeveel dagen om te
 how many days to sync in the past (default %1)	groupdav	nl	Hoeveel dagen om te synchroniseren vanuit het verleden (Standaard %1)
 how many entries should the list show	common	nl	Hoeveel items mogen er in de lijst getoond worden
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	nl	Hoe veel programma-iconen moeten worden weergegeven in de navigatiebalk. Extra iconen worden weergegeven in een uitklapmenu.
+how many rows to print	common	nl	Hoeveel rijen af te drukken
 how to show the general egroupware menu ?	common	nl	Hoe moet het algemene EGroupware menu weergegeven worden?
 html	common	nl	HTML
 html link to the current record	common	nl	HTML link naar huidig record
@@ -637,13 +639,16 @@ insert new column behind this one	common	nl	voeg een nieuwe kolom na deze kolom 
 insert new column in front of all	common	nl	voeg een nieuwe kolom voor deze kolom in
 insert new row after this one	common	nl	voeg een nieuwe rij onder deze rij in
 insert new row in front of first line	common	nl	voeg een nieuwe rij boven de eerste rij in
+insert placeholder	common	nl	Plaatshouder invoegen
 insert row after	common	nl	Rij invoegen onder
 insert row before	common	nl	Rij invoegen boven
 insert timestamp into description field	common	nl	Tijdstempel invoegen in beschrijvingsveld
 integer	common	nl	Geheel getal
 international	common	nl	Internationaal
+invalid 2-factor authentication code	common	nl	Ongeldige 2-Factor Authenticatie code
 invalid filename	common	nl	Ongelde bestandsnaam
 invalid ip address	common	nl	Ongeldig IP-adres
+invalid or expired 'remember me' token	common	nl	Ongeldig of verlopen 'onthoud mij' token
 invalid password	common	nl	Ongeldig wachtwoord
 iran, islamic republic of	common	nl	IRAN
 iraq	common	nl	IIRAK
@@ -651,6 +656,7 @@ ireland	common	nl	IERLAND
 israel	common	nl	ISRAËL
 it has been more then %1 days since you changed your password	common	nl	Er zijn meer dan %1 dagen verstreken sinds u uw wachtwoord hebt gewijzigd.
 it is recommended that you run setup to upgrade your tables to the current version	common	nl	Het is aanbevolen dat u setup uitvoerd om uw tabellen bij te werken naar een actuele versie
+it is recommended to store your public key in addressbook, so other users can write you encrypted mails.	common	nl	Het is aanbevolen om uw publieke sleutel op te slaan in Adresboek, zodat andere gebruikers u versleutelde e-mails kunnen schrijven.
 italic	common	nl	Cursief
 italy	common	nl	ITALIË
 jamaica	common	nl	JAMAICA

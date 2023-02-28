@@ -386,6 +386,8 @@ height, disabled	common	lv	Augstums,nav atļauts
 help	common	lv	Palīgs
 high	common	lv	Augsta
 highest	common	lv	Augstākā
+history	common	lv	Vēsture
+history log	common	lv	Versiju vēsture
 holy see (vatican city state)	common	lv	VATIKĀNS
 home	common	lv	Mājas
 home email	common	lv	e-pasts mājās
@@ -395,7 +397,11 @@ hong kong	common	lv	HONKONGA
 horizontal rule	common	lv	Horizontālā kārtula
 hour	common	lv	Stundas
 hours	common	lv	stundas
+how many days to sync in the future (default %1)	groupdav	lv	Cik dienas sinhronizēt nākotnē (noklusējuma %1)
+how many days to sync in the past (default %1)	groupdav	lv	Cik dienas sinhronizēt pagātnē (noklusējuma %1)
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	lv	Cik daudz ikonas tiek rādītas rīku joslā (lapas augšpusē). Citas ikonas atrodas izvēlnē, kuru var atvērt uzspiežot uz ikonas, kas atrodas rīku joslas labajā malā.
+how many rows to print	common	lv	Cik rindu drukāt
+how to show the general egroupware menu ?	common	lv	Kā parādīt vispārējo EGroupware izvēlni
 html	common	lv	HTML
 hungary	common	lv	UNGĀRIJA
 iceland	common	lv	ISLANDE
@@ -417,11 +423,14 @@ insert new column behind this one	common	lv	ievieto jaunu kolonnu aiz šīs
 insert new column in front of all	common	lv	pirms visām kolonnām ievieto jaunu kolonnu
 insert new row after this one	common	lv	pēc šīs rindiņas ievieto jaunu rindiņu
 insert new row in front of first line	common	lv	pierms pirmās līnijas ievieto jaunu rindiņu
+insert placeholder	common	lv	Ievietot vietvārdu
 insert timestamp into description field	common	lv	Ievietot laika zīmogu apraksta laukā
 integer	common	lv	Vesels skaitlis
 international	common	lv	Internacionāls
+invalid 2-factor authentication code	common	lv	Nederīgs 2 faktoru autentifikācijas kods
 invalid filename	common	lv	Nederīgs lauka nosaukums
 invalid ip address	common	lv	Nederīga IP adrese
+invalid or expired 'remember me' token	common	lv	Nederīgs vai beidzies "atcerēties mani" žetona derīguma termiņš
 invalid password	common	lv	Nederīga parole
 iran, islamic republic of	common	lv	IRĀNA, ISLAMA REPUBLIKA
 iraq	common	lv	IRĀKA
@@ -429,6 +438,7 @@ ireland	common	lv	ĪRIJA
 israel	common	lv	IZRAĒLA
 it has been more then %1 days since you changed your password	common	lv	Ir pagājušas vairāk kā %1 dienas kopš Jūs nomainījāt savu paroli
 it is recommended that you run setup to upgrade your tables to the current version	common	lv	Būtu vēlams palaist setup programmu, lai pārveidotu datu bāzi (varbūt tabulas?) atbilstoši jaunākajai versijai.
+it is recommended to store your public key in addressbook, so other users can write you encrypted mails.	common	lv	Savu publisko atslēgu ieteicams saglabāt Addressbook, lai citi lietotāji varētu jums rakstīt šifrētus e-pastus.
 italic	common	lv	Slīpraksts
 italy	common	lv	ITĀLIJA
 jamaica	common	lv	JAMAIKA

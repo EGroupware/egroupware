@@ -701,6 +701,7 @@ insert new column behind this one	common	sk	Vložiť nový stĺpec za týmto
 insert new column in front of all	common	sk	Vložiť nový stĺpec na úplný začiatok
 insert new row after this one	common	sk	Vložiť riadok za týmto
 insert new row in front of first line	common	sk	Vložiť riadok na začiatok prvého Riadku
+insert placeholder	common	sk	Vložiť zástupný symbol
 insert row after	common	sk	Vložiť Riadok Za
 insert row before	common	sk	Vložiť Riadok Pred
 insert timestamp into description field	common	sk	Vložiť časovú pečiatku do poľa popisu
@@ -708,9 +709,11 @@ install	common	sk	Inštalovať
 integer	common	sk	Celé číslo
 international	common	sk	Mezinárodný
 introduction	common	sk	Úvod
+invalid 2-factor authentication code	common	sk	Neplatný kód dvojfaktorového overovania
 invalid email	common	sk	Chybný e-mail
 invalid filename	common	sk	Chybný názov súboru
 invalid ip address	common	sk	Chybná IP adresa
+invalid or expired 'remember me' token	common	sk	Neplatný alebo neplatný token "zapamätaj si ma
 invalid password	common	sk	Chybné heslo
 iran, islamic republic of	common	sk	IRÁN, ISLAMSKÁ REPUBLIKA
 iraq	common	sk	IRAK

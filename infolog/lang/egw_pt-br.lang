@@ -41,6 +41,7 @@ add sub	infolog	pt-br	adicionar uma Sub
 add timesheet entry	infolog	pt-br	Adicionar registro à planilha de tempo
 add:	infolog	pt-br	Adicionar:
 added	infolog	pt-br	adicionado
+addressbook placeholders available	infolog	pt-br	Disponibilização de porta-livros de endereços
 all	infolog	pt-br	Todos
 all links and attachments	infolog	pt-br	todos links e arquivos anexados
 all projects	infolog	pt-br	Todos projetos
@@ -143,6 +144,7 @@ edit status	infolog	pt-br	Editar o Status
 edit the entry	infolog	pt-br	Editar o registro
 edit this entry	infolog	pt-br	Editar este registro
 empty for all	infolog	pt-br	esvaziar tudo
+encrypt description	infolog	pt-br	Descrição encriptada
 end	infolog	pt-br	Fim
 enddate	infolog	pt-br	Data Final
 enddate can not be before startdate	infolog	pt-br	A data final não pode ser anterior a data inicial
@@ -165,6 +167,7 @@ finish	infolog	pt-br	finalizar
 for serial letter use this tag. put the content, you want to repeat between two tags.	infolog	pt-br	Para cartas em série use esta tag. Coloque o conteúdo, que você quer que repita, entre duas Tags.
 for which types should this field be used	infolog	pt-br	para quais tipos este campo deve ser utilizado
 from	infolog	pt-br	De
+full list of placeholder names	infolog	pt-br	Lista completa de nomes de titulares de lugar
 general fields:	infolog	pt-br	Campos gerais:
 general settings	infolog	pt-br	Definições gerais
 global categories	infolog	pt-br	Categorias Globais
@@ -188,14 +191,16 @@ infolog - import csv-file	infolog	pt-br	Importar arquivo CVS - Tarefas
 infolog - new	infolog	pt-br	Nova - Tarefas
 infolog - new subproject	infolog	pt-br	Novo Subprojeto - Tarefas
 infolog - subprojects from	infolog	pt-br	Novo Subprojeto de - Tarefas
+infolog encryption requires epl subscription	infolog	pt-br	A criptografia InfoLog requer Assinatura EPL
 infolog entry deleted	infolog	pt-br	Tarefa removida
 infolog entry saved	infolog	pt-br	Tarefa salva
-InfoLog filter for the home screen	infolog	pt-br	Filtro para Tarefas na Página Inicial
+infolog filter for the home screen	infolog	pt-br	Filtro para Tarefas na Página Inicial
 infolog list	infolog	pt-br	Lista de Tarefas
 infolog preferences	common	pt-br	Preferências - Tarefas
 infolog-fieldname	infolog	pt-br	Nome do campo - Tarefas
 insert	infolog	pt-br	Inserir
 insert in document	infolog	pt-br	Inserir em documento
+insert timestamp into description field	infolog	pt-br	Insira o carimbo da hora no campo de descrição
 invalid filename	infolog	pt-br	Nome de arquivo inválido
 label<br>helptext	infolog	pt-br	Etiqueta<br>Texto para ajuda
 last changed	infolog	pt-br	Última alteração
@@ -275,6 +280,8 @@ planned time	infolog	pt-br	Horas planejadas
 price	infolog	pt-br	Preço
 pricelist	infolog	pt-br	Lista de preços
 primary link	infolog	pt-br	Link primário
+print this infolog	infolog	pt-br	Imprima este InfoLog
+printing...	infolog	pt-br	Impressão...
 priority	infolog	pt-br	Prioridade
 private	infolog	pt-br	Particular
 project	infolog	pt-br	Projeto
@@ -325,7 +332,7 @@ select to filter by responsible	infolog	pt-br	Selecione para filtrar por respons
 sets the status of this entry and its subs to done	infolog	pt-br	Configura o status deste registros e seus sub-registros como Completada
 should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	pt-br	As sub tarefas de chamadas, notas, devem ser mostradas ou não . Você pode sempre pode visualizar as sub tarefas à partir da principal.
 should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	pt-br	Links para outros aplicativos ou anexos deverão ser exibidos na lista de Tarefas (quando você abrir Tarefas em modo normal de visualização).
-Should InfoLog show up on the home screen and with which filter. Works only if you dont selected an application for the home screen (in your preferences).	infolog	pt-br	O aplicativo Tarefas deverá ser exibido na Página Inicial ? Com qual filtro? Funciona somente se você não selecionou um aplicativo para sua Página Inicial (em suas preferências).
+should infolog show up on the home screen and with which filter. works only if you dont selected an application for the home screen (in your preferences).	infolog	pt-br	O aplicativo Tarefas deverá ser exibido na Página Inicial ? Com qual filtro? Funciona somente se você não selecionou um aplicativo para sua Página Inicial (em suas preferências).
 should infolog use full names (surname and familyname) or just the loginnames.	infolog	pt-br	O aplicativo Tarefas deve usar o nome completo (nome e sobrenome) ou apenas o login de acesso.
 should the infolog list show a unique numerical id, which can be used eg. as ticket id.	infolog	pt-br	A lista do aplicativo Tarefas deverá exibir um identificador número único, que poderá ser usado, por exemplo, como identificador de Ticket.
 should the infolog list show the column "last modified".	infolog	pt-br	A lista do aplicativo Tarefas deverá exibir a coluna "Última alteração".
@@ -346,8 +353,8 @@ startdate enddate	infolog	pt-br	Data inicial / Data Final
 startdate for new entries	infolog	pt-br	Data inicial para novas tarefas
 startrecord	infolog	pt-br	Iniciar registro
 status	infolog	pt-br	Status
-status, percent and date completed are always allowed.	infolog	pt-br	Status, percentagem e data de finalização são sempre autorizados.
 status ...	infolog	pt-br	Status ...
+status, percent and date completed are always allowed.	infolog	pt-br	Status, percentagem e data de finalização são sempre autorizados.
 sub	infolog	pt-br	Sub
 sub-entries become subs of the parent or main entries, if there's no parent	infolog	pt-br	Sub-entradas tornam-se "filhas" da "entrada-pai" ou, se não houver "entrada-pai", da entrada principal
 subject	infolog	pt-br	Assunto
@@ -389,7 +396,6 @@ view the parent of this entry and all his subs	infolog	pt-br	Ver o registro supe
 view this linked entry in its application	infolog	pt-br	Ver esse link no aplicativo correspondente
 when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	pt-br	Quando uma pendência ou chamada for iniciada ela deverá ser mostrada primeiro no filtro que esteja aberto ou na sua página inicial
 which additional fields should the responsible be allowed to edit without having edit rights?	infolog	pt-br	Que registros adicionais o responsável estará autorizado a editar sem ter acesso à edição?
-which implicit acl rights should the responsible get?	infolog	pt-br	Que direitos implícitos o responsável deverá receber ?
 which types should the calendar show	infolog	pt-br	Quais tipos deverão ser exibidos pela Agenda
 will-call	infolog	pt-br	a chamar
 write (add or update) a record by passing its fields.	infolog	pt-br	Escrever (adicionar ou atualizar) um registro contornando seus campos.
@@ -403,6 +409,5 @@ you can choose a categorie to be preselected, when you create a new infolog entr
 you can't delete one of the stock types !!!	infolog	pt-br	Você não pode apagar um destes tipos!!!
 you have entered an invalid ending date	infolog	pt-br	Você informou uma data final inválida
 you have entered an invalid starting date	infolog	pt-br	Você informou uma data inícial inválida
-you have to enter a name, to create a new typ!!!	infolog	pt-br	Você deve digitar um nome para criar um novo tipo!!!
 you must enter a subject or a description	infolog	pt-br	Você deve digitar um assunto ou uma descrição
 your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	infolog	pt-br	Sua base de dados NÃO está atualizada (%1 x %2), por favor execute %3setup%4 para atualizá-la.

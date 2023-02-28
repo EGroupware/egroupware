@@ -41,6 +41,7 @@ add sub	infolog	hu	Albejegyzés hozzáadása
 add timesheet entry	infolog	hu	Regiszter bejegyzés hozzáadása
 add:	infolog	hu	Hozzáadás:
 added	infolog	hu	Hozzáadva
+addressbook placeholders available	infolog	hu	Címjegyzék helyőrzői elérhetőek
 all	infolog	hu	Összes
 all links and attachments	infolog	hu	Minden hivatkozás és melléklet
 all projects	infolog	hu	Minden projekt
@@ -142,6 +143,7 @@ edit status	infolog	hu	Állapot szerkesztése
 edit the entry	infolog	hu	Bejegyzés szerkesztése
 edit this entry	infolog	hu	Aktuális bejegyzés szerkesztése
 empty for all	infolog	hu	összes törlése
+encrypt description	infolog	hu	Titkosított leírás
 end	infolog	hu	Befejezés
 enddate	infolog	hu	Lejárat napja
 enddate can not be before startdate	infolog	hu	A lejárat dátuma nem lehet korábbi mint a kezdés dátuma
@@ -162,6 +164,7 @@ fieldseparator	infolog	hu	Mező elválasztó
 finish	infolog	hu	befejez
 for which types should this field be used	infolog	hu	használható típusok a mezőben
 from	infolog	hu	Feladó
+full list of placeholder names	infolog	hu	A helyőrző nevek teljes listája
 general fields:	infolog	hu	Általános mezők:
 global categories	infolog	hu	Globális kategóriák
 group owner for	infolog	hu	Csoport tulajdonos
@@ -184,12 +187,14 @@ infolog - import csv-file	infolog	hu	InfoLog - CSV-állomány import
 infolog - new	infolog	hu	InfoLog - Új
 infolog - new subproject	infolog	hu	InfoLog - Új alprojekt
 infolog - subprojects from	infolog	hu	InfoLog - Alprojekt innen
+infolog encryption requires epl subscription	infolog	hu	Az InfoLog titkosításához EPL előfizetés szükséges
 infolog entry deleted	infolog	hu	InfoLog bejegyzés törölve
 infolog entry saved	infolog	hu	InfoLog bejegyzés elmentve
-InfoLog filter for the home screen	infolog	hu	InfoLog szűrő a fő képernyőn
+infolog filter for the home screen	infolog	hu	InfoLog szűrő a fő képernyőn
 infolog list	infolog	hu	InfoLog lista
 infolog preferences	common	hu	InfoLog tulajdonságok
 infolog-fieldname	infolog	hu	InfoLog - Mezőnév
+insert timestamp into description field	infolog	hu	Időbélyegző beillesztése a leírás mezőbe
 invalid filename	infolog	hu	Érvénytelen állománynév
 label<br>helptext	infolog	hu	Címke<br>Segítség szöveg
 last changed	infolog	hu	Utolsó változás
@@ -265,6 +270,8 @@ planned time	infolog	hu	tervezett idő
 price	infolog	hu	Ár
 pricelist	infolog	hu	Árlista
 primary link	infolog	hu	elsődleges kapcsolat
+print this infolog	infolog	hu	Az InfoLog kinyomtatása
+printing...	infolog	hu	Nyomtatás...
 priority	infolog	hu	Prioritás
 private	infolog	hu	Magán
 project	infolog	hu	Projekt
@@ -315,7 +322,7 @@ sender	infolog	hu	Feladó
 sets the status of this entry and its subs to done	infolog	hu	Bejegyzés és hozzátartozó albejegyzések állapotának megváltoztatása készre
 should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	hu	InfoLog megjelenítse-e az alfeladatokat, -hívásokat vagy -feljegyzéseket a normál nézetben. Az albejegyzéseket mindig el lehet érni a szülőn keresztül.
 should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	hu	Infolog megjelenítse-e a hivatkozásokat más alkalmazáskhoz és/vagy állomány mellékleteket a normál nézetben.
-Should InfoLog show up on the home screen and with which filter. Works only if you dont selected an application for the home screen (in your preferences).	infolog	hu	Az InfoLog megjelenik a Kezdőlapon egy szűrő alkalmazásával, listázva a feladatait stb. Akkor működik, ha nem választott ki egy alkalmazást Főképernyőnek (a beállításai között). Ha nem tudja, ez miről szól, akkor valószínűleg nem állította át és működni fog.
+should infolog show up on the home screen and with which filter. works only if you dont selected an application for the home screen (in your preferences).	infolog	hu	Az InfoLog megjelenik a Kezdőlapon egy szűrő alkalmazásával, listázva a feladatait stb. Akkor működik, ha nem választott ki egy alkalmazást Főképernyőnek (a beállításai között). Ha nem tudja, ez miről szól, akkor valószínűleg nem állította át és működni fog.
 should infolog use full names (surname and familyname) or just the loginnames.	infolog	hu	Az InfoLog használja-e a teljes nevet (családi és keresztnév), vagy csak a bejelentkező nevet.
 should the infolog list show a unique numerical id, which can be used eg. as ticket id.	infolog	hu	Az InfoLog lista megjelenítse-e az egyedi azonosítót, ami egy szám. Ez a szám alkalmas például jegy azonosító használatára (egyértelműbb, mint a megnevezés, tehát van értelme).
 should the infolog list show the column "last modified".	infolog	hu	Az InfoLog lista megjelenítse-e az "utolsó módosítás" oszlopot is.
@@ -336,8 +343,8 @@ startdate enddate	infolog	hu	Kezdés dátuma Befejezés dátuma
 startdate for new entries	infolog	hu	Új bejegyzés kezdési időpontja
 startrecord	infolog	hu	Kezdő bejegyzés
 status	infolog	hu	Állapot
-status, percent and date completed are always allowed.	infolog	hu	(például ha az alapértelmezett csoportjogosultság nem tenné lehetővé, hogy a leírást módosítsa a felelős).
 status ...	infolog	hu	Állapot ...
+status, percent and date completed are always allowed.	infolog	hu	(például ha az alapértelmezett csoportjogosultság nem tenné lehetővé, hogy a leírást módosítsa a felelős).
 sub	infolog	hu	Albejegyzés
 sub-entries become subs of the parent or main entries, if there's no parent	infolog	hu	Az albejegyzések a struktúrában felettük álló kategóriának lesznek gyermekei, ha nincs szülő.
 subject	infolog	hu	Tárgy
@@ -376,7 +383,6 @@ view the parent of this entry and all his subs	infolog	hu	Szülő bejegyzés és
 view this linked entry in its application	infolog	hu	hivatkozott bejegyzés megtekintése a hozzá tartozó alkalmazással
 when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	hu	Ha egy tennivaló vagy telefonhívás elindult, a nyitott (vagy saját nyitott) szűrőbe bekerül a dátuma (ezt is ki kell találni, hogy hol szerepel)
 which additional fields should the responsible be allowed to edit without having edit rights?	infolog	hu	A bejegyzés felelőse mely mezőket szerkesztheti anélkül, hogy egyébként szerkesztési jogosultságai lennének?
-which implicit acl rights should the responsible get?	infolog	hu	Mely értelemszerűen felmerülő ACL jogosultságokat kapjon a felelős?
 which types should the calendar show	infolog	hu	Mely típust mutasson a naptár
 will-call	infolog	hu	hívni fog
 write (add or update) a record by passing its fields.	infolog	hu	Kiír (hozzáad vagy módosít) egy bejegyzést a mezők átadásával.
@@ -392,6 +398,5 @@ you can choose a categorie to be preselected, when you create a new infolog entr
 you can't delete one of the stock types !!!	infolog	hu	Gyári típust nem lehet törölni !!!
 you have entered an invalid ending date	infolog	hu	Helytelen befejezési dátum
 you have entered an invalid starting date	infolog	hu	Helytelen kezdési dátum
-you have to enter a name, to create a new typ!!!	infolog	hu	Új típus létrehozásához meg kell adni egy nevet!
 you must enter a subject or a description	infolog	hu	Meg kell adni a tárgyat vagy a leírást
 your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	infolog	hu	Az adatbázis frissítésre szorul (%1 <-> %2), kérem futtassa a %3beállításokat%4 az adatbázis frissítéséhez.
