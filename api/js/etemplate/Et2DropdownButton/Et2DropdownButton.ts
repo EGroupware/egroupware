@@ -121,6 +121,10 @@ export class Et2DropdownButton extends Et2widgetWithSelectMixin(Et2Button)
 
 	render()
 	{
+		if(this.readonly)
+		{
+			return '';
+		}
 		return html`
             <sl-button-group>
                 <sl-button size="${egwIsMobile() ? "large" : "medium"}" id="main" ?disabled=${this.disabled}>
