@@ -16,7 +16,7 @@ if (!defined('TIMESHEET_APP'))
 }
 
 $setup_info[TIMESHEET_APP]['name']      = TIMESHEET_APP;
-$setup_info[TIMESHEET_APP]['version']   = '22.1';
+$setup_info[TIMESHEET_APP]['version']   = '23.1';
 $setup_info[TIMESHEET_APP]['app_order'] = 5;
 $setup_info[TIMESHEET_APP]['tables']    = array('egw_timesheet','egw_timesheet_extra','egw_timesheet_events');
 $setup_info[TIMESHEET_APP]['enable']    = 1;
@@ -51,5 +51,5 @@ $setup_info[TIMESHEET_APP]['hooks']['config_validate'] = 'EGroupware\\Timesheet\
 /* Dependencies for this app to work */
 $setup_info[TIMESHEET_APP]['depends'][] = array(
 	 'appname' => 'api',
-	 'versions' => Array('21.1')
+	 'versions' => Array('23.1')
 );

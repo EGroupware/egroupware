@@ -9,7 +9,7 @@
  */
 
 $setup_info['importexport']['name']      = 'importexport';
-$setup_info['importexport']['version']   = '21.1';
+$setup_info['importexport']['version']   = '23.1';
 $setup_info['importexport']['app_order'] = 2;
 $setup_info['importexport']['enable']    = 2;
 $setup_info['importexport']['tables']    = array('egw_importexport_definitions');
@@ -39,7 +39,7 @@ $setup_info['importexport']['hooks']['deleteaccount'] = 'importexport.importexpo
 /* Dependencies for this app to work */
 $setup_info['importexport']['depends'][] = array(
 	 'appname' => 'api',
-	 'versions' => Array('21.1')
+	 'versions' => Array('23.1')
 );
 
 // installation checks for importexport

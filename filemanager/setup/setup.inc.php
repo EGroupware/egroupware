@@ -9,7 +9,7 @@
 
 $setup_info['filemanager']['name']    = 'filemanager';
 $setup_info['filemanager']['title']   = 'Filemanager';
-$setup_info['filemanager']['version'] = '21.1';
+$setup_info['filemanager']['version'] = '23.1';
 $setup_info['filemanager']['app_order'] = 6;
 $setup_info['filemanager']['enable']  = 1;
 $setup_info['filemanager']['index']   = 'filemanager.filemanager_ui.index&ajax=true';
@@ -38,5 +38,5 @@ $setup_info['filemanager']['hooks']['vfs_mkdir'] = 'filemanager_hooks::vfs_hooks
 /* Dependencies for this app to work */
 $setup_info['filemanager']['depends'][] = array(
 	'appname'  => 'api',
-	'versions' => array('21.1')
+	'versions' => array('23.1')
 );

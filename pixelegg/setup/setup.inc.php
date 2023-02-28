@@ -10,7 +10,7 @@
 
 $GLOBALS['egw_info']['template']['pixelegg']['name']      = 'pixelegg';
 $GLOBALS['egw_info']['template']['pixelegg']['title']     = 'Standard ';
-$GLOBALS['egw_info']['template']['pixelegg']['version']   = '21.1';
+$GLOBALS['egw_info']['template']['pixelegg']['version']   = '23.1';
 
 $GLOBALS['egw_info']['template']['pixelegg']['author'] = array(
    array('name' => 'EGroupware GmbH', 'url' => 'http://www.egroupware.org/'),
@@ -34,5 +34,5 @@ $GLOBALS['egw_info']['template']['pixelegg']['themes'] = array(
 // Dependencies for this template to work
 $GLOBALS['egw_info']['template']['pixelegg']['depends'][] = array(
 	'appname' => 'api',
-	'versions' => Array('21.1')
+	'versions' => Array('23.1')
 );

@@ -839,3 +839,13 @@ function api_upgrade21_1_002()
 
 	return $GLOBALS['setup_info']['api']['currentver'] = '21.1.003';
 }
+
+/**
+ * Bump version to 23.1
+ *
+ * @return string
+ */
+function api_upgrade21_1_003()
+{
+	return $GLOBALS['setup_info']['api']['currentver'] = '23.1';
+}

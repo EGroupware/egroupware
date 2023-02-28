@@ -12,7 +12,7 @@
 
 $setup_info['mail']['name']      	= 'mail';
 $setup_info['mail']['title']     	= 'mail';
-$setup_info['mail']['version']     	= '21.1';
+$setup_info['mail']['version']     	= '23.1';
 $setup_info['mail']['app_order'] 	= 2;
 $setup_info['mail']['enable']    	= 1;
 $setup_info['mail']['index']    	= 'mail.mail_ui.index&ajax=true';
@@ -42,7 +42,7 @@ $setup_info['mail']['hooks']['config'] = 'mail_hooks::config';
 /* Dependencies for this app to work */
 $setup_info['mail']['depends'][] = array(
 	'appname'  => 'api',
-	'versions' => Array('21.1')
+	'versions' => Array('23.1')
 );
 // installation checks for mail
 $setup_info['mail']['check_install'] = array(

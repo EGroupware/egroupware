@@ -38,5 +38,5 @@ $setup_info[NOTIFICATION_APP]['hooks']['config'] = 'notifications.notifications.
 /* Dependencies for this app to work */
 $setup_info[NOTIFICATION_APP]['depends'][] = array(
 	 'appname' => 'api',
-	 'versions' => Array('21.1')
+	 'versions' => Array('23.1')
 );

@@ -222,6 +222,15 @@ function timesheet_upgrade21_1()
 		'uc' => array('tse_id')
 	));
 
-	return $GLOBALS['setup_info']['timesheet']['currentver'] = '22.1';
+	return $GLOBALS['setup_info']['timesheet']['currentver'] = '23.1';
 }
 
+/**
+ * Bump version to 23.1
+ *
+ * @return string
+ */
+function timesheet_upgrade22_1()
+{
+	return $GLOBALS['setup_info']['timesheet']['currentver'] = '23.1';
+}
