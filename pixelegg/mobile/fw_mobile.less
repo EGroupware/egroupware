@@ -662,15 +662,19 @@
 	  }
 
 	  et2-dialog et2-button[slot="footer"]:has(et2-image)::part(label) {
-		/* Visually hide labels but leave them there for accessibility */
-		position: absolute;
-		width: 1px;
-		height: 1px;
-		overflow: hidden;
-		clip: rect(0 0 0 0);
-		flex: 0 1 auto;
+		  /* Visually hide labels but leave them there for accessibility */
+		  position: absolute;
+		  width: 1px;
+		  height: 1px;
+		  overflow: hidden;
+		  clip: rect(0 0 0 0);
+		  flex: 0 1 auto;
 	  }
-
+      et2-dialog#delete_popup {
+		  position: absolute;
+		  z-index: 1000000;
+		  display: block;
+	  }
 	  et2-button.plus_button {
 		position: fixed !important;
 		right: 15px;
