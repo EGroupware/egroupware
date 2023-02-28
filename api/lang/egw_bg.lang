@@ -342,6 +342,8 @@ height	common	bg	Височина
 help	common	bg	Помощ
 high	common	bg	Висок
 highest	common	bg	Най-висок
+history	common	bg	История
+history log	common	bg	История на версиите
 holy see (vatican city state)	common	bg	Ватикана
 home	common	bg	Начало
 home email	common	bg	домашен e-mail
@@ -349,7 +351,10 @@ home screen	common	bg	Основен екран
 honduras	common	bg	Хондурас
 hong kong	common	bg	Хонг-Конг
 hours	common	bg	часа
+how many days to sync in the future (default %1)	groupdav	bg	Колко дни да се синхронизира в бъдеще (по подразбиране %1)
+how many days to sync in the past (default %1)	groupdav	bg	Колко дни да се синхронизира в миналото (по подразбиране %1)
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	bg	Колко икони да се покажат в лентата за навигация (горе на страницата)? Останалите икони се показват чрез падащо меню, активирано чрез иконата в крайната дясна част на лентата.
+how many rows to print	common	bg	Колко реда да се отпечатат
 how to show the general egroupware menu ?	common	bg	Как да се покаже общото меню на EGroupware ?
 html	common	bg	HTML
 hungary	common	bg	Унгария
@@ -367,12 +372,15 @@ insert all %1 addresses of the %2 contacts in %3	common	bg	Вмъкване на
 insert column after	common	bg	Вмъкни колона след
 insert column before	common	bg	Вмъкни колона преди
 insert in document	common	bg	Вмъкване в документа
+insert placeholder	common	bg	Вмъкване на заместител
 insert row after	common	bg	Вмъкни ред след
 insert row before	common	bg	Вмъкни ред преди
 insert timestamp into description field	common	bg	Вмъкване на времеви печат в полето за описание
 international	common	bg	Международен
+invalid 2-factor authentication code	common	bg	Невалиден код за двуфакторно удостоверяване
 invalid filename	common	bg	Грешно име на файл
 invalid ip address	common	bg	Невалиден IP адрес
+invalid or expired 'remember me' token	common	bg	Невалиден или изтекъл токен "запомни ме
 invalid password	common	bg	Грешна парола
 iran, islamic republic of	common	bg	Ислямска Република Иран
 iraq	common	bg	Ирак
@@ -380,6 +388,7 @@ ireland	common	bg	Ейре
 israel	common	bg	Израел
 it has been more then %1 days since you changed your password	common	bg	Изминали са повече от %1 дни, откакто сте променяли паролата си
 it is recommended that you run setup to upgrade your tables to the current version	common	bg	Препоръчително е да преминете през "инсталация" (setup), за да обновите таблиците си до текущата версия.
+it is recommended to store your public key in addressbook, so other users can write you encrypted mails.	common	bg	Препоръчително е да съхранявате публичния си ключ в Addressbook, за да могат други потребители да ви пишат криптирани писма.
 italic	common	bg	Курсив
 italy	common	bg	Италия
 jamaica	common	bg	Ямайка

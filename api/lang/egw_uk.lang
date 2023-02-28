@@ -225,27 +225,37 @@ haiti	common	uk	ГАЇТІ
 help	common	uk	Довідка
 high	common	uk	Високий
 highest	common	uk	Найвищий
+history	common	uk	Історія
+history log	common	uk	Історія версій
 home	common	uk	Додому
 home email	common	uk	домашній email
 home screen	common	uk	Основний екран
 honduras	common	uk	ГОНДУРАС
 hours	common	uk	години
+how many days to sync in the future (default %1)	groupdav	uk	Скільки днів синхронізувати в майбутньому (за замовчуванням %1)
+how many days to sync in the past (default %1)	groupdav	uk	Скільки днів синхронізувати в минулому (за замовчуванням %1)
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	uk	Скільки ікон показувати в навігаційній панелі. Додаткові ікони будуть в випадаючому меню в правій частині панелі.
+how many rows to print	common	uk	Скільки рядків друкувати
+how to show the general egroupware menu ?	common	uk	Як показати загальне меню EGroupware
 hungary	common	uk	УГОРЩИНА
 id	common	uk	Id
 image url	common	uk	URL зображення
 import	common	uk	Імпорт
 insert all %1 addresses of the %2 contacts in %3	common	uk	Вставити всі %1 адресів %2 контактів в %3
+insert placeholder	common	uk	Вставте заповнювач
 insert timestamp into description field	common	uk	Вставте мітку часу в поле опису
 international	common	uk	Міжнародний
+invalid 2-factor authentication code	common	uk	Невірний код 2-факторної автентифікації
 invalid filename	common	uk	невірне ім'я файлу
 invalid ip address	common	uk	Невірна IP адреса
+invalid or expired 'remember me' token	common	uk	Недійсний або прострочений токен "запам'ятати мене
 invalid password	common	uk	Невірний пароль
 iraq	common	uk	ІРАК
 ireland	common	uk	ІРЛАНДІЯ
 israel	common	uk	ІЗРАЇЛЬ
 it has been more then %1 days since you changed your password	common	uk	Пройшло більше %1 днів з часу зміни паролю
 it is recommended that you run setup to upgrade your tables to the current version	common	uk	It is recommended that you run setup to upgrade your tables to the current version.
+it is recommended to store your public key in addressbook, so other users can write you encrypted mails.	common	uk	Рекомендується зберігати ваш відкритий ключ в адресній книзі, щоб інші користувачі могли писати вам зашифровані листи.
 italy	common	uk	ІТАЛІЯ
 jamaica	common	uk	ЯМАЙКА
 january	common	uk	Січень

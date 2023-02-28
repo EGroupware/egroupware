@@ -511,6 +511,8 @@ height, disabled	common	pt	Altura, Desactivada
 help	common	pt	Ajuda
 high	common	pt	Alta
 highest	common	pt	Mais alta
+history	common	pt	História
+history log	common	pt	Diário de história
 holy see (vatican city state)	common	pt	Santa Sé (Cidade do Estado do Vaticano)
 home	common	pt	Página inicial
 home email	common	pt	endereço de correio electrónico principal
@@ -520,8 +522,12 @@ hong kong	common	pt	Hong Kong
 horizontal rule	common	pt	Regra horizontal
 hour	common	pt	Hora
 hours	common	pt	Horas
+how many days to sync in the future (default %1)	groupdav	pt	Quantos dias para sincronizar no futuro (%1 por defeito)
+how many days to sync in the past (default %1)	groupdav	pt	Quantos dias para sincronizar no passado (por defeito %1)
 how many entries should the list show	common	pt	Número de registos a exibir na lista
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	pt	Quantos ícones devem ser exibidos na barra de navegação (topo da página). Os ícones adicionais irão para um outro menu. Para aceder a este menu basta clicar no ícone mais à direita da barra de navegação.
+how many rows to print	common	pt	Quantas filas a imprimir
+how to show the general egroupware menu ?	common	pt	Como mostrar o menu geral do EGroupware
 html	common	pt	HTML
 html link to the current record	common	pt	Link HTML para o registro atual
 hungary	common	pt	Hungria
@@ -558,13 +564,16 @@ insert new column behind this one	common	pt	Inserir uma coluna antes desta
 insert new column in front of all	common	pt	Inserir uma coluna à frente de todas
 insert new row after this one	common	pt	Inserir uma coluna depois desta
 insert new row in front of first line	common	pt	Inserir uma linha à frente de todas
+insert placeholder	common	pt	Inserir o espaço reservado
 insert row after	common	pt	Inserir linha depois
 insert row before	common	pt	Inserir linha antes
 insert timestamp into description field	common	pt	Inserir carimbo da hora no campo de descrição
 integer	common	pt	Inteiro
 international	common	pt	Internacional
+invalid 2-factor authentication code	common	pt	Código de autenticação de 2 factores inválidos
 invalid filename	common	pt	Nome de ficheiro inválido
 invalid ip address	common	pt	Endereço IP inválido
+invalid or expired 'remember me' token	common	pt	Ficha "lembre-se de mim" inválida ou expirada
 invalid password	common	pt	Senha inválida
 iran, islamic republic of	common	pt	Irão, República Islâmica do
 iraq	common	pt	Iraque
@@ -572,6 +581,7 @@ ireland	common	pt	Irlanda
 israel	common	pt	Israel
 it has been more then %1 days since you changed your password	common	pt	Passaram %1 dias desde a última alteração da sua senha
 it is recommended that you run setup to upgrade your tables to the current version	common	pt	É recomendado que seja executada a Configuração para atualizar as tabelas para a versão atual.
+it is recommended to store your public key in addressbook, so other users can write you encrypted mails.	common	pt	Recomenda-se o armazenamento da sua chave pública no Addressbook, para que outros utilizadores possam escrever-lhe mensagens encriptadas.
 italic	common	pt	Itálico
 italy	common	pt	Itália
 jamaica	common	pt	Jamaica

@@ -35,6 +35,7 @@ add file	infolog	el	Προσθήκη αρχείου
 add sub	infolog	el	προσθήκη υπό
 add:	infolog	el	Προσθήκη:
 added	infolog	el	Προστέθηκε
+addressbook placeholders available	infolog	el	Διαθέσιμα εικονίδια στο βιβλίο διευθύνσεων
 all	infolog	el	Όλα
 all links and attachments	infolog	el	όλοι οι σύνδεσμοι και οι επισυνάψεις
 allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	el	επιτρέπει τον καθορισμό της κατάστασης μιας καταχώρησης,π.χ. καθορισμός μιας εκκρεμότητας σε ολοκληρωμένη εάν τελείωσε (αξίες εξαρτώνται από τον τύπο της καταχώρησης)
@@ -125,6 +126,7 @@ edit status	infolog	el	Επιμέλεια κατάστασης
 edit the entry	infolog	el	Επιμέλεια της καταχώρησης
 edit this entry	infolog	el	Επιμέλεια αυτής της καταχώρησης
 empty for all	infolog	el	κενό για όλα
+encrypt description	infolog	el	Κρυπτογράφηση περιγραφής
 end	infolog	el	Τέλος
 enddate	infolog	el	Προθεσμία λήξης
 enddate can not be before startdate	infolog	el	Η προθεσμία λήξης δεν μπορεί να είναι προηγούμενη της  ημερομηνίας έναρξης
@@ -143,6 +145,7 @@ fieldseparator	infolog	el	Διαχωριστής πεδίων
 finish	infolog	el	τέλος
 for which types should this field be used	infolog	el	για ποιους τύπους να χρησιμοποιηθεί αυτό το πεδίο
 from	infolog	el	Από
+full list of placeholder names	infolog	el	Πλήρης κατάλογος των ονομάτων των placeholder
 general fields:	infolog	el	Γενικά πεδία:
 global categories	infolog	el	Παγκόσμιες κατηγορίες
 high	infolog	el	υψηλή
@@ -160,12 +163,14 @@ infolog - import csv-file	infolog	el	InfoLog - Εισαγωγή CSV αρχείο
 infolog - new	infolog	el	InfoLog - Νέο
 infolog - new subproject	infolog	el	InfoLog - Νέα υποκατηγορία σχεδίων
 infolog - subprojects from	infolog	el	InfoLog - Υποκατηγορίες σχεδίων από
+infolog encryption requires epl subscription	infolog	el	Η κρυπτογράφηση InfoLog απαιτεί συνδρομή EPL
 infolog entry deleted	infolog	el	InfoLog καταχώρηση διεγράφη
 infolog entry saved	infolog	el	InfoLog καταχώρηση αποθηκεύτηκε
 infolog filter for the home screen	infolog	el	InfoLog φίλτρο για τη βασική οθόνη
 infolog list	infolog	el	InfoLog λίστα
 infolog preferences	common	el	InfoLog προτιμήσεις
 infolog-fieldname	infolog	el	InfoLog - Όνομα πεδίου
+insert timestamp into description field	infolog	el	Εισαγωγή χρονοσφραγίδας στο πεδίο περιγραφής
 invalid filename	infolog	el	Άκυρο όνομα αρχείου
 label<br>helptext	infolog	el	Ετικέτα<br>Κείμενο βοήθειας
 last changed	infolog	el	Τελευταία αλλαγή
@@ -234,6 +239,8 @@ planned time	infolog	el	ώρα σχεδίου
 price	infolog	el	Τιμή
 pricelist	infolog	el	Τιμοκατάλογος
 primary link	infolog	el	κύριος σύνδεσμος
+print this infolog	infolog	el	Εκτύπωση αυτού του InfoLog
+printing...	infolog	el	Εκτύπωση...
 priority	infolog	el	Προτεραιότητα
 private	infolog	el	Προσωπικό
 project	infolog	el	Σχέδιο

@@ -404,6 +404,7 @@ height, disabled	common	id	Height, Disabled
 help	common	id	Bantuan
 high	common	id	Tinggi
 highest	common	id	Tertinggi
+history	common	id	Sejarah
 history log	common	id	Log Riwayat
 holy see (vatican city state)	common	id	HOLY SEE (NEGARA KOTA VATICAN)
 home	common	id	Beranda
@@ -414,6 +415,10 @@ hong kong	common	id	HONG KONG
 horizontal rule	common	id	Horizontal Rule
 hour	common	id	Jam
 hours	common	id	jam
+how many days to sync in the future (default %1)	groupdav	id	Berapa hari yang akan disinkronkan di masa mendatang (default %1)
+how many days to sync in the past (default %1)	groupdav	id	Berapa hari yang akan disinkronkan di masa lalu (default %1)
+how many rows to print	common	id	Berapa banyak baris yang akan dicetak
+how to show the general egroupware menu ?	common	id	Cara menampilkan menu umum EGroupware
 html	common	id	HTML
 hungary	common	id	HONGARIA
 iceland	common	id	ISLANDIA

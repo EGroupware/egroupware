@@ -26,6 +26,7 @@ add file	infolog	uk	Додати файл
 add sub	infolog	uk	Додати Підзапис
 add:	infolog	uk	Додати:
 added	infolog	uk	Добавлено
+addressbook placeholders available	infolog	uk	Доступні заповнювачі адресної книги
 all	infolog	uk	Все
 all links and attachments	infolog	uk	Всі додатки та посилання
 allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	uk	Дозволяє встановити статус запису, наприклад, встановити Завдання як виконане у випадку закінчення (значення залежать від типу запису)
@@ -84,6 +85,7 @@ edit or create categories for ingolog	infolog	uk	Редагувати або с�
 edit the entry	infolog	uk	Редагувати запис
 edit this entry	infolog	uk	Редагувати цей запис
 empty for all	infolog	uk	порожнє для всіх
+encrypt description	infolog	uk	Зашифрувати опис
 enddate	infolog	uk	Дата закінчення
 enddate can not be before startdate	infolog	uk	Закінчення не може бути раніше Початку
 enter a custom contact, leave empty if linked entry should be used	infolog	uk	Введіть додатковий контакт, або залиште його порожнім, якщо повинен використовуватись прив'язаний запис
@@ -97,6 +99,7 @@ fieldseparator	infolog	uk	Розділитель полів
 finish	infolog	uk	закінчено
 for which types should this field be used	infolog	uk	для яких типів призначене це поле
 from	infolog	uk	Від
+full list of placeholder names	infolog	uk	Повний список імен заповнювачів
 global categories	infolog	uk	Глобальні категорії
 high	infolog	uk	високий
 id	infolog	uk	Id
@@ -109,9 +112,11 @@ infolog - import csv-file	infolog	uk	Записки - Імпорт CSV-файл�
 infolog - new	infolog	uk	Записки - Новий запис
 infolog - new subproject	infolog	uk	Записки - Новий підпроект
 infolog - subprojects from	infolog	uk	Записки - Підпроекти
+infolog encryption requires epl subscription	infolog	uk	Шифрування InfoLog вимагає підписки на EPL
 infolog list	infolog	uk	Перелік записок
 infolog preferences	common	uk	Записки - Параметри
 infolog-fieldname	infolog	uk	Записки - Ім'я поля
+insert timestamp into description field	infolog	uk	Вставити мітку часу в поле опису
 invalid filename	infolog	uk	невірне ім'я файлу
 label<br>helptext	infolog	uk	Мітка<br>Пояснючий текст
 last changed	infolog	uk	Востаннє змінено
@@ -160,6 +165,8 @@ permission denied	infolog	uk	Заборонено
 phone	infolog	uk	Телефонний дзвінок
 phone/email	infolog	uk	Телефон/Email
 phonecall	infolog	uk	Телефонний дзвінок
+print this infolog	infolog	uk	Надрукувати цей інфолог
+printing...	infolog	uk	Друк...
 priority	infolog	uk	Пріоритет
 private	infolog	uk	Особисте
 project	infolog	uk	Проект
@@ -223,5 +230,4 @@ yes - delete	infolog	uk	Так - Видалити
 you can't delete one of the stock types !!!	infolog	uk	Ви не можете видалити один з вбудованих типів
 you have entered an invalid ending date	infolog	uk	Ви ввели невірну дату закінчення
 you have entered an invalid starting date	infolog	uk	Ви ввели невірну дату початку
-you have to enter a name, to create a new typ!!!	infolog	uk	Для створення нового типу необхідно ввести назву
 you must enter a subject or a description	infolog	uk	Необхідно ввести тему або опис

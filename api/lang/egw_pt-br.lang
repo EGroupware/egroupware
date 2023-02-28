@@ -555,6 +555,7 @@ height, disabled	common	pt-br	Altura, Desativada
 help	common	pt-br	Ajuda
 high	common	pt-br	Alto
 highest	common	pt-br	Mais alto
+history	common	pt-br	História
 history log	common	pt-br	Registro do histórico
 holy see (vatican city state)	common	pt-br	VATICANO
 home	common	pt-br	Página Inicial
@@ -569,6 +570,7 @@ how many days to sync in the future (default %1)	groupdav	pt-br	Quantos dias par
 how many days to sync in the past (default %1)	groupdav	pt-br	Quantos dias para sincronizar no passado (padrão% 1)
 how many entries should the list show	common	pt-br	Quantos items a lista deverá exibir
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	pt-br	Quantos ícones devem ser mostrados na barra de navegação (ao topo da página). Ícones adicionais serão colocados em um recurso adicional em forma de menú suspenso à direita da barra de navegação.
+how many rows to print	common	pt-br	Quantas filas para imprimir
 how to show the general egroupware menu ?	common	pt-br	Como exibir o menu geral do EGroupware ?
 html	common	pt-br	Html
 html link to the current record	common	pt-br	Link HTML para o registro atual
@@ -610,13 +612,16 @@ insert new column behind this one	common	pt-br	inserir uma nova coluna antes des
 insert new column in front of all	common	pt-br	inserir uma nova coluna ao final de todas
 insert new row after this one	common	pt-br	inserir uma nova linha após esta
 insert new row in front of first line	common	pt-br	inserir uma nova linha antes da primeira linha
+insert placeholder	common	pt-br	Inserir espaço reservado
 insert row after	common	pt-br	Inserir linha depois
 insert row before	common	pt-br	Inserir linha antes
 insert timestamp into description field	common	pt-br	Insira o carimbo da hora no campo de descrição
 integer	common	pt-br	Inteiro
 international	common	pt-br	Internacional
+invalid 2-factor authentication code	common	pt-br	Código de autenticação de 2 fatores inválidos
 invalid filename	common	pt-br	Nome de arquivo inválido
 invalid ip address	common	pt-br	Endereço IP inválido
+invalid or expired 'remember me' token	common	pt-br	Ficha "lembre-se de mim" inválida ou vencida
 invalid password	common	pt-br	Senha inválida
 iran, islamic republic of	common	pt-br	IRÃ
 iraq	common	pt-br	IRAQUE
@@ -624,6 +629,7 @@ ireland	common	pt-br	IRLANDA
 israel	common	pt-br	ISRAEL
 it has been more then %1 days since you changed your password	common	pt-br	Já passaram mais de %1 dias desde que você mudou sua senha
 it is recommended that you run setup to upgrade your tables to the current version	common	pt-br	É recomendado que seja executada a Configuração para atualizar as tabelas para a versão atual.
+it is recommended to store your public key in addressbook, so other users can write you encrypted mails.	common	pt-br	É recomendável armazenar sua chave pública no Addressbook, para que outros usuários possam escrever seus e-mails criptografados.
 italic	common	pt-br	Itálico
 italy	common	pt-br	ITÁLIA
 jamaica	common	pt-br	JAMAICA

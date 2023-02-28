@@ -12,9 +12,6 @@
 %1 you are responsible for is starting at %2	infolog	fr	%1 dont vous êtes responsables commence le %2
 %1 you delegated is due at %2	infolog	fr	%1 que vous avez délégué est dû le %2
 %1 you delegated is starting at %2	infolog	fr	%1 que vous avez délégué commence le %2
-%s $cont[info_from]	infolog	fr	%s $cont[info_from]
-%s $row_cont[info_addr]	infolog	fr	%s $row_cont[info_addr]
-%s $row_cont[info_from]	infolog	fr	%s $row_cont[info_from]
 (and children) deleted	infolog	fr	(et sous-entrées) supprimés.
 (no subject)	infolog	fr	(pas de sujet)
 - subprojects from	infolog	fr	- Sous-projets de
@@ -74,7 +71,7 @@ back to main list	infolog	fr	Retour à la liste principale
 billed	infolog	fr	Facturé
 both	infolog	fr	Les deux
 call	infolog	fr	Appel
-can be used to show further infolog types in the calendar or limit it to show eg. only tasks.	infolog	fr	Peut être utilisé pour montrer plus de types d'Infolog dans le calendrier ou les limiter par ex aux tâches seulement
+can be used to show further infolog types in the calendar or limit it to show eg. only tasks.	infolog	fr	Peut être utilisé pour montrer plus de types d'InfoLog dans le calendrier ou les limiter par ex aux tâches seulement
 can not return an exact number of rows and therefore hides the count.	admin	fr	Impossible de récupérer le nombre exacts de lignes, total masqué.
 cancel	infolog	fr	Annuler
 cancelled	infolog	fr	Annulé
@@ -139,10 +136,10 @@ date completed (leave it empty to have it automatic set if status is done or bil
 datecreated	infolog	fr	Date de création
 dates, status, access	infolog	fr	Dates, Statut, Accès
 days	infolog	fr	Jours
-default category for new infolog entries	infolog	fr	Catégorie par défaut pour les entrées d'Infolog
+default category for new infolog entries	infolog	fr	Catégorie par défaut pour les entrées d'InfoLog
 default document to insert entries	infolog	fr	Document par défaut pour insérer les entrées.
 default filter for infolog	infolog	fr	Filtre par défaut pour l'iInfoLog
-default status for a new log entry	infolog	fr	Statut par défaut pour un nouvel infolog
+default status for a new log entry	infolog	fr	Statut par défaut pour un nouvel Infolog
 delegated	infolog	fr	Délégué
 delegated open	infolog	fr	Délégué ouvert
 delegated open and upcoming	infolog	fr	Délégué ouvert et à venir
@@ -159,7 +156,6 @@ deletes this field	infolog	fr	supprime ce champ
 deletes this status	infolog	fr	supprime ce statut
 description	infolog	fr	Description
 determines the order the fields are displayed	infolog	fr	détermine l´ordre d´affichage des champs
-difference:	infolog	fr	Différence :
 directory with documents to insert entries	infolog	fr	Répertoire avec les documents pour insérer les entrées
 disables a status without deleting it	infolog	fr	désactive un statut sans le supprimer
 do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	fr	Voulez-vous une confirmation du responsable sur: accepter, finir la tâche, ou les deux
@@ -177,12 +173,10 @@ download	infolog	fr	Télécharger
 download url for links	infolog	fr	URL de téléchargement pour les liens
 due %1	infolog	fr	Dû %
 due date	infolog	fr	Echéance
-due date must be in the future!!!	infolog	fr	L'échéance doit être dans le futur !
 duration	infolog	fr	Durée
 e-mail:	infolog	fr	Email :
 each value is a line like <id>[=<label>]	infolog	fr	chaque valeur est une ligne telle que <id>[=<label>]
 edit	infolog	fr	Modifier
-edit conditions	infolog	fr	Modifier les conditions
 edit or create categories for ingolog	infolog	fr	Modifier ou créer des catégories pour InfoLog
 edit rights (full edit rights incl. making someone else responsible!)	infolog	fr	modifier les droits (édition complète des droits, pouvant rendre quelqu'un d'autre responsable!)
 edit status	infolog	fr	Modifier les statuts
@@ -195,7 +189,7 @@ enddate	infolog	fr	Date de fin
 enddate can not be before startdate	infolog	fr	La date de fin ne peut pas être avant la date de début
 enter a custom contact, leave empty if linked entry should be used	infolog	fr	Entrez un contact personnalisé, laissez vide si l'entrée liée devrait être utilisée
 enter a custom phone/email, leave empty if linked entry should be used	infolog	fr	Entrez un EMail/numéro de téléphone personnalisé, laissez vide si l'entrée liée devait être utilisée
-enter a textual description of the log-entry	infolog	fr	Entrez une description textuelle de l'entrée de Log
+enter a textual description of the log-entry	infolog	fr	Entrez une description textuelle de l'entrée de InfoLog
 enter the query pattern	infolog	fr	Entrez le champ de requête
 entry and all files	infolog	fr	Entrée et tous les fichiers
 error: importing the ical	infolog	fr	Erreur : lors de l'importation de l'iCal
@@ -205,20 +199,18 @@ error: the entry has been updated since you opened it for editing!	infolog	fr	Er
 execute a further action for this entry	infolog	fr	Exécuter une action de plus pour cette entrée
 existing links	infolog	fr	Liens existants
 exists	infolog	fr	Existe
-exit without saving	infolog	fr	Sortir sans sauvegarder
 export definition to use for nextmatch export	infolog	fr	Définition de l'export à utiliser pour l'export "nextmatch"
 exports in ical format.	infolog	fr	Exportes au format iCal.
-exports infolog entries into a csv file.	infolog	fr	Exporter les entrées d'Infolog dans un fichier CSV.
+exports infolog entries into a csv file.	infolog	fr	Exporter les entrées d'InfoLog dans un fichier CSV.
 favorites	infolog	fr	Favoris
 fax	infolog	fr	Fax
 field must not be empty !!!	infolog	fr	Ce champ ne peut être vide !
-fields to exclude when copying an infolog:	infolog	fr	Champs à exclure lors de la copie d'un Infolog :
+fields to exclude when copying an infolog:	infolog	fr	Champs à exclure lors de la copie d'un InfoLog :
 fields to exclude when creating a sub-entry:	infolog	fr	Champs à exclure lors de création d'une sous-entrée :
 fieldseparator	infolog	fr	Séparateur de champ
 finish	infolog	fr	Terminer
 first argument for preg_replace	infolog	fr	Premier argument pour preg_replace
-first non-empty:	infolog	fr	Premier non-vide :
-for infolog type %1, %2 is required	infolog	fr	Pour un infolog de type %1, %2 est requis
+for infolog type %1, %2 is required	infolog	fr	Pour un InfoLog de type %1, %2 est requis
 for serial letter use this tag. put the content, you want to repeat between two tags.	infolog	fr	Pour les lettres en série utiliser cette balise. Placer le contenu que vous voulez répéter entre deux balises.
 for which types should this field be used	infolog	fr	pour quels types ce champ devrait être utilisé
 from	infolog	fr	De
@@ -244,7 +236,7 @@ if you specify an export definition, it will be used when you export	infolog	fr	
 import next set	infolog	fr	importer l´élément suivant
 importance	infolog	fr	Importance
 imports entries into the infolog from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	infolog	fr	Importe les entrées dans l'Infolog depuis un fichier CSV. CSV veut dire 'Valeurs Séparées par des Virgules". Dans l'onglet d'options, vous pouvez aussi choisir d'autres séparateurs.
-imports todos into infolog from an ical file.	infolog	fr	Importer des tâches dans l'infolog depuis un fichier iCal.
+imports todos into infolog from an ical file.	infolog	fr	Importer des tâches dans l'InfoLog depuis un fichier iCal.
 info log	common	fr	InfoLog
 infolog	common	fr	InfoLog
 infolog - delete	infolog	fr	InfoLog - Supprimer
@@ -258,22 +250,20 @@ infolog csv import	infolog	fr	Infolog importation CSV
 infolog encryption requires epl subscription	infolog	fr	Le chiffrement nécessite un abonnement EPL
 infolog entry deleted	infolog	fr	InfoLog entrée supprimée
 infolog entry saved	infolog	fr	InfoLog entrée enregistrée
-infolog fields:	infolog	fr	Champs d'Infolog:
+infolog fields:	infolog	fr	Champs d'InfoLog:
 infolog filter for the home screen	infolog	fr	InfoLog filtre pour l'écran principal
-infolog ical export	infolog	fr	Export Infolog en iCal
-infolog ical import	infolog	fr	Import Infolog en infolog
-infolog id	infolog	fr	Infolog ID
+infolog ical export	infolog	fr	Export InfoLog en iCal
+infolog ical import	infolog	fr	Import InfoLog en InfoLog
+infolog id	infolog	fr	InfoLog ID
 infolog list	infolog	fr	Liste InfoLog
 infolog preferences	common	fr	Préférences InfoLog
 infolog-fieldname	infolog	fr	InfoLog - Nom du champ
-infolog.entry_test.%s.locality	infolog	fr	infolog.entry_test.%s.locality
 insert	infolog	fr	Insérer
 insert in document	infolog	fr	Insérer dans un document
 insert timestamp into description field	infolog	fr	Insérer une ligne de temps dans le champ description
 invalid filename	infolog	fr	Nom de fichier invalide
 invalid owner id: %1.  might be a bad field translation.  used %2 instead.	infolog	fr	Id de propriétaire invalide: %1. %2 utilisé à la place.
 invalid status for entry type %1.	infolog	fr	Statut invalide pour l'entrée de type %1.
-kanban	infolog	fr	Kanban
 label<br>helptext	infolog	fr	Label<br>Texte d´aide
 last changed	infolog	fr	Dernière modification
 last modified	infolog	fr	Dernière modification
@@ -297,13 +287,11 @@ list all categories	infolog	fr	Liste toutes les catégories
 list of files linked to the current record	infolog	fr	Liste des fichiers liés à l'enregistrement en cours
 load custom fields in index, if filtered by selected types (eg. to display them in a type-specific index template)	infolog	fr	Charge les champs personnalisés dans l'index, si filtré par les types sélectionnés (ex. pour les afficher dans un modèle d'index spécifique au type)
 location	infolog	fr	Emplacement
-location, priority , ...	infolog	fr	Emplacement, priorité, ...
 longer textual description	infolog	fr	Description textuelle plus longue
 low	infolog	fr	Bas
 manage mapping	infolog	fr	Gestion des correspondances
 max length of the input [, length of the inputfield (optional)]	infolog	fr	taille max de l´entrée [, taille du champ d´entrée (optionnel)]
 modifier	infolog	fr	Editeur
-modifier full name:	infolog	fr	Nom complet du modifié par
 modifierer	infolog	fr	Editeur
 name must not be empty !!!	infolog	fr	Le nom ne peut pas être vide !!!
 name of current user, all other contact fields are valid too	infolog	fr	Nom de l'utilisateur courant, tous les autres champs de contacts sont valides aussi
@@ -328,7 +316,6 @@ not	infolog	fr	pas
 not assigned	infolog	fr	Pas attribué
 not-started	infolog	fr	Non démarré
 note	infolog	fr	Note
-notification	infolog	fr	Notification
 notification settings	infolog	fr	Paramètres de notification
 number of records to read (%1)	infolog	fr	Nombre d'enregistrements à lire (%1)
 number of row for a multiline inputfield or line of a multi-select-box	infolog	fr	nombre de lignes pour un champ d´entrées multilignes ou pour une boîte de sélection multiple
@@ -358,7 +345,7 @@ own upcoming	infolog	fr	Propre arrivant
 owner does not have edit rights	infolog	fr	Le propriétaire n'a pas les droits en édition
 owner, responsible	infolog	fr	Propriétaire, Responsable
 parent	infolog	fr	Parent
-parent infolog	infolog	fr	Parent de l'Infolog
+parent infolog	infolog	fr	Parent de l'InfoLog
 participants for scheduling an appointment	infolog	fr	Participants pour programmer une réunion
 path on (web-)serverside<br>eg. /var/samba/share	infolog	fr	Chemin côté (web)server<br>p.ex. /var/samba/Share
 path to user and group files has to be outside of the webservers document-root!!!	infolog	fr	Le chemin vers les fichiers utilisateurs et groupes DOIT FIGURER EN DEHORS du répertoire racine des serveurs Web!!!
@@ -377,7 +364,7 @@ prefix for sub-entries (default: re:)	infolog	fr	Préfixe pour les sous-entrées
 price	infolog	fr	Prix
 pricelist	infolog	fr	Liste de prix
 primary link	infolog	fr	Lien primaire
-print this infolog	infolog	fr	Imprimer cet Infolog
+print this infolog	infolog	fr	Imprimer cet InfoLog
 printing...	infolog	fr	Impression...
 priority	infolog	fr	Priorité
 private	infolog	fr	Privé
@@ -399,7 +386,6 @@ receive notifications about own items	infolog	fr	Recevoir les notifications pour
 receive notifications about starting entries you are responsible for	infolog	fr	Recevoir les notifications pour les entrées dont vous êtes responsables et qui commencent.
 receive notifications about starting entries you delegated	infolog	fr	Recevoir les notifications pour les entrées que vous avez déléguées et qui commencent.
 receive notifications as html-mails	infolog	fr	Recevoir les notifications comme des mails en HTML.
-regex replace:	infolog	fr	Remplacement Regex :
 regular expression	infolog	fr	Expression régulière
 remark	infolog	fr	Remarque
 remove this link (not the entry itself)	infolog	fr	Enlever ce lien (pas l'entrée elle-même)
@@ -418,7 +404,6 @@ rights for the responsible	infolog	fr	Droits pour le responsable
 rows	infolog	fr	Lignes
 same day	infolog	fr	Même jour
 save	infolog	fr	Enregistrer
-save the changes made	infolog	fr	Enregistrer les modifications faites
 saves the changes made and leaves	infolog	fr	enregistre les modifications et quitte
 saves this entry	infolog	fr	Enregistre cette entrée
 schedule appointment	infolog	fr	Programmer une réunion
@@ -483,7 +468,6 @@ sub-entries will not be closed	infolog	fr	Les sous-entrées ne seront pas clôtu
 sub-entry	infolog	fr	Sous-entrée
 subject	infolog	fr	Sujet
 sum	infolog	fr	Somme
-sum:	infolog	fr	Somme :
 tag to mark positions for address labels	infolog	fr	Balise pour marquer les positions des étiquettes d'adresses
 task	infolog	fr	ToDo
 tasks of	infolog	fr	Tâche de
@@ -496,7 +480,6 @@ the text displayed to the user	infolog	fr	le texte affiché pour l´utilisateur
 this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	fr	Ceci est le filtre qu'InfoLog utilise quand vous entrez dans l'application. Les filtres limitent les entrées à montrer dans la  vue actuelle. Il y a des filtres pour montrer seulement ceux temrminés, encore ouverts ou les futures entrées de vous-même ou de tous les utilisateurs.
 til when should the todo or phonecall be finished	infolog	fr	Quand la tâche ou l'appel téléphonique devrait être terminé
 times	infolog	fr	Heures
-timesheet	infolog	fr	feuille de temps
 titles of any entries linked to the current record, excluding attached files	infolog	fr	Titres de toutes les entrées liées à l'enregistrement courant, à l'exception des fichiers
 to many might exceed your execution-time-limit	infolog	fr	trop peut excéder votre temps limite d´exécution.
 to what should the startdate of new entries be set.	infolog	fr	A quoi devrait être fixée la date de départ de la nouvelle entrée.
@@ -506,11 +489,10 @@ todo	infolog	fr	Tâche
 typ	infolog	fr	Type
 typ '%1' already exists !!!	infolog	fr	Le type '%1' existe déjà !
 type	infolog	fr	Type
-type '%1' already exists !!!	infolog	fr	le type '%1' existe déjà !
 type ...	infolog	fr	Type ...
 type of customfield	infolog	fr	Type de champ personnalisé
 type of field	infolog	fr	Type de champ
-type of the log-entry: note, phonecall or todo	infolog	fr	Type de l'entrée Log: Note, Appel téléphonique ou tâche
+type of the log-entry: note, phonecall or todo	infolog	fr	Type de l'entrée InfoLog: Note, Appel téléphonique ou tâche
 unable to link to %3 by custom field "%1": "%4".  %2 matches.	infolog	fr	Impossible de lie à %3 par le champ personnalisé "%1": "%4". %2 correspond.
 unknown type: %1	infolog	fr	Type inconnu : %1
 unlink	infolog	fr	Délier
@@ -520,7 +502,6 @@ urgency	infolog	fr	Priorité
 urgent	infolog	fr	Urgent
 use all	infolog	fr	Utiliser tout
 use custom notification message	infolog	fr	Utiliser le message de notification personnalisé
-use definition filter	infolog	fr	Utiliser les filtres de définition
 use field from csv if possible	infolog	fr	Utiliser le champ du CSV si possible
 use search results	infolog	fr	Utiliser les résultats de la recherche
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	infolog	fr	Utiliser cette balise pour les étiquettes d'adresse. Placer le contenu que vous voulez répéter entre deux balises.
@@ -549,7 +530,7 @@ yes, noone can purge deleted items	infolog	fr	Oui, personne ne peut purger les �
 yes, only admins can purge deleted items	infolog	fr	Oui, les administrateurs seuls peuvent purger les éléménts supprimés
 yes, with larger fontsize	infolog	fr	Oui, avec une taille de caractères plus grande
 yes, with purging of deleted items possible	infolog	fr	Oui, avec la purge des éléments supprimés possible
-you can choose a categorie to be preselected, when you create a new infolog entry	infolog	fr	Vous pouvez choisir une catégorie qui sera présélectionnée lors de la création de nouvelles entrées d'Infolog
+you can choose a categorie to be preselected, when you create a new infolog entry	infolog	fr	Vous pouvez choisir une catégorie qui sera présélectionnée lors de la création de nouvelles entrées d'InfoLog
 you can't delete one of the stock types !!!	infolog	fr	Vous ne pouvez pas effacer un des types de stock !
 you have entered an invalid ending date	infolog	fr	Vous avez entré une date de fin invalide !
 you have entered an invalid starting date	infolog	fr	Vous avez entré une date de début invalide !

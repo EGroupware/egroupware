@@ -32,7 +32,17 @@ created	common	ro	Creat
 created by	common	ro	Creat de
 created by %1	common	ro	Creat de %1
 dark mode	common	ro	Mod întunecat
+history	common	ro	Istorie
+history log	common	ro	Istoricul versiunii
+how many days to sync in the future (default %1)	groupdav	ro	Câte zile să se sincronizeze în viitor (implicit %1)
+how many days to sync in the past (default %1)	groupdav	ro	Câte zile de sincronizare în trecut (implicit %1)
+how many rows to print	common	ro	Câte rânduri să se tipărească
+how to show the general egroupware menu ?	common	ro	Cum se afișează meniul general EGroupware
+insert placeholder	common	ro	Inserir espaço reservado
 insert timestamp into description field	common	ro	Introduceți data și ora în câmpul de descriere
+invalid 2-factor authentication code	common	ro	Código de autenticação de 2 fatores inválidos
+invalid or expired 'remember me' token	common	ro	Ficha "lembre-se de mim" inválida ou vencida
+it is recommended to store your public key in addressbook, so other users can write you encrypted mails.	common	ro	É recomendável armazenar sua chave pública no Addressbook, para que outros usuários possam escrever seus e-mails criptografados.
 light mode	common	ro	Mod deschis
 new password	common	ro	Parolă nouă
 ok	common	ro	Acceptă

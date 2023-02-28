@@ -109,6 +109,7 @@ copy to	mail	bg	Копиране в
 could not append message:	mail	bg	Съобщение не можа да се добави:
 could not save the acl because some names are empty	mail	bg	ACL не можа да се запази, защото някои имена са празни
 create new account	mail	bg	Създаване на нов акаунт
+cross account forward attachment is not allowed!	mail	bg	Не е разрешено прикачването на кръстосана сметка напред!
 current folder	mail	bg	текуща папка
 current subject	mail	bg	текуща тема
 currently:	mail	bg	Понастоящем:
@@ -116,7 +117,10 @@ date(newest first)	mail	bg	По дата (първо най-новите)
 date(oldest first)	mail	bg	По дата (първо най-старите)
 deactive	mail	bg	Деактивиране
 default sorting order	mail	bg	Подреждане по подразбиране
+default toolbar actions shown in mail's html editor	mail	bg	Функции, активирани в лентата с инструменти на редактора HTML при съставяне на имейл
+default value for remembering s/mime passphrase in minutes	mail	bg	Стойност по подразбиране за запомняне на S/MIME паролата в минути
 default your name and email	common	bg	Вашето име и имейл, по подразбиране
+defines what to show as contact label for added contact into to/cc/bcc when composing an email. default is firstname lastname and empty means include eveything available.	mail	bg	Определя какво да се показва като етикет на контакта за добавен контакт в Към/Копиране/Сляпо копие при съставяне на имейл. По подразбиране е име фамилия име, а празно означава, че включва всичко налично.
 defines what to show as identity label on mail folder header	common	bg	Дефинира какво да се показва като етикет за самоличност в header-а на пощенската папка
 delete folder	mail	bg	Изтриване на Папка
 delete folder %1 ?	mail	bg	ИЗТРИВАНЕ на Папка %1?
@@ -129,6 +133,7 @@ deleting folders	mail	bg	Изтриване на папки
 deny certain groups access to following features	mail	bg	Забранете на определени групи достъп до следните функции
 directories have to be shared.	mail	bg	Директориите трябва да бъдат споделени.
 disable	mail	bg	Забранява
+disable caching of flags	mail	bg	Деактивиране на кеширането на флагове
 disable horizontal rule for separation of mail body from signature	mail	bg	Деактивиране на "хоризонталното правило" за отделяне на основния текст от подписа в съобщението
 disable use of flowed lines in plain text mails (rfc3676)	mail	bg	Деактивира използването на поточни линии в обикновени текстови съобщения (RFC3676)
 disabled!	mail	bg	Деактивиран!

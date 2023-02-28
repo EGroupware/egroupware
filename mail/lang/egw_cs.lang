@@ -85,13 +85,19 @@ copy to	mail	cs	Kopírovat do
 could not append message:	mail	cs	Není možné připojit zprávu:
 could not save the acl because some names are empty	mail	cs	Není možné uložit ACL, protože některá ze jmen jsou prázdná!
 create new account	mail	cs	Přidat účet
+cross account forward attachment is not allowed!	mail	cs	Připojení křížového účtu není povoleno!
 current folder	mail	cs	Aktuální složka
+current subject	mail	cs	Aktuální téma
 currently:	mail	cs	Aktuálně:
 date(newest first)	mail	cs	Datum (od nejnovějšího)
 date(oldest first)	mail	cs	Datum (od nejstaršího)
 deactive	mail	cs	Deaktivovat
 default sorting order	mail	cs	Výchozí třídění
+default toolbar actions shown in mail's html editor	mail	cs	Funkce povolené na panelu nástrojů editoru HTML při vytváření e-mailu
+default value for remembering s/mime passphrase in minutes	mail	cs	Výchozí hodnota pro zapamatování přístupové fráze S/MIME v minutách
 default your name and email	common	cs	Vaše jméno a e-mail jako výchozí
+defines what to show as contact label for added contact into to/cc/bcc when composing an email. default is firstname lastname and empty means include eveything available.	mail	cs	Definuje, co se má zobrazit jako popisek kontaktu pro přidaný kontakt do pole Komu/Kopírovat/Slepá kopie při sestavování e-mailu. Výchozí hodnota je jméno příjmení a prázdná znamená zahrnout vše, co je k dispozici.
+defines what to show as identity label on mail folder header	common	cs	Definuje, co se má zobrazit jako štítek identity v záhlaví složky pošty
 delete folder	mail	cs	Smazat složku
 delete folder %1 ?	mail	cs	Smazat složku %1 ?
 delete this acl	mail	cs	Smazat tyto ACL
@@ -103,6 +109,7 @@ deleting folders	mail	cs	Smazání složek
 deny certain groups access to following features	mail	cs	Zakázání přístupu konkrétním skupinám k následujícím funkcím
 directories have to be shared.	mail	cs	Adersáře musí být sdílené
 disable	mail	cs	Zakázat
+disable caching of flags	mail	cs	Zakázat ukládání příznaků do mezipaměti
 disable horizontal rule for separation of mail body from signature	mail	cs	Zakázat oddělovač mezi textem zprávy a podpisem
 disable use of flowed lines in plain text mails (rfc3676)	mail	cs	Zakázat použití plovoucích řádků v čistě textových e-mailech (RFC3676)
 disabled!	mail	cs	Zakázáno!

@@ -31,6 +31,7 @@ add sub	infolog	pl	dodaj podrz.
 add timesheet entry	infolog	pl	Dodaj wpis czasu pracy
 add:	infolog	pl	Dodaj:
 added	infolog	pl	Dodano
+addressbook placeholders available	infolog	pl	Książka adresowa dostępna
 all	infolog	pl	Wszystko
 all links and attachments	infolog	pl	wszystkie linki i załączniki
 all projects	infolog	pl	Wszystkie projekty
@@ -138,6 +139,7 @@ finish	infolog	pl	Koniec
 for serial letter use this tag. put the content, you want to repeat between two tags.	infolog	pl	Użyj tego tagu dla listów seryjnych. Wstaw zawartość którą chcesz powtórzyć pomiędzy dwa tagi.
 for which types should this field be used	infolog	pl	dla jakich typów to pole będzie uzywane
 from	infolog	pl	Od
+full list of placeholder names	infolog	pl	Pełna lista nazw zastępczych
 general fields:	infolog	pl	Pola ogólne:
 global categories	infolog	pl	Kategorie globalne
 group owner for	infolog	pl	Właściciel grupowy dla
@@ -156,9 +158,10 @@ infolog - import csv-file	infolog	pl	CRM Dziennik - Import pliku CSV
 infolog - new	infolog	pl	CRM Dziennik - Nowy
 infolog - new subproject	infolog	pl	CRM Dziennik - Nowy podprojekt
 infolog - subprojects from	infolog	pl	CRM Dziennik - Podprojekt z
+infolog encryption requires epl subscription	infolog	pl	Szyfrowanie InfoLog wymaga subskrypcji EPL
 infolog entry deleted	infolog	pl	Wpis nfoLog skasowany
 infolog entry saved	infolog	pl	Wpis InfoLog zapisany
-InfoLog filter for the home screen	infolog	pl	Filtr dziennika na stronę główną
+infolog filter for the home screen	infolog	pl	Filtr dziennika na stronę główną
 infolog list	infolog	pl	CRM Dziennik lista
 infolog preferences	common	pl	CRM Dziennik preferencje
 infolog-fieldname	infolog	pl	CRM Dziennik - Nazwa pola
@@ -233,6 +236,8 @@ planned	infolog	pl	zaplanowany
 planned time	infolog	pl	Zaplanowany czas
 price	infolog	pl	Cena
 pricelist	infolog	pl	Cennik
+print this infolog	infolog	pl	Drukuj ten InfoLog
+printing...	infolog	pl	Drukowanie...
 priority	infolog	pl	Priorytet
 private	infolog	pl	Prywatne
 project	infolog	pl	Projekt
@@ -257,6 +262,7 @@ rows	infolog	pl	Wiersze
 save	infolog	pl	Zapisz
 saves the changes made and leaves	infolog	pl	zapisuje zmiany i wychodzi
 saves this entry	infolog	pl	Zapisz ten wpis
+schedule appointment	infolog	pl	Zaplanuj termin
 search	infolog	pl	Szukaj
 search for:	infolog	pl	Szukaj dla
 select	infolog	pl	Wybór
@@ -274,10 +280,9 @@ select to filter by owner	infolog	pl	wybierz aby sortować po właścicielu
 select to filter by responsible	infolog	pl	wybierz aby sortować po osobie odpowiedzialnej
 sender	infolog	pl	nadawca
 sets the status of this entry and its subs to done	infolog	pl	Ustaw stan wpisu i jego wpisów podrzędnych na "gotowy".
-schedule appointment	infolog	pl	Zaplanuj termin
 should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	pl	Czy Dziennik CRM ma w domyślnym widoku wyświetlać wszystkie Zadania, Rozmowy i Notatki podrzędne? Możesz zawsze dotrzeć do nich poprzez ich <i>rodzica</i>.
 should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	pl	Czy Dziennik CRM powinien pokazywać odnośniki do innych aplikacji oraz/lub załączone pliki na liście zadań (domyślny widok gdy uruchamiany jest Dziennik CRM)?
-Should InfoLog show up on the home screen and with which filter. Works only if you dont selected an application for the home screen (in your preferences).	infolog	pl	Czy Dziennik CRM powinien pokazywać zadania na głównym ekranie a jeżeli tak, to z jakim filtrem. Działa tylko, jeżeli nie wybrano aplikacji na główny ekran (we wspólnych ustawieniach).
+should infolog show up on the home screen and with which filter. works only if you dont selected an application for the home screen (in your preferences).	infolog	pl	Czy Dziennik CRM powinien pokazywać zadania na głównym ekranie a jeżeli tak, to z jakim filtrem. Działa tylko, jeżeli nie wybrano aplikacji na główny ekran (we wspólnych ustawieniach).
 should infolog use full names (surname and familyname) or just the loginnames.	infolog	pl	Czy CRM - Dziennik ma używać pełnych danych osobowych (imię, nazwisko), czy tylko loginów.
 should the infolog list show a unique numerical id, which can be used eg. as ticket id.	infolog	pl	Czy na liście zadań Dziennika CRM pokazywać unikalny identyfikator numeryczny, który może być używany np. jako numer kolejny zadania?
 should the infolog list show the column "last modified".	infolog	pl	Czy na liście zadań Dziennika CRM pokazywać kolumnę "ostatnio zmodyfikowany"?
@@ -298,11 +303,11 @@ startdate enddate	infolog	pl	Data początku, data zakończenia
 startdate for new entries	infolog	pl	Data rozpoczęcia dla nowych zadań
 startrecord	infolog	pl	Początkowy rekord
 status	infolog	pl	Status
-status, percent and date completed are always allowed.	infolog	pl	Status, stopień zaawansowania oraz data wykonania są zawsze możliwe do edycji.
 status ...	infolog	pl	Status ...
+status, percent and date completed are always allowed.	infolog	pl	Status, stopień zaawansowania oraz data wykonania są zawsze możliwe do edycji.
 sub	infolog	pl	Podrz.
-sub-entry	infolog	pl	Wpis podrzędny
 sub-entries become subs of the parent or main entries, if there's no parent	infolog	pl	Zadania stają się podrzędne wobec zadań, z których je utworzono lub głównych zadań, jeżeli zadania z których je utworzono nie istnieją.
+sub-entry	infolog	pl	Wpis podrzędny
 subject	infolog	pl	Temat
 tag to mark positions for address labels	infolog	pl	Zaznacz, aby oznaczyć pozycję dla etykiet adresu
 task	infolog	pl	Zadanie
@@ -341,7 +346,6 @@ view the parent of this entry and all his subs	infolog	pl	Zoabcz rodzica tego wp
 view this linked entry in its application	infolog	pl	zoabcz podlinkowany wpis w jego aplikacji (np. w Książce Adresowej dla kontaktu)
 when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	pl	Kiedy powinno się rozpocząć Zadanie lub Rozmowa telefoniczna
 which additional fields should the responsible be allowed to edit without having edit rights?	infolog	pl	Które dodatkowe pola powinna móc edytować osoba odpowiedzialna nie posiadając praw edycji?
-which implicit acl rights should the responsible get?	infolog	pl	Które prawa ACL powinna otrzymać niejawnie osoba odpowiedzialna?
 will-call	infolog	pl	zadzwoni
 write (add or update) a record by passing its fields.	infolog	pl	Zapisz (dodaj lub uaktualnij) zapis przez przechodzenie po jego polach
 yes - delete	infolog	pl	Tak - Usuń
@@ -350,6 +354,5 @@ yes, with larger fontsize	infolog	pl	Tak, z większą czcionką
 you can't delete one of the stock types !!!	infolog	pl	Nie możesz usunąć jesdnego z typów!!!
 you have entered an invalid ending date	infolog	pl	Podałeś niepoprawną datę zakończenia
 you have entered an invalid starting date	infolog	pl	Podałeś niepoprawną datę rozpoczęcia
-you have to enter a name, to create a new typ!!!	infolog	pl	Aby stworzyć nowy typ, musisz podać nazwę!!!
 you must enter a subject or a description	infolog	pl	Musisz podać temat lub opis
 your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	infolog	pl	Twoja baza jest NIEAKTUALNA (%1 vs. %2), uruchom %3setup%4 aby zaktualizować bazę.

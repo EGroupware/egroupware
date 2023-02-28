@@ -108,12 +108,17 @@ could not save the acl because some names are empty	mail	it	Impossibile salvare 
 create new account	mail	it	Crea nuovo account
 cross account forward attachment is not allowed!	mail	it	Non è consentito l'attacco incrociato di conti in avanti!
 current folder	mail	it	cartella corrente
+current subject	mail	it	Oggetto corrente
 currently:	mail	it	Al momento:
 date(newest first)	mail	it	Data (prima più recenti)
 date(oldest first)	mail	it	Data (prima meno recenti)
 deactive	mail	it	Disattiva
 default sorting order	mail	it	Ordinamento predefinito
+default toolbar actions shown in mail's html editor	mail	it	Funzioni abilitate nella barra degli strumenti dell'editor HTML durante la composizione di un'email
+default value for remembering s/mime passphrase in minutes	mail	it	Valore predefinito per la memorizzazione della passphrase S/MIME in minuti.
 default your name and email	common	it	Predefinire tuo nome e email
+defines what to show as contact label for added contact into to/cc/bcc when composing an email. default is firstname lastname and empty means include eveything available.	mail	it	Definisce cosa mostrare come etichetta del contatto per il contatto aggiunto in A/Copia/Copia cieca durante la composizione di un'e-mail. Il valore predefinito è nome e cognome e vuoto significa che include tutti i dati disponibili.
+defines what to show as identity label on mail folder header	common	it	Definisce cosa mostrare come etichetta di identità nell'intestazione della cartella di posta.
 delete folder	mail	it	Elimina cartella
 delete folder %1 ?	mail	it	ELIMINARE la cartella %1 ?
 delete this acl	mail	it	Elimina questa ACL
@@ -125,6 +130,7 @@ deleting folders	mail	it	Eliminazione cartelle
 deny certain groups access to following features	mail	it	Nega accesso alle seguenti funzioni ad alcuni gruppi
 directories have to be shared.	mail	it	Le cartelle devono essere condivise
 disable	mail	it	Disabilita
+disable caching of flags	mail	it	Disabilita la memorizzazione nella cache dei flag
 disable horizontal rule for separation of mail body from signature	mail	it	disabilita il righello per la separazione del corpo del messaggio dalla firma
 disable use of flowed lines in plain text mails (rfc3676)	mail	it	Disabilitare l'uso di flowd lines in email di solo testo (RFC3676)
 disabled!	mail	it	diabilitato!

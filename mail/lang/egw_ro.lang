@@ -1,5 +1,12 @@
 (leave empty for no quota)	mail	ro	(Lăsați gol pentru nici o cotă)
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	ro	Valorile configurate vor fi setate automat în dialogul de compunere pentru câmpul respectat atunci când se compune un nou e-mail.
+cross account forward attachment is not allowed!	mail	ro	Atașarea contului încrucișat nu este permisă!
+current subject	mail	ro	Subiect curent
+default toolbar actions shown in mail's html editor	mail	ro	Funcții activate în bara de instrumente a editorului HTML atunci când se compune un e-mail
+default value for remembering s/mime passphrase in minutes	mail	ro	Valoarea implicită pentru memorarea frazei de trecere S/MIME în minute
+defines what to show as contact label for added contact into to/cc/bcc when composing an email. default is firstname lastname and empty means include eveything available.	mail	ro	Definește ce să se afișeze ca etichetă de contact pentru contactul adăugat în Către/Copie/Copie oarbă atunci când compuneți un e-mail. Valoarea implicită este Firstname Lastname (nume, prenume, nume), iar empty (gol) înseamnă că include tot ce este disponibil.
+defines what to show as identity label on mail folder header	common	ro	Definește ce să se afișeze ca etichetă de identitate în antetul dosarului de e-mail
+disable caching of flags	mail	ro	Dezactivarea memorării în cache a stegulețelor
 modify subject	mail	ro	Modificați subiectul
 modify subject of this message	mail	ro	Modificați subiectul acestui mesaj
 new subject	mail	ro	Subiect nou

@@ -163,6 +163,7 @@ edit status	infolog	pt	Editar estado
 edit the entry	infolog	pt	Editar o registo
 edit this entry	infolog	pt	Editar este registo
 empty for all	infolog	pt	vazio para todos
+encrypt description	infolog	pt	Descrição encriptada
 end	infolog	pt	Fim
 enddate	infolog	pt	Data limite
 enddate can not be before startdate	infolog	pt	Data limite não pode ser anterior à data de início
@@ -216,13 +217,13 @@ infolog - import csv-file	infolog	pt	Acesso à informação - Importar ficheiro 
 infolog - new	infolog	pt	Acesso à informação - Novo
 infolog - new subproject	infolog	pt	Acesso à informação - Novo sub-projecto
 infolog - subprojects from	infolog	pt	Acesso à informação - Sub-projectos de
-infolog copied - the copy can now be edited	infolog	pt	Infolog copiado - a cópia pode agora ser editado
 infolog csv export	infolog	pt	Infolog CSV exportação
 infolog csv import	infolog	pt	Importação CSV Infolog
+infolog encryption requires epl subscription	infolog	pt	A encriptação InfoLog requer Subscrição EPL
 infolog entry deleted	infolog	pt	Registo do acesso à informação eliminado
 infolog entry saved	infolog	pt	Registo do acesso à informação guardado
 infolog fields:	infolog	pt	Infolog campos:
-InfoLog filter for the home screen	infolog	pt	Filtro do acesso à informação para o ecrã principal
+infolog filter for the home screen	infolog	pt	Filtro do acesso à informação para o ecrã principal
 infolog ical export	infolog	pt	Infolog iCal export
 infolog ical import	infolog	pt	Importação Infolog iCal
 infolog id	infolog	pt	Infolog ID
@@ -231,6 +232,7 @@ infolog preferences	common	pt	Preferências do acesso à informação
 infolog-fieldname	infolog	pt	Acesso à informação - Nome do campo
 insert	infolog	pt	Inserir
 insert in document	infolog	pt	Insira no documento
+insert timestamp into description field	infolog	pt	Inserir carimbo da hora no campo de descrição
 invalid filename	infolog	pt	Nome de ficheiro inválido
 invalid status for entry type %1.	infolog	pt	Estado inválido para o tipo de entrada% 1.
 label<br>helptext	infolog	pt	Etiqueta<br>Texto de ajuda
@@ -322,6 +324,8 @@ prefix for sub-entries (default: re:)	infolog	pt	Prefixo para sub-entradas (defa
 price	infolog	pt	Preço
 pricelist	infolog	pt	Lista de preços
 primary link	infolog	pt	Ligação primária
+print this infolog	infolog	pt	Imprimir este InfoLog
+printing...	infolog	pt	Impressão...
 priority	infolog	pt	Prioridade
 private	infolog	pt	Privado
 project	infolog	pt	Projecto
@@ -386,7 +390,7 @@ sets the status of this entry and its subs to done	infolog	pt	Configura o estado
 sets the status of this entry to done	infolog	pt	Define o status desta entrada para done
 should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	pt	O acesso à informação deve ou não exibir sub-tarefas, chamadas ou notas na visualização normal? Pode sempre vê-las através dos respectivos elementos principais.
 should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	pt	O acesso à informação deve exibir as ligações a outras aplicações e/ou aos anexos de ficheiros na lista do acesso à informação (na visualização normal ao entrar no acesso à informação)?
-Should InfoLog show up on the home screen and with which filter. Works only if you dont selected an application for the home screen (in your preferences).	infolog	pt	O acesso à informação deve ser exibido no ecrã principal? Com que filtro? Está opção só será possível, se não seleccionar uma aplicação para o ecrã principal (nas suas preferências).
+should infolog show up on the home screen and with which filter. works only if you dont selected an application for the home screen (in your preferences).	infolog	pt	O acesso à informação deve ser exibido no ecrã principal? Com que filtro? Está opção só será possível, se não seleccionar uma aplicação para o ecrã principal (nas suas preferências).
 should infolog use full names (surname and familyname) or just the loginnames.	infolog	pt	O acesso à informação deve utilizar nomes completos (nome próprio e apelido) ou apenas nomes de utilizador?
 should the infolog list show a unique numerical id, which can be used eg. as ticket id.	infolog	pt	A lista de acesso à informação deve exibir uma ID numérica única, que possa ser utilizada, por exemplo, como uma ID de bilhete?
 should the infolog list show the column "last modified".	infolog	pt	A lista de acesso à informação deve ou não exibir a coluna "última modificação"?
@@ -409,8 +413,8 @@ startdate must be before enddate!!!	infolog	pt	STARTDATE deve ser antes endDate!
 starting %1	infolog	pt	A partir de 1%
 startrecord	infolog	pt	Iniciar registo
 status	infolog	pt	Estado
-status, percent and date completed are always allowed.	infolog	pt	A edição do estado, percentagem e data de conclusão é sempre autorizada.
 status ...	infolog	pt	Estado ...
+status, percent and date completed are always allowed.	infolog	pt	A edição do estado, percentagem e data de conclusão é sempre autorizada.
 sub	infolog	pt	Sub-registo
 sub-entries become subs of the parent or main entries, if there's no parent	infolog	pt	Os sub-registos tornam-se sub-registos de registos principais, ou registos principais se não existirem registos principais.
 sub-entries will not be closed	infolog	pt	Sub entradas não serão fechadas
@@ -460,7 +464,6 @@ view the parent of this entry and all his subs	infolog	pt	Ver o registo principa
 view this linked entry in its application	infolog	pt	Ver este registo ligado na sua aplicação
 when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	pt	Quando as tarefas ou chamadas telefónicas devem ser executadas. Surgem a partir dessa data no filtro--abertas ou no minhas--abertas (página inicial)
 which additional fields should the responsible be allowed to edit without having edit rights?	infolog	pt	Sem ter direitos de edição, o responsável deve estar autorizado a editar que campos adicionais?
-which implicit acl rights should the responsible get?	infolog	pt	O responsável deve ter que direitos ACL implícitos?
 which types should the calendar show	infolog	pt	Quais os tipos deve o calendário mostra
 will-call	infolog	pt	Por telefonar
 write (add or update) a record by passing its fields.	infolog	pt	Editar (adicionar ou actualizar) um registo ao passar os seus campos.
@@ -475,7 +478,6 @@ yes, with purging of deleted items possible	infolog	pt	Sim, com o expurgo de ite
 you can't delete one of the stock types !!!	infolog	pt	Não pode eliminar um dos tipos de armazenamento !!!
 you have entered an invalid ending date	infolog	pt	Inseriu uma data de fim inválida
 you have entered an invalid starting date	infolog	pt	Inseriu uma data de início inválida
-you have to enter a name, to create a new typ!!!	infolog	pt	É necessário inserir um nome para criar um novo tipo!!!
 you must enter a subject or a description	infolog	pt	É necessário inserir um assunto ou uma descrição
 you need to select an entry for linking.	infolog	pt	Você precisa selecionar uma entrada para a ligação.
 you need to select some entries first	infolog	pt	Você precisa selecionar algumas entradas em primeiro lugar.

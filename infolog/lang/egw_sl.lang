@@ -1,4 +1,3 @@
-%1 copied - the copy can now be edited	infolog	sl	Kopirano je %1 - kopijo lahko zdaj urejate
 %1 days in advance	infolog	sl	%1 dni vnaprej
 %1 deleted	infolog	sl	%1 izbrisan
 %1 deleted by %2 at %3	infolog	sl	%1 izbrisal %2 dne %3
@@ -31,12 +30,10 @@
 a short subject for the entry	infolog	sl	Kratek predmet za vnos
 abort without deleting	infolog	sl	Prekliči brez brisanja
 accept	infolog	sl	Sprejmi
-access	infolog	sl	Dostop
 action	infolog	sl	Dejanje
 actions...	infolog	sl	Dejanja ...
 actual date and time	infolog	sl	Dejanski datum in čas
 add	infolog	sl	Dodaj
-add %1	infolog	sl	Dodaj %1
 add / remove link	infolog	sl	Dodaj / odstrani povezavo
 add a file	infolog	sl	Dodaj datoteko
 add a new entry	infolog	sl	Dodaj nov zapis
@@ -48,12 +45,9 @@ add file	infolog	sl	Dodaj datoteko
 add or delete links	infolog	sl	Dodajanje ali brisanje povezav
 add sub	infolog	sl	Dodaj namestnika
 add timesheet entry	infolog	sl	Dodaj vnos timeheet
-add user to responsibles	infolog	sl	dodajte uporabnika odgovornim osebam
-add user to responsibles, removing evtl. previous category user	infolog	sl	dodajte uporabnika odgovornim, odstranite evtl. uporabnika prejšnje kategorije
 add:	infolog	sl	Dodaj:
 added	infolog	sl	Dodano
 addressbook placeholders available	infolog	sl	Imetniki naslovnikov so na voljo
-admin	infolog	sl	Skrbnik
 all	infolog	sl	Vse
 all links and attachments	infolog	sl	Vse povezave in priponke
 all other %1 fields are valid	infolog	sl	Vsa druga polja %1 so veljavna
@@ -87,7 +81,6 @@ change completion	infolog	sl	Spremeni zaključeno
 change history	infolog	sl	Spremembe
 change owner when updating	infolog	sl	Spremenite lastnika ob posodabljanju
 change the status of an entry, eg. close it	infolog	sl	Sprememba statusa vnosa, npr. zapiranje
-changed	infolog	sl	spremenjeno
 changed category to %1	infolog	sl	Spremenjena kategorija v %1
 changed completion to %1%	infolog	sl	Sprememba končanja na %1%
 changed status to %1	infolog	sl	Spremenjen status na %1
@@ -134,7 +127,6 @@ custom regarding	infolog	sl	Lastno glede na
 custom status for typ	infolog	sl	Lastni satus za tip
 customfields	infolog	sl	Lastna polja
 data exchange settings	infolog	sl	Nastavitve za izmenjavo podatkov
-date	infolog	sl	Datum
 date completed	infolog	sl	Datum zaključka
 date completed (leave it empty to have it automatic set if status is done or billed)	infolog	sl	Datum zaključka (pustite prazno, da se nastavi samodejno, če je status nastavljen na Končano ali Obračunano)
 datecreated	infolog	sl	Datum ustvarjanja
@@ -162,7 +154,6 @@ description	infolog	sl	Opis
 determines the order the fields are displayed	infolog	sl	ugotovi vrstni red polj, ki so prikazana
 directory with documents to insert entries	infolog	sl	Mapa z dokumenti za vstavljanje
 disables a status without deleting it	infolog	sl	Onemogoči status brez brisanja
-do you really want to delete this rule	infolog	sl	Ali res želite izbrisati to pravilo
 do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	sl	Ali želite potrdilo odgovornosti za: sprejemanje, končanje naloge ali oboje?
 do you want a notification if items owned by groups you are part of get updated ?	infolog	sl	Ali želite obvestilo, če so elementi v lasti skupin, v katere ste vključeni, posodobljeni?
 do you want a notification, if items get assigned to you or assigned items get updated?	infolog	sl	Želite prejeti obvestilo, če je element dodeljen vam ali se dodeljeni elemeni posodobijo?
@@ -202,7 +193,6 @@ error: saving the entry	infolog	sl	Napaka pri shranjevanju vnosa
 error: the entry has been updated since you opened it for editing!	infolog	sl	Napaka: vnos je bil spremenjen odkar ste ga odprli za urejanje!
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	infolog	sl	Primer {{IF n_prefix~Mr~Pozdravljeni g.~Pozdravljeni gospa}} - poiščite polje "n_prefix", za "gospod", če najdete, pišite Hello godpod, drugače pišite Hello gospa.
 example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	infolog	sl	Primer {{LETTERPREFIXCUSTOM n_prefix naslov n_family}} - Primer: g. Dr. James Miller
-example {{letterprefix}} - gives a letter prefix without double spaces, if the title is emty for example	infolog	sl	Primer {{LETTERPREFIX}} - daje črkovno predpono brez dvojnih presledkov, če je naslov na primer na primer
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	infolog	sl	Primer {{NELF vloga}} - če poljska vloga ni prazna, boste dobili novo vrstico z vrednostjo vloge na poljubnem mestu
 example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	infolog	sl	Primer {{nenvlf role}} - če poljska vloga ni prazna, nastavite LF brez poljubne vrednosti polja
 execute a further action for this entry	infolog	sl	Izvede dodatna dejanja za ta vnos
@@ -232,7 +222,6 @@ high	infolog	sl	Visoko
 history	infolog	sl	Zgodovina
 history logging	infolog	sl	Beleenje zgodovine
 history logging and deleting of items	infolog	sl	Beleenje zgodovine in brisanje elementov
-how many describtion lines should be directly visible. further lines are available via a scrollbar.	infolog	sl	Koliko opisnih vrstic bi moralo biti neposredno vidnih. Dodatne vrstice so na voljo preko drsnega traku.
 how wide should the description area be. this value is numeric and interpreted as em; 60 works reasonably well.	infolog	sl	Kako široko bi bilo treba opisno območje. Ta vrednost je številka, npr. 60.
 html link to the current record	infolog	sl	Povezava HTML s trenutnim zapisom
 id	infolog	sl	Šifra
@@ -240,13 +229,10 @@ id#	infolog	sl	ID#
 if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	sl	Če ima vrsta skupinskega lastnika, bo lastnik vseh vnosov te vrste dana skupina in NE uporabnik, ki jo je ustvaril!
 if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	sl	Če ni nastavljen, je vrstica za iskanje in filtriranje skrita za manj vnosov kakor "maksimalno število zadetkov na stran" (kakor je definirano v vaših nastavitvah.
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	infolog	sl	Če določite imenik (celotna pot vfs), bo %1 prikazalo dejanje za vsak dokument. To dejanje omogoča prenos določenega dokumenta z vstavljenimi podatki.
-if you specify a directory (full vfs path) here, opravila displays an action for each document. that action allows to download the specified document with the data inserted. the document can contain placeholder like {{info_subject}}, to be replaced with the data. the following document-types are supported:*.rtf, *.txt	infolog	sl	Če podate naslov (celotno pot vfs) tukaj, bo Opravila prikazal dejanje za vsak dokument. To dejanje omogoča prenos določenega dokumenta z vstavljenimi podatki. Dokument lahko vsebuje vsebnik kot {{info_subject}}, ki ga je treba zamenjati s podatki. Podprte so naslednje vrste dokumentov: *. Rtf, * .txt
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	infolog	sl	Če določite dokument (celotno pot vfs) tukaj,%1 prikaže ikono dodatne ikone za vsak vnos. Ta ikona omogoča prenos določenega dokumenta z vstavljenimi podatki.
-if you specify a document (full vfs path) here, opravila displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted. the document can contain placeholder like {{info_subject}}, to be replaced with the data. the following document-types are supported:*.rtf, *.txt	infolog	sl	Če določite dokument (celotna pot vfs), bo za vsak vnos prikazala ikono dodatne dokumentacije. Ta ikona omogoča prenos določenega dokumenta z vstavljenimi podatki. Dokument lahko vsebuje vsebnik kot {{info_subject}}, ki ga je treba zamenjati s podatki. Podprte so naslednje vrste dokumentov: *. Rtf, * .txt
 if you specify an export definition, it will be used when you export	infolog	sl	Če določite definicijo izvoza, se bo uporabil, ko boste izvozili
 import next set	infolog	sl	Uvozi naslednji niz
 importance	infolog	sl	Pomen
-imports entries into the infolog from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	infolog	sl	Uvoz vnosov v InfoLog iz datoteke CSV. CSV pomeni "vrednosti ločene z vejico". V zavihku z možnostmi lahko izberete tudi druge separatorje.
 imports todos into infolog from an ical file.	infolog	sl	Uvozi TODO v Infolog iz iCal datoteke.
 info log	common	sl	InfoDnevnik
 infolog	common	sl	InfoDnevnik
@@ -262,7 +248,7 @@ infolog encryption requires epl subscription	infolog	sl	Šifriranje InfoLog zaht
 infolog entry deleted	infolog	sl	Vnos InfoDnevnika je bil izbrisan
 infolog entry saved	infolog	sl	Vnos InfoDnevnika je bil shranjen
 infolog fields:	infolog	sl	Polja InfoLog:
-InfoLog filter for the home screen	infolog	sl	Filter InfoDnevnika za uvodni zaslon
+infolog filter for the home screen	infolog	sl	Filter InfoDnevnika za uvodni zaslon
 infolog ical export	infolog	sl	Infolog iCal izvoz
 infolog ical import	infolog	sl	Infolog iCal uvoz
 infolog id	infolog	sl	InfoLog ID
@@ -301,10 +287,8 @@ longer textual description	infolog	sl	Daljši opis
 low	infolog	sl	Nizko
 manage mapping	infolog	sl	Upravljaj mapiranje
 max length of the input [, length of the inputfield (optional)]	infolog	sl	Največja dolžina vhoda [dolžina vhodnega polja (neobvezno)]
-menu	infolog	sl	Meni
 modifier	infolog	sl	Modifikator
 modifierer	infolog	sl	Modifikator
-multiple	infolog	sl	večkraten
 name must not be empty !!!	infolog	sl	Ime ne sme biti prazno!!!
 name of current user, all other contact fields are valid too	infolog	sl	Ime trenutnega uporabnika, veljavna so tudi vsa druga polja stika
 name of new type to create	infolog	sl	Ime novega tipa, ki ga ustvarjate
@@ -313,7 +297,6 @@ new %1	infolog	sl	Nov %1
 new %1 created by %2 at %3	infolog	sl	Nov %1 ustvaril %2 dne %3
 new name	infolog	sl	Novo ime
 new search	infolog	sl	Novo iskanje
-no	infolog	sl	Ne
 no - cancel	infolog	sl	Ne - Prekliči
 no custom field "%1" for %2.	infolog	sl	Ni polj po meri "%1" za %2.
 no describtion, links or attachments	infolog	sl	Brez opisa, povezav ali priponk
@@ -355,7 +338,6 @@ own open	infolog	sl	Lastni odprt
 own open and upcoming	infolog	sl	Lastna odprta in prihajajoča
 own overdue	infolog	sl	Lastni zapadel
 own upcoming	infolog	sl	Lastni prihajajoč
-owner	infolog	sl	Lastnik
 owner does not have edit rights	infolog	sl	Lastnik nima pravic za urejanje
 owner, responsible	infolog	sl	Lastnik, odgovoren
 parent	infolog	sl	Nadrejen
@@ -367,7 +349,6 @@ pattern for search in addressbook	infolog	sl	Vzorec za iskanje po adresarju
 pattern for search in projects	infolog	sl	Vzorec za iskanje po Projektih
 percent completed	infolog	sl	Odstotek končanega
 permission denied	infolog	sl	Dostop zavrnjen
-permission denied!	infolog	sl	Dovoljenje zavrnjeno!
 permissions error - %1 could not %2	infolog	sl	Dovoljena napaka - %1 ni mogla %2
 phone	infolog	sl	Telefonski klic
 phone/email	infolog	sl	Telefon/E-naslov
@@ -378,6 +359,7 @@ prefix for sub-entries (default: re:)	infolog	sl	Predpona za pod-vnose (privzeto
 price	infolog	sl	Cena
 pricelist	infolog	sl	Cenik
 primary link	infolog	sl	Primarna povezava
+print this infolog	infolog	sl	Natisnite ta informativni dnevnik
 printing...	infolog	sl	Tiskanje ...
 priority	infolog	sl	Prioriteta
 private	infolog	sl	Zasebno
@@ -421,7 +403,6 @@ saves the changes made and leaves	infolog	sl	Shrani spremembe in zapusti
 saves this entry	infolog	sl	Shrani ta zapis
 schedule appointment	infolog	sl	Načrt imenovanja
 search	infolog	sl	Poišči
-search for '%1'	infolog	sl	Poiščite '%1'
 search for:	infolog	sl	Išči:
 second parameter for preg_replace	infolog	sl	Drugi parameter za preg_replace
 select	infolog	sl	Izberi
@@ -445,13 +426,11 @@ selection cf	infolog	sl	Izbor CF
 sender	infolog	sl	Pošiljatelj
 set status to done	infolog	sl	Nastavite stanje za konec
 set status to done for all entries	infolog	sl	Nastavi status, ki se naredi za vse vnose
-set user as only responsible user, but keeping groups	infolog	sl	nastavi uporabnika kot edino odgovornega uporabnika, vendar ohranja skupine
-set user as only responsible, removing all existing responsibles	infolog	sl	nastavite uporabnika kot edino odgovorno, tako da odstranite vse obstoječe odgovore
 sets the status of this entry and its subs to done	infolog	sl	Nastavi status tega vnosa in podrejenih vnosov na končano
 sets the status of this entry to done	infolog	sl	Nastavi status tega vnosa za dokončanje
 should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	sl	Ali naj InfoDnevnik prikaže podrejena opravila - klice ali opombe - v splošnem oknu? Podrejena opravila lahko vedno vidite preko njihovih nadrejenih opravil?
 should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	sl	Ali naj InfoDnevnik prikaže povezave do drugih aplikacij in/ali datotečne povezave v seznamu InfoDnevnik (splošni pogled, ko vstopite v InfoDnevnik)?
-Should InfoLog show up on the home screen and with which filter. Works only if you dont selected an application for the home screen (in your preferences).	infolog	sl	Ali naj se InfoDnevnik prikaže v uvodnem zaslonu in s katerim filtrom. Deluje samo, če v nastavitveh za uvodni zaslon ne izberete aplikacije.
+should infolog show up on the home screen and with which filter. works only if you dont selected an application for the home screen (in your preferences).	infolog	sl	Ali naj se InfoDnevnik prikaže v uvodnem zaslonu in s katerim filtrom. Deluje samo, če v nastavitveh za uvodni zaslon ne izberete aplikacije.
 should infolog use full names (surname and familyname) or just the loginnames.	infolog	sl	Ali naj InfoDnevnik uporabi polna imena (ime in priimek) ali samo uporabniška imena?
 should the infolog list show a unique numerical id, which can be used eg. as ticket id.	infolog	sl	Ali naj se InfoDnevnik prikaže številčno šifro, ki se lahko uporabi kot šifra opravila?
 should the infolog list show the column "last modified".	infolog	sl	Ali naj se InfoDnevnik prikaže stolpec "Zadnjič spremenjeno"?
@@ -466,7 +445,6 @@ show status and percent done separate	infolog	sl	Prikaži status in odstotek opr
 show sub-entries	infolog	sl	Prikaži podrejene vnose
 show ticket id	infolog	sl	Prikaži šifro opravila
 show times	infolog	sl	Prikaži čase
-site configuration	infolog	sl	Konfiguracija spletnega mesta
 small view	infolog	sl	Skrčen pogled
 start	infolog	sl	Začetek
 start a new search, cancel this link	infolog	sl	Zaženi novo iskanje, prekini to povezavo
@@ -477,8 +455,8 @@ startdate must be before enddate!!!	infolog	sl	Začetni datum mora biti pred kon
 starting %1	infolog	sl	Začetek %1
 startrecord	infolog	sl	Začetni zapis
 status	infolog	sl	Status
-status, percent and date completed are always allowed.	infolog	sl	Status, odstotek in datum opravljenega so vedno dovoljeni.
 status ...	infolog	sl	Status ...
+status, percent and date completed are always allowed.	infolog	sl	Status, odstotek in datum opravljenega so vedno dovoljeni.
 sub	infolog	sl	Podrejeni
 sub-entries become subs of the parent or main entries, if there's no parent	infolog	sl	Podrejeni vnosi postanejo podrejeni staršu ali glavnemu vnosu, če ni starša
 sub-entries will not be closed	infolog	sl	podrejeni vnosi ne bodo zaprti
@@ -498,7 +476,6 @@ the text displayed to the user	infolog	sl	besedilo, ki se prikaže uporabniku
 this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	sl	To je filter, ki ga InfoDnevnik uporablja, ko vstopite v aplikacijo. Filter omejuje število prikazanih zapisov v trenutnem pogledu. Obstajajo filtri, ki prikazujejo samo dokončane, še odprte ali zapise v prihodnosti, vaše ali tuje zapise.
 til when should the todo or phonecall be finished	infolog	sl	Do kdaj naj bo opravilo ali telefonski klic opravljen
 times	infolog	sl	Časi
-timesheet	infolog	sl	časovni list
 titles of any entries linked to the current record, excluding attached files	infolog	sl	Naslovi vseh vnosov, povezanih s trenutnim zapisom, brez priloženih datotek
 to many might exceed your execution-time-limit	infolog	sl	Preveč lahko preseže čas izvajanja
 to what should the startdate of new entries be set.	infolog	sl	Na kaj naj bo nastavljen začetni datum novega vnosa?
@@ -508,7 +485,6 @@ todo	infolog	sl	Opravila
 typ	infolog	sl	Tip
 typ '%1' already exists !!!	infolog	sl	Tip '%1' že obstaja!
 type	infolog	sl	Tip
-type '%1' already exists !!!	infolog	sl	tip "%1" že obstaja!
 type ...	infolog	sl	Tip ...
 type of customfield	infolog	sl	Vrsta polja po meri
 type of field	infolog	sl	Vrsta polja
@@ -518,7 +494,6 @@ unknown type: %1	infolog	sl	Neznana vrsta: %1
 unlink	infolog	sl	Odstrani povezavo
 unlinked from %1	infolog	sl	Povezava ni prekinjena od %1
 upcoming	infolog	sl	Prihajajoč
-update	infolog	sl	nadgradnja
 urgency	infolog	sl	Nujnost
 urgent	infolog	sl	Nujno
 use all	infolog	sl	Uporabite vse
@@ -527,10 +502,8 @@ use field from csv if possible	infolog	sl	Če je mogoče, uporabite polje CSV
 use search results	infolog	sl	Uporabite rezultate iskanja
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	infolog	sl	Uporabi to značko za naslov nalepk. Stik, ki ga želite ponoviti, dajte med dve znački.
 used time	infolog	sl	Porabljen čas
-username	infolog	sl	Uporabniško ime
 values for selectbox	infolog	sl	Vrednosti za izbirno polje
 view all subs of this entry	infolog	sl	Poglej vse podrejene zapise
-view linked %1 entries	infolog	sl	Oglejte si povezane vnose %1
 view other subs	infolog	sl	Poglej ostale podrejene zapise
 view parent	infolog	sl	Poglej nadrejenega
 view parent with children	infolog	sl	Pogled nadrejenih z podrejenimi zapisi
@@ -539,13 +512,11 @@ view the parent of this entry and all his subs	infolog	sl	Poglej nadrejenega in 
 view this linked entry in its application	infolog	sl	Poglej ta povezani vnos v njegovi aplikaciji
 when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	sl	Kdaj naj se Opravila ali Telefonski klic zaženejo?
 which additional fields should the responsible be allowed to edit without having edit rights?	infolog	sl	Katera dodatna polja lahko odgovorni ureja brez pravic za urejanje?
-which implicit acl rights should the responsible get?	infolog	sl	Katere pravice ACL naj dobi odgovorni?
 which participants should be preselected when scheduling an appointment.	infolog	sl	Kateri udeleženci je treba predhodno izbirati pri načrtovanju sestanka.
 which types should the calendar show	infolog	sl	Katere vrste naj koledar prikaže
 which types should the calendar show like events?	infolog	sl	Katere vrste naj koledar prikaže kot dogodki?
 will-call	infolog	sl	Bodo klicani
 write (add or update) a record by passing its fields.	infolog	sl	Zapišite (dodajte ali posodobite) zapis s podanimi vrednostmi.
-yes	infolog	sl	Da
 yes - close	infolog	sl	Da - Zapri
 yes - close including sub-entries	infolog	sl	Da - Zapri, vključno s podnaslovi
 yes - delete	infolog	sl	Da - Izbriši
@@ -558,7 +529,6 @@ you can choose a categorie to be preselected, when you create a new infolog entr
 you can't delete one of the stock types !!!	infolog	sl	Ne morete izbrisati glavnega tipa!
 you have entered an invalid ending date	infolog	sl	Vnesli ste napačen končni datum
 you have entered an invalid starting date	infolog	sl	Vnesli ste napačen začetni datum
-you have to enter a name, to create a new typ!!!	infolog	sl	Vpisati morate ime za imenovanje novega tipa
 you must enter a subject or a description	infolog	sl	Vpisati morate predmet ali opis
 you need to select an entry for linking.	infolog	sl	Izbrati morate vnos za povezovanje.
 you need to select some entries first	infolog	sl	Najprej morate izbrati nekaj vnosov.

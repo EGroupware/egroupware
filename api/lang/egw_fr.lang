@@ -712,6 +712,7 @@ insert new column behind this one	common	fr	Insérer une nouvelle colonne après
 insert new column in front of all	common	fr	Insérer une nouvelle colonne devant toutes les autres
 insert new row after this one	common	fr	Insérer une nouvelle ligne après celle-ci
 insert new row in front of first line	common	fr	Insérer une nouvelle ligne devant la première ligne
+insert placeholder	common	fr	Insérer un espace réservé
 insert row after	common	fr	Insérer une ligne après
 insert row before	common	fr	Insérer une ligne avant
 insert timestamp into description field	common	fr	Insérer un timestamp dans le champs description
@@ -723,6 +724,7 @@ invalid 2-factor authentication code	common	fr	Code d'authentification à double
 invalid email	common	fr	Email invalide
 invalid filename	common	fr	Nom de fichier invalide
 invalid ip address	common	fr	Adresse IP invalide
+invalid or expired 'remember me' token	common	fr	jeton "remember me" invalide ou expiré.
 invalid password	common	fr	Mot de passe invalide
 iran, islamic republic of	common	fr	IRAN, REPUBLIQUE ISLAMIQUE D'
 iraq	common	fr	IRAK

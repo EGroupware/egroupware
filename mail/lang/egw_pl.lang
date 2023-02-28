@@ -20,12 +20,19 @@ condition	mail	pl	warunek
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	pl	Skonfigurowane wartości zostaną ustawione automatycznie w oknie dialogowym kompilacji dla wybranego pola podczas tworzenia nowej wiadomości e-mail.
 contains	mail	pl	zawiera
 copy to	mail	pl	Kopiuj do
+cross account forward attachment is not allowed!	mail	pl	Dołączanie do konta forward jest zabronione!
+current subject	mail	pl	Aktualny temat
 date(newest first)	mail	pl	Data (od najnowszych)
 date(oldest first)	mail	pl	Data (od najstarszych)
 default sorting order	mail	pl	Domyślny porządek sortowania
+default toolbar actions shown in mail's html editor	mail	pl	Funkcje włączone w pasku narzędzi edytora HTML podczas tworzenia wiadomości e-mail
+default value for remembering s/mime passphrase in minutes	mail	pl	Domyślna wartość pamiętania hasła S/MIME w minutach
+defines what to show as contact label for added contact into to/cc/bcc when composing an email. default is firstname lastname and empty means include eveything available.	mail	pl	Określa co ma być pokazywane jako etykieta kontaktu dla dodawanego kontaktu w Do/Kopiuj/Blind copy podczas komponowania emaila. Domyślnie firstname lastname, a puste oznacza włączenie wszystkiego co dostępne.
+defines what to show as identity label on mail folder header	common	pl	Określa co ma być pokazywane jako etykieta tożsamości w nagłówku folderu poczty
 delete folder	mail	pl	Usuń folder
 deleted	mail	pl	skasowany
 disable	mail	pl	Wyłącz
+disable caching of flags	mail	pl	Wyłączenie buforowania flag
 discard	mail	pl	odrzuć
 discard message	mail	pl	odrzuć wiadomość
 display messages in multiple windows	mail	pl	wyświetl wiadomości w wielu oknach

@@ -113,9 +113,9 @@ copy of:	infolog	de	Kopie von:
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	infolog	de	Kopieren Sie ihre Änderungen in die Zwischenablage, %1laden den Eintrag neu%2 und fügen diese wieder ein.
 create new links	infolog	de	Neue Verknüpfung erzeugen
 created	infolog	de	Erstellt
-creates a new field	infolog	de	erstellt ein neues Feld
-creates a new status with the given values	infolog	de	erstellt einen neuen Status mit den angegebenen Werten
-creates a new typ with the given name	infolog	de	erstellt einen neuen Typ mit dem eingegebenen Namen
+creates a new field	infolog	de	Erstellt ein neues Feld
+creates a new status with the given values	infolog	de	Erstellt einen neuen Status mit den angegebenen Werten
+creates a new typ with the given name	infolog	de	Erstellt einen neuen Typ mit dem eingegebenen Namen
 creation	infolog	de	Erstellung
 csv-fieldname	infolog	de	CSV-Feldname
 csv-filename	infolog	de	CSV-Dateiname

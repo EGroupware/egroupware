@@ -9,12 +9,17 @@ compress folder	mail	da	Komprimere mappe
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	da	Konfigurerede værdier vil automatisk blive indstillet i dialogboksen for det respekterede felt, når du skriver en ny e-mail.
 contains	mail	da	indeholder
 copy to	mail	da	Kopier til
+cross account forward attachment is not allowed!	mail	da	Det er ikke tilladt at foretage en fremadrettet vedhæftning på tværs af konti!
 date(newest first)	mail	da	Dato (nyeste først)
 date(oldest first)	mail	da	Dato (ældste først)
 default sorting order	mail	da	Standart soterings rækkefølge
+default toolbar actions shown in mail's html editor	mail	da	Funktioner aktiveret i HTML-redigeringens værktøjslinje, når du udarbejder en e-mail
+default value for remembering s/mime passphrase in minutes	mail	da	Standardværdi for hukommelse af S/MIME-passphrase i minutter
+defines what to show as contact label for added contact into to/cc/bcc when composing an email. default is firstname lastname and empty means include eveything available.	mail	da	Definerer, hvad der skal vises som kontaktmærke for tilføjede kontaktpersoner i Til/Kopiere/Blind kopi, når du udarbejder en e-mail. Standard er fornavn efternavn og tom betyder, at alt tilgængeligt skal medtages.
 delete folder	mail	da	Slet Mappe
 deleted	mail	da	slettet
 disable	mail	da	Deaktivere
+disable caching of flags	mail	da	Deaktiver caching af flag
 display of html emails	mail	da	Vis HTML i emails
 display only when no plain text is available	mail	da	Vis kun når ren tekst version er tilgængelig
 does not contain	mail	da	indeholder ikke

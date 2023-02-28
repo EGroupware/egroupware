@@ -6,12 +6,17 @@ any status	mail	et	kõik staatused
 by date	mail	et	Kuupäeva järgi
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	et	Konfigureeritud väärtused määratakse automaatselt koostamise dialoogis kinnipeetavale väljale, kui koostate uue e-kirja.
 contains	mail	et	sisaldab
+cross account forward attachment is not allowed!	mail	et	Det er ikke tilladt at foretage en fremadrettet vedhæftning på tværs af konti!
 date(newest first)	mail	et	Kuupäev (uuemad enne)
 date(oldest first)	mail	et	Kuupäev (vanemad enne)
 default sorting order	mail	et	Vaikimisi sorteerimise järjekord
+default toolbar actions shown in mail's html editor	mail	et	Funktioner aktiveret i HTML-redigeringens værktøjslinje, når du udarbejder en e-mail
+default value for remembering s/mime passphrase in minutes	mail	et	Standardværdi for hukommelse af S/MIME-passphrase i minutter
+defines what to show as contact label for added contact into to/cc/bcc when composing an email. default is firstname lastname and empty means include eveything available.	mail	et	Definerer, hvad der skal vises som kontaktmærke for tilføjede kontaktpersoner i Til/Kopiere/Blind kopi, når du udarbejder en e-mail. Standard er fornavn efternavn og tom betyder, at alt tilgængeligt skal medtages.
 delete folder	mail	et	Kustuta kaust
 deleted	mail	et	kustutatud
 disable	mail	et	Keela
+disable caching of flags	mail	et	Deaktiver caching af flag
 discard	mail	et	unusta
 discard message	mail	et	unusta kirjad
 display messages in multiple windows	mail	et	Näita kirju mitmes aknas

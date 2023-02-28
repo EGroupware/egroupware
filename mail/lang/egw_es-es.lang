@@ -111,6 +111,7 @@ copy to	mail	es-es	Copiar a
 could not append message:	mail	es-es	No se pudo agregar el mensaje:
 could not save the acl because some names are empty	mail	es-es	No se pudo guardar la lista de control de acceso porque algunos nombres están vacíos
 create new account	mail	es-es	crear nueva cuenta
+cross account forward attachment is not allowed!	mail	es-es	No está permitido adjuntar cuentas cruzadas.
 current folder	mail	es-es	carpeta actual
 current subject	mail	es-es	Asunto actual
 currently:	mail	es-es	Actualmente:
@@ -118,7 +119,11 @@ date(newest first)	mail	es-es	fecha (la más reciente primero)
 date(oldest first)	mail	es-es	fecha (la más antigua primero)
 deactive	mail	es-es	Desactivar
 default sorting order	mail	es-es	Modo de ordenar predeterminado
+default toolbar actions shown in mail's html editor	mail	es-es	Funciones habilitadas en la barra de herramientas del editor HTML al redactar un correo electrónico
+default value for remembering s/mime passphrase in minutes	mail	es-es	Valor predeterminado para recordar la frase de contraseña S/MIME en minutos
 default your name and email	common	es-es	por defecto su nombre y correo-e
+defines what to show as contact label for added contact into to/cc/bcc when composing an email. default is firstname lastname and empty means include eveything available.	mail	es-es	Define qué mostrar como etiqueta de contacto para el contacto añadido en Para/Copiar/Copia oculta al redactar un correo electrónico. Por defecto es firstname lastname y empty significa incluir todo lo disponible.
+defines what to show as identity label on mail folder header	common	es-es	Define qué mostrar como etiqueta de identidad en la cabecera de la carpeta de correo.
 delete folder	mail	es-es	Suprimir carpeta
 delete folder %1 ?	mail	es-es	¿SUPRIMIR carpeta %1?
 delete this acl	mail	es-es	Suprimir esta lista de control de acceso
@@ -130,6 +135,7 @@ deleting folders	mail	es-es	Suprimiendo carpetas
 deny certain groups access to following features	mail	es-es	Denegar a determinados grupos el acceso a las funciones siguientes
 directories have to be shared.	mail	es-es	Los directorios tienen que ser compartidos.
 disable	mail	es-es	Desactivar
+disable caching of flags	mail	es-es	Desactivar el almacenamiento en caché de las banderas
 disable horizontal rule for separation of mail body from signature	mail	es-es	deshabilitar la regla horizontal para separar el cuerpo del correo de la firma
 disable use of flowed lines in plain text mails (rfc3676)	mail	es-es	Deshabilitar el uso de líneas fluidas en correos de texto sin formato (RFC3676)
 disabled!	mail	es-es	desactivado!

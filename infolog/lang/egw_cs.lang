@@ -178,6 +178,7 @@ edit status	infolog	cs	Editovat stav
 edit the entry	infolog	cs	Editovat záznam
 edit this entry	infolog	cs	Editovat tento záznam
 empty for all	infolog	cs	prázdné znamená vše
+encrypt description	infolog	cs	Šifrování popisu
 end	infolog	cs	Konec
 enddate	infolog	cs	Koncové datum
 enddate can not be before startdate	infolog	cs	Koncové datum nemůže předcházet počátečnímu datu
@@ -245,10 +246,11 @@ infolog - new subproject	infolog	cs	InfoLog - Nový podprojekt
 infolog - subprojects from	infolog	cs	InfoLog - Podprojekty (čeho)
 infolog csv export	infolog	cs	Export do souboru CSV
 infolog csv import	infolog	cs	Import ze souboru CSV
+infolog encryption requires epl subscription	infolog	cs	Šifrování InfoLogu vyžaduje předplatné EPL
 infolog entry deleted	infolog	cs	Záznam InfoLogu smazán
 infolog entry saved	infolog	cs	Záznam InfoLogu uložen
 infolog fields:	infolog	cs	Pole Úkolů:
-InfoLog filter for the home screen	infolog	cs	Filtr InfoLogu pro hlavní obrazovku
+infolog filter for the home screen	infolog	cs	Filtr InfoLogu pro hlavní obrazovku
 infolog ical export	infolog	cs	Export do souboru iCal
 infolog ical import	infolog	cs	Import ze souboru iCal
 infolog id	infolog	cs	Identifikace úkolu
@@ -257,6 +259,7 @@ infolog preferences	common	cs	Předvolby InfoLogu
 infolog-fieldname	infolog	cs	InfoLog - Název položky
 insert	infolog	cs	Vložit
 insert in document	infolog	cs	Vložit do dokumentu
+insert timestamp into description field	infolog	cs	Vložení časového razítka do pole popisu
 invalid filename	infolog	cs	Neplatné jméno souboru
 invalid owner id: %1.  might be a bad field translation.  used %2 instead.	infolog	cs	Nesprávná identifikace vlastníka: %1. Místo toho je použito %2.
 invalid status for entry type %1.	infolog	cs	Záznam typu %1 má nesprávný stav.
@@ -358,6 +361,7 @@ prefix for sub-entries (default: re:)	infolog	cs	Předpona pro podřízené záz
 price	infolog	cs	Cena
 pricelist	infolog	cs	Ceník
 primary link	infolog	cs	hlavní odkaz
+print this infolog	infolog	cs	Tisk tohoto InfoLogu
 printing...	infolog	cs	Probíhá tisk...
 priority	infolog	cs	Priorita
 private	infolog	cs	Soukromé
@@ -428,7 +432,7 @@ sets the status of this entry and its subs to done	infolog	cs	Nastavit stav záz
 sets the status of this entry to done	infolog	cs	Nastaví stav tohoto záznamu na hotovo
 should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	cs	Má InfoLog zobrazovat Pod-úkoly, -hovory nebo -poznámky v normálním zobrazení nebo ne? Podpoložky můžete vždy zobrazit přes jejich rodiče.
 should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	cs	Má InfoLog zobrazovat odkazy na ostatní aplikace nebo připojené soubory v seznamu InfoLogu nebo ne (normální zobrazení při vstupu do InfoLogu)?
-Should InfoLog show up on the home screen and with which filter. Works only if you dont selected an application for the home screen (in your preferences).	infolog	cs	Má se InfoLog zobrazovat na hlavní obrazovce a se kterým filtrem? Volba funguje jen v případě, že nevyberete v předvolbách pro hlavní obrazovku nějakou aplikaci.
+should infolog show up on the home screen and with which filter. works only if you dont selected an application for the home screen (in your preferences).	infolog	cs	Má se InfoLog zobrazovat na hlavní obrazovce a se kterým filtrem? Volba funguje jen v případě, že nevyberete v předvolbách pro hlavní obrazovku nějakou aplikaci.
 should infolog use full names (surname and familyname) or just the loginnames.	infolog	cs	Má InfoLog používat jména a příjmení nebo jen přihlašovací jména?
 should the infolog list show a unique numerical id, which can be used eg. as ticket id.	infolog	cs	Má seznam InfoLogu zobrazovat unikátní číselná Id, která se dají požívat např. jako ticket Id?
 should the infolog list show the column "last modified".	infolog	cs	Má seznam InfoLogu zobrazovat sloupec "naposledy změněno"?
@@ -453,8 +457,8 @@ startdate must be before enddate!!!	infolog	cs	Počáteční datum musí být d�
 starting %1	infolog	cs	Začíná %1
 startrecord	infolog	cs	První záznam
 status	infolog	cs	Stav
-status, percent and date completed are always allowed.	infolog	cs	Stav, procento a datum dokončení může vždy.
 status ...	infolog	cs	Stav ...
+status, percent and date completed are always allowed.	infolog	cs	Stav, procento a datum dokončení může vždy.
 sub	infolog	cs	Podpoložka
 sub-entries become subs of the parent or main entries, if there's no parent	infolog	cs	Podzáznamy se stanou podpoložkou rodiče nebo hlavních záznamů, pokud neexistuje rodič
 sub-entries will not be closed	infolog	cs	Podřízené záznamy nebudou ukončeny
@@ -510,7 +514,6 @@ view the parent of this entry and all his subs	infolog	cs	Zobrazit rodiče tohot
 view this linked entry in its application	infolog	cs	zobrazit odkazovaný záznam v jeho aplikaci
 when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	cs	kdy má být úkol nebo telefonní hovor započat (od tohoto data se ve filtru na úvodní straně zobrazuje jako otevřený nebo vlastní otevřený)
 which additional fields should the responsible be allowed to edit without having edit rights?	infolog	cs	Které dodatečné položky má mít odpovědná osoba možnost editovat bez toho, že by měla práva k editaci?
-which implicit acl rights should the responsible get?	infolog	cs	Jaká implicitní ACL práva má odpovědná osoba dostat?
 which participants should be preselected when scheduling an appointment.	infolog	cs	Kteří účastníci by měli být automaticky pozváni při vytváření schůzky.
 which types should the calendar show	infolog	cs	Které typy záznamů má kalendář zobrazovat
 which types should the calendar show like events?	infolog	cs	Které typy záznamů má kalendář zobrazovat jako událost?
@@ -528,7 +531,6 @@ you can choose a categorie to be preselected, when you create a new infolog entr
 you can't delete one of the stock types !!!	infolog	cs	Nemůžete smazat jeden z kmenových typů !!!
 you have entered an invalid ending date	infolog	cs	Zadal(a) jste neplatné datum dokočení
 you have entered an invalid starting date	infolog	cs	Zadal(a) jste neplatné počáteční datum
-you have to enter a name, to create a new typ!!!	infolog	cs	Pro vytvoření nového typu musíte zadat jeho název!!!
 you must enter a subject or a description	infolog	cs	Musíte zadat předmět nebo popis
 you need to select an entry for linking.	infolog	cs	Pro vytvoření propojení musíte nejprve vybrat nějaký záznam.
 you need to select some entries first	infolog	cs	Nejprve musíte vybrat nějaký záznam.

@@ -112,6 +112,7 @@ copy to	mail	sk	Kopírovať do
 could not append message:	mail	sk	Nepodarilo sa pripojiť správu:
 could not save the acl because some names are empty	mail	sk	Nepodarilo sa uložiť ACL! Pretože niektoré mená sú prázdne!
 create new account	mail	sk	Vytvoriť nový účet
+cross account forward attachment is not allowed!	mail	sk	Pripojenie krížového účtu dopredu nie je povolené!
 current folder	mail	sk	Aktuálny priečinok
 current subject	mail	sk	Aktuálny predmet
 currently:	mail	sk	Aktuálne:
@@ -119,7 +120,10 @@ date(newest first)	mail	sk	Dátum (novšie na začiatok)
 date(oldest first)	mail	sk	Dátum (staršie na začiatok)
 deactive	mail	sk	Deaktivovať
 default sorting order	mail	sk	Predvolené triedenie
+default toolbar actions shown in mail's html editor	mail	sk	Funkcie povolené na paneli nástrojov editora HTML pri vytváraní e-mailu
+default value for remembering s/mime passphrase in minutes	mail	sk	Predvolená hodnota pre zapamätanie prístupovej frázy S/MIME v minútach
 default your name and email	common	sk	Predvolené: vaše meno a e-mailová adresa
+defines what to show as contact label for added contact into to/cc/bcc when composing an email. default is firstname lastname and empty means include eveything available.	mail	sk	Definuje, čo sa má zobraziť ako označenie kontaktu pre pridaný kontakt do položky Komu/Kopírovať/Slepá kópia pri zostavovaní e-mailu. Predvolené je meno priezvisko a prázdne znamená zahrnúť všetko, čo je k dispozícii.
 defines what to show as identity label on mail folder header	common	sk	Definuje, čo sa má ukázať ako značka totožnosti na hlavičke poštového priečinku
 delete folder	mail	sk	Odstrániť priečinok
 delete folder %1 ?	mail	sk	ODSTRÁNIŤ Priečinok %1 ?
@@ -132,6 +136,7 @@ deleting folders	mail	sk	Odstraňujú sa priečinky
 deny certain groups access to following features	mail	sk	Zakázať niektorým skupinám prístup k nasledovným funkciám
 directories have to be shared.	mail	sk	Priečinky sa musia zdieľať
 disable	mail	sk	Vypnúť
+disable caching of flags	mail	sk	Zakázať ukladanie príznakov do medzipamäte
 disable horizontal rule for separation of mail body from signature	mail	sk	Vypnúť pravítko oddeľujúce telo správy a podpis
 disable use of flowed lines in plain text mails (rfc3676)	mail	sk	Zakázať používanie plávajúcich riadkov v plaintextových správach (RFC3676)
 disabled!	mail	sk	vypnuté!

@@ -105,13 +105,19 @@ copy to	mail	sl	Kopiraj v
 could not append message:	mail	sl	Ni bilo mogoče dodati sporočila:
 could not save the acl because some names are empty	mail	sl	ACL ni bilo mogoče shraniti, ker so nekatera imena prazna
 create new account	mail	sl	ustvariti nov račun
+cross account forward attachment is not allowed!	mail	sl	Priključitev naprej med računi ni dovoljena!
 current folder	mail	sl	trenutna mapa
+current subject	mail	sl	Trenutna tema
 currently:	mail	sl	Trenutno:
 date(newest first)	mail	sl	Datum (najprej novejši)
 date(oldest first)	mail	sl	Datum (najprej starejši)
 deactive	mail	sl	Neaktiven
 default sorting order	mail	sl	Privzet način razvrščanja
+default toolbar actions shown in mail's html editor	mail	sl	Funkcije, omogočene v orodni vrstici urejevalnika HTML pri sestavljanju e-pošte
+default value for remembering s/mime passphrase in minutes	mail	sl	Privzeta vrednost za pomnjenje gesla S/MIME v minutah
 default your name and email	common	sl	privzeto ime in e-pošto
+defines what to show as contact label for added contact into to/cc/bcc when composing an email. default is firstname lastname and empty means include eveything available.	mail	sl	Določa, kaj se prikaže kot oznaka stika za dodan stik v To/Copy/Blind copy pri sestavljanju e-poštnega sporočila. Privzeto je ime priimek in prazen pomeni, da vključuje vse, kar je na voljo.
+defines what to show as identity label on mail folder header	common	sl	Določa, kaj se prikaže kot oznaka identitete v glavi poštne mape
 delete folder	mail	sl	Briši mapo
 delete folder %1 ?	mail	sl	DELETE Mapa %1 ?
 delete this acl	mail	sl	Izbrišite ta ACL
@@ -123,6 +129,7 @@ deleting folders	mail	sl	Brisanje map
 deny certain groups access to following features	mail	sl	Nekatere skupine onemogočite dostop do naslednjih funkcij
 directories have to be shared.	mail	sl	Imeniki morajo biti v skupni rabi.
 disable	mail	sl	Onemogoči
+disable caching of flags	mail	sl	Onemogoči predpomnjenje zastavic
 disable horizontal rule for separation of mail body from signature	mail	sl	onemogočite horizontalno pravilo za ločitev telesa pošte od podpisa
 disable use of flowed lines in plain text mails (rfc3676)	mail	sl	Onemogočite uporabo pretočnih vrstic v navadnih besedilnih poštah (RFC3676)
 disabled!	mail	sl	onemogočeno!

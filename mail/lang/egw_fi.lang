@@ -20,12 +20,17 @@ condition	mail	fi	Ehdot
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	fi	Määritetyt arvot asetetaan automaattisesti laatimisvalintaikkunassa arvostetulle kentälle, kun laadit uutta sähköpostia.
 contains	mail	fi	Sisältää
 copy to	mail	fi	Kopio
+cross account forward attachment is not allowed!	mail	fi	Tilin rajat ylittävä eteenpäin kiinnittäminen ei ole sallittua!
 date(newest first)	mail	fi	Päivämäärä - uusin ensin
 date(oldest first)	mail	fi	Päivämäärä - vanhin ensin
 default sorting order	mail	fi	Oletus lajittelujärjestys
+default toolbar actions shown in mail's html editor	mail	fi	HTML-editorin työkalupalkissa sähköpostia laadittaessa käytössä olevat toiminnot.
+default value for remembering s/mime passphrase in minutes	mail	fi	S/MIME-salasanan muistamisen oletusarvo minuutteina.
+defines what to show as contact label for added contact into to/cc/bcc when composing an email. default is firstname lastname and empty means include eveything available.	mail	fi	Määrittää, mitä näytetään yhteystietotarrana yhteystietoa lisättävän yhteystiedon kohdalla To/Kopio/Sokea kopio sähköpostia laadittaessa. Oletusarvo on etunimi sukunimi ja tyhjä tarkoittaa, että kaikki käytettävissä olevat tiedot sisällytetään.
 delete folder	mail	fi	Poista kansio
 deleted	mail	fi	Poistettu
 disable	mail	fi	Ota pois käytöstä
+disable caching of flags	mail	fi	Poista lippujen välimuistitallennus käytöstä
 discard	mail	fi	Hylkää
 discard message	mail	fi	Hylkää viesti
 display messages in multiple windows	mail	fi	Näytä viesti uudessa ikkunassa?

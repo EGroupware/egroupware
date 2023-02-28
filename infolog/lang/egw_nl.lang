@@ -41,6 +41,7 @@ add sub	infolog	nl	Sub toevoegen
 add timesheet entry	infolog	nl	Urenregistratie toevoegen
 add:	infolog	nl	Toevoegen:
 added	infolog	nl	toegevoegd
+addressbook placeholders available	infolog	nl	roadmangang.danmark@gmail.com	remove
 all	infolog	nl	Alles
 all links and attachments	infolog	nl	alle links en bijlagen
 all projects	infolog	nl	Alle projecten
@@ -142,6 +143,7 @@ edit status	infolog	nl	Wijzig status
 edit the entry	infolog	nl	Wijzig de infolog
 edit this entry	infolog	nl	Wijzig dit infolog
 empty for all	infolog	nl	leeg voor alle
+encrypt description	infolog	nl	Beschrijving coderen
 end	infolog	nl	Einde
 enddate	infolog	nl	Einddatum
 enddate can not be before startdate	infolog	nl	Einddatum kan vroeger zijn dan begindatum
@@ -168,6 +170,7 @@ finish	infolog	nl	Einde
 for serial letter use this tag. put the content, you want to repeat between two tags.	infolog	nl	Gebruik deze tag voor serie brieven. Plaats de inhoud die herhaald moet worden tussen de twee tags.
 for which types should this field be used	infolog	nl	Voor welke type wordt dit veld gebruikt
 from	infolog	nl	Van
+full list of placeholder names	infolog	nl	Volledige lijst met namen van plaatshouders
 general fields:	infolog	nl	Algemene velden:
 general settings	infolog	nl	Algemene instellingen
 global categories	infolog	nl	Algemene categoriën
@@ -193,14 +196,16 @@ infolog - import csv-file	infolog	nl	InfoLog - Importeer CSV-bestand
 infolog - new	infolog	nl	InfoLog - Nieuw
 infolog - new subproject	infolog	nl	InfoLog - Nieuw subproject
 infolog - subprojects from	infolog	nl	InfoLog - Subprojecten van
+infolog encryption requires epl subscription	infolog	nl	InfoLog encryptie vereist EPL-abonnement
 infolog entry deleted	infolog	nl	InfoLog verwijderd
 infolog entry saved	infolog	nl	InfoLog opgeslagen
-InfoLog filter for the home screen	infolog	nl	InfoLog filter tbv de voorpagina
+infolog filter for the home screen	infolog	nl	InfoLog filter tbv de voorpagina
 infolog list	infolog	nl	InfoLog lijst
 infolog preferences	common	nl	InfoLog voorkeuren
 infolog-fieldname	infolog	nl	InfoLog-veldnaam
 insert	infolog	nl	Voeg toe
 insert in document	infolog	nl	Invoegen in document
+insert timestamp into description field	infolog	nl	Tijdstempel invoegen in beschrijvingsveld
 invalid filename	infolog	nl	Ongeldige bestandsnaam
 label<br>helptext	infolog	nl	Label<br/>Helptekst
 last changed	infolog	nl	Laatst gewijzigd
@@ -279,6 +284,8 @@ planned time	infolog	nl	geplande tijd
 price	infolog	nl	Prijs
 pricelist	infolog	nl	Prijslijst
 primary link	infolog	nl	primaire link
+print this infolog	infolog	nl	Deze InfoLog afdrukken
+printing...	infolog	nl	Afdrukken...
 priority	infolog	nl	Prioriteit
 private	infolog	nl	Privé
 project	infolog	nl	Project
@@ -330,7 +337,7 @@ sender	infolog	nl	Afzender
 sets the status of this entry and its subs to done	infolog	nl	Zet de status van dit item en de onderliggende op gedaan
 should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	nl	Moet InfoLog subtaken, -telefoongesprekken of -notities standaard weergeven, ja of nee. U kunt altijd sub's weergeven via de bovenliggende infolog ?
 should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	nl	Moet InfoLog de links naar andere toepassingen en/of bestanden in de InfoLog lijst (normale weergave als u InfoLog start).
-Should InfoLog show up on the home screen and with which filter. Works only if you dont selected an application for the home screen (in your preferences).	infolog	nl	Moet InfoLog op de voorpagina getoond worden en met welk filter. Werkt alleen indien u geen toepassing voor de voorpagina heeft gekozen (in uw voorkeuren).
+should infolog show up on the home screen and with which filter. works only if you dont selected an application for the home screen (in your preferences).	infolog	nl	Moet InfoLog op de voorpagina getoond worden en met welk filter. Werkt alleen indien u geen toepassing voor de voorpagina heeft gekozen (in uw voorkeuren).
 should infolog use full names (surname and familyname) or just the loginnames.	infolog	nl	Moet InfoLog volledige namen (voor- en achternaam) gebruiken of alleen gebruikersnamen?
 should the infolog list show a unique numerical id, which can be used eg. as ticket id.	infolog	nl	Moet de InfoLog lijst een uniek nummer tonen dat bijvoorbeeld als ticket ID gebruik kan worden?
 should the infolog list show the column "last modified".	infolog	nl	Moet de InfoLog lijst de kolom "laatst gewijzigd" tonen?
@@ -351,8 +358,8 @@ startdate enddate	infolog	nl	Startdatum Einddatum
 startdate for new entries	infolog	nl	Startdatum voor nieuwe items
 startrecord	infolog	nl	Startregel
 status	infolog	nl	Status
-status, percent and date completed are always allowed.	infolog	nl	Status, percentage en datum voltooid zijn altijd toegestaan.
 status ...	infolog	nl	Status ...
+status, percent and date completed are always allowed.	infolog	nl	Status, percentage en datum voltooid zijn altijd toegestaan.
 sub	infolog	nl	Onderliggende
 sub-entries become subs of the parent or main entries, if there's no parent	infolog	nl	Sub infologs worden subs van de bovenliggende of hoofd infologs als er geen boven liggende infolog is
 subject	infolog	nl	Onderwerp
@@ -395,7 +402,6 @@ view the parent of this entry and all his subs	infolog	nl	Van deze infolog de bo
 view this linked entry in its application	infolog	nl	Gelinkt record in bijbehorende applicatie bekijken
 when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	nl	Wanneer moet de Taak of het Telefoongesprek worden gestart? If zal vanaf die datum worden weergeven in het filter OPEN of EIGEN OPENSTAANDE
 which additional fields should the responsible be allowed to edit without having edit rights?	infolog	nl	Welke additionele velden moet de verantwoordelijke kunnen bewerken zonder daarvoor speciale bewerk rechten te moeten krijgen?
-which implicit acl rights should the responsible get?	infolog	nl	Welke impliciete ACL rechten moet de verantwoordelijke krijgen?
 which types should the calendar show	infolog	nl	Welke types moet de kalender weergeven
 will-call	infolog	nl	zal bellen
 write (add or update) a record by passing its fields.	infolog	nl	Schrijf (toevoegen of bijwerken) een record door de velden mee te geven.
@@ -409,6 +415,5 @@ you can choose a categorie to be preselected, when you create a new infolog entr
 you can't delete one of the stock types !!!	infolog	nl	U kunt de standaard types niet verwijderen
 you have entered an invalid ending date	infolog	nl	U heeft een ongeldige einddatum ingevoerd
 you have entered an invalid starting date	infolog	nl	U heeft een ongeldige startdatum ingevoerd
-you have to enter a name, to create a new typ!!!	infolog	nl	U moet een naam invoeren om een nieuw type aan te maken!
 you must enter a subject or a description	infolog	nl	U moet een onderwerp of een beschrijving invoeren
 your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	infolog	nl	Uw database is NIET actueel (%1 vs. %2), voer s.v.p. %3setup%4 uit om uw database te actualiseren.

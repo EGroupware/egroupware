@@ -39,6 +39,7 @@ add sub	infolog	id	tambah Sub
 add timesheet entry	infolog	id	Tamba entri lembarwaktu
 add:	infolog	id	Tambah:
 added	infolog	id	ditambahkan
+addressbook placeholders available	infolog	id	Tersedia tempat penampung buku alamat
 all	infolog	id	Semua
 all links and attachments	infolog	id	semua tautan dan lampiran
 all projects	infolog	id	Semua Proyek
@@ -117,6 +118,7 @@ edit status	infolog	id	Edit status
 edit the entry	infolog	id	Edit entri
 edit this entry	infolog	id	Edit entri ini
 empty for all	infolog	id	kosongkan untuk semuanya
+encrypt description	infolog	id	Mengenkripsi deskripsi
 end	infolog	id	Akhir
 enddate	infolog	id	Tanggal jatuh-tempo
 enddate can not be before startdate	infolog	id	Tanggal jatuh-tempo tidak dapat sebelum tanggal memulai
@@ -127,6 +129,7 @@ field must not be empty !!!	infolog	id	Field tidak boleh kosong !!!
 fieldseparator	infolog	id	Pemisah field
 finish	infolog	id	rampung
 from	infolog	id	Dari
+full list of placeholder names	infolog	id	Daftar lengkap nama placeholder
 general fields:	infolog	id	Field Umum:
 global categories	infolog	id	Kategori Global
 high	infolog	id	tinggi
@@ -145,10 +148,12 @@ infolog - import csv-file	infolog	id	InfoLog - Impor berkas-CSV
 infolog - new	infolog	id	InfoLog - Baru
 infolog - new subproject	infolog	id	InfoLog - Subproyek Baru
 infolog - subprojects from	infolog	id	InfoLog - Subproyek dari
+infolog encryption requires epl subscription	infolog	id	Enkripsi InfoLog memerlukan Langganan EPL
 infolog list	infolog	id	Daftar InfoLog
 infolog preferences	common	id	Kesukaan InfoLog
 infolog-fieldname	infolog	id	Nama field-InfoLog
 insert in document	infolog	id	Sisipkan dalam dokumen
+insert timestamp into description field	infolog	id	Menyisipkan stempel waktu ke dalam bidang deskripsi
 invalid filename	infolog	id	Nama berkas keliru
 label<br>helptext	infolog	id	Label<br>Helptext
 last changed	infolog	id	Pengubahan terakhir
@@ -209,6 +214,8 @@ planned time	infolog	id	waktu yang direncanakan
 price	infolog	id	Harga
 pricelist	infolog	id	Daftar harga
 primary link	infolog	id	tautan utama
+print this infolog	infolog	id	Cetak InfoLog ini
+printing...	infolog	id	Mencetak...
 priority	infolog	id	Prioritas
 private	infolog	id	Privat
 project	infolog	id	Proyek

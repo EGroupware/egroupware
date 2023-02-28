@@ -26,6 +26,7 @@ add sub	infolog	et	lisa alam
 add timesheet entry	infolog	et	Lisa Timesheet kirje
 add:	infolog	et	Lisa:
 added	infolog	et	Lisatud
+addressbook placeholders available	infolog	et	Kättesaadavad aadressiraamatu paigutussätted
 all	infolog	et	Kõik
 all projects	infolog	et	Kõik projektid
 apply the changes	infolog	et	Rakenda muudatused
@@ -85,6 +86,7 @@ edit status	infolog	et	Muuda staatust
 edit the entry	infolog	et	Muuda kirjet
 edit this entry	infolog	et	Muuda seda kirjet
 empty for all	infolog	et	tühi kõigijaoks
+encrypt description	infolog	et	Krüpteeri kirjeldus
 end	infolog	et	Lõpp
 enddate	infolog	et	Tähtaja kuupäev
 enddate can not be before startdate	infolog	et	Tähtaja kuupäev ei saa olle enne alustamise kuupäeva
@@ -95,6 +97,7 @@ fax	infolog	et	Faks
 field must not be empty !!!	infolog	et	Väli ei tohi jääda tühjaks !!!
 fieldseparator	infolog	et	Väljaeraldaja
 finish	infolog	et	lõpp
+full list of placeholder names	infolog	et	Täielik loetelu paigutussalvestiste nimedest
 global categories	infolog	et	Globaalsed Kategooriad
 high	infolog	et	kõrge
 history	infolog	et	Ajalugu
@@ -106,10 +109,12 @@ infolog - edit	infolog	et	InfoLog - Muuda
 infolog - import csv-file	infolog	et	InfoLog - Impordi CSV-Fail
 infolog - new	infolog	et	InfoLog - Uus
 infolog - new subproject	infolog	et	InfoLog - Uus Alamprojekt
+infolog encryption requires epl subscription	infolog	et	InfoLogi krüpteerimine nõuab EPL tellimust
 infolog entry deleted	infolog	et	InfoLog kirje kustutatud
 infolog entry saved	infolog	et	InfoLog kirje salvestatud
 infolog list	infolog	et	InfoLog nimekiri
 infolog preferences	common	et	InfoLog eelistused
+insert timestamp into description field	infolog	et	Ajatempli sisestamine kirjelduse väljale
 invalid filename	infolog	et	Vigane failinimi
 last changed	infolog	et	Viimati vahetatud
 last modified	infolog	et	Viimati muudetud
@@ -145,6 +150,8 @@ phonecall	infolog	et	Telefoni Kõne
 planned	infolog	et	kavandatud
 planned time	infolog	et	kavandatud aeg
 price	infolog	et	Hind
+print this infolog	infolog	et	Trükkida see InfoLog
+printing...	infolog	et	Trükkimine...
 priority	infolog	et	Prioriteet
 private	infolog	et	Privaatne
 project	infolog	et	Projekt
@@ -158,7 +165,7 @@ search for:	infolog	et	Otsi:
 select	infolog	et	Märgi
 select a price	infolog	et	Vali hind
 select a project	infolog	et	Vali Projekt
-show in the infolog list	infolog	et	Näita infoLog listis
+show in the infolog list	infolog	et	Näita InfoLog listis
 show last modified	infolog	et	Näita viimati muudetud
 show times	infolog	et	Näita aegu
 small view	infolog	et	väike vaade

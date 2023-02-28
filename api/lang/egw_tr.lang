@@ -67,9 +67,19 @@ group has been deleted	common	tr	Grup silindi
 group has been updated	common	tr	Grup güncellendi
 group name	common	tr	Grup Ýsmi
 highest	common	tr	En yüksek
+history	common	tr	Tarih
+history log	common	tr	Sürüm geçmişi
 home email	common	tr	Ev E-mail
+how many days to sync in the future (default %1)	groupdav	tr	Gelecekte kaç gün senkronize edilecek (varsayılan %1)
+how many days to sync in the past (default %1)	groupdav	tr	Geçmişte kaç gün senkronize edilecek (varsayılan %1)
+how many rows to print	common	tr	Kaç satır yazdırılacağı
+how to show the general egroupware menu ?	common	tr	Genel EGroupware menüsü nasıl gösterilir
+insert placeholder	common	tr	Yer tutucu ekle
 insert timestamp into description field	common	tr	Açıklama alanına zaman damgası ekle
 international	common	tr	Uluslararas?
+invalid 2-factor authentication code	common	tr	Geçersiz 2 Faktörlü Kimlik Doğrulama kodu
+invalid or expired 'remember me' token	common	tr	Geçersiz veya süresi dolmuş 'beni hatırla' belirteci
+it is recommended to store your public key in addressbook, so other users can write you encrypted mails.	common	tr	Açık anahtarınızı Adres Defteri'nde saklamanız önerilir, böylece diğer kullanıcılar size şifreli postalar yazabilir.
 light mode	common	tr	Işık modu
 load	common	tr	Yükle
 loginid	common	tr	Kullanýcý Adý

@@ -20,12 +20,19 @@ condition	mail	hu	feltétel
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	hu	A beállított értékek automatikusan beállítódnak a kompozíció párbeszédpanelen az adott mezőhöz, amikor új e-mailt állít össze.
 contains	mail	hu	tartalmaz
 copy to	mail	hu	Másold ide:
+cross account forward attachment is not allowed!	mail	hu	Kereszt számla előre csatolása nem megengedett!
+current subject	mail	hu	Jelenlegi téma
 date(newest first)	mail	hu	Dátum (újak elsőnek)
 date(oldest first)	mail	hu	Dátum (régiek elsőnek)
 default sorting order	mail	hu	Alapértelmezett rendezési sor
+default toolbar actions shown in mail's html editor	mail	hu	A HTML-szerkesztő eszköztárban e-mail készítésekor engedélyezett funkciók
+default value for remembering s/mime passphrase in minutes	mail	hu	Az S/MIME jelszó megjegyzésére szolgáló alapértelmezett érték percekben
+defines what to show as contact label for added contact into to/cc/bcc when composing an email. default is firstname lastname and empty means include eveything available.	mail	hu	Meghatározza, hogy mit jelenítsen meg kapcsolattartó címkéjeként a hozzáadott kapcsolattartóhoz a Címzettek/Másolás/Vak másolatban, amikor e-mailt állít össze. Az alapértelmezett érték a keresztnév vezetéknév, az üres érték pedig azt jelenti, hogy minden elérhetőt tartalmaz.
+defines what to show as identity label on mail folder header	common	hu	Meghatározza, hogy mi jelenjen meg a levélmappa fejlécében identitáscímkeként.
 delete folder	mail	hu	Mappa törlése
 deleted	mail	hu	törölve
 disable	mail	hu	Letilt
+disable caching of flags	mail	hu	A zászlók gyorsítótárazásának letiltása
 discard	mail	hu	elvet
 discard message	mail	hu	üzenet elvetése
 display messages in multiple windows	mail	hu	üzenetek megjelenítése több ablakban

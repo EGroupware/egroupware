@@ -107,6 +107,7 @@ copy to	mail	el	Αντιγραφή στο
 could not append message:	mail	el	Δεν μπόρεσα να προσθέσω το μήνυμα:
 could not save the acl because some names are empty	mail	el	Τα δικαιώματα ACL δεν μπόρεσαν να αποθηκευθούν γιατί κάποια όνοματα είναι κενά
 create new account	mail	el	Δημιουργία νέου λογαριασμού
+cross account forward attachment is not allowed!	mail	el	Δεν επιτρέπεται η εμπροσθοβαρής σύνδεση διασταυρούμενων λογαριασμών!
 current folder	mail	el	Τρέχον φάκελος
 current subject	mail	el	Τρέχον θέμα
 currently:	mail	el	Αυτή τη στιγμή:
@@ -114,8 +115,10 @@ date(newest first)	mail	el	Ημερομηνία (πρώτα η πιο πρόσφ
 date(oldest first)	mail	el	Ημερομηνία (πρώτα η πιο παλιά)
 deactive	mail	el	Απενεργοποίηση
 default sorting order	mail	el	Προεπιλεγμένη σειρά ταξινόμησης
+default toolbar actions shown in mail's html editor	mail	el	Ενεργοποίηση λειτουργιών στη γραμμή εργαλείων του επεξεργαστή HTML κατά τη σύνταξη ενός email
 default value for remembering s/mime passphrase in minutes	mail	el	Προεπιλεγμένη τιμή σε λεπτά για την απομνημόνευση του κωδικού S/MIME
 default your name and email	common	el	προεπιλεγμένο όνομα και email
+defines what to show as contact label for added contact into to/cc/bcc when composing an email. default is firstname lastname and empty means include eveything available.	mail	el	Καθορίζει τι θα εμφανίζεται ως ετικέτα επαφής για την προσθήκη επαφής στο Προς/Καντιγραφή/τυφλό αντίγραφο κατά τη σύνταξη ενός email. Η προεπιλεγμένη τιμή είναι firstname lastname και το κενό σημαίνει ότι περιλαμβάνει όλα τα διαθέσιμα.
 defines what to show as identity label on mail folder header	common	el	Ορίζει τι εμφανίζεται σαν ετικέτα στον τίτλο του κύριου φακέλου
 delete folder	mail	el	Διαγραφή Φακέλου
 delete folder %1 ?	mail	el	ΔΙΑΓΡΑΦΗ φακέλου %1 ;
@@ -128,6 +131,7 @@ deleting folders	mail	el	Διαδικασία διαγραφής φακέλων
 deny certain groups access to following features	mail	el	Αποκλεισμός ορισμένων ομάδων από τις παρακάτω λειτουργίες
 directories have to be shared.	mail	el	Οι κατάλογοι πρέπει να προσπελάσιμοι από κοινού
 disable	mail	el	Απενεργοποίηση
+disable caching of flags	mail	el	Απενεργοποίηση της προσωρινής αποθήκευσης σημαιών
 disable horizontal rule for separation of mail body from signature	mail	el	απενεργοποίηση οριζόντιας γραμμής διαχωρισμού κειμένου μηνύματος και υπογραφής
 disable use of flowed lines in plain text mails (rfc3676)	mail	el	Απενεργοποίηση της χρήσης μεταβλητής αλλαγή γραμμών σε μηνύματα απλού κειμένου (RFC3676)
 disabled!	mail	el	απενεργοποιημένο!

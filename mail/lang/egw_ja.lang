@@ -105,13 +105,19 @@ copy to	mail	ja	コピー先
 could not append message:	mail	ja	Could not append Message:
 could not save the acl because some names are empty	mail	ja	名前の一部が空欄のためACLを保存できませんでした。
 create new account	mail	ja	新規アカウントの作成
+cross account forward attachment is not allowed!	mail	ja	クロスアカウントでの転送添付ができない!
 current folder	mail	ja	現在のフォルダ
+current subject	mail	ja	現在の件名
 currently:	mail	ja	現在値:
 date(newest first)	mail	ja	日時(新しい順)
 date(oldest first)	mail	ja	日時(古い順)
 deactive	mail	ja	無効化
 default sorting order	mail	ja	既定のソート順
+default toolbar actions shown in mail's html editor	mail	ja	メール作成時にHTMLエディタツールバーで有効になる機能
+default value for remembering s/mime passphrase in minutes	mail	ja	S/MIMEのパスフレーズを記憶する際のデフォルト値を分単位で設定可能
 default your name and email	common	ja	既定の氏名,メール・アドレス
+defines what to show as contact label for added contact into to/cc/bcc when composing an email. default is firstname lastname and empty means include eveything available.	mail	ja	メール作成時にTo/Copy/Blind Copyに追加した連絡先のラベルとして何を表示するかを定義します。デフォルトはfirstname lastnameで、emptyの場合は利用可能なものすべてを含むことを意味します。
+defines what to show as identity label on mail folder header	common	ja	メールフォルダヘッダのIDラベルとして何を表示するかを定義します。
 delete folder	mail	ja	フォルダの削除
 delete folder %1 ?	mail	ja	フォルダ %1 を削除してよろしいですか?
 delete this acl	mail	ja	この ACL を削除する
@@ -123,6 +129,7 @@ deleting folders	mail	ja	フォルダの削除中
 deny certain groups access to following features	mail	ja	下記の機能に対する、特定のグループ・アクセスを拒否
 directories have to be shared.	mail	ja	ディレクトリは共有である必要があります。
 disable	mail	ja	無効
+disable caching of flags	mail	ja	フラグのキャッシュを無効にする
 disable horizontal rule for separation of mail body from signature	mail	ja	署名とメッセージ本体を分離するための水平線を無効にする
 disable use of flowed lines in plain text mails (rfc3676)	mail	ja	プレーン・テキスト・メールで浮動線の使用を無効にする (RFC3676)
 disabled!	mail	ja	無効化されました!

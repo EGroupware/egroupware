@@ -47,6 +47,7 @@ add sub	infolog	ru	Добавить дочернюю запись
 add timesheet entry	infolog	ru	Добавить запись табеля учета времени
 add:	infolog	ru	Добавить:
 added	infolog	ru	Добавлено
+addressbook placeholders available	infolog	ru	Доступны держатели адресной книги
 all	infolog	ru	Все
 all links and attachments	infolog	ru	все ссылки и вложения
 all projects	infolog	ru	Все проекты
@@ -172,6 +173,7 @@ edit status	infolog	ru	Редактировать состояние
 edit the entry	infolog	ru	Редактировать запись
 edit this entry	infolog	ru	Редактировать эту запись
 empty for all	infolog	ru	пусто для всех
+encrypt description	infolog	ru	Зашифровать описание
 end	infolog	ru	Завершение
 enddate	infolog	ru	До даты
 enddate can not be before startdate	infolog	ru	До даты не может быть раньше даты начала
@@ -236,13 +238,13 @@ infolog - import csv-file	infolog	ru	Журнал - импорт файла CSV
 infolog - new	infolog	ru	Журнал - Новый
 infolog - new subproject	infolog	ru	Журнал - Новый Подпроект
 infolog - subprojects from	infolog	ru	Журнал - Подпроект из
-infolog copied - the copy can now be edited	infolog	ru	ИнфоЖурнал скопирован - теперь копию можно редактировать
 infolog csv export	infolog	ru	Экспорт ИнфоЖурнала в формате CSV
 infolog csv import	infolog	ru	Bcgjhn в ИнфоЖурнал в формате CSV
+infolog encryption requires epl subscription	infolog	ru	Для шифрования InfoLog требуется подписка EPL
 infolog entry deleted	infolog	ru	Запись Журнала удалена
 infolog entry saved	infolog	ru	Запись Журнала сохранена
 infolog fields:	infolog	ru	Поля ИнфоЖурнала:
-InfoLog filter for the home screen	infolog	ru	Фильтр Журнала для основного экрана
+infolog filter for the home screen	infolog	ru	Фильтр Журнала для основного экрана
 infolog ical export	infolog	ru	Экспорт ИнфоЖурнала в формате iCal
 infolog ical import	infolog	ru	Импорт в ИнфоЖурнале в формате iCal
 infolog id	infolog	ru	ID записи ИнфоЖурнала
@@ -251,6 +253,7 @@ infolog preferences	common	ru	Настройки Журнала
 infolog-fieldname	infolog	ru	Название поля Журнала
 insert	infolog	ru	Вставить
 insert in document	infolog	ru	Вставить в документ
+insert timestamp into description field	infolog	ru	Вставка временной метки в поле описания
 invalid filename	infolog	ru	Неправильное имя файла
 invalid owner id: %1.  might be a bad field translation.  used %2 instead.	infolog	ru	Неправильный ID владельца: %1. Вместо него использовано %2.
 invalid status for entry type %1.	infolog	ru	Неверный статус для записи типа %1.
@@ -348,6 +351,8 @@ prefix for sub-entries (default: re:)	infolog	ru	Префикс для доче�
 price	infolog	ru	Цена
 pricelist	infolog	ru	Прайслист
 primary link	infolog	ru	Первичная ссылка
+print this infolog	infolog	ru	Печать этого инфологического журнала
+printing...	infolog	ru	Печать...
 priority	infolog	ru	Приоритет
 private	infolog	ru	Личный
 project	infolog	ru	Проект
@@ -417,7 +422,7 @@ sets the status of this entry and its subs to done	infolog	ru	Устанавли
 sets the status of this entry to done	infolog	ru	Устанавливает статус этой записи на "Выполнено"
 should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	ru	Должен ли Журнал показывает подзадания, -звонки или -заметки в нормальном виде или нет. Вы всегда можете посмотреть подэлементы через их родителей.
 should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	ru	Должен ли Журнал показывать ссылки на другие приложения и/или прикрепленные файлы в списке Журнала (нормальный вид при входе в Журнал)
-Should InfoLog show up on the home screen and with which filter. Works only if you dont selected an application for the home screen (in your preferences).	infolog	ru	Должен ли Журнал отображаться на основной странице и с каким фильтром. Работает только если Вы не выбрали приложение для основной страницы (в Ваших настройках).
+should infolog show up on the home screen and with which filter. works only if you dont selected an application for the home screen (in your preferences).	infolog	ru	Должен ли Журнал отображаться на основной странице и с каким фильтром. Работает только если Вы не выбрали приложение для основной страницы (в Ваших настройках).
 should infolog use full names (surname and familyname) or just the loginnames.	infolog	ru	Должен ли Журнал использовать полные имена (имя и фамилия) или только имена для входа
 should the infolog list show a unique numerical id, which can be used eg. as ticket id.	infolog	ru	Должен ли список Журнала показывать уникальные числовые идентификаторы, которые могут быть использованы, например, как идентификаторы талонов
 should the infolog list show the column "last modified".	infolog	ru	Должен ли список Журнала показывать колонку "последнее изменение"
@@ -440,8 +445,8 @@ startdate for new entries	infolog	ru	Дата начала для новых з�
 starting %1	infolog	ru	Начиная с %1
 startrecord	infolog	ru	Начальная запись
 status	infolog	ru	Состояние
-status, percent and date completed are always allowed.	infolog	ru	Состояние, процент и дата завершения уже разрешены.
 status ...	infolog	ru	Состояние ...
+status, percent and date completed are always allowed.	infolog	ru	Состояние, процент и дата завершения уже разрешены.
 sub	infolog	ru	Под
 sub-entries become subs of the parent or main entries, if there's no parent	infolog	ru	Под-записи становятся подзаписями родительских или главных записей если нет родителей
 sub-entries will not be closed	infolog	ru	Дочерние записи не будут закрыты
@@ -494,7 +499,6 @@ view the parent of this entry and all his subs	infolog	ru	Показать ро�
 view this linked entry in its application	infolog	ru	Показать данную запись в ее приложении
 when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	ru	когда Задание или Телефонный Звонок должны начаться, они показываются с этой даты при открытии фильтра или просто открытии (стартовая страница) (?..)
 which additional fields should the responsible be allowed to edit without having edit rights?	infolog	ru	Какие дополнительные поля должен мочь редактировать ответственный, не имея прав на редактирование?
-which implicit acl rights should the responsible get?	infolog	ru	Какие подразумеваемые права ACL должен получить ответственный?
 which participants should be preselected when scheduling an appointment.	infolog	ru	Какие участники должны быть предварительно выбраны для расписания встречи.
 which types should the calendar show	infolog	ru	Какие типы календарь должен показывать
 will-call	infolog	ru	Позвонит
@@ -511,7 +515,6 @@ you can choose a categorie to be preselected, when you create a new infolog entr
 you can't delete one of the stock types !!!	infolog	ru	Вы не можете удалить один из основных типов!!!
 you have entered an invalid ending date	infolog	ru	Вы ввели неверную дату окончания
 you have entered an invalid starting date	infolog	ru	Вы ввели неверную дату начала
-you have to enter a name, to create a new typ!!!	infolog	ru	Вы должны ввести имя, чтобы создать новый тип!!!
 you must enter a subject or a description	infolog	ru	Вы должны ввести тему или описание
 you need to select an entry for linking.	infolog	ru	Необходимо выбрать запись для ссылки.
 you need to select some entries first	infolog	ru	Необходимо сначала выбрать записи.

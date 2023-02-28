@@ -57,12 +57,18 @@ copied %1 message(s) from %2 to %3	mail	pt	% copiados 1 mensagem (s) de% 2 a 3%
 copy to	mail	pt	Copiar para
 could not append message:	mail	pt	Não foi possível anexar Mensagem:
 create new account	mail	pt	criar nova conta
+cross account forward attachment is not allowed!	mail	pt	Não é permitido o envio de anexos de contas cruzadas!
+current subject	mail	pt	Assunto actual
 currently:	mail	pt	Atualmente:
 date(newest first)	mail	pt	Data (+ recente primeiro)
 date(oldest first)	mail	pt	Data (+ antiga primeiro)
 deactive	mail	pt	Desativado
 default sorting order	mail	pt	Ordenar por (por omissão)
+default toolbar actions shown in mail's html editor	mail	pt	Funções activadas na barra de ferramentas do editor HTML ao compor um e-mail
+default value for remembering s/mime passphrase in minutes	mail	pt	Valor por defeito para recordar a frase-chave S/MIME em minutos
 default your name and email	common	pt	padrão o seu nome e e-mail
+defines what to show as contact label for added contact into to/cc/bcc when composing an email. default is firstname lastname and empty means include eveything available.	mail	pt	Define o que mostrar como etiqueta de contacto para contacto adicional na cópia To/Copy/Blind quando se compõe um e-mail. O primeiro nome por defeito é o último nome e os meios vazios incluem tudo o que está disponível.
+defines what to show as identity label on mail folder header	common	pt	Define o que mostrar como etiqueta de identidade no cabeçalho da pasta de correio
 delete folder	mail	pt	Excluir pasta
 delete folder %1 ?	mail	pt	Apagar pasta% 1?
 deleted	mail	pt	eliminado/a
@@ -70,6 +76,7 @@ deleted %1 messages in %2	mail	pt	% apagado 1 mensagens em 2%
 deleted!	mail	pt	apagado!
 deny certain groups access to following features	mail	pt	Negar o acesso a certos grupos as seguintes características
 disable	mail	pt	Incapacitar
+disable caching of flags	mail	pt	Desactivar o caching de bandeiras
 disabled!	mail	pt	disabled!
 discard	mail	pt	descartar
 discard message	mail	pt	Descarte mensagem

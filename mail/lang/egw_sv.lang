@@ -16,12 +16,19 @@ condition	mail	sv	vilkor
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	sv	De konfigurerade värdena kommer att ställas in automatiskt i dialogrutan för det respekterade fältet när du skriver ett nytt e-postmeddelande.
 contains	mail	sv	Innehåller
 copy to	mail	sv	Kopiera
+cross account forward attachment is not allowed!	mail	sv	Det är inte tillåtet att bifoga ett konto för korsändamål!
+current subject	mail	sv	Aktuellt ämne
 date(newest first)	mail	sv	Datum (nyaste först)
 date(oldest first)	mail	sv	Datum (äldsta först)
 default sorting order	mail	sv	Standard sorterings ordning
+default toolbar actions shown in mail's html editor	mail	sv	Funktioner som är aktiverade i HTML-redigerarens verktygsfält när du skriver ett e-postmeddelande
+default value for remembering s/mime passphrase in minutes	mail	sv	Standardvärde för att komma ihåg S/MIME-passfrasen i minuter
+defines what to show as contact label for added contact into to/cc/bcc when composing an email. default is firstname lastname and empty means include eveything available.	mail	sv	Definierar vad som ska visas som kontaktetikett för den kontakt som läggs till i Till/Kopiera/Blind kopia när du skriver ett e-postmeddelande. Standardvärdet är förnamn efternamn och tomt innebär att allt som finns tillgängligt inkluderas.
+defines what to show as identity label on mail folder header	common	sv	Definierar vad som ska visas som identitetsetikett i mapphuvudet för e-postmeddelanden.
 delete folder	mail	sv	Radera katalog
 deleted	mail	sv	Raderad
 disable	mail	sv	Inaktivera
+disable caching of flags	mail	sv	Inaktivera caching av flaggor
 discard	mail	sv	Ignorera
 discard message	mail	sv	Ignorera meddelande
 display messages in multiple windows	mail	sv	Visa meddelanden i flera fönster

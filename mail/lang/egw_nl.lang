@@ -69,12 +69,18 @@ copy to	mail	nl	Kopieer naar
 could not append message:	mail	nl	Kon niet aan bericht toevoegen:
 could not save the acl because some names are empty	mail	nl	Kon niet naar ACL opslaan ! Omdat sommige namen leeg zijn !
 create new account	mail	nl	Maak een nieuwe gebruiker aan
+cross account forward attachment is not allowed!	mail	nl	Cross account forward attachment is niet toegestaan!
+current subject	mail	nl	Huidig onderwerp
 currently:	mail	nl	Momenteel:
 date(newest first)	mail	nl	Datum (meest recente eerst)
 date(oldest first)	mail	nl	Datum (oudste eerst)
 deactive	mail	nl	Niet actief
 default sorting order	mail	nl	Standaard volgorde
+default toolbar actions shown in mail's html editor	mail	nl	Functies ingeschakeld in de HTML editor werkbalk bij het samenstellen van een e-mail
+default value for remembering s/mime passphrase in minutes	mail	nl	Standaardwaarde voor onthouden S/MIME wachtwoord in minuten
 default your name and email	common	nl	Standaard uw naam en email
+defines what to show as contact label for added contact into to/cc/bcc when composing an email. default is firstname lastname and empty means include eveything available.	mail	nl	Definieert wat moet worden getoond als contactlabel voor toegevoegd contact in Aan/Kopie/Blindkopie bij het samenstellen van een e-mail. Standaard is voornaam achternaam en leeg betekent inclusief alles wat beschikbaar is.
+defines what to show as identity label on mail folder header	common	nl	Definieert wat moet worden getoond als identiteitslabel in de header van de e-mailmap.
 delete folder	mail	nl	Verwijder map
 delete folder %1 ?	mail	nl	VERWIJDER Map %1 ?
 deleted	mail	nl	verwijdert
@@ -82,6 +88,7 @@ deleted %1 messages in %2	mail	nl	verwijder %1 bericht(en) in %2
 deleted!	mail	nl	verwijdert!
 deny certain groups access to following features	mail	nl	Weiger bepaalde groepen toegang tot de volgende eigenschappen
 disable	mail	nl	Zet uit
+disable caching of flags	mail	nl	Caching van vlaggen uitschakelen
 disable horizontal rule for separation of mail body from signature	mail	nl	Zet liniaal uit voor het scheiden in berichten van hoofdtekst en handtekening
 disabled!	mail	nl	Niet actief!
 discard	mail	nl	negeer

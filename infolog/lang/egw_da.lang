@@ -28,6 +28,7 @@ add file	infolog	da	Tilføj fil
 add sub	infolog	da	Tilføj Underkategori
 add:	infolog	da	Tilføj:
 added	infolog	da	Tilføjet
+addressbook placeholders available	infolog	da	Pladsholdere i adressebogen er tilgængelige
 all	infolog	da	Alle
 all links and attachments	infolog	da	alle links og vedhæftet filer
 allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	da	tillader at sætte status på en indtastning, f.eks. sætte en opgave til forbi hvis den er færdig (værdierne afhænger af typen)
@@ -74,7 +75,7 @@ datecreated	infolog	da	dato oprettet
 dates, status, access	infolog	da	Datoer, status og adgang
 days	infolog	da	dage
 default filter for infolog	infolog	da	Standart filter for Opgaver
-default status for a new log entry	infolog	da	standart status for en ny opgave
+default status for a new log entry	infolog	da	Standart status for en ny opgave
 delegation	infolog	da	Overdrag
 delete	infolog	da	Slet
 delete one record by passing its id.	infolog	da	Slet en record ved at angive dets ID
@@ -97,6 +98,7 @@ edit status	infolog	da	Redigér status
 edit the entry	infolog	da	Redigér indstasningen
 edit this entry	infolog	da	Redigér denne indstasning
 empty for all	infolog	da	tom for alle
+encrypt description	infolog	da	Krypter beskrivelse
 end	infolog	da	Slut
 enddate	infolog	da	Slut dato
 enddate can not be before startdate	infolog	da	Slut dato kan ikke være før start dato
@@ -114,25 +116,28 @@ fieldseparator	infolog	da	feltseparator
 finish	infolog	da	færdig
 for which types should this field be used	infolog	da	til hvilken type skal dette felt bruges til
 from	infolog	da	Fra
+full list of placeholder names	infolog	da	Komplet liste over navne på pladsholdere
 global categories	infolog	da	Globale Kategorier
 high	infolog	da	Høj
 history	infolog	da	Historisk
 id	infolog	da	ID
 if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	da	Hvis ikke sat, vil linien med 'Søg' og 'Filtre' være gemt ved mindre emner end 'Max. matches pr. side' (som defineret i Standard præferencer).
 import next set	infolog	da	Importer næste 'set'
-info log	common	da	Opgaver
-infolog	common	da	Opgaver
-infolog - delete	infolog	da	Opgaver - Slet
-infolog - edit	infolog	da	Opgaver - Redigér
-infolog - import csv-file	infolog	da	Opgaver - Importer CSV-fil
-infolog - new	infolog	da	Opgaver - Ny
-infolog - new subproject	infolog	da	Opgaver - Nyt underopgave
-infolog - subprojects from	infolog	da	Opgaver - Underopgave fra
-infolog entry deleted	infolog	da	Infolog emne slettet
-infolog entry saved	infolog	da	Infolog emne gemt
-infolog list	infolog	da	Vis Infolog
+info log	common	da	InfoLog
+infolog	common	da	InfoLog
+infolog - delete	infolog	da	InfoLog - Slet
+infolog - edit	infolog	da	InfoLog - Redigér
+infolog - import csv-file	infolog	da	InfoLog - Importer CSV-fil
+infolog - new	infolog	da	InfoLog - Ny
+infolog - new subproject	infolog	da	InfoLog- Nyt underopgave
+infolog - subprojects from	infolog	da	InfoLog - Underopgave fra
+infolog encryption requires epl subscription	infolog	da	InfoLog-kryptering kræver EPL-abonnement
+infolog entry deleted	infolog	da	InfoLog emne slettet
+infolog entry saved	infolog	da	InfoLog emne gemt
+infolog list	infolog	da	Vis InfoLog
 infolog preferences	common	da	Opgaver - Præferencer
 infolog-fieldname	infolog	da	Opgaver - Feltnavn
+insert timestamp into description field	infolog	da	Indsæt tidsstempel i beskrivelsesfeltet
 invalid filename	infolog	da	Ugyldigt filnavn
 label<br>helptext	infolog	da	Label<br>Hjælp tekst
 last changed	infolog	da	Sidst ændret
@@ -189,6 +194,8 @@ phone/email	infolog	da	Telefon/E-mail
 phonecall	infolog	da	Telefon besked
 planned	infolog	da	Planlagt
 planned time	infolog	da	Planlagt tid
+print this infolog	infolog	da	Udskriv denne InfoLog
+printing...	infolog	da	Udskrivning...
 priority	infolog	da	Prioritet
 private	infolog	da	Privat
 project	infolog	da	Projekt
@@ -217,13 +224,13 @@ select an entry to link with	infolog	da	Vælg en opgave at linke med
 select to filter by owner	infolog	da	Filtrer ved ejer
 select to filter by responsible	infolog	da	Filtrer ved ansvarlig
 sets the status of this entry and its subs to done	infolog	da	Sæt status af dette emne og dets underpunkter til : Udført
-should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	da	Skal Opgaver vise underkategorier, -telefon beskeder eller -noter i det normale vindue eller ikke. Du kan altid vise underkategorierne via deres forældre.
-should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	da	Skal INfolog vise links til andre programmer og/eller til vedhæftelser i InfoLog listen (Standard view når du er i InfoLog).
-should infolog use full names (surname and familyname) or just the loginnames.	infolog	da	Skal Opgaver vise fulde navne (efternavne og familienavn) eller kun brugernavne.
+should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	da	Skal InfoLog vise underkategorier, -telefon beskeder eller -noter i det normale vindue eller ikke. Du kan altid vise underkategorierne via deres forældre.
+should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	da	Skal InfoLog vise links til andre programmer og/eller til vedhæftelser i InfoLog listen (Standard view når du er i InfoLog).
+should infolog use full names (surname and familyname) or just the loginnames.	infolog	da	Skal InfoLog vise fulde navne (efternavne og familienavn) eller kun brugernavne.
 should this entry only be visible to you and people you grant privat access via the acl	infolog	da	skal denne opgave kun være tilgængelig for dig og andre du har givet privat adgang til via ACL.
 show a column for used and planned times in the list.	infolog	da	Vis en kolonne for brugt og planlagt tid i listen
 show full usernames	infolog	da	Vis fulde brugernavne
-show in the infolog list	infolog	da	Vis i Opgave liste
+show in the infolog list	infolog	da	Vis i InfoLog liste
 show times	infolog	da	Vis tider
 small view	infolog	da	lille visning
 start	infolog	da	Start
@@ -251,7 +258,7 @@ typ	infolog	da	Type
 typ '%1' already exists !!!	infolog	da	Type '%1' eksistere allerede
 type	infolog	da	Type
 type ...	infolog	da	Type ...
-type of the log-entry: note, phonecall or todo	infolog	da	Type på log-entry : Notat, telefon-kald eller ToDo
+type of the log-entry: note, phonecall or todo	infolog	da	Type på InfoLog-entry : Notat, telefon-kald eller ToDo
 unlink	infolog	da	Fjern link
 upcoming	infolog	da	kommende
 urgency	infolog	da	Prioritet
@@ -271,6 +278,5 @@ yes - delete	infolog	da	Ja - Slet
 yes - delete including sub-entries	infolog	da	Ja - Slet inclusiv under-emner
 you have entered an invalid ending date	infolog	da	Du har indtastet en ugyldig slut dato
 you have entered an invalid starting date	infolog	da	Du har indtastet en ugyldig start dato
-you have to enter a name, to create a new typ!!!	infolog	da	Du skal indtaste et navn, for at oprette en ny type!!!
 you must enter a subject or a description	infolog	da	Du skal indtaste en beskrivelse eller emne
 your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	infolog	da	Din database er ikke up to date (%1 vs. %2) Kør %3setup%4 for at opdatere database.

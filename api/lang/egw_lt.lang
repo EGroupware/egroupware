@@ -121,15 +121,25 @@ gibraltar	common	lt	GIBRALTARAS
 greece	common	lt	GRAIKIJA
 greenland	common	lt	GRENLANDIJA
 guatemala	common	lt	GVATEMALA
+history	common	lt	Istorija
+history log	common	lt	Versijos istorija
+how many days to sync in the future (default %1)	groupdav	lt	Kiek dienų sinchronizuoti ateityje (numatytoji %1)
+how many days to sync in the past (default %1)	groupdav	lt	Kiek dienų sinchronizuoti praeityje (numatytoji %1)
+how many rows to print	common	lt	Kiek eilučių spausdinti
+how to show the general egroupware menu ?	common	lt	Kaip rodyti bendrąjį EGroupware meniu
 hungary	common	lt	VENGRIJA
 iceland	common	lt	ISLANDIJA
 india	common	lt	INDIJA
 indonesia	common	lt	INDONEZIJA
+insert placeholder	common	lt	Įterpti pakaitinę antraštę
 insert timestamp into description field	common	lt	Laiko žymos įterpimas į aprašymo lauką
+invalid 2-factor authentication code	common	lt	Neteisingas 2 veiksnių autentiškumo patvirtinimo kodas
+invalid or expired 'remember me' token	common	lt	Netinkamas arba pasibaigęs "Prisimink mane" žetono galiojimo laikas
 iran, islamic republic of	common	lt	IRANAS
 iraq	common	lt	IRAKAS
 ireland	common	lt	AIRIJA
 israel	common	lt	IZRAELIS
+it is recommended to store your public key in addressbook, so other users can write you encrypted mails.	common	lt	Rekomenduojama savo viešąjį raktą saugoti Adresinė, kad kiti naudotojai galėtų jums rašyti užšifruotus laiškus.
 italy	common	lt	ITALIJA
 jamaica	common	lt	JAMAIKA
 january	common	lt	Sausis
