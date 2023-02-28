@@ -547,6 +547,21 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 		destroy()
 		{
 			// Not really needed, use the disconnectedCallback() and let the browser handle it
+
+			// Call the destructor of all children so any legacy widgets get destroyed
+			for(let i = this.getChildren().length - 1; i >= 0; i--)
+			{
+				this.getChildren()[i].destroy();
+			}
+
+			// Free the array managers if they belong to this widget
+			for(let key in this._mgrs)
+			{
+				if(this._mgrs[key] && this._mgrs[key].owner == this)
+				{
+					delete this._mgrs[key];
+				}
+			}
 		}
 
 		isInTree() : boolean

@@ -298,7 +298,7 @@ export class et2_file extends et2_inputWidget
 			let drop_target = widget && widget.getDOMNode() || document.getElementById(this.options.drop_target);
 			if(drop_target)
 			{
-				this.resumable.unAssignDrop(drop_target);
+				this.resumable.unAssignDrop([drop_target]);
 			}
 		}
 
