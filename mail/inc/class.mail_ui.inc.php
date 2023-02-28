@@ -2348,6 +2348,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			)
 		));
 		$readonlys = $preserv = $content;
+		unset($readonlys['mail_displayattachments']);
 		$readonlys['mail_displaydate'] = true;
 		if ($rememberServerID != $this->mail_bo->profileID)
 		{
