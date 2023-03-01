@@ -1135,3 +1135,4 @@ et2-split#mail-index_mailSplitter.squeezed .mail-index_quotabox{
 .expanderFirstRow {
 	position: absolute;
 }
+.attachments et2-dropdown-button[id$="\[actions\]"]{display: inline}

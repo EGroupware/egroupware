@@ -2526,9 +2526,19 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 				$attachmentHTML[$key]['mail_id'] = $rowID;
 				$attachmentHTML[$key]['winmailFlag']=$value['is_winmail'];
 				$attachmentHTML[$key]['smime_type'] = $value['smime_type'];
-				$attachmentHTML[$key]['actions'] = $GLOBALS['egw_info']['user']['preferences']['filemanager']['document_doubleclick_action'] === 'collabora' ?
-					'collabora' : 'downloadOneAsFile';
-				$attachmentHTML[$key]['actionsDefaultLabel'] = 'Download';
+
+				if ($GLOBALS['egw_info']['apps']['collabora']
+					&& $GLOBALS['egw_info']['user']['preferences']['filemanager']['document_doubleclick_action'] === 'collabora'
+					&& array_key_exists($value['mimeType'], filemanager_hooks::getEditorPrefMimes()))
+				{
+					$attachmentHTML[$key]['actions'] = 'collabora';
+					$attachmentHTML[$key]['actionsDefaultLabel'] = 'Open with Collabora';
+				}
+				else
+				{
+					$attachmentHTML[$key]['actions'] = 'downloadOneAsFile';
+					$attachmentHTML[$key]['actionsDefaultLabel'] = 'Download';
+				}
 
 				// reset mode array as it should be considered differently for
 				// each attachment
