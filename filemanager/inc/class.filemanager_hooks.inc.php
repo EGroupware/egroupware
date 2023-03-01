@@ -309,6 +309,22 @@ class filemanager_hooks
 	}
 
 	/**
+	 * Get supported mime types for editor based on user preferences
+	 * @return array|mixed
+	 */
+	static function getEditorPrefMimes()
+	{
+		$mimes = self::getEditorLink()['mime']??[];
+		$excluedMimes = is_string($GLOBALS['egw_info']['user']['preferences']['filemanager']['collab_excluded_mimes'])?
+			explode(',', $GLOBALS['egw_info']['user']['preferences']['filemanager']['collab_excluded_mimes']) : [];
+		foreach ($mimes as $mime => $value)
+		{
+			if (in_array($mime, $excluedMimes)) unset($mimes[$mime]);
+		}
+		return $mimes;
+	}
+
+	/**
 	 * Hooks called by vfs, implemented to be able to notify subscribed users about changed files
 	 *
 	 * No need to care for rename or unlink/rmdir as subscriptions are store as properties of the file/directory!

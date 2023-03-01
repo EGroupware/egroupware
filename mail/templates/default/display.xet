@@ -108,8 +108,7 @@
                                                 <column disabled="!@showtempname"/>
                                                 <column disabled="!@showtempname"/>
                                                 <column width="70%"/>
-                                                <column width="11%"/>
-                                                <column width="10%"/>
+                                                <column width="30%"/>
                                             </columns>
                                             <rows>
                                                 <row class="row attachmentRow">
@@ -118,7 +117,6 @@
                                                     <et2-description  id="mail_displayattachments[0][type]"></et2-description>
                                                     <et2-description  id="mail_displayattachments[0][winmailFlag]"></et2-description>
                                                     <et2-description-expose  class="et2_link useEllipsis" id="mail_displayattachments[0][filename]" mime="@mail_displayattachments[0][type]" href="@mail_displayattachments[0][mime_url]" noLang="1" mimeData="@mail_displayattachments[0][mime_data]"></et2-description-expose>
-                                                    <et2-description  align="right" id="mail_displayattachments[0][size]"></et2-description>
                                                     <et2-description align="right" value="@attachmentsBlockTitle" class="et2_bold"></et2-description>
                                                 </row>
                                             </rows>
@@ -131,8 +129,8 @@
                                             <column disabled="!@showtempname"/>
                                             <column disabled="!@showtempname"/>
                                             <column width="70%" />
-                                            <column width="11%" />
-                                            <column width="10%"/>
+                                            <column width="10%" />
+                                            <column width="20"/>
                                             <column />
                                         </columns>
                                         <rows>
@@ -143,7 +141,7 @@
                                                 <et2-description  id="${row}[winmailFlag]"></et2-description>
                                                 <et2-description-expose  class="et2_link useEllipsis" id="${row}[filename]" mime="$row_cont[type]" href="$row_cont[mime_url]" noLang="1" mimeData="$row_cont[mime_data]"></et2-description-expose>
                                                 <et2-description  align="right" id="${row}[size]"></et2-description>
-                                                <et2-dropdown-button  id="${row}[actions]" label="$row_cont[actionsDefaultLabel]" readonly="false" disabled="false" onchange="app.mail.attachmentsBlockActions" onclick="app.mail.attachmentsBlockActions"/>
+                                                <et2-dropdown-button id="${row}[actions]" label="$row_cont[actionsDefaultLabel]" readonly="false" disabled="false" onchange="app.mail.attachmentsBlockActions" onclick="app.mail.attachmentsBlockActions"/>
                                             </row>
                                         </rows>
                                     </grid>
