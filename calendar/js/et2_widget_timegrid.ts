@@ -30,6 +30,7 @@ import {EGW_AI_DRAG_ENTER, EGW_AI_DRAG_OUT} from "../../api/js/egw_action/egw_ac
 import {formatDate, formatTime, parseTime} from "../../api/js/etemplate/Et2Date/Et2Date";
 import interact from "@interactjs/interactjs/index";
 import type {InteractEvent} from "@interactjs/core/InteractEvent";
+import {CalendarApp} from "./app";
 
 /**
  * Class which implements the "calendar-timegrid" XET-Tag for displaying a span of days
