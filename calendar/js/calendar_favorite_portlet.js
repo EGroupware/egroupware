@@ -17,7 +17,7 @@
  * views, we need some custom handling to detect and handle refreshes.
  *
  * Note we put the class in home.
- */
+ *
 app.classes.home.calendar_favorite_portlet = app.classes.home.home_favorite_portlet.extend({
 
 observer: function(_msg, _app, _id, _type, _msg_type, _targetapp)
@@ -70,4 +70,4 @@ observer: function(_msg, _app, _id, _type, _msg_type, _targetapp)
 		}		
 	}
 }
-});
+});*/
