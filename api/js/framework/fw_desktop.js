@@ -479,7 +479,8 @@ import "sortablejs/Sortable.min.js";
 			if (!$menu.is(":visible"))
 			{
 				$body.on('click', function(e){
-					if (e.target.id != 'topmenu_info_user_avatar' && jQuery(e.target).parents('#topmenu_info_user_avatar').length < 1)
+					if (e.target.id != 'topmenu_info_user_avatar' && jQuery(e.target).parents('#topmenu_info_user_avatar').length < 1
+					&& e.target.nodeName && e.target.nodeName != 'ET2-SELECT')
 					{
 						jQuery(this).off(e);
 						$menu.toggle();
