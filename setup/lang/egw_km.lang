@@ -758,7 +758,7 @@ virtual mail manager (login-name includes domain)	setup	km	កម្មវិធ
 warning!	setup	km	ព្រមាន!
 we can proceed	setup	km	យើងអាចបន្តបាន។
 we could not determine the version of %1, please make sure it is at least %2	setup	km	យើងមិនអាចកំណត់កំណែ%1 បានទេ សូមប្រាកដថាវាយ៉ាងហោចណាស់ %2
-we strongly recomment to run a db backup before running the import!	setup	km	យើងសូមផ្តល់អនុសាសន៍យ៉ាងខ្លាំងឱ្យដំណើរការការបម្រុងទុក DB មុនពេលដំណើរការការនាំចូល!
+we strongly recommend to run a db backup before running the import!	setup	km	យើងសូមផ្តល់អនុសាសន៍យ៉ាងខ្លាំងឱ្យដំណើរការការបម្រុងទុក DB មុនពេលដំណើរការការនាំចូល!
 we will automatically update your tables/records to %1	setup	km	យើងនឹងធ្វើបច្ចុប្បន្នភាពតារាង/កំណត់ត្រារបស់អ្នកដោយស្វ័យប្រវត្តិទៅ%1
 we will now run a series of tests, which may take a few minutes.  click the link below to proceed.	setup	km	ឥឡូវនេះយើងនឹងដំណើរការការធ្វើតេស្តជាបន្តបន្ទាប់ ដែលអាចចំណាយពេលពីរបីនាទី។ សូមចុចតំណខាងក្រោមដើម្បីបន្ត។
 weekly	setup	km	ប្រចាំសប្តាហ៍

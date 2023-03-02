@@ -758,7 +758,7 @@ virtual mail manager (login-name includes domain)	setup	de	Virtual Mail Manager 
 warning!	setup	de	Warnung!
 we can proceed	setup	de	Wir können fortfahren
 we could not determine the version of %1, please make sure it is at least %2	setup	de	Wir konnten die Version von %1 nicht ermitteln, bitte stellen Sie sicher das sie mindestens %2 ist.
-we strongly recomment to run a db backup before running the import!	setup	de	Wir empfehlen dringend eine Datensicherung zu machen BEVOR der Import ausgeführt wird!
+we strongly recommend to run a db backup before running the import!	setup	de	Wir empfehlen dringend eine Datensicherung zu machen BEVOR der Import ausgeführt wird!
 we will automatically update your tables/records to %1	setup	de	Wir werden Ihre Tabellen/Einträge automatisch zu %1 aktualisieren
 we will now run a series of tests, which may take a few minutes.  click the link below to proceed.	setup	de	Wir werden jetzt eine Serie von Tests durchführen. Das kann ein paar Minuten dauern. Klicken sie auf den folgenden Link um Fortzufahren.
 weekly	setup	de	wöchentlich

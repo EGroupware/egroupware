@@ -762,7 +762,7 @@ virtual mail manager (login-name includes domain)	setup	en	Virtual mail manager 
 warning!	setup	en	Warning!
 we can proceed	setup	en	We can proceed
 we could not determine the version of %1, please make sure it is at least %2	setup	en	We could not determine the version of %1, please make sure it is at least %2
-we strongly recomment to run a db backup before running the import!	setup	en	We strongly recomment to run a DB backup BEFORE running the import!
+we strongly recommend to run a db backup before running the import!	setup	en	We strongly recommend to run a DB backup BEFORE running the import!
 we will automatically update your tables/records to %1	setup	en	We will automatically update your tables/records to %1
 we will now run a series of tests, which may take a few minutes.  click the link below to proceed.	setup	en	We will now run a series of tests, which may take a few minutes. Click the link below to proceed.
 weekly	setup	en	weekly
