@@ -248,7 +248,7 @@ export class Et2LinkString extends Et2Widget(LitElement) implements et2_IDetache
 		);
 
 		 */
-
+		this.dispatchEvent(new Event("change", {bubbles: true}));
 	}
 
 	/**

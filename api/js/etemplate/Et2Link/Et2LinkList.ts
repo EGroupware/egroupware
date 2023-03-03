@@ -113,6 +113,7 @@ export class Et2LinkList extends Et2LinkString
 		this._handleRowContext = this._handleRowContext.bind(this);
 
 		this._handleChange = this._handleChange.bind(this);
+		this._handleLinkToChange = this._handleLinkToChange.bind(this);
 	}
 
 	connectedCallback()
@@ -121,19 +122,28 @@ export class Et2LinkList extends Et2LinkString
 		this._createContextMenu();
 
 		// Look for LinkTo and listen for change so we can update
-		this.getInstanceManager().DOMContainer.querySelectorAll("et2-link-to").forEach(link =>
+		if(this.getInstanceManager())
 		{
-			link.addEventListener("et2-change", this._handleChange);
-		})
+			this.getInstanceManager().DOMContainer.querySelectorAll("et2-link-to").forEach(link =>
+			{
+				link.addEventListener("et2-change", this._handleLinkToChange);
+			})
+		}
+
+		this.addEventListener("change", this._handleChange);
 	}
 
 	disconnectedCallback()
 	{
 		super.disconnectedCallback();
-		this.getInstanceManager().DOMContainer.querySelectorAll("et2-link-to").forEach(link =>
+		if(this.getInstanceManager())
 		{
-			link.removeEventListener("et2-change", this._handleChange);
-		})
+			this.getInstanceManager().DOMContainer.querySelectorAll("et2-link-to").forEach(link =>
+			{
+				link.removeEventListener("et2-change", this._handleLinkToChange);
+			})
+		}
+		this.removeEventListener("change", this._handleChange);
 	}
 
 	protected _listTemplate()
@@ -248,12 +258,26 @@ export class Et2LinkList extends Et2LinkString
 	}
 
 	/**
+	 * Handle & pass on an internal change
+	 * @param {ChangeEvent} _event
+	 * @protected
+	 */
+	protected _handleChange(_event : Event)
+	{
+		if(!this.onchange)
+		{
+			return;
+		}
+		this.onchange(this, _event.data, _event)
+	}
+
+	/**
 	 * We listen to LinkTo widgets so we can update
 	 *
 	 * @param _ev
 	 * @protected
 	 */
-	protected _handleChange(_ev)
+	protected _handleLinkToChange(_ev)
 	{
 		if(_ev && typeof _ev.currentTarget)
 		{
@@ -301,7 +325,9 @@ export class Et2LinkList extends Et2LinkString
 			return html``;
 		}
 		return html`
-            <et2-image class="delete_button" slot="${this._get_row_id(link)}" src="delete" ._parent=${this}
+            <et2-image class="delete_button" slot="${this._get_row_id(link)}" src="delete"
+                       part="delete-button"
+                       ._parent=${this}
                        .onclick=${() =>
                        {
                            this._delete_link(link);
@@ -341,6 +367,9 @@ export class Et2LinkList extends Et2LinkString
 				this._link_list.splice(this._link_list.indexOf(link), 1);
 			}
 			this.dispatchEvent(new CustomEvent("et2-delete", {bubbles: true, detail: link}));
+			let change = new Event("change", {bubbles: true});
+			change['data'] = link;
+			this.dispatchEvent(change);
 		};
 
 		// Unsaved entry, had no ID yet
@@ -391,7 +420,12 @@ export class Et2LinkList extends Et2LinkString
 				for(let id in list)
 				{
 					let link = list[id];
-					if(link.app)
+					if(!link.app && typeof list.splice !== "undefined")
+					{
+						list.splice(parseInt(id), 1);
+						continue;
+					}
+					else if(link.app)
 					{
 						// Temp IDs can cause problems since the ID includes the file name or :
 						if(link.link_id && typeof link.link_id != 'number')
@@ -415,9 +449,9 @@ export class Et2LinkList extends Et2LinkString
 						{
 							link.title = link.id.name || '';
 						}
-						(<LinkInfo[]>this._link_list).push(<LinkInfo>link);
 					}
 				}
+				this._addLinks(list);
 			}
 			else
 			{
