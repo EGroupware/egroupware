@@ -17,16 +17,11 @@
 					<html id="mainscreen_message"/>
 				</row>
 				<row>
-                    <old-box id="portlets">
-                        <!-- Box wrapper needed to get box to auto-repeat -->
-                        <et2-box id="${row}">
-                            <et2-portlet id="${_cont[id]}" title="$_cont[title]" color="@color"
-                                         parent_node="home-index_portlets" settings="@settings" width="@width"
-                                         height="@height" row="@row" col="@col" value="@content" class="@class"
-                                         actions="@actions"/>
-                        </et2-box>
-                    </old-box>
-                </row>
+					<et2-box  id="portlets">
+						<!-- Box wrapper needed to get box to auto-repeat -->
+						<et2-box  id="${row}"><portlet id="${_cont[id]}" title="$_cont[title]" color="@color" parent_node="home-index_portlets" settings="@settings" width="@width" height="@height" row="@row" col="@col" value="@content" class="@class"/></et2-box>
+					</et2-box>
+				</row>
 			</rows>
 		</grid>
 	</template>

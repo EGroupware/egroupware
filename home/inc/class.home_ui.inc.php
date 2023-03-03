@@ -290,7 +290,7 @@ class home_ui
 				$appname = $app;
 			}
 		}
-		//Framework::includeJS('', $classname, $appname ? $appname : 'home');
+		Framework::includeJS('', $classname, $appname ? $appname : 'home');
 
 		if($full_exec)
 		{

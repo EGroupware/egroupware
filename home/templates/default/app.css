@@ -10,16 +10,6 @@
 }
 #home-index_portlets {
 	background-color: inherit;
-	display: grid;
-	grid-auto-columns: 50ex;
-	grid-auto-rows: 50ex;
-
-	gap: 2ex;
-
-	justify-content: stretch;
-	align-content: stretch;
-	justify-items: stretch;
-	align-items: stretch;
 }
 #portlets {
 	border: 1px solid silver;
@@ -36,8 +26,14 @@
 .et2_portlet.ui-widget-content > div {
 
 }
-
-
+.et2_portlet.ui-widget-content > div:last-of-type {
+	/* Allow space for header, as the whole portlet is sized by auto-generated css */
+	position: absolute;
+	bottom: 0px;
+	top: 20px;
+	width: 100%;
+	overflow: hidden;
+}
 .et2_portlet .et2_container {
 	height: 100%;
 }
