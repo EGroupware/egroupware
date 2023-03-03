@@ -50,10 +50,38 @@ abstract class home_portlet
 	public abstract function get_description();
 
 	/**
+	 * Get the web-component tag used client side
+	 *
+	 * @return string
+	 */
+	public function get_type()
+	{
+		return 'et2-portlet';
+	}
+
+	/**
+	 * Get a list of "Add" actions
+	 * @return array
+	 */
+	public function get_add_actions()
+	{
+		$desc = $this->get_description();
+		return array(
+			array(
+				'id'              => __CLASS__,
+				'caption'         => $desc['displayName'],
+				'hint'            => $desc['description'],
+				'onExecute'       => 'javaScript:app.home.add',
+				'acceptedTypes'   => $this->accept_drop(),
+				'allowOnMultiple' => $this->accept_multiple()
+			));
+	}
+
+	/**
 	 * Generate the display for the portlet
 	 *
 	 * @param id String unique ID, provided to the portlet so it can make sure content is
-	 * 	unique, if needed.
+	 *    unique, if needed.
 	 * @param Etemplate $etemplate eTemplate to generate content
 	 */
 	public abstract function exec($id = null, Etemplate &$etemplate = null);

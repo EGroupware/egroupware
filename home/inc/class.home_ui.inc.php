@@ -115,8 +115,7 @@ class home_ui
 				'onExecute'	=> 'javaScript:app.home.add',
 				'children'	=> $add_portlets
 			),
-			// Favorites are sortable which needs special handling,
-			// handled directly through jQuery
+			// Favorites are sortable which needs special handling
 		);
 
 		// Add all known portlets as drop actions too.  If there are multiple matches, there will be a menu
@@ -180,8 +179,9 @@ class home_ui
 			$portlet = new $classname($context);
 			$desc = $portlet->get_description();
 			$portlet_content = array(
-				'id'	=>	$id
-			) + $desc + $context;
+					'id'   => $id,
+					'type' => $portlet->get_type()
+				) + $desc + $context;
 
 
 			// Get settings
@@ -566,6 +566,7 @@ class home_ui
 			else
 			{
 				$prefs->delete('home', $portlet_id);
+				$response->data([]);
 			}
 		}
 		else
@@ -594,7 +595,7 @@ class home_ui
 				$classname = substr($classname, 4);
 			}
 			$content = null;
-			$portlet = $this->get_portlet($portlet_id, $context, $content, $attributes, $full_exec);
+			$portlet = $this->get_portlet("home-index_portlets_" . $portlet_id, $context, $content, $attributes, $full_exec);
 
 			$context['class'] = get_class($portlet);
 			foreach($portlet->get_properties() as $property)

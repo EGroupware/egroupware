@@ -92,17 +92,22 @@ class home_list_portlet extends home_portlet
 	public function get_description()
 	{
 		return array(
-			'displayName'=> 'List of entries',
-			'title'=>	$this->title,
-			'description'=>	lang('Show a list of entries')
+			'displayName' => 'List of entries',
+			'title'       => $this->title,
+			'description' => lang('Show a list of entries')
 		);
+	}
+
+	public function get_type()
+	{
+		return 'et2-portlet-list';
 	}
 
 	/**
 	 * Get a fragment of HTML for display
 	 *
 	 * @param id String unique ID, provided to the portlet so it can make sure content is
-	 * 	unique, if needed.
+	 *    unique, if needed.
 	 * @return string HTML fragment for display
 	 */
 	public function exec($id = null, Etemplate &$etemplate = null)
@@ -127,7 +132,7 @@ class home_list_portlet extends home_portlet
 			}
 		}
 
-		$etemplate->exec('home.home_list_portlet.exec',$content);
+		//$etemplate->exec('home.home_list_portlet.exec',$content);
 	}
 
 	/**

@@ -13,8 +13,9 @@
 import {Et2Widget} from "../Et2Widget/Et2Widget";
 import {SlCard} from "@shoelace-style/shoelace";
 import interact from "@interactjs/interactjs";
+import type {InteractEvent} from "@interactjs/core/InteractEvent";
 import {egw} from "../../jsapi/egw_global";
-import {classMap, css, html} from "@lion/core";
+import {classMap, css, html, TemplateResult} from "@lion/core";
 import {HasSlotController} from "@shoelace-style/shoelace/dist/internal/slot";
 import shoelace from "../Styles/shoelace";
 import {Et2Dialog} from "../Et2Dialog/Et2Dialog";
@@ -25,7 +26,7 @@ import {HomeApp} from "../../../../home/js/app";
  * Participate in Home
  */
 
-export class Et2Portlet extends (Et2Widget(SlCard))
+export class Et2Portlet extends Et2Widget(SlCard)
 {
 	static get properties()
 	{
@@ -62,8 +63,12 @@ export class Et2Portlet extends (Et2Widget(SlCard))
 			...shoelace,
 			...(super.styles || []),
 			css`
+			  :host {
+				--header-spacing: var(--sl-spacing-medium);
+			  }
+
 			  .portlet__header {
-				flex: 1 0 auto;
+				flex: 0 0 auto;
 				display: flex;
 				font-style: inherit;
 				font-variant: inherit;
@@ -73,7 +78,9 @@ export class Et2Portlet extends (Et2Widget(SlCard))
 				font-size: var(--sl-font-size-medium);
 				line-height: var(--sl-line-height-dense);
 				padding: var(--header-spacing);
+				padding-right: calc(2em + var(--header-spacing));
 				margin: 0px;
+				position: relative;
 			  }
 
 			  .portlet__title {
@@ -84,8 +91,8 @@ export class Et2Portlet extends (Et2Widget(SlCard))
 
 			  .portlet__header et2-button-icon {
 				display: none;
-				order: 99;
-				margin-left: auto;
+				position: absolute;
+				right: 0px;
 			  }
 
 			  .portlet__header:hover et2-button-icon {
@@ -97,11 +104,17 @@ export class Et2Portlet extends (Et2Widget(SlCard))
 				height: 100%
 			  }
 
+			  .card_header {
+				margin-right: calc(var(--sl-spacing-medium) + 1em);
+			  }
+
 			  .card__body {
 				/* display block to prevent overflow from our size */
 				display: block;
 				overflow: hidden;
+
 				flex: 1 1 auto;
+				padding: 0px;
 			  }
 
 
@@ -149,6 +162,19 @@ export class Et2Portlet extends (Et2Widget(SlCard))
 
 		Promise.all([/* any others here...*/ this.updateComplete])
 			.then(() => this._setupMoveResize());
+	}
+
+	/**
+	 * Load further details from content
+	 *
+	 * Normal load & attribute assign will cast our settings object to a string
+	 * @param _template_node
+	 */
+	transformAttributes(attrs)
+	{
+		super.transformAttributes(attrs);
+		let data = this.getArrayMgr("content").data.find(e => e.id && e.id == this.id);
+		this.settings = typeof attrs.settings == "string" ? data.value || data.settings || {} : attrs.settings;
 	}
 
 	/**
@@ -316,16 +342,17 @@ export class Et2Portlet extends (Et2Widget(SlCard))
 	headerTemplate()
 	{
 		return html`
-            <header class="portlet__header">
-                <h2 class="portlet__title">${this.title}</h2>
-                <et2-button-icon name="gear" label="Settings" noSubmit=true
-                                 @click="${() => this.edit_settings()}"></et2-button-icon>
-            </header>`;
+            <h2 class="portlet__title">${this.title}</h2>`;
 	}
 
-	footerTemplate()
+	bodyTemplate() : TemplateResult
 	{
-		return '';
+		return html``;
+	}
+
+	footerTemplate() : TemplateResult
+	{
+		return html``;
 	}
 
 
@@ -343,7 +370,27 @@ export class Et2Portlet extends (Et2Widget(SlCard))
 			value: {
 				content: this.settings
 			},
-			buttons: Et2Dialog.BUTTONS_OK_CANCEL
+			buttons: [
+				{
+					"button_id": Et2Dialog.OK_BUTTON,
+					label: this.egw().lang('ok'),
+					id: 'dialog[ok]',
+					image: 'check',
+					"default": true
+				},
+				{
+					label: this.egw().lang('delete'),
+					id: 'delete',
+					image: 'delete',
+					align: "right"
+				},
+				{
+					"button_id": Et2Dialog.CANCEL_BUTTON,
+					label: this.egw().lang('cancel'),
+					id: 'cancel',
+					image: 'cancel'
+				}
+			],
 		});
 		// Set separately to avoid translation
 		dialog.title = this.egw().lang("Edit") + " " + (this.title || '');
@@ -354,11 +401,18 @@ export class Et2Portlet extends (Et2Widget(SlCard))
 	{
 		if(button_id != Et2Dialog.OK_BUTTON)
 		{
+			if(button_id == "delete")
+			{
+				this.update_settings('~remove~').then(() =>
+				{
+					this.remove();
+				});
+			}
 			return;
 		}
 
 		// Pass updated settings, unless we're removing
-		this.update_settings((typeof value == 'string') ? {} : this.settings || {});
+		this.update_settings({...this.settings, ...value});
 
 		// Extend, not replace, because settings has types while value has just value
 		if(typeof value == 'object')
@@ -367,13 +421,19 @@ export class Et2Portlet extends (Et2Widget(SlCard))
 		}
 	}
 
-	protected update_settings(settings)
+	public update_settings(settings)
 	{
+		// Skip any updates during loading
+		if(!this.getInstanceManager().isReady)
+		{
+			return;
+		}
+
 		// Save settings - server might reply with new content if the portlet needs an update,
 		// but ideally it doesn't
 		this.classList.add("loading");
 
-		this.egw().jsonq("home.home_ui.ajax_set_properties", [this.id, [], settings, this.settings ? this.settings.group : false],
+		return this.egw().jsonq("home.home_ui.ajax_set_properties", [this.id, [], settings, this.settings ? this.settings.group : false],
 			function(data)
 			{
 				// This section not for us
@@ -437,8 +497,13 @@ export class Et2Portlet extends (Et2Widget(SlCard))
                     })}
             >
                 <slot name="image" part="image" class="card__image">${this.imageTemplate()}</slot>
-                <slot name="header" part="header" class="card__header">${this.headerTemplate()}</slot>
-                <slot part="body" class="card__body"></slot>
+
+                <header class="portlet__header">
+                    <slot name="header" part="header" class="card__header">${this.headerTemplate()}</slot>
+                    <et2-button-icon name="gear" label="Settings" noSubmit=true
+                                     @click="${() => this.edit_settings()}"></et2-button-icon>
+                </header>
+                <slot part="body" class="card__body">${this.bodyTemplate()}</slot>
                 <slot name="footer" part="footer" class="card__footer">${this.footerTemplate()}</slot>
             </div>
 		`;

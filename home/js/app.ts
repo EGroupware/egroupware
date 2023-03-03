@@ -8,12 +8,14 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  */
 
-import {AppJS} from "../../api/js/jsapi/app_base.js";
 import {et2_createWidget} from "../../api/js/etemplate/et2_core_widget";
 import {EgwApp} from "../../api/js/jsapi/egw_app";
 import {etemplate2} from "../../api/js/etemplate/etemplate2";
 import {Et2Portlet} from "../../api/js/etemplate/Et2Portlet/Et2Portlet";
 import {Et2PortletFavorite} from "./Et2PortletFavorite";
+import {loadWebComponent} from "../../api/js/etemplate/Et2Widget/Et2Widget";
+import "./Et2PortletList";
+import Sortable from "sortablejs/modular/sortable.complete.esm.js";
 
 /**
  * JS for home application
@@ -30,7 +32,7 @@ export class HomeApp extends EgwApp
 	/**
 	 * Grid resolution.  Must match et2_portlet GRID
 	 */
-	public static GRID = 50;
+	public static GRID = 150;
 
 	/**
 	 * Default size for new portlets
@@ -43,6 +45,7 @@ export class HomeApp extends EgwApp
 	// List of portlets
 	private portlets = {};
 	portlet_container : any;
+	private sortable : Sortable;
 
 	/**
 	 * Constructor
@@ -68,10 +71,13 @@ export class HomeApp extends EgwApp
 		super.destroy(this.appname);
 
 		// Make sure all other sub-etemplates in portlets are done
-		let others = etemplate2.getByApplication(this.appname);
-		for(let i = 0; i < others.length; i++)
+		if(this == window.app.home)
 		{
-			others[i].clear();
+			let others = etemplate2.getByApplication(this.appname);
+			for(let i = 0; i < others.length; i++)
+			{
+				others[i].clear();
+			}
 		}
 	}
 
@@ -96,12 +102,9 @@ export class HomeApp extends EgwApp
 
 			this.portlet_container = this.et2.getWidgetById("portlets");
 
-			// Set up sorting of portlets
-			//this._do_ordering();
-
 			// Accept drops of favorites, which aren't part of action system
-			jQuery(this.et2.getDOMNode().parentNode).droppable({
-				hoverClass: 'drop-hover',
+			this.sortable = new Sortable(this.et2.getDOMNode().parentNode, {
+				chosenClass: 'drop-hover',
 				accept: function(draggable)
 				{
 					// Check for direct support for that application
@@ -111,8 +114,9 @@ export class HomeApp extends EgwApp
 					}
 					return false;
 				},
-				drop: function(event, ui)
+				onAdd: function(event, ui)
 				{
+					debugger;
 					// Favorite dropped on home - fake an action and divert to normal handler
 					let action = {
 						data: {
@@ -128,8 +132,9 @@ export class HomeApp extends EgwApp
 					action.ui = ui;
 					app.home.add_from_drop(action, [{data: ui.helper.context.dataset}])
 				}
-			})
+			});
 				// Bind to unload to remove it from our list
+			/*
 				.on('clear', '.et2_container[id]', jQuery.proxy(function(e)
 				{
 					if(e.target && e.target.id && this.portlets[e.target.id])
@@ -138,6 +143,8 @@ export class HomeApp extends EgwApp
 						delete this.portlets[e.target.id];
 					}
 				}, this));
+				
+			 */
 		}
 		else if(et2.uniqueId)
 		{
@@ -148,7 +155,7 @@ export class HomeApp extends EgwApp
 				window.setTimeout(() => {this.et2_ready(et2, name);}, 200);
 				return;
 			}
-			let portlet = portlet_container.getWidgetById(et2.uniqueId);
+			let portlet = portlet_container.getWidgetById(et2.uniqueId) || et2.DOMContainer;
 			// Check for existing etemplate, this one loaded over it
 			// NOTE: Moving them around like this can cause problems with event handlers
 			let existing = etemplate2.getById(et2.uniqueId);
@@ -163,14 +170,19 @@ export class HomeApp extends EgwApp
 				}
 			}
 			// Set size & position
-			let settings = portlet_container.getArrayMgr("content").data.find(e => e.id == et2.uniqueId) || {};
+			let et2_data = et2.widgetContainer.getArrayMgr("content").data;
+			let settings = et2_data && et2_data.id == portlet.id && et2_data || portlet_container.getArrayMgr("content").data.find(e => et2.uniqueId.endsWith(e.id)) || {settings: {}};
+			portlet.settings = settings.settings || {};
 			portlet.style.gridArea = settings.row + "/" + settings.col + "/ span " + (settings.height || 1) + "/ span " + (settings.width || 1);
-			
+
+
 			// It's in the right place for original load, but move it into portlet
+
 			let misplaced = jQuery(etemplate2.getById('home-index').DOMContainer).siblings('#' + et2.DOMContainer.id);
-			if(portlet)
+
+			if(portlet && et2.DOMContainer !== portlet)
 			{
-				portlet.addChild(et2.widgetContainer);
+				portlet.append(et2.DOMContainer);
 				et2.resize();
 			}
 			if(portlet && misplaced.length)
@@ -180,6 +192,10 @@ export class HomeApp extends EgwApp
 
 			// Instanciate custom code for this portlet
 			this._get_portlet_code(portlet);
+
+			// Ordering of portlets
+			// Only needs to be done once, but its hard to tell when everything is loaded
+			this._do_ordering();
 		}
 	}
 
@@ -248,10 +264,11 @@ export class HomeApp extends EgwApp
 		{
 			let $portlet_container = jQuery(this.portlet_container.getDOMNode());
 			attrs.row = Math.max(1, Math.round((action.menu_context.posy - $portlet_container.offset().top) / HomeApp.GRID) + 1);
-			attrs.col = Math.max(1, Math.round((action.menu_context.posx - $portlet_container.offset().left) / HomeApp.GRID) + 1);
+			// Use "auto" col to avoid any overlap or overflow
+			attrs.col = "auto";
 		}
 
-		let portlet = <Et2Portlet>et2_createWidget('et2-portlet', attrs, this.portlet_container);
+		let portlet = <Et2Portlet>loadWebComponent('et2-portlet', attrs, this.portlet_container);
 		portlet.loadingFinished();
 
 		// Get actual attributes & settings, since they're not available client side yet
@@ -277,48 +294,38 @@ export class HomeApp extends EgwApp
 
 		// Basic portlet attributes
 		let attrs = {
+			...HomeApp.DEFAULT,
 			id: this._create_id(),
 			class: action.data.class || action.id.substr(5),
-			width: this.DEFAULT.WIDTH,
-			height: this.DEFAULT.HEIGHT
+			dropped_data: []
 		};
 
 		// Try to find where the drop was
 		if(action != null && action.ui && action.ui.position)
 		{
-			attrs.row = Math.max(1, Math.round((action.ui.position.top - $portlet_container.offset().top) / this.GRID));
-			attrs.col = Math.max(1, Math.round((action.ui.position.left - $portlet_container.offset().left) / this.GRID));
+			attrs.row = Math.max(1, Math.round((action.ui.position.top - $portlet_container.offset().top) / HomeApp.GRID));
+			// Use "auto" col to avoid any overlap or overflow
+			attrs.col = "auto";
 		}
 
-		let portlet = <Et2Portlet>et2_createWidget('portlet', jQuery.extend({}, attrs), this.portlet_container);
-		portlet.loadingFinished();
-		// Immediately add content ID so etemplate loads into the right place
-		portlet.content.append('<div id="' + attrs.id + '" class="et2_container"/>');
-
 		// Get actual attributes & settings, since they're not available client side yet
-		let drop_data = [];
 		for(let i = 0; i < source.length; i++)
 		{
 			if(source[i].id)
 			{
-				drop_data.push(source[i].id);
+				attrs.dropped_data.push(source[i].id);
 			}
 			else
 			{
-				drop_data.push(source[i].data);
+				attrs.dropped_data.push(source[i].data);
 			}
 		}
-		// Don't pass default width & height so class can set it
-		delete attrs.width;
-		delete attrs.height;
-		portlet._process_edit(et2_dialog.OK_BUTTON, jQuery.extend({dropped_data: drop_data}, attrs));
 
-		// Set up sorting/grid of new portlet
-		$portlet_container.data("gridster").add_widget(
-			portlet.getDOMNode(),
-			this.DEFAULT.WIDTH, this.DEFAULT.HEIGHT,
-			attrs.col, attrs.row
-		);
+		let portlet = <Et2Portlet>loadWebComponent('et2-portlet', attrs, this.portlet_container);
+		portlet.loadingFinished();
+
+		// Get actual attributes & settings, since they're not available client side yet
+		portlet.update_settings(attrs);
 
 		// Instanciate custom code for this portlet
 		this._get_portlet_code(portlet);
@@ -399,7 +406,7 @@ export class HomeApp extends EgwApp
 		let p = this.portlet_container.getWidgetById(id);
 		if(p)
 		{
-			p._process_edit(et2_dialog.OK_BUTTON, '~reload~');
+			p.update_settings('~reload~');
 		}
 	}
 
@@ -462,95 +469,25 @@ export class HomeApp extends EgwApp
 	 */
 	_do_ordering()
 	{
-		let $portlet_container = jQuery(this.portlet_container.getDOMNode());
-		$portlet_container
-			/* Gridster */
-			.gridster({
-				widget_selector: 'div.et2_portlet',
-				// Dimensions + margins = grid spacing
-				widget_base_dimensions: [home.GRID - 5, home.GRID - 5],
-				widget_margins: [5, 5],
-				extra_rows: 1,
-				extra_cols: 1,
-				min_cols: 3,
-				min_rows: 3,
-				/**
-				 * Set which parameters we want when calling serialize().
-				 * @param $w jQuery jQuery-wrapped element
-				 * @param grid Object Grid settings
-				 * @return Object - will be returned by gridster.serialize()
-				 */
-				serialize_params: function($w, grid)
-				{
-					return {
-						id: $w.attr('id').replace(app.home.portlet_container.getInstanceManager().uniqueId + '_', ''),
-						row: grid.row,
-						col: grid.col,
-						width: grid.size_x,
-						height: grid.size_y
-					};
-				},
-				/**
-				 * Gridster's internal drag settings
-				 */
-				draggable: {
-					handle: '.ui-widget-header',
-					stop: function(event, ui)
-					{
-						// Update widget(s)
-						let changed = this.serialize_changed();
-
-						// Reset changed, or they keep accumulating
-						this.$changed = jQuery([]);
-
-						for(let key in changed)
-						{
-							if(!changed[key].id)
-							{
-								continue;
-							}
-							// Changed ID is the ID
-							let widget = window.app.home.portlet_container.getWidgetById(changed[key].id);
-							if(!widget || widget == window.app.home.portlet_container)
-							{
-								continue;
-							}
-
-							egw().jsonq("home.home_ui.ajax_set_properties", [changed[key].id, {}, {
-									row: changed[key].row,
-									col: changed[key].col
-								}, widget.settings ? widget.settings.group : false],
-								null,
-								widget, true, widget
-							);
-						}
-					}
-				}
-
-			});
-
-		// Rescue selectboxes from Firefox
-		$portlet_container.on('mousedown touchstart', 'select', function(e)
+		if(!this.portlet_container)
 		{
-			e.stopPropagation();
-		});
-		// Bind window resize to re-layout gridster
-		jQuery(window).one("resize." + this.et2._inst.uniqueId, function()
+			return;
+		}
+
+		let col_map = {};
+		this.portlet_container.getDOMNode().querySelectorAll("[style*='grid-area']").forEach((n) =>
 		{
-			// Note this doesn't change the positions, just makes them invalid
-			$portlet_container.data('gridster').recalculate_faux_grid();
-		});
-		// Bind resize to update gridster - this may happen _before_ the widget gets a
-		// chance to update itself, so we can't use the widget
-		$portlet_container
-			.on("resizestop", function(event, ui)
+			let [col, span] = (getComputedStyle(n).gridColumn || "").split(" / ");
+			if(typeof col_map[col] !== "undefined")
 			{
-				$portlet_container.data("gridster").resize_widget(
-					ui.element,
-					Math.round(ui.size.width / app.home.GRID),
-					Math.round(ui.size.height / app.home.GRID)
-				);
-			});
+				// Set column to auto to avoid overlap
+				n.style.gridColumn = "auto / " + span;
+			}
+			else
+			{
+				col_map[col] = true;
+			}
+		});
 	}
 
 	/**
@@ -573,125 +510,11 @@ export class HomeApp extends EgwApp
 	 * Functions for the list portlet
 	 */
 	/**
-	 * For list_portlet - opens a dialog to add a new entry to the list
-	 *
-	 * @param {egwAction} action Drop or add action
-	 * @param {egwActionObject[]} Selected entries
-	 * @param {egwActionObject} target_action Drop target
-	 */
-	add_link(action, source, target_action)
-	{
-		// Actions got confused drop vs popup
-		if(source[0].id == 'portlets')
-		{
-			return this.add_link(action);
-		}
-
-		// Get widget
-		let widget = null;
-		while(action.parent != null)
-		{
-			if(action.data && action.data.widget)
-			{
-				widget = action.data.widget;
-				break;
-			}
-			action = action.parent;
-		}
-		if(target_action == null)
-		{
-			// use template base url from initial template, to continue using webdav, if that was loaded via webdav
-			let splitted = 'home.edit'.split('.');
-			let path = app.home.portlet_container.getRoot()._inst.template_base_url + splitted.shift() + "/templates/default/" +
-				splitted.join('.') + ".xet";
-			let dialog = et2_createWidget("dialog", {
-				callback: function(button_id, value)
-				{
-					if(button_id == et2_dialog.CANCEL_BUTTON)
-					{
-						return;
-					}
-					let new_list = widget.options.settings.list || [];
-					for(let i = 0; i < new_list.length; i++)
-					{
-						if(new_list[i].app == value.add.app && new_list[i].id == value.add.id)
-						{
-							// Duplicate - skip it
-							return;
-						}
-					}
-					value.add.link_id = value.add.app + ':' + value.add.id;
-					// Update server side
-					new_list.push(value.add);
-					widget._process_edit(button_id, {list: new_list});
-					// Update client side
-					let list = widget.getWidgetById('list');
-					if(list)
-					{
-						list.set_value(new_list);
-					}
-				},
-				buttons: et2_dialog.BUTTONS_OK_CANCEL,
-				title: app.home.egw.lang('add'),
-				template: path,
-				value: {content: [{label: app.home.egw.lang('add'), type: 'link-entry', name: 'add', size: ''}]}
-			});
-		}
-		else
-		{
-			// Drag'n'dropped something on the list - just send action IDs
-			let new_list = widget.options.settings.list || [];
-			let changed = false;
-			for(let i = 0; i < new_list.length; i++)
-			{
-				// Avoid duplicates
-				for(let j = 0; j < source.length; j++)
-				{
-					if(!source[j].id || new_list[i].app + "::" + new_list[i].id == source[j].id)
-					{
-						// Duplicate - skip it
-						source.splice(j, 1);
-					}
-				}
-			}
-			for(let i = 0; i < source.length; i++)
-			{
-				let explode = source[i].id.split('::');
-				new_list.push({app: explode[0], id: explode[1], link_id: explode.join(':')});
-				changed = true;
-			}
-			if(changed)
-			{
-				widget._process_edit(et2_dialog.OK_BUTTON, {
-					list: new_list || {}
-				});
-			}
-			// Filemanager support - links need app = 'file' and type set
-			for(let i = 0; i < new_list.length; i++)
-			{
-				if(new_list[i]['app'] == 'filemanager')
-				{
-					new_list[i]['app'] = 'file';
-					new_list[i]['path'] = new_list[i]['title'] = new_list[i]['icon'] = new_list[i]['id'];
-				}
-			}
-
-			widget.getWidgetById('list').set_value(new_list);
-		}
-	}
-
-	/**
 	 * Remove a link from the list
 	 */
 	link_change(list, link_id, row)
 	{
-		// Quick response client side
-		row.slideUp(row.remove);
-
-		// Actual removal
-		let portlet = list._parent._parent;
-		portlet.options.settings.list.splice(row.index(), 1);
-		portlet._process_edit(et2_dialog.OK_BUTTON, {list: portlet.options.settings.list || {}});
+		list.link_change(link_id, row);
 	}
 
 	/**

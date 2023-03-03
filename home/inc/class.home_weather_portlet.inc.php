@@ -39,7 +39,7 @@ class home_weather_portlet extends home_portlet
 		if (false) parent::__construct();
 
 		// City not set for new widgets created via context menu
-		if(!$context['city'] || $context['height'] < 2)
+		if(!$context['city'])
 		{
 			// Set initial size to 3x2, default is too small
 			$context['width'] = 3;
