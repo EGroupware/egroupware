@@ -2,7 +2,6 @@
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="home.favorite" template="" lang="" group="0" version="1.9.001">
-		<et2-button  id="header_toggle" image="egw_action/arrows" class="closed" onclick="app.home.nextmatch_toggle_header" parentId="@header_node"></et2-button>
 		<nextmatch id="nm" class="header_hidden" hide_header="true"/>
 	</template>
 </overlay>

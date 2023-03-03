@@ -11,8 +11,9 @@
 #home-index_portlets {
 	background-color: inherit;
 	display: grid;
-	grid-auto-columns: 50ex;
-	grid-auto-rows: 50ex;
+	grid-auto-columns: 25ex;
+	grid-auto-rows: 25ex;
+	grid-auto-flow: dense;
 
 	gap: 2ex;
 

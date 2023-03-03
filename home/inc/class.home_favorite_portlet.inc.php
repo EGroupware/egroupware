@@ -145,14 +145,55 @@ class home_favorite_portlet extends home_portlet
 
 	public static function process($content = array())
 	{
-		unset($content);	// not used, but required by function signature
+		unset($content);    // not used, but required by function signature
 
 		// We need to keep the template going, thanks.
-		Etemplate\Widget::setElementAttribute('','','');
+		Etemplate\Widget::setElementAttribute('', '', '');
 	}
 
-	public function get_actions(){
+	public function get_actions()
+	{
 		return array();
+	}
+
+	public function get_type()
+	{
+		return 'et2-portlet-favorite';
+	}
+
+	/**
+	 * Get a list of "Add" actions
+	 * @return array
+	 */
+	public function get_add_actions()
+	{
+		$desc = $this->get_description();
+		$actions = array();
+
+		// Add a list of favorites
+		if($this->context['appname'] && ($favorites = Framework\Favorites::get_favorites($this->context['appname'])))
+		{
+			foreach($favorites as $name => $favorite)
+			{
+				$actions[] = array(
+					'id'        => __CLASS__ . $name,
+					'caption'   => $name,
+					'onExecute' => 'javaScript:app.home.add'
+				);
+			}
+		}
+		else
+		{
+			$actions[] = array(
+				'id'              => __CLASS__,
+				'caption'         => lang('List'),
+				'hint'            => $desc['description'],
+				'onExecute'       => 'javaScript:app.home.add',
+				'acceptedTypes'   => $this->accept_drop(),
+				'allowOnMultiple' => $this->accept_multiple()
+			);
+		}
+		return $actions;
 	}
 
 	/**
