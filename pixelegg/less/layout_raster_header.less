@@ -104,9 +104,22 @@
 			height: auto;
 			z-index: 1000;
 			top: 45px;
-			#rc_status_select, #rc_status_select_chzn {
+			#rc_status_select {
 				width: 50% !important;
 				margin-left: 10px;
+				sl-menu-item::part(checked-icon) {
+					border-radius: 50%;
+					width: 12px;
+					height: 12px;
+					margin-top: 5px;
+					margin-right: 5px;
+					visibility: visible;
+				}
+
+				sl-menu-item[value="online"]::part(checked-icon) {background: #2de0a5;}
+				sl-menu-item[value="away"]::part(checked-icon) {background: #ffd21f;}
+				sl-menu-item[value="busy"]::part(checked-icon) {background: #f5455c;}
+				sl-menu-item[value="offline"]::part(checked-icon) {background: #cbced1;}
 			}
 			#rc_status_select_chzn {
 				a.chzn-single span {padding-top: 0px;}

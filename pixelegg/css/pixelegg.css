@@ -4305,10 +4305,29 @@ span.overlayContainer img.overlay {
   z-index: 1000;
   top: 45px;
 }
-#egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items #rc_status_select,
-#egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items #rc_status_select_chzn {
+#egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items #rc_status_select {
   width: 50% !important;
   margin-left: 10px;
+}
+#egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items #rc_status_select sl-menu-item::part(checked-icon) {
+  border-radius: 50%;
+  width: 12px;
+  height: 12px;
+  margin-top: 5px;
+  margin-right: 5px;
+  visibility: visible;
+}
+#egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items #rc_status_select sl-menu-item[value="online"]::part(checked-icon) {
+  background: #2de0a5;
+}
+#egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items #rc_status_select sl-menu-item[value="away"]::part(checked-icon) {
+  background: #ffd21f;
+}
+#egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items #rc_status_select sl-menu-item[value="busy"]::part(checked-icon) {
+  background: #f5455c;
+}
+#egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items #rc_status_select sl-menu-item[value="offline"]::part(checked-icon) {
+  background: #cbced1;
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items #rc_status_select_chzn a.chzn-single span {
   padding-top: 0px;
