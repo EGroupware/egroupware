@@ -1105,7 +1105,7 @@ app.classes.mail = AppJS.extend(
 						data.attachmentsBlockTitle = _data.length > 1 ? `+${_data.length-1}` : '';
 						// Update client cache to avoid resolving winmail.dat attachment again
 						egw.dataStoreUID(data.uid, data);
-						if (!egwIsMobile()) mailPreview.set_value({content:data});
+						if (!egwIsMobile() && mailPreview) mailPreview.set_value({content:data});
 					}
 					else
 					{
@@ -1187,7 +1187,7 @@ app.classes.mail = AppJS.extend(
 			sel_options.attachmentsBlock.actions = actions;
 		}
 
-		if (!egwIsMobile()) mailPreview.set_value({content:data, sel_options:sel_options});
+		if (!egwIsMobile() && mailPreview) mailPreview.set_value({content:data, sel_options:sel_options});
 
 		if (selected && selected.length>1)
 		{
