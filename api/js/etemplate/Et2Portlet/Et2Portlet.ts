@@ -179,6 +179,16 @@ export class Et2Portlet extends Et2Widget(SlCard)
 		super.transformAttributes(attrs);
 		let data = this.getArrayMgr("content").data.find(e => e.id && e.id == this.id);
 		this.settings = typeof attrs.settings == "string" ? data.value || data.settings || {} : attrs.settings;
+
+		// Set size & position, if available
+		if(data && (data.row || data.height))
+		{
+			this.style.gridRow = (data.row || "auto") + " / span " + (data.height || 1);
+		}
+		if(data && (data.col || data.width))
+		{
+			this.style.gridColumn = (data.col || "auto") + " / span " + (data.width || 1);
+		}
 	}
 
 	/**
