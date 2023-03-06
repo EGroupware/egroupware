@@ -21,6 +21,7 @@ import shoelace from "../Styles/shoelace";
 import {Et2Dialog} from "../Et2Dialog/Et2Dialog";
 import {et2_IResizeable} from "../et2_core_interfaces";
 import {HomeApp} from "../../../../home/js/app";
+import {etemplate2} from "../etemplate2";
 
 /**
  * Participate in Home
@@ -179,6 +180,17 @@ export class Et2Portlet extends Et2Widget(SlCard)
 		super.transformAttributes(attrs);
 		let data = this.getArrayMgr("content").data.find(e => e.id && e.id == this.id);
 		this.settings = typeof attrs.settings == "string" ? data.value || data.settings || {} : attrs.settings;
+
+		// Set size & position, if available
+		// NB: initial load can't find them by entry in array mgr, we check the data directly
+		if(attrs.row || attrs.height || data.row || data.height)
+		{
+			this.style.gridRow = (attrs.row || data.row || "auto") + " / span " + (attrs.height || data.height || 1);
+		}
+		if(attrs.col || attrs.width || data.col || data.width)
+		{
+			this.style.gridColumn = (attrs.col || data.col || "auto") + " / span " + (attrs.width || data.width || 1);
+		}
 	}
 
 	/**
@@ -335,6 +347,9 @@ export class Et2Portlet extends Et2Widget(SlCard)
 
 		// Update position settings
 		this.update_settings({row: row, col: col, width: width, height: height});
+
+		// If there's a full etemplate living inside, make it resize
+		etemplate2.getById(this.id).resize();
 	}
 
 
@@ -459,9 +474,6 @@ export class Et2Portlet extends Et2Widget(SlCard)
 				// Only resize once, and only if needed
 				if(data.attributes.width || data.attributes.height)
 				{
-					this.style.columnSpan = data.attributes.width;
-					this.style.rowSpan = data.attributes.height;
-
 					// Tell children
 					try
 					{

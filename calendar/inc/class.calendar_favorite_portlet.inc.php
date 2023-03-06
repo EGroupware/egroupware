@@ -15,8 +15,8 @@ use EGroupware\Api\Framework;
 use EGroupware\Api\Etemplate;
 
 /**
- * The addressbook_list_portlet uses a nextmatch / favorite
- * to display a list of entries.
+ * The list uses a nextmatch / favorite
+ * to display a list of entries, but other views do their own things
  */
 class calendar_favorite_portlet extends home_favorite_portlet
 {
@@ -246,7 +246,8 @@ class calendar_favorite_portlet extends home_favorite_portlet
 		return $properties;
 	}
 
-	public function get_actions() {
+	public function get_actions()
+	{
 		if($this->favorite['state']['view'] == 'listview' || !$this->actions)
 		{
 			return array();
@@ -255,5 +256,10 @@ class calendar_favorite_portlet extends home_favorite_portlet
 		{
 			return $this->actions;
 		}
+	}
+
+	public function get_type()
+	{
+		return 'et2-portlet-calendar';
 	}
 }
