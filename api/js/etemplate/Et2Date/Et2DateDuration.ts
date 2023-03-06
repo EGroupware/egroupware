@@ -352,6 +352,12 @@ export class Et2DateDuration extends Et2InputWidget(FormControlMixin(LitElement)
 	set displayFormat(value : string)
 	{
 		this.__displayFormat = "";
+		if(!value)
+		{
+			// Don't allow an empty value, but don't throw a real error
+			console.warn("Invalid displayFormat ", value, this);
+			value = "dhm";
+		}
 		// Display format must be in decreasing size order (dhms) or the calculations
 		// don't work out nicely
 		for(let f of Object.keys(Et2DateDuration.time_formats))
