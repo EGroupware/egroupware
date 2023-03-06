@@ -16,6 +16,7 @@ import {Et2PortletFavorite} from "./Et2PortletFavorite";
 import {loadWebComponent} from "../../api/js/etemplate/Et2Widget/Et2Widget";
 import "./Et2PortletList";
 import "./Et2PortletNote";
+import "../../calendar/js/Et2PortletCalendar"
 import Sortable from "sortablejs/modular/sortable.complete.esm.js";
 
 /**
