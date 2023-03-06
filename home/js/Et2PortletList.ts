@@ -147,7 +147,7 @@ export class Et2PortletList extends Et2Portlet
 		{
 			return;
 		}
-		debugger;
+		
 		// Not used, but delete puts link in event.data
 		let link_data = event.data || false;
 
