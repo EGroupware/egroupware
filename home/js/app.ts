@@ -15,6 +15,7 @@ import {Et2Portlet} from "../../api/js/etemplate/Et2Portlet/Et2Portlet";
 import {Et2PortletFavorite} from "./Et2PortletFavorite";
 import {loadWebComponent} from "../../api/js/etemplate/Et2Widget/Et2Widget";
 import "./Et2PortletList";
+import "./Et2PortletNote";
 import Sortable from "sortablejs/modular/sortable.complete.esm.js";
 
 /**
@@ -133,18 +134,8 @@ export class HomeApp extends EgwApp
 					app.home.add_from_drop(action, [{data: ui.helper.context.dataset}])
 				}
 			});
-				// Bind to unload to remove it from our list
-			/*
-				.on('clear', '.et2_container[id]', jQuery.proxy(function(e)
-				{
-					if(e.target && e.target.id && this.portlets[e.target.id])
-					{
-						this.portlets[e.target.id].destroy();
-						delete this.portlets[e.target.id];
-					}
-				}, this));
-				
-			 */
+
+			this._do_ordering()
 		}
 		else if(et2.uniqueId)
 		{
@@ -516,183 +507,13 @@ export class HomeApp extends EgwApp
 	{
 		list.link_change(link_id, row);
 	}
-
-	/**
-	 * Functions for the note portlet
-	 */
-	/**
-	 * Set up for editing a note
-	 * CKEditor has CSP issues, so we need a popup
-	 *
-	 * @param {egwAction} action
-	 * @param {egwActionObject[]} Selected
-	 */
-	note_edit(action, selected)
-	{
-		if(!selected && typeof action == 'string')
-		{
-			let id = action;
-		}
-		else
-		{
-			let id = selected[0].id;
-		}
-
-		// Aim to match the size
-		let portlet_dom = jQuery('[id$=' + id + '][data-sizex]', this.portlet_container.getDOMNode());
-		let width = portlet_dom.attr('data-sizex') * this.GRID;
-		let height = portlet_dom.attr('data-sizey') * this.GRID;
-
-		// CKEditor is impossible to use below a certain size
-		// Add 35px for the toolbar, 35px for the buttons
-		let window_width = Math.max(580, width + 20);
-		let window_height = Math.max(350, height + 70);
-
-		// Open popup, but add 70 to the height for the toolbar
-		this.egw.open_link(this.egw.link('/index.php', {
-			menuaction: 'home.home_note_portlet.edit',
-			id: id,
-			height: window_height - 70
-		}), 'home_' + id, window_width + 'x' + window_height, 'home');
-	}
-
-	/**
-	 * Favorites / nextmatch
-	 */
-	/**
-	 * Toggle the nextmatch header shown / hidden
-	 *
-	 * @param {Event} event
-	 * @param {et2_button} widget
-	 */
-	nextmatch_toggle_header(event, widget)
-	{
-		widget.set_class(widget.class == 'opened' ? 'closed' : 'opened');
-		// We operate on the DOM here, nm should be unaware of our fiddling
-		let nm = widget.getParent().getWidgetById('nm');
-		if(!nm)
-		{
-			return;
-		}
-
-		// Hide header
-		nm.div.toggleClass('header_hidden');
-		nm.set_hide_header(nm.div.hasClass('header_hidden'));
-		nm.resize();
-	}
 }
 
 app.classes.home = HomeApp;
 
-/// Base class code
-
-/**
- * Base class for portlet specific javascript
- *
- * Should this maybe extend et2_portlet?  It would complicate instantiation.
- *
- * @type @exp;Class@call;extend
- */
-export class HomePortlet
-{
-	protected portlet = null;
-
-	init(portlet)
-	{
-		this.portlet = portlet;
-	}
-
-	destroy()
-	{
-		this.portlet = null;
-	}
-
-	/**
-	 * Handle framework refresh messages to determine if the portlet needs to
-	 * refresh too.
-	 *
-	 * App is responsible for only reacting to "messages" it is interested in!
-	 *
-	 */
-	observer(_msg, _app, _id, _type, _msg_type, _targetapp)
-	{
-		// Not interested
-	}
-}
 
 /*
-app.classes.home.home_link_portlet = app.classes.home.home_portlet.extend({
-	init: function(portlet) {
-		// call parent
-		this._super.apply(this, arguments);
 
-		// Check for tooltip
-		if(this.portlet)
-		{
-			let content = jQuery('.tooltip', this.portlet.content);
-			if(content.length && content.children().length)
-			{
-				//Check if the tooltip is already initialized
-				this.portlet.content.tooltip({
-					items: this.portlet.content,
-					content: content.html(),
-					tooltipClass: 'portlet_' + this.portlet.id,
-					show: {effect: 'slideDown', delay:500},
-					hide: {effect: 'slideUp', delay: 500},
-					position: {my: "left top", at:"left bottom", collision: "flipfit"},
-					open: jQuery.proxy(function(event, ui) {
-						// Calendar specific formatting
-						if(ui.tooltip.has('.calendar_calEventTooltip').length)
-						{
-							ui.tooltip.removeClass("ui-tooltip");
-							ui.tooltip.addClass("calendar_uitooltip");
-						}
-					},this),
-					close: function(event,ui) {
-						ui.tooltip.hover(
-							function() {
-								jQuery(this).stop(true).fadeTo(100,1);
-							},
-							function() {
-								jQuery(this).slideUp("400",function() {jQuery(this).remove();});
-							}
-						);
-					}
-				});
-			}
-		}
-	},
-	observer: function(_msg, _app, _id, _type)
-	{
-		if(this.portlet && this.portlet.settings)
-		{
-			let value = this.portlet.settings.entry || {};
-			if(value.app && value.app == _app && value.id && value.id == _id)
-			{
-				// We don't just get the updated title, in case there's a custom
-				// template with more fields
-				app.home.refresh(this.portlet.id);
-			}
-		}
-	}
-});
-app.classes.home.home_list_portlet = app.classes.home.home_portlet.extend({
-	observer: function(_msg, _app, _id, _type)
-	{
-		if(this.portlet && this.portlet.getWidgetById('list'))
-		{
-			let list = this.portlet.getWidgetById('list').options.value;
-			for(let i = 0; i < list.length; i++)
-			{
-				if(list[i].app == _app && list[i].id == _id)
-				{
-					app.home.refresh(this.portlet.id);
-					return;
-				}
-			}
-		}
-	}
-});
 app.classes.home.home_weather_portlet = app.classes.home.home_portlet.extend({
 	init: function(portlet) {
 		// call parent
@@ -711,43 +532,5 @@ app.classes.home.home_weather_portlet = app.classes.home.home_portlet.extend({
 			});
 		}
 	}
-});
-app.classes.home.home_favorite_portlet = app.classes.home.home_portlet.extend({
-	init: function(portlet) {
-		// call parent
-		this._super.apply(this, arguments);
-
-		// Somehow favorite got lost, or is not set
-		if(portlet.options && portlet.options.settings && typeof portlet.options.settings !== 'undefined' &&
-			!portlet.options.settings.favorite
-		)
-		{
-			portlet.edit_settings();
-		}
-	},
-	observer: function(_msg, _app, _id, _type, _msg_type, _targetapp)
-	{
-		if(this.portlet.class.indexOf(_app) == 0 || this.portlet.class == 'home_favorite_portlet')
-		{
-			this.portlet.getWidgetById('nm').refresh(_id,_type);
-		}
-	}
-});
-
-
-/**
- * An example illustrating extending the base code for a application specific code.
- * See also the calendar app, which needs custom handlers
- *
- * @type @exp;app@pro;classes@pro;home@pro;home_favorite_portlet@call;extend
- * Note we put it in home, but this code should go in addressbook/js/addressbook_favorite_portlet.js
- *
-app.classes.home.addressbook_favorite_portlet = app.classes.home.home_favorite_portlet.extend({
-
-observer: function(_msg, _app, _id, _type, _msg_type, _targetapp)
-{
-	// Just checking...
-	debugger;
-}
 });
 */

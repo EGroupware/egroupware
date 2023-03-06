@@ -110,10 +110,10 @@ class home_note_portlet extends home_portlet
 		if(!$content['note'])
 		{
 			$content['note'] = '';
-			Api\Json\Response::get()->apply('app.home.note_edit',array($id));
+			$content['edit_settings'] = true;
 		}
 
-		$etemplate->exec('home.home_note_portlet.exec',$content,array(),array('__ALL__'=>true),array('id' =>$id));
+		//$etemplate->exec('home.home_note_portlet.exec',$content,array(),array('__ALL__'=>true),array('id' =>$id));
 	}
 
 	public function get_actions()
@@ -160,7 +160,7 @@ class home_note_portlet extends home_portlet
 		);
 		// Internal - no type means it won't show in configure dialog
 		$properties[] = array(
-			'name'	=>	'note'
+			'name' => 'note'
 		);
 		return $properties;
 	}
@@ -168,9 +168,14 @@ class home_note_portlet extends home_portlet
 	public function get_description()
 	{
 		return array(
-			'displayName'=> lang('Note'),
-			'title'=>	$this->context['title'],
-			'description'=>	lang('A quick note')
+			'displayName' => lang('Note'),
+			'title'       => $this->context['title'],
+			'description' => lang('A quick note')
 		);
+	}
+
+	public function get_type()
+	{
+		return 'et2-portlet-note';
 	}
 }
