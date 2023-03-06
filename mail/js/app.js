@@ -1204,7 +1204,7 @@ app.classes.mail = AppJS.extend(
 		}
 
 		// Not applied to mobile preview
-		if (!egwIsMobile())
+		if (!egwIsMobile() && this.getPreviewPaneState())
 		{
 			// Blank first, so we don't show previous email while loading
 			var IframeHandle = this.et2.getWidgetById('messageIFRAME');
