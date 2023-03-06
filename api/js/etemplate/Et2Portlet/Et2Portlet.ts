@@ -77,7 +77,8 @@ export class Et2Portlet extends Et2Widget(SlCard)
 				font-family: inherit;
 				font-size: var(--sl-font-size-medium);
 				line-height: var(--sl-line-height-dense);
-				padding: var(--header-spacing);
+				padding: 0px;
+				padding-left: var(--header-spacing);
 				padding-right: calc(2em + var(--header-spacing));
 				margin: 0px;
 				position: relative;
@@ -91,12 +92,15 @@ export class Et2Portlet extends Et2Widget(SlCard)
 
 			  .portlet__header et2-button-icon {
 				display: none;
-				position: absolute;
-				right: 0px;
 			  }
 
 			  .portlet__header:hover et2-button-icon {
 				display: initial;
+			  }
+
+			  .portlet__header #settings {
+				position: absolute;
+				right: 0px;
 			  }
 
 			  .card {
@@ -500,7 +504,7 @@ export class Et2Portlet extends Et2Widget(SlCard)
 
                 <header class="portlet__header">
                     <slot name="header" part="header" class="card__header">${this.headerTemplate()}</slot>
-                    <et2-button-icon name="gear" label="Settings" noSubmit=true
+                    <et2-button-icon id="settings" name="gear" label="Settings" noSubmit=true
                                      @click="${() => this.edit_settings()}"></et2-button-icon>
                 </header>
                 <slot part="body" class="card__body">${this.bodyTemplate()}</slot>

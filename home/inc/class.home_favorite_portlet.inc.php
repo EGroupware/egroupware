@@ -77,7 +77,7 @@ class home_favorite_portlet extends home_portlet
 			$need_reload = true;
 		}
 		// Favorite not set for new widgets created via context menu
-		if(!$context['favorite'])
+		if(!$context['favorite'] && !($context['width'] || $context['height']))
 		{
 			// Set initial size to 6x3, default is way too small
 			$context['width'] = max($context['width'], 6);
@@ -240,7 +240,10 @@ class home_favorite_portlet extends home_portlet
 		{
 			if($favorite)
 			{
-				$favorite_list[$id] = $favorite['name'];
+				$favorite_list[] = array(
+					'value' => $id,
+					'label' => $favorite['name']
+				);
 			}
 		}
 		$favorite = array(
