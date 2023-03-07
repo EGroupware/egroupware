@@ -642,7 +642,7 @@ Hide subsequent headers in week view with non-consolidated owners
 /* alarm_date widget disabled class
 */
 .calendar_alarm_date_display {
-  display: none !important;
+  display: none;
 }
 /*overwirte margin applied by egwGridView*/
 .calendar_alarm_grid {
