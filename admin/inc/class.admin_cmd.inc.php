@@ -370,7 +370,7 @@ abstract class admin_cmd
 		$vars = get_object_vars($this);	// does not work in php5.1.2 due a bug
 
 		// data is stored serialized
-		// paswords are masked / removed, if we dont need them anymore
+		// passwords are masked / removed, if we don't need them anymore
 		$vars['data'] = in_array($this->status, self::$require_pw_stati) ?
 			json_encode($this->data) : self::mask_passwords($this->data);
 

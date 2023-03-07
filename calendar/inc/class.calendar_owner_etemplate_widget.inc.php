@@ -175,7 +175,7 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 						 'filter' => array('account_id' => null)) +
 			$search_options;
 		$results = array();
-		$is_admin = !!($GLOBALS['egw_info']['user']['apps']['admin']);
+		$is_admin = !empty($GLOBALS['egw_info']['user']['apps']['admin']);
 		$total = 0;
 
 		// Contacts matching accounts the user does not have permission for cause
