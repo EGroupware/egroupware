@@ -36,14 +36,6 @@ export class HomeApp extends EgwApp
 	 */
 	public static GRID = 150;
 
-	/**
-	 * Default size for new portlets
-	 */
-	public static DEFAULT = {
-		WIDTH: 4,
-		HEIGHT: 1
-	};
-
 	// List of portlets
 	private portlets = {};
 	portlet_container : any;
@@ -248,10 +240,8 @@ export class HomeApp extends EgwApp
 	{
 		// Basic portlet attributes
 		let attrs = {
-			...HomeApp.DEFAULT, ...{
 				id: this._create_id(),
 				class: action.data.class
-			}
 		};
 
 		// Try to put it about where the menu was opened
@@ -263,7 +253,7 @@ export class HomeApp extends EgwApp
 			attrs.col = "auto";
 		}
 
-		let portlet = <Et2Portlet>loadWebComponent('et2-portlet', attrs, this.portlet_container);
+		let portlet = <Et2Portlet>loadWebComponent(this.get_portlet_tag(action), attrs, this.portlet_container);
 		portlet.loadingFinished();
 
 		// Get actual attributes & settings, since they're not available client side yet
@@ -289,7 +279,6 @@ export class HomeApp extends EgwApp
 
 		// Basic portlet attributes
 		let attrs = {
-			...HomeApp.DEFAULT,
 			id: this._create_id(),
 			class: action.data.class || action.id.substr(5),
 			dropped_data: []
@@ -316,7 +305,7 @@ export class HomeApp extends EgwApp
 			}
 		}
 
-		let portlet = <Et2Portlet>loadWebComponent('et2-portlet', attrs, this.portlet_container);
+		let portlet = <Et2Portlet>loadWebComponent(this.get_portlet_tag(action), attrs, this.portlet_container);
 		portlet.loadingFinished();
 
 		// Get actual attributes & settings, since they're not available client side yet
@@ -406,6 +395,22 @@ export class HomeApp extends EgwApp
 	}
 
 	/**
+	 * Determine the correct portlet type to use for the given action
+	 *
+	 * @param {egwAction} action
+	 */
+	get_portlet_tag(action : egwAction) : string
+	{
+		// Try to turn action ID into tag (eg: home_list_portlet -> et2-portlet-list)
+		let tag = "et2-" + action.id.replace("add_", "").split("_").reverse().slice(0, -1).map(i => i.toLowerCase()).join("-");
+		if(typeof customElements.get(tag) != "undefined")
+		{
+			return tag;
+		}
+		return "et2-portlet";
+	}
+
+	/**
 	 * Determine the best fitting code to use for the given portlet, instanciate
 	 * it and add it to the list.
 	 *
@@ -485,21 +490,27 @@ export class HomeApp extends EgwApp
 		this.portlet_container.getDOMNode().querySelectorAll("[style*='grid-area']").forEach((n) =>
 		{
 			let [row] = (getComputedStyle(n).gridRow || "").split(" / ");
-			let [col, span] = (getComputedStyle(n).gridColumn || "").split(" / ");
-			if(parseInt(row) > last_row)
+			const colData = (getComputedStyle(n).gridColumn || "").split(" / span ");
+			let col = parseInt(colData[0]);
+			let span = parseInt(colData[1] || "1");
+			if(parseInt(row) != last_row && typeof col_map[row] == "undefined")
 			{
 				last_row = parseInt(row);
-				col_map = {};
+				col_map[row] = {};
 			}
 			// If column is already occupied, or start off screen, or width pushes right side off screen
-			if(typeof col_map[col] !== "undefined" || parseInt(col) > maxColumn || parseInt(col) + (parseInt(span) || 1) > maxColumn)
+			if(typeof col_map[row][col] !== "undefined" || col > maxColumn || (col + span) > maxColumn)
 			{
+				if(col + span > maxColumn)
+				{
+					span = Math.min(span, (maxColumn - (parseInt(Object.keys(col_map[row]).at(-1)) || col)));
+				}
 				// Set column to auto to avoid overlap
-				n.style.gridColumn = "auto / " + span;
+				n.style.gridColumn = "auto / span " + span;
 			}
-			for(let i = parseInt(col); i < (parseInt(span) || 1); i++)
+			for(let i = col; i <= span; i++)
 			{
-				col_map[col + i] = true;
+				col_map[row][i] = true;
 			}
 		});
 	}

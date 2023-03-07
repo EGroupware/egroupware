@@ -151,6 +151,9 @@ export class Et2Portlet extends Et2Widget(SlCard)
 		}
 	};
 
+	protected static DEFAULT_WIDTH = 2;
+	protected static DEFAULT_HEIGHT = 2;
+
 	constructor()
 	{
 		super();
@@ -178,18 +181,18 @@ export class Et2Portlet extends Et2Widget(SlCard)
 	transformAttributes(attrs)
 	{
 		super.transformAttributes(attrs);
-		let data = this.getArrayMgr("content").data.find(e => e.id && e.id == this.id);
+		let data = this.getArrayMgr("content").data.find(e => e.id && e.id == this.id) || {};
 		this.settings = typeof attrs.settings == "string" ? data.value || data.settings || {} : attrs.settings;
 
 		// Set size & position, if available
 		// NB: initial load can't find them by entry in array mgr, we check the data directly
 		if(attrs.row || attrs.height || data.row || data.height)
 		{
-			this.style.gridRow = (attrs.row || data.row || "auto") + " / span " + (attrs.height || data.height || 1);
+			this.style.gridRow = (attrs.row || data.row || "auto") + " / span " + (attrs.height || data.height || this.constructor.DEFAULT_HEIGHT);
 		}
 		if(attrs.col || attrs.width || data.col || data.width)
 		{
-			this.style.gridColumn = (attrs.col || data.col || "auto") + " / span " + (attrs.width || data.width || 1);
+			this.style.gridColumn = (attrs.col || data.col || "auto") + " / span " + (attrs.width || data.width || this.constructor.DEFAULT_WIDTH);
 		}
 	}
 
@@ -349,7 +352,7 @@ export class Et2Portlet extends Et2Widget(SlCard)
 		this.update_settings({row: row, col: col, width: width, height: height});
 
 		// If there's a full etemplate living inside, make it resize
-		etemplate2.getById(this.id).resize();
+		etemplate2.getById(this.id)?.resize();
 	}
 
 

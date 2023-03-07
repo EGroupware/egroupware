@@ -259,10 +259,10 @@ class home_ui
 		}
 
 		$attributes = array(
-			'title' => $desc['title'],
-			'color' => $settings['color'],
+			'title'    => $desc['title'],
+			'color'    => $settings['color'] ?: "",
 			'settings' => $settings,
-			'actions' => $portlet->get_actions(),
+			'actions'  => $portlet->get_actions(),
 		);
 		// Add in default settings
 		self::create_default_actions($attributes['actions'], $id);
