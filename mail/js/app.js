@@ -1019,6 +1019,16 @@ app.classes.mail = AppJS.extend(
 		var splitter = this.et2.getWidgetById('mailSplitter');
 		// return if there's no splitter we maybe in mobile mode
 		if (typeof splitter == 'undefined' || splitter == null) return;
+		let dock = function(){
+			splitter.style.setProperty('--max','100%');
+			splitter.dock();
+		};
+		let undock = function ()
+		{
+			splitter.style.setProperty('--max','70%');
+			splitter.undock();
+		};
+
 		if(splitter.isDocked())
 		{
 			this.mail_previewAreaActive = false;
@@ -1027,15 +1037,15 @@ app.classes.mail = AppJS.extend(
 		//Dock the splitter always if we are browsing with mobile
 		if (_value==true)
 		{
-			if (this.mail_previewAreaActive) splitter.dock();
+			if (this.mail_previewAreaActive) dock();
 			this.mail_previewAreaActive = false;
 		}
 		else
 		{
 			if (!this.mail_previewAreaActive)
 			{
-				splitter.undock();
-				window.setTimeout(function(){splitter.left.trigger('resize.et2_split.mailSplitter');},200);
+				undock();
+				//window.setTimeout(function(){splitter.left.trigger('resize.et2_split.mailSplitter');},200);
 			}
 			this.mail_previewAreaActive = true;
 		}
@@ -1194,10 +1204,14 @@ app.classes.mail = AppJS.extend(
 			// Leave if we're here and there is nothing selected, too many, or no data
 			if (attachmentsBlock)
 			{
-				attachmentsBlock.set_value({content:[]});
-				attachmentsBlock.set_class('previewAttachmentArea noContent mail_DisplayNone');
+				// check if the widget is attached before setting its content
+				if (attachmentsBlock.parentNode)
+				{
+					attachmentsBlock.set_value({content:[]});
+					attachmentsBlock.set_class('previewAttachmentArea noContent mail_DisplayNone');
+				}
 				var IframeHandle = this.et2.getWidgetById('messageIFRAME');
-				IframeHandle.set_src('about:blank');
+				if(IframeHandle) IframeHandle.set_src('about:blank');
 				this.mail_disablePreviewArea(true);
 			}
 			if (!egwIsMobile())return;
