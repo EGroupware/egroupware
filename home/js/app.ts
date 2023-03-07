@@ -161,11 +161,15 @@ export class HomeApp extends EgwApp
 					}
 				}
 			}
-			// Set size & position
-			let et2_data = et2.widgetContainer.getArrayMgr("content").data;
-			let settings = et2_data && et2_data.id == portlet.id && et2_data || portlet_container.getArrayMgr("content").data.find(e => et2.uniqueId.endsWith(e.id)) || {settings: {}};
-			portlet.settings = settings.settings || {};
-			portlet.style.gridArea = settings.row + "/" + settings.col + "/ span " + (settings.height || 1) + "/ span " + (settings.width || 1);
+			// Set size & position, if somehow not set yet (Et2Portlet does it)
+			if(portlet.style.gridArea == "")
+			{
+				let et2_data = et2.widgetContainer.getArrayMgr("content").data;
+				let settings = et2_data && et2_data.id == portlet.id && et2_data || portlet_container.getArrayMgr("content").data.find(e => et2.uniqueId.endsWith(e.id)) || {settings: {}};
+				portlet.settings = settings.settings || {};
+				debugger;
+				portlet.style.gridArea = settings.row + "/" + settings.col + "/ span " + (settings.height || 1) + "/ span " + (settings.width || 1);
+			}
 
 
 			// It's in the right place for original load, but move it into portlet
@@ -457,7 +461,10 @@ export class HomeApp extends EgwApp
 	}
 
 	/**
-	 * Set up the drag / drop / re-order of portlets
+	 * Set up the positioning of portlets
+	 *
+	 * This handles portlets that may be offscreen because of wrong settings or changed screen size
+	 *
 	 */
 	_do_ordering()
 	{
@@ -466,18 +473,34 @@ export class HomeApp extends EgwApp
 			return;
 		}
 
+
+		// Check for column overflow
+		const gridStyle = getComputedStyle(this.portlet_container.getDOMNode());
+		let col_list = gridStyle.getPropertyValue("grid-template-columns").split(" ") || [];
+		const gridWidth = parseInt(gridStyle.width);
+		const maxColumn = Math.floor(gridWidth / (parseInt(col_list[0]) || 1));
+
+		// Check for column overlap
 		let col_map = {};
+		let last_row = 0;
 		this.portlet_container.getDOMNode().querySelectorAll("[style*='grid-area']").forEach((n) =>
 		{
+			let [row] = (getComputedStyle(n).gridRow || "").split(" / ");
 			let [col, span] = (getComputedStyle(n).gridColumn || "").split(" / ");
-			if(typeof col_map[col] !== "undefined")
+			if(parseInt(row) > last_row)
+			{
+				last_row = parseInt(row);
+				col_map = {};
+			}
+			// If column is already occupied, or start off screen, or width pushes right side off screen
+			if(typeof col_map[col] !== "undefined" || parseInt(col) > maxColumn || parseInt(col) + (parseInt(span) || 1) > maxColumn)
 			{
 				// Set column to auto to avoid overlap
 				n.style.gridColumn = "auto / " + span;
 			}
-			else
+			for(let i = parseInt(col); i < (parseInt(span) || 1); i++)
 			{
-				col_map[col] = true;
+				col_map[col + i] = true;
 			}
 		});
 	}
