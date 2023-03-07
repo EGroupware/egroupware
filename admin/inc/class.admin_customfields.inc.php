@@ -119,7 +119,7 @@ class admin_customfields
 			$this->fields = Api\Storage\Customfields::get($this->appname,true);
 			$this->content_types = Api\Config::get_content_types($this->appname);
 		}
-		$this->so = new Api\Storage\Base('phpgwapi','egw_customfields',null,'',true);
+		$this->so = new Api\Storage\Base('api','egw_customfields',null,'',true);
 	}
 
 	/**
@@ -156,7 +156,7 @@ class admin_customfields
 				$this->content_types = (array)Api\Link::get_registry($this->appname,'default_types');
 			}
 			// Set this now, we need to know it for updates
-			$this->content_type = $content['content_types']['types'] ? $content['content_types']['types'] : (array_key_exists(0,$this->content_types) ? $this->content_types[0] : key($this->content_types));
+			$this->content_type = $content['content_types']['types'] ?: (array_key_exists(0,$this->content_types) ? $this->content_types[0] : key($this->content_types));
 
 			// Common type changes - add, delete
 			if($content['content_types']['delete'])
