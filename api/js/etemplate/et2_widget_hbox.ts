@@ -168,8 +168,8 @@ export class et2_hbox extends et2_baseWidget
 		if (_sender != this && this.alignData.hasAlign)
 		{
 			// Check whether we've create a special container for the widget
-			let align = (_sender.implements(et2_IAligned) ?
-				_sender.get_align() : "left");
+			let align = (_sender?.implements(et2_IAligned) ?
+				_sender?.get_align() : "left");
 
 			if (align == "left" && this.leftDiv != null)
 			{
