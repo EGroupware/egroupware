@@ -167,7 +167,6 @@ export class HomeApp extends EgwApp
 				let et2_data = et2.widgetContainer.getArrayMgr("content").data;
 				let settings = et2_data && et2_data.id == portlet.id && et2_data || portlet_container.getArrayMgr("content").data.find(e => et2.uniqueId.endsWith(e.id)) || {settings: {}};
 				portlet.settings = settings.settings || {};
-				debugger;
 				portlet.style.gridArea = settings.row + "/" + settings.col + "/ span " + (settings.height || 1) + "/ span " + (settings.width || 1);
 			}
 
