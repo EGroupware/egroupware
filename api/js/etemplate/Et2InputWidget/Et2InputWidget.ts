@@ -4,6 +4,7 @@ import {css, dedupeMixin, LitElement, PropertyValues} from "@lion/core";
 import {Required} from "../Validators/Required";
 import {ManualMessage} from "../Validators/ManualMessage";
 import {LionValidationFeedback, Validator} from "@lion/form-core";
+import {et2_csvSplit} from "../et2_core_common";
 
 /**
  * This mixin will allow any LitElement to become an Et2InputWidget
@@ -96,6 +97,13 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 		{
 			return {
 				...super.properties,
+				/**
+				 * The label of the widget
+				 * Overridden from parent to use our accessors
+				 */
+				label: {
+					type: String, noAccessor: true
+				},
 				// readOnly is what the property is in Lion, readonly is the attribute
 				readOnly: {
 					type: Boolean,
@@ -347,6 +355,40 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 			return this.readonly || this.disabled ? null : this.value;
 		}
 
+		/**
+		 * Legacy support for labels with %s that get wrapped around the widget
+		 *
+		 * Not the best way go with webComponents - shouldn't modify their DOM like this
+		 *
+		 * @param new_label
+		 */
+		set label(new_label : string)
+		{
+			if(!new_label || !new_label.includes("%s"))
+			{
+				return super.label = new_label;
+			}
+			this.__label = new_label;
+			const [pre, post] = et2_csvSplit(new_label, 2, "%s");
+			this.label = pre;
+			if(post?.trim().length > 0)
+			{
+				const label = document.createElement("et2-description");
+				label.innerText = post;
+				// Put in suffix, if parent has a suffix slot
+				if(this.parentNode?.shadowRoot?.querySelector("slot[name='suffix']"))
+				{
+					label.slot = "suffix";
+				}
+
+				this.parentNode.append(label);
+			}
+		}
+
+		get label()
+		{
+			return this.__label;
+		}
 
 		isDirty()
 		{
