@@ -181,7 +181,21 @@ export class Et2Portlet extends Et2Widget(SlCard)
 	 */
 	transformAttributes(attrs)
 	{
+		// Pull out width - super will handle it wrong then remove it
+		let width
+		if(typeof attrs.width != "undefined")
+		{
+			width = attrs.width;
+			delete attrs.width;
+		}
+
 		super.transformAttributes(attrs);
+
+		// If width was provided, put it back
+		if(typeof width != "undefined")
+		{
+			attrs.width = width;
+		}
 		let data = this.getArrayMgr("content").data.find(e => e.id && e.id == this.id) || {};
 		this.settings = typeof attrs.settings == "string" ? data.value || data.settings || {} : attrs.settings;
 
