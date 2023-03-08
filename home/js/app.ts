@@ -503,7 +503,10 @@ export class HomeApp extends EgwApp
 			{
 				if(col + span > maxColumn)
 				{
-					span = Math.min(span, (maxColumn - (parseInt(Object.keys(col_map[row]).at(-1)) || col)));
+					span = Math.max(
+						1,
+						Math.min(span, (maxColumn - (parseInt(Object.keys(col_map[row]).at(-1)) || col)))
+					);
 				}
 				// Set column to auto to avoid overlap
 				n.style.gridColumn = "auto / span " + span;
