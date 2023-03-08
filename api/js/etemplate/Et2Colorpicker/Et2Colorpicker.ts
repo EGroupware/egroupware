@@ -76,9 +76,6 @@ export class Et2Colorpicker extends Et2InputWidget(SlColorPicker)
 	{
 		super.firstUpdated(_changedProperties);
 
-		// After nodes are created, override placement
-		this.dropdown.placement = "right";
-
 		// Add in clear button - parent has no accessible slots
 		render(this._clearButtonTemplate(), this._buttonNode);
 	}
