@@ -431,7 +431,7 @@ class admin_mail
 		}
 
 		$tpl = new Etemplate('admin.mailwizard.folder');
-		$tpl->exec(static::APP_CLASS.'folder', $content, $sel_options, array(), $content);
+		$tpl->exec(static::APP_CLASS.'folder', $content, $sel_options, array(), $content, 2);
 	}
 
 	/**
