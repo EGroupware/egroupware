@@ -76,7 +76,7 @@ export class Et2Textbox extends Et2InputWidget(SlInput)
 		if(changedProperties.has('validator'))
 		{
 			// Remove all existing Pattern validators (avoids duplicates)
-			this.validators = (this.validators || []).filter((validator) => validator instanceof Regex)
+			this.validators = (this.validators || []).filter((validator) => !(validator instanceof Regex))
 			this.validators.push(new Regex(this.validator));
 		}
 	}
