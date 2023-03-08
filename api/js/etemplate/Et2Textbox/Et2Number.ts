@@ -101,7 +101,7 @@ export class Et2Number extends Et2Textbox
 				val = parseFloat(val);
 			}
 		}
-		return val;
+		return val + "";
 	}
 }
 // @ts-ignore TypeScript is not recognizing that Et2Textbox is a LitElement
