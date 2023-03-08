@@ -13,10 +13,10 @@ docker-compose up -d
 ```
 ## More information
 The provided docker-compose.yml will run the following container:
-* **egroupware** running latest PHP 7.3 as FPM (see fpm subdirectory for more information)
-* **egroupware-push** runing latest PHP Swoole for websocket connections
+* **egroupware** running latest PHP 8.1 as FPM (see fpm subdirectory for more information)
+* **egroupware-push** running PHP 8.1 Swoole Alpine image for websocket connections
 * **egroupware-nginx** running Nginx as webserver (by default http only on port 8080)
-* **egroupware-db** latest MariaDB 10.4
+* **egroupware-db** latest MariaDB 10.6
 * **egroupware-watchtower** updating all above container automatically daily at 4am
 * **collabora-key** Collabora Online Office
 * **collabora-init** Collabora init container to generate the configuration once
@@ -79,7 +79,7 @@ volumes:
       device: $PWD/data/default/rocketchat/uploads
 services:
   egroupware:
-    image: egroupware/egroupware:20.1
+    image: egroupware/egroupware:latest
     # EPL image: download.egroupware.org/egroupware/epl:20.1
     # setting a default language for a new installation
     #environment:
@@ -130,7 +130,9 @@ services:
 
   # push server using phpswoole
   push:
-    image: phpswoole/swoole:latest
+    image: phpswoole/swoole:php8.1-alpine
+    command:
+      - /var/www/server.php
     volumes:
       - sources-push:/var/www
       - sessions:/var/lib/php/sessions
