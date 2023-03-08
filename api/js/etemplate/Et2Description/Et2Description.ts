@@ -250,7 +250,7 @@ export class Et2Description extends Et2Widget(LitElement) implements et2_IDetach
 
 	getDetachedAttributes(attrs)
 	{
-		attrs.push("id", "value", "class", "href");
+		attrs.push("id", "label", "value", "class", "href");
 	}
 
 	getDetachedNodes() : HTMLElement[]
