@@ -53,7 +53,7 @@ volumes:
       device: $PWD/data/default/rocketchat/uploads
 services:
   egroupware:
-    image: egroupware/egroupware:22.1
+    image: egroupware/egroupware:latest
     # EPL image: download.egroupware.org/egroupware/epl:20.1
     # setting a default language for a new installation
     #environment:
@@ -104,7 +104,11 @@ services:
 
   # push server using phpswoole
   push:
-    image: phpswoole/swoole:latest
+    image: phpswoole/swoole:php8.1-alpine
+    command:
+      - /var/www/server.php
+    environment:
+      EGW_MAX_PUSH_USERS: 1024
     volumes:
       - sources-push:/var/www
       - sessions:/var/lib/php/sessions
