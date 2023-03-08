@@ -535,7 +535,7 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 
 			validators.map(async validator =>
 			{
-				let values = this.value;
+				let values = this.getValue();
 				if(!Array.isArray(values))
 				{
 					values = [values];
