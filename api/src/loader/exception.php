@@ -127,7 +127,7 @@ function egw_exception_handler($e)
 		$message = '<h3>'.Api\Html::htmlspecialchars($headline)."</h3>\n".
 			'<pre><b>'.Api\Html::htmlspecialchars($e->getMessage().' ('.$e->getCode().')')."</b>\n\n";
 
-		echo $e->getFile().' ('.$e->getLine().")\n";
+		echo str_replace(EGW_SERVER_ROOT.'/', '', $e->getFile()).' ('.$e->getLine().")\n";
 
 		// only show trace (incl. function arguments) if explicitly enabled, eg. on a development system
 		if ($GLOBALS['egw_info']['server']['exception_show_trace'])
