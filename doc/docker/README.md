@@ -79,8 +79,8 @@ volumes:
       device: $PWD/data/default/rocketchat/uploads
 services:
   egroupware:
-    image: egroupware/egroupware:latest
-    # EPL image: download.egroupware.org/egroupware/epl:20.1
+    image: egroupware/egroupware:23.1
+    # EPL image: download.egroupware.org/egroupware/epl:23.1
     # setting a default language for a new installation
     #environment:
     #- LANG=de
