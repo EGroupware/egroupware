@@ -107,6 +107,11 @@
     -webkit-box-shadow: 0px 0px 2px 2px #666666;
     -khtml-box-shadow: 0px 0px 2px 2px #666666;
   }
+  html[data-darkmode='1'] et2-dialog::part(panel),
+  html[data-darkmode='1'] body .flatpickr-calendar.open {
+    border: 1px solid hsl(240, 5%, 64.9%);
+    box-shadow: none;
+  }
   html[data-darkmode='1'] #calendar_sidebox_header.egw_fw_ui_sidemenu_entry_header_active,
   html[data-darkmode='1'] #calendar_sidebox_header {
     border-color: #ff9dca !important;
