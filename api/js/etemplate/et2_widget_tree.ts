@@ -657,7 +657,23 @@ export class et2_tree extends et2_inputWidget
 		else
 		{
 			this.input.loadJSON(this.egw().link(this.autoloading_url, {id: _id}),
-				function(dxmlObject) {self._dhtmlxtree_json_callback(JSON.parse(dxmlObject.xmlDoc.responseText), _id);}
+				function(dxmlObject) {
+				self._dhtmlxtree_json_callback(JSON.parse(dxmlObject.xmlDoc.responseText), _id);
+
+				// refreshing root node causes binding actions fails in dhtmlx tree, we try to refresh the opened node
+				// in order to rebind the actions again.
+				if (_id == 0)
+				{
+					let openedId = self._oldValue.split("::")[0];
+					let interval = setInterval(()=> {
+						if (self.input.getOpenState(openedId))
+						{
+							clearInterval(interval);
+							self.refreshItem(openedId);
+						}
+					}, 100);
+				}
+			}
 			);
 		}
 	}
