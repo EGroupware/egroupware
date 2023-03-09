@@ -72,7 +72,7 @@ import {egwIsMobile} from "../egw_action/egw_action_common.js";
 import {Et2Dialog} from "./Et2Dialog/Et2Dialog";
 import {Et2Select} from "./Et2Select/Et2Select";
 import {loadWebComponent} from "./Et2Widget/Et2Widget";
-import {Et2AccountFilterHeader} from "./Nextmatch/Headers/AccountFilterHeader";
+import {Et2AccountFilterHeader} from "./Et2Nextmatch/Headers/AccountFilterHeader";
 import {Et2SelectCategory} from "./Et2Select/Et2SelectCategory";
 import {Et2Searchbox} from "./Et2Textbox/Et2Searchbox";
 
