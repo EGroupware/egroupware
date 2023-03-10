@@ -41,7 +41,7 @@ $asyncservice = new Api\Asyncservice();
 if (!empty($_POST['download']))
 {
 	$file = key($_POST['download']);
-	$file = $db_backup->backup_dir.'/'.basename($file);	// basename to now allow to change the dir
+	$file = $db_backup->backup_dir.'/'.basename($file);	// basename to not allow to change the dir
 
 	// FIRST: switch off zlib.output_compression, as this would limit downloads in size to memory_limit
 	ini_set('zlib.output_compression',0);
@@ -50,6 +50,7 @@ if (!empty($_POST['download']))
 
 	Api\Header\Content::type(basename($file));
 	readfile($file);
+	$db_backup->log($file, 'Downloaded');
 	exit;
 }
 $setup_tpl = new Framework\Template($tpl_root);
@@ -88,7 +89,7 @@ else
 	$run_in_egw = true;
 }
 // save backup housekeeping settings
-if ($_POST['save_backup_settings'])
+if (!empty($_POST['save_backup_settings']))
 {
 	$matches = array();
 	preg_match('/^\d*$/', $_POST['backup_mincount'], $matches);
@@ -112,7 +113,7 @@ if ($_POST['save_backup_settings'])
 		}
 	}
 }
-if ($_POST['mount'])
+if (!empty($_POST['mount']))
 {
 	Vfs::$is_root = true;
 	echo '<div align="center">'.
@@ -123,11 +124,10 @@ if ($_POST['mount'])
 	Vfs::$is_root = false;
 }
 // create a backup now
-if($_POST['backup'])
+if (!empty($_POST['backup']))
 {
 	if (is_resource($f = $db_backup->fopen_backup()))
 	{
-		echo '<p align="center">'.lang('backup started, this might take a few minutes ...')."</p>\n";
 		$starttime = microtime(true);
 		$db_backup->backup($f);
 		if(is_resource($f))
@@ -147,7 +147,9 @@ if($_POST['backup'])
 		$setup_tpl->set_var('error_msg',$f);
 	}
 }
-$setup_tpl->set_var('backup_now_button','<input type="submit" name="backup" title="'.htmlspecialchars(lang("back's up your DB now, this might take a few minutes")).'" value="'.htmlspecialchars(lang('backup now')).'" />');
+$setup_tpl->set_var('backup_now_button','<input type="submit" name="backup" title="'.
+	htmlspecialchars(lang("back's up your DB now, this might take a few minutes")).'" value="'.htmlspecialchars(lang('backup now')).
+	'" onclick="if (egw && egw.loading_prompt) egw.loading_prompt(\'db_backup\', true, \''.htmlspecialchars(lang('backup started, this might take a few minutes ...')).'\'); return true;" />');
 $setup_tpl->set_var('upload','<input type="file" name="uploaded" /> &nbsp;'.
 	'<input type="submit" name="upload" value="'.htmlspecialchars(lang('upload backup')).'" title="'.htmlspecialchars(lang("uploads a backup to the backup-dir, from where you can restore it")).'" />');
 $setup_tpl->set_var('backup_mincount','<input type="text" name="backup_mincount" value="'.$db_backup->backup_mincount.'" size="3" maxlength="3"/>');
@@ -158,22 +160,22 @@ $setup_tpl->set_var('backup_files','<input type="checkbox" name="backup_files" v
 $setup_tpl->set_var('backup_save_settings','<input type="submit" name="save_backup_settings" value="'.htmlspecialchars(lang('save')).'" />');
 $setup_tpl->set_var('backup_mount','<input type="submit" name="mount" value="'.htmlspecialchars(lang('Mount backup directory to %1','/backup')).'" />');
 
-if ($_POST['upload'] && is_array($_FILES['uploaded']) && !$_FILES['uploaded']['error'] &&
+if (!empty($_POST['upload']) && is_array($_FILES['uploaded']) && !$_FILES['uploaded']['error'] &&
 	is_uploaded_file($_FILES['uploaded']['tmp_name']))
 {
-	move_uploaded_file($_FILES['uploaded']['tmp_name'],$db_backup->backup_dir.'/'.$_FILES['uploaded']['name']);
+	move_uploaded_file($_FILES['uploaded']['tmp_name'], $filename=$db_backup->backup_dir.'/'.$_FILES['uploaded']['name']);
 
-	$md5 = ', md5='.md5_file($db_backup->backup_dir.'/'.$_FILES['uploaded']['name']);
-	$md5 .= ', sha1='.sha1_file($db_backup->backup_dir.'/'.$_FILES['uploaded']['name']);
+	$md5 = ', md5='.md5_file($filename).', sha1='.sha1_file($filename);
 
-	$setup_tpl->set_var('error_msg',lang("succesfully uploaded file %1",$_FILES['uploaded']['name'].', '.
-		sprintf('%3.1f MB (%d)',$_FILES['uploaded']['size']/(1024*1024),$_FILES['uploaded']['size']).$md5));
+	$setup_tpl->set_var('error_msg', ($msg=lang("succesfully uploaded file %1", $filename.', '.
+		sprintf('%3.1f MB (%d)',$_FILES['uploaded']['size']/(1024*1024),$_FILES['uploaded']['size']))).$md5);
+	$db_backup->log($filename, $msg);
 }
 // delete a backup
 if (!empty($_POST['delete']))
 {
-	$file = key($_POST['delete']);
-	$file = $db_backup->backup_dir.'/'.basename($file);	// basename to not allow to change the dir
+	$file = $db_backup->backup_dir.'/'.basename(key($_POST['delete']));	// basename to not allow to change the dir
+	$db_backup->log($file, lang("backup '%1' deleted", $file));
 
 	if (unlink($file)) $setup_tpl->set_var('error_msg',lang("backup '%1' deleted",$file));
 }
@@ -190,7 +192,11 @@ if (!empty($_POST['rename']))
 		$file = $db_backup->backup_dir.'/'.basename($file);	// basename to not allow to change the dir
 		$ext = preg_match('/(\.gz|\.bz2)+$/i',$file,$matches) ? $matches[1] : '';
 		$new_file = $db_backup->backup_dir.'/'.preg_replace('/(\.gz|\.bz2)+$/i','',basename($new_name)).$ext;
-		if (rename($file,$new_file)) $setup_tpl->set_var('error_msg',lang("backup '%1' renamed to '%2'",basename($file),basename($new_file)));
+		if (rename($file,$new_file))
+		{
+			$setup_tpl->set_var('error_msg',lang("backup '%1' renamed to '%2'",basename($file),basename($new_file)));
+			$db_backup->log($new_file, lang("backup '%1' renamed to '%2'",basename($file),basename($new_file)));
+		}
 	}
 }
 // restore a backup
@@ -201,7 +207,6 @@ if (!empty($_POST['restore']))
 
 	if (is_resource($f = $db_backup->fopen_backup($file,true)))
 	{
-		echo '<p align="center">'.lang('restore started, this might take a few minutes ...')."</p>\n".str_repeat(' ',4096);
 		$start = time();
 		$db_backup->restore($f, true, $file);	// allways convert to current system charset on restore
 		$setup_tpl->set_var('error_msg',lang("backup '%1' restored",$file).' ('.(time()-$start).' s)');
@@ -274,11 +279,14 @@ foreach($files as $file => $ctime)
 		'mod'		=> date('Y-m-d H:i',$ctime),
 		'size'		=> sprintf('%3.1f MB (%d)',$size/(1024*1024),$size),
 		'actions'	=> '<input type="submit" name="download['.$file.']" value="'.htmlspecialchars(lang('download')).'" />&nbsp;'."\n".
+			($file === Api\Db\Backup::LOG_FILE ? '' :
 			'<input type="submit" name="delete['.$file.']" value="'.htmlspecialchars(lang('delete')).'" onclick="return confirm(\''.
 				htmlspecialchars(lang('Confirm to delete this backup?')).'\');" />&nbsp;'."\n".
 			'<input name="new_name['.$file.']" value="" size="15" /><input type="submit" name="rename['.$file.']" value="'.htmlspecialchars(lang('rename')).'" />&nbsp;'."\n".
-			'<input type="submit" name="restore['.$file.']" value="'.htmlspecialchars(lang('restore')).'" onclick="return confirm(\''.
-				htmlspecialchars(lang('Restoring a backup will delete/replace all content in your database. Are you sure?')).'\');" />',
+			'<input type="submit" name="restore['.$file.']" value="'.htmlspecialchars(lang('restore')).'" onclick="if (confirm(\''.
+				htmlspecialchars(lang('Restoring a backup will delete/replace all content in your database. Are you sure?')).
+				'\')) { if (egw && egw.loading_prompt) egw.loading_prompt(\'db_backup\', true, \''.htmlspecialchars(lang('restore started, this might take a few minutes ...')).
+				'\'); return true; } else return false;" />'),
 	));
 	$setup_tpl->parse('set_rows','set_row',true);
 }
