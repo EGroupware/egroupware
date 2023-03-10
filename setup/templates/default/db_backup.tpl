@@ -1,7 +1,14 @@
 <!-- begin db_backup.tpl -->
 <p align="center"><font color="red">{error_msg}</font></p>
 
-<script language="JavaScript1.2">
+<script>
+
+window.setTimeout(() => {
+    if (egw && egw.loading_prompt)
+    {
+        egw.loading_prompt('db_backup', false);
+    }
+}, 500);
 
 Array.prototype.contains = function(value)
 {
@@ -74,18 +81,18 @@ function sort_table(id)
 <input name="sortedby" id="sortedby" type="hidden" />
 <table border="0" align="center" width="98%" cellpadding="5">
 <!-- BEGIN setup_header -->
-	<tr bgcolor="#486591">
+	<tr>
 		<td colspan="2">
 			&nbsp;<font color="#fefefe"><b>{stage_title}</b></font>
 		</td>
 	</tr>
-	<tr bgcolor="#e6e6e6">
+	<tr>
 		<td colspan="2">
 			{stage_desc}
 		</td>
 	</tr>
 <!-- END setup_header -->
-	<tr bgcolor="#e6e6e6">
+	<tr>
 		<td>
 			<b>{lang_scheduled_backups}</b>
 		</td>
@@ -93,7 +100,7 @@ function sort_table(id)
 			{backup_now_button}
 		</td>
 	</tr>
-	<tr bgcolor="#e6e6e6">
+	<tr>
 		<td colspan="2">
 			<table style="border: 1px solid black; border-collapse: collapse;" border="1" width="100%">
 				<tr align="center">
@@ -121,7 +128,7 @@ function sort_table(id)
 			</table>
 		</td>
 	</tr>
-	<tr bgcolor="#e6e6e6">
+	<tr>
 		<td>
 			<b>{lang_backup_sets}</b> {backup_dir}
 		</td>
@@ -129,7 +136,7 @@ function sort_table(id)
 		 {upload}
 		</td>
 	</tr>
-	<tr bgcolor="#e6e6ee">
+	<tr>
 		<td>
 			{lang_backup_cleanup}
 		</td>
@@ -137,7 +144,7 @@ function sort_table(id)
 		 {lang_backup_mincount} {backup_mincount}
 		</td>
 	</tr>
-	<tr bgcolor="#e6e6e6">
+	<tr>
 		<td>
 			 {lang_backup_files_info}
 		</td>
@@ -145,7 +152,7 @@ function sort_table(id)
 			{lang_backup_files} {backup_files}
 		</td>
 	</tr>
-	<tr bgcolor="#e6e6ee">
+	<tr>
 		<td>
 			{backup_mount}
 		</td>
@@ -153,7 +160,7 @@ function sort_table(id)
 			{backup_save_settings}
 		</td>
 	</tr>
-	<tr bgcolor="#e6e6e6">
+	<tr>
 		<td colspan="2">
 			<table id="files_table" style="border: 1px solid black; border-collapse: collapse;" border="1" width="100%">
 				<tr align="center">
