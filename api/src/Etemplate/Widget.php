@@ -207,7 +207,7 @@ class Widget
 			{
 				$type = $this->type;
 			}
-			$legacy_options = $legacy_options[$type];
+			$legacy_options = $legacy_options[$type] ?? null;
 		}
 
 		// read and set all attributes
@@ -222,14 +222,14 @@ class Widget
 					$cloned = true;	// only clone it once, otherwise we loose attributes!
 				}
 				// $reader->value is an object and therefore assigned by reference
-				// this is important to not loose content when validating dynamic generated tabs as in settings!
+				// this is important to not lose content when validating dynamic generated tabs as in settings!
 				$template->attrs[$reader->name] = $value = $reader->value;
 
 				// expand attributes values, otherwise eg. validation can not use attrs referencing to content
 				if (!empty($value) && ($value[0] === '@' || strpos($value, '$cont') !== false))
 				{
 					$value = self::expand_name($value, null, null, null, null,
-						isset(self::$cont) ? self::$cont : self::$request->content);
+						self::$cont ?? self::$request->content);
 				}
 
 				// split legacy options
