@@ -189,9 +189,9 @@ class Backup
 		if (!$name)
 		{
 			//echo '-> !$name<br>';	// !
-			if (!$this->backup_dir || !is_writable($this->backup_dir))
+			if (empty($this->backup_dir) || !is_writable($this->backup_dir))
 			{
-				//echo '   -> !$this->backup_dir || !is_writable($this->backup_dir)<br>';	// !
+				$this->log($name, $reading, null, lang("backupdir '%1' is not writeable by the webserver", $this->backup_dir));
 				return lang("backupdir '%1' is not writeable by the webserver",$this->backup_dir);
 			}
 			$name = $this->backup_dir.'/db_backup-'.date('YmdHi');
@@ -209,37 +209,40 @@ class Backup
 			if(!class_exists('ZipArchive', false))
 			{
 				$this->backup_files = false;
-				//echo '   -> (new ZipArchive) == NULL<br>';	// !
+				$this->log($name, $reading, null, lang("Cant open %1, needs ZipArchive", $name));
 				return lang("Cant open %1, needs ZipArchive", $name)."<br>\n";
 			}
-			if(!($f = fopen($name, $mode)))
+			if(!($f = fopen($path=$name, $mode)))
 			{
 				//echo '   -> !($f = fopen($name, $mode))<br>';	// !
 				$lang_mode = $reading ? lang("reading") : lang("writing");
+				$this->log($name, $reading, null, lang("Cant open '%1' for %2", $name, $lang_mode));
 				return lang("Cant open '%1' for %2", $name, $lang_mode)."<br>";
 			}
-			return $f;
 		}
-		if(class_exists('ZipArchive', false) && !$reading && $this->backup_files)
+		elseif (class_exists('ZipArchive', false) && !$reading && $this->backup_files)
 		{
 			//echo '-> (new ZipArchive) != NULL && !$reading; '.$name.'<br>';	// !
-			if(!($f = fopen($name, $mode)))
+			if (!($f = fopen($path=$name, $mode)))
 			{
-				//echo '   -> !($f = fopen($name, $mode))<br>';	// !
 				$lang_mode = $reading ? lang("reading") : lang("writing");
+				$this->log($name, $reading, null, lang("Cant open '%1' for %2", $name, $lang_mode));
 				return lang("Cant open '%1' for %2", $name, $lang_mode)."<br>";
 			}
-			return $f;
 		}
-		if(!($f = fopen("compress.bzip2://$name.bz2", $mode)) &&
-	 		!($f = fopen("compress.zlib://$name.gz",$mode)) &&
- 		 	!($f = fopen($name,$mode))
+		elseif (!($f = fopen('compress.bzip2://'.($path=$name.'.bz2'), $mode)) &&
+	 		!($f = fopen('compress.zlib://'.($path=$name.'.gz'),$mode)) &&
+ 		 	!($f = fopen($path=$name,$mode))
 		)
 		{
-			//echo '-> !($f = fopen("compress.bzip2://$name.bz2", $mode))<br>';	// !
 			$lang_mode = $reading ? lang("reading") : lang("writing");
+			$this->log($name, $reading, null, lang("Cant open '%1' for %2", $name, $lang_mode));
 			return lang("Cant open '%1' for %2", $name, $lang_mode)."<br>";
 		}
+
+		// Log start of backup/restore
+		$this->log($path, $reading, true);
+
 		return $f;
 	}
 
@@ -280,7 +283,9 @@ class Backup
 		{
 			if ($count >= $this->backup_mincount)//
 			{
+				$this->log($file, lang('Housekeeping removed'));
 				$ret = unlink($this->backup_dir.'/'.$file);
+				if (!$ret) $this->log($file, 'remove', null, "Failed to remove $file");
 				if (($ret) && (is_array($files_return)))
 				{
 					array_push($files_return, $file);
@@ -414,6 +419,7 @@ class Backup
 			$name = $dir.'/database_backup/'.basename($list[0]);
 			if(!($f = fopen($name, 'rb')))
 			{
+				$this->log($name, true, null, lang("Cant open '%1' for %2", $filename, lang("reading")));
 				return lang("Cant open '%1' for %2", $filename, lang("reading"))."<br>\n";
 			}
 		}
@@ -476,6 +482,7 @@ class Backup
 		{
 			if (!$this->db->transaction_commit())
 			{
+				$this->log($filename, true, false, lang('Restore failed'));
 				return lang('Restore failed');
 			}
 		}
@@ -496,6 +503,9 @@ class Backup
 
 		// search-and-register-hooks
 		Api\Hooks::read(true);
+
+		// log end of successful restore
+		$this->log($filename, true, false);
 
 		return '';
 	}
@@ -907,7 +917,7 @@ class Backup
 				$res = $zip->open($filename, ZipArchive::CREATE);
 				if($res !== TRUE)
 				{
-					//echo '   -> !$res<br>';	// !
+					$this->log($filename, false, null, lang("Cant open '%1' for %2", $filename, lang("writing")));
 					return lang("Cant open '%1' for %2", $filename, lang("writing"))."<br>\n";
 				}
 				$file_list = $this->get_file_list($dir);
@@ -975,11 +985,19 @@ class Backup
 		{
 			if ($this->backup_files && !$skip_files_backup)
 			{
+				$this->log($name, false, null, lang("Cant open %1, needs ZipArchive", $name));
 				echo '<center>'.lang("Cant open %1, needs ZipArchive", $name)."<br>\n".'</center>';
 			}
 
-		    fclose($f);
-		    if (file_exists($name)) unlink($name);
+			// get actual filename from stream
+			$filename_parts = explode('://', stream_get_meta_data($f)['uri'] ?? $name);
+
+			fclose($f);
+		    //if (file_exists($name)) unlink($name);
+
+			// log successful end of backup
+			$this->log(array_pop($filename_parts), false, false);
+
 			return TRUE;
 		}
 		// save files ....
@@ -1002,6 +1020,10 @@ class Backup
 		$zip->close();
 		fclose($f);
 		unlink($name);
+
+		// log successful end of backup
+		$this->log($filename, false, false);
+
 		return true;
 	}
 
@@ -1149,6 +1171,62 @@ class Backup
 		$def .= "$tabs)";
 
 		return $def;
+	}
+
+	const LOG_FILE = 'db_backup.log';
+
+	/**
+	 * Log backup and restore start- and stop-time, plus file-name, -size and sha1 hash
+	 *
+	 * @param string $file filename
+	 * @param bool|string $restore true: 'Restore', false: 'Backup', string with custom label
+	 * @param bool $start true: start of operation, false: end, null: neither
+	 * @return void
+	 */
+	public function log(string $file, $restore, bool $start=null, string $error_msg=null)
+	{
+		$msg = (is_string($restore) ? $restore : ($restore ? 'Restore' : 'Backup')).' ';
+		if (isset($start))
+		{
+			$msg .= $start ? 'started ' : 'finished ';
+		}
+		$msg .= 'at '.date('Y-m-d H:i:s e').' ';
+		if (!empty($GLOBALS['egw_setup']))
+		{
+			$msg .= 'from setup: ';
+		}
+		elseif (!empty($GLOBALS['egw_info']['user']['account_lid']))
+		{
+			$msg .= 'by user '.$GLOBALS['egw_info']['user']['account_lid'].': ';
+		}
+		$msg .= ($path = $file[0] === '/' ? $file : $this->backup_dir.'/'.$file).' ';
+		if (empty($this->backup_dir) || !file_exists($path))
+		{
+			if (empty($error_msg) && (!$start || $restore))
+			{
+				$msg .= 'NOT existing!';
+			}
+		}
+		else
+		{
+			$msg .= sprintf('%3.1f MB (%d)',filesize($path)/(1024*1024), filesize($path)).' sha1: '.sha1_file($path);
+		}
+		if (!empty($error_msg))
+		{
+			$msg .= ' ERROR: '.$error_msg;
+		}
+
+		// try opening log-file in backup-dir, or /var/lib/egroupware
+		if (!empty($this->backup_dir) && ($f = fopen($this->backup_dir.'/'.self::LOG_FILE, 'a')) ||
+			($f = fopen('/var/lib/egroupware/'.self::LOG_FILE, 'a')))
+		{
+			fwrite($f, $msg."\n".(!$start ? "\n" : ''));
+			fclose($f);
+		}
+		else
+		{
+			error_log("Could NOT open ".self::LOG_FILE.': '.$msg);
+		}
 	}
 }
 

@@ -1101,6 +1101,8 @@ class Schema
 		echo '<p>'.$msg."<br>\n".($backtrace ? 'Backtrace: '.function_backtrace(1)."</p>\n" : '');
 	}
 
+	const DEFAULT_TIMESTAMPS = ['current_date', 'current_timestamp', 'now()', 'curdate()'];
+
 	/**
 	 * Converts an eGW table-definition array into an ADOdb column-definition string
 	 *
@@ -1155,7 +1157,7 @@ class Schema
 				case 'date':
 					$ado_col = 'D';
 					// allow to use now() beside current_date, as Postgres backups contain it and it's easier to remember anyway
-					if (in_array($col_data['default'],array('current_date','now()')))
+					if (in_array(strtolower($col_data['default']), self::DEFAULT_TIMESTAMPS))
 					{
 						$ado_col .= ' DEFDATE';
 						unset($col_data['default']);
@@ -1190,7 +1192,7 @@ class Schema
 				case 'timestamp':
 					$ado_col = 'T';
 					// allow to use now() beside current_timestamp, as Postgres backups contain it and it's easier to remember anyway
-					if (in_array($col_data['default'],array('current_timestamp','now()')))
+					if (in_array(strtolower($col_data['default']) , self::DEFAULT_TIMESTAMPS))
 					{
 						$ado_col .= ' DEFTIMESTAMP';
 						unset($col_data['default']);
