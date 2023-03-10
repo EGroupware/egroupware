@@ -230,7 +230,7 @@ class home_ui
 
 		// Add in legacy HTML home bits
 		// TODO: DOM IDs still collide
-		//$this->get_legacy_portlets($portlets, $attributes);
+		$this->get_legacy_portlets($portlets, $attributes);
 
 		return $portlets;
 	}
@@ -349,7 +349,9 @@ class home_ui
 				continue;
 			}
 			$context = array(
-				'class' => 'home_legacy_portlet', 'app' => $appname,
+				'class' => 'home_legacy_portlet',
+				'app'   => $appname,
+				'type'  => 'et2-portlet',
 				'width' => 8, 'height' => 3
 			);
 			$_content = '';
