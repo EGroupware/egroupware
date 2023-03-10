@@ -671,7 +671,37 @@ app.classes.mail = AppJS.extend(
 						}
 						break;
 					case 'add':
+						const current_id = tree.getValue();
 						tree.refreshItem(0);	// refresh root
+						// ToDo: tree.refreshItem() and openItem() should return a promise
+						// need to wait tree is refreshed: current and new id are there AND current folder is selected again
+						const interval = window.setInterval(() => {
+							if (tree.getNode(_id) && tree.getNode(current_id))
+							{
+								if (!tree.getSelectedNode())
+								{
+									tree.reSelectItem(current_id);
+								}
+								else
+								{
+									window.clearInterval(interval);
+									// open new account
+									tree.openItem(_id, true);
+									// need to wait new folders are loaded AND current folder is selected again
+									const open_interval = window.setInterval(() => {
+										if (tree.getNode(_id + '::INBOX')) {
+											if (!tree.getSelectedNode()) {
+												tree.reSelectItem(current_id);
+											} else {
+												window.clearInterval(open_interval);
+												this.mail_changeFolder(_id + '::INBOX', tree, current_id);
+												tree.reSelectItem(_id + '::INBOX');
+											}
+										}
+									}, 200);
+								}
+							}
+						}, 200);
 						break;
 					default: // null
 				}
