@@ -189,7 +189,10 @@ class home_ui
 			$settings = $portlet->get_properties();
 			foreach($settings as $key => $setting)
 			{
-				if(is_array($setting) && !array_key_exists('type',$setting)) unset($settings[$key]);
+				if(is_array($setting) && !array_key_exists('type', $setting))
+				{
+					unset($settings[$key]);
+				}
 			}
 			$settings += $context;
 			foreach(home_portlet::$common_attributes as $attr)
@@ -197,6 +200,10 @@ class home_ui
 				unset($settings[$attr]);
 			}
 			$portlet_content['settings'] = $settings;
+			if(method_exists($portlet, "get_value"))
+			{
+				$portlet_content['value'] = $portlet->get_value();
+			}
 
 			// Set actions
 			// Must be after settings so actions can take settings into account

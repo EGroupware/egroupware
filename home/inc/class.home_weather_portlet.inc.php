@@ -27,7 +27,6 @@ class home_weather_portlet extends home_portlet
 {
 
 	const API_URL = "http://api.openweathermap.org/data/2.5/";
-	const ICON_URL = 'http://openweathermap.org/img/w/';
 	const API_KEY = '45484f039c5caa14d31aefe7f5514292';
 	const CACHE_TIME = 3600; // Cache weather for an hour
 
@@ -51,22 +50,15 @@ class home_weather_portlet extends home_portlet
 		$this->context = $context;
 	}
 
-	public function exec($id = null, Etemplate &$etemplate = null)
+	public function get_value()
 	{
-		// Allow to submit directly back here
-		if(is_array($id) && $id['id'])
-		{
-			$id = $id['id'];
-		}
-		$etemplate->read('home.weather');
-
-		$etemplate->set_dom_id($id);
-		$content = $this->context;
+		$id = $this->context['id'];
+		$content = array();
 		$request = array(
-			'units'	=> $this->context['units'] ? $this->context['units'] : 'metric',
-			'lang'	=> $GLOBALS['egw_info']['user']['preferences']['common']['lang'],
+			'units' => $this->context['units'] ?: 'metric',
+			'lang'  => $GLOBALS['egw_info']['user']['preferences']['common']['lang'],
 			// Always get (& cache) 10 days, we'll cut down later
-			'cnt'	=> 10
+			'cnt'   => 10
 		);
 		if($this->context['city_id'])
 		{
@@ -78,9 +70,9 @@ class home_weather_portlet extends home_portlet
 			$request['q'] = $this->context['city'];
 			$content += $this->get_weather($request);
 		}
-		elseif ($this->context['position'])
+		elseif($this->context['position'])
 		{
-			list($request['lat'],$request['lon']) = explode(',',$this->context['position']);
+			list($request['lat'], $request['lon']) = explode(',', $this->context['position']);
 			$content += $this->get_weather($request);
 		}
 
@@ -94,34 +86,25 @@ class home_weather_portlet extends home_portlet
 			// Save updated Api\Preferences
 			$portlets[$id]['city_id'] = $content['city_id'];
 			$this->context['city'] = $portlets[$id]['city'] = $content['settings']['city'] =
-				$content['settings']['title'] = $content['city'] = is_array($content['city']) ? $content['city']['name'] : $content['city'];
+			$content['settings']['title'] = $content['city'] = is_array($content['city']) ? $content['city']['name'] : $content['city'];
 			unset($portlets[$id]['position']);
 			$GLOBALS['egw']->preferences->add('home', $id, $portlets[$id]);
 			$GLOBALS['egw']->preferences->save_repository(True);
 		}
 
-		// Adjust data to match portlet size
-		if($this->context['height'] <= 2 && $this->context['width'] <= 3)
-		{
-			// Too small for the other days
-			unset($content['list']);
-		}
-		else if ($this->context['height'] == 2 && $this->context['width'] > 3)
-		{
-			// Wider, but not taller
-			unset($content['current']);
-		}
-		// Even too small for current high/low
-		if($this->context['width'] < 3)
-		{
-			$content['current']['no_current_temp'] = true;
-		}
-
-
 		// Direct to full forecast page
-		$content['attribution'] ='http://openweathermap.org/city/'.$content['city_id'];
+		$content['attribution'] = 'http://openweathermap.org/city/' . $content['city_id'];
 
-		$etemplate->exec('home.home_weather_portlet.exec',$content,array(),array('__ALL__'=>true),array('id' =>$id));
+		return [
+			'color'   => $this->context['color'],
+			'city'    => $this->context['city'],
+			'display' => $this->context['display'],
+			'weather' => $content
+		];
+	}
+
+	public function exec($id = null, Etemplate &$etemplate = null)
+	{
 	}
 
 	/**
@@ -188,10 +171,10 @@ class home_weather_portlet extends home_portlet
 		{
 			$massage =& $data['list'];
 
-			for($i = 0; $i <  min(count($massage), $this->context['width']); $i++)
+			for($i = 0; $i < count($data['list']); $i++)
 			{
 				$forecast =& $massage[$i];
-				$forecast['day'] = Api\DateTime::to($forecast['dt'],'l');
+				$forecast['day'] = Api\DateTime::to($forecast['dt'], 'l');
 				self::format_forecast($forecast);
 			}
 			// Chop data to fit into portlet
@@ -223,29 +206,49 @@ class home_weather_portlet extends home_portlet
 		$weather =& $data['weather'] ? $data['weather'] : $data;
 		$temp =& $data['temp'] ? $data['temp'] : $data;
 
-		// Full URL for icon
+		// Find icon
 		if(is_array($weather))
 		{
 			foreach($weather as &$w)
 			{
-				$w['icon'] = static::ICON_URL . $w['icon'].'.png';
+				$w['icon'] = static::get_icon($w);
 			}
 		}
 
 		// Round
-		foreach(array('temp','temp_min','temp_max','min','max') as $temp_name)
+		foreach(array('temp', 'temp_min', 'temp_max', 'min', 'max') as $temp_name)
 		{
 			if(array_key_exists($temp_name, $temp))
 			{
-				$temp[$temp_name] = ''.round($temp[$temp_name]);
+				$temp[$temp_name] = '' . round($temp[$temp_name]);
 			}
 		}
 	}
 
+	/**
+	 * Get an icon to represent the forecast
+	 *
+	 * We use icon names from shoelace
+	 * @param $weather
+	 * @return string
+	 */
+	protected static function get_icon(&$weather)
+	{
+		$icon = "question-lg";
+		switch(strtolower($weather['main']))
+		{
+			case 'clear' :
+				$icon = 'sun';
+				break;
+			default:
+				$icon = strtolower($weather['main']);
+		}
+		return $icon;
+	}
+
 	public function get_actions()
 	{
-		$actions = array(
-		);
+		$actions = array();
 		return $actions;
 	}
 
@@ -270,9 +273,9 @@ class home_weather_portlet extends home_portlet
 		$properties = parent::get_properties();
 
 		$properties[] = array(
-			'name'	=>	'city',
-			'type'	=>	'textbox',
-			'label'	=>	lang('Location'),
+			'name'  => 'city',
+			'type'  => 'textbox',
+			'label' => lang('Location'),
 		);
 		return $properties;
 	}
@@ -280,9 +283,14 @@ class home_weather_portlet extends home_portlet
 	public function get_description()
 	{
 		return array(
-			'displayName'=> lang('Weather'),
-			'title'=>	$this->context['city'],
-			'description'=>	lang('Weather')
+			'displayName' => lang('Weather'),
+			'title'       => $this->context['city'],
+			'description' => lang('Weather')
 		);
+	}
+
+	public function get_type()
+	{
+		return 'et2-portlet-weather';
 	}
 }
