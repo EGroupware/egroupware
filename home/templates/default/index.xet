@@ -8,7 +8,7 @@
 		</et2-vbox>
 	</template>
 	<template id="home.index" template="" lang="" group="0" version="1.9.001">
-
+        <html id="mainscreen_message"></html>
         <old-box id="portlets">
             <!-- Box wrapper needed to get box to auto-repeat -->
             <et2-portlet type="${row_cont[type]}" id="${row_cont[id]}" title="$row_cont[title]" color="$row_cont[color]"
