@@ -22,6 +22,7 @@ import {Et2Dialog} from "../Et2Dialog/Et2Dialog";
 import {et2_IResizeable} from "../et2_core_interfaces";
 import {HomeApp} from "../../../../home/js/app";
 import {etemplate2} from "../etemplate2";
+import {SelectOption} from "../Et2Select/FindSelectOptions";
 
 /**
  * Participate in Home
@@ -379,6 +380,17 @@ export class Et2Portlet extends Et2Widget(SlCard)
 
 
 	/**
+	 * Get a list of user-configurable properties
+	 * @returns {[{name : string, type : string, select_options? : [SelectOption]}]}
+	 */
+	get portletProperties() : { name : string, type : string, label : string, select_options? : SelectOption[] }[]
+	{
+		return [
+			{name: 'color', label: "Color", type: 'et2-colorpicker'}
+		];
+	}
+
+	/**
 	 * Create & show a dialog for customizing this portlet
 	 *
 	 * Properties for customization are sent in the 'settings' attribute
@@ -390,7 +402,7 @@ export class Et2Portlet extends Et2Widget(SlCard)
 			callback: this._process_edit.bind(this),
 			template: this.editTemplate,
 			value: {
-				content: this.settings
+				content: {...this.settings, ...this.portletProperties}
 			},
 			buttons: [
 				{
@@ -441,6 +453,7 @@ export class Et2Portlet extends Et2Widget(SlCard)
 		{
 			this.settings = {...this.settings, value};
 		}
+		this.requestUpdate();
 	}
 
 	public update_settings(settings)

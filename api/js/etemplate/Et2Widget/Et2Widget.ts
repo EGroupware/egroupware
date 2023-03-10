@@ -11,6 +11,8 @@ import {ClassWithAttributes, ClassWithInterfaces} from "../et2_core_inheritance"
 import {css, dedupeMixin, LitElement, PropertyValues, unsafeCSS} from "@lion/core";
 import type {et2_container} from "../et2_core_baseWidget";
 import type {et2_DOMWidget} from "../et2_core_DOMWidget";
+import {egw_getActionManager, egw_getAppObjectManager} from "../../egw_action/egw_action.js";
+import {EGW_AI_DRAG_OUT, EGW_AI_DRAG_OVER} from "../../egw_action/egw_action_constants";
 
 /**
  * This mixin will allow any LitElement to become an Et2Widget
@@ -84,6 +86,11 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 		 */
 		protected _deferred_properties : { [key : string] : string } = {};
 
+		/**
+		 * EGroupware action system action manager
+		 */
+		private _actionManager : egwAction;
+
 
 		/** WebComponent **/
 		static get styles()
@@ -91,18 +98,20 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 			return [
 				...(super.styles ? (Array.isArray(super.styles) ? super.styles : [super.styles]) : []),
 				css`
-				:host([disabled]) {
+				  :host([disabled]) {
 					display: none;
-				}
-				
-				/* CSS to align internal inputs according to box alignment */
-				:host([align="center"]) .input-group__input {
+				  }
+
+				  /* CSS to align internal inputs according to box alignment */
+
+				  :host([align="center"]) .input-group__input {
 					justify-content: center;
-				}
-				:host([align="right"]) .input-group__input {
+				  }
+
+				  :host([align="right"]) .input-group__input {
 					justify-content: flex-end;
-				}
-            `];
+				  }
+				`];
 		}
 
 		static get properties()
@@ -192,6 +201,9 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 				data: {
 					type: String,
 					reflect: false
+				},
+				actions: {
+					type: Object
 				}
 			};
 		}
@@ -1331,6 +1343,124 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 			// If we're the root object, return the phpgwapi API instance
 			return typeof egw === "function" ? egw('phpgwapi', wnd) : (window['egw'] ? window['egw'] : null);
 		}
+
+		/**
+		 * Set Actions on the widget
+		 *
+		 * Each action is defined as an object:
+		 *
+		 * move: {
+		 *      type: "drop",
+		 *      acceptedTypes: "mail",
+		 *      icon:   "move",
+		 *      caption:	"Move to"
+		 *      onExecute:      javascript:app.mail.drop_move"
+		 * }
+		 *
+		 * This will turn the widget into a drop target for "mail" drag types.  When "mail" drag types are dropped,
+		 * the function drop_move(egwAction action, egwActionObject sender) will be called.  The ID of the
+		 * dragged "mail" will be in sender.id, some information about the sender will be in sender.context.  The
+		 * widget involved can typically be found in action.parent.data.widget, so your handler
+		 * can operate in the widget context easily.  The location varies depending on your action though.  It
+		 * might be action.parent.parent.data.widget
+		 *
+		 * To customise how the actions are handled for a particular widget, override _link_actions().  It handles
+		 * the more widget-specific parts.
+		 *
+		 * @param {object} actions {ID: {attributes..}+} map of egw action information
+		 */
+		set actions(actions : egwAction[])
+		{
+			if(this.id == "" || typeof this.id == "undefined")
+			{
+				return;
+			}
+			// Initialize the action manager and add some actions to it
+			// Only look 1 level deep
+			let gam = egw_getActionManager(this.egw().app_name(), true, 1);
+			if(typeof this._actionManager != "object" && actions.length > 0)
+			{
+				if(gam.getActionById(this.getInstanceManager().uniqueId, 1) !== null)
+				{
+					gam = gam.getActionById(this.getInstanceManager().uniqueId, 1);
+				}
+				if(gam.getActionById(this.id, 1) != null)
+				{
+					this._actionManager = gam.getActionById(this.id, 1);
+				}
+				else
+				{
+					this._actionManager = gam.addAction("actionManager", this.id);
+				}
+			}
+			this._actionManager.updateActions(actions, this.egw().appName);
+			//if (this.options.default_execute) this._actionManager.setDefaultExecute(this.options.default_execute);
+
+			// Put a reference to the widget into the action stuff, so we can
+			// easily get back to widget context from the action handler
+			this._actionManager.data = {widget: this};
+
+			// Link the actions to the DOM
+			this._link_actions(actions);
+		}
+
+		get actions()
+		{
+			return this._actionManager?.children || []
+		}
+
+		/**
+		 * Link the EGroupware actions to the DOM nodes / widget bits.
+		 *
+		 * @param {object} actions {ID: {attributes..}+} map of egw action information
+		 */
+		protected _link_actions(actions)
+		{
+			// Get the top level element for the tree
+			const objectManager = egw_getAppObjectManager(true);
+			let widget_object = objectManager.getObjectById(this.id);
+
+			if(widget_object == null)
+			{
+				// Add a new container to the object manager which will hold the widget
+				// objects
+				widget_object = objectManager.insertObject(false, new egwActionObject(
+					this.id, objectManager, (new Et2ActionObjectForWidget(this)).getAOI(),
+					this._actionManager || objectManager.manager.getActionById(this.id) || objectManager.manager
+				));
+			}
+			else
+			{
+				widget_object.setAOI((new Et2ActionObjectForWidget(this, this.getDOMNode())).getAOI());
+			}
+
+			// Delete all old objects
+			widget_object.clear();
+			widget_object.unregisterActions();
+
+			// Go over the widget & add links - this is where we decide which actions are
+			// 'allowed' for this widget at this time
+			widget_object.updateActionLinks(this._get_action_links(actions));
+		}
+
+		/**
+		 * Get all action-links / id's of 1.-level actions from a given action object
+		 *
+		 * This can be overwritten to not allow all actions, by not returning them here.
+		 *
+		 * @param actions
+		 * @returns {Array}
+		 */
+		_get_action_links(actions)
+		{
+			const action_links = [];
+			for(let i in actions)
+			{
+				let action = actions[i];
+				action_links.push(typeof action.id != 'undefined' ? action.id : i);
+			}
+			return action_links;
+		}
 	}
 
 	// Add some more stuff in
@@ -1625,5 +1755,63 @@ export function cssImage(image_name : string, app_name? : string)
 	else
 	{
 		return css``;
+	}
+}
+
+/**
+ * The egw_action system requires an egwActionObjectInterface Interface implementation
+ * to tie actions to DOM nodes.  This one can be used by any widget.
+ *
+ *
+ * @param {et2_DOMWidget} widget
+ * @param {Object} node
+ *
+ */
+export class Et2ActionObjectForWidget
+{
+	aoi : egwActionObjectInterface;
+
+	constructor(_widget : LitElement, _node? : HTMLElement)
+	{
+		const widget = _widget;
+		const objectNode = _node;
+		this.aoi = new egwActionObjectInterface();
+		this.aoi['getWidget'] = function()
+		{
+			return widget;
+		};
+		this.aoi.doGetDOMNode = function()
+		{
+			return widget
+		};
+
+// _outerCall may be used to determine, whether the state change has been
+// evoked from the outside and the stateChangeCallback has to be called
+// or not.
+		this.aoi.doSetState = function(_state, _outerCall)
+		{
+		};
+
+// The doTiggerEvent function may be overritten by the aoi if it wants to
+// support certain action implementation specific events like EGW_AI_DRAG_OVER
+// or EGW_AI_DRAG_OUT
+		this.aoi.doTriggerEvent = function(_event, _data)
+		{
+			switch(_event)
+			{
+				case EGW_AI_DRAG_OVER:
+					this.widget.classList.add("ui-state-active");
+					break;
+				case EGW_AI_DRAG_OUT:
+					this.widget.classList.remove("ui-state-active");
+					break;
+			}
+			return true;
+		};
+	}
+
+	getAOI()
+	{
+		return this.aoi;
 	}
 }
