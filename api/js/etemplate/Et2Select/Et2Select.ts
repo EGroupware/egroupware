@@ -9,7 +9,7 @@
 
 
 import {css, html, PropertyValues, TemplateResult} from "@lion/core";
-import {Et2StaticSelectMixin, StaticOptions} from "./StaticOptions";
+import {Et2StaticSelectMixin, StaticOptions as so} from "./StaticOptions";
 import {Et2widgetWithSelectMixin} from "./Et2WidgetWithSelectMixin";
 import {SelectOption} from "./FindSelectOptions";
 import {SlMenuItem, SlSelect} from "@shoelace-style/shoelace";
@@ -725,12 +725,6 @@ if(typeof customElements.get("lion-validation-feedback") === "undefined")
 {
 	customElements.define("lion-validation-feedback", LionValidationFeedback);
 }
-/**
- * Use a single StaticOptions, since it should have no state
- * @type {StaticOptions}
- */
-const so = new StaticOptions();
-
 
 export class Et2SelectApp extends Et2StaticSelectMixin(Et2Select)
 {
