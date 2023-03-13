@@ -11,8 +11,7 @@
 
 import {css} from "@lion/core";
 import {Et2Date} from "./Et2Date";
-import type {Instance} from "flatpickr/dist/types/instance";
-import {default as ShortcutButtonsPlugin} from "shortcut-buttons-flatpickr/dist/shortcut-buttons-flatpickr";
+import {Instance} from "flatpickr/dist/types/instance";
 
 
 export class Et2DateTime extends Et2Date
@@ -116,6 +115,7 @@ export class Et2DateTime extends Et2Date
 	 */
 	protected _buttonPlugin()
 	{
+		// @ts-ignore TypeScript can't find ShortcutButtonsPlugin, but rollup does
 		return ShortcutButtonsPlugin({
 			button: [
 				{label: this.egw().lang("ok")},

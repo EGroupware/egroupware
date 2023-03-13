@@ -12,12 +12,12 @@
 import {css, html} from "@lion/core";
 import 'lit-flatpickr';
 import {dateStyles} from "./DateStyles";
-import type {Instance} from 'flatpickr/dist/types/instance';
-import {default as scrollPlugin} from "flatpickr/dist/plugins/scrollPlugin.js";
-import {default as ShortcutButtonsPlugin} from "shortcut-buttons-flatpickr/dist/shortcut-buttons-flatpickr";
+import {Instance} from 'flatpickr/dist/types/instance';
+import "flatpickr/dist/plugins/scrollPlugin.js";
+import "shortcut-buttons-flatpickr/dist/shortcut-buttons-flatpickr";
 import flatpickr from "flatpickr";
 import {egw} from "../../jsapi/egw_global";
-import type {HTMLElementWithValue} from "@lion/form-core/types/FormControlMixinTypes";
+import {HTMLElementWithValue} from "@lion/form-core/types/FormControlMixinTypes";
 import {Et2Textbox} from "../Et2Textbox/Et2Textbox";
 import {Et2ButtonIcon} from "../Et2Button/Et2ButtonIcon";
 import {FormControlMixin} from "@lion/form-core";
