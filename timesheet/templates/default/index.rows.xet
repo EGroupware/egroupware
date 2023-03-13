@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
+<overlay>
+    <template id="timesheet.index.rows" template="" lang="" group="0" version="1.9.001">
+        <grid width="100%">
+            <columns>
+                <column width="135"/>
+                <column width="70%"/>
+                <column width="15%"/>
+                <column width="60"/>
+                <column width="60" disabled="@no_ts_quantity"/>
+                <column width="60" disabled="@no_ts_unitprice"/>
+                <column width="60" disabled="@no_ts_total"/>
+                <column width="130" disabled="@no_owner_col"/>
+                <column width="135"/>
+                <column width="50"/>
+                <column width="10%" disabled="@no_ts_status"/>
+                <column width="15%"/>
+                <column width="120"/>
+            </columns>
+            <rows>
+                <row class="th">
+                    <nextmatch-sortheader label="Date" id="ts_start"/>
+                    <grid spacing="0" padding="0">
+                        <columns>
+                            <column/>
+                        </columns>
+                        <rows>
+                            <row disabled="@pm_integration=full">
+                                <et2-nextmatch-header-filter id="ts_project" search="false" noLang="1"
+                                                             emptyLabel="All projects"/>
+                            </row>
+                            <row disabled="!@pm_integration=full">
+                                <et2-nextmatch-header-entry id="pm_id" noLang="1" placeholder="All projects"
+                                                            onlyApp="projectmanager"/>
+                            </row>
+                            <row>
+                                <nextmatch-customfilter id="linked" options="link-entry"/>
+                            </row>
+                            <row>
+                                <nextmatch-sortheader label="Title" id="ts_title"/>
+                            </row>
+                        </rows>
+                    </grid>
+                    <nextmatch-sortheader label="Category" id="cat_id"/>
+                    <et2-vbox>
+                        <nextmatch-sortheader label="Duration" id="ts_duration"/>
+                        <et2-date-duration id="duration" readonly="true"></et2-date-duration>
+                    </et2-vbox>
+                    <et2-vbox>
+                        <nextmatch-sortheader label="Quantity" id="ts_quantity"/>
+                        <et2-number id="quantity" readonly="true" precision="3"></et2-number>
+                    </et2-vbox>
+                    <nextmatch-sortheader label="Price" id="ts_unitprice"/>
+                    <et2-vbox>
+                        <nextmatch-sortheader label="Total" id="ts_total"/>
+                        <et2-number id="price" readonly="true" precision="2"></et2-number>
+                    </et2-vbox>
+                    <et2-nextmatch-header-filter id="ts_owner" class="$cont[ownerClass]" noLang="1" emptyLabel="User"/>
+                    <nextmatch-sortheader label="Created" id="ts_created"/>
+                    <nextmatch-sortheader label="ID" id="ts_id"/>
+                    <et2-nextmatch-header-filter id="ts_status" emptyLabel="Status"/>
+                    <nextmatch-customfields id="customfields"/>
+                    <nextmatch-header label="Kanban" id="kanban"/>
+                </row>
+                <row class="$row_cont[cat_id] $row_cont[class]">
+                    <et2-date-time id="${row}[ts_start]" readonly="true"></et2-date-time>
+                    <et2-vbox>
+                        <et2-link id="${row}[ts_link]" app="" noLang="1"></et2-link>
+                        <et2-description id="${row}[ts_title]" class="ts_title $row_cont[titleClass]"
+                                         noLang="1"></et2-description>
+                        <et2-description id="${row}[ts_description]" class="ts_description"
+                                         noLang="1"></et2-description>
+                    </et2-vbox>
+                    <et2-select-cat class="noWrap" id="${row}[cat_id]" readonly="true"></et2-select-cat>
+                    <et2-date-duration id="${row}[ts_duration]" readonly="true" align="right" displayFormat="hm"
+                                       selectUnit="false"></et2-date-duration>
+                    <et2-number id="${row}[ts_quantity]" readonly="true" precision="3" noLang="1"></et2-number>
+                    <et2-description id="${row}[ts_unitprice]" noLang="1"></et2-description>
+                    <et2-number id="${row}[ts_total]" readonly="true" precision="2" noLang="1"></et2-number>
+                    <et2-select-account class="$cont[ownerClass]" id="${row}[ts_owner]"
+                                        readonly="true"></et2-select-account>
+                    <et2-date-time id="${row}[ts_created]" readonly="true"></et2-date-time>
+                    <et2-description id="${row}[ts_id]"></et2-description>
+                    <et2-select id="${row}[ts_status]" readonly="true"></et2-select>
+                    <customfields-list id="$row" readonly="true"/>
+                    <et2-link-string entryId="${row_cont[ts_id]}" application="timesheet"
+                                     onlyApp="kanban"></et2-link-string>
+                </row>
+            </rows>
+        </grid>
+    </template>
+</overlay>
