@@ -1047,8 +1047,9 @@ app.classes.mail = AppJS.extend(
 	 */
 	mail_disablePreviewArea: function(_value) {
 		var splitter = this.et2.getWidgetById('mailSplitter');
+		var previewPane = this.egw.preference('previewPane', 'mail');
 		// return if there's no splitter we maybe in mobile mode
-		if (typeof splitter == 'undefined' || splitter == null) return;
+		if (typeof splitter == 'undefined' || splitter == null || previewPane == 'vertical') return;
 		let dock = function(){
 			splitter.style.setProperty('--max','100%');
 			splitter.dock();
