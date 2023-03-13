@@ -136,7 +136,7 @@ class home_weather_portlet extends home_portlet
 			$current = file_get_contents($url);
 			if($debug) error_log(__METHOD__ . ' current: ' . $current);
 
-			return array_merge(array('current' => json_decode($current,true)), json_decode($forecast,true));
+			return array_merge(array('current' => json_decode($current, true)), (array)json_decode($forecast, true));
 		}, array($query), self::CACHE_TIME);
 
 		// Some sample data, if you need to test
