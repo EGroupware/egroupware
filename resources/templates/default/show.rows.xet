@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id="resources.show.rows" template="" lang="" group="0" version="1.9.003">
-		<grid width="100%">
-			<columns>
-				<column width="70"/>
-				<column width="50%"/>
-				<column width="50"/>
-				<column width="15%"/>
-				<column width="15%"/>
-				<column width="15%"/>
-				<column width="15%" disabled="@no_customfields"/>
-			</columns>
+	<template id="resources.show.rows" lang="" group="0" version="1.9.003">
+        <grid width="100%">
+            <columns>
+                <column width="70"/>
+                <column width="50%"/>
+                <column width="50"/>
+                <column width="15%"/>
+                <column width="15%"/>
+                <column width="15%"/>
+                <column width="15%" disabled="@no_customfields"/>
+            </columns>
 			<rows>
 				<row class="th">
 					<nextmatch-sortheader label="Image" id="image"/>
