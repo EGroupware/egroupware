@@ -28,24 +28,24 @@ class resources_favorite_portlet extends home_favorite_portlet
 		$context['appname'] = 'resources';
 
 		// Let parent handle the basic stuff
-		parent::__construct($context,$need_reload);
+		parent::__construct($context, $need_reload);
 
 		$this->context['template'] = 'resources.show.rows';
-		$this->nm_settings += array(
-			'get_rows'	=> 'resources.resources_bo.get_rows',
+		$this->nm_settings = array_merge($this->nm_settings, array(
+			'get_rows'     => 'resources.resources_bo.get_rows',
 			// Use a different template so it can be accessed from client side
-			'template'	=> 'resources.show.rows',
+			'template'     => 'resources.show.rows',
 			// Don't store in session, there's no point
-			'store_state'    => false,
+			'store_state'  => false,
 			// Use a reduced column set for home, user can change if needed
-			'default_cols'   => 'image,name_short_description,useable_quantity',
-			'row_id'         => 'res_id',
-			'row_modified'   => 'ts_modified',
+			'default_cols' => 'image,name_short_description,useable_quantity',
+			'row_id'       => 'res_id',
+			'row_modified' => 'ts_modified',
 
-			'no_cat'         => true,
-			'filter_label'   => lang('Category'),
-			'filter2'        => -1,
-		);
+			'no_cat'       => true,
+			'filter_label' => lang('Category'),
+			'filter2'      => -1,
+		));
 	}
 
 	public function exec($id = null, Etemplate &$etemplate = null)

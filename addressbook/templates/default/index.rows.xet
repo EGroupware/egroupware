@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
+<overlay>
+    <!-- Separate file so home can find it -->
+    <template id="addressbook.index.rows" template="" lang="" group="0" version="1.9.005">
+        <grid width="100%">
+            <columns>
+                <column width="20"/>
+                <column width="40%" minWidth="150"/>
+                <column width="70"/>
+                <column width="100"/>
+                <column width="60"/>
+                <column width="80"/>
+                <column width="180"/>
+                <column width="180"/>
+                <column width="180"/>
+                <column width="180"/>
+                <column width="40"/>
+                <column width="80" disabled="@no_customfields"/>
+                <column width="120"/>
+                <column width="60%" minWidth="100"/>
+                <column width="80" disabled="@no_distribution_list"/>
+                <column width="80"/>
+                <column width="50"/>
+                <column width="80" disabled="@no_event_column"/>
+                <column width="120"/>
+            </columns>
+            <rows>
+                <row class="th">
+                    <nextmatch-header label="Type" id="type"/>
+                    <grid spacing="0" padding="0">
+                        <columns>
+                            <column/>
+                            <column/>
+                        </columns>
+                        <rows>
+                            <row disabled="!@order=n_fileas">
+                                <nextmatch-sortheader label="own sorting" id="n_fileas" span="all"/>
+                            </row>
+                            <row disabled="!@order=n_given">
+                                <nextmatch-sortheader label="Firstname" id="n_given"/>
+                                <nextmatch-sortheader label="Name" id="n_family"/>
+                            </row>
+                            <row disabled="!@order=n_family">
+                                <nextmatch-sortheader label="Name" id="n_family"/>
+                                <nextmatch-sortheader label="Firstname" id="n_given"/>
+                            </row>
+                            <row>
+                                <nextmatch-sortheader label="Organisation" id="org_name" span="all"/>
+                            </row>
+                            <row disabled="!@order=/^(org_name|n_fileas|adr_one_postalcode|contact_modified|contact_created|#)/">
+                                <nextmatch-sortheader label="Name" id="n_family"/>
+                                <nextmatch-sortheader label="Firstname" id="n_given" class="leftPad5"/>
+                            </row>
+                            <row disabled="@order=n_fileas">
+                                <nextmatch-sortheader label="own sorting" id="n_fileas" span="all"/>
+                            </row>
+                        </rows>
+                    </grid>
+                    <nextmatch-header label="role" id="role"/>
+                    <nextmatch-header label="Category" id="cat_id"/>
+                    <nextmatch-header label="Photo" id="photo"/>
+                    <nextmatch-header label="Birthday" id="bday"/>
+                    <et2-vbox>
+                        <nextmatch-header label="Business address" id="business"/>
+                        <et2-nextmatch-header-custom id="adr_one_countrycode" class="countrySelect"
+                                                     widgetType="select-country" emptyLabel="Country"/>
+                        <nextmatch-sortheader label="zip code" id="adr_one_postalcode"/>
+                    </et2-vbox>
+                    <et2-vbox>
+                        <nextmatch-header label="Home address" id="home"/>
+                        <et2-nextmatch-header-custom id="adr_two_countrycode" class="countrySelect"
+                                                     widgetType="select-country" emptyLabel="Country"/>
+                        <nextmatch-sortheader label="zip code" id="adr_two_postalcode"/>
+                    </et2-vbox>
+                    <et2-vbox>
+                        <nextmatch-header label="Business phone" id="tel_work"/>
+                        <nextmatch-header label="Mobile phone" id="tel_cell"/>
+                        <nextmatch-header label="Home phone" id="tel_home"/>
+                        <et2-description value="Fax"></et2-description>
+                    </et2-vbox>
+                    <et2-vbox>
+                        <nextmatch-header label="Url" id="url"/>
+                        <nextmatch-header label="Business email" id="email"/>
+                        <nextmatch-header label="Home email" id="email_home"/>
+                    </et2-vbox>
+                    <nextmatch-header label="Room" id="room"/>
+                    <nextmatch-customfields id="customfields"/>
+                    <nextmatch-header label="Kanban" id="kanban"/>
+                    <nextmatch-header label="Note" id="note"/>
+                    <nextmatch-header label="Distribution lists" id="distribution_list"/>
+                    <et2-vbox>
+                        <nextmatch-header label="Addressbook" id="owner"/>
+                        <et2-nextmatch-header-account id="shared_with" emptyLabel="Shared with" accountType="both"/>
+                    </et2-vbox>
+                    <nextmatch-sortheader label="ID" id="contact_id"/>
+                    <et2-vbox>
+                        <nextmatch-header label="Last date" id="calendar"/>
+                        <nextmatch-header label="Next date" id="calendar"/>
+                    </et2-vbox>
+                    <et2-vbox>
+                        <nextmatch-sortheader label="Created" id="contact_created" sortmode="DESC"/>
+                        <nextmatch-sortheader label="Last modified" id="contact_modified" sortmode="DESC"/>
+                    </et2-vbox>
+                </row>
+                <row class="$row_cont[class] $row_cont[cat_id]" valign="top">
+                    <et2-image align="center" label="$row_cont[type_label]" src="$row_cont[type]" noLang="1"/>
+                    <et2-vbox id="${row}[id]">
+                        <et2-description id="${row}[line1]" noLang="1"></et2-description>
+                        <et2-description id="${row}[line2]" noLang="1"></et2-description>
+                        <et2-description id="${row}[org_unit]" noLang="1"></et2-description>
+                        <et2-description id="${row}[title]" noLang="1"></et2-description>
+                        <et2-description id="${row}[first_org]" noLang="1"></et2-description>
+                    </et2-vbox>
+                    <et2-description id="${row}[role]"></et2-description>
+                    <et2-select-cat id="${row}[cat_id]" readonly="true" rows="2" multiple="1"></et2-select-cat>
+                    <et2-lavatar src="$row_cont[photo]" contactId="$row_cont[id]" lname="$row_cont[n_family]"
+                                 fname="$row_cont[n_given]"></et2-lavatar>
+                    <et2-date id="${row}[bday]" readonly="true" dataFormat="Y-m-d"></et2-date>
+                    <et2-vbox>
+                        <et2-description id="${row}[adr_one_street]" noLang="1"></et2-description>
+                        <et2-description id="${row}[adr_one_street2]" noLang="1"></et2-description>
+                        <et2-hbox>
+                            <et2-description id="${row}[adr_one_postalcode]" noLang="1"></et2-description>
+                            <et2-description value=" " id="${row}[adr_one_locality]" class="leftPad5"
+                                             noLang="1"></et2-description>
+                            <et2-description id="${row}[adr_one_region]" class="leftPad5" noLang="1"></et2-description>
+                        </et2-hbox>
+                        <et2-description id="${row}[adr_one_countryname]" noLang="1"></et2-description>
+                        <et2-select-country id="${row}[adr_one_countrycode]" readonly="true"></et2-select-country>
+                    </et2-vbox>
+                    <et2-vbox>
+                        <et2-description id="${row}[adr_two_street]" noLang="1"></et2-description>
+                        <et2-description id="${row}[adr_two_street2]" noLang="1"></et2-description>
+                        <et2-hbox>
+                            <et2-description id="${row}[adr_two_postalcode]" noLang="1"></et2-description>
+                            <et2-description value=" " id="${row}[adr_two_locality]" class="leftPad5"
+                                             noLang="1"></et2-description>
+                            <et2-description id="${row}[adr_two_region]" class="leftPad5" noLang="1"></et2-description>
+                        </et2-hbox>
+                        <et2-description id="${row}[adr_two_countryname]" noLang="1"></et2-description>
+                        <et2-select-country id="${row}[adr_two_countrycode]" readonly="true"></et2-select-country>
+                    </et2-vbox>
+                    <et2-vbox>
+                        <et2-url-phone id="${row}[tel_work]" readonly="true" class="telNumbers"
+                                       statustext="Business phone"></et2-url-phone>
+                        <et2-url-phone id="${row}[tel_cell]" readonly="true" class="telNumbers"
+                                       statustext="Mobile phone"></et2-url-phone>
+                        <et2-url-phone id="${row}[tel_home]" readonly="true" class="telNumbers"
+                                       statustext="Home phone"></et2-url-phone>
+                        <et2-url-phone id="${row}[tel_cell_private]" readonly="true" class="telNumbers"
+                                       statustext="Mobile phone (private)"></et2-url-phone>
+                        <et2-url-fax id="${row}[tel_fax]" readonly="true" statustext="Fax"></et2-url-fax>
+                        <et2-url-phone id="${row}[tel_prefered]" readonly="true" class="telNumbers"
+                                       statustext="$row_cont[tel_prefer_label]"></et2-url-phone>
+                    </et2-vbox>
+                    <et2-vbox>
+                        <et2-url id="${row}[url]" readonly="true" class="fixedHeight"></et2-url>
+                        <et2-url-email id="${row}[email]" readonly="true" class="fixedHeight"></et2-url-email>
+                        <et2-url-email id="${row}[email_home]" readonly="true" class="fixedHeight"></et2-url-email>
+                    </et2-vbox>
+                    <et2-description id="${row}[room]"></et2-description>
+                    <customfields-list id="$row" class="customfields"/>
+                    <et2-link-string entryId="${row_cont[id]}" application="addressbook"
+                                     onlyApp="kanban"></et2-link-string>
+                    <et2-textarea id="${row}[note]" readonly="true" noLang="1"></et2-textarea>
+                    <et2-description id="${row}[distrib_lists]"></et2-description>
+                    <et2-vbox>
+                        <et2-select-account id="${row}[owner]" readonly="true"></et2-select-account>
+                        <et2-select-account id="${row}[shared_with]" readonly="true"
+                                            multiple="true"></et2-select-account>
+                    </et2-vbox>
+                    <et2-description id="${row}[id]" class="contactid"></et2-description>
+                    <et2-vbox>
+                        <et2-link id="${row}[last_link]" app=""></et2-link>
+                        <et2-link id="${row}[next_link]" app=""></et2-link>
+                    </et2-vbox>
+                    <et2-vbox>
+                        <et2-date-time id="${row}[created]" readonly="true" class="noWrap"></et2-date-time>
+                        <et2-select-account id="${row}[creator]" readonly="true"></et2-select-account>
+                        <et2-date-time id="${row}[modified]" readonly="true" class="noBreak"></et2-date-time>
+                        <et2-select-account id="${row}[modifier]" readonly="true"></et2-select-account>
+                    </et2-vbox>
+                </row>
+            </rows>
+        </grid>
+    </template>
+</overlay>

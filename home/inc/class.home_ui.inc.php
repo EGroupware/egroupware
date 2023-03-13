@@ -76,8 +76,19 @@ class home_ui
 		{
 			$id = $p_data['id'];
 
-			if(!$id) continue;
-			$portlet = $this->get_portlet($id, $p_data, $content, $attrs, true);
+			if(!$id)
+			{
+				continue;
+			}
+			try
+			{
+				$portlet = $this->get_portlet($id, $p_data, $content, $attrs, true);
+			}
+			catch (Exception $e)
+			{
+				error_log($e);
+			}
+
 		}
 
 	}
@@ -302,6 +313,7 @@ class home_ui
 		if($full_exec)
 		{
 			$content = $portlet->exec($id, $etemplate, $full_exec ? 2 : -1);
+			Etemplate::reset_request();
 		}
 
 		return $portlet;
@@ -405,15 +417,16 @@ class home_ui
 				}
 				foreach($classes[$appname] as $portlet)
 				{
-					$instance = new $portlet();
+					$context = ['id' => $portlet];
+					$instance = new $portlet($context);
 					$desc = $instance->get_description();
 
 					$add_to[$portlet] = array(
-						'id'	=> $portlet,
-						'caption' => $desc['displayName'],
-						'hint' => $desc['description'],
-						'onExecute' => 'javaScript:app.home.add',
-						'acceptedTypes' => $instance->accept_drop(),
+						'id'              => $portlet,
+						'caption'         => $desc['displayName'],
+						'hint'            => $desc['description'],
+						'onExecute'       => 'javaScript:app.home.add',
+						'acceptedTypes'   => $instance->accept_drop(),
 						'allowOnMultiple' => $instance->accept_multiple()
 					);
 				}

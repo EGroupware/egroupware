@@ -122,6 +122,7 @@ class home_favorite_portlet extends home_portlet
 
 		$content = $this->context + array('nm' => $this->nm_settings);
 		$content['header_node'] = "home-index_{$id}_header";
+		unset($content['template']);
 		$sel_options = $content['sel_options'] ? $content['sel_options'] : array();
 		unset($content['sel_options']);
 		$etemplate->setElementAttribute('nm', 'template',$this->nm_settings['template']);
