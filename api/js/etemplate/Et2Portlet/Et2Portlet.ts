@@ -417,10 +417,10 @@ export class Et2Portlet extends Et2Widget(SlCard)
 	{
 		let content = this.portletProperties;
 
-		// Add values, but skip any lingering properties
+		// Add values, but skip any duplicate properties
 		Object.keys(this.settings).forEach(k =>
 		{
-			if(typeof k == "string" && isNaN(parseInt(k)))
+			if(typeof k == "string" && isNaN(parseInt(k)) || content.filter(v => v.name == this.settings[k].name).length == 0)
 			{
 				content[k] = this.settings[k];
 			}

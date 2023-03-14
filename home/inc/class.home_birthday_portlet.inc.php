@@ -177,8 +177,8 @@ use EGroupware\Api\Etemplate;
 
 		$properties[] = array(
 			'name'           => 'days',
-			'type'           => 'et2-selectbox',
-			'label'          => '',
+			'type'           => 'et2-select',
+			'label'          => 'Birthdays',
 			'default'        => 3,
 			'select_options' => array(
 				1  => lang('Yes, for today and tomorrow'),
