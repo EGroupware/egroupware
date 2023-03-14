@@ -949,7 +949,7 @@ class AddressbookApp extends EgwApp
 	 */
 	nm_compare_field()
 	{
-		var field = this.et2.getWidgetById('filter2');
+		var field = this.et2?.getWidgetById('filter2');
 		if (field) var val = field.get_value();
 		if (val)
 		{
