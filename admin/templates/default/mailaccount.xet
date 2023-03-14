@@ -66,7 +66,7 @@
 				</row>
 				<row>
 					<et2-description  for="acc_imap_password" value="Password"></et2-description>
-					<et2-password  id="acc_imap_password" maxlength="128" autocomplete="off" placeholder="Leave empty to use OAuth, if supported"></et2-password>
+					<et2-password  id="acc_imap_password" maxlength="128" autocomplete="new-password" placeholder="Leave empty to use OAuth, if supported"></et2-password>
 					<et2-description  id="acc_imap_account_id" class="emailadmin_diagnostic"></et2-description>
 					<et2-description></et2-description>
 				</row>
@@ -97,7 +97,7 @@
 								</row>
 								<row>
 									<et2-description  for="acc_imap_admin_password" value="Password"></et2-description>
-									<et2-password  id="acc_imap_admin_password" maxlength="128" autocomplete="off"></et2-password>
+									<et2-password  id="acc_imap_admin_password" maxlength="128" autocomplete="new-password"></et2-password>
 								</row>
 								<row>
 									<et2-description></et2-description>
@@ -218,7 +218,7 @@
 				<row class="@manual_class">
 					<et2-description  for="acc_smtp_password" value="Password"></et2-description>
 					<et2-hbox>
-						<et2-password  id="acc_smtp_password" maxlength="128" autocomplete="off" placeholder="Leave empty to use OAuth, if supported"></et2-password>
+						<et2-password  id="acc_smtp_password" maxlength="128" autocomplete="new-password" placeholder="Leave empty to use OAuth, if supported"></et2-password>
 						<et2-description  id="acc_smtp_account_id" class="emailadmin_diagnostic"></et2-description>
 					</et2-hbox>
 				</row>
@@ -239,7 +239,7 @@
 				</row>
 				<row>
 					<et2-description  for="acc_spam_password" value="API Token"></et2-description>
-					<et2-password  id="acc_spam_password" width="95%" suggest="24" placeholder="@spamtitan_blur"></et2-password>
+					<et2-password  id="acc_spam_password" width="95%" suggest="24" autocomplete="new-password" placeholder="@spamtitan_blur"></et2-password>
 				</row>
 			</rows>
 		</grid>

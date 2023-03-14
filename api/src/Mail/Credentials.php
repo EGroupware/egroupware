@@ -251,7 +251,7 @@ class Credentials
 							if (empty($results[$pre.'username']))
 							{
 								$results[$pre.'username'] = $row['cred_username'];
-								$results[$pre.'password'] = '**oauth**';
+								$results[$pre.'password'] = self::UNAVAILABLE;
 							}
 						}
 					}
