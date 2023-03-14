@@ -200,7 +200,7 @@ class home_ui
 			$settings = $portlet->get_properties();
 			foreach($settings as $key => $setting)
 			{
-				if(is_array($setting) && !array_key_exists('type', $setting))
+				if(is_array($setting) && !array_key_exists('type', $setting) || is_numeric($key))
 				{
 					unset($settings[$key]);
 				}
