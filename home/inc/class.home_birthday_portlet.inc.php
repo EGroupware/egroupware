@@ -32,7 +32,6 @@ use EGroupware\Api\Etemplate;
 	public function __construct(Array &$context = array(), &$need_reload = false)
 	{
 		unset($need_reload);	// not used, but required by function signature
-		if (false) parent::__construct();
 
 		$this->context = $context;
 	}
@@ -177,15 +176,15 @@ use EGroupware\Api\Etemplate;
 		$properties = parent::get_properties();
 
 		$properties[] = array(
-			'name'	=>	'days',
-			'type'	=>	'listbox',
-			'label'	=>	'',
-			'default' => 3,
+			'name'           => 'days',
+			'type'           => 'et2-selectbox',
+			'label'          => '',
+			'default'        => 3,
 			'select_options' => array(
-				1 => lang('Yes, for today and tomorrow'),
-				3 => lang('Yes, for the next three days'),
-				7 => lang('Yes, for the next week'),
-				14=> lang('Yes, for the next two weeks'),
+				1  => lang('Yes, for today and tomorrow'),
+				3  => lang('Yes, for the next three days'),
+				7  => lang('Yes, for the next week'),
+				14 => lang('Yes, for the next two weeks'),
 			),
 		);
 		return $properties;

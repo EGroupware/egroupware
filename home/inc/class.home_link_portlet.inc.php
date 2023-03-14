@@ -51,8 +51,6 @@ class home_link_portlet extends home_portlet
 	 */
 	public function __construct(Array &$context = array(), &$need_reload = false)
 	{
-		if (false) parent::__construct();
-
 		// Process dropped data into something useable
 		if($context['dropped_data'])
 		{

@@ -40,8 +40,6 @@ class home_list_portlet extends home_portlet
 	 */
 	public function __construct(Array &$context = array(), &$need_reload = false)
 	{
-		if (false) parent::__construct();
-
 		if(!is_array($context['list'])) $context['list'] = array();
 
 		// Process dropped data (Should be GUIDs) into something useable
