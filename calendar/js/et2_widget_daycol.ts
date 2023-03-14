@@ -858,7 +858,7 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 		{
 			// Avoid white, which is hard to see
 			// Use border-bottom-color, Firefox doesn't give a value with border-color
-			const color = (new ColorTranslator(event.div.css('background-color'))).RGB !== 'rgb(255,255,255)' ?
+			const color = (new ColorTranslator(event.div.css('background-color') || '#FFFFFF')).RGB !== 'rgb(255,255,255)' ?
 				event.div.css('background-color') : event.div.css('border-bottom-color');
 			if(color !== 'rgba(0, 0, 0, 0)')
 			{
