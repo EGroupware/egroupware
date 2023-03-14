@@ -35,7 +35,6 @@ class home_legacy_portlet extends home_portlet
 	public function __construct(array &$context = array(), &$need_reload = false)
 	{
 		unset($need_reload);	// not used, but required by function signature
-		if (false) parent::__construct();
 
 		$this->context = $context;
 

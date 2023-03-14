@@ -35,8 +35,6 @@ class home_weather_portlet extends home_portlet
 	 */
 	public function __construct(Array &$context = array(), &$need_reload = false)
 	{
-		if (false) parent::__construct();
-
 		// City not set for new widgets created via context menu
 		if(!$context['city'])
 		{

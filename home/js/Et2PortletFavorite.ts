@@ -2,6 +2,8 @@ import {Et2Portlet} from "../../api/js/etemplate/Et2Portlet/Et2Portlet";
 import {classMap, css, html} from "@lion/core";
 import shoelace from "../../api/js/etemplate/Styles/shoelace";
 import {etemplate2} from "../../api/js/etemplate/etemplate2";
+import type {SelectOption} from "../../api/js/etemplate/Et2Select/FindSelectOptions";
+import {Et2Favorites} from "../../api/js/etemplate/Et2Favorites/Et2Favorites";
 
 export class Et2PortletFavorite extends Et2Portlet
 {
@@ -32,6 +34,33 @@ export class Et2PortletFavorite extends Et2Portlet
 	{
 		super.connectedCallback();
 		this.classList.add("header_hidden");
+	}
+
+	/**
+	 * Get a list of user-configurable properties
+	 * @returns {[{name : string, type : string, select_options? : [SelectOption]}]}
+	 */
+	get portletProperties() : { name : string, type : string, label : string, select_options? : SelectOption[] }[]
+	{
+		// Default blank filter
+		let favorites = [
+			{value: 'blank', label: this.egw().lang("No filters")}
+		];
+
+		// Load favorites
+		let preferences : any = this.egw().preference("*", this.settings.appname);
+		for(let pref_name in preferences)
+		{
+			if(pref_name.indexOf(Et2Favorites.PREFIX) == 0 && typeof preferences[pref_name] == 'object')
+			{
+				let name = pref_name.substr(Et2Favorites.PREFIX.length);
+				favorites.push({value: name, label: preferences[pref_name]['name']});
+			}
+		}
+		return [
+			...super.portletProperties,
+			{name: "favorite", type: "et2-select", label: "Favorite", select_options: favorites}
+		]
 	}
 
 	headerTemplate()

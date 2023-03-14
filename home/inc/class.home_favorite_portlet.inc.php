@@ -59,8 +59,6 @@ class home_favorite_portlet extends home_portlet
 	 */
 	public function __construct(Array &$context = array(), &$need_reload = false)
 	{
-		if (false) parent::__construct();
-
 		// Process dropped data (Should be [appname => <appname>, id => <favorite ID>]) into something useable
 		if($context['dropped_data'])
 		{
@@ -235,18 +233,7 @@ class home_favorite_portlet extends home_portlet
 	public function get_properties()
 	{
 		$properties = parent::get_properties();
-		$favorites = Framework\Favorites::get_favorites($this->context['appname']);
-		$favorite_list = array();
-		foreach($favorites as $id => $favorite)
-		{
-			if($favorite)
-			{
-				$favorite_list[] = array(
-					'value' => $id,
-					'label' => $favorite['name']
-				);
-			}
-		}
+
 		$favorite = array(
 			'label'	=>	lang('Favorite'),
 			'name'	=>	'favorite',

@@ -32,8 +32,6 @@ class home_note_portlet extends home_portlet
 	 */
 	public function __construct(Array &$context = array(), &$need_reload = false)
 	{
-		if (false) parent::__construct();
-
 		// Title not set for new widgets created via context menu
 		if(!$context['title'])
 		{
