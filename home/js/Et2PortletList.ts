@@ -2,6 +2,8 @@ import {Et2Portlet} from "../../api/js/etemplate/Et2Portlet/Et2Portlet";
 import {et2_createWidget} from "../../api/js/etemplate/et2_core_widget";
 import {css, html, TemplateResult} from "@lion/core";
 import shoelace from "../../api/js/etemplate/Styles/shoelace";
+import {SelectOption} from "../../api/js/etemplate/Et2Select/FindSelectOptions";
+import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";
 
 /**
  * Home portlet to show a list of entries
@@ -147,7 +149,7 @@ export class Et2PortletList extends Et2Portlet
 		{
 			return;
 		}
-		
+
 		// Not used, but delete puts link in event.data
 		let link_data = event.data || false;
 
@@ -156,6 +158,30 @@ export class Et2PortletList extends Et2Portlet
 		{
 			this.update_settings({list: this.settings.list});
 		}
+	}
+
+	/**
+	 * Get a list of user-configurable properties
+	 * @returns {[{name : string, type : string, select_options? : [SelectOption]}]}
+	 */
+	get portletProperties() : { name : string, type : string, label : string, select_options? : SelectOption[] }[]
+	{
+		return [
+			...super.portletProperties,
+			{name: "title", type: "et2-textbox", label: "Title"},
+			{name: "add", type: "et2-link-entry", label: "Add"}
+		]
+	}
+
+	_process_edit(button_id, value)
+	{
+		if(button_id == Et2Dialog.OK_BUTTON && value.add)
+		{
+			// Add in to list, remove from value or it will be saved
+			value.list = [...this.settings.list, value.add];
+			delete value.add;
+		}
+		super._process_edit(button_id, value);
 	}
 
 	bodyTemplate() : TemplateResult

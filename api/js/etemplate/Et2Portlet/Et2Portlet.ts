@@ -411,12 +411,23 @@ export class Et2Portlet extends Et2Widget(SlCard)
 	 */
 	edit_settings()
 	{
+		let content = this.portletProperties;
+
+		// Add values, but skip any lingering properties
+		Object.keys(this.settings).forEach(k =>
+		{
+			if(typeof k == "string" && isNaN(parseInt(k)))
+			{
+				content[k] = this.settings[k];
+			}
+		});
+
 		let dialog = new Et2Dialog(this.egw());
 		dialog.transformAttributes({
 			callback: this._process_edit.bind(this),
 			template: this.editTemplate,
 			value: {
-				content: {...this.settings, ...this.portletProperties}
+				content: content
 			},
 			buttons: [
 				{
