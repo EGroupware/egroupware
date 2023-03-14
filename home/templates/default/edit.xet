@@ -2,17 +2,18 @@
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="home.edit" template="" lang="" group="0" version="1.9.001">
-		<grid>
-			<columns>
-				<column/>
-				<column/>
-			</columns>
-			<rows>
-				<row>
-					<et2-label  for="@${row}[name]" value="@${row}[label]"></et2-label>
-					<widget type="@${row}[type]" id="@${row}[name]" no_lang="1" select_options="@${row}[select_options]"/>
-				</row>
-			</rows>
+		<grid width="100%">
+            <columns>
+                <column/>
+                <column/>
+            </columns>
+            <rows>
+                <row>
+                    <et2-label for="@${row}[name]" value="@${row}[label]"></et2-label>
+                    <widget type="@${row}[type]" id="@${row}[name]" no_lang="1"
+                            select_options="@${row}[select_options]"/>
+                </row>
+            </rows>
 		</grid>
 	</template>
 </overlay>

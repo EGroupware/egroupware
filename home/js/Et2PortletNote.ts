@@ -1,6 +1,7 @@
 import shoelace from "../../api/js/etemplate/Styles/shoelace";
 import {css, html, TemplateResult, unsafeHTML} from "@lion/core";
 import {Et2Portlet} from "../../api/js/etemplate/Et2Portlet/Et2Portlet";
+import type {SelectOption} from "../../api/js/etemplate/Et2Select/FindSelectOptions";
 
 /**
  * Home portlet to show a note
@@ -40,6 +41,19 @@ export class Et2PortletNote extends Et2Portlet
 			id: this.id,
 			height: window_height - 70
 		}), 'home_' + this.id, window_width + 'x' + window_height, 'home');
+	}
+
+	/**
+	 * Get a list of user-configurable properties
+	 * @returns {[{name : string, type : string, select_options? : [SelectOption]}]}
+	 */
+	get portletProperties() : { name : string, type : string, label : string, select_options? : SelectOption[] }[]
+	{
+		return [
+			...super.portletProperties,
+			{name: "title", type: "et2-textbox", label: "Title"},
+			{name: "note", type: "htmlarea", label: ""}
+		]
 	}
 
 	bodyTemplate() : TemplateResult
