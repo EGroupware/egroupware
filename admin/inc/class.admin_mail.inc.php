@@ -886,7 +886,7 @@ class admin_mail
 				{
 					$content['acc_id'] = key($content['accounts']);
 					//error_log(__METHOD__.__LINE__.'.'.array2string($content['acc_id']));
-					// test if the "to be selected" acccount is imap or not
+					// test if the "to be selected" account is imap or not
 					if (is_array($content['accounts']) && count($content['accounts'])>1 && Mail\Account::is_multiple($content['acc_id']))
 					{
 						try {
@@ -930,6 +930,13 @@ class admin_mail
 						$content['called_for'] : $GLOBALS['egw_info']['user']['account_id']);
 					$account->getUserData();	// quota, aliases, forwards etc.
 					$content += $account->params;
+					foreach(['acc_imap_password', 'acc_smtp_password'] as $n)
+					{
+						if (isset($content['acc_oauth_username']) && $content[$n] === Mail\Credentials::UNAVAILABLE)
+						{
+							unset($content[$n]);
+						}
+					}
 					$content['acc_sieve_enabled'] = (string)($content['acc_sieve_enabled']);
 					$content['notify_use_default'] = !$content['notify_account_id'];
 					self::fix_account_id_0($content['account_id']);
