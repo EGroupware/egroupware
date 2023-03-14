@@ -1,3 +1,20 @@
+egroupware-docker (23.1.20230314) hardy; urgency=low
+
+  * 23.1 final release with the following major features:
+  * Modernization through technology change to Web Components and Lit
+  * Working time recording and timer for projects
+  * New features in the mail app including OAuth support for Office365 and Gmail
+  * Optimizations in the file manager: user quota and push notifications
+  * New functionalities in various applications e.g. with regard to Kanban integration
+  * Improvement of user selection and performance for large installations
+  * New features for administrators: PUSH notifications and synchronization users to LDAP/AD
+  * Changes since 5th RC: https://github.com/EGroupware/egroupware/compare/23.1.20230228...23.1.20230314
+  * Home: fix not working home app caused by new JS loading and transformed it to use webcomponents
+  * Admin/Setup: logging all DB backup operations to a text file db_backup.log in backup-directory
+  * Rocketchat: fix rocketchat's status sometimes is not showing up in Status app for bigger installations
+
+ -- Ralf Becker <rb@egroupware.org>  Tue, 14 Mar 2023 10:49:04 +0100
+
 egroupware-docker (23.1.20230228) hardy; urgency=low
 
   * 5th release and hopefully last candidate for upcoming 23.1
