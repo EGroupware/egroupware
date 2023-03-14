@@ -351,6 +351,10 @@ export class Et2Portlet extends Et2Widget(SlCard)
 		target.style.height = "";
 		target.removeAttribute('data-x');
 		target.removeAttribute('data-y');
+		if(o_x == "auto")
+		{
+			o_x = "" + (1 + Math.round((this.getBoundingClientRect().left - this.parentElement.getBoundingClientRect().left) / parentDimensions.x));
+		}
 
 		let col = Math.max(1, (dx + (parseInt(o_x) || 0)));
 		let row = Math.max(1, (dy + (parseInt(o_y) || 0)));
