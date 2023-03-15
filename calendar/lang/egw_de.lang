@@ -18,11 +18,11 @@
 a list of email addresses of all participants who have not declined	calendar	de	Eine Liste der E-Mail-Adressen aller Teilnehmer, die nicht abgelehnt haben.
 a non blocking event will not conflict with other events	calendar	de	Ein nicht blockierender Termin ergibt keinen Terminkonflikt mit anderen Terminen
 accept	calendar	de	Zusagen
-accept or reject an invitation	calendar	de	Einladung zu- oder absagen
+accept or reject an invitation	calendar	de	Einladung zusagen oder ablehnen
 accepted	calendar	de	Zugesagt
 access denied to the calendar of %1 !!!	calendar	de	Zugriff zum Kalender von %1 verweigert !!!
 access to calendar of %1 denied!	calendar	de	Zugriff auf den Kalender von %1 verweigert!
-action that caused the notify: added, canceled, accepted, rejected, ...	calendar	de	Aktion, welche die Benachrichtigung verursacht hat: Hinzugefügt, Storniert, Zugesagt, Abgesagt
+action that caused the notify: added, canceled, accepted, rejected, ...	calendar	de	Aktion, welche die Benachrichtigung verursacht hat: hinzugefügt, storniert, zugesagt, abgelehnt
 actions	calendar	de	Befehle
 actions...	calendar	de	Aktionen...
 add alarm	calendar	de	Alarm zufügen
@@ -50,7 +50,7 @@ all day	calendar	de	ganztägig
 all events	calendar	de	Alle Termine
 all exceptions are converted into single events.	calendar	de	Alle Ausnahmen wurden zu Einzelterminen konvertiert.
 all future	calendar	de	Alle zukünftigen
-all incl. rejected	calendar	de	Alle einschl. abgesagte
+all incl. rejected	calendar	de	Alle einschl. abgelehnte
 all participants	calendar	de	Alle Teilnehmer
 allow booking requests from any user when creating events?	calendar	de	Erlaube Buchungsanfragen von beliebigen Benutzern bei der Erstellung von Terminen?
 allow users to prevent change notifications ('do not notify')	calendar	de	Erlaube Benutzern Benachrichtigungen über Änderungen zu unterdrücken ('Nicht benachrichtigen')
@@ -184,8 +184,8 @@ do you want a weekview with or without weekend?	calendar	de	Möchten Sie eine Wo
 do you want non-egroupware participants of events you created to be automatically notified about new or changed appointments?	calendar	de	Sollen Teilnehmer, die keine EGroupware Benutzer sind, automatisch über Änderungen an von Ihnen angelegten Terminen benachrichtigt werden?
 do you want responses from events you created, but are not participating in?	calendar	de	Wollen Sie Antworten zu Terminen, die Sie erstellt haben, an denen Sie aber nicht teilnehmen?
 do you want to be notified about changes of appointments you modified?	calendar	de	Wollen Sie auch über eigene Änderungen Benachrichtigt werden?
-do you want to be notified about new or changed appointments? you are not notified about changes you made yourself.<br>you can limit the notifications to certain changes only. each item includes all notifications listed above. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get participant responses like acceptions or rejections too.	calendar	de	Möchten Sie über neue oder geänderte Termine informiert werden? Sie werden NICHT über Änderungen informiert, die Sie selbst anwenden.<br />Sie können die Benachrichtigungen auf bestimmte Änderungen beschränken. Jede Auswahl beinhaltet die oben aufgeführten Benachrichtigungen. Alle Änderungen beinhalten Änderungen des Titels, der Beschreibung, der Teilnehmer, aber keine Antworten der Teilnehmer. Falls der Besitzer eines Termins eine Benachrichtigung angefordert hat, werden auch die Teilnehmer-Antworten (Annahmen oder Absagen) zur Verfügung gestellt.
-do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	de	Möchten Sie über neue oder geänderte Termine informiert werden? Sie werden NICHT über Änderungen informiert, die Sie selbst anwenden.<br />Sie können die Benachrichtigungen auf bestimmte Änderungen beschränken. Jede Auswahl beinhaltet die oben aufgeführten Benachrichtigungen. Alle Änderungen beinhalten Änderungen des Titels, der Beschreibung, der Teilnehmer, aber keine Antworten der Teilnehmer. Falls der Besitzer eines Termins eine Benachrichtigung angefordert hat, werden auch die Teilnehmer-Antworten (Annahmen oder Absagen) zur Verfügung gestellt.
+do you want to be notified about new or changed appointments? you are not notified about changes you made yourself.<br>you can limit the notifications to certain changes only. each item includes all notifications listed above. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get participant responses like acceptions or rejections too.	calendar	de	Möchten Sie über neue oder geänderte Termine informiert werden? Sie werden NICHT über Änderungen informiert, die Sie selbst anwenden.<br />Sie können die Benachrichtigungen auf bestimmte Änderungen beschränken. Jede Auswahl beinhaltet die oben aufgeführten Benachrichtigungen. Alle Änderungen beinhalten Änderungen des Titels, der Beschreibung, der Teilnehmer, aber keine Antworten der Teilnehmer. Falls der Besitzer eines Termins eine Benachrichtigung angefordert hat, werden auch die Teilnehmer-Antworten (Annahmen oder Ablehnungen) zur Verfügung gestellt.
+do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	de	Möchten Sie über neue oder geänderte Termine informiert werden? Sie werden NICHT über Änderungen informiert, die Sie selbst anwenden.<br />Sie können die Benachrichtigungen auf bestimmte Änderungen beschränken. Jede Auswahl beinhaltet die oben aufgeführten Benachrichtigungen. Alle Änderungen beinhalten Änderungen des Titels, der Beschreibung, der Teilnehmer, aber keine Antworten der Teilnehmer. Falls der Besitzer eines Termins eine Benachrichtigung angefordert hat, werden auch die Teilnehmer-Antworten (Annahmen oder Ablehnungen) zur Verfügung gestellt.
 do you want to be notified about participant responses from events you created, but are not participating in?	calendar	de	Möchten Sie über die Antworten der Teilnehmer von Terminen, die Sie erstellt haben, an denen Sie aber nicht teilnehmen, informiert werden?
 do you want to edit this event as an exception or the whole series?	calendar	de	Wollen Sie diesen Termin als Ausnahme bearbeiten oder die ganze Serie?
 do you want to keep the series exceptions in your calendar?	calendar	de	Wollen Sie die Ausnahmen dieses Serientermins in Ihrem Kalender behalten?
@@ -307,6 +307,7 @@ how much entries to skip	calendar	de	Wie viele Einträge sollen übersprungen we
 html link to the current record	calendar	de	HTML-Link zum aktuellen Datensatz
 ical	calendar	de	iCal
 ical / rfc2445	calendar	de	iCal / RFC2445
+ical cannot change the owner of an existing event.  this applies to new events only.	calendar	de	iCal kann den Eigentümer eines bestehenden Ereignisses nicht ändern. Dies ist nur für neue Ereignisse möglich.
 ical export	calendar	de	iCal Export
 ical file	calendar	de	iCal Datei
 ical import	calendar	de	iCal Import
@@ -398,7 +399,7 @@ no rights to export more than %1 entries!	calendar	de	Sie haben keine Rechte meh
 no, users will need to contact users with direct booking permission	calendar	de	Nein, Benutzer müssen sich mit Benutzern mit direkter Buchungsberechtigung in Verbindung setzen.
 non blocking	calendar	de	nicht blockierend
 not	calendar	de	nicht
-not rejected	calendar	de	Nicht abgesagt
+not rejected	calendar	de	Nicht abgelehnt
 nothing to update, version is already %1.	calendar	de	Nichts aktualisiert, Version ist bereits %1
 notification messages for added events	calendar	de	Benachrichtigungstext für neue Termine
 notification messages for canceled events	calendar	de	Benachrichtigungstext für stornierte Termine
@@ -474,8 +475,8 @@ recurrence enddate	calendar	de	Enddatum der Wiederholung
 recurrences and conflict check	calendar	de	Wiederholungen und Konfliktprüfung
 recurring event	calendar	de	Wiederholender Termin
 regular edit	calendar	de	reguläres Bearbeiten
-reject	calendar	de	Absagen
-rejected	calendar	de	Abgesagt
+reject	calendar	de	Ablehnen
+rejected	calendar	de	Abgelehnt
 removes the event from my calendar	calendar	de	Entfernt diesen Termin aus meinem Kalender
 repeat days	calendar	de	Wiederholungstage
 repeat the event until which date (empty means unlimited)	calendar	de	Bis zu welchen Datum soll der Termin wiederholt werden (leer bedeutet unbegrenzt)
@@ -496,7 +497,7 @@ reset	calendar	de	Zurücksetzen
 reset participant stati on event shifts	calendar	de	Rücksetzen des Teilnehmerstatus beim Verschieben von Terminen
 resources	calendar	de	Ressourcen
 resources except conflicting ones	calendar	de	Ressourcen ausgenommen bereits gebuchte
-resources with conflict detection	calendar	de	Ressourcen mit bereits gebuchten
+resources with conflict detection	calendar	de	Ressourcen mit Buchungskonflikt
 restrict add category to	calendar	de	Beschränke hinzufügen der Kategorie auf
 restrict set status to	calendar	de	Beschränke Statusänderungen auf
 role	calendar	de	Rolle
@@ -531,12 +532,12 @@ should the grid be shown in the calendar	calendar	de	Soll das Gitternetz im Kale
 should the number of weeks be shown on top of the calendar	calendar	de	Soll die Wochenanzahl im Kalender  oben angezeigt werden?
 should the number of weeks be shown on top of the calendar (only if offset = 0)	calendar	de	Soll die Kalenderwoche im oberen Teil des Kalenders angezeigt werden (Nur wenn Abstand=0)
 should the planner display an empty row for users or categories without any appointment.	calendar	de	Soll der Planer eine leere Zeile für Benutzer oder Kategorien ohne einen Termin anzeigen
-should the status of the event-participants (accept, reject, ...) be shown in brackets after each participants name ?	calendar	de	Soll der Status (zugesagt, abgesagt ...) der Termin- Teilnehmer in Klammern hinter jeden Teilnehmer angezeigt werden?
+should the status of the event-participants (accept, reject, ...) be shown in brackets after each participants name ?	calendar	de	Soll der Status (zugesagt, abgelehnt ...) der Termin- Teilnehmer in Klammern hinter jeden Teilnehmer angezeigt werden?
 show %1 from %2	calendar	de	Zeige %1 von %2
 show a calendar title	calendar	de	Soll der Kalender Titel angezeigt werden?
 show all events, as if they were private	calendar	de	Zeige alle Termine, so als wären sie privat
-show all status incl. rejected events	calendar	de	Zeige alle Status einschl. abgesagte Termine
-show all status, but rejected	calendar	de	Zeige alle Status außer abgesagte Termine
+show all status incl. rejected events	calendar	de	Zeige alle Status einschl. abgelehnte Termine
+show all status, but rejected	calendar	de	Zeige alle Status außer abgelehnte Termine
 show all status, but unknown	calendar	de	Zeige alle Termine außer Einladungen
 show also events just owned by selected user	calendar	de	Zeige zusätzlich Termine die dem ausgewählten Benutzer nur gehören
 show birthdays as all day non-blocking events as well as via mouseover of the date.	calendar	de	Zeige Geburtstage als ganztägiges nicht-blockierendes Ereignis an, zusätzlich zum Tooltip auf dem Datum
@@ -548,8 +549,8 @@ show list of upcoming events	calendar	de	Zeige eine Liste der kommenden Termine
 show only accepted events	calendar	de	Zeige nur zugesagte Termine
 show only delegated events	calendar	de	Nur delegierte Einträge anzeigen
 show only events flagged as public, (not checked as private)	calendar	de	Nur öffentliche Termine (nicht als privat markierte) anzeigen
-show only invitations, not yet accepted or rejected	calendar	de	Zeige nur Einladungen, nicht bereits zu- oder abgesagte Termine
-show only rejected events	calendar	de	Zeige nur abgesagte Termine
+show only invitations, not yet accepted or rejected	calendar	de	Zeige nur Einladungen, nicht bereits zu- oder abgelehnte Termine
+show only rejected events	calendar	de	Zeige nur abgelehnte Termine
 show only tentative accepted events	calendar	de	Zeige nur vorläufig zugesagte Termine
 show only the date, not the year	admin	de	Zeige nur das Datum nicht das Jahr
 show this month	calendar	de	Diesen Monat anzeigen
@@ -603,7 +604,7 @@ this message is sent for canceled or deleted events.	calendar	de	Diese Benachric
 this message is sent for modified or moved events.	calendar	de	Diese Benachrichtigung wird für geänderte Termine versendet
 this message is sent to every participant of events you own, who has requested notifcations about new events.<br>you can use certain variables which get substituted with the data of the event. the first line is the subject of the email.	calendar	de	Diese Nachricht wird an alle Teilnehmer der Termine versendet, die Sie anlegen. (Teilnehmer müssen die Benachrichtigung per E-Mail aktiviert haben!) <br>Sie können verschiedene Variablen verwenden, die die notwendigen Informationen der Termin-Mitteilung beinhalten. Die erste Zeile ist der Betreff der E-Mail
 this message is sent to uninvited participants.	calendar	de	Diese Nachricht wird ausgeladenen Teilnehmern gesendet
-this message is sent when you accept, tentative accept or reject an event.	calendar	de	Diese Nachricht wird gesendet wenn Sie einen Termin zusagen, vorläufig zusagen oder absagen
+this message is sent when you accept, tentative accept or reject an event.	calendar	de	Diese Nachricht wird gesendet wenn Sie einen Termin zusagen, vorläufig zusagen oder ablehnen
 this message is sent when you set an alarm for a certain event. include all information you might need.	calendar	de	Diese Alarm-Meldung wird Ihnen gesendet, wenn Sie einen Alarm für einen Termin aktivieren. Nehmen Sie alle Informationen darin auf, die Sie zum gewünschten Alarm-Zeitpunkt benötigen
 this module displays a planner calendar.	calendar	de	Dieses Modul zeigt einen Planerkalender
 this module displays a user's calendar as multiple weeks. don't give calendar application access to the anon user!	calendar	de	Dieses Modul zeigt den Benutzer Kalender als Mehrwochenansicht. Geben Sie dem anonymen Benutzer keinen Zugriff auf das Kalender Modul

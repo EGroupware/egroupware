@@ -71,7 +71,6 @@ check all	calendar	el	Επιλογή όλων
 choose a category	calendar	el	Επιλέξτε μία κατηγορία
 close the window	calendar	el	Κλείσιμο παραθύρου
 compose a mail to all participants after the event is saved	calendar	el	Συντάξτε ένα μήνυμα σε όλους τους συμμετέχοντες αφού σωθεί το γεγονός
-copy of:	calendar	el	Αντίγραφο του:
 copy this event	calendar	el	Αντιγράψτε αυτό το γεγονός
 countries	calendar	el	Χώρες
 country	calendar	el	Χώρα
@@ -198,9 +197,17 @@ holidays	calendar	el	Άδειες
 holidays only	calendar	el	Μόνο άδειες
 hours	calendar	el	Ώρες
 how far to search (from startdate)	calendar	el	πόσο μακρυά να ψάξει (από την αρχική ημερομηνία)
+how many days to be removed in the future (default 365)	calendar	el	Πόσες ημέρες θα αφαιρεθούν στο μέλλον (προεπιλογή 365)
+how many days to be removed in the past (default 100)	calendar	el	Πόσες ημέρες θα αφαιρεθούν στο παρελθόν (προεπιλογή 100)
+how many days to sync in the future (default %1)	calendar	el	Πόσες ημέρες πρέπει να συγχρονιστούν στο μέλλον (προεπιλογή %1)
+how many days to sync in the past (default %1)	calendar	el	Πόσες ημέρες για συγχρονισμό στο παρελθόν (προεπιλογή %1)
+how many description lines should be directly visible. further lines are available via a scrollbar.	calendar	el	Πόσες γραμμές περιγραφής θα πρέπει να είναι άμεσα ορατές. Περαιτέρω γραμμές είναι διαθέσιμες μέσω μιας γραμμής κύλισης.
+how many lines of all day events should be directly visible. further lines are available via a mouseover.	calendar	el	Πόσες γραμμές των γεγονότων όλων των ημερών θα πρέπει να είναι άμεσα ορατές. Περαιτέρω γραμμές είναι διαθέσιμες μέσω ενός mouseover.
 how many minutes should each interval last?	calendar	el	Πόσα λεπτά πρέπει κάθε διάλειμμα να διαρκεί;
+how many separate calendars to show before merging them together	calendar	el	Ελάχιστος αριθμός χρηστών για την εμφάνιση μιας ενοποιημένης προβολής ημερολογίου, εάν επιλεγούν λιγότεροι χρήστες, το ημερολόγιο εμφανίζεται ξεχωριστά για προβολή εβδομάδας ή ημέρας.
 ical	calendar	el	iCal
 ical / rfc2445	calendar	el	iCal / rfc2445
+ical cannot change the owner of an existing event.  this applies to new events only.	calendar	el	Το iCal δεν μπορεί να αλλάξει τον ιδιοκτήτη ενός υπάρχοντος συμβάντος. Αυτό ισχύει μόνο για νέα συμβάντα.
 ical export	calendar	el	iCal εξαγωγή
 ical file	calendar	el	iCal αρχείο
 ical import	calendar	el	iCal εισαγωγή

@@ -109,7 +109,6 @@ close the window	calendar	bg	Затвори прозореца
 compose a mail to all participants after the event is saved	calendar	bg	съставяне на e-mail до всички участници след запис на събитието
 configuration settings	calendar	bg	Настройки за конфигурация
 conflict	calendar	bg	Конфликт
-copy of:	calendar	bg	Копие на:
 copy this event	calendar	bg	Копирай това събитие
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	calendar	bg	Копирайте промените в клипборда, %1презаредете записа%2 и ги съединете.
 countries	calendar	bg	Държави
@@ -296,6 +295,7 @@ how much entries to skip	calendar	bg	Колко записи да пропусн
 html link to the current record	calendar	bg	HTML линк към текущия запис
 ical	calendar	bg	iCal
 ical / rfc2445	calendar	bg	iCal / rfc2445
+ical cannot change the owner of an existing event.  this applies to new events only.	calendar	bg	V aplikaci iCal nelze změnit vlastníka existující události. To platí pouze pro nové události.
 ical export	calendar	bg	Експорт в iCal
 ical file	calendar	bg	iCal файл
 ical import	calendar	bg	Импорт на iCal

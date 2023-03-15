@@ -1,0 +1,8 @@
+how many days to be removed in the future (default 365)	calendar	lt	Kiek dienų bus pašalinta ateityje (numatytoji 365)
+how many days to be removed in the past (default 100)	calendar	lt	Kiek dienų turi būti pašalinta praeityje (numatytoji reikšmė 100)
+how many days to sync in the future (default %1)	calendar	lt	Kiek dienų sinchronizuoti ateityje (numatytoji %1)
+how many days to sync in the past (default %1)	calendar	lt	Kiek dienų sinchronizuoti praeityje (numatytoji %1)
+how many description lines should be directly visible. further lines are available via a scrollbar.	calendar	lt	Kiek aprašymo eilučių turi būti tiesiogiai matoma. Daugiau eilučių galima matyti per slinkties juostą.
+how many lines of all day events should be directly visible. further lines are available via a mouseover.	calendar	lt	Kiek visų dienų įvykių eilučių turėtų būti tiesiogiai matoma. Daugiau eilučių pasiekiama per pelės žymeklį.
+how many separate calendars to show before merging them together	calendar	lt	Mažiausias naudotojų skaičius, kad būtų rodomas konsoliduotas kalendoriaus vaizdas, jei pasirinkta mažiau naudotojų, kalendorius rodomas atskirai savaitės arba dienos vaizdui.
+ical cannot change the owner of an existing event.  this applies to new events only.	calendar	lt	iCal negali pakeisti esamo įvykio savininko. Tai taikoma tik naujiems įvykiams.

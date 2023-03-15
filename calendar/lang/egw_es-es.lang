@@ -301,6 +301,7 @@ how much entries to skip	calendar	es-es	Cuántas entradas ignorar
 html link to the current record	calendar	es-es	Enlace HTML al registro actual
 ical	calendar	es-es	iCal
 ical / rfc2445	calendar	es-es	iCal / rfc2445
+ical cannot change the owner of an existing event.  this applies to new events only.	calendar	es-es	iCal no puede cambiar el propietario de un evento existente. Esto sólo se aplica a los nuevos eventos.
 ical export	calendar	es-es	Exportar iCal
 ical file	calendar	es-es	fichero iCal
 ical import	calendar	es-es	Importar iCal

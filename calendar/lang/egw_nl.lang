@@ -9,7 +9,6 @@
 %1 records read (not yet imported, you may go back and uncheck test import)	calendar	nl	%1 records gelezen (nog niet geïmporteerd, u kunt teruggaan en Test Import uitzetten)
 %1 weeks	calendar	nl	%1 weken
 (empty = use global limit, no = no export at all)	admin	nl	(leeg = gebruik globale limiet, no = helemaal geen export)
-<b>please note</b>: the calendar use the holidays of your country, which is set to %1. you can change it in your %2.<br />holidays are %3 automatic installed from %4. you can changed it in %5.	calendar	nl	<b>Let op</b>: de agenda gebruikt de vrije dagen van uw land dat staat ingesteld op %1. U kunt dit wijzigen in uw %2.<br />Vrije dagen worden %3 automatisch geinstalleerd vanaf %4. U kunt dit wijzigen in %5.
 a non blocking event will not conflict with other events	calendar	nl	Een niet-blokkerende gebeurtenis zal geen conflicten met andere gebeurtenissen geven
 accept	calendar	nl	Accepteren
 accept or reject an invitation	calendar	nl	Accepteer of weiger een uitnodiging
@@ -21,7 +20,6 @@ actions...	calendar	nl	Acties...
 add alarm	calendar	nl	Alarm toevoegen
 add timesheet entry	calendar	nl	Urenregistratie toevoegen
 added	calendar	nl	Toegevoegd
-added by synchronisation	calendar	nl	toegevoegd tijdens synchronisatie
 after	calendar	nl	na
 after %1	calendar	nl	Na %1
 after current date	calendar	nl	Na de huidige datum
@@ -39,8 +37,6 @@ all participants	calendar	nl	Alle deelnemers
 allows to edit the event again	calendar	nl	Staat toe om de gebeurtenis opnieuw te wijzigen
 always	calendar	nl	altijd
 apply the changes	calendar	nl	wijzigingen doorvoeren
-are you sure you want to delete this country ?	calendar	nl	Weet u zeker dat u dit land wilt verwijderen?
-are you sure you want to delete this holiday ?	calendar	nl	Weet u zeker dat u deze feestdag wilt verwijderen?
 back half a month	calendar	nl	halve maand terug
 back one month	calendar	nl	één maand terug
 before %1	calendar	nl	Voor %1
@@ -54,7 +50,6 @@ by	calendar	nl	door
 calendar csv export	calendar	nl	Kalender CSV export
 calendar event	calendar	nl	Agenda - Afspraak
 calendar fields:	calendar	nl	Kaldendervelden:
-calendar holiday management	admin	nl	Agenda feestdagen beheer
 calendar menu	calendar	nl	Agenda menu
 calendar preferences	calendar	nl	Agenda voorkeuren
 calendar settings	admin	nl	Agenda instellingen
@@ -69,7 +64,6 @@ choose a category	calendar	nl	Kies een categorie
 close the window	calendar	nl	Venster sluiten
 compose a mail to all participants after the event is saved	calendar	nl	stel een email aan alle deelnemers op nadat de gebeurtenis is opgeslagen
 conflict	calendar	nl	Conflict
-copy of:	calendar	nl	Kopie van:
 copy this event	calendar	nl	Kopieer deze gebeurtenis
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	calendar	nl	Kopieer uw wijzigingen naar het klembord, %1 herlaad het record%2 en voeg ze samen.
 countries	calendar	nl	Landen
@@ -109,13 +103,11 @@ delete this series of recurring events	calendar	nl	Deze serie herhalende gebeurt
 deleted	calendar	nl	verwijderd
 deny resources reservation for private events	calendar	nl	Verbied hulpmiddelen reserveringen voor privë gebeurtenissen
 directory with documents to insert entries	calendar	nl	Map met dokumenten om gegevens in tevoeren
-uninvited	calendar	nl	Uitnodiging teruggetrokken
 display status of events	calendar	nl	Status van afspraken weergeven
 displayed view	calendar	nl	getoonde weergave
 do you want a weekview with or without weekend?	calendar	nl	Wil je weekoverzicht met of zonder weekend?
 do you want to be notified about new or changed appointments? you are not notified about changes you made yourself.<br>you can limit the notifications to certain changes only. each item includes all notifications listed above. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get participant responses like acceptions or rejections too.	calendar	nl	Wilt u worden geinformeerd over nieuwe of gewijzigde afspraken? U wordt geïnformeerd over wijzigingen die u zelf heeft gemaakt.<br />U kunt de de notificaties beperken to alleen bepaalde wijzigingen. Elk item bevat alle notificaties hierboven weergegeven. "Alle wijzigingen" bevat wijziging va titel, beschrijving, deelnemers, maar niet reacties van deelnemers. Als de eigenaar van een afspraak verzocht heeft om een van de notificaties, zal hij of zij altijd reacties krijgen van de deelnemers zoals acceptaties en afwijzigingen.
 do you want to receive a regularly summary of your appointments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	nl	Wilt u per email een periodieke overzichten ontvangen van uw afspraken? </br>Het overzicht wordt verzonden naar uw standaard emailadres op de ochtend dat de afspraak plaatsvind en op maandag voor wekelijkse overzichten. <br /> Er wordt alleen een overzicht verstuurd als er in die afspraken staan geregistreerd.
-do you wish to autoload calendar holidays files dynamically?	admin	nl	Wilt u de feestdagen automatisch downloaden
 download	calendar	nl	Downloaden
 download this event as ical	calendar	nl	Download deze gebeurtenis als iCal
 duration	calendar	nl	Duur
@@ -138,7 +130,6 @@ error: resources reservation in private events is not allowed!!!	calendar	nl	Fou
 error: saving the event !!!	calendar	nl	Fout: opslaan van de gebeurtenis !!!
 error: starttime has to be before the endtime !!!	calendar	nl	Fout: Begintijd moet voor de eindtijd liggen !!!
 error: the entry has been updated since you opened it for editing!	calendar	nl	Fout: het record is gewijzigd sinds je het opende voor bewerking!
-event copied - the copy can now be edited	calendar	nl	Gebeurtenis gekopieerd - de kopie kan nu bewerkt worden
 event deleted	calendar	nl	Gebeurtenis verwijderd
 event details follow	calendar	nl	Afspraak details volgen
 event saved	calendar	nl	Gebeurtenis opgeslagen
@@ -191,20 +182,26 @@ high priority	calendar	nl	hoge prioriteit
 history	calendar	nl	Historie
 history logging	admin	nl	Historie vastleggen
 holiday	calendar	nl	Vakantie
-holiday management	calendar	nl	Feestdagenbeheer
 holidays	calendar	nl	Vakanties
 hours	calendar	nl	uren
 how far to search (from startdate)	calendar	nl	hoe ver vooruit zoeken (vanaf de begindatum)
+how many days to be removed in the future (default 365)	calendar	nl	Hoeveel dagen in de toekomst te verwijderen (standaard 365)
+how many days to be removed in the past (default 100)	calendar	nl	Hoeveel dagen te verwijderen in het verleden (standaard 100)
+how many days to sync in the future (default %1)	calendar	nl	Hoeveel dagen te synchroniseren in de toekomst (standaard %1)
+how many days to sync in the past (default %1)	calendar	nl	Hoeveel dagen te synchroniseren in het verleden (standaard %1)
+how many description lines should be directly visible. further lines are available via a scrollbar.	calendar	nl	Hoeveel beschrijvingsregels moeten direct zichtbaar zijn. Verdere regels zijn beschikbaar via een schuifbalk.
+how many lines of all day events should be directly visible. further lines are available via a mouseover.	calendar	nl	Hoeveel regels van alle daggebeurtenissen direct zichtbaar moeten zijn. Verdere regels zijn beschikbaar via een mouseover.
 how many minutes should each interval last?	calendar	nl	Hoeveel minuten moet ieder interval duren?
+how many separate calendars to show before merging them together	calendar	nl	Minimum aantal gebruikers voor het tonen van een geconsolideerde kalenderweergave, indien minder gebruikers zijn geselecteerd wordt de kalender apart getoond voor week- of dagweergave.
 how many weeks should the multiple week view show?	calendar	nl	Hoeveel weken moet de meerweekse weergave tonen?
 html link to the current record	calendar	nl	HTML link naar huidig record
 ical	calendar	nl	iCal
 ical / rfc2445	calendar	nl	iCal / rfc2445
+ical cannot change the owner of an existing event.  this applies to new events only.	calendar	nl	iCal kan de eigenaar van een bestaande gebeurtenis niet wijzigen. Dit geldt alleen voor nieuwe gebeurtenissen.
 ical export	calendar	nl	iCal export
 ical file	calendar	nl	iCal bestand
 ical import	calendar	nl	iCal import
 ical successful imported	calendar	nl	iCal goed geimporteerd
-if checked holidays falling on a weekend, are taken on the monday after.	calendar	nl	wanneer deze optie is geactiveerd zullen feestdagen die vallen in het weekend, genomen worden op de maandag daarna.
 if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	nl	Indien u hier geen wachtwoord instelt, is de informatie beschikbaar voor iedereen die de URL kent!!!
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	calendar	nl	Als u hier een specifieke map (volledig vfs pad) definieert, %1 dan wordt er een actie getoond voor elk document, Het icoon staat dan toe dat het document wordt gedownload met de data toegevoegd.
 if you specify an export definition, it will be used when you export	calendar	nl	Als u een export definitie kiest, zal deze worden gebruikt bij de export
@@ -228,7 +225,6 @@ links, attachments	calendar	nl	Links, bijlagen
 list of files linked to the current record	calendar	nl	Lijs van bestanden gelinkt aan huidig record
 listview	calendar	nl	Lijstweergave
 location	calendar	nl	Plaats
-location to autoload from	admin	nl	Plaats om van te laden
 location, start- and endtimes, ...	calendar	nl	Plaats, begin- en eindtijden
 mail all participants	calendar	nl	Stuur een email naar alle deelnemers
 make freebusy information available to not logged in persons?	calendar	nl	Maak vrij/bezet informatie beschikbaar voor niet ingelogde personen?
@@ -253,8 +249,8 @@ non blocking	calendar	nl	niet blokkerend
 not	calendar	nl	niet
 notification messages for added events	calendar	nl	Notificatieberichten voor toegevoegde afspraken
 notification messages for canceled events	calendar	nl	Notificatieberichten voor geannuleerde afspraken
-notification messages for uninvited participants	calendar	nl	Notificatieberichten voor deelnemers waarvan de uitnodiging is ingetrokken
 notification messages for modified events	calendar	nl	Notificatieberichten voor gewijzigde afspraken
+notification messages for uninvited participants	calendar	nl	Notificatieberichten voor deelnemers waarvan de uitnodiging is ingetrokken
 notification messages for your alarms	calendar	nl	Notificatieberichten voor uw alarms
 notification messages for your responses	calendar	nl	Notificatieberichten voor uw reacties
 number of records to read (%1)	calendar	nl	Aantal records om te lezen (%1)
@@ -318,7 +314,6 @@ select multiple contacts for a further action	calendar	nl	Kies meerdere contacte
 select resources	calendar	nl	Selecteer hulpmiddelen
 select who should get the alarm	calendar	nl	Selecteer wie de herinnering moet ontvangen
 selected range	calendar	nl	Gekozen range
-set a year only for one-time / non-regular holidays.	calendar	nl	Stel een een jaar in voor opzichstaande / niet reguliere feestdagen
 set new events to private	calendar	nl	Zet nieuwe afspraken op privé
 setting lock time calender	admin	nl	Stel een gegevenslock tijd in voor de agenda (standaard 1 seconde)
 should new events created as private by default ?	calendar	nl	Moeten nieuwe afspraken standaard als privé worden aangemaakt?
@@ -355,8 +350,8 @@ this entry is opened by user:	calendar	nl	Dit record werd geopend binnen het ing
 this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	nl	Deze groep is voorgeselecteerd wanneer u de planner opent. U kunt deze selectie in de planner eventueel wijzigen.
 this message is sent for canceled or deleted events.	calendar	nl	Deze notificatie wordt verstuurd voor geannuleerde en verwijderde afspraken.
 this message is sent for modified or moved events.	calendar	nl	Deze notificatie wordt verstuurd voor gewijzigde afspraken.
-this message is sent to uninvited participants.	calendar	nl	Deze notificatie wordt verstuurd aan deelnemers waarvan de uitnodiging is ingetrokken.
 this message is sent to every participant of events you own, who has requested notifcations about new events.<br>you can use certain variables which get substituted with the data of the event. the first line is the subject of the email.	calendar	nl	Deze notificatie wordt verstuurd naar elke deelnemer van uw afspraken die notificatie voor nieuwe afspraken heeft geactiveerd.<br /> U kunt bepaalde plaatsvervangende woorden invullen  die worden gebruikt met de gegevens van de afspraak. De eerste regel is het onderwerp van de email.
+this message is sent to uninvited participants.	calendar	nl	Deze notificatie wordt verstuurd aan deelnemers waarvan de uitnodiging is ingetrokken.
 this message is sent when you accept, tentative accept or reject an event.	calendar	nl	Deze notificatie wordt verstuurd wanneer u afspraken accepteert, op proef accepteert of afwijst.
 this message is sent when you set an alarm for a certain event. include all information you might need.	calendar	nl	Deze notificatie wordt verstuurd als u een alarm instelt voor een bepaalde afspraak. Geef aan welke informatie u mogelijker nodig heeft.
 this module displays the current month	calendar	nl	Deze module toont de huidige maand
@@ -372,6 +367,7 @@ to many might exceed your execution-time-limit	calendar	nl	te veel kan mogelijk 
 translation	calendar	nl	Vertaling
 tue	calendar	nl	Din
 two weeks	calendar	nl	twee weken
+uninvited	calendar	nl	Uitnodiging teruggetrokken
 updated	calendar	nl	Bijgewerkt
 use end date	calendar	nl	Gebruik einddatum
 use the selected time and close the popup	calendar	nl	gebruik de geselecteerde tijd en sluit het popupvenster

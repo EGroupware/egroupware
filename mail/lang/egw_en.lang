@@ -256,7 +256,7 @@ force html	mail	en	force HTML
 force plain text	mail	en	force plain text
 forward	mail	en	Forward
 forward as attachment	mail	en	forward as attachment
-forward inline	mail	en	forward inline
+forward inline	mail	en	forward
 forward messages to:	mail	en	Forward messages to:
 forward messages:	mail	en	Forward messages:
 forward to	mail	en	forward to
@@ -318,7 +318,7 @@ in mailbox: %1, with id: %2, and partid: %3	mail	en	In Mailbox: %1, with ID: %2,
 in order to protect your privacy all external sources within this email are blocked.	mail	en	In order to protect your privacy all external sources within this email are blocked.
 inbox	mail	en	INBOX
 initialization of mail failed. please use the wizard to cope with the problem.	mail	en	The initialisation of the mail module failed. Please use the configuration wizard to correct the configuration.
-inline	mail	en	Inline
+inline	mail	en	forward
 insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)	mail	en	insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)
 job	mail	en	job
 junk	mail	en	Junk
@@ -555,7 +555,7 @@ set flags	mail	en	set flags
 set it as default:	mail	en	set it as default:
 set predefined values for compose...	mail	en	Set predefined values for compose ...
 should new messages show up on the home page	mail	en	Should new messages show up on the Home page
-should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	en	Should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.
+should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	en	Should signature be inserted after (standard) or before a reply or forward, and should signature be visible and changeable during compose.
 show	mail	en	show
 show all addresses	mail	en	Show all Addresses
 show all attachments	mail	en	Show all attachments

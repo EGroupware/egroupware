@@ -16,13 +16,10 @@ all categories	calendar	lv	visas kategorijas
 all day	calendar	lv	VIsu dienu
 always	calendar	lv	Vienmēr
 apply the changes	calendar	lv	Lietot izmaiņas
-are you sure you want to delete this country ?	calendar	lv	TIešām vēlies dzēst šo valsti?
-are you sure you want to delete this holiday ?	calendar	lv	Tiešām vēlies dzēst šo brīvdienu?
 before the event	calendar	lv	pirms šī notikuma
 birthday	calendar	lv	Dzimšanas diena
 birthdays	admin	lv	Dzimšanas dienas
 calendar event	calendar	lv	Kalendārs- notikums
-calendar holiday management	admin	lv	Kalendāra brīvdienu vadība
 calendar preferences	calendar	lv	Kalendāra izvēles
 calendar settings	admin	lv	Kalendāra uzstādījumi
 calendar-fieldname	calendar	lv	Kalendāra lauka nosaukums
@@ -48,7 +45,6 @@ default calendar view	calendar	lv	Noklusētais kalendāra skats
 delete series	calendar	lv	Dzēš sērijas
 deleted	calendar	lv	Izdzēsts
 display status of events	calendar	lv	Parādīt notikumu statusu
-do you wish to autoload calendar holidays files dynamically?	admin	lv	Vai vēlies dinamisku kalendāra brīvdienu automātisku ielādi?
 download	calendar	lv	Lejupielādēt
 duration	calendar	lv	Izpildes laiks
 edit series	calendar	lv	Rediģēt sērijas
@@ -74,10 +70,17 @@ h	calendar	lv	h
 high priority	calendar	lv	augsta prioritāte
 history	calendar	lv	Vēsture
 holiday	calendar	lv	Brīvdiena
-holiday management	calendar	lv	Brīvdienu vadība
 holidays	calendar	lv	Brīvdienas
 hours	calendar	lv	stundas
+how many days to be removed in the future (default 365)	calendar	lv	Cik dienas tiks noņemtas nākotnē (noklusējuma 365)
+how many days to be removed in the past (default 100)	calendar	lv	Cik dienas jādzēš pagātnē (pēc noklusējuma 100)
+how many days to sync in the future (default %1)	calendar	lv	Cik dienas sinhronizēt nākotnē (noklusējuma %1)
+how many days to sync in the past (default %1)	calendar	lv	Cik dienas sinhronizēt pagātnē (noklusējuma %1)
+how many description lines should be directly visible. further lines are available via a scrollbar.	calendar	lv	Cik daudzām apraksta rindām jābūt tieši redzamām. Papildu rindas ir pieejamas, izmantojot ritināšanas joslu.
+how many lines of all day events should be directly visible. further lines are available via a mouseover.	calendar	lv	Cik daudzām visu dienu notikumu rindām jābūt tieši redzamām. Papildu rindas ir pieejamas, izmantojot peles kursoru.
+how many separate calendars to show before merging them together	calendar	lv	Minimālais lietotāju skaits, lai parādītu konsolidētu kalendāra skatu, ja izvēlēts mazāks lietotāju skaits, kalendārs tiek rādīts atsevišķi nedēļas vai dienas skatam.
 ical / rfc2445	calendar	lv	iCal / rfc2445
+ical cannot change the owner of an existing event.  this applies to new events only.	calendar	lv	iCal nevar mainīt esoša notikuma īpašnieku. Tas attiecas tikai uz jauniem notikumiem.
 ignore conflict	calendar	lv	Ignorēt pretrunu
 import	calendar	lv	Importēt
 import csv-file	common	lv	Importēt CSV datni
@@ -88,7 +91,6 @@ lastname of person to notify	calendar	lv	Personas, kurai jāpaziņō, uzvārds
 link to view the event	calendar	lv	Saistīt, lai parādītu notikumu
 links	calendar	lv	Saites
 location	calendar	lv	Novietojums
-location to autoload from	admin	lv	VIeta, no kuras automātiski ielādēt
 minutes	calendar	lv	minūtes
 modified	calendar	lv	Pārveidots
 mon	calendar	lv	Pirmdiena
@@ -146,7 +148,6 @@ rule	calendar	lv	Kārtula
 sat	calendar	lv	Sestdiena
 scheduling conflict	calendar	lv	Pretrunas plānošana
 select resources	calendar	lv	Iezīmē resursus
-set a year only for one-time / non-regular holidays.	calendar	lv	Uzstādi tikai gadu vienas reizes/neregulārām brīvdienām
 show list of upcoming events	calendar	lv	Rādīt gaidāmo notikumu sarakstu
 single event	calendar	lv	atsevišķs notikums
 start date/time	calendar	lv	Sākums datums/laiks

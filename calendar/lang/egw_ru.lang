@@ -109,7 +109,6 @@ close the window	calendar	ru	Закрыть окно
 compose a mail to all participants after the event is saved	calendar	ru	Составить письмо ко всем участникам после сохранения события
 configuration settings	calendar	ru	Настройки конфигурации
 conflict	calendar	ru	Конфликт
-copy of:	calendar	ru	Копия
 copy this event	calendar	ru	Скопировать данное событие
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	calendar	ru	Скопируйте ваши изменения в буфер обмена, %1 обновите запись%2 и объедините их.
 countries	calendar	ru	Страны
@@ -299,6 +298,7 @@ how much entries to skip	calendar	ru	Сколько записей пропус�
 html link to the current record	calendar	ru	HTML-ссылка на запись
 ical	calendar	ru	iCal
 ical / rfc2445	calendar	ru	iCal / rfc2445
+ical cannot change the owner of an existing event.  this applies to new events only.	calendar	ru	iCal не может изменить владельца существующего события. Это относится только к новым событиям.
 ical export	calendar	ru	Экпорт iCal
 ical file	calendar	ru	Файл iCal
 ical import	calendar	ru	Импорт iCal

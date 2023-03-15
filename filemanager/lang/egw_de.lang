@@ -105,7 +105,7 @@ disable	filemanager	de	Ausschalten
 disable versioning for this mountpoint	filemanager	de	Versionierung für diesen Mountpoint ausschalten
 display and modification of content	filemanager	de	Anzeigen und Verändern des Inhaltes
 display of content	filemanager	de	Anzeigen des Inhaltes
-do you want more information about epl subscription?	common	de	Wollen Sie mehr Informationen über die EGroupware Vollversion EPL?
+do you want more information about epl subscription?	common	de	Wollen Sie mehr Informationen über die EGroupware EPL?
 do you want to overwrite existing file %1 in directory %2?	filemanager	de	Wollen Sie die bestehende Datei %1 im Ordner %2 überschreiben?
 do you want to overwrite the existing file %1?	filemanager	de	Wollen Sie die existierende Datei %1 überschreiben?
 download	filemanager	de	Herunterladen
@@ -162,7 +162,7 @@ files from subdirectories	filemanager	de	Dateien aus Unterordner
 files in this directory	filemanager	de	Dateien in diesem Ordner
 filesystem	filemanager	de	Dateisystem
 filesystem check reported no problems.	filemanager	de	Überprüfung des Dateisystems ergab keine Probleme
-filesystem: mount directory (inside /var/lib/egroupware!) from host filesystem	filemanager	de	Dateisystem: mounted Verzeichnisse (innerhalb von /var/lib/egroupware) vom Dateisystem des Hosts
+filesystem: mount directory (inside /var/lib/egroupware!) from host filesystem	filemanager	de	Dateisystem: Mounted Verzeichnisse (innerhalb von /var/lib/egroupware) vom Dateisystem des Hosts
 finally delete	filemanager	de	Endgültig löschen
 finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	de	Ältere Versionen und gelöschte Dateien unter dem angegebenen Ordner endgültig löschen.\n\nDas kann NICHT rückgängig gemacht werden!
 finally delete this version	filemanager	de	Diese Version endgültig löschen
@@ -289,7 +289,7 @@ show link "your home directory*" in side box menu?*	filemanager	de	Möchten Sie 
 show link to filemanagers basedirectory (/) in side box menu?	filemanager	de	Zeige die Verknüpfung zum Basisordner (/) des Dateimanagers im Seitenmenü?
 size	filemanager	de	Größe
 smb, webdavs and vfs require a username!	filemanager	de	SMB, WebDAVs und VFS benötigen einen Benutzernamen!
-smb: mount samba or windows fileserver shares	filemanager	de	SMB: mounten von Freigaben eines Samba oder Windows Dateiserver
+smb: mount samba or windows fileserver shares	filemanager	de	SMB: Mounten von Freigaben eines Samba- oder Windows-Dateiserver
 some functionalities require superuser permissions, please login here as filemanager superuser - allowed users are defined in setup.	filemanager	de	Einige Funktionalitäten benötigen Superuser-Rechte. Bitte loggen sie sich hier als Dateimanager Superuser ein (Zulässige Benutzer werden im Setup festgelegt).
 sqlfs statistics	filemanager	de	sqlFS Statistik
 start search	filemanager	de	Suche starten
@@ -329,7 +329,7 @@ versioning requires egroupware epl	filemanager	de	Versionierung benötigt EGroup
 vfs mounts and versioning	common	de	VFS einhängen und versionieren
 view link	filemanager	de	Zeige Link
 webdav link copied into clipboard	filemanager	de	WebDAV-Link in die Zwischenablage kopiert
-webdavs: mount egroupware or *cloud shares	filemanager	de	WebDAVs: mounten von EGroupware oder *Cloud Freigaben
+webdavs: mount egroupware or *cloud shares	filemanager	de	WebDAVs: Mounten von EGroupware oder anderen *Cloud-Freigaben
 who should be allowed to finally delete deleted files or old versions of a file:	filemanager	de	Wer soll gelöschte Dateien oder ältere Versionen endgültig löschen dürfen:
 writable share link	filemanager	de	Beschreibbare Freigabe-Link
 wrong username or password!	filemanager	de	Falscher Benutzername oder Passwort!
