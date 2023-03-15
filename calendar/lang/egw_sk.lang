@@ -109,7 +109,6 @@ close the window	calendar	sk	Zavrieť okno
 compose a mail to all participants after the event is saved	calendar	sk	Po uložení udalosti napísať E-mail všetkým účastníkom
 configuration settings	calendar	sk	Konfiguračné nastavenia
 conflict	calendar	sk	Konflikt
-copy of:	calendar	sk	Kópia (čoho):
 copy this event	calendar	sk	Kopírovať udalosť
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	calendar	sk	Kopírovať vaše zmeny do schránky, %1znovunačítať záznam%2 a zlúčiť ich.
 countries	calendar	sk	Krajiny
@@ -298,6 +297,7 @@ how much entries to skip	calendar	sk	Koľko položiek preskočiť?
 html link to the current record	calendar	sk	HTML odkaz na aktuálny záznam
 ical	calendar	sk	iCal
 ical / rfc2445	calendar	sk	iCal - rfc2445
+ical cannot change the owner of an existing event.  this applies to new events only.	calendar	sk	V aplikácii iCal nie je možné zmeniť vlastníka existujúcej udalosti. Platí to len pre nové udalosti.
 ical export	calendar	sk	Export iCal
 ical file	calendar	sk	Súbor iCal
 ical import	calendar	sk	Import iCal

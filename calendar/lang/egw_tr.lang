@@ -13,13 +13,10 @@ alarm management	calendar	tr	Alarm Yönetimi
 alarms	calendar	tr	Alarmlar
 all day	calendar	tr	Tüm Gün
 always	calendar	tr	her zaman
-are you sure you want to delete this country ?	calendar	tr	Bu ülkeyi silmek istediğinize emin misiniz?
-are you sure you want to delete this holiday ?	calendar	tr	Bu tatili silmek istediğinize emin misiniz?
 before the event	calendar	tr	etkinlikten önce
 birthday	calendar	tr	Do?um Tarihi
 birthdays	admin	tr	Do?um Tarihleri
 calendar event	calendar	tr	Takvim Etkinliği
-calendar holiday management	admin	tr	Takvim Tatil Yönetimi
 calendar preferences	calendar	tr	Takvim Seçenekleri
 calendar settings	admin	tr	Takvim Ayarları
 calendar-fieldname	calendar	tr	Takvim-Alan Adı
@@ -44,8 +41,6 @@ delete series	calendar	tr	Seriyi sil
 deleted	calendar	tr	Silindi
 display status of events	calendar	tr	Etkinliklerin durumlarını görüntüle
 do you want to be notified about new or changed appointments? you are not notified about changes you made yourself.<br>you can limit the notifications to certain changes only. each item includes all notifications listed above. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get participant responses like acceptions or rejections too.	calendar	tr	Yeni ya da değişiklik yapılmış toplantılardan haberdar olmak ister misiniz? Kendi yaptığınız değişiklikler hakkında da uyarı emailleri alacaksınız.<br>Uyarıları istediğiniz belli eylemlerle sınırlandırabilirsiniz.Her bir öge yukarıda listelenen bütün uyarı metodlarına sahiptir. Bütün değişiklikler; başlık, açıklama, katılımcı değişikliklerini içerir. Bir etkinlik sahibi bir uyarı talep etmişse; katılımcıların kabul ve red mesajlarını da ayrıca uyarı olarak alacaktır.
-do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	tr	Toplantılarınızın düzenli bir özetini e-maille almak ister misiniz?<br>Özet bilgi toplantı günü sabahı ya da haftalık özetler için ise pazartesi sabahı gönderilecektir.
-do you wish to autoload calendar holidays files dynamically?	admin	tr	Tatil takvimi dosyalarının otomatik olarak yüklenmesini ister misiniz?
 download	calendar	tr	İndir
 duration	calendar	tr	Süre
 edit series	calendar	tr	Seriyi düzenle
@@ -60,7 +55,6 @@ extended updates always include the complete event-details. ical's can be import
 fieldseparator	calendar	tr	Alan Ayracı
 firstname of person to notify	calendar	tr	Uyarılacak kişinin ilk adı
 format of event updates	calendar	tr	Etkinlik güncellemelerinin formatı
-freebusy: unknow user '%1', wrong password or not availible to not loged in users !!!	calendar	tr	Müsait meşgul: Bilinmeyen kullanıcı '%1', hatalı şifre veya giriş yapmamış kullanıcılar için yapılamaz.
 fri	calendar	tr	Cum
 full description	calendar	tr	Tam Açıklama
 fullname of person to notify	calendar	tr	Uyarılacak kişinin tam adı
@@ -72,11 +66,17 @@ group public only	calendar	tr	Sadece Grup Umumi(Public)
 here is your requested alarm.	calendar	tr	İstediğiniz alarm buradadır.
 high priority	calendar	tr	yüksek öncelik
 holiday	calendar	tr	Tatil
-holiday management	calendar	tr	Tatil Yönetimi
 holidays	calendar	tr	Tatiller
 hours	calendar	tr	saat
+how many days to be removed in the future (default 365)	calendar	tr	Gelecekte kaç gün kaldırılacak (varsayılan 365)
+how many days to be removed in the past (default 100)	calendar	tr	Geçmişte kaç gün kaldırılacak (varsayılan 100)
+how many days to sync in the future (default %1)	calendar	tr	Gelecekte kaç gün senkronize edilecek (varsayılan %1)
+how many days to sync in the past (default %1)	calendar	tr	Geçmişte kaç gün senkronize edilecek (varsayılan %1)
+how many description lines should be directly visible. further lines are available via a scrollbar.	calendar	tr	Kaç açıklama satırının doğrudan görünür olması gerektiği. Diğer satırlar bir kaydırma çubuğu aracılığıyla kullanılabilir.
+how many lines of all day events should be directly visible. further lines are available via a mouseover.	calendar	tr	Tüm gün etkinliklerinin kaç satırı doğrudan görünür olmalıdır. Diğer satırlar fareyle üzerine gelindiğinde kullanılabilir.
+how many separate calendars to show before merging them together	calendar	tr	Birleştirilmiş takvim görünümünü göstermek için minimum kullanıcı sayısı, daha az kullanıcı seçilirse takvim hafta veya gün görünümü için ayrı ayrı görüntülenir.
 ical / rfc2445	calendar	tr	iCal / rfc2445
-if checked holidays falling on a weekend, are taken on the monday after.	calendar	tr	Seçilirse, haftasonuna gelen tatiller/bayramlar ilk pazartesine ötelenir.
+ical cannot change the owner of an existing event.  this applies to new events only.	calendar	tr	iCal mevcut bir etkinliğin sahibini değiştiremez. Bu yalnızca yeni etkinlikler için geçerlidir.
 ignore conflict	calendar	tr	çakışma Yoksay
 import	calendar	tr	?thal Et
 import csv-file	common	tr	CSV Dosyası İthal Et
@@ -85,7 +85,6 @@ last	calendar	tr	son
 lastname of person to notify	calendar	tr	Uyarılacak kişinin soyadı
 link to view the event	calendar	tr	Etkinliği görüntülemek için link
 location	calendar	tr	Konum
-location to autoload from	admin	tr	Otomatik yükleme yapılacak konum
 minutes	calendar	tr	dakika
 modified	calendar	tr	Değiştirilmiş
 mon	calendar	tr	Ay
@@ -110,7 +109,6 @@ olddate	calendar	tr	Eski tarih
 on %1 %2 %3 your meeting request for %4	calendar	tr	%4 için %1 %2 %3'deki toplantı talepleriniz
 on all modification, but responses	calendar	tr	bütün değişikliklerde ama yanıtlarda değil
 on any time change too	calendar	tr	herhangi zaman değişiminde de
-on invitation / cancelation only	calendar	tr	davet/iptal durumlarında sadece
 on participant responses too	calendar	tr	katılımcı cavaplarında da
 on time change of more than 4 hours too	calendar	tr	4 saatten fazla zaman değişikliklerinde de
 open todo's:	calendar	tr	Yapılacak İşleri Aç:
@@ -138,10 +136,8 @@ reset	calendar	tr	Sıfırla
 rule	calendar	tr	Kural
 sat	calendar	tr	Cte
 scheduling conflict	calendar	tr	Zamanlama çakışması
-set a year only for one-time / non-regular holidays.	calendar	tr	Yılı sadece bir kere ayarla / düzensiz tatil/bayram
 set new events to private	calendar	tr	Yeni etkinlikleri özel olarak ayarla
 should new events created as private by default ?	calendar	tr	Yeni etkinlikler varsayılan olarak 'özel' mi olmalı?
-should the status of the event-participants (accept, reject, ...) be shown in brakets after each participants name ?	calendar	tr	Bir etkinlik katılımcısının kabul/red bilgisi her katılımcı isminden sonra parantez içinde gösterilmeli midir?
 show list of upcoming events	calendar	tr	Yaklaşan Etkinlikleri görüntüle
 single event	calendar	tr	tek etkinlik
 start date/time	calendar	tr	Başlangıç Tarih/Zaman
@@ -179,10 +175,7 @@ work day ends on	calendar	tr	Mesai günleri bitişi
 work day starts on	calendar	tr	Mesai günleri başlangıcı
 yearly	calendar	tr	Yıllık
 yearview	calendar	tr	Yıllık Görünüm
-you can either set a year or a occurence, not both !!!	calendar	tr	ya bir 'Yıl' ya da 'Olay' tanımlamalısınız, ikisini birlikte değil !!!
-you can only set a year or a occurence !!!	calendar	tr	Sadece yıl ya da olay tanımlayabilirsiniz !!!
 you do not have permission to read this record!	calendar	tr	Bu kaydı okumak için yeterli izniniz yok !
 you have a meeting scheduled for %1	calendar	tr	%1 için zamanlanmış bir toplantınız var
-you need to set either a day or a occurence !!!	calendar	tr	Bir gün ya da olay seçmek durumundasınız !!!
 your meeting scheduled for %1 has been canceled	calendar	tr	%1 için ayarlanmış toplantınız iptal edilmiştir
 your meeting that had been scheduled for %1 has been rescheduled to %2	calendar	tr	%1 için zayarlanmış toplantınız %2 için yeniden ayarlanmıştır.

@@ -54,7 +54,7 @@ always show html emails	mail	de	HTML-E-Mails immer anzeigen
 always show notifiction	mail	de	Benachrichtigungen immer anzeigen
 an error happend while trying to remove acl rights from the account %1!	mail	de	Ein Fehler trat auf beim Versuch die Zugriffskontrollrechte vom Konto %1 zu entfernen!
 and the rule with priority %1, now got the priority %2	mail	de	Die Regel mit Priorität %1 hat jetzt die Priorität %2
-answered	mail	de	beantworted
+answered	mail	de	Beantworted
 any of	mail	de	mit einem
 any status	mail	de	Alle Status
 append	mail	de	hinzufügen
@@ -318,7 +318,7 @@ in mailbox: %1, with id: %2, and partid: %3	mail	de	Im Mail-Ordner: %1, mit der 
 in order to protect your privacy all external sources within this email are blocked.	mail	de	Um Ihre Privatsphäre zu schützen, werden alle externen Inhalte in dieser E-Mail blockiert.
 inbox	mail	de	Posteingang
 initialization of mail failed. please use the wizard to cope with the problem.	mail	de	Die Initializierung des Mail-Moduls ist fehlgeschlagen. Bitte benutzen Sie den Konfigurationsassistenten um die Konfiguration zu korrigieren.
-inline	mail	de	Weiterleiten Inline
+inline	mail	de	Weiterleiten
 insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)	mail	de	Einfügen der Signatur am Anfang einer neuen E-Mail (auch Antworten/Weiterleiten). <br>Die Signatur ist dann Teil der E-Mail und kann möglicherweise nicht über die Funktionalität >Signatur ändern/auswählen< verändert werden.
 job	mail	de	dienstlich
 junk	mail	de	Spam
@@ -593,7 +593,7 @@ sources	mail	de	HTML-Quellcode
 spamtitan api url	mail	de	SpamTitan API URL
 spamtitan integration requires epl version	mail	de	SpamTitan-Integration benötigt die EPL Version
 start new messages with mime type plain/text or html?	mail	de	Sollen neue E-Mails als plain/text oder HTML Nachrichten verfasst werden?
-start reply messages with mime type plain/text or html or try to use the displayed format (default)?	mail	de	Antworten auf und Inline-Weiterleiten von E-Mails im Text-, im HTML-Format oder entsprechend des Formats, in dem die E-Mail vom Sender ursprünglich verfasst wurde.
+start reply messages with mime type plain/text or html or try to use the displayed format (default)?	mail	de	Antworten auf und weiterleiten von E-Mails im Text-, im HTML-Format oder entsprechend des Formats, in dem die E-Mail vom Sender ursprünglich verfasst wurde.
 step 1: imap - incoming mail	mail	de	1. Schritt: Posteingang (IMAP) einrichten
 step 2: folder	mail	de	2. Schritt: Ordner einrichten
 step 3: sieve - server side mail filtering	mail	de	3. Schritt: Serverseitige Filterregeln (Sieve) einrichten
@@ -672,7 +672,7 @@ what to do when you delete a message	mail	de	Wählen Sie die Methode aus, wenn S
 what to do when you send a message	mail	de	Wählen Sie die Aktion aus, wenn eine Nachricht versendet wird. EGroupware kann  z. B. die Nachricht in den Gesendet-Ordner kopieren.
 when deleting messages	mail	de	Wenn Nachrichten gelöscht werden
 when displaying messages in a popup, re-use the same popup for all or open a new popup for each message	mail	de	Dürfen E-Mail in dem gleichen Fenster angezeigt werden, oder wünschen Sie nur jede E-Mail ein neues Fenster?
-when saving messages as item of a different app	mail	de	Wählen Sie das Format zur Konvertierung von E-Mails in andere Anwendungen aus. Beispielsweise das Speichern von E-Mails als InfoLog. Wir empfehlen .eml, um die Original E-Mail zu erhalten und darauf zu antworten.
+when saving messages as item of a different app	mail	de	Wählen Sie das Format zur Konvertierung von E-Mails in andere Anwendungen aus. Beispielsweise das Speichern von E-Mails als InfoLog. Wir empfehlen .eml, um die original E-Mail zu erhalten und darauf zu antworten.
 when sending messages	mail	de	Wenn Nachrichten versendet werden
 which folders (additional to the sent folder) should be displayed using the sent folder view schema	mail	de	Welche E-Mail-Ordner, zusätzlich zum Gesendet-Ordner, sollen im Anzeigenschema analog des Gesendet-Ordners  dargestellt werden (Empfänger-Adresse, anstatt der Absender-Adresse).
 which folders - in general - should not be automatically created, if not existing	mail	de	Welche E-Mail-Ordner sollen generell NICHT automatisch angelegt werden, wenn Sie nicht existieren? Wählen Sie hier die Ordner aus, die NICHT von EGroupware automatisch angelegt werden dürfen.

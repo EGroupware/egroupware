@@ -13,13 +13,10 @@ alarm management	calendar	uk	Керування попередженнями
 alarms	calendar	uk	Попередження
 all day	calendar	uk	На повний день
 always	calendar	uk	Завжди
-are you sure you want to delete this country ?	calendar	uk	Ви впевнені, що хочете видалити цю країну?
-are you sure you want to delete this holiday ?	calendar	uk	Ви впевнені, що хочете видалити це свято?
 before the event	calendar	uk	перед подією
 birthday	calendar	uk	День народження
 birthdays	admin	uk	Дні народження
 calendar event	calendar	uk	Календарна подія
-calendar holiday management	admin	uk	Календар - Керування святами
 calendar preferences	calendar	uk	Параметри Календарю
 calendar settings	admin	uk	Установки Календарю
 calendar-fieldname	calendar	uk	Календар - Ім'я поля
@@ -46,7 +43,6 @@ deleted	calendar	uk	Видалено
 display status of events	calendar	uk	Показувати статус подій
 do you want to be notified about new or changed appointments? you are not notified about changes you made yourself.<br>you can limit the notifications to certain changes only. each item includes all notifications listed above. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get participant responses like acceptions or rejections too.	calendar	uk	Чи хочете Ви отримувати повідомлення щодо нових або змінених призначень? Ви будете їх отримувати щодо змін, які зробили самі.<br>Ви можете обмежити отрумавання повідомлень тілько щодо деяких змін. Кожний елемент включає всі повідомлення, що вказані вище. Всі зміни включають зміни назви, опису, учасників, але не відповіді учасників. Якщо власник події захоче отримувати повідомлення, він завжди буде отримувати і відповіді учасників (Відмова, Прийнято, тощо);
 do you want to receive a regularly summary of your appointments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	uk	Чи хочете Ви отримувати по email регулярні конспективні нагадування про Ваші призначення?<br>Вони будуть надсилатись на Вашу стандартну email-адресу кожного ранку, або по понеділках відносно подій тиждня.<br>І тільки у випадках нявності подій у віповідний день або тиждень.
-do you wish to autoload calendar holidays files dynamically?	admin	uk	Чи бажаєте Ви загружати файли святкових днів динамічно?
 download	calendar	uk	Зкачати
 duration	calendar	uk	Тривалість
 edit series	calendar	uk	Редагувати серію
@@ -73,11 +69,17 @@ group public only	calendar	uk	Публічне для групи
 here is your requested alarm.	calendar	uk	Це нагадування, яке Ви просили.
 high priority	calendar	uk	Високий пріоритет
 holiday	calendar	uk	Свято
-holiday management	calendar	uk	Керування святами
 holidays	calendar	uk	Свята
 hours	calendar	uk	години
+how many days to be removed in the future (default 365)	calendar	uk	Скільки днів буде видалено в майбутньому (за замовчуванням 365)
+how many days to be removed in the past (default 100)	calendar	uk	Скільки днів видаляти в минулому (за замовчуванням 100)
+how many days to sync in the future (default %1)	calendar	uk	Через скільки днів синхронізувати в майбутньому (за замовчуванням %1)
+how many days to sync in the past (default %1)	calendar	uk	Скільки днів синхронізувати в минулому (за замовчуванням %1)
+how many description lines should be directly visible. further lines are available via a scrollbar.	calendar	uk	Скільки рядків опису має бути безпосередньо видимим. Інші рядки доступні через смугу прокрутки.
+how many lines of all day events should be directly visible. further lines are available via a mouseover.	calendar	uk	Скільки рядків усіх подій за день має бути безпосередньо видимим. Додаткові рядки доступні при наведенні миші.
+how many separate calendars to show before merging them together	calendar	uk	Мінімальна кількість користувачів для відображення консолідованого календаря, якщо вибрано менше користувачів, календар відображається окремо для перегляду тижня або дня.
 ical / rfc2445	calendar	uk	iCal / rfc2445
-if checked holidays falling on a weekend, are taken on the monday after.	calendar	uk	Якщо відмічені свята припадають на вихідні, то наступний понеділок теж вихідний.
+ical cannot change the owner of an existing event.  this applies to new events only.	calendar	uk	iCal не може змінити власника існуючої події. Це стосується лише нових подій.
 ignore conflict	calendar	uk	Ігнорувати конфлікт
 import	calendar	uk	Імпорт
 import csv-file	common	uk	Імпортувати CSV-файл
@@ -87,7 +89,6 @@ last changed	calendar	uk	Востаннє змінено
 lastname of person to notify	calendar	uk	Прізвище людини для повідомлення
 links	calendar	uk	Посилання
 location	calendar	uk	Місце
-location to autoload from	admin	uk	Місце, з якого автоматично загрузити.
 minutes	calendar	uk	хвилини
 modified	calendar	uk	Змінено
 mon	calendar	uk	Пн
@@ -139,7 +140,6 @@ reset	calendar	uk	Переввести
 rule	calendar	uk	Правило
 sat	calendar	uk	Сб
 scheduling conflict	calendar	uk	Конфлікт розкладу
-set a year only for one-time / non-regular holidays.	calendar	uk	Вкажіть рік тільки для одноразових чи нерегулярних свят.
 set new events to private	calendar	uk	Встановлювати нові події як особисті.
 should new events created as private by default ?	calendar	uk	Чи повинні нові події створюватись як особисті?
 should the status of the event-participants (accept, reject, ...) be shown in brackets after each participants name ?	calendar	uk	Показувати відмітки учасників події (прийнято, відхилено,...) в дужках після кожного імені учасника?

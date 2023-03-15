@@ -302,6 +302,7 @@ how much entries to skip	calendar	it	Quanti inserimenti saltare
 html link to the current record	calendar	it	Collegamento HTML al record attuale
 ical	calendar	it	iCal
 ical / rfc2445	calendar	it	iCal / rfc2445
+ical cannot change the owner of an existing event.  this applies to new events only.	calendar	it	iCal non può cambiare il proprietario di un evento esistente. Questo vale solo per i nuovi eventi.
 ical export	calendar	it	Esportazione iCal
 ical file	calendar	it	file iCal
 ical import	calendar	it	Importazione iCal

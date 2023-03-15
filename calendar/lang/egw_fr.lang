@@ -291,12 +291,15 @@ how many days to be removed in the past (default 100)	calendar	fr	Combien de jou
 how many days to sync in the future (default %1)	calendar	fr	Combien de jour à synchroniser dans le futur (défaut %1)
 how many days to sync in the past (default %1)	calendar	fr	Combien de jour à synchroniser dans le passé (défaut %1)
 how many description lines should be directly visible. further lines are available via a scrollbar.	calendar	fr	Combien de lignes de descriptions devraient être directement visibles. Les lignes supplémentaires sont disponibles via une barre de défilement.
+how many lines of all day events should be directly visible. further lines are available via a mouseover.	calendar	fr	Combien de lignes d'événements de tous les jours doivent être directement visibles. D'autres lignes sont disponibles par un survol de la souris.
 how many minutes should each interval last?	calendar	fr	Combien de minutes doit durer chaque intervalle ?
+how many separate calendars to show before merging them together	calendar	fr	Nombre minimum d'utilisateurs pour afficher une vue consolidée du calendrier, si moins d'utilisateurs sont sélectionnés, le calendrier est affiché séparément pour la semaine ou la journée.
 how many weeks should the multiple week view show?	calendar	fr	Combien de semaines afficher dans la vue multi-semaines ?
 how much entries to skip	calendar	fr	Ignorer combien d'éléments ?
 html link to the current record	calendar	fr	Lien HTML vers l'enregistrement courant
 ical	calendar	fr	iCal
 ical / rfc2445	calendar	fr	iCal / rfc2445
+ical cannot change the owner of an existing event.  this applies to new events only.	calendar	fr	iCal ne peut pas changer le propriétaire d'un événement existant. Cela s'applique uniquement aux nouveaux événements.
 ical export	calendar	fr	Exportation iCal
 ical file	calendar	fr	Fichier iCal
 ical import	calendar	fr	Importation iCal

@@ -22,7 +22,6 @@ accept or reject an invitation	calendar	ja	参加依頼に対して回答
 accepted	calendar	ja	参加回答済み
 access denied to the calendar of %1 !!!	calendar	ja	%1 のカレンダーに対するアクセスが拒否されました!!!
 access to calendar of %1 denied!	calendar	ja	%1 のカレンダーに対するアクセスが拒否されました!
-access by	calendar	ja	アクセスするユーザ/グループ
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	ja	通知要因となったアクション（追加, キャンセル, 参加回答, 不参加回答, ...）
 actions	calendar	ja	アクション
 actions...	calendar	ja	アクション...
@@ -46,7 +45,6 @@ alarm management	calendar	ja	アラーム管理
 alarms	calendar	ja	アラーム
 all categories	calendar	ja	全カテゴリ
 all day	calendar	ja	全ての日
-all days	calendar	ja	全ての曜日
 all events	calendar	ja	全イベント
 all exceptions are converted into single events.	calendar	ja	全例外を1個のイベントに変換しました。
 all future	calendar	ja	未来方向の全て
@@ -103,7 +101,6 @@ choose a category	calendar	ja	カテゴリを選択
 close the window	calendar	ja	ウィンドウを閉じる
 compose a mail to all participants after the event is saved	calendar	ja	イベントを保存して全参加者に送付するメールを作成
 conflict	calendar	ja	衝突
-copy of:	calendar	ja	コピー:
 copy this event	calendar	ja	このイベントをコピー
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	calendar	ja	変更をクリップボードにコピーし、%1 項目%2 をリロードしてマージ
 countries	calendar	ja	国
@@ -120,18 +117,16 @@ csv	calendar	ja	CSV
 csv-fieldname	calendar	ja	CSV 項目名
 csv-filename	calendar	ja	CSV ファイル名
 custom	calendar	ja	カスタム
-custom event color	calendar	ja	イベント表示色を変更
 custom color for events without category color	calendar	ja	カテゴリ色を除く、イベント表示色を指定します。
+custom event color	calendar	ja	イベント表示色を変更
 custom fields	common	ja	カスタム項目
 custom url for ical with holidays for all users	calendar	ja	全ユーザで共有する iCal 祝祭日定義 URL を指定します。
 custom_2	common	ja	空き/予定あり
 daily	calendar	ja	日単位
 daily tables	calendar	ja	日表
 data exchange settings	calendar	ja	データ交換設定
-data from	calendar	ja	データの取得元
 date for the day of the week	calendar	ja	曜日の日付
 date for the day of the week, available for the first entry inside each day of week or daily table inside the selected range.	calendar	ja	各曜日(または選択範囲内の日表）の最初の項目で利用可能な、曜日の日付。
-date range	calendar	ja	期間
 day	calendar	ja	日
 day of week tables	calendar	ja	曜日表
 days	calendar	ja	日
@@ -160,7 +155,6 @@ delete this series of recurring events	calendar	ja	この繰返しイベント�
 deleted	calendar	ja	削除済み
 deny resources reservation for private events	calendar	ja	プライベート・イベントでのリソース予約を禁止する
 directory with documents to insert entries	calendar	ja	イベント・データを保管するドキュメントを置くディレクトリ
-uninvited	calendar	ja	参加要請を解除
 display holidays or birthdays as events in dayview	calendar	ja	日表示で祝祭日と誕生日を表示
 display in header	calendar	ja	ヘッダ表示
 display status of events	calendar	ja	イベント状況表示
@@ -209,21 +203,17 @@ error: you can't shift a series from the past!	calendar	ja	エラー: 繰返し�
 event	common	ja	イベント
 event deleted	calendar	ja	イベントを削除しました。
 event details follow	calendar	ja	イベント詳細
-event owner	calendar	ja	イベント所有者
 event saved	calendar	ja	イベントを保存しました。
 event will occupy the whole day	calendar	ja	終日行なわれるイベント
 events	common	ja	イベント
 every user can invite other users and groups	admin	ja	ユーザは誰でも、他のユーザ/グループに参加依頼することができます。
-Example {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - search the field "n_prefix", for "Mr", if found, write Hello Mr., else write Hello Ms.	calendar	ja	例 {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - 項目 "n_prefix" を "Mr" で検索し, もし見つかれば「Hello Mr.」と出力し、見つからなければ「Hello Ms.」と出力。
-Example {{LETTERPREFIX}} - Gives a letter prefix without double spaces, if the title is emty for  example	calendar	ja	例 {{LETTERPREFIX}} - ダブル・スペースを挟まずに接頭字を出力(タイトルが空欄の場合など）。
-Example {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Example: Mr Dr. James Miller	calendar	ja	例 {{LETTERPREFIXCUSTOM n_prefix title n_family}} - 例: Mr Dr. James Miller
-Example {{NELF role}} - if field role is not empty, you will get a new line with the value of field role	calendar	ja	例 {{NELF role}} - 項目のロールが空欄でない場合、項目ロールの値と改行を出力。
-Example {{NENVLF role}} - if field role is not empty, set a LF without any value of the field	calendar	ja	例 {{nenvlf role}} - 項目のロールが空欄でない場合、項目の値でなく改行を出力。
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	calendar	ja	例 {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - 項目 "n_prefix" を "Mr" で検索し, もし見つかれば「Hello Mr.」と出力し、見つからなければ「Hello Ms.」と出力。
+example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	calendar	ja	例 {{LETTERPREFIXCUSTOM n_prefix title n_family}} - 例: Mr Dr. James Miller
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	calendar	ja	例 {{NELF role}} - 項目のロールが空欄でない場合、項目ロールの値と改行を出力。
+example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	calendar	ja	例 {{nenvlf role}} - 項目のロールが空欄でない場合、項目の値でなく改行を出力。
 exception	calendar	ja	例外
 exception created - you can now edit or delete it	calendar	ja	例外を作成しました。
 exceptions	calendar	ja	例外
-exclude weekend	calendar	ja	週末を除外
-exclude weekend events from counting	calendar	ja	週末のイベントを集計から除外する
 execute a further action for this entry	calendar	ja	このイベントで更にアクションを実行
 existing links	calendar	ja	定義済みリンク
 exists	calendar	ja	存在
@@ -256,7 +246,7 @@ freetime search	calendar	ja	空き時間検索
 fri	calendar	ja	金
 full description	calendar	ja	詳細
 fullname of person to notify	calendar	ja	通知先氏名
-General fields:	calendar	ja	一般項目:
+general fields:	calendar	ja	一般項目:
 general settings	calendar	ja	一般設定
 global categories	calendar	ja	グローバル・カテゴリ
 global public and group public	calendar	ja	パブリックと所属グループ
@@ -281,6 +271,8 @@ holidays only	calendar	ja	祝祭日のみ
 hours	calendar	ja	時
 how far to search (from startdate)	calendar	ja	How far to search (from start date)
 how many appointments should non-admins be able to export	admin	ja	非管理者がエクスポート可能な最大約束数。
+how many days to be removed in the future (default 365)	calendar	ja	何日後に削除されるのか（デフォルト365日）
+how many days to be removed in the past (default 100)	calendar	ja	過去に何日分削除されるか（デフォルト100）
 how many days to sync in the future (default %1)	calendar	ja	同期する未来方向の日数（既定値 %1日）
 how many days to sync in the past (default %1)	calendar	ja	同期する過去方向の日数（既定値 %1日）
 how many description lines should be directly visible. further lines are available via a scrollbar.	calendar	ja	説明文の最大表示行数を指定します。表示しきれない分はスクロールして表示することができます。
@@ -292,6 +284,7 @@ how much entries to skip	calendar	ja	読み飛ばすべき項目数
 html link to the current record	calendar	ja	現在のレコードに対する HTML リンク
 ical	calendar	ja	iCal
 ical / rfc2445	calendar	ja	iCal / rfc2445
+ical cannot change the owner of an existing event.  this applies to new events only.	calendar	ja	iCalは、既存のイベントの所有者を変更することはできません。これは新規イベントのみに適用されます。
 ical export	calendar	ja	iCal エクスポート
 ical file	calendar	ja	iCal ファイル
 ical import	calendar	ja	iCal インポート
@@ -307,7 +300,6 @@ import	calendar	ja	インポート
 import csv-file	common	ja	CSV ファイルをインポート
 imports events into your calendar from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	calendar	ja	CSV ファイルからカレンダーにイベントをインポートします。
 imports events into your calendar from an ical file.	calendar	ja	iCal ファイルからイベントをインポート
-include holidays as counting days	calendar	ja	祝祭日を集計対象に含める
 initially year aligned	calendar	ja	初期状態では、年を揃えます
 insert	calendar	ja	挿入
 insert in document	calendar	ja	ドキュメントに挿入
@@ -315,7 +307,7 @@ interval	calendar	ja	時間間隔
 invalid email-address "%1" for user %2	calendar	ja	ユーザ %2 のメール・アドレス "%1" が不正です。
 invalid owner id: %1.  might be a bad field translation.  used %2 instead.	calendar	ja	所有者(ID: %1）が不正です。代わりに %2 を使用しました。
 invitations	calendar	ja	参加依頼
-invite	calendar	ja	参加を依頼
+invite	common	ja	参加を依頼
 it can not read timezones from sqlite database %1!	calendar	ja	sqlite データベース %1 からタイムゾーン情報を取得できませんでした!
 just me	calendar	ja	自分のみ
 keep exceptions	calendar	ja	例外を保持
@@ -331,10 +323,10 @@ limit search for conflicts in recurrences to given time in seconds (default 3)	c
 link title for events to show	calendar	ja	リンク・タイトル
 link to view the event	calendar	ja	イベントを閲覧するためのリンク
 links	calendar	ja	リンク
-Links and attached files	calendar	ja	リンクと添付ファイル
+links and attached files	calendar	ja	リンクと添付ファイル
 links to specified application.  example: {{links/infolog}}	calendar	ja	指定されたアプリケーションへのリンク。  例: {{links/infolog}}
 links, attachments	calendar	ja	リンク, 添付
-List of files linked to the current record	calendar	ja	このレコードにリンクするファイルの一覧
+list of files linked to the current record	calendar	ja	このレコードにリンクするファイルの一覧
 listview	calendar	ja	リスト表示
 location	calendar	ja	場所
 location, start- and endtimes, ...	calendar	ja	場所, 開始/終了日時, ...
@@ -349,11 +341,9 @@ meeting request	calendar	ja	ミーティング参加要請
 meetingrequest to all participants	calendar	ja	全参加者に参加要請
 merge document...	calendar	ja	ドキュメントのマージ...
 midnight	calendar	ja	深夜
-minimum days to count as a week	calendar	ja	週として集計する最低日数
 minimum number of users for showing day view as consolidated.	calendar	ja	日表示時に統合表示されるユーザの最低ユーザ数
 minimum number of users for showing week view as consolidated.	calendar	ja	週表示時に統合表示されるユーザの最低ユーザ数
 minutes	calendar	ja	分
-min days	calendar	ja	週最低日数
 modified	calendar	ja	変更日時
 modifier	calendar	ja	変更者
 mon	calendar	ja	月
@@ -364,13 +354,10 @@ monthly (by day)	calendar	ja	月単位(曜日)
 monthview	calendar	ja	月表示
 multiple week view	calendar	ja	複数週表示
 name of current user, all other contact fields are valid too	calendar	ja	ユーザ名（他のコンタクト項目も全て有効）
-name of the week (ex: monday)	calendar	ja	曜日(例: 月曜日)
 name of the week (ex: monday), available for the first entry inside each day of week or daily table inside the selected range.	calendar	ja	曜日（例:月曜日）
 needs action	calendar	ja	アクションが必要
-Never	calendar	ja	しない
 new	calendar	ja	新規
 new event participants	calendar	ja	新規イベント作成時の参加者選択方法
-new search	calendar	ja	再検索
 new search with the above parameters	calendar	ja	上記パラメータで再検索
 no automatic purging	admin	ja	自動削除しない
 no events found	calendar	ja	イベントが見つかりません。
@@ -388,8 +375,8 @@ not rejected	calendar	ja	辞退していないイベント
 nothing to update, version is already %1.	calendar	ja	更新はありません。既に最新バージョン（%1）です。
 notification messages for added events	calendar	ja	追加されたイベントの通知メッセージ
 notification messages for canceled events	calendar	ja	キャンセルされたイベントの通知メッセージ
-notification messages for uninvited participants	calendar	ja	参加依頼を取り消した人への通知メッセージ
 notification messages for modified events	calendar	ja	変更したイベントの通知メッセージ
+notification messages for uninvited participants	calendar	ja	参加依頼を取り消した人への通知メッセージ
 notification messages for your alarms	calendar	ja	アラームの通知メッセージ
 notification messages for your responses	calendar	ja	回答の通知メッセージ
 notification settings	calendar	ja	通知設定
@@ -416,13 +403,12 @@ only the initial date of that recurring event is checked!	calendar	ja	繰返し�
 only used for first viewing of calendar, afterwards last selected view is used.	calendar	ja	カレンダーを開く初回にのみ使用されます。それ以降は、最後に使用した表示が使用されます。
 open todo's:	calendar	ja	オープン状態の ToDo:
 optional	calendar	ja	任意参加
-output unit	calendar	ja	出力単位
 overlap holiday	calendar	ja	重複休日
 owner too	calendar	ja	所有者
-participants automatically added to new events	calendar	ja	新規イベント追加時に自動的に追加される参加者を指定します。
 participant names by type	calendar	ja	タイプ別参加者名
 participant table	calendar	ja	参加者一覧
 participants	calendar	ja	参加者
+participants automatically added to new events	calendar	ja	新規イベント追加時に自動的に追加される参加者を指定します。
 participants uninvited from an event	calendar	ja	イベントへの参加依頼を取り消された参加者
 participants, resources, ...	calendar	ja	参加者, リソース, ...
 password for not loged in users to your freebusy information?	calendar	ja	非ログイン・ユーザがあなたの「空き/予定あり」の情報を取得するためのパスワード
@@ -462,7 +448,6 @@ repetition	calendar	ja	繰返し
 repetitiondetails (or empty)	calendar	ja	繰返し条件詳細
 replacements for inserting events into documents	calendar	ja	ドキュメントにイベントを挿入する際の置換
 reply to meeting request	calendar	ja	ミーティング参加要請に回答
-report	calendar	ja	レポート作成
 requested	calendar	ja	参加要請
 requested date %1 outside allowed range of %2 days: recurring events obmitted!	calendar	ja	指定された日付 %1 は設定可能な範囲（%2日間）を逸脱しています。繰返しイベントは破棄されました。
 requested meeting is in the past!	calendar	ja	参加要請を受けているミーティング時刻は既に過ぎています!
@@ -475,7 +460,6 @@ resources except conflicting ones	calendar	ja	リソース（予約衝突検出�
 resources with conflict detection	calendar	ja	リソース（予約衝突検出を行なう）
 restrict add category to	calendar	ja	カテゴリの追加を制限:
 restrict set status to	calendar	ja	状態の設定を制限:
-rights	calendar	ja	権限
 role	calendar	ja	ロール
 rule	calendar	ja	ルール
 sat	calendar	ja	土
@@ -530,7 +514,6 @@ show this month	calendar	ja	今月を表示
 show this week	calendar	ja	今週を表示
 show year and age	calendar	ja	生年と年齢を表示
 single event	calendar	ja	イベント
-sort by event	calendar	ja	並べ変え
 specify where url of the day links to	calendar	ja	指定された日がリンクする URL を指定してください。
 start	calendar	ja	開始日時
 start date/time	calendar	ja	開始日時
@@ -570,8 +553,8 @@ this mail contains a meeting request	calendar	ja	このメールは、会議の�
 this mail contains a reply to a meeting request	calendar	ja	このメールは、会議参加要請に対する回答です。
 this message is sent for canceled or deleted events.	calendar	ja	このメッセージは、キャンセルまたは削除されたイベントについて送信されるものです。
 this message is sent for modified or moved events.	calendar	ja	このメッセージは、変更または移動したイベントについて送信されるものです。
-this message is sent to uninvited participants.	calendar	ja	このメッセージは、参加要請を取り消された人に送信されるものです。
 this message is sent to every participant of events you own, who has requested notifcations about new events.<br>you can use certain variables which get substituted with the data of the event. the first line is the subject of the email.	calendar	ja	このメッセージは、新規イベント通知を有効に設定している参加者に対して送信されるイベント通知です。<br>具体的なイベント内容を埋め込むために定義済み変数を利用することができます。先頭行はメールの件名です。
+this message is sent to uninvited participants.	calendar	ja	このメッセージは、参加要請を取り消された人に送信されるものです。
 this message is sent when you accept, tentative accept or reject an event.	calendar	ja	このメッセージは、回答（承諾, 仮承諾, 辞退）として送信されるものです。
 this message is sent when you set an alarm for a certain event. include all information you might need.	calendar	ja	このメッセージは、イベントのアラームとして送信されるものです。
 this module displays a planner calendar.	calendar	ja	予定表を表示します。
@@ -591,7 +574,7 @@ timezone of event ical file import/export	calendar	ja	iCal ファイルのイン
 timezones aliases updated to version %1 (%2 records updated).	calendar	ja	タイムゾーンの別名をバージョン %1 に更新しました(%2 個のレコードを更新)。
 timezones updated to version %1 (%2 records updated).	calendar	ja	タイムゾーンをバージョン %1 に更新しました(%2 個のレコードを更新)。
 title of the event	calendar	ja	イベント・タイトル
-Titles of any entries linked to the current record, excluding attached files	calendar	ja	このレコードにリンクする項目のタイトル（添付ファイルを除く）
+titles of any entries linked to the current record, excluding attached files	calendar	ja	このレコードにリンクする項目のタイトル（添付ファイルを除く）
 to many might exceed your execution-time-limit	calendar	ja	数量が多過ぎるため、実行時間の制限値を越える恐れがあります。
 to-firstname	calendar	ja	名前を使用
 to-fullname	calendar	ja	氏名を使用
@@ -602,6 +585,7 @@ tue	calendar	ja	火
 two weeks	calendar	ja	2週間
 type of planner	calendar	ja	予定表のタイプ
 unable to save	calendar	ja	保存できませんでした
+uninvited	calendar	ja	参加要請を解除
 update timezones	common	ja	タイムゾーンを更新
 updated	calendar	ja	更新日時
 use end date	calendar	ja	終了日を使う
@@ -630,7 +614,6 @@ weekday	calendar	ja	曜日
 weekday starts on	calendar	ja	週の始め
 weekdays	calendar	ja	曜日
 weekdays to use in search	calendar	ja	検索対象曜日
-weekend	calendar	ja	週末
 weekly	calendar	ja	週単位
 weeks in multiple week view	calendar	ja	複数週表示で表示する週の数
 weeks offset (for multi-column display)	calendar	ja	複数カラム表示のオフセット週数
@@ -648,7 +631,6 @@ work day ends on	calendar	ja	日表示の終了時刻
 work day starts on	calendar	ja	日表示の開始時刻
 workday	calendar	ja	就業日カレンダー
 workdays	calendar	ja	<nobr>就業日</nobr>
-working days	calendar	ja	<nobr>就業日</nobr>
 yearly	calendar	ja	年単位
 yearly planner	calendar	ja	年間予定表
 years	admin	ja	年

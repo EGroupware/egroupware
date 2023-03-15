@@ -5,7 +5,6 @@ actions...	calendar	et	Tegevused...
 add alarm	calendar	et	Lisa alarm
 add timesheet entry	calendar	et	Lisa Timesheet kirje
 added	calendar	et	Lisatud
-added by synchronisation	calendar	et	lisatud sünkroniseerimise käigus
 after %1	calendar	et	Pärast %1
 after current date	calendar	et	Pärast käesolevat kuupäeva
 alarm	calendar	et	Alarm
@@ -21,8 +20,6 @@ all participants	calendar	et	Kõik osalejad
 allows to edit the event again	calendar	et	Luba muuta sündmust uuesti
 always	calendar	et	alati
 apply the changes	calendar	et	rakenda uuendused
-are you sure you want to delete this country ?	calendar	et	Tahad kindlasti seda riiki kustutada ?
-are you sure you want to delete this holiday ?	calendar	et	Tahad kindlasti seda püha kustutada ?
 back half a month	calendar	et	pool kuud tagasi
 back one month	calendar	et	üks kuu tagasi
 before %1	calendar	et	Enne %1
@@ -32,7 +29,6 @@ birthday	calendar	et	Sünnipäev
 birthdays	admin	et	Sünnipäevad
 busy	calendar	et	hõivatud
 calendar event	calendar	et	Kalendri Sündmus
-calendar holiday management	admin	et	Kalendri Pühade Manageerimine
 calendar menu	calendar	et	Kalender menüü
 calendar preferences	calendar	et	Kalendri seadistus
 calendar settings	admin	et	Kalendri häälestus
@@ -68,7 +64,6 @@ deleted	calendar	et	kustutatud
 display status of events	calendar	et	Näita sündmuste staatust
 displayed view	calendar	et	näita vaade
 do you want a weekview with or without weekend?	calendar	et	Soovid nädalavaadet koos või ilma nädalavahetuseta?
-do you wish to autoload calendar holidays files dynamically?	admin	et	Kas tahad autolaadida kalendrisse pühad dünaamiliselt?
 download	calendar	et	Lae alla
 download this event as ical	calendar	et	Lae alla see sündmus kui iCal
 duration	calendar	et	Kestvus
@@ -83,7 +78,6 @@ ends	calendar	et	lõppes
 error adding the alarm	calendar	et	Viga alarmi lisamisel
 error: saving the event !!!	calendar	et	Viga: sündmuse salvestamisel !!!
 error: starttime has to be before the endtime !!!	calendar	et	Viga: Startimisaeg peab olema enne
-event copied - the copy can now be edited	calendar	et	Sündmus kopeeritud - koopiat võib müüd muuta
 event deleted	calendar	et	Sündmus kustutatud
 event saved	calendar	et	Sündmus salvestatud
 event will occupy the whole day	calendar	et	Sündmus hõlmab tervet päeva
@@ -110,10 +104,17 @@ hide private infos	calendar	et	Peida privaatne info
 high priority	calendar	et	kõrge prioteet
 history	calendar	et	Ajalugu
 holiday	calendar	et	Püha
-holiday management	calendar	et	Pühade Manageerimine
 holidays	calendar	et	Pühad
 hours	calendar	et	tundi
+how many days to be removed in the future (default 365)	calendar	et	Mitu päeva eemaldatakse tulevikus (vaikimisi 365)
+how many days to be removed in the past (default 100)	calendar	et	Mitu päeva eemaldatakse minevikus (vaikimisi 100)
+how many days to sync in the future (default %1)	calendar	et	Mitu päeva sünkroonida tulevikus (vaikimisi %1)
+how many days to sync in the past (default %1)	calendar	et	Mitu päeva sünkroonida minevikus (vaikimisi %1)
+how many description lines should be directly visible. further lines are available via a scrollbar.	calendar	et	Mitu kirjelduse rida peaks olema otse nähtav. Täiendavad read on saadaval kerimisriba kaudu.
+how many lines of all day events should be directly visible. further lines are available via a mouseover.	calendar	et	Mitu rida kõikide päevade sündmusi peaks olema otse nähtav. Täiendavad read on saadaval hiirega ülevalpool.
+how many separate calendars to show before merging them together	calendar	et	Minimaalne kasutajate arv konsolideeritud kalendrivaate kuvamiseks, kui on valitud vähem kasutajaid, kuvatakse kalender eraldi nädala või päeva vaates.
 ical	calendar	et	iCal
+ical cannot change the owner of an existing event.  this applies to new events only.	calendar	et	iCal ei saa muuta olemasoleva sündmuse omanikku. See kehtib ainult uute sündmuste kohta.
 ical export	calendar	et	iCal Export
 ical file	calendar	et	iCal fail
 ical import	calendar	et	iCal Import

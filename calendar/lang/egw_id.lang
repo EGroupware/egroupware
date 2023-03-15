@@ -7,7 +7,6 @@
 %1 weeks	calendar	id	%1 minggu
 (%1 events in %2 seconds)	calendar	id	(%1 kegiatan dalam %2 detik)
 (empty = use global limit, no = no export at all)	admin	id	(empty = gunakan pembatasan global, no = tidak ada ekspor sama sekali)
-<b>please note</b>: the calendar use the holidays of your country, which is set to %1. you can change it in your %2.<br />holidays are %3 automatic installed from %4. you can changed it in %5.	calendar	id	<b>Mohon dicatat</b>: Kalender menggunakan Hari Raya untuk negara anda, yaitu %1. Anda dapat mengubahnya pada %2 anda.<br />Hari Raya %3 diinstal otomatis dari %4. Anda dapat mengubahnya pada %5.
 a non blocking event will not conflict with other events	calendar	id	Kegiatan yang <em>non blocking</em> tidak akan konflik dengan kegiatan lainnya
 accept	calendar	id	diterima
 accept or reject an invitation	calendar	id	Terima atau tolak undangan
@@ -19,7 +18,6 @@ actions...	calendar	id	Tindakan...
 add alarm	calendar	id	Tambah alarm
 add timesheet entry	calendar	id	Tamba entri lembarwaktu
 added	calendar	id	Ditambahkan
-added by synchronisation	calendar	id	Penambahan karena sinkronisasi
 after	calendar	id	after
 after %1	calendar	id	Setelah %1
 after current date	calendar	id	Setelah tanggal sekarang
@@ -37,8 +35,6 @@ all incl. rejected	calendar	id	Semua termasuk yang ditolak
 all participants	calendar	id	Semua peserta
 always	calendar	id	selalu
 apply the changes	calendar	id	Terapkan perubahan
-are you sure you want to delete this country ?	calendar	id	Anda sudah yakin akan menghapus Negara ini?
-are you sure you want to delete this holiday ?	calendar	id	Anda sudah yakin akan menghapus hari-raya ini?
 back half a month	calendar	id	mundur setengah bulan
 back one month	calendar	id	mundur sebulan
 back one year	calendar	id	mundur setahun
@@ -55,7 +51,6 @@ calendar - planner	calendar	id	Kalender - Planner
 calendar csv export	calendar	id	Ekspor CSV Kalender
 calendar event	calendar	id	Kegiatan Kalender
 calendar fields:	calendar	id	Field Kalender:
-calendar holiday management	admin	id	Pengelolaan Hari Raya Kalender
 calendar menu	calendar	id	Menu Kalender
 calendar preferences	calendar	id	Kesukaan Kalender
 calendar settings	admin	id	Pengaturan Kalender
@@ -71,7 +66,6 @@ choose a category	calendar	id	Pilih kategori
 close the window	calendar	id	Tutup jendela
 compose a mail to all participants after the event is saved	calendar	id	Tulis surat ke seluruh peserta setelah kegiatan disimpan
 conflict	calendar	id	Konflik
-copy of:	calendar	id	Salinan dari:
 copy this event	calendar	id	Salin kegiatan ini
 countries	calendar	id	Negara
 country	calendar	id	Negara
@@ -100,7 +94,6 @@ delete this event	calendar	id	Hapus kegiatan ini
 delete this exception	calendar	id	Hapus pengecualian ini
 delete this series of recurring events	calendar	id	Hapus runtun kegiatan yang berulang ini
 deleted	calendar	id	Dihapus
-uninvited	calendar	id	Batal diundang
 display status of events	calendar	id	Tampilkan status kegiatan
 download	calendar	id	Unduh
 download this event as ical	calendar	id	Unduh kegiatan ini sebagai iCal
@@ -151,11 +144,18 @@ high priority	calendar	id	Prioritas tinggi
 history	calendar	id	Riwayat
 history logging	admin	id	Catatan riwayat
 holiday	calendar	id	Hari Raya
-holiday management	calendar	id	Pengelolaan Hari Raya
 holidays	calendar	id	Hari Raya
 hours	calendar	id	jam
+how many days to be removed in the future (default 365)	calendar	id	Berapa hari yang akan dihapus di masa depan (default 365)
+how many days to be removed in the past (default 100)	calendar	id	Berapa hari yang akan dihapus di masa lalu (default 100)
+how many days to sync in the future (default %1)	calendar	id	Berapa hari yang akan disinkronkan di masa depan (default %1)
+how many days to sync in the past (default %1)	calendar	id	Berapa hari yang akan disinkronkan di masa lalu (default %1)
+how many description lines should be directly visible. further lines are available via a scrollbar.	calendar	id	Berapa banyak baris deskripsi yang harus terlihat secara langsung. Baris lebih lanjut tersedia melalui bilah gulir.
+how many lines of all day events should be directly visible. further lines are available via a mouseover.	calendar	id	Berapa banyak baris peristiwa sepanjang hari yang harus terlihat secara langsung. Baris lebih lanjut tersedia melalui mouseover.
+how many separate calendars to show before merging them together	calendar	id	Jumlah minimum pengguna untuk menampilkan tampilan kalender gabungan, jika pengguna yang dipilih lebih sedikit, kalender akan ditampilkan secara terpisah untuk tampilan minggu atau hari.
 ical	calendar	id	iCal
 ical / rfc2445	calendar	id	iCal / rfc2445
+ical cannot change the owner of an existing event.  this applies to new events only.	calendar	id	iCal tidak dapat mengubah pemilik acara yang sudah ada. Ini hanya berlaku untuk acara baru.
 ical export	calendar	id	Ekspor iCal
 ical file	calendar	id	Berkas iCal
 ical import	calendar	id	Impor iCal
@@ -167,7 +167,7 @@ insert in document	calendar	id	Sisipkan dalam dokumen
 interval	calendar	id	Interval
 invalid email-address "%1" for user %2	calendar	id	alamat email "%1" untuk pengguna %2 keliru
 invitations	calendar	id	Undangan
-invite	calendar	id	Undang
+invite	common	id	Undang
 last	calendar	id	Akhir
 last changed	calendar	id	Pengubahan terakhir
 link to view the event	calendar	id	Tautan untuk melihat kegiatan
@@ -273,6 +273,7 @@ tomorrow	calendar	id	Esok
 translation	calendar	id	Terjemahan
 tue	calendar	id	Sel
 two weeks	calendar	id	Dua minggu
+uninvited	calendar	id	Batal diundang
 update timezones	common	id	Perbarui zonawaktu
 updated	calendar	id	Diperbarui
 use end date	calendar	id	Gunakan tanggal berakhir

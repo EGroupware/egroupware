@@ -30,7 +30,6 @@ add new alarm	calendar	cs	Vytvořit novou připomínku
 add new participants or resource	calendar	cs	Přidat nové účastníky nebo místo
 add timesheet entry	calendar	cs	Přidat pracovní výkaz
 added	calendar	cs	Přidáno
-added by synchronisation	calendar	cs	přidáno synchronizací
 after	calendar	cs	po
 after %1	calendar	cs	Po %1
 after current date	calendar	cs	Po aktuálním datu
@@ -99,7 +98,6 @@ choose a category	calendar	cs	Vybrat kategorii
 close the window	calendar	cs	Zavřít okno
 compose a mail to all participants after the event is saved	calendar	cs	napsat dopis všem účastníkům po uložení události
 conflict	calendar	cs	Konflikt
-copy of:	calendar	cs	Kopie (čeho):
 copy this event	calendar	cs	Kopírovat tuto událost
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	calendar	cs	Zkopírujte Vaše změny do clipboardu, %1znovu načtěte záznam%2 a proveďte sloučení změn.
 countries	calendar	cs	Země
@@ -151,7 +149,6 @@ delete this series of recurring events	calendar	cs	Smazat tyto řady pravidelný
 deleted	calendar	cs	smazáno
 deny resources reservation for private events	calendar	cs	Zakázat rezervaci zdrojů pro soukromé události
 directory with documents to insert entries	calendar	cs	Složka pro vkládání dokumentů
-uninvited	calendar	cs	Zrušená pozvánka
 display holidays or birthdays as events in dayview	calendar	cs	Zobrazit svátky nebo narozeniny jako události v denním pohledu
 display in header	calendar	cs	Zobrazit v hlavičce
 display status of events	calendar	cs	Zobrazit stav událostí
@@ -265,13 +262,20 @@ holidays only	calendar	cs	Pouze svátky
 hours	calendar	cs	hodin
 how far to search (from startdate)	calendar	cs	jak daleko hledat (od počátečního data)
 how many appointments should non-admins be able to export	admin	cs	Kolik událostí může uživatel bez administrátorských práv exportovat?
+how many days to be removed in the future (default 365)	calendar	cs	Kolik dní má být v budoucnu odstraněno (výchozí 365)
+how many days to be removed in the past (default 100)	calendar	cs	Kolik dní má být odstraněno v minulosti (výchozí 100)
+how many days to sync in the future (default %1)	calendar	cs	Kolik dní se má synchronizovat v budoucnosti (výchozí %1)
+how many days to sync in the past (default %1)	calendar	cs	Kolik dní se má synchronizovat v minulosti (výchozí %1)
 how many description lines should be directly visible. further lines are available via a scrollbar.	calendar	cs	Kolik řádek popisu má být vidět přímo. Ostatní řádky budou dostupné přes posouvací lištu.
+how many lines of all day events should be directly visible. further lines are available via a mouseover.	calendar	cs	Kolik řádků všech denních událostí má být přímo viditelných. Další řádky jsou k dispozici prostřednictvím najetí myší.
 how many minutes should each interval last?	calendar	cs	Kolik minut by měl každý interval trvat?
+how many separate calendars to show before merging them together	calendar	cs	Minimální počet uživatelů pro zobrazení konsolidovaného zobrazení kalendáře, pokud je vybráno méně uživatelů, kalendář se zobrazí zvlášť pro týdenní nebo denní zobrazení.
 how many weeks should the multiple week view show?	calendar	cs	Kolik týdnů má zobrazovat vícetýdenní pohled?
 how much entries to skip	calendar	cs	Kolik záznamů se má přeskočit?
 html link to the current record	calendar	cs	HTML odkaz na aktuální záznam
 ical	calendar	cs	iCal
 ical / rfc2445	calendar	cs	iCal / rfc2445
+ical cannot change the owner of an existing event.  this applies to new events only.	calendar	cs	V aplikaci iCal nelze změnit vlastníka existující události. To platí pouze pro nové události.
 ical export	calendar	cs	Exportovat iCal
 ical file	calendar	cs	iCal soubor
 ical import	calendar	cs	Importovat iCal
@@ -294,7 +298,7 @@ interval	calendar	cs	Časový úsek
 invalid email-address "%1" for user %2	calendar	cs	Neplatná e-mailová adresa "%1" pro uživatele %2
 invalid owner id: %1.  might be a bad field translation.  used %2 instead.	calendar	cs	Nesprávné ID vlastníka: %1. Jedná se zřejmě o špatnou interpretaci pole. Místo toho se použije %2.
 invitations	calendar	cs	Pozvánky
-invite	calendar	cs	Pozvat
+invite	common	cs	Pozvat
 it can not read timezones from sqlite database %1!	calendar	cs	Není možné načíst časové zóny z databáze sqlite %1!
 keep exceptions	calendar	cs	Zachovat výjimky
 keep the series unchanged.	calendar	cs	Ponechat řadu pravidelného opakování beze změn.
@@ -357,8 +361,8 @@ not rejected	calendar	cs	Neodmítnuté
 nothing to update, version is already %1.	calendar	cs	Žádný update není k dispozici, verze je již %1.
 notification messages for added events	calendar	cs	Tvar zprávy s upozorněním na přidané události
 notification messages for canceled events	calendar	cs	Tvar zprávy s upozorněním na zrušené události
-notification messages for uninvited participants	calendar	cs	Tvar zprávy s upozorněním na zrušení účasti
 notification messages for modified events	calendar	cs	Tvar zprávy s upozorněním na změněné údálosti
+notification messages for uninvited participants	calendar	cs	Tvar zprávy s upozorněním na zrušení účasti
 notification messages for your alarms	calendar	cs	Tvar zprávy pro Vaše připomínky
 notification messages for your responses	calendar	cs	Tvar zprávy pro Vaše odpovědi
 notification settings	calendar	cs	Nastavení připomínek
@@ -531,8 +535,8 @@ this mail contains a meeting request	calendar	cs	Tento e-mail obsahuje žádost 
 this mail contains a reply to a meeting request	calendar	cs	Tento e-mail obsahuje odpověď na žádost o schůzku
 this message is sent for canceled or deleted events.	calendar	cs	Tato zpráva je zasílána v případě ukončených nebo smazaných událostí.
 this message is sent for modified or moved events.	calendar	cs	Tato zpráva je zasílána  v případě změněných nebo posunutých událostí.
-this message is sent to uninvited participants.	calendar	cs	Tato zpráva je zasílána účastníkům, kterým byla zrušena pozvánka.
 this message is sent to every participant of events you own, who has requested notifcations about new events.<br>you can use certain variables which get substituted with the data of the event. the first line is the subject of the email.	calendar	cs	Tato zpráva je zaslána každému účastníkovi události, jejíž jste vlastníkem, který si nastavil zasílání informací o nových událostech.<br>V textu můžete použít některé proměnné, které budou nahrazeny údaji konkrétní události. První řádka textu bude subjektem e-mailové zprávy.
+this message is sent to uninvited participants.	calendar	cs	Tato zpráva je zasílána účastníkům, kterým byla zrušena pozvánka.
 this message is sent when you accept, tentative accept or reject an event.	calendar	cs	Tato zpráva je zaslána, pokud přijmete, předběžně přijmete nebo odmítnete událost.
 this message is sent when you set an alarm for a certain event. include all information you might need.	calendar	cs	Tato zpráva je zaslána, pokud nastavíte upozornění pro určitou událost. Zahrnuje všechny informace, které by jste mohl(a) potřebovat.
 this module displays a planner calendar.	calendar	cs	Tento modul zobrazí plánovací kalendář
@@ -563,6 +567,7 @@ tue	calendar	cs	Út
 two weeks	calendar	cs	dva týdny
 type of planner	calendar	cs	Typ plánovacího kalendáře
 unable to save	calendar	cs	Není možné zapsat
+uninvited	calendar	cs	Zrušená pozvánka
 update timezones	common	cs	Aktualizovat časová pásma
 updated	calendar	cs	Aktualizováno
 use end date	calendar	cs	použít koncové datum
