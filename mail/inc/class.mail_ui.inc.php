@@ -2529,7 +2529,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 
 				if ($GLOBALS['egw_info']['apps']['collabora']
 					&& $GLOBALS['egw_info']['user']['preferences']['filemanager']['document_doubleclick_action'] === 'collabora'
-					&& array_key_exists($value['mimeType'], filemanager_hooks::getEditorPrefMimes()))
+					&& array_key_exists($value['mimeType'], filemanager_hooks::getEditorPrefMimes() ?: []))
 				{
 					$attachmentHTML[$key]['actions'] = 'collabora';
 					$attachmentHTML[$key]['actionsDefaultLabel'] = 'Open with Collabora';
