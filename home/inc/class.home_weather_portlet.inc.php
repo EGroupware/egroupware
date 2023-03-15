@@ -103,6 +103,7 @@ class home_weather_portlet extends home_portlet
 
 	public function exec($id = null, Etemplate &$etemplate = null)
 	{
+		return ['settings' => $this->get_value()];
 	}
 
 	/**

@@ -131,7 +131,7 @@ export class Et2PortletWeather extends Et2Portlet
 		const current = this.settings?.weather?.current || {weather: [{icon: "question-lg"}], temp: {temp: "?"}};
 
 		// Get the forecast, excluding today
-		let list = this.settings.weather && (Object.values(this.settings?.weather?.list || {}).slice(1) || []);
+		let list = this.settings.weather && (Object.values(this.settings?.weather?.list || {}).slice(1) || []) || [];
 		
 		return html`
             <div

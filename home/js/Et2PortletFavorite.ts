@@ -127,8 +127,7 @@ export class Et2PortletFavorite extends Et2Portlet
 		return super.update_settings(settings)
 			.then(result =>
 			{
-				// Response did not ask for settings, and was not understandable for us
-				if(result == false && !this.nm)
+				if(!this.nm)
 				{
 					// If child was added recently (not loaded in normal reload), resize them all
 					etemplate2.getByTemplate("home.favorite").forEach(et => (<etemplate2>et).resize(undefined))
