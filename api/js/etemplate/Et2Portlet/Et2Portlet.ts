@@ -418,7 +418,7 @@ export class Et2Portlet extends Et2Widget(SlCard)
 		let content = this.portletProperties;
 
 		// Add values, but skip any duplicate properties
-		Object.keys(this.settings).forEach(k =>
+		Object.keys(this.settings || {}).forEach(k =>
 		{
 			if(typeof k == "string" && isNaN(parseInt(k)) || content.filter(v => v.name == this.settings[k].name).length == 0)
 			{
@@ -488,17 +488,17 @@ export class Et2Portlet extends Et2Widget(SlCard)
 	public update_settings(settings)
 	{
 		// Skip any updates during loading
-		if(!this.getInstanceManager().isReady)
+		if(this.getInstanceManager() && !this.getInstanceManager().isReady)
 		{
-			return;
+			return Promise.resolve();
 		}
 
 		// Save settings - server might reply with new content if the portlet needs an update,
 		// but ideally it doesn't
 		this.classList.add("loading");
 
-		return this.egw().jsonq("home.home_ui.ajax_set_properties", [this.id, [], settings, this.settings ? this.settings.group : false],
-			function(data)
+		return this.egw().request("home.home_ui.ajax_set_properties", [this.id, [], settings, this.settings ? this.settings.group : false])
+			.then((data) =>
 			{
 				// This section not for us
 				if(!data || typeof data.attributes == 'undefined')
@@ -536,9 +536,7 @@ export class Et2Portlet extends Et2Widget(SlCard)
 						this.egw().debug('warn', e, this);
 					}
 				}
-			},
-			this);
-
+			});
 	}
 
 	render()

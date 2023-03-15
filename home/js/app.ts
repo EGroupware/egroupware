@@ -178,9 +178,6 @@ export class HomeApp extends EgwApp
 				et2.DOMContainer.id = et2.uniqueId;
 			}
 
-			// Instanciate custom code for this portlet
-			this._get_portlet_code(portlet);
-
 			// Ordering of portlets
 			// Only needs to be done once, but its hard to tell when everything is loaded
 			this._do_ordering();
@@ -241,9 +238,18 @@ export class HomeApp extends EgwApp
 	{
 		// Basic portlet attributes
 		let attrs = {
-				id: this._create_id(),
-				class: action.data.class
+			id: this._create_id(),
+			class: action.data.class,
+			settings: {}
 		};
+		// Add extra data from action
+		Object.keys(action.data).forEach(k =>
+		{
+			if(["id", "type", "acceptedTypes", "class"].indexOf(k) == -1)
+			{
+				attrs["settings"][k] = action.data[k];
+			}
+		})
 
 		// Try to put it about where the menu was opened
 		if(action.menu_context)
@@ -258,10 +264,15 @@ export class HomeApp extends EgwApp
 		portlet.loadingFinished();
 
 		// Get actual attributes & settings, since they're not available client side yet
-		portlet.update_settings(attrs);
-
-		// Instanciate custom code for this portlet
-		this._get_portlet_code(portlet);
+		portlet.update_settings(attrs).then((result) =>
+		{
+			// Initial add needs to wait for the update to come back, then ask about settings
+			// Etemplate can conflict with portlet asking for settings
+			if(result === false)
+			{
+				portlet.edit_settings();
+			}
+		});
 	}
 
 	/**
@@ -311,9 +322,6 @@ export class HomeApp extends EgwApp
 
 		// Get actual attributes & settings, since they're not available client side yet
 		portlet.update_settings(attrs);
-
-		// Instanciate custom code for this portlet
-		this._get_portlet_code(portlet);
 	}
 
 	/**

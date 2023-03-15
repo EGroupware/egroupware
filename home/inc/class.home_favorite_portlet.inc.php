@@ -85,20 +85,18 @@ class home_favorite_portlet extends home_portlet
 		}
 
 		// Load and copy favorite
-		if($context['favorite'] && !is_array($context['favorite']))
+		if($context['favorite'])
 		{
 			$favorites = Framework\Favorites::get_favorites($context['appname']);
-			$context['favorite'] = $favorites[$context['favorite']];
-			$need_reload = true;
 		}
 
-		$this->favorite = (array)$context['favorite'];
+		$this->favorite = (array)$favorites[$context['favorite'] ?: 'blank'];
 		$this->title = lang($context['appname']) . ': ' . $this->favorite['name'];
 		$this->context = $context;
 		if($this->favorite)
 		{
 			$this->nm_settings['favorite'] = $this->context['favorite'];
-			if(is_array($this->favorite['state']))
+			if(is_array($favorites[$context['favorite']]['state']))
 			{
 				$this->nm_settings += $this->favorite['state'];
 			}

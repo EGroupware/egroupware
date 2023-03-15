@@ -427,6 +427,7 @@ class home_ui
 						'id'              => $portlet,
 						'caption'         => $desc['displayName'],
 						'hint'            => $desc['description'],
+						'appname'         => $appname,
 						'onExecute'       => 'javaScript:app.home.add',
 						'acceptedTypes'   => $instance->accept_drop(),
 						'allowOnMultiple' => $instance->accept_multiple()
