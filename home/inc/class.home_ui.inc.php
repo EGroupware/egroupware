@@ -635,6 +635,10 @@ class home_ui
 
 			// Update client side
 			$update = array('attributes' => $attributes);
+			if($content && is_array($content))
+			{
+				$update['attributes'] = array_merge_recursive($update['attributes'], $content);
+			}
 
 			// New portlet?  Flag going straight to edit mode
 			if($add)
