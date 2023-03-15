@@ -34,10 +34,10 @@ import {et2_no_init} from "../../api/js/etemplate/et2_core_common";
 import {CalendarApp} from "./app";
 import {sprintf} from "../../api/js/egw_action/egw_action_common.js";
 import {et2_dataview_grid} from "../../api/js/etemplate/et2_dataview_view_grid";
-import {et2_selectbox} from "../../api/js/etemplate/et2_widget_selectbox";
 import {formatDate, formatTime} from "../../api/js/etemplate/Et2Date/Et2Date";
 import interact from "@interactjs/interactjs/index";
 import type {InteractEvent} from "@interactjs/core/InteractEvent";
+import {StaticOptions} from "../../api/js/etemplate/Et2Select/StaticOptions";
 
 /**
  * Class which implements the "calendar-planner" XET-Tag for displaying a longer
@@ -707,12 +707,11 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 					this.grid.append(hours);
 				}
 			},
-			row_labels: function() {
+			row_labels: function()
+			{
 				var im = this.getInstanceManager();
-				var categories = et2_selectbox.cat_options({
-						_type:'select-cat',
-						getInstanceManager: function() {return im;}
-					},{application: 'calendar'});
+				this.nodeName = "ET2-SELECT-CAT_RO"
+				var categories = StaticOptions.cached_server_side(this, "cat", ',,,calendar', false);
 
 				var labels = [];
 				let app_calendar = this.getInstanceManager().app_obj.calendar || app.calendar;
@@ -722,7 +721,7 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 				)
 				{
 					app_calendar.state.cat_id = '';
-					labels.push({id:'',value:'',label: egw.lang('none'), main: '', data: {}});
+					labels.push({id: '', value: '', label: egw.lang('none'), main: '', data: {}});
 					labels = labels.concat(categories);
 				}
 				else
@@ -1958,10 +1957,8 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 					if(event && event.data && event.data.app && this.options.group_by == 'category')
 					{
 						// Fake it to use the cache / call
-						et2_selectbox.cat_options({
-							_type:'select-cat',
-							getInstanceManager: function() {return im;}
-						}, {application:event.data.app||'calendar'});
+						this.nodeName = "ET2-SELECT-CAT_RO"
+						let categories = StaticOptions.cached_server_side(this, "cat", ",,," + (event.data.app || 'calendar'), false);
 					}
 				}
 
