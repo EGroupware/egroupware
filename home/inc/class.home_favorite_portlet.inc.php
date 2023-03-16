@@ -85,7 +85,7 @@ class home_favorite_portlet extends home_portlet
 		}
 
 		// Load and copy favorite
-		if($context['favorite'])
+		if($context['appname'])
 		{
 			$favorites = Framework\Favorites::get_favorites($context['appname']);
 		}
