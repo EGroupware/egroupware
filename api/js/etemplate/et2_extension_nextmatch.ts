@@ -739,7 +739,24 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			}
 		}
 
-		this.update_in_progress = false;
+		// Wait a bit.  header.setFilters() can cause webComponents to update, so we want to wait for that
+		let wait = [];
+		this.iterateOver(w =>
+		{
+			if(typeof w.updateComplete != "undefined")
+			{
+				wait.push(w.updateComplete);
+			}
+		}, this);
+		setTimeout(() =>
+		{
+			// It needs a little longer than just the updateComplete, not sure why.
+			// Turning it off too soon causes problems with app.infolog.filter2_change
+			Promise.allSettled(wait).then(() =>
+			{
+				this.update_in_progress = false;
+			});
+		}, 100);
 	}
 
 	/**
