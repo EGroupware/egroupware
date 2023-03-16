@@ -493,6 +493,15 @@ export class Et2Portlet extends Et2Widget(SlCard)
 			return Promise.resolve();
 		}
 
+		// We can set some things immediately, server will overwrite if it doesn't like them
+		this.portletProperties.forEach(p =>
+		{
+			if(typeof settings[p.name] != "undefined")
+			{
+				this[p.name] = settings[p.name];
+			}
+		})
+
 		// Save settings - server might reply with new content if the portlet needs an update,
 		// but ideally it doesn't
 		this.classList.add("loading");
