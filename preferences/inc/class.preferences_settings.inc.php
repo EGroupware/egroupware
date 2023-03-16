@@ -99,25 +99,25 @@ class preferences_settings
 							$GLOBALS['egw']->preferences->set_account_id($account_id);
 							$GLOBALS['egw']->preferences->read_repository();
 						}
-						// name of common preferences which require reload of framework, if there values change
-						$require_reload = array('template_set', 'theme', 'lang', 'template_color', 'template_custom_color', 'textsize');
-						$old_values = array_intersect_key($GLOBALS['egw_info']['user']['preferences']['common'], array_flip($require_reload));
-
 						$attribute = $type == 'group' ? 'user' : $type;
+
+						$require_reload = self::fetchRequireToReload($appname, $type);
+						$old_values = array_intersect_key($GLOBALS['egw_info']['user']['preferences'][$appname], array_flip($require_reload));
+
 						if (!($msg=$this->process_array($GLOBALS['egw']->preferences->$attribute, $prefs, $content['types'], $appname, $attribute, $content)))
 						{
 							$msg_type = 'success';
 							$msg = lang('Preferences saved.');
 
 							// do we need to reload whole framework
-							if ($appname == 'common')
+							if (!empty($require_reload))
 							{
 								if ($account_id && $GLOBALS['egw']->preferences->get_account_id() != $GLOBALS['egw_info']['user']['account_id'])
 								{
 									$GLOBALS['egw']->preferences->set_account_id($GLOBALS['egw_info']['user']['account_id']);
 								}
 								$GLOBALS['egw_info']['user']['preferences'] = $GLOBALS['egw']->preferences->read_repository();
-								$new_values = array_intersect_key($GLOBALS['egw_info']['user']['preferences']['common'], array_flip($require_reload));
+								$new_values = array_intersect_key($GLOBALS['egw_info']['user']['preferences'][$appname], array_flip($require_reload));
 								//error_log(__METHOD__."() ".__LINE__.": old_values=".array2string($old_values).", new_values=".array2string($new_values));
 								if ($old_values != $new_values)
 								{
@@ -197,6 +197,41 @@ class preferences_settings
 		if ($msg) Framework::message($msg, $msg_type ? $msg_type : 'error');
 
 		$tpl->exec('preferences.preferences_settings.index', $data, $sel_options, $readonlys, $preserve, 2);
+	}
+
+	/**
+	 * Fetch preferences of given app where they have reload attribute set to true
+	 * @param string $appname app name
+	 * @param string $type 'user', 'default', 'forced'
+	 * @return array
+	 * @throws Api\Exception\AssertionFailed
+	 */
+	static function fetchRequireToReload($appname, $type)
+	{
+		$keys = [];
+		if ($appname == 'common')
+		{
+			// none app pref names here since we can't read them via hooks
+			$keys = ['template_color', 'template_custom_color', 'sidebox_custom_color'];
+			$settings = Api\Hooks::single(array(
+				'account_id'=>$GLOBALS['egw']->preferences->get_account_id(),
+				'location'=>'settings',
+				'type' => $type), 'preferences');
+		}
+		else
+		{
+			$settings = Api\Hooks::single(array(
+				'account_id'=>$GLOBALS['egw']->preferences->get_account_id(),
+				'location'=>'settings',
+				'type' => $type), $appname);
+		}
+
+
+		foreach ($settings as $key => $value)
+		{
+			if ($value['reload']) $keys[]=$key;
+		}
+		return $keys;
 	}
 
 	/**
