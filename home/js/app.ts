@@ -14,6 +14,7 @@ import {etemplate2} from "../../api/js/etemplate/etemplate2";
 import {Et2Portlet} from "../../api/js/etemplate/Et2Portlet/Et2Portlet";
 import {Et2PortletFavorite} from "./Et2PortletFavorite";
 import {loadWebComponent} from "../../api/js/etemplate/Et2Widget/Et2Widget";
+import "./Et2PortletLink";
 import "./Et2PortletList";
 import "./Et2PortletNote";
 import './Et2PortletWeather';

@@ -214,6 +214,7 @@ class home_link_portlet extends home_portlet
 
 		return $actions;
 	}
+
 	/**
 	 * This portlet accepts files and links
 	 *
@@ -221,6 +222,11 @@ class home_link_portlet extends home_portlet
 	 */
 	public function accept_drop()
 	{
-		return array('file','link');
+		return array('file', 'link');
+	}
+
+	public function get_type()
+	{
+		return "et2-portlet-link";
 	}
 }
