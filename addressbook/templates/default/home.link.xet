@@ -3,7 +3,8 @@
 <overlay>
 	<template id="addressbook.home.link" template="" lang="" group="0" version="1.9.001">
 		<et2-hbox  height="100px">
-			<et2-image  src="image" class="photo"></et2-image>
+            <et2-lavatar src="$cont[photo]" contactId="$cont[id]" lname="$cont[n_family]"
+                         fname="$cont[n_given]"></et2-lavatar>
 			<et2-vbox>
 				<et2-description  id="n_fn" class="addressbook_sidebox_name"></et2-description>
 				<et2-description  id="org_name" class="addressbook_sidebox_org"></et2-description>
