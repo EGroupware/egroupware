@@ -440,7 +440,8 @@ class mail_hooks
 					'expand' => lang('show horizontal, hide if none selected'),
 					'hide' => lang('never show'),
 				),
-				'default' => 'vertical'
+				'default' => 'vertical',
+				'reload' => true
 			),
 			'toggledOnActions' => array(
 				'type' => 'taglist',

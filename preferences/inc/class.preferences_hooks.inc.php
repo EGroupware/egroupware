@@ -184,6 +184,7 @@ class preferences_hooks
 				'values' => $textsize,
 				'default' => '14',
 				'admin'  => False,
+				'reload' => true
 			),
 			'lazy-update' => array(
 				'type'   => 'select',
@@ -205,6 +206,7 @@ class preferences_hooks
 				'xmlrpc' => True,
 				'admin'  => False,
 				'forced' => file_exists(EGW_SERVER_ROOT.'/pixelegg') ? 'pixelegg' : 'idots',
+				'reload' => true
 			),
 			'theme' => array(
 				'type'   => 'select',
@@ -215,6 +217,7 @@ class preferences_hooks
 				'xmlrpc' => True,
 				'admin'  => False,
 				'forced' => file_exists(EGW_SERVER_ROOT.'/pixelegg') ? 'pixelegg' : 'idots',
+				'reload' => true
 			),
 			'darkmode' => array(
 				'type'   => 'select',
@@ -335,6 +338,7 @@ class preferences_hooks
 				'xmlrpc' => True,
 				'admin'  => False,
 				'default'=> $lang,
+				'reload' => true
 			),
 			'country' => array(
 				'type'       => 'et2-select-country',
