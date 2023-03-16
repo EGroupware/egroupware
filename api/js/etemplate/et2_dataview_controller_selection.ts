@@ -668,15 +668,17 @@ export class et2_dataview_selectionManager
 
 	_query_ranges(queryRanges)
 	{
-		var that = this;
-		var record_count = 0;
-		var range_index = 0;
-		var range_count = queryRanges.length;
-		var cont = true;
-		var fetchPromise = new Promise(function(resolve)
+		let that = this;
+		let record_count = 0;
+		let range_index = 0;
+		let range_count = queryRanges.length;
+		let cont = true;
+		let fetchResolver;
+		let fetchPromise = new Promise(function(resolve)
 		{
-			resolve();
+			fetchResolver = resolve;
 		});
+		let fetchList = [fetchPromise];
 		// Found after dialog loads
 		var progressbar;
 
@@ -696,61 +698,67 @@ export class et2_dataview_selectionManager
 			}],
 			width: 300
 		});
-		(this._context._widget.getDOMNode() || document.body).appendChild(dialog);
+		(this._context._widget.getDOMNode() || document.body).append(dialog);
 		dialog.updateComplete.then(() =>
 		{
-			dialog.template.DOMContainer.addEventListener('load', function()
+			dialog.template.DOMContainer.addEventListener('load', () =>
 			{
 				// Get access to template widgets
 				progressbar = dialog.template.widgetContainer.getWidgetById('progressbar');
-			});
-		});
+				let rangePromise = fetchPromise;
 
-		for(var i = 0; i < queryRanges.length; i++)
-		{
-			if(record_count + (queryRanges[i].bottom - queryRanges[i].top + 1) > that.MAX_SELECTION)
-			{
-				egw.message(egw.lang('Too many rows selected.<br />Select all, or less than %1 rows', that.MAX_SELECTION));
-				break;
-			}
-			else
-			{
-				record_count += (queryRanges[i].bottom - queryRanges[i].top + 1);
-				fetchPromise = fetchPromise.then((function()
+				for(var i = 0; i < queryRanges.length; i++)
 				{
-					// Check for abort
-					if(!cont)
+					if(record_count + (queryRanges[i].bottom - queryRanges[i].top + 1) > et2_dataview_selectionManager.MAX_SELECTION)
 					{
-						return;
+						egw.message(egw.lang('Too many rows selected.<br />Select all, or less than %1 rows', et2_dataview_selectionManager.MAX_SELECTION));
+						break;
 					}
-
-					return new Promise(function(resolve)
+					else
 					{
-						that._queryRangeCallback.call(that._context, this,
-							function(_order)
+						record_count += (queryRanges[i].bottom - queryRanges[i].top + 1);
+						// We want to chain these one after the other, not fire them all right away
+						rangePromise = rangePromise.then((function()
+						{
+							// Check for abort
+							if(!cont)
 							{
-								for(var j = 0; j < _order.length; j++)
-								{
-									// Check for no_actions flag via data since entry isn't there/available
-									var data = egw.dataGetUIDdata(_order[j]);
-								if(!data || data && data.data && !data.data.no_actions)
-								{
-									var entry = this._getRegisteredRowsEntry(_order[j]);
-									this._updateEntryState(entry,
-											egwSetBit(entry.state, EGW_AO_STATE_SELECTED, true));
-								}
+								return;
 							}
-							progressbar.set_value(100*(++range_index/range_count));
-							resolve();
-						}, that);
-					}.bind(this));
-				}).bind(queryRanges[i]));
-			}
-		}
-		fetchPromise.finally(function() {
-			dialog.close();
+
+							return new Promise(function(resolve)
+							{
+								that._queryRangeCallback.call(that._context, this,
+									function(_order)
+									{
+										for(var j = 0; j < _order.length; j++)
+										{
+											// Check for no_actions flag via data since entry isn't there/available
+											var data = egw.dataGetUIDdata(_order[j]);
+											if(!data || data && data.data && !data.data.no_actions)
+											{
+												var entry = this._getRegisteredRowsEntry(_order[j]);
+												this._updateEntryState(entry,
+													egwSetBit(entry.state, EGW_AO_STATE_SELECTED, true));
+											}
+										}
+										progressbar.set_value(100 * (++range_index / range_count));
+										resolve();
+									}, that);
+							}.bind(this));
+						}).bind(queryRanges[i]));
+						fetchList.push(rangePromise);
+					}
+				}
+
+				// Start the first fetch
+				fetchResolver();
+				Promise.all(fetchList).finally(function()
+				{
+					dialog.close();
+				});
+			})
 		});
 	}
-
 }
 
