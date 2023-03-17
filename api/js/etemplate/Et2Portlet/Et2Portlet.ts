@@ -474,13 +474,22 @@ export class Et2Portlet extends Et2Widget(SlCard)
 			return;
 		}
 
+		// Keep settings, but remove any properties, no need to pass those on
+		let settings = {};
+		Object.keys(this.settings || {}).forEach(k =>
+		{
+			if(typeof k == "string" && isNaN(parseInt(k)) || typeof this.settings[k].name == "undefined" && typeof this.settings[k].type == "undefined")
+			{
+				settings[k] = this.settings[k];
+			}
+		});
 		// Pass updated settings, unless we're removing
-		this.update_settings({...this.settings, ...value});
+		this.update_settings({...settings, ...value});
 
 		// Extend, not replace, because settings has types while value has just value
 		if(typeof value == 'object')
 		{
-			this.settings = {...this.settings, value};
+			this.settings = {...settings, ...value};
 		}
 		this.requestUpdate();
 	}
@@ -500,7 +509,7 @@ export class Et2Portlet extends Et2Widget(SlCard)
 			{
 				this[p.name] = settings[p.name];
 			}
-		})
+		});
 
 		// Save settings - server might reply with new content if the portlet needs an update,
 		// but ideally it doesn't
