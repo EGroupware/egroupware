@@ -1238,7 +1238,7 @@ declare interface IegwWndLocal extends IegwGlobal
 	 * @param _isHtml true: add a html (no automatic quoting!), false (default): add as text
 	 * @param _options tooltip options
 	 */
-	tooltipBind(_elem : HTMLElement, _str : string, _isHtml? : boolean, _options);
+	tooltipBind(_elem : HTMLElement, _str : string, _isHtml? : boolean, _options? : any);
 	/**
 	 * Unbinds the tooltip from the given DOM-Node.
 	 *
@@ -1361,6 +1361,8 @@ declare var egw_LAB : any;
 declare function egwIsMobile() : string|null;
 
 declare var mailvelope : any;
+
+declare var framework : any;
 
 declare function egw_refresh(_msg : string, app : string, id? : string|number, _type?, targetapp?, replace?, _with?, msgtype?);
 declare function egw_open();
