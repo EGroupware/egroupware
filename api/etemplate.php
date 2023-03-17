@@ -278,6 +278,12 @@ function send_template()
 		{
 			$attrs = parseAttrs($matches[3]);
 
+			// ignore tags for select-country, it was never used to get multiple countries
+			if (isset($attrs['tags']) && ($attrs['type'] === 'select-country' || str_starts_with($matches[0], '<select-country')))
+			{
+				unset($attrs['tags']);
+			}
+
 			// set multiple for old tags attribute or taglist without maxSelection="1"
 			if (isset($attrs['tags']) || $matches['1'] === 'taglist' && (empty($attrs['maxSelection']) || $attrs['maxSelection'] > 1))
 			{
