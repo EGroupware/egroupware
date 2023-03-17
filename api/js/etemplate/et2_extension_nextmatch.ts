@@ -741,7 +741,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 
 		// Wait a bit.  header.setFilters() can cause webComponents to update, so we want to wait for that
 		let wait = [];
-		this.iterateOver(w =>
+		this.header.iterateOver(w =>
 		{
 			if(typeof w.updateComplete != "undefined")
 			{
