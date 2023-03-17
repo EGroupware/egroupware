@@ -90,13 +90,14 @@ class home_favorite_portlet extends home_portlet
 			$favorites = Framework\Favorites::get_favorites($context['appname']);
 		}
 
-		$this->favorite = (array)$favorites[$context['favorite'] ?: 'blank'];
+		$this->favorite = is_array($context['favorite']) ? $context['favorite'] :
+			(array)$favorites[$context['favorite'] ?: 'blank'];
 		$this->title = lang($context['appname']) . ': ' . $this->favorite['name'];
 		$this->context = $context;
 		if($this->favorite)
 		{
 			$this->nm_settings['favorite'] = $this->context['favorite'];
-			if(is_array($favorites[$context['favorite']]['state']))
+			if(is_string($context['favorite']) && is_array($favorites[$context['favorite']]['state']))
 			{
 				$this->nm_settings += $this->favorite['state'];
 			}
