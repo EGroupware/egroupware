@@ -483,8 +483,6 @@ class Db
 					break;
 
 				case 'sapdb':
-					$Type = 'maxdb';
-					// fall through
 				case 'maxdb':
 					$Type ='sapdb';	// name in ADOdb
 					$php_extension = 'odbc';
@@ -756,7 +754,8 @@ class Db
 	* @param int $fetchmode =self::FETCH_BOTH self::FETCH_BOTH (default), self::FETCH_ASSOC or self::FETCH_NUM
 	* @param boolean $reconnect =true true: try reconnecting if server closes connection, false: dont (mysql only!)
 	* @return ADORecordSet or false, if the query fails
-	* @throws Db\Exception\InvalidSql with $this->Link_ID->ErrorNo() as code
+	* @throws Db\Exception\InvalidSql for SQL syntax errors
+	* @throws Db\Exception with $this->Link_ID->ErrorNo() as code for all other errors
 	*/
 	function query($Query_String, $line = '', $file = '', $offset=0, $num_rows=-1, $inputarr=false, $fetchmode=self::FETCH_BOTH, $reconnect=true)
 	{
@@ -820,7 +819,14 @@ class Db
 		catch(\mysqli_sql_exception $e) {
 			if (!($reconnect && $this->Type == 'mysql' && ($e->getCode() == 2006 || $e->getMessage() === 'MySQL server has gone away')))
 			{
-				throw new Db\Exception($e->getMessage(), $e->getCode(), $e);
+				if ($e->getCode() == 1064)  // You have an error in your SQL syntax
+				{
+					throw new Db\Exception\InvalidSql($e->getMessage(), $e->getCode(), $e);
+				}
+				else
+				{
+					throw new Db\Exception($e->getMessage(), $e->getCode(), $e);
+				}
 			}
 			$this->Errno  = 2006;
 			$this->Error  = $e->getMessage();
@@ -849,7 +855,7 @@ class Db
 				"\n$this->Error ($this->Errno)".
 				($inputarr ? "\nParameters: '".implode("','",$inputarr)."'":''), $this->Errno);
 		}
-		elseif(empty($rs->sql)) $rs->sql = $Query_String;
+		elseif(!$rs->sql) $rs->sql = $Query_String;
 		return $rs;
 	}
 
@@ -1827,7 +1833,7 @@ class Db
 
 		if ($app === true && $table)
 		{
-			foreach(self::$all_app_data as $app => &$app_data)
+			foreach(self::$all_app_data as &$app_data)
 			{
 				if (isset($app_data[$table]))
 				{
@@ -1835,27 +1841,27 @@ class Db
 				}
 			}
 			// $table not found in loaded apps, check not yet loaded ones
-			foreach(scandir(EGW_INCLUDE_ROOT) as $app)
+			foreach(scandir(EGW_INCLUDE_ROOT) as $dir)
 			{
-				if ($app[0] == '.' || !is_dir(EGW_INCLUDE_ROOT.'/'.$app) || isset(self::$all_app_data[$app]))
+				if ($dir[0] == '.' || !is_dir(EGW_INCLUDE_ROOT.'/'.$dir) || isset(self::$all_app_data[$dir]))
 				{
 					continue;
 				}
-				$tables_current = EGW_INCLUDE_ROOT . "/$app/setup/tables_current.inc.php";
+				$tables_current = EGW_INCLUDE_ROOT . "/$dir/setup/tables_current.inc.php";
 				if (!@file_exists($tables_current))
 				{
-					self::$all_app_data[$app] = False;
+					self::$all_app_data[$dir] = False;
 				}
 				else
 				{
 					$phpgw_baseline = null;
 					include($tables_current);
-					self::$all_app_data[$app] =& $phpgw_baseline;
+					self::$all_app_data[$dir] =& $phpgw_baseline;
 					unset($phpgw_baseline);
 
-					if (isset(self::$all_app_data[$app][$table]))
+					if (isset(self::$all_app_data[$dir][$table]))
 					{
-						return self::$all_app_data[$app][$table];
+						return self::$all_app_data[$dir][$table];
 					}
 				}
 			}
@@ -1863,7 +1869,7 @@ class Db
 		}
 		if (!$app)
 		{
-			$app = $this->app ? $this->app : $GLOBALS['egw_info']['flags']['currentapp'];
+			$app = $this->app ?: $GLOBALS['egw_info']['flags']['currentapp'];
 		}
 		$app_data =& self::$all_app_data[$app];
 
@@ -1927,6 +1933,9 @@ class Db
 	* @param string|boolean $app string with name of app or False to use the current-app
 	* @param bool $use_prepared_statement use a prepared statement
 	* @param array|bool $table_def use this table definition. If False, the table definition will be read from tables_baseline
+	* @throws Db\Exception\InvalidSql for SQL syntax errors
+	* @throws Db\Exception with $this->Link_ID->ErrorNo() as code for all other errors
+	* @throws Exception\WrongParameter use $where together with multiple data rows in $data
 	* @return ADORecordSet or false, if the query fails
 	*/
 	function insert($table,$data,$where,$line,$file,$app=False,$use_prepared_statement=false,$table_def=False)
@@ -2044,6 +2053,8 @@ class Db
 	* @param string|boolean $app string with name of app or False to use the current-app
 	* @param bool $use_prepared_statement use a prepared statement
 	* @param array|bool $table_def use this table definition. If False, the table definition will be read from tables_baseline
+	* @throws Db\Exception\InvalidSql for SQL syntax errors
+	* @throws Db\Exception with $this->Link_ID->ErrorNo() as code for all other errors
 	* @return ADORecordSet or false, if the query fails
 	*/
 	function update($table,$data,$where,$line,$file,$app=False,$use_prepared_statement=false,$table_def=False)
@@ -2142,9 +2153,12 @@ class Db
 	* @param string $file file-name to pass to query
 	* @param string|boolean $app string with name of app or False to use the current-app
 	* @param array|bool $table_def use this table definition. If False, the table definition will be read from tables_baseline
+	* @param int|null $limit limit delete to given number of rows
+	* @throws Db\Exception\InvalidSql for SQL syntax errors
+	* @throws Db\Exception e.g. 1205: Lock timeout exceeded, if deleting rows took to long, you can use $limit to delete in multiple calls
 	* @return ADORecordSet or false, if the query fails
 	*/
-	function delete($table,$where,$line,$file,$app=False,$table_def=False)
+	function delete($table, $where, $line, $file, $app=False, $table_def=False, int $limit=null)
 	{
 		if (!$table_def) $table_def = $this->get_table_definitions($app,$table);
 
@@ -2153,7 +2167,8 @@ class Db
 			$table = self::$tablealiases[$table];
 		}
 		$sql = "DELETE FROM $table WHERE ".
-			$this->column_data_implode(' AND ',$where,True,False,$table_def['fd']);
+			$this->column_data_implode(' AND ',$where,True,False,$table_def['fd']).
+			(isset($limit) && $limit > 0 ? 'LIMIT '.$limit : '');
 
 		if (!is_bool($this->log_updates) && in_array($table, (array)$this->log_updates))
 		{
@@ -2234,6 +2249,8 @@ class Db
 	*	"LEFT JOIN table2 ON (x=y)", Note: there's no quoting done on $join!
 	* @param array|bool $table_def use this table definition. If False, the table definition will be read from tables_baseline
 	* @param int $fetchmode =self::FETCH_ASSOC self::FETCH_ASSOC (default), self::FETCH_BOTH or self::FETCH_NUM
+	* @throws Db\Exception\InvalidSql for SQL syntax errors
+	* @throws Db\Exception with $this->Link_ID->ErrorNo() as code for all other errors
 	* @return ADORecordSet or false, if the query fails
 	*/
 	function select($table,$cols,$where,$line,$file,$offset=False,$append='',$app=False,$num_rows=0,$join='',$table_def=False,$fetchmode=self::FETCH_ASSOC)
@@ -2282,6 +2299,8 @@ class Db
 	* @param int|bool $offset offset for a limited query or False (default)
 	* @param int $num_rows number of rows to return if offset set, default 0 = use default in user prefs
 	* @param int $fetchmode =self::FETCH_ASSOC self::FETCH_ASSOC (default), self::FETCH_BOTH or self::FETCH_NUM
+	* @throws Db\Exception\InvalidSql for SQL syntax errors
+	* @throws Db\Exception with $this->Link_ID->ErrorNo() as code for all other errors
 	* @return ADORecordSet or false, if the query fails
 	*/
 	function union($selects,$line,$file,$order_by='',$offset=false,$num_rows=0,$fetchmode=self::FETCH_ASSOC)
