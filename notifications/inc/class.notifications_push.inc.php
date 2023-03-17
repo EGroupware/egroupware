@@ -98,10 +98,10 @@ class notifications_push implements Json\PushBackend
 	{
 		if (!isset($account_id)) $account_id = $GLOBALS['egw_info']['user']['account_id'];
 
-		foreach((array)$account_id as $account_id)
+		foreach((array)$account_id as $id)
 		{
 			self::$db->insert(self::TABLE, array(
-				'account_id'  => $account_id,
+				'account_id'  => $id,
 				'notify_type' => self::TYPE,
 				'notify_message' => json_encode(array(
 					'method' => $key,
@@ -117,16 +117,35 @@ class notifications_push implements Json\PushBackend
 	}
 
 	/**
-	 * Delete push messages older then our heartbeat-limit (poll frequency of notifications)
+	 * Delete push messages older than our heartbeat-limit (poll frequency of notifications)
 	 */
 	protected static function cleanup_push_msgs()
 	{
 		if (($ts = self::$db->from_unixtime(Api\Session::heartbeat_limit())))
 		{
-			self::$db->delete(self::TABLE, array(
-				'notify_type' => self::TYPE,
-				'notify_created < '.$ts,
-			), __LINE__, __FILE__, self::APP);
+			try {
+				self::$db->delete(self::TABLE, array(
+					'notify_type' => self::TYPE,
+					'notify_created < '.$ts,
+				), __LINE__, __FILE__, self::APP);
+			}
+			catch (Api\Db\Exception $e) {
+				if ($e->getCode() == 1205)  // MariaDB: Lock wait timeout exceeded
+				{
+					$n = 0;
+					do {
+						self::$db->delete(self::TABLE, array(
+							'notify_type' => self::TYPE,
+							'notify_created < '.$ts,
+						), __LINE__, __FILE__, self::APP, null, 1000);
+					}
+					while($n++ < 100 && self::$db->affected_rows());
+				}
+				else
+				{
+					_egw_log_exception($e);
+				}
+			}
 		}
 	}
 
