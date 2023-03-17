@@ -2,6 +2,7 @@ import {Et2Portlet} from "../../api/js/etemplate/Et2Portlet/Et2Portlet";
 import shoelace from "../../api/js/etemplate/Styles/shoelace";
 import {css} from "@lion/core";
 import {SelectOption} from "../../api/js/etemplate/Et2Select/FindSelectOptions";
+import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";
 
 /**
  * Home portlet to show a list of entries
@@ -28,6 +29,16 @@ export class Et2PortletLink extends Et2Portlet
 			...super.portletProperties,
 			{name: "entry", type: "et2-link-entry", label: "Entry"}
 		]
+	}
+
+	_process_edit(button_id, value)
+	{
+		if(button_id == Et2Dialog.OK_BUTTON && value.entry && value.entry != this.settings.entry)
+		{
+			// Update title with new app immediately
+			this.title = this.egw().lang(value.entry.app);
+		}
+		super._process_edit(button_id, value);
 	}
 }
 
