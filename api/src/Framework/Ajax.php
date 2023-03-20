@@ -188,7 +188,7 @@ abstract class Ajax extends Api\Framework
 		ob_end_clean();
 		//error_log(__METHOD__.'('.array2string($extra).') called from:'.function_backtrace());
 
-		// the instanciation of the template has to be here and not in the constructor,
+		// the instantiation of the template has to be here and not in the constructor,
 		// as the old template class has problems if restored from the session (php-restore)
 		// todo: check if this is still true
 		$this->tpl = new Template(EGW_SERVER_ROOT.$this->template_dir);
