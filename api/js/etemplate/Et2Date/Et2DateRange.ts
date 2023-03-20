@@ -3,9 +3,8 @@ import {FormControlMixin} from "@lion/form-core";
 import {classMap, css, html, ifDefined, LitElement, TemplateResult} from "@lion/core";
 import shoelace from "../Styles/shoelace";
 import {dateStyles} from "./DateStyles";
-import flatpickr from "flatpickr";
 import "flatpickr/dist/plugins/rangePlugin";
-import {Et2Date, formatDate, parseDate} from "./Et2Date";
+import {formatDate, parseDate} from "./Et2Date";
 import {egw} from "../../jsapi/egw_global";
 
 /**
@@ -53,31 +52,6 @@ export class Et2DateRange extends Et2InputWidget(FormControlMixin(LitElement))
 	constructor()
 	{
 		super();
-	}
-
-	getUpdateComplete() {
-		const p = super.getUpdateComplete();
-		if(!this.relative)
-		{
-			p.then(() => this.setupFlatpickr());
-		}
-		return p;
-	}
-	protected setupFlatpickr()
-	{
-		if(!this.fromElement || !this.fromElement._inputElement) return;
-
-		this.fromElement._instance = flatpickr((<Et2Date>this.fromElement).findInputField(), {
-			...(<Et2Date>this.fromElement).getOptions(),
-			...{
-				plugins: [
-					// @ts-ignore ts can't find rangePlugin in IDE
-					rangePlugin({
-						input: this.toElement
-					})
-				]
-			}
-		});
 	}
 
 	render()
@@ -157,15 +131,15 @@ export class Et2DateRange extends Et2InputWidget(FormControlMixin(LitElement))
 				?required=${this.required}
 				placeholder=${ifDefined(this.placeholder)}
 				defaultDate=${ifDefined(this.value?.from)}
-			></et2-date>
-			<et2-textbox
-				name="to"
-				?disabled=${this.disabled}
+            ></et2-date>
+            <et2-date
+                    name="to"
+                    ?disabled=${this.disabled}
 				?readonly=${this.readonly}
 				?required=${this.required}
 				placeholder=${ifDefined(this.placeholder)}
 				value=${ifDefined(this.value?.to)}
-			></et2-textbox>
+            ></et2-date>
 		`;
 	}
 
