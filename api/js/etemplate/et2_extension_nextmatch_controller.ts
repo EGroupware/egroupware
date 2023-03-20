@@ -88,7 +88,7 @@ export class et2_nextmatch_controller extends et2_dataview_controller implements
 
 		this.setDataProvider(this);
 		this.setRowCallback(this._nmRowCallback);
-		this.setLinkCallback(this._linkCallback);
+		this.setLinkCallback(this._nmLinkCallback);
 		this.setContext(this);
 
 		// Copy the egw reference
@@ -585,7 +585,7 @@ export class et2_nextmatch_controller extends et2_dataview_controller implements
 	 *
 	 * @return Array List of action names that valid for the row
 	 */
-	_linkCallback( _data, _idx, _uid)
+	_nmLinkCallback( _data, _idx, _uid)
 	{
 		if(_uid.trim() != "")
 		{
