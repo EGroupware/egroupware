@@ -24,7 +24,7 @@ import './fw_browser.js';
 import './fw_ui.js';
 import './fw_classes.js';
 import '../jsapi/egw_inheritance.js';
-import "sortablejs/Sortable.min.js";
+import Sortable from "sortablejs/modular/sortable.complete.esm";
 /**
  *
  * @param {DOMWindow} window
