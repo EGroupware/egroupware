@@ -3,8 +3,9 @@ import {FormControlMixin} from "@lion/form-core";
 import {classMap, css, html, ifDefined, LitElement, TemplateResult} from "@lion/core";
 import shoelace from "../Styles/shoelace";
 import {dateStyles} from "./DateStyles";
-import "flatpickr/dist/plugins/rangePlugin";
-import {formatDate, parseDate} from "./Et2Date";
+import flatpickr from "flatpickr";
+import {default as rangePlugin} from "flatpickr/dist/plugins/rangePlugin";
+import {Et2Date, formatDate, parseDate} from "./Et2Date";
 import {egw} from "../../jsapi/egw_global";
 
 /**
@@ -52,6 +53,30 @@ export class Et2DateRange extends Et2InputWidget(FormControlMixin(LitElement))
 	constructor()
 	{
 		super();
+	}
+
+	getUpdateComplete() {
+		const p = super.getUpdateComplete();
+		if(!this.relative)
+		{
+			p.then(() => this.setupFlatpickr());
+		}
+		return p;
+	}
+	protected setupFlatpickr()
+	{
+		if(!this.fromElement || !this.fromElement._inputElement) return;
+
+		this.fromElement._instance = flatpickr((<Et2Date>this.fromElement).findInputField(), {
+			...(<Et2Date>this.fromElement).getOptions(),
+			...{
+				plugins: [
+					rangePlugin({
+						input: this.toElement
+					})
+				]
+			}
+		});
 	}
 
 	render()
