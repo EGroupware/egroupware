@@ -87,7 +87,7 @@ export class et2_nextmatch_controller extends et2_dataview_controller implements
 		super(_parentController, _grid);
 
 		this.setDataProvider(this);
-		this.setRowCallback(this._rowCallback);
+		this.setRowCallback(this._nmRowCallback);
 		this.setLinkCallback(this._linkCallback);
 		this.setContext(this);
 
@@ -560,7 +560,7 @@ export class et2_nextmatch_controller extends et2_dataview_controller implements
 	 * this special case used to store the rowWidget reference, so that it can
 	 * be properly freed.
 	 */
-	_rowCallback( _data, _tr, _idx, _entry)
+	_nmRowCallback(_data, _tr, _idx, _entry)
 	{
 		// Let the row provider fill in the data row -- store the returned
 		// rowWidget inside the _entry
