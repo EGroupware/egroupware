@@ -2836,9 +2836,12 @@ class mail_compose
 		$addrFromList=array();
 		foreach((array)$_emailAddressList as $ak => $address)
 		{
-			if(is_numeric($address) && $address > 0 || preg_match('/ <(\\d+)@lists.egroupware.org>$/', $address, $matches))
+			if(is_numeric($address) && $address > 0 || preg_match('/ <(-?\d+)@lists.egroupware.org>$/', $address, $matches))
 			{
-				if (!isset($contacts_obs)) $contacts_obj = new Api\Contacts();
+				if(!isset($contacts_obs))
+				{
+					$contacts_obj = new Api\Contacts();
+				}
 				// List was selected, expand to addresses
 				unset($_emailAddressList[$ak]);
 				foreach($contacts_obj->search('',array('n_fn','n_prefix','n_given','n_family','org_name','email','email_home'),
