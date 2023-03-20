@@ -398,7 +398,10 @@ export class Et2DateDuration extends Et2InputWidget(FormControlMixin(LitElement)
 	_inputGroupInputTemplate()
 	{
 		return html`
-            <div class="input-group__input">
+            <div class="input-group__input" @sl-change=${() =>
+            {
+                this.dispatchEvent(new Event("change", {bubbles: true}));
+            }}>
                 <slot name="input">
                     ${this._inputTemplate()}
                     ${this._formatTemplate()}
