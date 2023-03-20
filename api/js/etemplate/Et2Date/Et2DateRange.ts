@@ -55,30 +55,6 @@ export class Et2DateRange extends Et2InputWidget(FormControlMixin(LitElement))
 		super();
 	}
 
-	getUpdateComplete() {
-		const p = super.getUpdateComplete();
-		if(!this.relative)
-		{
-			p.then(() => this.setupFlatpickr());
-		}
-		return p;
-	}
-	protected setupFlatpickr()
-	{
-		if(!this.fromElement || !this.fromElement._inputElement) return;
-
-		this.fromElement._instance = flatpickr((<Et2Date>this.fromElement).findInputField(), {
-			...(<Et2Date>this.fromElement).getOptions(),
-			...{
-				plugins: [
-					rangePlugin({
-						input: this.toElement
-					})
-				]
-			}
-		});
-	}
-
 	render()
 	{
 		const hasLabel = this.label ? true : false
@@ -156,15 +132,15 @@ export class Et2DateRange extends Et2InputWidget(FormControlMixin(LitElement))
 				?required=${this.required}
 				placeholder=${ifDefined(this.placeholder)}
 				defaultDate=${ifDefined(this.value?.from)}
-			></et2-date>
-			<et2-textbox
-				name="to"
-				?disabled=${this.disabled}
+            ></et2-date>
+            <et2-date
+                    name="to"
+                    ?disabled=${this.disabled}
 				?readonly=${this.readonly}
 				?required=${this.required}
 				placeholder=${ifDefined(this.placeholder)}
 				value=${ifDefined(this.value?.to)}
-			></et2-textbox>
+            ></et2-date>
 		`;
 	}
 
