@@ -193,6 +193,21 @@ class TimesheetApp extends EgwApp
 	}
 
 	/**
+	 * If editing a timesheet and no quantity is set, update the placeholder text when duration changes
+	 *
+	 * This is for display only
+	 */
+	update_quantity(event, widget)
+	{
+		const quantity = this.et2.getWidgetById("ts_quantity");
+		if(quantity)
+		{
+			// Duration is in minutes, round to hours with 1 decimal
+			quantity.placeholder = Math.round(parseInt(widget.value) / 6) / 10;
+		}
+	}
+
+	/**
 	 * Get title in order to set it as document title
 	 * @returns {string}
 	 */
