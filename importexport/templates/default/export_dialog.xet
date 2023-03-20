@@ -67,11 +67,13 @@
 					<et2-description  value="Definition filter"></et2-description>
 				</row>
 				<row valign="top" disabled="!@plugin_selectors_template">
-					<template id="@plugin_selectors_template"/>
-					<et2-box  onclick="jQuery('input[value=\'filter\']').not(':checked').attr('checked',true).parent().effect('highlight',{},2000);" class="filters">
-						<filter id="filter_tpl"/>
-					</et2-box>
-				</row>
+                    <template id="@plugin_selectors_template"/>
+                    <et2-box
+                            onclick="document.getElementById('importexport-export_dialog_selection-filter').checked=true;"
+                            class="filters">
+                        <filter id="filter_tpl"/>
+                    </et2-box>
+                </row>
 			</rows>
 		</grid>
 		<styles>
