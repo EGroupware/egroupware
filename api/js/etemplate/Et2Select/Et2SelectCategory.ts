@@ -10,7 +10,7 @@
 
 import {css, PropertyValues} from "@lion/core";
 import {Et2Select} from "./Et2Select";
-import {Et2StaticSelectMixin, StaticOptions} from "./StaticOptions";
+import {Et2StaticSelectMixin, StaticOptions as so} from "./StaticOptions";
 import {cleanSelectOptions} from "./FindSelectOptions";
 
 /**
@@ -171,11 +171,5 @@ export class Et2SelectCategory extends Et2StaticSelectMixin(Et2Select)
 		return tag;
 	}
 }
-
-/**
- * Use a single StaticOptions, since it should have no state
- * @type {StaticOptions}
- */
-const so = new StaticOptions();
 
 customElements.define("et2-select-cat", Et2SelectCategory);

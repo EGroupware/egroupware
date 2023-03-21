@@ -27,7 +27,7 @@ import {et2_container} from "../../api/js/etemplate/et2_core_baseWidget";
 import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";
 import {formatDate, formatTime} from "../../api/js/etemplate/Et2Date/Et2Date";
 import {ColorTranslator} from "colortranslator";
-import {StaticOptions} from "../../api/js/etemplate/Et2Select/StaticOptions";
+import {StaticOptions as so} from "../../api/js/etemplate/Et2Select/StaticOptions";
 import {Et2Select} from "../../api/js/etemplate/Et2Select/Et2Select";
 import {SelectOption} from "../../api/js/etemplate/Et2Select/FindSelectOptions";
 import {CalendarApp} from "./app";
@@ -298,7 +298,6 @@ export class et2_calendar_event extends et2_valueWidget implements et2_IDetached
 			this._need_actions_linked = !this.options.readonly;
 
 			// Make sure category stuff is there by faking a call to cache
-			let so = new StaticOptions();
 			so.cached_server_side(<Et2Select><unknown>{
 				nodeName: "ET2-SELECT-CAT_RO",
 				egw: () => this.egw()
@@ -525,7 +524,6 @@ export class et2_calendar_event extends et2_valueWidget implements et2_IDetached
 			let cat_label : (string | string[]) = '';
 			if(this.options.value.category)
 			{
-				let so = new StaticOptions();
 				let options = <SelectOption[]>so.cached_server_side(<Et2Select><unknown>{
 					nodeName: "ET2-SELECT-CAT_RO",
 					egw: () => this.egw()

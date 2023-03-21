@@ -222,7 +222,7 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 			if(changedProperties.has('required'))
 			{
 				// Remove all existing Required validators (avoids duplicates)
-				this.validators = (this.validators || []).filter((validator) => validator instanceof Required)
+				this.validators = (this.validators || []).filter((validator) => !(validator instanceof Required))
 				if(this.required)
 				{
 					this.validators.push(new Required());

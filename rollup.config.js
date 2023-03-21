@@ -15,12 +15,13 @@ import { readFileSync, readdirSync, statSync, unlinkSync  } from "fs";
 //import rimraf from 'rimraf';
 import { minify } from 'terser';
 import resolve from '@rollup/plugin-node-resolve';
+import commonjs from '@rollup/plugin-commonjs';
 
 // Best practice: use this
 //rimraf.sync('./dist/');
 //rimraf.sync('./chunks/');
 
-// remove only chunks older then 2 days, to allow UI to still load them and not require a reload / F5
+// remove only chunks older than 2 days, to allow UI to still load them and not require a reload / F5
 const rm_older = Date.now() - 48*3600000;
 readdirSync('./chunks').forEach(name => {
     const stat = statSync('./chunks/'+name);
@@ -55,6 +56,11 @@ const config = {
         // app.ts/js are added automatic by addAppsConfig() below
     },
     external: function(id,parentId,isResolved) {
+        // core-js used require and needs to be run through RollupJS and NOT treated as external
+        if (id.includes("/node_modules/core-js/"))
+        {
+            return false;
+        }
         if(!isResolved)
         {
             return;
@@ -113,6 +119,8 @@ const config = {
     resolve({
         browser: true
     }),
+    // core-js uses require, which needs to be transformed to es-modules
+    commonjs(),
     {
         transform (code, id) {
             if (id.endsWith('.ts'))
@@ -127,7 +135,22 @@ const config = {
                             // plugins: stage3Syntax,
                             errorRecovery: true
                         },
-                        presets: ['@babel/preset-typescript']
+                        presets: [
+                            ['@babel/preset-typescript', {
+                                //onlyRemoveTypeImports: true   // seems not necessary and generates a lot of warnings about not exported symbols
+                            }],
+                            ['@babel/preset-env', {
+                                corejs: {
+                                    version: "3"
+                                },
+                                useBuiltIns: "usage",
+                                modules: false,
+                                targets : {
+                                    esmodules: true,
+                                    safari: "14"
+                                }
+                            }],
+                        ]
                     }, function (err, result) {
                         if (err)
                             return reject(err);

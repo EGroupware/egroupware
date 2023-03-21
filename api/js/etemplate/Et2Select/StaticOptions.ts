@@ -103,7 +103,7 @@ export const Et2StaticSelectMixin = <T extends Constructor<Et2WidgetWithSelect>>
  * @param {boolean} return_promise true: always return a promise
  * @returns {Object[]|Promise<Object[]>} Array of options, or empty and they'll get filled in later, or Promise
  */
-export class StaticOptions
+export const StaticOptions = new class StaticOptionsType
 {
 	cached_server_side(widget : Et2SelectWidgets, type : string, options_string, return_promise? : boolean) : SelectOption[]|Promise<SelectOption[]>
 	{

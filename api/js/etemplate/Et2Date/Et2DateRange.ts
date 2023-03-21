@@ -4,7 +4,7 @@ import {classMap, css, html, ifDefined, LitElement, TemplateResult} from "@lion/
 import shoelace from "../Styles/shoelace";
 import {dateStyles} from "./DateStyles";
 import flatpickr from "flatpickr";
-import "flatpickr/dist/plugins/rangePlugin";
+import {default as rangePlugin} from "flatpickr/dist/plugins/rangePlugin";
 import {Et2Date, formatDate, parseDate} from "./Et2Date";
 import {egw} from "../../jsapi/egw_global";
 
@@ -71,7 +71,6 @@ export class Et2DateRange extends Et2InputWidget(FormControlMixin(LitElement))
 			...(<Et2Date>this.fromElement).getOptions(),
 			...{
 				plugins: [
-					// @ts-ignore ts can't find rangePlugin in IDE
 					rangePlugin({
 						input: this.toElement
 					})
