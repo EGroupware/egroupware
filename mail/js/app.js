@@ -6369,6 +6369,13 @@ app.classes.mail = AppJS.extend(
 	 */
 	onclickCompose(_node, _address)
 	{
-		egw.open_link('mailto:'+_address.value);
+		if (_address.value && this.egw.preference('force_mailto', 'addressbook') != '1')
+		{
+			this.egw.open_link('mailto:' + _address.value);
+		}
+		else
+		{
+			window.open("mailto:" + _address.value);
+		}
 	}
 });
