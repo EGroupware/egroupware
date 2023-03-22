@@ -362,21 +362,21 @@ class timesheet_ui extends timesheet_bo
 			'referer' => $referer,
 			'ts_title_blur' => $content['ts_title_blur'],
 		);
-		$content = array_merge($this->data,array(
-			'msg'  => $msg,
-			'view' => $view,
-			'tabs'  => $content['tabs'],
-			'link_to' => array(
-				'to_id' => $this->data['ts_id'] ? $this->data['ts_id'] :
+		$content = array_merge($this->data, array(
+			'msg'              => $msg,
+			'view'             => $view,
+			'tabs'             => $content['tabs'],
+			'link_to'          => array(
+				'to_id'  => $this->data['ts_id'] ? $this->data['ts_id'] :
 					($this->data['link_to']['to_id'] ? $this->data['link_to']['to_id'] : $content['link_to']['to_id']),
 				'to_app' => TIMESHEET_APP,
 			),
-			'ts_quantity_blur' => $this->data['ts_duration'] ? round($this->data['ts_duration'] / 60.0,3) : '',
-			'ts_quantity' => $this->data['ts_duration']/60.0 == $this->data['ts_quantity'] ? null : $this->data['ts_quantity'],
-			'start_time' => isset($this->data['start_time']) ? $this->data['start_time'] : $this->data['ts_start'],
-			'pm_integration' => $this->pm_integration,
-			'no_ts_status' => !$this->status_labels && ($this->data['ts_status'] != self::DELETED_STATUS),
-			'tabs' => $_GET['tabs'] ?? 'general',
+			'ts_quantity_blur' => $this->data['ts_duration'] ? round($this->data['ts_duration'] / 60.0, 3) : '',
+			'ts_quantity'      => $this->data['ts_duration'] / 60.0 == $this->data['ts_quantity'] ? null : (float)$this->data['ts_quantity'],
+			'start_time'       => isset($this->data['start_time']) ? $this->data['start_time'] : $this->data['ts_start'],
+			'pm_integration'   => $this->pm_integration,
+			'no_ts_status'     => !$this->status_labels && ($this->data['ts_status'] != self::DELETED_STATUS),
+			'tabs'             => $_GET['tabs'] ?? 'general',
 		));
 		$links = array();
 		// create links specified in the REQUEST (URL)

@@ -202,8 +202,18 @@ class TimesheetApp extends EgwApp
 		const quantity = this.et2.getWidgetById("ts_quantity");
 		if(quantity)
 		{
+			// use decimal separator from user prefs
+			const format = this.egw.preference('number_format');
+			const sep = format ? format[0] : '.';
+
 			// Duration is in minutes, round to hours with 1 decimal
-			quantity.placeholder = Math.round(parseInt(widget.value) / 6) / 10;
+			let val = "" + (Math.round(parseInt(widget.value) / 6) / 10);
+			if(format && sep && sep !== '.')
+			{
+				val = val.replace('.', sep);
+			}
+
+			quantity.placeholder = val;
 		}
 	}
 
