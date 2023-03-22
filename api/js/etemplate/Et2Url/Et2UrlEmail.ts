@@ -13,6 +13,7 @@ import {IsEmail} from "../Validators/IsEmail";
 import {Et2Textbox} from "../Et2Textbox/Et2Textbox";
 import {colorsDefStyles} from "../Styles/colorsDefStyles";
 import {css} from "@lion/core";
+import {egw} from "../../jsapi/egw_global";
 
 /**
  * @customElement et2-url-email
@@ -55,6 +56,10 @@ export class Et2UrlEmail extends Et2InvokerMixin(Et2Textbox)
 		if (value && egw.user('apps').mail && egw.preference('force_mailto','addressbook') != '1' )
 		{
 			egw.open_link('mailto:'+value);
+		}
+		else
+		{
+			window.open("mailto:" + value);
 		}
 	}
 }
