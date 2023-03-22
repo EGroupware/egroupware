@@ -9,9 +9,33 @@
  */
 
 import {Et2Textbox} from "./Et2Textbox";
+import {css, html, render} from "@lion/core";
 
 export class Et2Number extends Et2Textbox
 {
+	static get styles()
+	{
+		return [
+			...(super.styles ? (Array.isArray(super.styles) ? super.styles : [super.styles]) : []),
+			css`
+			  /* Scroll buttons */
+
+			  :host(:hover) ::slotted(et2-button-scroll) {
+				display: flex;
+			  }
+
+			  ::slotted(et2-button-scroll) {
+				display: none;
+			  }
+
+			  .input--medium .input__suffix ::slotted(et2-button-scroll) {
+				padding: 0px;
+			  }
+
+			`,
+		];
+	}
+
 	static get properties()
 	{
 		return {
@@ -35,17 +59,33 @@ export class Et2Number extends Et2Textbox
 		}
 	}
 
+
+	constructor()
+	{
+		super();
+
+		this.handleScroll = this.handleScroll.bind(this);
+	}
+
+	connectedCallback()
+	{
+		super.connectedCallback();
+
+		// Add spinners
+		render(this._incrementButtonTemplate(), this);
+	}
+
 	transformAttributes(attrs)
 	{
-		if (attrs.precision === 0 && typeof attrs.step === 'undefined')
+		if(attrs.precision === 0 && typeof attrs.step === 'undefined')
 		{
 			attrs.step = 1;
 		}
-		if (typeof attrs.validator === 'undefined')
+		if(typeof attrs.validator === 'undefined')
 		{
 			attrs.validator = attrs.precision === 0 ? '/^-?[0-9]*$/' : '/^-?[0-9]*[,.]?[0-9]*$/';
 		}
-		attrs.type = 'number';
+		attrs.inputmode = "numeric";
 		super.transformAttributes(attrs);
 	}
 
@@ -58,16 +98,38 @@ export class Et2Number extends Et2Textbox
 	{
 		super.validator = regexp;
 	}
+
 	get validator()
 	{
 		return super.validator;
 	}
 
-	set_value(val)
+	handleInput()
 	{
-		if (""+val !== "")
+		// Do nothing
+	}
+
+	handleBlur()
+	{
+		this.value = this.input.value;
+		super.handleBlur();
+	}
+
+	set value(val)
+	{
+		if("" + val !== "")
 		{
-			if (typeof this.precision !== 'undefined')
+			// use decimal separator from user prefs
+			const format = this.egw().preference('number_format');
+			const sep = format ? format[0] : '.';
+
+			// Remove separator so parseFloat works
+			if(typeof val === 'string' && format && sep && sep !== '.')
+			{
+				val = val.replace(sep, '.');
+			}
+
+			if(typeof this.precision !== 'undefined')
 			{
 				val = parseFloat(val).toFixed(this.precision);
 			}
@@ -75,33 +137,71 @@ export class Et2Number extends Et2Textbox
 			{
 				val = parseFloat(val);
 			}
-			// use decimal separator from user prefs
-			const format = this.egw().preference('number_format');
-			const sep = format ? format[0] : '.';
+			// Put separator back in, if different
 			if(typeof val === 'string' && format && sep && sep !== '.')
 			{
 				val = val.replace('.', sep);
 			}
 		}
-		this.value = val;
+		super.value = val;
 	}
 
-	getValue()
+	get value()
 	{
-		let val = this.value;
+		return super.value;
+	}
 
-		if (""+val !== "")
+	getValue() : any
+	{
+		// Needs to be string to pass validator
+		return "" + this.valueAsNumber;
+	}
+
+	get valueAsNumber() : number
+	{
+		let val = this.__value;
+
+		if("" + val !== "")
 		{
-			if (typeof this.precision !== 'undefined')
+			// remove decimal separator from user prefs
+			const format = this.egw().preference('number_format');
+			const sep = format ? format[0] : '.';
+			if(typeof val === 'string' && format && sep && sep !== '.')
 			{
-				val = parseFloat(val).toFixed(this.precision);
+				val = val.replace(sep, '.');
+			}
+			if(typeof this.precision !== 'undefined')
+			{
+				val = parseFloat(parseFloat(val).toFixed(this.precision));
 			}
 			else
 			{
 				val = parseFloat(val);
 			}
 		}
-		return val + "";
+		return val;
+	}
+
+	private handleScroll(e)
+	{
+		const old_value = this.value;
+		this.value = "" + (this.valueAsNumber + e.detail * (parseFloat(this.step) || 1));
+		this.dispatchEvent(new CustomEvent("sl-change", {bubbles: true}));
+		this.requestUpdate("value", old_value);
+	}
+
+	protected _incrementButtonTemplate()
+	{
+		// No increment buttons on mobile
+		if(typeof egwIsMobile == "function" && egwIsMobile())
+		{
+			return '';
+		}
+
+		return html`
+            <et2-button-scroll class="et2-number__scrollbuttons" slot="suffix"
+                               part="scroll"
+                               @et2-scroll=${this.handleScroll}></et2-button-scroll>`;
 	}
 }
 // @ts-ignore TypeScript is not recognizing that Et2Textbox is a LitElement
