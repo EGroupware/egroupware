@@ -120,42 +120,49 @@ export class Et2DateDuration extends Et2InputWidget(FormControlMixin(LitElement)
 			shoelace,
 			...dateStyles,
 			css`
-			.form-field__group-two {
+			  .form-field__group-two {
 				max-width: 100%;
-			}
-			.input-group {
+			  }
+
+			  .input-group {
 				display: flex;
 				flex-direction: row;
 				flex-wrap: nowrap;
 				align-items: baseline;
-			}
-			.input-group__after {
+			  }
+
+			  .input-group__after {
 				margin-inline-start: var(--sl-input-spacing-medium);
-			}
-			et2-select {
+			  }
+
+			  et2-select {
 				color: var(--input-text-color);
 				border-left: 1px solid var(--input-border-color);
 				flex: 2 1 auto;
-			}
-			et2-select::part(control) {
+			  }
+
+			  et2-select::part(control) {
 				border-top-left-radius: 0px;
 				border-bottom-left-radius: 0px;
-			}
-			et2-textbox {
+			  }
+
+			  .duration__input {
 				flex: 1 1 auto;
 				max-width: 4.5em;
 				margin-right: -2px;
-			}
-			et2-textbox::part(input) {
+			  }
+
+			  .duration__input::part(input) {
 				padding-right: 0px;
-			}
-			et2-textbox:not(:last-child)::part(base) {
+			  }
+
+			  .duration__input:not(:last-child)::part(base) {
 				border-right: none;
 				border-top-right-radius: 0px;
 				border-bottom-right-radius: 0px;
-			}
-				
-            `,
+			  }
+
+			`,
 		];
 	}
 
@@ -300,7 +307,7 @@ export class Et2DateDuration extends Et2InputWidget(FormControlMixin(LitElement)
 			return "" + (this.dataFormat === 'm' ? Math.round(value) : value);
 		}
 
-		let val = this._durationNode.length ? this._durationNode[0].value : '';
+		let val = this._durationNode.length ? this._durationNode[0].valueAsNumber : '';
 		if(val === '' || isNaN(val))
 		{
 			return this.emptyNot0 ? '' : "0";
@@ -565,9 +572,11 @@ export class Et2DateDuration extends Et2InputWidget(FormControlMixin(LitElement)
 		}
 		return html`${inputs.map((input : any) =>
                 html`
-                    <et2-textbox part="duration__${input.name}" type="number" class="duration__input" name=${input.name}
-                                 min=${input.min} max=${input.max} title=${input.title}
-                                 value=${input.value}></et2-textbox>`
+                    <et2-number part="${"duration__" + input.name}" class="duration__input"
+                                exportparts="scroll:scroll,scrollbutton:scrollbutton"
+                                name=${input.name}
+                                min=${input.min} max=${input.max} precision="2" title=${input.title}
+                                value=${input.value}></et2-number>`
         )}
 		`;
 	}
@@ -611,7 +620,7 @@ export class Et2DateDuration extends Et2InputWidget(FormControlMixin(LitElement)
 	 */
 	get _durationNode() : HTMLInputElement[]
 	{
-		return this.shadowRoot ? this.shadowRoot.querySelectorAll("et2-textbox") || [] : [];
+		return this.shadowRoot ? this.shadowRoot.querySelectorAll(".duration__input") || [] : [];
 	}
 
 
