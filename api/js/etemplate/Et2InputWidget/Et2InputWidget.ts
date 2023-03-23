@@ -373,15 +373,25 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 			this.label = pre;
 			if(post?.trim().length > 0)
 			{
-				const label = document.createElement("et2-description");
-				label.innerText = post;
-				// Put in suffix, if parent has a suffix slot
-				if(this.parentNode?.shadowRoot?.querySelector("slot[name='suffix']"))
-				{
-					label.slot = "suffix";
-				}
+				const update = () => {
+					const label = document.createElement("et2-description");
+					label.innerText = post;
+					// Put in suffix, if parent has a suffix slot
+					if(this.parentNode?.shadowRoot?.querySelector("slot[name='suffix']"))
+					{
+						label.slot = "suffix";
+					}
 
-				this.parentNode.append(label);
+					this.parentNode.append(label);
+				}
+				if (this.parentNode)
+				{
+					update();
+				}
+				else
+				{
+					window.setTimeout(update, 1);
+				}
 			}
 		}
 
