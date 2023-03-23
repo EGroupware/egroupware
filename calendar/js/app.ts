@@ -57,6 +57,8 @@ import {tapAndSwipe} from "../../api/js/tapandswipe";
 import {CalendarOwner} from "./CalendarOwner";
 import {et2_IInput} from "../../api/js/etemplate/et2_core_interfaces";
 import {Et2DateTime} from "../../api/js/etemplate/Et2Date/Et2DateTime";
+import {Et2Select} from "../../api/js/etemplate/Et2Select/Et2Select";
+import type {SelectOption} from "../../api/js/etemplate/Et2Select/FindSelectOptions";
 
 /**
  * UI for calendar
@@ -3741,6 +3743,60 @@ export class CalendarApp extends EgwApp
 				}
 			}, this, null
 		);
+	}
+
+	/**
+	 * Pre-fetch the members of any group participants
+	 *
+	 * This is done to avoid rewriting since group fetching is async.  We fetch missing group members in advance,
+	 * then hold the data in the sidebox select options for immediate access when checking if an event should be displayed
+	 * in a particular calendar.
+	 *
+	 * @param event
+	 * @return Promise
+	 */
+	async _fetch_group_members(event) : Promise<any>
+	{
+		let groups = [];
+		let option_owner = null;
+		let options : SelectOption[];
+		if(app.calendar && app.calendar.sidebox_et2 && app.calendar.sidebox_et2.getWidgetById('owner'))
+		{
+			option_owner = app.calendar.sidebox_et2.getWidgetById('owner');
+		}
+		else
+		{
+			option_owner = parent.getArrayMgr("sel_options").getRoot().getEntry('owner');
+		}
+
+		options = option_owner.select_options;
+
+		for(const id of Object.keys(event.participants))
+		{
+			if(parseInt(id) >= 0)
+			{
+				continue;
+			}
+			let resource = options.find((o) => o.value === id);
+			if(!resource || resource && !resource.resources)
+			{
+				groups.push(parseInt(id));
+			}
+		}
+
+		// Find missing groups
+		if(groups.length)
+		{
+			return this.egw.request("calendar.calendar_owner_etemplate_widget.ajax_owner", [groups]).then((data) =>
+			{
+				options = options.concat(Object.values(data));
+				option_owner.select_options = options;
+			});
+		}
+		else
+		{
+			return Promise.resolve();
+		}
 	}
 
 	/**

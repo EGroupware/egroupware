@@ -370,39 +370,53 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 	_data_callback( event_ids)
 	{
 		const events = [];
-		if(event_ids == null || typeof event_ids.length == 'undefined') event_ids = [];
-		for(let i = 0; i < event_ids.length; i++)
+		const waitForGroups = [];
+		if(event_ids == null || typeof event_ids.length == 'undefined')
 		{
-			let event : any = egw.dataGetUIDdata('calendar::'+event_ids[i]);
-			event = event && event.data || false;
-			if(event && event.date && et2_calendar_event.owner_check(event, this) && (
-				event.date === this.options.date ||
-				// Accept multi-day events
-				new Date(event.start) <= this.date //&& new Date(event.end) >= this.date
-			))
-			{
-				events.push(event);
-			}
-			else if (event)
-			{
-				// Got an ID that doesn't belong
-				event_ids.splice(i--,1);
-			}
+			event_ids = [];
 		}
 
-		if(!this.div.is(":visible"))
+		for(let i = 0; i < event_ids.length; i++)
 		{
-			// Not visible, defer the layout or it all winds up at the top
-			// Cancel any existing listener & bind
-			jQuery(this.getInstanceManager().DOMContainer.parentNode)
-				.off('show.'+CalendarApp._daywise_cache_id(this.options.date, this.options.owner))
-				.one('show.'+CalendarApp._daywise_cache_id(this.options.date, this.options.owner), function() {
-					this._update_events(events)
-				}.bind(this));
-			return;
+			let event : any = egw.dataGetUIDdata('calendar::' + event_ids[i]);
+			event = event && event.data || false;
+			waitForGroups.push((<CalendarApp>app.calendar)._fetch_group_members(event).then(() =>
+			{
+				if(event && event.date && et2_calendar_event.owner_check(event, this) && (
+					event.date === this.options.date ||
+					// Accept multi-day events
+					new Date(event.start) <= this.date //&& new Date(event.end) >= this.date
+				))
+				{
+					events.push(event);
+				}
+				else if(event)
+				{
+					// Got an ID that doesn't belong
+					event_ids.splice(i--, 1);
+				}
+			}));
 		}
-		if(!this.getParent().disabled)
-			this._update_events(events);
+
+		Promise.all(waitForGroups).then(() =>
+		{
+			if(!this.div.is(":visible"))
+			{
+				// Not visible, defer the layout or it all winds up at the top
+				// Cancel any existing listener & bind
+				jQuery(this.getInstanceManager().DOMContainer.parentNode)
+					.off('show.' + CalendarApp._daywise_cache_id(this.options.date, this.options.owner))
+					.one('show.' + CalendarApp._daywise_cache_id(this.options.date, this.options.owner), function()
+					{
+						this._update_events(events)
+					}.bind(this));
+				return;
+			}
+			if(!this.getParent().disabled)
+			{
+				this._update_events(events);
+			}
+		});
 	}
 
 	set_label( label)
