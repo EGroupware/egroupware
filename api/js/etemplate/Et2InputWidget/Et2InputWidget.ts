@@ -373,7 +373,8 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 			this.label = pre;
 			if(post?.trim().length > 0)
 			{
-				const update = () => {
+				this.updateComplete.then(() =>
+				{
 					const label = document.createElement("et2-description");
 					label.innerText = post;
 					// Put in suffix, if parent has a suffix slot
@@ -383,15 +384,7 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 					}
 
 					this.parentNode.append(label);
-				}
-				if (this.parentNode)
-				{
-					update();
-				}
-				else
-				{
-					window.setTimeout(update, 1);
-				}
+				});
 			}
 		}
 
