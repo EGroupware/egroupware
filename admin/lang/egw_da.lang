@@ -1,5 +1,6 @@
 %1 - %2 of %3 user accounts	admin	da	%1 - %2 af %3 bruger kontier
 %1 not found or not executable !!!	admin	da	%1 er ikke fundet eller er ikke eksekverbar!!!
+(no subject)	admin	da	(ingen emne)
 (stored password will not be shown here)	admin	da	(Gemte adgangskoder vil ikke blive vist her)
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	da	(For at installere nye applikationer brug <br><a href="setup/" target="setup">Setup</a> [Administrere Applikationer] !!!)
 accesslog and bruteforce defense	admin	da	Adgangslog for BruteForce forsvar
@@ -29,20 +30,23 @@ add group	admin	da	Tilføj gruppe
 add new account	admin	da	Tilføj ny konto
 add new application	admin	da	Tilføj ny applikation
 add peer server	admin	da	Tilføj Peer Server
+add profile	admin	da	Tilføj Profil
 add sub-category	admin	da	Tilføj underkategori
+admin dn	admin	da	admin dn
 admin email	admin	da	Administrator e-mail
 admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	da	Administrator e-mail adresser (komma separeret) som skal have besked omkring blokeringen (tom for ingen)
 admin name	admin	da	Administrator navn
+admin password	admin	da	admin adgangskode
+admin username	admin	da	admin brugernavn
 administration	admin	da	Administration
 admins	admin	da	Administratore
 advanced options	admin	da	avanceret indstillinger
-after how many unsuccessful attempts to login, an account should be blocked (default 15) ?	admin	da	Efter hvor mange usuccesfulde forsøg på login, skal en konto låses (Standard 3)?
 after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	da	Efter hvor mange usuccesfulde forsøg på login, skal en IP låses (Standard 3)?
 all categories	admin	da	Alle kategorier
 all records and account information will be lost!	admin	da	Alle posteringer og konto infomationer vil gå tabt!
 all users	admin	da	Alle brugere
 allow anonymous access to this app	admin	da	Tillad anonym adgang til denne applikation
-alternate email address	admin	da	alternativ email adresse
+alternate email address	admin	da	alternativ e-mail adresse
 anonymous user	admin	da	Anonym bruger
 anonymous user (not shown in list sessions)	admin	da	Anonym bruger (ikke vist i session loggen)
 anonymous user does not exist!	admin	da	Anonym bruger eksisterer ikke!
@@ -88,10 +92,11 @@ creates a new field	admin	da	opretter et nyt felt
 crontab only (recomended)	admin	da	kun crontab (anbefalet)
 custom fields	admin	da	Valgfri Felter
 cyrus imap server	admin	da	Cyrus IMAP Server
+cyrus imap server administration	admin	da	Cyrus IMAP server administration
 data	admin	da	Data
 day	admin	da	Dag
 day of week<br>(0-6, 0=sun)	admin	da	Ugedag<br>(0-6, 0=Søn)
-default	admin	da	Standard
+default	admin	da	standart
 default file system space per user	admin	da	Standard system plads pr bruger
 default file system space per user/group ?	admin	da	Standard system plads pr bruger/gruppe?
 deinstall crontab	admin	da	Afinstallere crontab
@@ -130,8 +135,10 @@ disabled (not recomended)	admin	da	deaktiveret (ikke anbefalet)
 display	admin	da	Vis
 do not delete the category and return back to the list	admin	da	slet IKKE denne kategori og vend tilbage til listen
 do you also want to delete all global subcategories ?	admin	da	Vil du også slette alle globale underkategorier?
+do you really want to delete this profile	admin	da	Vil du virkelig slette denne profil
 do you want to delete all global subcategories ?	admin	da	Vil du slette alle globale underkategorier?
 do you want to move all global subcategories one level down ?	admin	da	Vil du flytte alle globale underkategorier et tak ned?
+domainname	admin	da	domæne navn
 down	admin	da	ned
 edit account	admin	da	Redigér konto
 edit application	admin	da	Redigér applikation
@@ -150,7 +157,9 @@ edit user account	admin	da	Redigér bruger konto
 email account active	admin	da	e-mail konto aktiv
 email address	admin	da	e-mail adresse
 enable	admin	da	aktivere
+enable cyrus imap server administration	admin	da	aktivere Cyrus IMAP server administration
 enable debug-messages	admin	da	Aktivere debug-beskeder
+enable sieve	admin	da	aktiver Sieve
 enabled - hidden from navbar	admin	da	Aktiveret - Gemt fra navigationsbjælken
 enabled - popup window	admin	da	Aktiveret - Popup vindue
 enter a description for the category	admin	da	indtast en beskrivelse for kategorien
@@ -168,10 +177,10 @@ enter the site password for peer servers	admin	da	Indtast site adgangskoden for 
 enter the site username for peer servers	admin	da	Indtast site brugernavnet for peer serverene
 enter the title for your site	admin	da	Indtast titlen for dit site
 enter the title of your logo	admin	da	Indtast title for dit logo
-enter the url or filename (in api/templates/default/images) of your logo	admin	da	Indtast stien eller filnavnet (i api/templates/default/images) på dit logo
 enter the url where your logo should link to	admin	da	Indtast stien hvor dit logo skal linke til
 enter your default ftp server	admin	da	Indtast din standard FTP server
 enter your default mail domain ( from: user@domain )	admin	da	Indtast dit standard domæne navn (fra: bruger@domæne)
+enter your default mail domain (from: user@domain)	admin	da	Indtast dit standart post domæne (fra: bruger@domæne)
 enter your http proxy server	admin	da	Indtast din HTTP proxy server
 enter your http proxy server port	admin	da	Indtast din HTTP proxy server port
 enter your smtp server hostname or ip address	admin	da	Indtast SMTP-server navn
@@ -179,6 +188,7 @@ enter your smtp server port	admin	da	Indtast SMTP-server port
 error canceling timer, maybe there's none set !!!	admin	da	Fejl ved annullering af timer, måske er den ikke sat!!!
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	da	Fejl ved indstillingen af timeren, forkert syntaks eller måske kører den allerede!!!
 error: %1 not found or other error !!!	admin	da	Fejl: %1 ikke fundet eller en anden fejl!!!
+event details follow	admin	da	Hændelses detajler følger
 expires	admin	da	Udløber
 failed to change password.	admin	da	Det lykkedes ikke at ændre adgangskoden.
 file space	admin	da	Fil plads
@@ -187,6 +197,7 @@ for the times above	admin	da	for tider over
 for the times below (empty values count as '*', all empty = every minute)	admin	da	for tider under (tom værdi virker som '*', alle tomme = hvert minut)
 force selectbox	admin	da	Tving Selectboks
 forward also to	admin	da	videresend også til
+forward email's to	admin	da	videresend e-mails til
 forward only	admin	da	videresend kun
 full name	admin	da	Fulde Navn
 general	admin	da	Generelt
@@ -200,6 +211,7 @@ group manager	admin	da	Gruppe Manager
 group name	admin	da	Gruppenavn
 hide php information	admin	da	gem php information
 home directory	admin	da	Hjemme mappe
+home screen message	admin	da	Startside besked
 host information	admin	da	Host information
 hour<br>(0-23)	admin	da	Timer<br>(0-23)
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	da	Hvor mange dage skal en notits blive i adgangsloggen, før den slettes (standard 90)?
@@ -207,6 +219,14 @@ how many minutes should an account or ip be blocked (default 1) ?	admin	da	Hvor 
 icon	admin	da	Ikon
 if no acl records for user or any group the user is a member of	admin	da	Hvis ingen ACL journal for en bruger eller gruppe som brugeren er medlem af
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	da	Hvis LDAP bruges, vil du håndtere hjemmemapper og loginshells atributter?
+imap admin password	admin	da	IMAP admin adgangskode
+imap admin user	admin	da	IMAP admin bruger
+imap c-client version < 2001	admin	da	IMAP C-Klient Version < 2001
+imap server	admin	da	IMAP Server
+imap server hostname or ip address	admin	da	IMAP server domænenavn eller IP adresse
+imap server logintyp	admin	da	IMAP server login type
+imap server port	admin	da	IMAP server port
+imap/pop3 server name	admin	da	IMAP/POP3 server navn
 in mbyte	admin	da	i Megabytes
 inbound	admin	da	indkommende
 install crontab	admin	da	Installere crontab
@@ -223,6 +243,7 @@ last login	admin	da	Sidste login
 last login from	admin	da	Sidste login fra
 last time read	admin	da	Sidst læst
 ldap accounts context	admin	da	LDAP kontoer contekst
+ldap basedn	admin	da	LDAP basedn
 ldap default homedirectory prefix (e.g. /home for /home/username)	admin	da	LDAP standard hjemmebibliotek præfiks (f.eks. /home for /home/brugernavn)
 ldap default shell (e.g. /bin/bash)	admin	da	LDAP standard shell (f.eks. /bin/bash)
 ldap encryption type	admin	da	LDAP krypterings type
@@ -230,6 +251,12 @@ ldap groups context	admin	da	LDAP gruppe contekst
 ldap host	admin	da	LDAP host
 ldap root password	admin	da	LDAP root adgangskode
 ldap rootdn	admin	da	LDAP rootdn
+ldap server	admin	da	LDAP server
+ldap server accounts dn	admin	da	LDAP server konto DN
+ldap server admin dn	admin	da	LDAP server admin DN
+ldap server admin password	admin	da	LDAP server admin adgangskode
+ldap server hostname or ip address	admin	da	LDAP server domænenavn eller IP adresse
+ldap settings	admin	da	LDAP indstillinger
 leave empty for no quota	admin	da	efterlad tom hvis ingen citat
 leave the category untouched and return back to the list	admin	da	efterlad kategorien urørt og vend tilbage til listen
 leave the group untouched and return back to the list	admin	da	efterlad gruppen urørt og vend tilbage til listen
@@ -246,7 +273,6 @@ login shell	admin	da	Login shell
 login time	admin	da	Login tid
 loginid	admin	da	LoginID
 mail settings	admin	da	Post indstillinger
-home screen message	admin	da	Startside besked
 manager	admin	da	Håndtering
 maximum account id (e.g. 65535 or 1000000)	admin	da	Maksimum konto id (f.eks. 65535 eller 10000000)
 maximum entries in click path history	admin	da	Maksimum antal i klik sti historie
@@ -258,12 +284,14 @@ mode	admin	da	Mode
 modified	admin	da	Modificeret
 month	admin	da	Måned
 name must not be empty !!!	admin	da	Navn må ikke være tomt!!!
+name of organisation	admin	da	Navn på organisation
 new group name	admin	da	Nyt gruppe navn
 new name	admin	da	nyt navn
 new password [ leave blank for no change ]	admin	da	Ny adgangskode [Efterlad tom for ingen ændring]
 next run	admin	da	Næste kørsel
 no algorithms available	admin	da	Ingen algoritmer tilgængelig
 no alternate email address	admin	da	ingen alternativ e-mail adresse
+no forwarding email address	admin	da	ingen viderestillet e-mail adresse
 no jobs in the database !!!	admin	da	Ingen jobs i databasen!!!
 no login history exists for this user	admin	da	Nogen login historie findes for denne bruger
 no matches found	admin	da	Ingen resultater fundet
@@ -272,10 +300,19 @@ no permission to add users	admin	da	ingen rettigheder til at tilføje brugere
 no permission to create groups	admin	da	ingen rettigheder til at oprette grupper
 note: ssl available only if php is compiled with curl support	admin	da	Note: SSL er kun tilgængelig hvis PHP er kompileret med curl understøttelse)
 number of row for a multiline inputfield or line of a multi-select-box	admin	da	Antal af rækker for et multi-linie felt eller linier i en multi-select box
+oauth authentiction	admin	da	OAuth-godkendelse
+offer to installing egroupware as mail-handler	admin	da	Tilbud om installation af EGroupware som mail-handler
+one day	admin	da	En dag
+one hour	admin	da	En time
 one month	admin	da	en måned
 one week	admin	da	en uge
 order	admin	da	Rækkefølge
+organisation	admin	da	Organisation
+other security configuration	admin	da	Anden sikkerhedskonfiguration
 outbound	admin	da	udgående
+own categories	admin	da	Egne kategorier
+own install id	admin	da	Eget installations-ID
+own install id:	admin	da	Eget installations-ID:
 peer server list	admin	da	Peer server liste
 peer servers	admin	da	Peer servere
 percent of users that logged out	admin	da	Procent af brugere der loggede ud
@@ -288,17 +325,20 @@ please enter a name	admin	da	Indtast venligst et navn
 please enter a name for that server !	admin	da	Indtast venligst et navn for den server!
 please run setup to become current	admin	da	Kør venligst setup for at opdatere
 please select	admin	da	Vlæg venligst
+pop3 server hostname or ip address	admin	da	POP3 server domænenavn eller IP adresse
+pop3 server port	admin	da	POP server port
 postfix with ldap	admin	da	Postfix med LDAP
 preferences	admin	da	Præferencer
 primary group	admin	da	primær gruppe
+profile list	admin	da	Profil liste
+profile name	admin	da	Profil navn
 qmaildotmode	admin	da	qmaildotmode
 quota settings	admin	da	quota indstillinger
 re-enter password	admin	da	Genindtast adgangskode
 read this list of methods.	admin	da	Læs denne liste over metoder
-remove	admin	da	Fjern
+remove	admin	da	fjern
 remove all users from this group	admin	da	Fjern alle brugere fra denne gruppe
 remove all users from this group ?	admin	da	Fjern alle brugere fra denne gruppe?
-return to view account	admin	da	Tilbage til konto visning
 rows	admin	da	Rækker
 save the category	admin	da	gem kategorien
 save the category and return back to the list	admin	da	gem kategorien og vend tilbage til listen
@@ -312,6 +352,8 @@ security	admin	da	Sikkerhed
 select group managers	admin	da	Vælg gruppe håndtering
 select permissions this group will have	admin	da	Vælg rettigheder denne gruppe skal have
 select the parent category. if this is a main category select no category	admin	da	Vælg overstående kategori. Hvis det er en hovedkategori vælg INGEN KATEGORI
+select type of imap/pop3 server	admin	da	Vælg type IMAP/POP3 server
+select type of smtp server	admin	da	Vælg time POP3 server
 select users for inclusion	admin	da	Brugere der skal inkluderes
 select where you want to store/retrieve filesystem information	admin	da	Vælg hvor du vil gemme/modtage filsystem informationer
 select where you want to store/retrieve user accounts	admin	da	Vælg hvor du vil gemme/modtage bruger kontier
@@ -331,14 +373,21 @@ show current action	admin	da	Vis nuværende handling
 show error log	admin	da	Vis fejllog
 show phpinfo()	admin	da	Vis phpinfo()
 show session ip address	admin	da	Vis session IP adresse
+sieve server hostname or ip address	admin	da	Sieve server domænenavn eller IP adresse
+sieve server port	admin	da	Sieve server port
+sieve settings	admin	da	Sieve indstillinger
 site	admin	da	Site
+smtp server name	admin	da	SMTP server navn
+smtp settings	admin	da	SMTP indstillinger
+smtp-server hostname or ip address	admin	da	SMTP server domænenavn eller IP adresse
+smtp-server port	admin	da	SMTP server port
 soap	admin	da	SOAP
 sorry, that group name has already been taken.	admin	da	Beklager, det gruppenavn er allerede brugt.
 sorry, the above users are still a member of the group %1	admin	da	Beklager, overstående brugere er stadig medlem af gruppen %1
 sorry, the follow users are still a member of the group %1	admin	da	Beklager, følgende brugere er stadig medlem af gruppen %1
 sort the entries	admin	da	sorter resultaterne
 ssl	admin	da	ssl
-standard	admin	da	standard
+standard	admin	da	Standart
 standard imap server	admin	da	Standart IMAP server
 standard pop3 server	admin	da	Standart POP3 server
 standard smtp-server	admin	da	Standart SMTP server
@@ -366,6 +415,7 @@ they must be removed before you can continue	admin	da	De skal fjernes før du ka
 this application is current	admin	da	Applikationen er den nyeste version
 this application requires an upgrade	admin	da	Denne applikation brhøver en opgradering
 this category is currently being used by applications as a parent category	admin	da	Denne kategori er brugt af en anden applikation, som en hovedkategori.
+this php has no imap support compiled in!!	admin	da	Der er ikke understøttelse for IMAP i din PHP kode.
 timeout for application session data in seconds (default 86400 = 1 day)	admin	da	Timeout for applikation session data i sekunder (standard 86400 = 1 dag)
 timeout for sessions in seconds (default 14400 = 4 hours)	admin	da	Timeout for sessioner i sekunder (standard 14400 = 4 timer)
 times	admin	da	Gange
@@ -378,12 +428,18 @@ two weeks	admin	da	to uger
 up	admin	da	op
 updated	admin	da	Opdateret
 use cookies to pass sessionid	admin	da	Brug cookies som sessionid
+use default	admin	da	Brug standard
+use ldap defaults	admin	da	brug LDAP standarter
 use pure html compliant code (not fully working yet)	admin	da	Brug ren HTML godkendt kode (virker ikke 100% endnu)
+use smtp auth	admin	da	Brug SMTP autorisation
 use theme	admin	da	Brug tema
+use tls authentication	admin	da	Brug TLS autorisation
+use tls encryption	admin	da	Brug TLS kryptering
 user accounts	admin	da	Bruger kontoer
 user data	common	da	Bruger data
 user groups	admin	da	Bruger grupper
 userdata	admin	da	brugerdata
+users can define their own emailaccounts	admin	da	Brugere kan selv definere deres egne e-mail kontoer
 users choice	admin	da	Brugerens valg
 view access log	admin	da	Vis adgangslog
 view account	admin	da	Vis konto
@@ -392,6 +448,7 @@ view error log	admin	da	Vis fejllog
 view sessions	admin	da	Vis sessioner
 view this user	admin	da	Vis denne bruger
 view user account	admin	da	Vis bruger konto
+virtual mail manager	admin	da	Virtuel post håndtering
 who would you like to transfer all records owned by the deleted user to?	admin	da	Hvem vil du overføre ALLE posteringer ejet af den slettede bruger til?
 would you like egroupware to cache the egw info array ?	admin	da	Vil du have EGroupware til at cache egw info array?
 would you like egroupware to check for a new version<br>when admins login ?	admin	da	Vil du have EGroupware til at kikke efter nyere versioner<br>når adminstratorer logget ind?
@@ -410,78 +467,3 @@ you must enter an application title.	admin	da	Du skal indtaste en applikations t
 you must select a file type	admin	da	Du skal vælge en type
 you will need to remove the subcategories before you can delete this category	admin	da	Du blive nød til at fjerne underkategorierne for du kan slette denne kategori!
 your session could not be verified.	admin	da	Din session kunne ikke verificeres
-(no subject)	admin	da	(ingen emne)
-add profile	admin	da	Tilføj Profil
-admin dn	admin	da	admin dn
-admin password	admin	da	admin adgangskode
-admin username	admin	da	admin brugernavn
-advanced options	admin	da	avanceret indstillinger
-alternate email address	admin	da	alternativ e-mail adresse
-cyrus imap server	admin	da	Cyrus IMAP Server
-cyrus imap server administration	admin	da	Cyrus IMAP server administration
-default	admin	da	standart
-deliver extern	admin	da	lever ekstern
-do you really want to delete this profile	admin	da	Vil du virkelig slette denne profil
-domainname	admin	da	domæne navn
-edit email settings	admin	da	redigere e-mail indstillingerne
-email account active	admin	da	e-mail konto aktiv
-email address	admin	da	e-mail adresse
-enable cyrus imap server administration	admin	da	aktivere Cyrus IMAP server administration
-enable sieve	admin	da	aktiver Sieve
-enter your default mail domain (from: user@domain)	admin	da	Indtast dit standart post domæne (fra: bruger@domæne)
-event details follow	admin	da	Hændelses detajler følger
-forward also to	admin	da	videresend også til
-forward email's to	admin	da	videresend e-mails til
-forward only	admin	da	videresend kun
-imap admin password	admin	da	IMAP admin adgangskode
-imap admin user	admin	da	IMAP admin bruger
-imap c-client version < 2001	admin	da	IMAP C-Klient Version < 2001
-imap server	admin	da	IMAP Server
-imap server hostname or ip address	admin	da	IMAP server domænenavn eller IP adresse
-imap server logintyp	admin	da	IMAP server login type
-imap server port	admin	da	IMAP server port
-imap/pop3 server name	admin	da	IMAP/POP3 server navn
-in mbyte	admin	da	i Megabytes
-ldap basedn	admin	da	LDAP basedn
-ldap server	admin	da	LDAP server
-ldap server accounts dn	admin	da	LDAP server konto DN
-ldap server admin dn	admin	da	LDAP server admin DN
-ldap server admin password	admin	da	LDAP server admin adgangskode
-ldap server hostname or ip address	admin	da	LDAP server domænenavn eller IP adresse
-ldap settings	admin	da	LDAP indstillinger
-leave empty for no quota	admin	da	efterlad tom hvis ingen citat
-mail settings	admin	da	Post indstillinger
-name of organisation	admin	da	Navn på organisation
-no alternate email address	admin	da	ingen alternativ e-mail adresse
-no forwarding email address	admin	da	ingen viderestillet e-mail adresse
-order	admin	da	Rækkefølge
-organisation	admin	da	Organisation
-pop3 server hostname or ip address	admin	da	POP3 server domænenavn eller IP adresse
-pop3 server port	admin	da	POP server port
-postfix with ldap	admin	da	Postfix med LDAP
-profile list	admin	da	Profil liste
-profile name	admin	da	Profil navn
-qmaildotmode	admin	da	qmaildotmode
-quota settings	admin	da	quota indstillinger
-remove	admin	da	fjern
-select type of imap/pop3 server	admin	da	Vælg type IMAP/POP3 server
-select type of smtp server	admin	da	Vælg time POP3 server
-sieve server hostname or ip address	admin	da	Sieve server domænenavn eller IP adresse
-sieve server port	admin	da	Sieve server port
-sieve settings	admin	da	Sieve indstillinger
-smtp server name	admin	da	SMTP server navn
-smtp settings	admin	da	SMTP indstillinger
-smtp-server hostname or ip address	admin	da	SMTP server domænenavn eller IP adresse
-smtp-server port	admin	da	SMTP server port
-standard	admin	da	Standart
-standard imap server	admin	da	Standart IMAP server
-standard pop3 server	admin	da	Standart POP3 server
-standard smtp-server	admin	da	Standart SMTP server
-this php has no imap support compiled in!!	admin	da	Der er ikke understøttelse for IMAP i din PHP kode.
-use default	admin	da	Brug standard
-use ldap defaults	admin	da	brug LDAP standarter
-use smtp auth	admin	da	Brug SMTP autorisation
-use tls authentication	admin	da	Brug TLS autorisation
-use tls encryption	admin	da	Brug TLS kryptering
-users can define their own emailaccounts	admin	da	Brugere kan selv definere deres egne e-mail kontoer
-virtual mail manager	admin	da	Virtuel post håndtering

@@ -1,6 +1,7 @@
 %1 - %2 of %3 user accounts	admin	lv	%1 -%2 no%3 lietotāju konti
 %1 - %2 of %3 user groups	admin	lv	%1-%2 no %3 lietotāju grupas
 %1 not found or not executable !!!	admin	lv	%1 nav atrasts vai nav izpildāms!!!
+(no subject)	admin	lv	(nav temata)
 (stored password will not be shown here)	admin	lv	(Ierakstītā parole netiks šeit parādīta)
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	lv	(lai instalētu jaunu programmatūru lieto <br><a href="setup/" target="setup">Setup</a> [Pārvaldi aplikācijas] !!!)
 accesslog and bruteforce defense	admin	lv	Piekļuves logs un nesankcionētās pieejas aizsardzība
@@ -31,14 +32,17 @@ add group	admin	lv	Pievienot grupu
 add new account	admin	lv	PIevienot jaunu kontu
 add new application	admin	lv	Pievienot jaunu aplikāciju
 add peer server	admin	lv	Pievienot vienādranga serveri
+add profile	admin	lv	Pievienot profilu
 add sub-category	admin	lv	Pievienot apakšgrupu
+admin dn	admin	lv	administratora dn
 admin email	admin	lv	Administratora e-pasts
 admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	lv	administratora e-pasta adreses(atdalītas ar komatu), lai tiktu informēts par bloķēšanu(atstāt tukšu, lai nesaņemtu paziņojumu)
 admin name	admin	lv	Administratora vārds
+admin password	admin	lv	administratora parole
+admin username	admin	lv	administratora lietotājvārds
 administration	admin	lv	Vadība
 admins	admin	lv	Administratori
 advanced options	admin	lv	uzlabotās iespējas
-after how many unsuccessful attempts to login, an account should be blocked (default 15) ?	admin	lv	Pēc cik neveiksmīgiem mēģinājumiem pieslēgties kontu vajadzētu nobloķēt (noklusējums 3)?
 after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	lv	Pēc cik neveiksmīgiem mēģinājumiem pieslēgties vajadzētu nobloķēt IP(noklusējums 3)?
 all applications	admin	lv	visas aplikācijas
 all categories	admin	lv	visas kategorijas
@@ -86,6 +90,7 @@ check ip address of all sessions	admin	lv	Pārbaudīt IP adresi visām sesijām
 check items to <b>%1</b> to %2 for %3	admin	lv	Pārbaudīt vienības <b>%1</b> to %2 for %3
 click to select a color	admin	lv	Noklikšķini, lai izvēlētos krāsu
 color	admin	lv	Krāsa
+continue	admin	lv	Turpināt
 country	admin	lv	Valsts
 country selection	admin	lv	Valsts Izvēle
 create group	admin	lv	Izveidot grupu
@@ -94,11 +99,12 @@ creates a new field	admin	lv	veido jaunu lauku
 crontab only (recomended)	admin	lv	tikai crontab (ieteicams)
 custom fields	admin	lv	Mainīti lauki
 cyrus imap server	admin	lv	Cyrus IMAP serveris
+cyrus imap server administration	admin	lv	Cyrus IMAP servera administrēšana
 data	admin	lv	Dati
 day	admin	lv	Diena
 day of week<br>(0-6, 0=sun)	admin	lv	Nedēļas diena <br>(0-6, 0=SV)
 db backup and restore	admin	lv	DV dublējums un atjaunināšana
-default	admin	lv	Noklusējums
+default	admin	lv	noklusējums
 default file system space per user	admin	lv	Noklusētā disku apjoma vērtība lietotājam
 default file system space per user/group ?	admin	lv	Noklusētā disku apjoma vērtība lietotājam/grupai?
 deinstall crontab	admin	lv	Atinstalēt crontab
@@ -139,8 +145,10 @@ disabled (not recomended)	admin	lv	neatļauts (nav ieteicams)
 display	admin	lv	Attēlo(display)
 do not delete the category and return back to the list	admin	lv	Neizdzēst kategoriju in atgriezties uz sarakstu
 do you also want to delete all global subcategories ?	admin	lv	Vai vēlies dzēst arī vispārējas apakšgrupas?
+do you really want to delete this profile	admin	lv	Vai tu tiešām vēlies dzēst šo profilu?
 do you want to delete all global subcategories ?	admin	lv	Vai vēlies dzēst visas vispārējas apakšgrupas?
 do you want to move all global subcategories one level down ?	admin	lv	Vai vēlies pārvietot visas vispārējas apakšgrupas vienu līmeni zemāk?
+domainname	admin	lv	domēna vārds
 down	admin	lv	lejā
 edit account	admin	lv	Rediģēt kontu
 edit application	admin	lv	Rediģēt  aplikāciju
@@ -159,7 +167,9 @@ edit user account	admin	lv	Rediģēt lietotāja kontu
 email account active	admin	lv	e-pasta konts aktīvs
 email address	admin	lv	e-pasta adrese
 enable	admin	lv	Aktivizēt
+enable cyrus imap server administration	admin	lv	atļaut Cyrus IMAP servera administrēšanu
 enable debug-messages	admin	lv	Atļaut atkļudošanas ziņojumus
+enable sieve	admin	lv	atļaut Sieve
 enabled - hidden from navbar	admin	lv	Atļauts - paslēpts no navigācijas paneļa
 enabled - popup window	admin	lv	Atļauts - uznirstošs logs
 enter a description for the category	admin	lv	ievadi kategorijas aprakstu
@@ -169,20 +179,21 @@ enter the background color for the site title	admin	lv	Ievadi fona krāsu lapas 
 enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	lv	Norādi pilno ceļu uz īslaicīgajām datnēm.<br>Piemēri:/tmp,C:\TEMP
 enter the full path for users and group files.<br>examples: /files, e:files	admin	lv	Ievadi pilno ceļu lietotāju un grupu datnēm.<br>Piemēri: /files,E:\FILES
 enter the hostname of the machine on which this server is running	admin	lv	Ievadi hostdatora vārdu uz kura ir palaists šis serveris
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	lv	Ievadi EGroupware URL atrašanos<b>Piemērs: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>No trailing slash</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	lv	Ievadi EGroupware URL atrašanos<b>Piemērs: http://www.domain.com/egroupware   or   /egroupware<br><b>No trailing slash</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	lv	Ievadi meklēšanas stringu. Lai parādītu visus ierakstus, atbrīvo šo lauku un nospied SUBMIT pogu vēlreiz
 enter the site password for peer servers	admin	lv	Ievadi vietnes paroli vienādranga serveriem
 enter the site username for peer servers	admin	lv	Ievadi vietnes lietotājvārdu vienādranga serveriem
 enter the title for your site	admin	lv	Ievadi savas vietnes nosaukumu
 enter the title of your logo	admin	lv	Ievadi sava logotipa nosaukumu
-enter the url or filename (in api/templates/default/images) of your logo	admin	lv	Ievadi logotipa URL vai faila nosaukumu (in api/templates/default/images)
 enter the url where your logo should link to	admin	lv	Ievadi URL ar kuru vajadzētu būt saistītam tavam logotipam
 enter your default ftp server	admin	lv	Ievadi noklusēto FTP serveri
 enter your default mail domain ( from: user@domain )	admin	lv	ievadi noklusēto pasta domēnu(no: lietotājs@domēns)
+enter your default mail domain (from: user@domain)	admin	lv	Ievadi noklusēto pasta domēnu (no: lietotājs@domēns)
 enter your http proxy server	admin	lv	Ievadi savu HTTP proxy serveri
 enter your http proxy server port	admin	lv	Ievadi savu HTTP proxy servera portu
 enter your smtp server hostname or ip address	admin	lv	Ievadi savu SMTP servera hostdatora vārdu vai IP adresi
 enter your smtp server port	admin	lv	Ievadi savu SMTP servera portu
+entry saved	admin	lv	Ieraksts saglabāts
 error canceling timer, maybe there's none set !!!	admin	lv	Kļūdas atceļot taimeri, iespējams neviens nav uzlikts!!!
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	lv	Kļūda uzstādot taimeri, kļūdaina sintakse vai, iespējams, kāds jau ir palaists!!!
 error: %1 not found or other error !!!	admin	lv	Kļūda: %1 nav atrasts vai cita kļūda!!!
@@ -195,6 +206,7 @@ file space must be an integer	admin	lv	Kartotēkas lielumam jābūt veselam skai
 for the times above	admin	lv	turpmākajām reizēm
 for the times below (empty values count as '*', all empty = every minute)	admin	lv	iepriekšējām reizēm (tukšās vērtības skaita kā '*', visi tukši=katru minūti)
 forward also to	admin	lv	pārsūtīt arī
+forward email's to	admin	lv	pārsūtīt e-pasta vēstules
 forward only	admin	lv	tikai pārsūtīt
 full name	admin	lv	Pilns vārds
 general	admin	lv	Vispārējs
@@ -208,6 +220,7 @@ group manager	admin	lv	Grupu pārvaldnieks
 group name	admin	lv	Grupas nosaukums
 hide php information	admin	lv	noslēpt php informāciju
 home directory	admin	lv	Mājas direktorija
+home screen message	admin	lv	Galvenā loga ziņojums
 host information	admin	lv	Host informācija
 hour<br>(0-23)	admin	lv	Stundas <br>(0-23)
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	lv	Cik dienu vajadzētu saglabāt iesniegtos datus piekļuves loga, pirms tie tiek izdzēsti (noklusējums 90)?
@@ -216,6 +229,14 @@ icon	admin	lv	Ikona
 idle	admin	lv	dīkstāve (idle)
 if no acl records for user or any group the user is a member of	admin	lv	Ja nav ACL ierakstu lietotājiem vai kādai grupai, lietotājs ir ...????
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	lv	Vai vēlies pārvaldīt mājasdirektoriju un pieteikšanāsformas atribūtus, ja lieto LDAP
+imap admin password	admin	lv	IMAP administratora parole
+imap admin user	admin	lv	IMAP administrators
+imap c-client version < 2001	admin	lv	IMAP C-Client Version <2001
+imap server	admin	lv	IMAP serveris
+imap server hostname or ip address	admin	lv	IMAP servera hosta vārds vai IP adrese
+imap server logintyp	admin	lv	IMAP servera autorizācijas veids
+imap server port	admin	lv	IMAP servera ports
+imap/pop3 server name	admin	lv	IMAP/POP3 servera nosaukums
 inbound	admin	lv	ienākošie (inbound)
 install crontab	admin	lv	Instalēt crontab
 installed applications	common	lv	Uzinstalētā programmatūra
@@ -231,6 +252,7 @@ last login	admin	lv	pēdējā autorizācija
 last login from	admin	lv	pēdējā autorizācija no
 last time read	admin	lv	Pēdējo reizi lasīts
 ldap accounts context	admin	lv	LDAP kontu konteksts
+ldap basedn	admin	lv	LDAP bāzes dn
 ldap default homedirectory prefix (e.g. /home for /home/username)	admin	lv	LDAP noklusētais mājasdirektorijas prefikss (piem./home for /home/username)
 ldap default shell (e.g. /bin/bash)	admin	lv	LDAP noklusēta forma(shell) (piem./bin/bash)
 ldap encryption type	admin	lv	LDAP šifrēšanas tips
@@ -238,6 +260,12 @@ ldap groups context	admin	lv	LDAP grupu konteksts
 ldap host	admin	lv	LDAP hosts
 ldap root password	admin	lv	LDAP sistēmas administratora parole
 ldap rootdn	admin	lv	LDAP saknesdn
+ldap server	admin	lv	LDAP serveris
+ldap server accounts dn	admin	lv	LDAP servera konti DN
+ldap server admin dn	admin	lv	LDAP servera administratora DN
+ldap server admin password	admin	lv	LDAP servera administratora parole
+ldap server hostname or ip address	admin	lv	LDAP servera hosta vārds vai IP adrese
+ldap settings	admin	lv	LDAP uzstādījumi
 leave the category untouched and return back to the list	admin	lv	Atstāt kategoriju neskartu un atgriezties uz sarakstu
 leave the group untouched and return back to the list	admin	lv	Atstāt grupu neskartu un atgriezties pie saraksta
 leave without saveing the entry	admin	lv	aiziet, nesaglabājot ierakstu
@@ -252,8 +280,7 @@ login screen	admin	lv	Autorizācijas logs
 login shell	admin	lv	Autorizācijas aile
 login time	admin	lv	Autorizācijas laiks
 loginid	admin	lv	Autorizācijas ID
-mail settings	admin	lv	Sūtījumu uzstādījumi
-home screen message	admin	lv	Galvenā loga ziņojums
+mail settings	admin	lv	Pasta uzstādījumi
 manager	admin	lv	Pārvaldnieks
 maximum account id (e.g. 65535 or 1000000)	admin	lv	Maksimālais kontu ID (piem.65535 vai 1000000)
 members	admin	lv	Locekļi
@@ -265,12 +292,14 @@ mode	admin	lv	Režīms
 modified	admin	lv	Pārveidots
 month	admin	lv	Mēnesis
 name must not be empty !!!	admin	lv	Nosaukums nedrīkst būt tukšs
+name of organisation	admin	lv	Organizācijas nosaukums
 new group name	admin	lv	Jaunais grupas nosaukums
 new name	admin	lv	jaunais nosaukums
 new password [ leave blank for no change ]	admin	lv	Jauna parole (atstāt tukšu, ja nemainās)
 next run	admin	lv	Nākošais solis
 no algorithms available	admin	lv	Nav pieejami algoritmi
 no alternate email address	admin	lv	nav alternatīvas e-pasta adreses
+no forwarding email address	admin	lv	nav pārsūtāmās e-pasta adreses
 no jobs in the database !!!	admin	lv	Datubāzē uzdevumu nav!!!
 no login history exists for this user	admin	lv	Šim lietotājam nav autorizāciju vētures
 no matches found	admin	lv	Nav atbilstošu ierakstu
@@ -279,10 +308,18 @@ no permission to add groups	admin	lv	Nav atļaujas, lai pievienotu grupas
 no permission to add users	admin	lv	Nav atļaujas, lai pievienotu lietotājus
 no permission to create groups	admin	lv	Nav atļaujas, lai izveidotu grupas
 note: ssl available only if php is compiled with curl support	admin	lv	Piezīme: SSl pieejams tikai tad, ja PHP ir ar CURL atbalstu
+oauth authentiction	admin	lv	OAuth autentifikācija
+offer to installing egroupware as mail-handler	admin	lv	Piedāvājums instalēt EGroupware kā pasta apstrādātāju
+one day	admin	lv	Viena diena
+one hour	admin	lv	Viena stunda
 one month	admin	lv	viens mēnesis
 one week	admin	lv	viena nedēļa
 order	admin	lv	Kārtība
+other security configuration	admin	lv	Cita drošības konfigurācija
 outbound	admin	lv	izejas (outbound)
+own categories	admin	lv	Pašu kategorijas
+own install id	admin	lv	Pašu instalācijas ID
+own install id:	admin	lv	Pašu instalācijas ID:
 password for smtp-authentication	admin	lv	Parole SMTP autentifikācijai
 path information	admin	lv	Ceļa informācija
 peer server list	admin	lv	Vienādranga servera saraksts
@@ -296,14 +333,17 @@ phpinfo	admin	lv	PHP informācija
 please enter a name	admin	lv	Lūdzu ievadi vārdu
 please enter a name for that server !	admin	lv	Lūzdu ievadi servera vārdu
 please select	admin	lv	Lūdzu atzīmē
+pop3 server hostname or ip address	admin	lv	POP3 servera hosta vārds vai IP adrese
+pop3 server port	admin	lv	POP3 servera ports
 preferences	admin	lv	Iestatījumi
 primary group	admin	lv	galvenā grupa
+profile list	admin	lv	Profila saraksts
+profile name	admin	lv	Profila vārds
 re-enter password	admin	lv	atkārtoti ievadi paroli
 read this list of methods.	admin	lv	Izlasi šo metožu sarakstu
-remove	admin	lv	Izdzēst
+remove	admin	lv	pārvietot
 remove all users from this group	admin	lv	Izmest visus lietotājus no šīs grupas
 remove all users from this group ?	admin	lv	Vai izmest visus lietotājus no šīs grupas?
-return to view account	admin	lv	Atgriezties, lai redzētu kontu
 rows	admin	lv	Rindas
 run asynchronous services	admin	lv	Palaist asinhronos pakalpojumus
 save the category	admin	lv	Saglabāt kategoriju
@@ -318,6 +358,8 @@ security	admin	lv	Drošība
 select group managers	admin	lv	Atzīmēt Grupu pārvaldniekus
 select permissions this group will have	admin	lv	Atzīmēt kādas tiesības būs šai grupai
 select the parent category. if this is a main category select no category	admin	lv	Atzīmē vecāku kategoriju. Ja tā ir galvenā kategorija atzīmē NO CATEGORY
+select type of imap/pop3 server	admin	lv	Atzīmēt IMAP/POP3 servera tipu
+select type of smtp server	admin	lv	Atzīmēt SMTP servera tipu
 select users for inclusion	admin	lv	Atzīmē kurus lietotājus ietvert
 select where you want to store/retrieve filesystem information	admin	lv	Atzīmē kur tu vēlies uzglabāt/labot datņu sistēmas informāciju
 select where you want to store/retrieve user accounts	admin	lv	Atzīmē, kur tu vēlies uzglabāt/labot lietotāju kontus
@@ -337,14 +379,21 @@ show current action	admin	lv	Rādīt pašreizējo darbību
 show error log	admin	lv	Rādīt kļudas logu
 show phpinfo()	admin	lv	Rādīt phpinfo()
 show session ip address	admin	lv	Rādīt sesijas IP adresi
+sieve server hostname or ip address	admin	lv	<b>?Sieve?</b> servera hosta vārds vai IP adrese
+sieve server port	admin	lv	Sieve servera ports
+sieve settings	admin	lv	Sieve uzstadījumi
 site	admin	lv	Lapa(site)
+smtp server name	admin	lv	SMTP servera nosaukums
+smtp settings	admin	lv	SMTP uzstādījumi
+smtp-server hostname or ip address	admin	lv	SMTP servera hosta vārds vai IP adrese
+smtp-server port	admin	lv	SMTP servera ports
 soap	admin	lv	SOAP
 sorry, that group name has already been taken.	admin	lv	Atvainojiet, šis grupas nosaukums jau ir aizņemts
 sorry, the above users are still a member of the group %1	admin	lv	Atvainojiet, iepriekšminētie lietotāji joprojām pieder grupai %1
 sorry, the follow users are still a member of the group %1	admin	lv	Atvainojiet, sekojošie lietotāji joprojām pieder grupai %1
 sort the entries	admin	lv	grupēt ierakstus
 ssl	admin	lv	ssl
-standard	admin	lv	standarta
+standard	admin	lv	Standarta
 standard imap server	admin	lv	Standarta IMAP serveris
 standard pop3 server	admin	lv	Standarta POP3 serveris
 standard smtp-server	admin	lv	Standarta SMTP serveris
@@ -372,6 +421,7 @@ they must be removed before you can continue	admin	lv	Tie jāizdzēš lai varēt
 this application is current	admin	lv	Šī ir pašreizējā aplikācija
 this application requires an upgrade	admin	lv	Šī aplikācija pieprasa jauninājumus
 this category is currently being used by applications as a parent category	admin	lv	Šī kategorija tiek lietota kā vecāku kategorija.
+this php has no imap support compiled in!!	admin	lv	Šim PHP nav IMAP nokompilēts atbalsts
 timeout for sessions in seconds (default 14400 = 4 hours)	admin	lv	Sesiju taimauts sekundēs (noklusējums 14400=4stundas)
 times	admin	lv	Reizes
 top	admin	lv	augšā
@@ -383,13 +433,19 @@ two weeks	admin	lv	divas nedēļas
 up	admin	lv	augšup
 updated	admin	lv	Atjaunināts
 use cookies to pass sessionid	admin	lv	Lieto sīkdatnes lai pārietu sesijasid
+use default	admin	lv	Lietot noklusējumu
+use ldap defaults	admin	lv	lieto LDAP noklusējumus
 use pure html compliant code (not fully working yet)	admin	lv	Lieto HTML pieļāvīgu kodu(kurš vēl pilnībā nestrādā)
+use smtp auth	admin	lv	Lieto SMTP autentifikāciju
 use theme	admin	lv	Lieto tēmu
+use tls authentication	admin	lv	Lieto TLS autentifikāciju
+use tls encryption	admin	lv	Lieto TLS šifrēšanu
 user accounts	admin	lv	Lietotāja konti
 user data	common	lv	Lietotāja Dati
 user for smtp-authentication (leave it empty if no auth required)	admin	lv	Lietotājs SMTP- autentifikācijai (atstāt tukšu, ja nepieprasa autentifikāciju)
 user groups	admin	lv	lietotāju grupas
 userdata	admin	lv	lietotāja dati
+users can define their own emailaccounts	admin	lv	LIetotāji  paši var definēt savus e-pasta kontus
 users choice	admin	lv	LIetotāju izvēle
 view access log	admin	lv	Parādīt pieejas logu
 view account	admin	lv	Parādīt kontu
@@ -398,6 +454,7 @@ view error log	admin	lv	Parādīt kļūdas logu
 view sessions	admin	lv	Parādīt sesijas
 view this user	admin	lv	parādīt šo lietotāju
 view user account	admin	lv	Parādīt lietotāja kontu
+virtual mail manager	admin	lv	VIrtuālais MAIL ManaGeR
 who would you like to transfer all records owned by the deleted user to?	admin	lv	Kam tu vēlies pārsūtīt izdzēstā lietotāja AAL ierakstus?
 would you like egroupware to cache the egw info array ?	admin	lv	Vai vēlies, lai EGroupware atceras <i>egw</i> informācijas masīvu?
 would you like egroupware to check for a new version<br>when admins login ?	admin	lv	Vai vēlies, lai EGroupware pārbauda jaunu versiju<br>kad admins autorizējas?
@@ -415,74 +472,5 @@ you must enter an application name.	admin	lv	Jums jāievada aplikācijas nosauku
 you must enter an application title.	admin	lv	Jums jāievada aplikācijas virsraksts
 you must select a file type	admin	lv	Jums jāizvēlas faila tips
 you will need to remove the subcategories before you can delete this category	admin	lv	Tev vajadzēs izdzēst apakšgrpu pirms tu varēsi izdzēst šo kategoriju!
-your session could not be verified.	admin	lv	Nevarēju Jūs pārbaudīt. Mēģiniet pēc 30sek. vēlreiz.
-(no subject)	admin	lv	(nav temata)
-add profile	admin	lv	Pievienot profilu
-admin dn	admin	lv	administratora dn
-admin password	admin	lv	administratora parole
-admin username	admin	lv	administratora lietotājvārds
-advanced options	admin	lv	uzlabotās iespējas
-alternate email address	admin	lv	alternatīvas e-pasta adreses
-continue	admin	lv	Turpināt
-cyrus imap server	admin	lv	Cyrus IMAP serveris
-cyrus imap server administration	admin	lv	Cyrus IMAP servera administrēšana
-default	admin	lv	noklusējums
-do you really want to delete this profile	admin	lv	Vai tu tiešām vēlies dzēst šo profilu?
-domainname	admin	lv	domēna vārds
-edit email settings	admin	lv	rediģēt e-pasta uzstādījumus
-email account active	admin	lv	e-pasta konts aktīvs
-email address	admin	lv	e-pasta adrese
-enable cyrus imap server administration	admin	lv	atļaut Cyrus IMAP servera administrēšanu
-enable sieve	admin	lv	atļaut Sieve
-enter your default mail domain (from: user@domain)	admin	lv	Ievadi noklusēto pasta domēnu (no: lietotājs@domēns)
-entry saved	admin	lv	Ieraksts saglabāts
-forward also to	admin	lv	pārsūtīt arī
-forward email's to	admin	lv	pārsūtīt e-pasta vēstules
-forward only	admin	lv	tikai pārsūtīt
-imap admin password	admin	lv	IMAP administratora parole
-imap admin user	admin	lv	IMAP administrators
-imap c-client version < 2001	admin	lv	IMAP C-Client Version <2001
-imap server	admin	lv	IMAP serveris
-imap server hostname or ip address	admin	lv	IMAP servera hosta vārds vai IP adrese
-imap server logintyp	admin	lv	IMAP servera autorizācijas veids
-imap server port	admin	lv	IMAP servera ports
-imap/pop3 server name	admin	lv	IMAP/POP3 servera nosaukums
-ldap basedn	admin	lv	LDAP bāzes dn
-ldap server	admin	lv	LDAP serveris
-ldap server accounts dn	admin	lv	LDAP servera konti DN
-ldap server admin dn	admin	lv	LDAP servera administratora DN
-ldap server admin password	admin	lv	LDAP servera administratora parole
-ldap server hostname or ip address	admin	lv	LDAP servera hosta vārds vai IP adrese
-ldap settings	admin	lv	LDAP uzstādījumi
-mail settings	admin	lv	Pasta uzstādījumi
-name of organisation	admin	lv	Organizācijas nosaukums
-no alternate email address	admin	lv	nav alternatīvas e-pasta adreses
-no forwarding email address	admin	lv	nav pārsūtāmās e-pasta adreses
-order	admin	lv	Kārtība
-pop3 server hostname or ip address	admin	lv	POP3 servera hosta vārds vai IP adrese
-pop3 server port	admin	lv	POP3 servera ports
-profile list	admin	lv	Profila saraksts
-profile name	admin	lv	Profila vārds
-remove	admin	lv	pārvietot
-select type of imap/pop3 server	admin	lv	Atzīmēt IMAP/POP3 servera tipu
-select type of smtp server	admin	lv	Atzīmēt SMTP servera tipu
-sieve server hostname or ip address	admin	lv	<b>?Sieve?</b> servera hosta vārds vai IP adrese
-sieve server port	admin	lv	Sieve servera ports
-sieve settings	admin	lv	Sieve uzstadījumi
-smtp server name	admin	lv	SMTP servera nosaukums
-smtp settings	admin	lv	SMTP uzstādījumi
-smtp-server hostname or ip address	admin	lv	SMTP servera hosta vārds vai IP adrese
-smtp-server port	admin	lv	SMTP servera ports
-standard	admin	lv	Standarta
-standard imap server	admin	lv	Standarta IMAP serveris
-standard pop3 server	admin	lv	Standarta POP3 serveris
-standard smtp-server	admin	lv	Standarta SMTP serveris
-this php has no imap support compiled in!!	admin	lv	Šim PHP nav IMAP nokompilēts atbalsts
-use default	admin	lv	Lietot noklusējumu
-use ldap defaults	admin	lv	lieto LDAP noklusējumus
-use smtp auth	admin	lv	Lieto SMTP autentifikāciju
-use tls authentication	admin	lv	Lieto TLS autentifikāciju
-use tls encryption	admin	lv	Lieto TLS šifrēšanu
-users can define their own emailaccounts	admin	lv	LIetotāji  paši var definēt savus e-pasta kontus
-virtual mail manager	admin	lv	VIrtuālais MAIL ManaGeR
 your name	admin	lv	Tavs vārds
+your session could not be verified.	admin	lv	Nevarēju Jūs pārbaudīt. Mēģiniet pēc 30sek. vēlreiz.

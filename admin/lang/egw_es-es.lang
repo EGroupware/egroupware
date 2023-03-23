@@ -665,6 +665,8 @@ number of sessions / egroupware logins in the last 30 days	admin	es-es	Número d
 number of users	admin	es-es	Número de usuarios
 number the applications serially. if they are not numbered serially, sorting the applications could work wrong. this will not change the application's order.	admin	es-es	Numerar las aplicaciones en serie. Si no se numeran en serie, podría no funcionar al ordenarlas. Esto no cambiará el orden de las aplicaciones.
 nummeric account id	admin	es-es	ID de cuenta numérico
+oauth authentiction	admin	es-es	Autenticación OAuth
+offer to installing egroupware as mail-handler	admin	es-es	Oferta para instalar EGroupware como gestor de correo
 official egroupware usage statistic	admin	es-es	Estadística oficial de uso de EGroupware
 one day	admin	es-es	un día
 one hour	admin	es-es	una hora

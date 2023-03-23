@@ -8,12 +8,14 @@
 %1 rights for %2 and applications %3	admin	zh	%2的权限%1和应用程序%3
 %1 user %2	admin	zh	%1用户%2
 (default no, leave it off if you dont use it)	admin	zh	(默认为否，如果您不打算使用请不要修改)
+(no subject)	admin	zh	(无主题)
 (stored password will not be shown here)	admin	zh	(已储存密码将不在这里显示)
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	zh	(请使用<a href="setup/" target="setup">[管理应用程序]</a>来安装新的应用程序！)
 -  type	admin	zh	- 类型
 accesslog and bruteforce defense	admin	zh	存取纪录与恶意攻击防御
 account %1 %2	admin	zh	帐户 %1 %2
 account '%1' deleted.	admin	zh	帐户 '%1' 已删除。
+account '%1' not found !!!	admin	zh	帐户 '%1' 未发现！
 account active	admin	zh	帐户激活
 account has been created	common	zh	帐户已创建
 account has been deleted	common	zh	帐户已删除
@@ -41,16 +43,20 @@ add global category for %1	admin	zh	为%1添加全局类别
 add group	admin	zh	添加群组
 add new account	admin	zh	添加新帐户
 add new application	admin	zh	添加新应用程序
+add new email address:	admin	zh	添加新邮箱地址：
 add peer server	admin	zh	添加对等服务器
+add profile	admin	zh	添加 profile
 add sub-category	admin	zh	添加子类别
+admin dn	admin	zh	管理 DN
 admin email	admin	zh	管理员邮箱
 admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	zh	管理员电子邮件地址 (逗号分隔) 以便通知有关故障等 (留空将不通知任何人)
 admin name	admin	zh	管理员名称
+admin password	admin	zh	管理密码
 admin queue and history	admin	zh	管理队列和历史纪录
+admin username	admin	zh	管理帐户
 administration	admin	zh	系统管理
 admins	admin	zh	管理员
 advanced options	admin	zh	高级选项
-after how many unsuccessful attempts to login, an account should be blocked (default 15) ?	admin	zh	几次登录失败后，将锁定该账户 (默认 3)？
 after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	zh	几次登录失败后，将封禁 IP 地址 (默认 3)？
 aliases	admin	zh	别名
 all applications	admin	zh	所有应用程序
@@ -59,11 +65,13 @@ all records and account information will be lost!	admin	zh	所有的记录和账
 all users	admin	zh	所有用户
 allow anonymous access to this app	admin	zh	允许匿名用户访问此应用程序
 allow remote administration from following install id's (comma separated)	admin	zh	允许从以下的安装 ID (逗号分隔) 进行远程管理
-alternate email address	admin	zh	备用邮箱地址
+alternate email address	admin	zh	候选邮箱地址
 anonymous user	admin	zh	匿名用户
 anonymous user (not shown in list sessions)	admin	zh	匿名用户 (不在会话列表中显示)
 anonymous user does not exist!	admin	zh	匿名用户不存在！
 anonymous user has no run-rights for the application!	admin	zh	匿名用户没有执行此应用程序的权限！
+any application	admin	zh	任何用用程序
+any group	admin	zh	任何组
 appearance	admin	zh	外观
 application	admin	zh	应用程序
 application '%1' not found (maybe not installed or misspelled)!	admin	zh	应用程序'%1'没被找到 (可能没安装或拼写错误)！
@@ -93,10 +101,15 @@ attribute mailforwardingaddress explained	admin	zh	该 <b><i>-accountStatus-</i>
 authentication / accounts	admin	zh	认证/账户
 auto create account records for authenticated users	admin	zh	自动为已通过身份验证的用户创建帐户记录
 back to the list	admin	zh	返回列表
+bad login name or password.	admin	zh	错误登录名和密码。
+bad or malformed request. server responded: %s	admin	zh	不正确的请求。服务器或应：%s
+bad request: %s	admin	zh	错误请求：%s
 bi-dir passthrough	admin	zh	bi-dir passthrough(双向通过)
 bi-directional	admin	zh	bi-directional(双向)
 bottom	admin	zh	底部
 calculate next run	admin	zh	计划下次运行
+can be used by application	admin	zh	可用于应用程序
+can be used by group	admin	zh	可用于群组
 can change password	admin	zh	可以更改密码
 cancel testjob!	admin	zh	取消测试任务！
 categories list	admin	zh	分类列表
@@ -115,11 +128,16 @@ check items to <b>%1</b> to %2 for %3	admin	zh	检查%3对%2的权限项目 <b>%
 click to select a color	admin	zh	点击选择一种颜色
 color	admin	zh	颜色
 command scheduled to run at %1	admin	zh	计划命令运行在%1
+connection dropped by imap server.	admin	zh	连接被 IMAP 服务器中断。
+continue	admin	zh	继续
 cookie domain (default empty means use full domain name, for sitemgr eg. ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com)	admin	zh	Cookie 域 (默认为空表示使用完整域名，对于 SiteMgr 等 ".domain.com" 允许 egw.domain.com 与 www.domain.com 使用同一个 cookie)
-cookie path (allows multiple egw sessions with different directories, has problemes with sitemgr!)	admin	zh	Cookie 路径 (允许多个 eGW 会话使用不同的目录，与 SiteMgr 会有问题！)
+cookie path (allows multiple egw sessions with different directories, has problemes with sitemgr!)	admin	zh	Cookie 路径 (允许多个 EGroupware 会话使用不同的目录，与 SiteMgr 会有问题！)
+could not complete request. reason given: %s	admin	zh	无法完成请求。原因是：%s
+could not open secure connection to the imap server. %s : %s.	admin	zh	无法打开到 IMAP 服务器的安全连接。%s:%s。
 could not remote execute the command	admin	zh	不能远程执行命令
 country	admin	zh	国家
 country selection	admin	zh	选择国家/地区
+cram-md5 or digest-md5 requires the auth_sasl package to be installed.	admin	zh	CRAM-MD5 或 DIGEST-MD5 需要安装 auth_sasl 包。
 create group	admin	zh	创建组
 created	admin	zh	创建日期
 created with id #%1	admin	zh	以 ID #%1 创建
@@ -127,6 +145,7 @@ creates a new field	admin	zh	创建一新字段
 crontab only (recomended)	admin	zh	仅 Crontab (推荐命令)
 custom fields	admin	zh	自定义字段
 cyrus imap server	admin	zh	Cyrus IMAP 服务器
+cyrus imap server administration	admin	zh	Cyrus IMAP 服务器管理
 data	admin	zh	数据
 day	admin	zh	日
 day of week<br>(0-6, 0=sun)	admin	zh	星期(0-6,0=日)
@@ -149,7 +168,7 @@ delete this group	admin	zh	删除该群组
 delete this user	admin	zh	删除该用户
 deleted	admin	zh	已删除
 deletes this field	admin	zh	删除此字段域
-deliver extern	admin	zh	外部传送
+deliver extern	admin	zh	传送外部
 deny access	admin	zh	拒绝访问
 deny access to access log	admin	zh	拒绝对访问日志的访问
 deny access to application registery	admin	zh	拒绝访问应用程序注册
@@ -173,15 +192,19 @@ disable "auto completion" of the login form	admin	zh	禁用登录表单的“自
 disable wysiwyg-editor	admin	zh	禁用所见即所得编辑器
 disabled (not recomended)	admin	zh	禁用 (不推荐)
 display	admin	zh	显示
+displaying html messages is disabled	admin	zh	显示HTML邮件被禁用
 do not delete the category and return back to the list	admin	zh	不要删除类别和返回其列表
+do not validate certificate	admin	zh	不确认证书
 do you also want to delete all global subcategories ?	admin	zh	您是否同样要删除所有全局子类别？
+do you really want to delete this profile	admin	zh	您确定要删除这个 profile 文件
 do you want to delete all global subcategories ?	admin	zh	您是否想要删除所有的全局子类别？
 do you want to move all global subcategories one level down ?	admin	zh	您是否想要把所有的全局子类别向下移动一级？
 document root (default)	admin	zh	文件根目录 (默认)
+domainname	admin	zh	域名
 down	admin	zh	向下
 edit account	admin	zh	编辑账户
 edit application	admin	zh	编辑应用程序
-edit email settings	admin	zh	编辑邮件设置
+edit email settings	admin	zh	编辑邮箱设置
 edit global category	admin	zh	编辑全局类别
 edit global category for %1	admin	zh	为%1编辑全局类别
 edit group	admin	zh	编辑组
@@ -195,14 +218,20 @@ edit user	admin	zh	编辑用户
 edit user account	admin	zh	编辑用户账户
 egroupware directory	admin	zh	EGroupware 目录
 either install id and config password needed or the remote hash!	admin	zh	必须输入安装ID和设置密码或远程散列标记 (hash)！
-email account active	admin	zh	邮件账户激活
-email address	admin	zh	邮件地址
+email account active	admin	zh	邮箱帐户激活
+email address	admin	zh	邮箱地址
+email settings	common	zh	邮箱设置
+emailadmin	admin	zh	邮箱管理
 enable	admin	zh	启用
+enable cyrus imap server administration	admin	zh	启用 Cyrus IMAP 服务器管理
 enable debug-messages	admin	zh	启用调试信息
+enable sieve	admin	zh	启用过滤
 enable the soap service	admin	zh	启用 SOAP 服务
 enable the xmlrpc service	admin	zh	启用 XML-RPC 服务
 enabled - hidden from navbar	admin	zh	从导航栏中隐藏
 enabled - popup window	admin	zh	启用弹出窗口
+encrypted connection	admin	zh	加密连接
+encryption settings	admin	zh	加密设置
 enter a description for the category	admin	zh	输入对类别的描述
 enter some random text for app_session <br>encryption (requires mcrypt)	admin	zh	为加密 APP-SESSION 输入一些随机文字<br>(需要 Mcrypt 支持)
 enter the background color for the login page	admin	zh	登录页面的背景颜色
@@ -218,23 +247,28 @@ enter the site password for peer servers	admin	zh	请输入对等服务器的站
 enter the site username for peer servers	admin	zh	请输入对等服务器的站点用户名
 enter the title for your site	admin	zh	输入您的网站标题
 enter the title of your logo	admin	zh	输入您的网站徽标标题
-enter the url or filename (in api/templates/default/images) of your logo	admin	zh	输入您的网站徽标 (Logo) 的网址或文件名 (api/templates/default/images)
 enter the url where your logo should link to	admin	zh	输入您的 Logo 链接地址 (Url)
 enter your default ftp server	admin	zh	请输入默认的FTP服务器
 enter your default mail domain ( from: user@domain )	admin	zh	输入默认邮件域名 (即邮件地址中"@"号后面的部分)
+enter your default mail domain (from: user@domain)	admin	zh	输入您的默认邮箱域 (比如：user@domain，取@之后的所有词或字母)
 enter your http proxy server	admin	zh	请输入HTTP代理服务器
 enter your http proxy server port	admin	zh	请输入HTTP代理服务器的端口号
 enter your smtp server hostname or ip address	admin	zh	输入SMTP服务器的主机名或IP地址
 enter your smtp server port	admin	zh	输入SMTP服务器的端口号
+entry saved	admin	zh	条目已储存
 error canceling timer, maybe there's none set !!!	admin	zh	取消定时器时出错，也许那里并未设定！
 error changing the password for %1 !!!	admin	zh	为%1更改密码错误！
+error connecting to imap server. %s : %s.	admin	zh	连接到 IMAP 服务器错误。%s : %s。
+error connecting to imap server: [%s] %s.	admin	zh	连接到 IMAP 服务器错误：[%s] %s。
 error saving	admin	zh	保存错误
 error saving account!	admin	zh	保存帐户错误！
 error saving the command!	admin	zh	保存命令错误！
+error saving the entry!!!	admin	zh	保存条目时发生错误！
 error saving to db:	admin	zh	保存到数据库错误：
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	zh	设置定时器时出错，语法不正确或定时器正在运行！
 error! no appname found	admin	zh	错误！找不到应用程序名称
 error: %1 not found or other error !!!	admin	zh	错误: 无法找到%1或其他原因！
+event details follow	admin	zh	事件细节
 expires	admin	zh	期限
 explanation of ldapman	admin	zh	这一模块已经在 POSTFIX,LDAP,Courier-IMAP 测试通过且需要 Schemas CORE 和 QMAIL(OID7914)支持。更多的关于该系统的使用和设置细节可以在管理员(ADMIN)文档文件夹中的 Readme.ldapman 找到。
 failed to change password.	admin	zh	更改密码失败。请联系系统管理员。
@@ -247,11 +281,13 @@ for the times above	admin	zh	为以上次数
 for the times below (empty values count as '*', all empty = every minute)	admin	zh	为以下次数(留空视为“*”, 全部为空 = 每一分钟)
 force selectbox	admin	zh	复选框
 forward also to	admin	zh	同时转发到
+forward email's to	admin	zh	转发邮件到
 forward emails to	admin	zh	转发邮件到
 forward only	admin	zh	转发
 full name	admin	zh	姓名
 general	admin	zh	通用
 global categories	common	zh	全局分类
+global options	admin	zh	全局选项
 grant	admin	zh	允许
 group ?	admin	zh	群组？
 group has been added	common	zh	组已添加
@@ -262,6 +298,7 @@ group manager	admin	zh	组管理
 group name	admin	zh	组名称
 hide php information	admin	zh	隐藏php信息
 home directory	admin	zh	首页目录
+home screen message	admin	zh	主窗口信息
 host information	admin	zh	主机信息
 hour<br>(0-23)	admin	zh	时(0-23)
 how big should thumbnails for linked images be (maximum in pixels) ?	admin	zh	用以链接图像的缩略图的尺寸应为多大 (最大像素) ？
@@ -273,7 +310,19 @@ icon	admin	zh	图标
 idle	admin	zh	空闲
 if no acl records for user or any group the user is a member of	admin	zh	如果没有用户或任何小组的 ACL 纪录，该用户将作为成员属于
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	zh	如果使用 LDAP，您想要管理主目录和 Login Shell 属性吗？
-in mbyte	admin	zh	以 MB 显示
+if using ssl or tls, you must have the php openssl extension loaded.	admin	zh	如果使用 SSL 或 TLS，您必须加载 PHP openssl 扩展。
+imap admin password	admin	zh	IMAP 管理者密码
+imap admin user	admin	zh	IMAP 管理者帐户
+imap c-client version < 2001	admin	zh	IMAP C-Clien 版本小 < 2001
+imap server	admin	zh	IMAP 服务器
+imap server closed the connection.	admin	zh	IMAP 服务器关闭连接。
+imap server closed the connection. server responded: %s	admin	zh	IMAP 服务器关闭连接。服务器回应：%s
+imap server hostname or ip address	admin	zh	IMAP 服务器的主机名或 IP 地址
+imap server logintyp	admin	zh	IMAP 服务器登录类型
+imap server name	admin	zh	IMAP 服务器名
+imap server port	admin	zh	IMAP 服务器端口号
+imap/pop3 server name	admin	zh	IMAP / POP3 服务器名
+in mbyte	admin	zh	以 MB 表示
 inbound	admin	zh	入站 (inbound)
 initial	admin	zh	初始的
 install crontab	admin	zh	安装 Crontab
@@ -295,6 +344,7 @@ last login	admin	zh	最近登录
 last login from	admin	zh	最近登录来自
 last time read	admin	zh	最近读取时间
 ldap accounts context	admin	zh	LDAP 账户上下文
+ldap basedn	admin	zh	LDAP basedn
 ldap default homedirectory prefix (e.g. /home for /home/username)	admin	zh	LDAP 默认主目录的前缀 (例如：/home/username 的前缀是：/home)
 ldap default shell (e.g. /bin/bash)	admin	zh	LDAP 默认 Shell (例如：/bin/bash)
 ldap encryption type	admin	zh	LDAP 加密类型
@@ -302,6 +352,12 @@ ldap groups context	admin	zh	LDAP 群组上下文
 ldap host	admin	zh	LDAP 主机名
 ldap root password	admin	zh	LDAP root 密码
 ldap rootdn	admin	zh	LDAP rootdn(目录树根)
+ldap server	admin	zh	LDAP 服务器
+ldap server accounts dn	admin	zh	LDAP 服务器帐户 DN
+ldap server admin dn	admin	zh	LDAP 服务器管理员 DN
+ldap server admin password	admin	zh	LDAP 服务器管管理员密码
+ldap server hostname or ip address	admin	zh	LDAP 服务器主机名或 IP 地址
+ldap settings	admin	zh	LDAP 设置
 leave empty for no quota	admin	zh	留空表示无限额
 leave the category untouched and return back to the list	admin	zh	不更改类别，返回列表
 leave the group untouched and return back to the list	admin	zh	不更改组，返回列表
@@ -317,9 +373,8 @@ login screen	admin	zh	登录页面
 login shell	admin	zh	登录交互程序
 login time	admin	zh	登录时间
 loginid	admin	zh	登录名
-mail settings	admin	zh	邮件设置
+mail settings	admin	zh	邮箱设置
 main email-address	admin	zh	主要信箱
-home screen message	admin	zh	主窗口信息
 manage mapping	admin	zh	管理匹配
 manager	admin	zh	管理器
 maximum account id (e.g. 65535 or 1000000)	admin	zh	最大帐户 id 数 (例如：65535 或 1000000)
@@ -334,25 +389,39 @@ modified	admin	zh	修改
 month	admin	zh	月
 more secure	admin	zh	更安全
 name must not be empty !!!	admin	zh	名称不能为空！
+name of organisation	admin	zh	组织名称
 new group name	admin	zh	新建组名称
 new name	admin	zh	新名称
 new password [ leave blank for no change ]	admin	zh	新密码 [留空则仍使用旧密码]
 next run	admin	zh	下次运行
 no algorithms available	admin	zh	没有可用算法
-no alternate email address	admin	zh	没有可替换的邮件地址
+no alternate email address	admin	zh	无备用邮箱地址
+no encryption	admin	zh	未加密
+no forwarding email address	admin	zh	没有转发邮件地址
 no jobs in the database !!!	admin	zh	没有任务在数据库中！
 no login history exists for this user	admin	zh	没有该用户登录的历史记录
 no matches found	admin	zh	未找到匹配
+no message returned.	admin	zh	无返回消息。
 no modes available	admin	zh	无可用模式
 no permission to add groups	admin	zh	无权添加组
 no permission to add users	admin	zh	无权添加用户
 no permission to create groups	admin	zh	无权创建组
+no plain text part found	admin	zh	未找到纯文本部分
+no supported imap authentication method could be found.	admin	zh	无支持 IMAP 认证的方法可以找到。
 note: ssl available only if php is compiled with curl support	admin	zh	注意：只有当php编译与curl支时，SSL有效
 number of row for a multiline inputfield or line of a multi-select-box	admin	zh	多行输入字段的列数或多选框的行数
+oauth authentiction	admin	zh	OAuth认证
+offer to installing egroupware as mail-handler	admin	zh	提供安装EGroupware作为邮件处理程序
+one day	admin	zh	一天
+one hour	admin	zh	一小时
 one month	admin	zh	一月
 one week	admin	zh	一星期
 order	admin	zh	排序
+organisation	admin	zh	组织
+other security configuration	admin	zh	其他安全配置
 outbound	admin	zh	出站
+own categories	admin	zh	自己的类别
+own install id	admin	zh	自己的安装ID
 own install id:	admin	zh	自己的安装 ID：
 passthrough	admin	zh	通过
 password for smtp-authentication	admin	zh	密码为SMTP认证
@@ -372,10 +441,21 @@ please enter a name	admin	zh	请输入名称
 please enter a name for that server !	admin	zh	请输入那台服务器的名称！
 please run setup to become current	admin	zh	请运行安装程序以成为当前
 please select	admin	zh	请选择
-postfix with ldap	admin	zh	Postfix 与 LDAP
+plesk can't rename users --> request ignored	admin	zh	Plesk 不能重命名用户  --> 请求忽略
+plesk imap server (courier)	admin	zh	Plesk IMAP 服务器 (Courier)
+plesk mail script '%1' not found !!!	admin	zh	Plesk 邮件脚本  '%1' 未找到！
+plesk requires passwords to have at least 5 characters and not contain the account-name --> password not set!!!	admin	zh	Plesk 需要至少5个字符密码并且不包含帐户名 --> 密码未设置！
+plesk smtp-server (qmail)	admin	zh	Plesk SMTP-Server (Qmail)
+pop3 server hostname or ip address	admin	zh	POP3 服务器主机名或 IP 地址
+pop3 server port	admin	zh	POP3 服务器端口号
+port	admin	zh	端口
+postfix with ldap	admin	zh	LDAP 用于 Postfix
 preferences	admin	zh	参数选择
 primary group	admin	zh	主要群组
-qmaildotmode	admin	zh	qmailDotMode
+profile access rights	admin	zh	profile 访问权限
+profile list	admin	zh	profile 列表
+profile name	admin	zh	profile 名
+qmaildotmode	admin	zh	qmaildotmode
 quota settings	admin	zh	配额设置
 quota size in mbyte	admin	zh	配额大小(MB)
 re-enter password	admin	zh	重新输入密码
@@ -388,7 +468,6 @@ remove	admin	zh	移除
 remove all users from this group	admin	zh	删除该组所有用户
 remove all users from this group ?	admin	zh	删除该组所有用户？
 requested	admin	zh	请求
-return to view account	admin	zh	返回到查看账户
 route all mails to	admin	zh	路由所有信件到
 rows	admin	zh	行
 run asynchronous services	admin	zh	运行异步服务
@@ -405,6 +484,9 @@ security	admin	zh	安全
 select group managers	admin	zh	选择组管理器
 select permissions this group will have	admin	zh	选择该组权限
 select the parent category. if this is a main category select no category	admin	zh	选择父类别。如果当前是一个主要类别，则选择<b>无类别</b>
+select type of imap server	admin	zh	选择 IMAP 服务器类型
+select type of imap/pop3 server	admin	zh	选择 IMAP / POP3 服务器类型
+select type of smtp server	admin	zh	选择 SMAP 服务器类型
 select users for inclusion	admin	zh	选择要包括的用户
 select where you want to store/retrieve filesystem information	admin	zh	选择您想要存储或检索文件系统信息的位置
 select where you want to store/retrieve user accounts	admin	zh	选择您想要存储或检索用户帐户的位置
@@ -413,6 +495,7 @@ selectbox	admin	zh	选择框
 server %1 has been updated	admin	zh	服务器%1已经更新
 server list	admin	zh	服务器列表
 server password	admin	zh	服务器密码
+server settings	admin	zh	服务器设置
 server type(mode)	admin	zh	服务器类型 (模式)
 server url	admin	zh	服务器网址
 server username	admin	zh	服务器用户名
@@ -424,7 +507,16 @@ show current action	admin	zh	显示当前操作
 show error log	admin	zh	显示错误日志
 show phpinfo()	admin	zh	显示 phpinfo()
 show session ip address	admin	zh	显示会话IP地址
+sieve server hostname or ip address	admin	zh	Sieve 服务器主机名或 IP 地址
+sieve server port	admin	zh	Sieve 服务器端口号
+sieve settings	admin	zh	Sieve 设置
 site	admin	zh	站点
+smtp authentication	admin	zh	SMTP 认证
+smtp options	admin	zh	SMTP 选项
+smtp server name	admin	zh	SMTP 服务器名
+smtp settings	admin	zh	SMTP 设置
+smtp-server hostname or ip address	admin	zh	SMTP 服务器主机名或 IP 地址
+smtp-server port	admin	zh	SMTP 服务器端口号
 soap	admin	zh	SOAP
 sorry, that group name has already been taken.	admin	zh	抱歉，该组名已被占用。
 sorry, the above users are still a member of the group %1	admin	zh	抱歉，以上用户仍然是%1组的成员
@@ -432,9 +524,9 @@ sorry, the follow users are still a member of the group %1	admin	zh	抱歉，以
 sort the entries	admin	zh	按序排列条目
 ssl	admin	zh	SSL
 standard	admin	zh	标准
-standard imap server	admin	zh	标准IMAP服务器
-standard pop3 server	admin	zh	标准POP3服务器
-standard smtp-server	admin	zh	标准SMTP服务器
+standard imap server	admin	zh	标准 IMAP 服务器
+standard pop3 server	admin	zh	标准 POP3 服务器
+standard smtp-server	admin	zh	标准 SMTP 服务器
 start	admin	zh	开始
 start testjob!	admin	zh	启动测试任务！
 submit changes	admin	zh	提交更改
@@ -451,8 +543,10 @@ that server name has been used already !	admin	zh	该服务器名称已被使用
 the api is current	admin	zh	当前 API
 the api requires an upgrade	admin	zh	API 需要升级
 the groups must include the primary group	admin	zh	这个群组必须包含主要群组
+the imap server does not appear to support the authentication method selected. please contact your system administrator.	admin	zh	IMAP 服务器似乎不支持所选择的认证方法。请联系系统管理员。
 the login and password can not be the same	admin	zh	登录名不能与密码相同
 the loginid can not be more then 8 characters	admin	zh	Login-ID长度不能大于8个字符
+the mimeparser can not parse this message.	admin	zh	mime 解析器不能解析这个邮件。
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	admin	zh	使用的名称在内 (<= 20 个字符)，修改现有的无效数据
 the testjob sends you a mail everytime it is called.	admin	zh	测试任务将在每次启动时向您发送电子邮件.
 the text displayed to the user	admin	zh	向用户显示的文本
@@ -463,9 +557,11 @@ they must be removed before you can continue	admin	zh	继续之前必须删除�
 this application is current	admin	zh	该应用程序为当前应用程序
 this application requires an upgrade	admin	zh	该应用程序需要升级
 this category is currently being used by applications as a parent category	admin	zh	应用程序当前正以该类别作为父类别使用。
+this php has no imap support compiled in!!	admin	zh	PHP 没有 IMAP 支持的编译！
 timeout for application session data in seconds (default 86400 = 1 day)	admin	zh	应用程序会话期限，单位：秒 (缺省 86400 = 1天)
 timeout for sessions in seconds (default 14400 = 4 hours)	admin	zh	会话时限，单位：秒 (默认 14400 = 4小时)
 times	admin	zh	次数
+to use a tls connection, you must be running a version of php 5.1.0 or higher.	admin	zh	未使用一个 TLS 连接，您必须运行 PHP 5.1.0 或更高版本。
 top	admin	zh	顶部
 total of %1 id's changed.	admin	zh	共计%1 id 被改变。
 total records	admin	zh	记录总数
@@ -477,19 +573,35 @@ two weeks	admin	zh	两周
 type '%1' already exists !!!	admin	zh	类型 '%1' 已经存在！
 type of customfield	admin	zh	自定义字段类型
 under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	zh	在 Windows 环境下需要%1手动%2安装 AsyncService 或是使用退级模式，退级方法指的是在每一页面查看以后才进行检查！
+unexpected response from server to authenticate command.	admin	zh	服务器为 AUTHENTICATE 指令返回不当以外回应。
+unexpected response from server to digest-md5 response.	admin	zh	服务器为 Digest-MD5 返回意外的不当的回应。
+unexpected response from server to login command.	admin	zh	服务器为 LOGIN  指令返回意外的不当回应。
 unknown account: %1 !!!	admin	zh	未知帐户：%1！
 unknown command %1!	admin	zh	未知命令%1！
+unknown imap response from the server. server responded: %s	admin	zh	INAP 服务器返回未知回应。服务器回应：%s
 unknown option %1	admin	zh	未知选项%1
+unsupported action '%1' !!!	admin	zh	不支持 '%1'  的操作！
 up	admin	zh	向上
+update current email address:	admin	zh	更新当前邮件地址：
 updated	admin	zh	已更新
 use cookies to pass sessionid	admin	zh	使用 Cookie 保存会话标识
+use default	admin	zh	使用默认值
+use ldap defaults	admin	zh	使用 LDAP 默认值
 use pure html compliant code (not fully working yet)	admin	zh	是否使用纯 HTML 兼容代码 (目前尚未完全可用)
+use smtp auth	admin	zh	使用 SMTP 认证
 use theme	admin	zh	使用主题
+use tls authentication	admin	zh	使用TLS 认证
+use tls encryption	admin	zh	使用TLS 加密
 user accounts	admin	zh	用户帐户
+user can edit forwarding address	admin	zh	用户可以编辑转发地址
 user data	common	zh	用户数据
 user for smtp-authentication (leave it empty if no auth required)	admin	zh	SMTP 用户认证 (如果不需要则保持为空)
 user groups	admin	zh	用户组
 userdata	admin	zh	用户数据
+username (standard)	admin	zh	用户名(标准)
+username@domainname (virtual mail manager)	admin	zh	用户名@域 (虚拟邮箱管理)
+users can define their own emailaccounts	admin	zh	用户可以自定义邮箱账户
+users can define their own signatures	admin	zh	用户可以定义他们自己的签名
 users choice	admin	zh	用户选择
 value for column %1 is not unique!	admin	zh	栏%1的值不是唯一的！
 view access log	admin	zh	查看访问日志
@@ -499,6 +611,7 @@ view error log	admin	zh	查看错误日志
 view sessions	admin	zh	查看会话
 view this user	admin	zh	查看该用户
 view user account	admin	zh	查看用户帐户
+virtual mail manager	admin	zh	虚拟邮箱管理
 who would you like to transfer all records owned by the deleted user to?	admin	zh	需要把被删除用户的所有记录转移给谁？
 would you like egroupware to cache the egw info array ?	admin	zh	需要 EGroupware 缓存 egw info 数组吗？
 would you like egroupware to check for a new version<br>when admins login ?	admin	zh	您要不要 EGroupware 在管理员登录时自动检查新版本？
@@ -522,139 +635,5 @@ you must select a file type	admin	zh	必须选择文件类型
 you must select at least one group member.	admin	zh	您必须至少选择一个组成员。
 you need to enter install id and password!	admin	zh	您需要输入安装 ID 和密码！
 you will need to remove the subcategories before you can delete this category	admin	zh	在删除该类别前，必须删除它的所有子类别！
+your name	admin	zh	您的名字
 your session could not be verified.	admin	zh	本次会话无法校验。
-(no subject)	emailadmin	zh	(无主题)
-account '%1' not found !!!	emailadmin	zh	帐户 '%1' 未发现！
-add new email address:	emailadmin	zh	添加新邮箱地址：
-add profile	emailadmin	zh	添加 profile
-admin dn	emailadmin	zh	管理 DN
-admin password	emailadmin	zh	管理密码
-admin username	emailadmin	zh	管理帐户
-advanced options	emailadmin	zh	高级选项
-alternate email address	emailadmin	zh	候选邮箱地址
-any application	emailadmin	zh	任何用用程序
-any group	emailadmin	zh	任何组
-bad login name or password.	emailadmin	zh	错误登录名和密码。
-bad or malformed request. server responded: %s	emailadmin	zh	不正确的请求。服务器或应：%s
-bad request: %s	emailadmin	zh	错误请求：%s
-can be used by application	emailadmin	zh	可用于应用程序
-can be used by group	emailadmin	zh	可用于群组
-connection dropped by imap server.	emailadmin	zh	连接被 IMAP 服务器中断。
-continue	emailadmin	zh	继续
-could not complete request. reason given: %s	emailadmin	zh	无法完成请求。原因是：%s
-could not open secure connection to the imap server. %s : %s.	emailadmin	zh	无法打开到 IMAP 服务器的安全连接。%s:%s。
-cram-md5 or digest-md5 requires the auth_sasl package to be installed.	emailadmin	zh	CRAM-MD5 或 DIGEST-MD5 需要安装 auth_sasl 包。
-cyrus imap server	emailadmin	zh	Cyrus IMAP 服务器
-cyrus imap server administration	emailadmin	zh	Cyrus IMAP 服务器管理
-default	emailadmin	zh	默认
-deliver extern	emailadmin	zh	传送外部
-displaying html messages is disabled	emailadmin	zh	显示HTML邮件被禁用
-do not validate certificate	emailadmin	zh	不确认证书
-do you really want to delete this profile	emailadmin	zh	您确定要删除这个 profile 文件
-domainname	emailadmin	zh	域名
-edit email settings	emailadmin	zh	编辑邮箱设置
-email account active	emailadmin	zh	邮箱帐户激活
-email address	emailadmin	zh	邮箱地址
-email settings	common	zh	邮箱设置
-emailadmin	emailadmin	zh	邮箱管理
-enable cyrus imap server administration	emailadmin	zh	启用 Cyrus IMAP 服务器管理
-enable sieve	emailadmin	zh	启用过滤
-encrypted connection	emailadmin	zh	加密连接
-encryption settings	emailadmin	zh	加密设置
-enter your default mail domain (from: user@domain)	emailadmin	zh	输入您的默认邮箱域 (比如：user@domain，取@之后的所有词或字母)
-entry saved	emailadmin	zh	条目已储存
-error connecting to imap server. %s : %s.	emailadmin	zh	连接到 IMAP 服务器错误。%s : %s。
-error connecting to imap server: [%s] %s.	emailadmin	zh	连接到 IMAP 服务器错误：[%s] %s。
-error saving account!	emailadmin	zh	保存帐户错误！
-error saving the entry!!!	emailadmin	zh	保存条目时发生错误！
-event details follow	emailadmin	zh	事件细节
-forward also to	emailadmin	zh	同时转发到
-forward email's to	emailadmin	zh	转发邮件到
-forward only	emailadmin	zh	转发
-global options	emailadmin	zh	全局选项
-if using ssl or tls, you must have the php openssl extension loaded.	emailadmin	zh	如果使用 SSL 或 TLS，您必须加载 PHP openssl 扩展。
-imap admin password	admin	zh	IMAP 管理者密码
-imap admin user	admin	zh	IMAP 管理者帐户
-imap c-client version < 2001	emailadmin	zh	IMAP C-Clien 版本小 < 2001
-imap server	emailadmin	zh	IMAP 服务器
-imap server closed the connection.	emailadmin	zh	IMAP 服务器关闭连接。
-imap server closed the connection. server responded: %s	emailadmin	zh	IMAP 服务器关闭连接。服务器回应：%s
-imap server hostname or ip address	emailadmin	zh	IMAP 服务器的主机名或 IP 地址
-imap server logintyp	emailadmin	zh	IMAP 服务器登录类型
-imap server name	emailadmin	zh	IMAP 服务器名
-imap server port	emailadmin	zh	IMAP 服务器端口号
-imap/pop3 server name	emailadmin	zh	IMAP / POP3 服务器名
-in mbyte	emailadmin	zh	以 MB 表示
-ldap basedn	emailadmin	zh	LDAP basedn
-ldap server	emailadmin	zh	LDAP 服务器
-ldap server accounts dn	emailadmin	zh	LDAP 服务器帐户 DN
-ldap server admin dn	emailadmin	zh	LDAP 服务器管理员 DN
-ldap server admin password	emailadmin	zh	LDAP 服务器管管理员密码
-ldap server hostname or ip address	emailadmin	zh	LDAP 服务器主机名或 IP 地址
-ldap settings	emailadmin	zh	LDAP 设置
-leave empty for no quota	emailadmin	zh	留空表示无限额
-mail settings	admin	zh	邮箱设置
-name of organisation	emailadmin	zh	组织名称
-no alternate email address	emailadmin	zh	无备用邮箱地址
-no encryption	emailadmin	zh	未加密
-no forwarding email address	emailadmin	zh	没有转发邮件地址
-no message returned.	emailadmin	zh	无返回消息。
-no plain text part found	emailadmin	zh	未找到纯文本部分
-no supported imap authentication method could be found.	emailadmin	zh	无支持 IMAP 认证的方法可以找到。
-order	emailadmin	zh	排序
-organisation	emailadmin	zh	组织
-plesk can't rename users --> request ignored	emailadmin	zh	Plesk 不能重命名用户  --> 请求忽略
-plesk imap server (courier)	emailadmin	zh	Plesk IMAP 服务器 (Courier)
-plesk mail script '%1' not found !!!	emailadmin	zh	Plesk 邮件脚本  '%1' 未找到！
-plesk requires passwords to have at least 5 characters and not contain the account-name --> password not set!!!	emailadmin	zh	Plesk 需要至少5个字符密码并且不包含帐户名 --> 密码未设置！
-plesk smtp-server (qmail)	emailadmin	zh	Plesk SMTP-Server (Qmail)
-pop3 server hostname or ip address	emailadmin	zh	POP3 服务器主机名或 IP 地址
-pop3 server port	emailadmin	zh	POP3 服务器端口号
-port	emailadmin	zh	端口
-postfix with ldap	emailadmin	zh	LDAP 用于 Postfix
-profile access rights	emailadmin	zh	profile 访问权限
-profile list	emailadmin	zh	profile 列表
-profile name	emailadmin	zh	profile 名
-qmaildotmode	emailadmin	zh	qmaildotmode
-quota settings	emailadmin	zh	配额设置
-quota size in mbyte	emailadmin	zh	配额大小(MB)
-remove	emailadmin	zh	移除
-select type of imap server	emailadmin	zh	选择 IMAP 服务器类型
-select type of imap/pop3 server	emailadmin	zh	选择 IMAP / POP3 服务器类型
-select type of smtp server	emailadmin	zh	选择 SMAP 服务器类型
-server settings	emailadmin	zh	服务器设置
-sieve server hostname or ip address	emailadmin	zh	Sieve 服务器主机名或 IP 地址
-sieve server port	emailadmin	zh	Sieve 服务器端口号
-sieve settings	emailadmin	zh	Sieve 设置
-smtp authentication	emailadmin	zh	SMTP 认证
-smtp options	emailadmin	zh	SMTP 选项
-smtp server name	emailadmin	zh	SMTP 服务器名
-smtp settings	emailadmin	zh	SMTP 设置
-smtp-server hostname or ip address	emailadmin	zh	SMTP 服务器主机名或 IP 地址
-smtp-server port	emailadmin	zh	SMTP 服务器端口号
-standard	emailadmin	zh	标准
-standard imap server	emailadmin	zh	标准 IMAP 服务器
-standard pop3 server	emailadmin	zh	标准 POP3 服务器
-standard smtp-server	emailadmin	zh	标准 SMTP 服务器
-the imap server does not appear to support the authentication method selected. please contact your system administrator.	emailadmin	zh	IMAP 服务器似乎不支持所选择的认证方法。请联系系统管理员。
-the mimeparser can not parse this message.	emailadmin	zh	mime 解析器不能解析这个邮件。
-this php has no imap support compiled in!!	emailadmin	zh	PHP 没有 IMAP 支持的编译！
-to use a tls connection, you must be running a version of php 5.1.0 or higher.	emailadmin	zh	未使用一个 TLS 连接，您必须运行 PHP 5.1.0 或更高版本。
-unexpected response from server to authenticate command.	emailadmin	zh	服务器为 AUTHENTICATE 指令返回不当以外回应。
-unexpected response from server to digest-md5 response.	emailadmin	zh	服务器为 Digest-MD5 返回意外的不当的回应。
-unexpected response from server to login command.	emailadmin	zh	服务器为 LOGIN  指令返回意外的不当回应。
-unknown imap response from the server. server responded: %s	emailadmin	zh	INAP 服务器返回未知回应。服务器回应：%s
-unsupported action '%1' !!!	emailadmin	zh	不支持 '%1'  的操作！
-update current email address:	emailadmin	zh	更新当前邮件地址：
-use default	emailadmin	zh	使用默认值
-use ldap defaults	emailadmin	zh	使用 LDAP 默认值
-use smtp auth	emailadmin	zh	使用 SMTP 认证
-use tls authentication	emailadmin	zh	使用TLS 认证
-use tls encryption	emailadmin	zh	使用TLS 加密
-user can edit forwarding address	emailadmin	zh	用户可以编辑转发地址
-username (standard)	emailadmin	zh	用户名(标准)
-username@domainname (virtual mail manager)	emailadmin	zh	用户名@域 (虚拟邮箱管理)
-users can define their own emailaccounts	emailadmin	zh	用户可以自定义邮箱账户
-users can define their own signatures	emailadmin	zh	用户可以定义他们自己的签名
-virtual mail manager	emailadmin	zh	虚拟邮箱管理
-your name	emailadmin	zh	您的名字

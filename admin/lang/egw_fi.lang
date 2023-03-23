@@ -4,6 +4,7 @@
 %1 categories of not (longer) existing accounts deleted.	admin	fi	%1 kategoriaa poistettu
 %1 category(s) %2	admin	fi	%1 kategoriaa %2
 %1 category(s) %2, %3 failed because of insufficent rights !!!	admin	fi	%1 kategoriaa %2, %3 epäonnistui käyttäjäoikeuksien takia.
+%1 entries deleted.	admin	fi	%1 tapahtumaa poistettu
 %1 group %2	admin	fi	%1 ryhmä %2
 %1 is no command!	admin	fi	%1 ei ole käsky!
 %1 log entries deleted.	admin	fi	%1 lokitietuetta poistettu!
@@ -11,6 +12,7 @@
 %1 rights for %2 and applications %3	admin	fi	%1 oikeudet %1 ja sovelluksille %3
 %1 user %2	admin	fi	%1 käyttäjä %2
 (default no, leave it off if you dont use it)	admin	fi	(Oletuksena ei, jätä tyhjäksi jollet halua käyttää sitä)
+(no subject)	admin	fi	Ei aihetta
 (stored password will not be shown here)	admin	fi	(Tallennettua salasanaa ei näytetä)
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	fi	(Käytä <br><a href="setup/" target="setup">Setup</a> [Manage Applications] asentaaksesi uusia sovelluksia !!!)
 -  type	admin	fi	- muoto
@@ -19,6 +21,7 @@ account "%1" has no email address --> not notified!	admin	fi	Käyttäjätilillä
 account "%1" has no plaintext password!	admin	fi	Käyttäjätilillä "%1" ei ole "plain text" salasanaa
 account %1 %2	admin	fi	Käyttäjätili%1 %2
 account '%1' deleted.	admin	fi	Käyttäjätili '%1' poistettu
+account '%1' not found !!!	admin	fi	Tiliä '%1' ei löytynyt!
 account active	admin	fi	Käyttäjätili aktiivinen
 account has been created	common	fi	Käyttäjätili luotu
 account has been deleted	common	fi	Käyttäjätili poistettu
@@ -36,6 +39,7 @@ action	admin	fi	Toimenpide
 actions	admin	fi	Toimenpiteet
 activate	admin	fi	Aktivoi
 activate wysiwyg-editor	admin	fi	Käytä WYSIWYG-toimitinta
+active templates	admin	fi	Aktiiviset mallipohjat
 add a category	admin	fi	Lisää kategoria
 add a group	admin	fi	Lisää ryhmä
 add a new account.	admin	fi	Uusi käyttäjätili.
@@ -49,16 +53,20 @@ add global category for %1	admin	fi	Lisää yleinen kategoria %1:lle
 add group	admin	fi	Lisää ryhmä
 add new account	admin	fi	Uusi käyttäjätili
 add new application	admin	fi	Uusi sovellus
+add new email address:	admin	fi	Lisää uusi sähköpostiosoite
 add peer server	admin	fi	Lisää rinnakkaispalvelin
+add profile	admin	fi	Lisää profiili
 add sub-category	admin	fi	Lisää alikaterogia
+admin dn	admin	fi	Ylläpitäjän dn
 admin email	admin	fi	Sähköpostin hallinta
 admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	fi	Ylläpitäjän sähköpostiosoitteet (pilkulla erotettu luettelo), joihin ilmoitetaan osoitteen lukitsemisesta (jätä tyhjäksi, jos ei ilmoiteta)
 admin name	admin	fi	Ylläpitäjän nimi
+admin password	admin	fi	Ylläpitäjän salasana
 admin queue and history	admin	fi	Admin Queue ja historia
+admin username	admin	fi	Ylläpitäjän käyttäjätunnus
 administration	admin	fi	Ylläpito
 admins	admin	fi	Ylläpitäjät
 advanced options	admin	fi	Lisäasetukset
-after how many unsuccessful attempts to login, an account should be blocked (default 15) ?	admin	fi	Kuinka monen epäonnistuneen kirjautumisyrityksen jälkeen tunnus lukitaan (oletus: 3)?
 after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	fi	Kuinka monen epäonnistuneen kirjautumisyrityksen jälkeen IP-osoite lukitaan (oletus: 3)?
 aliases	admin	fi	Aliakset
 all applications	admin	fi	Kaikki sovellukset
@@ -71,6 +79,9 @@ anonymous user	admin	fi	Anonyymi käyttäjä
 anonymous user (not shown in list sessions)	admin	fi	Anonyymi käyttäjä (ei näytetä kirjautuneiden luettelossa)
 anonymous user does not exist!	admin	fi	Anonyymiä käyttäjää EI ole olemassa
 anonymous user has no run-rights for the application!	admin	fi	Anonyymillä käyttäjällä EI ole suoritusoikeuksia tähän sovellukseen!
+any application	admin	fi	Mikä tahansa sovellus
+any group	admin	fi	Mikä tahansa ryhmä
+any user	admin	fi	Kuka tahansa käyttäjä
 appearance	admin	fi	Ulkoasu
 application	admin	fi	Sovellus
 application '%1' not found (maybe not installed or misspelled)!	admin	fi	Sovellusta %1 ei löytynyt (ehkä sitä ei ole asennettu tai se oli väärin kirjoitettu).
@@ -97,13 +108,21 @@ attempt to use correct mimetype for ftp instead of default 'application/octet-st
 authentication / accounts	admin	fi	Käyttäjäntunnistus / Käyttäjätilit
 auto create account records for authenticated users	admin	fi	Luo käyttäjätietueet automaattisesti tunnistetuille käyttäjille
 available placeholders	admin	fi	Käytettävät sijaismerkinnät
+back to admin/grouplist	admin	fi	Takaisin ylläpitoon / Ryhmäluetteloon
+back to admin/userlist	admin	fi	Takaisin ylläpitoon / Käyttäjäluetteloon
 back to the list	admin	fi	Takaisin luetteloon
+bad login name or password.	admin	fi	Väärä käyttäjätunnus tai salasana
+bad or malformed request. server responded: %s	admin	fi	Väärä tai viallinen pyyntö. %s
+bad request: %s	admin	fi	Väärä pyyntö: %s
 bi-dir passthrough	admin	fi	Kaksisuuntainen läpäisy
 bi-directional	admin	fi	Kaksisuuntainen
 bottom	admin	fi	Alas
 bulk password reset	admin	fi	Salasanojen hallinta
 calculate next run	admin	fi	Laske seuraava suoritusaika
 calendar recurrence horizont in days (default 1000)	admin	fi	Kalenterin toistuvien tapahtumien takaraja päivinä (oletus 1000)
+can be used by application	admin	fi	Sovellukselle
+can be used by group	admin	fi	Ryhmälle
+can be used by user	admin	fi	Käyttäjälle
 can change password	admin	fi	Voi vaihtaa salasanaa
 cancel testjob!	admin	fi	Peruuta TestiTyö!
 cancel this scheduled command	admin	fi	Peruuta tämä ajastettu toiminto
@@ -128,9 +147,14 @@ click to select a color	admin	fi	Napsauta valitaksesi värin
 color	admin	fi	Väri
 command scheduled to run at %1	admin	fi	Komento suoritetaan kello %1
 commercial: all sorts of companies	admin	fi	Kaupallinen: Kaikki yritykset
+connection dropped by imap server.	admin	fi	Yhteys IMAP palvelimeen katkesi.
+continue	admin	fi	Jatka
 cookie path (allows multiple egw sessions with different directories, has problemes with sitemgr!)	admin	fi	Evästeiden polku (mahdollistaa useiden eGW evästeiden käytön eri hakemistoista, voi aiheuttaa ongelmia Sivuston hallinta-modulissa)
+could not complete request. reason given: %s	admin	fi	Pyyntöä ei voitu toteuttaa. %s
+could not open secure connection to the imap server. %s : %s.	admin	fi	Turvattua yhteyttä IMAP palvelimeen ei voitu avata. %s : %s.
 country	admin	fi	Maa
 country selection	admin	fi	Maan valinta
+cram-md5 or digest-md5 requires the auth_sasl package to be installed.	admin	fi	CRAM-MD5 tai DIGEST-MD5 käyttö edellyttää Auth_SASL paketin asentamista.
 create group	admin	fi	Uusi ryhmä
 created	admin	fi	Luotu
 created with id #%1	admin	fi	Luotu ID numerolla #%1
@@ -140,7 +164,8 @@ creates a new field	admin	fi	Luodaan uusi kenttä
 crontab only (recomended)	admin	fi	Vain crontab (suositellaan)
 custom fields	admin	fi	Lisäkentät
 custom translation	admin	fi	Omat käännökset
-cyrus imap server	admin	fi	Cyrus IMAP palvelin
+cyrus imap server	admin	fi	Cyrus IMAP -palvelin
+cyrus imap server administration	admin	fi	Cyrus IMAP -palvelimen hallinta
 data	admin	fi	Tieto
 day	admin	fi	Päivä
 day of week<br>(0-6, 0=sun)	admin	fi	Viikonpäivä
@@ -192,11 +217,16 @@ disable "auto completion" of the login form	admin	fi	Kirjautumisikkunan "automaa
 disable wysiwyg-editor	admin	fi	Älä käytä WYSIWYG-toimitinta
 disabled (not recomended)	admin	fi	Ei käytössä (ei suositella)
 display	admin	fi	Näytä
+displaying html messages is disabled	admin	fi	HTML viestien näyttäminen on estetty
 do not delete the category and return back to the list	admin	fi	Kategoriaa EI poisteta ja palataan luetteloon.
+do not validate certificate	admin	fi	Älä tarkista sertifikaattia
 do you also want to delete all global subcategories ?	admin	fi	Haluatko poistaa myös yleiset alakategoriat?
+do you really want to delete this profile	admin	fi	Haluatko varmasti poistaa tämän profiilin?
+do you really want to reset the filter for the profile listing	admin	fi	Haluatko varmasti uudelleenasettaa suotimen profiililuetteloon?
 do you want to delete all global subcategories ?	admin	fi	Haluatko poistaa kaikki yleiset alakategoriat?
 do you want to move all global subcategories one level down ?	admin	fi	Haluatko siirtää kaikkia yleisiä alakategorioita tason verran alemmas?
 document root (default)	admin	fi	Tiedostojen juurihakemisto (oletus)
+domainname	admin	fi	Verkkotunnus
 down	admin	fi	Alas
 download csv	admin	fi	Lataa CSV
 edit account	admin	fi	Muokkaa käyttäjätiliä
@@ -216,15 +246,23 @@ edit user account	admin	fi	Muokkaa käyttäjätiliä
 educational: universities, schools, ...	admin	fi	Opetuksellinen: Yliopistot, Koulut
 egroupware directory	admin	fi	EGroupware hakemisto
 egroupware version	admin	fi	EGroupware versio
-email account active	admin	fi	Sähköpostilin aktivointi
+email account active	admin	fi	Sähköpostitili käytössä
 email address	admin	fi	Sähköpostiosoite
+email settings	common	fi	Sähköpostin asetukset
+emailadmin	admin	fi	Sähköpostin ylläpito
+emailadmin: group assigned profile	common	fi	Sähköpostin ylläpito: Ryhmälle suunnattu profiili
+emailadmin: user assigned profile	common	fi	Sähköpostin ylläpito: Käyttäjälle suunnattu profiili
 enable	admin	fi	Ota käyttöön
+enable cyrus imap server administration	admin	fi	Ota Cyrus IMAP -palvelimen hallinta käyttöön
 enable debug-messages	admin	fi	Näytä virheenjäljitysviestit
+enable sieve	admin	fi	Ota Sieve käyttöön
 enable spellcheck in rich text editor	admin	fi	Salli oikolukuohjelma Rich text editorissa.
 enable the soap service	admin	fi	Salli SOAP palvelut
 enable the xmlrpc service	admin	fi	Salli XMLRPC palvelut
 enabled - hidden from navbar	admin	fi	Käytössä - Ei näy työkalupalkissa
 enabled - popup window	admin	fi	Käytössä - Ponnahdusikkuna
+encrypted connection	admin	fi	Yhteyden suojaus
+encryption settings	admin	fi	Yhteyden suojausasetukset
 enter a description for the category	admin	fi	Anna kategorian kuvaus
 enter some random text for app_session <br>encryption (requires mcrypt)	admin	fi	Anna hieman satunnaisia merkkejä alustaaksesi app_session <br>salauksen (vaatii mcrypt)
 enter the background color for the login page	admin	fi	Anna kirjautumisnäytön taustaväri
@@ -240,26 +278,31 @@ enter the site password for peer servers	admin	fi	Anna salasana rinnakkaispalvel
 enter the site username for peer servers	admin	fi	Anna käyttäjätunnus rinnakkaispalvelimille
 enter the title for your site	admin	fi	Anna palvelun nimi
 enter the title of your logo	admin	fi	Anna logolle selite (näkyy kun hiirtä pitää hetken logon päällä)
-enter the url or filename (in api/templates/default/images) of your logo	admin	fi	Anna logon URL tai tiedostonimi (pitää olla hakemistossa api/templates/default/images)
-enter the url or filename (in your templates image directory) of your favicon (the little icon that appears in the browsers tabs)	admin	fi	Anna faviconin URL tai tiedostonimi (in your templates image directory). Favicon on pieni kuvake selaimen osoiterivillä.
 enter the url where your logo should link to	admin	fi	Anna URL, johon logon napsauttaminen vie
 enter the vfs-path where additional images, icons or logos can be placed (and found by egroupwares applications). the path must start with /,and be readable by all users	admin	fi	Anna VFS-polku lisäkuville, kuvakkeille, logoille. (Kaikkilla sovelluksilla ja käyttäjillä  täytyy olla pääsy tähän kansioon) Polun tulee alkaa /-merkillä.
 enter your default ftp server	admin	fi	Anna oletuksena käytettävä FTP-palvelin
 enter your default mail domain ( from: user@domain )	admin	fi	Anna postin verkkotunnus (domain) (Lähettäjä: mina@verkkotunnus.fi)
+enter your default mail domain (from: user@domain)	admin	fi	Anna oletusverkkotunnus (käyttäjä@verkkotunnus)
 enter your http proxy server	admin	fi	Anna HTTP-välityspalvelin
 enter your http proxy server port	admin	fi	Anna HTTP-välityspalvelimen portti
 enter your smtp server hostname or ip address	admin	fi	Anna SMTP -palvelimen nimi tai IP-osoite
 enter your smtp server port	admin	fi	Anna SMTP -palvelimen portti
+entry saved	admin	fi	Tallennettu
 error canceling timer, maybe there's none set !!!	admin	fi	Virhe poistettaessa ajastusta, ehkä sitä ei edes ole asetettu !!!
 error changing the password for %1 !!!	admin	fi	Virhe salasanaa vaihdettaessa %1 !!
+error connecting to imap server. %s : %s.	admin	fi	Virhe yhdistettäessä IMAP palvelimeen. %s : %s.
+error connecting to imap server: [%s] %s.	admin	fi	Virhe yhdistettäessä IMAP palvelimeen. [%s] %s.
+error deleting entry!	admin	fi	Virhe poistettaessa!
 error deleting log entry!	admin	fi	Virhe poistettaessa lokitietuetta %1 !!
 error saving	admin	fi	Virhe tallennettaessa!
 error saving account!	admin	fi	Virhe tallennettaessa käyttäjätiliä!
 error saving the command!	admin	fi	Virhe tallennettaessa käskyä!
+error saving the entry!!!	admin	fi	Virhe tallennettaessa!
 error saving to db:	admin	fi	Virhe tallennettaessa tietokantaan:
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	fi	Virhe tehtäessä ajastusta, komento väärin muotoiltu tai ajastus on jo olemassa !!!
 error! no appname found	admin	fi	Virhe! Sovellusta ei lödy!
 error: %1 not found or other error !!!	admin	fi	Virhe: %1 ei löydy tai muu virhe !!!
+event details follow	admin	fi	Tapahtuman yksityiskohdat alla
 exists	admin	fi	Olemassaoleva
 expires	admin	fi	Vanhentuu
 explanation of ldapman	admin	fi	Tämä moduuli on toistaiseksi testattu POSTFIX:lla, LDAP:lla, Courier-IMAP:lla ja se tarvitsee schemat Core ja QMAIL (OID7914). Jos haluat lisätietoja käytöstä ja säätämisestä järjestelmääsi varten, lue README.ldapman hakemistosta Admin/doc.
@@ -272,16 +315,20 @@ false	admin	fi	false
 field '%1' already exists !!!	admin	fi	Kenttä'%1' on jo olemassa !!!
 file space	admin	fi	Tallennustila
 file space must be an integer	admin	fi	Tallennustila on oltava kokonaisluku
+filtered by account	admin	fi	Käyttäjätilien mukaan
+filtered by group	admin	fi	Ryhmän mukaan
 for the times above	admin	fi	Näinä aikoina
 for the times below (empty values count as '*', all empty = every minute)	admin	fi	Yläpuolella määritettyinä aikoina (tyhjä tarkoittaa '*', kaikki tyhjää = joka minuutti)
 force selectbox	admin	fi	Pakota valitsemaan
 force users to change their password regularily?(empty for no,number for after that number of days	admin	fi	Kuinka usein käyttäjien on vaihdettava salasana? Tyhjä=ei koskaan, muutoin asteta päivien lukumäärä.
-forward also to	admin	fi	Välitä eteenpäin myös
+forward also to	admin	fi	Välitä osoitteeseen
+forward email's to	admin	fi	Välitä osoitteeseen
 forward emails to	admin	fi	Eteenpäin välitetyt sähköpostit
-forward only	admin	fi	Välitä vain eteenpäin
+forward only	admin	fi	Ainoastaan edelleenlähetys
 full name	admin	fi	Koko nimi
 general	admin	fi	Yleinen
 global categories	common	fi	Yleiset kategoriat
+global options	admin	fi	Yleiset asetukset
 governmental: incl. state or municipal authorities or services	admin	fi	Hallituksellinen: Sisältää osavaltioiden ja paikallishallinnot ja palvelut
 grant	admin	fi	Myönnä
 group ?	admin	fi	Ryhmä ?
@@ -295,6 +342,7 @@ group manager	admin	fi	Ryhmien hallinta
 group name	admin	fi	Ryhmän nimi
 hide php information	admin	fi	Piilota php-tiedot
 home directory	admin	fi	Kotihakemisto
+home screen message	admin	fi	Päänäytön viesti
 host information	admin	fi	Palvelimen tiedot
 hour<br>(0-23)	admin	fi	Tunti<br>(0-23)
 how big should thumbnails for linked images be (maximum in pixels) ?	admin	fi	Thumbnailin maksimikoko linkitetyille kuville pikseleinä?
@@ -306,7 +354,21 @@ icon	admin	fi	Kuvake
 idle	admin	fi	Vapaa
 if no acl records for user or any group the user is a member of	admin	fi	Jos käyttäjälle tai ryhmälle ei ole ACL -tietueita, kuuluu käyttäjä ryhmään
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	fi	Jos käytät LDAP-hakemistoa, haluatko hallita kotihakemistoja ja shellejä?
-in mbyte	admin	fi	Megoina
+if using ssl or tls, you must have the php openssl extension loaded.	admin	fi	Jos SSL tai TLS on käytössä, PHP openssl lisäosa pitää olla ladattuna.
+imap admin password	admin	fi	IMAP admin salasana
+imap admin user	admin	fi	IMAP admin käyttäjätunnus
+imap c-client version < 2001	admin	fi	IMAP C-Client versio < 2001
+imap server	admin	fi	IMAP -palvelin
+imap server closed the connection.	admin	fi	IMAP palvelin katkaisi yhteyden.
+imap server closed the connection. server responded: %s	admin	fi	IMAP palvelin katkaisi yhteyden. %s
+imap server hostname or ip address	admin	fi	IMAP -palvelimen nimi tai IP-osoite
+imap server logintyp	admin	fi	IMAP -palvelimen käyttäjätunnistus
+imap server name	admin	fi	IMAP -palvelimen nimi
+imap server port	admin	fi	IMAP -palvelimen portti
+imap/pop3 server name	admin	fi	IMAP / POP3 -palvelimen nimi
+importance	admin	fi	Tärkeys
+in mbyte	admin	fi	Megatavua
+inactive	admin	fi	Ei käytössä
 inbound	admin	fi	Tuleva
 initial	admin	fi	Alkukirjain
 install crontab	admin	fi	Asenna crontab
@@ -334,6 +396,7 @@ last password change	admin	fi	Viimeisin salasanan vaihto
 last submission:	admin	fi	Viimeisin kirjaus
 last time read	admin	fi	Luettu viimeksi
 ldap accounts context	admin	fi	LDAP -tunnusten konteksti
+ldap basedn	admin	fi	LDAP basedn
 ldap default homedirectory prefix (e.g. /home for /home/username)	admin	fi	LDAP kotihakemistojen etuliite (esim. /home jos hakemisto on /home/username)
 ldap default shell (e.g. /bin/bash)	admin	fi	LDAP oletus-shell (esim. /bin/bash)
 ldap encryption type	admin	fi	LDAP salaustapa
@@ -341,7 +404,13 @@ ldap groups context	admin	fi	LDAP -ryhmien konteksti
 ldap host	admin	fi	LDAP palvelin
 ldap root password	admin	fi	LDAP root salasana
 ldap rootdn	admin	fi	LDAP rootdn
-leave empty for no quota	admin	fi	Jätä tyhjäksi, jollei rajoituksia ole.
+ldap server	admin	fi	LDAP -palvelin
+ldap server accounts dn	admin	fi	LDAP -tunnusten DN
+ldap server admin dn	admin	fi	LDAP -ylläpidon DN
+ldap server admin password	admin	fi	LDAP -hallinnan salasana
+ldap server hostname or ip address	admin	fi	LDAP -palvelimen nimi tai IP-osoite
+ldap settings	admin	fi	LDAP -asetukset
+leave empty for no quota	admin	fi	Jätä tyhjäksi, jos ei rajoiteta
 leave the category untouched and return back to the list	admin	fi	Palaa luetteloon muuttamatta kategoriaa
 leave the group untouched and return back to the list	admin	fi	Palaa luetteloon muuttamatta ryhmää
 leave unchanged	admin	fi	Älä muuta
@@ -363,13 +432,14 @@ login-status	admin	fi	Kirjautumistila
 loginid	admin	fi	LoginID
 logintime	admin	fi	Kirjautumisaika
 logoutime	admin	fi	Uloskirjautumisaika
-mail settings	admin	fi	Sähköpostiasetukset
+mail settings	admin	fi	Sähköpostin asetukset
 main email-address	admin	fi	Pääsähköpostiosoite
-home screen message	admin	fi	Päänäytön viesti
 manage mapping	admin	fi	Valitse kentät
+manage stationery templates	admin	fi	Hallitse sähköpostin taustakuvamallipohjia
 manager	admin	fi	Hallinnoija
 maximum account id (e.g. 65535 or 1000000)	admin	fi	Suurin tunnus-id (esim. 65535 tai 1000000)
 maximum entries in click path history	admin	fi	Navigointihistorian maksimikoko
+mb used	admin	fi	MB käytetty
 members	admin	fi	Jäsenet
 message has been updated	admin	fi	Viesti päivitetty
 method	admin	fi	Tapa
@@ -381,6 +451,7 @@ month	admin	fi	Kuukausi
 more secure	admin	fi	Lisää turvallisuutta
 must change password upon next login	admin	fi	Salasana vaihdettava seuraavan kirjautumisen yhteydessä
 name must not be empty !!!	admin	fi	Nimi ei saa olla tyhjä !!!
+name of organisation	admin	fi	Organisaation nimi
 name of the egroupware instance, eg. default	admin	fi	Palvelun nimi esim. yrityksesi nimi
 new group name	admin	fi	Uuden ryhmän nimi
 new name	admin	fi	Uusi nimi
@@ -388,14 +459,19 @@ new password	admin	fi	Uusi salasana
 new password [ leave blank for no change ]	admin	fi	Uusi salasana [ Tyhjä = ei muutosta ]
 next run	admin	fi	Suoritetaan seuraavan kerran
 no algorithms available	admin	fi	Ei käytettävissä
-no alternate email address	admin	fi	Ei vaihtoehtoista sähköpostiosoitetta
+no alternate email address	admin	fi	Ei vaihtoehtoista osoitetta
+no encryption	admin	fi	Ei suojausta
+no forwarding email address	admin	fi	Välityksen sähköpostiosoitetta ei löytynyt
 no jobs in the database !!!	admin	fi	Tietokannassa ei ole töitä !!!
 no login history exists for this user	admin	fi	Käyttäjällä ei ole kirjautumishistoriaa
 no matches found	admin	fi	Yhtään kohdetta ei löytynyt
+no message returned.	admin	fi	Viestiä ei palautettu
 no modes available	admin	fi	Tiloja ei käytettävissä
 no permission to add groups	admin	fi	Ei oikeutta lisätä ryhmiä
 no permission to add users	admin	fi	Ei oikeutta lisätä käyttäjiä
 no permission to create groups	admin	fi	Ei oikeutta luoda ryhmiä
+no plain text part found	admin	fi	Pelkkää tekstiä ei löytynyt
+no supported imap authentication method could be found.	admin	fi	Tuettua IMAP tunnistustapaa ei löydetty.
 non profit: clubs, associations, ...	admin	fi	Yleishyödylliset: Klubit, Yhteisöt,...
 note: ssl available only if php is compiled with curl support	admin	fi	Huomaa: SSL on käytettävissä vain jos PHP on käännetty curl-tuella
 notification mail	admin	fi	Huomautusviesti
@@ -406,6 +482,8 @@ number of row for a multiline inputfield or line of a multi-select-box	admin	fi	
 number of sessions / egroupware logins in the last 30 days	admin	fi	Istuntojen / sisäänkirjautumisien määrä kuukauden ajalta.
 number of users	admin	fi	Käyttäjien lukumäärä
 nummeric account id	admin	fi	Numeerinen käyttäjätilin ID
+oauth authentiction	admin	fi	OAuth-todennus
+offer to installing egroupware as mail-handler	admin	fi	Tarjous EGroupware asentamisesta sähköpostin käsittelijäksi
 official egroupware usage statistic	admin	fi	Virallinen EGroupwaren käyttötilasto
 one day	admin	fi	Yksi päivä
 one hour	admin	fi	Yksi tunti
@@ -413,9 +491,12 @@ one month	admin	fi	Yksi kuukausi
 one week	admin	fi	Yksi viikko
 only below displayed information is directly submitted to %s.	admin	fi	Ainoastaan esitetty tieto lähetetään: %s
 operating system	admin	fi	Käyttöjärjestelmä
-order	admin	fi	Järjestä
+order	admin	fi	Järjestys
+organisation	admin	fi	Organisaatio
+other security configuration	admin	fi	Muut turvallisuusasetukset
 outbound	admin	fi	Lähtevä
 own categories	admin	fi	Omat kategoriat
+own install id	admin	fi	Oma asennustunnus
 own install id:	admin	fi	Asennus ID:
 owner "%1" removed, please select group-owner	admin	fi	Omistaja "%1" poistettu. Valitse omistajaksi ryhmä.
 passthrough	admin	fi	Läpikulku
@@ -441,12 +522,24 @@ please enter a name	admin	fi	Anna nimi
 please enter a name for that server !	admin	fi	Anna palvelimen nimi!
 please run setup to become current	admin	fi	Aja setup-sovellus päivittääksesi
 please select	admin	fi	Valitse
+plesk can't rename users --> request ignored	admin	fi	Plesk ei voi nimetä käyttäjiä --> pyyntö hylätty
+plesk imap server (courier)	admin	fi	Plesk IMAP palvelin (Courier)
+plesk mail script '%1' not found !!!	admin	fi	Plesk sähköpostiskriptiä '%1' ei löydy !!!
+plesk requires passwords to have at least 5 characters and not contain the account-name --> password not set!!!	admin	fi	Plesk:n salasanassa pitää olla vähintään 5 merkkiä, eikä se saa olla käyttäjätilin nimi --> salasanaa EI ole asetettu !!!
+plesk smtp-server (qmail)	admin	fi	Plesk SMTP-palvelin (Qmail)
+pop3 server hostname or ip address	admin	fi	POP3 -palvelimen nimi tai IP-osoite
+pop3 server port	admin	fi	POP3 -palvelimen portti
+port	admin	fi	Portti
 postfix with ldap	admin	fi	Postfix ja LDAP
 postpone for	admin	fi	Siirrä eteenpäin
 preferences	admin	fi	Asetukset
 primary group	admin	fi	Ensisijainen ryhmä
+profile access rights	admin	fi	Profiilin käyttöoikeudet
+profile is active	admin	fi	Profiili on aktiivinen
+profile list	admin	fi	Profiileiluettelo
+profile name	admin	fi	Profiilin nimi
 qmaildotmode	admin	fi	qmaildotmode
-quota settings	admin	fi	Rajoituksen asetukset
+quota settings	admin	fi	Tallennuskiintiön asetukset
 quota size in mbyte	admin	fi	Rajoituksen koko Mb:nä
 re-enter password	admin	fi	Salasana uudestaan
 read this list of methods.	admin	fi	Lue tämä metodien lista
@@ -455,12 +548,13 @@ remove	admin	fi	Poista
 remove all users from this group	admin	fi	Poista käyttäjät ryhmästä
 remove all users from this group ?	admin	fi	Poistetaanko kaikki käyttäjät tästä ryhmästä?
 requested	admin	fi	Vaadittu
-return to view account	admin	fi	Palaa käyttäjätilin tietoihin
+reset filter	admin	fi	Poista suodatin
 rights	admin	fi	ACL -oikeudet
 route all mails to	admin	fi	Reititä kaikki viestit
 rows	admin	fi	Rivit
 rpm or debian package	admin	fi	RPM tai Debian paketti
 run asynchronous services	admin	fi	Suorita ajastetut palvelut
+save of message %1 failed. could not save message to folder %2 due to: %3	admin	fi	Viestin %1 tallennus epäonnistui. Viestiä ei voitu tallentaa kansioon %2. Syy: %3
 save the category	admin	fi	Tallenna kategoria
 save the category and return back to the list	admin	fi	Tallenna kategoria ja palaa luetteloon
 saves the changes made and leaves	admin	fi	Tallenna muutokset ja poistu
@@ -475,15 +569,20 @@ select accounts for which the custom field should be visible	admin	fi	Valitse k�
 select group managers	admin	fi	Valitse ryhmien ylläpitäjät
 select permissions this group will have	admin	fi	Valitse ryhmälle oikeudet
 select the parent category. if this is a main category select no category	admin	fi	Valitse pääkategoria. Jos tämä on pääkategoria, valitse EI KATEGORIAA
+select type of imap server	admin	fi	Valitse IMAP -palvelimen tyyppi
+select type of imap/pop3 server	admin	fi	Valitse IMAP / POP3 -palvelimen tyyppi
+select type of smtp server	admin	fi	Valitse SMTP -palvelimen tyyppi
 select users	admin	fi	Valitse käyttäjät
 select users for inclusion	admin	fi	Valitse mukaan otettavat käyttäjät
 select where you want to store/retrieve filesystem information	admin	fi	Valitse minne haluat tallentaa/noutaa tiedostojärjestelmän tiedot.
 select where you want to store/retrieve user accounts	admin	fi	Valitse minne haluat tallentaa/noutaa käyttäjätilit.
 select which location this app should appear on the navbar, lowest (left) to highest (right)	admin	fi	Valitse missä sovellus sijaitsee työkalupalkissa, alimmaisesta (vasen) ylimmäiseen (oikea).
 selectbox	admin	fi	Valintalista
+send using this email-address	admin	fi	Lähetä käyttäen tätä sähköpostiosoitetta
 server %1 has been updated	admin	fi	Palvelin %1 päivitetty
 server list	admin	fi	Palvelimet
 server password	admin	fi	Palvelimen salasana
+server settings	admin	fi	Palvelimen asetukset
 server type(mode)	admin	fi	Palvelimen tyyppi(moodi)
 server url	admin	fi	Palvelimen URL
 server username	admin	fi	Palvelimen käyttäjätunnus
@@ -497,7 +596,16 @@ show current action	admin	fi	Näytä viimeisin toimi
 show error log	admin	fi	Näytä virheloki
 show phpinfo()	admin	fi	Näytä phpinfo()
 show session ip address	admin	fi	Näytä istunnon IP-osoite
+sieve server hostname or ip address	admin	fi	Sieve -palvelimen nimi tai IP-osoite
+sieve server port	admin	fi	Sieve -palvelimen portti
+sieve settings	admin	fi	Sieven asetukset
 site	admin	fi	Palvelu
+smtp authentication	admin	fi	SMTP -tunnistus
+smtp options	admin	fi	SMTP -asetukset
+smtp server name	admin	fi	SMTP -palvelimen nimi
+smtp settings	admin	fi	SMTP -asetukset
+smtp-server hostname or ip address	admin	fi	SMTP -palvelimen nimi tai IP-osoite
+smtp-server port	admin	fi	SMTP -palvelimen portti
 soap	admin	fi	SOAP
 sorry, that group name has already been taken.	admin	fi	Valitan, ryhmän nimi on jo käytössä.
 sorry, the above users are still a member of the group %1	admin	fi	Valitan, nämä käyttäjät kuuluvat vielä ryhmään %1
@@ -505,11 +613,13 @@ sorry, the follow users are still a member of the group %1	admin	fi	Valitan, nä
 sort the entries	admin	fi	Lajittele kohteet
 ssl	admin	fi	ssl
 standard	admin	fi	Vakio
-standard imap server	admin	fi	Standardi IMAP palvelin
-standard pop3 server	admin	fi	Standardi POP3 palvelin
-standard smtp-server	admin	fi	Standardi SMTP palvelin
+standard imap server	admin	fi	Vakio IMAP -palvelin
+standard pop3 server	admin	fi	Vakio POP3 -palvelin
+standard smtp-server	admin	fi	Vakio SMTP -palvelin
 start	admin	fi	Aloita
 start testjob!	admin	fi	Käynnistä TestiTyö!
+starts with	admin	fi	Alkaa:
+stationery	admin	fi	Sähköpostin taustakuvamallipohjat
 submit changes	admin	fi	Lähetä muutokset
 submit displayed information?	admin	fi	Lähetä esitetty tieto?
 submit statistic information	admin	fi	Lähetä esitetty tieto
@@ -518,6 +628,7 @@ subtype	admin	fi	Alamuoto
 success	admin	fi	Onnistunut
 switch it off, if users are randomly thrown out	admin	fi	Ota pois käytöstä, jos käyttäjät ovat satunnaisesti hylätty.
 template selection	admin	fi	Malliohjan valinta
+templates	admin	fi	Mallipohjat
 text entry	admin	fi	Tekstille
 that application name already exists.	admin	fi	Sovelluksen nimi on jo käytössä.
 that application order must be a number.	admin	fi	Järjestyksen pitää olla numero.
@@ -527,9 +638,11 @@ that server name has been used already !	admin	fi	Palvelimen nimi on jo käytös
 the api is current	admin	fi	API on ajan tasalla
 the api requires an upgrade	admin	fi	API vaatii päivityksen
 the groups must include the primary group	admin	fi	Ensisijainen ryhmä on valittava
+the imap server does not appear to support the authentication method selected. please contact your system administrator.	admin	fi	IMAP palvelimelta ei löydy tukea valitulle tunnistusmuodolle, ota yhteyttä järjestelmän pääkäyttäjään.
 the install id of an instance can be found under admin > site configuration	admin	fi	Asennus-ID löytyy: Ylläpito >> Palvelun asetukset.
 the login and password can not be the same	admin	fi	Käyttäjätunnus ja salasana eivät voi olla samat
 the loginid can not be more then 8 characters	admin	fi	Käyttäjätunnus voi olla vain 8 merkkiä pitkä
+the mimeparser can not parse this message.	admin	fi	Mimeparseri ei voi jäsentää tätä viestiä
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	admin	fi	Nimeä käytetään sisäisesti (tietokannassa) (<= 20 merkkiä), muuttaminen voi hävittää olemassa olevia tietoja.
 the testjob sends you a mail everytime it is called.	admin	fi	TestiTyö lähettää sinulle sähköpostiviestin aina kun se ajetaan.
 the text displayed to the user	admin	fi	Teksti näytetään käyttäjälle
@@ -541,10 +654,12 @@ this application is current	admin	fi	Sovellus on ajan tasalla
 this application requires an upgrade	admin	fi	Sovellus vaatii päivityksen
 this category is currently being used by applications as a parent category	admin	fi	Sovellus käyttää tätä kategoriaa yläkategoriana.
 this controls exports and merging.	admin	fi	Vaikuttaa Vientiin ja "Merge print"-toimintoon
+this php has no imap support compiled in!!	admin	fi	Tämä PHP ei sisällä IMAP tukea!!
 timeout for application session data in seconds (default 86400 = 1 day)	admin	fi	Kuinka monta sekuntia sovelluksen tilatietoa säilytetään (oletus: 86400 = 1 vrk)
 timeout for sessions in seconds (default 14400 = 4 hours)	admin	fi	Kuinka monta sekuntia on istunnon aikakatkaisu (oletus: 14400 = 4 tuntia)
 times	admin	fi	Ajat
 to allow us to track the growth of your individual installation use this submit id, otherwise delete it:	admin	fi	Käytä tätä lähetystunnusta, jos sallit tilastotietojen kasvun seuraamisen, muutoin poista se:
+to use a tls connection, you must be running a version of php 5.1.0 or higher.	admin	fi	Käyttääksesi TLS yhteyttä, sinulla pitää olla käytössä PHP 5.1.0 tai uudempi versio.
 top	admin	fi	Ylös
 total of %1 id's changed.	admin	fi	Kaikkiaan %1 ID muutettu.
 total records	admin	fi	Tietueita
@@ -559,24 +674,46 @@ two weeks	admin	fi	Kaksi viikkoa
 type '%1' already exists !!!	admin	fi	Tyyppi '%1' on jo olemassa !!!
 type of customfield	admin	fi	Lisäkentän tyyppi
 under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	fi	Windows -ympäristössä ylläpitäjän on asennettava asyncservice %1käsin%2 tai käytettävä fallback -tilaa. Tällöin töiden suoritustarve tarkistetaan vain kun EGroupwarea käytetään.
+unexpected response from server to authenticate command.	admin	fi	Odottamaton vastaus palvelimen AUTHENTICATE komennolta.
+unexpected response from server to digest-md5 response.	admin	fi	Odottamaton vastaus palvelimen Digest-MD5 vastauksesta.
+unexpected response from server to login command.	admin	fi	Odottamaton vastaus palvelimen LOGIN komennolta.
 unknown account: %1 !!!	admin	fi	Tuntematon käyttäjätili: %1!!!
 unknown command %1!	admin	fi	Tuntematon komento: %1!!!
+unknown imap response from the server. server responded: %s	admin	fi	Tuntematon IMAP vastaus palvelimelta. Palvelin vastasi: %s
 unknown option %1	admin	fi	Tuntematon optio: %1!!!
+unsupported action '%1' !!!	admin	fi	Toiminto, jota ei tueta '%1' !!!
 unwilling to save category with current settings. check for inconsistency:	admin	fi	Kategoriaa ei voitu tallentaa valituilla asetuksilla. Tarkista toiminnot.
 up	admin	fi	Ylös
+update current email address:	admin	fi	Päivitä nykyinen sähköpostiosoite:
 updated	admin	fi	Päivitetty
 url of the egroupware installation, eg. http://domain.com/egroupware	admin	fi	EGroupwaren URL, esim. http://domain.com/egroupware
 usage	admin	fi	Käyttö
 use cookies to pass sessionid	admin	fi	Käytä evästeitä (cookie) istuntotunnuksen välitykseen.
+use default	admin	fi	Käytä oletusta
+use ldap defaults	admin	fi	Käytä LDAP -oletuksia
+use predefined username and password defined below	admin	fi	Käytä esimääriteltyä käyttäjänimeä ja salasanaa
 use pure html compliant code (not fully working yet)	admin	fi	Käytä HTML yhteensopivuustilaa (ei toimi vielä täysin).
+use smtp auth	admin	fi	Käytä SMTP -käyttäjätunnistusta
 use theme	admin	fi	Käytä teemaa
+use tls authentication	admin	fi	Käytä TLS -käyttäjätunnistusta
+use tls encryption	admin	fi	Käytä TLS -salausta
+use users email-address (as seen in useraccount)	admin	fi	Käytä käyttäjän sähköpostiosoitetta
 user accounts	admin	fi	Käyttäjätilit
+user can edit forwarding address	admin	fi	Käyttäjä voi muokata välitys osoitetta
 user csv export	admin	fi	Käyttäjätilien CSV vienti
 user csv import	admin	fi	Käyttäjätilien CsV tuonti
 user data	common	fi	Käyttäjän tiedot
 user for smtp-authentication (leave it empty if no auth required)	admin	fi	SMTP -käyttäjätunnus (tyhjä, jos ei käytetä)
 user groups	admin	fi	Käyttäjäryhmät
 userdata	admin	fi	Käyttäjän tiedot
+userid@domain eg. u1234@domain	admin	fi	käyttäjätunnus@verkkotunnus
+username (standard)	admin	fi	Käyttäjätunnus (standardi)
+username/password defined by admin	admin	fi	Ylläpidon määrittelemä käyttäjätunnus/salasana
+username@domainname (virtual mail manager)	admin	fi	käyttäjätunnus@verkkotunnus (Virtual MAIL ManaGeR)
+users can define their own emailaccounts	admin	fi	Käyttäjät voivat määritellä omia sähköpostitilejä
+users can define their own identities	admin	fi	Käyttäjät voivat määritellä omia identiteettejä
+users can define their own signatures	admin	fi	Käyttäjät voivat määritellä omia allekirjoituksia
+users can utilize these stationery templates	admin	fi	Käyttäjät voivat määritellä omia sähköpostin taustakuvamallipohjia
 users choice	admin	fi	Käyttäjä valitsee
 value for column %1 is not unique!	admin	fi	Sarakkeen arvo %1 ei ole ainutlaatuinen!
 vfs directory "%1" not found!	admin	fi	VFS tiedostoa "%1" ei löytynyt!
@@ -587,6 +724,7 @@ view error log	admin	fi	Näytä virheloki
 view sessions	admin	fi	Näytä istunnot
 view this user	admin	fi	Näytä tämä käyttäjä
 view user account	admin	fi	Näytä käyttäjätili
+virtual mail manager	admin	fi	Virtual MAIL ManaGeR
 warn users about the need to change their password? the number set here should be lower than the value used to enforce the change of passwords every x days. only effective when enforcing of password change is enabled. (empty for no,number for number of days before they must change)	admin	fi	Kuinka monta päivää etukäteen käyttäjiä huomautetaan tulevasta salasanan vaihdosta. Tyhjä = Ei huomautusta
 we ask for the data to improve our profile in the press and to get a better understanding of egroupware's user base and it's needs.	admin	fi	Tietoja käytetään ainoastaan tilastolliseen tarkoitukseen.
 we hope you understand the importance for this voluntary statistic and not deny it lightly.	admin	fi	Mitään identiteetin paljastavaa tietoa ei tallenneta.
@@ -599,8 +737,11 @@ would you like to show each application's upgrade status ?	admin	fi	Näytetään
 wrong account type: %1 is no %2 !!!	admin	fi	Virheellinen tilityyppi: %1 ei ole %2!!
 wrong admin-account or -password !!!	admin	fi	Virheellinen Admin-tunnus tai salasana!!
 xml-rpc	admin	fi	XML-RPC
+yes, use credentials below only for alarms and notifications, otherwise use credentials of current user	admin	fi	Kyllä, Käytä annettua salasanaa vain hälytyksiin ja huomautusviesteihin, muulloin käyttäjän tunnuksia
+yes, use credentials of current user or if given credentials below	admin	fi	Kyllä, käyttäjän tunnukset, tai mahdolliset allaolevat tunnukset
 you have entered an invalid expiration date	admin	fi	Virheellinen vanhenemispäivä!
 you have no email address for your user set !!!	admin	fi	Sähköpostiosoitetta ei ole määritelty käyttäjälle!
+you have received a new message on the	admin	fi	Sinulle on uusi viesti
 you have to enter a name, to create a new field!!!	admin	fi	Sinun pitää antaa nimi luodaksesi kenttä!!!
 you have to enter a name, to create a new type!	admin	fi	Sinun pitää antaa nimi luodaksesi tyyppi!
 you must add at least 1 permission or group to this account	admin	fi	Lisää käyttäjätiliin ainakin yksi ACL-oikeus tai ryhmä.
@@ -617,171 +758,5 @@ you need to select as least one action!	admin	fi	Valitse vähintään yksi toimi
 you need to select some users first!	admin	fi	Valitse ensin käyttäjät!
 you will need to remove the subcategories before you can delete this category	admin	fi	Alikategoriat on poistettava ennen kuin voit poistaa tämän kategorian!
 your last submission was less then %1 days ago!	admin	fi	Viimeisin lähettämäsi tieto on vähemmän kuin %1 päivää sitten!
-your session could not be verified.	admin	fi	Istuntoasi ei voitu varmentaa.
-%1 entries deleted.	admin	fi	%1 tapahtumaa poistettu
-(no subject)	admin	fi	Ei aihetta
-account '%1' not found !!!	admin	fi	Tiliä '%1' ei löytynyt!
-active templates	admin	fi	Aktiiviset mallipohjat
-add new email address:	admin	fi	Lisää uusi sähköpostiosoite
-add profile	admin	fi	Lisää profiili
-admin dn	admin	fi	Ylläpitäjän dn
-admin password	admin	fi	Ylläpitäjän salasana
-admin username	admin	fi	Ylläpitäjän käyttäjätunnus
-advanced options	admin	fi	Lisäasetukset
-alternate email address	admin	fi	Vaihtoehtoinen sähköpostiosoite
-any application	admin	fi	Mikä tahansa sovellus
-any group	admin	fi	Mikä tahansa ryhmä
-any user	admin	fi	Kuka tahansa käyttäjä
-back to admin/grouplist	admin	fi	Takaisin ylläpitoon / Ryhmäluetteloon
-back to admin/userlist	admin	fi	Takaisin ylläpitoon / Käyttäjäluetteloon
-bad login name or password.	admin	fi	Väärä käyttäjätunnus tai salasana
-bad or malformed request. server responded: %s	admin	fi	Väärä tai viallinen pyyntö. %s
-bad request: %s	admin	fi	Väärä pyyntö: %s
-can be used by application	admin	fi	Sovellukselle
-can be used by group	admin	fi	Ryhmälle
-can be used by user	admin	fi	Käyttäjälle
-connection dropped by imap server.	admin	fi	Yhteys IMAP palvelimeen katkesi.
-continue	admin	fi	Jatka
-could not complete request. reason given: %s	admin	fi	Pyyntöä ei voitu toteuttaa. %s
-could not open secure connection to the imap server. %s : %s.	admin	fi	Turvattua yhteyttä IMAP palvelimeen ei voitu avata. %s : %s.
-cram-md5 or digest-md5 requires the auth_sasl package to be installed.	admin	fi	CRAM-MD5 tai DIGEST-MD5 käyttö edellyttää Auth_SASL paketin asentamista.
-cyrus imap server	admin	fi	Cyrus IMAP -palvelin
-cyrus imap server administration	admin	fi	Cyrus IMAP -palvelimen hallinta
-default	admin	fi	Oletus
-deliver extern	admin	fi	Deliver extern
-displaying html messages is disabled	admin	fi	HTML viestien näyttäminen on estetty
-do not validate certificate	admin	fi	Älä tarkista sertifikaattia
-do you really want to delete this profile	admin	fi	Haluatko varmasti poistaa tämän profiilin?
-do you really want to reset the filter for the profile listing	admin	fi	Haluatko varmasti uudelleenasettaa suotimen profiililuetteloon?
-domainname	admin	fi	Verkkotunnus
-edit email settings	admin	fi	Muokkaa sähköpostin asetuksia
-email account active	admin	fi	Sähköpostitili käytössä
-email address	admin	fi	Sähköpostiosoite
-email settings	common	fi	Sähköpostin asetukset
-emailadmin	admin	fi	Sähköpostin ylläpito
-emailadmin: group assigned profile	common	fi	Sähköpostin ylläpito: Ryhmälle suunnattu profiili
-emailadmin: user assigned profile	common	fi	Sähköpostin ylläpito: Käyttäjälle suunnattu profiili
-enable cyrus imap server administration	admin	fi	Ota Cyrus IMAP -palvelimen hallinta käyttöön
-enable sieve	admin	fi	Ota Sieve käyttöön
-encrypted connection	admin	fi	Yhteyden suojaus
-encryption settings	admin	fi	Yhteyden suojausasetukset
-enter your default mail domain (from: user@domain)	admin	fi	Anna oletusverkkotunnus (käyttäjä@verkkotunnus)
-entry saved	admin	fi	Tallennettu
-error connecting to imap server. %s : %s.	admin	fi	Virhe yhdistettäessä IMAP palvelimeen. %s : %s.
-error connecting to imap server: [%s] %s.	admin	fi	Virhe yhdistettäessä IMAP palvelimeen. [%s] %s.
-error deleting entry!	admin	fi	Virhe poistettaessa!
-error saving account!	admin	fi	Virhe tallennettaessa käyttäjätiliä!
-error saving the entry!!!	admin	fi	Virhe tallennettaessa!
-event details follow	admin	fi	Tapahtuman yksityiskohdat alla
-filtered by account	admin	fi	Käyttäjätilien mukaan
-filtered by group	admin	fi	Ryhmän mukaan
-forward also to	admin	fi	Välitä osoitteeseen
-forward email's to	admin	fi	Välitä osoitteeseen
-forward only	admin	fi	Ainoastaan edelleenlähetys
-global options	admin	fi	Yleiset asetukset
-if using ssl or tls, you must have the php openssl extension loaded.	admin	fi	Jos SSL tai TLS on käytössä, PHP openssl lisäosa pitää olla ladattuna.
-imap admin password	admin	fi	IMAP admin salasana
-imap admin user	admin	fi	IMAP admin käyttäjätunnus
-imap c-client version < 2001	admin	fi	IMAP C-Client versio < 2001
-imap server	admin	fi	IMAP -palvelin
-imap server closed the connection.	admin	fi	IMAP palvelin katkaisi yhteyden.
-imap server closed the connection. server responded: %s	admin	fi	IMAP palvelin katkaisi yhteyden. %s
-imap server hostname or ip address	admin	fi	IMAP -palvelimen nimi tai IP-osoite
-imap server logintyp	admin	fi	IMAP -palvelimen käyttäjätunnistus
-imap server name	admin	fi	IMAP -palvelimen nimi
-imap server port	admin	fi	IMAP -palvelimen portti
-imap/pop3 server name	admin	fi	IMAP / POP3 -palvelimen nimi
-importance	admin	fi	Tärkeys
-in mbyte	admin	fi	Megatavua
-inactive	admin	fi	Ei käytössä
-ldap basedn	admin	fi	LDAP basedn
-ldap server	admin	fi	LDAP -palvelin
-ldap server accounts dn	admin	fi	LDAP -tunnusten DN
-ldap server admin dn	admin	fi	LDAP -ylläpidon DN
-ldap server admin password	admin	fi	LDAP -hallinnan salasana
-ldap server hostname or ip address	admin	fi	LDAP -palvelimen nimi tai IP-osoite
-ldap settings	admin	fi	LDAP -asetukset
-leave empty for no quota	admin	fi	Jätä tyhjäksi, jos ei rajoiteta
-mail settings	admin	fi	Sähköpostin asetukset
-manage stationery templates	admin	fi	Hallitse sähköpostin taustakuvamallipohjia
-mb used	admin	fi	MB käytetty
-name of organisation	admin	fi	Organisaation nimi
-no alternate email address	admin	fi	Ei vaihtoehtoista osoitetta
-no encryption	admin	fi	Ei suojausta
-no forwarding email address	admin	fi	Välityksen sähköpostiosoitetta ei löytynyt
-no message returned.	admin	fi	Viestiä ei palautettu
-no plain text part found	admin	fi	Pelkkää tekstiä ei löytynyt
-no supported imap authentication method could be found.	admin	fi	Tuettua IMAP tunnistustapaa ei löydetty.
-order	admin	fi	Järjestys
-organisation	admin	fi	Organisaatio
-plesk can't rename users --> request ignored	admin	fi	Plesk ei voi nimetä käyttäjiä --> pyyntö hylätty
-plesk imap server (courier)	admin	fi	Plesk IMAP palvelin (Courier)
-plesk mail script '%1' not found !!!	admin	fi	Plesk sähköpostiskriptiä '%1' ei löydy !!!
-plesk requires passwords to have at least 5 characters and not contain the account-name --> password not set!!!	admin	fi	Plesk:n salasanassa pitää olla vähintään 5 merkkiä, eikä se saa olla käyttäjätilin nimi --> salasanaa EI ole asetettu !!!
-plesk smtp-server (qmail)	admin	fi	Plesk SMTP-palvelin (Qmail)
-pop3 server hostname or ip address	admin	fi	POP3 -palvelimen nimi tai IP-osoite
-pop3 server port	admin	fi	POP3 -palvelimen portti
-port	admin	fi	Portti
-postfix with ldap	admin	fi	Postfix ja LDAP
-profile access rights	admin	fi	Profiilin käyttöoikeudet
-profile is active	admin	fi	Profiili on aktiivinen
-profile list	admin	fi	Profiileiluettelo
-profile name	admin	fi	Profiilin nimi
-qmaildotmode	admin	fi	qmaildotmode
-quota settings	admin	fi	Tallennuskiintiön asetukset
-quota size in mbyte	admin	fi	Rajoituksen koko Mb:nä
-remove	admin	fi	Poista
-reset filter	admin	fi	Poista suodatin
-save of message %1 failed. could not save message to folder %2 due to: %3	admin	fi	Viestin %1 tallennus epäonnistui. Viestiä ei voitu tallentaa kansioon %2. Syy: %3
-select type of imap server	admin	fi	Valitse IMAP -palvelimen tyyppi
-select type of imap/pop3 server	admin	fi	Valitse IMAP / POP3 -palvelimen tyyppi
-select type of smtp server	admin	fi	Valitse SMTP -palvelimen tyyppi
-send using this email-address	admin	fi	Lähetä käyttäen tätä sähköpostiosoitetta
-server settings	admin	fi	Palvelimen asetukset
-sieve server hostname or ip address	admin	fi	Sieve -palvelimen nimi tai IP-osoite
-sieve server port	admin	fi	Sieve -palvelimen portti
-sieve settings	admin	fi	Sieven asetukset
-smtp authentication	admin	fi	SMTP -tunnistus
-smtp options	admin	fi	SMTP -asetukset
-smtp server name	admin	fi	SMTP -palvelimen nimi
-smtp settings	admin	fi	SMTP -asetukset
-smtp-server hostname or ip address	admin	fi	SMTP -palvelimen nimi tai IP-osoite
-smtp-server port	admin	fi	SMTP -palvelimen portti
-standard	admin	fi	Vakio
-standard imap server	admin	fi	Vakio IMAP -palvelin
-standard pop3 server	admin	fi	Vakio POP3 -palvelin
-standard smtp-server	admin	fi	Vakio SMTP -palvelin
-starts with	admin	fi	Alkaa:
-stationery	admin	fi	Sähköpostin taustakuvamallipohjat
-templates	admin	fi	Mallipohjat
-the imap server does not appear to support the authentication method selected. please contact your system administrator.	admin	fi	IMAP palvelimelta ei löydy tukea valitulle tunnistusmuodolle, ota yhteyttä järjestelmän pääkäyttäjään.
-the mimeparser can not parse this message.	admin	fi	Mimeparseri ei voi jäsentää tätä viestiä
-this php has no imap support compiled in!!	admin	fi	Tämä PHP ei sisällä IMAP tukea!!
-to use a tls connection, you must be running a version of php 5.1.0 or higher.	admin	fi	Käyttääksesi TLS yhteyttä, sinulla pitää olla käytössä PHP 5.1.0 tai uudempi versio.
-unexpected response from server to authenticate command.	admin	fi	Odottamaton vastaus palvelimen AUTHENTICATE komennolta.
-unexpected response from server to digest-md5 response.	admin	fi	Odottamaton vastaus palvelimen Digest-MD5 vastauksesta.
-unexpected response from server to login command.	admin	fi	Odottamaton vastaus palvelimen LOGIN komennolta.
-unknown imap response from the server. server responded: %s	admin	fi	Tuntematon IMAP vastaus palvelimelta. Palvelin vastasi: %s
-unsupported action '%1' !!!	admin	fi	Toiminto, jota ei tueta '%1' !!!
-update current email address:	admin	fi	Päivitä nykyinen sähköpostiosoite:
-use default	admin	fi	Käytä oletusta
-use ldap defaults	admin	fi	Käytä LDAP -oletuksia
-use predefined username and password defined below	admin	fi	Käytä esimääriteltyä käyttäjänimeä ja salasanaa
-use smtp auth	admin	fi	Käytä SMTP -käyttäjätunnistusta
-use tls authentication	admin	fi	Käytä TLS -käyttäjätunnistusta
-use tls encryption	admin	fi	Käytä TLS -salausta
-use users email-address (as seen in useraccount)	admin	fi	Käytä käyttäjän sähköpostiosoitetta
-user can edit forwarding address	admin	fi	Käyttäjä voi muokata välitys osoitetta
-userid@domain eg. u1234@domain	admin	fi	käyttäjätunnus@verkkotunnus
-username (standard)	admin	fi	Käyttäjätunnus (standardi)
-username/password defined by admin	admin	fi	Ylläpidon määrittelemä käyttäjätunnus/salasana
-username@domainname (virtual mail manager)	admin	fi	käyttäjätunnus@verkkotunnus (Virtual MAIL ManaGeR)
-users can define their own emailaccounts	admin	fi	Käyttäjät voivat määritellä omia sähköpostitilejä
-users can define their own identities	admin	fi	Käyttäjät voivat määritellä omia identiteettejä
-users can define their own signatures	admin	fi	Käyttäjät voivat määritellä omia allekirjoituksia
-users can utilize these stationery templates	admin	fi	Käyttäjät voivat määritellä omia sähköpostin taustakuvamallipohjia
-virtual mail manager	admin	fi	Virtual MAIL ManaGeR
-yes, use credentials below only for alarms and notifications, otherwise use credentials of current user	admin	fi	Kyllä, Käytä annettua salasanaa vain hälytyksiin ja huomautusviesteihin, muulloin käyttäjän tunnuksia
-yes, use credentials of current user or if given credentials below	admin	fi	Kyllä, käyttäjän tunnukset, tai mahdolliset allaolevat tunnukset
-you have received a new message on the	admin	fi	Sinulle on uusi viesti
 your name	admin	fi	Nimesi
+your session could not be verified.	admin	fi	Istuntoasi ei voitu varmentaa.

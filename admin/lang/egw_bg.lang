@@ -110,8 +110,16 @@ manage mapping	admin	bg	Управление на съответствията
 modified	admin	bg	Редактирано
 month	admin	bg	Месец
 no matches found	admin	bg	Не са открити съвпадения
+oauth authentiction	admin	bg	Удостоверяване на OAuth
+offer to installing egroupware as mail-handler	admin	bg	Оферта за инсталиране на EGroupware като mail-handler
+one day	admin	bg	Един ден
+one hour	admin	bg	Един час
 one month	admin	bg	един месец
 one week	admin	bg	една седмица
+other security configuration	admin	bg	Друга конфигурация на сигурността
+own categories	admin	bg	Собствени категории
+own install id	admin	bg	Собствен идентификатор на инсталацията
+own install id:	admin	bg	Идентификатор на собствена инсталация:
 permission denied	admin	bg	Не е позволено
 requested	admin	bg	Заявена
 start	admin	bg	Старт
