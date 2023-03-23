@@ -884,7 +884,10 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			// Pass off some keys to select
 			if(['ArrowDown', 'ArrowUp', 'Home', 'End'].includes(event.key))
 			{
-				return this.handleKeyDown(event);
+
+				// Strip out hidden non-matching selected & disabled items so key navigation works
+				this.menuItems = this.menuItems.filter(i => !i.disabled);
+				return super.handleKeyDown(event);
 			}
 			event.stopPropagation();
 
