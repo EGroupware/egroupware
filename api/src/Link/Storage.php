@@ -1,6 +1,6 @@
 <?php
 /**
- * EGroupware API - Interapplicaton links storage
+ * EGroupware API - Inter-application links storage
  *
  * Links have two ends each pointing to an entry, each entry is a double:
  * 	 - app   app-name or directory-name of an egw application, eg. 'infolog'
@@ -8,11 +8,10 @@
  *
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright 2001-2016 by RalfBecker@outdoor-training.de
+ * @copyright 2001-2023 by RalfBecker@outdoor-training.de
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package api
  * @subpackage link
- * @version $Id$
  */
 
 namespace EGroupware\Api\Link;
@@ -20,11 +19,13 @@ namespace EGroupware\Api\Link;
 use EGroupware\Api;
 
 /**
- * generalized linking between entries of eGroupware apps - SO layer
+ * generalized linking between entries of EGroupware apps - SO layer
  *
  * All vars passed to this class get correct escaped to prevent query insertion.
  *
  * All methods are now static!
+ *
+ * Non-ascii chars in link_id1/2 are now encoded as "\uXXXX", to be able to store them in ascii columns.
  */
 class Storage
 {
@@ -48,7 +49,7 @@ class Storage
 	public static $limit_exceeded = false;
 
 	/**
-	 * creats a link between $app1,$id1 and $app2,$id2
+	 * creates a link between $app1,$id1 and $app2,$id2
 	 *
 	 * @param string $app1 appname of 1. endpoint of the link
 	 * @param string $id1 id in $app1
@@ -57,7 +58,7 @@ class Storage
 	 * @param string $remark ='' Remark to be saved with the link (defaults to '')
 	 * @param int $owner =0 Owner of the link (defaults to user)
 	 * @param int $lastmod =0 timestamp of last modification (defaults to now=time())
-	 * @return int/boolean False (for db or param-error) or on success link_id (Please not the return-value of $id1)
+	 * @return int|boolean False (for db or param-error) or on success link_id (Please not the return-value of $id1)
 	 */
 	static function link( $app1,&$id1,$app2,$id2='',$remark='',$owner=0,$lastmod=0 )
 	{
@@ -82,15 +83,15 @@ class Storage
 		{
 			$owner = $GLOBALS['egw_info']['user']['account_id'];
 		}
-		return self::$db->insert(self::TABLE,array(
+		return self::$db->insert(self::TABLE, self::encodeRow([
 				'link_app1'		=> $app1,
 				'link_id1'		=> $id1,
 				'link_app2'		=> $app2,
 				'link_id2'		=> $id2,
 				'link_remark'	=> $remark,
-				'link_lastmod'	=> $lastmod ? $lastmod : time(),
+				'link_lastmod'	=> $lastmod ?: time(),
 				'link_owner'	=> $owner,
-			),False,__LINE__,__FILE__) ? self::$db->get_last_insert_id(self::TABLE,'link_id') : false;
+			]),False,__LINE__,__FILE__) ? self::$db->get_last_insert_id(self::TABLE,'link_id') : false;
 	}
 
 	/**
@@ -144,16 +145,18 @@ class Storage
 
 		$links = array();
 		try {
-			foreach(self::$db->select(self::TABLE, '*', self::$db->expression(self::TABLE, '((', array(
+			foreach(self::$db->select(self::TABLE, '*', self::$db->expression(self::TABLE, '((', self::encodeRow([
 						'link_app1'	=> $app,
 						'link_id1'	=> $id,
-					),') OR (',array(
+					]), ') OR (', self::encodeRow([
 						'link_app2'	=> $app,
 						'link_id2'	=> $id,
-					),'))',
+					]), '))',
 					$deleted ? '' : ' AND deleted IS NULL'
 				), __LINE__, __FILE__, $offset, $order ? " ORDER BY $order" : '', 'phpgwapi', $limit) as $row)
 			{
+				$row = self::decodeRow($row);
+
 				// check if left side (1) is one of our targets --> add it
 				if ($row['link_app1'] == $app && in_array($row['link_id1'],(array)$id))
 				{
@@ -224,20 +227,25 @@ class Storage
 			{
 				return False;
 			}
-			$where = self::$db->expression(self::TABLE,'(',array(
+			$where = self::$db->expression(self::TABLE,'(',self::encodeRow([
 					'link_app1'	=> $app_link_id,
 					'link_id1'	=> $id,
 					'link_app2'	=> $app2,
 					'link_id2'	=> $id2,
-				),') OR (',array(
+				]),') OR (',self::encodeRow([
 					'link_app2'	=> $app_link_id,
 					'link_id2'	=> $id,
 					'link_app1'	=> $app2,
 					'link_id1'	=> $id2,
-				),')');
+				]),')');
 		}
 		try {
-			return self::$db->select(self::TABLE,'*',$where,__LINE__,__FILE__)->fetch(ADODB_FETCH_ASSOC);
+			$row = self::$db->select(self::TABLE,'*',$where,__LINE__,__FILE__)->fetch(ADODB_FETCH_ASSOC);
+			if (is_array($row))
+			{
+				$row = self::decodeRow($row);
+			}
+			return $row;
 		}
 		// catch Illegal mix of collations (ascii_general_ci,IMPLICIT) and (utf8_general_ci,COERCIBLE) for operation '=' (1267)
 		// caused by non-ascii chars compared with ascii field uid
@@ -284,21 +292,21 @@ class Storage
 					$check1['link_id1'] = $id;
 					$check2['link_id2'] = $id;
 				}
-				$where = self::$db->expression(self::TABLE,'((',$check1,') OR (',$check2,'))');
+				$where = self::$db->expression(self::TABLE,'((', self::encodeRow($check1), ') OR (', self::encodeRow($check2), '))');
 			}
 			elseif ($app != '' && $app2 != '')
 			{
-				$where = self::$db->expression(self::TABLE,'(',array(
+				$where = self::$db->expression(self::TABLE,'(', self::encodeRow([
 						'link_app1'	=> $app,
 						'link_id1'	=> $id,
 						'link_app2'	=> $app2,
 						'link_id2'	=> $id2,
-					),') OR (',array(
+					]), ') OR (', self::encodeRow([
 						'link_app1'	=> $app2,
 						'link_id1'	=> $id2,
 						'link_app2'	=> $app,
 						'link_id2'	=> $id,
-					),')');
+					]),')');
 			}
 			if ($owner)
 			{
@@ -310,7 +318,7 @@ class Storage
 		try {
 			foreach(self::$db->select(self::TABLE,'*',$where,__LINE__,__FILE__) as $row)
 			{
-				$deleted[] = $row;
+				$deleted[] = self::decodeRow($row);
 			}
 			if($hold_for_purge)
 			{
@@ -357,7 +365,7 @@ class Storage
 			$check1['link_id1'] = $id;
 			$check2['link_id2'] = $id;
 		}
-		$where = self::$db->expression(self::TABLE,'((',$check1,') OR (',$check2,'))');
+		$where = self::$db->expression(self::TABLE,'((', self::encodeRow($check1), ') OR (', self::encodeRow($check2), '))');
 		self::$db->update(self::TABLE,array('deleted'=> null), $where, __LINE__,__FILE__);
 	}
 
@@ -412,7 +420,7 @@ class Storage
 			array('table'=>self::TABLE,
 				'cols'=>'c.*,b.link_app1 AS app3,b.link_id1 AS id3,b.link_id AS link3',
 				'where'=>'a.link_app1='.self::$db->quote($app).' AND c.link_app2='.self::$db->quote($target_app).
-                        		(!$target_id ? '' : self::$db->expression(self::TABLE,' AND c.',array('link_id2' => $target_id))),
+                        		(!$target_id ? '' : self::$db->expression(self::TABLE, ' AND c.', self::encodeRow(['link_id2' => $target_id]))),
                         	'join'=>" a
                         		JOIN $table b ON a.link_id2=b.link_id1 AND a.link_app2=b.link_app1
                        			JOIN $table c ON a.link_id1=c.link_id1 AND a.link_app1=c.link_app1 AND a.link_id!=c.link_id AND c.link_app2=b.link_app2 AND c.link_id2=b.link_id2",
@@ -421,7 +429,7 @@ class Storage
 			array('table'=>self::TABLE,
 				'cols'=>'b.link_id, b.link_app2 as app1, b.link_id2 as id1, b.link_app1 as app2, b.link_id1 as id2, b.link_remark,b.link_lastmod,b.link_owner,b.deleted,c.link_app1 AS app3,c.link_id1 AS id3,c.link_id AS link3',
                        		'where'=>'a.link_app1='.self::$db->quote($app).' AND b.link_app1='.self::$db->quote($target_app).
-                        		(!$target_id ? '' : self::$db->expression(self::TABLE,' AND b.',array('link_id1' => $target_id))),
+                        		(!$target_id ? '' : self::$db->expression(self::TABLE, ' AND b.', self::encodeRow(['link_id1' => $target_id]))),
                         	'join'=>" a
                         		JOIN $table b ON a.link_id1=b.link_id2 AND a.link_app1=b.link_app2
                         		JOIN $table c ON a.link_id2=c.link_id1 AND a.link_app2=c.link_app1 AND a.link_id!=c.link_id AND c.link_app2=b.link_app1 AND c.link_id2=b.link_id1",
@@ -430,7 +438,7 @@ class Storage
 			array('table'=>self::TABLE,
 				'cols'=>'a.*,c.link_app1 AS app3,c.link_id1 AS id3,c.link_id AS link3',
                      		'where'=>'a.link_app1='.self::$db->quote($app).' AND a.link_app2='.self::$db->quote($target_app).
-                        		(!$target_id ? '' : self::$db->expression(self::TABLE,' AND a.',array('link_id2' => $target_id))),
+                        		(!$target_id ? '' : self::$db->expression(self::TABLE,' AND a.', self::encodeRow(['link_id2' => $target_id]))),
                        		'join'=>" a
                        			JOIN $table b ON a.link_id1=b.link_id2 AND a.link_app1=b.link_app2
                         		JOIN $table c ON a.link_id2=c.link_id2 AND a.link_app2=c.link_app2 AND a.link_id!=c.link_id AND c.link_app1=b.link_app1 AND c.link_id1=b.link_id1",
@@ -450,6 +458,7 @@ class Storage
 		$links = array();
 		foreach(self::$db->union($arrayofselects, __LINE__, __FILE__, $order, $offset, $limit) as $row)
 		{
+			$row = self::decodeRow($row);
 			if ($just_app_ids)
 			{
 				if ($row['link_app1'] == $target_app && (is_null($target_id) || in_array($row['link_id1'],(array)$target_id)))
@@ -470,6 +479,70 @@ class Storage
 		self::$limit_exceeded = $offset !== false && count($links) == $limit;
 
 		return $links;
+	}
+
+	/**
+	 * Encode id to be stored in ascii column by encoding non-ascii utf8 chars as \uXXXX
+	 *
+	 * @param string|int|array $id one or multiple ids
+	 * @return string|array
+	 */
+	private static function encodeId($id)
+	{
+		if (is_array($id))
+		{
+			return array_map([__CLASS__, __METHOD__], $id);
+		}
+		return substr(json_encode($id, JSON_UNESCAPED_SLASHES), 1, -1);
+	}
+
+	/**
+	 * Encoding row with link_id1/2 stored in ascii column by encoding non-ascii utf8 chars as \uXXXX
+	 *
+	 * @param array $row
+	 * @return array
+	 */
+	private static function encodeRow(array $row)
+	{
+		if (isset($row['link_id1']))
+		{
+			$row['link_id1'] = self::encodeId($row['link_id1']);
+		}
+		if (isset($row['link_id2']))
+		{
+			$row['link_id2'] = self::encodeId($row['link_id2']);
+		}
+		return $row;
+	}
+
+	/**
+	 * Decoding id stored in ascii column by decoding non-ascii utf8 chars stored as \uXXXX
+	 *
+	 * @param string $id
+	 * @return string
+	 */
+	private static function decodeId(string $id)
+	{
+		return json_decode('"'.$id.'"');
+	}
+
+	/**
+	 * Decoding row with link_id1/2 stored in ascii column by decoding non-ascii utf8 chars stored as \uXXXX
+	 *
+	 * @param array $row
+	 * @return array
+	 */
+	private static function decodeRow(array $row)
+	{
+		if (isset($row['link_id1']))
+		{
+			$row['link_id1'] = self::decodeId($row['link_id1']);
+		}
+		if (isset($row['link_id2']))
+		{
+			$row['link_id2'] = self::decodeId($row['link_id2']);
+		}
+		return $row;
 	}
 
 	/**
