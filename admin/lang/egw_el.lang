@@ -2,6 +2,7 @@
 %1 acl records of not (longer) existing accounts deleted.	admin	el	%1 ACL εγγραφές από μη υπάρχοντες λογαριασμούς διαγράφηκαν.
 %1 not found or not executable !!!	admin	el	%1 not found or not executable !!!
 (default no, leave it off if you dont use it)	admin	el	(προεπιλεγμένο Νο, να μείνει απενεργοποιημένο αν δεν χρησιμοποιείται)
+(no subject)	admin	el	(κανένα θέμα)
 (stored password will not be shown here)	admin	el	(Τα αποθηκευμένα password δεν θα εμφανίζονται εδω)
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	el	(To install new applications use<br><a href="setup/" target="setup">Setup</a> [Manage Applications] !!!)
 -  type	admin	el	- τύπος
@@ -40,7 +41,6 @@ admin name	admin	el	Ονομα διαχειρηστή
 administration	admin	el	Διαχείρηση
 admins	admin	el	Διαχειριστές
 advanced options	admin	el	επιλογές για προχωρημένους
-after how many unsuccessful attempts to login, an account should be blocked (default 15) ?	admin	el	Μετά από πόσες αποτυχημένες προσπάθειες για εισαγωγή, ένας λογαριασμός θα έπρεπε να μπλοκαριστεί (προκαθορισμένο 3) ?
 after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	el	Μετά από πόσες αποτυχημένες προσπάθειες για εισαγωγή, ένα IP θα έπρεπε να μπλοκαριστεί (προκαθορισμένο 3) ?
 aliases	admin	el	Ψευδώνυμα
 all categories	admin	el	Όλες οι κατηγορίες
@@ -79,6 +79,8 @@ attribute mailforwardingaddress explained	admin	el	Αυτό διαχειρίζε
 authentication / accounts	admin	el	Ποιστοποίηση / λογαριασμοί
 auto create account records for authenticated users	admin	el	Αυτόματη δημιουργία εγραφών λογαριασμού για ποιστοποιημένους χρήστες
 back to the list	admin	el	πίσω στη λίστα
+bad login name or password.	admin	el	Λάθος όνομα ή κωδικός πρόσβασης
+bad request: %s	admin	el	Άκυρη απαίτηση: %
 bi-dir passthrough	admin	el	ημη-κατευθυντικό πέρασμα
 bi-directional	admin	el	ημη-κατευθυντικός
 bottom	admin	el	βάση
@@ -95,8 +97,12 @@ check ip address of all sessions	admin	el	Ελεγξε τις διευθύνσε
 check items to <b>%1</b> to %2 for %3	admin	el	Ελεγξε τα θέματα στα <b>%1</b> to %2 για %3
 click to select a color	admin	el	Κάντε κλικ για να επιλέξετε ένα χρ΄'ωμα
 color	admin	el	Χρώμα
+connection dropped by imap server.	admin	el	Έπεσε η σύνδεση από τον IMAP server
+could not complete request. reason given: %s	admin	el	Δεν ολοκληρώθηκε το αίτημα. Αιτία: %s
+could not open secure connection to the imap server. %s : %s.	admin	el	Δεν έγινε ασφαλής σύνδεση με τον IMAP server. %s : %s.
 country	admin	el	Χώρα
 country selection	admin	el	Επιλογή χώρας
+cram-md5 or digest-md5 requires the auth_sasl package to be installed.	admin	el	CRAM-MD5 ή DIGEST-MD5 απαιτεί το Auth_SASL πακέτο να εγκατασταθεί.
 create group	admin	el	Δημιουργία ομάδας
 created	admin	el	Δημιουργήθηκε
 creates a new field	admin	el	δημιουργεί νέο πεδίο
@@ -106,7 +112,7 @@ data	admin	el	Δεδομένα
 day	admin	el	Ημέρα
 day of week<br>(0-6, 0=sun)	admin	el	Ημέρα της εβδομάδας <br>(0-6, 0=Κυρ)
 db backup and restore	admin	el	DB backup και επαναφορά
-default	admin	el	Προεπιλεγμένος
+default	admin	el	προκαθορισμένο
 default file system space per user	admin	el	Προεπιλεγμένο σύστημα αρχείων ανα χρήστη
 default file system space per user/group ?	admin	el	Προεπιλεγμένο σύστημα αρχείων ανα χρήστη/ομαδά ?
 deinstall crontab	admin	el	Απεγκατάσταση crontab
@@ -146,7 +152,9 @@ disable "auto completion" of the login form	admin	el	Απενεργοποίησ�
 disable wysiwyg-editor	admin	el	απενεργοποίηση του WYSIWYG
 disabled (not recomended)	admin	el	απενεργοποίηση (δεν προτείνεται)
 display	admin	el	Εμφάνιση
+displaying html messages is disabled	admin	el	η προβολή των html μηνυμάτων είναι απενεργοποιημένη
 do not delete the category and return back to the list	admin	el	μην διαγράψεις την κατηγορία και επέστρεψε στην λίστα
+do not validate certificate	admin	el	μην επικυρώνετε το πιστοποιητικό
 do you also want to delete all global subcategories ?	admin	el	Θέλεις επίσης να διαγραφούν και όλες οι γενικές υποκατηγορίες?
 do you want to delete all global subcategories ?	admin	el	Θέλεις να διαγραφούν όλες οι γενικές υποκατηγορίες;
 do you want to move all global subcategories one level down ?	admin	el	Θέλεις να μετακινήσεις όλες τις γενικές υποκατηγορίες ένα επίπεδο κάτω?
@@ -174,6 +182,7 @@ enable debug-messages	admin	el	Εμφάνιση μηνυμάτων-αποσφα�
 enable the xmlrpc service	admin	el	Ενεργοποίηση της υπηρεσίας xmlrpc
 enabled - hidden from navbar	admin	el	Εμφάνιση - Απόκρυψη απο μπάρα πλοήγησης
 enabled - popup window	admin	el	Ενεργοποίηση - Εμφνιζόμενο Παράθυρο
+encrypted connection	admin	el	αποκρυπτογραφημένη σύνδεση
 enter a description for the category	admin	el	Εισήγαγε μια περιγραφή για την κατηγορία
 enter some random text for app_session <br>encryption (requires mcrypt)	admin	el	Εισήγαγε λιγο τυχαίο κείμενο για περίοδο εφαρμογής <br> encryption (απαιτήται mcrypt)
 enter the background color for the login page	admin	el	Εισάγετε χρώμα φόντου για την σελίδα εισαγωγής
@@ -187,7 +196,6 @@ enter the site password for peer servers	admin	el	Εισήγαγε το συνθ
 enter the site username for peer servers	admin	el	Εισήγαγε το όνομα χρήστη της ιστιοσελίδας για ισότιμους server
 enter the title for your site	admin	el	Εισήγαγε τον τίτλο για την ιστιοσελίδα σου
 enter the title of your logo	admin	el	Εισήγαγε τον τίτλο για το λογοτυπο σου
-enter the url or filename (in api/templates/default/images) of your logo	admin	el	Πληκτρολογήστε το URL ή το όνομα του αρχείου(στο api/templates/default/images) του λογότυπου σας
 enter the url where your logo should link to	admin	el	Εισήγαγε την url από όπου το λογότυπό σου πρέπει να συνδέεται
 enter your default ftp server	admin	el	Εισήγαγε τον προκαθορισμένο FTP server
 enter your default mail domain ( from: user@domain )	admin	el	Εισαγωγή του προκαθορισμένου ονόματος τομέα αλληλογραφίας (Από:user@domain)
@@ -196,9 +204,12 @@ enter your http proxy server port	admin	el	Εισήγαγε το port του HTT
 enter your smtp server hostname or ip address	admin	el	Εισάγωγή του ονόματος ή του IP του SMTP server
 enter your smtp server port	admin	el	Εισάγωγή του SMTP server port
 error canceling timer, maybe there's none set !!!	admin	el	Λάθος ακυρώνωντας χρονομέτρη, ισως να μην εχει ρυθμηστεί κανένας
+error connecting to imap server. %s : %s.	admin	el	Σφάλμα κατά τη σύνδεση με τον IMAP server. %s : %s.
+error connecting to imap server: [%s] %s.	admin	el	Σφάλμα κατά τη σύνδεση με τον IMAP server. [%s] : %s.
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	el	Λάθος ακυρώνοντας χρονομέτρη, λάθος σύνταξη ή ίσως ήδη τρέχει ένας!!!
 error! no appname found	admin	el	Σφάλμα!Δεν βρέθηκε το όνομα εφαρμ
 error: %1 not found or other error !!!	admin	el	Λάθος: %1 δεν βρέθηκε ή άλλο λάθος !!!
+event details follow	admin	el	Ακολουθούν λεπτομέρειες γεγονότων
 expires	admin	el	Λήγει
 explanation of ldapman	admin	el	Αυτή η ενότητα έχει ελεγχθεί έως τώρα για τα POSTFIX,LDAP,Courier-IMAP και χρειάζεται τα σχήματα CORE και QMAIL (OID7914). Περισσότερες λεπτομέρειες σχετικά με τη χρήση και τη διαμόρφωση αυτού του συστήματος μπορείτε να βρείτε στο README.ldapman στον φάκελο εγγ του ADMIN.
 fallback (after each pageview)	admin	el	υποχώρηση (μετα από κάθε εμφάνηση οθόνης)
@@ -223,6 +234,7 @@ group manager	admin	el	Διαχειριστής ομάδας
 group name	admin	el	Ονομα ομάδας
 hide php information	admin	el	απόκρυψε php πληροφορία
 home directory	admin	el	Αρχικος κατάλογος
+home screen message	admin	el	Μήνυμα κύριας οθόνης
 host information	admin	el	Πληροφορία
 hour<br>(0-23)	admin	el	Ωρα<br>(0-23)
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	el	Πόσες ημέρες πρέπει οι εισαγωγές να μένουν στην καταγραφή πρόσβασης, πρίν σβυστούν(προκαθορισμένο 90) ?
@@ -232,6 +244,10 @@ icon	admin	el	Εικόνα
 idle	admin	el	αδρανής
 if no acl records for user or any group the user is a member of	admin	el	αν καμία εγγραφή ACL για χρήστη ή όποιας ομάδας είναι μέλος του
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	el	Αν χρησημοποιήτε LDAP, θέλετε να διαχειριστείτε τον αρχικό κατάλογο και τα χαρακτηριστικά κέλυφους εισαγωγής?
+if using ssl or tls, you must have the php openssl extension loaded.	admin	el	Αν χρησιμοποιείται SSL ή TLS, πρέπει να έχετε την PHP openssl επέκταση φορτωμένη.
+imap server	admin	el	IMAP Server
+imap server closed the connection.	admin	el	Ο IMAP Server έκλεισε τη σύνδεση
+imap server closed the connection. server responded: %s	admin	el	Ο IMAP Server έκλεισε τη σύνδεση. Ο Server απάντησε: %s
 in mbyte	admin	el	σε MByte
 inbound	admin	el	εισερχόμενος
 initial	admin	el	Αρχικό
@@ -273,7 +289,6 @@ login time	admin	el	Ωρα Εισόδου
 loginid	admin	el	ID εισόδου
 mail settings	admin	el	Ρυθμίσεις μηνυμάτων
 main email-address	admin	el	Κύρια Διεύθυνση Email
-home screen message	admin	el	Μήνυμα κύριας οθόνης
 manager	admin	el	Διαχειριστής
 maximum account id (e.g. 65535 or 1000000)	admin	el	Μέγιστος αριθμός id  λογαριασμών (π.χ. 65535 ή 1000000)
 maximum entries in click path history	admin	el	Μέγιστος αριθμός εισόδων στο click path ιστορικό
@@ -292,19 +307,32 @@ new password [ leave blank for no change ]	admin	el	Νέο συνθηματικ�
 next run	admin	el	Επόμενη ενέργεια
 no algorithms available	admin	el	δεν υπάρχουν διαθέσιμοι αλγόριθμοι
 no alternate email address	admin	el	δεν υπάρχει εναλλακτική διεύθυνση email
+no encryption	admin	el	Καμία κρυπτογράφηση
 no jobs in the database !!!	admin	el	Δέν υπάρχουν ενέργειες στην βάση δεδομένων
 no login history exists for this user	admin	el	Δεν υπάρχει ιστορικό εισόδου γι'αυτόν τον χρήστη
 no matches found	admin	el	Δέν βρέθηκαν όμοια
+no message returned.	admin	el	Δεν επεστράφη κάποιο μήνυμα.
 no modes available	admin	el	δεν υπάρχουν διαθέσιμες modes
 no permission to add groups	admin	el	δεν υπάρχουν δικαώματα για να προσθέσετε ομάδες
 no permission to add users	admin	el	δεν υπάρχουν δικαώματα για να προσθέσετε χρήστες
 no permission to create groups	admin	el	δεν υπάρχουν δικαώματα για να δημιουργήσετε ομάδες
+no plain text part found	admin	el	δεν βρέθηκε μέρος αποκρυπτογραφημένου κειμένου
+no supported imap authentication method could be found.	admin	el	Δεν βρέθηκε καμία υποστηριζόμενη IMAP επικυρωμένη μέθοδος.
 note: ssl available only if php is compiled with curl support	admin	el	Σημείωση: SSL διαθέσιμα μόνο αν PHP έχει μεταγλωτιστεί με curl sypport
 number of row for a multiline inputfield or line of a multi-select-box	admin	el	αριθμός σειρών για ένα πολυγραμμικό πεδίο εισαγωγής ή γραμμών για ένα πολυ-επιλογών-κουτί
+oauth authentiction	admin	el	Αυθεντικοποίηση OAuth
+offer to installing egroupware as mail-handler	admin	el	Προσφορά για την εγκατάσταση του EGroupware ως χειριστή αλληλογραφίας
+one day	admin	el	Μια μέρα
+one hour	admin	el	Μία ώρα
 one month	admin	el	ένας μήνας
 one week	admin	el	μία εβδομάδα
 order	admin	el	Ταξινόμηση
+organisation	admin	el	οργανισμός
+other security configuration	admin	el	Άλλες ρυθμίσεις ασφαλείας
 outbound	admin	el	βγαίνει προς τα έξω
+own categories	admin	el	Δικές σας κατηγορίες
+own install id	admin	el	Δικό σας ID εγκατάστασης
+own install id:	admin	el	ID δικής σας εγκατάστασης:
 passthrough	admin	el	διέρχεται
 password for smtp-authentication	admin	el	Κωδικός για την SMTP-πιστοποίηση
 path information	admin	el	Πλητοφορία path
@@ -321,6 +349,7 @@ please enter a name	admin	el	Παρακαλώ εισάγετε ένα όνομα
 please enter a name for that server !	admin	el	Παρακαλώ εισάγετε ένα όνομα γι'αυτόν τον server !
 please run setup to become current	admin	el	Παρακαλώ τρέξτε το setup για να γίνετε τρέχων
 please select	admin	el	Παρακαλώ επιλέξτε
+port	admin	el	θύρα
 preferences	admin	el	Προτιμήσεις
 primary group	admin	el	Κυρίως ομάδα
 quota settings	admin	el	ρυθμίσεις ποσοστών
@@ -331,7 +360,6 @@ register application hooks	admin	el	Καταχώρηση hook της εφαρμ�
 remove	admin	el	αφαίρεση
 remove all users from this group	admin	el	Διαγράψτε όλους τους χρήστες απο αυτη την ομάδα
 remove all users from this group ?	admin	el	Θα διαγράψετε όλους τους χρήστες απο αυτη την ομάδα?
-return to view account	admin	el	Επιστροφή στην εμφάνηση του λογαριασμού
 route all mails to	admin	el	Δρομολογήστε όλα τα Μηνύματα στο
 rows	admin	el	Γραμμές
 run asynchronous services	admin	el	Τρέξτε Ασύνχρονες υπηρεσίες
@@ -366,7 +394,9 @@ show current action	admin	el	Εμφάνηση τρέχουσας ενέργει�
 show error log	admin	el	Εμφάνηση καταγραφή λαθών
 show phpinfo()	admin	el	Εμφάνηση phpinfo()
 show session ip address	admin	el	Εμφάνηση διεύθυνσης περιόδων IP
+sieve settings	admin	el	Ρυθμίσεις Sieve
 site	admin	el	Ιστιοσελίδα
+smtp settings	admin	el	Ρυθμίσεις SMTP
 soap	admin	el	SOAP
 sorry, that group name has already been taken.	admin	el	Συγνώμη, αυτό το όνομα ομάδας υπάρχει ήδη
 sorry, the above users are still a member of the group %1	admin	el	Συγνώμη, οι παραπάνω χρήστες είναι ακόμα μέλοι της ομάδας %1
@@ -393,6 +423,7 @@ that server name has been used already !	admin	el	Το όνομα του server 
 the api is current	admin	el	Το API χρησιμοποιήται αυτη τη στιγμή
 the api requires an upgrade	admin	el	Το API απαιτεί αναβάθμηση
 the groups must include the primary group	admin	el	Οι ομάδες πρέπει να συμπεριλαμβάνουν την αρχική ομάδα
+the imap server does not appear to support the authentication method selected. please contact your system administrator.	admin	el	Ο IMAP server δεν υποστηρίζει την επιλεγμένη μέθοδο αυθεντικότητας.Παρακαλώ επικοινωνήστε με τον διαχειριστή σας.
 the login and password can not be the same	admin	el	Το όνομα εισαγωγής και το συνθηματικό δεν πρέπει να είναι το ίδιο
 the loginid can not be more then 8 characters	admin	el	Η Ταυτότητα εισαγωγής δεν πρέπει να είναι παραπάνς απο 8 χαρακτήρες
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	admin	el	το όνομα χρησιμοποιείται εσωτερικά (<=20 χαρακτ), ενδεχόμενη αλλαγή του προκαλεί μη διαθεσιμότητα των δεδομένων
@@ -405,9 +436,11 @@ they must be removed before you can continue	admin	el	Πρέπει να απομ
 this application is current	admin	el	Αυτή η εφαρμογή χρησιμοποιήται
 this application requires an upgrade	admin	el	Αυτή η εφαρμογή απαιτεί αναβάθμιση
 this category is currently being used by applications as a parent category	admin	el	Αυτή η κατηγορία χρησημοποιήται αυτή τη στιγμή απο εφαρμογές σαν αρχική κατηγορία
+this php has no imap support compiled in!!	admin	el	Αυτό το PHP δεν έχει καθόλου IMAP υποστήριξη μεταφρασμένη!!
 timeout for application session data in seconds (default 86400 = 1 day)	admin	el	Χρονοαναμονή για δεδομένα περιόδου εφαρμογής σε δευτερόλεπτα (προκαθορισμένο 86400 = 1 ημέρα)
 timeout for sessions in seconds (default 14400 = 4 hours)	admin	el	Χρονοαναμονή για περίοδο σε δευτερόλεπτα (προκαθορισμένο 14400 = 4 ώρες)
 times	admin	el	Φορες
+to use a tls connection, you must be running a version of php 5.1.0 or higher.	admin	el	Για τη χρησιμοποίηση TLS σύνδεσης, πρέπει να έχετε PHP 5.1.0 ή υψηλότερη έκδοση.
 top	admin	el	κορυφή
 total records	admin	el	Σύνολο εγγραφών
 translation	admin	el	Μετάφραση
@@ -417,16 +450,22 @@ two weeks	admin	el	δύο εβδομάδες
 type '%1' already exists !!!	admin	el	ο τύπος '%1" υπάρχει ήδη !!!
 type of customfield	admin	el	Τύπος συνήθους πεδίου
 under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	el	Στο λειτουργικό σύστημα των windows πρέπει να εγκαταστήσετε %1χειροκίνητα%2 το asyncservice ή να χρησιμοποιήσετε το fallback mode. Fallback σημαίνει ότι οι εργασίες ελέγχονται μόνο μετά από κάθε προβολή σελίδας.
+unexpected response from server to authenticate command.	admin	el	Απρόσμενη απάντηση από τον server στην ΕΞΑΚΡΙΒΩΣΗ ΓΝΗΣΙΟΤΗΤΑΣ εντολής.
+unexpected response from server to digest-md5 response.	admin	el	Απρόσμενη απάντηση από τον server στην Digest-MD5 απάντηση.
+unexpected response from server to login command.	admin	el	Απρόσμενη απάντηση από τον server στην εντολή ΕΙΣΟΔΟΥ
+unknown imap response from the server. server responded: %s	admin	el	Άγνωστη IMAP απάντηση από τον server.Απάντηση Server:%s
 up	admin	el	πάνω
 updated	admin	el	Ενημερώθηκε
 use cookies to pass sessionid	admin	el	Χρησημοποίηση cookies για να περάσεις την sessionid
 use pure html compliant code (not fully working yet)	admin	el	Χρήση κανονικού συμβατού HTML κώδικα (δέν παίζει σωστά ακόμα)
+use smtp auth	admin	el	Χρήση SMTP αυθ
 use theme	admin	el	Χρησιμοποίηση θέματος
 user accounts	admin	el	Λογαριασμοί χρήστη
 user data	common	el	Δεδομένα χρήστη
 user for smtp-authentication (leave it empty if no auth required)	admin	el	Χρήστης για την SMTP-πιστοποίηση (να μείνει κενό αν δεν χρειάζεται πιστοποίηση)
 user groups	admin	el	Ομάδες χρήστη
 userdata	admin	el	δεδομένα χρήστη
+users can define their own emailaccounts	admin	el	Οι χρήστες μπορούν να ορίσουν τους δικούς τους email λογαριασμούς
 users choice	admin	el	Επιλογή Χρήστη
 view access log	admin	el	Εμφάνιση καταγραφής πρόσβασης
 view account	admin	el	Εμφάνιση λογαριασμού
@@ -456,58 +495,3 @@ you must select a file type	admin	el	Πρέπει να επιλέξετε ένα
 you must select at least one group member.	admin	el	Πρέπει να επιλέξετε τουλάχιστον ένα μέλος ομάδας
 you will need to remove the subcategories before you can delete this category	admin	el	Θα πρέπει να διαγραφούν οι υποκατηγορίες πριν διαγράψετε αυτή την κατηγορία !
 your session could not be verified.	admin	el	Η περίοδος εργασίας δεν μπόρεσε να επαληθευθεί
-(no subject)	admin	el	(κανένα θέμα)
-advanced options	admin	el	επιλογές για προχωρημένους
-alternate email address	admin	el	εναλλακτική διεύθυνση email
-bad login name or password.	admin	el	Λάθος όνομα ή κωδικός πρόσβασης
-bad request: %s	admin	el	Άκυρη απαίτηση: %
-connection dropped by imap server.	admin	el	Έπεσε η σύνδεση από τον IMAP server
-could not complete request. reason given: %s	admin	el	Δεν ολοκληρώθηκε το αίτημα. Αιτία: %s
-could not open secure connection to the imap server. %s : %s.	admin	el	Δεν έγινε ασφαλής σύνδεση με τον IMAP server. %s : %s.
-cram-md5 or digest-md5 requires the auth_sasl package to be installed.	admin	el	CRAM-MD5 ή DIGEST-MD5 απαιτεί το Auth_SASL πακέτο να εγκατασταθεί.
-default	admin	el	προκαθορισμένο
-deliver extern	admin	el	παράδοση εξωτερ
-displaying html messages is disabled	admin	el	η προβολή των html μηνυμάτων είναι απενεργοποιημένη
-do not validate certificate	admin	el	μην επικυρώνετε το πιστοποιητικό
-edit email settings	admin	el	επεξεργασία ρυθμίσεων email
-email account active	admin	el	ενεργός κατάλογος email
-email address	admin	el	διεύθυνση email
-encrypted connection	admin	el	αποκρυπτογραφημένη σύνδεση
-error connecting to imap server. %s : %s.	admin	el	Σφάλμα κατά τη σύνδεση με τον IMAP server. %s : %s.
-error connecting to imap server: [%s] %s.	admin	el	Σφάλμα κατά τη σύνδεση με τον IMAP server. [%s] : %s.
-event details follow	admin	el	Ακολουθούν λεπτομέρειες γεγονότων
-forward also to	admin	el	προώθηση επίσης στο
-forward only	admin	el	μόνο προώθηση
-if using ssl or tls, you must have the php openssl extension loaded.	admin	el	Αν χρησιμοποιείται SSL ή TLS, πρέπει να έχετε την PHP openssl επέκταση φορτωμένη.
-imap server	admin	el	IMAP Server
-imap server closed the connection.	admin	el	Ο IMAP Server έκλεισε τη σύνδεση
-imap server closed the connection. server responded: %s	admin	el	Ο IMAP Server έκλεισε τη σύνδεση. Ο Server απάντησε: %s
-in mbyte	admin	el	σε MByte
-leave empty for no quota	admin	el	να μείνει κενό για μη ποσοστόσεις
-mail settings	admin	el	Ρυθμίσεις μηνυμάτων
-no alternate email address	admin	el	δεν υπάρχει εναλλακτική διεύθυνση email
-no encryption	admin	el	Καμία κρυπτογράφηση
-no message returned.	admin	el	Δεν επεστράφη κάποιο μήνυμα.
-no plain text part found	admin	el	δεν βρέθηκε μέρος αποκρυπτογραφημένου κειμένου
-no supported imap authentication method could be found.	admin	el	Δεν βρέθηκε καμία υποστηριζόμενη IMAP επικυρωμένη μέθοδος.
-order	admin	el	Ταξινόμηση
-organisation	admin	el	οργανισμός
-port	admin	el	θύρα
-quota settings	admin	el	ρυθμίσεις ποσοστών
-quota size in mbyte	admin	el	μέγεθος ποσοστών σε MByte
-remove	admin	el	αφαίρεση
-sieve settings	admin	el	Ρυθμίσεις Sieve
-smtp settings	admin	el	Ρυθμίσεις SMTP
-standard	admin	el	συνήθης
-standard imap server	admin	el	συνήθης IMAP server
-standard pop3 server	admin	el	συνήθης POP3 server
-standard smtp-server	admin	el	συνήθης SMTP-server
-the imap server does not appear to support the authentication method selected. please contact your system administrator.	admin	el	Ο IMAP server δεν υποστηρίζει την επιλεγμένη μέθοδο αυθεντικότητας.Παρακαλώ επικοινωνήστε με τον διαχειριστή σας.
-this php has no imap support compiled in!!	admin	el	Αυτό το PHP δεν έχει καθόλου IMAP υποστήριξη μεταφρασμένη!!
-to use a tls connection, you must be running a version of php 5.1.0 or higher.	admin	el	Για τη χρησιμοποίηση TLS σύνδεσης, πρέπει να έχετε PHP 5.1.0 ή υψηλότερη έκδοση.
-unexpected response from server to authenticate command.	admin	el	Απρόσμενη απάντηση από τον server στην ΕΞΑΚΡΙΒΩΣΗ ΓΝΗΣΙΟΤΗΤΑΣ εντολής.
-unexpected response from server to digest-md5 response.	admin	el	Απρόσμενη απάντηση από τον server στην Digest-MD5 απάντηση.
-unexpected response from server to login command.	admin	el	Απρόσμενη απάντηση από τον server στην εντολή ΕΙΣΟΔΟΥ
-unknown imap response from the server. server responded: %s	admin	el	Άγνωστη IMAP απάντηση από τον server.Απάντηση Server:%s
-use smtp auth	admin	el	Χρήση SMTP αυθ
-users can define their own emailaccounts	admin	el	Οι χρήστες μπορούν να ορίσουν τους δικούς τους email λογαριασμούς

@@ -25,7 +25,6 @@
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	ja	To install new applications use<br><a href="setup/" target="setup">Setup</a> [Manage Applications]!
 -  type	admin	ja	-  タイプ
 access by	admin	ja	アクセスするユーザ/グループ
-Access by	admin	ja	アクセスするユーザ/グループ
 access control	admin	ja	アクセス制御
 access to %1 data by others	admin	ja	他者が「%1」のデータにアクセス可能
 accesslog and bruteforce defense	admin	ja	AccessLog and BruteForce defense
@@ -105,10 +104,10 @@ allow users to create identities for aliases	admin	ja	Allow users to create iden
 alternate email address	admin	ja	代替メール・アドレス
 and logged in	admin	ja	ログインしました
 anonymous user	admin	ja	匿名ユーザ
-Anonymous user. Not shown in list sessions.	admin	ja	匿名ユーザにする（セッション一覧で非表示）
 anonymous user (not shown in list sessions)	admin	ja	匿名ユーザにする（セッション一覧で非表示）
 anonymous user does not exist!	admin	ja	匿名ユーザが存在しません!
 anonymous user has no run-rights for the application!	admin	ja	Anonymous user has NO run-rights for the application!
+anonymous user. not shown in list sessions.	admin	ja	匿名ユーザにする（セッション一覧で非表示）
 any application	admin	ja	Any application
 any group	admin	ja	Any group
 any user	admin	ja	Any user
@@ -123,7 +122,6 @@ applications list	admin	ja	アプリケーション一覧
 applications run rights updated.	admin	ja	アプリケーション実行権限を更新しました。
 applies the changes	admin	ja	変更を適用しました。
 apply the changes	admin	ja	変更を適用
-apps & license	admin	ja	アプリケーション & ライセンス
 archive: zip or tar	admin	ja	アーカイブ: zip または tar
 are you sure you want to delete the application %1 ?	admin	ja	アプリケーション %1 を削除してよろしいですか？
 are you sure you want to delete this account ?	admin	ja	このアカウントを削除してよろしいですか？
@@ -136,7 +134,7 @@ are you sure you want to kill this session ?	admin	ja	このセッションを�
 async services last executed	admin	ja	非同期サービスの最終実行日時
 asynchronous timed services	admin	ja	非同期スケジュール済みサービス
 asyncservices not yet installed or other error (%1) !!!	admin	ja	Async services not yet installed or other error (%1) !
-attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	ja	FTP のMIMEタイプで &nbsp; 'application/octet-stream' &nbsp; の代わりに<br />正しいタイプを使う
+attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	ja	FTP のMIMEタイプで   'application/octet-stream'   の代わりに<br />正しいタイプを使う
 attribute accountstatus explained	admin	ja	This handles the attribute <b><i>-accountStatus-</i></b> from the QMAIL schema.
 attribute mail explained	admin	ja	This handles the attribute <b><i>-mail-</i></b> from the QMAIL schema and should never be empty. It is also the eGW internal email field.
 attribute mailalternateaddress explained	admin	ja	This handles the attribute <b><i>-mailAlternateAddress-</i></b> from the QMAIL schema and can be handled as virtual maps or aliases.
@@ -149,20 +147,13 @@ back to admin/grouplist	admin	ja	管理者/グループ 一覧に戻る
 back to admin/userlist	admin	ja	管理者/グループ 一覧に戻る
 back to the list	admin	ja	一覧に戻る
 backup directory %1 mounted as %2	admin	ja	Backup directory %1 mounted as %2
-backup files (needs ZipArchive)	admin	ja	バックアップ・ファイル（要ZipArchive）
-backup housekeeping	admin	ja	バックアップ・ハウス・キーピング
-backup now	admin	ja	今すぐバックアップ
-backup sets	admin	ja	バックアップ先:
 bad login name or password.	admin	ja	ログイン名またはパスワードが不正です。
 bad or malformed request. server responded: %s	admin	ja	Bad or malformed request. %s
 bad request: %s	admin	ja	不正なリクエスト: %s
 bi-dir passthrough	admin	ja	双方向パススルー
 bi-directional	admin	ja	双方向
-blocks	admin	ja	ブロック
-books	admin	ja	本
 bottom	admin	ja	下部
 bulk password reset	admin	ja	バルク・パスワード・リセット
-button	admin	ja	ボタン
 calculate next run	admin	ja	次回の実行日時を算出
 calendar recurrence horizont in days (default 1000)	admin	ja	Calendar recurrence horizon in days. Default = 1000.
 can be used by application	admin	ja	Can be used by application
@@ -170,7 +161,6 @@ can be used by group	admin	ja	Can be used by group
 can be used by user	admin	ja	Can be used by user
 can change password	admin	ja	パスワード変更可能
 can not change users into groups, same sign required!	admin	ja	Can NOT change users into groups, same sign required!
-Can only be change via Setup!	admin	ja	セットアップでのみ変更可能です!
 cancel testjob!	admin	ja	テスト・ジョブをキャンセル!
 cancel this scheduled command	admin	ja	Cancel this scheduled command
 categories list	admin	ja	カテゴリ一覧
@@ -182,7 +172,6 @@ certificate	admin	ja	証明書
 change account_id	admin	ja	アカウント ID を変更する
 change acl rights	admin	ja	ACL 権限を変更する
 change config settings	admin	ja	環境設定を変更
-|change domain of email address and aliases	admin	ja	電子メール・アドレスのドメインと別名を変更
 change domain of email address and aliases	admin	ja	電子メール・アドレスのドメインと別名を変更
 change login screen message	admin	ja	メイン画面のメッセージを変更
 change owner	admin	ja	所有者を変更
@@ -191,24 +180,18 @@ change password hash to	admin	ja	パスワード・ハッシュを変更:
 changed password hash for %1 to %2.	admin	ja	%1 のパスワード・ハッシュを %2 に変更しました。
 changelog	admin	ja	変更履歴
 changelog and versions	admin	ja	変更履歴/バージョン
-charts	admin	ja	表
 check acl for entries of not (longer) existing accounts	admin	ja	Check ACL for entries of not existing accounts.
 check categories for not (longer) existing accounts	admin	ja	Check categories for not (longer) existing accounts
 check ip address of all sessions	admin	ja	全てのセッションで IP アドレスのチェックを行う
 check items to <b>%1</b> to %2 for %3	admin	ja	%3(%2)に対する <b>%1</b> の項目をチェックしてください
-check to backup and restore the files directory (may use a lot of space, make sure to configure housekeeping accordingly)	admin	ja	ファイルに直接バックアップ/復元する（要大容量。ハウスキーピング値を適切に設定すること）
 children	admin	ja	子孫
 clear cache and register hooks	admin	ja	キャッシュをクリアしてフックを再登録
 click to select a color	admin	ja	クリックして色を選択
-clipboard	admin	ja	クリップボード
 color	admin	ja	色
 command scheduled to run at %1	admin	ja	Command scheduled to run at %1
 commercial: all sorts of companies	admin	ja	商用: 会社
-communications	admin	ja	コミュニケーション
 config password or md5 hash from the header.inc.php	admin	ja	Config password or md5 hash from the header.inc.php.
-configure	admin	ja	構成
 configuration saved.	admin	ja	設定を保存しました。
-connect	admin	ja	接続
 connection dropped by imap server.	admin	ja	IMAP サーバーによって接続が切断されました。
 connection is not secure! everyone can read eg. your credentials.	admin	ja	Connection is NOT secure! Everyone can read eg. your credentials.
 continue	admin	ja	次へ
@@ -231,18 +214,14 @@ creates / updates user groups from csv file	admin	ja	CSV ファイルからグ�
 creates a new field	admin	ja	新規項目を作成します
 crontab only (recomended)	admin	ja	crontab のみ（推奨）
 current hash	admin	ja	現在のハッシュ値:
-Custom	admin	ja	カスタム
 custom fields	admin	ja	カスタム項目
 custom translation	admin	ja	カスタム翻訳
 cyrus imap server	admin	ja	Cyrus IMAP サーバー
 cyrus imap server administration	admin	ja	Cyrus IMAP サーバー管理
 data	admin	ja	データ
 data from	admin	ja	データの取得元
-Data from	admin	ja	データの取得元
-date	admin	ja	日時
 day	admin	ja	日
 day of week<br>(0-6, 0=sun)	admin	ja	曜日<br>(0-6, 0=日曜日)
-day of week<br />(0-6, 0=sunday)	admin	ja	曜日<br>(0-6, 0=日曜日)
 db backup and restore	admin	ja	DB バックアップ/復元
 deactivate	admin	ja	無効化
 debug	admin	ja	デバッグ
@@ -342,8 +321,7 @@ email settings	common	ja	電子メール設定
 emailadmin	admin	ja	eMailAdmin
 emailadmin: group assigned profile	common	ja	eMailAdmin: Group assigned profile
 emailadmin: user assigned profile	common	ja	eMailAdmin: User assigned profile
-|empty to NOT change	admin	ja	変更しない場合は空欄
-empty to NOT change	admin	ja	変更しない場合は空欄
+empty to not change	admin	ja	変更しない場合は空欄
 enable	admin	ja	有効化
 enable cyrus imap server administration	admin	ja	Cyrus IMAP サーバー管理を有効化
 enable debug-messages	admin	ja	デバッグ・メッセージを有効化
@@ -375,8 +353,8 @@ enter the vfs-path where additional images, icons or logos can be placed (and fo
 enter your default ftp server	admin	ja	既定の FTP サーバを入力してください
 enter your default mail domain ( from: user@domain )	admin	ja	メールドメイン名 ( 書式 user@domain の domain部分 )
 enter your default mail domain (from: user@domain)	admin	ja	メールドメイン名 ( 書式 user@domain の domain部分 )
-enter your http proxy server	admin	ja	HTTP &nbsp; プロキシサーバを入力してください
-enter your http proxy server port	admin	ja	HTTP &nbsp; プロキシサーバポートを入力してください
+enter your http proxy server	admin	ja	HTTP   プロキシサーバを入力してください
+enter your http proxy server port	admin	ja	HTTP   プロキシサーバポートを入力してください
 enter your smtp server hostname or ip address	admin	ja	SMTP サーバ名または IP アドレスを入力してください
 enter your smtp server port	admin	ja	SMTP ポート番号を入力してください
 entry saved	admin	ja	項目を保存しました
@@ -413,11 +391,8 @@ field '%1' already exists !!!	admin	ja	項目'%1' は既にそんざいします
 file rejected, no %2. is:%1	admin	ja	ファイルは拒否されました。%2 ではありません。実際は %1
 file space	admin	ja	File space
 file space must be an integer	admin	ja	File space must be an integer
-filename	admin	ja	ファイル名
 filtered by account	admin	ja	アカウントでフィルタリング
 filtered by group	admin	ja	グループでフィルタリング
-finance	admin	ja	ファイナンス
-float	admin	ja	浮動小数
 folder acl	admin	ja	フォルダ ACL
 for the times above	admin	ja	（上記時刻に対して）
 for the times below (empty values count as '*', all empty = every minute)	admin	ja	For the times below: empty values count as '*', all empty = every minute.
@@ -430,7 +405,6 @@ forward emails to	admin	ja	メールを転送 転送先:
 forward only	admin	ja	Forward only
 forward only disables imap mailbox / storing of mails and just forwards them to given address.	admin	ja	Forward only disables IMAP mailbox / storing of mails and just forwards them to given address.
 full name	admin	ja	氏名
-gear	admin	ja	歯車
 general	admin	ja	一般
 global categories	common	ja	グローバルカテゴリ
 global options	admin	ja	全体オプション
@@ -453,16 +427,14 @@ group has been updated	common	ja	グループを更新しました。
 group list	admin	ja	グループ一覧
 group manager	admin	ja	グループ管理
 group name	admin	ja	グループ名
-hardware	admin	ja	ハードウェア
 hash	admin	ja	ハッシュ
 hide php information	admin	ja	PHP情報を閉じる
 hide sidebox video tutorials	admin	ja	Hide sidebox video tutorials
-history	admin	ja	履歴
 home directory	admin	ja	ホーム・ディレクトリ
+home screen message	admin	ja	メイン画面メッセージ
 host information	admin	ja	ホスト情報
 hostname or ip	admin	ja	Hostname or IP
 hour<br>(0-23)	admin	ja	時<br>(0-23)
-hour (0-24)	admin	ja	時 (0-24)
 how big should thumbnails for linked images be (maximum in pixels) ?	admin	ja	リンク画像のサムネイルの最大サイズ（ピクセル）
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	ja	アクセス履歴を残す期間（既定=90日）
 how many entries should non-admins be able to export (empty = no limit, no = no export)	admin	ja	非管理者ユーザがエクスポートできる最大件数（空欄=無制限, 「いいえ」=エクスポート不可）
@@ -470,13 +442,11 @@ how many minutes should an account or ip be blocked (default 1) ?	admin	ja	ロ�
 how should email addresses for new users be constructed?	admin	ja	新規ユーザ・アカウントの電子メール・アドレスの既定の書式を選択してください
 how username get constructed	admin	ja	How username get constructed
 icon	admin	ja	アイコン
-idea	admin	ja	アイディア
 identity deleted	admin	ja	名称を削除しました
 identity saved.	admin	ja	名称を保存しました。
 idle	admin	ja	アイドル
 if different from email address	admin	ja	if different from EMail address
 if no acl records for user or any group the user is a member of	admin	ja	ユーザ/グループにACL権限が無い場合に加入するグループ:
-if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	ja	If using LDAP, do you want to manage home directory and loginshell attributes?
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	ja	LDAP 利用時のホームディレクトリとログインシェルの情報
 if using ssl or tls, you must have the php openssl extension loaded.	admin	ja	If using SSL or TLS, you must have the PHP openssl extension loaded.
 if you ignore that error as admin, you should check "%1"!	admin	ja	If you ignore that error as admin, you should check "%1"!
@@ -493,11 +463,9 @@ imap server name	admin	ja	IMAP server name
 imap server port	admin	ja	IMAP server port
 imap/pop3 server name	admin	ja	IMAP/POP3 server name
 importance	admin	ja	重要度
-important	admin	ja	重要
 in mbyte	admin	ja	in MByte
 inactive	admin	ja	無効
 inbound	admin	ja	インバウンド
-info	admin	ja	情報
 initial	admin	ja	初期
 install crontab	admin	ja	crontab をインストール
 install id	admin	ja	インストールID
@@ -518,7 +486,6 @@ kill	admin	ja	切断
 kill session	admin	ja	セッションを切断
 kill these sessions	admin	ja	セッションを切断
 kill this session	admin	ja	セッションを切断
-language	admin	ja	言語
 languages	admin	ja	言語
 last %1 logins	admin	ja	直近のログイン（%1）
 last %1 logins for %2	admin	ja	Last %1 logins for %2
@@ -527,7 +494,6 @@ last login	admin	ja	最終ログイン
 last login from	admin	ja	最終ログインIP
 last password change	admin	ja	最終パスワード変更日時
 last submission:	admin	ja	最終送信:
-last time read	admin	ja	Last Time Read
 last time read	admin	ja	Last time read
 ldap accounts context	admin	ja	LDAP アカウント・コンテキスト
 ldap basedn	admin	ja	LDAP basedn
@@ -537,7 +503,6 @@ ldap encryption type	admin	ja	LDAP 暗号化タイプ
 ldap groups context	admin	ja	LDAP グループ・コンテキスト
 ldap host	admin	ja	LDAP ホスト名
 ldap root password	admin	ja	LDAP ルート・パスワード
-ldap rootdn	admin	ja	LDAP rootdn
 ldap rootdn	admin	ja	LDAP rootdn
 ldap server	admin	ja	LDAP サーバー
 ldap server accounts dn	admin	ja	LDAP サーバー アカウント DN
@@ -573,8 +538,6 @@ lowercase email addresses	admin	ja	電子メール・アドレス（小文字）
 mail account	admin	ja	メール・アカウント
 mail settings	admin	ja	電子メール設定
 main email-address	admin	ja	メイン電子メール・アドレス
-home screen message	admin	ja	メイン画面メッセージ
-maintainer	admin	ja	保守担当者
 manage mapping	admin	ja	マッピング管理
 manage stationery templates	admin	ja	Manage stationery templates
 manager	admin	ja	管理者
@@ -585,7 +548,6 @@ mb used	admin	ja	MB 使用中
 members	admin	ja	メンバー
 message has been updated	admin	ja	メッセージを更新しました。
 method	admin	ja	方法
-min backup count	admin	ja	最小バックアップ数
 minimum account id (e.g. 500 or 100, etc.)	admin	ja	最小アカウントID（例: 500 や 100 等）
 minute	admin	ja	分
 mode	admin	ja	モード
@@ -631,17 +593,18 @@ number of sessions / egroupware logins in the last 30 days	admin	ja	Number of se
 number of users	admin	ja	ユーザ数
 number the applications serially. if they are not numbered serially, sorting the applications could work wrong. this will not change the application's order.	admin	ja	Number the applications serially. If they are not numbered serially, sorting the applications could work wrong. This will not change the application's order.
 nummeric account id	admin	ja	アカウント IDの数値
+oauth authentiction	admin	ja	OAuth Authentiction
+offer to installing egroupware as mail-handler	admin	ja	メールハンドラとしてEGroupwareをインストールすることを提案する。
 official egroupware usage statistic	admin	ja	公式 EGroupware 使用量統計
 one day	admin	ja	1日
 one hour	admin	ja	1時間
 one month	admin	ja	1ヶ月
 one week	admin	ja	1週間
 only below displayed information is directly submitted to %s.	admin	ja	下記の情報のみが %s に直接送信されます。
-open_book	admin	ja	開いた本
-open_folder	admin	ja	開いたフォルダ
 operating system	admin	ja	オペレーティング・システム
 order	admin	ja	順序
 organisation	admin	ja	組織・団体
+other security configuration	admin	ja	その他のセキュリティ設定
 outbound	admin	ja	アウトバウンド
 own categories	admin	ja	所有カテゴリ
 own install id	admin	ja	所有インストール ID
@@ -657,7 +620,6 @@ passwords requires this number of different character classes	admin	ja	パスワ
 path information	admin	ja	パス情報
 peer server list	admin	ja	ピア・サーバ一覧
 peer servers	admin	ja	ピア・サーバ
-people	admin	ja	人々
 percent of users that logged out	admin	ja	ユーザのログアウト率
 percent this user has logged out	admin	ja	Percent this user has logged out
 permission denied	admin	ja	パーミッションがありません
@@ -665,7 +627,6 @@ permission denied !!!	admin	ja	パーミッションがありません!
 permission denied!!!	admin	ja	パーミッションがありません!!!
 permissions	admin	ja	パーミッション
 permissions this group has	admin	ja	利用可能アプリケーション
-person	admin	ja	人
 personal: eg. within a family	admin	ja	パーソナル: 例 家族内
 php version	admin	ja	PHP バージョン
 phpinfo	admin	ja	PHP情報
@@ -712,7 +673,6 @@ renaming user 'anonymous' will break file sharing and collabora online office!	a
 requested	admin	ja	リクエスト済み
 required pear class mail/mimedecode.php not found.	admin	ja	Required PEAR class Mail/mimeDecode.php not found.
 reset filter	admin	ja	フィルターをリセット
-return to view account	admin	ja	アカウント表示に戻る
 rights	admin	ja	権限
 route all mails to	admin	ja	Route all Mails to
 rows	admin	ja	行
@@ -725,10 +685,7 @@ save the category and return back to the list	admin	ja	変更を保存して一�
 saves the changes made and leaves	admin	ja	変更を保存して終了
 saves this entry	admin	ja	この項目を保存
 saving of message %1 failed. destination folder %2 does not exist.	admin	ja	Saving of message %1 failed. Destination Folder %2 does not exist.
-schedule	admin	ja	スケジュール
 scheduled	admin	ja	スケジュール済み
-scheduled backups	admin	ja	スケジュール済みバックアップ
-screen	admin	ja	スクリーン
 search accounts	admin	ja	アカウントを検索
 search categories	admin	ja	カテゴリを検索
 search groups	admin	ja	グループを検索
@@ -784,7 +741,6 @@ smtp-server port	admin	ja	SMTP サーバー・ポート
 soap	admin	ja	SOAP
 sorry, that group name has already been taken.	admin	ja	Sorry, that group name has already been taken.
 sorry, the above users are still a member of the group %1	admin	ja	Sorry, the above users are still a member of the group %1 .
-sorry, the follow users are still a member of the group %1	admin	ja	%1 がグループのメンバーになっています。
 sorry, the follow users are still a member of the group %1	admin	ja	Sorry, the follow users are still a member of the group %1 .
 sort the entries	admin	ja	Sort the entries
 source account #%1 does not exist!	admin	ja	Source account #%1 does NOT exist!
@@ -794,12 +750,10 @@ standard identity	admin	ja	標準名称
 standard imap server	admin	ja	標準 IMAP サーバー
 standard pop3 server	admin	ja	標準 POP3 サーバー
 standard smtp-server	admin	ja	標準 SMTP サーバー
-star	admin	ja	星
 start	admin	ja	Start
 start testjob!	admin	ja	テスト・ジョブを開始します!
 starts with	admin	ja	Starts with
 stationery	admin	ja	Stationery
-stats	admin	ja	統計
 submit changes	admin	ja	変更を送信
 submit displayed information?	admin	ja	表示中の情報を送信しますか
 submit statistic information	admin	ja	統計情報送信
@@ -808,12 +762,10 @@ submit to egroupware.org	admin	ja	egroupware.org に送信
 subtype	admin	ja	サブ・タイプ
 subversion checkout	admin	ja	Subversion チェックアウト
 success	admin	ja	成功
-successful connected to %1 server%2.	admin	ja	%1 サーバーに接続成功。%2。
 successful connected to %1 server%2.	admin	ja	%1 サーバー %2 に接続しました。
 switch back to standard identity to save account.	admin	ja	Switch back to standard identity to save account.
 switch back to standard identity to save other account data.	admin	ja	Switch back to standard identity to save other account data.
 switch it off, if users are randomly thrown out	admin	ja	ユーザがランダムに強制ログアウトしてしまう場合は無効にしてください
-table	admin	ja	テーブル
 template selection	admin	ja	テンプレート選択
 templates	admin	ja	テンプレート
 text entry	admin	ja	テキスト入力
@@ -878,13 +830,11 @@ unwilling to save category with current settings. check for inconsistency:	admin
 up	admin	ja	上
 update current email address:	admin	ja	メール・アドレスを更新:
 updated	admin	ja	更新日時
-upload backup	admin	ja	バックアップをアップロード
 upload your background image or enter the url	admin	ja	背景画像をアップロードするかURLを入力
 upload your certificate .p12/.pfx file	admin	ja	あなたの証明書ファイル（.p12/.pfx）をアップロード
 upload your favicon or enter the url	admin	ja	お気に入りをアップロードするかURLを入力
 upload your header logo or enter the url (leave it empty if it is the same as login logo)	admin	ja	ヘッダ・ロゴをアップロードするかURLを入力（ログイン・ロゴと同じにする場合は空欄）
 upload your logo or enter the url	admin	ja	ロゴをアップロードするかURLを入力
-uploads a backup to the backup-dir, from where you can restore it	admin	ja	復元するバックアップをバックアップ・ディレクトリにアップロードしてください
 uppercase, lowercase, number, special char	admin	ja	大文字, 小文字, 数字, 特殊文字
 url of the egroupware installation, eg. http://domain.com/egroupware	admin	ja	EGroupware の URL, 例: http://domain.com/egroupware
 usage	admin	ja	使用量
@@ -934,7 +884,6 @@ warn users about the need to change their password? the number set here should b
 we ask for the data to improve our profile in the press and to get a better understanding of egroupware's user base and it's needs.	admin	ja	送信される情報は、全世界でのEGroupwareの利用概観を得るためにのみ使用されます。
 we hope you understand the importance for this voluntary statistic and not deny it lightly.	admin	ja	個人・団体を特定し得るデータについては一切保存しません。
 who would you like to transfer all records owned by the deleted user to?	admin	ja	削除ユーザの全レコードを転送するユーザを選択してください。
-world	admin	ja	世界
 would you like egroupware to cache the egw info array ?	admin	ja	egw info 配列をキャッシュしますか？
 would you like egroupware to check for a new version<br>when admins login ?	admin	ja	管理者でログイン時、EGroupwareのバージョン・チェックを行う
 would you like egroupware to check for new application versions when admins login ?	admin	ja	Check for application updates when admins login.
@@ -942,7 +891,6 @@ would you like to automaticaly load new langfiles (at login-time) ?	admin	ja	Loa
 would you like to show each application's upgrade status ?	admin	ja	アプリケーションのアップグレード状況を表示する。
 wrong account type: %1 is no %2 !!!	admin	ja	アカウント・タイプが不正です: %1 は %2 ではありません!
 wrong admin-account or -password !!!	admin	ja	管理者アカウントまたはパスワードが不正です!
-xml-rpc	admin	ja	XML-RPC
 xml-rpc	admin	ja	XML-RPC
 yes, but no scayt	admin	ja	Yes, but no Spell Check As You Type (online)
 yes, use browser based spell checking engine	admin	ja	Yes, use browser based spell checking engine

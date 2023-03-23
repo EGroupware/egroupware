@@ -37,7 +37,6 @@ admin name	admin	tr	Yönetici İsmi
 administration	admin	tr	Yönetim
 admins	admin	tr	Yöneticiler
 after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	tr	Kaç tane başarısız sistem girişinden sonra bir hesap engellenecektir (varsayılan 3) ?
-after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	tr	Kaç tane başarısız sistem girişinden sonra IP engellenecektir (varsayılan 3) ?
 all records and account information will be lost!	admin	tr	Bütün kayıtlar ve hesap bilgileri kaybedilecektir!
 all users	admin	tr	Tüm Kullanıcılar
 allow anonymous access to this app	admin	tr	Bu uygulamaya anonim girişe izin ver
@@ -158,7 +157,6 @@ enter the site password for peer servers	admin	tr	Peer sunucular için site şif
 enter the site username for peer servers	admin	tr	Peer sunucular için site kullanıcı adı giriniz.
 enter the title for your site	admin	tr	Site başlığını giriniz.
 enter the title of your logo	admin	tr	Logonuzun başlığını giriniz.
-enter the url or filename (in api/templates/default/images) of your logo	admin	tr	Logonuzun URL'sini ya da dosya adını giriniz. (api/templates/default/images içinde olmalıdır.)
 enter the url where your logo should link to	admin	tr	Logonuz için link giriniz.
 enter your default ftp server	admin	tr	Varsayılan FTP sunucusunu giriniz
 enter your default mail domain ( from: user@domain )	admin	tr	Varsayılan mail domain'ini giriniz ( From: kullanıcı@domain )
@@ -169,6 +167,7 @@ enter your smtp server port	admin	tr	SMTP sunucu portunuzu giriniz.
 error canceling timer, maybe there's none set !!!	admin	tr	Zamanlayıcıyı iptal ederken hata oluştu, hiç ayarlı olmayabilir !!!
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	tr	Zamanlayıcı ayarlarken hata oluştu, yanlış sözdizimi ya da halihazırda çalışan bir tane olabilir !!!
 error: %1 not found or other error !!!	admin	tr	Hata: %1 bulunamıyor ya da başka bir hata !!!
+event details follow	admin	tr	Etkinlik Detayları Ektedir
 expires	admin	tr	Sona Eriyor
 fallback (after each pageview)	admin	tr	fallback (her sayfa görüntülemeden sonra)
 file space	admin	tr	Dosya Kotası
@@ -187,10 +186,10 @@ group manager	admin	tr	Grup Yöneticisi
 group name	admin	tr	Grup İsmi
 hide php information	admin	tr	php bilgisini sakla
 home directory	admin	tr	Ev dizini
+home screen message	admin	tr	Ana ekran mesajı
 host information	admin	tr	Host bilgisi
 hour<br>(0-23)	admin	tr	Saat<br>(0-23)
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	tr	Erişim kütüklerindeki kayıtlar en fazla kaç günlük oalcaktır (varsayılan 90) ?
-how many minutes should an account or ip be blocked (default 30) ?	admin	tr	Bir hesap ya da IP kaç dakika engellenmiş kalacaktır (varsayılan 30) ?
 icon	admin	tr	Simge
 idle	admin	tr	boşta
 if no acl records for user or any group the user is a member of	admin	tr	ACL kaydı olmayan herhangi bir kullanıcı/grup bu grup üyesi sayılacaktır
@@ -229,7 +228,6 @@ login shell	admin	tr	Giriş kabuğu
 login time	admin	tr	Giriş zamanı
 loginid	admin	tr	Kullanıcı Adı
 mail settings	admin	tr	Mail ayarları
-home screen message	admin	tr	Ana ekran mesajı
 manager	admin	tr	Yönetici
 maximum account id (e.g. 65535 or 1000000)	admin	tr	Meksimum hesap id'si (ör: 65535 ya da 1000000)
 maximum entries in click path history	admin	tr	Yol kayıtlarındaki maksimum kayıt #
@@ -252,8 +250,18 @@ no permission to add groups	admin	tr	grup eklemek için izin yok
 no permission to add users	admin	tr	kullanıcı eklemek için izin yok
 no permission to create groups	admin	tr	grup eklemek için izin yok
 note: ssl available only if php is compiled with curl support	admin	tr	Not: SSL desteğinin olması için PHP'nin curl desteği ile derlenmiş olması gerekir.
+oauth authentiction	admin	tr	OAuth Kimlik Doğrulaması
+offer to installing egroupware as mail-handler	admin	tr	EGroupware'i posta işleyicisi olarak yükleme teklifi
+one day	admin	tr	Bir gün
+one hour	admin	tr	Bir saat
+one month	admin	tr	Bir ay
+one week	admin	tr	Bir hafta
 order	admin	tr	Sıralama
+other security configuration	admin	tr	Diğer güvenlik yapılandırması
 outbound	admin	tr	giden
+own categories	admin	tr	Kendi kategorileriniz
+own install id	admin	tr	Kendi kurulum kimliği
+own install id:	admin	tr	Kendi kurulum kimliği:
 passthrough	admin	tr	içiçe
 password for smtp-authentication	admin	tr	SMTP doğrulaması için şifre
 path information	admin	tr	Yol bilgisi
@@ -277,7 +285,6 @@ register application hooks	admin	tr	Uygulama bağlantılarını kaydet
 remove	admin	tr	Kaldır
 remove all users from this group	admin	tr	Bu gruptaki tüm kullanıcıları kaldır
 remove all users from this group ?	admin	tr	Bu gruptaki tüm kullanıcıları kaldır ?
-return to view account	admin	tr	Hesap görüntülemeye geri dön
 run asynchronous services	admin	tr	Asenkron servisleri çalıştır
 save the category	admin	tr	kategoriyi kaydet
 save the category and return back to the list	admin	tr	kategoriyi kaydet ve listeye geri dön
@@ -382,9 +389,3 @@ you must enter an application name.	admin	tr	Bir uygulama adı girmelisiniz
 you must enter an application title.	admin	tr	Bir uygulama başlığı girmelisiniz
 you must select a file type	admin	tr	Bir dosya tipi seçmelisiniz
 you will need to remove the subcategories before you can delete this category	admin	tr	Bir kategoriyi silmeden önce o kategoriye ait tüm alt kategorileri kaldırmalısınız !
-default	emailadmin	tr	Varsayılan
-event details follow	emailadmin	tr	Etkinlik Detayları Ektedir
-mail settings	admin	tr	Mail ayarları
-order	emailadmin	tr	Sıralama
-remove	emailadmin	tr	Kaldır
-standard	emailadmin	tr	standart

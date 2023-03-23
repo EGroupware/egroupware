@@ -454,6 +454,8 @@ number of active users	admin	cs	počet aktivních uživatelů
 number of row for a multiline inputfield or line of a multi-select-box	admin	cs	počet řádků ve víceřádkovém vstupním poli nebo ve výběrovém okně
 number of sessions / egroupware logins in the last 30 days	admin	cs	Počet relací / Přihlášení do eGroupWaru během posledních 3O dní
 number of users	admin	cs	Počet uživatelů
+oauth authentiction	admin	cs	Ověřování OAuth
+offer to installing egroupware as mail-handler	admin	cs	Nabídka instalace EGroupware jako mail-handleru
 official egroupware usage statistic	admin	cs	Oficiální statistiky využití eGroupWaru
 one day	admin	cs	jeden den
 one hour	admin	cs	jednu hodinu
@@ -463,7 +465,10 @@ only below displayed information is directly submitted to %s.	admin	cs	Na server
 operating system	admin	cs	Operační systém
 order	admin	cs	Pořadí
 organisation	admin	cs	Organizace
+other security configuration	admin	cs	Další konfigurace zabezpečení
 outbound	admin	cs	odchozí
+own categories	admin	cs	Vlastní kategorie
+own install id	admin	cs	Vlastní instalační ID:
 own install id:	admin	cs	Vlastní instalační ID:
 passthrough	admin	cs	průchozí
 password for smtp-authentication	admin	cs	Heslo pro SMTP autentikaci

@@ -689,8 +689,8 @@ organisation	admin	de	Organisation
 other security configuration	admin	de	Andere sicherheitsrelevante Konfigurationen
 outbound	admin	de	ausgehend
 own categories	admin	de	eigene Kategorien
-own install id	admin	de	Eigene Install ID
-own install id:	admin	de	eigene Install-ID
+own install id	admin	de	Eigene Install-ID
+own install id:	admin	de	Eigene Install-ID:
 owner "%1" removed, please select group-owner	admin	de	Besitzer "%1" entfernt, bitte einen Gruppenbesitzer auswählen.
 passphrase	admin	de	Passphrase
 passthrough	admin	de	durchgehend

@@ -89,7 +89,6 @@ admin username	admin	sk	Používateľské meno správcu
 administration	admin	sk	Správa
 admins	admin	sk	Správcovia
 advanced options	admin	sk	Pokročilé možnosti
-after how many unsuccessful attempts to login, an account should be blocked (default 15) ?	admin	sk	Po koľkých neúspešných pokusoch o prihlásenie sa má účet zablokovať (predvolené: 3)?
 after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	sk	Po koľkých neúspešných pokusoch o prihlásenie sa má IP zablokovať (predvolené: 3)?
 aliases	admin	sk	Aliasy
 all applications	admin	sk	Všetky aplikácie
@@ -344,8 +343,6 @@ enter the site password for peer servers	admin	sk	Zadajte heslo stránky pre pee
 enter the site username for peer servers	admin	sk	Zadajte používateľské meno stránky pre peer servre
 enter the title for your site	admin	sk	Zadajte nadpis Vašej stránky
 enter the title of your logo	admin	sk	Zadajte titulok Vášho loga
-enter the url or filename (in api/templates/default/images) of your logo	admin	sk	Zadajte URL adresu alebo názov súboru Vášho loga (v api/templates/default/images)
-enter the url or filename (in your templates image directory) of your favicon (the little icon that appears in the browsers tabs)	admin	sk	Zadajte URL alebo názov súboru (v adresári šablónového obrazu) vašej favikony (tej malej ikonky ktorá sa objavuje na kartách prehliadača)
 enter the url where your logo should link to	admin	sk	Zadajte URL adresu, kam má smerovať odkaz pod Vaším logom
 enter the vfs-path where additional images, icons or logos can be placed (and found by egroupwares applications). the path must start with /,and be readable by all users	admin	sk	Zadajte VFP cestu, kde sa môžu ukladať ďalšie obrázky, ikony alebo logá (a použiť v aplikáciách EGroupware). Cesta MUSÍ byť čitateľná pre všetkých a začínať /
 enter your default ftp server	admin	sk	Zadajte Váš predvolený FTP server
@@ -426,6 +423,7 @@ hash	admin	sk	Hash
 hide php information	admin	sk	skryť php informácie
 hide sidebox video tutorials	admin	sk	Skryť video tutoriály v bočnom paneli
 home directory	admin	sk	Domovský adresár
+home screen message	admin	sk	Text správy hlavnej stránky
 host information	admin	sk	Informácie o serveri
 hostname or ip	admin	sk	Názov stroja alebo IP
 hour<br>(0-23)	admin	sk	Hodina<br>(0-23)
@@ -530,7 +528,6 @@ logoutime	admin	sk	Čas odhlásenia
 mail account	admin	sk	Poštový účet
 mail settings	admin	sk	Nastavenia Pošty
 main email-address	admin	sk	Hlavná E-mailová adresa
-home screen message	admin	sk	Text správy hlavnej stránky
 manage mapping	admin	sk	Správa mapovania
 manager	admin	sk	Správca
 manual entry	admin	sk	Ručná položka
@@ -585,6 +582,8 @@ number of sessions / egroupware logins in the last 30 days	admin	sk	Počet relá
 number of users	admin	sk	Počet používateľov
 number the applications serially. if they are not numbered serially, sorting the applications could work wrong. this will not change the application's order.	admin	sk	Očíslovať aplikácie zaradom. Ak nie sú očíslované zaradom, zoradenie aplikácií môže fungovať chybne. Táto akcia nezmení poradie aplikácií.
 nummeric account id	admin	sk	Číselné ID účtu
+oauth authentiction	admin	sk	Overovanie OAuth
+offer to installing egroupware as mail-handler	admin	sk	Ponuka inštalácie EGroupware ako mail-handler
 official egroupware usage statistic	admin	sk	Oficiálna štatistika používania EGroupware
 one day	admin	sk	jeden deň
 one hour	admin	sk	jedna hodina
@@ -594,6 +593,7 @@ only below displayed information is directly submitted to %s.	admin	sk	Len zobra
 operating system	admin	sk	Operačný systém
 order	admin	sk	Poradie
 organisation	admin	sk	Organizácia
+other security configuration	admin	sk	Iná konfigurácia zabezpečenia
 outbound	admin	sk	odchodzie
 own categories	admin	sk	Vlastné kategórie
 own install id	admin	sk	Vlastné ID inštalácie
@@ -662,7 +662,6 @@ renaming user 'anonymous' will break file sharing and collabora online office!	a
 requested	admin	sk	Vyžiadané
 required pear class mail/mimedecode.php not found.	admin	sk	Nenašla sa požadovaná trieda PEAR Mail / mimeDecode.php
 reset filter	admin	sk	Vynulovať filter
-return to view account	admin	sk	Návrat na zobrazenie účtov
 rights	admin	sk	Oprávnenia
 route all mails to	admin	sk	Všetky správy smerovať cez
 rows	admin	sk	Riadky

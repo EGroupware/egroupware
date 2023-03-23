@@ -1,4 +1,5 @@
 (default no, leave it off if you dont use it)	admin	et	(vaikimisi Ei, jäta see välja kui sa seda ei kasuta)
+account '%1' not found !!!	admin	et	Kontot '%1' ei leitud !!!
 account active	admin	et	Konto aktiivne
 account has been created	common	et	Konto on tehtud
 account has been deleted	common	et	Konto on kustutatud
@@ -22,14 +23,18 @@ add global category	admin	et	Lisa globaalne kategooria
 add group	admin	et	Lisa grupp
 add new account	admin	et	Lisa uus konto
 add new application	admin	et	Lisa uus rakendus
+add new email address:	admin	et	Lisa uus email aadress
+add profile	admin	et	Lisa Profiil
 add sub-category	admin	et	Lisa alam kategooria
 admin email	admin	et	Admin Email
 admin name	admin	et	Admin Nimi
+admin password	admin	et	admin parool
+admin username	admin	et	admin kasutajanimi
 all applications	admin	et	kõik rakendused
 all categories	admin	et	Kõik kategooriad
 all users	admin	et	Kõik kasutajad
 allow anonymous access to this app	admin	et	Luba anonüümne ligipääs sellele rakendusele
-alternate email address	admin	et	alternatiivne email aadress
+alternate email address	admin	et	Alternatiivne email aadress
 anonymous user	admin	et	Anonymous kasutaja
 anonymous user (not shown in list sessions)	admin	et	Anonüümne Kasutaja (pole nähtav protsesside listis)
 anonymous user does not exist!	admin	et	Anonymous kasutaja EI eksisteeri!
@@ -48,6 +53,7 @@ are you sure you want to delete this group ?	admin	et	Oled kindel, et tahad kust
 are you sure you want to delete this server?	admin	et	Oled kindel, et tahad kustutada seda serverit ?
 are you sure you want to kill this session ?	admin	et	Oled kindel, et tahad tappa seda sessiooni ?
 authentication / accounts	admin	et	Autentimine / Kontod
+bad login name or password.	admin	et	Vale kasutajanimi või parool
 can change password	admin	et	Võib muuta parooli
 categories list	admin	et	Kategooriate nimekiri
 category list	admin	et	Kategooria nimekiri
@@ -55,15 +61,17 @@ change acl rights	admin	et	muuda ACL Õigusi
 change login screen message	admin	et	Muuda pealehe sõnumit
 click to select a color	admin	et	Kliki valimaks värvi
 color	admin	et	Värv
+continue	admin	et	Jätka
 country	admin	et	Riik
 country selection	admin	et	Riigi Valik
 create group	admin	et	Tee Grupp
 created	admin	et	Tehtud
 creates a new field	admin	et	teeb uue välja
 cyrus imap server	admin	et	Cyrus IMAP Server
+cyrus imap server administration	admin	et	Cyrus IMAP server administreerimine
 day	admin	et	Päev
 db backup and restore	admin	et	DB tagavara ja taastamine
-default	admin	et	Vaikimisi
+default	admin	et	vaikimisi
 delete account	admin	et	Kustuta konto
 delete application	admin	et	Kustuta rakendus
 delete category	admin	et	Kustuta kategooria
@@ -87,14 +95,18 @@ deny access to phpinfo	admin	et	Keela ligipääs phpinfo-le
 deny access to user accounts	admin	et	Keela ligipääs kasutaja kontodele
 disable	admin	et	Keela
 disabled (not recomended)	admin	et	väljalülitatud (pole soovitav)
+displaying html messages is disabled	admin	et	html kirjade näitamine on välja lülitatud
+do not validate certificate	admin	et	ära valideeri sertifikaati
 do you also want to delete all global subcategories ?	admin	et	Kas tahad kustutada samuti kõik globaalsed alamkategooriad ?
+do you really want to delete this profile	admin	et	Tahad tõesti kustutada seda Profiili
 do you want to delete all global subcategories ?	admin	et	Kas tahad kustutada kõik globaalsed alamkategooriad ?
 do you want to move all global subcategories one level down ?	admin	et	Kas tahad liigutada kõik globaalsed alamkategooriad üks level alla ?
 document root (default)	admin	et	Dokument root (vaikimisi)
+domainname	admin	et	Doomeninimi
 down	admin	et	alla
 edit account	admin	et	Muuda kontot
 edit application	admin	et	Muuda rakendust
-edit email settings	admin	et	muuda email setinguid
+edit email settings	admin	et	muuda emaili setinguid
 edit global category	admin	et	Muuda globaalset kategooriat
 edit group	admin	et	Muuda Gruppi
 edit group acl's	admin	et	muuda grupi ACL'e
@@ -107,15 +119,21 @@ edit user account	admin	et	Muuda kasutaja kontot
 egroupware directory	admin	et	EGroupware kaust
 email account active	admin	et	email konto aktiivne
 email address	admin	et	email aadress
+email settings	common	et	Email setingud
 enable	admin	et	luba
 enabled - popup window	admin	et	Lubatud - Hüpikaknad
+encrypted connection	admin	et	krüpteeritud ühendus
+encryption settings	admin	et	Krüpteerimise setingud
 enter the hostname of the machine on which this server is running	admin	et	Sisesta hostinimi kus see server töötab
 enter your default ftp server	admin	et	Sisesta oma vaikimisi FTP server
+enter your default mail domain (from: user@domain)	admin	et	Sisesta oma vaikimisi mail doomen (kasutaja@doomen)
 enter your http proxy server	admin	et	Sisesta oma HTTP proksi server
 enter your http proxy server port	admin	et	Sisesta oma HTTP proksi serveri port
 enter your smtp server hostname or ip address	admin	et	Sisesta oma SMTP serveri nimi või IP aadress
 enter your smtp server port	admin	et	Sisesta oma SMTP serveri port
+entry saved	admin	et	Kirje salvestatud
 error canceling timer, maybe there's none set !!!	admin	et	Viga taimleri tühistamisel, võibolla pole seda seatud !!!
+error saving the entry!!!	admin	et	Viga kirje salvestamisel !!!
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	et	Viga taimleri seadmisel, vale süntaks või võibolla üks juba töötab !!!
 error: %1 not found or other error !!!	admin	et	Viga: %1 ei leitud või muu viga !!!
 expires	admin	et	Aegub
@@ -123,6 +141,7 @@ field '%1' already exists !!!	admin	et	Väli '%1' eksisteerib juba !!!
 full name	admin	et	Täis nimi
 general	admin	et	Üldine
 global categories	common	et	Globaalsed Kategooriad
+global options	admin	et	Globaalsed omadused
 group ?	admin	et	grupp ?
 group list	admin	et	Gruppi nimekiri
 group name	admin	et	Grupi Nimi
@@ -132,6 +151,15 @@ host information	admin	et	Hosti informatsioon
 how many minutes should an account or ip be blocked (default 1) ?	admin	et	Mitu minutit konto või IP blokeeritakse (vaikimisi 30) ?
 how should email addresses for new users be constructed?	admin	et	Kuidas EMail aadress uute kasutajatejaoks konstrueeritakse?
 icon	admin	et	Ikoon
+imap admin password	admin	et	IMAP admin parool
+imap admin user	admin	et	IMAP admin kasutaja
+imap c-client version < 2001	admin	et	IMAP C-Client Versioon < 2001
+imap server	admin	et	IMAP Server
+imap server closed the connection.	admin	et	IMAP server sulges ühenduse.
+imap server closed the connection. server responded: %s	admin	et	IMAP Server sulges ühenduse. Server Vastas: %s
+imap server name	admin	et	imap serveri nimi
+imap server port	admin	et	IMAP serveri port
+imap/pop3 server name	admin	et	IMAP/POP3 server nimi
 installed applications	common	et	Installeeritud rakendused
 ip	admin	et	IP
 kill	admin	et	Tapa
@@ -141,6 +169,7 @@ last login	admin	et	viimane login
 ldap encryption type	admin	et	LDAP krüpteeringu tüüp
 ldap root password	admin	et	LDAP root parool
 ldap rootdn	admin	et	LDAP rootdn
+ldap settings	admin	et	LDAP setingud
 leaves without saveing	admin	et	lahkub ilma salvestamatta
 list current sessions	admin	et	Nimekiri hetke sessioonidest
 list of current users	admin	et	nimekiri hetke kasutajatest
@@ -150,7 +179,7 @@ login screen	admin	et	Sisselogimise aken
 login shell	admin	et	Sisselogimise shell
 login time	admin	et	Sisselogimise Aeg
 loginid	admin	et	SisselogimiseID
-mail settings	admin	et	Mail settingud
+mail settings	admin	et	Mail setingud
 minute	admin	et	Mi
 modified	admin	et	Muudetud
 month	admin	et	Kuu
@@ -159,13 +188,22 @@ new group name	admin	et	Uus grupi nimi
 new name	admin	et	uus nimi
 new password [ leave blank for no change ]	admin	et	Uus parool [ Jäta tühjaks kui ei soovi muuta ]
 no alternate email address	admin	et	pole alternatiivset email aadressi
+no encryption	admin	et	ilna krüpteeringutta
 no login history exists for this user	admin	et	Pole sisselogimise ajalugu sellel kasutajal
 no matches found	admin	et	sobivaid ei leitud
 no permission to add groups	admin	et	pole õigusi gruppide lisamiseks
 no permission to add users	admin	et	pole õigusi kasutajate lisamiseks
 no permission to create groups	admin	et	pole õigusi gruppide tegemiseks
+oauth authentiction	admin	et	OAuth autentimine
+offer to installing egroupware as mail-handler	admin	et	Pakkumine EGroupware'i paigaldamiseks posti käitlejana
+one day	admin	et	Üks päev
+one hour	admin	et	Üks tund
 one month	admin	et	üks kuu
 one week	admin	et	üks kuu
+organisation	admin	et	Organisatsioon
+other security configuration	admin	et	Muud turvakonfiguratsioonid
+own install id	admin	et	Oma paigaldus ID
+own install id:	admin	et	Oma paigaldus ID:
 password for smtp-authentication	admin	et	Parool SMTP-audentimiseks
 path information	admin	et	Teekonna informatsioon
 permission denied	admin	et	Õigused puuduvad
@@ -175,6 +213,8 @@ permissions	admin	et	Õigused
 phpinfo	admin	et	PHP informatsioon
 please enter a name	admin	et	Palun sisesta nimi
 please select	admin	et	Palun Vali
+pop3 server port	admin	et	POP3 serveri port
+port	admin	et	port
 primary group	admin	et	primaarne Grupp
 re-enter password	admin	et	Sisesta parool uuesti
 remove	admin	et	eemalda
@@ -182,16 +222,25 @@ search accounts	admin	et	Otsi kontosid
 search categories	admin	et	Otsi kategooriaid
 search groups	admin	et	Otsi gruppe
 security	admin	et	Turvalisus
+select type of imap server	admin	et	vali IMAP serveri tüüp
+select type of imap/pop3 server	admin	et	vali IMAP/POP3 serveri tüüp
+select type of smtp server	admin	et	Vali SMTP serveri tüüp
 select where you want to store/retrieve filesystem information	admin	et	Vali kuhu sa tahad salvestada failisüsteemi informatsiooni
 select where you want to store/retrieve user accounts	admin	et	Vali kuhu sa tahad salvestada kasutaja kontosid
 server list	admin	et	Serveri Nimekiri
 server password	admin	et	Serveri Parool
+server settings	admin	et	Serveri setingud
 server username	admin	et	Serveri Kasutajanimi
 show access log	admin	et	Näita külastuste logi
 show error log	admin	et	Näita vigade logi
 show phpinfo()	admin	et	Näita phpinfo()
 show session ip address	admin	et	Näita sessiooni IP aadressi
+sieve server port	admin	et	Sieve serveri port
+sieve settings	admin	et	Sieve setingud
 site	admin	et	Sait
+smtp server name	admin	et	SMTP serveri nimi
+smtp settings	admin	et	SMTP setingud
+smtp-server port	admin	et	SMTP serveri port
 sorry, that group name has already been taken.	admin	et	Vabandust, see grupinimi on juba võetud
 ssl	admin	et	ssl
 start	admin	et	Start
@@ -213,6 +262,7 @@ two weeks	admin	et	kaks nädalat
 unknown account: %1 !!!	admin	et	Tundmatu konto:: %1 !!!
 up	admin	et	üles
 updated	admin	et	uuendatud
+use default	admin	et	Kasuta vaikimisi
 use theme	admin	et	Kasuta nahka
 user accounts	admin	et	Kasutaja kontod
 user for smtp-authentication (leave it empty if no auth required)	admin	et	Kasutajanimi SMTP-autentimiseks (jäta see tühjaks kui pole nõutav)
@@ -237,55 +287,3 @@ you must enter an application title.	admin	et	Pead sisesestama rakenduse pealkir
 you must select a file type	admin	et	Pead valima failitüübi
 you must select at least one group member.	admin	et	Pead valima vähemalt ühe grupiliikme.
 you will need to remove the subcategories before you can delete this category	admin	et	Pead eemaldama kõigepealt alamkategoorjad kustutamaks seda kategooriat !
-account '%1' not found !!!	admin	et	Kontot '%1' ei leitud !!!
-add new email address:	admin	et	Lisa uus email aadress
-add profile	admin	et	Lisa Profiil
-admin password	admin	et	admin parool
-admin username	admin	et	admin kasutajanimi
-alternate email address	admin	et	Alternatiivne email aadress
-bad login name or password.	admin	et	Vale kasutajanimi või parool
-continue	admin	et	Jätka
-cyrus imap server	admin	et	Cyrus IMAP Server
-cyrus imap server administration	admin	et	Cyrus IMAP server administreerimine
-default	admin	et	vaikimisi
-displaying html messages is disabled	admin	et	html kirjade näitamine on välja lülitatud
-do not validate certificate	admin	et	ära valideeri sertifikaati
-do you really want to delete this profile	admin	et	Tahad tõesti kustutada seda Profiili
-domainname	admin	et	Doomeninimi
-edit email settings	admin	et	muuda emaili setinguid
-email account active	admin	et	email konto aktiivne
-email address	admin	et	email aadress
-email settings	common	et	Email setingud
-encrypted connection	admin	et	krüpteeritud ühendus
-encryption settings	admin	et	Krüpteerimise setingud
-enter your default mail domain (from: user@domain)	admin	et	Sisesta oma vaikimisi mail doomen (kasutaja@doomen)
-entry saved	admin	et	Kirje salvestatud
-error saving the entry!!!	admin	et	Viga kirje salvestamisel !!!
-global options	admin	et	Globaalsed omadused
-imap admin password	admin	et	IMAP admin parool
-imap admin user	admin	et	IMAP admin kasutaja
-imap c-client version < 2001	admin	et	IMAP C-Client Versioon < 2001
-imap server	admin	et	IMAP Server
-imap server closed the connection.	admin	et	IMAP server sulges ühenduse.
-imap server closed the connection. server responded: %s	admin	et	IMAP Server sulges ühenduse. Server Vastas: %s
-imap server name	admin	et	imap serveri nimi
-imap server port	admin	et	IMAP serveri port
-imap/pop3 server name	admin	et	IMAP/POP3 server nimi
-ldap settings	admin	et	LDAP setingud
-mail settings	admin	et	Mail setingud
-no alternate email address	admin	et	pole alternatiivset email aadressi
-no encryption	admin	et	ilna krüpteeringutta
-organisation	admin	et	Organisatsioon
-pop3 server port	admin	et	POP3 serveri port
-port	admin	et	port
-remove	admin	et	eemalda
-select type of imap server	admin	et	vali IMAP serveri tüüp
-select type of imap/pop3 server	admin	et	vali IMAP/POP3 serveri tüüp
-select type of smtp server	admin	et	Vali SMTP serveri tüüp
-server settings	admin	et	Serveri setingud
-sieve server port	admin	et	Sieve serveri port
-sieve settings	admin	et	Sieve setingud
-smtp server name	admin	et	SMTP serveri nimi
-smtp settings	admin	et	SMTP setingud
-smtp-server port	admin	et	SMTP serveri port
-use default	admin	et	Kasuta vaikimisi

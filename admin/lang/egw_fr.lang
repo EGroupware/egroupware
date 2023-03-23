@@ -10,12 +10,10 @@
 %1 category(s) %2	admin	fr	%1 catégorie(s) %2
 %1 category(s) %2, %3 failed because of insufficent rights !!!	admin	fr	%1 catégorie(s) %2, %3 en échec pour droits insuffisants !!!
 %1 class not instanciated	admin	fr	Classe %1 non instanciée
-%1 entries deleted	admin	fr	%1 éléments supprimés
 %1 entries deleted.	admin	fr	%1 éléments supprimés.
 %1 group %2	admin	fr	%1 groupe %2
 %1 is no command!	admin	fr	%1 n'est pas une commande !
 %1 log entries deleted.	admin	fr	%1 entrées dans le log effacées.
-%1 mail credentials deleted	admin	fr	%1 information(s) d'identification email supprimée(s)
 %1 not found or not executable !!!	admin	fr	%1 introuvable ou pas exécutable !!!
 %1 phrases saved.	admin	fr	%1 phrases enregistrées.
 %1 rights for %2 and applications %3	admin	fr	Droits en %1 pour %2 et l'application %3.
@@ -38,7 +36,6 @@
 access by	admin	fr	Accès par
 access control	admin	fr	Contrôle d'accès
 access to %1 data by others	admin	fr	Accès aux données de %1  par d'autres
-access token revoked.	admin	fr	Jeton d'accès révoqué.
 accesslog and bruteforce defense	admin	fr	Protection contre les attaques par accès aux logs et force brute
 account	admin	fr	Compte
 account "%1" has no email address --> not notified!	admin	fr	Le compte "%1" n'a pas d'adresse email --> pas notifié !
@@ -48,7 +45,6 @@ account '%1' deleted.	admin	fr	Compte '%' supprimé.
 account '%1' not found !!!	admin	fr	Le compte %1 n'a pas été trouvé!!!
 account active	admin	fr	Compte actif
 account deleted.	admin	fr	Compte supprimé.
-account editable by user	admin	fr	compte modifiable par l'utilisateur
 account has been created	common	fr	Le compte a été créé.
 account has been deleted	common	fr	Le compte a été supprimé.
 account has been updated	common	fr	Le compte a été mis à jour.
@@ -109,8 +105,6 @@ advanced options	admin	fr	Options avancées
 after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	fr	Après combien de tentatives infructueuses de connexion, un compte doit-il être bloqué. (3 par défaut)
 after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	fr	Après combien de tentatives infructueuses de connexion, une adresse IP doit-elle être bloquée. (15 par défaut)
 aliases	admin	fr	Alias
-aliases+forwards	admin	fr	Alias+Transferts
-aliases, forwarding, quota, ...	admin	fr	Alias, Transferts, Quota...
 all accounts	admin	fr	Tous les comptes
 all acls	admin	fr	Tous les ACLs
 all applications	admin	fr	Toutes les applications
@@ -122,7 +116,6 @@ allow anonymous access to this app	admin	fr	Autoriser l'accès anonyme à cette 
 allow remote administration from following install id's (comma separated)	admin	fr	Autoriser l'administration à distance depuis les ID d'installation suivantes, séparé par des virgules.
 allow user to set 'remember me' token	admin	fr	AUtoriser les utilisateurs à utiliser "Se souvenir de moi"
 allow users to change forwards	admin	fr	Autoriser les utilisateurs à changer les transferts
-allow users to create further identities	admin	fr	Autoriser les utilisateurs à créer d'autres identités
 allow users to create identities for aliases	admin	fr	Autoriser les utilisateurs à créer des identités pour les alias
 allowed for get requests, default in modern browsers, if attribute is not set	admin	fr	autorisé pour les requêtes get, par défaut dans les navigateurs modernes, si l'attribut n'est pas défini
 allowed just as second factor	admin	fr	autorisé uniquement en second facteur
@@ -145,7 +138,6 @@ applications	admin	fr	Applications
 applications available on mobile devices	admin	fr	Applications disponibles sur les mobiles
 applications list	admin	fr	Liste des applications
 applications run rights updated.	admin	fr	Droits d'execution de l'application mis à jour
-applications this group can use	admin	fr	Applications autorisées pour ce groupe
 applies the changes	admin	fr	Appliquer les changements
 apply changes	admin	fr	Appliquer les changements
 apply the changes	admin	fr	Appliquer les changements
@@ -173,7 +165,6 @@ authentication / accounts	admin	fr	Authentification / Comptes
 auto create account records for authenticated users	admin	fr	Créer automatiquement les enregistrements de comptes pour les utilisateurs authentifiés
 automatically transfer entries owned by the user:	admin	fr	Transférer automatiquement les entrées appartenant à l'utilisateur :
 available placeholders	admin	fr	Mots clés disponibles
-b	admin	fr	B
 back to admin/grouplist	admin	fr	Retour à l'admin / liste des groupes
 back to admin/userlist	admin	fr	Retour à l'admin / liste des utilisateurs
 back to the list	admin	fr	Retour à la liste
@@ -285,7 +276,6 @@ default	admin	fr	défaut
 default file system space per user	admin	fr	Espace disque par utilisateur (par défaut)
 default file system space per user/group ?	admin	fr	Espace disque par utilisateur/groupe (par défaut) ?
 default of currently	admin	fr	actuel défaut
-default preferences	admin	fr	Préférences par défaut
 deinstall crontab	admin	fr	Désinstaller le crontab
 delete account	admin	fr	Supprimer le compte
 delete account %1	admin	fr	Supprimer le compte %1
@@ -357,7 +347,6 @@ do you really want to delete this profile	admin	fr	Voulez-vous vraiment supprime
 do you really want to reset the filter for the profile listing	admin	fr	Voulez-vous vraiment réinitialiser le filtre pour le listage des profils ?
 do you want to delete all global subcategories ?	admin	fr	Voulez-vous supprimer toutes les sous-catégories globales ?
 do you want to move all global subcategories one level down ?	admin	fr	Voulez-vous déplacer toutes les sous-catégories globales un niveau plus bas ?
-docker	admin	fr	Docker
 document root (default)	admin	fr	Racine des documents (défaut)
 domainname	admin	fr	Nom de domaine
 down	admin	fr	Bas
@@ -465,27 +454,23 @@ failed to upload %1	admin	fr	Echec à l'upload %1
 fallback (after each pageview)	admin	fr	retour au défaut (après chaque prévisualisation)
 false	admin	fr	Faux
 field '%1' already exists !!!	admin	fr	Le champ '%1'  existe déjà !
-field must not be empty!	admin	fr	Le champ ne peut être vide !
 file rejected, no %2. is:%1	admin	fr	Fichier rejeté, pas de %2.  Fichiers permis : %1
 file space	admin	fr	Espace fichiers
 file space must be an integer	admin	fr	La valeur Espace fichiers doit être un entier
 filtered by account	admin	fr	Filtrage par compte
 filtered by group	admin	fr	Filtrage par groupe
-folder	admin	fr	Dossier
 folder acl	admin	fr	ACL sur le dossier
 for the times above	admin	fr	pour le timing ci-dessus
 for the times below (empty values count as '*', all empty = every minute)	admin	fr	Pour le timing ci-dessous (les valeurs vides comptent comme '*', tout vide = chaque minute)
 forbid users to create identities	admin	fr	Interdire aux utilisateurs de créer des identités
 force selectbox	admin	fr	Forcer la boîte de sélection
 force users to change their password regularily?(empty for no,number for after that number of days	admin	fr	Définir la récurrence du changement forcé de mot de passe. Définir le nombre de jours. Vide = Non
-forced preferences	admin	fr	Préférences forcées
 forward also to	admin	fr	Transférer aussi à
 forward email's to	admin	fr	Transférer les emails à
 forward emails to	admin	fr	Transférer le emails à
 forward only	admin	fr	Seulement transférer
 forward only disables imap mailbox / storing of mails and just forwards them to given address.	admin	fr	Forward désactive uniquement la boîte aux lettres IMAP / le stockage des mails et se contente de les transférer à une adresse donnée.
 full name	admin	fr	Nom complet
-gb	admin	fr	GB
 general	admin	fr	Général
 generate certificate	admin	fr	Générer le Certificat
 git clone	admin	fr	Git clone
@@ -539,10 +524,8 @@ if you delete the user without selecting an account to move the data to, all ent
 if you ignore that error as admin, you should check "%1"!	admin	fr	Si vous ignorer cette erreur en tant qu'administrateur, vous devez cocher "%1" !
 if you specify port 5190 as sieve server port, you enforce ssl for sieve (server must support that)	admin	fr	Si vous spécifiez le port 5190 comme port du serveur Sieve, vous forcer le SSL pour Sieve (et le serveur doit le supporter...)
 if you wish to have randomly selected images you may upload multiple images.	admin	fr	Si vous souhaitez avoir des images sélectionnées au hasard, vous pouvez télécharger plusieurs images.
-imap	admin	fr	IMAP
 imap admin password	admin	fr	Mot de passe de l'administrateur IMAP
 imap admin user	admin	fr	ID administrateur IMAP
-imap administration	admin	fr	Administration IMAP
 imap c-client version < 2001	admin	fr	IMAP C-Client Version < 2001
 imap server	admin	fr	Serveur IMAP
 imap server closed the connection.	admin	fr	Le serveur IMAP a interrompu la connexion.
@@ -556,8 +539,6 @@ importance	admin	fr	Importance
 in mbyte	admin	fr	en Mo
 inactive	admin	fr	Inactif
 inbound	admin	fr	Entrant
-inbox	admin	fr	INBOX
-incoming mail	admin	fr	Courrier entrant
 initial	admin	fr	Initial
 install crontab	admin	fr	Installer le crontab
 install id	admin	fr	ID d'installation
@@ -577,7 +558,6 @@ invalid value "%1" use yes or no!	admin	fr	Valeur "%1" invalide, utilisez oui ou
 invalid value "%1", use only:	admin	fr	Valeur "%1" invalide, utilisez seulement :
 ip	admin	fr	IP
 jobs	admin	fr	Travaux
-kb	admin	fr	KB
 kill	admin	fr	Tuer
 kill session	admin	fr	Tuer la session
 kill these sessions	admin	fr	Tuer ces sessions
@@ -696,6 +676,8 @@ number of sessions / egroupware logins in the last 30 days	admin	fr	Nombre de se
 number of users	admin	fr	Nombre d'utilisateurs
 number the applications serially. if they are not numbered serially, sorting the applications could work wrong. this will not change the application's order.	admin	fr	Numéroter les applications séquentiellement. Si elles ne sont pas numérotées séquentiellement, le tri des applications pourrait être erroné. Ceci ne change pas l'ordre des applications.
 nummeric account id	admin	fr	ID numérique du compte
+oauth authentiction	admin	fr	Authentification OAuth
+offer to installing egroupware as mail-handler	admin	fr	Offre d'installation d'EGroupware en tant que gestionnaire de courrier
 official egroupware usage statistic	admin	fr	Statistique officielle d'usage d'EGroupware
 one day	admin	fr	Un jour
 one hour	admin	fr	Une heure
@@ -707,7 +689,6 @@ order	admin	fr	Ordre
 organisation	admin	fr	Organisation
 other security configuration	admin	fr	Autres paramètres de sécurité
 outbound	admin	fr	sortant
-outgoing mail	admin	fr	Email sortant
 own categories	admin	fr	Catégories personnelles
 own install id	admin	fr	ID d'installation propre
 own install id:	admin	fr	ID d'installation propre :
@@ -755,7 +736,6 @@ port	admin	fr	port
 postfix with ldap	admin	fr	Postfix avec support LDAP
 postpone for	admin	fr	Reporter à
 preferences	admin	fr	Préférences
-preferences saved.	admin	fr	Préférences enregistrées.
 primary group	admin	fr	Groupe primaire
 processing of file %1 failed. failed to meet basic restrictions.	admin	fr	Le traitement du fichier %1 a échoué. Les restrictions de base ne sont pas respectées.
 profile access rights	admin	fr	Droits d'accès du profil
@@ -763,7 +743,6 @@ profile is active	admin	fr	Le profil est actif
 profile list	admin	fr	Liste des profils
 profile name	admin	fr	Nom de profil
 qmaildotmode	admin	fr	qmaildotmode
-quota (mb)	admin	fr	Quota (Mo)
 quota settings	admin	fr	Paramètres de quota
 quota size in mbyte	admin	fr	Taille des quota en Mo
 re-enter password	admin	fr	Entrez à nouveau le mot de passe
@@ -831,7 +810,6 @@ server settings	admin	fr	Configuration du serveur
 server type(mode)	admin	fr	Type de serveur (mode)
 server url	admin	fr	URL du serveur
 server username	admin	fr	Nom d'utilisateur du serveur
-serverside filtering	admin	fr	Filtres côté serveur
 sessions	admin	fr	Sessions
 sessions last 30 days	admin	fr	Sessions des 30 derniers jours
 set a random password	admin	fr	Définir un mot de passe aléatoire
@@ -848,7 +826,6 @@ show error log	admin	fr	Afficher le journal des erreurs
 show members	admin	fr	Afficher les membres
 show phpinfo()	admin	fr	Afficher phpinfo()
 show session ip address	admin	fr	Afficher les adresses IP des sessions
-sieve	admin	fr	Sieve
 sieve server hostname or ip address	admin	fr	Nom ou adresse IP du serveur Sieve
 sieve server port	admin	fr	Port Sieve
 sieve settings	admin	fr	Paramètres Sieve
@@ -868,7 +845,6 @@ sorry, the above users are still a member of the group %1	admin	fr	Désolé, les
 sorry, the follow users are still a member of the group %1	admin	fr	Désolé, les utilisateurs suivants sont encore membres de ce groupe %1
 sort the entries	admin	fr	Trier les entrées
 source account #%1 does not exist!	admin	fr	Le compte source #%1 n'existe pas !
-spamtitan integration requires epl version	admin	fr	SpamTitan nécessite la version EPL
 ssl	admin	fr	ssl
 standard	admin	fr	Standard
 standard identity	admin	fr	Identité standard
@@ -998,7 +974,6 @@ users can define their own identities	admin	fr	Les utilisateurs peuvent définir
 users can define their own signatures	admin	fr	les utilisateurs peuvent définir leurs propres signatures
 users can utilize these stationery templates	admin	fr	Les utilisateurs peuvent utiliser ces modèles de papiers
 users choice	admin	fr	Choix de l'utilisateur
-users in this group	admin	fr	Utilisateurs dans ce groupe
 using data from mozilla ispdb for provider %1	admin	fr	Utilisation des données de Mozilla ISPDB pour le fournisseur %1
 vacation messages with start- and end-date require an admin account to be set	admin	fr	Les messages d'absence avec date de début et de fin doivent être définis par un administrateur !
 vacation notice	admin	fr	Message d'absence
