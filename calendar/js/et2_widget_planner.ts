@@ -405,19 +405,20 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 			},
 			// Labels for the rows
 			row_labels: function() {
-				var labels = [];
-				var already_added = [];
-				var options = [];
-				var resource = null;
+				let labels = [];
+				let already_added = [];
+				let options = [];
+				let resource = null;
+				let owner = null;
 				if(app.calendar && app.calendar.sidebox_et2 && app.calendar.sidebox_et2.getWidgetById('owner'))
 				{
-					const owner = app.calendar.sidebox_et2.getWidgetById('owner')
-					options = [...owner.select_options, ...owner._selected_remote];
+					owner = app.calendar.sidebox_et2.getWidgetById('owner')
 				}
 				else
 				{
-					options = this.getArrayMgr("sel_options").getRoot().getEntry('owner');
+					owner = this.getArrayMgr("sel_options").getRoot().getEntry('owner');
 				}
+				options = owner.select_options;
 				for(var i = 0; i < this.options.owner.length; i++)
 				{
 					var user = this.options.owner[i];
@@ -530,20 +531,34 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 						rows[label_index].push(event);
 					}
 				};
-				for(var user in participants)
+				for(let user in participants)
 				{
 					var participant = participants[user];
-					if (parseInt(user) < 0)	// groups
+
+					if(parseInt(user) < 0)	// groups
 					{
-						var planner = this;
-						egw.accountData(user,'account_fullname',true,function(result) {
-							for(var id in result)
+						let owner = null;
+						let options = [];
+						if(app.calendar && app.calendar.sidebox_et2 && app.calendar.sidebox_et2.getWidgetById('owner'))
+						{
+							owner = app.calendar.sidebox_et2.getWidgetById('owner')
+						}
+						else
+						{
+							owner = this.getArrayMgr("sel_options").getRoot().getEntry('owner');
+						}
+						options = owner.select_options.find((o) => o.value == user).resources || [];
+
+						for(let i = 0; i < options.length; i++)
+						{
+							if(!participants[options[i]])
 							{
-								if(!participants[id]) add_row.call(planner,id,participant);
+								add_row.call(this, options[i], participant);
 							}
-						},labels);
+						}
 						continue;
 					}
+
 					add_row.call(this, user, participant);
 				}
 			},
@@ -1897,9 +1912,24 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 		}
 		this.registeredCallbacks.push(cache_id);
 
-		egw.dataRegisterUID(cache_id, function(data) {
+		egw.dataRegisterUID(cache_id, function(data)
+		{
 
+			const waitForGroups = [];
 			if(data && data.length)
+			{
+				for(var i = 0; i < data.length; i++)
+				{
+					var event = egw.dataGetUIDdata('calendar::' + data[i]);
+
+					waitForGroups.push((<CalendarApp>app.calendar)._fetch_group_members(event.data));
+				}
+			}
+			if(waitForGroups.length == 0)
+			{
+				return;
+			}
+			Promise.all(waitForGroups).then(() =>
 			{
 				var invalidate = true;
 
@@ -1966,7 +1996,7 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 				{
 					this.invalidate(false);
 				}
-			}
+			});
 		}, this, this.getInstanceManager().execId,this.id);
 
 		return value;
