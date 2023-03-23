@@ -269,7 +269,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		this.addEventListener("mousewheel", this._handleMouseWheel);
 		this.addEventListener("mouseenter", this._handleMouseEnter);
 		this.addEventListener("mouseup", this.handleOptionClick);
-		this.addEventListener("keyup", this.handleKeyDown);
+		this.addEventListener("keydown", this.handleKeyDown);
 
 		this.updateComplete.then(() =>
 		{
@@ -710,6 +710,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 					this.handleMenuHide();
 				}
 			});
+			event.stopPropagation();
 		}
 
 	}
