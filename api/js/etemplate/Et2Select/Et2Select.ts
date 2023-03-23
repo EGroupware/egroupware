@@ -252,6 +252,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		this._handleMouseEnter = this._handleMouseEnter.bind(this);
 		this._handleMouseLeave = this._handleMouseLeave.bind(this);
 		this.handleOptionClick = this.handleOptionClick.bind(this);
+		this.handleKeyDown = this.handleKeyDown.bind(this);
 		this.handleTagRemove = this.handleTagRemove.bind(this);
 	}
 
@@ -268,6 +269,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		this.addEventListener("mousewheel", this._handleMouseWheel);
 		this.addEventListener("mouseenter", this._handleMouseEnter);
 		this.addEventListener("mouseup", this.handleOptionClick);
+		this.addEventListener("keyup", this.handleKeyDown);
 
 		this.updateComplete.then(() =>
 		{
@@ -687,6 +689,29 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 				this.handleMenuHide();
 			}
 		});
+	}
+
+	/**
+	 * Always close the dropdown if an option is clicked, even if multiple=true.  This differs from SlSelect,
+	 * which leaves the dropdown open for multiple=true
+	 *
+	 * @param {KeyboardEvent} event
+	 * @private
+	 */
+	private handleKeyDown(event : KeyboardEvent)
+	{
+		if(event.key === 'Enter' || (event.key === ' ' && this.typeToSelectString === ''))
+		{
+			this.dropdown.hide().then(() =>
+			{
+				if(typeof this.handleMenuHide == "function")
+				{
+					// Make sure search gets hidden
+					this.handleMenuHide();
+				}
+			});
+		}
+
 	}
 
 	/**
