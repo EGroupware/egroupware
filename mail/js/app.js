@@ -313,7 +313,7 @@ app.classes.mail = AppJS.extend(
 					this.et2.getArrayMgr("content").getEntry('mail_id'),
 					this.et2.getArrayMgr("content").getEntry('mail_displayattachments')
 				);
-				this.smimeAttachmentsCheckerInterval();
+
 				break;
 			case 'mail.compose':
 				var composeToolbar = this.et2.getWidgetById('composeToolbar');
@@ -1284,7 +1284,7 @@ app.classes.mail = AppJS.extend(
 				});
 			}, 300));
 		}
-		if (data['smime']) this.smimeAttachmentsCheckerInterval();
+
 		var messages = {};
 		messages['msg'] = [rowId];
 
@@ -6033,30 +6033,19 @@ app.classes.mail = AppJS.extend(
 			this.set_smimeAttachmentsMobile(_attachments);
 			return;
 		}
-		var attachmentArea = this.et2.getWidgetById(egw(window).is_popup()?'mail_displayattachments':'attachmentsBlock');
-		var content = this.et2.getArrayMgr('content');
-		var mailPreview = this.et2.getWidgetById('mailPreviewContainer');
-		if (attachmentArea && _attachments && _attachments.length > 0)
+		let data = {};
+		let selected = [];
+		if (_attachments)
 		{
-			attachmentArea.getParent().set_disabled(false);
-			content.data[attachmentArea.id] = _attachments;
-			this.et2.setArrayMgr('contnet', content);
-			attachmentArea.getDOMNode().classList.remove('loading');
-			attachmentArea.set_value({content:_attachments});
-			if (attachmentArea.id == 'attachmentsBlock')
-			{
-				var a_node = attachmentArea.getDOMNode();
-				var m_node = mailPreview.getDOMNode();
-				var offset = m_node.offsetTop - a_node.offsetTop;
-				if (a_node.offsetTop + a_node.offsetHeight > m_node.offsetTop)
-				{
-					m_node.style.setProperty('top', m_node.offsetTop + offset+"px");
-				}
-			}
-		}
-		else
-		{
-			attachmentArea.getParent().set_disabled(true);
+			selected = [_attachments[0]['mail_id']];
+			data = egw.dataGetUIDdata(selected[0]);
+			// do not call mail_preview if we have the attachments already resolved, avoid infinit loop
+			if (data.data.attachmentsBlock.length>0) return;
+
+			data.data.attachmentsBlock = _attachments;
+			data.data.attachmentsBlockTitle = _attachments.lenght;
+			egw.dataStoreUID(data.uid, data);
+			this.mail_preview(selected, this.et2.getWidgetById('nm'));
 		}
 	},
 	/**
