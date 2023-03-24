@@ -322,14 +322,14 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 			case 'c':
 			case '':
 				// check if link-search already returned either icon or (l|f)name and only if not, query contact again
-				if (!(isset($value['icon']) || isset($value['lname']) && isset($value['fname'])) &&
-					($contact = $contacts_obj->read($type === '' ? 'account:'.$id : $id, true)))
+				if(!(isset($value['icon']) || isset($value['lname']) && isset($value['fname'])) &&
+					($contact = $contacts_obj->read($type === '' ? 'account:' . $id : $data['res_id'], true)))
 				{
-					if (Api\Contacts::hasPhoto($contact))
+					if(Api\Contacts::hasPhoto($contact))
 					{
 						$value['icon'] = Api\Framework::link('/api/avatar.php', array(
 							'contact_id' => $contact['id'],
-							'etag' => $contact['etag'] ? $contact['etag'] : 1
+							'etag'       => $contact['etag'] ? $contact['etag'] : 1
 						));
 					}
 					else
@@ -340,7 +340,7 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 				}
 				if($id < 0)
 				{
-					$value['resources'] = array_map('strval',$GLOBALS['egw']->accounts->members($id, true));
+					$value['resources'] = array_map('strval', $GLOBALS['egw']->accounts->members($id, true));
 				}
 				break;
 			default :
