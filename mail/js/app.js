@@ -218,6 +218,12 @@ app.classes.mail = AppJS.extend(
 				let aom = egw_getObjectManager('mail').getObjectById('nm');
 				aom.flags = egwSetBit(aom.flags, EGW_AO_FLAG_DEFAULT_FOCUS, false);
 
+				let splitter = this.et2.getWidgetById('mailSplitter');
+				if (splitter && egw.preference('previewPane', 'mail') == 'expand')
+				{
+					splitter.style.setProperty('--max','100%');
+					splitter.dock()
+				}
 				// Set preview pane state
 				this.mail_disablePreviewArea(!this.getPreviewPaneState());
 
@@ -1066,6 +1072,11 @@ app.classes.mail = AppJS.extend(
 		}
 		this.et2.getWidgetById('mailPreview').set_disabled(_value);
 		//Dock the splitter always if we are browsing with mobile
+		if (egwIsMobile())
+		{
+			this.mail_disablePreviewArea = _value = true;
+		}
+
 		if (_value==true)
 		{
 			if (this.mail_previewAreaActive) dock();
@@ -1126,6 +1137,7 @@ app.classes.mail = AppJS.extend(
 		let sel_options = {}
 		let attachmentsBlock = this.et2.getWidgetById('attachmentsBlock');
 		let mailPreview = this.et2.getWidgetById('mailPreview');
+		let previewPane = this.egw.preference('previewPane', 'mail');
 		if(typeof selected != 'undefined' && selected.length == 1)
 		{
 			rowId = this.mail_fetchCurrentlyFocussed(selected);
@@ -1247,9 +1259,8 @@ app.classes.mail = AppJS.extend(
 			}
 			if (!egwIsMobile())return;
 		}
-
 		// Not applied to mobile preview
-		if (!egwIsMobile() && this.getPreviewPaneState())
+		else if (!egwIsMobile() && previewPane !='hide')
 		{
 			// Blank first, so we don't show previous email while loading
 			var IframeHandle = this.et2.getWidgetById('messageIFRAME');
@@ -1262,7 +1273,7 @@ app.classes.mail = AppJS.extend(
 				.next(this.mailvelope_iframe_selector).remove();
 
 			// need to have the DOM ready for calculation.
-			this.mail_disablePreviewArea(false);
+			this.mail_disablePreviewArea((typeof selected == 'undefined' || selected.length == 0 && previewPane == 'expand'));
 
 			// Update the internal list of selected mails, if needed
 			if(this.mail_selectedMails.indexOf(rowId) < 0)
