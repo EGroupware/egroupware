@@ -88,7 +88,7 @@
   html[data-darkmode='1'] #loginMainDiv,
   html[data-darkmode='1'] .et2_taglist_tags_icon,
   html[data-darkmode='1'] .fw_avatar_stat,
-  html[data-darkmode='1'] et2-lavatar[image=""]::part(base),
+  html[data-darkmode='1'] et2-tag::part(icon),
   html[data-darkmode='1'] et2-avatar-group,
   html[data-darkmode='1'] .blueimp-gallery .slide {
     filter: invert(1) hue-rotate(180deg) !important;

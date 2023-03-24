@@ -625,6 +625,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		tag.value = item.value;
 		tag.textContent = item.getTextLabel().trim();
 		tag.class = item.classList.value + " search_tag";
+		tag.setAttribute("exportparts", "icon");
 		if(this.size)
 		{
 			tag.size = this.size;
