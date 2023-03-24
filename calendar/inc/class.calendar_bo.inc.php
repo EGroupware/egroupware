@@ -507,16 +507,22 @@ class calendar_bo
 			// for groups we have to include the members
 			if ($GLOBALS['egw']->accounts->get_type($user) == 'g')
 			{
-				if ($no_enum_groups) continue;
+				// Include the group itself to catch group invitations
+				$users[] = $user;
+
+				if($no_enum_groups)
+				{
+					continue;
+				}
 
 				$members = $GLOBALS['egw']->accounts->members($user, true);
-				if (is_array($members))
+				if(is_array($members))
 				{
 					foreach($members as $member)
 					{
 						// use only members which gave the user a read-grant
-						if (!in_array($member, $users) &&
-							($ignore_acl || $this->check_perms(Acl::READ|($use_freebusy?self::ACL_FREEBUSY:0),0,$member)))
+						if(!in_array($member, $users) &&
+							($ignore_acl || $this->check_perms(Acl::READ | ($use_freebusy ? self::ACL_FREEBUSY : 0), 0, $member)))
 						{
 							$users[] = $member;
 						}
