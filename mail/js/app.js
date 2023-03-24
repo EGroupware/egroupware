@@ -1138,6 +1138,9 @@ app.classes.mail = AppJS.extend(
 		let attachmentsBlock = this.et2.getWidgetById('attachmentsBlock');
 		let mailPreview = this.et2.getWidgetById('mailPreview');
 		let previewPane = this.egw.preference('previewPane', 'mail');
+		// don't go further if the preview is supposed to be disabled and we're not in mobile view
+		if (previewPane == 'hide' && !egwIsMobile()) return;
+
 		if(typeof selected != 'undefined' && selected.length == 1)
 		{
 			rowId = this.mail_fetchCurrentlyFocussed(selected);
