@@ -99,12 +99,10 @@
                                      onlyApp="kanban"></et2-link-string>
                     <et2-select-cat id="${row}[info_cat]" readonly="true"></et2-select-cat>
                     <et2-vbox>
-                        <et2-date-time id="${row}[info_startdate]" readonly="true"
-                                       class="infolog_fixedHeight"></et2-date-time>
+                        <et2-date-time id="${row}[info_startdate]" readonly="true"></et2-date-time>
                         <et2-date-time id="${row}[info_enddate]" readonly="true"
-                                       class="$row_cont[end_class] infolog_fixedHeight"></et2-date-time>
-                        <et2-date-time id="${row}[info_datecompleted]" readonly="true"
-                                       class="infolog_fixedHeight"></et2-date-time>
+                                       class="$row_cont[end_class]"></et2-date-time>
+                        <et2-date-time id="${row}[info_datecompleted]" readonly="true"></et2-date-time>
                     </et2-vbox>
                     <et2-vbox>
                         <et2-hbox>
