@@ -282,6 +282,18 @@ if ($npm)
 
 	if ($grunt) run_cmd($grunt, 'grunt');
 
+    if (!file_exists($chunks=__DIR__.'/chunks') || !is_dir($chunks))
+    {
+	    if (!is_dir($chunks))
+	    {
+            unlink($chunks);
+	    }
+	    if (!mkdir($chunks, 0755) && !is_dir($chunks))
+	    {
+		    throw new \RuntimeException(sprintf('Clound NOT create directory "%s"!', $chunks));
+	    }
+    }
+
 	run_cmd($npm .' run build', 'rollup (npm run build)');
 }
 
