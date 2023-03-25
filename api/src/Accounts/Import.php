@@ -59,7 +59,7 @@ class Import
 			$GLOBALS['egw_info']['server'] += Api\Config::read('phpgwapi');
 		}
 
-		if (!in_array($source = $GLOBALS['egw_info']['server']['account_import_source'], ['ldap', 'ads']))
+		if (!in_array($source = $GLOBALS['egw_info']['server']['account_import_source'], ['ldap', 'ads', 'univention']))
 		{
 			throw new \InvalidArgumentException("Invalid account_import_source='{$GLOBALS['egw_info']['server']['account_import_source']}'!");
 		}
@@ -154,7 +154,7 @@ class Import
 	{
 		try {
 			// determine from where we migrate to what
-			if (!in_array($source = $GLOBALS['egw_info']['server']['account_import_source'], ['ldap', 'ads']))
+			if (!in_array($source = $GLOBALS['egw_info']['server']['account_import_source'], ['ldap', 'ads', 'univention']))
 			{
 				throw new \InvalidArgumentException("Invalid account_import_source='{$GLOBALS['egw_info']['server']['account_import_source']}'!");
 			}
@@ -168,7 +168,7 @@ class Import
 			}
 			if (!$initial_import && empty($GLOBALS['egw_info']['server']['account_import_lastrun']))
 			{
-				throw new \InvalidArgumentException(lang("You need to run the inital import first!"));
+				throw new \InvalidArgumentException(lang("You need to run the initial import first!"));
 			}
 
 			Api\Accounts::cache_invalidate();   // to not get any cached data eg. from the wrong backend
@@ -215,7 +215,7 @@ class Import
 			$last_modified = null;
 			$start_import = time();
 			$cookie = '';
-			$start = ['', 5, &$cookie]; // cookie must be a reference!
+			$start = ['', 500, &$cookie]; // cookie must be a reference!
 			do
 			{
 				foreach ($this->contacts->search('', false, '', 'account_lid', '', '', 'AND', $start, $filter) as $contact)
@@ -402,7 +402,7 @@ class Import
 						}
 					}
 					// if requested, also set memberships
-					if ($type === 'users+groups' && !$dry_run)
+					if (in_array('groups', explode('+', $type)) && !$dry_run)
 					{
 						// LDAP backend does not query it automatic
 						if (!isset($account['memberships']))
@@ -884,8 +884,13 @@ class Import
 				{
 					if (!($account = $this->accounts->read($ldap_id)))
 					{
-						$this->logger("Failed reading user '$account_lid' (#$ldap_id) from LDAP, maybe he is not contained in filter --> ignored", 'detail');
+						$this->logger("Failed reading user '$account_lid' (#$ldap_id) from LDAP to set as member of group '$group', maybe he is not contained in filter --> ignored", 'detail');
 						continue;
+					}
+					// LDAP backend does not query it automatic
+					if (!isset($account['memberships']))
+					{
+						$account['memberships'] = $this->accounts->memberships($ldap_id);
 					}
 					if (!($contact = $this->contacts->read($account['person_id'])))
 					{
@@ -926,11 +931,11 @@ class Import
 					$this->accounts_sql->set_memberships(array_filter(array_map(function($account_lid)
 					{
 						return $this->accounts_sql->name2id($account_lid);
-					}, $account['memberships'])), $sql_account['account_id']);
+					}, $account['memberships'] ?? [])), $sql_account['account_id']);
 				}
 				else
 				{
-					if (!($memberships = $this->accounts_sql->memberships($account_id)))
+					if (($memberships = $this->accounts_sql->memberships($account_id)) === false)
 					{
 						$this->logger("Error reading memberships of (existing) user '$account_lid' (#$account_id)!", 'error');
 						$errors++;
