@@ -990,7 +990,7 @@ app.classes.mail = AppJS.extend(
 					if (content[field]['files'] && content[field]['files']['filemode']
 							&& filemode && filemode.get_value() != content[field]['files']['filemode'])
 					{
-						var filemode_label = filemode.options.select_options[content[field]['files']['filemode']]['label'];
+						var filemode_label = filemode.options.select_options.filter(_item=>{return _item.value == content[field]['files']['filemode']})[0]['label'];
 						Et2Dialog.show_dialog(function (_button)
 							{
 								if (_button == Et2Dialog.YES_BUTTON)
