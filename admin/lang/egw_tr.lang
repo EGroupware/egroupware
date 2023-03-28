@@ -3,6 +3,12 @@
 %1 not found or not executable !!!	admin	tr	%1 bulunamadı veya çalıştırılamıyor !!!
 (stored password will not be shown here)	admin	tr	(Kayıtlı şifreler burada görüntülenmeyecektir.)
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	tr	(Yeni uygulama yüklemek için <br><a href="setup/" target="setup">Kurulum</a>u kullanınız. !!!)
+1 year	admin	tr	1 yıl
+2 month	admin	tr	2 ay
+2 weeks	admin	tr	2 hafta
+2-factor-authentication for interactive login	admin	tr	Etkileşimli oturum açma için 2 Faktörlü Kimlik Doğrulama
+3 month	admin	tr	3 ay
+6 month	admin	tr	6 ay
 accesslog and bruteforce defense	admin	tr	Erişim kayıtları ve BruteForce Koruması
 account active	admin	tr	Hesap aktif
 account has been created	common	tr	Hesap oluşturuldu

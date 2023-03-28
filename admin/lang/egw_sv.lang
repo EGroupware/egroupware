@@ -7,6 +7,12 @@
 (stored password will not be shown here)	admin	sv	(lagrade lösenord visas ej här)
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	sv	(För att installera nya applikationer används<br><a href="setup/" target="setup">Installationen</a> [Hantera Applikationer] !!!
 -  type	admin	sv	- typ
+1 year	admin	sv	1 år
+2 month	admin	sv	2 månader
+2 weeks	admin	sv	2 veckor
+2-factor-authentication for interactive login	admin	sv	2-faktorsautentisering för interaktiv inloggning
+3 month	admin	sv	3 månader
+6 month	admin	sv	6 månader
 accesslog and bruteforce defense	admin	sv	Accesslogg- och BruteForce försvar
 account active	admin	sv	Kontot är aktivt
 account has been created	common	sv	Kontot har skapats

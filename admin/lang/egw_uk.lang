@@ -2,6 +2,12 @@
 %1 not found or not executable !!!	admin	uk	%1 не знайдено або не може бути виконано !!!
 (stored password will not be shown here)	admin	uk	(збережений пароль не буде тут показуватись)
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	uk	(Для встановлення нових приложень використайте<br><a href="setup/" target="setup">Setup</a> [Керування приложеннями] !!!)
+1 year	admin	uk	1 рік
+2 month	admin	uk	2 місяці
+2 weeks	admin	uk	2 тижні
+2-factor-authentication for interactive login	admin	uk	2-факторна автентифікація для інтерактивного входу
+3 month	admin	uk	3 місяці
+6 month	admin	uk	6 місяців
 accesslog and bruteforce defense	admin	uk	Протоколи доступу та захист BruteForce
 account active	admin	uk	Рахунок активний
 account has been created	common	uk	Рахунок створено

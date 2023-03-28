@@ -7,6 +7,12 @@
 (stored password will not be shown here)	admin	pt	(Senha guardada não será exibida aqui)
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	pt	(Para instalar novas aplicações clique em <br><a href="setup/" target="setup">Configurações</a> [Aplicações de Gestão] !!!)
 -  type	admin	pt	- tipo
+1 year	admin	pt	1 ano
+2 month	admin	pt	2 meses
+2 weeks	admin	pt	2 semanas
+2-factor-authentication for interactive login	admin	pt	2-Factor-Autenticação para login interactivo
+3 month	admin	pt	3 meses
+6 month	admin	pt	6 meses
 accesslog and bruteforce defense	admin	pt	Registo de acesso e defesa de ataque de força bruta
 account active	admin	pt	Conta activa
 account has been created	common	pt	A conta foi criada

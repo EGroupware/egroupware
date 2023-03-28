@@ -24,6 +24,12 @@
 (stored password will not be shown here)	admin	sk	(Uložené heslá sa tu nezobrazia)
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	sk	(Pre nainštalovanie nových aplikácií použite<br><a href="setup/" target="setup">Inštalátor</a> [Správa aplikácií] !!!)
 -  type	admin	sk	- typ
+1 year	admin	sk	1 rok
+2 month	admin	sk	2 mesiace
+2 weeks	admin	sk	2 týždne
+2-factor-authentication for interactive login	admin	sk	2-faktorová autentifikácia pre interaktívne prihlásenie
+3 month	admin	sk	3 mesiace
+6 month	admin	sk	6 mesiacov
 access by	admin	sk	Koho prístup
 access control	admin	sk	Riadenie prístupu
 access to %1 data by others	admin	sk	Prístup ostatných k dátam %1

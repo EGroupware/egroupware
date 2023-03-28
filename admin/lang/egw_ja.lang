@@ -24,6 +24,12 @@
 (stored password will not be shown here)	admin	ja	Stored password will not be shown here!
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	ja	To install new applications use<br><a href="setup/" target="setup">Setup</a> [Manage Applications]!
 -  type	admin	ja	-  タイプ
+1 year	admin	ja	1年
+2 month	admin	ja	2ヶ月
+2 weeks	admin	ja	2週間
+2-factor-authentication for interactive login	admin	ja	対話型ログインのための2要素認証
+3 month	admin	ja	3ヶ月
+6 month	admin	ja	6ヶ月
 access by	admin	ja	アクセスするユーザ/グループ
 access control	admin	ja	アクセス制御
 access to %1 data by others	admin	ja	他者が「%1」のデータにアクセス可能

@@ -13,6 +13,12 @@
 (stored password will not be shown here)	admin	cs	(Uložená hesla zde nebudou zobrazena)
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	cs	(Pro instalaci nových aplikací použijte<br><a href="setup/" target="setup">Setup</a> [Spravovat aplikace] !!!)
 -  type	admin	cs	- typ
+1 year	admin	cs	1 rok
+2 month	admin	cs	2 měsíce
+2 weeks	admin	cs	2 týdny
+2-factor-authentication for interactive login	admin	cs	2-faktorové ověřování pro interaktivní přihlášení
+3 month	admin	cs	3 měsíce
+6 month	admin	cs	6 měsíců
 accesslog and bruteforce defense	admin	cs	Přístupový protokol a obrana proti útoku hrubou silou
 account %1 %2	admin	cs	Účet %1 %2
 account '%1' deleted.	admin	cs	Účet '%1' byl smazán.

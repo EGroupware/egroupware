@@ -12,6 +12,12 @@
 (stored password will not be shown here)	admin	zh	(已储存密码将不在这里显示)
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	zh	(请使用<a href="setup/" target="setup">[管理应用程序]</a>来安装新的应用程序！)
 -  type	admin	zh	- 类型
+1 year	admin	zh	1年
+2 month	admin	zh	2个月
+2 weeks	admin	zh	2周
+2-factor-authentication for interactive login	admin	zh	交互式登录的双因素认证
+3 month	admin	zh	3个月
+6 month	admin	zh	6个月
 accesslog and bruteforce defense	admin	zh	存取纪录与恶意攻击防御
 account %1 %2	admin	zh	帐户 %1 %2
 account '%1' deleted.	admin	zh	帐户 '%1' 已删除。

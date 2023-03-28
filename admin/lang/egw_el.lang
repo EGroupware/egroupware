@@ -6,6 +6,12 @@
 (stored password will not be shown here)	admin	el	(Τα αποθηκευμένα password δεν θα εμφανίζονται εδω)
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	el	(To install new applications use<br><a href="setup/" target="setup">Setup</a> [Manage Applications] !!!)
 -  type	admin	el	- τύπος
+1 year	admin	el	1 έτος
+2 month	admin	el	2 μήνες
+2 weeks	admin	el	2 εβδομάδες
+2-factor-authentication for interactive login	admin	el	Πιστοποίηση 2 παραγόντων για διαδραστική σύνδεση
+3 month	admin	el	3 μήνες
+6 month	admin	el	6 μήνες
 accesslog and bruteforce defense	admin	el	AccessLog και BruteForce άμυνα
 account active	admin	el	Λογαριασμός ενεργός
 account has been created	common	el	Ο λογαριασμός έχει δημιουργηθεί

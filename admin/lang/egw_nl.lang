@@ -12,6 +12,12 @@
 (stored password will not be shown here)	admin	nl	(Opgeslagen wachtwoord word hier niet weergegeven)
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	nl	(Gebruik <a href="setup/" target="setup">Setup</a>[Beheer toepassingen] om nieuwe toepassingen te installeren.)
 -  type	admin	nl	- type
+1 year	admin	nl	1 jaar
+2 month	admin	nl	2 maanden
+2 weeks	admin	nl	2 weken
+2-factor-authentication for interactive login	admin	nl	2-Factor-Authenticatie voor interactief inloggen
+3 month	admin	nl	3 maanden
+6 month	admin	nl	6 maanden
 accesslog and bruteforce defense	admin	nl	Toegangslogboek en bescherming procesvermogen
 account	admin	nl	Account
 account %1 %2	admin	nl	Account %1 %2
