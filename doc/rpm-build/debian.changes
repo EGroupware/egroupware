@@ -1,3 +1,26 @@
+egroupware-docker (23.1.20230328) hardy; urgency=low
+
+  * Safari/iOS: support Safari/iOS 14.x via transpiling of JavaScript
+  * Home: get home mostly working again
+  * All apps: multi-selections eg. searching and entering mail addresses close now automatic on selecting a result
+  * Infolog: Remove height restriction on start/due/completed dates in list
+  * Mail: fix mail preview don't get set correctly when running in expand pane view
+  * Mail: fix mail preview can not show attachments for smime encrypted messages
+  * NewsAdmin: fix creating of new categories
+  * WebAuthN: fix not working registration of new authentication devices or browsers
+  * Notifications: deal with "Lock timeout exceeded" error on too many undeleted notifications
+  * Rocketchat: fix rocketchat's status sometimes is not showing up in Status app for bigger installations
+  * Status: add new config setting in  order to be able to open BigBlueButton calls in separate window with no iframe
+  * Status: fix top header (invite button, end call button, ...) in call dialogs no longer is visible
+  * Status: fix ringing tone never ends after a call being answered
+  * Status: fix somehow not found user in contacts stalls whole display of status column
+  * Api/MariaDB/MySQL: fix SQL error handling in PHP 8.1
+  * Admin/Setup: logging all DB backup operations to a text file db_backup.log in backup-directory
+  * LDAP/Univention: periodic account-import for Univention (mailPrimaryAddress), use LDAP account-filter for reading accounts too
+  * full list of changes https://github.com/EGroupware/egroupware/compare/23.1.20230314...23.1.20230328
+
+ -- Ralf Becker <rb@egroupware.org>  Tue, 28 Mar 2023 10:17:13 +0200
+
 egroupware-docker (23.1.20230314) hardy; urgency=low
 
   * 23.1 final release with the following major features:
