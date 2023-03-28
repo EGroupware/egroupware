@@ -120,7 +120,8 @@
 				</row>
 				<row valign="top">
 					<et2-description  for="recur_data" value="Repeat days"></et2-description>
-					<et2-select-dow  statustext="Days of the week for a weekly repeated event" id="recur_data" rows="6" multiple="1" placeholder="1"></et2-select-dow>
+					<et2-select-dow statustext="Days of the week for a weekly repeated event" id="recur_data" rows="6"
+                                    multiple="true" placeholder=""></et2-select-dow>
 					<et2-vbox>
 						<et2-description  value="Exceptions"></et2-description>
 						<et2-button  statustext="Create an exception for the given date" label="@exception_label" id="button[exception]" noLang="1"></et2-button>
