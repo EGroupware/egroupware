@@ -51,6 +51,7 @@
   html[data-darkmode='1'] et2-calendar-owner::part(icon),
   html[data-darkmode='1'] sl-menu-item [slot="prefix"],
   html[data-darkmode='1'] iframe,
+  html[data-darkmode='1'] et2-lavatar[image=""]::part(base),
   html[data-darkmode='1'] video,
   html[data-darkmode='1'] #loginMainDiv,
   html[data-darkmode='1'] .et2_taglist_tags_icon,
@@ -9466,3 +9467,4 @@ table.egwGridView_grid img.et2_appicon {
     border-radius: 0;
   }
 }
+/*# sourceMappingURL=fw_mobile.css.map */
