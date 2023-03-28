@@ -57,7 +57,11 @@ export class Et2CheckboxReadonly extends Et2InputWidget(LitElement) implements e
 
 	render()
 	{
-		const isChecked = this.checked || typeof this.selectedValue == "string" && this.value == this.selectedValue;
+		const isChecked = this.checked ||
+			// selectedValue is set, so only a value matching that counts as checked
+			typeof this.selectedValue == "string" && this.value == this.selectedValue ||
+			// selectedValue is not set, any truthy value counts as checked
+			typeof this.selectedValue === "undefined" && this.value;
 		let check = "";
 
 		if(isChecked && this.roTrue)
