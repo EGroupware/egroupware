@@ -124,7 +124,8 @@
                                     multiple="true" placeholder=""></et2-select-dow>
 					<et2-vbox>
 						<et2-description  value="Exceptions"></et2-description>
-						<et2-button  statustext="Create an exception for the given date" label="@exception_label" id="button[exception]" noLang="1"></et2-button>
+						<et2-button statustext="Create an exception for the given date" label="@exception_label"
+                                    id="button[exception]" noLang="1" hideOnReadonly="true"></et2-button>
 					</et2-vbox>
 					<grid id="recur_exception">
 						<columns>
