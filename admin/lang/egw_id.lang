@@ -5,6 +5,12 @@
 %1 user %2	admin	id	%1 pengguna %2
 (no subject)	admin	id	(tanpa subyek)
 -  type	admin	id	- tipe
+1 year	admin	id	1 tahun
+2 month	admin	id	2 bulan
+2 weeks	admin	id	2 minggu
+2-factor-authentication for interactive login	admin	id	Autentikasi 2-Faktor untuk login interaktif
+3 month	admin	id	3 bulan
+6 month	admin	id	6 bulan
 account %1 %2	admin	id	Akoun %1 %2
 account '%1' deleted.	admin	id	Akoun '%1' dihapus.
 account '%1' not found !!!	admin	id	Akoun '%1' tidak ditemukan !!!

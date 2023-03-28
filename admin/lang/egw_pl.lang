@@ -13,6 +13,12 @@
 (stored password will not be shown here)	admin	pl	(Przechowywane hasło nie bdzie tutaj wyświetlane)
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	pl	(Aby zainstalować nowe aplikacje, użyj<br><a href="setup/" target="setup">Setup</a> [Zarządzaj aplikacjami] !!!)
 -  type	admin	pl	- typ
+1 year	admin	pl	1 rok
+2 month	admin	pl	2 miesiące
+2 weeks	admin	pl	2 tygodnie
+2-factor-authentication for interactive login	admin	pl	2-Factor-Authentication dla interaktywnego logowania
+3 month	admin	pl	3 miesiące
+6 month	admin	pl	6 miesięcy
 accesslog and bruteforce defense	admin	pl	Dziennik dostępu oraz ochrona przed atakiem typu BruteForce
 account %1 %2	admin	pl	Konto %1 %2
 account '%1' deleted.	admin	pl	Konto '%1' usunięte

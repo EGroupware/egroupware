@@ -1,4 +1,10 @@
 (default no, leave it off if you dont use it)	admin	et	(vaikimisi Ei, jäta see välja kui sa seda ei kasuta)
+1 year	admin	et	1 aasta
+2 month	admin	et	2 kuud
+2 weeks	admin	et	2 nädalat
+2-factor-authentication for interactive login	admin	et	2-faktoriline autentimine interaktiivseks sisselogimiseks
+3 month	admin	et	3 kuu
+6 month	admin	et	6 kuud
 account '%1' not found !!!	admin	et	Kontot '%1' ei leitud !!!
 account active	admin	et	Konto aktiivne
 account has been created	common	et	Konto on tehtud

@@ -7,6 +7,12 @@
 (stored password will not be shown here)	admin	hu	(a tárolt jelszó  nem fog itt megjelenni)
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	hu	(Új alkalmazás telepítéséhez használja a <br><a href="setup/" target="setup">Setup</a> felületet [Alkalmazások Kezelése].)
 -  type	admin	hu	- típus
+1 year	admin	hu	1 év
+2 month	admin	hu	2 hónap
+2 weeks	admin	hu	2 hét
+2-factor-authentication for interactive login	admin	hu	2-faktoros hitelesítés interaktív bejelentkezéshez
+3 month	admin	hu	3 hónap
+6 month	admin	hu	6 hónap
 accesslog and bruteforce defense	admin	hu	Log elérése és brute force védelem
 account %1 %2	admin	hu	Felhasználói hozzáférés %1 %2
 account '%1' deleted.	admin	hu	'%1' felhasználói hozzáférés törölve.

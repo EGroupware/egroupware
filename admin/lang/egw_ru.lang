@@ -20,6 +20,12 @@
 (stored password will not be shown here)	admin	ru	Сохранённые пароли не будут отображены
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	ru	Для установки новых приложений используйте<br><a href="setup/" target="setup">Установка</a> [Управление приложениями]!
 -  type	admin	ru	- тип
+1 year	admin	ru	1 год
+2 month	admin	ru	2 месяц
+2 weeks	admin	ru	2 недели
+2-factor-authentication for interactive login	admin	ru	Двухфакторная аутентификация для интерактивного входа в систему
+3 month	admin	ru	3 месяц
+6 month	admin	ru	6 месяц
 accesslog and bruteforce defense	admin	ru	Журнал доступа и защита от взлома подбором
 account	admin	ru	Учетная запись
 account "%1" has no email address --> not notified!	admin	ru	Учётная запись «%1» не имеет E-mail адреса и поэтому не получает извещений!

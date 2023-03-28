@@ -4,6 +4,12 @@
 (no subject)	admin	lv	(nav temata)
 (stored password will not be shown here)	admin	lv	(Ierakstītā parole netiks šeit parādīta)
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	lv	(lai instalētu jaunu programmatūru lieto <br><a href="setup/" target="setup">Setup</a> [Pārvaldi aplikācijas] !!!)
+1 year	admin	lv	1 gads
+2 month	admin	lv	2 mēneši
+2 weeks	admin	lv	2 nedēļas
+2-factor-authentication for interactive login	admin	lv	2 faktoru autentifikācija interaktīvai pieteikšanās sistēmai
+3 month	admin	lv	3 mēneši
+6 month	admin	lv	6 mēneši
 accesslog and bruteforce defense	admin	lv	Piekļuves logs un nesankcionētās pieejas aizsardzība
 account active	admin	lv	Konts aktīvs
 account has been created	common	lv	Konts tika izveidots

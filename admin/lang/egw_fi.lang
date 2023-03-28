@@ -16,6 +16,12 @@
 (stored password will not be shown here)	admin	fi	(Tallennettua salasanaa ei näytetä)
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	fi	(Käytä <br><a href="setup/" target="setup">Setup</a> [Manage Applications] asentaaksesi uusia sovelluksia !!!)
 -  type	admin	fi	- muoto
+1 year	admin	fi	1 vuosi
+2 month	admin	fi	2 kuukautta
+2 weeks	admin	fi	2 viikkoa
+2-factor-authentication for interactive login	admin	fi	2-tekijätunnistus interaktiivista kirjautumista varten
+3 month	admin	fi	3 kuukautta
+6 month	admin	fi	6 kuukautta
 accesslog and bruteforce defense	admin	fi	Käyttöloki ja suoja käyttäjätunnusten arvuuttelulle
 account "%1" has no email address --> not notified!	admin	fi	Käyttäjätilillä "%1" ei ole sähköpostiosoitetta - ei huomautusviestiä.
 account "%1" has no plaintext password!	admin	fi	Käyttäjätilillä "%1" ei ole "plain text" salasanaa
@@ -149,7 +155,7 @@ command scheduled to run at %1	admin	fi	Komento suoritetaan kello %1
 commercial: all sorts of companies	admin	fi	Kaupallinen: Kaikki yritykset
 connection dropped by imap server.	admin	fi	Yhteys IMAP palvelimeen katkesi.
 continue	admin	fi	Jatka
-cookie path (allows multiple egw sessions with different directories, has problemes with sitemgr!)	admin	fi	Evästeiden polku (mahdollistaa useiden eGW evästeiden käytön eri hakemistoista, voi aiheuttaa ongelmia Sivuston hallinta-modulissa)
+cookie path (allows multiple egw sessions with different directories, has problemes with sitemgr!)	admin	fi	Evästeiden polku (mahdollistaa useiden EGroupware evästeiden käytön eri hakemistoista, voi aiheuttaa ongelmia Sivuston hallinta-modulissa)
 could not complete request. reason given: %s	admin	fi	Pyyntöä ei voitu toteuttaa. %s
 could not open secure connection to the imap server. %s : %s.	admin	fi	Turvattua yhteyttä IMAP palvelimeen ei voitu avata. %s : %s.
 country	admin	fi	Maa
@@ -729,7 +735,7 @@ warn users about the need to change their password? the number set here should b
 we ask for the data to improve our profile in the press and to get a better understanding of egroupware's user base and it's needs.	admin	fi	Tietoja käytetään ainoastaan tilastolliseen tarkoitukseen.
 we hope you understand the importance for this voluntary statistic and not deny it lightly.	admin	fi	Mitään identiteetin paljastavaa tietoa ei tallenneta.
 who would you like to transfer all records owned by the deleted user to?	admin	fi	Kenelle siirretään KAIKKI poistetun käyttäjän tietueet?
-would you like egroupware to cache the egw info array ?	admin	fi	Säilytetäänkö egw info -rakenne välimuistissa?
+would you like egroupware to cache the egw info array ?	admin	fi	Säilytetäänkö EGroupware info -rakenne välimuistissa?
 would you like egroupware to check for a new version<br>when admins login ?	admin	fi	Tarkistetaanko, onko EGroupware:sta uutta versiota<br>kun ylläpitäjä kirjautuu järjestelmään?
 would you like egroupware to check for new application versions when admins login ?	admin	fi	Haluatko, että EGroupware etsii uusia versioita sovelluksista ylläpitäjän kirjautuessa ?
 would you like to automaticaly load new langfiles (at login-time) ?	admin	fi	Ladataanko uudet kielitiedostot automaattisesti (kirjauduttaessa) ?

@@ -13,6 +13,12 @@
 (stored password will not be shown here)	admin	pt-br	(Senha salva não será exibida aqui)
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	pt-br	(Para instalar um novo aplicativo use <br><a href="setup/" target="setup">Setup</a>[Gerenciar aplicativos] !!!)
 -  type	admin	pt-br	- tipo
+1 year	admin	pt-br	1 ano
+2 month	admin	pt-br	2 meses
+2 weeks	admin	pt-br	2 semanas
+2-factor-authentication for interactive login	admin	pt-br	2-Fator-Autenticação para login interativo
+3 month	admin	pt-br	3 meses
+6 month	admin	pt-br	6 meses
 accesslog and bruteforce defense	admin	pt-br	Registro de acesso e defesa de Força Bruta
 account %1 %2	admin	pt-br	Conta %1 %2
 account '%1' deleted.	admin	pt-br	Conta '%1' removida.

@@ -3,6 +3,12 @@
 (no subject)	admin	da	(ingen emne)
 (stored password will not be shown here)	admin	da	(Gemte adgangskoder vil ikke blive vist her)
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	da	(For at installere nye applikationer brug <br><a href="setup/" target="setup">Setup</a> [Administrere Applikationer] !!!)
+1 year	admin	da	1 år
+2 month	admin	da	2 måneder
+2 weeks	admin	da	2 uger
+2-factor-authentication for interactive login	admin	da	2-faktor-autentificering til interaktivt login
+3 month	admin	da	3 måneder
+6 month	admin	da	6 måneder
 accesslog and bruteforce defense	admin	da	Adgangslog for BruteForce forsvar
 account active	admin	da	Konto aktiv
 account has been created	common	da	Kontoen er oprettet

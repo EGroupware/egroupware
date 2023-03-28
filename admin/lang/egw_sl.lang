@@ -25,6 +25,12 @@
 (stored password will not be shown here)	admin	sl	(Shranjeno geslo tu ne bo vidno)
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	sl	(Za namestitev novih aplikacij uporabite <br><a href="setup/" target="setup">Namestitev</a> [Upravljanje aplikacij]!)
 -  type	admin	sl	- vrsta
+1 year	admin	sl	1 leto
+2 month	admin	sl	2 meseca
+2 weeks	admin	sl	2 tedna
+2-factor-authentication for interactive login	admin	sl	2-faktorska avtentikacija za interaktivno prijavo
+3 month	admin	sl	3 mesece
+6 month	admin	sl	6 mesecev
 access by	admin	sl	Dostop do
 access control	admin	sl	Nadzor dostopa
 access to %1 data by others	admin	sl	Dostop do podatkov %1 drugim
