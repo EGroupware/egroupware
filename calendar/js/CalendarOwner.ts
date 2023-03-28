@@ -108,7 +108,7 @@ export class CalendarOwner extends Et2Select
 		if(!option.fname && !option.lname && !option.icon && option.app)
 		{
 			return html`
-                <et2-image src="${option.app}/navbar"></et2-image>`;
+                <et2-image src="${option.app}/navbar" style="width: var(--icon-width)"></et2-image>`;
 		}
 		// lavatar uses a size property, not a CSS variable
 		let style = getComputedStyle(this);
