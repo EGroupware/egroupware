@@ -11,7 +11,7 @@
 import {css, html, PropertyValues, TemplateResult} from "@lion/core";
 import {Et2StaticSelectMixin, StaticOptions as so} from "./StaticOptions";
 import {Et2widgetWithSelectMixin} from "./Et2WidgetWithSelectMixin";
-import {SelectOption} from "./FindSelectOptions";
+import {cleanSelectOptions, SelectOption} from "./FindSelectOptions";
 import {SlMenuItem, SlSelect} from "@shoelace-style/shoelace";
 import shoelace from "../Styles/shoelace";
 import {Et2WithSearchMixin} from "./SearchMixin";
@@ -898,11 +898,48 @@ customElements.define("et2-select-day", Et2SelectDay);
 
 export class Et2SelectDayOfWeek extends Et2StaticSelectMixin(Et2Select)
 {
-	constructor()
+	connectedCallback()
 	{
-		super();
+		super.connectedCallback();
 
-		this.static_options = so.dow(this, {other: this.other || []});
+		// Wait for connected instead of constructor because attributes make a difference in
+		// which options are offered
+		this.fetchComplete = so.dow(this, {other: this.other || []}).then(options =>
+		{
+			this.set_static_options(cleanSelectOptions(options));
+		});
+	}
+
+	set value(new_value)
+	{
+		let expanded_value = typeof new_value == "object" ? new_value : [];
+		if(new_value && (typeof new_value == "string" || typeof new_value == "number"))
+		{
+			let int_value = parseInt(new_value);
+			this.updateComplete.then(() =>
+			{
+				this.fetchComplete.then(() =>
+				{
+					let options = this.select_options;
+					for(let index in options)
+					{
+						let right = parseInt(options[index].value);
+						if(!!(int_value & right))
+						{
+							expanded_value.push("" + right);
+						}
+					}
+					super.value = expanded_value;
+				})
+			});
+			return;
+		}
+		super.value = expanded_value;
+	}
+
+	get value()
+	{
+		return super.value;
 	}
 }
 
