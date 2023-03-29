@@ -1157,7 +1157,7 @@ class Schema
 				case 'date':
 					$ado_col = 'D';
 					// allow to use now() beside current_date, as Postgres backups contain it and it's easier to remember anyway
-					if (in_array(strtolower($col_data['default']), self::DEFAULT_TIMESTAMPS))
+					if (isset($col_data['default']) && in_array(strtolower($col_data['default']), self::DEFAULT_TIMESTAMPS))
 					{
 						$ado_col .= ' DEFDATE';
 						unset($col_data['default']);
@@ -1192,7 +1192,7 @@ class Schema
 				case 'timestamp':
 					$ado_col = 'T';
 					// allow to use now() beside current_timestamp, as Postgres backups contain it and it's easier to remember anyway
-					if (in_array(strtolower($col_data['default']) , self::DEFAULT_TIMESTAMPS))
+					if (isset($col_data['default']) && in_array(strtolower($col_data['default']) , self::DEFAULT_TIMESTAMPS))
 					{
 						$ado_col .= ' DEFTIMESTAMP';
 						unset($col_data['default']);
