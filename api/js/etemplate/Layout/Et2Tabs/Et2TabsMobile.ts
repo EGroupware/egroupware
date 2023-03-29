@@ -1,7 +1,5 @@
 import {Et2Tabs} from "./Et2Tabs";
 import {classMap, html, repeat, TemplateResult} from "@lion/core";
-import {et2_createWidget} from "../../et2_core_widget";
-import {et2_template} from "../../et2_widget_template";
 import {Et2Details} from "../Et2Details/Et2Details";
 import {SlTab, SlTabPanel} from "@shoelace-style/shoelace";
 
@@ -57,17 +55,6 @@ export class Et2TabsMobile extends Et2Tabs
 
 	protected tabTemplate(tab, index : number) : TemplateResult
 	{
-		if(tab.XMLNode)
-		{
-			// Just read the XMLNode
-			let tabContent = this.createElementFromNode(tab.XMLNode);
-			tabContent.getDOMNode().slot = tab.id;
-		}
-		else
-		{
-			let template = <et2_template>et2_createWidget('template', tab.widget_options, this);
-			template.getDOMNode().slot = tab.id;
-		}
 		return html`
             <et2-details
                     id="${tab.id}"
@@ -75,7 +62,6 @@ export class Et2TabsMobile extends Et2Tabs
                     ?open=${index == this._selectedIndex}
                     ?disabled=${tab.disabled}
                     ?hidden=${tab.hidden}
-
             >
                 <slot name="${tab.id}"/>
             </et2-details>`
