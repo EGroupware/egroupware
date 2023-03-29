@@ -660,9 +660,9 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(LitFlatpickr))
 			{
 				return flatpickr.formatDate(<Date>this.defaultDate, this.getOptions().dateFormat);
 			}
-			if(typeof egwIsMobile == "function" && egwIsMobile())
+			if(typeof egwIsMobile == "function" && egwIsMobile() && this._inputNode?.value)
 			{
-				return this._inputNode?.value + "Z" || "";
+				return this._inputNode?.value + "Z";
 			}
 			return this._inputNode?.value || '';
 		}
