@@ -200,7 +200,8 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 			css`
 				:host {
 					--header-spacing: var(--sl-spacing-medium);
-					--body-spacing: var(--sl-spacing-medium)
+					--body-spacing: var(--sl-spacing-medium);
+				    --width: auto;
 				}
 				.dialog__panel {
 					border: 1px solid silver;
@@ -238,7 +239,6 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 				pointer-events: none;
 				background: transparent;
 			  }
-
 			  :host(:not([isModal])) .dialog__panel {
 				pointer-events: auto;
 			  }
