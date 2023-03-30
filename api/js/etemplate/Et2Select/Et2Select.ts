@@ -924,7 +924,8 @@ export class Et2SelectDayOfWeek extends Et2StaticSelectMixin(Et2Select)
 					for(let index in options)
 					{
 						let right = parseInt(options[index].value);
-						if(!!(int_value & right))
+
+						if((int_value & right) == right)
 						{
 							expanded_value.push("" + right);
 						}
