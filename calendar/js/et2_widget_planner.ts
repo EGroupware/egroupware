@@ -1996,7 +1996,12 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 				{
 					this.invalidate(false);
 				}
-			});
+			})
+				.then(() =>
+				{
+					// Update the "now" line _after_ rows are done
+					this._updateNow();
+				});
 		}, this, this.getInstanceManager().execId,this.id);
 
 		return value;
