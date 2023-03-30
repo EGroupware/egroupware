@@ -42,6 +42,16 @@ done
 	exit 1
 }
 
+# check $version is already in changelog
+grep -q "$version.$packaging" $(dirname $0)/debian.changes || {
+  git pull
+  grep -q "$version.$packaging" $(dirname $0)/debian.changes || {
+    echo "No $version.$packaging in changelog ($(dirname $0)/debian.changes)!"
+    echo "Did you pushed it to the branch?"
+    exit 1
+  }
+}
+
 ucs=4.4
 
 univention-appcenter-control list | tee /tmp/ucs-apps | egrep "$ucs/egroupware=$version.$packaging$postfix" || {
