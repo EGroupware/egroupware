@@ -105,7 +105,7 @@ export class et2_template extends et2_DOMWidget
 				this.options = et2_cloneObject(_attrs);
 				_attrs = {};
 			}
-			if(this.id != "" || this.options.template)
+			if((this.id != "" || this.options.template) && !this.options.disabled)
 			{
 				var parts = (this.options.template || this.id).split('?');
 				var cache_buster = parts.length > 1 ? parts.pop() : null;
