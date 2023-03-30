@@ -311,11 +311,6 @@ export class et2_vfsPath extends et2_vfsName
 	{
 		// Call the inherited constructor
 		super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_vfsPath._attributes, _child || {}));
-	}
-
-	createInputWidget()
-	{
-		super.createInputWidget();
 		this.div = jQuery(document.createElement("div"))
 			.addClass('et2_vfsPath');
 		this.span = jQuery(document.createElement("ul"))
@@ -336,6 +331,12 @@ export class et2_vfsPath extends et2_vfsName
 				jQuery(this).removeClass('scrollable');
 			}
 		});
+	}
+
+	createInputWidget()
+	{
+		super.createInputWidget();
+
 		this.input.on('focus', function() {
 			this.input.val(this.options.value);
 			this.span.hide();
