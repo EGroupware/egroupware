@@ -790,6 +790,10 @@ et2-dialog .dialog--has_message {
     vertical-align: middle;
     display: flex;
 }
+/* we need to keep the buttons used in et2dialog always in maximum width to be displayed their content fully*/
+et2-dialog et2-button {
+    max-width: initial;
+}
 
 
 
