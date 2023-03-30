@@ -161,16 +161,23 @@ class HiddenUploadSharing extends Sharing
 	{
 		$actions = parent::get_actions('filemanager', $group);
 
+		// In filemanager, only collabora sharing is EPL Only
+		unset($actions['share']['children'][0]);
+		foreach($actions['share']['children'] as $action_id => &$action)
+		{
+			// Take care not to re-enble shareDocuments if it has no documents
+			$action['enabled'] = $action_id == 'shareDocuments' && $action['enabled'] || $action_id != 'shareDocuments';
+		}
 		// Add in a hidden upload directory
 		$actions['share']['children']['shareUploadDir'] = array(
-				'caption' => lang('Hidden uploads'),
-				'group' => 2,
-				'order' => 30,
-				'enabled' => 'javaScript:app.filemanager.hidden_upload_enabled',
-				'onExecute' => 'javaScript:app.filemanager.share_link',
-				'data' => ['share_writable' => self::HIDDEN_UPLOAD],
-				'icon' => 'upload',
-				'hideOnDisabled' => true
+			'caption'        => lang('Hidden uploads'),
+			'group'          => 2,
+			'order'          => 30,
+			'enabled'        => 'javaScript:app.filemanager.hidden_upload_enabled',
+			'onExecute'      => 'javaScript:app.filemanager.share_link',
+			'data'           => ['share_writable' => self::HIDDEN_UPLOAD],
+			'icon'           => 'upload',
+			'hideOnDisabled' => true
 		);
 
 		return $actions;
