@@ -182,6 +182,10 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 			  ::part(display-label) {
 				margin: 0;
 			  }
+              :host::part(display-label) {
+                max-height: 8em;
+				overflow-y: auto;
+              }
 			`
 		];
 	}
