@@ -2934,7 +2934,8 @@ class Contacts extends Contacts\Storage
 					if (substr($name, 0, 4) === 'tel_' && !empty($value))
 					{
 						try {
-							$tel = $phoneNumberUtil->parse($value,
+							// we sanitize the number a little, as phoneNumberUtil e.g. chokes on pipe char ("|") when used in phone numbers
+							$tel = $phoneNumberUtil->parse(preg_replace('/[^+0-9()\/ -]+/', '', $value),
 								// prefer region of contact, to eg. be able to parse US numbers starting direct with areacode but no leading 0
 								$row[substr($name, -5) === '_home' ? 'adr_two_countrycode' : 'adr_one_countrycode'] ?:
 								$row['adr_one_countrycode'] ?: $region);
