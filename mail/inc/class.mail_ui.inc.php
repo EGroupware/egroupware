@@ -487,7 +487,7 @@ class mail_ui
 							'start'          =>	0,		// IO position in list
 							'order'          =>	'date',	// IO name of the column to sort after (optional for the sortheaders)
 							'sort'           =>	'DESC',	// IO direction of the sort: 'ASC' or 'DESC'
-							'no_columnselection' => $this->mail_bo->mailPreferences['previewPane'] == 'vertical'? true : false
+							'no_columnselection' => false
 						);
 					}
 					if (Api\Header\UserAgent::mobile()) $content[self::$nm_index]['header_row'] = 'mail.index.header_right';
