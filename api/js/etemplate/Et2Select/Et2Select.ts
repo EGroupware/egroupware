@@ -436,7 +436,9 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		}
 		// If no value is set, choose the first option
 		// Only do this on once during initial setup, or it can be impossible to clear the value
-		const valueArray = Array.isArray(this.value) ? this.value : (!this.value ? [] : this.value.toString().split(','));
+		const valueArray = Array.isArray(this.value) ? this.value : (
+			!this.value ? [] : (this.multiple ? this.value.toString().split(',') : [this.value])
+		);
 
 		// value not in options --> use emptyLabel, if exists, or first option otherwise
 		if(this.select_options.filter((option) => valueArray.find(val => val == option.value) ||
@@ -462,7 +464,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 
 	set_value(val : string | string[] | number | number[])
 	{
-		if(typeof val === 'string' && val.indexOf(',') !== -1)
+		if(typeof val === 'string' && val.indexOf(',') !== -1 && (this.multiple || val.length >= 3))
 		{
 			val = val.split(',');
 		}
