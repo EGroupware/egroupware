@@ -14,7 +14,6 @@ export class Et2TabsMobile extends Et2Tabs
 	connectedCallback()
 	{
 		super.connectedCallback();
-		this.nav = this.shadowRoot.querySelector("et2-vbox");
 	}
 
 	protected createTabs(tabData)
@@ -52,6 +51,47 @@ export class Et2TabsMobile extends Et2Tabs
 	{
 		// Don't have an indicator to sync
 	}
+
+	repositionIndicator()
+	{
+		// Don't have an indicator to reposition
+	}
+
+	preventIndicatorTransition()
+	{
+		// Don't have an indicator
+	}
+
+	/**
+	 * Reimplement to allow our existing function signatures too
+	 *
+	 * @deprecated use this.show(name : string)
+	 * @param tab number or name of tab (Sl uses that internally with a SlTab!)
+	 * @param options
+	 */
+	setActiveTab(tab : SlTab | String | Number, options? : {
+		emitEvents? : boolean;
+		scrollBehavior? : 'auto' | 'smooth';
+	})
+	{
+		if(typeof tab === 'number')
+		{
+			tab = this.getAllTabs()[tab];
+			return this.show(tab.panel);
+		}
+		if(typeof tab === 'string')
+		{
+			return this.show(tab);
+		}
+		// Don't call super, it hides tab content
+	}
+
+
+	get nav() : HTMLElement
+	{
+		return this.shadowRoot.querySelector("et2-vbox");
+	}
+
 
 	protected tabTemplate(tab, index : number) : TemplateResult
 	{
