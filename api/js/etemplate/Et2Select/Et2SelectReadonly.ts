@@ -305,23 +305,21 @@ customElements.define("et2-select-bool_ro", Et2SelectBoolReadonly);
 
 export class Et2SelectCategoryReadonly extends Et2SelectReadonly
 {
-	constructor()
+	protected find_select_options(_attrs)
 	{
-		super();
 
+		// Need to do this in find_select_options so attrs can be used to get proper options
 		so.cat(this).then(_options =>
 		{
 			this.select_options = _options;
 
 			// on first load we have the value before the options arrive --> need to request an update
-			if (this.value && (!Array.isArray(this.value) || this.value.length))
+			if(this.value && (!Array.isArray(this.value) || this.value.length))
 			{
 				this.requestUpdate('value');
 			}
 		});
 	}
-
-	protected find_select_options(_attrs) {}
 }
 
 // @ts-ignore TypeScript is not recognizing that this widget is a LitElement
