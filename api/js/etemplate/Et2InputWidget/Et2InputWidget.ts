@@ -131,6 +131,10 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 				autofocus: {
 					type: Boolean,
 					reflect: true
+				},
+
+				autocomplete: {
+					type: String
 				}
 			};
 		}
@@ -184,6 +188,7 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 
 			this.et2HandleFocus = this.et2HandleFocus.bind(this);
 			this.et2HandleBlur = this.et2HandleBlur.bind(this);
+			this.autocomplete = 'on';
 		}
 
 		connectedCallback()
