@@ -59,26 +59,33 @@ class Import
 			$GLOBALS['egw_info']['server'] += Api\Config::read('phpgwapi');
 		}
 
-		if (!in_array($source = $GLOBALS['egw_info']['server']['account_import_source'], ['ldap', 'ads', 'univention']))
+		try
 		{
-			throw new \InvalidArgumentException("Invalid account_import_source='{$GLOBALS['egw_info']['server']['account_import_source']}'!");
+			$this->_logger = $logger;
+
+			if (!in_array($source = $GLOBALS['egw_info']['server']['account_import_source'], ['ldap', 'ads', 'univention']))
+			{
+				throw new \InvalidArgumentException("Invalid account_import_source='{$GLOBALS['egw_info']['server']['account_import_source']}'!");
+			}
+
+			$this->contacts = ($frontend = self::contactsFactory($source))->so_accounts ?: $frontend->somain;
+			$this->contacts_sql_frontend = self::contactsFactory('sql');
+			$this->contacts_sql = $this->contacts_sql_frontend->so_accounts ?: $this->contacts_sql_frontend->somain;
+
+			$this->accounts = self::accountsFactory($source)->backend;
+			$this->frontend_sql = self::accountsFactory('sql');
+			$this->accounts_sql = $this->frontend_sql->backend;
+
+			$this->files2attrs = [
+				Api\Contacts::FILES_PHOTO => ['jpegphoto', Api\Contacts::FILES_BIT_PHOTO, null],
+				Api\Contacts::FILES_PGP_PUBKEY => ['pubkey', Api\Contacts::FILES_BIT_PGP_PUBKEY, \addressbook_bo::$pgp_key_regexp],
+				Api\Contacts::FILES_SMIME_PUBKEY => ['pubkey', Api\Contacts::FILES_BIT_SMIME_PUBKEY, Api\Mail\Smime::$certificate_regexp],
+			];
 		}
-
-		$this->contacts = ($frontend = self::contactsFactory($source))->so_accounts ?: $frontend->somain;
-		$this->contacts_sql_frontend = self::contactsFactory('sql');
-		$this->contacts_sql = $this->contacts_sql_frontend->so_accounts ?: $this->contacts_sql_frontend->somain;
-
-		$this->accounts = self::accountsFactory($source)->backend;
-		$this->frontend_sql = self::accountsFactory('sql');
-		$this->accounts_sql = $this->frontend_sql->backend;
-
-		$this->_logger = $logger;
-
-		$this->files2attrs = [
-			Api\Contacts::FILES_PHOTO => ['jpegphoto', Api\Contacts::FILES_BIT_PHOTO, null],
-			Api\Contacts::FILES_PGP_PUBKEY => ['pubkey', Api\Contacts::FILES_BIT_PGP_PUBKEY, \addressbook_bo::$pgp_key_regexp],
-			Api\Contacts::FILES_SMIME_PUBKEY => ['pubkey', Api\Contacts::FILES_BIT_SMIME_PUBKEY, Api\Mail\Smime::$certificate_regexp],
-		];
+		catch (\Exception $e) {
+			$this->logger('Error: '.$e->getMessage(), 'fatal');
+			throw $e;
+		}
 	}
 
 	/**
@@ -184,7 +191,7 @@ class Import
 			{
 				foreach($this->groups($initial_import ? null : $GLOBALS['egw_info']['server']['account_import_lastrun'],
 					in_array('local', explode('+', $type)) ? 'no' : $delete,
-					$groups, $set_members, $dry_run) as $name => $val)
+					$groups, $set_members, $dry_run, $sql_groups) as $name => $val)
 				{
 					$$name += $val;
 				}
@@ -409,11 +416,28 @@ class Import
 						{
 							$account['memberships'] = $this->accounts->memberships($account['account_id']);
 						}
+						// preserve memberships of local groups, if they are allowed
+						$local_memberships = [];
+						if (in_array('local', explode('+', $type)))
+						{
+							if (!isset($local_groups))
+							{
+								$local_groups = [];
+								foreach(array_diff($sql_groups, $groups) as $gid => $group)
+								{
+									$local_groups[$gid] = $this->accounts_sql->members($gid);
+								}
+							}
+							$local_memberships = array_keys(array_filter($local_groups, static function($members) use ($account_id)
+							{
+								return isset($members[$account_id]);
+							}));
+						}
 						// we need to convert the account_id's of memberships, in case we use different ones in SQL
-						$this->accounts_sql->set_memberships(array_filter(array_map(static function($account_lid) use ($groups)
+						$this->accounts_sql->set_memberships(array_merge(array_filter(array_map(static function($account_lid) use ($groups)
 						{
 							return array_search($account_lid, $groups);
-						}, $account['memberships'])), $account_id);
+						}, $account['memberships'])), $local_memberships), $account_id);
 					}
 					if ($new)
 					{
@@ -539,9 +563,10 @@ class Import
 	 * @param array|null &$groups on return all current groups as account_id => account_lid pairs
 	 * @param array|null &$set_members on return, if modified: (sql)account_id => [(ldap)account_id => account_lid] pairs
 	 * @param bool $dry_run true: only log what would be done, but do NOT make any changes
+	 * @param array|null &$sql_groups on return all current groups in SQL as account_id => account_lid pairs
 	 * @return int[] values for keys "created", "updated", "uptodate", "errors", "deleted"
 	 */
-	protected function groups(?int $modified, string $delete, array &$groups=null, array &$set_members=null, bool $dry_run=false)
+	protected function groups(?int $modified, string $delete, array &$groups=null, array &$set_members=null, bool $dry_run=false, array &$sql_groups=null)
 	{
 		// to delete no longer existing groups, we have to query all groups!
 		if ($modified) $delete = 'no';
