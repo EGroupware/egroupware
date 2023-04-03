@@ -464,7 +464,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 
 	set_value(val : string | string[] | number | number[])
 	{
-		if(typeof val === 'string' && val.indexOf(',') !== -1 && (this.multiple || val.length >= 3))
+		if(typeof val === 'string' && val.indexOf(',') !== -1 && this.multiple)
 		{
 			val = val.split(',');
 		}
