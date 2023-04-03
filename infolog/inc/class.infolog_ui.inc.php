@@ -669,21 +669,33 @@ class infolog_ui
 		{
 			return $data;
 		}
-		$event = array_merge($data,array(
-			'category'	=> $GLOBALS['egw']->categories->check_list(Acl::READ, $infolog['info_cat']),
-			'priority'	=> $infolog['info_priority'] + 1,
-			'public'	=> $infolog['info_access'] != 'private',
-			'title'		=> $infolog['info_subject'],
-			'description'	=> $infolog['info_des'],
-			'location'	=> $infolog['info_location'],
-			'start'		=> $infolog['info_startdate'],
-			'end'		=> $infolog['info_enddate'] ? $infolog['info_enddate'] : $infolog['info_datecompleted']
+		$event = array_merge($data, array(
+			'category'    => $GLOBALS['egw']->categories->check_list(Acl::READ, $infolog['info_cat']),
+			'priority'    => $infolog['info_priority'] + 1,
+			'public'      => $infolog['info_access'] != 'private',
+			'title'       => $infolog['info_subject'],
+			'description' => $infolog['info_des'],
+			'location'    => $infolog['info_location'],
+			'start'       => $infolog['info_startdate'],
+			'end'         => $infolog['info_enddate'] ? $infolog['info_enddate'] : $infolog['info_datecompleted']
 		));
 		unset($event['entry_id']);
-		if (!$event['end']) $event['end'] = $event['start'] + (int) $GLOBALS['egw_info']['user']['preferences']['calendar']['defaultlength']*60;
+		if(!$event['end'])
+		{
+			$event['end'] = $event['start'] + (int)$GLOBALS['egw_info']['user']['preferences']['calendar']['defaultlength'] * 60;
+		}
 
 		// Match Api\Categories by name
-		$event['category'] = $GLOBALS['egw']->categories->name2id(Api\Categories::id2name($infolog['info_cat']));
+		if($infolog['info_cat'])
+		{
+			$event['category'] = $GLOBALS['egw']->categories->name2id(Api\Categories::id2name($infolog['info_cat']));
+		}
+		if(!$event['category'] || $event['category'] === '0')
+		{
+			// No matching category found, don't send an invalid category
+			unset($event['category']);
+		}
+
 
 		// make current user the owner of the new event, not the selected calendar, if current user has rights for it
 		$event['owner'] = $user = $GLOBALS['egw_info']['user']['account_id'];
