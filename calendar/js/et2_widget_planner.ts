@@ -296,12 +296,8 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 					return;
 				}
 				// Position bar by mouse
-				planner.vertical_bar.position({
-					my: 'right-1',
-					of: event,
-					collision: 'fit'
-				});
-				planner.vertical_bar.css('top','0px');
+				planner.vertical_bar.css("left", (event.clientX - planner.grid.offset().left + 120) + "px");
+				planner.vertical_bar.css('top', '0px');
 
 				// Get time at mouse
 				if(jQuery(event.target).closest('.calendar_eventRows').length == 0)
