@@ -1053,7 +1053,7 @@ app.classes.mail = AppJS.extend(
 	 */
 	mail_disablePreviewArea: function(_value) {
 		var splitter = this.et2.getWidgetById('mailSplitter');
-		var previewPane = this.egw.preference('previewPane', 'mail');
+		var previewPane = this.egw.preference('previewPane', 'mail') || 'vertical';
 		// return if there's no splitter we maybe in mobile mode
 		if (typeof splitter == 'undefined' || splitter == null || previewPane == 'vertical') return;
 		let dock = function(){
@@ -1137,7 +1137,7 @@ app.classes.mail = AppJS.extend(
 		let sel_options = {}
 		let attachmentsBlock = this.et2.getWidgetById('attachmentsBlock');
 		let mailPreview = this.et2.getWidgetById('mailPreview');
-		let previewPane = this.egw.preference('previewPane', 'mail');
+		let previewPane = this.egw.preference('previewPane', 'mail')||'vertical';
 		// don't go further if the preview is supposed to be disabled and we're not in mobile view
 		if (previewPane == 'hide' && !egwIsMobile()) return;
 
@@ -6223,7 +6223,7 @@ app.classes.mail = AppJS.extend(
 	 */
 	getPreviewPaneState: function ()
 	{
-		var previewPane = this.egw.preference('previewPane', 'mail');
+		var previewPane = this.egw.preference('previewPane', 'mail') || 'vertical';
 		var nm = this.et2.getWidgetById(this.nm_index);
 		var state = false;
 		switch (previewPane)
