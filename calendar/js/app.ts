@@ -3760,13 +3760,13 @@ export class CalendarApp extends EgwApp
 		let groups = [];
 		let option_owner = null;
 		let options : SelectOption[];
-		if(app.calendar && app.calendar.sidebox_et2 && app.calendar.sidebox_et2.getWidgetById('owner'))
+		if(this.sidebox_et2 && this.sidebox_et2.getWidgetById('owner'))
 		{
-			option_owner = app.calendar.sidebox_et2.getWidgetById('owner');
+			option_owner = this.sidebox_et2.getWidgetById('owner');
 		}
 		else
 		{
-			option_owner = parent.getArrayMgr("sel_options").getRoot().getEntry('owner');
+			option_owner = this.et2.getArrayMgr("sel_options").getRoot().getEntry('owner') || {select_options: []};
 		}
 
 		options = option_owner.select_options;
