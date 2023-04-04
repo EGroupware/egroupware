@@ -100,7 +100,7 @@
 }
 
 /* Conflict display */
-div.calendar_conflicts {
+.calendar_conflicts {
 	max-height: 540px;
 	overflow-y: auto;
 }
