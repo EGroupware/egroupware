@@ -1916,7 +1916,11 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 			{
 				for(var i = 0; i < data.length; i++)
 				{
-					var event = egw.dataGetUIDdata('calendar::' + data[i]);
+					let event = egw.dataGetUIDdata('calendar::' + data[i]);
+					if(!event || !event.data)
+					{
+						continue;
+					}
 
 					waitForGroups.push((<CalendarApp>app.calendar)._fetch_group_members(event.data));
 				}
