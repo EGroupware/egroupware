@@ -688,6 +688,11 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 	 */
 	private handleOptionClick(event : MouseEvent)
 	{
+		if(event.target == this)
+		{
+			// Don't hide dropdown when clicking on select.  That can close it after user opens it.
+			return;
+		}
 		this.dropdown.hide().then(() =>
 		{
 			if(typeof this.handleMenuHide == "function")
