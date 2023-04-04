@@ -380,7 +380,11 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 		{
 			let event : any = egw.dataGetUIDdata('calendar::' + event_ids[i]);
 			event = event && event.data || false;
-			waitForGroups.push((<CalendarApp>app.calendar)._fetch_group_members(event).then(() =>
+			if(!event)
+			{
+				continue;
+			}
+			waitForGroups.push(((<CalendarApp>this.getInstanceManager().app_obj.calendar)._fetch_group_members(event)).then(() =>
 			{
 				if(event && event.date && et2_calendar_event.owner_check(event, this) && (
 					event.date === this.options.date ||
