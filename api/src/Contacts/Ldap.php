@@ -56,11 +56,6 @@ class Ldap
 	var $ldapServerInfo;
 
 	/**
-	* @var int $ldapLimit how many rows to fetch from ldap server
-	*/
-	var $ldapLimit = 2000;
-
-	/**
 	* @var string $personalContactsDN holds the base DN for the personal addressbooks
 	*/
 	var $personalContactsDN;
@@ -1277,11 +1272,11 @@ class Ldap
 
 		if($_addressbooktype == self::ALL || $_ldapContext == $this->allContactsDN)
 		{
-			$result = ldap_search($this->ds, $_ldapContext, $_filter, $_attributes, 0, $this->ldapLimit, null, null, $control);
+			$result = ldap_search($this->ds, $_ldapContext, $_filter, $_attributes, null, null, null, null, $control);
 		}
 		else
 		{
-			$result = @ldap_list($this->ds, $_ldapContext, $_filter, $_attributes, 0, $this->ldapLimit, null, null, $control);
+			$result = ldap_list($this->ds, $_ldapContext, $_filter, $_attributes, null, null, null, null, $control);
 		}
 		if(!$result || !$entries = ldap_get_entries($this->ds, $result)) return array();
 		$this->total += $entries['count'];
@@ -1295,9 +1290,9 @@ class Ldap
 				$this->total = $serverctrls[LDAP_CONTROL_VLVRESPONSE]['value']['count'];
 				$start = null;	// so caller does NOT run it's own limit
 			}
-			elseif (isset($serverctrls[LDAP_CONTROL_PAGEDRESULTS]['value']['cookie']))
+			else
 			{
-				$start[2] = $serverctrls[LDAP_CONTROL_PAGEDRESULTS]['value']['cookie'];
+				$start[2] = $serverctrls[LDAP_CONTROL_PAGEDRESULTS]['value']['cookie'] ?? '';
 			}
 		}
 

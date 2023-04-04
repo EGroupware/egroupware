@@ -50,6 +50,7 @@ try {
 		$import->showLog();
 		return;
 	}
+	$import->logger("Manual import started via setup: initial=$_GET[initial], dry-run=$_GET[dry_run]", 'info');
 	$import->run(!empty($_GET['initial']) && $_GET['initial'] !== 'false',
 		!empty($_GET['dry_run'] ?? $_GET['dry-run']) && ($_GET['dry_run'] ?? $_GET['dry-run']) !== 'false');
 }
