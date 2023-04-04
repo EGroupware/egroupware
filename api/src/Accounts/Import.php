@@ -36,6 +36,14 @@ class Import
 	protected $_logger;
 
 	/**
+	 * Conflict offset is added to an account_id/uidNumber, if it's already used (as gidNumber or by another user)
+	 */
+	const CONFLICT_OFFSET = 1000000;
+	/**
+	 * Max. value for 32-bit signed integer columns like account_id
+	 */
+	const MAX_INTEGER = 2147483647;
+	/**
 	 * Filename => [attr, mask, regexp] for jpegphoto and pubkey attributes
 	 *
 	 * @var array[]
@@ -142,12 +150,31 @@ class Import
 
 	 * @return void
 	 */
-	protected function logger(string $message, string $level)
+	function logger(string $message, string $level)
 	{
 		if ($this->_logger)
 		{
 			call_user_func($this->_logger, $message, $level);
 		}
+
+		// log to file too
+		$log = $GLOBALS['egw_info']['server']['files_dir'].'/'.self::LOG_FILE;
+		if (!file_exists($dir=dirname($log)) && !mkdir($dir) || !is_dir($dir) ||
+			!($fp = fopen($log, 'a+')))
+		{
+			if (!in_array($level, ['debug', 'detail']))
+			{
+				error_log(__METHOD__.' '.strtoupper($level).' '.$message);
+			}
+		}
+		else
+		{
+			if ($this->_logger || !in_array($level, ['debug', 'detail']))
+			{
+				fwrite($fp, date('Y-m-d H:i:s O').' '.strtoupper($level).' '.$message."\n");
+			}
+		}
+		if (!empty($fp)) fclose($fp);
 	}
 
 	/**
@@ -219,6 +246,7 @@ class Import
 			{
 				$filter[] = 'modified>='.$GLOBALS['egw_info']['server']['account_import_lastrun'];
 			}
+			$num = 0;
 			$last_modified = null;
 			$start_import = time();
 			$cookie = '';
@@ -233,15 +261,19 @@ class Import
 						$last_modified = $contact['modified'];
 					}
 					$account = $this->accounts->read($contact['account_id']);
-					$this->logger(json_encode($contact + $account), 'debug');
+					$this->logger(++$num.'. User: '.json_encode($contact + $account, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE), 'debug');
 					// check if account exists in sql
 					if (!($account_id = $this->accounts_sql->name2id($account['account_lid'])))
 					{
 						$sql_account = $account;
-						// check if account_id is not yet taken by another user or group --> unset it to let DB assign a new one
-						if ($this->accounts_sql->read($account['account_id']))
+						// check if account_id is not yet taken by another user or group --> add offset or unset it to let DB assign a new one
+						while ($this->accounts_sql->read($sql_account['account_id']))
 						{
-							unset($sql_account['account_id']);
+							if (($sql_account['account_id'] += self::CONFLICT_OFFSET) > self::MAX_INTEGER)
+							{
+								unset($sql_account['account_id']);
+								break;
+							}
 						}
 						if ($dry_run)
 						{
@@ -250,9 +282,13 @@ class Import
 						elseif (($account_id = $sql_account['account_id'] = $this->accounts_sql->save($sql_account, true)) > 0)
 						{
 							// run addaccount hook to create eg. home-directory or mail account
-							Api\Hooks::process($sql_account+array(
-									'location' => 'addaccount'
-								),False,True);	// called for every app now, not only enabled ones)
+							// only if account-repository is already SQL, NOT for migration
+							if (($GLOBALS['egw_info']['server']['account_repository'] ?? 'sql') === 'sql')
+							{
+								Api\Hooks::process($sql_account+array(
+										'location' => 'addaccount'
+									),False,True);	// called for every app now, not only enabled ones)
+							}
 
 							$this->logger("Successful created user '$account[account_lid]' (#$account[account_id]".
 								($account['account_id'] != $account_id ? " as #$account_id" : '').')', 'detail');
@@ -266,7 +302,9 @@ class Import
 					}
 					elseif ($account_id < 0)
 					{
-						throw new \Exception("User '$account[account_lid]' already exists as group!");
+						$this->logger("User '$account[account_lid]' (#$account[account_id]) already exists as group --> NOT imported!", 'error');
+						$errors++;
+						continue;
 					}
 					elseif (!($sql_account = $this->accounts_sql->read($account_id)))
 					{
@@ -298,10 +336,13 @@ class Import
 									if ($this->accounts_sql->save($to_update) > 0)
 									{
 										// run editaccount hook to create eg. home-directory or mail account
-										Api\Hooks::process($to_update+array(
-												'location' => 'editaccount'
-											),False,True);	// called for every app now, not only enabled ones)
-
+										// only if account-repository is already SQL, NOT for migration
+										if (($GLOBALS['egw_info']['server']['account_repository'] ?? 'sql') === 'sql')
+										{
+											Api\Hooks::process($to_update + array(
+													'location' => 'editaccount'
+												), False, True);    // called for every app now, not only enabled ones)
+										}
 										$this->logger("Successful updated user '$account[account_lid]' (#$account_id): " .
 											json_encode($diff, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES), 'detail');
 										if (!$new) $new = false;
@@ -330,6 +371,7 @@ class Import
 					{
 						$sql_contact = $contact;
 						unset($sql_contact['id']);  // LDAP contact-id is the UID!
+						$sql_contact['account_id'] = $account_id;
 						if (!$this->contacts_sql->save($sql_contact))
 						{
 							$sql_contact['id'] = $this->contacts_sql->data['id'];
@@ -367,6 +409,7 @@ class Import
 						$to_update = array_merge($sql_contact, array_filter($contact, static function ($attr) {
 							return $attr !== null && $attr !== '';
 						}));
+						unset($to_update['account_id']);    // no need to update, specially as account_id might be different!
 						$to_update['id'] = $sql_contact['id'];
 						if (($diff = array_diff_assoc($to_update, $sql_contact)))
 						{
@@ -583,10 +626,10 @@ class Import
 			$groups = $sql_groups;
 		}
 
-		$created = $updated = $uptodate = $errors = $deleted = 0;
+		$created = $updated = $uptodate = $errors = $deleted = $num = 0;
 		foreach($this->accounts->search(['type' => 'groups', 'modified' => $modified]) as $account_id => $group)
 		{
-			$this->logger(json_encode($group, JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES), 'debug');
+			$this->logger(++$num.'. Group: '.json_encode($group, JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES), 'debug');
 
 			if (!($sql_id = array_search($group['account_lid'], $sql_groups)))
 			{
@@ -673,7 +716,11 @@ class Import
 			$groups[$sql_id] = $group['account_lid'];
 
 			// we need to record and return the id's to update members, AFTER users are created/updated
-			$set_members[$sql_id] = $this->accounts->read($group['account_id'])['members'];
+			// only for incremental run, initial run set's memberships with the user anyway (more efficient for LDAP!)
+			if (!empty($modified))
+			{
+				$set_members[$sql_id] = $this->accounts->members($group['account_id']);
+			}
 		}
 
 		// delete the groups not returned from LDAP, groups can NOT be deactivated, we just delete them in the DB
@@ -826,43 +873,21 @@ class Import
 	public static function async()
 	{
 		try {
-			$log = $GLOBALS['egw_info']['server']['files_dir'].'/'.self::LOG_FILE;
-			if (!file_exists($dir=dirname($log)) && !mkdir($dir) || !is_dir($dir) ||
-				!($fp = fopen($log, 'a+')))
-			{
-				$logger = static function($str, $level)
-				{
-					if (!in_array($level, ['debug', 'detail']))
-					{
-						error_log(__METHOD__.' '.strtoupper($level).' '.$str);
-					}
-				};
-			}
-			else
-			{
-				$logger = static function($str, $level) use ($fp)
-				{
-					if (!in_array($level, ['debug', 'detail']))
-					{
-						fwrite($fp, date('Y-m-d H:i:s O').' '.strtoupper($level).' '.$str."\n");
-					}
-				};
-			}
-			$logger(date('Y-m-d H:i:s O').' LDAP account import started', 'info');
-			$import = new self($logger);
+			$import = new self();
+			$import->logger(date('Y-m-d H:i:s O').' LDAP account import started', 'info');
 			$import->run(false);
-			$logger(date('Y-m-d H:i:s O').' LDAP account import finished'.(!empty($fp)?"\n":''), 'info');
+			$import->logger(date('Y-m-d H:i:s O').' LDAP account import finished'.(!empty($fp)?"\n":''), 'info');
 		}
 		catch (\InvalidArgumentException $e) {
 			_egw_log_exception($e);
 			// disable async job, something is not configured correct
 			self::installAsyncJob();
-			$logger('Async job for periodic import canceled', 'fatal');
+			$import->logger('Async job for periodic import canceled', 'fatal');
 		}
 		catch (\Exception $e) {
 			_egw_log_exception($e);
+			$import->logger('Error: '.$e->getMessage());
 		}
-		if (!empty($fp)) fclose($fp);
 	}
 
 	/**
