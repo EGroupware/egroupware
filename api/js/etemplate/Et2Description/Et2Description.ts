@@ -222,10 +222,18 @@ export class Et2Description extends Et2Widget(LitElement) implements et2_IDetach
 
 		if(this.mimeData || this.href)
 		{
+
 			egw(window).open_link(this.mimeData || this.href, this.extraLinkTarget, this.extraLinkPopup, null, null, this.mime);
+			_ev.preventDefault();
+			return false;
 		}
-		_ev.preventDefault();
-		return false;
+		else if(_ev.target.nodeName !== "A")
+		{
+			// If it's not an activated link, just stop
+			_ev.preventDefault();
+			return false;
+		}
+		// Let links (present if activateLinks = true) do their thing normally
 	}
 
 	protected wrapLink(href, value)
