@@ -98,38 +98,6 @@ export class HomeApp extends EgwApp
 
 			this.portlet_container = this.et2.getWidgetById("portlets");
 
-			// Accept drops of favorites, which aren't part of action system
-			this.sortable = new Sortable(this.et2.getDOMNode().parentNode, {
-				chosenClass: 'drop-hover',
-				accept: function(draggable)
-				{
-					// Check for direct support for that application
-					if(draggable[0].dataset && draggable[0].dataset.appname)
-					{
-						return egw_getActionManager('home', false, 1).getActionById('drop_' + draggable[0].dataset.appname + '_favorite_portlet') != null;
-					}
-					return false;
-				},
-				onAdd: function(event, ui)
-				{
-					debugger;
-					// Favorite dropped on home - fake an action and divert to normal handler
-					let action = {
-						data: {
-							class: 'add_home_favorite_portlet'
-						}
-					}
-
-					// Check for direct support for that application
-					if(ui.helper.context.dataset && ui.helper.context.dataset.appname)
-					{
-						action = egw_getActionManager('home', false, 1).getActionById('drop_' + ui.helper.context.dataset.appname + '_favorite_portlet') || {}
-					}
-					action.ui = ui;
-					app.home.add_from_drop(action, [{data: ui.helper.context.dataset}])
-				}
-			});
-
 			this._do_ordering()
 		}
 		else if(et2.uniqueId)
