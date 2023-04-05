@@ -27,7 +27,7 @@
 					<et2-description  value="Unitprice" for="ts_unitprice"></et2-description>
 					<et2-hbox  disabled="@pm_integration=none" >
 						<projectmanager-pricelist id="pl_id" class="et2_fullWidth"
-                                                  onchange="window.app.timesheet.et2.getWidgetById('ts_unitprice').set_value(this.options[this.selectedIndex].text.lastIndexOf('(') &lt; 0 ? '' : this.options[this.selectedIndex].text.slice(this.options[this.selectedIndex].text.lastIndexOf('(')+1,-1));"
+                                                  onchange="let option = this.select_options.find(e=>e.value == this.value) || {label:''};window.app.timesheet.et2.getWidgetById('ts_unitprice').set_value(option.label.lastIndexOf('(') &lt; 0 ? '' : option.label.slice(option.label.lastIndexOf('(')+1,-1));"
                                                   emptyLabel="None"/>
 					</et2-hbox>
 					<et2-description></et2-description>
