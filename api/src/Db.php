@@ -1242,6 +1242,7 @@ class Db
 				// do NOT stall because DB does not know the TZ, report once per session
 				if (empty($_SESSION[Session::EGW_APPSESSION_VAR][__CLASS__]['SQL-error-TZ']))
 				{
+					$e->details = 'Instructions to install timezones in your DB: https://mariadb.com/kb/en/mysql_tzinfo_to_sql/';
 					_egw_log_exception($e);
 					$_SESSION[Session::EGW_APPSESSION_VAR][__CLASS__]['SQL-error-TZ'] = 'reported';
 				}
