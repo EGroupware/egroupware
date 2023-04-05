@@ -20,7 +20,7 @@ use EGroupware\Api\Acl;
  * Permanent error_log() calls should use $this->caldav->log($str) instead, to be send to PHP error_log()
  * and our request-log (prefixed with "### " after request and response, like exceptions).
  *
- * @ToDo: new properties on calendars and it's ressources specially from sharing:
+ * @ToDo: new properties on calendars and it's resources specially from sharing:
  * - for the invite property: 5.2.2 in https://trac.calendarserver.org/browser/CalendarServer/trunk/doc/Extensions/caldav-sharing.txt
  * - https://trac.calendarserver.org/browser/CalendarServer/trunk/doc/Extensions/caldav-schedulingchanges.txt
  */

@@ -99,7 +99,7 @@ class calendar_bo
 	 */
 	var $customfields = array();
 	/**
-	 * @var int $user nummerical id of the current user-id
+	 * @var int $user numerical id of the current user-id
 	 */
 	var $user=0;
 
