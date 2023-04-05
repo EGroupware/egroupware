@@ -214,6 +214,7 @@ class Import
 			}
 
 			$created = $updated = $uptodate = $errors = $deleted = 0;
+			$default_memberships = $default_group_id = null;
 			if (in_array('groups', explode('+', $type)))
 			{
 				foreach($this->groups($initial_import ? null : $GLOBALS['egw_info']['server']['account_import_lastrun'],
@@ -221,6 +222,23 @@ class Import
 					$groups, $set_members, $dry_run, $sql_groups) as $name => $val)
 				{
 					$$name += $val;
+				}
+			}
+			// if only users get imported, set their primary group and memberships as configured for auto-created accounts
+			else
+			{
+				// check if we have a comma or semicolon delimited list of groups --> add first as primary and rest as memberships
+				foreach(preg_split('/[,;] */', $GLOBALS['egw_info']['server']['default_group_lid'] ?? 'Default') as $group_lid)
+				{
+					if (($group_id = $this->accounts_sql->name2id(trim($group_lid), 'account_lid', 'g')))
+					{
+						if (!$default_group_id) $default_group_id = $group_id;
+						$default_memberships[] = $group_id;
+					}
+				}
+				if (!$default_group_id && ($default_group_id = $this->accounts_sql->name2id('Default', 'account_lid', 'g')))
+				{
+					$default_memberships[] = $default_group_id;
 				}
 			}
 
@@ -266,6 +284,8 @@ class Import
 					if (!($account_id = $this->accounts_sql->name2id($account['account_lid'])))
 					{
 						$sql_account = $account;
+						// if only users are imported set primary group as configured
+						if (isset($default_group_id)) $sql_account['account_primary_group'] = $default_group_id;
 						// check if account_id is not yet taken by another user or group --> add offset or unset it to let DB assign a new one
 						while ($this->accounts_sql->read($sql_account['account_id']))
 						{
@@ -482,6 +502,12 @@ class Import
 							return array_search($account_lid, $groups);
 						}, $account['memberships'])), $local_memberships), $account_id);
 					}
+					// if only users are synced add new users to default group(s) as configured for auto-created accounts
+					elseif ($new && $default_memberships)
+					{
+						$this->accounts_sql->set_memberships($default_memberships, $account_id);
+					}
+
 					if ($new)
 					{
 						++$created;
