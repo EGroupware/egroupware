@@ -41,7 +41,7 @@
 				<row class="row">
 					<et2-description  value="Price"></et2-description>
 					<projectmanager-pricelist id="pl_id"
-                                              onchange="window.app.infolog.et2.getWidgetById('info_price').set_value(this.options[this.selectedIndex].text.lastIndexOf('(') &lt; 0 ? '' : this.options[this.selectedIndex].text.slice(this.options[this.selectedIndex].text.lastIndexOf('(')+1,-1));"
+                                              onchange="let option = this.select_options.find(e=>e.value == this.value) || {label:''};window.app.infolog.et2.getWidgetById('info_price').set_value(option.label.lastIndexOf('(') &lt; 0 ? '' : option.label.slice(option.label.lastIndexOf('(')+1,-1));"
                                               emptyLabel="None" class="et2_fullWidth"/>
 					<et2-number  id="info_price"></et2-number>
 					<et2-description></et2-description>
