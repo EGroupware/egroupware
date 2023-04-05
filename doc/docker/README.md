@@ -9,6 +9,7 @@ curl https://raw.githubusercontent.com/EGroupware/egroupware/master/doc/docker/d
 curl https://raw.githubusercontent.com/EGroupware/egroupware/master/doc/docker/nginx.conf > nginx.conf
 # edit docker-compose.yml or nginx.conf, by default it will run on http://localhost:8080/
 mkdir data # this is where egroupware data is stored, it's by default a subdir of the directory of docker-compose.yml
+mkdir -p data/default/loolwsd # this is where collabora config is stored
 docker-compose up -d
 ```
 ## More information
@@ -27,6 +28,8 @@ The provided docker-compose.yml will run the following container:
 version: '3'
 volumes:
   sources:
+  # you can use either an anonymous volume, or explicitly specify an existing (!) path
+  # device: $PWD/sources
   db:
   data:
     driver_opts:
@@ -45,8 +48,7 @@ volumes:
   #    # location of deprecated EGroupware packages like Wiki, SiteMgr, KnowledgeBase
   #    device: /usr/share/egroupware
   #    #device: $PWD/extra
-  # collabora-config
-  # sources for push server, swoolpush subdirectory of egroupware
+  # sources for push server, swoolepush subdirectory of egroupware sources, in volume "sources"
   sources-push:
     driver_opts:
       type: none
@@ -55,6 +57,7 @@ volumes:
   # volume to store config.inc.php file / token shared between egroupware and push container
   push-config:
   sessions:
+  # collabora-config directory, initially filled by collabora-init container
   collabora-config:
     driver_opts:
       type: none
