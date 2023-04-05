@@ -279,6 +279,9 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		{
 			this.addEventListener("sl-change", this._triggerChange);
 			this.addEventListener("sl-after-show", this._doResize)
+
+			/* A hack to deal with how we do dark mode to avoid re-coloring the dropdown icon */
+			this.shadowRoot.querySelector(".select__icon").setAttribute("part", "dropdown-icon");
 		});
 	}
 

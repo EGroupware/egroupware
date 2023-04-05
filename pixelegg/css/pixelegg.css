@@ -72,6 +72,7 @@
   html[data-darkmode='1'] img,
   html[data-darkmode='1'] #blueimp-gallery:not(:fullscreen),
   html[data-darkmode='1'] #blueimp-gallery ol,
+  html[data-darkmode='1'] et2-select-account::part(icon),
   html[data-darkmode='1'] et2-select-email::part(icon),
   html[data-darkmode='1'] et2-calendar-owner::part(icon),
   html[data-darkmode='1'] sl-menu-item [slot="prefix"],
@@ -81,8 +82,6 @@
   html[data-darkmode='1'] #loginMainDiv,
   html[data-darkmode='1'] .et2_taglist_tags_icon,
   html[data-darkmode='1'] .fw_avatar_stat,
-  html[data-darkmode='1'] et2-tag::part(icon),
-  html[data-darkmode='1'] et2-email-tag::part(icon),
   html[data-darkmode='1'] et2-avatar-group,
   html[data-darkmode='1'] .blueimp-gallery .slide {
     filter: invert(1) hue-rotate(180deg) !important;
