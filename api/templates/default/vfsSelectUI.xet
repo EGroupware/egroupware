@@ -12,17 +12,27 @@
 				</row>
 				<row class="nextmatch_header_row">
 					<et2-vbox>
-						<et2-box  class="et2_toolbar">
-							<et2-button  statustext="Go to your home directory" id="home" onclick="app.vfsSelectUI.do_action('home', widget)" image="filemanager/gohome" noSubmit="true"></et2-button>
-							<et2-button  statustext="Up" id="up" onclick="app.vfsSelectUI.change_dir('..', widget);" image="filemanager/goup" noSubmit="true"></et2-button>
-							<et2-button  statustext="Favorites" id="favorites" onclick="app.vfsSelectUI.change_dir('/apps/favorites', widget);" image="filemanager/fav_filter" noSubmit="true"></et2-button>
-							<et2-select  width="175" id="app" onchange="app.vfsSelectUI.do_action('app', widget)" emptyLabel="Applications" noLang="1"></et2-select>
-							<et2-button  statustext="Create directory" id="createdir" class="createDir" onclick="app.vfsSelectUI.createdir" image="filemanager/button_createdir" noSubmit="true" roImage="filemanager/createdir_disabled"></et2-button>
-							<file id="upload_file" statustext="upload file" progress_dropdownlist = "true" multiple="true" onFinish="app.vfsSelectUI.storeFile"/>
-							<et2-searchbox  id="search" onchange="app.vfsSelectUI.search"></et2-searchbox>
-						</et2-box>
-						<vfs-path id="path" class="et2_fullWidth selectPath" align="left" onchange="app.vfsSelectUI.do_action('path', widget)" width="99.2%"/>
-					</et2-vbox>
+                        <et2-box class="et2_toolbar">
+                            <et2-button statustext="Go to your home directory" id="home"
+                                        onclick="app.vfsSelectUI.do_action('home', widget)" image="filemanager/gohome"
+                                        noSubmit="true"></et2-button>
+                            <et2-button statustext="Up" id="up" onclick="app.vfsSelectUI.change_dir('..', widget);"
+                                        image="filemanager/goup" noSubmit="true"></et2-button>
+                            <et2-button statustext="Favorites" id="favorites"
+                                        onclick="app.vfsSelectUI.change_dir('/apps/favorites', widget);"
+                                        image="filemanager/fav_filter" noSubmit="true"></et2-button>
+                            <et2-select width="175" id="app" onchange="app.vfsSelectUI.do_action('app', widget)"
+                                        emptyLabel="Applications" noLang="1"></et2-select>
+                            <et2-button statustext="Create directory" id="createdir" class="createDir"
+                                        onclick="app.vfsSelectUI.createdir" image="filemanager/button_createdir"
+                                        noSubmit="true" roImage="filemanager/createdir_disabled"></et2-button>
+                            <file id="upload_file" statustext="upload file" progress_dropdownlist="true" multiple="true"
+                                  onFinish="app.vfsSelectUI.storeFile"/>
+                            <et2-searchbox id="search" onchange="app.vfsSelectUI.search"></et2-searchbox>
+                        </et2-box>
+                        <vfs-path id="path" class="et2_fullWidth selectPath" align="left"
+                                  onchange="app.vfsSelectUI.do_action" width="99.2%"/>
+                    </et2-vbox>
 				</row>
 				<row>
 					<et2-hbox  class="selectFiles">

@@ -283,16 +283,41 @@ export class vfsSelectUI extends EgwApp
 	 */
 	do_action(action : string, widget : Et2Button | Et2Select | et2_vfsPath)
 	{
-		if (!action) return;
-		let field = '', value : string|string[] = '' ;
-		switch (action)
+		if(!this.et2)
 		{
-			case 'path': field = 'path'; value = (<et2_vfsPath>widget).getValue(); break;
-			case 'home': field = 'action'; value = 'home'; break;
-			case 'app': field = 'app'; value = (<Et2Select>widget).getValue(); break;
-			case 'mime': field = 'mime'; value = (<Et2Select>widget).getValue(); break;
+			// Etemplate has already gone
+			return;
+		}
+		if(!action && widget && widget.id)
+		{
+			action = widget.id;
+		}
+		if(!action)
+		{
+			return;
+		}
+		let field = '', value : string | string[] = '';
+		switch(action)
+		{
+			case 'path':
+				field = 'path';
+				value = (<et2_vfsPath>widget).getValue();
+				break;
+			case 'home':
+				field = 'action';
+				value = 'home';
+				break;
+			case 'app':
+				field = 'app';
+				value = (<Et2Select>widget).getValue();
+				break;
+			case 'mime':
+				field = 'mime';
+				value = (<Et2Select>widget).getValue();
+				break;
 		}
 		this.submit(field, value);
+		return false;
 	}
 
 	/**

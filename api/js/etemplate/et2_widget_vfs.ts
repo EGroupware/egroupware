@@ -1098,6 +1098,7 @@ export class et2_vfsSelect extends et2_inputWidget
 			{
 				this.dialog.close();
 			}
+			app.vfsSelectUI.destroy();
 			delete app.vfsSelectUI;
 		}
 		let attrs = {
@@ -1136,7 +1137,8 @@ export class et2_vfsSelect extends et2_inputWidget
 			{
 				label: egw.lang(_data.content.label),
 				id: "submit",
-				image: _data.content.mode.match(/saveas|select-dir/) ? "save" : this.options.button_icon
+				image: _data.content.mode.match(/saveas|select-dir/) ? "save" : this.options.button_icon,
+				default: false
 			}
 		];
 		let extra_buttons_action = {};
@@ -1173,7 +1175,7 @@ export class et2_vfsSelect extends et2_inputWidget
 		let data = jQuery.extend(_data, {'currentapp': currentApp, etemplate_exec_id: et2.etemplate_exec_id});
 
 		// define a mini app object for vfs select UI
-		app.vfsSelectUI = new app.classes.vfsSelectUI;
+		app.vfsSelectUI = et2.app_obj['vfsSelectUI'] = new app.classes.vfsSelectUI;
 
 		// callback for dialog
 		this.submit_callback = function(submit_button_id, submit_value, savemode)
@@ -1277,6 +1279,7 @@ export class et2_vfsSelect extends et2_inputWidget
 			app.vfsSelectUI.et2 = self.dialog.template.widgetContainer;
 			app.vfsSelectUI.vfsSelectWidget = self;
 			app.vfsSelectUI.et2_ready(app.vfsSelectUI.et2, 'api.vfsSelectUI');
+			app.vfsSelectUI.et2.getInstanceManager().app_obj['vfsSelectUI'] = app.vfsSelectUI;
 		});
 		this.dialog.addEventListener("close", () =>
 		{
