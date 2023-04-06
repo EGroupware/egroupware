@@ -20,6 +20,7 @@ import {et2_nextmatch_controller} from "../../api/js/etemplate/et2_extension_nex
 import {egw} from "../../api/js/jsapi/egw_global";
 import {et2_selectbox} from "../../api/js/etemplate/et2_widget_selectbox";
 import {et2_textbox} from "../../api/js/etemplate/et2_widget_textbox";
+import {ExposeMixin, MIME_REGEX} from "../../api/js/etemplate/Expose/ExposeMixin";
 
 /**
  * UI for filemanager
@@ -988,7 +989,7 @@ export class filemanagerAPP extends EgwApp
 		this.et2 = this.et2 ? this.et2 : etemplate2.getById('filemanager-index').widgetContainer;
 		let mime = this.et2._inst.widgetContainer.getWidgetById('$row');
 		// try to get mime widget DOM node out of the row DOM
-		let mime_dom = jQuery(_senders[0].iface.getDOMNode()).find("span#filemanager-index_\\$row");
+		let mime_dom = jQuery(_senders[0].iface.getDOMNode()).find("et2-vfs-mime");
 		let fe = egw.file_editor_prefered_mimes();
 
 		// symlinks dont have mime 'http/unix-directory', but server marks all directories with class 'isDir'
@@ -996,7 +997,7 @@ export class filemanagerAPP extends EgwApp
 		{
 			this.change_dir(path,_action.parent.data.nextmatch || this.et2);
 		}
-		else if(mime && data.data.mime.match(mime.mime_regexp) && mime_dom.length>0)
+		else if(data.data.mime.match(MIME_REGEX) && mime_dom.length>0)
 		{
 			mime_dom.click();
 		}
