@@ -27,7 +27,7 @@ const IMAGE_DEFAULT = {
 };
 
 // For filtering to only show things we can handle
-const MIME_REGEX = (navigator.userAgent.match(/(MSIE|Trident)/)) ?
+export const MIME_REGEX = (navigator.userAgent.match(/(MSIE|Trident)/)) ?
 	// IE only supports video/mp4 mime type
 				   new RegExp(/(video\/mp4)|(image\/:*(?!tif|x-xcf|pdf))|(audio\/:*)/, 'i') :
 				   new RegExp(/(video\/(mp4|ogg|webm))|(image\/:*(?!tif|x-xcf|pdf))|(audio\/:*)/, 'i');
