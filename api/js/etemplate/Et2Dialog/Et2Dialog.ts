@@ -400,7 +400,7 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 		this._onClick = this._onClick.bind(this);
 		this._onButtonClick = this._onButtonClick.bind(this);
 		this._onMoveResize = this._onMoveResize.bind(this);
-		this.handleKeyDown = this.handleKeyDown.bind(this);
+		this.handleKeyUp = this.handleKeyUp.bind(this);
 		this._adoptTemplateButtons = this._adoptTemplateButtons.bind(this);
 
 		// Don't leave it undefined, it's easier to deal with if it's just already resolved.
@@ -419,6 +419,8 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 	{
 		super.connectedCallback();
 
+		this.addEventListener("keyup", this.handleKeyUp);
+
 		// Prevent close if they click the overlay when the dialog is modal
 		this.addEventListener('sl-request-close', event =>
 		{
@@ -436,6 +438,7 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 	disconnectedCallback()
 	{
 		super.disconnectedCallback();
+		this.removeEventListener("keyup", this.handleKeyUp);
 		this.removeEventListener("sl-hide", this.handleClose);
 		this.removeEventListener("sl-after-show", this.handleOpen);
 	}
@@ -476,11 +479,8 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 		this.removeEventListener("keydown", this.handleKeyDown);
 	}
 
-	handleKeyDown(event : KeyboardEvent)
+	handleKeyUp(event : KeyboardEvent)
 	{
-		// Parent handles escape, but is already bound
-		super.handleKeyDown(event);
-
 		// Trigger the "primary" or first button
 		if(this.open && event.key === 'Enter')
 		{
