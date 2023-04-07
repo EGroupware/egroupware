@@ -3,7 +3,8 @@
 ## EGroupware FPM container using Ubuntu 18.04 and PHP 7.3 from ondrej/php PPA
 ##
 ################################################################################
-FROM ubuntu:20.04
+ARG ARCH=
+FROM ${ARCH}ubuntu:20.04
 MAINTAINER rb@egroupware.org
 
 ARG VERSION=dev-master
