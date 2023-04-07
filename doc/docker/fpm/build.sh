@@ -5,6 +5,8 @@ cd $(dirname $0)
 
 DEFAULT_PHP_VERSION=8.1
 PHP_VERSION=$DEFAULT_PHP_VERSION
+# which architectures to build for multi-platform images, if buildx is available on a Docker desktop or newer Docker installation
+PLATFORMS=linux/amd64,linux/ppc64le,linux/arm/v7,linux/arm64/v8
 
 if [[ $1 =~ ^[78]\.[0-9]$ ]]
 then
@@ -32,17 +34,26 @@ BRANCH=$(echo $VERSION|sed 's/\.[0-9]\{8\}$//')
 [ $PHP_VERSION != $DEFAULT_PHP_VERSION ] && TAG=$TAG-$PHP_VERSION
 
 docker pull ubuntu:20.04
-docker build --build-arg "VERSION=$VERSION" --build-arg "PHP_VERSION=$PHP_VERSION" -t egroupware/egroupware:$TAG . && {
-	docker push egroupware/egroupware:$TAG
-	# further tags are only for the default PHP version
-	[ $PHP_VERSION != $DEFAULT_PHP_VERSION ] && exit
-	# tag only stable releases as latest
-	#[ $TAG != "master" ] && {
-	#	docker tag egroupware/egroupware:$TAG egroupware/egroupware:latest
-	#	docker push egroupware/egroupware:latest
-	#}
-	[ "$BRANCH" != $VERSION -a "dev-${BRANCH}" != $VERSION ] && {
-		docker tag egroupware/egroupware:$TAG egroupware/egroupware:$BRANCH
-		docker push egroupware/egroupware:$BRANCH
-	}
+
+# add further tags for default PHP version only
+[ $PHP_VERSION = $DEFAULT_PHP_VERSION -a "$BRANCH" != $VERSION -a "dev-${BRANCH}" != $VERSION ] && {
+  extra_tags="$tags --tag egroupware/egroupware:latest --tag egroupware/egroupware:$BRANCH"
 }
+
+if docker buildx 2>&1 >/dev/null
+then
+  # buildx available --> build a multi-platform image and push it for all tags
+  docker buildx build --push --platform $PLATFORMS --build-arg "VERSION=$VERSION" --build-arg "PHP_VERSION=$PHP_VERSION" --tag egroupware/egroupware:$TAG $extra_tags .
+else
+  # no buildx, eg. on dev only builds amd64!
+  docker build --build-arg "VERSION=$VERSION" --build-arg "PHP_VERSION=$PHP_VERSION" --tag egroupware/egroupware:$TAG . && {
+    docker push egroupware/egroupware:$TAG
+    for tag in $tags
+    do
+      [ -z "$tag" -o "$tag" = "--tags" ] || {
+        docker tag egroupware/egroupware:$TAG $tag
+        docker push $tag
+      }
+    done
+  }
+fi
