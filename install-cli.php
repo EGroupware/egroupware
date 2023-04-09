@@ -162,7 +162,7 @@ foreach($bins as $name => $binaries)
 
 if ($verbose) echo "Using following binaries: ".json_encode ($bins, JSON_UNESCAPED_SLASHES)."\n";
 
-if (!extension_loaded('curl')) die("Required PHP extesion 'curl' missing! You need to install php-curl package.\n\n");
+if (!extension_loaded('curl')) die("Required PHP extension 'curl' missing! You need to install php-curl package.\n\n");
 
 // check if we are on a git clone
 $output = array();
@@ -223,7 +223,7 @@ else
 {
 	$target = $branch;
 
-	// find latest release
+	// find the latest release
 	if ($channel == 'release')
 	{
 		$target = get_latest_release($use_prerelease);
@@ -255,7 +255,7 @@ foreach(scandir(__DIR__) as $dir)
 		}
 		if ($branch != $target)
 		{
-			$cmd .= "$git checkout $target && ";
+			$cmd .= "$git fetch && $git checkout $target && ";
 		}
 		// no need to pull for release-channel/tags
 		if (!preg_match('/^\d+\.\d+\.\d{8}/', $target))
@@ -284,13 +284,13 @@ if ($npm)
 
     if (!file_exists($chunks=__DIR__.'/chunks') || !is_dir($chunks))
     {
-	    if (!is_dir($chunks))
+	    if (file_exists($chunks) && !is_dir($chunks))
 	    {
             unlink($chunks);
 	    }
 	    if (!mkdir($chunks, 0755) && !is_dir($chunks))
 	    {
-		    throw new \RuntimeException(sprintf('Clound NOT create directory "%s"!', $chunks));
+		    throw new \RuntimeException(sprintf('Cloud NOT create directory "%s"!', $chunks));
 	    }
     }
 
@@ -359,7 +359,7 @@ function run_git(array $argv, $main_too=true)
 }
 
 /**
- * Get latest release
+ * Get the latest release
  *
  * @param boolean $prerelease =false include releases taged as prerelease
  * @param boolean $return_name =true true: just return name, false: full release object
