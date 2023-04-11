@@ -248,8 +248,8 @@
 		<grid width="100%">
 			<columns>
 				<column width="113"/>
-				<column width="400"/>
 				<column/>
+				<column width="150"/>
 			</columns>
 			<rows>
 				<row>
