@@ -8,9 +8,10 @@
  */
 
 import {Et2Select} from "./Et2Select";
-import {css, html, nothing} from "@lion/core";
+import {css, html, nothing, PropertyValues} from "@lion/core";
 import {IsEmail} from "../Validators/IsEmail";
 import interact from "@interactjs/interact";
+import {Validator} from "@lion/form-core";
 
 /**
  * Select email address(es)
@@ -56,6 +57,11 @@ export class Et2SelectEmail extends Et2Select
 			allowDragAndDrop: {type: Boolean},
 
 			/**
+			 * Allow placeholders like {{email}}, beside real email-addresses
+			 */
+			allowPlaceholder: {type: Boolean},
+
+			/**
 			 * Include mailing lists: returns them with their integer list_id
 			 */
 			includeLists: {type: Boolean},
@@ -73,12 +79,25 @@ export class Et2SelectEmail extends Et2Select
 		this.search = true;
 		this.searchUrl = "EGroupware\\Api\\Etemplate\\Widget\\Taglist::ajax_email";
 		this.allowFreeEntries = true;
+		this.allowPlaceholder = false;
 		this.editModeEnabled = true;
 		this.allowDragAndDrop = false;
 		this.includeLists = false;
 		this.multiple = false;
 		this.fullEmail = false;
-		this.defaultValidators.push(new IsEmail());
+		this.defaultValidators.push(new IsEmail(this.allowPlaceholder));
+	}
+
+	/** @param {import('@lion/core').PropertyValues } changedProperties */
+	willUpdate(changedProperties : PropertyValues)
+	{
+		super.willUpdate(changedProperties);
+
+		if(changedProperties.has('allowPlaceholder'))
+		{
+			this.defaultValidators = (<Array<Validator>>this.defaultValidators).filter(v => !(v instanceof IsEmail));
+			this.defaultValidators.push(new IsEmail(this.allowPlaceholder));
+		}
 	}
 
 	connectedCallback()
