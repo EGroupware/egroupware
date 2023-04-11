@@ -32,10 +32,11 @@ export class IsEmail extends Pattern
 	 * - "{{email}}"
 	 * - "{{n_fn}} <{{email}}"
 	 * - "{{#<custom-field-name>}}"
+	 * - "{{info_contact/email}}" or "{{user/#<custom-field-name}}"
 	 * - we do NOT check if the placeholder is implemented by addressbook or a valid custom-field name!
 	 * - "test" or "{test}}" are NOT valid
 	 */
-	static EMAIL_PLACEHOLDER_PREG = new RegExp('^(.*{{#?[a-z0-9_]+}}.*|'+IsEmail.EMAIL_PREG.source.substr(1, IsEmail.EMAIL_PREG.source.length-2)+')$', 'i');
+	static EMAIL_PLACEHOLDER_PREG = new RegExp('^(.*{{[a-z0-9_/#]+}}.*|'+IsEmail.EMAIL_PREG.source.substr(1, IsEmail.EMAIL_PREG.source.length-2)+')$', 'i');
 
 	/**
 	 *
