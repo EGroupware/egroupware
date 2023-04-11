@@ -150,14 +150,21 @@ export class Et2VBox extends Et2Box
 		return [
 			...super.styles,
 			css`
-            :host > div {
-            	flex-direction: column;
-			}
-			/* CSS for child elements */
-            ::slotted(*) {
-            	/* Stop children from growing vertically.  In general we want them to stay their "normal" height */
-            	flex-grow: 0;
-            }
+			  :host > div {
+				flex-direction: column;
+			  }
+
+			  :host([align="center"]) > div {
+				align-items: center;
+			  }
+
+			  /* CSS for child elements */
+
+			  ::slotted(*) {
+				/* Stop children from growing vertically.  In general we want them to stay their "normal" height */
+				flex-grow: 0;
+			  }
+
 			`
 		];
 	}
