@@ -67,6 +67,13 @@ export class Et2SelectEmail extends Et2Select
 			includeLists: {type: Boolean},
 
 			/**
+			 * If the email is a contact, we normally show the contact name instead of the email.
+			 * Set to true to turn this off and always show just the email
+			 * Mutually exclusive with fullEmail!
+			 */
+			onlyEmail: {type: Boolean},
+
+			/**
 			 * Show the full, original value email address under all circumstances, rather than the contact name for known contacts
 			 */
 			fullEmail: {type: Boolean}
@@ -85,6 +92,7 @@ export class Et2SelectEmail extends Et2Select
 		this.includeLists = false;
 		this.multiple = false;
 		this.fullEmail = false;
+		this.onlyEmail = false;
 		this.defaultValidators.push(new IsEmail(this.allowPlaceholder));
 	}
 
@@ -190,6 +198,7 @@ export class Et2SelectEmail extends Et2Select
 		let tag = super._createTagNode(item);
 
 		tag.fullEmail = this.fullEmail;
+		tag.onlyEmail = this.onlyEmail;
 
 		// Re-set after setting fullEmail as that can change what we show
 		tag.textContent = item.getTextLabel().trim();
