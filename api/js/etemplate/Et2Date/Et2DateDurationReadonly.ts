@@ -47,7 +47,9 @@ export class Et2DateDurationReadonly extends Et2DateDuration
 
 	set value(_value)
 	{
+		const old_value = this.__value;
 		this.__value = _value;
+		this.requestUpdate("value", old_value);
 	}
 
 	render()
