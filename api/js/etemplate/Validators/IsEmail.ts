@@ -27,9 +27,23 @@ export class IsEmail extends Pattern
 	 */
 	static EMAIL_PREG : RegExp = /^(([^\042',<][^,<]+|\042[^\042]+\042|\'[^\']+\'|"(?:[^"\\]|\\.)*")\s?<)?[^\x00-\x20()\xe2\x80\x8b<>@,;:\042\[\]\x80-\xff]+@([a-z0-9ÄÖÜäöüß](|[a-z0-9ÄÖÜäöüß_-]*[a-z0-9ÄÖÜäöüß])\.)+[a-z]{2,}>?$/i;
 
-	constructor()
+	/**
+	 * Allow everything containing at least one placeholder e.g.:
+	 * - "{{email}}"
+	 * - "{{n_fn}} <{{email}}"
+	 * - "{{#<custom-field-name>}}"
+	 * - we do NOT check if the placeholder is implemented by addressbook or a valid custom-field name!
+	 * - "test" or "{test}}" are NOT valid
+	 */
+	static EMAIL_PLACEHOLDER_PREG = new RegExp('^(.*{{#?[a-z0-9_]+}}.*|'+IsEmail.EMAIL_PREG.source.substr(1, IsEmail.EMAIL_PREG.source.length-2)+')$', 'i');
+
+	/**
+	 *
+	 * @param _allowPlaceholders true: allow valid email-addresses OR something with placeholder(s)
+	 */
+	constructor(_allowPlaceholders: boolean)
 	{
-		super(IsEmail.EMAIL_PREG);
+		super(_allowPlaceholders ? IsEmail.EMAIL_PLACEHOLDER_PREG : IsEmail.EMAIL_PREG);
 	}
 
 	/**

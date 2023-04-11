@@ -46,7 +46,8 @@
 					</row>
 					<row class="mailComposeHeaders mailComposeJQueryReplyto">
 						<et2-description  value="Reply to"></et2-description>
-						<et2-select-email  id="replyto" width="100%" onclick="app.mail.address_click" multiple="true" searchUrl="EGroupware\Api\Etemplate\Widget\Taglist::ajax_email"></et2-select-email>
+						<et2-select-email  id="replyto" width="100%" onclick="app.mail.address_click" multiple="true"
+							searchUrl="EGroupware\Api\Etemplate\Widget\Taglist::ajax_email" allowPlaceholder="true"></et2-select-email>
 						<et2-description></et2-description>
 					</row>
 					<row class="mailComposeHeaders mailComposeJQueryFolder">
@@ -56,7 +57,9 @@
 					</row>
 					<row class="mailComposeHeaders" >
 						<et2-description  value="To"></et2-description>
-						<et2-select-email  id="to" allowDragAndDrop="true" width="100%" onclick="app.mail.address_click" multiple="true" onchange="app.mail.recipients_onchange" autofocus="true" searchUrl="EGroupware\Api\Etemplate\Widget\Taglist::ajax_email" placeholder="select or insert email address" includeLists="true"></et2-select-email>
+						<et2-select-email  id="to" allowDragAndDrop="true" width="100%" onclick="app.mail.address_click" multiple="true"
+							onchange="app.mail.recipients_onchange" autofocus="true" searchUrl="EGroupware\Api\Etemplate\Widget\Taglist::ajax_email"
+							placeholder="select or insert email address" includeLists="true" allowPlaceholder="true"></et2-select-email>
 						<et2-hbox>
 							<et2-description  id="cc_expander" value="Cc" class="et2_button_text" onclick="app.mail.compose_fieldExpander"></et2-description>
 							<et2-description  id="bcc_expander" value="Bcc" class="et2_button_text" onclick="app.mail.compose_fieldExpander"></et2-description>
@@ -64,12 +67,16 @@
 					</row>
 					<row class="mailComposeHeaders mailComposeJQueryCc">
 						<et2-description  value="Cc"></et2-description>
-						<et2-select-email  id="cc" width="100%" allowDragAndDrop="true" onclick="app.mail.address_click" multiple="true" onchange="app.mail.recipients_onchange" searchUrl="EGroupware\Api\Etemplate\Widget\Taglist::ajax_email" placeholder="select or insert email address" includeLists="true"></et2-select-email>
+						<et2-select-email  id="cc" width="100%" allowDragAndDrop="true" onclick="app.mail.address_click" multiple="true"
+							onchange="app.mail.recipients_onchange" searchUrl="EGroupware\Api\Etemplate\Widget\Taglist::ajax_email"
+							placeholder="select or insert email address" includeLists="true" allowPlaceholder="true"></et2-select-email>
 						<et2-description></et2-description>
 					</row>
 					<row  class="mailComposeHeaders mailComposeJQueryBcc">
 						<et2-description  value="Bcc"></et2-description>
-						<et2-select-email  id="bcc" width="100%" allowDragAndDrop="true" onclick="app.mail.address_click" multiple="true" onchange="app.mail.recipients_onchange" searchUrl="EGroupware\Api\Etemplate\Widget\Taglist::ajax_email" placeholder="select or insert email address" includeLists="true"></et2-select-email>
+						<et2-select-email  id="bcc" width="100%" allowDragAndDrop="true" onclick="app.mail.address_click" multiple="true"
+							onchange="app.mail.recipients_onchange" searchUrl="EGroupware\Api\Etemplate\Widget\Taglist::ajax_email"
+							placeholder="select or insert email address" includeLists="true" allowPlaceholder="true"></et2-select-email>
 						<et2-description></et2-description>
 					</row>
 					<row class="mailComposeHeaders">
