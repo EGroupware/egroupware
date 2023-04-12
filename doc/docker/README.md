@@ -43,7 +43,7 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: $PWD/sources/egroupware/swoolepush
+      device: $PWD/sources/swoolepush
   db:
   data:
     driver_opts:
@@ -218,12 +218,8 @@ services:
   collabora-key:
     image: "quay.io/egroupware/collabora-key:stable"
     #image: collabora/code:latest
-    # needs to be initialised via: docker run --rm -v dev_collabora-config:/mnt --entrypoint '/bin/cp -r /etc/loolwsd /mnt' quay.io/egroupware/collabora-key:stable
     volumes:
-      - collabora-config:/etc/loolwsd
-    # dont try to regenerate the (not used certificate) as volumn is readonly
-    environment:
-      - DONT_GEN_SSL_CERT=1
+      - collabora-config:/etc/coolwsd
     restart: always
     container_name: collabora-key
     # set the ip-address of your docker host AND your official DNS name so Collabora
@@ -236,7 +232,7 @@ services:
   # initialise the collabora-config volume
   collabora-init:
     image: "quay.io/egroupware/collabora-key:latest"
-    command:  bash -c "test -f /tmp/coolwsd/coolwsd.xml || (cp -p /etc/coolwsd/* /tmp/coolwsd && cd /tmp/coolwsd && ln -s coolwsd.conf loolwsd.conf)"
+    command:  bash -c 'test -f /tmp/coolwsd/coolwsd.xml || (cp -p /etc/coolwsd/* /tmp/coolwsd/; sed "s/<enable type=\"bool\" desc=\"Controls whether SSL encryption between coolwsd and the network is enabled (do not disable for production deployment). If default is false, must first be compiled with SSL support to enable.\" default=\"true\">true</<enable type=\"bool\" desc=\"Controls whether SSL encryption between coolwsd and the network is enabled (do not disable for production deployment). If default is false, must first be compiled with SSL support to enable.\" default=\"true\">false</g" < /etc/coolwsd/coolwsd.xml > /tmp/coolwsd/coolwsd.xml)'
     volumes:
       - collabora-config:/tmp/coolwsd
 
