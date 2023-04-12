@@ -1,3 +1,26 @@
+egroupware-docker (23.1.20230412) hardy; urgency=low
+
+  * Docker images are available now for architektures: amd64 (as before), arm/v7, arm64/v8 and ppc64le
+  * Mail: Make list refresh option available in 3pane-view through column selector
+  * Mail: allow placeholders in compose instead of email-addresses to be able to create mail templates
+  * Mail/Calendar: show scrollbar, if meeting request does not fit into preview area
+  * Filemanager: fix broken expose view for filename click&open action
+  * Filemanager: fix after opening and closing the gallery in filemanager the list is no longer accessible
+  * Calendar/CalDAV: set current user as owner for events created in resource calendar
+  * Rocketchat: fix rocketchat's status sometimes is not showing up in Status app for bigger installations
+  * Status: add new config setting in  order to be able to open BigBlueButton calls in separate window with no iframe
+  * Status: fix top header (invite button, end call button, ...) in call dialogs no longer is visible
+  * Status: fix ringing tone never ends after a call being answered
+  * Status: fix somehow not found user in contacts stalls whole display of status column
+  * Projectmanager: fix missing application and status icon in element list
+  * LDAP/AD: if only users get imported, set their primary group and memberships as configured for auto-created accounts (Default group by default)
+  * LDAP/AD/Setup: periodic import disables (add|edit)account hooks, if account-repository is not SQL and further performance improvements
+  * LDAP/ADS: fix memberships of local groups were lost in periodic account-import
+  * EPL/CTI/Addressbook: phone numbers written with unusual separator like pipe symbol where not found
+  * full list of changes https://github.com/EGroupware/egroupware/compare/23.1.20230328...23.1.20230412
+
+ -- Ralf Becker <rb@egroupware.org>  Wed, 12 Apr 2023 11:21:00 +0200
+
 egroupware-docker (23.1.20230328) hardy; urgency=low
 
   * Safari/iOS: support Safari/iOS 14.x via transpiling of JavaScript
