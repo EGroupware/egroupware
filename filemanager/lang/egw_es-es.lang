@@ -49,6 +49,7 @@ cannot create directory because it begins or ends in a space	filemanager	es-es	N
 cautiously rejecting to remove folder '%1'!	filemanager	es-es	Por precaución, se rechaza el borrado de la carpeta '%1'
 check all	filemanager	es-es	Comprobar todo
 check virtual filesystem	common	es-es	Comprobar el sistema de ficheros virtual
+classic	filemanager	es-es	Barra de herramientas estandar
 clear search	filemanager	es-es	Limpiar búsqueda
 clipboard is empty!	filemanager	es-es	¡El portapapeles está vacío!
 collab editor settings	filemanager	es-es	Configuración del editor de collab
@@ -155,6 +156,7 @@ files	common	es-es	Archivos
 files from links	filemanager	es-es	Archivos de enlaces
 files from subdirectories	filemanager	es-es	Ficheros de subdirectorios
 files in this directory	filemanager	es-es	Ficheros en este directorio
+filesystem	filemanager	es-es	Sistema de archivos
 filesystem check reported no problems.	filemanager	es-es	La comprobación del sistema de archivos no ha encontrado problemas
 finally delete	filemanager	es-es	Fnalmente suprimido
 finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	es-es	Finalmente suprime todas las versiones anteriores y los archivos borrados en el directorio dado.\n\n¡Esto NO se puede deshacer!
@@ -228,10 +230,15 @@ preview %1	filemanager	es-es	Vista previa %1
 preview of %1	filemanager	es-es	Vista previa de %1
 projectmanager	filemanager	es-es	Administrador de proyectos
 properties saved.	filemanager	es-es	Se han guardado las propiedades.
+protocol to use	filemanager	es-es	Protocolo a usae
+protocols	filemanager	es-es	Protocolos
 quick jump to	filemanager	es-es	Salto rápido a
+quota	filemanager	es-es	Cuota
+quota exceeded	filemanager	es-es	Cuota excedida
 read & write access	filemanager	es-es	Derechos de lectura y escritura
 read access only	filemanager	es-es	Sólo derecho de lectura
 readonly share link	filemanager	es-es	Enlace de compartir en solo lectura
+recalculate	filemanager	es-es	Recalcular
 reload	filemanager	es-es	recargar
 rename of %1 to %2 failed!	filemanager	es-es	¡Fallo al renombrar %1 a %2!
 rename, change permissions or ownership	filemanager	es-es	Renombrar, cambiar los permisos o propietario
@@ -287,6 +294,7 @@ there's already a file with that name!	filemanager	es-es	¡Ya existe un fichero 
 tile view	filemanager	es-es	Vista de teja
 to overwrite the existing file store again.	filemanager	es-es	Para sobreescribir el fichero existente, vuelva a guardar.
 total files	filemanager	es-es	Total ficheros
+ui mode	filemanager	es-es	Barra de herramientas estandar
 under directory	filemanager	es-es	bajo el directorio
 unmount	filemanager	es-es	Desmontar
 unused space	filemanager	es-es	Espacio sin utilizar

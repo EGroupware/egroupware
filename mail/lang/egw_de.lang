@@ -36,7 +36,7 @@ aliases+forwards	mail	de	Aliase+Weiterleitungen
 all	mail	de	alle
 all adresses:	mail	de	Alle Adressen
 all available info	admin	de	alle verfügbaren Informationen
-all filtered	mail	de	alle gefilterten
+all filtered	mail	de	Alle gefilterten
 all messages in the folder will be lost	mail	de	Alle Nachrichten in dem ausgewählten Ordner werden unwiderruflich gelöscht
 all my email addresses	mail	de	alle meine E-Mail-Adressen
 all of	mail	de	alle
@@ -584,6 +584,8 @@ signature position and visibility	mail	de	Position und Sichtbarkeit der Signatur
 size(...->0)	mail	de	Größe(...->0)
 size(0->...)	mail	de	Größe(0->...)
 small view	mail	de	schmale Ansicht
+smime encrypted message	mail	de	S/MIME-verschlüsselte Nachricht
+smime signed message	mail	de	S/MIME-signierte Nachricht
 smtp	mail	de	Postausgangs-Server
 sneak preview in list	mail	de	Mit Kurzvorschau
 some clients fail to detect correct charset, if flowed lines are enabled.	mail	de	Einige Mailprogramme haben Probleme den Zeichensatz zu erkennen, wenn variabler Zeilenumbruch verwendet wird.

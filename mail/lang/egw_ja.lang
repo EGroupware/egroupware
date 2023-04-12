@@ -530,6 +530,8 @@ signature position and visibility	mail	ja	署名の表示位置
 size(...->0)	mail	ja	サイズ(降順)
 size(0->...)	mail	ja	サイズ(昇順)
 small view	mail	ja	スモール・ビュー
+smime encrypted message	mail	ja	S/MIME暗号化メッセージ
+smime signed message	mail	ja	S/MIME署名付きメッセージ
 smtp	mail	ja	SMTP
 sneak preview in list	mail	ja	スニークプリビュー有効
 some clients fail to detect correct charset, if flowed lines are enabled.	mail	ja	浮動行を有効にすると、クライアントによっては文字セットの検出ができない可能性があります。

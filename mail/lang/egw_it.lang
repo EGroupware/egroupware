@@ -532,6 +532,8 @@ signature position and visibility	mail	it	Posizione e visibilità della firma
 size(...->0)	mail	it	Dimensione (...->0)
 size(0->...)	mail	it	Dimensione (0->...)
 small view	mail	it	visualizzazione ridotta
+smime encrypted message	mail	it	Messaggio criptato S/MIME
+smime signed message	mail	it	Messaggio firmato S/MIME
 smtp	mail	it	SMTP
 sneak preview in list	mail	it	Anteprima nell'elenco
 some clients fail to detect correct charset, if flowed lines are enabled.	mail	it	Alcuni client non riescono a rilevare correttamente il set di caratteri se le flowed lines sono abilitate

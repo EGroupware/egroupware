@@ -159,6 +159,9 @@ signature	mail	hu	Aláírás
 size(...->0)	mail	hu	Méret (...->0)
 size(0->...)	mail	hu	Méret (0->...)
 small view	mail	hu	tömör nézet
+smime encrypted message	mail	hu	S/MIME titkosított üzenet
+smime signed message	mail	hu	S/MIME aláírással ellátott üzenet
+smtp	mail	hu	SMTP
 start new messages with mime type plain/text or html?	mail	hu	Új üzenet írása egyszerű szöveg vagy html-ként?
 subject(a->z)	mail	hu	Tárgy (A->Z)
 subject(z->a)	mail	hu	Tárgy (Z->A)

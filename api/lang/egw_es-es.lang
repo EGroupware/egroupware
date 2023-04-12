@@ -176,6 +176,7 @@ automatically hide the sidebox menu's?	common	es-es	¿Ocultar automáticamente e
 automatically hide the sidebox menus?	common	es-es	¿Ocultar automáticamente los menús laterales?
 automatically refresh list	common	es-es	Actualizar automáticamente la lista
 autosave default category	common	es-es	Guardar auotmáticamente la categoria predeterminada
+avatar	common	es-es	Avatar
 azerbaijan	common	es-es	AZERBAIJAN
 back	common	es-es	Atrás
 back to user login	common	es-es	Volver al inicio de sesión del usuario
@@ -381,6 +382,7 @@ december	common	es-es	Diciembre
 deck	common	es-es	Cubierta (interna)
 default	common	es-es	Predeterminado
 default category	common	es-es	Categoría predeterminada
+default document to insert entries	preferences	es-es	Documento predeterminado para insertar entradas
 default height for the windows	common	es-es	Altura predeterminada para las ventanas
 default visible actions	common	es-es	Acciones visibles por defecto
 default width for the windows	common	es-es	Ancho predeterminado para las ventanas
@@ -420,6 +422,8 @@ diable the execution a bugfixscript for internet explorer 5.5 and higher to show
 direction left to right	common	es-es	Dirección de izquierda a derecha
 directory	common	es-es	Directorio
 directory does not exist, is not readable by the webserver or is not relative to the document root!	common	es-es	¡El directorio no existe, el servidor web no lo puede leer o no es relativo a la raíz de los documentos!
+directory for storing merged documents	preferences	es-es	Carpeta para almacenar documentos combinados
+directory with documents to insert entries	preferences	es-es	Carpeta con documentos para insertar entradas
 disable internet explorer png-image-bugfix	common	es-es	Desactivar el parche de IE para ver imágenes PNG
 disable slider effects	common	es-es	Desactivar efectos deslizantes
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	es-es	¿Desactivar los efectos deslizantes animados al mostrar u ocultar menús en la página? Los usuarios de Opera y Konqueror probablemente querrán esto.
@@ -448,6 +452,7 @@ domain name for mail-address, eg. "%1"	common	es-es	Nombre del dominio para la d
 domestic	common	es-es	Doméstico
 dominica	common	es-es	DOMINICA
 dominican republic	common	es-es	REPUBLICA DOMINICANA
+don't ask again!	common	es-es	¡No vuelva a preguntar!
 don't show this again	common	es-es	No mostrar esto otra vez
 done	common	es-es	Hecho
 dos international	common	es-es	DOS internacional
@@ -858,6 +863,7 @@ maybe	common	es-es	Tal vez
 mayotte	common	es-es	MAYOTTE
 medium	common	es-es	Medio
 menu	common	es-es	Menú
+merged document filename	preferences	es-es	Nombre de archivo del documento combinado
 message	common	es-es	Mensaje
 message ...	common	es-es	Mensaje...
 message prepared for sending.	common	es-es	Mensaje preparado para su envío.
@@ -912,6 +918,7 @@ new egroupware release %1 available	common	es-es	Nueva versión de EGroupware %1
 new entry added sucessfully	common	es-es	La nueva entrada se ha añadido correctamente
 new favorite	common	es-es	Nuevo favorito
 new main category	common	es-es	Nueva categoría principal
+new password	common	es-es	Nueva contraseña
 new search	common	es-es	Nueva búsqueda
 new table created	common	es-es	Se ha creado una tabla nueva
 new value	common	es-es	Nuevo valor

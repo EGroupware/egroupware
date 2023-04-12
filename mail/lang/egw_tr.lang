@@ -24,5 +24,8 @@ save all attachments to filemanager	mail	tr	Tüm ekleri filemanager'a kaydet
 select all	mail	tr	Tamam?n? seç
 select or insert email address	mail	tr	E-posta adresini seçin veya ekleyin
 set predefined values for compose...	mail	tr	Oluşturma için önceden tanımlanmış değerleri ayarlayın ...
+smime encrypted message	mail	tr	S/MIME şifreli mesaj
+smime signed message	mail	tr	S/MIME imzalı mesaj
+smtp	mail	tr	SMTP
 text	mail	tr	Metin
 write	mail	tr	Yaz

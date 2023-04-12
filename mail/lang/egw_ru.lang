@@ -267,6 +267,9 @@ signature at top	mail	ru	Подпись сверху
 size(...->0)	mail	ru	Размер (...->0)
 size(0->...)	mail	ru	Размер (0->...)
 small view	mail	ru	Просмотр в небольшом окне
+smime encrypted message	mail	ru	Зашифрованное сообщение S/MIME
+smime signed message	mail	ru	S/MIME подписанное сообщение
+smtp	mail	ru	SMTP
 sneak preview in list	mail	ru	Предварительный просмотр в списке
 sort order	mail	ru	Порядок сортировки
 source	mail	ru	Исходный код

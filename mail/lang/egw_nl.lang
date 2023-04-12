@@ -395,6 +395,8 @@ signature at top	mail	nl	Ondertekeing bovenaan
 size(...->0)	mail	nl	Grootte (...->0)
 size(0->...)	mail	nl	Grootte 0->...)
 small view	mail	nl	kleine weergave
+smime encrypted message	mail	nl	S/MIME gecodeerd bericht
+smime signed message	mail	nl	S/MIME ondertekend bericht
 smtp	mail	nl	SMTP
 sort order	mail	nl	Volgorde
 source	mail	nl	Bron

@@ -173,6 +173,9 @@ signature	mail	fi	Allekirjoitus
 size(...->0)	mail	fi	Koko (...->0)
 size(0->...)	mail	fi	Koko (0->...)
 small view	mail	fi	Pieni näkymä
+smime encrypted message	mail	fi	S/MIME-salattu viesti
+smime signed message	mail	fi	S/MIME-allekirjoitettu viesti
+smtp	mail	fi	SMTP
 sort order	mail	fi	Lajittelujärjestys
 start new messages with mime type plain/text or html?	mail	fi	Haluatko aloitaa uudet viestit pelkkänä tekstinä vai HTML:nä?
 subject(a->z)	mail	fi	Aiheet A > Z

@@ -69,6 +69,9 @@ set predefined values for compose...	mail	et	Määrake komplekteerimise jaoks et
 size(...->0)	mail	et	Suurus (...->0)
 size(0->...)	mail	et	Suurus (0->...)
 small view	mail	et	väike vaade
+smime encrypted message	mail	et	S/MIME krüpteeritud sõnum
+smime signed message	mail	et	S/MIME allkirjastatud sõnum
+smtp	mail	et	SMTP
 text	mail	et	Tekst
 trash folder	mail	et	Trash Kaust
 unread	mail	et	lugematta

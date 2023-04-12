@@ -14,3 +14,6 @@ predefined addresses for compose	mail	ro	Adrese predefinite pentru compunere
 save all attachments to filemanager	mail	ro	Salvați toate atașamentele în filemanager
 select or insert email address	mail	ro	Selectați sau introduceți adresa de e-mail
 set predefined values for compose...	mail	ro	Setați valori predefinite pentru compunere ...
+smime encrypted message	mail	ro	Mesaj criptat S/MIME
+smime signed message	mail	ro	Mesaj semnat S/MIME
+smtp	mail	ro	SMTP

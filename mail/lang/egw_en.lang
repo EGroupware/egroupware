@@ -584,6 +584,8 @@ signature position and visibility	mail	en	Signature position and visibility
 size(...->0)	mail	en	size(...->0)
 size(0->...)	mail	en	size(0->...)
 small view	mail	en	small view
+smime encrypted message	mail	en	S/MIME encrypted message
+smime signed message	mail	en	S/MIME signed message
 smtp	mail	en	SMTP
 sneak preview in list	mail	en	Sneak preview in list
 some clients fail to detect correct charset, if flowed lines are enabled.	mail	en	Some clients fail to detect correct charset, if flowed lines are enabled.

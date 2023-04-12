@@ -220,6 +220,9 @@ signature	mail	pt-br	Assinatura
 size(...->0)	mail	pt-br	Tamanho (...->0)
 size(0->...)	mail	pt-br	Tamanho (0->...)
 small view	mail	pt-br	Visão resumida
+smime encrypted message	mail	pt-br	S/MIME mensagem criptografada
+smime signed message	mail	pt-br	Mensagem assinada S/MIME
+smtp	mail	pt-br	SMTP
 sort order	mail	pt-br	Ordem de classificação
 start new messages with mime type plain/text or html?	mail	pt-br	iniciar novas mensagens com mime type plain/text ou html ?
 subject(a->z)	mail	pt-br	Assunto (A->Z)

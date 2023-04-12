@@ -87,6 +87,9 @@ signature	mail	da	Signatur
 size(...->0)	mail	da	Størrelse (...->0)
 size(0->...)	mail	da	Størrelse (0->...)
 small view	mail	da	Lille overblik
+smime encrypted message	mail	da	S/MIME-krypteret meddelelse
+smime signed message	mail	da	S/MIME-signeret meddelelse
+smtp	mail	da	SMTP
 sort order	mail	da	Soterings rækkefølge
 subject(a->z)	mail	da	Emne (A->Z)
 subject(z->a)	mail	da	Emne (Z->A)

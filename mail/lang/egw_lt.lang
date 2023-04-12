@@ -14,3 +14,6 @@ predefined addresses for compose	mail	lt	Iš anksto nustatyti adresai sudarymui
 save all attachments to filemanager	mail	lt	Įrašyti visus priedus į failų tvarkyklę
 select or insert email address	mail	lt	Pasirinkite arba įterpkite el. pašto adresą
 set predefined values for compose...	mail	lt	Nustatykite iš anksto nustatytas reikšmes compose ...
+smime encrypted message	mail	lt	S/MIME užšifruotas pranešimas
+smime signed message	mail	lt	S/MIME pasirašytas pranešimas
+smtp	mail	lt	SMTP

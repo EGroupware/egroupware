@@ -23,5 +23,8 @@ save all attachments to filemanager	mail	uk	Зберегти всі вкладе
 select or insert email address	mail	uk	Виберіть або вставте адресу електронної пошти
 set predefined values for compose...	mail	uk	ВстаВстановити заздалегідь визначені значення для створення ...новити заздалегідь визначені значення для створення ...
 small view	mail	uk	маленький вигляд
+smime encrypted message	mail	uk	S/MIME зашифроване повідомлення
+smime signed message	mail	uk	Повідомлення з підписом S/MIME
+smtp	mail	uk	SMTP
 text	mail	uk	Текст
 write	mail	uk	Записати
