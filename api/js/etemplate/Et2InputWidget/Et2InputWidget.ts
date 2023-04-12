@@ -473,6 +473,13 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 		{
 			super.transformAttributes(attrs);
 
+			// Set attributes for the form / autofill.  It's the individual widget's
+			// responsibility to do something appropriate with these properties.
+			if(this.autocomplete == "on" && window.customElements.get(this.localName).getPropertyOptions("name") != "undefined")
+			{
+				this.name = this.getArrayMgr("content").explodeKey(this.id).pop();
+			}
+
 			// Check whether an validation error entry exists
 			if(this.id && this.getArrayMgr("validation_errors"))
 			{
