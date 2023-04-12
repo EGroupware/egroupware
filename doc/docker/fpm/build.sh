@@ -37,7 +37,7 @@ docker pull ubuntu:20.04
 
 # add further tags for default PHP version only
 [ $PHP_VERSION = $DEFAULT_PHP_VERSION -a "$BRANCH" != $VERSION -a "dev-${BRANCH}" != $VERSION ] && {
-  extra_tags="$tags --tag egroupware/egroupware:latest --tag egroupware/egroupware:$BRANCH"
+  extra_tags="--tag egroupware/egroupware:latest --tag egroupware/egroupware:$BRANCH"
 }
 
 if docker buildx 2>&1 >/dev/null
@@ -48,7 +48,7 @@ else
   # no buildx, eg. on dev only builds amd64!
   docker build --build-arg "VERSION=$VERSION" --build-arg "PHP_VERSION=$PHP_VERSION" --tag egroupware/egroupware:$TAG . && {
     docker push egroupware/egroupware:$TAG
-    for tag in $tags
+    for tag in $extra_tags
     do
       [ -z "$tag" -o "$tag" = "--tags" ] || {
         docker tag egroupware/egroupware:$TAG $tag

@@ -1,6 +1,6 @@
 ################################################################################
 ##
-## EGroupware FPM container using Ubuntu 18.04 and PHP 7.3 from ondrej/php PPA
+## EGroupware FPM container using Ubuntu 20.04 and PHP 8.1 from ondrej/php PPA
 ##
 ################################################################################
 ARG ARCH=
@@ -14,7 +14,8 @@ ARG PHP_VERSION=8.1
 ENV VERSION=$VERSION
 ENV PHP_VERSION=$PHP_VERSION
 
-RUN apt-get update \
+RUN set -e \
+    && apt-get update \
 	&& apt-get install -y software-properties-common \
 	&& LC_ALL=C.UTF-8 add-apt-repository -y ppa:ondrej/php \
 	&& apt-get update \
@@ -81,6 +82,8 @@ exit $RESULT' \
     # install nodejs 16.x PPA (Shoelace requires >= 14.17, Ubuntu 22.04 only has 12.x)
     && curl -fsSL https://deb.nodesource.com/setup_16.x | bash - \
     && apt-get install -y nodejs \
+    # nodejs PPA does NOT exist for ppc64le, therefore we need to install npm separate, as not included in stock nodejs on Ubuntu
+    && test -f /usr/bin/npm || apt-get install -y npm \
 	&& npm install -g grunt-cli \
 	&& npm install \
 	&& grunt \
