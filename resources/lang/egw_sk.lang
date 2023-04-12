@@ -3,6 +3,7 @@
 %1 resource(s) %2	resources	sk	%1 zdrojov %2
 %1 resource(s) %2, %3 failed	resources	sk	%1 zdrojov %2, %3 zlyhalo
 %1 resource(s) %2, %3 failed because of insufficent rights !!!	resources	sk	%1 zdrojov %2, %3 zlyhalo kvôli nedostatočným oprávneniam!!!
+%1 resource(s) booked	resources	sk	%1 zdrojov zarezervovaných
 %1 resource(s) view calendar	resources	sk	%1 zdrojov Zobraziť kalendár
 accessories	resources	sk	Príslušenstvo
 accessories of	resources	sk	Príslušenstvo k
@@ -46,6 +47,7 @@ delete this entry	resources	sk	Odstrániť túto položku
 deleted	resources	sk	Odstránené
 description (short)	resources	sk	Popis (stručný)
 direct booking permissions	resources	sk	Priame rezervačné práva
+do you really want to delete this resource?	resources	sk	Skutočne chcete odstrániť tento zdroj?
 don't use vfs (this will need a symlink --> see readme)	resources	sk	Nepoužívať vfs (bude potrebný symlink --> prečítajte si README)
 edit this entry	resources	sk	Uprav tento záznam
 event start	resources	sk	Začiatok udalosti

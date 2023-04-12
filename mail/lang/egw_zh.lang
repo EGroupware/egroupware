@@ -126,6 +126,9 @@ signature	mail	zh	签名
 size(...->0)	mail	zh	大小 (...->0)
 size(0->...)	mail	zh	大小(0->...)
 small view	mail	zh	小视图
+smime encrypted message	mail	zh	S/MIME加密的信息
+smime signed message	mail	zh	S/MIME签名信息
+smtp	mail	zh	SMTP
 sort order	mail	zh	分类排序
 subject(a->z)	mail	zh	主题 (A->Z)
 subject(z->a)	mail	zh	主题 (Z->A)

@@ -482,6 +482,8 @@ signature position and visibility	mail	cs	Pozice a viditelnost podpisu
 size(...->0)	mail	cs	Velikost (...->0)
 size(0->...)	mail	cs	Velikost (0->...)
 small view	mail	cs	malé zobrazení
+smime encrypted message	mail	cs	Šifrovaná zpráva S/MIME
+smime signed message	mail	cs	Zpráva podepsaná protokolem S/MIME
 smtp	mail	cs	SMTP
 sneak preview in list	mail	cs	Skrytý náhled v seznamu
 some clients fail to detect correct charset, if flowed lines are enabled.	mail	cs	Některé e-mailové programy špatně detekují správnou znakovou sadu, pokud jsou povoleny plovoucí řádky.

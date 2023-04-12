@@ -245,6 +245,7 @@ creates / updates user groups from csv file	admin	es-es	Crea o actualiza los gru
 creates a new field	admin	es-es	crea un campo nuevo
 crontab only (recomended)	admin	es-es	Sólo mediante crontab (recomendado)
 current certificate	admin	es-es	Current certificate
+current default	admin	es-es	predeterminado actual
 current hash	admin	es-es	Hash actual
 currently:	admin	es-es	Actualmente:
 custom 1	admin	es-es	Custom 1
@@ -324,6 +325,7 @@ disable all	admin	es-es	Deshabilitar todo
 disable minifying of javascript and css files	admin	es-es	Deshabilitar la reducción de archivos javascript y CSS
 disable pgp encryption (mailvelope)	admin	es-es	Deshabilitar el cifrado PGP (Mailvelope)
 disable wysiwyg-editor	admin	es-es	Deshabilitar editor WYSIWYG
+disabled	admin	es-es	Deshabilitado
 disabled (not recomended)	admin	es-es	Deshabilitado (no se recomienda)
 disabled, do not show on login page	admin	es-es	deshabilitado, no se muestra en la página de inicio de sesión
 display	admin	es-es	Mostrar
@@ -333,6 +335,8 @@ displaying plain messages is disabled	admin	es-es	mostrar mensajes simples está
 do not delete the category and return back to the list	admin	es-es	NO borrar la categoría y regresar a la lista
 do not generate email addresses	admin	es-es	No generar direcciones de correo-e
 do not offer introduction video	admin	es-es	No ofrecer video introductorio
+do not send cookie	admin	es-es	no enviar cookie
+do not set attribute	admin	es-es	No establecer atributo
 do not validate certificate	admin	es-es	No validar el certificado
 do you also want to delete all global subcategories ?	admin	es-es	¿Desea eliminar también todas las subcategorías globales?
 do you really want to delete this profile	admin	es-es	¿Realmente desea borrar este perfil?
@@ -375,12 +379,13 @@ empty to not change	admin	es-es	en blanco para NO cambiar
 enable	admin	es-es	Activar
 enable cyrus imap server administration	admin	es-es	activar administración del servidor Cyrus IMAP
 enable debug-messages	admin	es-es	Activar mensajes de depuración
-enable sieve	admin	es-es	activar Sieve
-enable spellcheck in rich text editor	admin	es-es	¿Activar la corrección ortográfica en el editor de texto enriquecido?
+enable sieve	admin	es-es	Activar Sieve
+enable spellcheck in rich text editor	admin	es-es	Activar el corrector ortográfico en el editor de texto enriquecido
 enable the soap service	admin	es-es	Activar el servicio soap
 enable the xmlrpc service	admin	es-es	Activar el servicio xmlrpc
-enabled - hidden from navbar	admin	es-es	Habilitado - Esconder de la barra de navegación
-enabled - popup window	admin	es-es	Habilitado - Ventana emergente
+enabled	admin	es-es	Activado
+enabled - hidden from navbar	admin	es-es	Activado - Esconder de la barra de navegación
+enabled - popup window	admin	es-es	Activado - Ventana emergente
 encrypted connection	admin	es-es	Conexión cifrada
 encryption	admin	es-es	Cifrado
 encryption settings	admin	es-es	Configuración del cifrado
@@ -492,6 +497,7 @@ hide sidebox video tutorials	admin	es-es	Ocultar los tutoriales en video de la c
 home directory	admin	es-es	Directorio personal
 home screen message	admin	es-es	Mensaje de la pantalla principal
 host information	admin	es-es	Información del servidor
+hostname or ip	admin	es-es	Nombre de host o IP
 hour<br>(0-23)	admin	es-es	Hora<br>(0-23)
 how big should thumbnails for linked images be (maximum in pixels) ?	admin	es-es	¿Qué tamaño deben tener las miniaturas para las imágenes vinculadas (máximo en pixels)?
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	es-es	¿Cuántos días deben permanecer las entradas en el registro de acceso, antes de borrarlas? (por defecto, 90)
@@ -578,6 +584,7 @@ ldap server admin password	admin	es-es	contraseña del administrador del servido
 ldap server hostname or ip address	admin	es-es	Nombre del servidor LDAP o dirección IP
 ldap settings	admin	es-es	Configuración LDAP
 leave empty for no quota	admin	es-es	Dejar en blanco para no poner cuota
+leave empty to use oauth, if supported	admin	es-es	Deje vacío para usar OAuth, si es compatible
 leave the category untouched and return back to the list	admin	es-es	dejar la categoría intacta y volver a la lista
 leave the group untouched and return back to the list	admin	es-es	Dejar el grupo intacto y volver a la lista
 leave unchanged	admin	es-es	Dejar sin cambios
@@ -654,6 +661,7 @@ no profile defined for user %1	admin	es-es	No se ha definido un perfil para el u
 no sieve support detected, either fix configuration manually or leave it switched off.	admin	es-es	No se detectó soporte de Sieve, arregle la configuración manualmente o déjelo apagado.
 no supported imap authentication method could be found.	admin	es-es	No se pudo encontrar ningún método soportado de identificación IMAP.
 non profit: clubs, associations, ...	admin	es-es	Sin ánimo de lucro: clubs, asociaciones...
+not enabled	admin	es-es	No disponible
 note: ssl available only if php is compiled with curl support	admin	es-es	Nota: SSL está disponible sólo si PHP está compilado con soporte curl
 notification mail	admin	es-es	Correo de notificación
 notify user by email	admin	es-es	Notificar al usuario por correo

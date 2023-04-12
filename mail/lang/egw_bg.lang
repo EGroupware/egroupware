@@ -357,6 +357,9 @@ signature	mail	bg	Подпис
 size(...->0)	mail	bg	Размер (...->0)
 size(0->...)	mail	bg	Размер (0->...)
 small view	mail	bg	умален изглед
+smime encrypted message	mail	bg	S/MIME криптирано съобщение
+smime signed message	mail	bg	S/MIME подписано съобщение
+smtp	mail	bg	SMTP
 start new messages with mime type plain/text or html?	mail	bg	Започва нови съобщения като чист текст или HTML?
 subject(a->z)	mail	bg	Тема (A->Z)
 subject(z->a)	mail	bg	Тема (Z->A)

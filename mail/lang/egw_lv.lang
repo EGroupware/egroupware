@@ -86,6 +86,9 @@ signature	mail	lv	Paraksts
 size(...->0)	mail	lv	Izmērs (...->0)
 size(0->...)	mail	lv	Izmērs (0->...)
 small view	mail	lv	mazais skats
+smime encrypted message	mail	lv	S/MIME šifrēta ziņa
+smime signed message	mail	lv	S/MIME parakstīts ziņojums
+smtp	mail	lv	SMTP
 sort order	mail	lv	Vieta pēc kārtas
 subject(a->z)	mail	lv	Tēma (A->Z)
 subject(z->a)	mail	lv	Tēma (Z->A)

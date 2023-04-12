@@ -497,6 +497,8 @@ signature position and visibility	mail	es-es	Posición y visibilidad de la firma
 size(...->0)	mail	es-es	Tamaño (...->0)
 size(0->...)	mail	es-es	Tamaño (0->...)
 small view	mail	es-es	Vista reducida
+smime encrypted message	mail	es-es	Mensaje cifrado S/MIME
+smime signed message	mail	es-es	Mensaje firmado S/MIME
 smtp	mail	es-es	SMTP
 some clients fail to detect correct charset, if flowed lines are enabled.	mail	es-es	Algunos clientes no detectan el conjunto de caracteres correcto, si las líneas fluidas están habilitadas.
 sort order	mail	es-es	Orden en la página

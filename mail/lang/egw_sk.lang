@@ -542,6 +542,8 @@ signature position and visibility	mail	sk	Umiestnenie a viditeľnosť podpisu
 size(...->0)	mail	sk	Veľkosť (...->0)
 size(0->...)	mail	sk	Veľkosť (0->...)
 small view	mail	sk	Zmenšený pohľad
+smime encrypted message	mail	sk	Šifrovaná správa S/MIME
+smime signed message	mail	sk	S/MIME podpísaná správa
 smtp	mail	sk	SMTP
 some clients fail to detect correct charset, if flowed lines are enabled.	mail	sk	Niektorí klienti nedokážu určiť správnu znakovú sadu keď sú plávajúce riadky zapnuté.
 sort order	mail	sk	Usporiadať podľa

@@ -54,6 +54,7 @@ last month	notifications	sk	Ostatný mesiac
 linked entries:	common	sk	Pripojené záznamy:
 login aborted, application exit?	notifications	sk	Prihlásenie bolo zrušené, chcete zavrieť aplikáciu?
 login in egroupware:	notifications	sk	Prihlásiť do EGroupware:
+mail account to use for notifications	admin	sk	E-mailový účet pre posielanie upozornení
 mail backend	admin	sk	Poštová infraštruktúra
 mark all as read	notifications	sk	označiť všetko ako prečítané
 mark as read	notifications	sk	označiť ako prečítané

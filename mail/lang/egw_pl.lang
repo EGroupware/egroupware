@@ -171,6 +171,9 @@ signature	mail	pl	Sygnaturka
 size(...->0)	mail	pl	Rozmiar (...->0)
 size(0->...)	mail	pl	Rozmiar (0->...)
 small view	mail	pl	widok uproszczony
+smime encrypted message	mail	pl	Komunikat zaszyfrowany S/MIME
+smime signed message	mail	pl	Komunikat podpisany S/MIME
+smtp	mail	pl	SMTP
 sneak preview in list	mail	pl	z krótkim podglądem
 sort order	mail	pl	Porządek sortowania
 start new messages with mime type plain/text or html?	mail	pl	nowe wiadomości mają być oznaczane jako tekst czy html?

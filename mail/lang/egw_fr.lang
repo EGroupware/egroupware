@@ -505,6 +505,8 @@ signature position and visibility	mail	fr	Position et visibilité de la signatur
 size(...->0)	mail	fr	Taille (MAX -> 0)
 size(0->...)	mail	fr	Taille (0 -> MAX)
 small view	mail	fr	Affichage réduit
+smime encrypted message	mail	fr	Message crypté S/MIME
+smime signed message	mail	fr	Message signé S/MIME
 smtp	mail	fr	SMTP
 sneak preview in list	mail	fr	Masquer la prévisualisation
 sort order	mail	fr	Ordre de tri

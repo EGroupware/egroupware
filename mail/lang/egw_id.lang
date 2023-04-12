@@ -110,6 +110,9 @@ signature	mail	id	Tandatangan
 size(...->0)	mail	id	Ukuran (...->0)
 size(0->...)	mail	id	Ukuran (0->...)
 small view	mail	id	small view
+smime encrypted message	mail	id	Pesan terenkripsi S/MIME
+smime signed message	mail	id	Pesan yang ditandatangani S/MIME
+smtp	mail	id	SMTP
 sort order	mail	id	Sort Order
 subject(a->z)	mail	id	Subyek (A->Z)
 subject(z->a)	mail	id	Subyek (Z->A)

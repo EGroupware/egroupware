@@ -529,6 +529,8 @@ signature position and visibility	mail	sl	Položaj podpisa in prepoznavnost
 size(...->0)	mail	sl	Velikost (... -> 0)
 size(0->...)	mail	sl	Velikost (0 -> ...)
 small view	mail	sl	Skrčen pogled
+smime encrypted message	mail	sl	Šifrirano sporočilo S/MIME
+smime signed message	mail	sl	Podpisano sporočilo S/MIME
 smtp	mail	sl	SMTP
 sneak preview in list	mail	sl	Na seznamu ni predogleda
 some clients fail to detect correct charset, if flowed lines are enabled.	mail	sl	Nekateri odjemalci ne zaznajo pravilnega znaka, če so omogočene teče linije.
