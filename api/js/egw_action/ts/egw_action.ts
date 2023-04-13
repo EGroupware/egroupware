@@ -1093,8 +1093,8 @@ export class EgwActionLink
  * egwActionObjects are organized in a tree structure.
  *
  * @param {string} _id is the identifier of the object which
- * @param {egwActionObject} _parent is the parent object in the hirachy. This may be set to NULL
- * @param {egwActionObjectInterface} _iface is the egwActionObjectInterface which connects the object
+ * @param {EgwActionObject} _parent is the parent object in the hirachy. This may be set to NULL
+ * @param {EgwActionObjectInterface} _iface is the egwActionObjectInterface which connects the object
  *    to the outer world.
  * @param {EgwActionManager} _manager is the action manager this object is connected to
  *    this object to the DOM tree. If the _manager isn't supplied, the parent manager
@@ -1119,6 +1119,8 @@ export class EgwActionObject
 	private selectedChildren = [];
 	private focusedChild = null;
 	private readonly onBeforeTrigger: Function = undefined
+	_context: any = undefined
+
 
 	constructor(_id: string, _parent: EgwActionObject, _interface: EgwActionObjectInterface, _manager?: EgwActionManager, _flags?: number)
 	{
@@ -2060,7 +2062,7 @@ export class EgwActionObject
 	};
 
 	/**
-	 * Unregisters all action implementations registerd to this element
+	 * Unregisters all action implementations registered to this element
 	 */
 	unregisterActions()
 	{
