@@ -944,7 +944,7 @@ export class EgwAction
 //after class creation register it in the global scope with its constructor!!
 // Do this for all classes extending EgwAction
 (() => {
-	window._egwActionClasses["default"] = {
+	window._egwActionClasses.default = {
 		"actionConstructor": EgwAction.constructor, "implementation": null
 	};
 })()
