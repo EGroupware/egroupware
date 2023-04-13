@@ -285,7 +285,17 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 			}
 
 			// Collect any ManualMessages
-			this._messagesHeldWhileFocused = (this.validators || []).filter((validator) => (validator instanceof ManualMessage));
+			this._messagesHeldWhileFocused = (this.validators || []).filter(
+				(validator) => (validator instanceof ManualMessage)
+			);
+			// Remove ManualMessages from validators list
+			for(let i = 0; i < this.validators.length; i++)
+			{
+				if(this._messagesHeldWhileFocused.indexOf(this.validators[i]) != -1)
+				{
+					this.validators.splice(i, 1);
+				}
+			}
 
 			this.updateComplete.then(() =>
 			{
@@ -494,8 +504,10 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 		 *
 		 * We handle validation errors from the server with ManualMessages, which always "fail".
 		 * If the value is empty, we only validate if the field is required.
+		 *
+		 * @param skipManual Do not run any manual validators, used during submit check.  We don't want manual validators to block submit.
 		 */
-		async validate()
+		async validate(skipManual = false)
 		{
 			if(this.readonly)
 			{
@@ -556,7 +568,10 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 				// Run manual validation messages just once, doesn't usually matter what the value is
 				if(validator instanceof ManualMessage)
 				{
-					doCheck(values, validator);
+					if(!skipManual)
+					{
+						doCheck(values, validator);
+					}
 				}
 					// Only validate if field is required, or not required and has a value
 				// Don't bother to validate empty fields
