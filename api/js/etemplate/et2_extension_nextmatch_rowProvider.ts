@@ -409,6 +409,11 @@ export class et2_nextmatch_rowProvider
 					}
 				}
 			}
+			else
+			{
+				// Need to include all webComponents or they lose their event handlers in the clone
+				hasAttr = true;
+			}
 
 			// Add the entry if there is any data in it
 			if(hasAttr)
