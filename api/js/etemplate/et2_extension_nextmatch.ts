@@ -3942,8 +3942,8 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 					}
 				}
 
-				// Update filters, if the value is different and we're not already doing so
-				if((result || typeof result === 'undefined') && entry != _widget.getValue() && !header.update_in_progress)
+				// Update filters, if we're not already doing so
+				if((result || typeof result === 'undefined') && !header.update_in_progress)
 				{
 					// Widget will not have an entry in getValues() because nulls
 					// are not returned, we remove it from activeFilters
