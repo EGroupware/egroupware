@@ -4347,6 +4347,10 @@ export class et2_nextmatch_sortheader extends et2_nextmatch_header implements et
 		{
 			// Send default sort mode if not sorted, otherwise send undefined to calculate
 			this.nextmatch.sortBy(this.id, this.sortmode == "none" ? !(this.options.sortmode.toUpperCase() == "DESC") : undefined);
+
+			// Update sort preference
+			this.egw().set_preference(this.nextmatch._get_appname(), this.nextmatch.options.template + "_sort", this.nextmatch.activeFilters["sort"]);
+
 			return true;
 		}
 
