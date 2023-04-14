@@ -120,7 +120,7 @@ class Nextmatch extends Etemplate\Widget
 		$value = self::get_array(self::$request->content, $form_name, true);
 
 		$value['start'] = 0;
-		if(!array_key_exists('num_rows',$value))
+		if(!array_key_exists('num_rows', $value))
 		{
 			$value['num_rows'] = self::INITIAL_ROWS;
 		}
@@ -129,24 +129,30 @@ class Nextmatch extends Etemplate\Widget
 
 		$send_value = $value;
 
-		list($app) = explode('.',$value['get_rows']);
-		if (empty($GLOBALS['egw_info']['apps'][$app]))
+		list($app) = explode('.', $value['get_rows']);
+		if(empty($GLOBALS['egw_info']['apps'][$app]))
 		{
-			list($app) = explode('.',$this->attrs['template']);
+			list($app) = explode('.', $this->attrs['template']);
+		}
+
+		// Check for sort preference.  We only apply this on first load so it can be changed
+		if($GLOBALS['egw_info']['user']['preferences'][$app][$this->attrs['template'] . "_sort"])
+		{
+			$send_value['sort'] = $GLOBALS['egw_info']['user']['preferences'][$app][$this->attrs['template'] . "_sort"];
 		}
 
 		// Check for a favorite in URL
-		if (!empty($_GET['favorite']) && !empty($value['favorites']))
+		if(!empty($_GET['favorite']) && !empty($value['favorites']))
 		{
-			$safe_name = preg_replace('/[^A-Za-z0-9-_]/','_',strip_tags($_GET['favorite']));
-			$pref_name = "favorite_" .$safe_name;
+			$safe_name = preg_replace('/[^A-Za-z0-9-_]/', '_', strip_tags($_GET['favorite']));
+			$pref_name = "favorite_" . $safe_name;
 
 			// Do some easy applying of filters server side
 			$favorite = $GLOBALS['egw_info']['user']['preferences'][$app][$pref_name];
 			if(!$favorite && $_GET['favorite'] == 'blank')
 			{
 				// Have to go through each of these
-				foreach(array('search','cat_id','filter','filter2') as $filter)
+				foreach(array('search', 'cat_id', 'filter', 'filter2') as $filter)
 				{
 					$send_value[$filter] = '';
 				}
