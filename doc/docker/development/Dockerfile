@@ -4,7 +4,7 @@
 ##
 ################################################################################
 FROM ubuntu:22.04
-MAINTAINER rb@egroupware.org
+LABEL maintainer="rb@egroupware.org"
 
 ARG VERSION=dev-master
 ARG PHP_VERSION=8.1
