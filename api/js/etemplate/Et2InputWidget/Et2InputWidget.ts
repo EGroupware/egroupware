@@ -516,7 +516,7 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 		 */
 		async validate(skipManual = false)
 		{
-			if(this.readonly)
+			if(this.readonly || this.disabled)
 			{
 				// Don't validate if the widget is read-only, there's nothing the user can do about it
 				return Promise.resolve();
