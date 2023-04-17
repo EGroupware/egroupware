@@ -83,6 +83,10 @@ export class Et2SelectEmail extends Et2Select
 	constructor(...args : any[])
 	{
 		super(...args);
+
+		// Always off for select email, per ticket #79694
+		this._close_on_select = true;
+
 		this.search = true;
 		this.searchUrl = "EGroupware\\Api\\Etemplate\\Widget\\Taglist::ajax_email";
 		this.allowFreeEntries = true;

@@ -25,6 +25,10 @@ class preferences_hooks
 	 */
 	static public function settings($hook_data)
 	{
+		$select_multiple_close = array(
+			'open'  => lang('Stay open'),
+			'close' => lang('Close after selection')
+		);
 		$navbar_format = array(
 			'icons'          => lang('Icons only'),
 			'icons_and_text' => lang('Icons and text'),
@@ -197,7 +201,7 @@ class preferences_hooks
 				'help'   => 'Fast update add new entries always top of the list and updates existing ones in place, unless list is sorted by last modified. Exact updates do a full refresh, if the list is not sorted by last modified.',
 				'default'=> 'lazy'
 			),
-			'template_set' => array(
+			'template_set'          => array(
 				'type'   => 'select',
 				'label'  => 'Interface/Template Selection',
 				'name'   => 'template_set',
@@ -208,7 +212,7 @@ class preferences_hooks
 				'forced' => file_exists(EGW_SERVER_ROOT.'/pixelegg') ? 'pixelegg' : 'idots',
 				'reload' => true
 			),
-			'theme' => array(
+			'theme'                 => array(
 				'type'   => 'select',
 				'label'  => 'Theme (colors/fonts) Selection',
 				'name'   => 'theme',
@@ -216,97 +220,105 @@ class preferences_hooks
 				'help'   => 'A theme defines the colors and fonts used by the template.',
 				'xmlrpc' => True,
 				'admin'  => False,
-				'forced' => file_exists(EGW_SERVER_ROOT.'/pixelegg') ? 'pixelegg' : 'idots',
+				'forced' => file_exists(EGW_SERVER_ROOT . '/pixelegg') ? 'pixelegg' : 'idots',
 				'reload' => true
 			),
-			'darkmode' => array(
-				'type'   => 'select',
-				'label'  => 'Dark mode theme',
-				'name'   => 'darkmode',
-				'values' => array('0' => 'off', '1' => 'on', '2'=> 'auto'),
-				'help'   => 'Dark mode theme',
-				'admin'  => False,
+			'darkmode'              => array(
+				'type'    => 'select',
+				'label'   => 'Dark mode theme',
+				'name'    => 'darkmode',
+				'values'  => array('0' => 'off', '1' => 'on', '2' => 'auto'),
+				'help'    => 'Dark mode theme',
+				'admin'   => False,
 				'default' => '0'
 			),
-			'audio_effect'=> array(
-				'type'   => 'select',
-				'label'  => 'Audio effect',
-				'name'   => 'audio_effect',
-				'values' => array('0'=>lang('Disable'),'1'=>lang('Enable')),
-				'help'   => 'Audio effect enables|disables sound effects used in the theme',
-				'xmlrpc' => True,
-				'admin'  => False,
+			'audio_effect'          => array(
+				'type'    => 'select',
+				'label'   => 'Audio effect',
+				'name'    => 'audio_effect',
+				'values'  => array('0' => lang('Disable'), '1' => lang('Enable')),
+				'help'    => 'Audio effect enables|disables sound effects used in the theme',
+				'xmlrpc'  => True,
+				'admin'   => False,
 				'default' => '0',
 			),
-			'navbar_format' => array(
+			'navbar_format'         => array(
+				'type'    => 'select',
+				'label'   => 'Show navigation bar as',
+				'name'    => 'navbar_format',
+				'values'  => $navbar_format,
+				'help'    => 'You can show the applications as icons only, icons with app-name or both.',
+				'xmlrpc'  => True,
+				'admin'   => False,
+				'default' => 'icons_and_text',
+			),
+			'link_list_format'      => array(
 				'type'   => 'select',
-				'label'  => 'Show navigation bar as',
-				'name'   => 'navbar_format',
-				'values' => $navbar_format,
-				'help'   => 'You can show the applications as icons only, icons with app-name or both.',
+				'label'  => 'Show links between eGroupWare aps as',
+				'name'   => 'link_list_format',
+				'values' => $link_list_format,
+				'help'   => 'You can show the linked entries with icons only, icons with app-name or both.',
 				'xmlrpc' => True,
 				'admin'  => False,
-				'default'=> 'icons_and_text',
+				'forced' => 'icons',
 			),
-			'link_list_format' => array(
-				'type'		=>	'select',
-				'label'		=>	'Show links between eGroupWare aps as',
-				'name'		=>	'link_list_format',
-				'values'	=>	$link_list_format,
-				'help'		=>	'You can show the linked entries with icons only, icons with app-name or both.',
-				'xmlrpc'	=>	True,
-				'admin'		=>	False,
-				'forced'    =>  'icons',
+			'select_multiple_close' => array(
+				'type'    => 'select',
+				'label'   => 'Keep list open for selecting multiple',
+				'name'    => 'select_multiple_close',
+				'values'  => $select_multiple_close,
+				'help'    => 'When you can select multiple options, should the option list stay open until you close it, or close after you pick an option.',
+				'default' => 'open'
 			),
-			'link_list_thumbnail' => array(
-				'type'		=>	'select',
-				'label'		=>	'Display thumbnails for linked images',
-				'name'		=>	'link_list_thumbnail',
-				'values'    =>  array(
-					'1'		=>  lang('Yes'),
-					'0'     =>	lang('No'),
+			'link_list_thumbnail'   => array(
+				'type'   => 'select',
+				'label'  => 'Display thumbnails for linked images',
+				'name'   => 'link_list_thumbnail',
+				'values' => array(
+					'1' => lang('Yes'),
+					'0' => lang('No'),
 				),
-				'help'		=>	'Images linked to an entry can be displayed as thumbnails.  You can turn this off to speed up page display.',
-				'xmlrpc'	=>	True,
-				'admin'		=>	False,
-				'forced'    =>  '1',
+				'help'   => 'Images linked to an entry can be displayed as thumbnails.  You can turn this off to speed up page display.',
+				'xmlrpc' => True,
+				'admin'  => False,
+				'forced' => '1',
 			),
-			'select_mode' => array(
-				'type'		=>	'select',
-				'label'		=>	'Select additional lines in lists by',
-				'name'		=>	'select_mode',
-				'values'    =>  array(
+			'select_mode'           => array(
+				'type'    => 'select',
+				'label'   => 'Select additional lines in lists by',
+				'name'    => 'select_mode',
+				'values'  => array(
 					'EGW_SELECTMODE_DEFAULT' => lang('holding Ctrl/Cmd key and click on the line'),
 					'EGW_SELECTMODE_TOGGLE'  => lang('just clicking on the line, like a checkbox'),
 				),
-				'help'		=>	'If a line is already selected, further lines get either selected by holding Ctrl/Cmd key and clicking on them (to not unselect the current selected line), or by just clicking on them as for a checkbox. If no line is selected clicking on one allways selects it. Holding down Shift key selects everything between current select line and the one clicked.',
-				'xmlrpc'	=>	True,
-				'admin'		=>	False,
-				'default'    =>  'EGW_SELECTMODE_DEFAULT',
+				'help'    => 'If a line is already selected, further lines get either selected by holding Ctrl/Cmd key and clicking on them (to not unselect the current selected line), or by just clicking on them as for a checkbox. If no line is selected clicking on one allways selects it. Holding down Shift key selects everything between current select line and the one clicked.',
+				'xmlrpc'  => True,
+				'admin'   => False,
+				'default' => 'EGW_SELECTMODE_DEFAULT',
 			),
-			'account_selection' => array(
-				'type'   => 'select',
-				'label'  => 'How do you like to select accounts',
-				'name'   => 'account_selection',
-				'values' => $account_sels,
-				'help'   => lang('The selectbox shows all available users (can be very slow on big installs with many users). The popup can search users by name or group.').' '.
+			'account_selection'     => array(
+				'type'     => 'select',
+				'label'    => 'How do you like to select accounts',
+				'name'     => 'account_selection',
+				'values'   => $account_sels,
+				'help'     => lang('The selectbox shows all available users (can be very slow on big installs with many users). The popup can search users by name or group.') . ' ' .
 					lang('The two last options limit the visibility of other users. Therefore they should be forced and apply NOT to administrators.'),
 				'run_lang' => false,
-				'xmlrpc' => True,
-				'admin'  => False,
-				'default'=> 'selectbox'
+				'xmlrpc'   => True,
+				'admin'    => False,
+				'default'  => 'selectbox'
 			),
-			'account_display' => array(
-				'type'   => 'select',
-				'label'  => 'How do you like to display accounts',
-				'name'   => 'account_display',
-				'values' => $account_display,
-				'help'   => 'Set this to your convenience. For security reasons, you might not want to show your Loginname in public.',
-				'xmlrpc' => True,
-				'admin'  => False,
-				'default'=> 'lastname',
+			'account_display'       => array(
+				'type'    => 'select',
+				'label'   => 'How do you like to display accounts',
+				'name'    => 'account_display',
+				'values'  => $account_display,
+				'help'    => 'Set this to your convenience. For security reasons, you might not want to show your Loginname in public.',
+				'xmlrpc'  => True,
+				'admin'   => False,
+				'default' => 'lastname',
 			),
-			'show_currentusers' => array(
+			'show_currentusers'     => array(
 				'type'  => 'check',
 				'label' => 'Show number of current users',
 				'name'  => 'show_currentusers',
@@ -315,7 +327,7 @@ class preferences_hooks
 				'admin'  => True,
 				'forced' => true,
 			),
-			'scroll_area'=> array(
+			'scroll_area'           => array(
 				'type'   => 'select',
 				'label'  => 'Applications list scroll area',
 				'name'   => 'scroll_area',
