@@ -244,11 +244,21 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 	 */
 	private _block_change_event = false;
 
+	/**
+	 * Close the dropdown after user selects an option.
+	 * Only applies when multiple="true".  We initialize it in constructor to the common preference "select_multiple_close"
+	 * @type {boolean}
+	 * @private
+	 */
+	private _close_on_select : boolean;
+
 	constructor(...args : any[])
 	{
 		super();
 		// We want this on more often than off
 		this.hoist = true;
+
+		this._close_on_select = this.egw().preference("select_multiple_close") == "close";
 
 		this._triggerChange = this._triggerChange.bind(this);
 		this._doResize = this._doResize.bind(this);
@@ -683,8 +693,8 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 	}
 
 	/**
-	 * Always close the dropdown if an option is clicked, even if multiple=true.  This differs from SlSelect,
-	 * which leaves the dropdown open for multiple=true
+	 * Apply the user preference to close the dropdown if an option is clicked, even if multiple=true.
+	 * The default (from SlSelect) leaves the dropdown open for multiple=true
 	 *
 	 * @param {MouseEvent} event
 	 * @private
@@ -696,14 +706,17 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 			// Don't hide dropdown when clicking on select.  That can close it after user opens it.
 			return;
 		}
-		this.dropdown.hide().then(() =>
+		if(this._close_on_select)
 		{
-			if(typeof this.handleMenuHide == "function")
+			this.dropdown.hide().then(() =>
 			{
-				// Make sure search gets hidden
-				this.handleMenuHide();
-			}
-		});
+				if(typeof this.handleMenuHide == "function")
+				{
+					// Make sure search gets hidden
+					this.handleMenuHide();
+				}
+			});
+		}
 	}
 
 	/**

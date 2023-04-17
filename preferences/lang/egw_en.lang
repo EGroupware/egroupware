@@ -104,6 +104,7 @@ interface/template selection	preferences	en	Interface | Template
 it sets content size (text only) according to selected size.	preferences	en	It sets content size (text only) according to selected size.
 just clicking on the line, like a checkbox	preferences	en	just clicking on the line, like a checkbox
 kama theme	preferences	en	Kama theme
+keep list open for selecting multiple	preferences	en	Keep list open for selecting multiple
 language	preferences	en	Language
 look & feel	preferences	en	Look & feel
 lowercase letters	preferences	en	lowercase letters
@@ -194,6 +195,7 @@ unit of displayed font sizes: either "px" as used eg. for web-pages or "pt" as u
 uppercase letters	preferences	en	uppercase letters
 use default	preferences	en	Use default
 users choice	preferences	en	Users choice
+when you can select multiple options, should the option list stay open until you close it, or close after you pick an option.	preferences	en	When you can select multiple options, should the option list stay open until you close it, or close after you pick an option.
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	en	Show Home and Logout buttons as applications in the top bar.
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	en	Select character set for the CSV Import|Export.
 which currency symbol or name should be used in egroupware.	preferences	en	Currency symbol or name.
