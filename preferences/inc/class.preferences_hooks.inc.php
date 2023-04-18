@@ -26,8 +26,9 @@ class preferences_hooks
 	static public function settings($hook_data)
 	{
 		$select_multiple_close = array(
-			'open'  => lang('Stay open'),
-			'close' => lang('Close after selection')
+			'open'        => lang('Stay open'),
+			'close_email' => lang('Stay open, but not for email'),
+			'close'       => lang('Close after selection')
 		);
 		$navbar_format = array(
 			'icons'          => lang('Icons only'),
