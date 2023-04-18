@@ -26,6 +26,7 @@ charset for the csv export	addressbook	de	Zeichensatz für den CSV Export
 charset for the csv export/import	preferences	de	Zeichensatz
 click to install	preferences	de	Klicken zum Installieren
 click to select a color	preferences	de	Anklicken um eine Farbe auszuwählen
+close after selection	preferences	de	Nach Auswahl schließen
 code is invalid	preferences	de	Der Code ist ungültig
 color	preferences	de	Farbe
 country	preferences	de	Land
@@ -104,6 +105,7 @@ interface/template selection	preferences	de	Auswahl der Benutzeroberfläche
 it sets content size (text only) according to selected size.	preferences	de	Stellt die Schriftgröße des Inhalts (nur Text) entsprechend der gewählten Größe ein.
 just clicking on the line, like a checkbox	preferences	de	einfaches anklicken der Zeile, wie eine Checkbox
 kama theme	preferences	de	Kama Farbschema
+keep list open for selecting multiple	preferences	de	Liste für die Auswahl mehrerer Optionen offen halten
 language	preferences	de	Sprache
 look & feel	preferences	de	Aussehen und Handhabung
 lowercase letters	preferences	de	Kleinbuchstaben
@@ -174,6 +176,8 @@ show_more_apps	common	de	Mehr Anwendungen anzeigen
 small paragraph	preferences	de	Schmaler Absatz
 special characters	preferences	de	Sonderzeichen
 spellchecker language	addressbook	de	Sprache Rechtschreibprüfung
+stay open	preferences	de	Liste auflassen
+stay open, but not for email	preferences	de	Liste auflassen, aber nicht für E-Mail
 text editor settings	preferences	de	Einstellungen des Texteditors
 text only	preferences	de	nur Text
 the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	de	Diese Anwendung wird gestartet, wenn sie EGroupware neu starten oder auf das Symbol der Startseite klicken. Sie können auch mehrere Anwendungen auf Ihrer Startseite anzeigen, dazu wählen sie keine Anwendung aus. Welche Anwendungen dann angezeigt werden, wird in den Einstellungen der jeweiligen Anwendungen konfiguriert.
@@ -194,6 +198,7 @@ unit of displayed font sizes: either "px" as used eg. for web-pages or "pt" as u
 uppercase letters	preferences	de	Großbuchstaben
 use default	preferences	de	Vorgabe benutzen
 users choice	preferences	de	Benutzerauswahl
+when you can select multiple options, should the option list stay open until you close it, or close after you pick an option.	preferences	de	Wenn Sie mehrere Optionen auswählen können, soll die Optionsliste geöffnet bleiben, bis Sie sie schließen, oder geschlossen werden, nachdem Sie eine Option ausgewählt haben.
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	de	Wenn Sie hier Ja auswählen, werden in der Hauptnavigationsleiste oben zusätzlich Buttons für die Startseite und zum Abmelden angezeigt.
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	de	Wählen Sie hier den Zeichensatz für den CSV Import|Export. Der Standard Zeichensatz, ist der Zeichensatz Ihrer EGroupware Installation.
 which currency symbol or name should be used in egroupware.	preferences	de	Welches Währungssymbol oder Name soll in EGroupware verwendet werden.

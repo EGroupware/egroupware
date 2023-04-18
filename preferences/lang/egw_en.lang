@@ -26,6 +26,7 @@ charset for the csv export	addressbook	en	Charset for the CSV export
 charset for the csv export/import	preferences	en	Character set
 click to install	preferences	en	click to install
 click to select a color	preferences	en	Click to select a color
+close after selection	preferences	en	Close after selection
 code is invalid	preferences	en	Code is invalid
 color	preferences	en	Color
 country	preferences	en	Country
@@ -175,6 +176,8 @@ show_more_apps	common	en	Show more applications
 small paragraph	preferences	en	Small Paragraph
 special characters	preferences	en	special characters
 spellchecker language	addressbook	en	Spellchecker language
+stay open	preferences	en	Stay open
+stay open, but not for email	preferences	en	Stay open, but not for email
 text editor settings	preferences	en	Text editor settings
 text only	preferences	en	Text only
 the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	en	The default application will be started when you enter EGroupware or click on the Home icon.<br>More than one application scan be shown on the home page, if nothing is selected here. It has to be configured in the preferences of each application.

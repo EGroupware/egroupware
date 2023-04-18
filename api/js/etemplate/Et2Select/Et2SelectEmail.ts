@@ -84,8 +84,8 @@ export class Et2SelectEmail extends Et2Select
 	{
 		super(...args);
 
-		// Always off for select email, per ticket #79694
-		this._close_on_select = true;
+		// Additional option for select email, per ticket #79694
+		this._close_on_select = this.egw().preference("select_multiple_close") != "open";
 
 		this.search = true;
 		this.searchUrl = "EGroupware\\Api\\Etemplate\\Widget\\Taglist::ajax_email";
