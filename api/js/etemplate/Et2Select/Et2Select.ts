@@ -83,14 +83,18 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 			/* No horizontal scrollbar, even if options are long */
 			.dropdown__panel {
 				overflow-x: clip;
-			}
-			/* Ellipsis when too small */
-			.select__label {
+			  }
+
+			  /* Ellipsis when too small */
+			  .select_tags {
+				max-width: 100%;
+			  }
+			  .select__label {
 				display: block;
-    			text-overflow: ellipsis;
-			  /* This is usually not used due to flex, but is the basis for ellipsis calculation */
-			  width: 10ex;
-			}
+				text-overflow: ellipsis;
+				/* This is usually not used due to flex, but is the basis for ellipsis calculation */
+				width: 10ex;
+			  }
 
 			  /** multiple=true uses tags for each value **/
 			  /* styling for icon inside tag (not option) */
