@@ -199,7 +199,7 @@ class resources_acl_ui
 						try {
 							$cats->edit($content);
 							resources_acl_bo::set_rights(
-								$content['id'], $content['read'], $content['write'], $content['calread'], $content['calwrite'], Array($content['admin'])
+								$content['id'], $content['read'], $content['write'], $content['calread'], $content['calwrite'], $content['admin']
 							);
 							if($content['location'])
 							{
