@@ -3769,7 +3769,7 @@ class mail_compose
 		{
 			$type = $key > 0 ? 'manual' : 'group';
 			$list = array(
-				'value'	=> $list_name.' <'.$key.'@lists.egroupware.org>',
+				'value'	=> '"'.str_replace('"', '', $list_name).'" <'.$key.'@lists.egroupware.org>',
 				'label'	=> $list_name,
 				'title' => lang('Mailinglist'),
 				'icon' => Api\Image::find('api', 'email'),
