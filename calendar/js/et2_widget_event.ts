@@ -527,7 +527,7 @@ export class et2_calendar_event extends et2_valueWidget implements et2_IDetached
 				let options = <SelectOption[]>so.cached_server_side(<Et2Select><unknown>{
 					nodeName: "ET2-SELECT-CAT_RO",
 					egw: () => this.egw()
-				}, "select-cat", ",,,calendar", false) || [];
+				}, "select-cat", ",,calendar", false) || [];
 				cat_label = options.find((o) => o.value == this.options.value.category)?.label || "";
 			}
 
