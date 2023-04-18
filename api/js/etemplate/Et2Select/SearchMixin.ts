@@ -779,7 +779,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 		handleMenuSelect(event)
 		{
 			// Need to keep the remote option - only if selected
-			if(event.detail.item.classList.contains("remote") && !this._selected_remote.find(o => o.value == event.detail.item.value))
+			if(event.detail.item.classList.contains("remote") && !this.select_options.find(o => o.value == event.detail.item.value))
 			{
 				this._selected_remote.push({...event.detail.item.option});
 			}
