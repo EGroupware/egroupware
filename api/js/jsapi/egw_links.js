@@ -169,7 +169,7 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 			let data = {};
 			if (mime_info)
 			{
-				if (this.isEditable(_type))
+				if (this.isCollaborable(_type))
 				{
 					data = {
 						'menuaction': 'collabora.EGroupware\\collabora\\Ui.editor',
@@ -557,6 +557,11 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 		 */
 		isCollaborable: function (mime)
 		{
+			if (typeof this.user('apps')['collabora'] == "undefined")
+			{
+				return false;
+			}
+
 			// Additional check to see if Collabora can open the file at all, not just edit it
 			let fe = this.file_editor_prefered_mimes(mime);
 			if (fe && fe.mime && fe.mime[mime] && fe.mime[mime].name || this.isEditable(mime))
