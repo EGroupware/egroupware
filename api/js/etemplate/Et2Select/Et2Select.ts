@@ -320,7 +320,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 	{
 		if(super._triggerChange(e) && !this._block_change_event)
 		{
-			this.dispatchEvent(new Event("change"));
+			this.dispatchEvent(new Event("change", {bubbles: true}));
 		}
 		if(this._block_change_event)
 		{
