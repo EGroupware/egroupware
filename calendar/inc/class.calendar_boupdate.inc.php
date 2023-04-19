@@ -3163,34 +3163,37 @@ class calendar_boupdate extends calendar_bo
 		foreach((array)$event['participants'] as $uid => $status)
 		{
 			$q = $r = null;
-			calendar_so::split_status($status,$q,$r);
+			calendar_so::split_status($status, $q, $r);
 			if($uid == $this->user || $status == 'U')
 			{
 				continue;
 			}
 
-			// Just user accounts
-			if (is_int($uid))
+			if(is_int($uid))
 			{
+				// Just user accounts
 				$preferences = new Api\Preferences($uid);
-				$part_prefs = $preferences->read_repository();
-				switch ($part_prefs['calendar']['reset_stati'])
-				{
-					case 'no':
-						break;
-					case 'startday':
-						if ($sameday) break;
-					default:
-						$status_reset = true;
-						$event['participants'][$uid] = calendar_so::combine_status('U',$q,$r);
-				}
 			}
-			// All other participant types
 			else
 			{
-				$status_reset = true;
-				$event['participants'][$uid] = calendar_so::combine_status('U',$q,$r);
+				// For non-users, use the owner's preference
+				$preferences = new Api\Preferences($event['owner']);
 			}
+			$part_prefs = $preferences->read_repository();
+			switch($part_prefs['calendar']['reset_stati'])
+			{
+				case 'no':
+					break;
+				case 'startday':
+					if($sameday)
+					{
+						break;
+					}
+				default:
+					$status_reset = true;
+					$event['participants'][$uid] = calendar_so::combine_status('U', $q, $r);
+			}
+
 		}
 		return $status_reset;
 
