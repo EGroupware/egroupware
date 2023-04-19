@@ -3824,16 +3824,16 @@ app.classes.mail = AppJS.extend(
 				egw.loading_prompt('mail_moveFolder', true, '', '#egw_fw_basecontainer');
 				for (var i = 0; i < _senders.length; i++)
 				{
-					egw.jsonq('mail.mail_ui.ajax_MoveFolder', [_senders[i].id, destination.id],
-						// Move is done (successfully or not), remove loading
-						function ()
-						{
-							var id = destination.id.split('::');
-							//refersh the top parent
-							ftree.refreshItem(id[0], null);
-							egw.loading_prompt('mail_moveFolder', false);
-						}
-					);
+					egw.request('mail.mail_ui.ajax_MoveFolder', [_senders[i].id, destination.id])
+						.finally(() =>
+							{
+								// Move is done (successfully or not), remove loading
+								var id = destination.id.split('::');
+								//refersh the top parent
+								ftree.refreshItem(id[0], null);
+								egw.loading_prompt('mail_moveFolder', false);
+							}
+						);
 				}
 			}
 		};
