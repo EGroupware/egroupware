@@ -86,7 +86,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 			  }
 
 			  /* Ellipsis when too small */
-			  .select_tags {
+			  .select__tags {
 				max-width: 100%;
 			  }
 			  .select__label {
