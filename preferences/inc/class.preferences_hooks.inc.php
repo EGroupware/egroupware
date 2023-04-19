@@ -269,7 +269,7 @@ class preferences_hooks
 				'name'    => 'select_multiple_close',
 				'values'  => $select_multiple_close,
 				'help'    => 'When you can select multiple options, should the option list stay open until you close it, or close after you pick an option.',
-				'default' => 'open'
+				'default' => 'close_email'
 			),
 			'link_list_thumbnail'   => array(
 				'type'   => 'select',
