@@ -415,7 +415,7 @@ egwAction.prototype.updateActions = function(_actions, _app)
 					if (typeof elem.icon == "undefined") elem.icon = this.defaultIcons[elem.id];
 					if (typeof elem.icon != "undefined")
 					{
-						elem.iconUrl = egw.image(elem.icon);
+						elem.iconUrl = egw.image(elem.icon, _app);
 					}
 					delete elem.icon;
 				}
