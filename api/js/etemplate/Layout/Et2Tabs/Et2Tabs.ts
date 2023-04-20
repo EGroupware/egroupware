@@ -391,9 +391,14 @@ export class Et2Tabs extends Et2InputWidget(SlTabGroup) implements et2_IResizeab
 		});
 	}
 
+	/**
+	 * Overridden to allow et2-tab-panel as well as sl-tab-panel
+	 *
+	 * @returns {[SlTabPanel]}
+	 */
 	getAllPanels()
 	{
-		const slot = this.body.querySelector('slot')!;
+		const slot = this.body!;
 		return [...slot.assignedElements()].filter(el => ['et2-tab-panel', 'sl-tab-panel'].indexOf(el.tagName.toLowerCase()) != -1) as [SlTabPanel];
 	}
 
