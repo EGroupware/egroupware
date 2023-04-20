@@ -130,8 +130,9 @@ export class EgwDragActionImplementation implements EgwActionImplementation
 			}
 		}
 
-		var text = jQuery(document.createElement('div')).addClass('et2_egw_action_ddHelper_tip');
-		div.append(text);
+		var text = (document.createElement('div'))
+			text.classList.add('et2_egw_action_ddHelper_tip');
+			div.append(text);
 
 		// Add notice of Ctrl key, if supported
 		if ('draggable' in document.createElement('span') &&
@@ -139,9 +140,9 @@ export class EgwDragActionImplementation implements EgwActionImplementation
 		{
 			var key = ["Mac68K", "MacPPC", "MacIntel"].indexOf(window.navigator.platform) < 0 ?
 				egw.lang('Alt') : egw.lang('Command ⌘');
-			text.text(egw.lang('Hold [%1] and [%2] key to drag %3 to your desktop', key, egw.lang('Shift ⇧'), itemLabel));
+			text.textContent = (egw.lang('Hold [${key}] and [${egw.lang(\'Shift ⇧\')}] key to drag ${itemLabel} to your desktop'));
 		}
-		// Final html DOM return as helper structor
+		// Final html DOM return as helper structure
 		return div;
 	}
 
