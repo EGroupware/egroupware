@@ -77,21 +77,22 @@ class resources_acl_ui
 	protected static function get_actions($appname='resources') {
 
 		$actions = array(
-			'open' => array(        // does edit if allowed, otherwise view
-				'caption' => 'Open',
-				'default' => true,
+			'open' => array(
+				// does edit if allowed, otherwise view
+				'caption'         => 'Open',
+				'default'         => true,
 				'allowOnMultiple' => false,
-				'url' => 'menuaction=resources.resources_acl_ui.edit&cat_id=$id',
-				'popup' => '600x420',
-				'group' => $group=1,
+				'url'             => 'menuaction=resources.resources_acl_ui.edit&cat_id=$id',
+				'popup'           => '800x420',
+				'group'           => $group = 1,
 			),
-			'add' => array(
-				'caption' => 'Add',
+			'add'  => array(
+				'caption'         => 'Add',
 				'allowOnMultiple' => false,
-				'icon' => 'new',
-				'url' => 'menuaction=admin.admin_categories.edit&appname=resources',
-				'popup' => '600x380',
-				'group' => $group,
+				'icon'            => 'new',
+				'url'             => 'menuaction=admin.admin_categories.edit&appname=resources',
+				'popup'           => '600x380',
+				'group'           => $group,
 			),
 		);
 
