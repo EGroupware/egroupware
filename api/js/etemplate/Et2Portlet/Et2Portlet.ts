@@ -16,7 +16,7 @@ import interact from "@interactjs/interactjs";
 import type {InteractEvent} from "@interactjs/core/InteractEvent";
 import {egw} from "../../jsapi/egw_global";
 import {classMap, css, html, TemplateResult} from "@lion/core";
-import {HasSlotController} from "@shoelace-style/shoelace/dist/internal/slot";
+import {HasSlotController} from "../../../../node_modules/@shoelace-style/shoelace/dist/internal/slot";
 import shoelace from "../Styles/shoelace";
 import {Et2Dialog} from "../Et2Dialog/Et2Dialog";
 import {et2_IResizeable} from "../et2_core_interfaces";
