@@ -605,14 +605,14 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		// Tag used must match this.optionTag, but you can't use the variable directly.
 		// Pass option along so SearchMixin can grab it if needed
 		return html`
-            <sl-menu-item value="${option.value}"
-                          title="${!option.title || this.noLang ? option.title : this.egw().lang(option.title)}"
-                          class="${option.class}" .option=${option}
-                          ?disabled=${option.disabled}
+            <sl-option value="${option.value}"
+                       title="${!option.title || this.noLang ? option.title : this.egw().lang(option.title)}"
+                       class="${option.class}" .option=${option}
+                       ?disabled=${option.disabled}
             >
                 ${this._iconTemplate(option)}
                 ${this.noLang ? option.label : this.egw().lang(option.label)}
-            </sl-menu-item>`;
+            </sl-option>`;
 	}
 
 	/**
