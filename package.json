@@ -64,7 +64,7 @@
     "@lion/select": "^0.15.0",
     "@lion/textarea": "^0.14.0",
     "@rollup/plugin-commonjs": "^24.0.1",
-    "@shoelace-style/shoelace": "2.0.0-beta.81",
+    "@shoelace-style/shoelace": "2.4.0",
     "blueimp-gallery": "^3.4.0",
     "colortranslator": "^1.9.2",
     "core-js": "^3.29.1",
