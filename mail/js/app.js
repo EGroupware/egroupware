@@ -6049,16 +6049,26 @@ app.classes.mail = AppJS.extend(
 		}
 		let data = {};
 		let selected = [];
+
+		let cmprAttchObjs = function(_obj1,_obj2)
+		{
+			for (let i=0;i<_obj1.length;i++)
+			{
+				if (_obj1[i]['mail_id'] != _obj2[i]['mail_id'] || _obj1[i]['partID'] != _obj2[i]['partID']) return false;
+			}
+
+			return true;
+		};
 		if (_attachments)
 		{
 			selected = [_attachments[0]['mail_id']];
 			data = egw.dataGetUIDdata(selected[0]);
 			// do not call mail_preview if we have the attachments already resolved, avoid infinit loop
-			if (data.data.attachmentsBlock.length>0) return;
+			if (data.data.attachmentsBlock.length>0 && cmprAttchObjs(data.data.attachmentsBlock, _attachments)) return;
 
 			data.data.attachmentsBlock = _attachments;
 			data.data.attachmentsBlockTitle = _attachments.lenght;
-			egw.dataStoreUID(data.uid, data);
+			egw.dataStoreUID(data.data.uid, data.data);
 			this.mail_preview(selected, this.et2.getWidgetById('nm'));
 		}
 	},
