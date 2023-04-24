@@ -203,8 +203,8 @@ export function egwDragActionImplementation()
 							},
 							mouseup: function (event){
 								if (_context.isSelection(event)){
-									// TODO: save and retrive selected range
-									node.setAttribute("draggable", true);
+									//let the draggable be reactivated by another click up as the range selection is
+									// not working as expected in shadow-dom as expected in all browsers
 								}
 								else
 								{
