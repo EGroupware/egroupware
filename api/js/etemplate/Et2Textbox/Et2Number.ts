@@ -124,9 +124,9 @@ export class Et2Number extends Et2Textbox
 			const sep = format ? format[0] : '.';
 
 			// Remove separator so parseFloat works
-			if(typeof val === 'string' && format && sep && sep !== '.')
+			if(typeof val === 'string')
 			{
-				val = val.replace(sep, '.');
+				val = val.replace(",", '.');
 			}
 
 			if(typeof this.precision !== 'undefined')
