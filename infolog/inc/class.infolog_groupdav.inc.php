@@ -300,8 +300,14 @@ class infolog_groupdav extends Api\CalDAV\Handler
 		$files = array();
 		// ToDo: add parameter to only return id & etag
 		// Please note: $query['start'] get incremented automatically by bo->search() with number of returned rows!
-		while(($tasks =& $this->bo->search($query)))
+		while(($tasks =& $this->bo->search($query)) &&
+			// if $query[cols] is set, bo->search() returns an iterator, which might be empty, in which case we have to stop
+			(is_array($tasks) || $tasks->NumRows()))
 		{
+			if ($this->debug)
+			{
+				error_log(__METHOD__ . "(): called bo->search(" . json_encode($query) . ") returned ".(is_array($tasks) ? count($tasks) : $tasks->NumRows())." entries");
+			}
 			foreach($tasks as $task)
 			{
 				// remove task from requested multiget ids, to be able to report not found urls
@@ -366,7 +372,7 @@ class infolog_groupdav extends Api\CalDAV\Handler
 		}
 		if ($this->debug)
 		{
-			error_log(__METHOD__."($path) took ".(microtime(true) - $starttime)." to return $yielded resources");
+			error_log(__METHOD__."($path) took ".(microtime(true) - $starttime)." to return $yielded resources, filter[sync-collection]=$sync_collection_report, sync-token=$this->sync_collection_token");
 		}
 	}
 
