@@ -545,13 +545,14 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 					});
 				}
 				select.select_options = options;
-
+				/*
 				select.updateComplete.then(() =>
 				{
 					// Adjust popup positioning to account for hidden select parts
 					select.popup.distance = -32;
 				});
 
+				 */
 			});
 		},
 
