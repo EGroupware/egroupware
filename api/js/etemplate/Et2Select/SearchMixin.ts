@@ -13,7 +13,7 @@ import {cleanSelectOptions, SelectOption} from "./FindSelectOptions";
 import {Validator} from "@lion/form-core";
 import {Et2Tag} from "./Tag/Et2Tag";
 import {SlMenuItem} from "@shoelace-style/shoelace";
-import {waitForEvent} from "@shoelace-style/shoelace/dist/internal/event";
+import {waitForEvent} from "../../../../node_modules/@shoelace-style/shoelace/dist/internal/event";
 
 // Otherwise import gets stripped
 let keep_import : Et2Tag;
@@ -619,7 +619,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 				this._searchInputNode?.removeEventListener("change", this._searchInputNode.handleChange);
 				this._searchInputNode?.addEventListener("change", this._handleSearchChange);
 
-				this.dropdown.querySelector('.select__label').addEventListener("change", this.handleTagEdit);
+				//		this.dropdown.querySelector('.select__label').addEventListener("change", this.handleTagEdit);
 			});
 		}
 
@@ -675,6 +675,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 		 */
 		_handleAfterShow()
 		{
+			return;
 			// Need to give positioner a chance to position.
 			// If we call it right away, it has not updated.
 			// I haven't found an event or Promise to hook on to

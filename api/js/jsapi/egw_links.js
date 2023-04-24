@@ -520,11 +520,14 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 					});
 				}
 				select.select_options = options;
+				/*
 				select.updateComplete.then(() =>
 				{
 					select.dropdown.trigger.style.visibility = 'hidden';
 					select.dropdown.trigger.style.height = '0px';
 				});
+
+				 */
 			});
 		},
 
