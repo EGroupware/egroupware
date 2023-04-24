@@ -9,13 +9,11 @@
 
 
 import {css, html, PropertyValues, TemplateResult} from "lit";
-import {Et2widgetWithSelectMixin} from "./Et2WidgetWithSelectMixin";
+import {Et2WidgetWithSelectMixin} from "./Et2WidgetWithSelectMixin";
 import {SelectOption} from "./FindSelectOptions";
 import {SlSelect} from "@shoelace-style/shoelace";
 import shoelace from "../Styles/shoelace";
-import {Et2WithSearchMixin} from "./SearchMixin";
 import {Et2Tag} from "./Tag/Et2Tag";
-import {LionValidationFeedback} from "@lion/form-core";
 import {RowLimitedMixin} from "../Layout/RowLimitedMixin";
 
 // export Et2WidgetWithSelect which is used as type in other modules
@@ -64,14 +62,14 @@ export class Et2Select extends Et2WidgetWithSelect
 			shoelace,
 			super.styles,
 			css`
-			:host {
+			  :host {
 				display: block;
 				flex: 1 0 auto;
 				--icon-width: 20px;
-			}
-			
-			
-			::slotted(img), img {
+			  }
+
+
+			  ::slotted(img), img {
 				vertical-align: middle;
 			}
 			
@@ -136,7 +134,7 @@ export class Et2Select extends Et2WidgetWithSelect
 
 			  /* Hide dropdown trigger when multiple & readonly */
 
-			  :host([readonly][multiple]) .select__icon {
+			  :host([readonly][multiple]) .select__expand-icon {
 				display: none;
 			  }
 
