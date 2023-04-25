@@ -259,7 +259,7 @@ class calendar_groupdav extends Api\CalDAV\Handler
 		if (isset($nresults))
 		{
 			unset($filter['no_total']);	// we need the total!
-			$files['files'] = $this->propfind_generator($path, $filter, [], (int)$nresults);
+			$files['files'] = $this->propfind_generator($path, $filter, $files['files'], (int)$nresults);
 
 			// hack to support limit with sync-collection report: events are returned in modified ASC order (oldest first)
 			// if limit is smaller than full result, return modified-1 as sync-token, so client requests next chunk incl. modified
@@ -368,20 +368,34 @@ class calendar_groupdav extends Api\CalDAV\Handler
 		{
 			foreach($events as $event)
 			{
-				// remove event from requested multiget ids, to be able to report not found urls
-				if (!empty($this->requested_multiget_ids) && ($k = array_search($event[self::$path_attr], $this->requested_multiget_ids)) !== false)
-				{
-					unset($this->requested_multiget_ids[$k]);
-				}
+				$no_active_participants = !$this->hasActiveParticipants($event, $filter['users'], $events);
+
 				// sync-collection report: deleted entries need to be reported without properties, same for rejected or deleted invitations
-				if ($sync_collection && ($event['deleted'] && !$event['cal_reference'] || in_array($event['participants'][$filter['users']][0], array('R','X'))))
+				if ($sync_collection && ($event['deleted'] && !$event['cal_reference'] ||
+					//in_array($event['participants'][$filter['users']][0] ?? '', array('R','X')) ||
+					$no_active_participants))
 				{
 					if (++$yielded && isset($nresults) && $yielded > $nresults)
 					{
 						return;
 					}
+					// remove event from requested multiget ids, to be able to report not found urls
+					if (!empty($this->requested_multiget_ids) && ($k = array_search($event[self::$path_attr], $this->requested_multiget_ids)) !== false)
+					{
+						unset($this->requested_multiget_ids[$k]);
+					}
 					yield ['path' => $path.urldecode($this->get_path($event))];
 					continue;
+				}
+				// for a regular propfind/multiget-report we must NOT return deleted or rejected events
+				if (!$sync_collection && $no_active_participants)
+				{
+					continue;
+				}
+				// remove event from requested multiget ids, to be able to report not found urls
+				if (!empty($this->requested_multiget_ids) && ($k = array_search($event[self::$path_attr], $this->requested_multiget_ids)) !== false)
+				{
+					unset($this->requested_multiget_ids[$k]);
 				}
 				$schedule_tag = null;
 				$etag = $this->get_etag($event, $schedule_tag);
@@ -407,7 +421,7 @@ class calendar_groupdav extends Api\CalDAV\Handler
 					$content = $this->iCal($event, $filter['users'],
 						strpos($path, '/inbox/') !== false ? 'REQUEST' : null,
 						!isset($calendar_data['children']['expand']) ? false :
-							($calendar_data['children']['expand']['attrs'] ? $calendar_data['children']['expand']['attrs'] : true));
+							($calendar_data['children']['expand']['attrs'] ? $calendar_data['children']['expand']['attrs'] : true), $events);
 					$props['getcontentlength'] = bytes($content);
 					$props['calendar-data'] = Api\CalDAV::mkprop(Api\CalDAV::CALDAV,'calendar-data',$content);
 				}
@@ -452,6 +466,59 @@ class calendar_groupdav extends Api\CalDAV\Handler
 			error_log(__METHOD__."($path) took ".(microtime(true) - $starttime).
 				" to return $yielded resources");
 		}
+	}
+
+	/**
+	 * Check an event has active (not rejected or deleted) participants against an (array of) user- or group-id(s)
+	 *
+	 * For recurring events / series-master we have to check all exceptions too!
+	 * For a group-id we also check against all members!
+	 *
+	 * @param array $event
+	 * @param int|int[] $users user(s) to check
+	 * @param array|null &$events on return exceptions to the series as returned by self::get_series() ($expand=false!)
+	 * @return bool true: user(s) is an active participant, or false if not (incl. all exceptions for recurring events)
+	 */
+	protected function hasActiveParticipants(array $event, $users, array &$events=null) : bool
+	{
+		$events = null;
+		if (!is_array($users))
+		{
+			$users = [$users];
+			if ($users[0] < 0)
+			{
+				$users = array_merge($users, Api\Accounts::getInstance()->members($users[0], true) ?: []);
+			}
+		}
+		// return true event(-master) has active participants
+		foreach(array_intersect_key($event['participants'], array_flip($users)) as $status)
+		{
+			if (!in_array($status[0], ['R', 'X']))
+			{
+				//error_log(__METHOD__."(cal_id=$event[id]: $event[title], cal_reference=$event[cal_reference], participants=".json_encode($event['participants']).", ".json_encode($users)." returning true");
+				return true;
+			}
+		}
+		// return false for regular / non-recurring events
+		if (empty($event['recur_type']))
+		{
+			return false;
+		}
+
+		// check exceptions for recurring event
+		$events =& self::get_series($event['uid'], $this->bo, false, $users[0], $event);
+		foreach($events as $exception)
+		{
+			if (empty($exception['reference'])) continue;   // master / identical to $event and already checked
+
+			if ($this->hasActiveParticipants($exception, $users))
+			{
+				return true;
+			}
+		}
+		//error_log(__METHOD__."(cal_id=$event[id]: $event[title], cal_reference=$event[cal_reference], participants=".json_encode($event['participants']).", ".json_encode($users)." returning false");
+		// if we get here, given user(s) are NOT an active participant of any exception or has been deleted or rejected them all
+		return false;
 	}
 
 	/**
@@ -502,7 +569,7 @@ class calendar_groupdav extends Api\CalDAV\Handler
 	 * @param array $options
 	 * @param array &$cal_filters
 	 * @param string $id
-	 * @param int &$nresult on return limit for number or results or unchanged/null
+	 * @param int &$nresults on return limit for number of results or unchanged/null
 	 * @return boolean true if filter could be processed
 	 */
 	function _report_filters($options, &$cal_filters, $id, &$nresults)
@@ -648,7 +715,11 @@ class calendar_groupdav extends Api\CalDAV\Handler
 				$cal_filters['query'][self::$path_attr] = $this->requested_multiget_ids;
 			}
 
-			if ($this->debug > 1) error_log(__FILE__ . __METHOD__ ."($options[path],...,$id) calendar-multiget: ids=".implode(',',$ids).', cal_filters='.array2string($cal_filters));
+			if ($this->debug > 1)
+			{
+				error_log(__FILE__ . __METHOD__ ."($options[path],...,$id) calendar-multiget: ids=".
+					implode(',', $this->requested_multiget_ids).', cal_filters='.json_encode($cal_filters));
+			}
 		}
 		return true;
 	}
@@ -689,9 +760,10 @@ class calendar_groupdav extends Api\CalDAV\Handler
 	 * @param int $user =null account_id of calendar to display
 	 * @param string $method =null eg. 'PUBLISH' for inbox, nothing anywhere else
 	 * @param boolean|array $expand =false true or array with values for 'start', 'end' to expand recurrences
+	 * @param array|null $events as returned by get_series() for !$expand (to not read them again)
 	 * @return string
 	 */
-	private function iCal(array $event,$user=null, $method=null, $expand=false)
+	private function iCal(array $event,$user=null, $method=null, $expand=false, array $events=null)
 	{
 		static $handler = null;
 		if (is_null($handler)) $handler = $this->_get_handler();
@@ -730,9 +802,7 @@ class calendar_groupdav extends Api\CalDAV\Handler
 			$event['description'] = lang('Videoconference').":\n$link\n\n".$event['description'];
 		}
 
-		$events = array($event);
-
-		// for recuring events we have to add the exceptions
+		// for recurring events we have to add the exceptions
 		if ($this->client_shared_uid_exceptions && $event['recur_type'] && !empty($event['uid']))
 		{
 			if (is_array($expand))
@@ -741,14 +811,21 @@ class calendar_groupdav extends Api\CalDAV\Handler
 				if (isset($expand['end'])) $expand['end'] = $this->vCalendar->_parseDateTime($expand['end']);
 			}
 			// pass in original event as master, as it has correct start-date even if first recurrence is an exception
-			$events =& self::get_series($event['uid'], $this->bo, $expand, $user, $event);
-
+			if ($expand || !isset($events))
+			{
+				$events =& self::get_series($event['uid'], $this->bo, $expand, $user, $event);
+			}
 			// as alarm is now only on next recurrence, set alarm from original event on master
 			if ($event['alarm']) $events[0]['alarm'] = $event['alarm'];
 		}
-		elseif(!$this->client_shared_uid_exceptions && $event['reference'])
+		else
 		{
-			$events[0]['uid'] .= '-'.$event['id'];	// force a different uid
+			$events = array($event);
+
+			if(!$this->client_shared_uid_exceptions && $event['reference'])
+			{
+				$events[0]['uid'] .= '-'.$event['id'];	// force a different uid
+			}
 		}
 		return $handler->exportVCal($events, '2.0', $method);
 	}
@@ -780,7 +857,8 @@ class calendar_groupdav extends Api\CalDAV\Handler
 
 		if (!($events =& $bo->search($params)))
 		{
-			return array();
+			$events = [];
+			return $events;
 		}
 
 		// find master, which is not always first event, eg. when first event is an exception
