@@ -31,7 +31,7 @@
 				<row class="$row_cont[id] $row_cont[class]">
 					<et2-hbox  cellpadding="0" cellspacing="0" >
 						<html id="${row}[level_spacer]" class="level_spacer"/>
-						<et2-description  id="${row}[name]" class="$row_cont[class]"></et2-description>
+						<et2-description  id="${row}[name]" class="$row_cont[class]" noLang="true"></et2-description>
 					</et2-hbox>
 					<et2-description  id="${row}[description]"></et2-description>
 					<et2-select  id="${row}[appname]" readonly="true"></et2-select>
