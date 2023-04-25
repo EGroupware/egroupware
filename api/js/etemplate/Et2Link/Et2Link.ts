@@ -304,7 +304,7 @@ export class Et2Link extends ExposeMixin<Et2Widget>(Et2Widget(LitElement)) imple
 
 	getDetachedAttributes(_attrs : string[])
 	{
-		_attrs.push("app", "entryId");
+		_attrs.push("app", "entryId", "statustext");
 	}
 
 	getDetachedNodes() : HTMLElement[]
