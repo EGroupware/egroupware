@@ -367,7 +367,10 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 
 		getValue()
 		{
-			return this.readonly || this.disabled ? null : this.value;
+			return this.readonly || this.disabled ? null : (
+				// Give a clone of objects or receiver might use the reference
+				typeof this.value == "object" ? (typeof this.value.length == "undefined" ? {...this.value} : [...this.value]) : this.value
+			);
 		}
 
 		/**
