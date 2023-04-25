@@ -208,7 +208,7 @@ li {
 
 	getDetachedAttributes(attrs)
 	{
-		attrs.push("id", "value", "class");
+		attrs.push("id", "value", "class", "statustext");
 	}
 
 	getDetachedNodes() : HTMLElement[]

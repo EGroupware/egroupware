@@ -97,7 +97,7 @@ export class Et2CheckboxReadonly extends Et2InputWidget(LitElement) implements e
 
 	getDetachedAttributes(_attrs : string[]) : void
 	{
-		_attrs.push("value", "class");
+		_attrs.push("value", "class", "statustext");
 	}
 
 	getDetachedNodes() : HTMLElement[]
