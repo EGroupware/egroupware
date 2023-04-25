@@ -134,7 +134,7 @@
 					<et2-date  id="ts_start" required="1"></et2-date>
 					<et2-description></et2-description>
 					<et2-description  value="Starttime"></et2-description>
-					<et2-date-timeonly  id="start_time"></et2-date-timeonly>
+					<et2-date-timeonly id="start_time" freeMinuteEntry="true"></et2-date-timeonly>
 				</row>
 				<row class="row dialogHeader3">
                     <et2-description value="Duration" for="ts_duration"></et2-description>
@@ -142,7 +142,7 @@
                                        onchange="app.timesheet.update_quantity"></et2-date-duration>
                     <et2-description></et2-description>
                     <et2-description value="or endtime" class="et2_noWrap"></et2-description>
-                    <et2-date-timeonly id="end_time"></et2-date-timeonly>
+                    <et2-date-timeonly id="end_time" freeMinuteEntry="true"></et2-date-timeonly>
                 </row>
 				<row>
 					<et2-tabbox  id="tabs" class="et2_nowrap" width="100%" span="all" tabHeight="200">
