@@ -386,7 +386,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			if(this._activeControls)
 			{
 				// Already there
-				this._activeControls.remove();
+				return;
 			}
 
 			const div = document.createElement("div");
