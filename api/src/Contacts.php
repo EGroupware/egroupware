@@ -381,7 +381,10 @@ class Contacts extends Contacts\Storage
 
 		$addressbooks = $to_sort = array();
 		if ($extra_label) $addressbooks[''] = $extra_label;
-		$addressbooks[$user] = lang('Personal');
+		if ($user > 0)
+		{
+			$addressbooks[$user] = lang('Personal');
+		}
 		// add all group addressbooks the user has the necessary rights too
 		foreach($grants as $uid => $rights)
 		{
