@@ -6058,7 +6058,7 @@ app.classes.mail = AppJS.extend(
 
 			return true;
 		};
-		if (_attachments)
+		if (_attachments && _attachments.length)
 		{
 			selected = [_attachments[0]['mail_id']];
 			data = egw.dataGetUIDdata(selected[0]);
