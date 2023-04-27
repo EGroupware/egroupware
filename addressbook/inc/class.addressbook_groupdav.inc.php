@@ -1323,12 +1323,17 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 			'O' => lang('Sync all selected into one'),
 			'D' => lang('Distribution lists as groups')
 		);
-		if (!isset($hook_data['setup']) && in_array($hook_data['type'], array('user', 'group')))
+		if (!isset($hook_data['setup']))
 		{
-			$user = $hook_data['account_id'];
+			$user = in_array($hook_data['type'], array('user', 'group')) ? $hook_data['account_id'] :
+				// for default or forced prefs show current users addressbooks
+				$GLOBALS['egw_info']['user']['account_id'];
 			$addressbook_bo = new Api\Contacts();
 			$addressbooks += $addressbook_bo->get_addressbooks(Acl::READ, null, $user);
-			if ($user > 0)  unset($addressbooks[$user]);	// allways synced
+			if ($user > 0 || !in_array($hook_data['type'], array('user', 'group')))
+			{
+				unset($addressbooks[$user]);	// personal AB is always synced, and don't show if for default and forced prefs
+			}
 			unset($addressbooks[$user.'p']);// ignore (optional) private addressbook for now
 		}
 
@@ -1338,7 +1343,7 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 			$addressbooks['N'] = lang('None');
 		}
 
-		// rewriting owner=0 to 'U', as 0 get's always selected by prefs
+		// rewriting owner=0 to 'U', as 0 gets always selected by prefs
 		// not removing it for default or forced prefs based on current users pref
 		if (!isset($addressbooks[0]) && (in_array($hook_data['type'], array('user', 'group')) ||
 			$GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'] === '1'))
