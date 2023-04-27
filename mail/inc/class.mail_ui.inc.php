@@ -3267,7 +3267,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			{
 				$smime['msg'] = lang($smime['msg']);
 				$acc_smime = Mail\Smime::get_acc_smime($this->mail_bo->profileID);
-				$attachments = $this->mail_bo->getMessageAttachments($uid, $partID, $structure,true,false,true, $mailbox);
+				$attachments = $this->mail_bo->getMessageAttachments($uid, $partID, $structure,true,true,true, $mailbox);
 				$push = new Api\Json\Push($GLOBALS['egw_info']['user']['account_id']);
 				if (!empty($acc_smime) && !empty($smime['addtocontact'])) $push->call('app.mail.smime_certAddToContact', $smime);
 				if (is_array($attachments))
