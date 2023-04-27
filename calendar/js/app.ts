@@ -3698,6 +3698,12 @@ export class CalendarApp extends EgwApp
 									if(option.value == widget.select_options[j].value)
 									{
 										widget.select_options[j].label = option.label;
+
+										// Do not let remote options stay remote or they'll disappear
+										if(typeof widget.select_options[j].class == "string")
+										{
+											widget.select_options[j].class = widget.select_options[j].class.replace("remote", "")
+										}
 										found = true;
 										break;
 									}
