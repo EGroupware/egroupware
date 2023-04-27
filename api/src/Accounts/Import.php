@@ -217,7 +217,8 @@ class Import
 			$default_memberships = $default_group_id = null;
 			if (in_array('groups', explode('+', $type)))
 			{
-				foreach($this->groups($initial_import ? null : $GLOBALS['egw_info']['server']['account_import_lastrun'],
+				// for AD always do a full import, as AD seems not to update the groups modification date, if only members change
+				foreach($this->groups($initial_import || $type === 'ads' ? null : $GLOBALS['egw_info']['server']['account_import_lastrun'],
 					in_array('local', explode('+', $type)) ? 'no' : $delete,
 					$groups, $set_members, $dry_run, $sql_groups) as $name => $val)
 				{
