@@ -314,7 +314,7 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 		{
 			$value = array_merge($value, $value['label']);
 		}
-		if($data['resources'])
+		if(!empty($data['resources']))
 		{
 			$value['resources'] = $data['resources'];
 		}
