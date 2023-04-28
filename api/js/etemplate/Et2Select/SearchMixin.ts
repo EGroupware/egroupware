@@ -542,6 +542,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 				if(options.findIndex(o => o.value == remote.value) != -1)
 				{
 					this._selected_remote.splice(remote_index, 1);
+					this.querySelector('[value="' + remote.value + '"]')?.classList.remove("remote");
 				}
 			}
 		}
