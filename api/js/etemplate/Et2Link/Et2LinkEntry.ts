@@ -245,7 +245,7 @@ export class Et2LinkEntry extends Et2InputWidget(FormControlMixin(SlotMixin(LitE
 	protected _bindListeners()
 	{
 		this._appNode.addEventListener("change", this._handleAppChange);
-		this._searchNode.addEventListener("sl-select", this._handleEntrySelect);
+		this._searchNode.addEventListener("change", this._handleEntrySelect);
 		this._searchNode.addEventListener("sl-clear", this._handleEntryClear);
 		this.addEventListener("sl-show", this._handleShow);
 		this.addEventListener("sl-hide", this._handleHide);
@@ -283,6 +283,7 @@ export class Et2LinkEntry extends Et2InputWidget(FormControlMixin(SlotMixin(LitE
 	 */
 	protected _handleEntrySelect(event)
 	{
+		event.stopPropagation();
 		this.classList.add("hideApp");
 		this.dispatchEvent(new Event("change"));
 		this.requestUpdate('value');
