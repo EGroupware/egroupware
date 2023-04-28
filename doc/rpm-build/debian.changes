@@ -1,3 +1,26 @@
+egroupware-docker (23.1.20230428) hardy; urgency=low
+
+  * CalDAV/InfoLog: fix infinit loop causing high database load, if sync-collection report did not query calendar-data
+  * CalDAV/Calendar: fix recurring events with users only added to an exception and have been deleted or rejected after
+  * CardDAV/Addressbook: show and allow to sync for default and forced preferences all ABs of the admin user
+  * Calendar: fix not displayed events of resources when a resource category was selected
+  * Mail: fix resize of compose window in plain-text mode to display everything
+  * Mail: fix showing of calendar invitations in s/mime
+  * Rocketchat: fix rocketchat's status sometimes is not showing up in Status app for bigger installations
+  * Status: add new config setting in  order to be able to open BigBlueButton calls in separate window with no iframe
+  * Status: fix top header (invite button, end call button, ...) in call dialogs no longer is visible
+  * Status: fix ringing tone never ends after a call being answered
+  * Status: fix somehow not found user in contacts stalls whole display of status column
+  * ProjectManager: fix display of icons in project- and element-list
+  * EPL/ProjectManager: fix moving tasks and projects
+  * EPL/Firewall: fix test gave an "Illegal offset type" error
+  * EPL/Tracker: fix reports not being displayed and giving errors
+  * AD/LDAP/Import: for AD always do a full import of groups, as AD seems not to update the modification date, if only members change
+  * All apps: various fixes in the new web-component based widgets
+  * full list of changes https://github.com/EGroupware/egroupware/compare/23.1.20230412...23.1.20230428
+
+ -- Ralf Becker <rb@egroupware.org>  Fri, 28 Apr 2023 08:44:31 +0200
+
 egroupware-docker (23.1.20230412) hardy; urgency=low
 
   * Docker images are available now for architektures: amd64 (as before), arm/v7, arm64/v8 and ppc64le
