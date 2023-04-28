@@ -3779,7 +3779,7 @@ export class CalendarApp extends EgwApp
 
 		for(const id of Object.keys(event.participants))
 		{
-			if(parseInt(id) >= 0)
+			if(parseInt(id) >= 0 || isNaN(parseInt(id)))
 			{
 				continue;
 			}

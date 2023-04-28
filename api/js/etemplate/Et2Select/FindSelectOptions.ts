@@ -259,15 +259,15 @@ export function cleanSelectOptions(options : SelectOption[] | string[] | object)
 				option.value = option.id;
 				delete option.id;
 			}
-			if (typeof option.value === 'number')
+			if(typeof option.value === 'number')
 			{
 				option.value = option.value.toString();
 			}
-			if (typeof option.label !== 'string')
+			if(typeof option.label !== 'string')
 			{
 				fixed_options.push(...cleanSelectOptions(option.label));
 			}
-			else
+			else if(fixed_options.findIndex(o => o.value == option.value) == -1)
 			{
 				fixed_options.push(option);
 			}
