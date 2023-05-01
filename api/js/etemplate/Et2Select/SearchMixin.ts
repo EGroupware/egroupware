@@ -863,12 +863,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			{
 				this.createFreeEntry(this._searchInputNode.value);
 			}
-			await this.dropdown.hide();
 			this.clearSearch();
-			if(event.relatedTarget && event.relatedTarget !== this)
-			{
-				event.relatedTarget.focus();
-			}
 		}
 
 		/**
