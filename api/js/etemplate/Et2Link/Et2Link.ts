@@ -295,7 +295,7 @@ export class Et2Link extends ExposeMixin<Et2Widget>(Et2Widget(LitElement)) imple
 			this.egw().open(Object.assign({
 				app: this.app,
 				id: this.entryId
-			}, this.dataset), "", this.linkHook, this.dataset.extra_args, this.extraLinkTarget, this.targetApp || this.app);
+			}, this.dataset), "", this.linkHook, this.dataset.extra_args, this.extraLinkTarget || this.app, this.targetApp || this.app);
 		}
 
 		_ev.stopImmediatePropagation();
