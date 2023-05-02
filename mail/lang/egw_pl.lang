@@ -2,12 +2,17 @@
 (leave empty for no quota)	mail	pl	(Pozostaw puste miejsce dla braku kwoty)
 (no subject)	mail	pl	(bez tematu)
 activating by date requires a start- and end-date!	mail	pl	Aktywacja wymaga daty rozpoczęcia i zakończenia
+add all my aliases	mail	pl	Dodaj wszystkie moje aliasy
+add raw message, ignore mail attachments	mail	pl	Konwersja poczty do elementu, dodanie surowej wiadomości (ignorowanie załączników do poczty)
 add to addressbook	mail	pl	dodaj do książki adresowej
+after reply, visible during compose	mail	pl	Po odpowiedzi, widoczne podczas komponowania
+aliases+forwards	mail	pl	Aliasy+Przekazy
 all of	mail	pl	wszystkie z
 allow images from external sources in html emails	mail	pl	Zezwalaj na wyświetlanie obrazkow z zewnętrznych serwerów w wiadomościach HTML
 allways a new window	mail	pl	zawsze w nowym oknie
 always show html emails	mail	pl	Zawsze pokazuj maile napisane w HTML
-answered	mail	pl	odpowiedział
+always show notifiction	mail	pl	Zawsze pokazuj powiadomienia
+answered	mail	pl	Odpowiedź na
 any of	mail	pl	dowolny z
 any status	mail	pl	dowolny status
 attachments	mail	pl	Załączniki
@@ -104,7 +109,17 @@ kilobytes	mail	pl	kilobajtów
 later	mail	pl	Później
 less than	mail	pl	mniej niż
 mail	common	pl	Poczta
+mail acl	mail	pl	Prawa dostępu
+mail filter	mail	pl	Filtr poczty
+mail filter rule	mail	pl	Reguła filtra poczty
 mail settings	mail	pl	Ustawienia email
+mail source	mail	pl	Źródło poczty
+mail-address	mail	pl	Adres pocztowy
+mailaccount	mail	pl	Konto pocztowe
+mailinglist	mail	pl	Lista mailingowa
+mails	common	pl	Poczta
+mark all as read	mail	pl	Zaznacz wszystko jako przeczytane
+mark all messages in folder as read	mail	pl	Zaznacz wszystkie wiadomości w folderze jako przeczytane
 mark as deleted	mail	pl	Zaznacz jako usunietą
 matches	mail	pl	pasuje do
 matches regexp	mail	pl	pasuje do wyrażenia regularnego
@@ -121,7 +136,7 @@ no folders	mail	pl	brak folderów
 no plain text part found	mail	pl	brak części 'czystym' tekstem
 no recipient address given!	mail	pl	Nie podano adresu docelowego!
 no signature	mail	pl	brak podpisu
-no sneak preview in list	mail	pl	Bez krótkiego podglądu
+no sneak preview in list	mail	pl	Brak podglądu wiadomości
 no subject given!	mail	pl	Nie podano tematu!
 none, create all	mail	pl	żaden, utwórz wszystko
 nothing to change.	mail	pl	Brak elementów do wprowadzenia zmian.
@@ -168,13 +183,15 @@ set predefined values for compose...	mail	pl	Ustaw predefiniowane wartości dla 
 sieve	mail	pl	Sieve
 sieve script name	mail	pl	Nazwa skryptu Sieve
 signature	mail	pl	Sygnaturka
+signature at top	mail	pl	podpis na górze
+signature position and visibility	mail	pl	Pozycja i widoczność podpisu
 size(...->0)	mail	pl	Rozmiar (...->0)
 size(0->...)	mail	pl	Rozmiar (0->...)
 small view	mail	pl	widok uproszczony
 smime encrypted message	mail	pl	Komunikat zaszyfrowany S/MIME
 smime signed message	mail	pl	Komunikat podpisany S/MIME
 smtp	mail	pl	SMTP
-sneak preview in list	mail	pl	z krótkim podglądem
+sneak preview in list	mail	pl	Podgląd wiadomości
 sort order	mail	pl	Porządek sortowania
 start new messages with mime type plain/text or html?	mail	pl	nowe wiadomości mają być oznaczane jako tekst czy html?
 subject(a->z)	mail	pl	Temat (A->Z)

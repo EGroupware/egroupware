@@ -660,6 +660,7 @@ if the error persists, contact your administrator for help and ask to check the 
 if there are some images in the background folder you can choose the one you would like to see.	common	cs	Pokud máte ve složce pozadí nějaké obrázky, můžete si vybrat ten, který se má zobrazovat.
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	preferences	cs	Pokud specifikujete složku (celou cestu vfs), %1 zobrazí se akce pro každý dokument. Touto akcí bude možné stáhnout požadovaný dokument s doplněnými údaji.
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	preferences	cs	Pokud specifikujete dokument (včetně celé cesty vfs), zobrazí se samostatná ikona pro každý záznam. Pomocí této ikony pak bude možné stáhnout požadovaný dokument s doplněnými údaji.
+if you use "2-factor-authentication", please enter the code here.	common	cs	Pokud používáte dvoufaktorové ověřování, zadejte kód zde.
 image	common	cs	Obrázek
 image directory relative to document root (use / !), example:	common	cs	Adresář pro obrázky relativní ke kořenovému adresáři dokumentů (použijte / !), například:
 image url	common	cs	URL obrázku
@@ -668,6 +669,7 @@ import an etemplate from a xml-file	common	cs	importovat eŠablonu z XML souboru
 import table-definitions from existing db-table	common	cs	Importovat definice tabulky ze stavající databázové tabulky
 import xml	common	cs	Importovat XML
 in order to copy to clipboard, you need to allow flash player by clicking on gray box.\nyou can permanently allow flash player for egroupware in your browser settings.	common	cs	Aby bylo možné provést kopírování do schránky, je nutné povolit Flash player kliknutím na oranžový rámeček.\nFlash player můžete trvale povolit pro EGroupware v nastavení vašeho internetového prohlížeče.
+include access to any linked files (links tab)	common	cs	Zahrňte přístup ke všem propojeným souborům (karta Odkazy)
 increment version to not overwrite the existing template	common	cs	zvyšte číslo verze, aby nedošlo k přepsání stávající šablony
 index/name of returned content (name of the template, link / method for image)	common	cs	index/název vráceného obsahu (název šablony, odkaz/metoda pro obrázek)
 indexed	common	cs	Indexovaný
@@ -1005,6 +1007,7 @@ philippines	common	cs	FILIPÍNY
 phone number	common	cs	telefonní číslo
 pitcairn	common	cs	PITCAIRN
 placeholders	common	cs	Zástupci pro automatizaci
+play/pause	common	cs	Přehrát/pozastavit
 please %1 by hand	common	cs	Prosím %1 ručně
 please enter a name	common	cs	Zadejte prosím jméno!
 please enter table-name first !!!	common	cs	Zadejte prosím nejprve název tabulky !!!

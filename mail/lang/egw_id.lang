@@ -2,8 +2,14 @@
 (leave empty for no quota)	mail	id	(Biarkan kosong untuk tidak ada kuota)
 (no subject)	mail	id	(tanpa subyek)
 activating by date requires a start- and end-date!	mail	id	Pengaktifan menurut tanggal memerlukan tanggal awal DAN akhir!
+add all my aliases	mail	id	Tambahkan semua alias saya
+add raw message, ignore mail attachments	mail	id	Mengonversi email menjadi item, menambahkan pesan mentah (abaikan lampiran email)
 add to addressbook	mail	id	Tambahkan ke buku alamat
+after reply, visible during compose	mail	id	Setelah membalas, terlihat saat menulis
+aliases+forwards	mail	id	Nama samaran + Teruskan
 all of	mail	id	semua
+always show notifiction	mail	id	Selalu tampilkan pemberitahuan
+answered	mail	id	Menjawab
 any of	mail	id	sembarang
 any status	mail	id	status apapun
 attachments	mail	id	Lampiran
@@ -66,7 +72,18 @@ junk	mail	id	Junk
 kilobytes	mail	id	kilobyte
 later	mail	id	Later
 less than	mail	id	kurang dari
+mail	common	id	Surat
+mail acl	mail	id	Hak akses
+mail filter	mail	id	Filter surat
+mail filter rule	mail	id	Aturan penyaring surat
 mail settings	mail	id	Pengaturan Mail
+mail source	mail	id	Sumber surat
+mail-address	mail	id	Alamat surat
+mailaccount	mail	id	Akun surat
+mailinglist	mail	id	Milis
+mails	common	id	Surat
+mark all as read	mail	id	Tandai semua sebagai telah dibaca
+mark all messages in folder as read	mail	id	Tandai semua pesan dalam folder sebagai telah dibaca
 mark as deleted	mail	id	Tandai sbg terhapus
 matches	mail	id	kecocokan
 matches regexp	mail	id	cocok regexp
@@ -77,6 +94,7 @@ new subject	mail	id	Subjek baru
 no access	mail	id	No access
 no folders	mail	id	tiada folder
 no signature	mail	id	tiada tandatangan
+no sneak preview in list	mail	id	Tidak ada pratinjau pesan
 no subject given!	mail	id	tiada subyek diisikan!
 on	mail	id	pada
 organisation	admin	id	Organisasi
@@ -107,12 +125,15 @@ sent	mail	id	Sent
 sent folder	mail	id	Sent Folder
 set predefined values for compose...	mail	id	Tetapkan nilai yang telah ditentukan sebelumnya untuk penulisan ...
 signature	mail	id	Tandatangan
+signature at top	mail	id	Tanda tangan di bagian atas
+signature position and visibility	mail	id	Posisi dan visibilitas tanda tangan
 size(...->0)	mail	id	Ukuran (...->0)
 size(0->...)	mail	id	Ukuran (0->...)
 small view	mail	id	small view
 smime encrypted message	mail	id	Pesan terenkripsi S/MIME
 smime signed message	mail	id	Pesan yang ditandatangani S/MIME
 smtp	mail	id	SMTP
+sneak preview in list	mail	id	Pratinjau pesan
 sort order	mail	id	Sort Order
 subject(a->z)	mail	id	Subyek (A->Z)
 subject(z->a)	mail	id	Subyek (Z->A)

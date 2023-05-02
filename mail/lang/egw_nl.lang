@@ -14,7 +14,9 @@ activating by date requires a start- and end-date!	mail	nl	Activering op datum v
 add a new folder to %1:	mail	nl	Voeg een neiuwe map toe %1:
 add all my aliases	mail	nl	Voeg al mijn aliassen toe
 add folder	mail	nl	Voeg map toe
+add raw message, ignore mail attachments	mail	nl	Mail omzetten naar item, onbewerkt bericht toevoegen (mailbijlagen negeren)
 add to addressbook	mail	nl	Aan adresboek toevoegen
+after reply, visible during compose	mail	nl	Na antwoord, zichtbaar tijdens samenstellen
 aliases+forwards	mail	nl	Aliases en Doorsturen
 all	mail	nl	Allemaal
 all adresses:	mail	nl	Alle adressen:
@@ -28,8 +30,9 @@ allow images from external sources in html emails	mail	nl	Afbeeldingen vanaf ext
 allow users to create further identities	mail	nl	Sta gebruikers toe meer identitietien aan te maken
 allways a new window	mail	nl	altijd in een nieuw venster
 always show html emails	mail	nl	Altijd HTML-emails weergeven
+always show notifiction	mail	nl	Altijd melding tonen
 and the rule with priority %1, now got the priority %2	mail	nl	Regel met pioriteit %1, heeft nu prioriteit %2
-answered	mail	nl	beantwoord
+answered	mail	nl	Beantwoord
 any of	mail	nl	iedere van
 any status	mail	nl	iedere status
 append	mail	nl	Voeg toe
@@ -235,14 +238,18 @@ keep a copy of the message in your inbox	mail	nl	Bewaar een kopie van het berich
 kilobytes	mail	nl	kilobytes
 later	mail	nl	later
 less than	mail	nl	minder dan
-mail	common	nl	Berichten
+mail	common	nl	Mail
+mail acl	mail	nl	Toegangsrechten
 mail filter	mail	nl	Berichten filter
+mail filter rule	mail	nl	Mail filter regel
 mail settings	mail	nl	Mail instellingen
 mail source	mail	nl	Berichten oorsporng
 mail-address	mail	nl	Bericht-adres
 mailaccount	mail	nl	Berichtaccount
 mailinglist	mail	nl	Berichtenlijst
+mails	common	nl	Mails
 mark all as read	mail	nl	Markeer alle als gelzezen
+mark all messages in folder as read	mail	nl	Markeer alle berichten in de map als gelezen
 mark as deleted	mail	nl	Markeer als verwijderd
 match:	mail	nl	Komt overeen:
 matches	mail	nl	komt overeen met
@@ -276,6 +283,7 @@ no plain text part found	mail	nl	geen platte tekst onderdeel gevonden
 no recipient address given!	mail	nl	Geen ontvanger adres opgegeven!
 no send folder set in preferences	mail	nl	Geen map Verzonden in voorkeuren
 no signature	mail	nl	geen ondertekening
+no sneak preview in list	mail	nl	Geen voorbeeld van een bericht
 no subject given!	mail	nl	Geen onderwerp opgegeven!
 no subject supplied	mail	nl	Geen onderwerp opgegeven
 no text body supplied, check attachments for message text	mail	nl	Geen hoofd tekst opgegeven, controleer bijlages voor de berichten tekst.
@@ -392,12 +400,14 @@ sieve server	mail	nl	Sieve server
 sieve_edit_instructions	mail	nl	*) wildcards (*,?) may be used. If you are trying to match * or ? itself, you must escape them with a backslash (\). If you check "Use regular expressions" you must use valid regular expressions. In order to escape of exclamation mark (!) at the begining not being used as "NOT", use regex and backslash (\) (e.g. \!)
 signature	mail	nl	Handtekening
 signature at top	mail	nl	Ondertekeing bovenaan
+signature position and visibility	mail	nl	Positie en zichtbaarheid handtekening
 size(...->0)	mail	nl	Grootte (...->0)
 size(0->...)	mail	nl	Grootte 0->...)
 small view	mail	nl	kleine weergave
 smime encrypted message	mail	nl	S/MIME gecodeerd bericht
 smime signed message	mail	nl	S/MIME ondertekend bericht
 smtp	mail	nl	SMTP
+sneak preview in list	mail	nl	Bericht preview
 sort order	mail	nl	Volgorde
 source	mail	nl	Bron
 sources	mail	nl	Bronnen

@@ -1,4 +1,10 @@
 (leave empty for no quota)	mail	lt	(palikite tuščią, jei kvotos nėra)
+add all my aliases	mail	lt	Pridėti visus mano slapyvardžius
+add raw message, ignore mail attachments	mail	lt	Konvertuoti laiškus į elementą, pridėti neapdorotą pranešimą (ignoruoti laiškų priedus)
+after reply, visible during compose	mail	lt	Po atsakymo, matomas sudarymo metu
+aliases+forwards	mail	lt	Slapyvardžiai + persiuntimas
+always show notifiction	mail	lt	Visada rodyti pranešimą
+answered	mail	lt	Atsakyta
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	lt	Nustatytos reikšmės bus automatiškai nustatytos komponavimo dialogo lange gerbiamam laukui, kai kuriamas naujas el. laiškas.
 cross account forward attachment is not allowed!	mail	lt	Kryžminės paskyros pirmyn priedas neleidžiamas!
 current subject	mail	lt	Dabartinė tema
@@ -7,13 +13,31 @@ default value for remembering s/mime passphrase in minutes	mail	lt	Numatytoji S/
 defines what to show as contact label for added contact into to/cc/bcc when composing an email. default is firstname lastname and empty means include eveything available.	mail	lt	Nustato, ką rodyti kaip pridėto kontakto etiketę į To/Copy/Blind copy (Į / Kopijuoti / Akloji kopija) kuriant el. laišką. Numatytoji reikšmė yra vardas pavardė pavardė, o tuščia reiškia, kad įtraukiama viskas, kas įmanoma.
 defines what to show as identity label on mail folder header	common	lt	Nustato, ką rodyti kaip tapatybės etiketę pašto aplanko antraštėje
 disable caching of flags	mail	lt	Išjungti vėliavų spartinimą
+mail	common	lt	Paštas
+mail acl	mail	lt	Prieigos teisės
+mail filter	mail	lt	Pašto filtras
+mail filter rule	mail	lt	Pašto filtro taisyklė
+mail settings	mail	lt	Pašto nustatymai
+mail source	mail	lt	Pašto šaltinis
+mail-address	mail	lt	Pašto adresas
+mailaccount	mail	lt	Pašto paskyra
+mailinglist	mail	lt	Pašto sąrašas
+mails	common	lt	Laiškai
+mark all as read	mail	lt	Pažymėti visus kaip perskaitytus
+mark all messages in folder as read	mail	lt	Pažymėti visus aplanke esančius pranešimus kaip perskaitytus
+mark as deleted	mail	lt	Pažymėti kaip ištrintus
 modify subject	mail	lt	Pakeisti temą
 modify subject of this message	mail	lt	Pakeiskite šio pranešimo temą
 new subject	mail	lt	Nauja tema
+no sneak preview in list	mail	lt	Nėra pranešimo peržiūros
 predefined addresses for compose	mail	lt	Iš anksto nustatyti adresai sudarymui
 save all attachments to filemanager	mail	lt	Įrašyti visus priedus į failų tvarkyklę
 select or insert email address	mail	lt	Pasirinkite arba įterpkite el. pašto adresą
 set predefined values for compose...	mail	lt	Nustatykite iš anksto nustatytas reikšmes compose ...
+signature	mail	lt	Parašas
+signature at top	mail	lt	parašas viršuje
+signature position and visibility	mail	lt	Parašo padėtis ir matomumas
 smime encrypted message	mail	lt	S/MIME užšifruotas pranešimas
 smime signed message	mail	lt	S/MIME pasirašytas pranešimas
 smtp	mail	lt	SMTP
+sneak preview in list	mail	lt	Pranešimo peržiūra

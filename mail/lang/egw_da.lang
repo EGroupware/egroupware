@@ -1,8 +1,13 @@
 (leave empty for no quota)	mail	da	(Lad det være tomt for ingen kvote)
 (no subject)	mail	da	(ingen emne)
+add all my aliases	mail	da	Tilføj alle mine aliasser
+add raw message, ignore mail attachments	mail	da	Konverter mail til emne, tilføj rå besked (ignorer vedhæftede filer)
 add to addressbook	mail	da	tilføj til adressebog
+after reply, visible during compose	mail	da	Efter svar, synlig under sammensætning
+aliases+forwards	mail	da	Fremmedord + viderestillinger
 always show html emails	mail	da	Vis altid HTML e-mails
-answered	mail	da	besvaret
+always show notifiction	mail	da	Vis altid meddelelse
+answered	mail	da	Besvaret
 attachments	mail	da	vedhæftet filer
 compose	mail	da	Ny meddelse
 compress folder	mail	da	Komprimere mappe
@@ -52,7 +57,18 @@ if	mail	da	HVIS
 imap	mail	da	IMAP
 imap server	mail	da	IMAP Server
 inbox	mail	da	Indbakke
+mail	common	da	Mail
+mail acl	mail	da	Adgangsrettigheder
+mail filter	mail	da	Mailfilter
+mail filter rule	mail	da	Regel for postfilter
 mail settings	mail	da	Post indstillinger
+mail source	mail	da	Mailkilde
+mail-address	mail	da	Mail-Address
+mailaccount	mail	da	Mailkonto
+mailinglist	mail	da	Mailingliste
+mails	common	da	Mails
+mark all as read	mail	da	Markér alle som læst
+mark all messages in folder as read	mail	da	Markér alle meddelelser i mappen som læste
 mark as deleted	mail	da	Marker som slettet
 matches	mail	da	resultater
 matches regexp	mail	da	resultater regexp
@@ -63,6 +79,7 @@ move to	mail	da	flyt valgte til
 move to trash	mail	da	Flyt til skraldespanden
 never display html emails	mail	da	Vis aldrig HTML emails
 new subject	mail	da	Nyt emne
+no sneak preview in list	mail	da	Ingen visning af meddelelser
 organisation	admin	da	Organisation
 organization	mail	da	organisation
 permission denied	mail	da	Adgang nægtet
@@ -84,12 +101,15 @@ sent folder	mail	da	Sendt Mappe
 set flags	mail	da	Markér e-mail som
 set predefined values for compose...	mail	da	Indstil foruddefinerede værdier for sammensætning ...
 signature	mail	da	Signatur
+signature at top	mail	da	signatur øverst
+signature position and visibility	mail	da	Signaturens placering og synlighed
 size(...->0)	mail	da	Størrelse (...->0)
 size(0->...)	mail	da	Størrelse (0->...)
 small view	mail	da	Lille overblik
 smime encrypted message	mail	da	S/MIME-krypteret meddelelse
 smime signed message	mail	da	S/MIME-signeret meddelelse
 smtp	mail	da	SMTP
+sneak preview in list	mail	da	Visning af besked
 sort order	mail	da	Soterings rækkefølge
 subject(a->z)	mail	da	Emne (A->Z)
 subject(z->a)	mail	da	Emne (Z->A)

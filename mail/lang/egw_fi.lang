@@ -2,12 +2,17 @@
 (leave empty for no quota)	mail	fi	(Jätä tyhjäksi, jos kiintiötä ei ole)
 (no subject)	mail	fi	Ei aihetta
 activating by date requires a start- and end-date!	mail	fi	Aktivointi päiväyksen perusteella vaatii SEKÄ aloitus- ETTÄ lopetuspäivän!
+add all my aliases	mail	fi	Lisää kaikki peitenimeni
+add raw message, ignore mail attachments	mail	fi	Muunna posti kohteeksi, lisää raaka viesti (jätä postin liitetiedostot huomiotta)
 add to addressbook	mail	fi	Lisää osoitekirjaan
+after reply, visible during compose	mail	fi	Vastauksen jälkeen, näkyvissä kokoamisen aikana
+aliases+forwards	mail	fi	Aliasit+Edelleenlähetys
 all of	mail	fi	kaikki /
 allow images from external sources in html emails	mail	fi	Salli kuvat HTML sähköposteissa
 allways a new window	mail	fi	Aina uusi ikkuna
 always show html emails	mail	fi	Näytä aina HTML sähköpostit
-answered	mail	fi	vastasi
+always show notifiction	mail	fi	Näytä aina ilmoitus
+answered	mail	fi	Vastattu
 any of	mail	fi	Mikä tahansa
 any status	mail	fi	Mikä tahansa tila
 attachments	mail	fi	Liitteet
@@ -105,8 +110,18 @@ keep a copy of the message in your inbox	mail	fi	Pidä kopio viestistä Inboxiss
 kilobytes	mail	fi	Kilotavu(a)
 later	mail	fi	Jälkeen
 less than	mail	fi	Vähemmän kuin
-mail	common	fi	Lähetä sähköpostilla
+mail	common	fi	Sähköpostit
+mail acl	mail	fi	Käyttöoikeudet
+mail filter	mail	fi	Postisuodatin
+mail filter rule	mail	fi	Postisuodattimen sääntö
 mail settings	mail	fi	Sähköpostiasetukset
+mail source	mail	fi	Sähköpostin lähde
+mail-address	mail	fi	Sähköpostiosoite
+mailaccount	mail	fi	Sähköpostitili
+mailinglist	mail	fi	Postituslista
+mails	common	fi	Sähköpostit
+mark all as read	mail	fi	Merkitse kaikki luetuiksi
+mark all messages in folder as read	mail	fi	Merkitse kaikki kansiossa olevat viestit luetuiksi
 mark as deleted	mail	fi	Merkitse poistetuksi
 matches	mail	fi	Täsmäävät
 matches regexp	mail	fi	Täsmäävät merkkijonoon
@@ -123,6 +138,7 @@ no folders	mail	fi	Ei kansioita
 no plain text part found	mail	fi	Pelkkää tekstiä ei löytynyt
 no recipient address given!	mail	fi	Vastaanottajan osoite puuttuu!
 no signature	mail	fi	Ei allekirjoitusta
+no sneak preview in list	mail	fi	Ei viestin esikatselua
 no subject given!	mail	fi	Aihe puuttuu!
 none, create all	mail	fi	Ei mitään, luo kaikki
 nothing to change.	mail	fi	Ei muutettavaa.
@@ -170,12 +186,15 @@ set predefined values for compose...	mail	fi	Aseta valmiiksi määritetyt arvot 
 sieve	mail	fi	Sieve
 sieve script name	mail	fi	Sieve skriptin nimi
 signature	mail	fi	Allekirjoitus
+signature at top	mail	fi	allekirjoitus ylhäällä
+signature position and visibility	mail	fi	Allekirjoituksen sijainti ja näkyvyys
 size(...->0)	mail	fi	Koko (...->0)
 size(0->...)	mail	fi	Koko (0->...)
 small view	mail	fi	Pieni näkymä
 smime encrypted message	mail	fi	S/MIME-salattu viesti
 smime signed message	mail	fi	S/MIME-allekirjoitettu viesti
 smtp	mail	fi	SMTP
+sneak preview in list	mail	fi	Viestin esikatselu
 sort order	mail	fi	Lajittelujärjestys
 start new messages with mime type plain/text or html?	mail	fi	Haluatko aloitaa uudet viestit pelkkänä tekstinä vai HTML:nä?
 subject(a->z)	mail	fi	Aiheet A > Z

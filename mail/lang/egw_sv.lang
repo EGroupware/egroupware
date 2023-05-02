@@ -1,10 +1,15 @@
 (leave empty for no quota)	mail	sv	(Lämna tomt för ingen kvot)
 (no subject)	mail	sv	(ingen rubrik)
+add all my aliases	mail	sv	Lägg till alla mina alias
+add raw message, ignore mail attachments	mail	sv	Konvertera e-post till objekt, lägg till obearbetat meddelande (ignorera bifogade filer)
 add to addressbook	mail	sv	Lägg till i Adressbok
+after reply, visible during compose	mail	sv	Efter svar, synlig under sammansättning
+aliases+forwards	mail	sv	Alias+Framåt
 all of	mail	sv	Alla
 allways a new window	mail	sv	Alltid nytt fönster
 always show html emails	mail	sv	Visa alltid HTML e-post
-answered	mail	sv	svarade
+always show notifiction	mail	sv	Visar alltid meddelande
+answered	mail	sv	Svarat
 any of	mail	sv	Någon av
 any status	mail	sv	Alla status
 attachments	mail	sv	Bilagor
@@ -78,7 +83,18 @@ keep a copy of the message in your inbox	mail	sv	Spara en kopia av brev i din In
 kilobytes	mail	sv	Kb
 later	mail	sv	Senare
 less than	mail	sv	Mindre än
+mail	common	sv	E-post
+mail acl	mail	sv	Tillträdesrättigheter
+mail filter	mail	sv	E-postfilter
+mail filter rule	mail	sv	Regel för e-postfilter
 mail settings	mail	sv	E-post alternativ
+mail source	mail	sv	E-postkälla
+mail-address	mail	sv	E-postadress
+mailaccount	mail	sv	E-postkonto
+mailinglist	mail	sv	Utskickslista
+mails	common	sv	E-post
+mark all as read	mail	sv	Markera alla som lästa
+mark all messages in folder as read	mail	sv	Markera alla meddelanden i mappen som lästa
 mark as deleted	mail	sv	Markera som raderad
 matches	mail	sv	Matchar
 matches regexp	mail	sv	Matchar regexp
@@ -90,6 +106,7 @@ move to trash	mail	sv	Flytta till Borttaget
 never display html emails	mail	sv	Visa inte HTML meddelanden
 new subject	mail	sv	Nytt ämne
 no plain text part found	mail	sv	Hittade inget textfält
+no sneak preview in list	mail	sv	Ingen förhandsgranskning av meddelanden
 on	mail	sv	På
 one address is not valid	mail	sv	En adress är ogiltig
 only one window	mail	sv	Endast ett fönster
@@ -125,12 +142,15 @@ set predefined values for compose...	mail	sv	Ställ in fördefinierade värden f
 sieve	mail	sv	Sieve
 sieve script name	mail	sv	Sieve skript namn
 signature	mail	sv	Signatur
+signature at top	mail	sv	Signatur högst upp
+signature position and visibility	mail	sv	Signaturens position och synlighet
 size(...->0)	mail	sv	Storlek (...->0)
 size(0->...)	mail	sv	Storlek (0->...)
 small view	mail	sv	Liten vy
 smime encrypted message	mail	sv	S/MIME-krypterat meddelande
 smime signed message	mail	sv	S/MIME-signerat meddelande
 smtp	mail	sv	SMTP
+sneak preview in list	mail	sv	Förhandsgranskning av meddelande
 subject(a->z)	mail	sv	Ämne (A->Ö)
 subject(z->a)	mail	sv	Ämne (Ö->A)
 text	mail	sv	Text

@@ -1,7 +1,13 @@
 (leave empty for no quota)	mail	lv	(atstājiet tukšu, ja kvotas nav)
 (no subject)	mail	lv	(nav temata)
+add all my aliases	mail	lv	Pievienot visus manus pseidonīmus
+add raw message, ignore mail attachments	mail	lv	Pārvērst pastu vienumā, pievienot neapstrādātu ziņojumu (ignorēt pasta pielikumus)
 add to addressbook	mail	lv	pievienot adrešu grāmatai
+after reply, visible during compose	mail	lv	Pēc atbildes, redzams sastādīšanas laikā
+aliases+forwards	mail	lv	Aliases+Forwards
 always show html emails	mail	lv	Vienmēr rādīt HTML e-pasta vēstules
+always show notifiction	mail	lv	Vienmēr rādīt paziņojumu
+answered	mail	lv	Atbildēts
 attachments	mail	lv	Pielikumi
 compose	mail	lv	Rakstīt jaunu
 compress folder	mail	lv	Kompresēt mapi
@@ -52,7 +58,18 @@ inbox	mail	lv	Iesūtne
 keep a copy of the message in your inbox	mail	lv	saglabāt vēstules kopiju IESŪTNĒ
 kilobytes	mail	lv	kb
 less than	mail	lv	mazāk nekā
+mail	common	lv	Pasts
+mail acl	mail	lv	Piekļuves tiesības
+mail filter	mail	lv	Pasta filtrs
+mail filter rule	mail	lv	Pasta filtra noteikums
 mail settings	mail	lv	Sūtījumu uzstādījumi
+mail source	mail	lv	Pasta avots
+mail-address	mail	lv	Pasta adrese
+mailaccount	mail	lv	Pasta konts
+mailinglist	mail	lv	Adresātu saraksts
+mails	common	lv	E-pasti
+mark all as read	mail	lv	Atzīmēt visus kā izlasītus
+mark all messages in folder as read	mail	lv	Atzīmēt visus ziņojumus mapē kā izlasītus
 mark as deleted	mail	lv	Atzīmēt kā izdzēstu
 modify subject	mail	lv	Mainīt tematu
 modify subject of this message	mail	lv	Mainīt šī ziņojuma tematu
@@ -61,6 +78,7 @@ move to	mail	lv	pārvietot atlasītās uz
 move to trash	mail	lv	Pārvietot uz atkritumiem
 never display html emails	mail	lv	Nekas nerādīt HTML vēstules
 new subject	mail	lv	Jauns temats
+no sneak preview in list	mail	lv	Nav ziņojuma priekšskatījuma
 on	mail	lv	ieslēgts
 organization	mail	lv	organizācija
 permission denied	mail	lv	Atļauja liegta
@@ -83,12 +101,15 @@ select or insert email address	mail	lv	Izvēlieties vai ievietojiet e-pasta adre
 sent folder	mail	lv	Mape nosūtīts
 set predefined values for compose...	mail	lv	Iestatiet iepriekš definētas vērtības sastādīšanai ...
 signature	mail	lv	Paraksts
+signature at top	mail	lv	Paraksts augšpusē
+signature position and visibility	mail	lv	Paraksta pozīcija un redzamība
 size(...->0)	mail	lv	Izmērs (...->0)
 size(0->...)	mail	lv	Izmērs (0->...)
 small view	mail	lv	mazais skats
 smime encrypted message	mail	lv	S/MIME šifrēta ziņa
 smime signed message	mail	lv	S/MIME parakstīts ziņojums
 smtp	mail	lv	SMTP
+sneak preview in list	mail	lv	Ziņu priekšskatījums
 sort order	mail	lv	Vieta pēc kārtas
 subject(a->z)	mail	lv	Tēma (A->Z)
 subject(z->a)	mail	lv	Tēma (Z->A)

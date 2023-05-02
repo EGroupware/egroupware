@@ -78,6 +78,7 @@ add sub	common	pl	Dodaj podrzędne
 add table	common	pl	Dodaj tablicę
 add to clipboard	common	pl	Dodaj do schowka
 addressbook	common	pl	Książka adresowa
+addressbooks to sync in addition to personal addressbook	groupdav	pl	Książki adresowe do synchronizacji oprócz osobistej książki adresowej
 admin	common	pl	Administrator
 administration	common	pl	Administracja
 advanced search	common	pl	Wyszukiwanie zaawansowane
@@ -88,6 +89,7 @@ align	common	pl	Wyrównanie
 alignment of label and input-field in table-cell	common	pl	wyrównanie etykiety i pola wprowadzania w komórce tabeli
 alignment of the v/hbox containing table-cell	common	pl	wyrównanie V/H Box, który zawiera komórkę tabeli
 all	common	pl	Wszystko
+all addressbooks	groupdav	pl	Wszystkie książki adresowe
 all days	common	pl	wszystkie dni
 all fields	common	pl	wszystkie pola
 all in one	groupdav	pl	Wszystko w jednym
@@ -560,6 +562,7 @@ iespell not detected. click ok to go to download page.	common	pl	Nie znaleziono 
 if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	common	pl	jeżeli pole jest wyłączone, pojawia się pusta komórka tabeli - dla (tymczasowego) usunięcia pola lub komórki
 if the clock is enabled would you like it to update it every second or every minute?	common	pl	Jeżeli zegar jest aktywny, czy chcesz odświeżać go co sekundę czy co minutę?
 if there are some images in the background folder you can choose the one you would like to see.	common	pl	Jeżeli są obrazki w katalogu teł, możesz wybrać ten, który chcesz zobaczyć.
+if you use "2-factor-authentication", please enter the code here.	common	pl	Jeśli używasz "2-Factor-Authentication", wprowadź tutaj kod.
 image	common	pl	Obrazek
 image directory relative to document root (use / !), example:	common	pl	Katalog przechowywania obrazków - względny do DOCUMENT_ROOT (użyj ciacha - / !), przykład:
 image url	common	pl	Adres URL obrazka
@@ -567,12 +570,14 @@ import	common	pl	Importuj
 import an etemplate from a xml-file	common	pl	Importuj e-Szablon z pliku XML
 import table-definitions from existing db-table	common	pl	Importuj definicję tabel z istniejących tabel bazy danych
 import xml	common	pl	Importuj z XML
+include access to any linked files (links tab)	common	pl	Dołącz dostęp do wszelkich połączonych plików (zakładka Links)
 increment version to not overwrite the existing template	common	pl	powiększ numer wersji, aby nie nadpisać istniejącego szablonu
 index/name of returned content (name of the template, link / method for image)	common	pl	index/name zwróconej zawartości (nazwa sablonu, linku / metody dla obrazka)
 indexed	common	pl	Indeksowana
 indexoptions	common	pl	Opcje indeksu
 india	common	pl	INDIE
 indonesia	common	pl	INDONEZJA
+infolog types to sync	common	pl	Typy InfoLog do synchronizacji
 initial	common	pl	Początkowe
 insert a column before	common	pl	wstaw kolumnę przed
 insert a column behind	common	pl	wstaw kolumnę po
@@ -854,6 +859,8 @@ peru	common	pl	PERU
 philippines	common	pl	FILIPINY
 phone number	common	pl	numer  telefonu
 pitcairn	common	pl	PITCAIRN
+placeholders	common	pl	Placeholdery
+play/pause	common	pl	Odtwarzanie/Pauza
 please %1 by hand	common	pl	Proszę %1 ręcznie
 please enter a name	common	pl	Proszę podać nazwę
 please enter table-name first !!!	common	pl	Proszę wpierw wprowadzić nazwę tabeli!
@@ -871,6 +878,7 @@ portugal	common	pl	PORTUGALIA
 postal	common	pl	Pocztowy
 powered by	common	pl	Działa w oparciu o
 precision	common	pl	Dokładność (długość)
+preference	common	pl	Preferencje
 preferences	common	pl	Ustawienia
 previous page	common	pl	Poprzednia strona
 primary group	common	pl	Grupa domyślna

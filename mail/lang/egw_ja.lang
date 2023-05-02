@@ -24,6 +24,7 @@ add a new folder to %1:	mail	ja	新規フォルダを %1 に追加:
 add all my aliases	mail	ja	別名を全て追加
 add as new	mail	ja	新規追加
 add folder	mail	ja	フォルダを追加
+add raw message, ignore mail attachments	mail	ja	メールをアイテムに変換し、生のメッセージを追加する（メールの添付ファイルは無視する）
 add this certificate into contact	mail	ja	アドレス帳に証明書を追加
 add to addressbook	mail	ja	アドレス帳に追加
 add your domain as "%1" in options to list of email providers and enable api.	mail	ja	あなたのドメイン名を "%1" の形式でメール・プロバイダ・オプションに追加し、APIを有効化してください。
@@ -49,8 +50,10 @@ allways a new window	mail	ja	常に新規ウィンドウを用いる
 always	mail	ja	常に
 always allow external sources from %1	mail	ja	%1からの外部ソースを常に許可
 always show html emails	mail	ja	HTLMメールを常に表示
+always show notifiction	mail	ja	常に通知を表示する
 an error happend while trying to remove acl rights from the account %1!	mail	ja	アカウント %1 の ACL 権限削除中にエラーが発生!
 and the rule with priority %1, now got the priority %2	mail	ja	優先順位 %1 でルールを追加しました（げないの優先順位は %2）
+answered	mail	ja	回答済み
 any of	mail	ja	いずれか:
 any status	mail	ja	全状態
 append	mail	ja	追加
@@ -307,6 +310,7 @@ less than	mail	ja	指定値よりサイズが小さい
 mail	common	ja	メール
 mail acl	mail	ja	メール ACL
 mail filter	mail	ja	メール・フィルター
+mail filter rule	mail	ja	メールフィルタルール
 mail settings	mail	ja	電子メール設定
 mail source	mail	ja	メールのソース
 mail-address	mail	ja	メール・アドレス

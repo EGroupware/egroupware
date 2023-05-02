@@ -1,4 +1,10 @@
 (leave empty for no quota)	mail	uk	(Залишити порожнім за відсутності квоти)
+add all my aliases	mail	uk	Додати всі мої псевдоніми
+add raw message, ignore mail attachments	mail	uk	Перетворити лист на елемент, додати сире повідомлення (ігнорувати вкладення)
+after reply, visible during compose	mail	uk	Після відповіді, видно під час створення листа
+aliases+forwards	mail	uk	Псевдоніми + переадресація
+always show notifiction	mail	uk	Завжди показувати сповіщення
+answered	mail	uk	Відповіли
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	uk	Налаштовані значення будуть автоматично встановлені в діалоговому вікні створення листа для відповідного поля при створенні нового листа.
 cross account forward attachment is not allowed!	mail	uk	Перехресне прикріплення форвардного рахунку не допускається!
 current subject	mail	uk	Поточна тема
@@ -14,17 +20,35 @@ enable	mail	uk	Включити
 event details follow	mail	uk	Подробиці події
 extended	mail	uk	Розширений
 from	mail	uk	Від
+mail	common	uk	Пошта
+mail acl	mail	uk	Права доступу
+mail filter	mail	uk	Поштовий фільтр
+mail filter rule	mail	uk	Правило фільтрації пошти
+mail settings	mail	uk	Налаштування пошти
+mail source	mail	uk	Джерело пошти
+mail-address	mail	uk	Поштова адреса
+mailaccount	mail	uk	Поштовий акаунт
+mailinglist	mail	uk	Список розсилки
+mails	common	uk	Листи
+mark all as read	mail	uk	Позначити всі як прочитані
+mark all messages in folder as read	mail	uk	Позначити всі повідомлення в папці як прочитані
+mark as deleted	mail	uk	Позначити як видалені
 modify subject	mail	uk	Змінити тему
 modify subject of this message	mail	uk	Змінити тему цього повідомлення
 new subject	mail	uk	Нова тема
+no sneak preview in list	mail	uk	Немає попереднього перегляду повідомлень
 permission denied	mail	uk	Заборонено
 predefined addresses for compose	mail	uk	Заздалегідь визначені адреси для компонування
 save all attachments to filemanager	mail	uk	Зберегти всі вкладення у файл-менеджер
 select or insert email address	mail	uk	Виберіть або вставте адресу електронної пошти
 set predefined values for compose...	mail	uk	ВстаВстановити заздалегідь визначені значення для створення ...новити заздалегідь визначені значення для створення ...
+signature	mail	uk	Підпис
+signature at top	mail	uk	підпис зверху
+signature position and visibility	mail	uk	Положення та видимість підпису
 small view	mail	uk	маленький вигляд
 smime encrypted message	mail	uk	S/MIME зашифроване повідомлення
 smime signed message	mail	uk	Повідомлення з підписом S/MIME
 smtp	mail	uk	SMTP
+sneak preview in list	mail	uk	Попередній перегляд повідомлень
 text	mail	uk	Текст
 write	mail	uk	Записати

@@ -690,6 +690,7 @@ import an etemplate from a xml-file	common	it	import an eTemplate from a xml-fil
 import table-definitions from existing db-table	common	it	Import table-definitions from existing db-table
 import xml	common	it	Importa XML
 in order to copy to clipboard, you need to allow flash player by clicking on gray box.\nyou can permanently allow flash player for egroupware in your browser settings.	common	it	Per copiare negli appunti c'è bisogno del Flash player.\n Puoi abilitarlo con la barra in alto per adesso, oppure permanentemente usando le impostazioni del browser.
+include access to any linked files (links tab)	common	it	Includere l'accesso a qualsiasi file collegato (scheda Collegamenti)
 increment version to not overwrite the existing template	common	it	incrementa la versione per non sovrascrivere il template esistente
 index/name of returned content (name of the template, link / method for image)	common	it	index/name of returned content (name of the Template, Link / Method for Image)
 indexed	common	it	Indicizzato
@@ -1031,6 +1032,7 @@ philippines	common	it	FILIPPINE
 phone number	common	it	numero telefonico
 pitcairn	common	it	PITCAIRN
 placeholders	common	it	Segnaposto (variabili metasintattiche)
+play/pause	common	it	Riproduzione/Pausa
 please %1 by hand	common	it	Per favore %1 a mano
 please enter a name	common	it	Per favore inserisci un nome!
 please enter table-name first !!!	common	it	Please enter table-name first !!!

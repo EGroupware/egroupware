@@ -12,8 +12,10 @@ activating by date requires a start- and end-date!	mail	pt-br	Ativação por dat
 add a new folder to %1:	mail	pt-br	Adicionar uma nova pasta para% 1:
 add all my aliases	mail	pt-br	Adicionar todos os meus aliases
 add folder	mail	pt-br	Adicionar pasta
+add raw message, ignore mail attachments	mail	pt-br	Converter correio em item, adicionar mensagem bruta (ignorar anexos de correio)
 add to addressbook	mail	pt-br	Adicionar aos Contatos
-aliases+forwards	mail	pt-br	Aliases + Forwards
+after reply, visible during compose	mail	pt-br	Após a resposta, visível durante a composição
+aliases+forwards	mail	pt-br	Pseudônimos+Avanços
 all adresses:	mail	pt-br	Todos os Endereços:
 all available info	admin	pt-br	todas as informações disponíveis
 all messages in the folder will be lost	mail	pt-br	Todas as mensagens da pasta serão perdidas
@@ -23,7 +25,8 @@ allow images from external sources in html emails	mail	pt-br	Todas as imagens de
 allow users to create further identities	mail	pt-br	permitir aos usuários criar novas identidades
 allways a new window	mail	pt-br	sempre uma nova janela
 always show html emails	mail	pt-br	Sempre mostar mensagens em HMTL
-answered	mail	pt-br	respondeu
+always show notifiction	mail	pt-br	Mostrar sempre notificação
+answered	mail	pt-br	Respondeu
 any of	mail	pt-br	qualquer
 any status	mail	pt-br	qualquer status
 append	mail	pt-br	anexar
@@ -159,7 +162,18 @@ keep a copy of the message in your inbox	mail	pt-br	Manter uma cópia da mensage
 kilobytes	mail	pt-br	Kbytes
 later	mail	pt-br	Depois
 less than	mail	pt-br	menor que
+mail	common	pt-br	Correio
+mail acl	mail	pt-br	Direitos de acesso
+mail filter	mail	pt-br	Filtro de correio
+mail filter rule	mail	pt-br	Regra do filtro de correio
 mail settings	mail	pt-br	Configurações de E-Mail
+mail source	mail	pt-br	Fonte do correio
+mail-address	mail	pt-br	Endereço de correio
+mailaccount	mail	pt-br	Conta de correio
+mailinglist	mail	pt-br	Lista de correio
+mails	common	pt-br	Correios
+mark all as read	mail	pt-br	Marcar tudo como lido
+mark all messages in folder as read	mail	pt-br	Marcar todas as mensagens em pasta como lidas
 mark as deleted	mail	pt-br	Remover mensagem(ns) selecionada(s)
 matches	mail	pt-br	coincidentes
 matches regexp	mail	pt-br	coincidentes com a expressão
@@ -175,6 +189,7 @@ no address to/cc/bcc supplied, and no folder to save message to provided.	mail	p
 no plain text part found	mail	pt-br	Nehuma parte em texto puro encontrada
 no recipient address given!	mail	pt-br	Nenhum endereço informado!
 no signature	mail	pt-br	sem assinatura
+no sneak preview in list	mail	pt-br	Sem visualização da mensagem
 no subject given!	mail	pt-br	Nenhum assunto informado!
 no valid %1 folder configured!	mail	pt-br	Nenhuma pasta válido% 1 configurado!
 nothing to change.	mail	pt-br	Nada a alterar.
@@ -217,12 +232,15 @@ set flags	mail	pt-br	Bandeiras de bandeira
 set predefined values for compose...	mail	pt-br	Definir valores pré-definidos para compor ...
 sieve script name	mail	pt-br	nome do script sieve
 signature	mail	pt-br	Assinatura
+signature at top	mail	pt-br	assinatura no topo
+signature position and visibility	mail	pt-br	Posição da assinatura e visibilidade
 size(...->0)	mail	pt-br	Tamanho (...->0)
 size(0->...)	mail	pt-br	Tamanho (0->...)
 small view	mail	pt-br	Visão resumida
 smime encrypted message	mail	pt-br	S/MIME mensagem criptografada
 smime signed message	mail	pt-br	Mensagem assinada S/MIME
 smtp	mail	pt-br	SMTP
+sneak preview in list	mail	pt-br	Pré-visualização da mensagem
 sort order	mail	pt-br	Ordem de classificação
 start new messages with mime type plain/text or html?	mail	pt-br	iniciar novas mensagens com mime type plain/text ou html ?
 subject(a->z)	mail	pt-br	Assunto (A->Z)

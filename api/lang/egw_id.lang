@@ -63,12 +63,15 @@ add %1 category for	common	id	Tambah %1 kategori untuk
 add a new contact	common	id	Tambah kontak baru
 add category	common	id	Tambah kategori
 add column	common	id	Add Column
+add current	common	id	Tampilan saat ini sebagai favorit
 add index	common	id	Add Index
 add new	common	id	Tambah baru
 add shortcut	common	id	Tambah Shortcut
 add sub	common	id	Tambah sub
 add table	common	id	Add Index
+add to clipboard	common	id	Tambahkan ke papan klip
 addressbook	common	id	Buku Alamat
+addressbooks to sync in addition to personal addressbook	groupdav	id	Buku alamat untuk disinkronkan selain buku alamat pribadi
 admin	common	id	Admin
 administration	common	id	Administrasi
 advanced search	common	id	Pencarian Canggih
@@ -77,8 +80,10 @@ albania	common	id	ALBANIA
 algeria	common	id	ALJAZAIR
 align	common	id	Align
 all	common	id	Semua
+all addressbooks	groupdav	id	Semua buku alamat
 all days	common	id	seharian
 all fields	common	id	semua field
+all in one	groupdav	id	Semua dalam satu
 all languages	common	id	semua bahasa
 all users	common	id	Semua pengguna
 allowed file type: %1	common	id	Tipe yang dibolehkan: %1
@@ -423,14 +428,17 @@ html	common	id	HTML
 hungary	common	id	HONGARIA
 iceland	common	id	ISLANDIA
 id	common	id	ID
+if you use "2-factor-authentication", please enter the code here.	common	id	Jika Anda menggunakan "Autentikasi 2 Faktor", masukkan kode di sini.
 image	common	id	Image
 image url	common	id	Image URL
 import	common	id	Impor
 import xml	common	id	Impor XML
+include access to any linked files (links tab)	common	id	Menyertakan akses ke file yang ditautkan (tab Tautan)
 indexed	common	id	Indexed
 indexoptions	common	id	Indexoptions
 india	common	id	INDIA
 indonesia	common	id	INDONESIA
+infolog types to sync	common	id	Jenis InfoLog yang akan disinkronkan
 initial	common	id	Initial
 insert column after	common	id	Sisipkan kolom setelah
 insert column before	common	id	Sisipkan kolom sebelum
@@ -588,6 +596,7 @@ no	common	id	Tidak
 no - cancel	common	id	Tidak - Batal
 no entries found, try again ...	common	id	tiada entri ditemukan, coba lagi ...
 no file	common	id	tiada berkas
+no filters	common	id	Tidak ada filter
 no matches found	common	id	Tiada yang cocok
 no subject	common	id	Tanpa Subyek
 none	common	id	Tiada
@@ -647,6 +656,8 @@ peru	common	id	PERU
 philippines	common	id	FILIPINA
 phone number	common	id	nomor telepon
 pitcairn	common	id	PITCAIRN
+placeholders	common	id	Penampung
+play/pause	common	id	Putar/Jeda
 please enter a name	common	id	Mohon masukan nama
 please select	common	id	Pilihlah
 please wait...	common	id	Tunggu...
@@ -658,6 +669,7 @@ portugal	common	id	PORTUGAL
 postal	common	id	Pos
 powered by	common	id	Digerakan oleh
 precision	common	id	Precision
+preference	common	id	Preferensi
 preferences	common	id	Kesukaan
 previous page	common	id	Halaman Sebelumnya
 primary group	common	id	Kelompok utama
