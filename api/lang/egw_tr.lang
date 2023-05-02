@@ -22,8 +22,13 @@ action	common	tr	Eylem
 actions	common	tr	Eylemler
 add	common	tr	ekle
 add a new contact	common	tr	Yeni bir ba?lant? ekle
+add current	common	tr	Favori olarak mevcut görünüm
+add to clipboard	common	tr	Panoya ekle
 addressbook	common	tr	Adres Defteri
+addressbooks to sync in addition to personal addressbook	groupdav	tr	Kişisel adres defterine ek olarak senkronize edilecek adres defterleri
 administration	common	tr	Yönetim
+all addressbooks	groupdav	tr	Tüm adres defterleri
+all in one	groupdav	tr	Hepsi bir arada
 and	common	tr	Ve
 application	common	tr	Uygulama
 apply	common	tr	uygula
@@ -74,6 +79,9 @@ how many days to sync in the future (default %1)	groupdav	tr	Gelecekte kaç gün
 how many days to sync in the past (default %1)	groupdav	tr	Geçmişte kaç gün senkronize edilecek (varsayılan %1)
 how many rows to print	common	tr	Kaç satır yazdırılacağı
 how to show the general egroupware menu ?	common	tr	Genel EGroupware menüsü nasıl gösterilir
+if you use "2-factor-authentication", please enter the code here.	common	tr	"2 Faktörlü Kimlik Doğrulama" kullanıyorsanız, lütfen kodu buraya girin.
+include access to any linked files (links tab)	common	tr	Bağlantılı dosyalara erişimi dahil edin (Bağlantılar sekmesi)
+infolog types to sync	common	tr	Senkronize edilecek InfoLog türleri
 insert placeholder	common	tr	Yer tutucu ekle
 insert timestamp into description field	common	tr	Açıklama alanına zaman damgası ekle
 international	common	tr	Uluslararas?
@@ -88,16 +96,20 @@ message	common	tr	Mesaj
 minute	common	tr	Dakika
 name	common	tr	Ýsim
 new password	common	tr	Yeni şifre
+no filters	common	tr	Filtre yok
 ok	common	tr	Tamam
 or	common	tr	ya da
 original	common	tr	Orjinal
 parcel	common	tr	Parsel
 phone number	common	tr	Tel no
+placeholders	common	tr	Yer Tutucular
+play/pause	common	tr	Oynat/Duraklat
 please enter a name	common	tr	Litfen bir isim giriniz
 please run setup to become current	common	tr	Güncel olmak için kurulumu çalýþtýrýnýz
 please select	common	tr	Lütfen seçiniz
 postal	common	tr	Posta
-preferences	common	tr	Ayarlar
+preference	common	tr	Tercih
+preferences	common	tr	Tercihler
 primary group	common	tr	ana grup
 project	common	tr	Proje
 read this list of methods.	common	tr	Method listesini oku

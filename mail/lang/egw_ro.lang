@@ -1,4 +1,10 @@
 (leave empty for no quota)	mail	ro	(Lăsați gol pentru nici o cotă)
+add all my aliases	mail	ro	Adăugați toate pseudonimele mele
+add raw message, ignore mail attachments	mail	ro	Conversia mailului în articol, adăugarea mesajului brut (ignorați atașamentele de mail)
+after reply, visible during compose	mail	ro	După răspuns, vizibil în timpul compunerii
+aliases+forwards	mail	ro	Aliasuri+Întoarcere
+always show notifiction	mail	ro	Afișează întotdeauna notificarea
+answered	mail	ro	Răspunsuri
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	ro	Valorile configurate vor fi setate automat în dialogul de compunere pentru câmpul respectat atunci când se compune un nou e-mail.
 cross account forward attachment is not allowed!	mail	ro	Atașarea contului încrucișat nu este permisă!
 current subject	mail	ro	Subiect curent
@@ -7,13 +13,31 @@ default value for remembering s/mime passphrase in minutes	mail	ro	Valoarea impl
 defines what to show as contact label for added contact into to/cc/bcc when composing an email. default is firstname lastname and empty means include eveything available.	mail	ro	Definește ce să se afișeze ca etichetă de contact pentru contactul adăugat în Către/Copie/Copie oarbă atunci când compuneți un e-mail. Valoarea implicită este Firstname Lastname (nume, prenume, nume), iar empty (gol) înseamnă că include tot ce este disponibil.
 defines what to show as identity label on mail folder header	common	ro	Definește ce să se afișeze ca etichetă de identitate în antetul dosarului de e-mail
 disable caching of flags	mail	ro	Dezactivarea memorării în cache a stegulețelor
+mail	common	ro	Mail
+mail acl	mail	ro	Drepturi de acces
+mail filter	mail	ro	Filtru de poștă
+mail filter rule	mail	ro	Regula de filtrare a corespondenței
+mail settings	mail	ro	Setări poștă
+mail source	mail	ro	Sursa de poștă
+mail-address	mail	ro	Adresa de e-mail
+mailaccount	mail	ro	Contul de poștă
+mailinglist	mail	ro	Listă de corespondență
+mails	common	ro	Mesaje
+mark all as read	mail	ro	Marcați toate ca fiind citite
+mark all messages in folder as read	mail	ro	Marcați toate mesajele din dosar ca fiind citite
+mark as deleted	mail	ro	Marcați ca fiind șterse
 modify subject	mail	ro	Modificați subiectul
 modify subject of this message	mail	ro	Modificați subiectul acestui mesaj
 new subject	mail	ro	Subiect nou
+no sneak preview in list	mail	ro	Nu există previzualizare a mesajelor
 predefined addresses for compose	mail	ro	Adrese predefinite pentru compunere
 save all attachments to filemanager	mail	ro	Salvați toate atașamentele în filemanager
 select or insert email address	mail	ro	Selectați sau introduceți adresa de e-mail
 set predefined values for compose...	mail	ro	Setați valori predefinite pentru compunere ...
+signature	mail	ro	Semnătură
+signature at top	mail	ro	semnătură în partea de sus
+signature position and visibility	mail	ro	Poziția și vizibilitatea semnăturii
 smime encrypted message	mail	ro	Mesaj criptat S/MIME
 smime signed message	mail	ro	Mesaj semnat S/MIME
 smtp	mail	ro	SMTP
+sneak preview in list	mail	ro	Previzualizare mesaj

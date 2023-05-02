@@ -72,6 +72,7 @@ add a new entry of the selected application	common	fi	Lisää uusi merkintä sov
 add a new multi-column index	common	fi	Lisää uusi monisarakkeen indeksi
 add category	common	fi	Lisää kategoria
 add column	common	fi	Lisää sarake
+add current	common	fi	Nykyinen näkymä suosikkina
 add index	common	fi	Lisää indeksi
 add new	common	fi	Lisää uusi
 add shortcut	common	fi	Lisää pikakuvake
@@ -583,6 +584,7 @@ if the clock is enabled would you like it to update it every second or every min
 if there are some images in the background folder you can choose the one you would like to see.	common	fi	Jos taustakuvahakemistossa on kuvia, voit valita mitä kuvaa haluat käyttää.
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	preferences	fi	Määrittele kansio (koko vfs polku), ja %1 näyttää kaikki kansiossa olevat tiedostot. Valittu tiedosto voidaan ladata, sisältäen tiedostoon automaattisesti syötetyt tiedot.
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	preferences	fi	Määrittele tiedosto (koko vfs polku), ja %1 näyttää kaikki ylimääräisen kuvakkeen jokaiselle merkinnälle. Määritelty tiedosto voidaan ladata kuvaketta klikkaamalla, sisältäen tiedostoon automaattisesti syötetyt tiedot..
+if you use "2-factor-authentication", please enter the code here.	common	fi	Jos käytät "2-tekijätunnistautumista", syötä koodi tähän.
 image	common	fi	Kuva
 image directory relative to document root (use / !), example:	common	fi	Kuvahakemiston suhteellinen dokumentin juurihakemisto (käytä / !), esimerkiksi:
 image url	common	fi	Kuvan URL
@@ -590,6 +592,7 @@ import	common	fi	Tuonti
 import an etemplate from a xml-file	common	fi	Tuo eMallipohja XML-tiedostosta
 import table-definitions from existing db-table	common	fi	Tuo taulumääritykset valmiista tietokannasta
 import xml	common	fi	Tuo XML
+include access to any linked files (links tab)	common	fi	Sisällytä pääsy linkitettyihin tiedostoihin (Linkit-välilehti).
 indexed	common	fi	Indeksoitu
 indexoptions	common	fi	Indeksointiasetukset
 india	common	fi	INTIA
@@ -787,6 +790,7 @@ no column to swap with !!!	common	fi	Ei saraketta johon voisi vaihtaa !!!
 no entries found, try again ...	common	fi	Ei merkintöjä, yritä uudelleen ...
 no file	common	fi	Ei tiedostoa
 no filename given or selected via browse...	common	fi	Tiedostonimeä ei annettu tai valittu Selaa... -valinnan kautta
+no filters	common	fi	Ei suodattimia
 no history for this record	common	fi	Tällä merkinnällä ei ole historiatietoja
 no matches found	common	fi	Ei osumia löydetty!
 no rights to export more than %1 entries!	common	fi	Sallittu vientimäärä: %1 merkintää!
@@ -879,6 +883,8 @@ pg up	common	fi	Sivu ylös
 philippines	common	fi	FILIPPIINIT
 phone number	common	fi	Puhelin
 pitcairn	common	fi	PITCAIRN
+placeholders	common	fi	Paikannimet
+play/pause	common	fi	Toista/tauko
 please %1 by hand	common	fi	Suorita manuaalisesti: %1
 please enter a name	common	fi	Anna nimi!
 please enter table-name first !!!	common	fi	Kirjoita ensin taulukon nimi !!!
@@ -896,6 +902,7 @@ portugal	common	fi	PORTUGALI
 postal	common	fi	Posti
 powered by	common	fi	Kehittänyt
 precision	common	fi	Esitystarkkuus
+preference	common	fi	Asetukset
 preferences	common	fi	Asetukset
 preferences for the %1 template set	preferences	fi	Asetukset mallipohjalle: %1
 previous page	common	fi	Edellinen sivu

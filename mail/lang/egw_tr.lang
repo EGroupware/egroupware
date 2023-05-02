@@ -1,4 +1,10 @@
 (leave empty for no quota)	mail	tr	(Kota olmaması için boş bırakın)
+add all my aliases	mail	tr	Tüm takma adlarımı ekle
+add raw message, ignore mail attachments	mail	tr	Postayı öğeye dönüştürün, ham mesaj ekleyin (posta eklerini yok sayın)
+after reply, visible during compose	mail	tr	Yanıttan sonra, oluşturma sırasında görünür
+aliases+forwards	mail	tr	Takma Adlar+İleri Yönler
+always show notifiction	mail	tr	Her zaman bildirim göster
+answered	mail	tr	Cevaplandı
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	tr	Yapılandırılan değerler, yeni bir e-posta oluşturulurken saygı duyulan alan için oluşturma iletişim kutusunda otomatik olarak ayarlanacaktır.
 cross account forward attachment is not allowed!	mail	tr	Çapraz hesap ileri ekine izin verilmez!
 current subject	mail	tr	Güncel konu
@@ -14,18 +20,35 @@ enable	mail	tr	Etkinleştir
 event details follow	mail	tr	Etkinlik Detayları Ektedir
 extended	mail	tr	Genişletilmiş
 from	mail	tr	Nereden
+mail	common	tr	Posta
+mail acl	mail	tr	Erişim hakları
+mail filter	mail	tr	Posta filtresi
+mail filter rule	mail	tr	Posta filtresi kuralı
 mail settings	mail	tr	Mail ayarları
+mail source	mail	tr	Posta Kaynağı
+mail-address	mail	tr	Posta Adresi
+mailaccount	mail	tr	Posta hesabı
+mailinglist	mail	tr	Posta listesi
+mails	common	tr	Postalar
+mark all as read	mail	tr	Hepsini okundu olarak işaretle
+mark all messages in folder as read	mail	tr	Klasördeki tüm iletileri okundu olarak işaretle
+mark as deleted	mail	tr	Silindi olarak işaretle
 modify subject	mail	tr	Konuyu değiştir
 modify subject of this message	mail	tr	Bu mesajın konusunu değiştirin
 new subject	mail	tr	Yeni konu
+no sneak preview in list	mail	tr	Mesaj önizlemesi yok
 permission denied	mail	tr	İzin verilmedi
 predefined addresses for compose	mail	tr	Compose için önceden tanımlanmış adresler
 save all attachments to filemanager	mail	tr	Tüm ekleri filemanager'a kaydet
 select all	mail	tr	Tamam?n? seç
 select or insert email address	mail	tr	E-posta adresini seçin veya ekleyin
 set predefined values for compose...	mail	tr	Oluşturma için önceden tanımlanmış değerleri ayarlayın ...
+signature	mail	tr	İmza
+signature at top	mail	tr	üstteki imza
+signature position and visibility	mail	tr	İmza konumu ve görünürlüğü
 smime encrypted message	mail	tr	S/MIME şifreli mesaj
 smime signed message	mail	tr	S/MIME imzalı mesaj
 smtp	mail	tr	SMTP
+sneak preview in list	mail	tr	Mesaj önizlemesi
 text	mail	tr	Metin
 write	mail	tr	Yaz

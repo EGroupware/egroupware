@@ -43,12 +43,15 @@ add %1 category for	common	hu	%1 kategória hozzáadása
 add a new contact	common	hu	Új kapcsolat hozzáadása
 add category	common	hu	Kategória hozzáadása
 add column	common	hu	Oszlop hozzáadása
+add current	common	hu	Jelenlegi nézet, mint kedvenc
 add index	common	hu	Index hozzáadása
 add new	common	hu	Új hozzáadása
 add shortcut	common	hu	Gyorsbillentyű hozzáadása
 add sub	common	hu	Albejegyzés hozzáadása
 add table	common	hu	Táblázat hozzáadása
+add to clipboard	common	hu	Hozzáadás a vágólaphoz
 addressbook	common	hu	Címjegyzék
+addressbooks to sync in addition to personal addressbook	groupdav	hu	Címkönyvek szinkronizálása a személyes címjegyzék mellett
 admin	common	hu	Admin
 administration	common	hu	Adminisztráció
 advanced search	common	hu	Kiterjesztett keresés
@@ -57,7 +60,9 @@ albania	common	hu	Albánia
 algeria	common	hu	Algéria
 align	common	hu	Igazítás
 all	common	hu	Összes
+all addressbooks	groupdav	hu	Minden címjegyzék
 all fields	common	hu	Összes mező
+all in one	groupdav	hu	Mindent egyben
 all languages	common	hu	minden nyelv
 all users	common	hu	Összes felhasználó
 alternate style-sheet:	common	hu	Stíluslap változtatása
@@ -396,12 +401,15 @@ id	common	hu	Azonosító
 iespell not detected. click ok to go to download page.	common	hu	iSpell nem található. Kattintson az OK-ra a letöltéshez.
 if the clock is enabled would you like it to update it every second or every minute?	common	hu	Ha az óra engedélyezve van, akkor minden másodpercben vagy minden percben frissítse az időt?
 if there are some images in the background folder you can choose the one you would like to see.	common	hu	Ha több kép található a Hátterek mappában, akkor kiválaszthatja, hogy melyiket szeretné beállítani.
+if you use "2-factor-authentication", please enter the code here.	common	hu	Ha "2-faktoros hitelesítést" használ, kérjük, adja meg a kódot itt.
 image	common	hu	Kép
 image directory relative to document root (use / !), example:	common	hu	Képkönyvtár relatív útvonala a dokumentum gyökérkönyvtárához képest (használja a / előtagot), például:
 image url	common	hu	Kép URL
 import	common	hu	Import
+include access to any linked files (links tab)	common	hu	Adja meg a linkelt fájlokhoz való hozzáférést (Linkek lap).
 india	common	hu	India
 indonesia	common	hu	Indonézia
+infolog types to sync	common	hu	Szinkronizálandó InfoLog típusok
 initial	common	hu	Kezdeti
 insert all %1 addresses of the %2 contacts in %3	common	hu	A %2 kapcsolat összes %1 címének beillesztése ide %3
 insert column after	common	hu	Oszlop szúrása utána
@@ -552,6 +560,7 @@ no	common	hu	Nem
 no - cancel	common	hu	Nem - Mégsem
 no entries found, try again ...	common	hu	nem található bejegyzés, próbálja újra
 no file	common	hu	nincs file
+no filters	common	hu	Nincsenek szűrők
 no history for this record	common	hu	Ehhez a rekordhoz nem tartoznak előzmények
 no matches found	common	hu	Nincs egyezés
 no savant2 template directories were found in:	common	hu	Nem található Savant2 sablon könyvtár ezen a helyen:
@@ -623,6 +632,8 @@ peru	common	hu	Peru
 philippines	common	hu	Fülöp-szigetek
 phone number	common	hu	telefonszám
 pitcairn	common	hu	Pitcairn-szigetek
+placeholders	common	hu	Helytartók
+play/pause	common	hu	Lejátszás/szünet
 please %1 by hand	common	hu	Kérem %1 kézzel
 please enter a name	common	hu	Kérem adjon meg egy nevet!
 please run setup to become current	common	hu	Kérem futtassa a setup-ot hogy a változás érvényre jusson.
@@ -637,7 +648,8 @@ popup with search	common	hu	Felugró ablak kereséssel
 portugal	common	hu	Portugália
 postal	common	hu	Postai
 powered by	common	hu	Powered by
-preferences	common	hu	Tulajdonságok
+preference	common	hu	Preferencia
+preferences	common	hu	Beállítások
 previous page	common	hu	Előző oldal
 primary group	common	hu	elsődleges csoport
 primary style-sheet:	common	hu	Elsődleges stíluslap

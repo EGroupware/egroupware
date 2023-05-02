@@ -24,6 +24,7 @@ add a new folder to %1:	mail	sl	Dodajte novo mapo v %1:
 add all my aliases	mail	sl	Dodaj vse moje vzdevke
 add as new	mail	sl	Dodaj kot nov
 add folder	mail	sl	Dodaj mapo
+add raw message, ignore mail attachments	mail	sl	Pretvori pošto v element, dodaj neobdelano sporočilo (ne upoštevaj priponk)
 add this certificate into contact	mail	sl	Dodajte to potrdilo v stik
 add to addressbook	mail	sl	Dodaj v adresar
 add your domain as "%1" in options to list of email providers and enable api.	mail	sl	Dodajte svojo domeno kot "%1" v možnosti na seznam ponudnikov e-pošte in omogočite API.
@@ -49,8 +50,10 @@ allways a new window	mail	sl	Vedno novo okno
 always	mail	sl	Vedno
 always allow external sources from %1	mail	sl	vedno prikaži html e-pošto
 always show html emails	mail	sl	Vedno prikaži HTML sporočila
+always show notifiction	mail	sl	Vedno prikaži obvestilo
 an error happend while trying to remove acl rights from the account %1!	mail	sl	Pri poskusu odstranitve pravic ACL iz računa %1 je prišlo do napake.
 and the rule with priority %1, now got the priority %2	mail	sl	In pravilo s prioriteto %1 je zdaj dobilo prednost %2
+answered	mail	sl	Odgovorjeno
 any of	mail	sl	Katerikoli od
 any status	mail	sl	Katerikoli status
 append	mail	sl	dodajte
@@ -308,6 +311,7 @@ less than	mail	sl	Manj kot
 mail	common	sl	Pošta
 mail acl	mail	sl	Pošta ACL
 mail filter	mail	sl	Mail filter
+mail filter rule	mail	sl	Pravilo poštnega filtra
 mail settings	mail	sl	E-poštne nastavitve
 mail source	mail	sl	Poštni vir
 mail-address	mail	sl	Poštni naslov

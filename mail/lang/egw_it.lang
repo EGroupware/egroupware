@@ -24,6 +24,7 @@ add a new folder to %1:	mail	it	Aggiungi cartella a %1
 add all my aliases	mail	it	Aggiungi tutti i miei alias
 add as new	mail	it	Aggiungi come nuovo
 add folder	mail	it	Aggiungi cartella
+add raw message, ignore mail attachments	mail	it	Convertire la posta in oggetto, aggiungere il messaggio grezzo (ignorare gli allegati della posta)
 add this certificate into contact	mail	it	Aggiungi questo certificato nel contatto
 add to addressbook	mail	it	aggiungi alla rubrica
 add your domain as "%1" in options to list of email providers and enable api.	mail	it	Aggiungere il dominio come "%1" nelle opzioni di elenco dei gestori di servizi di posta elettronica e abilitare l'API
@@ -49,6 +50,7 @@ allways a new window	mail	it	sempre in una nuova finestra
 always	mail	it	Sempre
 always allow external sources from %1	mail	it	Permetti sempre sorgenti esterne/remote da %1
 always show html emails	mail	it	Visualizza sempre le e-mail HTML
+always show notifiction	mail	it	Mostra sempre la notifica
 an error happend while trying to remove acl rights from the account %1!	mail	it	Errore di rimozione permessi ACL dall'account %1!
 and the rule with priority %1, now got the priority %2	mail	it	E la regola con priorità %1, ha adesso priorità %2
 answered	mail	it	ha risposto
@@ -309,6 +311,7 @@ less than	mail	it	meno di
 mail	common	it	mail
 mail acl	mail	it	Permessi ACL della posta
 mail filter	mail	it	Filtro email
+mail filter rule	mail	it	Regola del filtro posta
 mail settings	mail	it	Impostazioni email
 mail source	mail	it	Sorgente email
 mail-address	mail	it	Indirizzo email

@@ -21,14 +21,18 @@ add "%1" into blacklisted emails	mail	bg	Добавете "%1" в черния �
 add "%1" into whiltelisted domains	mail	bg	Добавете "%1" в "белия списък" на домейните
 add "%1" into whitelisted emails	mail	bg	Добавете "%1" в "белия списък" на имейлите
 add a new folder to %1:	mail	bg	Добавете нова папка към %1:
+add all my aliases	mail	bg	Добавяне на всички мои псевдоними
 add as new	mail	bg	Добавете като нов(а)
 add files as %1	mail	bg	Добавете файлове като %1
 add folder	mail	bg	Добавете папка
+add raw message, ignore mail attachments	mail	bg	Конвертиране на поща в елемент, добавяне на необработено съобщение (игнориране на прикачени файлове към поща)
 add this certificate into contact	mail	bg	Добавете този сертификат в контакта
 add to addressbook	mail	bg	Добави към Адресния указател
 add your domain as "%1" in options to list of email providers and enable api.	mail	bg	Добавете вашия домейн като "%1" в опции към списъка на имейл доставчици и активирайте API.
 adding %1 to blacklisted email addresses failed because of %2	mail	bg	Добавянето на %1 в черния списък на имейл адресите не бе успешно поради %2
 adding %1 to whiltelisted email addresses failed because of %2	mail	bg	Добавянето на %1 в белия списък на имейл адресите не бе успешно поради %2
+after reply, visible during compose	mail	bg	След отговор, видим по време на съставяне
+aliases+forwards	mail	bg	Псевдоними+препратки
 all	mail	bg	Всичко(и)
 all adresses:	mail	bg	Всички адреси:
 all available info	admin	bg	цялата налична информация
@@ -47,6 +51,7 @@ allways a new window	mail	bg	винаги в нов прозорец
 always	mail	bg	Винаги
 always allow external sources from %1	mail	bg	Винаги позволява външни източници от %1
 always show html emails	mail	bg	Винаги показва HTML съобщения
+always show notifiction	mail	bg	Винаги показвайте известие
 an error happend while trying to remove acl rights from the account %1!	mail	bg	Възникна грешка, докато се опитвате да премахнете ACL права от акаунта %1!
 and the rule with priority %1, now got the priority %2	mail	bg	И правилото с приоритет %1, сега получи приоритет %2
 answered	mail	bg	отговори
@@ -298,8 +303,18 @@ junk folder	mail	bg	Папка с нежелани файлове
 keep a copy of the message in your inbox	mail	bg	запазване на копие от съобщението във Входящи
 kilobytes	mail	bg	килобайта
 less than	mail	bg	по-малко от
+mail	common	bg	Поща
+mail acl	mail	bg	Права за достъп
 mail filter	mail	bg	Пощенски филтър
+mail filter rule	mail	bg	Правило за филтриране на пощата
 mail settings	mail	bg	Настройки на пощата
+mail source	mail	bg	Източник на поща
+mail-address	mail	bg	Mail-Address
+mailaccount	mail	bg	Пощенски акаунт
+mailinglist	mail	bg	Пощенски списък
+mails	common	bg	Поща
+mark all as read	mail	bg	Маркирайте всички като прочетени
+mark all messages in folder as read	mail	bg	Маркиране на всички съобщения в папката като прочетени
 mark as deleted	mail	bg	Маркирай като изтрито
 matches	mail	bg	съвпада с
 matches regexp	mail	bg	съвпада с рег. израз
@@ -315,6 +330,7 @@ no address to/cc/bcc supplied, and no folder to save message to provided.	mail	b
 no plain text part found	mail	bg	липсва текстова част
 no recipient address given!	mail	bg	Не е посочен адрес на получател!
 no signature	mail	bg	няма подпис
+no sneak preview in list	mail	bg	Няма предварителен преглед на съобщението
 no subject given!	mail	bg	Не е посочена Тема!
 on	mail	bg	на
 only one window	mail	bg	само в един прозорец
@@ -354,12 +370,15 @@ set predefined values for compose...	mail	bg	Задаване на предва�
 sieve script name	mail	bg	име на sieve скрипт
 sieve_edit_instructions	mail	bg	(*) могат да се използват "заместващи символи" (* ,?) Ако се опитвате да съчетаете помежду си * или ?, трябва да ги избегнете с наклонена черта (\). Ако поставите отметка „Използване на регулярни изрази“, трябва да използвате валидни регулярни изрази. За да избегнете удивителен знак (!) в началото, който не се използва като "НЕ", използвайте регекс и обратна черта (\) (например \!)
 signature	mail	bg	Подпис
+signature at top	mail	bg	подпис в горната част
+signature position and visibility	mail	bg	Позиция и видимост на подписа
 size(...->0)	mail	bg	Размер (...->0)
 size(0->...)	mail	bg	Размер (0->...)
 small view	mail	bg	умален изглед
 smime encrypted message	mail	bg	S/MIME криптирано съобщение
 smime signed message	mail	bg	S/MIME подписано съобщение
 smtp	mail	bg	SMTP
+sneak preview in list	mail	bg	Предварителен преглед на съобщението
 start new messages with mime type plain/text or html?	mail	bg	Започва нови съобщения като чист текст или HTML?
 subject(a->z)	mail	bg	Тема (A->Z)
 subject(z->a)	mail	bg	Тема (Z->A)

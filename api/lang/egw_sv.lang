@@ -62,12 +62,15 @@ add a new entry of the selected application	common	sv	Skapa ny post av vald appl
 add a new multi-column index	common	sv	Skapa multikolumn index
 add category	common	sv	Lägg till kategori
 add column	common	sv	Infoga kolumn
+add current	common	sv	Nuvarande vy som favorit
 add index	common	sv	Skapa index
 add new	common	sv	Skapa ny
 add shortcut	common	sv	Lägg till genväg
 add sub	common	sv	Lägg till under
 add table	common	sv	Skapa tabell
+add to clipboard	common	sv	Lägg till i urklipp
 addressbook	common	sv	Adressbok
+addressbooks to sync in addition to personal addressbook	groupdav	sv	Adressböcker som ska synkroniseras utöver den personliga adressboken
 admin	common	sv	Admin
 administration	common	sv	Administration
 advanced search	common	sv	Avancerad sökning
@@ -78,8 +81,10 @@ align	common	sv	Justera
 alignment of label and input-field in table-cell	common	sv	Justering av etikett och indata fält i tabell cell
 alignment of the v/hbox containing table-cell	common	sv	Justering av V/HBox innehållande tabell cell
 all	common	sv	Alla
+all addressbooks	groupdav	sv	Alla adressböcker
 all days	common	sv	Samtliga dagar
 all fields	common	sv	Alla fält
+all in one	groupdav	sv	Alla i en
 all operations save the template!	common	sv	Alla operationer sparar template
 all users	common	sv	Alla användare
 alternate style-sheet:	common	sv	Alternerande style-sheet:
@@ -509,18 +514,21 @@ iespell not detected. click ok to go to download page.	common	sv	ieSpell hittade
 if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	common	sv	Om fält är inaktiverat visas en tom tabell cell, för (temporär) borttagning av ett fält/cell
 if the clock is enabled would you like it to update it every second or every minute?	common	sv	Vill du att klockan uppdateras varje sekund eller minut om den aktiveras?
 if there are some images in the background folder you can choose the one you would like to see.	common	sv	Om det finns bilder i bakgrundskatalogen, kan du välja den du vill se.
+if you use "2-factor-authentication", please enter the code here.	common	sv	Om du använder "2-faktorsautentisering" ska du ange koden här.
 image	common	sv	Bild
 image url	common	sv	Bild URL
 import	common	sv	Import
 import an etemplate from a xml-file	common	sv	Importera eTemplate från XML fil
 import table-definitions from existing db-table	common	sv	Importera tabell definitioner från existerande databas tabell
 import xml	common	sv	Importera XML
+include access to any linked files (links tab)	common	sv	Ange tillgång till eventuella länkade filer (fliken Länkar).
 increment version to not overwrite the existing template	common	sv	Uppdatera version för att inte skriva över nuvarande mall
 index/name of returned content (name of the template, link / method for image)	common	sv	Index/namn på returnerat innehåll (namn på Template, Länk/Metod för bild)
 indexed	common	sv	Indexerad
 indexoptions	common	sv	Index alternativ
 india	common	sv	INDIEN
 indonesia	common	sv	INDONESIEN
+infolog types to sync	common	sv	InfoLog-typer som ska synkroniseras
 initial	common	sv	Inledande
 insert a column before	common	sv	Infoga kolumn före
 insert a column behind	common	sv	Infoga kolumn efter
@@ -699,6 +707,7 @@ no column to swap with !!!	common	sv	Ingen kolumn att byta med!
 no entries found, try again ...	common	sv	Inga poster hittades, försök igen ...
 no file	common	sv	Ingen fil
 no filename given or selected via browse...	common	sv	Ingen fil angiven eller vald
+no filters	common	sv	Inga filter
 no history for this record	common	sv	Ingen historik för posten
 no matches found	common	sv	Inga träffar
 no row to swap with !!!	common	sv	Ingen rad att byta med!
@@ -783,6 +792,8 @@ peru	common	sv	PERU
 philippines	common	sv	FILIPINERNA
 phone number	common	sv	Telefonnummer
 pitcairn	common	sv	PITCAIRNÖARNA
+placeholders	common	sv	Platshållare
+play/pause	common	sv	Spela/pausa
 please %1 by hand	common	sv	Var god och %1 för hand
 please enter a name	common	sv	Ange ett namn
 please enter table-name first !!!	common	sv	Var god och ange tabell namnet först
@@ -798,7 +809,8 @@ popup with search	common	sv	Popup med sökning
 portugal	common	sv	PORTUGAL
 postal	common	sv	Post adress
 precision	common	sv	Precision
-preferences	common	sv	Alternativ
+preference	common	sv	Inställningar
+preferences	common	sv	Inställningar
 previous page	common	sv	Föregående sida
 primary group	common	sv	Primär grupp
 primary key	common	sv	Primary Key

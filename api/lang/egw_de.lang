@@ -94,7 +94,7 @@ add shortcut	common	de	Abkürzung hinzufügen
 add sub	common	de	Untergeordnete hinzufügen
 add table	common	de	Tabelle zufügen
 add to clipboard	common	de	Zur Zwischenablage hinzufügen
-add user to responsibles	groupdav	de	füge Benutzer zu Verantwortlichen hinzu
+add user to responsibles	groupdav	de	Füge Benutzer zu Verantwortlichen hinzu
 add user to responsibles, removing evtl. previous category user	groupdav	de	füge Benutzer zu Verantwortlichen hinzu, entferne Benutzer der vorherigen Kategorie
 add your domain as "%1" in options to list of email providers and enable api.	common	de	Fügen Sie Ihre Domain als "%1" unter Optionen in der Liste der E-Mail-Anbieter hinzu und schalten Sie API ein.
 addressbook	common	de	Adressbuch

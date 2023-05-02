@@ -4,15 +4,20 @@
 (select mails by clicking on the line, like a checkbox)	mail	ru	(выберите письма нажатием на строчку, как место выбора)
 (with checkbox enforced)	mail	ru	(с отмеченным флажком)
 activating by date requires a start- and end-date!	mail	ru	Активация по дате требует наличия начальной и конечной даты!
+add all my aliases	mail	ru	Добавить все мои псевдонимы
 add as new	mail	ru	Новая запись
 add folder	mail	ru	Добавить папку
+add raw message, ignore mail attachments	mail	ru	Преобразование почты в элемент, добавление необработанного сообщения (игнорирование вложений почты)
 add to addressbook	mail	ru	добавить в адресную книгу
+after reply, visible during compose	mail	ru	После ответа, видно во время составления
+aliases+forwards	mail	ru	Псевдонимы+Пересылки
 all available info	admin	ru	Вся доступная информация
 all of	mail	ru	Все из
 allow external images	mail	ru	Разрешить внешние изображения
 allow images from external sources in html emails	mail	ru	Разрешать изображения из внешних источников в письмах формата HTML
 allways a new window	mail	ru	Всегда новое окно
 always show html emails	mail	ru	Всегда показывать письма формата HTML
+always show notifiction	mail	ru	Всегда показывать уведомление
 answered	mail	ru	ответил
 any of	mail	ru	Любой из
 any status	mail	ru	Любое состояние
@@ -152,8 +157,15 @@ kilobytes	mail	ru	Килобайт
 later	mail	ru	Отложить
 less than	mail	ru	Меньше чем
 mail	common	ru	Почта
+mail acl	mail	ru	Права доступа
+mail filter	mail	ru	Почтовый фильтр
+mail filter rule	mail	ru	Правило почтового фильтра
 mail settings	mail	ru	Установки почты
 mail source	mail	ru	Источник почты
+mail-address	mail	ru	Почтовый адрес
+mailaccount	mail	ru	Почтовый аккаунт
+mailinglist	mail	ru	Список рассылки
+mails	common	ru	Почта
 mark all as read	mail	ru	Пометить всё как прочитанное
 mark all messages in folder as read	mail	ru	Пометить всю папку как прочитанное
 mark as deleted	mail	ru	Пометить как удалённое
@@ -264,6 +276,7 @@ sieve connection status	mail	ru	Статус соединения Sieve
 sieve script name	mail	ru	название скрипта Sieve
 signature	mail	ru	Подпись
 signature at top	mail	ru	Подпись сверху
+signature position and visibility	mail	ru	Положение и видимость подписи
 size(...->0)	mail	ru	Размер (...->0)
 size(0->...)	mail	ru	Размер (0->...)
 small view	mail	ru	Просмотр в небольшом окне

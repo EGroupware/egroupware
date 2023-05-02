@@ -12,8 +12,10 @@ activating by date requires a start- and end-date!	mail	pt	Ativação por data r
 add a new folder to %1:	mail	pt	Adicionar uma nova pasta para% 1:
 add all my aliases	mail	pt	Adicionar todos os meus aliases
 add folder	mail	pt	Adicionar pasta
+add raw message, ignore mail attachments	mail	pt	Converter correio em item, adicionar mensagem em bruto (ignorar anexos de correio)
 add to addressbook	mail	pt	adicionar ao livro de endereços
-aliases+forwards	mail	pt	Aliases + Forwards
+after reply, visible during compose	mail	pt	Após resposta, visível durante a composição
+aliases+forwards	mail	pt	Pseudónimos+Avanços
 all adresses:	mail	pt	Todos os Endereços:
 all available info	admin	pt	odas as informações disponíveis
 all messages in the folder will be lost	mail	pt	Todas as mensagens da pasta serão perdidas
@@ -23,7 +25,8 @@ allow images from external sources in html emails	mail	pt	permitir imagens de fo
 allow users to create further identities	mail	pt	permitir aos usuários criar novas identidades
 allways a new window	mail	pt	Sempre numa nova janela
 always show html emails	mail	pt	Exibir sempre mensagens HTML
-answered	mail	pt	respondeu
+always show notifiction	mail	pt	Mostrar sempre notificação
+answered	mail	pt	Respondeu
 any of	mail	pt	algum de
 any status	mail	pt	qualquer estado
 append	mail	pt	anexar
@@ -202,12 +205,17 @@ kilobytes	mail	pt	kilobytes
 later	mail	pt	mais tarde
 less than	mail	pt	menos de
 mail	common	pt	Correio
+mail acl	mail	pt	Direitos de acesso
 mail filter	mail	pt	Filtro de correio
+mail filter rule	mail	pt	Regra do filtro de correio
 mail settings	mail	pt	Configurações do correio electrónico
 mail source	mail	pt	Correio Fonte
 mail-address	mail	pt	Mail-Endereço
 mailaccount	mail	pt	Mailaccount
 mailinglist	mail	pt	Mailinglist
+mails	common	pt	Correio
+mark all as read	mail	pt	Marcar tudo como lido
+mark all messages in folder as read	mail	pt	Marcar todas as mensagens em pasta como lidas
 mark as deleted	mail	pt	Marcar como apagada
 match:	mail	pt	Jogo:
 matches	mail	pt	Coincide
@@ -238,6 +246,7 @@ no plain text part found	mail	pt	nenhuma parte de texto simples encontrado
 no recipient address given!	mail	pt	No endereço do destinatário dado!
 no send folder set in preferences	mail	pt	Sem envio de pasta definido nas preferências
 no signature	mail	pt	sem assinatura
+no sneak preview in list	mail	pt	Sem pré-visualização da mensagem
 no subject given!	mail	pt	Nenhum assunto dado!
 no subject supplied	mail	pt	sem assunto fornecido
 no valid %1 folder configured!	mail	pt	Nenhuma pasta válido% 1 configurado!
@@ -338,12 +347,14 @@ sieve script name	mail	pt	nome do script peneira
 sieve server	mail	pt	Servidor Sieve
 signature	mail	pt	Assinatura
 signature at top	mail	pt	assinatura no topo
+signature position and visibility	mail	pt	Posição da assinatura e visibilidade
 size(...->0)	mail	pt	Tamanho (...->0)
 size(0->...)	mail	pt	Tamanho (0->...)
 small view	mail	pt	Sumário
 smime encrypted message	mail	pt	Mensagem encriptada S/MIME
 smime signed message	mail	pt	Mensagem assinada S/MIME
 smtp	mail	pt	SMTP
+sneak preview in list	mail	pt	Pré-visualização da mensagem
 sort order	mail	pt	Ordenar
 source	mail	pt	Fonte
 sources	mail	pt	Fontes

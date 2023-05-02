@@ -37,9 +37,12 @@ active	common	da	Aktiv
 add	common	da	Tilføj
 add %1 category for	common	da	Tilføj kategorien %1 for
 add category	common	da	Tilføj kategori
+add current	common	da	Nuværende visning som favorit
 add shortcut	common	da	Tilføj forkortelse
 add sub	common	da	Tilføj underkategori
+add to clipboard	common	da	Tilføj til udklipsholder
 addressbook	common	da	Adressebog
+addressbooks to sync in addition to personal addressbook	groupdav	da	Adressebøger til synkronisering ud over den personlige adressebog
 admin	common	da	Admin
 administration	common	da	Administration
 advanced search	common	da	Avanceretsøgning
@@ -47,7 +50,9 @@ afghanistan	common	da	Afghanistan
 albania	common	da	Albanien
 algeria	common	da	Algeriet
 all	common	da	Alle
+all addressbooks	groupdav	da	Alle adressebøger
 all fields	common	da	alle felter
+all in one	groupdav	da	Alle i én
 all users	common	da	Alle brugere
 alternate style-sheet:	common	da	Alternativt style-sheet
 american samoa	common	da	Amerikansk Samoa
@@ -335,10 +340,13 @@ html	common	da	HTML
 hungary	common	da	Ungarn
 iceland	common	da	Island
 id	common	da	ID
+if you use "2-factor-authentication", please enter the code here.	common	da	Hvis du bruger "2-Factor-Authentication", skal du indtaste koden her.
 image url	common	da	Billedets adresse
 import	common	da	Importer
+include access to any linked files (links tab)	common	da	Medtag adgang til eventuelle linkede filer (fanen Links)
 india	common	da	Indien
 indonesia	common	da	Indonesien
+infolog types to sync	common	da	InfoLog-typer, der skal synkroniseres
 insert all %1 addresses of the %2 contacts in %3	common	da	Indsæt alle %1 adresserne fra %2 kontakterne i %3
 insert column after	common	da	Indslt kolonne efter
 insert column before	common	da	Indsæt kolonne foran
@@ -466,6 +474,7 @@ no	common	da	Nej
 no - cancel	common	da	No - Annullere
 no entries found, try again ...	common	da	ingen resultater fundet, prøv igen....
 no file	common	da	ingen fil
+no filters	common	da	Ingen filtre
 no history for this record	common	da	Ingen historie fundet for denne post
 no matches found	common	da	Ingen resultater fundet
 no subject	common	da	Intet Emne
@@ -520,6 +529,8 @@ peru	common	da	Peru
 philippines	common	da	Fillipinerne
 phone number	common	da	Telefonnummer
 pitcairn	common	da	Pitcairn
+placeholders	common	da	Pladsholdere
+play/pause	common	da	Afspilning/Pause
 please %1 by hand	common	da	Udfør venligst %1 manuelt
 please enter a name	common	da	Indtast venligst et navn!
 please run setup to become current	common	da	Kør venligst setup for at blive opdateret
@@ -531,6 +542,7 @@ poland	common	da	Polen
 popup with search	common	da	Popup vindue med søg
 portugal	common	da	Portugal
 postal	common	da	Post
+preference	common	da	Præferencer
 preferences	common	da	Præferencer
 previous page	common	da	Forrige side
 primary group	common	da	primær gruppe

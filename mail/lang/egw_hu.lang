@@ -2,12 +2,17 @@
 (leave empty for no quota)	mail	hu	(Ha nincs kvóta, hagyja üresen)
 (no subject)	mail	hu	(nincs tárgy)
 activating by date requires a start- and end-date!	mail	hu	Dátum szeretni aktiváláshoz kezdés ÉS befejezés időpont is szükséges!
+add all my aliases	mail	hu	Az összes álnevem hozzáadása
+add raw message, ignore mail attachments	mail	hu	Leveleket elemmé alakítani, nyers üzenetet hozzáadni (figyelmen kívül hagyni a levél mellékleteket)
 add to addressbook	mail	hu	címjegyzékhez hozzáad
+after reply, visible during compose	mail	hu	Válasz után, látható az összeállítás során
+aliases+forwards	mail	hu	Aliasok+Továbbítás
 all of	mail	hu	összes innnen
 allow images from external sources in html emails	mail	hu	Külső forrásból származó képek megjelenítése a HTML email-ekben
 allways a new window	mail	hu	mindig új ablak
 always show html emails	mail	hu	Mindig jelenítse meg a HTML üzenetet
-answered	mail	hu	válaszolt
+always show notifiction	mail	hu	Mindig megjeleníti az értesítést
+answered	mail	hu	Válaszolt
 any of	mail	hu	bármennyi
 any status	mail	hu	bármilyen állapot
 attachments	mail	hu	Mellékletek
@@ -99,7 +104,18 @@ keep a copy of the message in your inbox	mail	hu	másolat megőrzése a Bejövő
 kilobytes	mail	hu	kilobájt
 later	mail	hu	Később
 less than	mail	hu	kisebb mint
+mail	common	hu	E-mail
+mail acl	mail	hu	Hozzáférési jogok
+mail filter	mail	hu	Levélszűrő
+mail filter rule	mail	hu	Levélszűrő szabály
 mail settings	mail	hu	eMail beállítások
+mail source	mail	hu	Levélforrás
+mail-address	mail	hu	Levelezési cím
+mailaccount	mail	hu	Mail fiók
+mailinglist	mail	hu	Levelezési lista
+mails	common	hu	Mailek
+mark all as read	mail	hu	Mindent olvasottnak jelölni
+mark all messages in folder as read	mail	hu	A mappa összes üzenetének olvasottként való megjelölése
 mark as deleted	mail	hu	Törlésre megjelöl
 matches	mail	hu	egyezés
 matches regexp	mail	hu	reguláris kifejezés egyezése
@@ -116,6 +132,7 @@ no folders	mail	hu	nincs mappa
 no plain text part found	mail	hu	nem található egyszerű szöveges tartalom
 no recipient address given!	mail	hu	Címzett nincs megadva!
 no signature	mail	hu	nincs aláírás
+no sneak preview in list	mail	hu	Nincs üzenet előnézet
 no subject given!	mail	hu	Az üzenethez nincs tárgy megadva.
 none, create all	mail	hu	egyik sem, összes létrehozása
 on	mail	hu	be
@@ -156,12 +173,15 @@ set predefined values for compose...	mail	hu	Előre meghatározott értékek be�
 sieve	mail	hu	Sieve
 sieve script name	mail	hu	Sieve szűrő szkript neve
 signature	mail	hu	Aláírás
+signature at top	mail	hu	aláírás a tetején
+signature position and visibility	mail	hu	Aláírás pozíciója és láthatósága
 size(...->0)	mail	hu	Méret (...->0)
 size(0->...)	mail	hu	Méret (0->...)
 small view	mail	hu	tömör nézet
 smime encrypted message	mail	hu	S/MIME titkosított üzenet
 smime signed message	mail	hu	S/MIME aláírással ellátott üzenet
 smtp	mail	hu	SMTP
+sneak preview in list	mail	hu	Üzenet előnézet
 start new messages with mime type plain/text or html?	mail	hu	Új üzenet írása egyszerű szöveg vagy html-ként?
 subject(a->z)	mail	hu	Tárgy (A->Z)
 subject(z->a)	mail	hu	Tárgy (Z->A)

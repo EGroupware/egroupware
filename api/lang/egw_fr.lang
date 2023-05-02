@@ -124,6 +124,7 @@ all operations save the template!	common	fr	Toutes les opérations sauvegardent 
 all users	common	fr	Tous les utilisateurs
 allow editing the %1	common	fr	Permettre de modifier le %1
 allowed file type: %1	common	fr	Type de fichier autorisé : %1
+allows to modify responsible users from devices not supporting them, by setting email address of a user as category.	groupdav	fr	Permet, pour le matériel qui ne permet pas d'avoir un utilisateur responsable, d'indiquer l'information en utilisant l'adresse email de l'utilisateur en tant que catégorie.
 alt	common	fr	Alt
 alternate style-sheet:	common	fr	Feuille de style alternative:
 am	common	fr	matin
@@ -175,6 +176,7 @@ automatically hide the sidebox menu's?	common	fr	Cacher automatiquement la barre
 automatically hide the sidebox menus?	common	fr	Cacher automatiquement la barre de menu latérale ?
 automatically refresh list	common	fr	Rafraîchir la liste automatiquement
 autosave default category	common	fr	Enregistrement automatique dans catégorie par défaut
+avatar	common	fr	Avatar
 azerbaijan	common	fr	AZERBAIDJAN
 back	common	fr	Retour
 back to user login	common	fr	Retour au Login utilisateur
@@ -260,6 +262,7 @@ change owner	common	fr	Changer le propriétaire
 changed	common	fr	Modifié
 charset	common	fr	utf-8
 check all	common	fr	Tout cocher
+check for empty values in if statements.  example {{if url~empty~~website:}} - if url is not empty, writes "website:"	common	fr	Vérifier les valeurs vides dans les structures conditionnelles IF. Par exemple {{IF url~EMPTY~~Website:}} - Si url n'est pas vide, écrit "Website:"
 check if content should only be displayed but not altered (the content is not send back then!)	common	fr	Le contenu doit être seulement affiché mais non modifié.
 check if field has to be filled by user	common	fr	Cocher si le champ doit être rempli par l'utilisateur
 check installation	common	fr	Vérifier l'installation
@@ -380,6 +383,7 @@ december	common	fr	Décembre
 deck	common	fr	Bureau (interne)
 default	common	fr	Défaut
 default category	common	fr	Catégorie par défaut
+default document to insert entries	preferences	fr	Document par défaut où ajouter les éléments
 default height for the windows	common	fr	Hauteur des fenêtres par défaut
 default visible actions	common	fr	Actions visibles par défaut
 default width for the windows	common	fr	Largeur des fenêtres par défaut
@@ -419,6 +423,8 @@ diable the execution a bugfixscript for internet explorer 5.5 and higher to show
 direction left to right	common	fr	Direction de gauche à droite
 directory	common	fr	Répertoire
 directory does not exist, is not readable by the webserver or is not relative to the document root!	common	fr	Ce répertoire n'existe pas, n'est pas lisible par le serveur web ou n'est pas relatif au "document root" !
+directory for storing merged documents	preferences	fr	Dossier des documents fusionnés
+directory with documents to insert entries	preferences	fr	Dossier des documents où ajouter les éléments
 disable internet explorer png-image-bugfix	common	fr	Désactiver png-image-bugfix d'Internet Explorer
 disable slider effects	common	fr	Désactiver les effets de glisse
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	fr	Désactiver les effets de glisse animés lors de l´affichage ou le masquage des menus de la page? Les utilisateurs d'Opera et Konqueror devraient sûrement en avoir besoin.
@@ -447,6 +453,7 @@ domain name for mail-address, eg. "%1"	common	fr	Nom du domaine pour les adresse
 domestic	common	fr	Intérieur
 dominica	common	fr	DOMINIQUE
 dominican republic	common	fr	REPUBLIQUE DOMINICAINE
+don't ask again!	common	fr	Ne plus demander !
 don't show this again	common	fr	Ne plus afficher
 done	common	fr	Fait
 dos international	common	fr	DOS International
@@ -536,12 +543,16 @@ ethiopia	common	fr	ETHIOPIE
 everything	common	fr	Tout
 exact	common	fr	exact
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	preferences	fr	Exemple {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - recherche le champ "n_prefix", sur "Mr", si trouvé, écrit Hello Mr., sinon écrit Hello Ms.
+example {{letterprefix}} - gives a letter prefix without double spaces, if the title is empty for example	preferences	fr	Exemple {{LETTERPREFIX}} - Ajoute un préfixe à une lettre sans double espaces, si le titre est vide par exemple.
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	preferences	fr	Exemple {{NEFL role}} - si le champ role n'est pas vide, ajoute une ligne vide puis la valeur du champ role
+example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	preferences	fr	Exemple {{nenvlf role}} - si le champ role n'est pas vide, ajoute une ligne vide sans la valeur du champ role
 exchange this row with the one above	common	fr	Intervertir cette ligne avec celle du dessus
 exchange this two columns	common	fr	Intervertir ces deux colonnes
 expiration	common	fr	Expiration
 export the loaded etemplate into a xml-file	common	fr	Exporter l'eTemplate chargé vers un fichier XML
 export xml	common	fr	Exporter XML
 extensions loaded:	common	fr	Extensions chargées :
+failed to change mode of required directory "%1" to %2!	admin	fr	Impossible de changer le mode du dossier requis "%1" en %2 !
 failed to change password.	common	fr	Echec du changement de mot de passe.
 failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	fr	Impossible de contacter le serveur ou réponse invalide de ce dernier. Essayez de vous reconnecter. En cas de panne contactez votre administrateur.
 failed to create required directory "%1"!	admin	fr	Echec de la création du répertoire "%1"!
@@ -581,10 +592,15 @@ firstname	common	fr	Prénom
 fixme!	common	fr	CORRIGEZ-MOI!
 floating point	common	fr	Virgule flottante
 folder already exists.	common	fr	Le dossier existe déjà.
+fontselect	common	fr	Police
+fontsizeselect	common	fr	Taille de la police
+for more than one contact in a document use the tag pagerepeat!	preferences	fr	Utiliser l'étiquette de répétition de page pour plus d'un contact dans un document!
 force	common	fr	forcer
 force selectbox	common	fr	Forcer la boîte de sélection
+forecolor	common	fr	Couleur
 foreign key	common	fr	Clé étrangère
 forever	common	fr	Toujours
+formatselect	common	fr	Format
 formatted text (html)	common	fr	Texte Formaté (HTML)
 found unconnected %1 %2!	admin	fr	%1 %2 non connectés !
 fr	common	fr	Fr
@@ -652,6 +668,8 @@ high	common	fr	Haut
 highest	common	fr	Plus haut
 history	common	fr	Historique
 history log	common	fr	Historique
+hold [%1] and [%2] key to drag %3 to your desktop	common	fr	Laissez les touches [%1] et [%2] appuyées pour glisser %3 vers votre bureau
+hold [%1] key to select text eg. to copy it	common	fr	Laissez la touche [%1] appuyée pour copier du texte
 holy see (vatican city state)	common	fr	VATICAN
 home	common	fr	Accueil
 home email	common	fr	email (privé)
@@ -679,6 +697,7 @@ if the error persists, contact your administrator for help and ask to check the 
 if there are some images in the background folder you can choose the one you would like to see.	common	fr	S'il y a des images dans le dossier d'arrière-plan vous pouvez choisir celle que vous voulez voir.
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	preferences	fr	Si vous spécifiez un répertoire (chemin vfs complet), %1 affiche une action pour chaque document. Cette action autorise le téléchargement du document spécifié avec les données insérées.
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	preferences	fr	Si vous spécifiez un répertoire (chemin vfs complet), %1 affiche une icône de document supplémentaire pour chaque entrée. Cette icône autorise le téléchargement du document spécifié avec les données insérée
+if you use "2-factor-authentication", please enter the code here.	common	fr	Si vous utilisez l'authentification à 2 facteurs, merci d'entre le code ici
 image	common	fr	Image
 image directory relative to document root (use / !), example:	common	fr	Répertoire image relative à la racine des documents (utiliser / !), par exemple :
 image url	common	fr	URL de l'Image
@@ -686,6 +705,8 @@ import	common	fr	Importer
 import an etemplate from a xml-file	common	fr	import an eTemplate from a xml-file
 import table-definitions from existing db-table	common	fr	Importer les définitions de table depuis la table de base de données existante
 import xml	common	fr	Importer XML
+in order to copy to clipboard, you need to allow flash player by clicking on gray box.\nyou can permanently allow flash player for egroupware in your browser settings.	common	fr	Pour copy dans le presse-papier, vous devez autoriser le lecteur Flash en cliquant sur la boîte grise.\nVous pouvez autoriser le lecteur Flash de manière permanente pour EGroupware dans les paramètres de votre navigateur
+include access to any linked files (links tab)	common	fr	Ajout de l'accès à tous liens de fichiers (onglet Liens)
 increment version to not overwrite the existing template	common	fr	incrémente la version pour ne pas écraser le modèle existant
 indent	common	fr	Indenter
 index/name of returned content (name of the template, link / method for image)	common	fr	index/nom du contenu renvoyé (nom du Template, Lien / Méthode pour Image)
@@ -855,6 +876,7 @@ minute	common	fr	Minute
 minutes	common	fr	Minutes
 missing: %1	common	fr	Manquant : %1
 mo	common	fr	Mo
+mode of required directory "%1" changed to %2.	admin	fr	Mode du dossier requis "%1" changé à %2.
 modifier	preferences	fr	Editeur
 moldova, republic of	common	fr	MOLDAVIE, REPUBLIQUE DE
 monaco	common	fr	MONACO
@@ -1036,6 +1058,7 @@ please %1 by hand	common	fr	Veuillez %1 à la main
 please enter a name	common	fr	Veuillez saisir un nom !
 please enter table-name first !!!	common	fr	SVP entrez le nom de la table d'abord !
 please reload the egroupware desktop (f5 / cmd+r).	common	fr	Veuillez recharger EGroupware (F5 / Cmd+R)
+please remember to use '%1' as username for local login's from now on!	common	fr	Veuillez penser à utiliser '%1' comme nom d'utilisateur pour le login local à partir de maintenant !
 please run setup to become current	common	fr	Veuillez exécuter le setup pour vous mettre à jour
 please select	common	fr	Veuillez sélectionner
 please set your global preferences	common	fr	Veuillez définir vos préférences globales !
@@ -1058,6 +1081,7 @@ preference	common	fr	Préférence
 preferences	common	fr	Préférences
 preferences for the %1 template set	preferences	fr	Préférences pour le template %1
 prev	common	fr	Préc.
+preview with entry	common	fr	Entrée précédente
 previous	common	fr	Précédent
 previous page	common	fr	Page précédente
 primary group	common	fr	groupe initial
@@ -1074,6 +1098,7 @@ protocol is required	common	fr	Le protocole est requis
 public	common	fr	public
 puerto rico	common	fr	PUERTO RICO
 qatar	common	fr	QATAR
+quick add	common	fr	Ajout rapide
 radiobutton	common	fr	BoutonRadio
 read	common	fr	Lire
 read a list of entries.	common	fr	Lire une liste d'entrées.
@@ -1082,6 +1107,7 @@ read etemplate from database (for the keys above)	common	fr	Lire eTemplate depui
 read this list of methods.	common	fr	Lisez cette liste de méthodes.
 reading	common	fr	Lecture
 readonly	common	fr	Lecture seule
+readonly filemanager directory	common	fr	Dossier du filemanager en lecture seule
 readonly share	common	fr	Dossier en lecture seule
 redo	common	fr	Refaire
 refresh	common	fr	Rafraîchir
@@ -1096,14 +1122,17 @@ remove selected accounts	common	fr	supprimer les comptes sélectionnés
 remove shortcut	common	fr	Supprimer le raccourci
 remove this link (not the entry itself)	common	fr	Enlever ce lien (pas l'entrée elle-même)
 removed (now) empty directory fs_id=%1	admin	fr	Répertoire vide fs_id=%1 a été supprimé (maintenant)
+removeformat	common	fr	Format de suppression
 rename	common	fr	Renommer
 repeat password	common	fr	Répéter le mot de passe
 replace	common	fr	Remplacer
 replace with	common	fr	Remplacer par
+request could not be processed, please reload your window (press f5 or cmd r)!	common	fr	La requête n'a pas pu être traitée, veuillez recharger la page (appui sur F5 our [CTRL]+R) !
 requests and full responses to files directory	common	fr	Requêtes et réponses complète sur les répertoires de fichiers
 requests and truncated responses to apache error-log	groupdav	fr	Requêtes et réponses tronquées vers les logs d'erreur Apache
 required	common	fr	Nécessaire
 required directory "%1" created.	admin	fr	Répertoire nécessaire "%1" créé.
+required directory "%1" has wrong mode %2 instead of %3!	admin	fr	Le dossier requis "%1" a un mode incorrect %2 au lieu du mode %3!
 required directory "%1" not found!	admin	fr	Répertoire nécessaire "%1" non trouvé !
 reset	common	fr	Reset
 reset all to default	common	fr	Remettre tout à la valeur par défaut
@@ -1247,8 +1276,10 @@ setup	common	fr	Setup
 setup main menu	common	fr	Menu principal du Setup
 seychelles	common	fr	SEYCHELLES
 share	common	fr	Partager
+share as readonly, but allow uploads.  uploads are hidden, and only accessable by those with an account	common	fr	Partager en lecture seule, mais autoriser les téléversements. Les fichiers téléversés sont cachés, et accessibles uniquement à ceux ayant un compte
 share filemanager directory	common	fr	Répertoire du Gestionnaire de fichiers
 share files	common	fr	Partager les fichiers
+share just the associated filemanager directory, not the %1	common	fr	Partager uniquement le dossier filemanager associé, pas le %1
 share link	common	fr	Partager le lien
 share this %1 via url	common	fr	Partager ce %1 par URL
 shift	common	fr	Shift
@@ -1365,6 +1396,7 @@ the mail server returned	common	fr	Le serveur email a renvoyé
 there already is a system-user with this name. user's should not have the same name as a systemuser	common	fr	Il y a déjà un utilisateur système avec ce nom. Veuillez choisir un autre nom.
 they will be sub-folders in users home (%1 attribute).	common	fr	Il y aura des sous-répertoires dans les répertoires personnels (home) (attribut %1)
 this feature is only available in epl version.	common	fr	Cette fonctiionnalité n'est disponsible que dans la version EPL.
+this is your own share.  to test it, use an anonymous / incognito window.<br/>%1	common	fr	C'est votre propre partage. Pour le tester, utilisez une fenêtre anonyme / privée.<br/>%1
 this name has been used already	common	fr	Ce nom est déjà utilisé !
 this text gets displayed if the input-field is empty and has no focus (blur)	common	fr	ce texte s'affiche si le champ de saisie est vide et n'a pas le focus (flou)
 this will reset toolbar preferences for all users and set them to configured default prefs.	common	fr	Ceci va mettre à zéro les préférences de barre d'outil de tous les utilisateurs vers les préférences par défaut.
@@ -1425,6 +1457,7 @@ update	common	fr	Mettre à jour
 update a single entry by passing the fields.	common	fr	Mettre à jour une entrée unique  en passant les champs.
 update from version '%s' to	common	fr	Mettre à jour depuis la Version '%s' vers
 update the clock per minute or per second	common	fr	Mettre à jour l'horloge par minutes ou secondes
+updating your account with new data from your identity provider failed!	common	fr	Échec de la mise à jour de votre compte avec les nouvelles données de votre fournisseur d'identité !
 upload	common	fr	Uploader
 upload directory does not exist, or is not writeable by webserver	common	fr	Le répertoire de dépôt n'existe pas ou le serveur web ne peut pas y écrire
 upload file(s) from filemanager...	common	fr	Uploader des fichiers depuis le gestionnaire de fichiers
@@ -1440,6 +1473,7 @@ use button to search for project	common	fr	Utilisez le bouton pour rechercher un
 user	common	fr	Utilisateur
 user accounts	common	fr	Comptes utilisateurs
 user groups	common	fr	Groupes utilisateurs
+user-agent & action	common	fr	User-agent & action
 username	common	fr	Nom d'utilisateur
 users	common	fr	Utilisateurs
 users choice	common	fr	Choix d'utilisateurs
@@ -1464,6 +1498,7 @@ view this linked entry in its application	common	fr	Voir cette entrée liée dan
 virgin islands, british	common	fr	ILES VIERGES ANGLAISES
 virgin islands, u.s.	common	fr	ILES VIERGES AMERICAINES
 wallis and futuna	common	fr	WALLIS ET FUTUNA
+was not able to delete the backup key because %1	common	fr	Impossible d'effacer la clé de sauvegarde parce que %1
 we	common	fr	Me
 we would like to introduce you to egroupware by showing a short introduction video.	common	fr	Nous souhaitons vous présenter EGroupware avec une courte vidéo d'introduction.
 wednesday	common	fr	Mercredi
@@ -1474,6 +1509,7 @@ western sahara	common	fr	SAHARA OCCIDENTAL
 what color should all the blank space on the desktop have	common	fr	Quelle couleur l'espace vide du bureau doit-il avoir?
 what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	fr	ce qui se passe avec un contenu débordant: visible (défaut), caché, scroll, auto (le navigateur décide)
 what style would you like the image to have?	common	fr	Quel style  souhaitez-vous pour l'image?
+when you merge entries into documents, they will be stored here. if no directory is provided, they will be stored in your home directory (%1)	preferences	fr	Quand vous fusionnez les entités dans des documents, ils seront stockés ici. Si aucun dossier n'est indiqué, il seront stockés dans votre dossier personnel (%1)
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	fr	Si vous dites oui, les bouttons Accueil et Déconnexion sont affichés comme des applications dans la barre d'application principale.
 where and how will the egroupware links like preferences, about and logout be displayed.	common	fr	Ou et comment seront affichés les liens comme Préférences, A propos de et Déconnexion.
 which groups	common	fr	Quels groupes
@@ -1491,6 +1527,7 @@ working days	common	fr	Jours ouvrables
 works reliable for total size up to 1-2 mb, might work for 5-10 mb, most likely to fail for >10mb	common	fr	Fiable pour les fichiers de 1-2Mo, doit fonctionner pour les fichiers 5-10Mo, avec un échec probable pour les fichiers > 10Mo
 would you like to display the page generation time at the bottom of every window?	common	fr	Voulez-vous voir apparaître le temps de génération en bas de chaque fenêtre?
 writable	common	fr	Inscriptible
+writable filemanager directory	common	fr	Dossier filemanager inscriptible
 writable share	common	fr	Dossier inscriptible
 write <app>/setup/tables_current.inc.php	common	fr	Ecrire <app>/setup/tables_current.inc.php
 write langfile	common	fr	Ecrire le fichier de langage
@@ -1529,6 +1566,7 @@ you need to set enable logging to "%1" to create/update a log.	groupdav	fr	Vous 
 you tried to automatically size a flex column, which always takes the rest of the space	common	fr	Vous avez essayé de changer la taille d'une colonne flex, qui prend toujours le reste de l'espace disponible.
 you will not be able to send or receive encrypted mails before completing that step!	common	fr	Vous ne pourrez pas envoyer ou recevoir des mails crypté avant de remplir cette étape !
 you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	fr	Vous avez tenté d'ouvrir l'application EGroupware: %1, mais vous n'avez aucune permission d'y accéder.
+your account has been updated with new data from your identity provider.	common	fr	Votre compte a été mis à jour avec les nouvelles données de votre fournisseur d'identité.
 your browser is not up-to-date (javascript es6 compatible), you may experience some of the features not working.	common	fr	Votre navigateur n'est pas à jour (compatible javascript ES6), certaines fonctions ne fonctionneront pas.
 your code is incorrect !!!	common	fr	Ce code est incorrect !
 your key has been restored successfully.	common	fr	Votre clé a été restaurée avec succès.
@@ -1541,7 +1579,7 @@ your password is about to expire in %1 days, you may change your password now	co
 your password might not match the password policy.	common	fr	Votre mot de passe pourrait ne pas répondre à la politique de complexité des mots de passe.
 your search returned %1 matchs	common	fr	Votre recherche a retourné %1 résultats
 your search returned 1 match	common	fr	Votre recherche a retourné 1 résultat
-your session timed out, please log in again	login	fr	Votre sesssion est expirée, veuillez vous reconnecter.
+your session timed out, please log in again	login	fr	Votre session est expirée, veuillez vous reconnecter.
 your settings have been updated	common	fr	Vos préférences ont été mises à jour.
 zambia	common	fr	ZAMBIE
 zimbabwe	common	fr	ZIMBABWE
