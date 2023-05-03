@@ -960,6 +960,13 @@ END:VALARM';
 		return false;
 	}
 
+	/**
+	 * Returns a list of custom widgets classes for etemplate2
+	 */
+	public static function widgets()
+	{
+		return array('calendar_owner_etemplate_widget');
+	}
 }
 
 // Not part of the class, since config hooks are still using the old style

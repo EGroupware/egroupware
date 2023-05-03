@@ -16,8 +16,6 @@ use EGroupware\Api\Egw;
 use EGroupware\Api\Etemplate;
 use EGroupware\Api\Framework;
 
-require_once("class.calendar_owner_etemplate_widget.inc.php");
-
 /**
  * Shared base-class of all calendar UserInterface classes
  *
