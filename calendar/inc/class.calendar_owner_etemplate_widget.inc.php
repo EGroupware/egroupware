@@ -333,9 +333,8 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 				break;
 			case 'c':
 			case '':
-				// check if link-search already returned either icon or (l|f)name and only if not, query contact again
-				if(!(isset($value['icon']) || isset($value['lname']) && isset($value['fname'])) &&
-					($contact = $contacts_obj->read($type === '' ? 'account:' . $id : $data['res_id'], true)))
+				// Query contact / account for email address
+				if($contact = $contacts_obj->read($type === '' ? 'account:' . $id : $data['res_id'], true))
 				{
 					if(Api\Contacts::hasPhoto($contact))
 					{
