@@ -1,3 +1,14 @@
+egroupware-docker (23.1.20230503) hardy; urgency=low
+
+  * fix some critical errors/regressions in the not published 23.1.20230428 release
+  * InfoLog: can not set project (caused double submit, stalled saving by redirecting to list)
+  * Calendar: Allow to select multiple categories in sidemenu
+  * Calendar: Put email address after user or contact
+  * ProjectManager: fix entries opened in elements list have wrong project linked (after project is changed)
+  * full list of changes https://github.com/EGroupware/egroupware/compare/23.1.20230428...23.1.20230503
+
+ -- Ralf Becker <rb@egroupware.org>  Wed, 03 May 2023 11:51:46 +0200
+
 egroupware-docker (23.1.20230428) hardy; urgency=low
 
   * CalDAV/InfoLog: fix infinit loop causing high database load, if sync-collection report did not query calendar-data
