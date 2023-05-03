@@ -302,7 +302,7 @@ export function egwPopupActionImplementation()
 			}
 		});
 		// bind a custom event tapandhold to be able to call it from nm action button
-		_node.addEventListener('tapandhold', _event=>{_callback(_)});
+		_node.addEventListener('tapandhold', _event=>{_callback(_event)});
 	}
 	/**
 	 * Registers the handler for the context menu
