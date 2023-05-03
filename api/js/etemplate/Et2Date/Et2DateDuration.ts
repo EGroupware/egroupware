@@ -347,7 +347,7 @@ export class Et2DateDuration extends Et2InputWidget(FormControlMixin(LitElement)
 
 	set value(_value)
 	{
-		this._display = this._convert_to_display(parseFloat(_value));
+		this._display = this._convert_to_display(_value == "" ? 0 : parseFloat(_value));
 		this.requestUpdate();
 	}
 
