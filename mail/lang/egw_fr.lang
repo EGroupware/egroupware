@@ -24,6 +24,7 @@ add all my aliases	mail	fr	Ajouter tous mes alias
 add as new	mail	fr	Ajouter comme nouveau
 add files as %1	mail	fr	Ajouter les fichiers comme %1
 add folder	mail	fr	Ajouter un dossier
+add raw message, ignore mail attachments	mail	fr	Convertir le courrier en élément, ajouter un message brut (ignorer les pièces jointes)
 add this certificate into contact	mail	fr	Ajouter ce certificat sur le contact
 add to addressbook	mail	fr	Ajouter au carnet d'adresses
 add your domain as "%1" in options to list of email providers and enable api.	mail	fr	Ajouter votre domaine comme "%1" dans les options pour lister tous les fournisseurs et activer les API.

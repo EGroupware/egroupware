@@ -381,7 +381,10 @@ class Contacts extends Contacts\Storage
 
 		$addressbooks = $to_sort = array();
 		if ($extra_label) $addressbooks[''] = $extra_label;
-		$addressbooks[$user] = lang('Personal');
+		if ($user > 0)
+		{
+			$addressbooks[$user] = lang('Personal');
+		}
 		// add all group addressbooks the user has the necessary rights too
 		foreach($grants as $uid => $rights)
 		{
@@ -1794,9 +1797,8 @@ class Contacts extends Contacts\Storage
 	 */
 	function read_calendar($uids,$extra_title=true)
 	{
-		if (!$GLOBALS['egw_info']['user']['apps']['calendar'] ||
-				$GLOBALS['egw_info']['server']['disable_event_column'] == 'True'
-		)
+		if (empty($GLOBALS['egw_info']['user']['apps']['calendar']) ||
+				$GLOBALS['egw_info']['server']['disable_event_column'] == 'True')
 		{
 			return array();
 		}
@@ -1807,7 +1809,7 @@ class Contacts extends Contacts\Storage
 		foreach($uids as $id => $uid)
 		{
 			$type = is_numeric($uid[0]) ? 'u' : $uid[0];
-			if($GLOBALS['egw_info']['server']['disable_event_column'] == 'contacts' && $type == 'u')
+			if($GLOBALS['egw_info']['server']['disable_event_column'] !== 'false' && $type === 'u')
 			{
 				continue;
 			}

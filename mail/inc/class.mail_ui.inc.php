@@ -3372,7 +3372,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			{
 				$smime['msg'] = lang($smime['msg']);
 				$acc_smime = Mail\Smime::get_acc_smime($this->mail_bo->profileID);
-				$attachments = $this->mail_bo->getMessageAttachments($uid, $partID, $structure,true,false,true, $mailbox);
+				$attachments = $this->mail_bo->getMessageAttachments($uid, $partID, $structure,true,true,true, $mailbox);
 				$push = new Api\Json\Push($GLOBALS['egw_info']['user']['account_id']);
 				if (!empty($acc_smime) && !empty($smime['addtocontact'])) $push->call('app.mail.smime_certAddToContact', $smime);
 				if (is_array($attachments))
@@ -3413,11 +3413,11 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		$bodyParts	= $this->mail_bo->getMessageBody($uid, ($htmlOptions?$htmlOptions:''), $partID, $structure, false, $mailbox, $calendar_part);
 
 		// for meeting requests (multipart alternative with text/calendar part) let calendar render it
-		if ($calendar_part && isset($GLOBALS['egw_info']['user']['apps']['calendar']) && empty($smime))
+		if ($calendar_part && isset($GLOBALS['egw_info']['user']['apps']['calendar']))
 		{
 			$charset = $calendar_part->getContentTypeParameter('charset');
 			// Do not try to fetch raw part content if it's smime signed message
-			$this->mail_bo->fetchPartContents($uid, $calendar_part);
+			if (empty($smime)) $this->mail_bo->fetchPartContents($uid, $calendar_part);
 			$headers = $this->mail_bo->getHeaders($mailbox, 0, 1, '', false, null, $uid);
 			Api\Cache::setSession('calendar', 'ical', array(
 				'charset' => $charset ?: 'utf-8',

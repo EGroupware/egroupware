@@ -1,11 +1,17 @@
 (leave empty for no quota)	mail	zh	(留空表示没有配额)
 (no subject)	mail	zh	(无主题)
 activating by date requires a start- and end-date!	mail	zh	以日期激活需要一个开始和结束日期！
+add all my aliases	mail	zh	添加我所有的别名
+add raw message, ignore mail attachments	mail	zh	将邮件转换为项目，添加原始信息（忽略邮件附件）。
 add to addressbook	mail	zh	添加至通讯录
+after reply, visible during compose	mail	zh	回复后，在撰写过程中可见
+aliases+forwards	mail	zh	别名+转发
 all of	mail	zh	所有的
 allow images from external sources in html emails	mail	zh	在HTML邮件中允许外部图片来源
 allways a new window	mail	zh	允许新窗口
 always show html emails	mail	zh	总是显示HTML邮件
+always show notifiction	mail	zh	总是显示通知
+answered	mail	zh	已回答
 any of	mail	zh	任何
 any status	mail	zh	任何状态
 attachments	mail	zh	附件
@@ -74,7 +80,18 @@ keep a copy of the message in your inbox	mail	zh	在收件箱保留一个邮件�
 kilobytes	mail	zh	kb
 later	mail	zh	晚一点
 less than	mail	zh	少于
+mail	common	zh	邮件
+mail acl	mail	zh	访问权限
+mail filter	mail	zh	邮件过滤器
+mail filter rule	mail	zh	邮件过滤规则
 mail settings	mail	zh	邮件设置
+mail source	mail	zh	邮件来源
+mail-address	mail	zh	邮件地址
+mailaccount	mail	zh	邮件账户
+mailinglist	mail	zh	邮件列表
+mails	common	zh	邮件
+mark all as read	mail	zh	标记所有为已读
+mark all messages in folder as read	mail	zh	将文件夹中的所有邮件标记为已读
 mark as deleted	mail	zh	标记为已删除
 matches	mail	zh	符合
 matches regexp	mail	zh	符合规则
@@ -89,6 +106,7 @@ no access	mail	zh	无访问
 no plain text part found	mail	zh	未找到纯文本部分
 no recipient address given!	mail	zh	没有给定收件人地址！
 no signature	mail	zh	没有签名
+no sneak preview in list	mail	zh	没有信息预览
 no subject given!	mail	zh	没有指定的主题！
 on	mail	zh	在
 one address is not valid	mail	zh	其中一个地址无效
@@ -123,12 +141,15 @@ sent folder	mail	zh	发件夹
 set predefined values for compose...	mail	zh	设置用于撰写的预定义值...
 sieve script name	mail	zh	Sieve 脚本名
 signature	mail	zh	签名
+signature at top	mail	zh	签名在顶部
+signature position and visibility	mail	zh	签名的位置和可见性
 size(...->0)	mail	zh	大小 (...->0)
 size(0->...)	mail	zh	大小(0->...)
 small view	mail	zh	小视图
 smime encrypted message	mail	zh	S/MIME加密的信息
 smime signed message	mail	zh	S/MIME签名信息
 smtp	mail	zh	SMTP
+sneak preview in list	mail	zh	信息预览
 sort order	mail	zh	分类排序
 subject(a->z)	mail	zh	主题 (A->Z)
 subject(z->a)	mail	zh	主题 (Z->A)

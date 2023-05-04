@@ -308,11 +308,23 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 		$value = array(
 			'value' => substr($id, 0, 1) == $type ? $id : $type . $id,
 			'label' => $title,
-			'app' => $data['app']
+			'app'   => $data['app']
 		);
+		if(isset($data['info']))
+		{
+			$info = ExecMethod($data['info'], $id);
+			if(count($info) > 0)
+			{
+				$value = array_merge($value, array_pop($info));
+			}
+		}
 		if(is_array($value['label']))
 		{
 			$value = array_merge($value, $value['label']);
+		}
+		if(!empty($data['resources']))
+		{
+			$value['resources'] = $data['resources'];
 		}
 		switch($type)
 		{
@@ -321,9 +333,8 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 				break;
 			case 'c':
 			case '':
-				// check if link-search already returned either icon or (l|f)name and only if not, query contact again
-				if(!(isset($value['icon']) || isset($value['lname']) && isset($value['fname'])) &&
-					($contact = $contacts_obj->read($type === '' ? 'account:' . $id : $data['res_id'], true)))
+				// Query contact / account for email address
+				if($contact = $contacts_obj->read($type === '' ? 'account:' . $id : $data['res_id'], true))
 				{
 					if(Api\Contacts::hasPhoto($contact))
 					{
@@ -337,6 +348,12 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 						$value['lname'] = $contact['n_family'];
 						$value['fname'] = $contact['n_given'];
 					}
+				}
+				// Add email
+				if(isset($value['email']) || isset($contact['email']) || isset($contact['email_home']))
+				{
+					$email = \EGroupware\Api\Mail::stripRFC822Addresses(array($value['email'] ?: $contact['email'] ?: $contact['email_home']));
+					$value['label'] .= $email ? (' <' . $email[0] . '>') : "";
 				}
 				if($id < 0)
 				{

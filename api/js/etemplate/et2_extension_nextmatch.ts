@@ -3440,12 +3440,10 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 				.hide()
 				.click(function(e)
 				{
-					// @ts-ignore
-					jQuery('tr.selected', self.nextmatch.getDOMNode()).trigger({
-						type: 'contextmenu',
-						which: 3,
-						originalEvent: e
-					});
+					if (self.nextmatch.getDOMNode().getElementsByClassName('selected').length>0)
+					{
+						self.nextmatch.getDOMNode().getElementsByClassName('selected')[0].dispatchEvent(new CustomEvent("tapandhold",{type:'tapandhold'}));
+					}
 				})
 				.prependTo(this.search_box);
 		}

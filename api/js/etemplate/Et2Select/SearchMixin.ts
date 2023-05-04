@@ -386,7 +386,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			if(this._activeControls)
 			{
 				// Already there
-				this._activeControls.remove();
+				return;
 			}
 
 			const div = document.createElement("div");
@@ -542,6 +542,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 				if(options.findIndex(o => o.value == remote.value) != -1)
 				{
 					this._selected_remote.splice(remote_index, 1);
+					this.querySelector('[value="' + remote.value + '"]')?.classList.remove("remote");
 				}
 			}
 		}
@@ -863,12 +864,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			{
 				this.createFreeEntry(this._searchInputNode.value);
 			}
-			await this.dropdown.hide();
 			this.clearSearch();
-			if(event.relatedTarget && event.relatedTarget !== this)
-			{
-				event.relatedTarget.focus();
-			}
 		}
 
 		/**

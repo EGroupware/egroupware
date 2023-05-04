@@ -97,7 +97,7 @@ check to save as infolog on send	mail	de	Nach dem Versenden als InfoLog erstelle
 check to save as tracker entry on send	mail	de	Nach dem Versenden als Ticket erstellen
 choose file	mail	de	Datei
 common acl	mail	de	Berechtigung
-compose	mail	de	verfassen
+compose	mail	de	Verfassen
 compose as new	mail	de	Als neu bearbeiten
 compress folder	mail	de	Ordner komprimieren
 condition	mail	de	Bedingung
@@ -145,14 +145,14 @@ directories have to be shared.	mail	de	Ordner müssen freigegeben werden.
 disable	mail	de	Deaktivieren
 disable caching of flags	mail	de	Caching von Flags ausschalten
 disable horizontal rule for separation of mail body from signature	mail	de	Signatur-Trennzeichen ausblenden
-disable use of flowed lines in plain text mails (rfc3676)	mail	de	Variablen Zeilenumbruch in text Mails (RFC3676) abschalten
+disable use of flowed lines in plain text mails (rfc3676)	mail	de	Variablen Zeilenumbruch in Text-Mails (RFC3676) abschalten
 disabled!	mail	de	deaktiviert
 discard	mail	de	verwerfen
 discard message	mail	de	Nachricht verwerfen
 display messages in multiple windows	mail	de	Nachrichten in mehreren Fenstern anzeigen
 display of html emails	mail	de	HTML-E-Mails anzeigen
 display of identities	admin	de	Anzeigeformat der verfügbaren Identitätsinformationen
-display only when no plain text is available	mail	de	nur anzeigen wenn kein Plain-Text vorhanden ist
+display only when no plain text is available	mail	de	Nur anzeigen wenn kein Plain-Text vorhanden ist
 displaying html messages is disabled	mail	de	Die Anzeige von HTML-E-Mails ist deaktiviert
 displaying plain messages is disabled	mail	de	Die Anzeige von reinen Text-E-Mails ist deaktiviert
 do not auto create folders	mail	de	Automatische Ordnererstellung verhindern für
@@ -343,9 +343,9 @@ mailinglist	mail	de	Mailingliste
 mails	common	de	Mails
 mails can be copied to that folder via context menu, if folder is configured.	mail	de	Mails können per Kontextmenü in diesen Ordner kopiert werden, wenn er konfiguriert ist.
 mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	de	Der Mailserver meldete:\n%1 \nWollen Sie fortfahren und die ausgewählten Mails direkt löschen (Ok klicken)?\nWenn nicht, bitten den Mülleimer löschen und es nochmal versuchen. (Abbruch klicken)
-mark all as read	mail	de	alle als Gelesen markieren
+mark all as read	mail	de	Alle als Gelesen markieren
 mark all messages in folder as read	mail	de	Alle Nachrichten in diesem Ordner als Gelesen markieren
-mark as deleted	mail	de	als gelöscht markieren
+mark as deleted	mail	de	Als Gelöscht markieren
 match:	mail	de	Übereinstimmung:
 matches	mail	de	stimmt überein (*, ? erlaubt)
 matches regexp	mail	de	stimmt überein mit regulärem Ausdruck
@@ -373,7 +373,7 @@ moved %1 message(s) from %2 to %3	mail	de	%1 Nachrichten wurden von %2 nach %3 v
 moving folders from one mailaccount to another is not supported	mail	de	Verschieben von Ordnern von einem Mailkonto zu einem anderen wird nicht unterstützt
 name of account	mail	de	Konten-Bezeichnung
 name of imap servers (space separated host or host:port)	mail	de	Name der IMAP Server (Leerzeichen getrennt Host oder Host:Port)
-never display html emails	mail	de	niemals anzeigen
+never display html emails	mail	de	Niemals anzeigen
 never show	mail	de	Nie anzeigen
 never show notification	mail	de	Benachrichtigungen nie anzeigen
 new mail from %1	mail	de	Neue Mail von %1
@@ -479,7 +479,7 @@ rename folder %1 to:	mail	de	Ordner %1 umbenennen in:
 renamed folder %1 to %2	mail	de	Ordner %1 umbenannt in %2
 replace 'http://' in image urls with (trailing / required!)	mail	de	Ersetze 'http://' in Bild Adressen (URLs) mit (muss in einem / enden!)
 replied	mail	de	beantwortet
-reply	mail	de	antworten
+reply	mail	de	Antworten
 reply all	mail	de	Allen Antworten
 reply message type	mail	de	Format Ihrer E-Mail beim Antworten/Weiterleiten
 reply to	mail	de	Antworten an
@@ -594,7 +594,7 @@ source	mail	de	Quelltext
 sources	mail	de	HTML-Quellcode
 spamtitan api url	mail	de	SpamTitan API URL
 spamtitan integration requires epl version	mail	de	SpamTitan-Integration benötigt die EPL Version
-start new messages with mime type plain/text or html?	mail	de	Sollen neue E-Mails als plain/text oder HTML Nachrichten verfasst werden?
+start new messages with mime type plain/text or html?	mail	de	Sollen neue E-Mails als Text- oder HTML-Nachrichten verfasst werden?
 start reply messages with mime type plain/text or html or try to use the displayed format (default)?	mail	de	Antworten auf und weiterleiten von E-Mails im Text-, im HTML-Format oder entsprechend des Formats, in dem die E-Mail vom Sender ursprünglich verfasst wurde.
 step 1: imap - incoming mail	mail	de	1. Schritt: Posteingang (IMAP) einrichten
 step 2: folder	mail	de	2. Schritt: Ordner einrichten
@@ -618,7 +618,7 @@ test connection	mail	de	Verbindungstest
 test connection and display basic information about the selected profile	mail	de	Teste Verbindung und zeige Basisinformationen zum ausgewählten (aktiven) Profil
 text	mail	de	Text
 text mode	mail	de	Text-Modus
-text/plain	mail	de	text/plain
+text/plain	mail	de	Text
 the %1 's acl removed from the %2	mail	de	Die Zugriffskontrollrechte von %1 wurden von %2 entfernt
 the %1 's acl, including its subfolders, removed from the %2	mail	de	Die Zugriffskontrollrechte inkl. Unterordner von %1 wurden von %2 entfernt
 the entered passphrase is not correct! please try again.	mail	de	Das eingegebene Passwort ist nicht korrekt. Bitte versuchen Sie es erneut.

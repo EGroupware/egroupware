@@ -25,6 +25,7 @@ add all my aliases	mail	es-es	Añadir todos mis alias
 add as new	mail	es-es	Añadir como nuevo
 add files as %1	mail	es-es	Añadir archivos como %1
 add folder	mail	es-es	Añadir carpeta
+add raw message, ignore mail attachments	mail	es-es	Convertir correo en elemento, añadir mensaje sin procesar (ignorar adjuntos de correo)
 add this certificate into contact	mail	es-es	Añadir este certificado en contacto
 add to addressbook	mail	es-es	añadir a la libreta de direcciones
 add your domain as "%1" in options to list of email providers and enable api.	mail	es-es	Añada su dominio como "% 1" en las opciones para listar los proveedores de correo electrónico y habilite la API.
@@ -50,6 +51,7 @@ allways a new window	mail	es-es	siempre una ventana nueva
 always	mail	es-es	Siempre
 always allow external sources from %1	mail	es-es	Siempre permitir fuentes externas desde %1
 always show html emails	mail	es-es	Mostrar siempre los correos HTML
+always show notifiction	mail	es-es	Mostrar siempre notificación
 an error happend while trying to remove acl rights from the account %1!	mail	es-es	Se ha producido un error al intentar eliminar los derechos ACL (lista de control de acceso) de la cuenta %1.
 and the rule with priority %1, now got the priority %2	mail	es-es	Y la regla con prioridad% 1, ahora tiene la prioridad %2
 answered	mail	es-es	respondió
@@ -357,6 +359,7 @@ no plain text part found	mail	es-es	no se encontró ninguna parte con texto senc
 no recipient address given!	mail	es-es	¡No se han indicado destinatarios!
 no send folder set in preferences	mail	es-es	No hay carpeta de envío configurada en preferencias
 no signature	mail	es-es	sin firma
+no sneak preview in list	mail	es-es	No hay vista previa de mensajes
 no subject given!	mail	es-es	¡No se ha indicado un asunto!
 no subject supplied	mail	es-es	Sin asunto
 no text body supplied, check attachments for message text	mail	es-es	no se suministró ningún cuerpo de texto, verifique los archivos adjuntos para el texto del mensaje
@@ -500,6 +503,7 @@ small view	mail	es-es	Vista reducida
 smime encrypted message	mail	es-es	Mensaje cifrado S/MIME
 smime signed message	mail	es-es	Mensaje firmado S/MIME
 smtp	mail	es-es	SMTP
+sneak preview in list	mail	es-es	Vista previa del mensaje
 some clients fail to detect correct charset, if flowed lines are enabled.	mail	es-es	Algunos clientes no detectan el conjunto de caracteres correcto, si las líneas fluidas están habilitadas.
 sort order	mail	es-es	Orden en la página
 source	mail	es-es	Fuente

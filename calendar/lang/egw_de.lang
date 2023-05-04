@@ -385,7 +385,7 @@ never notify externals (non-users) about events i create	calendar	de	Benachricht
 new	calendar	de	Neu
 new event category	calendar	de	Kategorie neue Termine
 new event participants	calendar	de	Teilnehmerauswahl für neue Termine
-new search with the above parameters	calendar	de	neue Suche mit den obigen Parametern
+new search with the above parameters	calendar	de	Neue Suche mit den obigen Parametern
 no automatic purging	admin	de	Keine automatische Bereinigung alter Termine
 no events found	calendar	de	Keine Termine gefunden
 no filter	calendar	de	Kein Filter
@@ -617,7 +617,7 @@ timeframe	calendar	de	Zeitrahmen
 timeframe to search	calendar	de	Zeitrahmen für die Suche
 timesheet entries created for	calendar	de	Stundenzettel Einträge erstellen für
 timezone	calendar	de	Zeitzone
-timezone in which recurrences have identical time	calendar	de	Zeitzone in der Wiederholungen zu identischer Uhrzeit stattfinden
+timezone in which recurrences have identical time	calendar	de	Zeitzone, in der Wiederholungen zu identischer Uhrzeit stattfinden
 timezone of event exports	calendar	de	Zeitzone des exportierten Termins
 timezone of event ical file import/export	calendar	de	Zeitzone für iCal Import/Export Datei
 timezones aliases updated to version %1 (%2 records updated).	calendar	de	Zeitzonen Aliases aktualisiert zu Version %1 (%2 Datensätze aktualisiert)
@@ -645,7 +645,7 @@ use given criteria:	calendar	de	Kriterien benutzen:
 use quick add or full edit dialog when creating a new event	calendar	de	Wollen Sie den verkürzten Dialog zum schnellen Hinzufügen oder das vollständige Bearbeiten-Fenster verwenden, wenn Sie ein neuen Termin erstellen?
 use range-views to optimise calendar queries?	calendar	de	Sollen spezielle Bereichs-Ansichten verwendet werden, um Kalenderabfragen zu optimieren?
 use side menu to filter participants	calendar	de	Zum Filtern von Teilnehmern, bitte Seitenmenu verwenden
-use the selected time and close the popup	calendar	de	benutzt die ausgewählte Zeit und schließt das Pop-up
+use the selected time and close the popup	calendar	de	Verwedet die ausgewählte Zeit und schließt das Fenster
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	calendar	de	Verwenden Sie diesen Platzhalter für Aufkleber. Fügen die den Inhalt, der wiederholt werden soll, zwischen zwei dieser Platzhalter ein.
 use this timezone to export calendar data.	calendar	de	Diese Zeitzone zum exportieren von Kalenderdaten verwenden
 use this timezone to import/export calendar data.	calendar	de	Verwendet diese Zeitzone für den Import/Export von Kalenderdaten.
@@ -653,7 +653,7 @@ use weekday start	calendar	de	Benutzer Start der Arbeitswoche
 user or group	calendar	de	Benutzer oder Gruppe
 user selectable css file for the calendar setup	calendar	de	Benutzer können ausgewählte CSS Dateien aus dem Kalender Setup benutzen
 users + groups: inviting both always requires an invite grant	admin	de	Benutzer + Gruppen: Einladungen beider brauchen eine Freigabe
-using already existing event on server.	calendar	de	Benutze bereits existierenden Termin auf dem Server
+using already existing event on server.	calendar	de	Verwende bereits existierenden Termin auf dem Server
 utilities	calendar	de	Zubehör
 view exception	calendar	de	Ausnahme anzeigen
 view series	calendar	de	Terminserie anzeigen

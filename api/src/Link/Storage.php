@@ -493,6 +493,10 @@ class Storage
 		{
 			return array_map([__CLASS__, __METHOD__], $id);
 		}
+		if(is_integer($id))
+		{
+			return '' . $id;
+		}
 		return substr(json_encode($id, JSON_UNESCAPED_SLASHES), 1, -1);
 	}
 

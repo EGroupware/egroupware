@@ -347,7 +347,7 @@ export class Et2DateDuration extends Et2InputWidget(FormControlMixin(LitElement)
 
 	set value(_value)
 	{
-		this._display = this._convert_to_display(parseFloat(_value));
+		this._display = this._convert_to_display(_value == "" ? 0 : parseFloat(_value));
 		this.requestUpdate();
 	}
 
@@ -534,14 +534,16 @@ export class Et2DateDuration extends Et2InputWidget(FormControlMixin(LitElement)
 	{
 		let inputs = [];
 		let value = typeof this._display.value === "number" ? this._display.value : (this._display.value.split(":") || []);
-		for(let i = this.selectUnit ? 1 : this.displayFormat.length; i > 0; --i)
+		let count = this.selectUnit ? 1 : this.displayFormat.length;
+		for(let i = count; i > 0; --i)
 		{
 			let input = {
 				name: "",
 				title: "",
 				value: typeof value == "number" ? value : ((this.selectUnit ? value.pop() : value[i]) || ""),
 				min: undefined,
-				max: undefined
+				max: undefined,
+				precision: count == 1 ? 2 : 0
 			};
 			if(!this.selectUnit)
 			{
@@ -575,7 +577,7 @@ export class Et2DateDuration extends Et2InputWidget(FormControlMixin(LitElement)
                     <et2-number part="${"duration__" + input.name}" class="duration__input"
                                 exportparts="scroll:scroll,scrollbutton:scrollbutton"
                                 name=${input.name}
-                                min=${input.min} max=${input.max} precision="2" title=${input.title}
+                                min=${input.min} max=${input.max} precision=${input.precision} title=${input.title}
                                 value=${input.value}></et2-number>`
         )}
 		`;

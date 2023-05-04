@@ -90,7 +90,7 @@ export class et2_entry extends et2_valueWidget
 		// Often the ID conflicts, so check prefix
 		if(_attrs.id && _attrs.id.indexOf(et2_entry.prefix) < 0)
 		{
-			_attrs.id = et2_entry.prefix + _attrs.id;
+			this.id = _attrs.id = et2_entry.prefix + _attrs.id;
 		}
 		let value = _attrs.value;
 

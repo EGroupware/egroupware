@@ -15,9 +15,10 @@ activating by date requires a start- and end-date!	mail	cs	Aktivace datumem vyž
 add a new folder to %1:	mail	cs	Přidat novou složku do %1:
 add all my aliases	mail	cs	Přidat všechny mé aliasy
 add folder	mail	cs	Přidat složku
+add raw message, ignore mail attachments	mail	cs	Převést poštu na položku, přidat nezpracovanou zprávu (ignorovat přílohy pošty)
 add to addressbook	mail	cs	přidat do adresáře
 add your domain as "%1" in options to list of email providers and enable api.	mail	cs	Přidat vaši doménu jako "%1" v možnostech pro zobrazení poskytovatelů e-mailu a povolení API.
-after reply, visible during compose	mail	cs	Pozice podpisu při přeposlaném textu, nad – pod textem
+after reply, visible during compose	mail	cs	Po odpovědi, viditelné při sestavování
 aliases+forwards	mail	cs	Aliasy a přesměrování
 all	mail	cs	Všechno
 all adresses:	mail	cs	Všechny adresy
@@ -32,9 +33,10 @@ allow images from external sources in html emails	mail	cs	Povolit obrázky z ext
 allow users to create further identities	mail	cs	Dovolit uživatelům vytvářet další identity
 allways a new window	mail	cs	Vždy nové okno
 always show html emails	mail	cs	Vždy zobrazovat HTML e-maily
+always show notifiction	mail	cs	Vždy zobrazit oznámení
 an error happend while trying to remove acl rights from the account %1!	mail	cs	Při pokusu o odebrání ACL práv z účtu %1 došlo k chybě!
 and the rule with priority %1, now got the priority %2	mail	cs	a pravidlo s prioritou %1 nyní získalo prioritu %2
-answered	mail	cs	odpověděl
+answered	mail	cs	Odpovězeno
 any of	mail	cs	kterýkoli z
 any status	mail	cs	jakýkoli status
 append	mail	cs	Doplnit
@@ -279,6 +281,7 @@ less than	mail	cs	menší než
 mail	common	cs	E-mail
 mail acl	mail	cs	ACL práva e-mailu
 mail filter	mail	cs	Filtrovací pravidla
+mail filter rule	mail	cs	Pravidlo poštovního filtru
 mail settings	mail	cs	Nastavení pošty
 mail source	mail	cs	Zdroj e-mailu
 mail-address	mail	cs	E-mailová adresa

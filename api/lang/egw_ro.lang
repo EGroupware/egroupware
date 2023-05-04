@@ -14,6 +14,11 @@
 5 minutes	common	ro	5 minute
 5 seconds	common	ro	5 secunde
 abort	common	ro	Abandonați
+add current	common	ro	Vizualizarea curentă ca favorită
+add to clipboard	common	ro	Adaugă în clipboard
+addressbooks to sync in addition to personal addressbook	groupdav	ro	Cărți de adrese de sincronizat în plus față de agenda personală
+all addressbooks	groupdav	ro	Toate agendele de adrese
+all in one	groupdav	ro	Toate într-una singură
 attention: action will be applied to all rows, not only visible ones!	api	ro	Atenție: acțiunea se va aplica tuturor rândurilor, nu numai celor vizibile!
 authenticate	common	ro	Autentificare
 cancel	common	ro	Renunţă
@@ -38,6 +43,9 @@ how many days to sync in the future (default %1)	groupdav	ro	Câte zile să se s
 how many days to sync in the past (default %1)	groupdav	ro	Câte zile de sincronizare în trecut (implicit %1)
 how many rows to print	common	ro	Câte rânduri să se tipărească
 how to show the general egroupware menu ?	common	ro	Cum se afișează meniul general EGroupware
+if you use "2-factor-authentication", please enter the code here.	common	ro	Dacă utilizați "Autentificare cu 2 factori", introduceți codul aici.
+include access to any linked files (links tab)	common	ro	Includeți accesul la orice fișier legat (fila Links)
+infolog types to sync	common	ro	Tipuri de InfoLog de sincronizat
 insert placeholder	common	ro	Inserir espaço reservado
 insert timestamp into description field	common	ro	Introduceți data și ora în câmpul de descriere
 invalid 2-factor authentication code	common	ro	Código de autenticação de 2 fatores inválidos
@@ -45,7 +53,12 @@ invalid or expired 'remember me' token	common	ro	Ficha "lembre-se de mim" invál
 it is recommended to store your public key in addressbook, so other users can write you encrypted mails.	common	ro	É recomendável armazenar sua chave pública no Addressbook, para que outros usuários possam escrever seus e-mails criptografados.
 light mode	common	ro	Mod deschis
 new password	common	ro	Parolă nouă
+no filters	common	ro	Fără filtre
 ok	common	ro	Acceptă
+placeholders	common	ro	Placeholders
+play/pause	common	ro	Redare/Pauză
+preference	common	ro	Preferințe
+preferences	common	ro	Preferințe
 repeat password	common	ro	Repetarea parolei
 saved column sizes to preferences.	common	ro	Salvat dimensiunile coloanelor în preferințe.
 show/hide	common	ro	afișați / ascundeți bara laterală

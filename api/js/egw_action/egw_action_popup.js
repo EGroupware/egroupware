@@ -301,6 +301,8 @@ export function egwPopupActionImplementation()
 				_callback(event);
 			}
 		});
+		// bind a custom event tapandhold to be able to call it from nm action button
+		_node.addEventListener('tapandhold', _event=>{_callback(_event)});
 	}
 	/**
 	 * Registers the handler for the context menu
@@ -324,7 +326,7 @@ export function egwPopupActionImplementation()
 			{
 				_egw_active_menu.hide();
 			}
-			else if (!e.ctrlKey && e.which == 3 || e.which === 0) // tap event indicates by 0
+			else if (!e.ctrlKey && e.which == 3 || e.which === 0 || e.type === 'tapandhold') // tap event indicates by 0
 			{
 				var _xy = ai._getPageXY(e);
 				var _implContext = {event:e, posx:_xy.posx, posy: _xy.posy};

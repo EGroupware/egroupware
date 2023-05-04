@@ -67,12 +67,15 @@ add a new entry of the selected application	common	pt	Adicionar um novo registo 
 add a new multi-column index	common	pt	Adicionar um novo índice de várias colunas
 add category	common	pt	Adicionar categorias
 add column	common	pt	Adicionar coluna
+add current	common	pt	Vista actual como favorito
 add index	common	pt	Adicionar índice
 add new	common	pt	Adicionar novo/a
 add shortcut	common	pt	Adicionar atalho
 add sub	common	pt	Adicionar sub-tarefa
 add table	common	pt	Adicionar tabela
+add to clipboard	common	pt	Adicionar à área de transferência
 addressbook	common	pt	Livro de endereços
+addressbooks to sync in addition to personal addressbook	groupdav	pt	Livros de endereços para sincronizar para além do livro de endereços pessoal
 admin	common	pt	Administrador
 administration	common	pt	Administração
 advanced search	common	pt	Pesquisa avançada
@@ -83,8 +86,10 @@ align	common	pt	Alinhar
 alignment of label and input-field in table-cell	common	pt	Alinhamento da etiqueta e campo na célula da tabela
 alignment of the v/hbox containing table-cell	common	pt	Alinhamento da caixa vertical/horizontal na célula da tabela
 all	common	pt	Tudo
+all addressbooks	groupdav	pt	Todos os livros de endereços
 all days	common	pt	Todos os dias
 all fields	common	pt	Todos os campos
+all in one	groupdav	pt	Tudo em um
 all languages	common	pt	Todos os idiomas
 all operations save the template!	common	pt	Todas as operações foram guardadas no modelo!
 all users	common	pt	Todos os usuários
@@ -537,18 +542,21 @@ iespell not detected. click ok to go to download page.	common	pt	O ieSpell não 
 if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	common	pt	Se o campo estiver desactivado, será apresentada uma célula vazia da tabela, para remoção (temporária) do campo/célula
 if the clock is enabled would you like it to update it every second or every minute?	common	pt	Se o relógio estiver activo, deseja actualizá-lo ao segundo ou ao minuto?
 if there are some images in the background folder you can choose the one you would like to see.	common	pt	Se existirem imagens na pasta de fundo, pode escolher a que gosta mais.
+if you use "2-factor-authentication", please enter the code here.	common	pt	Se utilizar a "Autenticação de 2 factores", introduza o código aqui.
 image	common	pt	Imagem
 image url	common	pt	URL da imagem
 import	common	pt	Importar
 import an etemplate from a xml-file	common	pt	Importar um modelo Web de um ficheiro XML
 import table-definitions from existing db-table	common	pt	Importar definições da tabela de uma tabela de base de dados existente
 import xml	common	pt	Importar XML
+include access to any linked files (links tab)	common	pt	Incluir o acesso a quaisquer ficheiros ligados (separador Ligações)
 increment version to not overwrite the existing template	common	pt	Actualizar a versão não sobrepõe o modelo existente
 index/name of returned content (name of the template, link / method for image)	common	pt	Índice/nome do conteúdo devolvido (nome do modelo, ligação / método por imagem)
 indexed	common	pt	Indexado/a
 indexoptions	common	pt	Opções de índice
 india	common	pt	Índia
 indonesia	common	pt	Indonésia
+infolog types to sync	common	pt	Tipos de InfoLog a sincronizar
 input required	common	pt	Entrada necessária
 insert a column before	common	pt	Inserir uma coluna antes
 insert a column behind	common	pt	Inserir uma coluna depois
@@ -827,6 +835,8 @@ peru	common	pt	Peru
 philippines	common	pt	Filipinas
 phone number	common	pt	número de telefone
 pitcairn	common	pt	Ilha Pitcairn
+placeholders	common	pt	Marcadores de lugar
+play/pause	common	pt	Reproduzir/Pausa
 please %1 by hand	common	pt	Por favor, %1 manualmente
 please enter a name	common	pt	Por favor, insira um nome !
 please enter table-name first !!!	common	pt	Por favor, insira o nome da tabela primeiro !!!

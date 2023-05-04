@@ -97,7 +97,7 @@ check to save as infolog on send	mail	en	check to save as infolog on send
 check to save as tracker entry on send	mail	en	check to save as tracker entry on send
 choose file	mail	en	Choose file
 common acl	mail	en	Common ACL
-compose	mail	en	compose
+compose	mail	en	Compose
 compose as new	mail	en	Compose as new
 compress folder	mail	en	compress folder
 condition	mail	en	Condition
@@ -145,7 +145,7 @@ directories have to be shared.	mail	en	Folder have to be shared.
 disable	mail	en	Disable
 disable caching of flags	mail	en	Disable caching of flags
 disable horizontal rule for separation of mail body from signature	mail	en	disable horizontal rule for separation of mail body from signature
-disable use of flowed lines in plain text mails (rfc3676)	mail	en	Disable use of flowed lines in plain text mails (RFC3676)
+disable use of flowed lines in plain text mails (rfc3676)	mail	en	Disable use of flowed lines in text mails (RFC3676)
 disabled!	mail	en	disabled!
 discard	mail	en	discard
 discard message	mail	en	Discard message
@@ -154,7 +154,7 @@ display of html emails	mail	en	display of HTML emails
 display of identities	admin	en	display identities
 display only when no plain text is available	mail	en	display only when no plain text is available
 displaying html messages is disabled	mail	en	displaying HTML messages is disabled
-displaying plain messages is disabled	mail	en	displaying plain messages is disabled
+displaying plain messages is disabled	mail	en	displaying plain text messages is disabled
 do not auto create folders	mail	en	do not auto create folders
 do not forward	mail	en	do not forward
 do you really want to apply %1 to all messages in the current view?	mail	en	Do you really want to apply %1 to ALL messages in the current view?
@@ -197,9 +197,9 @@ emailaddress	admin	en	emailaddress
 emailadmin: profilemanagement	mail	en	eMailAdmin: Profilemanagement
 emails in blacklisted domains are marked as spam	mail	en	Emails in blacklisted domains are marked as spam
 emails in whitelisted domains are not marked as spam	mail	en	Emails in whitelisted domains are not marked as spam
-empty junk	mail	en	empty junk/spam folder
+empty junk	mail	en	Empty junk folder
 empty trash	mail	en	empty trash
-empty trash and junk	mail	en	Empty Trash and Junk
+empty trash and junk	mail	en	Empty trash and junk
 enable	mail	en	Enable
 enabled	mail	en	Enabled
 enabled!	mail	en	enabled!
@@ -253,13 +253,13 @@ folder settings	mail	en	Folder settings
 for e.g.: mpeg	mail	en	for e.g.: mpeg
 for eg.: mpeg	mail	en	for eg.: mpeg
 force html	mail	en	force HTML
-force plain text	mail	en	force plain text
+force plain text	mail	en	force text
 forward	mail	en	Forward
-forward as attachment	mail	en	forward as attachment
-forward inline	mail	en	forward
+forward as attachment	mail	en	Forward as attachment
+forward inline	mail	en	Forward
 forward messages to:	mail	en	Forward messages to:
 forward messages:	mail	en	Forward messages:
-forward to	mail	en	forward to
+forward to	mail	en	Forward to
 forward to address (*):	mail	en	Forward to address (*):
 forwarding of this message failed because the content of this message seems to be encrypted and can not be decrypted properly. if you still wish to forward content of this encrypted message, you may try to use forward as attachment instead.	mail	en	Forwarding of this message failed because the content of this message seems to be encrypted and can not be decrypted properly. If you still wish to forward content of this encrypted message, you may try to use forward as attachment instead.
 forwards	mail	en	Forwards
@@ -318,9 +318,9 @@ in mailbox: %1, with id: %2, and partid: %3	mail	en	In Mailbox: %1, with ID: %2,
 in order to protect your privacy all external sources within this email are blocked.	mail	en	In order to protect your privacy all external sources within this email are blocked.
 inbox	mail	en	INBOX
 initialization of mail failed. please use the wizard to cope with the problem.	mail	en	The initialisation of the mail module failed. Please use the configuration wizard to correct the configuration.
-inline	mail	en	forward
+inline	mail	en	Forward
 insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)	mail	en	insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)
-job	mail	en	job
+job	mail	en	Job
 junk	mail	en	Junk
 junk folder	mail	en	Junk folder
 keep a copy of the message in your inbox	mail	en	Keep a copy of the message in your inbox
@@ -343,9 +343,9 @@ mailinglist	mail	en	Mailinglist
 mails	common	en	Mails
 mails can be copied to that folder via context menu, if folder is configured.	mail	en	Mails can be copied to that folder via context menu, if folder is configured.
 mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	en	Mailserver reported:\n%1 \nDo you want to proceed by deleting the selected messages immediately (click ok)?\nIf not, please try to empty your trashfolder before continuing. (click cancel)
-mark all as read	mail	en	mark all as read
-mark all messages in folder as read	mail	en	mark all messages in folder as read
-mark as deleted	mail	en	mark as deleted
+mark all as read	mail	en	Mark all as read
+mark all messages in folder as read	mail	en	Mark all messages in folder as read
+mark as deleted	mail	en	Mark as deleted
 match:	mail	en	Match:
 matches	mail	en	matches
 matches regexp	mail	en	matches regexp
@@ -368,13 +368,13 @@ move selected mails to archive	mail	en	Move selected mails to archive
 move selected to	mail	en	Move selected to
 move to	mail	en	Move to
 move to archive	mail	en	Move to archive folder
-move to trash	mail	en	move to trash
-moved %1 message(s) from %2 to %3	mail	en	moved %1 message(s) from %2 to %3
+move to trash	mail	en	Move to trash
+moved %1 message(s) from %2 to %3	mail	en	Moved %1 message(s) from %2 to %3
 moving folders from one mailaccount to another is not supported	mail	en	Moving Folders from one mail account to another is not supported
 name of account	mail	en	Name of account
 name of imap servers (space separated host or host:port)	mail	en	Name of IMAP servers (space separated host or host:port)
-never display html emails	mail	en	never display HTML emails
-never show	mail	en	never show
+never display html emails	mail	en	Never display HTML emails
+never show	mail	en	Never show
 never show notification	mail	en	Never show notification
 new mail from %1	mail	en	New mail from %1
 new mail notification	mail	en	New mail notification
@@ -387,8 +387,8 @@ no address to/cc/bcc supplied, and no folder to save message to provided.	mail	e
 no adress, to send this mail to, supplied	mail	en	no address was supplied to whom to send this mail
 no folder destination supplied, and no folder to save message or other measure to store the mail (save to infolog/tracker) provided, but required.	mail	en	No Folder destination supplied, and no folder to save message or other measure to store the mail (save to infolog/tracker) provided, but required.
 no folders	mail	en	no folders
-no message body supplied	mail	en	no message body supplied
-no plain text part found	mail	en	no plain text part found
+no message body supplied	mail	en	No message body supplied
+no plain text part found	mail	en	No plain text part found
 no recipient address given!	mail	en	No recipient address given!
 no send folder set in preferences	mail	en	No Send Folder set in preferences
 no signature	mail	en	no signature
@@ -551,8 +551,8 @@ serverside filterrules (sieve) are not activated	mail	en	Serverside Filterrules 
 serverside vacationnotice (via sieve) are not activated	mail	en	Serverside absent notice messages (via Sieve) are not activated
 set / remove flags	mail	en	Set / Remove Flags
 set / remove labels	mail	en	Set / Remove Labels
-set flags	mail	en	set flags
-set it as default:	mail	en	set it as default:
+set flags	mail	en	Set flags
+set it as default:	mail	en	Set it as default:
 set predefined values for compose...	mail	en	Set predefined values for compose ...
 should new messages show up on the home page	mail	en	Should new messages show up on the Home page
 should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	en	Should signature be inserted after (standard) or before a reply or forward, and should signature be visible and changeable during compose.
@@ -594,8 +594,8 @@ source	mail	en	Source
 sources	mail	en	Sources
 spamtitan api url	mail	en	SpamTitan API URL
 spamtitan integration requires epl version	mail	en	SpamTitan integration requires EPL version
-start new messages with mime type plain/text or html?	mail	en	start new messages with MIME-type plain/text or HTML?
-start reply messages with mime type plain/text or html or try to use the displayed format (default)?	mail	en	start reply messages with MIME-type plain/text or HTML or try to use the displayed format (default)?
+start new messages with mime type plain/text or html?	mail	en	Start new messages with MIME-type text or HTML?
+start reply messages with mime type plain/text or html or try to use the displayed format (default)?	mail	en	Start reply messages with MIME-type text HTML or try to use the displayed format (default)?
 step 1: imap - incoming mail	mail	en	Step 1: IMAP - incoming mail
 step 2: folder	mail	en	Step 2: Folder
 step 3: sieve - server side mail filtering	mail	en	Step 3: Sieve - server side mail filtering
@@ -618,7 +618,7 @@ test connection	mail	en	Test connection
 test connection and display basic information about the selected profile	mail	en	Test Connection and display basic information about the selected profile
 text	mail	en	Text
 text mode	mail	en	Text mode
-text/plain	mail	en	text/plain
+text/plain	mail	en	Text
 the %1 's acl removed from the %2	mail	en	The %1 's acl removed from the %2
 the %1 's acl, including its subfolders, removed from the %2	mail	en	The %1 's acl, including its subfolders, removed from the %2
 the entered passphrase is not correct! please try again.	mail	en	The entered passphrase is not correct! Please try again.

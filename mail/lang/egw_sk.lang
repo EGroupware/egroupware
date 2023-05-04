@@ -25,6 +25,7 @@ add all my aliases	mail	sk	Pridať všetky moje aliasy
 add as new	mail	sk	Pridať ako nové
 add files as %1	mail	sk	Pridať súbor ako %1
 add folder	mail	sk	Pridať priečinok
+add raw message, ignore mail attachments	mail	sk	Previesť poštu na položku, pridať nespracovanú správu (ignorovať prílohy pošty)
 add this certificate into contact	mail	sk	Pridať tento certifikát do kontaktu
 add to addressbook	mail	sk	Pridať do adresára
 add your domain as "%1" in options to list of email providers and enable api.	mail	sk	Pridajte vašu doménu v predvoľbách ako "%1" pre zoznam poskytovateľov e-mailu a povoľte API.
@@ -50,8 +51,10 @@ allways a new window	mail	sk	Vždy nové okno
 always	mail	sk	Vždy
 always allow external sources from %1	mail	sk	Vždy povoliť externé zdroje od %1
 always show html emails	mail	sk	Vždy zobraziť HTML správy
+always show notifiction	mail	sk	Vždy zobraziť oznámenie
 an error happend while trying to remove acl rights from the account %1!	mail	sk	Nastala nejaká chyba pri pokuse odstrániť ACL práva z účtu %1!
 and the rule with priority %1, now got the priority %2	mail	sk	a pravidlo priority %1 má teraz prioritu %2
+answered	mail	sk	Odpovedal
 any of	mail	sk	Ktorýkoľvek z
 any status	mail	sk	Všetko
 append	mail	sk	Pripojiť
@@ -320,6 +323,7 @@ mail settings	mail	sk	Nastavenia pošty
 mail source	mail	sk	Zdroj správy
 mail-address	mail	sk	Mail-Adresa
 mailaccount	mail	sk	Mailový účet
+mailinglist	mail	sk	Poštový zoznam
 mails	common	sk	Správy
 mails can be copied to that folder via context menu, if folder is configured.	mail	sk	Správy sa dajú kopírovať do toho priečinku cez kontextovú ponuku, ak je nastavený priečinok.
 mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	sk	Poštový server oznámil :\n%1 \nChcete pokračovať v odstraňovaní vybraných správ (v tom prípade kliknite na OK)?\nAk nie, prosím skúste vyprázdniť Odpadkový kôš pred vykonaním ďalších krokov. (v tom prípade kliknite na Cancel)
@@ -545,6 +549,7 @@ small view	mail	sk	Zmenšený pohľad
 smime encrypted message	mail	sk	Šifrovaná správa S/MIME
 smime signed message	mail	sk	S/MIME podpísaná správa
 smtp	mail	sk	SMTP
+sneak preview in list	mail	sk	Náhľad správy
 some clients fail to detect correct charset, if flowed lines are enabled.	mail	sk	Niektorí klienti nedokážu určiť správnu znakovú sadu keď sú plávajúce riadky zapnuté.
 sort order	mail	sk	Usporiadať podľa
 source	mail	sk	Zdroj

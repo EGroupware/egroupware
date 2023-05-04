@@ -44,11 +44,14 @@ add a new entry of the selected application	common	lv	Pievienot atzīmetas aplik
 add a new multi-column index	common	lv	Pievienot jaunu daudzkolonnu priekšmetu rādītāju
 add category	common	lv	Pievienot kategoriju
 add column	common	lv	Pievienot kolonnu
+add current	common	lv	Pašreizējais skatījums kā iecienītākais
 add index	common	lv	Pievienot indeksu
 add new	common	lv	Pievienot jaunu
 add sub	common	lv	Pievienot apakškategoriju
 add table	common	lv	PIevienot tabulu
+add to clipboard	common	lv	Pievienot starpliktuvei
 addressbook	common	lv	Adrešu grāmata
+addressbooks to sync in addition to personal addressbook	groupdav	lv	Papildus personīgajai adrešu grāmatiņai sinhronizējamās adrešu grāmatiņas
 admin	common	lv	Administrators
 administration	common	lv	Administrēšana
 advanced search	common	lv	Uzlabota meklēšana
@@ -59,7 +62,9 @@ align	common	lv	Centrēt
 alignment of label and input-field in table-cell	common	lv	iezīmes un ievades lauka novietojums tabulas kolonnā
 alignment of the v/hbox containing table-cell	common	lv	V/Hbox satura novietojums tabulas kolonnā
 all	common	lv	Visi
+all addressbooks	groupdav	lv	Visas adrešu grāmatas
 all fields	common	lv	visi lauki
+all in one	groupdav	lv	Viss vienā
 all users	common	lv	Visi lietotāji
 alternate style-sheet:	common	lv	Alternatīvs stila-izklājums:
 am	common	lv	noo rīta
@@ -407,17 +412,20 @@ hungary	common	lv	UNGĀRIJA
 iceland	common	lv	ISLANDE
 id	common	lv	ID
 if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	common	lv	ja lauks nav atļauts,īslaicīgai lauka/kolonnas pārcelšanai tiek parādītas tabulas tukšās kolonnas.
+if you use "2-factor-authentication", please enter the code here.	common	lv	Ja izmantojat "2 faktoru autentifikāciju", lūdzu, ievadiet kodu šeit.
 image	common	lv	Attēls
 image url	common	lv	Attēla URL
 import	common	lv	Importēt
 import an etemplate from a xml-file	common	lv	importēt eveidni no xml datnes
 import table-definitions from existing db-table	common	lv	Importēt tabulas nosacījumus no eksistējošas DB tabulas
 import xml	common	lv	Importēt XML
+include access to any linked files (links tab)	common	lv	Iekļaut piekļuvi visiem saistītiem failiem (cilne Saites)
 index/name of returned content (name of the template, link / method for image)	common	lv	atgrieztā satura(veidnes nosaukums,saite/attēla veids) indekss/nosaukums
 indexed	common	lv	Indeksēts
 indexoptions	common	lv	Indeksa opcijas
 india	common	lv	INDIJA
 indonesia	common	lv	INDONĒZIJA
+infolog types to sync	common	lv	Sinhronizējamo InfoLog žurnālu veidi
 insert all %1 addresses of the %2 contacts in %3	common	lv	Ievietot visas %1adreses no %2 kontaktiem %3
 insert new column behind this one	common	lv	ievieto jaunu kolonnu aiz šīs
 insert new column in front of all	common	lv	pirms visām kolonnām ievieto jaunu kolonnu
@@ -568,6 +576,7 @@ no - cancel	common	lv	Nē- Atcelt
 no entries found, try again ...	common	lv	neviens ieraksts netika atrasts, mēģiniet vēlreiz ...
 no file	common	lv	nav datnes
 no filename given or selected via browse...	common	lv	Meklēt...nav dots vai atzīmēts datnes nosaukums
+no filters	common	lv	Nav filtru
 no history for this record	common	lv	nav pieejama šī ieraksta vēsture
 no matches found	common	lv	Nav atbilstošu ierakstu
 no subject	common	lv	Nav Tēmas
@@ -630,6 +639,8 @@ peru	common	lv	PERU
 philippines	common	lv	FILIPĪNAS
 phone number	common	lv	telefona nummurs
 pitcairn	common	lv	PITKERNA
+placeholders	common	lv	Vietrāži
+play/pause	common	lv	Atskaņot/pauzēt
 please %1 by hand	common	lv	Lūdzu, %1 ar roku
 please enter a name	common	lv	Lūdzu, ieraksti savu vārdu !
 please enter table-name first !!!	common	lv	VIspirms norādiet tabulas nosaukumu, lūdzu !!!
@@ -642,6 +653,7 @@ poland	common	lv	POLIJA
 popup with search	common	lv	Uzsākt ar meklēšanu
 portugal	common	lv	PORTUGĀLE
 postal	common	lv	Pasta
+preference	common	lv	Priekšrocības
 preferences	common	lv	Iestādījumi
 previous page	common	lv	Iepriekšējā lapa
 primary group	common	lv	galvenā grupa

@@ -58,6 +58,8 @@ export class Et2SelectCategory extends Et2StaticSelectMixin(Et2Select)
 	constructor()
 	{
 		super();
+		// we should not translate categories name
+		this.noLang = true;
 	}
 
 	async connectedCallback()
