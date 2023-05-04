@@ -609,9 +609,9 @@ export class Et2DateDuration extends Et2InputWidget(FormControlMixin(LitElement)
             <et2-select value="${this._display.unit || this.displayFormat[0]}">
                 ${[...this.displayFormat].map((format : string) =>
                         html`
-                            <sl-menu-item value=${format} ?checked=${this._display.unit === format}>
+                            <sl-option value=${format}>
                                 ${this.time_formats[format]}
-                            </sl-menu-item>`
+                            </sl-option>`
                 )}
             </et2-select>
 		`;
