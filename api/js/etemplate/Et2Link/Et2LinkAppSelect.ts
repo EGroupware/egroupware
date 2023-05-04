@@ -118,7 +118,7 @@ export class Et2LinkAppSelect extends SlotMixin(Et2Select)
 			this.value = this.egw().preference('link_app', appname || this.egw().app_name());
 		}
 		// Register to
-		this.addEventListener("change", this._handleChange);
+		this.addEventListener("sl-change", this._handleChange);
 
 		if(this.__onlyApp)
 		{
@@ -129,7 +129,7 @@ export class Et2LinkAppSelect extends SlotMixin(Et2Select)
 	disconnectedCallback()
 	{
 		super.disconnectedCallback();
-		this.removeEventListener("change", this._handleChange);
+		this.removeEventListener("sl-change", this._handleChange);
 	}
 
 	/**
@@ -227,10 +227,10 @@ export class Et2LinkAppSelect extends SlotMixin(Et2Select)
 	_optionTemplate(option : SelectOption) : TemplateResult
 	{
 		return html`
-            <sl-menu-item value="${option.value}" title="${option.title}">
+            <sl-option value="${option.value}" title="${option.title}">
                 ${this.appIcons ? "" : option.label}
                 ${this._iconTemplate(option.value)}
-            </sl-menu-item>`;
+            </sl-option>`;
 	}
 
 	_iconTemplate(appname)
