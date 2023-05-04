@@ -20,7 +20,6 @@ export class Et2Select extends Et2WidgetWithSelect
 			super.styles,
 			css`
 			  :host {
-				:host {
 				  display: block;
 				  flex: 1 0 auto;
 				  --icon-width: 20px;
@@ -161,6 +160,18 @@ export class Et2Select extends Et2WidgetWithSelect
                        src="${option.icon}"></et2-image>`
 	}
 
+	protected _createImage(item)
+	{
+		let image = item.querySelector("et2-image") || item.querySelector("[slot='prefix']");
+		if(image)
+		{
+			image = image.clone();
+			image.slot = "prefix";
+			image.class = "tag_image";
+			return image;
+		}
+		return "";
+	}
 }
 
 if(typeof customElements.get("et2-select") === "undefined")

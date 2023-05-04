@@ -114,8 +114,7 @@ export class Et2SelectCategory extends Et2StaticSelectMixin(Et2Select)
 			return;
 		}
 
-		const checkedItem = this.menuItems.find(item => item.value === this.value);
-		this.displayLabel = checkedItem ? checkedItem.textContent : '';
+		const checkedItem = this.selectedOptions.find(item => item.value === this.value);
 		this.querySelector("[slot=prefix].tag_image")?.remove();
 		if(checkedItem)
 		{
@@ -124,7 +123,7 @@ export class Et2SelectCategory extends Et2StaticSelectMixin(Et2Select)
 			{
 				this.append(image);
 			}
-			this.dropdown.querySelector(".select__control").style.borderColor =
+			this.popup.querySelector(".select__combobox").style.borderColor =
 				getComputedStyle(checkedItem).getPropertyValue("--category-color") || "";
 		}
 	}
@@ -141,8 +140,8 @@ export class Et2SelectCategory extends Et2StaticSelectMixin(Et2Select)
 		// @ts-ignore Doesn't know about Et2WidgetWithSelectMixin._renderOptions()
 		return super._renderOptions().then(() =>
 		{
-			// @ts-ignore Doesn't know about SlSelect.menuItems
-			if(this.menuItems.length > 0)
+			// @ts-ignore Doesn't know about SlSelect.selectedOptions
+			if(this.selectedOptions.length > 0)
 			{
 				this.doLabelChange();
 			}
