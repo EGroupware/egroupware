@@ -13,7 +13,6 @@ import {Et2WidgetWithSelectMixin} from "./Et2WidgetWithSelectMixin";
 import {SelectOption} from "./FindSelectOptions";
 import {SlSelect} from "@shoelace-style/shoelace";
 import shoelace from "../Styles/shoelace";
-import {Et2Tag} from "./Tag/Et2Tag";
 import {RowLimitedMixin} from "../Layout/RowLimitedMixin";
 
 // export Et2WidgetWithSelect which is used as type in other modules
