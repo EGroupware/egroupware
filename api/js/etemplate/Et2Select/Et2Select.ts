@@ -453,9 +453,12 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		}
 		// If no value is set, choose the first option
 		// Only do this on once during initial setup, or it can be impossible to clear the value
-		const valueArray = Array.isArray(this.value) ? this.value : (
+		let valueArray = Array.isArray(this.value) ? this.value : (
 			!this.value ? [] : (this.multiple ? this.value.toString().split(',') : [this.value])
 		);
+
+		// Check for value using missing options (deleted or otherwise not allowed)
+		valueArray = this.filterOutMissingOptions(valueArray);
 
 		// value not in options --> use emptyLabel, if exists, or first option otherwise
 		if(this.select_options.filter((option) => valueArray.find(val => val == option.value) ||
@@ -495,6 +498,29 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 			val = [...new Set(val.map(v => typeof v === 'number' ? v.toString() : v || ''))];
 		}
 		this.value = val || '';
+	}
+
+	/**
+	 * Check a value for missing options and remove them.
+	 *
+	 * We'll warn about it in the helpText, and if they save the change will be made.
+	 * This is to avoid the server-side validation error, which the user can't do much about.
+	 *
+	 * @param {string[]} value
+	 * @returns {string[]}
+	 */
+	filterOutMissingOptions(value : string[]) : string[]
+	{
+		if(!this.readonly && value && value.length > 0 && !this.allowFreeEntries && this.select_options.length > 0)
+		{
+			const missing = value.filter(v => !this.select_options.some(option => option.value == v));
+			if(missing.length > 0)
+			{
+				this.helpText = this.egw().lang("Invalid option '%1' removed", missing.join(", "));
+				value = value.filter(item => missing.indexOf(item) == -1);
+			}
+		}
+		return value;
 	}
 
 	transformAttributes(attrs)
