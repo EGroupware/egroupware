@@ -1,15 +1,57 @@
-import {SelectOption} from "./FindSelectOptions";
-import {css, html, TemplateResult} from "lit"
-import shoelace from "../Styles/shoelace";
-import {SlSelect} from "@shoelace-style/shoelace";
-import {RowLimitedMixin} from "../Layout/RowLimitedMixin";
+/**
+ * EGroupware eTemplate2 - Select WebComponent
+ *
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @package api
+ * @link https://www.egroupware.org
+ * @author Nathan Gray
+ */
+
+
+import {css, html, TemplateResult} from "lit";
 import {Et2widgetWithSelectMixin} from "./Et2WidgetWithSelectMixin";
+import {SelectOption} from "./FindSelectOptions";
+import {SlSelect} from "@shoelace-style/shoelace";
+import shoelace from "../Styles/shoelace";
+import {RowLimitedMixin} from "../Layout/RowLimitedMixin";
 
 // export Et2WidgetWithSelect which is used as type in other modules
 export class Et2WidgetWithSelect extends RowLimitedMixin(Et2widgetWithSelectMixin(SlSelect))
 {
 };
 
+/**
+ * Select widget
+ *
+ * At its most basic, you can select one option from a list provided.  The list can be passed from the server in
+ * the sel_options array or options can be added as children in the template.  Some extending classes provide specific
+ * options, such as Et2SelectPercent or Et2SelectCountry.  All provided options will be mixed together and used.
+ *
+ * To allow selecting more than one option, use the attribute multiple="true".   This will take & return an array
+ * as value instead of just a string.
+ *
+ * SearchMixin adds additional abilities to ALL select boxes
+ * @see Et2WithSearchMixin
+ *
+ * Override for extending widgets:
+ * # Custom display of selected value
+ * 	When selecting a single value (!multiple) you can override doLabelChange() to customise the displayed label
+ * 	@see Et2SelectCategory, which adds in the category icon
+ *
+ * # Custom option rows
+ *  Options can have 'class' and 'icon' properties that will be used for the option
+ * 	The easiest way for further customisation to use CSS in an external file (like etemplate2.css) and ::part().
+ * 	@see Et2SelectCountry which displays flags via CSS instead of using SelectOption.icon
+ *
+ * # Custom tags
+ * 	When multiple is set, instead of a single value each selected value is shown in a tag.  While it's possible to
+ * 	use CSS to some degree, we can also use a custom tag class that extends Et2Tag.
+ * 	1.  Create the extending class
+ * 	2.  Make sure it's loaded (add to etemplate2.ts)
+ * 	3.  In your extending Et2Select, override get tagTag() to return the custom tag name
+ *
+ */
+// @ts-ignore SlSelect styles is a single CSSResult, not an array, so TS complains
 export class Et2Select extends Et2WidgetWithSelect
 {
 	static get styles()
@@ -20,105 +62,182 @@ export class Et2Select extends Et2WidgetWithSelect
 			super.styles,
 			css`
 			  :host {
-				  display: block;
-				  flex: 1 0 auto;
-				  --icon-width: 20px;
-				}
+				display: block;
+				flex: 1 0 auto;
+				--icon-width: 20px;
+			  }
 
 
-				::slotted(img), img {
-				}
+			  ::slotted(img), img {
+			  }
 
 
-				::slotted(img), img {
-				  vertical-align: middle;
-				}
+			  ::slotted(img), img {
+				vertical-align: middle;
+			  }
 
-				/* Get rid of padding before/after options */
+			  /* Get rid of padding before/after options */
 
-				sl-menu::part(base) {
-				}
+			  sl-menu::part(base) {
+			  }
 
-				/* Get rid of padding before/after options */
+			  /* Get rid of padding before/after options */
 
-				sl-menu::part(base) {
-				  padding: 0px;
-				}
+			  sl-menu::part(base) {
+				padding: 0px;
+			  }
 
-				/* No horizontal scrollbar, even if options are long */
+			  /* No horizontal scrollbar, even if options are long */
 
-				.dropdown__panel {
-				  overflow-x: clip;
-				}
+			  .dropdown__panel {
+				overflow-x: clip;
+			  }
 
-				/* Ellipsis when too small */
+			  /* Ellipsis when too small */
 
-				.select__tags {
-				  max-width: 100%;
-				}
+			  .select__tags {
+				max-width: 100%;
+			  }
 
-				.select__label {
-				  display: block;
-				  text-overflow: ellipsis;
-				  /* This is usually not used due to flex, but is the basis for ellipsis calculation */
-				  width: 10ex;
-				}
+			  .select__label {
+				display: block;
+				text-overflow: ellipsis;
+				/* This is usually not used due to flex, but is the basis for ellipsis calculation */
+				width: 10ex;
+			  }
 
-				/** multiple=true uses tags for each value **/
-				/* styling for icon inside tag (not option) */
+			  /** multiple=true uses tags for each value **/
+			  /* styling for icon inside tag (not option) */
 
-				.tag_image {
-				  margin-right: var(--sl-spacing-x-small);
-				}
+			  .tag_image {
+				margin-right: var(--sl-spacing-x-small);
+			  }
 
-				/* Maximum height + scrollbar on tags (+ other styling) */
+			  /* Maximum height + scrollbar on tags (+ other styling) */
 
-				.select__tags {
-				  margin-left: 0px;
-				  max-height: initial;
-				  overflow-y: auto;
-				  gap: 0.1rem 0.5rem;
-				}
+			  .select__tags {
+				margin-left: 0px;
+				max-height: initial;
+				overflow-y: auto;
+				gap: 0.1rem 0.5rem;
+			  }
 
-				.select--medium .select__tags {
-				  padding-top: 2px;
-				  padding-bottom: 2px;
-				}
+			  .select--medium .select__tags {
+				padding-top: 2px;
+				padding-bottom: 2px;
+			  }
 
-				:host([rows]) .select__control > .select__label > .select__tags {
-				  max-height: calc(var(--rows, 5) * 29px);
-				}
+			  :host([rows]) .select__control > .select__label > .select__tags {
+				max-height: calc(var(--rows, 5) * 29px);
+			  }
 
-				:host([rows='1']) .select__tags {
-				  overflow: hidden;
-				}
+			  :host([rows='1']) .select__tags {
+				overflow: hidden;
+			  }
 
-				/* Keep overflow tag right-aligned.  It's the only sl-tag. */
+			  /* Keep overflow tag right-aligned.  It's the only sl-tag. */
 
-				.select__tags sl-tag {
-				  margin-left: auto;
-				}
+			  .select__tags sl-tag {
+				margin-left: auto;
+			  }
 
-				select:hover {
-				  box-shadow: 1px 1px 1px rgb(0 0 0 / 60%);
-				}
+			  select:hover {
+				box-shadow: 1px 1px 1px rgb(0 0 0 / 60%);
+			  }
 
-				/* Hide dropdown trigger when multiple & readonly */
+			  /* Hide dropdown trigger when multiple & readonly */
 
-				:host([readonly][multiple]) .select__expand-icon {
-				  display: none;
-				}
+			  :host([readonly][multiple]) .select__expand-icon {
+				display: none;
+			  }
 
-				/* Style for the list */
+			  /* Style for the list */
 
-				::part(listbox) {
-				  min-width: fit-content;
-				  overflow-y: auto;
-				}
+			  ::part(listbox) {
+				min-width: fit-content;
+				overflow-y: auto;
+			  }
 			`
 		];
 	}
 
+
+	/**
+	 * Used by Et2WidgetWithSelect to render each option into the select
+	 *
+	 * @param {SelectOption} option
+	 * @returns {TemplateResult}
+	 */
+
+	connectedCallback()
+	{
+		super.connectedCallback();
+		this.updateComplete.then(() =>
+		{
+			this.addEventListener("sl-change", this._triggerChange);
+		});
+	}
+
+	disconnectedCallback()
+	{
+		super.disconnectedCallback();
+
+		this.removeEventListener("sl-change", this._triggerChange);
+	}
+
+	/**
+	 * This method must be called whenever the selection changes. It will update the selected options cache, the current
+	 * value, and the display value.
+	 *
+	 * Overridden to get our original option value, spaces and all.
+	 */
+	private selectionChanged()
+	{
+		// Update selected options cache
+		this.selectedOptions = this.getAllOptions().filter(el => el.selected);
+
+		// Update the value and display label
+		if(this.multiple)
+		{
+			this.value = this.selectedOptions.map(el => el.option.value);
+
+			if(this.placeholder && this.value.length === 0)
+			{
+				// When no items are selected, keep the value empty so the placeholder shows
+				this.displayLabel = '';
+			}
+			else
+			{
+				this.displayLabel = this.localize.term('numOptionsSelected', this.selectedOptions.length);
+			}
+		}
+		else
+		{
+			this.value = this.selectedOptions[0]?.option?.value ?? '';
+			this.displayLabel = this.selectedOptions[0]?.getTextLabel() ?? '';
+		}
+
+		// Update validity
+		this.updateComplete.then(() =>
+		{
+			this.formControlController.updateValidity();
+		});
+	}
+
+	/**
+	 * Add an option for the "empty label" option, used if there's no value
+	 *
+	 * @returns {TemplateResult}
+	 */
+	_emptyLabelTemplate() : TemplateResult
+	{
+		if(!this.emptyLabel || this.multiple)
+		{
+			return html``;
+		}
+		return html`
+            <sl-option value="">${this.emptyLabel}</sl-option>`;
+	}
 
 	/**
 	 * Used by Et2WidgetWithSelect to render each option into the select

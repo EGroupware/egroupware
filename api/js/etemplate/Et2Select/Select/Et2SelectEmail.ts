@@ -7,9 +7,9 @@
  * @author Nathan Gray
  */
 
-import {Et2Select} from "./Et2Select";
+import {Et2Select} from "../Et2Select";
 import {css, html, nothing, PropertyValues} from "@lion/core";
-import {IsEmail} from "../Validators/IsEmail";
+import {IsEmail} from "../../Validators/IsEmail";
 import interact from "@interactjs/interact";
 import {Validator} from "@lion/form-core";
 

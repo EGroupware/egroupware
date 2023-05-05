@@ -24,7 +24,7 @@ import {
 	egw_keyHandler
 } from "../../api/js/egw_action/egw_keymanager.js";
 import {Et2UrlEmailReadonly} from "../../api/js/etemplate/Et2Url/Et2UrlEmailReadonly";
-import {Et2SelectEmail} from "../../api/js/etemplate/Et2Select/Et2SelectEmail";
+import {Et2SelectEmail} from "../../api/js/etemplate/Et2Select/Select/Et2SelectEmail";
 /* required dependency, commented out because no module, but egw:uses is no longer parsed
 */
 

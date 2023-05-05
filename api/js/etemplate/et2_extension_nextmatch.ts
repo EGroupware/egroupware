@@ -73,7 +73,7 @@ import {Et2Dialog} from "./Et2Dialog/Et2Dialog";
 import {Et2Select} from "./Et2Select/Et2Select";
 import {loadWebComponent} from "./Et2Widget/Et2Widget";
 import {Et2AccountFilterHeader} from "./Et2Nextmatch/Headers/AccountFilterHeader";
-import {Et2SelectCategory} from "./Et2Select/Et2SelectCategory";
+import {Et2SelectCategory} from "./Et2Select/Select/Et2SelectCategory";
 import {Et2Searchbox} from "./Et2Textbox/Et2Searchbox";
 
 //import {et2_selectAccount} from "./et2_widget_SelectAccount";

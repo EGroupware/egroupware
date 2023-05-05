@@ -71,12 +71,7 @@ import './Et2Nextmatch/Headers/EntryHeader';
 import './Et2Nextmatch/Headers/FilterHeader';
 import './Et2Select/Et2Listbox';
 import './Et2Select/Et2Select';
-import './Et2Select/Et2SelectAccount';
-import './Et2Select/Et2SelectCategory';
-import './Et2Select/Et2SelectCountry';
-import './Et2Select/Et2SelectEmail';
-import './Et2Select/Et2SelectReadonly';
-import './Et2Select/Et2SelectThumbnail'
+import './Et2Select/SelectTypes';
 import './Et2Select/Tag/Et2Tag';
 import './Et2Select/Tag/Et2CategoryTag';
 import './Et2Select/Tag/Et2EmailTag';

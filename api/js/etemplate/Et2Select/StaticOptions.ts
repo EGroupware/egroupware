@@ -8,9 +8,11 @@
  * @param {type} widget
  */
 import {sprintf} from "../../egw_action/egw_action_common";
-import {Et2SelectReadonly} from "./Et2SelectReadonly";
+import {Et2SelectReadonly} from "./Select/Et2SelectReadonly";
 import {find_select_options, SelectOption} from "./FindSelectOptions";
-import {Et2Select, Et2SelectNumber, Et2WidgetWithSelect} from "./Et2Select";
+import {Et2Select, Et2WidgetWithSelect} from "./Et2Select";
+
+import {Et2SelectNumber} from "./Select/Et2SelectNumber";
 
 export type Et2SelectWidgets = Et2Select | Et2WidgetWithSelect | Et2SelectReadonly;
 
@@ -31,10 +33,12 @@ export const Et2StaticSelectMixin = <T extends Constructor<Et2WidgetWithSelect>>
 
 		// Hold the static widget options separately so other options (like sent from server in sel_options) won't
 		// conflict or be wiped out
-		protected static_options : SelectOption[];
+		protected static_options : SelectOption[] | Promise<SelectOption[]>;
 
 		// If widget needs to fetch options from server, we might want to wait for them
 		protected fetchComplete : Promise<SelectOption[] | void>;
+
+		protected other = [];
 
 		constructor(...args)
 		{

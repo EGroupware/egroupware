@@ -7,13 +7,13 @@
  * @author Ralf Becker <rb@egroupware.org>
  */
 
-import {Et2Select} from "./Et2Select";
-import {cleanSelectOptions, SelectOption} from "./FindSelectOptions";
-import {SelectAccountMixin} from "./SelectAccountMixin";
-import {Et2StaticSelectMixin} from "./StaticOptions";
+import {Et2Select} from "../Et2Select";
+import {cleanSelectOptions, SelectOption} from "../FindSelectOptions";
+import {SelectAccountMixin} from "../SelectAccountMixin";
+import {Et2StaticSelectMixin} from "../StaticOptions";
 import {html, nothing} from "@lion/core";
 
-export type AccountType = 'accounts'|'groups'|'both'|'owngroups';
+export type AccountType = 'accounts' | 'groups' | 'both' | 'owngroups';
 
 /**
  * @customElement et2-select-account

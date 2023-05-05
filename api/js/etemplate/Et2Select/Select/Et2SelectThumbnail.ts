@@ -7,9 +7,9 @@
  * @author Nathan Gray
  */
 
-import {Et2Select} from "./Et2Select";
+import {Et2Select} from "../Et2Select";
 import {css} from "@lion/core";
-import {SelectOption} from "./FindSelectOptions";
+import {SelectOption} from "../FindSelectOptions";
 
 export class Et2SelectThumbnail extends Et2Select
 {

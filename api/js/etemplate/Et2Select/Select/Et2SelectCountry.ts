@@ -8,10 +8,10 @@
  */
 
 
-import {Et2Select} from "./Et2Select";
-import {Et2StaticSelectMixin, StaticOptions as so} from "./StaticOptions";
-import {egw} from "../../jsapi/egw_global";
-import {SelectOption} from "./FindSelectOptions";
+import {Et2Select} from "../Et2Select";
+import {Et2StaticSelectMixin, StaticOptions as so} from "../StaticOptions";
+import {egw} from "../../../jsapi/egw_global";
+import {SelectOption} from "../FindSelectOptions";
 
 /**
  * Customised Select widget for countries
