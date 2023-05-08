@@ -837,7 +837,7 @@ class timesheet_ui extends timesheet_bo
 				}
 				$row['ts_start'] = $row['ts_unitprice'] = '';
 				if (!$this->quantity_sum) $row['ts_quantity'] = '';
-				$row['class'] = 'th rowNoEdit rowNoDelete rowNoUndelete';
+				$row['class'] = 'th rowNoEdit rowNoDelete rowNoUndelete rowSum';
 				$row['titleClass'] = 'timesheet_titleSum';
 				continue;
 			}

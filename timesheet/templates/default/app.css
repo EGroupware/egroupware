@@ -5,16 +5,22 @@
  */
 
 /* Allow project list selection in nm header to be large */
-#timesheet-index #timesheet-index_pm_id .ui-autocomplete.ui-menu
-{
+#timesheet-index #timesheet-index_pm_id .ui-autocomplete.ui-menu {
 	max-height: 80%;
 }
-.timesheet_titleSum,.timesheet_titleDetails { font-weight: bold; }
+
+.rowSum [id*='ts_quantity'], .rowSum [id*='ts_duration'], .timesheet_titleSum, .timesheet_titleDetails {
+	font-weight: bold;
+}
+
+table.egwGridView_grid tbody td[align=right] {
+	padding-top: 0px;
+}
 
 /* Let category & total columns line up vertically with the 2-element headers (Duration, Total, etc) */
 #timesheet-index .innerContainer > span {
-    margin-bottom: 5px;
-    display: inline-block;
+	margin-bottom: 5px;
+	display: inline-block;
 }
 
 #timesheet-edit.et2_container {
