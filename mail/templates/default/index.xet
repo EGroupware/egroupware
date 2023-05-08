@@ -13,7 +13,7 @@
                 </row>
                 <row>
                     <et2-vbox  class="previewWrapper">
-                        <et2-box  id="blank" disabled="@fromaddress">
+                        <et2-box  id="blank" disabled="@uid">
                             <et2-image  src="email"></et2-image>
                             <et2-description  value="Select an item to read"></et2-description>
                         </et2-box>
