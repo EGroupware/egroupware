@@ -1251,7 +1251,8 @@ class Base
 	 * @param string &$op ='AND' on return boolean operation to use, if pattern does not start with ! we use OR else AND
 	 * @param string $extra_col =null extra column to search
 	 * @param array $search_cols =[] List of columns to search.  If not provided, all columns in $this->db_cols will be considered
-	 * @param ?bool $search_cfs =null null: do it only for Api\Storage, false: never do it
+	 *  allows to specify $search_cfs parameter with key 'search_cfs', which has precedence over $search_cfs parameter
+	 * @param null|bool|string|string[] $search_cfs null: do it only for Api\Storage, false: never do it, or string type(s) of cfs to search, e.g. "url-email"
 	 * @return array or column => value pairs
 	 */
 	public function search2criteria($_pattern,&$wildcard='',&$op='AND',$extra_col=null, $search_cols=[],$search_cfs=null)
@@ -1284,8 +1285,13 @@ class Base
 		{
 			$search_cols = $this->get_default_search_columns();
 		}
+		if (array_key_exists('search_cfs', $search_cols))
+		{
+			$search_cfs = $search_cols['search_cfs'];
+			unset($search_cols['search_cfs']);
+		}
 		// Concat all fields to be searched together, so the conditions operate across the whole record
-		foreach($search_cols as $col)
+		foreach($search_cols as $key => $col)
 		{
 			$col_name = $col;
 			$table = $this->table_name;
@@ -1381,7 +1387,7 @@ class Base
 			if ($search_cfs ?? is_a($this, __NAMESPACE__))
 			{
 				// add custom-field search: OR id IN (SELECT id FROM extra_table WHERE extra_value LIKE '$search_token')
-				$token_filter .= $this->cf_match($search_token);
+				$token_filter .= $this->cf_match($search_token, is_string($search_cfs) || is_array($search_cfs) ? $search_cfs : null);
 			}
 
 			// Compare numeric token as equality for numeric columns
