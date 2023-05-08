@@ -21,7 +21,7 @@ import {et2_register_widget, et2_widget, WidgetConfig} from "./et2_core_widget";
 import {et2_no_init} from "./et2_core_common";
 // fixing circular dependencies by only importing type
 import type {et2_inputWidget} from "./et2_core_inputWidget";
-import {egwIsMobile} from "../egw_action/egw_action_common.js";
+import {egwIsMobile} from "../egw_action/egw_action_common";
 
 /**
  * Class which manages the DOM node itself. The simpleWidget class is derrived

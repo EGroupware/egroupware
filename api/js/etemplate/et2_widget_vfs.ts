@@ -30,7 +30,7 @@ import {et2_no_init} from "./et2_core_common";
 import {egw} from "../jsapi/egw_global";
 import {egw_getAppObjectManager, egwActionObject} from "../egw_action/egw_action.js";
 import {egw_keyHandler} from '../egw_action/egw_keymanager.js';
-import {EGW_KEY_ENTER} from '../egw_action/egw_action_constants.js';
+import {EGW_KEY_ENTER} from '../egw_action/egw_action_constants';
 import {Et2Dialog} from "./Et2Dialog/Et2Dialog";
 import type {Et2VfsMime} from "./Vfs/Et2VfsMime";
 import type {Et2VfsGid, Et2VfsUid} from "./Et2Vfs/Et2VfsUid";

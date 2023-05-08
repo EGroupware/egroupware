@@ -36,9 +36,9 @@ import {
 	egwActionObjectManager,
 	egwActionObject
 } from "../egw_action/egw_action.js";
-import {EGW_AO_FLAG_DEFAULT_FOCUS,EGW_AO_EXEC_SELECTED, EGW_AO_FLAG_IS_CONTAINER} from "../egw_action/egw_action_constants.js";
+import {EGW_AO_FLAG_DEFAULT_FOCUS,EGW_AO_EXEC_SELECTED, EGW_AO_FLAG_IS_CONTAINER} from "../egw_action/egw_action_constants";
 import {nm_action} from "./et2_extension_nextmatch_actions.js";
-import {egwIsMobile} from "../egw_action/egw_action_common.js";
+import {egwIsMobile} from "../egw_action/egw_action_common";
 
 /**
  * @augments et2_dataview_controller

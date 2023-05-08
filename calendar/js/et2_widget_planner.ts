@@ -27,12 +27,12 @@ import {
 	EGW_AI_DRAG_ENTER,
 	EGW_AI_DRAG_OUT,
 	EGW_AO_FLAG_IS_CONTAINER
-} from "../../api/js/egw_action/egw_action_constants.js";
+} from "../../api/js/egw_action/egw_action_constants";
 import {et2_IDetachedDOM, et2_IPrint, et2_IResizeable} from "../../api/js/etemplate/et2_core_interfaces";
 import {et2_compileLegacyJS} from "../../api/js/etemplate/et2_core_legacyJSFunctions";
 import {et2_no_init} from "../../api/js/etemplate/et2_core_common";
 import {CalendarApp} from "./app";
-import {sprintf} from "../../api/js/egw_action/egw_action_common.js";
+import {sprintf} from "../../api/js/egw_action/egw_action_common";
 import {et2_dataview_grid} from "../../api/js/etemplate/et2_dataview_view_grid";
 import {formatDate, formatTime} from "../../api/js/etemplate/Et2Date/Et2Date";
 import interact from "@interactjs/interactjs/index";

@@ -20,7 +20,7 @@ import {et2_valueWidget} from "../etemplate/et2_core_valueWidget";
 import {nm_action} from "../etemplate/et2_extension_nextmatch_actions";
 import {Et2Dialog} from "../etemplate/Et2Dialog/Et2Dialog";
 import {Et2Favorites} from "../etemplate/Et2Favorites/Et2Favorites";
-import {EgwAction} from "../egw_action/ts/egw_action";
+import {EgwAction} from "../egw_action/egw_action";
 
 /**
  * Type for push-message

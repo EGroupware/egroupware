@@ -26,7 +26,7 @@ import {et2_calendar_event} from "./et2_widget_event";
 import {egw_getObjectManager, egwActionObject} from "../../api/js/egw_action/egw_action.js";
 import {et2_compileLegacyJS} from "../../api/js/etemplate/et2_core_legacyJSFunctions";
 import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";
-import {EGW_AI_DRAG_ENTER, EGW_AI_DRAG_OUT} from "../../api/js/egw_action/egw_action_constants.js";
+import {EGW_AI_DRAG_ENTER, EGW_AI_DRAG_OUT} from "../../api/js/egw_action/egw_action_constants";
 import {formatDate, formatTime, parseTime} from "../../api/js/etemplate/Et2Date/Et2Date";
 import interact from "@interactjs/interactjs/index";
 import type {InteractEvent} from "@interactjs/core/InteractEvent";

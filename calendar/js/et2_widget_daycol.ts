@@ -22,7 +22,7 @@ import {ClassWithAttributes} from "../../api/js/etemplate/et2_core_inheritance";
 import {et2_IDetachedDOM, et2_IResizeable} from "../../api/js/etemplate/et2_core_interfaces";
 import {et2_no_init} from "../../api/js/etemplate/et2_core_common";
 import {egw} from "../../api/js/jsapi/egw_global";
-import {egwIsMobile, sprintf} from "../../api/js/egw_action/egw_action_common.js";
+import {egwIsMobile, sprintf} from "../../api/js/egw_action/egw_action_common";
 import {CalendarApp} from "./app";
 import {et2_calendar_view} from "./et2_widget_view";
 import flatpickr from "flatpickr";

@@ -21,7 +21,7 @@ import {et2_compileLegacyJS} from "./et2_core_legacyJSFunctions";
 import {et2_loadXMLFromURL} from "./et2_core_xml";
 import {et2_nextmatch, et2_nextmatch_header_bar} from "./et2_extension_nextmatch";
 import '../jsapi/egw_json.js';
-import {egwIsMobile} from "../egw_action/egw_action_common.js";
+import {egwIsMobile} from "../egw_action/egw_action_common";
 import './Layout/Et2Box/Et2Box';
 import './Layout/Et2Details/Et2Details';
 import './Layout/Et2Tabs/Et2Tab';

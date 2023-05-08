@@ -25,7 +25,7 @@ import {
 	egwActionObject,
 	egwActionObjectInterface
 } from '../egw_action/egw_action.js';
-import {EGW_AI_DRAG_OUT, EGW_AI_DRAG_OVER} from '../egw_action/egw_action_constants.js';
+import {EGW_AI_DRAG_OUT, EGW_AI_DRAG_OVER} from '../egw_action/egw_action_constants';
 import {egw} from "../jsapi/egw_global";
 import {Et2Tab} from "./Layout/Et2Tabs/Et2Tab";
 import {Et2TabPanel} from "./Layout/Et2Tabs/Et2TabPanel";

@@ -17,7 +17,7 @@ import {
 	EGW_KEY_ARROW_RIGHT,
 	EGW_KEY_ARROW_UP, EGW_KEY_ENTER,
 	EGW_KEY_ESCAPE
-} from "./egw_action_constants.js";
+} from "./egw_action_constants";
 //Global variable which is used to store the currently active menu so that it
 //may be closed when another menu openes
 export var _egw_active_menu = null;

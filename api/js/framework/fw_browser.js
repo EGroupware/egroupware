@@ -12,7 +12,7 @@
 	egw_inheritance.js;
 */
 
-import '../egw_action/egw_action_common.js';
+import '../egw_action/egw_action_common';
 import '../jsapi/egw_inheritance.js';
 import '../etemplate/etemplate2';	// otherwise et2_load json-response-handler is not (yet) available
 

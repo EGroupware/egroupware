@@ -16,8 +16,8 @@ import {et2_createWidget} from "../../api/js/etemplate/et2_core_widget";
 import {et2_dialog} from "../../api/js/etemplate/et2_widget_dialog";
 import {et2_button} from "../../api/js/etemplate/et2_widget_button";
 import {egw_getObjectManager} from '../../api/js/egw_action/egw_action.js';
-import {egwIsMobile, egwSetBit} from "../../api/js/egw_action/egw_action_common.js";
-import {EGW_AO_FLAG_DEFAULT_FOCUS} from "../../api/js/egw_action/egw_action_constants.js";
+import {egwIsMobile, egwSetBit} from "../../api/js/egw_action/egw_action_common";
+import {EGW_AO_FLAG_DEFAULT_FOCUS} from "../../api/js/egw_action/egw_action_constants";
 import {
 	egw_keycode_translation_function,
 	egw_keycode_makeValid,

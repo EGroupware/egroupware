@@ -13,10 +13,10 @@
 */
 
 /// <reference types="../egw_action" />
-import {egwBitIsSet} from "./egw_action_common";
+import {egwBitIsSet} from "../egw_action_common";
 import {EGW_AO_STATE_FOCUSED, EGW_AO_STATE_SELECTED} from "./egw_action_constants";
 import {egwActionObjectInterface} from "../egw_action";
-import {EgwActionObjectBase} from "./egw_action";
+import {EgwActionObjectBase} from "../egw_action";
 
 /**
  * This file contains an egw_actionObjectInterface which allows a dhtmlx tree

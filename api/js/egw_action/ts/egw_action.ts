@@ -28,10 +28,10 @@ import {
 	EGW_AO_EXEC_SELECTED,
 	EGW_KEY_A,
 	EGW_KEY_SPACE, EGW_AO_STATES
-} from './egw_action_constants';
+} from '../egw_action_constants';
 import {
 	EgwFnct, egwActionStoreJSON, egwBitIsSet, egwQueueCallback, egwSetBit, egwObjectLength
-} from './egw_action_common';
+} from '../egw_action_common';
 import '../egw_action_popup.js';
 import "../egw_action_dragdrop.js";
 import "../egw_menu_dhtmlx.js";
@@ -822,12 +822,14 @@ export class EgwAction
 				Et2Dialog.show_dialog((_button) => {
 					if (_button == Et2Dialog.YES_BUTTON)
 					{
+						// @ts-ignore
 						return this.onExecute.exec(this, _senders, _target);
 					}
 				}, msg, this.data.hint, {}, Et2Dialog.BUTTONS_YES_NO, Et2Dialog.QUESTION_MESSAGE);
 				return;
 			}
 		}
+		// @ts-ignore
 		return this.onExecute.exec(this, _senders, _target);
 	};
 

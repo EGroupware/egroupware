@@ -25,8 +25,8 @@ import {
 	EGW_AO_STATE_FOCUSED,
 	EGW_AO_STATE_NORMAL,
 	EGW_AO_STATE_SELECTED
-} from "../egw_action/egw_action_constants.js";
-import {egwBitIsSet, egwSetBit} from "../egw_action/egw_action_common.js";
+} from "../egw_action/egw_action_constants";
+import {egwBitIsSet, egwSetBit} from "../egw_action/egw_action_common";
 import {Et2Dialog} from "./Et2Dialog/Et2Dialog";
 
 /**
