@@ -414,9 +414,10 @@ class Storage extends Storage\Base
 	 * To be or-ed to query for $_pattern in regular columns of main-table.
 	 *
 	 * @param string $_pattern search pattern incl. * or ? as wildcard, if no wildcards used we append and prepend one!
+	 * @param string|string[] $_type=null only search cfs of given type(s), e.g. "url-email"
 	 * @return string with SQL fragment running on main table: "id IN (SELECT id FROM extra-table WHERE extra_value like '$pattern')"
 	 */
-	public function cf_match($_pattern)
+	public function cf_match($_pattern, $_type=null)
 	{
 		static $private_cfs=null;
 
@@ -435,9 +436,21 @@ class Storage extends Storage\Base
 				$this->customfields);
 			//error_log(__METHOD__."() private_cfs=".array2string($private_cfs));
 		}
-		if ($private_cfs)
+		if ($_type)
 		{
-			$sql .= ' AND '.$this->db->expression($this->extra_table, array($this->extra_key => array_keys($this->customfields)));
+			$cfs = [];
+			foreach($this->customfields as $name => $data)
+			{
+				if (in_array($data['type'], (array)$_type, true))
+				{
+					$cfs[] = $name;
+				}
+			}
+			if (!$cfs) return '';
+		}
+		if ($private_cfs || isset($cfs))
+		{
+			$sql .= ' AND '.$this->db->expression($this->extra_table, array($this->extra_key => $cfs ?? array_keys($this->customfields)));
 		}
 		return $sql.')';
 	}
