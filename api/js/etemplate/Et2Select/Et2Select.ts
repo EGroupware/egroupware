@@ -8,7 +8,7 @@
  */
 
 
-import {css, html, TemplateResult} from "lit";
+import {css, html, PropertyValues, TemplateResult} from "lit";
 import {Et2widgetWithSelectMixin} from "./Et2WidgetWithSelectMixin";
 import {SelectOption} from "./FindSelectOptions";
 import {SlSelect} from "@shoelace-style/shoelace";
@@ -185,6 +185,31 @@ export class Et2Select extends Et2WidgetWithSelect
 		this.removeEventListener("sl-change", this._triggerChange);
 	}
 
+	// @ts-ignore
+	get value()
+	{
+		return super.value;
+	}
+
+	// @ts-ignore
+	set value(val : string | string[] | number | number[])
+	{
+		if(typeof val === 'string' && val.indexOf(',') !== -1 && this.multiple)
+		{
+			val = val.split(',');
+		}
+		if(typeof val === 'number')
+		{
+			val = val.toString();
+		}
+		if(Array.isArray(val))
+		{
+			// Make sure value has no duplicates, and values are strings
+			val = <string[]>[...new Set(val.map(v => typeof v === 'number' ? v.toString() : v || ''))];
+		}
+		super.value = val || '';
+	}
+
 	/**
 	 * This method must be called whenever the selection changes. It will update the selected options cache, the current
 	 * value, and the display value.
@@ -199,7 +224,7 @@ export class Et2Select extends Et2WidgetWithSelect
 		// Update the value and display label
 		if(this.multiple)
 		{
-			this.value = this.selectedOptions.map(el => el.option.value);
+			this.value = this.selectedOptions.map(el => typeof el.option != "undefined" ? el.option.value : el.value);
 
 			if(this.placeholder && this.value.length === 0)
 			{
@@ -213,8 +238,8 @@ export class Et2Select extends Et2WidgetWithSelect
 		}
 		else
 		{
-			this.value = this.selectedOptions[0]?.option?.value ?? '';
-			this.displayLabel = this.selectedOptions[0]?.getTextLabel() ?? '';
+			this.value = (typeof this.selectedOptions[0]?.option != "undefined" ? this.selectedOptions[0]?.option.value : this.selectedOptions[0]?.value) ?? '';
+			this.displayLabel = this.selectedOptions[0]?.getTextLabel() || (this.emptyLabel ?? '');
 		}
 
 		// Update validity
@@ -222,6 +247,18 @@ export class Et2Select extends Et2WidgetWithSelect
 		{
 			this.formControlController.updateValidity();
 		});
+	}
+
+	updated(changedProperties : PropertyValues)
+	{
+		super.updated(changedProperties);
+
+		// Make sure display gets updated
+		if(changedProperties.has('value') || changedProperties.has("emptyLabel"))
+		{
+			// Is this needed? Maybe for initial value
+			//this.selectionChanged();
+		}
 	}
 
 	/**
