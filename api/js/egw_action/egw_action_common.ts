@@ -1,7 +1,3 @@
-// noinspection JSUnusedGlobalSymbols
-//test
-import {egw} from "../../jsapi/egw_global";
-
 /**
  * eGroupWare egw_action framework - egw action framework
  *
@@ -13,7 +9,8 @@ import {egw} from "../../jsapi/egw_global";
  */
 
 import {EGW_AO_SHIFT_STATE_BLOCK, EGW_AO_SHIFT_STATE_MULTI, EGW_AO_SHIFT_STATE_NONE} from "./egw_action_constants";
-
+// this import breaks shoelace with ("Illegal constructor (custom element class must be registered with global customElements registry to be newable)"); in SlAvatar
+//import {egw} from "../jsapi/egw_global.js";
 /**
  * Sets properties given in _data in _obj. Checks whether the property keys
  * exists and if corresponding setter functions are available. Properties starting
@@ -26,7 +23,6 @@ import {EGW_AO_SHIFT_STATE_BLOCK, EGW_AO_SHIFT_STATE_MULTI, EGW_AO_SHIFT_STATE_N
  */
 export function egwActionStoreJSON(_data: any, _obj: any, _setterOnly: boolean | string): void {
     for (let key in _data) {
-        //TODO: is this still needed?
         if (key.charAt(0) != '_') {
             //Check whether there is a setter function available
             if (typeof _obj['set_' + key] == "function") {
@@ -268,7 +264,9 @@ export function egwQueueCallback(_proc: { apply: (arg0: any, arg1: any) => void;
 //     }, _timeout)
 // }
 
-
+/**
+ * @deprecated use class EgwFnct instead
+ */
 /**
  * Class which is used to be able to handle references to JavaScript functions
  * from strings.
@@ -339,12 +337,17 @@ export class EgwFnct
     /**
      * Executes the function
      */
-    public exec(...args) {
-        this.functionToPerform ? this.functionToPerform.apply(this.context, ...args) : this.value
+    public exec() {
+        if (this.functionToPerform) {
+          return  this.functionToPerform.apply(this.context,arguments)
+        } else {
+            return this.value
+        }
     }
 
 }
 
+export class  egwFnct extends EgwFnct {}
 
 /**
  * Checks whether this is currently run on a mobile browser
