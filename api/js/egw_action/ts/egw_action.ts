@@ -1105,13 +1105,13 @@ export class EgwActionLink
 export class EgwActionObject
 {
 	readonly id: string
-	private readonly parent: EgwActionObject
+	readonly parent: EgwActionObject
 	private readonly children: EgwActionObject[] = []
 	private actionLinks: EgwActionLink[] = []
 	interface: EgwActionObjectInterface
 	readonly manager: EgwActionManager
 	private readonly flags: number
-	private data: any = null
+	data: any = null
 	private readonly setSelectedCallback: any = null;
 	private registeredImpls: any[] = [];
 	// Two variables which help fast travelling through the object tree, when
