@@ -4351,13 +4351,21 @@ class Mail
 	 *
 	 * @param string $_date to be parsed/formatted
 	 * @param string $format ='' if none is passed, use user prefs
+	 * @param boolean|null $convert2usertime true: user-, false: server-timezone, null: as parsed
 	 * @return string returns the date as it is parseable by strtotime, or current timestamp if everything fails
 	 */
-	static function _strtotime($_date='', $format='', $convert2usertime=false)
+	static function _strtotime($_date='', $format='', $convert2usertime=null)
 	{
 		try {
 			$date = new DateTime($_date);	// parse date & time including timezone (throws exception, if not parsable)
-			if ($convert2usertime) $date->setUser();	// convert to user-time
+			if ($convert2usertime === true)
+			{
+				$date->setUser();   // convert to user-time
+			}
+			elseif ($convert2usertime === false)
+			{
+				$date->setServer(); // convert to server-time
+			}
 			$date2return = $date->format($format);
 		}
 		catch(\Exception $e)
@@ -4378,6 +4386,7 @@ class Mail
 				$date2return = DateTime::to('now', $format);
 			}
 		}
+		//error_log(__METHOD__."(date=".json_encode($_date).", format='$format', convert2usertime=".json_encode($convert2usertime).") returning ".json_encode($date2return));
 		return $date2return;
 	}
 
