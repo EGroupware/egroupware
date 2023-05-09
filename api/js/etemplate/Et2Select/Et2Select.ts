@@ -448,7 +448,12 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		);
 
 		// Check for value using missing options (deleted or otherwise not allowed)
-		valueArray = this.filterOutMissingOptions(valueArray);
+		let filtered = this.filterOutMissingOptions(valueArray);
+		if(filtered.length != valueArray.length)
+		{
+			this.value = filtered;
+			return;
+		}
 
 		// Multiple is allowed to be empty, and if we don't have an emptyLabel nothing to do
 		if(this.multiple || !this.emptyLabel)
@@ -773,8 +778,6 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		{
 			super.et2HandleBlur(event);
 		}
-		console.log("Blur event");
-
 		this.dropdown?.hide();
 	}
 
