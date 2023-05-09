@@ -11,7 +11,7 @@
 /*egw:uses
 	et2_core_interfaces;
 	et2_core_widget;
-	/api/js/egw_action/egw_action.js;
+	/api/js/egw_action/egw_action;
 */
 
 import {ClassWithAttributes} from './et2_core_inheritance';
@@ -24,7 +24,7 @@ import {
 	egw_getObjectManager,
 	egwActionObject,
 	egwActionObjectInterface
-} from '../egw_action/egw_action.js';
+} from '../egw_action/egw_action';
 import {EGW_AI_DRAG_OUT, EGW_AI_DRAG_OVER} from '../egw_action/egw_action_constants';
 import {egw} from "../jsapi/egw_global";
 import {Et2Tab} from "./Layout/Et2Tabs/Et2Tab";

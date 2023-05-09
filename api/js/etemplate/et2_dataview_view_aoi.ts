@@ -17,7 +17,7 @@
 
 import {
 	egwActionObjectInterface
-} from "../egw_action/egw_action.js";
+} from "../egw_action/egw_action";
 import {EGW_AO_SHIFT_STATE_MULTI,
 	EGW_AO_STATE_FOCUSED,
 	EGW_AO_STATE_SELECTED} from '../egw_action/egw_action_constants';

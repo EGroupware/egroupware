@@ -26,7 +26,7 @@ import {et2_inputWidget} from "./et2_core_inputWidget";
 import {ClassWithAttributes} from "./et2_core_inheritance";
 import {et2_no_init} from "./et2_core_common";
 import {egw} from "../jsapi/egw_global";
-import {egw_getAppObjectManager, egw_getObjectManager, egwActionObject} from "../egw_action/egw_action.js";
+import {egw_getAppObjectManager, egw_getObjectManager, egwActionObject} from "../egw_action/egw_action";
 import {EGW_AO_FLAG_IS_CONTAINER} from "../egw_action/egw_action_constants";
 import {dhtmlxtreeItemAOI} from "../egw_action/egw_dragdrop_dhtmlx_tree.js";
 import {egwIsMobile} from "../egw_action/egw_action_common";

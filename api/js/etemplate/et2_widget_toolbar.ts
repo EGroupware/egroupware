@@ -17,7 +17,7 @@
 import {et2_DOMWidget} from "./et2_core_DOMWidget";
 import {et2_register_widget, WidgetConfig} from "./et2_core_widget";
 import {ClassWithAttributes} from "./et2_core_inheritance";
-import {egw_getObjectManager, egwActionObject, egwActionObjectManager} from '../egw_action/egw_action.js';
+import {egw_getObjectManager, egwActionObject, egwActionObjectManager} from '../egw_action/egw_action';
 import {et2_IInput} from "./et2_core_interfaces";
 import {egw} from "../jsapi/egw_global";
 import {egwIsMobile} from "../egw_action/egw_action_common";

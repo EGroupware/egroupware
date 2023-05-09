@@ -10,6 +10,7 @@
 
 import {EGW_AO_SHIFT_STATE_BLOCK, EGW_AO_SHIFT_STATE_MULTI, EGW_AO_SHIFT_STATE_NONE} from "./egw_action_constants";
 // this import breaks shoelace with ("Illegal constructor (custom element class must be registered with global customElements registry to be newable)"); in SlAvatar
+//et2 also has this import without problems
 //import {egw} from "../jsapi/egw_global.js";
 /**
  * Sets properties given in _data in _obj. Checks whether the property keys

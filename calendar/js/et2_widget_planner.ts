@@ -22,7 +22,7 @@ import {et2_action_object_impl} from "../../api/js/etemplate/et2_core_DOMWidget"
 import {et2_calendar_event} from "./et2_widget_event";
 import {et2_calendar_planner_row} from "./et2_widget_planner_row";
 import {egw} from "../../api/js/jsapi/egw_global";
-import {egw_getObjectManager, egwActionObject} from "../../api/js/egw_action/egw_action.js";
+import {egw_getObjectManager, egwActionObject} from "../../api/js/egw_action/egw_action";
 import {
 	EGW_AI_DRAG_ENTER,
 	EGW_AI_DRAG_OUT,

@@ -18,7 +18,7 @@
 import {egw} from "../jsapi/egw_global";
 import {et2_bounds} from "./et2_core_common";
 import {et2_dataview_rowAOI} from "./et2_dataview_view_aoi";
-import {egwActionObjectInterface} from "../egw_action/egw_action.js";
+import {egwActionObjectInterface} from "../egw_action/egw_action";
 import {
 	EGW_AO_SHIFT_STATE_BLOCK,
 	EGW_AO_SHIFT_STATE_MULTI,

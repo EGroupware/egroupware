@@ -7,7 +7,7 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package egw_action
  */
-
+//TODO step für Step ersetzen von js file
 /*egw:uses
 	egw_action_common;
 */
@@ -28,16 +28,16 @@ import {
 	EGW_AO_EXEC_SELECTED,
 	EGW_KEY_A,
 	EGW_KEY_SPACE, EGW_AO_STATES
-} from '../egw_action_constants';
+} from './egw_action_constants';
 import {
 	EgwFnct, egwActionStoreJSON, egwBitIsSet, egwQueueCallback, egwSetBit, egwObjectLength
-} from '../egw_action_common';
-import '../egw_action_popup.js';
-import "../egw_action_dragdrop.js";
-import "../egw_menu_dhtmlx.js";
-import {app, egw, Iegw} from "../../jsapi/egw_global";
-import {Et2Dialog} from "../../etemplate/Et2Dialog/Et2Dialog";
-import {nm_action} from "../../etemplate/et2_extension_nextmatch_actions";
+} from './egw_action_common';
+import './egw_action_popup.js';
+import "./egw_action_dragdrop.js";
+import "./egw_menu_dhtmlx.js";
+//import {app, egw, Iegw} from "../jsapi/egw_global";
+import {Et2Dialog} from "../etemplate/Et2Dialog/Et2Dialog";
+import {nm_action} from "../etemplate/et2_extension_nextmatch_actions";
 
 //TODO check
 //global window interface augmentation
@@ -57,6 +57,7 @@ type EgwActionClassData = {
 	actionConstructor: Function,
 	implementation: any
 }
+//TODO egw global.js
 declare global
 {
 	interface Window
@@ -65,13 +66,14 @@ declare global
 		egw: Function //egw returns instance of client side api -- set in egw_core.js
 		egwIsMobile: () => boolean // set in egw_action_commons.ts
 		nm_action: typeof nm_action
+		egw_getAppName:()=>string
 	}
 }
 /**
  * Getter functions for the global egwActionManager and egwObjectManager objects
  */
 
-let egw_globalActionManager = null;
+var egw_globalActionManager = null;
 export var egw_globalObjectManager = null;
 
 /**
@@ -87,7 +89,7 @@ export var egw_globalObjectManager = null;
  * @param {number} [_search_depth=Infinite] How deep into existing action children
  *    to search.
  */
-export function egw_getActionManager(_id?: null, _create: boolean = true, _search_depth: number = Number.MAX_VALUE)
+export function egw_getActionManager(_id?: string, _create: boolean = true, _search_depth: number = Number.MAX_VALUE)
 {
 
 	// Check whether the global action manager had been created, if not do so
@@ -126,7 +128,7 @@ export function egw_getObjectManager(_id, _create = true, _search_depth = Number
 {
 
 	// Check whether the global object manager exists
-	var res = egw_globalObjectManager;
+	let res = egw_globalObjectManager;
 	if (res == null)
 	{
 		res = egw_globalObjectManager = new EgwActionObjectManager("_egwGlobalObjectManager", egw_getActionManager());
@@ -165,9 +167,9 @@ export function egw_getAppObjectManager(_create, _appName)
  * @return {EgwActionManager}
  */
 // this function is never used
-// export function egw_getAppActionManager(_create) {
-//     return egw_getActionManager(egw_getAppName(), _create, 1);
-//}
+export function egw_getAppActionManager(_create) {
+     return egw_getActionManager(window.egw_getAppName(), _create, 1);
+}
 
 
 /** egwActionHandler Interface **/
@@ -943,6 +945,11 @@ export class EgwAction
 
 }
 
+/**
+ * @deprecated use upperCase class EgwAction instead
+ */
+export class egwAction extends EgwAction{}
+
 //after class creation register it in the global scope with its constructor!!
 // Do this for all classes extending EgwAction
 (() => {
@@ -1003,7 +1010,10 @@ export class EgwActionManager extends EgwAction
 	}
 
 }
-
+/**
+ * @deprecated use upperCase class EgwAction instead
+ */
+export class egwActionManager extends EgwActionManager{}
 
 /** EgwActionImplementation Interface **/
 
@@ -1043,6 +1053,25 @@ export interface EgwActionImplementation
 	unregisterAction: (_actionObjectInterface: EgwActionObjectInterface) => boolean;
 	executeImplementation: (_context: any, _selected: any, _links: any) => any;
 	type: string;
+}
+/**
+ * @deprecated implement upperCase interface EgwActionImplementation instead
+ */
+export class egwActionImplementation implements EgwActionImplementation{
+	executeImplementation(_context: any, _selected: any, _links: any): any {
+		throw new Error("unimplemented member please implement uppercase EgwActionImplementation Interface")
+	}
+
+	registerAction(_actionObjectInterface: EgwActionObjectInterface, _triggerCallback: Function, _context: object): boolean {
+		throw new Error("unimplemented member please implement uppercase EgwActionImplementation Interface")
+	}
+
+	type: string;
+
+	unregisterAction(_actionObjectInterface: EgwActionObjectInterface): boolean {
+		throw new Error("unimplemented member please implement uppercase EgwActionImplementation Interface")
+	}
+
 }
 
 
@@ -1088,6 +1117,10 @@ export class EgwActionLink
 	};
 }
 
+/**
+ * @deprecated use upperCase class EgwActionLink instead
+ */
+export class egwActionLink extends EgwActionLink{}
 /**
  * The egwActionObject represents an abstract object to which actions may be
  * applied. Communication with the DOM tree is established by using the
@@ -2351,6 +2384,10 @@ export class EgwActionObject
 	};
 }
 
+/**
+ * @deprecated use upperCase class EgwAction instead
+ */
+export class egwActionObject extends EgwActionObject{}
 
 /** egwActionObjectInterface Interface **/
 
@@ -2515,6 +2552,11 @@ export class EgwActionObjectBase implements EgwActionObjectInterface
 
 }
 
+/**
+ * @deprecated use EgwActionObjectBase instead
+ * this name exist for historical reasons
+ */
+export class egwActionObjectInterface extends EgwActionObjectBase{}
 //var egwActionObjectDummyInterface = EgwActionObjectBase.constructor;
 
 /** egwActionObjectManager Object **/
@@ -2568,8 +2610,7 @@ export class EgwActionObjectManager extends EgwActionObject
 }
 
 /**
- * @deprecated use EgwActionObjectBase instead
- * this name exist for historical reasons
+ * @deprecated use uppercase EgwActionObjectManager instead
+ *
  */
-export type egwActionObjectInterface = EgwActionObjectBase
-//TODO other aliases
+export class egwActionObjectManager extends EgwActionObjectManager{}

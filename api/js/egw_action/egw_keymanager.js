@@ -13,7 +13,7 @@
 	egw_action;
 */
 
-import {egw_getAppObjectManager, egw_globalObjectManager} from "./egw_action.js";
+import {egw_getAppObjectManager, egw_globalObjectManager} from "./egw_action";
 import {_egw_active_menu} from "./egw_menu.js";
 import {
 	EGW_AO_FLAG_DEFAULT_FOCUS,

@@ -20,7 +20,7 @@ import {et2_IAligned, et2_IDetachedDOM, et2_IResizeable} from "./et2_core_interf
 import {et2_register_widget, et2_widget, WidgetConfig} from "./et2_core_widget";
 import {ClassWithAttributes} from "./et2_core_inheritance";
 import {et2_action_object_impl, et2_DOMWidget} from "./et2_core_DOMWidget";
-import {egw_getAppObjectManager, egwActionObject} from '../egw_action/egw_action.js';
+import {egw_getAppObjectManager, egwActionObject} from '../egw_action/egw_action';
 import {et2_directChildrenByTagName, et2_filteredNodeIterator, et2_readAttrWithDefault} from "./et2_core_xml";
 import {egw} from "../jsapi/egw_global";
 import Sortable from 'sortablejs/modular/sortable.complete.esm.js';

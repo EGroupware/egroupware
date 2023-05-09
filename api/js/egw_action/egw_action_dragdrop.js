@@ -16,7 +16,7 @@
 	vendor.bower-asset.jquery.dist.jquery;
 */
 
-import {egwAction,egwActionImplementation, egw_getObjectManager} from "./egw_action.js";
+import {egwAction,egwActionImplementation, egw_getObjectManager} from "./egw_action";
 import {getPopupImplementation} from "./egw_action_popup.js";
 import {EGW_AI_DRAG_OUT, EGW_AI_DRAG_OVER, EGW_AO_EXEC_THIS, EGW_AI_DRAG_ENTER} from "./egw_action_constants";
 

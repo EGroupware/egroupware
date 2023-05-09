@@ -250,7 +250,7 @@ class Bundle
 		$inc_mgr->include_js_file('/api/js/dhtmlxtree/sources/ext/dhtmlxtree_json.js');
 		// actions
 		$inc_mgr->include_js_file('/api/js/egw_action/egw_action_constants');
-		$inc_mgr->include_js_file('/api/js/egw_action/egw_action.js');
+		$inc_mgr->include_js_file('/api/js/egw_action/egw_action');
 		$inc_mgr->include_js_file('/api/js/egw_action/egw_keymanager.js');
 		$inc_mgr->include_js_file('/api/js/egw_action/egw_action_popup.js');
 		$inc_mgr->include_js_file('/api/js/egw_action/egw_action_dragdrop.js');
