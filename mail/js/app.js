@@ -400,6 +400,11 @@ app.classes.mail = AppJS.extend(
 				var content = this.et2.getArrayMgr('content').data;
 				if (to && to.get_value() && to.get_value().length > 0)
 				{
+					if (typeof to.blur == "function")
+					{
+						// html area changes focus as part of its init, make sure it doesn't re-focus to
+						to.blur();
+					}
 					if (content.is_plain)
 					{
 						// focus
@@ -407,9 +412,11 @@ app.classes.mail = AppJS.extend(
 						// get the cursor to the top of the textarea
 						if (typeof plainText.getDOMNode().setSelectionRange !='undefined' && !jQuery(plainText.getDOMNode()).is(":hidden"))
 						{
-							setTimeout(function(){
-								plainText.getDOMNode().setSelectionRange(0,0)
+							setTimeout(function ()
+							{
+								plainText.getDOMNode().setSelectionRange(0, 0)
 								plainText.focus();
+								plainText.shadowRoot.querySelector("textarea").scrollTop = 0;
 							}, 2000);
 						}
 					}

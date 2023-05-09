@@ -713,6 +713,15 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		return tag;
 	}
 
+	blur()
+	{
+		if(typeof super.blur == "function")
+		{
+			super.blur();
+		}
+		this.dropdown.hide();
+	}
+
 	private handleTagRemove(event : CustomEvent, option)
 	{
 		event.stopPropagation();
@@ -756,6 +765,17 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 				}
 			});
 		}
+	}
+
+	private et2HandleBlur(event : Event)
+	{
+		if(typeof super.et2HandleBlur === "function")
+		{
+			super.et2HandleBlur(event);
+		}
+		console.log("Blur event");
+
+		this.dropdown?.hide();
 	}
 
 	/**
