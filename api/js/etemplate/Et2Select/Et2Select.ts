@@ -436,11 +436,26 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 	 */
 	protected fix_bad_value()
 	{
-		if(this.multiple || (!this.emptyLabel && (!Array.isArray(this.select_options) || this.select_options.length == 0)))
+		// Stop if there are no options
+		if(!Array.isArray(this.select_options) || this.select_options.length == 0)
 		{
 			// Nothing to do here
 			return;
 		}
+
+		let valueArray = Array.isArray(this.value) ? this.value : (
+			!this.value ? [] : (this.multiple ? this.value.toString().split(',') : [this.value])
+		);
+
+		// Check for value using missing options (deleted or otherwise not allowed)
+		valueArray = this.filterOutMissingOptions(valueArray);
+
+		// Multiple is allowed to be empty, and if we don't have an emptyLabel nothing to do
+		if(this.multiple || !this.emptyLabel)
+		{
+			return;
+		}
+
 		// See if parent (search / free entry) is OK with it
 		if(super.fix_bad_value())
 		{
@@ -453,12 +468,6 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		}
 		// If no value is set, choose the first option
 		// Only do this on once during initial setup, or it can be impossible to clear the value
-		let valueArray = Array.isArray(this.value) ? this.value : (
-			!this.value ? [] : (this.multiple ? this.value.toString().split(',') : [this.value])
-		);
-
-		// Check for value using missing options (deleted or otherwise not allowed)
-		valueArray = this.filterOutMissingOptions(valueArray);
 
 		// value not in options --> use emptyLabel, if exists, or first option otherwise
 		if(this.select_options.filter((option) => valueArray.find(val => val == option.value) ||
