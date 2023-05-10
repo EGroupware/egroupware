@@ -3,7 +3,7 @@
 
 namespace EGroupware\Infolog;
 
-require_once realpath(__DIR__.'/../../projectmanager/tests/TemplateTest.php');
+require_once realpath(__DIR__ . '/../../projectmanager/tests/TemplateTest.php');
 
 use EGroupware\Api\Link;
 
