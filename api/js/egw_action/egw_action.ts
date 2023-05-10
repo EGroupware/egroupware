@@ -35,11 +35,37 @@ import "./egw_menu_dhtmlx.js";
 //import {app, egw, Iegw} from "../jsapi/egw_global";
 //import {Et2Dialog} from "../etemplate/Et2Dialog/Et2Dialog";
 import {nm_action} from "../etemplate/et2_extension_nextmatch_actions";
+
+/**
+ * holds all possible Types of a egwActionClass
+ */
+type EgwActionClasses = {
+	default: EgwActionClassData,//
+	actionManager: EgwActionClassData, drag: EgwActionClassData, drop: EgwActionClassData, popup: EgwActionClassData
+}
+/**
+ * holds the constructor and implementation of an EgwActionClass
+ */
+type EgwActionClassData = {
+	//type EgwAction["constructor"],
+	actionConstructor: Function,
+	implementation: any
+}
+//TODO egw global.js
+declare global {
+	interface Window {
+		_egwActionClasses: EgwActionClasses;
+		egw: Function //egw returns instance of client side api -- set in egw_core.js
+		egwIsMobile: () => boolean // set in egw_action_commons.ts
+		nm_action: typeof nm_action
+		egw_getAppName: () => string
+	}
+}
 /**
  * Getter functions for the global egwActionManager and egwObjectManager objects
  */
 
-var egw_globalActionManager = null;
+let egw_globalActionManager = null;
 export var egw_globalObjectManager = null;
 
 /**
@@ -152,6 +178,7 @@ export function egw_getAppActionManager(_create) {
  *
  * @param {function} _executeEvent
  * @return {egwActionHandler}
+ * TODO no usage?
  */
 export function egwActionHandler(_executeEvent)
 {
@@ -164,19 +191,23 @@ export function egwActionHandler(_executeEvent)
 
 /**
  * Associative array where action classes may register themselves
- * TODO(they never do??)
+ *
  */
-if (typeof window._egwActionClasses == "undefined")
-	window._egwActionClasses = {};
-
-_egwActionClasses["default"] = {
-	"actionConstructor": egwAction,
-	"implementation": null
-};
-_egwActionClasses["actionManager"] = {
-	"actionConstructor": egwActionManager,
-	"implementation": null
-};
+if (typeof window._egwActionClasses == "undefined") {
+	window._egwActionClasses = {
+		actionManager: {actionConstructor: null, implementation: null},
+		default: {actionConstructor: null, implementation: null},
+		drag: undefined,
+		drop: undefined,
+		popup: {actionConstructor: null, implementation: null}
+	};
+}
+if(typeof window._egwActionClasses.actionManager == "undefined"){
+	window._egwActionClasses.actionManager = {actionConstructor: egwActionManager, implementation: null}
+}
+if(typeof window._egwActionClasses.default == "undefined"){
+	window._egwActionClasses.default = {actionConstructor: egwAction, implementation: null}
+}
 
 /**
  * Constructor for egwAction object
