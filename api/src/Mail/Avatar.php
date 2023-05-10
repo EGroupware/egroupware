@@ -28,7 +28,7 @@ class Avatar
 	 * @return string|null
 	 * @ToDo add a domain based image as fallback eg. as fallback from their website
 	 */
-	static function getAvatar(string $address, array &$lavatar=null)
+	static function getAvatar(string $address=null, array &$lavatar=null)
 	{
 		if (empty($address))
 		{
