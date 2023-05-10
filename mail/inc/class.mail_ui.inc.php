@@ -1955,8 +1955,6 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			if(!empty($header['label3'])) $flags .= "3";
 			if(!empty($header['label4'])) $flags .= "4";
 			if(!empty($header['label5'])) $flags .= "5";
-
-			$data["status"] = "<span class=\"status_img\"></span>";
 			//error_log(__METHOD__.array2string($header).' Flags:'.$flags);
 
 			// the css for this row
@@ -2131,30 +2129,17 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			$data['attachmentsBlock'] = $imageHTMLBlock;
 			if ($_folderType)
 			{
-				$fromcontact = self::getContactFromAddress($data['fromaddress']);
-				if(!empty($fromcontact) && $fromcontact[0]['photo'])
-				{
-					$data['fromavatar'] = $fromcontact[0]['photo'];
-				}
+				$data['fromavatar'] = Api\Mail\Avatar::getAvatar($data['fromaddress']);
 			}
-			$data['address'] = ($_folderType ? $data["toaddress"] : $data["fromaddress"]);
-			$data['lavatar'] = ['fname' => $data['address']];
+			$data['address'] = $_folderType ? $data["toaddress"] : $data["fromaddress"];
+			$data['lavatar'] = Api\Mail\Avatar::getLavatar($data['address']);
 
-			$contact = self::getContactFromAddress($data['address']);
-			if(!empty($contact))
+			if (($data['avatar'] = Api\Mail\Avatar::getAvatar($data['address'], $data['lavatar'])) && !$_folderType)
 			{
-				$data['lavatar'] = ['fname' => $contact[0]['n_given'], 'lname' => $contact[0]['n_family']];
-				if($contact[0]['photo'])
-				{
-					$data['avatar'] = $contact[0]['photo'];
-				}
-				if(!$_folderType)
-				{
-					$data['fromavatar'] = $data['avatar'];
-				}
+				$data['fromavatar'] = $data['avatar'];
 			}
 
-			if (in_array("bodypreview", $cols)&&$header['bodypreview'])
+			if (in_array("bodypreview", $cols) && $header['bodypreview'])
 			{
 				$data["bodypreview"] = $header['bodypreview'];
 			}
