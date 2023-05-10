@@ -348,6 +348,9 @@ export class EgwFnct
 
 }
 
+/**
+ * @deprecated use upperCase class instead
+ */
 export class  egwFnct extends EgwFnct {}
 
 /**
