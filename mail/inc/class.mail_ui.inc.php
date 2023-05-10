@@ -2342,35 +2342,10 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		}
 		// send configured image proxy to client-side
 		$content['image_proxy'] = self::image_proxy();
-		$contact = self::getContactFromAddress($content['from'][0]);
-
-		if (!empty($contact))
-		{
-			$content['avatar'] = $contact[0]['photo'];
-		}
+		$content['avatar'] = Api\Mail\Avatar::getAvatar($content['from'][0]);
 
 		$etpl->exec('mail.mail_ui.displayMessage', $content, $sel_options, $readonlys, $preserv, 2);
 	}
-
-	/**
-	 * Retrieve contact info from a given address
-	 *
-	 * @param string|null $address
-	 * @return array
-	 */
-	static function getContactFromAddress($address)
-	{
-		if (empty($address)) return [];
-
-		$email = Mail::stripRFC822Addresses([$address]);
-
-		return $GLOBALS['egw']->contacts->search(
-			array('contact_email' => $email[0], 'contact_email_home' => $email[0]),
-			array('contact_id', 'email', 'email_home', 'n_fn', 'n_given', 'n_family'),
-			'', '', '', false, 'OR', false
-		);
-	}
-
 
 	/**
 	 * This is a helper function to trigger Push method
