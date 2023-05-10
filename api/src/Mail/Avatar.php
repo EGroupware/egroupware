@@ -63,8 +63,12 @@ class Avatar
 	 * - "ralf.becker@egroupware.org" --> dito
 	 * - "rb@egroupware.org" --> ["fname" --> "r", "lname" => "b"]
 	 */
-	static function getLavatar(string $address) : array
+	static function getLavatar(string $address=null) : array
 	{
+		if (empty($address))
+		{
+			return [];
+		}
 		if (preg_match("/^\"?'?(.*)'?\"?\s+<([^<>'\"]+)>$/", $address, $matches))
 		{
 			if (($parts = preg_split('/[, ]+/', $matches[1])))
