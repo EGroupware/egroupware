@@ -1972,7 +1972,7 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 							{
 								window.clearTimeout(this._deferred_row_updates[id]);
 							}
-							this._deferred_row_updates[id] = window.setTimeout(jQuery.proxy(this._deferred_row_update,this,id),this.DEFERRED_ROW_TIME);
+							this._deferred_row_updates[id] = window.setTimeout(jQuery.proxy(this._deferred_row_update, this, id), et2_calendar_planner.DEFERRED_ROW_TIME);
 						}
 					}
 					else
