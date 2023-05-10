@@ -67,37 +67,30 @@ declare global {
 
 let egw_globalActionManager = null;
 export var egw_globalObjectManager = null;
-
 /**
  * Returns the action manager for the given application - each application has its
  * own sub-ActionManager in the global action manager object to prevent collisions
  * from happening
  *
  * @param _id is the name of the sub-actionManager which should be returned.
- * 	If the action manager does not exist right now, it is created. If the
- * 	parameter is ommited or null, the global action manager is returned.
+ *    If the action manager does not exist right now, it is created. If the
+ *    parameter is omitted or null, the global action manager is returned.
  * @param {boolean} [_create=true] If an objectManager with the given id is not
- *	found, it will be created at the top level.
+ *    found, it will be created at the top level.
  * @param {number} [_search_depth=Infinite] How deep into existing action children
- *	to search.
+ *    to search.
  */
-export function egw_getActionManager(_id, _create,_search_depth) {
-	if (typeof _create == 'undefined') {
-		_create = true;
-	}
-	if (typeof _search_depth == "undefined") {
-		_search_depth = Number.MAX_VALUE;
-	}
+export function egw_getActionManager(_id?: string, _create: boolean = true, _search_depth: number = Number.MAX_VALUE) {
 
 	// Check whether the global action manager had been created, if not do so
-	var res = egw_globalActionManager;
+	let res = egw_globalActionManager;
 	if (egw_globalActionManager == null) {
 		res = egw_globalActionManager = new egwActionManager();
 	}
 
 	// Check whether the sub-action manager exists, if not, create it
 	if (typeof _id != 'undefined' && _id != null) {
-		res = egw_globalActionManager.getActionById(_id,_search_depth);
+		res = egw_globalActionManager.getActionById(_id, _search_depth);
 		if (res == null && _create) {
 			res = egw_globalActionManager.addAction("actionManager", _id);
 		}
@@ -111,35 +104,26 @@ export function egw_getActionManager(_id, _create,_search_depth) {
  * have its own object manager where it can place action objects or containers.
  *
  * @param _id is the name of the sub-object manager should be returned. If the
- * 	object manager does not exists right now, it is created. If the parameter
- *	is ommited or null, the global object manager is returned.
+ *    object manager does not exists right now, it is created. If the parameter
+ *    is ommited or null, the global object manager is returned.
  * @param {boolean} [_create=true] If an objectManager with the given id is not
- *	found, it will be created at the top level.
+ *    found, it will be created at the top level.
  * @param {number} [_search_depth=Infinite] How deep into existing action children
- *	to search.
+ *    to search.
  */
-export function egw_getObjectManager(_id, _create, _search_depth) {
-	if (typeof _create == "undefined") {
-		_create = true;
-	}
-	if (typeof _search_depth == "undefined") {
-		_search_depth = Number.MAX_VALUE;
-	}
+export function egw_getObjectManager(_id, _create = true, _search_depth = Number.MAX_VALUE) {
 
 	// Check whether the global object manager exists
-	var res = egw_globalObjectManager;
+	let res = egw_globalObjectManager;
 	if (res == null) {
-		res = egw_globalObjectManager =
-			new egwActionObjectManager("_egwGlobalObjectManager",
-				egw_getActionManager());
+		res = egw_globalObjectManager = new egwActionObjectManager("_egwGlobalObjectManager", egw_getActionManager());
 	}
 
 	// Check whether the sub-object manager exists, if not, create it
 	if (typeof _id != 'undefined' && _id != null) {
 		res = egw_globalObjectManager.getObjectById(_id, _search_depth);
 		if (res == null && _create) {
-			res = new egwActionObjectManager(_id,
-				egw_getActionManager(_id,true,_search_depth));
+			res = new egwActionObjectManager(_id, egw_getActionManager(_id, true, _search_depth));
 			egw_globalObjectManager.addObject(res);
 		}
 	}
@@ -151,23 +135,23 @@ export function egw_getObjectManager(_id, _create, _search_depth) {
  * Returns the object manager for the current application
  *
  * @param {boolean} _create
- * @param {string} _appName //appname might not always be the current app, e.g. running app content under admin tab
+ * @param {string} _appName //appName might not always be the current app, e.g. running app content under admin tab
  * @return {egwActionObjectManager}
  */
 export function egw_getAppObjectManager(_create, _appName) {
-	return egw_getObjectManager(_appName ? _appName : egw_getAppName(), _create,1);
+	return egw_getObjectManager(_appName ? _appName : egw(window).app_name(), _create, 1);
 }
 
 /**
  * Returns the action manager for the current application
  *
  * @param {boolean} _create
- * @return {egwActionManager}
+ * @return {EgwActionManager}
  */
+// this function is never used
 export function egw_getAppActionManager(_create) {
-	return egw_getActionManager(egw_getAppName(), _create,1);
+	return egw_getActionManager(window.egw_getAppName(), _create, 1);
 }
-
 
 
 /** egwActionHandler Interface **/
