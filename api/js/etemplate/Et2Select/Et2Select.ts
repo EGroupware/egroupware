@@ -455,8 +455,8 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 			return;
 		}
 
-		// Multiple is allowed to be empty, and if we don't have an emptyLabel nothing to do
-		if(this.multiple || !this.emptyLabel)
+		// Multiple is allowed to be empty, and if we don't have an emptyLabel or options nothing to do
+		if(this.multiple || (!this.emptyLabel && this.select_options.length === 0))
 		{
 			return;
 		}
