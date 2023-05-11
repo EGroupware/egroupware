@@ -8,11 +8,10 @@
  */
 
 
-import {css, html, PropertyValues, TemplateResult} from "@lion/core";
-import {Et2StaticSelectMixin, StaticOptions as so} from "./StaticOptions";
+import {css, html, PropertyValues, TemplateResult} from "lit";
 import {Et2widgetWithSelectMixin} from "./Et2WidgetWithSelectMixin";
-import {cleanSelectOptions, SelectOption} from "./FindSelectOptions";
-import {SlMenuItem, SlSelect} from "@shoelace-style/shoelace";
+import {SelectOption} from "./FindSelectOptions";
+import {SlSelect} from "@shoelace-style/shoelace";
 import shoelace from "../Styles/shoelace";
 import {RowLimitedMixin} from "../Layout/RowLimitedMixin";
 
@@ -53,7 +52,7 @@ export class Et2WidgetWithSelect extends RowLimitedMixin(Et2widgetWithSelectMixi
  *
  */
 // @ts-ignore SlSelect styles is a single CSSResult, not an array, so TS complains
-export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
+export class Et2Select extends Et2WidgetWithSelect
 {
 	static get styles()
 	{
@@ -62,18 +61,18 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 			shoelace,
 			super.styles,
 			css`
-			:host {
+			  :host {
 				display: block;
 				flex: 1 0 auto;
 				--icon-width: 20px;
-			}
-			
-			
-			::slotted(img), img {
+			  }
+
+
+			  ::slotted(img), img {
 				vertical-align: middle;
-			}
-			
-			/* Get rid of padding before/after options */
+			  }
+
+			  /* Get rid of padding before/after options */
 			sl-menu::part(base) {
 				padding: 0px;
 			  }
@@ -373,75 +372,6 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 			tag.prepend(image);
 		}
 		return tag;
-	}
-
-	private handleTagRemove(event : CustomEvent, option)
-	{
-		event.stopPropagation();
-
-		if(!this.disabled)
-		{
-			option.selected = false;
-			let index = this.value.indexOf(option.value);
-			if(index > -1)
-			{
-				this.value.splice(index, 1);
-			}
-			this.dispatchEvent(new CustomEvent('sl-input'));
-			this.dispatchEvent(new CustomEvent('sl-change'));
-			this.syncItemsFromValue();
-		}
-	}
-
-	/**
-	 * Apply the user preference to close the dropdown if an option is clicked, even if multiple=true.
-	 * The default (from SlSelect) leaves the dropdown open for multiple=true
-	 *
-	 * @param {MouseEvent} event
-	 * @private
-	 */
-	private handleOptionClick(event : MouseEvent)
-	{
-		if(event.target == this)
-		{
-			// Don't hide dropdown when clicking on select.  That can close it after user opens it.
-			return;
-		}
-		if(this._close_on_select)
-		{
-			this.dropdown.hide().then(() =>
-			{
-				if(typeof this.handleMenuHide == "function")
-				{
-					// Make sure search gets hidden
-					this.handleMenuHide();
-				}
-			});
-		}
-	}
-
-	/**
-	 * Always close the dropdown if an option is clicked, even if multiple=true.  This differs from SlSelect,
-	 * which leaves the dropdown open for multiple=true
-	 *
-	 * @param {KeyboardEvent} event
-	 * @private
-	 */
-	private handleKeyDown(event : KeyboardEvent)
-	{
-		if(event.key === 'Enter' || (event.key === ' ' && this.typeToSelectString === ''))
-		{
-			this.dropdown.hide().then(() =>
-			{
-				if(typeof this.handleMenuHide == "function")
-				{
-					// Make sure search gets hidden
-					this.handleMenuHide();
-				}
-			});
-			event.stopPropagation();
-		}
-
 	}
 
 	/**
