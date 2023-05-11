@@ -3759,9 +3759,9 @@ export class CalendarApp extends EgwApp
 	 * in a particular calendar.
 	 *
 	 * @param event
-	 * @return Promise
+	 * @return Promise| null
 	 */
-	async _fetch_group_members(event) : Promise<any>
+	async _fetch_group_members(event) : Promise<any> | null
 	{
 		let groups = [];
 		let option_owner = null;
@@ -3801,7 +3801,7 @@ export class CalendarApp extends EgwApp
 		}
 		else
 		{
-			return Promise.resolve();
+			return null;
 		}
 	}
 
