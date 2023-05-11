@@ -97,6 +97,19 @@ export class CalendarOwner extends Et2Select
 	}
 
 	/**
+	 * Check a value for missing options and remove them.
+	 *
+	 * Override to allow any value, since we won't have all options
+	 *
+	 * @param {string[]} value
+	 * @returns {string[]}
+	 */
+	filterOutMissingOptions(value : string[]) : string[]
+	{
+		return value;
+	}
+
+	/**
 	 * Override icon for the select option to use lavatar
 	 *
 	 * @param option

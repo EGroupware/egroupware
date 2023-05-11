@@ -530,7 +530,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 			const missing = value.filter(v => !this.select_options.some(option => option.value == v));
 			if(missing.length > 0)
 			{
-				this.helpText = this.egw().lang("Invalid option '%1' removed", missing.join(", "));
+				console.warn("Invalid option '" + missing.join(", ") + " ' removed");
 				value = value.filter(item => missing.indexOf(item) == -1);
 			}
 		}
