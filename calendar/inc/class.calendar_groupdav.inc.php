@@ -329,7 +329,7 @@ class calendar_groupdav extends Api\CalDAV\Handler
 	}
 
 	/**
-	 * Chunk-size for DB queries of profind_generator
+	 * Chunk-size for DB queries of propfind_generator
 	 */
 	const CHUNK_SIZE = 500;
 
@@ -361,14 +361,16 @@ class calendar_groupdav extends Api\CalDAV\Handler
 		}
 		$sync_collection = $filter['sync-collection'];
 
-		for($chunk=0; $events =& $this->bo->search($filter+[
-			'offset' => $chunk*self::CHUNK_SIZE,
-			'num_rows' => self::CHUNK_SIZE,
-		]); ++$chunk)
+		$events = null;
+		for($chunk=0; (!$chunk || count($events) === self::CHUNK_SIZE) && // stop after we have not got a full chunk
+			($events =& $this->bo->search($filter+[
+				'offset' => $chunk*self::CHUNK_SIZE,
+				'num_rows' => self::CHUNK_SIZE,
+			])); ++$chunk)
 		{
 			foreach($events as $event)
 			{
-				$no_active_participants = !$this->hasActiveParticipants($event, $filter['users'], $events);
+				$no_active_participants = !$this->hasActiveParticipants($event, $filter['users'], $exceptions);
 
 				// sync-collection report: deleted entries need to be reported without properties, same for rejected or deleted invitations
 				if ($sync_collection && ($event['deleted'] && !$event['cal_reference'] ||
@@ -421,7 +423,7 @@ class calendar_groupdav extends Api\CalDAV\Handler
 					$content = $this->iCal($event, $filter['users'],
 						strpos($path, '/inbox/') !== false ? 'REQUEST' : null,
 						!isset($calendar_data['children']['expand']) ? false :
-							($calendar_data['children']['expand']['attrs'] ? $calendar_data['children']['expand']['attrs'] : true), $events);
+							($calendar_data['children']['expand']['attrs'] ?: true), $exceptions);
 					$props['getcontentlength'] = bytes($content);
 					$props['calendar-data'] = Api\CalDAV::mkprop(Api\CalDAV::CALDAV,'calendar-data',$content);
 				}
@@ -472,23 +474,20 @@ class calendar_groupdav extends Api\CalDAV\Handler
 	 * Check an event has active (not rejected or deleted) participants against an (array of) user- or group-id(s)
 	 *
 	 * For recurring events / series-master we have to check all exceptions too!
-	 * For a group-id we also check against all members!
+	 * For a group-id we also check against all members and for a user-id we also check the memberships!
 	 *
 	 * @param array $event
 	 * @param int|int[] $users user(s) to check
-	 * @param array|null &$events on return exceptions to the series as returned by self::get_series() ($expand=false!)
+	 * @param array|null &$exceptions on return exceptions to the series as returned by self::get_series() ($expand=false!)
 	 * @return bool true: user(s) is an active participant, or false if not (incl. all exceptions for recurring events)
 	 */
-	protected function hasActiveParticipants(array $event, $users, array &$events=null) : bool
+	protected function hasActiveParticipants(array $event, $users, array &$exceptions=null) : bool
 	{
-		$events = null;
+		$exceptions = null;
 		if (!is_array($users))
 		{
-			$users = [$users];
-			if ($users[0] < 0)
-			{
-				$users = array_merge($users, Api\Accounts::getInstance()->members($users[0], true) ?: []);
-			}
+			$add = $users < 0 ? 'members' : 'memberships';
+			$users = array_merge([$users], Api\Accounts::getInstance()->$add($users, true) ?: []);
 		}
 		// return true event(-master) has active participants
 		foreach(array_intersect_key($event['participants'], array_flip($users)) as $status)
@@ -506,8 +505,8 @@ class calendar_groupdav extends Api\CalDAV\Handler
 		}
 
 		// check exceptions for recurring event
-		$events =& self::get_series($event['uid'], $this->bo, false, $users[0], $event);
-		foreach($events as $exception)
+		$exceptions =& self::get_series($event['uid'], $this->bo, false, $users[0], $event);
+		foreach($exceptions as $exception)
 		{
 			if (empty($exception['reference'])) continue;   // master / identical to $event and already checked
 

@@ -177,8 +177,8 @@ class infolog_ui
 		}
 		if (!isset($info['info_anz_subs'])) $info['info_anz_subs'] = $this->bo->anzSubs($id);
 		$this->bo->link_id2from($info,$action,$action_id);	// unset from for $action:$action_id
-		$info['info_percent'] = (int) $info['info_percent'].'%';
-		$editrights = $this->bo->check_access($info,Acl::EDIT);
+		$info['info_percent'] = (int)$info['info_percent'];
+		$editrights = $this->bo->check_access($info, Acl::EDIT);
 		$isresposible = $this->bo->is_responsible($info);
 		if ((!($editrights || // edit rights or more then standard responsible rights
 			$isresposible && array_diff($this->bo->responsible_edit,array('info_status','info_percent','info_datecompleted')))))
@@ -2126,8 +2126,14 @@ class infolog_ui
 					{
 						$content['info_type'] = $GLOBALS['egw_info']['user']['preferences']['infolog']['preferred_type'];
 					}
-					if (empty($content['info_status'])) $content['info_status'] = $this->bo->status['defaults'][$content['info_type']];
-					if (empty($content['info_percent'])) $content['info_percent'] = $content['info_status'] == 'done' ? '100%' : '0%';
+					if(empty($content['info_status']))
+					{
+						$content['info_status'] = $this->bo->status['defaults'][$content['info_type']];
+					}
+					if(empty($content['info_percent']))
+					{
+						$content['info_percent'] = $content['info_status'] == 'done' ? '100' : '0';
+					}
 					break;
 			}
 			if (!isset($this->bo->enums['type'][$content['info_type']]))
@@ -2397,8 +2403,11 @@ class infolog_ui
 			$content['info_type'] = $types[0];
 		}
 		// get a consistent status, percent and date-completed
-		if (!isset($content['info_status'])) $content['info_status'] = $this->bo->status['defaults'][$content['info_type']];
-		if (!isset($content['info_percent'])) $content['info_percent'] = $content['info_status'] == 'done' ? '100%' : '0%';
+		if(!isset($content['info_status']))
+		{
+			$content['info_status'] = $this->bo->status['defaults'][$content['info_type']];
+		}
+		if(!isset($content['info_percent'])) $content['info_percent'] = $content['info_status'] == 'done' ? '100' : '0';
 		$content['info_datecompleted'] =$content['info_status'] == 'done' ? $this->bo->user_time_now : 0;
 
 		if (!isset($content['info_cat'])) $content['info_cat'] = $this->prefs['cat_add_default'];

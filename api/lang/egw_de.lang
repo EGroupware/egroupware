@@ -137,6 +137,7 @@ and	common	de	UND
 andorra	common	de	ANDORRA
 angola	common	de	ANGOLA
 anguilla	common	de	ANGUILLA
+answering no will not ask you again for this browser.	common	de	Wenn Sie mit Nein antworten, werden Sie für diesen Browser nicht mehr gefragt.
 antarctica	common	de	ANTARKTIS
 antigua and barbuda	common	de	ANTIGUA UND BARBUDA
 api	common	de	EGroupware API
@@ -738,6 +739,7 @@ insert row after	common	de	Zeile danach einfügen
 insert row before	common	de	Zeile davor einfügen
 insert timestamp into description field	common	de	Zeitstempel in das Beschreibungs-Feld einfügen
 install	common	de	Installieren
+install egroupware as mail-handler?	common	de	EGroupware als Mail-Handler installieren?
 integer	common	de	Ganzzahl
 international	common	de	International
 introduction	common	de	Einführung

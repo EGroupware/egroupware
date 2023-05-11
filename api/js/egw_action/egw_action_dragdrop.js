@@ -202,7 +202,7 @@ export function egwDragActionImplementation()
 								}
 							},
 							mouseup: function (event){
-								if (_context.isSelection(event)){
+								if (_context.isSelection(event) && document.getSelection().type === 'Range'){
 									//let the draggable be reactivated by another click up as the range selection is
 									// not working as expected in shadow-dom as expected in all browsers
 								}

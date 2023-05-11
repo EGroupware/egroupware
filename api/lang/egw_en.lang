@@ -137,6 +137,7 @@ and	common	en	AND
 andorra	common	en	ANDORRA
 angola	common	en	ANGOLA
 anguilla	common	en	ANGUILLA
+answering no will not ask you again for this browser.	common	en	Answering no will not ask you again for this browser.
 antarctica	common	en	ANTARCTICA
 antigua and barbuda	common	en	ANTIGUA AND BARBUDA
 api	common	en	EGroupware API
@@ -738,6 +739,7 @@ insert row after	common	en	Insert row after
 insert row before	common	en	Insert row before
 insert timestamp into description field	common	en	Insert timestamp into description field
 install	common	en	Install
+install egroupware as mail-handler?	common	en	Install EGroupware as mail-handler?
 integer	common	en	Integer
 international	common	en	International
 introduction	common	en	Introduction

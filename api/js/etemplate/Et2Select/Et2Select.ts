@@ -8,10 +8,11 @@
  */
 
 
-import {css, html, PropertyValues, TemplateResult} from "lit";
+import {css, html, PropertyValues, TemplateResult} from "@lion/core";
+import {Et2StaticSelectMixin, StaticOptions as so} from "./StaticOptions";
 import {Et2widgetWithSelectMixin} from "./Et2WidgetWithSelectMixin";
-import {SelectOption} from "./FindSelectOptions";
-import {SlSelect} from "@shoelace-style/shoelace";
+import {cleanSelectOptions, SelectOption} from "./FindSelectOptions";
+import {SlMenuItem, SlSelect} from "@shoelace-style/shoelace";
 import shoelace from "../Styles/shoelace";
 import {RowLimitedMixin} from "../Layout/RowLimitedMixin";
 
@@ -52,7 +53,7 @@ export class Et2WidgetWithSelect extends RowLimitedMixin(Et2widgetWithSelectMixi
  *
  */
 // @ts-ignore SlSelect styles is a single CSSResult, not an array, so TS complains
-export class Et2Select extends Et2WidgetWithSelect
+export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 {
 	static get styles()
 	{
@@ -61,29 +62,19 @@ export class Et2Select extends Et2WidgetWithSelect
 			shoelace,
 			super.styles,
 			css`
-			  :host {
+			:host {
 				display: block;
 				flex: 1 0 auto;
 				--icon-width: 20px;
-			  }
-
-
-			  ::slotted(img), img {
-			  }
-
-
-			  ::slotted(img), img {
+			}
+			
+			
+			::slotted(img), img {
 				vertical-align: middle;
-			  }
-
-			  /* Get rid of padding before/after options */
-
-			  sl-menu::part(base) {
-			  }
-
-			  /* Get rid of padding before/after options */
-
-			  sl-menu::part(base) {
+			}
+			
+			/* Get rid of padding before/after options */
+			sl-menu::part(base) {
 				padding: 0px;
 			  }
 
@@ -206,8 +197,43 @@ export class Et2Select extends Et2WidgetWithSelect
 		{
 			// Make sure value has no duplicates, and values are strings
 			val = <string[]>[...new Set(val.map(v => typeof v === 'number' ? v.toString() : v || ''))];
+			val = [...new Set(val.map(v => typeof v === 'number' ? v.toString() : v || ''))];
 		}
 		super.value = val || '';
+	}
+
+	/**
+	 * Check a value for missing options and remove them.
+	 *
+	 * We'll warn about it in the helpText, and if they save the change will be made.
+	 * This is to avoid the server-side validation error, which the user can't do much about.
+	 *
+	 * @param {string[]} value
+	 * @returns {string[]}
+	 */
+	filterOutMissingOptions(value : string[]) : string[]
+	{
+		if(!this.readonly && value && value.length > 0 && !this.allowFreeEntries && this.select_options.length > 0)
+		{
+			const missing = value.filter(v => !this.select_options.some(option => option.value == v));
+			if(missing.length > 0)
+			{
+				this.helpText = this.egw().lang("Invalid option '%1' removed", missing.join(", "));
+				value = value.filter(item => missing.indexOf(item) == -1);
+			}
+		}
+		return value;
+	}
+
+	transformAttributes(attrs)
+	{
+		super.transformAttributes(attrs);
+
+		// Deal with initial value of multiple set as CSV
+		if(this.multiple && typeof this.value == "string")
+		{
+			this.value = this.value.length ? this.value.split(",") : [];
+		}
 	}
 
 	/**
@@ -297,6 +323,126 @@ export class Et2Select extends Et2WidgetWithSelect
             </sl-option>`;
 	}
 
+	/**
+	 * Customise how tags are rendered.  This overrides what SlSelect
+	 * does in syncItemsFromValue().
+	 * This is a copy+paste from SlSelect.syncItemsFromValue().
+	 *
+	 * @param item
+	 * @protected
+	 */
+	protected _createTagNode(item)
+	{
+		let tag;
+		if(typeof super._createTagNode == "function")
+		{
+			tag = super._createTagNode(item);
+		}
+		else
+		{
+			tag = <Et2Tag>document.createElement(this.tagTag);
+		}
+		tag.value = item.value;
+		tag.textContent = item.getTextLabel().trim();
+		tag.class = item.classList.value + " search_tag";
+		tag.setAttribute("exportparts", "icon");
+		if(this.size)
+		{
+			tag.size = this.size;
+		}
+		if(this.readonly || item.option && typeof (item.option.disabled) != "undefined" && item.option.disabled)
+		{
+			tag.removable = false;
+			tag.readonly = true;
+		}
+		else
+		{
+			tag.addEventListener("dblclick", this._handleDoubleClick);
+			tag.addEventListener("click", this.handleTagInteraction);
+			tag.addEventListener("keydown", this.handleTagInteraction);
+			tag.addEventListener("sl-remove", (event : CustomEvent) => this.handleTagRemove(event, item));
+		}
+		// Allow click handler even if read only
+		if(typeof this.onTagClick == "function")
+		{
+			tag.addEventListener("click", (e) => this.onTagClick(e, e.target));
+		}
+		let image = this._createImage(item);
+		if(image)
+		{
+			tag.prepend(image);
+		}
+		return tag;
+	}
+
+	private handleTagRemove(event : CustomEvent, option)
+	{
+		event.stopPropagation();
+
+		if(!this.disabled)
+		{
+			option.selected = false;
+			let index = this.value.indexOf(option.value);
+			if(index > -1)
+			{
+				this.value.splice(index, 1);
+			}
+			this.dispatchEvent(new CustomEvent('sl-input'));
+			this.dispatchEvent(new CustomEvent('sl-change'));
+			this.syncItemsFromValue();
+		}
+	}
+
+	/**
+	 * Apply the user preference to close the dropdown if an option is clicked, even if multiple=true.
+	 * The default (from SlSelect) leaves the dropdown open for multiple=true
+	 *
+	 * @param {MouseEvent} event
+	 * @private
+	 */
+	private handleOptionClick(event : MouseEvent)
+	{
+		if(event.target == this)
+		{
+			// Don't hide dropdown when clicking on select.  That can close it after user opens it.
+			return;
+		}
+		if(this._close_on_select)
+		{
+			this.dropdown.hide().then(() =>
+			{
+				if(typeof this.handleMenuHide == "function")
+				{
+					// Make sure search gets hidden
+					this.handleMenuHide();
+				}
+			});
+		}
+	}
+
+	/**
+	 * Always close the dropdown if an option is clicked, even if multiple=true.  This differs from SlSelect,
+	 * which leaves the dropdown open for multiple=true
+	 *
+	 * @param {KeyboardEvent} event
+	 * @private
+	 */
+	private handleKeyDown(event : KeyboardEvent)
+	{
+		if(event.key === 'Enter' || (event.key === ' ' && this.typeToSelectString === ''))
+		{
+			this.dropdown.hide().then(() =>
+			{
+				if(typeof this.handleMenuHide == "function")
+				{
+					// Make sure search gets hidden
+					this.handleMenuHide();
+				}
+			});
+			event.stopPropagation();
+		}
+
+	}
 
 	/**
 	 * Get the icon for the select option

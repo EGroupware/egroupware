@@ -54,7 +54,7 @@
 					<nextmatch-sortheader label="Category" id="cat_id"/>
 					<et2-vbox>
 						<nextmatch-sortheader label="Duration" id="ts_duration"/>
-						<et2-date-duration  id="duration" readonly="true" ></et2-date-duration>
+						<et2-date-duration id="duration" readonly="true" displayFormat="hm"></et2-date-duration>
 					</et2-vbox>
 					<et2-vbox>
 						<nextmatch-sortheader label="Quantity" id="ts_quantity"/>

@@ -1955,8 +1955,6 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			if(!empty($header['label3'])) $flags .= "3";
 			if(!empty($header['label4'])) $flags .= "4";
 			if(!empty($header['label5'])) $flags .= "5";
-
-			$data["status"] = "<span class=\"status_img\"></span>";
 			//error_log(__METHOD__.array2string($header).' Flags:'.$flags);
 
 			// the css for this row
@@ -2131,30 +2129,17 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			$data['attachmentsBlock'] = $imageHTMLBlock;
 			if ($_folderType)
 			{
-				$fromcontact = self::getContactFromAddress($data['fromaddress']);
-				if(!empty($fromcontact) && $fromcontact[0]['photo'])
-				{
-					$data['fromavatar'] = $fromcontact[0]['photo'];
-				}
+				$data['fromavatar'] = Api\Mail\Avatar::getAvatar($data['fromaddress']);
 			}
-			$data['address'] = ($_folderType ? $data["toaddress"] : $data["fromaddress"]);
-			$data['lavatar'] = ['fname' => $data['address']];
+			$data['address'] = $_folderType ? $data["toaddress"] : $data["fromaddress"];
+			$data['lavatar'] = Api\Mail\Avatar::getLavatar($data['address']);
 
-			$contact = self::getContactFromAddress($data['address']);
-			if(!empty($contact))
+			if (($data['avatar'] = Api\Mail\Avatar::getAvatar($data['address'], $data['lavatar'])) && !$_folderType)
 			{
-				$data['lavatar'] = ['fname' => $contact[0]['n_given'], 'lname' => $contact[0]['n_family']];
-				if($contact[0]['photo'])
-				{
-					$data['avatar'] = $contact[0]['photo'];
-				}
-				if(!$_folderType)
-				{
-					$data['fromavatar'] = $data['avatar'];
-				}
+				$data['fromavatar'] = $data['avatar'];
 			}
 
-			if (in_array("bodypreview", $cols)&&$header['bodypreview'])
+			if (in_array("bodypreview", $cols) && $header['bodypreview'])
 			{
 				$data["bodypreview"] = $header['bodypreview'];
 			}
@@ -2357,35 +2342,10 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		}
 		// send configured image proxy to client-side
 		$content['image_proxy'] = self::image_proxy();
-		$contact = self::getContactFromAddress($content['from'][0]);
-
-		if (!empty($contact))
-		{
-			$content['avatar'] = $contact[0]['photo'];
-		}
+		$content['avatar'] = Api\Mail\Avatar::getAvatar($content['from'][0]);
 
 		$etpl->exec('mail.mail_ui.displayMessage', $content, $sel_options, $readonlys, $preserv, 2);
 	}
-
-	/**
-	 * Retrieve contact info from a given address
-	 *
-	 * @param string|null $address
-	 * @return array
-	 */
-	static function getContactFromAddress($address)
-	{
-		if (empty($address)) return [];
-
-		$email = Mail::stripRFC822Addresses([$address]);
-
-		return $GLOBALS['egw']->contacts->search(
-			array('contact_email' => $email[0], 'contact_email_home' => $email[0]),
-			array('contact_id', 'email', 'email_home', 'n_fn', 'n_given', 'n_family'),
-			'', '', '', false, 'OR', false
-		);
-	}
-
 
 	/**
 	 * This is a helper function to trigger Push method

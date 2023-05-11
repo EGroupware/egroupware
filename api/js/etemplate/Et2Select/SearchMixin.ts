@@ -175,9 +175,10 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 				:host([allowfreeentries]:not([multiple])) .select--standard.select--open:not(.select--disabled) .select__control .select__label {
 					display: none;
 				}
-				
-				/* Search textbox general styling, starts hidden */
-				.select__prefix ::slotted(.search_input),.search_input {
+
+				  /* Search textbox general styling, starts hidden */
+
+				  .select__prefix ::slotted(.search_input), .search_input {
 					display: none;
 					flex: 1 1 auto;
 					margin-left: 0px;
@@ -185,17 +186,21 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 					height: var(--sl-input-height-medium);
 					position: absolute;
 					background-color: white;
-					z-index: 1;
-				}
-				/* Search UI active - show textbox & stuff */
-				::slotted(.search_input.active),.search_input.active,
-				.search_input.editing{
+					z-index: var(--sl-z-index-dropdown);
+				  }
+
+				  /* Search UI active - show textbox & stuff */
+
+				  ::slotted(.search_input.active), .search_input.active,
+				  .search_input.editing {
 					display: flex;
-				}
-				/* If multiple and no value, overlap search onto widget instead of below */
-				:host([multiple]) .search_input.active.novalue {
+				  }
+
+				  /* If multiple and no value, overlap search onto widget instead of below */
+
+				  :host([multiple]) .search_input.active.novalue {
 					top: 0px;
-				}
+				  }
 				
 				/* Hide options that do not match current search text */
 				::slotted(.no-match) {
