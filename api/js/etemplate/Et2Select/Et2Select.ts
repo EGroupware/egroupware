@@ -14,6 +14,7 @@ import {SelectOption} from "./FindSelectOptions";
 import {SlSelect} from "@shoelace-style/shoelace";
 import shoelace from "../Styles/shoelace";
 import {RowLimitedMixin} from "../Layout/RowLimitedMixin";
+import {Et2Tag} from "./Tag/Et2Tag";
 
 // export Et2WidgetWithSelect which is used as type in other modules
 export class Et2WidgetWithSelect extends RowLimitedMixin(Et2widgetWithSelectMixin(SlSelect))
@@ -290,13 +291,6 @@ export class Et2Select extends Et2WidgetWithSelect
 	updated(changedProperties : PropertyValues)
 	{
 		super.updated(changedProperties);
-
-		// Make sure display gets updated
-		if(changedProperties.has('value') || changedProperties.has("emptyLabel"))
-		{
-			// Is this needed? Maybe for initial value
-			//this.selectionChanged();
-		}
 	}
 
 	/**
