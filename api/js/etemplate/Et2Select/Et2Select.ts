@@ -175,6 +175,18 @@ export class Et2Select extends Et2WidgetWithSelect
 		this.removeEventListener("sl-change", this._triggerChange);
 	}
 
+	_triggerChange(e)
+	{
+		if((super._triggerChange && super._triggerChange(e) || typeof super._triggerChange === "undefined") && !this._block_change_event)
+		{
+			this.dispatchEvent(new Event("change", {bubbles: true}));
+		}
+		if(this._block_change_event)
+		{
+			this.updateComplete.then(() => this._block_change_event = false);
+		}
+	}
+
 	// @ts-ignore
 	get value()
 	{
