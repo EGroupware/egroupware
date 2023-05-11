@@ -132,6 +132,7 @@ export class Et2DateDuration extends Et2InputWidget(FormControlMixin(LitElement)
 			  }
 
 			  .input-group__after {
+				display: contents;
 				margin-inline-start: var(--sl-input-spacing-medium);
 			  }
 

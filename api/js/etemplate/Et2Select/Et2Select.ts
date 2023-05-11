@@ -63,7 +63,7 @@ export class Et2Select extends Et2WidgetWithSelect
 			css`
 			  :host {
 				display: block;
-				flex: 1 0 auto;
+				flex: 1 1 auto;
 				--icon-width: 20px;
 			  }
 
@@ -73,7 +73,8 @@ export class Et2Select extends Et2WidgetWithSelect
 			  }
 
 			  /* Get rid of padding before/after options */
-			sl-menu::part(base) {
+
+			  sl-menu::part(base) {
 				padding: 0px;
 			  }
 
