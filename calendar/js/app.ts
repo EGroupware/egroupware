@@ -3751,6 +3751,8 @@ export class CalendarApp extends EgwApp
 		);
 	}
 
+	private _group_query_cache = {};
+
 	/**
 	 * Pre-fetch the members of any group participants
 	 *
@@ -3791,13 +3793,21 @@ export class CalendarApp extends EgwApp
 		}
 
 		// Find missing groups
-		if(groups.length)
+		const cache_key = groups.join("_");
+		if(groups.length && typeof this._group_query_cache[cache_key] === "undefined")
 		{
-			return this.egw.request("calendar.calendar_owner_etemplate_widget.ajax_owner", [groups]).then((data) =>
+			this._group_query_cache[cache_key] = this.egw.request("calendar.calendar_owner_etemplate_widget.ajax_owner", [groups]).then((data) =>
 			{
 				options = options.concat(Object.values(data));
 				option_owner.select_options = options;
+			}).finally(() =>
+			{
+				delete this._group_query_cache[cache_key];
 			});
+		}
+		if(typeof this._group_query_cache[cache_key] !== "undefined")
+		{
+			return this._group_query_cache[cache_key];
 		}
 		else
 		{
