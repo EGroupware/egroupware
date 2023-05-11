@@ -171,6 +171,29 @@ export function egwActionHandler(_executeEvent) {
 }
 
 
+/** egwActionManager Object **/
+
+/**
+ * egwActionManager manages a list of actions - it overwrites the egwAction class
+ * and allows child actions to be added to it.
+ *
+ * @param {egwAction} _parent
+ * @param {string} _id
+ * @return {egwActionManager}
+ */
+export class egwActionManager {
+    constructor(_parent = null, _id ="") {
+
+
+        const action = new egwAction(_parent, _id);
+
+        action.type = "actionManager";
+        action.canHaveChildren = true;
+
+        return action;
+    }
+}
+
 /** egwAction Object **/
 
 /**
@@ -247,7 +270,7 @@ egwAction.prototype.remove = function () {
 
     // Remove this element from the parent list
     if (this.parent) {
-        var idx = this.parent.children.indexOf(this);
+        const idx = this.parent.children.indexOf(this);
         if (idx >= 0) {
             this.parent.children.splice(idx, 1);
         }
@@ -275,8 +298,8 @@ egwAction.prototype.getActionById = function (_id, _search_depth) {
     // If this element is capable of having children, search those for the given
     // action id
     if (this.canHaveChildren) {
-        for (var i = 0; i < this.children.length && _search_depth > 0; i++) {
-            var elem = this.children[i].getActionById(_id, _search_depth - 1);
+        for (let i = 0; i < this.children.length && _search_depth > 0; i++) {
+            const elem = this.children[i].getActionById(_id, _search_depth - 1);
             if (elem) {
                 return elem;
             }
@@ -296,7 +319,7 @@ egwAction.prototype.getActionById = function (_id, _search_depth) {
  * @return array
  */
 egwAction.prototype.getActionsByAttr = function (_attr, _val) {
-    var _actions = [];
+    let _actions = [];
 
     // If the current action object has the given attr AND value, or no value was provided, return it
     if (typeof this[_attr] != "undefined" && (this[_attr] === _val || typeof _val === "undefined" && this[_attr] !== null)) {
@@ -305,7 +328,7 @@ egwAction.prototype.getActionsByAttr = function (_attr, _val) {
 
     // If this element is capable of having children, search those too
     if (this.canHaveChildren) {
-        for (var i = 0; i < this.children.length; i++) {
+        for (let i = 0; i < this.children.length; i++) {
             _actions = _actions.concat(this.children[i].getActionsByAttr(_attr, _val));
         }
     }
@@ -332,10 +355,10 @@ egwAction.prototype.addAction = function (_type, _id, _caption, _iconUrl,
 
     // Only allow adding new actions, if this action class allows it.
     if (this.canHaveChildren) {
-        var constructor = _egwActionClasses[_type].actionConstructor;
+        const constructor = _egwActionClasses[_type].actionConstructor;
 
         if (typeof constructor == "function") {
-            var action = new constructor(this, _id, _caption, _iconUrl, _onExecute,
+            const action = new constructor(this, _id, _caption, _iconUrl, _onExecute,
                 _allowOnMultiple);
             this.children.push(action);
 
@@ -385,13 +408,13 @@ egwAction.prototype.defaultIcons = {
 egwAction.prototype.updateActions = function (_actions, _app) {
     if (this.canHaveChildren) {
         if (typeof _app == "undefined") _app = egw_getAppName();	// this can probably be queried from actionObjectManager ...
-        var egw = window.egw(_app);
+        const egw = window.egw(_app);
 
         if (jQuery.isArray(_actions)) {
             _actions = jQuery.extend({}, _actions);
         }
-        for (var i in _actions) {
-            var elem = _actions[i];
+        for (let i in _actions) {
+            let elem = _actions[i];
 
             if (typeof elem == "string") {
                 _actions[i] = elem = {caption: elem};
@@ -422,7 +445,7 @@ egwAction.prototype.updateActions = function (_actions, _app) {
                 delete elem.no_lang;
 
                 // translate confirm messages
-                for (var attr in {confirm: '', confirm_multiple: ''}) {
+                for (let attr in {confirm: '', confirm_multiple: ''}) {
                     if (typeof elem[attr] == "string") {
                         elem[attr] = egw.lang(elem[attr]) + (elem[attr].substr(-1) != '?' ? '?' : '');
                     }
@@ -441,12 +464,12 @@ egwAction.prototype.updateActions = function (_actions, _app) {
 
                 //Check whether the action already exists, and if no, add it to the
                 //actions list
-                var action = this.getActionById(elem.id);
+                let action = this.getActionById(elem.id);
                 if (!action) {
                     if (typeof elem.type == "undefined")
                         elem.type = "popup";
 
-                    var constructor = null;
+                    let constructor = null;
 
                     // Check whether the given type is inside the "canHaveChildren"
                     // array
@@ -492,7 +515,7 @@ egwAction.prototype.not_disableClass = function (_action, _senders, _target) {
     } else if (_target.id) {
         // Checking on a something that doesn't have a DOM node, like a nm row
         // that's not currently rendered
-        var data = egw.dataGetUIDdata(_target.id);
+        const data = egw.dataGetUIDdata(_target.id);
         if (data && data.data && data.data.class) {
             return -1 === data.data.class.split(' ').indexOf(_action.data.disableClass);
         }
@@ -516,7 +539,7 @@ egwAction.prototype.enableClass = function (_action, _senders, _target) {
         // Checking on a something that doesn't have a DOM node, like a nm row
         // that's not currently rendered.  Not as good as an actual DOM node check
         // since things can get missed, but better than nothing.
-        var data = egw.dataGetUIDdata(_target.id);
+        const data = egw.dataGetUIDdata(_target.id);
         if (data && data.data && data.data.class) {
             return -1 !== data.data.class.split(' ').indexOf(_action.data.enableClass);
         }
@@ -553,7 +576,7 @@ egwAction.prototype.setDefaultExecute = function (_value) {
 
     // Apply the value to all children
     if (this.canHaveChildren) {
-        for (var i = 0; i < this.children.length; i++) {
+        for (let i = 0; i < this.children.length; i++) {
             this.children[i].setDefaultExecute(_value);
         }
     }
@@ -590,14 +613,14 @@ egwAction.prototype.execute = function (_senders, _target) {
  * @returns {Boolean}
  */
 egwAction.prototype._check_confirm_mass_selections = function (_senders, _target) {
-    var obj_manager = egw_getObjectManager(this.getManager().parent.id, false);
+    const obj_manager = egw_getObjectManager(this.getManager().parent.id, false);
     if (!obj_manager) {
         return false;
     }
 
     // Action needs to care about mass selection - check for parent that cares too
-    var confirm_mass_needed = false;
-    var action = this;
+    let confirm_mass_needed = false;
+    let action = this;
     while (action && action !== obj_manager.manager && !confirm_mass_needed) {
         confirm_mass_needed = action.confirm_mass_selection;
         action = action.parent;
@@ -605,18 +628,18 @@ egwAction.prototype._check_confirm_mass_selections = function (_senders, _target
     if (!confirm_mass_needed) return false;
 
     // Check for confirm mass selection checkboxes
-    var confirm_mass_selections = obj_manager.manager.getActionsByAttr("confirm_mass_selection");
+    const confirm_mass_selections = obj_manager.manager.getActionsByAttr("confirm_mass_selection");
     confirm_mass_needed = _senders.length > 20;
-    var self = this;
+    const self = this;
 
     // Find & show prompt
-    for (var i = 0; confirm_mass_needed && i < confirm_mass_selections.length; i++) {
-        var check = confirm_mass_selections[i];
+    for (let i = 0; confirm_mass_needed && i < confirm_mass_selections.length; i++) {
+        const check = confirm_mass_selections[i];
         if (check.checkbox === false || check.checked === true) continue;
 
         // Show the mass selection prompt
-        var msg = egw.lang(check.confirm_mass_selection, obj_manager.getAllSelected() ? egw.lang('all') : _senders.length);
-        var callback = function (_button) {
+        const msg = egw.lang(check.confirm_mass_selection, obj_manager.getAllSelected() ? egw.lang('all') : _senders.length);
+        const callback = function (_button) {
             // YES = unchecked, NO = checked
             check.set_checked(_button === Et2Dialog.NO_BUTTON);
             if (_button !== Et2Dialog.CANCEL_BUTTON) {
@@ -637,18 +660,18 @@ egwAction.prototype._check_confirm = function (_senders, _target) {
     if (this.data && (this.data.confirm || this.data.confirm_multiple) && this.onExecute.fnct != window.nm_action &&
         typeof Et2Dialog != 'undefined')	// let old eTemplate run it's own confirmation from nextmatch_action.js
     {
-        var msg = this.data.confirm || '';
+        let msg = this.data.confirm || '';
         if (_senders.length > 1) {
             if (this.data.confirm_multiple) {
                 msg = this.data.confirm_multiple;
             }
             // check if we have all rows selected
-            var obj_manager = egw_getObjectManager(this.getManager().parent.id, false);
+            const obj_manager = egw_getObjectManager(this.getManager().parent.id, false);
             if (obj_manager && obj_manager.getAllSelected()) {
                 msg += "\n\n" + egw().lang('Attention: action will be applied to all rows, not only visible ones!');
             }
         }
-        var self = this;
+        const self = this;
         if (msg.trim().length > 0) {
             if (this.data.policy_confirmation && egw.app('policy')) {
                 egw.includeJS(egw.link('/policy/js/app.min.js'), function () {
@@ -696,12 +719,12 @@ egwAction.prototype.set_caption = function (_value) {
 
 egwAction.prototype.set_iconUrl = function (_value) {
     this.iconUrl = _value;
-};
 
+};
 egwAction.prototype.set_enabled = function (_value) {
     this.enabled.setValue(_value);
-};
 
+};
 /**
  * The allowOnMultiple property may be true, false, "only" (> 1) or number of select, eg. 2
  *
@@ -713,39 +736,39 @@ egwAction.prototype.set_allowOnMultiple = function (_value) {
 
 egwAction.prototype.set_hideOnDisabled = function (_value) {
     this.hideOnDisabled = _value;
-};
 
+};
 egwAction.prototype.set_hideOnMobile = function (_value) {
     this.hideOnMobile = _value;
-};
 
+};
 egwAction.prototype.set_disableIfNoEPL = function (_value) {
     this.disableIfNoEPL = _value;
-};
 
+};
 egwAction.prototype.set_data = function (_value) {
     this.data = _value;
-};
 
+};
 egwAction.prototype.updateAction = function (_data) {
     //_setterOnly:mixed is not ideal  --> find other solution?
     egwActionStoreJSON(_data, this, "data");
-};
 
+};
 function _egwActionTreeContains(_tree, _elem) {
-    for (var i = 0; i < _tree.length; i++) {
+    for (let i = 0; i < _tree.length; i++) {
         if (_tree[i].action == _elem) {
             return _tree[i];
-        }
 
+        }
         if (typeof _tree[i].children != "undefined") {
-            var elem = _egwActionTreeContains(_tree[i].children, _elem);
+            const elem = _egwActionTreeContains(_tree[i].children, _elem);
             if (elem) {
                 return elem;
             }
         }
-    }
 
+    }
     return null;
 }
 
@@ -763,16 +786,16 @@ egwAction.prototype.appendToTree = function (_tree, _addChildren) {
     let _addParent = false;
     if (typeof _addChildren == "undefined") {
         _addChildren = true;
-    }
 
+    }
     if (typeof _addParent == "undefined") {
         _addParent = true;
-    }
 
+    }
     // Preset some variables
-    var root = _tree.root;
-    var parent_cntr = null;
-    var cntr = {
+    const root = _tree.root;
+    let parent_cntr = null;
+    let cntr = {
         "action": this,
         "children": []
     };
@@ -825,8 +848,8 @@ egwAction.prototype.appendToTree = function (_tree, _addChildren) {
 };
 
 /**
- * Returns the parent action manager
- */
+* Returns the parent action manager
+*/
 egwAction.prototype.getManager = function () {
     if (this.type == "actionManager") {
         return this;
@@ -837,32 +860,6 @@ egwAction.prototype.getManager = function () {
     }
 };
 
-
-/** egwActionManager Object **/
-
-/**
- * egwActionManager manages a list of actions - it overwrites the egwAction class
- * and allows child actions to be added to it.
- *
- * @param {egwAction} _parent
- * @param {string} _id
- * @return {egwActionManager}
- */
-export function egwActionManager(_parent, _id) {
-    if (typeof _parent == 'undefined') {
-        _parent = null;
-    }
-    if (typeof _id == 'undefined') {
-        _id = false;
-    }
-
-    var action = new egwAction(_parent, _id);
-
-    action.type = "actionManager";
-    action.canHaveChildren = true;
-
-    return action;
-}
 
 
 /** egwActionImplementation Interface **/
@@ -1056,8 +1053,8 @@ export class egwActionObject {
             _search_depth = Number.MAX_VALUE;
         }
 
-        for (var i = 0; i < this.children.length && _search_depth > 0; i++) {
-            var obj = this.children[i].getObjectById(_id, _search_depth - 1);
+        for (let i = 0; i < this.children.length && _search_depth > 0; i++) {
+            const obj = this.children[i].getObjectById(_id, _search_depth - 1);
             if (obj) {
                 return obj;
             }
@@ -1103,7 +1100,7 @@ export class egwActionObject {
     insertObject(_index, _id, _iface, _flags) {
         if (_index === false) _index = this.children.length;
 
-        var obj = null;
+        let obj = null;
 
         if (typeof _id == "object") {
             obj = _id;
@@ -1163,7 +1160,7 @@ export class egwActionObject {
 
         // Remove this element from the parent list
         if (this.parent != null) {
-            var idx = this.parent.children.indexOf(this);
+            const idx = this.parent.children.indexOf(this);
 
             if (idx >= 0) {
                 this.parent.children.splice(idx, 1);
@@ -1189,7 +1186,7 @@ export class egwActionObject {
         if (this.parent === null) {
             return [];
         } else {
-            var list = this.parent.getParentList();
+            const list = this.parent.getParentList();
             list.unshift(this.parent);
             return list;
         }
@@ -1224,7 +1221,7 @@ export class egwActionObject {
         if ((!_test || _test(this)) && this.getSelected()) _list.elements.push(this);
 
         if (this.selectedChildren) {
-            for (var i = 0; i < this.selectedChildren.length; i++) {
+            for (let i = 0; i < this.selectedChildren.length; i++) {
                 this.selectedChildren[i].getSelectedObjects(_test, _list);
             }
         }
@@ -1237,7 +1234,7 @@ export class egwActionObject {
      */
     getAllSelected() {
         if (this.children.length == this.selectedChildren.length) {
-            for (var i = 0; i < this.children.length; i++) {
+            for (let i = 0; i < this.children.length; i++) {
                 if (!this.children[i].getAllSelected()) return false;
             }
             // If this element is an container *and* does not have any children, we
@@ -1396,7 +1393,7 @@ export class egwActionObject {
                     const focused = this.getFocusedObject();
                     if (focused) {
                         objs = this.traversePath(focused);
-                        for (var i = 0; i < objs.length; i++) {
+                        for (let i = 0; i < objs.length; i++) {
                             objs[i].setSelected(true);
                         }
                     }
@@ -1433,14 +1430,14 @@ export class egwActionObject {
             case EGW_KEY_PAGE_DOWN:
 
                 if (!_alt) {
-                    var intval = (_keyCode == EGW_KEY_ARROW_UP || _keyCode == EGW_KEY_ARROW_DOWN) ? 1 : 10;
+                    const intval = (_keyCode == EGW_KEY_ARROW_UP || _keyCode == EGW_KEY_ARROW_DOWN) ? 1 : 10;
 
                     if (this.children.length > 0) {
                         // Get the focused object
                         const focused = this.getFocusedObject();
 
                         // Determine the object which should get selected
-                        var selObj = null;
+                        let selObj = null;
                         if (!focused) {
                             selObj = this.children[0];
                         } else {
@@ -1453,7 +1450,7 @@ export class egwActionObject {
                                 this.setAllSelected(false);
                             } else if (!(this.parent && this.parent.data && this.parent.data.keyboard_select)) {
                                 const objs = focused.traversePath(selObj);
-                                for (var i = 0; i < objs.length; i++) {
+                                for (let i = 0; i < objs.length; i++) {
                                     objs[i].setSelected(true);
                                 }
                             }
@@ -1512,9 +1509,9 @@ export class egwActionObject {
                 return this;
             }
 
-            var flatTree = this.getContainerRoot().flatList();
+            const flatTree = this.getContainerRoot().flatList();
 
-            var idx = flatTree.indexOf(this);
+            let idx = flatTree.indexOf(this);
             if (idx > 0) {
                 idx = Math.max(1, idx - _intval);
                 return flatTree[idx];
@@ -1531,9 +1528,9 @@ export class egwActionObject {
                 return this;
             }
 
-            var flatTree = this.getContainerRoot().flatList(true);
+            const flatTree = this.getContainerRoot().flatList(true);
 
-            var idx = flatTree.indexOf(this);
+            let idx = flatTree.indexOf(this);
             if (idx < flatTree.length - 1) {
                 idx = Math.min(flatTree.length - 1, idx + _intval);
                 return flatTree[idx];
@@ -1587,11 +1584,11 @@ export class egwActionObject {
     setFocused(_focused) {
         if (typeof _focused == "undefined") _focused = true;
 
-        var state = this.iface.getState();
+        const state = this.iface.getState();
 
         if (egwBitIsSet(state, EGW_AO_STATE_FOCUSED) != _focused) {
             // Un-focus the currently focused object
-            var currentlyFocused = this.getFocusedObject();
+            const currentlyFocused = this.getFocusedObject();
             if (currentlyFocused && currentlyFocused != this) {
                 currentlyFocused.setFocused(false);
             }
@@ -1615,7 +1612,7 @@ export class egwActionObject {
      */
 
     setSelected(_selected) {
-        var state = this.iface.getState();
+        const state = this.iface.getState();
 
         if ((egwBitIsSet(state, EGW_AO_STATE_SELECTED) != _selected) && egwBitIsSet(state, EGW_AO_STATE_VISIBLE)) {
             this.iface.setState(egwSetBit(state, EGW_AO_STATE_SELECTED, _selected));
@@ -1754,7 +1751,7 @@ export class egwActionObject {
 
             if (typeof elem.actionId != "undefined" && elem.actionId) {
                 //Get the action link object, if it doesn't exist yet, create it
-                var actionLink = this.getActionLink(elem.actionId);
+                let actionLink = this.getActionLink(elem.actionId);
                 if (!actionLink && _doCreate) {
                     actionLink = new egwActionLink(this.manager);
                     this.actionLinks.push(actionLink);
@@ -1768,7 +1765,7 @@ export class egwActionObject {
         }
 
         if (_recursive) {
-            for (var i = 0; i < this.children.length; i++) {
+            for (let i = 0; i < this.children.length; i++) {
                 this.children[i].updateActionLinks(_actionLinks, true, _doCreate);
             }
         }
@@ -1814,7 +1811,7 @@ export class egwActionObject {
      */
     unregisterActions() {
         while (this.registeredImpls.length > 0) {
-            var impl = this.registeredImpls.pop();
+            const impl = this.registeredImpls.pop();
             if (this.iface) {
                 impl.unregisterAction(this.iface);
             }
@@ -1921,10 +1918,10 @@ export class egwActionObject {
      */
 
     _getLinks(_objs, _actionType) {
-        var actionLinks = {};
-        var testedSelected = [];
+        const actionLinks = {};
+        const testedSelected = [];
 
-        var test = function (olink) {
+        const test = function (olink) {
             // Test whether the action type is of the given implementation type
             if (olink.actionObj.type == _actionType) {
                 if (typeof actionLinks[olink.actionId] == "undefined") {
@@ -1937,15 +1934,15 @@ export class egwActionObject {
                 }
 
                 // Accumulate the action link properties
-                var llink = actionLinks[olink.actionId];
+                const llink = actionLinks[olink.actionId];
                 llink.enabled = llink.enabled && olink.actionObj.enabled.exec(olink.actionObj, _objs, _objs[i]) && olink.enabled && olink.visible;
                 llink.visible = (llink.visible || olink.visible);
                 llink.cnt++;
 
                 // Add in children, so they can get checked for visible / enabled
                 if (olink.actionObj && olink.actionObj.children.length > 0) {
-                    for (var j = 0; j < olink.actionObj.children.length; j++) {
-                        var child = olink.actionObj.children[j];
+                    for (let j = 0; j < olink.actionObj.children.length; j++) {
+                        const child = olink.actionObj.children[j];
                         test({
                             actionObj: child, actionId: child.id, enabled: olink.enabled, visible: olink.visible
                         });
@@ -1955,7 +1952,7 @@ export class egwActionObject {
         };
 
         for (var i = 0; i < _objs.length; i++) {
-            var obj = _objs[i];
+            const obj = _objs[i];
             if (!egwBitIsSet(obj.flags, EGW_AO_FLAG_IS_CONTAINER) && obj.triggerCallback()) {
                 testedSelected.push(obj);
 
@@ -1966,7 +1963,7 @@ export class egwActionObject {
         }
 
         // Check whether all objects supported the action
-        for (var k in actionLinks) {
+        for (let k in actionLinks) {
             actionLinks[k].enabled = actionLinks[k].enabled && (actionLinks[k].cnt >= testedSelected.length) && ((actionLinks[k].actionObj.allowOnMultiple === true) || (actionLinks[k].actionObj.allowOnMultiple == "only" && _objs.length > 1) || (actionLinks[k].actionObj.allowOnMultiple == false && _objs.length === 1) || (typeof actionLinks[k].actionObj.allowOnMultiple === 'number' && _objs.length == actionLinks[k].actionObj.allowOnMultiple));
             if (!window.egwIsMobile()) actionLinks[k].actionObj.hideOnMobile = false;
             actionLinks[k].visible = actionLinks[k].visible && !actionLinks[k].actionObj.hideOnMobile && (actionLinks[k].enabled || !actionLinks[k].actionObj.hideOnDisabled);
@@ -1987,7 +1984,7 @@ export class egwActionObject {
      */
 
     getActionLink(_actionId: string) {
-        for (var i = 0; i < this.actionLinks.length; i++) {
+        for (let i = 0; i < this.actionLinks.length; i++) {
             if (this.actionLinks[i].actionObj?.id == _actionId) {
                 return this.actionLinks[i];
             }
@@ -2013,24 +2010,24 @@ export class egwActionObject {
             return true;
         };
 
-        for (var i = 0; i < this.actionLinks.length; i++) {
-            var action = this.actionLinks[i].actionObj;
+        this.actionLinks.forEach(item => {
+            const action = item.actionObj;
             if (typeof action != "undefined" && _test(this)) {
                 if (typeof _groups[action.type] == "undefined") {
                     _groups[action.type] = [];
                 }
 
                 _groups[action.type].push({
-                    "object": this, "link": this.actionLinks[i]
+                    "object": this, "link": item
                 });
             }
-        }
+        });
 
         // Recursively add the actions of the children to the result (as _groups is
         // an object, only the reference is passed).
-        for (var i = 0; i < this.children.length; i++) {
-            this.children[i].getActionImplementationGroups(_test, _groups);
-        }
+        this.children.forEach(item => {
+            item.getActionImplementationGroups(_test, _groups);
+        });
 
         return _groups;
     };
@@ -2248,7 +2245,7 @@ export class egwActionObjectInterface implements EgwActionObjectInterface {
 
 /** -- egwActionObjectDummyInterface Class -- **/
 
-var egwActionObjectDummyInterface = egwActionObjectInterface;
+const egwActionObjectDummyInterface = egwActionObjectInterface;
 
 /** egwActionObjectManager Object **/
 

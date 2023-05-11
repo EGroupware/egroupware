@@ -915,7 +915,7 @@ function _egwActionTreeFind(_tree: Tree, _elem: egwAction): TreeElem {
 //  */
 // export class EgwActionManager extends EgwAction
 // {
-// 	constructor(_parent = null, _id = "false")
+// 	constructor(_parent = null, _id = "")
 // 	{
 // 		super(_parent, _id);
 // 		super.type = "actionManager";
@@ -924,7 +924,7 @@ function _egwActionTreeFind(_tree: Tree, _elem: egwAction): TreeElem {
 //
 // }
 // /**
-//  * @deprecated use upperCase class EgwAction instead
+//  * @deprecated use upperCase class EgwActionManager instead
 //  */
 // export class egwActionManager extends EgwActionManager{}
 //
