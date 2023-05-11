@@ -11,13 +11,15 @@
 import {Et2Select} from "../../api/js/etemplate/Et2Select/Et2Select";
 import {css, html, nothing} from "@lion/core";
 import {IsEmail} from "../../api/js/etemplate/Validators/IsEmail";
+import {cleanSelectOptions} from "../../api/js/etemplate/Et2Select/FindSelectOptions";
+import {Et2StaticSelectMixin} from "../../api/js/etemplate/Et2Select/StaticOptions";
 
 /**
  * Select widget customised for calendar owner, which can be a user
  * account or group, or an entry from almost any app, or an email address
  *
  */
-export class CalendarOwner extends Et2Select
+export class CalendarOwner extends Et2StaticSelectMixin(Et2Select)
 {
 
 	static get styles()
@@ -41,6 +43,31 @@ export class CalendarOwner extends Et2Select
 
 		// Take grants into account for search
 		this.searchOptions['checkgrants'] = true;
+	}
+
+	connectedCallback()
+	{
+		super.connectedCallback();
+
+		// Start fetch of users
+		const type = this.egw().preference('account_selection', 'common');
+		if(!type || type == "none" || type == "selectbox")
+		{
+			return;
+		}
+		let fetch = [];
+		// for primary_group we only display owngroups == own memberships, not other groups
+		if(type === 'primary_group')
+		{
+			fetch.push(this.egw().accounts('accounts').then(options => {this.static_options = this.static_options.concat(cleanSelectOptions(options))}));
+			fetch.push(this.egw().accounts('owngroups').then(options => {this.static_options = this.static_options.concat(cleanSelectOptions(options))}));
+		}
+		else
+		{
+			fetch.push(this.egw().accounts('accounts').then(options => {this.static_options = this.static_options.concat(cleanSelectOptions(options))}));
+		}
+		this.fetchComplete = Promise.all(fetch)
+			.then(() => this._renderOptions());
 	}
 
 	/**
