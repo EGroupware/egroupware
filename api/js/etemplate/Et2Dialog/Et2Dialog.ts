@@ -1205,7 +1205,7 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 	static confirm(_senders, _dialogMsg, _titleMsg, _postSubmit?)
 	{
 		let senders = _senders;
-		let buttonId = _senders.id;
+		let button = _senders;
 		let dialogMsg = (typeof _dialogMsg != "undefined") ? _dialogMsg : '';
 		let titleMsg = (typeof _titleMsg != "undefined") ? _titleMsg : '';
 		let egw = _senders instanceof et2_widget ? _senders.egw() : undefined;
@@ -1215,7 +1215,7 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 			{
 				if(_postSubmit)
 				{
-					senders.getRoot().getInstanceManager().postSubmit(buttonId);
+					senders.getRoot().getInstanceManager().postSubmit(button);
 				}
 				else if(senders.instanceOf(et2_button) && senders.getType() !== "buttononly")
 				{
@@ -1225,7 +1225,9 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 				}
 				else
 				{
-					senders.getRoot().getInstanceManager().submit(buttonId);
+					senders.clicked = true;
+					senders.getRoot().getInstanceManager().submit(button);
+					senders.clicked = false;
 				}
 			}
 		};
