@@ -172,28 +172,6 @@ export function egwActionHandler(_executeEvent) {
 }
 
 
-/** egwActionManager Object **/
-
-/**
- * egwActionManager manages a list of actions - it overwrites the egwAction class
- * and allows child actions to be added to it.
- *
- * @param {egwAction} _parent
- * @param {string} _id
- * @return {egwActionManager}
- */
-export class egwActionManager {
-    constructor(_parent = null, _id = "") {
-
-
-        const action = new egwAction(_parent, _id);
-
-        action.type = "actionManager";
-        action.canHaveChildren = true;
-
-        return action;
-    }
-}
 
 /** egwAction Object **/
 
@@ -899,6 +877,23 @@ function _egwActionTreeFind(_tree: Tree, _elem: egwAction): TreeElem {
 }
 
 
+/** egwActionManager Object **/
+
+/**
+ * egwActionManager manages a list of actions - it overwrites the egwAction class
+ * and allows child actions to be added to it.
+ *
+ * @param {egwAction} _parent
+ * @param {string} _id
+ * @return {egwActionManager}
+ */
+export class egwActionManager extends egwAction{
+    constructor(_parent = null, _id = "") {
+        super(_parent,_id);
+        this.type = "actionManager";
+        this.canHaveChildren = true;
+    }
+}
 
 /**
  * Associative array where action classes may register themselves
