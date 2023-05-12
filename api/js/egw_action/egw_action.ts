@@ -172,7 +172,6 @@ export function egwActionHandler(_executeEvent) {
 }
 
 
-
 /** egwAction Object **/
 
 
@@ -887,9 +886,9 @@ function _egwActionTreeFind(_tree: Tree, _elem: egwAction): TreeElem {
  * @param {string} _id
  * @return {egwActionManager}
  */
-export class egwActionManager extends egwAction{
+export class egwActionManager extends egwAction {
     constructor(_parent = null, _id = "") {
-        super(_parent,_id);
+        super(_parent, _id);
         this.type = "actionManager";
         this.canHaveChildren = true;
     }
@@ -915,70 +914,76 @@ if (typeof window._egwActionClasses.default == "undefined") {
     window._egwActionClasses.default = {actionConstructor: egwAction, implementation: null}
 }
 
-/** egwActionImplementation Interface **/
+/** EgwActionImplementation Interface **/
 
 /**
- * Abstract interface for the egwActionImplementation object. The egwActionImplementation
+ * Abstract interface for the EgwActionImplementation object. The EgwActionImplementation
  * object is responsible for inserting the actual action representation (context menu,
  * drag-drop code) into the DOM Tree by using the egwActionObjectInterface object
  * supplied by the object.
  * To write a "class" which derives from this object, simply write a own constructor,
- * which replaces "this" with a "new egwActionImplementation" and implement your
+ * which replaces "this" with a "new EgwActionImplementation" and implement your
  * code in "doRegisterAction" und "doUnregisterAction".
  * Register your own implementation within the _egwActionClasses object.
  *
- * @return {egwActionImplementation}
  */
-export function egwActionImplementation() {
-    this.doRegisterAction = function () {
-        throw "Abstract function call: registerAction";
-    };
-    this.doUnregisterAction = function () {
-        throw "Abstract function call: unregisterAction";
-    };
-    this.doExecuteImplementation = function () {
-        throw "Abstract function call: executeImplementation";
-    };
-    this.type = "";
+export interface EgwActionImplementation {
+    /**
+     * @param {object} _actionObjectInterface is the AOI in which the implementation
+     *    should be registered.
+     * @param {function} _triggerCallback is the callback function which will be triggered
+     *    when the user triggeres this action implementatino (e.g. starts a drag-drop or
+     *    right-clicks on an object.)
+     * @param {object} _context in which the triggerCallback should get executed.
+     * @returns {boolean} true if the Action had been successfully registered, false if it
+     *    had not.
+     */
+    registerAction: (_actionObjectInterface: EgwActionObjectInterface, _triggerCallback: Function, _context: object) => boolean;
+    /**
+     * Unregister action will be called before an actionObjectInterface is destroyed,
+     * which gives the EgwActionImplementation the opportunity to remove the previously
+     * injected code.
+     *
+     * @param {egwActionObjectInterface} _actionObjectInterface
+     * @returns true if the Action had been successfully unregistered, false if it
+     *    had not.
+     */
+    unregisterAction: (_actionObjectInterface: EgwActionObjectInterface) => boolean;
+    executeImplementation: (_context: any, _selected: any, _links: any) => any;
+    type: string;
 }
 
 /**
- * Injects the implementation code into the DOM tree by using the supplied
- * actionObjectInterface.
- *
- * @param {object} _actionObjectInterface is the AOI in which the implementation
- *    should be registered.
- * @param {function} _triggerCallback is the callback function which will be triggered
- *    when the user triggeres this action implementatino (e.g. starts a drag-drop or
- *    right-clicks on an object.)
- * @param {object} _context in which the triggerCallback should get executed.
- * @returns true if the Action had been successfully registered, false if it
- *    had not.
+ * @deprecated implement upperCase interface EgwActionImplementation instead
  */
-egwActionImplementation.prototype.registerAction = function (_actionObjectInterface, _triggerCallback, _context) {
-    if (typeof _context == "undefined")
-        _context = null;
+export class egwActionImplementation implements EgwActionImplementation {
 
-    return this.doRegisterAction(_actionObjectInterface, _triggerCallback, _context);
-};
+    doRegisterAction = function (...args) {
+        throw "Abstract function call: registerAction";
+    };
+    doUnregisterAction = function (...args) {
+        throw "Abstract function call: unregisterAction";
+    };
+    doExecuteImplementation = function (...args) {
+        throw "Abstract function call: executeImplementation";
+    };
 
-/**
- * Unregister action will be called before an actionObjectInterface is destroyed,
- * which gives the egwActionImplementation the opportunity to remove the previously
- * injected code.
- *
- * @param {egwActionObjectInterface} _actionObjectInterface
- * @returns true if the Action had been successfully unregistered, false if it
- *    had not.
- */
-egwActionImplementation.prototype.unregisterAction = function (_actionObjectInterface) {
-    return this.doUnregisterAction(_actionObjectInterface);
-};
 
-egwActionImplementation.prototype.executeImplementation = function (_context, _selected, _links) {
-    return this.doExecuteImplementation(_context, _selected, _links);
-};
+    executeImplementation(_context: any, _selected: any, _links: any): any {
+        return this.doExecuteImplementation(_context, _selected, _links);
+    }
 
+    registerAction(_actionObjectInterface: EgwActionObjectInterface, _triggerCallback: Function, _context: object = null): boolean {
+        return this.doRegisterAction(_actionObjectInterface, _triggerCallback, _context);
+    }
+
+    type: string;
+
+    unregisterAction(_actionObjectInterface: EgwActionObjectInterface): boolean {
+        return this.doUnregisterAction(_actionObjectInterface);
+    }
+
+}
 
 /** egwActionLink Object **/
 
