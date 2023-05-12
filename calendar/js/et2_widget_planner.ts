@@ -38,6 +38,7 @@ import {formatDate, formatTime} from "../../api/js/etemplate/Et2Date/Et2Date";
 import interact from "@interactjs/interactjs/index";
 import type {InteractEvent} from "@interactjs/core/InteractEvent";
 import {StaticOptions} from "../../api/js/etemplate/Et2Select/StaticOptions";
+import {SelectOption} from "../../api/js/etemplate/Et2Select/FindSelectOptions";
 
 /**
  * Class which implements the "calendar-planner" XET-Tag for displaying a longer
@@ -722,7 +723,7 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 			{
 				var im = this.getInstanceManager();
 				this.nodeName = "ET2-SELECT-CAT_RO"
-				var categories = StaticOptions.cached_server_side(this, "cat", ',,,calendar', false);
+				var categories = <SelectOption[]>StaticOptions.cached_server_side(this, "cat", ',,,calendar', false);
 
 				var labels = [];
 				let app_calendar = this.getInstanceManager().app_obj.calendar || app.calendar;
@@ -745,10 +746,12 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 					for(var i = 0; i < cat_id.length; i++)
 					{
 						// Find label for that category
-						for(var j = 0; j < categories.length; j++)
+						let cat = null;
+						for(let j = 0; j < categories.length; j++)
 						{
 							if(categories[j].value == cat_id[i])
 							{
+								cat = categories[j];
 								categories[j].id = categories[j].value;
 								labels.push(categories[j]);
 								break;
@@ -756,13 +759,22 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 						}
 
 						// Get its children immediately
-						egw.json(
-							'EGroupware\\Api\\Etemplate\\Widget\\Select::ajax_get_options',
-							['select-cat',',,,calendar,'+cat_id[i]],
-							function(data) {
-								labels = labels.concat(data);
-							}
-						).sendRequest(false);
+						if(cat && cat.children === "")
+						{
+							continue;
+						}
+						else if(!cat || !cat.children || categories.filter(o => cat.children.find(c => o.value == c)).length != cat.children.length)
+						{
+							egw.json(
+								'EGroupware\\Api\\Etemplate\\Widget\\Select::ajax_get_options',
+								['select-cat', ',,,calendar,' + cat_id[i]],
+								function(data)
+								{
+									labels = labels.concat(data);
+								}
+							).sendRequest(false);
+						}
+
 					}
 				}
 
