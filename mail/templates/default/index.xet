@@ -123,11 +123,11 @@
             <et2-description  id="nm[vacationnotice]" class="@nm[vacationclass]"></et2-description>
             <et2-description  id="nm[vacationrange]" class="@nm[vacationrangeclass]"></et2-description>
         </et2-details>
+        <et2-details id="mail.index.datefilter" class="mail-index_datefilter" summary="Date..." hoist="true">
+            <et2-date id="startdate" label="Start" onchange="app.mail.mail_refreshMessageGrid(false,true);"></et2-date>
+            <et2-date id="enddate" label="End" onchange="app.mail.mail_refreshMessageGrid(false,true);"></et2-date>
+        </et2-details>
 
-        <et2-hbox  id="mail.index.datefilter" class="mail-index_datefilter">
-            <et2-date  id="startdate" label="Start" onchange="app.mail.mail_refreshMessageGrid(false,true);"></et2-date>
-            <et2-date  id="enddate" label="End" onchange="app.mail.mail_refreshMessageGrid(false,true);"></et2-date>
-        </et2-hbox>
         <et2-hbox  id="mail.index.quotabox" class="mail-index_quotabox">
             <progress id="nm[quotainpercent]" label="@nm[quota]" class="@nm[quotaclass]"/>
         </et2-hbox>

@@ -1136,3 +1136,8 @@ et2-split#mail-index_mailSplitter.squeezed .mail-index_quotabox{
 	position: absolute;
 }
 .attachments et2-dropdown-button[id$="\[actions\]"]{display: inline}
+
+et2-details.mail-index_datefilter::part(base) {
+	height: var(--sl-input-height-medium);
+	border-radius: var(--sl-border-radius-small);
+}
