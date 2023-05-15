@@ -995,33 +995,36 @@ export class egwActionImplementation implements EgwActionImplementation {
  * @param _manager is a reference to the egwActionManager whic contains the action
  *    the object wants to link to.
  */
-export function egwActionLink(_manager) {
-    this.enabled = true;
-    this.visible = true;
-    this.actionId = "";
-    this.actionObj = null;
-    this.manager = _manager;
+export class egwActionLink {
+    enabled = true;
+    visible = true;
+    actionId = "";
+    actionObj = null;
+    manager:egwActionManager;
+
+    constructor(_manager) {
+        this.manager = _manager;
+    }
+    updateLink(_data)
+	{
+		egwActionStoreJSON(_data, this, true);
+	}
+    set_enabled(_value) {
+        this.enabled = _value;
+    };
+
+    set_visible(_value) {
+        this.visible = _value;
+    };
+    set_actionId(_value)
+	{
+		this.actionId = _value;
+		this.actionObj = this.manager.getActionById(_value);
+
+		if (!this.actionObj)
+			throw "Action object with id '"+_value+"' does not exist!";
+	};
 }
-
-egwActionLink.prototype.updateLink = function (_data) {
-    egwActionStoreJSON(_data, this, true);
-};
-
-egwActionLink.prototype.set_enabled = function (_value) {
-    this.enabled = _value;
-};
-
-egwActionLink.prototype.set_visible = function (_value) {
-    this.visible = _value;
-};
-
-egwActionLink.prototype.set_actionId = function (_value) {
-    this.actionId = _value;
-    this.actionObj = this.manager.getActionById(_value);
-
-    if (!this.actionObj)
-        throw "Action object with id '" + _value + "' does not exist!";
-};
 
 /**
  * The egwActionObject represents an abstract object to which actions may be
