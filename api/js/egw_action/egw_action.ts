@@ -56,10 +56,12 @@ type EgwActionClassData = {
 declare global {
     interface Window {
         _egwActionClasses: EgwActionClasses;
-        egw: Function //egw returns instance of client side api -- set in egw_core.js
+        egw: any //egw returns instance of client side api -- set in egw_core.js
         egwIsMobile: () => boolean // set in egw_action_commons.ts
         nm_action: typeof nm_action
         egw_getAppName: () => string
+        Et2Dialog:any
+        app:any
     }
 }
 /**
@@ -548,7 +550,7 @@ export class egwAction {
         } else if (_target.id) {
             // Checking on a something that doesn't have a DOM node, like a nm row
             // that's not currently rendered
-            const data = egw.dataGetUIDdata(_target.id);
+            const data = window.egw.dataGetUIDdata(_target.id);
             if (data && data.data && data.data.class) {
                 return -1 === data.data.class.split(' ').indexOf(_action.data.disableClass);
             }
@@ -573,7 +575,7 @@ export class egwAction {
             // Checking on a something that doesn't have a DOM node, like a nm row
             // that's not currently rendered.  Not as good as an actual DOM node check
             // since things can get missed, but better than nothing.
-            const data = egw.dataGetUIDdata(_target.id);
+            const data = window.egw.dataGetUIDdata(_target.id);
             if (data && data.data && data.data.class) {
                 return -1 !== data.data.class.split(' ').indexOf(_action.data.enableClass);
             }
@@ -671,15 +673,15 @@ export class egwAction {
             }
 
             // Show the mass selection prompt
-            const msg = egw.lang(check.confirm_mass_selection, obj_manager.getAllSelected() ? egw.lang('all') : _senders.length);
+            const msg = window.egw.lang(check.confirm_mass_selection, obj_manager.getAllSelected() ? window.egw.lang('all') : _senders.length);
             const callback = (_button) => {
                 // YES = unchecked, NO = checked
-                check.set_checked(_button === Et2Dialog.NO_BUTTON);
-                if (_button !== Et2Dialog.CANCEL_BUTTON) {
+                check.set_checked(_button === window.Et2Dialog.NO_BUTTON);
+                if (_button !== window.Et2Dialog.CANCEL_BUTTON) {
                     this._check_confirm(_senders, _target);
                 }
             };
-            Et2Dialog.show_dialog(callback, msg, this.data.hint, {}, Et2Dialog.BUTTONS_YES_NO_CANCEL, Et2Dialog.QUESTION_MESSAGE);
+            window.Et2Dialog.show_dialog(callback, msg, this.data.hint, {}, window.Et2Dialog.BUTTONS_YES_NO_CANCEL, window.Et2Dialog.QUESTION_MESSAGE);
             return true;
         }
         return false;
@@ -692,7 +694,7 @@ export class egwAction {
     private _check_confirm(_senders, _target) {
         // check if actions needs to be confirmed first
         if (this.data && (this.data.confirm || this.data.confirm_multiple) &&
-            this.onExecute.functionToPerform != window.nm_action && typeof Et2Dialog != 'undefined')	// let old eTemplate run its own confirmation from nextmatch_action.js
+            this.onExecute.functionToPerform != window.nm_action && typeof window.Et2Dialog != 'undefined')	// let old eTemplate run its own confirmation from nextmatch_action.js
         {
             let msg = this.data.confirm || '';
             if (_senders.length > 1) {
@@ -702,28 +704,28 @@ export class egwAction {
                 // check if we have all rows selected
                 const obj_manager = egw_getObjectManager(this.getManager().parent.id, false);
                 if (obj_manager && obj_manager.getAllSelected()) {
-                    msg += "\n\n" + egw().lang('Attention: action will be applied to all rows, not only visible ones!');
+                    msg += "\n\n" + window.egw().lang('Attention: action will be applied to all rows, not only visible ones!');
                 }
             }
             //no longer needed because of '=>' notation
             //var self = this;
             if (msg.trim().length > 0) {
-                if (this.data.policy_confirmation && egw.app('policy')) {
-                    import(egw.link('/policy/js/app.min.js')).then(() => {
-                            if (typeof app.policy === 'undefined' || typeof app.policy.confirm === 'undefined') {
-                                app.policy = new app.classes.policy();
+                if (this.data.policy_confirmation && window.egw.app('policy')) {
+                    import(window.egw.link('/policy/js/app.min.js')).then(() => {
+                            if (typeof window.app.policy === 'undefined' || typeof window.app.policy.confirm === 'undefined') {
+                                window.app.policy = new window.app.classes.policy();
                             }
-                            app.policy.confirm(this, _senders, _target);
+                            window.app.policy.confirm(this, _senders, _target);
                         }
                     );
                     return;
                 }
-                Et2Dialog.show_dialog((_button) => {
-                    if (_button == Et2Dialog.YES_BUTTON) {
+                window.Et2Dialog.show_dialog((_button) => {
+                    if (_button == window.Et2Dialog.YES_BUTTON) {
                         // @ts-ignore
                         return this.onExecute.exec(this, _senders, _target);
                     }
-                }, msg, this.data.hint, {}, Et2Dialog.BUTTONS_YES_NO, Et2Dialog.QUESTION_MESSAGE);
+                }, msg, this.data.hint, {}, window.Et2Dialog.BUTTONS_YES_NO, window.Et2Dialog.QUESTION_MESSAGE);
                 return;
             }
         }
@@ -1982,7 +1984,7 @@ export class egwActionObject {
         const actionLinks = {};
         const testedSelected = [];
 
-        const test = function (olink) {
+        const test = function (olink,obj) {
             // Test whether the action type is of the given implementation type
             if (olink.actionObj.type == _actionType) {
                 if (typeof actionLinks[olink.actionId] == "undefined") {
@@ -1996,7 +1998,7 @@ export class egwActionObject {
 
                 // Accumulate the action link properties
                 const llink = actionLinks[olink.actionId];
-                llink.enabled = llink.enabled && olink.actionObj.enabled.exec(olink.actionObj, _objs, _objs[i]) && olink.enabled && olink.visible;
+                llink.enabled = llink.enabled && olink.actionObj.enabled.exec(olink.actionObj, _objs, obj) && olink.enabled && olink.visible;
                 llink.visible = (llink.visible || olink.visible);
                 llink.cnt++;
 
@@ -2006,20 +2008,19 @@ export class egwActionObject {
                         const child = olink.actionObj.children[j];
                         test({
                             actionObj: child, actionId: child.id, enabled: olink.enabled, visible: olink.visible
-                        });
+                        },obj);
                     }
                 }
             }
         };
 
-        for (var i = 0; i < _objs.length; i++) {
-            const obj = _objs[i];
+        for (const obj of _objs) {
             if (!egwBitIsSet(obj.flags, EGW_AO_FLAG_IS_CONTAINER) && obj.triggerCallback()) {
                 testedSelected.push(obj);
 
-                for (var j = 0; j < obj.actionLinks.length; j++) {
-                    test(obj.actionLinks[j]); //object link
-                }
+                obj.actionLinks.forEach(item => {
+                    test(item,obj); //object link
+                });
             }
         }
 
@@ -2221,24 +2222,24 @@ export interface EgwActionObjectInterface {
 export class egwActionObjectInterface implements EgwActionObjectInterface {
     //Preset the iface functions
 
-    doGetDOMNode = function () {
+    doGetDOMNode() {
         return null;
     };
 
     // _outerCall may be used to determine, whether the state change has been
     // evoked from the outside and the stateChangeCallback has to be called
     // or not.
-    doSetState = function (_state) {
+    doSetState(_state) {
     };
 
     // The doTiggerEvent function may be overritten by the aoi if it wants to
     // support certain action implementation specific events like EGW_AI_DRAG_OVER
     // or EGW_AI_DRAG_OUT
-    doTriggerEvent = function (_event, _data) {
+    doTriggerEvent(_event, _data) {
         return false;
     };
 
-    doMakeVisible = function () {
+    doMakeVisible() {
     };
 
     _state = EGW_AO_STATE_NORMAL || EGW_AO_STATE_VISIBLE;
