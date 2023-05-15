@@ -5257,26 +5257,24 @@ app.classes.mail = AppJS.extend(
 	 */
 	mailvelopeDisplay: function(_keyring)
 	{
-		var self = this;
-		var mailvelope = window.mailvelope;
-		var iframe = jQuery('iframe#mail-display_mailDisplayBodySrc,iframe#mail-index_messageIFRAME');
-		var armored = iframe.contents().find('td.td_display > pre').text().trim();
+		let self = this;
+		let iframe = jQuery('iframe#mail-display_mailDisplayBodySrc,iframe#mail-index_messageIFRAME');
+		let armored = iframe.contents().find('td.td_display > pre').text().trim();
 
 		if (armored == "" || armored.indexOf(this.begin_pgp_message) === -1) return;
 
-		var container = iframe.parent()[0];
-		var container_selector = container.id ? '#'+container.id : 'div.mailDisplayContainer';
-
-		var options = {
+		let container = iframe.parent()[0];
+		let container_selector = this.et2._inst.name == 'mail.display'  ? '.mailDisplayContainer' : `#${container.dom_id}`;
+		let options = {
 			showExternalContent: this.egw.preference('allowExternalIMGs') == 1	// "1", or "0", undefined --> true or false
 		};
 		// get sender address, so Mailvelope can check signature
-		var from_widget = this.et2.getWidgetById('FROM_0') || this.et2.getWidgetById('previewFromAddress');
-		if (from_widget && from_widget.value)
+		let from = this.et2._inst.name == 'mail.display' ? this.et2.getArrayMgr('content').data.from : this.et2.getWidgetById('additionalfromaddress').value;
+		if (from)
 		{
-			options.senderAddress = from_widget.value.replace(/^.*<([^<>]+)>$/, '$1');
+			options.senderAddress = from[0].replace(/^.*<([^<>]+)>$/, '$1');
 		}
-		mailvelope.createDisplayContainer(container_selector, armored, _keyring, options).then(function()
+		window.mailvelope.createDisplayContainer(container_selector, armored, _keyring, options).then(function()
 		{
 			// hide our iframe to give space for mailvelope iframe with encrypted content
 			iframe.hide();
