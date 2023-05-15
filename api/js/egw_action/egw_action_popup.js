@@ -14,7 +14,7 @@
 	egw_menu;
 */
 
-import {egwAction, egwActionImplementation, egwActionObject} from './egw_action';
+import {EgwAction, egwActionImplementation, EgwActionObject} from './egw_action';
 import {egwFnct} from './egw_action_common';
 import {egwMenu, _egw_active_menu} from "./egw_menu.js";
 import {EGW_KEY_ENTER, EGW_KEY_MENU} from "./egw_action_constants";
@@ -29,7 +29,7 @@ _egwActionClasses["popup"] = {
 
 export function egwPopupAction(_id, _handler, _caption, _icon, _onExecute, _allowOnMultiple)
 {
-	var action = new egwAction(_id, _handler, _caption, _icon, _onExecute, _allowOnMultiple);
+	var action = new EgwAction(_id, _handler, _caption, _icon, _onExecute, _allowOnMultiple);
 	action.type = "popup";
 	action.canHaveChildren = ["popup"];
 	action["default"] = false;
@@ -661,7 +661,7 @@ export function egwPopupActionImplementation()
 	 * drag and drop actions, based on current clipboard and the accepted types
 	 *
 	 * @param {object[]} _links Actions for inclusion in the menu
-	 * @param {egwActionObject[]} _selected Currently selected entries
+	 * @param {EgwActionObject[]} _selected Currently selected entries
 	 */
 	ai._addCopyPaste = function (_links, _selected)
 	{
@@ -910,7 +910,7 @@ export function egwPopupActionImplementation()
 					//replace jQuery with spread operator
 					// set the Prototype of the copy set_onExecute is not available otherwise
 					//TODO is this a valid/elegant way to do this??? give egwAction a methode clone -- make abstract parent class
-					var drop_clone = { ...drop[k].actionObj, __proto__:egwAction.prototype};
+					var drop_clone = { ...drop[k].actionObj, __proto__:EgwAction.prototype};
 					var parent = paste_action.parent === drop_clone.parent ? paste_action : (paste_action.getActionById(drop_clone.parent.id) || paste_action);
 					drop_clone.parent = parent;
 					drop_clone.onExecute = new egwFnct(this, null, []);

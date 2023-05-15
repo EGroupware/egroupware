@@ -89,7 +89,7 @@ export function egw_getActionManager(_id?: string, _create: boolean = true, _sea
     // Check whether the global action manager had been created, if not do so
     let res = egw_globalActionManager;
     if (egw_globalActionManager == null) {
-        res = egw_globalActionManager = new egwActionManager();
+        res = egw_globalActionManager = new EgwActionManager();
     }
 
     // Check whether the sub-action manager exists, if not, create it
@@ -120,14 +120,14 @@ export function egw_getObjectManager(_id, _create = true, _search_depth = Number
     // Check whether the global object manager exists
     let res = egw_globalObjectManager;
     if (res == null) {
-        res = egw_globalObjectManager = new egwActionObjectManager("_egwGlobalObjectManager", egw_getActionManager());
+        res = egw_globalObjectManager = new EgwActionObjectManager("_egwGlobalObjectManager", egw_getActionManager());
     }
 
     // Check whether the sub-object manager exists, if not, create it
     if (typeof _id != 'undefined' && _id != null) {
         res = egw_globalObjectManager.getObjectById(_id, _search_depth);
         if (res == null && _create) {
-            res = new egwActionObjectManager(_id, egw_getActionManager(_id, true, _search_depth));
+            res = new EgwActionObjectManager(_id, egw_getActionManager(_id, true, _search_depth));
             egw_globalObjectManager.addObject(res);
         }
     }
@@ -140,7 +140,7 @@ export function egw_getObjectManager(_id, _create = true, _search_depth = Number
  *
  * @param {boolean} _create
  * @param {string} _appName //appName might not always be the current app, e.g. running app content under admin tab
- * @return {egwActionObjectManager}
+ * @return {EgwActionObjectManager}
  */
 export function egw_getAppObjectManager(_create, _appName) {
     return egw_getObjectManager(_appName ? _appName : window.egw(window).app_name(), _create, 1);
@@ -188,7 +188,7 @@ export function egwActionHandler(_executeEvent) {
  * @param {boolean} _allowOnMultiple
  * @returns {EgwAction}
  */
-export class egwAction {
+export class EgwAction {
     public readonly id: string;
     private caption: string;
 
@@ -233,8 +233,8 @@ export class egwAction {
     type = "default"; //All derived classes have to override this!
     canHaveChildren: boolean | string[] = false; //Has to be overwritten by inheriting action classes
     // this is not bool all the time. Can be ['popup'] e.g. List of egwActionClasses that are allowed to have children?
-    private readonly parent: egwAction;
-    private children: egwAction[] = []; //i guess
+    private readonly parent: EgwAction;
+    private children: EgwAction[] = []; //i guess
 
     private readonly onExecute = new EgwFnct(this, null, []);
 
@@ -298,7 +298,7 @@ export class egwAction {
         close: 'close'
     };
 
-    constructor(_parent: egwAction, _id: string, _caption: string = "", _iconUrl: string = "", _onExecute: string | Function = null, _allowOnMultiple: boolean = true) {
+    constructor(_parent: EgwAction, _id: string, _caption: string = "", _iconUrl: string = "", _onExecute: string | Function = null, _allowOnMultiple: boolean = true) {
         if (_parent && (typeof _id != "string" || !_id) && _parent.type !== "actionManager") {
             throw "EgwAction _id must be a non-empty string!";
         }
@@ -338,7 +338,7 @@ export class egwAction {
      *
      * @return {(EgwAction|null)}
      */
-    public getActionById(_id: string, _search_depth: number = Number.MAX_VALUE): egwAction {
+    public getActionById(_id: string, _search_depth: number = Number.MAX_VALUE): EgwAction {
         // If the current action object has the given id, return this object
         if (this.id == _id) {
             return this;
@@ -395,7 +395,7 @@ export class egwAction {
      * @param {boolean} _allowOnMultiple
      */
 
-    public addAction(_type: string, _id: string, _caption: string, _iconUrl: string, _onExecute: string | Function, _allowOnMultiple: boolean): egwAction {
+    public addAction(_type: string, _id: string, _caption: string, _iconUrl: string, _onExecute: string | Function, _allowOnMultiple: boolean): EgwAction {
         //Get the constructor for the given action type
         if (!(_type in window._egwActionClasses)) {
             //TODO doesn't default instead of popup make more sense here??
@@ -407,7 +407,7 @@ export class egwAction {
             const constructor: any = window._egwActionClasses[_type]?.actionConstructor;
 
             if (typeof constructor == "function") {
-                const action: egwAction = new constructor(this, _id, _caption, _iconUrl, _onExecute, _allowOnMultiple);
+                const action: EgwAction = new constructor(this, _id, _caption, _iconUrl, _onExecute, _allowOnMultiple);
                 this.children.push(action);
 
                 return action;
@@ -544,7 +544,7 @@ export class egwAction {
      * @param _target egwActionObject object, gets called for every object in _senders
      * @returns boolean true if none has disableClass, false otherwise
      */
-    private not_disableClass(_action: egwAction, _senders: any, _target: any) {
+    private not_disableClass(_action: EgwAction, _senders: any, _target: any) {
         if (_target.iface.getDOMNode()) {
             return !(_target.iface.getDOMNode()).classList.contains(_action.data.disableClass);
         } else if (_target.id) {
@@ -566,7 +566,7 @@ export class egwAction {
      * @returns boolean true if none has disableClass, false otherwise
      */
     //TODO senders is never used in function body??
-    private enableClass(_action: egwAction, _senders: any[], _target: any) {
+    private enableClass(_action: EgwAction, _senders: any[], _target: any) {
         if (typeof _target == 'undefined') {
             return false;
         } else if (_target.iface.getDOMNode()) {
@@ -590,7 +590,7 @@ export class egwAction {
      * @param _target egwActionObject object, gets called for every object in _senders
      * @returns boolean true if _target.id matches _action.data.enableId
      */
-    private enableId(_action: egwAction, _senders: any[], _target: any) {
+    private enableId(_action: EgwAction, _senders: any[], _target: any) {
         if (typeof _action.data.enableId == 'string') {
             _action.data.enableId = new RegExp(_action.data.enableId);
         }
@@ -652,7 +652,7 @@ export class egwAction {
 
         // Action needs to care about mass selection - check for parent that cares too
         let confirm_mass_needed = false;
-        let action: egwAction = this;
+        let action: EgwAction = this;
         while (action && action !== obj_manager.manager && !confirm_mass_needed) {
             confirm_mass_needed = !!action.confirm_mass_selection;
             action = action.parent;
@@ -741,7 +741,7 @@ export class egwAction {
     /**
      * Returns the parent action manager
      */
-    getManager(): egwAction {
+    getManager(): EgwAction {
         if (this.type == "actionManager") {
             return this;
         } else if (this.parent) {
@@ -851,16 +851,20 @@ export class egwAction {
 
 }
 
-type TreeElem = { action: egwAction, children: Tree }
+export class egwAction extends EgwAction{
+
+}
+
+type TreeElem = { action: EgwAction, children: Tree }
 type Tree = TreeElem[]
 
 /**
  * finds an egwAction in the given tree
  * @param {Tree}_tree where to search
- * @param {egwAction}_elem elem to search
+ * @param {EgwAction}_elem elem to search
  * @returns {TreeElem} the treeElement for corresponding _elem if found, null else
  */
-function _egwActionTreeFind(_tree: Tree, _elem: egwAction): TreeElem {
+function _egwActionTreeFind(_tree: Tree, _elem: EgwAction): TreeElem {
     for (const current of _tree) {
         if (current.action == _elem) {
             return current;
@@ -884,17 +888,18 @@ function _egwActionTreeFind(_tree: Tree, _elem: egwAction): TreeElem {
  * egwActionManager manages a list of actions - it overwrites the egwAction class
  * and allows child actions to be added to it.
  *
- * @param {egwAction} _parent
+ * @param {EgwAction} _parent
  * @param {string} _id
- * @return {egwActionManager}
+ * @return {EgwActionManager}
  */
-export class egwActionManager extends egwAction {
+export class EgwActionManager extends EgwAction {
     constructor(_parent = null, _id = "") {
         super(_parent, _id);
         this.type = "actionManager";
         this.canHaveChildren = true;
     }
 }
+export class egwActionManager extends EgwActionManager{}
 
 /**
  * Associative array where action classes may register themselves
@@ -910,10 +915,10 @@ if (typeof window._egwActionClasses == "undefined") {
     };
 }
 if (typeof window._egwActionClasses.actionManager == "undefined") {
-    window._egwActionClasses.actionManager = {actionConstructor: egwActionManager, implementation: null}
+    window._egwActionClasses.actionManager = {actionConstructor: EgwActionManager, implementation: null}
 }
 if (typeof window._egwActionClasses.default == "undefined") {
-    window._egwActionClasses.default = {actionConstructor: egwAction, implementation: null}
+    window._egwActionClasses.default = {actionConstructor: EgwAction, implementation: null}
 }
 
 /** EgwActionImplementation Interface **/
@@ -997,12 +1002,12 @@ export class egwActionImplementation implements EgwActionImplementation {
  * @param _manager is a reference to the egwActionManager whic contains the action
  *    the object wants to link to.
  */
-export class egwActionLink {
+export class EgwActionLink {
     enabled = true;
     visible = true;
     actionId = "";
     actionObj = null;
-    manager:egwActionManager;
+    manager:EgwActionManager;
 
     constructor(_manager) {
         this.manager = _manager;
@@ -1027,6 +1032,10 @@ export class egwActionLink {
 			throw "Action object with id '"+_value+"' does not exist!";
 	};
 }
+/**
+ * @deprecated implement upperCase class instead
+ */
+export class egwActionLink extends  EgwActionLink{}
 
 /**
  * The egwActionObject represents an abstract object to which actions may be
@@ -1035,22 +1044,22 @@ export class egwActionLink {
  * egwActionObjects are organized in a tree structure.
  *
  * @param {string} _id is the identifier of the object which
- * @param {egwActionObject} _parent is the parent object in the hirachy. This may be set to NULL
+ * @param {EgwActionObject} _parent is the parent object in the hirachy. This may be set to NULL
  * @param {egwActionObjectInterface} _iface is the egwActionObjectInterface which connects the object
  *    to the outer world.
- * @param {egwActionManager} _manager is the action manager this object is connected to
+ * @param {EgwActionManager} _manager is the action manager this object is connected to
  *    this object to the DOM tree. If the _manager isn't supplied, the parent manager
  *    is taken.
  * @param {number} _flags a set of additional flags being applied to the object,
  *    defaults to 0
  */
-export class egwActionObject {
+export class EgwActionObject {
     readonly id: string
-    readonly parent: egwActionObject
-    private readonly children: egwActionObject[] = []
-    private actionLinks: egwActionLink[] = []
+    readonly parent: EgwActionObject
+    private readonly children: EgwActionObject[] = []
+    private actionLinks: EgwActionLink[] = []
     iface: EgwActionObjectInterface
-    readonly manager: egwActionManager
+    readonly manager: EgwActionManager
     private readonly flags: number
     data: any = null
     private readonly setSelectedCallback: any = null;
@@ -1175,7 +1184,7 @@ export class egwActionObject {
             // Set the parent to this object
             obj.parent = this;
         } else if (typeof _id == "string") {
-            obj = new egwActionObject(_id, this, _iface, this.manager, _flags);
+            obj = new EgwActionObject(_id, this, _iface, this.manager, _flags);
         }
 
         if (obj) {
@@ -1258,7 +1267,7 @@ export class egwActionObject {
     /**
      * Returns the first parent which has the container flag
      */
-    getContainerRoot(): egwActionObject {
+    getContainerRoot(): EgwActionObject {
         if (egwBitIsSet(this.flags, EGW_AO_FLAG_IS_CONTAINER) || this.parent === null) {
             return this;
         } else {
@@ -1336,7 +1345,7 @@ export class egwActionObject {
      *    the object.
      * @return {array}
      */
-    flatList(_visibleOnly?: boolean, _obj?: { elements: egwActionObject[] }) {
+    flatList(_visibleOnly?: boolean, _obj?: { elements: EgwActionObject[] }) {
         if (typeof (_obj) == "undefined") {
             _obj = {
                 "elements": []
@@ -1368,7 +1377,7 @@ export class egwActionObject {
      * @todo Remove flatList here!
      */
     traversePath(_to) {
-        const contRoot: egwActionObject = this.getContainerRoot();
+        const contRoot: EgwActionObject = this.getContainerRoot();
 
         if (contRoot) {
             // Get a flat list of all the hncp elements and search for this object
@@ -1816,7 +1825,7 @@ export class egwActionObject {
                 //Get the action link object, if it doesn't exist yet, create it
                 let actionLink = this.getActionLink(elem.actionId);
                 if (!actionLink && _doCreate) {
-                    actionLink = new egwActionLink(this.manager);
+                    actionLink = new EgwActionLink(this.manager);
                     this.actionLinks.push(actionLink);
                 }
 
@@ -2126,6 +2135,11 @@ export class egwActionObject {
 
 }
 
+/**
+ * @deprecated implement upperCase interface EgwActionImplementation instead
+ */
+export class egwActionObject extends EgwActionObject{}
+
 /** egwActionObjectInterface Interface **/
 
 /**
@@ -2317,9 +2331,9 @@ const egwActionObjectDummyInterface = egwActionObjectInterface;
  *
  * @param {string} _id
  * @param {string} _manager
- * @return {egwActionObjectManager}
+ * @return {EgwActionObjectManager}
  */
-export class egwActionObjectManager extends egwActionObject {
+export class EgwActionObjectManager extends EgwActionObject {
     constructor(_id: string, _manager: any) {
         const aoi = new egwActionObjectInterface();
         //const ao = new egwActionObject(_id, null, aoi, _manager, EGW_AO_FLAG_IS_CONTAINER)
@@ -2330,4 +2344,7 @@ export class egwActionObjectManager extends egwActionObject {
     }
 
 }
-
+/**
+ * @deprecated implement upperCase class instead
+ */
+export class egwActionObjectManager extends  EgwActionObjectManager{}

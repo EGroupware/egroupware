@@ -16,7 +16,7 @@
 	vendor.bower-asset.jquery.dist.jquery;
 */
 
-import {egwAction,egwActionImplementation, egw_getObjectManager} from "./egw_action";
+import {EgwAction,egwActionImplementation, egw_getObjectManager} from "./egw_action";
 import {getPopupImplementation} from "./egw_action_popup.js";
 import {EGW_AI_DRAG_OUT, EGW_AI_DRAG_OVER, EGW_AO_EXEC_THIS, EGW_AI_DRAG_ENTER} from "./egw_action_constants";
 
@@ -40,7 +40,7 @@ _egwActionClasses["drop"] = {
  * whenever dragging starts. The onExecute JS handler should return the
  * drag-drop helper object - otherwise an default helper will be generated.
  *
- * @param {egwAction} _id
+ * @param {EgwAction} _id
  * @param {string} _handler
  * @param {string} _caption
  * @param {string} _icon
@@ -50,7 +50,7 @@ _egwActionClasses["drop"] = {
  */
 export function egwDragAction(_id, _handler, _caption, _icon, _onExecute, _allowOnMultiple)
 {
-	var action = new egwAction(_id, _handler, _caption, _icon, _onExecute, _allowOnMultiple);
+	var action = new EgwAction(_id, _handler, _caption, _icon, _onExecute, _allowOnMultiple);
 
 	action.type = "drag";
 	action.dragType = "default";
@@ -380,7 +380,7 @@ export function egwDragActionImplementation()
  * The egwDropAction class overwrites the egwAction class and adds the "acceptedTypes"
  * property. This array should contain all "dragTypes" the drop action is allowed to
  *
- * @param {egwAction} _id
+ * @param {EgwAction} _id
  * @param {string} _handler
  * @param {string} _caption
  * @param {string} _icon
@@ -390,7 +390,7 @@ export function egwDragActionImplementation()
  */
 export function egwDropAction(_id, _handler, _caption, _icon, _onExecute, _allowOnMultiple)
 {
-	var action = new egwAction(_id, _handler, _caption, _icon, _onExecute, _allowOnMultiple);
+	var action = new EgwAction(_id, _handler, _caption, _icon, _onExecute, _allowOnMultiple);
 
 	action.type = "drop";
 	action.acceptedTypes = ["default"];
