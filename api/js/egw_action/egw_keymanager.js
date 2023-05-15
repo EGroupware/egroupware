@@ -76,7 +76,7 @@ function _egw_nodeIsInInput(_node)
 /**
  * Register the onkeypress handler on the document
  */
-jQuery(function() {
+jQuery(function() {//waits for DOM ready
 
 	// Fetch the key down event and translate it into browser-independent and
 	// easy to use key codes and shift states

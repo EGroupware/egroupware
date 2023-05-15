@@ -35,7 +35,7 @@ import "./egw_menu_dhtmlx.js";
 //import {app, egw, Iegw} from "../jsapi/egw_global";
 //import {Et2Dialog} from "../etemplate/Et2Dialog/Et2Dialog";
 import {nm_action} from "../etemplate/et2_extension_nextmatch_actions";
-import type {Iegw} from "../jsapi/egw_global";
+import type {Iegw, IegwAppLocal} from "../jsapi/egw_global";
 
 /**
  * holds all possible Types of a egwActionClass
@@ -56,7 +56,7 @@ type EgwActionClassData = {
 declare global {
     interface Window {
         _egwActionClasses: EgwActionClasses;
-        egw: any //egw returns instance of client side api -- set in egw_core.js
+        egw: Iegw //egw returns instance of client side api -- set in egw_core.js
         egwIsMobile: () => boolean // set in egw_action_commons.ts
         nm_action: typeof nm_action
         egw_getAppName: () => string
@@ -433,7 +433,7 @@ export class egwAction {
             this is an egw Object as defined in egw_core.js
             probably not because it changes on runtime
              */
-            const localEgw: Iegw = window.egw(_app);
+            const localEgw: IegwAppLocal = window.egw(_app);
             //replaced jQuery calls
             if (Array.isArray(_actions)) {
                 //_actions is now an object for sure
@@ -704,7 +704,7 @@ export class egwAction {
                 // check if we have all rows selected
                 const obj_manager = egw_getObjectManager(this.getManager().parent.id, false);
                 if (obj_manager && obj_manager.getAllSelected()) {
-                    msg += "\n\n" + window.egw().lang('Attention: action will be applied to all rows, not only visible ones!');
+                    msg += "\n\n" + window.egw.lang('Attention: action will be applied to all rows, not only visible ones!');
                 }
             }
             //no longer needed because of '=>' notation
