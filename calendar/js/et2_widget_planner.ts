@@ -722,10 +722,22 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 			row_labels: function()
 			{
 				var im = this.getInstanceManager();
-				this.nodeName = "ET2-SELECT-CAT_RO"
-				var categories = <SelectOption[]>StaticOptions.cached_server_side(this, "cat", ',,,calendar', false);
-
 				var labels = [];
+				var categories = <SelectOption[]>StaticOptions.cached_server_side(this, "cat", ',,,calendar', false);
+				if(!categories || categories.length == 0)
+				{
+					// No categories at all?  Probably loading before sidebox is done.  Ask directly and wait for them, rather than firing
+					// 50 different requests.
+					egw.json(
+						'EGroupware\\Api\\Etemplate\\Widget\\Select::ajax_get_options',
+						['select-cat', ',,,calendar'],
+						function(data)
+						{
+							categories = data;
+						}
+					).sendRequest(false);
+				}
+
 				let app_calendar = this.getInstanceManager().app_obj.calendar || app.calendar;
 				if(!app_calendar.state.cat_id ||
 					app_calendar.state.cat_id.toString() === '' ||
