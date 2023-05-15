@@ -17,9 +17,7 @@
 */
 
 // Need CSS, or it doesn't really work
-//if(typeof egw == 'function') egw(window).includeCSS(egw.webserverUrl + "/api/js/egw_action/test/skins/dhtmlxmenu_egw.css");
-import {dhtmlXMenuObject} from "../../dhtmlxMenu/sources/dhtmlxmenu.js"
-import {egwMenuItem} from "../egw_action";
+//import {dhtmlXMenuObject} from "../dhtmlxMenu/sources/dhtmlxmenu.js"
 
 export class EgwMenuImpl
 {
@@ -170,5 +168,9 @@ export class EgwMenuImpl
 
 		return counter;
 	};
+
+}
+
+export class egwMenuImpl extends  EgwMenuImpl{
 
 }
