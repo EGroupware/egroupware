@@ -53,6 +53,11 @@ export class Et2ButtonIcon extends ButtonMixin(Et2InputWidget(SlIconButton))
 	{
 		return this.src || this.name;
 	}
+
+	set name(name)
+	{
+		// No - use image to avoid conflicts between our icons & SlIconButton's image/url loading
+	}
 }
 
 customElements.define("et2-button-icon", Et2ButtonIcon);
