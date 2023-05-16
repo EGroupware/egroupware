@@ -1334,7 +1334,14 @@
 					-khtml-box-shadow: 2px 3px 13px #666666;
 					filter: progid:DXImageTransform.Microsoft.Shadow(color=#999999,direction=135,strength=3);
 					-moz-user-select: none;
+					et2-button::part(label) {
+						padding: 1em;
+						overflow: hidden;
+					}
+					et2-dropdown-button {height: 46px;}
+					et2-image {filter: none!important;}
 				}
+
 				button.et2_toolbar_hasCaption {
 					width:auto;
 				}

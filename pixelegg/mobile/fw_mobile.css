@@ -9106,6 +9106,16 @@ table.egwGridView_grid img.et2_appicon {
     filter: progid:DXImageTransform.Microsoft.Shadow(color=#999999, direction=135, strength=3);
     -moz-user-select: none;
   }
+  body .et2_toolbar .ui-toolbar-menulist et2-button::part(label) {
+    padding: 1em;
+    overflow: hidden;
+  }
+  body .et2_toolbar .ui-toolbar-menulist et2-dropdown-button {
+    height: 46px;
+  }
+  body .et2_toolbar .ui-toolbar-menulist et2-image {
+    filter: none!important;
+  }
   body .et2_toolbar button.et2_toolbar_hasCaption {
     width: auto;
   }
@@ -9466,3 +9476,4 @@ table.egwGridView_grid img.et2_appicon {
     border-radius: 0;
   }
 }
+/*# sourceMappingURL=fw_mobile.css.map */
