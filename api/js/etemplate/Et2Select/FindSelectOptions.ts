@@ -1,6 +1,13 @@
+/**
+ * Interface for select options
+ *
+ * While we can (mostly) handle key => value maps, this is the preferred way to specify selectable options.
+ * For option groups, value is the list of sub-options.
+ *
+ */
 export interface SelectOption
 {
-	value : string;
+	value : string | SelectOption[];
 	label : string;
 	// Hover help text
 	title? : string;
