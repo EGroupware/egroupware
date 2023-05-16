@@ -247,14 +247,32 @@ class calendar_hooks
 			{
 				$options[$group['account_id']] = Api\Accounts::username($group['account_id']);
 			}
-			$freebusy_url = calendar_bo::freebusy_url($GLOBALS['egw_info']['user']['account_lid'],$GLOBALS['egw_info']['user']['preferences']['calendar']['freebusy_pw']);
-			$freebusy_url = '<a href="'.$freebusy_url.'" target="_blank">'.$freebusy_url.'</a>';
+			$freebusy_url = calendar_bo::freebusy_url($GLOBALS['egw_info']['user']['account_lid'], $GLOBALS['egw_info']['user']['preferences']['calendar']['freebusy_pw']);
+			$freebusy_url = '<a href="' . $freebusy_url . '" target="_blank">' . $freebusy_url . '</a>';
 			$freebusy_help = lang('Should not loged in persons be able to see your freebusy information? You can set an extra password, different from your normal password, to protect this informations. The freebusy information is in iCal format and only include the times when you are busy. It does not include the event-name, description or locations. The URL to your freebusy information is');
 			$freebusy_help .= ' ' . $freebusy_url;
 
 			// Timezone for file exports
 			$export_tzs = array(['value' => '0', 'label' => lang('Use Event TZ')]);
-			$export_tzs += Api\DateTime::getTimezones();
+			$tz_list = Api\DateTime::getTimezones();
+
+			// Format for select
+			$format = function ($key, $value) use (&$format, &$tzs)
+			{
+				if(is_array($value))
+				{
+					$value = [
+						'label' => $key,
+						'value' => array_map($format, array_keys($value), array_values($value))
+					];
+				}
+				else
+				{
+					$value = ['label' => $value, 'value' => $key];
+				}
+				return $value;
+			};
+			$export_tzs = array_merge($export_tzs, array_map($format, array_keys($tz_list), array_values($tz_list)));
 		}
 		$link_title_options = calendar_bo::get_link_options();
 		$settings = array(
