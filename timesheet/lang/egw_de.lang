@@ -144,7 +144,7 @@ status deleted.	timesheet	de	Status gelöscht
 status of created timesheets	timesheet	de	Status für neue Stundenzettel
 status updated.	timesheet	de	Status geändert
 stop	common	de	Stop
-stop- or pause-time can not be before the start-time %1!	common	de	Stop- oder Pausen-Zeit kann nicht for der Start-Zeit %1 liegen!
+stop- or pause-time can not be before the start-time %1!	common	de	Stop- oder Pausen-Zeit kann nicht vor der Start-Zeit %1 liegen!
 sum	timesheet	de	Summe
 sum %1:	timesheet	de	Summe %1:
 tag to mark positions for address labels	timesheet	de	Platzhalter, um die Position der Adresslabels festzulegen
