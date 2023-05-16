@@ -1035,6 +1035,7 @@ Hide subsequent headers in week view with non-consolidated owners
 }
 .calendar_calDayTodosTable tr {
   page-break-inside: avoid;
+  display: flex;
 }
 .calendar_calDayTodosTable tr td span:first-child {
   white-space: nowrap;
@@ -2709,7 +2710,6 @@ div#calendar-container div.calendar table tbody tr.rowhilite td {
     z-index: 1;
   }
   #calendar-toolbar #toolbar-actionlist {
-    margin-left: 60px;
     margin-top: 4px;
   }
   #calendar-edit #calendar-edit_calendar-edit-details {
@@ -2804,6 +2804,7 @@ div#calendar-container div.calendar table tbody tr.rowhilite td {
   #calendar-toolbar .nm-mob-header {
     width: 100%;
     position: absolute;
+    display: inline-block;
     z-index: 100;
   }
   #calendar-toolbar .nm-mob-header .ui-toolbar-menulist button {
@@ -2814,12 +2815,17 @@ div#calendar-container div.calendar table tbody tr.rowhilite td {
     width: 50px;
   }
   #calendar-toolbar .nm-mob-header #calendar-toolbar_toolbar {
-    width: calc(100% - 100px);
-    display: inline-block;
+    display: flex;
     padding: 0px !important;
+    min-width: 230px;
+    justify-content: flex-start;
   }
   #calendar-toolbar .nm-mob-header #calendar-toolbar_toolbar #toolbar-actionlist {
     margin-left: 0px;
+    margin-top: 0px;
+  }
+  #calendar-toolbar .nm-mob-header #calendar-toolbar_toolbar .et2_toolbar_more {
+    min-width: 30px;
   }
   span#calendar-view_header_dateIndicator {
     display: block;

@@ -21,7 +21,6 @@
 		background: #0c5da5;
 		z-index: 1;
 		#toolbar-actionlist {
-			margin-left: 60px;
 			margin-top: 4px;
 		}
 	}
@@ -103,6 +102,7 @@
 		.nm-mob-header {
 			width: 100%;
 			position: absolute;
+			display: inline-block;
 			.ui-toolbar-menulist button {color: black;}
 			z-index: 100;
 			.et2_searchbox {
@@ -110,12 +110,15 @@
 				width: 50px;
 			}
 			#calendar-toolbar_toolbar{
-				width: ~"calc(100% - 100px)";
-				display: inline-block;
+				display: flex;
 				padding: 0px !important;
+				min-width: 230px;
+				justify-content: flex-start;
 				#toolbar-actionlist {
 					margin-left: 0px;
+					margin-top: 0px;
 				}
+				.et2_toolbar_more {min-width: 30px;}
 			}
 		}
 	}
