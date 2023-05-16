@@ -527,7 +527,31 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 	{
 		if(!this.readonly && value && value.length > 0 && !this.allowFreeEntries && this.select_options.length > 0)
 		{
-			const missing = value.filter(v => !this.select_options.some(option => option.value == v));
+			function filterBySelectOptions(arrayToFilter, options : SelectOption[])
+			{
+				const filteredArray = arrayToFilter.filter(item =>
+				{
+					// Check if item is found in options
+					return !options.some(option =>
+					{
+						if(typeof option.value === 'string')
+						{
+							// Regular option
+							return option.value === item;
+						}
+						else if(Array.isArray(option.value))
+						{
+							// Recursively check if item is found in nested array (option groups)
+							return filterBySelectOptions([item], option.value).length > 0;
+						}
+						return false;
+					});
+				});
+
+				return filteredArray;
+			}
+
+			const missing = filterBySelectOptions(value, this.select_options);
 			if(missing.length > 0)
 			{
 				console.warn("Invalid option '" + missing.join(", ") + " ' removed");
