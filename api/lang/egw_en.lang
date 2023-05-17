@@ -669,7 +669,6 @@ high	common	en	High
 highest	common	en	Highest
 history	common	en	History
 history log	common	en	Version history
-hold [%1] and [%2] key to drag %3 to your desktop	common	en	Hold [%1] and [%2] key to drag %3 to your desktop
 hold [%1] key to select text eg. to copy it	common	en	Hold [%1] key to select text eg. to copy it
 holy see (vatican city state)	common	en	HOLY SEE (VATICAN CITY STATE)
 home	common	en	Home
@@ -1562,6 +1561,7 @@ you have not entered participants	common	en	You have not entered participants.
 you have selected an invalid date	common	en	You have selected an invalid date!
 you have selected an invalid main category	common	en	You have selected an invalid main category!
 you have successfully logged out	common	en	You have successfully logged out.
+you may drag files out to your desktop	common	en	You may drag files out to your desktop
 you need to %1set your timezone preference%2.	common	en	You need to %1set your time zone preference%2.
 you need to add the webserver user '%1' to the group '%2'.	common	en	You need to add the web server user '%1' to the group '%2'.
 you need to be an egroupware administrator to access this functionality!	common	en	You need to be an EGroupware administrator to access this functionality!
