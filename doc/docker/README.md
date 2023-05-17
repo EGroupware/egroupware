@@ -7,9 +7,12 @@
 ```
 curl https://raw.githubusercontent.com/EGroupware/egroupware/master/doc/docker/docker-compose.yml > docker-compose.yml
 curl https://raw.githubusercontent.com/EGroupware/egroupware/master/doc/docker/nginx.conf > nginx.conf
+curl https://raw.githubusercontent.com/EGroupware/egroupware/master/doc/docker/Dockerfile > Dockerfile
 # edit docker-compose.yml or nginx.conf, by default it will run on http://localhost:8080/
 mkdir data # this is where egroupware data is stored, it's by default a subdir of the directory of docker-compose.yml
 docker-compose up -d
+# grand access rights to source sub folders
+#remove sources/egroupware/swolepush --> egw install complains that /egroupware has to be empty
 ```
 ## More information
 The provided docker-compose.yml will run the following container:
