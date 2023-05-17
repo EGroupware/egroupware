@@ -11,7 +11,7 @@
 
 
 import {ExposeMixin, ExposeValue} from "../Expose/ExposeMixin";
-import {css, html, LitElement} from "@lion/core";
+import {css, html, LitElement, TemplateResult} from "@lion/core";
 import {Et2Widget} from "../Et2Widget/Et2Widget";
 import {et2_IDetachedDOM} from "../et2_core_interfaces";
 
@@ -22,6 +22,7 @@ import {et2_IDetachedDOM} from "../et2_core_interfaces";
  * You can set it directly in the properties (application, entryId) or use set_value() to
  * pass an object {app: string, id: string, [title: string]} or string in the form <application>::<ID>.
  * If title is not specified, it will be fetched using framework's egw.link_title()
+ *
  */
 
 // @ts-ignore TypeScript says there's something wrong with types
@@ -32,20 +33,37 @@ export class Et2Link extends ExposeMixin<Et2Widget>(Et2Widget(LitElement)) imple
 		return [
 			...super.styles,
 			css`
-			:host {
+			  :host {
 				display: block;
 				cursor: pointer;
-			}
-			:host:hover {
+			  }
+
+			  .link {
+				display: flex;
+				gap: 0.5rem;
+			  }
+
+			  .link__title {
+				flex: 2 1 50%;
+			  }
+
+			  .link__remark {
+				flex: 1 1 50%
+			  }
+
+			  :host:hover {
 				text-decoration: underline
-			}
-			/** Style based on parent **/
-			:host-context(et2-link-string) {
+			  }
+
+			  /** Style based on parent **/
+
+			  :host(et2-link-string) div {
 				display: inline;
-			}
-			:host-context(et2-link-list):hover {
+			  }
+
+			  :host-context(et2-link-list):hover {
 				text-decoration: none;
-			}
+			  }
 			`
 		];
 	}
@@ -119,7 +137,7 @@ export class Et2Link extends ExposeMixin<Et2Widget>(Et2Widget(LitElement)) imple
 	constructor()
 	{
 		super();
-		this._title = "";
+		this._title = Et2Link.MISSING_TITLE;
 		this.__linkHook = "view";
 	}
 
@@ -128,9 +146,34 @@ export class Et2Link extends ExposeMixin<Et2Widget>(Et2Widget(LitElement)) imple
 		super.connectedCallback();
 	}
 
-	createRenderRoot()
+	/**
+	 * Build a thumbnail for the link
+	 * @param link
+	 * @returns {TemplateResult}
+	 * @protected
+	 */
+	protected _thumbnailTemplate(link : LinkInfo) : TemplateResult
 	{
-		return this;
+		// If we have a mimetype, use a Et2VfsMime
+		// Files have path set in 'icon' property, and mime in 'type'
+		if(link.type && link.icon)
+		{
+			return html`
+                <et2-vfs-mime part="icon" class="link__icon" ._parent=${this} .value=${Object.assign({
+                    name: link.title,
+                    mime: link.type,
+                    path: link.icon
+                }, link)}
+                ></et2-vfs-mime>`;
+		}
+		return html`
+            <et2-image-expose
+                    part="icon"
+                    class="link__icon"
+                    ._parent=${this}
+                    href="${link.href}"
+                    src=${this.egw().image("" + link.icon)}
+            ></et2-image-expose>`;
 	}
 
 	render()
@@ -145,7 +188,12 @@ export class Et2Link extends ExposeMixin<Et2Widget>(Et2Widget(LitElement)) imple
 				.replace(this.breakTitle, this.breakTitle.trimEnd() + "\u200B")
 				.replace(/ /g, '\u00a0');
 		}
-		return html`${title}`;
+		return html`
+            <div part="base" class="link et2_link">
+                ${this._thumbnailTemplate({id: this.entryId, app: this.app, ...this.dataset})}
+                <span part="title" class="link__title">${title}</span>
+                <span part="remark" class="link__remark">${this.dataset.remark}</span>
+            </div>`;
 	}
 
 	public set title(_title)
@@ -200,7 +248,6 @@ export class Et2Link extends ExposeMixin<Et2Widget>(Et2Widget(LitElement)) imple
 		{
 			this.app = _value.app;
 			this.entryId = _value.id;
-			this._title = Et2Link.MISSING_TITLE;
 
 			if(_value.title)
 			{
@@ -216,6 +263,7 @@ export class Et2Link extends ExposeMixin<Et2Widget>(Et2Widget(LitElement)) imple
 				this.dataset[key] = _value[key];
 			})
 		}
+		this.requestUpdate("value");
 	}
 
 
