@@ -613,12 +613,12 @@ class DateTime extends \DateTime
 		try {
 			self::$server_timezone = new DateTimeZone($GLOBALS['egw_info']['server']['server_timezone']);
 		}
-		catch(\Exception $e)
+		catch(\Throwable $e)
 		{
 			try {
 				self::$server_timezone = new DateTimeZone(date_default_timezone_get());
 			}
-			catch(\Exception $e)
+			catch(\Throwable $e)
 			{
 				self::$server_timezone = new DateTimeZone('Europe/Berlin');
 			}
