@@ -1057,24 +1057,33 @@ div.et2_file input.et2_file_upload {
  * Autocomplete in dialogs - fix so they go over/out of the dialog
  */
 .ui-dialog * ul.ui-autocomplete {
-    position: fixed;
+	position: fixed;
 }
 
 /**
  * Link wiget(s)
  */
+et2-link-string et2-link::part(base) {
+	display: inline;
+}
+
+et2-link-string > et2-link::part(icon), et2-link-string > et2-link::part(remark) {
+	display: none;
+}
+
+
 /* Link entry - x button*/
 div.et2_link_entry {
-    width: 99%;
-    white-space: nowrap;
+	width: 99%;
+	white-space: nowrap;
 }
 
 div.et2_link_entry:after {
-    display: inline-block;
-    content: ".";
-    height: 0;
-    visibility: hidden;
-    margin: -20px;
+	display: inline-block;
+	content: ".";
+	height: 0;
+	visibility: hidden;
+	margin: -20px;
 }
 
 /* Special layout for inside nm grid */
@@ -1314,19 +1323,23 @@ ul.et2_link_string {
 }
 
 et2-link-list et2-link {
-    color: initial;
-    width: 30%;
+	color: initial;
+	width: 30%;
 }
 
 et2-link-list et2-link:hover {
-    text-decoration: initial;
+	text-decoration: initial;
+}
+
+et2-link-list > et2-link::part(icon) {
+	width: 1rem;
 }
 
 .et2_link_list .icon img,
 .et2_vfs .icon img {
-    width: 16px;
-    height: 16px;
-    display: inline-block;
+	width: 16px;
+	height: 16px;
+	display: inline-block;
 }
 
 div.et2_vfsPath {
