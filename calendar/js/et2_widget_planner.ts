@@ -1952,7 +1952,7 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 					}
 				}
 			}
-			if(waitForGroups.length == 0)
+			if(!data || data.length == 0)
 			{
 				return;
 			}
