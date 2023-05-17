@@ -145,7 +145,7 @@ export function egwDragActionImplementation()
 		if('draggable' in document.createElement('span') &&
 			navigator && navigator.userAgent.indexOf('Chrome') >= 0 && egw.app_name() == 'filemanager') // currently only filemanager supports drag out
 		{
-			text.text(egw.lang('You may darg files out to your desktop', itemLabel));
+			text.text(egw.lang('You may drag files out to your desktop', itemLabel));
 		}
 		// Final html DOM return as helper structor
 		return div;
