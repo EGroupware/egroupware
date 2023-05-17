@@ -22,9 +22,11 @@ export class Et2UrlReadonly extends Et2Description
 		return [
 			...super.styles,
 			css`
-			:host {
+			  
+			a {
 				cursor: pointer;
-				color: #26537c;
+				color: #26537c !important;
+			    text-decoration: none !important;
 			}`
 		];
 	}

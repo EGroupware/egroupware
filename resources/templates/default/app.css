@@ -18,6 +18,7 @@ div.resources_pictureFile div.progress{
 #resources-acl_edit .permissions {
 	margin: 2em 0em;
 	height: auto;
+	width: 100%;
 }
 
 #resources-acl_edit .permissions .th {

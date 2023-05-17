@@ -464,6 +464,7 @@
      <select name="newsettings[account_import_source]">
       <option value="ads" {selected_account_import_source_ads}>ADS</option>
       <option value="ldap" {selected_account_import_source_ldap}>LDAP</option>
+      <option value="univention" {selected_account_import_source_univention}>Univention (LDAP)</option>
      </select>
     </td>
    </tr>

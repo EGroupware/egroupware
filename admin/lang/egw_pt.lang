@@ -7,6 +7,12 @@
 (stored password will not be shown here)	admin	pt	(Senha guardada não será exibida aqui)
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	pt	(Para instalar novas aplicações clique em <br><a href="setup/" target="setup">Configurações</a> [Aplicações de Gestão] !!!)
 -  type	admin	pt	- tipo
+1 year	admin	pt	1 ano
+2 month	admin	pt	2 meses
+2 weeks	admin	pt	2 semanas
+2-factor-authentication for interactive login	admin	pt	2-Factor-Autenticação para login interactivo
+3 month	admin	pt	3 meses
+6 month	admin	pt	6 meses
 accesslog and bruteforce defense	admin	pt	Registo de acesso e defesa de ataque de força bruta
 account active	admin	pt	Conta activa
 account has been created	common	pt	A conta foi criada
@@ -352,11 +358,19 @@ no permission to create groups	admin	pt	sem permissão para criar grupos
 no plain text part found	admin	pt	nenhuma parte de texto simples encontrado
 note: ssl available only if php is compiled with curl support	admin	pt	Nota: SSL disponível apenas se o PHP estiver compilado com suporte curl.
 number of row for a multiline inputfield or line of a multi-select-box	admin	pt	Número de linhas para um campo multi-linha ou linhas de uma caixa de selecção múltipla.
+oauth authentiction	admin	pt	Autenticação OAuth
+offer to installing egroupware as mail-handler	admin	pt	Oferta de instalação de EGroupware como correio
+one day	admin	pt	Um dia
+one hour	admin	pt	Uma hora
 one month	admin	pt	um mês
 one week	admin	pt	uma semana
 order	admin	pt	Ordem
 organisation	admin	pt	Empresa
+other security configuration	admin	pt	Outra configuração de segurança
 outbound	admin	pt	Saída
+own categories	admin	pt	Categorias próprias
+own install id	admin	pt	ID de instalação própria
+own install id:	admin	pt	ID de instalação própria:
 passthrough	admin	pt	Atravessar
 password for smtp-authentication	admin	pt	Senha para autenticação SMTP
 path information	admin	pt	Informação de Path

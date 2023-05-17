@@ -71,6 +71,7 @@ billed	infolog	sk	Vyúčtované
 both	infolog	sk	Obidvoje
 call	infolog	sk	Volať
 can be used to show further infolog types in the calendar or limit it to show eg. only tasks.	infolog	sk	Dá sa použiť na zobrazenie ďalších typov Záznamníka v Kalendári, alebo obmedziť zobrazovanie napr. len na úlohy.
+can not return an exact number of rows and therefore hides the count.	admin	sk	Nevie oznámiť presný počet riadkov a preto schováva počítadlo.
 cancel	infolog	sk	Zrušiť
 cancelled	infolog	sk	Zrušené
 categories	infolog	sk	Kategórie
@@ -103,6 +104,7 @@ completed	infolog	sk	Stav vybavenia
 configuration	infolog	sk	Konfigurácia
 confirm	infolog	sk	Potvrdiť
 contact	infolog	sk	Kontakt
+contact cf	infolog	sk	CF kontaktu
 contact fields	infolog	sk	Polia kontaktu
 contactfield	infolog	sk	Pole kontaktu
 convert to a ticket	infolog	sk	Konvertovať na tiket
@@ -274,6 +276,7 @@ leave it empty for a full week	infolog	sk	Ponechať prázdne po celý týždeň
 leave without saveing the entry	infolog	sk	Odísť bez uloženia záznamu
 leaves without saveing	infolog	sk	Odísť bez uloženia
 length	infolog	sk	Dĺžka
+limit list to last n month, if ordering by last-modified and not searching.	admin	sk	Obmedziť zoznam na ostatných N mesiacov, ak je zoradený podľa poslednej úpravy a bez vyhľadávania.
 limit number of description lines (default 5, 0 for no limit)	infolog	sk	Obmedziť počet riadkov opisu (0 znamená bez limitu; predvolené: 5)
 limit width of description column ((effective only if lines limit is set), 0 for no limit)	infolog	sk	Obmedziť šírku stĺpca popisu. Uplatní sa len ak je nastavené obmedzenie riadkov. 0 = bez obmedzenia.
 link	infolog	sk	Odkaz
@@ -352,6 +355,7 @@ path to user and group files has to be outside of the webservers document-root!!
 pattern for search in addressbook	infolog	sk	Výraz pre hľadanie v Adresári
 pattern for search in projects	infolog	sk	Výraz pre hľadanie v Projektoch
 percent completed	infolog	sk	Na koľko percent vyriešené
+performance optimization for huge infolog tables	admin	sk	Vyladenie výkonu pre obrovské tabuľky Záznamníka
 permission denied	infolog	sk	Prístup bol odmietnutý
 permissions error - %1 could not %2	infolog	sk	Chyba oprávnení - %1 nemôže %2
 phone	infolog	sk	Telefonát
@@ -426,6 +430,7 @@ select to filter by owner	infolog	sk	Filtrovanie podľa vlastníka
 select to filter by responsible	infolog	sk	Filtrovanie podľa zodpovedného
 select users or groups	infolog	sk	Vyberte používateľov alebo skupiny
 selected calendars	infolog	sk	Vybrané kalendáre
+selection cf	infolog	sk	CF výberu
 sender	infolog	sk	Odosielateľ
 set status to done	infolog	sk	Nastaviť stav na hotovo
 set status to done for all entries	infolog	sk	Nastaviť stav na hotovo pre všetky položky
@@ -514,6 +519,7 @@ view the parent of this entry and all his subs	infolog	sk	Zobraziť rodičovský
 view this linked entry in its application	infolog	sk	Zobraziť tento odkaz v jeho aplikácii
 when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	sk	keď má byť začatá Úloha alebo Telefonát, ukáže sa akoby od tohto dátumu vo filtri "otvorené" alebo "moje otvorené" (úvodná stránka)
 which additional fields should the responsible be allowed to edit without having edit rights?	infolog	sk	Ktoré prídavné položky majú byť zodpovednej osobe prístupné pre úpravy, a to aj bez pridelených práv na úpravy?
+which implicit acl rights should the responsible get	infolog	sk	Ktoré implicitné ACL prístupové oprávnenia má obdržať zodpovedná osoba
 which participants should be preselected when scheduling an appointment.	infolog	sk	Ktorí účastníci majú byť predvybratí pri plánovaní pozvania.
 which types should the calendar show	infolog	sk	Aké typy má kalendár ukazovať
 which types should the calendar show like events?	infolog	sk	Aké typy má kalendár zobrazovať ako udalosti?

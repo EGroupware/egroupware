@@ -94,7 +94,7 @@ add shortcut	common	de	Abkürzung hinzufügen
 add sub	common	de	Untergeordnete hinzufügen
 add table	common	de	Tabelle zufügen
 add to clipboard	common	de	Zur Zwischenablage hinzufügen
-add user to responsibles	groupdav	de	füge Benutzer zu Verantwortlichen hinzu
+add user to responsibles	groupdav	de	Füge Benutzer zu Verantwortlichen hinzu
 add user to responsibles, removing evtl. previous category user	groupdav	de	füge Benutzer zu Verantwortlichen hinzu, entferne Benutzer der vorherigen Kategorie
 add your domain as "%1" in options to list of email providers and enable api.	common	de	Fügen Sie Ihre Domain als "%1" unter Optionen in der Liste der E-Mail-Anbieter hinzu und schalten Sie API ein.
 addressbook	common	de	Adressbuch
@@ -137,6 +137,7 @@ and	common	de	UND
 andorra	common	de	ANDORRA
 angola	common	de	ANGOLA
 anguilla	common	de	ANGUILLA
+answering no will not ask you again for this browser.	common	de	Wenn Sie mit Nein antworten, werden Sie für diesen Browser nicht mehr gefragt.
 antarctica	common	de	ANTARKTIS
 antigua and barbuda	common	de	ANTIGUA UND BARBUDA
 api	common	de	EGroupware API
@@ -668,7 +669,6 @@ high	common	de	Hoch
 highest	common	de	Höchste
 history	common	de	Historie
 history log	common	de	Versions-Historie
-hold [%1] and [%2] key to drag %3 to your desktop	common	de	[%1] und [%2] Tasten halten um %3 auf Ihren Schreibtisch (Desktop) zu ziehen
 hold [%1] key to select text eg. to copy it	common	de	Zum Kopieren [%1]-Taste beim Auswählen halten
 holy see (vatican city state)	common	de	VATICAN
 home	common	de	Home
@@ -738,6 +738,7 @@ insert row after	common	de	Zeile danach einfügen
 insert row before	common	de	Zeile davor einfügen
 insert timestamp into description field	common	de	Zeitstempel in das Beschreibungs-Feld einfügen
 install	common	de	Installieren
+install egroupware as mail-handler?	common	de	EGroupware als Mail-Handler installieren?
 integer	common	de	Ganzzahl
 international	common	de	International
 introduction	common	de	Einführung
@@ -1560,6 +1561,7 @@ you have not entered participants	common	de	Sie haben keine Teilnehmer eingegebe
 you have selected an invalid date	common	de	Sie haben ein ungültiges Datum gewählt !
 you have selected an invalid main category	common	de	Sie haben eine ungültige Hauptkategorie gewählt !
 you have successfully logged out	common	de	Sie haben sich erfolgreich abgemeldet
+you may drag files out to your desktop	common	de	Sie können die Dateien auch auf Ihren Desktop ziehen
 you need to %1set your timezone preference%2.	common	de	Sie müssen %1Ihre Zeitzone in den Einstellungen setzen%2
 you need to add the webserver user '%1' to the group '%2'.	common	de	Sie müssen den Webserver-User '%1' zur Gruppe '%2' hinzufügen.
 you need to be an egroupware administrator to access this functionality!	common	de	Sie müssen ein EGroupware Administrator sein, um auf diese Funktion zuzugreifen!

@@ -83,7 +83,7 @@ try {
 	}
 	if (strpos($_GET['menuaction'],'::') !== false && strpos($_GET['menuaction'],'.') === false)	// static method name app_something::method
 	{
-		@list($className,$functionName,$handler) = explode('::',$_GET['menuaction']);
+		@list($className,$functionName,$handler) = explode('::',$_GET['menuaction'])+[2 => null];
 
 		if (substr($className, 0, 11) == 'EGroupware\\')
 		{

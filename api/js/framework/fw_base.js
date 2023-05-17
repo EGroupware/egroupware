@@ -387,7 +387,7 @@ window.fw_base = (function(){ "use strict"; return Class.extend(
 				_app.sidemenuEntry.parent.open(_app.sidemenuEntry);
 
 				// reliable init sidebox, as app.js might initialise earlier
-				if (typeof app[_app.appName] == 'object')
+				if (typeof app[_app.appName] == 'object' && jQuery('#favorite_sidebox_'+_app.appName, this.sidemenuDiv).length)
 				{
 					var sidebox = jQuery('#favorite_sidebox_'+_app.appName, this.sidemenuDiv).getElementsByTagName('ul')[0];
 					var self = this;

@@ -87,8 +87,8 @@ export class et2_nextmatch_controller extends et2_dataview_controller implements
 		super(_parentController, _grid);
 
 		this.setDataProvider(this);
-		this.setRowCallback(this._rowCallback);
-		this.setLinkCallback(this._linkCallback);
+		this.setRowCallback(this._nmRowCallback);
+		this.setLinkCallback(this._nmLinkCallback);
 		this.setContext(this);
 
 		// Copy the egw reference
@@ -560,7 +560,7 @@ export class et2_nextmatch_controller extends et2_dataview_controller implements
 	 * this special case used to store the rowWidget reference, so that it can
 	 * be properly freed.
 	 */
-	_rowCallback( _data, _tr, _idx, _entry)
+	_nmRowCallback(_data, _tr, _idx, _entry)
 	{
 		// Let the row provider fill in the data row -- store the returned
 		// rowWidget inside the _entry
@@ -585,7 +585,7 @@ export class et2_nextmatch_controller extends et2_dataview_controller implements
 	 *
 	 * @return Array List of action names that valid for the row
 	 */
-	_linkCallback( _data, _idx, _uid)
+	_nmLinkCallback( _data, _idx, _uid)
 	{
 		if(_uid.trim() != "")
 		{

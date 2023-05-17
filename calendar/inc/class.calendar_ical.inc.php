@@ -1543,6 +1543,12 @@ class calendar_ical extends calendar_boupdate
 				}
 			}
 
+			// check if event was created in a non-user calendar, e.g. a resource calendar --> set current user as owner
+			if (!is_numeric($event['owner']))
+			{
+				$event['owner'] = $this->user;
+			}
+
 			// update alarms depending on the given event type
 			if (count($event['alarm']) > 0 || isset($this->supportedFields['alarm']) && isset($event['alarm']))
 			{
@@ -2813,7 +2819,7 @@ class calendar_ical extends calendar_boupdate
 					{
 						$event['organizer'] = $attributes['params']['CN'].' <'.$event['organizer'].'>';
 					}
-					// fall throught
+					// fall through
 				case 'ATTENDEE':
 					// work around Ligthning sending @ as %40
 					$attributes['value'] = str_replace('%40', '@', $attributes['value']);
@@ -3091,7 +3097,7 @@ class calendar_ical extends calendar_boupdate
 
 				case 'ATTACH':
 					if ($attributes['params'] && !empty($attributes['params']['FMTTYPE'])) break;	// handeled by managed attachment code
-					// fall throught to store external attachment url
+					// fall through to store external attachment url
 				default:	// X- attribute or other by EGroupware unsupported property
 					//error_log(__METHOD__."() $attributes[name] = ".array2string($attributes));
 					// for attributes with multiple values in multiple lines, merge the values

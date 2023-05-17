@@ -72,7 +72,8 @@ export class Et2LinkAdd extends Et2InputWidget(FormControlMixin(ValidateMixin(Sl
 			{
 				const button = <Et2Button>document.createElement("et2-button");
 				button.id = this.id + "_add";
-				button.label = this.egw().lang("Add")
+				button.label = this.egw().lang("Add");
+				button.noSubmit = true;
 
 				return button;
 			}

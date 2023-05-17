@@ -864,6 +864,11 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 
 		iterateOver(_callback : Function, _context, _type)
 		{
+			if(this.disabled)
+			{
+				// Don't if we're disabled
+				return;
+			}
 			if(typeof _type === "undefined" || _type === et2_widget || _type === Et2Widget ||
 				typeof _type === 'function' && this instanceof _type ||
 				et2_implements_registry[_type] && et2_implements_registry[_type](this))

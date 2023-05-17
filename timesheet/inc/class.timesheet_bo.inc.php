@@ -510,12 +510,20 @@ class timesheet_bo extends Api\Storage
 		// if we only want to return the summary (sum of duration and sum of price) we have to take care that the customfield table
 		// is not joined, as the join causes a multiplication of the sum per customfield found
 		// joining of the cutomfield table is triggered by criteria being set with either a string or an array
-		$this->summary = parent::search($only_summary ? null : $criteria,
-			"SUM(ts_duration) AS duration,SUM($total_sql) AS price,MAX(ts_modified) AS max_modified".
-				($this->quantity_sum ? ",SUM(ts_quantity) AS quantity" : ''),
+		$cols = ['SUM(ts_duration) AS duration',
+				 "SUM($total_sql) AS price",
+				 'MAX(ts_modified) AS max_modified'];
+		if($this->quantity_sum)
+		{
+			$cols[] = 'SUM(ts_quantity) AS quantity';
+		}
+		$this->summary = parent::search(
+			$only_summary ? null : $criteria,
+			$cols,
 			'', '', $wildcard, $empty, $op, false,
 			$only_summary && is_array($criteria) ? ($filter ? array_merge($criteria, (array)$filter) : $criteria) : $filter,
-			$only_summary ? '' : $join);
+			$only_summary ? '' : $join
+		);
 		$this->summary = $this->summary[0];
 		$this->summary['max_modified'] = Api\DateTime::server2user($this->summary['max_modified']);
 

@@ -74,6 +74,13 @@ export class Et2EmailTag extends Et2Tag
 
 			/**
 			 * If the email is a contact, we normally show the contact name instead of the email.
+			 * Set to true to turn this off and always show just the email
+			 * Mutually exclusive with fullEmail!
+			 */
+			onlyEmail: {type: Boolean},
+
+			/**
+			 * If the email is a contact, we normally show the contact name instead of the email.
 			 * Set to true to turn this off and always show the email
 			 */
 			fullEmail: {type: Boolean}
@@ -85,6 +92,7 @@ export class Et2EmailTag extends Et2Tag
 		super(...args);
 		this.contactPlus = true;
 		this.fullEmail = false;
+		this.onlyEmail = false;
 		this.handleMouseEnter = this.handleMouseEnter.bind(this);
 		this.handleMouseLeave = this.handleMouseLeave.bind(this);
 		this.handleClick = this.handleClick.bind(this);
@@ -184,12 +192,17 @@ export class Et2EmailTag extends Et2Tag
 	{
 		let content = this.value;
 		// If there's a name, just show the name, otherwise show the email
-		if(Et2EmailTag.email_cache[this.value])
+		if(!this.onlyEmail && Et2EmailTag.email_cache[this.value])
 		{
 			// Append current value as email, data may have work & home email in it
 			content = (Et2EmailTag.email_cache[this.value]?.n_fn || "") + " <" + this.value + ">"
 		}
-		if(!this.fullEmail)
+		if (this.onlyEmail)
+		{
+			const split = this.splitEmail(content);
+			content = split.email || this.value;
+		}
+		else if(!this.fullEmail)
 		{
 			const split = this.splitEmail(content);
 			content = split.name || split.email;

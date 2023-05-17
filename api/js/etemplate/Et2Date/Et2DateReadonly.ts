@@ -19,7 +19,6 @@ import {dateStyles} from "./DateStyles";
  */
 export class Et2DateReadonly extends Et2Widget(LitElement) implements et2_IDetachedDOM
 {
-	protected value : any;
 	protected parser : Function;
 	protected formatter : Function;
 
@@ -66,7 +65,7 @@ export class Et2DateReadonly extends Et2Widget(LitElement) implements et2_IDetac
 
 	getDetachedAttributes(attrs)
 	{
-		attrs.push("id", "value", "class");
+		attrs.push("id", "value", "class", "statustext");
 	}
 
 	getDetachedNodes() : HTMLElement[]

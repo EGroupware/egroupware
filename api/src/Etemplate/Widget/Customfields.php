@@ -195,8 +195,9 @@ class Customfields extends Transformer
 			preg_match($preg = '/'.$this->attrs['prefix'].'([^\]]+)/',$form_name,$matches) && isset($fields[$name=$matches[1]]))
 		{
 			$fields = array($name => $fields[$name]);
-			$value = array($this->attrs['prefix'].$name => $value);
-			$form_name = $this->attrs['prefix'].$name;
+			$value = self::get_array(self::$request->content, $form_name, false, true);
+			$fields[$name]['value'] = $value;
+			$form_name = $this->attrs['prefix'] . $name;
 		}
 
 		if(!is_array($fields)) $fields = array();
@@ -267,7 +268,7 @@ class Customfields extends Transformer
 			$widget = $this->_widget($fname, $field);
 			if(method_exists($widget, 'beforeSendToClient'))
 			{
-				$widget->beforeSendToClient($this->id == self::GLOBAL_ID ? '' : $this->id, $expand);
+				$widget->beforeSendToClient($this->id == self::GLOBAL_ID ? '' : $form_name, $expand);
 			}
 		}
 	}

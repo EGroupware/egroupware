@@ -27,7 +27,7 @@ const IMAGE_DEFAULT = {
 };
 
 // For filtering to only show things we can handle
-const MIME_REGEX = (navigator.userAgent.match(/(MSIE|Trident)/)) ?
+export const MIME_REGEX = (navigator.userAgent.match(/(MSIE|Trident)/)) ?
 	// IE only supports video/mp4 mime type
 				   new RegExp(/(video\/mp4)|(image\/:*(?!tif|x-xcf|pdf))|(audio\/:*)/, 'i') :
 				   new RegExp(/(video\/(mp4|ogg|webm))|(image\/:*(?!tif|x-xcf|pdf))|(audio\/:*)/, 'i');
@@ -921,6 +921,12 @@ export function ExposeMixin<B extends Constructor<LitElement>>(superclass : B)
 		{
 			// Check to see if we're in a nextmatch, remove magic
 			let nm = this.find_nextmatch(this);
+
+			// redefine essential removeClass method in case the active element has no longer contains it.
+			if (!this._gallery.activeIndicator.removeClass)
+			{
+				this._gallery.activeIndicator.removeClass = blueimp.helper.prototype.removeClass;
+			}
 			if(nm && !this._is_target_indepth(nm))
 			{
 				// Remove scrolling from thumbnails

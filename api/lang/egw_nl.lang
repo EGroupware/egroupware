@@ -608,6 +608,7 @@ if field is disabled an empty table-cell is displayed, for (temporal) removement
 if the clock is enabled would you like it to update it every second or every minute?	common	nl	Indien de klok is ingeschakeld, wilt u dan dat deze iedere seconde of iedere minuut wordt geactualiseerd?
 if there are some images in the background folder you can choose the one you would like to see.	common	nl	Indien er enkele afbeeldingen in de achtergrond map aanwezig zijn, kunt u er een kiezen die u wilt weergeven.
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	preferences	nl	Als u hier een specifieke map (volledig vfs pad) definieert, %1 dan wordt er een actie getoond voor elk document, Het icoon staat dan toe dat het document wordt gedownload met de data toegevoegd.
+if you use "2-factor-authentication", please enter the code here.	common	nl	Als u "2-Factor-Authentication" gebruikt, vul dan hier de code in.
 image	common	nl	Afbeelding
 image directory relative to document root (use / !), example:	common	nl	Afbeeldingen directory relatief ten opzichte van de document root (gebruik / !), bijvoorbeeld:
 image url	common	nl	Afbeelding URL
@@ -615,6 +616,7 @@ import	common	nl	Importeren
 import an etemplate from a xml-file	common	nl	importeer een eTemplate vanuit een XML-bestand
 import table-definitions from existing db-table	common	nl	Importeer tabeldefinities vanuit een bestaande DB tabel
 import xml	common	nl	Importeer XML
+include access to any linked files (links tab)	common	nl	Geef toegang tot alle gekoppelde bestanden (tabblad Links)
 increment version to not overwrite the existing template	common	nl	verhoog versie zodat de bestaande template niet wordt overschreven
 index/name of returned content (name of the template, link / method for image)	common	nl	index/naam van de teruggegeven inhoud (naam van de Template, Link / Methode voor afbeelding)
 indexed	common	nl	Geindexeerd
@@ -925,6 +927,7 @@ philippines	common	nl	FILIPIJNEN
 phone number	common	nl	telefoonnummer
 pitcairn	common	nl	PITCAIRN (EILAND)
 placeholders	common	nl	Tijdelijke aanduiding
+play/pause	common	nl	Afspelen/Pauze
 please %1 by hand	common	nl	Gelieve %1 handmatig uit te voeren
 please enter a name	common	nl	Vul a.u.b. een naam in !
 please enter table-name first !!!	common	nl	Vul a.u.b. eerst de tabelnaam in !!!
@@ -943,6 +946,7 @@ postal	common	nl	Post
 powered by	common	nl	Ondersteund door
 pre	common	nl	Voor
 precision	common	nl	Precisie
+preference	common	nl	Voorkeur
 preferences	common	nl	Voorkeuren
 preferences for the %1 template set	preferences	nl	Voorkeur voor set template %1
 prev	common	nl	Vorige

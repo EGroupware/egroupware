@@ -1,3 +1,83 @@
+egroupware-docker (23.1.20230503) hardy; urgency=low
+
+  * fix some critical errors/regressions in the not published 23.1.20230428 release
+  * InfoLog: can not set project (caused double submit, stalled saving by redirecting to list)
+  * Calendar: Allow to select multiple categories in sidemenu
+  * Calendar: Put email address after user or contact
+  * ProjectManager: fix entries opened in elements list have wrong project linked (after project is changed)
+  * full list of changes https://github.com/EGroupware/egroupware/compare/23.1.20230428...23.1.20230503
+
+ -- Ralf Becker <rb@egroupware.org>  Wed, 03 May 2023 11:51:46 +0200
+
+egroupware-docker (23.1.20230428) hardy; urgency=low
+
+  * CalDAV/InfoLog: fix infinit loop causing high database load, if sync-collection report did not query calendar-data
+  * CalDAV/Calendar: fix recurring events with users only added to an exception and have been deleted or rejected after
+  * CardDAV/Addressbook: show and allow to sync for default and forced preferences all ABs of the admin user
+  * Calendar: fix not displayed events of resources when a resource category was selected
+  * Mail: fix resize of compose window in plain-text mode to display everything
+  * Mail: fix showing of calendar invitations in s/mime
+  * Rocketchat: fix rocketchat's status sometimes is not showing up in Status app for bigger installations
+  * Status: add new config setting in  order to be able to open BigBlueButton calls in separate window with no iframe
+  * Status: fix top header (invite button, end call button, ...) in call dialogs no longer is visible
+  * Status: fix ringing tone never ends after a call being answered
+  * Status: fix somehow not found user in contacts stalls whole display of status column
+  * ProjectManager: fix display of icons in project- and element-list
+  * EPL/ProjectManager: fix moving tasks and projects
+  * EPL/Firewall: fix test gave an "Illegal offset type" error
+  * EPL/Tracker: fix reports not being displayed and giving errors
+  * AD/LDAP/Import: for AD always do a full import of groups, as AD seems not to update the modification date, if only members change
+  * All apps: various fixes in the new web-component based widgets
+  * full list of changes https://github.com/EGroupware/egroupware/compare/23.1.20230412...23.1.20230428
+
+ -- Ralf Becker <rb@egroupware.org>  Fri, 28 Apr 2023 08:44:31 +0200
+
+egroupware-docker (23.1.20230412) hardy; urgency=low
+
+  * Docker images are available now for architektures: amd64 (as before), arm/v7, arm64/v8 and ppc64le
+  * Mail: Make list refresh option available in 3pane-view through column selector
+  * Mail: allow placeholders in compose instead of email-addresses to be able to create mail templates
+  * Mail/Calendar: show scrollbar, if meeting request does not fit into preview area
+  * Filemanager: fix broken expose view for filename click&open action
+  * Filemanager: fix after opening and closing the gallery in filemanager the list is no longer accessible
+  * Calendar/CalDAV: set current user as owner for events created in resource calendar
+  * Rocketchat: fix rocketchat's status sometimes is not showing up in Status app for bigger installations
+  * Status: add new config setting in  order to be able to open BigBlueButton calls in separate window with no iframe
+  * Status: fix top header (invite button, end call button, ...) in call dialogs no longer is visible
+  * Status: fix ringing tone never ends after a call being answered
+  * Status: fix somehow not found user in contacts stalls whole display of status column
+  * Projectmanager: fix missing application and status icon in element list
+  * LDAP/AD: if only users get imported, set their primary group and memberships as configured for auto-created accounts (Default group by default)
+  * LDAP/AD/Setup: periodic import disables (add|edit)account hooks, if account-repository is not SQL and further performance improvements
+  * LDAP/ADS: fix memberships of local groups were lost in periodic account-import
+  * EPL/CTI/Addressbook: phone numbers written with unusual separator like pipe symbol where not found
+  * full list of changes https://github.com/EGroupware/egroupware/compare/23.1.20230328...23.1.20230412
+
+ -- Ralf Becker <rb@egroupware.org>  Wed, 12 Apr 2023 11:21:00 +0200
+
+egroupware-docker (23.1.20230328) hardy; urgency=low
+
+  * Safari/iOS: support Safari/iOS 14.x via transpiling of JavaScript
+  * Home: get home mostly working again
+  * All apps: multi-selections eg. searching and entering mail addresses close now automatic on selecting a result
+  * Infolog: Remove height restriction on start/due/completed dates in list
+  * Mail: fix mail preview don't get set correctly when running in expand pane view
+  * Mail: fix mail preview can not show attachments for smime encrypted messages
+  * NewsAdmin: fix creating of new categories
+  * WebAuthN: fix not working registration of new authentication devices or browsers
+  * Notifications: deal with "Lock timeout exceeded" error on too many undeleted notifications
+  * Rocketchat: fix rocketchat's status sometimes is not showing up in Status app for bigger installations
+  * Status: add new config setting in  order to be able to open BigBlueButton calls in separate window with no iframe
+  * Status: fix top header (invite button, end call button, ...) in call dialogs no longer is visible
+  * Status: fix ringing tone never ends after a call being answered
+  * Status: fix somehow not found user in contacts stalls whole display of status column
+  * Api/MariaDB/MySQL: fix SQL error handling in PHP 8.1
+  * Admin/Setup: logging all DB backup operations to a text file db_backup.log in backup-directory
+  * LDAP/Univention: periodic account-import for Univention (mailPrimaryAddress), use LDAP account-filter for reading accounts too
+  * full list of changes https://github.com/EGroupware/egroupware/compare/23.1.20230314...23.1.20230328
+
+ -- Ralf Becker <rb@egroupware.org>  Tue, 28 Mar 2023 10:17:13 +0200
+
 egroupware-docker (23.1.20230314) hardy; urgency=low
 
   * 23.1 final release with the following major features:

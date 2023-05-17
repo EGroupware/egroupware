@@ -478,11 +478,12 @@ class admin_customfields
 		// Show sub-type row, and get types
 		if($this->manage_content_types)
 		{
+			$content['cf_type2'] = is_array($content['cf_type2']) ? $content['cf_type2'] : explode(",", $content['cf_type2']);
 			if(empty($this->content_types))
 			{
 				$this->content_types = Api\Config::get_content_types($this->appname);
 			}
-			if (empty($this->content_types))
+			if(empty($this->content_types))
 			{
 				// if you define your default types of your app with the search_link hook, they are available here, if no types were found
 				$this->content_types = (array)Api\Link::get_registry($this->appname, 'default_types');
@@ -491,6 +492,9 @@ class admin_customfields
 			{
 				$this->types2[$type] = is_array($entry) ? $entry['name'] : $entry;
 			}
+			// Make sure there are no invalid types in the value (from deleted types)
+			$content['cf_type2'] = array_intersect($content['cf_type2'], array_keys($this->types2));
+
 			$sel_options['cf_type2'] = $this->types2;
 		}
 		else

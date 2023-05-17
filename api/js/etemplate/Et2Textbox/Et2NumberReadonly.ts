@@ -25,9 +25,13 @@ export class Et2NumberReadonly extends Et2TextboxReadonly
 
 	set_value(val)
 	{
-		if (""+val !== "")
+		if(val === null)
 		{
-			if (typeof this.precision !== 'undefined')
+			val = "";
+		}
+		else if("" + val !== "")
+		{
+			if(typeof this.precision !== 'undefined')
 			{
 				val = parseFloat(val).toFixed(this.precision);
 			}

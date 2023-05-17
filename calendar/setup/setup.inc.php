@@ -46,6 +46,7 @@ $setup_info['calendar']['hooks']['acl_rights'] = 'calendar_hooks::acl_rights';
 $setup_info['calendar']['hooks']['categories'] = 'calendar_hooks::categories';
 $setup_info['calendar']['hooks']['mail_import'] = 'calendar_hooks::mail_import';
 $setup_info['calendar']['hooks']['notifications_actions'] = 'calendar_hooks::notifications_actions';
+$setup_info['calendar']['hooks']['etemplate2_register_widgets'] = 'calendar_hooks::widgets';
 
 /* Dependencies for this app to work */
 $setup_info['calendar']['depends'][] = array(

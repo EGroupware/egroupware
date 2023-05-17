@@ -1041,8 +1041,6 @@ export abstract class EgwApp
 				// Try to update nextmatch favorites too
 				this._refresh_fav_nm();
 			}
-
-			jQuery(this).dialog("close");
 		};
 
 

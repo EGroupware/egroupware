@@ -161,8 +161,22 @@ class Url extends Etemplate\Widget
 		$result = $GLOBALS['egw']->contacts->search(
 			array('contact_email' => $email[0], 'contact_email_home' => $email[0]),
 			array('contact_id', 'email', 'email_home', 'n_fn'),
-			'', '', '', false, 'OR', false
+			'', '', '%', false, 'OR', false
 		);
-		$response->data($result ? $result[0] : false);
+		// iterate through the possibilities and find the best match to what was entered
+		$best_match = null;
+		$best_match_score = -1;
+		foreach($result as $possibility)
+		{
+			$score = max(similar_text(strtolower($_email), strtolower($possibility['n_fn'] . " " . $possibility['email'])),
+						 similar_text(strtolower($_email), strtolower($possibility['n_fn'] . " " . $possibility['email_home']))
+			);
+			if($score > $best_match_score)
+			{
+				$best_match_score = $score;
+				$best_match = $possibility;
+			}
+		}
+		$response->data($result ? $best_match : false);
 	}
 }

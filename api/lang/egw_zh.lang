@@ -63,12 +63,15 @@ add a new entry of the selected application	common	zh	在选择的应用程序�
 add a new multi-column index	common	zh	添加新的多列索引
 add category	common	zh	添加类别
 add column	common	zh	添加列
+add current	common	zh	当前视图为最爱
 add index	common	zh	添加索引
 add new	common	zh	新增
 add shortcut	common	zh	添加快捷键
 add sub	common	zh	添加子类别
 add table	common	zh	添加表
+add to clipboard	common	zh	添加到剪贴板
 addressbook	common	zh	通讯簿
+addressbooks to sync in addition to personal addressbook	groupdav	zh	除了个人通讯录，还可以同步通讯录
 admin	common	zh	系统管理
 administration	common	zh	系统管理
 advanced search	common	zh	高级搜索
@@ -79,8 +82,10 @@ align	common	zh	对齐
 alignment of label and input-field in table-cell	common	zh	标签与输入字段的对齐方式
 alignment of the v/hbox containing table-cell	common	zh	V/HBox 的对齐方式
 all	common	zh	全部
+all addressbooks	groupdav	zh	所有地址簿
 all days	common	zh	全部日数
 all fields	common	zh	所有字段
+all in one	groupdav	zh	一体化
 all languages	common	zh	所有语言
 all operations save the template!	common	zh	所有操作保存模板！
 all users	common	zh	所有用户
@@ -528,6 +533,7 @@ iespell not detected. click ok to go to download page.	common	zh	ieSpell 未找�
 if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	common	zh	为了(暂时)移除一个 field/cell，如果字段被禁用则会显示一个空白 table-cell
 if the clock is enabled would you like it to update it every second or every minute?	common	zh	如果使用时钟，每秒还是每分钟更新？
 if there are some images in the background folder you can choose the one you would like to see.	common	zh	如果背景文件夹中有一些图片的话，您可以选择其中的一个您希望的。
+if you use "2-factor-authentication", please enter the code here.	common	zh	如果你使用 "2-Factor-Authentication"，请在此输入代码。
 image	common	zh	图片
 image directory relative to document root (use / !), example:	common	zh	相对文档根目录的图片目录(使用：/)，例如：
 image url	common	zh	图片网址
@@ -535,12 +541,14 @@ import	common	zh	导入
 import an etemplate from a xml-file	common	zh	从XML文件导入一个模板
 import table-definitions from existing db-table	common	zh	从已有的数据表导入表定义文件
 import xml	common	zh	导入XML文件
+include access to any linked files (links tab)	common	zh	包括对任何链接文件的访问(链接标签)
 increment version to not overwrite the existing template	common	zh	增加版本以避免覆盖现有模板
 index/name of returned content (name of the template, link / method for image)	common	zh	返回内容的索引/名称(模板名称，图片的链接/方法)
 indexed	common	zh	已索引
 indexoptions	common	zh	索引选项
 india	common	zh	印度
 indonesia	common	zh	印度尼西亚
+infolog types to sync	common	zh	要同步的信息日志类型
 initial	common	zh	初始的
 insert a column before	common	zh	在前面插入一列
 insert a column behind	common	zh	在后面插入一列
@@ -723,6 +731,7 @@ no column to swap with !!!	common	zh	没有与之交换的列！
 no entries found, try again ...	common	zh	条目找不到，请重试...
 no file	common	zh	无文件
 no filename given or selected via browse...	common	zh	没有指定文件名或是通过浏览器选择的...
+no filters	common	zh	没有过滤器
 no history for this record	common	zh	该记录无历史记录
 no matches found	common	zh	未找到匹配
 no row to swap with !!!	common	zh	没有与之交换的行！
@@ -810,6 +819,8 @@ peru	common	zh	秘鲁
 philippines	common	zh	菲律宾
 phone number	common	zh	电话号码
 pitcairn	common	zh	皮特凯恩
+placeholders	common	zh	占位符
+play/pause	common	zh	播放/暂停
 please %1 by hand	common	zh	请手动%1
 please enter a name	common	zh	请输入名称！
 please enter table-name first !!!	common	zh	请先输入表格名称！
@@ -827,6 +838,7 @@ portugal	common	zh	葡萄牙
 postal	common	zh	邮政
 powered by	common	zh	Powered by
 precision	common	zh	精度
+preference	common	zh	首选项
 preferences	common	zh	参数选择
 previous page	common	zh	前一页
 primary group	common	zh	主要群组

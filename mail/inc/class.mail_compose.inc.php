@@ -2836,9 +2836,12 @@ class mail_compose
 		$addrFromList=array();
 		foreach((array)$_emailAddressList as $ak => $address)
 		{
-			if(is_numeric($address) && $address > 0 || preg_match('/ <(\\d+)@lists.egroupware.org>$/', $address, $matches))
+			if(is_numeric($address) && $address > 0 || preg_match('/ <(-?\d+)@lists.egroupware.org>$/', $address, $matches))
 			{
-				if (!isset($contacts_obs)) $contacts_obj = new Api\Contacts();
+				if(!isset($contacts_obs))
+				{
+					$contacts_obj = new Api\Contacts();
+				}
 				// List was selected, expand to addresses
 				unset($_emailAddressList[$ak]);
 				foreach($contacts_obj->search('',array('n_fn','n_prefix','n_given','n_family','org_name','email','email_home'),
@@ -3627,7 +3630,7 @@ class mail_compose
 			$search_str = implode(' +', $search);	// tell contacts/so_sql to AND search patterns
 			//error_log(__METHOD__.__LINE__.$_searchString);
 			$filter = $showAccounts ? array() : array('account_id' => null);
-			$filter['cols_to_search'] = array('n_prefix','n_given','n_family','org_name','email','email_home', 'contact_id');
+			$filter['cols_to_search'] = array('n_prefix','n_given','n_family','org_name','email','email_home', 'contact_id', 'search_cfs' => false);
 			$cols = array('n_fn','n_prefix','n_given','n_family','org_name','email','email_home', 'contact_id', 'etag');
 			$contacts = $contacts_obj->search($search_str, $cols, 'n_fn', '', '%', false, 'OR', array(0,100), $filter);
 			$cfs_type_email = Api\Storage\Customfields::get_email_cfs('addressbook');
@@ -3766,7 +3769,7 @@ class mail_compose
 		{
 			$type = $key > 0 ? 'manual' : 'group';
 			$list = array(
-				'value'	=> $list_name.' <'.$key.'@lists.egroupware.org>',
+				'value'	=> '"'.str_replace('"', '', $list_name).'" <'.$key.'@lists.egroupware.org>',
 				'label'	=> $list_name,
 				'title' => lang('Mailinglist'),
 				'icon' => Api\Image::find('api', 'email'),

@@ -81,6 +81,7 @@ add table	common	pt-br	Adicionar Tabela
 add to clipboard	common	pt-br	Adicionar à prancheta
 add user to responsibles	groupdav	pt-br	adicionar o usuário para responsáveis
 addressbook	common	pt-br	Contatos
+addressbooks to sync in addition to personal addressbook	groupdav	pt-br	Catálogos de endereços para sincronizar, além do catálogo de endereços pessoal
 admin	common	pt-br	Administrador
 administration	common	pt-br	Administração
 advanced search	common	pt-br	Pesquisa avançada
@@ -581,6 +582,7 @@ iespell not detected. click ok to go to download page.	common	pt-br	ieSpell não
 if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	common	pt-br	se o campo for desativado uma célula vazia na tabela será mostrada, para remoção (temporária) de um campo/célula
 if the clock is enabled would you like it to update it every second or every minute?	common	pt-br	Se o relógio estiver habilitado, você gostaria de atualizá-lo a cada segundo ou minuto ?
 if there are some images in the background folder you can choose the one you would like to see.	common	pt-br	Se existirem algumas imagens na pasta de fundo, você poderá escolher uma que gostaria de ver.
+if you use "2-factor-authentication", please enter the code here.	common	pt-br	Se você usa "autenticação de dois fatores", digite o código aqui.
 image	common	pt-br	Imagem
 image directory relative to document root (use / !), example:	common	pt-br	Diretório de imagem relativo à pasta raiz (use / !), por exemplo:
 image url	common	pt-br	URL da imagem
@@ -588,6 +590,7 @@ import	common	pt-br	Importar
 import an etemplate from a xml-file	common	pt-br	importar um eModelo a partir de um arquivo xml
 import table-definitions from existing db-table	common	pt-br	Importar definições de tabela a partir de uma base de tabelas existente
 import xml	common	pt-br	Importar XML
+include access to any linked files (links tab)	common	pt-br	Inclua o acesso a todos os arquivos vinculados (guia Links)
 increment version to not overwrite the existing template	common	pt-br	Incrementar versão para não sobrescrever o modelo existente.
 index/name of returned content (name of the template, link / method for image)	common	pt-br	nome/index do conteúdo recebido (nome do Modelo, Link / Método para imagem)
 indexed	common	pt-br	Indexado
@@ -892,6 +895,7 @@ philippines	common	pt-br	FILIPINAS
 phone number	common	pt-br	Número de Telefone
 pitcairn	common	pt-br	PITCAIRN
 placeholders	common	pt-br	Espaços reservados
+play/pause	common	pt-br	Reproduzir/Pausar
 please %1 by hand	common	pt-br	%1 pela mão
 please enter a name	common	pt-br	Por favor, digite um nome !
 please enter table-name first !!!	common	pt-br	Informe primeiro o nome da tabela!!!
@@ -910,6 +914,7 @@ postal	common	pt-br	CEP
 powered by	common	pt-br	Desenvolvido por
 pre	common	pt-br	Pré
 precision	common	pt-br	Precisão
+preference	common	pt-br	Preferências
 preferences	common	pt-br	Preferências
 preferences for the %1 template set	preferences	pt-br	Preferências para o conjunto modelo% 1
 prev	common	pt-br	Anterior

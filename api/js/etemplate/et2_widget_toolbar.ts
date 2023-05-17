@@ -644,6 +644,7 @@ export class et2_toolbar extends et2_DOMWidget implements et2_IInput
 				class: `et2_toolbar_draggable${this.id}`,
 				readonly: false
 			}, this);
+			if (egwIsMobile() && !this.preference[action.id]) widget.name = '';
 			if (isCheckbox)
 			{
 				widget.classList.add('toolbar_toggle');

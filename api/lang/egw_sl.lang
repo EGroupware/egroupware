@@ -663,6 +663,7 @@ if the error persists, contact your administrator for help and ask to check the 
 if there are some images in the background folder you can choose the one you would like to see.	common	sl	Če so v mapi kakšne slike, lahko izberete tisto, ki jo želite videti.
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	preferences	sl	Če določite imenik, celotno pot vfs, %1 prikaže ukrep za vsak dokument. To dejanje omogoča prenos določenega dokumenta z vstavljenimi podatki.
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	preferences	sl	Če določite dokument, celotno pot vfs, %1 prikaže ikono dodatne dokumentacije za vsak vnos. Ta ikona omogoča prenos določenega dokumenta z vstavljenimi podatki.
+if you use "2-factor-authentication", please enter the code here.	common	sl	Če uporabljate 2-faktorsko preverjanje pristnosti, tukaj vnesite kodo.
 image	common	sl	Slika
 image directory relative to document root (use / !), example:	common	sl	Mapa slik, relativno na koren dokumentov (document root, uporabite /!). Primer:
 image url	common	sl	URL podobe
@@ -671,6 +672,7 @@ import an etemplate from a xml-file	common	sl	Uvozi ePredlogo iz datoteke XML
 import table-definitions from existing db-table	common	sl	Uvozi definicije tabele iz obstoječe tabele podatkovne baze
 import xml	common	sl	Uvozi XML
 in order to copy to clipboard, you need to allow flash player by clicking on gray box.\nyou can permanently allow flash player for egroupware in your browser settings.	common	sl	Če želite kopirati v odložišče, morate omogočiti Flash predvajalnik tako, da kliknete sivo polje.\NTukaj lahko trajno dovolite Flash Player za EGroupware v nastavitvah brskalnika.
+include access to any linked files (links tab)	common	sl	Vključite dostop do vseh povezanih datotek (zavihek Povezave)
 increment version to not overwrite the existing template	common	sl	Povišaj različico, da ne prepišeš obstoječe podloge
 index/name of returned content (name of the template, link / method for image)	common	sl	Indeks/ime vrnjene vsebine (ime predloge, povezava/metoda za sliko)
 indexed	common	sl	V kazalu

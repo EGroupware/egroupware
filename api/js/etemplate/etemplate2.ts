@@ -32,6 +32,7 @@ import './Et2Avatar/Et2Avatar';
 import './Et2Avatar/Et2AvatarGroup';
 import './Et2Button/Et2Button';
 import './Et2Button/Et2ButtonIcon';
+import './Et2Button/Et2ButtonScroll';
 import './Et2Button/Et2ButtonTimestamper';
 import './Et2Checkbox/Et2Checkbox';
 import './Et2Checkbox/Et2CheckboxReadonly';

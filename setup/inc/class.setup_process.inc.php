@@ -19,7 +19,7 @@ use EGroupware\Api;
  *
  * app status values:
  *	U	Upgrade required/available
- *	R	upgrade in pRogress
+ *	R	upgrade in progress
  *	C	upgrade Completed successfully
  *	D	Dependency failure
  * 	P	Post-install dependency failure
@@ -695,7 +695,7 @@ class setup_process
 							}
 						}
 					}
-					if ($currentver == $targetver)	// upgrades succesful
+					if ($currentver == $targetver)	// upgrades successful
 					{
 						if($DEBUG)
 						{

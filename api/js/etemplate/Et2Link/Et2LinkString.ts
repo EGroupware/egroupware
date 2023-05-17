@@ -285,7 +285,7 @@ export class Et2LinkString extends Et2Widget(LitElement) implements et2_IDetache
 
 	getDetachedAttributes(_attrs : string[])
 	{
-		_attrs.push("application", "entryId");
+		_attrs.push("application", "entryId", "statustext");
 	}
 
 	getDetachedNodes() : HTMLElement[]

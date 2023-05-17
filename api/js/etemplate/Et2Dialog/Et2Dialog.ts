@@ -200,7 +200,8 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 			css`
 				:host {
 					--header-spacing: var(--sl-spacing-medium);
-					--body-spacing: var(--sl-spacing-medium)
+					--body-spacing: var(--sl-spacing-medium);
+				    --width: auto;
 				}
 				.dialog__panel {
 					border: 1px solid silver;
@@ -238,7 +239,6 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 				pointer-events: none;
 				background: transparent;
 			  }
-
 			  :host(:not([isModal])) .dialog__panel {
 				pointer-events: auto;
 			  }
@@ -400,7 +400,7 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 		this._onClick = this._onClick.bind(this);
 		this._onButtonClick = this._onButtonClick.bind(this);
 		this._onMoveResize = this._onMoveResize.bind(this);
-		this.handleKeyDown = this.handleKeyDown.bind(this);
+		this.handleKeyUp = this.handleKeyUp.bind(this);
 		this._adoptTemplateButtons = this._adoptTemplateButtons.bind(this);
 
 		// Don't leave it undefined, it's easier to deal with if it's just already resolved.
@@ -419,6 +419,8 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 	{
 		super.connectedCallback();
 
+		this.addEventListener("keyup", this.handleKeyUp);
+
 		// Prevent close if they click the overlay when the dialog is modal
 		this.addEventListener('sl-request-close', event =>
 		{
@@ -436,6 +438,7 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 	disconnectedCallback()
 	{
 		super.disconnectedCallback();
+		this.removeEventListener("keyup", this.handleKeyUp);
 		this.removeEventListener("sl-hide", this.handleClose);
 		this.removeEventListener("sl-after-show", this.handleOpen);
 	}
@@ -476,11 +479,8 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 		this.removeEventListener("keydown", this.handleKeyDown);
 	}
 
-	handleKeyDown(event : KeyboardEvent)
+	handleKeyUp(event : KeyboardEvent)
 	{
-		// Parent handles escape, but is already bound
-		super.handleKeyDown(event);
-
 		// Trigger the "primary" or first button
 		if(this.open && event.key === 'Enter')
 		{
@@ -1205,7 +1205,7 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 	static confirm(_senders, _dialogMsg, _titleMsg, _postSubmit?)
 	{
 		let senders = _senders;
-		let buttonId = _senders.id;
+		let button = _senders;
 		let dialogMsg = (typeof _dialogMsg != "undefined") ? _dialogMsg : '';
 		let titleMsg = (typeof _titleMsg != "undefined") ? _titleMsg : '';
 		let egw = _senders instanceof et2_widget ? _senders.egw() : undefined;
@@ -1215,7 +1215,7 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 			{
 				if(_postSubmit)
 				{
-					senders.getRoot().getInstanceManager().postSubmit(buttonId);
+					senders.getRoot().getInstanceManager().postSubmit(button);
 				}
 				else if(senders.instanceOf(et2_button) && senders.getType() !== "buttononly")
 				{
@@ -1225,7 +1225,9 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 				}
 				else
 				{
-					senders.getRoot().getInstanceManager().submit(buttonId);
+					senders.clicked = true;
+					senders.getRoot().getInstanceManager().submit(button);
+					senders.clicked = false;
 				}
 			}
 		};

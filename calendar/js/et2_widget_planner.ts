@@ -38,6 +38,7 @@ import {formatDate, formatTime} from "../../api/js/etemplate/Et2Date/Et2Date";
 import interact from "@interactjs/interactjs/index";
 import type {InteractEvent} from "@interactjs/core/InteractEvent";
 import {StaticOptions} from "../../api/js/etemplate/Et2Select/StaticOptions";
+import {SelectOption} from "../../api/js/etemplate/Et2Select/FindSelectOptions";
 
 /**
  * Class which implements the "calendar-planner" XET-Tag for displaying a longer
@@ -296,12 +297,8 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 					return;
 				}
 				// Position bar by mouse
-				planner.vertical_bar.position({
-					my: 'right-1',
-					of: event,
-					collision: 'fit'
-				});
-				planner.vertical_bar.css('top','0px');
+				planner.vertical_bar.css("left", (event.clientX - planner.grid.offset().left + 120) + "px");
+				planner.vertical_bar.css('top', '0px');
 
 				// Get time at mouse
 				if(jQuery(event.target).closest('.calendar_eventRows').length == 0)
@@ -405,19 +402,20 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 			},
 			// Labels for the rows
 			row_labels: function() {
-				var labels = [];
-				var already_added = [];
-				var options = [];
-				var resource = null;
+				let labels = [];
+				let already_added = [];
+				let options = [];
+				let resource = null;
+				let owner = null;
 				if(app.calendar && app.calendar.sidebox_et2 && app.calendar.sidebox_et2.getWidgetById('owner'))
 				{
-					const owner = app.calendar.sidebox_et2.getWidgetById('owner')
-					options = [...owner.select_options, ...owner._selected_remote];
+					owner = app.calendar.sidebox_et2.getWidgetById('owner')
 				}
 				else
 				{
-					options = this.getArrayMgr("sel_options").getRoot().getEntry('owner');
+					owner = this.getArrayMgr("sel_options").getRoot().getEntry('owner');
 				}
+				options = owner.select_options;
 				for(var i = 0; i < this.options.owner.length; i++)
 				{
 					var user = this.options.owner[i];
@@ -530,20 +528,34 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 						rows[label_index].push(event);
 					}
 				};
-				for(var user in participants)
+				for(let user in participants)
 				{
 					var participant = participants[user];
-					if (parseInt(user) < 0)	// groups
+
+					if(parseInt(user) < 0)	// groups
 					{
-						var planner = this;
-						egw.accountData(user,'account_fullname',true,function(result) {
-							for(var id in result)
+						let owner = null;
+						let options = [];
+						if(app.calendar && app.calendar.sidebox_et2 && app.calendar.sidebox_et2.getWidgetById('owner'))
+						{
+							owner = app.calendar.sidebox_et2.getWidgetById('owner')
+						}
+						else
+						{
+							owner = this.getArrayMgr("sel_options").getRoot().getEntry('owner');
+						}
+						options = owner.select_options.find((o) => o.value == user).resources || [];
+
+						for(let i = 0; i < options.length; i++)
+						{
+							if(!participants[options[i]])
 							{
-								if(!participants[id]) add_row.call(planner,id,participant);
+								add_row.call(this, options[i], participant);
 							}
-						},labels);
+						}
 						continue;
 					}
+
 					add_row.call(this, user, participant);
 				}
 			},
@@ -710,10 +722,22 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 			row_labels: function()
 			{
 				var im = this.getInstanceManager();
-				this.nodeName = "ET2-SELECT-CAT_RO"
-				var categories = StaticOptions.cached_server_side(this, "cat", ',,,calendar', false);
-
 				var labels = [];
+				var categories = <SelectOption[]>StaticOptions.cached_server_side(this, "cat", ',,,calendar', false);
+				if(!categories || categories.length == 0)
+				{
+					// No categories at all?  Probably loading before sidebox is done.  Ask directly and wait for them, rather than firing
+					// 50 different requests.
+					egw.json(
+						'EGroupware\\Api\\Etemplate\\Widget\\Select::ajax_get_options',
+						['select-cat', ',,,calendar'],
+						function(data)
+						{
+							categories = data;
+						}
+					).sendRequest(false);
+				}
+
 				let app_calendar = this.getInstanceManager().app_obj.calendar || app.calendar;
 				if(!app_calendar.state.cat_id ||
 					app_calendar.state.cat_id.toString() === '' ||
@@ -734,10 +758,12 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 					for(var i = 0; i < cat_id.length; i++)
 					{
 						// Find label for that category
-						for(var j = 0; j < categories.length; j++)
+						let cat = null;
+						for(let j = 0; j < categories.length; j++)
 						{
 							if(categories[j].value == cat_id[i])
 							{
+								cat = categories[j];
 								categories[j].id = categories[j].value;
 								labels.push(categories[j]);
 								break;
@@ -745,13 +771,22 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 						}
 
 						// Get its children immediately
-						egw.json(
-							'EGroupware\\Api\\Etemplate\\Widget\\Select::ajax_get_options',
-							['select-cat',',,,calendar,'+cat_id[i]],
-							function(data) {
-								labels = labels.concat(data);
-							}
-						).sendRequest(false);
+						if(cat && cat.children === "")
+						{
+							continue;
+						}
+						else if(!cat || !cat.children || categories.filter(o => cat.children.find(c => o.value == c)).length != cat.children.length)
+						{
+							egw.json(
+								'EGroupware\\Api\\Etemplate\\Widget\\Select::ajax_get_options',
+								['select-cat', ',,,calendar,' + cat_id[i]],
+								function(data)
+								{
+									labels = labels.concat(data);
+								}
+							).sendRequest(false);
+						}
+
 					}
 				}
 
@@ -1897,9 +1932,31 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 		}
 		this.registeredCallbacks.push(cache_id);
 
-		egw.dataRegisterUID(cache_id, function(data) {
+		egw.dataRegisterUID(cache_id, function(data)
+		{
 
+			const waitForGroups = [];
 			if(data && data.length)
+			{
+				for(var i = 0; i < data.length; i++)
+				{
+					let event = egw.dataGetUIDdata('calendar::' + data[i]);
+					if(!event || !event.data)
+					{
+						continue;
+					}
+					let wait = (<CalendarApp>app.calendar)._fetch_group_members(event.data);
+					if(wait !== null)
+					{
+						waitForGroups.push(wait);
+					}
+				}
+			}
+			if(waitForGroups.length == 0)
+			{
+				return;
+			}
+			Promise.all(waitForGroups).then(() =>
 			{
 				var invalidate = true;
 
@@ -1942,7 +1999,7 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 							{
 								window.clearTimeout(this._deferred_row_updates[id]);
 							}
-							this._deferred_row_updates[id] = window.setTimeout(jQuery.proxy(this._deferred_row_update,this,id),this.DEFERRED_ROW_TIME);
+							this._deferred_row_updates[id] = window.setTimeout(jQuery.proxy(this._deferred_row_update, this, id), et2_calendar_planner.DEFERRED_ROW_TIME);
 						}
 					}
 					else
@@ -1966,7 +2023,12 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 				{
 					this.invalidate(false);
 				}
-			}
+			})
+				.then(() =>
+				{
+					// Update the "now" line _after_ rows are done
+					this._updateNow();
+				});
 		}, this, this.getInstanceManager().execId,this.id);
 
 		return value;

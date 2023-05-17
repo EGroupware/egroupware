@@ -46,22 +46,22 @@ tr.infolog_rowHasParent > td:first-child {
 }
 
 /* break in words if necessary for description */
-#infolog-index_nm div.infoDes > span {
+div.infoDes > span {
     overflow-wrap: break-word;
 }
 
 /* Spacing for parent / sub indicators */
-#infolog-index .egwGridView_grid .infolog_CompletedClmn {
+.egwGridView_grid .infolog_CompletedClmn {
     max-width: fit-content;
     margin-left: 10px;
 }
 
-#infolog-index tr.infolog_rowHasParent > td:first-child .infolog_CompletedClmn {
+tr.infolog_rowHasParent > td:first-child .infolog_CompletedClmn {
     margin-left: 16px;
 }
 
 /* Put line break for the first column*/
-#infolog-index .egwGridView_grid .infolog_CompletedClmn::part(base) {
+.egwGridView_grid .infolog_CompletedClmn::part(base) {
     flex-wrap: wrap;
     justify-content: center;
 }

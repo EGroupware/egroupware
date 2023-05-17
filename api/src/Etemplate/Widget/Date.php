@@ -106,7 +106,6 @@ class Date extends Transformer
 	/**
 	 * Put date in the proper format for sending to client
 	 * @param string|int $value
-	 * @param string $format
 	 */
 	public function format_date($value)
 	{
@@ -129,7 +128,15 @@ class Date extends Transformer
 		}
 		else
 		{
-			$date = new Api\DateTime($value);
+			try {
+				$date = new Api\DateTime($value);
+			}
+			catch (\Exception $e) {
+				// do NOT stall for somehow invalid values: log it and return empty
+				$e->details = $this->id.': '.json_encode($value);
+				_egw_log_exception($e);
+				return null;
+			}
 		}
 		if (in_array($this->type, ['et2-date-timeonly', 'date-timeonly']) && $date)
 		{

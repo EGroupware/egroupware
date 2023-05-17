@@ -34,14 +34,19 @@ active	common	uk	Активний
 add	common	uk	Добавити
 add %1 category for	common	uk	Додати категорію %1 для
 add category	common	uk	Додати категорію
+add current	common	uk	Поточний перегляд у вибраному
 add sub	common	uk	Додати підкатегорію
+add to clipboard	common	uk	Додати в буфер обміну
 addressbook	common	uk	Адресна книга
+addressbooks to sync in addition to personal addressbook	groupdav	uk	Адресні книги для синхронізації на додаток до особистої адресної книги
 admin	common	uk	Адміністрування
 administration	common	uk	Адміністрація
 afghanistan	common	uk	АФГАНІСТАН
 albania	common	uk	АЛБАНІЯ
 algeria	common	uk	АЛЖИР
 all	common	uk	Все
+all addressbooks	groupdav	uk	Всі адресні книги
+all in one	groupdav	uk	Все в одному
 all users	common	uk	Всі користувачі
 andorra	common	uk	АНДОРРА
 angola	common	uk	АНГОЛА
@@ -239,8 +244,11 @@ how many rows to print	common	uk	Скільки рядків друкувати
 how to show the general egroupware menu ?	common	uk	Як показати загальне меню EGroupware
 hungary	common	uk	УГОРЩИНА
 id	common	uk	Id
+if you use "2-factor-authentication", please enter the code here.	common	uk	Якщо ви використовуєте "2-факторну автентифікацію", будь ласка, введіть код тут.
 image url	common	uk	URL зображення
 import	common	uk	Імпорт
+include access to any linked files (links tab)	common	uk	Включити доступ до будь-яких пов'язаних файлів (вкладка "Посилання")
+infolog types to sync	common	uk	Типи інфологів для синхронізації
 insert all %1 addresses of the %2 contacts in %3	common	uk	Вставити всі %1 адресів %2 контактів в %3
 insert placeholder	common	uk	Вставте заповнювач
 insert timestamp into description field	common	uk	Вставте мітку часу в поле опису
@@ -331,6 +339,7 @@ no	common	uk	Ні
 no - cancel	common	uk	Ні - Відмовитись
 no entries found, try again ...	common	uk	Записів не знайдено, спробуйте ще...
 no file	common	uk	файлу немає
+no filters	common	uk	Немає фільтрів
 no history for this record	common	uk	Немає історії для цього запису
 no matches found	common	uk	Відповідностей не знайдено
 no subject	common	uk	Немає теми
@@ -372,6 +381,8 @@ personal	common	uk	Особисте
 peru	common	uk	ПЕРУ
 philippines	common	uk	ФІЛІППІНИ
 phone number	common	uk	Номер телефону
+placeholders	common	uk	Заповнювачі
+play/pause	common	uk	Відтворення/Пауза
 please enter a name	common	uk	Будь ласка введіть ім'я
 please run setup to become current	common	uk	Будь ласка запустіть setup для оновлення версії
 please select	common	uk	Будь ласка виберіть
@@ -382,7 +393,8 @@ poland	common	uk	ПОЛЬЩА
 popup with search	common	uk	Вспливаюче вікно з пошуком
 portugal	common	uk	ПОРТУГАЛІЯ
 postal	common	uk	Поштовий
-preferences	common	uk	Параметри
+preference	common	uk	Налаштування
+preferences	common	uk	Налаштування
 previous page	common	uk	Попередня сторінка
 primary group	common	uk	первинна група
 print	common	uk	Друкувати

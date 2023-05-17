@@ -40,6 +40,7 @@ add	common	el	Προσθήκη
 add %1 category for	common	el	Προσθήκη κατηγορίας %1 για
 add a new contact	common	el	Προσθέστε μία νέα επαφή
 add category	common	el	Προσθήκη κατηγορίας
+add current	common	el	Τρέχουσα άποψη ως αγαπημένη
 add shortcut	common	el	Προσθήκη Συντόμευσης
 add sub	common	el	Προσθήκη υπo
 addressbook	common	el	Επαφές
@@ -358,11 +359,14 @@ id	common	el	Id
 iespell not detected. click ok to go to download page.	common	el	ieSpell δεν βρέθηκε.Κλικ στο ΟΚ για να πάτε στη download page
 if the clock is enabled would you like it to update it every second or every minute?	common	el	Αν το ρολόι είναι ενεργοποιημένο θα θέλατε να το ενημερώνετε κάθε δευτερόλεπτο ή κάθε λεπτό;
 if there are some images in the background folder you can choose the one you would like to see.	common	el	Εάν υπάρχουν μερικές εικόνες στο φάκελο φόντου μπορείτε να επιλέξετε αυτές που θέλετε να δείτε.
+if you use "2-factor-authentication", please enter the code here.	common	el	Εάν χρησιμοποιείτε "2-Factor-Authentication", παρακαλούμε εισάγετε τον κωδικό εδώ.
 image directory relative to document root (use / !), example:	common	el	Κατάλογος εικόνας σχετικός με τη ρίζα εγγράφου (χρήση /!), π.χ.:
 image url	common	el	Εικόνα URL
 import	common	el	Εισαγωγή
+include access to any linked files (links tab)	common	el	Συμπεριλάβετε την πρόσβαση σε όλα τα συνδεδεμένα αρχεία (καρτέλα Σύνδεσμοι)
 india	common	el	ΙΝΔΙΑ
 indonesia	common	el	ΙΝΔΟΝΗΣΙΑ
+infolog types to sync	common	el	Τύποι InfoLog για συγχρονισμό
 initial	common	el	Αρχικό
 insert all %1 addresses of the %2 contacts in %3	common	el	Εισαγωγή όλων των %1 διευθύνσεων των %2 επαφών στο %3
 insert column after	common	el	Εισαγωγή στήλης μετά
@@ -502,6 +506,7 @@ niue	common	el	ΝΙΟΥΕ
 no	common	el	Όχι
 no - cancel	common	el	Όχι-Άκυρο
 no entries found, try again ...	common	el	δεν βρέθηκαν καταχωρήσεις, ξαναπροσπαθήστε...
+no filters	common	el	Δεν υπάρχουν φίλτρα
 no history for this record	common	el	Δεν υπάρχει ιστορικό γι' αυτή την εγγραφή
 no matches found	common	el	Δέν βρέθηκαν όμοια
 no savant2 template directories were found in:	common	el	Δεν βρέθηκαν ετικέτες καταλόγων Savant2 στο:
@@ -560,6 +565,8 @@ peru	common	el	ΠΕΡΟΥ
 philippines	common	el	ΦΙΛΙΠΠΙΝΕΣ
 phone number	common	el	Αριθμός τηλεφώνου
 pitcairn	common	el	ΠΙΤΚΕΡΝ
+placeholders	common	el	Καταχωρητής
+play/pause	common	el	Възпроизвеждане/пауза
 please %1 by hand	common	el	Παρακαλώ %1 με το χέρι
 please enter a name	common	el	Παρακαλώ εισάγετε όνομα
 please run setup to become current	common	el	Παρακαλώ τρέξτε το setup για να γίνετε έγκυρος
@@ -570,6 +577,7 @@ please wait...	common	el	Παρακαλώ περιμένετε
 poland	common	el	ΠΟΛΩΝΙΑ
 portugal	common	el	ΠΟΡΤΟΓΑΛΙΑ
 postal	common	el	Ταχυδρομικός
+preference	common	el	Предпочитания
 preferences	common	el	Επιλογές
 previous page	common	el	Προηγούμενη σελίδα
 primary group	common	el	Κυρίως ομάδα

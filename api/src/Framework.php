@@ -1479,6 +1479,13 @@ abstract class Framework extends Framework\Extra
 	*/
 	static function includeJS($package, $file=null, $app='api', $append=true)
 	{
+		// prefer app.min.js over old, pre RollupJS app.js
+		if ($package[0] === '/' && substr($package, -7) === '/app.js' &&
+			self::$js_include_mgr->include_js_file(substr($package, 0, -3).'.min.js', $file, $app, $append) ||
+			$file === 'app' && self::$js_include_mgr->include_js_file($package, 'app.min', $app, $append))
+		{
+			return;
+		}
 		self::$js_include_mgr->include_js_file($package, $file, $app, $append);
 	}
 

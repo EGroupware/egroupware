@@ -4,19 +4,13 @@
     <template id="mail.index.rows.vertical" template="" lang="" group="0" version="1.9.001">
         <grid width="100%">
             <columns>
-                <column width="90%"/>
-                <column width="80"/>
+                <column width="80%"/>
+                <column width="140"/>
             </columns>
             <rows>
                 <row class="th">
                     <nextmatch-sortheader label="subject" id="subject"/>
                     <nextmatch-sortheader align="center" label="date" id="date" sortmode="DESC"/>
-                    <nextmatch-sortheader align="center" label="arrival" id="arrival"/>
-                    <nextmatch-sortheader label="mail-address" id="address"/>
-                    <nextmatch-sortheader label="to" id="toaddress"/>
-                    <nextmatch-sortheader label="from" id="fromaddress"/>
-                    <nextmatch-sortheader align="center" label="size" id="size"/>
-                    <nextmatch-header statustext="security" label="Security" id="security"/>
                 </row>
                 <row class="$row_cont[class]">
                     <et2-hbox  class="$row_cont[class] mobile_cat_col">

@@ -70,7 +70,7 @@
 			</columns>
 			<rows>
 				<row>
-					<et2-textarea  id="changelog" readonly="true"></et2-textarea>
+					<et2-textarea  id="changelog" readonly="true" activateLinks="true"></et2-textarea>
 				</row>
 			</rows>
 		</grid>

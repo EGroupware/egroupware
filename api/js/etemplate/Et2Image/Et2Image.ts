@@ -230,7 +230,7 @@ export class Et2Image extends Et2Widget(SlotMixin(LitElement)) implements et2_ID
 	 */
 	getDetachedAttributes(_attrs)
 	{
-		_attrs.push("src", "label", "href");
+		_attrs.push("src", "label", "href", "statustext");
 	}
 
 	getDetachedNodes()

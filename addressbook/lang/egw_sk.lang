@@ -1,5 +1,6 @@
 %1 added	addressbook	sk	%1 pridané
 %1 contact(s) %2	addressbook	sk	%1 kontakt(ov) %2
+%1 contact(s) %2, %3 failed because of %4 !!!	addressbook	sk	%1 kontakt(ov) %2, %3 sa nepodarilo z dôvodu %4 !!!
 %1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	sk	%1 kontakt(ov) %2, %3 sa nepodarilo z dôvodu nedostatočných práv !!!
 %1 contacts updated (%2 errors).	addressbook	sk	%1 kontaktov bolo zaktualizovaných (%2 chýb).
 %1 fields in %2 other organisation member(s) changed	addressbook	sk	%1 položiek u %2 členov iných organizácií sa zmenilo
@@ -108,7 +109,7 @@ category path	addressbook	sk	Cesta kategórie
 category tree	admin	sk	Strom kategórie
 cell phone	addressbook	sk	Mobil
 change addressbook when updating	addressbook	sk	Zmeniť Adresár pri aktualizácii
-change all organisation members	addressbook	sk	zmeniť všetkých členov organizácie
+change all organisation members	addressbook	sk	Zmeniť u všetkých členov organizácie
 charset for the csv export	addressbook	sk	Znaková sada pre export CSV
 charset for the vcard export	addressbook	sk	Znaková sada pre export vCard
 charset for the vcard import and export	addressbook	sk	Znaková sada pre import a export vCard
@@ -156,7 +157,7 @@ country (private)	addressbook	sk	Krajina (súkromné)
 country code	addressbook	sk	Kód krajiny
 country code (private)	addressbook	sk	Kód krajiny (súkromné)
 create new links	addressbook	sk	Vytvoriť nové odkazy
-created	addressbook	sk	Vytvorené
+created	addressbook	sk	Vytvoril/a
 credit	addressbook	sk	Kredit
 crm view list	addressbook	sk	CRM zobraziť zoznam
 crm-view	addressbook	sk	CRM-Zobrazenie
@@ -253,6 +254,7 @@ extra	addressbook	sk	Extra
 extra encodings	addressbook	sk	Extra kódovania
 extra private	addressbook	sk	Extra súkromné
 failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	sk	Nepodarilo sa vykonať zmeny u %1 členov organizácie -nedostatočné práva !!!
+favorite phone	addressbook	sk	Obľúbený telefón
 favorites	addressbook	sk	Obľúbené
 fax	addressbook	sk	Fax
 fax (private)	addressbook	sk	Fax (súkromné)
@@ -326,7 +328,7 @@ international	addressbook	sk	Mezinárodný
 internet	addressbook	sk	Internet
 label	addressbook	sk	Označenie
 last date	addressbook	sk	Posledný dátum
-last modified	addressbook	sk	Naposledy zmenené
+last modified	addressbook	sk	Posledná zmena
 last modified by	addressbook	sk	Naposledy zmenil:
 ldap context for contacts	admin	sk	LDAP kontext pre kontakty
 ldap host for contacts	admin	sk	LDAP hostiteľ pre kontakty
@@ -371,7 +373,8 @@ multiple vcard	addressbook	sk	Viacero vizitiek vCard
 name for the distribution list	addressbook	sk	Názov pre distribučný zoznam
 name of current user, all other contact fields are valid too	addressbook	sk	Meno súčasného používateľa, ostatné kontaktné polia sú tiež platné.
 name, address	addressbook	sk	Meno, Adresa
-new contact submitted by %1 at %2	addressbook	sk	Nový kontakt odoslal %1 %2
+name, email, phone	addressbook	sk	Meno, e-mail, telefón
+new contact submitted by %1 at %2	addressbook	sk	Nový kontakt odoslal %1 o %2
 new window opened to edit infolog for your selection	addressbook	sk	Otvorilo sa nové okno pre úpravu Záznamníka pre váš výber
 next date	addressbook	sk	Nasledujúci dátum
 no categories selected	addressbook	sk	neboli vybrané kategórie
@@ -416,6 +419,7 @@ prevent deleting of contacts	admin	sk	Zabrániť odstráneniu kontaktu
 private address	addressbook	sk	Súkromná adresa
 private custom fields	addressbook	sk	Súkromné užívateľské polia
 public key	addressbook	sk	Verejný kľúč
+public sharing url	addressbook	sk	Verejná zdieľaná URL
 publish into groups:	addressbook	sk	Publikovať do skupín:
 read a list / search for entries.	addressbook	sk	Načítať zoznam / vyhľadať záznamy.
 read a list of entries.	addressbook	sk	Načítaj zoznam záznamov.
@@ -452,6 +456,7 @@ select the type of conversion:	addressbook	sk	Vyberte typ prevodu:
 select where you want to store / retrieve contacts	admin	sk	Vyberte, kde chcete ukladať / získavať kontakty
 selected contacts	addressbook	sk	vybrané kontakty
 send emailcopy to receiver	addressbook	sk	Poslať kópiu e-mailu adresátovi
+send fax via email by replacing fax number with an email address	addressbook	sk	Poslať fax e-mailom, číslo faxu sa nahradí e-mailovou adresou
 send succeeded to %1	common	sk	Odoslanie sa podarilo pre %1
 seperator	addressbook	sk	Oddeľovač
 set full name and file as field in contacts of all users (either all or only empty values)	admin	sk	Nastaviť plné meno a súbor ako pole v kontaktoch všetkých používateľov (buď všetky alebo len prázdne hodnoty)

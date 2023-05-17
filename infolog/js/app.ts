@@ -160,7 +160,7 @@ class InfologApp extends EgwApp
 			}
 		}
 		// Refresh handler for Addressbook CRM view
-		if (_app == 'infolog' && this.et2.getInstanceManager() && this.et2.getInstanceManager().app == 'addressbook' && this.et2.getInstanceManager().name == 'infolog.index')
+		if(_app == 'infolog' && this.et2?.getInstanceManager() && this.et2.getInstanceManager().app == 'addressbook' && this.et2.getInstanceManager().name == 'infolog.index')
 		{
 			this.et2._inst.refresh(_msg, _app, _id, _type);
 		}
@@ -367,7 +367,8 @@ class InfologApp extends EgwApp
 	 */
 	actionCallback(_action)
 	{
-		egw.json("infolog.infolog_ui.ajax_action",[_action, this._action_ids, this._action_all]).sendRequest(true);
+		// Use glogal app.infolog instead of this, since confirm_delete() is called on app.infolog while actionCallback() uses etemplate.app_obj.infolog
+		egw.json("infolog.infolog_ui.ajax_action", [_action, app.infolog._action_ids, app.infolog._action_all]).sendRequest(true);
 	}
 
 	/**

@@ -33,11 +33,51 @@ egw.extend('config', egw.MODULE_GLOBAL, function()
 	function install_mailto_handler()
 	{
 		if (document.location.href.match(/(\?|&)cd=yes(&|$)/) &&
+			!window.sessionStorage.getItem('asked-mailto-handler') &&
 			typeof navigator.registerProtocolHandler === 'function')	// eg. Safari 15.5 does NOT implement it
 		{
-			let url = egw_webserverUrl;
-			if (url[0] === '/') url = document.location.protocol+'://'+document.location.hostname+(url !== '/' ? url : '');
-			navigator.registerProtocolHandler('mailto', url+'/index.php?menuaction=mail.mail_compose.compose&preset[mailto]=%s', 'Mail');
+			const _ask_mailto_handler = () => {
+				let url = egw_webserverUrl;
+				if (url[0] === '/') url = document.location.protocol+'://'+document.location.hostname+(url !== '/' ? url : '');
+				navigator.registerProtocolHandler('mailto', url+'/index.php?menuaction=mail.mail_compose.compose&preset[mailto]=%s', 'Mail');
+				// remember not to ask again for this "session"
+				window.sessionStorage.setItem('asked-mailto-handler', 'yes');
+			};
+			// FF does not support user to opt out of the mailto-handler / have a "Don't ask me again" option,
+			// so we add that ourselves here for Firefox only:
+			if (navigator.userAgent.match(/firefox/i) && !navigator.userAgent.match(/chrome/i))
+			{
+				if (window.localStorage.getItem('asked-mailto-handler'))
+				{
+					return;
+				}
+				const dialog = window.Et2Dialog;
+				if (typeof dialog === 'undefined')
+				{
+					window.setTimeout(install_mailto_handler.bind(this), 1000);
+					return;
+				}
+				dialog.show_dialog((_button) =>
+				{
+					switch(_button)
+					{
+						case dialog.YES_BUTTON:
+							_ask_mailto_handler();
+							// fall through
+						case dialog.NO_BUTTON:
+							window.localStorage.setItem('asked-mailto-handler', _button == dialog.YES_BUTTON ? 'answer-was-yes' : 'answer-was-no');
+							break;
+						case dialog.CANCEL_BUTTON:
+							// ask again next session ...
+							window.sessionStorage.setItem('asked-mailto-handler', 'yes');
+					}
+				}, egw.lang('Answering no will not ask you again for this browser.'), egw.lang('Install EGroupware as mail-handler?'),
+					undefined, dialog.BUTTONS_YES_NO_CANCEL);
+			}
+			else
+			{
+				_ask_mailto_handler();
+			}
 		}
 	}
 

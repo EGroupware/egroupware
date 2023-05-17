@@ -661,6 +661,7 @@ if the error persists, contact your administrator for help and ask to check the 
 if there are some images in the background folder you can choose the one you would like to see.	common	ja	If there are some images in the background folder you can choose the one you would like to see.
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	preferences	ja	ディレクトリ（VFS フルパス）を指定すると、%1上で各ドキュメントに対するアクションが表示され、ドキュメントをダウンロードすることができるようになります。
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	preferences	ja	ドキュメント（VFS フルパス）を指定すると、%1の各項目ごとに拡張ドキュメント・アイコンが表示され、ドキュメントをダウンロードすることができるようになります。
+if you use "2-factor-authentication", please enter the code here.	common	ja	2要素認証」をご利用の場合は、ここにコードを入力してください。
 image	common	ja	画像
 image directory relative to document root (use / !), example:	common	ja	Image directory relative to document root (use / !), example:
 image url	common	ja	画像 URL
@@ -669,6 +670,7 @@ import an etemplate from a xml-file	common	ja	eTemplate を XML ファイルか�
 import table-definitions from existing db-table	common	ja	Import table definitions from existing DB table
 import xml	common	ja	XMLをインポート
 in order to copy to clipboard, you need to allow flash player by clicking on gray box.\nyou can permanently allow flash player for egroupware in your browser settings.	common	ja	In order to copy to clipboard, you need to allow Flash player by clicking on gray box.\nYou can permanently allow Flash player for EGroupware in your browser settings.
+include access to any linked files (links tab)	common	ja	リンク先のファイルへのアクセスを含める（リンクタブ）
 increment version to not overwrite the existing template	common	ja	Increment version to not overwrite the existing template.
 index/name of returned content (name of the template, link / method for image)	common	ja	Index/name of returned content, name of the Template, link / method for image.
 indexed	common	ja	インデックスが作成されました。
@@ -1002,6 +1004,7 @@ philippines	common	ja	フィリピン
 phone number	common	ja	電話番号
 pitcairn	common	ja	ピトケアン諸島
 placeholders	common	ja	プレースホルダ
+play/pause	common	ja	再生/一時停止
 please %1 by hand	common	ja	Please %1 by hand
 please enter a name	common	ja	名前を入力してください!
 please enter table-name first !!!	common	ja	テーブル名を入力してください!

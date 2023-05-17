@@ -436,13 +436,13 @@ export class et2_container extends et2_baseWidget
 
 		// Don't care about what class it is, just that it has the function
 		// @ts-ignore
-		if(typeof widget.get_value !== 'function')
+		if(typeof widget.get_value !== 'function' && typeof widget.value == "undefined")
 		{
 			throw 'Widget ' + id + ' does not have a get_value() function';
 		}
 
 		// @ts-ignore
-		return widget.get_value();
+		return typeof widget.get_value == "function" ? widget.get_value() : widget.value;
 	}
 
 	/**

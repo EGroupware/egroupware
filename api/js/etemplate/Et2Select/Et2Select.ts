@@ -11,7 +11,7 @@
 import {css, html, PropertyValues, TemplateResult} from "@lion/core";
 import {Et2StaticSelectMixin, StaticOptions as so} from "./StaticOptions";
 import {Et2widgetWithSelectMixin} from "./Et2WidgetWithSelectMixin";
-import {SelectOption} from "./FindSelectOptions";
+import {cleanSelectOptions, SelectOption} from "./FindSelectOptions";
 import {SlMenuItem, SlSelect} from "@shoelace-style/shoelace";
 import shoelace from "../Styles/shoelace";
 import {Et2WithSearchMixin} from "./SearchMixin";
@@ -83,14 +83,18 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 			/* No horizontal scrollbar, even if options are long */
 			.dropdown__panel {
 				overflow-x: clip;
-			}
-			/* Ellipsis when too small */
-			.select__label {
+			  }
+
+			  /* Ellipsis when too small */
+			  .select__tags {
+				max-width: 100%;
+			  }
+			  .select__label {
 				display: block;
-    			text-overflow: ellipsis;
-			  /* This is usually not used due to flex, but is the basis for ellipsis calculation */
-			  width: 10ex;
-			}
+				text-overflow: ellipsis;
+				/* This is usually not used due to flex, but is the basis for ellipsis calculation */
+				width: 10ex;
+			  }
 
 			  /** multiple=true uses tags for each value **/
 			  /* styling for icon inside tag (not option) */
@@ -182,6 +186,10 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 			  ::part(display-label) {
 				margin: 0;
 			  }
+              :host::part(display-label) {
+                max-height: 8em;
+				overflow-y: auto;
+              }
 			`
 		];
 	}
@@ -240,17 +248,29 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 	 */
 	private _block_change_event = false;
 
+	/**
+	 * Close the dropdown after user selects an option.
+	 * Only applies when multiple="true".  We initialize it in constructor to the common preference "select_multiple_close"
+	 * @type {boolean}
+	 * @private
+	 */
+	private _close_on_select : boolean;
+
 	constructor(...args : any[])
 	{
 		super();
 		// We want this on more often than off
 		this.hoist = true;
 
+		this._close_on_select = this.egw().preference("select_multiple_close") == "close";
+
 		this._triggerChange = this._triggerChange.bind(this);
 		this._doResize = this._doResize.bind(this);
 		this._handleMouseWheel = this._handleMouseWheel.bind(this);
 		this._handleMouseEnter = this._handleMouseEnter.bind(this);
 		this._handleMouseLeave = this._handleMouseLeave.bind(this);
+		this.handleOptionClick = this.handleOptionClick.bind(this);
+		this.handleKeyDown = this.handleKeyDown.bind(this);
 		this.handleTagRemove = this.handleTagRemove.bind(this);
 	}
 
@@ -266,11 +286,16 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 
 		this.addEventListener("mousewheel", this._handleMouseWheel);
 		this.addEventListener("mouseenter", this._handleMouseEnter);
+		this.addEventListener("mouseup", this.handleOptionClick);
+		this.addEventListener("keydown", this.handleKeyDown);
 
 		this.updateComplete.then(() =>
 		{
 			this.addEventListener("sl-change", this._triggerChange);
 			this.addEventListener("sl-after-show", this._doResize)
+
+			/* A hack to deal with how we do dark mode to avoid re-coloring the dropdown icon */
+			this.shadowRoot.querySelector(".select__icon").setAttribute("part", "dropdown-icon");
 		});
 	}
 
@@ -295,7 +320,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 	{
 		if(super._triggerChange(e) && !this._block_change_event)
 		{
-			this.dispatchEvent(new Event("change"));
+			this.dispatchEvent(new Event("change", {bubbles: true}));
 		}
 		if(this._block_change_event)
 		{
@@ -411,11 +436,31 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 	 */
 	protected fix_bad_value()
 	{
-		if(this.multiple || (!this.emptyLabel && (!Array.isArray(this.select_options) || this.select_options.length == 0)))
+		// Stop if there are no options
+		if(!Array.isArray(this.select_options) || this.select_options.length == 0)
 		{
 			// Nothing to do here
 			return;
 		}
+
+		let valueArray = Array.isArray(this.value) ? this.value : (
+			!this.value ? [] : (this.multiple ? this.value.toString().split(',') : [this.value])
+		);
+
+		// Check for value using missing options (deleted or otherwise not allowed)
+		let filtered = this.filterOutMissingOptions(valueArray);
+		if(filtered.length != valueArray.length)
+		{
+			this.value = filtered;
+			return;
+		}
+
+		// Multiple is allowed to be empty, and if we don't have an emptyLabel or options nothing to do
+		if(this.multiple || (!this.emptyLabel && this.select_options.length === 0))
+		{
+			return;
+		}
+
 		// See if parent (search / free entry) is OK with it
 		if(super.fix_bad_value())
 		{
@@ -428,7 +473,6 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		}
 		// If no value is set, choose the first option
 		// Only do this on once during initial setup, or it can be impossible to clear the value
-		const valueArray = Array.isArray(this.value) ? this.value : (!this.value ? [] : this.value.toString().split(','));
 
 		// value not in options --> use emptyLabel, if exists, or first option otherwise
 		if(this.select_options.filter((option) => valueArray.find(val => val == option.value) ||
@@ -454,7 +498,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 
 	set_value(val : string | string[] | number | number[])
 	{
-		if(typeof val === 'string' && val.indexOf(',') !== -1)
+		if(typeof val === 'string' && val.indexOf(',') !== -1 && this.multiple)
 		{
 			val = val.split(',');
 		}
@@ -468,6 +512,53 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 			val = [...new Set(val.map(v => typeof v === 'number' ? v.toString() : v || ''))];
 		}
 		this.value = val || '';
+	}
+
+	/**
+	 * Check a value for missing options and remove them.
+	 *
+	 * We'll warn about it in the helpText, and if they save the change will be made.
+	 * This is to avoid the server-side validation error, which the user can't do much about.
+	 *
+	 * @param {string[]} value
+	 * @returns {string[]}
+	 */
+	filterOutMissingOptions(value : string[]) : string[]
+	{
+		if(!this.readonly && value && value.length > 0 && !this.allowFreeEntries && this.select_options.length > 0)
+		{
+			function filterBySelectOptions(arrayToFilter, options : SelectOption[])
+			{
+				const filteredArray = arrayToFilter.filter(item =>
+				{
+					// Check if item is found in options
+					return !options.some(option =>
+					{
+						if(typeof option.value === 'string')
+						{
+							// Regular option
+							return option.value === item;
+						}
+						else if(Array.isArray(option.value))
+						{
+							// Recursively check if item is found in nested array (option groups)
+							return filterBySelectOptions([item], option.value).length > 0;
+						}
+						return false;
+					});
+				});
+
+				return filteredArray;
+			}
+
+			const missing = filterBySelectOptions(value, this.select_options);
+			if(missing.length > 0)
+			{
+				console.warn("Invalid option '" + missing.join(", ") + " ' removed");
+				value = value.filter(item => missing.indexOf(item) == -1);
+			}
+		}
+		return value;
 	}
 
 	transformAttributes(attrs)
@@ -621,6 +712,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		tag.value = item.value;
 		tag.textContent = item.getTextLabel().trim();
 		tag.class = item.classList.value + " search_tag";
+		tag.setAttribute("exportparts", "icon");
 		if(this.size)
 		{
 			tag.size = this.size;
@@ -650,6 +742,15 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		return tag;
 	}
 
+	blur()
+	{
+		if(typeof super.blur == "function")
+		{
+			super.blur();
+		}
+		this.dropdown.hide();
+	}
+
 	private handleTagRemove(event : CustomEvent, option)
 	{
 		event.stopPropagation();
@@ -666,6 +767,66 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 			this.dispatchEvent(new CustomEvent('sl-change'));
 			this.syncItemsFromValue();
 		}
+	}
+
+	/**
+	 * Apply the user preference to close the dropdown if an option is clicked, even if multiple=true.
+	 * The default (from SlSelect) leaves the dropdown open for multiple=true
+	 *
+	 * @param {MouseEvent} event
+	 * @private
+	 */
+	private handleOptionClick(event : MouseEvent)
+	{
+		if(event.target == this)
+		{
+			// Don't hide dropdown when clicking on select.  That can close it after user opens it.
+			return;
+		}
+		if(this._close_on_select)
+		{
+			this.dropdown.hide().then(() =>
+			{
+				if(typeof this.handleMenuHide == "function")
+				{
+					// Make sure search gets hidden
+					this.handleMenuHide();
+				}
+			});
+		}
+	}
+
+	private et2HandleBlur(event : Event)
+	{
+		if(typeof super.et2HandleBlur === "function")
+		{
+			super.et2HandleBlur(event);
+		}
+		this.dropdown?.hide();
+	}
+
+	/**
+	 * Always close the dropdown if an option is clicked, even if multiple=true.  This differs from SlSelect,
+	 * which leaves the dropdown open for multiple=true
+	 *
+	 * @param {KeyboardEvent} event
+	 * @private
+	 */
+	private handleKeyDown(event : KeyboardEvent)
+	{
+		if(event.key === 'Enter' || (event.key === ' ' && this.typeToSelectString === ''))
+		{
+			this.dropdown.hide().then(() =>
+			{
+				if(typeof this.handleMenuHide == "function")
+				{
+					// Make sure search gets hidden
+					this.handleMenuHide();
+				}
+			});
+			event.stopPropagation();
+		}
+
 	}
 
 	/**
@@ -850,11 +1011,49 @@ customElements.define("et2-select-day", Et2SelectDay);
 
 export class Et2SelectDayOfWeek extends Et2StaticSelectMixin(Et2Select)
 {
-	constructor()
+	connectedCallback()
 	{
-		super();
+		super.connectedCallback();
 
-		this.static_options = so.dow(this, {other: this.other || []});
+		// Wait for connected instead of constructor because attributes make a difference in
+		// which options are offered
+		this.fetchComplete = so.dow(this, {other: this.other || []}).then(options =>
+		{
+			this.set_static_options(cleanSelectOptions(options));
+		});
+	}
+
+	set value(new_value)
+	{
+		let expanded_value = typeof new_value == "object" ? new_value : [];
+		if(new_value && (typeof new_value == "string" || typeof new_value == "number"))
+		{
+			let int_value = parseInt(new_value);
+			this.updateComplete.then(() =>
+			{
+				this.fetchComplete.then(() =>
+				{
+					let options = this.select_options;
+					for(let index in options)
+					{
+						let right = parseInt(options[index].value);
+
+						if((int_value & right) == right)
+						{
+							expanded_value.push("" + right);
+						}
+					}
+					super.value = expanded_value;
+				})
+			});
+			return;
+		}
+		super.value = expanded_value;
+	}
+
+	get value()
+	{
+		return super.value;
 	}
 }
 

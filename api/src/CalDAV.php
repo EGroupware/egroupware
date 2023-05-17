@@ -1311,7 +1311,7 @@ class CalDAV extends HTTP_WebDAV_Server
 			{
 				$collection_props = $this->props2array($file['props']);
 				echo '<h3>'.lang('Collection listing').': '.htmlspecialchars($collection_props['DAV:displayname'])."</h3>\n";
-				continue;	// own entry --> displaying properies later
+				continue;	// own entry --> displaying properties later
 			}
 			if(!$n++)
 			{
@@ -1322,7 +1322,7 @@ class CalDAV extends HTTP_WebDAV_Server
 				}
 				echo "\t</tr>\n";
 			}
-			$props = $this->props2array($file['props']);
+			$props = $this->props2array($file['props'] ?? []);
 			//echo $file['path']; _debug_array($props);
 			$class = $class === 'row_on' ? 'row_off' : 'row_on';
 

@@ -8,9 +8,10 @@
  */
 
 import {Et2Select} from "./Et2Select";
-import {css, html, nothing} from "@lion/core";
+import {css, html, nothing, PropertyValues} from "@lion/core";
 import {IsEmail} from "../Validators/IsEmail";
 import interact from "@interactjs/interact";
+import {Validator} from "@lion/form-core";
 
 /**
  * Select email address(es)
@@ -56,9 +57,21 @@ export class Et2SelectEmail extends Et2Select
 			allowDragAndDrop: {type: Boolean},
 
 			/**
+			 * Allow placeholders like {{email}}, beside real email-addresses
+			 */
+			allowPlaceholder: {type: Boolean},
+
+			/**
 			 * Include mailing lists: returns them with their integer list_id
 			 */
 			includeLists: {type: Boolean},
+
+			/**
+			 * If the email is a contact, we normally show the contact name instead of the email.
+			 * Set to true to turn this off and always show just the email
+			 * Mutually exclusive with fullEmail!
+			 */
+			onlyEmail: {type: Boolean},
 
 			/**
 			 * Show the full, original value email address under all circumstances, rather than the contact name for known contacts
@@ -70,15 +83,33 @@ export class Et2SelectEmail extends Et2Select
 	constructor(...args : any[])
 	{
 		super(...args);
+
+		// Additional option for select email, per ticket #79694
+		this._close_on_select = this.egw().preference("select_multiple_close") != "open";
+
 		this.search = true;
 		this.searchUrl = "EGroupware\\Api\\Etemplate\\Widget\\Taglist::ajax_email";
 		this.allowFreeEntries = true;
+		this.allowPlaceholder = false;
 		this.editModeEnabled = true;
 		this.allowDragAndDrop = false;
 		this.includeLists = false;
 		this.multiple = false;
 		this.fullEmail = false;
-		this.defaultValidators.push(new IsEmail());
+		this.onlyEmail = false;
+		this.defaultValidators.push(new IsEmail(this.allowPlaceholder));
+	}
+
+	/** @param {import('@lion/core').PropertyValues } changedProperties */
+	willUpdate(changedProperties : PropertyValues)
+	{
+		super.willUpdate(changedProperties);
+
+		if(changedProperties.has('allowPlaceholder'))
+		{
+			this.defaultValidators = (<Array<Validator>>this.defaultValidators).filter(v => !(v instanceof IsEmail));
+			this.defaultValidators.push(new IsEmail(this.allowPlaceholder));
+		}
 	}
 
 	connectedCallback()
@@ -113,6 +144,24 @@ export class Et2SelectEmail extends Et2Select
 				e.target.classList.remove('et2_dropZone');
 			}
 		});
+	}
+
+	/**
+	 * Handle keypresses inside the search input
+	 * Overridden from parent to also skip the hidden selected options, which other selects do not do
+	 *
+	 * @param {KeyboardEvent} event
+	 * @protected
+	 */
+	protected _handleSearchKeyDown(event : KeyboardEvent)
+	{
+		// Pass off some keys to select
+		if(['ArrowDown', 'ArrowUp', 'Home', 'End'].includes(event.key))
+		{
+			// Strip out hidden non-matching selected so key navigation works
+			this.menuItems = this.menuItems.filter(i => !i.checked);
+		}
+		return super._handleSearchKeyDown(event);
 	}
 
 	/**
@@ -153,6 +202,7 @@ export class Et2SelectEmail extends Et2Select
 		let tag = super._createTagNode(item);
 
 		tag.fullEmail = this.fullEmail;
+		tag.onlyEmail = this.onlyEmail;
 
 		// Re-set after setting fullEmail as that can change what we show
 		tag.textContent = item.getTextLabel().trim();

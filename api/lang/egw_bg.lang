@@ -41,9 +41,12 @@ add	common	bg	Добави
 add %1 category for	common	bg	Добави %1 категория за
 add a new contact	common	bg	Добавяне на контакт
 add category	common	bg	Добави категория
+add current	common	bg	Текущ изглед като любим
 add shortcut	common	bg	Добави пряк път
 add sub	common	bg	Добави подкатегория
+add to clipboard	common	bg	Добавяне в клипборда
 addressbook	common	bg	Адресен указател
+addressbooks to sync in addition to personal addressbook	groupdav	bg	Синхронизиране на адресни книги в допълнение към личната адресна книга
 admin	common	bg	Админ
 administration	common	bg	Администрация
 advanced search	common	bg	Разширено търсене
@@ -51,7 +54,9 @@ afghanistan	common	bg	Афганистан
 albania	common	bg	Албания
 algeria	common	bg	Алжир
 all	common	bg	Всички
+all addressbooks	groupdav	bg	Всички адресни книги
 all fields	common	bg	всички полета
+all in one	groupdav	bg	Всичко в едно
 all users	common	bg	Всички потребители
 alternate style-sheet:	common	bg	Алтернативен style-sheet:
 american samoa	common	bg	Американска Самоа
@@ -363,11 +368,14 @@ id	common	bg	Документ за самоличност / ID
 iespell not detected. click ok to go to download page.	common	bg	Не е открит   ieSpell. Кликнете OK за пренасочване към страницата за изтеглянето му.
 if the clock is enabled would you like it to update it every second or every minute?	common	bg	Ако часовникът е разрешен как да се обновява - на всяка секунда или на всяка минута?
 if there are some images in the background folder you can choose the one you would like to see.	common	bg	Ако има изображения в директорията за фон може да изберете кое да виждате.
+if you use "2-factor-authentication", please enter the code here.	common	bg	Ако използвате "2-факторно удостоверяване", моля, въведете кода тук.
 image directory relative to document root (use / !), example:	common	bg	Директория за изображенията, относително спрямо document root (използвайте / !), например:
 image url	common	bg	URL на изображението
 import	common	bg	Импорт
+include access to any linked files (links tab)	common	bg	Включете достъп до всички свързани файлове (раздел Връзки)
 india	common	bg	Индия
 indonesia	common	bg	Индонезия
+infolog types to sync	common	bg	Типове InfoLog за синхронизиране
 insert all %1 addresses of the %2 contacts in %3	common	bg	Вмъкване на всички %1 адреси на %2 контакти в %3
 insert column after	common	bg	Вмъкни колона след
 insert column before	common	bg	Вмъкни колона преди
@@ -509,6 +517,7 @@ niue	common	bg	Ниуе
 no	common	bg	Не
 no - cancel	common	bg	Не - Отменя
 no entries found, try again ...	common	bg	няма резултати, опитайте отново...
+no filters	common	bg	Без филтри
 no history for this record	common	bg	Няма история за този запис
 no matches found	common	bg	Не са открити съвпадения
 no savant2 template directories were found in:	common	bg	Не са намерени Savant2 template директории в:
@@ -575,6 +584,8 @@ peru	common	bg	Перу
 philippines	common	bg	Филипини
 phone number	common	bg	телефонен номер
 pitcairn	common	bg	Острови Питкерн
+placeholders	common	bg	Заместващи символи
+play/pause	common	bg	Възпроизвеждане/пауза
 please %1 by hand	common	bg	Моля %1 ръчно
 please enter a name	common	bg	Моля въведете име!
 please run setup to become current	common	bg	Моля минете през "инсталация", за да обновите
@@ -587,6 +598,7 @@ poland	common	bg	Полша
 portugal	common	bg	Португалия
 postal	common	bg	Пощенски
 powered by	common	bg	Работи с
+preference	common	bg	Предпочитания
 preferences	common	bg	Настройки
 previous page	common	bg	Предишна страница
 primary style-sheet:	common	bg	Основен набор стилове (style-sheet):

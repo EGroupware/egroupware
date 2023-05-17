@@ -790,6 +790,10 @@ et2-dialog .dialog--has_message {
     vertical-align: middle;
     display: flex;
 }
+/* we need to keep the buttons used in et2dialog always in maximum width to be displayed their content fully*/
+et2-dialog et2-button {
+    max-width: initial;
+}
 
 
 
@@ -2908,7 +2912,7 @@ div.et2_toolbar.ui-widget-header {
 .et2_toolbar .ui-toolbar-menulist > *:hover::part(label) {
 	color: var(--sl-color-neutral-0);
 }
-
+.et2_toolbar summary::-webkit-details-marker {display: none;}
 .nextmatch_header_row et2-button::part(container) {
 	height: 18px;
 }

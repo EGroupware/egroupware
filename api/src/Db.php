@@ -37,9 +37,9 @@ if(empty($GLOBALS['egw_info']['server']['db_type']))
  *		$cnt = $db->query("SELECT COUNT(*) FROM ...")->fetchColumn($column_num=0);
  *
  * To fetch a next (single) row, you can use:
- *		$row = $db->query("SELECT COUNT(*) FROM ...")->fetch($fetchmod=null);
+ *		$row = $db->query("SELECT * FROM ...")->fetch($fetchmod=null);
  *
- * Api\Db allows to use exceptions to catch sql-erros, not existing tables or failure to connect to the database, eg.:
+ * Api\Db allows to use exceptions to catch sql-errors, not existing tables or failure to connect to the database, eg.:
  *		try {
  *			$this->db->connect();
  *			$num_config = $this->db->select(config::TABLE,'COUNT(config_name)',false,__LINE__,__FILE__)->fetchColumn();
@@ -1242,6 +1242,7 @@ class Db
 				// do NOT stall because DB does not know the TZ, report once per session
 				if (empty($_SESSION[Session::EGW_APPSESSION_VAR][__CLASS__]['SQL-error-TZ']))
 				{
+					$e->details = 'Instructions to install timezones in your DB: https://mariadb.com/kb/en/mysql_tzinfo_to_sql/';
 					_egw_log_exception($e);
 					$_SESSION[Session::EGW_APPSESSION_VAR][__CLASS__]['SQL-error-TZ'] = 'reported';
 				}

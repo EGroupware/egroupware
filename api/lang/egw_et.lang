@@ -39,9 +39,12 @@ add	common	et	Lisa
 add %1 category for	common	et	Lisa %1 kategooria
 add a new contact	common	et	Lisa uus kontakt
 add category	common	et	Lisa Kategooria
+add current	common	et	Praegune vaade kui lemmik
 add shortcut	common	et	Lisa Kiirklahv
 add sub	common	et	Lisa alam
+add to clipboard	common	et	Lisa lõikelauale
 addressbook	common	et	Aadressiraamat
+addressbooks to sync in addition to personal addressbook	groupdav	et	Aadressiraamatute sünkroonimine lisaks isiklikule aadressiraamatule
 admin	common	et	Admin
 administration	common	et	Administreerimine
 advanced search	common	et	Laiendatud Otsing
@@ -49,7 +52,9 @@ afghanistan	common	et	AFGANISTAN
 albania	common	et	ALBAANIA
 algeria	common	et	ALŽEERIA
 all	common	et	Kõik
+all addressbooks	groupdav	et	Kõik aadressiraamatud
 all fields	common	et	kõik väljad
+all in one	groupdav	et	Kõik ühes
 all users	common	et	Kõik kasutajad
 alternate style-sheet:	common	et	Alternatiivne stiilileht:
 american samoa	common	et	AMEERIKA SAMOA
@@ -321,12 +326,15 @@ html	common	et	Html
 hungary	common	et	UNGARI
 iceland	common	et	ISLAND
 id	common	et	ID
+if you use "2-factor-authentication", please enter the code here.	common	et	Kui kasutate "2-faktorilist autentimist", sisestage kood siia.
 image	common	et	Pilt
 image url	common	et	Pildi URL
 import	common	et	Import
 import xml	common	et	Impordi XML
+include access to any linked files (links tab)	common	et	Lisage juurdepääs lingitud failidele (vahekaart "Lingid").
 india	common	et	INDIA
 indonesia	common	et	INDONEESIA
+infolog types to sync	common	et	Sünkroniseeritavad InfoLog tüübid
 insert column after	common	et	Sisesta veerg enne
 insert column before	common	et	Sisesta veerg peale
 insert placeholder	common	et	Sisesta paigutuskoht
@@ -402,6 +410,7 @@ no	common	et	Ei
 no - cancel	common	et	Ei -Tühista
 no entries found, try again ...	common	et	kirjeid ei leitud, proovi uuesti
 no file	common	et	pole faili
+no filters	common	et	Filtrid puuduvad
 no matches found	common	et	sobivaid ei leitud
 none	common	et	Pole
 normal	common	et	Normaalne
@@ -434,12 +443,15 @@ password has been updated	common	et	Parool on uuendatud
 path	common	et	Teekond
 personal	common	et	Personaalne
 phone number	common	et	telefoni number
+placeholders	common	et	Paigaldajad
+play/pause	common	et	Esitus/peatus
 please enter a name	common	et	Palun sisesta nimi !
 please select	common	et	Palun Vali
 please set your global preferences	common	et	Palun sisesta oma globaalsed eelistused !
 please wait...	common	et	Palun Oota...
 poland	common	et	POOLA
 portugal	common	et	PORTUGAL
+preference	common	et	Eelistused
 preferences	common	et	Eelistused
 previous page	common	et	Eelmine leht
 primary group	common	et	primaarne Grupp

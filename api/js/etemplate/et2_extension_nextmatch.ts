@@ -741,7 +741,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 
 		// Wait a bit.  header.setFilters() can cause webComponents to update, so we want to wait for that
 		let wait = [];
-		this.iterateOver(w =>
+		this.header.iterateOver(w =>
 		{
 			if(typeof w.updateComplete != "undefined")
 			{
@@ -3440,12 +3440,10 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 				.hide()
 				.click(function(e)
 				{
-					// @ts-ignore
-					jQuery('tr.selected', self.nextmatch.getDOMNode()).trigger({
-						type: 'contextmenu',
-						which: 3,
-						originalEvent: e
-					});
+					if (self.nextmatch.getDOMNode().getElementsByClassName('selected').length>0)
+					{
+						self.nextmatch.getDOMNode().getElementsByClassName('selected')[0].dispatchEvent(new CustomEvent("tapandhold",{type:'tapandhold'}));
+					}
 				})
 				.prependTo(this.search_box);
 		}
@@ -3942,8 +3940,8 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 					}
 				}
 
-				// Update filters, if the value is different and we're not already doing so
-				if((result || typeof result === 'undefined') && entry != _widget.getValue() && !header.update_in_progress)
+				// Update filters, if we're not already doing so
+				if((result || typeof result === 'undefined') && !header.update_in_progress)
 				{
 					// Widget will not have an entry in getValues() because nulls
 					// are not returned, we remove it from activeFilters
@@ -4347,6 +4345,10 @@ export class et2_nextmatch_sortheader extends et2_nextmatch_header implements et
 		{
 			// Send default sort mode if not sorted, otherwise send undefined to calculate
 			this.nextmatch.sortBy(this.id, this.sortmode == "none" ? !(this.options.sortmode.toUpperCase() == "DESC") : undefined);
+
+			// Update sort preference
+			this.egw().set_preference(this.nextmatch._get_appname(), this.nextmatch.options.template + "_sort", this.nextmatch.activeFilters["sort"]);
+
 			return true;
 		}
 

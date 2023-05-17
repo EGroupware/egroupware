@@ -715,7 +715,7 @@ class Storage
 				{
 					if($col != Sql::EXTRA_VALUE &&
 						$col != Sql::EXTRA_TABLE.'.'.Sql::EXTRA_VALUE &&
-						!array_key_exists($col, $backend->db_cols))
+						!array_key_exists($col, $backend->db_cols) && $key !== 'search_cfs')
 					{
 						if(!($col = array_search($col, $backend->db_cols)))
 						{

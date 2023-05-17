@@ -175,9 +175,10 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 				:host([allowfreeentries]:not([multiple])) .select--standard.select--open:not(.select--disabled) .select__control .select__label {
 					display: none;
 				}
-				
-				/* Search textbox general styling, starts hidden */
-				.select__prefix ::slotted(.search_input),.search_input {
+
+				  /* Search textbox general styling, starts hidden */
+
+				  .select__prefix ::slotted(.search_input), .search_input {
 					display: none;
 					flex: 1 1 auto;
 					margin-left: 0px;
@@ -185,17 +186,21 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 					height: var(--sl-input-height-medium);
 					position: absolute;
 					background-color: white;
-					z-index: 1;
-				}
-				/* Search UI active - show textbox & stuff */
-				::slotted(.search_input.active),.search_input.active,
-				.search_input.editing{
+					z-index: var(--sl-z-index-dropdown);
+				  }
+
+				  /* Search UI active - show textbox & stuff */
+
+				  ::slotted(.search_input.active), .search_input.active,
+				  .search_input.editing {
 					display: flex;
-				}
-				/* If multiple and no value, overlap search onto widget instead of below */
-				:host([multiple]) .search_input.active.novalue {
+				  }
+
+				  /* If multiple and no value, overlap search onto widget instead of below */
+
+				  :host([multiple]) .search_input.active.novalue {
 					top: 0px;
-				}
+				  }
 				
 				/* Hide options that do not match current search text */
 				::slotted(.no-match) {
@@ -386,7 +391,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			if(this._activeControls)
 			{
 				// Already there
-				this._activeControls.remove();
+				return;
 			}
 
 			const div = document.createElement("div");
@@ -542,6 +547,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 				if(options.findIndex(o => o.value == remote.value) != -1)
 				{
 					this._selected_remote.splice(remote_index, 1);
+					this.querySelector('[value="' + remote.value + '"]')?.classList.remove("remote");
 				}
 			}
 		}
@@ -779,7 +785,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 		handleMenuSelect(event)
 		{
 			// Need to keep the remote option - only if selected
-			if(event.detail.item.classList.contains("remote") && !this._selected_remote.find(o => o.value == event.detail.item.value))
+			if(event.detail.item.classList.contains("remote") && !this.select_options.find(o => o.value == event.detail.item.value))
 			{
 				this._selected_remote.push({...event.detail.item.option});
 			}
@@ -862,12 +868,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			{
 				this.createFreeEntry(this._searchInputNode.value);
 			}
-			await this.dropdown.hide();
 			this.clearSearch();
-			if(event.relatedTarget && event.relatedTarget !== this)
-			{
-				event.relatedTarget.focus();
-			}
 		}
 
 		/**
@@ -884,7 +885,10 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			// Pass off some keys to select
 			if(['ArrowDown', 'ArrowUp', 'Home', 'End'].includes(event.key))
 			{
-				return this.handleKeyDown(event);
+
+				// Strip out hidden non-matching selected & disabled items so key navigation works
+				this.menuItems = this.menuItems.filter(i => !i.disabled);
+				return super.handleKeyDown(event);
 			}
 			event.stopPropagation();
 

@@ -679,7 +679,7 @@ class importexport_helper_functions {
 					$settings['tags'] = true;
 					break;
 				case 'select-cat':
-					$settings['rows'] = "5,,,$app_name";
+					$settings['application'] = $app_name;
 					$settings['tags'] = true;
 					break;
 				case 'select-account':

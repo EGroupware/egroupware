@@ -91,49 +91,32 @@ export class Et2DropdownButton extends Et2widgetWithSelectMixin(Et2Button)
 
 		// Rebind click to just the main button, not the whole thing
 		this.removeEventListener("click", this._handleClick);
-
-		// Need to wait until update is done and these exist
-		this.updateComplete.then(() =>
-		{
-			if(this.buttonNode)
-			{
-				this.buttonNode.addEventListener("click", this._handleClick);
-			}
-			if(this.dropdownNode)
-			{
-				this.dropdownNode.addEventListener('sl-select', this._handleSelect);
-			}
-		});
 	}
 
-	disconnectedCallback()
+	protected _renderOptions()
 	{
-		super.disconnectedCallback();
-		if(this.buttonNode)
-		{
-			this.buttonNode.removeEventListener("click", this._handleClick);
-		}
-		if(this.dropdownNode)
-		{
-			this.dropdownNode.removeEventListener('sl-select', this._handleSelect);
-		}
+		// We have our own render, so we can handle it internally
 	}
 
-	render()
+	render() : TemplateResult
 	{
 		if(this.readonly)
 		{
-			return '';
+			return html``;
 		}
 		return html`
             <sl-button-group>
-                <sl-button size="${egwIsMobile() ? "large" : "medium"}" id="main" ?disabled=${this.disabled}>
+                <sl-button size="${egwIsMobile() ? "large" : "medium"}" id="main"
+                           ?disabled=${this.disabled}
+                           @click=${this._handleClick}
+                >
                     ${this.label}
                 </sl-button>
                 <sl-dropdown placement="bottom-end" hoist>
                     <sl-button size="${egwIsMobile() ? "large" : "medium"}" slot="trigger" caret
                                ?disabled=${this.disabled}></sl-button>
-                    <sl-menu>
+                    <sl-menu @sl-select=${this._handleSelect}>
+                        ${(this.select_options || []).map((option : SelectOption) => this._optionTemplate(option))}
                     </sl-menu>
                 </sl-dropdown>
             </sl-button-group>

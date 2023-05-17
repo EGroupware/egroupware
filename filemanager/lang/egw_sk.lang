@@ -107,8 +107,10 @@ download	filemanager	sk	Stiahnuť
 download documents	filemanager	sk	Stiahnuť dokumenty
 edit comments	filemanager	sk	Upraviť poznámky
 edit settings	filemanager	sk	Upraviť nastavenia
+edit share	filemanager	sk	Upraviť sieťový priečinok
 enable	filemanager	sk	Zapnúť
 enable versioning for given mountpoint	filemanager	sk	Zapnúť verzie pre daný prípojný bod
+enter a file size, e.g. 100k, 200m or 2g	filemanager	sk	Zadajte veľkosť súboru, napr. 100K, 200M alebo 2G
 enter setup user and password	filemanager	sk	Zadajte používateľa a heslo inštalácie
 enter setup user and password to get root rights	filemanager	sk	Ak chcete získať administrátorské oprávnenia, zadajte používateľa a heslo inštalácie
 enter the complete vfs path to specify a fast access link to a folder	filemanager	sk	Zadajte úplnú cestu VFS pre odkaz pre rýchly prístup do priečinku
@@ -152,7 +154,9 @@ files	common	sk	Súbory
 files from links	filemanager	sk	Súbory v odkazoch
 files from subdirectories	filemanager	sk	Súbory z podpriečinkov
 files in this directory	filemanager	sk	Súbory v tomto priečinku
+filesystem	filemanager	sk	Súborový systém
 filesystem check reported no problems.	filemanager	sk	Kontrola súborového systému nenašla žiadne problémy
+filesystem: mount directory (inside /var/lib/egroupware!) from host filesystem	filemanager	sk	Súborový systém: priečinok pripojenia (v rámci /var/lib/egroupware!) z hostiteľského súborového systému
 finally delete	filemanager	sk	Definitívne odstrániť
 finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	sk	Definitívne odstrániť všetky staršie verzie a odstránené súbory v danom adresári.\n\nToto sa už NEBUDE dať vrátiť späť!
 finally delete this version	filemanager	sk	Definitívne odstrániť túto verziu
@@ -165,6 +169,7 @@ go home	filemanager	sk	návrat domov
 go to	filemanager	sk	Choď na
 go to your home directory	filemanager	sk	Choď do svojho domovského adresára
 go up	filemanager	sk	nahor
+group home quota	filemanager	sk	Kvóta skupiny pre domovský priečinok
 hidden upload	filemanager	sk	Skryté nahrávanie
 hidden uploads	filemanager	sk	Skryté nahrávanie
 id	filemanager	sk	Id
@@ -204,14 +209,17 @@ no files in this directory.	filemanager	sk	Žiadne súbory v tomto priečinku.
 no preview available	filemanager	sk	Nie je k dispozícii žiadny náhľad
 no version history for this file/directory	filemanager	sk	Žiadna história verzií pre tento súbor/priečinok.
 noone	filemanager	sk	Nikto
+notebookbar	filemanager	sk	V kartách
 older versions or deleted files	filemanager	sk	Staré verzie alebo odstránené súbory
 only owner can rename or delete the content	filemanager	sk	Iba vlastník môže premenovať alebo odstrániť obsah
 open	filemanager	sk	Otvoriť
 open documents with collabora, if permissions are given	filemanager	sk	Otvoriť dokument pomocou Collabora, ak máte povolenie
 open odt documents with collabeditor	filemanager	sk	Otvoriť ODT dokument pomocou editora Collabora
 operation	filemanager	sk	Operácia
+password for webdav and smb, use $pass for password of logged in user	filemanager	sk	Heslo pre WebDAV a SMB; pre použitie hesla prihláseného používateľa zadajte $pass
 paste link	filemanager	sk	Prilepiť odkaz
 path %1 not found or not a directory!	filemanager	sk	Cesta %1 sa nenašla alebo nie je priečinkom!
+path and query-parameters, smb: share and optional path (with /)	filemanager	sk	Cesta a parametre dopytu, SMB: sieťového úložiska, a voliteľne aj cesta (vrátane /)
 percentage	filemanager	sk	Percento
 permission denied!	filemanager	sk	Prístup bol odopretý!
 permissions	filemanager	sk	Prístupové oprávnenia
@@ -222,10 +230,16 @@ preview %1	filemanager	sk	Náhľad %1
 preview of %1	filemanager	sk	Náhľad pre %1
 projectmanager	filemanager	sk	Projektovník
 properties saved.	filemanager	sk	Vlastnosti uložené
+protocol to use	filemanager	sk	Použitý protokol
+protocols	filemanager	sk	Protokoly
 quick jump to	filemanager	sk	Rýchly skok na
+quota	filemanager	sk	Kvóta
+quota exceeded	filemanager	sk	Kvóta bola prekročená
 read & write access	filemanager	sk	Prístup na čítanie a zápis
 read access only	filemanager	sk	Prístup iba na čítanie
 readonly share link	filemanager	sk	Zdieľaný odkaz iba na čítanie
+recalculate	filemanager	sk	Prepočítať
+recalculated %1 directories in %2 iterations and %3 seconds	filemanager	sk	Prepočítaných %1 priečinkov v %2 prechodov za %3 sekúnd
 reload	filemanager	sk	Znovunačítať
 rename of %1 to %2 failed!	filemanager	sk	Premenovanie %1 na %2 zlyhalo!
 rename, change permissions or ownership	filemanager	sk	Premenovať, zmeniť prístupové oprávnenia alebo vlastníctvo
@@ -252,6 +266,7 @@ select file(s) from vfs	common	sk	Vyberte súbor(y) z VFS
 setting for document merge saved.	filemanager	sk	Nastavenia e zlučovanie dokumentov boli uložené.
 share files	filemanager	sk	Zdieľať súbory
 share link copied into clipboard	filemanager	sk	Zdieľať odkaz skopírovaný v schránke
+share mounted at %1.<br/>please close this tab.	filemanager	sk	Sieťový priečinok pripojený do %1.<br/>Prosím zavrite túto kartu.
 shared files	filemanager	sk	Zdieľané súbory
 shared with	filemanager	sk	Zdieľané s
 show	filemanager	sk	Ukázať
@@ -263,6 +278,8 @@ show link "your home directory" in side box menu?	filemanager	sk	Zobraziť odkaz
 show link "your home directory*" in side box menu?*	filemanager	sk	Zobraziť odkaz "Domovský priečinok" v bočnej ponuke?
 show link to filemanagers basedirectory (/) in side box menu?	filemanager	sk	Ukázať odkaz na základný priečinok správcu súborov (/) v bočnej ponuke?
 size	filemanager	sk	Veľkosť
+smb, webdavs and vfs require a username!	filemanager	sk	SMB, WebDAV a VFS vyžadujú používateľské meno!
+smb: mount samba or windows fileserver shares	filemanager	sk	SMB: pripojenie sieťových priečinkov zo serverov Samba alebo Windows
 some functionalities require superuser permissions, please login here as filemanager superuser - allowed users are defined in setup.	filemanager	sk	Niektoré funkcionality vyžadujú privilégiá superpoužívateľa, prosím prihláste sa teraz ako superpoužívateľ správcu súborov * povolení používatelia sú definovaní v setupe.
 sqlfs statistics	filemanager	sk	Štatistika sqlFS
 start search	filemanager	sk	Hľadaj
@@ -276,12 +293,15 @@ the default start folder is your personal folder. the default is used, if you le
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	filemanager	sk	Dokument môže obsahovať premennú, napr. {{%3}} ktorá sa nahradí údajmi (%1úplný zoznam názvov premenných%2).
 the following document-types are supported:	filemanager	sk	Podporované sú nasledovné typy dokumentov:
 the requested path %1 is not available.	filemanager	sk	Požadované cesta %1 nie je dostupná.
+the uploaded file is only visible to the person sharing these files with you, not to yourself or other people knowing this sharing link.	filemanager	sk	Nahratý súbor je viditeľný iba pre osobu, ktorá s Vami zdieľa tieto súbory, nie pre Vás ani iných ľudí ktorí poznajú tento zdieľaný odkaz.
 there's already a directory with that name!	filemanager	sk	Priečinok s týmto názvom už existuje!
 there's already a file with that name!	filemanager	sk	Súbor s týmto menom už existuje!
 tile view	filemanager	sk	Dlaždicové zobrazenie
 to overwrite the existing file store again.	filemanager	sk	Ak chcete prepísať existujúci súbor, uložte znovu.
 total files	filemanager	sk	Súborov celkovo
+ui mode	filemanager	sk	Štandardný panel nástrojov
 under directory	filemanager	sk	pod adresárom
+unlock	filemanager	sk	Odomknúť
 unmount	filemanager	sk	Odpojiť
 unused space	filemanager	sk	Nevyužitý priestor
 up	filemanager	sk	Hore
@@ -291,15 +311,21 @@ upload files	filemanager	sk	Odovzdať súbory
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	filemanager	sk	Použiť túto značku pre označenie adries. Vložte obsah, ktorý chcete, medzi dve značky.
 used space	filemanager	sk	Použitý priestor
 user color indicator	filemanager	sk	Indikátor používateľskej farby
+user home quota	filemanager	sk	Kvóta pre používateľov domovský priečinok
+username for webdav and smb, use $user for name of logged in user	filemanager	sk	Používateľské meno pre WebDAV a SMB; ak chcete použiť meno prihláseného používateľa, zadajte $user
 users and groups	filemanager	sk	Používatelia a skupiny
 versioning	filemanager	sk	Verziovanie
+versioning requires egroupware epl	filemanager	sk	Verziovanie je podporované len v EGroupware EPL
 vfs mounts and versioning	common	sk	VFS pripájanie a verzie
+view link	filemanager	sk	Zobraziť odkaz
 webdav link copied into clipboard	filemanager	sk	WebDAV odkaz skopírovaný do schránky
+webdavs: mount egroupware or *cloud shares	filemanager	sk	WebDAV: pripojiť zdieľané priečinky EGroupware alebo *Cloud
 who should be allowed to finally delete deleted files or old versions of a file:	filemanager	sk	Komu povoliť konečné odstránanie odstránených súborov alebo starých verzií súboru:
 writable share link	filemanager	sk	Zapisovateľný zdieľaný odkaz
 wrong username or password!	filemanager	sk	Chybné meno alebo heslo!
 you are not allowed to finally delete older versions and deleted files!	filemanager	sk	NEmáte dovolené definitívne odstrániť staré verzie a odstránené súbory!
 you are not allowed to upload a script!	filemanager	sk	Nemáte dovolené odovzdávať skript!
+you can either delete some files or get in touch with your administrator to get more space	filemanager	sk	Môžete zmazať nejaké súbory, alebo požiadať svojho administrátora o väčší priestor
 you can only grant additional rights, you can not take rights away!	filemanager	sk	Môžete len pridať ďalšie práva, nemôžete práva odobrať!
 you can use regular upload [+] button to upload files.	filemanager	sk	Môžete použiť bežné tlačítko [+] pre odovzdanie súborov.
 you do not have access to %1	filemanager	sk	Nemáte prístup ku %1

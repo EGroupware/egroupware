@@ -49,8 +49,8 @@ abstract class Entry extends Transformer
 			'entry-fields' => array(	// List of fields
 				'sel_options' => array('__callback__' => 'get_field_list'),
 				'type' => 'select',
-				'no_lang' => true,
-				'options' => 'None',
+				'noLang' => true,
+				'emptyLabel' => 'None',
 			),
 		)
 	);

@@ -1,7 +1,5 @@
 import {Et2Tabs} from "./Et2Tabs";
 import {classMap, html, repeat, TemplateResult} from "@lion/core";
-import {et2_createWidget} from "../../et2_core_widget";
-import {et2_template} from "../../et2_widget_template";
 import {Et2Details} from "../Et2Details/Et2Details";
 import {SlTab, SlTabPanel} from "@shoelace-style/shoelace";
 
@@ -16,7 +14,6 @@ export class Et2TabsMobile extends Et2Tabs
 	connectedCallback()
 	{
 		super.connectedCallback();
-		this.nav = this.shadowRoot.querySelector("et2-vbox");
 	}
 
 	protected createTabs(tabData)
@@ -55,19 +52,49 @@ export class Et2TabsMobile extends Et2Tabs
 		// Don't have an indicator to sync
 	}
 
+	repositionIndicator()
+	{
+		// Don't have an indicator to reposition
+	}
+
+	preventIndicatorTransition()
+	{
+		// Don't have an indicator
+	}
+
+	/**
+	 * Reimplement to allow our existing function signatures too
+	 *
+	 * @deprecated use this.show(name : string)
+	 * @param tab number or name of tab (Sl uses that internally with a SlTab!)
+	 * @param options
+	 */
+	setActiveTab(tab : SlTab | String | Number, options? : {
+		emitEvents? : boolean;
+		scrollBehavior? : 'auto' | 'smooth';
+	})
+	{
+		if(typeof tab === 'number')
+		{
+			tab = this.getAllTabs()[tab];
+			return this.show(tab.panel);
+		}
+		if(typeof tab === 'string')
+		{
+			return this.show(tab);
+		}
+		// Don't call super, it hides tab content
+	}
+
+
+	get nav() : HTMLElement
+	{
+		return this.shadowRoot.querySelector("et2-vbox");
+	}
+
+
 	protected tabTemplate(tab, index : number) : TemplateResult
 	{
-		if(tab.XMLNode)
-		{
-			// Just read the XMLNode
-			let tabContent = this.createElementFromNode(tab.XMLNode);
-			tabContent.getDOMNode().slot = tab.id;
-		}
-		else
-		{
-			let template = <et2_template>et2_createWidget('template', tab.widget_options, this);
-			template.getDOMNode().slot = tab.id;
-		}
 		return html`
             <et2-details
                     id="${tab.id}"
@@ -75,7 +102,6 @@ export class Et2TabsMobile extends Et2Tabs
                     ?open=${index == this._selectedIndex}
                     ?disabled=${tab.disabled}
                     ?hidden=${tab.hidden}
-
             >
                 <slot name="${tab.id}"/>
             </et2-details>`

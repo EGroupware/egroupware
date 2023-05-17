@@ -16,6 +16,7 @@ add an additional condition	importexport	sk	Pridať doplňujúcu podmienku
 addressbook csv import	importexport	sk	Adresár - import CSV
 addressbook vcard import	importexport	sk	Adresár - import vCard
 admin disabled exporting	importexport	sk	Export zakázaný správcom
+all custom fields	importexport	sk	Všetky vlastné polia
 all encodings	importexport	sk	Všetky kódovania
 all users	importexport	sk	Všetci používatelia
 allowed users	importexport	sk	Oprávnení používatelia
@@ -46,6 +47,7 @@ database values	importexport	sk	Databázové hodnoty
 day of week	importexport	sk	Deň v týždni
 define imports|exports	common	sk	Definovať importy|exporty
 definition	importexport	sk	Definícia
+definition filter	importexport	sk	Filter definícií
 delete all selected definitions	importexport	sk	Odstrániť VŠETKY vybrané definície
 delete files after import	importexport	sk	Odstrániť súbory po skončení importu
 deleted	importexport	sk	Odstránené.

@@ -73,17 +73,17 @@ egw.extend('images', egw.MODULE_GLOBAL, function()
 				// If the application name is not given, set it to the name of
 				// current application
 				_app = this.getAppName();
+			}
 
-				// Handle images in appname/imagename format
-				if(_name.indexOf('/') > 0)
+			// Handle images in appname/imagename format
+			if(_name.indexOf('/') > 0)
+			{
+				var split = _name.split('/',2);
+				// dhtmlxtree and egw_action are subdirs in image dir, not applications
+				if (split[0] !== 'dhtmlxtree' && split[0] !== 'egw_action')
 				{
-					var split = _name.split('/',2);
-					// dhtmlxtree and egw_action are subdirs in image dir, not applications
-					if (split[0] !== 'dhtmlxtree' && split[0] !== 'egw_action')
-					{
-						_app = split[0];
-						_name = split[1];
-					}
+					_app = split[0];
+					_name = split[1];
 				}
 			}
 

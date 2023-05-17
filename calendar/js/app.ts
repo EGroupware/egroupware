@@ -57,6 +57,8 @@ import {tapAndSwipe} from "../../api/js/tapandswipe";
 import {CalendarOwner} from "./CalendarOwner";
 import {et2_IInput} from "../../api/js/etemplate/et2_core_interfaces";
 import {Et2DateTime} from "../../api/js/etemplate/Et2Date/Et2DateTime";
+import {Et2Select} from "../../api/js/etemplate/Et2Select/Et2Select";
+import type {SelectOption} from "../../api/js/etemplate/Et2Select/FindSelectOptions";
 
 /**
  * UI for calendar
@@ -3696,6 +3698,12 @@ export class CalendarApp extends EgwApp
 									if(option.value == widget.select_options[j].value)
 									{
 										widget.select_options[j].label = option.label;
+
+										// Do not let remote options stay remote or they'll disappear
+										if(typeof widget.select_options[j].class == "string")
+										{
+											widget.select_options[j].class = widget.select_options[j].class.replace("remote", "")
+										}
 										found = true;
 										break;
 									}
@@ -3741,6 +3749,70 @@ export class CalendarApp extends EgwApp
 				}
 			}, this, null
 		);
+	}
+
+	private _group_query_cache = {};
+
+	/**
+	 * Pre-fetch the members of any group participants
+	 *
+	 * This is done to avoid rewriting since group fetching is async.  We fetch missing group members in advance,
+	 * then hold the data in the sidebox select options for immediate access when checking if an event should be displayed
+	 * in a particular calendar.
+	 *
+	 * @param event
+	 * @return Promise| null
+	 */
+	async _fetch_group_members(event) : Promise<any> | null
+	{
+		let groups = [];
+		let option_owner = null;
+		let options : SelectOption[];
+		if(this.sidebox_et2 && this.sidebox_et2.getWidgetById('owner'))
+		{
+			option_owner = this.sidebox_et2.getWidgetById('owner');
+		}
+		else
+		{
+			option_owner = this.et2.getArrayMgr("sel_options").getRoot().getEntry('owner') || {select_options: []};
+		}
+
+		options = option_owner.select_options;
+
+		for(const id of Object.keys(event.participants))
+		{
+			if(parseInt(id) >= 0 || isNaN(parseInt(id)))
+			{
+				continue;
+			}
+			let resource = options.find((o) => o.value === id);
+			if(!resource || resource && !resource.resources)
+			{
+				groups.push(parseInt(id));
+			}
+		}
+
+		// Find missing groups
+		const cache_key = groups.join("_");
+		if(groups.length && typeof this._group_query_cache[cache_key] === "undefined")
+		{
+			this._group_query_cache[cache_key] = this.egw.request("calendar.calendar_owner_etemplate_widget.ajax_owner", [groups]).then((data) =>
+			{
+				options = options.concat(Object.values(data));
+				option_owner.select_options = options;
+			}).finally(() =>
+			{
+				delete this._group_query_cache[cache_key];
+			});
+		}
+		if(typeof this._group_query_cache[cache_key] !== "undefined")
+		{
+			return this._group_query_cache[cache_key];
+		}
+		else
+		{
+			return null;
+		}
 	}
 
 	/**

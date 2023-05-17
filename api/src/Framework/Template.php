@@ -29,7 +29,7 @@ class Template
 
 	/**
 	 * @var $debug mixed False for no debug, string or array of strings with:
-	 *	- function-name like set_var to get eg. all assignments or
+	 *	- function-name like set_var to get e.g. all assignments or
 	 *	- handle- / variable-names - if you are only interested in some variables ;-)
 	 */
 	var $debug = False;	// array('cat_list','cat_list_t');
@@ -153,7 +153,7 @@ class Template
 	/**
 	 * Extract the template $handle from $parent and place variable {$name} instead
 	 *
-	 * @param string $parent name of tempalte containing $handle
+	 * @param string $parent name of template containing $handle
 	 * @param string $handle name of part
 	 * @param string $name name of variable/placeholder
 	 * @return boolean
@@ -179,7 +179,7 @@ class Template
 		$match = null;
 		if (!preg_match($reg,$str,$match))
 		{
-			// unfortunaly some apps set non-existing blocks, therefor I have to disable this diagnostics again for now
+			// unfortunately some apps set non-existing blocks, therefor I have to disable this diagnostics again for now
 			$this->halt("set_block: unable to find block '$handle' in '$parent'=<pre>".htmlspecialchars($str)."</pre> this->root=$this->root");
 			// return False;
 		}
@@ -223,7 +223,7 @@ class Template
 	}
 
 	/**
-	 * Substitue variables/placeholders and return result
+	 * Substitute variables/placeholders and return result
 	 *
 	 * @param string $handle handle of template where variables are to be substituted
 	 * @return string
@@ -243,13 +243,13 @@ class Template
 		$str = $this->get_var($handle);
 		foreach($this->varkeys as $k => $v)
 		{
-			$str = str_replace($v, $this->varvals[$k], $str);
+			$str = str_replace($v, $this->varvals[$k] ?? '', $str);
 		}
 		return $str;
 	}
 
 	/**
-	 * Substitue variables/placeholders and print result
+	 * Substitute variables/placeholders and print result
 	 *
 	 * @param string $handle handle of template where variables are to be substituted
 	 * @return boolean false
@@ -318,7 +318,7 @@ class Template
 	}
 
 	/**
-	 * This is a short cut for print finish parse
+	 * This is a shortcut for print finish parse
 	 */
 	function pfp($target, $handle, $append = False)
 	{
@@ -534,7 +534,7 @@ class Template
 		switch ($this->halt_on_error)
 		{
 			case 'no':
-				// ignore error quitely
+				// ignore error quietly
 				break;
 			case 'report':
 				printf("<b>Template Error:</b> %s<br>\n", $msg);
@@ -563,7 +563,7 @@ class Template
 	/**
 	 * get template dir of an application
 	 *
-	 * @param $appname appication name optional can be derived from $GLOBALS['egw_info']['flags']['currentapp'];
+	 * @param string $appname application name optional can be derived from $GLOBALS['egw_info']['flags']['currentapp'];
 	 * @return string template directory
 	 * @throws Api\Exception\WrongParameter if no directory is found
 	 */

@@ -105,57 +105,6 @@ module.exports = function (grunt) {
 						"pixelegg/print.css"
 					]
 				}
-			},
-			jdots: {
-				files: {
-					"jdots/css/high-contrast.min.css": [
-						"node_modules/flatpickr/dist/themes/light.css",
-						"api/js/dhtmlxtree/codebase/dhtmlxtree.css",
-						"api/js/egw_action/test/skins/dhtmlxmenu_egw.css",
-						"vendor/bower-asset/diff2html/dist/diff2html.css",
-						"vendor/bower-asset/cropper/dist/cropper.min.css",
-						"api/templates/default/css/flags.css",
-						"api/templates/default/css/htmlarea.css",
-						"api/templates/default/etemplate2.css",
-						"api/templates/default/default.css",
-						"jdots/egw_fw.css",
-						"jdots/css/jdots.css",
-						"jdots/css/high-contrast.css",
-						"api/templates/default/print.css",
-						"jdots/print.css"
-					],
-					"jdots/css/jdots.min.css": [
-						"node_modules/flatpickr/dist/themes/light.css",
-						"api/js/dhtmlxtree/codebase/dhtmlxtree.css",
-						"api/js/egw_action/test/skins/dhtmlxmenu_egw.css",
-						"vendor/bower-asset/diff2html/dist/diff2html.css",
-						"vendor/bower-asset/cropper/dist/cropper.min.css",
-						"api/templates/default/css/flags.css",
-						"api/templates/default/css/htmlarea.css",
-						"api/templates/default/etemplate2.css",
-						"api/templates/default/default.css",
-						"jdots/egw_fw.css",
-						"jdots/css/jdots.css",
-						"api/templates/default/print.css",
-						"jdots/print.css"
-					],
-					"jdots/css/orange-green.min.css": [
-						"node_modules/flatpickr/dist/themes/light.css",
-						"api/js/dhtmlxtree/codebase/dhtmlxtree.css",
-						"api/js/egw_action/test/skins/dhtmlxmenu_egw.css",
-						"vendor/bower-asset/diff2html/dist/diff2html.css",
-						"vendor/bower-asset/cropper/dist/cropper.min.css",
-						"api/templates/default/css/flags.css",
-						"api/templates/default/css/htmlarea.css",
-						"api/templates/default/etemplate2.css",
-						"api/templates/default/default.css",
-						"jdots/egw_fw.css",
-						"jdots/css/jdots.css",
-						"jdots/css/orange-green.css",
-						"api/templates/default/print.css",
-						"jdots/print.css"
-					]
-				}
 			}
 		},
 		hub: {
@@ -166,7 +115,7 @@ module.exports = function (grunt) {
 			}
 		}
 	});
-	// Load plugin for css minificaton
+	// Load plugin for css minification
 	grunt.loadNpmTasks("grunt-contrib-cssmin");
 
 	// Load the plugin that runs tasks only on modified files

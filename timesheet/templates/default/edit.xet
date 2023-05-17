@@ -27,7 +27,7 @@
 					<et2-description  value="Unitprice" for="ts_unitprice"></et2-description>
 					<et2-hbox  disabled="@pm_integration=none" >
 						<projectmanager-pricelist id="pl_id" class="et2_fullWidth"
-                                                  onchange="window.app.timesheet.et2.getWidgetById('ts_unitprice').set_value(this.options[this.selectedIndex].text.lastIndexOf('(') &lt; 0 ? '' : this.options[this.selectedIndex].text.slice(this.options[this.selectedIndex].text.lastIndexOf('(')+1,-1));"
+                                                  onchange="let option = this.select_options.find(e=>e.value == this.value) || {label:''};window.app.timesheet.et2.getWidgetById('ts_unitprice').set_value(option.label.lastIndexOf('(') &lt; 0 ? '' : option.label.slice(option.label.lastIndexOf('(')+1,-1));"
                                                   emptyLabel="None"/>
 					</et2-hbox>
 					<et2-description></et2-description>
@@ -134,15 +134,16 @@
 					<et2-date  id="ts_start" required="1"></et2-date>
 					<et2-description></et2-description>
 					<et2-description  value="Starttime"></et2-description>
-					<et2-date-timeonly  id="start_time"></et2-date-timeonly>
+					<et2-date-timeonly id="start_time" freeMinuteEntry="true"></et2-date-timeonly>
 				</row>
 				<row class="row dialogHeader3">
-					<et2-description  value="Duration" for="ts_duration"></et2-description>
-					<et2-date-duration  id="ts_duration" displayFormat="hm"></et2-date-duration>
-					<et2-description></et2-description>
-					<et2-description  value="or endtime" class="et2_noWrap"></et2-description>
-					<et2-date-timeonly  id="end_time"></et2-date-timeonly>
-				</row>
+                    <et2-description value="Duration" for="ts_duration"></et2-description>
+                    <et2-date-duration id="ts_duration" displayFormat="hm"
+                                       onchange="app.timesheet.update_quantity"></et2-date-duration>
+                    <et2-description></et2-description>
+                    <et2-description value="or endtime" class="et2_noWrap"></et2-description>
+                    <et2-date-timeonly id="end_time" freeMinuteEntry="true"></et2-date-timeonly>
+                </row>
 				<row>
 					<et2-tabbox  id="tabs" class="et2_nowrap" width="100%" span="all" tabHeight="200">
 						<tabs>

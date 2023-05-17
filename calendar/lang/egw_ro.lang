@@ -1,0 +1,8 @@
+how many days to be removed in the future (default 365)	calendar	ro	Câte zile trebuie să fie eliminate în viitor (implicit 365)
+how many days to be removed in the past (default 100)	calendar	ro	Câte zile trebuie să fie eliminate în trecut (implicit 100)
+how many days to sync in the future (default %1)	calendar	ro	Câte zile trebuie sincronizate în viitor (implicit %1)
+how many days to sync in the past (default %1)	calendar	ro	Câte zile trebuie sincronizate în trecut (implicit %1)
+how many description lines should be directly visible. further lines are available via a scrollbar.	calendar	ro	Câte linii de descriere trebuie să fie direct vizibile. Liniile suplimentare sunt disponibile prin intermediul unei bare de derulare.
+how many lines of all day events should be directly visible. further lines are available via a mouseover.	calendar	ro	Câte rânduri ale evenimentelor din toate zilele trebuie să fie direct vizibile. Linii suplimentare sunt disponibile prin intermediul unui mouseover.
+how many separate calendars to show before merging them together	calendar	ro	Numărul minim de utilizatori pentru a afișa o vizualizare consolidată a calendarului; dacă sunt selectați mai puțini utilizatori, calendarul este afișat separat pentru vizualizarea săptămânală sau zilnică.
+ical cannot change the owner of an existing event.  this applies to new events only.	calendar	ro	iCal nu poate schimba proprietarul unui eveniment existent. Acest lucru se aplică numai evenimentelor noi.

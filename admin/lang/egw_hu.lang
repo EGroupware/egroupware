@@ -3,12 +3,20 @@
 %1 acl records of not (longer) existing accounts deleted.	admin	hu	%1 ACL bejegyzés törölve a már nem létező felhasználói hozzáférésekből.
 %1 not found or not executable !!!	admin	hu	%1 nem található, vagy nem futtatható!
 (default no, leave it off if you dont use it)	admin	hu	(alapértelmezésként Nem, hagyja ki ha nem használja)
+(no subject)	admin	hu	(nincs tárgy)
 (stored password will not be shown here)	admin	hu	(a tárolt jelszó  nem fog itt megjelenni)
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	hu	(Új alkalmazás telepítéséhez használja a <br><a href="setup/" target="setup">Setup</a> felületet [Alkalmazások Kezelése].)
 -  type	admin	hu	- típus
+1 year	admin	hu	1 év
+2 month	admin	hu	2 hónap
+2 weeks	admin	hu	2 hét
+2-factor-authentication for interactive login	admin	hu	2-faktoros hitelesítés interaktív bejelentkezéshez
+3 month	admin	hu	3 hónap
+6 month	admin	hu	6 hónap
 accesslog and bruteforce defense	admin	hu	Log elérése és brute force védelem
 account %1 %2	admin	hu	Felhasználói hozzáférés %1 %2
 account '%1' deleted.	admin	hu	'%1' felhasználói hozzáférés törölve.
+account '%1' not found !!!	admin	hu	'%1' felhasználói azonosító nem található!
 account active	admin	hu	Hozzáférés aktív
 account has been created	common	hu	Az azonosító létrehozva
 account has been deleted	common	hu	Az azonosító törölve
@@ -25,6 +33,7 @@ action	admin	hu	Művelet
 actions	admin	hu	Műveletek
 activate	admin	hu	Aktivál
 activate wysiwyg-editor	admin	hu	WYSIWYG-szerkesztő engedélyezése
+active templates	admin	hu	Aktív vázlatok
 add a category	admin	hu	kategória hozzáadása
 add a group	admin	hu	csoport hozzáadása
 add a new account.	admin	hu	Új azonosító hozzáadása
@@ -38,15 +47,19 @@ add global category for %1	admin	hu	Globális kategória hozzáadása ehhez %1
 add group	admin	hu	Csoport hozzáadása
 add new account	admin	hu	Hozzáférést hozzáad
 add new application	admin	hu	Alkalmazás hozzáadása
+add new email address:	admin	hu	Új email cím hozzáadása:
 add peer server	admin	hu	Add Peer Server
+add profile	admin	hu	Profil hozzáadása
 add sub-category	admin	hu	Alkategória hozzáadása
+admin dn	admin	hu	Admin dn
 admin email	admin	hu	Admin email
 admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	hu	Ezek az adminisztrátori emailcímek (vesszével elválasztva) lesznek értesítve a blokkolt IP-címekről és azonosítókról (üresen hagyva nem lesz értesítés)
 admin name	admin	hu	Adminisztrátor neve
+admin password	admin	hu	adminisztrátor jelszava
+admin username	admin	hu	adminisztrátor neve
 administration	admin	hu	Adminisztráció
 admins	admin	hu	Adminisztrátorok
-advanced options	admin	hu	További beállítások
-after how many unsuccessful attempts to login, an account should be blocked (default 15) ?	admin	hu	Mennyi sikertelen belépési kísérlet után legyen az azonosító blokkolt (alapértelmezésben 3)?
+advanced options	admin	hu	haladó beállítások
 after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	hu	Mennyi sikertelen belépési kísérlet után legyen az IP-cím blokkolt (alapértelmezésben 3)?
 aliases	admin	hu	Álnevek
 all categories	admin	hu	Összes kategória
@@ -58,6 +71,9 @@ anonymous user	admin	hu	Név nélküli felhasználó
 anonymous user (not shown in list sessions)	admin	hu	Anonim felhasználó (nem jelenik meg a listázáskor)
 anonymous user does not exist!	admin	hu	Anonymous felhasználó nem létezik!
 anonymous user has no run-rights for the application!	admin	hu	Az Anonymous felhasználónak nincs futtatási joga az alkalmazáshoz!
+any application	admin	hu	Bármelyik modul
+any group	admin	hu	Bármelyik csoport
+any user	admin	hu	bármely felhasználó
 appearance	admin	hu	Megjelenés
 application	admin	hu	Alkalmazás
 application '%1' not found (maybe not installed or misspelled)!	admin	hu	A(z) '%1' modul nem található (talán nincs telepítve vagy elírás történt)!
@@ -86,11 +102,19 @@ attribute mailalternateaddress explained	admin	hu	A QMAIL séma <b><i>-mailAlter
 attribute mailforwardingaddress explained	admin	hu	A QMAIL séma <b><i>-mailForwardingAddress-</i></b> tulajdonságát kezeli le, és nem lehet üresen hagyni, ha egyszer már hozzá lett rendelve (a 'ha' utáni rész sántít, de határozottan van ott valami).
 authentication / accounts	admin	hu	Azonosítás / Azonosítók
 auto create account records for authenticated users	admin	hu	Hitelesített felhasználóknak automatikus hozzáférés generálása.
+back to admin/grouplist	admin	hu	Vissza az csoportok adminisztráláshoz
+back to admin/userlist	admin	hu	Vissza a felhasználók adminisztráláshoz
 back to the list	admin	hu	vissza a listához
+bad login name or password.	admin	hu	Hibás belépési név vagy jelszó.
+bad or malformed request. server responded: %s	admin	hu	Hibás kérés. Szerver válasza: %s
+bad request: %s	admin	hu	Hibás kérés: %s
 bi-dir passthrough	admin	hu	kétirányú átjáró
 bi-directional	admin	hu	kétirányú
 bottom	admin	hu	legalsó
 calculate next run	admin	hu	Legközelebbi futás kiszámítása
+can be used by application	admin	hu	Ez a modul használhatja
+can be used by group	admin	hu	Ez a csoport használhatja
+can be used by user	admin	hu	a felhasználó alkalmazhatja
 can change password	admin	hu	Megváltoztathatja a jelszavát
 cancel testjob!	admin	hu	Tesztfeladat leállítása/törlése!
 categories list	admin	hu	Kategóriák listája
@@ -105,10 +129,15 @@ check ip address of all sessions	admin	hu	Összes session IP cím ellenőrzése
 check items to <b>%1</b> to %2 for %3	admin	hu	Tételek ellenőrzése <b>%1</b> to %2 for %3
 click to select a color	admin	hu	Színválasztás
 color	admin	hu	Szín
+connection dropped by imap server.	admin	hu	A kapcsolatot az IMAP szerver eldobta.
+continue	admin	hu	Folytat
 cookie domain (default empty means use full domain name, for sitemgr eg. ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com)	admin	hu	Süti tartomány (az alapértelmezett üres jelentése a teljes domain, például a SiteManager esetében a ".domain.com" lehetővé teszi ugyanazon süti használatát az egw.domain.com és a www.domain.com számára is)
 cookie path (allows multiple egw sessions with different directories, has problemes with sitemgr!)	admin	hu	Süti útvonal (többszörös eGW munkamenetet külön könyvtárakba menti, problémákat okozhat a Sitemanager esetében)
+could not complete request. reason given: %s	admin	hu	Kérést nem lehet teljesíteni. Az ok: %s
+could not open secure connection to the imap server. %s : %s.	admin	hu	Nem létesíthető titkos csatorna az IMAP szerverhez. %s : %s
 country	admin	hu	Ország
 country selection	admin	hu	Ország kiválasztása
+cram-md5 or digest-md5 requires the auth_sasl package to be installed.	admin	hu	CRAM-MD5 vagy DIGEST-MD5 használatához az Auth_SASL csomagot telepíteni kell.
 create group	admin	hu	Csoport létrehozása
 created	admin	hu	Létrehozva
 created with id #%1	admin	hu	létrehozva a #%1 azonosítóval
@@ -116,6 +145,7 @@ creates a new field	admin	hu	Új mező létrehozása
 crontab only (recomended)	admin	hu	csak crontab (ajánlott)
 custom fields	admin	hu	Egyedi mezők
 cyrus imap server	admin	hu	Cyrus IMAP-kiszolgáló
+cyrus imap server administration	admin	hu	Cyrus IMAP-kiszolgáló adminisztrációja
 data	admin	hu	Adat
 day	admin	hu	Nap
 day of week<br>(0-6, 0=sun)	admin	hu	A hét napja<br />(0-6, 0=Vasárnap)
@@ -160,11 +190,16 @@ disable "auto completion" of the login form	admin	hu	Az automatikus kiegészít�
 disable wysiwyg-editor	admin	hu	WYSIWYG-szerkesztő kikapcsolása
 disabled (not recomended)	admin	hu	tiltott (nem ajánlott)
 display	admin	hu	Megjelenítés
+displaying html messages is disabled	admin	hu	HTML levelek megjelenítése tiltva
 do not delete the category and return back to the list	admin	hu	A kategória törlése NÉLKÜL vissza a listázáshoz
+do not validate certificate	admin	hu	ne ellenőrizze a tanúsítványt
 do you also want to delete all global subcategories ?	admin	hu	Biztosan törlésre kerüljön az összes általános alkategória?
+do you really want to delete this profile	admin	hu	Valóban törölni kívánja ezt a profilt
+do you really want to reset the filter for the profile listing	admin	hu	Valóban törölni szeretnéd a profillista szűrőt?
 do you want to delete all global subcategories ?	admin	hu	Biztosan törlésre kerüljön az összes alkategória?
 do you want to move all global subcategories one level down ?	admin	hu	Biztosan szeretné egy szinttel lejjebb vinni az összes globális alkategóriát?
 document root (default)	admin	hu	Dokumentum főkönyvtár (alapértelmezett)
+domainname	admin	hu	tartománynév
 down	admin	hu	Le
 edit account	admin	hu	Azonosító szerkesztése
 edit application	admin	hu	Alkalmazás módosítása
@@ -183,12 +218,20 @@ edit user account	admin	hu	Felhasználói azonosító szerkesztése
 egroupware directory	admin	hu	EGroupware könyvtár
 email account active	admin	hu	email azonosító aktív
 email address	admin	hu	email cím
+email settings	common	hu	Email beállítások
+emailadmin	admin	hu	EmailAdmin
+emailadmin: group assigned profile	common	hu	eMailAdmin: csoport a profilhoz hozzárendelve
+emailadmin: user assigned profile	common	hu	eMailAdmin: felhasználó a profilhoz hozzárendelve
 enable	admin	hu	engedélyez
+enable cyrus imap server administration	admin	hu	Cyrus IMAP-kiszolgáló adminisztrációjának engedélyezése
 enable debug-messages	admin	hu	Hibajelentő üzenetek engedélyezése
+enable sieve	admin	hu	Sieve engedélyezése
 enable the soap service	admin	hu	SOAP-szolgáltatás engedélyezése
 enable the xmlrpc service	admin	hu	XML-RPC-szolgáltatás engedélyezése
 enabled - hidden from navbar	admin	hu	Engedélyezve - Navbarban nem szerepel
 enabled - popup window	admin	hu	Engedélyezve - Felugró Ablak
+encrypted connection	admin	hu	titkosított kapcsolat
+encryption settings	admin	hu	Titkosítás beállításai
 enter a description for the category	admin	hu	a kategória leírásának megadása
 enter some random text for app_session <br>encryption (requires mcrypt)	admin	hu	Adjon meg néhány véletlenszerűen kiválasztott karaktert<br>az app_session titkosításhoz (mcrypt szükséges)
 enter the background color for the login page	admin	hu	A bejelentkezési oldal háttérszíne
@@ -204,19 +247,24 @@ enter the site password for peer servers	admin	hu	Adja meg a site jelszót a pee
 enter the site username for peer servers	admin	hu	Adja meg a site felhasználót a peer szerverhez
 enter the title for your site	admin	hu	A webhely megnevezése
 enter the title of your logo	admin	hu	A logó címe
-enter the url or filename (in api/templates/default/images) of your logo	admin	hu	Adja meg a céglogó URL-ét vagy a fájlnevét (api/templates/default/images könyvtárból)
 enter the url where your logo should link to	admin	hu	Adja meg az internetes hivatkozást, hogy hová mutasson a céglogó
 enter your default ftp server	admin	hu	Az alapértelmezett FTP-kiszolgáló
 enter your default mail domain ( from: user@domain )	admin	hu	Adja meg az alapértelmezett email tartományt (felhasználó@tartomány alapján)
+enter your default mail domain (from: user@domain)	admin	hu	Adja meg az alapértelmezett levelezési tartományt (a felhasználó@tartomány-ból)
 enter your http proxy server	admin	hu	A HTTP-proxy kiszolgáló
 enter your http proxy server port	admin	hu	A HTTP-proxy kiszolgáló portszáma
 enter your smtp server hostname or ip address	admin	hu	Az SMTP-kiszolgáló hosztneve vagy IP-címe
 enter your smtp server port	admin	hu	Az SMTP-kiszolgáló portszáma
+entry saved	admin	hu	Bejegyzés elmentve
 error canceling timer, maybe there's none set !!!	admin	hu	Timer leállítási hiba, talán nincs még beállítva!!
+error connecting to imap server. %s : %s.	admin	hu	Hiba történt az IMAP szerverhez csatlakozás közben. %s : %s
+error connecting to imap server: [%s] %s.	admin	hu	Hiba történt az IMAP szerverhez csatlakozás közben. [%s ]: %s
 error saving account!	admin	hu	Felhasználói hozzáférés mentése sikertelen!
+error saving the entry!!!	admin	hu	Bejegyzés mentése közben hiba történt!!!
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	hu	Timer beállítási hiba, rossz szintaxis vagy egy példány már fut!!
 error! no appname found	admin	hu	Hiba!! Alkalmazásnév nem található.
 error: %1 not found or other error !!!	admin	hu	Hiba: %1 nem található vagy egyéb hiba !!!
+event details follow	admin	hu	Esemény jellemzőinek követése
 expires	admin	hu	Lejár
 explanation of ldapman	admin	hu	Ez a modul eddig a következőkkel lett tesztelve: Postfix, Ldap, Courier-IMAP és a szükséges sémák: CORE és QMAIL (OID7914). További részleteket találhat a használatról és beállításról a README.ldapman fájlban az ADMIN dokumentum mappájában.
 failed to change password.	admin	hu	Sikertelen jelszó változtatás.
@@ -224,15 +272,19 @@ fallback (after each pageview)	admin	hu	visszatérés (minden oldalnézet után)
 field '%1' already exists !!!	admin	hu	'%1' mező már létezik!
 file space	admin	hu	Fájl space
 file space must be an integer	admin	hu	Fájl space egész értékű kell legyen
+filtered by account	admin	hu	Fiók szerint szűrve
+filtered by group	admin	hu	Csoport szerint szűrve
 for the times above	admin	hu	fent látható időpontokban
 for the times below (empty values count as '*', all empty = every minute)	admin	hu	lent látható időpontokban (az üres bejegyzés '*'-ként szerepel, ha minden üres, akkor az egyenértékű a 'minden percben'-el)
 force selectbox	admin	hu	Kényszerített selectbox
 forward also to	admin	hu	továbbítsd ide is
+forward email's to	admin	hu	email továbbítása ide
 forward emails to	admin	hu	email továbbítása ide
-forward only	admin	hu	csak továbbküldés
+forward only	admin	hu	továbbítás csak ide
 full name	admin	hu	Teljes Neve
 general	admin	hu	Általános
 global categories	common	hu	Globális kategóriák
+global options	admin	hu	Globális opciók
 group ?	admin	hu	csoport?
 group has been added	common	hu	A csoport hozzáadása megtörtént
 group has been deleted	common	hu	A csoport törlése megtörtént
@@ -242,6 +294,7 @@ group manager	admin	hu	Csoportmenedzser
 group name	admin	hu	Csoport neve
 hide php information	admin	hu	php információ elrejtése
 home directory	admin	hu	Home könyvtár
+home screen message	admin	hu	Főképernyőn megjelenő szöveg
 host information	admin	hu	Host információ
 hour<br>(0-23)	admin	hu	Óra<br />(0-23)
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	hu	A hozzáférési listában hány napig legyenek megőrizve az adatok, mielőtt törlődnének (alapértelmezett 90 nap)?
@@ -251,7 +304,21 @@ icon	admin	hu	Ikon
 idle	admin	hu	inaktív
 if no acl records for user or any group the user is a member of	admin	hu	Ha a felhasználónak vagy összes csoportjának nincs ACL meghatározva
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	hu	Ha LDAP-ot használ, kívánja kezelni a Saját könyvtárat és a bejelentkezési héj tulajdonságait?
+if using ssl or tls, you must have the php openssl extension loaded.	admin	hu	SSL vagy TLS használatához a PHP openssl kiterjesztését telepíteni kell.
+imap admin password	admin	hu	IMAP adminisztrátor jelszava
+imap admin user	admin	hu	IMAP adminisztrátor felhasználóneve
+imap c-client version < 2001	admin	hu	IMAP C-Client verzió < 2001
+imap server	admin	hu	IMAP szerver
+imap server closed the connection.	admin	hu	Az IMAP szerver lezárta a kapcsolatot.
+imap server closed the connection. server responded: %s	admin	hu	Az IMAP szerver lezárta a kapcsolatot: %s
+imap server hostname or ip address	admin	hu	IMAP szerver hosztneve vagy IP címe
+imap server logintyp	admin	hu	IMAP szerver bejelentkezési típusa
+imap server name	admin	hu	IMAP szerver neve
+imap server port	admin	hu	IMAP szerver portja
+imap/pop3 server name	admin	hu	IMAP/POP3 szerver neve
+importance	admin	hu	Fontosság
 in mbyte	admin	hu	MBájtban
+inactive	admin	hu	inaktív
 inbound	admin	hu	beérkező
 initial	admin	hu	Kezdeti
 install crontab	admin	hu	Crontab telepítése
@@ -268,6 +335,7 @@ last login	admin	hu	utolsó bejelentkezés
 last login from	admin	hu	utolsó bejelentkezés címe
 last time read	admin	hu	Utolsó olvasás időpontja
 ldap accounts context	admin	hu	LDAP fiók környezet
+ldap basedn	admin	hu	LDAP basedn
 ldap default homedirectory prefix (e.g. /home for /home/username)	admin	hu	LDAP Alapértelmezett Saját könyvtár előtagja (pl. /home a /home/felhasználó formához)
 ldap default shell (e.g. /bin/bash)	admin	hu	LDAP Alapértelmezett héj (pl. /bin/bash)
 ldap encryption type	admin	hu	LDAP titkosítás típusa
@@ -275,6 +343,12 @@ ldap groups context	admin	hu	LDAP csoport környezet
 ldap host	admin	hu	LDAP hoszt
 ldap root password	admin	hu	LDAP root jelszava
 ldap rootdn	admin	hu	LDAP rootdn
+ldap server	admin	hu	LDAP szerver
+ldap server accounts dn	admin	hu	LDAP szerver accounts DN
+ldap server admin dn	admin	hu	LDAP szerver admin DN
+ldap server admin password	admin	hu	LDAP szerver adminisztrátorának jelszava
+ldap server hostname or ip address	admin	hu	LDAP szerver hosztneve vagy IP címe
+ldap settings	admin	hu	LDAP beállítások
 leave empty for no quota	admin	hu	hagyja üresen a kvóta figyelmen kívül hagyásához
 leave the category untouched and return back to the list	admin	hu	hagyja érintetlenül a kategóriát és térjen vissza a listához
 leave the group untouched and return back to the list	admin	hu	Hagyja érintetlenül a csoportot és térjen vissza a listához
@@ -290,9 +364,9 @@ login screen	admin	hu	Bejelentkezési képernyő
 login shell	admin	hu	Bejelentkezési héj
 login time	admin	hu	Belépés ideje
 loginid	admin	hu	LoginID
-mail settings	admin	hu	eMail beállítások
+mail settings	admin	hu	Levelezési beállítások
 main email-address	admin	hu	Fő emailcím
-home screen message	admin	hu	Főképernyőn megjelenő szöveg
+manage stationery templates	admin	hu	Irodaszer minták kezelése
 manager	admin	hu	Manager
 maximum account id (e.g. 65535 or 1000000)	admin	hu	Legnagyobb felhasználói azonosító (pl. 65535 vagy 1000000)
 maximum entries in click path history	admin	hu	Útvonal látogatottság bejegyzések maximális száma
@@ -306,25 +380,40 @@ modified	admin	hu	Módosított
 month	admin	hu	Hónap
 more secure	admin	hu	biztonságosabb
 name must not be empty !!!	admin	hu	Név nem lehet üres!!!
+name of organisation	admin	hu	Szervezet neve
 new group name	admin	hu	Új csoport neve
 new name	admin	hu	új név
 new password [ leave blank for no change ]	admin	hu	Új jelszó [ üresen hagyva nem lesz változás ]
 next run	admin	hu	Következő futtatás
 no algorithms available	admin	hu	nincsenek elérhető algoritmusok
-no alternate email address	admin	hu	nincs alternatív emailcím
+no alternate email address	admin	hu	nincs alternatív email cím
+no encryption	admin	hu	titkosítás  nélkül
+no forwarding email address	admin	hu	nincs továbbküldési email cím
 no jobs in the database !!!	admin	hu	Nem található feladat az adatbázisban!!!
 no login history exists for this user	admin	hu	Ehhez a felhasználóhoz nem található belépési történet
 no matches found	admin	hu	Nincs egyezés
+no message returned.	admin	hu	Nincs visszaadott üzenet.
 no modes available	admin	hu	nincs elérhetó mód
 no permission to add groups	admin	hu	nincs jogosultság csoportok hozzáadására
 no permission to add users	admin	hu	nincs jogosultság felhasználók hozzáadására
 no permission to create groups	admin	hu	nincs jogosultság csoportok létrehozására
+no plain text part found	admin	hu	nem található egyszerű szöveges tartalom
+no supported imap authentication method could be found.	admin	hu	Nem található támogatott IMAP hitelesítés.
 note: ssl available only if php is compiled with curl support	admin	hu	Megjegyzés: SSL csak akkor érhető el, ha a PHP curl támogatással lett lefordítva
 number of row for a multiline inputfield or line of a multi-select-box	admin	hu	sorok száma a többsoros beviteli mező, vagy egy kiválasztó lista esetén (ilyen 'magas' lesz a doboz/szerkesztő mező)
+oauth authentiction	admin	hu	OAuth hitelesítés
+offer to installing egroupware as mail-handler	admin	hu	Ajánlat az EGroupware telepítésére levélkezelőként
+one day	admin	hu	Egy nap
+one hour	admin	hu	Egy óra
 one month	admin	hu	egy hónap
 one week	admin	hu	egy hét
 order	admin	hu	Rendezés
+organisation	admin	hu	Szervezet
+other security configuration	admin	hu	Egyéb biztonsági konfiguráció
 outbound	admin	hu	kimenő
+own categories	admin	hu	Saját kategóriák
+own install id	admin	hu	Saját telepítési azonosító
+own install id:	admin	hu	Saját telepítési azonosító:
 passthrough	admin	hu	átmenő
 password for smtp-authentication	admin	hu	Jelszó az SMTP-azonosításhoz
 path information	admin	hu	Útvonal-információ
@@ -342,9 +431,21 @@ please enter a name	admin	hu	Kérem adjon meg egy nevet!
 please enter a name for that server !	admin	hu	Kérem adjon meg egy szerver nevet!
 please run setup to become current	admin	hu	Kérem futtassa a setup-ot hogy a változás érvényre jusson.
 please select	admin	hu	Kérem válasszon
+plesk can't rename users --> request ignored	admin	hu	A Plesk nem tudja átnevezni a felhasználókat -> kérés figyelmen kívül hagyva
+plesk imap server (courier)	admin	hu	Plesk IMAP Szerver (Courier)
+plesk mail script '%1' not found !!!	admin	hu	Plesk levél szkript '%1' nem található!!!
+plesk requires passwords to have at least 5 characters and not contain the account-name --> password not set!!!	admin	hu	Plesk megköveteli, hogy a jelszó legalább 5 karakter legyen és ne tartalmazza a felhasználói nevet --> jelszó beállítása NEM történt meg!!!
+plesk smtp-server (qmail)	admin	hu	Plesk SMTP-Szerver (Qmail)
+pop3 server hostname or ip address	admin	hu	POP3 szerver hosztneve vagy IP címe
+pop3 server port	admin	hu	POP3 szerver portja
+port	admin	hu	portcím
 postfix with ldap	admin	hu	Postfix LDAP-vel
 preferences	admin	hu	Tulajdonságok
 primary group	admin	hu	elsődleges csoport
+profile access rights	admin	hu	profil elérési jogosultságok
+profile is active	admin	hu	a profil inaktív
+profile list	admin	hu	Profil lista
+profile name	admin	hu	Profilnév
 qmaildotmode	admin	hu	qmaildotmode
 quota settings	admin	hu	kvóta beállításai
 quota size in mbyte	admin	hu	kvóta Mbájtokban
@@ -354,7 +455,7 @@ register application hooks	admin	hu	Regisztrálja az alkalmazás visszacsatolás
 remove	admin	hu	eltávolítás
 remove all users from this group	admin	hu	Csoport összes felhasználójának törlése
 remove all users from this group ?	admin	hu	Összes felhasználó eltávolítása ebből a csoportból?
-return to view account	admin	hu	Visszatérés a hozzáférések megjelenítéséhez
+reset filter	admin	hu	szűrö törlése
 rights	admin	hu	Hozzáférés
 route all mails to	admin	hu	Összes email irányítása ide:
 rows	admin	hu	Sorok
@@ -371,14 +472,19 @@ security	admin	hu	Biztonság
 select group managers	admin	hu	Csoport menedzser kiválasztása
 select permissions this group will have	admin	hu	Válassza ki milyen jogosultságokkal rendelkezzen a csoport
 select the parent category. if this is a main category select no category	admin	hu	Szülő kategória kiválasztása. Ha ez a főkategória, akkor nincs kategória kiválasztva
+select type of imap server	admin	hu	IMAP szerver típusának kiválasztása
+select type of imap/pop3 server	admin	hu	Válassza ki az IMAP/POP3 szerver típusát
+select type of smtp server	admin	hu	Válassza ki az SMTP szerver típusát
 select users for inclusion	admin	hu	Felhasználók kiválasztása a  befoglaláshoz
 select where you want to store/retrieve filesystem information	admin	hu	Válassza ki, hol kívánja tárolni a fájlrendszer információkat
 select where you want to store/retrieve user accounts	admin	hu	Válassza ki, hol kívánja tárolni a felhasználói hozzáféréseket
 select which location this app should appear on the navbar, lowest (left) to highest (right)	admin	hu	Válassza ki, hogy ez az alkalmazás hol jelenjen meg a tálcán, legkisebbtől (bal oldalon) a legnagyobbig (jobb oldal)
 selectbox	admin	hu	Kiválasztó doboz
+send using this email-address	admin	hu	Küldés erről az e-mail címről
 server %1 has been updated	admin	hu	%1 szerver frissítve
 server list	admin	hu	Szerver lista
 server password	admin	hu	Szerver jelszó
+server settings	admin	hu	Szerver beállítások
 server type(mode)	admin	hu	Szerver típus (mód)
 server url	admin	hu	Szerver URL
 server username	admin	hu	Szerver felhasználónév
@@ -390,24 +496,35 @@ show current action	admin	hu	Jelenlegi művelet megjelenítése
 show error log	admin	hu	Hibanapló megjelenítése
 show phpinfo()	admin	hu	phpinfo() megjelenítése
 show session ip address	admin	hu	Session IP cím megjelenítése
+sieve server hostname or ip address	admin	hu	Sieve szerver hosztneve vagy IP címe
+sieve server port	admin	hu	Sieve szerver port
+sieve settings	admin	hu	SIEVE beállítások
 site	admin	hu	Oldal
+smtp authentication	admin	hu	SMTP azonosítás
+smtp options	admin	hu	SMTP opciók
+smtp server name	admin	hu	SMTP szerver neve
+smtp settings	admin	hu	SMTP beállítások
+smtp-server hostname or ip address	admin	hu	SMTP szerver hosztneve vagy IP címe
+smtp-server port	admin	hu	SMTP szerver portja
 soap	admin	hu	SOAP
 sorry, that group name has already been taken.	admin	hu	Már létezik csoport ezen a néven
 sorry, the above users are still a member of the group %1	admin	hu	A fenti felhasználók már tagjai az alábbi csoportnak: %1
 sorry, the follow users are still a member of the group %1	admin	hu	A következő felhasználók már a(z) %1 csoport tagjai
 sort the entries	admin	hu	elemek rendezése
 ssl	admin	hu	ssl
-standard	admin	hu	szabványos
-standard imap server	admin	hu	szabványos IMAP-kiszolgáló
-standard pop3 server	admin	hu	szabványos POP3-kiszolgáló
-standard smtp-server	admin	hu	szabványos SMTP-kiszolgáló
+standard	admin	hu	Szabványos
+standard imap server	admin	hu	Szabványos IMAP-kiszolgáló
+standard pop3 server	admin	hu	Szabványos POP3-kiszolgáló
+standard smtp-server	admin	hu	Szabványos SMTP-kiszolgáló
 start	admin	hu	Indít
 start testjob!	admin	hu	TesztFeladat indítása!
+stationery	admin	hu	Irodaszer
 submit changes	admin	hu	Változások elküldése
 submit the search string	admin	hu	Keresési szöveg elküldése
 subtype	admin	hu	Altípus
 switch it off, if users are randomly thrown out	admin	hu	kapcsolja ki, a felhasználókat véletlenszerűen kidobja a rendszer
 template selection	admin	hu	Sablon választás
+templates	admin	hu	Sablonok
 text entry	admin	hu	Szöveges bejegyzés
 that application name already exists.	admin	hu	Ez az alkalmazás név már létezik.
 that application order must be a number.	admin	hu	Az alkalmazás sorrend szám kell legyen.
@@ -417,8 +534,10 @@ that server name has been used already !	admin	hu	Ez a szerver név már haszná
 the api is current	admin	hu	Az API nem igényel frissítést
 the api requires an upgrade	admin	hu	Az API frissítést igényel
 the groups must include the primary group	admin	hu	A csoportoknak az elsődleges csoportot tartalmaznia kell
+the imap server does not appear to support the authentication method selected. please contact your system administrator.	admin	hu	Az IMAP szerver úgy tűnik nem támogatja a kiválasztott hitelesítést. Lépjen kapcsolatba az adminisztrátorral.
 the login and password can not be the same	admin	hu	A felhasználónév és a jelszó nem egyezhet meg
 the loginid can not be more then 8 characters	admin	hu	A bejelentkezési név nem lehet több, mint 8 karakter
+the mimeparser can not parse this message.	admin	hu	A MIME feldolgozó nem tudta feldolgozni ezt az üzenetet.
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	admin	hu	a nevet a rendszer használja (<=20 karakter), megváltozása esetén a létező adatok elérhetetlenekké válnak
 the testjob sends you a mail everytime it is called.	admin	hu	A TesztFeladat levelet küld önnek, minden egyes lefutása alkalmával.
 the text displayed to the user	admin	hu	a szöveg megjelenítve a felhasználónak
@@ -429,9 +548,11 @@ they must be removed before you can continue	admin	hu	El kell távolítani őket
 this application is current	admin	hu	Az alkalmazás nem igényel frissítést
 this application requires an upgrade	admin	hu	Az alkalmazás frissítést igényel
 this category is currently being used by applications as a parent category	admin	hu	Ez a kategória jelenleg valamelyik/összes alkalmazás használatában van mint szülő kategória.
+this php has no imap support compiled in!!	admin	hu	A használt PHP verzió nem tartalmaz IMAP támogatást! (telepíteni kell)
 timeout for application session data in seconds (default 86400 = 1 day)	admin	hu	Alkalmazás session-ök időtúllépése másodpercben (alapértelmezett 86400 = 1 nap)
 timeout for sessions in seconds (default 14400 = 4 hours)	admin	hu	Session-ök időtúllépése másodpercben (alapértelmezett = 4 óra)
 times	admin	hu	Időigény
+to use a tls connection, you must be running a version of php 5.1.0 or higher.	admin	hu	TLS kapcsolat használatához legalább PHP 5.1.0-val kell rendelkeznie.
 top	admin	hu	Felül
 total of %1 id's changed.	admin	hu	Összesen %1 azonosító megváltoztatva.
 total records	admin	hu	Összes rekord
@@ -442,17 +563,37 @@ two weeks	admin	hu	két hét
 type '%1' already exists !!!	admin	hu	'%1' típus már létezik!!!
 type of customfield	admin	hu	Egyedi mező típusa
 under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	hu	Windows alatt a feladatütemezőt %1kézzel%2 kell telepíteni, vagy használni a Fallback módot. A Fallback azt jelenti, hogy minden egyes oldal letöltésnél/megjelenítésnél történik a feladatok végrehajtása, ha szükséges!!
+unexpected response from server to authenticate command.	admin	hu	Váratlan válasz a szervertől az AUTHENTICATE parancsra.
+unexpected response from server to digest-md5 response.	admin	hu	Váratlan válasz a szervertől a Digest-MD5 parancsra.
+unexpected response from server to login command.	admin	hu	Váratlan válasz a szervertől a LOGIN parancsra.
 unknown account: %1 !!!	admin	hu	Ismeretlen felhasználói hozzáférés: %1!!!
+unknown imap response from the server. server responded: %s	admin	hu	Váratlan válasz a szervertől: %s
+unsupported action '%1' !!!	admin	hu	Nem támogatott művelet '%1' !!!
 up	admin	hu	Fel
+update current email address:	admin	hu	Jelenlegi email cím frissítése:
 updated	admin	hu	frissítve
 use cookies to pass sessionid	admin	hu	Használjon sütiket a session azonosító átadásához
+use default	admin	hu	Használja az alapértelmezettet
+use ldap defaults	admin	hu	használja az LDAP alapbeállításokat
+use predefined username and password defined below	admin	hu	Használd a lent megadott felhasználónevet és jelszót
 use pure html compliant code (not fully working yet)	admin	hu	Használjon tiszta HTML kódot (nem teljesen működik egyelőre)
+use smtp auth	admin	hu	SMTP hitelesítés használata
 use theme	admin	hu	Téma használata
+use tls authentication	admin	hu	TLS hitelesítés használata
+use tls encryption	admin	hu	TLS kódolás használata
 user accounts	admin	hu	Felhasználói hozzáférések
+user can edit forwarding address	admin	hu	Felhasználó szerkesztheti a továbbításkor a címeket
 user data	common	hu	Felhasználó adatai
 user for smtp-authentication (leave it empty if no auth required)	admin	hu	Felhasználó az SMTP hitelesítéshez (hagyja üresen, ha nem szükséges hitelesíteni)
 user groups	admin	hu	Felhasználói csoportok
 userdata	admin	hu	felhasználó adatai
+username (standard)	admin	hu	felhasználó név (standard)
+username/password defined by admin	admin	hu	Az adminisztrátok által meghatározott felhasználó és jelszó
+username@domainname (virtual mail manager)	admin	hu	felhasználónév@tartománynév (Virtual MAIL ManaGeR)
+users can define their own emailaccounts	admin	hu	A felhasználók saját maguk állíthatják be az email postafiókjaikat
+users can define their own identities	admin	hu	A felhasználók beállíthatják a saját azonosítójukat
+users can define their own signatures	admin	hu	A felhasználók beállíthatják a saját aláírásukat
+users can utilize these stationery templates	admin	hu	A felhasználók alkalmazhatják az irodaszer mintákat
 users choice	admin	hu	Felhasználói választás
 view access log	admin	hu	Elérési napló megtekintése
 view account	admin	hu	Azonosító megtekintése
@@ -461,6 +602,7 @@ view error log	admin	hu	Hibanapló megtekintése
 view sessions	admin	hu	Kapcsolatok megtekintése
 view this user	admin	hu	felhasználó megtekintése
 view user account	admin	hu	Felhasználói hozzáférés megjelenítése
+virtual mail manager	admin	hu	Virtuális MAIL ManaGeR
 who would you like to transfer all records owned by the deleted user to?	admin	hu	Melyik felhasználónak másoljam át az Összes bejegyzést, ami a törölt felhasználóhoz tartozott?
 would you like egroupware to cache the egw info array ?	admin	hu	Akarja, hogy az eGW gyorsítótárat használjon a belső info adataihoz?
 would you like egroupware to check for a new version<br>when admins login ?	admin	hu	Akarja, hogy az eGW ellenőrizze az új verzió elérhetőségét,<br>amikor az adminisztrátor belép?
@@ -470,6 +612,7 @@ would you like to show each application's upgrade status ?	admin	hu	Akarja, hogy
 wrong admin-account or -password !!!	admin	hu	Érvénytelen adminisztrátor felhasználó vagy jelszó!!!
 xml-rpc	admin	hu	XML-RPC
 you have entered an invalid expiration date	admin	hu	Érvénytelen lejárati időt adott meg
+you have received a new message on the	admin	hu	Új üzenet érkezett a
 you have to enter a name, to create a new field!!!	admin	hu	Meg kell adnia egy nevet, hogy az új mezőt létre lehessen hozni!!!
 you have to enter a name, to create a new type!	admin	hu	Meg kell adnia egy nevet, hogy az új típust létre lehessen hozni!
 you must add at least 1 permission or group to this account	admin	hu	Legalább egy engedélyt vagy csoportot hozzá kell adni a felhasználói hozzáféréshez
@@ -482,162 +625,5 @@ you must enter an application title.	admin	hu	Meg kell adnia egy alkalmazás cí
 you must select a file type	admin	hu	Kötelező fájltípust választani
 you must select at least one group member.	admin	hu	Legalább egy csoport tagot ki kell jelölnie.
 you will need to remove the subcategories before you can delete this category	admin	hu	Mielőtt ezt a kategóriát törölné, el kell távolítania az összes alkategóriáját!
-your session could not be verified.	admin	hu	Az ön munkamenete nem ellenőrizhető.
-(no subject)	admin	hu	(nincs tárgy)
-account '%1' not found !!!	admin	hu	'%1' felhasználói azonosító nem található!
-active templates	admin	hu	Aktív vázlatok
-add new email address:	admin	hu	Új email cím hozzáadása:
-add profile	admin	hu	Profil hozzáadása
-admin dn	admin	hu	Admin dn
-admin password	admin	hu	adminisztrátor jelszava
-admin username	admin	hu	adminisztrátor neve
-advanced options	admin	hu	haladó beállítások
-alternate email address	admin	hu	alternatív emailcím
-any application	admin	hu	Bármelyik modul
-any group	admin	hu	Bármelyik csoport
-any user	admin	hu	bármely felhasználó
-back to admin/grouplist	admin	hu	Vissza az csoportok adminisztráláshoz
-back to admin/userlist	admin	hu	Vissza a felhasználók adminisztráláshoz
-bad login name or password.	admin	hu	Hibás belépési név vagy jelszó.
-bad or malformed request. server responded: %s	admin	hu	Hibás kérés. Szerver válasza: %s
-bad request: %s	admin	hu	Hibás kérés: %s
-can be used by application	admin	hu	Ez a modul használhatja
-can be used by group	admin	hu	Ez a csoport használhatja
-can be used by user	admin	hu	a felhasználó alkalmazhatja
-connection dropped by imap server.	admin	hu	A kapcsolatot az IMAP szerver eldobta.
-continue	admin	hu	Folytat
-could not complete request. reason given: %s	admin	hu	Kérést nem lehet teljesíteni. Az ok: %s
-could not open secure connection to the imap server. %s : %s.	admin	hu	Nem létesíthető titkos csatorna az IMAP szerverhez. %s : %s
-cram-md5 or digest-md5 requires the auth_sasl package to be installed.	admin	hu	CRAM-MD5 vagy DIGEST-MD5 használatához az Auth_SASL csomagot telepíteni kell.
-cyrus imap server	admin	hu	Cyrus IMAP-kiszolgáló
-cyrus imap server administration	admin	hu	Cyrus IMAP-kiszolgáló adminisztrációja
-default	admin	hu	Alapértelmezett
-deliver extern	admin	hu	külső kézbesítés
-displaying html messages is disabled	admin	hu	HTML levelek megjelenítése tiltva
-do not validate certificate	admin	hu	ne ellenőrizze a tanúsítványt
-do you really want to delete this profile	admin	hu	Valóban törölni kívánja ezt a profilt
-do you really want to reset the filter for the profile listing	admin	hu	Valóban törölni szeretnéd a profillista szűrőt?
-domainname	admin	hu	tartománynév
-edit email settings	admin	hu	email beállítások szerkesztése
-email account active	admin	hu	email azonosító aktív
-email address	admin	hu	email cím
-email settings	common	hu	Email beállítások
-emailadmin	admin	hu	EmailAdmin
-emailadmin: group assigned profile	common	hu	eMailAdmin: csoport a profilhoz hozzárendelve
-emailadmin: user assigned profile	common	hu	eMailAdmin: felhasználó a profilhoz hozzárendelve
-enable cyrus imap server administration	admin	hu	Cyrus IMAP-kiszolgáló adminisztrációjának engedélyezése
-enable sieve	admin	hu	Sieve engedélyezése
-encrypted connection	admin	hu	titkosított kapcsolat
-encryption settings	admin	hu	Titkosítás beállításai
-enter your default mail domain (from: user@domain)	admin	hu	Adja meg az alapértelmezett levelezési tartományt (a felhasználó@tartomány-ból)
-entry saved	admin	hu	Bejegyzés elmentve
-error connecting to imap server. %s : %s.	admin	hu	Hiba történt az IMAP szerverhez csatlakozás közben. %s : %s
-error connecting to imap server: [%s] %s.	admin	hu	Hiba történt az IMAP szerverhez csatlakozás közben. [%s ]: %s
-error saving account!	admin	hu	Felhasználói hozzáférés mentése sikertelen!
-error saving the entry!!!	admin	hu	Bejegyzés mentése közben hiba történt!!!
-event details follow	admin	hu	Esemény jellemzőinek követése
-filtered by account	admin	hu	Fiók szerint szűrve
-filtered by group	admin	hu	Csoport szerint szűrve
-forward also to	admin	hu	továbbítsd ide is
-forward email's to	admin	hu	email továbbítása ide
-forward only	admin	hu	továbbítás csak ide
-global options	admin	hu	Globális opciók
-if using ssl or tls, you must have the php openssl extension loaded.	admin	hu	SSL vagy TLS használatához a PHP openssl kiterjesztését telepíteni kell.
-imap admin password	admin	hu	IMAP adminisztrátor jelszava
-imap admin user	admin	hu	IMAP adminisztrátor felhasználóneve
-imap c-client version < 2001	admin	hu	IMAP C-Client verzió < 2001
-imap server	admin	hu	IMAP szerver
-imap server closed the connection.	admin	hu	Az IMAP szerver lezárta a kapcsolatot.
-imap server closed the connection. server responded: %s	admin	hu	Az IMAP szerver lezárta a kapcsolatot: %s
-imap server hostname or ip address	admin	hu	IMAP szerver hosztneve vagy IP címe
-imap server logintyp	admin	hu	IMAP szerver bejelentkezési típusa
-imap server name	admin	hu	IMAP szerver neve
-imap server port	admin	hu	IMAP szerver portja
-imap/pop3 server name	admin	hu	IMAP/POP3 szerver neve
-importance	admin	hu	Fontosság
-in mbyte	admin	hu	MBájtban
-inactive	admin	hu	inaktív
-ldap basedn	admin	hu	LDAP basedn
-ldap server	admin	hu	LDAP szerver
-ldap server accounts dn	admin	hu	LDAP szerver accounts DN
-ldap server admin dn	admin	hu	LDAP szerver admin DN
-ldap server admin password	admin	hu	LDAP szerver adminisztrátorának jelszava
-ldap server hostname or ip address	admin	hu	LDAP szerver hosztneve vagy IP címe
-ldap settings	admin	hu	LDAP beállítások
-leave empty for no quota	admin	hu	hagyja üresen a kvóta figyelmen kívül hagyásához
-mail settings	admin	hu	Levelezési beállítások
-manage stationery templates	admin	hu	Irodaszer minták kezelése
-name of organisation	admin	hu	Szervezet neve
-no alternate email address	admin	hu	nincs alternatív email cím
-no encryption	admin	hu	titkosítás  nélkül
-no forwarding email address	admin	hu	nincs továbbküldési email cím
-no message returned.	admin	hu	Nincs visszaadott üzenet.
-no plain text part found	admin	hu	nem található egyszerű szöveges tartalom
-no supported imap authentication method could be found.	admin	hu	Nem található támogatott IMAP hitelesítés.
-order	admin	hu	Rendezés
-organisation	admin	hu	Szervezet
-plesk can't rename users --> request ignored	admin	hu	A Plesk nem tudja átnevezni a felhasználókat -> kérés figyelmen kívül hagyva
-plesk imap server (courier)	admin	hu	Plesk IMAP Szerver (Courier)
-plesk mail script '%1' not found !!!	admin	hu	Plesk levél szkript '%1' nem található!!!
-plesk requires passwords to have at least 5 characters and not contain the account-name --> password not set!!!	admin	hu	Plesk megköveteli, hogy a jelszó legalább 5 karakter legyen és ne tartalmazza a felhasználói nevet --> jelszó beállítása NEM történt meg!!!
-plesk smtp-server (qmail)	admin	hu	Plesk SMTP-Szerver (Qmail)
-pop3 server hostname or ip address	admin	hu	POP3 szerver hosztneve vagy IP címe
-pop3 server port	admin	hu	POP3 szerver portja
-port	admin	hu	portcím
-postfix with ldap	admin	hu	Postfix LDAP-vel
-profile access rights	admin	hu	profil elérési jogosultságok
-profile is active	admin	hu	a profil inaktív
-profile list	admin	hu	Profil lista
-profile name	admin	hu	Profilnév
-qmaildotmode	admin	hu	qmaildotmode
-quota settings	admin	hu	kvóta beállításai
-quota size in mbyte	admin	hu	kvóta Mbájtokban
-remove	admin	hu	eltávolítás
-reset filter	admin	hu	szűrö törlése
-select type of imap server	admin	hu	IMAP szerver típusának kiválasztása
-select type of imap/pop3 server	admin	hu	Válassza ki az IMAP/POP3 szerver típusát
-select type of smtp server	admin	hu	Válassza ki az SMTP szerver típusát
-send using this email-address	admin	hu	Küldés erről az e-mail címről
-server settings	admin	hu	Szerver beállítások
-sieve server hostname or ip address	admin	hu	Sieve szerver hosztneve vagy IP címe
-sieve server port	admin	hu	Sieve szerver port
-sieve settings	admin	hu	SIEVE beállítások
-smtp authentication	admin	hu	SMTP azonosítás
-smtp options	admin	hu	SMTP opciók
-smtp server name	admin	hu	SMTP szerver neve
-smtp settings	admin	hu	SMTP beállítások
-smtp-server hostname or ip address	admin	hu	SMTP szerver hosztneve vagy IP címe
-smtp-server port	admin	hu	SMTP szerver portja
-standard	admin	hu	Szabványos
-standard imap server	admin	hu	Szabványos IMAP-kiszolgáló
-standard pop3 server	admin	hu	Szabványos POP3-kiszolgáló
-standard smtp-server	admin	hu	Szabványos SMTP-kiszolgáló
-stationery	admin	hu	Irodaszer
-templates	admin	hu	Sablonok
-the imap server does not appear to support the authentication method selected. please contact your system administrator.	admin	hu	Az IMAP szerver úgy tűnik nem támogatja a kiválasztott hitelesítést. Lépjen kapcsolatba az adminisztrátorral.
-the mimeparser can not parse this message.	admin	hu	A MIME feldolgozó nem tudta feldolgozni ezt az üzenetet.
-this php has no imap support compiled in!!	admin	hu	A használt PHP verzió nem tartalmaz IMAP támogatást! (telepíteni kell)
-to use a tls connection, you must be running a version of php 5.1.0 or higher.	admin	hu	TLS kapcsolat használatához legalább PHP 5.1.0-val kell rendelkeznie.
-unexpected response from server to authenticate command.	admin	hu	Váratlan válasz a szervertől az AUTHENTICATE parancsra.
-unexpected response from server to digest-md5 response.	admin	hu	Váratlan válasz a szervertől a Digest-MD5 parancsra.
-unexpected response from server to login command.	admin	hu	Váratlan válasz a szervertől a LOGIN parancsra.
-unknown imap response from the server. server responded: %s	admin	hu	Váratlan válasz a szervertől: %s
-unsupported action '%1' !!!	admin	hu	Nem támogatott művelet '%1' !!!
-update current email address:	admin	hu	Jelenlegi email cím frissítése:
-use default	admin	hu	Használja az alapértelmezettet
-use ldap defaults	admin	hu	használja az LDAP alapbeállításokat
-use predefined username and password defined below	admin	hu	Használd a lent megadott felhasználónevet és jelszót
-use smtp auth	admin	hu	SMTP hitelesítés használata
-use tls authentication	admin	hu	TLS hitelesítés használata
-use tls encryption	admin	hu	TLS kódolás használata
-user can edit forwarding address	admin	hu	Felhasználó szerkesztheti a továbbításkor a címeket
-username (standard)	admin	hu	felhasználó név (standard)
-username/password defined by admin	admin	hu	Az adminisztrátok által meghatározott felhasználó és jelszó
-username@domainname (virtual mail manager)	admin	hu	felhasználónév@tartománynév (Virtual MAIL ManaGeR)
-users can define their own emailaccounts	admin	hu	A felhasználók saját maguk állíthatják be az email postafiókjaikat
-users can define their own identities	admin	hu	A felhasználók beállíthatják a saját azonosítójukat
-users can define their own signatures	admin	hu	A felhasználók beállíthatják a saját aláírásukat
-users can utilize these stationery templates	admin	hu	A felhasználók alkalmazhatják az irodaszer mintákat
-virtual mail manager	admin	hu	Virtuális MAIL ManaGeR
-you have received a new message on the	admin	hu	Új üzenet érkezett a
 your name	admin	hu	Az ön neve
+your session could not be verified.	admin	hu	Az ön munkamenete nem ellenőrizhető.

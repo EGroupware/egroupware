@@ -218,6 +218,12 @@ app.classes.mail = AppJS.extend(
 				let aom = egw_getObjectManager('mail').getObjectById('nm');
 				aom.flags = egwSetBit(aom.flags, EGW_AO_FLAG_DEFAULT_FOCUS, false);
 
+				let splitter = this.et2.getWidgetById('mailSplitter');
+				if (splitter && egw.preference('previewPane', 'mail') == 'expand')
+				{
+					splitter.style.setProperty('--max','100%');
+					splitter.dock()
+				}
 				// Set preview pane state
 				this.mail_disablePreviewArea(!this.getPreviewPaneState());
 
@@ -313,7 +319,7 @@ app.classes.mail = AppJS.extend(
 					this.et2.getArrayMgr("content").getEntry('mail_id'),
 					this.et2.getArrayMgr("content").getEntry('mail_displayattachments')
 				);
-				this.smimeAttachmentsCheckerInterval();
+
 				break;
 			case 'mail.compose':
 				var composeToolbar = this.et2.getWidgetById('composeToolbar');
@@ -394,6 +400,11 @@ app.classes.mail = AppJS.extend(
 				var content = this.et2.getArrayMgr('content').data;
 				if (to && to.get_value() && to.get_value().length > 0)
 				{
+					if (typeof to.blur == "function")
+					{
+						// html area changes focus as part of its init, make sure it doesn't re-focus to
+						to.blur();
+					}
 					if (content.is_plain)
 					{
 						// focus
@@ -401,9 +412,11 @@ app.classes.mail = AppJS.extend(
 						// get the cursor to the top of the textarea
 						if (typeof plainText.getDOMNode().setSelectionRange !='undefined' && !jQuery(plainText.getDOMNode()).is(":hidden"))
 						{
-							setTimeout(function(){
-								plainText.getDOMNode().setSelectionRange(0,0)
+							setTimeout(function ()
+							{
+								plainText.getDOMNode().setSelectionRange(0, 0)
 								plainText.focus();
+								plainText.shadowRoot.querySelector("textarea").scrollTop = 0;
 							}, 2000);
 						}
 					}
@@ -984,7 +997,7 @@ app.classes.mail = AppJS.extend(
 					if (content[field]['files'] && content[field]['files']['filemode']
 							&& filemode && filemode.get_value() != content[field]['files']['filemode'])
 					{
-						var filemode_label = filemode.options.select_options[content[field]['files']['filemode']]['label'];
+						var filemode_label = filemode.options.select_options.filter(_item=>{return _item.value == content[field]['files']['filemode']})[0]['label'];
 						Et2Dialog.show_dialog(function (_button)
 							{
 								if (_button == Et2Dialog.YES_BUTTON)
@@ -1047,7 +1060,7 @@ app.classes.mail = AppJS.extend(
 	 */
 	mail_disablePreviewArea: function(_value) {
 		var splitter = this.et2.getWidgetById('mailSplitter');
-		var previewPane = this.egw.preference('previewPane', 'mail');
+		var previewPane = this.egw.preference('previewPane', 'mail') || 'vertical';
 		// return if there's no splitter we maybe in mobile mode
 		if (typeof splitter == 'undefined' || splitter == null || previewPane == 'vertical') return;
 		let dock = function(){
@@ -1066,6 +1079,11 @@ app.classes.mail = AppJS.extend(
 		}
 		this.et2.getWidgetById('mailPreview').set_disabled(_value);
 		//Dock the splitter always if we are browsing with mobile
+		if (egwIsMobile())
+		{
+			this.mail_disablePreviewArea = _value = true;
+		}
+
 		if (_value==true)
 		{
 			if (this.mail_previewAreaActive) dock();
@@ -1126,6 +1144,10 @@ app.classes.mail = AppJS.extend(
 		let sel_options = {}
 		let attachmentsBlock = this.et2.getWidgetById('attachmentsBlock');
 		let mailPreview = this.et2.getWidgetById('mailPreview');
+		let previewPane = this.egw.preference('previewPane', 'mail')||'vertical';
+		// don't go further if the preview is supposed to be disabled and we're not in mobile view
+		if (previewPane == 'hide' && !egwIsMobile()) return;
+
 		if(typeof selected != 'undefined' && selected.length == 1)
 		{
 			rowId = this.mail_fetchCurrentlyFocussed(selected);
@@ -1247,9 +1269,8 @@ app.classes.mail = AppJS.extend(
 			}
 			if (!egwIsMobile())return;
 		}
-
 		// Not applied to mobile preview
-		if (!egwIsMobile() && this.getPreviewPaneState())
+		else if (!egwIsMobile() && previewPane !='hide')
 		{
 			// Blank first, so we don't show previous email while loading
 			var IframeHandle = this.et2.getWidgetById('messageIFRAME');
@@ -1262,7 +1283,7 @@ app.classes.mail = AppJS.extend(
 				.next(this.mailvelope_iframe_selector).remove();
 
 			// need to have the DOM ready for calculation.
-			this.mail_disablePreviewArea(false);
+			this.mail_disablePreviewArea((typeof selected == 'undefined' || selected.length == 0 && previewPane == 'expand'));
 
 			// Update the internal list of selected mails, if needed
 			if(this.mail_selectedMails.indexOf(rowId) < 0)
@@ -1284,7 +1305,7 @@ app.classes.mail = AppJS.extend(
 				});
 			}, 300));
 		}
-		if (data['smime']) this.smimeAttachmentsCheckerInterval();
+
 		var messages = {};
 		messages['msg'] = [rowId];
 
@@ -2019,8 +2040,8 @@ app.classes.mail = AppJS.extend(
 
 					if (filter && dates)
 					{
-						if (this.et2.getWidgetById('startdate') && this.et2.getWidgetById('startdate').get_value()) nm.activeFilters["startdate"] = this.et2.getWidgetById('startdate').date;
-						if (this.et2.getWidgetById('enddate') && this.et2.getWidgetById('enddate').get_value()) nm.activeFilters["enddate"] = this.et2.getWidgetById('enddate').date;
+						if (this.et2.getWidgetById('startdate') && this.et2.getWidgetById('startdate').get_value()) nm.activeFilters["startdate"] = this.et2.getWidgetById('startdate').value;
+						if (this.et2.getWidgetById('enddate') && this.et2.getWidgetById('enddate').get_value()) nm.activeFilters["enddate"] = this.et2.getWidgetById('enddate').value;
 					}
 			}
 		}
@@ -3810,16 +3831,16 @@ app.classes.mail = AppJS.extend(
 				egw.loading_prompt('mail_moveFolder', true, '', '#egw_fw_basecontainer');
 				for (var i = 0; i < _senders.length; i++)
 				{
-					egw.jsonq('mail.mail_ui.ajax_MoveFolder', [_senders[i].id, destination.id],
-						// Move is done (successfully or not), remove loading
-						function ()
-						{
-							var id = destination.id.split('::');
-							//refersh the top parent
-							ftree.refreshItem(id[0], null);
-							egw.loading_prompt('mail_moveFolder', false);
-						}
-					);
+					egw.request('mail.mail_ui.ajax_MoveFolder', [_senders[i].id, destination.id])
+						.finally(() =>
+							{
+								// Move is done (successfully or not), remove loading
+								var id = destination.id.split('::');
+								//refersh the top parent
+								ftree.refreshItem(id[0], null);
+								egw.loading_prompt('mail_moveFolder', false);
+							}
+						);
 				}
 			}
 		};
@@ -4687,8 +4708,7 @@ app.classes.mail = AppJS.extend(
 
 				if (textArea.id != "mail_htmltext")
 				{
-					textArea.getParent().set_height(bodySize);
-					textArea.set_height(bodySize);
+					textArea.getParent().style.height = `${bodySize}px`;
 				}
 				else if (typeof textArea != 'undefined' && textArea.id == 'mail_htmltext')
 				{
@@ -5237,26 +5257,24 @@ app.classes.mail = AppJS.extend(
 	 */
 	mailvelopeDisplay: function(_keyring)
 	{
-		var self = this;
-		var mailvelope = window.mailvelope;
-		var iframe = jQuery('iframe#mail-display_mailDisplayBodySrc,iframe#mail-index_messageIFRAME');
-		var armored = iframe.contents().find('td.td_display > pre').text().trim();
+		let self = this;
+		let iframe = jQuery('iframe#mail-display_mailDisplayBodySrc,iframe#mail-index_messageIFRAME');
+		let armored = iframe.contents().find('td.td_display > pre').text().trim();
 
 		if (armored == "" || armored.indexOf(this.begin_pgp_message) === -1) return;
 
-		var container = iframe.parent()[0];
-		var container_selector = container.id ? '#'+container.id : 'div.mailDisplayContainer';
-
-		var options = {
+		let container = iframe.parent()[0];
+		let container_selector = this.et2._inst.name == 'mail.display'  ? '.mailDisplayContainer' : `#${container.dom_id}`;
+		let options = {
 			showExternalContent: this.egw.preference('allowExternalIMGs') == 1	// "1", or "0", undefined --> true or false
 		};
 		// get sender address, so Mailvelope can check signature
-		var from_widget = this.et2.getWidgetById('FROM_0') || this.et2.getWidgetById('previewFromAddress');
-		if (from_widget && from_widget.value)
+		let from = this.et2._inst.name == 'mail.display' ? this.et2.getArrayMgr('content').data.from : this.et2.getWidgetById('additionalfromaddress').value;
+		if (from)
 		{
-			options.senderAddress = from_widget.value.replace(/^.*<([^<>]+)>$/, '$1');
+			options.senderAddress = from[0].replace(/^.*<([^<>]+)>$/, '$1');
 		}
-		mailvelope.createDisplayContainer(container_selector, armored, _keyring, options).then(function()
+		window.mailvelope.createDisplayContainer(container_selector, armored, _keyring, options).then(function()
 		{
 			// hide our iframe to give space for mailvelope iframe with encrypted content
 			iframe.hide();
@@ -6033,30 +6051,29 @@ app.classes.mail = AppJS.extend(
 			this.set_smimeAttachmentsMobile(_attachments);
 			return;
 		}
-		var attachmentArea = this.et2.getWidgetById(egw(window).is_popup()?'mail_displayattachments':'attachmentsBlock');
-		var content = this.et2.getArrayMgr('content');
-		var mailPreview = this.et2.getWidgetById('mailPreviewContainer');
-		if (attachmentArea && _attachments && _attachments.length > 0)
+		let data = {};
+		let selected = [];
+
+		let cmprAttchObjs = function(_obj1,_obj2)
 		{
-			attachmentArea.getParent().set_disabled(false);
-			content.data[attachmentArea.id] = _attachments;
-			this.et2.setArrayMgr('contnet', content);
-			attachmentArea.getDOMNode().classList.remove('loading');
-			attachmentArea.set_value({content:_attachments});
-			if (attachmentArea.id == 'attachmentsBlock')
+			for (let i=0;i<_obj1.length;i++)
 			{
-				var a_node = attachmentArea.getDOMNode();
-				var m_node = mailPreview.getDOMNode();
-				var offset = m_node.offsetTop - a_node.offsetTop;
-				if (a_node.offsetTop + a_node.offsetHeight > m_node.offsetTop)
-				{
-					m_node.style.setProperty('top', m_node.offsetTop + offset+"px");
-				}
+				if (_obj1[i]['mail_id'] != _obj2[i]['mail_id'] || _obj1[i]['partID'] != _obj2[i]['partID']) return false;
 			}
-		}
-		else
+
+			return true;
+		};
+		if (_attachments && _attachments.length)
 		{
-			attachmentArea.getParent().set_disabled(true);
+			selected = [_attachments[0]['mail_id']];
+			data = egw.dataGetUIDdata(selected[0]);
+			// do not call mail_preview if we have the attachments already resolved, avoid infinit loop
+			if (data.data.attachmentsBlock.length>0 && cmprAttchObjs(data.data.attachmentsBlock, _attachments)) return;
+
+			data.data.attachmentsBlock = _attachments;
+			data.data.attachmentsBlockTitle = _attachments.lenght;
+			egw.dataStoreUID(data.data.uid, data.data);
+			this.mail_preview(selected, this.et2.getWidgetById('nm'));
 		}
 	},
 	/**
@@ -6220,7 +6237,7 @@ app.classes.mail = AppJS.extend(
 	 */
 	getPreviewPaneState: function ()
 	{
-		var previewPane = this.egw.preference('previewPane', 'mail');
+		var previewPane = this.egw.preference('previewPane', 'mail') || 'vertical';
 		var nm = this.et2.getWidgetById(this.nm_index);
 		var state = false;
 		switch (previewPane)
@@ -6369,6 +6386,13 @@ app.classes.mail = AppJS.extend(
 	 */
 	onclickCompose(_node, _address)
 	{
-		egw.open_link('mailto:'+_address.value);
+		if (_address.value && this.egw.preference('force_mailto', 'addressbook') != '1')
+		{
+			this.egw.open_link('mailto:' + _address.value);
+		}
+		else
+		{
+			window.open("mailto:" + _address.value);
+		}
 	}
 });

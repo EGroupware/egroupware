@@ -177,8 +177,8 @@ class infolog_ui
 		}
 		if (!isset($info['info_anz_subs'])) $info['info_anz_subs'] = $this->bo->anzSubs($id);
 		$this->bo->link_id2from($info,$action,$action_id);	// unset from for $action:$action_id
-		$info['info_percent'] = (int) $info['info_percent'].'%';
-		$editrights = $this->bo->check_access($info,Acl::EDIT);
+		$info['info_percent'] = (int)$info['info_percent'];
+		$editrights = $this->bo->check_access($info, Acl::EDIT);
 		$isresposible = $this->bo->is_responsible($info);
 		if ((!($editrights || // edit rights or more then standard responsible rights
 			$isresposible && array_diff($this->bo->responsible_edit,array('info_status','info_percent','info_datecompleted')))))
@@ -669,21 +669,33 @@ class infolog_ui
 		{
 			return $data;
 		}
-		$event = array_merge($data,array(
-			'category'	=> $GLOBALS['egw']->categories->check_list(Acl::READ, $infolog['info_cat']),
-			'priority'	=> $infolog['info_priority'] + 1,
-			'public'	=> $infolog['info_access'] != 'private',
-			'title'		=> $infolog['info_subject'],
-			'description'	=> $infolog['info_des'],
-			'location'	=> $infolog['info_location'],
-			'start'		=> $infolog['info_startdate'],
-			'end'		=> $infolog['info_enddate'] ? $infolog['info_enddate'] : $infolog['info_datecompleted']
+		$event = array_merge($data, array(
+			'category'    => $GLOBALS['egw']->categories->check_list(Acl::READ, $infolog['info_cat']),
+			'priority'    => $infolog['info_priority'] + 1,
+			'public'      => $infolog['info_access'] != 'private',
+			'title'       => $infolog['info_subject'],
+			'description' => $infolog['info_des'],
+			'location'    => $infolog['info_location'],
+			'start'       => $infolog['info_startdate'],
+			'end'         => $infolog['info_enddate'] ? $infolog['info_enddate'] : $infolog['info_datecompleted']
 		));
 		unset($event['entry_id']);
-		if (!$event['end']) $event['end'] = $event['start'] + (int) $GLOBALS['egw_info']['user']['preferences']['calendar']['defaultlength']*60;
+		if(!$event['end'])
+		{
+			$event['end'] = $event['start'] + (int)$GLOBALS['egw_info']['user']['preferences']['calendar']['defaultlength'] * 60;
+		}
 
 		// Match Api\Categories by name
-		$event['category'] = $GLOBALS['egw']->categories->name2id(Api\Categories::id2name($infolog['info_cat']));
+		if($infolog['info_cat'])
+		{
+			$event['category'] = $GLOBALS['egw']->categories->name2id(Api\Categories::id2name($infolog['info_cat']));
+		}
+		if(!$event['category'] || $event['category'] === '0')
+		{
+			// No matching category found, don't send an invalid category
+			unset($event['category']);
+		}
+
 
 		// make current user the owner of the new event, not the selected calendar, if current user has rights for it
 		$event['owner'] = $user = $GLOBALS['egw_info']['user']['account_id'];
@@ -2114,8 +2126,14 @@ class infolog_ui
 					{
 						$content['info_type'] = $GLOBALS['egw_info']['user']['preferences']['infolog']['preferred_type'];
 					}
-					if (empty($content['info_status'])) $content['info_status'] = $this->bo->status['defaults'][$content['info_type']];
-					if (empty($content['info_percent'])) $content['info_percent'] = $content['info_status'] == 'done' ? '100%' : '0%';
+					if(empty($content['info_status']))
+					{
+						$content['info_status'] = $this->bo->status['defaults'][$content['info_type']];
+					}
+					if(empty($content['info_percent']))
+					{
+						$content['info_percent'] = $content['info_status'] == 'done' ? '100' : '0';
+					}
 					break;
 			}
 			if (!isset($this->bo->enums['type'][$content['info_type']]))
@@ -2385,8 +2403,11 @@ class infolog_ui
 			$content['info_type'] = $types[0];
 		}
 		// get a consistent status, percent and date-completed
-		if (!isset($content['info_status'])) $content['info_status'] = $this->bo->status['defaults'][$content['info_type']];
-		if (!isset($content['info_percent'])) $content['info_percent'] = $content['info_status'] == 'done' ? '100%' : '0%';
+		if(!isset($content['info_status']))
+		{
+			$content['info_status'] = $this->bo->status['defaults'][$content['info_type']];
+		}
+		if(!isset($content['info_percent'])) $content['info_percent'] = $content['info_status'] == 'done' ? '100' : '0';
 		$content['info_datecompleted'] =$content['info_status'] == 'done' ? $this->bo->user_time_now : 0;
 
 		if (!isset($content['info_cat'])) $content['info_cat'] = $this->prefs['cat_add_default'];

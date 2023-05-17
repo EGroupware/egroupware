@@ -29,6 +29,7 @@ add alarm	calendar	sk	Pridaj pripomienku
 add appointments via shortened dialog or complete edit window	calendar	sk	Pridať udalosti cez skrátený dialóg alebo úplne okno úprav
 add current view as favorite	calendar	sk	Pridať súčasný pohľad ako obľúbený
 add new alarm	calendar	sk	Pridať novú pripomienku
+add new event	calendar	sk	Pridať novú udalosť
 add new participants or resource	calendar	sk	Pridať nových účastníkov alebo zdroj
 add timesheet entry	calendar	sk	Pridať položku Harmonogramu
 added	calendar	sk	Pridané
@@ -62,6 +63,7 @@ apply the changes	calendar	sk	Vykonať uvedené zmeny
 appointment settings	calendar	sk	Nastavenia udalostí
 as an alternative you can %1download a mysql dump%2 and import it manually into egw_cal_timezones table.	calendar	sk	Iná možnosť - môžete %1stiahnuť MYSQL dump%2 a naimportovať ho ručne do tabuľky egw_cal_timezones.
 at start of the event	calendar	sk	na začiatku udalosti
+attention	calendar	sk	Upozornenie
 automatically purge old events after	admin	sk	Automaticky vymazať udalosti staršie než
 available for the first entry inside each day of week or daily table inside the selected range:	calendar	sk	Dostupné pre prvú položku v rámci každého dňa v týždni alebo dennej tabuľky v rámci vybraného rozsahu:
 back half a month	calendar	sk	Späť o pol mesiaca
@@ -91,6 +93,7 @@ calendar menu	calendar	sk	Ponuka Kalendára
 calendar preferences	calendar	sk	Predvoľby Kalendára
 calendar settings	admin	sk	Nastavenia Kalendára
 calendar-fieldname	calendar	sk	Kalendár - názov poľa
+can not send any notifications because notifications app is not installed!	calendar	sk	Nemôžem odosielať pripomienky pretože aplikácia pripomienok nie je nainštalovaná!
 can't add alarms in the past !!!	calendar	sk	Pripomienky sa nedajú zadávať do minulosti!!!
 can't aquire lock!	calendar	sk	Nepodarilo sa získať zámok!
 canceled	calendar	sk	Zrušené
@@ -101,6 +104,7 @@ category automatically added to new events	calendar	sk	Kategória ktorá sa auto
 chair	calendar	sk	Predseda
 change history	calendar	sk	Zmeniť históriu
 change your status	calendar	sk	Zmeniť váš status
+changed event-data applied	calendar	sk	Zmeny v údajoch udalosti boli uložené
 charset of file	calendar	sk	Znaková sada súboru
 check all	calendar	sk	Označiť všetko
 choose a category	calendar	sk	Vyberte kategóriu
@@ -141,6 +145,8 @@ days	calendar	sk	dní
 days of the week for a weekly repeated event	calendar	sk	Dni v týždni pre týždenne sa opakujúce udalosti
 days repeated	calendar	sk	dní sa opakuje
 dayview	calendar	sk	Denný pohľad
+default alarm added for yourself or all participants	calendar	sk	Pripomienka sa automaticky vkladá pre nové udalosti.<br>Pre Vás alebo pre všetkých účastníkov.
+default alarm for	calendar	sk	Predvolená pripomienka pre
 default alarm for regular events	calendar	sk	Predvolená pripomienka pre bežné udalosti
 default alarm for whole-day events	calendar	sk	Predvolená pripomienka pre celodenné udalosti
 default appointment length (in minutes)	calendar	sk	Predvolená dĺžka udalostí (v minútach)
@@ -158,6 +164,7 @@ delete series	calendar	sk	Odstrániť sériu
 delete this alarm	calendar	sk	Odstrániť túto pripomienku
 delete this event	calendar	sk	Odstrániť túto udalosť
 delete this exception	calendar	sk	Odstrániť túto výnimku
+delete this meeting for all participants	calendar	sk	Odstrániť toto stretnutie pre všetkých účastníkov
 delete this recurrence	calendar	sk	Odstrániť toto opakovanie
 delete this series of recurring events	calendar	sk	Odstrániť túto sériu pravidelných udalostí
 deleted	calendar	sk	Odstránené
@@ -171,6 +178,7 @@ displays this calendar view on the home page (page you get when you enter egroup
 distribution list	calendar	sk	Distribučný zoznam
 do not import conflicting events	calendar	sk	Neimportovať udalosti ktoré sú v konflikte
 do not include events of group members	calendar	sk	Nezahrnúť udalosti členov skupiny
+do not notify externals (non-users) about this event	calendar	sk	NEpripomínať externým účastníkom (ktorí nie sú používateľmi nášho EGroupware) túto udalosť
 do you really want to change the start of this series? if you do, the original series will be terminated as of %1 and a new series for the future reflecting your changes will be created.	calendar	sk	Naozaj si želáte zmeniť začiatok tejto série? Ak to urobíte, pôvodná séria bude %1 ukončená a bude vytvorená nová séria pre budúcnosť, v ktorej budú zohľadnené vaše zmeny.
 do you want a weekview with or without weekend?	calendar	sk	Želáte si týždenný pohľad s víkendom alebo bez?
 do you want non-egroupware participants of events you created to be automatically notified about new or changed appointments?	calendar	sk	Chcete, aby účastníci mimo EGroupware, pri udalostiach ktoré ste vytvorili, boli automaticky upozornení na zmeny alebo nové udalosti?
@@ -178,6 +186,7 @@ do you want responses from events you created, but are not participating in?	cal
 do you want to be notified about changes of appointments you modified?	calendar	sk	Chcete dostávať upozornenia na zmeny tých udalostí, ktoré ste upravili?
 do you want to be notified about new or changed appointments? you are not notified about changes you made yourself.<br>you can limit the notifications to certain changes only. each item includes all notifications listed above. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get participant responses like acceptions or rejections too.	calendar	sk	Chcete dostávať správy, ktoré Vás upovedomia o nových alebo zmenených udalostiach? Budete informovaní aj o zmenách ktoré sami urobíte.<br>Upovedomenia sa dajú aj obmedziť na určité typy zmien. Každý prvok obsahuje zároveň všetky predošlé upovedomenia. Všetky zmeny zahŕňajú zmeny titulku, opisu, účastníkov, ale nie odpovede účastníkov. Ak vlastník udalosti žiada akékoľvek správy o zmenách, dostane vždy aj odozvy účastníkov, napríklad prijatia a odmietnutia.
 do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	sk	Chcete dostávať upozornenia na zmeny nových alebo zmenených udalostí? Budete upozorňovaní na zmeny, ktoré sami urobíte.<br>Upozornenia môžete obmedziť na niektoré vybrané zmeny. Každá položka obsahuje všetky upozornenia, ktoré sú nad ňou vymenované. Všetky úpravy zahŕňa: zmeny v titulku, opise, účastníkoch, ale bez odpovedí účastníkov. Ak si vlastník udalosti vyžiadal nejaké upozornenia, bude vždy dostávať odpovede účastníkov ako napríklad potvrdenia a odmietnutia účasti.
+do you want to be notified about participant responses from events you created, but are not participating in?	calendar	sk	Chcete byť upozornení na odpovede účastníkov pri udalostiach, ktoré ste vytvorili, ale nie ste ich účastníkom?
 do you want to edit this event as an exception or the whole series?	calendar	sk	Chcete upraviť túto udalosť ako výnimku alebo celú sériu?
 do you want to keep the series exceptions in your calendar?	calendar	sk	Chcete ponechať výnimky tejto série v kalendári?
 do you want to receive a regularly summary of your appointments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	sk	Chcete dostávať E-mailom pravidelný súhrn vašich schôdzok?<br>Súhrn sa bude posielať na vašu bežnú adresu každé ráno, prípadne v pondelok pre týždenný súhrn.<br>Posiela sa len vtedy, ak máte plánované nejaké schôdzky na daný deň alebo týždeň.
@@ -201,6 +210,7 @@ enddate / -time of the meeting, eg. for more then one day	calendar	sk	Dátum uko
 enddate of the export	calendar	sk	Dátum ukončenia exportu
 ends	calendar	sk	končí
 error adding the alarm	calendar	sk	Chyba počas pridávania pripomienky
+error notifying %1	calendar	sk	Chyba počas upozorňovania %1
 error saving the event!	calendar	sk	Chyba pri ukladaní udalosti!
 error: can't delete original series!	calendar	sk	Chyba: Nedá sa odstrániť originálna séria!
 error: duration of event longer then recurrence interval!	calendar	sk	Chyba: udalosť trvá dlhšie než je nastavený interval opakovania!
@@ -365,11 +375,13 @@ monthly	calendar	sk	Mesačne
 monthly (by date)	calendar	sk	Mesačne (podľa dátumu)
 monthly (by day)	calendar	sk	Mesačne (podľa dňa)
 monthview	calendar	sk	Mesačný pohľad
+multiple participants	calendar	sk	Viacero pčastníkov
 multiple week view	calendar	sk	Pohľad viacerých týždňov
 name of current user, all other contact fields are valid too	calendar	sk	Meno súčasného používateľa, platné sú aj všetky ostatné polia kontaktu
 name of the day of the week (ex: monday)	calendar	sk	Názov dňa v týždni (napr. Pondelok)
 name of the week (ex: monday), available for the first entry inside each day of week or daily table inside the selected range.	calendar	sk	Názov týždňa, napr: Pondelok, dostupný pre prvú položku v každom dni týždňa alebo dennú tabuľku v rámci určeného intervalu.
 needs action	calendar	sk	Vyžaduje akciu
+never notify externals (non-users) about events i create	calendar	sk	Nikdy nepripomínať externým účastníkom (ktorí nepoužívajú náš Egroupware) udalosti, ktoré som vytvoril/a
 new	calendar	sk	Nové
 new event category	calendar	sk	Nová kategória udalostí
 new event participants	calendar	sk	Noví účastníci udalosti
@@ -396,8 +408,12 @@ notification messages for uninvited participants	calendar	sk	Tvar správy pre ú
 notification messages for your alarms	calendar	sk	Tvar správy pripomienky udalosti
 notification messages for your responses	calendar	sk	Tvar správy pre Vaše odpovede
 notification settings	calendar	sk	Nastavenia pripomienok
+notify	calendar	sk	Upozorniť
+notify all externals (non-users) about this event	calendar	sk	Upozorňovať všetkých externých účastníkov (ktorí nepoužívajú náš EGroupware) na túto udalosť
+notify externals	calendar	sk	Upozorňovať externých účastníkov
 notify non-egroupware users about event updates	calendar	sk	Upozorňovať používateľov mimo EGroupware na novinky k udalosti
 number of records to read (%1)	calendar	sk	Počet záznamov k načítaniu (%1)
+number of resources to be booked	calendar	sk	Počet zdrojov na rezerváciu
 number of weeks to show	calendar	sk	Počet zobrazených týždňov
 observance rule	calendar	sk	Pravidlo zachovania
 occurence	calendar	sk	Výskyt
@@ -442,6 +458,7 @@ prevent deleting of entries	admin	sk	Zabrániť odstraňovaniu položiek
 previous	calendar	sk	Predchádzajúca
 private and global public	calendar	sk	Súkromné i verejne prístupné
 private and group public	calendar	sk	Prístupné súkromne i pre skupinu
+private event	calendar	sk	Súkromná udalosť
 private only	calendar	sk	Iba súkromne
 quantity	calendar	sk	Množstvo
 quick add	calendar	sk	Rýchle pridanie
@@ -450,6 +467,7 @@ re-edit event	calendar	sk	Znovu uprav
 receive email updates	calendar	sk	Dostávať informácie elektronickou poštou?
 receive notifications about events you created/modified/deleted	calendar	sk	Dostávať upozornenia o udalostiach, ktoré ste vytvorili/zmenili/odstránili
 receive summary of appointments	calendar	sk	Dostávať súhrn udalostí
+recordings	calendar	sk	Nahrávky
 recover	calendar	sk	Obnoviť
 recovered	calendar	sk	Obnovené.
 recurrence	calendar	sk	Pravidelné opakovanie
@@ -459,6 +477,7 @@ recurring event	calendar	sk	Opakujúca sa udalosť
 regular edit	calendar	sk	Normálna úprava
 reject	calendar	sk	Odmietnuť
 rejected	calendar	sk	Odmietnuté
+removes the event from my calendar	calendar	sk	Odstráni udalosť z môjho Kalendára
 repeat days	calendar	sk	Opakované dni
 repeat the event until which date (empty means unlimited)	calendar	sk	až dokedy sa má udalosť opakovať (prázdne znamená bez obmedzenia)
 repeat type	calendar	sk	Druh opakovania
@@ -468,6 +487,7 @@ repetition	calendar	sk	Opakovanie
 repetitiondetails (or empty)	calendar	sk	Detaily o opakovaní (alebo nič)
 replacements for inserting events into documents	calendar	sk	Náhrady pre vkladanie položiek do dokumentov
 reply to meeting request	calendar	sk	Odpoveď na požiadavku na stretnutie
+replying "%1" is not a participant of the event! only continue if you want to add as new participant.	calendar	sk	Odpovedajúci "%1" NIE je účastník udalosti! Pokračujte iba v prípade, že ho chcete pridať ako nového účastníka.
 requested	calendar	sk	Požiadané
 requested date %1 outside allowed range of %2 days: recurring events obmitted!	calendar	sk	Požadovaný dátum %1 je mimo povoleného intervalu %2 dní: opakujúce sa udalosti sú vynechané!
 requested meeting is in the past!	calendar	sk	Požiadavka na stretnutie ide do minulosti!
@@ -500,6 +520,8 @@ select who should get the alarm	calendar	sk	Vybrať kto dostane pripomienku
 selected range	calendar	sk	Vybraný rozsah
 selected users/groups	calendar	sk	Vybraní používatelia/skupiny
 send meetingrequest to all participants after the event is saved	calendar	sk	Po uložení udalosti, poslať požiadavku na stretnutie všetkým účastníkom
+send notifications	calendar	sk	Odoslať upozornenia
+send notifications to users right now	calendar	sk	Ihneď odoslať upozornenia účastníkom
 series deleted	calendar	sk	Séria odstránená
 set new events to private	calendar	sk	Nastaviť nové udalosti ako súkromné
 setting lock time calender	admin	sk	Nastavenie Datalock času pre Kalendár (predvolené: 1 sek.)
@@ -511,6 +533,7 @@ should the number of weeks be shown on top of the calendar	calendar	sk	Chcete, a
 should the number of weeks be shown on top of the calendar (only if offset = 0)	calendar	sk	Chcete, aby sa čísla týždňov zobrazovali navrchu kalendára (iba ak posun = 0)
 should the planner display an empty row for users or categories without any appointment.	calendar	sk	Chcete, aby plánovač zobrazoval prázdny riadok pri používateľoch, ktorí nemajú žiadnu udalosť?
 should the status of the event-participants (accept, reject, ...) be shown in brackets after each participants name ?	calendar	sk	Má se za menom používateľa zobrazovať jeho vzťah k udalosti (prijal, odmietol, ...)?
+show %1 from %2	calendar	sk	Zobraziť %1 z %2
 show a calendar title	calendar	sk	Zobraziť titulok kalendára
 show all events, as if they were private	calendar	sk	Zobraziť všetky udalosti tak, ako keby boli všetky súkromné
 show all status incl. rejected events	calendar	sk	Zobraziť všetky stavy vrátane odmietnutých udalostí
@@ -534,6 +557,7 @@ show this month	calendar	sk	Ukáž tento mesiac
 show this week	calendar	sk	Ukáž tento týždeň
 show year and age	calendar	sk	Ukázať rok a vek
 single event	calendar	sk	Samostatná udalosť
+single participant	calendar	sk	Jediný účastník
 specify where url of the day links to	calendar	sk	Vyberte, kam odkazuje URL daného dňa
 start	calendar	sk	Začiatok
 start date/time	calendar	sk	Dátum/čas začiatku
@@ -543,6 +567,7 @@ startdate / -time	calendar	sk	Dátum/čas začiatku
 startdate and -time of the search	calendar	sk	Dátum/čas začiatku hľadania
 startdate of the export	calendar	sk	Dátum/čas začiatku exportu
 startrecord	calendar	sk	Prvý záznam
+status	calendar	sk	Stav
 status already applied	calendar	sk	Stav sa už aplikoval.
 status changed	calendar	sk	Stav sa zmenil
 status for all future scheduled days changed	calendar	sk	Stav všetkých budúcich naplánovaných dní sa zmenil
@@ -557,9 +582,12 @@ test import (show importable records <u>only</u> in browser)	calendar	sk	Otestov
 the apple ical apps use this color to display events from this calendar.	calendar	sk	Aplikácie Apple iCal používajú túto farbu na zobrazenie udalostí z tohto kalendára
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	calendar	sk	Dokument môže obsahovať premennú, napr. {{%3}} ktorá sa nahradí údajmi (%1úplný zoznam názvov premenných%2).
 the exceptions are deleted together with the series.	calendar	sk	Výnimky boli odstránené spolu so sériou.
+the extern organizer changed the event!	calendar	sk	Externý organizér zmenil udalosť!
 the following document-types are supported:	calendar	sk	Podporované sú nasledovné typy dokumentov:
 the original series will be terminated today and a new series be created.	calendar	sk	Pôvodná séria bude dneškom ukončená a vytvorí sa nová séria.
 the resource you selected is already overbooked:	calendar	sk	Tento zdroj je už rezervovaný:
+the sender "%1" is not the extern organizer "%2", proceed with caution!	calendar	sk	Odosielateľ "%1" NIE je externý organizér "%2", pokračujte opatrne!
+the sender "%1" is not the participant replying "%2", proceed with caution!	calendar	sk	Odosielateľ "%1" NIE je účastník odpovedajúci "%2", pokračujte opatrne!
 this day is shown as first day in the week or month view.	calendar	sk	Tento deň sa zobrazuje ako prvý v týždennom či mesačnom pohľade.
 this defines the end of your dayview. events after this time, are shown below the dayview.	calendar	sk	Touto hodinou sa končí denný pohľad. Udalosti po tejto hodine se zobrazia až za denným pohľadom.
 this defines the start of your dayview. events before this time, are shown above the dayview.<br>this time is also used as a default starttime for new events.	calendar	sk	Touto hodinou sa začína denný pohľad. Udalosti pred touto hodinou se zobrazia pred denným pohľadom.<br>Zároveň sa táto hodina použije ako východzia pre nové udalosti.
@@ -599,6 +627,7 @@ to many might exceed your execution-time-limit	calendar	sk	piveľa môže prekro
 to-firstname	calendar	sk	Ku krstnému menu
 to-fullname	calendar	sk	K plnému menu
 to-lastname	calendar	sk	K priezvisku
+toggle weekend	calendar	sk	Prepnúť víkend
 tomorrow	calendar	sk	Zajtra
 translation	calendar	sk	Preklad
 tue	calendar	sk	Ut
@@ -610,6 +639,7 @@ update calendar view immediately when navigation calendar in sidebox is changed	
 update timezones	common	sk	Aktualizovať časové pásma
 updated	calendar	sk	Aktualizované
 use end date	calendar	sk	použiť dátum ukončenia
+use event tz	calendar	sk	Použiť časovú zónu udalosti
 use given criteria:	calendar	sk	Použiť zadané kritériá:
 use quick add or full edit dialog when creating a new event	calendar	sk	Na vytvorenie novej udalosti použiť funkciu rýchle pridanie alebo plný dialóg pre úpravy
 use range-views to optimise calendar queries?	calendar	sk	Použiť interval zobrazenia na optimizáciu kalendára?

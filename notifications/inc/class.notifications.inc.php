@@ -780,18 +780,22 @@ class notifications {
 				foreach($chain_groups as $name => $arr_name) {
 					${$arr_name.$suffix} = array();
 					foreach(array_keys(${$arr_name}) as $key) {
-						if($arr_name == 'disabled_chains') {
-							${$arr_name.$suffix}[$key] = '('.lang('Disabled').') '.lang($this->chains_descriptions[$key]);
-						} else {
-							${$arr_name.$suffix}[$key] = lang($this->chains_descriptions[$key]);
-						}
+						${$arr_name . $suffix}[] = [
+							'value'    => $key,
+							'label'    => lang($this->chains_descriptions[$key]),
+							'disabled' => $arr_name == 'disabled_chains'
+						];
 					}
 				}
 				// summarize all groups with minimum one chain to the final array
 				$chains_final = array();
 				foreach($chain_groups as $name => $arr_name) {
-					if(is_array(${$arr_name.$suffix}) && count(${$arr_name.$suffix}) > 0) {
-						$chains_final[$name] = ${$arr_name.$suffix};
+					if(is_array(${$arr_name.$suffix}) && count(${$arr_name.$suffix}) > 0)
+					{
+						$chains_final[] = array(
+							'label' => $name,
+							'value' => ${$arr_name . $suffix}
+						);
 					}
 				}
 				return $chains_final;

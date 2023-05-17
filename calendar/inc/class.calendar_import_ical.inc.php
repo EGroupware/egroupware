@@ -298,12 +298,18 @@ class calendar_import_ical implements importexport_iface_import_plugin  {
 	 */
 	public function get_options_etpl(importexport_definition &$definition=null)
 	{
+		$owner = $definition->plugin_options['owner'] ?? $GLOBALS['egw_info']['user']['account_id'];
+		// Make sure Owner from import dialog is not array
+		if(is_array($owner))
+		{
+			$owner = array_pop($owner);
+		}
 		return array(
 			'name'        => 'calendar.import_ical',
 			'content'     => array(
 				'file_type' => 'ical',
 				'charset'   => $GLOBALS['egw_info']['user']['preferences']['common']['csv_charset'],
-				'cal_owner' => [$definition->plugin_options['cal_owner'] ?: $GLOBALS['egw_info']['user']['account_id']]
+				'cal_owner' => $owner ? [$owner] : null
 			),
 			'sel_options' => array(
 				'charset'   => Api\Translation::get_installed_charsets(),

@@ -676,6 +676,8 @@ number of sessions / egroupware logins in the last 30 days	admin	it	Numero di se
 number of users	admin	it	Numero di utenti
 number the applications serially. if they are not numbered serially, sorting the applications could work wrong. this will not change the application's order.	admin	it	Enumerazione seriale delle applicazioni. Se non sono enumerate serialmente, l'ordinamento potrebbe funzionare male. Ciò non modificherà l'ordine effettivo delle applicazioni.
 nummeric account id	admin	it	ID Account numerico
+oauth authentiction	admin	it	Autenticazione OAuth
+offer to installing egroupware as mail-handler	admin	it	Offerta per l'installazione di EGroupware come mail-handler
 official egroupware usage statistic	admin	it	Statistica ufficiale di utilizzo di EGroupware
 one day	admin	it	Un giorno
 one hour	admin	it	Un'ora
@@ -689,7 +691,7 @@ other security configuration	admin	it	Altra configurazione di sicurezza
 outbound	admin	it	In uscita
 own categories	admin	it	Proprie categorie
 own install id	admin	it	Tuo ID installazione
-own install id:	admin	it	Tuo ID installazione
+own install id:	admin	it	Tuo ID installazione:
 owner "%1" removed, please select group-owner	admin	it	Proprietario "%1" rimosso. Per favore selezionare un proprietario per il gruppo
 passphrase	admin	it	parola d'ordine
 passthrough	admin	it	Passthrough

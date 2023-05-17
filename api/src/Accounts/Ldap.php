@@ -555,7 +555,10 @@ class Ldap
 	 */
 	protected function _read_user($account_id)
 	{
-		$sri = ldap_search($this->ds, $this->user_context, '(&(objectclass=posixAccount)(uidnumber=' . (int)$account_id.'))',
+		// add account_filter to filter (user has to be '*', as we otherwise only search uid's)
+		$account_filter = str_replace(array('%user', '%domain'), array('*', $GLOBALS['egw_info']['user']['domain']), $this->account_filter);
+
+		$sri = ldap_search($this->ds, $this->user_context, '(&(objectclass=posixAccount)(uidnumber=' . (int)$account_id.")$account_filter)",
 			array('dn','uidnumber','uid','gidnumber','givenname','sn','cn',static::MAIL_ATTR,'userpassword','telephonenumber',
 				'shadowexpire','shadowlastchange','homedirectory','loginshell','createtimestamp','modifytimestamp'));
 
@@ -582,7 +585,7 @@ class Ldap
 			// both status and expires are encoded in the single shadowexpire value in LDAP
 			// - if it's unset an account is enabled AND does never expire
 			// - if it's set to 0, the account is disabled
-			// - if it's set to > 0, it will or already has expired --> acount is active if it not yet expired
+			// - if it's set to > 0, it will or already has expired --> account is active if it not yet expired
 			// shadowexpire is in days since 1970/01/01 (equivalent to a timestamp (int UTC!) / (24*60*60)
 			'account_status'    => isset($data['shadowexpire']) && $data['shadowexpire'][0]*24*3600+$utc_diff < time() ? false : 'A',
 			'account_expires'   => isset($data['shadowexpire']) && $data['shadowexpire'][0] ? $data['shadowexpire'][0]*24*3600+$utc_diff : -1, // LDAP date is in UTC

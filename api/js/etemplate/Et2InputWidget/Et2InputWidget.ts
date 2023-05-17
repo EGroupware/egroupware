@@ -131,6 +131,10 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 				autofocus: {
 					type: Boolean,
 					reflect: true
+				},
+
+				autocomplete: {
+					type: String
 				}
 			};
 		}
@@ -184,6 +188,7 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 
 			this.et2HandleFocus = this.et2HandleFocus.bind(this);
 			this.et2HandleBlur = this.et2HandleBlur.bind(this);
+			this.autocomplete = 'on';
 		}
 
 		connectedCallback()
@@ -280,7 +285,17 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 			}
 
 			// Collect any ManualMessages
-			this._messagesHeldWhileFocused = (this.validators || []).filter((validator) => (validator instanceof ManualMessage));
+			this._messagesHeldWhileFocused = (this.validators || []).filter(
+				(validator) => (validator instanceof ManualMessage)
+			);
+			// Remove ManualMessages from validators list
+			for(let i = 0; i < this.validators.length; i++)
+			{
+				if(this._messagesHeldWhileFocused.indexOf(this.validators[i]) != -1)
+				{
+					this.validators.splice(i, 1);
+				}
+			}
 
 			this.updateComplete.then(() =>
 			{
@@ -352,7 +367,10 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 
 		getValue()
 		{
-			return this.readonly || this.disabled ? null : this.value;
+			return this.readonly || this.disabled ? null : (
+				// Give a clone of objects or receiver might use the reference
+				this.value && typeof this.value == "object" ? (typeof this.value.length == "undefined" ? {...this.value} : [...this.value]) : this.value
+			);
 		}
 
 		/**
@@ -373,15 +391,18 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 			this.label = pre;
 			if(post?.trim().length > 0)
 			{
-				const label = document.createElement("et2-description");
-				label.innerText = post;
-				// Put in suffix, if parent has a suffix slot
-				if(this.parentNode?.shadowRoot?.querySelector("slot[name='suffix']"))
+				this.updateComplete.then(() =>
 				{
-					label.slot = "suffix";
-				}
+					const label = document.createElement("et2-description");
+					label.innerText = post;
+					// Put in suffix, if parent has a suffix slot
+					if(this.parentNode?.shadowRoot?.querySelector("slot[name='suffix']"))
+					{
+						label.slot = "suffix";
+					}
 
-				this.parentNode.append(label);
+					this.parentNode.append(label);
+				});
 			}
 		}
 
@@ -465,6 +486,13 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 		{
 			super.transformAttributes(attrs);
 
+			// Set attributes for the form / autofill.  It's the individual widget's
+			// responsibility to do something appropriate with these properties.
+			if(this.autocomplete == "on" && window.customElements.get(this.localName).getPropertyOptions("name") != "undefined")
+			{
+				this.name = this.getArrayMgr("content").explodeKey(this.id).pop();
+			}
+
 			// Check whether an validation error entry exists
 			if(this.id && this.getArrayMgr("validation_errors"))
 			{
@@ -486,10 +514,12 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 		 *
 		 * We handle validation errors from the server with ManualMessages, which always "fail".
 		 * If the value is empty, we only validate if the field is required.
+		 *
+		 * @param skipManual Do not run any manual validators, used during submit check.  We don't want manual validators to block submit.
 		 */
-		async validate()
+		async validate(skipManual = false)
 		{
-			if(this.readonly)
+			if(this.readonly || this.disabled)
 			{
 				// Don't validate if the widget is read-only, there's nothing the user can do about it
 				return Promise.resolve();
@@ -548,7 +578,10 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 				// Run manual validation messages just once, doesn't usually matter what the value is
 				if(validator instanceof ManualMessage)
 				{
-					doCheck(values, validator);
+					if(!skipManual)
+					{
+						doCheck(values, validator);
+					}
 				}
 					// Only validate if field is required, or not required and has a value
 				// Don't bother to validate empty fields

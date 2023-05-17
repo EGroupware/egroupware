@@ -110,6 +110,11 @@ egw.extend('jsonq', egw.MODULE_GLOBAL, function()
 									json.handleResponse({response: response});
 								}
 							}
+							// Response is there, but empty.  Make sure to resolve it or the callback doesn't get called.
+							if (typeof response.length !== "undefined" && response.length == 0)
+							{
+								job.resolve();
+							}
 						}
 
 						delete jsonq_queue[uid];

@@ -116,6 +116,14 @@ export class Et2SelectAccount extends SelectAccountMixin(Et2StaticSelectMixin(Et
 	}
 
 	/**
+	 * Override filter to not, since we don't have all accounts available
+	 */
+	filterOutMissingOptions(value : string[]) : string[]
+	{
+		return value;
+	}
+
+	/**
 	 * Override icon for the select option
 	 *
 	 * @param option

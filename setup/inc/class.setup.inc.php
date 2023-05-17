@@ -919,8 +919,8 @@ class setup
 			echo'<br>Input values: '
 				. 'A="'.$a.'", B="'.$b.'"';
 		}
-		$newa = str_replace('pre','.',$a);
-		$newb = str_replace('pre','.',$b);
+		$newa = str_replace('pre', '.', $a ?? '');
+		$newb = str_replace('pre', '.', $b ?? '');
 		$testa = explode('.',$newa);
 		if($testa[3] == '')
 		{

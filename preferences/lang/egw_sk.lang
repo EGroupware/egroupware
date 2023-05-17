@@ -168,6 +168,7 @@ show qrcode	preferences	sk	Ukázať QR kód
 show qrcode to enable on an additional device.	preferences	sk	Ukázať QR kód pre povolenie na prídavnom zariadení.
 show text on navigation icons	preferences	sk	Zobrazovať text na navigačných ikonách
 show_more_apps	common	sk	Zobraziť ďalšie aplikácie
+small paragraph	preferences	sk	Malý odstavec
 special characters	preferences	sk	špeciálne znaky
 spellchecker language	addressbook	sk	Jazyk kontroly pravopisu
 text editor settings	preferences	sk	Nastavenia textového editora
