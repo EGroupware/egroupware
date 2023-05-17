@@ -87,14 +87,14 @@ export class Et2ButtonScroll extends ButtonMixin(LitElement)
                 <et2-button-icon
                         noSubmit
                         data-direction="1"
-                        name="chevron-up"
+                        image="chevron-up"
                         part="button"
                 >↑
                 </et2-button-icon>
                 <et2-button-icon
                         noSubmit
                         data-direction="-1"
-                        name="chevron-down"
+                        image="chevron-down"
                         part="button"
                 >↓
                 </et2-button-icon>
