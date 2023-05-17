@@ -145,9 +145,7 @@ export function egwDragActionImplementation()
 		if('draggable' in document.createElement('span') &&
 			navigator && navigator.userAgent.indexOf('Chrome') >= 0 && egw.app_name() == 'filemanager') // currently only filemanager supports drag out
 		{
-			var key = ["Mac68K","MacPPC","MacIntel"].indexOf(window.navigator.platform) < 0 ?
-				egw.lang('Alt') : egw.lang('Command ⌘');
-			text.text(egw.lang('Hold [%1] and [%2] key to drag %3 to your desktop', key, egw.lang('Shift ⇧'), itemLabel));
+			text.text(egw.lang('You may darg files out to your desktop', itemLabel));
 		}
 		// Final html DOM return as helper structor
 		return div;
@@ -176,8 +174,7 @@ export function egwDragActionImplementation()
 			{
 				return;
 			}
-			// Disable file drag and drop, it conflicts with normal drag and drop
-			for (var i = 0; false && i < groups.drag.length; i++)
+			for (var i = 0; i < groups.drag.length; i++)
 			{
 				// dragType 'file' says it can be dragged as a file
 				if(groups.drag[i].link.actionObj.dragType == 'file' || groups.drag[i].link.actionObj.dragType.indexOf('file') > -1)
@@ -187,47 +184,51 @@ export function egwDragActionImplementation()
 				}
 			}
 
-			if(!action)
-			{
-				// Use Ctrl key in order to select content
-				jQuery(node).off("mousedown")
-						.on({
-							mousedown: function(event){
-								if (_context.isSelection(event)){
-									node.setAttribute("draggable", false);
-								}
-								else if(event.which != 3)
-								{
-									document.getSelection().removeAllRanges();
-								}
-							},
-							mouseup: function (event){
-								if (_context.isSelection(event) && document.getSelection().type === 'Range'){
-									//let the draggable be reactivated by another click up as the range selection is
-									// not working as expected in shadow-dom as expected in all browsers
-								}
-								else
-								{
-									node.setAttribute("draggable", true);
-								}
+			// Bind mouse handlers
+			jQuery(node).off("mousedown")
+				.on({
+					mousedown: function(event){
+						if (_context.isSelection(event)){
+							node.setAttribute("draggable", false);
+						}
+						else if(event.which != 3)
+						{
+							document.getSelection().removeAllRanges();
+						}
+					},
+					mouseup: function (event){
+						if (_context.isSelection(event) && document.getSelection().type === 'Range'){
+							//let the draggable be reactivated by another click up as the range selection is
+							// not working as expected in shadow-dom as expected in all browsers
+						}
+						else
+						{
+							node.setAttribute("draggable", true);
+						}
 
-								// Set cursor back to auto. Seems FF can't handle cursor reversion
-								jQuery('body').css({cursor:'auto'});
-							}
-				});
-			}
+						// Set cursor back to auto. Seems FF can't handle cursor reversion
+						jQuery('body').css({cursor:'auto'});
+					}
+			});
+
 
 			node.setAttribute('draggable', true);
 			const dragstart = function(event) {
-				if (action) {
+
+				// The helper function is called before the start function
+				// is evoked. Call the given callback function. The callback
+				// function will gather the selected elements and action links
+				// and call the doExecuteImplementation function. This
+				// will call the onExecute function of the first action
+				// in order to obtain the helper object (stored in ai.helper)
+				// and the multiple dragDropTypes (ai.ddTypes)
+				_callback.call(_context, false, ai);
+
+				if (action && egw.app_name() == 'filemanager') {
 					if (_context.isSelection(event)) return;
 
 					// Get all selected
-					// Multiples aren't supported by event.dataTransfer, yet, so
-					// select only the row they clicked on.
-					var selected = [_context];
-					_context.parent.setAllSelected(false);
-					_context.setSelected(true);
+					var selected = ai.selected;
 
 					// Set file data
 					for (let i = 0; i < selected.length; i++) {
@@ -239,14 +240,7 @@ export function egwDragActionImplementation()
 							if (url[0] == '/') url = egw.link(url);
 							// egw.link adds the webserver, but that might not be an absolute URL - try again
 							if (url[0] == '/') url = window.location.origin + url;
-
-							// Unfortunately, dragging files is currently only supported by Chrome
-							if (navigator && navigator.userAgent.indexOf('Chrome')) {
-								event.dataTransfer.setData("DownloadURL", d.mime + ':' + d.name + ':' + url);
-							} else {
-								// Include URL as a fallback
-								event.dataTransfer.setData("text/uri-list", url);
-							}
+							event.dataTransfer.setData("DownloadURL", d.mime + ':' + d.name + ':' + url);
 						}
 					}
 					event.dataTransfer.effectAllowed = 'copy';
@@ -259,14 +253,7 @@ export function egwDragActionImplementation()
 				} else {
 					event.dataTransfer.effectAllowed = 'linkMove';
 				}
-				// The helper function is called before the start function
-				// is evoked. Call the given callback function. The callback
-				// function will gather the selected elements and action links
-				// and call the doExecuteImplementation function. This
-				// will call the onExecute function of the first action
-				// in order to obtain the helper object (stored in ai.helper)
-				// and the multiple dragDropTypes (ai.ddTypes)
-				_callback.call(_context, false, ai);
+
 
 				const data = {
 					ddTypes: ai.ddTypes,
