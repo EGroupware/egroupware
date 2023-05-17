@@ -107,7 +107,7 @@ class DateTime extends \DateTime
 		switch(($type = gettype($time)))
 		{
 			case 'NULL':
-			case 'boolean':	// depricated use in calendar for 'now'
+			case 'boolean':	// deprecated use in calendar for 'now'
 				$time = 'now';
 				$type = 'string';
 				// fall through
@@ -625,7 +625,7 @@ class DateTime extends \DateTime
 			error_log(__METHOD__."() invalid server_timezone='{$GLOBALS['egw_info']['server']['server_timezone']}' setting now '".self::$server_timezone->getName()."'!");
 			Config::save_value('server_timezone',$GLOBALS['egw_info']['server']['server_timezone'] = self::$server_timezone->getName(),'phpgwapi');
 		}
-		if (!isset($GLOBALS['egw_info']['user']['preferences']['common']['tz']))
+		if (empty($GLOBALS['egw_info']['user']['preferences']['common']['tz']))
 		{
 			$GLOBALS['egw_info']['user']['preferences']['common']['tz'] = $GLOBALS['egw_info']['server']['server_timezone'];
 		}
@@ -636,7 +636,7 @@ class DateTime extends \DateTime
 
 	/**
 	 * Return "beautified" timezone list:
-	 * - no depricated timezones
+	 * - no deprecated timezones
 	 * - return UTC and oceans at the end
 	 * - if (user lang is a european language), move Europe to top
 	 *
@@ -644,9 +644,9 @@ class DateTime extends \DateTime
 	 */
 	public static function getTimezones()
 	{
-		// prepare list of timezones from php, ignoring depricated ones and sort as follows
+		// prepare list of timezones from php, ignoring deprecated ones and sort as follows
 		$tzs = array(
-			'Africa'     => array(),	// Contients
+			'Africa'     => array(),	// Continents
 			'America'    => array(),
 			'Asia'       => array(),
 			'Australia'  => array(),
@@ -704,7 +704,7 @@ class DateTime extends \DateTime
 		{
 			if (in_array($name,$no_vtimezone)) continue;	// do NOT allow to set in EGroupware, as we have not VTIMEZONE component for it
 			list($continent) = explode('/',$name,2);
-			if (!isset($tzs[$continent])) continue;	// old depricated timezones
+			if (!isset($tzs[$continent])) continue;	// old deprecated timezones
 			$datetime = new DateTime('now',new DateTimeZone($name));
 			$tzs[$continent][$name] = str_replace(array('_','/'),array(' ',' / '),$name)."  ".$datetime->format();
 			unset($datetime);
