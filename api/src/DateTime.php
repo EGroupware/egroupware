@@ -575,7 +575,7 @@ class DateTime extends \DateTime
 		try {
 			self::$user_timezone = new DateTimeZone($tz);
 		}
-		catch(\Exception $e)
+		catch(\Throwable $e)
 		{
 			unset($e);
 			// silently use server timezone, as we have no means to report the wrong timezone to the user from this class
