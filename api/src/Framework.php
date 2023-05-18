@@ -1678,7 +1678,15 @@ abstract class Framework extends Framework\Extra
 		foreach($list as $type => &$accounts)
 		{
 			$options = array('account_type' => $type, 'tag_list' => true) + $accounts;
-			$accounts = Accounts::link_query('',$options);
+			$accounts = Accounts::link_query('', $options);
+		}
+		unset($list["accounts"][9]);
+		// Make sure the user themselves is in there
+		if(!array_key_exists($GLOBALS['egw_info']['user']['account_id'], $list['accounts']))
+		{
+			$options = array('account_type' => 'accounts', 'tag_list' => true,
+							 'account_id'   => $GLOBALS['egw_info']['user']['account_id']) + $list['accounts'];
+			$list['accounts'] += Accounts::link_query('', $options);
 		}
 
 		Json\Response::get()->data($list);
