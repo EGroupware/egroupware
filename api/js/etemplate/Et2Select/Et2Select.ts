@@ -86,11 +86,9 @@ export class Et2Select extends Et2WidgetWithSelect
 			  }
 
 			  /* Ellipsis when too small */
-
 			  .select__tags {
 				max-width: 100%;
 			  }
-
 			  .select__label {
 				display: block;
 				text-overflow: ellipsis;
@@ -153,13 +151,18 @@ export class Et2Select extends Et2WidgetWithSelect
 		];
 	}
 
-
 	/**
-	 * Used by Et2WidgetWithSelect to render each option into the select
+	 * List of properties that get translated
 	 *
-	 * @param {SelectOption} option
-	 * @returns {TemplateResult}
+	 * @returns object
 	 */
+	static get translate()
+	{
+		return {
+			...super.translate,
+			emptyLabel: true
+		}
+	}
 
 	connectedCallback()
 	{
