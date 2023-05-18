@@ -59,6 +59,34 @@ describe("Select widget basics", () =>
 		assert.notExists(element.querySelector("option"), "Static option not found in DOM");
 		assert.deepEqual(element.select_options, [], "Unexpected option(s)");
 	})
+
+	it("closes when losing focus", async() =>
+	{
+	// WIP
+		const blurSpy = sinon.spy();
+		element.addEventListener('blur', blurSpy);
+		const showPromise = new Promise(resolve =>
+		{
+			element.addEventListener("sl-after-show", resolve);
+		});
+		const hidePromise = new Promise(resolve =>
+		{
+			element.addEventListener("blur", resolve);
+		});
+
+		element.focus();
+
+		await showPromise;
+
+		element.blur();
+
+		await hidePromise;
+
+		sinon.assert.calledOnce(blurSpy);
+
+		// Check that it actually closed dropdown
+		assert.isFalse(element.dropdown?.hasAttribute("open"));
+	})
 });
 
 describe("Multiple", () =>
