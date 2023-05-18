@@ -3763,7 +3763,7 @@ export class CalendarApp extends EgwApp
 	 * @param event
 	 * @return Promise| null
 	 */
-	_fetch_group_members(event) : Promise<any> | null
+	async _fetch_group_members(event) : Promise<any> | null
 	{
 		let groups = [];
 		let option_owner = null;
