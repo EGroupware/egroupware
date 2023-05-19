@@ -10,7 +10,7 @@
  * @Todo: @new-js-loader port to TypeScript
  */
 import {egwMenuImpl} from './egw_menu_dhtmlx';
-import {egw_shortcutIdx} from './egw_keymanager';
+import {egw_registeredShortcuts, egw_shortcutIdx} from './egw_keymanager';
 import {
 	EGW_KEY_ARROW_DOWN,
 	EGW_KEY_ARROW_LEFT,
@@ -20,29 +20,18 @@ import {
 } from "./egw_action_constants";
 //Global variable which is used to store the currently active menu so that it
 //may be closed when another menu openes
-export var _egw_active_menu = null;
+export var _egw_active_menu: egwMenu = null;
 
 /**
  * Internal function which generates a menu item with the given parameters as used
  * in e.g. the egwMenu.addItem function.
  */
 //TODO Icons: write PHP GD script which is capable of generating the menu icons in various states (disabled, highlighted)
-function _egwGenMenuItem(_parent, _id, _caption, _iconUrl, _onClick)
+//TODO ask why we dont use new EgwMenuItem(params)
+function _egwGenMenuItem(_parent = null, _id = "", _caption = "", _iconUrl = "", _onClick = null)
 {
-	//Preset the parameters
-	if (typeof _parent == "undefined")
-		_parent = null;
-	if (typeof _id == "undefined")
-		_id = "";
-	if (typeof _caption == "undefined")
-		_caption = "";
-	if (typeof _iconUrl == "undefined")
-		_iconUrl = "";
-	if (typeof _onClick == "undefined")
-		_onClick = null;
-
 	//Create a menu item with no parent (null) and set the given parameters
-	var item = new egwMenuItem(_parent, _id);
+	var item: egwMenuItem = new egwMenuItem(_parent, _id);
 	item.set_caption(_caption);
 	item.set_iconUrl(_iconUrl);
 	item.set_onClick(_onClick);
@@ -51,18 +40,17 @@ function _egwGenMenuItem(_parent, _id, _caption, _iconUrl, _onClick)
 }
 
 /**
- * Internal function which parses the given menu tree in _elements and adds the 
+ * Internal function which parses the given menu tree in _elements and adds the
  * elements to the given parent.
  */
 function _egwGenMenuStructure(_elements, _parent)
 {
-	var items = [];
+	const items: egwMenuItem[] = [];
 
 	//Go through each object in the elements array
-	for (var i = 0; i < _elements.length; i++)
+	for (const obj of _elements)
 	{
 		//Go through each key of the current object
-		var obj = _elements[i];
 		var item = new egwMenuItem(_parent, null);
 		for (var key in obj)
 		{
@@ -70,16 +58,15 @@ function _egwGenMenuStructure(_elements, _parent)
 			{
 				//Recursively load the children.
 				item.children = _egwGenMenuStructure(obj[key], item);
-			}
-			else
+			} else
 			{
 				//Directly set the other keys
 				//TODO Sanity neccessary checks here?
 				//TODO Implement menu item getters?
 				if (key == "id" || key == "caption" || key == "iconUrl" ||
-				    key == "checkbox" || key == "checked" || key == "groupIndex" ||
-				    key == "enabled" || key == "default" || key == "onClick" ||
-				    key == "hint" || key == "shortcutCaption")
+					key == "checkbox" || key == "checked" || key == "groupIndex" ||
+					key == "enabled" || key == "default" || key == "onClick" ||
+					key == "hint" || key == "shortcutCaption")
 				{
 					item['set_' + key](obj[key]);
 				}
@@ -126,6 +113,27 @@ function _egwSetMenuOnClick(_elements, _onClick)
 }
 
 /**
+ * replacement function for jquery trigger
+ * @param selector
+ * @param eventType
+ */
+function trigger(selector, eventType)
+{
+	if (typeof eventType === 'string' && typeof selector[eventType] === 'function')
+	{
+		selector[eventType]();
+	} else
+	{
+		const event =
+			typeof eventType === 'string'
+				? new Event(eventType, {bubbles: true})
+				: eventType;
+		selector.dispatchEvent(event);
+	}
+}
+
+
+/**
  * Constructor for the egwMenu object. The egwMenu object is a abstract representation
  * of a context/popup menu. The actual generation of the menu can by done by so
  * called menu implementations. Those are activated by simply including the JS file
@@ -134,205 +142,204 @@ function _egwSetMenuOnClick(_elements, _onClick)
  * The currently available implementation is the "egwDhtmlxMenu.js" which is based
  * upon the dhtmlxmenu component.
  */
-export function egwMenu()
+export class egwMenu
 {
 	//The "items" variable contains all menu items of the menu
-	this.children = [];
+	children: egwMenuItem[] = [];
 
 	//The "instance" variable contains the currently opened instance. There may
 	//only be one instance opened at a time.
-	this.instance = null;
-}
-
-/**
- * The private _checkImpl function checks whether a menu implementation is available.
- *
- * @returns bool whether a menu implemenation is available.
- */
-egwMenu.prototype._checkImpl = function()
-{
-	return typeof egwMenuImpl == 'function';
-}
-
-/**
- * The showAtElement function shows the menu at the given screen position in an
- * (hopefully) optimal orientation. There can only be one instance of the menu opened at
- * one time and the menu implementation should care that there is only one menu
- * opened globaly at all.
- *
- * @param int _x is the x position at which the menu will be opened
- * @param int _y is the y position at which the menu will be opened
- * @param bool _force if true, the menu will be reopened at the given position,
- * 	even if it already had been opened. Defaults to false.
- * @returns bool whether the menu had been opened
- */
-egwMenu.prototype.showAt = function(_x, _y, _force)
-{
-	if (typeof _force == "undefined")
-		_force = false;
-
-	//Hide any other currently active menu
-	if (_egw_active_menu != null)
+	instance: egwMenuImpl = null; // This is equivalent to iface in other classes and holds an egwMenuImpl
+	constructor()
 	{
-		if (_egw_active_menu == this && !_force)
-		{
-			this.hide();
-			return false;
-		}
-		else
-		{
-			_egw_active_menu.hide();
-		}
 	}
 
-	if (this.instance == null && this._checkImpl)
+	/**
+	 * The private _checkImpl function checks whether a menu implementation is available.
+	 *
+	 * @returns bool whether a menu implemenation is available.
+	 */
+	private _checkImpl()
 	{
-		//Obtain a new egwMenuImpl object and pass this instance to it
-		this.instance = new egwMenuImpl(this.children);
+		return typeof egwMenuImpl == 'function';
+	}
 
-		_egw_active_menu = this;
-
-		var self = this;
-		this.instance.showAt(_x, _y, function() {
-			self.instance = null;
+	/**
+	 * Hides the menu if it is currently opened. Otherwise nothing happenes.
+	 */
+	public hide()
+	{
+		//Reset the currently active menu variable
+		if (_egw_active_menu == this)
 			_egw_active_menu = null;
-		});
-		return true;
+
+		//Check whether a currently opened instance exists. If it does, close it.
+		if (this.instance != null)
+		{
+			this.instance.hide();
+			this.instance = null;
+		}
 	}
 
-	return false;
-}
-
-/**
- * Keyhandler to allow keyboard navigation of menu
- *
- * @return boolean true if we dealt with the keypress
- */
-egwMenu.prototype.keyHandler = function(_keyCode, _shift, _ctrl, _alt)
-{
-	// Let main keyhandler deal with shortcuts
-	var idx = egw_shortcutIdx(_keyCode, _shift, _ctrl, _alt);
-	if (typeof egw_registeredShortcuts[idx] !== "undefined")
+	/**
+	 * The showAtElement function shows the menu at the given screen position in a
+	 * (hopefully) optimal orientation. There can only be one instance of the menu opened at
+	 * one time and the menu implementation should care that there is only one menu
+	 * opened globaly at all.
+	 *
+	 * @param {number} _x is the x position at which the menu will be opened
+	 * @param {number} _y is the y position at which the menu will be opened
+	 * @param {boolean} _force if true, the menu will be reopened at the given position,
+	 * 	even if it already had been opened. Defaults to false.
+	 * @returns {boolean} whether the menu had been opened
+	 */
+	public showAt(_x: number, _y: number, _force: boolean = false)
 	{
+		//Hide any other currently active menu
+		if (_egw_active_menu != null)
+		{
+			if (_egw_active_menu == this && !_force)
+			{
+				this.hide();
+				return false;
+			} else
+			{
+				_egw_active_menu.hide();
+			}
+		}
+
+		if (this.instance == null && this._checkImpl)
+		{
+			//Obtain a new egwMenuImpl object and pass this instance to it
+			this.instance = new egwMenuImpl(this.children);
+
+			_egw_active_menu = this;
+
+			this.instance.showAt(_x, _y, () => {
+				this.instance = null;
+				_egw_active_menu = null;
+			});
+			return true;
+		}
+
 		return false;
 	}
 
-	let current = this.instance.dhtmlxmenu.menuSelected;
-	if(current !== -1)
+	/**
+	 * Key handler to allow keyboard navigation of menu
+	 * TODO does this work?
+	 *
+	 * @return {boolean} true if we dealt with the keypress
+	 */
+	public keyHandler(_keyCode, _shift, _ctrl, _alt)
 	{
-		let find_func = function(child) {
-			if( child.id === current.replace(this.instance.dhtmlxmenu.idPrefix, ""))
-			{
-				return child;
-			}
-			else if (child.children)
-			{
-				for(let i = 0; i < child.children.length; i++)
-				{
-					const result = find_func(child.children[i]);
-					if(result) return result;
-				}
-			}
-			return null;
-		}.bind(this);
-		current = find_func(this);
-	}
-	else
-	{
-		current = this.children[0];
-		jQuery("#"+this.instance.dhtmlxmenu.idPrefix + current.id).trigger("mouseover");
-		return true;
-	}
-
-	switch (_keyCode) {
-		case EGW_KEY_ENTER:
-			jQuery("#"+this.instance.dhtmlxmenu.idPrefix + current.id).trigger("click");
-			return true;
-		case EGW_KEY_ESCAPE:
-			this.hide();
-			return true;
-		case EGW_KEY_ARROW_RIGHT:
-			if(current.children)
-			{
-				current = current.children[0];
-			}
-			break;
-		case EGW_KEY_ARROW_LEFT:
-			if(current.parent && current.parent !== this)
-			{
-				current = current.parent;
-			}
-			break;
-		case EGW_KEY_ARROW_UP:
-		case EGW_KEY_ARROW_DOWN:
-			const direction = _keyCode === EGW_KEY_ARROW_DOWN ? 1 : -1;
-			let parent = current.parent;
-			let index = parent.children.indexOf(current);
-			let cont = false;
-
-			// Don't run off ends, skip disabled
-			do
-			{
-				index += direction;
-				cont = !parent.children[index] || !parent.children[index].enabled || !parent.children[index].id;
-			} while (cont && index + direction < parent.children.length && index + direction >= 0);
-			if(index > parent.children.length - 1)
-			{
-				index = parent.children.length-1;
-			}
-			if(index < 0)
-			{
-				index = 0;
-			}
-			current = parent.children[index];
-			break;
-		default:
+		// Let main keyhandler deal with shortcuts
+		const idx = egw_shortcutIdx(_keyCode, _shift, _ctrl, _alt);
+		if (typeof egw_registeredShortcuts[idx] !== "undefined")
+		{
 			return false;
-	}
+		}
 
-	if(current)
-	{
-		jQuery("#" + this.instance.dhtmlxmenu.idPrefix + current.id).trigger("mouseover");
-		this.instance.dhtmlxmenu._redistribSubLevelSelection(this.instance.dhtmlxmenu.idPrefix + current.id,this.instance.dhtmlxmenu.idPrefix + ( current.parent ? current.parent.id : this.instance.dhtmlxmenu.topId));
-	}
-	return true;
-};
+		//TODO change with shoelace
+		let current = this.instance.dhtmlxmenu.menuSelected;
+		if (current !== -1)
+		{
+			let find_func = function (child) {
+				if (child.id === current.replace(this.instance.dhtmlxmenu.idPrefix, ""))
+				{
+					return child;
+				} else if (child.children)
+				{
+					for (let i = 0; i < child.children.length; i++)
+					{
+						const result = find_func(child.children[i]);
+						if (result) return result;
+					}
+				}
+				return null;
+			}.bind(this);
+			current = find_func(this);
+		} else
+		{
+			current = this.children[0];
+			trigger("#" + this.instance.dhtmlxmenu.idPrefix + current.id, "mouseover");
+			return true;
+		}
 
-/**
- * Hides the menu if it is currently opened. Otherwise nothing happenes.
- */
-egwMenu.prototype.hide = function()
-{
-	//Reset the currently active menu variable
-	if (_egw_active_menu == this)
-		_egw_active_menu = null;
+		switch (_keyCode)
+		{
+			case EGW_KEY_ENTER:
+				trigger("#" + this.instance.dhtmlxmenu.idPrefix + current.id, "click");
+				return true;
+			case EGW_KEY_ESCAPE:
+				this.hide();
+				return true;
+			case EGW_KEY_ARROW_RIGHT:
+				if (current.children)
+				{
+					current = current.children[0];
+				}
+				break;
+			case EGW_KEY_ARROW_LEFT:
+				if (current.parent && current.parent !== this)
+				{
+					current = current.parent;
+				}
+				break;
+			case EGW_KEY_ARROW_UP:
+			case EGW_KEY_ARROW_DOWN:
+				const direction = _keyCode === EGW_KEY_ARROW_DOWN ? 1 : -1;
+				let parent = current.parent;
+				let index = parent.children.indexOf(current);
+				let cont = false;
 
-	//Check whether an currently opened instance exists. If it does, close it.
-	if (this.instance != null)
-	{
-		this.instance.hide();
-		this.instance = null;
-	}
+				// Don't run off ends, skip disabled
+				do
+				{
+					index += direction;
+					cont = !parent.children[index] || !parent.children[index].enabled || !parent.children[index].id;
+				} while (cont && index + direction < parent.children.length && index + direction >= 0);
+				if (index > parent.children.length - 1)
+				{
+					index = parent.children.length - 1;
+				}
+				if (index < 0)
+				{
+					index = 0;
+				}
+				current = parent.children[index];
+				break;
+			default:
+				return false;
+		}
+
+		if (current)
+		{
+			trigger("#" + this.instance.dhtmlxmenu.idPrefix + current.id,"mouseover");
+			this.instance.dhtmlxmenu._redistribSubLevelSelection(this.instance.dhtmlxmenu.idPrefix + current.id, this.instance.dhtmlxmenu.idPrefix + (current.parent ? current.parent.id : this.instance.dhtmlxmenu.topId));
+		}
+		return true;
+	};
 }
+
 
 /**
  * Adds a new menu item to the list and returns a reference to that object.
  *
- * @param string _id is a unique identifier of the menu item. You can use the
+ * @param {string} _id is a unique identifier of the menu item. You can use
  * 	the getItem function to search a specific menu item inside the menu tree. The
- * 	id may also be false, null or "", which makes sense for items like seperators,
+ * 	id may also be false, null or "", which makes sense for items like separators,
  * 	which you don't want to access anymore after adding them to the menu tree.
- * @param string _caption is the caption of the newly generated menu item. Set the caption
+ * @param {string} _caption is the caption of the newly generated menu item. Set the caption
  * 	to "-" in order to create a sperator.
- * @param string _iconUrl is the URL of the icon which should be prepended to the
+ * @param {string} _iconUrl is the URL of the icon which should be prepended to the
  * 	menu item. It may be false, null or "" if you don't want a icon to be displayed.
- * @param function _onClick is the JS function which is being executed when the
+ * @param {function} _onClick is the JS function which is being executed when the
  * 	menu item is clicked.
- * @returns egwMenuItem the newly generated menu item, which had been appended to the
+ * @returns {egwMenuItem} the newly generated menu item, which had been appended to the
  * 	menu item list.
  */
-egwMenu.prototype.addItem = function(_id, _caption, _iconUrl, _onClick)
-{
+egwMenu.prototype.addItem = function (_id, _caption, _iconUrl, _onClick) {
 	//Append the item to the list
 	var item = _egwGenMenuItem(this, _id, _caption, _iconUrl, _onClick);
 	this.children.push(item);
@@ -343,8 +350,7 @@ egwMenu.prototype.addItem = function(_id, _caption, _iconUrl, _onClick)
 /**
  * Removes all elements fromt the menu structure.
  */
-egwMenu.prototype.clear = function()
-{
+egwMenu.prototype.clear = function () {
 	this.children = [];
 }
 
@@ -354,18 +360,16 @@ egwMenu.prototype.clear = function()
  * property of such an object is interpreted as a new sub-menu tree and appended
  * to that child.
  *
- * @param array _elements is a array of elements which should be added to the menu
+ * @param {array} _elements is an array of elements which should be added to the menu
  */
-egwMenu.prototype.loadStructure = function(_elements)
-{
+egwMenu.prototype.loadStructure = function (_elements) {
 	this.children = _egwGenMenuStructure(_elements, this);
 }
 
 /**
  * Searches for the given item id within the element tree.
  */
-egwMenu.prototype.getItem = function(_id)
-{
+egwMenu.prototype.getItem = function (_id) {
 	return _egwSearchMenuItem(this.children, _id);
 }
 
@@ -373,8 +377,7 @@ egwMenu.prototype.getItem = function(_id)
  * Applies the given onClick handler to all menu items which don't have a clicked
  * handler assigned yet.
  */
-egwMenu.prototype.setGlobalOnClick = function(_onClick)
-{
+egwMenu.prototype.setGlobalOnClick = function (_onClick) {
 	_egwSetMenuOnClick(this.children, _onClick);
 }
 
@@ -384,7 +387,7 @@ egwMenu.prototype.setGlobalOnClick = function(_onClick)
  */
 export class egwMenuItem
 {
-	id:string;
+	id: string;
 	caption = "";
 	checkbox = false;
 	checked = false;
@@ -397,19 +400,23 @@ export class egwMenuItem
 	shortcutCaption = null;
 
 	children = [];
-	parent:egwMenu;
-	constructor(_parent,_id)
+	parent: egwMenu;
+	//is set for radio Buttons
+	_dhtmlx_grpid: string="";
+	//hint might get set somewhere
+	hint: string="";
+
+	constructor(_parent, _id)
 	{
-		this.parent=_parent;
-		this.id=_id;
+		this.parent = _parent;
+		this.id = _id;
 	}
 }
 
 /**
  * Searches for the given item id within the element tree.
  */
-egwMenuItem.prototype.getItem = function(_id)
-{
+egwMenuItem.prototype.getItem = function (_id) {
 	if (this.id === _id)
 		return this;
 
@@ -420,8 +427,7 @@ egwMenuItem.prototype.getItem = function(_id)
  * Applies the given onClick handler to all menu items which don't have a clicked
  * handler assigned yet.
  */
-egwMenuItem.prototype.setGlobalOnClick = function(_onClick)
-{
+egwMenuItem.prototype.setGlobalOnClick = function (_onClick) {
 	this.onClick = _onClick;
 	_egwSetMenuOnClick(this.children, _onClick);
 }
@@ -442,8 +448,7 @@ egwMenuItem.prototype.setGlobalOnClick = function(_onClick)
  * @returns egwMenuItem the newly generated menu item, which had been appended to the
  * 	menu item list.
  */
-egwMenuItem.prototype.addItem = function(_id, _caption, _iconUrl, _onClick)
-{
+egwMenuItem.prototype.addItem = function (_id, _caption, _iconUrl, _onClick) {
 	//Append the item to the list
 	var item = _egwGenMenuItem(this, _id, _caption, _iconUrl, _onClick);
 	this.children.push(item);
@@ -454,24 +459,20 @@ egwMenuItem.prototype.addItem = function(_id, _caption, _iconUrl, _onClick)
 
 //Setter functions for the menuitem properties
 
-egwMenuItem.prototype.set_id = function(_value)
-{
+egwMenuItem.prototype.set_id = function (_value) {
 	this.id = _value;
 }
 
-egwMenuItem.prototype.set_caption = function(_value)
-{
+egwMenuItem.prototype.set_caption = function (_value) {
 	//A value of "-" means that this element is a seperator.
 	this.caption = _value;
 }
 
-egwMenuItem.prototype.set_checkbox = function(_value)
-{
+egwMenuItem.prototype.set_checkbox = function (_value) {
 	this.checkbox = _value;
 }
 
-egwMenuItem.prototype.set_checked = function(_value)
-{
+egwMenuItem.prototype.set_checked = function (_value) {
 	if (_value && this.groupIndex > 0)
 	{
 		//Uncheck all other elements in this radio group
@@ -485,45 +486,37 @@ egwMenuItem.prototype.set_checked = function(_value)
 	this.checked = _value;
 }
 
-egwMenuItem.prototype.set_groupIndex = function(_value)
-{
+egwMenuItem.prototype.set_groupIndex = function (_value) {
 	//If groupIndex is greater than 0 and the element is a checkbox, it is
 	//treated like a radio box
 	this.groupIndex = _value;
 }
 
-egwMenuItem.prototype.set_enabled = function(_value)
-{
+egwMenuItem.prototype.set_enabled = function (_value) {
 	this.enabled = _value;
 }
 
-egwMenuItem.prototype.set_onClick = function(_value)
-{
+egwMenuItem.prototype.set_onClick = function (_value) {
 	this.onClick = _value;
 }
 
-egwMenuItem.prototype.set_iconUrl = function(_value)
-{
+egwMenuItem.prototype.set_iconUrl = function (_value) {
 	this.iconUrl = _value;
 }
 
-egwMenuItem.prototype.set_default = function(_value)
-{
+egwMenuItem.prototype.set_default = function (_value) {
 	this["default"] = _value;
 }
 
-egwMenuItem.prototype.set_data = function(_value)
-{
+egwMenuItem.prototype.set_data = function (_value) {
 	this.data = _value;
 }
 
-egwMenuItem.prototype.set_hint = function(_value)
-{
+egwMenuItem.prototype.set_hint = function (_value) {
 	this.hint = _value;
 }
 
-egwMenuItem.prototype.set_shortcutCaption = function(_value)
-{
+egwMenuItem.prototype.set_shortcutCaption = function (_value) {
 	this.shortcutCaption = _value;
 }
 

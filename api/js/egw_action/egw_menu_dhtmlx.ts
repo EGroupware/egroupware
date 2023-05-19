@@ -10,13 +10,15 @@
  */
 
 
+import {egwMenuItem} from "./egw_menu";
+
 /**
  *
  * @param {type} _structure
  */
 export class egwMenuImpl
 {
-	private readonly dhtmlxmenu:any;
+	readonly dhtmlxmenu:any;
 	constructor(_structure)
 	{
 		//Create a new dhtmlxmenu object
@@ -182,7 +184,7 @@ export class egwMenuImpl
 
 		window.setTimeout(() => {
 			this.dhtmlxmenu.showContextMenu(_x, _y);
-			// TODO: Get keybard focus
+			// TODO: Get keyboard focus
 		}, 0);
 	};
 
