@@ -428,7 +428,7 @@ export class Et2Select extends Et2WidgetWithSelect
 
 	protected _createImage(item)
 	{
-		let image = item.querySelector("et2-image") || item.querySelector("[slot='prefix']");
+		let image = item ? item.querySelector("et2-image") || item.querySelector("[slot='prefix']") : null;
 		if(image)
 		{
 			image = image.clone();
