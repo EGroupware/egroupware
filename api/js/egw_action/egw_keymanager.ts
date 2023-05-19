@@ -76,6 +76,7 @@ function _egw_nodeIsInInput(_node)
 /**
  * execute
  * @param fn after DOM is ready
+ * replacement for jQuery.ready()
  */
 function ready(fn) {
 	if (document.readyState !== 'loading') {
@@ -87,14 +88,14 @@ function ready(fn) {
 /**
  * Register the onkeypress handler on the document
  */
-jQuery(function() {//waits for DOM ready
+ready(()=> {//waits for DOM ready
 
 	// Fetch the key down event and translate it into browser-independent and
 	// easy to use key codes and shift states
 	document.addEventListener("keydown", (keyboardEvent: KeyboardEvent)=> {
 
 		// Translate the given key code and make it valid
-		var keyCode = keyboardEvent.keyCode;
+		let keyCode = keyboardEvent.keyCode;
 		keyCode = egw_keycode_translation_function(keyCode);
 		keyCode = egw_keycode_makeValid(keyCode);
 
@@ -102,7 +103,12 @@ jQuery(function() {//waits for DOM ready
 		if (keyCode != -1)
 		{
 			// Check whether the event came from the sidebox - if yes, ignore
-			if(jQuery(keyboardEvent.target).parents("#egw_fw_sidemenu").length > 0) return;
+			//if(jQuery(keyboardEvent.target).parents("#egw_fw_sidemenu").length > 0) return;
+			//TODO check replacement with ralf or Nathan
+			let target:any = keyboardEvent.target // this is some kind of element
+			while ((target=target.parentNode) && target !== document){
+				if (!"#egw_fw_sidemenu"||target.matches("#egw_fw_sidemenu")) return;
+			}
 
 			// If a context menu is open, give the keyboard to it
 			if (typeof _egw_active_menu !== undefined && _egw_active_menu &&
@@ -113,13 +119,13 @@ jQuery(function() {//waits for DOM ready
 			}
 			// Check whether the event came from an input field - if yes, only
 			// allow function keys (like F1) to be captured by our code
-			var inInput = _egw_nodeIsInInput(keyboardEvent.target);
+			const inInput = _egw_nodeIsInInput(keyboardEvent.target);
 			if (!inInput || (keyCode >= EGW_KEY_F1 && keyCode <= EGW_KEY_F12))
 			{
 				if (egw_keyHandler(keyCode, keyboardEvent.shiftKey, keyboardEvent.ctrlKey || keyboardEvent.metaKey, keyboardEvent.altKey))
 				{
 					// If the key handler successfully passed the key event to some
-					// sub component, prevent the default action
+					// subcomponent, prevent the default action
 					keyboardEvent.preventDefault();
 				}
 			}
