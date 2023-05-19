@@ -10,7 +10,7 @@
  * @Todo: @new-js-loader port to TypeScript
  */
 import {egwMenuImpl} from './egw_menu_dhtmlx';
-import {egw_shortcutIdx} from './egw_keymanager.js';
+import {egw_shortcutIdx} from './egw_keymanager';
 import {
 	EGW_KEY_ARROW_DOWN,
 	EGW_KEY_ARROW_LEFT,

@@ -251,7 +251,7 @@ class Bundle
 		// actions
 		$inc_mgr->include_js_file('/api/js/egw_action/egw_action_constants');
 		$inc_mgr->include_js_file('/api/js/egw_action/egw_action');
-		$inc_mgr->include_js_file('/api/js/egw_action/egw_keymanager.js');
+		$inc_mgr->include_js_file('/api/js/egw_action/egw_keymanager');
 		$inc_mgr->include_js_file('/api/js/egw_action/egw_action_popup.js');
 		$inc_mgr->include_js_file('/api/js/egw_action/egw_action_dragdrop.js');
 		$inc_mgr->include_js_file('/api/js/egw_action/egw_dragdrop_dhtmlx_tree.js');

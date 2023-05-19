@@ -22,7 +22,7 @@ import {
 	egw_keycode_translation_function,
 	egw_keycode_makeValid,
 	egw_keyHandler
-} from "../../api/js/egw_action/egw_keymanager.js";
+} from "../../api/js/egw_action/egw_keymanager";
 import {Et2UrlEmailReadonly} from "../../api/js/etemplate/Et2Url/Et2UrlEmailReadonly";
 import {Et2SelectEmail} from "../../api/js/etemplate/Et2Select/Et2SelectEmail";
 /* required dependency, commented out because no module, but egw:uses is no longer parsed
