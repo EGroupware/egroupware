@@ -43,7 +43,7 @@ function _egwGenMenuItem(_parent = null, _id = "", _caption = "", _iconUrl = "",
  * Internal function which parses the given menu tree in _elements and adds the
  * elements to the given parent.
  */
-function _egwGenMenuStructure(_elements, _parent)
+function _egwGenMenuStructure(_elements: any[], _parent)
 {
 	const items: egwMenuItem[] = [];
 
@@ -51,8 +51,8 @@ function _egwGenMenuStructure(_elements, _parent)
 	for (const obj of _elements)
 	{
 		//Go through each key of the current object
-		var item = new egwMenuItem(_parent, null);
-		for (var key in obj)
+		const item = new egwMenuItem(_parent, null);
+		for (const key in obj)
 		{
 			if (key == "children" && obj[key].constructor === Array)
 			{
@@ -82,14 +82,14 @@ function _egwGenMenuStructure(_elements, _parent)
 /**
  * Internal function which searches for the given ID inside an element tree.
  */
-function _egwSearchMenuItem(_elements, _id)
+function _egwSearchMenuItem(_elements, _id): egwMenuItem
 {
-	for (var i = 0; i < _elements.length; i++)
+	for (const item1 of _elements)
 	{
-		if (_elements[i].id === _id)
-			return _elements[i];
+		if (item1.id === _id)
+			return item1;
 
-		var item = _egwSearchMenuItem(_elements[i].children, _id);
+		const item = _egwSearchMenuItem(item1.children, _id);
 		if (item)
 			return item;
 	}
@@ -98,17 +98,17 @@ function _egwSearchMenuItem(_elements, _id)
 }
 
 /**
- * Internal function which alows to set the onClick handler of multiple menu items
+ * Internal function which allows to set the onClick handler of multiple menu items
  */
 function _egwSetMenuOnClick(_elements, _onClick)
 {
-	for (var i = 0; i < _elements.length; i++)
+	for (const item of _elements)
 	{
-		if (_elements[i].onClick === null)
+		if (item.onClick === null)
 		{
-			_elements[i].onClick = _onClick;
+			item.onClick = _onClick;
 		}
-		_egwSetMenuOnClick(_elements[i].children, _onClick);
+		_egwSetMenuOnClick(item.children, _onClick);
 	}
 }
 
@@ -315,56 +315,59 @@ export class egwMenu
 
 		if (current)
 		{
-			trigger("#" + this.instance.dhtmlxmenu.idPrefix + current.id,"mouseover");
+			trigger("#" + this.instance.dhtmlxmenu.idPrefix + current.id, "mouseover");
 			this.instance.dhtmlxmenu._redistribSubLevelSelection(this.instance.dhtmlxmenu.idPrefix + current.id, this.instance.dhtmlxmenu.idPrefix + (current.parent ? current.parent.id : this.instance.dhtmlxmenu.topId));
 		}
 		return true;
-	};
+	}
+
+	/**
+	 * Adds a new menu item to the list and returns a reference to that object.
+	 *
+	 * @param {string} _id is a unique identifier of the menu item. You can use
+	 * 	the getItem function to search a specific menu item inside the menu tree. The
+	 * 	id may also be false, null or "", which makes sense for items like separators,
+	 * 	which you don't want to access anymore after adding them to the menu tree.
+	 * @param {string} _caption is the caption of the newly generated menu item. Set the caption
+	 * 	to "-" in order to create a sperator.
+	 * @param {string} _iconUrl is the URL of the icon which should be prepended to the
+	 * 	menu item. It may be false, null or "" if you don't want a icon to be displayed.
+	 * @param {function} _onClick is the JS function which is being executed when the
+	 * 	menu item is clicked.
+	 * @returns {egwMenuItem} the newly generated menu item, which had been appended to the
+	 * 	menu item list.
+	 */
+	public addItem(_id, _caption, _iconUrl, _onClick): egwMenuItem
+	{
+		//Append the item to the list
+		const item: egwMenuItem = _egwGenMenuItem(this, _id, _caption, _iconUrl, _onClick);
+		this.children.push(item);
+
+		return item;
+	}
+
+	/**
+	 * Removes all elements fromt the menu structure.
+	 */
+	public clear()
+	{
+		this.children = [];
+	}
+
+	/**
+	 * Loads the menu structure from the given object tree. The object tree is an array
+	 * of objects which may contain a subset of the menu item properties. The "children"
+	 * property of such an object is interpreted as a new sub-menu tree and appended
+	 * to that child.
+	 *
+	 * @param {array} _elements is an array of elements which should be added to the menu
+	 */
+	public loadStructure(_elements)
+	{
+		this.children = _egwGenMenuStructure(_elements, this);
+	}
 }
 
-
-/**
- * Adds a new menu item to the list and returns a reference to that object.
- *
- * @param {string} _id is a unique identifier of the menu item. You can use
- * 	the getItem function to search a specific menu item inside the menu tree. The
- * 	id may also be false, null or "", which makes sense for items like separators,
- * 	which you don't want to access anymore after adding them to the menu tree.
- * @param {string} _caption is the caption of the newly generated menu item. Set the caption
- * 	to "-" in order to create a sperator.
- * @param {string} _iconUrl is the URL of the icon which should be prepended to the
- * 	menu item. It may be false, null or "" if you don't want a icon to be displayed.
- * @param {function} _onClick is the JS function which is being executed when the
- * 	menu item is clicked.
- * @returns {egwMenuItem} the newly generated menu item, which had been appended to the
- * 	menu item list.
- */
-egwMenu.prototype.addItem = function (_id, _caption, _iconUrl, _onClick) {
-	//Append the item to the list
-	var item = _egwGenMenuItem(this, _id, _caption, _iconUrl, _onClick);
-	this.children.push(item);
-
-	return item;
-}
-
-/**
- * Removes all elements fromt the menu structure.
- */
-egwMenu.prototype.clear = function () {
-	this.children = [];
-}
-
-/**
- * Loads the menu structure from the given object tree. The object tree is an array
- * of objects which may contain a subset of the menu item properties. The "children"
- * property of such an object is interpreted as a new sub-menu tree and appended
- * to that child.
- *
- * @param {array} _elements is an array of elements which should be added to the menu
- */
-egwMenu.prototype.loadStructure = function (_elements) {
-	this.children = _egwGenMenuStructure(_elements, this);
-}
 
 /**
  * Searches for the given item id within the element tree.
@@ -388,9 +391,43 @@ egwMenu.prototype.setGlobalOnClick = function (_onClick) {
 export class egwMenuItem
 {
 	id: string;
+
+	set_id(_value)
+	{
+		this.id = _value;
+	}
+
 	caption = "";
+
+	set_caption(_value)
+	{
+		//A value of "-" means that this element is a seperator.
+		this.caption = _value;
+	}
+
 	checkbox = false;
+
+	set_checkbox(_value)
+	{
+		this.checkbox = _value;
+	}
+
 	checked = false;
+
+	set_checked(_value)
+	{
+		if (_value && this.groupIndex > 0)
+		{
+			//Uncheck all other elements in this radio group
+			for (var menuItem of this.parent.children)
+			{
+				if (menuItem.groupIndex == this.groupIndex)
+					menuItem.checked = false;
+			}
+		}
+		this.checked = _value;
+	}
+
 	groupIndex = 0;
 	enabled = true;
 	iconUrl = "";
@@ -402,121 +439,95 @@ export class egwMenuItem
 	children = [];
 	parent: egwMenu;
 	//is set for radio Buttons
-	_dhtmlx_grpid: string="";
+	_dhtmlx_grpid: string = "";
 	//hint might get set somewhere
-	hint: string="";
+	hint: string = "";
 
 	constructor(_parent, _id)
 	{
 		this.parent = _parent;
 		this.id = _id;
 	}
-}
 
-/**
- * Searches for the given item id within the element tree.
- */
-egwMenuItem.prototype.getItem = function (_id) {
-	if (this.id === _id)
-		return this;
-
-	return _egwSearchMenuItem(this.children, _id);
-}
-
-/**
- * Applies the given onClick handler to all menu items which don't have a clicked
- * handler assigned yet.
- */
-egwMenuItem.prototype.setGlobalOnClick = function (_onClick) {
-	this.onClick = _onClick;
-	_egwSetMenuOnClick(this.children, _onClick);
-}
-
-/**
- * Adds a new menu item to the list and returns a reference to that object.
- *
- * @param string _id is a unique identifier of the menu item. You can use the
- * 	the getItem function to search a specific menu item inside the menu tree. The
- * 	id may also be false, null or "", which makes sense for items like seperators,
- * 	which you don't want to access anymore after adding them to the menu tree.
- * @param string _caption is the caption of the newly generated menu item. Set the caption
- * 	to "-" in order to create a sperator.
- * @param string _iconUrl is the URL of the icon which should be prepended to the
- * 	menu item. It may be false, null or "" if you don't want a icon to be displayed.
- * @param function _onClick is the JS function which is being executed when the
- * 	menu item is clicked.
- * @returns egwMenuItem the newly generated menu item, which had been appended to the
- * 	menu item list.
- */
-egwMenuItem.prototype.addItem = function (_id, _caption, _iconUrl, _onClick) {
-	//Append the item to the list
-	var item = _egwGenMenuItem(this, _id, _caption, _iconUrl, _onClick);
-	this.children.push(item);
-
-	return item;
-}
-
-
-//Setter functions for the menuitem properties
-
-egwMenuItem.prototype.set_id = function (_value) {
-	this.id = _value;
-}
-
-egwMenuItem.prototype.set_caption = function (_value) {
-	//A value of "-" means that this element is a seperator.
-	this.caption = _value;
-}
-
-egwMenuItem.prototype.set_checkbox = function (_value) {
-	this.checkbox = _value;
-}
-
-egwMenuItem.prototype.set_checked = function (_value) {
-	if (_value && this.groupIndex > 0)
+	/**
+	 * Searches for the given item id within the element tree.
+	 */
+	getItem(_id)
 	{
-		//Uncheck all other elements in this radio group
-		for (var i = 0; i < this.parent.children.length; i++)
-		{
-			var obj = this.parent.children[i];
-			if (obj.groupIndex == this.groupIndex)
-				obj.checked = false;
-		}
-	}
-	this.checked = _value;
-}
+		if (this.id === _id)
+			return this;
 
-egwMenuItem.prototype.set_groupIndex = function (_value) {
+		return _egwSearchMenuItem(this.children, _id);
+	}
+
+	/**
+	 * Applies the given onClick handler to all menu items which don't have a clicked
+	 * handler assigned yet.
+	 */
+	setGlobalOnClick(_onClick)
+	{
+		this.onClick = _onClick;
+		_egwSetMenuOnClick(this.children, _onClick);
+	}
+
+	/**
+	 * Adds a new menu item to the list and returns a reference to that object.
+	 *
+	 * @param {string} _id is a unique identifier of the menu item. You can use the
+	 * 	the getItem function to search a specific menu item inside the menu tree. The
+	 * 	id may also be false, null or "", which makes sense for items like seperators,
+	 * 	which you don't want to access anymore after adding them to the menu tree.
+	 * @param {string} _caption is the caption of the newly generated menu item. Set the caption
+	 * 	to "-" in order to create a sperator.
+	 * @param {string} _iconUrl is the URL of the icon which should be prepended to the
+	 * 	menu item. It may be false, null or "" if you don't want a icon to be displayed.
+	 * @param {function} _onClick is the JS function which is being executed when the
+	 * 	menu item is clicked.
+	 * @returns {egwMenuItem} the newly generated menu item, which had been appended to the
+	 * 	menu item list.
+	 */
+	addItem(_id: string, _caption: string, _iconUrl: string, _onClick: any)
+	{
+		//Append the item to the list
+		const item = _egwGenMenuItem(this, _id, _caption, _iconUrl, _onClick);
+		this.children.push(item);
+
+		return item;
+	}
+
+	set_groupIndex(_value) {
 	//If groupIndex is greater than 0 and the element is a checkbox, it is
 	//treated like a radio box
 	this.groupIndex = _value;
 }
 
-egwMenuItem.prototype.set_enabled = function (_value) {
+	set_enabled (_value) {
 	this.enabled = _value;
 }
 
-egwMenuItem.prototype.set_onClick = function (_value) {
+	set_onClick (_value) {
 	this.onClick = _value;
 }
 
-egwMenuItem.prototype.set_iconUrl = function (_value) {
+	set_iconUrl (_value) {
 	this.iconUrl = _value;
 }
 
-egwMenuItem.prototype.set_default = function (_value) {
+	set_default (_value) {
 	this["default"] = _value;
 }
 
-egwMenuItem.prototype.set_data = function (_value) {
+	set_data (_value) {
 	this.data = _value;
 }
 
-egwMenuItem.prototype.set_hint = function (_value) {
+	set_hint (_value) {
 	this.hint = _value;
 }
 
-egwMenuItem.prototype.set_shortcutCaption = function (_value) {
+	set_shortcutCaption (_value) {
 	this.shortcutCaption = _value;
+}
+
 }
 
