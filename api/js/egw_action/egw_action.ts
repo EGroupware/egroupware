@@ -1057,18 +1057,18 @@ export class egwActionLink extends  EgwActionLink{}
 export class EgwActionObject {
     readonly id: string
     readonly parent: EgwActionObject
-    private readonly children: EgwActionObject[] = []
+    public readonly children: EgwActionObject[] = []
     private actionLinks: EgwActionLink[] = []
     iface: EgwActionObjectInterface
     readonly manager: EgwActionManager
-    private readonly flags: number
+    readonly flags: number
     data: any = null
     private readonly setSelectedCallback: any = null;
     private registeredImpls: any[] = [];
     // Two variables which help fast travelling through the object tree, when
     // searching for the selected/focused object.
     private selectedChildren = [];
-    private focusedChild = null;
+    private focusedChild:EgwActionObject = null;
     private readonly onBeforeTrigger: Function = undefined
     _context: any = undefined
 
@@ -1775,7 +1775,7 @@ export class EgwActionObject {
      * @param {boolean} _focused
      */
 
-    updateFocusedChild(_child, _focused) {
+    updateFocusedChild(_child: EgwActionObject, _focused: boolean) {
         if (_focused) {
             this.focusedChild = _child;
         } else {

@@ -13,7 +13,7 @@
 	egw_action;
 */
 
-import {egw_getAppObjectManager, egw_globalObjectManager} from "./egw_action";
+import {egw_getAppObjectManager, egw_globalObjectManager, EgwActionObject, EgwActionObjectManager} from "./egw_action";
 import {_egw_active_menu} from "./egw_menu.js";
 import {
 	EGW_AO_FLAG_DEFAULT_FOCUS,
@@ -25,7 +25,7 @@ import {
 import {egwBitIsSet} from "./egw_action_common";
 
 /**
- * The tranlation function converts the given native key code into one of the
+ * The translation function converts the given native key code into one of the
  * egw key constants as listed above. This key codes were chosen to match the
  * key codes of IE and FF.
  */
@@ -171,6 +171,7 @@ function addEventListener(el, eventName, eventHandler, selector)
 /**
  * Required to catch the context menu
  */
+//TODO how do i test for this
 addEventListener(window, "contextmenu", document, (event) => {
 	// Check for actual key press
 	if (!(event.originalEvent.x == 1 && event.originalEvent.y == 1)) return true;
@@ -186,17 +187,25 @@ addEventListener(window, "contextmenu", document, (event) => {
 
 
 /**
- * Creates an unique key for the given shortcut
+ * Creates a unique key for the given shortcut
  */
-export function egw_shortcutIdx(_keyCode, _shift, _ctrl, _alt)
+export function egw_shortcutIdx(_keyCode: number, _shift: boolean, _ctrl: boolean, _alt: boolean):string
 {
 	return "_" + _keyCode + "_" +
 		(_shift ? "S" : "") +
 		(_ctrl ? "C" : "") +
 		(_alt ? "A" : "");
 }
+type Shortcut= {"handler":()=> boolean,
+	"context": any,
+	"shortcut":{
+		"keyCode": number,
+		"shift": boolean,
+		"ctrl": boolean,
+		"alt":boolean
+	}}
 
-var egw_registeredShortcuts = {}
+export var egw_registeredShortcuts = {}
 
 /**
  * Registers a global shortcut. If the shortcut already exists, it is overwritten.
@@ -209,10 +218,10 @@ var egw_registeredShortcuts = {}
  * 	parameter.
  * @param {any} _context is the context in which the function will be executed
  */
-export function egw_registerGlobalShortcut(_keyCode, _shift, _ctrl, _alt, _handler, _context)
+export function egw_registerGlobalShortcut(_keyCode: number, _shift: boolean, _ctrl: boolean, _alt: boolean, _handler: () => boolean, _context: any)
 {
 	// Generate the hash map index for the shortcut
-	var idx = egw_shortcutIdx(_keyCode, _shift, _ctrl, _alt);
+	const idx = egw_shortcutIdx(_keyCode, _shift, _ctrl, _alt);
 
 	// Register the shortcut
 	egw_registeredShortcuts[idx] = {
@@ -233,7 +242,7 @@ export function egw_registerGlobalShortcut(_keyCode, _shift, _ctrl, _alt, _handl
 export function egw_unregisterGlobalShortcut(_keyCode, _shift, _ctrl, _alt)
 {
 	// Generate the hash map index for the shortcut
-	var idx = egw_shortcutIdx(_keyCode, _shift, _ctrl, _alt);
+	const idx = egw_shortcutIdx(_keyCode, _shift, _ctrl, _alt);
 
 	// Delete the entry from the hash map
 	delete egw_registeredShortcuts[idx];
@@ -248,13 +257,13 @@ export function egw_keyHandler(_keyCode, _shift, _ctrl, _alt)
 {
 
 	// Check whether there is a global shortcut waiting for the keypress event
-	var idx = egw_shortcutIdx(_keyCode, _shift, _ctrl, _alt);
+	const idx = egw_shortcutIdx(_keyCode, _shift, _ctrl, _alt);
 	if (typeof egw_registeredShortcuts[idx] != "undefined")
 	{
-		var shortcut = egw_registeredShortcuts[idx];
+		const shortcut:Shortcut = egw_registeredShortcuts[idx];
 
 		// Call the registered shortcut function and return its result, if it handled it
-		var result = shortcut.handler.call(shortcut.context, shortcut.shortcut);
+		const result = shortcut.handler.call(shortcut.context, shortcut.shortcut);
 		if (result) return result;
 	}
 
@@ -262,8 +271,8 @@ export function egw_keyHandler(_keyCode, _shift, _ctrl, _alt)
 
 	// Get the object manager and fetch the container of the currently
 	// focused object
-	var focusedObject = egw_globalObjectManager ? egw_globalObjectManager.getFocusedObject() : null;
-	var appMgr = egw_getAppObjectManager(false);
+	let focusedObject: EgwActionObject = egw_globalObjectManager ? egw_globalObjectManager.getFocusedObject() : null;
+	const appMgr: EgwActionObjectManager = egw_getAppObjectManager(false);
 	if (appMgr && !focusedObject)
 	{
 		focusedObject = appMgr.getFocusedObject();
@@ -273,35 +282,34 @@ export function egw_keyHandler(_keyCode, _shift, _ctrl, _alt)
 			// If the current application doesn't have a focused object,
 			// check whether the application object manager contains an object
 			// with the EGW_AO_FLAG_DEFAULT_FOCUS flag set.
-			var cntr = null;
-			for (var i = 0; i < appMgr.children.length; i++)
+			let egwActionObject:EgwActionObject = null;
+			for (const child of appMgr.children)
 			{
-				var child = appMgr.children[i];
 				if (egwBitIsSet(EGW_AO_FLAG_DEFAULT_FOCUS, child.flags))
 				{
-					cntr = child;
+					egwActionObject = child;
 					break;
 				}
 			}
 
 			// Get the first child of the found container and focus the first
 			// object
-			if (cntr && cntr.children.length > 0)
+			if (egwActionObject && egwActionObject.children.length > 0)
 			{
-				cntr.children[0].setFocused(true);
-				focusedObject = cntr.children[0];
+				egwActionObject.children[0].setFocused(true);
+				focusedObject = egwActionObject.children[0];
 			}
 		}
 	}
 	if (focusedObject)
 	{
 		// Handle the default keys (arrow_up, down etc.)
-		var cntr = focusedObject.getContainerRoot();
-		var handled = false;
+		let egwActionObject = focusedObject.getContainerRoot();
+		let handled = false;
 
-		if (cntr)
+		if (egwActionObject)
 		{
-			handled = cntr.handleKeyPress(_keyCode, _shift, _ctrl, _alt);
+			handled = egwActionObject.handleKeyPress(_keyCode, _shift, _ctrl, _alt);
 		}
 
 		// Execute the egw_popup key handler of the focused object
