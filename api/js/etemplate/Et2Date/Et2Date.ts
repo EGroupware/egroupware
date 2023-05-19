@@ -1019,13 +1019,13 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(LitFlatpickr))
             <div class="et2-date-time__scrollbuttons" part="scrollbuttons" @click=${this.handleScroll}>
                 <et2-button-icon
                         noSubmit
-                        name="chevron-up"
+                        image="chevron-up"
                         data-direction="1"
                 >↑
                 </et2-button-icon>
                 <et2-button-icon
                         noSubmit
-                        name="chevron-down"
+                        image="chevron-down"
                         data-direction="-1"
                 >↓
                 </et2-button-icon>
