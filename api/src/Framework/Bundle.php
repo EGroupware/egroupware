@@ -255,8 +255,8 @@ class Bundle
 		$inc_mgr->include_js_file('/api/js/egw_action/egw_action_popup.js');
 		$inc_mgr->include_js_file('/api/js/egw_action/egw_action_dragdrop.js');
 		$inc_mgr->include_js_file('/api/js/egw_action/egw_dragdrop_dhtmlx_tree.js');
-		$inc_mgr->include_js_file('/api/js/egw_action/egw_menu.js');
-		$inc_mgr->include_js_file('/api/js/egw_action/egw_menu_dhtmlx.js');
+		$inc_mgr->include_js_file('/api/js/egw_action/egw_menu');
+		$inc_mgr->include_js_file('/api/js/egw_action/egw_menu_dhtmlx');
 		// include choosen in api, as old eTemplate uses it and fail if it pulls in half of et2
 		$inc_mgr->include_js_file('/api/js/jquery/chosen/chosen.jquery.js');
 		$bundles['api'] = $inc_mgr->get_included_files();

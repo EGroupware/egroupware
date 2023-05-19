@@ -14,7 +14,7 @@
 */
 
 import {egw_getAppObjectManager, egw_globalObjectManager, EgwActionObject, EgwActionObjectManager} from "./egw_action";
-import {_egw_active_menu} from "./egw_menu.js";
+import {_egw_active_menu} from "./egw_menu";
 import {
 	EGW_AO_FLAG_DEFAULT_FOCUS,
 	EGW_AO_EXEC_SELECTED,

@@ -26,7 +26,7 @@ export var _egw_active_menu = null;
  * Internal function which generates a menu item with the given parameters as used
  * in e.g. the egwMenu.addItem function.
  */
-//TODO Icons: write PHP GD script which is cabable of generating the menu icons in various states (disabled, highlighted)
+//TODO Icons: write PHP GD script which is capable of generating the menu icons in various states (disabled, highlighted)
 function _egwGenMenuItem(_parent, _id, _caption, _iconUrl, _onClick)
 {
 	//Preset the parameters
@@ -382,22 +382,27 @@ egwMenu.prototype.setGlobalOnClick = function(_onClick)
  * Constructor for the egwMenuItem. Each entry in a menu (including seperators)
  * is represented by a menu item.
  */
-export function egwMenuItem(_parent, _id)
+export class egwMenuItem
 {
-	this.id = _id;
-	this.caption = "";
-	this.checkbox = false;
-	this.checked = false;
-	this.groupIndex = 0;
-	this.enabled = true;
-	this.iconUrl = "";
-	this.onClick = null;
-	this["default"] = false;
-	this.data = null;
-	this.shortcutCaption = null;
+	id:string;
+	caption = "";
+	checkbox = false;
+	checked = false;
+	groupIndex = 0;
+	enabled = true;
+	iconUrl = "";
+	onClick = null;
+	default = false;
+	data = null;
+	shortcutCaption = null;
 
-	this.children = [];
-	this.parent = _parent;
+	children = [];
+	parent:egwMenu;
+	constructor(_parent,_id)
+	{
+		this.parent=_parent;
+		this.id=_id;
+	}
 }
 
 /**
