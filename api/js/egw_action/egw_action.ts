@@ -27,7 +27,7 @@ import {
     EGW_KEY_SPACE, EGW_AO_STATES
 } from './egw_action_constants';
 import {
-    EgwFnct, egwFnct, egwActionStoreJSON, egwBitIsSet, egwQueueCallback, egwSetBit, egwObjectLength
+    EgwFnct, egwActionStoreJSON, egwBitIsSet, egwQueueCallback, egwSetBit, egwObjectLength
 } from './egw_action_common';
 import './egw_action_popup.js';
 import "./egw_action_dragdrop.js";
@@ -68,8 +68,8 @@ declare global {
  * Getter functions for the global egwActionManager and egwObjectManager objects
  */
 
-let egw_globalActionManager = null;
-export var egw_globalObjectManager = null;
+let egw_globalActionManager:EgwActionManager = null;
+export var egw_globalObjectManager:EgwActionObjectManager = null;
 
 /**
  * Returns the action manager for the given application - each application has its
@@ -115,7 +115,8 @@ export function egw_getActionManager(_id?: string, _create: boolean = true, _sea
  * @param {number} [_search_depth=Infinite] How deep into existing action children
  *    to search.
  */
-export function egw_getObjectManager(_id, _create = true, _search_depth = Number.MAX_VALUE) {
+export function egw_getObjectManager(_id, _create = true, _search_depth = Number.MAX_VALUE): EgwActionObjectManager
+{
 
     // Check whether the global object manager exists
     let res = egw_globalObjectManager;
@@ -142,7 +143,7 @@ export function egw_getObjectManager(_id, _create = true, _search_depth = Number
  * @param {string} _appName //appName might not always be the current app, e.g. running app content under admin tab
  * @return {EgwActionObjectManager}
  */
-export function egw_getAppObjectManager(_create, _appName) {
+export function egw_getAppObjectManager(_create, _appName="") {
     return egw_getObjectManager(_appName ? _appName : window.egw(window).app_name(), _create, 1);
 }
 
@@ -395,7 +396,7 @@ export class EgwAction {
      * @param {boolean} _allowOnMultiple
      */
 
-    public addAction(_type: string, _id: string, _caption: string, _iconUrl: string, _onExecute: string | Function, _allowOnMultiple: boolean): EgwAction {
+    public addAction(_type: string, _id: string, _caption: string="", _iconUrl: string="", _onExecute: string | Function=null, _allowOnMultiple: boolean=true): EgwAction {
         //Get the constructor for the given action type
         if (!(_type in window._egwActionClasses)) {
             //TODO doesn't default instead of popup make more sense here??
@@ -1072,7 +1073,7 @@ export class EgwActionObject {
     _context: any = undefined
 
 
-    constructor(_id: string, _parent, _interface, _manager?, _flags?: number) {
+    constructor(_id: string, _parent, _interface:EgwActionObjectInterface, _manager?, _flags: number=0) {
         if (typeof _manager == "undefined" && typeof _parent == "object" && _parent) _manager = _parent.manager;
         if (typeof _flags == "undefined") _flags = 0;
 
@@ -1149,7 +1150,7 @@ export class EgwActionObject {
      *    object. May be omitted.
      * @returns object the generated object
      */
-    addObject(_id, _interface, _flags) {
+    addObject(_id: any, _interface: EgwActionObjectInterface=null, _flags: number=0) {
         return this.insertObject(false, _id, _interface, _flags);
     };
 
@@ -1162,14 +1163,14 @@ export class EgwActionObject {
      *    to the end of the list.
      * @param {string|object} _id Id of the object which will be created or the object
      *    that will be added.
-     * @param {object} _iface if _id was an string, _iface defines the interface which
+     * @param {object} _iface if _id was a string, _iface defines the interface which
      *    will be connected to the newly generated object.
      * @param {number} _flags are the flags will which be supplied to the newly generated
      *    object. May be omitted.
      * @returns object the generated object
      */
 
-    insertObject(_index, _id, _iface, _flags) {
+    insertObject(_index: number | boolean, _id: string | EgwActionObject, _iface: EgwActionObjectInterface, _flags: number) {
         if (_index === false) _index = this.children.length;
 
         let obj = null;
@@ -1189,7 +1190,7 @@ export class EgwActionObject {
 
         if (obj) {
             // Add the element to the children
-            this.children.splice(_index, 0, obj);
+            this.children.splice(_index as number, 0, obj);
         } else {
             throw "Error while adding new element to the ActionObjects!";
         }
