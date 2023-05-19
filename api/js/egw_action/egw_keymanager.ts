@@ -29,7 +29,7 @@ import {egwBitIsSet} from "./egw_action_common";
  * egw key constants as listed above. This key codes were chosen to match the
  * key codes of IE and FF.
  */
-export var egw_keycode_translation_function = function(_nativeKeyCode) {
+export var egw_keycode_translation_function = function (_nativeKeyCode) {
 	// Map the numpad to the 0..9 keys
 	if (_nativeKeyCode >= 96 && _nativeKeyCode <= 105)
 	{
@@ -43,9 +43,11 @@ export var egw_keycode_translation_function = function(_nativeKeyCode) {
  * Checks whether the given keycode is in the list of valid key codes. If not,
  * returns -1.
  */
-export function egw_keycode_makeValid(_keyCode) {
+export function egw_keycode_makeValid(_keyCode)
+{
 	const idx = EGW_VALID_KEYS.indexOf(_keyCode);
-	if (idx >= 0) {
+	if (idx >= 0)
+	{
 		return _keyCode;
 	}
 
@@ -61,13 +63,11 @@ function _egw_nodeIsInInput(_node)
 			['et2-textbox', 'et2-number', 'et2-searchbox', 'et2-select', 'et2-textarea', 'et2-button'].indexOf(tagName) != -1)
 		{
 			return true;
-		}
-		else
+		} else
 		{
 			return _egw_nodeIsInInput(_node.parentNode);
 		}
-	}
-	else
+	} else
 	{
 		return false;
 	}
@@ -78,21 +78,25 @@ function _egw_nodeIsInInput(_node)
  * @param fn after DOM is ready
  * replacement for jQuery.ready()
  */
-function ready(fn) {
-	if (document.readyState !== 'loading') {
+function ready(fn)
+{
+	if (document.readyState !== 'loading')
+	{
 		fn();
-	} else {
+	} else
+	{
 		document.addEventListener('DOMContentLoaded', fn);
 	}
 }
+
 /**
  * Register the onkeypress handler on the document
  */
-ready(()=> {//waits for DOM ready
+ready(() => {//waits for DOM ready
 
 	// Fetch the key down event and translate it into browser-independent and
 	// easy to use key codes and shift states
-	document.addEventListener("keydown", (keyboardEvent: KeyboardEvent)=> {
+	document.addEventListener("keydown", (keyboardEvent: KeyboardEvent) => {
 
 		// Translate the given key code and make it valid
 		let keyCode = keyboardEvent.keyCode;
@@ -105,9 +109,10 @@ ready(()=> {//waits for DOM ready
 			// Check whether the event came from the sidebox - if yes, ignore
 			//if(jQuery(keyboardEvent.target).parents("#egw_fw_sidemenu").length > 0) return;
 			//TODO check replacement with ralf or Nathan
-			let target:any = keyboardEvent.target // this is some kind of element
-			while ((target=target.parentNode) && target !== document){
-				if (!"#egw_fw_sidemenu"||target.matches("#egw_fw_sidemenu")) return;
+			let target: any = keyboardEvent.target // this is some kind of element
+			while ((target = target.parentNode) && target !== document)
+			{
+				if (!"#egw_fw_sidemenu" || target.matches("#egw_fw_sidemenu")) return;
 			}
 
 			// If a context menu is open, give the keyboard to it
@@ -133,21 +138,51 @@ ready(()=> {//waits for DOM ready
 	});
 });
 
+
+function addEventListener(el, eventName, eventHandler, selector)
+{
+	if (selector)
+	{
+		const wrappedHandler = (e) => {
+			if (!e.target) return;
+			const el = e.target.closest(selector);
+			if (el)
+			{
+				const newEvent = Object.create(e, {
+					target: {
+						value: el
+					}
+				});
+				eventHandler.call(el, newEvent);
+			}
+		};
+		el.addEventListener(eventName, wrappedHandler);
+		return wrappedHandler;
+	} else
+	{
+		const wrappedHandler = (e) => {
+			eventHandler.call(el, e);
+		};
+		el.addEventListener(eventName, wrappedHandler);
+		return wrappedHandler;
+	}
+}
+
 /**
  * Required to catch the context menu
  */
-jQuery(window).on("contextmenu",document, function(event) {
+addEventListener(window, "contextmenu", document, (event) => {
 	// Check for actual key press
-	if(!(event.originalEvent.x == 1 && event.originalEvent.y == 1)) return true;
-	if(!event.ctrlKey && egw_keyHandler(EGW_KEY_MENU, event.shiftKey, event.ctrlKey || event.metaKey, event.altKey))
+	if (!(event.originalEvent.x == 1 && event.originalEvent.y == 1)) return true;
+	if (!event.ctrlKey && egw_keyHandler(EGW_KEY_MENU, event.shiftKey, event.ctrlKey || event.metaKey, event.altKey))
 	{
 		// If the key handler successfully passed the key event to some
-		// sub component, prevent the default action
+		// subcomponent, prevent the default action
 		event.preventDefault();
 		return false;
 	}
 	return true;
-});
+})
 
 
 /**
@@ -165,14 +200,14 @@ var egw_registeredShortcuts = {}
 
 /**
  * Registers a global shortcut. If the shortcut already exists, it is overwritten.
- * @param int _keyCode is one of the keycode constants
- * @param bool _shift whether shift has to be set
- * @param bool _ctrl whether ctrl has to be set
- * @param bool _alt whether alt has to be set
- * @param function _handler the function which will be called when the shortcut
+ * @param {int} _keyCode is one of the keycode constants
+ * @param {bool} _shift whether shift has to be set
+ * @param {bool} _ctrl whether ctrl has to be set
+ * @param {bool} _alt whether alt has to be set
+ * @param {function} _handler the function which will be called when the shortcut
  * 	is evoked. An object containing the shortcut data will be passed as first
  * 	parameter.
- * @param object _context is the context in which the function will be executed
+ * @param {any} _context is the context in which the function will be executed
  */
 export function egw_registerGlobalShortcut(_keyCode, _shift, _ctrl, _alt, _handler, _context)
 {
@@ -209,7 +244,8 @@ export function egw_unregisterGlobalShortcut(_keyCode, _shift, _ctrl, _alt)
  * _shift, _ctrl, _alt values have been translated into platform independent
  * values (for apple devices).
  */
-export function egw_keyHandler(_keyCode, _shift, _ctrl, _alt) {
+export function egw_keyHandler(_keyCode, _shift, _ctrl, _alt)
+{
 
 	// Check whether there is a global shortcut waiting for the keypress event
 	var idx = egw_shortcutIdx(_keyCode, _shift, _ctrl, _alt);
@@ -219,7 +255,7 @@ export function egw_keyHandler(_keyCode, _shift, _ctrl, _alt) {
 
 		// Call the registered shortcut function and return its result, if it handled it
 		var result = shortcut.handler.call(shortcut.context, shortcut.shortcut);
-		if(result) return result;
+		if (result) return result;
 	}
 
 	// Pass the keypress to the currently focused action object
@@ -272,14 +308,14 @@ export function egw_keyHandler(_keyCode, _shift, _ctrl, _alt) {
 		if (!handled)
 		{
 			return focusedObject.executeActionImplementation(
-			{
-				"keyEvent": {
-					"keyCode": _keyCode,
-					"shift": _shift,
-					"ctrl": _ctrl,
-					"alt": _alt
-				}
-			}, "popup", EGW_AO_EXEC_SELECTED);
+				{
+					"keyEvent": {
+						"keyCode": _keyCode,
+						"shift": _shift,
+						"ctrl": _ctrl,
+						"alt": _alt
+					}
+				}, "popup", EGW_AO_EXEC_SELECTED);
 		}
 
 		return handled;
