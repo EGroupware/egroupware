@@ -189,7 +189,7 @@ export class Et2Link extends ExposeMixin<Et2Widget>(Et2Widget(LitElement)) imple
 				.replace(/ /g, '\u00a0');
 		}
 		return html`
-            <div part="base" class="link et2_link">
+            <div part="base" class="link et2_link" draggable="${this.app == 'file'}" @dragstart=${this._handleDragStart.bind(this, this.dataset)}>
                 ${this._thumbnailTemplate({id: this.entryId, app: this.app, ...this.dataset})}
                 <span part="title" class="link__title">${title}</span>
                 <span part="remark" class="link__remark">${this.dataset.remark}</span>
@@ -326,6 +326,49 @@ export class Et2Link extends ExposeMixin<Et2Widget>(Et2Widget(LitElement)) imple
 					// It's probably already been rendered
 					this.requestUpdate();
 				});
+			}
+		}
+	}
+
+	/**
+	 * Handle dragstart event for dragging out a file
+	 *
+	 * @param _data
+	 * @param _ev
+	 * @protected
+	 */
+	protected _handleDragStart (_data, _ev)
+	{
+		// // Unfortunately, dragging files is currently only supported by Chrome
+		if(navigator && navigator.userAgent.indexOf('Chrome') >= 0) {
+
+			if (_ev.dataTransfer == null) {
+				return;
+			}
+			if (_data && _data.type && _data.download_url) {
+				_ev.dataTransfer.dropEffect = "copy";
+				_ev.dataTransfer.effectAllowed = "copy";
+
+				let url = _data.download_url;
+
+				// NEED an absolute URL
+				if (url[0] == '/') url = egw.link(url);
+				// egw.link adds the webserver, but that might not be an absolute URL - try again
+				if (url[0] == '/') url = window.location.origin + url;
+
+				// Unfortunately, dragging files is currently only supported by Chrome
+				if (navigator && navigator.userAgent.indexOf('Chrome')) {
+					_ev.dataTransfer.setData("DownloadURL", _data.type + ':' + _data.title + ':' + url);
+				}
+
+				// Include URL as a fallback
+				_ev.dataTransfer.setData("text/uri-list", url);
+			}
+
+			if (_ev.dataTransfer.types.length == 0) {
+				// No file data? Abort: drag does nothing
+				_ev.preventDefault();
+				return;
 			}
 		}
 	}
