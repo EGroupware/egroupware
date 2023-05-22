@@ -282,6 +282,8 @@ export function egwDragActionImplementation()
 				if (helper) helper.remove();
 				const draggable = document.querySelector('.drag--moving');
 				if (draggable) draggable.classList.remove('drag--moving');
+				// cleanup drop hover class from all other DOMs if there's still anything left
+				Array.from(document.getElementsByClassName('et2dropzone drop-hover')).forEach(_i=>{_i.classList.remove('drop-hover')})
 			};
 
 			// Drag Event listeners
