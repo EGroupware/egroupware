@@ -2817,7 +2817,7 @@ div#calendar-container div.calendar table tbody tr.rowhilite td {
   #calendar-toolbar .nm-mob-header #calendar-toolbar_toolbar {
     display: flex;
     padding: 0px !important;
-    min-width: 230px;
+    min-width: 260px;
     justify-content: flex-start;
   }
   #calendar-toolbar .nm-mob-header #calendar-toolbar_toolbar #toolbar-actionlist {
