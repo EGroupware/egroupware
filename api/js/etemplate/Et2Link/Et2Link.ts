@@ -358,7 +358,7 @@ export class Et2Link extends ExposeMixin<Et2Widget>(Et2Widget(LitElement)) imple
 
 				// Unfortunately, dragging files is currently only supported by Chrome
 				if (navigator && navigator.userAgent.indexOf('Chrome')) {
-					_ev.dataTransfer.setData("DownloadURL", _data.type + ':' + _data.title + ':' + url);
+					_ev.dataTransfer.setData("DownloadURL", _data.type + ':' + this.title + ':' + url);
 				}
 
 				// Include URL as a fallback
