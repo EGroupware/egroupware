@@ -145,7 +145,14 @@ export function egwDragActionImplementation()
 		if('draggable' in document.createElement('span') &&
 			navigator && navigator.userAgent.indexOf('Chrome') >= 0 && egw.app_name() == 'filemanager') // currently only filemanager supports drag out
 		{
-			text.text(egw.lang('You may darg files out to your desktop', itemLabel));
+			if (rows.length == 1)
+			{
+				text.text(egw.lang('You may darg file out to your desktop', itemLabel));
+			}
+			else
+			{
+				text.text(egw.lang('Note: If you drag out these selected rows to desktop only the first selected row will be downloaded.', itemLabel));
+			}
 		}
 		// Final html DOM return as helper structor
 		return div;
@@ -231,7 +238,7 @@ export function egwDragActionImplementation()
 					var selected = ai.selected;
 
 					// Set file data
-					for (let i = 0; i < selected.length; i++) {
+					for (let i = 0; i < 1; i++) {
 						let d = selected[i].data || egw.dataGetUIDdata(selected[i].id).data || {};
 						if (d && d.mime && d.download_url) {
 							var url = d.download_url;
