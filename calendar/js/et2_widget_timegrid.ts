@@ -1295,7 +1295,6 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 				{
 					dropEnd = helper.dropEnd[0].dataset || this.dropEnd
 				}
-				this.getWidget()._event_drop.call(jQuery('.calendar_d-n-d_timeCounter', _data.ui.helper)[0], this.getWidget(), event, _data.ui, dropEnd);
 			}
 			var drag_listener = function(_event)
 			{
