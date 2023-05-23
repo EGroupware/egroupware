@@ -325,10 +325,11 @@ class importexport_wizard_basic_import_csv
 			foreach($content['csv_fields'] as $index => $title)
 			{
 				$content['mapping'][] = array(
-					'index'	=>	$index,
-					'title' => $title,
-					'field'	=>	$field[$index],
-					'conversion'	=>	$conversion[$index]
+					'index'      => $index,
+					'title'      => $title,
+					// Make sure the field is not null, or auto-repeat will skip the row
+					'field'      => $field[$index] ?: '',
+					'conversion' => $conversion[$index]
 				);
 				if(strstr($title,lang('Extra %1'))) $empties++;
 			}
