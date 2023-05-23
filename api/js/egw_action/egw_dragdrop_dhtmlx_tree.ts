@@ -9,14 +9,8 @@
  */
 
 
-import {egwBitIsSet, egwSetBit} from "./egw_action_common";
-import {
-	EGW_AI_DRAG_OUT,
-	EGW_AI_DRAG_OVER,
-	EGW_AO_STATE_FOCUSED,
-	EGW_AO_STATE_NORMAL,
-	EGW_AO_STATE_SELECTED, EGW_AO_STATE_VISIBLE, EGW_AO_STATES
-} from "./egw_action_constants";
+import {egwBitIsSet} from "./egw_action_common";
+import {EGW_AI_DRAG_OUT, EGW_AI_DRAG_OVER, EGW_AO_STATE_FOCUSED, EGW_AO_STATE_SELECTED} from "./egw_action_constants";
 import {EgwActionObjectInterface} from "./egw_action";
 import {egwActionObjectInterface} from "./egw_action";
 
@@ -44,108 +38,46 @@ export function dhtmlxTree_getNode(_tree: dhtmlXTreeObject, _itemId: string)
 
 // An action object interface for an dhtmlxTree entry - it only contains the
 // code needed for drag/drop handling
-export class dhtmlxtreeItemAOI implements EgwActionObjectInterface
+export class dhtmlxtreeItemAOI
 {
-	private node;
-	private id;
-	private tree;
-
 	constructor(_tree, _itemId)
 	{
+
+		const aoi = new egwActionObjectInterface();
+
 		// Retrieve the actual node from the tree
-		this.node = dhtmlxTree_getNode(_tree, _itemId);
-		this.id = _itemId;
-		this.tree = _tree
-
-	}
-
-	_state: number = EGW_AO_STATE_NORMAL || EGW_AO_STATE_VISIBLE;
-	stateChangeCallback: Function;
-	stateChangeContext: any;
-	reconnectActionsCallback: Function;
-	reconnectActionsContext: any;
-
-	setStateChangeCallback(_callback: Function, _context: any): void
-	{
-		this.stateChangeCallback = _callback;
-		this.stateChangeContext = _context;
-	}
-
-	setReconnectActionsCallback(_callback: Function, _context: any): void
-	{
-		this.reconnectActionsCallback = _callback;
-		this.reconnectActionsContext = _context;
-	}
-
-	reconnectActions(): void
-	{
-		if (this.reconnectActionsCallback)
-		{
-			this.reconnectActionsCallback.call(this.reconnectActionsContext);
-		}
-	}
-
-	updateState(_stateBit: number, _set: boolean, _shiftState: boolean): void
-	{
-		// Calculate the new state
-		//this does not guarantee a valid state at runtime
-		const newState: EGW_AO_STATES = <EGW_AO_STATES>egwSetBit(this._state, _stateBit, _set);
-
-		// Call the stateChangeCallback if the state really changed
-		if (this.stateChangeCallback)
-		{
-			this._state = this.stateChangeCallback.call(this.stateChangeContext, newState, _stateBit, _shiftState);
-		} else
-		{
-			this._state = newState;
+		aoi.node = dhtmlxTree_getNode(_tree, _itemId);
+		aoi.id = _itemId;
+		aoi.doGetDOMNode = function () {
+			return aoi.node;
 		}
 
-	}
-
-	getDOMNode(): Element
-	{
-		return this.node;
-	}
-
-	setState(_state: any): void
-	{
-		if (!this.tree || !this.tree.focusItem) return;
-
-		// Update the "focused" flag
-		if (egwBitIsSet(_state, EGW_AO_STATE_FOCUSED))
-		{
-			this.tree.focusItem(this.id);
+		aoi.doTriggerEvent = function (_event) {
+			if (_event == EGW_AI_DRAG_OVER)
+			{
+				jQuery(this.node).addClass("draggedOver");
+			}
+			if (_event == EGW_AI_DRAG_OUT)
+			{
+				jQuery(this.node).removeClass("draggedOver");
+			}
 		}
-		if (egwBitIsSet(_state, EGW_AO_STATE_SELECTED))
-		{
-			this.tree.selectItem(this.id, false);	// false = do not trigger onSelect
-		}
-	}
 
-	getState(): number
-	{
-		return this._state;
-	}
+		aoi.doSetState = function (_state) {
+			if (!_tree || !_tree.focusItem) return;
 
-	triggerEvent(_event: any, _data: any): boolean
-	{
-		let result = false
-		if (_event == EGW_AI_DRAG_OVER)
-		{
-			this.node.classList.add("draggedOver")
-			result = true
+			// Update the "focused" flag
+			if (egwBitIsSet(_state, EGW_AO_STATE_FOCUSED))
+			{
+				_tree.focusItem(this.id);
+			}
+			if (egwBitIsSet(_state, EGW_AO_STATE_SELECTED))
+			{
+				_tree.selectItem(this.id, false);	// false = do not trigger onSelect
+			}
 		}
-		if (_event == EGW_AI_DRAG_OUT)
-		{
-			this.node.classList.remove("draggedOver")
-			result = true
-		}
-		return result
-	}
 
-	makeVisible(): void
-	{
-		console.log("Method not implemented.");
+		return aoi;
 	}
 }
 
