@@ -172,7 +172,7 @@ function addEventListener(el, eventName, eventHandler, selector)
  * Required to catch the context menu
  */
 //TODO how do i test for this
-addEventListener(window, "contextmenu", document, (event) => {
+jQuery(window).on("contextmenu",document, function(event) {
 	// Check for actual key press
 	if (!(event.originalEvent.x == 1 && event.originalEvent.y == 1)) return true;
 	if (!event.ctrlKey && egw_keyHandler(EGW_KEY_MENU, event.shiftKey, event.ctrlKey || event.metaKey, event.altKey))

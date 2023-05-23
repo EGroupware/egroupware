@@ -8,26 +8,28 @@
  * @package egw_action
  */
 
-/*egw:uses
-	egw_action;
-*/
-import {egwActionObjectInterface} from "./egw_action";
+
 import {egwBitIsSet} from "./egw_action_common";
 import {EGW_AI_DRAG_OUT, EGW_AI_DRAG_OVER, EGW_AO_STATE_FOCUSED, EGW_AO_STATE_SELECTED} from "./egw_action_constants";
+import {EgwActionObjectInterface} from "./egw_action";
+import {egwActionObjectInterface} from "./egw_action";
 
 /**
-* This file contains an egw_actionObjectInterface which allows a dhtmlx tree
-* row to be a drag target and contains a function which transforms a complete
-* dhtmlx tree into egw_actionObjects
-*/
+ * This file contains an egw_actionObjectInterface which allows a dhtmlx tree
+ * row to be a drag target and contains a function which transforms a complete
+ * dhtmlx tree into egw_actionObjects
+ */
+declare class dhtmlXTreeObject {
 
-export function dhtmlxTree_getNode(_tree, _itemId) {
-	var node = _tree._globalIdStorageFind(_itemId);
-	if (node != null)
-	{
+	_globalIdStorageFind(_itemId: string):any
+}
+
+export function dhtmlxTree_getNode(_tree: dhtmlXTreeObject, _itemId: string) {
+	const node = _tree._globalIdStorageFind(_itemId);
+	if (node != null) {
 		// Get the outer html table node of the tree node - return the first
 		// "tr" child of the element
-		return jQuery("tr:first", node.htmlNode).get(0);
+		return node.htmlNode.querySelector("tr:first-child")
 	}
 }
 
