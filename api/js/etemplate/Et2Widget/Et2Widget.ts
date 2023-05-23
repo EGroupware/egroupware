@@ -237,7 +237,7 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 
 			this.addEventListener("click", this._handleClick);
 
-			if(this.statustext)
+			if(this.statustext && !egwIsMobile())
 			{
 				this.egw().tooltipBind(this, this.egw().lang(this.statustext));
 			}
