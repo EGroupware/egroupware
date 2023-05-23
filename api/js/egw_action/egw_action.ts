@@ -2155,6 +2155,7 @@ export class egwActionObject extends EgwActionObject{}
  * @return {egwActionObjectInterface}
  */
 export interface EgwActionObjectInterface {
+    //TODO abstract class might be better
     //properties
     _state: number;
     stateChangeCallback: Function;
