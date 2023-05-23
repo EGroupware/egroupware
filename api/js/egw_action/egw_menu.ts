@@ -7,7 +7,6 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package egw_action
  *
- * @Todo: @new-js-loader port to TypeScript
  */
 import {egwMenuImpl} from './egw_menu_dhtmlx';
 import {egw_registeredShortcuts, egw_shortcutIdx} from './egw_keymanager';
@@ -19,7 +18,7 @@ import {
 	EGW_KEY_ESCAPE
 } from "./egw_action_constants";
 //Global variable which is used to store the currently active menu so that it
-//may be closed when another menu openes
+//may be closed when another menu opens
 export var _egw_active_menu: egwMenu = null;
 
 /**
@@ -31,7 +30,7 @@ export var _egw_active_menu: egwMenu = null;
 function _egwGenMenuItem(_parent = null, _id = "", _caption = "", _iconUrl = "", _onClick = null)
 {
 	//Create a menu item with no parent (null) and set the given parameters
-	var item: egwMenuItem = new egwMenuItem(_parent, _id);
+	const item: egwMenuItem = new egwMenuItem(_parent, _id);
 	item.set_caption(_caption);
 	item.set_iconUrl(_iconUrl);
 	item.set_onClick(_onClick);
@@ -61,7 +60,7 @@ function _egwGenMenuStructure(_elements: any[], _parent)
 			} else
 			{
 				//Directly set the other keys
-				//TODO Sanity neccessary checks here?
+				//TODO Sanity necessary checks here?
 				//TODO Implement menu item getters?
 				if (key == "id" || key == "caption" || key == "iconUrl" ||
 					key == "checkbox" || key == "checked" || key == "groupIndex" ||
@@ -82,7 +81,7 @@ function _egwGenMenuStructure(_elements: any[], _parent)
 /**
  * Internal function which searches for the given ID inside an element tree.
  */
-function _egwSearchMenuItem(_elements, _id): egwMenuItem
+function _egwSearchMenuItem(_elements: any[], _id: any): egwMenuItem
 {
 	for (const item1 of _elements)
 	{
@@ -134,9 +133,9 @@ function trigger(selector, eventType)
 
 
 /**
- * Constructor for the egwMenu object. The egwMenu object is a abstract representation
- * of a context/popup menu. The actual generation of the menu can by done by so
- * called menu implementations. Those are activated by simply including the JS file
+ * Constructor for the egwMenu object. The egwMenu object is an abstract representation
+ * of a context/popup menu. The actual generation of the menu can be done by
+ * so-called menu implementations. Those are activated by simply including the JS file
  * of such an implementation.
  *
  * The currently available implementation is the "egwDhtmlxMenu.js" which is based
@@ -157,7 +156,7 @@ export class egwMenu
 	/**
 	 * The private _checkImpl function checks whether a menu implementation is available.
 	 *
-	 * @returns bool whether a menu implemenation is available.
+	 * @returns bool whether a menu implementation is available.
 	 */
 	private _checkImpl()
 	{
@@ -165,7 +164,7 @@ export class egwMenu
 	}
 
 	/**
-	 * Hides the menu if it is currently opened. Otherwise nothing happenes.
+	 * Hides the menu if it is currently opened. Otherwise, nothing happens.
 	 */
 	public hide()
 	{
@@ -185,7 +184,7 @@ export class egwMenu
 	 * The showAtElement function shows the menu at the given screen position in a
 	 * (hopefully) optimal orientation. There can only be one instance of the menu opened at
 	 * one time and the menu implementation should care that there is only one menu
-	 * opened globaly at all.
+	 * opened globally at all.
 	 *
 	 * @param {number} _x is the x position at which the menu will be opened
 	 * @param {number} _y is the y position at which the menu will be opened
@@ -233,7 +232,7 @@ export class egwMenu
 	 */
 	public keyHandler(_keyCode, _shift, _ctrl, _alt)
 	{
-		// Let main keyhandler deal with shortcuts
+		// Let main key-handler deal with shortcuts
 		const idx = egw_shortcutIdx(_keyCode, _shift, _ctrl, _alt);
 		if (typeof egw_registeredShortcuts[idx] !== "undefined")
 		{
@@ -329,9 +328,9 @@ export class egwMenu
 	 * 	id may also be false, null or "", which makes sense for items like separators,
 	 * 	which you don't want to access anymore after adding them to the menu tree.
 	 * @param {string} _caption is the caption of the newly generated menu item. Set the caption
-	 * 	to "-" in order to create a sperator.
+	 * 	to "-" in order to create a separator.
 	 * @param {string} _iconUrl is the URL of the icon which should be prepended to the
-	 * 	menu item. It may be false, null or "" if you don't want a icon to be displayed.
+	 * 	menu item. It may be false, null or "" if you don't want an icon to be displayed.
 	 * @param {function} _onClick is the JS function which is being executed when the
 	 * 	menu item is clicked.
 	 * @returns {egwMenuItem} the newly generated menu item, which had been appended to the
@@ -340,14 +339,14 @@ export class egwMenu
 	public addItem(_id, _caption, _iconUrl, _onClick): egwMenuItem
 	{
 		//Append the item to the list
-		const item: egwMenuItem = _egwGenMenuItem(this, _id, _caption, _iconUrl, _onClick);
+		const item: egwMenuItem = new egwMenuItem(this, _id, _caption, _iconUrl, _onClick);
 		this.children.push(item);
 
 		return item;
 	}
 
 	/**
-	 * Removes all elements fromt the menu structure.
+	 * Removes all elements from the menu structure.
 	 */
 	public clear()
 	{
@@ -366,26 +365,26 @@ export class egwMenu
 	{
 		this.children = _egwGenMenuStructure(_elements, this);
 	}
-}
 
+	/**
+	 * Searches for the given item id within the element tree.
+	 */
+	public getItem(_id) {
+		return _egwSearchMenuItem(this.children, _id);
+	}
 
-/**
- * Searches for the given item id within the element tree.
- */
-egwMenu.prototype.getItem = function (_id) {
-	return _egwSearchMenuItem(this.children, _id);
-}
-
-/**
- * Applies the given onClick handler to all menu items which don't have a clicked
- * handler assigned yet.
- */
-egwMenu.prototype.setGlobalOnClick = function (_onClick) {
+	/**
+	 * Applies the given onClick handler to all menu items which don't have a clicked
+	 * handler assigned yet.
+	 */
+	setGlobalOnClick(_onClick) {
 	_egwSetMenuOnClick(this.children, _onClick);
 }
+}
+
 
 /**
- * Constructor for the egwMenuItem. Each entry in a menu (including seperators)
+ * Constructor for the egwMenuItem. Each entry in a menu (including separators)
  * is represented by a menu item.
  */
 export class egwMenuItem
@@ -401,7 +400,7 @@ export class egwMenuItem
 
 	set_caption(_value)
 	{
-		//A value of "-" means that this element is a seperator.
+		//A value of "-" means that this element is a separator.
 		this.caption = _value;
 	}
 
@@ -419,7 +418,7 @@ export class egwMenuItem
 		if (_value && this.groupIndex > 0)
 		{
 			//Uncheck all other elements in this radio group
-			for (var menuItem of this.parent.children)
+			for (const menuItem of this.parent.children)
 			{
 				if (menuItem.groupIndex == this.groupIndex)
 					menuItem.checked = false;
@@ -443,10 +442,13 @@ export class egwMenuItem
 	//hint might get set somewhere
 	hint: string = "";
 
-	constructor(_parent, _id)
+	constructor(_parent, _id, _caption="", _iconUrl="", onClick=null)
 	{
 		this.parent = _parent;
 		this.id = _id;
+		this.caption = _caption;
+		this.iconUrl = _iconUrl;
+		this.onClick = onClick;
 	}
 
 	/**
@@ -473,14 +475,14 @@ export class egwMenuItem
 	/**
 	 * Adds a new menu item to the list and returns a reference to that object.
 	 *
-	 * @param {string} _id is a unique identifier of the menu item. You can use the
+	 * @param {string} _id is a unique identifier of the menu item. You can use
 	 * 	the getItem function to search a specific menu item inside the menu tree. The
-	 * 	id may also be false, null or "", which makes sense for items like seperators,
+	 * 	id may also be false, null or "", which makes sense for items like separators,
 	 * 	which you don't want to access anymore after adding them to the menu tree.
 	 * @param {string} _caption is the caption of the newly generated menu item. Set the caption
-	 * 	to "-" in order to create a sperator.
+	 * 	to "-" in order to create a separator.
 	 * @param {string} _iconUrl is the URL of the icon which should be prepended to the
-	 * 	menu item. It may be false, null or "" if you don't want a icon to be displayed.
+	 * 	menu item. It may be false, null or "" if you don't want an icon to be displayed.
 	 * @param {function} _onClick is the JS function which is being executed when the
 	 * 	menu item is clicked.
 	 * @returns {egwMenuItem} the newly generated menu item, which had been appended to the
