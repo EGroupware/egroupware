@@ -45,10 +45,20 @@ export class Et2Link extends ExposeMixin<Et2Widget>(Et2Widget(LitElement)) imple
 
 			  .link__title {
 				flex: 2 1 50%;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+				max-width: max-content;
+                width: 0;
 			  }
 
 			  .link__remark {
-				flex: 1 1 50%
+				flex: 1 1 50%;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                max-width: max-content;
+                width: 0;
 			  }
 
 			  :host:hover {
