@@ -260,7 +260,15 @@ export class Et2Link extends ExposeMixin<Et2Widget>(Et2Widget(LitElement)) imple
 				{
 					return;
 				}
-				this.dataset[key] = _value[key];
+				// we should not let null value being stored into dataset as 'null'
+				if (_value[key] === null)
+				{
+					this.dataset[key] = "";
+				}
+				else
+				{
+					this.dataset[key] = _value[key];
+				}
 			})
 		}
 		this.requestUpdate("value");
