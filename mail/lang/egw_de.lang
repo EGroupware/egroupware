@@ -25,13 +25,13 @@ add all my aliases	mail	de	Alle Alias-Adressen hinzufügen
 add as new	mail	de	Neues Ticket erstellen
 add files as %1	mail	de	Dateien hinzufügen als %1
 add folder	mail	de	Ordner hinzufügen
-add raw message, ignore mail attachments	mail	de	Konvertiere E-Mail zum Eintrag und füge die original E-Mail an (aber keine Anhänge).
+add raw message, ignore mail attachments	mail	de	Konvertiere E-Mail zum Eintrag und füge die original E-Mail an (aber keine Anhänge)
 add this certificate into contact	mail	de	Dieses Zertifikat dem Kontakt hinzufügen
 add to addressbook	mail	de	zum Adressbuch hinzufügen
 add your domain as "%1" in options to list of email providers and enable api.	mail	de	Fügen Sie Ihre Domain als "%1" in Optionen zu der Liste der E-Mail-Anbieter hinzu und schalten sie API ein.
 adding %1 to blacklisted email addresses failed because of %2	mail	de	Hinzufügen von %1 als E-Mailadresse zur Blackliste ist fehlgeschlagen, da %2
 adding %1 to whiltelisted email addresses failed because of %2	mail	de	Hinzufügen von %1 als E-Mailadresse zur Whiteliste ist fehlgeschlagen, da %2
-after reply, visible during compose	mail	de	Nach dem zitierten Text, sichtbar während der Bearbeitung
+after reply, visible during compose	mail	de	Unter dem zitierten Text, sichtbar während der Bearbeitung
 aliases+forwards	mail	de	Aliase+Weiterleitungen
 all	mail	de	alle
 all adresses:	mail	de	Alle Adressen
@@ -44,8 +44,8 @@ all subfolders will be deleted too, and all messages in all affected folders wil
 allow	mail	de	erlauben
 allow external images	mail	de	Erlaube externe Bildquellen
 allow external images from listed domains	mail	de	Erlaube externe Inhalte der folgenden Domains
-allow images from external sources in html emails	mail	de	Erlaube Bilder von externen Bildquellen in HTML-E-Mails
-allow images from listed domains in html emails	mail	de	Erlaube Bilder von externen Bildquellen der folgenden Domains in HTML-E-Mails
+allow images from external sources in html emails	mail	de	Erlaube Bilder von externen Bildquellen in HTML-E-Mails.
+allow images from listed domains in html emails	mail	de	Erlaube Bilder von externen Bildquellen der folgenden Domains in HTML-E-Mails.
 allow users to create further identities	mail	de	Anwender dürfen weitere Identitäten anlegen
 allways a new window	mail	de	immer in einem neuen Fenster
 always	mail	de	Immer
@@ -58,7 +58,7 @@ answered	mail	de	Beantworted
 any of	mail	de	mit einem
 any status	mail	de	Alle Status
 append	mail	de	hinzufügen
-appended after reply before sending	mail	de	Einfügen nach dem zitierten Text im Zuge des Versendens
+appended after reply before sending	mail	de	Einfügen unter dem zitierten Text im Zuge des Versendens
 application mail expected but got: %1	mail	de	Anwendung Mail erwarted, aber %1 erhalten!
 archive folder	mail	de	Archivordner
 are you sure you want to delete all selected folders?	mail	de	Sollen alle selektierten Ordner gelöcht werden?
@@ -66,7 +66,7 @@ are you sure you want to move folder %1 to folder %2?	mail	de	Soll der Ordner %1
 arrival	mail	de	Empfangsdatum
 ask for permission	mail	de	Immer nachfragen
 attach files	mail	de	Dateien anhängen
-attach users vcard at compose to every new mail	mail	de	Füge die vCard des aktiven Benutzers an jede neue E-Mail an
+attach users vcard at compose to every new mail	mail	de	Füge die vCard des Benutzers an jede neue E-Mail an.
 attach vcard	mail	de	vCard hinzufügen
 attachment	mail	de	Anhang
 attachment has been saved successfully.	mail	de	Anhang erfolgreich gespeichert.
@@ -76,7 +76,7 @@ authentication	mail	de	Authentifizierung
 available personal email-accounts/profiles	mail	de	verfügbare persönliche E-Mail Konten bzw. Profile
 be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	de	Wenn Sie alle ausgewählten Dateien als %1-Modus hinzufügen, werden auch alle in der Liste vorhandenen Anhänge in den %2-Modus geändert.  \n \n Wollen Sie fortfahren?
 be aware that all attachments will be sent as %1!	mail	de	Beachten Sie, dass alle Anhänge als %1 gesendet werden!
-before reply, visible during compose	mail	de	Vor dem zitierten Text, sichtbar während der Bearbeitung
+before reply, visible during compose	mail	de	Über dem zitierten Text, sichtbar während der Bearbeitung
 blacklisted mails are marked as spam	mail	de	E-Mail-Adressen, die in die Blacklist eingetragen werden, werden als Spam markiert
 but check shared folders	mail	de	aber explizite Überprüfung der Ordner unterhalb der (Benutzer-)Freigaben
 by date	mail	de	nach Datum
@@ -131,7 +131,7 @@ default toolbar actions shown in mail's html editor	mail	de	Aktivierte Funktione
 default value for remembering s/mime passphrase in minutes	mail	de	Standardwert für die Erinnerung an die S/MIME-Passphrase in Minuten
 default your name and email	common	de	z.B. Ihr Name und Ihre E-Mail-Adresse
 defines what to show as contact label for added contact into to/cc/bcc when composing an email. default is firstname lastname and empty means include eveything available.	mail	de	Legt fest, was beim Verfassen einer E-Mail als Kontaktbezeichnung für den hinzugefügten Kontakt in An/Kopie/Blindkopie angezeigt werden soll. Die Voreinstellung ist Vorname Nachname und leer bedeutet, dass alles Verfügbare angezeigt wird.
-defines what to show as identity label on mail folder header	common	de	Definiert, was im Kopf des E-Mail-Postfach angezeigt werden soll.
+defines what to show as identity label on mail folder header	common	de	Definiert, was im Kopf des E-Mail-Postfach angezeigt werden soll. Die Bezeichnungen beziehen sich auf die Felder im E-Mail-Konto.
 delete folder	mail	de	Ordner löschen
 delete folder %1 ?	mail	de	Ordner %1 löschen?
 delete this acl	mail	de	Zugriffsrechte löschen
@@ -252,11 +252,11 @@ folder management ...	mail	de	Ordner-Verwaltung ...
 folder settings	mail	de	Ordner-Einstellungen
 for e.g.: mpeg	mail	de	z.B. mpeg
 for eg.: mpeg	mail	de	z.B. für mpeg
-force html	mail	de	erzwinge HTML
-force plain text	mail	de	erzwinge Text
-forward	mail	de	weiterleiten als
-forward as attachment	mail	de	weiterleiten als Anhang
-forward inline	mail	de	weiterleiten
+force html	mail	de	Erzwinge HTML
+force plain text	mail	de	Erzwinge Text
+forward	mail	de	Weiterleiten als
+forward as attachment	mail	de	Weiterleiten als Anhang
+forward inline	mail	de	Weiterleiten
 forward messages to:	mail	de	Nachricht weiterleiten an:
 forward messages:	mail	de	Nachricht weiterleiten an (mehrere Adressen durch Komma trennen):
 forward to	mail	de	weiterleiten an
@@ -282,12 +282,12 @@ how often to check with the server for new mail	mail	de	Aktualisierungsintervall
 how should the available information on identities be displayed	admin	de	Hier legen Sie fest wie die verfügbaren Informationen Ihrer Identitäten in ausgehenden Mails angezeigt wird
 how to forward messages	mail	de	Wie möchten Sie Nachrichten weiterleiten
 html	mail	de	HTML
-html mode	mail	de	HTML Modus
+html mode	mail	de	HTML-Modus
 ident name	mail	de	Name
 ident name email	mail	de	Name [E-Mail]
 ident name organization email	mail	de	Name Organisation [E-Mail]
 identity	mail	de	Identität
-identity label	mail	de	Anzeige E-Mail Profil im Seitenmenü
+identity label	mail	de	Anzeige E-Mail-Profil im Seitenmenü
 identity+signature	mail	de	Identität+Signatur
 if	mail	de	Wenn
 if authentication required	mail	de	wenn Benutzeranmeldung erforderlich ist
@@ -367,8 +367,8 @@ move folder	mail	de	Ordner verschieben
 move selected mails to archive	mail	de	Verschiebe ausgewählte Nachrichten in den konfigurierten Archiv Ordner
 move selected to	mail	de	Verschiebe ausgewählte nach
 move to	mail	de	verschieben
-move to archive	mail	de	Verschiebe in den Archivordner
-move to trash	mail	de	in den Papierkorb verschieben
+move to archive	mail	de	Verschiebe in Archivordner
+move to trash	mail	de	Verschiebe in Papierkorb
 moved %1 message(s) from %2 to %3	mail	de	%1 Nachrichten wurden von %2 nach %3 verschoben
 moving folders from one mailaccount to another is not supported	mail	de	Verschieben von Ordnern von einem Mailkonto zu einem anderen wird nicht unterstützt
 name of account	mail	de	Konten-Bezeichnung
@@ -411,12 +411,13 @@ only if currently in an other app	mail	de	Nur anzeigen wenn aktuell in einer and
 only makes sense, if you transport password through a different channel / outside of this mail to recipients!	mail	de	Macht nur dann Sinn, wenn das Passwort auf einem anderen Weg, außerhalb dieser Mail, den Empfängern mitgeteilt wird!
 only needed for some servers, that do not return all folders on root level queries to retrieve all folders for that level	mail	de	wird nur für bestimmte Server gebraucht, die NICHT alle Ordner für Root-Knoten-Abfragen zurückgeben (damit wird in diesem Fall explizit auf Ordner in den Prefixes der Namespaces geprüft)
 only one window	mail	de	nur ein einziges Fenster
-only send message, do not copy a version of the message to the configured sent folder	mail	de	Versende Nachricht, kopiere sie nicht in den konfigurierten Gesendet Ordner
+only send message, do not copy a version of the message to the configured sent folder	mail	de	Versende Nachricht, kopiere sie nicht in den konfigurierten Gesendet-Ordner
 open in html mode	mail	de	In HTML-Modus öffnen
 open in text mode	mail	de	In Text-Modus öffnen
 open with collabora office	mail	de	Mit Collabora Online öffnen
 organisation	admin	de	Organisation
 organization	mail	de	Organisation
+organization | real name email	mail	de	Organisation | Ihr Name [E-Mail]
 original message	mail	de	ursprüngliche Nachricht
 outbox	mail	de	Postausgang
 password protect	mail	de	Passwort geschützt
@@ -469,7 +470,7 @@ remove "%1" from blacklisted emails	mail	de	Lösche "%1" aus der E-Mail Blacklis
 remove "%1" from whiltelisted domains	mail	de	Lösche "%1" aus der Whitelist Domainliste
 remove "%1" from whiltelisted emails	mail	de	Lösche "%1" aus der E-Mail Whiteliste
 remove all	mail	de	Alle Entfernen
-remove immediately	mail	de	sofort löschen
+remove immediately	mail	de	Sofort löschen
 removed folder %1	mail	de	Ordner %1 gelöscht
 removing %1 from blacklisted email addresses failed because of %2	mail	de	Löschen von %1 als E-Mailadresse von der Blackliste fehlgeschlagen, da %2
 removing %1 from whiltelisted email addresses failed because of %2	mail	de	Löschen von %1 als E-Mailadresse von der Whiteliste fehlgeschlagen, da %2
@@ -541,7 +542,7 @@ selected	mail	de	ausgewählt
 selected date range (with quicksearch)	mail	de	Datumsbereich (mit Schnellsuche)
 send a reject message:	mail	de	Ablehnungs-E-Mail senden:
 send files as	mail	de	Dateien versenden als
-send message and move to send folder (if configured)	mail	de	Versende Nachricht und kopiere diese in den konfigurierten Gesendet Ordner
+send message and move to send folder (if configured)	mail	de	Versende Nachricht und kopiere diese in den konfigurierten Gesendet-Ordner
 send message pgp encrypted: requires keys from all recipients!	mail	de	Nachricht PGP-verschlüsselt senden: benötigt Schlüssel von allen Empfängern!
 sender	mail	de	Absender
 sent	mail	de	Gesendet
@@ -570,7 +571,7 @@ show test connection section and control the level of info displayed??	mail	de	S
 show them this time only	mail	de	Einmalig externe Inhalte anzeigen
 show vertical	mail	de	Vertikal anzeigen (3-Spalten-Ansicht)
 show/hide preview pane in mail list view	mail	de	Mailvorschau anzeigen oder ausblenden
-shows a temporary visible notification including from address, subject and a snippet of the mail	mail	de	Zeigt eine kurze Zeit sichtbare Benachrichtigung einschließlich Absender, Betreff und Auszug der Mail
+shows a temporary visible notification including from address, subject and a snippet of the mail	mail	de	Zeigt eine kurze Zeit sichtbare Benachrichtigung einschließlich Absender, Betreff und Kurzvorschau der E-Mail.
 sieve	mail	de	Sieve
 sieve connection status	mail	de	Sieve Verbindungsstatus
 sieve not activated	mail	de	Sieve nicht aktiviert

@@ -17,7 +17,11 @@ abort	common	ro	Abandonați
 add current	common	ro	Vizualizarea curentă ca favorită
 add to clipboard	common	ro	Adaugă în clipboard
 addressbooks to sync in addition to personal addressbook	groupdav	ro	Cărți de adrese de sincronizat în plus față de agenda personală
+admin	common	ro	Admin
+admin settings for %1	common	ro	Setări administrative pentru %1
+advanced search	common	ro	Căutare avansată
 all addressbooks	groupdav	ro	Toate agendele de adrese
+all categories	common	ro	Toate categoriile
 all in one	groupdav	ro	Toate într-una singură
 attention: action will be applied to all rows, not only visible ones!	api	ro	Atenție: acțiunea se va aplica tuturor rândurilor, nu numai celor vizibile!
 authenticate	common	ro	Autentificare
@@ -52,6 +56,12 @@ invalid 2-factor authentication code	common	ro	Código de autenticação de 2 fa
 invalid or expired 'remember me' token	common	ro	Ficha "lembre-se de mim" inválida ou vencida
 it is recommended to store your public key in addressbook, so other users can write you encrypted mails.	common	ro	É recomendável armazenar sua chave pública no Addressbook, para que outros usuários possam escrever seus e-mails criptografados.
 light mode	common	ro	Mod deschis
+login rejected by epl firewall, please contact your administrator	common	ro	Autentificare respinsă de firewall-ul EGroupware, vă rugăm să contactați administratorul.
+logout	common	ro	Ieșire
+lost login id	common	ro	ID de conectare pierdut
+lost password	common	ro	Parolă pierdută
+mailvelope addon installation failed! please try again.	common	ro	Parolă pierdută
+mailvelope addon installation succeded. now you may configure the options.	common	ro	Instalarea addon-ului Mailvelope a reușit. Acum puteți configura opțiunile.
 new password	common	ro	Parolă nouă
 no filters	common	ro	Fără filtre
 ok	common	ro	Acceptă

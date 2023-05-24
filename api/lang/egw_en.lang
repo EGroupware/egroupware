@@ -238,7 +238,7 @@ cannot set this cat as its own parent!	common	en	Can not set this category as it
 cant delete a single widget from a grid !!!	common	en	Can't delete a single widget from a grid!
 cant delete the only column of a grid !!!	common	en	Can't delete the only column of a grid!
 cant delete the only row in a grid !!!	common	en	Can't delete the only row in a grid!
-cant open %1, needs ziparchive	common	en	Cant open %1, needs ZipArchive
+cant open %1, needs ziparchive	common	en	Cant open %1, needs ZIP archive
 cant open '%1' for %2	common	en	Cant open '%1' for %2
 cape verde	common	en	CAPE VERDE
 caption	common	en	Caption
@@ -832,6 +832,7 @@ location calendars	groupdav	en	Location calendars
 locations	common	en	Locations
 logging / debuging	groupdav	en	Logging / debuging
 login	common	en	Login
+login rejected by epl firewall, please contact your administrator	common	en	Login rejected by EGroupware firewall, please contact your administrator.
 loginid	common	en	Login ID
 logout	common	en	Logout
 lost login id	common	en	Lost login ID
@@ -1179,7 +1180,7 @@ savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants
 save	common	en	Save
 save all	common	en	Save all
 save as	common	en	Save as
-save as zip	common	en	Save as Zip
+save as zip	common	en	Save as ZIP
 save selected columns as default preference for all users.	common	en	Save columns as default preference for all users.
 save the changes made and close the window	common	en	Save changes and close
 save the etemplate under the above keys (name, ...), change them for a saveas	common	en	Save eTemplate under the above keys (name, ...), change them for a SaveAs

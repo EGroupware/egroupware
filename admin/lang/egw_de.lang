@@ -889,7 +889,7 @@ the mimeparser can not parse this message.	admin	de	Der Mimeparser versteht dies
 the name used internaly (&lt;= 20 chars), changeing it makes existing data unavailible	admin	de	intern benutzter Name (<= 20 Buchstaben), Veränderungen machen existierende Daten unerreichbar!
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	admin	de	intern benutzter Name (<= 20 Buchstaben), Veränderungen machen existierende Daten unerreichbar!
 the testjob sends you a mail everytime it is called.	admin	de	Der Testjob sendet Ihnen jedes mal eine E-Mail wenn er aufgerufen wird.
-the text displayed to the user	admin	de	für den Benutzer angezeigter Text
+the text displayed to the user	admin	de	Für den Benutzer angezeigter Text
 the two passwords are not the same	admin	de	Die beiden Passwörter stimmen nicht überein
 the users bellow are still members of group %1	admin	de	Die unten angezeigten Benutzer sind Mitglied der Gruppe %1
 there already is a group with this name. userid's can not have the same name as a groupid	admin	de	Es gibt bereits ein Gruppe mit diesem Namen. Benutzernamen dürfen nicht identisch mit Gruppennamen sein.

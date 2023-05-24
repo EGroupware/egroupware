@@ -238,7 +238,7 @@ cannot set this cat as its own parent!	common	de	Eine Kategorie kann nicht als I
 cant delete a single widget from a grid !!!	common	de	Kann kein einzelnes Widget aus einer Tabelle löschen !!!
 cant delete the only column of a grid !!!	common	de	Kann nicht die einzige Spalte einer Tabelle löschen !!!
 cant delete the only row in a grid !!!	common	de	Kann nicht die einzige Zeile einer Tabelle löschen !!!
-cant open %1, needs ziparchive	common	de	Kann die %1 nicht öffnen, benötigt ZipAchive
+cant open %1, needs ziparchive	common	de	Kann die %1 nicht öffnen, benötigt ZIPArchive
 cant open '%1' for %2	common	de	Kann '%1' nicht zum %2 öffnen
 cape verde	common	de	KAP VERDE
 caption	common	de	Text
@@ -386,7 +386,7 @@ default	common	de	Vorgabe
 default category	common	de	Standard-Kategorie
 default document to insert entries	preferences	de	Standarddokument für Einfügen in Dokument
 default height for the windows	common	de	Vorgabewert für Höhe des Fensters
-default visible actions	common	de	standardmäßig sichtbare Aktionen
+default visible actions	common	de	Standardmäßig sichtbare Aktionen
 default width for the windows	common	de	Vorgabewert für Breite des Fensters
 del	common	de	entf
 delete	common	de	Löschen
@@ -438,7 +438,7 @@ displayed in the top line of the groupbox (legend)	common	de	wird oben in der Um
 distribution lists as groups	groupdav	de	Verteilerlisten als Gruppen
 djibouti	common	de	DSCHIBUTI
 do not notify	common	de	Nicht benachrichtigen
-do not notify of these changes	common	de	Es werden keine Benachrichtigungen beim Anlegen oder Ändern versendet.
+do not notify of these changes	common	de	Es werden keine Benachrichtigungen beim Anlegen oder Ändern versendet
 do not use on public computers!	common	de	NICHT auf öffentlichen Computern verwenden!
 do you also want to delete all subcategories ?	common	de	Sollen alle Unterkategorien gelöscht werden ?
 do you want to save the changes you made in table %s?	common	de	Wollen Sie die Änderungen in der Tabelle '%s' speichern?
@@ -832,6 +832,7 @@ location calendars	groupdav	de	Kalender von Räumen
 locations	common	de	Räume
 logging / debuging	groupdav	de	Logging / Fehlersuche
 login	common	de	Anmelden
+login rejected by epl firewall, please contact your administrator	common	de	Anmeldung von der EPL-Firewall abgelehnt, bitte wenden Sie sich an Ihren Administrator.
 loginid	common	de	Benutzerkennung
 logout	common	de	Abmelden
 lost login id	common	de	Anmeldenamen vergessen
@@ -1181,10 +1182,10 @@ save all	common	de	Alle speichern
 save as	common	de	Speichern unter
 save as zip	common	de	Als ZIP-Datei speichern
 save selected columns as default preference for all users.	common	de	Speichert die ausgewählten Spalten als Vorgabe für alle Benutzer.
-save the changes made and close the window	common	de	speichert die Änderungen uns schließt das Fenster
+save the changes made and close the window	common	de	Speichert die Änderungen uns schließt das Fenster
 save the etemplate under the above keys (name, ...), change them for a saveas	common	de	Speichert das eTemplate unter den obigen Schlüsseln (name, ...), ändern für ein Speichern unter
 saved column sizes to preferences.	common	de	Spaltengrößen in den Voreinstellungen gespeichert
-saves changes to tables_current.inc.php	common	de	speichert die Änderungen in tables_current.inc.php
+saves changes to tables_current.inc.php	common	de	Speichert die Änderungen in tables_current.inc.php
 saves the template with given version number and closes the window	common	de	speichert das Template unter der angegebenen Versionsnummer und schließt das Fenster
 scale	common	de	Scale
 scale for float	common	de	Nachkommastellen für Gleitkommawerte
