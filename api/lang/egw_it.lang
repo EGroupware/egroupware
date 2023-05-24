@@ -98,6 +98,7 @@ add your domain as "%1" in options to list of email providers and enable api.	co
 addressbook	common	it	Rubrica
 addressbooks to sync in addition to personal addressbook	groupdav	it	Rubriche da sincronizzare oltre alla rubrica personale
 admin	common	it	Amministra
+admin settings for %1	common	it	Impostazioni amministratore per %1
 administration	common	it	Amministrazione
 advanced search	common	it	Ricerca avanzata
 afghanistan	common	it	AFGHANISTAN
@@ -652,7 +653,6 @@ high	common	it	Alta
 highest	common	it	Più Alta
 history	common	it	La storia
 history log	common	it	Log cronologia
-hold [%1] and [%2] key to drag %3 to your desktop	common	it	Premere [%1] e [%2] per trascire sul tuo desktop
 hold [%1] key to select text eg. to copy it	common	it	Premere [%1] per selezionare il testo p.es. per copiarlo
 holy see (vatican city state)	common	it	SANTA SEDE (STATO DI CITTA' DEL VATICANO)
 home	common	it	Home
@@ -811,6 +811,7 @@ location calendars	groupdav	it	Calendari locali
 locations	common	it	località
 logging / debuging	groupdav	it	Resgistro/Debug
 login	common	it	Login
+login rejected by epl firewall, please contact your administrator	common	it	Instalasi addon Mailvelope berhasil. Sekarang Anda dapat mengkonfigurasi opsi.
 loginid	common	it	LoginID
 logout	common	it	Logout
 lost login id	common	it	ID di accesso perso

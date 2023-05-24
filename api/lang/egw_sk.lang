@@ -657,7 +657,6 @@ high	common	sk	Vysoká
 highest	common	sk	Najvyššia
 history	common	sk	História
 history log	common	sk	Záznam histórie
-hold [%1] and [%2] key to drag %3 to your desktop	common	sk	Ak chcete premiestniť %3 na svoju plochu, podržte klávesy [%1] a [%2]
 hold [%1] key to select text eg. to copy it	common	sk	Ak podržíte klávesu [%1], môžete vyznačiť text, napr. za účelom kopírovania
 holy see (vatican city state)	common	sk	VATIKÁN (MESTSKÝ ŠTÁT)
 home	common	sk	Domov
@@ -819,6 +818,7 @@ location calendars	groupdav	sk	Kalendáre umiestnení
 locations	common	sk	Umiestnenia
 logging / debuging	groupdav	sk	Protokolovanie / ladenie
 login	common	sk	Prihlásenie
+login rejected by epl firewall, please contact your administrator	common	sk	Prihlásenie odmietnuté bránou firewall EGroupware, obráťte sa na svojho správcu.
 loginid	common	sk	Prihlasovacie ID
 logout	common	sk	Odhlásenie
 lost login id	common	sk	Stratené ID prihlásenia

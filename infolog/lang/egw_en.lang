@@ -497,7 +497,7 @@ type	infolog	en	Type
 type ...	infolog	en	Type ...
 type of customfield	infolog	en	Type of custom field
 type of field	infolog	en	Type of field
-type of the log-entry: note, phonecall or todo	infolog	en	Type of the InfoLog entry: Note, Phone call or ToDo
+type of the log-entry: note, phonecall or todo	infolog	en	Type of the InfoLog entry
 unable to link to %3 by custom field "%1": "%4".  %2 matches.	infolog	en	Unable to link to %3 by custom field "%1": "%4".  %2 matches.
 unknown type: %1	infolog	en	Unknown type: %1
 unlink	infolog	en	Unlink

@@ -97,6 +97,7 @@ add your domain as "%1" in options to list of email providers and enable api.	co
 addressbook	common	cs	Adresář
 addressbooks to sync in addition to personal addressbook	groupdav	cs	Adresáře k synchronizaci pro přidání do osobních adresářů
 admin	common	cs	Správce
+admin settings for %1	common	cs	Nastavení správce pro %1
 administration	common	cs	Správa
 advanced search	common	cs	Rozšířené hledání
 afghanistan	common	cs	AFGHÁNISTÁN
@@ -632,7 +633,6 @@ high	common	cs	Vysoká
 highest	common	cs	Nejvyšší
 history	common	cs	Historie
 history log	common	cs	Protokol historie
-hold [%1] and [%2] key to drag %3 to your desktop	common	cs	Stiskněte současně klávesy [%1] a [%2] a pak můžete přetáhnout %3 na vaši plochu
 holy see (vatican city state)	common	cs	VATIKÁN
 home	common	cs	Hlavní strana
 home email	common	cs	domácí e-mail
@@ -790,6 +790,7 @@ location calendars	groupdav	cs	Kalendář umístění
 locations	common	cs	umístění
 logging / debuging	groupdav	cs	Logodání / ladění chyb
 login	common	cs	Přihlásit
+login rejected by epl firewall, please contact your administrator	common	cs	Přihlášení bylo odmítnuto bránou firewall EGroupware, kontaktujte prosím svého správce.
 loginid	common	cs	ID pro přihlášení
 logout	common	cs	Odhlásit
 lost login id	common	cs	Zapomenuté přihlašovací ID

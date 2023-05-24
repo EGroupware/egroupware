@@ -73,6 +73,7 @@ add to clipboard	common	id	Tambahkan ke papan klip
 addressbook	common	id	Buku Alamat
 addressbooks to sync in addition to personal addressbook	groupdav	id	Buku alamat untuk disinkronkan selain buku alamat pribadi
 admin	common	id	Admin
+admin settings for %1	common	id	Pengaturan admin untuk %1
 administration	common	id	Administrasi
 advanced search	common	id	Pencarian Canggih
 afghanistan	common	id	AFGHANISTAN
@@ -81,6 +82,7 @@ algeria	common	id	ALJAZAIR
 align	common	id	Align
 all	common	id	Semua
 all addressbooks	groupdav	id	Semua buku alamat
+all categories	common	id	Semua kategori
 all days	common	id	seharian
 all fields	common	id	semua field
 all in one	groupdav	id	Semua dalam satu
@@ -514,6 +516,7 @@ loading	common	id	memuatkan
 local	common	id	Lokal
 locations	common	id	lokasi
 login	common	id	Masuk
+login rejected by epl firewall, please contact your administrator	common	id	Login ditolak oleh firewall EGroupware, silakan hubungi administrator Anda.
 loginid	common	id	LoginID
 logout	common	id	Keluar
 lost login id	common	id	Lupa LoginID
@@ -524,6 +527,8 @@ luxembourg	common	id	LUXEMBOURG
 macau	common	id	MACAU
 macedonia, the former yugoslav republic of	common	id	MACEDONIA, BEKAS REPUBLIK YUGOSLAVIA
 madagascar	common	id	MADAGASKAR
+mailvelope addon installation failed! please try again.	common	id	Instalasi addon amplop surat gagal! Silakan coba lagi.
+mailvelope addon installation succeded. now you may configure the options.	common	id	Instalasi addon Mailvelope berhasil. Sekarang Anda dapat mengkonfigurasi opsi.
 main category	common	id	Kategori Utama
 maintainer	common	id	Pemelihara
 malawi	common	id	MALAWI

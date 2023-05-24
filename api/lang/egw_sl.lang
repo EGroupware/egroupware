@@ -98,6 +98,7 @@ add your domain as "%1" in options to list of email providers and enable api.	co
 addressbook	common	sl	Adresar
 addressbooks to sync in addition to personal addressbook	groupdav	sl	Imenik za sinhronizacijo poleg osebnega adresarja
 admin	common	sl	Oskrbnik
+admin settings for %1	common	sl	Adminske nastavitve za %1
 administration	common	sl	Administracija
 advanced search	common	sl	Napredno iskanje
 afghanistan	common	sl	AFGANISTAN
@@ -634,7 +635,6 @@ high	common	sl	Visoko
 highest	common	sl	Najvišje
 history	common	sl	História
 history log	common	sl	Dnevnik zgodovine
-hold [%1] and [%2] key to drag %3 to your desktop	common	sl	Zadržite tipko [%1] in [%2], da povlečete %3 na namizje
 hold [%1] key to select text eg. to copy it	common	sl	Držite tipko [%1], da izberete besedilo npr. da ga kopirate
 holy see (vatican city state)	common	sl	SVETI SEDEŽ (MESTNA DRŽAVA VATIKAN)
 home	common	sl	Domov
@@ -793,6 +793,7 @@ location calendars	groupdav	sl	Koledarji lokacije
 locations	common	sl	Lokacije
 logging / debuging	groupdav	sl	Prijava / odpravljanje napak
 login	common	sl	Prijava
+login rejected by epl firewall, please contact your administrator	common	sl	Požarni zid EGroupware je zavrnil prijavo, obrnite se na skrbnika.
 loginid	common	sl	Uporabniško ime
 logout	common	sl	Odjava
 lost login id	common	sl	Pozabljeno uporabniško ime

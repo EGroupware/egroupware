@@ -26,8 +26,12 @@ add current	common	tr	Favori olarak mevcut görünüm
 add to clipboard	common	tr	Panoya ekle
 addressbook	common	tr	Adres Defteri
 addressbooks to sync in addition to personal addressbook	groupdav	tr	Kişisel adres defterine ek olarak senkronize edilecek adres defterleri
+admin	common	tr	Yönetici
+admin settings for %1	common	tr	%1 için yönetici ayarları
 administration	common	tr	Yönetim
+advanced search	common	tr	Gelişmiş arama
 all addressbooks	groupdav	tr	Tüm adres defterleri
+all categories	common	tr	Tüm kategoriler
 all in one	groupdav	tr	Hepsi bir arada
 and	common	tr	Ve
 application	common	tr	Uygulama
@@ -90,8 +94,14 @@ invalid or expired 'remember me' token	common	tr	Geçersiz veya süresi dolmuş 
 it is recommended to store your public key in addressbook, so other users can write you encrypted mails.	common	tr	Açık anahtarınızı Adres Defteri'nde saklamanız önerilir, böylece diğer kullanıcılar size şifreli postalar yazabilir.
 light mode	common	tr	Işık modu
 load	common	tr	Yükle
+login rejected by epl firewall, please contact your administrator	common	tr	Giriş EGroupware güvenlik duvarı tarafından reddedildi, lütfen yöneticinize başvurun.
 loginid	common	tr	Kullanýcý Adý
+logout	common	tr	Oturum Kapatma
+lost login id	common	tr	Kayıp giriş kimliği
+lost password	common	tr	Kayıp şifre
 lowest	common	tr	En düþük
+mailvelope addon installation failed! please try again.	common	tr	Mailvelope eklentisi kurulumu başarısız oldu! Lütfen tekrar deneyin.
+mailvelope addon installation succeded. now you may configure the options.	common	tr	Mailvelope eklentisi kurulumu başarılı oldu. Şimdi seçenekleri yapılandırabilirsiniz.
 message	common	tr	Mesaj
 minute	common	tr	Dakika
 name	common	tr	Ýsim

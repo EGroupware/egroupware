@@ -80,6 +80,7 @@ add to clipboard	common	pl	Dodaj do schowka
 addressbook	common	pl	Książka adresowa
 addressbooks to sync in addition to personal addressbook	groupdav	pl	Książki adresowe do synchronizacji oprócz osobistej książki adresowej
 admin	common	pl	Administrator
+admin settings for %1	common	pl	Ustawienia administratora dla %1
 administration	common	pl	Administracja
 advanced search	common	pl	Wyszukiwanie zaawansowane
 afghanistan	common	pl	AFGANISTAN
@@ -90,6 +91,7 @@ alignment of label and input-field in table-cell	common	pl	wyrównanie etykiety 
 alignment of the v/hbox containing table-cell	common	pl	wyrównanie V/H Box, który zawiera komórkę tabeli
 all	common	pl	Wszystko
 all addressbooks	groupdav	pl	Wszystkie książki adresowe
+all categories	common	pl	Wszystkie kategorie
 all days	common	pl	wszystkie dni
 all fields	common	pl	wszystkie pola
 all in one	groupdav	pl	Wszystko w jednym
@@ -677,6 +679,7 @@ loading	common	pl	ładowanie
 local	common	pl	Lokalny
 locations	common	pl	Lokacje
 login	common	pl	Zaloguj się
+login rejected by epl firewall, please contact your administrator	common	pl	Logowanie odrzucone przez zaporę sieciową EGroupware, skontaktuj się z administratorem.
 loginid	common	pl	Identyfikator (login)
 logout	common	pl	Wylogowanie
 lost login id	common	pl	Zapomniano nazwę konta
@@ -688,6 +691,8 @@ macau	common	pl	MAKAO
 macedonia, the former yugoslav republic of	common	pl	MACEDONIA
 madagascar	common	pl	MADAGASKAR
 mail domain, eg. "%1"	common	pl	domena maila, np. "%1"
+mailvelope addon installation failed! please try again.	common	pl	Instalacja dodatku Mailvelope nie powiodła się! Spróbuj ponownie.
+mailvelope addon installation succeded. now you may configure the options.	common	pl	Instalacja dodatku Mailvelope powiodła się. Teraz możesz skonfigurować opcje.
 main category	common	pl	Kategoria główna
 maintainer	common	pl	Prowadzący
 malawi	common	pl	MALAWI

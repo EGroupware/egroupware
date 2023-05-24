@@ -667,7 +667,6 @@ high	common	es-es	Alta
 highest	common	es-es	La más alta
 history	common	es-es	Historia
 history log	common	es-es	Registro histórico
-hold [%1] and [%2] key to drag %3 to your desktop	common	es-es	Mantenga presionadas las teclas [%1] y [%2] para arrastrar %3 a su escritorio
 hold [%1] key to select text eg. to copy it	common	es-es	Mantenga presionada la tecla [%1] para seleccionar texto, e.g. para copiarlo
 holy see (vatican city state)	common	es-es	SANTA SEDE (ESTADO DE LA CIUDAD DEL VATICANO)
 home	common	es-es	Inicio
@@ -830,6 +829,7 @@ location calendars	groupdav	es-es	Calendarios de localización
 locations	common	es-es	ubicaciones
 logging / debuging	groupdav	es-es	Registro / depuración
 login	common	es-es	Entrar
+login rejected by epl firewall, please contact your administrator	common	es-es	Login rechazado por el firewall de EGroupware, por favor contacte con su administrador.
 loginid	common	es-es	ID de usuario
 logout	common	es-es	Salir
 lost login id	common	es-es	Se ha perdido el id de sesion
