@@ -1,3 +1,20 @@
+egroupware-docker (23.1.20230524) hardy; urgency=low
+
+  * Mail: performance improvements for huge addressbooks by caching avatars
+  * Mail: searching in compose now ignores custom fields as they might lead to unexpected results
+  * Mail: fix preview and display no longer can decrypt an encrypted pgp message
+  * Mail: fix date filter is no longer working in mail's list
+  * Mail: work around Firefox not offering an option to not ask again installing EGroupware as mail-handler
+  * eSync/Mail: fix wrong timezone conversation if user-timezone is different from server-timezone
+  * CalDAV/Calendar: fix group invitations were not shown on devices unless explicit accepted
+  * Filemanager/All apps: Fix drag out files to desktop (Chrome only!) and file drag in (all browsers)
+  * Mobile theme: Fix calendar header toolbars are no more visible
+  * smallPART: Added Commentstoptime to Comment-CSV-Export
+  * Status: fix call popup shows empty white screen (happens in FF only)
+  * All apps: fix / improve several widgets specially selectbox and tags
+
+ -- Ralf Becker <rb@egroupware.org>  Wed, 24 May 2023 11:58:49 +0200
+
 egroupware-docker (23.1.20230503) hardy; urgency=low
 
   * fix some critical errors/regressions in the not published 23.1.20230428 release
