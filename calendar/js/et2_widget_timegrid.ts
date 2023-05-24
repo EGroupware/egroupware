@@ -1225,49 +1225,16 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 		let _invite_enabled = function (action, event, target)
 		{
 			var event = event.iface.getWidget();
-			var timegrid = target.iface.getWidget() || false;
-			if(event === timegrid || !event || !timegrid ||
-				!event.options || !event.options.value.participants || !timegrid.options.owner
-			)
+			const timegrid = target.iface.getWidget() || false;
+			if(timegrid)
 			{
-				return false;
+				const enabled = timegrid._get_invite_action_enabled(event);
+				widget_object.getActionLink('invite').enabled = enabled;
+				widget_object.getActionLink('change_participant').enabled = enabled;
+
+				// If invite or change participant are enabled, drag is not
+				widget_object.getActionLink('egw_link_drop').enabled = !enabled;
 			}
-			var owner_match = false;
-			var own_timegrid = event.getParent().getParent() === timegrid && !timegrid.daily_owner;
-
-			for (var id in event.options.value.participants)
-			{
-				if(!timegrid.daily_owner)
-				{
-					if(timegrid.options.owner === id ||
-						timegrid.options.owner.indexOf &&
-						timegrid.options.owner.indexOf(id) >= 0)
-					{
-						owner_match = true;
-					}
-				}
-				else
-				{
-					timegrid.iterateOver(function (col)
-					                     {
-						                     // Check scroll section or header section
-						                     if(col.div.has(timegrid.gridHover).length || col.header.has(timegrid.gridHover).length)
-						                     {
-							                     owner_match = owner_match || col.options.owner.indexOf(id) !== -1;
-							                     own_timegrid = (col === event.getParent());
-						                     }
-					                     }, this, et2_calendar_daycol);
-				}
-			}
-			var enabled = !owner_match &&
-				// Not inside its own timegrid
-				!own_timegrid;
-
-			widget_object.getActionLink('invite').enabled = enabled;
-			widget_object.getActionLink('change_participant').enabled = enabled;
-
-			// If invite or change participant are enabled, drag is not
-			widget_object.getActionLink('egw_link_drop').enabled = !enabled;
 		};
 
 		aoi.doTriggerEvent = function(_event, _data)
@@ -1282,6 +1249,9 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 			{
 				return;
 			}
+
+			// Hide tooltip or it might throw events too
+			egw.tooltipDestroy();
 
 			/*
 			We have to handle the drop in the normal event stream instead of waiting
@@ -1299,14 +1269,11 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 			var drag_listener = function(_event)
 			{
 				aoi.getWidget()._drag_helper(jQuery('.calendar_d-n-d_timeCounter', _data.ui.helper)[0], _data.ui.helper[0], 0);
-				if(aoi.getWidget().daily_owner)
-				{
-					_invite_enabled(
-						widget_object.getActionLink('invite').actionObj,
-						event,
-						widget_object
-					);
-				}
+				_invite_enabled(
+					widget_object.getActionLink('invite').actionObj,
+					_data.ui.selected[0],
+					widget_object
+				);
 			};
 			var time = jQuery('.calendar_d-n-d_timeCounter', _data.ui.helper);
 			switch(_event)
@@ -1361,12 +1328,12 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 					}
 					break;
 				default:
-					// It never came in?
+					// Event starts in its own parent
 					if(!time.length)
 					{
 						jQuery(_data.ui.helper).prepend('<div class="calendar_d-n-d_timeCounter" data-count="1"><span></span></div>');
 					}
-					drag_listener(event);
+					drag_listener(_data.ui.selected[0]);
 			}
 		};
 
@@ -1562,13 +1529,26 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 								}, this, et2_calendar_daycol);
 							}
 							egw().json('calendar.calendar_uiforms.ajax_invite', [
-									button_id==='series' ? event_data.id : event_data.app_id,
+									button_id === 'series' ? event_data.id : event_data.app_id,
 									add_owner,
 									action.id === 'change_participant' ?
-										jQuery.extend([],source[i].iface.getWidget().getParent().options.owner) :
+									jQuery.extend([], source[i].iface.getWidget().getParent().options.owner) :
 										[]
 								],
-								function() { loading.remove();}
+								function(data)
+								{
+									if(data.type)
+									{
+										// Make sure to only run once
+										return;
+									}
+									// Need to remove the action from the original timegrid
+									source[0].iface.getWidget()?.destroy();
+									if(loading)
+									{
+										loading.remove();
+									}
+								}
 							).sendRequest(true);
 						});
 						// Ok, stop.
@@ -1635,6 +1615,44 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 			}
 		}
 		return action_links;
+	}
+
+	_get_invite_action_enabled(event : et2_calendar_event)
+	{
+		if(!event || !event.options || !event.options.value.participants || !this.options.owner)
+		{
+			return false;
+		}
+		var owner_match = false;
+		var own_timegrid = event.getParent()?.getParent() === this && !this.daily_owner;
+
+		for(var id in event.options.value.participants)
+		{
+			if(!this.daily_owner)
+			{
+				if(this.options.owner === id ||
+					this.options.owner.indexOf &&
+					this.options.owner.indexOf(id) >= 0)
+				{
+					owner_match = true;
+				}
+			}
+			else
+			{
+				this.iterateOver(function(col)
+				{
+					// Check scroll section or header section
+					if(col.div.has(this.gridHover).length || col.header.has(this.gridHover).length)
+					{
+						owner_match = owner_match || col.options.owner.indexOf(id) !== -1;
+						own_timegrid = (col === event.getParent());
+					}
+				}, this, et2_calendar_daycol);
+			}
+		}
+		return !owner_match &&
+			// Not inside its own timegrid
+			!own_timegrid;
 	}
 
 	/**
