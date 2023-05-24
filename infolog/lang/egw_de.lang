@@ -36,14 +36,14 @@ actual date and time	infolog	de	aktuelles Datum und Uhrzeit
 add	infolog	de	Hinzufügen
 add / remove link	infolog	de	Hinzufügen / Entfernen von Verknüpfungen
 add a file	infolog	de	Datei anhängen
-add a new entry	infolog	de	einen neuen Eintrag anlegen
-add a new note	infolog	de	eine neue Notiz anlegen
-add a new phonecall	infolog	de	einen neuen Telefonanruf anlegen
-add a new sub-task, -note, -call to this entry	infolog	de	einen neuen Untereintrag erstellen.
-add a new todo	infolog	de	eine neue Aufgabe anlegen
+add a new entry	infolog	de	Einen neuen Eintrag anlegen
+add a new note	infolog	de	Eine neue Notiz anlegen
+add a new phonecall	infolog	de	Einen neuen Telefonanruf anlegen
+add a new sub-task, -note, -call to this entry	infolog	de	Einen neuen Untereintrag erstellen.
+add a new todo	infolog	de	Eine neue Aufgabe anlegen
 add file	infolog	de	Datei hinzufügen
 add or delete links	infolog	de	Verknüpfungen hinzufügen oder löschen
-add sub	infolog	de	neuen Untereintrag anlegen
+add sub	infolog	de	Neuen Untereintrag anlegen
 add timesheet entry	infolog	de	Stundenzettel Eintrag hinzufügen
 add:	infolog	de	Hinzufügen:
 added	infolog	de	Hinzugefügt
@@ -151,9 +151,9 @@ delete one record by passing its id.	infolog	de	Einen Datensatz spezifiziert dur
 delete selected entries?	infolog	de	Sollen die ausgewählten Datensätze gelöscht werden?
 delete this entry and all listed sub-entries	infolog	de	Diesen Eintrag und all aufgelisteten Untereinträge löschen
 deleted	infolog	de	gelöscht
-deletes the selected typ	infolog	de	löscht den ausgewählten Typ
-deletes this field	infolog	de	löscht dieses Feld
-deletes this status	infolog	de	löscht diesen Status
+deletes the selected typ	infolog	de	Löscht den ausgewählten Typ
+deletes this field	infolog	de	Löscht dieses Feld
+deletes this status	infolog	de	Löscht diesen Status
 description	infolog	de	Beschreibung
 determines the order the fields are displayed	infolog	de	legt die Reihenfolge fest in der die Felder angezeigt werden
 directory with documents to insert entries	infolog	de	Ordner mit Dokumenten zum Einfügen von InfoLogs
@@ -227,7 +227,7 @@ high	infolog	de	hoch
 history	infolog	de	Historie
 history logging	infolog	de	Protokollierung der Historie
 history logging and deleting of items	infolog	de	Protokollierung der Historie und löschen von Einträgen
-how many description lines should be directly visible. further lines are available via a scrollbar.	infolog	de	Wie viele Zeilen der Beschreibung sollen direkt sichtbar sein. Zusätzliche Zeilen können über einen Rollbalken erreicht werden
+how many description lines should be directly visible. further lines are available via a scrollbar.	infolog	de	Wie viele Zeilen der Beschreibung sollen direkt sichtbar sein. Zusätzliche Zeilen können über einen Rollbalken erreicht werden.
 how wide should the description area be. this value is numeric and interpreted as em; 60 works reasonably well.	infolog	de	Wie breit darf das Beschreibungsfeld sein. Sie können hier einen nummerischen Wert eintragen
 html link to the current record	infolog	de	HTML-Link zum aktuellen Datensatz
 id	infolog	de	ID
@@ -363,7 +363,7 @@ phone	infolog	de	Anruf
 phone/email	infolog	de	Telefon/E-Mail
 phonecall	infolog	de	Telefonanruf
 planned	infolog	de	geplant
-planned time	infolog	de	geplante Zeit
+planned time	infolog	de	Geplante Zeit
 prefix for sub-entries (default: re:)	infolog	de	Präfix für Untereinträge (Vorgabe: Re:)
 price	infolog	de	Preis
 pricelist	infolog	de	Preisliste
@@ -415,9 +415,9 @@ search	infolog	de	Suchen
 search for:	infolog	de	Suchen nach:
 second parameter for preg_replace	infolog	de	2. Parameter für preg_replace
 select	infolog	de	Auswählen
-select a category for this entry	infolog	de	eine Kategorie für diesen Eintrag auswählen
+select a category for this entry	infolog	de	Eine Kategorie für diesen Eintrag auswählen
 select a price	infolog	de	Preis auswählen
-select a priority for this task	infolog	de	eine Priorität für diesen Eintrag auswählen
+select a priority for this task	infolog	de	Eine Priorität für diesen Eintrag auswählen
 select a project	infolog	de	Projekt auswählen
 select a responsible user: a person you want to delegate this task	infolog	de	Verantwortlichen auswählen: Person(en), der Sie diese Aufgabe delegieren wollen
 select a typ to edit it's status-values or delete it	infolog	de	einen Type auswählen um seine Statuswerte zu ändern oder ihn zu löschen
@@ -444,7 +444,7 @@ should infolog use full names (surname and familyname) or just the loginnames.	i
 should the infolog list show a unique numerical id, which can be used eg. as ticket id.	infolog	de	Soll die InfoLog Liste eine eindeutige Nummer anzeigen, die z.B. als Ticketnummer verwendet werden kann.
 should the infolog list show the column "last modified".	infolog	de	Soll die InfoLog Liste die Spalte "Zuletzt geändert" anzeigen.
 should the infolog list show the percent done only for status ongoing or two separate icons.	infolog	de	Soll die InfoLog Liste Prozent erledigt nur für den Status "in Arbeit" anzeigen oder zwei separate Icons.
-should this entry only be visible to you and people you grant privat access via the acl	infolog	de	Soll dieser Eintrag nur sichtbar sein für Sie und Personen denen Sie privaten Zugriff über die Zugriffsberechtigungen erlaubt haben
+should this entry only be visible to you and people you grant privat access via the acl	infolog	de	Soll dieser Eintrag nur sichtbar sein für Sie und Personen, denen Sie privaten Zugriff über die Zugriffsberechtigungen erlaubt haben
 show a column for used and planned times in the list.	infolog	de	Zeige eine Spalte für benutzte und geplante Zeiten in der List.
 show a x if content equals this compare value, otherwise show nothing	infolog	de	zeigt ein X an, wenn der Inhalt mit dem  Vergleichswert übereinstimmt, ansonsten erfolgt keine Anzeige.
 show full usernames	infolog	de	Kompletten Benutzernamen anzeigen
@@ -479,11 +479,11 @@ template	infolog	de	Vorlage
 test import (show importable records <u>only</u> in browser)	infolog	de	Test Import (zeige importierbare Datensätze <u>nur</u> im Browser)
 the document can contain placeholder like {{%1}}, to be replaced with the data.	infolog	de	Das Dokument kann Platzhalter wie {{%1}} enthalten, die mit den Daten ersetzt werden.
 the following document-types are supported:	infolog	de	Folgende Dateitypen werden unterstützt:
-the name used internaly (<= 10 chars), changeing it makes existing data unavailible	infolog	de	der Name wird intern benutzt (<= 10 Zeichen), wenn er geändert wird, werden existierende Daten unzugänglich
-the name used internaly (<= 20 chars), changeing it makes existing data unavailible	infolog	de	der Name wird intern benutzt (<= 20 Zeichen), wenn er geändert wird, werden existierende Daten unzugänglich
+the name used internaly (<= 10 chars), changeing it makes existing data unavailible	infolog	de	Der Name wird intern benutzt (<= 10 Zeichen). Wenn er geändert wird, werden existierende Daten unzugänglich
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	infolog	de	Der Name wird intern benutzt (<= 20 Zeichen). Wenn er geändert wird, werden existierende Daten unzugänglich
 the text displayed to the user	infolog	de	der Text der dem Benutzer angezeigt wird
 this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	de	Das ist der Filter, den InfoLog benutzt wenn es das erste mal aufgerufen wird. Filter beschränken die aktuelle Anzeige. Es gibt Filter um nur beendete, offene oder zukünftige Einträge von Ihnen oder allen Benutzern anzuzeigen.
-til when should the todo or phonecall be finished	infolog	de	bis wann soll die Aufgabe oder der Anruf erledigt sein
+til when should the todo or phonecall be finished	infolog	de	Bis wann soll die Aufgabe oder der Anruf erledigt sein
 times	infolog	de	Zeiten
 titles of any entries linked to the current record, excluding attached files	infolog	de	Liste aller Einträge die mit dem aktuellen Datensatz verknüpft sind, mit Ausnahme von Dateianhängen.
 to many might exceed your execution-time-limit	infolog	de	zu viel können Ihre Laufzeitbeschränkung überschreiten
@@ -497,7 +497,7 @@ type	infolog	de	Typ
 type ...	infolog	de	Typ ...
 type of customfield	infolog	de	Typ des benutzerdefinierten Feldes
 type of field	infolog	de	Art des Feldes
-type of the log-entry: note, phonecall or todo	infolog	de	Typ des InfoLog-Eintrages: Aufgabe, Notiz oder Anruf
+type of the log-entry: note, phonecall or todo	infolog	de	Typ des InfoLog-Eintrages
 unable to link to %3 by custom field "%1": "%4".  %2 matches.	infolog	de	Verknüpfung zu  %3 eines Benutzerdefinierten Feldes "%1": "%4" nicht möglich. %2 würde passen
 unknown type: %1	infolog	de	Unbekannter Typ %1
 unlink	infolog	de	Verknüpfung lösen
@@ -510,7 +510,7 @@ use custom notification message	infolog	de	Benutze benutzerdefinierte Nachrichte
 use field from csv if possible	infolog	de	Verwendet die Felder vom CSV, wenn möglich
 use search results	infolog	de	Verwendet die Suchergebnisse
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	infolog	de	Benutzern Sie diesen Platzhalter für Adressetiketten. Fügen Sie den Inhalt, den Sie wiederholen möchten zwischen zwei Platzhalter ein.
-used time	infolog	de	benötigte Zeit
+used time	infolog	de	Benötigte Zeit
 values for selectbox	infolog	de	Werte für die Auswahlbox
 view all subs of this entry	infolog	de	alle Untereinträge dieses Eintrag anzeigen
 view other subs	infolog	de	andere Untereinträge anzeigen

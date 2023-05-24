@@ -668,7 +668,6 @@ high	common	fr	Haut
 highest	common	fr	Plus haut
 history	common	fr	Historique
 history log	common	fr	Historique
-hold [%1] and [%2] key to drag %3 to your desktop	common	fr	Laissez les touches [%1] et [%2] appuyées pour glisser %3 vers votre bureau
 hold [%1] key to select text eg. to copy it	common	fr	Laissez la touche [%1] appuyée pour copier du texte
 holy see (vatican city state)	common	fr	VATICAN
 home	common	fr	Accueil
@@ -831,6 +830,7 @@ location calendars	groupdav	fr	Localisations des calendriers
 locations	common	fr	Localisations
 logging / debuging	groupdav	fr	Journalisation / débogage
 login	common	fr	Login
+login rejected by epl firewall, please contact your administrator	common	fr	Connexion rejetée par le pare-feu d'EGroupware, veuillez contacter votre administrateur.
 loginid	common	fr	LoginID
 logout	common	fr	Déconnexion
 lost login id	common	fr	Identifiant oublié

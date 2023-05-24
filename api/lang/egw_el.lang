@@ -44,13 +44,17 @@ add current	common	el	Τρέχουσα άποψη ως αγαπημένη
 add shortcut	common	el	Προσθήκη Συντόμευσης
 add sub	common	el	Προσθήκη υπo
 addressbook	common	el	Επαφές
+addressbooks to sync in addition to personal addressbook	groupdav	el	Βιβλία διευθύνσεων για συγχρονισμό εκτός από το προσωπικό βιβλίο διευθύνσεων
 admin	common	el	Διαχειριστής
+admin settings for %1	common	el	Ρυθμίσεις διαχειριστή για %1
 administration	common	el	Διαχείριση
 advanced search	common	el	Αναζήτηση για προχωρημένους
 afghanistan	common	el	ΑΦΓΑΝΙΣΤΑΝ
 albania	common	el	ΑΛΒΑΝΙΑ
 algeria	common	el	ΑΛΓΕΡΙΑ
 all	common	el	Ολα
+all addressbooks	groupdav	el	Όλα τα βιβλία διευθύνσεων
+all categories	common	el	Όλες οι κατηγορίες
 all fields	common	el	όλα τα πεδία
 all users	common	el	Ολοι οι χρήστες
 alternate style-sheet:	common	el	Εναλλακτικό στυλ-φύλλου
@@ -439,8 +443,11 @@ loading	common	el	φόρτωση
 local	common	el	Τοπικός
 locations	common	el	τοποθεσίες
 login	common	el	Είσοδος
+login rejected by epl firewall, please contact your administrator	common	el	Η σύνδεση απορρίφθηκε από το τείχος προστασίας του EGroupware, επικοινωνήστε με το διαχειριστή σας.
 loginid	common	el	Ταυτότητα εισόδου
 logout	common	el	Εξοδος
+lost login id	common	el	Χαμένο αναγνωριστικό σύνδεσης
+lost password	common	el	Χαμένος κωδικός πρόσβασης
 low	common	el	Χαμηλό
 lowest	common	el	Ελάχιστο
 luxembourg	common	el	ΛΟΥΞΕΜΒΟΥΡΓΟ
@@ -448,6 +455,8 @@ macau	common	el	ΜΑΚΑΟ
 macedonia, the former yugoslav republic of	common	el	Π.Γ.Δ. ΤΗΣ ΜΑΚΕΔΟΝΙΑΣ
 madagascar	common	el	ΜΑΔΑΓΑΣΚΑΡΗ
 mail domain, eg. "%1"	common	el	mail domain, π.χ. "%1"
+mailvelope addon installation failed! please try again.	common	el	Η εγκατάσταση του πρόσθετου Mailvelope απέτυχε! Παρακαλώ δοκιμάστε ξανά.
+mailvelope addon installation succeded. now you may configure the options.	common	el	Η εγκατάσταση του πρόσθετου Mailvelope πέτυχε. Τώρα μπορείτε να ρυθμίσετε τις επιλογές.
 main category	common	el	Βασική κατηγορία
 maintainer	common	el	Συντηρητής
 malawi	common	el	ΜΑΛΑΟΥΪ

@@ -53,6 +53,7 @@ add to clipboard	common	hu	Hozzáadás a vágólaphoz
 addressbook	common	hu	Címjegyzék
 addressbooks to sync in addition to personal addressbook	groupdav	hu	Címkönyvek szinkronizálása a személyes címjegyzék mellett
 admin	common	hu	Admin
+admin settings for %1	common	hu	Admin beállítások %1 számára
 administration	common	hu	Adminisztráció
 advanced search	common	hu	Kiterjesztett keresés
 afghanistan	common	hu	Afganisztán
@@ -61,6 +62,7 @@ algeria	common	hu	Algéria
 align	common	hu	Igazítás
 all	common	hu	Összes
 all addressbooks	groupdav	hu	Minden címjegyzék
+all categories	common	hu	Minden kategória
 all fields	common	hu	Összes mező
 all in one	groupdav	hu	Mindent egyben
 all languages	common	hu	minden nyelv
@@ -488,6 +490,7 @@ loading	common	hu	betöltés
 local	common	hu	Helyi
 locations	common	hu	helyek
 login	common	hu	Belépés
+login rejected by epl firewall, please contact your administrator	common	hu	Az EGroupware tűzfal elutasította a bejelentkezést, kérjük, lépjen kapcsolatba a rendszergazdával.
 loginid	common	hu	Belépési azonosító
 logout	common	hu	Kilépés
 lost login id	common	hu	Elfelejtett felhasználónév
@@ -499,6 +502,8 @@ macau	common	hu	Makao
 macedonia, the former yugoslav republic of	common	hu	Macedónia
 madagascar	common	hu	Madagaszkár
 mail domain, eg. "%1"	common	hu	email tartomány, pl. "%1"
+mailvelope addon installation failed! please try again.	common	hu	A Mailvelope addon telepítése sikertelen! Kérjük, próbálja meg újra.
+mailvelope addon installation succeded. now you may configure the options.	common	hu	Mailvelope addon telepítése sikeres. Most beállíthatja az opciókat.
 main category	common	hu	Fő kategória
 maintainer	common	hu	Karbantartó
 malawi	common	hu	Malawi
