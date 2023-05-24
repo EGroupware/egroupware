@@ -75,6 +75,7 @@ import {loadWebComponent} from "./Et2Widget/Et2Widget";
 import {Et2AccountFilterHeader} from "./Et2Nextmatch/Headers/AccountFilterHeader";
 import {Et2SelectCategory} from "./Et2Select/Select/Et2SelectCategory";
 import {Et2Searchbox} from "./Et2Textbox/Et2Searchbox";
+import {LitElement} from "@lion/core";
 
 //import {et2_selectAccount} from "./et2_widget_SelectAccount";
 let keep_import : Et2AccountFilterHeader
@@ -3079,19 +3080,27 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 								egw.css(nm.print.row_selector, 'display: none');
 
 								// No scrollbar in print view
-								jQuery('.egwGridView_scrollarea', this.div).css('overflow-y', 'hidden');
+								jQuery('.egwGridView_scrollarea', nm.div).css('overflow-y', 'hidden');
 								// Show it all
-								jQuery('.egwGridView_scrollarea', this.div).css('height', 'auto');
+								jQuery('.egwGridView_scrollarea', nm.div).css('height', 'auto');
 
-								// Grid needs to redraw before it can be printed, so wait
+								// Grid (& widgets) need to redraw before it can be printed, so wait
 								window.setTimeout(function()
 								{
-									dialog.close();
+									// et2-link-string are the worst for taking a while
+									const nodeListArray : LitElement[] = Array.from(nm.div[0].querySelectorAll("et2-link-string"));
+									const promises = nodeListArray.map(node => node.updateComplete);
+									Promise.all(promises).finally(() =>
+									{
+										dialog.close();
 
-									// Should be OK to print now
-									resolve();
-								}.bind(nm), et2_dataview_grid.ET2_GRID_INVALIDATE_TIMEOUT);
-
+										// Should be OK to print now
+										dialog.updateComplete.then(() =>
+										{
+											resolve();
+										});
+									});
+								}, 10 * fetchedCount);
 							}
 
 						}, ctx);
