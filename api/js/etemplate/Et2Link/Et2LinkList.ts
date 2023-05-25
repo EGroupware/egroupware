@@ -188,7 +188,7 @@ export class Et2LinkList extends Et2LinkString
 	{
 		const id = typeof link.id === "string" ? link.id : link.link_id;
 		return html`
-            <et2-link slot="${this._get_row_id(link)}" app="${link.app}" entryId="${id}"
+            <et2-link slot="${this._get_row_id(link)}" app="${link.app}" entryId="${id}" statustext="${link.title}"
                       ._parent=${this}
                       .value=${link}></et2-link>
             ${this._deleteButtonTemplate(link)}
