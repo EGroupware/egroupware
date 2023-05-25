@@ -964,28 +964,30 @@ export class CalendarApp extends EgwApp
 
 		let sortablejs = Sortable.create(sortable, {
 			ghostClass: 'srotable_cal_wk_ph',
-			draggable: state.view == 'day'? '.calendar_calDayColHeader' : '.view_row',
-			handle: state.view == 'day'? '.calendar_calToday' : '.calendar_calGridHeader',
+			draggable: state.view == 'day' ? '.calendar_calDayColHeader' : '.view_row',
+			handle: state.view == 'day' ? '.calendar_calToday' : '.calendar_calGridHeader',
 			animation: 100,
-			filter: state.view == 'day'? '.calendar_calTimeGridScroll' : '.calendar_calDayColHeader',
+			filter: state.view == 'day' ? '.calendar_calTimeGridScroll' : '.calendar_calDayColHeader',
+			preventOnFilter: false, // Required for dnd fullday nonblocking
 			dataIdAttr: 'data-owner',
-			direction: state.view == 'day'? 'horizental' : 'vertical',
+			direction: state.view == 'day' ? 'horizental' : 'vertical',
 			sort: state.owner.length > 1 && (
-				state.view == 'day' && state.owner.length < parseInt(''+egw.preference('day_consolidate','calendar')) ||
-				(state.view == 'week' || state.view == 'day4') && state.owner.length < parseInt(''+egw.preference('week_consolidate','calendar'))), // enable/disable sort
-			onStart: function (event)
+				state.view == 'day' && state.owner.length < parseInt('' + egw.preference('day_consolidate', 'calendar')) ||
+				(state.view == 'week' || state.view == 'day4') && state.owner.length < parseInt('' + egw.preference('week_consolidate', 'calendar'))), // enable/disable sort
+			onStart: function(event)
 			{
 				// Put owners into row IDs
-				CalendarApp.views[app.calendar.state.view].etemplates[0].widgetContainer.iterateOver(function(widget) {
+				CalendarApp.views[app.calendar.state.view].etemplates[0].widgetContainer.iterateOver(function(widget)
+				{
 					if(widget.options.owner && !widget.disabled)
 					{
-						widget.div.parents('tr').attr('data-owner',widget.options.owner);
+						widget.div.parents('tr').attr('data-owner', widget.options.owner);
 					}
 					else
 					{
 						widget.div.parents('tr').removeAttr('data-owner');
 					}
-				},this,et2_calendar_timegrid);
+				}, this, et2_calendar_timegrid);
 			},
 			onSort: function(event)
 			{
