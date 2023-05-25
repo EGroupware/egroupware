@@ -47,8 +47,7 @@ export class Et2Link extends ExposeMixin<Et2Widget>(Et2Widget(LitElement)) imple
 				flex: 2 1 50%;
                 overflow: hidden;
                 text-overflow: ellipsis;
-                white-space: nowrap;
-				max-width: max-content;
+                max-width: max-content;
                 width: 0;
 			  }
 
@@ -56,7 +55,6 @@ export class Et2Link extends ExposeMixin<Et2Widget>(Et2Widget(LitElement)) imple
 				flex: 1 1 50%;
                 overflow: hidden;
                 text-overflow: ellipsis;
-                white-space: nowrap;
                 max-width: max-content;
                 width: 0;
 			  }
