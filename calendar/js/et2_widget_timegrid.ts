@@ -243,8 +243,8 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 			}
 
 			// Load the event
-			timegrid._get_event_info(this);
-			if(this.classList.contains("resizing"))
+			const event_info = timegrid._get_event_info(this);
+			if(this.classList.contains("resizing") || event_info.whole_day === "true")
 			{
 				// Currently already resizing
 				return;
