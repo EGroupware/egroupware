@@ -970,7 +970,7 @@ class Ads
 			}
 			if (!empty($param['account_id']))
 			{
-				$account_ids_filter = '(|(objectsid='.implode(')(objectsid=', array_map([$this, 'get_sid'], $param['account_id'])).')';
+				$account_ids_filter = '(|(objectsid='.implode(')(objectsid=', array_map([$this, 'get_sid'], (array)$param['account_id'])).')';
 				$filter = $filter ? "(&$filter$account_ids_filter)" : $account_ids_filter;
 			}
 			if (!empty($param['modified']))
