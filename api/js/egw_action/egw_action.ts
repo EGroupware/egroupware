@@ -2445,14 +2445,16 @@ export function getDragImplementation()
     return _dragActionImpl;
 }
 
+
+
 export class egwDragActionImplementation
 {
     constructor()
     {
 
-    var ai = new egwActionImplementation();
+        const ai = new egwActionImplementation();
 
-    ai.type = "drag";
+        ai.type = "drag";
 
     ai.helper = null;
     ai.ddTypes = [];
@@ -2463,29 +2465,29 @@ export class egwDragActionImplementation
     ai.defaultDDHelper = function (_selected)
     {
         // Table containing clone of rows
-        var table = jQuery(document.createElement("table")).addClass('egwGridView_grid et2_egw_action_ddHelper_row');
+        const table = jQuery(document.createElement("table")).addClass('egwGridView_grid et2_egw_action_ddHelper_row');
         // tr element to use as last row to show lable more ...
-        var moreRow = jQuery(document.createElement('tr')).addClass('et2_egw_action_ddHelper_moreRow');
+        const moreRow = jQuery(document.createElement('tr')).addClass('et2_egw_action_ddHelper_moreRow');
         // Main div helper container
-        var div = jQuery(document.createElement("div")).append(table);
+        const div = jQuery(document.createElement("div")).append(table);
 
-        var rows = [];
+        const rows = [];
         // Maximum number of rows to show
-        var maxRows = 3;
+        const maxRows = 3;
         // item label
-        var itemLabel = egw.lang(egw.link_get_registry(egw.app_name(),_selected.length > 1?'entries':'entry')||egw.app_name());
+        const itemLabel = egw.lang(egw.link_get_registry(egw.app_name(), _selected.length > 1 ? 'entries' : 'entry') || egw.app_name());
 
-        var index = 0;
+        let index = 0;
 
         // Take select all into account when counting number of rows, because they may not be
         // in _selected object
-        var pseudoNumRows = (_selected[0] && _selected[0]._context && _selected[0]._context._selectionMgr &&
+        const pseudoNumRows = (_selected[0] && _selected[0]._context && _selected[0]._context._selectionMgr &&
             _selected[0]._context._selectionMgr._selectAll) ?
             _selected[0]._context._selectionMgr._total : _selected.length;
 
-        for (var i = 0; i < _selected.length;i++)
+        for (let i = 0; i < _selected.length; i++)
         {
-            var row = jQuery(_selected[i].iface.getDOMNode()).clone();
+            const row = jQuery(_selected[i].iface.getDOMNode()).clone();
             if (row)
             {
                 rows.push(row);
@@ -2495,13 +2497,13 @@ export class egwDragActionImplementation
             if (index == maxRows)
             {
                 // Lable to show number of items
-                var spanCnt = jQuery(document.createElement('span'))
+                const spanCnt = jQuery(document.createElement('span'))
                     .addClass('et2_egw_action_ddHelper_itemsCnt')
                     .appendTo(div);
 
                 spanCnt.text(pseudoNumRows +' '+ itemLabel);
                 // Number of not shown rows
-                var restRows = pseudoNumRows - maxRows;
+                const restRows = pseudoNumRows - maxRows;
                 if (restRows)
                 {
                     moreRow.text(egw.lang("%1 more %2 selected ...", (pseudoNumRows - maxRows), itemLabel));
@@ -2511,7 +2513,7 @@ export class egwDragActionImplementation
             }
         }
 
-        var text = jQuery(document.createElement('div')).addClass('et2_egw_action_ddHelper_tip');
+        const text = jQuery(document.createElement('div')).addClass('et2_egw_action_ddHelper_tip');
         div.append(text);
 
         // Add notice of Ctrl key, if supported
@@ -2526,7 +2528,7 @@ export class egwDragActionImplementation
 
     ai.doRegisterAction = function(_aoi, _callback, _context)
     {
-        var node = _aoi.getDOMNode() && _aoi.getDOMNode()[0] ? _aoi.getDOMNode()[0] : _aoi.getDOMNode();
+        const node = _aoi.getDOMNode() && _aoi.getDOMNode()[0] ? _aoi.getDOMNode()[0] : _aoi.getDOMNode();
 
         if (node)
         {
@@ -2541,8 +2543,8 @@ export class egwDragActionImplementation
             }
 
             // It shouldn't be so hard to get the action...
-            var action = null;
-            var groups = _context.getActionImplementationGroups();
+            let action = null;
+            const groups = _context.getActionImplementationGroups();
             if (!groups.drag)
             {
                 return;
@@ -2601,13 +2603,13 @@ export class egwDragActionImplementation
                     if (_context.isSelection(event)) return;
 
                     // Get all selected
-                    var selected = ai.selected;
+                    const selected = ai.selected;
 
                     // Set file data
                     for (let i = 0; i < selected.length; i++) {
                         let d = selected[i].data || egw.dataGetUIDdata(selected[i].id).data || {};
                         if (d && d.mime && d.download_url) {
-                            var url = d.download_url;
+                            let url = d.download_url;
 
                             // NEED an absolute URL
                             if (url[0] == '/') url = egw.link(url);
@@ -2669,7 +2671,7 @@ export class egwDragActionImplementation
 
     ai.doUnregisterAction = function(_aoi)
     {
-        var node = _aoi.getDOMNode();
+        const node = _aoi.getDOMNode();
 
         if (node){
             node.setAttribute('draggable', false);
@@ -2687,14 +2689,14 @@ export class egwDragActionImplementation
     {
         // Reset the helper object of the action implementation
         this.helper = null;
-        var hasLink = false;
+        let hasLink = false;
 
         // Store the drag-drop types
         this.ddTypes = [];
         this.selected = _selected;
 
         // Call the onExecute event of the first actionObject
-        for (var k in _links)
+        for (let k in _links)
         {
             if (_links[k].visible)
             {
@@ -2710,8 +2712,8 @@ export class egwDragActionImplementation
                 // Push the dragType of the associated action object onto the
                 // drag type list - this allows an element to support multiple
                 // drag/drop types.
-                var type = jQuery.isArray(_links[k].actionObj.dragType) ? _links[k].actionObj.dragType : [_links[k].actionObj.dragType];
-                for(var i = 0; i < type.length; i++)
+                const type = jQuery.isArray(_links[k].actionObj.dragType) ? _links[k].actionObj.dragType : [_links[k].actionObj.dragType];
+                for(let i = 0; i < type.length; i++)
                 {
                     if (this.ddTypes.indexOf(type[i]) == -1)
                     {
@@ -2749,7 +2751,7 @@ export class egwDragActionImplementation
  */
 export function egwDropAction(_id, _handler, _caption, _icon, _onExecute, _allowOnMultiple)
 {
-    var action = new EgwAction(_id, _handler, _caption, _icon, _onExecute, _allowOnMultiple);
+    const action = new EgwAction(_id, _handler, _caption, _icon, _onExecute, _allowOnMultiple);
 
     action.type = "drop";
     action.acceptedTypes = ["default"];
@@ -2790,8 +2792,7 @@ export function egwDropAction(_id, _handler, _caption, _icon, _onExecute, _allow
     return action;
 }
 
-var
-    _dropActionImpl = null;
+let _dropActionImpl = null;
 
 export function getDropImplementation()
 {
@@ -2804,18 +2805,18 @@ export function getDropImplementation()
 
 export function egwDropActionImplementation()
 {
-    var ai = new egwActionImplementation();
+    const ai = new egwActionImplementation();
 
     //keeps track of current drop element where dragged item's entered.
     // it's necessary for dragenter/dragleave issue correction.
-    var currentDropEl = null;
+    let currentDropEl = null;
 
     ai.type = "drop";
 
     ai.doRegisterAction = function(_aoi, _callback, _context)
     {
-        var node = _aoi.getDOMNode() && _aoi.getDOMNode()[0] ? _aoi.getDOMNode()[0] : _aoi.getDOMNode();
-        var self = this;
+        const node = _aoi.getDOMNode() && _aoi.getDOMNode()[0] ? _aoi.getDOMNode()[0] : _aoi.getDOMNode();
+        const self = this;
         if (node)
         {
             node.classList.add('et2dropzone');
@@ -2889,15 +2890,15 @@ export function egwDropActionImplementation()
                 });
 
 
-                var links = _callback.call(_context, "links", self, EGW_AO_EXEC_THIS);
+                const links = _callback.call(_context, "links", self, EGW_AO_EXEC_THIS);
 
                 // Disable all links which only accept types which are not
                 // inside ddTypes
                 for (var k in links) {
-                    var accepted = links[k].actionObj.acceptedTypes;
+                    const accepted = links[k].actionObj.acceptedTypes;
 
-                    var enabled = false;
-                    for (var i = 0; i < data.ddTypes.length; i++) {
+                    let enabled = false;
+                    for (let i = 0; i < data.ddTypes.length; i++) {
                         if (accepted.indexOf(data.ddTypes[i]) != -1) {
                             enabled = true;
                             break;
@@ -2914,8 +2915,8 @@ export function egwDropActionImplementation()
                 }
 
                 // Check whether there is only one link
-                var cnt = 0;
-                var lnk = null;
+                let cnt = 0;
+                let lnk = null;
                 for (var k in links) {
                     if (links[k].enabled && links[k].visible) {
                         lnk = links[k];
@@ -2940,8 +2941,8 @@ export function egwDropActionImplementation()
                     // This is possible as the popup and the popup action
                     // object and the drop action object share same
                     // set of properties.
-                    var popup = getPopupImplementation();
-                    var pos = popup._getPageXY(event);
+                    const popup = getPopupImplementation();
+                    const pos = popup._getPageXY(event);
 
                     // Don't add paste actions, this is a drop
                     popup.auto_paste = false;
@@ -3040,7 +3041,7 @@ export function egwDropActionImplementation()
 
             // Check whether all drag types of the selected objects
             // are accepted
-            var ddTypes = _data.ddTypes;
+            const ddTypes = _data.ddTypes;
 
             for (let i = 0; i < ddTypes.length; i++)
             {
@@ -3055,7 +3056,7 @@ export function egwDropActionImplementation()
 
     ai.doUnregisterAction = function(_aoi)
     {
-        var node = _aoi.getDOMNode();
+        const node = _aoi.getDOMNode();
 
         if (node) {
             node.classList.remove('et2dropzone');
@@ -3065,12 +3066,12 @@ export function egwDropActionImplementation()
     ai._fetchAccepted = function(_links)
     {
         // Accumulate the accepted types
-        var accepted = [];
-        for (var k in _links)
+        const accepted = [];
+        for (let k in _links)
         {
-            for (var i = 0; i < _links[k].actionObj.acceptedTypes.length; i++)
+            for (let i = 0; i < _links[k].actionObj.acceptedTypes.length; i++)
             {
-                var type = _links[k].actionObj.acceptedTypes[i];
+                const type = _links[k].actionObj.acceptedTypes[i];
 
                 if (accepted.indexOf(type) == -1)
                 {
