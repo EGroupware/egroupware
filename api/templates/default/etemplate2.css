@@ -1071,6 +1071,9 @@ et2-link-string > et2-link::part(icon), et2-link-string > et2-link::part(remark)
 	display: none;
 }
 
+et2-link-list et2-link::part(title), et2-link-list et2-link::part(remark) {
+    white-space: nowrap;
+}
 
 /* Link entry - x button*/
 div.et2_link_entry {
