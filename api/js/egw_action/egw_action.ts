@@ -30,12 +30,13 @@ import {
     EgwFnct, egwActionStoreJSON, egwBitIsSet, egwQueueCallback, egwSetBit, egwObjectLength
 } from './egw_action_common';
 import './egw_action_popup.js';
-import "./egw_action_dragdrop.js";
+import "././egw_action_dragdrop";
 import "./egw_menu_dhtmlx";
 //import {app, egw, Iegw} from "../jsapi/egw_global";
 //import {Et2Dialog} from "../etemplate/Et2Dialog/Et2Dialog";
 import {nm_action} from "../etemplate/et2_extension_nextmatch_actions";
 import type {Iegw, IegwAppLocal} from "../jsapi/egw_global";
+import {getDragImplementation} from "./egw_action_dragdrop";
 
 /**
  * holds all possible Types of a egwActionClass
@@ -2350,3 +2351,11 @@ export class EgwActionObjectManager extends EgwActionObject {
  * @deprecated implement upperCase class instead
  */
 export class egwActionObjectManager extends  EgwActionObjectManager{}
+
+
+
+
+
+/**
+ * dragdrop
+ */

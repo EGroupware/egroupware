@@ -253,7 +253,7 @@ class Bundle
 		$inc_mgr->include_js_file('/api/js/egw_action/egw_action');
 		$inc_mgr->include_js_file('/api/js/egw_action/egw_keymanager');
 		$inc_mgr->include_js_file('/api/js/egw_action/egw_action_popup.js');
-		$inc_mgr->include_js_file('/api/js/egw_action/egw_action_dragdrop.js');
+		$inc_mgr->include_js_file('/api/js/egw_action/egw_action_dragdrop.ts');
 		$inc_mgr->include_js_file('/api/js/egw_action/egw_dragdrop_dhtmlx_tree.ts');
 		$inc_mgr->include_js_file('/api/js/egw_action/egw_menu');
 		$inc_mgr->include_js_file('/api/js/egw_action/egw_menu_dhtmlx');
