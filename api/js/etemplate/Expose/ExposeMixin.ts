@@ -507,7 +507,8 @@ export function ExposeMixin<B extends Constructor<LitElement>>(superclass : B)
 				// Try for all exposable of the same type in the parent widget
 				try
 				{
-					this.getParent().getDOMNode().querySelectorAll(this.localName).forEach((exposable, index) =>
+					const others = (this.getParent().closest("[exposable]") || this.getParent().getDOMNode()).querySelectorAll(this.localName);
+					others.forEach((exposable, index) =>
 					{
 						if(exposable === this)
 						{
@@ -518,6 +519,10 @@ export function ExposeMixin<B extends Constructor<LitElement>>(superclass : B)
 							mediaContent.push(...exposable.getMedia(Object.assign({}, IMAGE_DEFAULT, exposable.exposeValue)));
 						}
 					});
+					if(!others || others.length == 0)
+					{
+						mediaContent = this.getMedia(_value);
+					}
 				}
 				catch(e)
 				{
