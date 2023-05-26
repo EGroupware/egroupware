@@ -1283,24 +1283,28 @@ div.et2_link_entry input.ui-autocomplete-input {
 }
 
 ul.et2_link_string {
-    list-style-type: none;
-    display: inline;
-    padding: 0px;
+	list-style-type: none;
+	display: inline;
+	padding: 0px;
 }
 
 .et2_link_string li {
-    display: inline;
+	display: inline;
+}
+
+et2-link-string et2-link::part(base) {
+	margin-right: -0.5ex;
 }
 
 .et2_link_string li:not(:last-child):after {
-    content: '\002C\00A0';
+	content: '\002C\00A0';
 }
 
 .et2_link_list {
-    border-collapse: collapse;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
+	border-collapse: collapse;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
