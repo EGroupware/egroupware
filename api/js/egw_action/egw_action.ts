@@ -179,7 +179,9 @@ export class egwAction extends EgwAction {
 
 /** egwActionManager Object **/
 
-
+/**
+ * @deprecated
+ */
 export class egwActionManager extends EgwActionManager{}
 
 /**
