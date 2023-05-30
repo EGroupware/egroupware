@@ -29,7 +29,7 @@ export type TapAndSwipeOptionsType = TapAndSwipeOptions;
 
 export class tapAndSwipe {
 	static readonly _default : TapAndSwipeOptionsType = {
-		threshold : 10,
+		threshold : 5,
 		tapHoldThreshold : 3000,
 		allowScrolling : 'both',
 		swipe : function(){},
@@ -70,6 +70,10 @@ export class tapAndSwipe {
 	 * keeps the timeout id for taphold
 	 */
 	private _tapHoldTimeout : number = null;
+	/**
+	 * keeps the timeout id for tap
+	 */
+	private _tapTimeout : number = null;
 
 	/**
 	 * keeps the contact point on touch start
@@ -80,6 +84,8 @@ export class tapAndSwipe {
 	private _scrolledElementObj : {el : HTMLElement, scrollTop : number, scrollLeft : number} = null;
 
 	private _hasBeenScrolled : boolean = false;
+
+	private _scrollEventTriggered : boolean = false;
 	/**
 	 * Options
 	 * @protected
@@ -107,6 +113,20 @@ export class tapAndSwipe {
 		this.element.addEventListener('touchstart', this._onTouchStart.bind(this), false);
 		this.element.addEventListener('touchend', this._ontouchEnd.bind(this), false);
 		this.element.addEventListener('touchmove', this._onTouchMove.bind(this), false);
+		this.element.addEventListener('touchcancel', this._onTouchCancel.bind(this), false);
+	}
+
+	_onScrolled(event)
+	{
+		this._scrollEventTriggered = true;
+	}
+
+	_onTouchCancel(event)
+	{
+		//cleanup tapHoldTimeout
+		window.clearTimeout(this._tapHoldTimeout);
+		//cleanup tapHoldTimeout
+		window.clearTimeout(this._tapTimeout);
 	}
 
 	_onTouchMove(event)
@@ -128,7 +148,9 @@ export class tapAndSwipe {
 		if(event.composedPath())
 		{
 			const scrolledItem = event.composedPath().filter(_item => {
+				if (_item instanceof HTMLElement) _item.addEventListener('scroll', this._onScrolled.bind(this), false);
 				return _item instanceof HTMLElement && this.element.contains(_item) && (_item.scrollTop != 0 || _item.scrollLeft !=0);
+
 			});
 			if (scrolledItem.length>0)
 			{
@@ -196,7 +218,11 @@ export class tapAndSwipe {
 	{
 		//cleanup tapHoldTimeout
 		window.clearTimeout(this._tapHoldTimeout);
+		const isTabOrHold = (this._endX == this._startX && this._endY == this._startY
+			|| (Math.sqrt((this._endX-this._startX)*(this._endX-this._startX) + (this._endY-this._startY)+(this._endY-this._startY))
+				< this.options.threshold));
 
+		this._hasBeenScrolled = this._hasBeenScrolled ?? (!isTabOrHold && this._scrollEventTriggered);
 		//check scrolling
 		if (this.options.allowScrolling && this._hasBeenScrolled)
 		{
@@ -211,7 +237,9 @@ export class tapAndSwipe {
 		{
 			if (!this._isTapAndHold)
 			{
-				this.options.tap.call(this,event, this._fingercount);
+				this._tapHoldTimeout = window.setTimeout(_=> {
+					this.options.tap.call(this,event, this._fingercount);
+				}, 100);
 			}
 
 			return;
@@ -253,5 +281,6 @@ export class tapAndSwipe {
 	{
 		this.element.removeEventListener('touchstart', this._onTouchStart);
 		this.element.removeEventListener('touchend', this._ontouchEnd);
+		this.element.removeEventListener('touchcancel', this._onTouchCancel);
 	}
 }
