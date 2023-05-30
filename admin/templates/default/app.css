@@ -108,6 +108,10 @@ td.admin_userAgent span {
 	max-width: 100% !important;
 }
 
+#acl-edit #_acl_account {
+	min-width: 16rem;
+}
+
 /**
  * mail account wizard and edit
  */
