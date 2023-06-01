@@ -823,13 +823,16 @@ export class filemanagerAPP extends EgwApp
 	 */
 	_do_action_callback(_data)
 	{
-		if(_data.action == "delete" && this.egw.pushAvailable())
+		if(typeof _data.action == "undefined") return;
+		if(["delete","createdir"].includes(_data.action) && this.egw.pushAvailable())
 		{
 			// No need to refresh, push will handle it
 			this.egw.message(_data.msg)
 			return;
 		}
-		window.egw_refresh(_data.msg, this.appname, undefined, undefined, undefined, undefined, undefined, _data.type);
+		setTimeout(() => {
+			window.egw_refresh(_data.msg, this.appname, undefined, undefined, undefined, undefined, undefined, _data.type);
+		},1);
 	}
 
 	/**
