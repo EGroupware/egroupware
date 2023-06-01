@@ -290,7 +290,7 @@ export function egwPopupActionImplementation()
 
 		let tap = new tapAndSwipe(_node, {
 			// this threshold must be the same as the one set in et2_dataview_view_aoi
-			tapHoldThreshold: 600,
+			tapHoldThreshold: 1000,
 			allowScrolling: "both",
 			tapAndHold: function(event, fingercount)
 			{

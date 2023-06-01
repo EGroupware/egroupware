@@ -1287,7 +1287,7 @@ export class CalendarApp extends EgwApp
 						scroll_animate.call(jQuery(event.target).closest('.calendar_calTimeGrid, .calendar_plannerWidget')[0], direction, delta);
 						return false;
 					},
-					threshold: 100,
+					minSwipeThreshold: 100,
 					allowScrolling: 'vertical'
 				});
 
