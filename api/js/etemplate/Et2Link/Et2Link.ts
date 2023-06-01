@@ -208,7 +208,9 @@ export class Et2Link extends ExposeMixin<Et2Widget>(Et2Widget(LitElement)) imple
 			// zero-width space after the break string
 			title = title
 				.replace(this.breakTitle, this.breakTitle.trimEnd() + "\u200B")
-				.replace(/ /g, '\u00a0');
+				.replace(/ /g, '\u00a0')
+				// Change hyphen to non-breaking hyphen
+				.replace(/-/g, '‑');
 		}
 		return html`
             <div part="base" class="link et2_link" draggable="${this.app == 'file'}" @dragstart=${this._handleDragStart.bind(this, this.dataset)}>
