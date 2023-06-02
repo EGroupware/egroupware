@@ -570,6 +570,7 @@ show test connection section and control the level of info displayed?	mail	de	Ze
 show test connection section and control the level of info displayed??	mail	de	Soll der Verbindungstest und die dazugehörigen Informationen angezeigt werden?
 show them this time only	mail	de	Einmalig externe Inhalte anzeigen
 show vertical	mail	de	Vertikal anzeigen (3-Spalten-Ansicht)
+show vertical with all columns	mail	de	Vertikal mit Einzelspalten anzeigen
 show/hide preview pane in mail list view	mail	de	Mailvorschau anzeigen oder ausblenden
 shows a temporary visible notification including from address, subject and a snippet of the mail	mail	de	Zeigt eine kurze Zeit sichtbare Benachrichtigung einschließlich Absender, Betreff und Kurzvorschau der E-Mail.
 sieve	mail	de	Sieve
