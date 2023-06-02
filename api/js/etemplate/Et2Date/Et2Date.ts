@@ -744,7 +744,16 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(LitFlatpickr))
 				// Avoid infinite loop of setting the same value back triggering another change
 				this._instance.input.value !== flatpickr.formatDate(parsedDate, this.getOptions().dateFormat))
 			{
-				this._instance.setDate(value, true, this._instance.config.altFormat)
+				try
+				{
+					// Can error for time-only due to missing calendar
+					this._instance.setDate(value, true, this._instance.config.altFormat)
+				}
+				catch(e)
+				{
+					// Just do it again, it works the second time
+					this._instance.setDate(value, true, this._instance.config.altFormat);
+				}
 			}
 			// Update the et2-textbox so it has current value for any (required) validation
 			this._inputNode.value = formattedDate;
