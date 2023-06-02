@@ -1448,6 +1448,10 @@ img.calendar_print_appicon {
   background-size: 20px;
   background-repeat: no-repeat;
   background-position: center;
+}
+#calendar-toolbar_toolbar span[data-group="integration"] > et2-switch::part(base),
+#toolbar-menulist et2-switch[id^="calendar-toolbar_toolbar-integration"],
+#toolbar-menulist et2-switch[id^="calendar-toolbar_toolbar-video_toggle"] {
   filter: brightness(0) contrast(0.3) opacity(0.7);
 }
 et2-switch#calendar-toolbar_toolbar-weekend {
@@ -1494,7 +1498,7 @@ et2-switch#calendar-toolbar_toolbar-weekend::part(label) {
   height: 32px;
   display: inline-block;
   vertical-align: top;
-  border: 1px solid silver;
+  border: 1px solid var(--sl-color-neutral-300);
   border-radius: 3px;
 }
 .ui-toolbar-menulist et2-switch,
