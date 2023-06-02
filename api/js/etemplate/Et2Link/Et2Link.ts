@@ -154,6 +154,16 @@ export class Et2Link extends ExposeMixin<Et2Widget>(Et2Widget(LitElement)) imple
 		super.connectedCallback();
 	}
 
+	async _getUpdateComplete()
+	{
+		await super._getUpdateComplete();
+		if(this._titlePromise)
+		{
+			// Wait for the title to arrive before we say we're done
+			await this._titlePromise;
+		}
+	}
+
 	/**
 	 * Build a thumbnail for the link
 	 * @param link
@@ -369,7 +379,10 @@ export class Et2Link extends ExposeMixin<Et2Widget>(Et2Widget(LitElement)) imple
 				let url = _data.download_url;
 
 				// NEED an absolute URL
-				if (url[0] == '/') url = egw.link(url);
+				if(url[0] == '/')
+				{
+					url = this.egw().link(url);
+				}
 				// egw.link adds the webserver, but that might not be an absolute URL - try again
 				if (url[0] == '/') url = window.location.origin + url;
 
