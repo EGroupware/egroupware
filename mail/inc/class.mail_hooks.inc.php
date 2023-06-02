@@ -436,9 +436,10 @@ class mail_hooks
 				'name' => 'previewPane',
 				'values' => array(
 					'vertical' => lang('show vertical'),
+					'allColumns' => lang('show vertical with all columns'),
 					'fixed' => lang('show horizontal'),
 					'expand' => lang('show horizontal, hide if none selected'),
-					'hide' => lang('never show'),
+					'hide' => lang('never show')
 				),
 				'default' => 'vertical',
 				'reload' => true
