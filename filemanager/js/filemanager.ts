@@ -20,7 +20,7 @@ import {et2_nextmatch_controller} from "../../api/js/etemplate/et2_extension_nex
 import {egw} from "../../api/js/jsapi/egw_global";
 import {et2_selectbox} from "../../api/js/etemplate/et2_widget_selectbox";
 import {et2_textbox} from "../../api/js/etemplate/et2_widget_textbox";
-import {ExposeMixin, MIME_REGEX} from "../../api/js/etemplate/Expose/ExposeMixin";
+import {MIME_REGEX} from "../../api/js/etemplate/Expose/ExposeMixin";
 
 /**
  * UI for filemanager
@@ -824,7 +824,7 @@ export class filemanagerAPP extends EgwApp
 	_do_action_callback(_data)
 	{
 		if(typeof _data.action == "undefined") return;
-		if(["delete","createdir"].includes(_data.action) && this.egw.pushAvailable())
+		if(this.egw.pushAvailable())
 		{
 			// No need to refresh, push will handle it
 			this.egw.message(_data.msg)

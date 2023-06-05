@@ -354,7 +354,7 @@ class filemanager_hooks
 		$stat = isset($data['stat']) ? $data['stat'] : Vfs::stat($path);
 
 		// we ignore notifications about zero size files, created by some WebDAV clients prior to every real update!
-		if($stat['size'] || Vfs::is_dir($path))
+		if($stat['size'] || Vfs::is_dir($path) || in_array($data['location'], ['vfs_rmdir', 'vfs_unlink']))
 		{
 			self::push($data, $stat);
 		}
