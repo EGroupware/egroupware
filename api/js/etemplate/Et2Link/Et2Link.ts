@@ -154,14 +154,15 @@ export class Et2Link extends ExposeMixin<Et2Widget>(Et2Widget(LitElement)) imple
 		super.connectedCallback();
 	}
 
-	async _getUpdateComplete()
+	async getUpdateComplete()
 	{
-		await super._getUpdateComplete();
+		const result = await super.getUpdateComplete();
 		if(this._titlePromise)
 		{
 			// Wait for the title to arrive before we say we're done
 			await this._titlePromise;
 		}
+		return result;
 	}
 
 	/**
