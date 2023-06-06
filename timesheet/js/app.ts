@@ -206,13 +206,22 @@ class TimesheetApp extends EgwApp
 			const format = this.egw.preference('number_format');
 			const sep = format ? format[0] : '.';
 
-			// Duration is in minutes, round to hours with 1 decimal
-			let val = "" + (Math.round(parseInt(widget.value) / 6) / 10);
+			// Duration is in minutes, round to hours with 2 decimals
+			const minutes = parseInt(widget.value) / 60;
+			let val = "" + Math.round((minutes + Number.EPSILON) * 1000) / 1000;
 			if(format && sep && sep !== '.')
 			{
 				val = val.replace('.', sep);
 			}
 
+			// Clear actual value to update if it was nearly the same
+			const old_val = parseInt(widget._oldValue) / 60;
+			if(Math.abs(parseFloat(quantity.value) - old_val) < 0.01)
+			{
+				quantity.value = "";
+			}
+
+			// Set placeholder
 			quantity.placeholder = val;
 		}
 	}
