@@ -47,6 +47,7 @@ $setup_info['calendar']['hooks']['categories'] = 'calendar_hooks::categories';
 $setup_info['calendar']['hooks']['mail_import'] = 'calendar_hooks::mail_import';
 $setup_info['calendar']['hooks']['notifications_actions'] = 'calendar_hooks::notifications_actions';
 $setup_info['calendar']['hooks']['etemplate2_register_widgets'] = 'calendar_hooks::widgets';
+$setup_info['calendar']['hooks']['etemplate2_history_get_rows'] = 'calendar.calendar_uiforms.modify_history';
 
 /* Dependencies for this app to work */
 $setup_info['calendar']['depends'][] = array(
