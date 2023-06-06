@@ -464,6 +464,9 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 		calendar_so::split_status($event['participants'][$uid], $quantity, $role);
 		$status = calendar_so::combine_status($status_in, $quantity, $role);
 
+		// convert to user-time, as that is what calendar_boupdate expects
+		$this->calendar->server2usertime($event);
+
 		if ($event['id'] && isset($event['participants'][$uid]))
 		{
 			$ret = $this->calendar->set_status($event, $uid, $status) ? $event['id'] : false;
