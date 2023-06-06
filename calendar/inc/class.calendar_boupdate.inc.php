@@ -1951,7 +1951,7 @@ class calendar_boupdate extends calendar_bo
 				{
 					foreach($event['alarm'] as $id => $alarm)
 					{
-						$this->delete_alarm($id);
+						$this->delete_alarm($id, true);
 					}
 				}
 			}
