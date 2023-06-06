@@ -3109,6 +3109,37 @@ class calendar_uiforms extends calendar_ui
 	}
 
 	/**
+	 * Modify history to make timestamps in user time
+	 *
+	 * @param array $data values for keys "data" (data) and "args":
+	 *  values for keys "value", "rows" (reference) and "total" (reference)
+	 */
+	public function modify_history(array $data)
+	{
+		$history = [];
+		$sel_options = [];
+		$this->setup_history($history, $sel_options);
+		foreach($data['rows'] as $index => &$row)
+		{
+			if($row['appname'] !== 'calendar')
+			{
+				return;
+			}
+			if(str_contains($history['history']['status-widgets'][$row['status']], 'date'))
+			{
+				foreach(['old_value', 'new_value'] as $field)
+				{
+					if(!$row[$field])
+					{
+						continue;
+					}
+					$row[$field] = Api\DateTime::server2user($row[$field], Api\DateTime::ET2);
+				}
+			}
+		}
+	}
+
+	/**
 	 * moves an event to another date/time
 	 *
 	 * @param string $_eventId id of the event which has to be moved
