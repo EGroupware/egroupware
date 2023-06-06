@@ -2768,4 +2768,34 @@ class infolog_ui
 		}
 		return $fields;
 	}
+
+
+	/**
+	 * Modify history to make timestamps in user time
+	 *
+	 * @param array $data values for keys "data" (data) and "args":
+	 *  values for keys "value", "rows" (reference) and "total" (reference)
+	 */
+	public function modify_history(array $data)
+	{
+		$fields = ['Co', 'st', 'Mo', 'En'];
+		foreach($data['rows'] as $index => &$row)
+		{
+			if($row['appname'] !== 'infolog')
+			{
+				return;
+			}
+			if(in_array($row['status'], $fields))
+			{
+				foreach(['old_value', 'new_value'] as $field)
+				{
+					if(!$row[$field])
+					{
+						continue;
+					}
+					$row[$field] = Api\DateTime::server2user($row[$field], Api\DateTime::ET2);
+				}
+			}
+		}
+	}
 }
