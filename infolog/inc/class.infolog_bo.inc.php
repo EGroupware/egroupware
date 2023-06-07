@@ -1083,12 +1083,7 @@ class infolog_bo
 			{
 				$values['info_from'] = '';
 			}
-
-			// Change new values back to user time before sending them back
-			if($user2server)
-			{
-				$this->time2time($values);
-			}
+			
 			// merge changes (keeping extra values from the UI)
 			$values_in = array_merge($values_in, $values);
 
