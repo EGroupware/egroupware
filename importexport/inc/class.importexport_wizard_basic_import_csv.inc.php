@@ -158,12 +158,23 @@ class importexport_wizard_basic_import_csv
 								if($GLOBALS['egw_info']['user']['preferences']['common']['lang'] != 'en' && !isset($english[$field_name])) {
 									$msg_id = Api\Translation::get_message_id($field_name, $content['application']);
 								}
-								if($msg_id) {
+								if($msg_id)
+								{
 									$english[$field_name] = Api\Translation::read('en', $content['application'], $msg_id);
-								} else {
+								}
+								else
+								{
 									$english[$field_name] = false;
 								}
-								if($english[$field_name] && strcasecmp($field, $english[$field_name]) == 0) {
+								if($english[$field_name] && strcasecmp($field, $english[$field_name]) == 0)
+								{
+									$content['field_mapping'][$index] = $key;
+									continue 2;
+								}
+
+								// Check for field name translated
+								if($field == Api\Translation::translate($field_name))
+								{
 									$content['field_mapping'][$index] = $key;
 									continue 2;
 								}
@@ -171,9 +182,10 @@ class importexport_wizard_basic_import_csv
 								// Check for similar but slightly different
 								$match = 0;
 								if(similar_text(strtolower($field), strtolower($field_name), $match) &&
-										$match > 85 &&
-										$match > $best_match_value
-								) {
+									$match > 85 &&
+									$match > $best_match_value
+								)
+								{
 									$best_match = $key;
 									$best_match_value = $match;
 								}
