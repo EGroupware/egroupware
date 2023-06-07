@@ -216,7 +216,7 @@ class TimesheetApp extends EgwApp
 
 			// Clear actual value to update if it was nearly the same
 			const old_val = parseInt(widget._oldValue) / 60;
-			if(Math.abs(parseFloat(quantity.value) - old_val) < 0.01)
+			if(Math.abs(quantity.valueAsNumber - old_val) < 0.01)
 			{
 				quantity.value = "";
 			}
