@@ -819,7 +819,7 @@ class Ldap
 				// only return given account_id's
 				if (!empty($param['account_id']))
 				{
-					$filter .= '(|(uidNumber=' . implode(')(uidNumber=', $param['account_id']) . '))';
+					$filter .= '(|(uidNumber=' . implode(')(uidNumber=', (array)$param['account_id']) . '))';
 				}
 				if (!empty($param['modified']))
 				{
