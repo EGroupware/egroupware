@@ -261,12 +261,16 @@ class Hooks
 				// some apps have setup_info for more then themselfs (eg. api for groupdav)
 				foreach($setup_info as $appname => $data)
 				{
+					if(!array_key_exists('hooks', $data))
+					{
+						continue;
+					}
 					foreach((array)$data['hooks'] as $location => $methods)
 					{
 						if (is_int($location))
 						{
 							$location = $methods;
-							$methods = '/'.$appname.'/inc/hook_'.$methods.'.inc.php';
+							$methods = '/' . $appname . '/inc/hook_' . $methods . '.inc.php';
 						}
 						$locations[$location][$appname] = (array)$methods;
 					}

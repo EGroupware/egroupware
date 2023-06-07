@@ -51,6 +51,10 @@ class importexport_definitions_ui
 	 * @var object
 	 */
 	var $plugin;
+	private Etemplate $etpl;
+	private string $clock;
+	private array $steps;
+	private $wizard_content_template;
 
 	function __construct()
 	{
@@ -60,7 +64,7 @@ class importexport_definitions_ui
 		$GLOBALS['egw_info']['flags']['currentapp'] = self::_appname;
 
 		$this->etpl = new Etemplate();
-		$this->clock = Api\Html::image(self::_appname,'clock');
+		$this->clock = Api\Html::image(self::_appname, 'clock');
 		$this->steps = array(
 			'wizard_step10' => lang('Choose an application'),
 			'wizard_step20' => lang('Choose a plugin'),

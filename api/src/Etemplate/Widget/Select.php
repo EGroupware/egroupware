@@ -644,7 +644,7 @@ class Select extends Etemplate\Widget
 		}
 		// Legacy / static support
 		// Have to do this explicitly, since legacy options is not defined on class level
-		$legacy_options = explode(',',$_legacy_options);
+		$legacy_options = explode(',', $_legacy_options ?? "");
 		foreach($legacy_options as &$field)
 		{
 			$field = self::expand_name($field, 0, 0,'','',self::$cont);
