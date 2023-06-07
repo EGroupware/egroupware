@@ -189,9 +189,9 @@ class Grid extends Box
 			foreach(array_merge(array($direct_child), $n ? array() : $direct_child->children) as $child)
 			{
 				$pat = $child->id;
-				while(($patstr = strstr($pat, '$')))
+				while($pat && ($patstr = strstr($pat, '$')))
 				{
-					$pat = substr($patstr,$patstr[1] == '{' ? 2 : 1);
+					$pat = substr($patstr, $patstr[1] == '{' ? 2 : 1);
 
 					switch ($this->type)
 					{
