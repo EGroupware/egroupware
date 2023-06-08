@@ -1019,11 +1019,11 @@ class filemanager_ui
 		if($query['col_filter']['path'] && $vfs_options['name'])
 		{
 			// Query the requested path, in case it's nested
-			$query['col_filter']['path'][] = $query['path'];
 			if(!is_array($query['col_filter']['dir']))
 			{
 				$query['col_filter']['dir'] = $query['col_filter']['dir'] ? [$query['col_filter']['dir']] : [];
 			}
+			$query['col_filter']['path'][] = $query['path'];
 			foreach($query['col_filter']['path'] as $filter_path)
 			{
 				$query['col_filter']['dir'][] = Vfs::is_dir($filter_path) ? $filter_path : Vfs::dirname($filter_path);
