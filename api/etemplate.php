@@ -105,8 +105,8 @@ function send_template()
 		}
 		exit;
 	}
-	$cache = $GLOBALS['egw_info']['server']['temp_dir'].'/egw_cache/eT2-Cache-'.
-		$GLOBALS['egw_info']['server']['install_id'].'-'.str_replace('/', '-', $_SERVER['PATH_INFO']);
+	$cache = $GLOBALS['egw_info']['server']['temp_dir'] . '/egw_cache/eT2-Cache-' .
+		$GLOBALS['egw_info']['server']['install_id'] . '-' . str_replace('/', '-', $_SERVER['PATH_INFO']) . '-' . filemtime($path);
 	if (PHP_SAPI !== 'cli' && file_exists($cache) && filemtime($cache) > max(filemtime($path), filemtime(__FILE__)) &&
 		($str = file_get_contents($cache)) !== false)
 	{
