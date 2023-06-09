@@ -540,6 +540,10 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 	 * properties of the StatMessage() item may change via ChangeMessage().
 	 * Note that this function will never be called on E-mail items as you can't change e-mail items, you
 	 * can only set them as 'read'.
+	 *
+	 * At least iOS 16.4 does NOT send any attendee-status via ChangeMessage, therefore the user can not set/change
+	 * the attendee status on the server, after initial response to the meeting-request. No idea why that is ...
+	 * WBXML shows a mail is generated to the organizer, but status is NOT send to the server!
 	 */
 	public function ChangeMessage($folderid, $_id, $message, $contentParameters)
 	{
@@ -566,7 +570,7 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 			ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."('$folderid',$id:$recur_date,".array2string($message).") handling of virtual exception not yet implemented!");
 			//error_log(__METHOD__."('$folderid',$id:$recur_date,".array2string($message).") handling of virtual exception not yet implemented!");
 		}
-		if (!$this->calendar->check_perms($id ? Acl::EDIT : Acl::ADD, $old_event ? $old_event : 0,$account))
+		if (!$this->calendar->check_perms($id ? Acl::EDIT : Acl::ADD, $old_event ?: 0,$account))
 		{
 			// @todo: write in users calendar and make account only a participant
 			ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."('$folderid',$id,...) no rights to add/edit event!");
@@ -584,10 +588,14 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 		{
 			$skip_notification = true; // to avoid double notification from client AND Server
 		}
+
+		// event is read in server-time, as is AS message, therefore we need to convert to user-time, which is expected by calendar_boupdate
+		$this->calendar->server2usertime($event);
+
 		$messages = null;
 		if (!($id = $this->calendar->update($event, true, true, false, true, $messages, $skip_notification)))
 		{
-			ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."('$folderid',$id,...) error saving event=".array2string($event)."!");
+			ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."('$folderid',$id,...) error (".implode(', ', $messages).") saving event=".array2string($event)."!");
 			return false;
 		}
 		// store non-delete exceptions
