@@ -20,79 +20,58 @@
 
    <tr class="row_off">
     <td>Label to display as option on login page:<br>or leave empty and select SAML as authentication type above for single sign on</td>
-    <td><input name="newsettings[saml_discovery]" placeholder="University Login" value="Test SSO" size="20"></td>
+    <td>Test SSO</td>
    </tr>
 
    <tr class="row_on">
     <td>Identity Provider:<br>You can specify multiple IdP on separate lines.</td>
-    <td><textarea name="newsettings[saml_idp]" placeholder="https://idp.uni-kl.de/idp/shibboleth" rows="3" cols="64">https://ucs.example.org/simplesamlphp/saml2/idp/metadata.php</textarea></td>
+    <td>https://ucs.example.org/simplesamlphp/saml2/idp/metadata.php</td>
    </tr>
 
    <tr class="row_off">
     <td>
-     Metadata:
-     refresh
-     <select name="newsettings[saml_metadata_refresh]">
-      <option value="daily">daily</option>
-      <option value="weekly">weekly</option>
-      <option value="no">not automatic</option>
-      <option value="now" selected>just now</option>
-     </select>
+     Metadata:<br/>
+     refresh [ just now   v]
     </td>
     <td>
-     <input name="newsettings[saml_metadata]" placeholder="https://www.aai.dfn.de/fileadmin/metadata/dfn-aai-metadata.xml" value="https://ucs.example.org/simplesamlphp/saml2/idp/metadata.php" size="64"><br>
+     https://ucs.example.org/simplesamlphp/saml2/idp/metadata.php
     </td>
    </tr>
    <tr class="row_on">
     <td>Certificate Metadata is signed with: (Will be downloaded once, unless changed.)</td>
-    <td><input name="newsettings[saml_certificate]" placeholder="https://www.aai.dfn.de/fileadmin/metadata/dfn-aai.pem" value="https://ucs.example.org/simplesamlphp/saml2/idp/certificate" size="64"></td>
+    <td>
+        https://ucs.example.org/simplesamlphp/saml2/idp/certificate
+    </td>
    </tr>
    <tr class="row_off">
     <td>Result data to use as username:</td>
     <td>
-     <select name="newsettings[saml_username]">
-      <option value="eduPersonPrincipalName">eduPersonPrincipalName</option>
-      <option value="eduPersonUniqueId">eduPersonUniqueId</option>
-      <option value="emailAddress">emailAddress</option>
-      <option value="uid" selected="">uid</option>
-      <option value="customOid">custom OID</option>
-     </select>
-     <input name="newsettings[saml_username_oid]" value="" placeholder="urn:oid:x.x.x.x" size="40">
+     [ uid   v]
     </td>
    </tr>
    <tr class="row_on">
     <td>Result data to add or remove extra membership:</td>
     <td>
-     <select name="newsettings[saml_affiliation]">
-      <option value="eduPersonAffiliation" selected="">eduPersonAffiliation</option>
-      <option value="custom">custom OID</option>
-     </select>
-     <input name="newsettings[saml_affiliation_oid]" value="" placeholder="urn:oid:x.x.x.x" size="40">
+     [ eduPersonAffiliation  v]
     </td>
    </tr>
    <tr class="row_off">
     <td>Result values (comma-separated) and group-name to add or remove:</td>
     <td>
-     <input name="newsettings[saml_affiliation_values]" value="" placeholder="staff, ..." size="30">
-     <input name="newsettings[saml_affiliation_group]" value="" placeholder="Teachers" size="30">
+     Staff<br/>
+     Teachers
     </td>
    </tr>
    <tr class="row_on">
     <td>Allow SAML logins to join existing accounts:<br>(Requires SAML optional on login page and user to specify username and password)</td>
     <td>
-     <select name="newsettings[saml_join]">
-      <option value="">No</option>
-      <option value="usernameemail">Replace username and email</option>
-      <option value="username">Replace username and keep email</option>
-      <option value="description">Use account description to store SAML username</option>
-     </select>
+     [ No     v]
     </td>
    </tr>
    <tr class="row_off">
     <td>Match SAML usernames to existing ones (use strings or regular expression):</td>
     <td>
-      <input name="newsettings[saml_replace]" placeholder="replace: '@uni-kl.de' or '/@(uni-kl\.de)$/'" value="" size="40">
-      <input name="newsettings[saml_replace_with]" placeholder="with: '@rhrk.uni-kl.de' or '@rhrk.$1'" value="" size="35">
+      
    </td>
    </tr>
    <tr class="row_on" height="25">
@@ -101,13 +80,13 @@
    </tr>
    <tr class="row_off">
     <td>Name for Service Provider:</td>
-    <td><input name="newsettings[saml_sp]" placeholder="EGroupware" value="EGroupware" size="40"></td>
+    <td>EGroupware</td>
    </tr>
    <tr class="row_on">
     <td>Technical contact:</td>
     <td>
-     <input name="newsettings[saml_contact_name]" value="Ralf Becker" placeholder="Name" size="24">
-     <input name="newsettings[saml_contact_email]" value="rb@egroupware.org" placeholder="Email" size="24">
+     Ralf Becker<br/>
+     rb@egroupware.org
     </td>
    </tr>
 </tbody></table>
