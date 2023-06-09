@@ -200,36 +200,53 @@ class infolog_ui
 		{
 			$info['class'] .= 'rowNoCloseAll ';
 		}
-		if (!$this->bo->check_access($info,Acl::DELETE))
+		if(!$this->bo->check_access($info, Acl::DELETE))
 		{
 			$info['class'] .= 'rowNoDelete ';
 		}
-		if (!$this->bo->check_access($info,Acl::ADD))
+		if(!$this->bo->check_access($info, Acl::ADD))
 		{
 			$info['class'] .= 'rowNoSubs ';
 		}
-		if ($info['info_id_parent']) $info['class'] .= 'infolog_rowHasParent ';
-		if ($info['info_anz_subs'] > 0) $info['class'] .= 'infolog_rowHasSubs ';
+		if($info['info_id_parent'])
+		{
+			$info['class'] .= 'infolog_rowHasParent ';
+		}
+		if($info['info_anz_subs'] > 0)
+		{
+			$info['class'] .= 'infolog_rowHasSubs ';
+		}
 
 		$info['row_mod'] = $info['info_datemodified'];
+		$timesheet_bo = new timesheet_bo();
+		$config = Api\Config::read('infolog');
 
-		if (!$show_links) $show_links = $this->prefs['show_links'];
-		if (($show_links != 'none' && $show_links != 'no_describtion' ||
-			 $this->prefs['show_times'] || isset($GLOBALS['egw_info']['user']['apps']['timesheet'])) &&
-			(isset($info['links']) || ($info['links'] = Link::get_links('infolog',$info['info_id'],'','link_lastmod DESC',true,true))))
+		if(!$show_links)
+		{
+			$show_links = $this->prefs['show_links'];
+		}
+		if(($show_links != 'none' && $show_links != 'no_describtion' ||
+				$this->prefs['show_times'] || isset($GLOBALS['egw_info']['user']['apps']['timesheet'])) &&
+			(isset($info['links']) || ($info['links'] = Link::get_links('infolog', $info['info_id'], '', 'link_lastmod DESC', true, true))))
 		{
 			$timesheets = array();
-			foreach ($info['links'] as $link)
+			foreach($info['links'] as $link)
 			{
 				// incl. link modification time into row_mod (link's lastmod is always in server-time!)
 				$link_mod = Api\DateTime::server2user($link['lastmod']);
-				if ($info['row_mod'] < $link_mod) $info['row_mod'] = $link_mod;
+				if($info['row_mod'] < $link_mod)
+				{
+					$info['row_mod'] = $link_mod;
+				}
 
-				if ($link['deleted']) continue;	// skip deleted links, but incl. them in row_mod!
+				if($link['deleted'])
+				{
+					continue;
+				}    // skip deleted links, but incl. them in row_mod!
 
-				if ($show_links != 'none' && $show_links != 'no_describtion' &&
+				if($show_links != 'none' && $show_links != 'no_describtion' &&
 					$link['link_id'] != $info['info_link_id'] &&
-				    ($link['app'] != $action || $link['id'] != $action_id) &&
+					($link['app'] != $action || $link['id'] != $action_id) &&
 					($show_links == 'all' || ($show_links == 'links') === ($link['app'] != Link::VFS_APPNAME)))
 				{
 					$info['filelinks'][] = $link;
@@ -242,7 +259,7 @@ class infolog_ui
 			}
 			if ($this->prefs['show_times'] && isset($GLOBALS['egw_info']['user']['apps']['timesheet']) && $timesheets)
 			{
-				$sum = ExecMethod('timesheet.timesheet_bo.sum',$timesheets);
+				$sum = $timesheet_bo->sum($timesheets, !$config['respect_timesheet_rights']);
 				$info['info_sum_timesheets'] = $sum['duration'];
 				// incl. max timesheet modification in row_mod
 				if ($info['row_mod'] < $sum['max_modified']) $info['row_mod'] = $sum['max_modified'];
@@ -446,12 +463,20 @@ class infolog_ui
 			$query['default_cols'] = '!cat_id,info_datemodified,info_used_time_info_planned_time,info_used_time_info_planned_time_info_replanned_time,info_id';
 		}
 		// set old show_times pref, that get_info calculates the cumulated time of the timesheets (we only check used&planned to work for both time cols)
-		$this->prefs['show_times'] = strpos($this->prefs[$query['columnselection_pref']],'info_used_time_info_planned_time') !== false;
+		$this->prefs['show_times'] = strpos($this->prefs[$query['columnselection_pref']], 'info_used_time_info_planned_time') !== false;
+
+		$reset_timesheet = false;
+		$config = Api\Config::read('infolog');
+		if(!$config['respect_timesheet_rights'] && !isset($GLOBALS['egw_info']['user']['apps']['timesheet']))
+		{
+			$reset_timesheet = true;
+			$GLOBALS['egw_info']['user']['apps']['timesheet'] = true;
+		}
 
 		// query all links and sub counts in one go
-		if ($infos && (!$query['csv_export'] || !is_array($query['csv_export'])))
+		if($infos && (!$query['csv_export'] || !is_array($query['csv_export'])))
 		{
-			$links = Link::get_links_multiple('infolog',array_keys($infos),true,'','link_lastmod DESC',true);	// true=incl. deleted
+			$links = Link::get_links_multiple('infolog', array_keys($infos), true, '', 'link_lastmod DESC', true);    // true=incl. deleted
 			$anzSubs = $this->bo->anzSubs(array_keys($infos));
 		}
 		$rows = array();
@@ -460,25 +485,29 @@ class infolog_ui
 		if ($query['action_id'] && $query['csv_export'] !== 'children')
 		{
 			$parents = $query['action'] == 'sp' && $query['action_id'] ? (array)$query['action_id'] : array();
-			if (!empty($parents) && count($parents) == 1 && is_array($query['action_id']))
+			if(!empty($parents) && count($parents) == 1 && is_array($query['action_id']))
 			{
-				$query['action_id'] = array_shift($query['action_id']);	// display single parent as app_header
+				$query['action_id'] = array_shift($query['action_id']);    // display single parent as app_header
 			}
 		}
 
 		$parent_first = !empty($parents) && count($parents) == 1;
 		$parent_index = 0;
 		// et2 nextmatch listens to total, and only displays that many rows, so add parent in or we'll lose the last row
-		if($parent_first || $query['action'] == 'sp' && is_array($query['action_id'])) $query['total']++;
+		if($parent_first || $query['action'] == 'sp' && is_array($query['action_id']))
+		{
+			$query['total']++;
+		}
+
 
 		// Check to see if we need to remove description
 		foreach($infos as $id => $info)
 		{
-			if (!$query['csv_export'] || !is_array($query['csv_export']))
+			if(!$query['csv_export'] || !is_array($query['csv_export']))
 			{
 				$info['links'] =& $links[$id];
 				$info['info_anz_subs'] = (int)$anzSubs[$id];
-				$info = $this->get_info($info,$readonlys,null,null,false,$details);
+				$info = $this->get_info($info, $readonlys, null, null, false, $details);
 			}
 			// for subs view ('sp') add parent(s) in front of subs once(!)
 			if ( $parent_first && ($main = $this->bo->read($query['action_id'])) ||
@@ -514,9 +543,19 @@ class infolog_ui
 		}
 		unset($links);
 
-		if ($query['cat_id']) $rows['no_cat_id'] = true;
-		if ($query['no_actions']) $rows['no_actions'] = true;
+		if($query['cat_id'])
+		{
+			$rows['no_cat_id'] = true;
+		}
+		if($query['no_actions'])
+		{
+			$rows['no_actions'] = true;
+		}
 		$rows['no_timesheet'] = !isset($GLOBALS['egw_info']['user']['apps']['timesheet']);
+		if($reset_timesheet)
+		{
+			unset($GLOBALS['egw_info']['user']['apps']['timesheet']);
+		}
 		if($clear_status_filter)
 		{
 			$rows['info_status'] = '';
