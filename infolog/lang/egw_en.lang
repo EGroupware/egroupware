@@ -397,6 +397,7 @@ removed	infolog	en	Removed.
 removed category	infolog	en	removed category
 replacement	infolog	en	Replacement
 replacements for inserting entries into documents	infolog	en	Replacements for inserting entries into documents
+respect timesheet run and read permissions for time totals	infolog	en	Respect timesheet run and read permissions for time totals
 responsible	infolog	en	Responsible
 responsible open	infolog	en	Responsible open
 responsible open and upcoming	infolog	en	Responsible open and upcoming
