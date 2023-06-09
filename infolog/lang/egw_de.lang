@@ -397,6 +397,7 @@ removed	infolog	de	Entfernt
 removed category	infolog	de	Kategorie erfolgreich entfernt
 replacement	infolog	de	Platzhalter
 replacements for inserting entries into documents	infolog	de	Platzhalter für das Einfügen in Dokumente
+respect timesheet run and read permissions for time totals	infolog	de	Respektieren Sie die Ausführungs- und Leseberechtigungen für Zeittabellen
 responsible	infolog	de	verantwortlich
 responsible open	infolog	de	verantwortlich offen
 responsible open and upcoming	infolog	de	verantwortlich offene und zukünftige
