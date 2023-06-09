@@ -4644,7 +4644,7 @@ class Mail
 				);
 				break;
 		}
-		return $bodyPart;
+		return $bodyPart ?? null;
 	}
 
 	/**
@@ -5057,7 +5057,7 @@ class Mail
 		{
 			$body2return = $_bodyParts;
 		}
-		return $body2return;
+		return $body2return ?? null;
 	}
 
 	/**
