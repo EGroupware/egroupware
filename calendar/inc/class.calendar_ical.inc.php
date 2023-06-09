@@ -939,7 +939,7 @@ class calendar_ical extends calendar_boupdate
 				if (!isset($alarmData['offset']) && !isset($alarmData['time'])) continue;
 
 				// skip alarms not being set for all users and alarms owned by other users
-				if ($alarmData['all'] != true && $alarmData['owner'] != $this->user)
+				if (empty($alarmData['all']) && $alarmData['owner'] != $this->user)
 				{
 					continue;
 				}
@@ -1041,13 +1041,13 @@ class calendar_ical extends calendar_boupdate
 
 			foreach ($attributes as $key => $value)
 			{
-				foreach (is_array($value) && $parameters[$key]['VALUE']!='DATE' ? $value : array($value) as $valueID => $valueData)
+				foreach (is_array($value) && ($parameters[$key]['VALUE']??null) != 'DATE' ? $value : array($value) as $valueID => $valueData)
 				{
 					$valueData = Api\Translation::convert($valueData,Api\Translation::charset(),$charset);
 	                $paramData = (array) Api\Translation::convert(is_array($value) ?
-	                		$parameters[$key][$valueID] : $parameters[$key],
+		                ($parameters[$key][$valueID]??null) : ($parameters[$key]??null),
 	                        Api\Translation::charset(),$charset);
-	                $valuesData = (array) Api\Translation::convert($values[$key],
+	                $valuesData = (array) Api\Translation::convert($values[$key] ?? null,
 	                		Api\Translation::charset(),$charset);
 	                $content = $valueData . implode(';', $valuesData);
 
@@ -3068,7 +3068,7 @@ class calendar_ical extends calendar_boupdate
 					}
 					break;
 				case 'CREATED':		// will be written direct to the event
-					if ($event['modified']) break;
+					if (!empty($event['modified'])) break;
 					// fall through
 				case 'LAST-MODIFIED':	// will be written direct to the event
 					$event['modified'] = $attributes['value'];
@@ -3192,7 +3192,7 @@ class calendar_ical extends calendar_boupdate
 				break;
 			}
 		}
-		if ($event['recur_enddate'])
+		if (!empty($event['recur_enddate']))
 		{
 			// reset recure_enddate to 00:00:00 on the last day
 			$rriter = calendar_rrule::event2rrule($event, false);
@@ -3211,7 +3211,7 @@ class calendar_ical extends calendar_boupdate
 			$event['recur_enddate'] = Api\DateTime::to($last, 'server');
 		}
 		// translate COUNT into an enddate, as we only store enddates
-		elseif($event['recur_count'])
+		elseif(!empty($event['recur_count']))
 		{
 			$rriter = calendar_rrule::event2rrule($event, false);
 			$last = $rriter->count2date($event['recur_count']);

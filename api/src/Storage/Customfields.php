@@ -603,7 +603,7 @@ class Customfields implements \IteratorAggregate
 		if(!$customfields)
 		{
 			static $_customfields = array();
-			if(!$_customfields[$app])
+			if(empty($_customfields[$app]))
 			{
 				$_customfields[$app] = Api\Storage\Customfields::get($app);
 			}
