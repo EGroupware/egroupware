@@ -617,7 +617,7 @@ export function egwPopupActionImplementation()
 		var tree = {"root": []};
 
 		// Automatically add in Drag & Drop actions
-		if(this.auto_paste && !egwIsMobile())
+		if(this.auto_paste && !egwIsMobile() && !ai._context.event.type.match(/touch/))
 		{
 			this._addCopyPaste(_links,_selected);
 		}
