@@ -1065,13 +1065,13 @@ class Db
 				'name'  => $column->name,
 				'type'  => $column->type,
 				'len'   => $column->max_length,
-				'flags' => $flags, // for backwards compatibilty (depreciated) used by JiNN atm
+				'flags' => $flags, // for backwards compatibility (depreciated) used by JiNN atm
 				'not_null' => $column->not_null,
 				'auto_increment' => $column->auto_increment,
 				'primary_key' => $column->primary_key,
 				'binary' => $column->binary,
 				'has_default' => $column->has_default,
-				'default'  => $column->default_value,
+				'default'  => $column->default_value ?? null,
 			);
 			$metadata[$i]['table'] = $table;
 			if ($full)
@@ -2321,11 +2321,11 @@ class Db
 				false,	// line
 				false,	// file
 				false,	// offset
-				$select['append'],
-				$select['app'],
+				$select['append'] ?? null,
+				$select['app'] ?? null,
 				0,		// num_rows,
-				$select['join'],
-				$select['table_def'],
+				$select['join'] ?? null,
+				$select['table_def'] ?? null,
 			));
 		}
 		$sql = count($union) > 1 ? '(' . implode(")\nUNION\n(",$union).')' : 'SELECT DISTINCT'.substr($union[0],6);
