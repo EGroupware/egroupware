@@ -148,7 +148,7 @@ class calendar_tracking extends Api\Storage\Tracking
 		{
 			unset($old['participants']);
 		}
-		if(is_array($old['participants']))
+		if(isset($old['participants']) && is_array($old['participants']))
 		{
 			$participants = $old['participants'];
 			$old['participants'] = array();
@@ -221,7 +221,7 @@ class calendar_tracking extends Api\Storage\Tracking
 				'status'	=>	$status,
 				'quantity'	=>	$quantity,
 				'role'		=>	$role,
-				'recur'		=>	$data['recur_date'] ? $data['recur_date'] : 0,
+				'recur'		=>	$data['recur_date'] ?? 0,
 			);
 		}
 		return $data;

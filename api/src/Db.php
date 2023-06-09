@@ -855,7 +855,10 @@ class Db
 				"\n$this->Error ($this->Errno)".
 				($inputarr ? "\nParameters: '".implode("','",$inputarr)."'":''), $this->Errno);
 		}
-		elseif(!$rs->sql) $rs->sql = $Query_String;
+		elseif(empty($rs->sql))
+		{
+			$rs->sql = $Query_String;
+		}
 		return $rs;
 	}
 
