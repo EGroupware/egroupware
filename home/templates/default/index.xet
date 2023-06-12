@@ -11,7 +11,7 @@
         <html id="mainscreen_message"></html>
         <old-box id="portlets">
             <!-- Box wrapper needed to get box to auto-repeat -->
-            <et2-portlet type="${row_cont[type]}" id="${row_cont[id]}" title="$row_cont[title]" color="$row_cont[color]"
+            <et2-portlet type="$row_cont[type]" id="$row_cont[id]" title="$row_cont[title]" color="$row_cont[color]"
                          parent_node="home-index_portlets" settings="$row_cont[settings]"
                          value="$row_cont[content]" class="$row_cont[class]"
                          actions="$row_cont[actions]"/>
