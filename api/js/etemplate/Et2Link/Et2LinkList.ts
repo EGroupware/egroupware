@@ -93,6 +93,10 @@ export class Et2LinkList extends Et2LinkString
 				width: 16px;
 				order: 5;
 			  }
+
+			  div:hover ::slotted(.delete_button) {
+				visibility: initial;
+			  }
 			`
 		];
 	}
@@ -116,7 +120,6 @@ export class Et2LinkList extends Et2LinkString
 		super();
 		this.readonly = false;
 
-		this._handleRowHover = this._handleRowHover.bind(this);
 		this._handleRowContext = this._handleRowContext.bind(this);
 
 		this._handleChange = this._handleChange.bind(this);
@@ -207,59 +210,10 @@ export class Et2LinkList extends Et2LinkString
 	protected _rowTemplate(link) : TemplateResult
 	{
 		return html`
-            <div id="${this._get_row_id(link)}"  
-                 @mouseover=${this._handleRowHover}
-                 @mouseout=${this._handleRowHover}
+            <div id="${this._get_row_id(link)}"
                  @contextmenu=${this._handleRowContext}>
                 <slot name="${this._get_row_id(link)}"></slot>
             </div>`;
-	}
-
-
-	/**
-	 * Handle show/hide delete button
-	 * @param _ev
-	 * @protected
-	 */
-	protected _handleRowHover(_ev)
-	{
-		if(this.readonly)
-		{
-			return;
-		}
-		let slot_name = "";
-		let target = _ev.target;
-
-		// Fist check if target is the row div
-		if(target.firstElementChild?.localName == "slot")
-		{
-			slot_name = target.firstElementChild.name;
-		}
-		do
-		{
-			// Look up tree for the slot
-			if(target.slot)
-			{
-				slot_name = target.slot;
-			}
-			target = target.parentNode;
-		}
-		while(!slot_name && target.parentNode)
-		if(!slot_name)
-		{
-			return;
-		}
-
-		if(_ev.type == "mouseout")
-		{
-			this.querySelectorAll(".delete_button").forEach(b => b.style.visibility = "");
-		}
-
-
-		if(_ev.type == "mouseover")
-		{
-			this.querySelector(".delete_button[slot='" + slot_name + "']").style.visibility = "initial";
-		}
 	}
 
 	/**
