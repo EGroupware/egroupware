@@ -1915,11 +1915,11 @@ class calendar_uiforms extends calendar_ui
 			$content['action_class'] = 'hideme';
 		}
 
-		if (!$event['id'] || $this->bo->check_perms(Acl::EDIT,$event))	// new event or edit rights to the event ==> allow to add alarm for all users
+		if(!$event['id'] || $this->bo->check_perms(Acl::EDIT, $event))    // new event or edit rights to the event ==> allow to add alarm for all users
 		{
 			$sel_options['owner'][0] = lang('All participants');
 		}
-		if (isset($event['participant_types']['u'][$this->user]))
+		if(isset($event['participant_types']['u'][$this->user]) || isset($event['participant_types'][''][$this->user]))
 		{
 			$sel_options['owner'][$this->user] = $this->bo->participant_name($this->user);
 		}
