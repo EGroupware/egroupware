@@ -68,6 +68,7 @@
   html[data-darkmode='1'] sl-menu-item [slot="prefix"],
   html[data-darkmode='1'] iframe,
   html[data-darkmode='1'] et2-lavatar[image=""]::part(base),
+  html[data-darkmode='1'] et2-avatar[id="_cropper_image"],
   html[data-darkmode='1'] video,
   html[data-darkmode='1'] #loginMainDiv,
   html[data-darkmode='1'] .et2_taglist_tags_icon,
