@@ -720,10 +720,11 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 
 		// check if extension changed and update mime-type in that case (as we currently determine mime-type by it's extension!)
 		// fixes eg. problems with MsWord storing file with .tmp extension and then renaming to .doc
-		if ($ok && ($new_mime = Vfs::mime_content_type($url_to,true)) != Vfs::mime_content_type($url_to))
+		if($ok && (!$from_stat['mime'] || $from_stat['mime'] != self::SYMLINK_MIME_TYPE) &&
+			($new_mime = Vfs::mime_content_type($url_to, true)) != Vfs::mime_content_type($url_to))
 		{
 			//echo "<p>Vfs::nime_content_type($url_to,true) = $new_mime</p>\n";
-			$stmt = self::$pdo->prepare('UPDATE '.self::TABLE.' SET fs_mime=:fs_mime WHERE fs_id=:fs_id');
+			$stmt = self::$pdo->prepare('UPDATE ' . self::TABLE . ' SET fs_mime=:fs_mime WHERE fs_id=:fs_id');
 			$stmt->execute(array(
 				'fs_mime' => $new_mime,
 				'fs_id'   => $from_stat['ino'],
