@@ -636,7 +636,7 @@ class calendar_boupdate extends calendar_bo
 	 * @param string $status of current user
 	 * @return boolean true = update requested, false otherwise
 	 */
-	public static function update_requested($userid, $part_prefs, &$msg_type, $old_event ,$new_event, $role, $status=null)
+	public function update_requested($userid, $part_prefs, &$msg_type, $old_event ,$new_event, $role, $status=null)
 	{
 		if ($msg_type == MSG_ALARM)
 		{
@@ -649,8 +649,14 @@ class calendar_boupdate extends calendar_bo
 		$msg_is_response = $msg_type == MSG_REJECTED || $msg_type == MSG_ACCEPTED || $msg_type == MSG_TENTATIVE || $msg_type == MSG_DELEGATED;
 
 		// Check if user is not participating, and does not want notifications
-		if ($msg_is_response && !$part_prefs['calendar']['receive_not_participating'] && !array_key_exists($userid, $old_event['participants'] ?? []))
+		if ($msg_is_response && empty($part_prefs['calendar']['receive_not_participating']) &&
+			// userid is the email address for non-user and NOT necessary the uid used as key in participants ("rb@egroupware.org" vs "eRalf Becker <rb@egroupware.org>")
+			!in_array(is_numeric($userid) ? $userid : strtolower($userid), array_map(function($uid)
+			{
+				return is_numeric($uid) ? $uid : strtolower($this->resource_info($uid)['email'] ?? '');
+			}, array_keys($old_event['participants'])), false))
 		{
+			error_log(__METHOD__."(userid=$userid, receive_not_participating='{$part_prefs['calendar']['receive_not_participating']}', msg_type=$msg_type, {participants: ".json_encode($old_event['participants']).", ...}, role='$role') msg_is_response=$msg_is_response --> user $userid is NOT participating");
 			return false;
 		}
 
@@ -711,7 +717,7 @@ class calendar_boupdate extends calendar_bo
 					break;
 			}
 		}
-		//error_log(__METHOD__."(userid=$userid, receive_updates='$ru', msg_type=$msg_type, ..., role='$role') msg_is_response=$msg_is_response --> want_update=$want_update");
+		//error_log(__METHOD__."(userid=$userid, receive_updates='$ru', msg_type=$msg_type, {participants: ".json_encode($old_event['participants']).", ...}, role='$role') msg_is_response=$msg_is_response --> want_update=$want_update");
 		return $want_update > 0;
 	}
 
@@ -761,7 +767,9 @@ class calendar_boupdate extends calendar_bo
 				$msg_type = MSG_DELETED;
 				break;
 		}
-		$ret = self::update_requested($account_id, $prefs, $msg_type, array(), array(), $role);
+		static $calendar_bo=null;
+		if (!isset($calendar_bo)) $calendar_bo = new calendar_bo();
+		$ret = $calendar_bo->update_requested($account_id, $prefs, $msg_type, array(), array(), $role);
 		//error_log(__METHOD__."('$user_or_email', '$ical_method', '$role') account_id=$account_id --> updated_requested returned ".array2string($ret));
 		return $ret;
 	}
@@ -870,7 +878,7 @@ class calendar_boupdate extends calendar_bo
 	 */
 	function _send_update($msg_type, $to_notify, $old_event, $new_event=null, $user=0, array $alarm=null, $ignore_prefs = false)
 	{
-		//error_log(__METHOD__."($msg_type,".array2string($to_notify).",...) ".array2string($new_event));
+		//error_log(__METHOD__."($msg_type, ".json_encode($to_notify).", ...,  ".json_encode($new_event).", ...)");
 		if (!is_array($to_notify))
 		{
 			$to_notify = array();
@@ -889,6 +897,8 @@ class calendar_boupdate extends calendar_bo
 			!$new_event && $old_event && $this->date2ts($old_event['start']) < ($this->now_su - 10)
 		)
 		{
+			error_log(__METHOD__."($msg_type, ".json_encode($to_notify).", ...,  ".json_encode($new_event).", ...) --> ignoring event in the past: start=".
+				date('Y-m-d H:i:s', ($new_event ?: $old_event)['start'])." < ".date('Y-m-d H:i:s', $this->now_su-10));
 			return False;
 		}
 		// check if default timezone is set correctly to server-timezone (ical-parser messes with it!!!)
@@ -989,7 +999,7 @@ class calendar_boupdate extends calendar_bo
 			{
 				$res_info = $this->resource_info($userid);
 
-				// check if responsible of a resource has read rights on event (might be private!)
+				// check if responsible for a resource has read rights on event (might be private!)
 				if ($res_info['app'] == 'resources' && $res_info['responsible'] &&
 					!$this->check_perms(Acl::READ, $event, 0, 'ts', null, $res_info['responsible']))
 				{
@@ -1053,9 +1063,10 @@ class calendar_boupdate extends calendar_bo
 					$fullname = $res_info && !empty($res_info['name']) ? $res_info['name'] : $userid;
 				}
 				$m_type = $msg_type;
-				if (!$ignore_prefs && !self::update_requested($userid, $part_prefs, $m_type, $old_event, $new_event, $role,
+				if (!$ignore_prefs && !$this->update_requested($userid, $part_prefs, $m_type, $old_event, $new_event, $role,
 					$event['participants'][$GLOBALS['egw_info']['user']['account_id']]))
 				{
+					//error_log("--> Update/notification NOT requested / ignored");
 					continue;
 				}
 				$action = $notify_msg = null;
