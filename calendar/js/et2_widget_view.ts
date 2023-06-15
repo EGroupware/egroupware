@@ -602,20 +602,20 @@ export class et2_calendar_view extends et2_valueWidget
 	 */
 	_drag_create_end(end?)
 	{
-		this.div.css('cursor', '');
+		this.div.css('cursor','');
 		if(typeof end === 'undefined')
 		{
 			end = {};
 		}
-		let options = {};
-		let return_value = true;
 
 		if(this.drag_create.start && end.date &&
 			JSON.stringify(this.drag_create.start.date) !== JSON.stringify(end.date))
 		{
 			// Drag from start to end, open dialog
-			options['start'] = this.drag_create.start.date < end.date ? this.drag_create.start.date : end.date;
-			options['end'] = this.drag_create.start.date < end.date ? end.date : this.drag_create.start.date;
+			var options = {
+				start: this.drag_create.start.date < end.date ? this.drag_create.start.date : end.date,
+				end: this.drag_create.start.date < end.date ? end.date : this.drag_create.start.date
+			};
 
 			// Whole day needs to go from 00:00 to 23:59
 			if(end.whole_day || this.drag_create.start.whole_day)
@@ -632,55 +632,59 @@ export class et2_calendar_view extends et2_valueWidget
 			}
 
 			// Add anything else that was set, but not date
-			jQuery.extend(options, this.drag_create.start, end);
-			delete (options.date);
-			return_value = false;
-		}
+			jQuery.extend(options,this.drag_create.start, end);
+			delete(options.date);
 
-		// Make sure parent is set, if needed
-		let app_calendar = this.getInstanceManager().app_obj.calendar || app.calendar;
-		if(this.drag_create.parent && this.drag_create.parent.options.owner !== app_calendar.state.owner && !options.owner)
-		{
-			options.owner = this.drag_create.parent.options.owner;
-		}
-
-		// Remove empties
-		for(var key in options)
-		{
-			if(!options[key])
+			// Make sure parent is set, if needed
+			let app_calendar = this.getInstanceManager().app_obj.calendar || app.calendar;
+			if (this.drag_create.parent && this.drag_create.parent.options.owner !== app_calendar.state.owner && !options.owner)
 			{
-				delete options[key];
+				options.owner = this.drag_create.parent.options.owner;
 			}
-			if(options[key] instanceof Date)
-			{
-				options[key] = options[key].toJSON();
-			}
-		}
-		app.calendar.add(options, this.drag_create.event);
 
-		// Wait a bit, having these stops the click
-		window.setTimeout(() =>
-		{
-			this.drag_create.start = null;
-			this.drag_create.end = null;
-			this.drag_create.parent = null;
-			if(this.drag_create.event)
+			// Remove empties
+			for(var key in options)
 			{
-				try
+				if(!options[key])
 				{
-					if(this.drag_create.event.destroy)
-					{
-						this.drag_create.event.destroy();
-					}
+					delete options[key];
 				}
-				catch(e)
+				if(options[key] instanceof Date)
 				{
+					options[key] = options[key].toJSON();
 				}
-				this.drag_create.event = null;
 			}
-		}, 100);
+			app.calendar.add(options, this.drag_create.event);
 
-		return return_value;
+			// Wait a bit, having these stops the click
+			window.setTimeout(jQuery.proxy(function() {
+				this.drag_create.start = null;
+				this.drag_create.end = null;
+				this.drag_create.parent = null;
+				if(this.drag_create.event)
+				{
+					this.drag_create.event = null;
+				}
+			},this),100);
+
+			return false;
+		}
+
+		this.drag_create.start = null;
+		this.drag_create.end = null;
+		this.drag_create.parent = null;
+		if(this.drag_create.event)
+		{
+			try
+			{
+				if(this.drag_create.event.destroy)
+				{
+					this.drag_create.event.destroy();
+				}
+			} catch(e) {}
+			this.drag_create.event = null;
+		}
+		return true;
 	}
 
 	/**
