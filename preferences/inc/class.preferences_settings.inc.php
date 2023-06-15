@@ -685,11 +685,11 @@ class preferences_settings
 		}
 		foreach($labels as &$def)
 		{
-			if (isset($values[$def]))
+			if(isset($values[$def]) && (!is_array($values[$def]) || $values[$def]['value'] == $def))
 			{
 				$def = is_array($values[$def]) ? $values[$def]['label'] : $values[$def];
 			}
-			else	// value could be in an optgroup
+			else	// value could be in an optgroup or array with label & value keys
 			{
 				foreach($values as $value)
 				{
