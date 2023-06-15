@@ -306,7 +306,7 @@ class calendar_boupdate extends calendar_bo
 		{
 			if ($new_event)
 			{
-				$this->send_update(MSG_ADDED,$event['participants'],'',$event);
+				$this->send_update(MSG_ADDED,$event['participants'],null, $event);
 			}
 			else // update existing event
 			{
@@ -649,7 +649,7 @@ class calendar_boupdate extends calendar_bo
 		$msg_is_response = $msg_type == MSG_REJECTED || $msg_type == MSG_ACCEPTED || $msg_type == MSG_TENTATIVE || $msg_type == MSG_DELEGATED;
 
 		// Check if user is not participating, and does not want notifications
-		if ($msg_is_response && empty($part_prefs['calendar']['receive_not_participating']) &&
+		if ($msg_is_response && is_array($old_event) && empty($part_prefs['calendar']['receive_not_participating']) &&
 			// userid is the email address for non-user and NOT necessary the uid used as key in participants ("rb@egroupware.org" vs "eRalf Becker <rb@egroupware.org>")
 			!in_array(is_numeric($userid) ? $userid : strtolower($userid), array_map(function($uid)
 			{
@@ -707,7 +707,7 @@ class calendar_boupdate extends calendar_bo
 						}
 					}
 				case 'add_cancel':
-					if ($msg_is_response && ($old_event['owner'] == $userid || $role == 'CHAIR') ||
+					if ($msg_is_response && is_array($old_event) && ($old_event['owner'] == $userid || $role == 'CHAIR') ||
 						$msg_type == MSG_DELETED || $msg_type == MSG_ADDED || $msg_type == MSG_DISINVITE)
 					{
 						++$want_update;
@@ -717,7 +717,7 @@ class calendar_boupdate extends calendar_bo
 					break;
 			}
 		}
-		//error_log(__METHOD__."(userid=$userid, receive_updates='$ru', msg_type=$msg_type, {participants: ".json_encode($old_event['participants']).", ...}, role='$role') msg_is_response=$msg_is_response --> want_update=$want_update");
+		//error_log(__METHOD__."(userid=$userid, receive_updates='$ru', msg_type=$msg_type, ".json_encode($old_event).", ..., role='$role') msg_is_response=$msg_is_response --> want_update=$want_update");
 		return $want_update > 0;
 	}
 
