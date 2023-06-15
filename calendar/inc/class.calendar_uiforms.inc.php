@@ -3125,7 +3125,8 @@ class calendar_uiforms extends calendar_ui
 			{
 				return;
 			}
-			if(str_contains($history['history']['status-widgets'][$row['status']], 'date'))
+			if  (is_string($history['history']['status-widgets'][$row['status']]) &&
+				str_contains($history['history']['status-widgets'][$row['status']], 'date'))
 			{
 				foreach(['old_value', 'new_value'] as $field)
 				{
