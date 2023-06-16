@@ -53,7 +53,11 @@ function try_lang($key,$vars=null)
 function _egw_log_exception($e,&$headline=null)
 {
 	$trace = explode("\n", $e->getTraceAsString());
-	if ($e instanceof Api\Exception\NoPermission)
+	if ($e instanceof Api\Exception\NoPermission\AuthenticationRequired)
+	{
+		$headline = try_lang('Unauthorized: Authentication required!');
+	}
+	elseif ($e instanceof Api\Exception\NoPermission)
 	{
 		$headline = try_lang('Permission denied!');
 	}
@@ -104,6 +108,14 @@ function egw_exception_handler($e)
 	if ($e instanceof Api\Exception\Redirect)
 	{
 		Api\Egw::redirect($e->url, $e->app);
+	}
+	elseif ($e instanceof Api\Exception\NoPermission\AuthenticationRequired)
+	{
+		header('WWW-Authenticate: Basic realm="'.$GLOBALS['egw_info']['flags']['auth_realm'] ?? 'EGroupware'.'"');
+		http_response_code(401);
+		echo "<html>\n<head>\n<title>401 Unauthorized</title>\n<body>\nAuthorization failed.\n</body>\n</html>\n";
+		_egw_log_exception($e);
+		exit;
 	}
 	// logging all exceptions to the error_log (if not cli) and get headline
 	$headline = null;

@@ -25,6 +25,7 @@ $GLOBALS['egw_info'] = array(
 		'currentapp' => 'calendar',
 		'noheader'   => True,
 		'nofooter'   => True,
+		'no_exception_handler' => 'basic_auth',	// we use a basic auth exception handler (sends exception message as basic auth realm)
 	),
 );
 // check if we are already logged in
@@ -44,16 +45,6 @@ if (!($logged_in = !empty(Api\Session::get_sessionid())))
 	}
 }
 include ('../header.inc.php');
-
-function fail_exit($msg)
-{
-	echo "<html>\n<head>\n<title>$msg</title>\n<meta http-equiv=\"content-type\" content=\"text/html; charset=".
-		Api\Translation::charset()."\" />\n</head>\n<body><h1>$msg</h1>\n</body>\n</html>\n";
-
-	header('WWW-Authenticate: Basic realm="'.($GLOBALS['egw_info']['flags']['auth_realm'] ?: 'EGroupware').'"');
-	http_response_code(401);
-	exit;
-}
 
 if (!$logged_in)
 {
@@ -84,7 +75,7 @@ elseif (isset($_GET['email']))
 }
 if ($user === false || !($username = $GLOBALS['egw']->accounts->id2name($user)))
 {
-	fail_exit(lang("freebusy: unknown user '%1', wrong password or not available to not logged in users !!!"." $username($user)",$_GET['user']));
+	throw new Api\Exception\NoPermission\AuthenticationRequired(lang("freebusy: unknown user '%1', wrong password or not available to not logged in users !!!"." $username($user)", $_GET['user']));
 }
 if (!$logged_in)
 {
@@ -126,7 +117,7 @@ if (!$logged_in)
 	}
 	if (!$logged_in)
 	{
-		fail_exit(lang("freebusy: unknown user '%1', or not available for unauthenticated users!", $_GET['user']));
+		throw new Api\Exception\NoPermission\AuthenticationRequired(lang("freebusy: unknown user '%1', or not available for unauthenticated users!", $_GET['user']));
 	}
 }
 if ($_GET['debug'])
