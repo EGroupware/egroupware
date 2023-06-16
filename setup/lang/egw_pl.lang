@@ -10,7 +10,7 @@
 %1 is set to %2, you will not be able to upload or attach files bigger then that!	setup	pl	%1 ustawiono na %2, nie będzie możliwe wgrywanie i załączanie plików większych niż ten!
 %1 is set to %2. this is not recommeded for a production system, as displayed error messages can contain passwords or other sensitive information!	setup	pl	%1 ustawiono na %2. NIE jest zalecane dla systemów produkcyjnych ponieważ wyświetlane błędy mogą zawierać HASŁA oraz inne poufne dane!
 %1 users and %2 groups created, %3 errors	setup	pl	Utworzono %1 użytkowników i %2 grup, %3 błędy
-%1, %2 or %3 the configuration file.	setup	pl	%1, %2 lub %3 plik konfiguracyjny
+%1 the configuration file.	setup	pl	%1 plik konfiguracyjny
 '%1' is no valid domain name!	setup	pl	%1 nie jest poprawnyą nazwą domeny
 '%1' is not allowed as %2. arguments of option %3 !!!	setup	pl	'%1' nie jest dozwolony jako %2. Argumenty opcji %3!!!
 '%1' must be integer	setup	pl	%1 musi mieć wartość INTEGER

@@ -16,7 +16,7 @@
 %1 password set in %2.	setup	en	%1 password set in %2.
 %1 passwords updated, %3 errors	setup	en	%1 passwords updated, %3 errors
 %1 users and %2 groups created, %3 errors	setup	en	%1 users and %2 groups created, %3 errors.
-%1, %2 or %3 the configuration file.	setup	en	%1, %2 or %3 the configuration file.
+%1 the configuration file.	setup	en	%1 the configuration file.
 '%1' is no valid domain name!	setup	en	'%1' is no valid domain name!
 '%1' is not allowed as %2. arguments of option %3 !!!	setup	en	'%1' is not allowed as %2. arguments of option %3 !!!
 '%1' must be integer	setup	en	%1 must be an integer value.
