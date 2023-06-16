@@ -3,7 +3,7 @@
 %1 created in %2.	setup	ca	%1 creat en %2.
 %1 does not exist !!!	setup	ca	%1 no existeix !!!
 %1 is %2%3 !!!	setup	ca	%1 és %2%3 !!!
-%1, %2 or %3 the configuration file.	setup	ca	%1, %2 o %3 el fitxer de configuració.
+%1 the configuration file.	setup	ca	%1 el fitxer de configuració.
 '%1' is not allowed as %2. arguments of option %3 !!!	setup	ca	'%1' no és permès com %2. arguments de l'opció %3 !!!
 (searching accounts and changing passwords)	setup	ca	(cercant comptes i canviant contrasenyes)
 *** do not update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your db in an unrecoverable state (your data is lost) !!!	setup	ca	*** NO actualitzeu la vostra base de dades a través d'aquesta Instal·lació, perquè l'actualització pot ser interrompuda pel max_execution_time deixant la vostra base de dades en un estat irrecuperable (les vostres dades es perdran) !!!

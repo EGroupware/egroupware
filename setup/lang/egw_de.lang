@@ -16,7 +16,7 @@
 %1 password set in %2.	setup	de	%1 Passwort gesetzt in %2.
 %1 passwords updated, %3 errors	setup	de	%1 Passwörter aktualisiert, %3 Fehler
 %1 users and %2 groups created, %3 errors	setup	de	%1 Benutzer und %2 Gruppen angelegt, %3 Fehler
-%1, %2 or %3 the configuration file.	setup	de	%1, %2 oder %3 der Konfigurationsdatei.
+%1 the configuration file.	setup	de	%1 der Konfigurationsdatei.
 '%1' is no valid domain name!	setup	de	'%1' ist kein gültiger Domainname!
 '%1' is not allowed as %2. arguments of option %3 !!!	setup	de	'%1' ist nicht erlaubt als %2. Parameter für die Option %3 !!!
 '%1' must be integer	setup	de	%1 muß ein Integer-Wert sein.

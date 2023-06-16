@@ -10,7 +10,7 @@
 %1 is set to %2, you will not be able to upload or attach files bigger then that!	setup	fi	%1 on asetettu %2, suurempien tiedostojen lataaminen tai liittäminen on estetty!
 %1 is set to %2. this is not recommeded for a production system, as displayed error messages can contain passwords or other sensitive information!	setup	fi	%1 on asetettu %2. Tätä EI suositella, sillä näytettäväät virheviestit voivat sisältää salasanoja tai muuta salaista tietoa!
 %1 users and %2 groups created, %3 errors	setup	fi	%1 käyttäjä(ä) ja %2 ryhmä(ä) luotu, %3 virhettä!
-%1, %2 or %3 the configuration file.	setup	fi	%1, %2 tai %3 konfigurointitiedostossa.
+%1 the configuration file.	setup	fi	%1 konfigurointitiedostossa.
 '%1' is no valid domain name!	setup	fi	%1 on virheellinen Domainnimi!
 '%1' is not allowed as %2. arguments of option %3 !!!	setup	fi	'%1' ei ole sallittu jos %2 asetuksen muuttujalla %3 !
 '%1' must be integer	setup	fi	%1 pitää olla kokonaisluku!

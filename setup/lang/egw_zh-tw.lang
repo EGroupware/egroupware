@@ -3,7 +3,7 @@
 %1 created in %2.	setup	zh-tw	%1 建立於 %2
 %1 does not exist !!!	setup	zh-tw	%1 不存在
 %1 is %2%3 !!!	setup	zh-tw	%1 是 %2%3！
-%1, %2 or %3 the configuration file.	setup	zh-tw	%1、%2 或 %3 設定檔案。
+%1 the configuration file.	setup	zh-tw	%1、%2 或 %3 設定檔案。
 '%1' is not allowed as %2. arguments of option %3 !!!	setup	zh-tw	'%1' 不允許為 %2 ，選項的參數 %3 ！
 (searching accounts and changing passwords)	setup	zh-tw	(搜尋帳號並且修改密碼)
 *** do not update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your db in an unrecoverable state (your data is lost) !!!	setup	zh-tw	***請不要透過安裝程式更新您的資料庫，因為執行過程可能超過系統預設允許的時間而遭到中斷，這可能會造成資料的遺失！
