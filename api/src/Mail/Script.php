@@ -469,7 +469,7 @@ class Script
 					$vac_rule .=  "] ";
 				}
 				$message = $vacation['text'];
-				if ($vacation['start_date'] || $vacation['end_date'])
+				if ($vacation['status'] === 'by_date' && ($vacation['start_date'] || $vacation['end_date']))
 				{
 					$format_date = 'd M Y'; // see to it, that there is always a format, because if it is missing - no date will be output
 					if (!empty($GLOBALS['egw_info']['user']['preferences']['common']['dateformat'])) $format_date = $GLOBALS['egw_info']['user']['preferences']['common']['dateformat'];
@@ -479,7 +479,7 @@ class Script
 						),$message);
 				}
 				$vac_rule .= " text:\n" . $message . "\n.\n;\n\n";
-				if ($this->extensions['date'] && $vacation['start_date'] && $vacation['end_date'])
+				if ($vacation['status'] === 'by_date' && $this->extensions['date'] && $vacation['start_date'] && $vacation['end_date'])
 				{
 					$newscriptbody .= "if allof (\n".
 					"currentdate :value \"ge\" \"date\" \"". date('Y-m-d', $vacation['start_date']) ."\",\n".
