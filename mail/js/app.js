@@ -6060,7 +6060,7 @@ app.classes.mail = AppJS.extend(
 			{
 				if (_obj1[i]['mail_id'] != _obj2[i]['mail_id'] || _obj1[i]['partID'] != _obj2[i]['partID']) return false;
 			}
-
+			if (_obj1.length != _obj2.length) return false;
 			return true;
 		};
 		if (_attachments && _attachments.length)
