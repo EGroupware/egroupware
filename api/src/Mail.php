@@ -6136,7 +6136,7 @@ class Mail
 				// everything else we only consider after we checked all
 				if (!isset($attachment)) $attachment = $part;
 				// do we want content fetched, can be done later, if not needed
-				if (isset($_stream))
+				if (isset($_stream) && empty($structure->getMetadata('X-EGroupware-Smime')))
 				{
 					$this->fetchPartContents($_uid, $attachment, $_stream);
 				}
