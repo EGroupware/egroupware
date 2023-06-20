@@ -1,3 +1,23 @@
+egroupware-docker (23.1.20230620) hardy; urgency=low
+
+  * Mail: Add new pane option for showing all columns in vertical 3-pane view
+  * Mail: fix mixed up inline images and attachments in smime signed messages
+  * Calendar: fix external organizer was not notified by mail (and other missing notifications of non-users)
+  * Calendar: Fix clicking a day in a different month in sidemenu jumped to wrong date
+  * Calendar: Deleting an event sometimes left other user's alarms
+  * Calendar: Adding alarms sometimes gave incorrect "can't add alarms in the past" error
+  * Calendar: History tab showed start / end times in server time, not user time
+  * Home: Fix birthdays were not visible
+  * Infolog / Tracker: Change timesheet total columns to ignore timesheet ACL
+  * Infolog: History tab showed start / due / completed dates in server time, not user time
+  * Timesheet: When changing duration, update quantity if it's not been set to something different
+  * Api: Fix custom etemplates were still used after deletion
+  * eSync: fix meeting requests confirmed via ActiveSync protocol got wrong time
+  * EPL: fixed/completed Wildix PBX implementation
+  * full list of changes https://github.com/EGroupware/egroupware/compare/23.1.20230524...23.1.20230620
+
+ -- Ralf Becker <rb@egroupware.org>  Tue, 20 Jun 2023 11:26:40 +0200
+
 egroupware-docker (23.1.20230524) hardy; urgency=low
 
   * Mail: performance improvements for huge addressbooks by caching avatars
