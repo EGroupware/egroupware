@@ -591,6 +591,8 @@ class mail_ui
 				{
 					$content[self::$nm_index]['cat_id']=($content[self::$nm_index]['cat_id']?(!Mail::$supportsORinQuery[$this->mail_bo->profileID]&&($content[self::$nm_index]['cat_id']=='quick'||$content[self::$nm_index]['cat_id']=='quickwithcc')?'subject':$content[self::$nm_index]['cat_id']):(Mail::$supportsORinQuery[$this->mail_bo->profileID]?'quick':'subject'));
 				}
+
+				$content['emailTag'] = $GLOBALS['egw_info']['user']['preferences']['mail']['emailTag'] ?? 'onlyname';
 				$readonlys = $preserv = array();
 				if (Mail::$debugTimes) Mail::logRunTimes($starttime,null,'',__METHOD__.__LINE__);
 		}
@@ -2339,7 +2341,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		// send configured image proxy to client-side
 		$content['image_proxy'] = self::image_proxy();
 		$content['avatar'] = Api\Mail\Avatar::getAvatar($content['from'][0]);
-
+		$content['emailTag'] =  $GLOBALS['egw_info']['user']['preferences']['mail']['emailTag'] ?? 'onlyname';
 		$etpl->exec('mail.mail_ui.displayMessage', $content, $sel_options, $readonlys, $preserv, 2);
 	}
 

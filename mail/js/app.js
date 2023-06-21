@@ -1158,7 +1158,7 @@ app.classes.mail = AppJS.extend(
 		{
 			rowId = this.mail_fetchCurrentlyFocussed(selected);
 			data = egw.dataGetUIDdata(rowId).data;
-
+			data.emailTag = egw.preference('emailTag', 'mail') ?? 'onlyname';
 			// Try to resolve winmail.data attachment
 			if (data && data.attachmentsBlock[0]
 					&& data.attachmentsBlock[0].winmailFlag

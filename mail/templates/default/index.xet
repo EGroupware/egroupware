@@ -30,19 +30,21 @@
                                 <et2-vbox class="addresses">
                                     <et2-hbox>
                                         <et2-description  value="From" class="firstColumnTitle"></et2-description>
-                                        <et2-select-email  id="additionalfromaddress" readonly="true" multiple="true" onclick="app.mail.onclickCompose"></et2-select-email>
+                                        <et2-select-email  id="additionalfromaddress" readonly="true"
+                                                           fullEmail="@emailTag=fullemail" onlyEmail="@emailTag=onlyemail" multiple="true"
+                                                           onclick="app.mail.onclickCompose"></et2-select-email>
                                         <et2-date-time align="right" id="date" readonly="true"></et2-date-time>
                                     </et2-hbox>
                                     <et2-hbox disabled="!@toaddress" width="100%">
                                         <et2-description value="To" class="firstColumnTitle"></et2-description>
                                         <et2-select-email id="additionaltoaddress" readonly="true" multiple="true"
-                                                          rows="1"
+                                                          rows="1" fullEmail="@emailTag=fullemail" onlyEmail="@emailTag=onlyemail"
                                                           onTagClick="app.mail.onclickCompose"></et2-select-email>
                                     </et2-hbox>
                                     <et2-hbox disabled="!@ccaddress" width="100%">
                                         <et2-description value="Cc" class="firstColumnTitle"></et2-description>
                                         <et2-select-email id="ccaddress" readonly="true" multiple="true"
-                                                          rows="1"
+                                                          rows="1" fullEmail="@emailTag=fullemail" onlyEmail="@emailTag=onlyemail"
                                                           onTagClick="app.mail.onclickCompose"></et2-select-email>
                                     </et2-hbox>
                                     <et2-hbox width="100%" disabled="!@attachmentsBlock">
