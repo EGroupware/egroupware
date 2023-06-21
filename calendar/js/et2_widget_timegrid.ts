@@ -2218,7 +2218,7 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 					height: $node.height() > parseInt($node.css('line-height')) ?
 							$node.css('padding-bottom') : '100%'
 				});
-				day = node;
+				day = node.querySelector(".calendar_calDayColHeader_spacer") ?? node;
 				this.gridHover
 					.attr('data-non_blocking', 'true');
 				break;
