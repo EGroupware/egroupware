@@ -137,13 +137,13 @@ use EGroupware\Api\Etemplate;
 						if($content['dry-run'])
 						{
 							$preview = $this->preview($plugin, $file, $definition_obj);
-							if(trim($this->message) == '')
-							{
-								// Clear first, to prevent request from being collected if the result is the same
-								$template->setElementAttribute('preview', 'value', '');
-								$template->setElementAttribute('preview', 'value', $preview);
-								return;
-							}
+
+							$template->setElementAttribute('message', 'value', $this->message);
+							
+							// Clear first, to prevent request from being collected if the result is the same
+							$template->setElementAttribute('preview', 'value', '');
+							$template->setElementAttribute('preview', 'value', $preview);
+							return;
 						}
 						else
 						{
