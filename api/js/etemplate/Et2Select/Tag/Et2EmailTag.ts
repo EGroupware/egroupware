@@ -195,7 +195,7 @@ export class Et2EmailTag extends Et2Tag
 		if(!this.onlyEmail && Et2EmailTag.email_cache[this.value])
 		{
 			// Append current value as email, data may have work & home email in it
-			content = (Et2EmailTag.email_cache[this.value]?.n_fn || "") + " <" + this.value + ">"
+			content = (Et2EmailTag.email_cache[this.value]?.n_fn || "") + " <" + (this.splitEmail(this.value)?.email || this.value) + ">"
 		}
 		if (this.onlyEmail)
 		{
