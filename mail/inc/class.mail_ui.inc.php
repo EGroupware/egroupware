@@ -2149,6 +2149,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			{
 				$data["bodypreview"] = $header['bodypreview'];
 			}
+			$data['emailTag'] = $GLOBALS['egw_info']['user']['preferences']['mail']['emailTag'] ?? "onlyname";
 			$rv[] = $data;
 			//error_log(__METHOD__.__LINE__.array2string($data));
 		}
