@@ -11,6 +11,7 @@
 import {IsEmail} from "../Validators/IsEmail";
 import {Et2UrlEmail} from "./Et2UrlEmail";
 import {Et2UrlReadonly} from "./Et2UrlReadonly";
+import {Et2EmailTag} from "../Et2Select/Tag/Et2EmailTag";
 
 /**
  * @customElement et2-url-email_ro
@@ -35,6 +36,13 @@ export class Et2UrlEmailReadonly extends Et2UrlReadonly
 			contactPlus: {
 				type: Boolean,
 			},
+			/**
+			 * set to true to always show just the email
+			 * Mutually exclusive with fullEmail!
+			 */
+			onlyEmail: {
+				type: Boolean
+			}
 		};
 	}
 
@@ -45,7 +53,7 @@ export class Et2UrlEmailReadonly extends Et2UrlReadonly
 		if (!this.fullEmail && val && val.indexOf('<') !== -1)
 		{
 			const parts = val.split('<');
-			if (parts[0])
+			if (parts[0] && !this.onlyEmail)
 			{
 				super.statustext = parts[1].substring(0, parts[1].length-1);
 				val = parts[0].trim();
