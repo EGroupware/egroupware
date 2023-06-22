@@ -195,16 +195,16 @@ export class Et2EmailTag extends Et2Tag
 		if(!this.onlyEmail && Et2EmailTag.email_cache[this.value])
 		{
 			// Append current value as email, data may have work & home email in it
-			content = (Et2EmailTag.email_cache[this.value]?.n_fn || "") + " <" + (this.splitEmail(this.value)?.email || this.value) + ">"
+			content = (Et2EmailTag.email_cache[this.value]?.n_fn || "") + " <" + (Et2EmailTag.splitEmail(this.value)?.email || this.value) + ">"
 		}
 		if (this.onlyEmail)
 		{
-			const split = this.splitEmail(content);
+			const split = Et2EmailTag.splitEmail(content);
 			content = split.email || this.value;
 		}
 		else if(!this.fullEmail)
 		{
-			const split = this.splitEmail(content);
+			const split = Et2EmailTag.splitEmail(content);
 			content = split.name || split.email;
 		}
 		return html`
@@ -264,7 +264,7 @@ export class Et2EmailTag extends Et2Tag
 	 *
 	 * @return {name:string, email:string}
 	 */
-	public splitEmail(email_string) : { name : string, email : string }
+	public static splitEmail(email_string) : { name : string, email : string }
 	{
 		let split = {name: "", email: email_string};
 		if(email_string && email_string.indexOf('<') !== -1)
