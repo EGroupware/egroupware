@@ -111,11 +111,13 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 			.appendTo(this.header);
 		this.all_day = jQuery(document.createElement('div'))
 			.addClass("calendar_calDayColAllDay")
-			.css('max-height', (egw.preference('limit_all_day_lines', 'calendar') || 3 ) * 1.4 + 'em')
+			.css('max-height', (egw.preference('limit_all_day_lines', 'calendar') || 3) * 1.4 + 'em')
 			.appendTo(this.header);
 		this.event_wrapper = jQuery(document.createElement('div'))
 			.addClass("event_wrapper")
 			.appendTo(this.div);
+
+		this.click = this.click.bind(this);
 
 		this.setDOMNode(this.div[0]);
 	}
@@ -1116,17 +1118,19 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 
 		// Remove the binding for the click handler, unless there's something
 		// custom here.
-		if (!this.onclick)
+		if(!this.onclick)
 		{
 			jQuery(this.node).off("click");
 		}
 		// But we do want to listen to certain clicks, and handle them internally
-		jQuery(this.node).on('click.et2_daycol',
-			'.calendar_calDayColHeader,.calendar_calAddEvent',
-			jQuery.proxy(this.click, this)
-		);
+		this.node.addEventListener("click", this.click);
 
 		return result;
+	}
+
+	removeFromDOM()
+	{
+		this.node.removeEventListener("click", this.click)
 	}
 
 	/**
@@ -1159,6 +1163,8 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 					owner: this.options.owner
 				};
 				this.getInstanceManager().app_obj.calendar.add(options);
+				_ev.stopImmediatePropagation();
+				_ev.preventDefault();
 				return false;
 			}
 			// Header, all day non-blocking
@@ -1175,6 +1181,8 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 					owner: this.options.owner
 				};
 				this.getInstanceManager().app_obj.calendar.add(options);
+				_ev.preventDefault();
+				_ev.stopImmediatePropagation();
 				return false;
 			}
 		}
@@ -1182,6 +1190,8 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 		else if(this.title.is(_ev.target) || this.title.has(_ev.target).length)
 		{
 			this.getInstanceManager().app_obj.calendar.update_state({view: 'day', date: this.date.toJSON()});
+			_ev.preventDefault();
+			_ev.stopImmediatePropagation();
 			return false;
 		}
 

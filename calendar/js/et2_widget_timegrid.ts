@@ -382,9 +382,11 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 				{
 					timegrid.gridHover.hide();
 				}
-			})
-			.on('mousedown', ':not(.calendar_calEvent)', this._mouse_down.bind(this))
-			.on('mouseup', this._mouse_up.bind(this));
+			});
+
+		this.div.get(0).addEventListener("mousedown", this._mouse_down.bind(this));
+		this.div.get(0).addEventListener("mouseup", this._mouse_up.bind(this));
+		this.div.get(0).addEventListener("click", this.click.bind(this), true);
 
 		return true;
 	}
@@ -1979,6 +1981,7 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 				result = this.onclick.apply(this, args);
 			}
 
+			_ev.stopImmediatePropagation();
 			var event_node = jQuery(event.event_node);
 			if(event.id && result && !this.disabled && !this.options.readonly &&
 				// Permissions - opening will fail if we try
@@ -2004,14 +2007,17 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 			app.calendar.update_state(jQuery.extend(
 				{view: 'week'},
 				this._labelContainer.is(_ev.target) ?
-					this.gridHeader[0].dataset :
-					_ev.target.dataset
+				this.gridHeader[0].dataset :
+				_ev.target.dataset
 			));
+			_ev.preventDefault();
+			_ev.stopImmediatePropagation();
 		}
 		else if (this.options.owner.length === 1 && jQuery(this.owner.getDOMNode()).is(_ev.target))
 		{
 			// Click on the owner in header, show just that owner
 			app.calendar.update_state({owner: this.options.owner});
+			_ev.stopImmediatePropagation();
 		}
 		else if (this.dayHeader.has(_ev.target).length)
 		{
@@ -2029,7 +2035,8 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 		}
 		// No time grid, click on a day
 		else if (this.options.granularity === 0 &&
-			(jQuery(_ev.target).hasClass('event_wrapper') || jQuery(_ev.target).hasClass('.calendar_calDayCol'))
+			(jQuery(_ev.target).hasClass('event_wrapper') || jQuery(_ev.target).hasClass('.calendar_calDayCol')) ||
+			_ev.target.classList.contains("calendar_calAddEvent")
 		)
 		{
 			// Default handler to open a new event at the selected time
@@ -2041,6 +2048,8 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 				owner: this.options.owner
 			};
 			app.calendar.add(options);
+			_ev.preventDefault();
+			_ev.stopImmediatePropagation();
 			return false;
 		}
 	}
@@ -2064,6 +2073,11 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 
 		// Skip for events
 		if(event.target.parentElement.classList.contains("calendar_calEvent"))
+		{
+			return;
+		}
+		// Skip for headers
+		if(this.dayHeader.has(event.target).length > 0)
 		{
 			return;
 		}
@@ -2164,7 +2178,7 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 		this.div.off('mousemove.dragcreate');
 		this.gridHover.css('cursor', '');
 
-		return this._drag_create_end(this.drag_create.event ? {date: end.date} : undefined);
+		this._drag_create_end(this.drag_create.event ? {date: end.date} : undefined);
 	}
 
 	/**
