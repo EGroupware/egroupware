@@ -37,19 +37,21 @@
 				</row>
 				<row class="row" disabled="!@ts_viewtype">
 					<et2-description  value="comment"></et2-description>
-					<et2-textarea  id="ts_description_short" rows="5" cols="50"></et2-textarea>
-					<et2-description></et2-description>
-					<et2-description></et2-description>
-					<et2-description></et2-description>
-				</row>
-				<row class="row" disabled="@ts_viewtype">
-					<et2-description  value="Quantity" for="ts_quantity"></et2-description>
-					<et2-number  statustext="empty if identical to duration" id="ts_quantity" precision="3" placeholder="@ts_quantity_blur"></et2-number>
-					<et2-description></et2-description>
-					<et2-description  value="Category" for="cat_id"></et2-description>
-					<et2-select-cat  span="all" id="cat_id" application="timesheet" emptyLabel="None"></et2-select-cat>
-				</row>
-			</rows>
+                    <et2-textarea id="ts_description_short" rows="5" cols="50"></et2-textarea>
+                    <et2-description></et2-description>
+                    <et2-description></et2-description>
+                    <et2-description></et2-description>
+                </row>
+                <row class="row" disabled="@ts_viewtype">
+                    <et2-description value="Quantity" for="ts_quantity"></et2-description>
+                    <et2-number statustext="empty if identical to duration" id="ts_quantity" precision="3" placeholder="@ts_quantity_blur"></et2-number>
+                    <et2-description></et2-description>
+                </row>
+                <row class="row" disabled="@ts_viewtype">
+                    <et2-description value="Category" for="cat_id"></et2-description>
+                    <et2-select-cat span="all" id="cat_id" application="timesheet" emptyLabel="None"></et2-select-cat>
+                </row>
+            </rows>
 		</grid>
 	</template>
 	<template id="timesheet.edit.notes" template="" lang="" group="0" version="1.5.001">
