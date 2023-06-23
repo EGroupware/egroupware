@@ -1393,6 +1393,64 @@ class adLDAP extends \adLDAP
 		parent::__construct($options);
 	}
 
+	private string $_controller;
+
+	/**
+	 * Reimplemented to try all given AD controllers, before finally failing
+	 *
+	 * @return bool
+	 * @throws adLDAPException
+	 */
+	function connect()
+	{
+		// if no more working (not failed) controllers, try again with all of them
+		if (!($controllers = array_diff($this->domainControllers, $failed=(array)Api\Cache::getInstance(__CLASS__, 'failed'))))
+		{
+			$controllers = $this->domainControllers;
+			$failed = [];
+			Api\Cache::unsetInstance(__CLASS__, 'failed');
+		}
+		if ((float)PHP_VERSION < 8.2)
+		{
+			$shuffled = [];
+			while($controllers)
+			{
+				$shuffled[] = $controllers[$key = array_rand($controllers)];
+				unset($controllers[$key]);
+			}
+			$controllers = $shuffled;
+		}
+		else
+		{
+			$r = new \Random\Randomizer();
+			$controllers = $r->shuffleArray($controllers);
+		}
+		foreach($controllers as $this->_controller)
+		{
+			try {
+				return parent::connect();
+			}
+			catch (adLDAPException $e) {
+				$failed[] = $this->_controller;
+				Api\Cache::setInstance(__CLASS__, 'failed', $failed, 300);
+			}
+		}
+		// if none of the controllers worked, throw the exception
+		throw $e;
+	}
+
+
+
+	/**
+	 * Not so random anymore ;)
+	 *
+	 * @return string
+	 */
+	function randomController()
+	{
+		return $this->_controller ?? parent::randomController();
+	}
+
 	/**
 	 * Magic method called when object gets serialized
 	 *
