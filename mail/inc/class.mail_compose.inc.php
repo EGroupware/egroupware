@@ -1541,6 +1541,10 @@ class mail_compose
 				case 'reply':
 				case 'reply_all':
 					$content = $this->getReplyData($from == 'reply' ? 'single' : 'all', $icServer, $folder, $msgUID, $part_id);
+					if ($content['mimeType'] === 'plain' && $GLOBALS['egw_info']['user']['preferences']['mail']['replyOptions'] === 'html')
+					{
+						$content['body'] = htmlspecialchars($content['body']);
+					}
 					$content['processedmail_id'] = $mail_id;
 					$content['mode'] = 'reply';
 					$_focusElement = 'body';
