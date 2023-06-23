@@ -50,7 +50,7 @@ export function formatDuration(value : number | string, options : formatOptions)
 		for(let i = 0; i < options.displayFormat.length; ++i)
 		{
 			let unit = options.displayFormat[i];
-			let val = this._unit_from_value(value, unit, i === 0);
+			let val = this._unit_from_value(value, unit, i === 0, options);
 			if(unit === 's' || unit === 'm' || unit === 'h' && options.displayFormat[0] === 'd')
 			{
 				vals.push(sprintf('%02d', val));
@@ -433,7 +433,10 @@ export class Et2DateDuration extends Et2InputWidget(FormControlMixin(LitElement)
 			for(let i = 0; i < this.displayFormat.length; ++i)
 			{
 				let unit = this.displayFormat[i];
-				let val = this._unit_from_value(_value, unit, i === 0);
+				let val = this._unit_from_value(_value, unit, i === 0, {
+					hoursPerDay: this.hoursPerDay,
+					dataFormat: this.dataFormat
+				});
 				if(unit === 's' || unit === 'm' || unit === 'h' && this.displayFormat[0] === 'd')
 				{
 					vals.push(sprintf('%02d', val));
@@ -506,9 +509,9 @@ export class Et2DateDuration extends Et2InputWidget(FormControlMixin(LitElement)
 		}
 	}
 
-	private _unit_from_value(_value, _unit, _highest)
+	private _unit_from_value(_value, _unit, _highest, options)
 	{
-		_value *= this._unit2seconds(this.dataFormat);
+		_value *= this._unit2seconds(options.dataFormat);
 		// get value for given _unit
 		switch(_unit)
 		{
@@ -519,9 +522,9 @@ export class Et2DateDuration extends Et2InputWidget(FormControlMixin(LitElement)
 				return _highest ? _value : _value % 60;
 			case 'h':
 				_value = Math.floor(_value / 3600);
-				return _highest ? _value : _value % this.hoursPerDay;
+				return _highest ? _value : _value % options.hoursPerDay;
 			case 'd':
-				return Math.floor(_value / 3600 / this.hoursPerDay);
+				return Math.floor(_value / 3600 / options.hoursPerDay);
 		}
 	}
 
