@@ -96,7 +96,7 @@ export const SelectAccountMixin = <T extends Constructor<LitElement>>(superclass
 					// Not already cached, need to fetch it
 					this.egw().link_title('api-accounts', id, true).then(title =>
 					{
-						option.label = title;
+						option.label = title || '';
 						this.requestUpdate('select_options');
 					});
 				}
