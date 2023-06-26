@@ -4729,13 +4729,18 @@ class Mail
 				case 'text':
 					switch($part->getSubType())
 					{
+						case 'calendar': // inline ics/ical files
+							if($part->getBytes() > 0)
+							{
+								$partCalendar = $part;
+							}
+						// Fall through in case user has no calendar access
 						case 'plain':
 						case 'html':
-						case 'calendar': // inline ics/ical files
 							if($part->getDisposition() != 'attachment')
 							{
 								$bodyPart[] = $this->getTextPart($_uid, $part, $_htmlMode, $_preserveSeen);
-								$skipParts[$mime_id]=$mime_type;
+								$skipParts[$mime_id] = $mime_type;
 							}
 							//error_log(__METHOD__.' ('.__LINE__.') '.' ->'.$part->type."/".$part->subType.' -> BodyPart:'.array2string($bodyPart[count($bodyPart)-1]));
 							break;
