@@ -61,7 +61,7 @@ export class Et2Avatar extends Et2Widget(SlotMixin(SlAvatar)) implements et2_IDe
 			/**
 			 * Contact id should be either user account_id {account:number} or contact_id {contact:number or number}
 			 */
-			contactId:{type: String},
+			contactId: {type: String, noAccessor: true},
 
 			/**
 			 * Image
@@ -175,34 +175,35 @@ export class Et2Avatar extends Et2Widget(SlotMixin(SlAvatar)) implements et2_IDe
 	{
 		let params = {};
 		let id = 'contact_id';
+		let parsedId = "";
 
 		if (!_contactId)
 		{
-			_contactId = this.egw().user('account_id');
+			parsedId = this.egw().user('account_id');
 		}
 		else if(_contactId.substr(0, 8) === 'account:')
 		{
 			id = 'account_id';
-			_contactId = _contactId.substr(8);
+			parsedId = _contactId.substr(8);
 		}
 		else if(_contactId.substr(0, 6) === 'email:')
 		{
 			id = 'email';
 			const matches = Et2Avatar.RFC822EMAIL.exec(_contactId);
-			_contactId = matches ? matches[1] : _contactId.substr(6);
+			parsedId = matches ? matches[1] : _contactId.substr(6);
 		}
 		else
 		{
 			id = 'contact_id';
-			_contactId = _contactId.replace('contact:', '');
+			parsedId = _contactId.replace('contact:', '');
 		}
 		let oldContactId = this._contactId;
 		this._contactId = _contactId;
-		// if our src (incl. cache-buster) already includes the correct id, use that one
-		if (!this.src || !this.src.match("(&|\\?)contact_id="+_contactId+"(&|\\$)"))
+		// if our image (incl. cache-buster) already includes the correct id, use that one
+		if(!this.image || !this.image.match("(&|\\?)contact_id=" + parsedId + "(&|\\$)"))
 		{
-			params[id] = _contactId;
-			this.src  = egw.link('/api/avatar.php',params);
+			params[id] = parsedId;
+			this.image = egw.link('/api/avatar.php', params);
 		}
 		this.requestUpdate("contactId", oldContactId);
 	}
