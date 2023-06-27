@@ -158,15 +158,18 @@ export class Et2Avatar extends Et2Widget(SlotMixin(SlAvatar)) implements et2_IDe
 		return this._contactId;
 	}
 
+	static RFC822EMAIL = /<([^<>]+)>$/;
+
 	/**
 	 * Function to set contactId
 	 * contactId could be in one of these formats:
-	 *		'number', will be consider as contact_id
+	 *		'number', will be considered as contact_id
 	 *		'contact:number', similar to above
-	 *		'account:number', will be consider as account id
+	 *		'account:number', will be considered as account id
+	 *		'email:<email>', will be considered as email address
 	 * @example: contactId = "account:4"
 	 *
-	 * @param {string} _contactId contact id could be as above mentioned formats
+	 * @param {string} _contactId contact id could be as above-mentioned formats
 	 */
 	set contactId(_contactId : string)
 	{
@@ -177,10 +180,16 @@ export class Et2Avatar extends Et2Widget(SlotMixin(SlAvatar)) implements et2_IDe
 		{
 			_contactId = this.egw().user('account_id');
 		}
-		else if(_contactId.match(/account:/))
+		else if(_contactId.substr(0, 8) === 'account:')
 		{
 			id = 'account_id';
-			_contactId = _contactId.replace('account:','');
+			_contactId = _contactId.substr(8);
+		}
+		else if(_contactId.substr(0, 6) === 'email:')
+		{
+			id = 'email';
+			const matches = Et2Avatar.RFC822EMAIL.exec(_contactId);
+			_contactId = matches ? matches[1] : _contactId.substr(6);
 		}
 		else
 		{
