@@ -31,7 +31,7 @@
                     <nextmatch-header statustext="security" label="Security" id="security"/>
                 </row>
                 <row class="$row_cont[class]">
-                    <et2-lavatar image="$row_cont[avatar]" fname="$row_cont[lavatar][fname]"
+                    <et2-lavatar contactId="email:$row_cont[address]" fname="$row_cont[lavatar][fname]"
                                  lname="$row_cont[lavatar][lname]" size="2.75em" shape="rounded"></et2-lavatar>
                     <et2-description span="1" class="status_img"></et2-description>
                     <html id="${row}[attachments]"/>

@@ -2131,17 +2131,9 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			if ($header['disposition-notification-to']) $data['dispositionnotificationto'] = $header['disposition-notification-to'];
 			if (($header['mdnsent']||$header['mdnnotsent']|$header['seen'])&&isset($data['dispositionnotificationto'])) unset($data['dispositionnotificationto']);
 			$data['attachmentsBlock'] = $imageHTMLBlock;
-			if ($_folderType)
-			{
-				$data['fromavatar'] = Api\Mail\Avatar::getAvatar($data['fromaddress']);
-			}
 			$data['address'] = $_folderType ? $data["toaddress"] : $data["fromaddress"];
 			$data['lavatar'] = Api\Mail\Avatar::getLavatar($data['address']);
-
-			if (($data['avatar'] = Api\Mail\Avatar::getAvatar($data['address'], $data['lavatar'])) && !$_folderType)
-			{
-				$data['fromavatar'] = $data['avatar'];
-			}
+			$data['fromlavatar'] = $_folderType ? Api\Mail\Avatar::getLavatar($data['fromaddress']) : $data['lavatar'];
 
 			if (in_array("bodypreview", $cols) && $header['bodypreview'])
 			{
