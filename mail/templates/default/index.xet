@@ -25,7 +25,7 @@
                             </et2-hbox>
                         </et2-hbox>
                         <et2-hbox  width="100%" class="mailPreviewHeaders">
-                            <et2-lavatar  src="@fromavatar" lname="@fromaddress" shape="rounded" size="2.75em"></et2-lavatar>
+                            <et2-lavatar  contactId="email:$cont[fromaddress]" lname="$cont[fromlavatar][lname]" fname="$cont[fromlavatar][fname]" shape="rounded" size="2.75em"></et2-lavatar>
                             <et2-vbox>
                                 <et2-vbox class="addresses">
                                     <et2-hbox>

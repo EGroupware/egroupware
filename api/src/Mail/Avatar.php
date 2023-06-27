@@ -41,7 +41,7 @@ class Avatar
 			static function($email, $address)
 			{
 				if (($contacts = $GLOBALS['egw']->contacts->search(['contact_email' => $email, 'contact_email_home' => $email],
-					['contact_id', 'email', 'email_home', 'n_fn', 'n_given', 'n_family'], '', '', '', false, 'OR', false)))
+					['contact_id', 'email', 'email_home', 'n_fn', 'n_given', 'n_family'], '', '', '', false, 'OR', [0,1])))
 				{
 					return [$contacts[0]['photo'], ['lname' => $contacts[0]['n_family'], 'fname' => $contacts[0]['n_given']]];
 				}

@@ -2745,7 +2745,7 @@ class Contacts extends Contacts\Storage
 		ob_start();
 
 		$contact_id = isset($_GET['contact_id']) ? $_GET['contact_id'] :
-			(isset($_GET['account_id']) ? 'account:'.$_GET['account_id'] : 0);
+			(isset($_GET['account_id']) ? 'account:'.$_GET['account_id'] : null);
 
 		if (substr($contact_id,0,8) == 'account:')
 		{
@@ -2753,11 +2753,29 @@ class Contacts extends Contacts\Storage
 			$contact_id = $GLOBALS['egw']->accounts->id2name(substr($contact_id, 8), 'person_id');
 		}
 
-		$contact = $this->read($contact_id);
+		if (!$contact_id && !empty($_GET['email']))
+		{
+			$email = strtolower(current(Mail::stripRFC822Addresses([$_GET['email']])));
+
+			if (!($contact = current($this->search(['contact_email' => $email, 'contact_email_home' => $email],
+				['contact_id', 'email', 'email_home', 'n_fn', 'n_given', 'n_family', 'contact_files', 'etag'],
+				'contact_files & '.self::FILES_BIT_PHOTO.' DESC', '', '', false, 'OR', [0, 1]) ?: [])) ||
+				!self::hasPhoto($contact))
+			{
+				Session::cache_control(86400);	// cache for 1 day
+				header('Content-type: image/jpeg');
+				http_response_code(404);
+				exit;
+			}
+		}
+		else
+		{
+			$contact = $this->read($contact_id);
+		}
 
 		if (!$contact || !self::hasPhoto($contact, $url, $size))
 		{
-			if(!$contact_id && $id < 0)
+			if(!$contact_id && isset($id) && $id < 0)
 			{
 				$group = $GLOBALS['egw']->accounts->read($id);
 				$contact = array(
@@ -2777,7 +2795,7 @@ class Contacts extends Contacts\Storage
 		}
 
 		// use an etag over the image mapp
-		$etag = '"'.$contact_id.':'.$contact['etag'].'"';
+		$etag = '"'.$contact['id'].':'.$contact['etag'].'"';
 		if (!ob_get_contents())
 		{
 			header('Content-type: image/jpeg');
@@ -2787,6 +2805,10 @@ class Contacts extends Contacts\Storage
 			if (isset($_GET['etag']))
 			{
 				Session::cache_control(30*86400);	// cache for 30 days
+			}
+			else
+			{
+				Session::cache_control(7*86400);	// cache for 7 days
 			}
 			// if servers send a If-None-Match header, response with 304 Not Modified, if etag matches
 			if (isset($_SERVER['HTTP_IF_NONE_MATCH']) && $_SERVER['HTTP_IF_NONE_MATCH'] === $etag)
