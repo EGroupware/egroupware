@@ -69,7 +69,7 @@ class Avatar
 		{
 			return [];
 		}
-		if (preg_match("/^\"?'?(.*)'?\"?\s+<([^<>'\"]+)>$/", $address, $matches))
+		if (preg_match("/^\"?'?(.*?)'?\"?\s+<([^<>'\"]+)>$/", $address, $matches))
 		{
 			if (($parts = preg_split('/[, ]+/', $matches[1])))
 			{
