@@ -277,6 +277,20 @@ class CalDAV extends HTTP_WebDAV_Server
 		$this->dav_powered_by = str_replace('EGroupware','EGroupware '.$GLOBALS['egw_info']['server']['versions']['phpgwapi'],
 			$this->dav_powered_by);
 
+		// detected available additional APIs from applications
+		$this->root += Cache::getInstance(__CLASS__, 'user-'.$GLOBALS['egw_info']['user']['account_id'], static function()
+		{
+			$apis = [];
+			foreach($GLOBALS['egw_info']['user']['apps'] as $app => $data)
+			{
+				if (class_exists('EGroupware\\'.ucfirst($app).'\\ApiHandler'))
+				{
+					$apis[$app] = [];
+				}
+			}
+			return $apis;
+		}, [], 86400);
+
 		parent::__construct();
 		// hack to allow to use query parameters in WebDAV, which HTTP_WebDAV_Server interprets as part of the path
 		list($this->_SERVER['REQUEST_URI']) = explode('?',$this->_SERVER['REQUEST_URI']);

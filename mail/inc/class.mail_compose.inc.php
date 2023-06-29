@@ -68,11 +68,11 @@ class mail_compose
 	var $composeID;
 	var $sessionData;
 
-	function __construct()
+	function __construct(int $_acc_id=null)
 	{
 		$this->displayCharset   = Api\Translation::charset();
 
-		$profileID = (int)$GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'];
+		$profileID = $_acc_id ?: (int)$GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'];
 		$this->mail_bo	= Mail::getInstance(true,$profileID);
 		$GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'] = $this->mail_bo->profileID;
 
@@ -397,14 +397,7 @@ class mail_compose
 			// and we want to avoid that
 			$isFirstLoad = !($actionToProcess=='composeasnew');//true;
 			$this->composeID = $_content['composeID'] = $this->generateComposeID();
-			if (!is_array($_content))
-			{
-				$_content = $this->setDefaults();
-			}
-			else
-			{
-				$_content = $this->setDefaults($_content);
-			}
+			$_content = $this->setDefaults($_content+['mailidentity' => $_REQUEST['preset']['identity'] ?? null]);
 		}
 		// VFS Selector was used
 		if (!empty($_content['selectFromVFSForCompose']))

@@ -414,8 +414,12 @@ abstract class Handler
 
 		if (!array_key_exists($app,$handler_cache))
 		{
-			$class = $app.'_groupdav';
-			if (!class_exists($class) && !class_exists($class = __NAMESPACE__.'\\'.ucfirst($app))) return null;
+			if (!class_exists($class='EGroupware\\'.ucfirst($app).'\\ApiHandler') &&
+				!class_exists($class=$app.'_groupdav') &&
+				!class_exists($class=__NAMESPACE__.'\\'.ucfirst($app)))
+			{
+				return null;
+			}
 
 			$handler_cache[$app] = new $class($app, $groupdav);
 		}
