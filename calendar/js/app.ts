@@ -4519,7 +4519,7 @@ export class CalendarApp extends EgwApp
 				( typeof _data.start != "string" ? _data.start.toJSON() : _data.start).slice(0,-1),
                 ( typeof _data.end != "string" ? _data.end.toJSON() : _data.end).slice(0,-1),
 				{
-					participants:Object.keys(_data.participants).filter(v => {return v.match(/^[0-9|e|c]/)})
+					participants: Object.keys(_data.participants ?? []).filter(v => {return v.match(/^[0-9|e|c]/)})
 				}], function(_value){
 					if (_value)
 					{
