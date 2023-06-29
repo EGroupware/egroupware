@@ -2764,7 +2764,7 @@ class Contacts extends Contacts\Storage
 			{
 				Session::cache_control(86400);	// cache for 1 day
 				header('Content-type: image/jpeg');
-				http_response_code(404);
+				http_response_code(204);
 				exit;
 			}
 		}
