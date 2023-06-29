@@ -362,7 +362,7 @@ document root (default)	admin	en	Document root (default)
 domainname	admin	en	Domain name
 down	admin	en	Down
 download csv	admin	en	Download CSV
-each value is a line like id[=label], or use @path to read options from a file in egroupware directory	admin	en	each value is a line like id[=label], or use @path to read options from a file in EGroupware directory
+each value is a line like id[=label], or use @path to read options from a file in egroupware directory	admin	en	each value is a line like id[=label], or use @path to read options from a file in the VFS
 each value is a line like label=[javascript]	admin	en	each value is a line like label=[javascript]
 edit account	admin	en	Edit account
 edit application	admin	en	Edit application

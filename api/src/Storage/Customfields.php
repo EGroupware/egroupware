@@ -272,9 +272,7 @@ class Customfields implements \IteratorAggregate
 	/**
 	 * Read the options of a 'select' or 'radio' custom field from a file
 	 *
-	 * For security reasons that file has to be relative to the eGW root
-	 * (to not use that feature to explore arbitrary files on the server)
-	 * and it has to be a php file setting one variable called options,
+	 * For security reasons it has to be a php file setting one variable called options,
 	 * (to not display it to anonymously by the webserver).
 	 * The $options var has to be an array with value => label pairs, eg:
 	 *
@@ -292,12 +290,11 @@ class Customfields implements \IteratorAggregate
 	{
 		$options = array();
 
-		if (!($path = realpath($file[0] == '/' ? $file : EGW_SERVER_ROOT.'/'.$file)) ||	// file does not exist
-			substr($path,0,strlen(EGW_SERVER_ROOT)+1) != EGW_SERVER_ROOT.'/' ||	// we are NOT inside the eGW root
-			basename($path,'.php').'.php' != basename($path) ||	// extension is NOT .php
-			basename($path) == 'header.inc.php')	// dont allow to include our header again
+		if(!($path = Api\Vfs::resolve_url($file)) ||    // file does not exist   // we are NOT inside the eGW root
+			basename($path, '.php') . '.php' != basename($path) ||    // extension is NOT .php
+			basename($path) == 'header.inc.php')    // dont allow to include our header again
 		{
-			return array(lang("'%1' is no php file in the eGW server root (%2)!".': '.$path,$file,EGW_SERVER_ROOT));
+			return array(lang("'%1' is no php file in the eGW server root (%2)!" . ': ' . $path, $file, EGW_SERVER_ROOT));
 		}
 		include($path);
 
