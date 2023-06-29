@@ -276,9 +276,10 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 				else
 				{
 					// Label in first column, widget in 2nd
+					const label = this.options.label || field.label;
 					jQuery(document.createElement("td"))
 						.prependTo(row);
-					et2_createWidget("label",{id: id + "_label", value: field.label,for: id},this);
+					et2_createWidget("label", {id: id + "_label", value: label.trim(), for: id}, this);
 				}
 
 				const type = attrs.type ? attrs.type : field.type;
@@ -420,12 +421,23 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 		}
 	}
 
-	loadFromXML( _node)
+	loadFromXML(_node)
 	{
 		this.loadFields();
 
 		// Load the nodes as usual
 		super.loadFromXML(_node);
+	}
+
+	set_label(_value : string)
+	{
+		// If we've got a field list, or all fields use normal label
+		if(this.getType() == 'customfields-list' || jQuery.isEmptyObject(this.options.fields) ||
+			Object.keys(this.options.fields).filter(f => this.options.fields[f]).length != 1)
+		{
+			return super.set_label(_value);
+		}
+		// For single field, we apply the widget label to the single field
 	}
 
 	set_value( _value)
