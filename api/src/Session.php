@@ -1570,24 +1570,33 @@ class Session
 		// if there are vars, we add them urlencoded to the url
 		if (count($vars))
 		{
-			$query = array();
-			foreach($vars as $key => $value)
-			{
-				if (is_array($value))
-				{
-					foreach($value as $val)
-					{
-						$query[] = $key.'[]='.urlencode($val);
-					}
-				}
-				else
-				{
-					$query[] = $key.'='.urlencode($value ?? '');
-				}
-			}
-			$ret_url .= '?' . implode('&',$query);
+			$ret_url .= '?' . implode('&', self::urlencode($vars));
 		}
 		return $ret_url;
+	}
+
+	/**
+	 * Recursively encode GET parameters
+	 *
+	 * @param array|string $values
+	 * @param string $prefix
+	 * @param array& $query
+	 * @return array
+	 */
+	protected static function urlencode($values, string $prefix='', array &$query=[])
+	{
+		if (is_array($values))
+		{
+			foreach($values as $name => $value)
+			{
+				self::urlencode($value, $prefix ? $prefix.'['.(is_int($name) ? '' : $name).']' : $name, $query);
+			}
+		}
+		else
+		{
+			$query[] = $prefix.'='.urlencode($values);
+		}
+		return $query;
 	}
 
 	/**
