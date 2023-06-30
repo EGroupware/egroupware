@@ -320,7 +320,7 @@ $phpgw_baseline = array(
 			'fs_created' => array('type' => 'timestamp','precision' => '8','nullable' => False),
 			'fs_modified' => array('type' => 'timestamp','precision' => '8','nullable' => False),
 			'fs_mime' => array('type' => 'ascii','precision' => '96','nullable' => False),
-			'fs_size' => array('type' => 'int','precision' => '8', 'default' => '0'),
+			'fs_size' => array('type' => 'int','precision' => '8','default' => '0'),
 			'fs_creator' => array('type' => 'int','meta' => 'user','precision' => '4','nullable' => False),
 			'fs_modifier' => array('type' => 'int','meta' => 'user','precision' => '4'),
 			'fs_active' => array('type' => 'bool','nullable' => False,'default' => 't'),
@@ -525,5 +525,23 @@ $phpgw_baseline = array(
 		'fk' => array(),
 		'ix' => array('contact_id','shared_with'),
 		'uc' => array(array('shared_by','shared_with','contact_id'))
+	),
+	'egw_tokens' => array(
+		'fd' => array(
+			'token_id' => array('type' => 'int','precision' => '4','nullable' => False),
+			'account_id' => array('type' => 'int','meta' => 'user','precision' => '4','nullable' => False,'comment' => '0=all users'),
+			'token_hash' => array('type' => 'ascii','precision' => '128','nullable' => False,'comment' => 'hash of token'),
+			'token_limits' => array('type' => 'ascii','meta' => 'json','precision' => '4096','comment' => 'limit run rights of session'),
+			'token_created' => array('type' => 'timestamp','nullable' => False),
+			'token_created_by' => array('type' => 'int','meta' => 'user','precision' => '4','nullable' => False),
+			'token_valid_until' => array('type' => 'timestamp'),
+			'token_revoked' => array('type' => 'timestamp'),
+			'token_revoked_by' => array('type' => 'int','meta' => 'user','precision' => '4'),
+			'token_remark' => array('type' => 'varchar','precision' => 255)
+		),
+		'pk' => array('token_id'),
+		'fk' => array(),
+		'ix' => array('account_id'),
+		'uc' => array()
 	)
 );
