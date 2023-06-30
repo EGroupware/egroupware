@@ -235,13 +235,22 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 
 			  /* Non-modal dialogs don't have an overlay */
 
-			  :host(:not([isModal])) .dialog, :host(:not([isModal])) .dialog__overlay {
+			  :host(:not([ismodal])) .dialog, :host(:not([isModal])) .dialog__overlay {
 				pointer-events: none;
 				background: transparent;
 			  }
-			  :host(:not([isModal])) .dialog__panel {
+
+			  :host(:not([ismodal])) .dialog__panel {
 				pointer-events: auto;
 			  }
+
+			  /* Hide close button when set */
+
+			  :host([noclosebutton]) .dialog__close {
+				display: none;
+			  }
+
+			  /* Button alignments */
 
 			  ::slotted([align="left"]) {
 				margin-right: auto;
@@ -311,7 +320,7 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 			/**
 			 * When set to true it removes the close button from dialog's header
 			 */
-			noCloseButton: Boolean
+			noCloseButton: {type: Boolean, reflect: true}
 		}
 	}
 
@@ -424,9 +433,17 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 		// Prevent close if they click the overlay when the dialog is modal
 		this.addEventListener('sl-request-close', event =>
 		{
+			// Prevent close on clicking somewhere else
 			if(this.isModal && event.detail.source === 'overlay')
 			{
 				event.preventDefault();
+				return;
+			}
+			// Prevent close on escape
+			if(!this.hideOnEscape && event.detail.source === 'keyboard')
+			{
+				event.preventDefault();
+				return;
 			}
 		})
 
@@ -876,7 +893,8 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 
 	_buttonsTemplate()
 	{
-		if(!this.buttons)
+		// No buttons set, but careful with BUTTONS_OK
+		if(!this.buttons && this.buttons !== Et2Dialog.BUTTONS_OK)
 		{
 			return;
 		}
