@@ -58,7 +58,7 @@ class ApiHandler extends Api\CalDAV\Handler
 		try {
 			if (str_starts_with($path, '/mail/attachments/'))
 			{
-				return self::storeAttachment($path, $options['content']);
+				return self::storeAttachment($path, $options['stream'] ?? $options['content']);
 			}
 			elseif (preg_match('#^/mail(/(\d+))?(/compose)?#', $path, $matches))
 			{
@@ -146,8 +146,11 @@ class ApiHandler extends Api\CalDAV\Handler
 	{
 		$attachment_path = tempnam($GLOBALS['egw_info']['server']['temp_dir'], 'attach--'.
 			(str_replace('/', '-', substr($path, 18)) ?: 'no-name').'--');
-		if (file_put_contents($attachment_path, $content))
+		if (is_resource($content) ?
+			stream_copy_to_stream($content, $fp=fopen($attachment_path, 'w')) :
+			file_put_contents($attachment_path, $content))
 		{
+			if (isset($fp)) fclose($fp);
 			header('Location: '.($location = '/mail/attachments/'.substr(basename($attachment_path), 8)));
 			echo json_encode([
 				'status'   => 200,
