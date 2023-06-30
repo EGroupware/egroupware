@@ -819,7 +819,10 @@ class Db
 		catch(\mysqli_sql_exception $e) {
 			if (!($reconnect && $this->Type == 'mysql' && ($e->getCode() == 2006 || $e->getMessage() === 'MySQL server has gone away')))
 			{
-				if ($e->getCode() == 1064)  // You have an error in your SQL syntax
+				if (in_array($e->getCode(), [
+					1064,   // You have an error in your SQL syntax
+					1062,   // Duplicate entry
+				]))
 				{
 					throw new Db\Exception\InvalidSql($e->getMessage(), $e->getCode(), $e);
 				}
