@@ -1006,7 +1006,7 @@ class mail_compose
 					}
 					if(!empty($remember)) $content = array_merge($content,$remember);
 				}
-				foreach(array('to','cc','bcc','subject','body','mimeType') as $name)
+				foreach(array('to','cc','bcc','subject','body','mimeType','replyto','priority') as $name)
 				{
 					//always handle mimeType
 					if ($name=='mimeType' && !empty($_REQUEST['preset'][$name]))
@@ -2504,7 +2504,7 @@ class mail_compose
 		$disableRuler = false;
 		$signature = $_identity['ident_signature'];
 		$sigAlreadyThere = $this->mailPreferences['insertSignatureAtTopOfMessage']!='no_belowaftersend'?1:0;
-		if ($sigAlreadyThere)
+		if ($sigAlreadyThere && empty($_formData['add_signature']))
 		{
 			// note: if you use stationery ' s the insert signatures at the top does not apply here anymore, as the signature
 			// is already part of the body, so the signature part of the template will not be applied.

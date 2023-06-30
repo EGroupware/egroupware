@@ -9,9 +9,9 @@ Implemented requests (relative to https://example.org/egroupware/groupdav.php)
   <summary>Example: Querying available identities / signatures</summary>
 
 ```bash
-curl -i https://example.org/egroupware/mail --user <user> -H 'Accept: application/json'
+curl -i https://example.org/egroupware/groupdav.php/mail --user <user> -H 'Accept: application/json'
 HTTP/1.1 200 OK
-Content-Type: application/json; charset=utf-8
+Content-Type: application/json
 
 {
         "responses": {
@@ -23,7 +23,7 @@ Content-Type: application/json; charset=utf-8
 ```
 </details>
 
-- ```POST /mail[/<id>]``` send mail for default or given account <id>
+- ```POST /mail[/<id>]``` send mail for default or given identity <id>
 <details>
   <summary>Example: Sending mail</summary>
 
@@ -31,7 +31,7 @@ The content of the POST request is a JSON encoded object with following attribut
 - ```to```: array of strings with (RFC882) email addresses like ```["info@egroupware.org", "Ralf Becker <rb@egroupware.org"]```
 - ```cc```: array of strings with (RFC882) email addresses (optional)
 - ```bcc```: array of strings with (RFC882) email addresses (optional)
-- ```replyTo```: string with (RFC822) email address (optional)
+- ```replyto```: string with (RFC822) email address (optional)
 - ```subject```: string with subject
 - ```body```: string plain text body (optional)
 - ```bodyHtml```: string with html body (optional)
@@ -44,12 +44,19 @@ The content of the POST request is a JSON encoded object with following attribut
 - ```shareExpiration```: "yyyy-mm-dd", default not accessed in 100 days (EPL only)
 - ```sharePassword```: string with password required to access share, default none (EPL only)
 - ```folder```: folder to store send mail, default Sent folder
+- ```priority```: 1: high, 3: normal (default), 5: low
 
-```bash
-curl -i https://example.org/egroupware/mail --user <user> \
+```
+curl -i https://example.org/egroupware/groupdav.php/mail/ --user <user> \
   -X POST -H 'Content-Type: application/json' \
-  --content `{"to":["info@egroupware.org"],"subject":"Testmail","body":"This is a test :)\n\nRegards"}`
-HTTP/1.1 204 No Content
+  --data-binary '{"to":["info@egroupware.org"],"subject":"Testmail","body":"This is a test :)\n\nRegards"}'
+HTTP/1.1 200 Ok
+Content-Type: application/json
+
+{
+  "status": 200,
+  "message": "Mail successful sent"
+}
 ```
 If you are not authenticated you will get:
 ```
@@ -61,9 +68,8 @@ If there is an error sending the mail you will get:
 ```
 HTTP/1.1 500 Internal Server Error
 Content-Type: application/json
-Content-Length: ...
 
-{"error": 123,"message":"SMTP Server not reachable"}
+{"error": 500,"message":"SMTP Server not reachable"}
 ```
 </details>
 
@@ -79,21 +85,7 @@ Content-Type: application/json
 
 {
     "status": 200,
-    "message": "Request to open compose window sent",
-    "extra": {
-        "preset": {
-            "to": [
-                "Birgit Becker <bb@egroupware.org"
-            ],
-            "cc": [
-                "info@egroupware.org"
-            ],
-            "subject": "Testmail",
-            "body": "<pre>This is a test :)\n\nRegards</pre>",
-            "mimeType": "html",
-            "identity": "52"
-        }
-    }
+    "message": "Request to open compose window sent"
 }
 ```
 - user is not online, therefore compose window can NOT be opened
@@ -116,7 +108,7 @@ The content of the POST request is the attachment, a Location header in the resp
 to use in further requests, instead of the attachment.
   
 ```
-curl -i https://example.org/egroupware/mail/attachment/<filename> --user <user> \
+curl -i https://example.org/egroupware/groupdav.php/mail/attachment/<filename> --user <user> \
     --data-binary @<file> -H 'Content-Type: <content-type-of-file>'
 HTTP/1.1 204 No Content
 Location: https://example.org/egroupware/mail/attachment/<token>

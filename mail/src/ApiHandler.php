@@ -58,30 +58,23 @@ class ApiHandler extends Api\CalDAV\Handler
 		try {
 			if (str_starts_with($path, '/mail/attachments/'))
 			{
-				$attachment_path = tempnam($GLOBALS['egw_info']['server']['temp_dir'], 'attach--'.
-					(str_replace('/', '-', substr($options['path'], 18)) ?: 'no-name').'--');
-				if (file_put_contents($attachment_path, $options['content']))
-				{
-					header('Location: '.($location = '/mail/attachments/'.substr(basename($attachment_path), 8)));
-					echo json_encode([
-						'status'   => 200,
-						'message'  => 'Attachment stored',
-						'location' => $location,
-					], self::JSON_RESPONSE_OPTIONS);
-					return '200 Ok';
-				}
-				throw new \Exception('Error storing attachment');
+				return self::storeAttachment($path, $options['content']);
 			}
-			elseif (preg_match('#^/mail/((\d+):(\d+)/)?(compose)?#', $path, $matches))
+			elseif (preg_match('#^/mail(/(\d+))?(/compose)?#', $path, $matches))
 			{
-				$acc_id = $matches[2] ?? null;
-				$ident_id = $matches[3] ?? null;
-				$do_compose = (bool)($matches[4] ?? false);
+				$ident_id = $matches[2] ?? self::defaultIdentity($user);
+				$do_compose = (bool)($matches[3] ?? false);
 				if (!($data = json_decode($options['content'], true)))
 				{
 					throw new \Exception('Error decoding JSON: '.json_last_error_msg(), 422);
 				}
 				// ToDo: check required attributes
+
+				$preset = array_filter(array_intersect_key($data, array_flip(['to', 'cc', 'bcc', 'replyto', 'subject', 'priority']))+[
+					'body' => $data['bodyHtml'] ?? null ?: $data['body'] ?? '',
+					'mimeType' => !empty($data['bodyHtml']) ? 'html' : 'plain',
+					'identity' => $ident_id,
+				]+self::prepareAttachments($data['attachments'] ?? [], $data['attachmentType'] ?? 'attach', $do_compose));
 
 				// for compose we need to construct a URL and push it to the client (or give an error if the client is not online)
 				if ($do_compose)
@@ -91,39 +84,38 @@ class ApiHandler extends Api\CalDAV\Handler
 						$account_lid = Api\Accounts::id2name($user);
 						throw new \Exception("User '$account_lid' (#$user) is NOT online", 404);
 					}
-					$extra = [
-						//'menuaction' => 'mail.mail_compose.compose',
-						'preset' => array_filter(array_intersect_key($data, array_flip(['to', 'cc', 'bcc', 'subject']))+[
-							'body' => $data['bodyHtml'] ?? null ?: $data['body'] ?? '',
-							'mimeType' => !empty($data['bodyHtml']) ? 'html' : 'plain',
-							'identity' => $ident_id,
-						]+self::prepareAttachments($data['attachments'] ?? [], $data['attachmentType'] ?? 'attach')),
-					];
 					$push = new Api\Json\Push($user);
-					//$push->call('egw.open_link', $link, '_blank', '640x1024');
-					$push->call('egw.open', '', 'mail', 'add', $extra, '_blank', 'mail');
+					$push->call('egw.open', '', 'mail', 'add', ['preset' => $preset], '_blank', 'mail');
 					header('Content-Type: application/json');
 					echo json_encode([
 						'status' => 200,
 						'message' => 'Request to open compose window sent',
-						'extra' => $extra,
+						//'data' => $preset,
 					], self::JSON_RESPONSE_OPTIONS);
 					return true;
 				}
 
-				$compose = new mail_compose($acc_id);
-				$compose->compose([
-					'mailaccount' => $acc_id.':'.$ident_id,
-					'mail_plaintext' => $data['body'] ?? null,
-					'mail_htmltext'  => $data['bodyHtml'] ?? null,
-					'mimeType' => !empty($data['bodyHtml']) ? 'html' : 'plain',
-					'file' => array_map(__CLASS__.'::uploadsForAttachments', $data['attachments'] ?? []),
-				]+array_diff_key($data+array_flip(['attachments', 'body', 'bodyHtml'])));
+				$compose = new \mail_compose($acc_id=Api\Mail\Account::read_identity($ident_id)['acc_id']);
+				$preset = array_filter([
+					'mailaccount' => $acc_id,
+					'mailidentity' => $ident_id,
+					'identity' => null,
+					'add_signature' => true,    // add signature in send, independent what preference says
+				]+$preset);
+				if ($compose->send($preset))
+				{
+					header('Content-Type: application/json');
+					echo json_encode([
+						'status' => 200,
+						'message' => 'Mail successful sent',
+						//'data' => $preset,
+					], self::JSON_RESPONSE_OPTIONS);
+					return true;
+				}
+				throw new \Exception($compose->error_info);
 			}
 
-			header('Content-Type: application/json');
-			echo $options['content'];
-			return true;
+			throw new \Exception('Not Found', 404);
 		}
 		catch (\Throwable $e) {
 			_egw_log_exception($e);
@@ -143,14 +135,63 @@ class ApiHandler extends Api\CalDAV\Handler
 	}
 
 	/**
+	 * Store uploaded attachment and return token
+	 *
+	 * @param string $path
+	 * @param string|stream $content
+	 * @return string HTTP status
+	 * @throws \Exception on error
+	 */
+	protected static function storeAttachment(string $path, $content)
+	{
+		$attachment_path = tempnam($GLOBALS['egw_info']['server']['temp_dir'], 'attach--'.
+			(str_replace('/', '-', substr($path, 18)) ?: 'no-name').'--');
+		if (file_put_contents($attachment_path, $content))
+		{
+			header('Location: '.($location = '/mail/attachments/'.substr(basename($attachment_path), 8)));
+			echo json_encode([
+				'status'   => 200,
+				'message'  => 'Attachment stored',
+				'location' => $location,
+			], self::JSON_RESPONSE_OPTIONS);
+			return '200 Ok';
+		}
+		throw new \Exception('Error storing attachment');
+	}
+
+	/**
+	 * Get default identity of user
+	 *
+	 * @param int $user
+	 * @return int ident_id
+	 * @throws Api\Exception\WrongParameter
+	 * @throws \Exception (404) if user has no IMAP account
+	 */
+	protected static function defaultIdentity(int $user)
+	{
+		foreach(Api\Mail\Account::search($user,false) as $acc_id => $account)
+		{
+			// do NOT add SMTP only accounts as identities
+			if (!$account->is_imap(false)) continue;
+
+			foreach($account->identities($acc_id) as $ident_id => $identity)
+			{
+				return $ident_id;
+			}
+		}
+		throw new \Exception("No IMAP account found for user #$user", 404);
+	}
+
+	/**
 	 * Convert an attachment name into an upload array for mail_compose::compose
 	 *
 	 * @param string[]? $attachments either "/mail/attachments/<token>" / file in temp_dir or VFS path
 	 * @param string? $attachmentType "attach" (default), "link", "share_ro", "share_rw"
+	 * @param bool $compose true: for compose window, false: to send
 	 * @return array with values for keys "file", "name" and "filemode"
 	 * @throws Exception if file not found or unreadable
 	 */
-	protected static function prepareAttachments(array $attachments, string $attachmentType=null)
+	protected static function prepareAttachments(array $attachments, string $attachmentType=null, bool $compose=true)
 	{
 		$ret = [];
 		foreach($attachments as $attachment)
@@ -161,14 +202,20 @@ class ApiHandler extends Api\CalDAV\Handler
 				{
 					throw new \Exception("Attachment $attachment NOT found", 400);
 				}
-				$ret['file'][] = $path;
-				$ret['name'][] = $matches[2];
-				/*return [
-					'name' => $matches[2],
-					'type' => Api\Vfs::mime_content_type($path),
-					'file' => $path,
-					'size' => filesize($path),
-				];*/
+				if ($compose)
+				{
+					$ret['file'][] = $path;
+					$ret['name'][] = $matches[2];
+				}
+				else
+				{
+					$ret['attachments'][] = [
+						'name' => $matches[2],
+						'type' => Api\Vfs::mime_content_type($path),
+						'file' => $path,
+						'size' => filesize($path),
+					];
+				}
 			}
 			else
 			{
@@ -176,14 +223,20 @@ class ApiHandler extends Api\CalDAV\Handler
 				{
 					throw new \Exception("Attachment $attachment NOT found", 400);
 				}
-				$ret['file'][] = Api\Vfs::PREFIX.$attachment;
-				$ret['name'][] = Api\Vfs::basename($attachment);
-				/*return [
-					'name' => Api\Vfs::basename($attachment),
-					'type' => Api\Vfs::mime_content_type($attachment),
-					'file' => Api\Vfs::PREFIX.$attachment,
-					'size' => filesize(Api\Vfs::PREFIX.$attachment),
-				];*/
+				if ($compose)
+				{
+					$ret['file'][] = Api\Vfs::PREFIX.$attachment;
+					$ret['name'][] = Api\Vfs::basename($attachment);
+				}
+				else
+				{
+					$ret['attachments'][] = [
+						'name' => Api\Vfs::basename($attachment),
+						'type' => Api\Vfs::mime_content_type($attachment),
+						'file' => Api\Vfs::PREFIX.$attachment,
+						'size' => filesize(Api\Vfs::PREFIX.$attachment),
+					];
+				}
 			}
 		}
 		if ($ret)
