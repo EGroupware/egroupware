@@ -72,7 +72,7 @@ if (Session::init_handler())
 					require_once($file);
 				}
 			}
-			$GLOBALS['egw'] = unserialize($_SESSION[Session::EGW_OBJECT_CACHE]);
+			$GLOBALS['egw'] = unserialize($_SESSION[Session::EGW_OBJECT_CACHE], ['allowed_classes' => true]);
 
 			if (is_object($GLOBALS['egw']) && ($GLOBALS['egw'] instanceof Egw))	// only egw object has wakeup2, setups egw_minimal eg. has not!
 			{
@@ -109,7 +109,7 @@ $GLOBALS['egw_info']['user']['domain'] = Session::search_instance(
 
 $GLOBALS['egw_info']['server'] += $GLOBALS['egw_domain'][$GLOBALS['egw_info']['user']['domain']];
 
-// the egw-object instanciates all sub-classes (eg. $GLOBALS['egw']->db) and the egw_info array
+// the egw-object instantiates all sub-classes (eg. $GLOBALS['egw']->db) and the egw_info array
 $GLOBALS['egw'] = new Egw(array_keys($GLOBALS['egw_domain']));
 
 if ($GLOBALS['egw_info']['flags']['currentapp'] != 'login' && !$GLOBALS['egw_info']['server']['show_domain_selectbox'])
@@ -117,7 +117,7 @@ if ($GLOBALS['egw_info']['flags']['currentapp'] != 'login' && !$GLOBALS['egw_inf
 	unset($GLOBALS['egw_domain']); // we kill this for security reasons
 }
 
-// saving the the egw_info array and the egw-object in the session
+// saving the egw_info array and the egw-object in the session
 if ($GLOBALS['egw_info']['flags']['currentapp'] != 'login')
 {
 	$_SESSION[Session::EGW_INFO_CACHE] = $GLOBALS['egw_info'];

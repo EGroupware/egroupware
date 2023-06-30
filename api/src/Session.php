@@ -194,6 +194,13 @@ class Session
 	protected $action;
 
 	/**
+	 * Limit apps available in a session, when not null
+	 *
+	 * @var array|null app-name => true or array pairs
+	 */
+	public $limits=null;
+
+	/**
 	 * Constructor just loads up some defaults from cookies
 	 *
 	 * @param array $domain_names =null domain-names used in this install
@@ -394,7 +401,7 @@ class Session
 			{
 				if (isset($_SESSION[$name]))
 				{
-					$_SESSION[$name] = unserialize(trim(mdecrypt_generic(self::$mcrypt,$_SESSION[$name])));
+					$_SESSION[$name] = unserialize(trim(mdecrypt_generic(self::$mcrypt,$_SESSION[$name])), ['allowed_classes' => true]);
 					//error_log(__METHOD__."() 'decrypting' session var $name: gettype($name) = ".gettype($_SESSION[$name]));
 				}
 			}
@@ -514,7 +521,7 @@ class Session
 
 			if (($blocked = $this->login_blocked($login,$user_ip)) ||	// too many unsuccessful attempts
 				!empty($GLOBALS['egw_info']['server']['global_denied_users'][$this->account_lid]) ||
-				$auth_check && !$GLOBALS['egw']->auth->authenticate($this->account_lid, $this->passwd, $this->passwd_type) ||
+				$auth_check && !$this->authenticate() ||
 				$this->account_id && $GLOBALS['egw']->accounts->get_type($this->account_id) == 'g')
 			{
 				$this->reason = $blocked ? 'blocked, too many attempts' : 'bad login or password';
@@ -702,6 +709,22 @@ class Session
 				") Exception ".$e->getMessage());
 			return false;
 		}
+	}
+
+	/**
+	 * Authenticate user with password or token
+	 *
+	 * @return bool
+	 * @throws \Exception
+	 */
+	public function authenticate()
+	{
+		$is_valid_token = Auth\Token::authenticate($this->account_lid, $this->passwd, $this->limits);
+		if (!isset($is_valid_token))
+		{
+			return $GLOBALS['egw']->auth->authenticate($this->account_lid, $this->passwd, $this->passwd_type);
+		}
+		return $is_valid_token;
 	}
 
 	/**
@@ -970,7 +993,9 @@ class Session
 			'session_action' => $_SERVER['PHP_SELF'],
 			'session_flags'  => $session_flags,
 			// we need the install-id to differ between several installations sharing one tmp-dir
-			'session_install_id' => $GLOBALS['egw_info']['server']['install_id']
+			'session_install_id' => $GLOBALS['egw_info']['server']['install_id'],
+			// we need to preserve the limits
+			'session_limits' => $this->limits,
 		);
 	}
 
@@ -1290,6 +1315,9 @@ class Session
 			return false;
 		}
 		$session =& $_SESSION[self::EGW_SESSION_VAR];
+
+		// we need to restore the limits
+		$this->limits = $session['session_limits'];
 
 		if ($session['session_dla'] <= time() - $GLOBALS['egw_info']['server']['sessions_timeout'])
 		{
@@ -1959,6 +1987,10 @@ class Session
 			$GLOBALS['egw']->datetime->__construct();		// to set tz_offset from the now read prefs
 		}
 		$user['apps']        = $GLOBALS['egw']->applications->read_repository();
+		if (!empty($this->limits))
+		{
+			$user['apps'] = array_intersect_key($user['apps'], array_filter($this->limits));
+		}
 		$user['domain']      = $this->account_domain;
 		$user['sessionid']   = $this->sessionid;
 		$user['kp3']         = $this->kp3;

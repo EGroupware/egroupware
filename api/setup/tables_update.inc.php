@@ -849,3 +849,32 @@ function api_upgrade21_1_003()
 {
 	return $GLOBALS['setup_info']['api']['currentver'] = '23.1';
 }
+
+/**
+ * Add table for user tokens which can be used instead of password
+ *
+ * @return string
+ */
+function api_upgrade23_1()
+{
+	$GLOBALS['egw_setup']->oProc->CreateTable('egw_tokens',array(
+		'fd' => array(
+			'token_id' => array('type' => 'int','precision' => '4','nullable' => False),
+			'account_id' => array('type' => 'int','meta' => 'user','precision' => '4','nullable' => False,'comment' => '0=all users'),
+			'token_hash' => array('type' => 'ascii','precision' => '128','nullable' => False,'comment' => 'hash of token'),
+			'token_limits' => array('type' => 'ascii','meta' => 'json','precision' => '4096','comment' => 'limit run rights of session'),
+			'token_created' => array('type' => 'timestamp','nullable' => False),
+			'token_created_by' => array('type' => 'int','meta' => 'user','precision' => '4','nullable' => False),
+			'token_valid_until' => array('type' => 'timestamp'),
+			'token_revoked' => array('type' => 'timestamp'),
+			'token_revoked_by' => array('type' => 'int','meta' => 'user','precision' => '4'),
+			'token_remark' => array('type' => 'varchar','precision' => 255)
+		),
+		'pk' => array('token_id'),
+		'fk' => array(),
+		'ix' => array('account_id'),
+		'uc' => array()
+	));
+
+	return $GLOBALS['setup_info']['api']['currentver'] = '23.1.001';
+}
