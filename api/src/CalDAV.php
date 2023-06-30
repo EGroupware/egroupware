@@ -1522,13 +1522,14 @@ class CalDAV extends HTTP_WebDAV_Server
 			if (method_exists($handler, 'post'))
 			{
 				// read the content in a string, if a stream is given
-				if (isset($options['stream']))
+				if (isset($options['stream']) && !self::isFileUpload())
 				{
 					$options['content'] = '';
 					while(!feof($options['stream']))
 					{
 						$options['content'] .= fread($options['stream'],8192);
 					}
+					fseek($options['stream'], 0);
 				}
 				return $handler->post($options,$id,$user);
 			}
@@ -2331,14 +2332,27 @@ class CalDAV extends HTTP_WebDAV_Server
 		{
 			self::$request_starttime = microtime(true);
 			// do NOT log non-text attachments
-			$this->store_request = $_SERVER['REQUEST_METHOD'] != 'POST' || !isset($_GET['action']) ||
-				!in_array($_GET['action'], array('attachment-add', 'attachment-update')) ||
+			$this->store_request = $_SERVER['REQUEST_METHOD'] != 'POST' ||
+				!self::isFileUpload() ||
 				substr($_SERVER['CONTENT_TYPE'], 0, 5) == 'text/';
 			ob_start();
 		}
 		parent::ServeRequest($prefix);
 
 		if (self::$request_starttime) self::log_request();
+	}
+
+	/**
+	 * Check if request is a possibly large, binary file upload:
+	 * - CalDAV managed attachments or
+	 * - Mail REST API attachment upload
+	 *
+	 * @return bool
+	 */
+	protected static function isFileUpload()
+	{
+		return (isset($_GET['action']) && in_array($_GET['action'], array('attachment-add', 'attachment-update'))) ||
+			strpos($_SERVER['REQUEST_URI'], '/mail/attachments/');
 	}
 
 	/**
