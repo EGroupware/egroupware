@@ -450,12 +450,14 @@ class setup_cmd_config extends setup_cmd
 		static $scan_done = null;
 		if (!$scan_done++)
 		{
-			// now add auth backends found in filesystem
+			// now add auth backends found in filesystem (must be sub-class of Backend, but not just an interface)
 			foreach(scandir(EGW_INCLUDE_ROOT.'/api/src/Auth') as $file)
 			{
 				$matches = null;
 				if (preg_match('/^([a-z0-9]+)\.php$/i', $file, $matches) &&
-					!isset($auth_types[strtolower($matches[1])]) && $matches[1] != 'Backend')
+					!isset($auth_types[strtolower($matches[1])]) &&
+					!interface_exists($class='EGroupware\\Api\\Auth\\'.$matches[1]) &&
+					is_subclass_of($class, Api\Auth\Backend::class))
 				{
 					$auth_types[strtolower($matches[1])] = $matches[1];
 				}
