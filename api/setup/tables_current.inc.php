@@ -528,7 +528,7 @@ $phpgw_baseline = array(
 	),
 	'egw_tokens' => array(
 		'fd' => array(
-			'token_id' => array('type' => 'int','precision' => '4','nullable' => False),
+			'token_id' => array('type' => 'auto','precision' => '4','nullable' => False),
 			'account_id' => array('type' => 'int','meta' => 'user','precision' => '4','nullable' => False,'comment' => '0=all users'),
 			'token_hash' => array('type' => 'ascii','precision' => '128','nullable' => False,'comment' => 'hash of token'),
 			'token_limits' => array('type' => 'ascii','meta' => 'json','precision' => '4096','comment' => 'limit run rights of session'),
@@ -537,7 +537,9 @@ $phpgw_baseline = array(
 			'token_valid_until' => array('type' => 'timestamp'),
 			'token_revoked' => array('type' => 'timestamp'),
 			'token_revoked_by' => array('type' => 'int','meta' => 'user','precision' => '4'),
-			'token_remark' => array('type' => 'varchar','precision' => 255)
+			'token_remark' => array('type' => 'varchar','precision' => '1024'),
+			'token_updated' => array('type' => 'timestamp'),
+			'token_updated_by' => array('type' => 'int','meta' => 'user','precision' => '4')
 		),
 		'pk' => array('token_id'),
 		'fk' => array(),
