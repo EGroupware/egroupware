@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
+<overlay>
+	<template id="admin.tokens.rows" template="" lang="" group="0" version="1.9.001">
+		<grid width="100%" height="100%">
+			<columns>
+				<column width="30"/>
+				<column width="120"/> <!-- User / All user -->
+				<column width="25%"/> <!-- Applications -->
+				<column width="120"/> <!-- Expiration -->
+				<column width="120"/> <!-- Revoked / By -->
+				<column width="120"/> <!-- Created / By -->
+				<column width="120"/> <!-- Updated / By -->
+				<column width="30%"/> <!-- remark -->
+			</columns>
+			<rows>
+				<row>
+					<nextmatch-sortheader label="ID" id="token_id"/>
+					<et2-nextmatch-header-account id="account_id" emptyLabel="User" accountType="user">
+						<option value="0">All users</option>
+					</et2-nextmatch-header-account>
+					<nextmatch-header id="token_apps" label="Applications"/>
+					<nextmatch-sortheader label="Expiration" id="token_valid_until"/>
+					<et2-vbox>
+						<nextmatch-sortheader label="Revoked" id="token_revoked"/>
+						<et2-nextmatch-header-account label="Revoked by" id="token_revoked_by"></et2-nextmatch-header-account>
+					</et2-vbox>
+					<et2-vbox>
+						<nextmatch-sortheader label="Created" id="token_created"/>
+						<et2-nextmatch-header-account label="Created by" id="token_created_by"></et2-nextmatch-header-account>
+					</et2-vbox>
+					<et2-vbox>
+						<nextmatch-sortheader label="Updated" id="token_created"/>
+						<et2-nextmatch-header-account label="Updated by" id="token_created_by"></et2-nextmatch-header-account>
+					</et2-vbox>
+					<nextmatch-header label="Remark" id="token_remark"/>
+				</row>
+				<row class="$row_cont[class]">
+					<et2-description id="${row}[token_id]" noLang="1"></et2-description>
+					<et2-select-account id="${row}[account_id]" readonly="true"></et2-select-account>
+					<et2-select-app id="${row}[token_apps]" readonly="true" multiple="true"></et2-select-app>
+					<et2-date id="${row}[token_valid_until]" readonly="true"></et2-date>
+					<et2-vbox>
+						<et2-date-time id="${row}[token_revoked]" readonly="true"></et2-date-time>
+						<et2-select-account id="${row}[token_revoked_by]" readonly="true"></et2-select-account>
+					</et2-vbox>
+					<et2-vbox>
+						<et2-date-time id="${row}[token_created]" readonly="true"></et2-date-time>
+						<et2-select-account id="${row}[token_created_by]" readonly="true"></et2-select-account>
+					</et2-vbox>
+					<et2-vbox>
+						<et2-date-time id="${row}[token_updated]" readonly="true"></et2-date-time>
+						<et2-select-account id="${row}[token_updated_by]" readonly="true"></et2-select-account>
+					</et2-vbox>
+					<et2-description id="${row}[token_remark]"></et2-description>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="admin.tokens.add" template="" lang="" group="0" version="1.9.001">
+		<et2-button label="Add" id="add" onclick="window.open('$cont[add_link]','_blank','dependent=yes,width=600,height=380,scrollbars=yes,status=yes'); return false;" noSubmit="true"></et2-button>
+	</template>
+	<template id="admin.tokens" template="" lang="" group="0" version="1.9.001">
+		<nextmatch id="nm" template="admin.tokens.rows" header_left="admin.tokens.add"/>
+	</template>
+</overlay>
