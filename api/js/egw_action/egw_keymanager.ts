@@ -99,6 +99,7 @@ ready(() => {//waits for DOM ready
 	document.addEventListener("keydown", (keyboardEvent: KeyboardEvent) => {
 
 		// Translate the given key code and make it valid
+		// TODO there are actual string key codes now so it would be nice to use those standardized ones instead of using our own
 		let keyCode = keyboardEvent.keyCode;
 		keyCode = egw_keycode_translation_function(keyCode);
 		keyCode = egw_keycode_makeValid(keyCode);
@@ -188,6 +189,7 @@ jQuery(window).on("contextmenu",document, function(event) {
 
 /**
  * Creates a unique key for the given shortcut
+ * TODO those ids exist already
  */
 export function egw_shortcutIdx(_keyCode: number, _shift: boolean, _ctrl: boolean, _alt: boolean):string
 {

@@ -26,7 +26,7 @@ import {EgwActionImplementation} from "./EgwActionImplementation";
 import {EgwActionLink} from "./EgwActionLink";
 import {EgwActionObject} from "./EgwActionObject";
 import {EgwActionObjectInterface} from "./EgwActionObjectInterface";
-import {EgwActionObjectManager} from "./EgwActionObjectManager"; //TODO replace with .ts
+import {EgwActionObjectManager} from "./EgwActionObjectManager";
 
 
 /**
@@ -367,26 +367,16 @@ export class egwActionObjectManager extends  EgwActionObjectManager{}
  */
 
 /**
- * eGroupWare egw_action framework - egw action framework
- *
- * @link http://www.egroupware.org
- * @author Andreas Stöckel <as@stylite.de>
- * @copyright 2011 by Andreas Stöckel
- * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @package egw_action
- */
-
-/*egw:uses
-	egw_action;
-	egw_action_common;
-	egw_action_popup;
-	vendor.bower-asset.jquery.dist.jquery;
-*/
-/**
  * Register the drag and drop handlers
  */
 if (typeof window._egwActionClasses == "undefined")
-    window._egwActionClasses = {};
+    window._egwActionClasses = {
+        actionManager: undefined,
+        default: undefined,
+        drag: undefined,
+        drop: undefined,
+        popup: undefined
+    };
 
 
 
