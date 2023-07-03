@@ -188,3 +188,14 @@ Admin command
   border-bottom: 0;
   background: white;
 }
+
+/**
+ * Application passwords / tokens
+ */
+/**
+ * EPL application Firewall
+ */
+tr.revoked > td * {
+    color: grey !important;
+    font-style: italic;
+}

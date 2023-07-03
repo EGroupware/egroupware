@@ -859,7 +859,7 @@ function api_upgrade23_1()
 {
 	$GLOBALS['egw_setup']->oProc->CreateTable('egw_tokens',array(
 		'fd' => array(
-			'token_id' => array('type' => 'int','precision' => '4','nullable' => False),
+			'token_id' => array('type' => 'auto','precision' => '4','nullable' => False),
 			'account_id' => array('type' => 'int','meta' => 'user','precision' => '4','nullable' => False,'comment' => '0=all users'),
 			'token_hash' => array('type' => 'ascii','precision' => '128','nullable' => False,'comment' => 'hash of token'),
 			'token_limits' => array('type' => 'ascii','meta' => 'json','precision' => '4096','comment' => 'limit run rights of session'),
@@ -868,7 +868,9 @@ function api_upgrade23_1()
 			'token_valid_until' => array('type' => 'timestamp'),
 			'token_revoked' => array('type' => 'timestamp'),
 			'token_revoked_by' => array('type' => 'int','meta' => 'user','precision' => '4'),
-			'token_remark' => array('type' => 'varchar','precision' => 255)
+			'token_remark' => array('type' => 'varchar','precision' => 1024),
+			'token_updated' => array('type' => 'timestamp'),
+			'token_updated_by' => array('type' => 'int','meta' => 'user','precision' => '4')
 		),
 		'pk' => array('token_id'),
 		'fk' => array(),
@@ -876,5 +878,28 @@ function api_upgrade23_1()
 		'uc' => array()
 	));
 
-	return $GLOBALS['setup_info']['api']['currentver'] = '23.1.001';
+	return $GLOBALS['setup_info']['api']['currentver'] = '23.1.002';
+}
+
+function api_upgrade23_1_001()
+{
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_tokens','token_id',array(
+		'type' => 'auto',
+		'precision' => '4',
+		'nullable' => False
+	));
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_tokens','token_remark',array(
+		'type' => 'varchar',
+		'precision' => '1024'
+	));
+	$GLOBALS['egw_setup']->oProc->AddColumn('egw_tokens','token_updated',array(
+		'type' => 'timestamp'
+	));
+	$GLOBALS['egw_setup']->oProc->AddColumn('egw_tokens','token_updated_by',array(
+		'type' => 'int',
+		'meta' => 'user',
+		'precision' => '4'
+	));
+
+	return $GLOBALS['setup_info']['api']['currentver'] = '23.1.002';
 }

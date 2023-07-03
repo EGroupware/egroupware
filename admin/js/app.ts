@@ -19,6 +19,7 @@ import {egw} from "../../api/js/jsapi/egw_global.js";
 import {egwAction, egwActionObject} from '../../api/js/egw_action/egw_action.js';
 import {LitElement} from "@lion/core";
 import {et2_nextmatch} from "../../api/js/etemplate/et2_extension_nextmatch";
+import {et2_DOMWidget} from "../../api/js/etemplate/et2_core_DOMWidget";
 
 /**
  * UI for Admin
@@ -1642,6 +1643,24 @@ class AdminApp extends EgwApp
 				_widget.getDOMNode().focus();
 			}
 		}, this).sendRequest();
+	}
+
+	/**
+	 * Clickhandler to copy given text or widget content to clipboard
+	 * @param _widget
+	 * @param _text default widget content
+	 */
+	copyClipboard(_widget : et2_DOMWidget, _text? : string, _event? : Event)
+	{
+		let value = _text || (typeof _widget.get_value === 'function' ? _widget.get_value() : _widget.options.value);
+		let node = _widget.getDOMNode() !== _widget ? _widget.getDOMNode() : _widget;
+		this.egw.copyTextToClipboard(value, node, _event).then((success) =>
+		{
+			if(success !== false)
+			{
+				this.egw.message(this.egw.lang("Copied '%1' to clipboard", value), 'success');
+			}
+		});
 	}
 }
 

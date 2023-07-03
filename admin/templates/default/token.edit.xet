@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
+<overlay>
+	<template id="admin.token.edit" template="" lang="" group="0" version="19.1">
+		<grid width="100%">
+			<columns>
+				<column width="100"/>
+				<column/>
+			</columns>
+			<rows>
+				<row disabled="!@token">
+					<et2-description value="Token"></et2-description>
+					<et2-textbox id="token" readonly="true" onclick="app.admin.copyClipboard(this)"></et2-textbox>
+				</row>
+				<row>
+					<et2-description for="account_id" value="User"></et2-description>
+					<et2-select-account id="account_id" accountType="user" emptyLabel="All users"></et2-select-account>
+				</row>
+				<row valign="top">
+					<et2-description for="token_limits" value="Applications"></et2-description>
+					<et2-vbox>
+						<et2-select-app id="token_apps" multiple="true" placeholder="All applications of the user"></et2-select-app>
+						<et2-description value="Select the applications you want the token to be limited to, or leave the default of all applications."></et2-description>
+					</et2-vbox>
+				</row>
+				<row>
+					<et2-description for="token_valid_until" value="Expiration"></et2-description>
+					<et2-date id="token_valid_until" dataFormat="object"></et2-date>
+				</row>
+				<row>
+					<et2-description for="token_remark" value="Remark"></et2-description>
+					<et2-textarea id="token_remark" rows="5"></et2-textarea>
+				</row>
+				<row disabled="!@token_id">
+					<et2-description value="Creator"></et2-description>
+					<et2-hbox>
+						<et2-select-account id="token_created_by" readonly="true"></et2-select-account>
+						<et2-date-time id="token_created" readonly="true" align="right"></et2-date-time>
+					</et2-hbox>
+				</row>
+				<row disabled="!@token_updated_by">
+					<et2-description value="Last updated"></et2-description>
+					<et2-hbox>
+						<et2-select-account id="token_updated_by" readonly="true"></et2-select-account>
+						<et2-date-time id="token_updated" readonly="true" align="right"></et2-date-time>
+					</et2-hbox>
+				</row>
+				<row>
+					<et2-hbox span="all">
+						<et2-button accesskey="s" label="Save" id="button[save]"></et2-button>
+						<et2-button label="Apply" id="button[apply]"></et2-button>
+						<et2-button label="Cancel" id="button[cancel]" onclick="window.close(); return false;"></et2-button>
+						<et2-button align="right" label="Revoke" id="button[delete]"
+							onclick="et2_dialog.confirm(widget,'Do you really want to revoke this token?','Revoke')"></et2-button>
+					</et2-hbox>
+				</row>
+			</rows>
+		</grid>
+	</template>
+</overlay>
