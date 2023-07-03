@@ -8,18 +8,20 @@
  * @package egw_action
  */
 
-import {EGW_AO_STATE_NORMAL, EGW_AO_STATE_VISIBLE, EGW_AO_STATE_SELECTED, EGW_AO_STATE_FOCUSED, EGW_AO_SHIFT_STATE_MULTI, EGW_AO_SHIFT_STATE_NONE, EGW_AO_FLAG_IS_CONTAINER, EGW_AO_SHIFT_STATE_BLOCK, EGW_KEY_ARROW_UP, EGW_KEY_ARROW_DOWN, EGW_KEY_PAGE_UP, EGW_KEY_PAGE_DOWN, EGW_AO_EXEC_THIS, EGW_AO_EXEC_SELECTED, EGW_KEY_A, EGW_KEY_SPACE, EGW_AO_STATES, EGW_AI_DRAG_OVER, EGW_AI_DRAG_ENTER, EGW_AI_DRAG_OUT,EGW_AI_DRAG}
-    from './egw_action_constants';
 import {
-    EgwFnct, egwActionStoreJSON, egwBitIsSet, egwQueueCallback, egwSetBit, egwObjectLength
-} from './egw_action_common';
-import './egw_action_popup.js';
+    EGW_AI_DRAG_ENTER,
+    EGW_AI_DRAG_OUT,
+    EGW_AI_DRAG_OVER,
+    EGW_AO_EXEC_THIS,
+    EGW_AO_STATE_NORMAL,
+    EGW_AO_STATE_VISIBLE,
+    EGW_AO_STATES
+} from './egw_action_constants';
+import {egwSetBit} from './egw_action_common';
+import '././egw_action_popup';
 import "././egw_action_dragdrop";
 import "./egw_menu_dhtmlx";
-import {nm_action} from "../etemplate/et2_extension_nextmatch_actions";
-import type {Iegw, IegwAppLocal} from "../jsapi/egw_global";
-import {getPopupImplementation} from "./egw_action_popup.js";
-import {egw} from "../jsapi/egw_global";
+import {getPopupImplementation} from "././egw_action_popup";
 import {EgwAction} from "./EgwAction";
 import {EgwActionManager} from "./EgwActionManager";
 import {EgwActionImplementation} from "./EgwActionImplementation";
@@ -27,35 +29,10 @@ import {EgwActionLink} from "./EgwActionLink";
 import {EgwActionObject} from "./EgwActionObject";
 import {EgwActionObjectInterface} from "./EgwActionObjectInterface";
 import {EgwActionObjectManager} from "./EgwActionObjectManager";
+import {EgwDragAction} from "./EgDragAction";
+import {egwDragActionImplementation} from "./egwDragActionImplementation";
 
 
-/**
- * holds all possible Types of a egwActionClass
- */
-type EgwActionClasses = {
-    default: EgwActionClassData,//
-    actionManager: EgwActionClassData, drag: EgwActionClassData, drop: EgwActionClassData, popup: EgwActionClassData
-}
-/**
- * holds the constructor and implementation of an EgwActionClass
- */
-type EgwActionClassData = {
-    //type EgwAction["constructor"],
-    actionConstructor: Function,
-    implementation: any
-}
-//TODO egw global.js
-declare global {
-    interface Window {
-        _egwActionClasses: EgwActionClasses;
-        egw: Iegw //egw returns instance of client side api -- set in egw_core.js
-        egwIsMobile: () => boolean // set in egw_action_commons.ts
-        nm_action: typeof nm_action
-        egw_getAppName: () => string
-        Et2Dialog:any
-        app:any
-    }
-}
 /**
  * Getter functions for the global egwActionManager and egwObjectManager objects
  */
@@ -386,37 +363,6 @@ window._egwActionClasses["drop"] = {
 };
 
 /**
- * The egwDragAction class overwrites the egwAction class and adds the new
- * "dragType" propery. The "onExecute" event of the drag action will be called
- * whenever dragging starts. The onExecute JS handler should return the
- * drag-drop helper object - otherwise an default helper will be generated.
- */
-export class EgwDragAction extends EgwAction
-{
-    private dragType = "default"
-
-    public set_dragType(_value)
-    {
-        this.dragType = _value
-    }
-
-    /**
-     * @param {EgwAction} parent
-     * @param {string} _id
-     * @param {string} _caption
-     * @param {string} _iconUrl
-     * @param {(string|function)} _onExecute
-     * @param {bool} _allowOnMultiple
-     */
-    constructor(parent: EgwAction, _id, _caption, _iconUrl, _onExecute, _allowOnMultiple)
-    {
-        super(parent, _id, _caption, _iconUrl, _onExecute, _allowOnMultiple);
-        this.type = "drag";
-        this.hideOnDisabled = true;
-    }
-}
-
-/**
  * @deprecated
  */
 export class egwDragAction extends EgwDragAction
@@ -437,301 +383,6 @@ export function getDragImplementation()
         _dragActionImpl = new egwDragActionImplementation();
     }
     return _dragActionImpl;
-}
-
-
-
-export class egwDragActionImplementation implements EgwActionImplementation
-{
-    constructor()
-    {
-
-        const ai = new egwActionImplementation();
-
-        ai.type = "drag";
-
-    ai.helper = null;
-    ai.ddTypes = [];
-    ai.selected = [];
-
-    // Define default helper DOM
-    // default helper also can be called later in application code in order to customization
-    ai.defaultDDHelper = function (_selected)
-    {
-        // Table containing clone of rows
-        const table = jQuery(document.createElement("table")).addClass('egwGridView_grid et2_egw_action_ddHelper_row');
-        // tr element to use as last row to show lable more ...
-        const moreRow = jQuery(document.createElement('tr')).addClass('et2_egw_action_ddHelper_moreRow');
-        // Main div helper container
-        const div = jQuery(document.createElement("div")).append(table);
-
-        const rows = [];
-        // Maximum number of rows to show
-        const maxRows = 3;
-        // item label
-        const itemLabel = egw.lang(egw.link_get_registry(egw.app_name(), _selected.length > 1 ? 'entries' : 'entry') || egw.app_name());
-
-        let index = 0;
-
-        // Take select all into account when counting number of rows, because they may not be
-        // in _selected object
-        const pseudoNumRows = (_selected[0] && _selected[0]._context && _selected[0]._context._selectionMgr &&
-            _selected[0]._context._selectionMgr._selectAll) ?
-            _selected[0]._context._selectionMgr._total : _selected.length;
-
-        for (let i = 0; i < _selected.length; i++)
-        {
-            const row = jQuery(_selected[i].iface.getDOMNode()).clone();
-            if (row)
-            {
-                rows.push(row);
-                table.append(row);
-            }
-            index++;
-            if (index == maxRows)
-            {
-                // Lable to show number of items
-                const spanCnt = jQuery(document.createElement('span'))
-                    .addClass('et2_egw_action_ddHelper_itemsCnt')
-                    .appendTo(div);
-
-                spanCnt.text(pseudoNumRows +' '+ itemLabel);
-                // Number of not shown rows
-                const restRows = pseudoNumRows - maxRows;
-                if (restRows)
-                {
-                    moreRow.text(egw.lang("%1 more %2 selected ...", (pseudoNumRows - maxRows), itemLabel));
-                }
-                table.append(moreRow);
-                break;
-            }
-        }
-
-        const text = jQuery(document.createElement('div')).addClass('et2_egw_action_ddHelper_tip');
-        div.append(text);
-
-        // Add notice of Ctrl key, if supported
-        if('draggable' in document.createElement('span') &&
-            navigator && navigator.userAgent.indexOf('Chrome') >= 0 && egw.app_name() == 'filemanager') // currently only filemanager supports drag out
-        {
-            text.text(egw.lang('You may darg files out to your desktop', itemLabel));
-        }
-        // Final html DOM return as helper structor
-        return div;
-    };
-
-    ai.doRegisterAction = function(_aoi, _callback, _context)
-    {
-        const node = _aoi.getDOMNode() && _aoi.getDOMNode()[0] ? _aoi.getDOMNode()[0] : _aoi.getDOMNode();
-
-        if (node)
-        {
-            // Prevent selection
-            node.onselectstart = function () {
-                return false;
-            };
-            if (!(window.FileReader && 'draggable' in document.createElement('span')))
-            {
-                // No DnD support
-                return;
-            }
-
-            // It shouldn't be so hard to get the action...
-            let action = null;
-            const groups = _context.getActionImplementationGroups();
-            if (!groups.drag)
-            {
-                return;
-            }
-            for (var i = 0; i < groups.drag.length; i++)
-            {
-                // dragType 'file' says it can be dragged as a file
-                if(groups.drag[i].link.actionObj.dragType == 'file' || groups.drag[i].link.actionObj.dragType.indexOf('file') > -1)
-                {
-                    action = groups.drag[i].link.actionObj;
-                    break;
-                }
-            }
-
-            // Bind mouse handlers
-            jQuery(node).off("mousedown")
-                .on({
-                    mousedown: function(event){
-                        if (_context.isSelection(event)){
-                            node.setAttribute("draggable", false);
-                        }
-                        else if(event.which != 3)
-                        {
-                            document.getSelection().removeAllRanges();
-                        }
-                    },
-                    mouseup: function (event){
-                        if (_context.isSelection(event) && document.getSelection().type === 'Range'){
-                            //let the draggable be reactivated by another click up as the range selection is
-                            // not working as expected in shadow-dom as expected in all browsers
-                        }
-                        else
-                        {
-                            node.setAttribute("draggable", true);
-                        }
-
-                        // Set cursor back to auto. Seems FF can't handle cursor reversion
-                        jQuery('body').css({cursor:'auto'});
-                    }
-                });
-
-
-            node.setAttribute('draggable', true);
-            const dragstart = function(event) {
-
-                // The helper function is called before the start function
-                // is evoked. Call the given callback function. The callback
-                // function will gather the selected elements and action links
-                // and call the doExecuteImplementation function. This
-                // will call the onExecute function of the first action
-                // in order to obtain the helper object (stored in ai.helper)
-                // and the multiple dragDropTypes (ai.ddTypes)
-                _callback.call(_context, false, ai);
-
-                if (action && egw.app_name() == 'filemanager') {
-                    if (_context.isSelection(event)) return;
-
-                    // Get all selected
-                    const selected = ai.selected;
-
-                    // Set file data
-                    for (let i = 0; i < selected.length; i++) {
-                        let d = selected[i].data || egw.dataGetUIDdata(selected[i].id).data || {};
-                        if (d && d.mime && d.download_url) {
-                            let url = d.download_url;
-
-                            // NEED an absolute URL
-                            if (url[0] == '/') url = egw.link(url);
-                            // egw.link adds the webserver, but that might not be an absolute URL - try again
-                            if (url[0] == '/') url = window.location.origin + url;
-                            event.dataTransfer.setData("DownloadURL", d.mime + ':' + d.name + ':' + url);
-                        }
-                    }
-                    event.dataTransfer.effectAllowed = 'copy';
-
-                    if (event.dataTransfer.types.length == 0) {
-                        // No file data? Abort: drag does nothing
-                        event.preventDefault();
-                        return;
-                    }
-                } else {
-                    event.dataTransfer.effectAllowed = 'linkMove';
-                }
-
-
-                const data = {
-                    ddTypes: ai.ddTypes,
-                    selected: ai.selected.map((item) => {
-                        return {id: item.id}
-                    })
-                };
-
-                if (!ai.helper) {
-                    ai.helper = ai.defaultDDHelper(ai.selected);
-                }
-                // Add a basic class to the helper in order to standardize the background layout
-                ai.helper[0].classList.add('et2_egw_action_ddHelper', 'ui-draggable-dragging');
-                document.body.append(ai.helper[0]);
-                this.classList.add('drag--moving');
-
-                event.dataTransfer.setData('application/json', JSON.stringify(data))
-
-                event.dataTransfer.setDragImage(ai.helper[0], 12, 12);
-
-                this.setAttribute('data-egwActionObjID', JSON.stringify(data.selected));
-            };
-
-            const dragend = function(event){
-                const helper = document.querySelector('.et2_egw_action_ddHelper');
-                if (helper) helper.remove();
-                const draggable = document.querySelector('.drag--moving');
-                if (draggable) draggable.classList.remove('drag--moving');
-            };
-
-            // Drag Event listeners
-            node.addEventListener('dragstart', dragstart , false);
-            node.addEventListener('dragend', dragend, false);
-
-
-            return true;
-        }
-        return false;
-    };
-
-    ai.doUnregisterAction = function(_aoi)
-    {
-        const node = _aoi.getDOMNode();
-
-        if (node){
-            node.setAttribute('draggable', false);
-        }
-    };
-
-    /**
-     * Builds the context menu and shows it at the given position/DOM-Node.
-     *
-     * @param {string} _context
-     * @param {array} _selected
-     * @param {object} _links
-     */
-    ai.doExecuteImplementation = function(_context, _selected, _links)
-    {
-        // Reset the helper object of the action implementation
-        this.helper = null;
-        let hasLink = false;
-
-        // Store the drag-drop types
-        this.ddTypes = [];
-        this.selected = _selected;
-
-        // Call the onExecute event of the first actionObject
-        for (let k in _links)
-        {
-            if (_links[k].visible)
-            {
-                hasLink = true;
-
-                // Only execute the following code if a JS function is registered
-                // for the action and this is the first action link
-                if (!this.helper && _links[k].actionObj.onExecute.hasHandler())
-                {
-                    this.helper = _links[k].actionObj.execute(_selected);
-                }
-
-                // Push the dragType of the associated action object onto the
-                // drag type list - this allows an element to support multiple
-                // drag/drop types.
-                const type = jQuery.isArray(_links[k].actionObj.dragType) ? _links[k].actionObj.dragType : [_links[k].actionObj.dragType];
-                for(let i = 0; i < type.length; i++)
-                {
-                    if (this.ddTypes.indexOf(type[i]) == -1)
-                    {
-                        this.ddTypes.push(type[i]);
-                    }
-                }
-            }
-        }
-
-        // If no helper has been defined, create an default one
-        if (!this.helper && hasLink)
-        {
-            this.helper = ai.defaultDDHelper(_selected);
-        }
-
-        return true;
-    };
-
-    return ai;}
-
-    registerAction: (_actionObjectInterface: EgwActionObjectInterface, _triggerCallback: Function, _context: object) => boolean;
-    unregisterAction: (_actionObjectInterface: EgwActionObjectInterface) => boolean;
-    executeImplementation: (_context: any, _selected: any, _links: any) => any;
-    type: string;
 }
 
 

@@ -13,7 +13,7 @@ import {
 	EgwActionObjectInterface,
 	EgwActionObject, EgwActionLink
 } from "../egw_action";
-import {getPopupImplementation} from "../egw_action_popup.js"; //TODO replace with .ts
+import {getPopupImplementation} from "../egw_action_popup"; //TODO replace with .ts
 import {EGW_AI_DRAG_OUT, EGW_AI_DRAG_OVER, EGW_AO_EXEC_THIS, EGW_AI_DRAG_ENTER} from "./egw_action_constants";
 import {egw} from "../../jsapi/egw_global";
 
