@@ -487,6 +487,7 @@ forward only disables imap mailbox / storing of mails and just forwards them to 
 full name	admin	en	Full name
 general	admin	en	General
 generate certificate	admin	en	Generate Certificate
+generate new token and display it once after saving	admin	en	Generate new token and display it once after saving
 git clone	admin	en	Git clone
 global categories	common	en	Global categories
 global options	admin	en	Global options
@@ -914,7 +915,6 @@ the name used internaly (&lt;= 20 chars), changeing it makes existing data unava
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	admin	en	The name used internally, <= 20 chars, changing it makes existing data unavailable.
 the testjob sends you a mail everytime it is called.	admin	en	The TestJob sends you a mail every time it is called.
 the text displayed to the user	admin	en	The text displayed to the user
-the token is displayed once after saving.	admin	en	The token is displayed once after saving.
 the two passwords are not the same	admin	en	Passwords are not the same
 the users bellow are still members of group %1	admin	en	The users below are still members of group %1
 there already is a group with this name. userid's can not have the same name as a groupid	admin	en	There is already a group with this name. User ID's can not have the same name as a group ID.

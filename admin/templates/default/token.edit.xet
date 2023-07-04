@@ -45,8 +45,16 @@
 						<et2-date-time id="token_updated" readonly="true" align="right"></et2-date-time>
 					</et2-hbox>
 				</row>
+				<row disabled="!@token_revoked">
+					<et2-description value="Revoked"></et2-description>
+					<et2-hbox>
+						<et2-select-account id="token_revoked_by" readonly="true"></et2-select-account>
+						<et2-date-time id="token_revoked" readonly="true" align="right"></et2-date-time>
+					</et2-hbox>
+				</row>
 				<row disabled="@token">
-					<et2-description value="The token is displayed once after saving." span="all"></et2-description>
+					<et2-description></et2-description>
+					<et2-checkbox id="new_token" label="Generate new token and display it once after saving" span="all"></et2-checkbox>
 				</row>
 				<row>
 					<et2-hbox span="all">

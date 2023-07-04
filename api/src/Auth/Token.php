@@ -88,20 +88,17 @@ class Token extends APi\Storage\Base
 		{
 			$account_id = $GLOBALS['egw_info']['user']['account_id'];
 		}
-		$token = Api\Auth::randomstring(16);
 		$inst = self::getInstance();
 		$inst->init([
 			'account_id' => $account_id,
-			'token_hash' => password_hash($token, PASSWORD_DEFAULT),
+			'new_token' => true,
 			'token_valid_until' => $until,
 			'token_remark' => $remark,
 			'token_limits' => $limits,
 		]);
 		$inst->save();
 
-		return $inst->data+[
-			'token' => self::PREFIX.$inst->data['token_id'].'_'.$token,
-		];
+		return $inst->data;
 	}
 
 	/**
@@ -130,7 +127,6 @@ class Token extends APi\Storage\Base
 	 * @param string|array $extra_where =null extra where clause, eg. to check an etag, returns true if no affected rows!
 	 * @return int|boolean 0 on success, or errno != 0 on error, or true if $extra_where is given and no rows affected
 	 * @throws Api\Exception\NoPermission\Admin if non-admin user tries to create token for anyone else
-	 * @throws Api\Exception\NotFound if token_id does NOT exist
 	 * @throws Api\Db\Exception if token could not be stored
 	 */
 	function save($keys=null,$extra_where=null)
@@ -152,9 +148,19 @@ class Token extends APi\Storage\Base
 			$this->data['token_updated_by'] = $GLOBALS['egw_info']['user']['account_id'];
 			$this->data['token_updated'] = $this->now;
 		}
+		if (!empty($keys['new_token']))
+		{
+			$token = Api\Auth::randomstring(16);
+			$this->data['token_hash'] = password_hash($token, PASSWORD_DEFAULT);
+			$this->data['token_revoked'] = null;
+		}
 		if (($ret = parent::save(null, $extra_where)))
 		{
 			throw new Api\Db\Exception(lang('Error storing token'));
+		}
+		if (isset($token))
+		{
+			$this->data['token'] = self::PREFIX.$this->data['token_id'].'_'.$token;
 		}
 		return $ret;
 	}
