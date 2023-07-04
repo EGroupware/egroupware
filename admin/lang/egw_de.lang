@@ -10,15 +10,19 @@
 %1 category(s) %2	admin	de	%1 Kategorie(n) %2
 %1 category(s) %2, %3 failed because of insufficent rights !!!	admin	de	%1 Kategorie(n) %2, %3 fehlgeschlagen wegen fehlender Rechte!
 %1 class not instanciated	admin	de	%1 Klasse nicht instanziiert
+%1 entries deleted	admin	de	%1 Einträge gelöscht
 %1 entries deleted.	admin	de	%1 Einträge gelöscht
 %1 group %2	admin	de	%1 Benutzergruppe %2
 %1 is no command!	admin	de	%1 ist kein Befehl !
 %1 log entries deleted.	admin	de	%1 Protokolleinträge gelöscht.
+%1 mail credentials deleted	admin	de	%1 Mail Zugangsdaten gelöscht
 %1 not found or not executable !!!	admin	de	%1 nicht gefunden oder nicht ausführbar !!!
 %1 phrases saved.	admin	de	%1 Phrasen gespeichert.
 %1 rights for %2 and applications %3	admin	de	%1 Rechte für %2 und Anwendung(en) %3
 %1 run rights for applications	admin	de	Ausführungsrechte für Anwendungen von %1
 %1 sessions killed	admin	de	%1 Sitzungen beendet
+%1 successful	admin	de	%1 erfolgreich
+%1 token %2.	admin	de	%1 Token %2.
 %1 user %2	admin	de	%1 Benutzer %2
 (de)activate mail accounts	admin	de	E-Mail-Konten (de)aktivieren
 (default no, leave it off if you dont use it)	admin	de	(Vorgabe Nein, ausgeschaltet lassen, wenn nicht benutzt)
@@ -36,6 +40,7 @@
 access by	admin	de	Zugriff durch
 access control	admin	de	Zugriffsrechte
 access to %1 data by others	admin	de	Zugriffsrechte %1 durch andere
+access token revoked.	admin	de	Zugangstoken widerrufen.
 accesslog and bruteforce defense	admin	de	Zugangsprotokoll und Abwehr von Brute-Force-Angriffen
 account	admin	de	Konto
 account "%1" has no email address --> not notified!	admin	de	Benutzer "%1" hat keine E-Mail-Adresse --> nicht benachrichtigt!
@@ -69,8 +74,10 @@ actions	admin	de	Befehle
 activate	admin	de	Aktivieren
 activate wysiwyg-editor	admin	de	WYSIWYG Editor (formatierter Text) aktivieren
 activated	admin	de	aktiviert
+activated again	admin	de	wieder aktiviert
 active mail accounts	admin	de	E-Mail Konten aktivieren
 active templates	admin	de	Aktive Vorlagen
+active this token again	admin	de	Diese Token wieder aktivieren
 add a category	admin	de	Eine Kategorie hinzufügen
 add a group	admin	de	Eine Gruppe hinzufügen
 add a new account.	admin	de	Neues Benutzerkonto anlegen
@@ -108,6 +115,7 @@ aliases	admin	de	E-Mail-Alias
 all accounts	admin	de	Alle Konten
 all acls	admin	de	Alle ACLs
 all applications	admin	de	Alle Anwendungen
+all applications of the user	admin	de	Alle Anwendungen des Benutzers
 all categories	admin	de	Alle Kategorien
 all groups	admin	de	Alle Gruppen
 all records and account information will be lost!	admin	de	Alle Datensätze und Kontoinformationen sind dann verloren!
@@ -133,11 +141,13 @@ appearance	admin	de	Aussehen
 application	admin	de	Anwendung
 application '%1' not found (maybe not installed or misspelled)!	admin	de	Anwendung '%1' nicht gefunden. (eventuell nicht installiert oder falsch geschrieben)!
 application name	admin	de	Name der Anwendung
+application passwords	admin	de	Anwendungspasswörter
 application title	admin	de	Titel der Anwendung
 applications	admin	de	Anwendungen
 applications available on mobile devices	admin	de	Anwendungen, die auf Mobilgeräten zur Verfügung stehen
 applications list	admin	de	Liste der Anwendungen
 applications run rights updated.	admin	de	Anwendungsrechte aktualisiert.
+applications this group can use	admin	de	Anwendungen die diese Gruppe benutzen darf
 applies the changes	admin	de	übernimmt Änderungen
 apply changes	admin	de	Änderungen übernehmen
 apply the changes	admin	de	Änderungen übernehmen
@@ -424,12 +434,14 @@ error connecting to imap server. %s : %s.	admin	de	Fehler beim Verbinden mit dem
 error connecting to imap server: [%s] %s.	admin	de	Fehler beim Verbinden mit dem IMAP Server. [%s] %s.
 error deleting entry!	admin	de	Fehler beim Löschen des Eintrags
 error deleting log entry!	admin	de	Fehler beim Löschen des Protokolleintrags!
+error revoking token!	admin	de	Fehler beim Widerrufen des Token!
 error saving	admin	de	Fehler beim Speichern
 error saving account!	admin	de	Fehler beim Speichern des Mail-Kontos!
 error saving the command!	admin	de	Fehler beim Speichern des Befehls!
 error saving the entry!!!	admin	de	Fehler beim Speichern !
 error saving to db:	admin	de	Fehler beim Speichern in der Datenbank:
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	de	Fehler beim Starten des Test-Jobs, falsche Syntax oder es läuft schon einer!
+error storing token!	admin	de	Fehler beim Speichern des Token!
 error! no appname found	admin	de	Fehler: Kein Anwendungsname gefunden
 error, no username!	admin	de	Fehler, kein Benutzername!
 error: %1 not found or other error !!!	admin	de	Fehler: %1 nicht gefunden oder anderer Fehler!
@@ -442,6 +454,7 @@ export certificate as p12	admin	de	Exportiere Zertifikat als p12 Datei
 exports groups into a csv file.	admin	de	Benutzergruppen in eine CSV-Datei exportieren.
 exports permission settings into a csv file.	admin	de	Exportiere Zugriffsrechte in eine CSV-Datei.
 exports users into a csv file.	admin	de	Benutzer in eine CSV-Datei exportieren.
+failed	admin	de	fehlgeschlagen
 failed to change password for account "%1"!	admin	de	Fehler beim Ändern des Passwortes für Benutzer "%1"!
 failed to change password.	admin	de	Ändern des Passwortes nicht möglich.
 failed to delete account!	admin	de	Fehler beim Löschen des Mail-Kontos!
@@ -454,6 +467,7 @@ field '%1' already exists !!!	admin	de	Feld '%1' existiert bereits !!!
 file rejected, no %2. is:%1	admin	de	Datei wurde abgewiesen, kein %2. ist:%1
 file space	admin	de	Speicherplatz
 file space must be an integer	admin	de	Speicherplatz muss eine Zahl sein
+filesystem quota	admin	de	Dateisystem Quota
 filtered by account	admin	de	Suche nach Benutzerprofilen
 filtered by group	admin	de	Suche nach Gruppenprofilen
 folder acl	admin	de	Zugriffsrechte
@@ -749,6 +763,7 @@ read this list of methods.	admin	de	Diese Liste der Methoden lesen
 register application hooks	admin	de	Registrieren der "Hooks" der Anwendungen
 reject passwords containing part of username or full name (3 or more characters long)	admin	de	Passwörter zurückweisen die einen Teil des Benutzernamen oder vollständigen Namens beinhalten (3 oder mehr Zeichen lang)
 relay access checked	admin	de	nicht angemeldetes Senden überprüft
+remark	admin	de	Bemerkung
 remote administration instances	admin	de	Remote Administrations Instanzen
 remote administration need to be enabled in the remote instance under admin &gt; site configuration!	admin	de	Die Remote Administration muss von der Remote-Instanz (unter Admin -> Konfiguration der Anwendung) freigegeben werden.
 remote administration need to be enabled in the remote instance under admin > site configuration!	admin	de	Die Remote Administration muss von der Remote-Instanz (unter Admin -> Konfiguration der Anwendung) freigegeben werden.
@@ -763,6 +778,10 @@ required pear class mail/mimedecode.php not found.	admin	de	Die benötigte PEAR-
 required to embed egroupware via iframe eg. for lti	admin	de	Notwendig um EGroupware per iFrame einzubetten z.B. für LTI
 requires 'openid / oauth2 server' app.	admin	de	Benötigt die 'Open ID / OAuth2 Server' Anwendung.
 reset filter	admin	de	Filter zurücksetzen
+revoke	admin	de	Widerrufen
+revoke this token	admin	de	Dieses Token widerrufen
+revoked	admin	de	Widerrufen
+revoked by	admin	de	Widerrufen von
 rights	admin	de	Rechte
 route all mails to	admin	de	Alle E-Mails senden an
 rows	admin	de	Zeilen
@@ -783,6 +802,7 @@ search accounts	admin	de	Benutzerkonten durchsuchen
 search categories	admin	de	Kategorien durchsuchen
 search groups	admin	de	Gruppen durchsuchen
 search peer servers	admin	de	Serververbund durchsuchen
+secret deleted, two factor authentication disabled.	admin	de	Geheimnis gelöscht, 2-Faktor-Authentifizierung ausgeschaltet.
 secure connection	admin	de	Sichere Verbindung
 security	admin	de	Sicherheit
 select accounts for which the custom field should be visible	admin	de	Benutzer auswählen, für die dieses benutzerdefinierte Feld sichtbar sein soll.
@@ -791,6 +811,7 @@ select language to define language based message. language 'english' is default 
 select multiple	admin	de	Mehrere auswählen
 select owner	admin	de	Besitzer auswählen
 select permissions this group will have	admin	de	wählen Sie die Zugriffsrechte für diese Gruppe.
+select the applications you want the token to be limited to, or leave the default of all applications.	admin	de	Wählen Sie die Anwendungen auf die das Token beschränkt sein soll, oder lassen Sie die Vorgabe alle Anwendungen.
 select the parent category. if this is a main category select no category	admin	de	Eine übergeordnete Kategorie auswählen. Wenn dies eine Hauptkategorie ist, KEINE KATEGORIE auswählen.
 select type of imap server	admin	de	IMAP-Server Typ auswählen
 select type of imap/pop3 server	admin	de	IMAP/POP3-Server Typ auswählen
@@ -890,6 +911,7 @@ the name used internaly (&lt;= 20 chars), changeing it makes existing data unava
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	admin	de	intern benutzter Name (<= 20 Buchstaben), Veränderungen machen existierende Daten unerreichbar!
 the testjob sends you a mail everytime it is called.	admin	de	Der Testjob sendet Ihnen jedes mal eine E-Mail wenn er aufgerufen wird.
 the text displayed to the user	admin	de	Für den Benutzer angezeigter Text
+the token is displayed once after saving.	admin	de	Das Token wird nach dem Speichern einmalig angezeigt.
 the two passwords are not the same	admin	de	Die beiden Passwörter stimmen nicht überein
 the users bellow are still members of group %1	admin	de	Die unten angezeigten Benutzer sind Mitglied der Gruppe %1
 there already is a group with this name. userid's can not have the same name as a groupid	admin	de	Es gibt bereits ein Gruppe mit diesem Namen. Benutzernamen dürfen nicht identisch mit Gruppennamen sein.
@@ -907,6 +929,10 @@ timeout for sessions in seconds (default 14400 = 4 hours)	admin	de	Zeit nach der
 times	admin	de	Zeiten
 to allow us to track the growth of your individual installation use this submit id, otherwise delete it:	admin	de	Benutzen Sie diese Übertragungs ID damit wir das Wachstum Ihrer individuellen Installation erfassen können, ansonsten löschen sie diese:
 to use a tls connection, you must be running a version of php 5.1.0 or higher.	admin	de	Um eine TLS Verbindung zu verwenden, benötigen Sie PHP 5.1.0 oder aktueller.
+token created.	admin	de	Token erzeugt.
+token not found!	admin	de	Token nicht gefunden!
+token revoked.	admin	de	Token widerrufen.
+token saved.	admin	de	Token gespeichert.
 top	admin	de	oben
 total of %1 accounts deleted.	admin	de	Insgesammt %1 Benutzerkonten gelöscht.
 total of %1 id's changed.	admin	de	Die Gesamtanzahl von %1 IDs wurde geändert.
@@ -934,7 +960,8 @@ unsupported action '%1' !!!	admin	de	Nicht unterstützte Aktion '%1' !!!
 unwilling to save category with current settings. check for inconsistency:	admin	de	Kategorie kann mit den aktuellen Einstellungen nicht gespeichert werden. Bitte überprüfen sie die Einstellungen auf Ungereimtheiten
 up	admin	de	hoch
 update current email address:	admin	de	Aktualisiere aktuelle E-Mail-Adresse
-updated	admin	de	aktualisiert
+updated	admin	de	Aktualisiert
+updated by	admin	de	Aktualisiert von
 upload your background image or enter the url	admin	de	Laden Sie ein Hintergrundbild hoch oder geben Sie eine entsprechende URL ein
 upload your certificate .p12/.pfx file	admin	de	Zertifikat hochladen (.p12/.pfx-Datei)
 upload your favicon or enter the url	admin	de	Laden Sie ein Favicon hoch oder geben Sie eine URL dafür ein
@@ -980,6 +1007,7 @@ using data from mozilla ispdb for provider %1	admin	de	Benutze Mozilla ISPDB fü
 using imap:%1, smtp:%2, oauth:%3:	admin	de	Benutze IMAP: %1, SMTP: %2, OAuth: %3:
 vacation messages with start- and end-date require an admin account to be set	admin	de	Abwesenheitsnotizen mit Start- und Enddatum benötigen einen gesetzten Administrator Benutzer!
 vacation notice	admin	de	Abwesenheitsnotiz
+valid for	admin	de	Gültig für
 value for column %1 is not unique!	admin	de	Wert für die Spalte %1 ist nicht eindeutig!
 vfs directory "%1" not found!	admin	de	VFS-Verzeichnis "%1" nicht gefunden!
 view access log	admin	de	Zugangsprotokoll anzeigen

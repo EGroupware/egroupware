@@ -192,10 +192,10 @@ Admin command
 /**
  * Application passwords / tokens
  */
-/**
- * EPL application Firewall
- */
 tr.revoked > td * {
     color: grey !important;
     font-style: italic;
+}
+td.token {
+    border: 3px solid red;
 }

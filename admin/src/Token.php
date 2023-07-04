@@ -102,17 +102,11 @@ class Token
 						break;
 
 					case 'delete':
-						if (!$this->token->revoke($content['token_id']))
-						{
-							Api\Framework::message(lang('Error revoking token!'));
-						}
-						else
-						{
-							Api\Framework::refresh_opener(lang('Token revoked.'),
-								Bo::APP, $content['token_id'], 'update');
-
-							Api\Framework::window_close();	// does NOT return
-						}
+						$this->token->revoke($content['token_id']);
+						Api\Framework::refresh_opener(lang('Token revoked.'),
+								self::APP, $content['token_id'], 'update');
+						Api\Framework::window_close();	// does NOT return
+						break;
 				}
 			}
 			catch(\Exception $e) {

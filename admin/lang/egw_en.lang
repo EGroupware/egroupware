@@ -10,15 +10,19 @@
 %1 category(s) %2	admin	en	%1 category(s) %2
 %1 category(s) %2, %3 failed because of insufficent rights !!!	admin	en	%1 category(s) %2, %3 failed because of insufficent rights !!!
 %1 class not instanciated	admin	en	%1 class not instanciated
+%1 entries deleted	admin	en	%1 entries deleted
 %1 entries deleted.	admin	en	%1 entries deleted.
 %1 group %2	admin	en	%1 group %2
 %1 is no command!	admin	en	%1 is no command!
 %1 log entries deleted.	admin	en	%1 log entries deleted.
+%1 mail credentials deleted	admin	en	%1 mail credentials deleted
 %1 not found or not executable !!!	admin	en	%1 not found or not executable!
 %1 phrases saved.	admin	en	%1 phrases saved.
 %1 rights for %2 and applications %3	admin	en	%1 rights for %2 and application(s) %3 .
 %1 run rights for applications	admin	en	%1 run rights for applications
 %1 sessions killed	admin	en	%1 sessions killed.
+%1 successful	admin	en	%1 successful
+%1 token %2.	admin	en	%1 token %2.
 %1 user %2	admin	en	%1 user %2
 (de)activate mail accounts	admin	en	(de)activate mail accounts
 (default no, leave it off if you dont use it)	admin	en	Default = No, leave it off if you dont use it
@@ -36,6 +40,7 @@
 access by	admin	en	Access by
 access control	admin	en	Access control
 access to %1 data by others	admin	en	Access to %1 data by others
+access token revoked.	admin	en	Access Token revoked.
 accesslog and bruteforce defense	admin	en	AccessLog and BruteForce defense
 account	admin	en	Account
 account "%1" has no email address --> not notified!	admin	en	Account "%1" has no email address --> not notified!
@@ -69,8 +74,10 @@ actions	admin	en	Actions
 activate	admin	en	Activate
 activate wysiwyg-editor	admin	en	Activate WYSIWYG-editor
 activated	admin	en	activated
+activated again	admin	en	activated again
 active mail accounts	admin	en	Active Mail Accounts
 active templates	admin	en	Active templates
+active this token again	admin	en	Active this token again
 add a category	admin	en	Add a category
 add a group	admin	en	Add a group
 add a new account.	admin	en	Add a new account
@@ -108,6 +115,7 @@ aliases	admin	en	Aliases
 all accounts	admin	en	All accounts
 all acls	admin	en	All ACLs
 all applications	admin	en	All applications
+all applications of the user	admin	en	All applications of the user
 all categories	admin	en	All categories
 all groups	admin	en	All groups
 all records and account information will be lost!	admin	en	All records and account information will be lost!
@@ -133,11 +141,13 @@ appearance	admin	en	Appearance
 application	admin	en	Application
 application '%1' not found (maybe not installed or misspelled)!	admin	en	Application '%1' not found. Maybe it is not installed or is misspelled!
 application name	admin	en	Application name
+application passwords	admin	en	Application passwords
 application title	admin	en	Application title
 applications	admin	en	Applications
 applications available on mobile devices	admin	en	Applications available on mobile devices
 applications list	admin	en	Applications list
 applications run rights updated.	admin	en	Applications run rights updated.
+applications this group can use	admin	en	Applications this group can use
 applies the changes	admin	en	Applies the changes
 apply changes	admin	en	Apply changes
 apply the changes	admin	en	Apply the changes
@@ -427,12 +437,14 @@ error connecting to imap server. %s : %s.	admin	en	Error connecting to IMAP serv
 error connecting to imap server: [%s] %s.	admin	en	Error connecting to IMAP server: [%s] %s.
 error deleting entry!	admin	en	Error deleting entry!
 error deleting log entry!	admin	en	Error deleting log entry!
+error revoking token!	admin	en	Error revoking token!
 error saving	admin	en	Error saving!
 error saving account!	admin	en	Error saving account!
 error saving the command!	admin	en	Error saving the command!
 error saving the entry!!!	admin	en	Error saving the entry!
 error saving to db:	admin	en	Error saving to db:
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	en	Error setting timer, wrong syntax or maybe there's one already running!
+error storing token!	admin	en	Error storing token!
 error! no appname found	admin	en	Error: No app name found!
 error, no username!	admin	en	Error, no username!
 error: %1 not found or other error !!!	admin	en	Error: %1 not found or other error!
@@ -445,6 +457,7 @@ export certificate as p12	admin	en	export certificate as p12
 exports groups into a csv file.	admin	en	Exports groups into a CSV file.
 exports permission settings into a csv file.	admin	en	Exports permission settings into a CSV File.
 exports users into a csv file.	admin	en	Exports users into a CSV file.
+failed	admin	en	failed
 failed to change password for account "%1"!	admin	en	Failed to change password for account "%1"!
 failed to change password.	admin	en	Failed to change password.
 failed to delete account!	admin	en	Failed to delete account!
@@ -457,6 +470,7 @@ field '%1' already exists !!!	admin	en	Field '%1' already exists!
 file rejected, no %2. is:%1	admin	en	File rejected, no %2. Is:%1
 file space	admin	en	File space
 file space must be an integer	admin	en	File space must be an integer
+filesystem quota	admin	en	Filesystem quota
 filtered by account	admin	en	Filtered by account
 filtered by group	admin	en	Filtered by group
 folder acl	admin	en	Folder ACL
@@ -752,6 +766,7 @@ read this list of methods.	admin	en	Read this list of methods.
 register application hooks	admin	en	Register application hooks
 reject passwords containing part of username or full name (3 or more characters long)	admin	en	Reject passwords containing part of username or full name (3 or more characters long)
 relay access checked	admin	en	Relay access checked
+remark	admin	en	Remark
 remote administration instances	admin	en	Remote administration instances
 remote administration need to be enabled in the remote instance under admin &gt; site configuration!	admin	en	Remote administration need to be enabled in the remote instance under Admin > Site configuration!
 remote administration need to be enabled in the remote instance under admin > site configuration!	admin	en	Remote administration need to be enabled in the remote instance under Admin > Site configuration!
@@ -766,6 +781,10 @@ required pear class mail/mimedecode.php not found.	admin	en	Required PEAR class 
 required to embed egroupware via iframe eg. for lti	admin	en	required to embed EGroupware via iframe eg. for LTI
 requires 'openid / oauth2 server' app.	admin	en	Requires 'OpenID / OAuth2 Server' app.
 reset filter	admin	en	Reset filter
+revoke	admin	en	Revoke
+revoke this token	admin	en	Revoke this token
+revoked	admin	en	revoked
+revoked by	admin	en	Revoked by
 rights	admin	en	Rights
 route all mails to	admin	en	Route all Mails to
 rows	admin	en	Rows
@@ -786,6 +805,7 @@ search accounts	admin	en	Search accounts
 search categories	admin	en	Search categories
 search groups	admin	en	Search groups
 search peer servers	admin	en	Search peer servers
+secret deleted, two factor authentication disabled.	admin	en	Secret deleted, two factor authentication disabled.
 secure connection	admin	en	Secure connection
 security	admin	en	Security
 select accounts for which the custom field should be visible	admin	en	Select accounts the custom field should be visible for.
@@ -794,6 +814,7 @@ select language to define language based message. language 'english' is default 
 select multiple	admin	en	Select multiple
 select owner	admin	en	Select owner
 select permissions this group will have	admin	en	Select permissions for this group
+select the applications you want the token to be limited to, or leave the default of all applications.	admin	en	Select the applications you want the token to be limited to, or leave the default of all applications.
 select the parent category. if this is a main category select no category	admin	en	Select the parent category. If this is a main category select NO CATEGORY.
 select type of imap server	admin	en	Select type of IMAP server
 select type of imap/pop3 server	admin	en	Select type of IMAP/POP3 server
@@ -893,6 +914,7 @@ the name used internaly (&lt;= 20 chars), changeing it makes existing data unava
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	admin	en	The name used internally, <= 20 chars, changing it makes existing data unavailable.
 the testjob sends you a mail everytime it is called.	admin	en	The TestJob sends you a mail every time it is called.
 the text displayed to the user	admin	en	The text displayed to the user
+the token is displayed once after saving.	admin	en	The token is displayed once after saving.
 the two passwords are not the same	admin	en	Passwords are not the same
 the users bellow are still members of group %1	admin	en	The users below are still members of group %1
 there already is a group with this name. userid's can not have the same name as a groupid	admin	en	There is already a group with this name. User ID's can not have the same name as a group ID.
@@ -910,6 +932,10 @@ timeout for sessions in seconds (default 14400 = 4 hours)	admin	en	Timeout for s
 times	admin	en	Times
 to allow us to track the growth of your individual installation use this submit id, otherwise delete it:	admin	en	To allow us to track the growth of your individual installation use this submit ID, otherwise delete it:
 to use a tls connection, you must be running a version of php 5.1.0 or higher.	admin	en	To use a TLS connection, you must be running a version of PHP 5.1.0 or higher.
+token created.	admin	en	Token created.
+token not found!	admin	en	Token not found!
+token revoked.	admin	en	Token revoked.
+token saved.	admin	en	Token saved.
 top	admin	en	Top
 total of %1 accounts deleted.	admin	en	Total of %1 accounts deleted.
 total of %1 id's changed.	admin	en	Total of %1 id's changed.
@@ -938,6 +964,7 @@ unwilling to save category with current settings. check for inconsistency:	admin
 up	admin	en	Up
 update current email address:	admin	en	Update current email address:
 updated	admin	en	Updated
+updated by	admin	en	Updated by
 upload your background image or enter the url	admin	en	Upload your background image or enter the URL
 upload your certificate .p12/.pfx file	admin	en	Upload your certificate .p12/.pfx file
 upload your favicon or enter the url	admin	en	Upload your favicon or enter the URL
@@ -983,6 +1010,7 @@ using data from mozilla ispdb for provider %1	admin	en	Using data from Mozilla I
 using imap:%1, smtp:%2, oauth:%3:	admin	en	Using IMAP:%1, SMTP:%2, OAUTH:%3:
 vacation messages with start- and end-date require an admin account to be set	admin	en	Vacation messages with start and end date require an admin account to be set!
 vacation notice	admin	en	Vacation notice
+valid for	admin	en	Valid for
 value for column %1 is not unique!	admin	en	Value for column %1 is not unique!
 vfs directory "%1" not found!	admin	en	VFS directory "%1" NOT found!
 view access log	admin	en	View access log
