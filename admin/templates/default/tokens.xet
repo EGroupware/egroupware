@@ -16,9 +16,9 @@
 			<rows>
 				<row>
 					<nextmatch-sortheader label="ID" id="token_id"/>
-					<et2-nextmatch-header-account id="account_id" emptyLabel="User" accountType="user">
-						<option value="0">All users</option>
-					</et2-nextmatch-header-account>
+					<et2-nextmatch-header-account id="account_id" emptyLabel="User" accountType="accounts">
+                        <option value="0">All users</option>
+                    </et2-nextmatch-header-account>
 					<nextmatch-header id="token_apps" label="Applications"/>
 					<nextmatch-sortheader label="Expiration" id="token_valid_until"/>
 					<et2-vbox>
