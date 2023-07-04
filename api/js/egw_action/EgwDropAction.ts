@@ -12,29 +12,32 @@ import {EgwAction} from "./EgwAction";
  * @param {bool} _allowOnMultiple
  * @returns {egwDropAction}
  */
-export class EgwDropAction {
+export class EgwDropAction extends EgwAction{
+     acceptedTypes: string[];
+     order: number;
+     group: number;
 
     constructor(_id, _handler, _caption, _icon, _onExecute, _allowOnMultiple) {
 
-    const action = new EgwAction(_id, _handler, _caption, _icon, _onExecute, _allowOnMultiple);
+    super(_id, _handler, _caption, _icon, _onExecute, _allowOnMultiple);
 
-    action.type = "drop";
-    action.acceptedTypes = ["default"];
-    action.canHaveChildren = ["drag", "popup"];
-    action["default"] = false;
-    action.order = 0;
-    action.group = 0;
+    this.type = "drop";
+    this.acceptedTypes = ["default"];
+    this.canHaveChildren = ["drag", "popup"];
+    this["default"] = false;
+    this.order = 0;
+    this.group = 0;}
 
-    action.set_default = function (_value) {
-        action["default"] = _value;
+    set_default(_value) {
+        this["default"] = _value;
     };
 
-    action.set_order = function (_value) {
-        action.order = _value;
+    set_order(_value) {
+        this.order = _value;
     };
 
-    action.set_group = function (_value) {
-        action.group = _value;
+    set_group(_value) {
+        this.group = _value;
     };
 
     /**
@@ -43,13 +46,11 @@ export class EgwDropAction {
      *
      * @param {(string|array)} _value
      */
-    action.set_acceptedTypes = function (_value) {
+    set_acceptedTypes(_value) {
         if (_value instanceof Array) {
-            action.acceptedTypes = _value;
+            this.acceptedTypes = _value;
         } else {
-            action.acceptedTypes = [_value];
+            this.acceptedTypes = [_value];
         }
     };
-
-    return action;}
 }

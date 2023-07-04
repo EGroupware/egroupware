@@ -1,4 +1,4 @@
-import type {EgwActionObjectInterface} from "./egw_action";
+import type {EgwActionObjectInterface} from "./EgwActionObjectInterface";
 
 /**
  * Abstract interface for the EgwActionImplementation object. The EgwActionImplementation
