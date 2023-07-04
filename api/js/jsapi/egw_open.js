@@ -592,55 +592,83 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 				}
 			}
 
-			if(popups.length == 1)
+			const pref_name = "mail_add_address_new_popup";
+			const new_dialog_pref = egw.preference(pref_name, "common");
+
+			if (popups.length == 0 || new_dialog_pref == "new")
 			{
-				try {
+				return openUp(_app, _extra);
+			}
+			if (new_dialog_pref == "add" && popups.length == 1)
+			{
+				try
+				{
 					popups[0].app[_app][_method](popups[0], _content);
 				}
-				catch(e) {
-					window.setTimeout(function() {
+				catch (e)
+				{
+					window.setTimeout(function ()
+					{
 						openUp(_app, _extra);
 					});
 				}
+				return;
 			}
-			else if (popups.length > 1)
+
+			var buttons = [
+				{label: this.lang("Add"), id: "add", "class": "ui-priority-primary", "default": true},
+				{label: this.lang("Cancel"), id: "cancel"}
+			];
+
+			// Fill dialog options
+			var c = [];
+			for (var i = 0; i < popups.length; i++)
 			{
-				var buttons = [
-					{label: this.lang("Add"), id: "add", "class": "ui-priority-primary", "default": true},
-					{label: this.lang("Cancel"), id: "cancel"}
-				];
-				var c = [];
-				for (var i = 0; i < popups.length; i++)
+				c.push({label: popups[i].document.title || this.lang(_app), index: i});
+			}
+			c.push({label: this.lang("New %1", egw.link_get_registry(_app, "entry")), index: "new"});
+
+			// Set initial value
+			switch (new_dialog_pref)
+			{
+				case "new":
+					c.index = "new";
+					break;
+				case "add":
+					c.index = 0;
+					break;
+			}
+			let dialog = new Et2Dialog(this.app_name());
+			dialog.transformAttributes({
+				callback: function (_button_id, _value)
 				{
-					c.push({label: popups[i].document.title || this.lang(_app), index: i});
-				}
-				let dialog = new Et2Dialog(this.app_name());
-				dialog.transformAttributes({
-					callback: function (_button_id, _value)
+					if (_value.remember)
 					{
-						if (_value && _value.grid)
+						// Remember and do not ask again (if they chose new)
+						egw.set_preference("common", pref_name, _value.remember && _value.grid.index == "new" ? "new" : "add");
+					}
+					if (_value && _value.grid)
+					{
+						switch (_button_id)
 						{
-							switch (_button_id)
-							{
-								case "add":
-									popups[_value.grid.index].app[_app][_method](popups[_value.grid.index], _content);
-									return;
-								case "cancel":
-							}
+							case "add":
+								if (_value.grid.index == "new")
+								{
+									return openUp(_app, _extra);
+								}
+								popups[_value.grid.index].app[_app][_method](popups[_value.grid.index], _content);
+								return;
+							case "cancel":
 						}
-					},
-					title: this.lang("Select an opened dialog"),
-					buttons: buttons,
-					value: {content: {grid: c}},
-					template: this.webserverUrl + '/api/templates/default/promptOpenedDialog.xet?1',
-					resizable: false
-				});
-				document.body.appendChild(dialog);
-			}
-			else
-			{
-				openUp(_app, _extra);
-			}
+					}
+				},
+				title: this.lang("Select an opened dialog"),
+				buttons: buttons,
+				value: {content: {grid: c}},
+				template: this.webserverUrl + '/api/templates/default/promptOpenedDialog.xet?1',
+				resizable: false
+			});
+			document.body.appendChild(dialog);
 		}
 	};
 });
