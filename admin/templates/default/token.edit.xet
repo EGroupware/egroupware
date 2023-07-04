@@ -10,7 +10,7 @@
 			<rows>
 				<row disabled="!@token">
 					<et2-description value="Token"></et2-description>
-					<et2-textbox id="token" readonly="true" onclick="app.admin.copyClipboard(this)"></et2-textbox>
+					<et2-textbox id="token" readonly="true" onclick="app.admin.copyClipboard(this)" class="token"></et2-textbox>
 				</row>
 				<row>
 					<et2-description for="account_id" value="User"></et2-description>
@@ -45,13 +45,16 @@
 						<et2-date-time id="token_updated" readonly="true" align="right"></et2-date-time>
 					</et2-hbox>
 				</row>
+				<row disabled="@token">
+					<et2-description value="The token is displayed once after saving." span="all"></et2-description>
+				</row>
 				<row>
 					<et2-hbox span="all">
 						<et2-button accesskey="s" label="Save" id="button[save]"></et2-button>
 						<et2-button label="Apply" id="button[apply]"></et2-button>
 						<et2-button label="Cancel" id="button[cancel]" onclick="window.close(); return false;"></et2-button>
 						<et2-button align="right" label="Revoke" id="button[delete]"
-							onclick="et2_dialog.confirm(widget,'Do you really want to revoke this token?','Revoke')"></et2-button>
+							onclick="et2_dialog.confirm(widget,'Revoke this token','Revoke')"></et2-button>
 					</et2-hbox>
 				</row>
 			</rows>
