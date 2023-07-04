@@ -60,7 +60,7 @@ class Token
 			}
 			else
 			{
-				$content = $this->token->init();
+				$content = $this->token->init()+['new_token' => true];
 				if (empty($GLOBALS['egw_info']['user']['apps']['admin']))
 				{
 					$content['account_id'] = $GLOBALS['egw_info']['user']['account_id'];
@@ -77,24 +77,16 @@ class Token
 					case 'save':
 					case 'apply':
 						$content['token_limits'] = Api\Auth\Token::apps2limits($content['token_apps']);
-						if (empty($content['token_id']))
+						if (empty($content['token_id']) || $content['new_token'])
 						{
-							$content = Api\Auth\Token::create($content['account_id'] ?: 0, $content['token_valid_until'], $content['token_remark'],
-								$content['token_limits']);
-							Api\Framework::refresh_opener(lang('Token created.'),
-								self::APP, $this->token->data['token_id'],'add');
+							$content['new_token'] = true;
 							$button = 'apply';  // must not close window to show token
 						}
-						elseif (!$this->token->save($content))
-						{
-							Api\Framework::refresh_opener(lang('Token saved.'),
-								self::APP, $this->token->data['token_id'],'edit');
-							$content = array_merge($content, $this->token->data);
-						}
-						else
-						{
-							throw new \Exception(lang('Error storing token!'));
-						}
+						$this->token->save($content);
+						Api\Framework::refresh_opener(empty($content['new_token']) ? lang('Token saved.') : lang('Token created.'),
+							self::APP, $this->token->data['token_id'],'edit');
+						unset($content['new_token']);
+						$content = array_merge($content, $this->token->data);
 						if ($button === 'save')
 						{
 							Api\Framework::window_close();	// does NOT return
