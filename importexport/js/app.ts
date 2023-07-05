@@ -126,8 +126,9 @@ class ImportExportApp extends EgwApp
 		var preview = jQuery(widget.getRoot().getWidgetById('preview_box').getDOMNode());
 		// TD gets the class too
 		preview.parent().show();
-		jQuery('.content', preview).empty();
+		jQuery('.content', preview).empty().text(this.egw.lang("Please wait..."));
 		preview
+			.removeClass("hideme")
 			.addClass('loading')
 			.show(100, jQuery.proxy(function()
 			{
@@ -140,6 +141,14 @@ class ImportExportApp extends EgwApp
 		return false;
 	}
 
+	closePreview()
+	{
+		const preview = jQuery(this.et2.getWidgetById("preview_box"));
+
+		// TD gets the class too
+		preview.parent().hide();
+	}
+
 	/**
 	 * Open a popup to run a given definition
 	 *
@@ -148,13 +157,19 @@ class ImportExportApp extends EgwApp
 	 */
 	run_definition(action, selected)
 	{
-		if(!selected || selected.length != 1) return;
+		if(!selected || selected.length != 1)
+		{
+			return;
+		}
 
-		var id = selected[0].id||null;
+		var id = selected[0].id || null;
 		var data = egw.dataGetUIDdata(id).data;
-		if(!data || !data.type) return;
+		if(!data || !data.type)
+		{
+			return;
+		}
 
-		egw.open_link(egw.link('/index.php',{
+		egw.open_link(egw.link('/index.php', {
 			menuaction: 'importexport.importexport_' + data.type + '_ui.' + data.type + '_dialog',
 			appname: data.application,
 			definition: data.definition_id
