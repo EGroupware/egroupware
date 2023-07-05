@@ -634,6 +634,7 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 				case "new":
 					c.index = "new";
 					break;
+				default:
 				case "add":
 					c.index = 0;
 					break;
