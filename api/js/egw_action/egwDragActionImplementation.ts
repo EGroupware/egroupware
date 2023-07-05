@@ -4,24 +4,26 @@ import {EgwActionObjectInterface} from "./EgwActionObjectInterface";
 import {egwActionImplementation} from "./egw_action";
 
 export class EgwDragActionImplementation implements EgwActionImplementation {
-    public type
-    private helper: HTMLDivElement;
-    private ddTypes: any[];
-    private selected: any[];
+     type
+     helper: HTMLDivElement;
+     ddTypes: any[];
+     selected: any[];
+    private defaultDDHelper: (_selected) => HTMLDivElement;
+    private doExecuteImplementation: (_context, _selected, _links) => boolean;
+    private doRegisterAction: (_aoi, _callback, _context) => (undefined | boolean);
+    private doUnregisterAction: (_aoi) => boolean;
 
     constructor() {
 
-        const ai = new egwActionImplementation();
+        this.type = "drag";
 
-        ai.type = "drag";
-
-        ai.helper = null;
-        ai.ddTypes = [];
-        ai.selected = [];
+        this.helper = null;
+        this.ddTypes = [];
+        this.selected = [];
 
         // Define default helper DOM
         // default helper also can be called later in application code in order to customization
-        ai.defaultDDHelper = function (_selected) {
+        this.defaultDDHelper = function (_selected) {
             // Table containing clone of rows
             const table: HTMLTableElement = (document.createElement("table"));
             table.classList.add('egwGridView_grid', 'et2_egw_action_ddHelper_row');
@@ -89,7 +91,7 @@ export class EgwDragActionImplementation implements EgwActionImplementation {
             return div;
         };
 
-        ai.doRegisterAction = function (_aoi, _callback, _context) {
+        this.doRegisterAction = function (_aoi, _callback, _context) {
             const node = _aoi.getDOMNode() && _aoi.getDOMNode()[0] ? _aoi.getDOMNode()[0] : _aoi.getDOMNode();
 
             if (node) {
@@ -110,7 +112,8 @@ export class EgwDragActionImplementation implements EgwActionImplementation {
                 }
 
                 // Bind mouse handlers
-                jQuery(node).off("mousedown")
+                //TODO can i just remove jquery.off??
+                //jQuery(node).off("mousedown")
                 node.addEventListener("mousedown", (event) => {
                     if (_context.isSelection(event)) {
                         node.setAttribute("draggable", false);
@@ -214,12 +217,13 @@ export class EgwDragActionImplementation implements EgwActionImplementation {
             return false;
         };
 
-        ai.doUnregisterAction = function (_aoi) {
+        this.doUnregisterAction = function (_aoi) {
             const node = _aoi.getDOMNode();
 
             if (node) {
                 node.setAttribute('draggable', false);
             }
+            return true;
         };
 
         /**
@@ -229,7 +233,7 @@ export class EgwDragActionImplementation implements EgwActionImplementation {
          * @param {array} _selected
          * @param {object} _links
          */
-        ai.doExecuteImplementation = function (_context, _selected, _links) {
+        this.doExecuteImplementation = function (_context, _selected, _links) {
             // Reset the helper object of the action implementation
             this.helper = null;
             let hasLink = false;
@@ -264,18 +268,19 @@ export class EgwDragActionImplementation implements EgwActionImplementation {
             }
         // If no helper has been defined, create a default one
             if (!this.helper && hasLink) {
-                this.helper = ai.defaultDDHelper(_selected);
+                this.helper = this.defaultDDHelper(_selected);
             }
 
             return true;
         };
-
-        return ai;
+        this.registerAction = this.doRegisterAction
+        this.unregisterAction = this.doUnregisterAction
+        this.executeImplementation= this.doExecuteImplementation
     }
 
-    registerAction: (_actionObjectInterface: EgwActionObjectInterface, _triggerCallback: Function, _context: object) => boolean;
-    unregisterAction: (_actionObjectInterface: EgwActionObjectInterface) => boolean;
-    executeImplementation: (_context: any, _selected: any, _links: any) => any;
+    registerAction: (_actionObjectInterface: EgwActionObjectInterface, _triggerCallback: Function, _context: object) => boolean = this.doRegisterAction;
+    unregisterAction: (_actionObjectInterface: EgwActionObjectInterface) => boolean= this.doUnregisterAction;
+    executeImplementation: (_context: any, _selected: any, _links: any) => any=this.doExecuteImplementation;
 }
 /**
  * @deprecated use upper case class
