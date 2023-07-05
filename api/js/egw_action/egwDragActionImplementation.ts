@@ -1,287 +1,263 @@
 import {EgwActionImplementation} from "./EgwActionImplementation";
 import {egw} from "../jsapi/egw_global";
 import {EgwActionObjectInterface} from "./EgwActionObjectInterface";
-import {egwActionImplementation} from "./egw_action";
 
 export class EgwDragActionImplementation implements EgwActionImplementation {
-     type
-     helper: HTMLDivElement;
-     ddTypes: any[];
-     selected: any[];
-    private defaultDDHelper: (_selected) => HTMLDivElement;
-    private doExecuteImplementation: (_context, _selected, _links) => boolean;
-    private doRegisterAction: (_aoi, _callback, _context) => (undefined | boolean);
-    private doUnregisterAction: (_aoi) => boolean;
+    type = "drag";
+    helper: HTMLDivElement = null;
+    ddTypes: any[] = [];
+    selected: any[] = [];
+    defaultDDHelper: (_selected) => HTMLDivElement = (_selected) => {
+        // Table containing clone of rows
+        const table: HTMLTableElement = (document.createElement("table"));
+        table.classList.add('egwGridView_grid', 'et2_egw_action_ddHelper_row');
+        // tr element to use as last row to show 'more ...' label
+        const moreRow: HTMLTableRowElement = (document.createElement('tr'))
+        moreRow.classList.add('et2_egw_action_ddHelper_moreRow');
+        // Main div helper container
+        const div: HTMLDivElement = (document.createElement("div"));
+        div.append(table);
 
-    constructor() {
+        let rows = [];
+        // Maximum number of rows to show
+        let maxRows = 3;
+        // item label
+        const itemLabel = egw.lang(
+            (
+                egw.link_get_registry(egw.app_name(), _selected.length > 1 ? 'entries' : 'entry') || egw.app_name()
+            ) as string
+        );
+        let index = 0;
 
-        this.type = "drag";
-
-        this.helper = null;
-        this.ddTypes = [];
-        this.selected = [];
-
-        // Define default helper DOM
-        // default helper also can be called later in application code in order to customization
-        this.defaultDDHelper = function (_selected) {
-            // Table containing clone of rows
-            const table: HTMLTableElement = (document.createElement("table"));
-            table.classList.add('egwGridView_grid', 'et2_egw_action_ddHelper_row');
-            // tr element to use as last row to show 'more ...' label
-            const moreRow: HTMLTableRowElement = (document.createElement('tr'))
-            moreRow.classList.add('et2_egw_action_ddHelper_moreRow');
-            // Main div helper container
-            const div: HTMLDivElement = (document.createElement("div"));
-            div.append(table);
-
-            let rows = [];
-            // Maximum number of rows to show
-            let maxRows = 3;
-            // item label
-            const itemLabel = egw.lang(
-                (
-                    egw.link_get_registry(egw.app_name(), _selected.length > 1 ? 'entries' : 'entry') || egw.app_name()
-                ) as string
-            );
-            let index = 0;
-
-            // Take select all into account when counting number of rows, because they may not be
-            // in _selected object
-        //todo Type of _context
+        // Take select all into account when counting number of rows, because they may not be
+        // in _selected object
         const pseudoNumRows = (_selected[0]?._context?._selectionMgr?._selectAll) ?
             _selected[0]._context?._selectionMgr?._total : _selected.length;
 
         for (const egwActionObject of _selected) {
             const row: Node = (egwActionObject.iface.getDOMNode()).cloneNode(true);
-                if (row) {
-                    rows.push(row);
-                    table.append(row);
-                }
-                index++;
-                if (index == maxRows) {
+            if (row) {
+                rows.push(row);
+                table.append(row);
+            }
+            index++;
+            if (index == maxRows) {
                 // Label to show number of items
                 const spanCnt = (document.createElement('span'))
                 spanCnt.classList.add('et2_egw_action_ddHelper_itemsCnt')
                 div.append(spanCnt);
 
                 spanCnt.textContent = (pseudoNumRows + ' ' + itemLabel);
-                    // Number of not shown rows
-                    const restRows = pseudoNumRows - maxRows;
+                // Number of not shown rows
+                const restRows = pseudoNumRows - maxRows;
                 if (restRows > 0) {
                     moreRow.textContent = egw.lang(`${pseudoNumRows - maxRows} more ${itemLabel} selected ...`);
-                    }
-                    table.append(moreRow);
-                    break;
                 }
+                table.append(moreRow);
+                break;
             }
+        }
 
         const text = (document.createElement('div'))
         text.classList.add('et2_egw_action_ddHelper_tip');
-            div.append(text);
+        div.append(text);
 
-            // Add notice of Ctrl key, if supported
-            if ('draggable' in document.createElement('span') &&
-                navigator && navigator.userAgent.indexOf('Chrome') >= 0 && egw.app_name() == 'filemanager') // currently only filemanager supports drag out
-            {
+        // Add notice of Ctrl key, if supported
+        if ('draggable' in document.createElement('span') &&
+            navigator && navigator.userAgent.indexOf('Chrome') >= 0 && egw.app_name() == 'filemanager') // currently only filemanager supports drag out
+        {
             const key = ["Mac68K", "MacPPC", "MacIntel"].indexOf(window.navigator.platform) < 0 ?
                 egw.lang('Alt') : egw.lang('Command ⌘');
             text.textContent = (egw.lang(`Hold [ ${key} ] and [${egw.lang('Shift ⇧')}] key to drag ${itemLabel} to your desktop`));
-            }
+        }
 // Final html DOM return as helper structure
-            return div;
-        };
+        return div;
+    };
 
-        this.doRegisterAction = function (_aoi, _callback, _context) {
-            const node = _aoi.getDOMNode() && _aoi.getDOMNode()[0] ? _aoi.getDOMNode()[0] : _aoi.getDOMNode();
+    registerAction: (_actionObjectInterface: EgwActionObjectInterface, _triggerCallback: Function, _context: any) => boolean = (_aoi, _callback, _context) => {
+        const node = _aoi.getDOMNode() && _aoi.getDOMNode()[0] ? _aoi.getDOMNode()[0] : _aoi.getDOMNode();
 
-            if (node) {
-                // Prevent selection
-                node.onselectstart = function () {
-                    return false;
-                };
-                if (!(window.FileReader && 'draggable' in document.createElement('span'))) {
-                    // No DnD support
-                    return;
+        if (node) {
+            // Prevent selection
+            node.onselectstart = function () {
+                return false;
+            };
+            if (!(window.FileReader && 'draggable' in document.createElement('span'))) {
+                // No DnD support
+                return;
+            }
+
+            // It shouldn't be so hard to get the action...
+            let action = null;
+            const groups = _context.getActionImplementationGroups();
+            if (!groups.drag) {
+                return;
+            }
+
+            // Bind mouse handlers
+            //TODO can i just remove jquery.off??
+            //jQuery(node).off("mousedown")
+            node.addEventListener("mousedown", (event) => {
+                if (_context.isSelection(event)) {
+                    node.setAttribute("draggable", false);
+                } else if (event.which != 3) {
+                    document.getSelection().removeAllRanges();
+                }
+            })
+            node.addEventListener("mouseup", (event) => {
+                if (_context.isSelection(event)) {
+                    // TODO: save and retrieve selected range
+                    node.setAttribute("draggable", true);
+                } else {
+                    node.setAttribute("draggable", true);
                 }
 
-                // It shouldn't be so hard to get the action...
-                let action = null;
-                const groups = _context.getActionImplementationGroups();
-                if (!groups.drag) {
-                    return;
+                // Set cursor back to auto. Seems FF can't handle cursor reversion
+                document.body.style.cursor = 'auto'
+            })
+
+
+            node.setAttribute('draggable', true);
+            const ai = this
+            const dragstart = function (event) {
+
+                // The helper function is called before the start function
+                // is evoked. Call the given callback function. The callback
+                // function will gather the selected elements and action links
+                // and call the doExecuteImplementation function. This
+                // will call the onExecute function of the first action
+                // in order to obtain the helper object (stored in ai.helper)
+                // and the multiple dragDropTypes (ai.ddTypes)
+                _callback.call(_context, false, ai);
+
+                if (action && egw.app_name() == 'filemanager') {
+                    if (_context.isSelection(event)) return;
+
+                    // Get all selected
+                    const selected = ai.selected;
+
+                    // Set file data
+                    for (let i = 0; i < selected.length; i++) {
+                        let d = selected[i].data || egw.dataGetUIDdata(selected[i].id).data || {};
+                        if (d && d.mime && d.download_url) {
+                            let url = d.download_url;
+
+                            // NEED an absolute URL
+                            if (url[0] == '/') url = egw.link(url);
+                            // egw.link adds the webserver, but that might not be an absolute URL - try again
+                            if (url[0] == '/') url = window.location.origin + url;
+                            event.dataTransfer.setData("DownloadURL", d.mime + ':' + d.name + ':' + url);
+                        }
+                    }
+                    event.dataTransfer.effectAllowed = 'copy';
+
+                    if (event.dataTransfer.types.length == 0) {
+                        // No file data? Abort: drag does nothing
+                        event.preventDefault();
+                        return;
+                    }
+                } else {
+                    event.dataTransfer.effectAllowed = 'linkMove';
                 }
 
-                // Bind mouse handlers
-                //TODO can i just remove jquery.off??
-                //jQuery(node).off("mousedown")
-                node.addEventListener("mousedown", (event) => {
-                    if (_context.isSelection(event)) {
-                        node.setAttribute("draggable", false);
-                    } else if (event.which != 3) {
-                        document.getSelection().removeAllRanges();
-                    }
-                })
-                node.addEventListener("mouseup", (event) => {
-                    if (_context.isSelection(event)) {
-                        // TODO: save and retrive selected range
-                        node.setAttribute("draggable", true);
-                    } else {
-                        node.setAttribute("draggable", true);
-                    }
 
-                    // Set cursor back to auto. Seems FF can't handle cursor reversion
-                    document.body.style.cursor = 'auto'
-                })
-
-
-                node.setAttribute('draggable', true);
-                const ai = this
-                const dragstart = function (event) {
-
-                    // The helper function is called before the start function
-                    // is evoked. Call the given callback function. The callback
-                    // function will gather the selected elements and action links
-                    // and call the doExecuteImplementation function. This
-                    // will call the onExecute function of the first action
-                    // in order to obtain the helper object (stored in ai.helper)
-                    // and the multiple dragDropTypes (ai.ddTypes)
-                    _callback.call(_context, false, ai);
-
-                    if (action && egw.app_name() == 'filemanager') {
-                        if (_context.isSelection(event)) return;
-
-                        // Get all selected
-                        const selected = ai.selected;
-
-                        // Set file data
-                        for (let i = 0; i < selected.length; i++) {
-                            let d = selected[i].data || egw.dataGetUIDdata(selected[i].id).data || {};
-                            if (d && d.mime && d.download_url) {
-                                let url = d.download_url;
-
-                                // NEED an absolute URL
-                                if (url[0] == '/') url = egw.link(url);
-                                // egw.link adds the webserver, but that might not be an absolute URL - try again
-                                if (url[0] == '/') url = window.location.origin + url;
-                                event.dataTransfer.setData("DownloadURL", d.mime + ':' + d.name + ':' + url);
-                            }
-                        }
-                        event.dataTransfer.effectAllowed = 'copy';
-
-                        if (event.dataTransfer.types.length == 0) {
-                            // No file data? Abort: drag does nothing
-                            event.preventDefault();
-                            return;
-                        }
-                    } else {
-                        event.dataTransfer.effectAllowed = 'linkMove';
-                    }
-
-
-                    const data = {
-                        ddTypes: ai.ddTypes,
-                        selected: ai.selected.map((item) => {
-                            return {id: item.id}
-                        })
-                    };
-
-                    if (!ai.helper) {
-                        ai.helper = ai.defaultDDHelper(ai.selected);
-                    }
-                    // Add a basic class to the helper in order to standardize the background layout
-                    ai.helper.classList.add('et2_egw_action_ddHelper', 'ui-draggable-dragging');
-                    document.body.append(ai.helper);
-                    this.classList.add('drag--moving');
-
-                    event.dataTransfer.setData('application/json', JSON.stringify(data))
-
-                    event.dataTransfer.setDragImage(ai.helper, 12, 12);
-
-                    this.setAttribute('data-egwActionObjID', JSON.stringify(data.selected));
+                const data = {
+                    ddTypes: ai.ddTypes,
+                    selected: ai.selected.map((item) => {
+                        return {id: item.id}
+                    })
                 };
 
-            const dragend = (event) => {
-                    const helper = document.querySelector('.et2_egw_action_ddHelper');
-                    if (helper) helper.remove();
-                    const draggable = document.querySelector('.drag--moving');
-                    if (draggable) draggable.classList.remove('drag--moving');
-                };
+                if (!ai.helper) {
+                    ai.helper = ai.defaultDDHelper(ai.selected);
+                }
+                // Add a basic class to the helper in order to standardize the background layout
+                ai.helper.classList.add('et2_egw_action_ddHelper', 'ui-draggable-dragging');
+                document.body.append(ai.helper);
+                this.classList.add('drag--moving');
 
-                // Drag Event listeners
-                node.addEventListener('dragstart', dragstart, false);
-                node.addEventListener('dragend', dragend, false);
+                event.dataTransfer.setData('application/json', JSON.stringify(data))
+
+                event.dataTransfer.setDragImage(ai.helper, 12, 12);
+
+                this.setAttribute('data-egwActionObjID', JSON.stringify(data.selected));
+            };
+
+            const dragend = (_) => {
+                const helper = document.querySelector('.et2_egw_action_ddHelper');
+                if (helper) helper.remove();
+                const draggable = document.querySelector('.drag--moving');
+                if (draggable) draggable.classList.remove('drag--moving');
+            };
+
+            // Drag Event listeners
+            node.addEventListener('dragstart', dragstart, false);
+            node.addEventListener('dragend', dragend, false);
 
 
-                return true;
-            }
-            return false;
-        };
-
-        this.doUnregisterAction = function (_aoi) {
-            const node = _aoi.getDOMNode();
-
-            if (node) {
-                node.setAttribute('draggable', false);
-            }
             return true;
-        };
+        }
+        return false;
+    };
 
-        /**
-         * Builds the context menu and shows it at the given position/DOM-Node.
-         *
-         * @param {string} _context
-         * @param {array} _selected
-         * @param {object} _links
-         */
-        this.doExecuteImplementation = function (_context, _selected, _links) {
-            // Reset the helper object of the action implementation
-            this.helper = null;
-            let hasLink = false;
+    unregisterAction: (_actionObjectInterface: EgwActionObjectInterface) => boolean =(_aoi) => {
+        const node = _aoi.getDOMNode();
 
-            // Store the drag-drop types
-            this.ddTypes = [];
-            this.selected = _selected;
+        if (node) {
+            node.setAttribute('draggable', "false");
+        }
+        return true;
+    };
 
-            // Call the onExecute event of the first actionObject
+    /**
+     * Builds the context menu and shows it at the given position/DOM-Node.
+     *
+     * @param {string} _context
+     * @param {array} _selected
+     * @param {object} _links
+     */
+    executeImplementation: (_context: any, _selected: any, _links: any) => any = (_context, _selected, _links) => {
+        // Reset the helper object of the action implementation
+        this.helper = null;
+        let hasLink = false;
+
+        // Store the drag-drop types
+        this.ddTypes = [];
+        this.selected = _selected;
+
+        // Call the onExecute event of the first actionObject
         for (const k in _links) {
-                if (_links[k].visible) {
-                    hasLink = true;
+            if (_links[k].visible) {
+                hasLink = true;
 
-                    // Only execute the following code if a JS function is registered
-                    // for the action and this is the first action link
-                    if (!this.helper && _links[k].actionObj.onExecute.hasHandler()) {
-                        this.helper = _links[k].actionObj.execute(_selected);
-                    }
+                // Only execute the following code if a JS function is registered
+                // for the action and this is the first action link
+                if (!this.helper && _links[k].actionObj.onExecute.hasHandler()) {
+                    this.helper = _links[k].actionObj.execute(_selected);
+                }
 
-                    // Push the dragType of the associated action object onto the
-                    // drag type list - this allows an element to support multiple
-                    // drag/drop types.
+                // Push the dragType of the associated action object onto the
+                // drag type list - this allows an element to support multiple
+                // drag/drop types.
                 const type: string[] = Array.isArray(_links[k].actionObj.dragType)
                     ? _links[k].actionObj.dragType
                     : [_links[k].actionObj.dragType];
                 for (const i of type) {
                     if (this.ddTypes.indexOf(i) === -1) {
                         this.ddTypes.push(i);
-                        }
                     }
                 }
             }
+        }
         // If no helper has been defined, create a default one
-            if (!this.helper && hasLink) {
-                this.helper = this.defaultDDHelper(_selected);
-            }
+        if (!this.helper && hasLink) {
+            this.helper = this.defaultDDHelper(_selected);
+        }
 
-            return true;
-        };
-        this.registerAction = this.doRegisterAction
-        this.unregisterAction = this.doUnregisterAction
-        this.executeImplementation= this.doExecuteImplementation
-    }
-
-    registerAction: (_actionObjectInterface: EgwActionObjectInterface, _triggerCallback: Function, _context: object) => boolean = this.doRegisterAction;
-    unregisterAction: (_actionObjectInterface: EgwActionObjectInterface) => boolean= this.doUnregisterAction;
-    executeImplementation: (_context: any, _selected: any, _links: any) => any=this.doExecuteImplementation;
+        return true;
+    };
 }
+
 /**
  * @deprecated use upper case class
  */
