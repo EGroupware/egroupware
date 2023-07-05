@@ -13,7 +13,7 @@
 	egw_action;
 */
 
-import {egw_getAppObjectManager, egw_globalObjectManager, EgwActionObject, EgwActionObjectManager} from "./egw_action";
+import {egw_getAppObjectManager, egw_globalObjectManager} from "./egw_action";
 import {_egw_active_menu} from "./egw_menu";
 import {
 	EGW_AO_FLAG_DEFAULT_FOCUS,
@@ -23,6 +23,8 @@ import {
 	EGW_KEY_F1, EGW_KEY_F12
 } from "./egw_action_constants";
 import {egwBitIsSet} from "./egw_action_common";
+import type {EgwActionObject} from "./EgwActionObject";
+import type {EgwActionObjectManager} from "./EgwActionObjectManager";
 
 /**
  * The translation function converts the given native key code into one of the

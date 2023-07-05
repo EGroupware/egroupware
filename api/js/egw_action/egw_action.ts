@@ -11,7 +11,6 @@
 import {EGW_AO_STATE_NORMAL, EGW_AO_STATE_VISIBLE, EGW_AO_STATES} from './egw_action_constants';
 import {egwSetBit} from './egw_action_common';
 import '././egw_action_popup';
-import "././egw_action_dragdrop";
 import "./egw_menu_dhtmlx";
 import {EgwAction} from "./EgwAction";
 import {EgwActionManager} from "./EgwActionManager";
