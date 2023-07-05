@@ -22,7 +22,7 @@ import {EgwActionObjectManager} from "./EgwActionObjectManager";
 import {EgwDragAction} from "./EgwDragAction";
 import {egwDragActionImplementation} from "./egwDragActionImplementation";
 import {EgwDropAction} from "./EgwDropAction";
-import {egwDropActionImplementation} from "./egwDropActionImplementation";
+import {egwDropActionImplementation} from "./EgwDropActionImplementation";
 
 
 /**
