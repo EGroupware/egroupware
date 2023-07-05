@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id="mail.compose" template="" lang="" group="0" version="1.9.001">
+	<template id="mail.compose" template="" lang="" group="0" version="23.1">
 		<et2-vbox  class="mailCompose mailComposeHeaderSection" width="100%">
 			<toolbar id="composeToolbar" width="et2_fullWidth" view_range="7" flat_list="false" list_header="short"/>
 			<et2-hbox  class="mail-compose_toolbar_assist" width="100%">
@@ -67,59 +67,59 @@
 					</row>
 					<row class="mailComposeHeaders mailComposeJQueryCc">
 						<et2-description  value="Cc"></et2-description>
-						<et2-select-email  id="cc" width="100%" allowDragAndDrop="true" onclick="app.mail.address_click" multiple="true"
-							onchange="app.mail.recipients_onchange" searchUrl="EGroupware\Api\Etemplate\Widget\Taglist::ajax_email"
-							placeholder="select or insert email address" includeLists="true" allowPlaceholder="true"></et2-select-email>
-						<et2-description></et2-description>
-					</row>
-					<row  class="mailComposeHeaders mailComposeJQueryBcc">
-						<et2-description  value="Bcc"></et2-description>
-						<et2-select-email  id="bcc" width="100%" allowDragAndDrop="true" onclick="app.mail.address_click" multiple="true"
-							onchange="app.mail.recipients_onchange" searchUrl="EGroupware\Api\Etemplate\Widget\Taglist::ajax_email"
-							placeholder="select or insert email address" includeLists="true" allowPlaceholder="true"></et2-select-email>
-						<et2-description></et2-description>
-					</row>
-					<row class="mailComposeHeaders">
-						<et2-description  value="Subject"></et2-description>
-						<et2-textbox  align="left" width="100%" id="subject" height="25" onchange="app.mail.subject2title"></et2-textbox>
-						<et2-hbox  align="left">
-							<et2-checkbox  statustext="Change editor type" label="HTML" id="mimeType" onchange="app.mail.submitOnChange" tabindex="7" roTrue=" " roFalse="disable"></et2-checkbox>
-						</et2-hbox>
-					</row>
-				</rows>
-			</grid>
-		</et2-vbox>
-		<et2-vbox  class="mailComposeBodySection" width="100%">
-			<et2-vbox  class="et2_file mailUploadSection" disabled="@no_griddata">
-				<et2-details  toggleAlign="left" title="@attachmentsBlockTitle" toggleOnHover="true" class="attachments" hoist="true" disabled="!@attachments">
-					<et2-hbox  slot="summary">
-						<grid class="previewAttachmentArea egwGridView_grid" >
-							<columns>
-								<column width= "3%"/>
-								<column disabled="!@showtempname" width="10%"/>
-								<column width="85%"/>
-								<column width="8%"/>
-							</columns>
-							<rows>
-								<row class="row attachmentRow">
-									<et2-image  src="@attachments[0][filemode_icon]" statustext="@attachments[0][filemode_title]"></et2-image>
-									<et2-description  id="attachments[0][tmp_name]"></et2-description>
-									<et2-description  class="useEllipsis et2_link" value="@attachments[0][name]" id="0[name]" onclick="app.mail.displayUploadedFile" noLang="1"></et2-description>
-									<vfs-size align="right" id="attachments[0][size]" />
-								</row>
-							</rows>
-						</grid>
-					</et2-hbox>
-					<grid id="attachments" class="previewAttachmentArea egwGridView_grid">
-						<columns>
-							<column width= "3%"/>
-							<column disabled="!@showtempname" width="10%"/>
-							<column width="85%"/>
-							<column width="8%"/>
-							<column width="" />
-						</columns>
-						<rows>
-							<row class="row attachmentRow">
+						<et2-select-email id="cc" width="100%" allowDragAndDrop="true" onclick="app.mail.address_click" multiple="true"
+                                          onchange="app.mail.recipients_onchange" searchUrl="EGroupware\Api\Etemplate\Widget\Taglist::ajax_email"
+                                          placeholder="select or insert email address" includeLists="true" allowPlaceholder="true"></et2-select-email>
+                        <et2-description></et2-description>
+                    </row>
+                    <row class="mailComposeHeaders mailComposeJQueryBcc">
+                        <et2-description value="Bcc"></et2-description>
+                        <et2-select-email id="bcc" width="100%" allowDragAndDrop="true" onclick="app.mail.address_click" multiple="true"
+                                          onchange="app.mail.recipients_onchange" searchUrl="EGroupware\Api\Etemplate\Widget\Taglist::ajax_email"
+                                          placeholder="select or insert email address" includeLists="true" allowPlaceholder="true"></et2-select-email>
+                        <et2-description></et2-description>
+                    </row>
+                    <row class="mailComposeHeaders">
+                        <et2-description value="Subject"></et2-description>
+                        <et2-textbox align="left" width="100%" id="subject" height="25" onchange="app.mail.subject2title"></et2-textbox>
+                        <et2-hbox align="left">
+                            <et2-checkbox statustext="Change editor type" label="HTML" id="mimeType" onchange="app.mail.submitOnChange" tabindex="7" roTrue=" " roFalse="disable"></et2-checkbox>
+                        </et2-hbox>
+                    </row>
+                </rows>
+            </grid>
+        </et2-vbox>
+        <et2-vbox class="mailComposeBodySection">
+            <et2-vbox class="et2_file mailUploadSection" disabled="@no_griddata">
+                <et2-details toggleAlign="left" title="@attachmentsBlockTitle" toggleOnHover="true" class="attachments" hoist="true" disabled="!@attachments">
+                    <et2-hbox slot="summary">
+                        <grid class="previewAttachmentArea egwGridView_grid">
+                            <columns>
+                                <column width="3%"/>
+                                <column disabled="!@showtempname" width="10%"/>
+                                <column width="85%"/>
+                                <column width="8%"/>
+                            </columns>
+                            <rows>
+                                <row class="row attachmentRow">
+                                    <et2-image src="@attachments[0][filemode_icon]" statustext="@attachments[0][filemode_title]"></et2-image>
+                                    <et2-description id="attachments[0][tmp_name]"></et2-description>
+                                    <et2-description class="useEllipsis et2_link" value="@attachments[0][name]" id="0[name]" onclick="app.mail.displayUploadedFile" noLang="1"></et2-description>
+                                    <vfs-size align="right" id="attachments[0][size]"/>
+                                </row>
+                            </rows>
+                        </grid>
+                    </et2-hbox>
+                    <grid id="attachments" class="previewAttachmentArea egwGridView_grid">
+                        <columns>
+                            <column width="3%"/>
+                            <column disabled="!@showtempname" width="10%"/>
+                            <column width="85%"/>
+                            <column width="8%"/>
+                            <column width=""/>
+                        </columns>
+                        <rows>
+                            <row class="row attachmentRow">
 								<et2-image  src="$row_cont[filemode_icon]" statustext="$row_cont[filemode_title]"></et2-image>
 								<et2-description  id="${row}[tmp_name]"></et2-description>
 								<et2-description  class="useEllipsis et2_link" id="${row}[name]" onclick="app.mail.displayUploadedFile" noLang="1"></et2-description>
@@ -136,15 +136,24 @@
 						<et2-date  id="expiration" placeholder="@expiration_blur" dataFormat="Y-m-d"></et2-date>
 					</et2-hbox>
 					<et2-password  id="password" statustext="Only makes sense, if you transport password through a different channel / outside of this mail to recipients!" placeholder="password protect"></et2-password>
-				</et2-hbox>
-			</et2-vbox>
-			<et2-hbox  disabled="@is_plain" class="mailComposeBody mailComposeHtmlContainer">
-				<htmlarea name="mail_htmltext" id="mail_htmltext" statusbar="false" menubar="false" toolbar="@html_toolbar" imageUpload="link_to" expand_toolbar="true" height="478px" width="100%" resize_ratio="0"/>
-			</et2-hbox>
-			<et2-hbox  disabled="@is_html" class="mailComposeBody mailComposeTextContainer">
-				<et2-textarea  width="100%" span="all" name="mail_plaintext" id="mail_plaintext" noLang="1" resizeRatio="0"></et2-textarea>
-			</et2-hbox>
+                </et2-hbox>
+            </et2-vbox>
+            <et2-hbox disabled="@is_plain" class="mailComposeBody mailComposeHtmlContainer">
+                <htmlarea name="mail_htmltext" id="mail_htmltext" statusbar="false" menubar="false" toolbar="@html_toolbar" imageUpload="link_to" expand_toolbar="true" width="100%" resize_ratio="0"/>
+            </et2-hbox>
+            <et2-hbox disabled="@is_html" class="mailComposeBody mailComposeTextContainer">
+                <et2-textarea width="100%" span="all" name="mail_plaintext" id="mail_plaintext" noLang="1" resizeRatio="0"></et2-textarea>
+            </et2-hbox>
 
-		</et2-vbox>
-	</template>
+        </et2-vbox>
+        <styles>
+            #mail-compose > div {
+            display: flex;
+            flex-direction: column;
+            }
+            #mail-compose .mailComposeBodySection, #mail-compose .mailComposeBody.mailComposeHtmlContainer {
+            flex: 1 1 auto;
+            }
+        </styles>
+    </template>
 </overlay>
