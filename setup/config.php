@@ -104,28 +104,29 @@ if(@$_POST['submit'] && @$newsettings)
 
 $GLOBALS['egw_setup']->html->show_header(lang('Configuration'),False,'config',$GLOBALS['egw_setup']->ConfigDomain . '(' . $GLOBALS['egw_domain'][$GLOBALS['egw_setup']->ConfigDomain]['db_type'] . ')');
 
+$current_config = [];
 // if we have an validation error, use the new settings made by the user and not the stored config
 if($GLOBALS['error'] && is_array($newsettings))
 {
-	$GLOBALS['current_config'] = $newsettings;
+	$current_config = $newsettings;
 }
 else
 {
 	foreach($GLOBALS['egw_setup']->db->select($GLOBALS['egw_setup']->config_table,'*',false,__LINE__,__FILE__) as $row)
 	{
-		$GLOBALS['current_config'][$row['config_name']] = $row['config_value'];
+		$current_config[$row['config_name']] = $row['config_value'];
 	}
 }
 $setup_tpl->pparse('out','T_config_pre_script');
 
 /* Now parse each of the templates we want to show here */
-class phpgw
+class egw
 {
 	var $accounts;
 	var $applications;
 	var $db;
 }
-$GLOBALS['egw'] = new phpgw;
+$GLOBALS['egw'] = new egw;
 $GLOBALS['egw']->db     =& $GLOBALS['egw_setup']->db;
 
 $t = new Framework\Template(Framework\Template::get_dir('setup'));
@@ -157,17 +158,18 @@ foreach($vars as $value)
 			}
 			else
 			{
-				$t->set_var($value,@$current_config[$newval]);
+				$t->set_var($value, $current_config[$newval]);
 			}
 			break;
 		case 'selected':
+		case 'checked':
 			$newvals = explode(' ',$newval);
 			$setting = array_pop($newvals);
 			$config = implode('_',$newvals);
 			/* echo $config . '=' . $current_config[$config]; */
-			if(@$current_config[$config] == $setting)
+			if($current_config[$config] == $setting)
 			{
-				$t->set_var($value,' selected');
+				$t->set_var($value,' '.$type);
 			}
 			else
 			{

@@ -66,18 +66,21 @@ class Fallback implements Backend
 			{
 				$backup_currentapp = $GLOBALS['egw_info']['flags']['currentapp'];
 				$GLOBALS['egw_info']['flags']['currentapp'] = 'admin';	// otherwise
-				$this->fallback_backend->change_password('', $passwd, $account_id);
+				$ret = $this->fallback_backend->change_password('', $passwd, $account_id);
+				Api\Auth::log(__METHOD__."('$username', ...) fallback_backend(".get_class($this->fallback_backend).
+					")->change_password('', '".str_repeat('*', strlen($passwd))."', $account_id) returned ".json_encode($ret));
 				$GLOBALS['egw_info']['flags']['currentapp'] = $backup_currentapp;
 				//error_log(__METHOD__."('$username', \$passwd) updated password for #$account_id on fallback ".($ret ? 'successfull' : 'failed!'));
 			}
 			return true;
 		}
-		if ($this->fallback_backend->authenticate($username,$passwd, $passwd_type))
+		if (($ret = $this->fallback_backend->authenticate($username,$passwd, $passwd_type)))
 		{
 			Api\Cache::setInstance(__CLASS__,'backend_used-'.$username,'fallback');
-			return true;
 		}
-		return false;
+		Api\Auth::log(__METHOD__."('$username', ...) fallback_backend(".get_class($this->fallback_backend).
+			")->authenticate('$username', '".str_repeat('*', strlen($passwd))."', ...) returned ".json_encode($ret));
+		return $ret;
 	}
 
 	/**
@@ -107,12 +110,16 @@ class Fallback implements Backend
 			if (($ret = $this->primary_backend->change_password($old_passwd, $new_passwd, $account_id)))
 			{
 				// if password successfully changed on primary, also update fallback
-				$this->fallback_backend->change_password($old_passwd, $new_passwd, $account_id);
+				$change_pwd = $this->fallback_backend->change_password($old_passwd, $new_passwd, $account_id);
+				Api\Auth::log(__METHOD__."(..., $account_id) fallback_backend(".get_class($this->fallback_backend).
+					")->change_password('', '".str_repeat('*', strlen($new_passwd))."', $account_id) returned ".json_encode($change_pwd));
 			}
 		}
 		else
 		{
 			$ret = $this->fallback_backend->change_password($old_passwd, $new_passwd, $account_id);
+			Api\Auth::log(__METHOD__."(..., $account_id) fallback_backend(".get_class($this->fallback_backend).
+				")->change_password('', '".str_repeat('*', strlen($new_passwd))."', $account_id) returned ".json_encode($ret));
 		}
 		//error_log(__METHOD__."('$old_passwd', '$new_passwd', $account_id) username='$username', backend=".Api\Cache::getInstance(__CLASS__,'backend_used-'.$username)." returning ".array2string($ret));
 		return $ret;
