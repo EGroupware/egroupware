@@ -142,7 +142,7 @@
                 <htmlarea name="mail_htmltext" id="mail_htmltext" statusbar="false" menubar="false" toolbar="@html_toolbar" imageUpload="link_to" expand_toolbar="true" width="100%" resize_ratio="0"/>
             </et2-hbox>
             <et2-hbox disabled="@is_html" class="mailComposeBody mailComposeTextContainer">
-                <et2-textarea width="100%" span="all" name="mail_plaintext" id="mail_plaintext" noLang="1" resizeRatio="0"></et2-textarea>
+                <et2-textarea span="all" name="mail_plaintext" id="mail_plaintext" noLang="1" resizeRatio="0"></et2-textarea>
             </et2-hbox>
 
         </et2-vbox>
@@ -151,7 +151,7 @@
             display: flex;
             flex-direction: column;
             }
-            #mail-compose .mailComposeBodySection, #mail-compose .mailComposeBody.mailComposeHtmlContainer {
+            #mail-compose .mailComposeBodySection, #mail-compose .mailComposeBody {
             flex: 1 1 auto;
             }
         </styles>
