@@ -26,7 +26,8 @@ export class EgwDropAction extends EgwAction{
     this.canHaveChildren = ["drag", "popup"];
     this["default"] = false;
     this.order = 0;
-    this.group = 0;}
+    this.group = 0;
+    }
 
     set_default(_value) {
         this["default"] = _value;

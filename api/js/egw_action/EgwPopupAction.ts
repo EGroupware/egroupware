@@ -1,48 +1,54 @@
 import {EgwAction} from "./EgwAction";
-import {egwFnct} from "./egw_action_common";
+import {EgwFnct} from "./egw_action_common";
 
-export function egwPopupAction(_id, _handler, _caption, _icon, _onExecute, _allowOnMultiple) {
-    var action = new EgwAction(_id, _handler, _caption, _icon, _onExecute, _allowOnMultiple);
-    action.type = "popup";
-    action.canHaveChildren = ["popup"];
-    action["default"] = false;
-    action.order = 0;
-    action.group = 0;
-    action.hint = false;
-    action.checkbox = false;
-    action.radioGroup = 0;
-    action.checked = false;
-    action.confirm_mass_selection = null;
-    action.shortcut = null;
-    action.singleClick = false;
+export class EgwPopupAction extends EgwAction {
+    default = false;
+    order = 0;
+    group = 0;
+    hint = false;
+    checkbox = false;
+    radioGroup = 0;
+    checked = false;
+    confirm_mass_selection = null;
+    shortcut = null;
+    singleClick = false;
+    private isChecked: EgwFnct;
 
-    action.set_singleClick = function (_value) {
-        action["singleClick"] = _value;
+    constructor(_id, _handler, _caption, _icon, _onExecute, _allowOnMultiple) {
+        super(_id, _handler, _caption, _icon, _onExecute, _allowOnMultiple)
+        //var action = new EgwAction(_id, _handler, _caption, _icon, _onExecute, _allowOnMultiple);
+        this.type = "popup";
+        this.canHaveChildren = ["popup"];
+
+    }
+
+    set_singleClick (_value) {
+        this.singleClick = _value;
     };
 
-    action.set_default = function (_value) {
-        action["default"] = _value;
+    set_default (_value) {
+        this.default = _value;
     };
 
-    action.set_order = function (_value) {
-        action.order = _value;
+    set_order (_value) {
+        this.order = _value;
     };
 
-    action.set_group = function (_value) {
-        action.group = _value;
+    set_group (_value) {
+        this.group = _value;
     };
 
-    action.set_hint = function (_value) {
-        action.hint = _value;
+    set_hint (_value) {
+        this.hint = _value;
     };
 
     // If true, the action will be rendered as checkbox
-    action.set_checkbox = function (_value) {
-        action.checkbox = _value;
+    set_checkbox (_value) {
+        this.checkbox = _value;
     };
 
-    action.set_checked = function (_value) {
-        action.checked = _value;
+    set_checked (_value) {
+        this.checked = _value;
     };
 
     /**
@@ -51,31 +57,32 @@ export function egwPopupAction(_id, _handler, _caption, _icon, _onExecute, _allo
      *
      * @param {String|Boolean} _value
      */
-    action.set_confirm_mass_selection = function (_value) {
-        action.confirm_mass_selection = _value;
+    set_confirm_mass_selection (_value) {
+        this.confirm_mass_selection = _value;
     };
 
     // Allow checkbox to be set from context using the given function
-    action.set_isChecked = function (_value) {
-        action.isChecked = new egwFnct(this, null, []);
+    set_isChecked (_value) {
+        this.isChecked = new EgwFnct(this, null, []);
         if (_value !== null) {
-            action.isChecked.setValue(_value);
+            this.isChecked.setValue(_value);
         }
     };
 
     // If radioGroup is >0 and the element is a checkbox, radioGroup specifies
     // the group of radio buttons this one belongs to
-    action.set_radioGroup = function (_value) {
-        action.radioGroup = _value;
+    set_radioGroup (_value) {
+        this.radioGroup = _value;
     };
 
-    action.set_shortcut = function (_value) {
+    set_shortcut (_value) {
         if (_value) {
-            var sc = {
+            const sc = {
                 "keyCode": -1,
                 "shift": false,
                 "ctrl": false,
-                "alt": false
+                "alt": false,
+                "caption":""
             };
 
             if (typeof _value == "object" && typeof _value.keyCode != "undefined" &&
@@ -93,5 +100,11 @@ export function egwPopupAction(_id, _handler, _caption, _icon, _onExecute, _allo
         }
     };
 
-    return action;
+}
+
+/**
+ * @deprecated
+ * use uppercase class
+ */
+export class egwPopupAction extends EgwPopupAction {
 }

@@ -4,6 +4,7 @@ import {EGW_KEY_ENTER, EGW_KEY_MENU} from "./egw_action_constants";
 import {tapAndSwipe} from "../tapandswipe";
 import {EgwAction} from "./EgwAction";
 import {egwFnct} from "./egw_action_common";
+import "./egwGlobal"
 
 export function egwPopupActionImplementation() {
     var ai = new egwActionImplementation();
@@ -24,7 +25,7 @@ export function egwPopupActionImplementation() {
         var defaultHandler = function (e) {
             // Prevent bubbling bound event on <a> tag, on touch devices
             // a tag should be handled by default event
-            if (egwIsMobile() && e.target.tagName == "A") return true;
+            if (window.egwIsMobile() && e.target.tagName == "A") return true;
 
             if (typeof document.selection != "undefined" && typeof document.selection.empty != "undefined") {
                 document.selection.empty();
