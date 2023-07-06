@@ -351,9 +351,14 @@ export class et2_arrayMgr
 
 	parseBoolExpression(_expression : string)
 	{
-		if (typeof _expression === "undefined" || _expression === null)
+		if(typeof _expression === "undefined" || _expression === null)
 		{
 			return false;
+		}
+
+		if(typeof _expression === "number")
+		{
+			return !!_expression;
 		}
 
 		// Check whether "$" occurs in the given identifier, don't parse rows if we're not in a row
