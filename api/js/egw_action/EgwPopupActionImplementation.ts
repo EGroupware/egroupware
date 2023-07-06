@@ -9,11 +9,10 @@ import {EgwActionImplementation} from "./EgwActionImplementation";
 
 export class EgwPopupActionImplementation implements EgwActionImplementation {
     type = "popup";
-
     auto_paste = true;
 
     registerAction = (_aoi, _callback, _context) => {
-        var node = _aoi.getDOMNode();
+        const node = _aoi.getDOMNode();
 
         if (node) {
             this._registerDefault(node, _callback, _context);
@@ -24,7 +23,8 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
     };
 
     unregisterAction = function (_aoi) {
-        var node = _aoi.getDOMNode();
+        const node = _aoi.getDOMNode();
+        //TODO jQuery replacement
         jQuery(node).off();
         return true
     };
@@ -59,12 +59,12 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
                 _context = {"posx": x, "posy": y};
             }
 
-            var menu = this._buildMenu(_links, _selected, _target);
+            const menu = this._buildMenu(_links, _selected, _target);
             menu.showAt(_context.posx, _context.posy);
 
             return true;
         } else {
-            var defaultAction = this._getDefaultLink(_links);
+            const defaultAction = this._getDefaultLink(_links);
             if (defaultAction) {
                 defaultAction.execute(_selected);
             }
@@ -76,21 +76,21 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
     /**
      * Registers the handler for the default action
      *
-     * @param {DOMNode} _node
+     * @param {any} _node
      * @param {function} _callback
      * @param {object} _context
      * @returns {boolean}
      */
-    private _registerDefault = function (_node, _callback, _context) {
-        var defaultHandler = function (e) {
+    private _registerDefault =  (_node, _callback, _context)=> {
+        const defaultHandler =  (e)=> {
             // Prevent bubbling bound event on <a> tag, on touch devices
             // a tag should be handled by default event
             if (window.egwIsMobile() && e.target.tagName == "A") return true;
 
-            if (typeof document.selection != "undefined" && typeof document.selection.empty != "undefined") {
-                document.selection.empty();
+            if (typeof document["selection"] != "undefined" && typeof document["selection"].empty != "undefined") {
+                document["selection"].empty();
             } else if (typeof window.getSelection != "undefined") {
-                var sel = window.getSelection();
+                const sel = window.getSelection();
                 sel.removeAllRanges();
             }
 
@@ -109,16 +109,16 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
             return false;
         };
 
-        if (egwIsMobile() || _context.manager.getActionsByAttr('singleClick', true).length > 0) {
-            jQuery(_node).bind('click', defaultHandler);
+        if (window.egwIsMobile() || _context.manager.getActionsByAttr('singleClick', true).length > 0) {
+            _node.addEventListener('click',defaultHandler)//jQuery(_node).on('click', defaultHandler);
         } else {
             _node.ondblclick = defaultHandler;
         }
     };
 
     private _getDefaultLink = function (_links) {
-        var defaultAction = null;
-        for (var k in _links) {
+        let defaultAction = null;
+        for (const k in _links) {
             if (_links[k].actionObj["default"] && _links[k].enabled) {
                 defaultAction = _links[k].actionObj;
                 break;
@@ -129,16 +129,16 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
     };
 
     private _searchShortcut = (_key, _objs, _links) => {
-        for (var i = 0; i < _objs.length; i++) {
-            var sc = _objs[i].shortcut;
-            if (sc && sc.keyCode == _key.keyCode && sc.shift == _key.shift &&
-                sc.ctrl == _key.ctrl && sc.alt == _key.alt &&
-                _objs[i].type == "popup" && (typeof _links[_objs[i].id] == "undefined" ||
-                    _links[_objs[i].id].enabled)) {
-                return _objs[i];
+        for (const item of _objs) {
+            const shortcut = item.shortcut;
+            if (shortcut && shortcut.keyCode == _key.keyCode && shortcut.shift == _key.shift &&
+                shortcut.ctrl == _key.ctrl && shortcut.alt == _key.alt &&
+                item.type == "popup" && (typeof _links[item.id] == "undefined" ||
+                    _links[item.id].enabled)) {
+                return item;
             }
 
-            var obj = this._searchShortcut(_key, _objs[i].children, _links);
+            const obj = this._searchShortcut(_key, item.children, _links);
             if (obj) {
                 return obj;
             }
@@ -146,8 +146,8 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
     };
 
     private _searchShortcutInLinks =  (_key, _links)=> {
-        var objs = [];
-        for (var k in _links) {
+        const objs = [];
+        for (const k in _links) {
             if (_links[k].enabled) {
                 objs.push(_links[k].actionObj);
             }
@@ -168,7 +168,7 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
     private _handleKeyPress = (_key, _selected, _links, _target) => {
         // Handle the default
         if (_key.keyCode == EGW_KEY_ENTER && !_key.ctrl && !_key.shift && !_key.alt) {
-            var defaultAction = this._getDefaultLink(_links);
+            const defaultAction = this._getDefaultLink(_links);
             if (defaultAction) {
                 defaultAction.execute(_selected);
                 return true;
@@ -182,7 +182,7 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
 
 
         // Check whether the given shortcut exists
-        var obj = this._searchShortcutInLinks(_key, _links);
+        const obj = this._searchShortcutInLinks(_key, _links);
         if (obj) {
             obj.execute(_selected);
             return true;
