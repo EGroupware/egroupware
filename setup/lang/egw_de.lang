@@ -15,8 +15,8 @@
 %1 not allowed to create in univention.	setup	de	Es ist nicht erlaubt unter Univention %1 anzulegen.
 %1 password set in %2.	setup	de	%1 Passwort gesetzt in %2.
 %1 passwords updated, %3 errors	setup	de	%1 Passwörter aktualisiert, %3 Fehler
-%1 users and %2 groups created, %3 errors	setup	de	%1 Benutzer und %2 Gruppen angelegt, %3 Fehler
 %1 the configuration file.	setup	de	%1 der Konfigurationsdatei.
+%1 users and %2 groups created, %3 errors	setup	de	%1 Benutzer und %2 Gruppen angelegt, %3 Fehler
 '%1' is no valid domain name!	setup	de	'%1' ist kein gültiger Domainname!
 '%1' is not allowed as %2. arguments of option %3 !!!	setup	de	'%1' ist nicht erlaubt als %2. Parameter für die Option %3 !!!
 '%1' must be integer	setup	de	%1 muß ein Integer-Wert sein.
@@ -291,6 +291,7 @@ email (standard maildomain should be set)	setup	de	email (Standard Maildomaine m
 email-address	setup	de	EMail Adresse
 emailadmin profile updated:	setup	de	EMailAdmin Profil aktualisiert:
 enable for extra debug-messages	setup	de	ankreuzen für zusätzliche Diagnosemeldungen
+enable logging of authentication to files-directory	setup	de	Aktiviere Logging der Authentifizierung in das Datei Verzeichnis
 enable mcrypt	setup	de	MCrypt einschalten
 enforce ssl (allows to specify just a path above)	setup	de	Erzwinge SSL (erlaubt darüber nur einen Pfad anzugeben)
 enter some random text for app session encryption	setup	de	Zufallstext zur Verschlüsselung der Anwendungssitzung
@@ -322,6 +323,7 @@ export has been completed!	setup	de	Export ist abgeschlossen!
 failed to mount backup directory!	setup	de	Konnte Datensicherungsverzeichnis nicht mounten!
 failed updating user "%1" dn="%2"!	setup	de	Konnte Benutzer "%1" dn="%2" nicht aktualisieren!
 failed writing configuration file header.inc.php, check the permissions !!!	setup	de	Fehler beim Schreiben der Konfigurationsdatei header.inc.php, bitte überprüfen Sie die Zugriffsrechte !!!
+fallback authentication	setup	de	Rückfall Authentifizierung
 false	setup	de	Falsch
 file	setup	de	DATEI
 file type, size, version, etc.	setup	de	Dateityp, Größe, Version usw.
@@ -367,6 +369,7 @@ however, the application may still work	setup	de	Wie auch immer, die Anwendung m
 http auth types (comma-separated) to use without login-page, eg. "ntlm"	setup	de	HTTP Authetifizierungs Typen (Komma-getrennt) die ohne Login Seite benutzt werden sollen, zB. "NTLM"
 identity provider	setup	de	Identitätsprovider
 if no acl records for user or any group the user is a member of	setup	de	Wenn es keinen ACL-Eintrag für einen Benutzer oder eine Gruppe, der er angehört gibt
+if primary authentication is not successful fall back to passwords synced into account-storage	setup	de	Wenn die primäre Authentifizierung NICHT erfolgreich ist, falle auf die synchronisierten Passwörter des Benutzer Storage zurück
 if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	de	Wenn safe_mode eingeschaltet ist, kann EGw verschiedene Einstellungen nicht mehr zur Laufzeit ändern, noch können wir nicht geladene Erweiterungen (php extensions) laden.
 if the application has no defined tables, selecting upgrade should remedy the problem	setup	de	Wenn die Anwendung keine definierten Tabellen hat, wählen Sie überarbeiten. Das Problem sollte damit behoben werden.
 if using ads (active directory)	setup	de	Wenn Sie ADS (Active Directory) benutzen

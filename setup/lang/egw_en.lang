@@ -15,8 +15,8 @@
 %1 not allowed to create in univention.	setup	en	%1 not allowed to create in Univention.
 %1 password set in %2.	setup	en	%1 password set in %2.
 %1 passwords updated, %3 errors	setup	en	%1 passwords updated, %3 errors
-%1 users and %2 groups created, %3 errors	setup	en	%1 users and %2 groups created, %3 errors.
 %1 the configuration file.	setup	en	%1 the configuration file.
+%1 users and %2 groups created, %3 errors	setup	en	%1 users and %2 groups created, %3 errors.
 '%1' is no valid domain name!	setup	en	'%1' is no valid domain name!
 '%1' is not allowed as %2. arguments of option %3 !!!	setup	en	'%1' is not allowed as %2. arguments of option %3 !!!
 '%1' must be integer	setup	en	%1 must be an integer value.
@@ -293,6 +293,7 @@ email-address	setup	en	EMail-address
 emailadmin mail account saved:	setup	en	EMailAdmin mail account saved:
 emailadmin profile updated:	setup	en	eMailAdmin profile updated:
 enable for extra debug-messages	setup	en	Enable for extra debug messages
+enable logging of authentication to files-directory	setup	en	Enable logging of authentication to files-directory
 enable mcrypt	setup	en	Enable MCrypt
 enforce ssl (allows to specify just a path above)	setup	en	Enforce SSL (allows to specify just a path above)
 enter some random text for app session encryption	setup	en	Enter some random text for app session encryption
@@ -324,6 +325,7 @@ export has been completed!	setup	en	Export has been completed!
 failed to mount backup directory!	setup	en	Failed to mount Backup directory!
 failed updating user "%1" dn="%2"!	setup	en	Failed updating user "%1" dn="%2"!
 failed writing configuration file header.inc.php, check the permissions !!!	setup	en	Failed writing configuration file header.inc.php, check the permissions!
+fallback authentication	setup	en	Fallback Authentication
 false	setup	en	False
 file	setup	en	FILE
 file type, size, version, etc.	setup	en	File type, size, version, etc.
@@ -370,6 +372,7 @@ however, the application may still work	setup	en	The application may still work
 http auth types (comma-separated) to use without login-page, eg. "ntlm"	setup	en	HTTP auth types, comma-separated to use without login page, eg. "NTLM"
 identity provider	setup	en	Identity Provider
 if no acl records for user or any group the user is a member of	setup	en	If no ACL records for user or any group the user is a member of
+if primary authentication is not successful fall back to passwords synced into account-storage	setup	en	If primary authentication is NOT successful fall back to passwords synced into account-storage
 if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	en	If safe_mode is turned on, EGw is not able to change certain settings on runtime, nor can we load any not yet loaded module.
 if the application has no defined tables, selecting upgrade should remedy the problem	setup	en	If the application has no defined tables, selecting upgrade should remedy the problem
 if using ads (active directory)	setup	en	If using ADS (Active Directory) authentication
