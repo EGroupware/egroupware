@@ -54,11 +54,11 @@ class infolog_widget extends Etemplate\Widget\Entry
 			),
 			'__default__' => array(
 				'options' => array(
-					'' => array('id' => '@value[@id]'),
+					''            => array('id' => '@value[@id]'),
 					// Others added automatically in constructor
 					'__default__' => array('type' => 'label', 'options' => ''),
 				),
-				'no_lang' => 1,
+				'no_lang' => true,
 			),
 		),
 	);
