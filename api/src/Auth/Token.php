@@ -51,6 +51,8 @@ class Token extends APi\Storage\Base
 			return null;    // not a token
 		}
 		try {
+			$log_passwd = substr($token, 0, strlen(Auth\Token::PREFIX)+1+strlen($matches[1]));
+			$log_passwd .= str_repeat('*', strlen($token)-strlen($log_passwd));
 			$data = self::getInstance()->read([
 				'token_id' => $matches[1],
 				'account_id' => [0, Api\Accounts::getInstance()->name2id($user)],
@@ -59,12 +61,15 @@ class Token extends APi\Storage\Base
 			]);
 			if (!password_verify($matches[2], $data['token_hash']))
 			{
+				Api\Auth::log(__METHOD__."('$user', '$log_passwd', ...') returned false (no active token found)");
 				return false;   // invalid token password
 			}
 			$limits = $data['token_limits'];
+			Api\Auth::log(__METHOD__."('$user', '$log_passwd', ...) returned true");
 			return true;
 		}
 		catch (Api\Exception\NotFound $e) {
+			Api\Auth::log(__METHOD__."('$user', '$log_passwd, ...) returned false: ".$e->getMessage());
 			return false;   // token not found
 		}
 	}
