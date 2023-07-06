@@ -1,7 +1,7 @@
 import {EgwActionImplementation} from "./EgwActionImplementation";
 import {EGW_AI_DRAG_ENTER, EGW_AI_DRAG_OUT, EGW_AI_DRAG_OVER, EGW_AO_EXEC_THIS} from "./egw_action_constants";
 import {getPopupImplementation} from "./egw_action_popup";
-import {egw_getObjectManager, egwActionImplementation} from "./egw_action";
+import {egw_getObjectManager} from "./egw_action";
 
 export class EgwDropActionImplementation implements EgwActionImplementation {
     type: string = "drop";
@@ -15,15 +15,15 @@ export class EgwDropActionImplementation implements EgwActionImplementation {
         const self:EgwDropActionImplementation = this;
         if (node) {
             node.classList.add('et2dropzone');
-            const dragover = function (event) {
+            const dragover = (event)=> {
                 if (event.preventDefault) {
                     event.preventDefault();
                 }
-                if (!self.getTheDraggedDOM()) return;
+                if (!this.getTheDraggedDOM()) return;
 
                 const data = {
                     event: event,
-                    ui: self.getTheDraggedData()
+                    ui: this.getTheDraggedData()
                 };
                 _aoi.triggerEvent(EGW_AI_DRAG_OVER, data);
 
@@ -75,7 +75,7 @@ export class EgwDropActionImplementation implements EgwActionImplementation {
 
                 let data = JSON.parse(event.dataTransfer.getData('application/json'));
 
-                if (!self.isAccepted(data, _context, _callback) || self.isTheDraggedDOM(this)) {
+                if (!self.isAccepted(data, _context, _callback,undefined) || self.isTheDraggedDOM(this)) {
                     // clean up the helper dom
                     if (helper) helper.remove();
                     return;
@@ -85,12 +85,12 @@ export class EgwDropActionImplementation implements EgwActionImplementation {
                     return egw_getObjectManager(item.id, false)
                 });
 
-
+                //links is an Object of DropActions bound to their names
                 const links = _callback.call(_context, "links", self, EGW_AO_EXEC_THIS);
 
                 // Disable all links which only accept types which are not
                 // inside ddTypes
-                for (var k in links) {
+                for (const k in links) {
                     const accepted = links[k].actionObj.acceptedTypes;
 
                     let enabled = false;
@@ -113,7 +113,7 @@ export class EgwDropActionImplementation implements EgwActionImplementation {
                 // Check whether there is only one link
                 let cnt = 0;
                 let lnk = null;
-                for (var k in links) {
+                for (const k in links) {
                     if (links[k].enabled && links[k].visible) {
                         lnk = links[k];
                         cnt += 1 + links[k].actionObj.children.length;
@@ -230,6 +230,7 @@ export class EgwDropActionImplementation implements EgwActionImplementation {
     }
 
     getTheDraggedData =  ()=> {
+        // @ts-ignore // in our case dataset will be present
         let data = this.getTheDraggedDOM().dataset.egwactionobjid;
         let selected = [];
         if (data) {
@@ -241,13 +242,15 @@ export class EgwDropActionImplementation implements EgwActionImplementation {
         return {
             draggable: this.getTheDraggedDOM(),
             helper: this.getHelperDOM(),
-            selected: selected
+            selected: selected,
+            position: undefined,
+            offset: undefined
 
         }
     }
 
     // check if given draggable is accepted for drop
-    isAccepted = function (_data, _context, _callback, _node) {
+    isAccepted =  (_data, _context, _callback, _node)=> {
         if (_node && !_node.classList.contains('et2dropzone')) return false;
         if (typeof _data.ddTypes != "undefined") {
             const accepted = this._fetchAccepted(
@@ -267,7 +270,7 @@ export class EgwDropActionImplementation implements EgwActionImplementation {
     };
 
 
-    _fetchAccepted = function (_links) {
+    private _fetchAccepted =  (_links) =>{
         // Accumulate the accepted types
         const accepted = [];
         for (let k in _links) {
