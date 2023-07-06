@@ -33,6 +33,6 @@ export interface EgwActionImplementation {
      *    had not.
      */
     unregisterAction: (_actionObjectInterface: EgwActionObjectInterface) => boolean;
-    executeImplementation: (_context: any, _selected: any, _links: any) => any;
+    executeImplementation: (_context: any, _selected: any, _links: any, _target?:any) => any;
     type: string;
 }

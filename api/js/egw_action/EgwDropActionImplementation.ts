@@ -1,7 +1,7 @@
 import {EgwActionImplementation} from "./EgwActionImplementation";
 import {EGW_AI_DRAG_ENTER, EGW_AI_DRAG_OUT, EGW_AI_DRAG_OVER, EGW_AO_EXEC_THIS} from "./egw_action_constants";
-import {getPopupImplementation} from "./egw_action_popup";
 import {egw_getObjectManager} from "./egw_action";
+import {getPopupImplementation} from "./EgwPopupActionImplementation";
 
 export class EgwDropActionImplementation implements EgwActionImplementation {
     type: string = "drop";
@@ -144,7 +144,7 @@ export class EgwDropActionImplementation implements EgwActionImplementation {
                     popup.auto_paste = false;
 
                     window.setTimeout(function () {
-                        popup.doExecuteImplementation(pos, selected, links,
+                        popup.executeImplementation(pos, selected, links,
                             _context);
                         // Reset, popup is reused
                         popup.auto_paste = true;

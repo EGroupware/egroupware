@@ -5,13 +5,73 @@ import {tapAndSwipe} from "../tapandswipe";
 import {EgwAction} from "./EgwAction";
 import {egwFnct} from "./egw_action_common";
 import "./egwGlobal"
+import {EgwActionImplementation} from "./EgwActionImplementation";
 
-export function egwPopupActionImplementation() {
-    var ai = new egwActionImplementation();
+export class EgwPopupActionImplementation implements EgwActionImplementation {
+    type = "popup";
 
-    ai.type = "popup";
+    auto_paste = true;
 
-    ai.auto_paste = true;
+    registerAction = (_aoi, _callback, _context) => {
+        var node = _aoi.getDOMNode();
+
+        if (node) {
+            this._registerDefault(node, _callback, _context);
+            this._registerContext(node, _callback, _context);
+            return true;
+        }
+        return false;
+    };
+
+    unregisterAction = function (_aoi) {
+        var node = _aoi.getDOMNode();
+        jQuery(node).off();
+        return true
+    };
+
+    /**
+     * Builds the context menu and shows it at the given position/DOM-Node.
+     *
+     * @param {object} _context
+     * @param {type} _selected
+     * @param {type} _links
+     * @param {type} _target
+     * @returns {Boolean}
+     */
+    executeImplementation = (_context, _selected, _links, _target)=> {
+        if (typeof _target == "undefined") {
+            _target = null;
+        }
+
+        this._context = _context;
+        if (typeof _context == "object" && typeof _context.keyEvent == "object") {
+            return this._handleKeyPress(_context.keyEvent, _selected, _links, _target);
+        } else if (_context != "default") {
+            //Check whether the context has the posx and posy parameters
+            if ((typeof _context.posx != "number" || typeof _context.posy != "number") &&
+                typeof _context.id != "undefined") {
+                // Calculate context menu position from the given DOM-Node
+                var node = _context;
+
+                const x = jQuery(node).offset().left;
+                const y = jQuery(node).offset().top;
+
+                _context = {"posx": x, "posy": y};
+            }
+
+            var menu = this._buildMenu(_links, _selected, _target);
+            menu.showAt(_context.posx, _context.posy);
+
+            return true;
+        } else {
+            var defaultAction = this._getDefaultLink(_links);
+            if (defaultAction) {
+                defaultAction.execute(_selected);
+            }
+        }
+
+        return false;
+    };
 
     /**
      * Registers the handler for the default action
@@ -21,7 +81,7 @@ export function egwPopupActionImplementation() {
      * @param {object} _context
      * @returns {boolean}
      */
-    ai._registerDefault = function (_node, _callback, _context) {
+    private _registerDefault = function (_node, _callback, _context) {
         var defaultHandler = function (e) {
             // Prevent bubbling bound event on <a> tag, on touch devices
             // a tag should be handled by default event
@@ -36,7 +96,7 @@ export function egwPopupActionImplementation() {
 
             if (!(_context.manager.getActionsByAttr('singleClick', true).length > 0 &&
                 e.originalEvent.target.classList.contains('et2_clickable'))) {
-                _callback.call(_context, "default", ai);
+                _callback.call(_context, "default", this);
             }
 
             // Stop action from bubbling up to parents
@@ -56,7 +116,7 @@ export function egwPopupActionImplementation() {
         }
     };
 
-    ai._getDefaultLink = function (_links) {
+    private _getDefaultLink = function (_links) {
         var defaultAction = null;
         for (var k in _links) {
             if (_links[k].actionObj["default"] && _links[k].enabled) {
@@ -68,7 +128,7 @@ export function egwPopupActionImplementation() {
         return defaultAction;
     };
 
-    ai._searchShortcut = function (_key, _objs, _links) {
+    private _searchShortcut = (_key, _objs, _links) => {
         for (var i = 0; i < _objs.length; i++) {
             var sc = _objs[i].shortcut;
             if (sc && sc.keyCode == _key.keyCode && sc.shift == _key.shift &&
@@ -85,7 +145,7 @@ export function egwPopupActionImplementation() {
         }
     };
 
-    ai._searchShortcutInLinks = function (_key, _links) {
+    private _searchShortcutInLinks =  (_key, _links)=> {
         var objs = [];
         for (var k in _links) {
             if (_links[k].enabled) {
@@ -93,7 +153,7 @@ export function egwPopupActionImplementation() {
             }
         }
 
-        return ai._searchShortcut(_key, objs, _links);
+        return this._searchShortcut(_key, objs, _links);
     };
 
     /**
@@ -105,7 +165,7 @@ export function egwPopupActionImplementation() {
      * @param {type} _target
      * @returns {Boolean}
      */
-    ai._handleKeyPress = function (_key, _selected, _links, _target) {
+    private _handleKeyPress = (_key, _selected, _links, _target) => {
         // Handle the default
         if (_key.keyCode == EGW_KEY_ENTER && !_key.ctrl && !_key.shift && !_key.alt) {
             var defaultAction = this._getDefaultLink(_links);
@@ -117,7 +177,7 @@ export function egwPopupActionImplementation() {
 
         // Menu button
         if (_key.keyCode == EGW_KEY_MENU && !_key.ctrl) {
-            return this.doExecuteImplementation({posx: 0, posy: 0}, _selected, _links, _target);
+            return this.executeImplementation({posx: 0, posy: 0}, _selected, _links, _target);
         }
 
 
@@ -130,7 +190,8 @@ export function egwPopupActionImplementation() {
 
         return false;
     };
-    ai._handleTapHold = function (_node, _callback) {
+
+    private _handleTapHold = function (_node, _callback) {
         //TODO (todo-jquery): ATM we need to convert the possible given jquery dom node object into DOM Element, this
         // should be no longer neccessary after removing jQuery nodes.
         if (_node instanceof jQuery) {
@@ -154,6 +215,7 @@ export function egwPopupActionImplementation() {
             _callback(_event)
         });
     }
+
     /**
      * Registers the handler for the context menu
      *
@@ -162,8 +224,8 @@ export function egwPopupActionImplementation() {
      * @param {object} _context
      * @returns {boolean}
      */
-    ai._registerContext = function (_node, _callback, _context) {
-        var contextHandler = function (e) {
+    private _registerContext = (_node, _callback, _context) => {
+        var contextHandler = (e) => {
 
             //Obtain the event object
             if (!e) {
@@ -174,9 +236,9 @@ export function egwPopupActionImplementation() {
                 _egw_active_menu.hide();
             } else if (!e.ctrlKey && e.which == 3 || e.which === 0 || e.type === 'tapandhold') // tap event indicates by 0
             {
-                var _xy = ai._getPageXY(e);
+                var _xy = this._getPageXY(e);
                 var _implContext = {event: e, posx: _xy.posx, posy: _xy.posy};
-                _callback.call(_context, _implContext, ai);
+                _callback.call(_context, _implContext, this);
             }
 
             e.cancelBubble = !e.ctrlKey || e.which == 1;
@@ -191,66 +253,6 @@ export function egwPopupActionImplementation() {
         if (!egwIsMobile()) jQuery(_node).on('contextmenu', contextHandler);
     };
 
-    ai.doRegisterAction = function (_aoi, _callback, _context) {
-        var node = _aoi.getDOMNode();
-
-        if (node) {
-            this._registerDefault(node, _callback, _context);
-            this._registerContext(node, _callback, _context);
-            return true;
-        }
-        return false;
-    };
-
-    ai.doUnregisterAction = function (_aoi) {
-        var node = _aoi.getDOMNode();
-        jQuery(node).off();
-    };
-
-    /**
-     * Builds the context menu and shows it at the given position/DOM-Node.
-     *
-     * @param {object} _context
-     * @param {type} _selected
-     * @param {type} _links
-     * @param {type} _target
-     * @returns {Boolean}
-     */
-    ai.doExecuteImplementation = function (_context, _selected, _links, _target) {
-        if (typeof _target == "undefined") {
-            _target = null;
-        }
-
-        ai._context = _context;
-        if (typeof _context == "object" && typeof _context.keyEvent == "object") {
-            return ai._handleKeyPress(_context.keyEvent, _selected, _links, _target);
-        } else if (_context != "default") {
-            //Check whether the context has the posx and posy parameters
-            if ((typeof _context.posx != "number" || typeof _context.posy != "number") &&
-                typeof _context.id != "undefined") {
-                // Calculate context menu position from the given DOM-Node
-                var node = _context;
-
-                const x = jQuery(node).offset().left;
-                const y = jQuery(node).offset().top;
-
-                _context = {"posx": x, "posy": y};
-            }
-
-            var menu = ai._buildMenu(_links, _selected, _target);
-            menu.showAt(_context.posx, _context.posy);
-
-            return true;
-        } else {
-            var defaultAction = ai._getDefaultLink(_links);
-            if (defaultAction) {
-                defaultAction.execute(_selected);
-            }
-        }
-
-        return false;
-    };
-
     /**
      * Groups and sorts the given action tree layer
      *
@@ -258,7 +260,7 @@ export function egwPopupActionImplementation() {
      * @param {type} _links
      * @param {type} _parentGroup
      */
-    ai._groupLayers = function (_layer, _links, _parentGroup) {
+    private _groupLayers = (_layer, _links, _parentGroup) => {
         // Seperate the multiple groups out of the layer
         var link_groups = {};
 
@@ -342,7 +344,7 @@ export function egwPopupActionImplementation() {
      * @param {type} _enabled
      * @param {type} _target
      */
-    ai._buildMenuLayer = function (_menu, _groups, _selected, _enabled, _target) {
+    private _buildMenuLayer = (_menu, _groups, _selected, _enabled, _target) => {
         var firstGroup = true;
 
         for (var i = 0; i < _groups.length; i++) {
@@ -382,9 +384,9 @@ export function egwPopupActionImplementation() {
 
                     item.set_data(link.actionObj);
                     if (link.enabled && _enabled) {
-                        item.set_onClick(function (elem) {
+                        item.set_onClick( (elem) => {
                             // Pass the context
-                            elem.data.menu_context = ai._context;
+                            elem.data.menu_context = this._context;
 
                             // Copy the "checked" state
                             if (typeof elem.data.checked != "undefined") {
@@ -420,7 +422,7 @@ export function egwPopupActionImplementation() {
      * @param {type} _target
      * @returns {egwMenu|egwActionImplementation._buildMenu.menu}
      */
-    ai._buildMenu = function (_links, _selected, _target) {
+    private _buildMenu = (_links, _selected, _target) => {
         // Build a tree containing all actions
         var tree = {"root": []};
 
@@ -452,7 +454,7 @@ export function egwPopupActionImplementation() {
         return menu;
     };
 
-    ai._getPageXY = function getPageXY(event) {
+    _getPageXY = function getPageXY(event) {
         // document.body.scrollTop does not work in IE
         var scrollTop = document.body.scrollTop ? document.body.scrollTop :
             document.documentElement.scrollTop;
@@ -469,7 +471,7 @@ export function egwPopupActionImplementation() {
      * @param {object[]} _links Actions for inclusion in the menu
      * @param {EgwActionObject[]} _selected Currently selected entries
      */
-    ai._addCopyPaste = function (_links, _selected) {
+    private _addCopyPaste =  (_links, _selected)=> {
         // Get a list of drag & drop actions
         var drag = _selected[0].getSelectedLinks('drag').links;
         var drop = _selected[0].getSelectedLinks('drop').links;
@@ -711,5 +713,20 @@ export function egwPopupActionImplementation() {
             }
         }
     };
-    return ai;
+    private _context: any;
+
+}
+
+
+/**
+ * @deprecated use uppercase class
+ */
+export class egwPopupActionImplementation extends EgwPopupActionImplementation{}
+let _popupActionImpl = null;
+
+export function getPopupImplementation(): EgwPopupActionImplementation {
+    if (!_popupActionImpl) {
+        _popupActionImpl = new EgwPopupActionImplementation();
+    }
+    return _popupActionImpl;
 }

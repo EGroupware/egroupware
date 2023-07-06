@@ -266,7 +266,7 @@ export class egwDragActionImplementation extends EgwDragActionImplementation {
 
 let _dragActionImpl = null
 
-export function getDragImplementation() {
+export function getDragImplementation():EgwDragActionImplementation {
     if (!_dragActionImpl) {
         _dragActionImpl = new EgwDragActionImplementation();
     }

@@ -20,10 +20,12 @@ import {EgwActionObject} from "./EgwActionObject";
 import {EgwActionObjectInterface} from "./EgwActionObjectInterface";
 import {EgwActionObjectManager} from "./EgwActionObjectManager";
 import {EgwDragAction} from "./EgwDragAction";
-import {egwDragActionImplementation} from "./egwDragActionImplementation";
+import {EgwDragActionImplementation, egwDragActionImplementation} from "./egwDragActionImplementation";
 import {EgwDropAction} from "./EgwDropAction";
 import {egwDropActionImplementation} from "./EgwDropActionImplementation";
 import "./egwGlobal"
+import {egwPopupAction, EgwPopupAction} from "./EgwPopupAction";
+import {getPopupImplementation} from "./EgwPopupActionImplementation";
 
 
 /**
@@ -158,11 +160,11 @@ export class egwActionManager extends EgwActionManager {
  */
 if (typeof window._egwActionClasses == "undefined") {
     window._egwActionClasses = {
-        actionManager: {actionConstructor: null, implementation: null},
-        default: {actionConstructor: null, implementation: null},
+        actionManager: undefined,
+        default: undefined,
         drag: undefined,
         drop: undefined,
-        popup: {actionConstructor: null, implementation: null}
+        popup: undefined
     };
 }
 if (typeof window._egwActionClasses.actionManager == "undefined") {
@@ -171,6 +173,22 @@ if (typeof window._egwActionClasses.actionManager == "undefined") {
 if (typeof window._egwActionClasses.default == "undefined") {
     window._egwActionClasses.default = {actionConstructor: EgwAction, implementation: null}
 }
+if (typeof window._egwActionClasses.drag == "undefined") {
+    window._egwActionClasses.drag = {actionConstructor: EgwDragAction, implementation: getDragImplementation()}
+}
+if (typeof window._egwActionClasses.drop == "undefined") {
+    window._egwActionClasses.drop = {actionConstructor: EgwDropAction, implementation: getDropImplementation()}
+}
+
+
+
+if (typeof window._egwActionClasses.popup == "undefined") {
+    window._egwActionClasses.popup = {
+        "actionConstructor": EgwPopupAction,
+        "implementation": getPopupImplementation
+    };
+}
+
 
 /** EgwActionImplementation Interface **/
 

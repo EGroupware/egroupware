@@ -10,25 +10,3 @@
  */
 
 
-import {egwPopupAction} from "./EgwPopupAction";
-import {egwPopupActionImplementation} from "./EgwPopupActionImplementation";
-
-if (typeof window._egwActionClasses == "undefined")
-	window._egwActionClasses = {};
-_egwActionClasses["popup"] = {
-	"actionConstructor": egwPopupAction,
-	"implementation": getPopupImplementation
-};
-
-var
-	_popupActionImpl = null;
-
-export function getPopupImplementation()
-{
-	if (!_popupActionImpl)
-	{
-		_popupActionImpl = new egwPopupActionImplementation();
-	}
-	return _popupActionImpl;
-}
-
