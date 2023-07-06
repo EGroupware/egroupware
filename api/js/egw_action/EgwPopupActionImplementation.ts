@@ -1,11 +1,13 @@
 import {egwActionImplementation} from "./egw_action";
-import {_egw_active_menu, egwMenu} from "./egw_menu";
+import {_egw_active_menu, egwMenu, egwMenuItem} from "./egw_menu";
 import {EGW_KEY_ENTER, EGW_KEY_MENU} from "./egw_action_constants";
 import {tapAndSwipe} from "../tapandswipe";
 import {EgwAction} from "./EgwAction";
 import {egwFnct} from "./egw_action_common";
 import "./egwGlobal"
 import {EgwActionImplementation} from "./EgwActionImplementation";
+import {EgwActionObject} from "./EgwActionObject";
+import {EgwPopupAction} from "./EgwPopupAction";
 
 export class EgwPopupActionImplementation implements EgwActionImplementation {
     type = "popup";
@@ -219,15 +221,15 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
     /**
      * Registers the handler for the context menu
      *
-     * @param {DOMNode} _node
+     * @param {any} _node
      * @param {function} _callback
      * @param {object} _context
      * @returns {boolean}
      */
     private _registerContext = (_node, _callback, _context) => {
-        var contextHandler = (e) => {
+        const contextHandler = (e) => {
 
-            //Obtain the event object
+            //Obtain the event object, this should not happen at any point
             if (!e) {
                 e = window.event;
             }
@@ -236,8 +238,8 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
                 _egw_active_menu.hide();
             } else if (!e.ctrlKey && e.which == 3 || e.which === 0 || e.type === 'tapandhold') // tap event indicates by 0
             {
-                var _xy = this._getPageXY(e);
-                var _implContext = {event: e, posx: _xy.posx, posy: _xy.posy};
+                const _xy = this._getPageXY(e);
+                const _implContext = {event: e, posx: _xy.posx, posy: _xy.posy};
                 _callback.call(_context, _implContext, this);
             }
 
@@ -250,7 +252,7 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
         // Safari still needs the taphold to trigger contextmenu
         // Chrome has default event on touch and hold which acts like right click
         this._handleTapHold(_node, contextHandler);
-        if (!egwIsMobile()) jQuery(_node).on('contextmenu', contextHandler);
+        if (!window.egwIsMobile()) jQuery(_node).on('contextmenu', contextHandler);
     };
 
     /**
@@ -261,41 +263,41 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
      * @param {type} _parentGroup
      */
     private _groupLayers = (_layer, _links, _parentGroup) => {
-        // Seperate the multiple groups out of the layer
-        var link_groups = {};
+        // Separate the multiple groups out of the layer
+        const link_groups = {};
 
-        for (var i = 0; i < _layer.children.length; i++) {
-            var actionObj = _layer.children[i].action;
+        for (let i = 0; i < _layer.children.length; i++) {
+            const popupAction:EgwPopupAction = _layer.children[i].action;
 
             // Check whether the link group of the current element already exists,
             // if not, create the group
-            var grp = actionObj.group;
+            const grp = popupAction.group;
             if (typeof link_groups[grp] == "undefined") {
                 link_groups[grp] = [];
             }
 
             // Search the link data for this action object if none is found,
             // visible and enabled = true is assumed
-            var visible = true;
-            var enabled = true;
+            let visible = true;
+            let enabled = true;
 
-            if (typeof _links[actionObj.id] != "undefined") {
-                visible = _links[actionObj.id].visible;
-                enabled = _links[actionObj.id].enabled;
+            if (typeof _links[popupAction.id] != "undefined") {
+                visible = _links[popupAction.id].visible;
+                enabled = _links[popupAction.id].enabled;
             }
 
             // Insert the element in order
-            var inserted = false;
-            var groupObj = {
-                "actionObj": actionObj,
+            let inserted = false;
+            const groupObj = {
+                "actionObj": popupAction,
                 "visible": visible,
                 "enabled": enabled,
                 "groups": []
             };
 
-            for (var j = 0; j < link_groups[grp].length; j++) {
-                var elem = link_groups[grp][j].actionObj;
-                if (elem.order > actionObj.order) {
+            for (let j = 0; j < link_groups[grp].length; j++) {
+                const elem:EgwPopupAction = link_groups[grp][j].actionObj;
+                if (elem.order > popupAction.order) {
                     inserted = true;
                     link_groups[grp].splice(j, 0, groupObj);
                     break;
@@ -314,22 +316,22 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
         }
 
         // Transform the link_groups object into an sorted array
-        var groups = [];
+        const groups = [];
 
-        for (var k in link_groups) {
+        for (const k in link_groups) {
             groups.push({"grp": k, "links": link_groups[k]});
         }
 
         groups.sort(function (a, b) {
-            var ia = parseInt(a.grp);
-            var ib = parseInt(b.grp);
+            const ia = parseInt(a.grp);
+            const ib = parseInt(b.grp);
             return (ia > ib) ? 1 : ((ia < ib) ? -1 : 0);
         });
 
         // Append the groups to the groups2 array
-        var groups2 = [];
-        for (var i = 0; i < groups.length; i++) {
-            groups2.push(groups[i].links);
+        const groups2 = [];
+        for (const item of groups) {
+            groups2.push(item.links);
         }
 
         _parentGroup.groups = groups2;
@@ -345,15 +347,13 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
      * @param {type} _target
      */
     private _buildMenuLayer = (_menu, _groups, _selected, _enabled, _target) => {
-        var firstGroup = true;
+        let firstGroup = true;
 
-        for (var i = 0; i < _groups.length; i++) {
-            var firstElem = true;
+        for (const item1 of _groups) {
+            let firstElem = true;
 
             // Go through the elements of each group
-            for (var j = 0; j < _groups[i].length; j++) {
-                var link = _groups[i][j];
-
+            for (const link of item1) {
                 if (link.visible) {
                     // Add an seperator after each group
                     if (!firstGroup && firstElem) {
@@ -361,9 +361,9 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
                     }
                     firstElem = false;
 
-                    var item = _menu.addItem(link.actionObj.id, link.actionObj.caption,
+                    const item:egwMenuItem = _menu.addItem(link.actionObj.id, link.actionObj.caption,
                         link.actionObj.iconUrl);
-                    item["default"] = link.actionObj["default"];
+                    item.default= link.actionObj["default"];
 
                     // As this code is also used when a drag-drop popup menu is built,
                     // we have to perform this check
@@ -376,9 +376,9 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
                         }
                         item.set_groupIndex(link.actionObj.radioGroup);
 
-                        if (link.actionObj.shortcut && !egwIsMobile()) {
-                            var sc = link.actionObj.shortcut;
-                            item.set_shortcutCaption(sc.caption);
+                        if (link.actionObj.shortcut && !window.egwIsMobile()) {
+                            const shortcut = link.actionObj.shortcut;
+                            item.set_shortcutCaption(shortcut.caption);
                         }
                     }
 
@@ -424,20 +424,20 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
      */
     private _buildMenu = (_links, _selected, _target) => {
         // Build a tree containing all actions
-        var tree = {"root": []};
+        const tree = {"root": []};
 
         // Automatically add in Drag & Drop actions
-        if (this.auto_paste && !egwIsMobile()) {
+        if (this.auto_paste && !window.egwIsMobile()) {
             this._addCopyPaste(_links, _selected);
         }
 
-        for (var k in _links) {
+        for (const k in _links) {
             _links[k].actionObj.appendToTree(tree);
         }
 
         // We need the dummy object container in order to pass the array by
         // reference
-        var groups = {
+        const groups = {
             "groups": []
         };
 
@@ -446,7 +446,7 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
             this._groupLayers(tree.root[0], _links, groups);
         }
 
-        var menu = new egwMenu();
+        const menu = new egwMenu();
 
         // Build the menu layers
         this._buildMenuLayer(menu, groups.groups, _selected, true, _target);
@@ -456,9 +456,9 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
 
     _getPageXY = function getPageXY(event) {
         // document.body.scrollTop does not work in IE
-        var scrollTop = document.body.scrollTop ? document.body.scrollTop :
+        const scrollTop = document.body.scrollTop ? document.body.scrollTop :
             document.documentElement.scrollTop;
-        var scrollLeft = document.body.scrollLeft ? document.body.scrollLeft :
+        const scrollLeft = document.body.scrollLeft ? document.body.scrollLeft :
             document.documentElement.scrollLeft;
 
         return {'posx': (event.clientX + scrollLeft), 'posy': (event.clientY + scrollTop)};
@@ -471,10 +471,10 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
      * @param {object[]} _links Actions for inclusion in the menu
      * @param {EgwActionObject[]} _selected Currently selected entries
      */
-    private _addCopyPaste =  (_links, _selected)=> {
+    private _addCopyPaste =  (_links, _selected:EgwActionObject[])=> {
         // Get a list of drag & drop actions
-        var drag = _selected[0].getSelectedLinks('drag').links;
-        var drop = _selected[0].getSelectedLinks('drop').links;
+        const drag = _selected[0].getSelectedLinks('drag').links;
+        const drop = _selected[0].getSelectedLinks('drop').links;
 
         // No drags & no drops means early exit (only by default added egw_cancel_drop does NOT count!)
         if ((!drag || jQuery.isEmptyObject(drag)) &&
@@ -484,19 +484,19 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
         }
 
         // Find existing actions so we don't get copies
-        var mgr = _selected[0].manager;
-        var copy_action = mgr.getActionById('egw_copy');
-        var add_action = mgr.getActionById('egw_copy_add');
-        var clipboard_action = mgr.getActionById('egw_os_clipboard');
-        var paste_action = mgr.getActionById('egw_paste');
+        const mgr = _selected[0].manager;
+        let copy_action = mgr.getActionById('egw_copy');
+        let add_action = mgr.getActionById('egw_copy_add');
+        let clipboard_action = mgr.getActionById('egw_os_clipboard');
+        let paste_action = mgr.getActionById('egw_paste');
 
         // Fake UI so we can simulate the position of the drop
-        var ui = {
+        const ui = {
             position: {top: 0, left: 0},
             offset: {top: 0, left: 0}
         };
         if (this._context.event) {
-            var event = this._context.event.originalEvent;
+            const event = this._context.event.originalEvent;
             ui.position = {top: event.pageY, left: event.pageX};
             ui.offset = {top: event.offsetY, left: event.offsetX};
         }
@@ -505,42 +505,42 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
             // Don't re-add if it's there
             if (copy_action == null) {
                 // Create a drag action that allows linking
-                copy_action = mgr.addAction('popup', 'egw_copy', egw.lang('Copy to clipboard'), egw.image('copy'), function (action, selected) {
+                copy_action = mgr.addAction('popup', 'egw_copy', window.egw.lang('Copy to clipboard'), window.egw.image('copy'), function (action, selected) {
                     // Copied, now add to clipboard
-                    var clipboard = {
+                    const clipboard = {
                         type: [],
                         selected: []
                     };
 
                     // When pasting we need to know the type of drag
-                    for (var k in drag) {
+                    for (const k in drag) {
                         if (drag[k].enabled && drag[k].actionObj.dragType.length > 0) {
                             clipboard.type = clipboard.type.concat(drag[k].actionObj.dragType);
                         }
                     }
-                    clipboard.type = jQuery.unique(clipboard.type);
+                    clipboard.type = jQuery.uniqueSort(clipboard.type);
                     // egwAction is a circular structure and can't be stringified so just take what we want
                     // Hopefully that's enough for the action handlers
-                    for (var k in selected) {
+                    for (const k in selected) {
                         if (selected[k].id) clipboard.selected.push({id: selected[k].id, data: selected[k].data});
                     }
 
                     // Save it in session
-                    egw.setSessionItem('phpgwapi', 'egw_clipboard', JSON.stringify(clipboard));
+                    window.egw.setSessionItem('phpgwapi', 'egw_clipboard', JSON.stringify(clipboard));
                 }, true);
                 copy_action.group = 2.5;
             }
             if (add_action == null) {
                 // Create an action to add selected to clipboard
-                add_action = mgr.addAction('popup', 'egw_copy_add', egw.lang('Add to clipboard'), egw.image('copy'), function (action, selected) {
+                add_action = mgr.addAction('popup', 'egw_copy_add', window.egw.lang('Add to clipboard'), window.egw.image('copy'), function (action, selected) {
                     // Copied, now add to clipboard
-                    var clipboard = JSON.parse(egw.getSessionItem('phpgwapi', 'egw_clipboard')) || {
+                    const clipboard = JSON.parse(window.egw.getSessionItem('phpgwapi', 'egw_clipboard')) || {
                         type: [],
                         selected: []
                     };
 
                     // When pasting we need to know the type of drag
-                    for (var k in drag) {
+                    for (const k in drag) {
                         if (drag[k].enabled && drag[k].actionObj.dragType.length > 0) {
                             clipboard.type = clipboard.type.concat(drag[k].actionObj.dragType);
                         }
@@ -548,19 +548,19 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
                     clipboard.type = jQuery.unique(clipboard.type);
                     // egwAction is a circular structure and can't be stringified so just take what we want
                     // Hopefully that's enough for the action handlers
-                    for (var k in selected) {
+                    for (const k in selected) {
                         if (selected[k].id) clipboard.selected.push({id: selected[k].id, data: selected[k].data});
                     }
 
                     // Save it in session
-                    egw.setSessionItem('phpgwapi', 'egw_clipboard', JSON.stringify(clipboard));
+                    window.egw.setSessionItem('phpgwapi', 'egw_clipboard', JSON.stringify(clipboard));
                 }, true);
                 add_action.group = 2.5;
 
             }
             if (clipboard_action == null) {
                 // Create an action to add selected to clipboard
-                clipboard_action = mgr.addAction('popup', 'egw_os_clipboard', egw.lang('Copy to OS clipboard'), egw.image('copy'), function (action) {
+                clipboard_action = mgr.addAction('popup', 'egw_os_clipboard', window.egw.lang('Copy to OS clipboard'), window.egw.image('copy'), function (action) {
 
                     if (document.queryCommandSupported('copy')) {
                         jQuery(action.data.target).trigger('copy');
@@ -571,21 +571,21 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
             let os_clipboard_caption = "";
             if (this._context.event) {
                 os_clipboard_caption = this._context.event.originalEvent.target.innerText.trim();
-                clipboard_action.set_caption(egw.lang('Copy "%1"', os_clipboard_caption.length > 20 ? os_clipboard_caption.substring(0, 20) + '...' : os_clipboard_caption));
+                clipboard_action.set_caption(window.egw.lang('Copy "%1"', os_clipboard_caption.length > 20 ? os_clipboard_caption.substring(0, 20) + '...' : os_clipboard_caption));
                 clipboard_action.data.target = this._context.event.originalEvent.target;
             }
             jQuery(clipboard_action.data.target).off('copy').on('copy', function (event) {
                 try {
-                    egw.copyTextToClipboard(os_clipboard_caption, clipboard_action.data.target, event).then((successful) => {
+                    window.egw.copyTextToClipboard(os_clipboard_caption, clipboard_action.data.target, event).then((successful) => {
                         // Fallback
                         if (typeof successful == "undefined") {
                             // Clear message
-                            egw.message(egw.lang("'%1' copied to clipboard", os_clipboard_caption.length > 20 ? os_clipboard_caption.substring(0, 20) + '...' : os_clipboard_caption));
+                            window.egw.message(window.egw.lang("'%1' copied to clipboard", os_clipboard_caption.length > 20 ? os_clipboard_caption.substring(0, 20) + '...' : os_clipboard_caption));
                             window.getSelection().removeAllRanges();
                             return false;
                         } else {
                             // Show fail message
-                            egw.message(egw.lang('Use Ctrl-C/Cmd-C to copy'));
+                            window.egw.message(window.egw.lang('Use Ctrl-C/Cmd-C to copy'));
                         }
                     });
 
@@ -622,9 +622,9 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
         if (drop && !jQuery.isEmptyObject(drop)) {
             // Create paste action
             // This injects the clipboard data and calls the original handler
-            var paste_exec = function (action, selected) {
+            let paste_exec = function (action, selected) {
                 // Add in clipboard as a sender
-                var clipboard = JSON.parse(egw.getSessionItem('phpgwapi', 'egw_clipboard'));
+                let clipboard = JSON.parse(window.egw.getSessionItem('phpgwapi', 'egw_clipboard'));
                 // Fake drop position
                 drop[action.id].actionObj.ui = ui;
                 // Set a flag so apps can tell the difference, if they need to
@@ -635,26 +635,26 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
                 drop[action.id].actionObj.paste = false;
             };
 
-            var clipboard = JSON.parse(egw.getSessionItem('phpgwapi', 'egw_clipboard')) || {
+            let clipboard = JSON.parse(window.egw.getSessionItem('phpgwapi', 'egw_clipboard')) || {
                 type: [],
                 selected: []
             };
 
             // Don't re-add if action already exists
             if (paste_action == null) {
-                paste_action = mgr.addAction('popup', 'egw_paste', egw.lang('Paste'), egw.image('editpaste'), paste_exec, true);
+                paste_action = mgr.addAction('popup', 'egw_paste', window.egw.lang('Paste'), window.egw.image('editpaste'), paste_exec, true);
                 paste_action.group = 2.5;
                 paste_action.order = 9;
                 paste_action.canHaveChildren.push('drop');
             }
 
             // Set hint to something resembling current clipboard
-            var hint = egw.lang('Clipboard') + ":\n";
+            let hint = window.egw.lang('Clipboard') + ":\n";
             paste_action.set_hint(hint);
             // Add titles of entries
-            for (var i = 0; i < clipboard.selected.length; i++) {
-                var id = clipboard.selected[i].id.split('::');
-                egw.link_title(id[0], id[1], function (title) {
+            for (let i = 0; i < clipboard.selected.length; i++) {
+                let id = clipboard.selected[i].id.split('::');
+                window.egw.link_title(id[0], id[1], function (title) {
                     if (title) this.hint += title + "\n";
                 }, paste_action);
             }
@@ -679,16 +679,16 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
                 }
 
                 // Add in actual actions as children
-                for (var k in drop) {
+                for (let k in drop) {
                     // Add some choices - need to be a copy, or they interfere with
                     // the original
                     //replace jQuery with spread operator
                     // set the Prototype of the copy set_onExecute is not available otherwise
                     //TODO is this a valid/elegant way to do this??? give egwAction a methode clone -- make abstract parent class
-                    var drop_clone = {...drop[k].actionObj};
+                    let drop_clone = {...drop[k].actionObj};
                     //warning This method is really slow
                     Object.setPrototypeOf(drop_clone, EgwAction.prototype)
-                    var parent = paste_action.parent === drop_clone.parent ? paste_action : (paste_action.getActionById(drop_clone.parent.id) || paste_action);
+                    let parent = paste_action.parent === drop_clone.parent ? paste_action : (paste_action.getActionById(drop_clone.parent.id) || paste_action);
                     drop_clone.parent = parent;
                     drop_clone.onExecute = new egwFnct(this, null, []);
                     drop_clone.children = [];
@@ -701,7 +701,7 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
                     // Drop is allowed if clipboard types intersect drop types
                     _links[k].enabled = false;
                     _links[k].visible = false;
-                    for (var i = 0; i < drop_clone.acceptedTypes.length; i++) {
+                    for (let i = 0; i < drop_clone.acceptedTypes.length; i++) {
                         if (clipboard.type.indexOf(drop_clone.acceptedTypes[i]) != -1) {
                             _links[paste_action.id].enabled = true;
                             _links[k].enabled = true;

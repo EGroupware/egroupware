@@ -5,6 +5,7 @@ import {egw_getObjectManager} from "./egw_action";
 export class EgwAction {
     public readonly id: string;
     private caption: string;
+    group: number;
 
     public set_caption(_value) {
         this.caption = _value;
@@ -48,7 +49,7 @@ export class EgwAction {
     canHaveChildren: boolean | string[] = false; //Has to be overwritten by inheriting action classes
     // this is not bool all the time. Can be ['popup'] e.g. List of egwActionClasses that are allowed to have children?
     private readonly parent: EgwAction;
-    private children: EgwAction[] = []; //i guess
+    children: EgwAction[] = []; //i guess
 
     private readonly onExecute = new EgwFnct(this, null, []);
 

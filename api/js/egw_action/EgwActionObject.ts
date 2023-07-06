@@ -974,7 +974,7 @@ export class EgwActionObject {
      */
 
     _getLinks(_objs, _actionType) {
-        const actionLinks = {};
+        const actionLinks:any = {};
         const testedSelected = [];
 
         const test = function (olink,obj) {
