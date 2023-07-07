@@ -51,7 +51,7 @@ class Token extends APi\Storage\Base
 			return null;    // not a token
 		}
 		try {
-			$log_passwd = substr($token, 0, strlen(Auth\Token::PREFIX)+1+strlen($matches[1]));
+			$log_passwd = substr($token, 0, strlen(self::PREFIX)+1+strlen($matches[1]));
 			$log_passwd .= str_repeat('*', strlen($token)-strlen($log_passwd));
 			$data = self::getInstance()->read([
 				'token_id' => $matches[1],
