@@ -94,22 +94,35 @@ class ApiHandler extends Api\CalDAV\Handler
 					], self::JSON_RESPONSE_OPTIONS);
 					return true;
 				}
-
-				$compose = new \mail_compose($acc_id=Api\Mail\Account::read_identity($ident_id)['acc_id']);
+				$acc_id = Api\Mail\Account::read_identity($ident_id)['acc_id'];
+				$mail_account = Api\Mail\Account::read($acc_id);
+				// check if the mail-account requires a user-context / password and then just send the mail with an smtp-only account NOT saving to Sent folder
+				if (empty($mail_account->acc_imap_password) || $mail_account->acc_smtp_auth_session && empty($mail_account->acc_smtp_password))
+				{
+					$acc_id = Api\Mail\Account::get_default(true, true, true, false);
+					$compose = new \mail_compose($acc_id);
+					$compose->mailPreferences['sendOptions'] = 'send_only';
+					$warning = 'Mail NOT saved to Sent folder, as no user password';
+				}
+				else
+				{
+					$compose = new \mail_compose($acc_id);
+				}
 				$preset = array_filter([
 					'mailaccount' => $acc_id,
 					'mailidentity' => $ident_id,
 					'identity' => null,
 					'add_signature' => true,    // add signature in send, independent what preference says
 				]+$preset);
-				if ($compose->send($preset))
+				if ($compose->send($preset, $acc_id))
 				{
 					header('Content-Type: application/json');
-					echo json_encode([
+					echo json_encode(array_filter([
 						'status' => 200,
+						'warning' => $warning ?? null,
 						'message' => 'Mail successful sent',
 						//'data' => $preset,
-					], self::JSON_RESPONSE_OPTIONS);
+					]), self::JSON_RESPONSE_OPTIONS);
 					return true;
 				}
 				throw new \Exception($compose->error_info);

@@ -273,7 +273,7 @@ class Account implements \ArrayAccess
 				$GLOBALS['egw_info']['user']['account_id'] &&
 				(!isset($called_for) || $called_for == $GLOBALS['egw_info']['user']['account_id']))
 			{
-				// get usename/password from current user, let it overwrite credentials for all/no session
+				// get username/password from current user, let it overwrite credentials for all/no session
 				$params = Credentials::from_session(
 						(!isset($called_for) ? array() : array('acc_smtp_auth_session' => false)) + $params, !isset($called_for)
 					) + $params;
@@ -1594,9 +1594,10 @@ class Account implements \ArrayAccess
 	 * @param boolean $smtp =false false: usable for IMAP, true: usable for SMTP
 	 * @param boolean $return_id =false true: return acc_id, false return account object
 	 * @param boolean $log_no_default =true true: error_log if no default found, false be silent
+	 * @param boolean $user_context =true false: we have no user context, need a smtp-only account or one without password
 	 * @return Account|int|null
 	 */
-	static function get_default($smtp=false, $return_id=false, $log_no_default=true)
+	static function get_default($smtp=false, $return_id=false, $log_no_default=true, $user_context=true)
 	{
 		try
 		{
@@ -1606,7 +1607,7 @@ class Account implements \ArrayAccess
 				{
 					if (!$params['acc_smtp_host'] || !$params['acc_smtp_port']) continue;
 					// check requirement of session, which is not available in async service!
-					if (isset($GLOBALS['egw_info']['flags']['async-service']) ||
+					if (!$user_context || isset($GLOBALS['egw_info']['flags']['async-service']) ||
 						empty($GLOBALS['egw_info']['user']['account_id']))	// happens during login when notifying about blocked accounts
 					{
 						if ($params['acc_smtp_auth_session']) continue;
