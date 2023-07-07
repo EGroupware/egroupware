@@ -58,7 +58,10 @@ class Fallback implements Backend
 	 */
 	function authenticate($username, $passwd, $passwd_type='text')
 	{
-		if ($this->primary_backend->authenticate($username, $passwd, $passwd_type))
+		$ret = $this->primary_backend->authenticate($username, $passwd, $passwd_type);
+		Api\Auth::log(__METHOD__."('$username', ...) primary_backend(".get_class($this->primary_backend).
+			")->authenticate('$username', '".str_repeat('*', strlen($passwd))."', ...) returned ".json_encode($ret));
+		if ($ret)
 		{
 			Api\Cache::setInstance(__CLASS__,'backend_used-'.$username,'primary');
 			// check if fallback has correct password, if not update it
