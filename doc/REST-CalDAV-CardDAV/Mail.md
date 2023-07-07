@@ -1,6 +1,11 @@
 # EGroupware REST API for Mail
 
-> Currently only sending mail or launching interactive compose windows
+Authentication is via Basic Auth with username and a password, or a token valid for:
+- either just the given user or all users
+- CalDAV/CardDAV Sync (REST API)
+- E-Mail application
+
+> Currently only implemented is sending mail or launching interactive compose windows.
 
 Implemented requests (relative to https://example.org/egroupware/groupdav.php)
 
@@ -35,7 +40,7 @@ The content of the POST request is a JSON encoded object with following attribut
 - ```subject```: string with subject
 - ```body```: string plain text body (optional)
 - ```bodyHtml```: string with html body (optional)
-- ```attachments```: array of strings returned from uploaded attachments (see below) or VFS path ```["/mail/attachment/<token>", "/home/<user>/<filename>", ...]```
+- ```attachments```: array of strings returned from uploaded attachments (see below) or VFS path ```["/mail/attachments/<token>", "/home/<user>/<filename>", ...]```
 - ```attachmentType```: one of the following strings (optional, default "attach")
   - "attach" send as attachment
   - "link" send as sharing link
@@ -47,7 +52,7 @@ The content of the POST request is a JSON encoded object with following attribut
 - ```priority```: 1: high, 3: normal (default), 5: low
 
 ```
-curl -i https://example.org/egroupware/groupdav.php/mail/ --user <user> \
+curl -i https://example.org/egroupware/groupdav.php/mail --user <user> \
   -X POST -H 'Content-Type: application/json' \
   --data-binary '{"to":["info@egroupware.org"],"subject":"Testmail","body":"This is a test :)\n\nRegards"}'
 HTTP/1.1 200 Ok
@@ -63,6 +68,15 @@ If you are not authenticated you will get:
 HTTP/1.1 401 Unauthorized
 WWW-Authenticate: Basic realm="EGroupware CalDAV/CardDAV/GroupDAV server"
 X-WebDAV-Status: 401 Unauthorized
+```
+If you use a token to authenticate, SMTP must work without password, or you need an SMTP-only account!
+It's probably still not possible to save a successful sent mail to the Sent folder:
+```
+{
+    "status": 200,
+    "warning": "Mail NOT saved to Sent folder, as no user password",
+    "message": "Mail successful sent"
+}
 ```
 If there is an error sending the mail you will get:
 ```
@@ -111,6 +125,6 @@ to use in further requests, instead of the attachment.
 curl -i https://example.org/egroupware/groupdav.php/mail/attachment/<filename> --user <user> \
     --data-binary @<file> -H 'Content-Type: <content-type-of-file>'
 HTTP/1.1 204 No Content
-Location: https://example.org/egroupware/mail/attachment/<token>
+Location: https://example.org/egroupware/groupdav.php/mail/attachment/<token>
 ```
 </details>
