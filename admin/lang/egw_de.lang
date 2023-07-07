@@ -187,6 +187,7 @@ bi-directional	admin	de	beide Richtungen
 blocking after wrong password	admin	de	Blockierung nach falschem Passwort
 bottom	admin	de	unten
 bulk password reset	admin	de	Rücksetzen mehrerer Passwörter
+by	admin	de	Von
 calculate next run	admin	de	nächste Ausführung berechnen
 calendar recurrence horizont in days (default 1000)	admin	de	Kalender Wiederholungs-Bereich in Tagen (Vorgabe sind 1000)
 can be used by application	admin	de	Kann von folgender Anwendung verwendet werden
@@ -782,7 +783,6 @@ reset filter	admin	de	Filter zurücksetzen
 revoke	admin	de	Widerrufen
 revoke this token	admin	de	Dieses Token widerrufen
 revoked	admin	de	Widerrufen
-revoked by	admin	de	Widerrufen von
 rights	admin	de	Rechte
 route all mails to	admin	de	Alle E-Mails senden an
 rows	admin	de	Zeilen
@@ -961,7 +961,6 @@ unwilling to save category with current settings. check for inconsistency:	admin
 up	admin	de	hoch
 update current email address:	admin	de	Aktualisiere aktuelle E-Mail-Adresse
 updated	admin	de	Aktualisiert
-updated by	admin	de	Aktualisiert von
 upload your background image or enter the url	admin	de	Laden Sie ein Hintergrundbild hoch oder geben Sie eine entsprechende URL ein
 upload your certificate .p12/.pfx file	admin	de	Zertifikat hochladen (.p12/.pfx-Datei)
 upload your favicon or enter the url	admin	de	Laden Sie ein Favicon hoch oder geben Sie eine URL dafür ein

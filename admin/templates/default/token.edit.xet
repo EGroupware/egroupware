@@ -14,7 +14,7 @@
 				</row>
 				<row>
 					<et2-description for="account_id" value="User"></et2-description>
-					<et2-select-account id="account_id" accountType="user" emptyLabel="All users"></et2-select-account>
+					<et2-select-account id="account_id" accountType="accounts" emptyLabel="All users"></et2-select-account>
 				</row>
 				<row valign="top">
 					<et2-description for="token_limits" value="Applications"></et2-description>

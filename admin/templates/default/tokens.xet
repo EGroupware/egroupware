@@ -23,15 +23,15 @@
 					<nextmatch-sortheader label="Expiration" id="token_valid_until"/>
 					<et2-vbox>
 						<nextmatch-sortheader label="Revoked" id="token_revoked"/>
-						<et2-nextmatch-header-account label="Revoked by" id="token_revoked_by"></et2-nextmatch-header-account>
+						<et2-nextmatch-header-account emptyLabel="By" id="token_revoked_by"></et2-nextmatch-header-account>
 					</et2-vbox>
 					<et2-vbox>
 						<nextmatch-sortheader label="Created" id="token_created"/>
-						<et2-nextmatch-header-account label="Created by" id="token_created_by"></et2-nextmatch-header-account>
+						<et2-nextmatch-header-account emptyLabel="By" id="token_created_by"></et2-nextmatch-header-account>
 					</et2-vbox>
 					<et2-vbox>
 						<nextmatch-sortheader label="Updated" id="token_created"/>
-						<et2-nextmatch-header-account label="Updated by" id="token_created_by"></et2-nextmatch-header-account>
+						<et2-nextmatch-header-account emptyLabel="By" id="token_created_by"></et2-nextmatch-header-account>
 					</et2-vbox>
 					<nextmatch-header label="Remark" id="token_remark"/>
 				</row>

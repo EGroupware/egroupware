@@ -187,6 +187,7 @@ bi-directional	admin	en	bi-directional
 blocking after wrong password	admin	en	Blocking after wrong password
 bottom	admin	en	Bottom
 bulk password reset	admin	en	Bulk password reset
+by	admin	en	By
 calculate next run	admin	en	Calculate next run
 calendar recurrence horizont in days (default 1000)	admin	en	Calendar recurrence horizon in days. Default = 1000.
 can be used by application	admin	en	Can be used by application
@@ -785,7 +786,6 @@ reset filter	admin	en	Reset filter
 revoke	admin	en	Revoke
 revoke this token	admin	en	Revoke this token
 revoked	admin	en	revoked
-revoked by	admin	en	Revoked by
 rights	admin	en	Rights
 route all mails to	admin	en	Route all Mails to
 rows	admin	en	Rows
@@ -964,7 +964,6 @@ unwilling to save category with current settings. check for inconsistency:	admin
 up	admin	en	Up
 update current email address:	admin	en	Update current email address:
 updated	admin	en	Updated
-updated by	admin	en	Updated by
 upload your background image or enter the url	admin	en	Upload your background image or enter the URL
 upload your certificate .p12/.pfx file	admin	en	Upload your certificate .p12/.pfx file
 upload your favicon or enter the url	admin	en	Upload your favicon or enter the URL
