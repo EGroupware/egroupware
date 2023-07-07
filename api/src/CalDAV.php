@@ -1501,7 +1501,8 @@ class CalDAV extends HTTP_WebDAV_Server
 		// for some reason OS X Addressbook (CFNetwork user-agent) uses now (DAV:add-member given with collection URL+"?add-member")
 		// POST to the collection URL plus a UID like name component (like for regular PUT) to create new entrys
 		if (isset($_GET['add-member']) || Handler::get_agent() == 'cfnetwork' ||
-			substr($options['path'], -1) === '/' && self::isJSON())
+			// addressbook has not implemented a POST handler, therefore we have to call the PUT handler
+			preg_match('#^(/[^/]+)?/addressbook(-[^/]+)?/$', $options['path']) && self::isJSON())
 		{
 			$_GET['add-member'] = '';	// otherwise we give no Location header
 			return $this->PUT($options, 'POST');
@@ -2027,7 +2028,7 @@ class CalDAV extends HTTP_WebDAV_Server
 			// check/handle Prefer: return-representation
 			if ($status[0] === '2' || $status === true)
 			{
-				// we can NOT use 204 No content (forbidds a body) with return=representation, therefore we need to use 200 Ok instead!
+				// we can NOT use 204 No content (forbids a body) with return=representation, therefore we need to use 200 Ok instead!
 				if ($handler->check_return_representation($options, $id, $user) && (int)$status == 204)
 				{
 					$status = '200 Ok';
