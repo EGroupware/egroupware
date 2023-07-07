@@ -81,34 +81,39 @@ class Auth
 	 */
 	static function backend($type=null, $save_in_session=true)
 	{
-		if (is_null($type))
+		if (!isset($type))
 		{
 			$type = self::backendType() ?: null;
 		}
 		// do we have a hostname specific auth type set
-		if (is_null($type) && !empty($GLOBALS['egw_info']['server']['auth_type_host']) &&
+		if (!isset($type) && !empty($GLOBALS['egw_info']['server']['auth_type_host']) &&
 			Header\Http::host() === $GLOBALS['egw_info']['server']['auth_type_hostname'])
 		{
 			$type = $GLOBALS['egw_info']['server']['auth_type_host'];
 		}
-		if (is_null($type)) $type = $GLOBALS['egw_info']['server']['auth_type'];
+		if (!isset($type))
+		{
+			$type = $GLOBALS['egw_info']['server']['auth_type'];
 
-		$account_storage = $GLOBALS['egw_info']['server']['account_storage'] ?? $type;
-		if (!empty($GLOBALS['egw_info']['server']['auth_fallback']) && $type !== $account_storage)
-		{
-			$backend = new Auth\Fallback($type, $account_storage);
-			self::log("Instantiated Auth\\Fallback('$type', '$account_storage')");
+			$account_repository = $GLOBALS['egw_info']['server']['account_repository'] ?? $type;
+			if (!empty($GLOBALS['egw_info']['server']['auth_fallback']) && $type !== $account_repository)
+			{
+				$backend = new Auth\Fallback($type, $account_repository);
+				self::log("Instantiated Auth\\Fallback('$type', '$account_repository')");
+				$type = "fallback:$type:$account_repository";
+			}
 		}
-		else
+		if (!isset($backend))
 		{
-			$backend_class = __CLASS__.'\\'.ucfirst($type);
+			[$t, $p1, $p2] = explode(':', $type)+[null,null,null];
+			$backend_class = __CLASS__.'\\'.ucfirst($t);
 
 			// try old location / name, if not found
-			if (!class_exists($backend_class) && class_exists('auth_'.$type))
+			if (!class_exists($backend_class) && class_exists('auth_'.$t))
 			{
-				$backend_class = 'auth_'.$type;
+				$backend_class = 'auth_'.$t;
 			}
-			$backend = new $backend_class;
+			$backend = new $backend_class($p1, $p2);
 			self::log("Instantiated $backend_class() (for type '$type')");
 		}
 
