@@ -37,6 +37,17 @@ class Token extends APi\Storage\Base
 	}
 
 	/**
+	 * Check if given token / password looks like a token
+	 *
+	 * @param string $token
+	 * @return bool
+	 */
+	public static function isToken(string $token)
+	{
+		return (bool)preg_match(self::TOKEN_REGEXP, $token);
+	}
+
+	/**
 	 * Authenticate a user with a token
 	 *
 	 * @param string $user
