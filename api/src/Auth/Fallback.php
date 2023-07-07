@@ -43,9 +43,10 @@ class Fallback implements Backend
 	 */
 	function __construct($primary='ldap',$fallback='sql')
 	{
-		$this->primary_backend = Api\Auth::backend(str_replace('auth_', '', $primary));
+		// do NOT save our backends in session, as we want "fallback" to be saved
+		$this->primary_backend = Api\Auth::backend(str_replace('auth_', '', $primary), false);
 
-		$this->fallback_backend = Api\Auth::backend(str_replace('auth_', '', $fallback));
+		$this->fallback_backend = Api\Auth::backend(str_replace('auth_', '', $fallback), false);
 	}
 
 	/**
