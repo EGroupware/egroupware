@@ -2936,10 +2936,10 @@ class mail_compose
 		return $messageUid;
 	}
 
-	function send($_formData)
+	function send($_formData, int $_acc_id=null)
 	{
 		$mail_bo	= $this->mail_bo;
-		$mail 		= new Api\Mailer($mail_bo->profileID);
+		$mail 		= new Api\Mailer($_acc_id ?: $mail_bo->profileID);
 		$messageIsDraft	=  false;
 
 		$this->sessionData['mailaccount']	= $_formData['mailaccount'];
@@ -3073,7 +3073,12 @@ class mail_compose
 		// we use the sentFolder settings of the choosen mailaccount
 		// sentFolder is account specific
 		$changeProfileOnSentFolderNeeded = false;
-		if ($_formData['serverID']!=$_formData['mailaccount'])
+		if ($this->mailPreferences['sendOptions'] === 'send_only')
+		{
+			// no need to check for Sent folder
+			$sentFolder = 'none';
+		}
+		elseif ($_formData['serverID']!=$_formData['mailaccount'])
 		{
 			$this->changeProfile($_formData['mailaccount']);
 			//error_log(__METHOD__.__LINE__.'#'.$this->mail_bo->profileID.'<->'.$mail_bo->profileID.'#');

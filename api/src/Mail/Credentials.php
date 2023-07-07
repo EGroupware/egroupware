@@ -324,6 +324,11 @@ class Credentials
 				throw new Api\Exception\WrongParameter("Unknown data[acc_imap_logintype]=".array2string($data['acc_imap_logintype']).'!');
 		}
 		$password = base64_decode(Api\Cache::getSession('phpgwapi', 'password'));
+		// if session password is a token, do NOT use it, but also do NOT throw, just return NULL for the password(s)
+		if (Api\Auth\Token::isToken($password))
+		{
+			$password = null;
+		}
 		$realname = !$set_identity || !empty($data['ident_realname']) ? $data['ident_realname'] :
 			($GLOBALS['egw_info']['user']['account_fullname'] ?? null);
 		$email = !$set_identity || !empty($data['ident_email']) ? $data['ident_email'] :
