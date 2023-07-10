@@ -1087,7 +1087,28 @@ export class etemplate2
 				{
 					api.loading_prompt('et2_submit_spinner', false);
 				}, this, async);
-				request.sendRequest();
+				const request_promise = request.sendRequest();
+
+				// Set up timeout for 30 seconds
+				let warning_message = null;
+				const timeout_id = window.setTimeout(() =>
+				{
+					// Do not abort request, it might still come
+					api.debug("warn", "Request '" + this.menuaction + "' timeout")
+					warning_message = api.message(api.lang("No response from server: your data is probably NOT saved"), "warning");
+					api.loading_prompt('et2_submit_spinner', false);
+				}, 30000);
+
+				// Cancel timeout
+				request_promise.then(() =>
+				{
+					// Responded  * and response processed *
+					clearTimeout(timeout_id);
+					if(warning_message)
+					{
+						warning_message.close();
+					}
+				});
 			}
 			else
 			{
