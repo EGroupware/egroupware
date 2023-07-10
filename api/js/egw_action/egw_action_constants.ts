@@ -1,24 +1,43 @@
+// noinspection JSUnusedGlobalSymbols
+
+/**
+ * eGroupWare egw_action framework - egw action framework
+ *
+ * @link http://www.egroupware.org
+ * @author Andreas Stöckel <as@stylite.de>
+ * @copyright 2011 by Andreas Stöckel
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @package egw_action
+ */
+
+
 //State bitmask (only use powers of two for new states!)
+
 export const EGW_AO_STATE_NORMAL = 0x00;
 export const EGW_AO_STATE_SELECTED = 0x01;
 export const EGW_AO_STATE_FOCUSED = 0x02;
 export const EGW_AO_STATE_VISIBLE = 0x04;  //< Can only be set by the AOI, means that the object is attached to the DOM-Tree and visible
+export type EGW_AO_STATES =
+	typeof EGW_AO_STATE_NORMAL
+	| typeof EGW_AO_STATE_SELECTED
+	| typeof EGW_AO_STATE_FOCUSED
+	| typeof EGW_AO_STATE_VISIBLE
 
 export const EGW_AO_EVENT_DRAG_OVER_ENTER = 0x00;
 export const EGW_AO_EVENT_DRAG_OVER_LEAVE = 0x01;
 
 // No shift key is pressed
 export const EGW_AO_SHIFT_STATE_NONE = 0x00;
-// A shift key, which allows multiselection is pressed (usually CTRL on a PC keyboard)
+// A shift key, which allows multi-selection is pressed (usually CTRL on a PC keyboard)
 export const EGW_AO_SHIFT_STATE_MULTI = 0x01;
-// A shift key is pressed, which forces blockwise selection (SHIFT on a PC keyboard)
+// A shift key is pressed, which forces block-wise selection (SHIFT on a PC keyboard)
 export const EGW_AO_SHIFT_STATE_BLOCK = 0x02;
 
 // If this flag is set, this object will not be returned as "focused". If this
 // flag is not applied to container objects, it may lead to some strange behaviour.
 export const EGW_AO_FLAG_IS_CONTAINER = 0x01;
 
-// If this flag is set, the object will gets its focus when no other object is
+// If this flag is set, the object will get its focus when no other object is
 // selected and e.g. a key is pressed.
 export const EGW_AO_FLAG_DEFAULT_FOCUS = 0x02;
 export const EGW_AI_DRAG = 0x0100; // Use the first byte as mask for event types - 01 is for events used with drag stuff
@@ -102,10 +121,6 @@ export const EGW_KEY_F10 = 121;
 export const EGW_KEY_F11 = 122;
 export const EGW_KEY_F12 = 123;
 
-export const EGW_VALID_KEYS = [
-    8, 9, 13, 27, 46, 32, 33, 34, 37, 38, 39, 40, 48, 49, 50, 51, 52, 53, 54,
-    55, 56, 57, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80,
-    81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 93, 112, 113, 114, 115, 116, 117, 118,
-    119, 120, 121, 122, 123
-]
+export const EGW_VALID_KEYS = [8, 9, 13, 27, 46, 32, 33, 34, 37, 38, 39, 40, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 93, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123] as const;
+export type EGW_KEY_TYPES = typeof EGW_VALID_KEYS[number]
 

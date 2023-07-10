@@ -20,6 +20,7 @@ import {et2_valueWidget} from "../etemplate/et2_core_valueWidget";
 import {nm_action} from "../etemplate/et2_extension_nextmatch_actions";
 import {Et2Dialog} from "../etemplate/Et2Dialog/Et2Dialog";
 import {Et2Favorites} from "../etemplate/Et2Favorites/Et2Favorites";
+import {EgwAction} from "../egw_action/EgwAction";
 
 /**
  * Type for push-message
@@ -2184,6 +2185,9 @@ export abstract class EgwApp
 	{
 		return EgwApp._instances[Symbol.iterator]();
 	}
+
+	//TODO check if this makes any sense
+	confirm:(param: EgwAction, _senders:any, _target:any)=>any=undefined
 }
 
 // EgwApp need to be global on window, as it's used to iterate through all EgwApp instances

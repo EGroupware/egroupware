@@ -15,14 +15,14 @@ import {AppJS} from "../../api/js/jsapi/app_base.js";
 import {et2_createWidget} from "../../api/js/etemplate/et2_core_widget";
 import {et2_dialog} from "../../api/js/etemplate/et2_widget_dialog";
 import {et2_button} from "../../api/js/etemplate/et2_widget_button";
-import {egw_getObjectManager} from '../../api/js/egw_action/egw_action.js';
-import {egwIsMobile, egwSetBit} from "../../api/js/egw_action/egw_action_common.js";
-import {EGW_AO_FLAG_DEFAULT_FOCUS} from "../../api/js/egw_action/egw_action_constants.js";
+import {egw_getObjectManager} from '../../api/js/egw_action/egw_action';
+import {egwIsMobile, egwSetBit} from "../../api/js/egw_action/egw_action_common";
+import {EGW_AO_FLAG_DEFAULT_FOCUS} from "../../api/js/egw_action/egw_action_constants";
 import {
 	egw_keycode_translation_function,
 	egw_keycode_makeValid,
 	egw_keyHandler
-} from "../../api/js/egw_action/egw_keymanager.js";
+} from "../../api/js/egw_action/egw_keymanager";
 import {Et2UrlEmailReadonly} from "../../api/js/etemplate/Et2Url/Et2UrlEmailReadonly";
 import {Et2SelectEmail} from "../../api/js/etemplate/Et2Select/Select/Et2SelectEmail";
 /* required dependency, commented out because no module, but egw:uses is no longer parsed

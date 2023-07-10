@@ -64,11 +64,11 @@ services:
     #environment:
     #- LANG=de
     volumes:
-    - sources:/var/www
-    - data:/var/lib/egroupware
-    - sessions:/var/lib/php/sessions
-    - cache:/root
-    - push-config:/var/lib/egroupware-push
+    - $PWD/sources:/var/www
+    - $PWD/data:/var/lib/egroupware
+    - $PWD/sessions:/var/lib/php/sessions
+    - $PWD/cache:/root
+    - $PWD/push-config:/var/lib/egroupware-push
     # if you want to use the host database:
     # 1. comment out the whole db service below AND
     # 2. set EGW_DB_HOST=localhost AND
@@ -110,7 +110,7 @@ services:
     #- EGW_EXTRA_APP_OLDAPI=https://github.com/EGroupware/phpgwapi.git https://github.com/EGroupware/etemplate.git
     #
     # XDEBUG_REMOTE_HOST need to be set, if the host running the IDE is different from 172.17.0.1 (Mac can use docker.for.mac.localhost)
-    - XDEBUG_REMOTE_HOST=docker.for.mac.localhost
+    - XDEBUG_REMOTE_HOST=172.17.0.1
     restart: always
     depends_on:
     - db
@@ -123,7 +123,7 @@ services:
   nginx:
     image: nginx:stable-alpine
     volumes:
-    - sources:/var/www:ro
+    - $PWD/sources:/var/www:ro
     # to add a certificate create a certificate.pem containing (in that order)
     # 1. private key
     # 2. public key
@@ -134,8 +134,8 @@ services:
     - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
     ports:
     # if no webserver is running on the host, change (first) number to 80 and 443
-    - "8080:80"
-    - "4443:443"
+      - "80:80"
+      - "443:443"
     depends_on:
     - egroupware
     - push
@@ -150,8 +150,9 @@ services:
     environment:
     #- MYSQL_ROOT=root
     - MYSQL_ROOT_PASSWORD=secret
-    - MARIADB_AUTO_UPGRADE=true
+    #- MARIADB_AUTO_UPGRADE=true
     volumes:
+    #for WSL2 no $PWD/ here! otherwhise connection is denied
     - db:/var/lib/mysql
     # to add an own persistent configuration
     #- ./mariadb.cnf:/etc/mysql/mariadb.conf.d/egroupware.cnf
@@ -167,9 +168,10 @@ services:
     command:
       - /var/www/server.php
     volumes:
-    - sources-push:/var/www
-    - sessions:/var/lib/php/sessions
-    - push-config:/var/lib/egroupware-push
+    # push server needs this source
+    - $PWD/sources/egroupware/swoolepush:/var/www
+    - $PWD/sessions:/var/lib/php/sessions
+    - $PWD/push-config:/var/lib/egroupware-push
     container_name: egroupware-push
     restart: always
     depends_on:
@@ -204,9 +206,9 @@ services:
     image: "quay.io/egroupware/collabora-key:stable"
     #image: collabora/code:latest
     volumes:
-    - collabora-config:/etc/loolwsd
+      # $PWD/collabora-config:/etc/loolwsd
       # support for Collabora/CODE 21.11+
-    - collabora-config:/etc/coolwsd
+      - $PWD/data/default/loolwsd:/etc/coolwsd
     restart: always
     container_name: collabora-key
     # set the ip-address of your docker host AND your official DNS name so Collabora
@@ -221,15 +223,15 @@ services:
     image: "quay.io/egroupware/collabora-key:latest"
     command:  bash -c "test -f /tmp/coolwsd/coolwsd.xml || (cp -p /etc/coolwsd/* /tmp/coolwsd && cd /tmp/coolwsd && ln -s coolwsd.conf loolwsd.conf)"
     volumes:
-      - collabora-config:/tmp/coolwsd
+      - $PWD/data/default/loolwsd:/tmp/coolwsd
 
   # Rocket.Chat server
   rocketchat:
-    image: rocketchat/rocket.chat:latest
+    image: quay.io/egroupware/rocket.chat:latest
     command: bash -c 'for i in `seq 1 30`; do node main.js && s=$$? && break || s=$$?; echo "Tried $$i times. Waiting 5 secs..."; sleep 5; done; (exit $$s)'
     restart: unless-stopped
     volumes:
-      - rocketchat-uploads:/app/uploads
+      - $PWD/data/default/rocketchat/uploads:/app/uploads
     # if EGroupware uses a certificate from a private CA, OAuth authentication will fail, you need to:
     # - have the CA certificate stored at /etc/egroupware-docker/private-ca.crt
     # - uncomment the next 2 lines about the private CA:
@@ -253,17 +255,17 @@ services:
 
   # MongoDB for Rocket.Chat
   mongo:
-    image: mongo:4.2
+    image: mongo:5.0
     restart: unless-stopped
     volumes:
       - mongo:/data/db
-      - rocketchat-dumps:/dump
-    command: mongod --smallfiles --oplogSize 128 --replSet rs0 --storageEngine=mmapv1
+      - $PWD/data/default/rocketchat/dump:/dump
+    command: mongod --oplogSize 128 --replSet rs0
     container_name: rocketchat-mongo
   # this container's job is just run the command to initialize the replica set.
   # it will run the command and remove himself (it will not stay running)
   mongo-init-replica:
-    image: mongo:4.2
+    image: mongo:5.0
     command: 'bash -c "for i in `seq 1 30`; do mongo mongo/rocketchat --eval \"rs.initiate({ _id: ''rs0'', members: [ { _id: 0, host: ''localhost:27017'' } ]})\" && s=$$? && break || s=$$?; echo \"Tried $$i times. Waiting 5 secs...\"; sleep 5; done; (exit $$s)"'
     depends_on:
       - mongo
