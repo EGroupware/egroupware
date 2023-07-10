@@ -68,7 +68,7 @@ import {et2_button} from "./et2_widget_button";
 import {et2_template} from "./et2_widget_template";
 import {egw} from "../jsapi/egw_global";
 import {et2_compileLegacyJS} from "./et2_core_legacyJSFunctions";
-import {egwIsMobile} from "../egw_action/egw_action_common.js";
+import {egwIsMobile} from "../egw_action/egw_action_common";
 import {Et2Dialog} from "./Et2Dialog/Et2Dialog";
 import {Et2Select} from "./Et2Select/Et2Select";
 import {loadWebComponent} from "./Et2Widget/Et2Widget";

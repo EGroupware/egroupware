@@ -26,7 +26,7 @@ import {
 	egwAction,
 	egwActionObject,
 	egwActionObjectInterface
-} from "../egw_action/egw_action.js";
+} from "../egw_action/egw_action";
 import {Et2Dialog} from "./Et2Dialog/Et2Dialog";
 import {ColorTranslator} from 'colortranslator';
 /**

@@ -39,8 +39,8 @@ import {et2_nextmatch} from "../../api/js/etemplate/et2_extension_nextmatch";
 import {et2_iframe} from "../../api/js/etemplate/et2_widget_iframe";
 // @ts-ignore
 import {date} from "../../api/js/etemplate/lib/date.js";
-import {sprintf} from "../../api/js/egw_action/egw_action_common.js";
-import {egw_registerGlobalShortcut, egw_unregisterGlobalShortcut} from "../../api/js/egw_action/egw_keymanager.js";
+import {sprintf} from "../../api/js/egw_action/egw_action_common";
+import {egw_registerGlobalShortcut, egw_unregisterGlobalShortcut} from "../../api/js/egw_action/egw_keymanager";
 import {egw, egw_getFramework} from "../../api/js/jsapi/egw_global";
 import {et2_number} from "../../api/js/etemplate/et2_widget_number";
 import {et2_template} from "../../api/js/etemplate/et2_widget_template";
