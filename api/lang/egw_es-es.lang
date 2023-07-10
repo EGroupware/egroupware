@@ -29,7 +29,7 @@
 '%1' copied to clipboard	common	es-es	%1' copiado en el portapapeles
 '%1' has an invalid format	common	es-es	'%1' no tiene un formato válido
 '%1' has an invalid format !!!	common	es-es	¡'%1' no tiene un formato válido!
-'%1' is no php file in the egw server root (%2)!	common	es-es	¡'%1' no es un archivo php en el directorio raíz de EGroupware (%2)!
+'%1' is not a valid json file!	common	es-es	¡'%1' no es un archivo json en el directorio raíz de EGroupware!
 '%1' is not a valid date !!!	common	es-es	¡'%1'  no es una fecha válida!
 '%1' is not a valid floatingpoint number !!!	common	es-es	¡'%1' no es un número válido de coma flotante!
 '%1' is not a valid integer !!!	common	es-es	¡'%1' no es un entero válido!

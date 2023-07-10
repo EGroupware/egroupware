@@ -27,7 +27,7 @@
 '%1' copied to clipboard	common	sl	'%1' se kopira v odložišče
 '%1' has an invalid format	common	sl	'%1' ima nepravilen format
 '%1' has an invalid format !!!	common	sl	'%1' ima nepravilen format
-'%1' is no php file in the egw server root (%2)!	common	sl	'%1' ni datoteka php v koraku eGW strežnika (%2)!
+'%1' is not a valid json file!	common	sl	'%1' ni datoteka json v koraku eGW strežnika!
 '%1' is not a valid date !!!	common	sl	'%1' ni veljaven datum !!!
 '%1' is not a valid floatingpoint number !!!	common	sl	'%1' ni pravilno decimalno število
 '%1' is not a valid integer !!!	common	sl	'%1' ni pravilno celo število

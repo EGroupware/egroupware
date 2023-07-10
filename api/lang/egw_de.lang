@@ -29,7 +29,7 @@
 '%1' copied to clipboard	common	de	'%1' in die Zwischenablage kopiert
 '%1' has an invalid format	common	de	'%1' hat ein ungültiges Format !!!
 '%1' has an invalid format !!!	common	de	'%1' hat ein ungültiges Format !!!
-'%1' is no php file in the egw server root (%2)!	common	de	'%1' ist keine php Datei in dem EGW Server Wurzelverzeichnis (%2)!
+'%1' is not a valid json file!	common	de	'%1' ist keine json Datei in dem EGW Server Wurzelverzeichnis!
 '%1' is not a valid date !!!	common	de	'%1' ist ein ungültiges Datum !!!
 '%1' is not a valid floatingpoint number !!!	common	de	'%1' ist keine gültige Gleitkommazahl !!!
 '%1' is not a valid integer !!!	common	de	'%1' ist keine gültige Ganzzahl !!!
