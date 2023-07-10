@@ -697,7 +697,7 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 	set_disabled( disabled)
 	{
 		var old_value = this.options.disabled;
-		super.set_disabled(disabled);
+		this.disabled = disabled;
 
 		this.div.get(0).classList.toggle("hideme", disabled);
 
