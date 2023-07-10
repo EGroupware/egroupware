@@ -117,10 +117,10 @@ export function et2_dataview_rowAOI(_node)
 	if (egwIsMobile()) {
 		let swipe = new tapAndSwipe(_node,{
 			// set the same threshold as action_popup event to get the tapAndHold working
-			tapHoldThreshold: 600,
+			tapHoldThreshold: 1000,
 			swipe: function (event, direction, distance)
 			{
-				if (distance > 100) selectHandler(event, {swip:direction});
+				selectHandler(event, {swip:direction});
 			},
 			tap: function (event)
 			{

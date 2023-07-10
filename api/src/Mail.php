@@ -4644,7 +4644,7 @@ class Mail
 				);
 				break;
 		}
-		return $bodyPart;
+		return $bodyPart ?? null;
 	}
 
 	/**
@@ -4729,13 +4729,18 @@ class Mail
 				case 'text':
 					switch($part->getSubType())
 					{
+						case 'calendar': // inline ics/ical files
+							if($part->getBytes() > 0)
+							{
+								$partCalendar = $part;
+							}
+						// Fall through in case user has no calendar access
 						case 'plain':
 						case 'html':
-						case 'calendar': // inline ics/ical files
 							if($part->getDisposition() != 'attachment')
 							{
 								$bodyPart[] = $this->getTextPart($_uid, $part, $_htmlMode, $_preserveSeen);
-								$skipParts[$mime_id]=$mime_type;
+								$skipParts[$mime_id] = $mime_type;
 							}
 							//error_log(__METHOD__.' ('.__LINE__.') '.' ->'.$part->type."/".$part->subType.' -> BodyPart:'.array2string($bodyPart[count($bodyPart)-1]));
 							break;
@@ -5057,7 +5062,7 @@ class Mail
 		{
 			$body2return = $_bodyParts;
 		}
-		return $body2return;
+		return $body2return ?? null;
 	}
 
 	/**
@@ -6136,7 +6141,7 @@ class Mail
 				// everything else we only consider after we checked all
 				if (!isset($attachment)) $attachment = $part;
 				// do we want content fetched, can be done later, if not needed
-				if (isset($_stream))
+				if (isset($_stream) && empty($structure->getMetadata('X-EGroupware-Smime')))
 				{
 					$this->fetchPartContents($_uid, $attachment, $_stream);
 				}

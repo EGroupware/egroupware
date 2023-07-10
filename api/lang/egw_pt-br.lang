@@ -83,6 +83,7 @@ add user to responsibles	groupdav	pt-br	adicionar o usuário para responsáveis
 addressbook	common	pt-br	Contatos
 addressbooks to sync in addition to personal addressbook	groupdav	pt-br	Catálogos de endereços para sincronizar, além do catálogo de endereços pessoal
 admin	common	pt-br	Administrador
+admin settings for %1	common	pt-br	Configurações de administrador para %1
 administration	common	pt-br	Administração
 advanced search	common	pt-br	Pesquisa avançada
 afghanistan	common	pt-br	AFEGANISTÃO
@@ -93,6 +94,7 @@ alignment of label and input-field in table-cell	common	pt-br	alinhamento da eti
 alignment of the v/hbox containing table-cell	common	pt-br	Alinhamento da V/HBox contendo a célula da tabela
 all	common	pt-br	Todos
 all addressbooks	groupdav	pt-br	Todos os catálogos de endereços
+all categories	common	pt-br	Todas as categorias
 all days	common	pt-br	Todos os dias
 all fields	common	pt-br	todos os campos
 all in one	groupdav	pt-br	Tudo em um
@@ -701,6 +703,7 @@ location calendars	groupdav	pt-br	Localização calendários
 locations	common	pt-br	Localizações
 logging / debuging	groupdav	pt-br	Registro / debuging
 login	common	pt-br	Conectar
+login rejected by epl firewall, please contact your administrator	common	pt-br	Login rejeitado pelo firewall do EGroupware, entre em contato com o administrador.
 loginid	common	pt-br	ID Login
 logout	common	pt-br	Desconectar
 lost login id	common	pt-br	Login perdido
@@ -713,6 +716,8 @@ macau	common	pt-br	MACAU
 macedonia, the former yugoslav republic of	common	pt-br	MACEDONIA
 madagascar	common	pt-br	MADAGASCAR
 mail domain, eg. "%1"	common	pt-br	Domínio do e-mail, ex. "%1"
+mailvelope addon installation failed! please try again.	common	pt-br	Falha na instalação do addon Mailvelope! Tente novamente.
+mailvelope addon installation succeded. now you may configure the options.	common	pt-br	A instalação do addon Mailvelope foi bem-sucedida. Agora você pode configurar as opções.
 main category	common	pt-br	Cetegoria principal
 maintainer	common	pt-br	Administrador
 malawi	common	pt-br	MALAWI

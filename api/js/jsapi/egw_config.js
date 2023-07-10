@@ -38,7 +38,7 @@ egw.extend('config', egw.MODULE_GLOBAL, function()
 		{
 			const _ask_mailto_handler = () => {
 				let url = egw_webserverUrl;
-				if (url[0] === '/') url = document.location.protocol+'://'+document.location.hostname+(url !== '/' ? url : '');
+				if (url[0] === '/') url = document.location.protocol+'//'+document.location.hostname+(url !== '/' ? url : '');
 				navigator.registerProtocolHandler('mailto', url+'/index.php?menuaction=mail.mail_compose.compose&preset[mailto]=%s', 'Mail');
 				// remember not to ask again for this "session"
 				window.sessionStorage.setItem('asked-mailto-handler', 'yes');

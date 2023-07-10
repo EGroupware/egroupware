@@ -237,7 +237,7 @@ class Categories
 				}
 			}
 			// check if certain parent required
-			if ($parent_id && !in_array($cat['parent'],(array)$parent_id)) continue;
+			if ($parent_id && !in_array($cat['parent']??null, (array)$parent_id)) continue;
 
 			// return global categories just if $globals is set
 			if (!$globals && !empty($cat['appname']) && $cat['appname'] === self::GLOBAL_APPNAME)

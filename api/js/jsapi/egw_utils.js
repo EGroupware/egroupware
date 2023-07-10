@@ -154,6 +154,8 @@ egw.extend('utils', egw.MODULE_GLOBAL, function()
 	 */
 	function fallbackCopyTextToClipboard(event, target_element, text)
 	{
+		const win = target_element?.ownerDocument.defaultView ?? target_element.ownerDocument.parentWindow ?? window;
+
 		// Cancel any no-select css
 		if (target_element)
 		{
@@ -162,17 +164,17 @@ egw.extend('utils', egw.MODULE_GLOBAL, function()
 
 			let range = document.createRange();
 			range.selectNode(target_element);
-			window.getSelection().removeAllRanges();
-			window.getSelection().addRange(range);
+			win.getSelection().removeAllRanges();
+			win.getSelection().addRange(range);
 
 			target_element.style.userSelect = old_select;
 
 
 			// detect we are in IE via checking setActive, since it's
 			// only supported in IE, and make sure there's clipboardData object
-			if (event && typeof event.target.setActive != 'undefined' && window.clipboardData)
+			if (event && typeof event.target.setActive != 'undefined' && win.clipboardData)
 			{
-				window.clipboardData.setData('Text', target_element.textContent.trim());
+				win.clipboardData.setData('Text', target_element.textContent.trim());
 			}
 			if (event && event.clipboardData)
 			{
@@ -181,7 +183,7 @@ egw.extend('utils', egw.MODULE_GLOBAL, function()
 			}
 		}
 		let textArea;
-		if (!window.clipboardData)
+		if (!win.clipboardData)
 		{
 
 			textArea = document.createElement("textarea");
@@ -192,7 +194,7 @@ egw.extend('utils', egw.MODULE_GLOBAL, function()
 			textArea.style.left = "0";
 			textArea.style.position = "fixed";
 
-			document.body.appendChild(textArea);
+			win.document.body.appendChild(textArea);
 			textArea.focus();
 			textArea.select();
 		}
@@ -200,7 +202,7 @@ egw.extend('utils', egw.MODULE_GLOBAL, function()
 		let successful = false;
 		try
 		{
-			successful = document.execCommand('copy');
+			successful = win.document.execCommand('copy');
 			const msg = successful ? 'successful' : 'unsuccessful';
 			console.log('Fallback: Copying text command was ' + msg);
 		}
@@ -209,7 +211,7 @@ egw.extend('utils', egw.MODULE_GLOBAL, function()
 			successful = false;
 		}
 
-		document.body.removeChild(textArea);
+		win.document.body.removeChild(textArea);
 		return successful;
 	}
 
@@ -514,7 +516,8 @@ egw.extend('utils', egw.MODULE_GLOBAL, function()
 				return Promise.resolve(success ? undefined : false);
 			}
 			// Use Clipboard API
-			return navigator.clipboard.writeText(text);
+			const win = target_element?.ownerDocument.defaultView ?? target_element.ownerDocument.parentWindow ?? window;
+			return win.navigator.clipboard.writeText(text);
 		}
 	};
 

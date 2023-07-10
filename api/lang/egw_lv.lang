@@ -53,6 +53,7 @@ add to clipboard	common	lv	Pievienot starpliktuvei
 addressbook	common	lv	Adrešu grāmata
 addressbooks to sync in addition to personal addressbook	groupdav	lv	Papildus personīgajai adrešu grāmatiņai sinhronizējamās adrešu grāmatiņas
 admin	common	lv	Administrators
+admin settings for %1	common	lv	Administratora iestatījumi %1
 administration	common	lv	Administrēšana
 advanced search	common	lv	Uzlabota meklēšana
 afghanistan	common	lv	AFGANISTĀNA
@@ -63,6 +64,7 @@ alignment of label and input-field in table-cell	common	lv	iezīmes un ievades l
 alignment of the v/hbox containing table-cell	common	lv	V/Hbox satura novietojums tabulas kolonnā
 all	common	lv	Visi
 all addressbooks	groupdav	lv	Visas adrešu grāmatas
+all categories	common	lv	Visas kategorijas
 all fields	common	lv	visi lauki
 all in one	groupdav	lv	Viss vienā
 all users	common	lv	Visi lietotāji
@@ -500,6 +502,7 @@ load	common	lv	Ielādēt
 load this template into the editor	common	lv	ielādēt šo veidni redaktorā
 local	common	lv	Vietējais
 login	common	lv	Pieteikties
+login rejected by epl firewall, please contact your administrator	common	lv	EGroupware ugunsmūris noraidīja pieteikšanos, lūdzu, sazinieties ar savu administratoru.
 loginid	common	lv	Pieteikuma ID
 logout	common	lv	Beigt darbu
 lost login id	common	lv	Pazudis pieteikšanās id
@@ -511,6 +514,8 @@ macau	common	lv	MAKAO
 macedonia, the former yugoslav republic of	common	lv	MAĶEDONIJA
 madagascar	common	lv	MADAGASKARA
 mail domain, eg. "%1"	common	lv	pasta domēns, piemēram, "%1
+mailvelope addon installation failed! please try again.	common	lv	Mailvelope addon instalēšana neizdevās! Lūdzu, mēģiniet vēlreiz.
+mailvelope addon installation succeded. now you may configure the options.	common	lv	Mailvelope addon instalācija ir veiksmīga. Tagad varat konfigurēt opcijas.
 main category	common	lv	Galvenā kategorija
 maintainer	common	lv	Uzturētājs
 malawi	common	lv	MALĀVIJA

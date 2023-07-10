@@ -14,7 +14,7 @@
 %1 password set in %2.	setup	fr	%1 mot de passe défini dans %2.
 %1 passwords updated, %3 errors	setup	fr	%1 mots de passe mis à jour, %3 erreur(s)
 %1 users and %2 groups created, %3 errors	setup	fr	%1 utilisateurs et %2 groupes créés, %3 erreurs.
-%1, %2 or %3 the configuration file.	setup	fr	%1, %2 ou le fichier de configuration %3.
+%1 the configuration file.	setup	fr	%1 le fichier de configuration.
 '%1' is no valid domain name!	setup	fr	'%1'  n'est pas un nom de domaine valide !
 '%1' is not allowed as %2. arguments of option %3 !!!	setup	fr	'%1' n'est pas autorisé en tant que %2ème argument de l'option %3 !!!
 '%1' must be integer	setup	fr	%1 doit être un nombre entier.

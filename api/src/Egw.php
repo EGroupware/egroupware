@@ -550,9 +550,10 @@ class Egw extends Egw\Base
 	 */
 	public static function on_shutdown($callback, array $args=array())
 	{
+		//error_log(__METHOD__."(".(((array)$callback)[1]??$callback).", ".json_encode($args).")");
 		array_unshift($args, $callback);
 
-		// prepend new callback, to run them in oposite order they are registered
+		// prepend new callback, to run them in opposite order they are registered
 		array_unshift(self::$shutdown_callbacks, $args);
 	}
 
@@ -575,12 +576,16 @@ class Egw extends Egw\Base
 			foreach(self::$shutdown_callbacks as $n => $data)
 			{
 				try {
-					//error_log(__METHOD__."() running ".array2string($data));
 					$callback = array_shift($data);
-					if (!is_array($callback) || strpos($callback[1], 'session') === false) continue;
+					if (!is_array($callback) || strpos($callback[1], 'session') === false)
+					{
+						//error_log(__METHOD__."() NOT (yet) running ".(((array)$callback)[1]??$callback).json_encode($data));
+						continue;
+					}
+					//error_log(__METHOD__."() running ".(((array)$callback)[1]??$callback).json_encode($data));
 					call_user_func_array($callback, $data);
 				}
-				catch (\Exception $ex) {
+				catch (\Throwable $ex) {
 					_egw_log_exception($ex);
 				}
 				unset(self::$shutdown_callbacks[$n]);
@@ -607,7 +612,7 @@ class Egw extends Egw\Base
 			foreach(self::$shutdown_callbacks as $data)
 			{
 				try {
-					//error_log(__METHOD__."() running ".array2string($data));
+					//error_log(__METHOD__."() running ".(((array)$callback)[1]??$callback).json_encode($data));
 					$callback = array_shift($data);
 					call_user_func_array($callback, $data);
 				}

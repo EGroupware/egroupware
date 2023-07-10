@@ -744,7 +744,16 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(LitFlatpickr))
 				// Avoid infinite loop of setting the same value back triggering another change
 				this._instance.input.value !== flatpickr.formatDate(parsedDate, this.getOptions().dateFormat))
 			{
-				this._instance.setDate(value, true, this._instance.config.altFormat)
+				try
+				{
+					// Can error for time-only due to missing calendar
+					this._instance.setDate(value, true, this._instance.config.altFormat)
+				}
+				catch(e)
+				{
+					// Just do it again, it works the second time
+					this._instance.setDate(value, true, this._instance.config.altFormat);
+				}
 			}
 			// Update the et2-textbox so it has current value for any (required) validation
 			this._inputNode.value = formattedDate;
@@ -1019,13 +1028,13 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(LitFlatpickr))
             <div class="et2-date-time__scrollbuttons" part="scrollbuttons" @click=${this.handleScroll}>
                 <et2-button-icon
                         noSubmit
-                        name="chevron-up"
+                        image="chevron-up"
                         data-direction="1"
                 >↑
                 </et2-button-icon>
                 <et2-button-icon
                         noSubmit
-                        name="chevron-down"
+                        image="chevron-down"
                         data-direction="-1"
                 >↓
                 </et2-button-icon>

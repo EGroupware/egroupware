@@ -48,7 +48,7 @@ import {et2_checkbox} from "../../api/js/etemplate/et2_widget_checkbox";
 import {et2_grid} from "../../api/js/etemplate/et2_widget_grid";
 import {Et2Textbox} from "../../api/js/etemplate/Et2Textbox/Et2Textbox";
 import "./SidemenuDate";
-import {formatDate, formatTime, parseDate} from "../../api/js/etemplate/Et2Date/Et2Date";
+import {Et2Date, formatDate, formatTime, parseDate} from "../../api/js/etemplate/Et2Date/Et2Date";
 import {EGW_KEY_PAGE_DOWN, EGW_KEY_PAGE_UP} from "../../api/js/egw_action/egw_action_constants";
 import {nm_action} from "../../api/js/etemplate/et2_extension_nextmatch_actions";
 import flatpickr from "flatpickr";
@@ -964,28 +964,30 @@ export class CalendarApp extends EgwApp
 
 		let sortablejs = Sortable.create(sortable, {
 			ghostClass: 'srotable_cal_wk_ph',
-			draggable: state.view == 'day'? '.calendar_calDayColHeader' : '.view_row',
-			handle: state.view == 'day'? '.calendar_calToday' : '.calendar_calGridHeader',
+			draggable: state.view == 'day' ? '.calendar_calDayColHeader' : '.view_row',
+			handle: state.view == 'day' ? '.calendar_calToday' : '.calendar_calGridHeader',
 			animation: 100,
-			filter: state.view == 'day'? '.calendar_calTimeGridScroll' : '.calendar_calDayColHeader',
+			filter: state.view == 'day' ? '.calendar_calTimeGridScroll' : '.calendar_calDayColHeader',
+			preventOnFilter: false, // Required for dnd fullday nonblocking
 			dataIdAttr: 'data-owner',
-			direction: state.view == 'day'? 'horizental' : 'vertical',
+			direction: state.view == 'day' ? 'horizental' : 'vertical',
 			sort: state.owner.length > 1 && (
-				state.view == 'day' && state.owner.length < parseInt(''+egw.preference('day_consolidate','calendar')) ||
-				(state.view == 'week' || state.view == 'day4') && state.owner.length < parseInt(''+egw.preference('week_consolidate','calendar'))), // enable/disable sort
-			onStart: function (event)
+				state.view == 'day' && state.owner.length < parseInt('' + egw.preference('day_consolidate', 'calendar')) ||
+				(state.view == 'week' || state.view == 'day4') && state.owner.length < parseInt('' + egw.preference('week_consolidate', 'calendar'))), // enable/disable sort
+			onStart: function(event)
 			{
 				// Put owners into row IDs
-				CalendarApp.views[app.calendar.state.view].etemplates[0].widgetContainer.iterateOver(function(widget) {
+				CalendarApp.views[app.calendar.state.view].etemplates[0].widgetContainer.iterateOver(function(widget)
+				{
 					if(widget.options.owner && !widget.disabled)
 					{
-						widget.div.parents('tr').attr('data-owner',widget.options.owner);
+						widget.div.parents('tr').attr('data-owner', widget.options.owner);
 					}
 					else
 					{
 						widget.div.parents('tr').removeAttr('data-owner');
 					}
-				},this,et2_calendar_timegrid);
+				}, this, et2_calendar_timegrid);
 			},
 			onSort: function(event)
 			{
@@ -1285,7 +1287,7 @@ export class CalendarApp extends EgwApp
 						scroll_animate.call(jQuery(event.target).closest('.calendar_calTimeGrid, .calendar_plannerWidget')[0], direction, delta);
 						return false;
 					},
-					threshold: 100,
+					minSwipeThreshold: 100,
 					allowScrolling: 'vertical'
 				});
 
@@ -1431,16 +1433,16 @@ export class CalendarApp extends EgwApp
 		if(widget)
 		{
 			var recur_end = widget.getRoot().getWidgetById('recur_enddate');
-			if(recur_end && recur_end.getValue && !recur_end.getValue())
+			if(recur_end && recur_end.getValue && !recur_end.value)
 			{
-				recur_end.set_min(widget.getValue());
+				recur_end.set_min(widget.value);
 			}
 
 			// Update end date, min duration is 1 minute
-			let end = <et2_date>widget.getRoot().getWidgetById('end');
-			let start_time = new Date(widget.getValue());
-			let end_time = new Date(end.getValue());
-			if(end.getValue() && end_time <= start_time)
+			let end = <Et2Date>widget.getRoot().getWidgetById('end');
+			let start_time = new Date(widget.value);
+			let end_time = new Date(end.value);
+			if(end.value && end_time <= start_time)
 			{
 				start_time.setMinutes(start_time.getMinutes() + 1);
 				end.set_value(start_time);
@@ -3390,9 +3392,9 @@ export class CalendarApp extends EgwApp
 	 */
 	alarm_custom_date (selectbox? : HTMLInputElement, _widget? : et2_selectbox)
 	{
-		var alarm_date = this.et2.getInputWidgetById('new_alarm[date]');
-		var alarm_options = _widget || this.et2.getInputWidgetById('new_alarm[options]');
-		var start = <et2_date>this.et2.getInputWidgetById('start');
+		var alarm_date = this.et2.getWidgetById('new_alarm[date]');
+		var alarm_options = _widget || this.et2.getWidgetById('new_alarm[options]');
+		var start = <Et2Date><unknown>this.et2.getWidgetById('start');
 
 		if (alarm_date && alarm_options && start)
 		{
@@ -4517,7 +4519,7 @@ export class CalendarApp extends EgwApp
 				( typeof _data.start != "string" ? _data.start.toJSON() : _data.start).slice(0,-1),
                 ( typeof _data.end != "string" ? _data.end.toJSON() : _data.end).slice(0,-1),
 				{
-					participants:Object.keys(_data.participants).filter(v => {return v.match(/^[0-9|e|c]/)})
+					participants: Object.keys(_data.participants ?? []).filter(v => {return v.match(/^[0-9|e|c]/)})
 				}], function(_value){
 					if (_value)
 					{

@@ -16,7 +16,7 @@
 %1 password set in %2.	setup	km	ពាក្យសម្ងាត់ %1 បានកំណត់ក្នុង %2 ។
 %1 passwords updated, %3 errors	setup	km	%1 បានធ្វើបច្ចុប្បន្នភាពពាក្យសម្ងាត់ %3 កំហុស
 %1 users and %2 groups created, %3 errors	setup	km	អ្នកប្រើប្រាស់ %1 និងក្រុម %2 បានបង្កើត %3 កំហុស។
-%1, %2 or %3 the configuration file.	setup	km	%1, %2 ឬ %3 ឯកសារកំណត់រចនាសម្ព័ន្ធ។
+%1 the configuration file.	setup	km	%1 ឯកសារកំណត់រចនាសម្ព័ន្ធ។
 '%1' is no valid domain name!	setup	km	'%1' មិនមែនជាឈ្មោះដែនត្រឹមត្រូវទេ!
 '%1' is not allowed as %2. arguments of option %3 !!!	setup	km	'%1' មិនត្រូវបានអនុញ្ញាតជា%2 អាគុយម៉ង់នៃជម្រើស%3 !!!
 '%1' must be integer	setup	km	%1 ត្រូវតែជាតម្លៃចំនួនគត់។

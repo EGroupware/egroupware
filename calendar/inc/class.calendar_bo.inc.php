@@ -602,8 +602,8 @@ class calendar_bo
 		}
 		// resolve users to add memberships for users and members for groups
 		// for search, do NOT use freebusy rights, as it would allow to probe the content of event entries
-		$users = $this->resolve_users($params['users'], $params['filter'] == 'no-enum-groups', $params['ignore_acl'], empty($params['query']));
-		if($params['private_allowed'])
+		$users = $this->resolve_users($params['users'], $params['filter'] == 'no-enum-groups', $params['ignore_acl'] ?? null, empty($params['query']));
+		if(!empty($params['private_allowed']))
 		{
 			$params['private_allowed'] = $this->resolve_users($params['private_allowed'],$params['filter'] == 'no-enum-groups',$params['ignore_acl'], empty($params['query']));
 		}
@@ -667,7 +667,7 @@ class calendar_bo
 		//echo "<p align=right>remove_rejected_by_user=$remove_rejected_by_user, filter=$filter, params[users]=".print_r($param['users'])."</p>\n";
 		foreach($events as $id => $event)
 		{
-			if ($params['enum_groups'] && $this->enum_groups($event))
+			if (!empty($params['enum_groups']) && $this->enum_groups($event))
 			{
 				$events[$id] = $event;
 			}
@@ -680,9 +680,9 @@ class calendar_bo
 			{
 				$is_private = !$this->check_perms(Acl::READ,$event);
 			}
-			if (!$params['ignore_acl'] && ($is_private || (!$event['public'] && $filter == 'hideprivate')))
+			if (empty($params['ignore_acl']) && ($is_private || (!$event['public'] && $filter == 'hideprivate')))
 			{
-				$this->clear_private_infos($events[$id],$params['private_allowed'] ? $params['private_allowed'] : $users);
+				$this->clear_private_infos($events[$id],$params['private_allowed'] ?: $users);
 			}
 		}
 
@@ -1344,7 +1344,7 @@ class calendar_bo
 			}
 			if (!is_array($event))
 			{
-				if ($this->xmlrpc)
+				if (!empty($this->xmlrpc))
 				{
 					$GLOBALS['server']->xmlrpc_error($GLOBALS['xmlrpcerr']['not_exist'],$GLOBALS['xmlrpcstr']['not_exist']);
 				}
@@ -1698,7 +1698,7 @@ class calendar_bo
 				$id2email[$id] = $GLOBALS['egw']->accounts->id2name($id,'account_email');
 			}
 		}
-		return $id2lid[$id].(($append_email || $id[0] == 'e') && !empty($id2email[$id]) ? ' <'.$id2email[$id].'>' : '');
+		return $id2lid[$id].(($append_email || is_string($id) && $id[0] == 'e') && !empty($id2email[$id]) ? ' <'.$id2email[$id].'>' : '');
 	}
 
 	/**
@@ -2187,7 +2187,7 @@ class calendar_bo
 	{
 		if (!is_array($entry))
 		{
-			list($id,$recur_date) = explode(':',$entry);
+			list($id,$recur_date) = explode(':',$entry)+[null,null];
 			$entry = $this->read($id, $recur_date, true, 'server');
 		}
 		$etag = $schedule_tag = $entry['id'].':'.$entry['etag'];

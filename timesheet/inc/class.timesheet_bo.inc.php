@@ -464,40 +464,43 @@ class timesheet_bo extends Api\Storage
 		}
 		else
 		{
-			if (!is_array($filter['ts_owner'])) $filter['ts_owner'] = array($filter['ts_owner']);
+			if(!is_array($filter['ts_owner']))
+			{
+				$filter['ts_owner'] = array($filter['ts_owner']);
+			}
 
 			foreach($filter['ts_owner'] as $key => $owner)
 			{
-				if (!isset($this->grants[$owner]))
+				if(!isset($this->grants[$owner]))
 				{
 					unset($filter['ts_owner'][$key]);
 				}
 			}
 		}
-		if (isset($filter['ts_status']) && $filter['ts_status'] && $filter['ts_status'] != self::DELETED_STATUS)
+		if(isset($filter['ts_status']) && $filter['ts_status'] && $filter['ts_status'] != self::DELETED_STATUS)
 		{
 			$filter['ts_status'] = $this->get_sub_status($filter['ts_status']);
 		}
 		else
 		{
-			$filter[] = '(ts_status ' . ($filter['ts_status'] == self::DELETED_STATUS ? '=':'!= ') . self::DELETED_STATUS .
-				($filter['ts_status'] == self::DELETED_STATUS ? '':' OR ts_status IS NULL') . ')';
+			$filter[] = '(ts_status ' . ($filter['ts_status'] == self::DELETED_STATUS ? '=' : '!= ') . self::DELETED_STATUS .
+				($filter['ts_status'] == self::DELETED_STATUS ? '' : ' OR ts_status IS NULL') . ')';
 		}
-		if (!count($filter['ts_owner']))
+		if(is_array($filter['ts_owner']) && !count($filter['ts_owner']))
 		{
 			$this->total = 0;
 			$this->summary = array();
 			return array();
 		}
-		if ($only_summary==false && $criteria && $this->show_sums)
+		if($only_summary == false && $criteria && $this->show_sums)
 		{
 			// if we have a criteria AND intend to show the sums we first query the affected ids,
 			// then we throw away criteria and filter, and replace the filter with the list of ids
-			$ids = parent::search($criteria,'egw_timesheet.ts_id as id','','',$wildcard,$empty,$op,false,$filter,$join);
+			$ids = parent::search($criteria, 'egw_timesheet.ts_id as id', '', '', $wildcard, $empty, $op, false, $filter, $join);
 			//_debug_array($ids);
-			if (empty($ids))
+			if(empty($ids))
 			{
-				$this->summary = array('duration'=>0,'price'=>null,'quantity'=>0);
+				$this->summary = array('duration' => 0, 'price' => null, 'quantity' => 0);
 				return array();
 			}
 			unset($criteria);
@@ -779,13 +782,18 @@ class timesheet_bo extends Api\Storage
 	 * @param array $ids array of timesheet id's
 	 * @return array with values for keys "duration", "price", "max_modified" and "quantity"
 	 */
-	function sum($ids)
+	function sum($ids, $ignore_acl = false)
 	{
-		if (!$ids)
+		if(!$ids)
 		{
 			return array('duration' => 0, 'quantity' => 0, 'price' => 0, 'max_modified' => null);
 		}
-		return $this->search(array('ts_id'=>$ids),true,'','','',false,'AND',false,null,'',false,true);
+		$filter = [];
+		if($ignore_acl)
+		{
+			$filter['ts_owner'] = false;
+		}
+		return $this->search(array('ts_id' => $ids), true, '', '', '', false, 'AND', false, $filter, '', false, true);
 	}
 
 	/**

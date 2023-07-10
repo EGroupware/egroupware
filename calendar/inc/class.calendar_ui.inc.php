@@ -665,10 +665,10 @@ class calendar_ui
 			$this->cal_prefs['saved_states']['cat_id']))
 		{
 			$filter_check = array(
-				'start' => $event['start'],
-				'users' => $this->cal_prefs['saved_states']['owner'],
-				'cat_id' => $this->cal_prefs['saved_states']['cat_id'],
-				'filter' => $this->cal_prefs['saved_states']['status_filter'],
+				'start'    => $event['start'] - 1,
+				'users'    => $this->cal_prefs['saved_states']['owner'],
+				'cat_id'   => $this->cal_prefs['saved_states']['cat_id'],
+				'filter'   => $this->cal_prefs['saved_states']['status_filter'],
 				'num_rows' => 1
 			);
 			$filter_match = (bool)$this->bo->search($filter_check, $this->bo->so->cal_table.".cal_id = {$event['id']}");

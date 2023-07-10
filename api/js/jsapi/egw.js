@@ -452,6 +452,8 @@ window.app = {classes: {}};
 	//
 	window.egw_LAB.wait = window.egw_ready.then;
 
+	// dispatch egw-is-created event in order to let login.js knows about egw object readiness
+	document.dispatchEvent(new Event('egw-is-created'));
 	/**
 	 *
 	 */

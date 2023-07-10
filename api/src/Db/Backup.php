@@ -691,7 +691,7 @@ class Backup
 	}
 
 	/**
-	 * Insert multiple rows ignoring doublicate entries
+	 * Insert multiple rows ignoring duplicate entries
 	 *
 	 * @param string $table
 	 * @param array $rows
@@ -704,14 +704,14 @@ class Backup
 		}
 		catch(Exception\InvalidSql $e)
 		{
-			// try inserting them one by one, ignoring doublicates
+			// try inserting them one by one, ignoring duplicates
 			foreach($rows as $data)
 			{
 				try {
 					$this->db->insert($table, $data, False, __LINE__, __FILE__, false, false, $schema);
 				}
 				catch(Exception\InvalidSql $e) {
-					echo "<p>".$e->getMessage()."</p>\n";
+					echo "<p>$table: ".$e->getMessage()." ignored</p>\n";
 				}
 			}
 		}

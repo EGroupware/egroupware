@@ -121,6 +121,7 @@ export class Et2Image extends Et2Widget(SlotMixin(LitElement)) implements et2_ID
                  src="${src}"
                  alt="${this.label}"
                  part="image"
+                 loading="lazy"
                  title="${this.statustext || this.label}"
             >`;
 	}

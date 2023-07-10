@@ -84,6 +84,7 @@ add user to responsibles, removing evtl. previous category user	groupdav	fi	Lis�
 addressbook	common	fi	Osoitekirja
 addressbooks to sync in addition to personal addressbook	groupdav	fi	Yksityisen osoitekirjan lisäksi synkronoitavat osoitekirjat
 admin	common	fi	Ylläpito
+admin settings for %1	common	fi	Ylläpitäjän asetukset %1 :lle
 administration	common	fi	Ylläpito
 advanced search	common	fi	Tarkempi haku
 afghanistan	common	fi	AFGANISTAN
@@ -94,6 +95,7 @@ alignment of label and input-field in table-cell	common	fi	Otsikon ja syöttöke
 alignment of the v/hbox containing table-cell	common	fi	Sisennys V/HBox:ssaa sisältäen taulukon solun
 all	common	fi	Kaikki
 all addressbooks	groupdav	fi	Kaikki osoitekirjat
+all categories	common	fi	Kaikki luokat
 all days	common	fi	Kaikki päivät
 all fields	common	fi	Kaikki kentät
 all in one	groupdav	fi	Kaikki samaan
@@ -701,6 +703,7 @@ location calendars	groupdav	fi	Paikat/Sijainnit -kalenterit
 locations	common	fi	Paikat/Sijainnit
 logging / debuging	groupdav	fi	Loki
 login	common	fi	Kirjaudu
+login rejected by epl firewall, please contact your administrator	common	fi	EGroupwaren palomuuri hylkäsi kirjautumisen, ota yhteyttä järjestelmänvalvojaan.
 loginid	common	fi	Kirjautumistunnus
 logout	common	fi	Kirjaudu ulos
 lost login id	common	fi	Kirjautumistunnus unohtunut
@@ -712,6 +715,8 @@ macau	common	fi	MACAU
 macedonia, the former yugoslav republic of	common	fi	MAKEDONIA, ENTINEN JUGOSLAVIAN TASAVALTA
 madagascar	common	fi	MADAGASCAR
 mail domain, eg. "%1"	common	fi	Sähköposti domain, esim. "%1"
+mailvelope addon installation failed! please try again.	common	fi	Mailvelope-lisäosan asennus epäonnistui! Yritä uudelleen.
+mailvelope addon installation succeded. now you may configure the options.	common	fi	Mailvelope-lisäosan asennus onnistui. Nyt voit määrittää asetukset.
 main category	common	fi	Pääkategoria
 maintainer	common	fi	Ylläpitäjä
 malawi	common	fi	MALAWI

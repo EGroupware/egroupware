@@ -84,7 +84,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 	 */
 	public function __construct(activesync_backend $backend)
 	{
-		if ($GLOBALS['egw_setup']) return;
+		if (isset($GLOBALS['egw_setup'])) return;
 
 		//$this->debugLevel=2;
 		$this->backend = $backend;
@@ -1069,18 +1069,18 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 			$output->read = $headers["flags"];
 
 			$output->flag = new SyncMailFlags();
-			if ($headers['flagged'] == 1)
+			if (isset($headers['flagged']) && $headers['flagged'] == 1)
 			{
 				$output->flag->flagstatus = 2;
 				//$output->flag->flagtype = "Flag for Follow up";
 			} else {
 				$output->flag->flagstatus = 0;
 			}
-			if ($headers['answered'])
+			if (!empty($headers['answered']))
 			{
 				$output->lastverexecuted = AS_REPLYTOSENDER;
 			}
-			elseif ($headers['forwarded'])
+			elseif (!empty($headers['forwarded']))
 			{
 				$output->lastverexecuted = AS_FORWARD;
 			}
@@ -1492,7 +1492,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 			// 'seen' aka 'read' is the only flag we want to know about
 			$mess["flags"] = 0;
 			// outlook supports additional flags, set them to 0
-			if($vars["seen"]) $mess["flags"] = 1;
+			if(!empty($vars["seen"])) $mess["flags"] = 1;
 			if ($this->debugLevel>3) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.array2string($mess));
 			$messagelist[$vars['uid']] = $mess;
 			unset($mess);
@@ -1518,9 +1518,9 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 	static function doFlagsMod($headerFlags)
 	{
 		$flags = 'nnn';
-		if ($headerFlags['flagged']) $flags[0] = 'f';
-		if ($headerFlags['answered']) $flags[1] = 'a';
-		if ($headerFlags['forwarded']) $flags[2] = 'f';
+		if (!empty($headerFlags['flagged'])) $flags[0] = 'f';
+		if (!empty($headerFlags['answered'])) $flags[1] = 'a';
+		if (!empty($headerFlags['forwarded'])) $flags[2] = 'f';
 		//ZLog::Write(LOGLEVEL_DEBUG, __METHOD__.'('.array2string($headerFlags).') returning '.array2string($flags));
 		return $flags;
 	}

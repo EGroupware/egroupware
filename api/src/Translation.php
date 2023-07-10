@@ -1076,6 +1076,7 @@ class Translation
 				Cache::unsetCache(Cache::INSTANCE,__CLASS__,$app.':'.$key);
 			}
 		}
+		self::max_lang_time(time());
  	}
 
 	/**

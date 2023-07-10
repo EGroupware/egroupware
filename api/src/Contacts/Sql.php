@@ -421,7 +421,7 @@ class Sql extends Api\Storage
 		);
 
 		$columns = implode(', ', $group);
-		if ($this->db->Type == 'mysql' && (float)$this->db->ServerInfo['version'] >= 4.0)
+		if (substr($this->db->Type, 0, 5) === 'mysql' && (float)$this->db->ServerInfo['version'] >= 4.0)
 		{
 			$mysql_calc_rows = 'SQL_CALC_FOUND_ROWS ';
 		}
@@ -623,7 +623,7 @@ class Sql extends Api\Storage
 			}
 			// postgres requires that expressions in order by appear in the columns of a distinct select
 			$all_matches = null;
-			if ($this->db->Type != 'mysql' && preg_match_all("/(#?[a-zA-Z_.]+) *(<> *''|IS NULL|IS NOT NULL)? *(ASC|DESC)?(,|$)/ui",
+			if (substr($this->db->Type, 0, 5) !== 'mysql' && preg_match_all("/(#?[a-zA-Z_.]+) *(<> *''|IS NULL|IS NOT NULL)? *(ASC|DESC)?(,|$)/ui",
 				$order_by, $all_matches, PREG_SET_ORDER))
 			{
 				if (!is_array($extra_cols))	$extra_cols = $extra_cols ? explode(',',$extra_cols) : array();
@@ -631,7 +631,7 @@ class Sql extends Api\Storage
 				{
 					$table = '';
 					$column = $matches[1];
-					if ($column[0] == '#') continue;	// order by custom field is handeled in so_sql_cf anyway
+					if ($column[0] == '#' || $column === 'account_id') continue;	// order by custom field is handled in so_sql_cf anyway
 					if (($key = array_search($column, $this->db_cols)) !== false) $column = $key;
 					if (strpos($column,'.') === false)
 					{

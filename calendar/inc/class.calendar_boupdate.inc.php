@@ -133,8 +133,8 @@ class calendar_boupdate extends calendar_bo
 		// check some minimum requirements:
 		// - new events need start, end and title
 		// - updated events cant set start, end or title to empty
-		if (!$event['id'] && (!$event['start'] || !$event['end'] || !$event['title']) ||
-			$event['id'] && (isset($event['start']) && !$event['start'] || isset($event['end']) && !$event['end'] ||
+		if (empty($event['id']) && (!$event['start'] || !$event['end'] || !$event['title']) ||
+			!empty($event['id']) && (isset($event['start']) && !$event['start'] || isset($event['end']) && !$event['end'] ||
 			isset($event['title']) && !$event['title']))
 		{
 			$messages[] = lang('Required information (start, end, title, ...) missing!');
@@ -143,7 +143,7 @@ class calendar_boupdate extends calendar_bo
 
 		$status_reset_to_unknown = false;
 
-		if (($new_event = !$event['id']))	// some defaults for new entries
+		if (($new_event = empty($event['id'])))	// some defaults for new entries
 		{
 			// if no owner given, set user to owner
 			if (!$event['owner']) $event['owner'] = $this->user;
@@ -185,7 +185,7 @@ class calendar_boupdate extends calendar_bo
 				': '.implode(', ',$removed);
 		}
 		// check category based ACL
-		if ($event['category'])
+		if (!empty($event['category']))
 		{
 			if (!is_array($event['category'])) $event['category'] = explode(',',$event['category']);
 			if (!$old_event || !isset($old_event['category']))
@@ -236,7 +236,7 @@ class calendar_boupdate extends calendar_bo
 		}
 
 		// generate a video-room-url, if we need one and not already have one
-		if ($event['videoconference'] && empty($event['##videoconference']) && !calendar_hooks::isVideoconferenceDisabled())
+		if (!empty($event['videoconference']) && empty($event['##videoconference']) && !calendar_hooks::isVideoconferenceDisabled())
 		{
 			$event['##videoconference'] = EGroupware\Status\Videoconference\Call::genUniqueRoomID();
 		}
@@ -245,7 +245,7 @@ class calendar_boupdate extends calendar_bo
 			$event['##videoconference'] = '';
 		}
 		// update videoconference resource amounts based on number of participants
-		if ($event['videoconference'] && !empty($event['##videoconference']) && !calendar_hooks::isVideoconferenceDisabled()
+		if (!empty($event['videoconference']) && !empty($event['##videoconference']) && !calendar_hooks::isVideoconferenceDisabled()
 			&& ($videoconferenceResId = \EGroupware\Status\Hooks::getVideoconferenceResourceId()))
 		{
 			$participant_total = 0;
@@ -291,13 +291,13 @@ class calendar_boupdate extends calendar_bo
 		$event = $this->read($cal_id, null, $ignore_acl, 'ts', $new_event && !$event['public'] ? $this->user : null);
 		//error_log("new $cal_id=". array2string($event));
 
-		if($old_event['deleted'] && $event['deleted'] == null)
+		if(!empty($old_event['deleted']) && !isset($event['deleted']))
 		{
 			// Restored, bring back links
 			Link::restore('calendar', $cal_id);
 			$update_type = 'add';
 		}
-		if ($this->log_file)
+		if (!empty($this->log_file))
 		{
 			$this->log2file($event2save,$event,$old_event);
 		}
@@ -306,7 +306,7 @@ class calendar_boupdate extends calendar_bo
 		{
 			if ($new_event)
 			{
-				$this->send_update(MSG_ADDED,$event['participants'],'',$event);
+				$this->send_update(MSG_ADDED,$event['participants'],null, $event);
 			}
 			else // update existing event
 			{
@@ -636,7 +636,7 @@ class calendar_boupdate extends calendar_bo
 	 * @param string $status of current user
 	 * @return boolean true = update requested, false otherwise
 	 */
-	public static function update_requested($userid, $part_prefs, &$msg_type, $old_event ,$new_event, $role, $status=null)
+	public function update_requested($userid, $part_prefs, &$msg_type, $old_event ,$new_event, $role, $status=null)
 	{
 		if ($msg_type == MSG_ALARM)
 		{
@@ -649,8 +649,14 @@ class calendar_boupdate extends calendar_bo
 		$msg_is_response = $msg_type == MSG_REJECTED || $msg_type == MSG_ACCEPTED || $msg_type == MSG_TENTATIVE || $msg_type == MSG_DELEGATED;
 
 		// Check if user is not participating, and does not want notifications
-		if ($msg_is_response && !$part_prefs['calendar']['receive_not_participating'] && !array_key_exists($userid, $old_event['participants'] ?? []))
+		if ($msg_is_response && is_array($old_event) && empty($part_prefs['calendar']['receive_not_participating']) &&
+			// userid is the email address for non-user and NOT necessary the uid used as key in participants ("rb@egroupware.org" vs "eRalf Becker <rb@egroupware.org>")
+			!in_array(is_numeric($userid) ? $userid : strtolower($userid), array_map(function($uid)
+			{
+				return is_numeric($uid) ? $uid : strtolower($this->resource_info($uid)['email'] ?? '');
+			}, array_keys($old_event['participants'])), false))
 		{
+			error_log(__METHOD__."(userid=$userid, receive_not_participating='{$part_prefs['calendar']['receive_not_participating']}', msg_type=$msg_type, {participants: ".json_encode($old_event['participants']).", ...}, role='$role') msg_is_response=$msg_is_response --> user $userid is NOT participating");
 			return false;
 		}
 
@@ -701,7 +707,7 @@ class calendar_boupdate extends calendar_bo
 						}
 					}
 				case 'add_cancel':
-					if ($msg_is_response && ($old_event['owner'] == $userid || $role == 'CHAIR') ||
+					if ($msg_is_response && is_array($old_event) && ($old_event['owner'] == $userid || $role == 'CHAIR') ||
 						$msg_type == MSG_DELETED || $msg_type == MSG_ADDED || $msg_type == MSG_DISINVITE)
 					{
 						++$want_update;
@@ -711,7 +717,7 @@ class calendar_boupdate extends calendar_bo
 					break;
 			}
 		}
-		//error_log(__METHOD__."(userid=$userid, receive_updates='$ru', msg_type=$msg_type, ..., role='$role') msg_is_response=$msg_is_response --> want_update=$want_update");
+		//error_log(__METHOD__."(userid=$userid, receive_updates='$ru', msg_type=$msg_type, ".json_encode($old_event).", ..., role='$role') msg_is_response=$msg_is_response --> want_update=$want_update");
 		return $want_update > 0;
 	}
 
@@ -761,7 +767,9 @@ class calendar_boupdate extends calendar_bo
 				$msg_type = MSG_DELETED;
 				break;
 		}
-		$ret = self::update_requested($account_id, $prefs, $msg_type, array(), array(), $role);
+		static $calendar_bo=null;
+		if (!isset($calendar_bo)) $calendar_bo = new calendar_bo();
+		$ret = $calendar_bo->update_requested($account_id, $prefs, $msg_type, array(), array(), $role);
 		//error_log(__METHOD__."('$user_or_email', '$ical_method', '$role') account_id=$account_id --> updated_requested returned ".array2string($ret));
 		return $ret;
 	}
@@ -870,12 +878,12 @@ class calendar_boupdate extends calendar_bo
 	 */
 	function _send_update($msg_type, $to_notify, $old_event, $new_event=null, $user=0, array $alarm=null, $ignore_prefs = false)
 	{
-		//error_log(__METHOD__."($msg_type,".array2string($to_notify).",...) ".array2string($new_event));
+		//error_log(__METHOD__."($msg_type, ".json_encode($to_notify).", ...,  ".json_encode($new_event).", ...)");
 		if (!is_array($to_notify))
 		{
 			$to_notify = array();
 		}
-		$notify_externals = $new_event ? $new_event['##notify_externals'] : $old_event['##notify_externals'];
+		$notify_externals = $new_event ? ($new_event['##notify_externals']??null) : ($old_event['##notify_externals']??null);
 		$disinvited = $msg_type == MSG_DISINVITE ? array_keys($to_notify) : array();
 
 		$owner = $old_event ? $old_event['owner'] : $new_event['owner'];
@@ -889,6 +897,8 @@ class calendar_boupdate extends calendar_bo
 			!$new_event && $old_event && $this->date2ts($old_event['start']) < ($this->now_su - 10)
 		)
 		{
+			error_log(__METHOD__."($msg_type, ".json_encode($to_notify).", ...,  ".json_encode($new_event).", ...) --> ignoring event in the past: start=".
+				date('Y-m-d H:i:s', ($new_event ?: $old_event)['start'])." < ".date('Y-m-d H:i:s', $this->now_su-10));
 			return False;
 		}
 		// check if default timezone is set correctly to server-timezone (ical-parser messes with it!!!)
@@ -942,9 +952,9 @@ class calendar_boupdate extends calendar_bo
 				}
 			}
 		}
-		// unless we notfiy externals about everything aka 'responses'
+		// unless we notify externals about everything aka 'responses'
 		// we will notify only an external chair, if only one exists
-		if (($notify_externals ?: $GLOBALS['egw_info']['user']['calendar']['notify_externals']) !== 'responses')
+		if (($notify_externals ?: $GLOBALS['egw_info']['user']['calendar']['notify_externals'] ?? null) !== 'responses')
 		{
 			// check if we have *only* an external chair
 			$chair = null;
@@ -989,7 +999,7 @@ class calendar_boupdate extends calendar_bo
 			{
 				$res_info = $this->resource_info($userid);
 
-				// check if responsible of a resource has read rights on event (might be private!)
+				// check if responsible for a resource has read rights on event (might be private!)
 				if ($res_info['app'] == 'resources' && $res_info['responsible'] &&
 					!$this->check_perms(Acl::READ, $event, 0, 'ts', null, $res_info['responsible']))
 				{
@@ -1053,9 +1063,10 @@ class calendar_boupdate extends calendar_bo
 					$fullname = $res_info && !empty($res_info['name']) ? $res_info['name'] : $userid;
 				}
 				$m_type = $msg_type;
-				if (!$ignore_prefs && !self::update_requested($userid, $part_prefs, $m_type, $old_event, $new_event, $role,
+				if (!$ignore_prefs && !$this->update_requested($userid, $part_prefs, $m_type, $old_event, $new_event, $role,
 					$event['participants'][$GLOBALS['egw_info']['user']['account_id']]))
 				{
+					//error_log("--> Update/notification NOT requested / ignored");
 					continue;
 				}
 				$action = $notify_msg = null;
@@ -1165,7 +1176,7 @@ class calendar_boupdate extends calendar_bo
 							// we need to pass $event[id] so iCal class reads event again,
 							// as event is in user TZ, but iCal class expects server TZ!
 							$ics = $calendar_ical->exportVCal([$cleared_event],
-								'2.0', $method, $cleared_event['recur_date'],
+								'2.0', $method, $cleared_event['recur_date'] ?? null,
 								'', 'utf-8', $method == 'REPLY' ? $user : 0
 							);
 							unset($calendar_ical);
@@ -1371,14 +1382,14 @@ class calendar_boupdate extends calendar_bo
 		//error_log(__METHOD__.'('.array2string($event).", $ignore_acl, $updateTS)");
 
 		// check if user has the permission to update / create the event
-		if (!$ignore_acl && ($event['id'] && !$this->check_perms(Acl::EDIT,$event['id']) ||
-			!$event['id'] && !$this->check_perms(Acl::EDIT,0,$event['owner']) &&
+		if (!$ignore_acl && (!empty($event['id']) && !$this->check_perms(Acl::EDIT,$event['id']) ||
+			empty($event['id']) && !$this->check_perms(Acl::EDIT,0,$event['owner']) &&
 			!$this->check_perms(Acl::ADD,0,$event['owner'])))
 		{
 			return false;
 		}
 
-		if ($event['id'])
+		if (!empty($event['id']))
 		{
 			// invalidate the read-cache if it contains the event we store now
 			if ($event['id'] == self::$cached_event['id']) self::$cached_event = array();
@@ -1499,16 +1510,16 @@ class calendar_boupdate extends calendar_bo
 			$this->enum_groups($expanded);
 			foreach($event['alarm'] as $id => &$alarm)
 			{
-				if($alarm['time'])
+				if(!empty($alarm['time']))
 				{
 					$alarm['time'] = $this->date2ts($alarm['time'], true);    // user to server-time
 				}
 
 				// remove alarms belonging to not longer existing or rejected participants
-				if ($alarm['owner'] && isset($expanded['participants']))
+				if (!empty($alarm['owner']) && isset($expanded['participants']))
 				{
 					// Don't auto-delete alarm if for all users
-					if($alarm['all']) continue;
+					if(!empty($alarm['all'])) continue;
 
 					$status = $expanded['participants'][$alarm['owner']];
 					if (!isset($status) || calendar_so::split_status($status) === 'R')
@@ -1518,7 +1529,7 @@ class calendar_boupdate extends calendar_bo
 						//error_log(__LINE__.': '.__METHOD__."(".array2string($event).") deleting alarm=".array2string($alarm).", $status=".array2string($alarm));
 					}
 				}
-				else if (!$alarm['owner'])
+				else if (empty($alarm['owner']))
 				{
 					$alarm['owner'] = $event['owner'];
 				}
@@ -1562,7 +1573,7 @@ class calendar_boupdate extends calendar_bo
 			$event['created'] = $save_event['created'] = $this->now;
 			$event['creator'] = $save_event['creator'] = $this->user;
 		}
-		$set_recurrences = $old_event ? abs(Api\DateTime::to($event['recur_enddate'], 'utc') - Api\DateTime::to($old_event['recur_enddate'], 'utc')) > 1 : false;
+		$set_recurrences = $old_event ? abs(Api\DateTime::to($event['recur_enddate']??null, 'utc') - Api\DateTime::to($old_event['recur_enddate']??null, 'utc')) > 1 : false;
 		$set_recurrences_start = 0;
 		if (($cal_id = $this->so->save($event,$set_recurrences,$set_recurrences_start,0,$event['etag'])) && $set_recurrences && $event['recur_type'] != MCAL_RECUR_NONE)
 		{
@@ -1573,7 +1584,7 @@ class calendar_boupdate extends calendar_bo
 		}
 
 		// create links for new participants from addressbook, if configured
-		if ($cal_id && $GLOBALS['egw_info']['server']['link_contacts'] && $event['participants'])
+		if ($cal_id && $GLOBALS['egw_info']['server']['link_contacts'] && !empty($event['participants']))
 		{
 			foreach($event['participants'] as $uid => $status)
 			{
@@ -1602,7 +1613,7 @@ class calendar_boupdate extends calendar_bo
 		}
 		foreach(['start', 'end', 'recur_enddate'] as $ts)
 		{
-			if(is_object($save_event[$ts]))
+			if(isset($save_event[$ts]) && is_object($save_event[$ts]))
 			{
 				$save_event[$ts] = $save_event[$ts]->format('ts');
 			}
@@ -1951,7 +1962,7 @@ class calendar_boupdate extends calendar_bo
 				{
 					foreach($event['alarm'] as $id => $alarm)
 					{
-						$this->delete_alarm($id);
+						$this->delete_alarm($id, true);
 					}
 				}
 			}
@@ -3119,7 +3130,7 @@ class calendar_boupdate extends calendar_bo
 		{
 			foreach($event['alarm'] as $id => $alarm)
 			{
-				$event['alarm'][$id]['time'] = $this->date2usertime($alarm['time']);
+				$event['alarm'][$id]['time'] = $this->date2usertime($alarm['time'] ?? null);
 			}
 		}
     }

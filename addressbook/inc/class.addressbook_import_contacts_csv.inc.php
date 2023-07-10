@@ -317,15 +317,27 @@ class addressbook_import_contacts_csv extends importexport_basic_import_csv  {
 			case 'update' :
 				// Only update if there are changes
 				$old = $this->bocontacts->read($_data['id']);
+				if(!$old || !is_array($old))
+				{
+					// Could not read existing record
+					$this->errors[$record_num] = lang("cant open '%1' for %2", $_data['id'], lang($_action));
+					return false;
+				}
 				// if we get countrycodes as countryname, try to translate them -> the rest should be handled by bo classes.
-				foreach(array('adr_one_', 'adr_two_') as $c_prefix) {
-					if (strlen(trim($_data[$c_prefix.'countryname']))==2)
-						$_data[$c_prefix.'countryname'] = $GLOBALS['egw']->country->get_full_name(trim($_data[$c_prefix.'countryname']), true);
+				foreach(array('adr_one_', 'adr_two_') as $c_prefix)
+				{
+					if(strlen(trim($_data[$c_prefix . 'countryname'])) == 2)
+					{
+						$_data[$c_prefix . 'countryname'] = $GLOBALS['egw']->country->get_full_name(trim($_data[$c_prefix . 'countryname']), true);
+					}
 				}
 				// Don't change a user account into a contact
-				if($old['owner'] == 0) {
+				if($old['owner'] == 0)
+				{
 					unset($_data['owner']);
-				} elseif(!$this->definition->plugin_options['change_owner']) {
+				}
+				elseif(!$this->definition->plugin_options['change_owner'])
+				{
 					// Don't change addressbook of an existing contact
 					unset($_data['owner']);
 				}

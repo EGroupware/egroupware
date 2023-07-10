@@ -127,8 +127,11 @@ use EGroupware\Api\Etemplate;
 							// Set this so plugin doesn't do any data changes
 							$content['dry-run'] = true;
 							importexport_helper_functions::$dry_run = true;
-							$this->message .= '<b>' . lang('Import aborted').":</b><br />\n";
+							$this->message .= '<b>' . lang('Import aborted') . ":</b><br />\n";
 							$definition_obj->plugin_options = (array)$definition_obj->plugin_options + array('dry_run' => true);
+
+							// Close preview
+							EGroupware\Api\Json\Response::get()->call('app.importexport.closePreview');
 						}
 						if(count($check_message))
 						{
@@ -137,18 +140,21 @@ use EGroupware\Api\Etemplate;
 						if($content['dry-run'])
 						{
 							$preview = $this->preview($plugin, $file, $definition_obj);
-							if(trim($this->message) == '')
-							{
-								// Clear first, to prevent request from being collected if the result is the same
-								$template->setElementAttribute('preview', 'value', '');
-								$template->setElementAttribute('preview', 'value', $preview);
-								return;
-							}
+
+							$template->setElementAttribute('message', 'value', $this->message);
+							
+							// Clear first, to prevent request from being collected if the result is the same
+							$template->setElementAttribute('preview', 'value', '');
+							$template->setElementAttribute('preview', 'value', $preview);
+							return;
 						}
 						else
 						{
 							importexport_helper_functions::$dry_run = false;
 							$count = $plugin->import($file, $definition_obj);
+							
+							// Close preview
+							EGroupware\Api\Json\Response::get()->call('app.importexport.closePreview');
 						}
 					}
 					else
@@ -160,12 +166,12 @@ use EGroupware\Api\Etemplate;
 					{
 						$this->message .= '<b>' . lang('test only').":</b><br />\n";
 					}
-					$this->message .= lang('%1 records processed', $count);
+					$this->message .= lang('%1 records processed', $count ?? 0);
 
 					// Refresh opening window
 					if(!$content['dry-run'])
 					{
-						Framework::refresh_opener(lang('%1 records processed',$count), $appname, null,null,$appname);
+						Framework::refresh_opener(lang('%1 records processed', $count ?? 0), $appname, null, null, $appname);
 					}
 					$total_processed = 0;
 					foreach($plugin->get_results() as $action => $a_count) {

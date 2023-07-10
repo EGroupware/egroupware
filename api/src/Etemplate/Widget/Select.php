@@ -362,7 +362,7 @@ class Select extends Etemplate\Widget
 		{
 			// Check selection preference, we may be able to skip reading some data
 			$select_pref = $GLOBALS['egw_info']['user']['preferences']['common']['account_selection'];
-			if(!empty($this->attrs['type']) && $this->attrs['type'] === 'select-account' &&
+			if($type === 'et2-select-account' &&
 				empty($GLOBALS['egw_info']['user']['apps']['admin']) && $select_pref === 'none')
 			{
 				// Preserve but do not send the value if preference is 'none'
@@ -644,7 +644,7 @@ class Select extends Etemplate\Widget
 		}
 		// Legacy / static support
 		// Have to do this explicitly, since legacy options is not defined on class level
-		$legacy_options = explode(',',$_legacy_options);
+		$legacy_options = explode(',', $_legacy_options ?? "");
 		foreach($legacy_options as &$field)
 		{
 			$field = self::expand_name($field, 0, 0,'','',self::$cont);

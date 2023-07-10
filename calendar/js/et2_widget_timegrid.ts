@@ -243,8 +243,8 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 			}
 
 			// Load the event
-			timegrid._get_event_info(this);
-			if(this.classList.contains("resizing"))
+			const event_info = timegrid._get_event_info(this);
+			if(this.classList.contains("resizing") || event_info.whole_day === "true")
 			{
 				// Currently already resizing
 				return;
@@ -382,9 +382,11 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 				{
 					timegrid.gridHover.hide();
 				}
-			})
-			.on('mousedown', ':not(.calendar_calEvent)', this._mouse_down.bind(this))
-			.on('mouseup', this._mouse_up.bind(this));
+			});
+
+		this.div.get(0).addEventListener("mousedown", this._mouse_down.bind(this));
+		this.div.get(0).addEventListener("mouseup", this._mouse_up.bind(this));
+		this.div.get(0).addEventListener("click", this.click.bind(this), true);
 
 		return true;
 	}
@@ -696,6 +698,9 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 	{
 		var old_value = this.options.disabled;
 		super.set_disabled(disabled);
+
+		this.div.get(0).classList.toggle("hideme", disabled);
+
 		if(disabled)
 		{
 			this.loader.show();
@@ -1225,49 +1230,16 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 		let _invite_enabled = function (action, event, target)
 		{
 			var event = event.iface.getWidget();
-			var timegrid = target.iface.getWidget() || false;
-			if(event === timegrid || !event || !timegrid ||
-				!event.options || !event.options.value.participants || !timegrid.options.owner
-			)
+			const timegrid = target.iface.getWidget() || false;
+			if(timegrid)
 			{
-				return false;
+				const enabled = timegrid._get_invite_action_enabled(event);
+				widget_object.getActionLink('invite').enabled = enabled;
+				widget_object.getActionLink('change_participant').enabled = enabled;
+
+				// If invite or change participant are enabled, drag is not
+				widget_object.getActionLink('egw_link_drop').enabled = !enabled;
 			}
-			var owner_match = false;
-			var own_timegrid = event.getParent().getParent() === timegrid && !timegrid.daily_owner;
-
-			for (var id in event.options.value.participants)
-			{
-				if(!timegrid.daily_owner)
-				{
-					if(timegrid.options.owner === id ||
-						timegrid.options.owner.indexOf &&
-						timegrid.options.owner.indexOf(id) >= 0)
-					{
-						owner_match = true;
-					}
-				}
-				else
-				{
-					timegrid.iterateOver(function (col)
-					                     {
-						                     // Check scroll section or header section
-						                     if(col.div.has(timegrid.gridHover).length || col.header.has(timegrid.gridHover).length)
-						                     {
-							                     owner_match = owner_match || col.options.owner.indexOf(id) !== -1;
-							                     own_timegrid = (col === event.getParent());
-						                     }
-					                     }, this, et2_calendar_daycol);
-				}
-			}
-			var enabled = !owner_match &&
-				// Not inside its own timegrid
-				!own_timegrid;
-
-			widget_object.getActionLink('invite').enabled = enabled;
-			widget_object.getActionLink('change_participant').enabled = enabled;
-
-			// If invite or change participant are enabled, drag is not
-			widget_object.getActionLink('egw_link_drop').enabled = !enabled;
 		};
 
 		aoi.doTriggerEvent = function(_event, _data)
@@ -1283,6 +1255,9 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 				return;
 			}
 
+			// Hide tooltip or it might throw events too
+			egw.tooltipDestroy();
+
 			/*
 			We have to handle the drop in the normal event stream instead of waiting
 			for the egwAction system so we can get the helper, and destination
@@ -1295,19 +1270,15 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 				{
 					dropEnd = helper.dropEnd[0].dataset || this.dropEnd
 				}
-				this.getWidget()._event_drop.call(jQuery('.calendar_d-n-d_timeCounter', _data.ui.helper)[0], this.getWidget(), event, _data.ui, dropEnd);
 			}
 			var drag_listener = function(_event)
 			{
 				aoi.getWidget()._drag_helper(jQuery('.calendar_d-n-d_timeCounter', _data.ui.helper)[0], _data.ui.helper[0], 0);
-				if(aoi.getWidget().daily_owner)
-				{
-					_invite_enabled(
-						widget_object.getActionLink('invite').actionObj,
-						event,
-						widget_object
-					);
-				}
+				_invite_enabled(
+					widget_object.getActionLink('invite').actionObj,
+					_data.ui.selected[0],
+					widget_object
+				);
 			};
 			var time = jQuery('.calendar_d-n-d_timeCounter', _data.ui.helper);
 			switch(_event)
@@ -1362,12 +1333,12 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 					}
 					break;
 				default:
-					// It never came in?
+					// Event starts in its own parent
 					if(!time.length)
 					{
 						jQuery(_data.ui.helper).prepend('<div class="calendar_d-n-d_timeCounter" data-count="1"><span></span></div>');
 					}
-					drag_listener(event);
+					drag_listener(_data.ui.selected[0]);
 			}
 		};
 
@@ -1563,13 +1534,26 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 								}, this, et2_calendar_daycol);
 							}
 							egw().json('calendar.calendar_uiforms.ajax_invite', [
-									button_id==='series' ? event_data.id : event_data.app_id,
+									button_id === 'series' ? event_data.id : event_data.app_id,
 									add_owner,
 									action.id === 'change_participant' ?
-										jQuery.extend([],source[i].iface.getWidget().getParent().options.owner) :
+									jQuery.extend([], source[i].iface.getWidget().getParent().options.owner) :
 										[]
 								],
-								function() { loading.remove();}
+								function(data)
+								{
+									if(data.type)
+									{
+										// Make sure to only run once
+										return;
+									}
+									// Need to remove the action from the original timegrid
+									source[0].iface.getWidget()?.destroy();
+									if(loading)
+									{
+										loading.remove();
+									}
+								}
 							).sendRequest(true);
 						});
 						// Ok, stop.
@@ -1636,6 +1620,44 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 			}
 		}
 		return action_links;
+	}
+
+	_get_invite_action_enabled(event : et2_calendar_event)
+	{
+		if(!event || !event.options || !event.options.value.participants || !this.options.owner)
+		{
+			return false;
+		}
+		var owner_match = false;
+		var own_timegrid = event.getParent()?.getParent() === this && !this.daily_owner;
+
+		for(var id in event.options.value.participants)
+		{
+			if(!this.daily_owner)
+			{
+				if(this.options.owner === id ||
+					this.options.owner.indexOf &&
+					this.options.owner.indexOf(id) >= 0)
+				{
+					owner_match = true;
+				}
+			}
+			else
+			{
+				this.iterateOver(function(col)
+				{
+					// Check scroll section or header section
+					if(col.div.has(this.gridHover).length || col.header.has(this.gridHover).length)
+					{
+						owner_match = owner_match || col.options.owner.indexOf(id) !== -1;
+						own_timegrid = (col === event.getParent());
+					}
+				}, this, et2_calendar_daycol);
+			}
+		}
+		return !owner_match &&
+			// Not inside its own timegrid
+			!own_timegrid;
 	}
 
 	/**
@@ -1959,6 +1981,7 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 				result = this.onclick.apply(this, args);
 			}
 
+			_ev.stopImmediatePropagation();
 			var event_node = jQuery(event.event_node);
 			if(event.id && result && !this.disabled && !this.options.readonly &&
 				// Permissions - opening will fail if we try
@@ -1984,14 +2007,17 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 			app.calendar.update_state(jQuery.extend(
 				{view: 'week'},
 				this._labelContainer.is(_ev.target) ?
-					this.gridHeader[0].dataset :
-					_ev.target.dataset
+				this.gridHeader[0].dataset :
+				_ev.target.dataset
 			));
+			_ev.preventDefault();
+			_ev.stopImmediatePropagation();
 		}
 		else if (this.options.owner.length === 1 && jQuery(this.owner.getDOMNode()).is(_ev.target))
 		{
 			// Click on the owner in header, show just that owner
 			app.calendar.update_state({owner: this.options.owner});
+			_ev.stopImmediatePropagation();
 		}
 		else if (this.dayHeader.has(_ev.target).length)
 		{
@@ -2009,7 +2035,8 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 		}
 		// No time grid, click on a day
 		else if (this.options.granularity === 0 &&
-			(jQuery(_ev.target).hasClass('event_wrapper') || jQuery(_ev.target).hasClass('.calendar_calDayCol'))
+			(jQuery(_ev.target).hasClass('event_wrapper') || jQuery(_ev.target).hasClass('.calendar_calDayCol')) ||
+			_ev.target.classList.contains("calendar_calAddEvent")
 		)
 		{
 			// Default handler to open a new event at the selected time
@@ -2021,6 +2048,8 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 				owner: this.options.owner
 			};
 			app.calendar.add(options);
+			_ev.preventDefault();
+			_ev.stopImmediatePropagation();
 			return false;
 		}
 	}
@@ -2044,6 +2073,11 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 
 		// Skip for events
 		if(event.target.parentElement.classList.contains("calendar_calEvent"))
+		{
+			return;
+		}
+		// Skip for headers
+		if(this.dayHeader.has(event.target).length > 0)
 		{
 			return;
 		}
@@ -2144,7 +2178,7 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 		this.div.off('mousemove.dragcreate');
 		this.gridHover.css('cursor', '');
 
-		return this._drag_create_end(this.drag_create.event ? {date: end.date} : undefined);
+		this._drag_create_end(this.drag_create.event ? {date: end.date} : undefined);
 	}
 
 	/**
@@ -2201,7 +2235,7 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 					height: $node.height() > parseInt($node.css('line-height')) ?
 							$node.css('padding-bottom') : '100%'
 				});
-				day = node;
+				day = node.querySelector(".calendar_calDayColHeader_spacer") ?? node;
 				this.gridHover
 					.attr('data-non_blocking', 'true');
 				break;

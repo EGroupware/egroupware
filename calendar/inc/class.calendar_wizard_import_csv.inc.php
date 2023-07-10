@@ -67,7 +67,7 @@ class calendar_wizard_import_csv extends importexport_wizard_basic_import_csv
 
 		// Search can only deal with ID
 		$sel_options['string'] = array(
-			'id'	=>	'Calendar ID'
+			'id' => lang('Calendar ID')
 		);
 		
 		if(!$content['skip_conflicts'] && $content['plugin_options']['skip_conflicts'])

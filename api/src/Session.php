@@ -194,6 +194,13 @@ class Session
 	protected $action;
 
 	/**
+	 * Limit apps available in a session, when not null
+	 *
+	 * @var array|null app-name => true or array pairs
+	 */
+	public $limits=null;
+
+	/**
 	 * Constructor just loads up some defaults from cookies
 	 *
 	 * @param array $domain_names =null domain-names used in this install
@@ -394,7 +401,7 @@ class Session
 			{
 				if (isset($_SESSION[$name]))
 				{
-					$_SESSION[$name] = unserialize(trim(mdecrypt_generic(self::$mcrypt,$_SESSION[$name])));
+					$_SESSION[$name] = unserialize(trim(mdecrypt_generic(self::$mcrypt,$_SESSION[$name])), ['allowed_classes' => true]);
 					//error_log(__METHOD__."() 'decrypting' session var $name: gettype($name) = ".gettype($_SESSION[$name]));
 				}
 			}
@@ -514,7 +521,7 @@ class Session
 
 			if (($blocked = $this->login_blocked($login,$user_ip)) ||	// too many unsuccessful attempts
 				!empty($GLOBALS['egw_info']['server']['global_denied_users'][$this->account_lid]) ||
-				$auth_check && !$GLOBALS['egw']->auth->authenticate($this->account_lid, $this->passwd, $this->passwd_type) ||
+				$auth_check && !$this->authenticate() ||
 				$this->account_id && $GLOBALS['egw']->accounts->get_type($this->account_id) == 'g')
 			{
 				$this->reason = $blocked ? 'blocked, too many attempts' : 'bad login or password';
@@ -643,7 +650,7 @@ class Session
 				$this->sessionid_access_log = $this->log_access($this->sessionid,$login,$user_ip,$this->account_id);
 				// We do NOT log anonymous sessions to not block website and also to cope with
 				// high rate anon endpoints might be called creating a bottleneck in the egw_accounts table.
-				Cache::setSession('phpgwapi', 'account_previous_login', $GLOBALS['egw']->auth->previous_login);
+				Cache::setSession('phpgwapi', 'account_previous_login', $GLOBALS['egw']->auth->previous_login ?? null);
 				$GLOBALS['egw']->accounts->update_lastlogin($this->account_id,$user_ip);
 			}
 			$GLOBALS['egw']->db->transaction_commit();
@@ -664,7 +671,7 @@ class Session
 
 				// set new remember me token/cookie, if requested and necessary
 				$expiration = null;
-				if (($token = $this->checkSetRememberMeToken($remember_me, $_COOKIE[self::REMEMBER_ME_COOKIE], $expiration)))
+				if (($token = $this->checkSetRememberMeToken($remember_me, $_COOKIE[self::REMEMBER_ME_COOKIE] ?? null, $expiration)))
 				{
 					self::egw_setcookie(self::REMEMBER_ME_COOKIE, $token, $expiration);
 				}
@@ -684,7 +691,7 @@ class Session
 				'account_domain' => $this->account_domain,
 				'user_ip'        => $user_ip,
 				'session_type'   => Session\Type::get($_SERVER['REQUEST_URI'],
-					$GLOBALS['egw_info']['flags']['current_app'],
+					$GLOBALS['egw_info']['flags']['current_app'] ?? null,
 					true),	// true return WebGUI instead of login, as we are logged in now
 			),'',true);
 
@@ -702,6 +709,22 @@ class Session
 				") Exception ".$e->getMessage());
 			return false;
 		}
+	}
+
+	/**
+	 * Authenticate user with password or token
+	 *
+	 * @return bool
+	 * @throws \Exception
+	 */
+	public function authenticate()
+	{
+		$is_valid_token = Auth\Token::authenticate($this->account_lid, $this->passwd, $this->limits);
+		if (!isset($is_valid_token))
+		{
+			return $GLOBALS['egw']->auth->authenticate($this->account_lid, $this->passwd, $this->passwd_type);
+		}
+		return $is_valid_token;
 	}
 
 	/**
@@ -957,7 +980,7 @@ class Session
 		// restore session vars set before session was started
 		if (is_array($this->required_files))
 		{
-			$_SESSION[self::EGW_REQUIRED_FILES] = !is_array($_SESSION[self::EGW_REQUIRED_FILES]) ? $this->required_files :
+			$_SESSION[self::EGW_REQUIRED_FILES] = !is_array($_SESSION[self::EGW_REQUIRED_FILES] ?? null) ? $this->required_files :
 				array_unique(array_merge($_SESSION[self::EGW_REQUIRED_FILES],$this->required_files));
 			unset($this->required_files);
 		}
@@ -969,8 +992,10 @@ class Session
 			'session_dla'    => $now,
 			'session_action' => $_SERVER['PHP_SELF'],
 			'session_flags'  => $session_flags,
-			// we need the install-id to differ between serveral installs shareing one tmp-dir
-			'session_install_id' => $GLOBALS['egw_info']['server']['install_id']
+			// we need the install-id to differ between several installations sharing one tmp-dir
+			'session_install_id' => $GLOBALS['egw_info']['server']['install_id'],
+			// we need to preserve the limits
+			'session_limits' => $this->limits,
 		);
 	}
 
@@ -1065,7 +1090,7 @@ class Session
 			}
 		}
 		//error_log(__METHOD__."('$sessionid', '$login', '$user_ip', $account_id) returning ".array2string($ret));
-		return $ret;
+		return $ret ?? null;
 	}
 
 	/**
@@ -1251,7 +1276,7 @@ class Session
 	{
 		if (self::ERROR_LOG_DEBUG) error_log(__METHOD__."('$sessionid','$kp3') ".function_backtrace());
 
-		$fill_egw_info_and_repositories = !$GLOBALS['egw_info']['flags']['restored_from_session'];
+		$fill_egw_info_and_repositories = empty($GLOBALS['egw_info']['flags']['restored_from_session']);
 
 		if(!$sessionid)
 		{
@@ -1291,6 +1316,9 @@ class Session
 		}
 		$session =& $_SESSION[self::EGW_SESSION_VAR];
 
+		// we need to restore the limits
+		$this->limits = $session['session_limits'];
+
 		if ($session['session_dla'] <= time() - $GLOBALS['egw_info']['server']['sessions_timeout'])
 		{
 			if (self::ERROR_LOG_DEBUG) error_log(__METHOD__."('$sessionid') session timed out!");
@@ -1298,9 +1326,9 @@ class Session
 			return false;
 		}
 
-		$this->session_flags = $session['session_flags'];
+		$this->session_flags = $session['session_flags'] ?? null;
 
-		$this->split_login_domain($session['session_lid'],$this->account_lid,$this->account_domain);
+		$this->split_login_domain($session['session_lid'] ?? null,$this->account_lid,$this->account_domain);
 
 		// This is to ensure that we authenticate to the correct domain (might not be default)
 		if($GLOBALS['egw_info']['user']['domain'] && $this->account_domain != $GLOBALS['egw_info']['user']['domain'])
@@ -1441,7 +1469,7 @@ class Session
 		),'',true);	// true = run hooks from all apps, not just the ones the current user has perms to run
 
 		// Only do the following, if where working with the current user
-		if (!$GLOBALS['egw_info']['user']['sessionid'] || $sessionid == $GLOBALS['egw_info']['user']['sessionid'])
+		if (empty($GLOBALS['egw_info']['user']['sessionid']) || $sessionid == $GLOBALS['egw_info']['user']['sessionid'])
 		{
 			// eg. SAML logout will fail, if there is no more session --> remove everything else
 			$auth = new Auth();
@@ -1570,24 +1598,33 @@ class Session
 		// if there are vars, we add them urlencoded to the url
 		if (count($vars))
 		{
-			$query = array();
-			foreach($vars as $key => $value)
-			{
-				if (is_array($value))
-				{
-					foreach($value as $val)
-					{
-						$query[] = $key.'[]='.urlencode($val);
-					}
-				}
-				else
-				{
-					$query[] = $key.'='.urlencode($value ?? '');
-				}
-			}
-			$ret_url .= '?' . implode('&',$query);
+			$ret_url .= '?' . implode('&', self::urlencode($vars));
 		}
 		return $ret_url;
+	}
+
+	/**
+	 * Recursively encode GET parameters
+	 *
+	 * @param array|string $values
+	 * @param string $prefix
+	 * @param array& $query
+	 * @return array
+	 */
+	protected static function urlencode($values, string $prefix='', array &$query=[])
+	{
+		if (is_array($values))
+		{
+			foreach($values as $name => $value)
+			{
+				self::urlencode($value, $prefix ? $prefix.'['.(is_int($name) ? '' : $name).']' : $name, $query);
+			}
+		}
+		else
+		{
+			$query[] = $prefix.'='.urlencode($values);
+		}
+		return $query;
 	}
 
 	/**
@@ -1950,6 +1987,10 @@ class Session
 			$GLOBALS['egw']->datetime->__construct();		// to set tz_offset from the now read prefs
 		}
 		$user['apps']        = $GLOBALS['egw']->applications->read_repository();
+		if (!empty($this->limits))
+		{
+			$user['apps'] = array_intersect_key($user['apps'], array_filter($this->limits));
+		}
 		$user['domain']      = $this->account_domain;
 		$user['sessionid']   = $this->sessionid;
 		$user['kp3']         = $this->kp3;
@@ -1988,7 +2029,7 @@ class Session
 			}
 		}
 
-		if (!$got_login)
+		if (empty($got_login))
 		{
 			$domain = $GLOBALS['egw_info']['server']['default_domain'];
 			$account_lid = $login;

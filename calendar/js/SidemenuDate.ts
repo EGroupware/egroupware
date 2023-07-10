@@ -325,18 +325,29 @@ export class SidemenuDate extends Et2Date
 	 *
 	 * @protected
 	 */
-	protected _handleHeaderChange()
+	protected _handleHeaderChange(selectedDates : Date[], value : string)
 	{
-		const maxDays = new Date(this._instance.currentYear, this._instance.currentMonth + 1, 0).getDate();
+		const update = {};
+		if(this.formatDate(selectedDates[0], this._instance.config.dateFormat) == value)
+		{
+			// Header changed, selected date did not - get a date in the new month
 
-		let temp_date = new Date("" + this._instance.currentYear + "-" +
-			(this._instance.currentMonth + 1) + "-" +
-			("" + Math.min(maxDays, new Date(this.value).getUTCDate())).padStart(2, "0")
-		);
-		temp_date.setUTCMinutes(temp_date.getUTCMinutes() + temp_date.getTimezoneOffset());
+			const maxDays = new Date(this._instance.currentYear, this._instance.currentMonth + 1, 0).getDate();
 
+			let temp_date = new Date("" + this._instance.currentYear + "-" +
+				(this._instance.currentMonth + 1) + "-" +
+				("" + Math.min(maxDays, new Date(this.value).getUTCDate())).padStart(2, "0")
+			);
+			temp_date.setUTCMinutes(temp_date.getUTCMinutes() + temp_date.getTimezoneOffset());
+
+			update['date'] = temp_date;
+		}
+		else
+		{
+			// User selected a date in a different month, header hasn't changed
+			update['date'] = value;
+		}
 		// Go directly
-		let update = {date: temp_date};
 		app.calendar.update_state(update);
 	}
 }

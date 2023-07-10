@@ -389,7 +389,7 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 		$message->sensitivity = !isset($event['public']) || $event['public'] ? 0 : 2;	// 0=normal, 1=personal, 2=private, 3=confidential
 
 		// busystatus=(0=free|1=tentative|2=busy|3=out-of-office), EGw has non_blocking=0|1
-		$message->busystatus = $event['non_blocking'] ? 0 : 2;
+		$message->busystatus = !empty($event['non_blocking']) ? 0 : 2;
 
 		// ToDo: recurring events: InstanceType, RecurrenceId, Recurrences; ...
 		$message->instancetype = 0;	// 0=Single, 1=Master recurring, 2=Single recuring, 3=Exception
@@ -464,7 +464,10 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 		calendar_so::split_status($event['participants'][$uid], $quantity, $role);
 		$status = calendar_so::combine_status($status_in, $quantity, $role);
 
-		if ($event['id'] && isset($event['participants'][$uid]))
+		// convert to user-time, as that is what calendar_boupdate expects
+		$this->calendar->server2usertime($event);
+
+		if (!empty($event['id']) && isset($event['participants'][$uid]))
 		{
 			$ret = $this->calendar->set_status($event, $uid, $status) ? $event['id'] : false;
 			$msg = $ret ? "status '$status' set for event #$ret" : "could NOT set status '$status' for event #$event[id]";
@@ -537,6 +540,10 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 	 * properties of the StatMessage() item may change via ChangeMessage().
 	 * Note that this function will never be called on E-mail items as you can't change e-mail items, you
 	 * can only set them as 'read'.
+	 *
+	 * At least iOS 16.4 does NOT send any attendee-status via ChangeMessage, therefore the user can not set/change
+	 * the attendee status on the server, after initial response to the meeting-request. No idea why that is ...
+	 * WBXML shows a mail is generated to the organizer, but status is NOT send to the server!
 	 */
 	public function ChangeMessage($folderid, $_id, $message, $contentParameters)
 	{
@@ -550,7 +557,7 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 
 		ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."('$folderid', $_id, ".array2string($message).") type='$type', account=$account");
 
-		list($id,$recur_date) = explode(':', $_id);
+		list($id,$recur_date) = explode(':', $_id)+[null,null];
 
 		if ($type != 'calendar' || $id && !($old_event = $this->calendar->read($id, $recur_date, false, 'server')))
 		{
@@ -563,7 +570,7 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 			ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."('$folderid',$id:$recur_date,".array2string($message).") handling of virtual exception not yet implemented!");
 			//error_log(__METHOD__."('$folderid',$id:$recur_date,".array2string($message).") handling of virtual exception not yet implemented!");
 		}
-		if (!$this->calendar->check_perms($id ? Acl::EDIT : Acl::ADD, $old_event ? $old_event : 0,$account))
+		if (!$this->calendar->check_perms($id ? Acl::EDIT : Acl::ADD, $old_event ?: 0,$account))
 		{
 			// @todo: write in users calendar and make account only a participant
 			ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."('$folderid',$id,...) no rights to add/edit event!");
@@ -581,10 +588,14 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 		{
 			$skip_notification = true; // to avoid double notification from client AND Server
 		}
+
+		// event is read in server-time, as is AS message, therefore we need to convert to user-time, which is expected by calendar_boupdate
+		$this->calendar->server2usertime($event);
+
 		$messages = null;
 		if (!($id = $this->calendar->update($event, true, true, false, true, $messages, $skip_notification)))
 		{
-			ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."('$folderid',$id,...) error saving event=".array2string($event)."!");
+			ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."('$folderid',$id,...) error (".implode(', ', $messages).") saving event=".array2string($event)."!");
 			return false;
 		}
 		// store non-delete exceptions
@@ -687,7 +698,7 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 		$participants = array();
 		foreach((array)$message->attendees as $attendee)
 		{
-			if ($attendee->type == 3) continue;	// we can not identify resources and re-add them anyway later
+			if (isset($attendee->type) && $attendee->type == 3) continue;	// we can not identify resources and re-add them anyway later
 
 			$matches = null;
 			if (preg_match('/^noreply-(.*)-uid@egroupware.org$/',$attendee->email,$matches))
@@ -725,7 +736,7 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 				$status = $event['participants'][$uid];
 				$quantity = $role = null;
 				calendar_so::split_status($status, $quantity, $role);
-				//ZLog::Write(LOGLEVEL_DEBUG, "old status for $uid is status=$status, quantity=$quantitiy, role=$role");
+				//ZLog::Write(LOGLEVEL_DEBUG, "old status for $uid is status=$status, quantity=$quantity, role=$role");
 			}
 			// check if just email is an existing attendee (iOS returns email as name too!), keep it to keep status/role if not set
 			elseif ($event['id'] && (isset($event['participants'][$u='e'.$attendee->email]) ||
@@ -733,14 +744,14 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 			{
 				$status = $event['participants'][$u];
 				calendar_so::split_status($status, $quantity, $role);
-				//ZLog::Write(LOGLEVEL_DEBUG, "old status for $uid as $u is status=$status, quantity=$quantitiy, role=$role");
+				//ZLog::Write(LOGLEVEL_DEBUG, "old status for $uid as $u is status=$status, quantity=$quantity, role=$role");
 			}
 			else	// set some defaults
 			{
 				$status = 'U';
-				$quantitiy = 1;
+				$quantity = 1;
 				$role = 'REQ-PARTICIPANT';
-				//ZLog::Write(LOGLEVEL_DEBUG, "default status for $uid is status=$status, quantity=$quantitiy, role=$role");
+				//ZLog::Write(LOGLEVEL_DEBUG, "default status for $uid is status=$status, quantity=$quantity, role=$role");
 			}
 			if ($role == 'CHAIR') $chair_set = true;	// by role from existing participant
 
@@ -760,8 +771,8 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 			{
 				$role = $r;
 			}
-			//ZLog::Write(LOGLEVEL_DEBUG, "-> status for $uid is status=$status ($s), quantity=$quantitiy, role=$role ($r)");
-			$participants[$uid] = calendar_so::combine_status($status,$quantitiy,$role);
+			//ZLog::Write(LOGLEVEL_DEBUG, "-> status for $uid is status=$status ($s), quantity=$quantity, role=$role ($r)");
+			$participants[$uid] = calendar_so::combine_status($status,$quantity,$role);
 		}
 		// if organizer is not already participant, add him as chair
 		if (($uid = $GLOBALS['egw']->accounts->name2id($message->organizeremail,'account_email')) && !isset($participants[$uid]))
@@ -856,7 +867,7 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 		{
 			foreach((array)$event['alarm'] as $alarm)
 			{
-				if (($alarm['all'] || $alarm['owner'] == $account) && $alarm['offset'] == 60*$message->reminder)
+				if ((!empty($alarm['all']) || $alarm['owner'] == $account) && $alarm['offset'] == 60*$message->reminder)
 				{
 					$alarm = true;	// alarm already exists --> do nothing
 					break;
@@ -1030,7 +1041,7 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 		}
 		else
 		{
-			list($id,$recur_date) = explode(':',$id);
+			list($id,$recur_date) = explode(':',$id)+[null,null];
 			if ($type != 'calendar' || !($event = $this->calendar->read($id,$recur_date,false,'server',$account)))
 			{
 				error_log(__METHOD__."('$folderid', $id, ...) read($id,null,false,'server',$account) returned false");
@@ -1252,11 +1263,11 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 			//ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."($id) message->exceptions=".array2string($message->exceptions));
 		}
 		// only return alarms if in own calendar
-		if ($account == $GLOBALS['egw_info']['user']['account_id'] && $event['alarm'])
+		if ($account == $GLOBALS['egw_info']['user']['account_id'] && !empty($event['alarm']))
 		{
 			foreach($event['alarm'] as $alarm)
 			{
-				if ($alarm['all'] || $alarm['owner'] == $account)
+				if (!empty($alarm['all']) || $alarm['owner'] == $account)
 				{
 					$message->reminder = $alarm['offset']/60;	// is in minutes, not seconds as in EGw
 					break;	// AS supports only one alarm! (we use the next/earliest one)

@@ -7,7 +7,7 @@
 %1 is needed by: %2.	setup	nl	%1 is nodig voor: %2.
 %1 is set to %2, you will not be able to upload or attach files bigger then that!	setup	nl	%1 is ingesteld op %2, u kunt geen bestanden uploaden of bijlagen toevoegen die groter zijn dan deze waarde!
 %1 is set to %2. this is not recommeded for a production system, as displayed error messages can contain passwords or other sensitive information!	setup	nl	%1 is ingesteld op %2. Dit is NIET aanbevolen voor een productie omgeving aangezien weergegeven foutmeldingen wachtwoorden en andere vertrouwelijke informatie kunnen bevatten.
-%1, %2 or %3 the configuration file.	setup	nl	%1, %2 of %3 het configuratie bestand.
+%1 the configuration file.	setup	nl	%1 het configuratie bestand.
 '%1' is no valid domain name!	setup	nl	'%1' is geen geldige domeinnaam!
 '%1' is not allowed as %2. arguments of option %3 !!!	setup	nl	'%1' is niet toegestaan als %2. argumenten van optie %3 !!!
 (searching accounts and changing passwords)	setup	nl	(zoekt accounts en wijzigt wachtwoorden)

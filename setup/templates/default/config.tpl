@@ -129,6 +129,8 @@
      <select name="newsettings[auth_type]">
 {hook_auth_types}
      </select>
+     <label><input type="checkbox" value="True" {checked_auth_log_True} name="newsettings[auth_log]"/>
+{lang_Enable_logging_of_authentication_to_files-directory}: auth.log</label>
     </td>
    </tr>
 
@@ -172,7 +174,14 @@
     </td>
    </tr>
 
-   <tr class="row_off">
+  <tr class="row_off">
+    <td>{lang_Fallback_Authentication}:</td>
+    <td>
+      <label><input type="checkbox" value="True" {checked_auth_fallback_True} name="newsettings[auth_fallback]"/>
+{lang_If_primary_authentication_is_NOT_successful_fall_back_to_passwords_synced_into_account-storage}</label>
+    </td>
+   </tr>
+   <tr class="row_on">
     <td>{lang_Select_where_you_want_to_store/retrieve_user_accounts}:</td>
     <td>
      <select name="newsettings[account_repository]">
@@ -181,14 +190,14 @@
     </td>
    </tr>
 
-   <tr class="row_on">
+   <tr class="row_off">
     <td>{lang_sql_encryption_type}:</td>
     <td>
      <select name="newsettings[sql_encryption_type]">{hook_sql_passwdhashes}</select>
     </td>
    </tr>
 
-   <tr class="row_off">
+   <tr class="row_on">
     <td>{lang_Allow_password_migration}:</td>
     <td>
       <select name="newsettings[pwd_migration_allowed]">
@@ -198,7 +207,7 @@
     </td>
    </tr>
 
-   <tr class="row_on">
+   <tr class="row_off">
     <td>{lang_Allowed_migration_types_(comma-separated)}:</td>
     <td>
       <input name="newsettings[pwd_migration_types]" value="{value_pwd_migration_types}" size="20" />

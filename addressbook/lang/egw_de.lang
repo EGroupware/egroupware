@@ -198,7 +198,7 @@ distribution lists	addressbook	de	Verteilerlisten
 distribution lists as groups	addressbook	de	Verteilerlisten als Gruppen
 distribution lists, ...	addressbook	de	Verteilerlisten, ...
 do you really want to delete this contact?	addressbook	de	Diesen Kontakt löschen?
-do you want a private addressbook, which can not be viewed by users, you grant access to your personal addressbook?	addressbook	de	Sie können mit dieser Funktion ein privates Adressbuch nutzen, das nicht an andere Benutzer freigegeben werden kann und Ihre Privatsphäre optimal schützt. Aktivieren Sie diese Funktion nach Bedarf.
+do you want a private addressbook, which can not be viewed by users, you grant access to your personal addressbook?	addressbook	de	Es kann ein zusätzliches privates Adressbuch eingeschaltet werden. Dieses kann nicht an andere Benutzer/Gruppen freigegeben werden.
 do your really want to delete this contact?	addressbook	de	Wollen Sie diesen Kontakt wirklich löschen?
 doesn't matter	addressbook	de	egal
 domestic	addressbook	de	Wohnung
@@ -225,7 +225,7 @@ email addresses (comma separated) to send the contact data	addressbook	de	E-Mail
 empty	admin	de	leere
 empty addressbook before importing	addressbook	de	Adressbuch Einträge löschen, die nicht in der CSV-Liste sind
 empty for all	addressbook	de	leer für alle
-enable an extra private addressbook	addressbook	de	Privates Adressbuch einschalten
+enable an extra private addressbook	addressbook	de	Privates Adressbuch
 enclosure	addressbook	de	Einschluss
 end	addressbook	de	Ende
 enter the path to the exported file here	addressbook	de	Bitte geben Sie den Pfad für die exportierte Datei an

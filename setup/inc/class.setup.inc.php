@@ -127,11 +127,12 @@ class setup
 				$this->set_table_names();		// sets/checks config- and applications-table-name
 
 				// Set the DB's client charset if a system-charset is set
-				if (($this->system_charset = $this->db->select($this->config_table,'config_value',array(
+				if (($charset = $this->db->select($this->config_table,'config_value',array(
 						'config_app'  => 'phpgwapi',
 						'config_name' => 'system_charset',
 					),__LINE__,__FILE__)->fetchColumn()))
 				{
+					$this->system_charset = $charset;
 					$this->db_charset_was = $this->db->Link_ID->GetCharSet();	// needed for the update
 
 					// we can NOT set the DB charset for mysql, if the api version < 1.0.1.019, as it would mess up the DB content!!!

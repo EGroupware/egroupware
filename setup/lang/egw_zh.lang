@@ -4,7 +4,7 @@
 %1 does not exist !!!	setup	zh	%1 不存在！
 %1 is %2%3 !!!	setup	zh	%1 是 %2%3！
 %1 is needed by: %2.	setup	zh	%1 必须由：%2。
-%1, %2 or %3 the configuration file.	setup	zh	%1、%2 或 %3 配置文件。
+%1 the configuration file.	setup	zh	%1、%2 或 %3 配置文件。
 '%1' is not allowed as %2. arguments of option %3 !!!	setup	zh	'%1'不允许为 %2，选项的参数 %3！
 (searching accounts and changing passwords)	setup	zh	(搜索帐户并修改密码)
 *** do not update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your db in an unrecoverable state (your data is lost) !!!	setup	zh	***请不要通过安装程序更新您的数据库，因为执行过程可能超过系统默认允许的时间而遭到中断，这可能会造成数据的丢失！

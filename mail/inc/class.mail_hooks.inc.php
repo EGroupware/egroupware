@@ -361,6 +361,20 @@ class mail_hooks
 				'admin'  => False,
 				'default'=> 'always',
 			],
+			'emailTag' => [
+				'type' => 'select',
+				'label' => 'Information to show on email tag',
+				'help' => 'You can select what info to be dispayed on email tag',
+				'name' => 'emailTag',
+				'values' => [
+					'onlyname' => lang('only name'),
+					'fullemail' => lang('name and email'),
+					'onlyemail' => lang('only email'),
+				],
+				'xmlrpc' => True,
+				'admin'  => False,
+				'default'=> 'onlyname',
+			],
 			array(
 				'type'  => 'section',
 				'title' => lang('Configuration settings'),
@@ -436,9 +450,10 @@ class mail_hooks
 				'name' => 'previewPane',
 				'values' => array(
 					'vertical' => lang('show vertical'),
+					'allColumns' => lang('show vertical with all columns'),
 					'fixed' => lang('show horizontal'),
 					'expand' => lang('show horizontal, hide if none selected'),
-					'hide' => lang('never show'),
+					'hide' => lang('never show')
 				),
 				'default' => 'vertical',
 				'reload' => true

@@ -1915,11 +1915,11 @@ class calendar_uiforms extends calendar_ui
 			$content['action_class'] = 'hideme';
 		}
 
-		if (!$event['id'] || $this->bo->check_perms(Acl::EDIT,$event))	// new event or edit rights to the event ==> allow to add alarm for all users
+		if(!$event['id'] || $this->bo->check_perms(Acl::EDIT, $event))    // new event or edit rights to the event ==> allow to add alarm for all users
 		{
 			$sel_options['owner'][0] = lang('All participants');
 		}
-		if (isset($event['participant_types']['u'][$this->user]))
+		if(isset($event['participant_types']['u'][$this->user]) || isset($event['participant_types'][''][$this->user]))
 		{
 			$sel_options['owner'][$this->user] = $this->bo->participant_name($this->user);
 		}
@@ -3106,6 +3106,38 @@ class calendar_uiforms extends calendar_ui
 			$sel_options[$status][$field] = lang($label);
 		}
 		// custom fields are now "understood" directly by historylog widget
+	}
+
+	/**
+	 * Modify history to make timestamps in user time
+	 *
+	 * @param array $data values for keys "data" (data) and "args":
+	 *  values for keys "value", "rows" (reference) and "total" (reference)
+	 */
+	public function modify_history(array $data)
+	{
+		$history = [];
+		$sel_options = [];
+		$this->setup_history($history, $sel_options);
+		foreach($data['rows'] as $index => &$row)
+		{
+			if($row['appname'] !== 'calendar')
+			{
+				return;
+			}
+			if  (is_string($history['history']['status-widgets'][$row['status']]) &&
+				str_contains($history['history']['status-widgets'][$row['status']], 'date'))
+			{
+				foreach(['old_value', 'new_value'] as $field)
+				{
+					if(!$row[$field])
+					{
+						continue;
+					}
+					$row[$field] = Api\DateTime::server2user($row[$field], Api\DateTime::ET2);
+				}
+			}
+		}
 	}
 
 	/**

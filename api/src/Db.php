@@ -819,7 +819,10 @@ class Db
 		catch(\mysqli_sql_exception $e) {
 			if (!($reconnect && $this->Type == 'mysql' && ($e->getCode() == 2006 || $e->getMessage() === 'MySQL server has gone away')))
 			{
-				if ($e->getCode() == 1064)  // You have an error in your SQL syntax
+				if (in_array($e->getCode(), [
+					1064,   // You have an error in your SQL syntax
+					1062,   // Duplicate entry
+				]))
 				{
 					throw new Db\Exception\InvalidSql($e->getMessage(), $e->getCode(), $e);
 				}
@@ -855,7 +858,10 @@ class Db
 				"\n$this->Error ($this->Errno)".
 				($inputarr ? "\nParameters: '".implode("','",$inputarr)."'":''), $this->Errno);
 		}
-		elseif(!$rs->sql) $rs->sql = $Query_String;
+		elseif(empty($rs->sql))
+		{
+			$rs->sql = $Query_String;
+		}
 		return $rs;
 	}
 
@@ -1062,13 +1068,13 @@ class Db
 				'name'  => $column->name,
 				'type'  => $column->type,
 				'len'   => $column->max_length,
-				'flags' => $flags, // for backwards compatibilty (depreciated) used by JiNN atm
+				'flags' => $flags, // for backwards compatibility (depreciated) used by JiNN atm
 				'not_null' => $column->not_null,
 				'auto_increment' => $column->auto_increment,
 				'primary_key' => $column->primary_key,
 				'binary' => $column->binary,
 				'has_default' => $column->has_default,
-				'default'  => $column->default_value,
+				'default'  => $column->default_value ?? null,
 			);
 			$metadata[$i]['table'] = $table;
 			if ($full)
@@ -2318,11 +2324,11 @@ class Db
 				false,	// line
 				false,	// file
 				false,	// offset
-				$select['append'],
-				$select['app'],
+				$select['append'] ?? null,
+				$select['app'] ?? null,
 				0,		// num_rows,
-				$select['join'],
-				$select['table_def'],
+				$select['join'] ?? null,
+				$select['table_def'] ?? null,
 			));
 		}
 		$sql = count($union) > 1 ? '(' . implode(")\nUNION\n(",$union).')' : 'SELECT DISTINCT'.substr($union[0],6);

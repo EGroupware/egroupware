@@ -88,6 +88,7 @@
   html[data-darkmode='1'] sl-menu-item [slot="prefix"],
   html[data-darkmode='1'] iframe,
   html[data-darkmode='1'] et2-lavatar[image=""]::part(base),
+  html[data-darkmode='1'] et2-avatar[id="_cropper_image"],
   html[data-darkmode='1'] video,
   html[data-darkmode='1'] #loginMainDiv,
   html[data-darkmode='1'] .et2_taglist_tags_icon,
@@ -7107,7 +7108,6 @@ table.egwGridView_grid img.et2_appicon {
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul a#topmenu_calls {
   background-image: url(../../api/templates/default/images/phone.svg);
   background-repeat: no-repeat;
-  background-size: 20px;
   background-position-x: -2px;
 }
 div.dhtmlxMenu_egw_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl tr.sub_item td.sub_item_icon img[src*="svg"] {

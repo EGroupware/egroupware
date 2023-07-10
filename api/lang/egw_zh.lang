@@ -73,6 +73,7 @@ add to clipboard	common	zh	添加到剪贴板
 addressbook	common	zh	通讯簿
 addressbooks to sync in addition to personal addressbook	groupdav	zh	除了个人通讯录，还可以同步通讯录
 admin	common	zh	系统管理
+admin settings for %1	common	zh	管理员对%1的设置
 administration	common	zh	系统管理
 advanced search	common	zh	高级搜索
 afghanistan	common	zh	阿富汗
@@ -83,6 +84,7 @@ alignment of label and input-field in table-cell	common	zh	标签与输入字段
 alignment of the v/hbox containing table-cell	common	zh	V/HBox 的对齐方式
 all	common	zh	全部
 all addressbooks	groupdav	zh	所有地址簿
+all categories	common	zh	所有类别
 all days	common	zh	全部日数
 all fields	common	zh	所有字段
 all in one	groupdav	zh	一体化
@@ -642,6 +644,7 @@ loading	common	zh	载入
 local	common	zh	本地
 locations	common	zh	位置
 login	common	zh	登录
+login rejected by epl firewall, please contact your administrator	common	zh	登录被 EGroupware 防火墙拒绝，请联系您的管理员。
 loginid	common	zh	登录名
 logout	common	zh	注销
 lost login id	common	zh	忘记登录帐户
@@ -653,6 +656,8 @@ macau	common	zh	澳门
 macedonia, the former yugoslav republic of	common	zh	马其顿王国
 madagascar	common	zh	马达加斯加岛
 mail domain, eg. "%1"	common	zh	邮件域，例如："%1"
+mailvelope addon installation failed! please try again.	common	zh	Mailvelope附加组件安装失败! 请再试一次。
+mailvelope addon installation succeded. now you may configure the options.	common	zh	Mailvelope附加组件安装成功。现在您可以对选项进行配置。
 main category	common	zh	主分类
 maintainer	common	zh	维护人员
 malawi	common	zh	马拉维

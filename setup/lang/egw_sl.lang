@@ -7,7 +7,7 @@
 %1 is needed by: %2.	setup	sl	%1 je potreben za: %2.
 %1 is set to %2, you will not be able to upload or attach files bigger then that!	setup	sl	%1 je nastavljeno na %2. Ne boste mogli prenesti datoteke, večje od te vrednosti.
 %1 is set to %2. this is not recommeded for a production system, as displayed error messages can contain passwords or other sensitive information!	setup	sl	%1 je nastavljeno na %2. To ni priporočeno za produkcijski sistem, ker lahko prikazano sporočilo vsebuje gesla in druge občutljive informacije.
-%1, %2 or %3 the configuration file.	setup	sl	%1, %2 ali %3 konfiguracijsko datoteko.
+%1 the configuration file.	setup	sl	%1 konfiguracijsko datoteko.
 '%1' is no valid domain name!	setup	sl	'%1' ni veljavno ime domene.
 '%1' is not allowed as %2. arguments of option %3 !!!	setup	sl	'%1' ni dovoljen kot %2. argument možnosti %3!
 (searching accounts and changing passwords)	setup	sl	(iskanje računov in spreminjanje gesel)

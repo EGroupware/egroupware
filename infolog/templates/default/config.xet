@@ -22,26 +22,30 @@
 					</et2-vbox>
 					<et2-select  id="responsible_edit" rows="6" options=",,,,,,0" multiple="1"></et2-select>
 				</row>
-				<row class="th">
-					<et2-description  value="History logging" span="all"></et2-description>
-				</row>
-				<row>
-					<et2-description  value="History logging and deleting of items"></et2-description>
-					<et2-select  id="history"></et2-select>
-				</row>
-				<row class="th">
-					<et2-description  value="Other configurations" span="all"></et2-description>
-				</row>
-				<row>
-					<et2-description  value="Fields to exclude when copying an infolog:"></et2-description>
-					<et2-select  id="copy_excludefields" rows="6" multiple="1"></et2-select>
-				</row>
-				<row>
-					<et2-description  value="Load custom fields in index, if filtered by selected types (eg. to display them in a type-specific index template)"></et2-description>
-					<et2-select  id="index_load_cfs" rows="6" options=",,,,,,1" multiple="1"></et2-select>
-				</row>
-				<row>
-					<et2-description  value="Prefix for sub-entries (default: Re:)"></et2-description>
+                <row class="th">
+                    <et2-description value="History logging" span="all"></et2-description>
+                </row>
+                <row>
+                    <et2-description value="History logging and deleting of items"></et2-description>
+                    <et2-select id="history"></et2-select>
+                </row>
+                <row class="th">
+                    <et2-description value="Other configurations" span="all"></et2-description>
+                </row>
+                <row>
+                    <et2-description value="Respect timesheet run and read permissions for time totals" labelFor="respect_timesheet_rights"></et2-description>
+                    <et2-checkbox id="respect_timesheet_rights"></et2-checkbox>
+                </row>
+                <row>
+                    <et2-description value="Fields to exclude when copying an infolog:"></et2-description>
+                    <et2-select id="copy_excludefields" rows="6" multiple="1"></et2-select>
+                </row>
+                <row>
+                    <et2-description value="Load custom fields in index, if filtered by selected types (eg. to display them in a type-specific index template)"></et2-description>
+                    <et2-select id="index_load_cfs" rows="6" options=",,,,,,1" multiple="1"></et2-select>
+                </row>
+                <row>
+                    <et2-description value="Prefix for sub-entries (default: Re:)"></et2-description>
 					<et2-textbox  id="sub_prefix" noLang="1"></et2-textbox>
 				</row>
 				<row>

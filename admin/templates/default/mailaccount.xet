@@ -10,32 +10,32 @@
 			</columns>
 			<rows>
 				<row>
-					<et2-description  for="ident_id" value="Identity"></et2-description>
-					<et2-select  id="ident_id" onchange="1" noLang="1"></et2-select>
-					<et2-select  id="acc_further_identities" class="emailadmin_no_user" onchange="1"></et2-select>
+					<et2-description for="ident_id" value="Identity"></et2-description>
+					<et2-select id="ident_id" onchange="1" noLang="1"></et2-select>
+					<et2-select id="acc_further_identities" class="emailadmin_no_user" onchange="1"></et2-select>
 				</row>
 				<row>
-					<et2-description  for="ident_name" value="Name"></et2-description>
-					<et2-textbox  id="ident_name" maxlength="128" span="all" placeholder="default your name and email"></et2-textbox>
+					<et2-description for="ident_name" value="Name"></et2-description>
+					<et2-textbox id="ident_name" maxlength="128" span="all" placeholder="default your name and email"></et2-textbox>
 				</row>
 				<row>
-					<et2-description  for="ident_realname" value="Your name"></et2-description>
-					<et2-hbox  span="all">
-						<et2-textbox  id="ident_realname" maxlength="128"></et2-textbox>
-						<et2-button  label="Placeholders" id="button[placeholders]" image="question-circle" onclick="window.open(egw::link('/index.php','menuaction=addressbook.addressbook_merge.show_replacements&amp;nonavbar=1'),'_blank','dependent=yes,width=860,height=620,scrollbars=yes,status=yes'); return false;" noSubmit="true"></et2-button>
+					<et2-description for="ident_realname" value="Your name"></et2-description>
+					<et2-hbox span="all">
+						<et2-textbox id="ident_realname" maxlength="128"></et2-textbox>
+						<et2-button label="Placeholders" id="button[placeholders]" image="question-circle" onclick="window.open(egw::link('/index.php','menuaction=addressbook.addressbook_merge.show_replacements&amp;nonavbar=1'),'_blank','dependent=yes,width=860,height=620,scrollbars=yes,status=yes'); return false;" noSubmit="true"></et2-button>
 					</et2-hbox>
 				</row>
 				<row>
-					<et2-description  for="ident_org" value="Organisation"></et2-description>
-					<et2-textbox  id="ident_org" maxlength="128" span="all"></et2-textbox>
+					<et2-description for="ident_org" value="Organisation"></et2-description>
+					<et2-textbox id="ident_org" maxlength="128" span="all"></et2-textbox>
 				</row>
 				<row disabled="@select_ident_mail">
-					<et2-description  for="ident_email" value="EMail address"></et2-description>
-					<et2-url-email  id="ident_email" maxlength="128" span="all"></et2-url-email>
+					<et2-description for="ident_email" value="EMail address"></et2-description>
+					<et2-url-email id="ident_email" maxlength="128" span="all"></et2-url-email>
 				</row>
 				<row disabled="!@select_ident_mail">
-					<et2-description  for="ident_email_alias" value="EMail address"></et2-description>
-					<et2-select  id="ident_email_alias" span="all"></et2-select>
+					<et2-description for="ident_email_alias" value="EMail address"></et2-description>
+					<et2-select id="ident_email_alias" span="all"></et2-select>
 				</row>
 				<row>
 					<htmlarea expand_toolbar="false" height="237px" id="ident_signature" span="all"/>
@@ -53,34 +53,34 @@
 			</columns>
 			<rows>
 				<row class="emailadmin_no_single">
-					<et2-description  for="acc_imap_logintype" value="Type"></et2-description>
-					<et2-select  id="acc_imap_type"></et2-select>
-					<et2-description  for="acc_imap_logintype" value="Login" class="emailadmin_no_single"></et2-description>
-					<et2-select  class="emailadmin_no_single" statustext="How username get constructed" id="acc_imap_logintype"></et2-select>
+					<et2-description for="acc_imap_logintype" value="Type"></et2-description>
+					<et2-select id="acc_imap_type"></et2-select>
+					<et2-description for="acc_imap_logintype" value="Login" class="emailadmin_no_single"></et2-description>
+					<et2-select class="emailadmin_no_single" statustext="How username get constructed" id="acc_imap_logintype"></et2-select>
 				</row>
 				<row class="@manual_class">
-					<et2-description  for="acc_imap_username" value="Username"></et2-description>
-					<et2-textbox  id="acc_imap_username" maxlength="128" autocomplete="off"></et2-textbox>
-					<et2-description  for="acc_domain" value="Domain" class="emailadmin_no_single"></et2-description>
-					<et2-textbox  id="acc_domain" maxlength="128" class="emailadmin_no_single"></et2-textbox>
+					<et2-description for="acc_imap_username" value="Username"></et2-description>
+					<et2-textbox id="acc_imap_username" maxlength="128" autocomplete="off"></et2-textbox>
+					<et2-description for="acc_domain" value="Domain" class="emailadmin_no_single"></et2-description>
+					<et2-textbox id="acc_domain" maxlength="128" class="emailadmin_no_single"></et2-textbox>
 				</row>
 				<row>
-					<et2-description  for="acc_imap_password" value="Password"></et2-description>
-					<et2-password  id="acc_imap_password" maxlength="128" autocomplete="new-password" placeholder="Leave empty to use OAuth, if supported"></et2-password>
-					<et2-description  id="acc_imap_account_id" class="emailadmin_diagnostic"></et2-description>
+					<et2-description for="acc_imap_password" value="Password"></et2-description>
+					<et2-password id="acc_imap_password" maxlength="128" autocomplete="new-password" placeholder="Leave empty to use OAuth, if supported"></et2-password>
+					<et2-description id="acc_imap_account_id" class="emailadmin_diagnostic"></et2-description>
 					<et2-description></et2-description>
 				</row>
 				<row class="@manual_class">
-					<et2-description  for="acc_imap_host" value="IMAP server"></et2-description>
-					<et2-textbox  id="acc_imap_host" maxlength="128" span="all" placeholder="Hostname or IP"></et2-textbox>
+					<et2-description for="acc_imap_host" value="IMAP server"></et2-description>
+					<et2-textbox id="acc_imap_host" maxlength="128" span="all" placeholder="Hostname or IP"></et2-textbox>
 				</row>
 				<row>
-                    <et2-description  for="acc_imap_ssl" value="Secure connection"></et2-description>
+                    <et2-description for="acc_imap_ssl" value="Secure connection"></et2-description>
                     <et2-hbox>
-                        <et2-select  class="emailadmin_ssl" id="acc_imap_ssl" onchange="app.admin.wizard_imap_ssl_onchange" required="1"></et2-select>
+                        <et2-select class="emailadmin_ssl" id="acc_imap_ssl" onchange="app.admin.wizard_imap_ssl_onchange" required="1"></et2-select>
                     </et2-hbox>
-                    <et2-description  for="acc_imap_port" value="Port"></et2-description>
-                    <et2-number  id="acc_imap_port" class="emailadmin_port" precision="0" required="1"></et2-number>
+                    <et2-description for="acc_imap_port" value="Port"></et2-description>
+                    <et2-number id="acc_imap_port" class="emailadmin_port" precision="0" required="1"></et2-number>
                 </row>
 				<row class="emailadmin_no_single">
 					<groupbox span="all" class="emailadmin_imap_admin">
@@ -92,19 +92,19 @@
 							</columns>
 							<rows>
 								<row>
-									<et2-description  for="acc_imap_admin_username" value="Admin user"></et2-description>
-									<et2-textbox  id="acc_imap_admin_username" maxlength="128" autocomplete="off"></et2-textbox>
+									<et2-description for="acc_imap_admin_username" value="Admin user"></et2-description>
+									<et2-textbox id="acc_imap_admin_username" maxlength="128" autocomplete="off"></et2-textbox>
 								</row>
 								<row>
-									<et2-description  for="acc_imap_admin_password" value="Password"></et2-description>
-									<et2-password  id="acc_imap_admin_password" maxlength="128" autocomplete="new-password"></et2-password>
+									<et2-description for="acc_imap_admin_password" value="Password"></et2-description>
+									<et2-password id="acc_imap_admin_password" maxlength="128" autocomplete="new-password"></et2-password>
 								</row>
 								<row>
 									<et2-description></et2-description>
-									<et2-checkbox  id="acc_admin_use_without_pw" label="Use admin credentials to connect without a session-password, e.g. for SSO"></et2-checkbox>
+									<et2-checkbox id="acc_admin_use_without_pw" label="Use admin credentials to connect without a session-password, e.g. for SSO"></et2-checkbox>
 								</row>
 								<row disabled="!@admin_actions">
-									<et2-description  value="Administration"></et2-description>
+									<et2-description value="Administration"></et2-description>
 									<toolbar id="admin_actions" default_execute="app.admin.account_edit_action"/>
 								</row>
 							</rows>
@@ -128,39 +128,39 @@
 			</columns>
 			<rows>
 				<row>
-					<et2-description  for="acc_folder_sent" value="Sent folder"></et2-description>
-					<et2-select  id="acc_folder_sent" allowFreeEntries="true" editModeEnabled="true" searchUrl="" emptyLabel="Select one ..."></et2-select>
+					<et2-description for="acc_folder_sent" value="Sent folder"></et2-description>
+					<et2-select id="acc_folder_sent" allowFreeEntries="true" searchUrl="" emptyLabel="Select one ..."></et2-select>
 				</row>
 				<row>
-					<et2-description  for="acc_folder_trash" value="Trash folder"></et2-description>
-					<et2-select  id="acc_folder_trash" allowFreeEntries="true" editModeEnabled="true" searchUrl="" emptyLabel="Select one ..."></et2-select>
+					<et2-description for="acc_folder_trash" value="Trash folder"></et2-description>
+					<et2-select id="acc_folder_trash" allowFreeEntries="true" searchUrl="" emptyLabel="Select one ..."></et2-select>
 				</row>
 				<row>
-					<et2-description  for="acc_folder_draft" value="Drafts folder"></et2-description>
-					<et2-select  id="acc_folder_draft" allowFreeEntries="true" editModeEnabled="true" searchUrl="" emptyLabel="Select one ..."></et2-select>
+					<et2-description for="acc_folder_draft" value="Drafts folder"></et2-description>
+					<et2-select id="acc_folder_draft" allowFreeEntries="true" searchUrl="" emptyLabel="Select one ..."></et2-select>
 				</row>
 				<row>
-					<et2-description  for="acc_folder_template" value="Templates folder"></et2-description>
-					<et2-select  id="acc_folder_template" allowFreeEntries="true" editModeEnabled="true" searchUrl="" emptyLabel="Select one ..."></et2-select>
+					<et2-description for="acc_folder_template" value="Templates folder"></et2-description>
+					<et2-select id="acc_folder_template" allowFreeEntries="true" searchUrl="" emptyLabel="Select one ..."></et2-select>
 				</row>
 				<row>
-					<et2-description  for="acc_folder_junk" value="Junk folder"></et2-description>
-					<et2-select  id="acc_folder_junk" allowFreeEntries="true" editModeEnabled="true" searchUrl="" emptyLabel="Select one ..."></et2-select>
+					<et2-description for="acc_folder_junk" value="Junk folder"></et2-description>
+					<et2-select id="acc_folder_junk" allowFreeEntries="true" searchUrl="" emptyLabel="Select one ..."></et2-select>
 				</row>
 				<row>
-					<et2-description  for="acc_folder_ham" value="Ham folder"></et2-description>
-					<et2-select  id="acc_folder_ham" allowFreeEntries="true" editModeEnabled="true" searchUrl="" emptyLabel="Mails can be copied to that folder via context menu, if folder is configured."></et2-select>
+					<et2-description for="acc_folder_ham" value="Ham folder"></et2-description>
+					<et2-select id="acc_folder_ham" allowFreeEntries="true" searchUrl="" emptyLabel="Mails can be copied to that folder via context menu, if folder is configured."></et2-select>
 				</row>
 				<row>
-					<et2-description  for="acc_folder_archive" value="Archive folder"></et2-description>
-					<et2-select  id="acc_folder_archive" allowFreeEntries="true" editModeEnabled="true" searchUrl="" emptyLabel="Select one ..."></et2-select>
+					<et2-description for="acc_folder_archive" value="Archive folder"></et2-description>
+					<et2-select id="acc_folder_archive" allowFreeEntries="true" searchUrl="" emptyLabel="Select one ..."></et2-select>
 				</row>
 				<row>
-					<et2-description  for="notify_folders" value="Notify about new mail in this folders"></et2-description>
+					<et2-description for="notify_folders" value="Notify about new mail in this folders"></et2-description>
 					<et2-vbox>
-						<et2-select  id="notify_folders" onchange="app.admin.change_folders" multiple="true" allowFreeEntries="true" editModeEnabled="true" searchUrl="" placeholder="Select one ..."></et2-select>
-						<et2-checkbox  id="notify_save_default" label="save as default"></et2-checkbox>
-						<et2-checkbox  id="notify_use_default" label="use default"></et2-checkbox>
+						<et2-select id="notify_folders" onchange="app.admin.change_folders" multiple="true" allowFreeEntries="true" searchUrl="" placeholder="Select one ..."></et2-select>
+						<et2-checkbox id="notify_save_default" label="save as default"></et2-checkbox>
+						<et2-checkbox id="notify_use_default" label="use default"></et2-checkbox>
 					</et2-vbox>
 				</row>
 			</rows>
@@ -174,22 +174,22 @@
 			</columns>
 			<rows>
 				<row>
-					<et2-description  for="acc_sieve_enabled" value="Enable Sieve"></et2-description>
-					<et2-select-bool  id="acc_sieve_enabled" required="1"></et2-select-bool>
+					<et2-description for="acc_sieve_enabled" value="Enable Sieve"></et2-description>
+					<et2-select-bool id="acc_sieve_enabled" required="1"></et2-select-bool>
 				</row>
 				<row class="@manual_class">
-					<et2-description  for="acc_sieve_host" value="Sieve server"></et2-description>
-					<et2-textbox  id="acc_sieve_host" onchange="app.admin.wizard_sieve_onchange" maxlength="128" placeholder="Hostname or IP"></et2-textbox>
+					<et2-description for="acc_sieve_host" value="Sieve server"></et2-description>
+					<et2-textbox id="acc_sieve_host" onchange="app.admin.wizard_sieve_onchange" maxlength="128" placeholder="Hostname or IP"></et2-textbox>
 				</row>
 				<row class="@manual_class">
-					<et2-description  for="acc_sieve_ssl" value="Secure connection"></et2-description>
+					<et2-description for="acc_sieve_ssl" value="Secure connection"></et2-description>
 					<et2-hbox>
-						<et2-select  class="emailadmin_ssl" id="acc_sieve_ssl" onchange="app.admin.wizard_sieve_ssl_onchange"></et2-select>
-						<et2-number  label="Port" id="acc_sieve_port" onchange="app.admin.wizard_sieve_onchange" class="label-on-left" precision="0"></et2-number>
+						<et2-select class="emailadmin_ssl" id="acc_sieve_ssl" onchange="app.admin.wizard_sieve_ssl_onchange"></et2-select>
+						<et2-number label="Port" id="acc_sieve_port" onchange="app.admin.wizard_sieve_onchange" class="label-on-left" precision="0"></et2-number>
 					</et2-hbox>
 				</row>
 				<row height="150">
-					<et2-description  value="Vacation messages with start and end date require an admin account to be set!" span="all" class="emailadmin_no_single"></et2-description>
+					<et2-description value="Vacation messages with start and end date require an admin account to be set!" span="all" class="emailadmin_no_single"></et2-description>
 					<et2-description></et2-description>
 					<et2-description></et2-description>
 				</row>
@@ -204,42 +204,42 @@
 			</columns>
 			<rows>
 				<row class="emailadmin_no_single">
-					<et2-description  for="acc_smtp_type" value="Type"></et2-description>
-					<et2-select  id="acc_smtp_type" onchange="1"></et2-select>
+					<et2-description for="acc_smtp_type" value="Type"></et2-description>
+					<et2-select id="acc_smtp_type" onchange="1"></et2-select>
 				</row>
 				<row class="emailadmin_no_single">
-					<et2-description  for="acc_smtp_auth_session" value="Authentication"></et2-description>
-					<et2-checkbox  label="Use username+password from current user" id="acc_smtp_auth_session"></et2-checkbox>
+					<et2-description for="acc_smtp_auth_session" value="Authentication"></et2-description>
+					<et2-checkbox label="Use username+password from current user" id="acc_smtp_auth_session"></et2-checkbox>
 				</row>
 				<row class="@manual_class">
-					<et2-description  for="acc_smtp_username" value="Username"></et2-description>
-					<et2-textbox  id="acc_smtp_username" maxlength="128" autocomplete="off" placeholder="if authentication required"></et2-textbox>
+					<et2-description for="acc_smtp_username" value="Username"></et2-description>
+					<et2-textbox id="acc_smtp_username" maxlength="128" autocomplete="off" placeholder="if authentication required"></et2-textbox>
 				</row>
 				<row class="@manual_class">
-					<et2-description  for="acc_smtp_password" value="Password"></et2-description>
+					<et2-description for="acc_smtp_password" value="Password"></et2-description>
 					<et2-hbox>
-						<et2-password  id="acc_smtp_password" maxlength="128" autocomplete="new-password" placeholder="Leave empty to use OAuth, if supported"></et2-password>
-						<et2-description  id="acc_smtp_account_id" class="emailadmin_diagnostic"></et2-description>
+						<et2-password id="acc_smtp_password" maxlength="128" autocomplete="new-password" placeholder="Leave empty to use OAuth, if supported"></et2-password>
+						<et2-description id="acc_smtp_account_id" class="emailadmin_diagnostic"></et2-description>
 					</et2-hbox>
 				</row>
 				<row class="@manual_class">
-					<et2-description  for="acc_smtp_host" value="SMTP server"></et2-description>
-					<et2-textbox  id="acc_smtp_host" maxlength="128" placeholder="Hostname or IP" required="1"></et2-textbox>
+					<et2-description for="acc_smtp_host" value="SMTP server"></et2-description>
+					<et2-textbox id="acc_smtp_host" maxlength="128" placeholder="Hostname or IP" required="1"></et2-textbox>
 				</row>
 				<row class="@manual_class">
-					<et2-description  for="acc_smtp_ssl" value="Secure connection"></et2-description>
+					<et2-description for="acc_smtp_ssl" value="Secure connection"></et2-description>
 					<et2-hbox>
-						<et2-select  class="emailadmin_ssl" id="acc_smtp_ssl" onchange="app.admin.wizard_smtp_ssl_onchange" required="1"></et2-select>
-						<et2-number  label="Port" id="acc_smtp_port" class="label-on-left" precision="0" required="1"></et2-number>
+						<et2-select class="emailadmin_ssl" id="acc_smtp_ssl" onchange="app.admin.wizard_smtp_ssl_onchange" required="1"></et2-select>
+						<et2-number label="Port" id="acc_smtp_port" class="label-on-left" precision="0" required="1"></et2-number>
 					</et2-hbox>
 				</row>
 				<row>
-					<et2-description  for="acc_spam_api" value="SpamTitan API URL"></et2-description>
-					<et2-url  id="acc_spam_api" width="95%" maxlength="128" placeholder="@spamtitan_blur"></et2-url>
+					<et2-description for="acc_spam_api" value="SpamTitan API URL"></et2-description>
+					<et2-url id="acc_spam_api" width="95%" maxlength="128" placeholder="@spamtitan_blur"></et2-url>
 				</row>
 				<row>
-					<et2-description  for="acc_spam_password" value="API Token"></et2-description>
-					<et2-password  id="acc_spam_password" width="95%" suggest="24" autocomplete="new-password" placeholder="@spamtitan_blur"></et2-password>
+					<et2-description for="acc_spam_password" value="API Token"></et2-description>
+					<et2-password id="acc_spam_password" width="95%" suggest="24" autocomplete="new-password" placeholder="@spamtitan_blur"></et2-password>
 				</row>
 			</rows>
 		</grid>
@@ -253,33 +253,33 @@
 			</columns>
 			<rows>
 				<row>
-					<et2-description  for="mailLocalAddress" value="EMail address"></et2-description>
-					<et2-url-email  id="mailLocalAddress" maxlength="128"></et2-url-email>
-					<et2-checkbox  label="Email account active" id="accountStatus" selectedValue="active"></et2-checkbox>
+					<et2-description for="mailLocalAddress" value="EMail address"></et2-description>
+					<et2-url-email id="mailLocalAddress" maxlength="128"></et2-url-email>
+					<et2-checkbox label="Email account active" id="accountStatus" selectedValue="active"></et2-checkbox>
 				</row>
 				<row>
-					<et2-description  for="mailAlternateAddress" value="Alternate email address"></et2-description>
-					<et2-select-email  id="mailAlternateAddress" allowFreeEntries="true" multiple="true" autocompleteUrl="" onlyEmail="true"></et2-select-email>
+					<et2-description for="mailAlternateAddress" value="Alternate email address"></et2-description>
+					<et2-select-email id="mailAlternateAddress" allowFreeEntries="true" multiple="true" autocompleteUrl="" onlyEmail="true"></et2-select-email>
 					<et2-description></et2-description>
 				</row>
 				<row disabled="@no_forward_available">
-					<et2-description  for="mailForwardingAddress" value="Forward email's to"></et2-description>
-					<et2-select-email  id="mailForwardingAddress" allowFreeEntries="true" multiple="true" autocompleteUrl="" onlyEmail="true"></et2-select-email>
+					<et2-description for="mailForwardingAddress" value="Forward email's to"></et2-description>
+					<et2-select-email id="mailForwardingAddress" allowFreeEntries="true" multiple="true" autocompleteUrl="" onlyEmail="true"></et2-select-email>
 					<et2-vbox>
-						<et2-checkbox  label="Forward only" id="deliveryMode" onchange="if (widget.getValue()) et2_dialog.alert('Forward only disables IMAP mailbox / storing of mails and just forwards them to given address.','Forward only');" selectedValue="forwardOnly"></et2-checkbox>
-						<et2-checkbox  label="Allow users to change forwards" id="acc_user_forward"></et2-checkbox>
+						<et2-checkbox label="Forward only" id="deliveryMode" onchange="if (widget.getValue()) et2_dialog.alert('Forward only disables IMAP mailbox / storing of mails and just forwards them to given address.','Forward only');" selectedValue="forwardOnly"></et2-checkbox>
+						<et2-checkbox label="Allow users to change forwards" id="acc_user_forward"></et2-checkbox>
 					</et2-vbox>
 				</row>
 				<row>
-					<et2-description  for="quotaLimit" value="Quota (MB)"></et2-description>
+					<et2-description for="quotaLimit" value="Quota (MB)"></et2-description>
 					<et2-hbox>
-						<et2-number  id="quotaLimit" precision="0"></et2-number>
-						<et2-description  value="Leave empty for no quota"></et2-description>
+						<et2-number id="quotaLimit" precision="0"></et2-number>
+						<et2-description value="Leave empty for no quota"></et2-description>
 					</et2-hbox>
-					<et2-number  label="Currently:" id="quotaUsed" readonly="true" precision="0"></et2-number>
+					<et2-number label="Currently:" id="quotaUsed" readonly="true" precision="0"></et2-number>
 				</row>
 				<row disabled="!@admin_actions">
-					<et2-description  value="Administration"></et2-description>
+					<et2-description value="Administration"></et2-description>
 					<toolbar id="admin_actions" colspan="2" default_execute="app.admin.account_edit_action"/>
 				</row>
 			</rows>
@@ -293,28 +293,28 @@
 			</columns>
 			<rows>
 				<row>
-					<et2-description  value="S/MIME" span="all"></et2-description>
+					<et2-description value="S/MIME" span="all"></et2-description>
 				</row>
 				<!-- disabled, because not working/fully implemented
 				<row disabled="@hide_smime_upload">
-					<et2-description  value="Certificate"></et2-description>
+					<et2-description value="Certificate"></et2-description>
 					<et2-hbox>
-						<et2-button  id="smimeGenerate" label="Generate Certificate" onclick="app.admin.smime_genCertificate" image="add" noSubmit="true"></et2-button>
+						<et2-button id="smimeGenerate" label="Generate Certificate" onclick="app.admin.smime_genCertificate" image="add" noSubmit="true"></et2-button>
 					</et2-hbox>
 				</row>
 				-->
 				<row disabled="@hide_smime_upload" valign="top">
-					<et2-description  value="Upload your certificate .p12/.pfx file"></et2-description>
+					<et2-description value="Upload your certificate .p12/.pfx file"></et2-description>
 					<et2-vbox>
 						<file id="smimeKeyUpload" accept=".p12,.pfx"/>
-						<et2-password  id="smime_pkcs12_password" maxlength="128" autocomplete="off" placeholder="Password to unlock encrypted p12"></et2-password>
+						<et2-password id="smime_pkcs12_password" maxlength="128" autocomplete="off" placeholder="Password to unlock encrypted p12"></et2-password>
 					</et2-vbox>
 				</row>
 				<row disabled="!@hide_smime_upload">
-					<et2-description  value="Current certificate"></et2-description>
+					<et2-description value="Current certificate"></et2-description>
 					<et2-hbox>
-						<et2-button  id="smime_export_p12" label="export certificate as p12" onclick="app.admin.smime_exportCert" image="export" noSubmit="true"></et2-button>
-						<et2-button  id="smime_delete_p12" label="Delete certificate" onclick="app.admin.change_account" image="delete" noSubmit="true"></et2-button>
+						<et2-button id="smime_export_p12" label="export certificate as p12" onclick="app.admin.smime_exportCert" image="export" noSubmit="true"></et2-button>
+						<et2-button id="smime_delete_p12" label="Delete certificate" onclick="app.admin.change_account" image="delete" noSubmit="true"></et2-button>
 					</et2-hbox>
 				</row>
 			</rows>
@@ -329,24 +329,24 @@
 			</columns>
 			<rows>
 				<row disabled="!@accounts" class="dialogHeader">
-					<et2-description  for="acc_id" value="Mail account"></et2-description>
-                    <et2-select  id="acc_id" onchange="app.admin.change_account" span="2"></et2-select>
+					<et2-description for="acc_id" value="Mail account"></et2-description>
+                    <et2-select id="acc_id" onchange="app.admin.change_account" span="2"></et2-select>
 					<et2-description></et2-description>
 				</row>
 				<row class="dialogHeader">
-					<et2-description  for="acc_name" value="Name of account"></et2-description>
-					<et2-textbox  id="acc_name" required="1"></et2-textbox>
-					<et2-description  align="right" value="$cont[acc_id]" class="emailadmin_diagnostic"></et2-description>
+					<et2-description for="acc_name" value="Name of account"></et2-description>
+					<et2-textbox id="acc_name" required="1"></et2-textbox>
+					<et2-description align="right" value="$cont[acc_id]" class="emailadmin_diagnostic"></et2-description>
 				</row>
                 <row class="emailadmin_no_user dialogHeader2">
-                    <et2-description  for="account_id" value="Valid for"></et2-description>
-                    <et2-hbox  span="all">
-                        <et2-select-account  id="account_id" placeholder="Everyone" multiple="true" accountType="both" rows="1"></et2-select-account>
-                        <et2-checkbox  label="account editable by user" id="acc_user_editable"></et2-checkbox>
+                    <et2-description for="account_id" value="Valid for"></et2-description>
+                    <et2-hbox span="all">
+                        <et2-select-account id="account_id" placeholder="Everyone" multiple="true" accountType="both" rows="1"></et2-select-account>
+                        <et2-checkbox label="account editable by user" id="acc_user_editable"></et2-checkbox>
                     </et2-hbox>
                 </row>
 				<row>
-					<et2-tabbox  id="tabs" span="all" tabHeight="480">
+					<et2-tabbox id="tabs" span="all" tabHeight="480">
 						<tabs>
 							<tab id="admin.mailaccount.identity" label="Identity+Signature" statustext="Identity&amp;Signature"/>
 							<tab id="admin.mailaccount.imap" label="IMAP" statustext="incoming mail"/>
@@ -369,13 +369,13 @@
 				</row>
 			</rows>
 		</grid>
-		<et2-hbox  class="dialogFooterToolbar">
-			<et2-button  label="Save" id="button[save]"></et2-button>
-			<et2-button  label="Apply" id="button[apply]"></et2-button>
-			<et2-button  statustext="Use wizard to detect or verify configuration" label="Wizard" id="button[wizard]" image="magicwand"></et2-button>
-			<et2-button  label="Cancel" id="button[cancel]" onclick="window.close();"></et2-button>
-			<et2-button  align="right" label="Delete" id="button[delete]" onclick="et2_dialog.confirm(widget,'Delete this account','Delete')" hideOnReadonly="true"></et2-button>
-			<et2-button  align="right" label="Delete identity" id="button[delete_identity]" onclick="et2_dialog.confirm(widget,'Delete identity','Delete')" hideOnReadonly="true" image="delete"></et2-button>
+		<et2-hbox class="dialogFooterToolbar">
+			<et2-button label="Save" id="button[save]"></et2-button>
+			<et2-button label="Apply" id="button[apply]"></et2-button>
+			<et2-button statustext="Use wizard to detect or verify configuration" label="Wizard" id="button[wizard]" image="magicwand"></et2-button>
+			<et2-button label="Cancel" id="button[cancel]" onclick="window.close();"></et2-button>
+			<et2-button align="right" label="Delete" id="button[delete]" onclick="et2_dialog.confirm(widget,'Delete this account','Delete')" hideOnReadonly="true"></et2-button>
+			<et2-button align="right" label="Delete identity" id="button[delete_identity]" onclick="et2_dialog.confirm(widget,'Delete identity','Delete')" hideOnReadonly="true" image="delete"></et2-button>
 		</et2-hbox>
 	</template>
 </overlay>

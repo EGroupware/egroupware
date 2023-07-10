@@ -46,6 +46,7 @@ add to clipboard	common	et	Lisa lõikelauale
 addressbook	common	et	Aadressiraamat
 addressbooks to sync in addition to personal addressbook	groupdav	et	Aadressiraamatute sünkroonimine lisaks isiklikule aadressiraamatule
 admin	common	et	Admin
+admin settings for %1	common	et	Administraatori seaded %1 jaoks
 administration	common	et	Administreerimine
 advanced search	common	et	Laiendatud Otsing
 afghanistan	common	et	AFGANISTAN
@@ -53,6 +54,7 @@ albania	common	et	ALBAANIA
 algeria	common	et	ALŽEERIA
 all	common	et	Kõik
 all addressbooks	groupdav	et	Kõik aadressiraamatud
+all categories	common	et	Kõik kategooriad
 all fields	common	et	kõik väljad
 all in one	groupdav	et	Kõik ühes
 all users	common	et	Kõik kasutajad
@@ -371,12 +373,15 @@ list	common	et	Nimekiri
 lithuania	common	et	LEEDU
 load	common	et	Lae
 local	common	et	Lokaalne
+login rejected by epl firewall, please contact your administrator	common	et	EGroupware tulemüür lükkab sisselogimise tagasi, palun võtke ühendust oma administraatoriga.
 loginid	common	et	SisselogimiseID
 logout	common	et	Logi välja
 lost login id	common	et	Kaotasid logimise id
 lost password	common	et	Kaotasid parooli
 low	common	et	Madal
 lowest	common	et	Madalaim
+mailvelope addon installation failed! please try again.	common	et	Mailvelope addoni paigaldamine ebaõnnestus! Palun proovige uuesti.
+mailvelope addon installation succeded. now you may configure the options.	common	et	Mailvelope addoni paigaldamine õnnestus. Nüüd võite seadistada valikuid.
 main category	common	et	Peamine kategooria
 malta	common	et	MALTA
 march	common	et	Märts

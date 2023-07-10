@@ -7,7 +7,7 @@
 %1 is needed by: %2.	setup	pt-br	%1 é utilizado por: %2.
 %1 is set to %2, you will not be able to upload or attach files bigger then that!	setup	pt-br	%1 está definido(a) como %2, você NÃO será capaz de fazer upload ou anexar arquivos maiores que isso!
 %1 is set to %2. this is not recommeded for a production system, as displayed error messages can contain passwords or other sensitive information!	setup	pt-br	%1 está definido(a) como %2. Isto NÃO é recomendado para um sistema em produção, já que mensagens de erros exibidas poderão conter senhas ou outras informações sensíveis!
-%1, %2 or %3 the configuration file.	setup	pt-br	%1, %2 ou %3 o arquivo de configuração.
+%1 the configuration file.	setup	pt-br	%1 o arquivo de configuração.
 '%1' is no valid domain name!	setup	pt-br	'%1' não é um nome de domínio válido!
 '%1' is not allowed as %2. arguments of option %3 !!!	setup	pt-br	'%1' não é permitido como argumento %2 da opção %3 !!!
 (searching accounts and changing passwords)	setup	pt-br	(procurando contas e alterando senhas)

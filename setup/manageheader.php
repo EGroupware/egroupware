@@ -97,6 +97,11 @@ else
 	$newheader = $GLOBALS['egw_setup']->header->generate($GLOBALS['egw_info'],$GLOBALS['egw_domain']);
 
 	$action = @key($_POST['action']);
+	// do NOT allow to show or download header with passwords, if header file can be written/updated on the server
+	if (!empty($action) && (is_writable('../header.inc.php') || !file_exists('../header.inc.php') && is_writable('../')))
+	{
+		$action = 'write';
+	}
 	switch($action)
 	{
 		case 'download':
@@ -121,7 +126,7 @@ else
 			break;
 
 		case 'write':
-			if ((is_writeable('../header.inc.php') || !file_exists('../header.inc.php') && is_writeable('../')) &&
+			if ((is_writable('../header.inc.php') || !file_exists('../header.inc.php') && is_writable('../')) &&
 				($f = fopen('../header.inc.php','wb')))
 			{
 				fwrite($f,$newheader);
@@ -170,8 +175,8 @@ function check_header_form()
 			case 'db_persistent':
 				$GLOBALS['egw_info']['server'][$name] = $value == 'True';
 				break;
-			case 'new_admin_password':
-				if ($value) $GLOBALS['egw_info']['server']['header_admin_password'] = $value;
+			case 'admin_password':
+				$GLOBALS['egw_info']['server']['header_admin_password'] = $value ?: $_SESSION['header']['admin_password'];
 				break;
 			default:
 				$GLOBALS['egw_info']['server'][$name] = $value;
@@ -193,12 +198,7 @@ function check_header_form()
 		{
 			if (function_exists('get_magic_quotes_gpc') && get_magic_quotes_gpc()) $value = stripslashes($value);
 
-			if ($name == 'new_config_passwd')
-			{
-				if ($value) $GLOBALS['egw_domain'][$domain]['config_passwd'] = $value;
-				continue;
-			}
-			$GLOBALS['egw_domain'][$domain][$name] = $value;
+			$GLOBALS['egw_domain'][$domain][$name] = $value ?: $_SESSION['header'][$domain][$name] ?? '';
 		}
 	}
 
@@ -314,8 +314,18 @@ function show_header_form($validation_errors)
 			{
 				$value = $GLOBALS['egw_setup']->header->default_db_ports[$data['db_type']];
 			}
-			$setup_tpl->set_var($name,htmlspecialchars($value));
+			// store passwords in session, do NOT send them to client-side
+			if (in_array($name, ['config_passwd', 'db_pass'], true))
+			{
+				$_SESSION['header'][$domain][$name] = $value;
+			}
+			else
+			{
+				$setup_tpl->set_var($name,htmlspecialchars($value));
+			}
 		}
+		$_SESSION['header']['admin_password'] = $GLOBALS['egw_info']['server']['header_admin_password'];
+
 		$dbtype_options = '';
 		foreach($supported_db as $db)
 		{
@@ -326,12 +336,10 @@ function show_header_form($validation_errors)
 
 		$setup_tpl->parse('domains','domain',True);
 	}
-	if(is_writeable('../header.inc.php') || !file_exists('../header.inc.php') && is_writeable('../'))
+	if(is_writable('../header.inc.php') || !file_exists('../header.inc.php') && is_writable('../'))
 	{
-		$setup_tpl->set_var('actions',lang('%1, %2 or %3 the configuration file.',
-			'<input type="submit" name="action[write]" value="'.htmlspecialchars(lang('Write')).'" />',
-			'<input type="submit" name="action[download]" value="'.htmlspecialchars(lang('Download')).'" />',
-			'<input type="submit" name="action[view]" value="'.htmlspecialchars(lang('View')).'" />'));
+		$setup_tpl->set_var('actions',lang('%1 the configuration file.',
+			'<input type="submit" name="action[write]" value="'.htmlspecialchars(lang('Write')).'" />'));
 	}
 	else
 	{

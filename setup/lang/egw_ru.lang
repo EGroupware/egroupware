@@ -10,7 +10,7 @@
 %1 is set to %2, you will not be able to upload or attach files bigger then that!	setup	ru	%1 установлено в %2, вы не сможете выгружать или прикреплять файлы большего размера!
 %1 is set to %2. this is not recommeded for a production system, as displayed error messages can contain passwords or other sensitive information!	setup	ru	%1 установлено в  %2. Это не рекомендуется для производственных систем, поскольку служебные сообщения могут содержать пароли и другую чувствительную информацию
 %1 users and %2 groups created, %3 errors	setup	ru	Создано %1 пользователей и %2 групп, ошибок %3.
-%1, %2 or %3 the configuration file.	setup	ru	%1, %2 или %3 файла(ов) конфигурации
+%1 the configuration file.	setup	ru	%1 файла(ов) конфигурации
 '%1' is no valid domain name!	setup	ru	'%1' - неверное имя домена!
 '%1' is not allowed as %2. arguments of option %3 !!!	setup	ru	'%1' недопустим как %2. Возможны аргументы %3 !
 '%1' must be integer	setup	ru	%1 должно быть целым числом.

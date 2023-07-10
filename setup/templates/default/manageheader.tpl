@@ -37,17 +37,16 @@ function setDefaultDBPort(selectBox,portField)
 				</td>
 			</tr>
 			<tr class="row_off">
-				<td><strong>{lang_adminuser}</strong><br /><input type="text" name="setting[header_admin_user]" size="30" value="{header_admin_user}" /></td>
+				<td><strong>{lang_adminuser}</strong><br /><input type="text" name="setting[header_admin_user]" size="50" value="{header_admin_user}" /></td>
 				<td>{lang_adminuser_descr}</td>
 			</tr>
 			<tr class="row_on">
 				<td><strong>{lang_adminpass}</strong><br />
-					<input type="hidden" name="setting[header_admin_password]" value="{header_admin_password}" />
-					<input type="password" name="setting[new_admin_password]" size="30" value="" /></td>
-				<td>{lang_adminpass_descr}<br />{lang_leave_empty}</td>
+					<input type="password" name="setting[admin_password]" size="50" value="" placeholder="{lang_leave_empty}" autocomplete="new-password"/></td>
+				<td>{lang_adminpass_descr}</td>
 			</tr>
 			<tr class="row_off">
-				<td><strong>{lang_setup_acl}</strong><br /><input type="text" name="setting[setup_acl]" size="30" value="{setup_acl}" /></td>
+				<td><strong>{lang_setup_acl}</strong><br /><input type="text" name="setting[setup_acl]" size="50" value="{setup_acl}" /></td>
 				<td>{lang_setup_acl_descr}</td>
 			</tr>
 			<tr class="row_on">
@@ -69,7 +68,7 @@ function setDefaultDBPort(selectBox,portField)
 				<td>{lang_mcrypt_warning}</td>
 			</tr>
 			<tr class="row_on">
-				<td><strong>{lang_mcryptiv}</strong><br /><input type="text" name="setting[mcrypt_iv]" value="{mcrypt_iv}" size="35" /></td>
+				<td><strong>{lang_mcryptiv}</strong><br /><input type="text" name="setting[mcrypt_iv]" value="{mcrypt_iv}" size="50"/></td>
 				<td>{lang_mcryptivdescr}</td>
 			</tr>
 			<tr class="row_off">
@@ -126,28 +125,28 @@ function setDefaultDBPort(selectBox,portField)
 					<td>{lang_whichdb}</td>
 				</tr>
 				<tr class="row_off">
-					<td><strong>{lang_dbhost}</strong><br /><input type="text" name="setting_{db_domain}[db_host]" value="{db_host}" /></td><td>{lang_dbhostdescr}</td>
+					<td><strong>{lang_dbhost}</strong><br /><input type="text" name="setting_{db_domain}[db_host]" size="50" value="{db_host}" /></td><td>{lang_dbhostdescr}</td>
 				</tr>
 				<tr class="row_on">
-					<td><strong>{lang_dbport}</strong><br /><input type="text" name="setting_{db_domain}[db_port]" value="{db_port}" /></td><td>{lang_dbportdescr}</td>
+					<td><strong>{lang_dbport}</strong><br /><input type="text" name="setting_{db_domain}[db_port]" size="50" value="{db_port}" /></td><td>{lang_dbportdescr}</td>
 				</tr>
 				<tr class="row_off">
-					<td><strong>{lang_dbname}</strong><br /><input type="text" name="setting_{db_domain}[db_name]" value="{db_name}" /></td><td>{lang_dbnamedescr}</td>
+					<td><strong>{lang_dbname}</strong><br /><input type="text" name="setting_{db_domain}[db_name]" size="50" value="{db_name}" /></td><td>{lang_dbnamedescr}</td>
 				</tr>
 				<tr class="row_on">
-					<td><strong>{lang_dbuser}</strong><br /><input type="text" name="setting_{db_domain}[db_user]" value="{db_user}" /></td><td>{lang_dbuserdescr}</td>
+					<td><strong>{lang_dbuser}</strong><br /><input type="text" name="setting_{db_domain}[db_user]" size="50" value="{db_user}" /></td><td>{lang_dbuserdescr}</td>
 				</tr>
 				<tr class="row_off">
-					<td><strong>{lang_dbpass}</strong><br /><input type="password" name="setting_{db_domain}[db_pass]" value="{db_pass}" /></td><td>{lang_dbpassdescr}</td>
+					<td><strong>{lang_dbpass}</strong><br /><input type="password" name="setting_{db_domain}[db_pass]" size="50" value="" placeholder="{lang_leave_empty}" autocomplete="new-password" /></td>
+					<td>{lang_dbpassdescr}</td>
 				</tr>
 				<tr class="row_on">
-					<td><strong>{lang_configuser}</strong><br /><input type="text" name="setting_{db_domain}[config_user]" value="{config_user}" /></td>
+					<td><strong>{lang_configuser}</strong><br /><input type="text" name="setting_{db_domain}[config_user]" size="50" value="{config_user}" /></td>
 					<td>{lang_configuser_descr}</td>
 				</tr>
 				<tr class="row_off">
 					<td><strong>{lang_configpass}</strong><br />
-						<input type="hidden" name="setting_{db_domain}[config_passwd]" value="{config_passwd}" />
-						<input type="password" name="setting_{db_domain}[new_config_passwd]" value="" /></td>
-					<td>{lang_passforconfig}<br />{lang_leave_empty}</td>
+						<input type="password" name="setting_{db_domain}[config_passwd]" value="" size="50" placeholder="{lang_leave_empty}" autocomplete="new-password"/></td>
+					<td>{lang_passforconfig}</td>
 				</tr>
 <!-- END domain -->

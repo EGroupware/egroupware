@@ -277,6 +277,20 @@ class CalDAV extends HTTP_WebDAV_Server
 		$this->dav_powered_by = str_replace('EGroupware','EGroupware '.$GLOBALS['egw_info']['server']['versions']['phpgwapi'],
 			$this->dav_powered_by);
 
+		// detected available additional APIs from applications
+		$this->root += Cache::getInstance(__CLASS__, 'user-'.$GLOBALS['egw_info']['user']['account_id'], static function()
+		{
+			$apis = [];
+			foreach($GLOBALS['egw_info']['user']['apps'] as $app => $data)
+			{
+				if (class_exists('EGroupware\\'.ucfirst($app).'\\ApiHandler'))
+				{
+					$apis[$app] = [];
+				}
+			}
+			return $apis;
+		}, [], 86400);
+
 		parent::__construct();
 		// hack to allow to use query parameters in WebDAV, which HTTP_WebDAV_Server interprets as part of the path
 		list($this->_SERVER['REQUEST_URI']) = explode('?',$this->_SERVER['REQUEST_URI']);
@@ -1487,7 +1501,8 @@ class CalDAV extends HTTP_WebDAV_Server
 		// for some reason OS X Addressbook (CFNetwork user-agent) uses now (DAV:add-member given with collection URL+"?add-member")
 		// POST to the collection URL plus a UID like name component (like for regular PUT) to create new entrys
 		if (isset($_GET['add-member']) || Handler::get_agent() == 'cfnetwork' ||
-			substr($options['path'], -1) === '/' && self::isJSON())
+			// addressbook has not implemented a POST handler, therefore we have to call the PUT handler
+			preg_match('#^(/[^/]+)?/addressbook(-[^/]+)?/$', $options['path']) && self::isJSON())
 		{
 			$_GET['add-member'] = '';	// otherwise we give no Location header
 			return $this->PUT($options, 'POST');
@@ -1508,13 +1523,14 @@ class CalDAV extends HTTP_WebDAV_Server
 			if (method_exists($handler, 'post'))
 			{
 				// read the content in a string, if a stream is given
-				if (isset($options['stream']))
+				if (isset($options['stream']) && !self::isFileUpload())
 				{
 					$options['content'] = '';
 					while(!feof($options['stream']))
 					{
 						$options['content'] .= fread($options['stream'],8192);
 					}
+					fseek($options['stream'], 0);
 				}
 				return $handler->post($options,$id,$user);
 			}
@@ -2012,7 +2028,7 @@ class CalDAV extends HTTP_WebDAV_Server
 			// check/handle Prefer: return-representation
 			if ($status[0] === '2' || $status === true)
 			{
-				// we can NOT use 204 No content (forbidds a body) with return=representation, therefore we need to use 200 Ok instead!
+				// we can NOT use 204 No content (forbids a body) with return=representation, therefore we need to use 200 Ok instead!
 				if ($handler->check_return_representation($options, $id, $user) && (int)$status == 204)
 				{
 					$status = '200 Ok';
@@ -2317,14 +2333,27 @@ class CalDAV extends HTTP_WebDAV_Server
 		{
 			self::$request_starttime = microtime(true);
 			// do NOT log non-text attachments
-			$this->store_request = $_SERVER['REQUEST_METHOD'] != 'POST' || !isset($_GET['action']) ||
-				!in_array($_GET['action'], array('attachment-add', 'attachment-update')) ||
+			$this->store_request = $_SERVER['REQUEST_METHOD'] != 'POST' ||
+				!self::isFileUpload() ||
 				substr($_SERVER['CONTENT_TYPE'], 0, 5) == 'text/';
 			ob_start();
 		}
 		parent::ServeRequest($prefix);
 
 		if (self::$request_starttime) self::log_request();
+	}
+
+	/**
+	 * Check if request is a possibly large, binary file upload:
+	 * - CalDAV managed attachments or
+	 * - Mail REST API attachment upload
+	 *
+	 * @return bool
+	 */
+	protected static function isFileUpload()
+	{
+		return (isset($_GET['action']) && in_array($_GET['action'], array('attachment-add', 'attachment-update'))) ||
+			strpos($_SERVER['REQUEST_URI'], '/mail/attachments/');
 	}
 
 	/**

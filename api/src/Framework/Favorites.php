@@ -95,7 +95,7 @@ class Favorites
 
 		// If were're here, the app supports favorites, so add a 'Add' link too
 		$html .= "<li data-id='add' class='ui-menu-item' role='menuitem'><a href='javascript:app.$app.add_favorite()' class='ui-corner-all'>";
-		$html .= Api\Html::image($app, 'new') . lang('Add current'). '</a></li>';
+		$html .= Api\Html::image($app, 'add') . lang('Add current') . '</a></li>';
 
 		$html .= '</ul></span>';
 

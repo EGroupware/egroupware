@@ -353,6 +353,7 @@ class calendar_so
 			));
 			unset($where['cal_id']);
 		}
+		$group_by = '';
 		if ((int) $recur_date && !$read_recurrence)
 		{
 			$where[] = 'cal_start >= '.(int)$recur_date;
@@ -901,7 +902,10 @@ class calendar_so
 				$where[] = '('.((int)$start).' < range_end OR range_end IS NULL)';
 			}
 		}
-		if (!preg_match('/^[a-z_ ,c]+$/i',$params['order'])) $params['order'] = 'cal_start';		// gard against SQL injection
+		if (empty($params['order']) || !preg_match('/^[a-z_ ,c]+$/i', $params['order']))
+		{
+			$params['order'] = 'cal_start'; 		// gard against SQL injection
+		}
 
 		// if not enum recuring events, we have to use minimum start- AND end-dates, otherwise we get more then one event per cal_id!
 		if (!$params['enum_recuring'])
@@ -987,7 +991,7 @@ class calendar_so
 				'cols'  => $cols,
 				'where' => $where,
 				'app'   => 'calendar',
-				'append'=> $params['append'],
+				'append'=> $params['append'] ?? null,
 				'table_def' => $cal_table_def,
 			);
 			$selects = array();
@@ -1032,7 +1036,7 @@ class calendar_so
 					$selects[count($selects)-1]['where'][] = "$this->user_table.cal_recur_date=cal_start";
 				}
 			}
-			if (is_numeric($offset) && !$params['no_total'])	// get the total too
+			if (is_numeric($offset) && empty($params['no_total']))	// get the total too
 			{
 				$save_selects = $selects;
 				// we only select cal_table.cal_id (and not cal_table.*) to be able to use DISTINCT (eg. MsSQL does not allow it for text-columns)
@@ -1045,14 +1049,14 @@ class calendar_so
 							array('range_start AS cal_start','range_end AS cal_end'), $selects[$key]['cols']);
 					}
 				}
-				if (!isset($params['cols']) && !$params['no_integration']) self::get_union_selects($selects,$start,$end,$users,$cat_id,$filter,$params['query'],$params['users']);
+				if (!isset($params['cols']) && empty($params['no_integration'])) self::get_union_selects($selects,$start,$end,$users,$cat_id,$filter,$params['query'],$params['users']);
 
 				$this->total = $this->db->union($selects,__LINE__,__FILE__)->NumRows();
 
 				// restore original cols / selects
 				$selects = $save_selects; unset($save_selects);
 			}
-			if (!isset($params['cols']) && !$params['no_integration']) self::get_union_selects($selects,$start,$end,$users,$cat_id,$filter,$params['query'],$params['users']);
+			if (!isset($params['cols']) && empty($params['no_integration'])) self::get_union_selects($selects,$start,$end,$users,$cat_id,$filter,$params['query'],$params['users']);
 
 			$rs = $this->db->union($selects,__LINE__,__FILE__,$params['order'],$offset,$num_rows);
 		}
@@ -1120,7 +1124,7 @@ class calendar_so
 			$row['recur_exception'] = $row['alarm'] = array();
 
 			// compile a list of recurrences per cal_id
-			if (!in_array($id,(array)$recur_ids[$row['cal_id']])) $recur_ids[$row['cal_id']][] = $id;
+			if (!isset($recur_ids[$row['cal_id']]) || !in_array($id, $recur_ids[$row['cal_id']])) $recur_ids[$row['cal_id']][] = $id;
 
 			$events[$id] = Api\Db::strip_array_keys($row,'cal_');
 		}
@@ -1184,7 +1188,7 @@ class calendar_so
 				}
 			}
 			//custom fields are not shown in the regular views, so we only query them, if explicitly required
-			if (!is_null($params['cfs']))
+			if (isset($params['cfs']))
 			{
 				$where = array('cal_id' => $ids);
 				if ($params['cfs']) $where['cal_extra_name'] = $params['cfs'];
@@ -1439,7 +1443,7 @@ ORDER BY cal_user_type, cal_usre_id
 
 		//error_log(__METHOD__.'('.array2string($event).",$set_recurrences,$change_since,$etag) ".function_backtrace());
 
-		$cal_id = (int) $event['id'];
+		$cal_id = (int)($event['id'] ?? 0);
 		unset($event['id']);
 		$set_recurrences = $set_recurrences || !$cal_id && $event['recur_type'] != MCAL_RECUR_NONE;
 
@@ -1465,15 +1469,15 @@ ORDER BY cal_user_type, cal_usre_id
 			$event['range_end'] = $event['recur_type'] == MCAL_RECUR_NONE ? $event['cal_end'] :
 				($event['recur_enddate'] ? $event['recur_enddate'] : null);
 		}
-		// ensure that we find mathing entries later on
-		if (!is_array($event['cal_category']))
+		// ensure that we find matching entries later on
+		if (isset($event['cal_category']) && !is_array($event['cal_category']))
 		{
 			$categories = array_unique(explode(',',$event['cal_category']));
 			sort($categories);
 		}
 		else
 		{
-			$categories = array_unique($event['cal_category']);
+			$categories = array_unique($event['cal_category'] ?? []);
 		}
 		sort($categories, SORT_NUMERIC);
 
@@ -1515,7 +1519,7 @@ ORDER BY cal_user_type, cal_usre_id
 			// new event
 			if (!$event['cal_owner']) $event['cal_owner'] = $GLOBALS['egw_info']['user']['account_id'];
 
-			if (!$event['cal_id'] && !isset($event['cal_uid'])) $event['cal_uid'] = '';	// uid is NOT NULL!
+			if (empty($event['cal_id']) && !isset($event['cal_uid'])) $event['cal_uid'] = '';	// uid is NOT NULL!
 
 			$event['cal_etag'] = $etag = 0;
 			$this->db->insert($this->cal_table,$event,false,__LINE__,__FILE__,'calendar');
@@ -1556,7 +1560,7 @@ ORDER BY cal_user_type, cal_usre_id
 				__LINE__,__FILE__,'calendar');
 
 			// add exception marker to master, so participants added to exceptions *only* get found
-			if ($event['cal_reference'])
+			if (!empty($event['cal_reference']))
 			{
 				$master_participants = array();
 				foreach($this->db->select($this->user_table, 'cal_user_type,cal_user_id,cal_user_attendee', array(
@@ -1725,7 +1729,7 @@ ORDER BY cal_user_type, cal_usre_id
 
 		foreach($event as $name => $value)
 		{
-			if ($name[0] == '#')
+			if (is_string($name) && $name[0] === '#')
 			{
 				if (is_array($value) && array_key_exists('id',$value))
 				{
@@ -1756,7 +1760,7 @@ ORDER BY cal_user_type, cal_usre_id
 		{
 			foreach ($event['alarm'] as $id => $alarm)
 			{
-				if ($alarm['id'] && strpos($alarm['id'], 'cal:'.$cal_id.':') !== 0)
+				if (!empty($alarm['id']) && strpos($alarm['id'], 'cal:'.$cal_id.':') !== 0)
 				{
 					unset($alarm['id']);	// unset the temporary id to add the alarm
 				}
@@ -1782,7 +1786,7 @@ ORDER BY cal_user_type, cal_usre_id
 		}
 
 		// if event is an exception: update modified of master, to force etag, ctag and sync-token change
-		if ($event['cal_reference'])
+		if (!empty($event['cal_reference']))
 		{
 			$this->updateModified($event['cal_reference']);
 		}
@@ -2071,7 +2075,7 @@ ORDER BY cal_user_type, cal_usre_id
 			// we do not touch unchanged (!) existing ones
 			foreach($participants as $uid => $status)
 			{
-				if ($old_participants[$uid] === $status)
+				if (isset($old_participants[$uid]) && $old_participants[$uid] === $status)
 				{
 					unset($participants[$uid]);
 				}
@@ -2387,13 +2391,13 @@ ORDER BY cal_user_type, cal_usre_id
 			}
 			if (!is_array($cal_id))
 			{
-				$alarms = (array)self::$alarm_cache[$cal_id];
+				$alarms = self::$alarm_cache[$cal_id] ?? [];
 			}
 			else
 			{
 				foreach($cal_id as $id)
 				{
-					$alarms[$id] = (array)self::$alarm_cache[$id];
+					$alarms[$id] = self::$alarm_cache[$id] ?? [];
 				}
 			}
 			//error_log(__METHOD__."(".array2string($cal_id).", ".array2string($update_cache).") returning from cache ".array2string($alarms));
@@ -2416,7 +2420,7 @@ ORDER BY cal_user_type, cal_usre_id
 			}
 		}
 		//error_log(__METHOD__."(".array2string($cal_id).") returning ".array2string($alarms));
-		return $alarms ? $alarms : array();
+		return $alarms ?? [];
 	}
 
 	/**
@@ -2452,7 +2456,7 @@ ORDER BY cal_user_type, cal_usre_id
 	function save_alarm($cal_id, $alarm, $update_modified=true)
 	{
 		//error_log(__METHOD__."($cal_id, ".array2string($alarm).', '.array2string($update_modified).') '.function_backtrace());
-		if (!($id = $alarm['id']))
+		if (!($id = $alarm['id'] ?? null))
 		{
 			$alarms = $this->read_alarms($cal_id);	// find a free alarm#
 			$n = count($alarms);

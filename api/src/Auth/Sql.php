@@ -60,7 +60,7 @@ class Sql implements Backend
 			'account_type'   => 'u',
 			'account_status' => 'A'
 		);
-		if (!$GLOBALS['egw_info']['server']['case_sensitive_username'])	// = is case sensitiv eg. on postgres, but not on mysql!
+		if (empty($GLOBALS['egw_info']['server']['case_sensitive_username']))	// = is case-sensitive e.g. on postgres, but not on mysql!
 		{
 			$where[] = 'account_lid '.$this->db->capabilities[Api\Db::CAPABILITY_CASE_INSENSITIV_LIKE].' '.$this->db->quote($username);
 			unset($where['account_lid']);
@@ -69,7 +69,7 @@ class Sql implements Backend
 		{
 			if (!($row = $this->db->select($this->table,'account_lid,account_pwd,account_lastlogin,account_id',$where,__LINE__,__FILE__)->fetch()) ||
 				empty($row['account_pwd']) ||
-				$GLOBALS['egw_info']['server']['case_sensitive_username'] && $row['account_lid'] != $username)
+				!empty($GLOBALS['egw_info']['server']['case_sensitive_username']) && $row['account_lid'] != $username)
 			{
 				return false;
 			}

@@ -2,15 +2,15 @@
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="home.birthdays" template="" lang="" group="0" version="1.9.001">
-		<grid>
-			<columns>
-				<column/>
-			</columns>
-			<rows>
-				<row>
-					<et2-link  id="${row}" app=""></et2-link>
-				</row>
-			</rows>
-		</grid>
+		<grid width="100%">
+            <columns>
+                <column/>
+            </columns>
+            <rows>
+                <row>
+                    <et2-link id="$row_cont[id]" app="$row_cont[app]" title="$row_cont[title]"></et2-link>
+                </row>
+            </rows>
+        </grid>
 	</template>
 </overlay>

@@ -10,7 +10,7 @@
 %1 is set to %2, you will not be able to upload or attach files bigger then that!	setup	es-es	¡%1 está establecido a %2, NO podrá subir o adjuntar ficheros mayores de ese valor!
 %1 is set to %2. this is not recommeded for a production system, as displayed error messages can contain passwords or other sensitive information!	setup	es-es	%1 está establecido en %2. ¡Esto NO se recomienda para un sistema en producción, ya que los mensajes de error pueden contener contraseñas o alguna otra información sensible!
 %1 users and %2 groups created, %3 errors	setup	es-es	Se han creado %1 usuarios y %2 grupos, %3 errores
-%1, %2 or %3 the configuration file.	setup	es-es	%1, %2 o %3 el fichero de configuración.
+%1 the configuration file.	setup	es-es	%1 el fichero de configuración.
 '%1' is no valid domain name!	setup	es-es	'%1' no es un nombre válido de dominio
 '%1' is not allowed as %2. arguments of option %3 !!!	setup	es-es	¡¡'%1' no está permitido como %2. argumentos de la opción %3 !!
 '%1' must be integer	setup	es-es	%1 debe ser un valor entero

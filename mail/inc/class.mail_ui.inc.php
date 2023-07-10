@@ -591,6 +591,8 @@ class mail_ui
 				{
 					$content[self::$nm_index]['cat_id']=($content[self::$nm_index]['cat_id']?(!Mail::$supportsORinQuery[$this->mail_bo->profileID]&&($content[self::$nm_index]['cat_id']=='quick'||$content[self::$nm_index]['cat_id']=='quickwithcc')?'subject':$content[self::$nm_index]['cat_id']):(Mail::$supportsORinQuery[$this->mail_bo->profileID]?'quick':'subject'));
 				}
+
+				$content['emailTag'] = $GLOBALS['egw_info']['user']['preferences']['mail']['emailTag'] ?? 'onlyname';
 				$readonlys = $preserv = array();
 				if (Mail::$debugTimes) Mail::logRunTimes($starttime,null,'',__METHOD__.__LINE__);
 		}
@@ -621,6 +623,10 @@ class mail_ui
 				break;
 			case "vertical":
 				$etpl->setElementAttribute('mailSplitter', 'orientation', 'v');
+				break;
+			case "allColumns":
+				$etpl->setElementAttribute('mailSplitter', 'orientation', 'v');
+				$etpl->setElementAttribute('nm', 'template', 'mail.index.rows.horizental');
 				break;
 			case "expand":
 			case "fixed":
@@ -2127,22 +2133,15 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			if ($header['disposition-notification-to']) $data['dispositionnotificationto'] = $header['disposition-notification-to'];
 			if (($header['mdnsent']||$header['mdnnotsent']|$header['seen'])&&isset($data['dispositionnotificationto'])) unset($data['dispositionnotificationto']);
 			$data['attachmentsBlock'] = $imageHTMLBlock;
-			if ($_folderType)
-			{
-				$data['fromavatar'] = Api\Mail\Avatar::getAvatar($data['fromaddress']);
-			}
 			$data['address'] = $_folderType ? $data["toaddress"] : $data["fromaddress"];
 			$data['lavatar'] = Api\Mail\Avatar::getLavatar($data['address']);
-
-			if (($data['avatar'] = Api\Mail\Avatar::getAvatar($data['address'], $data['lavatar'])) && !$_folderType)
-			{
-				$data['fromavatar'] = $data['avatar'];
-			}
+			$data['fromlavatar'] = $_folderType ? Api\Mail\Avatar::getLavatar($data['fromaddress']) : $data['lavatar'];
 
 			if (in_array("bodypreview", $cols) && $header['bodypreview'])
 			{
 				$data["bodypreview"] = $header['bodypreview'];
 			}
+			$data['emailTag'] = $GLOBALS['egw_info']['user']['preferences']['mail']['emailTag'] ?? "onlyname";
 			$rv[] = $data;
 			//error_log(__METHOD__.__LINE__.array2string($data));
 		}
@@ -2343,7 +2342,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		// send configured image proxy to client-side
 		$content['image_proxy'] = self::image_proxy();
 		$content['avatar'] = Api\Mail\Avatar::getAvatar($content['from'][0]);
-
+		$content['emailTag'] =  $GLOBALS['egw_info']['user']['preferences']['mail']['emailTag'] ?? 'onlyname';
 		$etpl->exec('mail.mail_ui.displayMessage', $content, $sel_options, $readonlys, $preserv, 2);
 	}
 
@@ -3332,7 +3331,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			{
 				$smime['msg'] = lang($smime['msg']);
 				$acc_smime = Mail\Smime::get_acc_smime($this->mail_bo->profileID);
-				$attachments = $this->mail_bo->getMessageAttachments($uid, $partID, $structure,true,true,true, $mailbox);
+				$attachments = $this->mail_bo->getMessageAttachments($uid, $partID, $structure,false,true,true, $mailbox);
 				$push = new Api\Json\Push($GLOBALS['egw_info']['user']['account_id']);
 				if (!empty($acc_smime) && !empty($smime['addtocontact'])) $push->call('app.mail.smime_certAddToContact', $smime);
 				if (is_array($attachments))

@@ -87,6 +87,7 @@ add user to responsibles, removing evtl. previous category user	groupdav	nl	voeg
 addressbook	common	nl	Adresboek
 addressbooks to sync in addition to personal addressbook	groupdav	nl	Adresboeken welke ook moeten worden gesynchroniseerd buiten het eigen adresboek.
 admin	common	nl	Beheer
+admin settings for %1	common	nl	Beheerdersinstellingen voor %1
 administration	common	nl	Beheer
 advanced search	common	nl	Geavanceerd zoeken
 afghanistan	common	nl	AFGHANISTAN
@@ -97,6 +98,7 @@ alignment of label and input-field in table-cell	common	nl	uitlijning van label 
 alignment of the v/hbox containing table-cell	common	nl	Uitlijning van de V/Hbox die de tabelcel bevat
 all	common	nl	Alles
 all addressbooks	groupdav	nl	Alle adresboeken
+all categories	common	nl	Alle categorieën
 all days	common	nl	alle dagen
 all fields	common	nl	alle velden
 all in one	groupdav	nl	Alles in een
@@ -582,7 +584,6 @@ high	common	nl	Hoog
 highest	common	nl	Hoogste
 history	common	nl	Geschiedenis
 history log	common	nl	Historie log
-hold [%1] and [%2] key to drag %3 to your desktop	common	nl	Houd [%1] en [%2] toets vast om %3 naar uw desktop te slepen
 holy see (vatican city state)	common	nl	VATICAANSTAD
 home	common	nl	Start
 home email	common	nl	email thuis
@@ -729,6 +730,7 @@ location calendars	groupdav	nl	Plaats van kalenders
 locations	common	nl	locaties
 logging / debuging	groupdav	nl	Logging / Debugging
 login	common	nl	Aanmelden
+login rejected by epl firewall, please contact your administrator	common	nl	Inloggen geweigerd door EGroupware firewall, neem contact op met uw beheerder.
 loginid	common	nl	Loginnaam
 logout	common	nl	Afmelden
 lost login id	common	nl	Vergeten Login ID
@@ -741,6 +743,8 @@ macau	common	nl	MACAU
 macedonia, the former yugoslav republic of	common	nl	MACEDONIË
 madagascar	common	nl	MADAGASKAR
 mail domain, eg. "%1"	common	nl	emai domein, bijv. "%1"
+mailvelope addon installation failed! please try again.	common	nl	Mailvelope addon installatie is mislukt! Probeer het opnieuw.
+mailvelope addon installation succeded. now you may configure the options.	common	nl	Mailvelope addon installatie is geslaagd. Nu kunt u de opties configureren.
 main category	common	nl	Hoofdcategorie
 maintainer	common	nl	Beheerder
 malawi	common	nl	MALAWI

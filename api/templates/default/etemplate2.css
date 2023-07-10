@@ -1057,24 +1057,36 @@ div.et2_file input.et2_file_upload {
  * Autocomplete in dialogs - fix so they go over/out of the dialog
  */
 .ui-dialog * ul.ui-autocomplete {
-    position: fixed;
+	position: fixed;
 }
 
 /**
  * Link wiget(s)
  */
-/* Link entry - x button*/
-div.et2_link_entry {
-    width: 99%;
+et2-link-string et2-link::part(base) {
+	display: inline;
+}
+
+et2-link-string > et2-link::part(icon), et2-link-string > et2-link::part(remark) {
+	display: none;
+}
+
+et2-link-list et2-link::part(title), et2-link-list et2-link::part(remark) {
     white-space: nowrap;
 }
 
+/* Link entry - x button*/
+div.et2_link_entry {
+	width: 99%;
+	white-space: nowrap;
+}
+
 div.et2_link_entry:after {
-    display: inline-block;
-    content: ".";
-    height: 0;
-    visibility: hidden;
-    margin: -20px;
+	display: inline-block;
+	content: ".";
+	height: 0;
+	visibility: hidden;
+	margin: -20px;
 }
 
 /* Special layout for inside nm grid */
@@ -1271,24 +1283,28 @@ div.et2_link_entry input.ui-autocomplete-input {
 }
 
 ul.et2_link_string {
-    list-style-type: none;
-    display: inline;
-    padding: 0px;
+	list-style-type: none;
+	display: inline;
+	padding: 0px;
 }
 
 .et2_link_string li {
-    display: inline;
+	display: inline;
+}
+
+et2-link-string et2-link::part(base) {
+	margin-right: -0.5ex;
 }
 
 .et2_link_string li:not(:last-child):after {
-    content: '\002C\00A0';
+	content: '\002C\00A0';
 }
 
 .et2_link_list {
-    border-collapse: collapse;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
+	border-collapse: collapse;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
@@ -1314,19 +1330,23 @@ ul.et2_link_string {
 }
 
 et2-link-list et2-link {
-    color: initial;
-    width: 30%;
+	color: initial;
+	width: 30%;
 }
 
 et2-link-list et2-link:hover {
-    text-decoration: initial;
+	text-decoration: initial;
+}
+
+et2-link-list > et2-link::part(icon) {
+	width: 1rem;
 }
 
 .et2_link_list .icon img,
 .et2_vfs .icon img {
-    width: 16px;
-    height: 16px;
-    display: inline-block;
+	width: 16px;
+	height: 16px;
+	display: inline-block;
 }
 
 div.et2_vfsPath {
@@ -1431,16 +1451,16 @@ div.et2_vfsPath li img {
 }
 
 .egw_tooltip {
-    position: fixed;
-    border: 1px solid #897f51;
-    background-color: #FDF9DB;
-    max-width: 300px;
-    color: black;
-    z-index: 1002;
-    -webkit-box-shadow: 2px 2px 10px 0px rgba(0, 0, 0, 0.75);
-    -moz-box-shadow: 2px 2px 10px 0px rgba(0, 0, 0, 0.75);
-    box-shadow: 2px 2px 10px 0px rgba(0, 0, 0, 0.75);
-    white-space: pre-wrap;
+	position: fixed;
+	border: 1px solid #897f51;
+	background-color: #FDF9DB;
+	max-width: 300px;
+	color: black;
+	z-index: 10002;
+	-webkit-box-shadow: 2px 2px 10px 0px rgba(0, 0, 0, 0.75);
+	-moz-box-shadow: 2px 2px 10px 0px rgba(0, 0, 0, 0.75);
+	box-shadow: 2px 2px 10px 0px rgba(0, 0, 0, 0.75);
+	white-space: pre-wrap;
 }
 
 /**
@@ -4066,6 +4086,7 @@ body .flatpickr-calendar {
 }
 
 .flatpickr-calendar.open {
+	/* egw tooltips are z-index: 10002, calendar needs to stay below that */
     z-index: 10000;
 }
 

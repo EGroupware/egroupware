@@ -45,47 +45,58 @@ export class Et2LinkList extends Et2LinkString
 		return [
 			...super.styles,
 			css`
-			:host {
-				display:flex;
+			  :host {
+				display: flex;
 				flex-direction: column;
 				column-gap: 10px;
 				overflow: hidden;
-			}
-			div {
+			  }
+
+			  div {
 				display: flex;
 				gap: 10px;
-			}
-			div:hover {
+			  }
+
+			  div:hover {
 				background-color: var(--highlight-background-color);
-			}
-			
-			div.zip_highlight {
+			  }
+
+			  div.zip_highlight {
 				animation-name: new_entry_pulse, new_entry_clear;
 				animation-duration: 5s;
 				animation-delay: 0s, 30s;
 				animation-fill-mode: forwards;
-			}
-			
-			/* CSS for child elements */
-            ::slotted(*):after {
-            	/* Reset from Et2LinkString */
-            	content: initial;
-            }
-            ::slotted(et2-vfs-mime), ::slotted(et2-image-expose) {
-            	width: 16px;
-            }
-            ::slotted(et2-link) {
-            	flex: 1 1 auto;
-            }
-            ::slotted(.remark) {
-            	flex: 1 1 auto;
-            	width: 20%;
-            }
-            ::slotted(.delete_button) {
-            	visibility: hidden;
-            	width: 16px;
-            	order: 5;
-            }
+			  }
+
+			  /* CSS for child elements */
+
+			  ::slotted(*):after {
+				/* Reset from Et2LinkString */
+				content: initial;
+			  }
+
+			  ::slotted(*)::part(icon) {
+				width: 1rem;
+			  }
+
+			  ::slotted(et2-link) {
+				flex: 1 1 auto;
+			  }
+
+			  ::slotted(.remark) {
+				flex: 1 1 auto;
+				width: 20%;
+			  }
+
+			  ::slotted(.delete_button) {
+				visibility: hidden;
+				width: 16px;
+				order: 5;
+			  }
+
+			  div:hover ::slotted(.delete_button) {
+				visibility: initial;
+			  }
 			`
 		];
 	}
@@ -109,7 +120,6 @@ export class Et2LinkList extends Et2LinkString
 		super();
 		this.readonly = false;
 
-		this._handleRowHover = this._handleRowHover.bind(this);
 		this._handleRowContext = this._handleRowContext.bind(this);
 
 		this._handleChange = this._handleChange.bind(this);
@@ -181,12 +191,9 @@ export class Et2LinkList extends Et2LinkString
 	{
 		const id = typeof link.id === "string" ? link.id : link.link_id;
 		return html`
-            ${this._thumbnailTemplate(link)}
-            <et2-link slot="${this._get_row_id(link)}" app="${link.app}" entryId="${id}"
+            <et2-link slot="${this._get_row_id(link)}" app="${link.app}" entryId="${id}" statustext="${link.title}"
                       ._parent=${this}
                       .value=${link}></et2-link>
-            <et2-description slot="${this._get_row_id(link)}" ._parent=${this} class="remark"
-                             value="${link.remark}"></et2-description>
             ${this._deleteButtonTemplate(link)}
 		`;
 	}
@@ -204,57 +211,9 @@ export class Et2LinkList extends Et2LinkString
 	{
 		return html`
             <div id="${this._get_row_id(link)}"
-                 @mouseover=${this._handleRowHover}
-                 @mouseout=${this._handleRowHover}
                  @contextmenu=${this._handleRowContext}>
                 <slot name="${this._get_row_id(link)}"></slot>
             </div>`;
-	}
-
-	/**
-	 * Handle show/hide delete button
-	 * @param _ev
-	 * @protected
-	 */
-	protected _handleRowHover(_ev)
-	{
-		if(this.readonly)
-		{
-			return;
-		}
-		let slot_name = "";
-		let target = _ev.target;
-
-		// Fist check if target is the row div
-		if(target.firstElementChild?.localName == "slot")
-		{
-			slot_name = target.firstElementChild.name;
-		}
-		do
-		{
-			// Look up tree for the slot
-			if(target.slot)
-			{
-				slot_name = target.slot;
-			}
-			target = target.parentNode;
-		}
-		while(!slot_name && target.parentNode)
-		if(!slot_name)
-		{
-			return;
-		}
-
-		if(_ev.type == "mouseout")
-		{
-			this.querySelectorAll(".delete_button").forEach(b => b.style.visibility = "");
-		}
-
-
-		if(_ev.type == "mouseover")
-		{
-			this.querySelector(".delete_button[slot='" + slot_name + "']").style.visibility = "initial";
-		}
 	}
 
 	/**
@@ -285,31 +244,6 @@ export class Et2LinkList extends Et2LinkString
 		}
 	}
 
-	/**
-	 * Build a thumbnail for the link
-	 * @param link
-	 * @returns {TemplateResult}
-	 * @protected
-	 */
-	protected _thumbnailTemplate(link) : TemplateResult
-	{
-		// If we have a mimetype, use a Et2VfsMime
-		// Files have path set in 'icon' property, and mime in 'type'
-		if(link.type && link.icon)
-		{
-			return html`
-                <et2-vfs-mime slot="${this._get_row_id(link)}" ._parent=${this} .value=${Object.assign({
-                    name: link.title,
-                    mime: link.type,
-                    path: link.icon
-                }, link)}></et2-vfs-mime>`;
-		}
-		return html`
-            <et2-image-expose
-                    slot="${this._get_row_id(link)}" ._parent=${this}
-                    href="${link.href}"
-                    src=${this.egw().image("" + link.icon)}></et2-image-expose>`;
-	}
 
 	/**
 	 * Build the delete button
@@ -614,7 +548,7 @@ export class Et2LinkList extends Et2LinkString
 
 	protected _set_comment(link, comment)
 	{
-		let remark = this.querySelector(".remark[slot='" + this._get_row_id(link) + "']");
+		let remark = this.querySelector("et2-link[slot='" + this._get_row_id(link) + "']");
 		if(!remark)
 		{
 			console.warn("Could not find link to comment on", link);
@@ -658,10 +592,10 @@ export class Et2LinkList extends Et2LinkString
 				{
 					// Append "" to make sure it's a string, not undefined
 					remark.classList.remove("loading");
-					// Update internal data & displayed comment
-					remark.value = link.remark = comment + "";
+					// Update internal data
+					link.remark = comment + "";
 					// Update link widget
-					remark.parentElement.querySelector("et2-link").value = link;
+					remark.value = link;
 				}
 			});
 	}

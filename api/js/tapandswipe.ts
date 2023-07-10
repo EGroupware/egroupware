@@ -11,7 +11,7 @@ export interface TapAndSwipeOptions {
 	// allow scrolling would stop swipe/tap events from being fired when there's scrolling available. It can be restricted
 	// to Vertical/Horizental/Both scrolling. If no value set it means not allowed.
 	allowScrolling? : string|null,
-	// tolorated pixel to fire the swipe events
+	// tolorated pixel for tap event
 	threshold? : number,
 	// time delay for defirentiate between tap event and long tap event, threshold is in milliseconds
 	tapHoldThreshold? : number,
@@ -23,14 +23,17 @@ export interface TapAndSwipeOptions {
 	tap? : Function,
 	// callback function being called on long tap(tap and hold)
 	tapAndHold? : Function,
+	// tolerate pixel to fire swipe events
+	minSwipeThreshold? : number,
 }
 
 export type TapAndSwipeOptionsType = TapAndSwipeOptions;
 
 export class tapAndSwipe {
 	static readonly _default : TapAndSwipeOptionsType = {
-		threshold : 10,
+		threshold : 5,
 		tapHoldThreshold : 3000,
+		minSwipeThreshold: 150,
 		allowScrolling : 'both',
 		swipe : function(){},
 		tap : function(){},
@@ -57,10 +60,17 @@ export class tapAndSwipe {
 	 */
 	private _endY : number = null;
 	/**
-	 * keeps the distance travelled between start point and end point
+	 * keeps the distance travelled between startX point and endX point
 	 * @private
 	 */
-	private _distance : number = null;
+	private _distanceX : number = null;
+
+	/**
+	 * keeps the distance travelled between startY point and endY point
+	 * @private
+	 */
+	private _distanceY : number = null;
+
 	/**
 	 * flag to keep the status of type of tap
 	 * @private
@@ -70,6 +80,10 @@ export class tapAndSwipe {
 	 * keeps the timeout id for taphold
 	 */
 	private _tapHoldTimeout : number = null;
+	/**
+	 * keeps the timeout id for tap
+	 */
+	private _tapTimeout : number = null;
 
 	/**
 	 * keeps the contact point on touch start
@@ -80,6 +94,11 @@ export class tapAndSwipe {
 	private _scrolledElementObj : {el : HTMLElement, scrollTop : number, scrollLeft : number} = null;
 
 	private _hasBeenScrolled : boolean = false;
+
+	private _scrollEventTriggered : boolean = false;
+
+	private _stillMoving : boolean = false;
+
 	/**
 	 * Options
 	 * @protected
@@ -107,11 +126,25 @@ export class tapAndSwipe {
 		this.element.addEventListener('touchstart', this._onTouchStart.bind(this), false);
 		this.element.addEventListener('touchend', this._ontouchEnd.bind(this), false);
 		this.element.addEventListener('touchmove', this._onTouchMove.bind(this), false);
+		this.element.addEventListener('touchcancel', this._onTouchCancel.bind(this), false);
+	}
+
+	_onScrolled(event)
+	{
+		this._scrollEventTriggered = true;
+	}
+
+	_onTouchCancel(event)
+	{
+		//cleanup tapHoldTimeout
+		window.clearTimeout(this._tapHoldTimeout);
+		//cleanup tapHoldTimeout
+		window.clearTimeout(this._tapTimeout);
 	}
 
 	_onTouchMove(event)
 	{
-
+		this._stillMoving = true;
 	}
 	/**
 	 * on touch start event handler
@@ -120,15 +153,17 @@ export class tapAndSwipe {
 	 */
 	private _onTouchStart(event : TouchEvent)
 	{
-		this._startX = event.changedTouches[0].screenX;
-		this._startY = event.changedTouches[0].screenY;
+		this._startX = event.changedTouches[0].pageX;
+		this._startY = event.changedTouches[0].pageY;
 		this._isTapAndHold = false;
 		this._fingercount = event.touches.length;
 
 		if(event.composedPath())
 		{
 			const scrolledItem = event.composedPath().filter(_item => {
+				if (_item instanceof HTMLElement) _item.addEventListener('scroll', this._onScrolled.bind(this), false);
 				return _item instanceof HTMLElement && this.element.contains(_item) && (_item.scrollTop != 0 || _item.scrollLeft !=0);
+
 			});
 			if (scrolledItem.length>0)
 			{
@@ -143,7 +178,7 @@ export class tapAndSwipe {
 		this._tapHoldTimeout = window.setTimeout(_=>{
 			this._isTapAndHold = true;
 			//check scrolling
-			if (this.options.allowScrolling && this._hasBeenScrolled)
+			if (this.options.allowScrolling && this._stillMoving)
 			{
 				return;
 			}
@@ -159,8 +194,9 @@ export class tapAndSwipe {
 	 */
 	private _ontouchEnd(event : TouchEvent)
 	{
-		this._endX = event.changedTouches[0].screenX;
-		this._endY = event.changedTouches[0].screenY;
+		this._endX = event.changedTouches[0].pageX;
+		this._endY = event.changedTouches[0].pageY;
+		this._stillMoving = false;
 
 		if (this._scrolledElementObj) {
 			switch (this.options.allowScrolling)
@@ -196,7 +232,14 @@ export class tapAndSwipe {
 	{
 		//cleanup tapHoldTimeout
 		window.clearTimeout(this._tapHoldTimeout);
+		this._distanceX = Math.abs(this._endX-this._startX);
+		this._distanceY = Math.abs(this._endY-this._startY);
+		const isTabOrHold = (this._endX == this._startX && this._endY == this._startY
+			|| (Math.sqrt((this._distanceX)*(this._distanceX) + (this._distanceY*2))
+				< this.options.threshold));
 
+
+		this._hasBeenScrolled = this._hasBeenScrolled ?? (!isTabOrHold && this._scrollEventTriggered);
 		//check scrolling
 		if (this.options.allowScrolling && this._hasBeenScrolled)
 		{
@@ -205,43 +248,43 @@ export class tapAndSwipe {
 		}
 
 		// Tap & TapAndHold handler
-		if (this._endX == this._startX && this._endY == this._startY
-			|| (Math.sqrt((this._endX-this._startX)*(this._endX-this._startX) + (this._endY-this._startY)+(this._endY-this._startY))
-				< this.options.threshold))
+		if (isTabOrHold)
 		{
 			if (!this._isTapAndHold)
 			{
-				this.options.tap.call(this,event, this._fingercount);
+				this._tapTimeout = window.setTimeout(_=> {
+					this.options.tap.call(this,event, this._fingercount);
+				}, 100);
 			}
 
 			return;
 		}
 
 		// left swipe handler
-		if (this._endX + this.options.threshold < this._startX) {
-			this._distance = this._startX - this._endX;
-			this.options.swipe.call(this, event, 'left', this._distance, this._fingercount);
+		if (this._endX + this.options.threshold < this._startX && this._distanceX > this._distanceY) {
+			if (this._distanceX < this.options.minSwipeThreshold) return;
+			this.options.swipe.call(this, event, 'left', this._distanceX, this._fingercount);
 			return;
 		}
 
 		// right swipe handler
-		if (this._endX - this.options.threshold > this._startX) {
-			this._distance = this._endX - this._startX;
-			this.options.swipe.call(this, event, 'right', this._distance, this._fingercount);
+		if (this._endX - this.options.threshold > this._startX && this._distanceX > this._distanceY) {
+			if (this._distanceX < this.options.minSwipeThreshold) return;
+			this.options.swipe.call(this, event, 'right', this._distanceX, this._fingercount);
 			return;
 		}
 
 		// up swipe handler
-		if (this._endY + this.options.threshold < this._startY) {
-			this._distance = this._startY - this._endY;
-			this.options.swipe.call(this, event, 'up', this._distance, this._fingercount);
+		if (this._endY + this.options.threshold < this._startY && this._distanceY > this._distanceX) {
+			if (this._distanceY < this.options.minSwipeThreshold) return;
+			this.options.swipe.call(this, event, 'up', this._distanceY, this._fingercount);
 			return;
 		}
 
 		// down swipe handler
-		if (this._endY - this.options.threshold > this._startY) {
-			this._distance = this._endY - this._startY;
-			this.options.swipe.call(this, event, 'down', this._distance, this._fingercount);
+		if (this._endY - this.options.threshold > this._startY && this._distanceY > this._distanceX) {
+			if (this._distanceY < this.options.minSwipeThreshold) return;
+			this.options.swipe.call(this, event, 'down', this._distanceY, this._fingercount);
 			return;
 		}
 	}
@@ -253,5 +296,6 @@ export class tapAndSwipe {
 	{
 		this.element.removeEventListener('touchstart', this._onTouchStart);
 		this.element.removeEventListener('touchend', this._ontouchEnd);
+		this.element.removeEventListener('touchcancel', this._onTouchCancel);
 	}
 }

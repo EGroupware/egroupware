@@ -65,13 +65,13 @@ class Auth
 	 *
 	 * @return string
 	 */
-	public function backendType()
+	public static function backendType()
 	{
 		return Cache::getSession(__CLASS__, 'backend');
 	}
 
 	/**
-	 * Instanciate a backend
+	 * Instantiate a backend
 	 *
 	 * Type will be stored in session, to automatic use the same type eg. for conditional use of SAML.
 	 *
@@ -81,34 +81,68 @@ class Auth
 	 */
 	static function backend($type=null, $save_in_session=true)
 	{
-		if (is_null($type))
+		if (!isset($type))
 		{
-			$type = Cache::getSession(__CLASS__, 'backend') ?: null;
+			$type = self::backendType() ?: null;
 		}
 		// do we have a hostname specific auth type set
-		if (is_null($type) && !empty($GLOBALS['egw_info']['server']['auth_type_host']) &&
+		if (!isset($type) && !empty($GLOBALS['egw_info']['server']['auth_type_host']) &&
 			Header\Http::host() === $GLOBALS['egw_info']['server']['auth_type_hostname'])
 		{
 			$type = $GLOBALS['egw_info']['server']['auth_type_host'];
 		}
-		if (is_null($type)) $type = $GLOBALS['egw_info']['server']['auth_type'];
-
-		$backend_class = __CLASS__.'\\'.ucfirst($type);
-
-		// try old location / name, if not found
-		if (!class_exists($backend_class))
+		if (!isset($type))
 		{
-			$backend_class = 'auth_'.$type;
+			$type = $GLOBALS['egw_info']['server']['auth_type'];
+
+			$account_repository = $GLOBALS['egw_info']['server']['account_repository'] ?? $type;
+			if (!empty($GLOBALS['egw_info']['server']['auth_fallback']) && $type !== $account_repository)
+			{
+				$backend = new Auth\Fallback($type, $account_repository);
+				self::log("Instantiated Auth\\Fallback('$type', '$account_repository')");
+				$type = "fallback:$type:$account_repository";
+			}
 		}
-		$backend = new $backend_class;
+		if (!isset($backend))
+		{
+			[$t, $p1, $p2] = explode(':', $type)+[null,null,null];
+			$backend_class = __CLASS__.'\\'.ucfirst($t);
+
+			// try old location / name, if not found
+			if (!class_exists($backend_class) && class_exists('auth_'.$t))
+			{
+				$backend_class = 'auth_'.$t;
+			}
+			$backend = new $backend_class($p1, $p2);
+			self::log("Instantiated $backend_class() (for type '$type')");
+		}
 
 		if (!($backend instanceof Auth\Backend))
 		{
 			throw new Exception\AssertionFailed("Auth backend class $backend_class is NO EGroupware\\Api\Auth\\Backend!");
 		}
-		if ($save_in_session) Cache::setSession(__CLASS__, 'backend', $type);
+		if ($save_in_session)
+		{
+			Cache::setSession(__CLASS__, 'backend', $type);
+		}
 
 		return $backend;
+	}
+
+	/**
+	 * Log $message to auth.log, if enabled
+	 *
+	 * @param string $message
+	 * @return void
+	 */
+	public static function log(string $message)
+	{
+		if (!empty($GLOBALS['egw_info']['server']['auth_log']) &&
+			($fp = fopen($GLOBALS['egw_info']['server']['files_dir'].'/auth.log', 'a')))
+		{
+			fwrite($fp, date('Y-m-d H:i:s: ').$message."\n");
+			fclose($fp);
+		}
 	}
 
 	/**
@@ -318,11 +352,24 @@ class Auth
 	 */
 	function authenticate($username, $passwd, $passwd_type='text')
 	{
-		return Cache::getCache($GLOBALS['egw_info']['server']['install_id'],
-			__CLASS__, sha1($username.':'.$passwd.':'.$passwd_type), function($username, $passwd, $passwd_type)
+		if (preg_match(Auth\Token::TOKEN_REGEXP, $passwd, $matches))
 		{
-			return $this->backend->authenticate($username, $passwd, $passwd_type);
+			$log_passwd = substr($passwd, 0, strlen(Auth\Token::PREFIX)+1+strlen($matches[1]));
+			$log_passwd .= str_repeat('*', strlen($passwd)-strlen($log_passwd));
+		}
+		else
+		{
+			$log_passwd = str_repeat('*', strlen($passwd));
+		}
+		$ret = Cache::getCache($GLOBALS['egw_info']['server']['install_id'],
+			__CLASS__, sha1($username.':'.$passwd.':'.$passwd_type), function($username, $passwd, $passwd_type) use ($log_passwd)
+		{
+			$ret = $this->backend->authenticate($username, $passwd, $passwd_type);
+			self::log(get_class($this->backend)."('$username', '$log_passwd', '$passwd_type') returned ".json_encode($ret));
+			return $ret;
 		}, [$username, $passwd, $passwd_type], self::AUTH_CACHE_TIME);
+		self::log(__METHOD__."('$username', '$log_passwd', '$passwd_type') returned ".json_encode($ret));
+		return $ret;
 	}
 
 	/**
@@ -339,6 +386,7 @@ class Auth
 	{
 		if (($err = self::crackcheck($new_passwd,null,null,null,$account_id)))
 		{
+			self::log(__METHOD__."(..., $account_id) new password rejected by crackcheck: $err");
 			throw new Exception\WrongUserinput($err);
 		}
 		if (($ret = $this->backend->change_password($old_passwd, $new_passwd, $account_id)))
@@ -360,6 +408,7 @@ class Auth
 			Cache::unsetCache($GLOBALS['egw_info']['server']['install_id'],
 				__CLASS__, sha1(Accounts::id2name($account_id).':'.$old_passwd.':text'));
 		}
+		self::log(__METHOD__."(..., $account_id) returned ".json_encode($ret));
 		return $ret;
 	}
 

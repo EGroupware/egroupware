@@ -628,6 +628,25 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		const checkedItems = Object.values(this._menuItems).filter(item => this.value.includes(item.value));
 		this.displayTags = checkedItems.map(item => this._createTagNode(item));
 
+		if(checkedItems.length !== this.value.length && this.multiple)
+		{
+			// There's a value that does not have a menu item, probably invalid.
+			// Add it as a marked tag so it can be corrected or removed.
+			const filteredValues = this.value.filter(str => !checkedItems.some(obj => obj.value === str));
+			for(let i = 0; i < filteredValues.length; i++)
+			{
+				const badTag = this._createTagNode({
+					value: filteredValues[i],
+					getTextLabel: () => filteredValues[i],
+					classList: {value: ""}
+				});
+				badTag.variant = "danger";
+				badTag.contactPlus = false;
+				// Put it in front so it shows
+				this.displayTags.unshift(badTag);
+			}
+		}
+
 		// Re-slice & add overflow tag
 		if(overflow)
 		{
@@ -766,6 +785,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 			this.dispatchEvent(new CustomEvent('sl-input'));
 			this.dispatchEvent(new CustomEvent('sl-change'));
 			this.syncItemsFromValue();
+			this.validate();
 		}
 	}
 
@@ -849,7 +869,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 
 	protected _createImage(item)
 	{
-		let image = item.querySelector("et2-image") || item.querySelector("[slot='prefix']");
+		let image = item?.querySelector ? item.querySelector("et2-image") || item.querySelector("[slot='prefix']") : null;
 		if(image)
 		{
 			image = image.clone();

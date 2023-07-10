@@ -50,6 +50,39 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 	 */
 	let title_uid = null;
 
+	/**
+	 * Encode query parameters
+	 *
+	 * @param object|array|string _values
+	 * @param string? _prefix
+	 * @param array? _query
+	 * @return array
+	 */
+	function urlencode(_values, _prefix, _query)
+	{
+		if (typeof _query === 'undefined') _query = [];
+		if (Array.isArray(_values))
+		{
+			if (!_prefix) throw "array of value needs a prefix";
+			for(const value of _values)
+			{
+				_query.push(_prefix+'[]='+encodeURIComponent(value));
+			}
+		}
+		else if (_values && typeof _values === 'object')
+		{
+			for(const name in _values)
+			{
+				urlencode(_values[name], _prefix ? _prefix+'['+name+']' : name, _query);
+			}
+		}
+		else
+		{
+			_query.push(_prefix+'='+encodeURIComponent(_values || ''));
+		}
+		return _query;
+	}
+
 	return {
 		/**
 		 * Check if $app is in the registry and has an entry for $name
@@ -339,25 +372,7 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 			}
 
 			// if there are vars, we add them urlencoded to the url
-			let query = [];
-
-			for(let name in vars)
-			{
-				let val = vars[name] || '';	// fix error for eg. null, which is an object!
-				if (typeof val == 'object')
-				{
-					for(let i=0; i < val.length; ++i)
-					{
-						query.push(name+'[]='+encodeURIComponent(val[i]));
-					}
-				}
-				else
-				{
-					query.push(name+'='+encodeURIComponent(val));
-				}
-			}
-
-			return query.length ? _url+'?'+query.join('&') : _url;
+			return Object.keys(vars).length ? _url+'?'+urlencode(vars).join('&') : _url;
 		},
 
 		/**

@@ -27,11 +27,15 @@ add current	common	lt	Dabartinis vaizdas kaip mėgstamiausias
 add to clipboard	common	lt	Pridėti į iškarpinę
 addressbook	common	lt	Adresų knyga
 addressbooks to sync in addition to personal addressbook	groupdav	lt	Sinchronizuojamos ne tik asmeninės adresinės, bet ir adresų knygelės
+admin	common	lt	Administratoriaus
+admin settings for %1	common	lt	Administratoriaus nustatymai %1
 administration	common	lt	Administravimas
+advanced search	common	lt	Išplėstinė paieška
 afghanistan	common	lt	AFGANISTANAS
 albania	common	lt	ALBANIJA
 algeria	common	lt	ALŽYRAS
 all addressbooks	groupdav	lt	Visos adresų knygelės
+all categories	common	lt	Visos kategorijos
 all in one	groupdav	lt	Viskas viename
 andorra	common	lt	ANDORA
 angola	common	lt	ANGOLA
@@ -165,8 +169,14 @@ latvia	common	lt	LATVIJA
 liberia	common	lt	LIBERIJA
 light mode	common	lt	Šviesus režimas
 lithuania	common	lt	LIETUVA
+login rejected by epl firewall, please contact your administrator	common	lt	Mailvelope addon instalācija ir veiksmīga. Tagad varat konfigurēt opcijas.
+logout	common	lt	Atsijungimas
+lost login id	common	lt	Pamestas prisijungimo ID
+lost password	common	lt	Pamestas slaptažodis
 luxembourg	common	lt	LIUKSEMBURGAS
 madagascar	common	lt	MADAGASKARAS
+mailvelope addon installation failed! please try again.	common	lt	Nepavyko įdiegti "Mailvelope" priedo! Bandykite dar kartą.
+mailvelope addon installation succeded. now you may configure the options.	common	lt	Mailvelope addon diegimas pavyko. Dabar galite konfigūruoti parinktis.
 main category	common	lt	Pagrindinė kategorija
 malaysia	common	lt	MALAIZIJA
 mali	common	lt	MALIS

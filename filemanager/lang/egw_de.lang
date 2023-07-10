@@ -271,7 +271,7 @@ saving setting for document merge failed!	filemanager	de	Speichern der Einstellu
 search for '%1'	filemanager	de	nach %1 suchen
 searchstring	filemanager	de	Suchbegriff
 select action...	filemanager	de	Befehl auswählen...
-select file to upload in current directory	filemanager	de	Datei(en) zum hochladen in den aktuellen Ordner auswählen
+select file to upload in current directory	filemanager	de	Datei(en) zum Hochladen in den aktuellen Ordner auswählen
 select file(s) from vfs	common	de	Datei(en) aus dem EGroupware Dateimanager auswählen
 setting for document merge saved.	filemanager	de	Einstellungen für Serienbriefe gespeichert
 share files	filemanager	de	Dateien freigeben

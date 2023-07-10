@@ -32,18 +32,30 @@ export class Et2LinkString extends Et2Widget(LitElement) implements et2_IDetache
 		return [
 			...super.styles,
 			css`
-			:host {
+			  :host {
 				list-style-type: none;
 				display: inline;
 				padding: 0px;
-			}
-			/* CSS for child elements */
-            ::slotted(*):after {
-            	content: ", "
-            }
-            ::slotted(*:last-child):after {
-            	content:initial;
-            }
+			  }
+
+			  ::slotted(*) {
+				display: inline;
+			  }
+
+			  ::slotted(*):hover {
+				text-decoration: underline;
+			  }
+
+
+			  /* CSS for child elements */
+
+			  ::slotted(*):after {
+				content: ", "
+			  }
+
+			  ::slotted(*:last-child):after {
+				content: initial;
+			  }
 			`
 		];
 	}
@@ -106,6 +118,16 @@ export class Et2LinkString extends Et2Widget(LitElement) implements et2_IDetache
 		this.__showDeleted = false;
 	}
 
+	async getUpdateComplete()
+	{
+		const result = await super.getUpdateComplete();
+		if(this._loadingPromise)
+		{
+			// Wait for the values to arrive before we say we're done
+			await this._loadingPromise;
+		}
+		return result;
+	}
 
 	/**
 	 * Set the value of the list

@@ -22,14 +22,18 @@ add sub	common	ko	하위 추가
 addressbook	common	ko	주소록
 admin	common	ko	관리
 administration	common	ko	관리
+advanced search	common	ko	상세 검색
 all	common	ko	모두
 all fields	common	ko	모든 필드
+all users	common	ko	모든 사용자
 and	common	ko	그리고(AND 연산)
 application	common	ko	응용프로그램
+applications	common	ko	응용프로그램들
 apply	common	ko	적용
 april	common	ko	4월
 are you sure you want to delete these entries ?	common	ko	이 항목들을 정말로 삭제하시겠습니까?
 are you sure you want to delete this entry ?	common	ko	현재 항목을 삭제하시겠습니까?
+attach file	common	ko	파일 첨부
 august	common	ko	8월
 back	common	ko	뒤로
 back to user login	common	ko	사용자 접속으로 돌아가기
@@ -44,6 +48,7 @@ category	common	ko	분류
 category %1 has been added !	common	ko	%1 분류가 추가되었습니다!
 category %1 has been updated !	common	ko	%1 분류가 갱신되었습니다!
 change	common	ko	변경
+changed	common	ko	변경됨
 charset	common	ko	utf-8
 check installation	common	ko	설치 점검
 check now	common	ko	지금 점검
@@ -56,18 +61,29 @@ choose the category	common	ko	분류를 선택하세요
 choose the parent category	common	ko	상위 분류를 선택하세요
 clear	common	ko	초기화
 clear form	common	ko	초기화
+click here to create the link	common	ko	새 링크를 생성하려면 클릭하세요
+click here to start the search	common	ko	검색을 시작하려면 클릭하세요
 close	common	ko	닫기
+comment	common	ko	커멘트
 common preferences	common	ko	공통설정
 company	common	ko	회사
+confirm	common	ko	확인
+contact	common	ko	주소록
 copy	common	ko	복사
 create	common	ko	작성
 created by	common	ko	작성자
 current	common	ko	현재
 current users	common	ko	현재 사용자
+custom	common	ko	사용자정의
+custom fields	common	ko	사용자정의 필드
 date	common	ko	날짜
 date due	common	ko	만기일
+day	common	ko	날
+days	common	ko	일동안
 december	common	ko	12월
+default	common	ko	기본
 delete	common	ko	삭제
+delete a single entry by passing the id.	common	ko	ID값으로 단일 엔트리 삭제
 delete category	common	ko	카테고리 삭제
 delete row	common	ko	열 삭제
 delete this entry	common	ko	이 엔트리 삭제
@@ -89,6 +105,7 @@ domain name for mail-address, eg. "%1"	common	ko	이메일 주소를 위한 도�
 domestic	common	ko	기숙사
 done	common	ko	완료
 download	common	ko	내려받기
+duration	common	ko	기간
 e-mail	common	ko	E-Mail
 edit	common	ko	수정
 edit categories	common	ko	분류 수정
@@ -109,6 +126,7 @@ failed to change password.	common	ko	암호를 바꾸는데 실패했습니다. 
 fax number	common	ko	팩스번호
 february	common	ko	2월
 fields	common	ko	필드들
+file	common	ko	FILE
 files	common	ko	파일들
 filter	common	ko	필터
 first name	common	ko	이름
@@ -136,8 +154,11 @@ high	common	ko	높음
 highest	common	ko	가장높은 (highest)
 home	common	ko	홈으로
 home email	common	ko	자택 E-mail
+home screen	common	ko	기본 화면
+hours	common	ko	시간
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	ko	최상위 페이지의 네비게이션 바에서 몇개의 아이콘이 보이길 원하나요. 여분의 아이콘은 가장 네비게이션바의 가장 오른쪽 아이콘의 풀다운 메뉴안으로 들어갑니다.
 image url	common	ko	그림 URL
+import	common	ko	가져오기
 insert column after	common	ko	뒤에 행 넣기
 insert column before	common	ko	앞에 행 넣기
 insert row after	common	ko	뒤에 열 넣기
@@ -160,22 +181,29 @@ justify right	common	ko	오른쪽 자리맞춤
 keywords	common	ko	키워드
 korea, democratic peoples republic of	common	ko	북한
 korea, republic of	common	ko	대한민국
+label	common	ko	라벨
 language	common	ko	언어
+last	common	ko	마지막
 last modified	common	ko	마지막 수정
 last name	common	ko	성
 last page	common	ko	끝 페이지로
 lastname	common	ko	성
 left	common	ko	왼쪽
+link	common	ko	링크
 list members	common	ko	멤버 목록
 load	common	ko	불러오기
 login	common	ko	로그인
+login rejected by epl firewall, please contact your administrator	common	ko	E그룹웨어 방화벽에 의해 로그인이 거부된 경우 관리자에게 문의하세요.
 loginid	common	ko	로그인ID
 logout	common	ko	로그아웃
+lost login id	common	ko	로그인 ID 분실
+lost password	common	ko	비밀번호 분실
 low	common	ko	낮음
 lowest	common	ko	가장낮은 (lowest)
 mail domain, eg. "%1"	common	ko	메일 도메인, 예. "%1"
+mailvelope addon installation failed! please try again.	common	ko	메일봉투 애드온 설치에 실패했습니다! 다시 시도하세요.
+mailvelope addon installation succeded. now you may configure the options.	common	ko	메일봉투 애드온 설치에 성공했습니다. 이제 옵션을 구성할 수 있습니다.
 main category	common	ko	기본 분류
-home screen	common	ko	기본 화면
 maintainer	common	ko	관리자
 march	common	ko	3월
 max number of icons in navbar	common	ko	네비게이션바의 최대 아이콘 갯수
@@ -183,19 +211,26 @@ may	common	ko	5월
 medium	common	ko	중간
 message	common	ko	메세지
 minute	common	ko	분
+minutes	common	ko	분
 monday	common	ko	월요일
+month	common	ko	월
+more	common	ko	검색조건 추가
 name	common	ko	이름
 name of the user, eg. "%1"	common	ko	사용자의 이름, 예. "%1"
 never	common	ko	절대(never)
+new	common	ko	새로만들기
 new entry added sucessfully	common	ko	새로운 데이터가 추가되었습니다.
 new main category	common	ko	새 기본 분류
+new search	common	ko	새 검색
 new value	common	ko	새 값
 next	common	ko	다음
 next page	common	ko	다음 페이지로
 no	common	ko	아니오
 no - cancel	common	ko	아니오 - 취소
 no entries found, try again ...	common	ko	항목을 찾지 못했습니다. 다시 시도해보세요
+no file	common	ko	파일 없음
 no history for this record	common	ko	이 레코드의 내역(변동기록)이 없습니다.
+no matches found	common	ko	일치하는 것을 찾을수 없습니다
 no subject	common	ko	제목없음
 none	common	ko	없음
 normal	common	ko	보통
@@ -250,12 +285,16 @@ priority	common	ko	중요도
 private	common	ko	개인
 project	common	ko	프로젝트
 public	common	ko	공개
+read a list of entries.	common	ko	엔트리 목록을 읽음
+read a single entry by passing the id and fieldlist.	common	ko	ID와 필드목록으로 단일 엔트리를 읽음
 read this list of methods.	common	ko	이 메소드 목록 읽기
+readonly	common	ko	읽기전용
 reject	common	ko	거부
 remove selected accounts	common	ko	선택된 계정 삭제
 rename	common	ko	이름변경
 replace	common	ko	치환
 replace with	common	ko	치환될 글월
+reset	common	ko	리셋
 resources	common	ko	리소스
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	ko	시스템의 존재하는 계정의 전체목록을 반환합니다. 주의: 데이터가 상당히 클 수 있습니다.
 returns struct of users application access	common	ko	사용자의 응용프로그램 액세스 구조 반환
@@ -278,6 +317,7 @@ select the default height for the application windows	common	ko	이 응용프로
 select the default width for the application windows	common	ko	이 응용프로그램 창이 사용할 기본 길이를 선택해주세요
 select user	common	ko	사용자 선택
 select work email address	common	ko	업무 메일주소 선택
+selectbox	common	ko	선택상자
 send	common	ko	보내기
 september	common	ko	9월
 server %1 has been added	common	ko	%1 서버가 추가되었습니다.
@@ -299,6 +339,7 @@ showing %1	common	ko	현재 %1
 showing %1 - %2 of %3	common	ko	전체 %3에서 %1 - %2
 site configuration	common	ko	사이트 구성
 sorry, your login has expired	login	ko	귀하의 사용자ID는 만료되어 더 이상 사용하실수 없습니다.
+start a new search, cancel this link	common	ko	이 링크를 취소하고 새로 검색
 status	common	ko	상태
 subject	common	ko	제목
 submit	common	ko	전송
@@ -318,7 +359,9 @@ total	common	ko	합계
 tuesday	common	ko	화요일
 type	common	ko	형식
 underline	common	ko	밑줄
+unlink	common	ko	삭제
 update	common	ko	갱신
+update a single entry by passing the fields.	common	ko	필드값으로 단일 엔트리 갱신
 upload	common	ko	업로드
 upload directory does not exist, or is not writeable by webserver	common	ko	업로드 디렉토리가 존재하지 않거나, 웹서버의 쓰기권한이 없습니다.
 user	common	ko	사용자
@@ -333,6 +376,7 @@ wednesday	common	ko	수요일
 welcome	common	ko	환영합니다
 which groups	common	ko	그룹선택
 width	common	ko	너비
+wk	common	ko	주
 work email	common	ko	업무 E-Mail
 would you like to display the page generation time at the bottom of every window?	common	ko	페이지 생성 시간을 모든 창의 하단에 출력하길 원하십니까?
 written by:	common	ko	작성:
@@ -353,46 +397,3 @@ your search returned %1 matchs	common	ko	%1건의 결과가 검색되었습니�
 your search returned 1 match	common	ko	1건의 결과가 검색되었습니다.
 your settings have been updated	common	ko	설정이 변경되었습니다.
 zoom	common	ko	확대
-advanced search	common	ko	상세 검색
-all users	common	ko	모든 사용자
-and	common	ko	그리고(AND 연산)
-application	common	ko	응용프로그램
-applications	common	ko	응용프로그램들
-attach file	common	ko	파일 첨부
-changed	common	ko	변경됨
-click here to create the link	common	ko	새 링크를 생성하려면 클릭하세요
-click here to start the search	common	ko	검색을 시작하려면 클릭하세요
-comment	common	ko	커멘트
-confirm	common	ko	확인
-contact	common	ko	주소록
-custom	common	ko	사용자정의
-custom fields	common	ko	사용자정의 필드
-day	common	ko	날
-days	common	ko	일동안
-default	common	ko	기본
-delete a single entry by passing the id.	common	ko	ID값으로 단일 엔트리 삭제
-duration	common	ko	기간
-file	common	ko	FILE
-hours	common	ko	시간
-import	common	ko	가져오기
-label	common	ko	라벨
-last	common	ko	마지막
-link	common	ko	링크
-minutes	common	ko	분
-month	common	ko	월
-more	common	ko	검색조건 추가
-new	common	ko	새로만들기
-new search	common	ko	새 검색
-no file	common	ko	파일 없음
-no matches found	common	ko	일치하는 것을 찾을수 없습니다
-or	common	ko	이거나(OR연산)
-read a list of entries.	common	ko	엔트리 목록을 읽음
-read a single entry by passing the id and fieldlist.	common	ko	ID와 필드목록으로 단일 엔트리를 읽음
-readonly	common	ko	읽기전용
-reset	common	ko	리셋
-selectbox	common	ko	선택상자
-start a new search, cancel this link	common	ko	이 링크를 취소하고 새로 검색
-unlink	common	ko	삭제
-update a single entry by passing the fields.	common	ko	필드값으로 단일 엔트리 갱신
-version	common	ko	버전
-wk	common	ko	주

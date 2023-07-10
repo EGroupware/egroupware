@@ -10,7 +10,7 @@
 %1 is set to %2, you will not be able to upload or attach files bigger then that!	setup	cs	%1 je nastaveno na %2, nebudete moci uploadovat nebo připojovat soubory větší než stanoví tento limit.
 %1 is set to %2. this is not recommeded for a production system, as displayed error messages can contain passwords or other sensitive information!	setup	cs	%1 je nastaveno na %2. To se nedoporučuje pro produkční systém, jelikož zobrazená chybová hlášení mohou obsahovat hesla a jiné citlivé údaje.
 %1 users and %2 groups created, %3 errors	setup	cs	bylo vytvořeno %1 uživatelů a %2 skupin, vyskytlo se %3 chyb
-%1, %2 or %3 the configuration file.	setup	cs	%1, %2 nebo %3 konfigurační soubor.
+%1 the configuration file.	setup	cs	%1 konfigurační soubor.
 '%1' is no valid domain name!	setup	cs	'%1' není platné doménové jméno!
 '%1' is not allowed as %2. arguments of option %3 !!!	setup	cs	'%1' není povoleno jako %2. argumenty volby %3 !!!
 '%1' must be integer	setup	cs	%1 musí být hodnota typu integer

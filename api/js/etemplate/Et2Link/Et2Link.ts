@@ -11,7 +11,7 @@
 
 
 import {ExposeMixin, ExposeValue} from "../Expose/ExposeMixin";
-import {css, html, LitElement} from "@lion/core";
+import {css, html, LitElement, TemplateResult} from "@lion/core";
 import {Et2Widget} from "../Et2Widget/Et2Widget";
 import {et2_IDetachedDOM} from "../et2_core_interfaces";
 
@@ -22,6 +22,7 @@ import {et2_IDetachedDOM} from "../et2_core_interfaces";
  * You can set it directly in the properties (application, entryId) or use set_value() to
  * pass an object {app: string, id: string, [title: string]} or string in the form <application>::<ID>.
  * If title is not specified, it will be fetched using framework's egw.link_title()
+ *
  */
 
 // @ts-ignore TypeScript says there's something wrong with types
@@ -32,20 +33,45 @@ export class Et2Link extends ExposeMixin<Et2Widget>(Et2Widget(LitElement)) imple
 		return [
 			...super.styles,
 			css`
-			:host {
+			  :host {
 				display: block;
 				cursor: pointer;
-			}
-			:host:hover {
+			  }
+
+			  .link {
+				display: flex;
+				gap: 0.5rem;
+			  }
+
+			  .link__title {
+				flex: 2 1 50%;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                max-width: max-content;
+                width: 0;
+			  }
+
+			  .link__remark {
+				flex: 1 1 50%;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                max-width: max-content;
+                width: 0;
+			  }
+
+			  :host:hover {
 				text-decoration: underline
-			}
-			/** Style based on parent **/
-			:host-context(et2-link-string) {
+			  }
+
+			  /** Style based on parent **/
+
+			  :host(et2-link-string) div {
 				display: inline;
-			}
-			:host-context(et2-link-list):hover {
+			  }
+
+			  :host-context(et2-link-list):hover {
 				text-decoration: none;
-			}
+			  }
 			`
 		];
 	}
@@ -119,7 +145,7 @@ export class Et2Link extends ExposeMixin<Et2Widget>(Et2Widget(LitElement)) imple
 	constructor()
 	{
 		super();
-		this._title = "";
+		this._title = Et2Link.MISSING_TITLE;
 		this.__linkHook = "view";
 	}
 
@@ -128,9 +154,46 @@ export class Et2Link extends ExposeMixin<Et2Widget>(Et2Widget(LitElement)) imple
 		super.connectedCallback();
 	}
 
-	createRenderRoot()
+	async getUpdateComplete()
 	{
-		return this;
+		const result = await super.getUpdateComplete();
+		if(this._titlePromise)
+		{
+			// Wait for the title to arrive before we say we're done
+			await this._titlePromise;
+		}
+		return result;
+	}
+
+	/**
+	 * Build a thumbnail for the link
+	 * @param link
+	 * @returns {TemplateResult}
+	 * @protected
+	 */
+	protected _thumbnailTemplate(link : LinkInfo) : TemplateResult
+	{
+		// If we have a mimetype, use a Et2VfsMime
+		// Files have path set in 'icon' property, and mime in 'type'
+		if(link.type && link.icon)
+		{
+			return html`
+                <et2-vfs-mime part="icon" class="link__icon" ._parent=${this} .value=${Object.assign({
+                    name: link.title,
+                    mime: link.type,
+                    path: link.icon
+                }, link)}
+                ></et2-vfs-mime>`;
+		}
+		return html`
+            <et2-image-expose
+                    part="icon"
+                    class="link__icon"
+                    ._parent=${this}
+                    href="${link.href}"
+                    src=${this.egw().image("" + link.icon)}
+                    ?disabled=${!(link.href || link.icon)}
+            ></et2-image-expose>`;
 	}
 
 	render()
@@ -143,9 +206,16 @@ export class Et2Link extends ExposeMixin<Et2Widget>(Et2Widget(LitElement)) imple
 			// zero-width space after the break string
 			title = title
 				.replace(this.breakTitle, this.breakTitle.trimEnd() + "\u200B")
-				.replace(/ /g, '\u00a0');
+				.replace(/ /g, '\u00a0')
+				// Change hyphen to non-breaking hyphen
+				.replace(/-/g, '‑');
 		}
-		return html`${title}`;
+		return html`
+            <div part="base" class="link et2_link" draggable="${this.app == 'file'}" @dragstart=${this._handleDragStart.bind(this, this.dataset)}>
+                ${this._thumbnailTemplate({id: this.entryId, app: this.app, ...this.dataset})}
+                <span part="title" class="link__title">${title}</span>
+                <span part="remark" class="link__remark">${this.dataset.remark}</span>
+            </div>`;
 	}
 
 	public set title(_title)
@@ -200,7 +270,6 @@ export class Et2Link extends ExposeMixin<Et2Widget>(Et2Widget(LitElement)) imple
 		{
 			this.app = _value.app;
 			this.entryId = _value.id;
-			this._title = Et2Link.MISSING_TITLE;
 
 			if(_value.title)
 			{
@@ -213,9 +282,18 @@ export class Et2Link extends ExposeMixin<Et2Widget>(Et2Widget(LitElement)) imple
 				{
 					return;
 				}
-				this.dataset[key] = _value[key];
+				// we should not let null value being stored into dataset as 'null'
+				if (_value[key] === null)
+				{
+					this.dataset[key] = "";
+				}
+				else
+				{
+					this.dataset[key] = _value[key];
+				}
 			})
 		}
+		this.requestUpdate("value");
 	}
 
 
@@ -278,6 +356,52 @@ export class Et2Link extends ExposeMixin<Et2Widget>(Et2Widget(LitElement)) imple
 					// It's probably already been rendered
 					this.requestUpdate();
 				});
+			}
+		}
+	}
+
+	/**
+	 * Handle dragstart event for dragging out a file
+	 *
+	 * @param _data
+	 * @param _ev
+	 * @protected
+	 */
+	protected _handleDragStart (_data, _ev)
+	{
+		// // Unfortunately, dragging files is currently only supported by Chrome
+		if(navigator && navigator.userAgent.indexOf('Chrome') >= 0) {
+
+			if (_ev.dataTransfer == null) {
+				return;
+			}
+			if (_data && _data.type && _data.download_url) {
+				_ev.dataTransfer.dropEffect = "copy";
+				_ev.dataTransfer.effectAllowed = "copy";
+
+				let url = _data.download_url;
+
+				// NEED an absolute URL
+				if(url[0] == '/')
+				{
+					url = this.egw().link(url);
+				}
+				// egw.link adds the webserver, but that might not be an absolute URL - try again
+				if (url[0] == '/') url = window.location.origin + url;
+
+				// Unfortunately, dragging files is currently only supported by Chrome
+				if (navigator && navigator.userAgent.indexOf('Chrome')) {
+					_ev.dataTransfer.setData("DownloadURL", _data.type + ':' + this.title + ':' + url);
+				}
+
+				// Include URL as a fallback
+				_ev.dataTransfer.setData("text/uri-list", url);
+			}
+
+			if (_ev.dataTransfer.types.length == 0) {
+				// No file data? Abort: drag does nothing
+				_ev.preventDefault();
+				return;
 			}
 		}
 	}

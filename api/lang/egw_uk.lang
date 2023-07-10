@@ -40,12 +40,15 @@ add to clipboard	common	uk	Додати в буфер обміну
 addressbook	common	uk	Адресна книга
 addressbooks to sync in addition to personal addressbook	groupdav	uk	Адресні книги для синхронізації на додаток до особистої адресної книги
 admin	common	uk	Адміністрування
+admin settings for %1	common	uk	Налаштування адміністратора для %1
 administration	common	uk	Адміністрація
+advanced search	common	uk	Розширений пошук
 afghanistan	common	uk	АФГАНІСТАН
 albania	common	uk	АЛБАНІЯ
 algeria	common	uk	АЛЖИР
 all	common	uk	Все
 all addressbooks	groupdav	uk	Всі адресні книги
+all categories	common	uk	Всі категорії
 all in one	groupdav	uk	Все в одному
 all users	common	uk	Всі користувачі
 andorra	common	uk	АНДОРРА
@@ -294,12 +297,17 @@ lithuania	common	uk	ЛИТВА
 load	common	uk	Вгрузити
 local	common	uk	Локальний
 login	common	uk	Login
+login rejected by epl firewall, please contact your administrator	common	uk	Брандмауер EGroupware відхилив ваш логін, зверніться до вашого адміністратора.
 loginid	common	uk	LoginID
 logout	common	uk	Вийти
+lost login id	common	uk	Втрачено логін
+lost password	common	uk	Втрачено пароль
 low	common	uk	Низький
 lowest	common	uk	Найнижчий
 luxembourg	common	uk	ЛЮКСЕМБУРГ
 mail domain, eg. "%1"	common	uk	mail domain, наприклад, "%1"
+mailvelope addon installation failed! please try again.	common	uk	Не вдалося встановити аддон Mailvelope! Будь ласка, спробуйте ще раз.
+mailvelope addon installation succeded. now you may configure the options.	common	uk	Інсталяція доповнення Mailvelope пройшла успішно. Тепер ви можете налаштувати опції.
 main category	common	uk	Базова категорія
 maintainer	common	uk	Супроводжує
 malaysia	common	uk	МАЛАЙЗІЯ

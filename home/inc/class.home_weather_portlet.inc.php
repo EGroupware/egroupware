@@ -239,6 +239,25 @@ class home_weather_portlet extends home_portlet
 			case 'clear' :
 				$icon = 'sun';
 				break;
+			case 'clouds':
+				$icon = strtolower($weather['main']);
+				if($weather['description'] == 'broken clouds')
+				{
+					$icon = 'cloud-sun';
+				}
+				break;
+			case 'rain':
+				$icon = 'cloud-rain';
+				if(str_contains($weather['description'], 'heavy'))
+				{
+					$icon = 'cloud-rain-heavy';
+				}
+				elseif(str_contains($weather['description'], 'light'))
+				{
+					$icon = 'cloud-drizzle';
+
+				}
+				break;
 			default:
 				$icon = strtolower($weather['main']);
 		}

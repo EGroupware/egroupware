@@ -68,11 +68,11 @@ class mail_compose
 	var $composeID;
 	var $sessionData;
 
-	function __construct()
+	function __construct(int $_acc_id=null)
 	{
 		$this->displayCharset   = Api\Translation::charset();
 
-		$profileID = (int)$GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'];
+		$profileID = $_acc_id ?: (int)$GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'];
 		$this->mail_bo	= Mail::getInstance(true,$profileID);
 		$GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'] = $this->mail_bo->profileID;
 
@@ -397,14 +397,7 @@ class mail_compose
 			// and we want to avoid that
 			$isFirstLoad = !($actionToProcess=='composeasnew');//true;
 			$this->composeID = $_content['composeID'] = $this->generateComposeID();
-			if (!is_array($_content))
-			{
-				$_content = $this->setDefaults();
-			}
-			else
-			{
-				$_content = $this->setDefaults($_content);
-			}
+			$_content = $this->setDefaults($_content+['mailidentity' => $_REQUEST['preset']['identity'] ?? null]);
 		}
 		// VFS Selector was used
 		if (!empty($_content['selectFromVFSForCompose']))
@@ -1013,7 +1006,7 @@ class mail_compose
 					}
 					if(!empty($remember)) $content = array_merge($content,$remember);
 				}
-				foreach(array('to','cc','bcc','subject','body','mimeType') as $name)
+				foreach(array('to','cc','bcc','subject','body','mimeType','replyto','priority') as $name)
 				{
 					//always handle mimeType
 					if ($name=='mimeType' && !empty($_REQUEST['preset'][$name]))
@@ -1541,6 +1534,10 @@ class mail_compose
 				case 'reply':
 				case 'reply_all':
 					$content = $this->getReplyData($from == 'reply' ? 'single' : 'all', $icServer, $folder, $msgUID, $part_id);
+					if ($content['mimeType'] === 'plain' && $GLOBALS['egw_info']['user']['preferences']['mail']['replyOptions'] === 'html')
+					{
+						$content['body'] = htmlspecialchars($content['body']);
+					}
 					$content['processedmail_id'] = $mail_id;
 					$content['mode'] = 'reply';
 					$_focusElement = 'body';
@@ -2507,7 +2504,7 @@ class mail_compose
 		$disableRuler = false;
 		$signature = $_identity['ident_signature'];
 		$sigAlreadyThere = $this->mailPreferences['insertSignatureAtTopOfMessage']!='no_belowaftersend'?1:0;
-		if ($sigAlreadyThere)
+		if ($sigAlreadyThere && empty($_formData['add_signature']))
 		{
 			// note: if you use stationery ' s the insert signatures at the top does not apply here anymore, as the signature
 			// is already part of the body, so the signature part of the template will not be applied.
@@ -2939,10 +2936,10 @@ class mail_compose
 		return $messageUid;
 	}
 
-	function send($_formData)
+	function send($_formData, int $_acc_id=null)
 	{
 		$mail_bo	= $this->mail_bo;
-		$mail 		= new Api\Mailer($mail_bo->profileID);
+		$mail 		= new Api\Mailer($_acc_id ?: $mail_bo->profileID);
 		$messageIsDraft	=  false;
 
 		$this->sessionData['mailaccount']	= $_formData['mailaccount'];
@@ -3076,7 +3073,12 @@ class mail_compose
 		// we use the sentFolder settings of the choosen mailaccount
 		// sentFolder is account specific
 		$changeProfileOnSentFolderNeeded = false;
-		if ($_formData['serverID']!=$_formData['mailaccount'])
+		if ($this->mailPreferences['sendOptions'] === 'send_only')
+		{
+			// no need to check for Sent folder
+			$sentFolder = 'none';
+		}
+		elseif ($_formData['serverID']!=$_formData['mailaccount'])
 		{
 			$this->changeProfile($_formData['mailaccount']);
 			//error_log(__METHOD__.__LINE__.'#'.$this->mail_bo->profileID.'<->'.$mail_bo->profileID.'#');

@@ -77,6 +77,7 @@ add to clipboard	common	pt	Adicionar à área de transferência
 addressbook	common	pt	Livro de endereços
 addressbooks to sync in addition to personal addressbook	groupdav	pt	Livros de endereços para sincronizar para além do livro de endereços pessoal
 admin	common	pt	Administrador
+admin settings for %1	common	pt	Definições do administrador para %1
 administration	common	pt	Administração
 advanced search	common	pt	Pesquisa avançada
 afghanistan	common	pt	Afeganistão
@@ -87,6 +88,7 @@ alignment of label and input-field in table-cell	common	pt	Alinhamento da etique
 alignment of the v/hbox containing table-cell	common	pt	Alinhamento da caixa vertical/horizontal na célula da tabela
 all	common	pt	Tudo
 all addressbooks	groupdav	pt	Todos os livros de endereços
+all categories	common	pt	Todas as categorias
 all days	common	pt	Todos os dias
 all fields	common	pt	Todos os campos
 all in one	groupdav	pt	Tudo em um
@@ -653,6 +655,7 @@ load	common	pt	Carregar
 load this template into the editor	common	pt	Carregar este modelo no editor
 local	common	pt	Local
 login	common	pt	Entrar
+login rejected by epl firewall, please contact your administrator	common	pt	Início de sessão rejeitado pela firewall do EGroupware, contacte o seu administrador.
 loginid	common	pt	ID de ligação
 logout	common	pt	Sair
 lost login id	common	pt	ID de acesso perdida
@@ -664,6 +667,8 @@ macau	common	pt	Macau
 macedonia, the former yugoslav republic of	common	pt	Macedónia, Antiga República Jugoslava da
 madagascar	common	pt	Madagáscar
 mail domain, eg. "%1"	common	pt	domínio de correio electrónico. Ex: "%1"
+mailvelope addon installation failed! please try again.	common	pt	A instalação do addon Mailvelope falhou! Por favor, tente novamente.
+mailvelope addon installation succeded. now you may configure the options.	common	pt	A instalação do addon Mailvelope foi bem sucedida. Agora pode configurar as opções.
 main category	common	pt	Cetegoria principal
 maintainer	common	pt	Administrador
 malawi	common	pt	Malawi

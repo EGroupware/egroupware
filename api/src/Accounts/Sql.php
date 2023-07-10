@@ -660,7 +660,7 @@ class Sql
 			//error_log(__METHOD__."('$name', '$which', ".array2string($account_type).") db->select('$table', '$cols', ".array2string($where).") returned ".array2string($rs).' '.function_backtrace());
 			return false;
 		}
-		return ($row['account_type'] == 'g' ? -1 : 1) * $row['account_id'];
+		return (($row['account_type']??null) === 'g' ? -1 : 1) * $row['account_id'];
 	}
 
 	/**

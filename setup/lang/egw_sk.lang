@@ -16,7 +16,7 @@
 %1 password set in %2.	setup	sk	Heslo %1 nastavené v %2.
 %1 passwords updated, %3 errors	setup	sk	Aktualizovaných %1 hesiel, %3 chýb.
 %1 users and %2 groups created, %3 errors	setup	sk	Bolo vytvorených %1 používateľov a %2 skupín, %3 chýb
-%1, %2 or %3 the configuration file.	setup	sk	%1, %2 alebo %3 konfiguračný súbor.
+%1 the configuration file.	setup	sk	%1 konfiguračný súbor.
 '%1' is no valid domain name!	setup	sk	'%1' nie je platný názov domény!
 '%1' is not allowed as %2. arguments of option %3 !!!	setup	sk	'%1' nie je povolené ako %2. argumenty k voľbe %3 !!!
 '%1' must be integer	setup	sk	%1 musí byť celočíselná hodnota.

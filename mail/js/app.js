@@ -363,16 +363,23 @@ app.classes.mail = AppJS.extend(
 						that.compose_fieldExpander();
 					}
 				});
-				/*Trigger compose_resizeHandler after the TinyMCE is fully loaded*/
+				/*Trigger after the TinyMCE is fully loaded*/
 				jQuery('#mail-compose').on ('load',function() {
 
 					if (textAreaWidget && textAreaWidget.tinymce)
 					{
-						textAreaWidget.tinymce.then(()=>{
-							that.compose_resizeHandler();
-							if (textAreaWidget.editor) jQuery(textAreaWidget.editor.iframeElement.contentWindow.document).on('dragenter', function(){
-							// anything to bind on tinymce iframe
-							});
+						textAreaWidget.tinymce.then(()=>
+						{
+							// Clear explicit height so browser can manage it
+							textAreaWidget.tinymce_container.style.height = "";
+
+							if (textAreaWidget.editor)
+							{
+								jQuery(textAreaWidget.editor.iframeElement.contentWindow.document).on('dragenter', function ()
+								{
+									// anything to bind on tinymce iframe
+								});
+							}
 						});
 					}
 					else
@@ -389,7 +396,6 @@ app.classes.mail = AppJS.extend(
 						e.stopImmediatePropagation();
 						return false;
 					}
-					that.compose_resizeHandler();
 				});
 				// Init key handler
 				this.init_keyHandler();
@@ -1152,7 +1158,7 @@ app.classes.mail = AppJS.extend(
 		{
 			rowId = this.mail_fetchCurrentlyFocussed(selected);
 			data = egw.dataGetUIDdata(rowId).data;
-
+			data.emailTag = egw.preference('emailTag', 'mail') ?? 'onlyname';
 			// Try to resolve winmail.data attachment
 			if (data && data.attachmentsBlock[0]
 					&& data.attachmentsBlock[0].winmailFlag
@@ -3936,9 +3942,6 @@ app.classes.mail = AppJS.extend(
 			var groupbox = boxAttachment.getParent();
 			if (groupbox) groupbox.set_disabled(false);
 		}
-		//Resize the compose dialog
-		var self = this;
-		setTimeout(function(){self.compose_resizeHandler();}, 100);
 		return true;
 	},
 
@@ -4672,65 +4675,7 @@ app.classes.mail = AppJS.extend(
 		}
 	},
 
-	/**
-	 * Control textArea size based on available free space at the bottom
-	 *
-	 */
-	compose_resizeHandler: function()
-	{
-		// Do not resize compose dialog if it's running on mobile device
-		// in this case user would be able to edit mail body by scrolling down,
-		// which is more convenient on small devices. Also resize mailbody with
-		// tinyMCE may causes performance regression, especially on devices with
-		// very limited resources and slow proccessor.
-		if (egwIsMobile()) return false;
-
-		try {
-			var bodyH = egw_getWindowInnerHeight();
-			var textArea = this.et2.getWidgetById('mail_plaintext');
-			var $headerSec = jQuery('.mailComposeHeaderSection');
-			var content = this.et2.getArrayMgr('content').data;
-
-			if (typeof textArea != 'undefined' && textArea != null)
-			{
-				if (textArea.getParent().disabled)
-				{
-					textArea = this.et2.getWidgetById('mail_htmltext');
-				}
-				// Tolerate values base on plain text or html, in order to calculate freespaces
-				var textAreaDelta = textArea.id == "mail_htmltext"?20:40;
-
-				// while attachments are in progress take progress visiblity into account
-				// otherwise the attachment progress is finished and consider attachments list
-				var delta =  textAreaDelta;
-
-				var bodySize = (bodyH  - Math.round($headerSec.height() + $headerSec.offset().top) - delta);
-
-				if (textArea.id != "mail_htmltext")
-				{
-					textArea.getParent().style.height = `${bodySize}px`;
-				}
-				else if (typeof textArea != 'undefined' && textArea.id == 'mail_htmltext')
-				{
-					if (textArea.editor)
-					{
-						jQuery(textArea.editor.editorContainer).height(bodySize);
-						jQuery(textArea.editor.iframeElement).height(bodySize - (textArea.editor.editorContainer.getElementsByClassName('tox-toolbar')[0].clientHeight +
-								textArea.editor.editorContainer.getElementsByClassName('tox-statusbar')[0].clientHeight));
-					}
-				}
-				else
-				{
-					textArea.set_height(bodySize - 90);
-				}
-			}
-		}
-		catch(e) {
-			// ignore errors causing compose to load twice
-		}
-	},
-
-	/**
+		/**
 	 * Display Folder,Cc or Bcc fields in compose popup
 	 *
 	 * @param {jQuery event} event
@@ -4823,7 +4768,6 @@ app.classes.mail = AppJS.extend(
 				}
 			}
 		}
-		this.compose_resizeHandler();
 	},
 
 	/**
@@ -6060,7 +6004,7 @@ app.classes.mail = AppJS.extend(
 			{
 				if (_obj1[i]['mail_id'] != _obj2[i]['mail_id'] || _obj1[i]['partID'] != _obj2[i]['partID']) return false;
 			}
-
+			if (_obj1.length != _obj2.length) return false;
 			return true;
 		};
 		if (_attachments && _attachments.length)

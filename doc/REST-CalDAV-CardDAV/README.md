@@ -31,6 +31,7 @@ One can use the following URLs relative (!) to https://example.org/egroupware/gr
 - ```/infolog/```     infologs of current user
 - ```/(resources|locations)/<resource-name>/calendar``` calendar of a resource/location, if user has rights to view
 - ```/<current-username>/(resource|location)-<resource-name>``` shared calendar from a resource/location
+- ```/mail/```   only REST API, currently only send EMail or launch interactive compose windows
 
 Shared addressbooks or calendars are only shown in the users home-set, if he subscribed to it via his CalDAV preferences!
 

@@ -428,18 +428,24 @@ class Accounts
 				break;
 		}
 		$accounts = array();
-		foreach(self::getInstance()->search(array(
-												'type'       => $options['filter']['group'] < 0 ? $options['filter']['group'] : $type,
-												'query'      => $pattern,
-												'query_type' => 'all',
-												'order'      => $order,
-												'offset'     => $options['num_rows']
-											)) as $account)
+		$params = array(
+			'type'       => $options['filter']['group'] < 0 ? $options['filter']['group'] : $type,
+			'query'      => $pattern,
+			'query_type' => $options['filter']['query_type'] ?: 'all',
+			'order'      => $order,
+			'offset'     => $options['num_rows']
+		);
+		if(array_key_exists('account_id', $options))
+		{
+			$params['account_id'] = $options['account_id'];
+		}
+		foreach(self::getInstance()->search($params) as $account)
 		{
 			$displayName = self::format_username($account['account_lid'],
-				$account['account_firstname'],$account['account_lastname'],$account['account_id']);
+												 $account['account_firstname'], $account['account_lastname'], $account['account_id']
+			);
 
-			if (!empty($options['tag_list']))
+			if(!empty($options['tag_list']))
 			{
 				$result = [
 					'value' => $account['account_id'],

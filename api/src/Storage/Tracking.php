@@ -369,8 +369,8 @@ abstract class Tracking
 		{
 			//error_log(__METHOD__.__LINE__.' Field:'.$name. ' Value (new):'.array2string($data[$name]));
 			//error_log(__METHOD__.__LINE__.' Field:'.$name. ' Value (old):'.array2string($old[$name]));
-			if (is_array($data[$name]) && array_key_exists('id',$data[$name])) $data[$name] = $data[$name]['id'];
-			if (is_array($old[$name]) && array_key_exists('id',$old[$name])) $old[$name] = $old[$name]['id'];
+			if (is_array($data[$name] ?? null) && array_key_exists('id',$data[$name])) $data[$name] = $data[$name]['id'];
+			if (is_array($old[$name] ?? null) && array_key_exists('id',$old[$name])) $old[$name] = $old[$name]['id'];
 			//error_log(__METHOD__.__LINE__.'(After processing) Field:'.$name. ' Value (new):'.array2string($data[$name]));
 			//error_log(__METHOD__.__LINE__.'(After processing) Field:'.$name. ' Value (old):'.array2string($old[$name]));
 		}

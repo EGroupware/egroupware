@@ -108,6 +108,10 @@ td.admin_userAgent span {
 	max-width: 100% !important;
 }
 
+#acl-edit #_acl_account {
+	min-width: 16rem;
+}
+
 /**
  * mail account wizard and edit
  */
@@ -183,4 +187,15 @@ Admin command
   border-left: 0;
   border-bottom: 0;
   background: white;
+}
+
+/**
+ * Application passwords / tokens
+ */
+tr.revoked > td * {
+    color: grey !important;
+    font-style: italic;
+}
+td.token {
+    border: 3px solid red;
 }

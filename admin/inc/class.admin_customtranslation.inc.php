@@ -64,6 +64,9 @@ class admin_customtranslation
 					}
 					if ($saved) $msg = lang('%1 phrases saved.', $saved);
 					if ($action == 'apply') break;
+
+					$push = new Api\Json\Push();
+					$push->call('location.reload');
 					// fall through
 				case 'cancel':
 					Egw::redirect_link('/admin/index.php');

@@ -31,7 +31,7 @@
                     <nextmatch-header statustext="security" label="Security" id="security"/>
                 </row>
                 <row class="$row_cont[class]">
-                    <et2-lavatar image="$row_cont[avatar]" fname="$row_cont[lavatar][fname]"
+                    <et2-lavatar contactId="email:$row_cont[address]" fname="$row_cont[lavatar][fname]"
                                  lname="$row_cont[lavatar][lname]" size="2.75em" shape="rounded"></et2-lavatar>
                     <et2-description span="1" class="status_img"></et2-description>
                     <html id="${row}[attachments]"/>
@@ -44,11 +44,11 @@
                         <et2-date-time align="center" id="${row}[date]" readonly="true"></et2-date-time>
                     </et2-hbox>
                     <et2-date-time-today align="center" id="${row}[modified]" readonly="true"></et2-date-time-today>
-                    <et2-url-email id="${row}[address]" readonly="true"></et2-url-email>
-                    <et2-url-email  id="${row}[toaddress]" readonly="true"></et2-url-email>
-                    <et2-url-email  id="${row}[fromaddress]" readonly="true"></et2-url-email>
+                    <et2-url-email id="${row}[address]" readonly="true" fullEmail="$row_cont[emailTag]=fullemail" onlyEmail="$row_cont[emailTag]=onlyemail"></et2-url-email>
+                    <et2-url-email id="${row}[toaddress]" readonly="true" fullEmail="$row_cont[emailTag]=fullemail" onlyEmail="$row_cont[emailTag]=onlyemail"></et2-url-email>
+                    <et2-url-email id="${row}[fromaddress]" readonly="true" fullEmail="$row_cont[emailTag]=fullemail" onlyEmail="$row_cont[emailTag]=onlyemail"></et2-url-email>
                     <vfs-size align="right" id="${row}[size]" no_lang="1" readonly="true"/>
-                    <et2-image  src="$row_cont[smime]" ></et2-image>
+                    <et2-image src="$row_cont[smime]"></et2-image>
                 </row>
             </rows>
         </grid>

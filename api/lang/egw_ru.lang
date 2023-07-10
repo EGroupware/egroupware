@@ -88,6 +88,7 @@ add user to responsibles, removing evtl. previous category user	groupdav	ru	до
 addressbook	common	ru	Контакты
 addressbooks to sync in addition to personal addressbook	groupdav	ru	Адресная книга для синхронизации в дополнение к личной адресной книге
 admin	common	ru	Администратор
+admin settings for %1	common	ru	Настройки администратора для %1
 administration	common	ru	Администрирование
 advanced search	common	ru	Расширенный поиск
 afghanistan	common	ru	Афганистан
@@ -98,6 +99,7 @@ alignment of label and input-field in table-cell	common	ru	Выравниван�
 alignment of the v/hbox containing table-cell	common	ru	Выравнивание Верт/Гориз (Box)  содержащего ячеку таблицы
 all	common	ru	Все
 all addressbooks	groupdav	ru	Все адресные книги
+all categories	common	ru	Все категории
 all days	common	ru	все дни
 all fields	common	ru	все поля
 all in one	groupdav	ru	Всё в одном
@@ -730,6 +732,7 @@ location calendars	groupdav	ru	Местные календари
 locations	common	ru	Местоположения
 logging / debuging	groupdav	ru	Журналирование/отладка
 login	common	ru	Вход
+login rejected by epl firewall, please contact your administrator	common	ru	Вход в систему отклонен брандмауэром EGroupware, обратитесь к администратору.
 loginid	common	ru	LoginID
 logout	common	ru	Выход
 lost login id	common	ru	Забытый login ID
@@ -741,6 +744,8 @@ macau	common	ru	Макао
 macedonia, the former yugoslav republic of	common	ru	Македония
 madagascar	common	ru	Мадагаскар
 mail domain, eg. "%1"	common	ru	почтовый домен, напр. "%1"
+mailvelope addon installation failed! please try again.	common	ru	Установка аддона Mailvelope не удалась! Пожалуйста, попробуйте еще раз.
+mailvelope addon installation succeded. now you may configure the options.	common	ru	Установка аддона Mailvelope прошла успешно. Теперь вы можете настроить параметры.
 main category	common	ru	Основная категория
 maintainer	common	ru	Ответственный
 malawi	common	ru	Малави

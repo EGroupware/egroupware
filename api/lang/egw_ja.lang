@@ -98,6 +98,7 @@ add your domain as "%1" in options to list of email providers and enable api.	co
 addressbook	common	ja	アドレス帳
 addressbooks to sync in addition to personal addressbook	groupdav	ja	個人アドレス帳に加えて同期するアドレス帳
 admin	common	ja	管理
+admin settings for %1	common	ja	管理者設定 %1
 administration	common	ja	管理
 advanced search	common	ja	詳細検索
 afghanistan	common	ja	アフガニスタン
@@ -632,7 +633,6 @@ high	common	ja	高
 highest	common	ja	最高
 history	common	ja	歴史
 history log	common	ja	変更履歴
-hold [%1] and [%2] key to drag %3 to your desktop	common	ja	Hold [%1] and [%2] key to drag %3 to your desktop
 hold [%1] key to select text eg. to copy it	common	ja	Hold [%1] key to select text eg. to copy it
 holy see (vatican city state)	common	ja	バチカン市国
 home	common	ja	ホーム
@@ -786,6 +786,7 @@ location calendars	groupdav	ja	場所情報カレンダー
 locations	common	ja	場所
 logging / debuging	groupdav	ja	ログ / デバッグ
 login	common	ja	ログイン
+login rejected by epl firewall, please contact your administrator	common	ja	EGroupwareのファイアウォールによりログインが拒否されました、管理者に連絡してください。
 loginid	common	ja	ログイン ID
 logout	common	ja	ログアウト
 lost login id	common	ja	ログイン IDを忘れた

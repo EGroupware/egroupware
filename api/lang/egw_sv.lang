@@ -72,6 +72,7 @@ add to clipboard	common	sv	Lägg till i urklipp
 addressbook	common	sv	Adressbok
 addressbooks to sync in addition to personal addressbook	groupdav	sv	Adressböcker som ska synkroniseras utöver den personliga adressboken
 admin	common	sv	Admin
+admin settings for %1	common	sv	Admininställningar för %1
 administration	common	sv	Administration
 advanced search	common	sv	Avancerad sökning
 afghanistan	common	sv	AFGHANISTAN
@@ -82,6 +83,7 @@ alignment of label and input-field in table-cell	common	sv	Justering av etikett 
 alignment of the v/hbox containing table-cell	common	sv	Justering av V/HBox innehållande tabell cell
 all	common	sv	Alla
 all addressbooks	groupdav	sv	Alla adressböcker
+all categories	common	sv	Alla kategorier
 all days	common	sv	Samtliga dagar
 all fields	common	sv	Alla fält
 all in one	groupdav	sv	Alla i en
@@ -623,6 +625,7 @@ loading	common	sv	Laddar
 local	common	sv	Lokal
 locations	common	sv	Placering
 login	common	sv	Inloggning
+login rejected by epl firewall, please contact your administrator	common	sv	Inloggningen avvisas av EGroupwares brandvägg, kontakta din administratör.
 loginid	common	sv	Inloggnings ID
 logout	common	sv	Logga ut
 lost login id	common	sv	Glömt inloggnings ID
@@ -634,6 +637,8 @@ macau	common	sv	MACAU
 macedonia, the former yugoslav republic of	common	sv	MAKEDONIEN
 madagascar	common	sv	MADAGASKAR
 mail domain, eg. "%1"	common	sv	E-postdomän, ex. "%1"
+mailvelope addon installation failed! please try again.	common	sv	Installation av Mailvelope-tillägget misslyckades! Försök igen.
+mailvelope addon installation succeded. now you may configure the options.	common	sv	Mailvelope addon installation lyckades. Nu kan du konfigurera alternativen.
 main category	common	sv	Huvudkategori
 maintainer	common	sv	Underhåll
 malawi	common	sv	MALAWI

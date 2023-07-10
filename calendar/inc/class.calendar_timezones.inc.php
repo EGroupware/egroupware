@@ -148,7 +148,7 @@ class calendar_timezones
 			}
 		}
 		// if not tzid queried, resolve aliases automatically
-		if ($data && $data['alias'] && $what != 'tzid' && $what != 'alias')
+		if ($data && !empty($data['alias']) && $what != 'tzid' && $what != 'alias')
 		{
 			$data = self::id2tz($data['alias'],null);
 		}
