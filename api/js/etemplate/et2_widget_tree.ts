@@ -13,7 +13,7 @@
 
 /*egw:uses
 	et2_core_inputWidget;
-	/api/js/egw_action/egw_dragdrop_dhtmlx_tree.js;
+	/api/js/egw_action/egw_dragdrop_dhtmlx_tree.ts;
 	/api/js/dhtmlxtree/codebase/dhtmlxcommon.js;
 //	using debugable and fixed source of dhtmltree instead: /api/js/dhtmlxtree/js/dhtmlXTree.js;
 	/api/js/dhtmlxtree/sources/dhtmlxtree.js;
@@ -26,10 +26,10 @@ import {et2_inputWidget} from "./et2_core_inputWidget";
 import {ClassWithAttributes} from "./et2_core_inheritance";
 import {et2_no_init} from "./et2_core_common";
 import {egw} from "../jsapi/egw_global";
-import {egw_getAppObjectManager, egw_getObjectManager, egwActionObject} from "../egw_action/egw_action.js";
-import {EGW_AO_FLAG_IS_CONTAINER} from "../egw_action/egw_action_constants.js";
-import {dhtmlxtreeItemAOI} from "../egw_action/egw_dragdrop_dhtmlx_tree.js";
-import {egwIsMobile} from "../egw_action/egw_action_common.js";
+import {egw_getAppObjectManager, egw_getObjectManager, egwActionObject} from "../egw_action/egw_action";
+import {EGW_AO_FLAG_IS_CONTAINER} from "../egw_action/egw_action_constants";
+import {dhtmlxtreeItemAOI} from "../egw_action/./egw_dragdrop_dhtmlx_tree";
+import {egwIsMobile} from "../egw_action/egw_action_common";
 
 /* no module, but egw:uses is ignored, so adding it here commented out
 import '../../../api/js/dhtmlxtree/sources/dhtmlxtree.js';

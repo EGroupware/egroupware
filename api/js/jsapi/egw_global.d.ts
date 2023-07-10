@@ -24,7 +24,19 @@ declare var egw : Iegw;
 /**
  * Interface for global egw with window global or local methods or as function returning an object allowing also application local methods
  */
-declare interface Iegw extends IegwWndLocal { (_app? : string|Window, _wnd? : Window) : IegwAppLocal }
+declare interface Iegw extends IegwWndLocal {
+	(_app?: string | Window, _wnd?: Window) : IegwAppLocal,
+	/**
+	 * Copy text to the clipboard
+	 *
+	 * @param text Actual text to copy.  Usually target_element.value
+	 * @param target_element Optional, but useful for fallback copy attempts
+	 * @param event Optional, but if you have an event we can try some fallback options with it
+	 *
+	 * @returns {Promise<undefined|boolean>|Promise<void>}
+	 */
+	copyTextToClipboard:(text, target_element, event)=>any
+}
 
 /**
  * Return type for egw.app() call
@@ -864,7 +876,7 @@ declare interface IegwWndLocal extends IegwGlobal
 	 * @param {object} _context
 	 * @returns {mixed|Promise}
 	 */
-	applyFunc(_func : string|Function, args : Array<any>, _context? : Object)  : Promise<any>|any
+	applyFunc(_func : string|Function, args : IArguments, _context? : Object)  : Promise<any>|any
 
 	/**
 	 * Registers a new handler plugin.

@@ -21,7 +21,7 @@ import {et2_calendar_daycol} from "./et2_widget_daycol";
 import {et2_calendar_planner_row} from "./et2_widget_planner_row";
 import {et2_IDetachedDOM} from "../../api/js/etemplate/et2_core_interfaces";
 import {et2_activateLinks, et2_insertLinkText, et2_no_init} from "../../api/js/etemplate/et2_core_common";
-import {egw_getAppObjectManager, egwActionObject} from '../../api/js/egw_action/egw_action.js';
+import {egw_getAppObjectManager, egwActionObject} from '../../api/js/egw_action/egw_action';
 import {egw} from "../../api/js/jsapi/egw_global";
 import {et2_container} from "../../api/js/etemplate/et2_core_baseWidget";
 import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";
