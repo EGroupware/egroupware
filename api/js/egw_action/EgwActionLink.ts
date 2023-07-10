@@ -6,7 +6,7 @@ import {egwActionStoreJSON} from "./egw_action_common";
  * This gives each action object the possibility to decide, whether the action
  * should be active in this context or not.
  *
- * @param _manager is a reference to the egwActionManager whic contains the action
+ * @param _manager is a reference to the egwActionManager which contains the action
  *    the object wants to link to.
  */
 export class EgwActionLink {

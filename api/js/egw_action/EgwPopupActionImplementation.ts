@@ -1,9 +1,8 @@
-import {egwActionImplementation} from "./egw_action";
 import {_egw_active_menu, egwMenu, egwMenuItem} from "./egw_menu";
 import {EGW_KEY_ENTER, EGW_KEY_MENU} from "./egw_action_constants";
 import {tapAndSwipe} from "../tapandswipe";
 import {EgwAction} from "./EgwAction";
-import {egwFnct} from "./egw_action_common";
+import {EgwFnct} from "./egw_action_common";
 import "./egwGlobal"
 import {EgwActionImplementation} from "./EgwActionImplementation";
 import {EgwActionObject} from "./EgwActionObject";
@@ -53,7 +52,7 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
             if ((typeof _context.posx != "number" || typeof _context.posy != "number") &&
                 typeof _context.id != "undefined") {
                 // Calculate context menu position from the given DOM-Node
-                var node = _context;
+                let node = _context;
 
                 const x = jQuery(node).offset().left;
                 const y = jQuery(node).offset().top;
@@ -195,7 +194,7 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
 
     private _handleTapHold = function (_node, _callback) {
         //TODO (todo-jquery): ATM we need to convert the possible given jquery dom node object into DOM Element, this
-        // should be no longer neccessary after removing jQuery nodes.
+        // should be no longer necessary after removing jQuery nodes.
         if (_node instanceof jQuery) {
             _node = _node[0];
         }
@@ -315,7 +314,7 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
             }
         }
 
-        // Transform the link_groups object into an sorted array
+        // Transform the link_groups object into a sorted array
         const groups = [];
 
         for (const k in link_groups) {
@@ -355,7 +354,7 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
             // Go through the elements of each group
             for (const link of item1) {
                 if (link.visible) {
-                    // Add an seperator after each group
+                    // Add a separator after each group
                     if (!firstGroup && firstElem) {
                         _menu.addItem("", "-");
                     }
@@ -420,7 +419,7 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
      * @param {type} _links
      * @param {type} _selected
      * @param {type} _target
-     * @returns {egwMenu|egwActionImplementation._buildMenu.menu}
+     * @returns {egwMenu|EgwActionImplementation._buildMenu.menu}
      */
     private _buildMenu = (_links, _selected, _target) => {
         // Build a tree containing all actions
@@ -545,7 +544,7 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
                             clipboard.type = clipboard.type.concat(drag[k].actionObj.dragType);
                         }
                     }
-                    clipboard.type = jQuery.unique(clipboard.type);
+                    clipboard.type = [...new Set(clipboard.type)].sort();
                     // egwAction is a circular structure and can't be stringified so just take what we want
                     // Hopefully that's enough for the action handlers
                     for (const k in selected) {
@@ -645,7 +644,9 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
                 paste_action = mgr.addAction('popup', 'egw_paste', window.egw.lang('Paste'), window.egw.image('editpaste'), paste_exec, true);
                 paste_action.group = 2.5;
                 paste_action.order = 9;
-                paste_action.canHaveChildren.push('drop');
+                if (typeof paste_action.canHaveChildren !== "boolean") {
+                    paste_action.canHaveChildren.push('drop');
+                }
             }
 
             // Set hint to something resembling current clipboard
@@ -659,7 +660,8 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
                 }, paste_action);
             }
 
-            // Add into links so it's included in menu
+            // Add into links, so it's included in menu
+            // @ts-ignore exec uses arguments:IArguments and therefor can consume them even if ts does not know it
             if (paste_action && paste_action.enabled.exec(paste_action, clipboard.selected, _selected[0])) {
                 if (typeof _links[paste_action.id] == 'undefined') {
                     _links[paste_action.id] = {
@@ -690,7 +692,7 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
                     Object.setPrototypeOf(drop_clone, EgwAction.prototype)
                     let parent = paste_action.parent === drop_clone.parent ? paste_action : (paste_action.getActionById(drop_clone.parent.id) || paste_action);
                     drop_clone.parent = parent;
-                    drop_clone.onExecute = new egwFnct(this, null, []);
+                    drop_clone.onExecute = new EgwFnct(this, null, []);
                     drop_clone.children = [];
                     drop_clone.set_onExecute(paste_exec);
                     parent.children.push(drop_clone);

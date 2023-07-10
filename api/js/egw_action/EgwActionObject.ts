@@ -18,8 +18,8 @@ import {
     EGW_KEY_PAGE_UP,
     EGW_KEY_SPACE
 } from "./egw_action_constants";
-import {egwActionObjectInterface} from "./egw_action";
 import type {EgwActionObjectInterface} from "./EgwActionObjectInterface";
+import {egwActionObjectInterface} from "./egw_action";
 
 /**
  * The egwActionObject represents an abstract object to which actions may be
@@ -28,7 +28,7 @@ import type {EgwActionObjectInterface} from "./EgwActionObjectInterface";
  * egwActionObjects are organized in a tree structure.
  *
  * @param {string} _id is the identifier of the object which
- * @param {EgwActionObject} _parent is the parent object in the hirachy. This may be set to NULL
+ * @param {EgwActionObject} _parent is the parent object in the hierarchy. This may be set to NULL
  * @param {egwActionObjectInterface} _iface is the egwActionObjectInterface which connects the object
  *    to the outer world.
  * @param {EgwActionManager} _manager is the action manager this object is connected to
@@ -122,12 +122,12 @@ export class EgwActionObject {
 
     /**
      * Adds an object as child to the actionObject and returns it - if the supplied
-     * parameter is a object, the object will be added directly, otherwise an object
+     * parameter is an object, the object will be added directly, otherwise an object
      * with the given id will be created.
      *
      * @param {(string|object)} _id Id of the object which will be created or the object
      *    that will be added.
-     * @param {object} _interface if _id was an string, _interface defines the interface which
+     * @param {object} _interface if _id was a string, _interface defines the interface which
      *    will be connected to the newly generated object.
      * @param {number} _flags are the flags will which be supplied to the newly generated
      *    object. May be omitted.
@@ -139,7 +139,7 @@ export class EgwActionObject {
 
     /**
      * Inserts an object as child to the actionObject and returns it - if the supplied
-     * parameter is a object, the object will be added directly, otherwise an object
+     * parameter is an object, the object will be added directly, otherwise an object
      * with the given id will be created.
      *
      * @param {number} _index Position where the object will be inserted, "false" will add it
@@ -293,8 +293,8 @@ export class EgwActionObject {
             for (let i = 0; i < this.children.length; i++) {
                 if (!this.children[i].getAllSelected()) return false;
             }
-            // If this element is an container *and* does not have any children, we
-            // should return false. If this element is not an container we have to
+            // If this element is a container *and* does not have any children, we
+            // should return false. If this element is not a container we have to
             // return true has this is the recursion base case
             return (!egwBitIsSet(this.flags, EGW_AO_FLAG_IS_CONTAINER)) || (this.children.length > 0);
         }
@@ -700,7 +700,7 @@ export class EgwActionObject {
             }
         }
 
-        // Update the children if the should be selected or if they should be
+        // Update the children if they should be selected or if they should be
         // deselected and there are selected children.
         if (_selected || this.selectedChildren.length > 0) {
             for (let i = 0; i < this.children.length; i++) {
@@ -741,7 +741,7 @@ export class EgwActionObject {
             this.selectedChildren.splice(id, 1);
         }
 
-        // If the emptieness of the selectedChildren array has changed, update the
+        // If the emptiness of the selectedChildren array has changed, update the
         // parent selected children array.
         if (wasEmpty != (this.selectedChildren.length == 0) && this.parent) {
             this.parent.updateSelectedChildren(this, wasEmpty);
@@ -785,7 +785,7 @@ export class EgwActionObject {
      *    ]
      *    string[] or {actionID:string,enabled:boolean}[]
      *    If an supplied link doesn't exist yet, it will be created (if _doCreate is true)
-     *    and added to the list. Otherwise the information will just be updated.
+     *    and added to the list. Otherwise, the information will just be updated.
      * @param {boolean} _recursive If true, the settings will be applied to all child
      *    object (default false)
      * @param {boolean} _doCreate If true, not yet existing links will be created (default true)
@@ -948,7 +948,7 @@ export class EgwActionObject {
 
     /**
      * Returns all selected objects, and all action links of those objects, which are
-     * of the given implementation type, wheras actionLink properties such as
+     * of the given implementation type, actionLink properties such as
      * "enabled" and "visible" are accumulated.
      *
      * Objects have the chance to change their action links or to deselect themselves
@@ -1052,7 +1052,7 @@ export class EgwActionObject {
      * Returns all actions associated to the object tree, grouped by type.
      *
      * @param {function} _test gets an egwActionObject and should return, whether the
-     *    actions of this object are added to the result. Defaults to a "always true"
+     *    actions of this object are added to the result. Defaults to an "always true"
      *    function.
      * @param {object} _groups is an internally used parameter, may be omitted.
      */
@@ -1095,7 +1095,7 @@ export class EgwActionObject {
      *    -Others: Alt + Shift
      *
      * @param {event} _event
-     * @return {boolean} return true if Alt+Shift keys and left mouse click arre pressed, otherwise false
+     * @return {boolean} return true if Alt+Shift keys and left mouse click are pressed, otherwise false
      */
 
     isDragOut(_event) {

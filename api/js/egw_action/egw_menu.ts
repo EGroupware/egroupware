@@ -26,7 +26,6 @@ export var _egw_active_menu: egwMenu = null;
  * in e.g. the egwMenu.addItem function.
  */
 //TODO Icons: write PHP GD script which is capable of generating the menu icons in various states (disabled, highlighted)
-//TODO ask why we dont use new EgwMenuItem(params)
 function _egwGenMenuItem(_parent = null, _id = "", _caption = "", _iconUrl = "", _onClick = null)
 {
 	//Create a menu item with no parent (null) and set the given parameters

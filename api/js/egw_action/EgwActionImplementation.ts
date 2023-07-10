@@ -5,7 +5,7 @@ import type {EgwActionObjectInterface} from "./EgwActionObjectInterface";
  * object is responsible for inserting the actual action representation (context menu,
  * drag-drop code) into the DOM Tree by using the egwActionObjectInterface object
  * supplied by the object.
- * To write a "class" which derives from this object, simply write a own constructor,
+ * To write a "class" which derives from this object, simply write an own constructor,
  * which replaces "this" with a "new EgwActionImplementation" and implement your
  * code in "doRegisterAction" und "doUnregisterAction".
  * Register your own implementation within the _egwActionClasses object.
