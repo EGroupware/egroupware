@@ -155,6 +155,10 @@
     border: none;
     box-shadow: none;
   }
+  body #mail-compose .mailComposeBodySection,
+  body #mail-compose .mailComposeBodySection .mailComposeBody {
+    height: calc(100% - 180px);
+  }
   body #mail-compose .mailComposeHeaderSection > table {
     padding: 0;
   }
