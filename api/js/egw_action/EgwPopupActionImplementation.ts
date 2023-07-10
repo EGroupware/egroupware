@@ -201,7 +201,7 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
 
         let tap = new tapAndSwipe(_node, {
             // this threshold must be the same as the one set in et2_dataview_view_aoi
-            tapHoldThreshold: 600,
+            tapHoldThreshold: 1000,
             allowScrolling: "both",
             tapAndHold: function (event, fingercount) {
                 if (fingercount >= 2) return;
@@ -426,7 +426,7 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
         const tree = {"root": []};
 
         // Automatically add in Drag & Drop actions
-        if (this.auto_paste && !window.egwIsMobile()) {
+        if (this.auto_paste && !window.egwIsMobile()&& !this._context.event.type.match(/touch/)) {
             this._addCopyPaste(_links, _selected);
         }
 
