@@ -21,7 +21,7 @@ import {egw} from "../../api/js/jsapi/egw_global";
 import {et2_selectbox} from "../../api/js/etemplate/et2_widget_selectbox";
 import {et2_textbox} from "../../api/js/etemplate/et2_widget_textbox";
 import {MIME_REGEX} from "../../api/js/etemplate/Expose/ExposeMixin";
-import {egwAction} from "../../api/js/egw_action/egw_action.js";
+import {egwAction} from "../../api/js/egw_action/egw_action";
 
 /**
  * UI for filemanager
