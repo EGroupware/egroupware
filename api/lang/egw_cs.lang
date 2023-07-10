@@ -27,7 +27,7 @@
 '%1' copied to clipboard	common	cs	'%1' zkopírováno do schránky
 '%1' has an invalid format	common	cs	'%1' má nesprávný formát !
 '%1' has an invalid format !!!	common	cs	'%1' má nesprávný formát !!!
-'%1' is no php file in the egw server root (%2)!	common	cs	'%1' není php souborem v server root EGw (%2)!
+'%1' is not a valid json file!	common	cs	'%1' není json souborem v server root EGw!
 '%1' is not a valid date !!!	common	cs	'%1' není platné datum !!!
 '%1' is not a valid floatingpoint number !!!	common	cs	'%1' není platné číslo s pohyblivou desetinnou čárkou !!!
 '%1' is not a valid integer !!!	common	cs	'%1' není platné celé číslo

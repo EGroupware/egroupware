@@ -20,7 +20,7 @@
 %s readonly	common	fi	%s vain lukuoikeus
 '%1' copied to clipboard	common	fi	'%1' kopioitu leikepöydälle
 '%1' has an invalid format !!!	common	fi	%1 on väärässä muodossa!
-'%1' is no php file in the egw server root (%2)!	common	fi	'%1' ei ole PHP tiedosto EGroupwaren server rootissa (%2)!
+'%1' is not a valid json file!	common	fi	'%1' ei ole json tiedosto EGroupwaren server rootissa!
 '%1' is not a valid date !!!	common	fi	%1 on epäkelpo päiväys!
 '%1' is not a valid floatingpoint number !!!	common	fi	%1 ei ole desimaaliluku!
 '%1' is not a valid integer !!!	common	fi	%1 ei ole kokonaisluku!

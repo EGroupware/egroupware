@@ -29,7 +29,7 @@
 '%1' copied to clipboard	common	sk	'%1' skopírované do schránky
 '%1' has an invalid format	common	sk	'%1' má nesprávny formát!
 '%1' has an invalid format !!!	common	sk	'%1' má nesprávny formát!
-'%1' is no php file in the egw server root (%2)!	common	sk	'%1' nie je php súborom v root adresári eGW servera (%2)!
+'%1' is not a valid json file!	common	sk	'%1' nie je json súborom v root adresári eGW servera!
 '%1' is not a valid date !!!	common	sk	'%1' nie je platný dátum!
 '%1' is not a valid floatingpoint number !!!	common	sk	'%1' nie je platné číslo s plávajúcou desatinnou čiarkou!
 '%1' is not a valid integer !!!	common	sk	'%1' nie je platné celé číslo !

@@ -291,12 +291,16 @@ class Customfields implements \IteratorAggregate
 		$options = array();
 
 		if(!($path = Api\Vfs::resolve_url($file)) ||    // file does not exist   // we are NOT inside the eGW root
-			basename($path, '.php') . '.php' != basename($path) ||    // extension is NOT .php
+			basename($path, '.json') . '.json' != basename($path) ||    // extension is NOT .php
 			basename($path) == 'header.inc.php')    // dont allow to include our header again
 		{
-			return array(lang("'%1' is no php file in the eGW server root (%2)!" . ': ' . $path, $file, EGW_SERVER_ROOT));
+			return array(lang("'%1' is not a valid json file!", $file));
 		}
-		include($path);
+		$options = json_decode(file_get_contents($path), true);
+		if($options === null)
+		{
+			return array(lang("'%1' is not a valid json file!", $file));
+		}
 
 		return $options;
 	}

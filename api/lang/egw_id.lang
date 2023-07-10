@@ -16,7 +16,6 @@
 %s readonly	common	id	%s readonly
 '%1' copied to clipboard	common	id	'%1' disalin ke clipboard
 '%1' has an invalid format !!!	common	id	'%1' has an invalid format !!!
-'%1' is no php file in the egw server root (%2)!	common	id	'%1' is no php file in the eGW server root (%2)!
 '%1' is not a valid date !!!	common	id	'%1' is not a valid date !!!
 '%1' is not a valid floatingpoint number !!!	common	id	'%1' is not a valid floatingpoint number !!!
 '%1' is not a valid integer !!!	common	id	'%1' is not a valid integer !!!

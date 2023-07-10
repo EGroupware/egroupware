@@ -24,7 +24,7 @@
 '%1' copied to clipboard	common	ru	'%1' скопировано в буфер обмена
 '%1' has an invalid format	common	ru	Неверный формат '%1'
 '%1' has an invalid format !!!	common	ru	'%1' имеет неверный формат!
-'%1' is no php file in the egw server root (%2)!	common	ru	'%1' нет файла php в корневом каталоге eGW (%2)!
+'%1' is not a valid json file!	common	ru	'%1' нет файла json в корневом каталоге eGW!
 '%1' is not a valid date !!!	common	ru	'%1' неверная дата!
 '%1' is not a valid floatingpoint number !!!	common	ru	'%1' неверное число с плавающей запятой!
 '%1' is not a valid integer !!!	common	ru	'%1' неверное целое !
