@@ -66,9 +66,14 @@ export class EgwDragActionImplementation implements EgwActionImplementation {
         if ('draggable' in document.createElement('span') &&
             navigator && navigator.userAgent.indexOf('Chrome') >= 0 && egw.app_name() == 'filemanager') // currently only filemanager supports drag out
         {
-            const key = ["Mac68K", "MacPPC", "MacIntel"].indexOf(window.navigator.platform) < 0 ?
-                egw.lang('Alt') : egw.lang('Command ⌘');
-            text.textContent = (egw.lang(`Hold [ ${key} ] and [${egw.lang('Shift ⇧')}] key to drag ${itemLabel} to your desktop`));
+            if (rows.length == 1)
+            {
+                text.textContent=(egw.lang('You may drag file out to your desktop', itemLabel));
+            }
+            else
+            {
+                text.textContent=(egw.lang('Note: If you drag out these selected rows to desktop only the first selected row will be downloaded.', itemLabel));
+            }
         }
 // Final html DOM return as helper structure
         return div;
@@ -105,9 +110,9 @@ export class EgwDragActionImplementation implements EgwActionImplementation {
                 }
             })
             node.addEventListener("mouseup", (event) => {
-                if (_context.isSelection(event)) {
-                    // TODO: save and retrieve selected range
-                    node.setAttribute("draggable", true);
+                if (_context.isSelection(event) && document.getSelection().type === 'Range') {
+                    //let the draggable be reactivated by another click up as the range selection is
+                    // not working as expected in shadow-dom as expected in all browsers
                 } else {
                     node.setAttribute("draggable", true);
                 }
@@ -137,7 +142,7 @@ export class EgwDragActionImplementation implements EgwActionImplementation {
                     const selected = ai.selected;
 
                     // Set file data
-                    for (let i = 0; i < selected.length; i++) {
+                    for (let i = 0; i < 1; i++) {
                         let d = selected[i].data || egw.dataGetUIDdata(selected[i].id).data || {};
                         if (d && d.mime && d.download_url) {
                             let url = d.download_url;
@@ -188,6 +193,8 @@ export class EgwDragActionImplementation implements EgwActionImplementation {
                 if (helper) helper.remove();
                 const draggable = document.querySelector('.drag--moving');
                 if (draggable) draggable.classList.remove('drag--moving');
+                // cleanup drop hover class from all other DOMs if there's still anything left
+                Array.from(document.getElementsByClassName('et2dropzone drop-hover')).forEach(_i=>{_i.classList.remove('drop-hover')})
             };
 
             // Drag Event listeners
