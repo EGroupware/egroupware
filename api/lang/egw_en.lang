@@ -29,7 +29,7 @@
 '%1' copied to clipboard	common	en	'%1' copied to clipboard
 '%1' has an invalid format	common	en	'%1' has an invalid format
 '%1' has an invalid format !!!	common	en	'%1' has an invalid format!
-'%1' is no php file in the egw server root (%2)!	common	en	'%1' is no php file in the eGW server root (%2)!
+'%1' is not a valid json file!	common	en	'%1' is not a valid json file
 '%1' is not a valid date !!!	common	en	'%1' is not a valid date!
 '%1' is not a valid floatingpoint number !!!	common	en	'%1' is not a valid floating point number!
 '%1' is not a valid integer !!!	common	en	'%1' is not a valid integer!

@@ -20,7 +20,7 @@
 %s readonly	common	pt-br	%s apenas leitura
 '%1' copied to clipboard	common	pt-br	%1' copiado para prancheta
 '%1' has an invalid format !!!	common	pt-br	'%1' está em um formato inválido !!!
-'%1' is no php file in the egw server root (%2)!	common	pt-br	'%1' não é um arquivo php na pasta raiz do servidor eGW (%2)!
+'%1' is not a valid json file!	common	pt-br	'%1' não é um arquivo json na pasta raiz do servidor eGW!
 '%1' is not a valid date !!!	common	pt-br	'%1' não é uma data válida !!!
 '%1' is not a valid floatingpoint number !!!	common	pt-br	%1' não é um número válido para o ponto flutuante!!!
 '%1' is not a valid integer !!!	common	pt-br	%1' não é um inteiro válido!!!

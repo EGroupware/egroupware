@@ -27,7 +27,7 @@
 '%1' copied to clipboard	common	ja	'%1' がクリップボードにコピーされました。
 '%1' has an invalid format	common	ja	'%1' のフォーマットが不正です。
 '%1' has an invalid format !!!	common	ja	'%1' のフォーマットが不正です!
-'%1' is no php file in the egw server root (%2)!	common	ja	'%1' is no php file in the eGW server root (%2)!
+'%1' is not a valid json file!	common	ja	'%1' is no json file in the eGW server root!
 '%1' is not a valid date !!!	common	ja	'%1' の日付が不正です!
 '%1' is not a valid floatingpoint number !!!	common	ja	'%1' は不正な浮動小数です!
 '%1' is not a valid integer !!!	common	ja	'%1' は無効な整数です!
