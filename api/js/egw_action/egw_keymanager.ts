@@ -140,41 +140,9 @@ ready(() => {//waits for DOM ready
 		}
 	});
 });
-
-
-function addEventListener(el, eventName, eventHandler, selector)
-{
-	if (selector)
-	{
-		const wrappedHandler = (e) => {
-			if (!e.target) return;
-			const el = e.target.closest(selector);
-			if (el)
-			{
-				const newEvent = Object.create(e, {
-					target: {
-						value: el
-					}
-				});
-				eventHandler.call(el, newEvent);
-			}
-		};
-		el.addEventListener(eventName, wrappedHandler);
-		return wrappedHandler;
-	} else
-	{
-		const wrappedHandler = (e) => {
-			eventHandler.call(el, e);
-		};
-		el.addEventListener(eventName, wrappedHandler);
-		return wrappedHandler;
-	}
-}
-
 /**
  * Required to catch the context menu
  */
-//TODO how do i test for this
 jQuery(window).on("contextmenu",document, function(event) {
 	// Check for actual key press
 	if (!(event.originalEvent.x == 1 && event.originalEvent.y == 1)) return true;

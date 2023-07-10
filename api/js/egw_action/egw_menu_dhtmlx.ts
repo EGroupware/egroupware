@@ -28,7 +28,6 @@ export class egwMenuImpl
 		this.dhtmlxmenu.renderAsContextMenu();
 		// TODO: Keyboard navigation of the menu
 
-		var self = this;
 
 		//Attach the simple click handler
 		this.dhtmlxmenu.attachEvent("onClick", (id) => {

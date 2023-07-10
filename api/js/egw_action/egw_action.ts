@@ -20,11 +20,11 @@ import {EgwActionObject} from "./EgwActionObject";
 import {EgwActionObjectInterface} from "./EgwActionObjectInterface";
 import {EgwActionObjectManager} from "./EgwActionObjectManager";
 import {EgwDragAction} from "./EgwDragAction";
-import {EgwDragActionImplementation, egwDragActionImplementation} from "./egwDragActionImplementation";
+import {EgwDragActionImplementation} from "./egwDragActionImplementation";
 import {EgwDropAction} from "./EgwDropAction";
 import {egwDropActionImplementation} from "./EgwDropActionImplementation";
 import "./egwGlobal"
-import {egwPopupAction, EgwPopupAction} from "./EgwPopupAction";
+import {EgwPopupAction} from "./EgwPopupAction";
 import {getPopupImplementation} from "./EgwPopupActionImplementation";
 
 
@@ -72,7 +72,7 @@ export function egw_getActionManager(_id?: string, _create: boolean = true, _sea
  * have its own object manager where it can place action objects or containers.
  *
  * @param _id is the name of the sub-object manager should be returned. If the
- *    object manager does not exists right now, it is created. If the parameter
+ *    object manager does not exist right now, it is created. If the parameter
  *    is ommited or null, the global object manager is returned.
  * @param {boolean} [_create=true] If an objectManager with the given id is not
  *    found, it will be created at the top level.
@@ -263,7 +263,7 @@ export class egwActionObjectInterface implements EgwActionObjectInterface {
     // evoked from the outside and the stateChangeCallback has to be called
     stateChangeCallback = null;
 
-    // The doTiggerEvent function may be overritten by the aoi if it wants to
+    // The doTriggerEvent function may be overwritten by the aoi if it wants to
     // support certain action implementation specific events like EGW_AI_DRAG_OVER
     stateChangeContext = null;
     reconnectActionsCallback = null;
@@ -373,7 +373,7 @@ export class egwDropAction extends EgwDropAction {
 }
 
 window._egwActionClasses["drop"] = {
-    "actionConstructor": egwDropAction,
+    "actionConstructor": EgwDropAction,
     "implementation": getDropImplementation
 };
 
@@ -385,7 +385,7 @@ export class egwDragAction extends EgwDragAction {
 
 (() => {
     window._egwActionClasses.drag = {
-        "actionConstructor": egwDragAction, "implementation": getDragImplementation
+        "actionConstructor": EgwDragAction, "implementation": getDragImplementation
     };
 })()
 
@@ -393,7 +393,7 @@ let _dragActionImpl = null;
 
 export function getDragImplementation() {
     if (!_dragActionImpl) {
-        _dragActionImpl = new egwDragActionImplementation();
+        _dragActionImpl = new EgwDragActionImplementation();
     }
     return _dragActionImpl;
 }

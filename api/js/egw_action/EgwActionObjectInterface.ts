@@ -69,7 +69,7 @@ export interface EgwActionObjectInterface {
     triggerEvent(_event: any, _data: any): boolean;
 
     /**
-     * Scrolls the element into a visble area if it is currently hidden
+     * Scrolls the element into a visible area if it is currently hidden
      */
     makeVisible(): void;
 }

@@ -6,6 +6,7 @@ export class EgwAction {
     public readonly id: string;
     private caption: string;
     group: number;
+    order: number;
 
     public set_caption(_value) {
         this.caption = _value;
@@ -17,10 +18,10 @@ export class EgwAction {
         this.iconUrl = _value;
     }
 
-    private allowOnMultiple: boolean | string | number;
+    allowOnMultiple: boolean | string | number;
 
     /**
-     * The allowOnMultiple property may be true, false, "only" (> 1) or number of select, eg. 2
+     * The allowOnMultiple property may be true, false, "only" (> 1) or number of select, e.g. 2
      *
      * @param {(boolean|string|number)} _value
      */
@@ -48,7 +49,7 @@ export class EgwAction {
     type = "default"; //All derived classes have to override this!
     canHaveChildren: boolean | string[] = false; //Has to be overwritten by inheriting action classes
     // this is not bool all the time. Can be ['popup'] e.g. List of egwActionClasses that are allowed to have children?
-    private readonly parent: EgwAction;
+    readonly parent: EgwAction;
     children: EgwAction[] = []; //i guess
 
     private readonly onExecute = new EgwFnct(this, null, []);
@@ -676,6 +677,9 @@ export class EgwAction {
     };
 
 
+    set_hint(hint: string) {
+        
+    }
 }
 
 

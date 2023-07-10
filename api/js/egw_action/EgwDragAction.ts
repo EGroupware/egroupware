@@ -2,9 +2,9 @@ import {EgwAction} from "./EgwAction";
 
 /**
  * The egwDragAction class overwrites the egwAction class and adds the new
- * "dragType" propery. The "onExecute" event of the drag action will be called
+ * "dragType" property. The "onExecute" event of the drag action will be called
  * whenever dragging starts. The onExecute JS handler should return the
- * drag-drop helper object - otherwise an default helper will be generated.
+ * drag-drop helper object - otherwise a default helper will be generated.
  */
 export class EgwDragAction extends EgwAction {
     private dragType = "default"
