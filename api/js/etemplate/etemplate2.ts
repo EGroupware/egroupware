@@ -1515,27 +1515,36 @@ export class etemplate2
 	{
 		// Check the parameters
 		const data = _response.data;
+		// window-close does NOT send data.DOMNodeID!
+		const dialog = <any>document.querySelector('et2-dialog > form'+(data.DOMNodeID?'#'+data.DOMNodeID:''))?.parentNode;
 
 		// handle Api\Framework::refresh_opener()
 		if(Array.isArray(data['refresh-opener']))
 		{
 			if(window.opener)// && typeof window.opener.egw_refresh == 'function')
 			{
-				var egw = window.egw(opener);
+				const egw = window.egw(dialog ? window : opener);
 				egw.refresh.apply(egw, data['refresh-opener']);
 			}
 		}
-		var egw = window.egw(window);
+		const egw = window.egw(window);
 
 		// need to set app_header before message, as message temp. replaces app_header
 		if(typeof data.data == 'object' && typeof data.data.app_header == 'string')
 		{
-			egw.app_header(data.data.app_header, data.data.currentapp || null);
+			if (dialog)
+			{
+				dialog.title = data.data.app_header;
+			}
+			else
+			{
+				egw.app_header(data.data.app_header, data.data.currentapp || null);
+			}
 			delete data.data.app_header;
 		}
 
 		// handle Api\Framework::message()
-		if(jQuery.isArray(data.message))
+		if(Array.isArray(data.message))
 		{
 			egw.message.apply(egw, data.message);
 		}
@@ -1546,6 +1555,12 @@ export class etemplate2
 			if(typeof data['window-close'] == 'string' && data['window-close'] !== 'true')
 			{
 				alert(data['window-close']);
+			}
+			if (dialog)
+			{
+				dialog.close();
+				dialog.parentNode.removeChild(dialog);
+				return Promise.resolve();
 			}
 			egw.close();
 			return true;
