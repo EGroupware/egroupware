@@ -76,7 +76,7 @@ class Token
 				!(new Api\Auth())->authenticate($GLOBALS['egw_info']['user']['account_lid'], $content['password']))
 			{
 				Api\Etemplate::set_validation_error('password', lang('Password is invalid'));
-				unset($content['button']);
+				$button = null;
 			}
 			try {
 				switch($button)
@@ -127,6 +127,7 @@ class Token
 			'button[delete]' => !$content['token_id'],
 			'account_id' => empty($GLOBALS['egw_info']['user']['apps']['admin']) || static::APP !== 'admin',
 		];
+		$GLOBALS['egw_info']['flags']['app_header'] = empty($content['token_id']) ? lang('Add token') : lang('Edit token');
 		$tmpl = new Api\Etemplate(self::APP.'.token.edit');
 		$tmpl->exec(static::APP.'.'.static::class.'.edit', $content, [], $readonlys, $content, 2);
 	}
@@ -191,7 +192,7 @@ class Token
 		elseif(!empty($content['token']['action']))
 		{
 			try {
-				Api\Framework::message($this->action($content['token']['action'],
+				Api\Framework::message(self::action($content['token']['action'],
 					$content['token']['selected'], $content['token']['select_all']));
 			}
 			catch (\Exception $ex) {
@@ -285,7 +286,7 @@ class Token
 	 * @returns string with success message
 	 * @throws Api\Exception\AssertionFailed
 	 */
-	protected function action($action, $selected, $select_all)
+	protected static function action($action, $selected, $select_all=false)
 	{
 		$success = 0;
 		try {
