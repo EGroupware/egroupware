@@ -1617,7 +1617,14 @@ export class etemplate2
 						uniqueId = data.DOMNodeID.replace('.', '-') + '-' + data['open_target'];
 					}
 					const et2 = new etemplate2(node, data.data.menuaction, uniqueId);
-					return et2.load(data.name, data.url, data.data, null, null, null, data['fw-target']);
+					return et2.load(data.name, data.url, data.data, null, null, null, data['fw-target'])
+						.then(() =>
+						{
+							if(dialog)
+							{
+								dialog._adoptTemplateButtons();
+							}
+						});
 				}
 				else
 				{
