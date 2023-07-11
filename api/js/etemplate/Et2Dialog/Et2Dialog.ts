@@ -938,7 +938,7 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 		let template_buttons = [
 			...search_in.querySelectorAll('[slot="footer"],[slot="buttons"]'),
 			// Look for a dialog footer, which will contain several buttons and possible other widgets
-			...search_in.querySelectorAll(".dialogFooterToolbar"),
+			...search_in.querySelectorAll(".dialogFooterToolbar et2-button"),
 			// Look for buttons at high level (not everywhere, otherwise we can't have other buttons in the template)
 			...search_in.querySelectorAll(":scope > et2-button, :scope > * > et2-button")
 		];
