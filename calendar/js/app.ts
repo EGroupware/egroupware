@@ -2061,45 +2061,21 @@ export class CalendarApp extends EgwApp
 		this.quick_add = options;
 
 		// Open dialog to use as target
-		let add_dialog = Et2Dialog.show_dialog(null, '', 'Add new event', null, [], Et2Dialog.PLAIN_MESSAGE, "", this.egw);
-		add_dialog.id = "quick_add";
-		// Position by the event
-		if(event)
-		{
-			add_dialog.config = {...add_dialog.config, referenceNode: event.getDOMNode()};
-		}
+		let add_dialog;
 
 		// Call the server, get it into the dialog
 		options = jQuery.extend({menuaction: 'calendar.calendar_uiforms.ajax_add', template: 'calendar.add'}, options);
 		this.egw.json(
 			this.egw.link('/json.php', options),
 			[options],
-			function(data)
+			(data) =>
 			{
-				if(data.type)
+				if(Array.isArray(data) && typeof data[0] === 'string')
 				{
-					return false;
+					jQuery(data[0]).appendTo(document.body);
 				}
-				var content = {
-					html: data[0],
-					js: ''
-				};
-
-				egw_seperateJavaScript(content);
-
-				// Check for right template in the response
-				if(content.html.indexOf('calendar-add') <= 0)
-				{
-					return false;
-				}
-				// Insert the content into the correct place
-				add_dialog._contentNode.replaceChildren();
-				add_dialog._contentNode.insertAdjacentHTML("beforeend", content.html);
-				let template = add_dialog.querySelector("[id='calendar-add']");
-				if(template)
-				{
-					template.addEventListener("load", add_dialog._adoptTemplateButtons);
-				}
+				add_dialog = document.body.querySelector("et2-dialog");
+				add_dialog.id = "quick-add";
 			}
 		).sendRequest();
 
@@ -2162,7 +2138,7 @@ export class CalendarApp extends EgwApp
 			if(invalid.filter((widget) => widget).length == 0)
 			{
 				// Close the dialog, if everything is OK
-				(<Et2Dialog><unknown>document.querySelector('et2-dialog#quick_add')).hide();
+				(<Et2Dialog><unknown>document.querySelector('et2-dialog')).hide();
 			}
 		});
 

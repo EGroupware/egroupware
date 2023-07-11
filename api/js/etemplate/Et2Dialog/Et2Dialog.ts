@@ -948,7 +948,7 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 	_adoptTemplateButtons()
 	{
 		// Check for something with buttons slot set
-		let search_in = <HTMLElement>(this._template_widget?.DOMContainer || this._contentNode);
+		let search_in = <HTMLElement>(this._template_widget?.DOMContainer ?? this._contentNode);
 		if(!search_in)
 		{
 			return;
@@ -1022,7 +1022,7 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 
 	get _contentNode() : HTMLElement
 	{
-		return this.querySelector('.dialog_content');
+		return this.querySelector('.dialog_content') ?? this.querySelector("*");
 	}
 
 	_setupMoveResize()
