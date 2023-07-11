@@ -132,11 +132,11 @@ egw.extend('user', egw.MODULE_GLOBAL, function()
 			let result = [];
 			if (type === 'both')
 			{
-				result = [].concat(accountStore.accounts, accountStore.groups);
+				result = [...Object.values(accountStore.accounts), ...Object.values(accountStore.groups)];
 			}
 			else
 			{
-				result = [].concat(accountStore[type]);
+				result = [...Object.values(accountStore[type])];
 			}
 			return Promise.resolve(result);
 		},
