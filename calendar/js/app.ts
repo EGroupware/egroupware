@@ -965,12 +965,12 @@ export class CalendarApp extends EgwApp
 		let sortablejs = Sortable.create(sortable, {
 			ghostClass: 'srotable_cal_wk_ph',
 			draggable: state.view == 'day' ? '.calendar_calDayColHeader' : '.view_row',
-			handle: state.view == 'day' ? '.calendar_calToday' : '.calendar_calGridHeader',
+			handle: state.view == 'day' ? '.blue_title' : '.calendar_calGridHeader',
 			animation: 100,
 			filter: state.view == 'day' ? '.calendar_calTimeGridScroll' : '.calendar_calDayColHeader',
 			preventOnFilter: false, // Required for dnd fullday nonblocking
 			dataIdAttr: 'data-owner',
-			direction: state.view == 'day' ? 'horizental' : 'vertical',
+			direction: state.view == 'day' ? 'horizontal' : 'vertical',
 			sort: state.owner.length > 1 && (
 				state.view == 'day' && state.owner.length < parseInt('' + egw.preference('day_consolidate', 'calendar')) ||
 				(state.view == 'week' || state.view == 'day4') && state.owner.length < parseInt('' + egw.preference('week_consolidate', 'calendar'))), // enable/disable sort
