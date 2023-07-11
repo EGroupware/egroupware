@@ -1502,7 +1502,7 @@ class CalDAV extends HTTP_WebDAV_Server
 		// POST to the collection URL plus a UID like name component (like for regular PUT) to create new entrys
 		if (isset($_GET['add-member']) || Handler::get_agent() == 'cfnetwork' ||
 			// addressbook has not implemented a POST handler, therefore we have to call the PUT handler
-			preg_match('#^(/[^/]+)?/addressbook(-[^/]+)?/$', $options['path']) && self::isJSON())
+			preg_match('#^(/[^/]+)?/addressbook(-[^/]+)?/$#', $options['path']) && self::isJSON())
 		{
 			$_GET['add-member'] = '';	// otherwise we give no Location header
 			return $this->PUT($options, 'POST');
