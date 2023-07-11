@@ -42,16 +42,26 @@ class Token extends Admin\Token
 			'prepend' => false,
 			'data' => [
 				'token' => [
-					'default_cols' => '!account_id',
 					'add_action' => 'app.preferences.addToken',
+					'no_account_id' => true,
 				]+self::get_nm_options(),
 			],
 			'preserve' => [
 			],
 			'sel_options' => [
 			],
-			'save_callback' => __CLASS__.'::action',
+			'save_callback' => __CLASS__.'::save_callback',
 		];
 	}
 
+	public static function save_callback(array &$content)
+	{
+		Api\Translation::add_app('admin');
+		try {
+			Api\Framework::message(self::action($content['token']['action'], $content['token']['selected']), 'success');
+		}
+		catch (\Exception $e) {
+			Api\Framework::message($e->getMessage(), 'error');
+		}
+	}
 }
