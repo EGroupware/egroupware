@@ -959,8 +959,9 @@ class infolog_bo
 			// It's now disabled for xmlrpc, as otherwise the xmlrpc code need to be changed!
 			$xmlrpc = is_object($GLOBALS['server']) && $GLOBALS['server']->last_method;
 			$check_modified = $values['info_datemodified'] && !$xmlrpc ? $to_write['info_datemodified'] : false;
-			$values['info_datemodified'] = $to_write['info_datemodified'] = $this->now;
-			if ($check_modified && isset($values['info_etag']))
+			$values['info_datemodified'] = $this->user_time_now;
+			$to_write['info_datemodified'] = $this->now;
+			if($check_modified && isset($values['info_etag']))
 			{
 				++$values['info_etag'];
 			}
@@ -985,6 +986,7 @@ class infolog_bo
 			if(!isset($values['info_type']) || $status_only || empty($values['caldav_name']))
 			{
 				$values = $this->read($info_id, true, 'server', $ignore_acl);
+				$this->time2time($values);
 			}
 
 			$values['info_id'] = $info_id;
