@@ -7,6 +7,9 @@
  */
 
 import {EgwApp} from '../../api/js/jsapi/egw_app';
+import type {Et2Button} from "../../api/js/etemplate/Et2Button/Et2Button";
+import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";
+import {egw} from "../../api/js/jsapi/egw_global";
 
 /**
  * JavaScript for Preferences
@@ -37,6 +40,20 @@ export class PreferencesApp extends EgwApp
 	{
 		// call parent
 		super.et2_ready(et2, name);
+	}
+
+	addToken(_ev : PointerEvent, _button : Et2Button)
+	{
+		console.log('app.preferences.addToken', arguments);
+
+		this.dialogExec('preferences.EGroupware\\Preferences\\Token.edit');
+	}
+
+	editToken(_action, _selection)
+	{
+		console.log('app.preferences.editToken', arguments);
+
+		this.dialogExec('preferences.EGroupware\\Preferences\\Token.edit&token_id='+_selection[0].id.split('::')[1]);
 	}
 }
 

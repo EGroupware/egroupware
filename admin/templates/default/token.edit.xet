@@ -12,7 +12,11 @@
 					<et2-description value="Token"></et2-description>
 					<et2-textbox id="token" readonly="true" onclick="app.admin.copyClipboard(this)" class="token"></et2-textbox>
 				</row>
-				<row>
+				<row disabled="@admin">
+					<et2-description for="password" value="Current password"></et2-description>
+					<et2-password id="password" required="true"></et2-password>
+				</row>
+				<row disabled="!@admin">
 					<et2-description for="account_id" value="User"></et2-description>
 					<et2-select-account id="account_id" accountType="accounts" emptyLabel="All users"></et2-select-account>
 				</row>
@@ -56,11 +60,11 @@
 					<et2-description></et2-description>
 					<et2-checkbox id="new_token" label="Generate new token and display it once after saving" span="all"></et2-checkbox>
 				</row>
-				<row>
+				<row class="dialogFooterToolbar">
 					<et2-hbox span="all">
 						<et2-button accesskey="s" label="Save" id="button[save]"></et2-button>
 						<et2-button label="Apply" id="button[apply]"></et2-button>
-						<et2-button label="Cancel" id="button[cancel]" onclick="window.close(); return false;"></et2-button>
+						<et2-button label="Cancel" id="button[cancel]" noValidation="true"></et2-button>
 						<et2-button align="right" label="Revoke" id="button[delete]"
 							onclick="et2_dialog.confirm(widget,'Revoke this token','Revoke')"></et2-button>
 					</et2-hbox>
