@@ -173,12 +173,12 @@ class preferences_password
 		{
 			$tabs = array();
 		}
-		// register hooks, if openid is available, but new hook not yet registered (should be removed after 19.1)
-		if (!empty($GLOBALS['egw_info']['apps']['openid']) && !Api\Hooks::implemented('preferences_security'))
+		// register hooks, if new "application password" hook not yet registered (should be removed after 24.1)
+		if (!in_array('preferences', array_keys(Api\Hooks::implemented('preferences_security'))))
 		{
 			Api\Hooks::read(true);
 		}
-		$hook_data = Api\Hooks::process(array('location' => 'preferences_security')+$content, ['openid'], true);
+		$hook_data = Api\Hooks::process(array('location' => 'preferences_security')+$content, ['preferences', 'openid'], true);
 		foreach($hook_data as $extra_tabs)
 		{
 			if (!$extra_tabs) continue;
