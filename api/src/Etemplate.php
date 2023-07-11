@@ -93,7 +93,7 @@ class Etemplate extends Etemplate\Widget\Template
 	 *	 0 = echo incl. navbar
 	 *	 1 = return html
 	 *	-1 = first time return html, after use 0 (echo html incl. navbar), eg. for home
-	 *	 2 = echo without navbar (eg. for popups)
+	 *	 2 = popup or show in dialog (echo without navbar)
 	 *	 3 = return eGW independent html site
 	 *	 4 = json response
 	 *	 5 = return Request object
@@ -258,8 +258,15 @@ class Etemplate extends Etemplate\Widget\Template
 			// check if we are in an ajax-exec call from jdots template (or future other tabbed templates)
 			if (isset($GLOBALS['egw']->framework->response))
 			{
-				$content = '<form target="egw_iframe_autocomplete_helper" action="'.$form_action.'" id="'.$dom_id.'" class="et2_container"></form>'."\n".
-					'<iframe name="egw_iframe_autocomplete_helper" style="width:0;height:0;position: absolute;visibility:hidden;"></iframe>';
+				if ($output_mode == 2)
+				{
+					$content = '<et2-dialog><form id="'.$dom_id.'" class="et2_container"></form></et2-dialog>'."\n";
+				}
+				else
+				{
+					$content = '<form target="egw_iframe_autocomplete_helper" action="'.$form_action.'" id="'.$dom_id.'" class="et2_container"></form>'."\n".
+						'<iframe name="egw_iframe_autocomplete_helper" style="width:0;height:0;position: absolute;visibility:hidden;"></iframe>';
+				}
 				$GLOBALS['egw']->framework->response->generic("data", array($content));
 				$GLOBALS['egw']->framework->response->generic('et2_load',$load_array+Framework::get_extra());
 				Framework::clear_extra();	// to not send/set it twice for multiple etemplates (eg. CRM view)
