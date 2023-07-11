@@ -29,6 +29,8 @@ $setup_info['preferences']['hooks']['admin']         = 'preferences_hooks::admin
 $setup_info['preferences']['hooks']['deny_prefs']    = 'preferences_hooks::deny_prefs';
 $setup_info['preferences']['hooks']['deny_acl']      = 'preferences_hooks::deny_acl';
 $setup_info['preferences']['hooks']['deny_cats']     = 'preferences_hooks::deny_cats';
+// Token / application passwords GUI for regular users
+$setup_info['preferences']['hooks']['preferences_security'] = \EGroupware\Preferences\Token::class.'::security';
 
 /* Dependencies for this app to work */
 $setup_info['preferences']['depends'][] = array(

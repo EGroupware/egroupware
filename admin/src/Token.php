@@ -43,7 +43,7 @@ class Token
 	}
 
 	/**
-	 * Edit a host
+	 * Edit or add a token
 	 *
 	 * @param array $content =null
 	 */
@@ -61,17 +61,24 @@ class Token
 			else
 			{
 				$content = $this->token->init()+['new_token' => true];
-				if (empty($GLOBALS['egw_info']['user']['apps']['admin']))
-				{
-					$content['account_id'] = $GLOBALS['egw_info']['user']['account_id'];
-				}
+			}
+			if (static::APP !== 'admin')
+			{
+				Api\Translation::add_app('admin');
 			}
 		}
 		elseif (!empty($content['button']))
 		{
-			try {
-				$button = key($content['button']);
+			$button = key($content['button'] ?? []);
+			unset($content['button']);
+
+			if ($button !== 'cancel' && static::APP !== 'admin' &&
+				!(new Api\Auth())->authenticate($GLOBALS['egw_info']['user']['account_lid'], $content['password']))
+			{
+				Api\Etemplate::set_validation_error('password', lang('Password is invalid'));
 				unset($content['button']);
+			}
+			try {
 				switch($button)
 				{
 					case 'save':
@@ -81,6 +88,10 @@ class Token
 						{
 							$content['new_token'] = true;
 							$button = 'apply';  // must not close window to show token
+							if (empty($GLOBALS['egw_info']['user']['apps']['admin']) || static::APP !== 'admin')
+							{
+								$content['account_id'] = $GLOBALS['egw_info']['user']['account_id'];
+							}
 						}
 						$this->token->save($content);
 						Api\Framework::refresh_opener(empty($content['new_token']) ? lang('Token saved.') : lang('Token created.'),
@@ -99,6 +110,10 @@ class Token
 								self::APP, $content['token_id'], 'update');
 						Api\Framework::window_close();	// does NOT return
 						break;
+
+					case 'cancel':
+						Api\Framework::window_close();	// does NOT return
+						break;
 				}
 			}
 			catch(\Exception $e) {
@@ -106,25 +121,49 @@ class Token
 			}
 		}
 		$content['token_apps'] = Api\Auth\Token::limits2apps($content['token_limits']);
+		$content['admin'] = !empty($GLOBALS['egw_info']['user']['apps']['admin']) && static::APP === 'admin';
 		if (empty($content['account_id'])) $content['account_id'] = '';
 		$readonlys = [
 			'button[delete]' => !$content['token_id'],
-			'account_id' => empty($GLOBALS['egw_info']['user']['apps']['admin']),
+			'account_id' => empty($GLOBALS['egw_info']['user']['apps']['admin']) || static::APP !== 'admin',
 		];
 		$tmpl = new Api\Etemplate(self::APP.'.token.edit');
-		$tmpl->exec(self::APP.'.'.self::class.'.edit', $content, [], $readonlys, $content, 2);
+		$tmpl->exec(static::APP.'.'.static::class.'.edit', $content, [], $readonlys, $content, 2);
 	}
 
 	/**
 	 * Fetch rows to display
 	 *
-	 * @param array $query
-	 * @param array& $rows =null
-	 * @param array& $readonlys =null
+	 * @param array $query with keys 'start', 'search', 'order', 'sort', 'col_filter'
+	 *	For other keys like 'filter', 'cat_id' you have to reimplement this method in a derived class.
+	 * @param array &$rows returned rows/competitions
+	 * @param array &$readonlys eg. to disable buttons based on acl, not use here, maybe in a derived class
+	 * @param string $join ='' sql to do a join, added as is after the table-name, eg. ", table2 WHERE x=y" or
+	 *	"LEFT JOIN table2 ON (x=y)", Note: there's no quoting done on $join!
+	 * @param boolean $need_full_no_count =false If true an unlimited query is run to determine the total number of rows, default false
+	 * @param mixed $only_keys =false, see search
+	 * @param string|array $extra_cols =array()
+	 * @return int total number of rows
 	 */
-	public function get_rows($query, array &$rows=null, array &$readonlys=null)
+	function get_rows($query,&$rows,&$readonlys,$join='',$need_full_no_count=false,$only_keys=false,$extra_cols=array())
 	{
-		$total = $this->token->get_rows($query, $rows, $readonlys);
+		// do NOT show all users or other users to non-admin or regular user UI
+		if (empty($GLOBALS['egw_info']['user']['apps']['admin']) || static::APP !== 'admin')
+		{
+			$query['col_filter']['account_id'] = $GLOBALS['egw_info']['user']['account_id'];
+		}
+		// sort revoked token behind active ones
+		if (empty($query['order']) || $query['order'] === 'token_id')
+		{
+			$order_by = 'token_revoked IS NOT NULL,token_id '.($query['sort'] ?? 'DESC').',token_revoked '.($query['sort'] ?? 'DESC');
+		}
+		else
+		{
+			$order_by = $query['order'].' '.$query['sort'];
+		}
+		$rows = $this->token->search($query['critera'] ?? '', $only_keys, $order_by, $extra_cols,
+			'',false, 'AND',$query['num_rows']?array((int)$query['start'],$query['num_rows']):(int)$query['start'],
+			$query['col_filter'],$join,$need_full_no_count) ?: [];
 		foreach($rows as &$row)
 		{
 			$row['token_apps'] = Api\Auth\Token::limits2apps($row['token_limits']);
@@ -133,7 +172,7 @@ class Token
 				$row['class'] = 'revoked';
 			}
 		}
-		return $total;
+		return $this->token->total;
 	}
 
 	/**
@@ -143,28 +182,17 @@ class Token
 	 */
 	public function index(array $content=null)
 	{
-		if (!is_array($content) || empty($content['nm']))
+		if (!is_array($content) || empty($content['token']))
 		{
 			$content = [
-				'nm' => [
-					'get_rows'       =>	self::APP.'.'.__CLASS__.'.get_rows',
-					'no_filter'      => true,	// disable the diverse filters we not (yet) use
-					'no_filter2'     => true,
-					'no_cat'         => true,
-					'order'          =>	'token_id',// IO name of the column to sort after (optional for the sortheaders)
-					'sort'           =>	'DESC',// IO direction of the sort: 'ASC' or 'DESC'
-					'row_id'         => 'token_id',
-					'actions'        => $this->get_actions(),
-					'placeholder_actions' => array('add'),
-					'add_link'       => Api\Egw::link('/index.php', 'menuaction='.self::APP.'.'.self::class.'.edit'),
-				]
+				'token' => self::get_nm_options(),
 			];
 		}
-		elseif(!empty($content['nm']['action']))
+		elseif(!empty($content['token']['action']))
 		{
 			try {
-				Api\Framework::message($this->action($content['nm']['action'],
-					$content['nm']['selected'], $content['nm']['select_all']));
+				Api\Framework::message($this->action($content['token']['action'],
+					$content['token']['selected'], $content['token']['select_all']));
 			}
 			catch (\Exception $ex) {
 				Api\Framework::message($ex->getMessage(), 'error');
@@ -173,7 +201,28 @@ class Token
 		$tmpl = new Api\Etemplate(self::APP.'.tokens');
 		$tmpl->exec(self::APP.'.'.self::class.'.index', $content, [
 			'account_id' => ['0' => lang('All users')]
-		], [], ['nm' => $content['nm']]);
+		], [], ['token' => $content['token']]);
+	}
+
+	/**
+	 * Options for NM widget
+	 *
+	 * @return array
+	 */
+	protected static function get_nm_options()
+	{
+		return [
+			'get_rows'       =>	static::APP.'.'.static::class.'.get_rows',
+			'no_filter'      => true,	// disable the diverse filters we not (yet) use
+			'no_filter2'     => true,
+			'no_cat'         => true,
+			'order'          =>	'token_id',// IO name of the column to sort after (optional for the sortheaders)
+			'sort'           =>	'DESC',// IO direction of the sort: 'ASC' or 'DESC'
+			'row_id'         => 'token_id',
+			'actions'        => self::get_actions(static::APP),
+			'placeholder_actions' => array('add'),
+			'add_action'       => "egw.open_link('".Api\Egw::link('/index.php', 'menuaction='.static::APP.'.'.static::class.'.edit')."','_blank','600x380')",
+		];
 	}
 
 	/**
@@ -182,9 +231,9 @@ class Token
 	 * @param array $cont values for keys license_(nation|year|cat)
 	 * @return array
 	 */
-	protected function get_actions()
+	public static function get_actions(string $app='admin')
 	{
-		return [
+		$actions = [
 			'edit' => [
 				'caption' => 'Edit',
 				'default' => true,
@@ -213,6 +262,18 @@ class Token
 				'group' => $group,
 			],
 		];
+		if ($app === 'preferences')
+		{
+			foreach([
+		        'edit' => 'app.preferences.editToken',
+		        'add' => 'app.preferences.addToken',
+			] as $action => $exec)
+			{
+				$actions[$action]['onExecute'] = 'javaScript:'.$exec;
+				unset($actions[$action]['url'], $actions[$action]['popup']);
+			}
+		}
+		return $actions;
 	}
 
 	/**
