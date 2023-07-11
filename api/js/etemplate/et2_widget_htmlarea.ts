@@ -17,7 +17,7 @@
 
 import {et2_editableWidget} from "./et2_core_editableWidget";
 import {ClassWithAttributes} from "./et2_core_inheritance";
-import {WidgetConfig, et2_register_widget, et2_createWidget} from "./et2_core_widget";
+import {et2_createWidget, et2_register_widget, WidgetConfig} from "./et2_core_widget";
 import {et2_IResizeable} from "./et2_core_interfaces";
 import {et2_no_init} from "./et2_core_common";
 import {egw} from "../jsapi/egw_global";
@@ -195,8 +195,7 @@ export class et2_htmlarea extends et2_editableWidget implements et2_IResizeable
 	doLoadingFinished()
 	{
 		super.doLoadingFinished();
-		this.init_editor();
-		return true;
+		return this.init_editor();
 	}
 
 	init_editor() {
@@ -315,6 +314,7 @@ export class et2_htmlarea extends et2_editableWidget implements et2_IResizeable
 				activeElement && activeElement.focus && activeElement.focus();
 			}
 		});
+		return this.tinymce;
 	}
 
 	/**
