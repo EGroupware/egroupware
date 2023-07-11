@@ -4481,7 +4481,7 @@ app.classes.mail = AppJS.extend(
 			// Coming from tree
 			acc_id = parseInt(_senders[0].id);
 		}
-		this.egw.open_link('mail.mail_sieve.editVacation&acc_id=' + acc_id, '_blank', '700x560');
+		this.egw.open_link('mail.mail_sieve.editVacation&acc_id=' + acc_id, '_blank', '700x660');
 	},
 
 	subscription_refresh: function(_data)
