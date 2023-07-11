@@ -76,7 +76,7 @@ function sort_table(id)
 
 </script>
 
-<form method="post" name="backup_form" action="{self}" enctype="multipart/form-data">
+<form method="post" name="backup_form" action="{self}" style="height: 100%; overflow-y: auto" enctype="multipart/form-data">
 {hidden_vars}
 <input name="sortedby" id="sortedby" type="hidden" />
 <table border="0" align="center" width="98%" cellpadding="5">
