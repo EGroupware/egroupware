@@ -1991,7 +1991,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			columns.push({
 				id: LETTERS,
 				caption: this.egw().lang('Search letter'),
-				visibility: (this.header.lettersearch.is(':visible') ? et2_dataview_column.ET2_COL_VISIBILITY_VISIBLE : et2_dataview_column.ET2_COL_VISIBILITY_ALWAYS_NOSELECT)
+				visibility: (this.header.lettersearch.is(':visible') ? et2_dataview_column.ET2_COL_VISIBILITY_VISIBLE : et2_dataview_column.ET2_COL_VISIBILITY_INVISIBLE)
 			});
 		}
 
