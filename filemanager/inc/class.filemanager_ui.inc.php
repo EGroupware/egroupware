@@ -410,17 +410,27 @@ class filemanager_ui
 			$content['nm']['actions'] = static::get_actions();
 			$content['nm']['home_dir'] = static::get_home_dir();
 			$content['nm']['view'] = $GLOBALS['egw_info']['user']['preferences']['filemanager']['nm_view'];
-			$content['nm']['placeholder_actions'] = array('mkdir','paste','share','file_drop_mail','file_drop_move','file_drop_copy','file_drop_symlink');
+			$content['nm']['placeholder_actions'] = array('mkdir', 'paste', 'share', 'file_drop_mail', 'file_drop_move',
+														  'file_drop_copy', 'file_drop_symlink');
 
-			if (isset($_GET['msg'])) $msg = $_GET['msg'];
+			// disable kanban column if we have no kanban
+			if(empty($GLOBALS['egw_info']['user']['apps']['kanban']))
+			{
+				$content['nm']['no_kanban'] = true;
+			}
+
+			if(isset($_GET['msg']))
+			{
+				$msg = $_GET['msg'];
+			}
 
 			// Blank favorite set via GET needs special handling for path
-			if (isset($_GET['favorite']) && $_GET['favorite'] == 'blank')
+			if(isset($_GET['favorite']) && $_GET['favorite'] == 'blank')
 			{
 				$content['nm']['path'] = static::get_home_dir();
 			}
 			// switch to projectmanager folders
-			if (isset($_GET['pm_id']))
+			if(isset($_GET['pm_id']))
 			{
 				$_GET['path'] = '/apps/projectmanager'.((int)$_GET['pm_id'] ? '/'.(int)$_GET['pm_id'] : '');
 			}
