@@ -676,8 +676,9 @@ div.mailDisplayHeaders div.mail_extraEmails.visible {
 	position: absolute;
 	height: -webkit-fill-available !important;
 }
-#mail-compose_mail_plaintext {
-    white-space: pre-wrap !important;
+
+#mail-compose_mail_plaintext::part(textarea) {
+	white-space: pre-wrap !important;
 }
 
 .mailPreviewHeaders {
