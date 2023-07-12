@@ -132,13 +132,19 @@ export class Et2ColumnSelection extends Et2InputWidget(LitElement)
 	 */
 	protected rowTemplate(column) : TemplateResult
 	{
-		let isCustom = column.widget?.instanceOf(et2_nextmatch_customfields) || false;
-		/*     ?disabled=${column.visibility == et2_dataview_column.ET2_COL_VISIBILITY_DISABLED} */
+		const isCustom = column.widget?.instanceOf(et2_nextmatch_customfields) || false;
+		const alwaysOn = [et2_dataview_column.ET2_COL_VISIBILITY_ALWAYS, et2_dataview_column.ET2_COL_VISIBILITY_ALWAYS_NOSELECT].indexOf(column.visibility) !== -1;
+
+		// Don't show disabled columns
+		if(column.visibility == et2_dataview_column.ET2_COL_VISIBILITY_DISABLED)
+		{
+			return html``;
+		}
 		return html`
             <sl-menu-item
                     value="${column.id}"
-                    ?checked=${column.visibility == et2_dataview_column.ET2_COL_VISIBILITY_VISIBLE}
-
+                    ?checked=${alwaysOn || column.visibility == et2_dataview_column.ET2_COL_VISIBILITY_VISIBLE}
+                    ?disabled=${alwaysOn}
                     title="${column.title}"
                     class="${classMap({
                         select_row: true,
