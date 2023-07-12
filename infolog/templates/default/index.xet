@@ -16,7 +16,7 @@
 				<column width="120"/>
 				<column width="45%"/>
 				<column width="15%" disabled="@no_customfields"/>
-                <column width="120"/>
+                <column width="120" disabled="@no_kanban"/>
 				<column/>
 				<column width="120"/>
 				<column/>

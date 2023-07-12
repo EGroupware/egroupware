@@ -1015,17 +1015,26 @@ class timesheet_ui extends timesheet_bo
 		{
 			$content['nm']['col_filter']['linked'] = array(
 				'app' => $_GET['link_app'],
-				'id' => $_GET['link_id']
+				'id'  => $_GET['link_id']
 			);
+		}
+		// disable kanban column if we have no kanban
+		if(empty($GLOBALS['egw_info']['user']['apps']['kanban']))
+		{
+			$content['nm']['no_kanban'] = true;
 		}
 		$read_grants = $this->grant_list(Acl::READ);
 		$content['nm']['no_owner_col'] = count($read_grants) == 1;
-		if ($GLOBALS['egw_info']['user']['preferences']['timesheet']['nextmatch-timesheet.index.rows']) $content['nm']['selectcols'] = $GLOBALS['egw_info']['user']['preferences']['timesheet']['nextmatch-timesheet.index.rows'];
+		if($GLOBALS['egw_info']['user']['preferences']['timesheet']['nextmatch-timesheet.index.rows'])
+		{
+			$content['nm']['selectcols'] = $GLOBALS['egw_info']['user']['preferences']['timesheet']['nextmatch-timesheet.index.rows'];
+		}
 		$sel_options = array(
-			'ts_owner'   => $read_grants,
-			'pm_id'      => array(lang('No project')),
-			'cat_id'     => array(array('value' => '', 'label' => lang('all categories')), array('value' => 0, 'label'=>lang('None'))),
-			'ts_status'  => $this->status_labels+array(lang('No status')),
+			'ts_owner'  => $read_grants,
+			'pm_id'     => array(lang('No project')),
+			'cat_id'    => array(array('value' => '', 'label' => lang('all categories')),
+								 array('value' => 0, 'label' => lang('None'))),
+			'ts_status' => $this->status_labels + array(lang('No status')),
 		);
 		if($this->config_data['history'])
 		{

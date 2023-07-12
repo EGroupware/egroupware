@@ -12,7 +12,7 @@
                 <column width="15%"/>
                 <column width="15%"/>
                 <column width="15%" disabled="@no_customfields"/>
-                <column width="120"/>
+                <column width="120" disabled="@no_kanban"/>
             </columns>
 			<rows>
 				<row class="th">
