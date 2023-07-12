@@ -140,15 +140,22 @@ class resources_ui
 			$content['nm']['options-filter2'][resources_bo::DELETED] = lang('Deleted');
 		}
 
-		if($_GET['search']) {
+		if($_GET['search'])
+		{
 			$content['nm']['search'] = $_GET['search'];
 		}
 		if($_GET['view_accs_of'])
 		{
 			$content['nm']['filter2'] = (int)$_GET['view_accs_of'];
 		}
-		$content['nm']['actions']	= $this->get_actions();
+		$content['nm']['actions'] = $this->get_actions();
 		$content['nm']['placeholder_actions'] = array('add');
+
+		// disable kanban column if we have no kanban
+		if(empty($GLOBALS['egw_info']['user']['apps']['kanban']))
+		{
+			$content['nm']['no_kanban'] = true;
+		}
 
 		// check if user is permitted to add resources
 		// If they can't read any categories, they won't be able to save it
@@ -159,7 +166,7 @@ class resources_ui
 		$no_button['back'] = true;
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('resources');
 
-		Framework::includeJS('.','resources','resources');
+		Framework::includeJS('.', 'resources', 'resources');
 
 		if($content['nm']['filter2'] > 0)
 		{

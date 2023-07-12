@@ -15,7 +15,7 @@
 				<column width="100"/>
 				<column width="30%"/>
 				<column width="20%"/>
-                <column width="120"/>
+                <column width="120" disabled="@no_kanban"/>
 			</columns>
 			<rows>
 				<row class="th">
