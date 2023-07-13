@@ -122,9 +122,15 @@ The content of the POST request is the attachment, a Location header in the resp
 to use in further requests, instead of the attachment.
   
 ```
-curl -i https://example.org/egroupware/groupdav.php/mail/attachment/<filename> --user <user> \
+curl -i https://example.org/egroupware/groupdav.php/mail/attachments/<filename> --user <user> \
     --data-binary @<file> -H 'Content-Type: <content-type-of-file>'
-HTTP/1.1 204 No Content
+HTTP/1.1 302 Found
 Location: https://example.org/egroupware/groupdav.php/mail/attachment/<token>
+
+{
+    "status": 200,
+    "message": "Attachment stored",
+    "location": "/mail/attachments/<filename>--xM35lY"
+}
 ```
 </details>
