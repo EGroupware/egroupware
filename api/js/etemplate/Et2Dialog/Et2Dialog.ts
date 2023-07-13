@@ -1022,7 +1022,7 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 
 	get _contentNode() : HTMLElement
 	{
-		return this.querySelector('.dialog_content') ?? this.querySelector("*");
+		return this.querySelector('.dialog_content');
 	}
 
 	_setupMoveResize()
