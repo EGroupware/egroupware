@@ -671,10 +671,13 @@ class calendar_uiforms extends calendar_ui
 		case 'exception':	// create an exception in a recuring event
 			$msg = $this->_create_exception($event,$preserv);
 			break;
+
 		case 'edit':
 			// Going from add dialog to full edit dialog
 			unset($preserv['template']);
 			unset($event['template']);
+			Api\Json\Response::get()->call('egw.open', '', 'calendar', 'edit', $event);
+			Framework::window_close();
 			break;
 
 		case 'copy':	// create new event with copied content, some content need to be unset to make a "new" event
@@ -1151,12 +1154,7 @@ class calendar_uiforms extends calendar_ui
 					$button == 'save' && $client_updated ? ($content['id'] ? $update_type : 'add') : 'delete'
 				);
 			}
-			// Don't try to close quick add, it's not in a popup
-			if($content['template'] !== 'calendar.add')
-			{
-				Framework::window_close();
-			}
-			exit();
+			Framework::window_close();
 		}
 		unset($event['no_notifications']);
 		return $this->edit($event,$preserv,$msg,$event['id'] ? $event['id'] : $content['link_to']['to_id']);
@@ -1562,8 +1560,8 @@ class calendar_uiforms extends calendar_ui
 		if (!is_array($event))
 		{
 			$preserv = array(
-				'no_popup' => isset($_GET['no_popup']),
-				'template' => isset($_GET['template']) ? $_GET['template'] : (isset($_REQUEST['print']) ? 'calendar.print' : 'calendar.edit'),
+				'no_popup' => !empty($_GET['no_popup']),
+				'template' => $_GET['template'] ?? (isset($_REQUEST['print']) ? 'calendar.print' : 'calendar.edit'),
 			);
 			if(!isset($_REQUEST['print']) && !empty($preserv['template']) && $this->cal_prefs['new_event_dialog'] == 'edit')
 			{

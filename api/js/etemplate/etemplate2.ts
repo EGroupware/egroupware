@@ -1568,7 +1568,7 @@ export class etemplate2
 		}
 
 		// handle framework.setSidebox calls
-		if(window.framework && jQuery.isArray(data.setSidebox))
+		if(!dialog && window.framework && Array.isArray(data.setSidebox))
 		{
 			if(data['fw-target'])
 			{
