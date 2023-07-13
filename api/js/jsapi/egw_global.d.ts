@@ -1121,6 +1121,19 @@ declare interface IegwWndLocal extends IegwGlobal
 	 */
 	open_link(_link : string, _target? : string, _popup? : string, _target_app? : string,
 			  _check_popup_blocker? : boolean, _mime_type? : string) : Window|void;
+
+	/**
+	 * Opens a menuaction in an Et2Dialog instead of a popup
+	 *
+	 * Please note:
+	 * This method does NOT (yet) work in popups, only in the main EGroupware window!
+	 * For popups you have to use the app.ts method openDialog(), which creates the dialog in the correct window / popup.
+	 *
+	 * @param string _menuaction
+	 * @return Promise<any>
+	 */
+	openDialog(_menuaction : string) : Promise<any>;
+
 	/**
 	 * Open a (centered) popup window with given size and url
 	 *

@@ -260,7 +260,7 @@ class Etemplate extends Etemplate\Widget\Template
 			{
 				if ($output_mode == 2)
 				{
-					$content = '<et2-dialog><form target="egw_iframe_autocomplete_helper" action="'.$form_action.'" id="'.$dom_id.'" class="et2_container"></form></et2-dialog>'."\n";
+					$content = '<et2-dialog><form target="egw_iframe_autocomplete_helper" action="'.$form_action.'" id="'.$dom_id.'" class="et2_container dialog_content"></form></et2-dialog>'."\n";
 				}
 				else
 				{
