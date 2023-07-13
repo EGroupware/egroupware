@@ -46,14 +46,14 @@ export class PreferencesApp extends EgwApp
 	{
 		console.log('app.preferences.addToken', arguments);
 
-		this.dialogExec('preferences.EGroupware\\Preferences\\Token.edit');
+		this.openDialog('preferences.EGroupware\\Preferences\\Token.edit');
 	}
 
 	editToken(_action, _selection)
 	{
 		console.log('app.preferences.editToken', arguments);
 
-		this.dialogExec('preferences.EGroupware\\Preferences\\Token.edit&token_id='+_selection[0].id.split('::')[1]);
+		this.openDialog('preferences.EGroupware\\Preferences\\Token.edit&token_id='+_selection[0].id.split('::')[1]);
 	}
 }
 
