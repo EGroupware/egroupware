@@ -141,6 +141,7 @@ import './et2_extension_nextmatch';
 import './et2_extension_customfields';
 import './vfsSelectUI';
 import {Et2Tabs} from "./Layout/Et2Tabs/Et2Tabs";
+import {Et2Dialog} from "./Et2Dialog/Et2Dialog";
 
 
 /**
@@ -312,7 +313,7 @@ export class etemplate2
 	 */
 	public clear(_keep_app_object? : boolean, _keep_session? : boolean)
 	{
-		jQuery(this._DOMContainer).trigger('clear');
+		this.DOMContainer.dispatchEvent(new Event("clear", {bubbles: true}));
 
 		// Remove any handlers on window (resize)
 		if(this.uniqueId)
@@ -1511,7 +1512,9 @@ export class etemplate2
 		// Check the parameters
 		const data = _response.data;
 		// window-close does NOT send data.DOMNodeID!
-		const dialog = <any>document.querySelector('et2-dialog > form'+(data.DOMNodeID?'#'+data.DOMNodeID:'.dialog_content'))?.parentNode;
+		const dialog = <any>document.querySelector('et2-dialog > form' + (data.DOMNodeID ? '#' + data.DOMNodeID : '.dialog_content'))?.parentNode ??
+			// Reloaded into same container
+			(this?.DOMContainer?.parentNode instanceof Et2Dialog ? this.DOMContainer.parentNode : undefined);
 
 		if (dialog)
 		{
@@ -1522,7 +1525,7 @@ export class etemplate2
 		// handle Api\Framework::refresh_opener()
 		if(Array.isArray(data['refresh-opener']))
 		{
-			if(window.opener)// && typeof window.opener.egw_refresh == 'function')
+			if(window.opener || dialog)// && typeof window.opener.egw_refresh == 'function')
 			{
 				const egw = window.egw(dialog ? window : opener);
 				egw.refresh.apply(egw, data['refresh-opener']);
@@ -1559,9 +1562,7 @@ export class etemplate2
 			}
 			if (dialog)
 			{
-				dialog.close();
-				dialog.parentNode.removeChild(dialog);
-				return Promise.resolve();
+				return dialog.close();
 			}
 			egw.close();
 			return true;
@@ -1587,14 +1588,16 @@ export class etemplate2
 		// regular et2 re-load
 		if(typeof data.url == "string" && typeof data.data === 'object')
 		{
+			let load : Promise<any>;
 			// @ts-ignore
 			if(this && typeof this.load == 'function')
 			{
 				// Called from etemplate
 				// set id in case serverside returned a different template
 				this._DOMContainer.id = this.uniqueId = data.DOMNodeID;
+
 				// @ts-ignore
-				return this.load(data.name, data.url, data.data);
+				load = this.load(data.name, data.url, data.data);
 			}
 			else
 			{
@@ -1618,20 +1621,30 @@ export class etemplate2
 						uniqueId = data.DOMNodeID.replace('.', '-') + '-' + data['open_target'];
 					}
 					const et2 = new etemplate2(node, data.data.menuaction, uniqueId);
-					return et2.load(data.name, data.url, data.data, null, null, null, data['fw-target'])
-						.then(() =>
-						{
-							if(dialog)
-							{
-								dialog._adoptTemplateButtons();
-							}
-						});
+					load = et2.load(data.name, data.url, data.data, null, null, null, data['fw-target']);
 				}
 				else
 				{
 					egw.debug("error", "Could not find target node %s", data.DOMNodeId);
 				}
 			}
+
+			// Extra handling for being loaded into a Et2Dialog
+			if(dialog)
+			{
+				load.then(() =>
+				{
+					// Move footer type buttons into dialog footer
+					const buttons = dialog._adoptTemplateButtons();
+
+					// Make sure adopted buttons are removed on clear
+					dialog.addEventListener("clear", () =>
+					{
+						buttons.forEach(n => n.remove());
+					});
+				});
+			}
+			return load;
 		}
 
 		throw("Error while parsing et2_load response");
