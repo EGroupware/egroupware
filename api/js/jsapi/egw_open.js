@@ -379,6 +379,32 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 		},
 
 		/**
+		 * Opens a menuaction in an Et2Dialog instead of a popup
+		 *
+		 * Please note:
+		 * This method does NOT (yet) work in popups, only in the main EGroupware window!
+		 * For popups you have to use the app.ts method openDialog(), which creates the dialog in the correct window / popup.
+		 *
+		 * @param string _menuaction
+		 * @return Promise<any>
+		 */
+		openDialog: function(_menuaction)
+		{
+			return this.json(_menuaction.match(/^([^.:]+)/)[0] + '.jdots_framework.ajax_exec.template.' + _menuaction,
+				['index.php?menuaction=' + _menuaction, true], _response =>
+				{
+					if (Array.isArray(_response) && typeof _response[0] === 'string')
+					{
+						jQuery(_response[0]).appendTo(_wnd.document.body);
+					}
+					else
+					{
+						console.log("Invalid response to dialogExec('"+_menuaction+"')", _response);
+					}
+				}).sendRequest();
+		},
+
+		/**
 		 * Open a (centered) popup window with given size and url
 		 *
 		 * @param {string} _url

@@ -750,13 +750,15 @@ export abstract class EgwApp
 	/**
 	 * Opens _menuaction in an Et2Dialog
 	 *
+	 * Equivalent to egw.openDialog, thought this one works in popups too.
+	 *
 	 * @param _menuaction
 	 * @return Promise<any>
 	 */
-	dialogExec(_menuaction : string)
+	openDialog(_menuaction : string)
 	{
-		const ajax = this.egw.json(_menuaction.match(/^([^.:]+)/)[0] + '.jdots_framework.ajax_exec.template.' + _menuaction,
-			['index.php?menuaction=' + _menuaction], _response =>
+		return this.egw.json(_menuaction.match(/^([^.:]+)/)[0] + '.jdots_framework.ajax_exec.template.' + _menuaction,
+			['index.php?menuaction=' + _menuaction, true], _response =>
 			{
 				if (Array.isArray(_response) && typeof _response[0] === 'string')
 				{
@@ -766,8 +768,7 @@ export abstract class EgwApp
 				{
 					console.log("Invalid response to dialogExec('"+_menuaction+"')", _response);
 				}
-			});
-		return ajax.sendRequest();
+			}).sendRequest();
 	}
 
 	/**

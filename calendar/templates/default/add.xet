@@ -24,9 +24,9 @@
                 </row>
             </rows>
         </grid>
-        <et2-button statustext="saves the changes made" label="Save" id="button[save]" image="save" onclick="return app.calendar.add_dialog_save(ev, widget); " slot="footer" default="true"></et2-button>
-        <et2-button statustext="Full edit dialog" label="Edit" id="button[edit]" image="edit" onclick="return app.calendar.add_dialog_edit(ev, widget);" slot="footer"></et2-button>
-        <et2-button statustext="Close the window" label="Cancel" id="button[cancel]" onclick="document.querySelector('et2-dialog').hide()" image="cancel" slot="footer"></et2-button>
+        <et2-button statustext="saves the changes made" label="Save" id="button[save]" slot="footer" default="true"></et2-button>
+        <et2-button statustext="Full edit dialog" label="Edit" id="button[edit]" slot="footer"></et2-button>
+        <et2-button statustext="Close the window" label="Cancel" id="button[cancel]" slot="footer"></et2-button>
         <et2-checkbox label="Always use full edit dialog" id="new_event_dialog" statustext="Always use the full edit dialog, not this little dialog" onchange="egw.set_preference('calendar',widget.id,widget.get_value() ? 'edit' : 'add');" slot="footer" align="right"></et2-checkbox>
     </template>
 </overlay>
