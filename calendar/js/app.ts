@@ -2062,7 +2062,31 @@ export class CalendarApp extends EgwApp
 		{
 			menuaction += '&'+name+'='+encodeURIComponent(options[name]);
 		}
-		return this.egw.openDialog(menuaction);
+		return this.egw.openDialog(menuaction).then(_dialog =>
+		{
+			// it would be much nicer if openDialog returns Promise<ET2Dialog>, so we can use it, without searching the dialog
+			// in a window.setTimeout in the DOM ...
+			window.setTimeout(() =>
+			{
+				const dialog = document.querySelector('et2-dialog > form.dialog_content')?.parentNode;
+				if (dialog)
+				{
+					dialog.callback = _button =>
+					{
+						if (event)
+						{
+							event.destroy();
+						}
+						// a little quicker than waiting for the server to close it
+						if (_button === "calendar-add_button[cancel]")
+						{
+							dialog.hide();
+						}
+						return false;
+					}
+				}
+			}, 500);
+		});
 	}
 
 	/**

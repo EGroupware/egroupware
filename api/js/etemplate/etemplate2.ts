@@ -1516,7 +1516,13 @@ export class etemplate2
 		// Check the parameters
 		const data = _response.data;
 		// window-close does NOT send data.DOMNodeID!
-		const dialog = <any>document.querySelector('et2-dialog > form'+(data.DOMNodeID?'#'+data.DOMNodeID:''))?.parentNode;
+		const dialog = <any>document.querySelector('et2-dialog > form'+(data.DOMNodeID?'#'+data.DOMNodeID:'.dialog_content'))?.parentNode;
+
+		if (dialog)
+		{
+			// stop dialogs from being closed on button click
+			dialog.callback = () => false;
+		}
 
 		// handle Api\Framework::refresh_opener()
 		if(Array.isArray(data['refresh-opener']))
