@@ -460,7 +460,7 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 	 */
 	close()
 	{
-		this.hide();
+		return this.hide();
 	}
 
 	addOpenListeners()
