@@ -399,7 +399,7 @@ class addressbook_import_contacts_csv extends importexport_basic_import_csv  {
 	protected function empty_addressbook($addressbook, $ids)
 	{
 		// Get all IDs in addressbook
-		$contacts = $this->bocontacts->search(array('owner' => $addressbook), true);
+		$contacts = $this->bocontacts->search(array('owner' => $addressbook), true) ?? [];
 		$contacts = array_column($contacts, 'id');
 
 		$delete = array_diff($contacts, $ids);
