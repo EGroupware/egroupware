@@ -165,6 +165,7 @@ class ApiHandler extends Api\CalDAV\Handler
 		{
 			if (isset($fp)) fclose($fp);
 			header('Location: '.($location = '/mail/attachments/'.substr(basename($attachment_path), 8)));
+			header('Content-Type: application/json');
 			echo json_encode([
 				'status'   => 200,
 				'message'  => 'Attachment stored',
