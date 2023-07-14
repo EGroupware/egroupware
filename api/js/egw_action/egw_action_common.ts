@@ -297,6 +297,9 @@ export class EgwFnct
         this.isDefault = false
         this.setValue(_default)
     }
+    public clone():EgwFnct{
+        return new EgwFnct(this.context,this.functionToPerform || this.value, this.acceptedTypes);
+    }
 
     /**
      * @returns true iff there is a function to perform and is not default

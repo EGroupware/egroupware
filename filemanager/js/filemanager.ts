@@ -1130,7 +1130,7 @@ export class filemanagerAPP extends EgwApp
 		};
 		for(let i = 0; i < actions.length; i++)
 		{
-			_action.getActionById(actions[i].id).onExecute = jQuery.extend(true, {}, _action.onExecute);
+			_action.getActionById(actions[i].id).onExecute = _action.onExecute.clone();
 
 			_action.getActionById(actions[i].id).set_onExecute(paste_exec);
 		}
