@@ -1450,6 +1450,19 @@ div.et2_vfsPath li img {
     visibility: visible;
 }
 
+/* Category indents in select options */
+sl-menu-item.cat_level1::part(label) {
+	padding-left: var(--sl-spacing-medium, 1em);
+}
+
+sl-menu-item.cat_level2::part(label) {
+	padding-left: calc(2 * var(--sl-spacing-medium, 1em));
+}
+
+sl-menu-item.cat_level3::part(label) {
+	padding-left: calc(3 * var(--sl-spacing-medium, 1em));
+}
+
 .egw_tooltip {
 	position: fixed;
 	border: 1px solid #897f51;
