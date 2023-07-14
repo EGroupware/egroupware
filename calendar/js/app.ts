@@ -4010,8 +4010,17 @@ export class CalendarApp extends EgwApp
 		var all_loaded = this.sidebox_et2 !== null;
 
 		// Avoid home portlets using our templates, and get them right
-		if(_et2.uniqueId.indexOf('portlet') === 0) return;
-		if(_et2.uniqueId === 'calendar-add') return;
+		if(_et2.uniqueId.indexOf('portlet') === 0)
+		{
+			return;
+		}
+
+		// Skip templates not involved in main view
+		if(['calendar.conflicts', 'calendar.add'].includes(_name))
+		{
+			return;
+		}
+
 
 		// Flag to make sure we don't hide non-view templates
 		var view_et2 = false;
