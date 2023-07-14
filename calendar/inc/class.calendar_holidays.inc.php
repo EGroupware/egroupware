@@ -134,7 +134,7 @@ class calendar_holidays
 		{
 			ksort($data);
 		}
-		error_log(__METHOD__."('$country', $year, $end_year) took ".  number_format(microtime(true)-$starttime, 3).'s to fetch '.count(call_user_func_array('array_merge', $years)).' events');
+		//error_log(__METHOD__."('$country', $year, $end_year) took ".  number_format(microtime(true)-$starttime, 3).'s to fetch '.count(call_user_func_array('array_merge', $years)).' events');
 		unset($starttime);
 
 		return $until_year ? $years : $years[$year];
