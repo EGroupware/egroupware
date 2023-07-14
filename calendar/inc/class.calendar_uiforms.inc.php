@@ -33,8 +33,6 @@ class calendar_uiforms extends calendar_ui
 {
 	var $public_functions = array(
 		'freetimesearch'  => True,
-		'ajax_add' => true,
-		'ajax_conflicts' => true,
 		'edit' => true,
 		'process_edit' => true,
 		'export' => true,
@@ -1025,7 +1023,7 @@ class calendar_uiforms extends calendar_ui
 			}
 			else
 			{
-				$msg = lang('Error: saving the event !!!');
+				$msg = ($msg ? $msg.'<br />':'') . lang('Error: saving the event !!!');
 			}
 			break;
 
@@ -1475,45 +1473,6 @@ class calendar_uiforms extends calendar_ui
 	public function uid_title_cmp($uid1, $uid2)
 	{
 		return strnatcasecmp($this->get_title($uid1), $this->get_title($uid2));
-	}
-
-	public function ajax_add()
-	{
-		// This tells etemplate to send as JSON response, not full
-		// This avoids errors from trying to send header again
-		if(Api\Json\Request::isJSONRequest())
-		{
-			$GLOBALS['egw']->framework->response = Api\Json\Response::get();
-		}
-
-		$this->edit();
-	}
-
-	/**
-	 * Get conflict dialog via ajax.  Used by quick add.
-	 *
-	 */
-	public function ajax_conflicts()
-	{
-		$content = $this->default_add_event();
-
-		// Process edit wants to see input values
-		$participants = array(1=> false);
-		$participants['cal_resources'] = '';
-		foreach($content['participants'] as $id => $status)
-		{
-			$quantity = $role = '';
-			calendar_so::split_status($status,$quantity,$role);
-			$participants[] = array(
-				'uid' => $id,
-				'status' => $status,
-				'quantity' => $quantity,
-				'role' => $role
-			);
-		}
-		$content['participants'] = $participants;
-		$content['button'] = array('save' => true);
-		return $this->process_edit($content);
 	}
 
 	/**

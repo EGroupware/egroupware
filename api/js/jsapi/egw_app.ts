@@ -751,25 +751,43 @@ export abstract class EgwApp
 	/**
 	 * Opens _menuaction in an Et2Dialog
 	 *
-	 * Equivalent to egw.openDialog, thought this one works in popups too.
+	 * Equivalent to egw.openDialog, though this one works in popups too.
 	 *
 	 * @param _menuaction
-	 * @return Promise<any>
+	 * @return Promise<Et2Dialog>
 	 */
-	openDialog(_menuaction : string)
+	openDialog(_menuaction : string) : Promise<Et2Dialog>
 	{
-		return this.egw.json(_menuaction.match(/^([^.:]+)/)[0] + '.jdots_framework.ajax_exec.template.' + _menuaction,
+		let resolver;
+		let rejector;
+		const dialog_promise = new Promise((resolve, reject) =>
+		{
+			resolver = value => resolve(value);
+			rejector = reason => reject(reason);
+		});
+		let request = this.egw.json(_menuaction.match(/^([^.:]+)/)[0] + '.jdots_framework.ajax_exec.template.' + _menuaction,
 			['index.php?menuaction=' + _menuaction, true], _response =>
 			{
-				if (Array.isArray(_response) && typeof _response[0] === 'string')
+				if(Array.isArray(_response) && typeof _response[0] === 'string')
 				{
-					jQuery(_response[0]).appendTo(document.body);
+					let dialog = jQuery(_response[0]).appendTo(document.body);
+					if(dialog.length > 0 && dialog.get(0))
+					{
+						resolver(dialog.get(0));
+					}
+					else
+					{
+						console.log("Unable to add dialog with dialogExec('" + _menuaction + "')", _response);
+						rejector(new Error("Unable to add dialog"));
+					}
 				}
 				else
 				{
-					console.log("Invalid response to dialogExec('"+_menuaction+"')", _response);
+					console.log("Invalid response to dialogExec('" + _menuaction + "')", _response);
+					rejector(new Error("Invalid response to dialogExec('" + _menuaction + "')"));
 				}
 			}).sendRequest();
+		return dialog_promise;
 	}
 
 	/**

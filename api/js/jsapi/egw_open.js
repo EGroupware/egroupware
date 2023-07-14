@@ -386,22 +386,40 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 		 * For popups you have to use the app.ts method openDialog(), which creates the dialog in the correct window / popup.
 		 *
 		 * @param string _menuaction
-		 * @return Promise<any>
+		 * @return Promise<Et2Dialog>
 		 */
 		openDialog: function(_menuaction)
 		{
-			return this.json(_menuaction.match(/^([^.:]+)/)[0] + '.jdots_framework.ajax_exec.template.' + _menuaction,
+			let resolver;
+			let rejector;
+			const dialog_promise = new Promise((resolve, reject) =>
+			{
+				resolver = value => resolve(value);
+				rejector = reason => reject(reason);
+			});
+			let request = egw.json(_menuaction.match(/^([^.:]+)/)[0] + '.jdots_framework.ajax_exec.template.' + _menuaction,
 				['index.php?menuaction=' + _menuaction, true], _response =>
 				{
 					if (Array.isArray(_response) && typeof _response[0] === 'string')
 					{
-						jQuery(_response[0]).appendTo(_wnd.document.body);
+						let dialog = jQuery(_response[0]).appendTo(_wnd.document.body);
+						if (dialog.length > 0 && dialog.get(0))
+						{
+							resolver(dialog.get(0));
+						}
+						else
+						{
+							console.log("Unable to add dialog with dialogExec('" + _menuaction + "')", _response);
+							rejector(new Error("Unable to add dialog"));
+						}
 					}
 					else
 					{
-						console.log("Invalid response to dialogExec('"+_menuaction+"')", _response);
+						console.log("Invalid response to dialogExec('" + _menuaction + "')", _response);
+						rejector(new Error("Invalid response to dialogExec('" + _menuaction + "')"));
 					}
 				}).sendRequest();
+			return dialog_promise;
 		},
 
 		/**
