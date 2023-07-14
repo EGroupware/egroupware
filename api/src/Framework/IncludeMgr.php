@@ -331,6 +331,7 @@ class IncludeMgr
 			// we will do no further processing but just include the file
 			// XXX: Is this case still used? If yes, it will not work with
 			// 	adding the ctime to all js files...
+			$args = '';
 			if (is_array($file))
 			{
 				foreach($file as $name => $val)
