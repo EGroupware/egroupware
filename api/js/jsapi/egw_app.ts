@@ -756,7 +756,7 @@ export abstract class EgwApp
 	 * @param _menuaction
 	 * @return Promise<Et2Dialog>
 	 */
-	openDialog(_menuaction : string)
+	openDialog(_menuaction : string) : Promise<Et2Dialog>
 	{
 		let resolver;
 		let rejector;
