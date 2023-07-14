@@ -271,7 +271,7 @@ export class EgwAction {
             this is an egw Object as defined in egw_core.js
             probably not because it changes on runtime
              */
-            const localEgw: IegwAppLocal = window.egw(_app);
+            const localEgw: IegwAppLocal = window.egw(_app, window);
             //replaced jQuery calls
             if (Array.isArray(_actions)) {
                 //_actions is now an object for sure
