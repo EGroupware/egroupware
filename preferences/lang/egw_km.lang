@@ -142,7 +142,6 @@ re-enter your password	preferences	km	បញ្ចូលពាក្យសម្
 read prefs for the specified application.	preferences	km	អានចំណូលចិត្តសម្រាប់កម្មវិធីដែលបានបញ្ជាក់។
 reset qrcode	preferences	km	កំណត់ QRCode ឡើងវិញ
 revoke	preferences	km	ដកហូត
-revoke acccess tokens	preferences	km	ដកហូតសញ្ញាសម្ងាត់ចូលប្រើ
 revoke this token	preferences	km	ដកហូតសញ្ញាសម្ងាត់នេះ។
 rich text editor theme	preferences	km	ស្បែកកម្មវិធីនិពន្ធអត្ថបទសម្បូរបែប
 scan qrcode with a time-based one-time password (totp) app:	preferences	km	ស្កែន QRCode ដោយប្រើកម្មវិធី Time-based One-time Password (TOTP)៖
