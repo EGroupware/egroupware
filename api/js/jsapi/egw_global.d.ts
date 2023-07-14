@@ -14,6 +14,7 @@
  */
 
 import type {EgwApp} from "./egw_app";
+import type {Et2Dialog} from "../etemplate/Et2Dialog/Et2Dialog";
 
 /**
  * Global egw object (for now created by the diverse JavaScript files) with a TypeScript interface
@@ -1118,9 +1119,9 @@ declare interface IegwWndLocal extends IegwGlobal
 	 * For popups you have to use the app.ts method openDialog(), which creates the dialog in the correct window / popup.
 	 *
 	 * @param string _menuaction
-	 * @return Promise<any>
+	 * @return Promise<Et2Dialog>
 	 */
-	openDialog(_menuaction : string) : Promise<any>;
+	openDialog(_menuaction : string) : Promise<Et2Dialog>;
 
 	/**
 	 * Open a (centered) popup window with given size and url
