@@ -390,7 +390,7 @@ egwAction.prototype.updateActions = function(_actions, _app)
 	if (this.canHaveChildren)
 	{
 		if (typeof _app == "undefined") _app = egw_getAppName();	// this can probably be queried from actionObjectManager ...
-		var egw = window.egw(_app);
+		var egw = window.egw(_app, window);
 
 		if (jQuery.isArray(_actions))
 		{
