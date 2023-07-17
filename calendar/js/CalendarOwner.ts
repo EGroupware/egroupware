@@ -51,7 +51,7 @@ export class CalendarOwner extends Et2StaticSelectMixin(Et2Select)
 
 		// Start fetch of users
 		const type = this.egw().preference('account_selection', 'common');
-		if(!type || type == "none" || type == "selectbox")
+		if(!type || type == "none")
 		{
 			return;
 		}
