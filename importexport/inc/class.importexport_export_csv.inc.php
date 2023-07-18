@@ -362,7 +362,7 @@ class importexport_export_csv implements importexport_iface_export_record
 							}
 							else
 							{
-								if($key == $name && !is_array($select_option))
+								if($key == $_name && !is_array($select_option))
 								{
 									$option = $select_option;
 									break;
