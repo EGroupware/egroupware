@@ -357,9 +357,9 @@ class mail_integration {
 			foreach($mailcontent['attachments'] as $key => $attachment)
 			{
 				$data_attachments[$key] = array(
-					'name' => $mailcontent['attachments'][$key]['name'],
-					'type' => $mailcontent['attachments'][$key]['type'],
-					'size' => $mailcontent['attachments'][$key]['size'],
+					'name'     => $attachment['filename'] ?? $mailcontent['attachments'][$key]['name'],
+					'type'     => $mailcontent['attachments'][$key]['type'],
+					'size'     => $mailcontent['attachments'][$key]['size'],
 					'tmp_name' => $mailcontent['attachments'][$key]['tmp_name']
 				);
 				if ($uid && !$mailcontent['attachments'][$key]['add_raw'])
