@@ -1207,13 +1207,13 @@ app.classes.mail = AppJS.extend(
 				},
 				{
 					id: 'saveOneToVfs',
-					label: 'Save in Filemanager',
+					label: 'Save to Filemanager',
 					icon: 'filemanager/navbar',
 					value: 'saveOneToVfs'
 				},
 				{
 					id: 'saveAllToVfs',
-					label: 'Save all to Filemanager',
+					label: 'Save all attachments to Filemanager',
 					icon: 'mail/save_all',
 					value: 'saveAllToVfs'
 				},
