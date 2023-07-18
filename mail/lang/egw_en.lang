@@ -502,7 +502,7 @@ rule with priority	mail	en	rule with priority
 rules	mail	en	rules
 s/mime encryption failed because no certificate has been found for sender address: %1	mail	en	S/MIME Encryption failed because no certificate has been found for sender address: %1
 save all	mail	en	Save all
-save all attachments to filemanager	mail	en	Save all attachments to filemanager
+save all attachments to filemanager	mail	en	Save all to filemanager
 save as calendar	mail	en	Save as Calendar
 save as default	mail	en	save as default
 save as draft	mail	en	Save as Draft
@@ -518,7 +518,7 @@ save message to disk	mail	en	Save Message to disk
 save of message %1 failed. could not save message to folder %2 due to: %3	mail	en	Save of message %1 failed. Could not save message to folder %2 due to: %3
 save the drafted message as eml file into vfs	mail	en	Save the drafted message as eml file into VFS
 save to disk	mail	en	Save to disk
-save to filemanager	mail	en	Save to filemanager
+save to filemanager	mail	en	Save in filemanager
 save:	mail	en	Save:
 saves subscription changes	mail	en	Save subscription changes
 saves this acl	mail	en	Save this ACL
