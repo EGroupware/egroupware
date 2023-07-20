@@ -2072,7 +2072,7 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 		}
 
 		// Skip for events
-		if(event.target.parentElement.classList.contains("calendar_calEvent"))
+		if(event.target.closest(".calendar_calEvent"))
 		{
 			return;
 		}
