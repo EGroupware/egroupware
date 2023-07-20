@@ -519,12 +519,14 @@ export class et2_calendar_view extends et2_valueWidget
 	 */
 	_drag_create_start(start)
 	{
-		this.drag_create.start = jQuery.extend({},start);
+		this.drag_create.start = jQuery.extend({}, start);
 		if(!this.drag_create.start.date)
 		{
 			this.drag_create.start = null;
 		}
-		this.drag_create.end = start;
+		this.drag_create.end = {...start, date: new Date(start.date.valueOf())};
+		// Begin at default duration
+		this.drag_create.end.date.setUTCMinutes(this.drag_create.end.date.getUTCMinutes() + (this.egw().preference("defaultlength", "calendar") ?? 60));
 
 		// Clear some stuff, if last time did not complete
 		if(this.drag_create.event)
@@ -540,7 +542,7 @@ export class et2_calendar_view extends et2_valueWidget
 		{
 			// Create event
 			this._drag_create_event()
-		}, 500);
+		}, 100);
 	}
 
 	/**

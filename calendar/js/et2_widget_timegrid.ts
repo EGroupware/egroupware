@@ -1974,7 +1974,7 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 		if(_ev.target.dataset.id || jQuery(_ev.target).parents('.calendar_calEvent').length)
 		{
 			// Event came from inside, maybe a calendar event
-			var event = this._get_event_info(_ev.originalEvent.target);
+			var event = this._get_event_info(_ev.target.closest(".calendar_calEvent"));
 			if(typeof this.onclick == 'function')
 			{
 				// Make sure function gets a reference to the widget, splice it in as 2. argument if not
@@ -2126,34 +2126,43 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 			var timegrid = this;
 			this.div.on('mousemove.dragcreate', function()
 			{
+				var end = jQuery.extend({}, timegrid.gridHover[0].dataset);
+				let date = timegrid.date_helper(end.date);
+				if(end.hour)
+				{
+					date.setUTCHours(end.hour);
+				}
+				if(end.minute)
+				{
+					date.setUTCMinutes(end.minute);
+				}
+				if(!timegrid.drag_create.event && date.toJSON() != start.date.toJSON())
+				{
+					timegrid._drag_create_start(start);
+					// Create the event immediately
+					timegrid._drag_create_event();
+				}
 				if(timegrid.drag_create.event && timegrid.drag_create.parent && timegrid.drag_create.end)
 				{
-					var end = jQuery.extend({}, timegrid.gridHover[0].dataset);
-					if(end.date)
+
+					timegrid.drag_create.end.date = date;
+					if(timegrid.drag_create.start.date.toJSON() == timegrid.drag_create.end.date.toJSON())
 					{
-						let date = timegrid.date_helper(end.date);
-						if(end.hour)
-						{
-							date.setUTCHours(end.hour);
-						}
-						if(end.minute)
-						{
-							date.setUTCMinutes(end.minute);
-						}
-						timegrid.drag_create.end.date = date;
+						// Minimum drag size is time granularity or default
+						timegrid.drag_create.end.date.setUTCMinutes(timegrid.drag_create.end.date.getUTCMinutes() + (timegrid.options.granularity || timegrid.egw().preference("defaultlength", "calendar")));
 					}
+
 					try
 					{
 						timegrid._drag_update_event();
 					}
-					catch (e)
+					catch(e)
 					{
 						timegrid._drag_create_end();
 					}
 				}
 			});
 		}
-		return this._drag_create_start(start);
 	}
 
 	/**
@@ -2163,7 +2172,10 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 	 */
 	_mouse_up(event)
 	{
-		if (this.options.readonly) return;
+		if(this.options.readonly)
+		{
+			return;
+		}
 		let end = {...this.gridHover[0].dataset};
 		if(end.date)
 		{
@@ -2181,7 +2193,20 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 		this.div.off('mousemove.dragcreate');
 		this.gridHover.css('cursor', '');
 
-		this._drag_create_end(this.drag_create.event ? {date: end.date} : undefined);
+		if(this.drag_create.end)
+		{
+			this._drag_create_end(this.drag_create.end);
+		}
+		else
+		{
+			// Not dragged enough to count, but Firefox will still count it as a click
+			if(navigator.userAgent.toLowerCase().indexOf('firefox') == -1)
+			{
+				// Fake a click for non-ff
+				event.stopImmediatePropagation();
+				this.gridHover[0].dispatchEvent(new Event("click"));
+			}
+		}
 	}
 
 	/**

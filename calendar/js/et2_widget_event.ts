@@ -1039,6 +1039,7 @@ export class et2_calendar_event extends et2_valueWidget implements et2_IDetached
 
 						result = this.onclick.apply(this, args);
 				}
+				_ev.stopImmediatePropagation();
 				return result;
 		}
 
