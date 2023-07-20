@@ -2336,8 +2336,9 @@ class CalDAV extends HTTP_WebDAV_Server
 			$this->store_request = $_SERVER['REQUEST_METHOD'] != 'POST' ||
 				!self::isFileUpload() ||
 				substr($_SERVER['CONTENT_TYPE'], 0, 5) == 'text/';
-			ob_start();
 		}
+		// unconditionally start output-buffering to fix problems with huge multiget reports from TB110 AB
+		ob_start();
 		parent::ServeRequest($prefix);
 
 		if (self::$request_starttime) self::log_request();

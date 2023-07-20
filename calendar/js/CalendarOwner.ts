@@ -51,7 +51,7 @@ export class CalendarOwner extends Et2StaticSelectMixin(Et2Select)
 
 		// Start fetch of users
 		const type = this.egw().preference('account_selection', 'common');
-		if(!type || type == "none" || type == "selectbox")
+		if(!type || type == "none")
 		{
 			return;
 		}
@@ -65,6 +65,7 @@ export class CalendarOwner extends Et2StaticSelectMixin(Et2Select)
 		else
 		{
 			fetch.push(this.egw().accounts('accounts').then(options => {this.static_options = this.static_options.concat(cleanSelectOptions(options))}));
+			fetch.push(this.egw().accounts('groups').then(options => {this.static_options = this.static_options.concat(cleanSelectOptions(options))}));
 		}
 		this.fetchComplete = Promise.all(fetch)
 			.then(() => this._renderOptions());

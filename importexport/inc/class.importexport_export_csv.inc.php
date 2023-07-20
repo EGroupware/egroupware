@@ -351,7 +351,24 @@ class importexport_export_csv implements importexport_iface_export_record
 					$names = array();
 					foreach($record->$name as $_name)
 					{
-						$option = $selects[$name][$_name];
+						$select_options = $selects[$name] ?? [];
+						$option = '';
+						foreach($select_options as $key => $select_option)
+						{
+							if(is_array($select_option) && isset($select_option['value']) && $select_option['value'] == $name && isset($select_option['label']))
+							{
+								$option = $select_option['label'];
+								break;
+							}
+							else
+							{
+								if($key == $_name && !is_array($select_option))
+								{
+									$option = $select_option;
+									break;
+								}
+							}
+						}
 						$names[] = lang(is_array($option) && $option['label'] ? $option['label'] : $option);
 					}
 					$record->$name = implode(', ', $names);

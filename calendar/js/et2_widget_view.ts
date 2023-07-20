@@ -540,7 +540,7 @@ export class et2_calendar_view extends et2_valueWidget
 		{
 			// Create event
 			this._drag_create_event()
-		}, 100);
+		}, 500);
 	}
 
 	/**
