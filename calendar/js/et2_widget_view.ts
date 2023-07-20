@@ -536,11 +536,10 @@ export class et2_calendar_view extends et2_valueWidget
 			this.drag_create.event = null;
 		}
 		// Wait a bit before adding an "event", it may be just a click
-		window.setTimeout(() =>
-		{
+		window.setTimeout(jQuery.proxy(function() {
 			// Create event
-			this._drag_create_event()
-		}, 100);
+			this._drag_create_event();
+		}, this), 250);
 	}
 
 	/**
@@ -609,7 +608,8 @@ export class et2_calendar_view extends et2_valueWidget
 			end = {};
 		}
 
-		if(this.drag_create.start && end.date)
+		if(this.drag_create.start && end.date &&
+			JSON.stringify(this.drag_create.start.date) !== JSON.stringify(end.date))
 		{
 			// Drag from start to end, open dialog
 			var options = {
