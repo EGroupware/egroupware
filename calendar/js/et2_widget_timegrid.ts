@@ -2197,15 +2197,11 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 		{
 			this._drag_create_end(this.drag_create.end);
 		}
-		else
+		else if(this.drag_create.start)
 		{
-			// Not dragged enough to count, but Firefox will still count it as a click
-			if(navigator.userAgent.toLowerCase().indexOf('firefox') == -1)
-			{
-				// Fake a click for non-ff
-				event.stopImmediatePropagation();
-				this.gridHover[0].dispatchEvent(new Event("click"));
-			}
+			// Not dragged enough to count, fake a click
+			event.stopImmediatePropagation();
+			this.gridHover[0].dispatchEvent(new Event("click"));
 		}
 	}
 
