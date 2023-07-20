@@ -1119,7 +1119,7 @@ export class filemanagerAPP extends EgwApp
 			let clipboard = JSON.parse(egw.getSessionItem('phpgwapi', 'egw_clipboard'));
 
 			// Set a flag so apps can tell the difference, if they need to
-			action.set_onExecute(action.parent.onExecute.fnct);
+			action.set_onExecute(action.parent.onExecute.functionToPerform);
 			action.execute(clipboard.selected,selected[0]);
 
 			// Clear the clipboard, the files are not there anymore
