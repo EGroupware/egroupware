@@ -283,7 +283,14 @@ export class EgwFnct
 {
     private readonly context: any;
     private readonly acceptedTypes: string[];
-    functionToPerform;
+    functionToPerform:Function;
+
+    /**
+     * @deprecated please use functionToPerform instead
+     */
+    public get fnct(){
+        return this.functionToPerform
+    }
     private value;
     // Flag for if this action is using a default handler
     // I don't think this is ever used @unused
