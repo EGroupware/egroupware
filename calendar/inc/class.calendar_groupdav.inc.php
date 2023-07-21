@@ -105,8 +105,13 @@ class calendar_groupdav extends Api\CalDAV\Handler
 		$this->bo = new calendar_boupdate();
 		$this->vCalendar = new Horde_Icalendar;
 
+		if (Api\CalDAV::isJSON())
+		{
+			self::$path_attr = 'id';
+			self::$path_extension = '';
+		}
 		// since 1.9.003 we allow clients to specify the URL when creating a new event, as specified by CalDAV
-		if (version_compare($GLOBALS['egw_info']['apps']['calendar']['version'], '1.9.003', '>='))
+		elseif (version_compare($GLOBALS['egw_info']['apps']['calendar']['version'], '1.9.003', '>='))
 		{
 			self::$path_attr = 'caldav_name';
 			self::$path_extension = '';
@@ -256,6 +261,20 @@ class calendar_groupdav extends Api\CalDAV\Handler
 			unset($filter['end']);
 		}
 
+		// check if we have to return the full calendar data or just the etag's
+		if (!($filter['calendar_data'] = $options['props'] == 'all' &&
+				$options['root']['ns'] == Api\CalDAV::CALDAV) && is_array($options['props']))
+		{
+			foreach($options['props'] as $prop)
+			{
+				if ($prop['name'] == 'calendar-data')
+				{
+					$filter['calendar_data'] = true;
+					break;
+				}
+			}
+		}
+
 		if (isset($nresults))
 		{
 			unset($filter['no_total']);	// we need the total!
@@ -346,8 +365,8 @@ class calendar_groupdav extends Api\CalDAV\Handler
 	{
 		if ($this->debug) $starttime = microtime(true);
 
-		$calendar_data = $this->caldav->prop_requested('calendar-data', Api\CalDAV::CALDAV, true);
-		if (!is_array($calendar_data)) $calendar_data = false;	// not in allprop or autoindex
+		$calendar_data = $filter['calendar_data'];
+		unset($filter['calendar_data']);
 
 		// yield extra resources like the root itself
 		$yielded = 0;
@@ -362,6 +381,7 @@ class calendar_groupdav extends Api\CalDAV\Handler
 		$sync_collection = $filter['sync-collection'];
 
 		$events = null;
+		$is_jscalendar = Api\CalDAV::isJSON();
 		for($chunk=0; (!$chunk || count($events) === self::CHUNK_SIZE) && // stop after we have not got a full chunk
 			($events =& $this->bo->search($filter+[
 				'offset' => $chunk*self::CHUNK_SIZE,
@@ -404,7 +424,8 @@ class calendar_groupdav extends Api\CalDAV\Handler
 
 				//header('X-EGROUPWARE-EVENT-'.$event['id'].': '.$event['title'].': '.date('Y-m-d H:i:s',$event['start']).' - '.date('Y-m-d H:i:s',$event['end']));
 				$props = array(
-					'getcontenttype' => $this->agent != 'kde' ? 'text/calendar; charset=utf-8; component=VEVENT' : 'text/calendar',
+					'getcontenttype' => $is_jscalendar ? Api\CalDAV\JsCalendar::MIME_TYPE_JSEVENT :
+						($this->agent != 'kde' ? 'text/calendar; charset=utf-8; component=VEVENT' : 'text/calendar'),
 					'getetag' => '"'.$etag.'"',
 					'getlastmodified' => $event['modified'],
 					// user and timestamp of creation or last modification of event, used in calendarserver only for shared calendars
@@ -420,11 +441,12 @@ class calendar_groupdav extends Api\CalDAV\Handler
 				//error_log(__FILE__ . __METHOD__ . "Calendar Data : $calendar_data");
 				if ($calendar_data)
 				{
-					$content = $this->iCal($event, $filter['users'],
+					$content = $is_jscalendar ? Api\CalDAV\JsCalendar::getJsEvent($event, false) :
+						$this->iCal($event, $filter['users'],
 						strpos($path, '/inbox/') !== false ? 'REQUEST' : null,
 						!isset($calendar_data['children']['expand']) ? false :
 							($calendar_data['children']['expand']['attrs'] ?: true), $exceptions);
-					$props['getcontentlength'] = bytes($content);
+					$props['getcontentlength'] = bytes($is_jscalendar ? json_encode($content) : $content);
 					$props['calendar-data'] = Api\CalDAV::mkprop(Api\CalDAV::CALDAV,'calendar-data',$content);
 				}
 				/* Calendarserver reports new events with schedule-changes: action: create, which iCal request
@@ -738,8 +760,17 @@ class calendar_groupdav extends Api\CalDAV\Handler
 			return $event;
 		}
 
-		$options['data'] = $this->iCal($event, $user, strpos($options['path'], '/inbox/') !== false ? 'REQUEST' : null);
-		$options['mimetype'] = 'text/calendar; charset=utf-8';
+		// jsEvent or iCal
+		if (($type=Api\CalDAV::isJSON()))
+		{
+			$options['data'] = Api\CalDAV\JsCalendar::getJsEvent($event, $type);
+			$options['mimetype'] = Api\CalDAV\JsCalendar::MIME_TYPE_JSEVENT.';charset=utf-8';
+		}
+		else
+		{
+			$options['data'] = $this->iCal($event, $user, strpos($options['path'], '/inbox/') !== false ? 'REQUEST' : null);
+			$options['mimetype'] = 'text/calendar; charset=utf-8';
+		}
 		header('Content-Encoding: identity');
 		$schedule_tag = null;
 		header('ETag: "'.$this->get_etag($event, $schedule_tag).'"');
@@ -960,7 +991,7 @@ class calendar_groupdav extends Api\CalDAV\Handler
 	 * @param string $prefix =null user prefix from path (eg. /ralf from /ralf/addressbook)
 	 * @return mixed boolean true on success, false on failure or string with http status (eg. '404 Not Found')
 	 */
-	function put(&$options,$id,$user=null,$prefix=null)
+	function put(&$options,$id,$user=null,$prefix=null,$method='PUT')
 	{
 		if ($this->debug) error_log(__METHOD__."($id, $user)".print_r($options,true));
 
@@ -1135,7 +1166,7 @@ class calendar_groupdav extends Api\CalDAV\Handler
 						}
 						if (!isset($master) && !$event['recurrence']) $master = $event;
 					}
-					if (!$modified)	// NO modififictions, or none we understood --> log it and return Ok: "204 No Content"
+					if (!$modified)	// NO modification, or none we understood --> log it and return Ok: "204 No Content"
 					{
 						$this->caldav->log(__METHOD__."(,,$user) NO changes for current user events=".array2string($events).', old-event='.array2string($oldEvent));
 					}
@@ -1177,8 +1208,20 @@ class calendar_groupdav extends Api\CalDAV\Handler
 			$retval = '201 Created';
 		}
 
-		if (!($cal_id = $handler->importVCal($vCalendar, $eventId,
-			self::etag2value($this->http_if_match), false, 0, $this->caldav->current_user_principal, $user, $charset, $id)))
+		$type = null;
+		if (($is_json=Api\CalDAV::isJSON($type)))
+		{
+			$event = Api\CalDAV\JsCalendar::parseJsEvent($options['content'], $oldEvent ?? [], $type, $method);
+			$cal_id = $this->bo->save($event);
+		}
+		else
+		{
+			$cal_id = $handler->importVCal($vCalendar, $eventId,
+				self::etag2value($this->http_if_match), false, 0, $this->caldav->current_user_principal, $user, $charset, $id);
+		}
+
+
+		if (!$cal_id)
 		{
 			if ($this->debug) error_log(__METHOD__."(,$id) eventId=$eventId: importVCal('$options[content]') returned ".array2string($cal_id));
 			if ($eventId && $cal_id === false)

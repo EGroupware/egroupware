@@ -594,7 +594,7 @@ class CalDAV extends HTTP_WebDAV_Server
 	}
 
 	/**
-	 * Generate (hierachical) supported-privilege property
+	 * Generate (hierarchical) supported-privilege property
 	 *
 	 * @param string $name name of privilege
 	 * @param string|array $data string with description or array with aggregated privileges plus value for key '*description*', '*ns*', '*only*'
@@ -1142,12 +1142,15 @@ class CalDAV extends HTTP_WebDAV_Server
 	{
 		header('Content-Type: application/json; charset=utf-8');
 		$is_addressbook = strpos($options['path'], '/addressbook') !== false;
+		$is_calendar = strpos($options['path'], '/calendar') !== false;
 		$propfind_options = array(
 			'path'  => $options['path'],
 			'depth' => 1,
 			'props' => $is_addressbook ? [
 				'address-data' => self::mkprop(self::CARDDAV, 'address-data', '')
-			] : 'all',
+			] : ($is_calendar ? [
+				'calendar-data' => self::mkprop(self::CALDAV, 'calendar-data', ''),
+			] : 'all'),
 			'other' => [],
 		);
 
@@ -1253,7 +1256,7 @@ class CalDAV extends HTTP_WebDAV_Server
 			// check if this is a property-object
 			elseif (count($prop) === 3 && isset($prop['name']) && isset($prop['ns']) && isset($prop['val']))
 			{
-				$value = $prop['name'] === 'address-data' ? $prop['val'] : self::jsonProps($prop['val']);
+				$value = in_array($prop['name'], ['address-data', 'calendar-data']) ? $prop['val'] : self::jsonProps($prop['val']);
 			}
 			else
 			{
@@ -1504,7 +1507,7 @@ class CalDAV extends HTTP_WebDAV_Server
 		// POST to the collection URL plus a UID like name component (like for regular PUT) to create new entrys
 		if (isset($_GET['add-member']) || Handler::get_agent() == 'cfnetwork' ||
 			// addressbook has not implemented a POST handler, therefore we have to call the PUT handler
-			preg_match('#^(/[^/]+)?/addressbook(-[^/]+)?/$#', $options['path']) && self::isJSON())
+			preg_match('#^(/[^/]+)?/(addressbook|calendar)(-[^/]+)?/$#', $options['path']) && self::isJSON())
 		{
 			$_GET['add-member'] = '';	// otherwise we give no Location header
 			return $this->PUT($options, 'POST');
@@ -2016,8 +2019,8 @@ class CalDAV extends HTTP_WebDAV_Server
 		{
 			return '404 Not Found';
 		}
-		// REST API & PATCH only implemented for addressbook currently
-		if ($app !== 'addressbook' && $method === 'PATCH')
+		// REST API & PATCH only implemented for addressbook and calendar currently
+		if (!in_array($app, ['addressbook', 'calendar']) && $method === 'PATCH')
 		{
 			return '501 Not implemented';
 		}

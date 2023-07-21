@@ -712,7 +712,7 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 			}
 			elseif (empty($id))
 			{
-				$contact['cardav_name'] = $contact['uid'].'.vcf';
+				$contact['carddav_name'] = $contact['uid'].'.vcf';
 				$contact['owner'] = $user;
 			}
 
