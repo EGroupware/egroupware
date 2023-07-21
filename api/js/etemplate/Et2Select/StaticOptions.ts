@@ -33,12 +33,10 @@ export const Et2StaticSelectMixin = <T extends Constructor<Et2WidgetWithSelect>>
 
 		// Hold the static widget options separately so other options (like sent from server in sel_options) won't
 		// conflict or be wiped out
-		protected static_options : SelectOption[] | Promise<SelectOption[]>;
+		protected static_options : SelectOption[];
 
 		// If widget needs to fetch options from server, we might want to wait for them
 		protected fetchComplete : Promise<SelectOption[] | void>;
-
-		protected other = [];
 
 		constructor(...args)
 		{
@@ -200,6 +198,36 @@ export const StaticOptions = new class StaticOptionsType
 			}
 			return return_promise ? Promise.resolve(cache) : cache;
 		}
+	}
+
+	cached_from_file(widget, file) : Promise<SelectOption[]>
+	{
+		const cache_owner = widget.egw().getCache('Et2Select');
+		let cache = cache_owner[file];
+		if(typeof cache === 'undefined')
+		{
+			cache_owner[file] = cache = widget.egw().window.fetch(file)
+				.then((response) =>
+				{
+					// Get the options
+					if(!response.ok)
+					{
+						throw response;
+					}
+					return response.json();
+				})
+				.then(options =>
+				{
+					// Need to clean the options because file may be key=>value, may have option list, may be mixed
+					cache_owner[file] = cleanSelectOptions(options) ?? [];
+					return cache_owner[file];
+				});
+		}
+		else if(cache && typeof cache.then === "undefined")
+		{
+			return Promise.resolve(cache);
+		}
+		return cache;
 	}
 
 	priority(widget : Et2SelectWidgets) : SelectOption[]
