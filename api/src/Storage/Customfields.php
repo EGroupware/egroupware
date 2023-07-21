@@ -272,16 +272,23 @@ class Customfields implements \IteratorAggregate
 	/**
 	 * Read the options of a 'select' or 'radio' custom field from a file
 	 *
-	 * For security reasons it has to be a php file setting one variable called options,
-	 * (to not display it to anonymously by the webserver).
-	 * The $options var has to be an array with value => label pairs, eg:
+	 * For security reasons it has to be a json file containing an array of options
+	 * The contents of the file has to be either an object with value:label pairs, eg:
 	 *
-	 * <?php
-	 * $options = array(
-	 *      'a' => 'Option A',
-	 *      'b' => 'Option B',
-	 *      'c' => 'Option C',
-	 * );
+	 * {
+	 *      'a': 'Option A',
+	 *      'b': 'Option B',
+	 *      'c': 'Option C',
+	 * }
+	 *
+	 * or an array of options with at least value and label, eg:
+	 *  [
+	 *        {value: 'a', label: 'Option A'},
+	 *        {value: 'b', label: 'Option B'},
+	 *        {value: 'c', label: 'Option C'}
+	 *  ]
+	 * See SelectOption type in api/js/etemplate/Et2Select/FindSelectOption.ts for full options.
+	 * Of the two, the array is preferred over value:label pairs for performance reasons.
 	 *
 	 * @param string $file file name inside the eGW server root, either relative to it or absolute
 	 * @return array in case of an error we return a single option with the message
