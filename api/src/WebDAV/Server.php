@@ -307,7 +307,7 @@ class HTTP_WebDAV_Server
             	$error = '412 Precondition failed';
             } else {
                 $error = '405 Method not allowed';
-                header("Allow: ".join(", ", $this->_allow()));  // tell client what's allowed
+                header("Allow: ".implode(", ", $this->_allow()));  // tell client what's allowed
             }
             $this->http_status($error);
             echo "<html><head><title>Error $error</title></head>\n";
@@ -1582,7 +1582,7 @@ class HTTP_WebDAV_Server
          (Not Implemented) response in such cases."
          */
         foreach ($this->_SERVER as $key => $val) {
-	        if (strncmp($key, 'HTTP_CONTENT', 11)) continue;
+	        if (strncmp($key, 'HTTP_CONTENT', 12)) continue;
 	        switch ($key) {
 		        case 'HTTP_CONTENT_ENCODING': // RFC 2616 14.11
 		        	switch($this->_SERVER['HTTP_CONTENT_ENCODING'])
@@ -1702,7 +1702,7 @@ class HTTP_WebDAV_Server
      * PUT method handler
      *
      * @param string $method='PUT'
-     * @return void
+     * @return string HTTP status
      */
     function http_PUT(string $method='PUT')
     {
@@ -1762,7 +1762,7 @@ class HTTP_WebDAV_Server
              (Not Implemented) response in such cases."
             */
             foreach ($this->_SERVER as $key => $val) {
-                if (strncmp($key, "HTTP_CONTENT", 11)) continue;
+                if (strncmp($key, "HTTP_CONTENT", 12)) continue;
                 switch ($key) {
                 case 'HTTP_CONTENT_ENCODING': // RFC 2616 14.11
 		        	switch($this->_SERVER['HTTP_CONTENT_ENCODING'])

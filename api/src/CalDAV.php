@@ -48,6 +48,7 @@ use calendar_hooks;
  * - /addressbook-accounts/ all accounts current user has rights to see
  * - /calendar/    calendar of current user
  * - /infolog/     infologs of current user
+ * - /mail/        mail REST API, see doc/REST-CalDAV-CardDAV/Mail.md
  * - /(resources|locations)/<resource-name>/calendar calendar of a resource/location, if user has rights to view
  * - /<current-username>/(resource|location)-<resource-name> shared calendar from a resource/location
  *
@@ -56,11 +57,11 @@ use calendar_hooks;
  * Calling one of the above collections with a GET request / regular browser generates an automatic index
  * from the data of a allprop PROPFIND, allow browsing CalDAV/CardDAV tree with a regular browser.
  *
- * Using EGroupware CalDAV/CardDAV as REST API: currently only for contacts
+ * Using EGroupware CalDAV/CardDAV as REST API: currently only for contacts and mail (sending)
  * ===========================================
  * GET requests to collections with an "Accept: application/json" header return a JSON response similar to a PROPFIND
  *     following GET parameters are supported to customize the returned properties:
- *     - props[]=<DAV-prop-name> eg. props[]=getetag to return only the ETAG (multiple DAV properties can be specified)
+ *     - props[]=<DAV-prop-name> e.g. props[]=getetag to return only the ETAG (multiple DAV properties can be specified)
  *       Default for addressbook collections is to only return address-data (JsContact), other collections return all props.
  *     - sync-token=<token> to only request change since last sync-token, like rfc6578 sync-collection REPORT
  *     - nresults=N limit number of responses (only for sync-collection / given sync-token parameter!)
@@ -70,6 +71,7 @@ use calendar_hooks;
  * GET  requests with an "Accept: application/json" header can be used to retrieve single resources / JsContact or JsCalendar schema
  * PUT  requests with  a "Content-Type: application/json" header allow modifying single resources
  * DELETE requests delete single resources
+ * PATCH  modify existing resource with partial data
  *
  * Permanent error_log() calls should use groupdav->log($str) instead, to be send to PHP error_log()
  * and our request-log (prefixed with "### " after request and response, like exceptions).
@@ -98,15 +100,15 @@ class CalDAV extends HTTP_WebDAV_Server
 	 */
 	const CARDDAV = 'urn:ietf:params:xml:ns:carddav';
 	/**
-	 * Apple Calendarserver namespace (eg. for ctag)
+	 * Apple Calendarserver namespace (e.g. for ctag)
 	 */
 	const CALENDARSERVER = 'http://calendarserver.org/ns/';
 	/**
-	 * Apple Addressbookserver namespace (eg. for ctag)
+	 * Apple Addressbookserver namespace (e.g. for ctag)
 	 */
 	const ADDRESSBOOKSERVER = 'http://addressbookserver.org/ns/';
 	/**
-	 * Apple iCal namespace (eg. for calendar color)
+	 * Apple iCal namespace (e.g. for calendar color)
 	 */
 	const ICAL = 'http://apple.com/ns/ical/';
 	/**
@@ -149,7 +151,7 @@ class CalDAV extends HTTP_WebDAV_Server
 	/**
 	 * Debug level: 0 = nothing, 1 = function calls, 2 = more info, 3 = complete $_SERVER array
 	 *
-	 * Can now be enabled on a per user basis in GroupDAV prefs, if it is set here to 0!
+	 * Can now be enabled on a per-user basis in GroupDAV preferences, if it is set here to 0!
 	 *
 	 * The debug messages are send to the apache error_log
 	 *
@@ -223,7 +225,7 @@ class CalDAV extends HTTP_WebDAV_Server
 		),
 	);
 	/**
-	 * $options parameter to PROPFIND request, eg. to check what props are requested
+	 * $options parameter to PROPFIND request, e.g. to check what props are requested
 	 *
 	 * @var array
 	 */
@@ -273,7 +275,7 @@ class CalDAV extends HTTP_WebDAV_Server
 		}
 		if ($this->debug) error_log(__METHOD__."() HTTP_USER_AGENT='$_SERVER[HTTP_USER_AGENT]' --> '$agent' --> client_requires_href_as_url=$this->client_require_href_as_url, crrnd(client refuses redundand namespace declarations)=$this->crrnd");
 
-		// adding EGroupware version to X-Dav-Powered-By header eg. "EGroupware 1.8.001 CalDAV/CardDAV/GroupDAV server"
+		// adding EGroupware version to X-Dav-Powered-By header e.g. "EGroupware 1.8.001 CalDAV/CardDAV/GroupDAV server"
 		$this->dav_powered_by = str_replace('EGroupware','EGroupware '.$GLOBALS['egw_info']['server']['versions']['phpgwapi'],
 			$this->dav_powered_by);
 
@@ -305,7 +307,7 @@ class CalDAV extends HTTP_WebDAV_Server
 		$this->egw_charset = Translation::charset();
 		if (strpos($this->base_uri, 'http') === 0)
 		{
-			$this->current_user_principal = $this->_slashify($this->base_uri);
+			$this->current_user_principal = self::_slashify($this->base_uri);
 		}
 		else
 		{
@@ -350,11 +352,11 @@ class CalDAV extends HTTP_WebDAV_Server
 		// locking support
 		if (!in_array('2', $dav)) $dav[] = '2';
 
-		if (preg_match('#/(calendar(-[^/]+)?|inbox|outbox)/#', $path))	// eg. /<username>/calendar-<otheruser>/
+		if (preg_match('#/(calendar(-[^/]+)?|inbox|outbox)/#', $path))	// e.g. /<username>/calendar-<otheruser>/
 		{
 			$app = 'calendar';
 		}
-		elseif (preg_match('#/addressbook(-[^/]+)?/#', $path))	// eg. /<username>/addressbook-<otheruser>/
+		elseif (preg_match('#/addressbook(-[^/]+)?/#', $path))	// e.g. /<username>/addressbook-<otheruser>/
 		{
 			$app = 'addressbook';
 		}
@@ -390,15 +392,16 @@ class CalDAV extends HTTP_WebDAV_Server
 	/**
 	 * PROPFIND and REPORT method handler
 	 *
-	 * @param  array  general parameter passing array
-	 * @param  array  return array for file properties
+	 * @param array &$options general parameter passing array
+	 * @param array &$files return array for file properties
+	 * @param string $method "PROPFIND" (default) or "REPORT"
 	 * @return bool   true on success
 	 */
 	function PROPFIND(&$options, &$files, $method='PROPFIND')
 	{
 		if ($this->debug) error_log(__CLASS__."::$method(".array2string($options).')');
 
-		// make options (readonly) available to all class methods, eg. prop_requested
+		// make options (readonly) available to all class methods, e.g. prop_requested
 		$this->propfind_options = $options;
 
 		$nresults = null;
@@ -412,7 +415,7 @@ class CalDAV extends HTTP_WebDAV_Server
 
 		// parse path in form [/account_lid]/app[/more]
 		$id = $app = $user = $user_prefix = null;
-		if (!self::_parse_path($options['path'],$id,$app,$user,$user_prefix) && $app && !$user && $user !== 0)
+		if (!$this->_parse_path($options['path'],$id,$app,$user,$user_prefix) && $app && !$user && $user !== 0)
 		{
 			if ($this->debug > 1) error_log(__CLASS__."::$method: user='$user', app='$app', id='$id': 404 not found!");
 			return '404 Not Found';
@@ -420,7 +423,7 @@ class CalDAV extends HTTP_WebDAV_Server
 		if ($this->debug > 1) error_log(__CLASS__."::$method(path='$options[path]'): user='$user', user_prefix='$user_prefix', app='$app', id='$id'");
 
 		$files = array('files' => array());
-		$path = $user_prefix = $this->_slashify($user_prefix);
+		$path = $user_prefix = self::_slashify($user_prefix);
 
 		if (!$app)	// user root folder containing apps
 		{
@@ -474,13 +477,13 @@ class CalDAV extends HTTP_WebDAV_Server
 			if ($this->debug) error_log(__CLASS__."::$method(path=$options[path]) 403 Forbidden: no app rights for '$app'");
 			return "403 Forbidden: no app rights for '$app'";	// no rights for the given app
 		}
-		if (($handler = self::app_handler($app)))
+		if (($handler = $this->app_handler($app)))
 		{
 			if ($method != 'REPORT' && !$id)	// no self URL for REPORT requests (only PROPFIND) or propfinds on an id
 			{
 				// KAddressbook doubles the folder, if the self URL contains the GroupDAV/CalDAV resourcetypes
 				$files['files'][0] = $this->add_app($app,$app=='addressbook'&&$handler->get_agent()=='kde',$user,
-					$this->_slashify($options['path']));
+					self::_slashify($options['path']));
 
 				// Hack for iOS 5.0.1 addressbook to stop asking directory gateway permissions with depth != 0
 				// values for depth are 0, 1, "infinit" or not set which has to be interpreted as "infinit"
@@ -492,7 +495,7 @@ class CalDAV extends HTTP_WebDAV_Server
 				}
 				if (!$options['depth']) return true;	// depth 0 --> show only the self url
 			}
-			return $handler->propfind($this->_slashify($options['path']),$options,$files,$user,$id);
+			return $handler->propfind(self::_slashify($options['path']),$options,$files,$user,$id);
 		}
 		return '501 Not Implemented';
 	}
@@ -503,7 +506,7 @@ class CalDAV extends HTTP_WebDAV_Server
 	 * @param string $path
 	 * @param array $props =array() extra properties 'resourcetype' is added anyway, name => value pairs or name => HTTP_WebDAV_Server([namespace,]name,value)
 	 * @param array $privileges =array('read') values for current-user-privilege-set
-	 * @param array $supported_privileges =null default $this->supported_privileges
+	 * @param array|null $supported_privileges =null default $this->supported_privileges
 	 * @return array with values for keys 'path' and 'props'
 	 */
 	public function add_collection($path, array $props = array(), array $privileges=array('read','read-acl','read-current-user-privilege-set'), array $supported_privileges=null)
@@ -594,7 +597,7 @@ class CalDAV extends HTTP_WebDAV_Server
 	 * Generate (hierachical) supported-privilege property
 	 *
 	 * @param string $name name of privilege
-	 * @param string|array $data string with describtion or array with agregated privileges plus value for key '*description*', '*ns*', '*only*'
+	 * @param string|array $data string with description or array with aggregated privileges plus value for key '*description*', '*ns*', '*only*'
 	 * @param string $path =null path to match with $data['*only*']
 	 * @return array of self::mkprop() arrays
 	 */
@@ -606,14 +609,14 @@ class CalDAV extends HTTP_WebDAV_Server
 		$props[] = self::mkprop('description', is_array($data) ? $data['*description*'] : $data);
 		if (is_array($data))
 		{
-			foreach($data as $name => $data)
+			foreach($data as $n => $d)
 			{
-				if ($name[0] == '*') continue;
-				if (is_array($data) && $data['*only*'] && strpos($path, $data['*only*']) === false)
+				if ($n[0] == '*') continue;
+				if (is_array($d) && $d['*only*'] && strpos($path, $d['*only*']) === false)
 				{
 					continue;	// wrong path
 				}
-				$props[] = $this->supported_privilege($name, $data, $path);
+				$props[] = $this->supported_privilege($n, $d, $path);
 			}
 		}
 		return self::mkprop('supported-privilege', $props);
@@ -704,7 +707,7 @@ class CalDAV extends HTTP_WebDAV_Server
 
 		if ($path != '/')
 		{
-			// add props modifyable via proppatch from client, eg. jqcalendar stores it's preferences there
+			// add props modifyable via proppatch from client, e.g. jqcalendar stores it's preferences there
 			foreach((array)$GLOBALS['egw_info']['user']['preferences']['groupdav'] as $name => $value)
 			{
 				list($prop,$prop4path,$ns) = explode(':', $name, 3);
@@ -923,7 +926,7 @@ class CalDAV extends HTTP_WebDAV_Server
 			$props['add-member'][] = self::mkprop('href',$this->base_uri.$path.'?add-member');
 		}
 
-		// add props modifyable via proppatch from client, eg. calendar-color, see self::$proppatch_props
+		// add props modifiable via proppatch from client, e.g. calendar-color, see self::$proppatch_props
 		$ns = null;
 		foreach((array)$GLOBALS['egw_info']['user']['preferences'][$app] as $name => $value)
 		{
@@ -979,7 +982,7 @@ class CalDAV extends HTTP_WebDAV_Server
 			}
 		}
 		// add other handler specific properties
-		if (($handler = self::app_handler($app)))
+		if (($handler = $this->app_handler($app)))
 		{
 			if (method_exists($handler,'extra_properties'))
 			{
@@ -1009,8 +1012,8 @@ class CalDAV extends HTTP_WebDAV_Server
 	 *
 	 * just calls PROPFIND()
 	 *
-	 * @param  array  general parameter passing array
-	 * @param  array  return array for file properties
+	 * @param array &$options general parameter passing array
+	 * @param array &$files return array for file properties
 	 * @return bool   true on success
 	 */
 	function REPORT(&$options, &$files)
@@ -1035,9 +1038,8 @@ class CalDAV extends HTTP_WebDAV_Server
 	 *
 	 * Currently, only implemented for REST not CalDAV/CardDAV
 	 *
-	 * @param $options
-	 * @param $files
-	 * @return string|void
+	 * @param array &$options
+	 * @return string
 	 */
 	function PATCH(array &$options)
 	{
@@ -1061,7 +1063,7 @@ class CalDAV extends HTTP_WebDAV_Server
 	/**
 	 * Check if client want or sends JSON
 	 *
-	 * @param string &$type=null
+	 * @param string|null &$type=null
 	 * @return bool|string false: no json, true: application/json, string: application/(string)+json
 	 */
 	public static function isJSON(string &$type=null)
@@ -1094,7 +1096,7 @@ class CalDAV extends HTTP_WebDAV_Server
 			}
 			return $this->autoindex($options);
 		}
-		if (($handler = self::app_handler($app)))
+		if (($handler = $this->app_handler($app)))
 		{
 			return $handler->get($options,$id,$user);
 		}
@@ -1203,7 +1205,7 @@ class CalDAV extends HTTP_WebDAV_Server
 
 				if (count($props) > 1)
 				{
-					$props = self::jsonProps($props);
+					$props = $this->jsonProps($props);
 				}
 				else
 				{
@@ -1296,7 +1298,7 @@ class CalDAV extends HTTP_WebDAV_Server
 
 		echo '<h1>(Cal|Card|Group)DAV ';
 		$path = '/groupdav.php';
-		foreach(explode('/',$this->_unslashify($options['path'])) as $n => $name)
+		foreach(explode('/', self::_unslashify($options['path'])) as $n => $name)
 		{
 			$path .= ($n != 1 ? '/' : '').$name;
 			echo Html::a_href(htmlspecialchars($name.'/'),$path);
@@ -1493,7 +1495,7 @@ class CalDAV extends HTTP_WebDAV_Server
 	/**
 	 * POST method handler
 	 *
-	 * @param  array  parameter passing array
+	 * @param array &$options parameter passing array
 	 * @return bool   true on success
 	 */
 	function POST(&$options)
@@ -1512,7 +1514,7 @@ class CalDAV extends HTTP_WebDAV_Server
 		$id = $app = $user = null;
 		$this->_parse_path($options['path'],$id,$app,$user);
 
-		if (($handler = self::app_handler($app)))
+		if (($handler = $this->app_handler($app)))
 		{
 			// managed attachments
 			if (isset($_GET['action']) && substr($_GET['action'], 0, 11) === 'attachment-')
@@ -1664,11 +1666,11 @@ class CalDAV extends HTTP_WebDAV_Server
 	 * - delete NOT included attachments, $delete_via_put is true
 	 * @todo: store URLs not from our managed attachments
 	 *
-	 * @param string $app eg. 'calendar'
+	 * @param string $app e.g. 'calendar'
 	 * @param int|string $id
 	 * @param array $attach array of array with values for keys 'name', 'params', 'value'
 	 * @param boolean $delete_via_put
-	 * @return boolean false on error, eg. invalid managed id, for false an xml-error body has been send
+	 * @return boolean false on error, e.g. invalid managed id, for false an xml-error body has been send
 	 */
 	public static function handle_attach($app, $id, $attach, $delete_via_put=false)
 	{
@@ -1764,7 +1766,7 @@ class CalDAV extends HTTP_WebDAV_Server
 	{
 		$filename = empty($_filename) ? 'attachment' : Vfs::basename($_filename);
 
-		if (strpos($mime, ';')) list($mime) = explode(';', $mime);	// in case it contains eg. charset info
+		if (strpos($mime, ';')) list($mime) = explode(';', $mime);	// in case it contains e.g. charset info
 
 		$ext = !empty($mime) ? MimeMagic::mime2ext($mime) : '';
 
@@ -1810,7 +1812,7 @@ class CalDAV extends HTTP_WebDAV_Server
 	/**
 	 * Add ATTACH attribute(s) for iCal
 	 *
-	 * @param string $app eg. 'calendar'
+	 * @param string $app e.g. 'calendar'
 	 * @param int|string $id
 	 * @param array &$attributes
 	 * @param array &$parameters
@@ -1863,10 +1865,10 @@ class CalDAV extends HTTP_WebDAV_Server
 	 *
 	 * @param string $managed_id
 	 * @param string $app =null app-name to check against path
-	 * @param string|int $id =null id to check agains path
+	 * @param string|int $id =null id to check against path
 	 * @return string|boolean "/apps/$app/$id/something" or false if not found or not belonging to given $app/$id
 	 */
-	static public function managed_id2path($managed_id, $app=null, $id=null)
+	public static function managed_id2path($managed_id, $app=null, $id=null)
 	{
 		$path = base64_decode($managed_id);
 
@@ -1887,16 +1889,16 @@ class CalDAV extends HTTP_WebDAV_Server
 	}
 
 	/**
-	 * Namespaces which need to be eplicitly named in self::$proppatch_props,
+	 * Namespaces which need to be explicitly named in self::$proppatch_props,
 	 * because we consider them protected, if not explicitly named
 	 *
 	 * @var array
 	 */
 	static $ns_needs_explicit_named_props = array(self::DAV, self::CALDAV, self::CARDDAV, self::CALENDARSERVER);
 	/**
-	 * props modifyable via proppatch from client for name-spaces mentioned in self::$ns_needs_explicit_named_props
+	 * props modifiable via proppatch from client for name-spaces mentioned in self::$ns_needs_explicit_named_props
 	 *
-	 * Props named here are stored in prefs without namespace!
+	 * Props named here are stored in preferences without namespace!
 	 *
 	 * @var array name => namespace pairs
 	 */
@@ -1914,7 +1916,7 @@ class CalDAV extends HTTP_WebDAV_Server
 	 * PROPPATCH method handler
 	 *
 	 * @param array &$options general parameter passing array
-	 * @return string with responsedescription or null, individual status in $options['props'][]['status']
+	 * @return string with response-description or null, individual status in $options['props'][]['status']
 	 */
 	function PROPPATCH(&$options)
 	{
@@ -1922,7 +1924,7 @@ class CalDAV extends HTTP_WebDAV_Server
 
 		// parse path in form [/account_lid]/app[/more]
 		$id = $app = $user = $user_prefix = null;
-		self::_parse_path($options['path'],$id,$app,$user,$user_prefix);	// allways returns false if eg. !$id
+		$this->_parse_path($options['path'],$id,$app,$user,$user_prefix);	// always returns false if e.g. !$id
 		if ($app == 'principals' || $id || $options['path'] == '/')
 		{
 			if ($this->debug > 1) error_log(__METHOD__.": user='$user', app='$app', id='$id': 404 not found!");
@@ -1932,7 +1934,7 @@ class CalDAV extends HTTP_WebDAV_Server
 			}
 			return 'NOT allowed to PROPPATCH that resource!';
 		}
-		// store selected props in preferences, eg. calendar-color, see self::$proppatch_props
+		// store selected props in preferences, e.g. calendar-color, see self::$proppatch_props
 		$need_save = array();
 		foreach($options['props'] as &$prop)
 		{
@@ -1991,7 +1993,8 @@ class CalDAV extends HTTP_WebDAV_Server
 	/**
 	 * PUT method handler
 	 *
-	 * @param  array  parameter passing array
+	 * @param array &$options parameter passing array
+	 * @param string $method "PUT" (default) or "PATCH"
 	 * @return bool   true on success
 	 */
 	function PUT(&$options, $method='PUT')
@@ -2018,7 +2021,7 @@ class CalDAV extends HTTP_WebDAV_Server
 		{
 			return '501 Not implemented';
 		}
-		if (($handler = self::app_handler($app)))
+		if (($handler = $this->app_handler($app)))
 		{
 			$status = $handler->put($options, $id, $user, $prefix, $method, $_SERVER['HTTP_CONTENT_TYPE']);
 
@@ -2042,7 +2045,7 @@ class CalDAV extends HTTP_WebDAV_Server
 	/**
 	 * DELETE method handler
 	 *
-	 * @param  array  general parameter passing array
+	 * @param array $options general parameter passing array
 	 * @return bool   true on success
 	 */
 	function DELETE($options)
@@ -2054,7 +2057,7 @@ class CalDAV extends HTTP_WebDAV_Server
 		{
 			return '404 Not Found';
 		}
-		if (($handler = self::app_handler($app)))
+		if (($handler = $this->app_handler($app)))
 		{
 			$status = $handler->delete($options,$id,$user);
 			// set default stati: true --> 204 No Content, false --> should be already handled
@@ -2067,7 +2070,7 @@ class CalDAV extends HTTP_WebDAV_Server
 	/**
 	 * MKCOL method handler
 	 *
-	 * @param  array  general parameter passing array
+	 * @param array $options general parameter passing array
 	 * @return bool   true on success
 	 */
 	function MKCOL($options)
@@ -2080,7 +2083,7 @@ class CalDAV extends HTTP_WebDAV_Server
 	/**
 	 * MOVE method handler
 	 *
-	 * @param  array  general parameter passing array
+	 * @param array $options general parameter passing array
 	 * @return bool   true on success
 	 */
 	function MOVE($options)
@@ -2093,7 +2096,8 @@ class CalDAV extends HTTP_WebDAV_Server
 	/**
 	 * COPY method handler
 	 *
-	 * @param  array  general parameter passing array
+	 * @param array $options general parameter passing array
+	 * @param bool $del false: default copy, true: move
 	 * @return bool   true on success
 	 */
 	function COPY($options, $del=false)
@@ -2106,19 +2110,19 @@ class CalDAV extends HTTP_WebDAV_Server
 	/**
 	 * LOCK method handler
 	 *
-	 * @param  array  general parameter passing array
+	 * @param array &$options general parameter passing array
 	 * @return bool   true on success
 	 */
 	function LOCK(&$options)
 	{
 		$id = $app = $user = null;
-		self::_parse_path($options['path'],$id,$app,$user);
+		$this->_parse_path($options['path'],$id,$app,$user);
 		$path = Vfs::app_entry_lock_path($app,$id);
 
 		if ($this->debug) error_log(__METHOD__.'('.array2string($options).") path=$path");
 
 		// get the app handler, to check if the user has edit access to the entry (required to make locks)
-		$handler = self::app_handler($app);
+		$handler = $this->app_handler($app);
 
 		// TODO recursive locks on directories not supported yet
 		if (!$id || !empty($options['depth']) || !$handler->check_access(Acl::EDIT,$id))
@@ -2127,7 +2131,7 @@ class CalDAV extends HTTP_WebDAV_Server
 		}
 		$options['timeout'] = time()+300; // 5min. hardcoded
 
-		// dont know why, but HTTP_WebDAV_Server passes the owner in D:href tags, which get's passed unchanged to checkLock/PROPFIND
+		// don't know why, but HTTP_WebDAV_Server passes the owner in D:href tags, which gets passed unchanged to checkLock/PROPFIND
 		// that's wrong according to the standard and cadaver does not show it on discover --> strip_tags removes eventual tags
 		$owner = strip_tags($options['owner']);
 		if (($ret = Vfs::lock($path,$options['locktoken'],$options['timeout'],$owner,
@@ -2141,13 +2145,13 @@ class CalDAV extends HTTP_WebDAV_Server
 	/**
 	 * UNLOCK method handler
 	 *
-	 * @param  array  general parameter passing array
-	 * @return bool   true on success
+	 * @param array &$options general parameter passing array
+	 * @return string string with HTTP status
 	 */
 	function UNLOCK(&$options)
 	{
 		$id = $app = $user = null;
-		self::_parse_path($options['path'],$id,$app,$user);
+		$this->_parse_path($options['path'],$id,$app,$user);
 		$path = Vfs::app_entry_lock_path($app,$id);
 
 		if ($this->debug) error_log(__METHOD__.'('.array2string($options).") path=$path");
@@ -2157,13 +2161,13 @@ class CalDAV extends HTTP_WebDAV_Server
 	/**
 	 * checkLock() helper
 	 *
-	 * @param  string resource path to check for locks
+	 * @param string $path resource path to check for locks
 	 * @return bool   true on success
 	 */
 	function checkLock($path)
 	{
 		$id = $app = $user = null;
-		self::_parse_path($path,$id,$app,$user);
+		$this->_parse_path($path,$id,$app,$user);
 
 		return Vfs::checkLock(Vfs::app_entry_lock_path($app, $id));
 	}
@@ -2171,13 +2175,13 @@ class CalDAV extends HTTP_WebDAV_Server
 	/**
 	 * ACL method handler
 	 *
-	 * @param  array  general parameter passing array
+	 * @param array &$options general parameter passing array
 	 * @return string HTTP status
 	 */
 	function ACL(&$options)
 	{
 		$id = $app = $user = null;
-		self::_parse_path($options['path'],$id,$app,$user);
+		$this->_parse_path($options['path'],$id,$app,$user);
 
 		if ($this->debug) error_log(__METHOD__.'('.array2string($options).") path=$options[path]");
 
@@ -2217,7 +2221,7 @@ class CalDAV extends HTTP_WebDAV_Server
 		{
 			$path = substr($path, 1);
 		}
-		$parts = explode('/', $this->_unslashify($path));
+		$parts = explode('/', self::_unslashify($path));
 
 		// /(resources|locations)/<resource-id>-<resource-name>/calendar
 		if ($parts[0] == 'resources' || $parts[0] == 'locations')
@@ -2292,7 +2296,7 @@ class CalDAV extends HTTP_WebDAV_Server
 			$user = $GLOBALS['egw_info']['user']['account_id'];
 		}
 
-		// Api\WebDAV\Server encodes %, # and ? again, which leads to storing eg. '%' as '%25'
+		// Api\WebDAV\Server encodes %, # and ? again, which leads to storing e.g. '%' as '%25'
 		$id = strtr(array_pop($parts), array(
 			'%25' => '%',
 			'%23' => '#',
@@ -2324,7 +2328,7 @@ class CalDAV extends HTTP_WebDAV_Server
 	 *
 	 * Reimplemented to add logging
 	 *
-     * @param  $prefix =null prefix filesystem path with given path, eg. "/webdav" for owncloud 4.5 remote.php
+     * @param  $prefix =null prefix filesystem path with given path, e.g. "/webdav" for owncloud 4.5 remote.php
 	 */
 	function ServeRequest($prefix=null)
 	{
@@ -2341,7 +2345,7 @@ class CalDAV extends HTTP_WebDAV_Server
 		ob_start();
 		parent::ServeRequest($prefix);
 
-		if (self::$request_starttime) self::log_request();
+		if (self::$request_starttime) $this->log_request();
 	}
 
 	/**
@@ -2358,7 +2362,7 @@ class CalDAV extends HTTP_WebDAV_Server
 	}
 
 	/**
-	 * Sanitizing filename to gard agains path traversal and / eg. in UserAgent string
+	 * Sanitizing filename to gard against path traversal and / e.g. in UserAgent string
 	 *
 	 * @param string $filename
 	 * @return string
@@ -2371,7 +2375,7 @@ class CalDAV extends HTTP_WebDAV_Server
 	/**
 	 * Log the request
 	 *
-	 * @param string $extra ='' extra text to add below request-log, eg. exception thrown
+	 * @param string $extra ='' extra text to add below request-log, e.g. exception thrown
 	 */
 	protected function log_request($extra='')
 	{
@@ -2382,7 +2386,7 @@ class CalDAV extends HTTP_WebDAV_Server
 				$msg_file = $GLOBALS['egw_info']['server']['files_dir'];
 				$msg_file .= '/groupdav';
 				$msg_file .= '/'.self::sanitize_filename($GLOBALS['egw_info']['user']['account_lid']).'/';
-				if (!file_exists($msg_file) && !mkdir($msg_file, 0700, true))
+				if (!file_exists($msg_file) && !mkdir($msg_file, 0700, true) && !is_dir($msg_file))
 				{
 					error_log(__METHOD__."() Could NOT create directory '$msg_file'!");
 					return;
@@ -2476,7 +2480,7 @@ class CalDAV extends HTTP_WebDAV_Server
 	}
 
 	/**
-	 * Recursivly add properties to XMLWriter object
+	 * Recursively add properties to XMLWriter object
 	 *
 	 * @param \XMLWriter $xml
 	 * @param string|array $props string with name for empty element in DAV NS or array with props
