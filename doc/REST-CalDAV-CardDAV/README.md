@@ -36,10 +36,10 @@ One can use the following URLs relative (!) to https://example.org/egroupware/gr
 Shared addressbooks or calendars are only shown in the users home-set, if he subscribed to it via his CalDAV preferences!
 
 Calling one of the above collections with a GET request / regular browser generates an automatic index
-from the data of a allprop PROPFIND, allow browsing CalDAV/CardDAV tree with a regular browser.
+from the data of an allprop PROPFIND, allow browsing CalDAV/CardDAV tree with a regular browser.
 
 ## REST API: using EGroupware CalDAV/CardDAV server with JSON
-> currently implemented only for contacts!
+> currently implemented only for contacts and calendar (without recurring events)!
 
 Following RFCs / drafts used/planned for JSON encoding of ressources
 * [draft-ietf-jmap-jscontact: JSContact: A JSON Representation of Contact Data](https://datatracker.ietf.org/doc/html/draft-ietf-jmap-jscontact) 
@@ -543,6 +543,6 @@ use ```<domain-name>:<name>``` like in JsCalendar
 - [x] Addressbook
   - [ ] update of photos, keys, attachments
 - [ ] InfoLog
-- [ ] Calendar
+- [X] Calendar
 - [ ] relatedTo / links
 - [ ] storing not native supported attributes eg. localization
