@@ -14,6 +14,7 @@ import {Validator} from "@lion/form-core";
 import {Et2Tag} from "./Tag/Et2Tag";
 import {SlMenuItem} from "@shoelace-style/shoelace";
 import {waitForEvent} from "@shoelace-style/shoelace/dist/internal/event";
+import {StaticOptions} from "./StaticOptions";
 
 // Otherwise import gets stripped
 let keep_import : Et2Tag;
@@ -576,6 +577,26 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 					}
 				});
 			}
+			if(this.searchEnabled)
+			{
+				for(const newValueElement of this.getValueAsArray())
+				{
+					if(this.select_options.some(o => o.value == newValueElement))
+					{
+						continue;
+					}
+
+					// Given a value we need to search for - this will add in all matches, including the one needed
+					this.remoteSearch(newValueElement, this.searchOptions).then((result : SelectOption[]) =>
+					{
+						const option = <SelectOption>result.find(o => o.value == newValueElement);
+						if(option)
+						{
+							this._selected_remote.push(option);
+						}
+					});
+				}
+			}
 		}
 
 		protected fix_bad_value()
@@ -1119,10 +1140,52 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 				return Promise.resolve();
 			}
 
-			// Fire off the query
-			let promise = this.remoteQuery(search, options);
+			// Check our URL: JSON file or URL?
+			if(this.searchUrl.includes(".json"))
+			{
+				// Get the file, search it
+				return this.jsonQuery(search, options);
+			}
+			else
+			{
+				// Fire off the query to the server
+				let promise = this.remoteQuery(search, options);
+			}
 
 			return promise;
+		}
+
+		/**
+		 * Search through a JSON file in the browser
+		 *
+		 * @param {string} search
+		 * @param {object} options
+		 * @protected
+		 */
+		protected jsonQuery(search : string, options : object)
+		{
+			// Get the file
+			const controller = new AbortController();
+			const signal = controller.signal;
+			let response_ok = false;
+			return StaticOptions.cached_from_file(this, this.searchUrl)
+				.then(options =>
+				{
+					// Filter the options
+					const lower_search = search.toLowerCase();
+					const filtered = options.filter(option =>
+					{
+						return option.label.toLowerCase().includes(lower_search) || option.value.includes(search)
+					});
+					// Add the matches
+					this.processRemoteResults(filtered);
+					return filtered;
+				})
+				.catch((_err) =>
+				{
+					this.egw().message(_err.statusText || this.searchUrl, "error");
+					return [];
+				});
 		}
 
 		/**
@@ -1152,6 +1215,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 				{query: search, ...sendOptions}), [search, sendOptions]).then((result) =>
 			{
 				this.processRemoteResults(result);
+				return result;
 			});
 		}
 

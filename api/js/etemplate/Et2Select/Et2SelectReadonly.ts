@@ -11,7 +11,7 @@
 import {css, html, LitElement, repeat, TemplateResult} from "@lion/core";
 import {et2_IDetachedDOM} from "../et2_core_interfaces";
 import {Et2Widget} from "../Et2Widget/Et2Widget";
-import {StaticOptions as so} from "./StaticOptions";
+import {StaticOptions, StaticOptions as so} from "./StaticOptions";
 import {find_select_options, SelectOption} from "./FindSelectOptions";
 import {SelectAccountMixin} from "./SelectAccountMixin";
 
@@ -52,6 +52,7 @@ li {
 
 	private __select_options : SelectOption[];
 	private __value : string[];
+	private __fetchComplete : Promise<void> = null;
 
 	constructor()
 	{
@@ -61,12 +62,32 @@ li {
 		this.__value = [];
 	}
 
+	public async getUpdateComplete()
+	{
+		const result = await super.getUpdateComplete();
+		if(this.__fetchComplete)
+		{
+			await this.__fetchComplete;
+		}
+		return result;
+	}
+
 	protected find_select_options(_attrs)
 	{
 		let sel_options = find_select_options(this, _attrs['select_options']);
 		if(sel_options.length > 0)
 		{
 			this.select_options = sel_options;
+		}
+
+		// Cache options from file
+		if(_attrs.searchUrl && _attrs.searchUrl.includes(".json") && this.__fetchComplete == null)
+		{
+			this.__fetchComplete = StaticOptions.cached_from_file(this, _attrs.searchUrl).then(options =>
+			{
+				this.select_options = options;
+				this.requestUpdate();
+			});
 		}
 	}
 

@@ -614,9 +614,11 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 		{
 			attrs.multiple = true;
 		}
-		// select_options are now send from server-side incl. ones defined via a file in EGroupware root
-		attrs.tags = field.tags;
-
+		if(field.values && field.values["@"])
+		{
+			// Options are in a list stored in a file
+			attrs.searchUrl = this.egw().webserverUrl + '/webdav.php' + field.values["@"];
+		}
 		return true;
 	}
 	_setup_select_account( field_name, field, attrs)

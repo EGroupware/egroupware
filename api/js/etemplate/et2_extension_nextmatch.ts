@@ -4190,12 +4190,17 @@ export class et2_nextmatch_customfields extends et2_customfields_list implements
 				{
 					field.values.splice(field.values.findIndex((i) => i.value == ''), 1);
 				}
+				let attrs = {
+					id: cf_id,
+					emptyLabel: field.label
+				};
+				if(field.values["@"])
+				{
+					attrs.searchUrl = this.egw().webserverUrl + '/webdav.php' + field.values["@"];
+				}
 				widget = loadWebComponent(
 					field.type == 'select-account' ? 'et2-nextmatch-header-account' : "et2-nextmatch-header-filter",
-					{
-						id: cf_id,
-						empty_label: field.label
-					},
+					attrs,
 					this
 				);
 			}
@@ -4203,7 +4208,7 @@ export class et2_nextmatch_customfields extends et2_customfields_list implements
 			{
 				widget = loadWebComponent("et2-nextmatch-header-entry", {
 					id: cf_id,
-					only_app: field.type,
+					onlyApp: field.type,
 					placeholder: field.label
 				}, this);
 			}

@@ -9,7 +9,7 @@
  */
 import {sprintf} from "../../egw_action/egw_action_common";
 import {Et2SelectReadonly} from "./Et2SelectReadonly";
-import {find_select_options, SelectOption} from "./FindSelectOptions";
+import {cleanSelectOptions, find_select_options, SelectOption} from "./FindSelectOptions";
 import {Et2Select, Et2SelectNumber, Et2WidgetWithSelect} from "./Et2Select";
 
 export type Et2SelectWidgets = Et2Select | Et2WidgetWithSelect | Et2SelectReadonly;
@@ -196,6 +196,36 @@ export const StaticOptions = new class StaticOptionsType
 			}
 			return return_promise ? Promise.resolve(cache) : cache;
 		}
+	}
+
+	cached_from_file(widget, file) : Promise<SelectOption[]>
+	{
+		const cache_owner = widget.egw().getCache('Et2Select');
+		let cache = cache_owner[file];
+		if(typeof cache === 'undefined')
+		{
+			cache_owner[file] = cache = widget.egw().window.fetch(file)
+				.then((response) =>
+				{
+					// Get the options
+					if(!response.ok)
+					{
+						throw response;
+					}
+					return response.json();
+				})
+				.then(options =>
+				{
+					// Need to clean the options because file may be key=>value, may have option list, may be mixed
+					cache_owner[file] = cleanSelectOptions(options) ?? [];
+					return cache_owner[file];
+				});
+		}
+		else if(cache && typeof cache.then === "undefined")
+		{
+			return Promise.resolve(cache);
+		}
+		return cache;
 	}
 
 	priority(widget : Et2SelectWidgets) : SelectOption[]
