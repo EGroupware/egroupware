@@ -2045,7 +2045,7 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 				date: target.dataset.date || this.options.date,
 				hour: target.dataset.hour || this._parent.options.day_start,
 				minute: target.dataset.minute || 0,
-				owner: this.options.owner
+				owner: this.daily_owner ? _ev.target.closest(".calendar_calDayCol").dataset.owner : this.options.owner
 			};
 			app.calendar.add(options);
 			_ev.preventDefault();
