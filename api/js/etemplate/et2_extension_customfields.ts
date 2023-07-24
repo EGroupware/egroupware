@@ -617,7 +617,7 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 		if(field.values && field.values["@"])
 		{
 			// Options are in a list stored in a file
-			attrs.searchUrl = this.egw().webserverUrl + '/webdav.php' + field.values["@"];
+			attrs.searchUrl = field.values["@"];
 		}
 		return true;
 	}
