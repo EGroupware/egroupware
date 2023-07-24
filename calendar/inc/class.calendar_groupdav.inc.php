@@ -383,10 +383,11 @@ class calendar_groupdav extends Api\CalDAV\Handler
 		$events = null;
 		$is_jscalendar = Api\CalDAV::isJSON();
 		for($chunk=0; (!$chunk || count($events) === self::CHUNK_SIZE) && // stop after we have not got a full chunk
-			($events =& $this->bo->search($filter+[
+			($events =& $this->bo->search([
 				'offset' => $chunk*self::CHUNK_SIZE,
 				'num_rows' => self::CHUNK_SIZE,
-			])); ++$chunk)
+				'date_format' => $is_jscalendar ? 'object' : 'ts',
+			]+$filter)); ++$chunk)
 		{
 			foreach($events as $event)
 			{
@@ -441,11 +442,10 @@ class calendar_groupdav extends Api\CalDAV\Handler
 				//error_log(__FILE__ . __METHOD__ . "Calendar Data : $calendar_data");
 				if ($calendar_data)
 				{
-					$content = $is_jscalendar ? Api\CalDAV\JsCalendar::getJsEvent($event, false) :
-						$this->iCal($event, $filter['users'],
+					$content = $this->iCal($event, $filter['users'],
 						strpos($path, '/inbox/') !== false ? 'REQUEST' : null,
 						!isset($calendar_data['children']['expand']) ? false :
-							($calendar_data['children']['expand']['attrs'] ?: true), $exceptions);
+							($calendar_data['children']['expand']['attrs'] ?: true), $exceptions, $is_jscalendar ? false : null);
 					$props['getcontentlength'] = bytes($is_jscalendar ? json_encode($content) : $content);
 					$props['calendar-data'] = Api\CalDAV::mkprop(Api\CalDAV::CALDAV,'calendar-data',$content);
 				}
@@ -578,10 +578,12 @@ class calendar_groupdav extends Api\CalDAV\Handler
 		}
 		if ($time)
 		{
-			$props['dtstamp'] = Api\CalDAV::mkprop(Api\CalDAV::CALENDARSERVER, 'dtstamp', gmdate('Ymd\\This\\Z', $time));
+			$dtstamp = Api\DateTime::to($time, 'object');
+			$dtstamp->setTimezone(new DateTimeZone('utc'));
+			$props['dtstamp'] = Api\CalDAV::mkprop(Api\CalDAV::CALENDARSERVER, 'dtstamp', $dtstamp->format('Ymd\\This\\Z'));
 		}
 		//error_log(__METHOD__."($user, $time) returning ".array2string($props));
-		return $props ? $props : '';
+		return $props ?: '';
 	}
 
 	/**
@@ -763,12 +765,12 @@ class calendar_groupdav extends Api\CalDAV\Handler
 		// jsEvent or iCal
 		if (($type=Api\CalDAV::isJSON()))
 		{
-			$options['data'] = Api\CalDAV\JsCalendar::getJsEvent($event, $type);
+			$options['data'] = $this->iCal($event, $user, strpos($options['path'], '/inbox/') !== false ? 'REQUEST' : null, false, null, $type);
 			$options['mimetype'] = Api\CalDAV\JsCalendar::MIME_TYPE_JSEVENT.';charset=utf-8';
 		}
 		else
 		{
-			$options['data'] = $this->iCal($event, $user, strpos($options['path'], '/inbox/') !== false ? 'REQUEST' : null);
+			$options['data'] = $this->iCal($event, $user, strpos($options['path'], '/inbox/') !== false ? 'REQUEST' : null, false, null);
 			$options['mimetype'] = 'text/calendar; charset=utf-8';
 		}
 		header('Content-Encoding: identity');
@@ -784,16 +786,17 @@ class calendar_groupdav extends Api\CalDAV\Handler
 	/**
 	 * Generate an iCal for the given event
 	 *
-	 * Taking into account virtual an real exceptions for recuring events
+	 * Taking into account virtual and real exceptions for recurring events
 	 *
 	 * @param array $event
 	 * @param int $user =null account_id of calendar to display
-	 * @param string $method =null eg. 'PUBLISH' for inbox, nothing anywhere else
+	 * @param string $method =null e.g. 'PUBLISH' for inbox, nothing anywhere else
 	 * @param boolean|array $expand =false true or array with values for 'start', 'end' to expand recurrences
 	 * @param array|null $events as returned by get_series() for !$expand (to not read them again)
-	 * @return string
+	 * @param bool|"pretty"|null $json null: iCal, false: return array with JSCalendar data, true+"pretty": return json-serialized JSCalendar
+	 * @return string|array array if $json === false
 	 */
-	private function iCal(array $event,$user=null, $method=null, $expand=false, array $events=null)
+	private function iCal(array $event,$user=null, $method=null, $expand=false, array $events=null, $json=null)
 	{
 		static $handler = null;
 		if (is_null($handler)) $handler = $this->_get_handler();
@@ -843,7 +846,7 @@ class calendar_groupdav extends Api\CalDAV\Handler
 			// pass in original event as master, as it has correct start-date even if first recurrence is an exception
 			if ($expand || !isset($events))
 			{
-				$events =& self::get_series($event['uid'], $this->bo, $expand, $user, $event);
+				$events =& self::get_series($event['uid'], $this->bo, $expand, $user, $event, isset($json) ? 'object' : 'server');
 			}
 			// as alarm is now only on next recurrence, set alarm from original event on master
 			if ($event['alarm']) $events[0]['alarm'] = $event['alarm'];
@@ -856,6 +859,10 @@ class calendar_groupdav extends Api\CalDAV\Handler
 			{
 				$events[0]['uid'] .= '-'.$event['id'];	// force a different uid
 			}
+		}
+		if (isset($json))
+		{
+			return Api\CalDAV\JsCalendar::JsEvent($events[0], $json, array_slice($events, 1));
 		}
 		return $handler->exportVCal($events, '2.0', $method);
 	}
@@ -872,7 +879,7 @@ class calendar_groupdav extends Api\CalDAV\Handler
 	 * @param array $master =null use provided event as master to fix wrong start-date if first recurrence is an exception
 	 * @return array
 	 */
-	private static function &get_series($uid,calendar_bo $bo=null, $expand=false, $user=null, $master=null)
+	private static function &get_series($uid,calendar_bo $bo=null, $expand=false, $user=null, $master=null, $date_format='server')
 	{
 		if (is_null($bo)) $bo = new calendar_boupdate();
 
@@ -880,7 +887,7 @@ class calendar_groupdav extends Api\CalDAV\Handler
 			'query' => array('cal_uid' => $uid),
 			'filter' => 'owner',  // return all possible entries
 			'daywise' => false,
-			'date_format' => 'server',
+			'date_format' => $date_format,
 			'cfs' => array(),	// read cfs as we use them to store X- attributes
 		);
 		if (is_array($expand)) $params += $expand;
@@ -891,7 +898,7 @@ class calendar_groupdav extends Api\CalDAV\Handler
 			return $events;
 		}
 
-		// find master, which is not always first event, eg. when first event is an exception
+		// find master, which is not always first event, e.g. when first event is an exception
 		$exceptions = array();
 		foreach($events as $k => &$recurrence)
 		{
@@ -904,7 +911,7 @@ class calendar_groupdav extends Api\CalDAV\Handler
 			}
 		}
 		// if recurring event starts in future behind horizont, nothing will be returned by bo::search()
-		if (!isset($master)) $master = $bo->read($uid);
+		if (!isset($master)) $master = $bo->read($uid, null, false, $date_format);
 
 		foreach($events as $k => &$recurrence)
 		{
@@ -912,7 +919,7 @@ class calendar_groupdav extends Api\CalDAV\Handler
 			if ($master && $recurrence['reference'] && $recurrence['reference'] != $master['id'])
 			{
 				unset($events[$k]);
-				continue;	// same uid, but references a different event or is own master
+				continue;	// same uid, but references a different event or its own master
 			}
 			if (!$master || $recurrence['id'] != $master['id'])	// real exception
 			{
@@ -929,7 +936,7 @@ class calendar_groupdav extends Api\CalDAV\Handler
 					$recurrence['participants'][$user] = 'R';
 				}
 				//error_log('real exception: '.array2string($recurrence));
-				// remove from masters recur_exception, as exception is include
+				// remove from masters recur_exception, as exception is included
 				// at least Lightning "understands" EXDATE as exception from what's included
 				// in the whole resource / VCALENDAR component
 				// not removing it causes Lightning to remove the exception itself
@@ -1620,12 +1627,13 @@ class calendar_groupdav extends Api\CalDAV\Handler
 	{
 		if (strpos($column=self::$path_attr,'_') === false) $column = 'cal_'.$column;
 
-		$event = $this->bo->read(array($column => $id, 'cal_deleted IS NULL', 'cal_reference=0'), null, true, 'server');
+		$event = $this->bo->read(array($column => $id, 'cal_deleted IS NULL', 'cal_reference=0'), null, true,
+			$date_format = Api\CalDAV::isJSON() ? 'object' : 'server');
 		if ($event) $event = array_shift($event);	// read with array as 1. param, returns an array of events!
 
 		if (!($retval = $this->bo->check_perms(calendar_bo::ACL_FREEBUSY,$event, 0, 'server')) &&
 			// above can be true, if current user is not in master but just a recurrence
-			(!$event['recur_type'] || !($events = self::get_series($event['uid'], $this->bo))))
+			(!$event['recur_type'] || !($events = self::get_series($event['uid'], $this->bo, false, null, null, $date_format))))
 		{
 			if ($this->debug > 0) error_log(__METHOD__."($id) no READ or FREEBUSY rights returning ".array2string($retval));
 			return $retval;

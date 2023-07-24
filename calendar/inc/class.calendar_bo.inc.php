@@ -1128,7 +1128,7 @@ class calendar_bo
 	}
 
 	/**
-	 * Inserts all repetions of $event in the timespan between $start and $end into $events
+	 * Inserts all repetitions of $event in the timespan between $start and $end into $events
 	 *
 	 * The new entries are just appended to $events, so $events is no longer sorted by startdate !!!
 	 *
@@ -2191,9 +2191,9 @@ class calendar_bo
 			$entry = $this->read($id, $recur_date, true, 'server');
 		}
 		$etag = $schedule_tag = $entry['id'].':'.$entry['etag'];
-		$etag .= ':'.$entry['modified'];
+		$etag .= ':'.Api\DateTime::user2server($entry['modified'], 'ts');
 
-		//error_log(__METHOD__ . "($entry[id],$client_share_uid_excpetions) entry=".array2string($entry)." --> etag=$etag");
+		//error_log(__METHOD__ . "($entry[id],$client_share_uid_exceptions) entry=".array2string($entry)." --> etag=$etag");
 		return $etag;
 	}
 

@@ -538,9 +538,9 @@ class calendar_rrule implements Iterator
 			$previous = clone $this->current;
 			$this->next_no_exception();
 		}
-		// if enddate is now before next acurrence, but not on same day, we use previous recurrence
+		// if enddate is now before next occurrence, but not on same day, we use previous recurrence
 		// this can happen if client gives an enddate which is NOT a recurrence date
-		// eg. for a on Monday recurring weekly event a Tuesday as enddate
+		// e.g. for an on Monday recurring weekly event a Tuesday as enddate
 		if ($this->enddate < $this->current  && $this->current->format('Ymd') != $this->enddate->format('Ymd'))
 		{
 			$last = $previous;
