@@ -46,7 +46,8 @@ li {
 		return {
 			...super.properties,
 			value: String,
-			select_options: {type: Array}
+			select_options: {type: Array},
+			searchUrl: String // Used for options from file
 		}
 	}
 
@@ -64,12 +65,16 @@ li {
 
 	public async getUpdateComplete()
 	{
-		const result = await super.getUpdateComplete();
 		if(this.__fetchComplete)
 		{
+			const response = await super.getUpdateComplete();
 			await this.__fetchComplete;
+			return response;
 		}
-		return result;
+		else
+		{
+			return super.getUpdateComplete();
+		}
 	}
 
 	protected find_select_options(_attrs)
@@ -81,13 +86,14 @@ li {
 		}
 
 		// Cache options from file
-		if(_attrs.searchUrl && _attrs.searchUrl.includes(".json") && this.__fetchComplete == null)
+		if(this.searchUrl && this.searchUrl.includes(".json") && this.__fetchComplete == null)
 		{
-			this.__fetchComplete = StaticOptions.cached_from_file(this, _attrs.searchUrl).then(options =>
-			{
-				this.select_options = options;
-				this.requestUpdate();
-			});
+			this.__fetchComplete = StaticOptions.cached_from_file(this, this.searchUrl)
+				.then(options =>
+				{
+					this.select_options = options;
+					this.requestUpdate();
+				});
 		}
 	}
 

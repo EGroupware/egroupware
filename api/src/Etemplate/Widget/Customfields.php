@@ -245,9 +245,15 @@ class Customfields extends Transformer
 			if (!empty($data['values']))
 			{
 				// Full URL for options from file
-				if(!empty($data['values']['@']))
+				if(!empty($data['values']['@']) && strpos($data['values']['@'], '/') == 0 && !str_contains($data['values']['@'], 'webdav.php') &&
+					$stat = Api\Vfs::stat($data['values']['@'])
+				)
 				{
-					$fields[$data['name']]['values']['@'] = Api\Framework::link(Api\Vfs::download_url($data['values']['@']));
+
+					$data['values']['@'] = $fields[$data['name']]['values']['@'] = Api\Framework::link(
+						Api\Vfs::download_url($data['values']['@']),
+						['download' => $stat['mtime']]
+					);
 				}
 				Select::fix_encoded_options($data['values']);
 			}
