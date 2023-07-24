@@ -4196,7 +4196,7 @@ export class et2_nextmatch_customfields extends et2_customfields_list implements
 				};
 				if(field.values["@"])
 				{
-					attrs.searchUrl = this.egw().webserverUrl + '/webdav.php' + field.values["@"];
+					attrs.searchUrl = field.values["@"];
 				}
 				widget = loadWebComponent(
 					field.type == 'select-account' ? 'et2-nextmatch-header-account' : "et2-nextmatch-header-filter",
