@@ -33,16 +33,17 @@ class JsCalendar
 	 *
 	 * @param int|array $event
 	 * @param bool|"pretty" $encode=true true: JSON encode, "pretty": JSON encode with pretty-print, false: return raw data e.g. from listing
+	 * @param ?array $exceptions=null
 	 * @return string|array
 	 * @throws Api\Exception\NotFound
 	 */
-	public static function getJsEvent($event, $encode=true)
+	public static function JsEvent($event, $encode=true, array $exceptions=[])
 	{
 		if (is_scalar($event) && !($event = self::getCalendar()->read($event)))
 		{
 			throw new Api\Exception\NotFound();
 		}
-		$data = array_filter([
+		$data = [
 			self::AT_TYPE => self::TYPE_EVENT,
 			'prodId' => 'EGroupware Calendar '.$GLOBALS['egw_info']['apps']['api']['version'],
 			'uid' => self::uid($event['uid']),
@@ -54,16 +55,25 @@ class JsCalendar
 			'timeZone' => $event['tzid'],
 			'showWithoutTime' => $event['whole_day'],
 			'duration' => self::Duration($event['start'], $event['end'], $event['whole_day']),
+			'recurrenceRules' => null,
+			'recurrenceOverrides' => null,
 			'freeBusyStatus' => $event['non_blocking'] ? 'free' : null,   // default is busy
 			'description' => $event['description'],
 			'participants' => self::Participants($event),
+			'alerts' => self::Alerts($event['alarm']),
 			'status' => empty($event['deleted']) ? 'confirmed' : 'cancelled',   // we have no "tentative" event-status (only participants)!
 			'priority' => self::Priority($event['priority']),
 			'categories' => self::categories($event['category']),
 			'privacy' => $event['public'] ? 'public' : 'private',
-			'alerts' => self::Alerts($event['alarms']),
 			'egroupware.org:customfields' => self::customfields($event),
-		]+self::Locations($event)+self::Recurrence($event));
+		] + self::Locations($event);
+
+		if (!empty($event['recur_type']))
+		{
+			$data = array_merge($data, self::Recurrence($event, $data, $exceptions));
+		}
+		$data = array_filter($data);
+
 		if ($encode)
 		{
 			return Api\CalDAV::json_encode($data, $encode === "pretty");
@@ -149,7 +159,13 @@ class JsCalendar
 						break;
 
 					case 'alerts':
-						$event['alarms'] = self::parseAlerts($value);
+						throw new \Exception('Creating or modifying alerts is NOT (yet) implemented!');
+						break;
+
+					case 'recurrenceRules':
+					case 'recurrenceOverrides':
+					case 'excludedRecurrenceRules':
+						throw new \Exception('Creating or modifying recurring events is NOT (yet) implemented!');
 						break;
 
 					case 'categories':
@@ -174,6 +190,13 @@ class JsCalendar
 		catch (\Throwable $e) {
 			self::handleExceptions($e, 'JsCalendar Event', $name, $value);
 		}
+
+		// if no participant given add current user as CHAIR to the event
+		if (empty($event['participants']))
+		{
+			$event['participants'][$GLOBALS['egw_info']['user']['account_id']] = 'ACHAIR';
+		}
+
 		return $event;
 	}
 
@@ -538,13 +561,15 @@ class JsCalendar
 				$info = self::getCalendar()->resource_info($uid) ?: [];
 				switch($info['type'] ?? $info['app'])
 				{
-					case 'user':
+					case 'e':   // email
+					case 'c':   // contact
+					case 'u':   // user
 						$info['kind'] = 'individual';
 						break;
-					case 'group':
+					case 'g':
 						$info['kind'] = 'group';
 						break;
-					case 'resources':
+					case 'r':
 						$info['kind'] = Api\CalDAV\Principals::resource_is_location($user_id) ? 'location' : 'resource';
 						break;
 				}
@@ -552,7 +577,7 @@ class JsCalendar
 			catch (\Exception $e) {
 				$info = [];
 			}
-			$participant = [
+			$participant = array_filter([
 				self::AT_TYPE => self::TYPE_PARTICIPANT,
 				'name' => $info['name'] ?? null,
 				'email' => $info['email'] ?? null,
@@ -565,7 +590,7 @@ class JsCalendar
 					'informational' => $role === 'NON-PARTICIPANT',
 				]),
 				'participationStatus' => $status2jscal[$status],
-			];
+			]);
 			$participants[$uid] = $participant;
 		}
 
@@ -612,22 +637,122 @@ class JsCalendar
 		return $priority_egw2jscal[$priority];
 	}
 
+	const TYPE_RECURRENCE_RULE = 'RecurrenceRule';
+	const TYPE_NDAY = 'NDay';
+
 	/**
 	 * Return recurrence properties: recurrenceId, recurrenceRules, recurrenceOverrides, ...
 	 *
-	 * @TODO
+	 * EGroupware only supports a subset of iCal recurrence rules (e.g. only byDay and byMonthDay, no other by-types)!
+	 *
 	 * @param array $event
+	 * @param array $data JSCalendar representation of event to calculate overrides
+	 * @param array $exceptions exceptions
 	 * @return array
 	 */
-	protected static function Recurrence(array $event)
+	protected static function Recurrence(array $event, array $data, array $exceptions=[])
 	{
-		return [];
+		if (empty($event['recur_type']))
+		{
+			return [];  // non-recurring event
+		}
+		$rriter = \calendar_rrule::event2rrule($event, false);
+		$rrule = $rriter->generate_rrule('2.0');
+		$rule = array_filter([
+			self::AT_TYPE => self::TYPE_RECURRENCE_RULE,
+			'frequency' => strtolower($rrule['FREQ']),
+			'interval' => $rrule['INTERVAL'] ?? null,
+			'until' => empty($rrule['UNTIL']) ? null : self::DateTime($rrule['UNTIL'], $event['tzid']),
+		]);
+		if (!empty($GLOBALS['egw_info']['user']['preferences']['calendar']['weekdaystarts']) &&
+			$GLOBALS['egw_info']['user']['preferences']['calendar']['weekdaystarts'] !== 'Monday')
+		{
+			$rule['firstDayOfWeek'] = strtolower(substr($GLOBALS['egw_info']['user']['preferences']['calendar']['weekdaystarts'], 0, 2));
+		}
+		if (!empty($rrule['BYDAY']))
+		{
+			$rule['byDay'] = array_filter([
+				self::AT_TYPE => self::TYPE_NDAY,
+				'day' => strtolower(substr($rrule['BYDAY'], $rriter->monthly_byday_num ? strlen((string)$rriter->monthly_byday_num) : 0)),
+				'nthOfPeriod' => $rriter->monthly_byday_num,
+			]);
+		}
+		elseif (!empty($rrule['BYMONTHDAY']))
+		{
+			$rule['byMonthDay'] = [$rrule['BYMONTHDAY']];   // EGroupware supports only a single day!
+		}
+
+		$overrides = [];
+		// adding excludes to the overrides
+		if (!empty($event['recur_exception']))
+		{
+			foreach ($event['recur_exception'] as $timestamp)
+			{
+				$ex_date = new Api\DateTime($timestamp, Api\DateTime::$server_timezone);
+				if (!empty($event['whole_day']))
+				{
+					$ex_date->setTime(0, 0, 0);
+				}
+				$overrides[self::DateTime($ex_date, $event['tzid'])] = [
+					'excluded' => true,
+				];
+			}
+		}
+
+		// adding exceptions to the overrides
+		foreach($exceptions as $exception)
+		{
+			$overrides[self::DateTime($exception['recurrence'], $event['tzid'])] = self::getPatch(self::JsEvent($exception, false), $data);
+		}
+
+		return array_filter([
+			'recurrenceRules' => [$rule],
+			'recurrenceOverrides' => $overrides,
+		]);
 	}
+
+	/**
+	 * Get patch from an event / recurrence compared to the master event
+	 *
+	 * @param array $event
+	 * @param array $master
+	 * @return array with modified attributes
+	 */
+	public static function getPatch(array $event, array $master=null)
+	{
+		if (!$master)
+		{
+			return $event;
+		}
+		// array_diff_assoc only reports values changed or set in $event for scalar values
+		$patch = array_diff_assoc($event, $master);
+
+		// we need to report unset / removed values
+		foreach($master as $name => $value)
+		{
+			if (isset($value) && !isset($event[$name]))
+			{
+				$patch[$name] = null;
+			}
+		}
+
+		// for non-scalar values, we have to call ourselves recursive
+		foreach($event as $name => $value)
+		{
+			if (is_array($value) && ($diff = self::getPatch($event[$name], $master[$name])))
+			{
+				$patch[$name] = $diff;
+			}
+		}
+		return $patch;
+	}
+
+	const TYPE_ALERT = 'Alert';
+	const TYPE_OFFSET_TRIGGER = 'OffsetTrigger';
 
 	/**
 	 * Return alerts object
 	 *
-	 * @TODO
 	 * @param array|null $alarms
 	 * @return array
 	 */
@@ -636,7 +761,19 @@ class JsCalendar
 		$alerts = [];
 		foreach($alarms ?? [] as $alarm)
 		{
-
+			if (!isset($alarm['offset']) || empty($alarm['all']) && $alarm['owner'] != $GLOBALS['egw_info']['user']['account_id'])
+			{
+				continue;   // do NOT show other users alarms
+			}
+			$alerts[$alarm['uid']] = array_filter([
+				self::AT_TYPE => self::TYPE_ALERT,
+				'trigger' => [
+					self::AT_TYPE => self::TYPE_OFFSET_TRIGGER,
+					'offset' => $alarm['offset'],
+				],
+				'acknowledged' => empty($alarm['attrs']['ACKNOWLEDGED']['value']) ? null :
+					self::UTCDateTime(new Api\DateTime($alarm['attrs']['ACKNOWLEDGED']['value'])),
+			]);
 		}
 		return $alerts;
 	}
