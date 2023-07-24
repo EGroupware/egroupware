@@ -1138,11 +1138,11 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 		 * @param {string} search
 		 * @protected
 		 */
-		protected remoteSearch(search : string, options : object)
+		protected remoteSearch(search : string, options : object) : Promise<SelectOption[]>
 		{
 			if(!this.searchUrl)
 			{
-				return Promise.resolve();
+				return Promise.resolve([]);
 			}
 
 			// Check our URL: JSON file or URL?
@@ -1154,10 +1154,8 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			else
 			{
 				// Fire off the query to the server
-				let promise = this.remoteQuery(search, options);
+				return this.remoteQuery(search, options);
 			}
-
-			return promise;
 		}
 
 		/**
@@ -1167,7 +1165,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 		 * @param {object} options
 		 * @protected
 		 */
-		protected jsonQuery(search : string, options : object)
+		protected jsonQuery(search : string, options : object) : Promise<SelectOption[]>
 		{
 			// Get the file
 			const controller = new AbortController();
@@ -1209,7 +1207,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 		 * @returns {any}
 		 * @protected
 		 */
-		protected remoteQuery(search : string, options : object)
+		protected remoteQuery(search : string, options : object) : Promise<SelectOption[]>
 		{
 			// Include a limit, even if options don't, to avoid massive lists breaking the UI
 			let sendOptions = {
@@ -1217,29 +1215,30 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 				...options
 			}
 			return this.egw().request(this.egw().link(this.egw().ajaxUrl(this.egw().decodePath(this.searchUrl)),
-				{query: search, ...sendOptions}), [search, sendOptions]).then((result) =>
+				{query: search, ...sendOptions}), [search, sendOptions]).then((results) =>
 			{
-				this.processRemoteResults(result);
-				return result;
+				// If results have a total included, pull it out.
+				// It will cause errors if left in the results
+				let total = null;
+				if(typeof results.total !== "undefined")
+				{
+					total = results.total;
+					delete results.total;
+				}
+				let entries = cleanSelectOptions(results);
+				this.processRemoteResults(entries, total);
+				return entries;
 			});
 		}
 
 		/**
 		 * Add in remote results
 		 * @param results
+		 * @param totalResults If there are more results than were returned, total number of matches
 		 * @protected
 		 */
-		protected processRemoteResults(results)
+		protected processRemoteResults(entries, totalResults = 0)
 		{
-			// If results have a total included, pull it out.
-			// It will cause errors if left in the results
-			let total = null;
-			if(typeof results.total !== "undefined")
-			{
-				total = results.total;
-				delete results.total;
-			}
-			let entries = cleanSelectOptions(results);
 			let resultCount = entries.length;
 
 			if(entries.length == 0)
@@ -1288,12 +1287,12 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 					})
 					.then(() =>
 					{
-						if(total && total > resultCount)
+						if(totalResults && totalResults > resultCount)
 						{
 							// More results available that were not sent
 							let count = document.createElement("span")
 							count.classList.add("remote");
-							count.textContent = this.egw().lang("%1 more...", total - resultCount);
+							count.textContent = this.egw().lang("%1 more...", totalResults - resultCount);
 							target.appendChild(count);
 						}
 					});
