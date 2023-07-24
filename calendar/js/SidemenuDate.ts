@@ -92,7 +92,7 @@ export class SidemenuDate extends Et2Date
 		await super.init();
 
 		// This needs to wait until after everything is created
-		if(this._instance.daysContainer !== undefined)
+		if(this._instance?.daysContainer !== undefined)
 		{
 			this._instance.weekNumbers.addEventListener("mouseover", this._handleDayHover);
 			this._instance.weekNumbers.addEventListener("mouseout", this._clearHover);
