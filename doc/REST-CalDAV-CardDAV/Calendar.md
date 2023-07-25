@@ -299,31 +299,7 @@ X-WebDAV-Status: 201 Created
 ```
 </details>
 
-
 * **PUT**  requests with  a ```Content-Type: application/json``` header allow modifying single resources (requires to specify all attributes!)
-
-<details>
-   <summary>Example: PUT request to update a resource</summary>
-
-```
-cat <<EOF | curl -i 'https://example.org/egroupware/groupdav.php/<username>/addressbook/1234' -X PUT -d @- -H "Content-Type: application/json" --user <username>
-{
-  "uid": "5638-8623c4830472a8ede9f9f8b30d435ea4",
-  "prodId": "EGroupware Addressbook 21.1.001",
-  "created": "2010-10-21T09:55:42Z",
-  "updated": "2014-06-02T14:45:24Z",
-  "name": [
-    { "type": "@type": "NameComponent", "personal", "value": "Default" },
-    { "type": "@type": "NameComponent", "surname", "value": "Tester" }
-  ],
-  "fullName": { "value": "Default Tester" },
-....
-}
-EOF
-
-HTTP/1.1 204 No Content
-```
-</details>
 
 <details>
    <summary>Example: PUT request with UID to update an existing resource or create it, if not exists</summary>
@@ -371,6 +347,7 @@ HTTP/1.1 204 No content
 * **DELETE** requests delete single resources
 <details>
    <summary>Example: Delete an existing event</summary>
+
 > Please note: the "Accept: application/json" header is required, as the CalDAV server would return 404 NotFound as the url does NOT end with .ics
 
 ```
