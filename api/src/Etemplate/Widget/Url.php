@@ -16,6 +16,7 @@
 namespace EGroupware\Api\Etemplate\Widget;
 
 use EGroupware\Api\Etemplate;
+use EGroupware\Api;
 
 /**
  * eTemplate URL widget handles URLs, emails & phone numbers
@@ -152,31 +153,49 @@ class Url extends Etemplate\Widget
 	/**
 	 * Handle ajax searches for existing contact based on email
 	 *
-	 * @return Array|boolean Contact data of first match, or false if contact does not exist
+	 * @param string|string[] $_email
+	 * @return Array|boolean Contact data of first match, or false if contact does not exist or
+	 *  for string[] array/object with email as key and the above as value
 	 */
 	public static function ajax_contact($_email)
 	{
-		$email = \EGroupware\Api\Mail::stripRFC822Addresses(array($_email));
-		$response = \EGroupware\Api\Json\Response::get();
+		$emails = Api\Mail::stripRFC822Addresses((array)$_email);
+		$response = Api\Json\Response::get();
 		$result = $GLOBALS['egw']->contacts->search(
-			array('contact_email' => $email[0], 'contact_email_home' => $email[0]),
+			array('contact_email' => $emails, 'contact_email_home' => $emails),
 			array('contact_id', 'email', 'email_home', 'n_fn'),
 			'', '', '%', false, 'OR', false
 		);
 		// iterate through the possibilities and find the best match to what was entered
-		$best_match = null;
-		$best_match_score = -1;
-		foreach($result as $possibility)
+		$best_matches = [];
+		$best_scores = [];
+		foreach($emails as $key => $email)
 		{
-			$score = max(similar_text(strtolower($_email), strtolower($possibility['n_fn'] . " " . $possibility['email'])),
-						 similar_text(strtolower($_email), strtolower($possibility['n_fn'] . " " . $possibility['email_home']))
-			);
-			if($score > $best_match_score)
+			$len_email = strlen($email);
+			$query = strtolower(((array)$_email)[$key]);
+			foreach($result as $possibility)
 			{
-				$best_match_score = $score;
-				$best_match = $possibility;
+				if (!strcasecmp($email, (substr($possibility['email'], -1) === '>' ?
+						substr($possibility['email'], -$len_email-1, -1) : $possibility['email'])) ||
+					!strcasecmp($email, (substr($possibility['email_home'], -1) === '>' ?
+						substr($possibility['email_home'], -$len_email-1, -1) : $possibility['email_home'])))
+				{
+					$score = max(similar_text($query, strtolower($possibility['n_fn'] . " " . $possibility['email'])),
+						similar_text($query, strtolower($possibility['n_fn'] . " " . $possibility['email_home']))
+					);
+					if (!isset($best_scores[$key]) || $score > $best_scores[$key])
+					{
+						$best_scores[$key] = $score;
+						$best_matches[$key] = $possibility;
+					}
+				}
 			}
 		}
-		$response->data($result ? $best_match : false);
+		$result = [];
+		foreach((array)$_email as $key => $value)
+		{
+			$result[$value] = $best_matches[$key] ?? false;
+		}
+		$response->data(is_array($_email) ? $result : array_shift($result));
 	}
 }
