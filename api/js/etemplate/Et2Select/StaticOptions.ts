@@ -53,7 +53,7 @@ export const Et2StaticSelectMixin = <T extends Constructor<Et2WidgetWithSelect>>
 			const options = super.select_options || [];
 			// make sure result is unique
 
-			return [...new Map([...options, ...(this.static_options || [])].map(item =>
+			return [...new Map([...(this.static_options || []), ...options].map(item =>
 				[item.value, item])).values()];
 
 		}
