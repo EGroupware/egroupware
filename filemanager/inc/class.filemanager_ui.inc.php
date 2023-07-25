@@ -1810,6 +1810,7 @@ class filemanager_ui
 
 				try
 				{
+					$data['path'] = $path;
 					if(Vfs::copy_uploaded($tmp_path, $path, $props, false))
 					{
 						++$arr['files'];
