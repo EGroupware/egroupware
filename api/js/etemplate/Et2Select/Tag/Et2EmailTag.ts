@@ -117,18 +117,43 @@ export class Et2EmailTag extends Et2Tag
 		this.removeEventListener("mouseleave", this.handleMouseLeave);
 	}
 
+	static contact_request : Promise<any>;
+	static contact_requests : { [key: string]: Array<Function>; } = {};
+
 	public checkContact(email : string) : Promise<boolean | ContactInfo>
 	{
 		if(typeof Et2EmailTag.email_cache[email] !== "undefined")
 		{
 			return Promise.resolve(Et2EmailTag.email_cache[email]);
 		}
-		return this.egw().jsonq('EGroupware\\Api\\Etemplate\\Widget\\Url::ajax_contact', [email]).then(
-			(result) =>
-			{
-				Et2EmailTag.email_cache[email] = result;
-				return result;
-			});
+		if (!Et2EmailTag.contact_request)
+		{
+			Et2EmailTag.contact_request = this.egw().jsonq('EGroupware\\Api\\Etemplate\\Widget\\Url::ajax_contact', [[]], null, null,
+				(parameters) => {
+					for(const email in Et2EmailTag.contact_requests)
+					{
+						parameters[0].push(email);
+					}
+				}).then((result) =>
+				{
+					for(const email in Et2EmailTag.contact_requests)
+					{
+						Et2EmailTag.email_cache[email] = result[email];
+						Et2EmailTag.contact_requests[email].forEach((resolve) => {
+							resolve(result[email]);
+						});
+					}
+					Et2EmailTag.contact_request = null;
+					Et2EmailTag.contact_requests = {};
+				});
+		}
+		if (typeof Et2EmailTag.contact_requests[email] === 'undefined')
+		{
+			Et2EmailTag.contact_requests[email] = [];
+		}
+		return new Promise(resolve => {
+			Et2EmailTag.contact_requests[email].push(resolve);
+		});
 	}
 
 	handleMouseEnter(e : MouseEvent)
