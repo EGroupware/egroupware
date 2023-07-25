@@ -586,17 +586,32 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 						continue;
 					}
 
-					// Given a value we need to search for - this will add in all matches, including the one needed
-					this.remoteSearch(newValueElement, this.searchOptions).then((result : SelectOption[]) =>
-					{
-						const option = <SelectOption>result.find(o => o.value == newValueElement);
-						if(option)
-						{
-							this._selected_remote.push(option);
-						}
-					});
+					this._missingOption(newValueElement);
 				}
 			}
+		}
+
+		/**
+		 * Some [part of a] value is missing from the available options, but should be there, so find and add it.
+		 *
+		 * This is used when not all options are sent to the client (search, link list).  Ideally we want to send
+		 * the options for the current value, but sometimes this is not the best option so here we search or create
+		 * the option as needed.  These are not free entries, but need to match some list somewhere.
+		 *
+		 * @param {string} newValueElement
+		 * @protected
+		 */
+		protected _missingOption(newValueElement : string)
+		{
+			// Given a value we need to search for - this will add in all matches, including the one needed
+			this.remoteSearch(newValueElement, this.searchOptions).then((result : SelectOption[]) =>
+			{
+				const option = <SelectOption>result.find(o => o.value == newValueElement);
+				if(option)
+				{
+					this._selected_remote.push(option);
+				}
+			});
 		}
 
 		protected fix_bad_value()
