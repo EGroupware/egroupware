@@ -11,6 +11,7 @@ import {css} from "@lion/core";
 import {Et2Select} from "../Et2Select/Et2Select";
 import {Et2LinkAppSelect} from "./Et2LinkAppSelect";
 import {Et2Link} from "./Et2Link";
+import {cleanSelectOptions} from "../Et2Select/FindSelectOptions";
 
 export class Et2LinkSearch extends Et2Select
 {
@@ -74,7 +75,8 @@ export class Et2LinkSearch extends Et2Select
 		}
 		return request.then((result) =>
 		{
-			this.processRemoteResults(result);
+			const entries = cleanSelectOptions(result);
+			this.processRemoteResults(entries);
 		});
 	}
 
