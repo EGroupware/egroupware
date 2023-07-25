@@ -74,7 +74,8 @@ class ApiHandler extends Api\CalDAV\Handler
 					'body' => $data['bodyHtml'] ?? null ?: $data['body'] ?? '',
 					'mimeType' => !empty($data['bodyHtml']) ? 'html' : 'plain',
 					'identity' => $ident_id,
-				]+self::prepareAttachments($data['attachments'] ?? [], $data['attachmentType'] ?? 'attach', $do_compose));
+				]+self::prepareAttachments($data['attachments'] ?? [], $data['attachmentType'] ?? 'attach',
+					$data['shareExpiration'], $data['sharePassword'], $do_compose));
 
 				// for compose we need to construct a URL and push it to the client (or give an error if the client is not online)
 				if ($do_compose)
@@ -202,13 +203,22 @@ class ApiHandler extends Api\CalDAV\Handler
 	/**
 	 * Convert an attachment name into an upload array for mail_compose::compose
 	 *
-	 * @param string[]? $attachments either "/mail/attachments/<token>" / file in temp_dir or VFS path
-	 * @param string? $attachmentType "attach" (default), "link", "share_ro", "share_rw"
+	 * @param string[] $attachments either "/mail/attachments/<token>" / file in temp_dir or VFS path
+	 * @param ?string $attachmentType "attach" (default), "link", "share_ro", "share_rw"
+	 * @param ?string $expiration "YYYY-mm-dd" or e.g. "+2days"
+	 * @param ?string $password optional password for the share
 	 * @param bool $compose true: for compose window, false: to send
-	 * @return array with values for keys "file", "name" and "filemode"
+	 * @return array with values for keys "file", "name", "filemode", "expiration" and "password"
 	 * @throws Exception if file not found or unreadable
 	 */
-	protected static function prepareAttachments(array $attachments, string $attachmentType=null, bool $compose=true)
+	/**
+	 * @param array $attachments
+	 * @param string|null $attachmentType
+	 * @param bool $compose
+	 * @return array
+	 * @throws Api\Exception
+	 */
+	protected static function prepareAttachments(array $attachments, string $attachmentType=null, string $expiration=null, string $password=null, bool $compose=true)
 	{
 		$ret = [];
 		foreach($attachments as $attachment)
@@ -262,6 +272,12 @@ class ApiHandler extends Api\CalDAV\Handler
 			if (!in_array($ret['filemode'], $valid=['attach', 'link', 'share_ro', 'share_rw']))
 			{
 				throw new \Exception("Invalid value '$ret[filemode]' for attachmentType, must be one of: '".implode("', '", $valid)."'", 422);
+			}
+			// EPL share password and expiration
+			$ret['password'] = $password ?: null;
+			if (!empty($expiration))
+			{
+				$ret['expiration'] = (new Api\DateTime($expiration))->format('Y-m-d');
 			}
 		}
 		return $ret;
