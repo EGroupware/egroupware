@@ -317,6 +317,7 @@ important	mail	en	important
 in mailbox: %1, with id: %2, and partid: %3	mail	en	In Mailbox: %1, with ID: %2, and PartID: %3
 in order to protect your privacy all external sources within this email are blocked.	mail	en	In order to protect your privacy all external sources within this email are blocked.
 inbox	mail	en	INBOX
+information to show on email tag	mail	en	Information to show on email tag
 initialization of mail failed. please use the wizard to cope with the problem.	mail	en	The initialisation of the mail module failed. Please use the configuration wizard to correct the configuration.
 inline	mail	en	Forward
 insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)	mail	en	insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)
@@ -371,6 +372,7 @@ move to archive	mail	en	Move to archive folder
 move to trash	mail	en	Move to trash
 moved %1 message(s) from %2 to %3	mail	en	Moved %1 message(s) from %2 to %3
 moving folders from one mailaccount to another is not supported	mail	en	Moving Folders from one mail account to another is not supported
+name and email	mail	en	name and email
 name of account	mail	en	Name of account
 name of imap servers (space separated host or host:port)	mail	en	Name of IMAP servers (space separated host or host:port)
 never display html emails	mail	en	Never display HTML emails
@@ -407,8 +409,10 @@ on	mail	en	on
 on behalf of	mail	en	On behalf of
 on vacation	mail	en	On vacation
 one address is not valid	mail	en	One address is not valid
+only email	mail	en	only email
 only if currently in an other app	mail	en	Only if currently in an other app
 only makes sense, if you transport password through a different channel / outside of this mail to recipients!	mail	en	Only makes sense, if you transport password through a different channel / outside of this mail to recipients!
+only name	mail	en	only name
 only needed for some servers, that do not return all folders on root level queries to retrieve all folders for that level	mail	en	only needed for some servers, that do not return all folders on root level queries to retrieve all folders for that level
 only one window	mail	en	only one window
 only send message, do not copy a version of the message to the configured sent folder	mail	en	only send message, do not copy a version of the message to the configured sent folder
@@ -694,6 +698,7 @@ yes, offer copy option	mail	en	yes, offer copy option
 yes, only trigger connection reset	mail	en	yes, only trigger connection reset
 yes, show all debug information available for the user	mail	en	yes, show all debug information available for the user
 yes, show basic info only	mail	en	yes, show basic info only
+you can select what info to be displayed on email tag	mail	en	You can select what info to be displayed on email tag
 you can either choose to save as infolog or tracker, not both.	mail	en	You can either choose to save as infolog OR tracker, not both.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	en	You can use $$start$$ for the above start date and $$end$$ for the end date.
 you may add this certificate into your contact, if you trust this signature.	mail	en	You may add this certificate into your contact, if you trust this signature.
