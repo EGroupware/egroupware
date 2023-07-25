@@ -70,13 +70,14 @@ export class Et2LinkSearch extends Et2Select
 		{
 			if(!this.query(request, this))
 			{
-				return Promise.resolve();
+				return Promise.resolve([]);
 			}
 		}
 		return request.then((result) =>
 		{
 			const entries = cleanSelectOptions(result);
 			this.processRemoteResults(entries);
+			return entries;
 		});
 	}
 
