@@ -317,6 +317,7 @@ important	mail	de	wichtig
 in mailbox: %1, with id: %2, and partid: %3	mail	de	Im Mail-Ordner: %1, mit der ID: %2 und der PartID: %3
 in order to protect your privacy all external sources within this email are blocked.	mail	de	Um Ihre Privatsphäre zu schützen, werden alle externen Inhalte in dieser E-Mail blockiert.
 inbox	mail	de	Posteingang
+information to show on email tag	mail	de	Informationsanzeige auf dem E-Mail-Tag
 initialization of mail failed. please use the wizard to cope with the problem.	mail	de	Die Initializierung des Mail-Moduls ist fehlgeschlagen. Bitte benutzen Sie den Konfigurationsassistenten um die Konfiguration zu korrigieren.
 inline	mail	de	Weiterleiten
 insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)	mail	de	Einfügen der Signatur am Anfang einer neuen E-Mail (auch Antworten/Weiterleiten). <br>Die Signatur ist dann Teil der E-Mail und kann möglicherweise nicht über die Funktionalität >Signatur ändern/auswählen< verändert werden.
@@ -371,6 +372,7 @@ move to archive	mail	de	Verschiebe in Archivordner
 move to trash	mail	de	Verschiebe in Papierkorb
 moved %1 message(s) from %2 to %3	mail	de	%1 Nachrichten wurden von %2 nach %3 verschoben
 moving folders from one mailaccount to another is not supported	mail	de	Verschieben von Ordnern von einem Mailkonto zu einem anderen wird nicht unterstützt
+name and email	mail	de	Name und E-Mail
 name of account	mail	de	Konten-Bezeichnung
 name of imap servers (space separated host or host:port)	mail	de	Name der IMAP Server (Leerzeichen getrennt Host oder Host:Port)
 never display html emails	mail	de	Niemals anzeigen
@@ -407,8 +409,10 @@ on	mail	de	am
 on behalf of	mail	de	Im Namen von
 on vacation	mail	de	Abwesenheit
 one address is not valid	mail	de	Eine Adresse ist ungültig
+only email	mail	de	Nur E-Mail
 only if currently in an other app	mail	de	Nur anzeigen wenn aktuell in einer anderen Anwendung
 only makes sense, if you transport password through a different channel / outside of this mail to recipients!	mail	de	Macht nur dann Sinn, wenn das Passwort auf einem anderen Weg, außerhalb dieser Mail, den Empfängern mitgeteilt wird!
+only name	mail	de	Nur Name
 only needed for some servers, that do not return all folders on root level queries to retrieve all folders for that level	mail	de	wird nur für bestimmte Server gebraucht, die NICHT alle Ordner für Root-Knoten-Abfragen zurückgeben (damit wird in diesem Fall explizit auf Ordner in den Prefixes der Namespaces geprüft)
 only one window	mail	de	nur ein einziges Fenster
 only send message, do not copy a version of the message to the configured sent folder	mail	de	Versende Nachricht, kopiere sie nicht in den konfigurierten Gesendet-Ordner
@@ -694,6 +698,7 @@ yes, offer copy option	mail	de	Ja, mit Kopieroption
 yes, only trigger connection reset	mail	de	Ja, aber führe nur das zurücksetzen der Verbindung aus
 yes, show all debug information available for the user	mail	de	Ja, zeige alle dem Benutzer zugänglichen Informationen an.
 yes, show basic info only	mail	de	Ja, nur Basis Informationen anzeigen
+you can select what info to be displayed on email tag	mail	de	Sie können auswählen, welche Informationen auf dem E-Mail-Tag angezeigt werden sollen
 you can either choose to save as infolog or tracker, not both.	mail	de	Sie können eine E-Mail entweder als InfoLog-, ODER als Ticket-Eintrag speichern, nicht beides gleichzeitig.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	de	Sie können $$start$$ für das obige Start- und $$end$$ für das Enddatum verwenden.
 you may add this certificate into your contact, if you trust this signature.	mail	de	Sie können dieses Zertifikat in Ihren Kontakt speichern, wenn Sie dieser Signatur trauen.

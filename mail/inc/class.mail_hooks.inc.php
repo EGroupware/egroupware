@@ -364,7 +364,7 @@ class mail_hooks
 			'emailTag' => [
 				'type' => 'select',
 				'label' => 'Information to show on email tag',
-				'help' => 'You can select what info to be dispayed on email tag',
+				'help' => 'You can select what info to be displayed on email tag',
 				'name' => 'emailTag',
 				'values' => [
 					'onlyname' => lang('only name'),
