@@ -89,7 +89,7 @@ export class CalendarOwner extends Et2StaticSelectMixin(Et2Select)
 		{
 			for(var i = 0; i < this.value.length; i++)
 			{
-				if(!this.menuItems.find(o => o.value == this.value[i]))
+				if(!this.select_options.find(o => o.value == this.value[i]))
 				{
 					missing_labels.push(this.value[i]);
 				}
