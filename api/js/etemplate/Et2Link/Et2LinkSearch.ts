@@ -53,7 +53,7 @@ export class Et2LinkSearch extends Et2Select
 
 	get _appNode() : Et2LinkAppSelect
 	{
-		return this.parentNode.querySelector("et2-link-apps");
+		return this.parentNode?.querySelector("et2-link-apps");
 	}
 
 	/**
@@ -65,7 +65,7 @@ export class Et2LinkSearch extends Et2Select
 
 	protected remoteQuery(search : string, options : object)
 	{
-		let request = this.egw().request(this.searchUrl, [this._appNode.value, '', search, options]);
+		let request = this.egw().request(this.searchUrl, [this._appNode?.value ?? options.app, '', search, options]);
 		if(this.query && typeof this.query == "function")
 		{
 			if(!this.query(request, this))
