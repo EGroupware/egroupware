@@ -1791,7 +1791,6 @@ class filemanager_ui
 							$path = $info['dirname'] . '/'. $info['filename'] . " ($i)." . $info['extension'];
 							$i++;
 						}
-						$data['path'] = $path;
 						break;
 					case 'ask':
 					default:
@@ -1811,6 +1810,7 @@ class filemanager_ui
 
 				try
 				{
+					$data['path'] = $path;
 					if(Vfs::copy_uploaded($tmp_path, $path, $props, false))
 					{
 						++$arr['files'];
