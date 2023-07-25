@@ -300,7 +300,17 @@ export class Et2LinkString extends Et2Widget(LitElement) implements et2_IDetache
 		this._loadingPromise = <Promise<LinkInfo[]>>(this.egw().jsonq('EGroupware\\Api\\Etemplate\\Widget\\Link::ajax_link_list', [_value]))
 			.then(_value =>
 			{
-				this._addLinks(not_saved_links.concat(_value));
+				if(_value && Array.isArray(_value))
+				{
+					for(let link of <LinkInfo[]>_value)
+					{
+						if(!not_saved_links.some(l => l.app == link.app && l.id == link.id))
+						{
+							not_saved_links.push(link);
+						}
+					}
+				}
+				this._addLinks(not_saved_links);
 				this._loadingPromise = null;
 			})
 	}
