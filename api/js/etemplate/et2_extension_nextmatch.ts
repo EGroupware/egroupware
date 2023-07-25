@@ -4194,7 +4194,7 @@ export class et2_nextmatch_customfields extends et2_customfields_list implements
 					id: cf_id,
 					emptyLabel: field.label
 				};
-				if(field.values["@"])
+				if(field.values && field.values["@"])
 				{
 					attrs.searchUrl = field.values["@"];
 				}
