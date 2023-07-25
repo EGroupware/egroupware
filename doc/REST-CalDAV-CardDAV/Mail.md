@@ -46,7 +46,7 @@ The content of the POST request is a JSON encoded object with following attribut
   - "link" send as sharing link
   - "share_ro" send a readonly share using the current file content (VFS only)
   - "share_rw" send as writable share (VFS and EPL only)
-- ```shareExpiration```: "yyyy-mm-dd", default not accessed in 100 days (EPL only)
+- ```shareExpiration```: "yyyy-mm-dd" or e.g. "+2days", default not accessed in 100 days (EPL only)
 - ```sharePassword```: string with password required to access share, default none (EPL only)
 - ```folder```: folder to store send mail, default Sent folder
 - ```priority```: 1: high, 3: normal (default), 5: low
