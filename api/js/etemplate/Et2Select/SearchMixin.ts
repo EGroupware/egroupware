@@ -375,6 +375,37 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 					tag.removable = !this.readonly;
 				});
 			}
+			if(changedProperties.has("value") && this.value)
+			{
+				// Overridden to add options if allowFreeEntries=true
+				if(this.allowFreeEntries && typeof this.value == "string" && !this.select_options.find(o => o.value == this.value && !o.class.includes('remote')))
+				{
+					this.createFreeEntry(this.value);
+				}
+				else if(this.allowFreeEntries && this.multiple)
+				{
+					this.value.forEach((e) =>
+					{
+						if(!this.select_options.find(o => o.value == e))
+						{
+							this.createFreeEntry(e);
+						}
+					});
+				}
+				if(this.searchEnabled)
+				{
+					// Check to see if value is for an option we do not have
+					for(const newValueElement of this.getValueAsArray())
+					{
+						if(this.select_options.some(o => o.value == newValueElement))
+						{
+							continue;
+						}
+
+						this._missingOption(newValueElement);
+					}
+				}
+			}
 		}
 
 		/**
@@ -560,34 +591,6 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			if(!new_value || !this.allowFreeEntries && !this.searchUrl)
 			{
 				return;
-			}
-
-			// Overridden to add options if allowFreeEntries=true
-			if(this.allowFreeEntries && typeof this.value == "string" && !this._menuItems.find(o => o.value == this.value && !o.classList.contains('remote')))
-			{
-				this.createFreeEntry(this.value);
-			}
-			else if(this.allowFreeEntries && this.multiple)
-			{
-				this.value.forEach((e) =>
-				{
-					if(!this._menuItems.find(o => o.value == e))
-					{
-						this.createFreeEntry(e);
-					}
-				});
-			}
-			if(this.searchEnabled)
-			{
-				for(const newValueElement of this.getValueAsArray())
-				{
-					if(this.select_options.some(o => o.value == newValueElement))
-					{
-						continue;
-					}
-
-					this._missingOption(newValueElement);
-				}
 			}
 		}
 
