@@ -24,6 +24,10 @@
 					<et2-description  value="Deny following groups access to security popup" label="%s:"></et2-description>
 					<et2-select-account  id="newsettings[deny_security]" multiple="true" width="100%" accountType="groups"></et2-select-account>
 				</row>
+				<row>
+					<et2-description  value="Deny following groups access to application passwords" label="%s:"></et2-description>
+					<et2-select-account  id="newsettings[deny_application_passwords]" multiple="true" width="100%" accountType="groups"></et2-select-account>
+				</row>
 			</rows>
 		</grid>
 	</template>
