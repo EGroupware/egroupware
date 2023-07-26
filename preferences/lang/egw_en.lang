@@ -45,6 +45,7 @@ default format block	preferences	en	Default format block
 default preferences	preferences	en	Default preferences
 delete categories	preferences	en	Delete categories
 deny following groups access to acl (grant access)	admin	en	Deny following groups access to ACL (grant access)
+deny following groups access to application passwords	preferences	en	Deny following groups access to application passwords
 deny following groups access to edit categories	admin	en	Deny following groups access to edit categories
 deny following groups access to preferences	admin	en	Deny following groups access to preferences
 deny following groups access to security popup	admin	en	Deny following groups access to security popup

@@ -45,6 +45,7 @@ default format block	preferences	de	Standard Formatierung
 default preferences	preferences	de	Voreinstellungen
 delete categories	preferences	de	Kategorie löschen
 deny following groups access to acl (grant access)	admin	de	Verweigere folgenden Gruppen den Zugriff in den ACL's
+deny following groups access to application passwords	preferences	de	Verweigere folgenden Gruppen den Zugriff zu Anwendungspasswörtern
 deny following groups access to edit categories	admin	de	Verweigere folgenden Gruppen den Zugriff zum Ändern der Kategorien
 deny following groups access to preferences	admin	de	Verweigere folgenden Gruppen den Zugriff zu den Einstellungen
 deny following groups access to security popup	admin	de	Verweigere folgenden Gruppen den Zugriff auf das Popup Sicherheit
