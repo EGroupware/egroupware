@@ -380,7 +380,7 @@ class JsCalendar
 		$cat_ids = [];
 		if ($categories)
 		{
-			if (!isset($bo)) $bo = new \calendar_bo();
+			if (!isset($bo)) $bo = new \calendar_boupdate();
 			$cat_ids = $bo->find_or_add_categories(array_keys($categories));
 		}
 		return $cat_ids ? implode(',', $cat_ids) : null;
