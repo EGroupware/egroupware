@@ -249,7 +249,6 @@ class Customfields extends Transformer
 					$stat = Api\Vfs::stat($data['values']['@'])
 				)
 				{
-
 					$data['values']['@'] = $fields[$data['name']]['values']['@'] = Api\Framework::link(
 						Api\Vfs::download_url($data['values']['@']),
 						['download' => $stat['mtime']]
@@ -503,7 +502,9 @@ class Customfields extends Transformer
 				// Here we need the options to validate
 				if($widget instanceof Select && !empty($field_settings['values']['@']))
 				{
-					$options = Api\Storage\Customfields::get_options_from_file($field_settings['values']['@']);
+					$file_bits = explode("/webdav.php", Api\Vfs::parse_url($field_settings['values']['@'], PHP_URL_PATH));
+					$file = array_pop($file_bits);
+					$options = Api\Storage\Customfields::get_options_from_file($file);
 					// keep extra values set by app code, eg. addressbook advanced search
 					if(!empty(self::$request->sel_options[self::$prefix . $fname]) && is_array(self::$request->sel_options[self::$prefix . $fname]))
 					{
