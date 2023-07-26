@@ -984,7 +984,8 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 		{
 			// Hidden on another tab, or no days for some reason
 			var dim = egw.getHiddenDimensions(this.days, false);
-			day_width = ( dim.w /Math.max(daycols_needed,1));
+			day_width = (dim.w / Math.max(daycols_needed, 1));
+			this.div.get(0).style.display = "";
 		}
 
 		// Create any needed widgets - otherwise, we'll just recycle
