@@ -1,3 +1,24 @@
+egroupware-docker (23.1.20230726) hardy; urgency=low
+
+  * Api/Login: application passwords / token to use instead of regular user credentials, optional with limited rights
+  * Mail: REST API to send mails including attachments / sharing links, or open interactive compose windows, [see](https://github.com/EGroupware/egroupware/blob/master/doc/REST-CalDAV-CardDAV/Mail.md)
+  * Mail: improve performace by skiping search for avatar images in contacts in favor of loading them when they become visible
+  * Calendar: new REST API to read, create, modify and delete events, [see](https://github.com/EGroupware/egroupware/blob/master/doc/REST-CalDAV-CardDAV/Calendar.md)
+  * Calendar: fix empty calendar on mobile devices
+  * Calendar: Added category filter for events without a category set
+  * Api: When clicking an email address, ask if user wants to add email to existing compose window or start a new mail
+  * Api: Customfield selectboxes can read options from a JSON file in the VFS using @[path] ex: @/home/Default/options.json
+  * Adressbook/CardDAV: unconditionally start output-buffering to fix problems with huge multiget reports from TB110 AB
+  * mailto: fix wrong URL registered for on premise installation (you need to delete it in the browser first!)
+  * Wiki: allow German umlauts and other non-ascii chars in page names
+  * Infolog / Tracker: Change timesheet total columns to ignore timesheet ACL
+  * Tracker: Add configuration setting for default tracker queue for new tickets instead of just the first one
+  * Tracker: Add read / unread filter to tracker list
+  * ActiveDirectory: implement fail over for multiple AD controllers (failed controllers are blacklisted for 5min)
+  * Setup/Authentication: added an authentication log and fallback authentication for all backends
+
+ -- Ralf Becker <rb@egroupware.org>  Wed, 26 Jul 2023 12:28:35 +0200
+
 egroupware-docker (23.1.20230620) hardy; urgency=low
 
   * Mail: Add new pane option for showing all columns in vertical 3-pane view
