@@ -34,6 +34,15 @@ class Token extends Admin\Token
 	 */
 	public static function security(array $data)
 	{
+		// add token / app passwords for non-admins only if not disabled for memberships
+		if (empty($GLOBALS['egw_info']['user']['apps']['admin']) &&
+			!empty($GLOBALS['egw_info']['server']['deny_application_passwords']) &&
+			array_intersect($GLOBALS['egw']->accounts->memberships($GLOBALS['egw_info']['user']['account_id'], true),
+				(array)$GLOBALS['egw_info']['server']['deny_application_passwords']))
+		{
+			return;
+		}
+
 		Api\Translation::add_app('admin');
 
 		return [
