@@ -698,17 +698,14 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 	{
 		var old_value = this.options.disabled;
 		this.disabled = disabled;
-		let style = window.getComputedStyle(this.div.get(0));
-		if (style.display !== 'none' && style.display !== '')
-		{
-			this.div.get(0).classList.toggle("hideme", disabled);
-		}
+
+		this.div.get(0).classList.toggle("hideme", disabled);
 
 		if(disabled)
 		{
 			this.loader.show();
 		}
-		else if (old_value !== disabled)
+		else if(old_value !== disabled)
 		{
 			// Scroll to start of day - stops jumping in FF
 			// For some reason on Chrome & FF this doesn't quite get the day start
