@@ -276,7 +276,7 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 				else
 				{
 					// Label in first column, widget in 2nd
-					const label = this.options.label || field.label;
+					const label = this.options.label || field.label || '';
 					jQuery(document.createElement("td"))
 						.prependTo(row);
 					et2_createWidget("label", {id: id + "_label", value: label.trim(), for: id}, this);
