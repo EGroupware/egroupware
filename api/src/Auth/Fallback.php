@@ -15,9 +15,7 @@ namespace EGroupware\Api\Auth;
 use EGroupware\Api;
 
 /**
- * Authentication agains a LDAP Server with fallback to SQL
- *
- * For other fallback types, simply change auth backends in constructor call
+ * Authentication against an LDAP Server (or other authentication type) with fallback to SQL
  */
 class Fallback implements Backend
 {
@@ -44,9 +42,9 @@ class Fallback implements Backend
 	function __construct($primary='ldap',$fallback='sql')
 	{
 		// do NOT save our backends in session, as we want "fallback" to be saved
-		$this->primary_backend = Api\Auth::backend(str_replace('auth_', '', $primary), false);
+		$this->primary_backend = Api\Auth::backend(str_replace('auth_', '', $primary ?: 'ldap'), false);
 
-		$this->fallback_backend = Api\Auth::backend(str_replace('auth_', '', $fallback), false);
+		$this->fallback_backend = Api\Auth::backend(str_replace('auth_', '', $fallback ?: 'sql'), false);
 	}
 
 	/**
