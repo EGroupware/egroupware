@@ -3602,7 +3602,8 @@ class mail_compose
 		exit();
 	}
 
-	public static function ajax_searchAddress($_searchStringLength=2) {
+	public static function ajax_searchAddress($_searchStringLength=2)
+	{
 		//error_log(__METHOD__. "request from seachAddress " . $_REQUEST['query']);
 		if (!is_int($_searchStringLength)) $_searchStringLength = 2;
 		$_searchString = trim($_REQUEST['query']);
@@ -3633,7 +3634,7 @@ class mail_compose
 			//error_log(__METHOD__.__LINE__.$_searchString);
 			$filter = $showAccounts ? array() : array('account_id' => null);
 			$filter['cols_to_search'] = array('n_prefix','n_given','n_family','org_name','email','email_home', 'contact_id', 'search_cfs' => false);
-			$cols = array('n_fn','n_prefix','n_given','n_family','org_name','email','email_home', 'contact_id', 'etag');
+			$cols = array('n_fn','n_prefix','n_given','n_family','org_name','email','email_home', 'contact_id', 'modified', 'files');
 			$contacts = $contacts_obj->search($search_str, $cols, 'n_fn', '', '%', false, 'OR', array(0,100), $filter);
 			$cfs_type_email = Api\Storage\Customfields::get_email_cfs('addressbook');
 			// additionally search the accounts, if the contact storage is not the account storage
@@ -3660,18 +3661,20 @@ class mail_compose
 
 		if (is_array($contacts))
 		{
+			$cf_emails = [];
+			// if we have email type custom-fields, query them all in one query
+			if (!empty($cfs_type_email))
+			{
+				$cf_emails = $contacts_obj->read_customfields(array_map(static function(array $contact)
+				{
+					return $contact['id'];
+				}, $contacts), $cfs_type_email);
+			}
 			foreach($contacts as $contact)
 			{
-				$cf_emails = [];
-				if ($cfs_type_email && ($cf_emails = $contacts_obj->read_customfields($contact['id'], $cfs_type_email)))
+				foreach(array_merge([$contact['email'], $contact['email_home']], $cf_emails[$contact['id']] ?? []) as $email)
 				{
-					// cf_emails: [$contact['id'] => ['cf1'=>'email','cf2'=>'email2',...]]
-					$cf_emails = array_values(reset($cf_emails));
-				}
-				foreach(array_merge(array($contact['email'],$contact['email_home']), $cf_emails) as $email)
-				{
-					// avoid wrong addresses, if an rfc822 encoded address is in addressbook
-					//$email = preg_replace("/(^.*<)([a-zA-Z0-9_\-]+@[a-zA-Z0-9_\-\.]+)(.*)/",'$2',$email);
+					// avoid wrong addresses, if a rfc822 encoded address is in addressbook
 					$rfcAddr = Mail::parseAddressList($email);
 					$_rfcAddr=$rfcAddr->first();
 					if (!$_rfcAddr->valid)
@@ -3706,13 +3709,13 @@ class mail_compose
 							'lname' => $contact['n_family'],
 							'fname' => $contact['n_given']
 						);
-						// TODO: Ralf find a cheap way to get this
-						if($actual_picture)
+						// if we have a real photo, add avatar.php URL
+						if (Api\Contacts::hasPhoto($contact))
 						{
-							$result['icon'] = Egw::link('/api/avatar.php', array(
+							$result['icon'] = Framework::link('/api/avatar.php', [
 								'contact_id' => $contact['id'],
-								'etag'       => $contact['etag']
-							));
+								'modified'   => $contact['modified'],
+							]);
 						}
 						$results[] = $result;
 					}
