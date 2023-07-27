@@ -1073,6 +1073,12 @@ class CalDAV extends HTTP_WebDAV_Server
 			$type = in_array($_SERVER['REQUEST_METHOD'], ['PUT', 'POST', 'PATCH', 'PROPPATCH']) ?
 				$_SERVER['HTTP_CONTENT_TYPE'] : $_SERVER['HTTP_ACCEPT'];
 		}
+		// make sure the client is not just a CalDAV client wrongly sending a Content-Type or Accept header for JSON
+		if (in_array($_SERVER['REQUEST_METHOD'], ['REPORT', 'PROPFIND', 'PROPPATCH']) ||    // no REST, but CalDAV methods
+			isset($_SERVER['HTTP_CONTENT_TYPE']) && pref_match('#(application|text)/xml#', $_SERVER['HTTP_CONTENT_TYPE']))
+		{
+			return false;
+		}
 		return preg_match('#application/(([^+ ;]+)\+)?json#', $type, $matches) ?
 			(empty($matches[1]) ? true : $matches[2]) : false;
 	}
