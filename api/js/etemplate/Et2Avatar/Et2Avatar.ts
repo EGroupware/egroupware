@@ -179,7 +179,7 @@ export class Et2Avatar extends Et2Widget(SlotMixin(SlAvatar)) implements et2_IDe
 
 		if (!_contactId)
 		{
-			parsedId = this.egw().user('account_id');
+			parsedId = null;
 		}
 		else if(_contactId.substr(0, 8) === 'account:')
 		{
@@ -200,7 +200,11 @@ export class Et2Avatar extends Et2Widget(SlotMixin(SlAvatar)) implements et2_IDe
 		let oldContactId = this._contactId;
 		this._contactId = _contactId;
 		// if our image (incl. cache-buster) already includes the correct id, use that one
-		if(!this.image || !this.image.match("(&|\\?)" + id + "=" + encodeURIComponent(parsedId) + "(&|$)"))
+		if (!parsedId)
+		{
+			this.image = null;
+		}
+		else if(!this.image || !this.image.match("(&|\\?)" + id + "=" + encodeURIComponent(parsedId) + "(&|$)"))
 		{
 			params[id] = parsedId;
 			this.image = egw.link('/api/avatar.php', params);
