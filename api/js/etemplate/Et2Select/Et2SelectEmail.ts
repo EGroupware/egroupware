@@ -254,7 +254,6 @@ export class Et2SelectEmail extends Et2Select
                          lname=${option.lname || nothing}
                          fname=${option.fname || nothing}
                          image=${option.icon || nothing}
-                         .contactId=${"email:" + option.value}
             >
             </et2-lavatar>`;
 	}
