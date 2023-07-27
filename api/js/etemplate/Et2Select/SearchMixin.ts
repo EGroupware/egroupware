@@ -346,35 +346,8 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 				// Decode URL, possibly again.  If set in template, it can wind up double-encoded.
 				this.searchUrl = this.egw().decodePath(this.searchUrl);
 			}
-		}
 
-		update(changedProperties)
-		{
-			super.update(changedProperties);
-
-			// One of the key properties has changed, need to add the needed nodes
-			if(changedProperties.has("search") || changedProperties.has("editModeEnabled") || changedProperties.has("allowFreeEntries"))
-			{
-				// Missing any of the required attributes?  Now we need to take it out.
-				if(!this.searchEnabled && !this.editModeEnabled && !this.allowFreeEntries || this.readonly)
-				{
-					this.querySelector(".search_input")?.remove();
-					return;
-				}
-
-				// Normally this should be handled in render(), but we have to add our nodes in
-				this._addNodes();
-			}
-			// Update any tags if edit mode changes
-			if(changedProperties.has("editModeEnabled") || changedProperties.has("readonly"))
-			{
-				// Required because we explicitly create tags instead of doing it in render()
-				this.shadowRoot.querySelectorAll(".select__tags > *").forEach((tag : Et2Tag) =>
-				{
-					tag.editable = this.editModeEnabled && !this.readonly;
-					tag.removable = !this.readonly;
-				});
-			}
+			// Add missing options if search or free entries enabled
 			if(changedProperties.has("value") && this.value)
 			{
 				// Overridden to add options if allowFreeEntries=true
@@ -406,6 +379,35 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 						this._missingOption(newValueElement);
 					}
 				}
+			}
+		}
+
+		update(changedProperties)
+		{
+			super.update(changedProperties);
+
+			// One of the key properties has changed, need to add the needed nodes
+			if(changedProperties.has("search") || changedProperties.has("editModeEnabled") || changedProperties.has("allowFreeEntries"))
+			{
+				// Missing any of the required attributes?  Now we need to take it out.
+				if(!this.searchEnabled && !this.editModeEnabled && !this.allowFreeEntries || this.readonly)
+				{
+					this.querySelector(".search_input")?.remove();
+					return;
+				}
+
+				// Normally this should be handled in render(), but we have to add our nodes in
+				this._addNodes();
+			}
+			// Update any tags if edit mode changes
+			if(changedProperties.has("editModeEnabled") || changedProperties.has("readonly"))
+			{
+				// Required because we explicitly create tags instead of doing it in render()
+				this.shadowRoot.querySelectorAll(".select__tags > *").forEach((tag : Et2Tag) =>
+				{
+					tag.editable = this.editModeEnabled && !this.readonly;
+					tag.removable = !this.readonly;
+				});
 			}
 		}
 
