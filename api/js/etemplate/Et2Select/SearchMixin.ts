@@ -1257,9 +1257,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 		 */
 		protected processRemoteResults(entries, totalResults = 0)
 		{
-			let resultCount = entries.length;
-
-			if(entries.length == 0)
+			if(!entries?.length)
 			{
 				return Promise.resolve();
 			}
@@ -1288,6 +1286,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 				 */
 
 				let temp_target = document.createElement("div");
+				let resultCount = entries.length;
 
 				render(options, temp_target);
 				return Promise.all(([...temp_target.querySelectorAll(":scope > *")].map(item => item.render)))
