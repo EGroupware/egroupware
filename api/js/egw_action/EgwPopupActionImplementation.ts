@@ -106,7 +106,7 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
             }
 
             if (!(_context.manager.getActionsByAttr('singleClick', true).length > 0 &&
-                e.originalEvent.target.classList.contains('et2_clickable'))) {
+                e.target.classList.contains('et2_clickable'))) {
                 _callback.call(_context, "default", this);
             }
 
