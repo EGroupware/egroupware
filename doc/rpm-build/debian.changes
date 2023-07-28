@@ -1,3 +1,9 @@
+egroupware-docker (23.1.20230728) hardy; urgency=low
+
+  * fix some regressions introduced in last maintenance release, [see](https://github.com/EGroupware/egroupware/compare/23.1.20230726...23.1.20230728)
+
+ -- Ralf Becker <rb@egroupware.org>  Fri, 28 Jul 2023 14:32:55 +0200
+
 egroupware-docker (23.1.20230726) hardy; urgency=low
 
   * Api/Login: application passwords / token to use instead of regular user credentials, optional with limited rights
