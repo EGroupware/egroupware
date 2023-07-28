@@ -578,30 +578,49 @@ abstract class Merge
 	 * Get share placeholder
 	 *
 	 * If the placeholder is present in the content, the share will be automatically
-	 * created.
+	 * created.  Valid placeholders:
+	 * $$share$$ - A link to the entry
+	 * $$share-files$$ - A link to filemanager showing files of the entry
+	 * $$share/writable$$ - An editable link to the entry, using current user's permission
+	 * $$share-files/writable$$ - Link to filemanager with write access
 	 */
 	protected function share_placeholder($app, $id, $prefix, &$content)
 	{
 		$replacements = array();
 
-		// Skip if no content or content has no share placeholder
-		if(!$content || strpos($content, '$$share') === FALSE)
+		// Skip if no content or content has no share placeholder (fast check)
+		if(!$content || strpos($content, '$$' . $this->prefix($prefix, 'share')) === FALSE)
 		{
 			return $replacements;
 		}
+
+		$matches = null;
+		preg_match_all('/\${2}' . $this->prefix($prefix, 'share') . '[^\$]*\${2}/', $content, $matches);
+		list($placeholders) = $matches;
 
 		if(!$GLOBALS['egw_info']['user']['apps']['stylite'])
 		{
-			$replacements['$$' . $prefix . 'share$$'] = lang('EPL Only');
+			foreach($placeholders as $p)
+			{
+				$replacements[$p] = lang('EPL Only');
+			}
 			return $replacements;
 		}
-
-		// Get or create the share
-		$share = $this->create_share($app, $id, $content);
-
-		if($share)
+		foreach($placeholders as $index => $placeholder)
 		{
-			$replacements['$$' . $prefix . 'share$$'] = $link = Api\Sharing::share2link($share);
+			// Get or create the share
+			try
+			{
+				$share = $this->create_share($app, $id, $placeholder);
+
+				$replacements[$placeholder] = $share ? Api\Sharing::share2link($share) : '';
+			}
+			catch (Exception $e)
+			{
+				_egw_log_exception($e, $headline);
+				$replacements[$placeholder] = lang('Error');
+				continue;
+			}
 		}
 
 		return $replacements;
@@ -623,17 +642,26 @@ abstract class Merge
 		$session = \EGroupware\Api\Cache::getSession(Api\Sharing::class, $path);
 		if($session && $session['share_path'] == $path)
 		{
+			Api\Cache::unsetSession(Api\Sharing::class, $path);
 			return $session;
 		}
 
+		$matches = null;
+		preg_match_all('/\${2}([^\/\$]+\/)?share(-files(_only)?)?(\/writable)?\${2}/', $content, $matches);
+		list($placeholders, , $files, , $writable) = $matches;
+
 		// Need to create the share here.
 		// No way to know here if it should be writable, or who it's going to
-		$mode = /* ?  ? Sharing::WRITABLE :*/
-			Api\Sharing::READONLY;
+		$mode = $writable[0] == "/writable" ? Api\Sharing::WRITABLE : Api\Sharing::READONLY;
+		$path = $files[0] !== '-files_only' ? $path : "/apps/$app/$id";
 		$recipients = array();
 		$extra = array();
 
-		//$extra['share_writable'] |=  ($mode == Sharing::WRITABLE ? 1 : 0);
+		if($files[0] == '-files')
+		{
+			$extra['include_files'] = true;
+		}
+		$extra['share_writable'] |= ($mode == Api\Sharing::WRITABLE ? 1 : 0);
 
 		return \EGroupware\Stylite\Link\Sharing::create('', $path, $mode, NULL, $recipients, $extra);
 	}
@@ -2988,40 +3016,51 @@ abstract class Merge
 	 */
 	public function get_common_replacements()
 	{
-		return array(
-			// Link to current entry
-			'link'                          => lang('URL of current record'),
-			'link/href'                     => lang('HTML link to the current record'),
-			'link/title'                    => lang('Link title of current record'),
+		$share_replacements = !$GLOBALS['egw_info']['user']['apps']['stylite'] ? [] : [
+			'share'                     => lang("Share this %1 via URL", lang('entry')),
+			// We don't allow anonymous file access through entries - the links tab will be empty
+			//	'share-files'               => lang("Share this %1 via URL", lang('entry')) . " " . lang("include access to any linked files (links tab)"),
+			'share-files_only'          => lang('Share just the associated filemanager directory, not the %1', lang('entry')),
+			'share/writable'            => lang("Share this %1 via URL", lang('entry')) . '. ' . lang('Allow anonymous editing'),
+			//	'share-files/writable'      => lang("Share this %1 via URL", lang('entry')) . " " . lang("include access to any linked files (links tab)"),
+			'share-files_only/writable' => lang('Share just the associated filemanager directory, not the %1', lang('entry')) . '. ' . lang('Allow anonymous editing'),
+		];
 
-			// Link system - linked entries
-			'links'                         => lang('Titles of any entries linked to the current record, excluding attached files'),
-			'links/href'                    => lang('HTML links to any entries linked to the current record, excluding attached files'),
-			'links/url'                     => lang('URLs of any entries linked to the current record, excluding attached files'),
-			'attachments'                   => lang('List of files linked to the current record'),
-			'links_attachments'             => lang('Links and attached files'),
-			'links/[appname]'               => lang('Links to specified application.  Example: {{links/infolog}}'),
+		return $share_replacements +
+			array(
+				// Link to current entry
+				'link'                          => lang('URL of current record'),
+				'link/href'                     => lang('HTML link to the current record'),
+				'link/title'                    => lang('Link title of current record'),
 
-			// General information
-			'date'                          => lang('Date'),
-			'datetime'                      => lang('Date + time'),
-			'time'                          => lang('Time'),
-			'user/n_fn'                     => lang('Name of current user, all other contact fields are valid too'),
-			'user/account_lid'              => lang('Username'),
+				// Link system - linked entries
+				'links'                         => lang('Titles of any entries linked to the current record, excluding attached files'),
+				'links/href'                    => lang('HTML links to any entries linked to the current record, excluding attached files'),
+				'links/url'                     => lang('URLs of any entries linked to the current record, excluding attached files'),
+				'attachments'                   => lang('List of files linked to the current record'),
+				'links_attachments'             => lang('Links and attached files'),
+				'links/[appname]'               => lang('Links to specified application.  Example: {{links/infolog}}'),
 
-			// Merge control
-			'pagerepeat'                    => lang('For serial letter use this tag. Put the content, you want to repeat between two Tags.'),
-			'label'                         => lang('Use this tag for addresslabels. Put the content, you want to repeat, between two tags.'),
-			'labelplacement'                => lang('Tag to mark positions for address labels'),
+				// General information
+				'date'                          => lang('Date'),
+				'datetime'                      => lang('Date + time'),
+				'time'                          => lang('Time'),
+				'user/n_fn'                     => lang('Name of current user, all other contact fields are valid too'),
+				'user/account_lid'              => lang('Username'),
 
-			// Commands
-			'IF fieldname'                  => lang('Example {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - search the field "n_prefix", for "Mr", if found, write Hello Mr., else write Hello Ms.'),
-			'IF fieldname~EMPTY~True~False' => lang('Check for empty values in IF statements.  Example {{IF url~EMPTY~~Website:}} - If url is not empty, writes "Website:"'),
-			'NELF'                          => lang('Example {{NELF role}} - if field role is not empty, you will get a new line with the value of field role'),
-			'NENVLF'                        => lang('Example {{NENVLF role}} - if field role is not empty, set a LF without any value of the field'),
-			'LETTERPREFIX'                  => lang('Example {{LETTERPREFIX}} - Gives a letter prefix without double spaces, if the title is emty for  example'),
-			'LETTERPREFIXCUSTOM'            => lang('Example {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Example: Mr Dr. James Miller'),
-		);
+				// Merge control
+				'pagerepeat'                    => lang('For serial letter use this tag. Put the content, you want to repeat between two Tags.'),
+				'label'                         => lang('Use this tag for addresslabels. Put the content, you want to repeat, between two tags.'),
+				'labelplacement'                => lang('Tag to mark positions for address labels'),
+
+				// Commands
+				'IF fieldname'                  => lang('Example {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - search the field "n_prefix", for "Mr", if found, write Hello Mr., else write Hello Ms.'),
+				'IF fieldname~EMPTY~True~False' => lang('Check for empty values in IF statements.  Example {{IF url~EMPTY~~Website:}} - If url is not empty, writes "Website:"'),
+				'NELF'                          => lang('Example {{NELF role}} - if field role is not empty, you will get a new line with the value of field role'),
+				'NENVLF'                        => lang('Example {{NENVLF role}} - if field role is not empty, set a LF without any value of the field'),
+				'LETTERPREFIX'                  => lang('Example {{LETTERPREFIX}} - Gives a letter prefix without double spaces, if the title is emty for  example'),
+				'LETTERPREFIXCUSTOM'            => lang('Example {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Example: Mr Dr. James Miller'),
+			);
 	}
 
 	/**
@@ -3034,6 +3073,7 @@ abstract class Merge
 		$placeholders = [
 			'URLs'             => [],
 			'Egroupware links' => [],
+			'Sharing'          => [],
 			'General'          => [],
 			'Repeat'           => [],
 			'Commands'         => []
@@ -3050,6 +3090,12 @@ abstract class Merge
 
 			switch($name)
 			{
+				case 'share':
+					$group = 'Sharing';
+					break;
+				case 'link':
+					$group = "URLs";
+					break;
 				case 'links':
 					$group = 'Egroupware links';
 					break;
