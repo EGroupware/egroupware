@@ -386,7 +386,7 @@ class calendar_groupdav extends Api\CalDAV\Handler
 			($events =& $this->bo->search([
 				'offset' => $chunk*self::CHUNK_SIZE,
 				'num_rows' => self::CHUNK_SIZE,
-				'date_format' => $is_jscalendar ? 'object' : 'ts',
+				'date_format' => $is_jscalendar ? 'object' : 'server',
 			]+$filter)); ++$chunk)
 		{
 			foreach($events as $event)
