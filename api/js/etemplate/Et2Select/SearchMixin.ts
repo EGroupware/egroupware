@@ -1196,8 +1196,14 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 					{
 						return option.label.toLowerCase().includes(lower_search) || option.value.includes(search)
 					});
+					// Limit results
+					const totalCount = filtered.length;
+					if(filtered.length > Et2WidgetWithSearch.RESULT_LIMIT)
+					{
+						filtered.splice(Et2WidgetWithSearch.RESULT_LIMIT);
+					}
 					// Add the matches
-					this.processRemoteResults(filtered);
+					this.processRemoteResults(filtered, totalCount);
 					return filtered;
 				})
 				.catch((_err) =>
