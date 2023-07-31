@@ -1398,12 +1398,13 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\PushIface
 	/**
 	 * Set vacation message for given user
 	 *
-	 * @param int|string $_euser nummeric account_id or imap username
+	 * @param int|string $_euser numeric account_id or imap username
 	 * @param array $_vacation
 	 * @param string $_scriptName =null
+	 * @param string|null& $vacation_rule=null on return Sieve vacation rule
 	 * @return boolean
 	 */
-	public function setVacationUser($_euser, array $_vacation, $_scriptName=null)
+	public function setVacationUser($_euser, array $_vacation, $_scriptName=null, string &$vacation_rule=null)
 	{
 		if ($this->debug) error_log(__METHOD__.' User:'.array2string($_euser).' Scriptname:'.array2string($_scriptName).' VacationMessage:'.array2string($_vacation));
 
@@ -1418,7 +1419,7 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\PushIface
 			$this->scriptName =& $this->sieve->scriptName;
 			$this->error =& $this->sieve->error;
 		}
-		$ret = $this->setVacation($_vacation, $_scriptName);
+		$ret = $this->setVacation($_vacation, $_scriptName, $vacation_rule);
 
 		return $ret;
 	}

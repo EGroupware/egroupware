@@ -134,3 +134,58 @@ Location: https://example.org/egroupware/groupdav.php/mail/attachment/<token>
 }
 ```
 </details>
+
+- ```POST /mail[/<id>]/vacation``` enable or disable vacation message or forwarding
+
+<details>
+  <summary>Example: Setting a vacation message with given start- and end-date</summary>
+
+The content of the POST request is a JSON encoded object with following attributes
+- ```status```: "on" (default, if not start/end), "off" or "by_date" (default, if start/end given)
+- ```start```: start-date "YYYY-mm-dd", or e.g. "+2days" (optional)
+- ```end```: end-date (last day of vacation) "YYYY-mm-dd" (optional)
+- ```text```: vacation notice to the sender (can container $$start$$ and $$end$$ placeholders)
+- ```modus```: "notice+store" (default) send vacation notice and store in INBOX, "notice": only send notice, "store": only store
+- ```forwards```: array of strings with (RFC882) email addresses (optional, default no forwarding)
+- ```addresses```: array of strings with (RFC882) email addresses (optional, default primary email address only)
+- ```days```: integer, after how many days should a sender get the vacation message again (optional, otherwise default is used)
+
+> The ```POST``` request is handled like a ```PATCH```, only the given attributes are replaced, use null to unset them.
+
+```
+curl -i https://example.org/egroupware/groupdav.php/mail/vacation --user <user> -X POST -H 'Content-Type: application/json' \
+  --data-binary '{"message":"I'm away from $$start$$ to $$end$$, will respond when I'm back.","start":"2023-01-01","end":"2023-01-10"}'
+    
+HTTP/1.1 200 Ok
+
+{
+    "status": 200,
+    "message": "Vacation handling stored"
+}
+```
+</details>
+
+- ```GET /mail[/<id>]/vacation``` get current vacation message/handling
+
+<details>
+  <summary>Example: Querying the current vacation handling</summary>
+
+For an explanation of the returned attributes of the returned object, see the POST request.
+
+```
+curl -i https://example.org/egroupware/groupdav.php/mail/vacation --user <user> -H 'Accept: application/json'
+    
+HTTP/1.1 200 Ok
+
+{
+  "start":"2023-01-01",
+  "end":"2023-01-10",
+  "status": "by_date",
+  "modus": "notice+store",
+  "text":"I'm away from $$start$$ to $$end$$, will respond when I'm back.",
+  "days": 5,
+  "addresses": ["me@example.org","webmaster@example.org"],
+  "forwards": ["hugo.meyer@example.org","sven@example.com"]
+}
+```
+</details>
