@@ -2313,8 +2313,8 @@ class CalDAV extends HTTP_WebDAV_Server
 			'%3F' => '?',
 		));
 
-		$ok = ($id || isset($_GET['add-member']) && $_SERVER['REQUEST_METHOD'] == 'POST') &&
-			($user || $user === 0) && in_array($app,array('addressbook','calendar','infolog','principals'));
+		$ok = ($id || isset($_GET['add-member']) && $_SERVER['REQUEST_METHOD'] === 'POST') &&
+			($user || $user === 0) && self::app_handler($app);
 
 		if ($this->debug)
 		{

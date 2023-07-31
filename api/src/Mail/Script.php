@@ -184,15 +184,22 @@ class Script
 						}
 						break;
 					case "vacation" :
-						if (preg_match("/^ *#vacation&&(.*)&&(.*)&&(.*)&&(.*)&&(.*)/i",$line,$bits) ||
+						if (preg_match("/^ *#vacation&&(.*)&&(.*)&&(.*)&&(.*)&&(.*)&&(.*)/i",$line,$bits) ||
+							preg_match("/^ *#vacation&&(.*)&&(.*)&&(.*)&&(.*)&&(.*)/i",$line,$bits) ||
 							preg_match("/^ *#vacation&&(.*)&&(.*)&&(.*)&&(.*)/i",$line,$bits)) {
 							$vacation['days'] = $bits[1];
 							$vaddresslist = preg_replace("/\"|\s/","",$bits[2]);
 							$vaddresses = preg_split("/,/",$vaddresslist);
-							$vacation['text'] = $bits[3];
-
-						// <crnl>s will be encoded as \\n. undo this.
-							$vacation['text'] = preg_replace("/\\\\n/","\r\n",$vacation['text']);
+							if (($vacation['text'] = $bits[3]) === 'false')
+							{
+								$vacation['text'] = false;
+							}
+							else
+							{
+								// <crnl>s will be encoded as \\n. undo this.
+								$vacation['text'] = preg_replace("/\\\\n/","\r\n",$vacation['text']);
+							}
+							$vacation['modus'] = $bits[6] ?? null;
 
 							if (strpos($bits[4],'-')!== false)
 							{
@@ -245,8 +252,11 @@ class Script
 	 *
 	 * @param Sieve $connection
 	 * @param boolean $utf7imap_fileinto =false true: encode foldernames with utf7imap, default utf8
+	 * @param string|null& $vac_rule on return vacation-rule in sieve syntax
+	 * @param bool $throw_exceptions =false true: throw exception with error-message
+	 * @return bool false on error with error-message in $this->error
 	 */
-	function updateScript (Sieve $connection, $utf7imap_fileinto=false)
+	function updateScript (Sieve $connection, $utf7imap_fileinto=false, &$vac_rule=null, bool $throw_exceptions=false)
 	{
 		#global $_SESSION,$default,$sieve;
 		global $default,$sieve;
@@ -411,8 +421,8 @@ class Script
 
 		if ($this->vacation) {
 			$vacation = $this->vacation;
-			if (!$vacation['days']) $vacation['days'] = ($default->vacation_days ? $default->vacation_days:'');
-			if (!$vacation['text']) $vacation['text'] = ($default->vacation_text ? $default->vacation_text:'');
+			if (!$vacation['days']) $vacation['days'] = $default->vacation_days ?: '';
+			if (!$vacation['text']) $vacation['text'] = $default->vacation_text ?: '';
 			if (!$vacation['status']) $vacation['status'] = 'on';
 
 			// filter out invalid addresses.
@@ -430,11 +440,12 @@ class Script
 			if (($vacation['status'] == 'on' && strlen(trim($vacation['text']))>0)|| $vacation['status'] == 'by_date')	// +24*3600 to include the end_date day
 			{
 				$vacation_active = true;
+				$vac_rule = '';
 				if ($vacation['text'])
 				{
 					if ($this->extensions['regex'])
 					{
-						$newscriptbody .= "if header :regex ".'"X-Spam-Status" '.'"\\\\bYES\\\\b"'."{\n\tstop;\n}\n"; //stop vacation reply if it is spam
+						$vac_rule .= "if header :regex " . '"X-Spam-Status" ' . '"\\\\bYES\\\\b"' . "{\n\tstop;\n}\n"; //stop vacation reply if it is spam
 						$regexused = 1;
 					}
 					else
@@ -442,56 +453,64 @@ class Script
 						// if there are no regex'es supported use a different Anti-Spam Rule: if X-Spam-Status holds
 						// additional spamscore information (e.g. BAYES) this rule may prevent Vacation notification
 						// TODO: refine rule without using regex
-						$newscriptbody .= "if header :contains ".'"X-Spam-Status" '.'"YES"'."{\n\tstop;\n}\n"; //stop vacation reply if it is spam
+						$vac_rule .= "if header :contains " . '"X-Spam-Status" ' . '"YES"' . "{\n\tstop;\n}\n"; //stop vacation reply if it is spam
 					}
 				}
-				if (trim($vacation['forwards'])) {
-					$if = array();
-					foreach($vacation['addresses'] as $addr) {
-						$if[] = 'address :contains ["To","TO","Cc","CC"] "'.trim($addr).'"';
-					}
-					$newscriptbody .= 'if anyof ('.implode(', ',$if).") {\n";
-					foreach(preg_split('/, ?/',$vacation['forwards']) as $addr) {
-						$newscriptbody .= "\tredirect \"".trim($addr)."\";\n";
-					}
-					$newscriptbody .= "\tkeep;\n}\n";
-				}
-				$vac_rule = "vacation :days " . $vacation['days'];
-				$first = 1;
-				if (!empty($vacation['addresses'][0]))
+				if (trim($vacation['forwards']))
 				{
-					$vac_rule .=  " :addresses [";
-					foreach ($vacation['addresses'] as $vaddress) {
+					$if = array();
+					foreach ($vacation['addresses'] as $addr)
+					{
+						$if[] = 'address :contains ["To","TO","Cc","CC"] "' . trim($addr) . '"';
+					}
+					$vac_rule .= 'if anyof (' . implode(', ', $if) . ") {\n";
+					foreach (preg_split('/, ?/', $vacation['forwards']) as $addr)
+					{
+						$vac_rule .= "\tredirect \"" . trim($addr) . "\";\n";
+					}
+					$vac_rule .= "\tkeep;\n}\n";
+				}
+				if (!isset($vacation['modus']) || $vacation['modus'] !== 'store')
+				{
+					$vac_rule .= "vacation :days " . $vacation['days'];
+					$first = 1;
+					if (!empty($vacation['addresses'][0]))
+					{
+						$vac_rule .= " :addresses [";
+						foreach ($vacation['addresses'] as $vaddress)
+						{
 							if (!$first) $vac_rule .= ", ";
 							$vac_rule .= "\"" . trim($vaddress) . "\"";
 							$first = 0;
+						}
+						$vac_rule .= "] ";
 					}
-					$vac_rule .=  "] ";
+					$message = $vacation['text'];
+					if ($vacation['status'] === 'by_date' && ($vacation['start_date'] || $vacation['end_date']))
+					{
+						$format_date = 'd M Y'; // see to it, that there is always a format, because if it is missing - no date will be output
+						if (!empty($GLOBALS['egw_info']['user']['preferences']['common']['dateformat'])) $format_date = $GLOBALS['egw_info']['user']['preferences']['common']['dateformat'];
+						$message = str_replace(array('$$start$$', '$$end$$'), array(
+							date($format_date, $vacation['start_date']),
+							date($format_date, $vacation['end_date']),
+						), $message);
+					}
+					$vac_rule .= " text:\n" . $message . "\n.\n;\n\n";
 				}
-				$message = $vacation['text'];
-				if ($vacation['status'] === 'by_date' && ($vacation['start_date'] || $vacation['end_date']))
+				if (isset($vacation['modus']) && $vacation['modus'] === 'notice')
 				{
-					$format_date = 'd M Y'; // see to it, that there is always a format, because if it is missing - no date will be output
-					if (!empty($GLOBALS['egw_info']['user']['preferences']['common']['dateformat'])) $format_date = $GLOBALS['egw_info']['user']['preferences']['common']['dateformat'];
-					$message = str_replace(array('$$start$$','$$end$$'),array(
-							date($format_date,$vacation['start_date']),
-							date($format_date,$vacation['end_date']),
-						),$message);
+					$vac_rule .= "discard;\n";
 				}
-				$vac_rule .= " text:\n" . $message . "\n.\n;\n\n";
 				if ($vacation['status'] === 'by_date' && $this->extensions['date'] && $vacation['start_date'] && $vacation['end_date'])
 				{
-					$newscriptbody .= "if allof (\n".
+					$vac_rule = "if allof (\n".
 					"currentdate :value \"ge\" \"date\" \"". date('Y-m-d', $vacation['start_date']) ."\",\n".
 					"currentdate :value \"le\" \"date\" \"". date('Y-m-d', $vacation['end_date']) ."\")\n".
 					"{\n".
 						$vac_rule."\n".
 					"}\n";
 				}
-				else
-				{
-					$newscriptbody .= $vac_rule;
-				}
+				$newscriptbody .= $vac_rule;
 			}
 
 			// update with any changes.
@@ -624,10 +643,11 @@ class Script
 				$first = 0;
 			}
 
-			$vacation['text'] = preg_replace("/\r?\n/","\\n",$vacation['text']);
+			$vacation['text'] = $vacation['text'] === false ? 'false' : preg_replace("/\r?\n/","\\n", $vacation['text']);
 			$newscriptfoot .= "&&" . $vacation['text'] . "&&" .
 				($vacation['status']=='by_date' ? $vacation['start_date'].'-'.$vacation['end_date'] : $vacation['status']);
-			if ($vacation['forwards']) $newscriptfoot .= '&&' . $vacation['forwards'];
+			$newscriptfoot .= '&&' . ($vacation['forwards'] ?? '');
+			if (!empty($vacation['modus'])) $newscriptfoot .= '&&' . $vacation['modus'];
 			$newscriptfoot .= "\n";
 		}
 		if ($this->emailNotification) {
@@ -651,6 +671,7 @@ class Script
 			$connection->installScript($this->name, $newscript, true);
 		}
 		catch (\Exception $e) {
+			if ($throw_exceptions) throw $e;
 			$this->errstr = 'updateScript: putscript failed: ' . $e->getMessage().($e->details?': '.$e->details:'');
 			if ($regexused && !$this->extensions['regex']) $this->errstr .= " REGEX is not an supported CAPABILITY";
 			error_log(__METHOD__.__LINE__.' # Error: ->'.$this->errstr);

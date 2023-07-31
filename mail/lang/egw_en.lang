@@ -416,6 +416,7 @@ only name	mail	en	only name
 only needed for some servers, that do not return all folders on root level queries to retrieve all folders for that level	mail	en	only needed for some servers, that do not return all folders on root level queries to retrieve all folders for that level
 only one window	mail	en	only one window
 only send message, do not copy a version of the message to the configured sent folder	mail	en	only send message, do not copy a version of the message to the configured sent folder
+only store message in inbox, do not send vacation notice	mail	en	Only store message in INBOX, do NOT send vacation notice
 open in html mode	mail	en	Open in HTML mode
 open in text mode	mail	en	Open in Text mode
 open with collabora office	mail	en	Open with Collabora Office
@@ -548,6 +549,8 @@ send a reject message:	mail	en	Send a reject message:
 send files as	mail	en	Send files as
 send message and move to send folder (if configured)	mail	en	send message and move to send folder (if configured)
 send message pgp encrypted: requires keys from all recipients!	mail	en	Send message PGP encrypted: requires keys from all recipients!
+send only a vacation notice, do not store message in inbox	mail	en	Send only a vacation notice, do NOT store message in INBOX
+send vacation notice and store message in inbox	mail	en	Send vacation notice and store message in INBOX
 sender	mail	en	sender
 sent	mail	en	Sent
 sent folder	mail	en	sent folder
@@ -698,8 +701,8 @@ yes, offer copy option	mail	en	yes, offer copy option
 yes, only trigger connection reset	mail	en	yes, only trigger connection reset
 yes, show all debug information available for the user	mail	en	yes, show all debug information available for the user
 yes, show basic info only	mail	en	yes, show basic info only
-you can select what info to be displayed on email tag	mail	en	You can select what info to be displayed on email tag
 you can either choose to save as infolog or tracker, not both.	mail	en	You can either choose to save as infolog OR tracker, not both.
+you can select what info to be displayed on email tag	mail	en	You can select what info to be displayed on email tag
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	en	You can use $$start$$ for the above start date and $$end$$ for the end date.
 you may add this certificate into your contact, if you trust this signature.	mail	en	You may add this certificate into your contact, if you trust this signature.
 you need to enter your s/mime passphrase to send this message.	mail	en	You need to enter your S/MIME passphrase to send this message.

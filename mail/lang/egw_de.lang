@@ -416,6 +416,7 @@ only name	mail	de	Nur Name
 only needed for some servers, that do not return all folders on root level queries to retrieve all folders for that level	mail	de	wird nur für bestimmte Server gebraucht, die NICHT alle Ordner für Root-Knoten-Abfragen zurückgeben (damit wird in diesem Fall explizit auf Ordner in den Prefixes der Namespaces geprüft)
 only one window	mail	de	nur ein einziges Fenster
 only send message, do not copy a version of the message to the configured sent folder	mail	de	Versende Nachricht, kopiere sie nicht in den konfigurierten Gesendet-Ordner
+only store message in inbox, do not send vacation notice	mail	de	Nachricht nur im Posteingang speichern, keine Abwesenheitsnotiz versenden
 open in html mode	mail	de	In HTML-Modus öffnen
 open in text mode	mail	de	In Text-Modus öffnen
 open with collabora office	mail	de	Mit Collabora Online öffnen
@@ -548,6 +549,8 @@ send a reject message:	mail	de	Ablehnungs-E-Mail senden:
 send files as	mail	de	Dateien versenden als
 send message and move to send folder (if configured)	mail	de	Versende Nachricht und kopiere diese in den konfigurierten Gesendet-Ordner
 send message pgp encrypted: requires keys from all recipients!	mail	de	Nachricht PGP-verschlüsselt senden: benötigt Schlüssel von allen Empfängern!
+send only a vacation notice, do not store message in inbox	mail	de	Sende nur eine Abwesenheitsnotiz, die Nachricht selbst NICHT im Posteingang speichern
+send vacation notice and store message in inbox	mail	de	Sende eine Abwesenheitsnotiz und speichere die Mail im Posteingang
 sender	mail	de	Absender
 sent	mail	de	Gesendet
 sent folder	mail	de	Ordner für gesendete Nachrichten
@@ -698,8 +701,8 @@ yes, offer copy option	mail	de	Ja, mit Kopieroption
 yes, only trigger connection reset	mail	de	Ja, aber führe nur das zurücksetzen der Verbindung aus
 yes, show all debug information available for the user	mail	de	Ja, zeige alle dem Benutzer zugänglichen Informationen an.
 yes, show basic info only	mail	de	Ja, nur Basis Informationen anzeigen
-you can select what info to be displayed on email tag	mail	de	Sie können auswählen, welche Informationen auf dem E-Mail-Tag angezeigt werden sollen
 you can either choose to save as infolog or tracker, not both.	mail	de	Sie können eine E-Mail entweder als InfoLog-, ODER als Ticket-Eintrag speichern, nicht beides gleichzeitig.
+you can select what info to be displayed on email tag	mail	de	Sie können auswählen, welche Informationen auf dem E-Mail-Tag angezeigt werden sollen
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	de	Sie können $$start$$ für das obige Start- und $$end$$ für das Enddatum verwenden.
 you may add this certificate into your contact, if you trust this signature.	mail	de	Sie können dieses Zertifikat in Ihren Kontakt speichern, wenn Sie dieser Signatur trauen.
 you need to enter your s/mime passphrase to send this message.	mail	de	Sie müssen Ihr S/MIME-Passwort eingeben um diese Nachricht zu senden.
