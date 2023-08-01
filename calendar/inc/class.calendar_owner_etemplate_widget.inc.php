@@ -54,9 +54,34 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 			// calendar app is not yet loaded.
 			$value = !empty($sel_options) ? array(): explode(',', $value);
 		}
+		$option_list = (array)$value;
+
+		// Add in accounts / own groups
+		$type = $bo->common_prefs['account_selection'];
+		if(!$type || $type == "none")
+		{
+			$accounts = [];
+		}
+		else
+		{
+			$accounts = Framework::ajax_user_list();
+			if($type == "primary_groups")
+			{
+				unset($accounts['groups']);
+			}
+			else
+			{
+				unset($accounts['owngroups']);
+			}
+		}
+		foreach($accounts as $type_account_list)
+		{
+			$option_list = array_merge($option_list, array_column($type_account_list, 'value'));
+		}
+
 
 		// Add external owners that a select account widget will not find
-		foreach((array)$value as $owner)
+		foreach(array_unique($option_list) as $owner)
 		{
 			$label = self::get_owner_label($owner);
 			$info = array();
@@ -213,6 +238,7 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 				if(array_key_exists('total', $options))
 				{
 					$total += $options['total'];
+					unset($options['total']);
 				}
 			}
 			// Use standard link registry
@@ -222,6 +248,7 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 				if(array_key_exists('total', $options))
 				{
 					$total += $options['total'];
+					unset($options['total']);
 				}
 			}
 
@@ -353,7 +380,7 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 				if(isset($value['email']) || isset($contact['email']) || isset($contact['email_home']))
 				{
 					$email = \EGroupware\Api\Mail::stripRFC822Addresses(array($value['email'] ?: $contact['email'] ?: $contact['email_home']));
-					$value['label'] .= $email ? (' <' . $email[0] . '>') : "";
+					$value['title'] = $email ? (' <' . $email[0] . '>') : "";
 				}
 				if($id < 0)
 				{

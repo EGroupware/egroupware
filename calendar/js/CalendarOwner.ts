@@ -9,9 +9,9 @@
  */
 
 import {Et2Select} from "../../api/js/etemplate/Et2Select/Et2Select";
-import {css, html, nothing} from "@lion/core";
+import {css, html, nothing, TemplateResult} from "@lion/core";
 import {IsEmail} from "../../api/js/etemplate/Validators/IsEmail";
-import {cleanSelectOptions} from "../../api/js/etemplate/Et2Select/FindSelectOptions";
+import {SelectOption} from "../../api/js/etemplate/Et2Select/FindSelectOptions";
 import {Et2StaticSelectMixin} from "../../api/js/etemplate/Et2Select/StaticOptions";
 
 /**
@@ -45,30 +45,45 @@ export class CalendarOwner extends Et2StaticSelectMixin(Et2Select)
 		this.searchOptions['checkgrants'] = true;
 	}
 
-	connectedCallback()
+	/**
+	 * Override parent to show email address in options
+	 *
+	 * We use this in edit dialog, but the same widget is used in sidemenu where the email is hidden via CSS.
+	 * Anything set in "title" will be shown
+	 *
+	 * @param {SelectOption} option
+	 * @returns {TemplateResult}
+	 */
+	_optionTemplate(option : SelectOption) : TemplateResult
 	{
-		super.connectedCallback();
+		// Tag used must match this.optionTag, but you can't use the variable directly.
+		// Pass option along so SearchMixin can grab it if needed
+		return html`
+            <sl-menu-item value="${option.value}"
+                          title="${!option.title || this.noLang ? option.title : this.egw().lang(option.title)}"
+                          class="${option.class}" .option=${option}
+                          ?disabled=${option.disabled}
+            >
+                ${this._iconTemplate(option)}
+                ${this.noLang ? option.label : this.egw().lang(option.label)}
+                <span class="title" slot="suffix">${option.title}</span>
+            </sl-menu-item>`;
+	}
 
-		// Start fetch of users
-		const type = this.egw().preference('account_selection', 'common');
-		if(!type || type == "none")
+	/**
+	 * Customise how tags are rendered.  Overridden from parent to add email to title for hover
+	 *
+	 * @param item
+	 * @protected
+	 */
+	protected _createTagNode(item)
+	{
+		const tag = super._createTagNode(item);
+		if(item.title)
 		{
-			return;
+			tag.title = item.title;
 		}
-		let fetch = [];
-		// for primary_group we only display owngroups == own memberships, not other groups
-		if(type === 'primary_group')
-		{
-			fetch.push(this.egw().accounts('accounts').then(options => {this.static_options = this.static_options.concat(cleanSelectOptions(options))}));
-			fetch.push(this.egw().accounts('owngroups').then(options => {this.static_options = this.static_options.concat(cleanSelectOptions(options))}));
-		}
-		else
-		{
-			fetch.push(this.egw().accounts('accounts').then(options => {this.static_options = this.static_options.concat(cleanSelectOptions(options))}));
-			fetch.push(this.egw().accounts('groups').then(options => {this.static_options = this.static_options.concat(cleanSelectOptions(options))}));
-		}
-		this.fetchComplete = Promise.all(fetch)
-			.then(() => this._renderOptions());
+		return tag;
 	}
 
 	/**
