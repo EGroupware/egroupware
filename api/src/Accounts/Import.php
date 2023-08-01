@@ -430,6 +430,8 @@ class Import
 						$to_update = array_merge($sql_contact, array_filter($contact, static function ($attr) {
 							return $attr !== null && $attr !== '';
 						}));
+						// files need to be or'ed with the sql value, as otherwise e.g. picture would disappear
+						$to_update['files'] |= $sql_contact['files'];
 						unset($to_update['account_id']);    // no need to update, specially as account_id might be different!
 						$to_update['id'] = $sql_contact['id'];
 						if (($diff = array_diff_assoc($to_update, $sql_contact)))
@@ -457,6 +459,9 @@ class Import
 							}
 							Api\Vfs::$is_root = false;
 */
+							// photo_unchanged=true must be set, to no delete the photo, if it's not in LDAP
+							$this->contacts_sql->data['photo_unchanged'] = !isset($diff['files']) ||
+								($to_update['files']&Api\Contacts::FILES_BIT_PHOTO) === ($sql_contact['files']&Api\Contacts::FILES_BIT_PHOTO);
 							if ($need_update && $this->contacts_sql->save($to_update))
 							{
 								$this->logger("Error updating contact data of '$account[account_lid]' (#$account_id)", 'error');
