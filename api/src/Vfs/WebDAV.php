@@ -638,6 +638,11 @@ class WebDAV extends HTTP_WebDAV_Server_Filesystem
 		{
 			$_SERVER['ORIG_REQUEST_URI'] = $_SERVER['REQUEST_URI'];
 			$_SERVER['REQUEST_URI'] = substr($_SERVER['REQUEST_URI'],0,$this->force_download);
+			// if download GET parameter contains a decent cache-buster, we allow caching for 10 days
+			if (strlen($_GET['download']) >= 8)
+			{
+				Api\Session::cache_control(864000);
+			}
 		}
 		parent::__construct();
 	}
