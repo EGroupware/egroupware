@@ -114,6 +114,10 @@
   background-color: var(--row_hover);
   box-shadow: none;
 }
+/* Hide email in sidebox */
+#calendar-sidebox_owner .title {
+  display: none;
+}
 /* Conflict display */
 .calendar_conflicts {
   max-height: 540px;
@@ -1462,7 +1466,7 @@ et2-switch#calendar-toolbar_toolbar-weekend {
   height: 100%;
 }
 #calendar-toolbar_toolbar et2-switch#calendar-toolbar_toolbar-weekend .label span {
-  background-size: contain;
+  background-size: 20px;
   height: 75%;
 }
 #calendar-toolbar_toolbar et2-switch#calendar-toolbar_toolbar-weekend .label {

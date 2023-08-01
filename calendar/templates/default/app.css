@@ -98,6 +98,10 @@
     background-color: var(--row_hover);
     box-shadow: none;
 }
+/* Hide email in sidebox */
+#calendar-sidebox_owner .title {
+	display: none;
+}
 
 /* Conflict display */
 .calendar_conflicts {
