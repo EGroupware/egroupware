@@ -2795,7 +2795,7 @@ table.egwGridView_outer thead tr th.noResize:hover {
 }
 
 .long_task .message.error {
-    color: white;
+	color: darkgray;
     background-image: none;
 }
 

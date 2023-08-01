@@ -1339,7 +1339,6 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 					retry.transformAttributes({
 						callback: function(button)
 						{
-							debugger;
 							switch(button)
 							{
 								case 'dialog[cancel]':
@@ -1417,8 +1416,8 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 				}
 
 				// Disable cancel (it's too late), enable OK
-				dialog._overlayContentNode.querySelector('et2-button[button_id="' + Et2Dialog.CANCEL_BUTTON + '"]').setAttribute("disabled")
-				dialog._overlayContentNode.querySelector('et2-button[button_id="' + Et2Dialog.OK_BUTTON + '"]').removeAttribute("disabled")
+				dialog.querySelector('et2-button[button_id="' + Et2Dialog.CANCEL_BUTTON + '"]').setAttribute("disabled", "")
+				dialog.querySelector('et2-button[button_id="' + Et2Dialog.OK_BUTTON + '"]').removeAttribute("disabled")
 				if(!cancel && typeof _callback == "function")
 				{
 					_callback.call(dialog, true, response);
