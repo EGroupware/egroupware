@@ -330,7 +330,7 @@ export class Et2LinkTo extends Et2InputWidget(ScopedElementsMixin(FormControlMix
 		}
 		else
 		{
-			this.validators.push(new ManualMessage(success));
+			this.validators.push(new ManualMessage(this.egw().lang("failed")));
 		}
 		this.dispatchEvent(new CustomEvent('link.et2_link_to', {bubbles: true, detail: success}));
 	}

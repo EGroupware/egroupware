@@ -427,7 +427,7 @@ class Link extends Etemplate\Widget
 
 			// Look for files - normally handled by ajax
 			$files = self::get_array($content, self::form_name($cname, $this->id . '_file'));
-			if(is_array($files) && !(is_array($value) && $value['to_id']))
+			if(is_array($files) && count($files) > 0 && !(is_array($value) && $value['to_id']))
 			{
 				$value = array();
 				if (is_dir($GLOBALS['egw_info']['server']['temp_dir']) && is_writable($GLOBALS['egw_info']['server']['temp_dir']))
