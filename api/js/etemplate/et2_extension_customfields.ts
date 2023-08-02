@@ -563,6 +563,7 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 	{
 		// No label on the widget itself
 		delete (attrs.label);
+		attrs.type = "password";
 		let defaults = {
 			viewable:true,
 			plaintext: false,
