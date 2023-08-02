@@ -1275,7 +1275,7 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 					// Cancel run
 					cancel = true;
 					jQuery("button[button_id=" + Et2Dialog.CANCEL_BUTTON + "]", dialog.div.parent()).button("disable");
-					update.call(_list.length, '');
+					updateUi.call(_list.length, '');
 				}
 			}
 		];
@@ -1313,13 +1313,12 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 			failed: 0,
 			widget: null
 		};
+		let success = [];
+		let retryDialog = null;
 
-		// Updates progressbar & log, calls next step
-		let update = function(response)
+		// Updates progressbar & log, returns next index
+		let updateUi = function(response, index = 0)
 		{
-			// context is index
-			let index = this || 0;
-
 			progressbar.set_value(100 * (index / _list.length));
 			progressbar.set_label(index + ' / ' + _list.length);
 
@@ -1336,6 +1335,7 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 
 					// Ask to retry / ignore / abort
 					let retry = new Et2Dialog(dialog.egw());
+					let retry_index = null;
 					retry.transformAttributes({
 						callback: function(button)
 						{
@@ -1343,16 +1343,14 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 							{
 								case 'dialog[cancel]':
 									cancel = true;
-									return update.call(index, '');
+									break;
 								case 'dialog[skip]':
-									// Continue with next index
 									totals.skipped++;
-									return update.call(index, '');
+									break
 								default:
 									// Try again with previous index
-									return update.call(index - 1, '');
+									retry_index = index - 1;
 							}
-
 						},
 						message: response.data,
 						title: '',
@@ -1366,10 +1364,18 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 					});
 					dialog.egw().window.document.body.appendChild(<LitElement><unknown>retry);
 					// Early exit
-					return;
+					retryDialog = retry.getComplete().then(() =>
+					{
+						retryDialog = null;
+						if(retry_index !== null)
+						{
+							sendRequest(retry_index)
+						}
+					});
 				default:
 					if(response && typeof response === "string")
 					{
+						success.push(_list[index - 1]);
 						totals.success++;
 						let div = document.createElement("DIV");
 						div.className = "message";
@@ -1397,36 +1403,63 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 			// Fire next step
 			if(!cancel && index < _list.length)
 			{
-				var parameters = _list[index];
-				if(typeof parameters != 'object')
+				return Promise.resolve(index);
+			}
+		}
+
+		/** Send off the request for one item */
+		let sendRequest = function(index)
+		{
+			let request = null;
+			let parameters = _list[index];
+			if(typeof parameters != 'object')
+			{
+				parameters = [parameters];
+			}
+
+			// Set up timeout for 30 seconds
+			const timeout_id = window.setTimeout(() =>
+			{
+				// Abort request, we'll either skip it or try again
+				if(request && request.abort)
 				{
-					parameters = [parameters];
+					request.abort();
 				}
+				updateUi({type: 'error', data: dialog.egw().lang("failed") + " " + parameters.join(" ")}, index + 1)
+			}, 30000);
 
 				// Async request, we'll take the next step in the callback
 				// We can't pass index = 0, it looks like false and causes issues
-				dialog.egw().json(_menuaction, parameters, update, index + 1, true, index + 1).sendRequest();
-			}
-			else
+			try
 			{
-				// All done
-				if(!cancel)
-				{
-					progressbar.set_value(100);
-				}
-
-				// Disable cancel (it's too late), enable OK
-				dialog.querySelector('et2-button[button_id="' + Et2Dialog.CANCEL_BUTTON + '"]').setAttribute("disabled", "")
-				dialog.querySelector('et2-button[button_id="' + Et2Dialog.OK_BUTTON + '"]').removeAttribute("disabled")
-				if(!cancel && typeof _callback == "function")
-				{
-					_callback.call(dialog, true, response);
-				}
+				request = dialog.egw().json(_menuaction, parameters).sendRequest()
+					.then(async(response) =>
+					{
+						if(response && response.response)
+						{
+							clearTimeout(timeout_id);
+							for(let value of response.response)
+							{
+								await updateUi(value.type == "data" ? value.data : value, index + 1);
+							}
+						}
+					})
+					.catch(async(response) =>
+					{
+						clearTimeout(timeout_id);
+						updateUi({type: 'error', data: response.message ?? response}, index + 1);
+					});
 			}
+			catch(e)
+			{
+				clearTimeout(timeout_id);
+				request.abort();
+				updateUi({type: 'error', data: dialog.egw().lang("No response from server: your data is probably NOT saved")}, index + 1);
+			}
+			return request;
 		};
-
 		// Wait for dialog, then start the process
-		dialog.getUpdateComplete().then(function()
+		dialog.getUpdateComplete().then(async function()
 		{
 			// Get access to template widgets
 			log = dialog.template.widgetContainer.getDOMWidgetById('log').getDOMNode();
@@ -1434,13 +1467,29 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 			progressbar.set_label('0 / ' + _list.length);
 			totals.widget = dialog.template.widgetContainer.getWidgetById('totals');
 
-			// Start
-			window.setTimeout(function()
+			for(let index = 0; index < _list.length && !cancel; index++)
 			{
-				update.call(0, '');
-			}, 0);
-		});
+				await sendRequest(index);
+				if(retryDialog)
+				{
+					await retryDialog;
+				}
+			}
 
+			// All done
+			if(!cancel)
+			{
+				progressbar.set_value(100);
+			}
+
+			// Disable cancel (it's too late), enable OK
+			dialog.querySelector('et2-button[button_id="' + Et2Dialog.CANCEL_BUTTON + '"]').setAttribute("disabled", "")
+			dialog.querySelector('et2-button[button_id="' + Et2Dialog.OK_BUTTON + '"]').removeAttribute("disabled")
+			if(!cancel && typeof _callback == "function")
+			{
+				_callback.call(dialog, true, success);
+			}
+		});
 		return dialog;
 	}
 }
