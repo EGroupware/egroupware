@@ -1125,13 +1125,12 @@ class AddressbookApp extends EgwApp
 			var callback = function(button, value) {
 				if(button == Et2Dialog.OK_BUTTON)
 				{
-					var _action_data = jQuery.extend(true, {}, action.data);
+					var _action = jQuery.extend(true, {}, action);
 					if(value.infolog)
 					{
-						_action_data.menuaction += '&to_app=infolog&info_type=' + value.info_type;
-						action.data = _action_data;
+						_action.data.menuaction += '&to_app=infolog&info_type=' + value.info_type;
 					}
-					nm_action(action, selected, target);
+					nm_action(_action, selected, target);
 				}
 			};
 			let dialog = new Et2Dialog(this.egw);
