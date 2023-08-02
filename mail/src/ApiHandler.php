@@ -176,8 +176,12 @@ class ApiHandler extends Api\CalDAV\Handler
 		// Sieve class stores them as comma-separated string
 		if (array_key_exists('forwards', $update))
 		{
-			$vacation['forwards'] = implode(',', $update['forwards'] ?? []);
+			$vacation['forwards'] = implode(',', self::parseAddressList($update['forwards'] ?? [], 'forwards'));
 			unset($update['forwards']);
+		}
+		if (array_key_exists('addresses', $update))
+		{
+			$update['addresses'] = self::parseAddressList($update['addresses'] ?? [], 'addresses');
 		}
 		static $modi = ['notice+store', 'notice', 'store'];
 		if (isset($update['modus']) && !in_array($update['modus'], $modi))
@@ -190,7 +194,11 @@ class ApiHandler extends Api\CalDAV\Handler
 		}
 		$vacation_rule = null;
 		$sieve = new Api\Mail\Sieve($account->imapServer());
-		$sieve->setVacation(array_merge(['days' => 3], $vacation, $update), null, $vacation_rule, true);
+		$sieve->setVacation(array_merge([   // some defaults
+			'status' => 'on',
+			'addresses' => [Api\Accounts::id2name($user, 'account_email')],
+			'days' => 3,
+		], $vacation, $update), null, $vacation_rule, true);
 		echo json_encode([
 			'status' => 200,
 			'message' => 'Vacation handling updated',
@@ -198,6 +206,32 @@ class ApiHandler extends Api\CalDAV\Handler
 			'vacation' => self::returnVacation($account->imapServer()->getVacationUser($user)),
 		], self::JSON_RESPONSE_OPTIONS);
 		return true;
+	}
+
+	/**
+	 * Parse array of email addresses
+	 *
+	 * @param string[] $_addresses
+	 * @param string $name attribute name for exception
+	 * @return string[]
+	 * @throws \Exception if there is an invalid email address
+	 */
+	protected static function parseAddressList(array $_addresses, $name=null)
+	{
+		$parsed = iterator_to_array(Api\Mail::parseAddressList($_addresses));
+
+		if (count($parsed) !== count($_addresses) ||
+			array_filter($parsed, static function ($addr)
+			{
+				return !$addr->valid;
+			}))
+		{
+			throw new \Exception("Error parsing email-addresses in attribute $name: ".json_encode($_addresses));
+		}
+		return array_map(static function($addr)
+		{
+			return $addr->mailbox.'@'.$addr->host;
+		}, $parsed);
 	}
 
 	/**
