@@ -10,7 +10,6 @@
  * @copyright EGroupware GmbH 2012-2021
  */
 
-import {EgwActionManager} from "../egw_action/EgwActionManager";
 
 /**
  * Default action for nextmatch rows, runs action specified _action.data.nm_action: see nextmatch_widget::egw_actions()
@@ -85,7 +84,7 @@ export function nm_action(_action, _senders, _target, _ids)
 	}
 	//console.log(_action); console.log(_senders);
 
-	let mgr = _action instanceof EgwActionManager ? _action : _action.getManager();
+	var mgr= _action.getManager();
 
 	var url = '#';
 	if (typeof _action.data.url != 'undefined')
