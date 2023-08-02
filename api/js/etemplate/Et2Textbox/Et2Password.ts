@@ -68,7 +68,7 @@ export class Et2Password extends Et2InvokerMixin(Et2Textbox)
 
 		if(attrs.viewable)
 		{
-			attrs['toggle-password'] = true;
+			attrs['passwordToggle'] = true;
 		}
 
 		super.transformAttributes(attrs);
@@ -151,6 +151,7 @@ export class Et2Password extends Et2InvokerMixin(Et2Textbox)
 
 		if (!this.visible || !this.encrypted)
 		{
+			this.type = this.visible ? 'text' : 'password';
 			return;
 		}
 
@@ -295,11 +296,11 @@ export class Et2Password extends Et2InvokerMixin(Et2Textbox)
                                             part="password-toggle-button"
                                             class="input__password-toggle"
                                             type="button"
-                                            aria-label=${this.localize.term(this.passwordVisible ? 'hidePassword' : 'showPassword')}
+                                            aria-label=${this.localize.term(this.isPasswordVisible ? 'hidePassword' : 'showPassword')}
                                             @click=${this.handlePasswordToggle}
                                             tabindex="-1"
                                     >
-                                        ${this.passwordVisible
+                                        ${this.isPasswordVisible
                                           ? html`
                                                     <slot name="show-password-icon">
                                                         <sl-icon name="eye-slash" library="system"></sl-icon>
@@ -335,7 +336,7 @@ export class Et2Password extends Et2InvokerMixin(Et2Textbox)
 	{
 		if(!this.readonly)
 		{
-			this.shadowRoot.querySelector("input[type='password']").removeAttribute("readonly");
+			this.shadowRoot.querySelector("input").removeAttribute("readonly");
 		}
 		super.handleFocus(e);
 	}
