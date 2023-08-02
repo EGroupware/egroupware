@@ -575,10 +575,12 @@ app.classes.mail = AppJS.extend(
 	{
 		let framework = egw_getFramework();
 		let notify = this.egw.preference('new_mail_notification', 'mail');
+		const message = egw.lang('New mail from %1', pushData.acl.from)+'\n'+pushData.acl.subject+'\n'+pushData.acl.snippet;
 		if (typeof notify === 'undefined' || notify === 'always' ||
 			notify === 'not-mail' && framework && framework.activeApp.appName !== 'mail')
 		{
-			this.egw.message(egw.lang('New mail from %1', pushData.acl.from)+'\n'+pushData.acl.subject+'\n'+pushData.acl.snippet, 'success');
+			this.egw.message(message, 'success');
+			this.egw.notification(egw.lang('new mail'), {body: message, tag: 'mail', icon: egw.image('navbar', 'mail')});
 		}
 	},
 
