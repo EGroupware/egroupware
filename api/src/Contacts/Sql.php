@@ -623,7 +623,7 @@ class Sql extends Api\Storage
 			}
 			// postgres requires that expressions in order by appear in the columns of a distinct select
 			$all_matches = null;
-			if (substr($this->db->Type, 0, 5) !== 'mysql' && preg_match_all("/(#?[a-zA-Z_.]+) *(<> *''|IS NULL|IS NOT NULL)? *(ASC|DESC)?(,|$)/ui",
+			if (substr($this->db->Type, 0, 5) !== 'mysql' && preg_match_all("/(#?[a-zA-Z_.]+) *(<> *''|IS NULL|IS NOT NULL|& *\d+)? *(ASC|DESC)?(,|$)/ui",
 				$order_by, $all_matches, PREG_SET_ORDER))
 			{
 				if (!is_array($extra_cols))	$extra_cols = $extra_cols ? explode(',',$extra_cols) : array();
