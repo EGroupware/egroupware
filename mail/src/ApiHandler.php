@@ -190,7 +190,7 @@ class ApiHandler extends Api\CalDAV\Handler
 		}
 		$vacation_rule = null;
 		$sieve = new Api\Mail\Sieve($account->imapServer());
-		$sieve->setVacation(array_merge($vacation, $update), null, $vacation_rule, true);
+		$sieve->setVacation(array_merge(['days' => 3], $vacation, $update), null, $vacation_rule, true);
 		echo json_encode([
 			'status' => 200,
 			'message' => 'Vacation handling updated',

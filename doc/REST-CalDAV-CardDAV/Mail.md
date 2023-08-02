@@ -154,7 +154,7 @@ The content of the POST request is a JSON encoded object with following attribut
 
 ```
 curl -i https://example.org/egroupware/groupdav.php/mail/vacation --user <user> -X POST -H 'Content-Type: application/json' \
-  --data-binary '{"message":"I'm away from $$start$$ to $$end$$, will respond when I'm back.","start":"2023-01-01","end":"2023-01-10"}'
+  --data-binary '{"text":"I'm away from $$start$$ to $$end$$, will respond when I'm back.","start":"2023-01-01","end":"2023-01-10"}'
     
 HTTP/1.1 200 Ok
 
