@@ -31,7 +31,7 @@ One can use the following URLs relative (!) to https://example.org/egroupware/gr
 - ```/infolog/```     infologs of current user
 - ```/(resources|locations)/<resource-name>/calendar``` calendar of a resource/location, if user has rights to view
 - ```/<current-username>/(resource|location)-<resource-name>``` shared calendar from a resource/location
-- ```/mail/```   only REST API, currently only send EMail or launch interactive compose windows
+- ```/mail/```   REST API only
 
 Shared addressbooks or calendars are only shown in the users home-set, if he subscribed to it via his CalDAV preferences!
 
@@ -41,7 +41,10 @@ from the data of an ```allprop``` PROPFIND, allow browsing CalDAV/CardDAV tree w
 ## REST API: using EGroupware CalDAV/CardDAV server with JSON
 - [Addressbook](Addressbook.md)
 - [Calendar](Calendar.md) (currently recurring events are readonly, they are returned but can not be created or modified)
-- [Mail](Mail.md) (currently only sending mails or opening interactive compose windows)
+- [Mail](Mail.md) (currently only sending mails, opening interactive compose windows and vacation handling)
+
+> For the REST API you always have to send an "Accept: application/json" header and for POST & PUT requests additionally 
+> a "Content-Type: application/json" header, otherwise you talk to the CalDAV/CardDAV server and don't get the response you expect!
 
 Following RFCs / drafts used/planned for JSON encoding of resources
 * [draft-ietf-jmap-jscontact: JSContact: A JSON Representation of Contact Data](https://datatracker.ietf.org/doc/html/draft-ietf-jmap-jscontact) 
