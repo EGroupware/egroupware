@@ -183,7 +183,7 @@ class Script
 							$this->pcount = $rule['priority'];
 						}
 						break;
-					case "vacation" :
+					case "vacation" :   // #vacation&&1:days&&2:addresses&&3:text&&4:status/start-end&&5:forwards&&6:modus
 						if (preg_match("/^ *#vacation&&(.*)&&(.*)&&(.*)&&(.*)&&(.*)&&(.*)/i",$line,$bits) ||
 							preg_match("/^ *#vacation&&(.*)&&(.*)&&(.*)&&(.*)&&(.*)/i",$line,$bits) ||
 							preg_match("/^ *#vacation&&(.*)&&(.*)&&(.*)&&(.*)/i",$line,$bits)) {
@@ -671,7 +671,11 @@ class Script
 			$connection->installScript($this->name, $newscript, true);
 		}
 		catch (\Exception $e) {
-			if ($throw_exceptions) throw $e;
+			if ($throw_exceptions)
+			{
+				$e->script = $newscript;
+				throw $e;
+			}
 			$this->errstr = 'updateScript: putscript failed: ' . $e->getMessage().($e->details?': '.$e->details:'');
 			if ($regexused && !$this->extensions['regex']) $this->errstr .= " REGEX is not an supported CAPABILITY";
 			error_log(__METHOD__.__LINE__.' # Error: ->'.$this->errstr);

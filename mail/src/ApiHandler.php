@@ -145,6 +145,23 @@ class ApiHandler extends Api\CalDAV\Handler
 	}
 
 	/**
+	 * Get vacation array from server
+	 *
+	 * @param Api\Mail\Imap $imap
+	 * @param ?int $user
+	 * @return array
+	 */
+	protected static function getVacation(Api\Mail\Imap $imap, int $user=null)
+	{
+		if ($GLOBALS['egw']->session->token_auth)
+		{
+			return $imap->getVacationUser($user ?: $GLOBALS['egw_info']['user']['account_id']);
+		}
+		$sieve = new Api\Mail\Sieve($imap);
+		return $sieve->getVacation()+['script' => $sieve->script];
+	}
+
+	/**
 	 * Update vacation message/handling with JSON data given in $content
 	 *
 	 * @param int $user
@@ -160,7 +177,7 @@ class ApiHandler extends Api\CalDAV\Handler
 		$vacation = $account->imapServer()->getVacationUser($user);
 		if (!($update = json_decode($content, true, 3, JSON_THROW_ON_ERROR)))
 		{
-			return throw new \Exeception('Invalid request: no content', 400);
+			throw new \Exeception('Invalid request: no content', 400);
 		}
 		// Sieve class stores them as timestamps
 		foreach(['start', 'end'] as $name)
@@ -219,7 +236,7 @@ class ApiHandler extends Api\CalDAV\Handler
 			'status' => 200,
 			'message' => 'Vacation handling updated',
 			'vacation_rule' => $vacation_rule,
-			'vacation' => self::returnVacation($account->imapServer()->getVacationUser($user)),
+			'vacation' => self::returnVacation(self::getVacation($account->imapServer(), $user)),
 		]), self::JSON_RESPONSE_OPTIONS);
 		return true;
 	}
@@ -452,7 +469,7 @@ class ApiHandler extends Api\CalDAV\Handler
 
 				case preg_match('#^/mail(/(\d+))?/vacation$#', $path, $matches) === 1:
 					$account = self::getMailAccount($user, $matches[2] ?? null);
-					echo json_encode(self::returnVacation($account->imapServer()->getVacationUser($user)), self::JSON_RESPONSE_OPTIONS);
+					echo json_encode(self::returnVacation(self::getVacation($account->imapServer(), $user)), self::JSON_RESPONSE_OPTIONS);
 					return true;
 			}
 		}
@@ -465,14 +482,15 @@ class ApiHandler extends Api\CalDAV\Handler
 	protected static function returnVacation(array $vacation)
 	{
 		return array_filter([
-			'status' => $vacation['status'],
+			'status' => $vacation['status'] ?? 'off',
 			'start' => isset($vacation['start_date']) ? Api\DateTime::to($vacation['start_date'], 'Y-m-d') : null,
 			'end' => $vacation['end_date'] ? Api\DateTime::to($vacation['end_date'], 'Y-m-d') : null,
-			'text' => $vacation['text'],
+			'text' => $vacation['text'] ?? null,
 			'modus' => $vacation['modus'] ?? "notice+store",
 			'days' => (int)($vacation['days'] ?? 0),
 			'addresses' => $vacation['addresses'] ?? null,
 			'forwards' => empty($vacation['forwards']) ? [] : preg_split('/, ?/', $vacation['forwards']),
+			'script' => $vacation['script'] ?? null,
 		]);
 	}
 
@@ -507,6 +525,8 @@ class ApiHandler extends Api\CalDAV\Handler
 		echo json_encode([
 				'error'   => $code = $e->getCode() ?: 500,
 				'message' => $e->getMessage(),
+				'details' => $e->details ?? null,
+				'script'  => $e->script ?? null,
 			]+(empty($GLOBALS['egw_info']['server']['exception_show_trace']) ? [] : [
 				'trace' => array_map(static function($trace)
 				{
