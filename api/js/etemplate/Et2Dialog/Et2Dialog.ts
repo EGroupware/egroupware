@@ -542,8 +542,13 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 		return this._complete_promise;
 	}
 
-	handleOpen()
+	handleOpen(event)
 	{
+		if(event.target !== this)
+		{
+			return;
+		}
+
 		this.addOpenListeners();
 		this._button_id = null;
 		this._complete_promise = this._complete_promise || new Promise<[number, Object]>((resolve) => this._completeResolver);
