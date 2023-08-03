@@ -595,6 +595,12 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			{
 				return;
 			}
+
+			// If widget is currently open, we may need to re-calculate search / dropdown positioning
+			if(this.isOpen)
+			{
+				this.handleMenuShow();
+			}
 		}
 
 		/**
