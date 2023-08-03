@@ -53,6 +53,10 @@ class ApiHandler extends Api\CalDAV\Handler
 		{
 			$prefix = '/'.Api\Accounts::id2name($user);
 			if (str_starts_with($path, $prefix)) $path = substr($path, strlen($prefix));
+			if ($user  != $GLOBALS['egw_info']['user']['account_id'])
+			{
+				throw new \Exception("/mail is NOT available for users other than the one you authenticated!", 403);
+			}
 		}
 		header('Content-Type: application/json');
 
@@ -192,18 +196,30 @@ class ApiHandler extends Api\CalDAV\Handler
 			throw new \Exception("Invalid attribute: ".implode(', ', $invalid), 400);
 		}
 		$vacation_rule = null;
-		$sieve = new Api\Mail\Sieve($account->imapServer());
-		$sieve->setVacation(array_merge([   // some defaults
+		$vacation = array_merge([   // some defaults
 			'status' => 'on',
 			'addresses' => [Api\Accounts::id2name($user, 'account_email')],
 			'days' => 3,
-		], $vacation, $update), null, $vacation_rule, true);
-		echo json_encode([
+		], $vacation, $update);
+		// for token-auth we have to use the admin connection
+		if ($GLOBALS['egw']->session->token_auth)
+		{
+			if (!$account->imapServer()->setVacationUser($user, $vacation))
+			{
+				throw new \Exception($account->imapServer()->error ?: 'Error updating sieve-script');
+			}
+		}
+		else
+		{
+			$sieve = new Api\Mail\Sieve($account->imapServer());
+			$sieve->setVacation($vacation, null, $vacation_rule, true);
+		}
+		echo json_encode(array_filter([
 			'status' => 200,
 			'message' => 'Vacation handling updated',
 			'vacation_rule' => $vacation_rule,
 			'vacation' => self::returnVacation($account->imapServer()->getVacationUser($user)),
-		], self::JSON_RESPONSE_OPTIONS);
+		]), self::JSON_RESPONSE_OPTIONS);
 		return true;
 	}
 
@@ -408,19 +424,23 @@ class ApiHandler extends Api\CalDAV\Handler
 	 */
 	function get(&$options,$id,$user=null)
 	{
-		$path = rtrim($options['path'], '/');
-		if (empty($user))
-		{
-			$user = $GLOBALS['egw_info']['user']['account_id'];
-		}
-		else
-		{
-			$prefix = '/'.Api\Accounts::id2name($user);
-			if (str_starts_with($path, $prefix)) $path = substr($path, strlen($prefix));
-		}
 		header('Content-Type: application/json');
 		try
 		{
+			$path = rtrim($options['path'], '/');
+			if (empty($user))
+			{
+				$user = $GLOBALS['egw_info']['user']['account_id'];
+			}
+			else
+			{
+				$prefix = '/'.Api\Accounts::id2name($user);
+				if (str_starts_with($path, $prefix)) $path = substr($path, strlen($prefix));
+				if ($user  != $GLOBALS['egw_info']['user']['account_id'])
+				{
+					throw new \Exception("/mail is NOT available for users other than the one you authenticated!", 403);
+				}
+			}
 			switch ($path)
 			{
 				case '/mail':
