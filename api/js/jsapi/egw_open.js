@@ -57,6 +57,17 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 			bcc: match['bcc'] || []
 		};
 
+		// No CSV, split them here and pay attention to quoted commas
+		const split_regex = /("[^"]*" <[^>]*>)|("[^"]*")|('[^']*')|([^,]+)/g;
+		for (let index in content)
+		{
+			if (typeof content[index] == "string")
+			{
+				const matches = content[index].match(split_regex);
+				content[index] = matches ?? content[index];
+			}
+		}
+
 		// Encode html entities in the URI, otheerwise server XSS protection wont
 		// allow it to pass, because it may get mistaken for some forbiden tags,
 		// e.g., "Mathias <mathias@example.com>" the first part of email "<mathias"
@@ -70,7 +81,7 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 		{
 			if (content[index].length > 0)
 			{
-				var cLen = content[index].split(',');
+				var cLen = content[index];
 				egw.message(egw.lang('%1 email(s) added into %2', cLen.length, egw.lang(index)));
 				return;
 			}
