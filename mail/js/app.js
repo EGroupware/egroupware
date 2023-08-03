@@ -1222,6 +1222,12 @@ app.classes.mail = AppJS.extend(
 					label: 'Save as ZIP',
 					icon: 'mail/save_zip',
 					value: 'downloadAllToZip'
+				},
+				{
+					id: 'forward',
+					label: 'Forward to',
+					icon: 'mail/forward',
+					value: 'forward'
 				}
 			];
 			const collabora = {
@@ -3296,6 +3302,35 @@ app.classes.mail = AppJS.extend(
 					smime_type: (attachment.smime_type ? attachment.smime_type : '')
 				});
 				this.et2._inst.download(url);
+				break;
+			case 'forward':
+				// Give some UI feedback, this might take a second
+				document.body.style.cursor = 'wait';
+
+				// Move the attachment to VFS
+				const file_id = mail_id+'::'+attachments[row_id].partID+'::'+attachments[row_id].winmailFlag+'::'+attachments[row_id].filename;
+				this.egw.request("mail.mail_ui.ajax_vfsOpen", [file_id,attachments[row_id].filename])
+					.then((vfs_path) => {
+						if(!vfs_path)
+						{
+							// Server call will also display an error on failure
+							return;
+						}
+
+						// File is in VFS, put it in a compose window
+						const params = {};
+						let content = {data:{files:{file:[]}}};
+						params['preset[file][]'] = 'vfs://default'+vfs_path;
+						content.data.files.file.push('vfs://default'+vfs_path);
+						content.data.files["filemode"] = params['preset[filemode]'];
+						// always open compose in html mode, as attachment links look a lot nicer in html
+						params["mimeType"] = 'html';
+						egw.openWithinWindow("mail", "setCompose", content, params, /mail.mail_compose.compose/, true);
+					})
+					.finally(() => {
+						// No matter what, clear the waiting style
+						document.body.style.cursor = '';
+					});
 				break;
 		}
 	},
