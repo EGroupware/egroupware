@@ -21,7 +21,7 @@ $GLOBALS['egw_info'] = array(
 		'nonavbar' => 'always',	// true would cause eTemplate to reset it to false for non-popups!
 		'currentapp' => 'api',
 		'autocreate_session_callback' => 'EGroupware\\Api\\Sharing::create_session',
-		'no_exception_handler' => 'basic_auth',	// we use a basic auth exception handler (sends exception message as basic auth realm)
+		'no_exception_handler' => true,    // we send our own errors
 	)
 );
 
