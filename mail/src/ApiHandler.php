@@ -58,6 +58,7 @@ class ApiHandler extends Api\CalDAV\Handler
 				throw new \Exception("/mail is NOT available for users other than the one you authenticated!", 403);
 			}
 		}
+		header('Content-Type: application/json');
 
 		try {
 			if (str_starts_with($path, '/mail/attachments/'))
@@ -95,7 +96,6 @@ class ApiHandler extends Api\CalDAV\Handler
 					}
 					$push = new Api\Json\Push($user);
 					$push->call('egw.open', '', 'mail', 'add', ['preset' => $preset], '_blank', 'mail');
-					header('Content-Type: application/json');
 					echo json_encode([
 						'status' => 200,
 						'message' => 'Request to open compose window sent',
@@ -125,7 +125,6 @@ class ApiHandler extends Api\CalDAV\Handler
 				]+$preset);
 				if ($compose->send($preset, $acc_id))
 				{
-					header('Content-Type: application/json');
 					echo json_encode(array_filter([
 						'status' => 200,
 						'warning' => $warning ?? null,
@@ -285,7 +284,6 @@ class ApiHandler extends Api\CalDAV\Handler
 		{
 			if (isset($fp)) fclose($fp);
 			header('Location: '.($location = '/mail/attachments/'.substr(basename($attachment_path), 8)));
-			header('Content-Type: application/json');
 			echo json_encode([
 				'status'   => 200,
 				'message'  => 'Attachment stored',
