@@ -95,9 +95,9 @@ export class et2_dialog extends Et2Dialog
 		return super._getButtons();
 	}
 
-	handleOpen()
+	handleOpen(event : CustomEvent)
 	{
-		super.handleOpen();
+		super.handleOpen(event);
 
 		// move the overlay dialog into appendTo dom since we want it to be shown in that container
 		if(this.appendTo)
