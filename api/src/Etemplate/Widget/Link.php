@@ -105,20 +105,24 @@ class Link extends Etemplate\Widget
 	 */
 	public static function ajax_link_search($app, $type, $pattern, $options=array())
 	{
-		$options['type'] = $type ? $type : $options['type'];
-		if(!$options['num_rows']) $options['num_rows'] = 1000;
+		$options['type'] = $type ?: $options['type'];
+		if(!$options['num_rows']) $options['num_rows'] = 100;
 
 		$links = Api\Link::query($app, $pattern, $options);
 
-		// Add ' ' to key so javascript does not parse it as a number.
-		// This preserves the order set by the application.
-		$linksc = array_combine(array_map(function($k)
-		{
-			return (string)" ".$k;
-		}, array_keys($links)), $links);
-
 		$response = Api\Json\Response::get();
-		$response->data($linksc);
+		// convert associative array to a real array with value attribute, to preserve the order of numeric keys
+		$response->data(array_values(array_map(static function($key, $value)
+		{
+			if (is_array($value))
+			{
+				return $value+['value' => $key];
+			}
+			return [
+				'value' => $key,
+				'label' => $value,
+			];
+		}, array_keys($links), $links)));
 	}
 
 	/**
