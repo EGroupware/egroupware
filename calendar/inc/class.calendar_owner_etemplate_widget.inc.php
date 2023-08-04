@@ -64,14 +64,35 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 		}
 		else
 		{
-			$accounts = Framework::ajax_user_list();
+			// close session now, to not block other user actions
+			$GLOBALS['egw']->session->commit_session();
+
+			$list = array('accounts'  => array('num_rows' => Link::DEFAULT_NUM_ROWS), 'groups' => array(),
+						  'owngroups' => array());
 			if($type == "primary_groups")
 			{
-				unset($accounts['groups']);
+				unset($list['groups']);
 			}
 			else
 			{
-				unset($accounts['owngroups']);
+				unset($list['owngroups']);
+			}
+			if($GLOBALS['egw_info']['user']['preferences']['common']['account_selection'] == 'primary_group')
+			{
+				$list['accounts']['filter']['group'] = $GLOBALS['egw_info']['user']['account_primary_group'];
+			}
+			foreach($list as $type => &$accounts)
+			{
+				$options = array('account_type' => $type, 'tag_list' => true) + $accounts;
+				$accounts = Accounts::link_query('', $options);
+			}
+			unset($list["accounts"][9]);
+			// Make sure the user themselves is in there
+			if(!array_key_exists($GLOBALS['egw_info']['user']['account_id'], $list['accounts']))
+			{
+				$options = array('account_type' => 'accounts', 'tag_list' => true,
+								 'account_id'   => $GLOBALS['egw_info']['user']['account_id']) + $list['accounts'];
+				$list['accounts'] += Accounts::link_query('', $options);
 			}
 		}
 		foreach($accounts as $type_account_list)
