@@ -505,8 +505,8 @@ class Import
 						// we need to convert the account_id's of memberships, in case we use different ones in SQL
 						$this->accounts_sql->set_memberships(array_merge(array_filter(array_map(static function($account_lid) use ($groups)
 						{
-							return array_search($account_lid, $groups);
-						}, $account['memberships'])), $local_memberships), $account_id);
+							return array_search(self::strtolower($account_lid), $groups);
+						}, $account['memberships'] ?: [])), $local_memberships), $account_id);
 					}
 					// if only users are synced add new users to default group(s) as configured for auto-created accounts
 					elseif ($new && $default_memberships)
@@ -650,7 +650,7 @@ class Import
 		$sql_groups = $groups = $set_members = [];
 		foreach($GLOBALS['egw']->db->select(Sql::TABLE, 'account_id,account_lid', ['account_type' => 'g'], __LINE__, __FILE__) as $row)
 		{
-			$sql_groups[-$row['account_id']] = $row['account_lid'];
+			$sql_groups[-$row['account_id']] = self::strtolower($row['account_lid']);
 		}
 		// fill groups with existing ones, for incremental sync, as we need to return all groups
 		if (!empty($modified))
@@ -663,7 +663,7 @@ class Import
 		{
 			$this->logger(++$num.'. Group: '.json_encode($group, JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES), 'debug');
 
-			if (!($sql_id = array_search($group['account_lid'], $sql_groups)))
+			if (!($sql_id = array_search(self::strtolower($group['account_lid']), $sql_groups)))
 			{
 				if ($this->accounts_sql->name2id($group['account_lid']) > 0)
 				{
@@ -745,7 +745,7 @@ class Import
 				// unset the updated groups, so we can delete the ones not returned from LDAP
 				unset($sql_groups[$sql_id]);
 			}
-			$groups[$sql_id] = $group['account_lid'];
+			$groups[$sql_id] = self::strtolower($group['account_lid']);
 
 			// we need to record and return the id's to update members, AFTER users are created/updated
 			// only for incremental run, initial run set's memberships with the user anyway (more efficient for LDAP!)
@@ -1053,5 +1053,21 @@ class Import
 			'updated' => $updated,
 			'errors'  => $errors,
 		];
+	}
+
+	/**
+	 * Lowercase a string using mb_strtolower, if available
+	 *
+	 * @param string $str
+	 * @return string
+	 */
+	static protected function strtolower($str)
+	{
+		static $strtolower = null;
+		if (!isset($strtolower))
+		{
+			$strtolower = function_exists('mb_strtolower') ? 'mb_strtolower' : 'strtolower';
+		}
+		return $strtolower($str);
 	}
 }
