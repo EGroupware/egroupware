@@ -177,14 +177,6 @@ class calendar_groupdav extends Api\CalDAV\Handler
 			return $this->free_busy_report($path, $options, $user);
 		}
 
-		if (isset($_GET['download']))
-		{
-			$this->caldav->propfind_options['props'] = array(array(
-				'xmlns' => Api\CalDAV::CALDAV,
-				'name'  => 'calendar-data',
-			));
-		}
-
 		// ToDo: add parameter to only return id & etag
 		$filter = array(
 			'users' => $user,
@@ -263,7 +255,7 @@ class calendar_groupdav extends Api\CalDAV\Handler
 
 		// check if we have to return the full calendar data or just the etag's
 		if (!($filter['calendar_data'] = $options['props'] == 'all' &&
-				$options['root']['ns'] == Api\CalDAV::CALDAV) && is_array($options['props']))
+				$options['root']['ns'] == Api\CalDAV::CALDAV || isset($_GET['download'])) && is_array($options['props']))
 		{
 			foreach($options['props'] as $prop)
 			{
