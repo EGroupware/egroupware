@@ -696,7 +696,6 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
                     // the original
                     //replace jQuery with spread operator
                     // set the Prototype of the copy set_onExecute is not available otherwise
-                    //TODO is this a valid/elegant way to do this??? give egwAction a methode clone -- make abstract parent class
                     let drop_clone = drop[k].actionObj.clone()//Object.assign(Object.create(Object.getPrototypeOf(drop[k].actionObj)), drop[k].actionObj) //{...drop[k].actionObj};
                     //warning This method is really slow
                     //Object.setPrototypeOf(drop_clone, EgwAction.prototype)

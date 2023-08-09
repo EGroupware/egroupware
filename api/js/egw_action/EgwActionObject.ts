@@ -422,7 +422,7 @@ export class EgwActionObject {
      * @param {number} _changedBit
      * @param {number} _shiftState is the status of extra keys being pressed during the
      *    selection process.
-     *///TODO check
+     */
     _ifaceCallback(_newState: number, _changedBit: number, _shiftState?: number) {
         if (typeof _shiftState == "undefined") _shiftState = EGW_AO_SHIFT_STATE_NONE;
 

@@ -27,7 +27,6 @@ type EgwActionClasses = {
     default: EgwActionClassData,//
     actionManager: EgwActionClassData, drag: EgwActionClassData, drop: EgwActionClassData, popup: EgwActionClassData
 }
-//TODO egw global.js
 declare global {
     interface Window {
         _egwActionClasses: EgwActionClasses;

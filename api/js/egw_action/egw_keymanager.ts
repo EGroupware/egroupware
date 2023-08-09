@@ -111,7 +111,6 @@ ready(() => {//waits for DOM ready
 		{
 			// Check whether the event came from the sidebox - if yes, ignore
 			//if(jQuery(keyboardEvent.target).parents("#egw_fw_sidemenu").length > 0) return;
-			//TODO check replacement with ralf or Nathan
 			let target: any = keyboardEvent.target // this is some kind of element
 			while ((target = target.parentNode) && target !== document)
 			{

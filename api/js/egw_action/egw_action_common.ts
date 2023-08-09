@@ -322,8 +322,6 @@ export class EgwFnct
      *    2. _value may be a boolean, which specifies whether the external onExecute handler
      *       (passed as "_handler" in the constructor) will be used.
      *    3. _value may be a JS function which will then be called.
-     *
-     *    TODO check if there should be other options
      */
     public setValue(_value: any) {
         this.value = null;
