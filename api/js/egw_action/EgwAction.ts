@@ -236,7 +236,6 @@ export class EgwAction {
     public addAction(_type: string, _id: string, _caption: string = "", _iconUrl: string = "", _onExecute: string | Function = null, _allowOnMultiple: boolean = true): EgwAction {
         //Get the constructor for the given action type
         if (!(_type in window._egwActionClasses)) {
-            //TODO doesn't default instead of popup make more sense here??
             _type = "popup"
         }
 
@@ -403,7 +402,6 @@ export class EgwAction {
      * @param _target egwActionObject object, gets called for every object in _senders
      * @returns boolean true if none has disableClass, false otherwise
      */
-    //TODO senders is never used in function body??
     public enableClass(_action: EgwAction, _senders: any[], _target: any) {
         if (typeof _target == 'undefined') {
             return false;
@@ -593,7 +591,7 @@ export class EgwAction {
      * The appendToGraph function generates an action tree which automatically contains
      * all parent elements. If the appendToGraph function is called for a
      *
-     * @param {not an array} _tree contains the tree structure - pass an object containing {root:Tree}??TODO
+     * @param {not an array} _tree contains the tree structure - pass an object containing {root:Tree}
      *    the empty array "root" to this function {"root": []}. The result will be stored in
      *    this array.
      * @param {boolean} _addChildren is used internally to prevent parent elements from
