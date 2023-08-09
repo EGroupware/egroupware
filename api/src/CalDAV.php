@@ -1291,7 +1291,8 @@ class CalDAV extends HTTP_WebDAV_Server
 		$propfind_options = array(
 			'path'  => $options['path'],
 			'depth' => 1,
-			'other' => [['name' => 'nresults', 'data' => $chunk_size]],
+			// do NOT limit response, if GET parameter download is given
+			'other' => isset($_GET['download']) ? [] : [['name' => 'nresults', 'data' => $chunk_size]],
 		);
 		$files = array();
 		if (($ret = $this->PROPFIND($propfind_options,$files)) !== true)
