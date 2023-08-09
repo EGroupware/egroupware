@@ -110,8 +110,10 @@ export class EgwDragActionImplementation implements EgwActionImplementation {
             }
 
             // Bind mouse handlers
-            //TODO can i just remove jquery.off??
-            //jQuery(node).off("mousedown")
+            //et2_dataview_view_aoi binds mousedown event in et2_dataview_rowAOI to "egwPreventSelect" function from egw_action_common via jQuery.mousedown
+            //jQuery(node).off("mousedown",egwPreventSelect)
+            //et2_dataview_view_aoi binds mousedown event in et2_dataview_rowAOI to "egwPreventSelect" function from egw_action_common via addEventListener
+            //node.removeEventListener("mousedown",egwPreventSelect)
             node.addEventListener("mousedown", (event) => {
                 if (_context.isSelection(event)) {
                     node.setAttribute("draggable", false);
