@@ -137,6 +137,10 @@
 			}
 			div#mail-view {
 				height: 100%;
+				#mail-view_subject
+				{
+					.mob-fontsize-l;
+				}
 			}
 			#mail-view_toaddressdetails {
 				color: #26537c;
@@ -220,115 +224,113 @@
 
 	#mail-index {
 		margin-right: 0px;
-		table.egwGridView_outer tbody {
-			span.et2_date_ro.et2_label {
-				font-size: 9px;
+		span.et2_date_ro.et2_label {
+			font-size: 9px;
+		}
+		td {
+			padding-top: 8px;
+			padding-bottom: 8px;
+			a[id^='mail-index_'][id$='fromaddress]']{
+				color:@gray_80;
+				.mob-fontsize-l;
+				overflow: hidden;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+				width: 95%;
+				display: inline-block;
 			}
-			td {
-				padding-top: 8px;
-				padding-bottom: 8px;
-				a[id^='mail-index_'][id$='fromaddress]']{
-					color:@gray_80;
-					.mob-fontsize-l;
-					overflow: hidden;
-					white-space: nowrap;
-					text-overflow: ellipsis;
-					width: 95%;
-					display: inline-block;
-				}
-				span[id^='mail-index_'][id$='attachments]'] {
-					float: right;
-					img {
-						width: 16px;
-						height: 16px;
-					}
-				}
-				span[id^='mail-index_'][id$='subject]'] {
-					overflow: hidden;
-					white-space: nowrap;
-					text-overflow: ellipsis;
-					width: 95%;
-					.mob-fontsize-n;
-					font-weight: normal !important;
-				}
-				label[id^='mail-index_'][id$='date]']{
-					padding-top: 0;
+			span[id^='mail-index_'][id$='attachments]'] {
+				float: right;
+				img {
+					width: 16px;
+					height: 16px;
 				}
 			}
-			tr{
-				height:55px;
-				div.recent ,
-				span.recent ,
-				time.recent ,
-				a.recent,
-				div.unseen ,
-				span.unseen ,
-				time.unseen ,
-				a.unseen  {
-					color: black !important;
-					font-weight: bold;
-				}
-				span.mail.mobile_cat_col {
-					background: #F5F5F5;
-				}
-				span.mail.label1.mobile_cat_col  {
-					background: #ff0080;
-				}
-				span.mail.label2.mobile_cat_col{
-					background: #ff8000;
-				}
-				span.mail.label3.mobile_cat_col {
-					background: #008000;
-				}
-				span.mail.label4.mobile_cat_col {
-					background: #0000ff;
-				}
-				span.mail.label5.mobile_cat_col {
-					background: #8000ff;
-				}
+			et2-description[id^='mail-index_'][id$='subject]'] {
+				overflow: hidden;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+				width: 95%;
+				.mob-fontsize-n;
+				font-weight: normal !important;
+			}
+			label[id^='mail-index_'][id$='date]']{
+				padding-top: 0;
+			}
+		}
+		tr{
+			height:55px;
+			div.recent ,
+			span.recent ,
+			time.recent ,
+			a.recent,
+			div.unseen ,
+			span.unseen ,
+			time.unseen ,
+			a.unseen  {
+				color: black !important;
+				font-weight: bold;
+			}
+			span.mail.mobile_cat_col {
+				background: #F5F5F5;
+			}
+			span.mail.label1.mobile_cat_col  {
+				background: #ff0080;
+			}
+			span.mail.label2.mobile_cat_col{
+				background: #ff8000;
+			}
+			span.mail.label3.mobile_cat_col {
+				background: #008000;
+			}
+			span.mail.label4.mobile_cat_col {
+				background: #0000ff;
+			}
+			span.mail.label5.mobile_cat_col {
+				background: #8000ff;
+			}
 
-				span.mail.flagged.mobile_cat_col  {
-					background: #ff0000;
-				}
+			span.mail.flagged.mobile_cat_col  {
+				background: #ff0000;
+			}
 
-				span.mail.prio_high.mobile_cat_col {
-					background: #ac0000;
-				}
+			span.mail.prio_high.mobile_cat_col {
+				background: #ac0000;
+			}
 
-				span.mail.deleted.mobile_cat_col {
-					background: silver;
-					text-decoration : line-through;
-				}
-				span.status_img {
-					padding:0 2px 2px 0;
-				}
-				span.deleted.status_img {
-					background-image: url(../default/images/kmmsgdel.svg);
-				}
-				span.unseen.status_img {
-					background-image: url(../default/images/kmmsgunseen.svg);
-				}
-				span.flagged_seen.status_img {
-					background-image: url(../default/images/read_flagged_small.svg);
-				}
-				span.flagged_unseen.status_img {
-					background-image: url(../default/images/unread_flagged_small.svg);
-				}
-				span.recent.status_img {
-					background-image: url(../default/images/kmmsgnew.svg);
-				}
-				span.replied.status_img {
-					background-image: url(../default/images/mail_reply.svg);
-				}
-				span.forwarded.status_img {
-					background-image: url(../default/images/mail_forward.svg);
-				}
-				span.bodypreview {
-					text-overflow: ellipsis;
-					padding-left: 2px;
-					font-style: normal;
-					.mob-fontsize-n;
-				}
+			span.mail.deleted.mobile_cat_col {
+				background: silver;
+				text-decoration : line-through;
+			}
+			span.status_img {
+				padding:0 2px 2px 0;
+			}
+			span.deleted.status_img {
+				background-image: url(../default/images/kmmsgdel.svg);
+			}
+			span.unseen.status_img {
+				background-image: url(../default/images/kmmsgunseen.svg);
+			}
+			span.flagged_seen.status_img {
+				background-image: url(../default/images/read_flagged_small.svg);
+			}
+			span.flagged_unseen.status_img {
+				background-image: url(../default/images/unread_flagged_small.svg);
+			}
+			span.recent.status_img {
+				background-image: url(../default/images/kmmsgnew.svg);
+			}
+			span.replied.status_img {
+				background-image: url(../default/images/mail_reply.svg);
+			}
+			span.forwarded.status_img {
+				background-image: url(../default/images/mail_forward.svg);
+			}
+			span.bodypreview {
+				text-overflow: ellipsis;
+				padding-left: 2px;
+				font-style: normal;
+				.mob-fontsize-n;
 			}
 		}
 		.mail-index_quotabox {
@@ -359,5 +361,5 @@
 	#mail-acl_grid {
 		.row{border-bottom: 1px solid silver;}
 	}
-
+	.mailPreviewHeaders et2-lavatar {position: inherit}
 }
