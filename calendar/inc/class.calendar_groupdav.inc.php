@@ -1011,13 +1011,28 @@ class calendar_groupdav extends Api\CalDAV\Handler
 		{
 			$_SERVER['HTTP_IF_SCHEDULE_TAG_MATCH'] = $_SERVER['HTTP_IF_SCHEDULE'];
 		}
+		// Thunderbird or Lightning: for "412 Precondition Failed" update only participant data, as TB offers user to overwrite server state
+		// CalDAVSynchronizer: does NOT handle 412 well and fails the complete sync, updating participant data only is the better option
+		$handle_etag_failure_with_partial_update = in_array(self::get_agent(), ['thunderbird', 'lightning', 'caldavsynchronizer']);
+
 		$return_no_access = true;	// as handled by importVCal anyway and allows it to set the status for participants
 		$oldEvent = $this->_common_get_put_delete('PUT',$options,$id,$return_no_access,
-			isset($_SERVER['HTTP_IF_SCHEDULE_TAG_MATCH']));	// dont fail with 412 Precondition Failed in that case
-		if (!is_null($oldEvent) && !is_array($oldEvent))
+			isset($_SERVER['HTTP_IF_SCHEDULE_TAG_MATCH']), !$handle_etag_failure_with_partial_update);	// dont fail with 412 Precondition Failed in that case
+
+		if ($oldEvent === '412 Precondition Failed' && $handle_etag_failure_with_partial_update)
+		{
+			$oldEvent = $this->read($id);
+			$this->caldav->log("Handing 412 Precondition Failed for Thunderbird by only updating participant data!");
+		}
+		elseif (!is_null($oldEvent) && !is_array($oldEvent))
 		{
 			if ($this->debug) error_log(__METHOD__.': '.print_r($oldEvent,true).function_backtrace());
 			return $oldEvent;
+		}
+		else
+		{
+			// set it to false, as we have no precondition failure
+			$handle_etag_failure_with_partial_update = false;
 		}
 
 		if (is_null($oldEvent) && ($user >= 0 && !$this->bo->check_perms(Acl::ADD, 0, $user) ||
@@ -1080,7 +1095,7 @@ class calendar_groupdav extends Api\CalDAV\Handler
 
 				if ($schedule_tag_match !== $schedule_tag)
 				{
-					if ($this->debug) error_log(__METHOD__."(,,$user) schedule_tag missmatch: given '$schedule_tag_match' != '$schedule_tag'");
+					if ($this->debug) error_log(__METHOD__."(,,$user) schedule_tag mismatch: given '$schedule_tag_match' != '$schedule_tag'");
 					// honor Prefer: return=representation for 412 too (no need for client to explicitly reload)
 					$this->check_return_representation($options, $id, $user);
 					return '412 Precondition Failed';
@@ -1088,6 +1103,8 @@ class calendar_groupdav extends Api\CalDAV\Handler
 			}
 			// if no edit-rights (aka no organizer), update only attendee stuff: status and alarms
 			if (!$this->check_access(Acl::EDIT, $oldEvent) ||
+				// only update participant data, if precondition is NOT meet
+				$handle_etag_failure_with_partial_update ||
 				// we ignored Lightings If-None-Match: "*" --> do not overwrite event, just change status
 				!empty($workaround_lightning_if_none_match))
 			{
