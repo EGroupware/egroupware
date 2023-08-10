@@ -5831,6 +5831,18 @@ app.classes.mail = AppJS.extend(
 		if (id){
 			content = egw.dataGetUIDdata(id);
 			content.data['toolbar'] = this.et2.getArrayMgr('sel_options').getEntry('toolbar');
+			if (content.data.toaddress||content.data.fromaddress)
+			{
+				content.data.additionaltoaddress = (content.data.additionaltoaddress??[]).concat(content.data.toaddress);
+				content.data.additionaltoaddress = 	content.data.additionaltoaddress.filter((i, item) => {
+					return content.data.additionaltoaddress.indexOf(i) == item
+				});
+				content.data.additionalfromaddress = (content.data.additionalfromaddress??[]).concat(content.data.fromaddress);
+				content.data.additionalfromaddress = content.data.additionalfromaddress.filter((i, item) => {
+					return content.data.additionalfromaddress.indexOf(i) == item
+				});
+			}
+
 			// Set default actions
 			for(var action in content.data['toolbar'])
 			{

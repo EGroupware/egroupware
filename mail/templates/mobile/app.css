@@ -128,6 +128,9 @@
   body #popupMainDiv div#mail-view {
     height: 100%;
   }
+  body #popupMainDiv div#mail-view #mail-view_subject {
+    font-size: 12pt;
+  }
   body #popupMainDiv #mail-view_toaddressdetails {
     color: #26537c;
     float: right;
@@ -212,14 +215,14 @@
   #mail-index {
     margin-right: 0px;
   }
-  #mail-index table.egwGridView_outer tbody span.et2_date_ro.et2_label {
+  #mail-index span.et2_date_ro.et2_label {
     font-size: 9px;
   }
-  #mail-index table.egwGridView_outer tbody td {
+  #mail-index td {
     padding-top: 8px;
     padding-bottom: 8px;
   }
-  #mail-index table.egwGridView_outer tbody td a[id^='mail-index_'][id$='fromaddress]'] {
+  #mail-index td a[id^='mail-index_'][id$='fromaddress]'] {
     color: #373737;
     font-size: 12pt;
     overflow: hidden;
@@ -228,14 +231,14 @@
     width: 95%;
     display: inline-block;
   }
-  #mail-index table.egwGridView_outer tbody td span[id^='mail-index_'][id$='attachments]'] {
+  #mail-index td span[id^='mail-index_'][id$='attachments]'] {
     float: right;
   }
-  #mail-index table.egwGridView_outer tbody td span[id^='mail-index_'][id$='attachments]'] img {
+  #mail-index td span[id^='mail-index_'][id$='attachments]'] img {
     width: 16px;
     height: 16px;
   }
-  #mail-index table.egwGridView_outer tbody td span[id^='mail-index_'][id$='subject]'] {
+  #mail-index td et2-description[id^='mail-index_'][id$='subject]'] {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -243,76 +246,76 @@
     font-size: 10pt;
     font-weight: normal !important;
   }
-  #mail-index table.egwGridView_outer tbody td label[id^='mail-index_'][id$='date]'] {
+  #mail-index td label[id^='mail-index_'][id$='date]'] {
     padding-top: 0;
   }
-  #mail-index table.egwGridView_outer tbody tr {
+  #mail-index tr {
     height: 55px;
   }
-  #mail-index table.egwGridView_outer tbody tr div.recent,
-  #mail-index table.egwGridView_outer tbody tr span.recent,
-  #mail-index table.egwGridView_outer tbody tr time.recent,
-  #mail-index table.egwGridView_outer tbody tr a.recent,
-  #mail-index table.egwGridView_outer tbody tr div.unseen,
-  #mail-index table.egwGridView_outer tbody tr span.unseen,
-  #mail-index table.egwGridView_outer tbody tr time.unseen,
-  #mail-index table.egwGridView_outer tbody tr a.unseen {
+  #mail-index tr div.recent,
+  #mail-index tr span.recent,
+  #mail-index tr time.recent,
+  #mail-index tr a.recent,
+  #mail-index tr div.unseen,
+  #mail-index tr span.unseen,
+  #mail-index tr time.unseen,
+  #mail-index tr a.unseen {
     color: black !important;
     font-weight: bold;
   }
-  #mail-index table.egwGridView_outer tbody tr span.mail.mobile_cat_col {
+  #mail-index tr span.mail.mobile_cat_col {
     background: #F5F5F5;
   }
-  #mail-index table.egwGridView_outer tbody tr span.mail.label1.mobile_cat_col {
+  #mail-index tr span.mail.label1.mobile_cat_col {
     background: #ff0080;
   }
-  #mail-index table.egwGridView_outer tbody tr span.mail.label2.mobile_cat_col {
+  #mail-index tr span.mail.label2.mobile_cat_col {
     background: #ff8000;
   }
-  #mail-index table.egwGridView_outer tbody tr span.mail.label3.mobile_cat_col {
+  #mail-index tr span.mail.label3.mobile_cat_col {
     background: #008000;
   }
-  #mail-index table.egwGridView_outer tbody tr span.mail.label4.mobile_cat_col {
+  #mail-index tr span.mail.label4.mobile_cat_col {
     background: #0000ff;
   }
-  #mail-index table.egwGridView_outer tbody tr span.mail.label5.mobile_cat_col {
+  #mail-index tr span.mail.label5.mobile_cat_col {
     background: #8000ff;
   }
-  #mail-index table.egwGridView_outer tbody tr span.mail.flagged.mobile_cat_col {
+  #mail-index tr span.mail.flagged.mobile_cat_col {
     background: #ff0000;
   }
-  #mail-index table.egwGridView_outer tbody tr span.mail.prio_high.mobile_cat_col {
+  #mail-index tr span.mail.prio_high.mobile_cat_col {
     background: #ac0000;
   }
-  #mail-index table.egwGridView_outer tbody tr span.mail.deleted.mobile_cat_col {
+  #mail-index tr span.mail.deleted.mobile_cat_col {
     background: silver;
     text-decoration: line-through;
   }
-  #mail-index table.egwGridView_outer tbody tr span.status_img {
+  #mail-index tr span.status_img {
     padding: 0 2px 2px 0;
   }
-  #mail-index table.egwGridView_outer tbody tr span.deleted.status_img {
+  #mail-index tr span.deleted.status_img {
     background-image: url(../default/images/kmmsgdel.svg);
   }
-  #mail-index table.egwGridView_outer tbody tr span.unseen.status_img {
+  #mail-index tr span.unseen.status_img {
     background-image: url(../default/images/kmmsgunseen.svg);
   }
-  #mail-index table.egwGridView_outer tbody tr span.flagged_seen.status_img {
+  #mail-index tr span.flagged_seen.status_img {
     background-image: url(../default/images/read_flagged_small.svg);
   }
-  #mail-index table.egwGridView_outer tbody tr span.flagged_unseen.status_img {
+  #mail-index tr span.flagged_unseen.status_img {
     background-image: url(../default/images/unread_flagged_small.svg);
   }
-  #mail-index table.egwGridView_outer tbody tr span.recent.status_img {
+  #mail-index tr span.recent.status_img {
     background-image: url(../default/images/kmmsgnew.svg);
   }
-  #mail-index table.egwGridView_outer tbody tr span.replied.status_img {
+  #mail-index tr span.replied.status_img {
     background-image: url(../default/images/mail_reply.svg);
   }
-  #mail-index table.egwGridView_outer tbody tr span.forwarded.status_img {
+  #mail-index tr span.forwarded.status_img {
     background-image: url(../default/images/mail_forward.svg);
   }
-  #mail-index table.egwGridView_outer tbody tr span.bodypreview {
+  #mail-index tr span.bodypreview {
     text-overflow: ellipsis;
     padding-left: 2px;
     font-style: normal;
@@ -347,4 +350,8 @@
   #mail-acl_grid .row {
     border-bottom: 1px solid silver;
   }
+  .mailPreviewHeaders et2-lavatar {
+    position: inherit;
+  }
 }
+/*# sourceMappingURL=app.css.map */
