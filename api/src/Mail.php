@@ -1504,7 +1504,7 @@ class Mail
 			// Pre-cache the headers we want, 'fetchHeaders' is a label into the cache
 			$fquery->headers('fetchHeaders',array(
 				'DISPOSITION-NOTIFICATION-TO','RETURN-RECEIPT-TO','X-CONFIRM-READING-TO',
-				'DATE','SUBJECT','FROM','TO','CC','REPLY-TO',
+				'DATE','SUBJECT','FROM','TO','CC','BCC','REPLY-TO',
 				'X-PRIORITY'
 			),array(
 				// Cache headers, we'll look at them below
@@ -1599,9 +1599,10 @@ class Mail
 				$headerObject['FROM'] = (array)($headerForPrio['FROM']?$headerForPrio['FROM']:($headerForPrio['REPLY-TO']?$headerForPrio['REPLY-TO']:$headerForPrio['RETURN-PATH']));
 				$headerObject['TO'] = (array)$headerForPrio['TO'];
 				$headerObject['CC'] = isset($headerForPrio['CC'])?(array)$headerForPrio['CC']:array();
+				$headerObject['BCC'] = isset($headerForPrio['BCC'])?(array)$headerForPrio['BCC']:array();
 				$headerObject['REPLY-TO'] = isset($headerForPrio['REPLY-TO'])?(array)$headerForPrio['REPLY-TO']:array();
 				$headerObject['PRIORITY'] = isset($headerForPrio['X-PRIORITY'])?$headerForPrio['X-PRIORITY']:null;
-				foreach (array('FROM','TO','CC','REPLY-TO') as $key)
+				foreach (array('FROM','TO','CC','BCC','REPLY-TO') as $key)
 				{
 					$address = array();
 					foreach ($headerObject[$key] as $k => $ad)
@@ -1801,6 +1802,16 @@ class Mail
 					{
 						//error_log(__METHOD__.' ('.__LINE__.') '."-> $k:".array2string($add));
 						$retValue['header'][$sortOrder[$uid]]['cc_addresses'][$ki] = self::decode_header($add,true);
+						//error_log(__METHOD__.' ('.__LINE__.') '.array2string($retValue['header'][$sortOrder[$uid]]['additional_to_addresses'][$ki]));
+						$ki++;
+					}
+				}
+				if(!empty($headerObject['BCC'])) {
+					$ki=0;
+					foreach($headerObject['BCC'] as $k => $add)
+					{
+						//error_log(__METHOD__.' ('.__LINE__.') '."-> $k:".array2string($add));
+						$retValue['header'][$sortOrder[$uid]]['bcc_addresses'][$ki] = self::decode_header($add,true);
 						//error_log(__METHOD__.' ('.__LINE__.') '.array2string($retValue['header'][$sortOrder[$uid]]['additional_to_addresses'][$ki]));
 						$ki++;
 					}
