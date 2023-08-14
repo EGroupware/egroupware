@@ -903,3 +903,14 @@ function api_upgrade23_1_001()
 
 	return $GLOBALS['setup_info']['api']['currentver'] = '23.1.002';
 }
+
+function api_upgrade23_1_002()
+{
+	$GLOBALS['egw_setup']->oProc->AddColumn('egw_sharing', 'share_password', array(
+		'type'      => 'varchar',
+		'precision' => '128',
+		'comment'   => 'optional reversible password'
+	));
+
+	return $GLOBALS['setup_info']['api']['currentver'] = '23.1.003';
+}

@@ -59,7 +59,10 @@ class Password extends Etemplate\Widget\Textbox
 			$preserv = (string)$value;
 
 			// only send password (or hash) to client-side, if explicitly requested
-			if (!empty($value) && (!array_key_exists('viewable', $this->attrs) || !in_array($this->attrs['viewable'], ['1', 'true', true], true)))
+			if(!empty($value) && (!array_key_exists('viewable', $this->attrs) ||
+					!in_array($this->attrs['viewable'], ['1', 'true', true], true))
+				&& (!array_key_exists('passwordToggle', $this->attrs) ||
+					!in_array($this->attrs['passwordToggle'], ['1', 'true', true], true)))
 			{
 				$value = str_repeat('*', strlen($preserv));
 			}
@@ -144,6 +147,18 @@ class Password extends Etemplate\Widget\Textbox
 		if($GLOBALS['egw']->auth->authenticate($GLOBALS['egw_info']['user']['account_lid'],$user_password))
 		{
 			$decrypted = Credentials::decrypt(array('cred_password' => $password,'cred_pw_enc' => Credentials::SYSTEM_AES));
+
+			// Try user
+			if(!$decrypted || $decrypted == Credentials::UNAVAILABLE)
+			{
+				$decrypted = Credentials::decrypt(
+					[
+						'cred_password' => $password,
+						'cred_pw_enc'   => Credentials::USER_AES,
+						'account_id'    => $GLOBALS['egw_info']['user']['account_id']
+					]
+				);
+			}
 		}
 		$response->data($decrypted);
 	}
