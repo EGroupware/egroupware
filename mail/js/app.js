@@ -1136,7 +1136,7 @@ app.classes.mail = AppJS.extend(
 	{
 		const id = _widget.id.replace('[actions]','');
 		const action = _widget.value;
-		_widget.label = _widget.select_options.filter(_item=>{return _item.value == _widget.value})[0].label;
+		_widget.label = this.egw.lang(_widget.select_options.filter(_item=>{return _item.value == _widget.value})[0].label);
 		this.saveAttachmentHandler(_widget,action, id);
 	},
 
