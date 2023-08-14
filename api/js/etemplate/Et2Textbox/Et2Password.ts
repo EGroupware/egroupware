@@ -66,9 +66,16 @@ export class Et2Password extends Et2InvokerMixin(Et2Textbox)
 		}
 		attrs.type = 'password';
 
-		if(attrs.viewable)
+		if(typeof attrs.viewable !== "undefined")
 		{
-			attrs['passwordToggle'] = true;
+			attrs['passwordToggle'] = attrs.viewable;
+			delete attrs.viewable;
+		}
+		if(typeof attrs.passwordToggle !== "undefined" && !attrs.passwordToggle
+			|| typeof attrs.passwordToggle == "string" && !this.getArrayMgr("content").parseBoolExpression(attrs.passwordToggle))
+		{
+			// Unset passwordToggle if its false.  It's from parent, and it doesn't handle string "false" = false
+			delete attrs.passwordToggle;
 		}
 
 		super.transformAttributes(attrs);
@@ -149,7 +156,7 @@ export class Et2Password extends Et2InvokerMixin(Et2Textbox)
 
 		this.visible = !this.visible;	// can't access private isPasswordVisible
 
-		if (!this.visible || !this.encrypted)
+		if(!this.visible || !this.encrypted || !this.value)
 		{
 			this.type = this.visible ? 'text' : 'password';
 			return;

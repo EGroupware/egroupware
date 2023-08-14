@@ -397,6 +397,8 @@ $phpgw_baseline = array(
 			'share_writable' => array('type' => 'int','precision' => '1','nullable' => False,'default' => '0','comment' => '0=readable, 1=writable'),
 			'share_with' => array('type' => 'varchar','precision' => '4096','comment' => 'email addresses, comma seperated'),
 			'share_passwd' => array('type' => 'varchar','precision' => '128','comment' => 'optional password-hash'),
+			'share_password' => array('type'    => 'varchar', 'precision' => '128',
+									  'comment' => 'optional reversible password'),
 			'share_created' => array('type' => 'timestamp','nullable' => False,'comment' => 'creation date'),
 			'share_last_accessed' => array('type' => 'timestamp','comment' => 'last access of share')
 		),
