@@ -129,6 +129,7 @@
      <select name="newsettings[auth_type]">
 {hook_auth_types}
      </select>
+     <input type="hidden" value="" name="newsettings[auth_log]"/>
      <label><input type="checkbox" value="True" {checked_auth_log_True} name="newsettings[auth_log]"/>
 {lang_Enable_logging_of_authentication_to_files-directory}: auth.log</label>
     </td>
@@ -177,6 +178,7 @@
   <tr class="row_off">
     <td>{lang_Fallback_Authentication}:</td>
     <td>
+      <input type="hidden" value="" name="newsettings[auth_fallback]"/>
       <label><input type="checkbox" value="True" {checked_auth_fallback_True} name="newsettings[auth_fallback]"/>
 {lang_If_primary_authentication_is_NOT_successful_fall_back_to_passwords_synced_into_account-storage}</label>
     </td>
@@ -495,7 +497,7 @@
       <option value="deactivate" {selected_account_import_delete_deactivate}>{lang_Deactivate_user}</option>
       <option value="no" {selected_account_import_delete_no}>{lang_Do_NOT_check_for_deleted_user}</option>
      </select>
-    <br/><i>Deleting or disabling no longer existing accounts works currently only by using manual inital import!</i>
+    <br/><i>Deleting or disabling no longer existing accounts works currently only by using manual initial import!</i>
     </td>
    </tr>
    <tr class="row_off">
@@ -505,7 +507,12 @@
      <input type="number" name="newsettings[account_import_frequency]" style="width: 3em" value="{value_account_import_frequency}"/>
      {lang_hours_at}
      <input type="time" name="newsettings[account_import_time]" value="{value_account_import_time}"/>
-     {lang_logs_to}: {value_files_dir}/setup/account-import.log
+     {lang_Log-Level}: <select name="newsettings[account_import_loglevel]">
+      <option value="info" {selected_account_import_loglevel_info}>Info</option>
+      <option value="detail" {selected_account_import_loglevel_detail}>Detail</option>
+      <option value="debug" {selected_account_import_loglevel_debug}>Debug</option>
+     </select>
+     <br/>{lang_logs_to}: {value_files_dir}/setup/account-import.log
     </td>
    </tr>
    <tr class="row_on">
