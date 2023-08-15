@@ -157,22 +157,23 @@ class Import
 			call_user_func($this->_logger, $message, $level);
 		}
 
+		$loglevel = $GLOBALS['egw_info']['server']['account_import_loglevel'] ?? 'info';
+		if ($loglevel === 'info' && in_array($level, ['debug', 'detail']) ||
+			$loglevel === 'detail' && $level === 'debug')
+		{
+			return;
+		}
+
 		// log to file too
 		$log = $GLOBALS['egw_info']['server']['files_dir'].'/'.self::LOG_FILE;
 		if (!file_exists($dir=dirname($log)) && !mkdir($dir) || !is_dir($dir) ||
 			!($fp = fopen($log, 'a+')))
 		{
-			if (!in_array($level, ['debug', 'detail']))
-			{
-				error_log(__METHOD__.' '.strtoupper($level).' '.$message);
-			}
+			error_log(__METHOD__.' '.strtoupper($level).' '.$message);
 		}
 		else
 		{
-			if ($this->_logger || !in_array($level, ['debug', 'detail']))
-			{
 				fwrite($fp, date('Y-m-d H:i:s O').' '.strtoupper($level).' '.$message."\n");
-			}
 		}
 		if (!empty($fp)) fclose($fp);
 	}
@@ -908,7 +909,7 @@ class Import
 			$import = new self();
 			$import->logger(date('Y-m-d H:i:s O').' LDAP account import started', 'info');
 			$import->run(false);
-			$import->logger(date('Y-m-d H:i:s O').' LDAP account import finished'.(!empty($fp)?"\n":''), 'info');
+			$import->logger(date('Y-m-d H:i:s O').' LDAP account import finished', 'info');
 		}
 		catch (\InvalidArgumentException $e) {
 			_egw_log_exception($e);
@@ -918,7 +919,7 @@ class Import
 		}
 		catch (\Exception $e) {
 			_egw_log_exception($e);
-			$import->logger('Error: '.$e->getMessage());
+			$import->logger('Error: '.$e->getMessage(), 'fatal');
 		}
 	}
 
