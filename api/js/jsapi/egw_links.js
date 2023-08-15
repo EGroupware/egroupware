@@ -358,7 +358,7 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 					let name = name_val[0];
 					let val = name_val[1] || '';
 					if (val.indexOf('%26') !== -1) val = val.replace(/%26/g,'&');	// make sure to not double encode &
-					if (name.lastIndexOf('[]') == name.length-2)
+					if (name.lastIndexOf('[]') != -1 && name.lastIndexOf('[]') == name.length-2)
 					{
 						name = name.substr(0,name.length-2);
 						if (typeof vars[name] === 'undefined') vars[name] = [];
