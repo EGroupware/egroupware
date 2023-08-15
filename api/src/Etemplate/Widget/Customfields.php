@@ -240,9 +240,9 @@ class Customfields extends Transformer
 				}
 		}
 		// need to encode values/select-options to keep their order
-		foreach($customfields as &$data)
+		foreach($customfields as $cf_name => &$data)
 		{
-			if (!empty($data['values']))
+			if(!empty($fields[$cf_name]) && !empty($data['values']))
 			{
 				// Full URL for options from file
 				if(!empty($data['values']['@']) && strpos($data['values']['@'], '/') == 0 && !str_contains($data['values']['@'], 'webdav.php') &&
