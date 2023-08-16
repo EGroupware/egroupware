@@ -300,6 +300,7 @@ class Import
 						if ($dry_run)
 						{
 							$this->logger("Dry-run: would created user '$account[account_lid]' (#$account[account_id])", 'detail');
+							$new = true;
 						}
 						elseif (($account_id = $sql_account['account_id'] = $this->accounts_sql->save($sql_account, true)) > 0)
 						{
@@ -351,6 +352,7 @@ class Import
 							{
 								$this->logger("Dry-run: would updated user '$account[account_lid]' (#$account_id): " .
 									json_encode($diff, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES), 'detail');
+								$new = false;
 							}
 							else
 							{
