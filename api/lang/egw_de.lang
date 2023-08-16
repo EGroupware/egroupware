@@ -1133,6 +1133,7 @@ repeat password	common	de	Passwort wiederholen
 replace	common	de	Ersetzen
 replace with	common	de	Ersetzen durch
 request could not be processed, please reload your window (press f5 or cmd r)!	common	de	Anfrage konnte nicht verarbeitet werden, bitte laden Sie Ihr Fenster neu (F5 oder Cmd R drücken)!
+requested resource '%1' does not exist or has expired	common	de	Die angeforderte Ressource '%1' existiert nicht oder ist bereits abgelaufen.
 requests and full responses to files directory	common	de	Anfragen und komplette Antworten in den Dateiordner
 requests and truncated responses to apache error-log	groupdav	de	Anfragen und gekürzte Antworten ins Apache error-log
 required	common	de	Benötigt
