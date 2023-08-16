@@ -218,7 +218,7 @@ class Sharing
 
 			return static::share_fail(
 				'404 Not Found',
-				"Requested resource '/".htmlspecialchars($token)."' does NOT exist!\n"
+				lang("Requested resource '%1' does not exist or has expired", htmlspecialchars($token)) . "\n"
 			);
 		}
 		// check password, if required
