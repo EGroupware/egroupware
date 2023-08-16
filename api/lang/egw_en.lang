@@ -1134,6 +1134,7 @@ repeat password	common	en	Repeat password
 replace	common	en	Replace
 replace with	common	en	Replace with
 request could not be processed, please reload your window (press f5 or cmd r)!	common	en	Request could not be processed, please reload your window (press F5 or Cmd R)!
+requested resource '%1' does not exist or has expired	common	en	Requested resource '%1' does not exist or has expired
 requests and full responses to files directory	common	en	Requests and full responses to files directory
 requests and truncated responses to apache error-log	groupdav	en	Requests and truncated responses to Apache error-log
 required	common	en	Required
