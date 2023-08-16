@@ -106,16 +106,6 @@ export class et2_dialog extends Et2Dialog
 		}
 	}
 
-	handleClose(ev : PointerEvent)
-	{
-		// revert the moved container back to its original position in order to be able to teardown the overlay properly
-		if(this.appendTo)
-		{
-			document.getElementsByClassName('global-overlays__overlay-container')[0].appendChild(this);
-		}
-		super.handleClose(ev);
-	}
-
 	/**
 	 * @deprecated
 	 * @returns {any}
