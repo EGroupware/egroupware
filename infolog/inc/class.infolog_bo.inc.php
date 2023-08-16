@@ -1432,7 +1432,9 @@ class infolog_bo
 				array(
 					'email' => $mailadr,
 					'email_home' => $mailadr
-				),True,'','','',false,'OR',false,null,'',false));
+				), ['id', 'account_id'], '', '', '', false, 'OR', false, null, '', false
+			)
+			);
 		}
 		if (!$contacts || !is_array($contacts) || !is_array($contacts[0]))
 		{
@@ -1444,10 +1446,13 @@ class infolog_bo
 			// create the first address as info_contact
 			$contact = array_shift($contacts);
 			$info['info_contact'] = 'addressbook:'.$contact['id'];
-			// create the rest a "ordinary" links
+			// create the rest as "ordinary" links, skipping accounts
 			foreach ($contacts as $contact)
 			{
-				Link::link('infolog',$info['link_to']['to_id'],'addressbook',$contact['id']);
+				if(empty($contact['account_id']))
+				{
+					Link::link('infolog', $info['link_to']['to_id'], 'addressbook', $contact['id']);
+				}
 			}
 		}
 		if (is_array($_attachments))
