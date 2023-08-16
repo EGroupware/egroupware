@@ -462,7 +462,7 @@ export class etemplate2
 					[this._etemplate_exec_id], null, null, "keepalive").sendRequest();
 			}, this);
 
-			window.addEventListener("beforeunload", this.destroy_session);
+			window.addEventListener("unload", this.destroy_session);
 		}
 	}
 
@@ -478,6 +478,7 @@ export class etemplate2
 
 		// Chrome requires returnValue to be set
 		e.returnValue = '';
+		return "";
 	}
 
 	public skip_close_prompt(skip = true)
