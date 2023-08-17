@@ -133,6 +133,7 @@ Location: https://example.org/egroupware/groupdav.php/mail/attachment/<token>
     "location": "/mail/attachments/<filename>--xM35lY"
 }
 ```
+> When using curl to upload attachments it's important to use ```--data-binary```, just ```-d``` or ```--data``` is NOT sufficient!
 </details>
 
 - ```POST /mail[/<id>]/vacation``` enable or disable vacation message or forwarding
