@@ -196,24 +196,27 @@ class Ads
 			}
 			$base_dn = implode(',', $base_dn_parts);
 
-			// check if a port is specified as host[:port] and pass it correctly to adLDAP
-			$matches = null;
-			if (preg_match('/:(\d+)/', $host=$config['ads_host'], $matches))
-			{
-				$port = $matches[1];
-				$host = preg_replace('/:(\d+)/', '', $config['ads_host']);
-			}
 			$options = array(
-				'domain_controllers' => preg_split('/[ ,]+/', $host),
-				'base_dn' => $base_dn ? $base_dn : null,
+				// always return an uri (incl. port), but no use_ssl or ad_port
+				'domain_controllers' => array_map(static function($uri_host_port) use ($config)
+				{
+					if (!preg_match('#^(ldaps?://)?([^:]+)(:\d+)?$#', $uri_host_port, $matches))
+					{
+						throw new \Exception("Invalid value for AD controller '$uri_host_port' in '$config[ads_host]'");
+					}
+					if ($matches[1] === 'ldaps://' || $config['ads_connection'] === 'ssl')
+					{
+						return 'ldaps://'.$matches[2].($matches[3] ?? '');
+					}
+					return 'ldap://'.$matches[2].($matches[3] ?? '');
+				}, preg_split('/[ ,]+/', trim($config['ads_host']))),
+				'base_dn' => $base_dn ?: null,
 				'account_suffix' => '@'.$config['ads_domain'],
 				'admin_username' => $config['ads_admin_user'],
 				'admin_password' => $config['ads_admin_passwd'],
 				'use_tls' => $config['ads_connection'] == 'tls',
-				'use_ssl' => $config['ads_connection'] == 'ssl',
 				'charset' => Api\Translation::charset(),
 			);
-			if (isset($port)) $options['ad_port'] = $port;
 
 			$adldap[$config['ads_domain']] = new adLDAP($options);
 			if (self::$debug) error_log(__METHOD__."() new adLDAP(".array2string($options).") returned ".array2string($adldap[$config['ads_domain']]).' '.function_backtrace());
