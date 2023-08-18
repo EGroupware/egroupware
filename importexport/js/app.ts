@@ -226,7 +226,7 @@ class ImportExportApp extends EgwApp
 	open_definition(event, widget)
 	{
 		const mgr = widget.getArrayMgr("content");
-		const data = mgr.getEntry(mgr.perspectiveData.row) || {};
+		const data = mgr.getEntry("" + mgr.perspectiveData.row) || {};
 		const type = data.type || "";
 		const application = data.application || "";
 		const definition_id = data.definition_id || "";
