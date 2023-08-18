@@ -44,6 +44,7 @@ class importexport_definitions_bo {
 
 	public function get_rows(&$query, &$rows, &$readonlys)
 	{
+		$sql = '';
 		// Filter only definitions user is allowed to use
 		if(!$GLOBALS['egw_info']['user']['apps']['admin']) {
 			$this_membership = $GLOBALS['egw']->accounts->memberships($GLOBALS['egw_info']['user']['account_id'], true);
