@@ -1,5 +1,5 @@
 import {SlMenu} from "@shoelace-style/shoelace";
-import {Et2widgetWithSelectMixin} from "./Et2WidgetWithSelectMixin";
+import {Et2WidgetWithSelectMixin} from "./Et2WidgetWithSelectMixin";
 import {RowLimitedMixin} from "../Layout/RowLimitedMixin";
 import shoelace from "../Styles/shoelace";
 import {css, html, TemplateResult} from "@lion/core";
@@ -12,7 +12,7 @@ import {SelectOption} from "./FindSelectOptions";
  *
  * Use Et2Selectbox in most cases, it's better.
  */
-export class Et2Listbox extends RowLimitedMixin(Et2widgetWithSelectMixin(SlMenu))
+export class Et2Listbox extends RowLimitedMixin(Et2WidgetWithSelectMixin(SlMenu))
 {
 
 	static get styles()

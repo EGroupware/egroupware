@@ -59,7 +59,7 @@ import {SearchMixinInterface} from "./SearchMixin";
 // Export the Interface for TypeScript
 type Constructor<T = {}> = new (...args : any[]) => T;
 
-export const Et2widgetWithSelectMixin = <T extends Constructor<LitElement>>(superclass : T) =>
+export const Et2WidgetWithSelectMixin = <T extends Constructor<LitElement>>(superclass : T) =>
 {
 	class Et2WidgetWithSelect extends Et2InputWidget(superclass)
 	{

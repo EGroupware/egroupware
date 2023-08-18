@@ -13,11 +13,13 @@ import {Et2widgetWithSelectMixin} from "./Et2WidgetWithSelectMixin";
 import {SelectOption} from "./FindSelectOptions";
 import {SlSelect} from "@shoelace-style/shoelace";
 import shoelace from "../Styles/shoelace";
-import {RowLimitedMixin} from "../Layout/RowLimitedMixin";
+import {Et2WithSearchMixin} from "./SearchMixin";
 import {Et2Tag} from "./Tag/Et2Tag";
+import {LionValidationFeedback} from "@lion/form-core";
+import {RowLimitedMixin} from "../Layout/RowLimitedMixin";
 
 // export Et2WidgetWithSelect which is used as type in other modules
-export class Et2WidgetWithSelect extends RowLimitedMixin(Et2widgetWithSelectMixin(SlSelect))
+export class Et2WidgetWithSelect extends RowLimitedMixin(Et2WidgetWithSelectMixin(SlSelect))
 {
 };
 
@@ -62,26 +64,23 @@ export class Et2Select extends Et2WidgetWithSelect
 			shoelace,
 			super.styles,
 			css`
-			  :host {
+			:host {
 				display: block;
-				flex: 1 1 auto;
+				flex: 1 0 auto;
 				--icon-width: 20px;
-			  }
-
-
-			  ::slotted(img), img {
+			}
+			
+			
+			::slotted(img), img {
 				vertical-align: middle;
-			  }
-
-			  /* Get rid of padding before/after options */
-
-			  sl-menu::part(base) {
+			}
+			
+			/* Get rid of padding before/after options */
+			sl-menu::part(base) {
 				padding: 0px;
-			  }
-
-			  /* No horizontal scrollbar, even if options are long */
-
-			  .dropdown__panel {
+			}
+			/* No horizontal scrollbar, even if options are long */
+			.dropdown__panel {
 				overflow-x: clip;
 			  }
 
@@ -137,7 +136,7 @@ export class Et2Select extends Et2WidgetWithSelect
 
 			  /* Hide dropdown trigger when multiple & readonly */
 
-			  :host([readonly][multiple]) .select__expand-icon {
+			  :host([readonly][multiple]) .select__icon {
 				display: none;
 			  }
 
@@ -149,6 +148,28 @@ export class Et2Select extends Et2WidgetWithSelect
 			  }
 			`
 		];
+	}
+
+	static get properties()
+	{
+		return {
+			...super.properties,
+			/**
+			 * Toggle between single and multiple selection
+			 */
+			multiple: {
+				type: Boolean,
+				reflect: true,
+			},
+
+			/**
+			 * Click handler for individual tags instead of the select as a whole.
+			 * Only used if multiple=true so we have tags
+			 */
+			onTagClick: {
+				type: Function,
+			}
+		}
 	}
 
 	/**
@@ -332,7 +353,7 @@ export class Et2Select extends Et2WidgetWithSelect
 			return html``;
 		}
 		return html`
-            <sl-option value="">${this.emptyLabel}</sl-option>`;
+            <sl-menu-item value="">${this.emptyLabel}</sl-menu-item>`;
 	}
 
 	/**
@@ -346,14 +367,25 @@ export class Et2Select extends Et2WidgetWithSelect
 		// Tag used must match this.optionTag, but you can't use the variable directly.
 		// Pass option along so SearchMixin can grab it if needed
 		return html`
-            <sl-option value="${option.value}"
-                       title="${!option.title || this.noLang ? option.title : this.egw().lang(option.title)}"
-                       class="${option.class}" .option=${option}
-                       ?disabled=${option.disabled}
+            <sl-menu-item value="${option.value}"
+                          title="${!option.title || this.noLang ? option.title : this.egw().lang(option.title)}"
+                          class="${option.class}" .option=${option}
+                          ?disabled=${option.disabled}
             >
                 ${this._iconTemplate(option)}
                 ${this.noLang ? option.label : this.egw().lang(option.label)}
-            </sl-option>`;
+            </sl-menu-item>`;
+	}
+
+	/**
+	 * Tag used for rendering tags when multiple=true
+	 * Used for creating, finding & filtering options.
+	 * @see createTagNode()
+	 * @returns {string}
+	 */
+	public get tagTag() : string
+	{
+		return "et2-tag";
 	}
 
 	/**
