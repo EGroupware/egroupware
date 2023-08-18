@@ -12,7 +12,7 @@
 import {Et2Button} from "../Et2Button/Et2Button";
 import {SlButtonGroup, SlDropdown} from "@shoelace-style/shoelace";
 import {css, html, TemplateResult} from "@lion/core";
-import {Et2widgetWithSelectMixin} from "../Et2Select/Et2WidgetWithSelectMixin";
+import {Et2WidgetWithSelectMixin} from "../Et2Select/Et2WidgetWithSelectMixin";
 import {SelectOption} from "../Et2Select/FindSelectOptions";
 
 /**
@@ -28,7 +28,7 @@ import {SelectOption} from "../Et2Select/FindSelectOptions";
  * as for a select box, but the title can also be full HTML if needed.
  *
  */
-export class Et2DropdownButton extends Et2widgetWithSelectMixin(Et2Button)
+export class Et2DropdownButton extends Et2WidgetWithSelectMixin(Et2Button)
 {
 
 	static get styles()

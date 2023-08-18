@@ -10,7 +10,7 @@
 
 import {css, html, PropertyValues, TemplateResult} from "@lion/core";
 import {Et2StaticSelectMixin, StaticOptions as so} from "./StaticOptions";
-import {Et2widgetWithSelectMixin} from "./Et2WidgetWithSelectMixin";
+import {Et2WidgetWithSelectMixin} from "./Et2WidgetWithSelectMixin";
 import {cleanSelectOptions, SelectOption} from "./FindSelectOptions";
 import {SlMenuItem, SlSelect} from "@shoelace-style/shoelace";
 import shoelace from "../Styles/shoelace";
@@ -20,7 +20,7 @@ import {LionValidationFeedback} from "@lion/form-core";
 import {RowLimitedMixin} from "../Layout/RowLimitedMixin";
 
 // export Et2WidgetWithSelect which is used as type in other modules
-export class Et2WidgetWithSelect extends RowLimitedMixin(Et2widgetWithSelectMixin(SlSelect))
+export class Et2WidgetWithSelect extends RowLimitedMixin(Et2WidgetWithSelectMixin(SlSelect))
 {
 };
 
