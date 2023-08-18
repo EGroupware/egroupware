@@ -500,6 +500,10 @@ class Import
 								{
 									$local_groups[$gid] = $this->accounts_sql->members($gid);
 								}
+								if ($local_groups)
+								{
+									$this->logger("Preserving members of local groups: ".implode(', ', array_diff($sql_groups, $groups)), 'detail');
+								}
 							}
 							$local_memberships = array_keys(array_filter($local_groups, static function($members) use ($account_id)
 							{
@@ -656,6 +660,7 @@ class Import
 	{
 		// to delete no longer existing groups, we have to query all groups!
 		if ($modified) $delete = 'no';
+		$local_groups = in_array('local', explode('+', $GLOBALS['egw_info']['server']['account_import_type']));
 
 		// query all groups in SQL
 		$sql_groups = $groups = $set_members = [];
@@ -663,15 +668,24 @@ class Import
 		{
 			$sql_groups[-$row['account_id']] = self::strtolower($row['account_lid']);
 		}
-		// fill groups with existing ones, for incremental sync, as we need to return all groups
-		if (!empty($modified))
+		// fill groups with existing ones, for incremental sync, but only if we have NO local groups, otherwise we need to query them all
+		$filter = ['type' => 'groups'];
+		if ($modified && !$local_groups)
 		{
 			$groups = $sql_groups;
+			$filter['modified'] = $modified;
 		}
 
 		$created = $updated = $uptodate = $errors = $deleted = $num = 0;
-		foreach($this->accounts->search(['type' => 'groups', 'modified' => $modified]) as $account_id => $group)
+		foreach($this->accounts->search($filter) as $account_id => $group)
 		{
+			// for local-groups, we always have to read all groups (to be able to determine which ones are local and preserve their memberships)
+			if ($modified && $local_groups && $group['account_modified'] < $modified &&
+				($sql_id = $this->accounts_sql->name2id($group['account_lid'])))
+			{
+				$groups[$sql_id] = self::strtolower($group['account_lid']);
+				continue;   // not logging them as changed, just had to get them (efficient in one query)
+			}
 			$this->logger(++$num.'. Group: '.json_encode($group, JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES), 'debug');
 
 			if (!($sql_id = array_search(self::strtolower($group['account_lid']), $sql_groups)))
