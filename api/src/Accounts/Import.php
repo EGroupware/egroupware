@@ -273,6 +273,7 @@ class Import
 			$start = ['', 500, &$cookie]; // cookie must be a reference!
 			do
 			{
+				$contact = $reconnected = null;
 				foreach ($this->contacts->search('', false, '', 'account_lid', '', '', 'AND', $start, $filter) as $contact)
 				{
 					$new = null;
@@ -532,8 +533,15 @@ class Import
 					// remember the users we imported, to be able to delete the ones we dont
 					unset($sql_users[$account_id]);
 				}
+				/* check if connection was somehow lost / timed out and reconnect
+				if ($initial_import && !isset($contact) && ldap_errno($this->contacts->ds) === -1)
+				{
+					$this->contacts->ds = $this->accounts->ldap_connection(true);
+					$reconnected = true;
+					$this->logger("Reconnected to LDAP server", 'info');
+				}*/
 			}
-			while ($start[2] !== '');
+			while ($reconnected || $start[2] !== '');
 
 			if ($set_members)
 			{
