@@ -469,7 +469,7 @@
     <td colspan="2"><b>{lang_Periodic_import_from_ADS_or_LDAP_into_EGroupware_database}:</b></td>
    </tr>
 
-   <tr class="row_on">
+   <tr class="row_off">
     <td>{lang_Source_(must_be_configured_above)}:</td>
     <td>
      <select name="newsettings[account_import_source]">
@@ -478,6 +478,10 @@
       <option value="univention" {selected_account_import_source_univention}>Univention (LDAP)</option>
      </select>
     </td>
+   </tr>
+   <tr class="row_on">
+     <td>{lang_Regular_expression_to_filter_by_DN}</td>
+     <td><input name="newsettings[account_import_dn_regexp]" value="{value_account_import_dn_regexp}" placeholder="/OU=(One|Two),DC=example,DC=org$/i" size="80" /></td>
    </tr>
    <tr class="row_off">
     <td>{lang_What_to_import?}:</td>

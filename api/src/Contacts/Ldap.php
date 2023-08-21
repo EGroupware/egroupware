@@ -1302,6 +1302,7 @@ class Ldap
 
 			$contact = array(
 				'id'  => $entry['uid'][0] ?? $entry['entryuuid'][0],
+				'dn'  => $entry['dn'],
 				'tid' => 'n',	// the type id for the addressbook
 			);
 			if (!empty($this->schema2egw[self::CF_OBJECTCLASS]))
