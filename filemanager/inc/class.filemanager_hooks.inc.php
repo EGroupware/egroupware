@@ -101,6 +101,10 @@ class filemanager_hooks
 			'Quota'                     => Egw::link('/index.php', 'menuaction=filemanager.filemanager_admin.quota&ajax=true'),
 			'VFS mounts and versioning' => Egw::link('/index.php', 'menuaction=filemanager.filemanager_admin.index&ajax=true'),
 		);
+		if($GLOBALS['egw_info']['user']['apps']['stylite'])
+		{
+			$file['Sharing'] = Egw::link('/index.php', 'menuaction=filemanager.filemanager_shares.index&admin=true&ajax=true');
+		}
 		if ($location == 'admin')
 		{
         	display_section(self::$appname,$file);

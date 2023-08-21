@@ -650,6 +650,8 @@ class Sharing
 						'share_token' => self::token(),
 						'share_path' => $path,
 						'share_owner' => Vfs::$user,
+						'share_modified' => (new DateTime('now', DateTime::$server_timezone))->format('ts'),
+						'share_modifier' => Vfs::$user,
 						'share_with' => implode(',', (array)$recipients),
 						'share_created' => time(),
 					)+$extra, false, __LINE__, __FILE__, Db::API_APPNAME);
