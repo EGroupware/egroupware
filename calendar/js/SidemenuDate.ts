@@ -109,6 +109,16 @@ export class SidemenuDate extends Et2Date
 	{
 		let options = super.getOptions();
 
+		// No scroll - remove scroll plugin
+		options.plugins = [];
+
+		// Add "Ok" and "today" buttons back in, if desired
+		const buttons = this._buttonPlugin();
+		if(buttons)
+		{
+			options.plugins.push(buttons)
+		}
+
 		options.allowInput = false;
 		options.inline = true;
 		options.dateFormat = "Y-m-dT00:00:00\\Z";
