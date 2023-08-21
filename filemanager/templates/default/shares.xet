@@ -4,6 +4,7 @@
 	<template id="filemanager.shares.rows" template="" lang="" group="0" version="14.2.001">
 		<grid width="100%">
 			<columns>
+                <column width="10%" disabled="!@admin"/>
 				<column width="30%"/>
 				<column width="100"/>
 				<column width="30%"/>
@@ -14,6 +15,7 @@
 			</columns>
 			<rows>
 				<row class="th">
+                    <et2-nextmatch-header-account id="share_owner" emptyLabel="Shared from"/>
 					<nextmatch-sortheader label="Path" id="share_path"/>
 					<et2-nextmatch-header-filter  id="type" emptyLabel="All types"/>
 					<nextmatch-header label="Shared with" id="shared_with"/>
@@ -23,6 +25,7 @@
 					<nextmatch-sortheader label="Last accessed" id="share_last_accessed"/>
 				</row>
 				<row>
+                    <et2-select-account_ro id="${row}[share_owner]"/>
 					<vfs id="${row}[share_path]"/>
 					<et2-select  id="${row}[type]" readonly="true"></et2-select>
 					<et2-description  id="${row}[share_with]"></et2-description>
