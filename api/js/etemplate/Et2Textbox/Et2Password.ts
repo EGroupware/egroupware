@@ -68,14 +68,14 @@ export class Et2Password extends Et2InvokerMixin(Et2Textbox)
 
 		if(typeof attrs.viewable !== "undefined")
 		{
-			attrs['passwordToggle'] = attrs.viewable;
+			attrs['togglePassword'] = attrs.viewable;
 			delete attrs.viewable;
 		}
-		if(typeof attrs.passwordToggle !== "undefined" && !attrs.passwordToggle
-			|| typeof attrs.passwordToggle == "string" && !this.getArrayMgr("content").parseBoolExpression(attrs.passwordToggle))
+		if(typeof attrs.togglePassword !== "undefined" && !attrs.togglePassword
+			|| typeof attrs.togglePassword == "string" && !this.getArrayMgr("content").parseBoolExpression(attrs.togglePassword))
 		{
-			// Unset passwordToggle if its false.  It's from parent, and it doesn't handle string "false" = false
-			delete attrs.passwordToggle;
+			// Unset togglePassword if its false.  It's from parent, and it doesn't handle string "false" = false
+			delete attrs.togglePassword;
 		}
 
 		super.transformAttributes(attrs);
@@ -297,7 +297,7 @@ export class Et2Password extends Et2InvokerMixin(Et2Textbox)
                                 : ''
                         }
                         ${
-                                this.passwordToggle && !this.disabled
+                                this.togglePassword && !this.disabled
                                 ? html`
                                     <button
                                             part="password-toggle-button"

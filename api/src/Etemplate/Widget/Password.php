@@ -61,8 +61,8 @@ class Password extends Etemplate\Widget\Textbox
 			// only send password (or hash) to client-side, if explicitly requested
 			if(!empty($value) && (!array_key_exists('viewable', $this->attrs) ||
 					!in_array($this->attrs['viewable'], ['1', 'true', true], true))
-				&& (!array_key_exists('passwordToggle', $this->attrs) ||
-					!in_array($this->attrs['passwordToggle'], ['1', 'true', true], true)))
+				&& (!array_key_exists('togglePassword', $this->attrs) ||
+					!in_array($this->attrs['togglePassword'], ['1', 'true', true], true)))
 			{
 				$value = str_repeat('*', strlen($preserv));
 			}
