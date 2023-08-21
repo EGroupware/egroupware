@@ -275,6 +275,12 @@ class Import
 			{
 				foreach ($this->contacts->search('', false, '', 'account_lid', '', '', 'AND', $start, $filter) as $contact)
 				{
+					// if we have a regexp to filter the DN, continue on non-match
+					if (!empty($GLOBALS['egw_info']['server']['account_import_dn_regexp']) &&
+						!preg_match($GLOBALS['egw_info']['server']['account_import_dn_regexp'], $contact['dn']))
+					{
+						continue;
+					}
 					$new = null;
 					if (!isset($last_modified) || (int)$last_modified < (int)$contact['modified'])
 					{
@@ -671,6 +677,12 @@ class Import
 		$created = $updated = $uptodate = $errors = $deleted = $num = 0;
 		foreach($this->accounts->search($filter) as $account_id => $group)
 		{
+			// if we have a regexp to filter the DN, continue on non-match
+			if (!empty($GLOBALS['egw_info']['server']['account_import_dn_regexp']) &&
+				!preg_match($GLOBALS['egw_info']['server']['account_import_dn_regexp'], $group['account_dn']))
+			{
+				continue;
+			}
 			// for local-groups, we always have to read all groups (to be able to determine which ones are local and preserve their memberships)
 			if ($modified && $local_groups && $group['account_modified'] < $modified &&
 				($sql_id = $this->accounts_sql->name2id($group['account_lid'])))
