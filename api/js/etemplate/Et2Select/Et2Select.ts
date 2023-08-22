@@ -13,11 +13,18 @@ import {Et2WidgetWithSelectMixin} from "./Et2WidgetWithSelectMixin";
 import {SelectOption} from "./FindSelectOptions";
 import shoelace from "../Styles/shoelace";
 import {RowLimitedMixin} from "../Layout/RowLimitedMixin";
-import {SlSelect} from "@shoelace-style/shoelace";
+import {SlOption, SlSelect} from "@shoelace-style/shoelace";
+import {Et2Tag} from "./Tag/Et2Tag";
 
 // export Et2WidgetWithSelect which is used as type in other modules
 export class Et2WidgetWithSelect extends RowLimitedMixin(Et2WidgetWithSelectMixin(SlSelect))
 {
+	// Gets an array of all <sl-option> elements
+	protected getAllOptions()
+	{
+		// @ts-ignore
+		return [...this.querySelectorAll<SlOption>('sl-option')];
+	}
 };
 
 /**
