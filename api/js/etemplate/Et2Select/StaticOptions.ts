@@ -9,9 +9,8 @@
  */
 import {sprintf} from "../../egw_action/egw_action_common";
 import {Et2SelectReadonly} from "./Select/Et2SelectReadonly";
-import {find_select_options, SelectOption} from "./FindSelectOptions";
+import {cleanSelectOptions, find_select_options, SelectOption} from "./FindSelectOptions";
 import {Et2Select, Et2WidgetWithSelect} from "./Et2Select";
-
 import {Et2SelectNumber} from "./Select/Et2SelectNumber";
 
 export type Et2SelectWidgets = Et2Select | Et2WidgetWithSelect | Et2SelectReadonly;
