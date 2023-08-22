@@ -8,7 +8,8 @@
  */
 
 import {Et2InputWidget, Et2InputWidgetInterface} from "../Et2InputWidget/Et2InputWidget";
-import {html, LitElement, PropertyValues, render, TemplateResult} from "@lion/core";
+import {html, LitElement, PropertyValues, render, TemplateResult} from "lit";
+import {property} from "lit/decorators/property.js";
 import {et2_readAttrWithDefault} from "../et2_core_xml";
 import {cleanSelectOptions, find_select_options, SelectOption} from "./FindSelectOptions";
 import {SearchMixinInterface} from "./SearchMixin";
@@ -54,29 +55,33 @@ export const Et2WidgetWithSelectMixin = <T extends Constructor<LitElement>>(supe
 {
 	class Et2WidgetWithSelect extends Et2InputWidget(superclass)
 	{
-		static get properties()
-		{
-			return {
-				...super.properties,
-				/**
-				 * Textual label for first row, eg: 'All' or 'None'.  It's value will be ''
-				 */
-				emptyLabel: String,
-
-				/**
-				 * Select box options
-				 *
-				 * Will be found automatically based on ID and type, or can be set explicitly in the template using
-				 * <option/> children, or using widget.select_options = SelectOption[]
-				 */
-				select_options: {type: Object, noAccessor: true},
-
-				/**
-				 * Limit size
-				 */
-				rows: {type: Number, noAccessor: true, reflect: true}
+		/**
+		 * The current value of the select, submitted as a name/value pair with form data. When `multiple` is enabled, the
+		 * value attribute will be a space-delimited list of values based on the options selected, and the value property will
+		 * be an array.
+		 *
+		@property({
+			noAccessor: true,
+			converter: {
+				fromAttribute: (value : string) => value.split(',')
 			}
-		}
+		})
+		value : string | string[] = "";
+		 */
+
+		/**
+		 * Textual label for first row, eg: 'All' or 'None'.  It's value will be ''
+		 */
+		@property({type: String})
+		emptyLabel : String = "";
+
+		/**
+		 * Limit size
+		 */
+		@property({type: Number, noAccessor: true, reflect: true})
+
+
+		private __select_options : SelectOption[] = [];
 
 		/**
 		 * Options found in the XML when reading the template
@@ -107,18 +112,31 @@ export const Et2WidgetWithSelectMixin = <T extends Constructor<LitElement>>(supe
 				}
 			}
 
+		}
+
+		willUpdate(changedProperties : PropertyValues<this>)
+		{
 			// Add in actual option tags to the DOM based on the new select_options
 			if(changedProperties.has('select_options') || changedProperties.has("emptyLabel"))
 			{
 				// Add in options as children to the target node
-				this._renderOptions();
+				const optionPromise = this._renderOptions();
 
 				// This is needed to display initial load value in some cases, like infolog nm header filters
-				if(this.handleMenuSlotChange && !this.hasUpdated)
+				if(typeof this.selectionChanged !== "undefined")
 				{
-					this.handleMenuSlotChange();
+					optionPromise.then(() => this.selectionChanged());
 				}
 			}
+		}
+
+		public getValueAsArray()
+		{
+			if(Array.isArray(this.value))
+			{
+				return this.value;
+			}
+			return [this.value];
 		}
 
 		/**
@@ -187,6 +205,13 @@ export const Et2WidgetWithSelectMixin = <T extends Constructor<LitElement>>(supe
 			this.select_options = <SelectOption[]>new_options;
 		}
 
+		/**
+		 * Select box options
+		 *
+		 * Will be found automatically based on ID and type, or can be set explicitly in the template using
+		 * <option/> children, or using widget.select_options = SelectOption[]
+		 */
+		@property({type: Object})
 		get select_options() : SelectOption[]
 		{
 			return this.__select_options;

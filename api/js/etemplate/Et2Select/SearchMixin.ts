@@ -13,7 +13,7 @@ import {cleanSelectOptions, SelectOption} from "./FindSelectOptions";
 import {Validator} from "@lion/form-core";
 import {Et2Tag} from "./Tag/Et2Tag";
 import {SlMenuItem} from "@shoelace-style/shoelace";
-import {waitForEvent} from "@shoelace-style/shoelace/dist/internal/event";
+import {waitForEvent} from "../../../../node_modules/@shoelace-style/shoelace/dist/internal/event.js";
 
 // Otherwise import gets stripped
 let keep_import : Et2Tag;
@@ -881,7 +881,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 		_handleClear(e)
 		{
 			// Only keep remote options that are still used
-			this._selected_remote = this._selected_remote.filter((option) => this.getValueAsArray().indexOf(option.value) !== -1);
+			this._selected_remote = this._selected_remote.filter((option) => this.value.indexOf(option.value) !== -1);
 
 			if(!this.multiple && this.searchEnabled)
 			{
@@ -1478,7 +1478,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			// type to select will focus matching entries, but we don't want to stop the edit yet
 			if(typeof abort == "object" && abort.type == "blur")
 			{
-				if(abort.relatedTarget?.localName == "sl-menu-item")
+				if(abort.relatedTarget?.localName == "sl-option")
 				{
 					return;
 				}

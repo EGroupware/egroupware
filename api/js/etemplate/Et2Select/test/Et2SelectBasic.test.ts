@@ -97,8 +97,8 @@ describe("Multiple", () =>
 		// @ts-ignore
 		element = await fixture<Et2Select>(html`
             <et2-select label="I'm a select" multiple="true">
-                <sl-menu-item value="one">One</sl-menu-item>
-                <sl-menu-item value="two">Two</sl-menu-item>
+                <sl-option value="one">One</sl-option>
+                <sl-option value="two">Two</sl-option>
             </et2-select>
 		`);
 		element.set_value("one,two");
@@ -111,7 +111,7 @@ describe("Multiple", () =>
 
 	it("Can remove tags", async() =>
 	{
-		assert.equal(element.querySelectorAll("sl-menu-item").length, 2, "Did not find options");
+		assert.equal(element.querySelectorAll("sl-option").length, 2, "Did not find options");
 
 		assert.sameMembers(element.value, ["one", "two"]);
 		let tags = element.shadowRoot.querySelectorAll('.select__tags > *');

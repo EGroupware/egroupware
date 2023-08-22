@@ -135,6 +135,10 @@ const config = {
                             // plugins: stage3Syntax,
                             errorRecovery: true
                         },
+						plugins: [
+							['@babel/plugin-proposal-decorators', {legacy: true}],
+							['@babel/plugin-proposal-class-properties', {loose: false}]
+						],
                         presets: [
                             ['@babel/preset-typescript', {
                                 //onlyRemoveTypeImports: true   // seems not necessary and generates a lot of warnings about not exported symbols

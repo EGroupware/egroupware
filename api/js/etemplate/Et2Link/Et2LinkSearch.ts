@@ -120,19 +120,16 @@ export class Et2LinkSearch extends Et2Select
 			option.label = title || Et2Link.MISSING_TITLE;
 			option.class = "";
 			// It's probably already been rendered, find the item
-			let item = this.menuItems.find(i => i.value === option.value);
+			let item = this.getAllOptions().find(i => i.value === option.value);
 			if(item)
 			{
 				item.textContent = title;
 				item.classList.remove("loading");
-				this.syncItemsFromValue();
 			}
 			else
 			{
 				// Not already rendered, update the select option
 				this.requestUpdate("select_options");
-				// update the displayed text
-				this.updateComplete.then(() => this.syncItemsFromValue());
 			}
 		});
 	}

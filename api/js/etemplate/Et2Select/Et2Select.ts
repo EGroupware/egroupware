@@ -8,12 +8,12 @@
  */
 
 
-import {css, html, PropertyValues, TemplateResult} from "lit";
+import {css, html, TemplateResult} from "lit";
 import {Et2WidgetWithSelectMixin} from "./Et2WidgetWithSelectMixin";
 import {SelectOption} from "./FindSelectOptions";
-import {SlSelect} from "@shoelace-style/shoelace";
 import shoelace from "../Styles/shoelace";
 import {RowLimitedMixin} from "../Layout/RowLimitedMixin";
+import {SlSelect} from "@shoelace-style/shoelace";
 
 // export Et2WidgetWithSelect which is used as type in other modules
 export class Et2WidgetWithSelect extends RowLimitedMixin(Et2WidgetWithSelectMixin(SlSelect))
@@ -233,7 +233,9 @@ export class Et2Select extends Et2WidgetWithSelect
 			val = <string[]>[...new Set(val.map(v => typeof v === 'number' ? v.toString() : v || ''))];
 			val = [...new Set(val.map(v => typeof v === 'number' ? v.toString() : v || ''))];
 		}
+		const oldValue = this.value;
 		super.value = val || '';
+		this.requestUpdate("value", oldValue);
 	}
 
 	/**
@@ -295,50 +297,6 @@ export class Et2Select extends Et2WidgetWithSelect
 	}
 
 	/**
-	 * This method must be called whenever the selection changes. It will update the selected options cache, the current
-	 * value, and the display value.
-	 *
-	 * Overridden to get our original option value, spaces and all.
-	 */
-	private selectionChanged()
-	{
-		// Update selected options cache
-		this.selectedOptions = this.getAllOptions().filter(el => el.selected);
-
-		// Update the value and display label
-		if(this.multiple)
-		{
-			this.value = this.selectedOptions.map(el => typeof el.option != "undefined" ? el.option.value : el.value);
-
-			if(this.placeholder && this.value.length === 0)
-			{
-				// When no items are selected, keep the value empty so the placeholder shows
-				this.displayLabel = '';
-			}
-			else
-			{
-				this.displayLabel = this.localize.term('numOptionsSelected', this.selectedOptions.length);
-			}
-		}
-		else
-		{
-			this.value = (typeof this.selectedOptions[0]?.option != "undefined" ? this.selectedOptions[0]?.option.value : this.selectedOptions[0]?.value) ?? '';
-			this.displayLabel = this.selectedOptions[0]?.getTextLabel() || (this.emptyLabel ?? '');
-		}
-
-		// Update validity
-		this.updateComplete.then(() =>
-		{
-			this.formControlController.updateValidity();
-		});
-	}
-
-	updated(changedProperties : PropertyValues)
-	{
-		super.updated(changedProperties);
-	}
-
-	/**
 	 * Add an option for the "empty label" option, used if there's no value
 	 *
 	 * @returns {TemplateResult}
@@ -350,7 +308,7 @@ export class Et2Select extends Et2WidgetWithSelect
 			return html``;
 		}
 		return html`
-            <sl-menu-item value="">${this.emptyLabel}</sl-menu-item>`;
+            <sl-option value="">${this.emptyLabel}</sl-option>`;
 	}
 
 	/**
@@ -364,14 +322,15 @@ export class Et2Select extends Et2WidgetWithSelect
 		// Tag used must match this.optionTag, but you can't use the variable directly.
 		// Pass option along so SearchMixin can grab it if needed
 		return html`
-            <sl-menu-item value="${option.value}"
-                          title="${!option.title || this.noLang ? option.title : this.egw().lang(option.title)}"
-                          class="${option.class}" .option=${option}
-                          ?disabled=${option.disabled}
+            <sl-option value="${option.value}"
+                       title="${!option.title || this.noLang ? option.title : this.egw().lang(option.title)}"
+                       class="${option.class}" .option=${option}
+                       .selected=${this.getValueAsArray().some(v => v == option.value)}
+                       ?disabled=${option.disabled}
             >
                 ${this._iconTemplate(option)}
                 ${this.noLang ? option.label : this.egw().lang(option.label)}
-            </sl-menu-item>`;
+            </sl-option>`;
 	}
 
 	/**

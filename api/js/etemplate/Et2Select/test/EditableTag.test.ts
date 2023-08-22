@@ -20,8 +20,8 @@ async function before(editable = true)
 	// @ts-ignore
 	element = await fixture<Et2Select>(html`
         <et2-select label="I'm a select" value="one" multiple="true" .editModeEnabled=${editable}>
-            <sl-menu-item value="one">One</sl-menu-item>
-            <sl-menu-item value="two">Two</sl-menu-item>
+            <sl-option value="one">One</sl-option>
+            <sl-option value="two">Two</sl-option>
         </et2-select>
 	`);
 	// Stub egw()

@@ -3745,7 +3745,8 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 		select.updateComplete.then(async() =>
 		{
 			await select.updateComplete;
-			select.syncItemsFromValue();
+			// TODO: syncItemsFromValue() went away.  Is this still needed?
+			//select.syncItemsFromValue();
 		})
 		return select;
 	}

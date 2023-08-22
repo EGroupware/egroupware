@@ -76,24 +76,24 @@ export class Et2Favorites extends Et2DropdownButton implements et2_INextmatchHea
 				min-width: 15em;
 			  }
 
-			  sl-menu-item:hover et2-image[src="trash"] {
+			  sl-option:hover et2-image[src="trash"] {
 				display: initial;
 			  }
 
 			  /* Add star icons - radio button is already in prefix */
 
-			  sl-menu-item::part(base) {
+			  sl-option::part(base) {
 				background-image: ${cssImage("fav_filter")};
 				background-repeat: no-repeat;
 				background-size: 16px 16px;
 				background-position: 5px center;
 			  }
 
-			  sl-menu-item[checked]::part(base) {
+			  sl-option[checked]::part(base) {
 				background-image: ${cssImage("favorites")};
 			  }
 
-			  sl-menu-item:last-child::part(base) {
+			  sl-option:last-child::part(base) {
 				background-image: none;
 			  }
 			`,
@@ -185,11 +185,11 @@ export class Et2Favorites extends Et2DropdownButton implements et2_INextmatchHea
                        statustext="${this.egw().lang("Delete")}"></et2-image>`;
 
 		return html`
-            <sl-menu-item value="${option.value}" ?checked="${option.value == this._preferred}">
+            <sl-option value="${option.value}" ?checked="${option.value == this._preferred}">
                 ${option.value !== Et2Favorites.ADD_VALUE ? radio : ""}
                 ${icon}
                 ${option.label}
-            </sl-menu-item>`;
+            </sl-option>`;
 	}
 
 
