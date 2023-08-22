@@ -17,7 +17,7 @@ import {SearchMixinInterface} from "./SearchMixin";
  * Base class for things that do selectbox type behaviour, to avoid putting too much or copying into read-only
  * selectboxes, also for common handling of properties for more special selectboxes.
  *
- * As with most other widgets that extend Lion components, do not override render().
+ * As with most other widgets that extend Shoelace components, do not override render() without good reason.
  * To extend this mixin, override:
  * - _optionTargetNode(): Return the HTMLElement where the "options" go.
  * - _optionTemplate(option:SelectOption): Renders the option.  To use a special widget, use its tag in render.
@@ -45,15 +45,6 @@ import {SearchMixinInterface} from "./SearchMixin";
  * - slots(): Most Lion components have an input slot where the <input> tag is created.
  * You can specify something else, or return {} to do your own thing.  This is a little more complicated.  You should
  * also override _inputGroupInputTemplate() to do what you normally would in render().
- *
- *
- * Technical note:
- * LionSelect (and any other LionField) use slots to wrap a real DOM node.  ET2 doesn't expect this,
- * so we have to create the input node (via slots()) and respect that it is _external_ to the Web Component.
- * This complicates things like adding the options, since we can't just override _inputGroupInputTemplate()
- * and include them when rendering - the parent expects to find the <select> added via a slot, render() would
- * put it inside the shadowDOM.  That's fine, but then it doesn't get created until render(), and the parent
- * (LionField) can't find it when it looks for it before then.
  *
  */
 // Export the Interface for TypeScript
@@ -169,22 +160,6 @@ export const Et2WidgetWithSelectMixin = <T extends Constructor<LitElement>>(supe
 					}
 				});
 
-		}
-
-		/**
-		 * Overwritten as sometimes called before this._inputNode is available
-		 *
-		 * @param {*} v - modelValue: can be an Object, Number, String depending on the
-		 * input type(date, number, email etc)
-		 * @returns {string} formattedValue
-		 */
-		formatter(v)
-		{
-			if (!this._inputNode)
-			{
-				return v;
-			}
-			return super.formatter(v);
 		}
 
 		/**

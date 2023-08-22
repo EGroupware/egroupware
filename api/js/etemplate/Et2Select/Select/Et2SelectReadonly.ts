@@ -11,7 +11,7 @@
 import {css, html, LitElement, repeat, TemplateResult} from "@lion/core";
 import {et2_IDetachedDOM} from "../../et2_core_interfaces";
 import {Et2Widget} from "../../Et2Widget/Et2Widget";
-import {StaticOptions as so} from "../StaticOptions";
+import {StaticOptions, StaticOptions as so} from "../StaticOptions";
 import {find_select_options, SelectOption} from "../FindSelectOptions";
 import {SelectAccountMixin} from "../SelectAccountMixin";
 
