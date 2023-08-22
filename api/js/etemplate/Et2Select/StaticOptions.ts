@@ -48,6 +48,13 @@ export const Et2StaticSelectMixin = <T extends Constructor<Et2WidgetWithSelect>>
 			this.requestUpdate("select_options");
 		}
 
+		async getUpdateComplete() : Promise<boolean>
+		{
+			const result = await super.getUpdateComplete();
+			await this.fetchComplete;
+			return result;
+		}
+
 		get select_options() : SelectOption[]
 		{
 			// @ts-ignore
