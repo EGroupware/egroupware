@@ -125,7 +125,11 @@ export const Et2WidgetWithSelectMixin = <T extends Constructor<LitElement>>(supe
 				// This is needed to display initial load value in some cases, like infolog nm header filters
 				if(typeof this.selectionChanged !== "undefined")
 				{
-					optionPromise.then(() => this.selectionChanged());
+					optionPromise.then(async() =>
+					{
+						await this.updateComplete;
+						this.selectionChanged();
+					});
 				}
 			}
 		}
