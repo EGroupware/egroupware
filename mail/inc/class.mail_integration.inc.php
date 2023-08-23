@@ -354,10 +354,24 @@ class mail_integration {
 		// Get attachments ready for integration as link
 		if (is_array($mailcontent['attachments']))
 		{
+			$data_attachments = array();
 			foreach($mailcontent['attachments'] as $key => $attachment)
 			{
+				// Find a unique name, in case there are multiple attachments with the same filename
+				$name = $attachment['filename'] ?? $mailcontent['attachments'][$key]['name'];
+				$i = 1;
+				$info = pathinfo($name);
+				while(count(array_filter($data_attachments, function ($v) use ($name)
+							{
+								return $v['name'] == $name;
+							},           ARRAY_FILTER_USE_BOTH)
+					) > 0)
+				{
+					$name = $info['filename'] . " ($i)." . $info['extension'];
+					$i++;
+				}
 				$data_attachments[$key] = array(
-					'name'     => $attachment['filename'] ?? $mailcontent['attachments'][$key]['name'],
+					'name' => $name,
 					'type'     => $mailcontent['attachments'][$key]['type'],
 					'size'     => $mailcontent['attachments'][$key]['size'],
 					'tmp_name' => $mailcontent['attachments'][$key]['tmp_name']
