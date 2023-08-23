@@ -63,6 +63,7 @@ export const Et2widgetWithSelectMixin = <T extends Constructor<LitElement>>(supe
 {
 	class Et2WidgetWithSelect extends Et2InputWidget(superclass)
 	{
+		private __select_options: SelectOption[];
 		static get properties()
 		{
 			return {
