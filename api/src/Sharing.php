@@ -208,6 +208,11 @@ class Sharing
 			}
 		}
 
+		// Load lang preference for error translations
+		if(empty($GLOBALS['egw_info']['user']['preferences']['common']['lang']))
+		{
+			$GLOBALS['egw_info']['user']['preferences'] = (new Preferences(Accounts::id2name('anonymous', 'account_id')))->read();
+		}
 		if (empty($token) || !($share = self::$db->select(self::TABLE, '*', array(
 			'share_token' => $token,
 			'(share_expires IS NULL OR share_expires > '.self::$db->quote(time(), 'date').')',
