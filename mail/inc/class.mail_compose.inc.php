@@ -3734,7 +3734,7 @@ class mail_compose
 			$args[] = $name;
 			$completeMailString = call_user_func_array('imap_rfc822_write_address', $args);
 			$results[] = array(
-				'id' => $completeMailString,
+				'value' => $completeMailString,
 				'label' => $completeMailString,
 				'name'	=> $name,
 				'title' => $group['account_email']
