@@ -3689,7 +3689,7 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 			// Not mail, since it needs to be different
 			&& !['mail'].includes(this.getInstanceManager().app))
 		{
-			widget_options.empty_label = this.egw().lang('All categories');
+			widget_options.emptyLabel = this.egw().lang('All categories');
 		}
 
 		// Create widget
@@ -3741,12 +3741,11 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 			});
 		}
 		// Sometimes the filter does not display the current value
-		// Call sync to try to get it to display
+		// Work-around: Request another update to get it to display
 		select.updateComplete.then(async() =>
 		{
 			await select.updateComplete;
-			// TODO: syncItemsFromValue() went away.  Is this still needed?
-			//select.syncItemsFromValue();
+			select.requestUpdate("value");
 		})
 		return select;
 	}
