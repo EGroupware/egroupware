@@ -25,6 +25,9 @@ import {
 } from "../../api/js/egw_action/egw_keymanager";
 import {Et2UrlEmailReadonly} from "../../api/js/etemplate/Et2Url/Et2UrlEmailReadonly";
 import {Et2SelectEmail} from "../../api/js/etemplate/Et2Select/Select/Et2SelectEmail";
+import {Et2SelectEmail} from "../../api/js/etemplate/Et2Select/Et2SelectEmail";
+import {Et2Tree} from "../../api/js/etemplate/Et2TreeWidget/Et2Tree";
+import {initMailTree} from "../../api/js/etemplate/Et2TreeWidget/MailTree";
 /* required dependency, commented out because no module, but egw:uses is no longer parsed
 */
 
@@ -253,6 +256,9 @@ app.classes.mail = AppJS.extend(
 				var tree_wdg = this.et2.getWidgetById(this.nm_index+'[foldertree]');
 				if (tree_wdg)
 				{
+					initMailTree();
+
+
 					tree_wdg.set_onopenstart(jQuery.proxy(this.openstart_tree, this));
 					tree_wdg.set_onopenend(jQuery.proxy(this.openend_tree, this));
 				}
