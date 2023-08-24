@@ -1,3 +1,26 @@
+egroupware-docker (23.1.20230824) hardy; urgency=low
+
+  * Api: Store recoverable password (encrypted) for shares so you don't have to change it when you forget
+  * Mail: new modus for vacation notice to not save message to INBOX and REST API to set vacation handling
+  * Mail: Add attachment action "Forward to" that adds file directly to compose window
+  * Mail/ActiveSync: fix wrong mime-type / broken mail when AS smart-forward is used e.g. by gmail app
+  * Calendar/CalDAV: Thunderbird and CalDAVSynchronizer: update only participant data, instead of failing when the event was changed
+  * Calendar/CalDAV: do NOT limit number of returned events for GET requests with download parameter
+  * Calendar/CalDAV: download of whole calendar as ics with a GET request on the collection and download GET parameter gave an empty file
+  * Calendar: Change how participant emails are shown
+  * PostgreSQL/Mail: fix SQL error querying email avatars
+  * smallPART: automatic subscribe everyone (including teachers) only as student on LTI launch, course owner must grant higher rights
+  * Status: add rocketchat group preference in order to be able to show selective RC groups in status app
+  * Tracker: Add ability to set due date through mailhandling and escalations
+  * Tracker: Add configuration option to set ticket start date from email
+  * AD/LDAP: added a DN filter to the periodic import to e.g. use 2 OU with a shared base
+  * AD/LDAP: fix periodic incremental import was loosing memberships to local groups for modified users
+  * AD/LDAP: fix duplicate key account_lid error on import caused by mixed case in account-names not treated equal
+  * AD/LDAP: fix local uploaded pictures are lost when automatic import is used
+  * ActiveDirectory: fix not working ldaps connection on a non-standard port
+
+ -- Ralf Becker <rb@egroupware.org>  Thu, 24 Aug 2023 12:20:58 +0200
+
 egroupware-docker (23.1.20230728) hardy; urgency=low
 
   * fix some regressions introduced in last maintenance release, [see](https://github.com/EGroupware/egroupware/compare/23.1.20230726...23.1.20230728)
