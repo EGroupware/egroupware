@@ -238,11 +238,14 @@ location	calendar	el	Τοποθεσία
 location, start- and endtimes, ...	calendar	el	Τοποθεσία, Έναρξη- και Τέλος, ...
 mail all participants	calendar	el	Αποστολή μηνύματος σε όλους τους συμμετέχοντες
 make freebusy information available to not logged in persons?	calendar	el	Να γίνουν οι πληροφορίες ελεύθερου χρόνου διαθέσιμες στα άτομα που δεν έχουν εισέλθει;
+maximum available quantity of %1 exceeded!	calendar	el	Υπέρβαση της μέγιστης διαθέσιμης ποσότητας του %1!
 meeting canceled	calendar	el	Η συνάντηση ακυρώθηκε
 meeting request	calendar	el	Αίτημα συνάντησης
 meetingrequest to all participants	calendar	el	Αίτημα συνάντησης σε όλους τους συμμετέχοντες
 merge document...	calendar	el	Συγχώνευση εγγράφου...
 midnight	calendar	el	Μεσάνυχτα
+minimum number of users for showing day view as consolidated.	calendar	el	Ελάχιστος αριθμός χρηστών για την εμφάνιση της ημερήσιας προβολής ως ενοποιημένη.
+minimum number of users for showing week view as consolidated.	calendar	el	Ελάχιστος αριθμός χρηστών για την εμφάνιση της προβολής εβδομάδας ως ενοποιημένη.
 minutes	calendar	el	Λεπτά
 modified	calendar	el	Τροποποιήθηκε
 modifier	calendar	el	Χρήστης τροποποίησης
@@ -252,8 +255,11 @@ monthly	calendar	el	Μηνιαίος
 monthly (by date)	calendar	el	Μηνιαίος (ανα ημερομηνία)
 monthly (by day)	calendar	el	Μηνιαίος (ανα ημέρα)
 monthview	calendar	el	Μηνιαία εμφάνιση
+move to	calendar	el	Μετακίνηση σε
+multiple participants	calendar	el	Πολλαπλοί συμμετέχοντες
 multiple week view	calendar	el	Εμφάνιση πολλαπλών εβδομάδων
 needs action	calendar	el	Απαιτείται ενέργεια
+never notify externals (non-users) about events i create	calendar	el	Δεν ειδοποιώ ποτέ εξωτερικούς (μη χρήστες) για τα συμβάντα που δημιουργώ
 new	calendar	el	Νέο
 new event category	calendar	el	Κατηγορία για νέα γεγονότα
 new event participants	calendar	el	Συμμετέχοντες για νέα γεγονότα

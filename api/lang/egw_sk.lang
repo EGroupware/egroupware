@@ -29,10 +29,10 @@
 '%1' copied to clipboard	common	sk	'%1' skopírované do schránky
 '%1' has an invalid format	common	sk	'%1' má nesprávny formát!
 '%1' has an invalid format !!!	common	sk	'%1' má nesprávny formát!
-'%1' is not a valid json file!	common	sk	'%1' nie je json súborom v root adresári eGW servera!
 '%1' is not a valid date !!!	common	sk	'%1' nie je platný dátum!
 '%1' is not a valid floatingpoint number !!!	common	sk	'%1' nie je platné číslo s plávajúcou desatinnou čiarkou!
 '%1' is not a valid integer !!!	common	sk	'%1' nie je platné celé číslo !
+'%1' is not a valid json file!	common	sk	'%1' nie je json súborom v root adresári eGW servera!
 '%1' is not a valid timezone!	common	sk	'%1' nie je platné časové pásmo!
 '%1' is not allowed ('%2')!	common	sk	'%1' NIE je dovolené ('%2')!
 '%1' is not allowed%2)!	common	sk	'%1' NIE je dovolené %2)!
@@ -136,6 +136,7 @@ and	common	sk	A
 andorra	common	sk	ANDORA
 angola	common	sk	ANGOLA
 anguilla	common	sk	ANGUILLA
+answering no will not ask you again for this browser.	common	sk	Ak odpoviete nie, tento prehliadač sa vás už nebude pýtať.
 antarctica	common	sk	ANTARKTÍDA
 antigua and barbuda	common	sk	ANTIQUA BARBUDA
 api	common	sk	EGroupware API
@@ -564,6 +565,7 @@ file %1 has no content in physical filesystem %2 --> failed to remove file!	admi
 file %1 has no content in physical filesystem %2 --> file removed!	admin	sk	Súbor %1 nemá obsah na fyzickom súborovom systéme %2 --> súbor odstránený!
 file %1 has no content in physical filesystem %2!	admin	sk	Súbor %1 nemá obsah na fyzickom súborovom systéme %2 !
 file '%1' not found!	common	sk	Súbor '%1' sa nenašiel!
+file a file	common	sk	Uloženie súboru
 file contains more than one etemplate, last one is shown !!!	common	sk	Súbor obsahuje viac než jednu eŠablónu, zobrazuje sa iba posledná!!!
 file information	common	sk	Informácie o súbore
 file is of wrong type (%1 != %2)!	common	sk	Súbor je nesprávneho typu (%1 != %2)!
@@ -591,6 +593,8 @@ forecolor	common	sk	Popredie
 foreign key	common	sk	Cudzí kľúč
 forever	common	sk	Navždy
 formatselect	common	sk	Formát
+formatted business address	common	sk	Formátovaná obchodná adresa
+formatted private address	common	sk	Formátovaná súkromná adresa
 formatted text (html)	common	sk	Formátovaný text (HTML)
 found unconnected %1 %2!	admin	sk	Našli sa nepripojené %1 %2 !
 fr	common	sk	Pi
@@ -726,6 +730,7 @@ insert row after	common	sk	Vložiť Riadok Za
 insert row before	common	sk	Vložiť Riadok Pred
 insert timestamp into description field	common	sk	Vložiť časovú pečiatku do poľa popisu
 install	common	sk	Inštalovať
+install egroupware as mail-handler?	common	sk	Nainštalovať EGroupware ako mail-handler?
 integer	common	sk	Celé číslo
 international	common	sk	Mezinárodný
 introduction	common	sk	Úvod
@@ -881,6 +886,7 @@ more	common	sk	Viac
 more than 1 match for '%1'	common	sk	Viac než 1 výskyt pre '%1'
 more then one active file %1 found, inactivating %2 older revisions!	admin	sk	Našiel sa viac než jeden aktívny súbor %1, deaktivujem staršie verzie %2!
 morocco	common	sk	MAROKO
+move	common	sk	Presunúť
 moved %1 children from directory fs_id=%2 to %3	admin	sk	Presunutých %1 potomkov zpriečinka fs_id=%2 do %3
 moved unconnected %1 %2 to %3.	admin	sk	Presunuté nepripojené %1 %2 do %3
 mozambique	common	sk	MOZAMBIK

@@ -22,7 +22,6 @@
 %s readonly	common	nl	%s alleen lezen
 '%1' copied to clipboard	common	nl	'%1' gekopieerd naar klembord
 '%1' has an invalid format !!!	common	nl	'%1' heeft een ongeldig formaat !!!
-'%1' is no php file in the egw server root (%2)!	common	nl	'%1' is geen php bestand in de eGW server rootdirectory (%2)
 '%1' is not a valid date !!!	common	nl	'%1' is geen geldige datum !!!
 '%1' is not a valid floatingpoint number !!!	common	nl	'%1' is geen geldig drijvende komma getal !!!
 '%1' is not a valid integer !!!	common	nl	'%1' is geen geldig geheel getal !!!
@@ -118,6 +117,7 @@ and	common	nl	En
 andorra	common	nl	ANDORRA
 angola	common	nl	ANGOLA
 anguilla	common	nl	ANGUILLA
+answering no will not ask you again for this browser.	common	nl	Als je nee antwoordt, wordt er niet meer naar deze browser gevraagd.
 antarctica	common	nl	ANTARTICA
 antigua and barbuda	common	nl	ANTIGUA EN BARBUDA
 api	common	nl	EGroupware API
@@ -501,6 +501,7 @@ file	common	nl	Bestand
 file %1 has no content in physical filesystem %2 --> failed to remove file!	admin	nl	Bestand %1 heeft geen inhoud in het fysieke bestand systeem %2  --> Verwijderen bestand mislukt !
 file %1 has no content in physical filesystem %2 --> file removed!	admin	nl	Bestand %1 heeft geen inhoud in het fysieke bestand systeem %2  --> bestand verwijdert!
 file %1 has no content in physical filesystem %2!	admin	nl	Bestand %1 heeft geen inhoud in het fysieke bestand systeem %2 !
+file a file	common	nl	Bestand opslaan
 file contains more than one etemplate, last one is shown !!!	common	nl	Bestand bevat meer dan één eTemplate, alleen de laatste wordt getoond !!!
 file writen	common	nl	Bestand weggeschreven
 files	common	nl	Bestanden
@@ -519,6 +520,8 @@ folder already exists.	common	nl	Map bestaat reeds.
 force selectbox	common	nl	Forceer Selectbox
 foreign key	common	nl	Foreign Key
 forever	common	nl	Voor altijd
+formatted business address	common	nl	Opgemaakt zakelijk adres
+formatted private address	common	nl	Opgemaakt privé-adres
 formatted text (html)	common	nl	Opgemaakte tekst (HTML)
 found unconnected %1 %2!	admin	nl	Niet verbonden %1 %2 ! gevonden
 france	common	nl	FRANKRIJK
@@ -528,6 +531,7 @@ french southern territories	common	nl	FRANSE ZUIDELIJKE GEBIEDEN
 friday	common	nl	Vrijdag
 ftp	common	nl	FTP
 fullname	common	nl	Volledige naam
+fullscreen	common	nl	Volledig scherm
 fullscreen mode	common	nl	Volledig scherm modus
 gabon	common	nl	GABON
 gambia	common	nl	GAMBIA
@@ -646,6 +650,7 @@ insert placeholder	common	nl	Plaatshouder invoegen
 insert row after	common	nl	Rij invoegen onder
 insert row before	common	nl	Rij invoegen boven
 insert timestamp into description field	common	nl	Tijdstempel invoegen in beschrijvingsveld
+install egroupware as mail-handler?	common	nl	EGroupware installeren als mail-handler?
 integer	common	nl	Geheel getal
 international	common	nl	Internationaal
 invalid 2-factor authentication code	common	nl	Ongeldige 2-Factor Authenticatie code
@@ -782,6 +787,7 @@ more	common	nl	Meer
 more than 1 match for '%1'	common	nl	Meer dan 1 overeenkomst voor '%1'
 more then one active file %1 found, inactivating %2 older revisions!	admin	nl	Meer dan 1 actief bestand %1 gevonden. deactiveer %2 oudere revisies
 morocco	common	nl	MAROKKO
+move	common	nl	Verplaats
 moved %1 children from directory fs_id=%2 to %3	admin	nl	Verplaatst %1 onderliggende mappen van map fs_id=%2 naar %3
 moved unconnected %1 %2 to %3.	admin	nl	Niet verbonden %1 %2 tot %3 verplaatst
 mozambique	common	nl	MOZAMBIQUE

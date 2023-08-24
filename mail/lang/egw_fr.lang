@@ -76,6 +76,8 @@ before reply, visible during compose	mail	fr	Avant la réponse, visible pendant 
 blacklisted mails are marked as spam	mail	fr	Les mails en liste noire sont marqués comme spam
 but check shared folders	mail	fr	sauf les dossiers partagés sélectionnés
 by date	mail	fr	Par date
+by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	fr	Par défaut, 'http://' est simplement remplacé par 'https://'. N'hésitez pas à configurer 'https://proxy.egroupware.org/' pour qu'il charge également les images disponibles uniquement via http.
+caching of flags	mail	fr	Mise en cache des drapeaux
 can not open imap connection	mail	fr	Ne peut pas ouvrir de connexion IMAP
 can not resolve the winmail.dat attachment!	mail	fr	Impossible de lire le fichier winmail.dat !
 canceled deletion due to user interaction	mail	fr	Suppression annulée par une interaction utilisateur
@@ -83,6 +85,7 @@ certificate info for email %1	mail	fr	Info de certificat pour l'email %1
 change editor type	mail	fr	changer l'éditeur vers le mode HTML
 changed profile	mail	fr	Profil changé
 changing subject failed because of %1	mail	fr	Changement de l'objet échoué parce que %1
+changing subject failed folder %1 does not exist	mail	fr	Échec de la modification du sujet : le dossier %1 n'existe pas
 check message against next rule also	mail	fr	Vérifiez le message avec la prochaine règle également
 check to receive a notification when the message is read (note: not all clients support this and/or the receiver may not authorize the notification)	mail	fr	cocher pour recevoir une notification lorsque le message est lu (note : tous les clients de messagerie ne supportent pas cette fonction et tous les destinataires n'autorisent pas la notification)
 check to save as calendar event on send	mail	fr	cocher pour sauvegarder comme Evénement après l'envoi
@@ -101,6 +104,7 @@ confirm attach message	mail	fr	Confirmer l'attachement au message
 confirm move to folder	mail	fr	Confirmer le déplacement vers un dossier
 connect to profile %1	mail	fr	Connexion au profil %1
 connection status	mail	fr	Statut de la connexion
+contact label	mail	fr	Etiquette de contact
 contains	mail	fr	contient
 contains(*)	mail	fr	Contient(*)
 convert mail to item and attach its attachments to this item (standard)	mail	fr	Convertir le message en item et y attacher ses pièces jointes
@@ -282,6 +286,7 @@ import message	mail	fr	Importer le message
 importance	mail	fr	Importance
 important	mail	fr	important
 inbox	mail	fr	Boîte de réception
+information to show on email tag	mail	fr	Informations à faire figurer sur l'étiquette du courrier électronique
 initialization of mail failed. please use the wizard to cope with the problem.	mail	fr	L'initialisation du courrier en échec. Veuillez utiliser l'assistant pour traiter le problème.
 inline	mail	fr	Transférer
 insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)	mail	fr	insérer la signature en haut du message (ou réponse) à l'ouverture de la fenêtre de rédaction (vous pourriez alors ne as pouvoir changer de signature)
@@ -292,6 +297,7 @@ keep a copy of the message in your inbox	mail	fr	Garder une copie du message dan
 kilobytes	mail	fr	kilo-octets
 later	mail	fr	Plus tard
 less than	mail	fr	Moins que
+list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	fr	Liste des actions à activer par défaut (par exemple, l'action "Mail compose save as InfoLog")
 mail	common	fr	Mail
 mail acl	mail	fr	ACL Mail
 mail filter	mail	fr	Filtre de mail
@@ -325,6 +331,7 @@ move to archive	mail	fr	Déplacer vers le dossier archives
 move to trash	mail	fr	Déplacer vers la Corbeille
 moved %1 message(s) from %2 to %3	mail	fr	Déplacer %1 message(s) de %2 vers %3
 moving folders from one mailaccount to another is not supported	mail	fr	Déplacer des dossiers d'un compte à un autre n'est pas supporté
+name and email	mail	fr	Nom et email
 name of account	mail	fr	Nom du compte
 never display html emails	mail	fr	Ne jamais afficher les messages HTML
 never show	mail	fr	Ne jamais afficher
@@ -358,17 +365,22 @@ notify when new mails arrive in these folders	mail	fr	M'avertir lorsque de nouve
 on	mail	fr	le
 on behalf of	mail	fr	De la part de
 one address is not valid	mail	fr	Une adresse n'est pas valide
+only email	mail	fr	Seulement le email
+only name	mail	fr	Seulement le nom
 only one window	mail	fr	Seulement une fenêtre
 only send message, do not copy a version of the message to the configured sent folder	mail	fr	Envoyer le message uniquement, ne pas copier vers le dossier des messages envoyés
 open in html mode	mail	fr	Ouvrir en mode HTML
 open in text mode	mail	fr	Ouvrir en mode texte
-organisation	admin	fr	organisation
+open with collabora office	mail	fr	Ouvrir avec Collabora Online
+organisation	admin	fr	Organisation
 organization	mail	fr	Entreprise
-original message	mail	fr	message d'origine
+organization | real name email	mail	fr	Organisation | Nom réel [Email]
+original message	mail	fr	Message d'origine
 outbox	mail	fr	Boîte d'envoi
 password protect	mail	fr	protection par mot de passe
 permission denied	mail	fr	Permission refusée
 please configure access to an existing individual imap account.	mail	fr	Veuillez configurer l'accès à un compte IMAP individuel existant.
+please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	fr	Veuillez configurer votre certificat S/MIME dans l'onglet Encryption situé dans la boîte de dialogue Edit Account.
 please enter password	mail	fr	Veuillez entrer un mot de passe
 please select a address	mail	fr	Sélectionner une adresse
 please select the number of days to wait between responses	mail	fr	Sélectionner le nombre de jours pour attendre entre les réponses
@@ -379,11 +391,12 @@ prevent managing filters	mail	fr	Empêcher la gestion des filtres
 prevent managing folders	mail	fr	Empêcher la gestion des dossiers
 prevent managing notifications	mail	fr	Empêcher la gestion des notifications
 prevent managing vacation notice	mail	fr	Empêcher la gestion des messages d'absence
-preview pane	mail	fr	Panneau de prévisualisation
+preview pane	mail	fr	Disposition des fenêtres
 primary profile	mail	fr	Profil primaire
-printing	mail	fr	impression
-printview	mail	fr	aperçu avant impression
+printing	mail	fr	Impression
+printview	mail	fr	Vue d'impression
 provide a default vacation text, (used on new vacation messages when there was no message set up previously)	admin	fr	fournir un message d'absence par défaut (pour les nouveaux messages d'absence lorsque aucun message n'existait auparavant)
+push notifications	mail	fr	Notifications push
 quicksearch	mail	fr	Recherche Rapide
 quicksearch (with cc)	mail	fr	Recherche rapide (avec les CC)
 quota not provided by server	mail	fr	Quota non indiqué par le serveur
@@ -491,7 +504,9 @@ show all folders	mail	fr	Afficher tous les dossiers
 show horizontal	mail	fr	Afficher à l'horizontale
 show horizontal, hide if none selected	mail	fr	Afficher à l'horizontale, cacher si aucun sélectionner
 show new messages on home page	mail	fr	Afficher les nouveaux messages sur la page d'accueil
+show notification for new arriving mails	mail	fr	Afficher une notification pour les nouveaux mails reçus
 show vertical	mail	fr	Afficher à la verticale
+show vertical with all columns	mail	fr	Afficher l'écran vertical avec toutes les colonnes
 show/hide preview pane in mail list view	mail	fr	Afficher/Maquer le panneau de prévisualisation dans la vue liste
 sieve	mail	fr	Sieve
 sieve connection status	mail	fr	Statut de connexion à Sieve
@@ -588,6 +603,7 @@ yes, but mask all usernames and passwords	mail	fr	Oui, mais masquer les noms d'u
 yes, offer copy option	mail	fr	oui, proposer une option de copie
 yes, show basic info only	mail	fr	Oui, afficher seulement les informations de base
 you can either choose to save as infolog or tracker, not both.	mail	fr	Vous pouvez choisir de sauvegarder soit dans infolog soit dans tracker, pas les 2
+you can select what info to be displayed on email tag	mail	fr	Vous pouvez sélectionner les informations à afficher sur l'étiquette de l'e-mail.
 you need to install mailvelope plugin available for chrome and firefox from %1.	mail	fr	Vous devez installer le plugin Mailvelope, disponbible pour Chrome et Firefox depuis %1.
 you need to save the message as draft first before to be able to save it into vfs	mail	fr	Vous devez enregistrer votre message comme brouillon avant de pouvoir l'enregistrer dans le VFS
 you will loose current message body, unless you save it to your clipboard!	mail	fr	Vous allez perdre le contenu de votre message, sauf si vous l'avez dans votre presse-papier !

@@ -62,6 +62,7 @@ and	common	da	Og
 andorra	common	da	Andorra
 angola	common	da	Angola
 anguilla	common	da	Anguilla
+answering no will not ask you again for this browser.	common	da	Hvis du svarer nej, vil du ikke længere blive bedt om at vælge denne browser.
 antarctica	common	da	Antarktis
 antigua and barbuda	common	da	Antigua og Barbuda
 application	common	da	Applikation
@@ -272,7 +273,9 @@ february	common	da	Februar
 fields	common	da	Felter
 fiji	common	da	Fiji
 file	common	da	Fil
+file a file	common	da	Gem en fil
 files	common	da	Filer
+fileupload	common	da	Upload af fil
 filter	common	da	Filter
 finland	common	da	Finland
 first name	common	da	Fornavn
@@ -281,6 +284,9 @@ first page	common	da	Første side
 firstname	common	da	Fornavn
 fixme!	common	da	RETMIG!
 force selectbox	common	da	Påtving Valgbox
+formatted business address	common	da	Formateret forretningsadresse
+formatted private address	common	da	Formateret privat adresse
+formatted text (html)	common	da	Formateret tekst (HTML)
 france	common	da	Frankrig
 french guiana	common	da	Fransk Guinea
 french polynesia	common	da	Fransk Polynesien
@@ -288,10 +294,14 @@ french southern territories	common	da	Franske Sydlige Territorier
 friday	common	da	Fredag
 ftp	common	da	FTP
 fullname	common	da	Fuldenavn
+fullscreen	common	da	Fuld skærm
+fullscreen mode	common	da	Fuld skærm-tilstand
 gabon	common	da	Gabon
 gambia	common	da	Gambia
+general fields:	preferences	da	Generelle felter:
 general menu	common	da	Hoved menu
 georgia	common	da	Georgien
+german	common	da	Tysk
 germany	common	da	Tyskland
 ghana	common	da	Ghana
 gibraltar	common	da	Gibraltar
@@ -356,6 +366,7 @@ insert placeholder	common	da	Indsæt pladsholder
 insert row after	common	da	Indsæt række efter
 insert row before	common	da	Indsæt række foran
 insert timestamp into description field	common	da	Insert timestamp into description field
+install egroupware as mail-handler?	common	da	Installere EGroupware som mail-handler?
 international	common	da	International
 invalid 2-factor authentication code	common	da	Ugyldig kode for 2-faktor-autentifikation
 invalid filename	common	da	Ugyldigt filnavn
@@ -453,6 +464,7 @@ month	common	da	Måned
 montserrat	common	da	Montserrat
 more	common	da	Flere
 morocco	common	da	Morokko
+move	common	da	Flyt
 mozambique	common	da	Mozambique
 myanmar	common	da	Myanmar
 name	common	da	Navn

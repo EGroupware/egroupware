@@ -74,6 +74,8 @@ before reply, visible during compose	mail	it	Prima della risposta, visibile dura
 blacklisted mails are marked as spam	mail	it	Segnare posta proveniente da indirizzi in blacklist come Spam
 but check shared folders	mail	it	ma controlla le cartelle condivise
 by date	mail	it	Per data
+by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	it	Per impostazione predefinita, 'http://' è semplicemente sostituito da 'https://'. È possibile configurare 'https://proxy.egroupware.org/' per caricare anche le immagini disponibili solo via http.
+caching of flags	mail	it	Caching dei flag
 can not open imap connection	mail	it	Impossibile stabilire una connessione IMAP
 can not resolve the winmail.dat attachment!	mail	it	Non è stato possibile risolvere l'allegato winmail.dat!
 canceled deletion due to user interaction	mail	it	Eliminazione interrotta a causa di azione da parte dell'utente
@@ -98,6 +100,7 @@ confirm attach message	mail	it	Conferma allegato al messaggio
 confirm move to folder	mail	it	Conferma lo spostamento alla cartella
 connect to profile %1	mail	it	Connetti al profilo %1
 connection status	mail	it	Stato della connessione
+contact label	mail	it	Etichetta di contatto
 contains	mail	it	contiene
 contains(*)	mail	it	Contiene(*)
 convert mail to item and attach its attachments to this item (standard)	mail	it	converti il messaggio email in elemento e allega i suoi allegati a questo elemento (standard)
@@ -296,6 +299,7 @@ important	mail	it	Importante
 in mailbox: %1, with id: %2, and partid: %3	mail	it	Nella casella: %1, con ID: %2 e PartID: %3
 in order to protect your privacy all external sources within this email are blocked.	mail	it	Per proteggere la tua privacy, tutte le immagini remote (di sorgenti esterne) sono state bloccate.
 inbox	mail	it	Posta in arrivo
+information to show on email tag	mail	it	Informazioni da mostrare sull'etichetta dell'e-mail
 initialization of mail failed. please use the wizard to cope with the problem.	mail	it	L'inizializzazione della posta elettronica non è andata a buon fine. Si prega di usare il Wizard per tentare di risolvere il problema.
 inline	mail	it	In linea
 insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)	mail	it	Inserisci la firma all'inizio del nuovo messaggio quando ne componi uno
@@ -308,6 +312,7 @@ later	mail	it	Più tardi
 learning as ham (not spam) failed because of %1	mail	it	Apprendimento come Ham (non Spam) fallito a causa di %1
 learning as spam failed because of %1	mail	it	Apprendimento come Spam fallito a causa di %1
 less than	mail	it	meno di
+list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	it	Elenco di azioni da attivare/attivare per impostazione predefinita (ad esempio, l'azione di composizione della posta salva come InfoLog).
 mail	common	it	mail
 mail acl	mail	it	Permessi ACL della posta
 mail filter	mail	it	Filtro email
@@ -346,6 +351,7 @@ move to archive	mail	it	Sposta in archivio
 move to trash	mail	it	Sposta nel cestino
 moved %1 message(s) from %2 to %3	mail	it	spostato %1 messaggi(o) da %2 a %3
 moving folders from one mailaccount to another is not supported	mail	it	Lo spostamento di cartelle fra account non è consentito.
+name and email	mail	it	Nome e email
 name of account	mail	it	Nome account
 never display html emails	mail	it	Non visualizzare mai le e-mail scritte in HTML
 never show	mail	it	non mostrare mai
@@ -377,14 +383,18 @@ notify about new mail in this folders	mail	it	Notifica quando arrivano nuovi mes
 notify when new mails arrive in these folders	mail	it	Notifica quando arrivano nuovi messaggi in queste cartelle
 on	mail	it	Su
 one address is not valid	mail	it	Un indirizzo non è valido
+only email	mail	it	Solo l'e-mail
 only makes sense, if you transport password through a different channel / outside of this mail to recipients!	mail	it	Ha senso soltanto se il trasporto password avviene attraverso canale diverso al di fuori di questa email ai destinatari!
+only name	mail	it	Solo nome
 only needed for some servers, that do not return all folders on root level queries to retrieve all folders for that level	mail	it	necessario solo per alcuni server che non restituiscono le tutte le cartelle del livello radice (root)
 only one window	mail	it	solo una finestra
 only send message, do not copy a version of the message to the configured sent folder	mail	it	Invia semplicemente i messaggio, non copiarli nella cartella della posta inviata
 open in html mode	mail	it	Apri in modalità HTML
 open in text mode	mail	it	Apri in modalità testo
+open with collabora office	mail	it	Aprire con Collabora Online
 organisation	admin	it	organizzazione
 organization	mail	it	organizzazione
+organization | real name email	mail	it	Organizzazione | Nome reale [Email]
 original message	mail	it	Messaggio originale
 outbox	mail	it	Posta in uscita
 password protect	mail	it	proteggi con password
@@ -409,6 +419,7 @@ printing	mail	it	in stampa
 printview	mail	it	Vista stampa
 processing of file %1 failed. failed to meet basic restrictions.	mail	it	Elaborazione del file %1 non riuscita. Non sono state soddisfate le regole di base delle restrizioni di caricamento.
 provide a default vacation text, (used on new vacation messages when there was no message set up previously)	admin	it	inserire il testo predefinito per l'autorisponditore delle ferie, (usato nei messaggi di vacanza quando non viene prima impostato un messaggio)
+push notifications	mail	it	Notifiche push
 quicksearch	mail	it	ricerca Veloce
 quicksearch (with cc)	mail	it	ricerca veloce (incluso CC)
 quota not provided by server	mail	it	Il server non fornisce informazioni sulla quota email
@@ -518,10 +529,12 @@ show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	
 show horizontal	mail	it	mostra in orizzonale
 show horizontal, hide if none selected	mail	it	mostra orizzontale, nascondi se nessuno selezionato
 show new messages on home page	mail	it	mostra nuovi messaggi in home page
+show notification for new arriving mails	mail	it	Mostra notifica per le nuove mail in arrivo
 show test connection section and control the level of info displayed?	mail	it	Mostrare la sezione di Test della connessione e controllare il livello delle informazioni mostrate
 show test connection section and control the level of info displayed??	mail	it	Mostrare la sezione di Prova Connessione e controllare il livello delle informazioni mostrate?
 show them this time only	mail	it	Mostrali solo per questa volta
 show vertical	mail	it	mostra in verticale
+show vertical with all columns	mail	it	Mostra verticale con tutte le colonne
 show/hide preview pane in mail list view	mail	it	Mostra/Nascondi pannello di anteprima nella vista elenco mail
 sieve	mail	it	Sieve
 sieve connection status	mail	it	Stato della connessione Sieve
@@ -639,10 +652,12 @@ yes, only trigger connection reset	mail	it	Sì, innesca solo la reimpostazione d
 yes, show all debug information available for the user	mail	it	sì mostra le informazioni di debug complete disponibili all'utente
 yes, show basic info only	mail	it	sì, mostra solo le informazioni di base
 you can either choose to save as infolog or tracker, not both.	mail	it	Puoi scegliere di salvare come Attività oppure Tracker, non entrambi
+you can select what info to be displayed on email tag	mail	it	È possibile selezionare le informazioni da visualizzare sul tag e-mail.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	it	Puoi usare $$start$$ per la data di inizio e $$end$$ per la data fine
 you may add this certificate into your contact, if you trust this signature.	mail	it	Puoi aggiungere questo certificato nel tuo contatto se ti fidi della firma
 you need to enter your s/mime passphrase to send this message.	mail	it	È necessario inserire la frase di accesso S/MIME per inviare questo messaggio.
 you need to install mailvelope plugin available for chrome and firefox from %1.	mail	it	E' necessario installare il plugin Mailvelope disponibile per Chrome e Firefox da %1.
 you need to save the message as draft first before to be able to save it into vfs	mail	it	Devi prima salvare il messaggio come bozza per poterlo salvare nel VFS
 you will loose current message body, unless you save it to your clipboard!	mail	it	Il corpo del messaggio attuale verrà perso, a meno che non venga salvato negli appunti!
+you've got new mail	mail	it	C'è nuova posta
 your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	it	La quota rimanente% 1 è troppo bassa, potresti non essere in grado di inviare / ricevere ulteriori email.\n Ripulire i messaggi di posta elettronica nel cestino o nella cartella della posta indesiderata potrebbe aiutarti a recuperare spazio.\n Se ciò non è stato di aiuto , chiedi al tuo amministratore di aumentare la quota disponibile.

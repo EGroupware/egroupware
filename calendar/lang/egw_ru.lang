@@ -366,11 +366,14 @@ monthly	calendar	ru	На месяц
 monthly (by date)	calendar	ru	На месяц (по дате)
 monthly (by day)	calendar	ru	На месяц (по дню)
 monthview	calendar	ru	Вид на месяц
+move to	calendar	ru	Переход к
+multiple participants	calendar	ru	Множественные участники
 multiple week view	calendar	ru	Вид на несколько недель
 name of current user, all other contact fields are valid too	calendar	ru	Имя текущего пользователя, все прочие поля контакта также верны
 name of the day of the week (ex: monday)	calendar	ru	Название дня недели (напр. Понедельник)
 name of the week (ex: monday), available for the first entry inside each day of week or daily table inside the selected range.	calendar	ru	Название дня недели, (напр. Понедельник), доступно для первой записи каждого дня недели или ежедневной таблицы в выбранном диапазоне.
 needs action	calendar	ru	Требуется действие
+never notify externals (non-users) about events i create	calendar	ru	Никогда не уведомлять внешних пользователей о событиях, которые я создаю
 new	calendar	ru	Новое
 new event category	calendar	ru	Новая категория события
 new event participants	calendar	ru	Новые участники события

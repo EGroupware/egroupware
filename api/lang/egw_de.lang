@@ -29,10 +29,10 @@
 '%1' copied to clipboard	common	de	'%1' in die Zwischenablage kopiert
 '%1' has an invalid format	common	de	'%1' hat ein ungültiges Format !!!
 '%1' has an invalid format !!!	common	de	'%1' hat ein ungültiges Format !!!
-'%1' is not a valid json file!	common	de	'%1' ist keine json Datei in dem EGW Server Wurzelverzeichnis!
 '%1' is not a valid date !!!	common	de	'%1' ist ein ungültiges Datum !!!
 '%1' is not a valid floatingpoint number !!!	common	de	'%1' ist keine gültige Gleitkommazahl !!!
 '%1' is not a valid integer !!!	common	de	'%1' ist keine gültige Ganzzahl !!!
+'%1' is not a valid json file!	common	de	'%1' ist keine json Datei in dem EGW Server Wurzelverzeichnis!
 '%1' is not a valid timezone!	common	de	'%1' ist keine gültige Zeitzone!
 '%1' is not allowed ('%2')!	common	de	'%1' ist NICHT erlaubt ('%2')!
 '%1' is not allowed%2)!	common	de	'%1' ist NICHT erlaubt '%2'!
@@ -372,6 +372,7 @@ data type	common	de	Datentyp
 database error	common	de	Datenbank Fehler
 database error!	common	de	Datenbank Fehler!
 date	common	de	Datum
+date + time	common	de	Datum + Zeit
 date due	common	de	fällig am
 date+time	common	de	Datum+Uhrzeit
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	de	Datum-Zeit Port.<br>Wenn Sie Port 13 benutzen, passen Sie bitte die Regeln der Firewall an bevor Sie die Seite speichern.<br>(Port: 13 / Host: 129.6.15.28)
@@ -487,7 +488,7 @@ egroupware administrators group, do not delete	common	de	EGroupware Gruppe für 
 egroupware all users group, do not delete	common	de	EGroupware Gruppe für alle Benutzer, NICHT löschen
 egroupware anonymous users group, do not delete	common	de	EGroupware Gruppe für anonymen Benutzer, nicht löschen
 egroupware api version	common	de	EGroupware API Version
-egroupware maintenance update %1 available	common	de	EGroupware Fehlerbehebungsupdate %1 ist verfügbar
+egroupware maintenance update %1 available	common	de	EGroupware Wartungsupdate %1 ist verfügbar
 egroupware security update %1 needs to be installed!	common	de	EGroupware Sicherheitsupdate %1 muss installiert werden!
 egroupware version	common	de	EGroupware Version
 egroupware: login blocked for user '%1', ip %2	common	de	EGroupware: Anmelden gesperrt für Benutzer '%1', IP %2
@@ -543,8 +544,9 @@ etemplate tutorial	common	de	eTemplate Einführung
 ethiopia	common	de	ÄTHIOPIEN
 everything	common	de	Alles
 exact	common	de	exakt
-example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	preferences	de	Beispiel: "{{IF n_prefix~Herr~Sehr geehrter~Sehr geehrte}}" - suche in dem Feld "n_prefix" nach "Herr", wenn gefunden, schreibe "Sehr geehrter", wenn nicht gefunden schreibe "Sehr geehrte". Es ist auch möglich anstatt fixer Werte, den Wert eines andren Feldes zu übernehmen. Beispiel (Land wird nur dann angezeigt, denn es nicht DEUTSCHLAND ist: }
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	preferences	de	Beispiel: "{{IF n_prefix~Herr~Sehr geehrter~Sehr geehrte}}" - suche in dem Feld "n_prefix" nach "Herr", wenn gefunden, schreibe "Sehr geehrter", wenn nicht gefunden schreibe "Sehr geehrte". Es ist auch möglich anstatt fixer Werte, den Wert eines andren Feldes zu übernehmen. Beispiel (Land wird nur dann angezeigt, wenn es nicht DEUTSCHLAND ist: }
 example {{letterprefix}} - gives a letter prefix without double spaces, if the title is empty for example	preferences	de	Beispiel: {{LETTERPREFIX}} - Ergibt eine Anrede ohne doppelte Leerzeichen, wenn z.B. der Titel leer ist
+example {{letterprefix}} - gives a letter prefix without double spaces, if the title is emty for  example	common	de	Beispiel {{LETTERPREFIX}} - Gibt ein Buchstabenpräfix ohne doppelte Leerzeichen an, wenn der Titel z.B. leer ist
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	preferences	de	Beispiel {{NELF role}} - Erzeugt einen Zeilenumbruch, wenn das Feld role nicht leer ist. Der Wert des Feldes role (Funktion) wird nach dem Zeilenumbruch ausgegeben.
 example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	preferences	de	Beispiel {{nenvlf role}} - Erzeugt einen Zeilenumbruch, wenn das Feld role (Funktion) einen Wert besitzt. Der Wert role (Funktion) wird auch bei Vorhandensein des Feldes role nicht ausgegeben.
 exchange this row with the one above	common	de	diese Zeile mit der darüber austauschen
@@ -602,6 +604,8 @@ forecolor	common	de	Textfarbe
 foreign key	common	de	Foreign Key
 forever	common	de	Für immer
 formatselect	common	de	Format
+formatted business address	common	de	Formatierte Geschäftsadresse
+formatted private address	common	de	Formatierte Privatadresse
 formatted text (html)	common	de	Formatierter Text (HTML)
 found unconnected %1 %2!	admin	de	Nicht verbundenen Einträge gefunden %1 %2
 fr	common	de	Fr
@@ -687,6 +691,7 @@ how many rows to print	common	de	Zeilen zum Drucken
 how to show the general egroupware menu ?	common	de	Wie soll das allgemeine EGroupware Menü angezeigt werden?
 html	common	de	HTML
 html link to the current record	common	de	HTML-Link zum aktuellen Eintrag.
+html links to any entries linked to the current record, excluding attached files	common	de	HTML-Links zu allen mit dem aktuellen Datensatz verknüpften Einträgen, ausgenommen angehängte Dateien
 hungary	common	de	UNGARN
 iceland	common	de	ISLAND
 id	common	de	ID
@@ -812,6 +817,7 @@ link is appended to mail allowing recipients to download currently attached vers
 link is appended to mail allowing recipients to download or modify up to date version of files (epl only)	common	de	Link wird an die Mail angefügt und erlaubt Adressaten den aktuellen Inhalt der angehangenen Dateien zu bearbeiten (nur EPL)
 link is appended to mail allowing recipients to download up to date version of files	common	de	Link wird an die Mail angefügt und erlaubt Adressaten den aktuellen Inhalt der angehangenen Dateien herunter zu laden
 link target %1 not found!	common	de	Keine Verknüpfung zu %1 gefunden!
+link title of current record	common	de	Link-Titel des aktuellen Datensatzes
 linkapps	common	de	VerknüpfungAnwendungen
 linked	common	de	Verknüpft
 linkentry	common	de	VerknüpfungEintrag
@@ -951,6 +957,7 @@ no filters	common	de	Keine Filter
 no history for this record	common	de	Keine Historie für diesen Datensatz
 no key for recipient:	common	de	Keinen Schlüssel für Empfänger:
 no matches found	common	de	Keine Treffer gefunden
+no response from server: your data is probably not saved	common	de	Keine Antwort vom Server: Ihre Daten sind wahrscheinlich NICHT gespeichert
 no results match	common	de	Kein Fund für
 no rights to export more than %1 entries!	common	de	Sie haben keine Rechte mehr als %1 Einträge zu exportieren!
 no row to swap with !!!	common	de	Keine Zeile um damit zu tauschen !!!
@@ -1472,6 +1479,8 @@ upload new photo	common	de	Neues Foto hochladen
 upload requires the directory to be writable by the webserver!	common	de	Der Upload verlangt, dass der Webserver Schreibrechte auf diesem Verzeichnis hat!
 uppercase letters	common	de	Grossbuchstaben
 url	common	de	Webseite
+url of current record	common	de	URL des aktuellen Datensatzes
+urls of any entries linked to the current record, excluding attached files	common	de	URLs aller mit dem aktuellen Datensatz verknüpften Einträge, ausgenommen angehängte Dateien
 uruguay	common	de	URUGUAY
 use button to search for	common	de	benutze Knopf zum suchen nach
 use button to search for address	common	de	benutze Knopf zum Suchen nach Adressen

@@ -375,6 +375,7 @@ monthly	calendar	de	Monatlich
 monthly (by date)	calendar	de	Monatlich (nach Datum)
 monthly (by day)	calendar	de	Monatlich (nach Wochentag)
 monthview	calendar	de	Monatsansicht
+move to	calendar	de	Verschieben nach
 multiple participants	calendar	de	Mehrere Teilnehmer
 multiple week view	calendar	de	Mehrwochenansicht
 name of current user, all other contact fields are valid too	calendar	de	Name des aktuellen Benutzers, alle anderen Kontakt Felder sind weiterhin gültig
@@ -397,7 +398,7 @@ no recurrence	calendar	de	Keine Wiederholung
 no response	calendar	de	Keine Antwort
 no rights to export more than %1 entries!	calendar	de	Sie haben keine Rechte mehr als %1 Einträge zu exportieren!
 no, users will need to contact users with direct booking permission	calendar	de	Nein, Benutzer müssen sich mit Benutzern mit direkter Buchungsberechtigung in Verbindung setzen.
-non blocking	calendar	de	nicht blockierend
+non blocking	calendar	de	Nicht blockierend
 not	calendar	de	nicht
 not rejected	calendar	de	Nicht abgelehnt
 nothing to update, version is already %1.	calendar	de	Nichts aktualisiert, Version ist bereits %1
@@ -421,11 +422,11 @@ old fixed definition	calendar	de	Ältere Definition, deren Werte nicht angepasst
 old startdate	calendar	de	Altes Startdatum
 olddate	calendar	de	Ursprüngliches Datum
 on %1 %2 %3 your meeting request for %4	calendar	de	Am %1 hat %2 Ihre Einladung für den %4 %3
-on all modification, but responses	calendar	de	bei allen Änderungen, außer Antworten
-on any time change too	calendar	de	auch jede zeitliche Veränderung
-on invitation / cancellation only	calendar	de	nur bei Einladungen/Absagen
-on participant responses too	calendar	de	auch bei Antworten der Teilnehmer
-on time change of more than 4 hours too	calendar	de	bei zeitlichen Änderungen größer als 4 Stunden
+on all modification, but responses	calendar	de	Bei allen Änderungen, außer Antworten
+on any time change too	calendar	de	Auch jede zeitliche Veränderung
+on invitation / cancellation only	calendar	de	Nur bei Einladungen/Absagen
+on participant responses too	calendar	de	Auch bei Antworten der Teilnehmer
+on time change of more than 4 hours too	calendar	de	Bei zeitlichen Änderungen größer als 4 Stunden
 one month	calendar	de	ein Monat
 one week	calendar	de	eine Woche
 one year	calendar	de	ein Jahr

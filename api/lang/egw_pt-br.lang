@@ -20,10 +20,10 @@
 %s readonly	common	pt-br	%s apenas leitura
 '%1' copied to clipboard	common	pt-br	%1' copiado para prancheta
 '%1' has an invalid format !!!	common	pt-br	'%1' está em um formato inválido !!!
-'%1' is not a valid json file!	common	pt-br	'%1' não é um arquivo json na pasta raiz do servidor eGW!
 '%1' is not a valid date !!!	common	pt-br	'%1' não é uma data válida !!!
 '%1' is not a valid floatingpoint number !!!	common	pt-br	%1' não é um número válido para o ponto flutuante!!!
 '%1' is not a valid integer !!!	common	pt-br	%1' não é um inteiro válido!!!
+'%1' is not a valid json file!	common	pt-br	'%1' não é um arquivo json na pasta raiz do servidor eGW!
 '%1' is not allowed ('%2')!	common	pt-br	'%1' não é permitido ('%2')!
 (session restored in %1 seconds)	common	pt-br	(sessão restaurada em %1 segundos)
 00 (disable)	admin	pt-br	00 (desabilitado)
@@ -112,6 +112,7 @@ and	common	pt-br	E
 andorra	common	pt-br	ANDORRA
 angola	common	pt-br	ANGOLA
 anguilla	common	pt-br	ANGUILLA
+answering no will not ask you again for this browser.	common	pt-br	Se você responder não, não será mais solicitado a fornecer esse navegador.
 antarctica	common	pt-br	ANTARTICA
 antigua and barbuda	common	pt-br	ANTIGUA E BARBUDA
 api	common	pt-br	API EGroupware
@@ -495,6 +496,8 @@ folder already exists.	common	pt-br	Pasta já existe.
 force selectbox	common	pt-br	Forçar caixa de seleção
 foreign key	common	pt-br	Chave externa
 forever	common	pt-br	Para sempre
+formatted business address	common	pt-br	Endereço comercial formatado
+formatted private address	common	pt-br	Endereço particular formatado
 formatted text (html)	common	pt-br	Texto Formatado (HTML)
 found unconnected %1 %2!	admin	pt-br	Encontrado% desconectados 1% 2!
 france	common	pt-br	FRANÇA
@@ -504,6 +507,7 @@ french southern territories	common	pt-br	FRENCH SOUTHERN TERRITORIES
 friday	common	pt-br	Sexta
 ftp	common	pt-br	FTP
 fullname	common	pt-br	Nome completo
+fullscreen	common	pt-br	Tela cheia
 fullscreen mode	common	pt-br	Modo tela cheia
 gabon	common	pt-br	GABÃO
 gambia	common	pt-br	GAMBIA
@@ -621,6 +625,7 @@ insert placeholder	common	pt-br	Inserir espaço reservado
 insert row after	common	pt-br	Inserir linha depois
 insert row before	common	pt-br	Inserir linha antes
 insert timestamp into description field	common	pt-br	Insira o carimbo da hora no campo de descrição
+install egroupware as mail-handler?	common	pt-br	Armazenar um arquivo
 integer	common	pt-br	Inteiro
 international	common	pt-br	Internacional
 invalid 2-factor authentication code	common	pt-br	Código de autenticação de 2 fatores inválidos
@@ -754,6 +759,7 @@ montserrat	common	pt-br	MONTSERRAT
 more	common	pt-br	Mais
 more than 1 match for '%1'	common	pt-br	mais de 1 combinação para '%1'
 morocco	common	pt-br	MARROCOS
+move	common	pt-br	Mover
 moved %1 children from directory fs_id=%2 to %3	admin	pt-br	Movido% 1 filhos do diretório fs_id =% de 2 a 3%
 moved unconnected %1 %2 to %3.	admin	pt-br	Movido% alheio 1% 2% para 3.
 mozambique	common	pt-br	MOÇAMBIQUE

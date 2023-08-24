@@ -89,6 +89,9 @@ last changed	calendar	uk	Востаннє змінено
 lastname of person to notify	calendar	uk	Прізвище людини для повідомлення
 links	calendar	uk	Посилання
 location	calendar	uk	Місце
+maximum available quantity of %1 exceeded!	calendar	uk	Максимально доступну кількість %1 перевищено!
+minimum number of users for showing day view as consolidated.	calendar	uk	Мінімальна кількість користувачів для відображення зведеного перегляду за день.
+minimum number of users for showing week view as consolidated.	calendar	uk	Мінімальна кількість користувачів для відображення тижневого перегляду як консолідованого.
 minutes	calendar	uk	хвилини
 modified	calendar	uk	Змінено
 mon	calendar	uk	Пн
@@ -97,6 +100,9 @@ monthly	calendar	uk	Помісячно
 monthly (by date)	calendar	uk	Помісячно (по числу)
 monthly (by day)	calendar	uk	Помісячно (поденно)
 monthview	calendar	uk	Вигляд місяця
+move to	calendar	uk	Перейдіть до
+multiple participants	calendar	uk	Кілька учасників
+never notify externals (non-users) about events i create	calendar	uk	Ніколи не повідомляти сторонніх (не користувачів) про події, які я створюю
 no filter	calendar	uk	Немає Фільтру
 no matches found	calendar	uk	Відповідностей не знайдено
 no response	calendar	uk	Немає відповіді

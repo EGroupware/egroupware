@@ -39,6 +39,7 @@ all categories	common	lt	Visos kategorijos
 all in one	groupdav	lt	Viskas viename
 andorra	common	lt	ANDORA
 angola	common	lt	ANGOLA
+answering no will not ask you again for this browser.	common	lt	Jei atsakysite "ne", šios naršyklės jūsų nebebus prašoma.
 api	common	lt	EGroupware API
 april	common	lt	Balandis
 argentina	common	lt	ARGENTINA
@@ -115,15 +116,24 @@ estonia	common	lt	ESTIJA
 ethiopia	common	lt	ETIOPIJA
 fax number	common	lt	fakso numeris
 february	common	lt	Vasaris
+file a file	common	lt	Failo išsaugojimas
 files	common	lt	Failai
+fileupload	common	lt	Failų įkėlimas
 filter	common	lt	Filtras
 finland	common	lt	SUOMIJA
 first name	common	lt	Vardas
 first name of the user, eg. "%1"	common	lt	Naudotojo vardas, pvz., "%1"
+formatted business address	common	lt	Suformatuotas verslo adresas
+formatted private address	common	lt	Suformatuotas privatus adresas
+formatted text (html)	common	lt	Suformatuotas tekstas (HTML)
 france	common	lt	PRANCŪZIJA
 friday	common	lt	Penktadienis
 ftp	common	lt	FTP
+fullscreen	common	lt	Viso ekrano
+fullscreen mode	common	lt	Viso ekrano režimas
 gambia	common	lt	GAMBIJA
+general fields:	preferences	lt	Bendrieji laukai:
+german	common	lt	Vokiečių kalba
 germany	common	lt	VOKIETIJA
 ghana	common	lt	GANA
 gibraltar	common	lt	GIBRALTARAS
@@ -145,6 +155,7 @@ indonesia	common	lt	INDONEZIJA
 infolog types to sync	common	lt	Sinchronizuojami informacijos žurnalo tipai
 insert placeholder	common	lt	Įterpti pakaitinę antraštę
 insert timestamp into description field	common	lt	Laiko žymos įterpimas į aprašymo lauką
+install egroupware as mail-handler?	common	lt	Įdiegti "EGroupware" kaip pašto tvarkyklę?
 invalid 2-factor authentication code	common	lt	Neteisingas 2 veiksnių autentiškumo patvirtinimo kodas
 invalid or expired 'remember me' token	common	lt	Netinkamas arba pasibaigęs "Prisimink mane" žetono galiojimo laikas
 iran, islamic republic of	common	lt	IRANAS
@@ -189,6 +200,7 @@ monaco	common	lt	MONAKAS
 monday	common	lt	Pirmadienis
 mongolia	common	lt	MONGOLIJA
 morocco	common	lt	MAROKAS
+move	common	lt	Perkelti
 namibia	common	lt	NAMIBIJA
 nepal	common	lt	NEPALAS
 netherlands	common	lt	OLANDIJA

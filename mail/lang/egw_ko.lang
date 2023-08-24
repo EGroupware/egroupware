@@ -1,3 +1,7 @@
+by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	ko	기본적으로 'http://'는 'https://'로 대체됩니다. 'https://proxy.egroupware.org/'를 설정하여 http를 통해서만 사용할 수 있는 이미지도 로드하도록 자유롭게 설정할 수 있습니다.
+caching of flags	mail	ko	플래그 캐싱
+changing subject failed folder %1 does not exist	mail	ko	제목 변경 실패 폴더 %1이(가) 존재하지 않습니다.
+contact label	mail	ko	연락처 레이블
 deleted	mail	ko	삭제됨
 edit account	mail	ko	계정 편집
 event details follow	mail	ko	** 다음은 이벤트-설명
@@ -5,9 +9,33 @@ everyone	mail	ko	모두
 extended	mail	ko	확장
 from	mail	ko	부터
 general	admin	ko	일반
+information to show on email tag	mail	ko	이메일 태그에 표시할 정보
+list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	ko	기본적으로 전환/활성화할 작업 목록(예: 메일 작성 InfoLog 작업으로 저장)
 mail settings	mail	ko	메일 설정
+name and email	mail	ko	이름 및 이메일
+only email	mail	ko	이메일만
+only name	mail	ko	이름만
+open in html mode	mail	ko	HTML 모드에서 열기
+open in text mode	mail	ko	텍스트 모드로 열기
+open with collabora office	mail	ko	콜러보라 온라인에서 열기
+organisation	admin	ko	조직
+organization | real name email	mail	ko	조직 | 실명 [이메일]
+original message	mail	ko	원본 메시지
+outbox	mail	ko	받은 편지함
 permission denied	mail	ko	접근권한이 없습니다
+please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	ko	계정 수정 대화 상자의 암호화 탭에서 S/MIME 인증서를 구성하세요.
+preview pane	mail	ko	창 레이아웃
+printing	mail	ko	인쇄
+push notifications	mail	ko	푸시 알림
+quicksearch	mail	ko	빠른 검색
+quicksearch (with cc)	mail	ko	빠른 검색(+복사)
 remove all	mail	ko	모두 삭제
 select all	mail	ko	모두 선택
+show notification for new arriving mails	mail	ko	새 메일 도착 알림 표시
+show vertical	mail	ko	세로로 표시
+show vertical with all columns	mail	ko	모든 열을 세로로 표시
+show/hide preview pane in mail list view	mail	ko	메일 목록 보기에서 미리보기 창 표시/숨기기
 small view	mail	ko	미니뷰
 write	mail	ko	쓰기
+you can select what info to be displayed on email tag	mail	ko	이메일 태그에 표시할 정보를 선택할 수 있습니다.
+you've got new mail	mail	ko	새 메일이 도착했습니다.

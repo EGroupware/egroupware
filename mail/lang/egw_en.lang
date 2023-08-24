@@ -331,7 +331,7 @@ learning as ham (not spam) failed because of %1	mail	en	Learning as ham (not spa
 learning as spam failed because of %1	mail	en	Learning as spam failed because of %1
 less than	mail	en	less than
 limit mailing list results when searching for addresses	mail	en	Limit mailing list results when searching for addresses
-list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	en	List of actions to be switched/activated on by default (eg. Mail compose save as infolog action)
+list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	en	List of actions to be switched/activated on by default (eg. Mail compose save as InfoLog action)
 mail	common	en	Mail
 mail acl	mail	en	Mail ACL
 mail filter	mail	en	Mail filter
@@ -372,7 +372,7 @@ move to archive	mail	en	Move to archive folder
 move to trash	mail	en	Move to trash
 moved %1 message(s) from %2 to %3	mail	en	Moved %1 message(s) from %2 to %3
 moving folders from one mailaccount to another is not supported	mail	en	Moving Folders from one mail account to another is not supported
-name and email	mail	en	name and email
+name and email	mail	en	Name and email
 name of account	mail	en	Name of account
 name of imap servers (space separated host or host:port)	mail	en	Name of IMAP servers (space separated host or host:port)
 never display html emails	mail	en	Never display HTML emails
@@ -409,21 +409,21 @@ on	mail	en	on
 on behalf of	mail	en	On behalf of
 on vacation	mail	en	On vacation
 one address is not valid	mail	en	One address is not valid
-only email	mail	en	only email
+only email	mail	en	Only email
 only if currently in an other app	mail	en	Only if currently in an other app
 only makes sense, if you transport password through a different channel / outside of this mail to recipients!	mail	en	Only makes sense, if you transport password through a different channel / outside of this mail to recipients!
-only name	mail	en	only name
+only name	mail	en	Only name
 only needed for some servers, that do not return all folders on root level queries to retrieve all folders for that level	mail	en	only needed for some servers, that do not return all folders on root level queries to retrieve all folders for that level
 only one window	mail	en	only one window
 only send message, do not copy a version of the message to the configured sent folder	mail	en	only send message, do not copy a version of the message to the configured sent folder
 only store message in inbox, do not send vacation notice	mail	en	Only store message in INBOX, do NOT send vacation notice
 open in html mode	mail	en	Open in HTML mode
 open in text mode	mail	en	Open in Text mode
-open with collabora office	mail	en	Open with Collabora Office
-organisation	admin	en	organisation
+open with collabora office	mail	en	Open with Collabora Online
+organisation	admin	en	Organisation
 organization	mail	en	organization
 organization | real name email	mail	en	Organization | Real name [Email]
-original message	mail	en	original message
+original message	mail	en	Original message
 outbox	mail	en	Outbox
 password protect	mail	en	password protect
 permission denied	mail	en	Permission denied
@@ -442,15 +442,15 @@ prevent managing filters	mail	en	Prevent managing filters
 prevent managing folders	mail	en	Prevent managing folders
 prevent managing notifications	mail	en	Prevent managing notifications
 prevent managing vacation notice	mail	en	Prevent managing vacation notice
-preview pane	mail	en	Preview pane
+preview pane	mail	en	Window layout
 primary profile	mail	en	Primary Profile
-printing	mail	en	printing
-printview	mail	en	printview
+printing	mail	en	Printing
+printview	mail	en	Printview
 processing of file %1 failed. failed to meet basic restrictions.	mail	en	Processing of file %1 failed. Failed to meet basic restrictions.
 provide a default vacation text, (used on new vacation messages when there was no message set up previously)	admin	en	provide a default vacation text, (used on new vacation messages when there was no message set up previously)
 push notifications	mail	en	Push notifications
-quicksearch	mail	en	quicksearch
-quicksearch (with cc)	mail	en	quicksearch (incl.CC)
+quicksearch	mail	en	Quicksearch
+quicksearch (with cc)	mail	en	Quicksearch (+Copy)
 quota limit warning in megabyte (recommended value is 30 mb).	mail	en	Quota limit warning in MegaByte (recommended value is 30 MB).
 quota not provided by server	mail	en	Quota not provided by server
 quota: %1	mail	en	Quota: %1
@@ -576,14 +576,14 @@ show notification for new arriving mails	mail	en	Show notification for new arriv
 show test connection section and control the level of info displayed?	mail	en	Show Test Connection section and control the level of info displayed?
 show test connection section and control the level of info displayed??	mail	en	Show Test Connection section and control the level of info displayed??
 show them this time only	mail	en	Show them this time only
-show vertical	mail	en	show vertical
-show vertical with all columns	mail	en	show vertical with all columns
+show vertical	mail	en	Show vertical
+show vertical with all columns	mail	en	Show vertical with all columns
 show/hide preview pane in mail list view	mail	en	Show/Hide preview pane in mail list view
 shows a temporary visible notification including from address, subject and a snippet of the mail	mail	en	Shows a temporary visible notification including from address, subject and a snippet of the mail
 sieve	mail	en	Sieve
 sieve connection status	mail	en	Sieve Connection Status
 sieve not activated	mail	en	Sieve not activated
-sieve script name	mail	en	sieve script name
+sieve script name	mail	en	Sieve script name
 sieve server	mail	en	Sieve server
 sieve_edit_instructions	mail	en	(*) wildcards (*,?) may be used. If you are trying to match * or ? itself, you must escape them with a backslash (\). If you check "Use regular expressions" you must use valid regular expressions. In order to escape of exclamation mark (!) at the begining not being used as "NOT", use regex and backslash (\) (e.g. \!)
 sign your message with smime certificate	mail	en	Sign your message with S/MIME certificate
@@ -702,7 +702,7 @@ yes, only trigger connection reset	mail	en	yes, only trigger connection reset
 yes, show all debug information available for the user	mail	en	yes, show all debug information available for the user
 yes, show basic info only	mail	en	yes, show basic info only
 you can either choose to save as infolog or tracker, not both.	mail	en	You can either choose to save as infolog OR tracker, not both.
-you can select what info to be displayed on email tag	mail	en	You can select what info to be displayed on email tag
+you can select what info to be displayed on email tag	mail	en	You can select what info to be displayed on email tag.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	en	You can use $$start$$ for the above start date and $$end$$ for the end date.
 you may add this certificate into your contact, if you trust this signature.	mail	en	You may add this certificate into your contact, if you trust this signature.
 you need to enter your s/mime passphrase to send this message.	mail	en	You need to enter your S/MIME passphrase to send this message.

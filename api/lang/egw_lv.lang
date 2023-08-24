@@ -76,6 +76,7 @@ and	common	lv	Un
 andorra	common	lv	ANDORA
 angola	common	lv	ANGOLA
 anguilla	common	lv	ANGILJA
+answering no will not ask you again for this browser.	common	lv	Ja atbildēsiet noliedzoši, šis pārlūks vairs netiks pieprasīts.
 antarctica	common	lv	ANTARKTĪDA
 antigua and barbuda	common	lv	ANTIGVA UN BARBUDA
 application	common	lv	Programmatūra
@@ -329,6 +330,7 @@ field must not be empty !!!	common	lv	Lauks nedīkst būt tukšs
 fields	common	lv	Lauki
 fiji	common	lv	FIDŽI
 file	common	lv	Datne
+file a file	common	lv	Saglabāt failu
 file contains more than one etemplate, last one is shown !!!	common	lv	Datnē ir vairāk kā viena eVeidne, tiek parādīta pēdējā!!!
 file writen	common	lv	Datne uzrakstīta
 files	common	lv	Faili
@@ -343,6 +345,8 @@ firstname	common	lv	Vārds
 fixme!	common	lv	SALABOMANI!
 floating point	common	lv	Peldošais punkts
 foreign key	common	lv	Ārējā atslēga
+formatted business address	common	lv	Formatēta uzņēmuma adrese
+formatted private address	common	lv	Formatēta privātā adrese
 formatted text (html)	common	lv	Noformatēts teksts(HTML)
 france	common	lv	FRANCIJA
 french guiana	common	lv	FRANČU GVIĀNA
@@ -351,10 +355,14 @@ french southern territories	common	lv	FRANČU DIENVIDU ANTARKTISKĀS TERITORIJAS
 friday	common	lv	Piektdiena
 ftp	common	lv	FTP
 fullname	common	lv	Pilns vārds
+fullscreen	common	lv	Pilna ekrāna
+fullscreen mode	common	lv	Pilna ekrāna režīms
 gabon	common	lv	GABONA
 gambia	common	lv	GAMBIJA
+general fields:	preferences	lv	Vispārīgie lauki:
 general menu	common	lv	Galvenā Izvēlne
 georgia	common	lv	GRUZIJA
+german	common	lv	Vācu valodā
 germany	common	lv	Vācija
 ghana	common	lv	GANA
 gibraltar	common	lv	GIBRALTĀRS
@@ -435,6 +443,7 @@ insert new row after this one	common	lv	pēc šīs rindiņas ievieto jaunu rindi
 insert new row in front of first line	common	lv	pierms pirmās līnijas ievieto jaunu rindiņu
 insert placeholder	common	lv	Ievietot vietvārdu
 insert timestamp into description field	common	lv	Ievietot laika zīmogu apraksta laukā
+install egroupware as mail-handler?	common	lv	Instalēt EGroupware kā pasta apstrādātāju?
 integer	common	lv	Vesels skaitlis
 international	common	lv	Internacionāls
 invalid 2-factor authentication code	common	lv	Nederīgs 2 faktoru autentifikācijas kods
@@ -546,6 +555,7 @@ month	common	lv	Mēnesis
 montserrat	common	lv	MONTSERRATA
 more	common	lv	Vēl
 morocco	common	lv	MAROKA
+move	common	lv	Pārvietot
 mozambique	common	lv	MOZAMBIKA
 multicolumn indices	common	lv	Daudzkolonnu indeksi
 myanmar	common	lv	MJANMA

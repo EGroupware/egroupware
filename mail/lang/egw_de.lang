@@ -423,7 +423,7 @@ open with collabora office	mail	de	Mit Collabora Online öffnen
 organisation	admin	de	Organisation
 organization	mail	de	Organisation
 organization | real name email	mail	de	Organisation | Ihr Name [E-Mail]
-original message	mail	de	ursprüngliche Nachricht
+original message	mail	de	Ursprüngliche Nachricht
 outbox	mail	de	Postausgang
 password protect	mail	de	Passwort geschützt
 permission denied	mail	de	Zugriff verweigert
@@ -442,7 +442,7 @@ prevent managing filters	mail	de	Zugriff auf Filterregeln deaktivieren
 prevent managing folders	mail	de	Zugriff auf die Ordnerverwaltung deaktivieren
 prevent managing notifications	mail	de	Zugriff auf Benachrichtigungen deaktivieren
 prevent managing vacation notice	mail	de	Zugriff auf die Abwesenheitsnotiz deaktivieren
-preview pane	mail	de	Mailvorschau
+preview pane	mail	de	Fensterlayout
 primary profile	mail	de	Primäres Profil
 printing	mail	de	Drucke
 printview	mail	de	Druckansicht
@@ -702,7 +702,7 @@ yes, only trigger connection reset	mail	de	Ja, aber führe nur das zurücksetzen
 yes, show all debug information available for the user	mail	de	Ja, zeige alle dem Benutzer zugänglichen Informationen an.
 yes, show basic info only	mail	de	Ja, nur Basis Informationen anzeigen
 you can either choose to save as infolog or tracker, not both.	mail	de	Sie können eine E-Mail entweder als InfoLog-, ODER als Ticket-Eintrag speichern, nicht beides gleichzeitig.
-you can select what info to be displayed on email tag	mail	de	Sie können auswählen, welche Informationen auf dem E-Mail-Tag angezeigt werden sollen
+you can select what info to be displayed on email tag	mail	de	Sie können auswählen, welche Informationen auf dem E-Mail-Tag angezeigt werden sollen. Die zusätzliche Anzeige der E-Mail-Adresse ermöglicht die Absenderadresse zu überprüfen.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	de	Sie können $$start$$ für das obige Start- und $$end$$ für das Enddatum verwenden.
 you may add this certificate into your contact, if you trust this signature.	mail	de	Sie können dieses Zertifikat in Ihren Kontakt speichern, wenn Sie dieser Signatur trauen.
 you need to enter your s/mime passphrase to send this message.	mail	de	Sie müssen Ihr S/MIME-Passwort eingeben um diese Nachricht zu senden.

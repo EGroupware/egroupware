@@ -20,10 +20,10 @@
 %s readonly	common	fi	%s vain lukuoikeus
 '%1' copied to clipboard	common	fi	'%1' kopioitu leikepöydälle
 '%1' has an invalid format !!!	common	fi	%1 on väärässä muodossa!
-'%1' is not a valid json file!	common	fi	'%1' ei ole json tiedosto EGroupwaren server rootissa!
 '%1' is not a valid date !!!	common	fi	%1 on epäkelpo päiväys!
 '%1' is not a valid floatingpoint number !!!	common	fi	%1 ei ole desimaaliluku!
 '%1' is not a valid integer !!!	common	fi	%1 ei ole kokonaisluku!
+'%1' is not a valid json file!	common	fi	'%1' ei ole json tiedosto EGroupwaren server rootissa!
 '%1' is not allowed ('%2')!	common	fi	'%1' ei ole sallittu ('%2')!
 (session restored in %1 seconds)	common	fi	Istunto palautettu %1 sekunnissa.
 00 (disable)	admin	fi	00 (ei käytössä)
@@ -116,6 +116,7 @@ and	common	fi	JA
 andorra	common	fi	ANDORRA
 angola	common	fi	ANGOLA
 anguilla	common	fi	ANGUILLA
+answering no will not ask you again for this browser.	common	fi	Jos vastaat kieltävästi, sinulta ei enää kysytä tätä selainta.
 antarctica	common	fi	ETELÄNAPAMANNER
 antigua and barbuda	common	fi	ANTIGUA JA BARBUDA
 api	common	fi	EGroupware API
@@ -479,6 +480,7 @@ fields	common	fi	Kentät
 fiji	common	fi	FIDJI
 file	common	fi	Tiedosto
 file '%1' not found!	common	fi	Tiedostoa '%1' ei löytynyt!
+file a file	common	fi	Tallenna tiedosto
 file contains more than one etemplate, last one is shown !!!	common	fi	Tiedosto sisältää enemmän kuin yhden eMallipohjan, viimeisin näytetään !!!
 file is of wrong type (%1 != %2)!	common	fi	Tiedosto on vääräntyyppinen (%1 !=%2)!
 file writen	common	fi	Tiedostoa kirjoitetaan
@@ -498,6 +500,8 @@ for more than one contact in a document use the tag pagerepeat!	preferences	fi	K
 force selectbox	common	fi	Pakoita valintalaatikko
 foreign key	common	fi	Viiteavain
 forever	common	fi	Ikuisesti
+formatted business address	common	fi	Muotoiltu liikeosoite
+formatted private address	common	fi	Muotoiltu yksityinen osoite
 formatted text (html)	common	fi	Muotoiltu teksti (HTML)
 france	common	fi	RANSKA
 french guiana	common	fi	RANSKAN GUANA
@@ -506,6 +510,7 @@ french southern territories	common	fi	RANSKAN ETELÄISET SIIRTOMAAT
 friday	common	fi	Perjantai
 ftp	common	fi	FTP
 fullname	common	fi	Koko nimi
+fullscreen	common	fi	Koko näytön kokoinen
 fullscreen mode	common	fi	Kokonäytön asetus
 gabon	common	fi	GABON
 gambia	common	fi	GAMBIA
@@ -621,6 +626,7 @@ insert placeholder	common	fi	Aseta paikanvaraaja
 insert row after	common	fi	Lisää rivi jälkeen
 insert row before	common	fi	Lisää rivi eteen
 insert timestamp into description field	common	fi	Lisää aikaleima kuvauskenttään
+install egroupware as mail-handler?	common	fi	Asennetaanko EGroupware sähköpostin käsittelijäksi?
 integer	common	fi	Kokonaisluku
 international	common	fi	Kansainvälinen
 invalid 2-factor authentication code	common	fi	Virheellinen 2-tekijätodennuskoodi
@@ -756,6 +762,7 @@ montserrat	common	fi	MONTSERRAT
 more	common	fi	Enemmän
 more than 1 match for '%1'	common	fi	Useampi kuin yksi osuma kohteelle '%1'
 morocco	common	fi	MAROKKO
+move	common	fi	Siirrä
 mozambique	common	fi	MOSAMBIK
 multicolumn indices	common	fi	Usean sarakkeen indeksi
 multiple	common	fi	Usea

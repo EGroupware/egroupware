@@ -5,7 +5,11 @@ after reply, visible during compose	mail	lt	Po atsakymo, matomas sudarymo metu
 aliases+forwards	mail	lt	Slapyvardžiai + persiuntimas
 always show notifiction	mail	lt	Visada rodyti pranešimą
 answered	mail	lt	Atsakyta
+by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	lt	Pagal numatytuosius nustatymus "http://" tiesiog pakeičiama "https://". Galite laisvai konfigūruoti 'https://proxy.egroupware.org/', kad taip pat būtų įkeliami vaizdai, prieinami tik per http.
+caching of flags	mail	lt	Vėliavų spartinimas
+changing subject failed folder %1 does not exist	mail	lt	Pakeisti temą nepavyko aplankas %1 neegzistuoja
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	lt	Nustatytos reikšmės bus automatiškai nustatytos komponavimo dialogo lange gerbiamam laukui, kai kuriamas naujas el. laiškas.
+contact label	mail	lt	Kontaktų etiketė
 cross account forward attachment is not allowed!	mail	lt	Kryžminės paskyros pirmyn priedas neleidžiamas!
 current subject	mail	lt	Dabartinė tema
 default toolbar actions shown in mail's html editor	mail	lt	HTML redaktoriaus įrankių juostoje įjungtos funkcijos kuriant el. laišką
@@ -13,6 +17,8 @@ default value for remembering s/mime passphrase in minutes	mail	lt	Numatytoji S/
 defines what to show as contact label for added contact into to/cc/bcc when composing an email. default is firstname lastname and empty means include eveything available.	mail	lt	Nustato, ką rodyti kaip pridėto kontakto etiketę į To/Copy/Blind copy (Į / Kopijuoti / Akloji kopija) kuriant el. laišką. Numatytoji reikšmė yra vardas pavardė pavardė, o tuščia reiškia, kad įtraukiama viskas, kas įmanoma.
 defines what to show as identity label on mail folder header	common	lt	Nustato, ką rodyti kaip tapatybės etiketę pašto aplanko antraštėje
 disable caching of flags	mail	lt	Išjungti vėliavų spartinimą
+information to show on email tag	mail	lt	Informacija, kuri turi būti rodoma el. pašto žymoje
+list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	lt	Veiksmų, kurie turi būti įjungti ir (arba) įjungti pagal numatytuosius nustatymus, sąrašas (pvz., veiksmas "Mail kompose išsaugoti kaip "InfoLog")
 mail	common	lt	Paštas
 mail acl	mail	lt	Prieigos teisės
 mail filter	mail	lt	Pašto filtras
@@ -28,12 +34,32 @@ mark all messages in folder as read	mail	lt	Pažymėti visus aplanke esančius p
 mark as deleted	mail	lt	Pažymėti kaip ištrintus
 modify subject	mail	lt	Pakeisti temą
 modify subject of this message	mail	lt	Pakeiskite šio pranešimo temą
+name and email	mail	lt	Vardas ir el. pašto adresas
 new subject	mail	lt	Nauja tema
 no sneak preview in list	mail	lt	Nėra pranešimo peržiūros
+only email	mail	lt	Tik el. paštas
+only name	mail	lt	Tik vardas ir pavardė
+open in html mode	mail	lt	Atidaryti HTML režimu
+open in text mode	mail	lt	Atidaryti teksto režimu
+open with collabora office	mail	lt	Atidaryti naudojant Collabora Online
+organisation	admin	lt	Organizacija
+organization | real name email	mail	lt	Organizacija | Tikrasis vardas [El. paštas]
+original message	mail	lt	Originali žinutė
+outbox	mail	lt	Gautų laiškų dėžutė
+please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	lt	Sukonfigūruokite S/MIME sertifikatą paskyros redagavimo dialogo lange esančiame skirtuke Šifravimas.
 predefined addresses for compose	mail	lt	Iš anksto nustatyti adresai sudarymui
+preview pane	mail	lt	Langų išdėstymas
+printing	mail	lt	Spausdinimas
+push notifications	mail	lt	"Push" pranešimai
+quicksearch	mail	lt	Greita paieška
+quicksearch (with cc)	mail	lt	Greita paieška (+ kopijavimas)
 save all attachments to filemanager	mail	lt	Įrašyti visus priedus į failų tvarkyklę
 select or insert email address	mail	lt	Pasirinkite arba įterpkite el. pašto adresą
 set predefined values for compose...	mail	lt	Nustatykite iš anksto nustatytas reikšmes compose ...
+show notification for new arriving mails	mail	lt	Rodyti pranešimus apie naujai gautus laiškus
+show vertical	mail	lt	Rodyti vertikaliai
+show vertical with all columns	mail	lt	Rodyti vertikaliai su visais stulpeliais
+show/hide preview pane in mail list view	mail	lt	Pašto sąrašo rodinyje rodyti / slėpti peržiūros langą
 signature	mail	lt	Parašas
 signature at top	mail	lt	parašas viršuje
 signature position and visibility	mail	lt	Parašo padėtis ir matomumas
@@ -41,3 +67,5 @@ smime encrypted message	mail	lt	S/MIME užšifruotas pranešimas
 smime signed message	mail	lt	S/MIME pasirašytas pranešimas
 smtp	mail	lt	SMTP
 sneak preview in list	mail	lt	Pranešimo peržiūra
+you can select what info to be displayed on email tag	mail	lt	Galite pasirinkti, kokia informacija bus rodoma el. pašto žymoje.
+you've got new mail	mail	lt	Gavote naują laišką
