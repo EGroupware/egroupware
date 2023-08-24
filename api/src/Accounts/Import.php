@@ -274,7 +274,7 @@ class Import
 			do
 			{
 				$contact = $reconnected = null;
-				foreach ($this->contacts->search('', false, '', 'account_lid', '', '', 'AND', $start, $filter) as $contact)
+				foreach ($this->contacts->search('', false, '', ['account_lid', 'jpegphoto'], '', '', 'AND', $start, $filter) as $contact)
 				{
 					// if we have a regexp to filter the DN, continue on non-match
 					if (!empty($GLOBALS['egw_info']['server']['account_import_dn_regexp']) &&
@@ -288,7 +288,9 @@ class Import
 						$last_modified = $contact['modified'];
 					}
 					$account = $this->accounts->read($contact['account_id']);
-					$this->logger(++$num.'. User: '.json_encode($contact + $account, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE), 'debug');
+					// do NOT log binary content of image
+					$hide_binary = ['jpegphoto' => $contact['jpegphoto'] ? bytes($contact['jpegphoto']).' bytes binary data' : null];
+					$this->logger(++$num.'. User: '.json_encode($hide_binary + $contact + $account, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE), 'debug');
 					// check if account exists in sql
 					if (!($account_id = $this->accounts_sql->name2id($account['account_lid'])))
 					{

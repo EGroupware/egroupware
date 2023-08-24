@@ -516,8 +516,9 @@ class Ldap
 			if (is_array($contact_id)) $contact_id = isset ($contact_id['id']) ? $contact_id['id'] : $contact_id['uid'];
 			$filter = $this->id_filter($contact_id);
 		}
-		$rows = $this->_searchLDAP($this->allContactsDN,
-			$filter, $this->all_attributes, self::ALL, array('_posixaccount2egw'));
+		$start = null;
+		$rows = $this->_searchLDAP($this->allContactsDN, $filter, $this->all_attributes, self::ALL,
+			['_posixaccount2egw'], null, $start, true);
 
 		return $rows ? $rows[0] : false;
 	}
@@ -821,7 +822,7 @@ class Ldap
 	function &search($criteria,$only_keys=True,$order_by='',$extra_cols='',$wildcard='',$empty=False,$op='AND',$start=false,$filter=null,$join='',$need_full_no_count=false)
 	{
 		//error_log(__METHOD__."(".array2string($criteria).", ".array2string($only_keys).", '$order_by', ".array2string($extra_cols).", '$wildcard', '$empty', '$op', ".array2string($start).", ".array2string($filter).")");
-		unset($only_keys, $extra_cols, $empty, $join, $need_full_no_count);	// not used, but required by function signature
+		$read_photo = $extra_cols ? in_array('jpegphoto', is_array($extra_cols) ? $extra_cols : explode(',', $extra_cols)) : false;
 
 		if (is_array($filter['owner']))
 		{
@@ -955,7 +956,7 @@ class Ldap
 		$colFilter = $this->_colFilter($filter);
 		$ldapFilter = "(&$objectFilter$searchFilter$colFilter$datefilter)";
 		//error_log(__METHOD__."(".array2string($criteria).", ".array2string($only_keys).", '$order_by', ".array2string($extra_cols).", '$wildcard', '$empty', '$op', ".array2string($start).", ".array2string($filter).") --> ldapFilter='$ldapFilter'");
-		if (!($rows = $this->_searchLDAP($searchDN, $ldapFilter, $this->all_attributes, $addressbookType, [], $order_by, $start)))
+		if (!($rows = $this->_searchLDAP($searchDN, $ldapFilter, $this->all_attributes, $addressbookType, [], $order_by, $start, $read_photo)))
 		{
 			return $rows;
 		}
@@ -1212,9 +1213,10 @@ class Ldap
 	 * @param array $_skipPlugins =null schema-plugins to skip
 	 * @param string $order_by sql order string eg. "contact_email ASC"
 	 * @param null|int|array $start [$start, $num_rows], on return null, if result sorted and limited by server
+	 * @param bool $read_photo true: return the binary content of the image, false: return true or false if there is an image or not
 	 * @return array/boolean with eGW contacts or false on error
 	 */
-	function _searchLDAP($_ldapContext, $_filter, $_attributes, $_addressbooktype, array $_skipPlugins=null, $order_by=null, &$start=null)
+	function _searchLDAP($_ldapContext, $_filter, $_attributes, $_addressbooktype, array $_skipPlugins=null, $order_by=null, &$start=null, bool $read_photo=false)
 	{
 		$_attributes[] = 'entryUUID';
 		$_attributes[] = 'objectClass';
@@ -1300,6 +1302,11 @@ class Ldap
 		{
 			if (!is_int($i)) continue;	// eg. count
 
+			if ($read_photo)
+			{
+				$result_entry = $i ? ldap_next_entry($this->ds, $result_entry) : ldap_first_entry($this->ds, $result);
+			}
+
 			$contact = array(
 				'id'  => $entry['uid'][0] ?? $entry['entryuuid'][0],
 				'dn'  => $entry['dn'],
@@ -1329,15 +1336,23 @@ class Ldap
 					$this->$objectclass2egw($contact,$entry);
 				}
 			}
-			// read binary jpegphoto only for one result == call by read
-			if ($this->total == 1 && isset($entry['jpegphoto'][0]))
+			// read photos from both jpegphoto and thumbnailphoto
+			if (isset($entry[$photo='jpegphoto'][0]) || isset($entry[$photo='thumbnailphoto'][0]))
 			{
-				$bin = ldap_get_values_len($this->ds,ldap_first_entry($this->ds,$result),'jpegphoto');
-				$contact['jpegphoto'] = $bin[0];
+				// read binary jpegphoto only for one result == call by read
+				if ($read_photo)
+				{
+					$bin = ldap_get_values_len($this->ds, $result_entry, $photo);
+					$contact['jpegphoto'] = $bin[0];
+				}
+				else
+				{
+					$contact['jpegphoto'] = true;
+				}
 			}
 			else
 			{
-				$contact['jpegphoto'] = isset($entry['jpegphoto'][0]);
+				$contact['jpegphoto'] = false;
 			}
 			$matches = null;
 			if(preg_match('/cn=([^,]+),'.preg_quote($this->personalContactsDN,'/').'$/i',$entry['dn'],$matches))
