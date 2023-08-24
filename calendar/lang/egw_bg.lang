@@ -362,11 +362,14 @@ monthly	calendar	bg	Месечен
 monthly (by date)	calendar	bg	Месечно (по дати)
 monthly (by day)	calendar	bg	Месечно (по дни)
 monthview	calendar	bg	Месечен изглед
+move to	calendar	bg	Преместете се в
+multiple participants	calendar	bg	Множество участници
 multiple week view	calendar	bg	Няколкоседмичен изглед
 name of current user, all other contact fields are valid too	calendar	bg	Име на текущия потребител, останалите полета на контакта също са валидни
 name of the day of the week (ex: monday)	calendar	bg	Име на ден от седмицата (напр. Понеделник)
 name of the week (ex: monday), available for the first entry inside each day of week or daily table inside the selected range.	calendar	bg	Наименование на седмицата, например:Понеделник, достъпен за първи запис във всеки ден от седмицата или дневна таблица в избрания диапазон.
 needs action	calendar	bg	Нужда от действие
+never notify externals (non-users) about events i create	calendar	bg	Никога да не уведомявам външни лица (които не са потребители) за събития, които създавам
 new	calendar	bg	Нов(а)
 new event category	calendar	bg	Нова категория на събитията
 new event participants	calendar	bg	Нови участници в събитието

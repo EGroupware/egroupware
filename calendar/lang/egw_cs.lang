@@ -330,6 +330,8 @@ meeting request	calendar	cs	Žádost o schůzku
 meetingrequest to all participants	calendar	cs	Žádost o schůzku pro všechny účastníky
 merge document...	calendar	cs	Sloučit dokument
 midnight	calendar	cs	Půlnoc
+minimum number of users for showing day view as consolidated.	calendar	cs	Minimální počet uživatelů pro zobrazení denního zobrazení jako konsolidovaného.
+minimum number of users for showing week view as consolidated.	calendar	cs	Minimální počet uživatelů pro zobrazení týdenního zobrazení jako konsolidovaného.
 minutes	calendar	cs	minut
 modified	calendar	cs	Změněno
 modifier	calendar	cs	Změnil
@@ -339,10 +341,13 @@ monthly	calendar	cs	Měsíčně
 monthly (by date)	calendar	cs	Měsíčně (podle datumu)
 monthly (by day)	calendar	cs	Měsíšně (podle dne)
 monthview	calendar	cs	Měsíční pohled
+move to	calendar	cs	Přesunout na
+multiple participants	calendar	cs	Více účastníků
 multiple week view	calendar	cs	Vícetýdenní pohled
 name of current user, all other contact fields are valid too	calendar	cs	Jméno aktuálního uživatele, všechny ostatní položky kontaktu jsou také platné
 name of the week (ex: monday), available for the first entry inside each day of week or daily table inside the selected range.	calendar	cs	Den v týdnu, např. pondělí, použitelné jako první záznam uvnitř každého dne v týdnu, nebo ve vybraném rozsahu denní tabulky.
 needs action	calendar	cs	Vyžaduje akci
+never notify externals (non-users) about events i create	calendar	cs	Nikdy neupozorňovat externisty (neuživatele) na události, které vytvořím
 new	calendar	cs	Nová
 new search with the above parameters	calendar	cs	nové hledání dle výše uvedených parametrů
 no automatic purging	admin	cs	Automatické odstranění není aktivní

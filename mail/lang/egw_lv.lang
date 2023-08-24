@@ -9,9 +9,13 @@ always show html emails	mail	lv	Vienmēr rādīt HTML e-pasta vēstules
 always show notifiction	mail	lv	Vienmēr rādīt paziņojumu
 answered	mail	lv	Atbildēts
 attachments	mail	lv	Pielikumi
+by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	lv	Pēc noklusējuma "http://" tiek aizstāts ar "https://". Varat konfigurēt 'https://proxy.egroupware.org/', lai ielādētu arī attēlus, kas pieejami tikai caur http.
+caching of flags	mail	lv	Karodziņu kešēšana
+changing subject failed folder %1 does not exist	mail	lv	Mainīt tēmu neizdevās mape %1 neeksistē
 compose	mail	lv	Rakstīt jaunu
 compress folder	mail	lv	Kompresēt mapi
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	lv	Konfigurētās vērtības tiks automātiski iestatītas sastādīšanas dialoglodziņā respektējamajam laukam, sastādot jaunu e-pastu.
+contact label	mail	lv	Kontakta etiķete
 contains	mail	lv	satur
 copy to	mail	lv	Kopēt Uz:
 cross account forward attachment is not allowed!	mail	lv	Nav atļauts pievienot starpkonta priekšējo pielikumu!
@@ -55,9 +59,11 @@ if	mail	lv	Ja
 imap	mail	lv	IMAP
 imap server	mail	lv	IMAP serveris
 inbox	mail	lv	Iesūtne
+information to show on email tag	mail	lv	E-pasta birkā norādāmā informācija
 keep a copy of the message in your inbox	mail	lv	saglabāt vēstules kopiju IESŪTNĒ
 kilobytes	mail	lv	kb
 less than	mail	lv	mazāk nekā
+list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	lv	Pēc noklusējuma ieslēdzamo/aktivizējamo darbību saraksts (piemēram, darbība Mail kompose saglabāt kā InfoLog)
 mail	common	lv	Pasts
 mail acl	mail	lv	Piekļuves tiesības
 mail filter	mail	lv	Pasta filtrs
@@ -76,15 +82,30 @@ modify subject of this message	mail	lv	Mainīt šī ziņojuma tematu
 move selected to	mail	lv	pārvietot atlasītās uz
 move to	mail	lv	pārvietot atlasītās uz
 move to trash	mail	lv	Pārvietot uz atkritumiem
+name and email	mail	lv	Vārds un e-pasts
 never display html emails	mail	lv	Nekas nerādīt HTML vēstules
 new subject	mail	lv	Jauns temats
 no sneak preview in list	mail	lv	Nav ziņojuma priekšskatījuma
 on	mail	lv	ieslēgts
+only email	mail	lv	Tikai e-pasts
+only name	mail	lv	Tikai vārds
+open in html mode	mail	lv	Atvērt HTML režīmā
+open in text mode	mail	lv	Atvērt teksta režīmā
+open with collabora office	mail	lv	Atvērt ar Collabora Online
+organisation	admin	lv	Organizācija
 organization	mail	lv	organizācija
+organization | real name email	mail	lv	Organizācija | Īstais vārds [E-pasts]
+original message	mail	lv	Sākotnējā ziņa
+outbox	mail	lv	Iesūtne
 permission denied	mail	lv	Atļauja liegta
+please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	lv	Lūdzu, konfigurējiet savu S/MIME sertifikātu Encryption cilnē, kas atrodas konta rediģēšanas dialoglodziņā.
 please select a address	mail	lv	Lūdzu, izvēlieties adresi
 predefined addresses for compose	mail	lv	Iepriekš noteiktas adreses sastādīšanai
+preview pane	mail	lv	Loga izkārtojums
+printing	mail	lv	Drukāšana
+push notifications	mail	lv	Push paziņojumi
 quicksearch	mail	lv	Ātrā meklēšana
+quicksearch (with cc)	mail	lv	Ātrā meklēšana (+kopēšana)
 refresh time in minutes	mail	lv	Atjaunošanas laiks ( minūtēs )
 remove all	mail	lv	Pārvietot visu
 remove immediately	mail	lv	Pārvietot nekavējoties
@@ -100,6 +121,10 @@ select all	mail	lv	Iezīmēt visus
 select or insert email address	mail	lv	Izvēlieties vai ievietojiet e-pasta adresi
 sent folder	mail	lv	Mape nosūtīts
 set predefined values for compose...	mail	lv	Iestatiet iepriekš definētas vērtības sastādīšanai ...
+show notification for new arriving mails	mail	lv	Parādīt paziņojumu par jaunām ienākošām vēstulēm
+show vertical	mail	lv	Rādīt vertikāli
+show vertical with all columns	mail	lv	Rādīt vertikāli ar visām kolonnām
+show/hide preview pane in mail list view	mail	lv	Rādīt/noslēpt priekšskatījuma paneli pasta saraksta skatā
 signature	mail	lv	Paraksts
 signature at top	mail	lv	Paraksts augšpusē
 signature position and visibility	mail	lv	Paraksta pozīcija un redzamība
@@ -121,3 +146,5 @@ vacation notice	mail	lv	norāde par atrašanos atvaļinājumā
 when deleting messages	mail	lv	Kad dzēš vēstules
 write	mail	lv	Rakstīt
 wrote	mail	lv	rakstīja
+you can select what info to be displayed on email tag	mail	lv	Varat izvēlēties, kāda informācija tiks rādīta e-pasta birkā.
+you've got new mail	mail	lv	Jūs esat saņēmis jaunu pastu

@@ -27,10 +27,10 @@
 '%1' copied to clipboard	common	cs	'%1' zkopírováno do schránky
 '%1' has an invalid format	common	cs	'%1' má nesprávný formát !
 '%1' has an invalid format !!!	common	cs	'%1' má nesprávný formát !!!
-'%1' is not a valid json file!	common	cs	'%1' není json souborem v server root EGw!
 '%1' is not a valid date !!!	common	cs	'%1' není platné datum !!!
 '%1' is not a valid floatingpoint number !!!	common	cs	'%1' není platné číslo s pohyblivou desetinnou čárkou !!!
 '%1' is not a valid integer !!!	common	cs	'%1' není platné celé číslo
+'%1' is not a valid json file!	common	cs	'%1' není json souborem v server root EGw!
 '%1' is not a valid timezone!	common	cs	'%1' není platní časová zóna!
 '%1' is not allowed ('%2')!	common	cs	'%1' NENÍ povoleno ('%2')!
 '%1' is not allowed%2)!	common	cs	'%1' NENÍ povoleno ('%2')!
@@ -129,6 +129,7 @@ and	common	cs	A
 andorra	common	cs	ANDORA
 angola	common	cs	ANGOLA
 anguilla	common	cs	ANGUILLA
+answering no will not ask you again for this browser.	common	cs	Pokud odpovíte ne, nebudete již na tento prohlížeč dotazováni.
 antarctica	common	cs	ANTARKTIDA
 antigua and barbuda	common	cs	ANTIGUA A BARBUDA
 api	common	cs	EGroupware API
@@ -544,6 +545,7 @@ file %1 has no content in physical filesystem %2 --> failed to remove file!	admi
 file %1 has no content in physical filesystem %2 --> file removed!	admin	cs	Soubor %1 nemá žádný obsah ve fyzickém souborovém systému %2 --> soubor byl smazán!
 file %1 has no content in physical filesystem %2!	admin	cs	Soubor %1 nemá žádný obsah ve fyzickém souborovém systému %2
 file '%1' not found!	common	cs	Soubor '%1' nebyl nalezen!
+file a file	common	cs	Uložení souboru
 file contains more than one etemplate, last one is shown !!!	common	cs	Soubor obsahuje více jak jednu eŠablonu, zobrazena je poslední !!!
 file information	common	cs	Informace o souboru
 file is of wrong type (%1 != %2)!	common	cs	Soubor nemá správný typ (%1 není %2)!
@@ -567,6 +569,8 @@ force	common	cs	vynutit
 force selectbox	common	cs	Vynutit rozbalovací nabídku
 foreign key	common	cs	Cizí klíč
 forever	common	cs	Napořád
+formatted business address	common	cs	Formátovaná obchodní adresa
+formatted private address	common	cs	Formátovaná soukromá adresa
 formatted text (html)	common	cs	Formátovaný text (HTML)
 found unconnected %1 %2!	admin	cs	Nalezen rozpojený %1 %2!
 fr	common	cs	Pá
@@ -577,6 +581,7 @@ french southern territories	common	cs	FRANCOUZSKÁ JIŽNÍ ÚZEMÍ
 friday	common	cs	Pátek
 ftp	common	cs	FTP
 fullname	common	cs	Celé jméno
+fullscreen	common	cs	Celá obrazovka
 fullscreen mode	common	cs	Zobrazení na celou obrazovku
 gabon	common	cs	GABUN
 gambia	common	cs	GAMBIE
@@ -699,6 +704,7 @@ insert placeholder	common	cs	Vložit zástupný symbol
 insert row after	common	cs	Vložit řádek za
 insert row before	common	cs	Vložit řádek před
 insert timestamp into description field	common	cs	Vložení časového razítka do pole popisu
+install egroupware as mail-handler?	common	cs	Nainstalovat EGroupware jako mail-handler?
 integer	common	cs	Celé číslo
 international	common	cs	Mezinárodní
 introduction	common	cs	Úvod
@@ -851,6 +857,7 @@ more	common	cs	Více
 more than 1 match for '%1'	common	cs	Více než jeden záznam pro '%1'
 more then one active file %1 found, inactivating %2 older revisions!	admin	cs	Byl nalezen více než jeden aktivní soubor %1, starší revize %2 jsou deaktivovány!
 morocco	common	cs	MAROKO
+move	common	cs	Přesunout
 moved %1 children from directory fs_id=%2 to %3	admin	cs	Potomek %1 byl přesunut ze složky fs_id=%2 do %3
 moved unconnected %1 %2 to %3.	admin	cs	Nepřipojený %1 %2 byl přesunut do %3
 mozambique	common	cs	MOSAMBIK

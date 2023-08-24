@@ -79,6 +79,8 @@ before reply, visible during compose	mail	sk	Pred odpoveď, viditeľné počas p
 blacklisted mails are marked as spam	mail	sk	E-maily na čiernej listine sa označia ako Spam
 but check shared folders	mail	sk	ale skontrolovať zdieľané priečinky
 by date	mail	sk	podľa dátumu
+by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	sk	V predvolenom nastavení sa "http://" nahradí len "https://". Nebojte sa nakonfigurovať 'https://proxy.egroupware.org/' aj na načítanie obrázkov dostupných len cez http.
+caching of flags	mail	sk	Ukladanie príznakov do medzipamäte
 can not open imap connection	mail	sk	Nedá sa otvoriť spojenie IMAP
 can not resolve the winmail.dat attachment!	mail	sk	Neviem spracovať prílohu winmail.dat!
 canceled deletion due to user interaction	mail	sk	odstraňovanie zrušené kvôli aktivite používateľa
@@ -105,6 +107,7 @@ confirm attach message	mail	sk	Potvrdiť priloženú správu
 confirm move to folder	mail	sk	Potvrdiť presun do priečinka
 connect to profile %1	mail	sk	Pripojiť k profilu %1
 connection status	mail	sk	Stav pripojenia
+contact label	mail	sk	Štítok kontaktu
 contains	mail	sk	obsahuje
 contains(*)	mail	sk	Obsahuje(*)
 convert mail to item and attach its attachments to this item (standard)	mail	sk	Konvertovať e-mail na položku, vrátane jeho príloh (štandard)
@@ -303,6 +306,7 @@ important	mail	sk	Dôležité
 in mailbox: %1, with id: %2, and partid: %3	mail	sk	V poštovom priečinku: %1, ID: %2, PertID: %3
 in order to protect your privacy all external sources within this email are blocked.	mail	sk	V záujme ochrany Vášho súkromia, všetky externé zdroje v tejto správe boli zablokované.
 inbox	mail	sk	Doručená pošta
+information to show on email tag	mail	sk	Informácie, ktoré sa majú zobraziť na e-mailovej značke
 initialization of mail failed. please use the wizard to cope with the problem.	mail	sk	Inicializácia mailu zlyhala. Prosím použite Sprievodcu na vyriešenie tohto problému.
 inline	mail	sk	Odoslať ďalej
 insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)	mail	sk	vložiť podpis na vrch (začiatok) novej správy (alebo odpovede) pri otvorení okna pre úpravu (nemusí sa vám podariť meniť podpisy)
@@ -315,6 +319,7 @@ later	mail	sk	Neskôr
 learning as ham (not spam) failed because of %1	mail	sk	Zapamätanie ako NIE nevyžiadanej správy zlyhalo z dôvodu: %1
 learning as spam failed because of %1	mail	sk	Zapamätanie ako nevyžiadanej správy zlyhalo z dôvodu: %1
 less than	mail	sk	menej než
+list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	sk	Zoznam akcií, ktoré majú byť predvolene zapnuté/aktivované (napr. akcia Mail kompose uložiť ako InfoLog)
 mail	common	sk	E-mail
 mail acl	mail	sk	ACL pre Mail
 mail filter	mail	sk	Filter správ
@@ -353,6 +358,7 @@ move to archive	mail	sk	Presunúť do priečinku Archív
 move to trash	mail	sk	Presunúť do Odpadkového koša
 moved %1 message(s) from %2 to %3	mail	sk	%1 správ bolo presunutých z %2 do %3
 moving folders from one mailaccount to another is not supported	mail	sk	Presúvanie priečinkov z jedného poštového účtu do druhého nie je podporované.
+name and email	mail	sk	Meno a e-mail
 name of account	mail	sk	Názov účtu
 never display html emails	mail	sk	Nezobrazovať HTML správy
 never show	mail	sk	Nikdy nezobrazovať
@@ -385,14 +391,18 @@ notify when new mails arrive in these folders	mail	sk	Upozorniť keď sa nové s
 on	mail	sk	ohľadom
 on behalf of	mail	sk	V mene
 one address is not valid	mail	sk	Jedna adresa je neplatná
+only email	mail	sk	Iba e-mail
 only makes sense, if you transport password through a different channel / outside of this mail to recipients!	mail	sk	Má to zmysel iba v prípade, keď heslo doručíte adresátom iným spôsobom, mimo tejto správy!
+only name	mail	sk	Iba meno
 only needed for some servers, that do not return all folders on root level queries to retrieve all folders for that level	mail	sk	Niektoré servre nevracajú všetky priečinky pri požiadavkách na koreňovej úrovni. Tieto servre to potrebujú aby načítali všetky priečinky na danej úrovni.
 only one window	mail	sk	Iba jedno okno
 only send message, do not copy a version of the message to the configured sent folder	mail	sk	Správu iba odoslať, nekopírovať do priečinka Odoslanej pošty
 open in html mode	mail	sk	Otvoriť v režime HTML
 open in text mode	mail	sk	Otvoriť v textovom režime
+open with collabora office	mail	sk	Otvoriť pomocou Collabora Online
 organisation	admin	sk	Organizácia
 organization	mail	sk	organizácia
+organization | real name email	mail	sk	Organizácia | Skutočné meno [E-mail]
 original message	mail	sk	Pôvodná správa
 outbox	mail	sk	Odoslané správy
 password protect	mail	sk	chrániť heslom
@@ -412,10 +422,13 @@ prevent managing filters	mail	sk	Zabrániť spravovaniu filtrov
 prevent managing folders	mail	sk	Zabrániť spravovaniu priečinkov
 prevent managing notifications	mail	sk	Zabrániť spravovaniu upozornení
 prevent managing vacation notice	mail	sk	Zabrániť spravovaniu automatických odpovedí počas neprítomnosti
+preview pane	mail	sk	Rozloženie okna
 primary profile	mail	sk	Základný profil
+printing	mail	sk	Tlač
 printview	mail	sk	Náhľad pre tlač
 processing of file %1 failed. failed to meet basic restrictions.	mail	sk	Spracovanie súboru %1 zlyhalo. Nesplnil základné obmedzenia.
 provide a default vacation text, (used on new vacation messages when there was no message set up previously)	admin	sk	Zadajte predvolený text pre neprítomnosť (používa sa pre nové odpovede počas neprítomnosti keď predtým nebola nastavená žiadna správa)
+push notifications	mail	sk	Oznámenia Push
 quicksearch	mail	sk	Rýchle hľadanie
 quicksearch (with cc)	mail	sk	Rýchle hľadanie (vrátane kópie)
 quota not provided by server	mail	sk	Server neposkytuje kvóty
@@ -528,10 +541,12 @@ show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	
 show horizontal	mail	sk	Zobraziť vodorovne
 show horizontal, hide if none selected	mail	sk	Zobraziť vodorovne, skryť ak nie je nič vybrané
 show new messages on home page	mail	sk	zobraziť noé správy na domovskej stránke
+show notification for new arriving mails	mail	sk	Zobrazenie upozornenia na nové prichádzajúce e-maily
 show test connection section and control the level of info displayed?	mail	sk	Zobraziť sekciu Test pripojenia a ovládanie úrovne zobrazovaných informácií?
 show test connection section and control the level of info displayed??	mail	sk	Zobraziť sekciu Test pripojenia a ovládanie úrovne zobrazovaných informácií??
 show them this time only	mail	sk	Zobraziť ich len v tomto prípade
 show vertical	mail	sk	Zobraziť zvisle
+show vertical with all columns	mail	sk	Zobraziť vertikálne so všetkými stĺpcami
 show/hide preview pane in mail list view	mail	sk	Zobraziť/Skryť náhľad pri zobrazení zoznamu správ
 sieve	mail	sk	Sieve
 sieve connection status	mail	sk	Stav spojenia Sieve
@@ -650,6 +665,7 @@ yes, only trigger connection reset	mail	sk	áno, spustiť iba reset pripojenia
 yes, show all debug information available for the user	mail	sk	áno, zobraziť všetky ladiace informácie dostupné používateľovi
 yes, show basic info only	mail	sk	áno, zobraziť len základné informácie
 you can either choose to save as infolog or tracker, not both.	mail	sk	Môžete si vybrať buď ukladanie do Záznamníka alebo Sledovača, ale nie oboje naraz.
+you can select what info to be displayed on email tag	mail	sk	Môžete vybrať, ktoré informácie sa majú zobrazovať na e-mailovej značke.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	sk	Pre dátum začiatku môžete použiť $$start$$ a pre dátum ukončenia $$end$$.
 you may add this certificate into your contact, if you trust this signature.	mail	sk	Môžete pridať tento certifikát do vášho kontaktu, ak dôverujete tomuto podpisu.
 you need to enter your s/mime passphrase to send this message.	mail	sk	Ak chcete odoslať túto správu, zadajte vaše S/MIME heslo.

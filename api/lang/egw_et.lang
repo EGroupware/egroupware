@@ -64,6 +64,7 @@ and	common	et	Ja
 andorra	common	et	ANDORRA
 angola	common	et	ANGOLA
 anguilla	common	et	ANGUILLA
+answering no will not ask you again for this browser.	common	et	Kui te vastate ei, ei küsita teilt enam seda brauserit.
 antarctica	common	et	ANTARKTIKA
 antigua and barbuda	common	et	ANTIGUA JA BARBUDA
 application	common	et	Rakendus
@@ -269,6 +270,7 @@ field	common	et	Väli
 field must not be empty !!!	common	et	Väli ei tohi jääda tühjaks !!!
 fields	common	et	Väljad
 file	common	et	Pail
+file a file	common	et	Faili salvestamine
 file writen	common	et	Fail kirjutatud
 files	common	et	Failid
 fileupload	common	et	Faili Üleslaadimine
@@ -282,13 +284,18 @@ firstname	common	et	Eesnimi
 fixme!	common	et	PARANDA MIND!
 folder already exists.	common	et	Kaust juba eksisteerib.
 forever	common	et	Igavesti
+formatted business address	common	et	Vormindatud äriaadress
+formatted private address	common	et	Vormindatud eraisiku aadress
+formatted text (html)	common	et	Vormindatud tekst (HTML)
 france	common	et	PRANSUSMAA
 friday	common	et	Reede
 ftp	common	et	FTP
 fullname	common	et	Täisnimi
+fullscreen	common	et	Täisekraan
 fullscreen mode	common	et	Täisekraan vaade
 gabon	common	et	GABON
 gambia	common	et	GAMBIA
+general fields:	preferences	et	Üldised väljad:
 georgia	common	et	GEORGIA
 german	common	et	SAKSAMAA
 germany	common	et	SAKSAMAA
@@ -343,6 +350,7 @@ insert placeholder	common	et	Sisesta paigutuskoht
 insert row after	common	et	Sisesta rida enne
 insert row before	common	et	Sisesta rida peale
 insert timestamp into description field	common	et	Lisage ajatempel kirjeldusväljale
+install egroupware as mail-handler?	common	et	Installige EGroupware posti käsitlejana?
 international	common	et	rahvusvaheline
 invalid 2-factor authentication code	common	et	2-faktoorse autentimise kood on kehtetu
 invalid filename	common	et	Vigane failinimi
@@ -396,6 +404,7 @@ monday	common	et	Esmaspäev
 mongolia	common	et	MONGOOLIA
 month	common	et	Kuu
 more	common	et	Rohkem
+move	common	et	Liigutage
 multiple	common	et	mitmik
 name	common	et	Nimi
 never	common	et	Mittekunagi

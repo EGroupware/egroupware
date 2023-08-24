@@ -29,10 +29,10 @@
 '%1' copied to clipboard	common	es-es	%1' copiado en el portapapeles
 '%1' has an invalid format	common	es-es	'%1' no tiene un formato válido
 '%1' has an invalid format !!!	common	es-es	¡'%1' no tiene un formato válido!
-'%1' is not a valid json file!	common	es-es	¡'%1' no es un archivo json en el directorio raíz de EGroupware!
 '%1' is not a valid date !!!	common	es-es	¡'%1'  no es una fecha válida!
 '%1' is not a valid floatingpoint number !!!	common	es-es	¡'%1' no es un número válido de coma flotante!
 '%1' is not a valid integer !!!	common	es-es	¡'%1' no es un entero válido!
+'%1' is not a valid json file!	common	es-es	¡'%1' no es un archivo json en el directorio raíz de EGroupware!
 '%1' is not a valid timezone!	common	es-es	¡'%1' no es una zona horaria válida!
 '%1' is not allowed ('%2')!	common	es-es	¡'%1' NO está permitido ('%2')!
 '%1' is not allowed%2)!	common	es-es	¡'% 1' NO está permitido (%2)!
@@ -137,6 +137,7 @@ and	common	es-es	y
 andorra	common	es-es	ANDORRA
 angola	common	es-es	ANGOLA
 anguilla	common	es-es	ANGUILLA
+answering no will not ask you again for this browser.	common	es-es	Si contestas que no, ya no se te preguntará por este navegador.
 antarctica	common	es-es	ANTARCTICA
 antigua and barbuda	common	es-es	ANTIGUA AND BARBUDA
 api	common	es-es	API de EGroupware
@@ -600,6 +601,8 @@ forecolor	common	es-es	Color frontal
 foreign key	common	es-es	Clave ajena
 forever	common	es-es	Para siempre
 formatselect	common	es-es	Seleccionar formato
+formatted business address	common	es-es	Dirección profesional con formato
+formatted private address	common	es-es	Dirección privada con formato
 formatted text (html)	common	es-es	Texto con formato (HTML)
 found unconnected %1 %2!	admin	es-es	¡Se encontró desconexión %1 %2!
 fr	common	es-es	Fr
@@ -736,6 +739,7 @@ insert row after	common	es-es	Insertar una fila despues
 insert row before	common	es-es	Insertar una fila antes
 insert timestamp into description field	common	es-es	Insertar marca de tiempo en el campo de descripción
 install	common	es-es	Instalar
+install egroupware as mail-handler?	common	es-es	¿Instalar EGroupware como gestor de correo?
 integer	common	es-es	Entero
 international	common	es-es	Internacional
 introduction	common	es-es	Introducción
@@ -891,7 +895,7 @@ more	common	es-es	Más
 more than 1 match for '%1'	common	es-es	Más de 1 coincidencia para '%1'
 more then one active file %1 found, inactivating %2 older revisions!	admin	es-es	Se encontró más de un archivo activo %1, ¡desactivando %2 revisiones anteriores!
 morocco	common	es-es	MARRUECOS
-move	common	es-es	mover
+move	common	es-es	Mover
 moved %1 children from directory fs_id=%2 to %3	admin	es-es	Se movieron %1 hijos del directorio fs_id =%2 a %3
 moved unconnected %1 %2 to %3.	admin	es-es	Se movió desconectado %1 %2 a %3.
 mozambique	common	es-es	MOZAMBIQUE

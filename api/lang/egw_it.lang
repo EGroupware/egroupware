@@ -27,7 +27,6 @@
 '%1' copied to clipboard	common	it	'%1' copiato negli appunti
 '%1' has an invalid format	common	it	'%1' ha un formato non valido
 '%1' has an invalid format !!!	common	it	'%1' ha un formato non valido
-'%1' is no php file in the egw server root (%2)!	common	it	'%1' non è un file php nella root del server EGroupware (%2)
 '%1' is not a valid date !!!	common	it	'%1'  non è una data valida
 '%1' is not a valid floatingpoint number !!!	common	it	'%1' non è un numero in virgola mobile valido
 '%1' is not a valid integer !!!	common	it	'%1' non è un intero valido
@@ -131,6 +130,7 @@ and	common	it	e
 andorra	common	it	ANDORRA
 angola	common	it	ANGOLA
 anguilla	common	it	ANGUILLA
+answering no will not ask you again for this browser.	common	it	In caso di risposta negativa, non verrà più richiesto il browser.
 antarctica	common	it	ANTARTIDE
 antigua and barbuda	common	it	ANTIGUA E BARBUDA
 api	common	it	API EGroupware
@@ -586,6 +586,8 @@ force	common	it	forza
 force selectbox	common	it	Forza Casella di Selezione
 foreign key	common	it	Tasto straniero
 forever	common	it	Per sempre
+formatted business address	common	it	Indirizzo aziendale formattato
+formatted private address	common	it	Indirizzo privato formattato
 formatted text (html)	common	it	Testo Formattato (HTML)
 found unconnected %1 %2!	admin	it	Trovati disconnessi %1 %2!
 fr	common	it	Fr
@@ -720,6 +722,7 @@ insert placeholder	common	it	Inserire un segnaposto
 insert row after	common	it	Inserisci una riga dopo
 insert row before	common	it	Inserisci una riga prima
 insert timestamp into description field	common	it	Inserire il timestamp nel campo descrizione
+install egroupware as mail-handler?	common	it	Installare EGroupware come gestore di posta?
 integer	common	it	Intero
 international	common	it	Internazionale
 introduction	common	it	Introduzione
@@ -873,7 +876,7 @@ more	common	it	Altro
 more than 1 match for '%1'	common	it	Più di una corrispondenza per '%1'
 more then one active file %1 found, inactivating %2 older revisions!	admin	it	Trovati %1 più di un file attivi, disattivazione delle revisioni più datate %2!
 morocco	common	it	MAROCCO
-move	common	it	muoversi
+move	common	it	Spostare
 moved %1 children from directory fs_id=%2 to %3	admin	it	Spostato %1 figli dalla directory fs_id=%2 a %3
 moved unconnected %1 %2 to %3.	admin	it	Spostato disconnessi %1 %2 a %3
 mozambique	common	it	MOZAMBICO

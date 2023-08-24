@@ -101,6 +101,7 @@ and	common	zh	及
 andorra	common	zh	安道尔共和国
 angola	common	zh	安哥拉
 anguilla	common	zh	安圭拉岛
+answering no will not ask you again for this browser.	common	zh	如果回答 "否"，将不再要求您使用该浏览器。
 antarctica	common	zh	南极洲
 antigua and barbuda	common	zh	安提瓜和巴布达·
 api	common	zh	[eGW-API]系统核心
@@ -433,6 +434,7 @@ field must not be empty !!!	common	zh	字段不得为空！
 fields	common	zh	字段
 fiji	common	zh	斐济
 file	common	zh	文件
+file a file	common	zh	存储文件
 file contains more than one etemplate, last one is shown !!!	common	zh	文件包含多个模板，只显示最后一条！
 file writen	common	zh	书面文件
 files	common	zh	文件
@@ -450,6 +452,8 @@ folder already exists.	common	zh	文件夹已存在。
 force selectbox	common	zh	必选框
 foreign key	common	zh	外键 (Foreign Key)
 forever	common	zh	始终
+formatted business address	common	zh	格式化商业地址
+formatted private address	common	zh	格式化私人地址
 formatted text (html)	common	zh	格式化文本 (HTML)
 france	common	zh	法国
 french guiana	common	zh	法属圭亚那地区
@@ -458,6 +462,7 @@ french southern territories	common	zh	法国南部地区
 friday	common	zh	星期五
 ftp	common	zh	FTP
 fullname	common	zh	全称
+fullscreen	common	zh	全屏
 fullscreen mode	common	zh	全屏模式
 gabon	common	zh	加蓬
 gambia	common	zh	冈比亚
@@ -570,6 +575,7 @@ insert placeholder	common	zh	插入占位符
 insert row after	common	zh	在之后插入行
 insert row before	common	zh	在之前插入行
 insert timestamp into description field	common	zh	在描述栏中插入时间戳
+install egroupware as mail-handler?	common	zh	安装 EGroupware 作为邮件处理程序？
 integer	common	zh	整数
 international	common	zh	国际
 invalid 2-factor authentication code	common	zh	无效的2-Factor Authentication代码
@@ -691,6 +697,7 @@ month	common	zh	月
 montserrat	common	zh	蒙特塞拉特岛
 more	common	zh	更多
 morocco	common	zh	摩洛哥
+move	common	zh	移动
 mozambique	common	zh	莫桑比克·
 multicolumn indices	common	zh	多列索引
 multiple	common	zh	多重

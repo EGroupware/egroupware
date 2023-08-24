@@ -14,6 +14,7 @@ import {Validator} from "@lion/form-core";
 import {Et2Tag} from "./Tag/Et2Tag";
 import {SlMenuItem} from "@shoelace-style/shoelace";
 import {waitForEvent} from "../../../../node_modules/@shoelace-style/shoelace/dist/internal/event.js";
+import {StaticOptions} from "./StaticOptions";
 
 // Otherwise import gets stripped
 let keep_import : Et2Tag;
@@ -640,7 +641,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			const valueArray = Array.isArray(this.value) ? this.value : (!this.value ? [] : this.value.toString().split(','));
 
 			// Check any already found options
-			if(Object.values(this.menuItems).filter((option) => valueArray.find(val => val == option.value)).length === 0)
+			if(Object.values(this.getAllOptions()).filter((option) => valueArray.find(val => val == option.value)).length === 0)
 			{
 				return false;
 			}

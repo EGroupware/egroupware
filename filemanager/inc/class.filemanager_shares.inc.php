@@ -193,7 +193,10 @@ class filemanager_shares extends filemanager_ui
 			switch($content['nm']['action'])
 			{
 				case 'delete':
-					$where = array('share_owner' => $GLOBALS['egw_info']['user']['account_id']);
+					if(empty($GLOBALS['egw_info']['user']['apps']['admin']))
+					{
+						$where['share_owner'] = $GLOBALS['egw_info']['user']['account_id'];
+					}
 					if (!$content['nm']['select_all'])
 					{
 						$where['share_id'] = $content['nm']['selected'];

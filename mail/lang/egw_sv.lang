@@ -14,11 +14,15 @@ any of	mail	sv	Någon av
 any status	mail	sv	Alla status
 attachments	mail	sv	Bilagor
 by date	mail	sv	Enligt datum
+by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	sv	Som standard ersätts 'http://' bara med 'https://'. Konfigurera gärna 'https://proxy.egroupware.org/' så att även bilder som endast är tillgängliga via http laddas.
+caching of flags	mail	sv	Cachelagring av flaggor
+changing subject failed folder %1 does not exist	mail	sv	Byte av ämne misslyckades mappen %1 finns inte
 check message against next rule also	mail	sv	Verifiera meddelande även mot nästa regel
 compose	mail	sv	Skriv
 compress folder	mail	sv	Komprimera katalog
 condition	mail	sv	vilkor
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	sv	De konfigurerade värdena kommer att ställas in automatiskt i dialogrutan för det respekterade fältet när du skriver ett nytt e-postmeddelande.
+contact label	mail	sv	Etikett för kontakt
 contains	mail	sv	Innehåller
 copy to	mail	sv	Kopiera
 cross account forward attachment is not allowed!	mail	sv	Det är inte tillåtet att bifoga ett konto för korsändamål!
@@ -79,10 +83,12 @@ if message size	mail	sv	om meddelande storlek
 imap	mail	sv	IMAP
 imap server	mail	sv	IMAP Server
 inbox	mail	sv	Inkorg
+information to show on email tag	mail	sv	Information som ska visas på e-postetiketten
 keep a copy of the message in your inbox	mail	sv	Spara en kopia av brev i din Inkorg
 kilobytes	mail	sv	Kb
 later	mail	sv	Senare
 less than	mail	sv	Mindre än
+list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	sv	Lista över åtgärder som ska aktiveras/aktiveras som standard (t.ex. åtgärden Mail compos spara som InfoLog)
 mail	common	sv	E-post
 mail acl	mail	sv	Tillträdesrättigheter
 mail filter	mail	sv	E-postfilter
@@ -103,21 +109,35 @@ modify subject of this message	mail	sv	Ändra ämnet för detta meddelande
 move selected to	mail	sv	Flytta valda till
 move to	mail	sv	Flytta valda till
 move to trash	mail	sv	Flytta till Borttaget
+name and email	mail	sv	Namn och e-post
 never display html emails	mail	sv	Visa inte HTML meddelanden
 new subject	mail	sv	Nytt ämne
 no plain text part found	mail	sv	Hittade inget textfält
 no sneak preview in list	mail	sv	Ingen förhandsgranskning av meddelanden
 on	mail	sv	På
 one address is not valid	mail	sv	En adress är ogiltig
+only email	mail	sv	Endast e-post
+only name	mail	sv	Endast namn
 only one window	mail	sv	Endast ett fönster
+open in html mode	mail	sv	Öppna i HTML-läge
+open in text mode	mail	sv	Öppna i textläge
+open with collabora office	mail	sv	Öppna med Collabora Online
 organisation	admin	sv	Organisation
 organization	mail	sv	Organisation
+organization | real name email	mail	sv	Organisation | Verkligt namn [E-post]
+original message	mail	sv	Ursprungligt meddelande
+outbox	mail	sv	Utkorg
 permission denied	mail	sv	Åtkomst nekad
+please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	sv	Konfigurera ditt S/MIME-certifikat på fliken Kryptering i dialogrutan Redigera konto.
 please select a address	mail	sv	Välj adress
 please select the number of days to wait between responses	mail	sv	Antal dagar mellan svar
 please supply the message to send with auto-responses	mail	sv	Meddelande att skicka med autosvar
 predefined addresses for compose	mail	sv	Fördefinierade adresser för sammansättning
+preview pane	mail	sv	Fönsterlayout
+printing	mail	sv	Utskrift
+push notifications	mail	sv	Push-meddelanden
 quicksearch	mail	sv	Snabbsök
+quicksearch (with cc)	mail	sv	Snabbsök (+Kopia)
 refresh time in minutes	mail	sv	Uppdaterings intervall i minuter
 reject with	mail	sv	Avvisa med
 remove all	mail	sv	Radera samtliga
@@ -139,6 +159,10 @@ select or insert email address	mail	sv	Välj eller infoga e-postadress
 sent folder	mail	sv	Skickat katalog
 set flags	mail	sv	Markera e-post som
 set predefined values for compose...	mail	sv	Ställ in fördefinierade värden för sammansättning ...
+show notification for new arriving mails	mail	sv	Visa avisering för nya inkommande e-postmeddelanden
+show vertical	mail	sv	Visa vertikalt
+show vertical with all columns	mail	sv	Visa vertikalt med alla kolumner
+show/hide preview pane in mail list view	mail	sv	Visa/dölj förhandsgranskningsfönstret i e-postlistan
 sieve	mail	sv	Sieve
 sieve script name	mail	sv	Sieve skript namn
 signature	mail	sv	Signatur
@@ -164,3 +188,5 @@ view header lines	mail	sv	Visa brevhuvudet
 when deleting messages	mail	sv	Vid meddelande radering
 write	mail	sv	Skriv
 wrote	mail	sv	Skrev
+you can select what info to be displayed on email tag	mail	sv	Du kan välja vilken information som ska visas på e-posttaggen.
+you've got new mail	mail	sv	Du har fått ny e-post

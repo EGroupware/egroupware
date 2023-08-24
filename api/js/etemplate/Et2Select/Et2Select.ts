@@ -8,13 +8,14 @@
  */
 
 
-import {css, html, TemplateResult} from "lit";
+import {css, html, PropertyValues, TemplateResult} from "lit";
 import {Et2WidgetWithSelectMixin} from "./Et2WidgetWithSelectMixin";
 import {SelectOption} from "./FindSelectOptions";
 import shoelace from "../Styles/shoelace";
 import {RowLimitedMixin} from "../Layout/RowLimitedMixin";
 import {SlOption, SlSelect} from "@shoelace-style/shoelace";
 import {Et2Tag} from "./Tag/Et2Tag";
+import {Et2WithSearchMixin} from "./SearchMixin";
 
 // export Et2WidgetWithSelect which is used as type in other modules
 export class Et2WidgetWithSelect extends RowLimitedMixin(Et2WidgetWithSelectMixin(SlSelect))
@@ -59,7 +60,7 @@ export class Et2WidgetWithSelect extends RowLimitedMixin(Et2WidgetWithSelectMixi
  *
  */
 // @ts-ignore SlSelect styles is a single CSSResult, not an array, so TS complains
-export class Et2Select extends Et2WidgetWithSelect
+export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 {
 	static get styles()
 	{
@@ -144,10 +145,54 @@ export class Et2Select extends Et2WidgetWithSelect
 				display: none;
 			  }
 
-			  /* Style for the list */
+			  /* Style for tag count if rows=1 */
 
-			  ::part(listbox) {
+			  :host([readonly][multiple][rows]) .select__tags sl-tag {
+				position: absolute;
+				right: 0px;
+				top: 1px;
+				box-shadow: rgb(0 0 0/50%) -1.5ex 0px 1ex -1ex, rgb(0 0 0 / 0%) 0px 0px 0px 0px;
+			  }
+
+			  :host([readonly][multiple][rows]) .select__tags sl-tag::part(base) {
+				background-color: var(--sl-input-background-color);
+				border-top-left-radius: 0;
+				border-bottom-left-radius: 0;
+				font-weight: bold;
+				min-width: 3em;
+				justify-content: center;
+			  }
+
+			  /* Show all rows on hover if rows=1 */
+
+			  :host([readonly][multiple][rows]):hover .select__tags {
+				width: -webkit-fill-available;
+				width: -moz-fill-available;
+				width: fill-available;
+			  }
+
+			  /* Style for the popup */
+
+			  ::part(popup) {
+				z-index: 1;
+				background: var(--sl-input-background-color);
+				padding: var(--sl-input-spacing-small);
+				padding-left: 2px;
+
+				box-shadow: var(--sl-shadow-large);
 				min-width: fit-content;
+				border-radius: var(--sl-border-radius-small);
+				border: 1px solid var(--sl-color-neutral-200);
+				max-height: 15em;
+				overflow-y: auto;
+			  }
+
+			  ::part(display-label) {
+				margin: 0;
+			  }
+
+			  :host::part(display-label) {
+				max-height: 8em;
 				overflow-y: auto;
 			  }
 			`
@@ -207,7 +252,7 @@ export class Et2Select extends Et2WidgetWithSelect
 
 	_triggerChange(e)
 	{
-		if((super._triggerChange && super._triggerChange(e) || typeof super._triggerChange === "undefined") && !this._block_change_event)
+		if(super._triggerChange(e) && !this._block_change_event)
 		{
 			this.dispatchEvent(new Event("change", {bubbles: true}));
 		}
@@ -308,6 +353,88 @@ export class Et2Select extends Et2WidgetWithSelect
 	 *
 	 * @returns {TemplateResult}
 	 */
+	loadFromXML(_node : Element)
+	{
+		super.loadFromXML(_node);
+
+		// Wait for update to be complete before we check for bad value so extending selects can have a chance
+		this.updateComplete.then(() => this.fix_bad_value());
+	}
+
+	/** @param {import('@lion/core').PropertyValues } changedProperties */
+	willUpdate(changedProperties : PropertyValues)
+	{
+		super.willUpdate(changedProperties);
+
+		if(changedProperties.has('select_options') || changedProperties.has("value") || changedProperties.has('emptyLabel'))
+		{
+			this.updateComplete.then(() => this.fix_bad_value());
+		}
+		if(changedProperties.has("select_options") && changedProperties.has("value"))
+		{
+			// Re-set value, the option for it may have just shown up
+			this.updateComplete.then(() => this.syncItemsFromValue())
+		}
+	}
+
+	/**
+	 * Override this method from SlSelect to stick our own tags in there
+	 */
+	syncItemsFromValue()
+	{
+		if(typeof super.syncItemsFromValue === "function")
+		{
+			super.syncItemsFromValue();
+		}
+
+		// Only applies to multiple
+		if(typeof this.displayTags !== "object" || !this.multiple)
+		{
+			return;
+		}
+
+		let overflow = null;
+		if(this.maxTagsVisible > 0 && this.displayTags.length > this.maxTagsVisible)
+		{
+			overflow = this.displayTags.pop();
+		}
+
+		const checkedItems = Object.values(this._menuItems).filter(item => this.value.includes(item.value));
+		this.displayTags = checkedItems.map(item => this._createTagNode(item));
+
+		if(checkedItems.length !== this.value.length && this.multiple)
+		{
+			// There's a value that does not have a menu item, probably invalid.
+			// Add it as a marked tag so it can be corrected or removed.
+			const filteredValues = this.value.filter(str => !checkedItems.some(obj => obj.value === str));
+			for(let i = 0; i < filteredValues.length; i++)
+			{
+				const badTag = this._createTagNode({
+					value: filteredValues[i],
+					getTextLabel: () => filteredValues[i],
+					classList: {value: ""}
+				});
+				badTag.variant = "danger";
+				badTag.contactPlus = false;
+				// Put it in front so it shows
+				this.displayTags.unshift(badTag);
+			}
+		}
+
+		// Re-slice & add overflow tag
+		if(overflow)
+		{
+			this.displayTags = this.displayTags.slice(0, this.maxTagsVisible);
+			this.displayTags.push(overflow);
+		}
+		else if(this.multiple && this.rows == 1 && this.readonly && this.value.length > 1)
+		{
+			// Maybe more tags than we can show, show the count
+			this.displayTags.push(html`
+                <sl-tag class="multiple_tag" size=${this.size}>${this.value.length}</sl-tag> `);
+		}
+	}
+
 	_emptyLabelTemplate() : TemplateResult
 	{
 		if(!this.emptyLabel || this.multiple)
@@ -401,6 +528,94 @@ export class Et2Select extends Et2WidgetWithSelect
 			tag.prepend(image);
 		}
 		return tag;
+	}
+
+	blur()
+	{
+		if(typeof super.blur == "function")
+		{
+			super.blur();
+		}
+		this.dropdown.hide();
+	}
+
+	private handleTagRemove(event : CustomEvent, option)
+	{
+		event.stopPropagation();
+
+		if(!this.disabled)
+		{
+			option.selected = false;
+			let index = this.value.indexOf(option.value);
+			if(index > -1)
+			{
+				this.value.splice(index, 1);
+			}
+			this.dispatchEvent(new CustomEvent('sl-input'));
+			this.dispatchEvent(new CustomEvent('sl-change'));
+			this.syncItemsFromValue();
+			this.validate();
+		}
+	}
+
+	/**
+	 * Apply the user preference to close the dropdown if an option is clicked, even if multiple=true.
+	 * The default (from SlSelect) leaves the dropdown open for multiple=true
+	 *
+	 * @param {MouseEvent} event
+	 * @private
+	 */
+	private handleOptionClick(event : MouseEvent)
+	{
+		if(event.target == this)
+		{
+			// Don't hide dropdown when clicking on select.  That can close it after user opens it.
+			return;
+		}
+		if(this._close_on_select)
+		{
+			this.dropdown.hide().then(() =>
+			{
+				if(typeof this.handleMenuHide == "function")
+				{
+					// Make sure search gets hidden
+					this.handleMenuHide();
+				}
+			});
+		}
+	}
+
+	private et2HandleBlur(event : Event)
+	{
+		if(typeof super.et2HandleBlur === "function")
+		{
+			super.et2HandleBlur(event);
+		}
+		this.dropdown?.hide();
+	}
+
+	/**
+	 * Always close the dropdown if an option is clicked, even if multiple=true.  This differs from SlSelect,
+	 * which leaves the dropdown open for multiple=true
+	 *
+	 * @param {KeyboardEvent} event
+	 * @private
+	 */
+	private handleKeyDown(event : KeyboardEvent)
+	{
+		if(event.key === 'Enter' || (event.key === ' ' && this.typeToSelectString === ''))
+		{
+			this.dropdown.hide().then(() =>
+			{
+				if(typeof this.handleMenuHide == "function")
+				{
+					// Make sure search gets hidden
+					this.handleMenuHide();
+				}
+			});
+			event.stopPropagation();
+		}
+
 	}
 
 	/**

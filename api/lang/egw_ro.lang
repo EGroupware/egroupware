@@ -23,6 +23,7 @@ advanced search	common	ro	Căutare avansată
 all addressbooks	groupdav	ro	Toate agendele de adrese
 all categories	common	ro	Toate categoriile
 all in one	groupdav	ro	Toate într-una singură
+answering no will not ask you again for this browser.	common	ro	Dacă răspundeți "nu", nu vi se va mai solicita acest browser.
 attention: action will be applied to all rows, not only visible ones!	api	ro	Atenție: acțiunea se va aplica tuturor rândurilor, nu numai celor vizibile!
 authenticate	common	ro	Autentificare
 cancel	common	ro	Renunţă
@@ -41,6 +42,15 @@ created	common	ro	Creat
 created by	common	ro	Creat de
 created by %1	common	ro	Creat de %1
 dark mode	common	ro	Mod întunecat
+file a file	common	ro	Stocați un fișier
+fileupload	common	ro	Încărcarea fișierelor
+formatted business address	common	ro	Adresa de afaceri formatată
+formatted private address	common	ro	Adresa privată formatată
+formatted text (html)	common	ro	Text formatat (HTML)
+fullscreen	common	ro	Fullscreen
+fullscreen mode	common	ro	Mod ecran complet
+general fields:	preferences	ro	Câmpuri generale:
+german	common	ro	Germană
 history	common	ro	Istorie
 history log	common	ro	Istoricul versiunii
 how many days to sync in the future (default %1)	groupdav	ro	Câte zile să se sincronizeze în viitor (implicit %1)
@@ -52,6 +62,7 @@ include access to any linked files (links tab)	common	ro	Includeți accesul la o
 infolog types to sync	common	ro	Tipuri de InfoLog de sincronizat
 insert placeholder	common	ro	Inserir espaço reservado
 insert timestamp into description field	common	ro	Introduceți data și ora în câmpul de descriere
+install egroupware as mail-handler?	common	ro	Instalați EGroupware ca manager de e-mail?
 invalid 2-factor authentication code	common	ro	Código de autenticação de 2 fatores inválidos
 invalid or expired 'remember me' token	common	ro	Ficha "lembre-se de mim" inválida ou vencida
 it is recommended to store your public key in addressbook, so other users can write you encrypted mails.	common	ro	É recomendável armazenar sua chave pública no Addressbook, para que outros usuários possam escrever seus e-mails criptografados.
@@ -62,6 +73,7 @@ lost login id	common	ro	ID de conectare pierdut
 lost password	common	ro	Parolă pierdută
 mailvelope addon installation failed! please try again.	common	ro	Parolă pierdută
 mailvelope addon installation succeded. now you may configure the options.	common	ro	Instalarea addon-ului Mailvelope a reușit. Acum puteți configura opțiunile.
+move	common	ro	Mutați
 new password	common	ro	Parolă nouă
 no filters	common	ro	Fără filtre
 ok	common	ro	Acceptă

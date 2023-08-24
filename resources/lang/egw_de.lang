@@ -22,7 +22,7 @@ book	resources	de	Buchen
 book resource	resources	de	Ressource buchen
 book selected resources	resources	de	Ausgewählte Ressourcen buchen
 book this resource	resources	de	Ressource buchen
-bookable	resources	de	buchbar
+bookable	resources	de	Buchbar
 booked	resources	de	gebucht
 booking requests	resources	de	Buchungsanfragen
 buy this article	resources	de	Diesen Artikel kaufen
@@ -112,7 +112,7 @@ read calendar permissions	resources	de	Kalender-Leseberechtigung
 read permissions	resources	de	Leseberechtigung
 registration confirmed %1	resources	de	Eintragung bestätigt %1
 related links	resources	de	Siehe auch
-remove accessories before changing accessory of	resources	de	Entfernen Sie das Zubehör, bevor Sie das Zubehör ändern von:
+remove accessories before changing accessory of	resources	de	Entfernen Sie das Zubehör, bevor Sie "Zubehör von" ändern.
 require confirmation	resources	de	Benötigt Bestätigung
 reserve	resources	de	Reserviert
 resource	resources	de	Ressource

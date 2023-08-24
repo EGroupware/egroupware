@@ -84,7 +84,7 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 			foreach($list as $type => &$accounts)
 			{
 				$options = array('account_type' => $type, 'tag_list' => true) + $accounts;
-				$accounts = Accounts::link_query('', $options);
+				$accounts = Api\Accounts::link_query('', $options);
 			}
 			unset($list["accounts"][9]);
 			// Make sure the user themselves is in there
@@ -92,7 +92,7 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 			{
 				$options = array('account_type' => 'accounts', 'tag_list' => true,
 								 'account_id'   => $GLOBALS['egw_info']['user']['account_id']) + $list['accounts'];
-				$list['accounts'] += Accounts::link_query('', $options);
+				$list['accounts'] += Api\Accounts::link_query('', $options);
 			}
 		}
 		foreach($accounts as $type_account_list)

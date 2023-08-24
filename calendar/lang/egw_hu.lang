@@ -203,6 +203,9 @@ location	calendar	hu	Helyszín
 location, start- and endtimes, ...	calendar	hu	Helyszín, kezdési- és befejezési időpont, ...
 mail all participants	calendar	hu	résztvevők email értesítése
 make freebusy information available to not logged in persons?	calendar	hu	Foglalt-Szabad információ elérhető-e a be nem jelentkezett személyeknek?
+maximum available quantity of %1 exceeded!	calendar	hu	A %1 maximálisan elérhető mennyiség túllépve!
+minimum number of users for showing day view as consolidated.	calendar	hu	A felhasználók minimális száma a napi nézet konszolidáltként való megjelenítéséhez.
+minimum number of users for showing week view as consolidated.	calendar	hu	A felhasználók minimális száma a heti nézet összevontként való megjelenítéséhez.
 minutes	calendar	hu	perc
 modified	calendar	hu	Módosított
 mon	calendar	hu	Hé
@@ -211,7 +214,10 @@ monthly	calendar	hu	Havonta
 monthly (by date)	calendar	hu	Havonta (dátum szerint)
 monthly (by day)	calendar	hu	Havonta (naponta)
 monthview	calendar	hu	Havi Nézet
+move to	calendar	hu	Mozgás a következő helyre
+multiple participants	calendar	hu	Több résztvevő
 multiple week view	calendar	hu	Többheti nézet
+never notify externals (non-users) about events i create	calendar	hu	Soha ne értesítsek külső személyeket (nem felhasználókat) az általam létrehozott eseményekről.
 new	calendar	hu	Új
 new search with the above parameters	calendar	hu	új keresés a fenti paraméterekkel
 no events found	calendar	hu	Esemény nem található
