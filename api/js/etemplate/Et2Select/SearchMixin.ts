@@ -13,7 +13,6 @@ import {cleanSelectOptions, SelectOption} from "./FindSelectOptions";
 import {Validator} from "@lion/form-core";
 import {Et2Tag} from "./Tag/Et2Tag";
 import {SlMenuItem} from "@shoelace-style/shoelace";
-import {waitForEvent} from "../../../../node_modules/@shoelace-style/shoelace/dist/internal/event.js";
 import {StaticOptions} from "./StaticOptions";
 
 // Otherwise import gets stripped
@@ -363,7 +362,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 				}
 				else if(this.allowFreeEntries && this.multiple)
 				{
-					this.value.forEach((e) =>
+					this.getValueAsArray().forEach((e) =>
 					{
 						if(!this.select_options.find(o => o.value == e))
 						{
@@ -600,7 +599,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			{
 				return;
 			}
-
+			
 			// If widget is currently open, we may need to re-calculate search / dropdown positioning
 			if(this.isOpen)
 			{

@@ -283,10 +283,9 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		{
 			// Make sure value has no duplicates, and values are strings
 			val = <string[]>[...new Set(val.map(v => typeof v === 'number' ? v.toString() : v || ''))];
-			val = [...new Set(val.map(v => typeof v === 'number' ? v.toString() : v || ''))];
 		}
 		const oldValue = this.value;
-		super.value = val || '';
+		super.value = val || [];
 		this.requestUpdate("value", oldValue);
 	}
 
@@ -366,6 +365,15 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 	{
 		super.willUpdate(changedProperties);
 
+		if(changedProperties.has('select_options'))
+		{
+			this._renderOptions().then(async() =>
+			{
+				// If the options changed, update the display
+				await this.updateComplete;
+				this.selectionChanged();
+			});
+		}
 		if(changedProperties.has('select_options') || changedProperties.has("value") || changedProperties.has('emptyLabel'))
 		{
 			this.updateComplete.then(() => this.fix_bad_value());
@@ -373,13 +381,13 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		if(changedProperties.has("select_options") && changedProperties.has("value"))
 		{
 			// Re-set value, the option for it may have just shown up
-			this.updateComplete.then(() => this.syncItemsFromValue())
+			//this.updateComplete.then(() => this.syncItemsFromValue())
 		}
 	}
 
 	/**
 	 * Override this method from SlSelect to stick our own tags in there
-	 */
+	 *
 	syncItemsFromValue()
 	{
 		if(typeof super.syncItemsFromValue === "function")
@@ -434,6 +442,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
                 <sl-tag class="multiple_tag" size=${this.size}>${this.value.length}</sl-tag> `);
 		}
 	}
+	 */
 
 	_emptyLabelTemplate() : TemplateResult
 	{
