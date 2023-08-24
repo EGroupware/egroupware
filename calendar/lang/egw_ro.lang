@@ -6,3 +6,9 @@ how many description lines should be directly visible. further lines are availab
 how many lines of all day events should be directly visible. further lines are available via a mouseover.	calendar	ro	Câte rânduri ale evenimentelor din toate zilele trebuie să fie direct vizibile. Linii suplimentare sunt disponibile prin intermediul unui mouseover.
 how many separate calendars to show before merging them together	calendar	ro	Numărul minim de utilizatori pentru a afișa o vizualizare consolidată a calendarului; dacă sunt selectați mai puțini utilizatori, calendarul este afișat separat pentru vizualizarea săptămânală sau zilnică.
 ical cannot change the owner of an existing event.  this applies to new events only.	calendar	ro	iCal nu poate schimba proprietarul unui eveniment existent. Acest lucru se aplică numai evenimentelor noi.
+maximum available quantity of %1 exceeded!	calendar	ro	Cantitatea maximă disponibilă de %1 a fost depășită!
+minimum number of users for showing day view as consolidated.	calendar	ro	Numărul minim de utilizatori pentru afișarea vizualizării zilei ca fiind consolidată.
+minimum number of users for showing week view as consolidated.	calendar	ro	Numărul minim de utilizatori pentru a afișa vizualizarea săptămânală ca fiind consolidată.
+move to	calendar	ro	Treceți la
+multiple participants	calendar	ro	Participanți multipli
+never notify externals (non-users) about events i create	calendar	ro	Nu notificați niciodată persoanele externe (non-utilizatori) despre evenimentele pe care le creez

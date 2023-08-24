@@ -27,10 +27,10 @@
 '%1' copied to clipboard	common	ja	'%1' がクリップボードにコピーされました。
 '%1' has an invalid format	common	ja	'%1' のフォーマットが不正です。
 '%1' has an invalid format !!!	common	ja	'%1' のフォーマットが不正です!
-'%1' is not a valid json file!	common	ja	'%1' is no json file in the eGW server root!
 '%1' is not a valid date !!!	common	ja	'%1' の日付が不正です!
 '%1' is not a valid floatingpoint number !!!	common	ja	'%1' は不正な浮動小数です!
 '%1' is not a valid integer !!!	common	ja	'%1' は無効な整数です!
+'%1' is not a valid json file!	common	ja	'%1' is no json file in the eGW server root!
 '%1' is not a valid timezone!	common	ja	'%1' は無効なタイムゾーンです!
 '%1' is not allowed ('%2')!	common	ja	'%1' は禁止されています ('%2')!
 '%1' is not allowed%2)!	common	ja	'%1' 禁止されています %2)!
@@ -130,6 +130,7 @@ and	common	ja	AND
 andorra	common	ja	アンドラ
 angola	common	ja	アンゴラ
 anguilla	common	ja	アンギラ
+answering no will not ask you again for this browser.	common	ja	いいえ」と答えると、このブラウザの入力は要求されなくなります。
 antarctica	common	ja	南極
 antigua and barbuda	common	ja	アンティグア・バーブーダ
 api	common	ja	EGroupware API
@@ -526,7 +527,7 @@ failed to change mode of required directory "%1" to %2!	admin	ja	ディレクト
 failed to change password.	common	ja	パスワード変更に失敗しました。
 failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	ja	Failed to contact server or invalid response from server. Try to re-login. Contact administrator in case of failure.
 failed to create required directory "%1"!	admin	ja	ディレクトリ "%1" の作成に失敗しました!
-failed to move unconnected %1 %2 to %3!	admin	ja	Faild to move unconnected %1 %2 to %3!
+failed to move unconnected %1 %2 to %3!	admin	ja	接続されていない %1 %2 を %3 に移動できませんでした！
 falkland islands (malvinas)	common	ja	フォークランド諸島
 faroe islands	common	ja	フェロー諸島
 favorite queries	common	ja	お気に入りクエリ
@@ -541,8 +542,9 @@ fiji	common	ja	フィジー
 file	common	ja	ファイル
 file %1 has no content in physical filesystem %2 --> failed to remove file!	admin	ja	File %1 has no content in physical filesystem %2 --> failed to remove file!
 file %1 has no content in physical filesystem %2 --> file removed!	admin	ja	File %1 has no content in physical filesystem %2 --> file removed!
-file %1 has no content in physical filesystem %2!	admin	ja	File %1 has no content in physical filesystem %2!
+file %1 has no content in physical filesystem %2!	admin	ja	ファイル %1 は物理ファイル・システム %2 にコンテンツがありません！
 file '%1' not found!	common	ja	ファイル '%1' が見つかりません!
+file a file	common	ja	ファイルを保存する
 file contains more than one etemplate, last one is shown !!!	common	ja	File contains more than one eTemplate, last one is shown!
 file information	common	ja	ファイル情報
 file is of wrong type (%1 != %2)!	common	ja	ファイルのタイプが異なっています (%1 != %2)!
@@ -566,8 +568,10 @@ force	common	ja	強制
 force selectbox	common	ja	セレクトボックス
 foreign key	common	ja	外部キー
 forever	common	ja	Forever
+formatted business address	common	ja	書式付きビジネスアドレス
+formatted private address	common	ja	書式付きプライベートアドレス
 formatted text (html)	common	ja	整形済みテキスト (HTML)
-found unconnected %1 %2!	admin	ja	Found unconnected %1 %2!
+found unconnected %1 %2!	admin	ja	接続されていない %1 %2 が見つかりました！
 fr	common	ja	金
 france	common	ja	フランス
 french guiana	common	ja	仏領ギアナ
@@ -611,8 +615,8 @@ group public	common	ja	パブリック
 groupbox	common	ja	グループ・ボックス
 groupdav	common	ja	CalDAV / CardCAV 同期
 groups	common	ja	グループ
-groups with permission for %1	common	ja	Groups with permission for %1
-groups without permission for %1	common	ja	Groups without permission for %1
+groups with permission for %1	common	ja	1 に対する権限があるグループ
+groups without permission for %1	common	ja	1 に対する権限がないグループ
 guadeloupe	common	ja	グアドループ
 guam	common	ja	グアム
 guatemala	common	ja	グアテマラ
@@ -633,7 +637,7 @@ high	common	ja	高
 highest	common	ja	最高
 history	common	ja	歴史
 history log	common	ja	変更履歴
-hold [%1] key to select text eg. to copy it	common	ja	Hold [%1] key to select text eg. to copy it
+hold [%1] key to select text eg. to copy it	common	ja	1] キーを押しながらテキストを選択します。
 holy see (vatican city state)	common	ja	バチカン市国
 home	common	ja	ホーム
 home email	common	ja	個人電子メール

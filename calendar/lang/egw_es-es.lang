@@ -369,11 +369,14 @@ monthly	calendar	es-es	Mensualmente
 monthly (by date)	calendar	es-es	Mensual (por fecha)
 monthly (by day)	calendar	es-es	Mensual (por día)
 monthview	calendar	es-es	Vista mensual
+move to	calendar	es-es	Mover a
+multiple participants	calendar	es-es	Múltiples participantes
 multiple week view	calendar	es-es	Vista de múltiples semanas
 name of current user, all other contact fields are valid too	calendar	es-es	Nombre del usuario actual. Todos los demás campos del contacto también son válidos.
 name of the day of the week (ex: monday)	calendar	es-es	Nombre del día de la semana (e.g. lunes)
 name of the week (ex: monday), available for the first entry inside each day of week or daily table inside the selected range.	calendar	es-es	Nombre de la semana, por ejemplo: lunes, disponible para la primera entrada dentro de cada día de la semana o tabla diaria dentro del rango seleccionado.
 needs action	calendar	es-es	Necesita acción
+never notify externals (non-users) about events i create	calendar	es-es	No notificar nunca a los externos (no usuarios) los eventos que creo
 new	calendar	es-es	Nueva
 new event category	calendar	es-es	Nueva categoría de evento
 new event participants	calendar	es-es	Nuevos participantes del evento

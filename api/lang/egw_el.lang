@@ -64,6 +64,7 @@ and	common	el	και
 andorra	common	el	ΑΝΔΟΡΡΑ
 angola	common	el	ΑΝΓΚΟΛΑ
 anguilla	common	el	ΑΝΓΚΟΥΙΛΛΑ
+answering no will not ask you again for this browser.	common	el	Εάν απαντήσετε όχι, δεν θα σας ζητηθεί πλέον αυτό το πρόγραμμα περιήγησης.
 antarctica	common	el	ΑΝΤΑΡΚΤΙΚΗ
 antigua and barbuda	common	el	ΑΝΤΙΓΚΟΥΑ & ΜΠΑΡΜΠΟΥΝΤΑ
 api	common	el	EGroupware API
@@ -287,7 +288,9 @@ field must not be empty !!!	common	el	Το πεδίο δεν πρέπει να �
 fields	common	el	Πεδία
 fiji	common	el	ΦΙΤΖΙ
 file	common	el	Αρχείο
+file a file	common	el	Αποθήκευση αρχείου
 files	common	el	Αρχεία
+fileupload	common	el	Ανέβασμα αρχείου
 filter	common	el	Φίλτρο
 finland	common	el	ΦΙΛΑΝΔΙΑ
 first name	common	el	Ονομα
@@ -297,6 +300,9 @@ firstname	common	el	Ονομα
 fixme!	common	el	Διόρθωσέ με!
 folder already exists.	common	el	Ο φάκελος υπάρχει ήδη
 force selectbox	common	el	Εξανάγκασε Επιλογή κουτιού
+formatted business address	common	el	Διαμορφωμένη επαγγελματική διεύθυνση
+formatted private address	common	el	Διαμορφωμένη ιδιωτική διεύθυνση
+formatted text (html)	common	el	Μορφοποιημένο κείμενο (HTML)
 france	common	el	ΓΑΛΙΑ
 french guiana	common	el	ΓΑΛΛΙΚΗ ΓΟΥΪΑΝΑ
 french polynesia	common	el	ΓΑΛΛΙΚΗ ΠΟΛΥΝΗΣΙΑ
@@ -304,6 +310,7 @@ french southern territories	common	el	ΝΟΤΙΕΣ ΓΑΛΛΙΚΕΣ ΚΤΗΣΕΙ
 friday	common	el	Παρασκευή
 ftp	common	el	FTP
 fullname	common	el	Ονοματεπώνυμο
+fullscreen	common	el	Πλήρης οθόνη
 fullscreen mode	common	el	Πλήρης οθόνη
 gabon	common	el	ΓΚΑΜΠΟΝ
 gambia	common	el	ΓΚΑΜΠΙΑ
@@ -379,6 +386,7 @@ insert placeholder	common	el	Εισαγωγή σημείου τοποθέτησ�
 insert row after	common	el	Εισαγωγή σειράς μετά
 insert row before	common	el	Εισαγωγή σειράς πριν
 insert timestamp into description field	common	el	Εισαγωγή χρονοσφραγίδας στο πεδίο περιγραφής
+install egroupware as mail-handler?	common	el	Εγκατάσταση του EGroupware ως χειριστή αλληλογραφίας;
 international	common	el	Διεθνείς
 invalid 2-factor authentication code	common	el	Μη έγκυρος κωδικός ελέγχου ταυτότητας 2 παραγόντων
 invalid filename	common	el	Άκυρο όνομα αρχείου
@@ -487,6 +495,7 @@ montenegro	common	el	ΜΑΥΡΟΒΟΥΝΙΟ
 month	common	el	Μήνας
 montserrat	common	el	ΜΟΝΣΕΡΑ
 morocco	common	el	ΜΑΡΟΚΟ
+move	common	el	Μετακινήστε το
 mozambique	common	el	ΜΟΝΖΑΒΙΚΗ
 multiple	common	el	πολλαπλό
 myanmar	common	el	ΜΥΑΝΜΑΡ

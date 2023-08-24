@@ -5,7 +5,11 @@ after reply, visible during compose	mail	uk	Після відповіді, ви�
 aliases+forwards	mail	uk	Псевдоніми + переадресація
 always show notifiction	mail	uk	Завжди показувати сповіщення
 answered	mail	uk	Відповіли
+by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	uk	За замовчуванням 'http://' просто замінено на 'https://'. Ви можете налаштувати 'https://proxy.egroupware.org/', щоб також завантажувати зображення, доступні лише через http.
+caching of flags	mail	uk	Кешування прапорів
+changing subject failed folder %1 does not exist	mail	uk	Змінити тему не вдалося, папка %1 не існує
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	uk	Налаштовані значення будуть автоматично встановлені в діалоговому вікні створення листа для відповідного поля при створенні нового листа.
+contact label	mail	uk	Мітка контакту
 cross account forward attachment is not allowed!	mail	uk	Перехресне прикріплення форвардного рахунку не допускається!
 current subject	mail	uk	Поточна тема
 default toolbar actions shown in mail's html editor	mail	uk	Функції, які вмикаються на панелі інструментів HTML-редактора під час створення листа
@@ -20,6 +24,8 @@ enable	mail	uk	Включити
 event details follow	mail	uk	Подробиці події
 extended	mail	uk	Розширений
 from	mail	uk	Від
+information to show on email tag	mail	uk	Інформація, яка буде відображатися в тезі листа
+list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	uk	Перелік дій, які вмикаються/вимикаються за замовчуванням (наприклад, дія "Скласти лист і зберегти як інфолог")
 mail	common	uk	Пошта
 mail acl	mail	uk	Права доступу
 mail filter	mail	uk	Поштовий фільтр
@@ -35,13 +41,34 @@ mark all messages in folder as read	mail	uk	Позначити всі повід
 mark as deleted	mail	uk	Позначити як видалені
 modify subject	mail	uk	Змінити тему
 modify subject of this message	mail	uk	Змінити тему цього повідомлення
+name and email	mail	uk	Ім'я та email
 new subject	mail	uk	Нова тема
 no sneak preview in list	mail	uk	Немає попереднього перегляду повідомлень
+only email	mail	uk	Тільки email
+only name	mail	uk	Тільки ім'я
+open in html mode	mail	uk	Відкрити в режимі HTML
+open in text mode	mail	uk	Відкрити в текстовому режимі
+open with collabora office	mail	uk	Відкрити за допомогою Collabora Online
+organisation	admin	uk	Організація
+organization | real name email	mail	uk	Організація | Прізвище, ім'я та по батькові [Email]
+original message	mail	uk	Оригінальне повідомлення
+outbox	mail	uk	Вихідні
 permission denied	mail	uk	Заборонено
+please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	uk	Будь ласка, налаштуйте ваш S/MIME сертифікат на вкладці Шифрування в діалоговому вікні Редагування облікового запису.
 predefined addresses for compose	mail	uk	Заздалегідь визначені адреси для компонування
+preview pane	mail	uk	Макет вікна
+printing	mail	uk	Друк
+push notifications	mail	uk	Push-повідомлення
+quicksearch	mail	uk	Швидкий пошук
+quicksearch (with cc)	mail	uk	Швидкий пошук (+Копіювати)
+read / unread	mail	uk	Прочитано / Не прочитано
 save all attachments to filemanager	mail	uk	Зберегти всі вкладення у файл-менеджер
 select or insert email address	mail	uk	Виберіть або вставте адресу електронної пошти
 set predefined values for compose...	mail	uk	ВстаВстановити заздалегідь визначені значення для створення ...новити заздалегідь визначені значення для створення ...
+show notification for new arriving mails	mail	uk	Показувати сповіщення про нові листи
+show vertical	mail	uk	Показати вертикаль
+show vertical with all columns	mail	uk	Показувати вертикаль з усіма стовпчиками
+show/hide preview pane in mail list view	mail	uk	Показати/приховати панель попереднього перегляду в списку листів
 signature	mail	uk	Підпис
 signature at top	mail	uk	підпис зверху
 signature position and visibility	mail	uk	Положення та видимість підпису
@@ -52,3 +79,5 @@ smtp	mail	uk	SMTP
 sneak preview in list	mail	uk	Попередній перегляд повідомлень
 text	mail	uk	Текст
 write	mail	uk	Записати
+you can select what info to be displayed on email tag	mail	uk	Ви можете вибрати, яка інформація буде відображатися в тезі листа.
+you've got new mail	mail	uk	Ви отримали новий лист

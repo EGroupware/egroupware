@@ -6,3 +6,9 @@ how many description lines should be directly visible. further lines are availab
 how many lines of all day events should be directly visible. further lines are available via a mouseover.	calendar	lt	Kiek visų dienų įvykių eilučių turėtų būti tiesiogiai matoma. Daugiau eilučių pasiekiama per pelės žymeklį.
 how many separate calendars to show before merging them together	calendar	lt	Mažiausias naudotojų skaičius, kad būtų rodomas konsoliduotas kalendoriaus vaizdas, jei pasirinkta mažiau naudotojų, kalendorius rodomas atskirai savaitės arba dienos vaizdui.
 ical cannot change the owner of an existing event.  this applies to new events only.	calendar	lt	iCal negali pakeisti esamo įvykio savininko. Tai taikoma tik naujiems įvykiams.
+maximum available quantity of %1 exceeded!	calendar	lt	Didžiausias galimas %1 kiekis viršytas!
+minimum number of users for showing day view as consolidated.	calendar	lt	Mažiausias naudotojų skaičius, kad dienos rodinys būtų rodomas kaip konsoliduotas.
+minimum number of users for showing week view as consolidated.	calendar	lt	Mažiausias naudotojų skaičius, kad savaitės vaizdas būtų rodomas kaip konsoliduotas.
+move to	calendar	lt	Perkelti į
+multiple participants	calendar	lt	Keli dalyviai
+never notify externals (non-users) about events i create	calendar	lt	Niekada nepranešti išoriniams asmenims (ne naudotojams) apie mano sukurtus įvykius

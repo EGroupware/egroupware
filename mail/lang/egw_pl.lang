@@ -17,12 +17,16 @@ any of	mail	pl	dowolny z
 any status	mail	pl	dowolny status
 attachments	mail	pl	Załączniki
 by date	mail	pl	Według daty
+by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	pl	Domyślnie "http://" jest po prostu zastępowane przez "https://". Możesz skonfigurować 'https://proxy.egroupware.org/', aby ładować również obrazy dostępne tylko przez http.
+caching of flags	mail	pl	Buforowanie flag
+changing subject failed folder %1 does not exist	mail	pl	Zmiana tematu nie powiodła się folder %1 nie istnieje
 check message against next rule also	mail	pl	sprawdź również kolejnę regułę
 compose	mail	pl	Utwórz
 compose as new	mail	pl	Utwórz nowe
 compress folder	mail	pl	Kompaktuj folder
 condition	mail	pl	warunek
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	pl	Skonfigurowane wartości zostaną ustawione automatycznie w oknie dialogowym kompilacji dla wybranego pola podczas tworzenia nowej wiadomości e-mail.
+contact label	mail	pl	Etykieta kontaktu
 contains	mail	pl	zawiera
 copy to	mail	pl	Kopiuj do
 cross account forward attachment is not allowed!	mail	pl	Dołączanie do konta forward jest zabronione!
@@ -102,12 +106,14 @@ import message	mail	pl	importuj wiadomość
 importance	mail	pl	ważność
 important	mail	pl	ważny
 inbox	mail	pl	ODEBRANE
+information to show on email tag	mail	pl	Informacje wyświetlane na tagu e-mail
 job	mail	pl	służbowy
 junk	mail	pl	Śmieci
 keep a copy of the message in your inbox	mail	pl	zachowaj kopię wiadomości w folderze ODEBRANE
 kilobytes	mail	pl	kilobajtów
 later	mail	pl	Później
 less than	mail	pl	mniej niż
+list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	pl	Lista akcji, które mają być domyślnie włączone/aktywowane (np. akcja Mail composose zapisz jako InfoLog)
 mail	common	pl	Poczta
 mail acl	mail	pl	Prawa dostępu
 mail filter	mail	pl	Filtr poczty
@@ -129,6 +135,7 @@ modify subject of this message	mail	pl	Zmień temat tej wiadomości
 move selected to	mail	pl	przenieś wiadomości do
 move to	mail	pl	przenieś wiadomości do
 move to trash	mail	pl	przenieś do kosza
+name and email	mail	pl	Imię i adres e-mail
 never display html emails	mail	pl	Nigdy nie wyświetlaj emaili HTML
 no access	mail	pl	Brak dostępu
 no address to/cc/bcc supplied, and no folder to save message to provided.	mail	pl	Nie podano adresu (TO/CC/BCC) ani folderu do zapisania wiadomości.
@@ -142,18 +149,29 @@ none, create all	mail	pl	żaden, utwórz wszystko
 nothing to change.	mail	pl	Brak elementów do wprowadzenia zmian.
 on	mail	pl	na
 one address is not valid	mail	pl	Jeden adres nie jest poprawny
+only email	mail	pl	Tylko email
+only name	mail	pl	Tylko nazwa
 only one window	mail	pl	tylko jedno okno
-organisation	admin	pl	organizacja
+open in html mode	mail	pl	Otwórz w trybie HTML
+open in text mode	mail	pl	Otwórz w trybie tekstowym
+open with collabora office	mail	pl	Otwórz za pomocą Collabora Online
+organisation	admin	pl	Organizacja
 organization	mail	pl	instytucja
-original message	mail	pl	wiadomość oryginalna
+organization | real name email	mail	pl	Organizacja | Prawdziwa nazwa [Email]
+original message	mail	pl	Oryginalna wiadomość
+outbox	mail	pl	Skrzynka nadawcza
 permission denied	mail	pl	Dostęp zabroniony
 please configure access to an existing individual imap account.	mail	pl	proszę skonfigurować dostęp do istniejącego konta IMAP.
+please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	pl	Skonfiguruj certyfikat S/MIME w zakładce Szyfrowanie znajdującej się w oknie dialogowym Edytuj konto.
 please select a address	mail	pl	Proszę wybrać adres
 please select the number of days to wait between responses	mail	pl	Wybierz, ile dni czekać między odpowiedziami
 please supply the message to send with auto-responses	mail	pl	Proszę wprowadzić wiadomość przesyłaną w automatycznych odpowiedziach
 predefined addresses for compose	mail	pl	Predefiniowane adresy dla kompozycji
+preview pane	mail	pl	Układ okna
+printing	mail	pl	Drukowanie
 printview	mail	pl	wydrukuj widok
 processing of file %1 failed. failed to meet basic restrictions.	mail	pl	Przetwarzanie pliku %1 nie powiodło się. Nie dotrzymano podstawowych restrykcji.
+push notifications	mail	pl	Powiadomienia push
 quicksearch	mail	pl	Szybkie wyszukiwanie
 quicksearch (with cc)	mail	pl	szybkie wyszukiwanie (+Kopia)
 refresh time in minutes	mail	pl	Czas odświeżania w minutach
@@ -180,6 +198,10 @@ sent	mail	pl	Wysłano
 sent folder	mail	pl	Folder Wysłane
 set flags	mail	pl	Oznacz e-mail jako
 set predefined values for compose...	mail	pl	Ustaw predefiniowane wartości dla komponowania ...
+show notification for new arriving mails	mail	pl	Wyświetlaj powiadomienia o nowych wiadomościach
+show vertical	mail	pl	Pokaż w pionie
+show vertical with all columns	mail	pl	Pokaż w pionie ze wszystkimi kolumnami
+show/hide preview pane in mail list view	mail	pl	Pokaż/ukryj panel podglądu w widoku listy wiadomości
 sieve	mail	pl	Sieve
 sieve script name	mail	pl	Nazwa skryptu Sieve
 signature	mail	pl	Sygnaturka
@@ -220,4 +242,5 @@ whole message	mail	pl	cała wiadomość
 write	mail	pl	Zapisz
 wrote	mail	pl	zapisano
 yes, offer copy option	mail	pl	tak, oferuj opcję kopii
+you can select what info to be displayed on email tag	mail	pl	Możesz wybrać, jakie informacje mają być wyświetlane w tagu e-mail.
 you've got new mail	mail	pl	Masz nową pocztę

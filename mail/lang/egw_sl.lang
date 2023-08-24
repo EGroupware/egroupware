@@ -74,12 +74,15 @@ before reply, visible during compose	mail	sl	Pred odgovorom, ki je viden med ses
 blacklisted mails are marked as spam	mail	sl	Črna pošta je označena kot vsiljena pošta
 but check shared folders	mail	sl	vendar preverite mape v skupni rabi
 by date	mail	sl	Po datumu
+by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	sl	Privzeto se "http://" nadomesti z "https://". Lahko konfigurirate 'https://proxy.egroupware.org/' tudi za nalaganje slik, ki so na voljo samo prek protokola http.
+caching of flags	mail	sl	Predpomnjenje zastavic
 can not open imap connection	mail	sl	Povezave IMAP ni mogoče odpreti
 can not resolve the winmail.dat attachment!	mail	sl	V priponki winmail.dat ni mogoče rešiti!
 canceled deletion due to user interaction	mail	sl	preklican izbris zaradi interakcije uporabnika
 certificate info for email %1	mail	sl	Podatki o certifikatu za e-poštni naslov %1
 change editor type	mail	sl	preklopite urejevalnik v način HTML
 changed profile	mail	sl	spremenjen profil
+changing subject failed folder %1 does not exist	mail	sl	Spreminjanje teme ni uspelo mapa %1 ne obstaja
 check message against next rule also	mail	sl	Preverite sporočilo tudi z naslednjim pravilom
 check to receive a notification when the message is read (note: not all clients support this and/or the receiver may not authorize the notification)	mail	sl	preverite, ali ste prejeli obvestilo, ko se prebere sporočilo (opomba: ne podpirajo vsi odjemalci in / ali prejemnik ne more odobriti obvestila)
 check to save as calendar event on send	mail	sl	preverite, ali želite shraniti kot dogodek ob pošiljanju
@@ -98,6 +101,7 @@ confirm attach message	mail	sl	Potrdite sporočilo o prijavi
 confirm move to folder	mail	sl	Potrdite premik v mapo
 connect to profile %1	mail	sl	Povežite se z profilom% 1
 connection status	mail	sl	Stanje povezave
+contact label	mail	sl	Oznaka za stike
 contains	mail	sl	Vsebuje
 contains(*)	mail	sl	Vsebuje (*)
 convert mail to item and attach its attachments to this item (standard)	mail	sl	pretvorite pošto v element in priložite njene priloge temu elementu (standardni)
@@ -296,6 +300,7 @@ important	mail	sl	pomembno
 in mailbox: %1, with id: %2, and partid: %3	mail	sl	V nabiralniku: %1, z ID: %2 in PartID: %3
 in order to protect your privacy all external sources within this email are blocked.	mail	sl	Da bi zaščitili vašo zasebnost, so vsi zunanji viri v tem e-poštnem sporočilu blokirani.
 inbox	mail	sl	Prejeto
+information to show on email tag	mail	sl	Informacije, ki se prikažejo na oznaki e-pošte
 initialization of mail failed. please use the wizard to cope with the problem.	mail	sl	Inicializacija pošte ni uspela. Prosimo, uporabite čarovnika za obvladovanje težave.
 inline	mail	sl	V vrsti
 insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)	mail	sl	vstavite podpis na vrh novega sporočila (ali odgovora), ko odprete pogovorno okno za sestavljanje (morda ne boste mogli zamenjati podpisov)
@@ -308,6 +313,7 @@ later	mail	sl	Pozneje
 learning as ham (not spam) failed because of %1	mail	sl	Učenje kot ham (ni vsiljena pošta) ni uspelo zaradi %1
 learning as spam failed because of %1	mail	sl	Učenje kot spam ni uspelo zaradi %1
 less than	mail	sl	Manj kot
+list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	sl	Seznam akcij, ki bodo privzeto vklopljene/aktivirane (npr. akcija Mail composose shrani kot InfoLog)
 mail	common	sl	Pošta
 mail acl	mail	sl	Pošta ACL
 mail filter	mail	sl	Mail filter
@@ -346,6 +352,7 @@ move to archive	mail	sl	Premakni v mapo za arhiviranje
 move to trash	mail	sl	Premakni v smeti
 moved %1 message(s) from %2 to %3	mail	sl	premaknil %1 sporočil od %2 do %3
 moving folders from one mailaccount to another is not supported	mail	sl	Premikanje map iz enega poštnega računa v drugega ni podprto
+name and email	mail	sl	Ime in e-pošta
 name of account	mail	sl	Ime računa
 never display html emails	mail	sl	Nikoli ne prikaži sporočil HTML
 never show	mail	sl	nikoli ne pokaži
@@ -377,14 +384,18 @@ notify about new mail in this folders	mail	sl	V teh mapah obvestite o novi pošt
 notify when new mails arrive in these folders	mail	sl	obvestite, kdaj v te mape pride nova pošta
 on	mail	sl	Vključeno
 one address is not valid	mail	sl	En naslov ni veljaven
+only email	mail	sl	Samo e-pošta
 only makes sense, if you transport password through a different channel / outside of this mail to recipients!	mail	sl	Smiselno je samo, če geslo prenesete na drug kanal / izven te pošte prejemnikom!, če geslo prenesete na drug kanal / izven te pošte prejemnikom!
+only name	mail	sl	Samo ime
 only needed for some servers, that do not return all folders on root level queries to retrieve all folders for that level	mail	sl	potrebni samo za nekatere strežnike, ki ne vrnejo vseh map v poizvedbah korenskega nivoja, da bi naložili vse mape za to raven
 only one window	mail	sl	Le eno okno
 only send message, do not copy a version of the message to the configured sent folder	mail	sl	pošljite samo sporočilo, ne kopirajte različice sporočila v nastavljeno mapo
 open in html mode	mail	sl	Odpri v načinu HTML
 open in text mode	mail	sl	Odpri v besedilnem načinu
+open with collabora office	mail	sl	Odpiranje s programom Collabora Online
 organisation	admin	sl	Organizacija
 organization	mail	sl	Organizacija
+organization | real name email	mail	sl	Organizacija | Resnično ime [E-pošta]
 original message	mail	sl	Izvirno sporočilo
 outbox	mail	sl	V pošiljanju
 password protect	mail	sl	zaščita z geslom
@@ -403,13 +414,15 @@ prevent managing filters	mail	sl	Preprečite upravljanje filtrov
 prevent managing folders	mail	sl	Preprečite upravljanje map
 prevent managing notifications	mail	sl	Preprečite upravljanje obvestil
 prevent managing vacation notice	mail	sl	Preprečite upravno obvestilo o dopustu
-preview pane	mail	sl	Okno za predogled
+preview pane	mail	sl	Postavitev okna
 primary profile	mail	sl	Osnovni profil
+printing	mail	sl	Tiskanje
 printview	mail	sl	Predogled tiskanja
 processing of file %1 failed. failed to meet basic restrictions.	mail	sl	Obdelava datoteke %1 ni uspela. Ni bilo mogoče zadostiti osnovnim omejitvam.
 provide a default vacation text, (used on new vacation messages when there was no message set up previously)	admin	sl	podajte privzeto besedilo za počitnice (uporablja se za nova sporočila za počitnice, če predhodno ni bilo sporočila)
+push notifications	mail	sl	Potisna obvestila
 quicksearch	mail	sl	Hitro iskanje
-quicksearch (with cc)	mail	sl	hitri iskalnik (vklj.CC)
+quicksearch (with cc)	mail	sl	Hitro iskanje (+ kopiranje)
 quota not provided by server	mail	sl	Kvota, ki jo ne zagotavlja strežnik
 quota: %1	mail	sl	Kvota: %1
 read	mail	sl	Prebrano
@@ -516,10 +529,12 @@ show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	
 show horizontal	mail	sl	prikazati vodoravno
 show horizontal, hide if none selected	mail	sl	prikazati vodoravno, skriti, če ni izbran
 show new messages on home page	mail	sl	prikaži nova sporočila na domači strani
+show notification for new arriving mails	mail	sl	Prikaži obvestilo za novo prispela sporočila
 show test connection section and control the level of info displayed?	mail	sl	Prikaži povezavo Test Connection in nadzirajte prikazano raven informacij?
 show test connection section and control the level of info displayed??	mail	sl	Prikaži povezavo Test Connection in nadzor nivoja prikazane informacije?
 show them this time only	mail	sl	Pokaži jih samo tokrat
 show vertical	mail	sl	prikazati navpično
+show vertical with all columns	mail	sl	Prikaži navpično z vsemi stolpci
 show/hide preview pane in mail list view	mail	sl	Pokaži / Skrij podokno za predogled v pogledu e-poštnega seznama
 sieve	mail	sl	Sieve
 sieve connection status	mail	sl	Stanje povezave
@@ -637,6 +652,7 @@ yes, only trigger connection reset	mail	sl	Ja, samo sproži ponastavitev povezav
 yes, show all debug information available for the user	mail	sl	da, prikažite vse informacije o odpravi napak, ki so na voljo uporabniku
 yes, show basic info only	mail	sl	da, prikaži samo osnovne informacije
 you can either choose to save as infolog or tracker, not both.	mail	sl	Lahko se odločite, da shranite kot infolog OR tracker, ne oboje.
+you can select what info to be displayed on email tag	mail	sl	Izberete lahko, katere informacije bodo prikazane na e-poštni oznaki.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	sl	Za začetni datum in $ $ end $ $ lahko uporabite $$ start $$ za končni datum.
 you may add this certificate into your contact, if you trust this signature.	mail	sl	To potrdilo lahko dodate v stik, če zaupate temu podpisu.
 you need to enter your s/mime passphrase to send this message.	mail	sl	Za pošiljanje tega sporočila morate vnesti geslo za S / MIME.

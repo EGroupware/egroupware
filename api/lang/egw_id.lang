@@ -96,6 +96,7 @@ and	common	id	Dan
 andorra	common	id	ANDORA
 angola	common	id	ANGOLA
 anguilla	common	id	ANGUILA
+answering no will not ask you again for this browser.	common	id	Jika Anda menjawab tidak, Anda tidak akan lagi diminta untuk menggunakan browser ini.
 antarctica	common	id	ANTARTIKA
 antigua and barbuda	common	id	ANTIGUA DAN BARBUDA
 api	common	id	EGroupware API
@@ -344,6 +345,7 @@ fields	common	id	Field
 fiji	common	id	FIJI
 file	common	id	Berkas
 file '%1' not found!	common	id	Berkas '%1' tidak ditemukan!
+file a file	common	id	Menyimpan file
 file is of wrong type (%1 != %2)!	common	id	Salah tipe berkas (%1 != %2 )!
 file writen	common	id	Berkas dituliskan
 files	common	id	Berkas
@@ -361,6 +363,9 @@ folder already exists.	common	id	Folder sudah ada.
 force selectbox	common	id	Force SelectBox
 foreign key	common	id	Foreign Key
 forever	common	id	Selamanya
+formatted business address	common	id	Alamat bisnis yang diformat
+formatted private address	common	id	Alamat pribadi yang diformat
+formatted text (html)	common	id	Teks yang diformat (HTML)
 france	common	id	PERANCIS
 french guiana	common	id	GUYANA PERANCIS
 french polynesia	common	id	POLYNESIA PERANCIS
@@ -368,6 +373,7 @@ french southern territories	common	id	TERITORI SELATAN PERANCIS
 friday	common	id	Jumat
 ftp	common	id	FTP
 fullname	common	id	Namalengkap
+fullscreen	common	id	Layar penuh
 fullscreen mode	common	id	Mode Layarpenuh
 gabon	common	id	GABON
 gambia	common	id	GAMBIA
@@ -447,6 +453,7 @@ insert in document	common	id	Sisipkan dalam dokumen
 insert row after	common	id	Sisipkan baris setelah
 insert row before	common	id	Sisipkan baris sebelum
 insert timestamp into description field	common	id	Masukkan cap waktu ke dalam bidang deskripsi
+install egroupware as mail-handler?	common	id	Menginstal EGroupware sebagai penangan surat?
 integer	common	id	Integer
 international	common	id	Internasional
 invalid filename	common	id	Nama berkas salah
@@ -563,6 +570,7 @@ montserrat	common	id	MONTSERRAT
 more	common	id	Lagi
 more than 1 match for '%1'	common	id	Lebih dari 1 kecocokan untuk '%1'
 morocco	common	id	MAROKO
+move	common	id	Pindah
 mozambique	common	id	MOZAMBIQUE
 multicolumn indices	common	id	Multicolumn Indices
 multiple	common	id	jamak

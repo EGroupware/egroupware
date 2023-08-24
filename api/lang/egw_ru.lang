@@ -24,10 +24,10 @@
 '%1' copied to clipboard	common	ru	'%1' скопировано в буфер обмена
 '%1' has an invalid format	common	ru	Неверный формат '%1'
 '%1' has an invalid format !!!	common	ru	'%1' имеет неверный формат!
-'%1' is not a valid json file!	common	ru	'%1' нет файла json в корневом каталоге eGW!
 '%1' is not a valid date !!!	common	ru	'%1' неверная дата!
 '%1' is not a valid floatingpoint number !!!	common	ru	'%1' неверное число с плавающей запятой!
 '%1' is not a valid integer !!!	common	ru	'%1' неверное целое !
+'%1' is not a valid json file!	common	ru	'%1' нет файла json в корневом каталоге eGW!
 '%1' is not allowed ('%2')!	common	ru	'%1' недопустимо ('%2')!
 (session restored in %1 seconds)	common	ru	(сессия восстановлена за %1 секунд)
 00 (disable)	admin	ru	00 (выкл)
@@ -120,6 +120,7 @@ and	common	ru	И
 andorra	common	ru	Андорра
 angola	common	ru	Ангола
 anguilla	common	ru	Ангилья
+answering no will not ask you again for this browser.	common	ru	Если вы ответите "нет", то этот браузер больше запрашиваться не будет.
 antarctica	common	ru	Антарктида
 antigua and barbuda	common	ru	Антигуа и Барбуда
 api	common	ru	EGroupware API
@@ -499,6 +500,7 @@ file %1 has no content in physical filesystem %2 --> failed to remove file!	admi
 file %1 has no content in physical filesystem %2 --> file removed!	admin	ru	Файл перемещён. Файл %1 не имеет контента в физической файловой системе %2
 file %1 has no content in physical filesystem %2!	admin	ru	Файл %1 не имеет контента в физической файловой системе %2
 file '%1' not found!	common	ru	Файл '%!' не найден!
+file a file	common	ru	Сохранить файл
 file contains more than one etemplate, last one is shown !!!	common	ru	Файл содержит больше одного е-Шаблона, показан только последний !!!
 file is of wrong type (%1 != %2)!	common	ru	Файл неправильного типа (%1 !=%2)!
 file writen	common	ru	Файл записан
@@ -519,6 +521,8 @@ for more than one contact in a document use the tag pagerepeat!	preferences	ru	�
 force selectbox	common	ru	Принудительно Список выбора
 foreign key	common	ru	Внешний ключ
 forever	common	ru	Навсегда
+formatted business address	common	ru	Форматированный юридический адрес
+formatted private address	common	ru	Форматированный частный адрес
 formatted text (html)	common	ru	Форматированный текст (HTML)
 found unconnected %1 %2!	admin	ru	Найдены не подсоединённые %1 %2
 france	common	ru	Франция
@@ -528,6 +532,7 @@ french southern territories	common	ru	Французские южные терр
 friday	common	ru	Пятница
 ftp	common	ru	FTP
 fullname	common	ru	Полное имя
+fullscreen	common	ru	Полноэкранный режим
 fullscreen mode	common	ru	Полноэкранный режим
 gabon	common	ru	Габон
 gambia	common	ru	Гамбия
@@ -647,6 +652,7 @@ insert placeholder	common	ru	Вставить заполнитель
 insert row after	common	ru	Вставить строку после
 insert row before	common	ru	Вставить строку перед
 insert timestamp into description field	common	ru	Вставка метки времени в поле описания
+install egroupware as mail-handler?	common	ru	Установить EGroupware в качестве почтового обработчика?
 integer	common	ru	Целое
 international	common	ru	Международный
 invalid 2-factor authentication code	common	ru	Неверный код двухфакторной аутентификации
@@ -787,6 +793,7 @@ more	common	ru	Еще
 more than 1 match for '%1'	common	ru	Более чем 1 совпадает с '%1'
 more then one active file %1 found, inactivating %2 older revisions!	admin	ru	Найдено более одного активного файла %1. Деактивация %2 старых версий.
 morocco	common	ru	Марокко
+move	common	ru	Переместить
 moved %1 children from directory fs_id=%2 to %3	admin	ru	Из каталога fs_id=%2 в %3 перемещено %1 дочерних
 moved unconnected %1 %2 to %3.	admin	ru	Перемещено %1 %2 в %3
 mozambique	common	ru	Мозамбик

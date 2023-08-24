@@ -27,10 +27,10 @@
 '%1' copied to clipboard	common	sl	'%1' se kopira v odložišče
 '%1' has an invalid format	common	sl	'%1' ima nepravilen format
 '%1' has an invalid format !!!	common	sl	'%1' ima nepravilen format
-'%1' is not a valid json file!	common	sl	'%1' ni datoteka json v koraku eGW strežnika!
 '%1' is not a valid date !!!	common	sl	'%1' ni veljaven datum !!!
 '%1' is not a valid floatingpoint number !!!	common	sl	'%1' ni pravilno decimalno število
 '%1' is not a valid integer !!!	common	sl	'%1' ni pravilno celo število
+'%1' is not a valid json file!	common	sl	'%1' ni datoteka json v koraku eGW strežnika!
 '%1' is not a valid timezone!	common	sl	'%1' ni datoteka php v koraku eGW strežnika (% 2)!
 '%1' is not allowed ('%2')!	common	sl	'%1' NI dovoljeno ('%2')!
 '%1' is not allowed%2)!	common	sl	'%1' NI dovoljeno %2)!
@@ -130,6 +130,7 @@ and	common	sl	in
 andorra	common	sl	ANDORA
 angola	common	sl	ANGOLA
 anguilla	common	sl	ANGVILA
+answering no will not ask you again for this browser.	common	sl	Če odgovorite z ne, vas ta brskalnik ne bo več vprašal.
 antarctica	common	sl	ANTARKTIKA
 antigua and barbuda	common	sl	ANTIGVA IN BARBUDA
 api	common	sl	EGroupware API
@@ -546,6 +547,7 @@ file %1 has no content in physical filesystem %2 --> failed to remove file!	admi
 file %1 has no content in physical filesystem %2 --> file removed!	admin	sl	Datoteka %1 nima vsebine v fizičnem datotečnem sistemu %2 -> datoteka je odstranjena!
 file %1 has no content in physical filesystem %2!	admin	sl	Datoteka %1 nima vsebine v fizičnem datotečnem sistemu %2!
 file '%1' not found!	common	sl	Datoteke »%1« ni mogoče najti!
+file a file	common	sl	Shranjevanje datoteke
 file contains more than one etemplate, last one is shown !!!	common	sl	Datoteka vsebuje več kot eno ePredlogo, prikazana je zadnja.
 file information	common	sl	Podatki o datoteki
 file is of wrong type (%1 != %2)!	common	sl	Datoteka je napačna (%1 !=%2)!
@@ -569,6 +571,8 @@ force	common	sl	vsili
 force selectbox	common	sl	Vsili izbirna polja
 foreign key	common	sl	Tuji ključ
 forever	common	sl	Za vedno
+formatted business address	common	sl	Formatiran poslovni naslov
+formatted private address	common	sl	Oblikovan zasebni naslov
 formatted text (html)	common	sl	Oblikovano besedilo (HTML)
 found unconnected %1 %2!	admin	sl	Najdeno je nepovezano %1 %2!
 fr	common	sl	Fr
@@ -579,6 +583,7 @@ french southern territories	common	sl	FRANCOSKI JUŽNI TERITORIJ
 friday	common	sl	Petek
 ftp	common	sl	FTP
 fullname	common	sl	Polno ime
+fullscreen	common	sl	Celozaslonska stran
 fullscreen mode	common	sl	Celozaslonski način
 gabon	common	sl	GABON
 gambia	common	sl	GAMBIJA
@@ -702,6 +707,7 @@ insert placeholder	common	sl	Vstavljanje nadomestnega nosilca
 insert row after	common	sl	Vstavi vrstico za izbranim
 insert row before	common	sl	Vstavi vrstico pred izbrano
 insert timestamp into description field	common	sl	Vstavljanje časovnega žiga v polje z opisom
+install egroupware as mail-handler?	common	sl	Namestite EGroupware kot poštni strežnik?
 integer	common	sl	Celo število
 international	common	sl	Mednarodni
 introduction	common	sl	Uvod
@@ -854,6 +860,7 @@ more	common	sl	Več
 more than 1 match for '%1'	common	sl	Več kot 1 se ujema z '%1'
 more then one active file %1 found, inactivating %2 older revisions!	admin	sl	Najdeno je več aktivnih datotek %1, inaktiviranje %2 starejših revizij!
 morocco	common	sl	MAROKO
+move	common	sl	Premaknite
 moved %1 children from directory fs_id=%2 to %3	admin	sl	Odstranili so otroke %1 iz imenika fs_id=%2 do %3
 moved unconnected %1 %2 to %3.	admin	sl	Premaknjeno nepovezano %1 %2 do %3.
 mozambique	common	sl	MOZAMBIK

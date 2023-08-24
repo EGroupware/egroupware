@@ -29,10 +29,10 @@
 '%1' copied to clipboard	common	en	'%1' copied to clipboard
 '%1' has an invalid format	common	en	'%1' has an invalid format
 '%1' has an invalid format !!!	common	en	'%1' has an invalid format!
-'%1' is not a valid json file!	common	en	'%1' is not a valid json file
 '%1' is not a valid date !!!	common	en	'%1' is not a valid date!
 '%1' is not a valid floatingpoint number !!!	common	en	'%1' is not a valid floating point number!
 '%1' is not a valid integer !!!	common	en	'%1' is not a valid integer!
+'%1' is not a valid json file!	common	en	'%1' is not a valid json file
 '%1' is not a valid timezone!	common	en	'%1' is not a valid timezone!
 '%1' is not allowed ('%2')!	common	en	'%1' is NOT allowed ('%2')!
 '%1' is not allowed%2)!	common	en	'%1' is NOT allowed%2)!
@@ -78,8 +78,8 @@ actions	common	en	Actions
 actions...	common	en	Actions...
 active	common	en	Active
 active directory requires ssl or tls to change passwords!	common	en	Active directory requires SSL or TLS to change passwords!
-add	common	en	add
-add %1	common	en	add %1
+add	common	en	Add
+add %1	common	en	Add %1
 add %1 category for	common	en	Add %1 category for
 add a new column (after the existing ones)	common	en	Add a new column
 add a new contact	common	en	Add a new contact
@@ -372,6 +372,7 @@ data type	common	en	Data type
 database error	common	en	Database error
 database error!	common	en	Database error!
 date	common	en	Date
+date + time	common	en	Date + time
 date due	common	en	Due date
 date+time	common	en	Date+Time
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	en	Date time port.<br>If using port 13, set firewall rules appropriately before submitting this page.<br>(Port: 13 / Host: 129.6.15.28).
@@ -545,6 +546,7 @@ everything	common	en	Everything
 exact	common	en	Exact
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	preferences	en	Example {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - search the field "n_prefix", for "Mr", if found, write Hello Mr., else write Hello Ms.
 example {{letterprefix}} - gives a letter prefix without double spaces, if the title is empty for example	preferences	en	Example {{LETTERPREFIX}} - Gives a letter prefix without double spaces, if the title is empty for example
+example {{letterprefix}} - gives a letter prefix without double spaces, if the title is emty for  example	common	en	Example {{LETTERPREFIX}} - Gives a letter prefix without double spaces, if the title is empty for  example
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	preferences	en	Example {{NELF role}} - if field role is not empty, you will get a new line with the value of field role
 example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	preferences	en	Example {{nenvlf role}} - if field role is not empty, set a LF without any value of the field
 exchange this row with the one above	common	en	Exchange this row with the one above
@@ -602,6 +604,8 @@ forecolor	common	en	Forecolor
 foreign key	common	en	Foreign key
 forever	common	en	Forever
 formatselect	common	en	Formatselect
+formatted business address	common	en	Formatted business address
+formatted private address	common	en	Formatted private address
 formatted text (html)	common	en	Formatted text (HTML)
 found unconnected %1 %2!	admin	en	Found unconnected %1 %2!
 fr	common	en	Fr
@@ -687,6 +691,7 @@ how many rows to print	common	en	How many rows to print
 how to show the general egroupware menu ?	common	en	How to show the general EGroupware menu
 html	common	en	HTML
 html link to the current record	common	en	HTML link to the current record
+html links to any entries linked to the current record, excluding attached files	common	en	HTML links to any entries linked to the current record, excluding attached files
 hungary	common	en	HUNGARY
 iceland	common	en	ICELAND
 id	common	en	ID
@@ -812,6 +817,7 @@ link is appended to mail allowing recipients to download currently attached vers
 link is appended to mail allowing recipients to download or modify up to date version of files (epl only)	common	en	Link is appended to mail allowing recipients to download or modify up to date version of files (EPL only)
 link is appended to mail allowing recipients to download up to date version of files	common	en	Link is appended to mail allowing recipients to download up to date version of files
 link target %1 not found!	common	en	Link target %1 not found!
+link title of current record	common	en	Link title of current record
 linkapps	common	en	Link apps
 linked	common	en	Linked
 linkentry	common	en	Link entry
@@ -895,7 +901,7 @@ more	common	en	More
 more than 1 match for '%1'	common	en	More than 1 match for '%1'
 more then one active file %1 found, inactivating %2 older revisions!	admin	en	More then one active file %1 found, inactivating %2 older revisions!
 morocco	common	en	MOROCCO
-move	common	en	move
+move	common	en	Move
 moved %1 children from directory fs_id=%2 to %3	admin	en	Moved %1 children from folder fs_id=%2 to %3
 moved unconnected %1 %2 to %3.	admin	en	Moved unconnected %1 %2 to %3.
 mozambique	common	en	MOZAMBIQUE
@@ -1473,6 +1479,8 @@ upload new photo	common	en	Upload new photo
 upload requires the directory to be writable by the webserver!	common	en	Upload requires the folder to be writable by the web server!
 uppercase letters	common	en	uppercase letters
 url	common	en	URL
+url of current record	common	en	URL of current record
+urls of any entries linked to the current record, excluding attached files	common	en	URLs of any entries linked to the current record, excluding attached files
 uruguay	common	en	URUGUAY
 use button to search for	common	en	Use button to search for
 use button to search for address	common	en	Use button to search for address

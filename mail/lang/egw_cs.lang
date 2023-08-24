@@ -55,10 +55,13 @@ available personal email-accounts/profiles	mail	cs	Dostupné osobní e-mailové 
 before reply, visible during compose	mail	cs	Před odpovědí, viditelně během vytváření zprávy
 but check shared folders	mail	cs	ale zkontrolovat sdílené složky
 by date	mail	cs	datumem
+by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	cs	Ve výchozím nastavení je "http://" nahrazeno pouze "https://". Nebojte se nastavit 'https://proxy.egroupware.org/' tak, aby načítal také obrázky dostupné pouze přes http.
+caching of flags	mail	cs	Ukládání příznaků do mezipaměti
 can not open imap connection	mail	cs	Není možné otevřít spojení se serverem IMAP.
 canceled deletion due to user interaction	mail	cs	Mazání bylo přerušeno uživatelem
 change editor type	mail	cs	Přepnout editor do HTML režimu
 changed profile	mail	cs	Změněný profil
+changing subject failed folder %1 does not exist	mail	cs	Změna předmětu se nezdařila složka %1 neexistuje
 check message against next rule also	mail	cs	zkontrolovat zprávu také proti následujícímu pravidlu
 check to receive a notification when the message is read (note: not all clients support this and/or the receiver may not authorize the notification)	mail	cs	Zaškrtněte pro obdržení zprávy, že e-mail byl přečten (Poznámka: ne všichni e-mailoví klienti podporují tuto funkci a/nebo příjemce nemusí toto ověření povolit).
 check to save as calendar event on send	mail	cs	Zaškrtněte pro uložení jako události po odeslání
@@ -77,6 +80,7 @@ confirm attach message	mail	cs	Potvrzení přílohy e-mailu
 confirm move to folder	mail	cs	Potvrzení při přesunu složky
 connect to profile %1	mail	cs	Připojit k profilu %1
 connection status	mail	cs	Stav připojení
+contact label	mail	cs	Štítek kontaktu
 contains	mail	cs	obsahuje
 contains(*)	mail	cs	Obsahuje (*)
 convert mail to item and attach its attachments to this item (standard)	mail	cs	Změnit e-mail na záznam a přílohy v e-mailu přiložit k tomuto záznamu (standardně)
@@ -268,6 +272,7 @@ importance	mail	cs	Důležitost
 important	mail	cs	důležitý
 in mailbox: %1, with id: %2, and partid: %3	mail	cs	Ve schránce: %1, s identifikací: %2 a %3
 inbox	mail	cs	Doručená pošta
+information to show on email tag	mail	cs	Informace, které se mají zobrazit na e-mailové značce
 initialization of mail failed. please use the wizard to cope with the problem.	mail	cs	Inicializace E-mailu nebyla úspěšná. Použijte prosím průvodce pro odstranění problému.
 inline	mail	cs	Přeposlat jako E-mail
 insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)	mail	cs	Vložit podpis na začátek nové zprávy (nebo odpovědi) při otevření okna pro psaní zprávy (nebude možné zvolit jiný podpis)
@@ -278,6 +283,7 @@ keep a copy of the message in your inbox	mail	cs	zachovat kopii zprávy ve vaš�
 kilobytes	mail	cs	kilobytů
 later	mail	cs	Později
 less than	mail	cs	menší než
+list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	cs	Seznam akcí, které mají být ve výchozím nastavení zapnuty/aktivovány (např. akce Mail kompose save as InfoLog).
 mail	common	cs	E-mail
 mail acl	mail	cs	ACL práva e-mailu
 mail filter	mail	cs	Filtrovací pravidla
@@ -315,6 +321,7 @@ move to archive	mail	cs	Přesunout do archivu
 move to trash	mail	cs	Přesunout do koše
 moved %1 message(s) from %2 to %3	mail	cs	%1 zpráv bylo přesunuto z %2 do %3
 moving folders from one mailaccount to another is not supported	mail	cs	Přesouvání složek z jednoho e-mailového účtu do jiného není podporováno
+name and email	mail	cs	Jméno a e-mail
 name of account	mail	cs	Název účtu
 never display html emails	mail	cs	Nikdy nezobrazovat HTML e-maily
 new mail notification	mail	cs	Oznámení o novém e-mailu
@@ -344,19 +351,24 @@ notify about new mail in this folders	mail	cs	Oznámit nový e-mail v těchto sl
 notify when new mails arrive in these folders	mail	cs	Oznámí, pokud do těchto složkek bude doručen nový e-mail
 on	mail	cs	na
 one address is not valid	mail	cs	Jedna adresa není platná
+only email	mail	cs	Pouze e-mail
 only makes sense, if you transport password through a different channel / outside of this mail to recipients!	mail	cs	Připadá v úvahu, pouze pokud heslo odesíláte jiným způsobem / mino tento e-mail!
+only name	mail	cs	Pouze jméno
 only needed for some servers, that do not return all folders on root level queries to retrieve all folders for that level	mail	cs	Je vyžadováno pouze pro některé servery, které nevracejí všechny složky na hlavní úrovni
 only one window	mail	cs	Jen jedno okno
 only send message, do not copy a version of the message to the configured sent folder	mail	cs	Pouze odešle zprávu a kopie zprávy nebude uložena do složky pro odeslanou poštu
 open in html mode	mail	cs	Otevřít v režimu HTML
 open in text mode	mail	cs	Otevřit v textovém režimu
+open with collabora office	mail	cs	Otevřít pomocí Collabora Online
 organisation	admin	cs	Organizace
 organization	mail	cs	organizace
-original message	mail	cs	původní zpráva
+organization | real name email	mail	cs	Organizace | Skutečné jméno [E-mail]
+original message	mail	cs	Původní zpráva
 outbox	mail	cs	Odeslaná pošta
 password protect	mail	cs	Chráněno heslem
 permission denied	mail	cs	Přístup zamítnut
 please configure access to an existing individual imap account.	mail	cs	Nakonfigurujte prosím přístup ke stávajícímu osobnímu IMAP účtu.
+please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	cs	Nakonfigurujte prosím svůj certifikát S/MIME na kartě Šifrování v dialogovém okně Upravit účet.
 please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	cs	Kontaktujte správce svého e-mailového serveru pro ověření, zda váš server podporuje pravidla a jak je v eGroupWaru pro váš účet %1 s identifikací %2 povolit.
 please contact your administrator to validate if your server supports serverside vacationmessages, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	cs	Kontaktujte správce svého e-mailového serveru pro ověření, zda váš server podporuje automatické odpovědi a jak je v eGroupWaru pro váš účet %1 s identifikací %2 povolit.
 please select a address	mail	cs	Prosím vyberte adresu
@@ -368,11 +380,13 @@ prevent managing filters	mail	cs	Zabránit změně filtrovacích pravidel
 prevent managing folders	mail	cs	Zabránit změně nastavení složek
 prevent managing notifications	mail	cs	Zabránit změně nastavení oznámení
 prevent managing vacation notice	mail	cs	Zabránit změně nastavení automatické odpovědi
-preview pane	mail	cs	Přehled - E-mail
+preview pane	mail	cs	Rozložení okna
 primary profile	mail	cs	Výchozí profil
+printing	mail	cs	Tisk
 printview	mail	cs	Náhled pro tisk
 processing of file %1 failed. failed to meet basic restrictions.	mail	cs	Zpracování souboru %1 nebylo úspěšné. Nebyla splněna základní omezení.
 provide a default vacation text, (used on new vacation messages when there was no message set up previously)	admin	cs	Zadejte výchozí text automatické odpovědi
+push notifications	mail	cs	Oznámení Push
 quicksearch	mail	cs	Rychlé hledání
 quicksearch (with cc)	mail	cs	Rychlé hledání (včetně příjemce v kopii)
 quota not provided by server	mail	cs	Kvóty nejsou serverem podporovány
@@ -470,8 +484,11 @@ show all attachments	mail	cs	Zobrazit všechny přílohy
 show all folders	mail	cs	Vyberte všechny složky
 show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	cs	Zobrazit všechny složky (přihlášené i nepřihlášené k odběru) na Hlavní stránce?
 show new messages on home page	mail	cs	Zobrazit nové zprávy na Hlavní stránce
+show notification for new arriving mails	mail	cs	Zobrazit oznámení o nově příchozích e-mailech
 show test connection section and control the level of info displayed?	mail	cs	Zobrazit sekci s testem připojení a s řízením úrovně zobrazovaných informací?
 show test connection section and control the level of info displayed??	mail	cs	Zobrazit sekci s testem připojení a s řízením úrovně zobrazovaných informací?
+show vertical	mail	cs	Zobrazit vertikální
+show vertical with all columns	mail	cs	Zobrazit vertikálně se všemi sloupci
 show/hide preview pane in mail list view	mail	cs	Zobrazit / skrýt náhled v seznamu zpráv
 sieve	mail	cs	Sieve
 sieve connection status	mail	cs	Stav podmínek Sieve
@@ -583,6 +600,7 @@ yes, only trigger connection reset	mail	cs	Ano, pouze resetovat připojení
 yes, show all debug information available for the user	mail	cs	Ano, zobrazit všechny ladicí informace dostupné pro uživatele
 yes, show basic info only	mail	cs	Ano, zobrazit pouze základní informace
 you can either choose to save as infolog or tracker, not both.	mail	cs	Můžete zvolit buď uložení jako úkol, nebo sledovací systém, ne však obojí.
+you can select what info to be displayed on email tag	mail	cs	Můžete vybrat, jaké informace se mají zobrazit na e-mailové značce.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	cs	Jako počáteční datum můžete použít $$start$$, jako koncové pak $$end$$.
 you need to install mailvelope plugin available for chrome and firefox from %1.	mail	cs	Je nutné nainstalovat zásuvný modul Mailvelope pro Chrome a Firefox z %1.
 you need to save the message as draft first before to be able to save it into vfs	mail	cs	Před tím, než bude možné zprávu uložit do VFS je nutné uložit ji jako koncept.

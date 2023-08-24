@@ -79,12 +79,15 @@ before reply, visible during compose	mail	es-es	Antes de la respuesta, visible d
 blacklisted mails are marked as spam	mail	es-es	Los mensajes en la lista negra están marcados como spam
 but check shared folders	mail	es-es	pero compruebe las carpetas compartidas
 by date	mail	es-es	por fecha
+by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	es-es	Por defecto, 'http://' se sustituye por 'https://'. Si lo desea, puede configurar 'https://proxy.egroupware.org/' para que también cargue imágenes sólo disponibles a través de http.
+caching of flags	mail	es-es	Almacenamiento en caché de banderas
 can not open imap connection	mail	es-es	No se puede abrir la conexión IMAP
 can not resolve the winmail.dat attachment!	mail	es-es	¡No se puede resolver el archivo adjunto winmail.dat!
 canceled deletion due to user interaction	mail	es-es	supresión cancelada debido a la interacción del usuario
 certificate info for email %1	mail	es-es	Información del certificado para el correo-e %1
 change editor type	mail	es-es	cambiar el editor al modo HTML
 changed profile	mail	es-es	perfil cambiado
+changing subject failed folder %1 does not exist	mail	es-es	Error al cambiar el asunto La carpeta %1 no existe
 check message against next rule also	mail	es-es	comprobar el mensaje también con la regla siguiente
 check to receive a notification when the message is read (note: not all clients support this and/or the receiver may not authorize the notification)	mail	es-es	marque para recibir una notificación cuando se lee el mensaje (nota: no todos los clientes apoyan esto y/o el receptor no puede autorizar la notificación)
 check to save as calendar event on send	mail	es-es	marque para guardar como evento al enviar
@@ -103,6 +106,7 @@ confirm attach message	mail	es-es	Confirmar adjuntar mensaje
 confirm move to folder	mail	es-es	Confirmar mover a carpeta
 connect to profile %1	mail	es-es	Conectar al perfil %1
 connection status	mail	es-es	Estado de la conexión
+contact label	mail	es-es	Etiqueta de contacto
 contains	mail	es-es	contiene
 contains(*)	mail	es-es	Contiene(*)
 convert mail to item and attach its attachments to this item (standard)	mail	es-es	convertir el correo a elemento y adjuntar sus adjuntos a este elemento (estándar)
@@ -297,6 +301,7 @@ importance	mail	es-es	importancia
 important	mail	es-es	importante
 in order to protect your privacy all external sources within this email are blocked.	mail	es-es	Para proteger su privacidad, todas las fuentes externas dentro de este correo-e están bloqueadas.
 inbox	mail	es-es	Bandeja de entrada
+information to show on email tag	mail	es-es	Información a mostrar en la etiqueta de correo electrónico
 initialization of mail failed. please use the wizard to cope with the problem.	mail	es-es	Error en la inicialización del correo. Por favor, use el asistente para hacer frente al problema.
 inline	mail	es-es	En línea
 insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)	mail	es-es	inserte la firma en la parte superior del mensaje al abrir el diálogo de redactar (quizás no pueda cambiar la firma)
@@ -309,6 +314,7 @@ later	mail	es-es	Más tarde
 learning as ham (not spam) failed because of %1	mail	es-es	El aprendizaje como ham (no spam) falló debido a %1
 learning as spam failed because of %1	mail	es-es	El aprendizaje como spam falló debido a %1
 less than	mail	es-es	menor que
+list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	es-es	Lista de acciones que deben activarse por defecto (por ejemplo, la acción Guardar como InfoLog de Mail composose)
 mail	common	es-es	Correo
 mail acl	mail	es-es	Lista de control de acceso del correo
 mail filter	mail	es-es	Filtro de correo
@@ -343,6 +349,7 @@ move to	mail	es-es	Mover a
 move to trash	mail	es-es	mover a la papelera
 moved %1 message(s) from %2 to %3	mail	es-es	movido %1 mensaje(s) de %2 a %3
 moving folders from one mailaccount to another is not supported	mail	es-es	Mover carpetas de una cuenta de correo a otra no está soportada
+name and email	mail	es-es	Nombre y correo electrónico
 name of account	mail	es-es	Nombre de la cuenta
 never display html emails	mail	es-es	nunca mostrar los correos en HTML
 never show	mail	es-es	nunca mostrar
@@ -371,16 +378,22 @@ notify about new mail in this folders	mail	es-es	Notificar sobre el correo nuevo
 notify when new mails arrive in these folders	mail	es-es	notificar cuando llegan nuevos correos a estas carpetas
 on	mail	es-es	en
 one address is not valid	mail	es-es	Una dirección no es válida
+only email	mail	es-es	Sólo email
+only name	mail	es-es	Sólo nombre
 only one window	mail	es-es	sólo una ventana
 only send message, do not copy a version of the message to the configured sent folder	mail	es-es	sólo enviar mensaje, no copia una versión del mensaje a la carpeta de envío configurada
 open in html mode	mail	es-es	Abrir en modo HTML
 open in text mode	mail	es-es	Abrir en modo texto
-organisation	admin	es-es	organización
+open with collabora office	mail	es-es	Abrir con Collabora Online
+organisation	admin	es-es	Organización
 organization	mail	es-es	organización
-original message	mail	es-es	mensaje original
+organization | real name email	mail	es-es	Organización | Nombre real [Email]
+original message	mail	es-es	Mensaje original
+outbox	mail	es-es	Bandeja de salida
 password protect	mail	es-es	protegido por contraseña
 permission denied	mail	es-es	Permiso denegado
 please configure access to an existing individual imap account.	mail	es-es	por favor, configure el acceso a una cuenta individual IMAP.
+please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	es-es	Por favor, configure su certificado S/MIME en la pestaña Cifrado del cuadro de diálogo Editar cuenta.
 please select a address	mail	es-es	Por favor, seleccione una dirección
 please select the number of days to wait between responses	mail	es-es	Por favor, seleccione el número de días a esperar entre las respuestas
 please supply the message to send with auto-responses	mail	es-es	Por favor, indique el mensaje a enviar para respuestas automáticas
@@ -389,16 +402,18 @@ prevent managing filters	mail	es-es	Impedir la gestión de filtros
 prevent managing folders	mail	es-es	Impedir la gestión de carpetas
 prevent managing notifications	mail	es-es	Impedir la gestión de notificaciones
 prevent managing vacation notice	mail	es-es	Impedir la gestión de aviso de vacaciones
-preview pane	mail	es-es	Panel de vista previa
+preview pane	mail	es-es	Diseño de la ventana
 primary profile	mail	es-es	Perfil principal
-printing	mail	es-es	imprimiendo
+printing	mail	es-es	Impresión
 printview	mail	es-es	vista de impresión
 processing of file %1 failed. failed to meet basic restrictions.	mail	es-es	Error al procesar el archivo %1. No se cumplieron las restricciones básicas.
+push notifications	mail	es-es	Notificaciones push
 quicksearch	mail	es-es	Búsqueda rápida
 quicksearch (with cc)	mail	es-es	Búsqueda rápida (incluyendo copia a)
 quota not provided by server	mail	es-es	Cuota no proporcionada por el servidor
 quota: %1	mail	es-es	Cuota: %1
 read	mail	es-es	leer
+read / unread	mail	es-es	Leído / No leído
 readable	mail	es-es	ilegible
 real name	mail	es-es	Nombre real
 real name email	mail	es-es	Nombre real [Correo-e]
@@ -487,7 +502,10 @@ show all folders	mail	es-es	mostrar todas las carpetas
 show horizontal	mail	es-es	mostrar horizontal
 show horizontal, hide if none selected	mail	es-es	mostrar horizontal, ocultar si no hay seleccionados
 show new messages on home page	mail	es-es	mostrar nuevos mensajes en la página principal
+show notification for new arriving mails	mail	es-es	Mostrar notificación de nuevos correos recibidos
 show vertical	mail	es-es	mostrar vertical
+show vertical with all columns	mail	es-es	Mostrar vertical con todas las columnas
+show/hide preview pane in mail list view	mail	es-es	Mostrar/ocultar el panel de vista previa en la vista de lista de correo
 sieve	mail	es-es	Sieve
 sieve connection status	mail	es-es	Estado de la conexión Sieve
 sieve not activated	mail	es-es	Sieve no está activado
@@ -578,6 +596,7 @@ yes, offer copy option	mail	es-es	sí, ofrecer la opción de copiar
 yes, show all debug information available for the user	mail	es-es	si, mostrar toda la información de depuración disponible para el usuario
 yes, show basic info only	mail	es-es	si, sólo mostrar información básica
 you can either choose to save as infolog or tracker, not both.	mail	es-es	Puede elegir guardar como infolog o seguimiento, no ambos.
+you can select what info to be displayed on email tag	mail	es-es	Puede seleccionar la información que se mostrará en la etiqueta de correo electrónico.
 you need to save the message as draft first before to be able to save it into vfs	mail	es-es	Debe guardar primero el mensaje como borrador para poder guardarlo en VFS
 you will loose current message body, unless you save it to your clipboard!	mail	es-es	Usted perderá el cuerpo del mensaje actual, a menos que lo guarde en su portapapeles!
 you've got new mail	mail	es-es	Tiene correo nuevo

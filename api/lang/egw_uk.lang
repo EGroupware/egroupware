@@ -53,6 +53,7 @@ all in one	groupdav	uk	Все в одному
 all users	common	uk	Всі користувачі
 andorra	common	uk	АНДОРРА
 angola	common	uk	АНГОЛА
+answering no will not ask you again for this browser.	common	uk	Якщо ви відповісте "ні", вам більше не буде запропоновано цей браузер.
 application	common	uk	Приложення
 applications	common	uk	Приложення
 apply	common	uk	Застосувати
@@ -194,7 +195,9 @@ ethiopia	common	uk	ЕФІОПІЯ
 fax number	common	uk	номер факсу
 february	common	uk	Лютий
 fields	common	uk	Поля
+file a file	common	uk	Зберегти файл
 files	common	uk	Файли
+fileupload	common	uk	Завантаження файлу
 filter	common	uk	Фільтр
 finland	common	uk	ФІНЛЯНДІЯ
 first name	common	uk	Ім'я
@@ -203,14 +206,21 @@ first page	common	uk	Перша сторінка
 firstname	common	uk	Ім'я
 fixme!	common	uk	FIXME!
 force selectbox	common	uk	Форсувати SelectBox
+formatted business address	common	uk	Відформатована бізнес-адреса
+formatted private address	common	uk	Відформатована приватна адреса
+formatted text (html)	common	uk	Відформатований текст (HTML)
 france	common	uk	ФРАНЦІЯ
 friday	common	uk	П'ятниця
 ftp	common	uk	FTP
 fullname	common	uk	Повне ім'я
+fullscreen	common	uk	Повноекранний режим
+fullscreen mode	common	uk	Повноекранний режим
 gabon	common	uk	ГАБОН
 gambia	common	uk	ГАМБІЯ
+general fields:	preferences	uk	Загальні поля:
 general menu	common	uk	Загальне меню
 georgia	common	uk	ГРУЗІЯ
+german	common	uk	Німецька
 germany	common	uk	ГЕРМАНІЯ
 ghana	common	uk	ГАНА
 grant access	common	uk	Надати доступ
@@ -255,6 +265,7 @@ infolog types to sync	common	uk	Типи інфологів для синхро�
 insert all %1 addresses of the %2 contacts in %3	common	uk	Вставити всі %1 адресів %2 контактів в %3
 insert placeholder	common	uk	Вставте заповнювач
 insert timestamp into description field	common	uk	Вставте мітку часу в поле опису
+install egroupware as mail-handler?	common	uk	Встановити EGroupware як поштовик?
 international	common	uk	Міжнародний
 invalid 2-factor authentication code	common	uk	Невірний код 2-факторної автентифікації
 invalid filename	common	uk	невірне ім'я файлу
@@ -327,6 +338,7 @@ monday	common	uk	Понеділок
 mongolia	common	uk	МОНГОЛІЯ
 month	common	uk	Місяць
 morocco	common	uk	МАРОККО
+move	common	uk	Перемістити
 mozambique	common	uk	МОЗАМБІК
 name	common	uk	Ім'я
 name of the user, eg. "%1"	common	uk	Ім'я користувача, тобто "%1"

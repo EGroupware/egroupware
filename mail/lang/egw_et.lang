@@ -9,7 +9,11 @@ always show notifiction	mail	et	Näita alati teavitust
 answered	mail	et	Vastatud
 any status	mail	et	kõik staatused
 by date	mail	et	Kuupäeva järgi
+by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	et	Vaikimisi asendatakse "http://" lihtsalt "https://". Saate vabalt konfigureerida 'https://proxy.egroupware.org/', et laadida ka pilte, mis on saadaval ainult http kaudu.
+caching of flags	mail	et	Lipude vahemälu
+changing subject failed folder %1 does not exist	mail	et	Teema muutmine ebaõnnestus kaust %1 ei ole olemas.
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	et	Konfigureeritud väärtused määratakse automaatselt koostamise dialoogis kinnipeetavale väljale, kui koostate uue e-kirja.
+contact label	mail	et	Kontakt silt
 contains	mail	et	sisaldab
 cross account forward attachment is not allowed!	mail	et	Det er ikke tilladt at foretage en fremadrettet vedhæftning på tværs af konti!
 date(newest first)	mail	et	Kuupäev (uuemad enne)
@@ -44,8 +48,10 @@ html	mail	et	Html
 if	mail	et	KUI
 imap	mail	et	IMAP
 imap server	mail	et	IMAP Server
+information to show on email tag	mail	et	E-posti sildil kuvatav teave
 later	mail	et	Hiljem
 less than	mail	et	vähem kui
+list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	et	Loetelu tegevustest, mis tuleb vaikimisi sisse lülitada/aktiveerida (nt Mail compose save as InfoLog action).
 mail	common	et	E-postid
 mail acl	mail	et	Juurdepääsuõigused
 mail filter	mail	et	Maili filter
@@ -62,17 +68,29 @@ mark as deleted	mail	et	Märgi kui kustutatud
 modify subject	mail	et	Muuda teemat
 modify subject of this message	mail	et	Muuda selle sõnumi teemat
 move to trash	mail	et	Liiguta trash-i
+name and email	mail	et	Nimi ja e-posti aadress
 never display html emails	mail	et	Ära näita kunagi HTML emaile
 new subject	mail	et	Uus teema
 no signature	mail	et	pole signatuuri
 no sneak preview in list	mail	et	Sõnumi eelvaade puudub
 on	mail	et	:
+only email	mail	et	Ainult e-post
+only name	mail	et	Ainult nimi
 only one window	mail	et	ainult üks aken
+open with collabora office	mail	et	Avamine Collabora Online'iga
 organisation	admin	et	Organisatsioon
+organization | real name email	mail	et	Organisatsioon | Tegelik nimi [E-post]
+original message	mail	et	Algne sõnum
+outbox	mail	et	Väljaminev postkast
 permission denied	mail	et	Õigused puuduvad
+please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	et	Palun konfigureerige oma S/MIME-sertifikaat vahekaardil Encryption, mis asub dialoogis Muuda kontot.
 please select a address	mail	et	Palun vali aadress
 predefined addresses for compose	mail	et	Koostamise jaoks etteantud aadressid
+preview pane	mail	et	Akna paigutus
+printing	mail	et	Trükkimine
+push notifications	mail	et	Push-teated
 quicksearch	mail	et	Kiirotsing
+quicksearch (with cc)	mail	et	Kiirotsing (+Kopeerimine)
 refresh time in minutes	mail	et	Värkendamise aeg minutites
 remove all	mail	et	Eemalda Kõik
 remove immediately	mail	et	Eemalda koheselt!
@@ -83,6 +101,10 @@ select all	mail	et	Märgi kõik
 select or insert email address	mail	et	Valige või sisestage e-posti aadress
 set flags	mail	et	Märgista e-kiri kui
 set predefined values for compose...	mail	et	Määrake komplekteerimise jaoks etteantud väärtused ...
+show notification for new arriving mails	mail	et	Näita teateid uute saabunud kirjade kohta
+show vertical	mail	et	Näita vertikaalset
+show vertical with all columns	mail	et	Näita vertikaalselt kõiki veergusid
+show/hide preview pane in mail list view	mail	et	Näita/peida eelvaatepaneel postide loendi vaates
 signature	mail	et	Allkiri
 signature at top	mail	et	allkiri üleval
 signature position and visibility	mail	et	Allkirja asukoht ja nähtavus
@@ -97,3 +119,4 @@ text	mail	et	Tekst
 trash folder	mail	et	Trash Kaust
 unread	mail	et	lugematta
 write	mail	et	Kirjuta
+you can select what info to be displayed on email tag	mail	et	Saate valida, millist teavet kuvatakse e-posti sildil.

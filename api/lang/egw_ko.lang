@@ -27,6 +27,7 @@ all	common	ko	모두
 all fields	common	ko	모든 필드
 all users	common	ko	모든 사용자
 and	common	ko	그리고(AND 연산)
+answering no will not ask you again for this browser.	common	ko	아니요라고 대답하면 더 이상 이 브라우저를 입력하라는 메시지가 표시되지 않습니다.
 application	common	ko	응용프로그램
 applications	common	ko	응용프로그램들
 apply	common	ko	적용
@@ -127,7 +128,9 @@ fax number	common	ko	팩스번호
 february	common	ko	2월
 fields	common	ko	필드들
 file	common	ko	FILE
+file a file	common	ko	파일 저장
 files	common	ko	파일들
+fileupload	common	ko	파일 업로드
 filter	common	ko	필터
 first name	common	ko	이름
 first name of the user, eg. "%1"	common	ko	사용자의 이름, 예. "%1"
@@ -135,9 +138,15 @@ first page	common	ko	첫 페이지
 firstname	common	ko	이름
 folder already exists.	common	ko	폴더가 이미 있습니다
 force selectbox	common	ko	강제 선택박스
+formatted business address	common	ko	형식화된 회사 주소
+formatted private address	common	ko	형식화된 개인 주소
+formatted text (html)	common	ko	서식 있는 텍스트(HTML)
 friday	common	ko	금요일
 ftp	common	ko	FTP
+fullscreen	common	ko	전체 화면
 fullscreen mode	common	ko	전체화면 모드
+general fields:	preferences	ko	일반 필드:
+germany	common	ko	독일어
 global public	common	ko	모두에게 공개
 grant access	common	ko	접근 승인
 group	common	ko	그룹
@@ -163,6 +172,7 @@ insert column after	common	ko	뒤에 행 넣기
 insert column before	common	ko	앞에 행 넣기
 insert row after	common	ko	뒤에 열 넣기
 insert row before	common	ko	앞에 열 넣기
+install egroupware as mail-handler?	common	ko	메일 핸들러로 E그룹웨어를 설치하시겠습니까?
 international	common	ko	국제
 invalid filename	common	ko	잘못된 파일명
 invalid ip address	common	ko	잘못된 IP주소
@@ -215,6 +225,7 @@ minutes	common	ko	분
 monday	common	ko	월요일
 month	common	ko	월
 more	common	ko	검색조건 추가
+move	common	ko	이동
 name	common	ko	이름
 name of the user, eg. "%1"	common	ko	사용자의 이름, 예. "%1"
 never	common	ko	절대(never)
