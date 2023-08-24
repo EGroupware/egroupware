@@ -4,8 +4,36 @@ import {Et2Link} from "../Et2Link/Et2Link";
 import {Et2widgetWithSelectMixin} from "../Et2Select/Et2WidgetWithSelectMixin";
 import {et2_no_init} from "../et2_core_common";
 import {egw} from "../../jsapi/egw_global";
+import {SelectOption, find_select_options, cleanSelectOptions} from "../Et2Select/FindSelectOptions";
+import {html} from "@lion/core";
+
+export type TreeItem = {
+    child: Boolean | 1,
+    data?: Object,//{sieve:true,...} or {acl:true} or other
+    id: String,
+    im0: String,
+    im1: String,
+    im2: String,
+    item: TreeItem[],
+    checked?: Boolean,
+    nocheckbox: number | Boolean,
+    open: 0 | 1,
+    parent: String,
+    text: String,
+    tooltip: String
+}
+
 
 export class Et2Tree extends Et2widgetWithSelectMixin(SlTree) {
+    private input: any = null;
+    private div: JQuery;
+    private autoloading_url: any;
+    private selectOptions: any;
+
+    constructor() {
+        super();
+    }
+
     static get properties() {
         return {
             ...super.properties,
@@ -22,8 +50,8 @@ export class Et2Tree extends Et2widgetWithSelectMixin(SlTree) {
                 description: "Used to set the tree options."
             },
             onClick: {
-                name:"onClick",
-                type:"js",
+                name: "onClick",
+                type: "js",
                 description: "JS code which gets executed when clicks on text of a node"
             },
             onSelect: {
@@ -85,7 +113,7 @@ export class Et2Tree extends Et2widgetWithSelectMixin(SlTree) {
                 default: false,
                 description: "Allow marking multiple nodes, default is false which means disabled multiselection, true or 'strict' activates it and 'strict' makes it strict to only same level marking"
             },
-            highlighting:{
+            highlighting: {
                 name: "highlighting",
                 type: Boolean,
                 default: false,
@@ -94,66 +122,99 @@ export class Et2Tree extends Et2widgetWithSelectMixin(SlTree) {
         }
     };
 
-    private input:any = null;
-    private div:JQuery;
-    private autoloading_url:any;
-
-    constructor() {
-        super();
-    }
-
-    _optionTemplate() {
-
-    }
-
-    public set onOpenStart(_handler: Function){
+    public set onOpenStart(_handler: Function) {
         this.installHandler("onOpenStart", _handler)
     }
-    public set onChange(_handler: Function){
+
+    public set onChange(_handler: Function) {
         this.installHandler("onChange", _handler)
     }
-    public set onClick(_handler: Function){
+
+    public set onClick(_handler: Function) {
         this.installHandler("onClick", _handler)
     }
-    public set onSelect(_handler: Function){
+
+    public set onSelect(_handler: Function) {
         this.installHandler("onSelect", _handler)
     }
-    public set onOpenEnd(_handler: Function){
+
+    public set onOpenEnd(_handler: Function) {
         this.installHandler("onOpenEnd", _handler)
     }
+
+    private rec(item:any):String{
+        var res = `<sl-tree-item>${item.text}</sl-tree-item>`;
+        if (item.child == 1) // there are children
+        {
+            for (const subItem of item.item) {
+                res+=`<sl-tree-item> ${this.rec(subItem)}</sl-tree-item>`
+            }
+        }
+        return res;
+    }
+    _optionTemplate() {
+        /*this.selectOptions = find_select_options(this);
+        var cleanselectOptions: SelectOption[] = cleanSelectOptions(this.selectOptions)
+        var result = `<sl-tree-item>test</sl-tree-item>`
+        for (const selectOption of this.selectOptions) {
+            if (selectOption.value == "item"){
+                result += this.rec(cleanselectOptions)
+            }
+        }
+        var result = `<sl-tree-item>test</sl-tree-item>`
+        const h = html`${result}`
+        return h*/
+        var x = html`<sl-tree-item>test</sl-tree-item>`;
+        return x;
+    }
+
     /**
      * @deprecated assign to onOpenStart
      * @param _handler
      */
-    public set_onopenstart(_handler:Function){this.installHandler("onOpenStart", _handler)}
+    public set_onopenstart(_handler: Function) {
+        this.installHandler("onOpenStart", _handler)
+    }
+
     /**
      * @deprecated assign to onChange
      * @param _handler
      */
-    public set_onchange(_handler:Function) { this.installHandler('onchange', _handler); }
+    public set_onchange(_handler: Function) {
+        this.installHandler('onchange', _handler);
+    }
+
     /**
      * @deprecated assign to onClick
      * @param _handler
      */
-    public set_onclick(_handler:Function) { this.installHandler('onclick',  _handler); }
+    public set_onclick(_handler: Function) {
+        this.installHandler('onclick', _handler);
+    }
+
     /**
      * @deprecated assign to onSelect
      * @param _handler
      */
-    public set_onselect(_handler:Function) { this.installHandler('onselect', _handler); }
+    public set_onselect(_handler: Function) {
+        this.installHandler('onselect', _handler);
+    }
+
     /**
      * @deprecated assign to onOpenEnd
      * @param _handler
      */
-    public set_onopenend(_handler:Function) { this.installHandler('onOpenEnd', _handler); }
+    public set_onopenend(_handler: Function) {
+        this.installHandler('onOpenEnd', _handler);
+    }
 
-    private installHandler(_name:String,_handler:Function){
-        if(this.input == null) this.createTree(this);
+    private installHandler(_name: String, _handler: Function) {
+        if (this.input == null) this.createTree(this);
 
     }
 
     private createTree(widget: this) {
-        
+
     }
 }
 
