@@ -11,7 +11,7 @@
 import {Et2UrlPhone} from "./Et2UrlPhone";
 import {Et2UrlEmail} from "./Et2UrlEmail";
 import {colorsDefStyles} from "../Styles/colorsDefStyles";
-import {css} from "@lion/core";
+import {css} from "lit";
 
 /**
  * @customElement et2-url-phone

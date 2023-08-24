@@ -9,7 +9,8 @@
  */
 
 import {Et2Widget} from "../Et2Widget/Et2Widget";
-import {css, SlotMixin} from "@lion/core";
+import {css} from "lit";
+import {SlotMixin} from "@lion/core";
 import {SlAvatar} from "@shoelace-style/shoelace";
 import {et2_IDetachedDOM} from "../et2_core_interfaces";
 import {egw} from "../../jsapi/egw_global";

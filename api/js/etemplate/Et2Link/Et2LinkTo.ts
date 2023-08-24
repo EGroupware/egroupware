@@ -12,7 +12,8 @@
 
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
 import {FormControlMixin, ValidateMixin} from "@lion/form-core";
-import {css, html, LitElement, ScopedElementsMixin} from "@lion/core";
+import {css, html, LitElement} from "lit";
+import {ScopedElementsMixin} from "@lion/core";
 import {et2_createWidget, et2_widget} from "../et2_core_widget";
 import {et2_file} from "../et2_widget_file";
 import {Et2Button} from "../Et2Button/Et2Button";

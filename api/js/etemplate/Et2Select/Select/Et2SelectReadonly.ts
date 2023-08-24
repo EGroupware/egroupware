@@ -8,7 +8,8 @@
  */
 
 
-import {css, html, LitElement, repeat, TemplateResult} from "@lion/core";
+import {css, html, LitElement, TemplateResult} from "lit";
+import {repeat} from "lit/directives/repeat.js";
 import {et2_IDetachedDOM} from "../../et2_core_interfaces";
 import {Et2Widget} from "../../Et2Widget/Et2Widget";
 import {StaticOptions, StaticOptions as so} from "../StaticOptions";

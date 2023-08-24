@@ -9,7 +9,8 @@
  */
 
 
-import {classMap, css, html, LitElement} from "@lion/core";
+import {css, html, LitElement} from "lit";
+import {classMap} from "lit/directives/class-map.js";
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
 import {sprintf} from "../../egw_action/egw_action_common";
 import {dateStyles} from "./DateStyles";

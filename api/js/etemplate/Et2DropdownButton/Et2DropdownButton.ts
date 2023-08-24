@@ -11,7 +11,7 @@
 
 import {Et2Button} from "../Et2Button/Et2Button";
 import {SlButtonGroup, SlDropdown} from "@shoelace-style/shoelace";
-import {css, html, TemplateResult} from "@lion/core";
+import {css, html, TemplateResult} from "lit";
 import {Et2WidgetWithSelectMixin} from "../Et2Select/Et2WidgetWithSelectMixin";
 import {SelectOption} from "../Et2Select/FindSelectOptions";
 

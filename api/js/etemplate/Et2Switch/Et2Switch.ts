@@ -8,8 +8,8 @@
  * @author Hadi Nategh
  */
 
-
-import {css, html, SlotMixin} from "@lion/core";
+import {css, html} from "lit";
+import {SlotMixin} from "@lion/core";
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
 import '../Et2Image/Et2Image';
 import {SlSwitch} from "@shoelace-style/shoelace";

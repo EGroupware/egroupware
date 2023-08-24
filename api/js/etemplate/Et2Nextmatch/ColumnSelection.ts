@@ -1,7 +1,9 @@
 /**
  * Column selector for nextmatch
  */
-import {classMap, css, html, LitElement, repeat, TemplateResult} from "@lion/core";
+import {css, html, LitElement, TemplateResult} from "lit";
+import {classMap} from "lit/directives/class-map.js";
+import {repeat} from "lit/directives/repeat.js";
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
 import {et2_nextmatch_customfields} from "../et2_extension_nextmatch";
 import shoelace from "../Styles/shoelace";

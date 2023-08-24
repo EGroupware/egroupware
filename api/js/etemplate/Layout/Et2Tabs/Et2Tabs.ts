@@ -10,7 +10,7 @@
 import {SlTab, SlTabGroup, SlTabPanel} from "@shoelace-style/shoelace";
 import {loadWebComponent} from "../../Et2Widget/Et2Widget";
 import {et2_directChildrenByTagName, et2_filteredNodeIterator, et2_readAttrWithDefault} from "../../et2_core_xml";
-import {css, PropertyValues} from "@lion/core";
+import {css, PropertyValues} from "lit";
 import shoelace from "../../Styles/shoelace";
 import {et2_createWidget} from "../../et2_core_widget";
 import {colorsDefStyles} from "../../Styles/colorsDefStyles";

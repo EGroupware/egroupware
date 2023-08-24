@@ -25,7 +25,7 @@ import {et2_IDetachedDOM, et2_IInput} from "./et2_core_interfaces";
 import {et2_cloneObject, et2_no_init} from "./et2_core_common";
 import {et2_DOMWidget} from "./et2_core_DOMWidget";
 import {loadWebComponent} from "./Et2Widget/Et2Widget";
-import {LitElement} from "@lion/core";
+import {LitElement} from "lit";
 
 export class et2_customfields_list extends et2_valueWidget implements et2_IDetachedDOM, et2_IInput
 {

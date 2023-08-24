@@ -8,7 +8,8 @@ import {et2_cloneObject, et2_csvSplit} from "../et2_core_common";
 import type {IegwAppLocal} from "../../jsapi/egw_global";
 import {egw} from "../../jsapi/egw_global";
 import {ClassWithAttributes, ClassWithInterfaces} from "../et2_core_inheritance";
-import {css, dedupeMixin, LitElement, PropertyValues, unsafeCSS} from "@lion/core";
+import {css, LitElement, PropertyValues, unsafeCSS} from "lit";
+import {dedupeMixin} from "@lion/core";
 import type {et2_container} from "../et2_core_baseWidget";
 import type {et2_DOMWidget} from "../et2_core_DOMWidget";
 

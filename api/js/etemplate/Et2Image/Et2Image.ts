@@ -8,8 +8,8 @@
  * @author Nathan Gray
  */
 
-
-import {css, html, LitElement, render, SlotMixin} from "@lion/core";
+import {css, html, LitElement, render} from "lit";
+import {SlotMixin} from "@lion/core";
 import {Et2Widget} from "../Et2Widget/Et2Widget";
 import {et2_IDetachedDOM} from "../et2_core_interfaces";
 

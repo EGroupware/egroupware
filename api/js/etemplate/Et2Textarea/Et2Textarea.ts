@@ -9,7 +9,7 @@
  */
 
 
-import {css} from "@lion/core";
+import {css} from "lit";
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
 import {SlTextarea} from "@shoelace-style/shoelace";
 import shoelace from "../Styles/shoelace";

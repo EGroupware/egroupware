@@ -6,7 +6,7 @@
  * @link https://www.egroupware.org
  * @author Nathan Gray
  */
-import {css, html, TemplateResult} from "@lion/core";
+import {css, html, TemplateResult} from "lit";
 import shoelace from "../../Styles/shoelace";
 import {Et2Tag} from "./Et2Tag";
 

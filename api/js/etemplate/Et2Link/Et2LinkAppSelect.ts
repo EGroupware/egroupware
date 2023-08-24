@@ -1,5 +1,6 @@
 import {cleanSelectOptions, SelectOption} from "../Et2Select/FindSelectOptions";
-import {css, html, SlotMixin, TemplateResult} from "@lion/core";
+import {css, html, TemplateResult} from "lit";
+import {SlotMixin} from "@lion/core";
 import {Et2Select} from "../Et2Select/Et2Select";
 
 

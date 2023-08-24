@@ -11,7 +11,7 @@ import {Et2Select} from "../Et2Select";
 import {cleanSelectOptions, SelectOption} from "../FindSelectOptions";
 import {SelectAccountMixin} from "../SelectAccountMixin";
 import {Et2StaticSelectMixin} from "../StaticOptions";
-import {html, nothing} from "@lion/core";
+import {html, nothing} from "lit";
 
 export type AccountType = 'accounts' | 'groups' | 'both' | 'owngroups';
 

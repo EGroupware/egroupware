@@ -10,7 +10,7 @@
  */
 
 import {Et2DropdownButton} from "../Et2DropdownButton/Et2DropdownButton";
-import {css, html, PropertyValues, TemplateResult} from "@lion/core";
+import {css, html, PropertyValues, TemplateResult} from "lit";
 import {SelectOption} from "../Et2Select/FindSelectOptions";
 import {et2_INextmatchHeader, et2_nextmatch} from "../et2_extension_nextmatch";
 import {Et2Image} from "../Et2Image/Et2Image";

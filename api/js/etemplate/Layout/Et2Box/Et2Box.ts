@@ -9,7 +9,8 @@
  */
 
 
-import {classMap, css, html, LitElement} from "@lion/core";
+import {css, html, LitElement} from "lit";
+import {classMap} from "lit/directives/class-map.js";
 import {Et2Widget} from "../../Et2Widget/Et2Widget";
 import {et2_IDetachedDOM} from "../../et2_core_interfaces";
 

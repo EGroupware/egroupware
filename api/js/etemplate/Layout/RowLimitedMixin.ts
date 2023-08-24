@@ -1,5 +1,5 @@
 // Export the Interface for TypeScript
-import {LitElement} from "@lion/core";
+import {LitElement} from "lit";
 
 type Constructor<T = {}> = new (...args : any[]) => T;
 

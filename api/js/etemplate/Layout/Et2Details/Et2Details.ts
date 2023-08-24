@@ -8,7 +8,7 @@
  */
 
 import {Et2Widget} from "../../Et2Widget/Et2Widget";
-import {css} from "@lion/core";
+import {css} from "lit";
 import {SlDetails} from "@shoelace-style/shoelace";
 import shoelace from "../../Styles/shoelace";
 

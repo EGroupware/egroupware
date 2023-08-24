@@ -1,10 +1,11 @@
 import {et2_IInput, et2_IInputNode, et2_ISubmitListener} from "../et2_core_interfaces";
 import {Et2Widget} from "../Et2Widget/Et2Widget";
-import {css, dedupeMixin, LitElement, PropertyValues} from "@lion/core";
+import {css, LitElement, PropertyValues} from "lit";
 import {Required} from "../Validators/Required";
 import {ManualMessage} from "../Validators/ManualMessage";
 import {LionValidationFeedback, Validator} from "@lion/form-core";
 import {et2_csvSplit} from "../et2_core_common";
+import {dedupeMixin} from "@lion/core";
 
 /**
  * This mixin will allow any LitElement to become an Et2InputWidget

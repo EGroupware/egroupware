@@ -9,7 +9,7 @@
 
 /* eslint-disable import/no-extraneous-dependencies */
 import {Et2Description} from "../Et2Description/Et2Description";
-import {css, TemplateResult} from "@lion/core";
+import {css, TemplateResult} from "lit";
 import {Et2Url} from "./Et2Url";
 
 /**

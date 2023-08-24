@@ -8,7 +8,8 @@
  */
 import {Et2Widget} from "../../Et2Widget/Et2Widget";
 import {SlTag} from "@shoelace-style/shoelace";
-import {classMap, css, html, TemplateResult} from "@lion/core";
+import {css, html, TemplateResult} from "lit";
+import {classMap} from "lit/directives/class-map.js";
 import shoelace from "../../Styles/shoelace";
 
 /**

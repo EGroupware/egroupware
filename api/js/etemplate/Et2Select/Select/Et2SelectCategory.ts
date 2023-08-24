@@ -8,7 +8,7 @@
  */
 
 
-import {css, PropertyValues} from "@lion/core";
+import {css, PropertyValues} from "lit";
 import {Et2Select} from "../Et2Select";
 import {Et2StaticSelectMixin, StaticOptions as so} from "../StaticOptions";
 import {cleanSelectOptions} from "../FindSelectOptions";

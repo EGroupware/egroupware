@@ -11,7 +11,7 @@
 
 
 import {ExposeMixin, ExposeValue} from "../Expose/ExposeMixin";
-import {css, html, LitElement, TemplateResult} from "@lion/core";
+import {css, html, LitElement, TemplateResult} from "lit";
 import {Et2Widget} from "../Et2Widget/Et2Widget";
 import {et2_IDetachedDOM} from "../et2_core_interfaces";
 

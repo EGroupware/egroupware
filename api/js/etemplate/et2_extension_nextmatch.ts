@@ -75,7 +75,7 @@ import {loadWebComponent} from "./Et2Widget/Et2Widget";
 import {Et2AccountFilterHeader} from "./Et2Nextmatch/Headers/AccountFilterHeader";
 import {Et2SelectCategory} from "./Et2Select/Select/Et2SelectCategory";
 import {Et2Searchbox} from "./Et2Textbox/Et2Searchbox";
-import {LitElement} from "@lion/core";
+import type {LitElement} from "lit";
 
 //import {et2_selectAccount} from "./et2_widget_SelectAccount";
 let keep_import : Et2AccountFilterHeader
@@ -3464,7 +3464,6 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 			this.category = this._build_select('cat_id', settings.cat_is_select ?
 														 'et2-select' : 'et2-select-cat', settings.cat_id, settings.cat_is_select !== true, {
 				multiple: false,
-				tags: true,
 				class: "select-cat",
 				value_class: settings.cat_id_class
 			});

@@ -7,8 +7,8 @@
  * @author Nathan Gray
  */
 
-
-import {css, html, LitElement, render, SlotMixin} from "@lion/core";
+import {css, html, LitElement, render} from "lit";
+import {SlotMixin} from "@lion/core";
 import {cleanSelectOptions, SelectOption} from "./FindSelectOptions";
 import {Validator} from "@lion/form-core";
 import {Et2Tag} from "./Tag/Et2Tag";

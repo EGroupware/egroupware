@@ -7,7 +7,7 @@
  * @author Nathan Gray
  */
 
-import {css} from "@lion/core";
+import {css} from "lit";
 import {Et2Select} from "../Et2Select/Et2Select";
 import {Et2LinkAppSelect} from "./Et2LinkAppSelect";
 import {Et2Link} from "./Et2Link";

@@ -2,7 +2,7 @@ import {SlMenu} from "@shoelace-style/shoelace";
 import {Et2WidgetWithSelectMixin} from "./Et2WidgetWithSelectMixin";
 import {RowLimitedMixin} from "../Layout/RowLimitedMixin";
 import shoelace from "../Styles/shoelace";
-import {css, html, TemplateResult} from "@lion/core";
+import {css, html, TemplateResult} from "lit";
 import {SelectOption} from "./FindSelectOptions";
 
 /**

@@ -6,7 +6,8 @@
  * @link https://www.egroupware.org
  * @author Nathan Gray
  */
-import {classMap, css, html, nothing, PropertyValues, TemplateResult} from "@lion/core";
+import {css, html, nothing, PropertyValues, TemplateResult} from "lit";
+import {classMap} from "lit/directives/class-map.js";
 import shoelace from "../../Styles/shoelace";
 import {Et2Tag} from "./Et2Tag";
 
