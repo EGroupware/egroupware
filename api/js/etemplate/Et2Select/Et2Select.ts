@@ -604,6 +604,18 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 	}
 
 	/**
+	 * Override from SlSelect to deal with value='' or [] and option has value=''.
+	 * This fixes "empty" value not being shown
+	 * @private
+	 */
+	private handleValueChange()
+	{
+		const allOptions = this.getAllOptions();
+		const value = Array.isArray(this.value) ? this.value : [this.value];
+		this.setSelectedOptions(allOptions.filter((el) => value.includes(el.value) || value.length == 0 && el.value === ""));
+	}
+
+	/**
 	 * Always close the dropdown if an option is clicked, even if multiple=true.  This differs from SlSelect,
 	 * which leaves the dropdown open for multiple=true
 	 *

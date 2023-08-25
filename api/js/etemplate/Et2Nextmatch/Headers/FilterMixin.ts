@@ -34,9 +34,6 @@ export const FilterMixin = <T extends Constructor>(superclass : T) => class exte
 		// Bind late, maybe that helps early change triggers?
 		this.updateComplete.then(() =>
 		{
-			// Work-around: Make sure empty value is shown, if currently empty
-			this.requestUpdate("value");
-
 			this.addEventListener("change", this.handleChange);
 		});
 	}

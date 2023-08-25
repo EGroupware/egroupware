@@ -86,7 +86,7 @@ export class Et2LinkSearch extends Et2Select
 		super.updated(changedProperties);
 
 		// Set a value we don't have as an option?  That's OK, we'll just add it
-		if(changedProperties.has("value") && this.value && (
+		if(changedProperties.has("value") && this.value && this.value.length > 0 && (
 			this.getAllOptions().length == 0 ||
 			this.getAllOptions().filter && this.getAllOptions().filter(item => this.getValueAsArray().includes(item.value)).length == 0
 		))

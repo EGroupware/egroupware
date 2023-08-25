@@ -81,7 +81,20 @@ export const Et2WidgetWithSelectMixin = <T extends Constructor<LitElement>>(supe
 		@property({type: Number, noAccessor: true, reflect: true})
 
 
+		/**
+		 * Internal list of possible select options
+		 *
+		 * This is where we keep options sent from the server.  This is not always the complete list, as extending
+		 * classes may have their own options to add in.  For example, static options are kept separate, as are search
+		 * results.  The select_options getter should give the complete list.
+		 */
 		private __select_options : SelectOption[] = [];
+
+		/**
+		 * When we create the select option elements, it takes a while.
+		 * If we don't wait for them, it causes issues in SlSelect
+		 */
+		protected _optionRenderPromise : Promise<void> = Promise.resolve();
 
 		/**
 		 * Options found in the XML when reading the template
@@ -95,6 +108,13 @@ export const Et2WidgetWithSelectMixin = <T extends Constructor<LitElement>>(supe
 			super(...args);
 
 			this.__select_options = <SelectOption[]>[];
+		}
+
+		async getUpdateComplete() : Promise<boolean>
+		{
+			const result = await super.getUpdateComplete();
+			await this._optionRenderPromise;
+			return result;
 		}
 
 		/** @param {import('@lion/core').PropertyValues } changedProperties */
@@ -169,7 +189,7 @@ export const Et2WidgetWithSelectMixin = <T extends Constructor<LitElement>>(supe
 				.map(this._groupTemplate.bind(this))}`;
 
 			render(options, temp_target);
-			return Promise.all(([...temp_target.querySelectorAll(":scope > *")].map(item => item.render)))
+			this._optionRenderPromise = Promise.all(([...temp_target.querySelectorAll(":scope > *")].map(item => item.render)))
 				.then(() =>
 				{
 					this._optionTargetNode.replaceChildren(
@@ -181,7 +201,7 @@ export const Et2WidgetWithSelectMixin = <T extends Constructor<LitElement>>(supe
 						this.handleMenuSlotChange();
 					}
 				});
-
+			return this._optionRenderPromise;
 		}
 
 		/**
