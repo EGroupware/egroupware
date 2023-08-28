@@ -548,10 +548,10 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			let options = [];
 
 			// Any provided options
-			options = options.concat(this.__select_options);
+			options = options.concat(this.__select_options ?? []);
 
 			// Any kept remote options
-			options = options.concat(this._selected_remote);
+			options = options.concat(this._selected_remote ?? []);
 
 			if(this.allowFreeEntries)
 			{

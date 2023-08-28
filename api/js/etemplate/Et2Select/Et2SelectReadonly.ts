@@ -11,8 +11,8 @@
 import {css, html, LitElement, repeat, TemplateResult} from "@lion/core";
 import {et2_IDetachedDOM} from "../et2_core_interfaces";
 import {Et2Widget} from "../Et2Widget/Et2Widget";
-import {StaticOptions, StaticOptions as so} from "./StaticOptions";
-import {find_select_options, SelectOption} from "./FindSelectOptions";
+import {Et2StaticSelectMixin, StaticOptions, StaticOptions as so} from "./StaticOptions";
+import {cleanSelectOptions, find_select_options, SelectOption} from "./FindSelectOptions";
 import {SelectAccountMixin} from "./SelectAccountMixin";
 
 /**
@@ -206,14 +206,11 @@ li {
 
 	render()
 	{
-		if(!this.value || Array.isArray(this.value) && !this.value.length)
-		{
-			return this._readonlyRender({label: this.emptyLabel || "", value: ""});
-		}
-
 		return html`
             <ul>
-                ${repeat(this.value, (val : string) => val, (val) =>
+                ${repeat(
+                        (Array.isArray(this.value) ? this.value : [this.value]),
+                        (val : string) => val, (val) =>
                 {
                     let option = (<SelectOption[]>this.select_options).find(option => option.value == val);
                     if(!option)
@@ -269,16 +266,15 @@ export class Et2SelectAccountReadonly extends SelectAccountMixin(Et2SelectReadon
 // @ts-ignore TypeScript is not recognizing that this widget is a LitElement
 customElements.define("et2-select-account_ro", Et2SelectAccountReadonly);
 
-export class Et2SelectAppReadonly extends Et2SelectReadonly
+export class Et2SelectAppReadonly extends Et2StaticSelectMixin(Et2SelectReadonly)
 {
-	constructor()
+	protected find_select_options(_attrs)
 	{
-		super();
-
-		this.select_options = so.app(this, {other: this.other || []});
+		this.fetchComplete = so.app(this, _attrs).then((options) =>
+		{
+			this.set_static_options(cleanSelectOptions(options));
+		});
 	}
-
-	protected find_select_options(_attrs) {}
 }
 
 // @ts-ignore TypeScript is not recognizing that this widget is a LitElement
@@ -316,15 +312,12 @@ export class Et2SelectBitwiseReadonly extends Et2SelectReadonly
 // @ts-ignore TypeScript is not recognizing that this widget is a LitElement
 customElements.define("et2-select-bitwise_ro", Et2SelectBitwiseReadonly);
 
-export class Et2SelectBoolReadonly extends Et2SelectReadonly
+export class Et2SelectBoolReadonly extends Et2StaticSelectMixin(Et2SelectReadonly)
 {
-	constructor()
+	protected find_select_options(_attrs)
 	{
-		super();
 		this.select_options = so.bool(this);
 	}
-
-	protected find_select_options(_attrs) {}
 }
 
 // @ts-ignore TypeScript is not recognizing that this widget is a LitElement
@@ -334,7 +327,6 @@ export class Et2SelectCategoryReadonly extends Et2SelectReadonly
 {
 	protected find_select_options(_attrs)
 	{
-
 		// Need to do this in find_select_options so attrs can be used to get proper options
 		so.cat(this).then(_options =>
 		{
@@ -356,25 +348,22 @@ export class Et2SelectPercentReadonly extends Et2SelectReadonly
 {
 	constructor()
 	{
-		super();
-		this.select_options = so.percent(this, {});
+		super(...arguments);
+		this.suffix = "%%";
+		this.select_options = so.percent(this);
 	}
-
-	protected find_select_options(_attrs) {}
 }
 
 // @ts-ignore TypeScript is not recognizing that this widget is a LitElement
 customElements.define("et2-select-percent_ro", Et2SelectPercentReadonly);
 
-export class Et2SelectCountryReadonly extends Et2SelectReadonly
+export class Et2SelectCountryReadonly extends Et2StaticSelectMixin(Et2SelectReadonly)
 {
-	constructor()
+	protected find_select_options(_attrs)
 	{
-		super();
-		this.select_options = so.country(this, {});
+		this.fetchComplete = (<Promise<SelectOption[]>>so.country(this, _attrs, true))
+			.then((options) => {this.set_static_options(cleanSelectOptions(options));});
 	}
-
-	protected find_select_options(_attrs) {}
 }
 
 // @ts-ignore TypeScript is not recognizing that this widget is a LitElement
@@ -382,29 +371,26 @@ customElements.define("et2-select-country_ro", Et2SelectCountryReadonly);
 
 export class Et2SelectDayReadonly extends Et2SelectReadonly
 {
-	constructor()
+	protected find_select_options(_attrs)
 	{
-		super();
-
 		this.select_options = so.day(this, {other: this.other || []});
 	}
-
-	protected find_select_options(_attrs) {}
 }
 
 // @ts-ignore TypeScript is not recognizing that this widget is a LitElement
 customElements.define("et2-select-day_ro", Et2SelectDayReadonly);
 
-export class Et2SelectDayOfWeekReadonly extends Et2SelectReadonly
+export class Et2SelectDayOfWeekReadonly extends Et2StaticSelectMixin(Et2SelectReadonly)
 {
-	constructor()
+	protected find_select_options(_attrs)
 	{
-		super();
-
-		this.select_options = so.dow(this, {other: this.other || []});
+		// Wait for connected instead of constructor because attributes make a difference in
+		// which options are offered
+		this.fetchComplete = so.dow(this, {other: this.other || []}).then(options =>
+		{
+			this.set_static_options(cleanSelectOptions(options));
+		});
 	}
-
-	protected find_select_options(_attrs) {}
 }
 
 // @ts-ignore TypeScript is not recognizing that this widget is a LitElement
@@ -412,14 +398,10 @@ customElements.define("et2-select-dow_ro", Et2SelectDayOfWeekReadonly);
 
 export class Et2SelectHourReadonly extends Et2SelectReadonly
 {
-	constructor()
+	protected find_select_options(_attrs)
 	{
-		super();
-
 		this.select_options = so.hour(this, {other: this.other || []});
 	}
-
-	protected find_select_options(_attrs) {}
 }
 
 // @ts-ignore TypeScript is not recognizing that this widget is a LitElement
@@ -427,29 +409,21 @@ customElements.define("et2-select-hour_ro", Et2SelectHourReadonly);
 
 export class Et2SelectMonthReadonly extends Et2SelectReadonly
 {
-	constructor()
+	protected find_select_options(_attrs)
 	{
-		super();
-
 		this.select_options = so.month(this);
 	}
-
-	protected find_select_options(_attrs) {}
 }
 
 // @ts-ignore TypeScript is not recognizing that this widget is a LitElement
 customElements.define("et2-select-month_ro", Et2SelectMonthReadonly);
 
-export class Et2SelectNumberReadonly extends Et2SelectReadonly
+export class Et2SelectNumberReadonly extends Et2StaticSelectMixin(Et2SelectReadonly)
 {
-	constructor()
+	protected find_select_options(_attrs)
 	{
-		super();
-
-		this.select_options = so.number(this, {other: this.other || []});
+		this.static_options = so.number(this, _attrs);
 	}
-
-	protected find_select_options(_attrs) {}
 }
 
 // @ts-ignore TypeScript is not recognizing that this widget is a LitElement
@@ -457,13 +431,10 @@ customElements.define("et2-select-number_ro", Et2SelectNumberReadonly);
 
 export class Et2SelectPriorityReadonly extends Et2SelectReadonly
 {
-	constructor()
+	protected find_select_options(_attrs)
 	{
-		super();
 		this.select_options = so.priority(this);
 	}
-
-	protected find_select_options(_attrs) {}
 }
 
 // @ts-ignore TypeScript is not recognizing that this widget is a LitElement
@@ -471,14 +442,10 @@ customElements.define("et2-select-priority_ro", Et2SelectPriorityReadonly);
 
 export class Et2SelectStateReadonly extends Et2SelectReadonly
 {
-	constructor()
+	protected find_select_options(_attrs)
 	{
-		super();
-
 		this.select_options = so.state(this, {other: this.other || []});
 	}
-
-	protected find_select_options(_attrs) {}
 }
 
 // @ts-ignore TypeScript is not recognizing that this widget is a LitElement
@@ -486,14 +453,10 @@ customElements.define("et2-select-state_ro", Et2SelectStateReadonly);
 
 export class Et2SelectTimezoneReadonly extends Et2SelectReadonly
 {
-	constructor()
+	protected find_select_options(_attrs)
 	{
-		super();
-
 		this.select_options = so.timezone(this, {other: this.other || []});
 	}
-
-	protected find_select_options(_attrs) {}
 }
 
 // @ts-ignore TypeScript is not recognizing that this widget is a LitElement
@@ -501,14 +464,10 @@ customElements.define("et2-select-timezone_ro", Et2SelectTimezoneReadonly);
 
 export class Et2SelectYearReadonly extends Et2SelectReadonly
 {
-	constructor()
+	protected find_select_options(_attrs)
 	{
-		super();
-
 		this.select_options = so.year(this, {other: this.other || []});
 	}
-
-	protected find_select_options(_attrs) {}
 }
 
 // @ts-ignore TypeScript is not recognizing that this widget is a LitElement
@@ -516,14 +475,10 @@ customElements.define("et2-select-year_ro", Et2SelectYearReadonly);
 
 export class Et2SelectLangReadonly extends Et2SelectReadonly
 {
-	constructor()
+	protected find_select_options(_attrs)
 	{
-		super();
-
 		this.select_options = so.lang(this, {other: this.other || []});
 	}
-
-	protected find_select_options(_attrs) {}
 }
 
 // @ts-ignore TypeScript is not recognizing that this widget is a LitElement

@@ -911,9 +911,16 @@ export class Et2SelectApp extends Et2StaticSelectMixin(Et2Select)
 {
 	constructor()
 	{
-		super();
+		super(...arguments);
+	}
 
-		this.static_options = so.app(this, {other: this.other || []});
+	public connectedCallback()
+	{
+		super.connectedCallback()
+		this.fetchComplete = so.app(this, {}).then((options) =>
+		{
+			this.set_static_options(cleanSelectOptions(options));
+		})
 	}
 }
 
@@ -924,7 +931,7 @@ export class Et2SelectTab extends Et2SelectApp
 {
 	constructor()
 	{
-		super();
+		super(...arguments);
 
 		this.allowFreeEntries = true;
 	}
@@ -982,6 +989,7 @@ export class Et2SelectBitwise extends Et2StaticSelectMixin(Et2Select)
 {
 	set value(new_value)
 	{
+		/* beforeSendToClient does this, we don't want it twice
 		let oldValue = this._value;
 		let expanded_value = [];
 		let options = this.select_options;
@@ -994,8 +1002,8 @@ export class Et2SelectBitwise extends Et2StaticSelectMixin(Et2Select)
 			}
 		}
 		super.value = expanded_value;
-
-		this.requestUpdate("value", oldValue);
+		*/
+		super.value = new_value;
 	}
 }
 
@@ -1006,7 +1014,7 @@ export class Et2SelectBool extends Et2StaticSelectMixin(Et2Select)
 {
 	constructor()
 	{
-		super();
+		super(...arguments);
 
 		this.static_options = so.bool(this);
 	}
@@ -1020,9 +1028,9 @@ export class Et2SelectDay extends Et2StaticSelectMixin(Et2Select)
 {
 	constructor()
 	{
-		super();
+		super(...arguments);
 
-		this.static_options = so.day(this, {other: this.other || []});
+		this.static_options = so.day(this, {});
 	}
 }
 
@@ -1084,7 +1092,7 @@ export class Et2SelectHour extends Et2StaticSelectMixin(Et2Select)
 {
 	constructor()
 	{
-		super();
+		super(...arguments);
 
 		this.static_options = so.hour(this, {other: this.other || []});
 	}
@@ -1097,7 +1105,7 @@ export class Et2SelectMonth extends Et2StaticSelectMixin(Et2Select)
 {
 	constructor()
 	{
-		super();
+		super(...arguments);
 
 		this.static_options = so.month(this);
 	}
@@ -1131,9 +1139,9 @@ export class Et2SelectNumber extends Et2StaticSelectMixin(Et2Select)
 		}
 	}
 
-	constructor()
+	constructor(...args)
 	{
-		super();
+		super(...args);
 		this.min = 1;
 		this.max = 10;
 		this.interval = 1;
@@ -1158,9 +1166,9 @@ customElements.define("et2-select-number", Et2SelectNumber);
 
 export class Et2SelectPercent extends Et2SelectNumber
 {
-	constructor()
+	constructor(...args)
 	{
-		super();
+		super(...args);
 		this.min = 0;
 		this.max = 100;
 		this.interval = 10;
@@ -1175,7 +1183,7 @@ export class Et2SelectPriority extends Et2StaticSelectMixin(Et2Select)
 {
 	constructor()
 	{
-		super();
+		super(...arguments);
 
 		this.static_options = so.priority(this);
 	}
@@ -1201,7 +1209,7 @@ export class Et2SelectState extends Et2StaticSelectMixin(Et2Select)
 
 	constructor()
 	{
-		super();
+		super(...arguments);
 
 		this.countryCode = 'DE';
 	}
@@ -1214,7 +1222,7 @@ export class Et2SelectState extends Et2StaticSelectMixin(Et2Select)
 	set countryCode(code : string)
 	{
 		this.__countryCode = code;
-		this.static_options = so.state(this, {country_code: code});
+		this.static_options = <SelectOption[]>so.state(this, {country_code: code});
 		this.requestUpdate("select_options");
 	}
 
@@ -1231,9 +1239,13 @@ export class Et2SelectTimezone extends Et2StaticSelectMixin(Et2Select)
 {
 	constructor()
 	{
-		super();
+		super(...arguments);
 
-		this.select_options = so.timezone(this, {other: this.other || []});
+		const options = so.timezone(this, {other: this.other || []});
+		if(Array.isArray(options))
+		{
+			this.static_options = options;
+		}
 	}
 }
 
@@ -1242,9 +1254,9 @@ customElements.define("et2-select-timezone", Et2SelectTimezone);
 
 export class Et2SelectYear extends Et2SelectNumber
 {
-	constructor()
+	constructor(args)
 	{
-		super();
+		super(...args);
 		this.min = -3;
 		this.max = 2;
 	}
@@ -1267,7 +1279,7 @@ export class Et2SelectLang extends Et2StaticSelectMixin(Et2Select)
 {
 	constructor()
 	{
-		super();
+		super(...arguments);
 
 		this.static_options = so.lang(this, {other: this.other || []});
 	}
