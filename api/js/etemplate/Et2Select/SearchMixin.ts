@@ -7,8 +7,7 @@
  * @author Nathan Gray
  */
 
-import {css, html, LitElement, render} from "lit";
-import {SlotMixin} from "@lion/core";
+import {css, CSSResultGroup, html, LitElement, render} from "lit";
 import {cleanSelectOptions, SelectOption} from "./FindSelectOptions";
 import {Validator} from "@lion/form-core";
 import {Et2Tag} from "./Tag/Et2Tag";
@@ -75,7 +74,7 @@ export declare class SearchMixinInterface
  */
 export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass : T) =>
 {
-	class Et2WidgetWithSearch extends SlotMixin(superclass)
+	class Et2WidgetWithSearch extends superclass
 	{
 		static get properties()
 		{
@@ -104,25 +103,12 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			}
 		}
 
-		static get styles()
+		static get styles() : CSSResultGroup
 		{
 			return [
 				// @ts-ignore
 				...(super.styles ? (Symbol.iterator in Object(super.styles) ? super.styles : [super.styles]) : []),
 				css`
-				/* Move the widget border 
-				.form-control-input {
-					border: solid var(--sl-input-border-width) var(--sl-input-border-color);
-					border-radius: var(--sl-input-border-radius-medium);
-				}
-				.form-control-input:hover {
-					background-color: var(--sl-input-background-color-hover);
-					border-color: var(--sl-input-border-color-hover);
-					color: var(--sl-input-color-hover);
-			  	}
-				.select--standard .select__control {
-					border-style: none;
-				}
 				/* Move focus highlight */
 				.form-control-input:focus-within {
 					box-shadow: var(--sl-focus-ring);
@@ -162,6 +148,11 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 				.search_input.editing #edit {
 					display: initial;
 				}
+
+				  // Search starts hidden
+				  :host([search]:not([open])) .select__prefix {
+					display: none;
+				  }
 				:host([search]:not([multiple])) .select--open .select__prefix {
 					flex: 2 1 auto;
 					width: 100%;
@@ -172,13 +163,14 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 				:host([allowfreeentries]:not([multiple])) .select--standard.select--open:not(.select--disabled) .select__control .select__prefix {
 					flex: 1 1 auto;
 				}
-				:host([allowfreeentries]:not([multiple])) .select--standard.select--open:not(.select--disabled) .select__control .select__label {
+
+				  :host([allowfreeentries]:not([multiple])) .select--standard.select--open:not(.select--disabled) .select__control .select__display-input {
 					display: none;
 				}
 
 				  /* Search textbox general styling, starts hidden */
 
-				  .select__prefix ::slotted(.search_input), .search_input {
+				  ::slotted(.search_input) {
 					display: none;
 					flex: 1 1 auto;
 					margin-left: 0px;
@@ -324,7 +316,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			}
 
 			this._addNodes();
-			this._bindListeners();
+			//this._bindListeners();
 		}
 
 		disconnectedCallback()
@@ -728,7 +720,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 		 */
 		_handleAfterShow()
 		{
-			return;
+			debugger;
 			// Need to give positioner a chance to position.
 			// If we call it right away, it has not updated.
 			// I haven't found an event or Promise to hook on to
@@ -753,10 +745,8 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 
 		focus()
 		{
-			this.dropdown?.show().then(() =>
-			{
-				this._searchInputNode.focus();
-			});
+			this.show();
+			this._searchInputNode.focus();
 		}
 
 		handleMenuHide()

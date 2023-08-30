@@ -3481,7 +3481,6 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 			this.filter2 = this._build_select('filter2', 'et2-select', settings.filter2,
 				settings.filter2_no_lang, {
 					multiple: false,
-					tags: settings.filter2_tags,
 					class: "select-cat",
 					value_class: settings.filter2_class
 				});
