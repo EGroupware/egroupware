@@ -3934,7 +3934,13 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 			let change = function(_node)
 			{
 				// Call previously set change function
-				const result = widget_change?.call(_widget, _node, header.nextmatch, _widget);
+				const params = [_node, header.nextmatch, _widget];
+				if(widget_change.toString().startsWith("function (ev, widget) {\n    // Dump the executed code for debugging"))
+				{
+					// Legacy - do not pass the nextmatch, it will override widget
+					params.splice(1, 1);
+				}
+				const result = widget_change?.apply(_widget, params);
 
 				// Find current value in activeFilters
 				let entry = header.nextmatch.activeFilters;

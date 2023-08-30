@@ -11,7 +11,6 @@ import {sprintf} from "../../egw_action/egw_action_common";
 import {Et2SelectReadonly} from "./Select/Et2SelectReadonly";
 import {cleanSelectOptions, find_select_options, SelectOption} from "./FindSelectOptions";
 import {Et2Select, Et2WidgetWithSelect} from "./Et2Select";
-import {Et2SelectNumber} from "./Select/Et2SelectNumber";
 
 export type Et2SelectWidgets = Et2Select | Et2WidgetWithSelect | Et2SelectReadonly;
 
@@ -59,8 +58,17 @@ export const Et2StaticSelectMixin = <T extends Constructor<Et2WidgetWithSelect>>
 		{
 			// @ts-ignore
 			const options = super.select_options || [];
-			// make sure result is unique
+			const statics = this.static_options || [];
 
+			if(options.length == 0)
+			{
+				return statics;
+			}
+			if(statics.length == 0)
+			{
+				return options;
+			}
+			// Merge & make sure result is unique
 			return [...new Map([...(this.static_options || []), ...options].map(item =>
 				[item.value, item])).values()];
 
@@ -281,9 +289,9 @@ export const StaticOptions = new class StaticOptionsType
 	{
 
 		var options = [];
-		var min = attrs.min ?? parseFloat(widget.min);
-		var max = attrs.max ?? parseFloat(widget.max);
-		var interval = attrs.interval ?? parseFloat(widget.interval);
+		var min = parseFloat(attrs.min ?? widget.min ?? 1);
+		var max = parseFloat(attrs.max ?? widget.max ?? 10);
+		var interval = parseFloat(attrs.interval ?? widget.interval ?? 1);
 		var format = attrs.format ?? '%d';
 
 		// leading zero specified in interval
@@ -310,9 +318,9 @@ export const StaticOptions = new class StaticOptionsType
 		return options;
 	}
 
-	percent(widget : Et2SelectNumber) : SelectOption[]
+	percent(widget : Et2SelectWidgets) : SelectOption[]
 	{
-		return this.number(widget);
+		return this.number(widget, {min: 0, max: 100, interval: 10, format: undefined});
 	}
 
 	year(widget : Et2SelectWidgets, attrs?) : SelectOption[]
@@ -340,7 +348,7 @@ export const StaticOptions = new class StaticOptionsType
 		for(var h = 0; h <= 23; ++h)
 		{
 			options.push({
-				value: h,
+				value: "" + h,
 				label: timeformat == 12 ?
 					   ((12 ? h % 12 : 12) + ' ' + (h < 12 ? egw.lang('am') : egw.lang('pm'))) :
 					   sprintf('%02d', h)
@@ -349,10 +357,10 @@ export const StaticOptions = new class StaticOptionsType
 		return options;
 	}
 
-	app(widget : Et2SelectWidgets | Et2Select, attrs) : SelectOption[] | Promise<SelectOption[]>
+	app(widget : Et2SelectWidgets | Et2Select, attrs) : Promise<SelectOption[]>
 	{
 		var options = ',' + (attrs.other || []).join(',');
-		return this.cached_server_side(widget, 'select-app', options);
+		return this.cached_server_side(widget, 'select-app', options, true);
 	}
 
 	cat(widget : Et2SelectWidgets) : Promise<SelectOption[]>
