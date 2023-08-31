@@ -109,6 +109,11 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 				// @ts-ignore
 				...(super.styles ? (Symbol.iterator in Object(super.styles) ? super.styles : [super.styles]) : []),
 				css`
+				  /* Spacing */
+
+				  :host([open][search]) .select--medium .select__combobox {
+					padding-inline: 0;
+				  }
 				/* Move focus highlight */
 				.form-control-input:focus-within {
 					box-shadow: var(--sl-focus-ring);
@@ -160,11 +165,13 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 				:host([search]:not([multiple])) .select--open .select__label {
 					margin: 0px;
 				}
-				:host([allowfreeentries]:not([multiple])) .select--standard.select--open:not(.select--disabled) .select__control .select__prefix {
+
+				  :host([allowfreeentries]:not([multiple])) .select--standard.select--open:not(.select--disabled) .select__prefix {
 					flex: 1 1 auto;
 				}
 
-				  :host([allowfreeentries]:not([multiple])) .select--standard.select--open:not(.select--disabled) .select__control .select__display-input {
+				  :host([search]) .select--standard.select--open:not(.select--disabled) .select__display-input,
+				  :host([allowfreeentries]:not([multiple])) .select--standard.select--open:not(.select--disabled) .select__display-input {
 					display: none;
 				}
 
@@ -173,10 +180,9 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 				  ::slotted(.search_input) {
 					display: none;
 					flex: 1 1 auto;
+					order: 2;
 					margin-left: 0px;
-					width: 100%;
 					height: var(--sl-input-height-medium);
-					position: absolute;
 					background-color: white;
 					z-index: var(--sl-z-index-dropdown);
 				  }
@@ -211,10 +217,6 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 				/* disable focus border */
 				:host([readonly]) .form-control-input:focus-within {
 					box-shadow: none;
-				}
-				/* no menu */
-				:host([readonly]) sl-menu {
-					display: none;
 				}
 				/* normal cursor */
 				:host([readonly]) .select__control {
@@ -288,16 +290,18 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			 */
 			this.defaultValidators = [];
 
-			this.handleMenuSelect = this.handleMenuSelect.bind(this);
+			this.handleOptionClick = this.handleOptionClick.bind(this);
 			this._handleChange = this._handleChange.bind(this);
 			this.handleTagEdit = this.handleTagEdit.bind(this);
 			this._handleAfterShow = this._handleAfterShow.bind(this);
+			this._handleMenuHide = this._handleMenuHide.bind(this);
 			this._handleSearchBlur = this._handleSearchBlur.bind(this);
 			this._handleClear = this._handleClear.bind(this);
 			this._handleDoubleClick = this._handleDoubleClick.bind(this);
 			this._handleSearchAbort = this._handleSearchAbort.bind(this);
 			this._handleSearchChange = this._handleSearchChange.bind(this);
 			this._handleSearchKeyDown = this._handleSearchKeyDown.bind(this);
+			this._handleSearchMouseDown = this._handleSearchMouseDown.bind(this);
 			this._handleEditKeyDown = this._handleEditKeyDown.bind(this);
 			this._handlePaste = this._handlePaste.bind(this);
 		}
@@ -316,7 +320,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			}
 
 			this._addNodes();
-			//this._bindListeners();
+			this._bindListeners();
 		}
 
 		disconnectedCallback()
@@ -463,12 +467,11 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
                                    @blur=${this.stopEdit.bind(this)}
                 />`;
 			}
-			// I can't figure out how to get this full width via CSS
 			return html`
                 <et2-textbox id="search" type="text" part="input" clearable
                              autocomplete="off"
                              placeholder="${this.egw().lang("search")}"
-                               style="width:100%"
+                             style="flex: 1 1 auto;"
                                @keydown=${this._handleSearchKeyDown}
                                @blur=${this._handleSearchBlur}
                 ></et2-textbox>
@@ -508,6 +511,10 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 				this.querySelector(".search_input");
 		}
 
+		protected get optionTag()
+		{
+			return 'sl-option';
+		}
 
 		/**
 		 * Only local options, excludes server options
@@ -644,7 +651,9 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 		protected _bindListeners()
 		{
 			this.addEventListener("sl-clear", this._handleClear);
+			this.addEventListener("sl-show", this._handleMenuShow);
 			this.addEventListener("sl-after-show", this._handleAfterShow);
+			this.addEventListener("sl-hide", this._handleMenuHide);
 
 			// Need our own change to catch the change event from search input
 			this.addEventListener("change", this._handleChange);
@@ -671,7 +680,9 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 		protected _unbindListeners()
 		{
 			this.removeEventListener("sl-select", this._handleSelect);
+			this.removeEventListener("sl-show", this._handleMenuShow);
 			this.removeEventListener("sl-after-show", this._handleAfterShow);
+			this.removeEventListener("sl-hide", this._handleMenuHide);
 			this.removeEventListener("sl-clear", this._handleClear)
 			this.removeEventListener("change", this._handleChange);
 			this.removeEventListener("paste", this._handlePaste);
@@ -679,7 +690,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			this._searchInputNode?.removeEventListener("change", this._handleSearchChange);
 		}
 
-		handleMenuShow()
+		_handleMenuShow()
 		{
 			if(this.readonly)
 			{
@@ -689,15 +700,11 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			this._activeControls?.classList.toggle("novalue", this.multiple && this.value == '' || !this.multiple);
 
 			// Reset for parent calculations, will be adjusted after if needed
-			this.dropdown.setAttribute("distance", 0);
-
-			super.handleMenuShow();
+			//this.dropdown.setAttribute("distance", 0);
 
 			if(this.searchEnabled || this.allowFreeEntries)
 			{
 				this._activeControls?.classList.add("active");
-				this._searchInputNode.focus();
-				this._searchInputNode.select();
 				// Hide edit explicitly since it's so hard via CSS
 				if(this._editInputNode)
 				{
@@ -720,7 +727,13 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 		 */
 		_handleAfterShow()
 		{
-			debugger;
+			if(this.searchEnabled || this.allowFreeEntries)
+			{
+				this._activeControls?.classList.add("active");
+				this._searchInputNode.focus();
+				this._searchInputNode.select();
+			}
+			return;
 			// Need to give positioner a chance to position.
 			// If we call it right away, it has not updated.
 			// I haven't found an event or Promise to hook on to
@@ -741,6 +754,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 					);
 				}
 			}, 100);
+
 		}
 
 		focus()
@@ -749,14 +763,13 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			this._searchInputNode.focus();
 		}
 
-		handleMenuHide()
+		_handleMenuHide()
 		{
 			if(this.readonly)
 			{
 				return;
 			}
 			clearTimeout(this._searchTimeout);
-			super.handleMenuHide();
 
 			// Reset display
 			if(this._searchInputNode)
@@ -771,7 +784,6 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			if(this.searchEnabled || this.allowFreeEntries)
 			{
 				this._activeControls?.classList.remove("active");
-				this.shadowRoot.querySelector('.select__label').style.display = "";
 			}
 		}
 
@@ -820,14 +832,14 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 		/**
 		 * An option was selected
 		 */
-		handleMenuSelect(event)
+		handleOptionClick(event)
 		{
 			// Need to keep the remote option - only if selected
-			if(event.detail.item.classList.contains("remote") && !this.select_options.find(o => o.value == event.detail.item.value))
+			if(event.target.classList.contains("remote") && !this.select_options.find(o => o.value == event.target.value))
 			{
-				this._selected_remote.push({...event.detail.item.option});
+				this._selected_remote.push({...event.target.option});
 			}
-			super.handleMenuSelect(event);
+			super.handleOptionClick(event);
 
 			this.updateComplete.then(() =>
 			{
@@ -845,7 +857,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 					}
 
 					// Scroll the new tag into view
-					if(event.detail && event.detail.item)
+					if(event.detail)
 					{
 						// Causes sidemenu (calendar) to scroll to top & get stuck
 						/*
@@ -877,11 +889,8 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			{
 				this._handleSearchAbort(e);
 
-				// Restore label styling
-				this.shadowRoot.querySelector("[part='display-label']").style.display = "";
-
 				// Start searching again
-				this.updateComplete.then(() => this.handleMenuShow())
+				this._handleMenuShow();
 			}
 		}
 
@@ -896,17 +905,6 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 		async _handleSearchBlur(event : FocusEvent)
 		{
 			clearTimeout(this._searchTimeout);
-			if(event.relatedTarget && event.relatedTarget instanceof SlMenuItem)
-			{
-				return;
-			}
-
-			// Try any value they had in progress
-			if(this._searchInputNode.value && this.allowFreeEntries)
-			{
-				this.createFreeEntry(this._searchInputNode.value);
-			}
-			this.clearSearch();
 		}
 
 		/**
@@ -918,14 +916,13 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 		{
 			clearTimeout(this._searchTimeout);
 			this._activeControls?.classList.add("active");
-			this.dropdown.show();
 
 			// Pass off some keys to select
 			if(['ArrowDown', 'ArrowUp', 'Home', 'End'].includes(event.key))
 			{
 
 				// Strip out hidden non-matching selected & disabled items so key navigation works
-				this.menuItems = this.menuItems.filter(i => !i.disabled);
+				this.menuItems = this.getAllOptions.filter(i => !i.disabled);
 				return super.handleKeyDown(event);
 			}
 			event.stopPropagation();
@@ -965,6 +962,17 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			{
 				this._searchTimeout = window.setTimeout(() => {this.startSearch()}, Et2WidgetWithSearch.SEARCH_TIMEOUT);
 			}
+		}
+
+		/**
+		 * Combobox listens for mousedown, which interferes with search clear button.
+		 * Here we block it from bubbling
+		 * @param {MouseEvent} event
+		 * @protected
+		 */
+		protected _handleSearchMouseDown(event : MouseEvent)
+		{
+			event.stopPropagation();
 		}
 
 		protected _handleEditKeyDown(event : KeyboardEvent)
@@ -1027,7 +1035,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 
 			// Show a spinner
 			let spinner = document.createElement("sl-spinner");
-			spinner.slot = "suffix";
+			spinner.slot = "expand-icon";
 			this.appendChild(spinner);
 
 			// Hide clear button
@@ -1048,7 +1056,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			]).then(() =>
 			{
 				// Show no results indicator
-				if(this.menuItems.filter(e => !e.classList.contains("no-match")).length == 0)
+				if(this.getAllOptions().filter(e => !e.classList.contains("no-match")).length == 0)
 				{
 					let target = this._optionTargetNode || this;
 					let temp = document.createElement("div");
@@ -1064,13 +1072,6 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 				{
 					clear_button.style.display = "";
 				}
-			}).then(() =>
-			{
-				// Not sure why this stays hidden if there's no results, but it sticks and hides all results afterward
-				this.dropdown.shadowRoot.querySelector(".dropdown__panel").removeAttribute("hidden");
-
-				// Call our resize stuff explicitly
-				this._handleAfterShow();
 			});
 		}
 
@@ -1120,7 +1121,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			})
 
 			// Reset remaining options.  It might be faster to re-create instead.
-			this._menuItems.forEach((item) =>
+			this.getAllOptions().forEach((item) =>
 			{
 				item.disabled = item.option?.disabled || false;
 				item.classList.remove("match");
@@ -1305,7 +1306,6 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 								target.appendChild(item);
 							}
 						})
-						this.handleMenuSlotChange();
 					})
 					.then(() =>
 					{
@@ -1520,14 +1520,12 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 					this.dropdown.panel.setAttribute("hidden", "");
 				});
 			}
-			this.syncItemsFromValue();
 		}
 
 		protected _handleSearchAbort(e)
 		{
 			this._activeControls.classList.remove("active");
 			this.clearSearch();
-			this.syncItemsFromValue();
 		}
 
 		/**

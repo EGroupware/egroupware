@@ -171,9 +171,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 				width: fill-available;
 			  }
 
-			  /* Style for the popup */
-
-			  ::part(popup) {
+			  ::part(listbox) {
 				z-index: 1;
 				background: var(--sl-input-background-color);
 				padding: var(--sl-input-spacing-small);
@@ -221,6 +219,11 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		}
 	}
 
+	constructor()
+	{
+		super();
+		this.hoist = true;
+	}
 	/**
 	 * List of properties that get translated
 	 *
@@ -576,21 +579,11 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 	 */
 	private handleOptionClick(event : MouseEvent)
 	{
-		if(event.target == this)
-		{
-			// Don't hide dropdown when clicking on select.  That can close it after user opens it.
-			return;
-		}
+		super.handleOptionClick(event);
+
 		if(this._close_on_select)
 		{
-			this.dropdown.hide().then(() =>
-			{
-				if(typeof this.handleMenuHide == "function")
-				{
-					// Make sure search gets hidden
-					this.handleMenuHide();
-				}
-			});
+			this.hide();
 		}
 	}
 
