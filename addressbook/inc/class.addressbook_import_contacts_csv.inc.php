@@ -100,7 +100,7 @@ class addressbook_import_contacts_csv extends importexport_basic_import_csv  {
 			$definition->plugin_options['contact_owner'] : $this->user;
 
 		// Check to make sure target addressbook is valid
-		if(!in_array($contact_owner, array_keys($this->bocontacts->get_addressbooks(Api\Acl::ADD))))
+		if($contact_owner != 'personal' && !in_array($contact_owner, array_keys($this->bocontacts->get_addressbooks(Api\Acl::ADD))))
 		{
 			$this->warnings[0] = lang("Unable to import into %1, using %2",
 				$contact_owner . ' (' . (is_numeric($contact_owner) ? Api\Accounts::username($contact_owner) : $contact_owner) . ')',

@@ -358,7 +358,7 @@ class importexport_import_csv implements importexport_iface_import_record { //, 
 				if ($record[$name]) {
 					// Automatically handle text owner without explicit translation
 					$new_owner = importexport_helper_functions::account_name2id($record[$name]);
-					if(!is_array($new_owner) || count($new_owner) != count(explode(',', $record[$name])))
+					if(!$new_owner || is_array($record[$name]) && count($record[$name]) || $record[$name])
 					{
 						// Unable to parse value into account
 						$warnings[] = $name . ': ' .lang('%1 is not a known user or group', $record[$name]);
