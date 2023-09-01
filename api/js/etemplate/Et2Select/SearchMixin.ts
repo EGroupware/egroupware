@@ -7,7 +7,7 @@
  * @author Nathan Gray
  */
 
-import {css, CSSResultGroup, html, LitElement, render} from "lit";
+import {css, CSSResultGroup, html, LitElement, render, TemplateResult} from "lit";
 import {cleanSelectOptions, SelectOption} from "./FindSelectOptions";
 import {Validator} from "@lion/form-core";
 import {Et2Tag} from "./Tag/Et2Tag";
@@ -118,7 +118,8 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 				.form-control-input:focus-within {
 					box-shadow: var(--sl-focus-ring);
 				}
-				.select--standard.select--focused:not(.select--disabled) .select__control {
+
+				  #search .input {
 					box-shadow: initial;
 				}
 				/* Show / hide SlSelect icons - dropdown arrow, etc but not loading spinner */
@@ -155,20 +156,34 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 				}
 
 				  // Search starts hidden
-				  :host([search]:not([open])) .select__prefix {
+				  :host([search]:not([open])) .select__prefix, :host([search]:not([open])) .search_input {
 					display: none;
 				  }
-				:host([search]:not([multiple])) .select--open .select__prefix {
+
+				  :host([search]) .select--open .select__prefix {
 					flex: 2 1 auto;
 					width: 100%;
 				}
-				:host([search]:not([multiple])) .select--open .select__label {
+
+				  :host([search]) .select--open .select__label {
 					margin: 0px;
 				}
 
 				  :host([allowfreeentries]:not([multiple])) .select--standard.select--open:not(.select--disabled) .select__prefix {
 					flex: 1 1 auto;
 				}
+
+				  :host([multiple][open]) .select__combobox {
+					flex-wrap: wrap;
+				  }
+
+				  :host([multiple]) .select__tags {
+					flex-basis: 100%;
+				  }
+
+				  :host([multiple][open]) .select__expand-icon {
+					display: none;
+				  }
 
 				  :host([search]) .select--standard.select--open:not(.select--disabled) .select__display-input,
 				  :host([allowfreeentries]:not([multiple])) .select--standard.select--open:not(.select--disabled) .select__display-input {
@@ -185,6 +200,10 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 					height: var(--sl-input-height-medium);
 					background-color: white;
 					z-index: var(--sl-z-index-dropdown);
+				  }
+
+				  ::slotted(.search_input) ::part(form-control-input), ::slotted(.search_input) ::part(base) {
+					border: none;
 				  }
 
 				  /* Search UI active - show textbox & stuff */
@@ -412,7 +431,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 		}
 
 		/**
-		 * Add the nodes we need to search - adjust parent shadowDOM
+		 * Add the nodes we need to search - add to DOM
 		 *
 		 * @protected
 		 */
@@ -427,34 +446,35 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			const div = document.createElement("div");
 			div.classList.add("search_input");
 			render(this._searchInputTemplate(), div);
-			if(!super.multiple)
-			{
-				div.slot = "prefix";
-				this.appendChild(div);
-				return;
-			}
 
-			super.updateComplete.then(() =>
-			{
-				let control = this.shadowRoot.querySelector(".form-control-input");
-				control.append(div);
-			});
+			div.slot = "prefix";
+			div.part = "search";
+			this.appendChild(div);
 		}
 
 		/**
-		 * Customise how tags are rendered.
-		 * Override to add edit
+		 * We can tap into the tag rendering to add our search input in
 		 *
-		 * @param item
+		 * @returns {TemplateResult}
 		 * @protected
 		 */
-		protected _createTagNode(item)
+		protected get tags() : TemplateResult
 		{
-			let tag = <Et2Tag>document.createElement(this.tagTag);
-			tag.editable = this.editModeEnabled && !this.readonly;
+			//if(!this.searchEnabled)
+			{
+				return super.tags;
+			}
+			/*
+						return html`
+							${super.tags}
+							<div part="search" exportparts="search" class="search_input">
+								${this._searchInputTemplate()}
+							</div>
+						`;
 
-			return tag;
+			 */
 		}
+
 
 		protected _searchInputTemplate()
 		{
@@ -602,7 +622,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			// If widget is currently open, we may need to re-calculate search / dropdown positioning
 			if(this.isOpen)
 			{
-				this.handleMenuShow();
+				this._handleMenuShow();
 			}
 		}
 
@@ -729,7 +749,6 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 		{
 			if(this.searchEnabled || this.allowFreeEntries)
 			{
-				this._activeControls?.classList.add("active");
 				this._searchInputNode.focus();
 				this._searchInputNode.select();
 			}
@@ -852,7 +871,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 					// If we were overlapping, reset
 					if(this._activeControls.classList.contains("novalue"))
 					{
-						this.handleMenuShow();
+						this._handleMenuShow();
 						this._handleAfterShow();
 					}
 

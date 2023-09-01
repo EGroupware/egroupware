@@ -114,11 +114,12 @@ export class Et2Tag extends Et2Widget(SlTag)
                         <sl-icon-button
                                 part="remove-button"
                                 exportparts="base:remove-button__base"
-                                name="x"
+                                name="x-lg"
                                 library="system"
                                 label=${this.egw().lang('remove')}
                                 class="tag__remove"
                                 @click=${this.handleRemoveClick}
+                                tabindex="-1"
                         ></sl-icon-button>
                     `
               : ''}

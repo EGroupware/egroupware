@@ -8,7 +8,8 @@
  */
 
 
-import {css, html, PropertyValues, TemplateResult} from "lit";
+import {css, nothing, PropertyValues, TemplateResult} from "lit";
+import {html, literal, StaticValue} from "lit/static-html.js";
 import {Et2WidgetWithSelectMixin} from "./Et2WidgetWithSelectMixin";
 import {SelectOption} from "./FindSelectOptions";
 import shoelace from "../Styles/shoelace";
@@ -223,6 +224,9 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 	{
 		super();
 		this.hoist = true;
+
+		// Tell parent to use our custom method
+		this.getTag = this._tagTemplate.bind(this);
 	}
 	/**
 	 * List of properties that get translated
@@ -485,9 +489,48 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 	 * @see createTagNode()
 	 * @returns {string}
 	 */
-	public get tagTag() : string
+	public get tagTag() : StaticValue
 	{
-		return "et2-tag";
+		return literal`et2-tag`;
+	}
+
+	/**
+	 * Custom tag
+	 * @param {SlOption} option
+	 * @param {number} index
+	 * @returns {TemplateResult}
+	 * @protected
+	 */
+	protected _tagTemplate(option : SlOption, index : number) : TemplateResult
+	{
+		const readonly = (this.readonly || option && typeof (option.disabled) != "undefined" && option.disabled);
+		const isEditable = this.editModeEnabled && !readonly;
+		const image = this._createImage(option);
+		const tagName = this.tagTag;
+		return html`
+            <${tagName}
+                    part="tag"
+                    exportparts="
+                      base:tag__base,
+                      content:tag__content,
+                      remove-button:tag__remove-button,
+                      remove-button__base:tag__remove-button__base,
+                      icon:icon
+                    "
+                    class=${"search_tag " + option.classList.value}
+                    ?pill=${this.pill}
+                    size=${this.size}
+                    ?removable=${!readonly}
+                    ?readonly=${readonly}
+                    ?editable=${isEditable}
+                    value=${option.value}
+                    @dblclick=${this._handleDoubleClick}
+                    @click=${typeof this.onTagClick == "function" ? (e) => this.onTagClick(e, e.target) : nothing}
+            >
+                ${image ?? nothing}
+                ${option.getTextLabel().trim()}
+            </${tagName}>
+		`;
 	}
 
 	/**
@@ -500,6 +543,8 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 	 */
 	protected _createTagNode(item)
 	{
+		console.warn("Deprecated");
+		debugger;
 		let tag;
 		if(typeof super._createTagNode == "function")
 		{
@@ -551,6 +596,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		this.dropdown.hide();
 	}
 
+	/* Parent should be fine now?
 	private handleTagRemove(event : CustomEvent, option)
 	{
 		event.stopPropagation();
@@ -565,10 +611,11 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 			}
 			this.dispatchEvent(new CustomEvent('sl-input'));
 			this.dispatchEvent(new CustomEvent('sl-change'));
-			this.syncItemsFromValue();
 			this.validate();
 		}
 	}
+
+	 */
 
 	/**
 	 * Apply the user preference to close the dropdown if an option is clicked, even if multiple=true.

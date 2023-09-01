@@ -12,6 +12,8 @@ import {css, PropertyValues} from "lit";
 import {Et2Select} from "../Et2Select";
 import {Et2StaticSelectMixin, StaticOptions as so} from "../StaticOptions";
 import {cleanSelectOptions} from "../FindSelectOptions";
+import {StaticValue} from "lit/development/static-html";
+import {literal} from "lit/static-html.js";
 
 /**
  * Customised Select widget for categories
@@ -133,9 +135,9 @@ export class Et2SelectCategory extends Et2StaticSelectMixin(Et2Select)
 	 *
 	 * @returns {string}
 	 */
-	get tagTag() : string
+	public get tagTag() : StaticValue
 	{
-		return "et2-category-tag";
+		return literal`et2-category-tag`;
 	}
 
 	/**
