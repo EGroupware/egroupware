@@ -3,9 +3,10 @@ import {SlTree} from "@shoelace-style/shoelace";
 import {Et2Link} from "../Et2Link/Et2Link";
 import {Et2widgetWithSelectMixin} from "../Et2Select/Et2WidgetWithSelectMixin";
 import {et2_no_init} from "../et2_core_common";
-import {egw} from "../../jsapi/egw_global";
+import {egw, framework} from "../../jsapi/egw_global";
 import {SelectOption, find_select_options, cleanSelectOptions} from "../Et2Select/FindSelectOptions";
 import {html, TemplateResult} from "@lion/core";
+import {egwIsMobile} from "../../egw_action/egw_action_common";
 
 export type TreeItem = {
     child: Boolean | 1,
@@ -142,23 +143,12 @@ export class Et2Tree extends Et2widgetWithSelectMixin(SlTree) {
         this.installHandler("onOpenEnd", _handler)
     }
 
-    private rec(item:any):TemplateResult<1>{
-        let res: TemplateResult<1> = html`${item.text}`;
-        if (item.item?.length >0) // there are children ; true means there are no children
-        {
-            for (const subItem of item.item) {
-                res=html`
-                    ${res}
-                    <sl-tree-item> ${this.rec(subItem)}</sl-tree-item>`
-            }
-        }
-        return res;
-    }
     _optionTemplate() {
         this.selectOptions = find_select_options(this)[1];
         let result: TemplateResult<1> = html``
         for (const selectOption of this.selectOptions) {
-                result = html`${result}<sl-tree-item >${this.rec(selectOption)}</sl-tree-item>`
+            result = html`${result}
+            <sl-tree-item>${this.rec(selectOption)}</sl-tree-item>`
         }
         const h = html`${result}`
         return h
@@ -204,9 +194,35 @@ export class Et2Tree extends Et2widgetWithSelectMixin(SlTree) {
         this.installHandler('onOpenEnd', _handler);
     }
 
+    private rec(item: any): TemplateResult<1> {
+        let res: TemplateResult<1> = html`${item.text}`;
+        if (item.item?.length > 0) // there are children ; true means there are no children
+        {
+            for (const subItem of item.item) {
+                res = html`
+                    ${res}
+                    <sl-tree-item> ${this.rec(subItem)}</sl-tree-item>`
+            }
+        }
+        return res;
+    }
+
     private installHandler(_name: String, _handler: Function) {
         if (this.input == null) this.createTree(this);
-
+        // automatic convert onChange event to oncheck or onSelect depending on multiple is used or not
+        if (_name == "onchange") {
+            _name = this.options.multiple ? "oncheck" : "onselect"
+        }
+        let handler = _handler;
+        let widget = this;
+        this.input.attachEvent(_name, function(_id){
+            let args = jQuery.makeArray(arguments);
+            // splice in widget as 2. parameter, 1. is new node-id, now 3. is old node id
+            args.splice(1, 0, widget);
+            // try to close mobile sidemenu after clicking on node
+            if (egwIsMobile() && typeof args[2] == 'string') framework.toggleMenu('on');
+            return handler.apply(this, args);
+        });
     }
 
     private createTree(widget: this) {
