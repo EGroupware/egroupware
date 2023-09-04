@@ -5,7 +5,7 @@ import {Et2widgetWithSelectMixin} from "../Et2Select/Et2WidgetWithSelectMixin";
 import {et2_no_init} from "../et2_core_common";
 import {egw} from "../../jsapi/egw_global";
 import {SelectOption, find_select_options, cleanSelectOptions} from "../Et2Select/FindSelectOptions";
-import {html} from "@lion/core";
+import {html, TemplateResult} from "@lion/core";
 
 export type TreeItem = {
     child: Boolean | 1,
@@ -142,30 +142,26 @@ export class Et2Tree extends Et2widgetWithSelectMixin(SlTree) {
         this.installHandler("onOpenEnd", _handler)
     }
 
-    private rec(item:any):String{
-        var res = `<sl-tree-item>${item.text}</sl-tree-item>`;
-        if (item.child == 1) // there are children
+    private rec(item:any):TemplateResult<1>{
+        let res: TemplateResult<1> = html`${item.text}`;
+        if (item.item?.length >0) // there are children ; true means there are no children
         {
             for (const subItem of item.item) {
-                res+=`<sl-tree-item> ${this.rec(subItem)}</sl-tree-item>`
+                res=html`
+                    ${res}
+                    <sl-tree-item> ${this.rec(subItem)}</sl-tree-item>`
             }
         }
         return res;
     }
     _optionTemplate() {
-        /*this.selectOptions = find_select_options(this);
-        var cleanselectOptions: SelectOption[] = cleanSelectOptions(this.selectOptions)
-        var result = `<sl-tree-item>test</sl-tree-item>`
+        this.selectOptions = find_select_options(this)[1];
+        let result: TemplateResult<1> = html``
         for (const selectOption of this.selectOptions) {
-            if (selectOption.value == "item"){
-                result += this.rec(cleanselectOptions)
-            }
+                result = html`${result}<sl-tree-item >${this.rec(selectOption)}</sl-tree-item>`
         }
-        var result = `<sl-tree-item>test</sl-tree-item>`
         const h = html`${result}`
-        return h*/
-        var x = html`<sl-tree-item>test</sl-tree-item>`;
-        return x;
+        return h
     }
 
     /**
