@@ -10,6 +10,7 @@
 
 
 import {Et2DateTime} from "./Et2DateTime";
+import {formatDate} from "./Et2Date";
 
 
 export class Et2DateTimeOnly extends Et2DateTime
@@ -75,6 +76,16 @@ export class Et2DateTimeOnly extends Et2DateTime
 		return "time";
 	}
 
+	get format() : Function
+	{
+		// Mobile is specific about the date format
+		if(typeof egwIsMobile == "function" && egwIsMobile())
+		{
+			return (date) => {return formatDate(date, {dateFormat: "H:i"});};
+		}
+		return super.format;
+	}
+
 	set_value(value)
 	{
 		let adjustedValue : Date | string = '';
@@ -82,10 +93,26 @@ export class Et2DateTimeOnly extends Et2DateTime
 		{
 			value = '';
 		}
+		let date = new Date(value);
+		if(typeof egwIsMobile == "function" && egwIsMobile())
+		{
+			date = new Date(value);
+			if(this._inputNode)
+			{
+				this._inputNode.value = isNaN(<any>date) ? "" : this.format(date);
+			}
+			else
+			{
+				this.updateComplete.then(() =>
+				{
+					this._inputNode.value = isNaN(<any>date) ? "" : this.format(date);
+				});
+			}
+			return;
+		}
 		// Handle timezone offset, flatpickr uses local time
 		if(value)
 		{
-			let date = new Date(value);
 			adjustedValue = new Date(date.valueOf() + date.getTimezoneOffset() * 60 * 1000);
 			adjustedValue.setDate(1);
 			adjustedValue.setMonth(0)
