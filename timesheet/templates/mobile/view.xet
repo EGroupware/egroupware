@@ -103,7 +103,7 @@
 				</row>
 				<row>
 					<et2-description  value="Starttime"></et2-description>
-					<et2-date-timeonly  id="start_time" dataFormat="H:i"></et2-date-timeonly>
+                    <et2-date-timeonly id="ts_start" dataFormat="H:i"></et2-date-timeonly>
 				</row>
 				<row>
 					<et2-description  value="Duration" for="ts_duration"></et2-description>

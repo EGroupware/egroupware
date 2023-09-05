@@ -627,13 +627,13 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(LitFlatpickr))
 		{
 			if(this._inputNode)
 			{
-				this._inputNode.value = isNaN(date) ? "" : this.format(date, {dateFormat: 'Y-m-dTH:i'});
+				this._inputNode.value = isNaN(date) ? "" : this.format(date);
 			}
 			else
 			{
 				this.updateComplete.then(() =>
 				{
-					this._inputNode.value = isNaN(date) ? "" : this.format(date, {dateFormat: 'Y-m-dTH:i'});
+					this._inputNode.value = isNaN(date) ? "" : this.format(date);
 				});
 			}
 			return;
@@ -684,6 +684,11 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(LitFlatpickr))
 
 	get format() : Function
 	{
+		// Mobile is specific about the date format, no time allowed
+		if(typeof egwIsMobile == "function" && egwIsMobile())
+		{
+			return (date) => {return formatDate(date, {dateFormat: "Y-m-d"});};
+		}
 		return formatDate;
 	}
 
