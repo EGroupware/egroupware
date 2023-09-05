@@ -544,6 +544,10 @@ textarea.et2_textbox_ro {
 /**
  * Multi-select widget
  */
+[search][multiple] ::part(base) {
+	border: none;
+	box-shadow: none;
+}
 button.et2_selectbox_expand {
     width: 16px;
     display: inline-block;

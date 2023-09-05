@@ -177,7 +177,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 					flex-wrap: wrap;
 				  }
 
-				  :host([multiple]) .select__tags {
+				  :host([multiple][open]) .select__tags {
 					flex-basis: 100%;
 				  }
 
@@ -202,7 +202,8 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 					z-index: var(--sl-z-index-dropdown);
 				  }
 
-				  ::slotted(.search_input) ::part(form-control-input), ::slotted(.search_input) ::part(base) {
+				  ::slotted(.search_input.active) {
+					/* See also etemplate2.css, searchbox border turned off in there */
 					border: none;
 				  }
 
@@ -488,7 +489,9 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
                 />`;
 			}
 			return html`
-                <et2-textbox id="search" type="text" part="input" clearable
+                <et2-textbox id="search" type="text" part="input"
+                             exportparts="base:search__base"
+                             clearable
                              autocomplete="off"
                              placeholder="${this.egw().lang("search")}"
                              style="flex: 1 1 auto;"
