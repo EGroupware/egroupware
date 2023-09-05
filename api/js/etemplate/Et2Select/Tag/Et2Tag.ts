@@ -24,7 +24,6 @@ export class Et2Tag extends Et2Widget(SlTag)
 			shoelace, css`
 			:host {
 			  flex: 1 1 auto;
-			  overflow: hidden;
 			}
 
 			.tag--pill {
