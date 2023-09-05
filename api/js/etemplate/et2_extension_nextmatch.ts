@@ -3936,7 +3936,7 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 			{
 				// Call previously set change function
 				const params = [_node, header.nextmatch, _widget];
-				if(widget_change.toString().startsWith("function (ev, widget) {\n    // Dump the executed code for debugging"))
+				if(widget_change?.toString().startsWith("function (ev, widget) {\n    // Dump the executed code for debugging"))
 				{
 					// Legacy - do not pass the nextmatch, it will override widget
 					params.splice(1, 1);
