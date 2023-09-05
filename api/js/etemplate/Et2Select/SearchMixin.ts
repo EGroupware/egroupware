@@ -803,10 +803,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 				this._editInputNode.style.display = "";
 			}
 
-			if(this.searchEnabled || this.allowFreeEntries)
-			{
-				this._activeControls?.classList.remove("active");
-			}
+			this._activeControls?.classList.remove("active");
 		}
 
 		_triggerChange(event)
@@ -955,12 +952,12 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			{
 				event.preventDefault();
 				this._searchInputNode.value = "";
-				this.dropdown.hide().then(async() =>
+				this.updateComplete.then(async() =>
 				{
 					// update sizing / position before getting ready for another one
 					if(this.multiple)
 					{
-						await this.dropdown.show();
+						//	await this.show();
 						this._searchInputNode.focus();
 					}
 				});
@@ -1390,16 +1387,19 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 				this.requestUpdate('select_options');
 			}
 
-			// Make sure not to double-add
-			if(this.multiple && this.value.indexOf(text) == -1)
+			// Make sure not to double-add, but wait until the option is there
+			this.updateComplete.then(() =>
 			{
-				this.value.push(text);
-			}
-			else if(!this.multiple && this.value !== text)
-			{
-				this.value = text;
-			}
-			this.requestUpdate("value");
+				if(this.multiple && this.value.indexOf(text) == -1)
+				{
+					this.value.push(text);
+				}
+				else if(!this.multiple && this.value !== text)
+				{
+					this.value = text;
+				}
+				this.requestUpdate("value");
+			});
 
 			// If we were overlapping edit inputbox with the value display, reset
 			if(!this.readonly && this._activeControls?.classList.contains("novalue"))

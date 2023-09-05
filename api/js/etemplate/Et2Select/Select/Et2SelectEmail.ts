@@ -223,7 +223,7 @@ export class Et2SelectEmail extends Et2Select
 	 *
 	 * @returns {string}
 	 */
-	getTag(option, index)
+	_tagTemplate(option, index)
 	{
 		return html`
             <et2-email-tag
@@ -233,6 +233,7 @@ export class Et2SelectEmail extends Et2Select
                     })}
                     ?.fullEmail=${this.fullEmail}
                     ?.onlyEmail=${this.onlyEmail}
+                    value=${option.value}
             >
                 ${option.getTextLabel().trim()}
             </et2-email-tag>
