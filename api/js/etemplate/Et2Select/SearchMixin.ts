@@ -296,7 +296,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 
 			// Hiding the selected options from the dropdown means we can't un-select the tags
 			// hidden by the max limit.  Prefer no limit.
-			this.maxTagsVisible = -1;
+			this.maxOptionsVisible = -1;
 
 			this.validators = [];
 			/**

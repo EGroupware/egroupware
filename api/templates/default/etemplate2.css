@@ -544,7 +544,7 @@ textarea.et2_textbox_ro {
 /**
  * Multi-select widget
  */
-[search][multiple] ::part(base) {
+[search][open] ::part(base) {
 	border: none;
 	box-shadow: none;
 }

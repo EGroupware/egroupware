@@ -409,7 +409,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		}
 
 		let overflow = null;
-		if(this.maxTagsVisible > 0 && this.displayTags.length > this.maxTagsVisible)
+		if(this.maxOptionsVisible > 0 && this.displayTags.length > this.maxOptionsVisible)
 		{
 			overflow = this.displayTags.pop();
 		}
@@ -439,7 +439,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		// Re-slice & add overflow tag
 		if(overflow)
 		{
-			this.displayTags = this.displayTags.slice(0, this.maxTagsVisible);
+			this.displayTags = this.displayTags.slice(0, this.maxOptionsVisible);
 			this.displayTags.push(overflow);
 		}
 		else if(this.multiple && this.rows == 1 && this.readonly && this.value.length > 1)
