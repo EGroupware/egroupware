@@ -1490,7 +1490,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			// type to select will focus matching entries, but we don't want to stop the edit yet
 			if(typeof abort == "object" && abort.type == "blur")
 			{
-				if(abort.relatedTarget?.localName == "sl-option")
+				if(abort.relatedTarget?.localName == this.optionTag)
 				{
 					return;
 				}
