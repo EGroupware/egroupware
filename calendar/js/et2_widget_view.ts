@@ -335,9 +335,9 @@ export class et2_calendar_view extends et2_valueWidget
 			// Ymd format: 20000101
 			date.setFullYear(parseInt(_value.substring(0, 4)));
 			// Avoid overflow into next month since it already has a value
-			date.setDate(1);
-			date.setMonth(parseInt(_value.substring(4, 6)) - 1);
-			date.setDate(parseInt(_value.substring(6, 8)));
+			date.setUTCDate(1);
+			date.setUTCMonth(parseInt(_value.substring(4, 6)) - 1);
+			date.setUTCDate(parseInt(_value.substring(6, 8)));
 			date.setUTCHours(0);
 			date.setUTCMinutes(0);
 			date.setUTCSeconds(0);
