@@ -14,7 +14,7 @@ import {Et2WidgetWithSelectMixin} from "./Et2WidgetWithSelectMixin";
 import {SelectOption} from "./FindSelectOptions";
 import shoelace from "../Styles/shoelace";
 import {RowLimitedMixin} from "../Layout/RowLimitedMixin";
-import {SlOption, SlSelect} from "@shoelace-style/shoelace";
+import {SlSelect} from "@shoelace-style/shoelace";
 import {Et2Tag} from "./Tag/Et2Tag";
 import {Et2WithSearchMixin} from "./SearchMixin";
 
@@ -25,7 +25,7 @@ export class Et2WidgetWithSelect extends RowLimitedMixin(Et2WidgetWithSelectMixi
 	protected getAllOptions()
 	{
 		// @ts-ignore
-		return [...this.querySelectorAll<SlOption>('sl-option')];
+		return [...this.querySelectorAll<Et2Option>('sl-option')];
 	}
 };
 
@@ -270,13 +270,16 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 	}
 
 	// @ts-ignore
-	get value()
+	getValue()
 	{
-		return super.value;
+		const value = this.getValueAsArray();
+		return this.multiple ?
+			   value.map(v => v.replaceAll("___", " ")) ?? [] :
+			   value.length > 0 ? value[0].replaceAll("___", " ") : ""
 	}
 
 	// @ts-ignore
-	set value(val : string | string[] | number | number[])
+	set_value(val : string | string[] | number | number[])
 	{
 		if(typeof val === 'string' && val.indexOf(',') !== -1 && this.multiple)
 		{
@@ -289,11 +292,13 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		if(Array.isArray(val))
 		{
 			// Make sure value has no duplicates, and values are strings
-			val = <string[]>[...new Set(val.map(v => typeof v === 'number' ? v.toString() : v || ''))];
+			this.value = <string[]>[...new Set(val.map(v => (typeof v === 'number' ? v.toString() : v || '').replaceAll(" ", "___")))];
 		}
-		const oldValue = this.value;
-		super.value = val || [];
-		this.requestUpdate("value", oldValue);
+		else
+		{
+			// Spaces are not allowed, so replace them
+			this.value = val.replaceAll(" ", "___");
+		}
 	}
 
 	/**
@@ -471,11 +476,12 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 	{
 		// Tag used must match this.optionTag, but you can't use the variable directly.
 		// Pass option along so SearchMixin can grab it if needed
+		const value = (<string>option.value).replaceAll(" ", "___");
 		return html`
-            <sl-option value="${option.value}"
+            <sl-option value="${value}"
                        title="${!option.title || this.noLang ? option.title : this.egw().lang(option.title)}"
                        class="${option.class}" .option=${option}
-                       .selected=${this.getValueAsArray().some(v => v == option.value)}
+                       .selected=${this.getValueAsArray().some(v => v == value)}
                        ?disabled=${option.disabled}
             >
                 ${this._iconTemplate(option)}
@@ -496,12 +502,12 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 
 	/**
 	 * Custom tag
-	 * @param {SlOption} option
+	 * @param {Et2Option} option
 	 * @param {number} index
 	 * @returns {TemplateResult}
 	 * @protected
 	 */
-	protected _tagTemplate(option : SlOption, index : number) : TemplateResult
+	protected _tagTemplate(option : Et2Option, index : number) : TemplateResult
 	{
 		const readonly = (this.readonly || option && typeof (option.disabled) != "undefined" && option.disabled);
 		const isEditable = this.editModeEnabled && !readonly;
