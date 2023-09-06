@@ -1,4 +1,4 @@
-et2-select-country sl-menu-item::part(prefix), et2-select-country .flag {
+et2-select-country sl-option::part(prefix), et2-select-country .flag {
     position: relative;
     background-image: url(../images/flags.png);
     background-position: 0 100px; /* to NOT display a flag for every value not explict defined below */
