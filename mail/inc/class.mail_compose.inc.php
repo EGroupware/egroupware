@@ -2496,11 +2496,6 @@ class mail_compose
 
 		$_mailObject->addHeader('Subject', $_formData['subject']);
 
-		// this should never happen since we come from the edit dialog
-		if (Mail::detect_qp($_formData['body'])) {
-			$_formData['body'] = preg_replace('/=\r\n/', '', $_formData['body']);
-			$_formData['body'] = quoted_printable_decode($_formData['body']);
-		}
 		$disableRuler = false;
 		$signature = $_identity['ident_signature'];
 		$sigAlreadyThere = $this->mailPreferences['insertSignatureAtTopOfMessage']!='no_belowaftersend'?1:0;
