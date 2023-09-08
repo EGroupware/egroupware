@@ -8,18 +8,20 @@
  */
 
 
-import {css, nothing, PropertyValues, TemplateResult} from "lit";
+import {css, LitElement, nothing, PropertyValues, TemplateResult} from "lit";
 import {html, literal, StaticValue} from "lit/static-html.js";
 import {Et2WidgetWithSelectMixin} from "./Et2WidgetWithSelectMixin";
 import {SelectOption} from "./FindSelectOptions";
 import shoelace from "../Styles/shoelace";
 import {RowLimitedMixin} from "../Layout/RowLimitedMixin";
-import {SlSelect} from "@shoelace-style/shoelace";
 import {Et2Tag} from "./Tag/Et2Tag";
 import {Et2WithSearchMixin} from "./SearchMixin";
+import {property} from "lit/decorators/property.js";
+import {SlSelect} from "@shoelace-style/shoelace";
+import {repeat} from "lit/directives/repeat.js";
 
 // export Et2WidgetWithSelect which is used as type in other modules
-export class Et2WidgetWithSelect extends RowLimitedMixin(Et2WidgetWithSelectMixin(SlSelect))
+export class Et2WidgetWithSelect extends RowLimitedMixin(Et2WidgetWithSelectMixin(LitElement))
 {
 	// Gets an array of all <sl-option> elements
 	protected getAllOptions()
@@ -220,13 +222,41 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		}
 	}
 
+
+	/** Placeholder text to show as a hint when the select is empty. */
+	@property() placeholder = '';
+	/** Allows more than one option to be selected. */
+	@property({type: Boolean, reflect: true}) multiple = false;
+	/** Disables the select control. */
+	@property({type: Boolean, reflect: true}) disabled = false;
+
+	/** Adds a clear button when the select is not empty. */
+	@property({type: Boolean}) clearable = false;
+
+	/** The select's label. If you need to display HTML, use the `label` slot instead. */
+	@property() label = '';
+
+	/**
+	 * The preferred placement of the select's menu. Note that the actual placement may vary as needed to keep the listbox
+	 * inside of the viewport.
+	 */
+	@property({reflect: true}) placement : 'top' | 'bottom' = 'bottom';
+
+	/** The select's help text. If you need to display HTML, use the `help-text` slot instead. */
+	@property({attribute: 'help-text'}) helpText = '';
+
+	/** The select's required attribute. */
+	@property({type: Boolean, reflect: true}) required = false;
+
+
+	private __value : string | string[] = "";
+
 	constructor()
 	{
 		super();
 		this.hoist = true;
 
-		// Tell parent to use our custom method
-		this.getTag = this._tagTemplate.bind(this);
+		this._tagTemplate = this._tagTemplate.bind(this);
 	}
 	/**
 	 * List of properties that get translated
@@ -247,6 +277,10 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		this.updateComplete.then(() =>
 		{
 			this.addEventListener("sl-change", this._triggerChange);
+			// Fixes missing empty label
+			this.select?.requestUpdate("value");
+			// Fixes incorrect opening position
+			this.select?.popup.handleAnchorChange();
 		});
 	}
 
@@ -269,18 +303,21 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		}
 	}
 
-	// @ts-ignore
-	getValue()
+	@property()
+	get value()
 	{
-		const value = this.getValueAsArray();
 		return this.multiple ?
-			   value.map(v => v.replaceAll("___", " ")) ?? [] :
-			   value.length > 0 ? value[0].replaceAll("___", " ") : ""
+			   this.__value ?? [] :
+			   this.__value ?? "";
 	}
 
 	// @ts-ignore
-	set_value(val : string | string[] | number | number[])
+	set value(val : string | string[] | number | number[])
 	{
+		if(typeof val === "undefined" || val == null)
+		{
+			val = "";
+		}
 		if(typeof val === 'string' && val.indexOf(',') !== -1 && this.multiple)
 		{
 			val = val.split(',');
@@ -289,16 +326,17 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		{
 			val = val.toString();
 		}
+		const oldValue = this.value;
 		if(Array.isArray(val))
 		{
 			// Make sure value has no duplicates, and values are strings
-			this.value = <string[]>[...new Set(val.map(v => (typeof v === 'number' ? v.toString() : v || '').replaceAll(" ", "___")))];
+			this.__value = <string[]>[...new Set(val.map(v => (typeof v === 'number' ? v.toString() : v || '')))];
 		}
 		else
 		{
-			// Spaces are not allowed, so replace them
-			this.value = val.replaceAll(" ", "___");
+			this.__value = val;
 		}
+		this.requestUpdate("value", oldValue);
 	}
 
 	/**
@@ -348,17 +386,6 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		return value;
 	}
 
-	transformAttributes(attrs)
-	{
-		super.transformAttributes(attrs);
-
-		// Deal with initial value of multiple set as CSV
-		if(this.multiple && typeof this.value == "string")
-		{
-			this.value = this.value.length ? this.value.split(",") : [];
-		}
-	}
-
 	/**
 	 * Add an option for the "empty label" option, used if there's no value
 	 *
@@ -377,23 +404,12 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 	{
 		super.willUpdate(changedProperties);
 
-		if(changedProperties.has('select_options'))
-		{
-			this._renderOptions().then(async() =>
-			{
-				// If the options changed, update the display
-				await this.updateComplete;
-				this.selectionChanged();
-			});
-		}
 		if(changedProperties.has('select_options') || changedProperties.has("value") || changedProperties.has('emptyLabel'))
 		{
 			this.updateComplete.then(() => this.fix_bad_value());
 		}
 		if(changedProperties.has("select_options") && changedProperties.has("value"))
 		{
-			// Re-set value, the option for it may have just shown up
-			//this.updateComplete.then(() => this.syncItemsFromValue())
 		}
 	}
 
@@ -463,9 +479,20 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 			return html``;
 		}
 		return html`
-            <sl-option value="">${this.emptyLabel}</sl-option>`;
+            <sl-option value=""
+                       .selected=${this.getValueAsArray().some(v => v == "")}
+            >
+                ${this.emptyLabel}
+            </sl-option>`;
 	}
 
+	_optionsTemplate() : TemplateResult
+	{
+		return html`${repeat(this.select_options
+			// Filter out empty values if we have empty label to avoid duplicates
+			.filter(o => this.emptyLabel ? o.value !== '' : o), this._groupTemplate.bind(this))
+		}`;
+	}
 	/**
 	 * Used by Et2WidgetWithSelect to render each option into the select
 	 *
@@ -537,6 +564,16 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
                 ${option.getTextLabel().trim()}
             </${tagName}>
 		`;
+	}
+
+	/**
+	 * Additional customisation template
+	 * @returns {*}
+	 * @protected
+	 */
+	protected _extraTemplate()
+	{
+		return typeof super._extraTemplate == "function" ? super._extraTemplate() : nothing;
 	}
 
 	/**
@@ -649,16 +686,10 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		this.dropdown?.hide();
 	}
 
-	/**
-	 * Override from SlSelect to deal with value='' or [] and option has value=''.
-	 * This fixes "empty" value not being shown
-	 * @private
-	 */
+
 	private handleValueChange()
 	{
-		const allOptions = this.getAllOptions();
-		const value = Array.isArray(this.value) ? this.value : [this.value];
-		this.setSelectedOptions(allOptions.filter((el) => value.includes(el.value) || value.length == 0 && el.value === ""));
+		this.__value = this.select.value;
 	}
 
 	/**
@@ -714,6 +745,56 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 			return image;
 		}
 		return "";
+	}
+
+	/** Shows the listbox. */
+	async show()
+	{
+		return this.select.show();
+	}
+
+	/** Hides the listbox. */
+	async hide()
+	{
+		this.select.hide();
+	}
+
+	protected _renderOptions()
+	{return Promise.resolve();}
+
+	protected get select() : SlSelect
+	{
+		return this.shadowRoot?.querySelector("sl-select");
+	}
+
+	public render()
+	{
+		const value = Array.isArray(this.value) ?
+					  this.value.map(v => { return v.replaceAll(" ", "___"); }) :
+					  this.value.replaceAll(" ", "___");
+
+		return html`
+            <sl-select
+                    exportparts="prefix tags display-input expand-icon combobox"
+                    label=${this.label}
+                    placeholder=${this.placeholder}
+                    ?multiple=${this.multiple}
+                    ?disabled=${this.disabled}
+                    ?clearable=${this.clearable}
+                    ?required=${this.required}
+                    helpText=${this.helpText}
+                    hoist
+                    placement=${this.placement}
+                    .getTag=${this._tagTemplate}
+                    .maxOptionsVisible=${0}
+                    .value=${value}
+                    @sl-change=${this.handleValueChange}
+            >
+                ${this._emptyLabelTemplate()}
+                ${this._optionsTemplate()}
+                ${this._extraTemplate()}
+            </sl-select>
+		`;
 	}
 }
 

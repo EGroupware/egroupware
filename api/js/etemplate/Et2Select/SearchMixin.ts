@@ -7,12 +7,13 @@
  * @author Nathan Gray
  */
 
-import {css, CSSResultGroup, html, LitElement, render, TemplateResult} from "lit";
+import {css, CSSResultGroup, html, LitElement, nothing, render} from "lit";
 import {cleanSelectOptions, SelectOption} from "./FindSelectOptions";
 import {Validator} from "@lion/form-core";
 import {Et2Tag} from "./Tag/Et2Tag";
 import {SlMenuItem} from "@shoelace-style/shoelace";
 import {StaticOptions} from "./StaticOptions";
+import {TemplateResult} from "@lion/core";
 
 // Otherwise import gets stripped
 let keep_import : Et2Tag;
@@ -64,6 +65,13 @@ export declare class SearchMixinInterface
 	 * Check a [local] item to see if it matches
 	 */
 	searchMatch(search : string, options : object, item : LitElement) : boolean
+
+	/**
+	 * Additional customisation location, where we stick the search elements
+	 *
+	 * @type {TemplateResult}
+	 */
+	_extraTemplate : TemplateResult
 }
 
 /**
@@ -109,41 +117,12 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 				// @ts-ignore
 				...(super.styles ? (Symbol.iterator in Object(super.styles) ? super.styles : [super.styles]) : []),
 				css`
-				  /* Spacing */
 
-				  :host([open][search]) .select--medium .select__combobox {
-					padding-inline: 0;
-				  }
-				/* Move focus highlight */
-				.form-control-input:focus-within {
-					box-shadow: var(--sl-focus-ring);
-				}
-
-				  #search .input {
-					box-shadow: initial;
-				}
-				/* Show / hide SlSelect icons - dropdown arrow, etc but not loading spinner */
-				:host([allowFreeEntries]) ::slotted(sl-icon[slot="suffix"]) {
-					display: none;
-				}
-				/* Make search textbox take full width */
-				::slotted(.search_input), ::slotted(.search_input) input, .search_input, .search_input input {
-					width: 100%;
-				}
-				.search_input input {
-					flex: 1 1 auto;
-					width: 100%;
-				}
 				/* Full width search textbox covers loading spinner, lift it up */
 				::slotted(sl-spinner) {
 					z-index: 2;
 				}
-				/* Don't show the current value while searching for single, we want the space
-					This lets the current value shrink to nothing so the input can expand
-				 */
-				.select__label {
-					flex: 1 15 auto;
-				}
+
 				/* Show edit textbox only when editing */
 				.search_input #edit {
 					display: none;
@@ -155,61 +134,53 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 					display: initial;
 				}
 
-				  // Search starts hidden
-				  :host([search]:not([open])) .select__prefix, :host([search]:not([open])) .search_input {
-					display: none;
-				  }
 
-				  :host([search]) .select--open .select__prefix {
+				  :host([search]) sl-select[open]::part(prefix), :host([allowfreeentries]) sl-select[open]::part(prefix) {
 					flex: 2 1 auto;
+					flex-wrap: wrap;
 					width: 100%;
 				}
 
-				  :host([search]) .select--open .select__label {
-					margin: 0px;
+				  :host([search]) sl-select[open]::part(display-input), :host([allowfreeentries]) sl-select[open]::part(display-input) {
+					display: none;
 				}
 
-				  :host([allowfreeentries]:not([multiple])) .select--standard.select--open:not(.select--disabled) .select__prefix {
-					flex: 1 1 auto;
-				}
-
-				  :host([multiple][open]) .select__combobox {
-					flex-wrap: wrap;
+				  :host([search][multiple]) sl-select[open]::part(expand-icon) {
+					display: none;
 				  }
 
-				  :host([multiple][open]) .select__tags {
+				  :host([multiple]) sl-select[open]::part(tags) {
 					flex-basis: 100%;
 				  }
 
-				  :host([multiple][open]) .select__expand-icon {
-					display: none;
+				  :host([multiple]) sl-select[open]::part(combobox) {
+					flex-flow: wrap;
 				  }
 
-				  :host([search]) .select--standard.select--open:not(.select--disabled) .select__display-input,
-				  :host([allowfreeentries]:not([multiple])) .select--standard.select--open:not(.select--disabled) .select__display-input {
-					display: none;
-				}
 
 				  /* Search textbox general styling, starts hidden */
 
-				  ::slotted(.search_input) {
+				  .search_input {
 					display: none;
+					/* See also etemplate2.css, searchbox border turned off in there */
+					border: none;
 					flex: 1 1 auto;
 					order: 2;
 					margin-left: 0px;
 					height: var(--sl-input-height-medium);
+					width: 100%;
 					background-color: white;
 					z-index: var(--sl-z-index-dropdown);
 				  }
 
-				  ::slotted(.search_input.active) {
-					/* See also etemplate2.css, searchbox border turned off in there */
+				  :host([search]) et2-textbox::part(search__base) {
 					border: none;
+					box-shadow: none;
 				  }
 
 				  /* Search UI active - show textbox & stuff */
 
-				  ::slotted(.search_input.active), .search_input.active,
+				  .search_input.active,
 				  .search_input.editing {
 					display: flex;
 				  }
@@ -221,7 +192,8 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 				  }
 				
 				/* Hide options that do not match current search text */
-				::slotted(.no-match) {
+
+				  .no-match {
 					display: none;
 				}
 				/* Different cursor for editable tags */
@@ -276,6 +248,9 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 
 		// Hold the original option data from earlier search results, since we discard on subsequent search
 		private _selected_remote = <SelectOption[]>[];
+
+		// Hold current search results, selected or otherwise
+		private _remote_options = <SelectOption[]>[];
 
 		/**
 		 * These characters will end a free tag
@@ -339,7 +314,6 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 				return;
 			}
 
-			this._addNodes();
 			this._bindListeners();
 		}
 
@@ -417,7 +391,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 				}
 
 				// Normally this should be handled in render(), but we have to add our nodes in
-				this._addNodes();
+				//this._addNodes();
 			}
 			// Update any tags if edit mode changes
 			if(changedProperties.has("editModeEnabled") || changedProperties.has("readonly"))
@@ -453,33 +427,18 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			this.appendChild(div);
 		}
 
-		/**
-		 * We can tap into the tag rendering to add our search input in
-		 *
-		 * @returns {TemplateResult}
-		 * @protected
-		 */
-		protected get tags() : TemplateResult
+		protected _extraTemplate()
 		{
-			//if(!this.searchEnabled)
+			if(!this.searchEnabled && !this.editModeEnabled && !this.allowFreeEntries || this.readonly)
 			{
-				return super.tags;
+				return nothing;
 			}
-			/*
-						return html`
-							${super.tags}
-							<div part="search" exportparts="search" class="search_input">
-								${this._searchInputTemplate()}
-							</div>
-						`;
-
-			 */
+			return this._searchInputTemplate();
 		}
-
 
 		protected _searchInputTemplate()
 		{
-			let edit = null;
+			let edit = nothing;
 			if(this.editModeEnabled)
 			{
 				edit = html`<input id="edit" type="text" part="input" autocomplete="off" style="width:100%"
@@ -489,6 +448,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
                 />`;
 			}
 			return html`
+                <div class="search_input" slot="prefix">
                 <et2-textbox id="search" type="text" part="input"
                              exportparts="base:search__base"
                              clearable
@@ -499,6 +459,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
                                @blur=${this._handleSearchBlur}
                 ></et2-textbox>
                 ${edit}
+                </div>
 			`;
 		}
 
@@ -546,7 +507,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 		 */
 		protected get localItems() : NodeList
 		{
-			return this.querySelectorAll(this.optionTag + ":not(.remote)");
+			return this.select.querySelectorAll(this.optionTag + ":not(.remote)");
 		}
 
 		/**
@@ -556,7 +517,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 		 */
 		protected get remoteItems() : NodeList
 		{
-			return this.querySelectorAll(this.optionTag + ".remote");
+			return this.select?.querySelectorAll(this.optionTag + ".remote") ?? [];
 		}
 
 		/**
@@ -566,7 +527,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 		 */
 		protected get freeEntries() : NodeList
 		{
-			return this.querySelectorAll(this.optionTag + ".freeEntry");
+			return this.select?.querySelectorAll(this.optionTag + ".freeEntry") ?? [];
 		}
 
 		get select_options() : SelectOption[]
@@ -578,6 +539,9 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 
 			// Any kept remote options
 			options = options.concat(this._selected_remote ?? []);
+
+			// Current search results
+			options = options.concat(this._remote_options ?? []);
 
 			if(this.allowFreeEntries)
 			{
@@ -941,7 +905,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			{
 
 				// Strip out hidden non-matching selected & disabled items so key navigation works
-				this.menuItems = this.getAllOptions.filter(i => !i.disabled);
+				// TODO
 				return super.handleKeyDown(event);
 			}
 			event.stopPropagation();
@@ -1138,14 +1102,6 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 					n.remove();
 				}
 			})
-
-			// Reset remaining options.  It might be faster to re-create instead.
-			this.getAllOptions().forEach((item) =>
-			{
-				item.disabled = item.option?.disabled || false;
-				item.classList.remove("match");
-				item.classList.remove("no-match");
-			});
 		}
 
 		/**
@@ -1302,6 +1258,10 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 					}
 					return null;
 				});
+
+				this._remote_options = entries;
+				this.requestUpdate("select_options");
+				return;
 
 				let options = html`${entries.map(this._optionTemplate.bind(this))}`;
 

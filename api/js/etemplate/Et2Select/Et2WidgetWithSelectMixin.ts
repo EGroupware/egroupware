@@ -160,7 +160,7 @@ export const Et2WidgetWithSelectMixin = <T extends Constructor<LitElement>>(supe
 			{
 				return this.value;
 			}
-			return [this.value];
+			return this.value == "null" || typeof this.value == "undefined" ? [] : [this.value];
 		}
 
 		/**
@@ -169,6 +169,7 @@ export const Et2WidgetWithSelectMixin = <T extends Constructor<LitElement>>(supe
 		 */
 		protected _renderOptions()
 		{
+			return Promise.resolve();
 			// Add in options as children to the target node
 			if(!this._optionTargetNode)
 			{

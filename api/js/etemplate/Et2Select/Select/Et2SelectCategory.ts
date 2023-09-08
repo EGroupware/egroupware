@@ -115,8 +115,8 @@ export class Et2SelectCategory extends Et2StaticSelectMixin(Et2Select)
 		{
 			return;
 		}
-
-		const checkedItem = this.selectedOptions.find(item => item.value === this.value);
+		return;
+		const checkedItem = this.select?.selectedOptions.find(item => item.value === this.value);
 		this.querySelector("[slot=prefix].tag_image")?.remove();
 		if(checkedItem)
 		{

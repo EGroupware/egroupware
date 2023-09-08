@@ -544,9 +544,13 @@ textarea.et2_textbox_ro {
 /**
  * Multi-select widget
  */
-[search][open] ::part(base) {
+[search][open] et2-textbox::part(base) {
 	border: none;
 	box-shadow: none;
+}
+
+[search][open]::part(combobox) {
+	flex-flow: wrap;
 }
 button.et2_selectbox_expand {
     width: 16px;
