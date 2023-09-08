@@ -439,7 +439,7 @@ class calendar_uilist extends calendar_ui
 		if($params['view'] && $params['view'] == 'listview' && Api\Json\Response::isJSONResponse())
 		{
 			Api\Json\Response::get()->call('app.calendar.set_app_header',
-				(count($search_params['users']) == 1 ? $this->bo->participant_name($search_params['users'][0]).': ' : '') .
+				(count($search_params) == 1 ? $this->bo->participant_name($search_params['users'][0]).': ' : '') .
 				$label);
 		}
 		foreach((array) $this->bo->search($search_params, !empty($col_filter) ? $col_filter : null) as $event)
