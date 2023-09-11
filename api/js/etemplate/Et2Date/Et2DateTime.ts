@@ -10,7 +10,7 @@
 
 
 import {css} from "lit";
-import {Et2Date} from "./Et2Date";
+import {Et2Date, formatDate, formatDateTime} from "./Et2Date";
 import type {Instance} from "flatpickr/dist/types/instance";
 import {default as ShortcutButtonsPlugin} from "shortcut-buttons-flatpickr/dist/shortcut-buttons-flatpickr";
 
@@ -108,6 +108,18 @@ export class Et2DateTime extends Et2Date
 	_mobileInputType() : string
 	{
 		return "datetime-local";
+	}
+
+	get format() : Function
+	{
+		// Mobile is specific about the date format
+		if(typeof egwIsMobile == "function" && egwIsMobile())
+		{
+			// Use formatDate() for full control, formatDateTime() will add a space
+			return (date) => {return formatDate(date, {dateFormat: "Y-m-dTH:i"});};
+		}
+
+		return formatDateTime;
 	}
 
 	/**
