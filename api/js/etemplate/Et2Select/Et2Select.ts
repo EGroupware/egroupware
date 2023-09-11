@@ -486,21 +486,28 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
             </sl-option>`;
 	}
 
-	_optionsTemplate() : TemplateResult
+	protected _optionsTemplate() : TemplateResult
 	{
 		return html`${repeat(this.select_options
 			// Filter out empty values if we have empty label to avoid duplicates
 			.filter(o => this.emptyLabel ? o.value !== '' : o), this._groupTemplate.bind(this))
 		}`;
 	}
+
 	/**
-	 * Used by Et2WidgetWithSelect to render each option into the select
+	 * Used to render each option into the select
 	 *
 	 * @param {SelectOption} option
 	 * @returns {TemplateResult}
 	 */
-	_optionTemplate(option : SelectOption) : TemplateResult
+	protected _optionTemplate(option : SelectOption) : TemplateResult
 	{
+		// Exclude non-matches when searching
+		if(typeof option.isMatch == "boolean" && !option.isMatch)
+		{
+			return html``;
+		}
+
 		// Tag used must match this.optionTag, but you can't use the variable directly.
 		// Pass option along so SearchMixin can grab it if needed
 		const value = (<string>option.value).replaceAll(" ", "___");
@@ -773,6 +780,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 					  this.value.map(v => { return v.replaceAll(" ", "___"); }) :
 					  (typeof this.value == "string" ? this.value.replaceAll(" ", "___") : "");
 
+		const options = this._optionsTemplate();
 		return html`
             <sl-select
                     exportparts="prefix tags display-input expand-icon combobox"
@@ -791,7 +799,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
                     @sl-change=${this.handleValueChange}
             >
                 ${this._emptyLabelTemplate()}
-                ${this._optionsTemplate()}
+                ${options}
                 ${this._extraTemplate()}
             </sl-select>
 		`;

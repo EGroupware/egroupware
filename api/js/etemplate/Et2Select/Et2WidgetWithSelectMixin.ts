@@ -287,7 +287,7 @@ export const Et2WidgetWithSelectMixin = <T extends Constructor<LitElement>>(supe
 		 * @param {SelectOption} option
 		 * @returns {TemplateResult}
 		 */
-		_optionTemplate(option : SelectOption) : TemplateResult
+		protected _optionTemplate(option : SelectOption) : TemplateResult
 		{
 			return html`
                 <span>Override _optionTemplate(). ${option.value} => ${option.label}</span>`;
