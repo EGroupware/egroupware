@@ -323,8 +323,8 @@ export const StaticOptions = new class StaticOptionsType
 			attrs = {}
 		}
 		var t = new Date();
-		attrs.min = t.getFullYear() + parseInt(widget.min);
-		attrs.max = t.getFullYear() + parseInt(widget.max);
+		attrs.min = t.getFullYear() + parseInt(attrs.min ?? widget.min ?? -3);
+		attrs.max = t.getFullYear() + parseInt(attrs.max ?? widget.max ?? 2);
 		return this.number(widget, attrs);
 	}
 

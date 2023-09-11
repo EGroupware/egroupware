@@ -144,6 +144,11 @@ li {
 		return this.value;
 	}
 
+	getValueAsArray()
+	{
+		return (Array.isArray(this.value) ? this.value : [this.value]);
+	}
+
 	set value(new_value : string | string[])
 	{
 		// Split anything that is still a CSV
@@ -207,10 +212,11 @@ li {
 
 	render()
 	{
+		const value = this.getValueAsArray();
 		return html`
             <ul>
                 ${repeat(
-                        (Array.isArray(this.value) ? this.value : [this.value]),
+                        this.getValueAsArray(),
                         (val : string) => val, (val) =>
                 {
                     let option = (<SelectOption[]>this.select_options).find(option => option.value == val);
@@ -283,14 +289,16 @@ customElements.define("et2-select-app_ro", Et2SelectAppReadonly);
 
 export class Et2SelectBitwiseReadonly extends Et2SelectReadonly
 {
+	/* Currently handled server side, we get an array
 	render()
 	{
 		let new_value = [];
+		let int_value = parseInt(this.value);
 		for(let index in this.select_options)
 		{
 			let option = this.select_options[index];
 			let right = parseInt(option && option.value ? option.value : index);
-			if(!!(this.value & right))
+			if(!!(int_value & right))
 			{
 				new_value.push(right);
 			}
@@ -308,6 +316,8 @@ export class Et2SelectBitwiseReadonly extends Et2SelectReadonly
                 })}
             </ul>`;
 	}
+
+	 */
 }
 
 // @ts-ignore TypeScript is not recognizing that this widget is a LitElement
@@ -350,7 +360,6 @@ export class Et2SelectPercentReadonly extends Et2SelectReadonly
 	constructor()
 	{
 		super(...arguments);
-		this.suffix = "%%";
 		this.select_options = so.percent(this);
 	}
 }
@@ -391,6 +400,23 @@ export class Et2SelectDayOfWeekReadonly extends Et2StaticSelectMixin(Et2SelectRe
 		{
 			this.set_static_options(cleanSelectOptions(options));
 		});
+	}
+
+	getValueAsArray()
+	{
+		let expanded_value = [];
+		let int_value = parseInt(this.value);
+		let options = this.select_options;
+		for(let index in options)
+		{
+			let right = parseInt(<string>options[index].value);
+
+			if((int_value & right) == right)
+			{
+				expanded_value.push("" + right);
+			}
+		}
+		return expanded_value;
 	}
 }
 
