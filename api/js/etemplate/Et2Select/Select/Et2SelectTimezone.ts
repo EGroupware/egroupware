@@ -7,7 +7,7 @@ export class Et2SelectTimezone extends Et2StaticSelectMixin(Et2Select)
 	{
 		super();
 
-		this.static_options = StaticOptions.timezone(this, {other: this.other || []});
+		this._static_options = StaticOptions.timezone(this, {other: this.other || []});
 	}
 }
 

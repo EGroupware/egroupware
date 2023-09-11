@@ -7,7 +7,7 @@ export class Et2SelectLang extends Et2StaticSelectMixin(Et2Select)
 	{
 		super();
 
-		this.static_options = StaticOptions.lang(this, {other: this.other || []});
+		this._static_options = StaticOptions.lang(this, {other: this.other || []});
 	}
 }
 

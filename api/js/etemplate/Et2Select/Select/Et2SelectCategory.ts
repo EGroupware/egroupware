@@ -93,7 +93,7 @@ export class Et2SelectCategory extends Et2StaticSelectMixin(Et2Select)
 		{
 			this.fetchComplete = so.cat(this).then(options =>
 			{
-				this.static_options = cleanSelectOptions(options);
+				this._static_options = cleanSelectOptions(options);
 				this.requestUpdate("select_options");
 			});
 		}

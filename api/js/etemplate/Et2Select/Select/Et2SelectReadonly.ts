@@ -423,7 +423,7 @@ export class Et2SelectNumberReadonly extends Et2StaticSelectMixin(Et2SelectReado
 {
 	protected find_select_options(_attrs)
 	{
-		this.static_options = so.number(this, _attrs);
+		this._static_options = so.number(this, _attrs);
 	}
 }
 

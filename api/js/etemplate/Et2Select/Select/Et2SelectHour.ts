@@ -7,7 +7,7 @@ export class Et2SelectHour extends Et2StaticSelectMixin(Et2Select)
 	{
 		super();
 
-		this.static_options = StaticOptions.hour(this, {other: this.other || []});
+		this._static_options = StaticOptions.hour(this, {other: this.other || []});
 	}
 }
 

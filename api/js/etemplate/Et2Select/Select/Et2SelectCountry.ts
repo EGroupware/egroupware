@@ -38,7 +38,7 @@ export class Et2SelectCountry extends Et2StaticSelectMixin(Et2Select)
 
 		(<Promise<SelectOption[]>>so.country(this, {}, true)).then(options =>
 		{
-			this.static_options = options
+			this._static_options = options
 			this.requestUpdate("select_options");
 		});
 	}

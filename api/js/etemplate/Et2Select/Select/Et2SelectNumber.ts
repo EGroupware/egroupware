@@ -43,7 +43,7 @@ export class Et2SelectNumber extends Et2StaticSelectMixin(Et2Select)
 
 		if(changedProperties.has('min') || changedProperties.has('max') || changedProperties.has('interval') || changedProperties.has('suffix'))
 		{
-			this.static_options = StaticOptions.number(this);
+			this._static_options = StaticOptions.number(this);
 			this.requestUpdate("select_options");
 		}
 	}

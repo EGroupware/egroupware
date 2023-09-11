@@ -11,6 +11,7 @@ import {sprintf} from "../../egw_action/egw_action_common";
 import {Et2SelectReadonly} from "./Select/Et2SelectReadonly";
 import {cleanSelectOptions, find_select_options, SelectOption} from "./FindSelectOptions";
 import {Et2Select, Et2WidgetWithSelect} from "./Et2Select";
+import {state} from "lit/decorators/state.js";
 
 export type Et2SelectWidgets = Et2Select | Et2WidgetWithSelect | Et2SelectReadonly;
 
@@ -31,21 +32,12 @@ export const Et2StaticSelectMixin = <T extends Constructor<Et2WidgetWithSelect>>
 
 		// Hold the static widget options separately so other options (like sent from server in sel_options) won't
 		// conflict or be wiped out
-		protected static_options : SelectOption[];
+		@state()
+		protected _static_options : SelectOption[] = [];
 
 		// If widget needs to fetch options from server, we might want to wait for them
-		protected fetchComplete : Promise<SelectOption[] | void>;
-
-		constructor(...args)
-		{
-			super(...args);
-
-			this.static_options = [];
-			this.fetchComplete = Promise.resolve();
-
-			// Trigger the options to get rendered into the DOM
-			this.requestUpdate("select_options");
-		}
+		@state()
+		protected fetchComplete : Promise<SelectOption[] | void> = Promise.resolve();
 
 		async getUpdateComplete() : Promise<boolean>
 		{
@@ -58,7 +50,7 @@ export const Et2StaticSelectMixin = <T extends Constructor<Et2WidgetWithSelect>>
 		{
 			// @ts-ignore
 			const options = super.select_options || [];
-			const statics = this.static_options || [];
+			const statics = this._static_options || [];
 
 			if(options.length == 0)
 			{
@@ -69,7 +61,7 @@ export const Et2StaticSelectMixin = <T extends Constructor<Et2WidgetWithSelect>>
 				return options;
 			}
 			// Merge & make sure result is unique
-			return [...new Map([...(this.static_options || []), ...options].map(item =>
+			return [...new Map([...(this._static_options || []), ...options].map(item =>
 				[item.value, item])).values()];
 
 		}
@@ -82,7 +74,7 @@ export const Et2StaticSelectMixin = <T extends Constructor<Et2WidgetWithSelect>>
 
 		set_static_options(new_static_options)
 		{
-			this.static_options = new_static_options;
+			this._static_options = new_static_options;
 			this.requestUpdate("select_options");
 		}
 

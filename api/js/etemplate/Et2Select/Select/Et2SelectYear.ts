@@ -17,7 +17,7 @@ export class Et2SelectYear extends Et2SelectNumber
 
 		if(changedProperties.has('min') || changedProperties.has('max') || changedProperties.has('interval') || changedProperties.has('suffix'))
 		{
-			this.select_options = StaticOptions.year(this);
+			this._static_options = StaticOptions.year(this);
 		}
 	}
 }

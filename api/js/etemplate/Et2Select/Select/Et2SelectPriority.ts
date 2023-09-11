@@ -7,7 +7,7 @@ export class Et2SelectPriority extends Et2StaticSelectMixin(Et2Select)
 	{
 		super();
 
-		this.static_options = StaticOptions.priority(this);
+		this._static_options = StaticOptions.priority(this);
 	}
 }
 

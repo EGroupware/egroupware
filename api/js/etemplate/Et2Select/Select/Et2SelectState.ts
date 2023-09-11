@@ -1,5 +1,6 @@
 import {Et2Select} from "../Et2Select";
 import {Et2StaticSelectMixin, StaticOptions} from "../StaticOptions";
+import {SelectOption} from "../FindSelectOptions";
 
 export class Et2SelectState extends Et2StaticSelectMixin(Et2Select)
 {
@@ -31,7 +32,7 @@ export class Et2SelectState extends Et2StaticSelectMixin(Et2Select)
 	set countryCode(code : string)
 	{
 		this.__countryCode = code;
-		this.static_options = StaticOptions.state(this, {country_code: code});
+		this._static_options = <SelectOption[]>StaticOptions.state(this, {country_code: code});
 		this.requestUpdate("select_options");
 	}
 

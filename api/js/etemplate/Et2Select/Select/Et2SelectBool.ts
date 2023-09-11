@@ -7,7 +7,7 @@ export class Et2SelectBool extends Et2StaticSelectMixin(Et2Select)
 	{
 		super();
 
-		this.static_options = StaticOptions.bool(this);
+		this._static_options = StaticOptions.bool(this);
 	}
 }
 

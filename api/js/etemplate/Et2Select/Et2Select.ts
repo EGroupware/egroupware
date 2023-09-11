@@ -771,7 +771,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 	{
 		const value = Array.isArray(this.value) ?
 					  this.value.map(v => { return v.replaceAll(" ", "___"); }) :
-					  this.value.replaceAll(" ", "___");
+					  (typeof this.value == "string" ? this.value.replaceAll(" ", "___") : "");
 
 		return html`
             <sl-select
@@ -801,4 +801,12 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 if(typeof customElements.get("et2-select") === "undefined")
 {
 	customElements.define("et2-select", Et2Select);
+}
+
+declare global
+{
+	interface HTMLElementTagNameMap
+	{
+		"et2-select" : Et2Select;
+	}
 }
