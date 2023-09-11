@@ -14,6 +14,12 @@ import {Et2Select, Et2WidgetWithSelect} from "./Et2Select";
 import {state} from "lit/decorators/state.js";
 
 export type Et2SelectWidgets = Et2Select | Et2WidgetWithSelect | Et2SelectReadonly;
+type NumberOptions = {
+	min? : number,
+	max? : number,
+	interval? : number,
+	format? : string
+};
 
 // Export the Interface for TypeScript
 type Constructor<T = {}> = new (...args : any[]) => T;
@@ -272,19 +278,14 @@ export const StaticOptions = new class StaticOptionsType
 		];
 	}
 
-	number(widget : Et2SelectWidgets, attrs = {
-		min: undefined,
-		max: undefined,
-		interval: undefined,
-		format: undefined
-	}) : SelectOption[]
+	number(widget : Et2SelectWidgets, attrs : NumberOptions = {}) : SelectOption[]
 	{
 
-		var options = [];
-		var min = parseFloat(attrs.min ?? widget.min ?? 1);
-		var max = parseFloat(attrs.max ?? widget.max ?? 10);
-		var interval = parseFloat(attrs.interval ?? widget.interval ?? 1);
-		var format = attrs.format ?? '%d';
+		const options = [];
+		const min = parseFloat(attrs.min ?? widget.min ?? 1);
+		const max = parseFloat(attrs.max ?? widget.max ?? 10);
+		let interval = parseFloat(attrs.interval ?? widget.interval ?? 1);
+		let format = attrs.format ?? '%d';
 
 		// leading zero specified in interval
 		if(widget.leading_zero && widget.leading_zero[0] == '0')
@@ -312,7 +313,7 @@ export const StaticOptions = new class StaticOptionsType
 
 	percent(widget : Et2SelectWidgets) : SelectOption[]
 	{
-		return this.number(widget, {min: 0, max: 100, interval: 10, format: undefined});
+		return this.number(widget, {min: 0, max: 100, interval: 10, format: "%d%%"});
 	}
 
 	year(widget : Et2SelectWidgets, attrs?) : SelectOption[]
@@ -329,8 +330,7 @@ export const StaticOptions = new class StaticOptionsType
 
 	day(widget : Et2SelectWidgets, attrs) : SelectOption[]
 	{
-		attrs.other = [1, 31, 1];
-		return this.number(widget, attrs);
+		return this.number(widget, {min: 1, max: 31, interval: 1});
 	}
 
 	hour(widget : Et2SelectWidgets, attrs) : SelectOption[]
