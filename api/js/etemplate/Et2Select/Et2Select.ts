@@ -516,11 +516,13 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		// Pass option along so SearchMixin can grab it if needed
 		const value = (<string>option.value).replaceAll(" ", "___");
 		return html`
-            <sl-option value="${value}"
-                       title="${!option.title || this.noLang ? option.title : this.egw().lang(option.title)}"
-                       class="${option.class}" .option=${option}
-                       .selected=${this.getValueAsArray().some(v => v == value)}
-                       ?disabled=${option.disabled}
+            <sl-option
+                    part="option"
+                    value="${value}"
+                    title="${!option.title || this.noLang ? option.title : this.egw().lang(option.title)}"
+                    class="${option.class}" .option=${option}
+                    .selected=${this.getValueAsArray().some(v => v == value)}
+                    ?disabled=${option.disabled}
             >
                 ${this._iconTemplate(option)}
                 ${this.noLang ? option.label : this.egw().lang(option.label)}
@@ -698,7 +700,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 	}
 
 
-	private handleValueChange()
+	protected handleValueChange()
 	{
 		this.__value = this.select.value;
 	}
@@ -789,9 +791,18 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 					  this.value.map(v => { return v.replaceAll(" ", "___"); }) :
 					  (typeof this.value == "string" ? this.value.replaceAll(" ", "___") : "");
 
+		let icon : TemplateResult | typeof nothing = nothing;
+		if(!this.multiple)
+		{
+			const icon_option = this.select_options.find(o => (o.value == value || Array.isArray(value) && value.includes(o.value)) && o.icon);
+			if(icon_option)
+			{
+				icon = this._iconTemplate(icon_option);
+			}
+		}
 		return html`
             <sl-select
-                    exportparts="prefix, tags, display-input, expand-icon, combobox, listbox"
+                    exportparts="prefix, tags, display-input, expand-icon, combobox, listbox, option"
                     label=${this.label}
                     placeholder=${this.placeholder}
                     ?multiple=${this.multiple}
@@ -806,6 +817,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
                     .value=${value}
                     @sl-change=${this.handleValueChange}
             >
+                ${icon}
                 ${this._emptyLabelTemplate()}
                 ${this._optionsTemplate()}
                 ${this._extraTemplate()}

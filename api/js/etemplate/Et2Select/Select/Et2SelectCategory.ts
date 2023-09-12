@@ -8,12 +8,13 @@
  */
 
 
-import {css, PropertyValues} from "lit";
+import {css, html, nothing, PropertyValues, TemplateResult, unsafeCSS} from "lit";
 import {Et2Select} from "../Et2Select";
 import {Et2StaticSelectMixin, StaticOptions as so} from "../StaticOptions";
 import {cleanSelectOptions} from "../FindSelectOptions";
 import {StaticValue} from "lit/development/static-html";
 import {literal} from "lit/static-html.js";
+import {repeat} from "lit/directives/repeat.js";
 
 /**
  * Customised Select widget for categories
@@ -27,12 +28,14 @@ export class Et2SelectCategory extends Et2StaticSelectMixin(Et2Select)
 			...super.styles,
 			css`
 			/* Category color on options */
-			::slotted(*) {
+
+			  sl-option {
 				border-left: 6px solid var(--category-color, transparent);
 			}
 			/* Border on the (single) selected value */
-			:host(.hasValue:not([multiple])) .select--standard .select__control {
-				border-left: 6px solid var(--sl-input-border-color);
+
+			  :host(:not([multiple]))::part(combobox) {
+				border-left: 6px solid var(--category-color, var(--sl-input-border-color));
 			}			
 			`
 		]
@@ -75,13 +78,6 @@ export class Et2SelectCategory extends Et2StaticSelectMixin(Et2Select)
 				(this.getInstanceManager() && this.getInstanceManager().app) ||
 				this.egw().app_name();
 		}
-		// If app passes options (addressbook index) we'll use those instead.
-		// They will be found automatically by update() after ID is set.
-		await this.updateComplete;
-		if(this.select_options.length == 0)
-		{
-
-		}
 	}
 
 
@@ -97,37 +93,43 @@ export class Et2SelectCategory extends Et2StaticSelectMixin(Et2Select)
 				this.requestUpdate("select_options");
 			});
 		}
+	}
 
-		if(changedProperties.has("value") || changedProperties.has('select_options'))
-		{
-			this.doLabelChange()
-		}
+
+	protected handleValueChange(e)
+	{
+		super.handleValueChange(e);
+
+		// Just re-draw to get the colors & icon
+		this.requestUpdate();
 	}
 
 	/**
-	 * Override from parent (SlSelect) to customise display of the current value.
-	 * Here's where we add the icon & color border
+	 * Used to render each option into the select
+	 * Overridden for colors
+	 *
+	 * @param {SelectOption} option
+	 * @returns {TemplateResult}
 	 */
-	doLabelChange()
+	public render() : TemplateResult
 	{
-		// Update the display label when checked menu item's label changes
-		if(this.multiple)
-		{
-			return;
-		}
-		return;
-		const checkedItem = this.select?.selectedOptions.find(item => item.value === this.value);
-		this.querySelector("[slot=prefix].tag_image")?.remove();
-		if(checkedItem)
-		{
-			let image = this._createImage(checkedItem)
-			if(image)
-			{
-				this.append(image);
-			}
-			this.popup.querySelector(".select__combobox").style.borderColor =
-				getComputedStyle(checkedItem).getPropertyValue("--category-color") || "";
-		}
+		/** CSS variables are not making it through to options, re-declaring them here works */
+		return html`
+            <style>
+                ${repeat(this.select_options, (option) =>
+                {
+                    if(typeof option.color == "undefined" || !option.color)
+                    {
+                        return nothing;
+                    }
+                    return unsafeCSS(
+                            (this.getValueAsArray().includes(option.value) ? "::part(combobox) { --category-color: " + option.color + ";}" : "") +
+                            ".cat_" + option.value + " {--category-color: " + option.color + ";}"
+                    );
+                })}
+            </style>
+            ${super.render()}
+		`;
 	}
 	
 	/**
