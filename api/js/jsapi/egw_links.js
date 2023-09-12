@@ -515,8 +515,12 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 			const parent = document.getElementById(_parent);
 			const select = document.createElement('et2-select');
 			select.setAttribute('id', 'quick_add_selectbox');
-			select.placement = "bottom right";
+			select.placement = "bottom end";
 			parent.append(select);
+			const plus = parent.querySelector("span");
+			plus.addEventListener("click", () => {
+				select.show();
+			})
 
 			// bind change handler
 			select.addEventListener('change', () =>
@@ -530,7 +534,7 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 			// need to load common translations for app-names
 			this.langRequire(window, [{app: 'common', lang: this.preference('lang')}], () =>
 			{
-				let options = [{value:'', label: this.lang('Select one...')}];
+				let options = [];
 				const apps = this.link_app_list('add');
 				for(let app in apps)
 				{

@@ -292,11 +292,6 @@ div.timesheet_timer {
 		height: 0px;
 		float: left;
 		display: inline-block;
-		/* do NOT show empty label */
-
-		sl-option[value=""] {
-		  display: none;
-		}
 
 		sl-option {
 		  white-space: nowrap;
@@ -316,7 +311,7 @@ div.timesheet_timer {
 	  }
 
 	  #quick_add_selectbox::part(listbox) {
-		width: fit-content;
+		float: right;
 	  }
 
 	  #quick_add_selectbox::part(combobox) {

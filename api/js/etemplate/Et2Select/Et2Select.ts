@@ -336,6 +336,10 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		{
 			this.__value = val;
 		}
+		if(this.select)
+		{
+			this.select.value = this.__value;
+		}
 		this.requestUpdate("value", oldValue);
 	}
 
@@ -766,6 +770,11 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		this.select.hide();
 	}
 
+	get open()
+	{
+		return this.select?.open ?? false;
+	}
+
 	protected _renderOptions()
 	{return Promise.resolve();}
 
@@ -780,10 +789,9 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 					  this.value.map(v => { return v.replaceAll(" ", "___"); }) :
 					  (typeof this.value == "string" ? this.value.replaceAll(" ", "___") : "");
 
-		const options = this._optionsTemplate();
 		return html`
             <sl-select
-                    exportparts="prefix tags display-input expand-icon combobox"
+                    exportparts="prefix, tags, display-input, expand-icon, combobox, listbox"
                     label=${this.label}
                     placeholder=${this.placeholder}
                     ?multiple=${this.multiple}
@@ -799,8 +807,9 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
                     @sl-change=${this.handleValueChange}
             >
                 ${this._emptyLabelTemplate()}
-                ${options}
+                ${this._optionsTemplate()}
                 ${this._extraTemplate()}
+                <slot></slot>
             </sl-select>
 		`;
 	}
