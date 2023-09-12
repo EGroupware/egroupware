@@ -133,8 +133,8 @@ export class Et2Split extends Et2Widget(SlotMixin(SlSplitPanel))
 					let outerNodetopOffset = widget.dynheight.outerNode.offset().top;
 					widget.dynheight.outerNode = {
 						// Random 3px deducted to make things fit better.  Otherwise nm edges are hidden
-						width: () => parseInt(getComputedStyle(this.shadowRoot.querySelector(".start")).width) - 3,
-						height: () => parseInt(getComputedStyle(this.shadowRoot.querySelector(".start")).height) - 3,
+						width: () => parseInt(getComputedStyle(this.querySelector("[slot='start']")).width) - 3,
+						height: () => parseInt(getComputedStyle(this.querySelector("[slot='start']")).height) - 3,
 						offset: () => {return {top:outerNodetopOffset}}
 					};
 					widget.dynheight._collectBottomNodes = function()
