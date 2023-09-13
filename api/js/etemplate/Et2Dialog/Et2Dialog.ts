@@ -12,7 +12,12 @@
 import {Et2Widget} from "../Et2Widget/Et2Widget";
 import {et2_button} from "../et2_widget_button";
 import {et2_widget} from "../et2_core_widget";
-import {classMap, css, html, ifDefined, LitElement, render, repeat, SlotMixin, styleMap} from "@lion/core";
+import {css, html, LitElement, render} from "lit";
+import {classMap} from "lit/directives/class-map.js";
+import {ifDefined} from "lit/directives/if-defined.js";
+import {repeat} from "lit/directives/repeat.js";
+import {styleMap} from "lit/directives/style-map.js";
+import {SlotMixin} from "@lion/core";
 import {et2_template} from "../et2_widget_template";
 import {etemplate2} from "../etemplate2";
 import {egw, IegwAppLocal} from "../../jsapi/egw_global";

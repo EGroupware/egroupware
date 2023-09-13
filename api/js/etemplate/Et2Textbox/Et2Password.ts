@@ -11,7 +11,9 @@
 import {Et2InvokerMixin} from "../Et2Url/Et2InvokerMixin";
 import {Et2Textbox} from "./Et2Textbox";
 import {Et2Dialog} from "../Et2Dialog/Et2Dialog";
-import {classMap, html, ifDefined} from "@lion/core";
+import {html} from "lit";
+import {classMap} from "lit/directives/class-map.js";
+import {ifDefined} from "lit/directives/if-defined.js";
 import {egw} from "../../jsapi/egw_global";
 
 const isChromium = navigator.userAgentData?.brands.some(b => b.brand.includes('Chromium'));

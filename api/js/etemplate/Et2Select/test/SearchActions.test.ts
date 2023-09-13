@@ -97,13 +97,13 @@ describe("Trigger search", () =>
 		// @ts-ignore
 		element = await fixture<Et2Select>(html`
             <et2-select label="I'm a select" search=true>
-                <sl-menu-item value="one">One</sl-menu-item>
-                <sl-menu-item value="two">Two</sl-menu-item>
-                <sl-menu-item value="three">Three</sl-menu-item>
-                <sl-menu-item value="four">Four</sl-menu-item>
-                <sl-menu-item value="five">Five</sl-menu-item>
-                <sl-menu-item value="six">Six</sl-menu-item>
-                <sl-menu-item value="seven">Seven</sl-menu-item>
+                <sl-option value="one">One</sl-option>
+                <sl-option value="two">Two</sl-option>
+                <sl-option value="three">Three</sl-option>
+                <sl-option value="four">Four</sl-option>
+                <sl-option value="five">Five</sl-option>
+                <sl-option value="six">Six</sl-option>
+                <sl-option value="seven">Seven</sl-option>
             </et2-select>
 		`);
 		// Stub egw()

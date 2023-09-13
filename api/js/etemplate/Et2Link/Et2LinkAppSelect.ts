@@ -1,9 +1,9 @@
 import {cleanSelectOptions, SelectOption} from "../Et2Select/FindSelectOptions";
-import {css, html, SlotMixin, TemplateResult} from "@lion/core";
+import {css, html, TemplateResult} from "lit";
 import {Et2Select} from "../Et2Select/Et2Select";
 
 
-export class Et2LinkAppSelect extends SlotMixin(Et2Select)
+export class Et2LinkAppSelect extends Et2Select
 {
 	static get styles()
 	{
@@ -49,22 +49,11 @@ export class Et2LinkAppSelect extends SlotMixin(Et2Select)
 		}
 	};
 
-	get slots()
-	{
-		return {
-			...super.slots,
-			"": () =>
-			{
+	/*
+					icon.style.width = "var(--icon-width)";
+					icon.style.height = "var(--icon-width)";
 
-				const icon = document.createElement("et2-image");
-				icon.setAttribute("slot", "prefix");
-				icon.setAttribute("src", "api/navbar");
-				icon.style.width = "var(--icon-width)";
-				icon.style.height = "var(--icon-width)";
-				return icon;
-			}
-		}
-	}
+	 */
 
 	protected __applicationList : string[];
 	protected __onlyApp : string;
@@ -104,9 +93,6 @@ export class Et2LinkAppSelect extends SlotMixin(Et2Select)
 	{
 		super.connectedCallback();
 
-		// Set icon
-		this.querySelector(":scope > [slot='prefix']").setAttribute("src", this.egw().link_get_registry(this.value, 'icon') ?? this.value + "/navbar");
-
 		if(!this.value)
 		{
 			// use preference
@@ -118,7 +104,7 @@ export class Et2LinkAppSelect extends SlotMixin(Et2Select)
 			this.value = this.egw().preference('link_app', appname || this.egw().app_name());
 		}
 		// Register to
-		this.addEventListener("change", this._handleChange);
+		this.addEventListener("sl-change", this._handleChange);
 
 		if(this.__onlyApp)
 		{
@@ -129,7 +115,7 @@ export class Et2LinkAppSelect extends SlotMixin(Et2Select)
 	disconnectedCallback()
 	{
 		super.disconnectedCallback();
-		this.removeEventListener("change", this._handleChange);
+		this.removeEventListener("sl-change", this._handleChange);
 	}
 
 	/**
@@ -173,10 +159,9 @@ export class Et2LinkAppSelect extends SlotMixin(Et2Select)
 		super.value = new_value;
 	}
 
-	_handleChange(e)
+	handleValueChange(e)
 	{
-		// Set icon
-		this.querySelector(":scope > [slot='prefix']").setAttribute("src", this.egw().link_get_registry(this.value, 'icon'));
+		super.handleValueChange(e);
 
 		// update preference
 		let appname = "";
@@ -198,13 +183,21 @@ export class Et2LinkAppSelect extends SlotMixin(Et2Select)
 		// Limit to one app
 		if(this.onlyApp)
 		{
-			select_options.push({value: this.onlyApp, label: this.egw().lang(this.onlyApp)});
+			select_options.push({
+				value: this.onlyApp,
+				label: this.egw().lang(this.onlyApp),
+				icon: this.egw().link_get_registry(this.onlyApp, 'icon') ?? this.onlyApp + "/navbar"
+			});
 		}
 		else if(this.applicationList.length > 0)
 		{
 			select_options = this.applicationList.map((app) =>
 			{
-				return {value: app, label: this.egw().lang(app)};
+				return {
+					value: app,
+					label: this.egw().lang(app),
+					icon: this.egw().link_get_registry(app, 'icon') ?? app + "/navbar"
+				};
 			});
 		}
 		else
@@ -215,29 +208,27 @@ export class Et2LinkAppSelect extends SlotMixin(Et2Select)
 			{
 				delete select_options['addressbook-email'];
 			}
+			select_options = cleanSelectOptions(select_options);
+			select_options.map((option) =>
+			{
+				option.icon = this.egw().link_get_registry(option.value, 'icon') ?? option.value + "/navbar"
+			});
 		}
 		if (!this.value)
 		{
 			this.value = <string>this.egw().preference('link_app', this.egw().app_name());
 		}
-		this.select_options = cleanSelectOptions(select_options);
+		this.select_options = select_options;
 	}
 
 
 	_optionTemplate(option : SelectOption) : TemplateResult
 	{
 		return html`
-            <sl-menu-item value="${option.value}" title="${option.title}">
+            <sl-option value="${option.value}" title="${option.title}">
                 ${this.appIcons ? "" : option.label}
-                ${this._iconTemplate(option.value)}
-            </sl-menu-item>`;
-	}
-
-	_iconTemplate(appname)
-	{
-		let url = appname ? this.egw().link_get_registry(appname, 'icon') : "";
-		return html`
-            <et2-image style="width: var(--icon-width)" slot="prefix" src="${url}"></et2-image>`;
+                ${this._iconTemplate(option)}
+            </sl-option>`;
 	}
 }
 

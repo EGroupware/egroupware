@@ -9,7 +9,7 @@
  */
 
 import {Et2Textbox} from "./Et2Textbox";
-import {css, html, render} from "@lion/core";
+import {css, html, render} from "lit";
 
 export class Et2Number extends Et2Textbox
 {

@@ -1,7 +1,7 @@
 /**
  * Cropper styles constant
  */
-import {css} from "@lion/core";
+import {css} from "lit";
 
 /*!
  * Cropper.js v1.5.12

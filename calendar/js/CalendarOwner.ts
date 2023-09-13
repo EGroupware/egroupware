@@ -56,18 +56,24 @@ export class CalendarOwner extends Et2StaticSelectMixin(Et2Select)
 	 */
 	_optionTemplate(option : SelectOption) : TemplateResult
 	{
+
+		const checked = this.value == null ?
+						option.value === this.value || this.multiple && this.value.indexOf(option.value) >= 0 :
+						this.value.indexOf(option.value) >= 0;
+
 		// Tag used must match this.optionTag, but you can't use the variable directly.
 		// Pass option along so SearchMixin can grab it if needed
 		return html`
-            <sl-menu-item value="${option.value}"
+            <sl-option value="${option.value}"
                           title="${!option.title || this.noLang ? option.title : this.egw().lang(option.title)}"
                           class="${option.class}" .option=${option}
                           ?disabled=${option.disabled}
+                       .selected=${checked}
             >
                 ${this._iconTemplate(option)}
                 ${this.noLang ? option.label : this.egw().lang(option.label)}
                 <span class="title" slot="suffix">${option.title}</span>
-            </sl-menu-item>`;
+            </sl-option>`;
 	}
 
 	/**

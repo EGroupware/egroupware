@@ -8,7 +8,7 @@
  */
 
 
-import {css, html} from "@lion/core";
+import {css, html} from "lit";
 import {Et2DateDuration, formatOptions} from "./Et2DateDuration";
 import {dateStyles} from "./DateStyles";
 

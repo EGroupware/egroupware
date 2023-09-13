@@ -8,20 +8,27 @@
  */
 
 
-import {css, html, PropertyValues, TemplateResult} from "@lion/core";
-import {Et2StaticSelectMixin, StaticOptions as so} from "./StaticOptions";
+import {css, LitElement, nothing, PropertyValues, TemplateResult} from "lit";
+import {html, literal, StaticValue} from "lit/static-html.js";
 import {Et2WidgetWithSelectMixin} from "./Et2WidgetWithSelectMixin";
-import {cleanSelectOptions, SelectOption} from "./FindSelectOptions";
-import {SlMenuItem, SlSelect} from "@shoelace-style/shoelace";
+import {SelectOption} from "./FindSelectOptions";
 import shoelace from "../Styles/shoelace";
-import {Et2WithSearchMixin} from "./SearchMixin";
-import {Et2Tag} from "./Tag/Et2Tag";
-import {LionValidationFeedback} from "@lion/form-core";
 import {RowLimitedMixin} from "../Layout/RowLimitedMixin";
+import {Et2Tag} from "./Tag/Et2Tag";
+import {Et2WithSearchMixin} from "./SearchMixin";
+import {property} from "lit/decorators/property.js";
+import {SlChangeEvent, SlSelect} from "@shoelace-style/shoelace";
+import {repeat} from "lit/directives/repeat.js";
 
 // export Et2WidgetWithSelect which is used as type in other modules
-export class Et2WidgetWithSelect extends RowLimitedMixin(Et2WidgetWithSelectMixin(SlSelect))
+export class Et2WidgetWithSelect extends RowLimitedMixin(Et2WidgetWithSelectMixin(LitElement))
 {
+	// Gets an array of all <sl-option> elements
+	protected getAllOptions()
+	{
+		// @ts-ignore
+		return [...this.querySelectorAll<Et2Option>('sl-option')];
+	}
 };
 
 /**
@@ -65,14 +72,14 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 			shoelace,
 			super.styles,
 			css`
-			:host {
+			  :host {
 				display: block;
 				flex: 1 0 auto;
 				--icon-width: 20px;
-			}
-			
-			
-			::slotted(img), img {
+			  }
+
+
+			  ::slotted(img), img {
 				vertical-align: middle;
 			}
 			
@@ -137,7 +144,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 
 			  /* Hide dropdown trigger when multiple & readonly */
 
-			  :host([readonly][multiple]) .select__icon {
+			  :host([readonly][multiple]) .select__expand-icon {
 				display: none;
 			  }
 
@@ -167,9 +174,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 				width: fill-available;
 			  }
 
-			  /* Style for the popup */
-
-			  ::part(popup) {
+			  ::part(listbox) {
 				z-index: 1;
 				background: var(--sl-input-background-color);
 				padding: var(--sl-input-spacing-small);
@@ -186,10 +191,11 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 			  ::part(display-label) {
 				margin: 0;
 			  }
-              :host::part(display-label) {
-                max-height: 8em;
+
+			  :host::part(display-label) {
+				max-height: 8em;
 				overflow-y: auto;
-              }
+			  }
 			`
 		];
 	}
@@ -216,6 +222,42 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		}
 	}
 
+
+	/** Placeholder text to show as a hint when the select is empty. */
+	@property() placeholder = '';
+	/** Allows more than one option to be selected. */
+	@property({type: Boolean, reflect: true}) multiple = false;
+	/** Disables the select control. */
+	@property({type: Boolean, reflect: true}) disabled = false;
+
+	/** Adds a clear button when the select is not empty. */
+	@property({type: Boolean}) clearable = false;
+
+	/** The select's label. If you need to display HTML, use the `label` slot instead. */
+	@property() label = '';
+
+	/**
+	 * The preferred placement of the select's menu. Note that the actual placement may vary as needed to keep the listbox
+	 * inside of the viewport.
+	 */
+	@property({reflect: true}) placement : 'top' | 'bottom' = 'bottom';
+
+	/** The select's help text. If you need to display HTML, use the `help-text` slot instead. */
+	@property({attribute: 'help-text'}) helpText = '';
+
+	/** The select's required attribute. */
+	@property({type: Boolean, reflect: true}) required = false;
+
+
+	private __value : string | string[] = "";
+
+	constructor()
+	{
+		super();
+		this.hoist = true;
+
+		this._tagTemplate = this._tagTemplate.bind(this);
+	}
 	/**
 	 * List of properties that get translated
 	 *
@@ -229,73 +271,16 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		}
 	}
 
-	get slots()
-	{
-		return {
-			...super.slots,
-			input: () =>
-			{
-				return document.createElement("select");
-			}
-		}
-	}
-
-	/**
-	 * If fix_bad_value() has to change the value, the update will trigger a change event.
-	 * We don't want that event to fire since it happens too soon, before the handler is ready and app.ts has set up
-	 * @type {boolean}
-	 * @private
-	 */
-	private _block_change_event = false;
-
-	/**
-	 * Close the dropdown after user selects an option.
-	 * Only applies when multiple="true".  We initialize it in constructor to the common preference "select_multiple_close"
-	 * @type {boolean}
-	 * @private
-	 */
-	private _close_on_select : boolean;
-
-	constructor(...args : any[])
-	{
-		super();
-		// We want this on more often than off
-		this.hoist = true;
-
-		this._close_on_select = this.egw().preference("select_multiple_close") == "close";
-
-		this._triggerChange = this._triggerChange.bind(this);
-		this._doResize = this._doResize.bind(this);
-		this._handleMouseWheel = this._handleMouseWheel.bind(this);
-		this._handleMouseEnter = this._handleMouseEnter.bind(this);
-		this._handleMouseLeave = this._handleMouseLeave.bind(this);
-		this.handleOptionClick = this.handleOptionClick.bind(this);
-		this.handleKeyDown = this.handleKeyDown.bind(this);
-		this.handleTagRemove = this.handleTagRemove.bind(this);
-	}
-
 	connectedCallback()
 	{
 		super.connectedCallback();
-
-		// Re-bind focus/blur to after show/hide to avoid buggy behaviour like menu won't hide
-		this.removeEventListener("blur", this.et2HandleBlur);
-		this.removeEventListener("focus", this.et2HandleFocus);
-		this.addEventListener("sl-after-show", this.et2HandleFocus);
-		this.addEventListener("sl-after-hide", this.et2HandleBlur);
-
-		this.addEventListener("mousewheel", this._handleMouseWheel);
-		this.addEventListener("mouseenter", this._handleMouseEnter);
-		this.addEventListener("mouseup", this.handleOptionClick);
-		this.addEventListener("keydown", this.handleKeyDown);
-
 		this.updateComplete.then(() =>
 		{
 			this.addEventListener("sl-change", this._triggerChange);
-			this.addEventListener("sl-after-show", this._doResize)
-
-			/* A hack to deal with how we do dark mode to avoid re-coloring the dropdown icon */
-			this.shadowRoot.querySelector(".select__icon").setAttribute("part", "dropdown-icon");
+			// Fixes missing empty label
+			this.select?.requestUpdate("value");
+			// Fixes incorrect opening position
+			this.select?.popup.handleAnchorChange();
 		});
 	}
 
@@ -303,17 +288,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 	{
 		super.disconnectedCallback();
 
-		this.removeEventListener("mousewheel", this._handleMouseWheel);
-		this.removeEventListener("sl-clear", this._triggerChange)
 		this.removeEventListener("sl-change", this._triggerChange);
-		this.removeEventListener("sl-after-show", this._doResize);
-		this.removeEventListener("sl-after-show", this.et2HandleFocus);
-		this.removeEventListener("sl-after-hide", this.et2HandleBlur);
-	}
-
-	firstUpdated(changedProperties?)
-	{
-		super.firstUpdated(changedProperties);
 	}
 
 	_triggerChange(e)
@@ -328,176 +303,21 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		}
 	}
 
-	/**
-	 * Change the menu sizing to allow the menu to be wider than the field width, but no smaller
-	 *
-	 * @param e
-	 * @private
-	 */
-	private _doResize(e)
+	@property()
+	get value()
 	{
-		this.menu.style.minWidth = this.menu.style.width;
-		this.menu.style.width = "";
+		return this.multiple ?
+			   this.__value ?? [] :
+			   this.__value ?? "";
 	}
 
-	/**
-	 * Stop scroll from bubbling so the sidemenu doesn't scroll too
-	 *
-	 * @param {MouseEvent} e
-	 */
-	private _handleMouseWheel(e : MouseEvent)
+	// @ts-ignore
+	set value(val : string | string[] | number | number[])
 	{
-		e.stopPropagation();
-	}
-
-	/**
-	 * If rows=1 and multiple=true, when they put the mouse over the widget show all tags
-	 * @param {MouseEvent} e
-	 * @private
-	 */
-	private _handleMouseEnter(e : MouseEvent)
-	{
-		if(this.rows == 1 && this.multiple == true && this.value.length > 1)
+		if(typeof val === "undefined" || val == null)
 		{
-			e.stopPropagation();
-			let distance = (-1 * parseInt(getComputedStyle(this).height)) - 2;
-
-			// Show all tags
-			this._oldMaxTagsVisible = this.maxTagsVisible;
-			this.maxTagsVisible = 0;
-			this._oldRows = this.rows;
-			this.rows = 10;
-			this.syncItemsFromValue();
-
-			// Bind to turn this all off
-			this.addEventListener("mouseleave", this._handleMouseLeave);
-
-			// Popup - this might get wiped out next render(), might not
-			this.updateComplete.then(() =>
-			{
-				let label = this.dropdown.querySelector(".select__label");
-				let popup = document.createElement("sl-popup");
-				popup.anchor = this;
-				popup.distance = distance;
-				popup.placement = "bottom";
-				popup.strategy = "fixed";
-				popup.active = true;
-				popup.sync = "width";
-				popup.classList.add("hover__popup", "details", "hoist", "details__body");
-				label.parentNode.insertBefore(popup, label);
-				popup.appendChild(label);
-				label.style.width = getComputedStyle(this).width;
-				label.style.margin = 0;
-			});
+			val = "";
 		}
-	}
-
-	/**
-	 * If we're showing all rows because of _handleMouseEnter, reset when mouse leaves
-	 * @param {MouseEvent} e
-	 * @private
-	 */
-	private _handleMouseLeave(e : MouseEvent)
-	{
-		let popup = this.dropdown.querySelector("sl-popup");
-		if(popup)
-		{
-			// Popup still here.  Remove it
-			let label = popup.firstChild;
-			popup.parentNode.insertBefore(label, popup);
-			popup.remove();
-		}
-		this.maxTagsVisible = this._oldMaxTagsVisible;
-		delete this._oldMaxTagsVisible;
-		this.rows = this._oldRows;
-		delete this._oldRows;
-		this.syncItemsFromValue();
-		this.removeEventListener("mouseleave", this._handleMouseLeave);
-		this.dropdown.requestUpdate();
-	}
-
-	/**
-	 * Get the node where we're putting the selection options
-	 *
-	 * @returns {HTMLElement}
-	 */
-	get _optionTargetNode() : HTMLElement
-	{
-		return <HTMLElement><unknown>this;
-	}
-
-	/**
-	 * Handle the case where there is no value set, or the value provided is not an option.
-	 * If this happens, we choose the first option or empty label.
-	 *
-	 * Careful when this is called.  We change the value here, so an infinite loop is possible if the widget has
-	 * onchange.
-	 *
-	 */
-	protected fix_bad_value()
-	{
-		// Stop if there are no options
-		if(!Array.isArray(this.select_options) || this.select_options.length == 0)
-		{
-			// Nothing to do here
-			return;
-		}
-
-		let valueArray = Array.isArray(this.value) ? this.value : (
-			!this.value ? [] : (this.multiple ? this.value.toString().split(',') : [this.value])
-		);
-
-		// Check for value using missing options (deleted or otherwise not allowed)
-		let filtered = this.filterOutMissingOptions(valueArray);
-		if(filtered.length != valueArray.length)
-		{
-			this.value = filtered;
-			return;
-		}
-
-		// Multiple is allowed to be empty, and if we don't have an emptyLabel or options nothing to do
-		if(this.multiple || (!this.emptyLabel && this.select_options.length === 0))
-		{
-			return;
-		}
-
-		// See if parent (search / free entry) is OK with it
-		if(super.fix_bad_value())
-		{
-			return;
-		}
-		// If somebody gave '' as a select_option, let it be
-		if(this.value === '' && this.select_options.filter((option) => this.value === option.value).length == 1)
-		{
-			return;
-		}
-		// If no value is set, choose the first option
-		// Only do this on once during initial setup, or it can be impossible to clear the value
-
-		// value not in options --> use emptyLabel, if exists, or first option otherwise
-		if(this.select_options.filter((option) => valueArray.find(val => val == option.value) ||
-			Array.isArray(option.value) && option.value.filter(o => valueArray.find(val => val == o.value))).length === 0)
-		{
-			let oldValue = this.value;
-			this.value = this.emptyLabel ? "" : "" + this.select_options[0]?.value;
-			this._block_change_event = (oldValue != this.value);
-			// ""+ to cast value of 0 to "0", to not replace with ""
-			this.requestUpdate("value", oldValue);
-		}
-	}
-
-	/**
-	 * @deprecated use this.multiple = multi
-	 *
-	 * @param multi
-	 */
-	set_multiple(multi)
-	{
-		this.multiple = multi;
-	}
-
-	set_value(val : string | string[] | number | number[])
-	{
 		if(typeof val === 'string' && val.indexOf(',') !== -1 && this.multiple)
 		{
 			val = val.split(',');
@@ -506,12 +326,25 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		{
 			val = val.toString();
 		}
+		const oldValue = this.value;
 		if(Array.isArray(val))
 		{
 			// Make sure value has no duplicates, and values are strings
-			val = [...new Set(val.map(v => typeof v === 'number' ? v.toString() : v || ''))];
+			this.__value = <string[]>[...new Set(val.map(v => (typeof v === 'number' ? v.toString() : v || '')))];
 		}
-		this.value = val || '';
+		else
+		{
+			this.__value = val;
+		}
+		if(this.multiple && typeof this.__value == "string")
+		{
+			this.__value = this.__value != "" ? [this.__value] : [];
+		}
+		if(this.select)
+		{
+			this.select.value = this.__value;
+		}
+		this.requestUpdate("value", oldValue);
 	}
 
 	/**
@@ -561,23 +394,10 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		return value;
 	}
 
-	transformAttributes(attrs)
-	{
-		super.transformAttributes(attrs);
-
-		// Deal with initial value of multiple set as CSV
-		if(this.multiple && typeof this.value == "string")
-		{
-			this.value = this.value.length ? this.value.split(",") : [];
-		}
-	}
-
 	/**
-	 * Load extra stuff from the template node.
-	 * Overridden from parent to force value to be "good", since this is the earliest place we have both value and
-	 * select options when loading from a template.
+	 * Add an option for the "empty label" option, used if there's no value
 	 *
-	 * @param {Element} _node
+	 * @returns {TemplateResult}
 	 */
 	loadFromXML(_node : Element)
 	{
@@ -592,20 +412,22 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 	{
 		super.willUpdate(changedProperties);
 
-		if(changedProperties.has('select_options') || changedProperties.has("value") || changedProperties.has('emptyLabel'))
+		if(changedProperties.has("multiple"))
+		{
+			this.value = this.__value;
+		}
+		if(changedProperties.has("select_options") || changedProperties.has("value") || changedProperties.has("emptyLabel"))
 		{
 			this.updateComplete.then(() => this.fix_bad_value());
 		}
 		if(changedProperties.has("select_options") && changedProperties.has("value"))
 		{
-			// Re-set value, the option for it may have just shown up
-			this.updateComplete.then(() => this.syncItemsFromValue())
 		}
 	}
 
 	/**
 	 * Override this method from SlSelect to stick our own tags in there
-	 */
+	 *
 	syncItemsFromValue()
 	{
 		if(typeof super.syncItemsFromValue === "function")
@@ -620,7 +442,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		}
 
 		let overflow = null;
-		if(this.maxTagsVisible > 0 && this.displayTags.length > this.maxTagsVisible)
+		if(this.maxOptionsVisible > 0 && this.displayTags.length > this.maxOptionsVisible)
 		{
 			overflow = this.displayTags.pop();
 		}
@@ -650,7 +472,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		// Re-slice & add overflow tag
 		if(overflow)
 		{
-			this.displayTags = this.displayTags.slice(0, this.maxTagsVisible);
+			this.displayTags = this.displayTags.slice(0, this.maxOptionsVisible);
 			this.displayTags.push(overflow);
 		}
 		else if(this.multiple && this.rows == 1 && this.readonly && this.value.length > 1)
@@ -660,6 +482,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
                 <sl-tag class="multiple_tag" size=${this.size}>${this.value.length}</sl-tag> `);
 		}
 	}
+	 */
 
 	_emptyLabelTemplate() : TemplateResult
 	{
@@ -668,34 +491,50 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 			return html``;
 		}
 		return html`
-            <sl-menu-item value="">${this.emptyLabel}</sl-menu-item>`;
+            <sl-option value=""
+                       .selected=${this.getValueAsArray().some(v => v == "")}
+            >
+                ${this.emptyLabel}
+            </sl-option>`;
 	}
 
+	protected _optionsTemplate() : TemplateResult
+	{
+		return html`${repeat(this.select_options
+			// Filter out empty values if we have empty label to avoid duplicates
+			.filter(o => this.emptyLabel ? o.value !== '' : o), this._groupTemplate.bind(this))
+		}`;
+	}
 
 	/**
-	 * Tag used for rendering options
-	 * Used for finding & filtering options, they're created by the mixed-in class
-	 * @returns {string}
+	 * Used to render each option into the select
+	 *
+	 * @param {SelectOption} option
+	 * @returns {TemplateResult}
 	 */
-	public get optionTag()
+	protected _optionTemplate(option : SelectOption) : TemplateResult
 	{
-		return "sl-menu-item";
-	}
+		// Exclude non-matches when searching
+		if(typeof option.isMatch == "boolean" && !option.isMatch)
+		{
+			return html``;
+		}
 
-
-	_optionTemplate(option : SelectOption) : TemplateResult
-	{
 		// Tag used must match this.optionTag, but you can't use the variable directly.
 		// Pass option along so SearchMixin can grab it if needed
+		const value = (<string>option.value).replaceAll(" ", "___");
 		return html`
-            <sl-menu-item value="${option.value}"
-                          title="${!option.title || this.noLang ? option.title : this.egw().lang(option.title)}"
-                          class="${option.class}" .option=${option}
-                          ?disabled=${option.disabled}
+            <sl-option
+                    part="option"
+                    value="${value}"
+                    title="${!option.title || this.noLang ? option.title : this.egw().lang(option.title)}"
+                    class="${option.class}" .option=${option}
+                    .selected=${this.getValueAsArray().some(v => v == value)}
+                    ?disabled=${option.disabled}
             >
                 ${this._iconTemplate(option)}
                 ${this.noLang ? option.label : this.egw().lang(option.label)}
-            </sl-menu-item>`;
+            </sl-option>`;
 	}
 
 	/**
@@ -704,9 +543,58 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 	 * @see createTagNode()
 	 * @returns {string}
 	 */
-	public get tagTag() : string
+	public get tagTag() : StaticValue
 	{
-		return "et2-tag";
+		return literal`et2-tag`;
+	}
+
+	/**
+	 * Custom tag
+	 * @param {Et2Option} option
+	 * @param {number} index
+	 * @returns {TemplateResult}
+	 * @protected
+	 */
+	protected _tagTemplate(option : Et2Option, index : number) : TemplateResult
+	{
+		const readonly = (this.readonly || option && typeof (option.disabled) != "undefined" && option.disabled);
+		const isEditable = this.editModeEnabled && !readonly;
+		const image = this._createImage(option);
+		const tagName = this.tagTag;
+		return html`
+            <${tagName}
+                    part="tag"
+                    exportparts="
+                      base:tag__base,
+                      content:tag__content,
+                      remove-button:tag__remove-button,
+                      remove-button__base:tag__remove-button__base,
+                      icon:icon
+                    "
+                    class=${"search_tag " + option.classList.value}
+                    ?pill=${this.pill}
+                    size=${this.size}
+                    ?removable=${!readonly}
+                    ?readonly=${readonly}
+                    ?editable=${isEditable}
+                    value=${option.value}
+                    @dblclick=${this._handleDoubleClick}
+                    @click=${typeof this.onTagClick == "function" ? (e) => this.onTagClick(e, e.target) : nothing}
+            >
+                ${image ?? nothing}
+                ${option.getTextLabel().trim()}
+            </${tagName}>
+		`;
+	}
+
+	/**
+	 * Additional customisation template
+	 * @returns {*}
+	 * @protected
+	 */
+	protected _extraTemplate()
+	{
+		return typeof super._extraTemplate == "function" ? super._extraTemplate() : nothing;
 	}
 
 	/**
@@ -719,6 +607,8 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 	 */
 	protected _createTagNode(item)
 	{
+		console.warn("Deprecated");
+		debugger;
 		let tag;
 		if(typeof super._createTagNode == "function")
 		{
@@ -770,6 +660,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		this.dropdown.hide();
 	}
 
+	/* Parent should be fine now?
 	private handleTagRemove(event : CustomEvent, option)
 	{
 		event.stopPropagation();
@@ -784,10 +675,11 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 			}
 			this.dispatchEvent(new CustomEvent('sl-input'));
 			this.dispatchEvent(new CustomEvent('sl-change'));
-			this.syncItemsFromValue();
 			this.validate();
 		}
 	}
+
+	 */
 
 	/**
 	 * Apply the user preference to close the dropdown if an option is clicked, even if multiple=true.
@@ -798,21 +690,11 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 	 */
 	private handleOptionClick(event : MouseEvent)
 	{
-		if(event.target == this)
-		{
-			// Don't hide dropdown when clicking on select.  That can close it after user opens it.
-			return;
-		}
+		super.handleOptionClick(event);
+
 		if(this._close_on_select)
 		{
-			this.dropdown.hide().then(() =>
-			{
-				if(typeof this.handleMenuHide == "function")
-				{
-					// Make sure search gets hidden
-					this.handleMenuHide();
-				}
-			});
+			this.hide();
 		}
 	}
 
@@ -823,6 +705,14 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 			super.et2HandleBlur(event);
 		}
 		this.dropdown?.hide();
+	}
+
+
+	protected handleValueChange(e : SlChangeEvent)
+	{
+		const old_value = this.__value;
+		this.__value = this.select.value;
+		this.requestUpdate("value", old_value);
 	}
 
 	/**
@@ -880,410 +770,82 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		return "";
 	}
 
-	public get _menuItems() : HTMLElement[]
+	/** Shows the listbox. */
+	async show()
 	{
-		return [...this.querySelectorAll<SlMenuItem>(this.optionTag)];
+		return this.select.show();
 	}
 
-
-	/**
-	 * Override parent to always call validate(), as our simple implementation needs to validate on clear as well.
-	 *
-	 * @param {string | false} err
-	 */
-	set_validation_error(err : string | false)
+	/** Hides the listbox. */
+	async hide()
 	{
-		super.set_validation_error(err);
-		if(err == false)
+		this.select.hide();
+	}
+
+	get open()
+	{
+		return this.select?.open ?? false;
+	}
+
+	protected _renderOptions()
+	{return Promise.resolve();}
+
+	protected get select() : SlSelect
+	{
+		return this.shadowRoot?.querySelector("sl-select");
+	}
+
+	public render()
+	{
+		const value = Array.isArray(this.value) ?
+					  this.value.map(v => { return v.replaceAll(" ", "___"); }) :
+					  (typeof this.value == "string" ? this.value.replaceAll(" ", "___") : "");
+
+		let icon : TemplateResult | typeof nothing = nothing;
+		if(!this.multiple)
 		{
-			this.validate();
-		}
-	}
-}
-
-customElements.define("et2-select", Et2Select);
-if(typeof customElements.get("lion-validation-feedback") === "undefined")
-{
-	customElements.define("lion-validation-feedback", LionValidationFeedback);
-}
-
-export class Et2SelectApp extends Et2StaticSelectMixin(Et2Select)
-{
-	constructor()
-	{
-		super(...arguments);
-	}
-
-	public connectedCallback()
-	{
-		super.connectedCallback()
-		this.fetchComplete = so.app(this, {}).then((options) =>
-		{
-			this.set_static_options(cleanSelectOptions(options));
-		})
-	}
-}
-
-// @ts-ignore TypeScript is not recognizing that this widget is a LitElement
-customElements.define("et2-select-app", Et2SelectApp);
-
-export class Et2SelectTab extends Et2SelectApp
-{
-	constructor()
-	{
-		super(...arguments);
-
-		this.allowFreeEntries = true;
-	}
-
-	set value(new_value)
-	{
-		if(!new_value)
-		{
-			super.value = new_value;
-			return;
-		}
-		const values = Array.isArray(new_value) ? new_value : [new_value];
-		const options = this.select_options;
-		values.forEach(value =>
-		{
-			if(!options.filter(option => option.value == value).length)
+			const icon_option = this.select_options.find(o => (o.value == value || Array.isArray(value) && value.includes(o.value)) && o.icon);
+			if(icon_option)
 			{
-				const matches = value.match(/^([a-z0-9]+)\-/i);
-				let option : SelectOption = {value: value, label: value};
-				if(matches)
-				{
-					option = options.filter(option => option.value == matches[1])[0] || {
-						value: value,
-						label: this.egw().lang(matches[1])
-					};
-					option.value = value;
-					option.label += ' ' + this.egw().lang('Tab');
-				}
-				try {
-					const app = opener?.framework.getApplicationByName(value);
-					if (app && app.displayName)
-					{
-						option.label = app.displayName;
-					}
-				}
-				catch (e) {
-					// ignore security exception, if opener is not accessible
-				}
-				this.select_options.concat(option);
-			}
-		})
-		super.value = new_value;
-	}
-
-	get value()
-	{
-		return super.value;
-	}
-}
-
-// @ts-ignore TypeScript is not recognizing that this widget is a LitElement
-customElements.define("et2-select-tab", Et2SelectTab);
-
-export class Et2SelectBitwise extends Et2StaticSelectMixin(Et2Select)
-{
-	set value(new_value)
-	{
-		/* beforeSendToClient does this, we don't want it twice
-		let oldValue = this._value;
-		let expanded_value = [];
-		let options = this.select_options;
-		for(let index in options)
-		{
-			let right = parseInt(options[index].value);
-			if(!!(new_value & right))
-			{
-				expanded_value.push(right);
+				icon = this._iconTemplate(icon_option);
 			}
 		}
-		super.value = expanded_value;
-		*/
-		super.value = new_value;
+		return html`
+            <sl-select
+                    exportparts="prefix, tags, display-input, expand-icon, combobox, listbox, option"
+                    label=${this.label}
+                    placeholder=${this.placeholder}
+                    ?multiple=${this.multiple}
+                    ?disabled=${this.disabled}
+                    ?clearable=${this.clearable}
+                    ?required=${this.required}
+                    helpText=${this.helpText}
+                    hoist
+                    placement=${this.placement}
+                    .getTag=${this._tagTemplate}
+                    .maxOptionsVisible=${0}
+                    .value=${value}
+                    @sl-change=${this.handleValueChange}
+            >
+                ${icon}
+                ${this._emptyLabelTemplate()}
+                ${this._optionsTemplate()}
+                ${this._extraTemplate()}
+                <slot></slot>
+            </sl-select>
+		`;
 	}
 }
 
-// @ts-ignore TypeScript is not recognizing that this widget is a LitElement
-customElements.define("et2-select-bitwise", Et2SelectBitwise);
-
-export class Et2SelectBool extends Et2StaticSelectMixin(Et2Select)
+if(typeof customElements.get("et2-select") === "undefined")
 {
-	constructor()
-	{
-		super(...arguments);
-
-		this.static_options = so.bool(this);
-	}
+	customElements.define("et2-select", Et2Select);
 }
 
-// @ts-ignore TypeScript is not recognizing that this widget is a LitElement
-customElements.define("et2-select-bool", Et2SelectBool);
-
-
-export class Et2SelectDay extends Et2StaticSelectMixin(Et2Select)
+declare global
 {
-	constructor()
+	interface HTMLElementTagNameMap
 	{
-		super(...arguments);
-
-		this.static_options = so.day(this, {});
+		"et2-select" : Et2Select;
 	}
 }
-
-// @ts-ignore TypeScript is not recognizing that this widget is a LitElement
-customElements.define("et2-select-day", Et2SelectDay);
-
-export class Et2SelectDayOfWeek extends Et2StaticSelectMixin(Et2Select)
-{
-	connectedCallback()
-	{
-		super.connectedCallback();
-
-		// Wait for connected instead of constructor because attributes make a difference in
-		// which options are offered
-		this.fetchComplete = so.dow(this, {other: this.other || []}).then(options =>
-		{
-			this.set_static_options(cleanSelectOptions(options));
-		});
-	}
-
-	set value(new_value)
-	{
-		let expanded_value = typeof new_value == "object" ? new_value : [];
-		if(new_value && (typeof new_value == "string" || typeof new_value == "number"))
-		{
-			let int_value = parseInt(new_value);
-			this.updateComplete.then(() =>
-			{
-				this.fetchComplete.then(() =>
-				{
-					let options = this.select_options;
-					for(let index in options)
-					{
-						let right = parseInt(options[index].value);
-
-						if((int_value & right) == right)
-						{
-							expanded_value.push("" + right);
-						}
-					}
-					super.value = expanded_value;
-				})
-			});
-			return;
-		}
-		super.value = expanded_value;
-	}
-
-	get value()
-	{
-		return super.value;
-	}
-}
-
-// @ts-ignore TypeScript is not recognizing that this widget is a LitElement
-customElements.define("et2-select-dow", Et2SelectDayOfWeek);
-
-export class Et2SelectHour extends Et2StaticSelectMixin(Et2Select)
-{
-	constructor()
-	{
-		super(...arguments);
-
-		this.static_options = so.hour(this, {other: this.other || []});
-	}
-}
-
-// @ts-ignore TypeScript is not recognizing that this widget is a LitElement
-customElements.define("et2-select-hour", Et2SelectHour);
-
-export class Et2SelectMonth extends Et2StaticSelectMixin(Et2Select)
-{
-	constructor()
-	{
-		super(...arguments);
-
-		this.static_options = so.month(this);
-	}
-}
-
-// @ts-ignore TypeScript is not recognizing that this widget is a LitElement
-customElements.define("et2-select-month", Et2SelectMonth);
-
-export class Et2SelectNumber extends Et2StaticSelectMixin(Et2Select)
-{
-	static get properties()
-	{
-		return {
-			...super.properties,
-			/**
-			 * Step between numbers
-			 */
-			interval: {type: Number},
-			min: {type: Number},
-			max: {type: Number},
-
-			/**
-			 * Add one or more leading zeros
-			 * Set to how many zeros you want (000)
-			 */
-			leading_zero: {type: String},
-			/**
-			 * Appended after every number
-			 */
-			suffix: {type: String}
-		}
-	}
-
-	constructor(...args)
-	{
-		super(...args);
-		this.min = 1;
-		this.max = 10;
-		this.interval = 1;
-		this.leading_zero = "";
-		this.suffix = "";
-	}
-
-	updated(changedProperties : PropertyValues)
-	{
-		super.updated(changedProperties);
-
-		if(changedProperties.has('min') || changedProperties.has('max') || changedProperties.has('interval') || changedProperties.has('suffix'))
-		{
-			this.static_options = so.number(this);
-			this.requestUpdate("select_options");
-		}
-	}
-}
-
-// @ts-ignore TypeScript is not recognizing that this widget is a LitElement
-customElements.define("et2-select-number", Et2SelectNumber);
-
-export class Et2SelectPercent extends Et2SelectNumber
-{
-	constructor(...args)
-	{
-		super(...args);
-		this.min = 0;
-		this.max = 100;
-		this.interval = 10;
-		this.suffix = "%%";
-	}
-}
-
-// @ts-ignore TypeScript is not recognizing that this widget is a LitElement
-customElements.define("et2-select-percent", Et2SelectPercent);
-
-export class Et2SelectPriority extends Et2StaticSelectMixin(Et2Select)
-{
-	constructor()
-	{
-		super(...arguments);
-
-		this.static_options = so.priority(this);
-	}
-}
-
-// @ts-ignore TypeScript is not recognizing that this widget is a LitElement
-customElements.define("et2-select-priority", Et2SelectPriority);
-
-export class Et2SelectState extends Et2StaticSelectMixin(Et2Select)
-{
-	/**
-	 * Two-letter ISO country code
-	 */
-	protected __country_code;
-
-	static get properties()
-	{
-		return {
-			...super.properties,
-			countryCode: String,
-		}
-	}
-
-	constructor()
-	{
-		super(...arguments);
-
-		this.countryCode = 'DE';
-	}
-
-	get countryCode()
-	{
-		return this.__countryCode;
-	}
-
-	set countryCode(code : string)
-	{
-		this.__countryCode = code;
-		this.static_options = <SelectOption[]>so.state(this, {country_code: code});
-		this.requestUpdate("select_options");
-	}
-
-	set_country_code(code)
-	{
-		this.countryCode = code;
-	}
-}
-
-// @ts-ignore TypeScript is not recognizing that this widget is a LitElement
-customElements.define("et2-select-state", Et2SelectState);
-
-export class Et2SelectTimezone extends Et2StaticSelectMixin(Et2Select)
-{
-	constructor()
-	{
-		super(...arguments);
-
-		const options = so.timezone(this, {other: this.other || []});
-		if(Array.isArray(options))
-		{
-			this.static_options = options;
-		}
-	}
-}
-
-// @ts-ignore TypeScript is not recognizing that this widget is a LitElement
-customElements.define("et2-select-timezone", Et2SelectTimezone);
-
-export class Et2SelectYear extends Et2SelectNumber
-{
-	constructor(args)
-	{
-		super(...args);
-		this.min = -3;
-		this.max = 2;
-	}
-
-	updated(changedProperties : PropertyValues)
-	{
-		super.updated(changedProperties);
-
-		if(changedProperties.has('min') || changedProperties.has('max') || changedProperties.has('interval') || changedProperties.has('suffix'))
-		{
-			this.select_options = so.year(this);
-		}
-	}
-}
-
-// @ts-ignore TypeScript is not recognizing that this widget is a LitElement
-customElements.define("et2-select-year", Et2SelectYear);
-
-export class Et2SelectLang extends Et2StaticSelectMixin(Et2Select)
-{
-	constructor()
-	{
-		super(...arguments);
-
-		this.static_options = so.lang(this, {other: this.other || []});
-	}
-}
-
-// @ts-ignore TypeScript is not recognizing that this widget is a LitElement
-customElements.define("et2-select-lang", Et2SelectLang);

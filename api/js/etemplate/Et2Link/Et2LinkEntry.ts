@@ -6,8 +6,8 @@
  * @link https://www.egroupware.org
  * @author Nathan Gray
  */
-
-import {css, html, LitElement, PropertyValues, SlotMixin} from "@lion/core";
+import {css, html, LitElement, PropertyValues} from "lit";
+import {SlotMixin} from "@lion/core";
 import {Et2LinkAppSelect} from "./Et2LinkAppSelect";
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
 import {FormControlMixin} from "@lion/form-core";

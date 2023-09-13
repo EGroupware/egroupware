@@ -7,13 +7,13 @@
  * @author Ralf Becker <rb@egroupware.org>
  */
 
-import {Et2Select} from "./Et2Select";
-import {cleanSelectOptions, SelectOption} from "./FindSelectOptions";
-import {SelectAccountMixin} from "./SelectAccountMixin";
-import {Et2StaticSelectMixin} from "./StaticOptions";
-import {html, nothing} from "@lion/core";
+import {Et2Select} from "../Et2Select";
+import {cleanSelectOptions, SelectOption} from "../FindSelectOptions";
+import {SelectAccountMixin} from "../SelectAccountMixin";
+import {Et2StaticSelectMixin} from "../StaticOptions";
+import {html, nothing} from "lit";
 
-export type AccountType = 'accounts'|'groups'|'both'|'owngroups';
+export type AccountType = 'accounts' | 'groups' | 'both' | 'owngroups';
 
 /**
  * @customElement et2-select-account
@@ -58,17 +58,16 @@ export class Et2SelectAccount extends SelectAccountMixin(Et2StaticSelectMixin(Et
 		{
 			if(this.accountType === 'both')
 			{
-				fetch.push(this.egw().accounts('accounts').then(options => {this.static_options = this.static_options.concat(cleanSelectOptions(options))}));
+				fetch.push(this.egw().accounts('accounts').then(options => {this._static_options = this._static_options.concat(cleanSelectOptions(options))}));
 			}
 
-			fetch.push(this.egw().accounts('owngroups').then(options => {this.static_options = this.static_options.concat(cleanSelectOptions(options))}));
+			fetch.push(this.egw().accounts('owngroups').then(options => {this._static_options = this._static_options.concat(cleanSelectOptions(options))}));
 		}
 		else
 		{
-			fetch.push(this.egw().accounts(this.accountType).then(options => {this.static_options = this.static_options.concat(cleanSelectOptions(options))}));
+			fetch.push(this.egw().accounts(this.accountType).then(options => {this._static_options = this._static_options.concat(cleanSelectOptions(options))}));
 		}
-		this.fetchComplete = Promise.all(fetch)
-			.then(() => this._renderOptions());
+		this.fetchComplete = Promise.all(fetch);
 	}
 
 
@@ -102,12 +101,7 @@ export class Et2SelectAccount extends SelectAccountMixin(Et2StaticSelectMixin(Et
 		{
 			return [];
 		}
-		let select_options : Array<SelectOption> = [...(this.static_options || []), ...super.select_options];
-
-		return select_options.filter((value, index, self) =>
-		{
-			return self.findIndex(v => v.value === value.value) === index;
-		});
+		return super.select_options;
 	}
 
 	set select_options(new_options : SelectOption[])

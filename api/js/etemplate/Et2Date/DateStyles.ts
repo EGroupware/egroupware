@@ -2,7 +2,7 @@
  * Sharable date styles constant
  */
 
-import {css} from "@lion/core";
+import {css} from "lit";
 import {colorsDefStyles} from "../Styles/colorsDefStyles";
 import {cssImage} from "../Et2Widget/Et2Widget";
 

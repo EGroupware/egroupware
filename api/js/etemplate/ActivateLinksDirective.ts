@@ -1,4 +1,6 @@
-import {Directive, directive, html, repeat} from "@lion/core";
+import {html} from "lit";
+import {Directive, directive} from "lit/directive.js";
+import {repeat} from "lit/directives/repeat.js";
 import {et2_activateLinks} from "./et2_core_common";
 
 /**

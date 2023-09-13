@@ -9,7 +9,7 @@
  */
 
 
-import {css, PropertyValues} from "@lion/core";
+import {css, PropertyValues} from "lit";
 import {Regex} from "../Validators/Regex";
 import {SlInput} from "@shoelace-style/shoelace";
 import shoelace from "../Styles/shoelace";

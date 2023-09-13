@@ -8,7 +8,8 @@
  */
 import {Et2Widget} from "../../Et2Widget/Et2Widget";
 import {SlTag} from "@shoelace-style/shoelace";
-import {classMap, css, html, TemplateResult} from "@lion/core";
+import {css, html, TemplateResult} from "lit";
+import {classMap} from "lit/directives/class-map.js";
 import shoelace from "../../Styles/shoelace";
 
 /**
@@ -23,7 +24,6 @@ export class Et2Tag extends Et2Widget(SlTag)
 			shoelace, css`
 			:host {
 			  flex: 1 1 auto;
-			  overflow: hidden;
 			}
 
 			.tag--pill {
@@ -113,11 +113,12 @@ export class Et2Tag extends Et2Widget(SlTag)
                         <sl-icon-button
                                 part="remove-button"
                                 exportparts="base:remove-button__base"
-                                name="x"
+                                name="x-lg"
                                 library="system"
                                 label=${this.egw().lang('remove')}
                                 class="tag__remove"
                                 @click=${this.handleRemoveClick}
+                                tabindex="-1"
                         ></sl-icon-button>
                     `
               : ''}

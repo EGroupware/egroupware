@@ -83,19 +83,19 @@
                             </et2-hbox>
                             <et2-hbox  disabled="!@sender">
                                 <et2-description  value="Sender" class="firstColumnTitle"></et2-description>
-                                <et2-select-email  id="sender" readonly="true" rows="1" maxTagsVisible="1" multiple="true" fullEmail="@emailTag=fullemail" onlyEmail="@emailTag=onlyemail"></et2-select-email>
+                                <et2-select-email  id="sender" readonly="true" rows="1" maxOptionsVisible="1" multiple="true" fullEmail="@emailTag=fullemail" onlyEmail="@emailTag=onlyemail"></et2-select-email>
                             </et2-hbox>
                             <et2-hbox  disabled="!@to">
                                 <et2-description  value="To" class="firstColumnTitle"></et2-description>
-                                <et2-select-email  id="to" readonly="true" rows="1" maxTagsVisible="1" multiple="true" fullEmail="@emailTag=fullemail" onlyEmail="@emailTag=onlyemail"></et2-select-email>
+                                <et2-select-email  id="to" readonly="true" rows="1" maxOptionsVisible="1" multiple="true" fullEmail="@emailTag=fullemail" onlyEmail="@emailTag=onlyemail"></et2-select-email>
                             </et2-hbox>
                             <et2-hbox  disabled="!@cc">
                                 <et2-description  value="Cc" class="firstColumnTitle"></et2-description>
-                                <et2-select-email  id="cc" rows="1" maxTagsVisible="1" readonly="true" multiple="true" fullEmail="@emailTag=fullemail" onlyEmail="@emailTag=onlyemail"></et2-select-email>
+                                <et2-select-email  id="cc" rows="1" maxOptionsVisible="1" readonly="true" multiple="true" fullEmail="@emailTag=fullemail" onlyEmail="@emailTag=onlyemail"></et2-select-email>
                             </et2-hbox>
                             <et2-hbox  disabled="!@bcc">
                                 <et2-description  value="Bcc" class="firstColumnTitle"></et2-description>
-                                <et2-select-email  id="bcc" rows="1" maxTagsVisible="1" readonly="true" multiple="true" fullEmail="@emailTag=fullemail" onlyEmail="@emailTag=onlyemail"></et2-select-email>
+                                <et2-select-email  id="bcc" rows="1" maxOptionsVisible="1" readonly="true" multiple="true" fullEmail="@emailTag=fullemail" onlyEmail="@emailTag=onlyemail"></et2-select-email>
                             </et2-hbox>
                             <et2-hbox width="100%" disabled="!@mail_displayattachments">
                                 <et2-description value="Attachments" class="firstColumnTitle"></et2-description>

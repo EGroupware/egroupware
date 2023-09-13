@@ -10,7 +10,8 @@
  */
 
 
-import {css, html, LitElement, PropertyValues, render, TemplateResult, until} from "@lion/core";
+import {css, html, LitElement, PropertyValues, render, TemplateResult} from "lit";
+import {until} from "lit/directives/until.js";
 import {Et2Widget} from "../Et2Widget/Et2Widget";
 import {Et2Link, LinkInfo} from "./Et2Link";
 import {et2_IDetachedDOM} from "../et2_core_interfaces";

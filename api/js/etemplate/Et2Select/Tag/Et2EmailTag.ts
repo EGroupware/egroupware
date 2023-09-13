@@ -6,7 +6,8 @@
  * @link https://www.egroupware.org
  * @author Nathan Gray
  */
-import {classMap, css, html, nothing, PropertyValues, TemplateResult} from "@lion/core";
+import {css, html, nothing, PropertyValues, TemplateResult} from "lit";
+import {classMap} from "lit/directives/class-map.js";
 import shoelace from "../../Styles/shoelace";
 import {Et2Tag} from "./Et2Tag";
 
@@ -95,8 +96,8 @@ export class Et2EmailTag extends Et2Tag
 		this.onlyEmail = false;
 		this.handleMouseEnter = this.handleMouseEnter.bind(this);
 		this.handleMouseLeave = this.handleMouseLeave.bind(this);
-		this.handleClick = this.handleClick.bind(this);
-		this.handleContactClick = this.handleContactClick.bind(this);
+		this.handleMouseDown = this.handleMouseDown.bind(this);
+		this.handleContactMouseDown = this.handleContactMouseDown.bind(this);
 	}
 
 	connectedCallback()
@@ -166,7 +167,7 @@ export class Et2EmailTag extends Et2Tag
 		this.shadowRoot.querySelector(".tag").classList.remove("contact_plus");
 	}
 
-	handleClick(e : MouseEvent)
+	handleMouseDown(e : MouseEvent)
 	{
 		e.stopPropagation();
 
@@ -177,7 +178,7 @@ export class Et2EmailTag extends Et2Tag
 		this.egw().open('', 'addressbook', 'add', extra);
 	}
 
-	handleContactClick(e : MouseEvent)
+	handleContactMouseDown(e : MouseEvent)
 	{
 		e.stopPropagation();
 		this.checkContact(this.value).then((result) =>
@@ -255,7 +256,7 @@ export class Et2EmailTag extends Et2Tag
 
 			button_or_avatar = html`
                 <et2-lavatar slot="prefix" part="icon"
-                             @click=${this.handleContactClick}
+                             @mousedown=${this.handleContactMouseDown}
                              .size=${style.getPropertyValue("--icon-width")}
                              lname=${option.lname || nothing}
                              fname=${option.fname || nothing}
@@ -269,7 +270,7 @@ export class Et2EmailTag extends Et2Tag
 			// Show a button to add as new contact
 			classes['tag__has_plus'] = true;
 			button_or_avatar = html`
-                <et2-button-icon image="add" @click=${this.handleClick}
+                <et2-button-icon image="add" @mousedown=${this.handleMouseDown}
                                  label="${this.egw().lang("Add a new contact")}"
                                  statustext="${this.egw().lang("Add a new contact")}">
                 </et2-button-icon>`;

@@ -2,7 +2,7 @@ import {SlMenu} from "@shoelace-style/shoelace";
 import {Et2WidgetWithSelectMixin} from "./Et2WidgetWithSelectMixin";
 import {RowLimitedMixin} from "../Layout/RowLimitedMixin";
 import shoelace from "../Styles/shoelace";
-import {css, html, TemplateResult} from "@lion/core";
+import {css, html, TemplateResult} from "lit";
 import {SelectOption} from "./FindSelectOptions";
 
 /**
@@ -40,7 +40,8 @@ export class Et2Listbox extends RowLimitedMixin(Et2WidgetWithSelectMixin(SlMenu)
 				overflow-x: clip;
 			}
 			/* Ellipsis when too small */
-			sl-menu-item.menu-item__label {
+
+			  sl-option.option__label {
 				display: block;
     			text-overflow: ellipsis;
     			/* This is usually not used due to flex, but is the basis for ellipsis calculation */
@@ -153,15 +154,15 @@ export class Et2Listbox extends RowLimitedMixin(Et2WidgetWithSelectMixin(SlMenu)
 		// Tag used must match this.optionTag, but you can't use the variable directly.
 		// Pass option along so SearchMixin can grab it if needed
 		return html`
-            <sl-menu-item
+            <sl-option
                     value="${option.value}"
                     title="${!option.title || this.noLang ? option.title : this.egw().lang(option.title)}"
                     class="${option.class}" .option=${option}
-                    ?checked=${checked}
+                    .selected=${checked}
             >
                 ${icon}
                 ${this.noLang ? option.label : this.egw().lang(option.label)}
-            </sl-menu-item>`;
+            </sl-option>`;
 	}
 }
 

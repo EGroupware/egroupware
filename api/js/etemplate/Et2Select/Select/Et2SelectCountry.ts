@@ -8,10 +8,10 @@
  */
 
 
-import {Et2Select} from "./Et2Select";
-import {Et2StaticSelectMixin, StaticOptions as so} from "./StaticOptions";
-import {egw} from "../../jsapi/egw_global";
-import {SelectOption} from "./FindSelectOptions";
+import {Et2Select} from "../Et2Select";
+import {Et2StaticSelectMixin, StaticOptions as so} from "../StaticOptions";
+import {egw} from "../../../jsapi/egw_global";
+import {SelectOption} from "../FindSelectOptions";
 
 /**
  * Customised Select widget for countries
@@ -38,7 +38,7 @@ export class Et2SelectCountry extends Et2StaticSelectMixin(Et2Select)
 
 		(<Promise<SelectOption[]>>so.country(this, {}, true)).then(options =>
 		{
-			this.static_options = options
+			this._static_options = options
 			this.requestUpdate("select_options");
 		});
 	}

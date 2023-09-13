@@ -1,7 +1,9 @@
 /**
  * Column selector for nextmatch
  */
-import {classMap, css, html, LitElement, repeat, TemplateResult} from "@lion/core";
+import {css, html, LitElement, TemplateResult} from "lit";
+import {classMap} from "lit/directives/class-map.js";
+import {repeat} from "lit/directives/repeat.js";
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
 import {et2_nextmatch_customfields} from "../et2_extension_nextmatch";
 import shoelace from "../Styles/shoelace";
@@ -85,7 +87,7 @@ export class Et2ColumnSelection extends Et2InputWidget(LitElement)
 		{
 			this.sort = Sortable.create(this.shadowRoot.querySelector('sl-menu'), {
 				ghostClass: 'ui-fav-sortable-placeholder',
-				draggable: 'sl-menu-item.column',
+				draggable: 'sl-option.column',
 				dataIdAttr: 'value',
 				direction: 'vertical',
 				delay: 25
@@ -141,10 +143,11 @@ export class Et2ColumnSelection extends Et2InputWidget(LitElement)
 			return html``;
 		}
 		return html`
-            <sl-menu-item
+            <sl-option
                     value="${column.id}"
                     ?checked=${alwaysOn || column.visibility == et2_dataview_column.ET2_COL_VISIBILITY_VISIBLE}
                     ?disabled=${alwaysOn}
+                    .selected="${this.value.some(v => v == column.id)}"
                     title="${column.title}"
                     class="${classMap({
                         select_row: true,
@@ -154,7 +157,7 @@ export class Et2ColumnSelection extends Et2InputWidget(LitElement)
                 ${column.caption}
                 <!-- Custom fields get listed separately -->
                 ${isCustom ? this.customFieldsTemplate(column) : ''}
-            </sl-menu-item>`;
+            </sl-option>`;
 	}
 
 	/**
@@ -198,8 +201,8 @@ export class Et2ColumnSelection extends Et2InputWidget(LitElement)
 
 	handleSelectAll(event)
 	{
-		let checked = (<SlMenuItem>this.shadowRoot.querySelector("sl-menu-item")).checked || false;
-		this.shadowRoot.querySelectorAll('sl-menu-item').forEach((item) => {item.checked = !checked});
+		let checked = (<SlMenuItem>this.shadowRoot.querySelector("sl-option")).checked || false;
+		this.shadowRoot.querySelectorAll('sl-option').forEach((item) => {item.checked = !checked});
 	}
 
 	set columns(new_columns)

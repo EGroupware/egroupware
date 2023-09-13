@@ -9,11 +9,11 @@
  */
 
 
-import {Et2Button} from "../Et2Button/Et2Button";
 import {SlButtonGroup, SlDropdown} from "@shoelace-style/shoelace";
-import {css, html, TemplateResult} from "@lion/core";
+import {css, html, LitElement, TemplateResult} from "lit";
 import {Et2WidgetWithSelectMixin} from "../Et2Select/Et2WidgetWithSelectMixin";
 import {SelectOption} from "../Et2Select/FindSelectOptions";
+import shoelace from "../Styles/shoelace";
 
 /**
  * A split button - a button with a dropdown list
@@ -28,13 +28,14 @@ import {SelectOption} from "../Et2Select/FindSelectOptions";
  * as for a select box, but the title can also be full HTML if needed.
  *
  */
-export class Et2DropdownButton extends Et2WidgetWithSelectMixin(Et2Button)
+export class Et2DropdownButton extends Et2WidgetWithSelectMixin(LitElement)
 {
 
 	static get styles()
 	{
 		return [
 			...super.styles,
+			shoelace,
 			css`
             :host {
             	/* Avoid unwanted style overlap from button */
@@ -98,6 +99,7 @@ export class Et2DropdownButton extends Et2WidgetWithSelectMixin(Et2Button)
 		// We have our own render, so we can handle it internally
 	}
 
+
 	render() : TemplateResult
 	{
 		if(this.readonly)
@@ -129,10 +131,10 @@ export class Et2DropdownButton extends Et2WidgetWithSelectMixin(Et2Button)
             <et2-image slot="prefix" src=${option.icon} icon></et2-image>` : '';
 
 		return html`
-            <sl-menu-item value="${option.value}">
+            <sl-option value="${option.value}">
                 ${icon}
                 ${this.noLang ? option.label : this.egw().lang(option.label)}
-            </sl-menu-item>`;
+            </sl-option>`;
 	}
 
 	protected _handleSelect(ev)

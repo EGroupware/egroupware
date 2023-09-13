@@ -1,7 +1,7 @@
 import {Et2Widget} from "../../Et2Widget/Et2Widget";
 import {SlTab} from "@shoelace-style/shoelace";
 import shoelace from "../../Styles/shoelace";
-import {css} from "@lion/core";
+import {css} from "lit";
 
 export class Et2Tab extends Et2Widget(SlTab)
 {

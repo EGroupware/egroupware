@@ -9,11 +9,13 @@
  * @copyright Nathan Gray 2013
  */
 
-import type {Et2Select, Et2SelectState} from "./Et2Select/Et2Select";
-import type {Et2SelectAccount} from "./Et2Select/Et2SelectAccount";
-import type {Et2SelectEmail} from "./Et2Select/Et2SelectEmail";
-import type {Et2SelectCategory} from "./Et2Select/Et2SelectCategory";
-import type {Et2SelectThumbnail} from "./Et2Select/Et2SelectThumbnail";
+import type {Et2Select} from "./Et2Select/Et2Select";
+import type {Et2SelectAccount} from "./Et2Select/Select/Et2SelectAccount";
+import type {Et2SelectEmail} from "./Et2Select/Select/Et2SelectEmail";
+import type {Et2SelectCategory} from "./Et2Select/Select/Et2SelectCategory";
+import type {Et2SelectThumbnail} from "./Et2Select/Select/Et2SelectThumbnail";
+
+import {Et2SelectState} from "./Et2Select/Select/Et2SelectState";
 
 /**
  * @deprecated use Et2Select

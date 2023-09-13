@@ -1,0 +1,285 @@
+/**
+ * Some static options, no need to transfer them over and over.
+ * We still need the same thing on the server side to validate, so they
+ * have to match.  See Etemplate\Widget\Select::typeOptions()
+ * The type specific legacy options wind up in attrs.other, but should be explicitly
+ * defined and set.
+ *
+ * @param {type} widget
+ */
+import { sprintf } from "../../egw_action/egw_action_common";
+import { cleanSelectOptions, find_select_options } from "./FindSelectOptions";
+/**
+ * Base class for things that have static options
+ *
+ * We keep static options separate and concatenate them in to allow for extra options without
+ * overwriting them when we get static options from the server
+ */
+export const Et2StaticSelectMixin = (superclass) => {
+    class Et2StaticSelectOptions extends (superclass) {
+        constructor(...args) {
+            super(...args);
+            this.static_options = [];
+            this.fetchComplete = Promise.resolve();
+            // Trigger the options to get rendered into the DOM
+            this.requestUpdate("select_options");
+        }
+        get select_options() {
+            // @ts-ignore
+            const options = super.select_options || [];
+            // make sure result is unique
+            return [...new Map([...(this.static_options || []), ...options].map(item => [item.value, item])).values()];
+        }
+        set select_options(new_options) {
+            // @ts-ignore IDE doesn't recognise property
+            super.select_options = new_options;
+        }
+        set_static_options(new_static_options) {
+            this.static_options = new_static_options;
+            this.requestUpdate("select_options");
+        }
+        /**
+         * Override the parent fix_bad_value() to wait for server-side options
+         * to come back before we check to see if the value is not there.
+         */
+        fix_bad_value() {
+            this.fetchComplete.then(() => {
+                // @ts-ignore Doesn't know it's an Et2Select
+                if (typeof super.fix_bad_value == "function") {
+                    // @ts-ignore Doesn't know it's an Et2Select
+                    super.fix_bad_value();
+                }
+            });
+        }
+    }
+    return Et2StaticSelectOptions;
+};
+/**
+ * Some options change, or are too complicated to have twice, so we get the
+ * options from the server once, then keep them to use if they're needed again.
+ * We use the options string to keep the different possibilities (eg. categories
+ * for different apps) separate.
+ *
+ * @param {et2_selectbox} widget Selectbox we're looking at
+ * @param {string} options_string
+ * @param {Object} attrs Widget attributes (not yet fully set)
+ * @param {boolean} return_promise true: always return a promise
+ * @returns {Object[]|Promise<Object[]>} Array of options, or empty and they'll get filled in later, or Promise
+ */
+export const StaticOptions = new class StaticOptionsType {
+    cached_server_side(widget, type, options_string, return_promise) {
+        // normalize options by removing trailing commas
+        options_string = options_string.replace(/,+$/, '');
+        const cache_id = widget.nodeName + '_' + options_string;
+        const cache_owner = widget.egw().getCache('Et2Select');
+        let cache = cache_owner[cache_id];
+        if (typeof cache === 'undefined') {
+            // Fetch with json instead of jsonq because there may be more than
+            // one widget listening for the response by the time it gets back,
+            // and we can't do that when it's queued.
+            const req = widget.egw().json('EGroupware\\Api\\Etemplate\\Widget\\Select::ajax_get_options', [type, options_string, widget.value]).sendRequest();
+            if (typeof cache === 'undefined') {
+                cache_owner[cache_id] = req;
+            }
+            cache = req;
+        }
+        if (typeof cache.then === 'function') {
+            // pending, wait for it
+            const promise = cache.then((response) => {
+                cache = cache_owner[cache_id] = response.response[0].data || undefined;
+                if (return_promise)
+                    return cache;
+                // Set select_options in attributes in case we get a response before
+                // the widget is finished loading (otherwise it will re-set to {})
+                //widget.select_options = cache;
+                // Avoid errors if widget is destroyed before the timeout
+                if (widget && typeof widget.id !== 'undefined') {
+                    if (typeof widget.set_static_options == "function") {
+                        widget.set_static_options(cache);
+                    }
+                    else if (typeof widget.set_select_options == "function") {
+                        widget.set_select_options(find_select_options(widget, {}, cache));
+                    }
+                }
+            });
+            return return_promise ? promise : [];
+        }
+        else {
+            // Check that the value is in there
+            // Make sure we are not requesting server for an empty value option or
+            // other widgets but select-timezone as server won't find anything and
+            // it will fall into an infinitive loop, e.g. select-cat widget.
+            if (widget.value && widget.value != "" && widget.value != "0" && type == "select-timezone") {
+                var missing_option = true;
+                for (var i = 0; i < cache.length && missing_option; i++) {
+                    if (cache[i].value == widget.value) {
+                        missing_option = false;
+                    }
+                }
+                // Try again - ask the server with the current value this time
+                if (missing_option) {
+                    delete cache_owner[cache_id];
+                    return this.cached_server_side(widget, type, options_string);
+                }
+                else {
+                    if (widget.value && widget && widget.get_value() !== widget.value) {
+                        egw.window.setTimeout(function () {
+                            // Avoid errors if widget is destroyed before the timeout
+                            if (this.widget && typeof this.widget.id !== 'undefined') {
+                                this.widget.set_value(this.widget.options.value);
+                            }
+                        }.bind({ widget: widget }), 1);
+                    }
+                }
+            }
+            return return_promise ? Promise.resolve(cache) : cache;
+        }
+    }
+    cached_from_file(widget, file) {
+        const cache_owner = widget.egw().getCache('Et2Select');
+        let cache = cache_owner[file];
+        if (typeof cache === 'undefined') {
+            cache_owner[file] = cache = widget.egw().window.fetch(file)
+                .then((response) => {
+                // Get the options
+                if (!response.ok) {
+                    throw response;
+                }
+                return response.json();
+            })
+                .then(options => {
+                var _a;
+                // Need to clean the options because file may be key=>value, may have option list, may be mixed
+                cache_owner[file] = (_a = cleanSelectOptions(options)) !== null && _a !== void 0 ? _a : [];
+                return cache_owner[file];
+            });
+        }
+        else if (cache && typeof cache.then === "undefined") {
+            return Promise.resolve(cache);
+        }
+        return cache;
+    }
+    priority(widget) {
+        return [
+            { value: "1", label: 'low' },
+            { value: "2", label: 'normal' },
+            { value: "3", label: 'high' },
+            { value: "0", label: 'undefined' }
+        ];
+    }
+    bool(widget) {
+        return [
+            { value: "0", label: 'no' },
+            { value: "1", label: 'yes' }
+        ];
+    }
+    month(widget) {
+        return [
+            { value: "1", label: 'January' },
+            { value: "2", label: 'February' },
+            { value: "3", label: 'March' },
+            { value: "4", label: 'April' },
+            { value: "5", label: 'May' },
+            { value: "6", label: 'June' },
+            { value: "7", label: 'July' },
+            { value: "8", label: 'August' },
+            { value: "9", label: 'September' },
+            { value: "10", label: 'October' },
+            { value: "11", label: 'November' },
+            { value: "12", label: 'December' }
+        ];
+    }
+    number(widget, attrs = {
+        min: undefined,
+        max: undefined,
+        interval: undefined,
+        format: undefined
+    }) {
+        var _a, _b, _c, _d;
+        var options = [];
+        var min = (_a = attrs.min) !== null && _a !== void 0 ? _a : parseFloat(widget.min);
+        var max = (_b = attrs.max) !== null && _b !== void 0 ? _b : parseFloat(widget.max);
+        var interval = (_c = attrs.interval) !== null && _c !== void 0 ? _c : parseFloat(widget.interval);
+        var format = (_d = attrs.format) !== null && _d !== void 0 ? _d : '%d';
+        // leading zero specified in interval
+        if (widget.leading_zero && widget.leading_zero[0] == '0') {
+            format = '%0' + ('' + interval).length + 'd';
+        }
+        // Suffix
+        if (widget.suffix) {
+            format += widget.egw().lang(widget.suffix);
+        }
+        // Avoid infinite loop if interval is the wrong direction
+        if ((min <= max) != (interval > 0)) {
+            interval = -interval;
+        }
+        for (var i = 0, n = min; n <= max && i <= 100; n += interval, ++i) {
+            options.push({ value: "" + n, label: sprintf(format, n) });
+        }
+        return options;
+    }
+    percent(widget) {
+        return this.number(widget);
+    }
+    year(widget, attrs) {
+        if (typeof attrs != 'object') {
+            attrs = {};
+        }
+        var t = new Date();
+        attrs.min = t.getFullYear() + parseInt(widget.min);
+        attrs.max = t.getFullYear() + parseInt(widget.max);
+        return this.number(widget, attrs);
+    }
+    day(widget, attrs) {
+        attrs.other = [1, 31, 1];
+        return this.number(widget, attrs);
+    }
+    hour(widget, attrs) {
+        var options = [];
+        var timeformat = widget.egw().preference('common', 'timeformat');
+        for (var h = 0; h <= 23; ++h) {
+            options.push({
+                value: h,
+                label: timeformat == 12 ?
+                    ((12 ? h % 12 : 12) + ' ' + (h < 12 ? egw.lang('am') : egw.lang('pm'))) :
+                    sprintf('%02d', h)
+            });
+        }
+        return options;
+    }
+    app(widget, attrs) {
+        var options = ',' + (attrs.other || []).join(',');
+        return this.cached_server_side(widget, 'select-app', options);
+    }
+    cat(widget) {
+        var options = [widget.globalCategories, /*?*/ , widget.application, widget.parentCat];
+        if (typeof options[3] == 'undefined') {
+            options[3] = widget.application ||
+                // When the widget is first created, it doesn't have a parent and can't find it's instanceManager
+                (widget.getInstanceManager() && widget.getInstanceManager().app) ||
+                widget.egw().app_name();
+        }
+        return this.cached_server_side(widget, 'select-cat', options.join(','), true);
+    }
+    country(widget, attrs, return_promise) {
+        var options = ',';
+        return this.cached_server_side(widget, 'select-country', options, return_promise);
+    }
+    state(widget, attrs) {
+        var options = attrs.country_code ? attrs.country_code : 'de';
+        return this.cached_server_side(widget, 'select-state', options);
+    }
+    dow(widget, attrs) {
+        var options = (widget.rows || "") + ',' + (attrs.other || []).join(',');
+        return this.cached_server_side(widget, 'select-dow', options, true);
+    }
+    lang(widget, attrs) {
+        var options = ',' + (attrs.other || []).join(',');
+        return this.cached_server_side(widget, 'select-lang', options);
+    }
+    timezone(widget, attrs) {
+        var options = ',' + (attrs.other || []).join(',');
+        return this.cached_server_side(widget, 'select-timezone', options);
+    }
+};
+//# sourceMappingURL=StaticOptions.js.map

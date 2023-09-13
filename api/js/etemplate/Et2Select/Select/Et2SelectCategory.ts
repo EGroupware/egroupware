@@ -8,10 +8,13 @@
  */
 
 
-import {css, PropertyValues} from "@lion/core";
-import {Et2Select} from "./Et2Select";
-import {Et2StaticSelectMixin, StaticOptions as so} from "./StaticOptions";
-import {cleanSelectOptions} from "./FindSelectOptions";
+import {css, html, nothing, PropertyValues, TemplateResult, unsafeCSS} from "lit";
+import {Et2Select} from "../Et2Select";
+import {Et2StaticSelectMixin, StaticOptions as so} from "../StaticOptions";
+import {cleanSelectOptions} from "../FindSelectOptions";
+import {StaticValue} from "lit/development/static-html";
+import {literal} from "lit/static-html.js";
+import {repeat} from "lit/directives/repeat.js";
 
 /**
  * Customised Select widget for categories
@@ -25,12 +28,14 @@ export class Et2SelectCategory extends Et2StaticSelectMixin(Et2Select)
 			...super.styles,
 			css`
 			/* Category color on options */
-			::slotted(*) {
+
+			  sl-option {
 				border-left: 6px solid var(--category-color, transparent);
 			}
 			/* Border on the (single) selected value */
-			:host(.hasValue:not([multiple])) .select--standard .select__control {
-				border-left: 6px solid var(--sl-input-border-color);
+
+			  :host(:not([multiple]))::part(combobox) {
+				border-left: 6px solid var(--category-color, var(--sl-input-border-color));
 			}			
 			`
 		]
@@ -73,13 +78,6 @@ export class Et2SelectCategory extends Et2StaticSelectMixin(Et2Select)
 				(this.getInstanceManager() && this.getInstanceManager().app) ||
 				this.egw().app_name();
 		}
-		// If app passes options (addressbook index) we'll use those instead.
-		// They will be found automatically by update() after ID is set.
-		await this.updateComplete;
-		if(this.select_options.length == 0)
-		{
-
-		}
 	}
 
 
@@ -91,72 +89,57 @@ export class Et2SelectCategory extends Et2StaticSelectMixin(Et2Select)
 		{
 			this.fetchComplete = so.cat(this).then(options =>
 			{
-				this.static_options = cleanSelectOptions(options);
+				this._static_options = cleanSelectOptions(options);
 				this.requestUpdate("select_options");
 			});
 		}
-
-		if(changedProperties.has("value") || changedProperties.has('select_options'))
-		{
-			this.doLabelChange()
-		}
 	}
 
-	/**
-	 * Override from parent (SlSelect) to customise display of the current value.
-	 * Here's where we add the icon & color border
-	 */
-	doLabelChange()
+
+	protected handleValueChange(e)
 	{
-		// Update the display label when checked menu item's label changes
-		if(this.multiple)
-		{
-			return;
-		}
+		super.handleValueChange(e);
 
-		const checkedItem = this.menuItems.find(item => item.value === this.value);
-		this.displayLabel = checkedItem ? checkedItem.textContent : '';
-		this.querySelector("[slot=prefix].tag_image")?.remove();
-		if(checkedItem)
-		{
-			let image = this._createImage(checkedItem)
-			if(image)
-			{
-				this.append(image);
-			}
-			this.dropdown.querySelector(".select__control").style.borderColor =
-				getComputedStyle(checkedItem).getPropertyValue("--category-color") || "";
-		}
+		// Just re-draw to get the colors & icon
+		this.requestUpdate();
 	}
 
 	/**
-	 * Render select_options as child DOM Nodes
+	 * Used to render each option into the select
+	 * Overridden for colors
 	 *
-	 * Overridden here so we can re-do the displayed label after first load of select options.
-	 * Initial load order / lifecycle does not have all the options at the right time
-	 * @protected
+	 * @param {SelectOption} option
+	 * @returns {TemplateResult}
 	 */
-	protected _renderOptions()
+	public render() : TemplateResult
 	{
-		// @ts-ignore Doesn't know about Et2WidgetWithSelectMixin._renderOptions()
-		return super._renderOptions().then(() =>
-		{
-			// @ts-ignore Doesn't know about SlSelect.menuItems
-			if(this.menuItems.length > 0)
-			{
-				this.doLabelChange();
-			}
-		});
+		/** CSS variables are not making it through to options, re-declaring them here works */
+		return html`
+            <style>
+                ${repeat(this.select_options, (option) =>
+                {
+                    if(typeof option.color == "undefined" || !option.color)
+                    {
+                        return nothing;
+                    }
+                    return unsafeCSS(
+                            (this.getValueAsArray().includes(option.value) ? "::part(combobox) { --category-color: " + option.color + ";}" : "") +
+                            ".cat_" + option.value + " {--category-color: " + option.color + ";}"
+                    );
+                })}
+            </style>
+            ${super.render()}
+		`;
 	}
-
+	
 	/**
 	 * Use a custom tag for when multiple=true
 	 *
 	 * @returns {string}
 	 */
-	get tagTag() : string
+	public get tagTag() : StaticValue
 	{
-		return "et2-category-tag";
+		return literal`et2-category-tag`;
 	}
 
 	/**

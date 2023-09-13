@@ -21,18 +21,20 @@ import {fetchAll, nm_action, nm_compare_field} from "../../api/js/etemplate/et2_
 import "./CRM";
 import {egw} from "../../api/js/jsapi/egw_global";
 import {LitElement} from "@lion/core";
-import {Et2SelectState} from "../../api/js/etemplate/Et2Select/Et2Select";
-import {Et2SelectCountry} from "../../api/js/etemplate/Et2Select/Et2SelectCountry";
+import {Et2SelectCountry} from "../../api/js/etemplate/Et2Select/Select/Et2SelectCountry";
+
+import {Et2SelectState} from "../../api/js/etemplate/Et2Select/Select/Et2SelectState";
 
 /**
  * Object to call app.addressbook.openCRMview with
  */
-export 	interface CrmParams {
-	contact_id: number|string;
-	crm_list?: "infolog"|"tracker"|"infolog-organisation"; // default: use preference
-	title?: string;	// default: link-title of contact_id
-	icon?: string;	// default: avatar for contact_id
-	index?: number;
+export interface CrmParams
+{
+	contact_id : number | string;
+	crm_list? : "infolog" | "tracker" | "infolog-organisation"; // default: use preference
+	title? : string;	// default: link-title of contact_id
+	icon? : string;	// default: avatar for contact_id
+	index? : number;
 }
 
 /**
