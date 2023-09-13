@@ -160,7 +160,11 @@ export const Et2WidgetWithSelectMixin = <T extends Constructor<LitElement>>(supe
 			{
 				return this.value;
 			}
-			return this.value == "null" || typeof this.value == "undefined" ? [] : [this.value];
+			if(this.value == "null" || typeof this.value == "undefined" || !this.emptyLabel && this.value == "")
+			{
+				return [];
+			}
+			return [this.value];
 		}
 
 		/**

@@ -136,6 +136,7 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 
 
 				  :host([search]) sl-select[open]::part(prefix), :host([allowfreeentries]) sl-select[open]::part(prefix) {
+					order: 9;
 					flex: 2 1 auto;
 					flex-wrap: wrap;
 					width: 100%;
@@ -423,7 +424,7 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 
 		protected _moreResultsTemplate()
 		{
-			if(this._total_result_count == 0)
+			if(this._total_result_count == 0 || this._total_result_count - this._remote_options.length == 0)
 			{
 				return nothing;
 			}
@@ -1313,9 +1314,11 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 			// Make sure not to double-add, but wait until the option is there
 			this.updateComplete.then(() =>
 			{
-				if(this.multiple && this.value.indexOf(text) == -1)
+				if(this.multiple && this.getValueAsArray().indexOf(text) == -1)
 				{
-					this.value.push(text);
+					let value = this.getValueAsArray();
+					value.push(text);
+					this.value = value;
 				}
 				else if(!this.multiple && this.value !== text)
 				{

@@ -336,6 +336,10 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		{
 			this.__value = val;
 		}
+		if(this.multiple && typeof this.__value == "string")
+		{
+			this.__value = this.__value != "" ? [this.__value] : [];
+		}
 		if(this.select)
 		{
 			this.select.value = this.__value;
@@ -408,7 +412,11 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 	{
 		super.willUpdate(changedProperties);
 
-		if(changedProperties.has('select_options') || changedProperties.has("value") || changedProperties.has('emptyLabel'))
+		if(changedProperties.has("multiple"))
+		{
+			this.value = this.__value;
+		}
+		if(changedProperties.has("select_options") || changedProperties.has("value") || changedProperties.has("emptyLabel"))
 		{
 			this.updateComplete.then(() => this.fix_bad_value());
 		}
