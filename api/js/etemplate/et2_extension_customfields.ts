@@ -634,11 +634,19 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 
 	 _setup_date(field_name, field, attrs) {
 		attrs.data_format = field.values && field.values.format ? field.values.format : 'Y-m-d';
+		 if(field.values?.format)
+		 {
+			 delete field.values.format;
+		 }
 		return true;
 	}
 	_setup_date_time( field_name, field, attrs)
 	{
 		attrs.data_format = field.values && field.values.format ? field.values.format : 'Y-m-d H:i:s';
+		if(field.values?.format)
+		{
+			delete field.values.format;
+		}
 		return true;
 	}
 	_setup_htmlarea( field_name, field, attrs)
