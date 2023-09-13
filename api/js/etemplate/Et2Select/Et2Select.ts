@@ -17,7 +17,7 @@ import {RowLimitedMixin} from "../Layout/RowLimitedMixin";
 import {Et2Tag} from "./Tag/Et2Tag";
 import {Et2WithSearchMixin} from "./SearchMixin";
 import {property} from "lit/decorators/property.js";
-import {SlSelect} from "@shoelace-style/shoelace";
+import {SlChangeEvent, SlSelect} from "@shoelace-style/shoelace";
 import {repeat} from "lit/directives/repeat.js";
 
 // export Et2WidgetWithSelect which is used as type in other modules
@@ -708,9 +708,11 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 	}
 
 
-	protected handleValueChange()
+	protected handleValueChange(e : SlChangeEvent)
 	{
+		const old_value = this.__value;
 		this.__value = this.select.value;
+		this.requestUpdate("value", old_value);
 	}
 
 	/**
