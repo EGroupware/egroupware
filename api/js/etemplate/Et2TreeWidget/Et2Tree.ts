@@ -29,7 +29,7 @@ export class Et2Tree extends Et2widgetWithSelectMixin(SlTree) {
     private input: any = null;
     private div: JQuery;
     private autoloading_url: any;
-    private selectOptions: any;
+    private selectOptions: TreeItem[];
 
     constructor() {
         super();
@@ -144,11 +144,15 @@ export class Et2Tree extends Et2widgetWithSelectMixin(SlTree) {
     }
 
     _optionTemplate() {
-        this.selectOptions = find_select_options(this)[1];
+        // @ts-ignore
+        this.selectOptions= find_select_options(this)[1];
+        //slot = expanded/collapsed instead of expand/collapse like it is in documentation
         let result: TemplateResult<1> = html``
         for (const selectOption of this.selectOptions) {
             result = html`${result}
-            <sl-tree-item>${this.rec(selectOption)}</sl-tree-item>`
+            <sl-tree-item>
+                ${this.recursivelyAddChildren(selectOption)}
+            </sl-tree-item>`
         }
         const h = html`${result}`
         return h
@@ -194,15 +198,26 @@ export class Et2Tree extends Et2widgetWithSelectMixin(SlTree) {
         this.installHandler('onOpenEnd', _handler);
     }
 
-    private rec(item: any): TemplateResult<1> {
+    private recursivelyAddChildren(item: any): TemplateResult<1> {
+        let img:String =item.im0??item.im1??item.im2;
+        let attributes = ""
         let res: TemplateResult<1> = html`${item.text}`;
-        if (item.item?.length > 0) // there are children ; true means there are no children
+        if(img){
+            img = "api/templates/default/images/dhtmlxtree/"+img
+            //sl-icon images need to be svgs if there is a png try to find the corresponding svg
+            if(img.endsWith(".png"))img = img.replace(".png",".svg");
+            res = html`<sl-icon src=${img}></sl-icon>${res}`
+        }
+        if (item.item?.length > 0) // there are children available
         {
             for (const subItem of item.item) {
                 res = html`
                     ${res}
-                    <sl-tree-item> ${this.rec(subItem)}</sl-tree-item>`
+                    <sl-tree-item lazy> ${this.recursivelyAddChildren(subItem)}</sl-tree-item>`
             }
+        // }else if(item.child === 1){
+        //     res = html``
+            //     }
         }
         return res;
     }
@@ -210,23 +225,29 @@ export class Et2Tree extends Et2widgetWithSelectMixin(SlTree) {
     private installHandler(_name: String, _handler: Function) {
         if (this.input == null) this.createTree(this);
         // automatic convert onChange event to oncheck or onSelect depending on multiple is used or not
-        if (_name == "onchange") {
-            _name = this.options.multiple ? "oncheck" : "onselect"
-        }
-        let handler = _handler;
-        let widget = this;
-        this.input.attachEvent(_name, function(_id){
-            let args = jQuery.makeArray(arguments);
-            // splice in widget as 2. parameter, 1. is new node-id, now 3. is old node id
-            args.splice(1, 0, widget);
-            // try to close mobile sidemenu after clicking on node
-            if (egwIsMobile() && typeof args[2] == 'string') framework.toggleMenu('on');
-            return handler.apply(this, args);
-        });
+        // if (_name == "onchange") {
+        //     _name = this.options.multiple ? "oncheck" : "onselect"
+        // }
+        // let handler = _handler;
+        // let widget = this;
+        // this.input.attachEvent(_name, function(_id){
+        //     let args = jQuery.makeArray(arguments);
+        //     // splice in widget as 2. parameter, 1. is new node-id, now 3. is old node id
+        //     args.splice(1, 0, widget);
+        //     // try to close mobile sidemenu after clicking on node
+        //     if (egwIsMobile() && typeof args[2] == 'string') framework.toggleMenu('on');
+        //     return handler.apply(this, args);
+        // });
     }
 
     private createTree(widget: this) {
+        widget.input = document.querySelector("et2-tree");
+        // Allow controlling icon size by CSS
+        widget.input.def_img_x = "";
+        widget.input.def_img_y = "";
 
+        // to allow "," in value, eg. folder-names, IF value is specified as array
+        widget.input.dlmtr = ':}-*(';
     }
 }
 
