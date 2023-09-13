@@ -11,12 +11,12 @@
 import {_egw_active_menu, egwMenu, egwMenuItem} from "./egw_menu";
 import {EGW_KEY_ENTER, EGW_KEY_MENU} from "./egw_action_constants";
 import {tapAndSwipe} from "../tapandswipe";
-import {EgwAction} from "./EgwAction";
 import {EgwFnct} from "./egw_action_common";
 import "./egwGlobal"
 import {EgwActionImplementation} from "./EgwActionImplementation";
 import {EgwActionObject} from "./EgwActionObject";
 import {EgwPopupAction} from "./EgwPopupAction";
+import {egw} from "../jsapi/egw_global";
 
 export class EgwPopupActionImplementation implements EgwActionImplementation {
     type = "popup";
@@ -242,6 +242,9 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
             if (!e) {
                 e = window.event;
             }
+
+			// Close any open tooltip so they don't get in the way
+			egw(window).tooltipCancel();
 
             if (_egw_active_menu) {
                 _egw_active_menu.hide();
