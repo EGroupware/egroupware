@@ -729,7 +729,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		{
 			super.blur();
 		}
-		this.dropdown.hide();
+		this.hide();
 	}
 
 	/* Parent should be fine now?
