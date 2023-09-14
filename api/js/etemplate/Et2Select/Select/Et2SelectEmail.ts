@@ -148,11 +148,6 @@ export class Et2SelectEmail extends Et2Select
 		}
 	}
 
-	connectedCallback()
-	{
-		super.connectedCallback();
-	}
-
 	protected _bindListeners()
 	{
 		super._bindListeners();
@@ -207,6 +202,9 @@ export class Et2SelectEmail extends Et2Select
 	 */
 	_tagTemplate(option, index)
 	{
+		const readonly = (this.readonly || option && typeof (option.disabled) != "undefined" && option.disabled);
+		const isEditable = this.editModeEnabled && !readonly;
+
 		return html`
             <et2-email-tag
                     class=${classMap({
@@ -215,7 +213,10 @@ export class Et2SelectEmail extends Et2Select
                     })}
                     ?.fullEmail=${this.fullEmail}
                     ?.onlyEmail=${this.onlyEmail}
-                    value=${option.value}
+                    ?removable=${!readonly}
+                    ?readonly=${readonly}
+                    ?editable=${isEditable}
+                    .value=${option.value.replaceAll("___", " ")}
             >
                 ${option.getTextLabel().trim()}
             </et2-email-tag>

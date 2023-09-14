@@ -1070,7 +1070,8 @@ div#mail-index_nm.splitter-pane {min-height: 100px;}
 	min-width: 7em;
 	color: darkgrey;
 }
-.mailPreviewHeaders et2-select-email::part(control) {
+
+.mailPreviewHeaders et2-select-email::part(combobox) {
 	border: none;
 }
 #popupMainDiv {height: 100%}

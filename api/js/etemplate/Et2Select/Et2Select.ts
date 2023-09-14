@@ -145,13 +145,13 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 
 			  /* Hide dropdown trigger when multiple & readonly */
 
-			  :host([readonly][multiple]) .select__expand-icon {
+			  :host([readonly][multiple])::part(expand-icon) {
 				display: none;
 			  }
 
 			  /* Style for tag count if rows=1 */
 
-			  :host([readonly][multiple][rows]) .select__tags sl-tag {
+			  :host([readonly][multiple][rows])::part(tags) {
 				position: absolute;
 				right: 0px;
 				top: 1px;
@@ -649,7 +649,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
                     ?removable=${!readonly}
                     ?readonly=${readonly}
                     ?editable=${isEditable}
-                    value=${option.value}
+                    .value=${option.value.replaceAll("___", " ")}
                     @dblclick=${this._handleDoubleClick}
                     @click=${typeof this.onTagClick == "function" ? (e) => this.onTagClick(e, e.target) : nothing}
             >

@@ -218,15 +218,15 @@ export class Et2EmailTag extends Et2Tag
 	{
 		let content = this.value;
 		// If there's a name, just show the name, otherwise show the email
-		if(!this.onlyEmail && Et2EmailTag.email_cache[this.value])
+		if(!this.onlyEmail && Et2EmailTag.email_cache[content])
 		{
 			// Append current value as email, data may have work & home email in it
-			content = (Et2EmailTag.email_cache[this.value]?.n_fn || "") + " <" + (Et2EmailTag.splitEmail(this.value)?.email || this.value) + ">"
+			content = (Et2EmailTag.email_cache[content]?.n_fn || "") + " <" + (Et2EmailTag.splitEmail(content)?.email || content) + ">"
 		}
 		if (this.onlyEmail)
 		{
 			const split = Et2EmailTag.splitEmail(content);
-			content = split.email || this.value;
+			content = split.email || content;
 		}
 		else if(!this.fullEmail)
 		{

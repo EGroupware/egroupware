@@ -11,9 +11,9 @@ import {css, CSSResultGroup, html, LitElement, nothing, render, TemplateResult} 
 import {cleanSelectOptions, SelectOption} from "./FindSelectOptions";
 import {Validator} from "@lion/form-core";
 import {Et2Tag} from "./Tag/Et2Tag";
-import {SlMenuItem} from "@shoelace-style/shoelace";
 import {StaticOptions} from "./StaticOptions";
 import {dedupeMixin} from "@open-wc/dedupe-mixin";
+import {SlOption} from "@shoelace-style/shoelace";
 
 // Otherwise import gets stripped
 let keep_import : Et2Tag;
@@ -543,9 +543,9 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 
 			if(this.allowFreeEntries)
 			{
-				this.freeEntries.forEach((item : SlMenuItem) =>
+				this.freeEntries.forEach((item : SlOption) =>
 				{
-					if(!options.some(i => i.value == item.value))
+					if(!options.some(i => i.value == item.value.replaceAll("___", " ")))
 					{
 						options.push({value: item.value, label: item.textContent, class: item.classList.toString()});
 					}
