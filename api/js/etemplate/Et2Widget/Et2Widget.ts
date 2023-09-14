@@ -103,6 +103,41 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 				:host([align="right"]) .input-group__input {
 					justify-content: flex-end;
 				}
+
+				  /* Put widget label to the left of the widget */
+
+				  ::part(form-control) {
+					display: flex;
+					align-items: center;
+					flex-wrap: wrap;
+				  }
+
+				  ::part(form-control-label) {
+					flex: 0 0 auto;
+					white-space: normal;
+				  }
+
+				  ::part(form-control-input) {
+					flex: 1 1 auto;
+					position: relative;
+					max-width: 100%;
+				  }
+
+				  ::part(form-control-help-text) {
+					flex-basis: 100%;
+					position: relative;
+				  }
+
+				  /* Use .et2-label-fixed class to give fixed label size */
+
+				  :host(.et2-label-fixed)::part(form-control-label) {
+					width: initial;
+					width: var(--label-width, 8em);
+				  }
+
+				  :host(.et2-label-fixed)::part(form-control-help-text) {
+					left: calc(var(--sl-spacing-medium) + var(--label-width, 8em));
+				  }
             `];
 		}
 
