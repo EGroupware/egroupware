@@ -393,9 +393,9 @@ export const StaticOptions = new class StaticOptionsType
 		return this.cached_server_side(widget, 'select-lang', options);
 	}
 
-	timezone(widget : Et2SelectWidgets, attrs) : SelectOption[] | Promise<SelectOption[]>
+	timezone(widget : Et2SelectWidgets, attrs) : Promise<SelectOption[]>
 	{
 		var options = ',' + (attrs.other || []).join(',');
-		return this.cached_server_side(widget, 'select-timezone', options);
+		return <Promise<SelectOption[]>>this.cached_server_side(widget, 'select-timezone', options, true);
 	}
 }

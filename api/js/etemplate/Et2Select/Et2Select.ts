@@ -65,6 +65,7 @@ export class Et2WidgetWithSelect extends RowLimitedMixin(Et2WidgetWithSelectMixi
 // @ts-ignore SlSelect styles is a single CSSResult, not an array, so TS complains
 export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 {
+	private _block_change_event : boolean = false;
 	static get styles()
 	{
 		return [
@@ -303,6 +304,70 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		}
 	}
 
+	/**
+	 * Handle the case where there is no value set, or the value provided is not an option.
+	 * If this happens, we choose the first option or empty label.
+	 *
+	 * Careful when this is called.  We change the value here, so an infinite loop is possible if the widget has
+	 * onchange.
+	 *
+	 */
+	protected fix_bad_value()
+	{
+		// Stop if there are no options
+		if(!Array.isArray(this.select_options) || this.select_options.length == 0)
+		{
+			// Nothing to do here
+			return;
+		}
+
+		// emptyLabel is fine
+		if(this.value === "" && this.emptyLabel)
+		{
+			return;
+		}
+
+		let valueArray = this.getValueAsArray();
+
+		// Check for value using missing options (deleted or otherwise not allowed)
+		let filtered = this.filterOutMissingOptions(valueArray);
+		if(filtered.length != valueArray.length)
+		{
+			this.value = filtered;
+			return;
+		}
+
+		// Multiple is allowed to be empty, and if we don't have an emptyLabel or options nothing to do
+		if(this.multiple || (!this.emptyLabel && this.select_options.length === 0))
+		{
+			return;
+		}
+
+		// See if parent (search / free entry) is OK with it
+		if(super.fix_bad_value())
+		{
+			return;
+		}
+		// If somebody gave '' as a select_option, let it be
+		if(this.value === '' && this.select_options.filter((option) => this.value === option.value).length == 1)
+		{
+			return;
+		}
+		// If no value is set, choose the first option
+		// Only do this on once during initial setup, or it can be impossible to clear the value
+
+		// value not in options --> use emptyLabel, if exists, or first option otherwise
+		if(this.select_options.filter((option) => valueArray.find(val => val == option.value) ||
+			Array.isArray(option.value) && option.value.filter(o => valueArray.find(val => val == o.value))).length === 0)
+		{
+			let oldValue = this.value;
+			this.value = this.emptyLabel ? "" : "" + this.select_options[0]?.value;
+			this._block_change_event = (oldValue != this.value);
+			// ""+ to cast value of 0 to "0", to not replace with ""
+			this.requestUpdate("value", oldValue);
+		}
+	}
+
 	@property()
 	get value()
 	{
@@ -384,10 +449,17 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 				return filteredArray;
 			}
 
+			// Empty is allowed, if there's an emptyLabel
+			if(value.toString() == "" && this.emptyLabel)
+			{
+				return value;
+			}
+
 			const missing = filterBySelectOptions(value, this.select_options);
 			if(missing.length > 0)
 			{
-				console.warn("Invalid option '" + missing.join(", ") + " ' removed");
+				debugger;
+				console.warn("Invalid option '" + missing.join(", ") + "' removed");
 				value = value.filter(item => missing.indexOf(item) == -1);
 			}
 		}
