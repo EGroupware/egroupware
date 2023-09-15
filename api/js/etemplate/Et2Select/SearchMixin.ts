@@ -7,7 +7,7 @@
  * @author Nathan Gray
  */
 
-import {css, CSSResultGroup, html, LitElement, nothing, render, TemplateResult} from "lit";
+import {css, CSSResultGroup, html, LitElement, nothing, TemplateResult} from "lit";
 import {cleanSelectOptions, SelectOption} from "./FindSelectOptions";
 import {Validator} from "@lion/form-core";
 import {Et2Tag} from "./Tag/Et2Tag";
@@ -419,6 +419,7 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 			return html`
                 ${this._searchInputTemplate()}
                 ${this._moreResultsTemplate()}
+                ${this._noResultsTemplate()}
 			`;
 		}
 
@@ -463,6 +464,11 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 
 		protected _noResultsTemplate()
 		{
+			if(this._total_result_count !== 0)
+			{
+				return nothing;
+			}
+
 			return html`
                 <div class="no-results">${this.egw().lang("no suggestions")}</div>`;
 		}
@@ -1037,15 +1043,6 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 				this.remoteSearch(this._searchInputNode.value, this.searchOptions)
 			]).then(() =>
 			{
-				// Show no results indicator
-				if(this.getAllOptions().filter(e => !e.classList.contains("no-match")).length == 0)
-				{
-					let target = this._optionTargetNode || this;
-					let temp = document.createElement("div");
-					render(this._noResultsTemplate(), temp);
-					target.append(temp.children[0]);
-				}
-
 				// Remove spinner
 				spinner.remove();
 
