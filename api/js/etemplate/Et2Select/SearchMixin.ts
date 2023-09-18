@@ -71,7 +71,7 @@ export declare class SearchMixinInterface
 	 *
 	 * @type {TemplateResult}
 	 */
-	_extraTemplate : TemplateResult
+	_extraTemplate : TemplateResult | typeof nothing
 }
 
 /**
@@ -409,7 +409,7 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 			}
 		}
 
-		protected _extraTemplate()
+		protected _extraTemplate() : TemplateResult | typeof nothing
 		{
 			if(!this.searchEnabled && !this.editModeEnabled && !this.allowFreeEntries || this.readonly)
 			{

@@ -35,6 +35,9 @@ export class Et2Tag extends Et2Widget(SlTag)
 			  width: 20px;
 			}
 
+			.tag__prefix {
+			  line-height: normal;
+			}
 			.tag__content {
 			  padding: 0px 0.2rem;
 			  flex: 1 2 auto;

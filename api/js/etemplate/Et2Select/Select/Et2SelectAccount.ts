@@ -70,14 +70,6 @@ export class Et2SelectAccount extends SelectAccountMixin(Et2StaticSelectMixin(Et
 		this.fetchComplete = Promise.all(fetch);
 	}
 
-
-	firstUpdated(changedProperties?)
-	{
-		super.firstUpdated(changedProperties);
-		// Due to the different way Et2SelectAccount handles options, we call this explicitly
-		this._renderOptions();
-	}
-
 	set accountType(type : AccountType)
 	{
 		this.__accountType = type;

@@ -244,16 +244,6 @@ export class Et2SelectEmail extends Et2Select
 	}
 
 	/**
-	 * Override image to skip it, we add images in Et2EmailTag using CSS
-	 * @param item
-	 * @protected
-	 */
-	protected _createImage(item)
-	{
-		return this.multiple ? "" : super._createImage(item);
-	}
-
-	/**
 	 * Overwritten to NOT split RFC822 addresses containing a comma in quoted name part
 	 *
 	 * E.g. '"Becker, Ralf" <rb@egroupware.org>'

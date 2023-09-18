@@ -17,7 +17,7 @@ import {RowLimitedMixin} from "../Layout/RowLimitedMixin";
 import {Et2Tag} from "./Tag/Et2Tag";
 import {Et2WithSearchMixin} from "./SearchMixin";
 import {property} from "lit/decorators/property.js";
-import {SlChangeEvent, SlSelect} from "@shoelace-style/shoelace";
+import {SlChangeEvent, SlOption, SlSelect} from "@shoelace-style/shoelace";
 import {repeat} from "lit/directives/repeat.js";
 
 // export Et2WidgetWithSelect which is used as type in other modules
@@ -556,59 +556,6 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 	}
 	 */
 
-	_emptyLabelTemplate() : TemplateResult
-	{
-		if(!this.emptyLabel || this.multiple)
-		{
-			return html``;
-		}
-		return html`
-            <sl-option value=""
-                       .selected=${this.getValueAsArray().some(v => v == "")}
-            >
-                ${this.emptyLabel}
-            </sl-option>`;
-	}
-
-	protected _optionsTemplate() : TemplateResult
-	{
-		return html`${repeat(this.select_options
-			// Filter out empty values if we have empty label to avoid duplicates
-			.filter(o => this.emptyLabel ? o.value !== '' : o), this._groupTemplate.bind(this))
-		}`;
-	}
-
-	/**
-	 * Used to render each option into the select
-	 *
-	 * @param {SelectOption} option
-	 * @returns {TemplateResult}
-	 */
-	protected _optionTemplate(option : SelectOption) : TemplateResult
-	{
-		// Exclude non-matches when searching
-		if(typeof option.isMatch == "boolean" && !option.isMatch)
-		{
-			return html``;
-		}
-
-		// Tag used must match this.optionTag, but you can't use the variable directly.
-		// Pass option along so SearchMixin can grab it if needed
-		const value = (<string>option.value).replaceAll(" ", "___");
-		return html`
-            <sl-option
-                    part="option"
-                    value="${value}"
-                    title="${!option.title || this.noLang ? option.title : this.egw().lang(option.title)}"
-                    class="${option.class}" .option=${option}
-                    .selected=${this.getValueAsArray().some(v => v == value)}
-                    ?disabled=${option.disabled}
-            >
-                ${this._iconTemplate(option)}
-                ${this.noLang ? option.label : this.egw().lang(option.label)}
-            </sl-option>`;
-	}
-
 	/**
 	 * Tag used for rendering tags when multiple=true
 	 * Used for creating, finding & filtering options.
@@ -620,54 +567,6 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		return literal`et2-tag`;
 	}
 
-	/**
-	 * Custom tag
-	 * @param {Et2Option} option
-	 * @param {number} index
-	 * @returns {TemplateResult}
-	 * @protected
-	 */
-	protected _tagTemplate(option : Et2Option, index : number) : TemplateResult
-	{
-		const readonly = (this.readonly || option && typeof (option.disabled) != "undefined" && option.disabled);
-		const isEditable = this.editModeEnabled && !readonly;
-		const image = this._createImage(option);
-		const tagName = this.tagTag;
-		return html`
-            <${tagName}
-                    part="tag"
-                    exportparts="
-                      base:tag__base,
-                      content:tag__content,
-                      remove-button:tag__remove-button,
-                      remove-button__base:tag__remove-button__base,
-                      icon:icon
-                    "
-                    class=${"search_tag " + option.classList.value}
-                    ?pill=${this.pill}
-                    size=${this.size}
-                    ?removable=${!readonly}
-                    ?readonly=${readonly}
-                    ?editable=${isEditable}
-                    .value=${option.value.replaceAll("___", " ")}
-                    @dblclick=${this._handleDoubleClick}
-                    @click=${typeof this.onTagClick == "function" ? (e) => this.onTagClick(e, e.target) : nothing}
-            >
-                ${image ?? nothing}
-                ${option.getTextLabel().trim()}
-            </${tagName}>
-		`;
-	}
-
-	/**
-	 * Additional customisation template
-	 * @returns {*}
-	 * @protected
-	 */
-	protected _extraTemplate()
-	{
-		return typeof super._extraTemplate == "function" ? super._extraTemplate() : nothing;
-	}
 
 	/**
 	 * Customise how tags are rendered.  This overrides what SlSelect
@@ -867,6 +766,141 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		return this.shadowRoot?.querySelector("sl-select");
 	}
 
+	/**
+	 * Custom, dynamic styling
+	 *
+	 * Put as much as you can in static styles for performance reasons
+	 * Override this for custom dynamic styles
+	 *
+	 * @returns {TemplateResult}
+	 * @protected
+	 */
+	protected _styleTemplate() : TemplateResult
+	{
+		return null;
+	}
+
+	/**
+	 * Used for the "no value" option for single select
+	 * Placeholder is used for multi-select with no value
+	 *
+	 * @returns {TemplateResult}
+	 */
+	_emptyLabelTemplate() : TemplateResult
+	{
+		if(!this.emptyLabel || this.multiple)
+		{
+			return html``;
+		}
+		return html`
+            <sl-option value=""
+                       .selected=${this.getValueAsArray().some(v => v == "")}
+            >
+                ${this.emptyLabel}
+            </sl-option>`;
+	}
+
+	/**
+	 * Iterate over all the options
+	 * @returns {TemplateResult}
+	 * @protected
+	 */
+	protected _optionsTemplate() : TemplateResult
+	{
+		return html`${repeat(this.select_options
+			// Filter out empty values if we have empty label to avoid duplicates
+			.filter(o => this.emptyLabel ? o.value !== '' : o), this._groupTemplate.bind(this))
+		}`;
+	}
+
+	/**
+	 * Used to render each option into the select
+	 * Override for custom select options.  Note that spaces are not allowed in option values,
+	 * and sl-select _requires_ options to be <sl-option>
+	 *
+	 * @param {SelectOption} option
+	 * @returns {TemplateResult}
+	 */
+	protected _optionTemplate(option : SelectOption) : TemplateResult
+	{
+		// Exclude non-matches when searching
+		if(typeof option.isMatch == "boolean" && !option.isMatch)
+		{
+			return html``;
+		}
+
+		// Tag used must match this.optionTag, but you can't use the variable directly.
+		// Pass option along so SearchMixin can grab it if needed
+		const value = (<string>option.value).replaceAll(" ", "___");
+		return html`
+            <sl-option
+                    part="option"
+                    value="${value}"
+                    title="${!option.title || this.noLang ? option.title : this.egw().lang(option.title)}"
+                    class="${option.class}" .option=${option}
+                    .selected=${this.getValueAsArray().some(v => v == value)}
+                    ?disabled=${option.disabled}
+            >
+                ${this._iconTemplate(option)}
+                ${this.noLang ? option.label : this.egw().lang(option.label)}
+            </sl-option>`;
+	}
+
+
+	/**
+	 * Custom tag
+	 *
+	 * Override this to customise display when multiple=true.
+	 * There is no restriction on the tag used, unlike _optionTemplate()
+	 *
+	 * @param {Et2Option} option
+	 * @param {number} index
+	 * @returns {TemplateResult}
+	 * @protected
+	 */
+	protected _tagTemplate(option : SlOption, index : number) : TemplateResult
+	{
+		const readonly = (this.readonly || option && typeof (option.disabled) != "undefined" && option.disabled);
+		const isEditable = this.editModeEnabled && !readonly;
+		const image = this._createImage(option);
+		const tagName = this.tagTag;
+		return html`
+            <${tagName}
+                    part="tag"
+                    exportparts="
+                      base:tag__base,
+                      content:tag__content,
+                      remove-button:tag__remove-button,
+                      remove-button__base:tag__remove-button__base,
+                      icon:icon
+                    "
+                    class=${"search_tag " + option.classList.value}
+                    ?pill=${this.pill}
+                    size=${this.size || "medium"}
+                    ?removable=${!readonly}
+                    ?readonly=${readonly}
+                    ?editable=${isEditable}
+                    .value=${option.value.replaceAll("___", " ")}
+                    @dblclick=${this._handleDoubleClick}
+                    @click=${typeof this.onTagClick == "function" ? (e) => this.onTagClick(e, e.target) : nothing}
+            >
+                ${image ?? nothing}
+                ${option.getTextLabel().trim()}
+            </${tagName}>
+		`;
+	}
+
+	/**
+	 * Additional customisation template
+	 * Override if needed.  Added after select options.
+	 *
+	 * @protected
+	 */
+	protected _extraTemplate() : TemplateResult | typeof nothing
+	{
+		return typeof super._extraTemplate == "function" ? super._extraTemplate() : nothing;
+	}
+
 	public render()
 	{
 		const value = Array.isArray(this.value) ?
@@ -883,12 +917,13 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 			}
 		}
 		return html`
+            ${this._styleTemplate()}
             <sl-select
                     exportparts="prefix, tags, display-input, expand-icon, combobox, listbox, option"
                     label=${this.label}
                     placeholder=${this.placeholder}
                     ?multiple=${this.multiple}
-                    ?disabled=${this.disabled}
+                    ?disabled=${this.disabled || this.readonly}
                     ?clearable=${this.clearable}
                     ?required=${this.required}
                     helpText=${this.helpText}
