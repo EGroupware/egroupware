@@ -95,7 +95,7 @@ class JsCalendar
 	 * @param string $method='PUT' 'PUT', 'POST' or 'PATCH'
 	 * @return array
 	 */
-	public static function parseJsEvent(string $json, array $old=[], string $content_type=null, $method='PUT')
+	public static function parseJsEvent(string $json, array $old=[], string $content_type=null, $method='PUT', int $calendar_owner=null)
 	{
 		try
 		{
@@ -147,7 +147,7 @@ class JsCalendar
 						break;
 
 					case 'participants':
-						$event['participants'] = self::parseParticipants($value);
+						$event['participants'] = self::parseParticipants($value, $strict, $calendar_owner);
 						break;
 
 					case 'priority':
@@ -537,21 +537,22 @@ class JsCalendar
 
 	const TYPE_PARTICIPANT = 'Participant';
 
+	static $status2jscal = [
+		'U' => 'needs-action',
+		'A' => 'accepted',
+		'R' => 'declined',
+		'T' => 'tentative',
+		//'' => 'delegated',
+	];
+
 	/**
 	 * Return participants object
 	 *
 	 * @param array $event
 	 * @return array
-	 */
+	 * @todo Resources and Groups without email	 */
 	protected static function Participants(array $event)
 	{
-		static $status2jscal = [
-			'U' => 'needs-action',
-			'A' => 'accepted',
-			'R' => 'declined',
-			'T' => 'tentative',
-			//'' => 'delegated',
-		];
 		$participants = [];
 		foreach($event['participants'] as $uid => $status)
 		{
@@ -589,12 +590,107 @@ class JsCalendar
 					'optional' => $role === 'OPT-PARTICIPANT',
 					'informational' => $role === 'NON-PARTICIPANT',
 				]),
-				'participationStatus' => $status2jscal[$status],
+				'participationStatus' => self::$status2jscal[$status],
 			]);
 			$participants[$uid] = $participant;
 		}
 
 		return $participants;
+	}
+
+	/**
+	 * Parse participants object
+	 *
+	 * @param array $participants
+	 * @param bool $strict true: require @types and objects with attributes name, email, ...
+	 * @param ?int $calendar_owner owner of the calendar / collection
+	 * @return array
+	 * @todo Resources and Groups without email
+	 */
+	protected static function parseParticipants(array $participants, bool $strict=true, int $calendar_owner=null)
+	{
+		$parsed = [];
+
+		foreach($participants as $uid => $participant)
+		{
+			if ($strict && (!is_array($participant) || $participant[self::AT_TYPE] !== self::TYPE_PARTICIPANT))
+			{
+				throw new \InvalidArgumentException("Missing or invalid @type: ".json_encode($participant, self::JSON_OPTIONS_ERROR));
+			}
+			elseif (!is_array($participant))
+			{
+				$participant = [
+					'email' => $participant,
+				];
+			}
+			// check if the uid is valid and matches the data in the object
+			if (($test_uid = self::Participants(['participants' => [
+				$uid => 'U'
+			]])) && ($test_uid['email'] ?? null) === $participant['email'] &&
+				($test_uid['kind'] ?? null) === ($participant['kind'] ?? null) &&
+				($test_uid['name'] ?? null) === ($participant['name'] ?? null))
+			{
+				// use $uid as is
+			}
+			else
+			{
+				if (empty($participant['email']) || !preg_match(Api\Etemplate\Widget\Url::EMAIL_PREG, $participant['email']))
+				{
+					throw new \InvalidArgumentException("Missing or invalid email address: ".json_encode($participant, self::JSON_OPTIONS_ERROR));
+				}
+				static $contacts = null;
+				if (!isset($contacts)) $contacts = new Api\Contacts();
+				if ((list($data) = $contacts->search([
+						'email' => $participant['email'],
+						'email_home' => $participant['email'],
+					], ['id','egw_addressbook.account_id as account_id','n_fn'],
+					'egw_addressbook.account_id IS NOT NULL DESC, n_fn IS NOT NULL DESC',
+					'','',false,'OR')))
+				{
+					// found an addressbook entry
+					$uid = $data['account_id'] ? (int)$data['account_id'] : 'c'.$data['id'];
+				}
+				else
+				{
+					$uid = 'e'.(empty($participant['name']) ? $participant['email'] : $participant['name'].' <'.$participant['email'].'>');
+				}
+			}
+			$default_status = $uid === $GLOBALS['egw_info']['user']['account_id'] ? 'A' : 'U';
+			$default_role = $uid === $calendar_owner ? 'CHAIR' : 'REQ-PARTICIPANT';
+			$parsed[$uid] = \calendar_so::combine_status(array_search($participant['participationStatus'] ?? $default_status, self::$status2jscal) ?: $default_status,
+				1, self::jscalRoles2role($participant['roles'] ?? null, $default_role));
+		}
+
+		return $parsed;
+	}
+
+	protected static function jscalRoles2role(array $roles=null, string $default_role=null)
+	{
+		$role = $default_role ?? 'REQ-PARTICIPANT';
+		foreach($roles ?? [] as $name => $value)
+		{
+			if ($value && $role !== 'CHAIR')
+			{
+				switch($name)
+				{
+					case 'owner':   // we ignore the owner, it's set automatic to the owner of the calendar/collection
+						break;
+					case 'attendee':
+						$role = 'REQ-PARTICIPANT';
+						break;
+					case 'optional':
+						$role = 'OPT-PARTICIPANT';
+						break;
+					case 'informational':
+						$role = 'NON-PARTICIPANT';
+						break;
+					case 'chair':
+						$role = 'CHAIR';
+						break;
+				}
+			}
+		}
+		return $role;
 	}
 
 	const TYPE_LOCATION = 'Location';
