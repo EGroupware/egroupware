@@ -1023,7 +1023,7 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 			// Show a spinner
 			let spinner = document.createElement("sl-spinner");
 			spinner.slot = "expand-icon";
-			this.appendChild(spinner);
+			this.select.appendChild(spinner);
 
 			// Hide clear button
 			let clear_button = <HTMLElement>this._searchInputNode.shadowRoot.querySelector(".input__clear")
@@ -1077,9 +1077,6 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 		{
 			let target = this._optionTargetNode || this;
 
-			// Remove "no suggestions"
-			target.querySelector(".no-results")?.remove();
-
 			// Remove any previously selected remote options that aren't used anymore
 			this._selected_remote = this._selected_remote.filter((option) =>
 			{
@@ -1090,14 +1087,7 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 			{
 				return prev + ":not([value='" + ('' + current.value).replace(/'/g, "\\\'") + "'])";
 			}, "");
-			target.querySelectorAll(".remote" + keepers).forEach(o => o.remove());
-			target.childNodes.forEach((n) =>
-			{
-				if(n.nodeType == Node.COMMENT_NODE)
-				{
-					n.remove();
-				}
-			})
+
 			// Not searching anymore, clear flag
 			this.select_options.map((o) => o.isMatch = null);
 			this.requestUpdate("select_options");
