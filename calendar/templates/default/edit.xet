@@ -48,7 +48,7 @@
 			<rows>
 				<row disabled="@no_add" height="60" class="et2_toolbar">
                     <calendar-owner id="participant" allowFreeEntries="true" span="4"
-                                    empty_label="Add new participants or resource"
+                                    placeholder="Add new participants or resource"
                                     onchange="app.calendar.participantOnChange"/>
                     <et2-hbox  width="100%">
                         <et2-textbox  type="integer" id="quantity" min="1" statustext="Number of resources to be booked"></et2-textbox>

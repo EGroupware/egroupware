@@ -99,7 +99,7 @@
     box-shadow: none;
 }
 /* Hide email in sidebox */
-#calendar-sidebox_owner .title {
+#calendar-sidebox_owner::part(tag__suffix) {
 	display: none;
 }
 
