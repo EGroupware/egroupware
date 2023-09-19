@@ -687,6 +687,8 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 			{
 				return;
 			}
+			this.setAttribute("open", "");
+
 			// Move search (& menu) if there's no value
 			this._activeControls?.classList.toggle("novalue", this.multiple && this.value == '' || !this.multiple);
 
@@ -759,6 +761,8 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 			{
 				return;
 			}
+			this.removeAttribute("open");
+
 			this.clearSearch();
 
 			// Reset display

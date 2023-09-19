@@ -808,7 +808,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		}
 		return html`
             <sl-option
-                    part="emptyLabel"
+                    part="emptyLabel option"
                     value=""
                     .selected=${this.getValueAsArray().some(v => v == "")}
             >
