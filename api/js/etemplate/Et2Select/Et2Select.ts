@@ -376,6 +376,15 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 	@property()
 	get value()
 	{
+		// Handle a bunch of non-values, if it's multiple we want an array
+		if(this.multiple && (this.__value == "null" || this.__value == null || typeof this.__value == "undefined" || !this.emptyLabel && this.__value == ""))
+		{
+			return [];
+		}
+		if(!this.multiple && !this.emptyLabel && this.__value == "")
+		{
+			return null;
+		}
 		return this.multiple ?
 			   this.__value ?? [] :
 			   this.__value ?? "";
@@ -464,7 +473,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 			if(missing.length > 0)
 			{
 				debugger;
-				console.warn("Invalid option '" + missing.join(", ") + "' removed");
+				console.warn("Invalid option '" + missing.join(", ") + "' removed from " + this.id, this);
 				value = value.filter(item => missing.indexOf(item) == -1);
 			}
 		}
@@ -472,9 +481,9 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 	}
 
 	/**
-	 * Add an option for the "empty label" option, used if there's no value
+	 * Additional customisations from the XET node
 	 *
-	 * @returns {TemplateResult}
+	 * @param {Element} _node
 	 */
 	loadFromXML(_node : Element)
 	{
@@ -926,7 +935,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
             <sl-select
                     exportparts="prefix, tags, display-input, expand-icon, combobox, listbox, option"
                     label=${this.label}
-                    placeholder=${this.placeholder}
+                    placeholder=${this.placeholder || (this.multiple && this.emptyLabel ? this.emptyLabel : "")}
                     ?multiple=${this.multiple}
                     ?disabled=${this.disabled || this.readonly}
                     ?clearable=${this.clearable}
