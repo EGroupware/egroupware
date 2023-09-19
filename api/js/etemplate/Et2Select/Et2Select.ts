@@ -696,7 +696,9 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 	protected handleValueChange(e : SlChangeEvent)
 	{
 		const old_value = this.__value;
-		this.__value = this.select.value;
+		this.__value = Array.isArray(this.select.value) ?
+					   this.select.value.map(e => e.replaceAll("___", " ")) :
+					   this.select.value.replaceAll("___", " ");
 		this.requestUpdate("value", old_value);
 	}
 
