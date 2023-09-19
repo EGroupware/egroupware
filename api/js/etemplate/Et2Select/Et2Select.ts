@@ -197,6 +197,11 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 				max-height: 8em;
 				overflow-y: auto;
 			  }
+			  :host([readonly])::part(combobox) {
+				background: none;
+				opacity: 1;
+				border: none;
+			  }
 			`
 		];
 	}
