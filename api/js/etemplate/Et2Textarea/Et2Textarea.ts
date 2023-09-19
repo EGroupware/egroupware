@@ -36,7 +36,8 @@ export class Et2Textarea extends Et2InputWidget(SlTextarea)
     			height: 100%;
     			align-items: stretch !important;
 			}
-            :host::part(base) {
+
+			  :host::part(form-control-input), :host::part(textarea) {
             	height: 100%;
             }
 			`,
