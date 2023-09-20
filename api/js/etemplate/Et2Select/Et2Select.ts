@@ -377,11 +377,12 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 	get value()
 	{
 		// Handle a bunch of non-values, if it's multiple we want an array
-		if(this.multiple && (this.__value == "null" || this.__value == null || typeof this.__value == "undefined" || !this.emptyLabel && this.__value == ""))
+		if(this.multiple && (this.__value == "null" || this.__value == null || typeof this.__value == "undefined" ||
+			!this.emptyLabel && this.__value == "" && !this.select_options.find(o => o.value == "")))
 		{
 			return [];
 		}
-		if(!this.multiple && !this.emptyLabel && this.__value == "")
+		if(!this.multiple && !this.emptyLabel && this.__value == "" && !this.select_options.find(o => o.value == ""))
 		{
 			return null;
 		}
