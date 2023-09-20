@@ -751,8 +751,10 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 
 		focus()
 		{
-			this.show();
-			this._searchInputNode.focus();
+			this.show().then(() =>
+			{
+				this._searchInputNode?.focus();
+			});
 		}
 
 		_handleMenuHide()
@@ -1303,20 +1305,16 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 			}
 
 			// Make sure not to double-add, but wait until the option is there
-			this.updateComplete.then(() =>
+			if(this.multiple && this.getValueAsArray().indexOf(text) == -1)
 			{
-				if(this.multiple && this.getValueAsArray().indexOf(text) == -1)
-				{
-					let value = this.getValueAsArray();
-					value.push(text);
-					this.value = value;
-				}
-				else if(!this.multiple && this.value !== text)
-				{
-					this.value = text;
-				}
-				this.requestUpdate("value");
-			});
+				let value = this.getValueAsArray();
+				value.push(text);
+				this.value = value;
+			}
+			else if(!this.multiple && this.value !== text)
+			{
+				this.value = text;
+			}
 
 			// If we were overlapping edit inputbox with the value display, reset
 			if(!this.readonly && this._activeControls?.classList.contains("novalue"))
@@ -1370,7 +1368,6 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 				{
 					this.value = value;
 				}
-				this.querySelector("[value='" + original.replace(/'/g, "\\\'") + "']")?.remove();
 				this.__select_options = this.__select_options.filter(v => v.value !== original);
 			}
 		}

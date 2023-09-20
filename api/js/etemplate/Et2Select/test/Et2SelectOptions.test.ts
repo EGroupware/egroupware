@@ -1,8 +1,9 @@
 import {assert, elementUpdated, fixture, html} from '@open-wc/testing';
 import {Et2Box} from "../../Layout/Et2Box/Et2Box";
-import {Et2Select, SelectOption} from "../Et2Select";
+import {Et2Select} from "../Et2Select";
 import * as sinon from "sinon";
 import {et2_arrayMgr} from "../../et2_core_arrayMgr";
+import {SelectOption} from "../FindSelectOptions";
 
 let parser = new window.DOMParser();
 
@@ -30,7 +31,6 @@ describe("Select widget", () =>
 	beforeEach(async() =>
 	{
 		// This stuff because otherwise Et2Select isn't actually loaded when testing
-		// @ts-ignore TypeScript is not recognizing that this widget is a LitElement
 		element = await fixture<Et2Select>(html`
             <et2-select></et2-select>
 		`);
@@ -39,7 +39,6 @@ describe("Select widget", () =>
 		assert.instanceOf(element, Et2Select);
 		element.remove();
 
-		// @ts-ignore TypeScript is not recognizing that this widget is a LitElement
 		container = await fixture<Et2Box>(html`
             <et2-box/>
 		`);

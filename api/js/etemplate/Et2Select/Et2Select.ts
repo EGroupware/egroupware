@@ -14,7 +14,6 @@ import {Et2WidgetWithSelectMixin} from "./Et2WidgetWithSelectMixin";
 import {SelectOption} from "./FindSelectOptions";
 import shoelace from "../Styles/shoelace";
 import {RowLimitedMixin} from "../Layout/RowLimitedMixin";
-import {Et2Tag} from "./Tag/Et2Tag";
 import {Et2WithSearchMixin} from "./SearchMixin";
 import {property} from "lit/decorators/property.js";
 import {SlChangeEvent, SlOption, SlSelect} from "@shoelace-style/shoelace";
@@ -582,61 +581,6 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		return literal`et2-tag`;
 	}
 
-
-	/**
-	 * Customise how tags are rendered.  This overrides what SlSelect
-	 * does in syncItemsFromValue().
-	 * This is a copy+paste from SlSelect.syncItemsFromValue().
-	 *
-	 * @param item
-	 * @protected
-	 */
-	protected _createTagNode(item)
-	{
-		console.warn("Deprecated");
-		debugger;
-		let tag;
-		if(typeof super._createTagNode == "function")
-		{
-			tag = super._createTagNode(item);
-		}
-		else
-		{
-			tag = <Et2Tag>document.createElement(this.tagTag);
-		}
-		tag.value = item.value;
-		tag.textContent = item?.getTextLabel()?.trim();
-		tag.class = item.classList.value + " search_tag";
-		tag.setAttribute("exportparts", "icon");
-		if(this.size)
-		{
-			tag.size = this.size;
-		}
-		if(this.readonly || item.option && typeof (item.option.disabled) != "undefined" && item.option.disabled)
-		{
-			tag.removable = false;
-			tag.readonly = true;
-		}
-		else
-		{
-			tag.addEventListener("dblclick", this._handleDoubleClick);
-			tag.addEventListener("click", this.handleTagInteraction);
-			tag.addEventListener("keydown", this.handleTagInteraction);
-			tag.addEventListener("sl-remove", (event : CustomEvent) => this.handleTagRemove(event, item));
-		}
-		// Allow click handler even if read only
-		if(typeof this.onTagClick == "function")
-		{
-			tag.addEventListener("click", (e) => this.onTagClick(e, e.target));
-		}
-		let image = this._createImage(item);
-		if(image)
-		{
-			tag.prepend(image);
-		}
-		return tag;
-	}
-
 	blur()
 	{
 		if(typeof super.blur == "function")
@@ -725,37 +669,6 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 			event.stopPropagation();
 		}
 
-	}
-
-	/**
-	 * Get the icon for the select option
-	 *
-	 * @param option
-	 * @protected
-	 */
-	protected _iconTemplate(option)
-	{
-		if(!option.icon)
-		{
-			return html``;
-		}
-
-		return html`
-            <et2-image slot="prefix" part="icon" style="width: var(--icon-width)"
-                       src="${option.icon}"></et2-image>`
-	}
-
-	protected _createImage(item)
-	{
-		let image = item?.querySelector ? item.querySelector("et2-image") || item.querySelector("[slot='prefix']") : null;
-		if(image)
-		{
-			image = image.clone();
-			image.slot = "prefix";
-			image.class = "tag_image";
-			return image;
-		}
-		return "";
 	}
 
 	/** Shows the listbox. */
@@ -865,6 +778,24 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
             </sl-option>`;
 	}
 
+	/**
+	 * Get the icon for the select option
+	 *
+	 * @param option
+	 * @protected
+	 */
+	protected _iconTemplate(option)
+	{
+		if(!option.icon)
+		{
+			return html``;
+		}
+
+		return html`
+            <et2-image slot="prefix" part="icon" style="width: var(--icon-width)"
+                       src="${option.icon}"></et2-image>`
+	}
+
 
 	/**
 	 * Custom tag
@@ -881,7 +812,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 	{
 		const readonly = (this.readonly || option && typeof (option.disabled) != "undefined" && option.disabled);
 		const isEditable = this.editModeEnabled && !readonly;
-		const image = this._createImage(option);
+		const image = this._iconTemplate(option);
 		const tagName = this.tagTag;
 		return html`
             <${tagName}
@@ -900,6 +831,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
                     ?readonly=${readonly}
                     ?editable=${isEditable}
                     .value=${option.value.replaceAll("___", " ")}
+                    @change=${this.handleTagEdit}
                     @dblclick=${this._handleDoubleClick}
                     @click=${typeof this.onTagClick == "function" ? (e) => this.onTagClick(e, e.target) : nothing}
             >
