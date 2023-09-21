@@ -78,6 +78,9 @@
     display: none;
 }
 
+*[hidden] {
+	display: none !important;
+}
 
 /**
  * VBox widget

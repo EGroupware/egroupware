@@ -161,10 +161,26 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 				class: {type: String, reflect: true},
 
 				/**
-				 * Defines whether this widget is visible.
-				 * Not to be confused with an input widget's HTML attribute 'disabled'.",
+				 * Defines whether this widget is visibly disabled.
+				 *
+				 * The widget is still visible, but clearly cannot be interacted with.  Widgets disabled in the template
+				 * will not return a value to the application code, even if re-enabled via javascript before submitting.
+				 * To allow a disabled widget to be re-enabled and return a value, disable via javascript in the app's
+				 * et2_ready() instead of an attribute in the template file.
 				 */
 				disabled: {
+					type: Boolean,
+					reflect: true
+				},
+
+				/**
+				 * The widget is not visible.
+				 *
+				 * As far as the user is concerned, the widget does not exist.  Widgets hidden with an attribute in the
+				 * template may not be created in the DOM, and will not return a value.  Widgets can be hidden after creation,
+				 * and they may return a value if hidden this way.
+				 */
+				hidden: {
 					type: Boolean,
 					reflect: true
 				},
@@ -350,12 +366,17 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 		/**
 		 * Wrapper on this.disabled because legacy had it.
 		 *
+		 * @deprecated Use widget.disabled for visually disabled, widget.hidden for visually hidden.
+		 * 	Widgets that are hidden from the server via attribute or $readonlys will not be created.
+		 * 	Widgets that are disabled from the server will not return a value to the application code.
+		 *
 		 * @param {boolean} value
 		 */
 		set_disabled(value : boolean)
 		{
 			let oldValue = this.disabled;
 			this.disabled = value;
+			this.hidden = value;
 			this.requestUpdate("disabled", oldValue);
 		}
 
@@ -760,7 +781,7 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 			{
 				widget = loadWebComponent(_nodeName, _node, this);
 
-				if(this.addChild)
+				if(this.addChild && widget)
 				{
 					// webcomponent going into old et2_widget
 					this.addChild(widget);
@@ -1434,6 +1455,13 @@ export function loadWebComponent(_nodeName : string, _template_node : Element|{[
 			throw Error("Unknown or unregistered WebComponent '" + _nodeName + "', could not find class.  Also checked for " + tries.join(','));
 		}
 	}
+
+	// Don't need to create hidden elements
+	if(parent.hidden || attrs["hidden"] && parent.getArrayMgr("content") && parent.getArryMgr("content").parseBoolExpression(attrs["hidden"]))
+	{
+		return null;
+	}
+
 	const readonly = parent?.getArrayMgr("readonlys") ?
 					 (<any>parent.getArrayMgr("readonlys")).isReadOnly(
 						 attrs["id"], attrs["readonly"],
