@@ -65,7 +65,7 @@ describe("Select widget", () =>
 			await element.updateComplete;
 
 			/** TESTING **/
-			assert.isNotNull(element.querySelector("[value='option']"), "Missing static option");
+			assert.isNotNull(element.select.querySelector("[value='option']"), "Missing static option");
 		});
 
 		it("directly in sel_options", async() =>
@@ -85,7 +85,7 @@ describe("Select widget", () =>
 			await element.updateComplete;
 
 			/** TESTING **/
-			assert.equal(element.querySelectorAll("sl-option").length, 2);
+			assert.equal(element.select.querySelectorAll("sl-option").length, 2);
 		});
 
 		it("merges static options with sel_options", async() =>
@@ -106,9 +106,7 @@ describe("Select widget", () =>
 			await element.updateComplete;
 
 			/** TESTING **/
-
-				// @ts-ignore o.value isn't known by TypeScript, but it's there
-			let option_keys = Object.values(element.querySelectorAll("sl-option")).map(o => o.value);
+			let option_keys = Object.values(element.select.querySelectorAll("sl-option")).map(o => o.value);
 			assert.include(option_keys, "option", "Static option missing");
 			assert.includeMembers(option_keys, ["1", "2", "option"], "Option mis-match");
 			assert.equal(option_keys.length, 3);

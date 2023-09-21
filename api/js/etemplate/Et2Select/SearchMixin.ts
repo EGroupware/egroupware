@@ -945,7 +945,7 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 			else if(event.key == "Escape")
 			{
 				this._handleSearchAbort(event);
-				this.dropdown.hide();
+				this.hide();
 				return;
 			}
 
