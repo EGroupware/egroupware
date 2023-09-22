@@ -1,16 +1,12 @@
 ## Widgets
 
 Widgets are the building blocks of our UI.
-While there is some legacy mess, we are currently making all our
+We are currently making all our
 widgets [WebComponents](https://developer.mozilla.org/en-US/docs/Web/API/Web_components)
-based on [Lit](https://lit.dev/docs/).
+based on [Lit](https://lit.dev/docs/). Many of our widgets use [Shoelace](https://shoelace.style) components as building
+blocks.
 
-Automated widget testing is done using "web-test-runner" to run the tests, which are written using
-
-* Mocha (https://mochajs.org/) & Chai Assertion Library (https://www.chaijs.com/api/assert/)
-* Playwright (https://playwright.dev/docs/intro) runs the tests in actual browsers.
-
-If you just want to use existing widgets, you can just put them in your .xet template file:
+If you just want to use existing widgets, you can put them in your .xet template file:
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>

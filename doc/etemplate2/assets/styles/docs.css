@@ -3,10 +3,10 @@
   --docs-border-color: var(--sl-color-neutral-200);
   --docs-border-width: 1px;
   --docs-border-radius: var(--sl-border-radius-medium);
-  --docs-content-max-width: 860px;
+	--docs-content-max-width: 100%;
   --docs-sidebar-width: 320px;
   --docs-sidebar-transition-speed: 250ms;
-  --docs-content-toc-max-width: 260px;
+	--docs-content-toc-max-width: 220px;
   --docs-content-padding: 2rem;
   --docs-content-vertical-spacing: 2rem;
   --docs-search-overlay-background: rgb(0 0 0 / 0.2);

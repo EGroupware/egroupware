@@ -29,8 +29,11 @@
     <meta property="og:description" content="{{ meta.description }}" />
     <meta property="og:image" content="{{ assetUrl(meta.image, true) }}" />
 
+    {# API Viewer Element #}
+	<script type="module" src="https://jspm.dev/api-viewer-element"></script>
+
     {# EGroupware #}
-    <script src="{{ assetUrl('scripts/etemplate/etemplate2.js') }}" type="module"></script>
+    <!--<script src="{{ assetUrl('scripts/etemplate/etemplate2.js') }}" type="module"></script>-->
 
     {# Shoelace #}
     <link rel="stylesheet" href="{{ assetUrl('shoelace/themes/light.css') }}" />
