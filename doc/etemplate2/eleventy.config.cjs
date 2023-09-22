@@ -24,8 +24,11 @@ const npmdir = 'dist';
 const allComponents = getAllComponents();
 let hasBuiltSearchIndex = false;
 
-// Write component data to file, 11ty will pick it up and create pages
+// Write component data to file, 11ty will pick it up and create pages - the name & location are important
 fs.writeFileSync("_data/components.json", JSON.stringify(allComponents));
+
+// Put it here too, since addPassthroughCopy() ignores it
+fs.copyFileSync("../dist/custom-elements.json", "assets/custom-elements.json");
 
 module.exports = function (eleventyConfig)
 {
