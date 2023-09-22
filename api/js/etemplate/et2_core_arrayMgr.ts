@@ -349,8 +349,13 @@ export class et2_arrayMgr
 		return _ident;
 	}
 
-	parseBoolExpression(_expression : string)
+	parseBoolExpression(_expression : string|number|boolean|undefined)
 	{
+		if (typeof _expression === "boolean")
+		{
+			return _expression;
+		}
+
 		if(typeof _expression === "undefined" || _expression === null)
 		{
 			return false;

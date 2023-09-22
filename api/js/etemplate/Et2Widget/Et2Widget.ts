@@ -1457,9 +1457,9 @@ export function loadWebComponent(_nodeName : string, _template_node : Element|{[
 	}
 
 	// Don't need to create hidden elements
-	if(parent.hidden || attrs["hidden"] && parent.getArrayMgr("content") && parent.getArryMgr("content").parseBoolExpression(attrs["hidden"]))
+	if(parent?.hidden || attrs["hidden"] && parent?.getArrayMgr("content") && parent.getArrayMgr("content").parseBoolExpression(attrs["hidden"]))
 	{
-		return null;
+		//return null;
 	}
 
 	const readonly = parent?.getArrayMgr("readonlys") ?
