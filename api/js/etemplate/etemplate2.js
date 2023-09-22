@@ -285,6 +285,9 @@ var etemplate2 = /** @class */ (function () {
             this.close_prompt = this._close_changed_prompt.bind(this);
             window.addEventListener("beforeunload", this.close_prompt);
         }
+        else if (window == egw_topWindow()) {
+            window.addEventListener("beforeunload", this.destroy_session);
+        }
         if (this._etemplate_exec_id) {
             this.destroy_session = jQuery.proxy(function (ev) {
                 // need to use async === "keepalive" to run via beforeunload
