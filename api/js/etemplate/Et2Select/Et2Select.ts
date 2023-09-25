@@ -64,7 +64,6 @@ export class Et2WidgetWithSelect extends RowLimitedMixin(Et2WidgetWithSelectMixi
 // @ts-ignore SlSelect styles is a single CSSResult, not an array, so TS complains
 export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 {
-	private _block_change_event : boolean = false;
 	static get styles()
 	{
 		return [
@@ -298,13 +297,9 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 
 	_triggerChange(e)
 	{
-		if(super._triggerChange(e) && !this._block_change_event)
+		if(super._triggerChange(e))
 		{
 			this.dispatchEvent(new Event("change", {bubbles: true}));
-		}
-		if(this._block_change_event)
-		{
-			this.updateComplete.then(() => this._block_change_event = false);
 		}
 	}
 
@@ -366,7 +361,6 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		{
 			let oldValue = this.value;
 			this.value = this.emptyLabel ? "" : "" + this.select_options[0]?.value;
-			this._block_change_event = (oldValue != this.value);
 			// ""+ to cast value of 0 to "0", to not replace with ""
 			this.requestUpdate("value", oldValue);
 		}
