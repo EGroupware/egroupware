@@ -21,8 +21,8 @@ use EGroupware\Api;
  * out the table to look if there is a notificaton for this
  * client. The second stage is done in class.notifications_ajax.inc.php
  */
-class notifications_popup implements notifications_iface {
-
+class notifications_popup implements notifications_iface
+{
 	/**
 	 * Appname
 	 */
@@ -120,13 +120,14 @@ class notifications_popup implements notifications_iface {
 	 * @param array $_user_sessions
 	 * @param array $_data
 	 */
-	private function save($_message, $_data) {
+	private function save($_message, $_data)
+	{
 		$result = $this->db->insert( self::_notification_table, array(
 			'account_id'     => $this->recipient->account_id,
 			'notify_message' => $_message,
 			'notify_type'    => self::_type,
-			'notify_data'    => is_array($_data) ? json_encode($_data) : NULL,
-			'notify_created' => Api\DateTime::user2server('now'),
+			'notify_data'    => $_data && is_array($_data) ? json_encode($_data) : NULL,
+			'notify_created' => new Api\DateTime(),
 		), false,__LINE__,__FILE__,self::_appname);
 		if ($result === false) throw new Exception("Can't save notification into SQL table");
 		$push = new Api\Json\Push($this->recipient->account_id);
@@ -136,50 +137,83 @@ class notifications_popup implements notifications_iface {
 
 
 	/**
-	 * read all notification messages for given recipient
+	 * Read the 100 most recent notification messages for given recipient
+	 *
+	 * We use a cut-off-date of 30day, not returning anything older!
+	 *
 	 * @param $_account_id
+	 * @param int $num_rows
 	 * @return array
 	 */
-	public static function read($_account_id)
+	public static function read($_account_id, int $num_rows=100)
 	{
 		if (!$_account_id) return [];
 
-		$rs = $GLOBALS['egw']->db->select(self::_notification_table, '*', array(
-				'account_id' => $_account_id,
-				'notify_type' => self::_type
-			),
-			__LINE__,__FILE__,0 ,'ORDER BY notify_id DESC',self::_appname, 100);
-		// Fetch the total
-		$total =  $GLOBALS['egw']->db->select(self::_notification_table, 'COUNT(*)', array(
-			'account_id' => $_account_id,
-			'notify_type' => self::_type
-		),
-			__LINE__,__FILE__,0 ,'',self::_appname)->fetchColumn();
-		$result = array();
-		if ($rs->NumRows() > 0)	{
-			foreach ($rs as $notification) {
-				$actions = null;
-				$data = json_decode($notification['notify_data'], true);
-				if (!empty($data['appname']) && !empty($data['data']))
-				{
-					$_actions = Api\Hooks::process (array(
-						'location' => 'notifications_actions',
-						'data' => $data['data']
-						), $data['appname'], true);
-					$actions = $_actions[$data['appname']];
-				}
-				$result[] = array(
-					'id'      => $notification['notify_id'],
-					'message' => $notification['notify_message'],
-					'status'  => $notification['notify_status'],
-					'created' => Api\DateTime::server2user($notification['notify_created']),
-					'current' => new Api\DateTime('now'),
-					'actions' => is_array($actions)?$actions:NULL,
-					'extra_data' => $data['data'] ?? [],
-				);
+		/** @var Api\Db $db */
+		$db = $GLOBALS['egw']->db;
 
+		$result = [];
+		if (($total =  $db->select(self::_notification_table, 'COUNT(*)', [
+			'account_id' => $_account_id,
+			'notify_type' => self::_type,
+			'notify_created > '.($cut_off=$db->quote(Api\DateTime::to(notifications_ajax::CUT_OFF_DATE, Api\DateTime::DATABASE))),
+		], __LINE__, __FILE__, false, '', self::_appname)->fetchColumn()))
+		{
+			$n = 0;
+			$chunk_size = 150;
+			do
+			{
+				$notification = null;
+				foreach ($rs=$db->select(self::_notification_table, '*', [
+					'account_id' => $_account_id,
+					'notify_type' => self::_type,
+					'notify_created > ' . $cut_off,
+				], __LINE__, __FILE__, $n, 'ORDER BY notify_id DESC', self::_appname, $chunk_size) as $notification)
+				{
+					$actions = null;
+					$data = json_decode($notification['notify_data'], true);
+					if (!empty($data['appname']) && !empty($data['data']))
+					{
+						$_actions = Api\Hooks::process(array(
+							'location' => 'notifications_actions',
+							'data' => $data['data']
+						), $data['appname'], true);
+						$actions = $_actions[$data['appname']];
+					}
+					$data = [
+						'id' => $notification['notify_id'],
+						'message' => $notification['notify_message'],
+						'status' => $notification['notify_status'],
+						'created' => Api\DateTime::server2user($notification['notify_created']),
+						'current' => new Api\DateTime('now'),
+						'actions' => is_array($actions) ? $actions : NULL,
+						'extra_data' => $data['data'] ?? [],
+					];
+					// aggregate by app:id reporting only the newest entry
+					if (!empty($data['extra_data']['id']))
+					{
+						if (!isset($result[$id = $data['extra_data']['app'] . ':' . $data['extra_data']['id']]))
+						{
+							$result[$id] = $data;
+						}
+						else
+						{
+							$total--;
+							/* in case we want to show all
+							$result['id']['others'][] = $data;
+							*/
+						}
+					}
+					else
+					{
+						$result[] = $data;
+					}
+				}
+				$n += $chunk_size;
 			}
-			return ['rows' => $result, 'total'=> $total];
+			while(!$notification || count($result) < min($num_rows, $total));
+
+			return ['rows' => array_values($result), 'total'=> $total];
 		}
 	}
 
@@ -273,7 +307,8 @@ class notifications_popup implements notifications_iface {
 	 *
 	 * @param settings array with keys account_id and new_owner (new_owner is optional)
 	 */
-	public static function deleteaccount($settings) {
+	public static function deleteaccount($settings)
+	{
 		$GLOBALS['egw']->db->delete( self::_notification_table, array(
 			'account_id'	=> $settings['account_id']
 		),__LINE__,__FILE__,self::_appname);
