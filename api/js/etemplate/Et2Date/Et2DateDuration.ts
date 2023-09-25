@@ -611,14 +611,14 @@ export class Et2DateDuration extends Et2InputWidget(FormControlMixin(LitElement)
 		};
 		// It would be nice to use an et2-select here, but something goes weird with the styling
 		return html`
-            <et2-select value="${this._display.unit || this.displayFormat[0]}">
+            <sl-select value="${this._display.unit || this.displayFormat[0]}">
                 ${[...this.displayFormat].map((format : string) =>
                         html`
                             <sl-option value=${format}>
                                 ${this.time_formats[format]}
                             </sl-option>`
                 )}
-            </et2-select>
+            </sl-select>
 		`;
 	}
 
