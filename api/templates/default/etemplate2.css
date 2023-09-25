@@ -1431,15 +1431,15 @@ div.et2_vfsPath li img {
 }
 
 /* Category indents in select options */
-sl-menu-item.cat_level1::part(label) {
+sl-option.cat_level1::part(label) {
 	padding-left: var(--sl-spacing-medium, 1em);
 }
 
-sl-menu-item.cat_level2::part(label) {
+sl-option.cat_level2::part(label) {
 	padding-left: calc(2 * var(--sl-spacing-medium, 1em));
 }
 
-sl-menu-item.cat_level3::part(label) {
+sl-option.cat_level3::part(label) {
 	padding-left: calc(3 * var(--sl-spacing-medium, 1em));
 }
 
