@@ -233,7 +233,7 @@ class notifications_ajax
 
 		// cleanup messages older than our cut-off-date
 		$this->db->delete(self::_notification_table, [
-			'notification_created <= '.$cut_off,
+			'notify_created <= '.$cut_off,
 			'notify_type' => self::_type
 		], __LINE__, __FILE__, self::_appname);
 	}
