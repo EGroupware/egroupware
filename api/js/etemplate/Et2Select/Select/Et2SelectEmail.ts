@@ -211,8 +211,8 @@ export class Et2SelectEmail extends Et2Select
                         ...option.classList,
                         "et2-select-draggable": !this.readonly && this.allowFreeEntries && this.allowDragAndDrop
                     })}
-                    ?.fullEmail=${this.fullEmail}
-                    ?.onlyEmail=${this.onlyEmail}
+                    .fullEmail=${this.fullEmail}
+                    .onlyEmail=${this.onlyEmail}
                     ?removable=${!readonly}
                     ?readonly=${readonly}
                     ?editable=${isEditable}
