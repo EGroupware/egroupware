@@ -45,6 +45,10 @@ export class Et2ColumnSelection extends Et2InputWidget(LitElement)
 				background-repeat: no-repeat;
 				cursor: grab;
 			}
+
+			  sl-menu-item::part(label), sl-menu-item::part(submenu-icon) {
+				cursor: initial;
+			  }
 			/* Change vertical alignment of CF checkbox line to up with title, not middle */
 			.custom_fields::part(base) {
 				align-items: baseline;
@@ -75,19 +79,17 @@ export class Et2ColumnSelection extends Et2InputWidget(LitElement)
 	{
 		super(...args);
 
-		this.columnClickHandler = this.columnClickHandler.bind(this);
 		this.handleSelectAll = this.handleSelectAll.bind(this);
 	}
 
 	connectedCallback()
 	{
 		super.connectedCallback();
-
 		this.updateComplete.then(() =>
 		{
 			this.sort = Sortable.create(this.shadowRoot.querySelector('sl-menu'), {
 				ghostClass: 'ui-fav-sortable-placeholder',
-				draggable: 'sl-option.column',
+				draggable: 'sl-menu-item.column',
 				dataIdAttr: 'value',
 				direction: 'vertical',
 				delay: 25
@@ -101,7 +103,7 @@ export class Et2ColumnSelection extends Et2InputWidget(LitElement)
             <sl-icon slot="header" name="check-all" @click=${this.handleSelectAll}
                      title="${this.egw().lang("Select all")}"
                      style="font-size:24px"></sl-icon>
-            <sl-menu @sl-select="${this.columnClickHandler}" part="columns" slot="content">
+            <sl-menu part="columns" slot="content">
                 ${repeat(this.__columns, (column) => column.id, (column) => this.rowTemplate(column))}
             </sl-menu>`;
 	}
@@ -143,11 +145,11 @@ export class Et2ColumnSelection extends Et2InputWidget(LitElement)
 			return html``;
 		}
 		return html`
-            <sl-option
-                    value="${column.id}"
+            <sl-menu-item
+                    value="${column.id.replaceAll(" ", "___")}"
+                    type="checkbox"
                     ?checked=${alwaysOn || column.visibility == et2_dataview_column.ET2_COL_VISIBILITY_VISIBLE}
                     ?disabled=${alwaysOn}
-                    .selected="${this.value.some(v => v == column.id)}"
                     title="${column.title}"
                     class="${classMap({
                         select_row: true,
@@ -157,7 +159,7 @@ export class Et2ColumnSelection extends Et2InputWidget(LitElement)
                 ${column.caption}
                 <!-- Custom fields get listed separately -->
                 ${isCustom ? this.customFieldsTemplate(column) : ''}
-            </sl-option>`;
+            </sl-menu-item>`;
 	}
 
 	/**
@@ -191,18 +193,10 @@ export class Et2ColumnSelection extends Et2InputWidget(LitElement)
             <sl-divider></sl-divider>`;
 	}
 
-	columnClickHandler(event)
-	{
-		const item = event.detail.item;
-
-		// Toggle checked state
-		item.checked = !item.checked;
-	}
-
 	handleSelectAll(event)
 	{
-		let checked = (<SlMenuItem>this.shadowRoot.querySelector("sl-option")).checked || false;
-		this.shadowRoot.querySelectorAll('sl-option').forEach((item) => {item.checked = !checked});
+		let checked = (<SlMenuItem>this.shadowRoot.querySelector("sl-menu-item")).checked || false;
+		this.shadowRoot.querySelectorAll('sl-menu-item').forEach((item) => {item.checked = !checked});
 	}
 
 	set columns(new_columns)
@@ -229,7 +223,7 @@ export class Et2ColumnSelection extends Et2InputWidget(LitElement)
 				{
 					menuItem.querySelectorAll("[value][checked]").forEach((cf : SlMenuItem) =>
 					{
-						value.push(cf.value);
+						value.push(cf.value.replaceAll("___", " "));
 					})
 				}
 			}
