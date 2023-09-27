@@ -24,9 +24,13 @@
     <li><em><a href="/components/sandbox">Sandbox</a></em></li>
       {% for component in meta.components %}
         <li>
+          {% if component.tagName %}
           <a href="/components/{{ component.tagName | removeSlPrefix }}">
             {{ component.name | classNameToComponentName }}
           </a>
+          {% else %}
+            {{ component.name }}
+          {% endif %}
         </li>
       {% endfor %}
     </ul>

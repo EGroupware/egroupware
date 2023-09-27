@@ -163,8 +163,13 @@
         {% for event in component.events %}
           <tr>
             <td data-flavor="html"><code class="nowrap">{{ event.name }}</code></td>
-            <td data-flavor="react"><code class="nowrap">{{ event.reactName }}</code></td>
-            <td>{{ event.description | markdownInline | safe }}</td>
+            <td>
+              {% if event.description %}
+                {{ event.description | markdownInline | safe }}
+			  {% else %}
+			    EVENT NEEDS A DESCRIPTION
+              {% endif %}
+			</td>
             <td>
               {% if event.type.text %}
                 <code>{{ event.type.text }}</code>

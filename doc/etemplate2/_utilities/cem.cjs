@@ -22,8 +22,8 @@ module.exports.getAllComponents = function ()
 				declaration.path = module.path.replace(/^src\//, 'dist/').replace(/\.ts$/, '.js');
 
 				// Remove members that are private or don't have a description
-				const members = declaration.members?.filter(member => member.description && member.privacy !== 'private');
-				const methods = members?.filter(prop => prop.kind === 'method' && prop.privacy !== 'private');
+				const members = declaration.members?.filter(member => member.description && member.privacy !== 'private') || [];
+				const methods = members?.filter(prop => prop.kind === 'method' && prop.privacy !== 'private') || [];
 				const properties = members?.filter(prop =>
 				{
 					// Look for a corresponding attribute
