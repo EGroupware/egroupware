@@ -130,7 +130,7 @@ module.exports = function (eleventyConfig)
 
 	eleventyConfig.addFilter('classNameToComponentName', className =>
 	{
-		let name = capitalCase(className.replace(/^Sl/, ''));
+		let name = capitalCase(className.replace(/^Et2/, ''));
 		if (name === 'Qr Code')
 		{
 			name = 'QR Code';
@@ -138,9 +138,9 @@ module.exports = function (eleventyConfig)
 		return name;
 	});
 
-	eleventyConfig.addFilter('removeSlPrefix', tagName =>
+	eleventyConfig.addFilter('removeEt2Prefix', tagName =>
 	{
-		return tagName.replace(/^sl-/, '');
+		return tagName.replace(/^et2-/, '');
 	});
 
 	//

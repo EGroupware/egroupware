@@ -25,7 +25,7 @@
       {% for component in meta.components %}
         <li>
           {% if component.tagName %}
-          <a href="/components/{{ component.tagName | removeSlPrefix }}">
+          <a href="/components/{{ component.tagName }}">
             {{ component.name | classNameToComponentName }}
           </a>
           {% else %}

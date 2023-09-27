@@ -126,4 +126,5 @@ export class Et2LAvatar extends Et2Avatar
 		return {background: bg, initials: text};
 	}
 }
-customElements.define("et2-lavatar", Et2LAvatar as any);
+
+customElements.define("et2-lavatar", Et2LAvatar);
