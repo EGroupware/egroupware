@@ -15,7 +15,8 @@ use EGroupware\Api;
 /**
  * Ajax methods for notifications
  */
-class notifications_ajax {
+class notifications_ajax
+{
 	/**
 	 * Appname
 	 */
@@ -35,6 +36,11 @@ class notifications_ajax {
 	 * Notification type
 	 */
 	const _type = 'base';
+
+	/**
+	 * Do NOT consider notifications older than this
+	 */
+	const CUT_OFF_DATE = '-30days';
 
 	/**
 	 * holds account object for user to notify
@@ -65,22 +71,6 @@ class notifications_ajax {
 	private $db;
 
 	/**
-	 * holds the users session data
-	 *
-	 * @var array
-	 */
-	var $session_data;
-
-	/**
-	 * holds the users session data defaults
-	 *
-	 * @var array
-	 */
-	var $session_data_defaults = array(
-		'notified_mail_uids'	=> array(),
-	);
-
-	/**
 	 * the xml response object
 	 *
 	 * @var Api\Json\Response
@@ -98,14 +88,10 @@ class notifications_ajax {
 	 * constructor
 	 *
 	 */
-	public function __construct() {
+	public function __construct()
+	{
 		$this->response = Api\Json\Response::get();
 		$this->recipient = (object)$GLOBALS['egw']->accounts->read($GLOBALS['egw_info']['user']['account_id']);
-
-		$this->config = (object)Api\Config::read(self::_appname);
-
-		$prefs = new Api\Preferences($this->recipient->account_id);
-		$this->preferences = $prefs->read();
 
 		$this->db = $GLOBALS['egw']->db;
 
@@ -147,18 +133,9 @@ class notifications_ajax {
 	 *
 	 * @param array $notifymessages one or multiple notify_id(s)
 	 */
-	public function delete_message($notifymessages)
+	public function delete_message(array $notifymessages)
 	{
-		$notify_ids = $this->fetch_notify_ids($notifymessages);
-		if (!empty($notify_ids))
-		{
-			$this->db->delete(self::_notification_table,array(
-				'notify_id' => $notify_ids,
-				'account_id' => $this->recipient->account_id,
-				'notify_type' => self::_type
-			),__LINE__,__FILE__,self::_appname);
-		}
-		$this->response->data(['deleted'=>$notify_ids]);
+		$this->update($notifymessages, null);   // null = delete
 	}
 
 	/**
@@ -172,80 +149,95 @@ class notifications_ajax {
 	 *				 this status has been used more specifically for browser type
 	 *				 of notifications.
 	 */
-	public function update_status($notifymessages, $status = "SEEN")
+	public function update_status(array $notifymessages, $status = "SEEN")
 	{
-		$notify_ids = $this->fetch_notify_ids($notifymessages);
-		if (!empty($notify_ids))
-		{
-			$this->db->update(self::_notification_table,array('notify_status' => $status),array(
-				'notify_id' => $notify_ids,
-				'account_id' => $this->recipient->account_id,
-				'notify_type' => self::_type
-			),__LINE__,__FILE__,self::_appname);
-		}
+		$this->update($notifymessages, $status);
 	}
 
 	/**
-	 * gets all relevant notify ids based on given notify message data
-	 * @param $notifymessages
+	 * Update or delete the given notification messages, incl. not explicitly mentioned ones with same app:id
+	 *
+	 * @param array $notifymessages
+	 * @param string|null $status use null to delete
 	 * @return array
 	 */
-	public function fetch_notify_ids ($notifymessages)
+	protected function update(array $notifymessages, $status='SEEN')
 	{
-		$notify_ids = [];
-
+		$notify_ids = $app_ids = [];
 		foreach ($notifymessages as $data)
 		{
-			if (is_array($data) && $data['id'])
+			if (is_array($data) && !empty($data['id']))
 			{
-				array_push($notify_ids, (string)$data['id']);
-				if (is_array($data['data'])) $notify_ids = array_unique(array_merge($notify_ids, $this->search_in_notify_data($data['data']['id'], $data['data']['app'])));
+				if (is_array($data['data'] ?? null) && !empty($data['data']['id']))
+				{
+					$app_ids[$data['data']['app']][$data['data']['id']] = $data['data']['id'];
+				}
+				$notify_ids[] = $data['id'];
 			}
 			else
 			{
-				array_push($notify_ids, (string)$data);
+				$notify_ids[] = $data;
 			}
-
 		}
-		return $notify_ids;
-	}
-
-	/**
-	 * Fetches all notify_ids relevant to the entry
-	 * @param $_id
-	 * @param $_appname
-	 * @return array
-	 */
-	public function search_in_notify_data($_id, $_appname)
-	{
-		$ret = [];
-		if ($_id && $_appname)
-		{
-			try {
-				// mariaDB supported query
-				$ret = $this->db->select(self::_notification_table, 'notify_id', array(
+		$cut_off = $this->db->quote(Api\DateTime::to(self::CUT_OFF_DATE, Api\DateTime::DATABASE));
+		try {
+			// MariaDB code using JSON_EXTRACT()
+			foreach($app_ids as $app => $ids)
+			{
+				$where = [
 					'account_id' => $this->recipient->account_id,
 					'notify_type' => self::_type,
-					'notify_data->"$.appname"' => $_appname,
-					'notify_data->"$.data.id"' => $_id
-				),
-					__LINE__,__FILE__,0 ,'ORDER BY notify_id DESC',self::_appname);
-			}
-			catch (Api\Db\Exception $e) {
-				// do it manual for all other DB
-				foreach($this->db->select(self::_notification_table, '*', array(
-					'account_id' => $this->recipient->account_id,
-					'notify_type' => self::_type
-				),
-					__LINE__,__FILE__,0 ,'ORDER BY notify_id DESC',self::_appname) as $row)
+					"JSON_EXTRACT(notify_data, '$.appname') = ".$this->db->quote($app),
+					"JSON_EXTRACT(notify_data, '$.data.id') IN (".implode(',', array_map([$this->db, 'quote'], array_unique($ids))).')',
+					'notify_created > '.$cut_off,
+				];
+				if (isset($status))
 				{
-					$data = json_decode($row['notify_data'], true);
-					if ($data['appname'] == $_appname && $data['data']['id'] == $_id) $ret[] = $row['notify_id'];
+					$this->db->update(self::_notification_table, ['notify_status' => $status], $where, __LINE__, __FILE__, self::_appname);
+				}
+				else
+				{
+					$this->db->delete(self::_notification_table, $where, __LINE__, __FILE__, self::_appname);
 				}
 			}
 		}
-		return $ret;
+		// other DBs
+		catch (Api\Db\Exception $e) {
+			foreach($this->db->select(self::_notification_table, 'notify_id,notify_data', [
+				'account_id' => $this->recipient->account_id,
+				'notify_type' => self::_type,
+				'notify_created > '.$cut_off,
+				"notify_data <> '[]'",  // does not return NULL or '[]' rows
+			]) as $row)
+			{
+				if (($data = json_decode($row['notify_data'], true)) &&
+					isset($data['data']['id']) && in_array($data['data']['id'], $app_ids[$data['appname']] ?? []))
+				{
+					$notify_ids[] = $row['notify_id'];
+				}
+			}
+		}
+		$where = [
+			'notify_id' => array_unique($notify_ids),
+			'account_id' => $this->recipient->account_id,
+			'notify_type' => self::_type
+		];
+		if (isset($status))
+		{
+			$this->db->update(self::_notification_table, ['notify_status' => $status], $where, __LINE__, __FILE__, self::_appname);
+		}
+		else
+		{
+			$this->db->delete(self::_notification_table, $where, __LINE__, __FILE__, self::_appname);
+		}
+
+		// cleanup messages older than our cut-off-date
+		$this->db->delete(self::_notification_table, [
+			'notify_created <= '.$cut_off,
+			'notify_type' => self::_type
+		], __LINE__, __FILE__, self::_appname);
 	}
+
 	/**
 	 * gets all egwpopup notifications for calling user
 	 *
@@ -255,32 +247,6 @@ class notifications_ajax {
 	{
 		$entries = notifications_popup::read($this->recipient->account_id);
 		$this->response->apply('app.notifications.append', array($entries['rows']??[], $browserNotify, $entries['total']??0));
-		return true;
-	}
-
-	/**
-	 * restores the users session data for notifications
-	 *
-	 * @return boolean true
-	 */
-	private function restore_session_data() {
-		$session_data = Api\Cache::getSession(self::_appname, 'session_data');
-		if(is_array($session_data)) {
-			$this->session_data = $session_data;
-		} else {
-			$this->session_data = $this->session_data_defaults;
-		}
-
-		return true;
-	}
-
-	/**
-	 * saves the users session data for notifications
-	 *
-	 * @return boolean true
-	 */
-	private function save_session_data() {
-		Api\Cache::setSession(self::_appname, 'session_data', $this->session_data);
 		return true;
 	}
 }

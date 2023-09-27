@@ -202,7 +202,7 @@ curl https://example.org/egroupware/groupdav.php/<username>/calendar/ -H "Accept
 
 following GET parameters are supported to customize the returned properties:
 - props[]=<DAV-prop-name> eg. props[]=getetag to return only the ETAG (multiple DAV properties can be specified)
-  Default for addressbook collections is to only return address-data (JsContact), other collections return all props.
+  Default for calendar collections is to only return calendar-data (JsEvent), other collections return all props.
 - sync-token=<token> to only request change since last sync-token, like rfc6578 sync-collection REPORT
 - nresults=N limit number of responses (only for sync-collection / given sync-token parameter!)
   this will return a "more-results"=true attribute and a new "sync-token" attribute to query for the next chunk
@@ -215,7 +215,7 @@ Examples: see addressbook
    <summary>Example: GET request for a single resource</summary>
 
 ```
-curl 'https://example.org/egroupware/groupdav.php/addressbook/6502' -H "Accept: application/pretty+json" --user <username>
+curl 'https://example.org/egroupware/groupdav.php/calendar/6502' -H "Accept: application/pretty+json" --user <username>
 {
     "@type": "Event",
     "prodId": "EGroupware Calendar 23.1.002",

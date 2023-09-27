@@ -14,10 +14,9 @@ import {Et2WidgetWithSelectMixin} from "./Et2WidgetWithSelectMixin";
 import {SelectOption} from "./FindSelectOptions";
 import shoelace from "../Styles/shoelace";
 import {RowLimitedMixin} from "../Layout/RowLimitedMixin";
-import {Et2Tag} from "./Tag/Et2Tag";
 import {Et2WithSearchMixin} from "./SearchMixin";
 import {property} from "lit/decorators/property.js";
-import {SlChangeEvent, SlSelect} from "@shoelace-style/shoelace";
+import {SlChangeEvent, SlOption, SlSelect} from "@shoelace-style/shoelace";
 import {repeat} from "lit/directives/repeat.js";
 
 // export Et2WidgetWithSelect which is used as type in other modules
@@ -144,13 +143,13 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 
 			  /* Hide dropdown trigger when multiple & readonly */
 
-			  :host([readonly][multiple]) .select__expand-icon {
+			  :host([readonly][multiple])::part(expand-icon) {
 				display: none;
 			  }
 
 			  /* Style for tag count if rows=1 */
 
-			  :host([readonly][multiple][rows]) .select__tags sl-tag {
+			  :host([readonly][multiple][rows])::part(tags) {
 				position: absolute;
 				right: 0px;
 				top: 1px;
@@ -195,6 +194,11 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 			  :host::part(display-label) {
 				max-height: 8em;
 				overflow-y: auto;
+			  }
+			  :host([readonly])::part(combobox) {
+				background: none;
+				opacity: 1;
+				border: none;
 			  }
 			`
 		];
@@ -293,19 +297,88 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 
 	_triggerChange(e)
 	{
-		if(super._triggerChange(e) && !this._block_change_event)
+		if(super._triggerChange(e))
 		{
 			this.dispatchEvent(new Event("change", {bubbles: true}));
 		}
-		if(this._block_change_event)
+	}
+
+	/**
+	 * Handle the case where there is no value set, or the value provided is not an option.
+	 * If this happens, we choose the first option or empty label.
+	 *
+	 * Careful when this is called.  We change the value here, so an infinite loop is possible if the widget has
+	 * onchange.
+	 *
+	 */
+	protected fix_bad_value()
+	{
+		// Stop if there are no options
+		if(!Array.isArray(this.select_options) || this.select_options.length == 0)
 		{
-			this.updateComplete.then(() => this._block_change_event = false);
+			// Nothing to do here
+			return;
+		}
+
+		// emptyLabel is fine
+		if(this.value === "" && this.emptyLabel)
+		{
+			return;
+		}
+
+		let valueArray = this.getValueAsArray();
+
+		// Check for value using missing options (deleted or otherwise not allowed)
+		let filtered = this.filterOutMissingOptions(valueArray);
+		if(filtered.length != valueArray.length)
+		{
+			this.value = filtered;
+			return;
+		}
+
+		// Multiple is allowed to be empty, and if we don't have an emptyLabel or options nothing to do
+		if(this.multiple || (!this.emptyLabel && this.select_options.length === 0))
+		{
+			return;
+		}
+
+		// See if parent (search / free entry) is OK with it
+		if(super.fix_bad_value())
+		{
+			return;
+		}
+		// If somebody gave '' as a select_option, let it be
+		if(this.value === '' && this.select_options.filter((option) => this.value === option.value).length == 1)
+		{
+			return;
+		}
+		// If no value is set, choose the first option
+		// Only do this on once during initial setup, or it can be impossible to clear the value
+
+		// value not in options --> use emptyLabel, if exists, or first option otherwise
+		if(this.select_options.filter((option) => valueArray.find(val => val == option.value) ||
+			Array.isArray(option.value) && option.value.filter(o => valueArray.find(val => val == o.value))).length === 0)
+		{
+			let oldValue = this.value;
+			this.value = this.emptyLabel ? "" : "" + this.select_options[0]?.value;
+			// ""+ to cast value of 0 to "0", to not replace with ""
+			this.requestUpdate("value", oldValue);
 		}
 	}
 
 	@property()
 	get value()
 	{
+		// Handle a bunch of non-values, if it's multiple we want an array
+		if(this.multiple && (this.__value == "null" || this.__value == null || typeof this.__value == "undefined" ||
+			!this.emptyLabel && this.__value == "" && !this.select_options.find(o => o.value == "")))
+		{
+			return [];
+		}
+		if(!this.multiple && !this.emptyLabel && this.__value == "" && !this.select_options.find(o => o.value == ""))
+		{
+			return null;
+		}
 		return this.multiple ?
 			   this.__value ?? [] :
 			   this.__value ?? "";
@@ -384,10 +457,17 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 				return filteredArray;
 			}
 
+			// Empty is allowed, if there's an emptyLabel
+			if(value.toString() == "" && this.emptyLabel)
+			{
+				return value;
+			}
+
 			const missing = filterBySelectOptions(value, this.select_options);
 			if(missing.length > 0)
 			{
-				console.warn("Invalid option '" + missing.join(", ") + " ' removed");
+				debugger;
+				console.warn("Invalid option '" + missing.join(", ") + "' removed from " + this.id, this);
 				value = value.filter(item => missing.indexOf(item) == -1);
 			}
 		}
@@ -395,9 +475,9 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 	}
 
 	/**
-	 * Add an option for the "empty label" option, used if there's no value
+	 * Additional customisations from the XET node
 	 *
-	 * @returns {TemplateResult}
+	 * @param {Element} _node
 	 */
 	loadFromXML(_node : Element)
 	{
@@ -484,59 +564,6 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 	}
 	 */
 
-	_emptyLabelTemplate() : TemplateResult
-	{
-		if(!this.emptyLabel || this.multiple)
-		{
-			return html``;
-		}
-		return html`
-            <sl-option value=""
-                       .selected=${this.getValueAsArray().some(v => v == "")}
-            >
-                ${this.emptyLabel}
-            </sl-option>`;
-	}
-
-	protected _optionsTemplate() : TemplateResult
-	{
-		return html`${repeat(this.select_options
-			// Filter out empty values if we have empty label to avoid duplicates
-			.filter(o => this.emptyLabel ? o.value !== '' : o), this._groupTemplate.bind(this))
-		}`;
-	}
-
-	/**
-	 * Used to render each option into the select
-	 *
-	 * @param {SelectOption} option
-	 * @returns {TemplateResult}
-	 */
-	protected _optionTemplate(option : SelectOption) : TemplateResult
-	{
-		// Exclude non-matches when searching
-		if(typeof option.isMatch == "boolean" && !option.isMatch)
-		{
-			return html``;
-		}
-
-		// Tag used must match this.optionTag, but you can't use the variable directly.
-		// Pass option along so SearchMixin can grab it if needed
-		const value = (<string>option.value).replaceAll(" ", "___");
-		return html`
-            <sl-option
-                    part="option"
-                    value="${value}"
-                    title="${!option.title || this.noLang ? option.title : this.egw().lang(option.title)}"
-                    class="${option.class}" .option=${option}
-                    .selected=${this.getValueAsArray().some(v => v == value)}
-                    ?disabled=${option.disabled}
-            >
-                ${this._iconTemplate(option)}
-                ${this.noLang ? option.label : this.egw().lang(option.label)}
-            </sl-option>`;
-	}
-
 	/**
 	 * Tag used for rendering tags when multiple=true
 	 * Used for creating, finding & filtering options.
@@ -548,116 +575,13 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		return literal`et2-tag`;
 	}
 
-	/**
-	 * Custom tag
-	 * @param {Et2Option} option
-	 * @param {number} index
-	 * @returns {TemplateResult}
-	 * @protected
-	 */
-	protected _tagTemplate(option : Et2Option, index : number) : TemplateResult
-	{
-		const readonly = (this.readonly || option && typeof (option.disabled) != "undefined" && option.disabled);
-		const isEditable = this.editModeEnabled && !readonly;
-		const image = this._createImage(option);
-		const tagName = this.tagTag;
-		return html`
-            <${tagName}
-                    part="tag"
-                    exportparts="
-                      base:tag__base,
-                      content:tag__content,
-                      remove-button:tag__remove-button,
-                      remove-button__base:tag__remove-button__base,
-                      icon:icon
-                    "
-                    class=${"search_tag " + option.classList.value}
-                    ?pill=${this.pill}
-                    size=${this.size}
-                    ?removable=${!readonly}
-                    ?readonly=${readonly}
-                    ?editable=${isEditable}
-                    value=${option.value}
-                    @dblclick=${this._handleDoubleClick}
-                    @click=${typeof this.onTagClick == "function" ? (e) => this.onTagClick(e, e.target) : nothing}
-            >
-                ${image ?? nothing}
-                ${option.getTextLabel().trim()}
-            </${tagName}>
-		`;
-	}
-
-	/**
-	 * Additional customisation template
-	 * @returns {*}
-	 * @protected
-	 */
-	protected _extraTemplate()
-	{
-		return typeof super._extraTemplate == "function" ? super._extraTemplate() : nothing;
-	}
-
-	/**
-	 * Customise how tags are rendered.  This overrides what SlSelect
-	 * does in syncItemsFromValue().
-	 * This is a copy+paste from SlSelect.syncItemsFromValue().
-	 *
-	 * @param item
-	 * @protected
-	 */
-	protected _createTagNode(item)
-	{
-		console.warn("Deprecated");
-		debugger;
-		let tag;
-		if(typeof super._createTagNode == "function")
-		{
-			tag = super._createTagNode(item);
-		}
-		else
-		{
-			tag = <Et2Tag>document.createElement(this.tagTag);
-		}
-		tag.value = item.value;
-		tag.textContent = item?.getTextLabel()?.trim();
-		tag.class = item.classList.value + " search_tag";
-		tag.setAttribute("exportparts", "icon");
-		if(this.size)
-		{
-			tag.size = this.size;
-		}
-		if(this.readonly || item.option && typeof (item.option.disabled) != "undefined" && item.option.disabled)
-		{
-			tag.removable = false;
-			tag.readonly = true;
-		}
-		else
-		{
-			tag.addEventListener("dblclick", this._handleDoubleClick);
-			tag.addEventListener("click", this.handleTagInteraction);
-			tag.addEventListener("keydown", this.handleTagInteraction);
-			tag.addEventListener("sl-remove", (event : CustomEvent) => this.handleTagRemove(event, item));
-		}
-		// Allow click handler even if read only
-		if(typeof this.onTagClick == "function")
-		{
-			tag.addEventListener("click", (e) => this.onTagClick(e, e.target));
-		}
-		let image = this._createImage(item);
-		if(image)
-		{
-			tag.prepend(image);
-		}
-		return tag;
-	}
-
 	blur()
 	{
 		if(typeof super.blur == "function")
 		{
 			super.blur();
 		}
-		this.dropdown.hide();
+		this.hide();
 	}
 
 	/* Parent should be fine now?
@@ -711,7 +635,9 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 	protected handleValueChange(e : SlChangeEvent)
 	{
 		const old_value = this.__value;
-		this.__value = this.select.value;
+		this.__value = Array.isArray(this.select.value) ?
+					   this.select.value.map(e => e.replaceAll("___", " ")) :
+					   this.select.value.replaceAll("___", " ");
 		this.requestUpdate("value", old_value);
 	}
 
@@ -739,37 +665,6 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 
 	}
 
-	/**
-	 * Get the icon for the select option
-	 *
-	 * @param option
-	 * @protected
-	 */
-	protected _iconTemplate(option)
-	{
-		if(!option.icon)
-		{
-			return html``;
-		}
-
-		return html`
-            <et2-image slot="prefix" part="icon" style="width: var(--icon-width)"
-                       src="${option.icon}"></et2-image>`
-	}
-
-	protected _createImage(item)
-	{
-		let image = item?.querySelector ? item.querySelector("et2-image") || item.querySelector("[slot='prefix']") : null;
-		if(image)
-		{
-			image = image.clone();
-			image.slot = "prefix";
-			image.class = "tag_image";
-			return image;
-		}
-		return "";
-	}
-
 	/** Shows the listbox. */
 	async show()
 	{
@@ -795,6 +690,162 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		return this.shadowRoot?.querySelector("sl-select");
 	}
 
+	/**
+	 * Custom, dynamic styling
+	 *
+	 * Put as much as you can in static styles for performance reasons
+	 * Override this for custom dynamic styles
+	 *
+	 * @returns {TemplateResult}
+	 * @protected
+	 */
+	protected _styleTemplate() : TemplateResult
+	{
+		return null;
+	}
+
+	/**
+	 * Used for the "no value" option for single select
+	 * Placeholder is used for multi-select with no value
+	 *
+	 * @returns {TemplateResult}
+	 */
+	_emptyLabelTemplate() : TemplateResult
+	{
+		if(!this.emptyLabel || this.multiple)
+		{
+			return html``;
+		}
+		return html`
+            <sl-option
+                    part="emptyLabel option"
+                    value=""
+                    .selected=${this.getValueAsArray().some(v => v == "")}
+            >
+                ${this.emptyLabel}
+            </sl-option>`;
+	}
+
+	/**
+	 * Iterate over all the options
+	 * @returns {TemplateResult}
+	 * @protected
+	 */
+	protected _optionsTemplate() : TemplateResult
+	{
+		return html`${repeat(this.select_options
+			// Filter out empty values if we have empty label to avoid duplicates
+			.filter(o => this.emptyLabel ? o.value !== '' : o), this._groupTemplate.bind(this))
+		}`;
+	}
+
+	/**
+	 * Used to render each option into the select
+	 * Override for custom select options.  Note that spaces are not allowed in option values,
+	 * and sl-select _requires_ options to be <sl-option>
+	 *
+	 * @param {SelectOption} option
+	 * @returns {TemplateResult}
+	 */
+	protected _optionTemplate(option : SelectOption) : TemplateResult
+	{
+		// Exclude non-matches when searching
+		if(typeof option.isMatch == "boolean" && !option.isMatch)
+		{
+			return html``;
+		}
+
+		// Tag used must match this.optionTag, but you can't use the variable directly.
+		// Pass option along so SearchMixin can grab it if needed
+		const value = (<string>option.value).replaceAll(" ", "___");
+		return html`
+            <sl-option
+                    part="option"
+                    value="${value}"
+                    title="${!option.title || this.noLang ? option.title : this.egw().lang(option.title)}"
+                    class="${option.class}" .option=${option}
+                    .selected=${this.getValueAsArray().some(v => v == value)}
+                    ?disabled=${option.disabled}
+            >
+                ${this._iconTemplate(option)}
+                ${this.noLang ? option.label : this.egw().lang(option.label)}
+            </sl-option>`;
+	}
+
+	/**
+	 * Get the icon for the select option
+	 *
+	 * @param option
+	 * @protected
+	 */
+	protected _iconTemplate(option)
+	{
+		if(!option.icon)
+		{
+			return html``;
+		}
+
+		return html`
+            <et2-image slot="prefix" part="icon" style="width: var(--icon-width)"
+                       src="${option.icon}"></et2-image>`
+	}
+
+
+	/**
+	 * Custom tag
+	 *
+	 * Override this to customise display when multiple=true.
+	 * There is no restriction on the tag used, unlike _optionTemplate()
+	 *
+	 * @param {Et2Option} option
+	 * @param {number} index
+	 * @returns {TemplateResult}
+	 * @protected
+	 */
+	protected _tagTemplate(option : SlOption, index : number) : TemplateResult
+	{
+		const readonly = (this.readonly || option && typeof (option.disabled) != "undefined" && option.disabled);
+		const isEditable = this.editModeEnabled && !readonly;
+		const image = this._iconTemplate(option);
+		const tagName = this.tagTag;
+		return html`
+            <${tagName}
+                    part="tag"
+                    exportparts="
+                      base:tag__base,
+                      content:tag__content,
+                      remove-button:tag__remove-button,
+                      remove-button__base:tag__remove-button__base,
+                      icon:icon
+                    "
+                    class=${"search_tag " + option.classList.value}
+                    ?pill=${this.pill}
+                    size=${this.size || "medium"}
+                    ?removable=${!readonly}
+                    ?readonly=${readonly}
+                    ?editable=${isEditable}
+                    .value=${option.value.replaceAll("___", " ")}
+                    @change=${this.handleTagEdit}
+                    @dblclick=${this._handleDoubleClick}
+                    @click=${typeof this.onTagClick == "function" ? (e) => this.onTagClick(e, e.target) : nothing}
+            >
+                ${image ?? nothing}
+                ${option.getTextLabel().trim()}
+            </${tagName}>
+		`;
+	}
+
+	/**
+	 * Additional customisation template
+	 * Override if needed.  Added after select options.
+	 *
+	 * @protected
+	 */
+	protected _extraTemplate() : TemplateResult | typeof nothing
+	{
+		return typeof super._extraTemplate == "function" ? super._extraTemplate() : nothing;
+	}
+
 	public render()
 	{
 		const value = Array.isArray(this.value) ?
@@ -811,12 +862,13 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 			}
 		}
 		return html`
+            ${this._styleTemplate()}
             <sl-select
                     exportparts="prefix, tags, display-input, expand-icon, combobox, listbox, option"
                     label=${this.label}
-                    placeholder=${this.placeholder}
+                    placeholder=${this.placeholder || (this.multiple && this.emptyLabel ? this.emptyLabel : "")}
                     ?multiple=${this.multiple}
-                    ?disabled=${this.disabled}
+                    ?disabled=${this.disabled || this.readonly}
                     ?clearable=${this.clearable}
                     ?required=${this.required}
                     helpText=${this.helpText}

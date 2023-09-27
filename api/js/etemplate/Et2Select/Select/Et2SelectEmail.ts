@@ -148,11 +148,6 @@ export class Et2SelectEmail extends Et2Select
 		}
 	}
 
-	connectedCallback()
-	{
-		super.connectedCallback();
-	}
-
 	protected _bindListeners()
 	{
 		super._bindListeners();
@@ -207,15 +202,21 @@ export class Et2SelectEmail extends Et2Select
 	 */
 	_tagTemplate(option, index)
 	{
+		const readonly = (this.readonly || option && typeof (option.disabled) != "undefined" && option.disabled);
+		const isEditable = this.editModeEnabled && !readonly;
+
 		return html`
             <et2-email-tag
                     class=${classMap({
                         ...option.classList,
                         "et2-select-draggable": !this.readonly && this.allowFreeEntries && this.allowDragAndDrop
                     })}
-                    ?.fullEmail=${this.fullEmail}
-                    ?.onlyEmail=${this.onlyEmail}
-                    value=${option.value}
+                    .fullEmail=${this.fullEmail}
+                    .onlyEmail=${this.onlyEmail}
+                    ?removable=${!readonly}
+                    ?readonly=${readonly}
+                    ?editable=${isEditable}
+                    .value=${option.value.replaceAll("___", " ")}
             >
                 ${option.getTextLabel().trim()}
             </et2-email-tag>
@@ -240,16 +241,6 @@ export class Et2SelectEmail extends Et2Select
                          image=${option.icon || nothing}
             >
             </et2-lavatar>`;
-	}
-
-	/**
-	 * Override image to skip it, we add images in Et2EmailTag using CSS
-	 * @param item
-	 * @protected
-	 */
-	protected _createImage(item)
-	{
-		return this.multiple ? "" : super._createImage(item);
 	}
 
 	/**

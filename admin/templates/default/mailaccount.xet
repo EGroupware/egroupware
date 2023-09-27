@@ -341,7 +341,7 @@
                 <row class="emailadmin_no_user dialogHeader2">
                     <et2-description for="account_id" value="Valid for"></et2-description>
                     <et2-hbox span="all">
-                        <et2-select-account id="account_id" placeholder="Everyone" multiple="true" accountType="both" rows="1"></et2-select-account>
+                        <et2-select-account id="account_id" placeholder="Everyone" multiple="true" accountType="both" rows="1" onchange="app.admin.warnMailAccountForAllChanged"></et2-select-account>
                         <et2-checkbox label="account editable by user" id="acc_user_editable"></et2-checkbox>
                     </et2-hbox>
                 </row>

@@ -471,15 +471,18 @@ class Etemplate extends Etemplate\Widget\Template
 	/**
 	 * Notify server that eT session/request is no longer needed, because user closed window
 	 *
-	 * @param string $_exec_id
+	 * @param string|string[] $_exec_id
 	 */
 	static public function ajax_destroy_session($_exec_id)
 	{
-		//error_log(__METHOD__."('$_exec_id')");
-		if (($request = Etemplate\Request::read($_exec_id, false)))
+		foreach((array)$_exec_id as $exec_id)
 		{
-			$request->remove_if_not_modified();
-			unset($request);
+			//error_log(__METHOD__."('$_exec_id')");
+			if (($request = Etemplate\Request::read($exec_id, false)))
+			{
+				$request->remove_if_not_modified();
+				unset($request);
+			}
 		}
 	}
 

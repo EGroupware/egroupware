@@ -1,8 +1,9 @@
 import {assert, elementUpdated, fixture, html} from '@open-wc/testing';
 import {Et2Box} from "../../Layout/Et2Box/Et2Box";
-import {Et2Select, SelectOption} from "../Et2Select";
+import {Et2Select} from "../Et2Select";
 import * as sinon from "sinon";
 import {et2_arrayMgr} from "../../et2_core_arrayMgr";
+import {SelectOption} from "../FindSelectOptions";
 
 let parser = new window.DOMParser();
 
@@ -30,7 +31,6 @@ describe("Select widget", () =>
 	beforeEach(async() =>
 	{
 		// This stuff because otherwise Et2Select isn't actually loaded when testing
-		// @ts-ignore TypeScript is not recognizing that this widget is a LitElement
 		element = await fixture<Et2Select>(html`
             <et2-select></et2-select>
 		`);
@@ -39,7 +39,6 @@ describe("Select widget", () =>
 		assert.instanceOf(element, Et2Select);
 		element.remove();
 
-		// @ts-ignore TypeScript is not recognizing that this widget is a LitElement
 		container = await fixture<Et2Box>(html`
             <et2-box/>
 		`);
@@ -66,7 +65,7 @@ describe("Select widget", () =>
 			await element.updateComplete;
 
 			/** TESTING **/
-			assert.isNotNull(element.querySelector("[value='option']"), "Missing static option");
+			assert.isNotNull(element.select.querySelector("[value='option']"), "Missing static option");
 		});
 
 		it("directly in sel_options", async() =>
@@ -86,7 +85,7 @@ describe("Select widget", () =>
 			await element.updateComplete;
 
 			/** TESTING **/
-			assert.equal(element.querySelectorAll("sl-option").length, 2);
+			assert.equal(element.select.querySelectorAll("sl-option").length, 2);
 		});
 
 		it("merges static options with sel_options", async() =>
@@ -107,9 +106,7 @@ describe("Select widget", () =>
 			await element.updateComplete;
 
 			/** TESTING **/
-
-				// @ts-ignore o.value isn't known by TypeScript, but it's there
-			let option_keys = Object.values(element.querySelectorAll("sl-option")).map(o => o.value);
+			let option_keys = Object.values(element.select.querySelectorAll("sl-option")).map(o => o.value);
 			assert.include(option_keys, "option", "Static option missing");
 			assert.includeMembers(option_keys, ["1", "2", "option"], "Option mis-match");
 			assert.equal(option_keys.length, 3);

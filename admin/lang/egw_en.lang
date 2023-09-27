@@ -188,6 +188,7 @@ blocking after wrong password	admin	en	Blocking after wrong password
 bottom	admin	en	Bottom
 bulk password reset	admin	en	Bulk password reset
 by	admin	en	By
+by selecting a user or group you effectively delete the mail account for all other users!\n\nare you really sure you want to do that?	admin	en	By selecting a user or group you effectively delete the mail account for all other users!\n\nAre you really sure you want to do that?
 calculate next run	admin	en	Calculate next run
 calendar recurrence horizont in days (default 1000)	admin	en	Calendar recurrence horizon in days. Default = 1000.
 can be used by application	admin	en	Can be used by application
@@ -923,6 +924,7 @@ this application is current	admin	en	This application is current.
 this application requires an upgrade	admin	en	This application requires an upgrade.
 this category is currently being used by applications as a parent category	admin	en	This category is currently being used by applications as a parent category.
 this controls exports and merging.	admin	en	This controls exports and merge prints.
+this is a mail account for all users!	admin	en	This is a mail account for ALL users!
 this is not a personal mail account!\n\naccount will be deleted for all users!\n\nare you really sure you want to do that?	admin	en	This is NOT a personal mail account!\n\nAccount will be deleted for ALL users!\n\nAre you really sure you want to do that?
 this key used in the html code your site serves to users.	admin	en	This key used in the HTML code your site serves to users.
 this php has no imap support compiled in!!	admin	en	This PHP has no IMAP support compiled in!!

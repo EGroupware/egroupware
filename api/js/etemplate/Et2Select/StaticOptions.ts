@@ -67,7 +67,7 @@ export const Et2StaticSelectMixin = <T extends Constructor<Et2WidgetWithSelect>>
 				return options;
 			}
 			// Merge & make sure result is unique
-			return [...new Map([...(this._static_options || []), ...options].map(item =>
+			return [...new Map([...options, ...(this._static_options || [])].map(item =>
 				[item.value, item])).values()];
 
 		}
@@ -393,9 +393,9 @@ export const StaticOptions = new class StaticOptionsType
 		return this.cached_server_side(widget, 'select-lang', options);
 	}
 
-	timezone(widget : Et2SelectWidgets, attrs) : SelectOption[] | Promise<SelectOption[]>
+	timezone(widget : Et2SelectWidgets, attrs) : Promise<SelectOption[]>
 	{
 		var options = ',' + (attrs.other || []).join(',');
-		return this.cached_server_side(widget, 'select-timezone', options);
+		return <Promise<SelectOption[]>>this.cached_server_side(widget, 'select-timezone', options, true);
 	}
 }

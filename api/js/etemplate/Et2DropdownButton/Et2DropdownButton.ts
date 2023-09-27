@@ -131,10 +131,10 @@ export class Et2DropdownButton extends Et2WidgetWithSelectMixin(LitElement)
             <et2-image slot="prefix" src=${option.icon} icon></et2-image>` : '';
 
 		return html`
-            <sl-option value="${option.value}">
+            <sl-menu-item value="${option.value}">
                 ${icon}
                 ${this.noLang ? option.label : this.egw().lang(option.label)}
-            </sl-option>`;
+            </sl-menu-item>`;
 	}
 
 	protected _handleSelect(ev)

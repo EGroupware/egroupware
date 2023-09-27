@@ -1227,7 +1227,7 @@ class calendar_groupdav extends Api\CalDAV\Handler
 		$type = null;
 		if (($is_json=Api\CalDAV::isJSON($type)))
 		{
-			$event = Api\CalDAV\JsCalendar::parseJsEvent($options['content'], $oldEvent ?? [], $type, $method);
+			$event = Api\CalDAV\JsCalendar::parseJsEvent($options['content'], $oldEvent ?? [], $type, $method, $user);
 			$cal_id = $this->bo->save($event);
 		}
 		else

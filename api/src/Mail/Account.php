@@ -1300,7 +1300,7 @@ class Account implements \ArrayAccess
 			{
 				$old_account_ids[] = $row['account_id'];
 			}
-			if ($data['account_id'] && ($ids_to_remove = array_diff($old_account_ids, (array)$data['account_id'])))
+			if (($ids_to_remove = array_diff($old_account_ids, (array)$data['account_id'])))
 			{
 				self::$db->delete(self::VALID_TABLE, $where+array(
 					'account_id' => $ids_to_remove,

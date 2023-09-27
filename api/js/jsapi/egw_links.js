@@ -515,6 +515,8 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 			const parent = document.getElementById(_parent);
 			const select = document.createElement('et2-select');
 			select.setAttribute('id', 'quick_add_selectbox');
+			// Empty label is required to clear value, but we hide it
+			select.emptyLabel = "Select";
 			select.placement = "bottom end";
 			parent.append(select);
 			const plus = parent.querySelector("span");

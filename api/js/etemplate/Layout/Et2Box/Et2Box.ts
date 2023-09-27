@@ -14,6 +14,11 @@ import {classMap} from "lit/directives/class-map.js";
 import {Et2Widget} from "../../Et2Widget/Et2Widget";
 import {et2_IDetachedDOM} from "../../et2_core_interfaces";
 
+/**
+ * @summary A basic wrapper to group other widgets
+ *
+ * @slot - Any other widget
+ */
 export class Et2Box extends Et2Widget(LitElement) implements et2_IDetachedDOM
 {
 	static get styles()

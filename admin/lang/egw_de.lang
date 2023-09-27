@@ -188,6 +188,7 @@ blocking after wrong password	admin	de	Blockierung nach falschem Passwort
 bottom	admin	de	unten
 bulk password reset	admin	de	Rücksetzen mehrerer Passwörter
 by	admin	de	Von
+by selecting a user or group you effectively delete the mail account for all other users!\n\nare you really sure you want to do that?	admin	de	Durch die Auswahl eines Benutzer oder Gruppe löschen Sie das Mailkonto für alle anderen Benutzer!\n\nSind Sie wirklich sicher, dass Sie das wollen?
 calculate next run	admin	de	nächste Ausführung berechnen
 calendar recurrence horizont in days (default 1000)	admin	de	Kalender Wiederholungs-Bereich in Tagen (Vorgabe sind 1000)
 can be used by application	admin	de	Kann von folgender Anwendung verwendet werden
@@ -920,6 +921,7 @@ this application is current	admin	de	Diese Anwendung ist aktuell
 this application requires an upgrade	admin	de	Diese Anwendung benötigt ein Upgrade
 this category is currently being used by applications as a parent category	admin	de	Diese Kategorie wird gegenwärtig als übergeordnete Kategorie benutzt.
 this controls exports and merging.	admin	de	Steuert den Export und den Merge Print von Dokumenten
+this is a mail account for all users!	admin	de	Das ist ein Mailkonto für ALLE Benutzer!
 this is not a personal mail account!\n\naccount will be deleted for all users!\n\nare you really sure you want to do that?	admin	de	Das ist KEIN persönliches Mail-Konto!\n\nDas Konto wird für ALLE Benutzer gelöscht!\n\nSind Sie wirklich sicher, dass Sie das wollen?
 this key used in the html code your site serves to users.	admin	de	Dieser Schlüssel steht im HTML Code den Ihre Website ausliefert.
 this php has no imap support compiled in!!	admin	de	Dieses PHP hat keine IMAP Unterstützung!!!

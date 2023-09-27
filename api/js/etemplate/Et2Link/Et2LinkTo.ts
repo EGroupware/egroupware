@@ -141,7 +141,7 @@ export class Et2LinkTo extends Et2InputWidget(ScopedElementsMixin(FormControlMix
             <et2-link-entry .onlyApp="${this.onlyApp}"
                             .applicationList="${this.applicationList}"
                             .readonly=${this.readonly}
-                            @sl-select=${this.handleEntrySelected}
+                            @sl-change=${this.handleEntrySelected}
                             @sl-clear="${this.handleEntryCleared}">
             </et2-link-entry>
             <et2-button id="link_button" label="Link" class="link" .noSubmit=${true}
@@ -405,6 +405,7 @@ export class Et2LinkTo extends Et2InputWidget(ScopedElementsMixin(FormControlMix
 		if(event.target == this.select._searchNode)
 		{
 			this.classList.add("can_link");
+			this.link_button.focus();
 		}
 	}
 

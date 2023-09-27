@@ -7,13 +7,13 @@
  * @author Nathan Gray
  */
 
-import {css, CSSResultGroup, html, LitElement, nothing, render, TemplateResult} from "lit";
+import {css, CSSResultGroup, html, LitElement, nothing, TemplateResult} from "lit";
 import {cleanSelectOptions, SelectOption} from "./FindSelectOptions";
 import {Validator} from "@lion/form-core";
 import {Et2Tag} from "./Tag/Et2Tag";
-import {SlMenuItem} from "@shoelace-style/shoelace";
 import {StaticOptions} from "./StaticOptions";
 import {dedupeMixin} from "@open-wc/dedupe-mixin";
+import {SlOption} from "@shoelace-style/shoelace";
 
 // Otherwise import gets stripped
 let keep_import : Et2Tag;
@@ -71,7 +71,7 @@ export declare class SearchMixinInterface
 	 *
 	 * @type {TemplateResult}
 	 */
-	_extraTemplate : TemplateResult
+	_extraTemplate : TemplateResult | typeof nothing
 }
 
 /**
@@ -409,7 +409,7 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 			}
 		}
 
-		protected _extraTemplate()
+		protected _extraTemplate() : TemplateResult | typeof nothing
 		{
 			if(!this.searchEnabled && !this.editModeEnabled && !this.allowFreeEntries || this.readonly)
 			{
@@ -419,6 +419,7 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 			return html`
                 ${this._searchInputTemplate()}
                 ${this._moreResultsTemplate()}
+                ${this._noResultsTemplate()}
 			`;
 		}
 
@@ -463,6 +464,11 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 
 		protected _noResultsTemplate()
 		{
+			if(this._total_result_count !== 0 || !this._searchInputNode?.value)
+			{
+				return nothing;
+			}
+
 			return html`
                 <div class="no-results">${this.egw().lang("no suggestions")}</div>`;
 		}
@@ -543,9 +549,9 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 
 			if(this.allowFreeEntries)
 			{
-				this.freeEntries.forEach((item : SlMenuItem) =>
+				this.freeEntries.forEach((item : SlOption) =>
 				{
-					if(!options.some(i => i.value == item.value))
+					if(!options.some(i => i.value == item.value.replaceAll("___", " ")))
 					{
 						options.push({value: item.value, label: item.textContent, class: item.classList.toString()});
 					}
@@ -681,6 +687,8 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 			{
 				return;
 			}
+			this.setAttribute("open", "");
+
 			// Move search (& menu) if there's no value
 			this._activeControls?.classList.toggle("novalue", this.multiple && this.value == '' || !this.multiple);
 
@@ -743,8 +751,10 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 
 		focus()
 		{
-			this.show();
-			this._searchInputNode.focus();
+			this.show().then(() =>
+			{
+				this._searchInputNode?.focus();
+			});
 		}
 
 		_handleMenuHide()
@@ -753,6 +763,8 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 			{
 				return;
 			}
+			this.removeAttribute("open");
+
 			this.clearSearch();
 
 			// Reset display
@@ -933,7 +945,7 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 			else if(event.key == "Escape")
 			{
 				this._handleSearchAbort(event);
-				this.dropdown.hide();
+				this.hide();
 				return;
 			}
 
@@ -1017,7 +1029,7 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 			// Show a spinner
 			let spinner = document.createElement("sl-spinner");
 			spinner.slot = "expand-icon";
-			this.appendChild(spinner);
+			this.select.appendChild(spinner);
 
 			// Hide clear button
 			let clear_button = <HTMLElement>this._searchInputNode.shadowRoot.querySelector(".input__clear")
@@ -1037,15 +1049,6 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 				this.remoteSearch(this._searchInputNode.value, this.searchOptions)
 			]).then(() =>
 			{
-				// Show no results indicator
-				if(this.getAllOptions().filter(e => !e.classList.contains("no-match")).length == 0)
-				{
-					let target = this._optionTargetNode || this;
-					let temp = document.createElement("div");
-					render(this._noResultsTemplate(), temp);
-					target.append(temp.children[0]);
-				}
-
 				// Remove spinner
 				spinner.remove();
 
@@ -1080,9 +1083,6 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 		{
 			let target = this._optionTargetNode || this;
 
-			// Remove "no suggestions"
-			target.querySelector(".no-results")?.remove();
-
 			// Remove any previously selected remote options that aren't used anymore
 			this._selected_remote = this._selected_remote.filter((option) =>
 			{
@@ -1093,14 +1093,7 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 			{
 				return prev + ":not([value='" + ('' + current.value).replace(/'/g, "\\\'") + "'])";
 			}, "");
-			target.querySelectorAll(".remote" + keepers).forEach(o => o.remove());
-			target.childNodes.forEach((n) =>
-			{
-				if(n.nodeType == Node.COMMENT_NODE)
-				{
-					n.remove();
-				}
-			})
+
 			// Not searching anymore, clear flag
 			this.select_options.map((o) => o.isMatch = null);
 			this.requestUpdate("select_options");
@@ -1301,7 +1294,7 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 				return false;
 			}
 			// Make sure not to double-add
-			if(!this.querySelector("[value='" + text.replace(/'/g, "\\\'") + "']") && !this.__select_options.find(o => o.value == text))
+			if(!this.querySelector("[value='" + text.replace(/'/g, "\\\'") + "']") && !this.select_options.find(o => o.value == text))
 			{
 				this.__select_options.push(<SelectOption>{
 					value: text.trim(),
@@ -1312,20 +1305,17 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 			}
 
 			// Make sure not to double-add, but wait until the option is there
-			this.updateComplete.then(() =>
+			if(this.multiple && this.getValueAsArray().indexOf(text) == -1)
 			{
-				if(this.multiple && this.getValueAsArray().indexOf(text) == -1)
-				{
-					let value = this.getValueAsArray();
-					value.push(text);
-					this.value = value;
-				}
-				else if(!this.multiple && this.value !== text)
-				{
-					this.value = text;
-				}
-				this.requestUpdate("value");
-			});
+				let value = this.getValueAsArray();
+				value.push(text);
+				this.value = value;
+			}
+			else if(!this.multiple && this.value !== text)
+			{
+				this.value = text;
+			}
+			this.dispatchEvent(new Event("change", {bubbles: true}));
 
 			// If we were overlapping edit inputbox with the value display, reset
 			if(!this.readonly && this._activeControls?.classList.contains("novalue"))
@@ -1379,7 +1369,6 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 				{
 					this.value = value;
 				}
-				this.querySelector("[value='" + original.replace(/'/g, "\\\'") + "']")?.remove();
 				this.__select_options = this.__select_options.filter(v => v.value !== original);
 			}
 		}

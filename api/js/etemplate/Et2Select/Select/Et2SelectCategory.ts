@@ -105,15 +105,15 @@ export class Et2SelectCategory extends Et2StaticSelectMixin(Et2Select)
 	}
 
 	/**
-	 * Used to render each option into the select
-	 * Overridden for colors
+	 * Custom, dynamic styling
 	 *
-	 * @param {SelectOption} option
+	 * CSS variables are not making it through to options, re-declaring them here works
+	 *
 	 * @returns {TemplateResult}
+	 * @protected
 	 */
-	public render() : TemplateResult
+	protected _styleTemplate() : TemplateResult
 	{
-		/** CSS variables are not making it through to options, re-declaring them here works */
 		return html`
             <style>
                 ${repeat(this.select_options, (option) =>
@@ -128,7 +128,6 @@ export class Et2SelectCategory extends Et2StaticSelectMixin(Et2Select)
                     );
                 })}
             </style>
-            ${super.render()}
 		`;
 	}
 	
@@ -140,20 +139,6 @@ export class Et2SelectCategory extends Et2StaticSelectMixin(Et2Select)
 	public get tagTag() : StaticValue
 	{
 		return literal`et2-category-tag`;
-	}
-
-	/**
-	 * Customise how tags are rendered.
-	 * This overrides parent to set application
-	 *
-	 * @param item
-	 * @protected
-	 */
-	protected _createTagNode(item)
-	{
-		let tag = super._createTagNode(item);
-		tag.application = this.application;
-		return tag;
 	}
 }
 
