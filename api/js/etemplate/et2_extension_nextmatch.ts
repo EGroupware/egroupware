@@ -2201,6 +2201,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			{
 				visibility[columnMgr.columns[i].id].visible = true;
 			}
+
 			// Custom fields are listed seperately in column list, but are only 1 column
 			if(widget && widget.instanceOf(et2_nextmatch_customfields))
 			{
@@ -2228,6 +2229,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 				}
 				(<et2_nextmatch_customfields><unknown>widget).set_visible(visible);
 			}
+			this.columns[i].visible = visibility[columnMgr.columns[i].id].visible;
 		}
 		columnMgr.setColumnVisibilitySet(visibility);
 
