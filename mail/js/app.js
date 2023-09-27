@@ -23,9 +23,6 @@ import {
 	egw_keycode_makeValid,
 	egw_keyHandler
 } from "../../api/js/egw_action/egw_keymanager";
-import {Et2UrlEmailReadonly} from "../../api/js/etemplate/Et2Url/Et2UrlEmailReadonly";
-import {Et2SelectEmail} from "../../api/js/etemplate/Et2Select/Et2SelectEmail";
-import {Et2Tree} from "../../api/js/etemplate/Et2TreeWidget/Et2Tree";
 import {initMailTree} from "../../api/js/etemplate/Et2TreeWidget/MailTree";
 /* required dependency, commented out because no module, but egw:uses is no longer parsed
 */
@@ -255,9 +252,6 @@ app.classes.mail = AppJS.extend(
 				var tree_wdg = this.et2.getWidgetById(this.nm_index+'[foldertree]');
 				if (tree_wdg)
 				{
-					initMailTree();
-
-
 					tree_wdg.set_onopenstart(jQuery.proxy(this.openstart_tree, this));
 					tree_wdg.set_onopenend(jQuery.proxy(this.openend_tree, this));
 				}
@@ -580,10 +574,12 @@ app.classes.mail = AppJS.extend(
 	{
 		let framework = egw_getFramework();
 		let notify = this.egw.preference('new_mail_notification', 'mail');
+		const message = egw.lang('New mail from %1', pushData.acl.from)+'\n'+pushData.acl.subject+'\n'+pushData.acl.snippet;
 		if (typeof notify === 'undefined' || notify === 'always' ||
 			notify === 'not-mail' && framework && framework.activeApp.appName !== 'mail')
 		{
-			this.egw.message(egw.lang('New mail from %1', pushData.acl.from)+'\n'+pushData.acl.subject+'\n'+pushData.acl.snippet, 'success');
+			this.egw.message(message, 'success');
+			this.egw.notification(egw.lang('new mail'), {body: message, tag: 'mail', icon: egw.image('navbar', 'mail')});
 		}
 	},
 
@@ -1139,7 +1135,7 @@ app.classes.mail = AppJS.extend(
 	{
 		const id = _widget.id.replace('[actions]','');
 		const action = _widget.value;
-		_widget.label = _widget.select_options.filter(_item=>{return _item.value == _widget.value})[0].label;
+		_widget.label = this.egw.lang(_widget.select_options.filter(_item=>{return _item.value == _widget.value})[0].label);
 		this.saveAttachmentHandler(_widget,action, id);
 	},
 
@@ -1212,13 +1208,13 @@ app.classes.mail = AppJS.extend(
 				},
 				{
 					id: 'saveOneToVfs',
-					label: 'Save in Filemanager',
+					label: 'Save to Filemanager',
 					icon: 'filemanager/navbar',
 					value: 'saveOneToVfs'
 				},
 				{
 					id: 'saveAllToVfs',
-					label: 'Save all to Filemanager',
+					label: 'Save all attachments to Filemanager',
 					icon: 'mail/save_all',
 					value: 'saveAllToVfs'
 				},
@@ -1227,6 +1223,12 @@ app.classes.mail = AppJS.extend(
 					label: 'Save as ZIP',
 					icon: 'mail/save_zip',
 					value: 'downloadAllToZip'
+				},
+				{
+					id: 'forward',
+					label: 'Forward to',
+					icon: 'mail/forward',
+					value: 'forward'
 				}
 			];
 			const collabora = {
@@ -3302,6 +3304,35 @@ app.classes.mail = AppJS.extend(
 				});
 				this.et2._inst.download(url);
 				break;
+			case 'forward':
+				// Give some UI feedback, this might take a second
+				document.body.style.cursor = 'wait';
+
+				// Move the attachment to VFS
+				const file_id = mail_id+'::'+attachments[row_id].partID+'::'+attachments[row_id].winmailFlag+'::'+attachments[row_id].filename;
+				this.egw.request("mail.mail_ui.ajax_vfsOpen", [file_id,attachments[row_id].filename])
+					.then((vfs_path) => {
+						if(!vfs_path)
+						{
+							// Server call will also display an error on failure
+							return;
+						}
+
+						// File is in VFS, put it in a compose window
+						const params = {};
+						let content = {data:{files:{file:[]}}};
+						params['preset[file][]'] = 'vfs://default'+vfs_path;
+						content.data.files.file.push('vfs://default'+vfs_path);
+						content.data.files["filemode"] = params['preset[filemode]'];
+						// always open compose in html mode, as attachment links look a lot nicer in html
+						params["mimeType"] = 'html';
+						egw.openWithinWindow("mail", "setCompose", content, params, /mail.mail_compose.compose/, true);
+					})
+					.finally(() => {
+						// No matter what, clear the waiting style
+						document.body.style.cursor = '';
+					});
+				break;
 		}
 	},
 
@@ -4486,7 +4517,7 @@ app.classes.mail = AppJS.extend(
 			// Coming from tree
 			acc_id = parseInt(_senders[0].id);
 		}
-		this.egw.open_link('mail.mail_sieve.editVacation&acc_id=' + acc_id, '_blank', '700x560');
+		this.egw.open_link('mail.mail_sieve.editVacation&acc_id=' + acc_id, '_blank', '700x660');
 	},
 
 	subscription_refresh: function(_data)
@@ -5836,6 +5867,18 @@ app.classes.mail = AppJS.extend(
 		if (id){
 			content = egw.dataGetUIDdata(id);
 			content.data['toolbar'] = this.et2.getArrayMgr('sel_options').getEntry('toolbar');
+			if (content.data.toaddress||content.data.fromaddress)
+			{
+				content.data.additionaltoaddress = (content.data.additionaltoaddress??[]).concat(content.data.toaddress);
+				content.data.additionaltoaddress = 	content.data.additionaltoaddress.filter((i, item) => {
+					return content.data.additionaltoaddress.indexOf(i) == item
+				});
+				content.data.additionalfromaddress = (content.data.additionalfromaddress??[]).concat(content.data.fromaddress);
+				content.data.additionalfromaddress = content.data.additionalfromaddress.filter((i, item) => {
+					return content.data.additionalfromaddress.indexOf(i) == item
+				});
+			}
+
 			// Set default actions
 			for(var action in content.data['toolbar'])
 			{

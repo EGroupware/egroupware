@@ -138,7 +138,7 @@
    <!-- change back later TODO
 
 
-        <tree autoloading="mail.mail_ui.ajax_foldertree" id="nm[foldertree]" onclick="app.mail.mail_changeFolder"
+        <et2-tree autoloading="mail.mail_ui.ajax_foldertree" id="nm[foldertree]" onclick="app.mail.mail_changeFolder"
               parent_node="mail-tree_target" onopenstart="app.mail.subscription_autoloadingStart"
               onopenend="app.mail.subscription_autoloadingEnd" highlighting="true"/>
 -->
