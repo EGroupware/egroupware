@@ -789,6 +789,24 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 				event.preventDefault();
 				return false;
 			}
+
+			// Find and keep any selected remote entries
+			// Doing it here catches keypress changes too
+			this.select.querySelectorAll("[aria-selected=true].remote").forEach((node) =>
+			{
+				const value = node.value.replaceAll("___", " ");
+				if(!node.selected || this._selected_remote.some(o => o.value == value))
+				{
+					return;
+				}
+				const remote_option_index = this._remote_options.findIndex(o => o.value == value);
+				if(remote_option_index >= 0)
+				{
+					console.log("Keeping " + value, this._remote_options[remote_option_index]);
+					this._selected_remote.push(node.option);
+					this._remote_options.splice(remote_option_index, 1);
+				}
+			});
 			return true;
 		}
 
@@ -827,11 +845,13 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 		 */
 		handleOptionClick(event)
 		{
-			// Need to keep the remote option - only if selected
-			if(event.target.classList.contains("remote") && !this.select_options.find(o => o.value == event.target.value))
+			// Only interested in option clicks, but handler is bound higher
+			if(event.target.tagName !== "SL-OPTION")
 			{
-				this._selected_remote.push({...event.target.option});
+				return;
 			}
+
+			if(typeof super.handleOptionClick == "function")
 			super.handleOptionClick(event);
 
 			this.updateComplete.then(() =>
@@ -841,25 +861,6 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 				{
 					this._searchInputNode.focus();
 					this._searchInputNode.select();
-
-					// If we were overlapping, reset
-					if(this._activeControls.classList.contains("novalue"))
-					{
-						this._handleMenuShow();
-						this._handleAfterShow();
-					}
-
-					// Scroll the new tag into view
-					if(event.detail)
-					{
-						// Causes sidemenu (calendar) to scroll to top & get stuck
-						/*
-						this.updateComplete.then(() =>
-						{
-							this.shadowRoot.querySelector("et2-tag[value='" + event.detail.item.value.replace(/'/g, "\\\'") + "']")?.scrollIntoView({block: "nearest"});
-						});
-						 */
-					}
 				}
 				else if(!this.multiple && this.searchEnabled)
 				{
@@ -1086,13 +1087,10 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 			// Remove any previously selected remote options that aren't used anymore
 			this._selected_remote = this._selected_remote.filter((option) =>
 			{
-				return this.multiple ? this.value.indexOf(option.value) != -1 : this.value == option.value;
+				return this.multiple ? this.value.indexOf(<string>option.value) != -1 : this.value == option.value;
 			});
-			// Remove remote options that aren't used
-			let keepers = this._selected_remote.reduce((prev, current) =>
-			{
-				return prev + ":not([value='" + ('' + current.value).replace(/'/g, "\\\'") + "'])";
-			}, "");
+
+			this._remote_options = [];
 
 			// Not searching anymore, clear flag
 			this.select_options.map((o) => o.isMatch = null);
@@ -1234,24 +1232,19 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 				return Promise.resolve();
 			}
 			// Add a "remote" class so we can tell these apart from any local results
-			entries.forEach((entry) =>
+			for(let i = entries.length - 1; i >= 0; i--)
 			{
+				const entry = entries[i];
 				entry.class = (entry.class || "") + " remote";
 				// Server says it's a match
 				entry.isMatch = true;
-			});
 
-
-			// Add in remote options, avoiding duplicates
-			this.select_options.filter(function(item)
-			{
-				let i = entries.findIndex(x => (x.value == item.value));
-				if(i <= -1)
+				// Avoid duplicates with existing options
+				if(this.select_options.some(o => o.value == entry.value))
 				{
-					entries.push(item);
+					entries.splice(i, 1);
 				}
-				return null;
-			});
+			}
 
 			this._remote_options = entries;
 			this.requestUpdate("select_options");

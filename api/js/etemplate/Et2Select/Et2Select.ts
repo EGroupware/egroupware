@@ -506,65 +506,6 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 	}
 
 	/**
-	 * Override this method from SlSelect to stick our own tags in there
-	 *
-	syncItemsFromValue()
-	{
-		if(typeof super.syncItemsFromValue === "function")
-		{
-			super.syncItemsFromValue();
-		}
-
-		// Only applies to multiple
-		if(typeof this.displayTags !== "object" || !this.multiple)
-		{
-			return;
-		}
-
-		let overflow = null;
-		if(this.maxOptionsVisible > 0 && this.displayTags.length > this.maxOptionsVisible)
-		{
-			overflow = this.displayTags.pop();
-		}
-
-		const checkedItems = Object.values(this._menuItems).filter(item => this.value.includes(item.value));
-		this.displayTags = checkedItems.map(item => this._createTagNode(item));
-
-		if(checkedItems.length !== this.value.length && this.multiple)
-		{
-			// There's a value that does not have a menu item, probably invalid.
-			// Add it as a marked tag so it can be corrected or removed.
-			const filteredValues = this.value.filter(str => !checkedItems.some(obj => obj.value === str));
-			for(let i = 0; i < filteredValues.length; i++)
-			{
-				const badTag = this._createTagNode({
-					value: filteredValues[i],
-					getTextLabel: () => filteredValues[i],
-					classList: {value: ""}
-				});
-				badTag.variant = "danger";
-				badTag.contactPlus = false;
-				// Put it in front so it shows
-				this.displayTags.unshift(badTag);
-			}
-		}
-
-		// Re-slice & add overflow tag
-		if(overflow)
-		{
-			this.displayTags = this.displayTags.slice(0, this.maxOptionsVisible);
-			this.displayTags.push(overflow);
-		}
-		else if(this.multiple && this.rows == 1 && this.readonly && this.value.length > 1)
-		{
-			// Maybe more tags than we can show, show the count
-			this.displayTags.push(html`
-                <sl-tag class="multiple_tag" size=${this.size}>${this.value.length}</sl-tag> `);
-		}
-	}
-	 */
-
-	/**
 	 * Tag used for rendering tags when multiple=true
 	 * Used for creating, finding & filtering options.
 	 * @see createTagNode()
@@ -615,6 +556,12 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 	private handleOptionClick(event : MouseEvent)
 	{
 		super.handleOptionClick(event);
+
+		// Only interested in option clicks, but handler is bound higher
+		if(event.target.tagName !== "SL-OPTION")
+		{
+			return;
+		}
 
 		if(this._close_on_select)
 		{
@@ -878,6 +825,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
                     .maxOptionsVisible=${0}
                     .value=${value}
                     @sl-change=${this.handleValueChange}
+                    @mouseup=${this.handleOptionClick}
             >
                 ${icon}
                 ${this._emptyLabelTemplate()}
