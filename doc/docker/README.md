@@ -31,5 +31,14 @@ The provided docker-compose.yml will run the following container:
 * **rocketchat-mongodb** MongoDB for Rocket.Chat
 * **portainer** Portainer Docker GUI
 
-## docker-compose.yml 
-https://github.com/EGroupware/egroupware/blob/2b66ca8ba6cd61f1808733a864d693c0601a871d/doc/docker/docker-compose.yml#L1-L999
+## Docker files: docker-compose.yml and docker-compose.overwrite.yml
+The [docker-compose.yml](docker-compose.yml) should be left unchanged for easier updating.
+You can place your changes in a ```docker-compose.override.yml``` file:
+```yml
+version: '3'
+services:
+  egroupware:
+    image: egroupware/egroupware:23.1
+    extra_hosts:
+      - "egw.example.org:172.17.0.1"
+```
