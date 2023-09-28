@@ -3632,7 +3632,7 @@ export class CalendarApp extends EgwApp
 		{
 			this._group_query_cache[cache_key] = this.egw.request("calendar.calendar_owner_etemplate_widget.ajax_owner", [groups]).then((data) =>
 			{
-				options = options.concat(Object.values(data));
+				options = option_owner.select_options.concat(Object.values(data));
 				option_owner.select_options = options;
 			}).finally(() =>
 			{
