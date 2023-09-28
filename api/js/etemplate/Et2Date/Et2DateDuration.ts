@@ -276,6 +276,16 @@ export class Et2DateDuration extends Et2InputWidget(FormControlMixin(LitElement)
 		this.formatter = formatDuration;
 	}
 
+	async getUpdateComplete()
+	{
+		const result = await super.getUpdateComplete();
+
+		// Format select does not start with value, needs an update
+		this._formatNode?.requestUpdate("value");
+
+		return result;
+	}
+
 	transformAttributes(attrs)
 	{
 		// Clean formats, but avoid things that need to be expanded like $cont[displayFormat]
@@ -610,11 +620,15 @@ export class Et2DateDuration extends Et2InputWidget(FormControlMixin(LitElement)
 			s: this.shortLabels ? this.egw().lang("s") : this.egw().lang("Seconds")
 		};
 		// It would be nice to use an et2-select here, but something goes weird with the styling
+		const current = this._display.unit || this.displayFormat[0];
 		return html`
-            <sl-select value="${this._display.unit || this.displayFormat[0]}">
+            <sl-select value="${current}">
                 ${[...this.displayFormat].map((format : string) =>
                         html`
-                            <sl-option value=${format}>
+                            <sl-option
+                                    value=${format}
+                                    .selected=${(format == current)}
+                            >
                                 ${this.time_formats[format]}
                             </sl-option>`
                 )}
@@ -636,7 +650,7 @@ export class Et2DateDuration extends Et2InputWidget(FormControlMixin(LitElement)
 	 */
 	get _formatNode() : HTMLSelectElement
 	{
-		return this.shadowRoot ? this.shadowRoot.querySelector("et2-select") : null;
+		return this.shadowRoot ? this.shadowRoot.querySelector("sl-select") : null;
 	}
 }
 
