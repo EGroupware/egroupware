@@ -284,7 +284,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 			// Fixes missing empty label
 			this.select?.requestUpdate("value");
 			// Fixes incorrect opening position
-			this.select?.popup.handleAnchorChange();
+			this.select?.popup?.handleAnchorChange();
 		});
 	}
 
@@ -581,6 +581,12 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 
 	protected handleValueChange(e : SlChangeEvent)
 	{
+		// Only interested when selected value changes, not any nested inputs
+		if(e.target !== this.select)
+		{
+			return;
+		}
+
 		const old_value = this.__value;
 		this.__value = Array.isArray(this.select.value) ?
 					   this.select.value.map(e => e.replaceAll("___", " ")) :

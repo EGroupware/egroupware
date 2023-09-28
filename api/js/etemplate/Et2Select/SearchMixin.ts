@@ -456,6 +456,7 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
                                @keydown=${this._handleSearchKeyDown}
                                @blur=${this._handleSearchBlur}
                              @sl-clear=${this._handleSearchClear}
+                             @sl-change=${this._handleSearchChange}
                 ></et2-textbox>
                 ${edit}
                 </div>
@@ -613,7 +614,7 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 			this.remoteSearch(newValueElement, this.searchOptions).then((result : SelectOption[]) =>
 			{
 				const option = <SelectOption>result.find(o => o.value == newValueElement);
-				if(option)
+				if(option && !this._selected_remote.some(o => o.value == newValueElement))
 				{
 					this._selected_remote.push(option);
 				}

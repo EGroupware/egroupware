@@ -358,6 +358,8 @@ export class Et2LinkTo extends Et2InputWidget(ScopedElementsMixin(FormControlMix
 
 		// Clear link entry
 		this.select.value = {app: this.select.app, id: ""};
+		this.select._searchNode.clearSearch();
+		this.select._searchNode.select_options = [];
 	}
 
 	/**
