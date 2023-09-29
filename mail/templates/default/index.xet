@@ -141,14 +141,7 @@
         </et2-hbox>
     </template>
     <template id="mail.index" template="" lang="" group="0" version="1.9.001">
-   <!-- change back later TODO
-
-
-        <et2-tree autoloading="mail.mail_ui.ajax_foldertree" id="nm[foldertree]" onclick="app.mail.mail_changeFolder"
-              parent_node="mail-tree_target" onopenstart="app.mail.subscription_autoloadingStart"
-              onopenend="app.mail.subscription_autoloadingEnd" highlighting="true"/>
--->
-        <et2-tree autoLoading="mail.mail_ui.ajax_foldertree" id="nm[foldertree]" onClick="app.mail.mail_changeFolder"
+        <et2-mail-tree autoLoading="mail.mail_ui.ajax_foldertree" id="nm[foldertree]" onClick="app.mail.mail_changeFolder"
               parent_node="mail-tree_target" onOpenStart="app.mail.subscription_autoloadingStart"
               onOpenEnd="app.mail.subscription_autoloadingEnd" highlighting="true"/>
 

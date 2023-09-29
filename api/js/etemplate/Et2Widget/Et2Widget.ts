@@ -12,6 +12,7 @@ import {css, LitElement, PropertyValues, unsafeCSS} from "lit";
 import {dedupeMixin} from "@lion/core";
 import type {et2_container} from "../et2_core_baseWidget";
 import type {et2_DOMWidget} from "../et2_core_DOMWidget";
+import {property} from "lit/decorators/property.js";
 
 /**
  * This mixin will allow any LitElement to become an Et2Widget
@@ -214,7 +215,9 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 				label: {
 					type: String
 				},
-
+				/**
+				 * @deprecated use camelCase onClick instead
+				 */
 				onclick: {
 					type: Function
 				},
@@ -247,6 +250,9 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 				}
 			};
 		}
+
+		@property({type:Function})
+		onClick:Function
 
 		/**
 		 * List of properties that get translated
@@ -595,6 +601,22 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 				}
 
 				return this.onclick(...args);
+			}
+			//onClick should be written in camelCase so this option needs to be supported here
+				// if we change to camelCase everywhere only the elif case is necessary
+			else
+			{
+				//et2Tree (MailTree) uses camesCase onClick
+				if(typeof this.onClick == "function")
+							{
+								// Make sure function gets a reference to the widget, splice it in as 2. argument if not
+								// let args = Array.prototype.slice.call(arguments);
+								// if(args.indexOf(this) == -1)
+								// {
+								// 	args.splice(1, 0, this);
+								// }
+								// return this.onClick("2::INBOX",this,this._previousOption?.id??"2::INBOX")
+							}
 			}
 
 			return true;

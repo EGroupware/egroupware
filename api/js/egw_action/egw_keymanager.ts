@@ -253,23 +253,23 @@ export function egw_keyHandler(_keyCode, _shift, _ctrl, _alt)
 			// If the current application doesn't have a focused object,
 			// check whether the application object manager contains an object
 			// with the EGW_AO_FLAG_DEFAULT_FOCUS flag set.
-			let egwActionObject:EgwActionObject = null;
-			for (const child of appMgr.children)
-			{
-				if (egwBitIsSet(EGW_AO_FLAG_DEFAULT_FOCUS, child.flags))
-				{
-					egwActionObject = child;
-					break;
+			//We should never do this for the delete key(keyCode === 46 ; idx === __46__ ) as one might delete an unselected mail by mistake
+			//if(idx !== "__46__") {
+				let egwActionObject: EgwActionObject = null;
+				for (const child of appMgr.children) {
+					if (egwBitIsSet(EGW_AO_FLAG_DEFAULT_FOCUS, child.flags)) {
+						egwActionObject = child;
+						break;
+					}
 				}
-			}
 
-			// Get the first child of the found container and focus the first
-			// object
-			if (egwActionObject && egwActionObject.children.length > 0)
-			{
-				egwActionObject.children[0].setFocused(true);
-				focusedObject = egwActionObject.children[0];
-			}
+				// Get the first child of the found container and focus the first
+				// object
+				if (egwActionObject && egwActionObject.children.length > 0) {
+					egwActionObject.children[0].setFocused(true);
+					focusedObject = egwActionObject.children[0];
+				}
+			//}
 		}
 	}
 	if (focusedObject)

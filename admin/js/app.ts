@@ -121,6 +121,10 @@ class AdminApp extends EgwApp
 							self._hide_navbar.call(self);
 						}
 					);
+
+					this.tree.addEventListener("sl-selection-change",(event)=>{
+						this.run(event.detail.selection[0].id,this.tree)
+					})
 				}
 				if( this.ajax_target && this.et2.getArrayMgr('content').getEntry('ajax_target'))
 				{
