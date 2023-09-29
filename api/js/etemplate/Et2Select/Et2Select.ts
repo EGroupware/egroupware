@@ -18,6 +18,7 @@ import {Et2WithSearchMixin} from "./SearchMixin";
 import {property} from "lit/decorators/property.js";
 import {SlChangeEvent, SlOption, SlSelect} from "@shoelace-style/shoelace";
 import {repeat} from "lit/directives/repeat.js";
+import {classMap} from "lit/directives/class-map.js";
 
 // export Et2WidgetWithSelect which is used as type in other modules
 export class Et2WidgetWithSelect extends RowLimitedMixin(Et2WidgetWithSelectMixin(LitElement))
@@ -703,7 +704,8 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 	protected _optionTemplate(option : SelectOption) : TemplateResult
 	{
 		// Exclude non-matches when searching
-		if(typeof option.isMatch == "boolean" && !option.isMatch)
+		// unless they're already selected, in which case removing them removes them from value
+		if(typeof option.isMatch == "boolean" && !option.isMatch && !this.getValueAsArray().includes(option.value))
 		{
 			return html``;
 		}
@@ -716,7 +718,12 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
                     part="option"
                     value="${value}"
                     title="${!option.title || this.noLang ? option.title : this.egw().lang(option.title)}"
-                    class="${option.class}" .option=${option}
+                    class=${classMap({
+                        "match": option.isMatch,
+                        "no-match": !option.isMatch,
+                        ...Object.fromEntries((option.class || "").split(" ").map(k => [k, true]))
+                    })}
+                    .option=${option}
                     .selected=${this.getValueAsArray().some(v => v == value)}
                     ?disabled=${option.disabled}
             >

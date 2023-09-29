@@ -14,6 +14,7 @@ import {Et2Tag} from "./Tag/Et2Tag";
 import {StaticOptions} from "./StaticOptions";
 import {dedupeMixin} from "@open-wc/dedupe-mixin";
 import {SlOption} from "@shoelace-style/shoelace";
+import {Et2Textbox} from "../Et2Textbox/Et2Textbox";
 
 // Otherwise import gets stripped
 let keep_import : Et2Tag;
@@ -327,6 +328,16 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 			this._unbindListeners();
 		}
 
+		async getUpdateComplete()
+		{
+			const result = super.getUpdateComplete();
+			if(this._searchInputNode)
+			{
+				await this._searchInputNode.updateComplete;
+			}
+			return result;
+		}
+
 		willUpdate(changedProperties)
 		{
 			super.willUpdate(changedProperties);
@@ -484,7 +495,7 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 			return !this.readonly && (this.search || this.searchUrl.length > 0);
 		}
 
-		protected get _searchInputNode() : HTMLInputElement
+		protected get _searchInputNode() : Et2Textbox
 		{
 			return this._activeControls?.querySelector("#search");
 		}
@@ -1034,7 +1045,7 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 			this.select.appendChild(spinner);
 
 			// Hide clear button
-			let clear_button = <HTMLElement>this._searchInputNode.shadowRoot.querySelector(".input__clear")
+			let clear_button = <HTMLElement>this._searchInputNode?.shadowRoot?.querySelector(".input__clear");
 			if(clear_button)
 			{
 				clear_button.style.display = "none";
@@ -1049,7 +1060,7 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 			return Promise.all([
 				this.localSearch(this._searchInputNode.value, this.searchOptions),
 				this.remoteSearch(this._searchInputNode.value, this.searchOptions)
-			]).then(() =>
+			]).then(async() =>
 			{
 				// Remove spinner
 				spinner.remove();
@@ -1059,6 +1070,7 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 				{
 					clear_button.style.display = "";
 				}
+				await this.updateComplete;
 			});
 		}
 
