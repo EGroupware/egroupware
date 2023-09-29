@@ -325,7 +325,8 @@ class timesheet_ui extends timesheet_bo
 						}
 						// create a new entry
 						$this->data['ts_start'] += 60 * $this->data['ts_duration'];
-						foreach(array('ts_id','ts_title','ts_description','ts_duration','ts_quantity','ts_modified','ts_modifier','link_to') as $name)
+						foreach(array('ts_id', 'ts_title', 'ts_description', 'ts_duration', 'ts_quantity',
+									  'ts_modified', 'ts_modifier', 'link_to', 'events') as $name)
 						{
 							unset($this->data[$name]);
 						}
@@ -1014,17 +1015,26 @@ class timesheet_ui extends timesheet_bo
 		{
 			$content['nm']['col_filter']['linked'] = array(
 				'app' => $_GET['link_app'],
-				'id' => $_GET['link_id']
+				'id'  => $_GET['link_id']
 			);
+		}
+		// disable kanban column if we have no kanban
+		if(empty($GLOBALS['egw_info']['user']['apps']['kanban']))
+		{
+			$content['nm']['no_kanban'] = true;
 		}
 		$read_grants = $this->grant_list(Acl::READ);
 		$content['nm']['no_owner_col'] = count($read_grants) == 1;
-		if ($GLOBALS['egw_info']['user']['preferences']['timesheet']['nextmatch-timesheet.index.rows']) $content['nm']['selectcols'] = $GLOBALS['egw_info']['user']['preferences']['timesheet']['nextmatch-timesheet.index.rows'];
+		if($GLOBALS['egw_info']['user']['preferences']['timesheet']['nextmatch-timesheet.index.rows'])
+		{
+			$content['nm']['selectcols'] = $GLOBALS['egw_info']['user']['preferences']['timesheet']['nextmatch-timesheet.index.rows'];
+		}
 		$sel_options = array(
-			'ts_owner'   => $read_grants,
-			'pm_id'      => array(lang('No project')),
-			'cat_id'     => array(array('value' => '', 'label' => lang('all categories')), array('value' => 0, 'label'=>lang('None'))),
-			'ts_status'  => $this->status_labels+array(lang('No status')),
+			'ts_owner'  => $read_grants,
+			'pm_id'     => array(lang('No project')),
+			'cat_id'    => array(array('value' => '', 'label' => lang('all categories')),
+								 array('value' => 0, 'label' => lang('None'))),
+			'ts_status' => $this->status_labels + array(lang('No status')),
 		);
 		if($this->config_data['history'])
 		{

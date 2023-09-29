@@ -1,5 +1,6 @@
 import {Et2Widget} from "../Et2Widget/Et2Widget";
-import {css, html, LitElement, repeat} from "@lion/core";
+import {css, html, LitElement} from "lit";
+import {repeat} from "lit/directives/repeat.js";
 import shoelace from "../Styles/shoelace";
 
 /**

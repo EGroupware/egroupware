@@ -998,16 +998,24 @@ class infolog_ui
 		$readonlys['cancel'] = $action != 'sp';
 
 		$this->tmpl->read('infolog.index');
-		$values['nm']['disable_autorefresh'] = true;	// we have push
+		$values['nm']['disable_autorefresh'] = true;    // we have push
+
+		// disable kanban column if we have no kanban
+		if(empty($GLOBALS['egw_info']['user']['apps']['kanban']))
+		{
+			$values['nm']['no_kanban'] = true;
+		}
+
 		$values['nm']['options-filter'] = $this->filters;
 		$values['nm']['get_rows'] = 'infolog.infolog_ui.get_rows';
 		$values['nm']['add_on_top_sort_field'] = 'info_datemodified';
-		$values['nm']['options-filter2'] = (in_array($this->prefs['show_links'],array('all','no_describtion')) ? array() : array(
-			''               => 'default',
-		)) + array(
-			'no_describtion' => 'no details',
-			'all'            => 'details',
-		);
+		$values['nm']['options-filter2'] = (in_array($this->prefs['show_links'], array('all',
+																					   'no_describtion')) ? array() : array(
+				'' => 'default',
+			)) + array(
+				'no_describtion' => 'no details',
+				'all'            => 'details',
+			);
 
 		//apply infolog_filter_change javascript method (hide/show of date filter form) over onchange filter
 		$values['nm']['filter_onchange'] = "app.infolog.filter_change();";
@@ -1016,7 +1024,7 @@ class infolog_ui
 		$values['nm']['filter2_onchange'] = "return app.infolog.filter2_change(ev, widget)";
 
 		// disable favories dropdown button, if not running as infolog
-		if ($called_as && $called_as != 'infolog')
+		if($called_as && $called_as != 'infolog')
 		{
 			$values['nm']['favorites'] = false;
 		}

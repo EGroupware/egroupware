@@ -9,7 +9,7 @@
  */
 
 
-import {css, html} from "@lion/core";
+import {css, html} from "lit";
 import 'lit-flatpickr';
 import {dateStyles} from "./DateStyles";
 import type {Instance} from 'flatpickr/dist/types/instance';
@@ -19,14 +19,10 @@ import flatpickr from "flatpickr";
 import {egw} from "../../jsapi/egw_global";
 import type {HTMLElementWithValue} from "@lion/form-core/types/FormControlMixinTypes";
 import {Et2Textbox} from "../Et2Textbox/Et2Textbox";
-import {Et2ButtonIcon} from "../Et2Button/Et2ButtonIcon";
 import {FormControlMixin} from "@lion/form-core";
 import {LitFlatpickr} from "lit-flatpickr";
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
 import shoelace from "../Styles/shoelace";
-
-const textbox = new Et2Textbox();
-const button = new Et2ButtonIcon();
 
 // list of existing localizations from node_modules/flatpicker/dist/l10n directory:
 const l10n = [
@@ -627,13 +623,13 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(LitFlatpickr))
 		{
 			if(this._inputNode)
 			{
-				this._inputNode.value = isNaN(date) ? "" : this.format(date, {dateFormat: 'Y-m-dTH:i'});
+				this._inputNode.value = isNaN(date) ? "" : this.format(date);
 			}
 			else
 			{
 				this.updateComplete.then(() =>
 				{
-					this._inputNode.value = isNaN(date) ? "" : this.format(date, {dateFormat: 'Y-m-dTH:i'});
+					this._inputNode.value = isNaN(date) ? "" : this.format(date);
 				});
 			}
 			return;
@@ -684,6 +680,11 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(LitFlatpickr))
 
 	get format() : Function
 	{
+		// Mobile is specific about the date format, no time allowed
+		if(typeof egwIsMobile == "function" && egwIsMobile())
+		{
+			return (date) => {return formatDate(date, {dateFormat: "Y-m-d"});};
+		}
 		return formatDate;
 	}
 

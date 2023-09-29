@@ -1,7 +1,8 @@
 import {et2_IDetachedDOM} from "../et2_core_interfaces";
 import {et2_checkbox} from "../et2_widget_checkbox";
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
-import {classMap, css, html, LitElement} from "@lion/core";
+import {css, html, LitElement} from "lit";
+import {classMap} from "lit/directives/class-map.js"
 import shoelace from "../Styles/shoelace";
 
 /**

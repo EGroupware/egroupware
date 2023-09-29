@@ -623,19 +623,27 @@ class calendar_so
 	function cat_filter($cat_id)
 	{
 		$sql = '';
-		if ($cat_id)
+		// No category
+		if($cat_id === false || $cat_id && ($cat_id == ["0"] || !(int)$cat_id))
+		{
+			$sql = 'cal_category=""';
+		}
+		elseif($cat_id)
 		{
 			$cats = $GLOBALS['egw']->categories->return_all_children($cat_id);
-			array_walk($cats, function(&$val, $key)
+			array_walk($cats, function (&$val, $key)
 			{
-				unset($key);	// not used, but required by function signature
-				$val = (int) $val;
+				unset($key);    // not used, but required by function signature
+				$val = (int)$val;
 			});
-			if (is_array($cat_id) && count($cat_id)==1) $cat_id = $cat_id[0];
-			$sql = '(cal_category'.(count($cats) > 1 ? " IN ('".implode("','",$cats)."')" : '='.$this->db->quote((int)$cat_id));
+			if(is_array($cat_id) && count($cat_id) == 1)
+			{
+				$cat_id = $cat_id[0];
+			}
+			$sql = '(cal_category' . (count($cats) > 1 ? " IN ('" . implode("','", $cats) . "')" : '=' . $this->db->quote((int)$cat_id));
 			foreach($cats as $cat)
 			{
-				$sql .= ' OR '.$this->db->concat("','",'cal_category',"','").' LIKE '.$this->db->quote('%,'.$cat.',%');
+				$sql .= ' OR ' . $this->db->concat("','", 'cal_category', "','") . ' LIKE ' . $this->db->quote('%,' . $cat . ',%');
 			}
 			$sql .= ') ';
 		}

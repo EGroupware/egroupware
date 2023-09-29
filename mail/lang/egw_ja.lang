@@ -74,6 +74,8 @@ before reply, visible during compose	mail	ja	返信前（メール作成中は�
 blacklisted mails are marked as spam	mail	ja	ブラックリスト・メールをスパムとして処理
 but check shared folders	mail	ja	ただし共有フォルダを検査する
 by date	mail	ja	日時
+by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	ja	デフォルトでは'http://'は'https://'に置き換えられます。http経由でのみ利用可能な画像も読み込むように、'https://proxy.egroupware.org/'を自由に設定してください。
+caching of flags	mail	ja	フラグのキャッシュ
 can not open imap connection	mail	ja	IMAP接続をオープンできませんでした
 can not resolve the winmail.dat attachment!	mail	ja	添付の winmail.dat を解決できません!
 canceled deletion due to user interaction	mail	ja	ユーザ割り込みのため削除を中止
@@ -98,6 +100,7 @@ confirm attach message	mail	ja	添付メッセージの確認
 confirm move to folder	mail	ja	フォルダ移動の確認
 connect to profile %1	mail	ja	プロフィール %1 に接続
 connection status	mail	ja	接続状態
+contact label	mail	ja	連絡先ラベル
 contains	mail	ja	含む
 contains(*)	mail	ja	含む(*)
 convert mail to item and attach its attachments to this item (standard)	mail	ja	メール本文と添付ファイルを保存（標準）
@@ -295,6 +298,7 @@ important	mail	ja	重要
 in mailbox: %1, with id: %2, and partid: %3	mail	ja	メールボックス: %1, ID: %2, パートID: %3
 in order to protect your privacy all external sources within this email are blocked.	mail	ja	プライバシー保護のため、このメール中の外部ソースは全てブロックされました。
 inbox	mail	ja	INBOX
+information to show on email tag	mail	ja	メールタグに表示する情報
 initialization of mail failed. please use the wizard to cope with the problem.	mail	ja	メールの初期化に失敗しました。ウィザードを使ってメールを構成してください。
 inline	mail	ja	転送
 insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)	mail	ja	新規作成ダイアログを開く時、署名を新規（または返信）メッセージの上に挿入
@@ -307,6 +311,7 @@ later	mail	ja	後で
 learning as ham (not spam) failed because of %1	mail	ja	ハム（スパムでない）学習に失敗しました（%1）
 learning as spam failed because of %1	mail	ja	スパム学習に失敗しました（%1）
 less than	mail	ja	指定値よりサイズが小さい
+list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	ja	デフォルトでオン/オフにするアクションのリスト (例: メール作成時にInfoLogとして保存するアクション)
 mail	common	ja	メール
 mail acl	mail	ja	メール ACL
 mail filter	mail	ja	メール・フィルター
@@ -345,6 +350,7 @@ move to archive	mail	ja	アーカイブに移動
 move to trash	mail	ja	ゴミ箱に移動
 moved %1 message(s) from %2 to %3	mail	ja	%1 個のメッセージを %2 から %3 に移動しました
 moving folders from one mailaccount to another is not supported	mail	ja	別のメール・アカウントのフォルダへの移動はできません
+name and email	mail	ja	名前とメール
 name of account	mail	ja	アカウント名
 never display html emails	mail	ja	HTMLメールを表示しない
 never show	mail	ja	表示しない
@@ -376,15 +382,19 @@ notify about new mail in this folders	mail	ja	これらのフォルダの新着�
 notify when new mails arrive in these folders	mail	ja	これらのフォルダに新着がある場合に通知
 on	mail	ja	on
 one address is not valid	mail	ja	メール・アドレスが不正です
+only email	mail	ja	メールのみ
 only makes sense, if you transport password through a different channel / outside of this mail to recipients!	mail	ja	Only makes sense, if you transport password through a different channel / outside of this mail to recipients!
+only name	mail	ja	名前のみ
 only needed for some servers, that do not return all folders on root level queries to retrieve all folders for that level	mail	ja	only needed for some servers, that do not return all folders on root level queries to retrieve all folders for that level
 only one window	mail	ja	単一ウィンドウのみ
 only send message, do not copy a version of the message to the configured sent folder	mail	ja	メッセージ送信のみ（送信済みフォルダにコピーしない）
 open in html mode	mail	ja	HTML モードで開く
 open in text mode	mail	ja	テキスト・モードで開く
+open with collabora office	mail	ja	Collabora Onlineで開く
 organisation	admin	ja	組織・団体
 organization	mail	ja	組織・団体
-original message	mail	ja	元のメッセージ
+organization | real name email	mail	ja	団体名｜本名 [メールアドレス］
+original message	mail	ja	オリジナルメッセージ
 outbox	mail	ja	送信ボックス
 password protect	mail	ja	パスワード保護
 permission denied	mail	ja	権限が拒否されました
@@ -408,6 +418,7 @@ printing	mail	ja	印刷中
 printview	mail	ja	印刷用表示
 processing of file %1 failed. failed to meet basic restrictions.	mail	ja	ファイル %1 の処理に失敗しました。基本的な制限値に抵触。
 provide a default vacation text, (used on new vacation messages when there was no message set up previously)	admin	ja	不在通知の内容の既定値を定義します。
+push notifications	mail	ja	プッシュ通知
 quicksearch	mail	ja	クイック検索
 quicksearch (with cc)	mail	ja	クイック検索 (CCを含む)
 quota not provided by server	mail	ja	サーバーにクォータ機能がありません
@@ -517,10 +528,12 @@ show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	
 show horizontal	mail	ja	横並びに表示
 show horizontal, hide if none selected	mail	ja	縦並びに表示
 show new messages on home page	mail	ja	ホームページで新着メッセージを表示
+show notification for new arriving mails	mail	ja	新着メールの通知を表示する
 show test connection section and control the level of info displayed?	mail	ja	接続試験領域を表示し表示情報のレベルを制御しますか？
 show test connection section and control the level of info displayed??	mail	ja	接続試験領域を表示し表示情報のレベルを制御しますか？
 show them this time only	mail	ja	今回のみ表示
 show vertical	mail	ja	縦並びに表示
+show vertical with all columns	mail	ja	すべてのカラムを縦に表示
 show/hide preview pane in mail list view	mail	ja	メール・リスト表示でプリビュー画面を表示/非表示
 sieve	mail	ja	Sieve
 sieve connection status	mail	ja	Sieve 接続状態
@@ -638,6 +651,7 @@ yes, only trigger connection reset	mail	ja	はい（接続リセット付き）
 yes, show all debug information available for the user	mail	ja	はい（ユーザのデバッグ情報を表示）
 yes, show basic info only	mail	ja	はい（基本情報のみ表示）
 you can either choose to save as infolog or tracker, not both.	mail	ja	インフォログまたはトラッカーに保存することができます。
+you can select what info to be displayed on email tag	mail	ja	メールタグに表示する情報を選択できます。
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	ja	開始日を $$start$$、終了日を $$end$$ で記述できます。
 you may add this certificate into your contact, if you trust this signature.	mail	ja	署名を信頼できる場合は、この証明書をアドレス帳に追加することができます。
 you need to enter your s/mime passphrase to send this message.	mail	ja	S/MIME パスフレーズを入力してメッセージを送信します。

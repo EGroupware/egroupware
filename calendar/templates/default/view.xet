@@ -22,7 +22,6 @@ Egroupware
 					<calendar-timegrid id="${row}" 
 						onchange="var state = {}; if(widget.options.start_date == widget.options.end_date) state.view = 'day'; app.calendar.update_state(state);"
 						onevent_change="app.calendar.event_change"
-						disabled="true"
 					>
 					</calendar-timegrid>
 				</row>

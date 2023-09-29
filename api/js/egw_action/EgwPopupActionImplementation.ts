@@ -1,12 +1,22 @@
+/**
+ * EGroupware egw_action framework - egw action framework
+ *
+ * @link https://www.egroupware.org
+ * @author Andreas Stöckel <as@stylite.de>
+ * @copyright 2011 by Andreas Stöckel
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @package egw_action
+ */
+
 import {_egw_active_menu, egwMenu, egwMenuItem} from "./egw_menu";
 import {EGW_KEY_ENTER, EGW_KEY_MENU} from "./egw_action_constants";
 import {tapAndSwipe} from "../tapandswipe";
-import {EgwAction} from "./EgwAction";
 import {EgwFnct} from "./egw_action_common";
 import "./egwGlobal"
 import {EgwActionImplementation} from "./EgwActionImplementation";
 import {EgwActionObject} from "./EgwActionObject";
 import {EgwPopupAction} from "./EgwPopupAction";
+import {egw} from "../jsapi/egw_global";
 
 export class EgwPopupActionImplementation implements EgwActionImplementation {
     type = "popup";
@@ -96,7 +106,7 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
             }
 
             if (!(_context.manager.getActionsByAttr('singleClick', true).length > 0 &&
-                e.originalEvent.target.classList.contains('et2_clickable'))) {
+                e.target.classList.contains('et2_clickable'))) {
                 _callback.call(_context, "default", this);
             }
 
@@ -232,6 +242,9 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
             if (!e) {
                 e = window.event;
             }
+
+			// Close any open tooltip so they don't get in the way
+			egw(window).tooltipCancel();
 
             if (_egw_active_menu) {
                 _egw_active_menu.hide();
@@ -686,10 +699,9 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
                     // the original
                     //replace jQuery with spread operator
                     // set the Prototype of the copy set_onExecute is not available otherwise
-                    //TODO is this a valid/elegant way to do this??? give egwAction a methode clone -- make abstract parent class
-                    let drop_clone = {...drop[k].actionObj};
+                    let drop_clone = drop[k].actionObj.clone()//Object.assign(Object.create(Object.getPrototypeOf(drop[k].actionObj)), drop[k].actionObj) //{...drop[k].actionObj};
                     //warning This method is really slow
-                    Object.setPrototypeOf(drop_clone, EgwAction.prototype)
+                    //Object.setPrototypeOf(drop_clone, EgwAction.prototype)
                     let parent = paste_action.parent === drop_clone.parent ? paste_action : (paste_action.getActionById(drop_clone.parent.id) || paste_action);
                     drop_clone.parent = parent;
                     drop_clone.onExecute = new EgwFnct(this, null, []);

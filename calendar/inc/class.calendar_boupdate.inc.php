@@ -1584,13 +1584,13 @@ class calendar_boupdate extends calendar_bo
 		}
 
 		// create links for new participants from addressbook, if configured
-		if ($cal_id && $GLOBALS['egw_info']['server']['link_contacts'] && !empty($event['participants']))
+		if($cal_id && $GLOBALS['egw_info']['server']['link_contacts'] && !empty($save_event['participants']))
 		{
-			foreach($event['participants'] as $uid => $status)
+			foreach($save_event['participants'] as $uid => $status)
 			{
 				$user_type = $user_id = null;
 				calendar_so::split_user($uid, $user_type, $user_id);
-				if ($user_type == 'c' && (!$old_event || !isset($old_event['participants'][$uid])))
+				if($user_type == 'c' && (!$old_event || !isset($old_event['participants'][$uid])))
 				{
 					Link::link('calendar', $cal_id, 'addressbook', $user_id);
 				}

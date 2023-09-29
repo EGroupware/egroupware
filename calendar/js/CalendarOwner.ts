@@ -9,9 +9,9 @@
  */
 
 import {Et2Select} from "../../api/js/etemplate/Et2Select/Et2Select";
-import {css, html, nothing} from "@lion/core";
+import {css, html, nothing, TemplateResult} from "@lion/core";
 import {IsEmail} from "../../api/js/etemplate/Validators/IsEmail";
-import {cleanSelectOptions} from "../../api/js/etemplate/Et2Select/FindSelectOptions";
+import {SelectOption} from "../../api/js/etemplate/Et2Select/FindSelectOptions";
 import {Et2StaticSelectMixin} from "../../api/js/etemplate/Et2Select/StaticOptions";
 
 /**
@@ -45,29 +45,48 @@ export class CalendarOwner extends Et2StaticSelectMixin(Et2Select)
 		this.searchOptions['checkgrants'] = true;
 	}
 
-	connectedCallback()
+	/**
+	 * Override parent to show email address in options
+	 *
+	 * We use this in edit dialog, but the same widget is used in sidemenu where the email is hidden via CSS.
+	 * Anything set in "title" will be shown
+	 *
+	 * @param {SelectOption} option
+	 * @returns {TemplateResult}
+	 */
+	_optionTemplate(option : SelectOption) : TemplateResult
 	{
-		super.connectedCallback();
+		const value = (<string>option.value).replaceAll(" ", "___");
+		return html`
+            <sl-option
+                    part="option"
+                    exportparts="prefix:tag__prefix, suffix:tag__suffix"
+                    value="${option.value}"
+                    title="${!option.title || this.noLang ? option.title : this.egw().lang(option.title)}"
+                    class="${option.class}" .option=${option}
+                    ?disabled=${option.disabled}
+                    .selected=${this.getValueAsArray().some(v => v == value)}
+            >
+                ${this._iconTemplate(option)}
+                ${this.noLang ? option.label : this.egw().lang(option.label)}
+                <span class="title" slot="suffix">${option.title}</span>
+            </sl-option>`;
+	}
 
-		// Start fetch of users
-		const type = this.egw().preference('account_selection', 'common');
-		if(!type || type == "none" || type == "selectbox")
+	/**
+	 * Customise how tags are rendered.  Overridden from parent to add email to title for hover
+	 *
+	 * @param item
+	 * @protected
+	 */
+	protected _createTagNode(item)
+	{
+		const tag = super._createTagNode(item);
+		if(item.title)
 		{
-			return;
+			tag.title = item.title;
 		}
-		let fetch = [];
-		// for primary_group we only display owngroups == own memberships, not other groups
-		if(type === 'primary_group')
-		{
-			fetch.push(this.egw().accounts('accounts').then(options => {this.static_options = this.static_options.concat(cleanSelectOptions(options))}));
-			fetch.push(this.egw().accounts('owngroups').then(options => {this.static_options = this.static_options.concat(cleanSelectOptions(options))}));
-		}
-		else
-		{
-			fetch.push(this.egw().accounts('accounts').then(options => {this.static_options = this.static_options.concat(cleanSelectOptions(options))}));
-		}
-		this.fetchComplete = Promise.all(fetch)
-			.then(() => this._renderOptions());
+		return tag;
 	}
 
 	/**
@@ -88,7 +107,7 @@ export class CalendarOwner extends Et2StaticSelectMixin(Et2Select)
 		{
 			for(var i = 0; i < this.value.length; i++)
 			{
-				if(!this.menuItems.find(o => o.value == this.value[i]))
+				if(!this.select_options.find(o => o.value == this.value[i]))
 				{
 					missing_labels.push(this.value[i]);
 				}

@@ -643,16 +643,13 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 			(isset($smartdata->replacemime) && $smartdata->replacemime == false)))
 		{
 			//force the default for the forwarding -> asmail
-			if (is_array($preferencesArray)) {
-				if (!array_key_exists('message_forwarding',$preferencesArray)
-					|| !isset($preferencesArray['message_forwarding'])
-					|| empty($preferencesArray['message_forwarding'])) $preferencesArray['message_forwarding'] = 'asmail';
-			} else {
+			if (empty($preferencesArray['message_forwarding']))
+			{
 				$preferencesArray['message_forwarding'] = 'asmail';
 			}
 			// construct the uid of the message out of the itemid - seems to be the uid, no construction needed
 			$uid = $smartdata->source->itemid;
-			ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."(".__LINE__.")IMAP Smartfordward is called with FolderID:".$smartdata->source->folderid.' and ItemID:'.$smartdata->source->itemid);
+			ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."(".__LINE__.")IMAP Smartforward is called with FolderID:".$smartdata->source->folderid.' and ItemID:'.$smartdata->source->itemid);
 			$this->splitID($smartdata->source->folderid, $account, $folder);
 
 			$this->mail->reopen($folder);
@@ -665,6 +662,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 				$rawHeader      = $this->mail->getMessageRawHeader($smartdata->source->itemid, '',$folder);
 				$rawBody        = $this->mail->getMessageRawBody($smartdata->source->itemid, '',$folder);
 				$mailObject->AddStringAttachment($rawHeader.$rawBody, $headers['SUBJECT'].'.eml', 'message/rfc822');
+				$mailObject->addHeader('Content-Type', 'multipart/mixed');
 				$AltBody = $AltBody."</br>".lang("See Attachments for Content of the Orignial Mail").$sigTextHtml;
 				$Body = $Body."\r\n".lang("See Attachments for Content of the Orignial Mail").$sigTextPlain;
 				$isforward = true;

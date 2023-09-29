@@ -12,7 +12,8 @@ import {cssImage, Et2Widget} from "../../Et2Widget/Et2Widget";
 import {SlSplitPanel} from "@shoelace-style/shoelace";
 import {et2_IDOMNode, et2_IResizeable} from "../../et2_core_interfaces";
 import {et2_DOMWidget} from "../../et2_core_DOMWidget";
-import {css, html, SlotMixin} from "@lion/core";
+import {css, html} from "lit";
+import {SlotMixin} from "@lion/core";
 import {colorsDefStyles} from "../../Styles/colorsDefStyles";
 
 export class Et2Split extends Et2Widget(SlotMixin(SlSplitPanel))
@@ -132,8 +133,8 @@ export class Et2Split extends Et2Widget(SlotMixin(SlSplitPanel))
 					let outerNodetopOffset = widget.dynheight.outerNode.offset().top;
 					widget.dynheight.outerNode = {
 						// Random 3px deducted to make things fit better.  Otherwise nm edges are hidden
-						width: () => parseInt(getComputedStyle(this.shadowRoot.querySelector(".start")).width) - 3,
-						height: () => parseInt(getComputedStyle(this.shadowRoot.querySelector(".start")).height) - 3,
+						width: () => parseInt(getComputedStyle(this.querySelector("[slot='start']")).width) - 3,
+						height: () => parseInt(getComputedStyle(this.querySelector("[slot='start']")).height) - 3,
 						offset: () => {return {top:outerNodetopOffset}}
 					};
 					widget.dynheight._collectBottomNodes = function()

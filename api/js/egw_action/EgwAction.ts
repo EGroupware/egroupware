@@ -1,10 +1,20 @@
+/**
+ * EGroupware egw_action framework - egw action framework
+ *
+ * @link https://www.egroupware.org
+ * @author Andreas Stöckel <as@stylite.de>
+ * @copyright 2011 by Andreas Stöckel
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @package egw_action
+ */
+
 import {egwActionStoreJSON, EgwFnct} from "./egw_action_common";
 import {IegwAppLocal} from "../jsapi/egw_global";
 import {egw_getObjectManager} from "./egw_action";
 
 export class EgwAction {
-    public readonly id: string;
-    private caption: string;
+    public id: string;
+    public caption: string;
     group: number;
     order: number;
 
@@ -12,7 +22,7 @@ export class EgwAction {
         this.caption = _value;
     }
 
-    private iconUrl: string;
+    public iconUrl: string;
 
     public set_iconUrl(_value) {
         this.iconUrl = _value;
@@ -29,7 +39,7 @@ export class EgwAction {
         this.allowOnMultiple = _value
     }
 
-    public readonly enabled: EgwFnct;
+    public enabled: EgwFnct;
 
     public set_enabled(_value) {
         this.enabled.setValue(_value);
@@ -52,7 +62,7 @@ export class EgwAction {
     readonly parent: EgwAction;
     children: EgwAction[] = []; //i guess
 
-    private readonly onExecute = new EgwFnct(this, null, []);
+    public onExecute = new EgwFnct(this, null, []);
 
     /**
      * Set to either a confirmation prompt, or TRUE to indicate that this action
@@ -226,7 +236,6 @@ export class EgwAction {
     public addAction(_type: string, _id: string, _caption: string = "", _iconUrl: string = "", _onExecute: string | Function = null, _allowOnMultiple: boolean = true): EgwAction {
         //Get the constructor for the given action type
         if (!(_type in window._egwActionClasses)) {
-            //TODO doesn't default instead of popup make more sense here??
             _type = "popup"
         }
 
@@ -261,7 +270,7 @@ export class EgwAction {
             this is an egw Object as defined in egw_core.js
             probably not because it changes on runtime
              */
-            const localEgw: IegwAppLocal = window.egw(_app);
+            const localEgw: IegwAppLocal = window.egw(_app, window);
             //replaced jQuery calls
             if (Array.isArray(_actions)) {
                 //_actions is now an object for sure
@@ -372,7 +381,7 @@ export class EgwAction {
      * @param _target egwActionObject object, gets called for every object in _senders
      * @returns boolean true if none has disableClass, false otherwise
      */
-    private not_disableClass(_action: EgwAction, _senders: any, _target: any) {
+    public not_disableClass(_action: EgwAction, _senders: any, _target: any) {
         if (_target.iface.getDOMNode()) {
             return !(_target.iface.getDOMNode()).classList.contains(_action.data.disableClass);
         } else if (_target.id) {
@@ -393,8 +402,7 @@ export class EgwAction {
      * @param _target egwActionObject object, gets called for every object in _senders
      * @returns boolean true if none has disableClass, false otherwise
      */
-    //TODO senders is never used in function body??
-    private enableClass(_action: EgwAction, _senders: any[], _target: any) {
+    public enableClass(_action: EgwAction, _senders: any[], _target: any) {
         if (typeof _target == 'undefined') {
             return false;
         } else if (_target.iface.getDOMNode()) {
@@ -418,7 +426,7 @@ export class EgwAction {
      * @param _target egwActionObject object, gets called for every object in _senders
      * @returns boolean true if _target.id matches _action.data.enableId
      */
-    private enableId(_action: EgwAction, _senders: any[], _target: any) {
+    public enableId(_action: EgwAction, _senders: any[], _target: any) {
         if (typeof _action.data.enableId == 'string') {
             _action.data.enableId = new RegExp(_action.data.enableId);
         }
@@ -472,7 +480,7 @@ export class EgwAction {
      * @param {type} _target
      * @returns {Boolean}
      */
-    private _check_confirm_mass_selections(_senders, _target) {
+    public _check_confirm_mass_selections(_senders, _target) {
         const obj_manager: any = egw_getObjectManager(this.getManager().parent.id, false);
         if (!obj_manager) {
             return false;
@@ -519,7 +527,7 @@ export class EgwAction {
     /**
      * Check to see if action needs to be confirmed by user before we do it
      */
-    private _check_confirm(_senders, _target) {
+    public _check_confirm(_senders, _target) {
         // check if actions needs to be confirmed first
         if (this.data && (this.data.confirm || this.data.confirm_multiple) &&
             this.onExecute.functionToPerform != window.nm_action && typeof window.Et2Dialog != 'undefined')	// let old eTemplate run its own confirmation from nextmatch_action.js
@@ -562,7 +570,7 @@ export class EgwAction {
     };
 
 
-    private updateAction(_data: Object) {
+    public updateAction(_data: Object) {
         egwActionStoreJSON(_data, this, "data")
     }
 
@@ -583,7 +591,7 @@ export class EgwAction {
      * The appendToGraph function generates an action tree which automatically contains
      * all parent elements. If the appendToGraph function is called for a
      *
-     * @param {not an array} _tree contains the tree structure - pass an object containing {root:Tree}??TODO
+     * @param {not an array} _tree contains the tree structure - pass an object containing {root:Tree}
      *    the empty array "root" to this function {"root": []}. The result will be stored in
      *    this array.
      * @param {boolean} _addChildren is used internally to prevent parent elements from
@@ -679,6 +687,14 @@ export class EgwAction {
 
     set_hint(hint: string) {
         
+    }
+    public clone():EgwAction{
+        const clone:EgwAction = Object.assign(Object.create(Object.getPrototypeOf(this)), this)
+        clone.onExecute = this.onExecute.clone()
+        if(this.enabled){
+            clone.enabled = this.enabled.clone()
+        }
+        return clone
     }
 }
 

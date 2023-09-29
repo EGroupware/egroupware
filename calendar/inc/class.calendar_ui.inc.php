@@ -560,13 +560,21 @@ class calendar_ui
 			array('value' => 'no-enum-groups', 'label' => lang('only group-events'),'title' => lang('Do not include events of group members')),
 			array('value' => 'not-unknown', 'label' => lang('No meeting requests'),'title' => lang('Show all status, but unknown')),
 		);
-		$sel_options['status_filter'][] = array('value' => 'deleted', 'label' => lang('Deleted'), 'title' => lang('Show events that have been deleted'));
+		$sel_options['status_filter'][] = array(
+			'value' => 'deleted', 'label' => lang('Deleted'),
+			'title' => lang('Show events that have been deleted')
+		);
+
+		$sel_options['cat_id'] = array(
+			['value' => '0', 'label' => lang('None')]
+		);
 
 		// Merge print
-		try {
-			if (class_exists('EGroupware\\collabora\\Bo') &&
-					$GLOBALS['egw_info']['user']['apps']['collabora'] &&
-					$discovery = \EGroupware\collabora\Bo::discover()
+		try
+		{
+			if(class_exists('EGroupware\\collabora\\Bo') &&
+				$GLOBALS['egw_info']['user']['apps']['collabora'] &&
+				$discovery = \EGroupware\collabora\Bo::discover()
 			)
 			{
 				$cont['collabora_enabled'] = true;

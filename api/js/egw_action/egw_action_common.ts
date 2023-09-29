@@ -283,7 +283,14 @@ export class EgwFnct
 {
     private readonly context: any;
     private readonly acceptedTypes: string[];
-    functionToPerform;
+    functionToPerform:Function;
+
+    /**
+     * @deprecated please use functionToPerform instead
+     */
+    public get fnct(){
+        return this.functionToPerform
+    }
     private value;
     // Flag for if this action is using a default handler
     // I don't think this is ever used @unused
@@ -296,6 +303,9 @@ export class EgwFnct
         this.value = null;
         this.isDefault = false
         this.setValue(_default)
+    }
+    public clone():EgwFnct{
+        return new EgwFnct(this.context,this.functionToPerform || this.value, this.acceptedTypes);
     }
 
     /**
@@ -312,8 +322,6 @@ export class EgwFnct
      *    2. _value may be a boolean, which specifies whether the external onExecute handler
      *       (passed as "_handler" in the constructor) will be used.
      *    3. _value may be a JS function which will then be called.
-     *
-     *    TODO check if there should be other options
      */
     public setValue(_value: any) {
         this.value = null;

@@ -6,8 +6,8 @@
  * @link https://www.egroupware.org
  * @author Nathan Gray
  */
-
-import {css, html, LitElement, PropertyValues, SlotMixin} from "@lion/core";
+import {css, html, LitElement, PropertyValues} from "lit";
+import {SlotMixin} from "@lion/core";
 import {Et2LinkAppSelect} from "./Et2LinkAppSelect";
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
 import {FormControlMixin} from "@lion/form-core";
@@ -284,7 +284,7 @@ export class Et2LinkEntry extends Et2InputWidget(FormControlMixin(SlotMixin(LitE
 	protected _handleEntrySelect(event)
 	{
 		event.stopPropagation();
-		this.classList.add("hideApp");
+		this.classList.toggle("hideApp", Boolean(typeof this.value == "object" ? this.value?.id : this.value));
 		this.dispatchEvent(new Event("change"));
 		this.requestUpdate('value');
 
@@ -390,10 +390,7 @@ export class Et2LinkEntry extends Et2InputWidget(FormControlMixin(SlotMixin(LitE
 			this.app = value.app;
 			this._searchNode.value = value.id;
 		}
-		if(value.id)
-		{
-			this.classList.add("hideApp");
-		}
+		this.classList.toggle("hideApp", Boolean(value.id));
 	}
 
 	/**

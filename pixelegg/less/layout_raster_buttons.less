@@ -288,25 +288,41 @@ div.timesheet_timer {
 
 	// quick_add and timer selectbox / menu
 	#topmenu_info_quick_add, #topmenu_info_timer {
-		#quick_add_selectbox, #timer_selectbox {
-			height: 0px;
-			float: left;
-			display: inline-block;
-			/* do NOT show empty label */
-			sl-menu-item[value=""] {
-				display: none;
-			}
+	  #quick_add_selectbox, #timer_selectbox {
+		height: 0px;
+		float: left;
+		display: inline-block;
+
+		sl-option {
+		  white-space: nowrap;
 		}
-		#quick_add_selectbox::part(form-control-input), #timer_selectbox::part(form-control-input) {
-			border: none !important;
-		}
-		#quick_add_selectbox::part(form-control), #timer_selectbox::part(form-control) {
-			margin-left: -3em;
-		}
-		#quick_add_selectbox::part(menu), #timer_selectbox::part(menu) {
-			max-height: 60vh;
-		}
-    }
+	  }
+
+	  #quick_add_selectbox::part(emptyLabel) {
+	  /* do NOT show empty label, required for clearing value */
+		display: none;
+	  }
+
+	  #quick_add_selectbox::part(form-control-input), #timer_selectbox::part(form-control-input) {
+		border: none !important;
+	  }
+
+	  #quick_add_selectbox::part(form-control), #timer_selectbox::part(form-control) {
+		margin-left: -3em;
+	  }
+
+	  #quick_add_selectbox::part(listbox), #timer_selectbox::part(menu) {
+		max-height: 60vh;
+	  }
+
+	  #quick_add_selectbox::part(listbox) {
+		float: right;
+	  }
+
+	  #quick_add_selectbox::part(combobox) {
+		visibility: hidden;
+	  }
+	}
 
     // ##############################################################################
     // JS ERROR BUTTON

@@ -144,6 +144,7 @@ class Ads extends Ldap
 			$this->all_attributes = array_merge($this->all_attributes,array_values($attributes));
 		}
 		$this->all_attributes = array_values(array_unique($this->all_attributes));
+		$this->all_attributes[] = 'thumbnailphoto'; // read as alternative to jpegphoto
 
 		$this->charset = Api\Translation::charset();
 	}
@@ -226,7 +227,9 @@ class Ads extends Ldap
 			(isset ($_contact_id['id']) ? $_contact_id['id'] : $_contact_id['uid']);
 
 		try {
-			$rows = $this->_searchLDAP($this->allContactsDN, $filter = $this->id_filter($contact_id), $this->all_attributes, Ldap::ALL);
+			$start = null;
+			$rows = $this->_searchLDAP($this->allContactsDN, $this->id_filter($contact_id), $this->all_attributes, Ldap::ALL,
+				null, null, $start, true);
 		}
 		catch (Api\Exception\AssertionFailed $e) {
 			$rows = null;

@@ -9,7 +9,7 @@
  */
 
 
-import {css, html, PropertyValues, render} from "@lion/core";
+import {css, html, PropertyValues, render} from "lit";
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
 import {SlColorPicker} from "@shoelace-style/shoelace";
 import shoelace from "../Styles/shoelace";

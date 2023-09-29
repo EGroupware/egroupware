@@ -290,7 +290,10 @@ mail all participants	calendar	fi	Lähetä huomautus kaikille osallistujille
 make freebusy information available to not logged in persons?	calendar	fi	Salli kirjautumattoman henkilön saada Vapaa/Varattu tieto?
 manage mapping	calendar	fi	Hallitse mappingiä
 max. number of entries to show (leave empty for no restriction)	calendar	fi	Näkyvien tapahtumien maksimimäärä (tyhjä=ei rajoitusta)
+maximum available quantity of %1 exceeded!	calendar	fi	%1:n käytettävissä oleva enimmäismäärä ylitetty!
 merge document...	calendar	fi	Syötä asiakirjaan
+minimum number of users for showing day view as consolidated.	calendar	fi	Käyttäjien vähimmäismäärä päiväkohtaisen näkymän näyttämiseksi konsolidoituna.
+minimum number of users for showing week view as consolidated.	calendar	fi	Käyttäjien vähimmäismäärä, jotta viikkonäkymä voidaan näyttää konsolidoituna.
 minutes	calendar	fi	minuuttia
 modified	calendar	fi	Muokattu
 modifier	calendar	fi	Muokkaaja
@@ -300,9 +303,12 @@ monthly	calendar	fi	Kuukausittain
 monthly (by date)	calendar	fi	Kuukausittain (pvm:n mukaan)
 monthly (by day)	calendar	fi	Kuukausittain (päivän mukaan)
 monthview	calendar	fi	Kuukausinäkymä
+move to	calendar	fi	Siirry osoitteeseen
+multiple participants	calendar	fi	Useita osallistujia
 multiple week view	calendar	fi	Usean viikon näkymä
 name of current user, all other contact fields are valid too	calendar	fi	Käyttäjän nimi, muut kentät ovat myös voimassa
 needs action	calendar	fi	Vaatii toimenpiteen
+never notify externals (non-users) about events i create	calendar	fi	En koskaan ilmoita ulkopuolisille (muille kuin käyttäjille) luomistani tapahtumista.
 new	calendar	fi	Uusi
 new search with the above parameters	calendar	fi	Uusi haku yllä olevilla parametreillä
 no automatic purging	admin	fi	Ei automaattista poistoa

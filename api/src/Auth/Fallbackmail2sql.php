@@ -24,6 +24,6 @@ class Fallbackmail2sql extends Fallback
 	 */
 	function __construct($primary='mail', $fallback='sql')
 	{
-		parent::__construct($primary, $fallback);
+		parent::__construct($primary ?: 'mail', $fallback ?: 'sql');
 	}
 }

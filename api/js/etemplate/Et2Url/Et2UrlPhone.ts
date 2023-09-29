@@ -11,7 +11,7 @@
 import {Et2InvokerMixin} from "./Et2InvokerMixin";
 import {Et2Textbox} from "../Et2Textbox/Et2Textbox";
 import {colorsDefStyles} from "../Styles/colorsDefStyles";
-import {css} from "@lion/core";
+import {css} from "lit";
 
 /**
  * @customElement et2-url-phone

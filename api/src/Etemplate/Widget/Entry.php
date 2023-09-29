@@ -69,7 +69,7 @@ abstract class Entry extends Transformer
 
 		$form_name = self::form_name($cname, $this->id);
 		$prefixed_id = (substr($this->id, 0, 1) == self::ID_PREFIX ? $this->id : self::ID_PREFIX . $this->id);
-		$data_id = $attrs['value'] ? self::form_name($cname, $attrs['value']) : self::form_name($cname, $prefixed_id);
+		$data_id = !empty($attrs['value']) ? self::form_name($cname, $attrs['value']) : self::form_name($cname, $prefixed_id);
 
 		// No need to proceed
 		if(!$data_id) return;
@@ -151,9 +151,9 @@ abstract class Entry extends Transformer
 		$value =& $data;
 		if(!is_array($value)) return $value;
 
-		foreach(array($attrs['field']) + explode(':',$attrs['alternate_fields']) as $field)
+		foreach(array($attrs['field']) + explode(':', ($attrs['alternate_fields'] ?? '')) as $field)
 		{
-			if($value[$field])
+			if(!empty($value[$field]))
 			{
 				return $value[$field];
 			}
@@ -175,12 +175,12 @@ abstract class Entry extends Transformer
 	 */
 	protected function customfield($attrs, &$data)
 	{
-		list($app, $type) = explode('-',$attrs['type']);
-		$data_id = $attrs['value'] ?: $attrs['id'];
+		list($app, $type) = explode('-', $attrs['type']);
+		$data_id = isset($attrs['value']) ? $attrs['value'] : $attrs['id'];
 		$id = is_array($data) ? static::get_array($data, $data_id) : $data;
-		if(!$app || !$type || !$GLOBALS['egw_info']['apps'][$app] || !$id ||
+		if(!$app || !$type || !isset($GLOBALS['egw_info']['apps'][$app]) || !$id ||
 			// Simple CF, already there
-			$data[$attrs['field']]
+			isset($data[$attrs['field']])
 		)
 		{
 			return;
@@ -194,7 +194,7 @@ abstract class Entry extends Transformer
 				$merge = new $classname();
 				$replacement_field = '$$'.$attrs['field'].'$$';
 				$replacements = $merge->get_app_replacements($app, $id, $replacement_field);
-				$data[$attrs['field']] = $replacements[$replacement_field];
+				$data[$attrs['field']] = $replacements[$replacement_field] ?? '';
 			}
 			catch(\Exception $e)
 			{
@@ -212,7 +212,7 @@ abstract class Entry extends Transformer
 	protected function regex($attrs, &$data)
 	{
 		$value =& $this->get_data_field($attrs, $data);
-		if(!$attrs['regex'] || !$value)
+		if(!isset($attrs['regex']) || !$value)
 		{
 			return;
 		}

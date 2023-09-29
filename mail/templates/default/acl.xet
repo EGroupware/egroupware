@@ -58,7 +58,7 @@
 								<et2-description  value="Action"></et2-description>
 							</row>
 							<row class="row">
-								<et2-select-account  id="${row}[acc_id]" allowFreeEntries="true" height="70" accountType="@account_type"></et2-select-account>
+								<et2-select-account id="${row}[acc_id]" allowFreeEntries="true" emptyLabel="Select account" accountType="@account_type"></et2-select-account>
 								<et2-select  id="${row}[acl]" onchange="app.mail.acl_common_rights_selector"></et2-select>
 								<et2-checkbox  align="center" id="${row}[acl_l]" onchange="app.mail.acl_common_rights"></et2-checkbox>
 								<et2-checkbox  align="center" id="${row}[acl_r]" onchange="app.mail.acl_common_rights"></et2-checkbox>
@@ -74,9 +74,7 @@
 								<et2-checkbox  align="center" id="${row}[acl_e]" onchange="app.mail.acl_common_rights"></et2-checkbox>
 								<et2-checkbox  align="center" id="${row}[acl_a]" onchange="app.mail.acl_common_rights"></et2-checkbox>
 								<et2-checkbox  align="center" id="${row}[acl_recursive]"></et2-checkbox>
-								<et2-hbox  orient=",0,0">
-									<et2-button  align="right" statustext="Delete this ACL" label="Delete" id="delete[${row}]" value="${row}" image="delete" onclick="et2_dialog.confirm(widget,'Do you really want to remove all rights from this account?','Remove')"></et2-button>
-								</et2-hbox>
+								<et2-button  align="right" statustext="Delete this ACL" label="Delete" id="delete[${row}]" value="${row}" image="delete" onclick="et2_dialog.confirm(widget,'Do you really want to remove all rights from this account?','Remove')"></et2-button>
 							</row>
 						</rows>
 					</grid>

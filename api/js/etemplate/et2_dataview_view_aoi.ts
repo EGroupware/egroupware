@@ -58,7 +58,8 @@ export function et2_dataview_rowAOI(_node)
 
 	// Prevent the browser from selecting the content of the element, when
 	// a special key is pressed.
-	jQuery(_node).mousedown(egwPreventSelect);
+	//Seems not to be necessary in nextmatch anymore
+	//_node.addEventListener("mousedown",egwPreventSelect);
 
 	/**
 	 * Now append some action code to the node

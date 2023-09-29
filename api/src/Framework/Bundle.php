@@ -249,6 +249,7 @@ class Bundle
 		$inc_mgr->include_js_file('/api/js/dhtmlxtree/sources/dhtmlxtree.js');
 		$inc_mgr->include_js_file('/api/js/dhtmlxtree/sources/ext/dhtmlxtree_json.js');
 		// actions
+        //TODO there are more and different files that need to be included
 		$inc_mgr->include_js_file('/api/js/egw_action/egw_action_constants');
 		$inc_mgr->include_js_file('/api/js/egw_action/egw_action');
 		$inc_mgr->include_js_file('/api/js/egw_action/egw_keymanager');

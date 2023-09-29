@@ -21,18 +21,20 @@ import {fetchAll, nm_action, nm_compare_field} from "../../api/js/etemplate/et2_
 import "./CRM";
 import {egw} from "../../api/js/jsapi/egw_global";
 import {LitElement} from "@lion/core";
-import {Et2SelectState} from "../../api/js/etemplate/Et2Select/Et2Select";
-import {Et2SelectCountry} from "../../api/js/etemplate/Et2Select/Et2SelectCountry";
+import {Et2SelectCountry} from "../../api/js/etemplate/Et2Select/Select/Et2SelectCountry";
+
+import {Et2SelectState} from "../../api/js/etemplate/Et2Select/Select/Et2SelectState";
 
 /**
  * Object to call app.addressbook.openCRMview with
  */
-export 	interface CrmParams {
-	contact_id: number|string;
-	crm_list?: "infolog"|"tracker"|"infolog-organisation"; // default: use preference
-	title?: string;	// default: link-title of contact_id
-	icon?: string;	// default: avatar for contact_id
-	index?: number;
+export interface CrmParams
+{
+	contact_id : number | string;
+	crm_list? : "infolog" | "tracker" | "infolog-organisation"; // default: use preference
+	title? : string;	// default: link-title of contact_id
+	icon? : string;	// default: avatar for contact_id
+	index? : number;
 }
 
 /**
@@ -836,7 +838,7 @@ class AddressbookApp extends EgwApp
 								id,
 								values.name
 							);
-							action.setDefaultExecute(action.parent.onExecute.fnct);
+							action.setDefaultExecute(action.parent.onExecute.functionToPerform);
 							action.updateAction({group: 1});
 						}
 					}
@@ -1125,12 +1127,13 @@ class AddressbookApp extends EgwApp
 			var callback = function(button, value) {
 				if(button == Et2Dialog.OK_BUTTON)
 				{
-					var _action = jQuery.extend(true, {}, action);
+					var _action_data = jQuery.extend(true, {}, action.data);
 					if(value.infolog)
 					{
-						_action.data.menuaction += '&to_app=infolog&info_type=' + value.info_type;
+						_action_data.menuaction += '&to_app=infolog&info_type=' + value.info_type;
+						action.data = _action_data;
 					}
-					nm_action(_action, selected, target);
+					nm_action(action, selected, target);
 				}
 			};
 			let dialog = new Et2Dialog(this.egw);

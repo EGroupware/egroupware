@@ -211,6 +211,9 @@ location	calendar	sv	Plats
 location, start- and endtimes, ...	calendar	sv	Plats, start- och slut tid
 mail all participants	calendar	sv	Skicka e-post till alla deltagare
 make freebusy information available to not logged in persons?	calendar	sv	Gör freebusy åtkomlig för oinloggade personer också?
+maximum available quantity of %1 exceeded!	calendar	sv	Maximal tillgänglig kvantitet av %1 överskriden!
+minimum number of users for showing day view as consolidated.	calendar	sv	Minsta antal användare för att visa dagsvyn som konsoliderad.
+minimum number of users for showing week view as consolidated.	calendar	sv	Minsta antal användare för att visa veckovyn som konsoliderad.
 minutes	calendar	sv	Minuter
 modified	calendar	sv	Ändrad
 mon	calendar	sv	Mån
@@ -219,8 +222,11 @@ monthly	calendar	sv	Månadsvis
 monthly (by date)	calendar	sv	Månadsvis (enl. datum)
 monthly (by day)	calendar	sv	Månadsvis (enl. dag)
 monthview	calendar	sv	Månad
+move to	calendar	sv	Flytta till
+multiple participants	calendar	sv	Flera deltagare
 multiple week view	calendar	sv	Flerveckovy
 needs action	calendar	sv	Kräver åtgärd
+never notify externals (non-users) about events i create	calendar	sv	Meddela aldrig externa personer (icke-användare) om händelser som jag skapar
 new	calendar	sv	Nytt
 new search with the above parameters	calendar	sv	Ny sökning med ovanstående parametrar
 no events found	calendar	sv	Inga händelser

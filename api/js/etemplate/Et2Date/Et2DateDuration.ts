@@ -9,7 +9,8 @@
  */
 
 
-import {classMap, css, html, LitElement} from "@lion/core";
+import {css, html, LitElement} from "lit";
+import {classMap} from "lit/directives/class-map.js";
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
 import {sprintf} from "../../egw_action/egw_action_common";
 import {dateStyles} from "./DateStyles";
@@ -132,6 +133,7 @@ export class Et2DateDuration extends Et2InputWidget(FormControlMixin(LitElement)
 			  }
 
 			  .input-group__after {
+				display: contents;
 				margin-inline-start: var(--sl-input-spacing-medium);
 			  }
 
@@ -272,6 +274,16 @@ export class Et2DateDuration extends Et2InputWidget(FormControlMixin(LitElement)
 		this.shortLabels = false;
 
 		this.formatter = formatDuration;
+	}
+
+	async getUpdateComplete()
+	{
+		const result = await super.getUpdateComplete();
+
+		// Format select does not start with value, needs an update
+		this._formatNode?.requestUpdate("value");
+
+		return result;
 	}
 
 	transformAttributes(attrs)
@@ -608,15 +620,19 @@ export class Et2DateDuration extends Et2InputWidget(FormControlMixin(LitElement)
 			s: this.shortLabels ? this.egw().lang("s") : this.egw().lang("Seconds")
 		};
 		// It would be nice to use an et2-select here, but something goes weird with the styling
+		const current = this._display.unit || this.displayFormat[0];
 		return html`
-            <et2-select value="${this._display.unit || this.displayFormat[0]}">
+            <sl-select value="${current}">
                 ${[...this.displayFormat].map((format : string) =>
                         html`
-                            <sl-menu-item value=${format} ?checked=${this._display.unit === format}>
+                            <sl-option
+                                    value=${format}
+                                    .selected=${(format == current)}
+                            >
                                 ${this.time_formats[format]}
-                            </sl-menu-item>`
+                            </sl-option>`
                 )}
-            </et2-select>
+            </sl-select>
 		`;
 	}
 
@@ -634,7 +650,7 @@ export class Et2DateDuration extends Et2InputWidget(FormControlMixin(LitElement)
 	 */
 	get _formatNode() : HTMLSelectElement
 	{
-		return this.shadowRoot ? this.shadowRoot.querySelector("et2-select") : null;
+		return this.shadowRoot ? this.shadowRoot.querySelector("sl-select") : null;
 	}
 }
 

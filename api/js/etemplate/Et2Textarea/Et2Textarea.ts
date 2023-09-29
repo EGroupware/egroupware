@@ -9,7 +9,7 @@
  */
 
 
-import {css} from "@lion/core";
+import {css} from "lit";
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
 import {SlTextarea} from "@shoelace-style/shoelace";
 import shoelace from "../Styles/shoelace";
@@ -29,14 +29,16 @@ export class Et2Textarea extends Et2InputWidget(SlTextarea)
 				width: 100%;
 				height: 100%;
             }
-            .textarea--resize-vertical .textarea__control {
+
+			  .textarea--resize-vertical {
             	height: 100%;
             }
             :host::part(form-control) {
     			height: 100%;
     			align-items: stretch !important;
 			}
-            :host::part(base) {
+
+			  :host::part(form-control-input), :host::part(textarea) {
             	height: 100%;
             }
 			`,

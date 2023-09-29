@@ -178,6 +178,9 @@ location	calendar	id	Lokasi
 location, start- and endtimes, ...	calendar	id	Lokasi, Waktu memulai dan berakhir, ...
 mail all participants	calendar	id	Surati semua peserta
 manage mapping	calendar	id	Mengelola pemetaan
+maximum available quantity of %1 exceeded!	calendar	id	Jumlah maksimum yang tersedia sebesar %1 terlampaui!
+minimum number of users for showing day view as consolidated.	calendar	id	Jumlah minimum pengguna untuk menampilkan tampilan hari sebagai konsolidasi.
+minimum number of users for showing week view as consolidated.	calendar	id	Jumlah minimum pengguna untuk menampilkan tampilan minggu sebagai konsolidasi.
 minutes	calendar	id	Menit
 modified	calendar	id	Diubah
 mon	calendar	id	Sen
@@ -186,7 +189,10 @@ monthly	calendar	id	Bulanan
 monthly (by date)	calendar	id	Bulanan (urut tanggal)
 monthly (by day)	calendar	id	Bulanan (urut hari)
 monthview	calendar	id	Tampilan Bulanan
+move to	calendar	id	Pindah ke
+multiple participants	calendar	id	Beberapa peserta
 needs action	calendar	id	Perlu tindakan
+never notify externals (non-users) about events i create	calendar	id	Jangan pernah memberi tahu pihak luar (bukan pengguna) tentang acara yang saya buat
 new	calendar	id	Baru
 no events found	calendar	id	Tidak ditemukan kegiatan
 no filter	calendar	id	Tiada saringan

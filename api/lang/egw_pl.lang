@@ -19,7 +19,6 @@
 %s readonly	common	pl	%s tylko do odczytu
 '%1' copied to clipboard	common	pl	'%1' skopiowane do schowka
 '%1' has an invalid format !!!	common	pl	'%1' jest w nieprawidłowym formacie!
-'%1' is no php file in the egw server root (%2)!	common	pl	'%1' to nie plik php w katalogu głównym serwera (%2)
 '%1' is not a valid date !!!	common	pl	'%1' nie jest datą w poprawnym formacie!
 '%1' is not a valid floatingpoint number !!!	common	pl	'%1' nie jest poprawną liczbą zmiennoprzecinkową!
 '%1' is not a valid integer !!!	common	pl	'%1' nie jest poprawną liczbą całkowitą!
@@ -109,6 +108,7 @@ and	common	pl	oraz
 andorra	common	pl	ANDORA
 angola	common	pl	ANGOLA
 anguilla	common	pl	ANGUILLA
+answering no will not ask you again for this browser.	common	pl	Jeśli odpowiesz "nie", nie będziesz już pytany o tę przeglądarkę.
 antarctica	common	pl	ANTARKTYKA
 antigua and barbuda	common	pl	ANTIGUA I BARBUDA
 api	common	pl	EGroupware API
@@ -459,6 +459,7 @@ fields	common	pl	Pola
 fiji	common	pl	FIDŻI
 file	common	pl	Plik
 file '%1' not found!	common	pl	Plik '%1' nie odnaleziony!
+file a file	common	pl	Przechowuj plik
 file contains more than one etemplate, last one is shown !!!	common	pl	Plik zawiera więcej niż jeden e-Szablon - pokazany jest ostatni z nich!
 file is of wrong type (%1 != %2)!	common	pl	Zły typ pliku (%1 != %2)!
 file writen	common	pl	Plik został zapisany
@@ -477,6 +478,8 @@ folder already exists.	common	pl	Folder o takiej nazwie już istnieje
 force selectbox	common	pl	Wymuś wybór z listy
 foreign key	common	pl	Klucz obcy
 forever	common	pl	Na zawsze
+formatted business address	common	pl	Sformatowany adres firmowy
+formatted private address	common	pl	Sformatowany adres prywatny
 formatted text (html)	common	pl	Tekst sformatowany (HTML)
 france	common	pl	FRANCJA
 french guiana	common	pl	GUJANA FRANCUSKA
@@ -485,6 +488,7 @@ french southern territories	common	pl	FRANCUSKIE TERYTORIA POŁUDNIOWE
 friday	common	pl	Piątek
 ftp	common	pl	FTP
 fullname	common	pl	Imię i nazwisko
+fullscreen	common	pl	Pełny ekran
 fullscreen mode	common	pl	Tryb pełnoekranowy
 gabon	common	pl	GABON
 gambia	common	pl	GAMBIA
@@ -599,6 +603,7 @@ insert placeholder	common	pl	Wstaw miejsce
 insert row after	common	pl	Wstaw wiersz po
 insert row before	common	pl	Wstaw wiersz przed
 insert timestamp into description field	common	pl	Wstaw znacznik czasu do pola opisu
+install egroupware as mail-handler?	common	pl	Zainstalować EGroupware jako mail-handler?
 integer	common	pl	Liczba całkowita
 international	common	pl	Międzynarodowy
 invalid 2-factor authentication code	common	pl	Nieprawidłowy kod uwierzytelniania dwuczynnikowego
@@ -728,6 +733,7 @@ montserrat	common	pl	MONTSERRAT
 more	common	pl	Więcej
 more than 1 match for '%1'	common	pl	Więcej niż 1 pasujący dla '%1'
 morocco	common	pl	MAROKO
+move	common	pl	Przenieść
 mozambique	common	pl	MOZAMBIK
 multicolumn indices	common	pl	Indeksy wielokolumnowe
 multiple	common	pl	wielokrotny

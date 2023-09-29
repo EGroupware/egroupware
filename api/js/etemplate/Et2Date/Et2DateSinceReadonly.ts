@@ -8,7 +8,7 @@
  */
 
 
-import {html} from "@lion/core";
+import {html} from "lit";
 import {parseDate, parseDateTime} from "./Et2Date";
 import {Et2DateReadonly} from "./Et2DateReadonly";
 

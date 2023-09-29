@@ -17,22 +17,26 @@
 				</et2-hbox>
 			</et2-hbox>
 			<et2-hbox  width="100%" class="mailPreviewHeaders">
-				<et2-lavatar  src="@avatar" lname="@address" shape="rounded" size="2.75em"></et2-lavatar>
+				<et2-lavatar  contactId="email:$cont[fromaddress]" lname="$cont[fromlavatar][lname]" fname="$cont[fromlavatar][fname]" shape="rounded" size="2.75em"></et2-lavatar>
 				<et2-vbox>
 					<et2-hbox>
 						<et2-details  class="details" toggleOnHover="true" hoist="true" toggleAlign="left">
 							<et2-select-email  slot="summary" id="fromaddress" readonly="true" fullEmail="@emailTag=fullemail" onlyEmail="@emailTag=onlyemail"/>
 							<et2-hbox>
 								<et2-description  value="From" class="firstColumnTitle"></et2-description>
-								<et2-select-email  id="additionalfromaddress" readonly="true" fullEmail="@emailTag=fullemail" onlyEmail="@emailTag=onlyemail"></et2-select-email>
+								<et2-select-email  id="additionalfromaddress"  rows="1" multiple="true" readonly="true" fullEmail="@emailTag=fullemail" onlyEmail="@emailTag=onlyemail"></et2-select-email>
 							</et2-hbox>
 							<et2-hbox  disabled="!@toaddress" width="100%">
 								<et2-description  value="To" class="firstColumnTitle"></et2-description>
-								<et2-select-email  id="additionaltoaddress" readonly="true" fullEmail="@emailTag=fullemail" onlyEmail="@emailTag=onlyemail"></et2-select-email>
+								<et2-select-email  id="additionaltoaddress" rows="1" multiple="true" readonly="true" fullEmail="@emailTag=fullemail" onlyEmail="@emailTag=onlyemail"></et2-select-email>
 							</et2-hbox>
 							<et2-hbox  disabled="!@ccaddress" width="100%">
 								<et2-description  value="Cc" class="firstColumnTitle"></et2-description>
-								<et2-select-email  id="ccaddress" readonly="true" fullEmail="@emailTag=fullemail" onlyEmail="@emailTag=onlyemail"></et2-select-email>
+								<et2-select-email  id="ccaddress" readonly="true" rows="1" multiple="true" fullEmail="@emailTag=fullemail" onlyEmail="@emailTag=onlyemail"></et2-select-email>
+							</et2-hbox>
+							<et2-hbox  disabled="!@bccaddress" width="100%">
+								<et2-description  value="BCc" class="firstColumnTitle"></et2-description>
+								<et2-select-email  id="bccaddress" readonly="true" rows="1" multiple="true" fullEmail="@emailTag=fullemail" onlyEmail="@emailTag=onlyemail"></et2-select-email>
 							</et2-hbox>
 						</et2-details>
 						<et2-date-time-today  align="right" id="date" readonly="true"></et2-date-time-today>

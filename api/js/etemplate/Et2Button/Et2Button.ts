@@ -13,7 +13,7 @@ import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
 import '../Et2Image/Et2Image';
 import {SlButton} from "@shoelace-style/shoelace";
 import {ButtonMixin} from "./ButtonMixin";
-import {PropertyValues} from "@lion/core";
+import {PropertyValues} from "lit";
 
 
 export class Et2Button extends ButtonMixin(Et2InputWidget(SlButton))
@@ -22,7 +22,7 @@ export class Et2Button extends ButtonMixin(Et2InputWidget(SlButton))
 	{
 		return {
 			...super.properties,
-			label: {type: String}
+			label: {type: String, noAccessor: true}
 		}
 	}
 

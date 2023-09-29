@@ -959,8 +959,9 @@ class infolog_bo
 			// It's now disabled for xmlrpc, as otherwise the xmlrpc code need to be changed!
 			$xmlrpc = is_object($GLOBALS['server']) && $GLOBALS['server']->last_method;
 			$check_modified = $values['info_datemodified'] && !$xmlrpc ? $to_write['info_datemodified'] : false;
-			$values['info_datemodified'] = $to_write['info_datemodified'] = $this->now;
-			if ($check_modified && isset($values['info_etag']))
+			$values['info_datemodified'] = $this->user_time_now;
+			$to_write['info_datemodified'] = $this->now;
+			if($check_modified && isset($values['info_etag']))
 			{
 				++$values['info_etag'];
 			}
@@ -985,6 +986,7 @@ class infolog_bo
 			if(!isset($values['info_type']) || $status_only || empty($values['caldav_name']))
 			{
 				$values = $this->read($info_id, true, 'server', $ignore_acl);
+				$this->time2time($values);
 			}
 
 			$values['info_id'] = $info_id;
@@ -1430,7 +1432,9 @@ class infolog_bo
 				array(
 					'email' => $mailadr,
 					'email_home' => $mailadr
-				),True,'','','',false,'OR',false,null,'',false));
+				), ['id', 'account_id'], '', '', '', false, 'OR', false, null, '', false
+			)
+			);
 		}
 		if (!$contacts || !is_array($contacts) || !is_array($contacts[0]))
 		{
@@ -1442,10 +1446,13 @@ class infolog_bo
 			// create the first address as info_contact
 			$contact = array_shift($contacts);
 			$info['info_contact'] = 'addressbook:'.$contact['id'];
-			// create the rest a "ordinary" links
+			// create the rest as "ordinary" links, skipping accounts
 			foreach ($contacts as $contact)
 			{
-				Link::link('infolog',$info['link_to']['to_id'],'addressbook',$contact['id']);
+				if(empty($contact['account_id']))
+				{
+					Link::link('infolog', $info['link_to']['to_id'], 'addressbook', $contact['id']);
+				}
 			}
 		}
 		if (is_array($_attachments))

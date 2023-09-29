@@ -25,7 +25,7 @@ import {et2_IDetachedDOM, et2_IInput} from "./et2_core_interfaces";
 import {et2_cloneObject, et2_no_init} from "./et2_core_common";
 import {et2_DOMWidget} from "./et2_core_DOMWidget";
 import {loadWebComponent} from "./Et2Widget/Et2Widget";
-import {LitElement} from "@lion/core";
+import {LitElement} from "lit";
 
 export class et2_customfields_list extends et2_valueWidget implements et2_IDetachedDOM, et2_IInput
 {
@@ -276,7 +276,7 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 				else
 				{
 					// Label in first column, widget in 2nd
-					const label = this.options.label || field.label;
+					const label = this.options.label || field.label || '';
 					jQuery(document.createElement("td"))
 						.prependTo(row);
 					et2_createWidget("label", {id: id + "_label", value: label.trim(), for: id}, this);
@@ -360,7 +360,7 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 		// Add in settings that are objects
 
 		// Customized settings for this widget (unlikely)
-		const data = this.getArrayMgr("modifications").getEntry(this.id);
+		const data = this.getArrayMgr("modifications").getEntry(this.id) ?? {};
 		// Check for global settings
 		const global_data = this.getArrayMgr("modifications").getRoot().getEntry('~custom_fields~', true);
 		if(global_data)
@@ -563,6 +563,7 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 	{
 		// No label on the widget itself
 		delete (attrs.label);
+		attrs.type = "password";
 		let defaults = {
 			viewable:true,
 			plaintext: false,
@@ -614,9 +615,11 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 		{
 			attrs.multiple = true;
 		}
-		// select_options are now send from server-side incl. ones defined via a file in EGroupware root
-		attrs.tags = field.tags;
-
+		if(field.values && field.values["@"])
+		{
+			// Options are in a list stored in a file
+			attrs.searchUrl = field.values["@"];
+		}
 		return true;
 	}
 	_setup_select_account( field_name, field, attrs)
@@ -631,11 +634,19 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 
 	 _setup_date(field_name, field, attrs) {
 		attrs.data_format = field.values && field.values.format ? field.values.format : 'Y-m-d';
+		 if(field.values?.format)
+		 {
+			 delete field.values.format;
+		 }
 		return true;
 	}
 	_setup_date_time( field_name, field, attrs)
 	{
 		attrs.data_format = field.values && field.values.format ? field.values.format : 'Y-m-d H:i:s';
+		if(field.values?.format)
+		{
+			delete field.values.format;
+		}
 		return true;
 	}
 	_setup_htmlarea( field_name, field, attrs)

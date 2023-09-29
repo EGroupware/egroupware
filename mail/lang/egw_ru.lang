@@ -30,7 +30,10 @@ attachments	mail	ru	Вложения
 available personal email-accounts/profiles	mail	ru	доступные личные адреса эл.почты/Профили
 but check shared folders	mail	ru	Не проверены папки, к которым дан доступ
 by date	mail	ru	По дате
+by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	ru	По умолчанию 'http://' просто заменяется на 'https://'. Вы можете настроить 'https://proxy.egroupware.org/' так, чтобы он также загружал изображения, доступные только по http.
+caching of flags	mail	ru	Etichetă de contact
 can not open imap connection	mail	ru	Невозможно установить подключение IMAP
+changing subject failed folder %1 does not exist	mail	ru	Изменение темы не удалось, папка %1 не существует
 check message against next rule also	mail	ru	Проверить сообщение также на соответствие следующему правилу
 common acl	mail	ru	Права общего доступа
 compose	mail	ru	Новое письмо
@@ -42,6 +45,7 @@ configured values will be set automatically on compose dialog for respected fiel
 confirm attach message	mail	ru	Подтвердить вложение сообщения
 confirm move to folder	mail	ru	Подтвердить перемещение в каталог
 connection status	mail	ru	Статус соединения
+contact label	mail	ru	Метка контакта
 contains	mail	ru	Содержит
 convert mail to item and attach its attachments to this item (standard)	mail	ru	Конвертировать сообщение как отдельное сообщение и прикрепить к этой части (стандартное)
 convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	ru	конвертировать сообщение как отдельное сообщение,прикрепить и добавить  raw message (message/rfc822 (.eml)) как вложение
@@ -149,6 +153,7 @@ import of message %1 failed. no contacts to merge and send to specified.	mail	ru
 importance	mail	ru	Значение
 important	mail	ru	Важное
 inbox	mail	ru	Входящие (INBOX)
+information to show on email tag	mail	ru	Информация для отображения в теге электронной почты
 insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)	mail	ru	Вставить подпись в начало нового сообщения  при открытии диалогового окна "создать"(или "ответить")
 job	mail	ru	Работа
 junk	mail	ru	Спам
@@ -156,6 +161,7 @@ keep a copy of the message in your inbox	mail	ru	Хранить копию со�
 kilobytes	mail	ru	Килобайт
 later	mail	ru	Отложить
 less than	mail	ru	Меньше чем
+list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	ru	Список действий, которые должны включаться/активироваться по умолчанию (например, действие Mail compose сохранить как InfoLog)
 mail	common	ru	Почта
 mail acl	mail	ru	Права доступа
 mail filter	mail	ru	Почтовый фильтр
@@ -179,6 +185,7 @@ modify subject of this message	mail	ru	Изменить тему этого со
 move selected to	mail	ru	Переместить выбранное в
 move to	mail	ru	Переместить в
 move to trash	mail	ru	Переместить в корзину
+name and email	mail	ru	Имя и email
 never display html emails	mail	ru	Никогда не показывать эл. письма в формате HTML
 new mail notification	mail	ru	Новое оповещение о поступлении сообщений
 new message type	mail	ru	новый тип сообщения
@@ -202,16 +209,21 @@ nothing to change.	mail	ru	Нечего менять.
 notify when new mails arrive in these folders	mail	ru	Оповещать, когда в эти ящики приходят новые письма
 on	mail	ru	На
 one address is not valid	mail	ru	Один из адресов неверен
+only email	mail	ru	Только электронная почта
+only name	mail	ru	Только имя
 only one window	mail	ru	Только одно окно
 only send message, do not copy a version of the message to the configured sent folder	mail	ru	Только отправить сообщение, не копировать в папку отправленные.
 open in html mode	mail	ru	Открыть как HTML
 open in text mode	mail	ru	Открыть как текст
+open with collabora office	mail	ru	Открывать с помощью Collabora Online
 organisation	admin	ru	Организация
 organization	mail	ru	Организация
-original message	mail	ru	Исходное сообщение
+organization | real name email	mail	ru	Организация | Реальное имя [Email]
+original message	mail	ru	Оригинальное сообщение
 outbox	mail	ru	Исходящие
 permission denied	mail	ru	Доступ запрещён
 please configure access to an existing individual imap account.	mail	ru	Настроить доступ к существующей учетной записи IMAP
+please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	ru	Пожалуйста, настройте сертификат S/MIME на вкладке Шифрование в диалоге Редактирование учетной записи.
 please select a address	mail	ru	Пожалуйста выберите адрес
 please select the number of days to wait between responses	mail	ru	Пожалуйста выберите количество дней ожидания между ответами
 please supply the message to send with auto-responses	mail	ru	Пожалуйста введите сообщение для отправки автоответа
@@ -220,9 +232,12 @@ prevent managing filters	mail	ru	Ограничить управление фа�
 prevent managing folders	mail	ru	Ограничить управление каталогами
 prevent managing notifications	mail	ru	Ограничить управление уведомлениями
 prevent managing vacation notice	mail	ru	Ограничить управление сообщениями об отпусках
+preview pane	mail	ru	Оформление окна
+printing	mail	ru	Печать
 printview	mail	ru	Предварительный просмотр
 processing of file %1 failed. failed to meet basic restrictions.	mail	ru	Обработка файла %1 прервана. Не удалось удовлетворить основные ограничения.
 provide a default vacation text, (used on new vacation messages when there was no message set up previously)	admin	ru	Введите текст по умолчанию на случай отсутствия (используется для новых сообщений об отсутствии, когда нет предварительно установленных сообщений)
+push notifications	mail	ru	Push-уведомления
 quicksearch	mail	ru	Быстрый поиск
 quicksearch (with cc)	mail	ru	Быстрый поиск (включая 'Копия')
 read / unread	mail	ru	Прочитано / Непрочитано
@@ -270,7 +285,11 @@ should new messages show up on the home page	mail	ru	отображать нов
 show all folders	mail	ru	Отображать все каталоги
 show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	ru	Отображать в панели команд главной страницы все каталоги, как подписные, так и те, на которые пользователь не подписан
 show new messages on home page	mail	ru	отображать новые сообщения на домашней странице
+show notification for new arriving mails	mail	ru	Показывать уведомления о новых пришедших письмах
 show test connection section and control the level of info displayed?	mail	ru	показать пункт меню "Проверка подключения"?
+show vertical	mail	ru	Показывать вертикально
+show vertical with all columns	mail	ru	Показывать вертикально со всеми колонками
+show/hide preview pane in mail list view	mail	ru	Показать/скрыть панель предварительного просмотра в списке писем
 sieve	mail	ru	Sieve
 sieve connection status	mail	ru	Статус соединения Sieve
 sieve script name	mail	ru	название скрипта Sieve
@@ -343,4 +362,5 @@ yes, only trigger connection reset	mail	ru	Да, сброс только зап�
 yes, show all debug information available for the user	mail	ru	Да, показать всю отладочную информацию, доступную для пользователя
 yes, show basic info only	mail	ru	Да, показать только основную информацию
 you can either choose to save as infolog or tracker, not both.	mail	ru	Вы можете выбрать как сохранять: как инфолог, или как трекер.
+you can select what info to be displayed on email tag	mail	ru	Вы можете выбрать, какая информация будет отображаться в теге email.
 you've got new mail	mail	ru	Вы получили новое письмо

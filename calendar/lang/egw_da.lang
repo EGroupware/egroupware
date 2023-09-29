@@ -173,6 +173,9 @@ location	calendar	da	Sted
 location, start- and endtimes, ...	calendar	da	Lokation, start- og sluttider,...
 mail all participants	calendar	da	E-mail alle deltagere
 make freebusy information available to not logged in persons?	calendar	da	Gør fri/optaget information tilgængelig for ikke-indloggede personer?
+maximum available quantity of %1 exceeded!	calendar	da	Maksimal tilgængelig mængde af %1 overskredet!
+minimum number of users for showing day view as consolidated.	calendar	da	Minimum antal brugere for at vise dagsvisning som konsolideret.
+minimum number of users for showing week view as consolidated.	calendar	da	Minimum antal brugere for at vise ugevisning som konsolideret.
 minutes	calendar	da	Minutter
 modified	calendar	da	Modificeret
 mon	calendar	da	Man
@@ -181,6 +184,9 @@ monthly	calendar	da	Månedligt
 monthly (by date)	calendar	da	Månedlig (pr. dato)
 monthly (by day)	calendar	da	Månedlig (pr. dag)
 monthview	calendar	da	Måneds visning
+move to	calendar	da	Flyt til
+multiple participants	calendar	da	Flere deltagere
+never notify externals (non-users) about events i create	calendar	da	Underret aldrig eksterne (ikke-brugere) om begivenheder, jeg opretter
 new	calendar	da	Ny
 new search with the above parameters	calendar	da	Ny søgning med ovenstående parametre
 no events found	calendar	da	Ingen aftaler fundet

@@ -201,6 +201,11 @@ class Session
 	public $limits=null;
 
 	/**
+	 * @var bool true: authenticated by token, not password, false: authenticated by password
+	 */
+	public $token_auth=false;
+
+	/**
 	 * Constructor just loads up some defaults from cookies
 	 *
 	 * @param array $domain_names =null domain-names used in this install
@@ -720,6 +725,7 @@ class Session
 	public function authenticate()
 	{
 		$is_valid_token = Auth\Token::authenticate($this->account_lid, $this->passwd, $this->limits);
+		$this->token_auth = (bool)$is_valid_token;
 		if (!isset($is_valid_token))
 		{
 			return $GLOBALS['egw']->auth->authenticate($this->account_lid, $this->passwd, $this->passwd_type);
@@ -994,8 +1000,9 @@ class Session
 			'session_flags'  => $session_flags,
 			// we need the install-id to differ between several installations sharing one tmp-dir
 			'session_install_id' => $GLOBALS['egw_info']['server']['install_id'],
-			// we need to preserve the limits
+			// we need to preserve the limits and if authenticated via token
 			'session_limits' => $this->limits,
+			'session_token_auth' => $this->token_auth,
 		);
 	}
 
@@ -1316,8 +1323,9 @@ class Session
 		}
 		$session =& $_SESSION[self::EGW_SESSION_VAR];
 
-		// we need to restore the limits
+		// we need to restore the limits and if authenticated via token
 		$this->limits = $session['session_limits'];
+		$this->token_auth = $session['session_token_auth'];
 
 		if ($session['session_dla'] <= time() - $GLOBALS['egw_info']['server']['sessions_timeout'])
 		{

@@ -148,16 +148,16 @@ export class et2_entry extends et2_valueWidget
 		// If value was set, find the record explicitly.
 		if(typeof this.options.value == 'string')
 		{
-			widget.options.value = this.getArrayMgr('content').getEntry(this.id+'['+this.options.field+']') ||
-				this.getRoot().getArrayMgr('content').getEntry(et2_entry.prefix+this.options.value + '['+this.options.field+']');
+			widget.value = this.getArrayMgr('content').getEntry(this.id + '[' + this.options.field + ']') ||
+				this.getRoot().getArrayMgr('content').getEntry(et2_entry.prefix + this.options.value + '[' + this.options.field + ']');
 		}
 		else if (this.options.field && this.options.value && this.options.value[this.options.field])
 		{
-			widget.options.value = this.options.value[this.options.field];
+			widget.value = this.options.value[this.options.field];
 		}
 		if(this.options.compare)
 		{
-			widget.options.value = widget.options.value == this.options.compare ? 'X' : '';
+			widget.value = widget.options.value == this.options.compare ? 'X' : '';
 		}
 		if(this.options.alternate_fields)
 		{
@@ -170,14 +170,24 @@ export class et2_entry extends et2_valueWidget
 				sum += typeof value === 'undefined' ? 0 : (parseFloat(value) * (negate ? -1 : 1));
 				if(value && this.options.field !== 'sum')
 				{
-					widget.options.value = value;
+					widget.value = value;
 					break;
 				}
 			}
 			if(this.options.field == 'sum')
 			{
-				if (this.options.precision && jQuery.isNumeric(sum)) sum = parseFloat(<string><unknown>sum).toFixed(this.options.precision);
-				widget.options.value = sum;
+				if(this.options.precision && !isNaN(sum))
+				{
+					sum = parseFloat(<string><unknown>sum).toFixed(this.options.precision);
+				}
+				// use decimal separator from user prefs
+				const format = this.egw().preference('number_format');
+				const sep = format ? format[0] : '.';
+				if(typeof sum === 'string' && format && sep && sep !== '.')
+				{
+					sum = sum.replace('.', sep);
+				}
+				widget.value = sum;
 			}
 		}
 	}

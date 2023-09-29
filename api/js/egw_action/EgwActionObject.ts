@@ -1,3 +1,13 @@
+/**
+ * EGroupware egw_action framework - egw action framework
+ *
+ * @link https://www.egroupware.org
+ * @author Andreas Stöckel <as@stylite.de>
+ * @copyright 2011 by Andreas Stöckel
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @package egw_action
+ */
+
 import {EgwActionLink} from "./EgwActionLink";
 import {EgwActionManager} from "./EgwActionManager";
 import {egwBitIsSet, egwObjectLength, egwQueueCallback, egwSetBit} from "./egw_action_common";
@@ -412,7 +422,7 @@ export class EgwActionObject {
      * @param {number} _changedBit
      * @param {number} _shiftState is the status of extra keys being pressed during the
      *    selection process.
-     *///TODO check
+     */
     _ifaceCallback(_newState: number, _changedBit: number, _shiftState?: number) {
         if (typeof _shiftState == "undefined") _shiftState = EGW_AO_SHIFT_STATE_NONE;
 

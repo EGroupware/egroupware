@@ -115,48 +115,39 @@
 		</grid>
 	</template>
 	<template id="filemanager.file.eacl" template="" lang="" group="0" version="1.9.001">
-		<grid width="100%" spacing="10">
-			<columns>
-				<column width="120"/>
-				<column/>
-				<column/>
-			</columns>
-			<rows>
-				<row valign="top" height="200">
-					<groupbox span="all">
-						<caption label="Extended access control list"/>
-						<grid width="100%" overflow="auto" id="eacl">
-							<columns>
-								<column width="80"/>
-								<column width="80"/>
-								<column width="20%"/>
-								<column width="16"/>
-							</columns>
-							<rows>
-								<row class="th">
-									<et2-description  value="Owner"></et2-description>
-									<et2-description  value="Rights"></et2-description>
-									<et2-description  value="Inherited"></et2-description>
-									<et2-description></et2-description>
-								</row>
-								<row class="row" disabled="!@1">
-									<et2-select-account  id="${row}[owner]" readonly="true"></et2-select-account>
-									<et2-select  id="${row}[rights]" readonly="true"></et2-select>
-									<et2-description  id="${row}[path]"></et2-description>
-									<et2-button  label="Delete" id="delete[$row_cont[ino]-$row_cont[owner]]" onclick="et2_dialog.confirm(widget,'Delete this extended ACL?','Delete')" image="delete"></et2-button>
-								</row>
-							</rows>
-						</grid>
-					</groupbox>
-				</row>
-				<row valign="bottom" disabled="!@is_owner">
-						<et2-select-account  class="filemanager-file_filemanager-file-eaclowner eaclAccount" label="Owner" id="eacl_owner" emptyLabel="select one" accountType="both"></et2-select-account>
-						<et2-select  class="eaclRights" statustext="You can only grant additional rights, you can NOT take rights away!" label="Rights" id="eacl[rights]"></et2-select>
-					<et2-button  label="Add" id="button[eacl]" image="add"></et2-button>
-				</row>
-			</rows>
-		</grid>
-	</template>
+        <et2-vbox class="full-height">
+            <groupbox style="flex-grow: 1">
+                <caption label="Extended access control list"/>
+                <grid width="100%" overflow="auto" id="eacl">
+                    <columns>
+                        <column width="80"/>
+                        <column width="80"/>
+                        <column width="20%"/>
+                        <column width="16"/>
+                    </columns>
+                    <rows>
+                        <row class="th">
+                            <et2-description value="Owner"></et2-description>
+                            <et2-description value="Rights"></et2-description>
+                            <et2-description value="Inherited"></et2-description>
+                            <et2-description></et2-description>
+                        </row>
+                        <row class="row" disabled="!@1">
+                            <et2-select-account id="${row}[owner]" readonly="true"></et2-select-account>
+                            <et2-select id="${row}[rights]" readonly="true"></et2-select>
+                            <et2-description id="${row}[path]"></et2-description>
+                            <et2-button label="Delete" id="delete[$row_cont[ino]-$row_cont[owner]]" onclick="et2_dialog.confirm(widget,'Delete this extended ACL?','Delete')" image="delete"></et2-button>
+                        </row>
+                    </rows>
+                </grid>
+            </groupbox>
+            <et2-hbox valign="bottom" disabled="!@is_owner">
+                <et2-select-account class="filemanager-file_filemanager-file-eaclowner eaclAccount" label="Owner" id="eacl_owner" emptyLabel="select one" accountType="both" placement="top"></et2-select-account>
+                <et2-select class="eaclRights" statustext="You can only grant additional rights, you can NOT take rights away!" label="Rights" id="eacl[rights]"></et2-select>
+                <et2-button label="Add" id="button[eacl]" image="add"></et2-button>
+            </et2-hbox>
+        </et2-vbox>
+    </template>
 	<template id="filemanager.file.preview" template="" lang="" group="0" version="1.5.001">
 		<grid width="100%" spacing="10" overflow="auto">
 			<columns>
@@ -259,48 +250,49 @@
 						<et2-button  align="right" statustext="Enter setup user and password to get root rights" label="Superuser" id="sudouser" onclick="jQuery('.superuser').css('display','inline'); document.getElementById(form::name('sudo[user]')).focus();" image="superuser" noSubmit="true"></et2-button>
 					</et2-hbox>
 				</row>
-				<row>
-					<groupbox class="superuser">
-						<caption label="Enter setup user and password"/>
-						<grid>
-							<columns>
-								<column/>
-								<column/>
-							</columns>
-							<rows>
-								<row>
-									<et2-description  for="sudo[user]" value="User"></et2-description>
-									<et2-textbox  id="sudo[user]"></et2-textbox>
-								</row>
-								<row>
-									<et2-description  for="sudo[passwd]" value="Password"></et2-description>
-									<et2-password  id="sudo[passwd]" autocomplete="on"></et2-password>
-								</row>
-								<row>
-									<et2-description></et2-description>
-									<et2-hbox>
-										<et2-button  label="Submit" id="button[setup]"></et2-button>
-										<et2-button  label="Cancel" onclick="jQuery('.superuser').hide();" noSubmit="true"></et2-button>
-									</et2-hbox>
+                <row>
+                    <groupbox class="superuser">
+                        <caption label="Enter setup user and password"/>
+                        <grid>
+                            <columns>
+                                <column/>
+                                <column/>
+                            </columns>
+                            <rows>
+                                <row>
+                                    <et2-description for="sudo[user]" value="User"></et2-description>
+                                    <et2-textbox id="sudo[user]"></et2-textbox>
+                                </row>
+                                <row>
+                                    <et2-description for="sudo[passwd]" value="Password"></et2-description>
+                                    <et2-password id="sudo[passwd]" autocomplete="on"></et2-password>
+                                </row>
+                                <row>
+                                    <et2-description></et2-description>
+                                    <et2-hbox>
+                                        <et2-button label="Submit" id="button[setup]"></et2-button>
+                                        <et2-button label="Cancel" onclick="jQuery('.superuser').hide();" noSubmit="true"></et2-button>
+                                    </et2-hbox>
 
-								</row>
-							</rows>
-						</grid>
-					</groupbox>
-				</row>
-			</rows>
-		</grid>
-		<styles>
-			.eaclAccount select,.eaclRights select { width: 160px; }
-.superuser {
-  position: absolute;
-  top: 130px;
-  left: 120px;
-  width: 200px;
-  background-color: white;
-  z-index: 1;
-  display: none;
-}
-		</styles>
-	</template>
+                                </row>
+                            </rows>
+                        </grid>
+                    </groupbox>
+                </row>
+            </rows>
+        </grid>
+        <styles>
+            .full-height { height: 100% }
+            .full-height > fieldset { flex-grow: 1; }
+            .superuser {
+            position: absolute;
+            top: 130px;
+            left: 120px;
+            width: 200px;
+            background-color: white;
+            z-index: 1;
+            display: none;
+            }
+        </styles>
+    </template>
 </overlay>

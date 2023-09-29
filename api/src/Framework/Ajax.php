@@ -1083,11 +1083,12 @@ abstract class Ajax extends Api\Framework
 	/**
 	 * Run a link via ajax, returning content via egw_json_response->data()
 	 *
-	 * This behavies like /index.php, but returns the content via json.
+	 * This behaves like /index.php, but returns the content via json.
 	 *
 	 * @param string $link
+	 * @param bool $dialog=false true ajax_exec is called to execute a popup in a dialog
 	 */
-	public static function ajax_exec($link)
+	public static function ajax_exec($link, bool $dialog=false)
 	{
 		$parts = parse_url($link);
 		$_SERVER['REQUEST_URI'] = $_SERVER['SCRIPT_NAME'] = $parts['path'];
@@ -1130,19 +1131,22 @@ abstract class Ajax extends Api\Framework
 		// dont send header and footer
 		self::$header_done = self::$footer_done = true;
 
-		// flag to indicate target of output e.g. _tab
-		if ($_GET['fw_target'])
+		if (!$dialog)
 		{
-			Api\Cache::unsetSession(__CLASS__,'sidebox_md5');	// sideboxes need to be send again
-			$GLOBALS['egw']->framework->set_extra('fw','target',$_GET['fw_target']);
+			// flag to indicate target of output e.g. _tab
+			if ($_GET['fw_target'])
+			{
+				Api\Cache::unsetSession(__CLASS__,'sidebox_md5');	// sideboxes need to be send again
+				$GLOBALS['egw']->framework->set_extra('fw','target',$_GET['fw_target']);
+			}
+
+			// need to call do_sidebox, as header() with $header_done does NOT!
+			$GLOBALS['egw']->framework->do_sidebox();
+
+			// send Api\Preferences, so we dont need to request them in a second ajax request
+			$GLOBALS['egw']->framework->response->call('egw.set_preferences',
+				(array)$GLOBALS['egw_info']['user']['preferences'][$app], $app);
 		}
-
-		// need to call do_sidebox, as header() with $header_done does NOT!
-		$GLOBALS['egw']->framework->do_sidebox();
-
-		// send Api\Preferences, so we dont need to request them in a second ajax request
-		$GLOBALS['egw']->framework->response->call('egw.set_preferences',
-			(array)$GLOBALS['egw_info']['user']['preferences'][$app], $app);
 
 		// call application menuaction
 		ob_start();

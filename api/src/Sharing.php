@@ -208,6 +208,11 @@ class Sharing
 			}
 		}
 
+		// Load lang preference for error translations
+		if(empty($GLOBALS['egw_info']['user']['preferences']['common']['lang']))
+		{
+			$GLOBALS['egw_info']['user']['preferences'] = (new Preferences(Accounts::id2name('anonymous', 'account_id')))->read();
+		}
 		if (empty($token) || !($share = self::$db->select(self::TABLE, '*', array(
 			'share_token' => $token,
 			'(share_expires IS NULL OR share_expires > '.self::$db->quote(time(), 'date').')',
@@ -218,7 +223,7 @@ class Sharing
 
 			return static::share_fail(
 				'404 Not Found',
-				"Requested resource '/".htmlspecialchars($token)."' does NOT exist!\n"
+				lang("Requested resource '%1' does not exist or has expired", htmlspecialchars($token)) . "\n"
 			);
 		}
 		// check password, if required
@@ -650,6 +655,8 @@ class Sharing
 						'share_token' => self::token(),
 						'share_path' => $path,
 						'share_owner' => Vfs::$user,
+						'share_modified' => (new DateTime('now', DateTime::$server_timezone))->format('ts'),
+						'share_modifier' => Vfs::$user,
 						'share_with' => implode(',', (array)$recipients),
 						'share_created' => time(),
 					)+$extra, false, __LINE__, __FILE__, Db::API_APPNAME);

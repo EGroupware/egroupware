@@ -5,7 +5,11 @@ after reply, visible during compose	mail	ro	După răspuns, vizibil în timpul c
 aliases+forwards	mail	ro	Aliasuri+Întoarcere
 always show notifiction	mail	ro	Afișează întotdeauna notificarea
 answered	mail	ro	Răspunsuri
+by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	ro	În mod implicit, "http://" este înlocuit cu "https://". Nu ezitați să
+caching of flags	mail	ro	Memorarea în cache a steagurilor
+changing subject failed folder %1 does not exist	mail	ro	Schimbarea subiectului a eșuat folderul %1 nu există
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	ro	Valorile configurate vor fi setate automat în dialogul de compunere pentru câmpul respectat atunci când se compune un nou e-mail.
+contact label	mail	ro	Etichetă de contact
 cross account forward attachment is not allowed!	mail	ro	Atașarea contului încrucișat nu este permisă!
 current subject	mail	ro	Subiect curent
 default toolbar actions shown in mail's html editor	mail	ro	Funcții activate în bara de instrumente a editorului HTML atunci când se compune un e-mail
@@ -13,6 +17,8 @@ default value for remembering s/mime passphrase in minutes	mail	ro	Valoarea impl
 defines what to show as contact label for added contact into to/cc/bcc when composing an email. default is firstname lastname and empty means include eveything available.	mail	ro	Definește ce să se afișeze ca etichetă de contact pentru contactul adăugat în Către/Copie/Copie oarbă atunci când compuneți un e-mail. Valoarea implicită este Firstname Lastname (nume, prenume, nume), iar empty (gol) înseamnă că include tot ce este disponibil.
 defines what to show as identity label on mail folder header	common	ro	Definește ce să se afișeze ca etichetă de identitate în antetul dosarului de e-mail
 disable caching of flags	mail	ro	Dezactivarea memorării în cache a stegulețelor
+information to show on email tag	mail	ro	Informații de afișat pe eticheta de e-mail
+list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	ro	Listă de acțiuni care urmează să fie activate/activate în mod implicit (de exemplu, acțiunea de salvare a compoziției de e-mail ca InfoLog)
 mail	common	ro	Mail
 mail acl	mail	ro	Drepturi de acces
 mail filter	mail	ro	Filtru de poștă
@@ -28,12 +34,32 @@ mark all messages in folder as read	mail	ro	Marcați toate mesajele din dosar ca
 mark as deleted	mail	ro	Marcați ca fiind șterse
 modify subject	mail	ro	Modificați subiectul
 modify subject of this message	mail	ro	Modificați subiectul acestui mesaj
+name and email	mail	ro	Nume și e-mail
 new subject	mail	ro	Subiect nou
 no sneak preview in list	mail	ro	Nu există previzualizare a mesajelor
+only email	mail	ro	Doar e-mail
+only name	mail	ro	Doar numele
+open in html mode	mail	ro	Deschidere în mod HTML
+open in text mode	mail	ro	Deschidere în mod text
+open with collabora office	mail	ro	Deschidere cu Collabora Online
+organisation	admin	ro	Organizație
+organization | real name email	mail	ro	Organizație | Nume real [Email]
+original message	mail	ro	Mesaj original
+outbox	mail	ro	Coșul de ieșire
+please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	ro	Vă rugăm să vă configurați certificatul S/MIME în fila Criptare din fereastra de dialog Editare cont.
 predefined addresses for compose	mail	ro	Adrese predefinite pentru compunere
+preview pane	mail	ro	Dispunerea ferestrei
+printing	mail	ro	Imprimarea
+push notifications	mail	ro	Notificări push
+quicksearch	mail	ro	Căutare rapidă
+quicksearch (with cc)	mail	ro	Căutare rapidă (+Copiere)
 save all attachments to filemanager	mail	ro	Salvați toate atașamentele în filemanager
 select or insert email address	mail	ro	Selectați sau introduceți adresa de e-mail
 set predefined values for compose...	mail	ro	Setați valori predefinite pentru compunere ...
+show notification for new arriving mails	mail	ro	Afișare notificare pentru mesajele noi sosite
+show vertical	mail	ro	Afișați pe verticală
+show vertical with all columns	mail	ro	Afișare verticală cu toate coloanele
+show/hide preview pane in mail list view	mail	ro	Afișați/ Ascundeți panoul de previzualizare în vizualizarea listei de mailuri
 signature	mail	ro	Semnătură
 signature at top	mail	ro	semnătură în partea de sus
 signature position and visibility	mail	ro	Poziția și vizibilitatea semnăturii
@@ -41,3 +67,5 @@ smime encrypted message	mail	ro	Mesaj criptat S/MIME
 smime signed message	mail	ro	Mesaj semnat S/MIME
 smtp	mail	ro	SMTP
 sneak preview in list	mail	ro	Previzualizare mesaj
+you can select what info to be displayed on email tag	mail	ro	Puteți selecta ce informații să fie afișate pe eticheta de e-mail.
+you've got new mail	mail	ro	Ați primit un mesaj nou

@@ -42,6 +42,11 @@ class Sieve extends Horde\ManageSieve
 	var $scriptName;
 
 	/**
+	 * @var string full Sieve script as text
+	 */
+	var $script;
+
+	/**
 	* @var array $rules containing the rules
 	*/
 	var $rules;
@@ -150,7 +155,7 @@ class Sieve extends Horde\ManageSieve
 	 * @param array $_vacation
 	 * @param string $_scriptName
 	 */
-	function setVacation(array $_vacation, $_scriptName=null)
+	function setVacation(array $_vacation, $_scriptName=null, &$vaction_rule=null, $throw_exception=false)
 	{
 		if ($this->debug)
 		{
@@ -159,7 +164,7 @@ class Sieve extends Horde\ManageSieve
 		$script = $this->retrieveRules($_scriptName);
 		$script->debug = $this->debug;
 		$script->vacation = $_vacation;
-		$ret = $script->updateScript($this);
+		$ret = $script->updateScript($this, false, $vaction_rule, $throw_exception);
 		$this->error = $script->errstr;
 		return $ret;
 	}
@@ -219,6 +224,7 @@ class Sieve extends Horde\ManageSieve
 		catch (\Exception $e) {
 			unset($e);	// ignore not found script exception
 		}
+		$this->script =& $script->script;
 		$this->rules =& $script->rules;
 		$this->vacation =& $script->vacation;
 		$this->emailNotification =& $script->emailNotification; // Added email notifications

@@ -366,11 +366,14 @@ monthly	calendar	fr	Mensuel
 monthly (by date)	calendar	fr	Mensuel (par date)
 monthly (by day)	calendar	fr	Mensuel (par jour)
 monthview	calendar	fr	Vue mensuelle
+move to	calendar	fr	Déplacer vers
+multiple participants	calendar	fr	Participants multiples
 multiple week view	calendar	fr	Vue multi-semaines
 name of current user, all other contact fields are valid too	calendar	fr	Nom de l'utilisateur courant, tous les autres champs de contacts sont valides aussi
 name of the day of the week (ex: monday)	calendar	fr	Jour de la semaine (ex : Lundi)
 name of the week (ex: monday), available for the first entry inside each day of week or daily table inside the selected range.	calendar	fr	Jour de la semaine (ex: lundi), disponible comme première entrée sur chaque vue semaine ou journalière à l'intérieur d'une sélection.
 needs action	calendar	fr	Action nécessaire
+never notify externals (non-users) about events i create	calendar	fr	Ne jamais informer les personnes externes (non-utilisateurs) des événements que je crée
 new	calendar	fr	Nouveau
 new event category	calendar	fr	Catégorie du nouvel événement
 new event participants	calendar	fr	Nouveaux participants

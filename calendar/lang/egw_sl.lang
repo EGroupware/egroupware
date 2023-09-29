@@ -337,10 +337,13 @@ monthly	calendar	sl	Mesečno
 monthly (by date)	calendar	sl	Mesečno (po datumu)
 monthly (by day)	calendar	sl	Mesečno (po dnevu)
 monthview	calendar	sl	Mesečni pogled
+move to	calendar	sl	Premaknite se na
+multiple participants	calendar	sl	Več udeležencev
 multiple week view	calendar	sl	Pogled več tednov
 name of current user, all other contact fields are valid too	calendar	sl	Ime trenutnega uporabnika, veljavna so tudi vsa druga polja stika
 name of the week (ex: monday), available for the first entry inside each day of week or daily table inside the selected range.	calendar	sl	Ime tedna, npr .: ponedeljek, ki je na voljo za prvi vnos znotraj vsakega dneva v tednu ali dnevne tabele v izbranem obsegu.
 needs action	calendar	sl	Potrebno je ukrepanje
+never notify externals (non-users) about events i create	calendar	sl	Nikoli ne obveščajte zunanjih oseb (ki niso uporabniki) o dogodkih, ki jih ustvarim
 new	calendar	sl	Nov
 new event participants	calendar	sl	Novi udeleženci dogodka
 new search with the above parameters	calendar	sl	Novo iskanje z zgornjimi parametri

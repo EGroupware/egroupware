@@ -16,11 +16,15 @@ any of	mail	zh	任何
 any status	mail	zh	任何状态
 attachments	mail	zh	附件
 by date	mail	zh	以日期
+by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	zh	默认情况下，"http://"只是用 "https://"代替。您可以随意配置 "https://proxy.egroupware.org/"，使其也能加载仅通过 http 提供的图片。
+caching of flags	mail	zh	标记缓存
+changing subject failed folder %1 does not exist	mail	zh	更改主题失败 文件夹 %1 不存在
 check message against next rule also	mail	zh	也用下一个规则检查邮件
 compose	mail	zh	撰写
 compress folder	mail	zh	压缩文件夹
 condition	mail	zh	条件
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	zh	在撰写新邮件时，配置的值将在撰写对话框中自动设置，用于尊重的领域。
+contact label	mail	zh	联系标签
 contains	mail	zh	包含
 copy to	mail	zh	复制到
 cross account forward attachment is not allowed!	mail	zh	不允许跨账户转发附件!
@@ -76,10 +80,12 @@ if message size	mail	zh	如果邮件大小
 imap	mail	zh	IMAP
 imap server	mail	zh	IMAP 服务器
 inbox	mail	zh	收件箱
+information to show on email tag	mail	zh	电子邮件标签上显示的信息
 keep a copy of the message in your inbox	mail	zh	在收件箱保留一个邮件副本
 kilobytes	mail	zh	kb
 later	mail	zh	晚一点
 less than	mail	zh	少于
+list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	zh	默认开启/激活的操作列表（例如，邮件撰写保存为 InfoLog 操作）
 mail	common	zh	邮件
 mail acl	mail	zh	访问权限
 mail filter	mail	zh	邮件过滤器
@@ -100,6 +106,7 @@ modify subject of this message	mail	zh	修改此信息的主题
 move selected to	mail	zh	将选定邮件移至
 move to	mail	zh	将选定邮件移至
 move to trash	mail	zh	移动至回收站
+name and email	mail	zh	姓名和电子邮件
 never display html emails	mail	zh	从不显示 HTML 邮件
 new subject	mail	zh	新的主题
 no access	mail	zh	无访问
@@ -110,15 +117,26 @@ no sneak preview in list	mail	zh	没有信息预览
 no subject given!	mail	zh	没有指定的主题！
 on	mail	zh	在
 one address is not valid	mail	zh	其中一个地址无效
+only email	mail	zh	仅电子邮件
+only name	mail	zh	仅名称
 only one window	mail	zh	只一个窗口
+open with collabora office	mail	zh	使用 Collabora Online 打开
 organisation	admin	zh	组织
 organization	mail	zh	组织
+organization | real name email	mail	zh	组织机构 | 真实姓名 [电子邮件］
+original message	mail	zh	原始信息
+outbox	mail	zh	发件箱
 permission denied	mail	zh	没有权限
+please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	zh	请在 "编辑帐户 "对话框的 "加密 "选项卡中配置您的 S/MIME 证书。
 please select a address	mail	zh	请选择地址
 please select the number of days to wait between responses	mail	zh	请选择回复之间要等待的天数
 please supply the message to send with auto-responses	mail	zh	请提供要自动回复的内容
 predefined addresses for compose	mail	zh	撰写的预定义地址
+preview pane	mail	zh	窗口布局
+printing	mail	zh	打印
+push notifications	mail	zh	推送通知
 quicksearch	mail	zh	快速搜索
+quicksearch (with cc)	mail	zh	快速搜索（+复制）
 refresh time in minutes	mail	zh	刷新时间分钟数
 reject with	mail	zh	拒绝
 remove all	mail	zh	全部删除
@@ -139,6 +157,10 @@ select all	mail	zh	全选
 select or insert email address	mail	zh	选择或插入电子邮件地址
 sent folder	mail	zh	发件夹
 set predefined values for compose...	mail	zh	设置用于撰写的预定义值...
+show notification for new arriving mails	mail	zh	显示新到邮件通知
+show vertical	mail	zh	垂直显示
+show vertical with all columns	mail	zh	垂直显示所有列
+show/hide preview pane in mail list view	mail	zh	在邮件列表视图中显示/隐藏预览窗格
 sieve script name	mail	zh	Sieve 脚本名
 signature	mail	zh	签名
 signature at top	mail	zh	签名在顶部
@@ -166,3 +188,4 @@ view header lines	mail	zh	查看邮件头
 when deleting messages	mail	zh	当删除邮件时
 write	mail	zh	写入
 wrote	mail	zh	写信
+you can select what info to be displayed on email tag	mail	zh	您可以选择要在电子邮件标签上显示的信息。

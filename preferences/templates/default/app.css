@@ -113,3 +113,14 @@ img.qrCode {
 table.prefTable tbody tr.prefRow .prefHelpColumn {
 	border-bottom: none;
 }
+
+/**
+ * Application passwords / tokens
+ */
+tr.revoked > td * {
+	color: grey !important;
+	font-style: italic;
+}
+td.token {
+	border: 3px solid red;
+}

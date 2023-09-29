@@ -286,9 +286,15 @@ class importexport_export_ui {
 					{
 						unset($filter[$key]);
 					}
+					// Format for date from/to
+					$date_format = 'ts';
+					if($key[0] == Api\Storage::CF_PREFIX && ($cf = (Api\Storage\Customfields::get($_appname) ?: [])[substr($key, 1)]))
+					{
+						$date_format = $cf['values']['format'] ?? ($cf['type'] == 'date' ? 'Y-m-d' : "Y-m-d H:i:s");
+					}
 					if(is_array($value) && array_key_exists('from', $value) && $value['from'])
 					{
-						$filter[$key]['from'] = Api\DateTime::to($value['from'],'ts');
+						$filter[$key]['from'] = Api\DateTime::to($value['from'], $date_format);
 					}
 					// If user selects an end date, they most likely want entries including that date
 					if(is_array($value) && array_key_exists('to',$value) && $value['to'] )
@@ -296,7 +302,7 @@ class importexport_export_ui {
 						// Adjust time to 23:59:59
 						$filter[$key]['to'] = new Api\DateTime($value['to']);
 						$filter[$key]['to']->setTime(23,59,59);
-						$filter[$key]['to'] = $filter[$key]['to']->format('ts');
+						$filter[$key]['to'] = $filter[$key]['to']->format($date_format);
 					}
 				}
 			}

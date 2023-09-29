@@ -97,6 +97,7 @@ and	common	sv	Och
 andorra	common	sv	ANDORRA
 angola	common	sv	ANGOLA
 anguilla	common	sv	ANGUILLA
+answering no will not ask you again for this browser.	common	sv	Om du svarar nej, kommer du inte längre att bli tillfrågad om denna webbläsare.
 antarctica	common	sv	ANTARKTIS
 antigua and barbuda	common	sv	ANTIGUA OCH BARBUDA
 api	common	sv	EGroupware API
@@ -416,6 +417,7 @@ field must not be empty !!!	common	sv	Fältet kan inte vara tomt
 fields	common	sv	Fält
 fiji	common	sv	FIJI
 file	common	sv	Fil
+file a file	common	sv	Lagra en fil
 file contains more than one etemplate, last one is shown !!!	common	sv	Filen innehåller mer än ett eTemplate, visar sista
 file writen	common	sv	Filen skriven
 files	common	sv	Filer
@@ -432,6 +434,8 @@ floating point	common	sv	Flyttal
 folder already exists.	common	sv	Katalogen finns redan
 force selectbox	common	sv	Tvinga Valruta
 foreign key	common	sv	Foreign Key
+formatted business address	common	sv	Formaterad företagsadress
+formatted private address	common	sv	Formaterad privat adress
 formatted text (html)	common	sv	Formaterad Text (HTML)
 france	common	sv	FRANKRIKE
 french guiana	common	sv	FRANSKA GUYANA
@@ -440,9 +444,11 @@ french southern territories	common	sv	FRANSKA SÖDRA TERRITORIERNA
 friday	common	sv	Fredag
 ftp	common	sv	FTP
 fullname	common	sv	Fullständigt namn
+fullscreen	common	sv	Helskärm
 fullscreen mode	common	sv	Helskärm
 gabon	common	sv	GABON
 gambia	common	sv	GAMBIA
+general fields:	preferences	sv	Allmänna fält:
 general menu	common	sv	Allmän meny
 georgia	common	sv	GEORGIEN
 german	common	sv	Tysk
@@ -549,6 +555,7 @@ insert placeholder	common	sv	Infoga en platshållare
 insert row after	common	sv	Infoga rad efter
 insert row before	common	sv	Infoga rad före
 insert timestamp into description field	common	sv	Infoga tidsstämpel i beskrivningsfältet
+install egroupware as mail-handler?	common	sv	Installera EGroupware som e-posthanterare?
 integer	common	sv	Heltal
 international	common	sv	Internationell
 invalid 2-factor authentication code	common	sv	Ogiltig kod för 2-faktorsautentisering
@@ -670,6 +677,7 @@ month	common	sv	Månad
 montserrat	common	sv	MONTSERRAT
 more	common	sv	Fler
 morocco	common	sv	MAROCKO
+move	common	sv	Flytta
 mozambique	common	sv	MOZAMBIQUE
 multicolumn indices	common	sv	Multikolumn Index
 multiple	common	sv	Flera

@@ -1398,7 +1398,7 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\PushIface
 	/**
 	 * Set vacation message for given user
 	 *
-	 * @param int|string $_euser nummeric account_id or imap username
+	 * @param int|string $_euser numeric account_id or imap username
 	 * @param array $_vacation
 	 * @param string $_scriptName =null
 	 * @return boolean
@@ -1418,9 +1418,7 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\PushIface
 			$this->scriptName =& $this->sieve->scriptName;
 			$this->error =& $this->sieve->error;
 		}
-		$ret = $this->setVacation($_vacation, $_scriptName);
-
-		return $ret;
+		return $this->setVacation($_vacation, $_scriptName);
 	}
 
 	/**

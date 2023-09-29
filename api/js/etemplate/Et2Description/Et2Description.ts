@@ -8,7 +8,7 @@
  */
 
 import {Et2Widget} from "../Et2Widget/Et2Widget";
-import {css, html, LitElement, render} from "@lion/core";
+import {css, html, LitElement, render} from "lit";
 import {et2_IDetachedDOM} from "../et2_core_interfaces";
 import {activateLinks} from "../ActivateLinksDirective";
 import {et2_csvSplit} from "../et2_core_common";

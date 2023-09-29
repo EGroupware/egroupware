@@ -88,6 +88,8 @@ class Request
 		// do we have a single request or an array of queued requests
 		if ($menuaction == 'api.queue')
 		{
+			// close session to NOT block other requests (api.queue should NOT be used for changing something in session)
+			$GLOBALS['egw']->session->commit_session();
 			$responses = array();
 			$response = Response::get();
 			foreach($parameters[0] as $uid => $data)

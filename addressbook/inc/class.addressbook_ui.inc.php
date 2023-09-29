@@ -280,7 +280,17 @@ class addressbook_ui extends addressbook_bo
 		if ($_GET['search']) {
 			$content['nm']['search'] = $_GET['search'];
 		}
-		if (isset($typeselection)) $content['nm']['col_filter']['tid'] = $typeselection;
+		if(isset($typeselection))
+		{
+			$content['nm']['col_filter']['tid'] = $typeselection;
+		}
+
+		// disable kanban column if we have no kanban
+		if(empty($GLOBALS['egw_info']['user']['apps']['kanban']))
+		{
+			$content['nm']['no_kanban'] = true;
+		}
+
 		// save the tid for use in creating new addressbook entrys via UI. Current tid is to be used as type of new entrys
 		//error_log(__METHOD__.__LINE__.' '.$content['nm']['col_filter']['tid']);
 		Api\Cache::setSession('addressbook','active_tid',$content['nm']['col_filter']['tid']);

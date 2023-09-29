@@ -75,9 +75,28 @@ class HiddenUpload extends AnonymousList
 		$vfs = Vfs::mount();
 		$GLOBALS['egw']->sharing[Sharing::get_token($props['ui_path'])]->redo();
 		parent::handle_upload_action($action, $selected, $dir, null, $arr);
-		if ($arr['files'])
+
+		// Parent upload action ruins our mount and says the upload failed.
+		// Do the mount again
+		$GLOBALS['egw']->sharing[Sharing::get_token($props['ui_path'])]->redo();
+
+		// Check ourselves for success
+		foreach($selected as $filekey => $file_info)
 		{
-			$arr['msg'] .= "\n" . lang("The uploaded file is only visible to the person sharing these files with you, not to yourself or other people knowing this sharing link.");
+			if(!is_array($file_info))
+			{
+				continue;
+			}
+			if($arr['uploaded'][$filekey] && Vfs::stat($arr['uploaded'][$filekey]['path']))
+			{
+				// success
+				$arr['files']++;
+				$arr['errs']--;
+			}
+		}
+		if($arr['files'])
+		{
+			$arr['msg'] = lang("The uploaded file is only visible to the person sharing these files with you, not to yourself or other people knowing this sharing link.");
 			$arr['type'] = 'notice';
 		}
 		else

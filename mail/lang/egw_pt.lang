@@ -38,8 +38,11 @@ authentication	mail	pt	Autenticação
 available personal email-accounts/profiles	mail	pt	EMail-Accounts/Profiles pessoais disponíveis
 but check shared folders	mail	pt	mas verifique as pastas compartilhadas
 by date	mail	pt	Por data
+by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	pt	Por defeito, 'http://' é simplesmente substituído por 'https://'. Pode configurar 'https://proxy.egroupware.org/' para carregar também imagens disponíveis apenas via http.
+caching of flags	mail	pt	Armazenamento em cache de bandeiras
 can not open imap connection	mail	pt	Não é possível abrir conexão IMAP
 changed profile	mail	pt	perfil alterado
+changing subject failed folder %1 does not exist	mail	pt	Falha na alteração do assunto A pasta %1 não existe
 check message against next rule also	mail	pt	Verifique mensagem contra seguinte regra também
 check to save as infolog on send	mail	pt	verificar para salvar como infolog em enviar
 check to save as tracker entry on send	mail	pt	verificar para salvar como trackerentry em enviar
@@ -54,6 +57,7 @@ confirm attach message	mail	pt	Confirme anexar mensagem
 confirm move to folder	mail	pt	Confirme Mover para pasta
 connect to profile %1	mail	pt	Conecte-se ao Perfil 1%
 connection status	mail	pt	Status da conexão
+contact label	mail	pt	Etiqueta de contacto
 contains	mail	pt	Contém
 contains(*)	mail	pt	Contém (*)
 copied %1 message(s) from %2 to %3	mail	pt	% copiados 1 mensagem (s) de% 2 a 3%
@@ -196,6 +200,7 @@ importance	mail	pt	importância
 important	mail	pt	importância
 in mailbox: %1, with id: %2, and partid: %3	mail	pt	Na caixa de correio:% 1, com ID:% 2, e PartID:% 3
 inbox	mail	pt	CAIXA DE ENTRADA
+information to show on email tag	mail	pt	Informações a mostrar na etiqueta de correio eletrónico
 inline	mail	pt	Em linha
 job	mail	pt	trabalho
 junk	mail	pt	Junco
@@ -204,6 +209,7 @@ keep a copy of the message in your inbox	mail	pt	Mantenha uma cópia da mensagem
 kilobytes	mail	pt	kilobytes
 later	mail	pt	mais tarde
 less than	mail	pt	menos de
+list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	pt	Lista de acções a ativar/ativar por predefinição (por exemplo, ação de composição de correio eletrónico guardar como InfoLog)
 mail	common	pt	Correio
 mail acl	mail	pt	Direitos de acesso
 mail filter	mail	pt	Filtro de correio
@@ -231,6 +237,7 @@ move selected to	mail	pt	Mover mensagens seleccionadas para
 move to	mail	pt	Mover-se para
 move to trash	mail	pt	Mover para o lixo
 moved %1 message(s) from %2 to %3	mail	pt	movida% 1 mensagem (s) de% 2 a 3%
+name and email	mail	pt	Nome e correio eletrónico
 name of account	mail	pt	Nome da conta
 never display html emails	mail	pt	Nunca apresentar mensagens HTML
 new mail notification	mail	pt	Notificação de correio Nova
@@ -256,14 +263,19 @@ notify about new mail in this folders	mail	pt	Notificar sobre novas mensagens ne
 notify when new mails arrive in these folders	mail	pt	notifique quando novos e-mails chegam nestas pastas
 on	mail	pt	em
 one address is not valid	mail	pt	Um endereço não é válido
+only email	mail	pt	Apenas o correio eletrónico
+only name	mail	pt	Apenas o nome
 only one window	mail	pt	Apenas numa janela
 open in html mode	mail	pt	Abrir em modo HTML
 open in text mode	mail	pt	Abrir em modo de texto
-organisation	admin	pt	empresa
+open with collabora office	mail	pt	Abrir com Collabora Online
+organisation	admin	pt	Organização
 organization	mail	pt	empresa
-original message	mail	pt	mensagem original
+organization | real name email	mail	pt	Organização | Nome real [Email]
+original message	mail	pt	Mensagem original
 outbox	mail	pt	Caixa de saída
 permission denied	mail	pt	Permissão negada
+please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	pt	Configure o seu certificado S/MIME no separador Encriptação localizado na caixa de diálogo Editar conta.
 please select a address	mail	pt	Por favor, seleccione um endereço
 please select the number of days to wait between responses	mail	pt	Por favor, seleccione o número de dias a esperar entre respostas
 please supply the message to send with auto-responses	mail	pt	Por favor, insira uma mensagem a enviar como auto-resposta
@@ -273,9 +285,13 @@ prevent managing filters	mail	pt	Impedir filtros gestão
 prevent managing folders	mail	pt	Impedir pastas gestão
 prevent managing notifications	mail	pt	Impedir notificações gestão
 prevent managing vacation notice	mail	pt	Impedir gestão aviso de férias
+preview pane	mail	pt	Apresentação da janela
 primary profile	mail	pt	Perfil primário
+printing	mail	pt	Impressão
 printview	mail	pt	printview
-quicksearch	mail	pt	Pesquisa simples
+push notifications	mail	pt	Notificações push
+quicksearch	mail	pt	Pesquisa rápida
+quicksearch (with cc)	mail	pt	Pesquisa rápida (+Cópia)
 quota not provided by server	mail	pt	Cota não fornecido pelo servidor
 quota: %1	mail	pt	Quota: 1%
 read	mail	pt	ler
@@ -340,6 +356,10 @@ set predefined values for compose...	mail	pt	Definir valores pré-definidos para
 should new messages show up on the home page	mail	pt	Caso as novas mensagens aparecem na página inicial
 show all folders	mail	pt	mostrar todas as pastas
 show new messages on home page	mail	pt	mostrar novas mensagens em home page
+show notification for new arriving mails	mail	pt	Mostrar notificação de novas mensagens recebidas
+show vertical	mail	pt	Mostrar vertical
+show vertical with all columns	mail	pt	Mostrar vertical com todas as colunas
+show/hide preview pane in mail list view	mail	pt	Mostrar/ocultar painel de pré-visualização na vista de lista de correio
 sieve	mail	pt	Peneira
 sieve connection status	mail	pt	Peneira Status da conexão
 sieve not activated	mail	pt	Peneirar a não activação
@@ -423,4 +443,5 @@ yes, but mask all usernames and passwords	mail	pt	Sim, mas mascarar todos os nom
 yes, offer copy option	mail	pt	sim, oferecer opção de cópia
 yes, only trigger connection reset	mail	pt	sim, apenas desencadear redefinição de conexão
 yes, show basic info only	mail	pt	sim, mostrar apenas informações básicas
+you can select what info to be displayed on email tag	mail	pt	Pode selecionar as informações a apresentar na etiqueta de correio eletrónico.
 you've got new mail	mail	pt	Você tem novas mensagens

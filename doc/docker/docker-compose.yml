@@ -40,8 +40,6 @@ volumes:
   # for Mac and Windows, do NOT use a directory for the DB, as the Docker host is in a VM!
   db:
   sessions:
-  # cache files from compose, npm and yarn (actually /root inside the container)
-  cache:
   # store Rocket.Chat MongoDB on an (internal) Volume
   mongo:
   # directory to store MongoDB dumps
@@ -58,8 +56,8 @@ volumes:
 
 services:
   egroupware:
-    # you can also use tags like: 7.4, 8.0 or 8.1 depending on the PHP version you want to use
-    image: egroupware/development:latest
+    # you can also use a branch as tags like e.g. "23.1" or a specific release like "23.1.20230911"
+    image: egroupware/egroupware:latest
     # setting a default language for a new installation
     #environment:
     #- LANG=de
@@ -67,7 +65,6 @@ services:
       - $PWD/sources:/var/www
       - $PWD/data:/var/lib/egroupware
       - $PWD/sessions:/var/lib/php/sessions
-      - $PWD/cache:/root
       - $PWD/push-config:/var/lib/egroupware-push
     # if you want to use the host database:
     # 1. comment out the whole db service below AND
@@ -89,28 +86,23 @@ services:
       # for internal db service you should to specify a root password here AND in db service
       # a database "egroupware" with a random password is created for you on installation (password is stored in header.inc.php in data directory)
       #- EGW_DB_ROOT=root
-      - EGW_DB_ROOT_PW=secret
-      # alternativly you can specify an already existing database with full right by the given user!
+      - EGW_DB_ROOT_PW=${EGW_DB_ROOT_PW}
+      # alternatively you can specify an already existing database with full right by the given user!
       #- EGW_DB_NAME=egroupware
       #- EGW_DB_USER=egroupware
       #- EGW_DB_PASS=
+      #
+      # other php.ini values to set in the container and their current defaults
+      #- EGW_SESSION_TIMEOUT=14000
+      #- EGW_APC_SHM_SIZE=128M
+      #- EGW_MEMORY_LIMIT=128M
+      #- EGW_MAX_EXECUTION_TIME=90
       #
       # further post_install.php arguments can be passed as a single enviroment variable with space separated assignments
       # "<name1>=<value1> <name2>=<value2>" see https://github.com/EGroupware/egroupware/blob/master/doc/rpm-build/post_install.php#L17
       # to configure eg. LDAP for authentication and account storage use
       #- EGW_POST_INSTALL='account-auth=ldap,ldap ldap_base=ou=egroupware,dc=example,dc=org ldap_host=tls://ldap.example.org ldap_admin=cn=admin,$base ldap_admin_pw=secret ldap_context=cn=users,$base ldap_group_context=cn=groups,$base'
       #
-      # extra non-default apps (need to start with EGW_EXTRA_APP!)
-      #
-      # EPL apps (need extra credentials!)
-      #- EGW_EXTRA_APPS_EPL=https://github.com/EGroupwareGmbH/epl.git https://github.com/EGroupwareGmbH/esyncpro.git https://github.com/EGroupwareGmbH/policy.git https://github.com/EGroupwareGmbH/webauthn.git
-      # old Wiki
-      #- EGW_EXTRA_APP_WIKI=https://github.com/EGroupware/wiki.git
-      # old API and eTemplate(1), required for upgrades from before 14.3
-      #- EGW_EXTRA_APP_OLDAPI=https://github.com/EGroupware/phpgwapi.git https://github.com/EGroupware/etemplate.git
-      #
-      # XDEBUG_REMOTE_HOST need to be set, if the host running the IDE is different from 172.17.0.1 (Mac can use docker.for.mac.localhost)
-      - XDEBUG_REMOTE_HOST=172.17.0.1
     restart: always
     depends_on:
       - db
@@ -118,9 +110,7 @@ services:
     # set the ip-address of your docker host AND your official DNS name so EGroupware
     # can access Rocket.Chat or Collabora without the need to go over your firewall
     #extra_hosts:
-    #- "my.host.name:ip-address"
-    extra_hosts:
-      - "devbox.egroupware.org:172.17.0.1"
+    #- "my.host.name:172.17.0.1"
 
   nginx:
     image: nginx:stable-alpine
@@ -151,8 +141,8 @@ services:
     image: mariadb:10.6
     environment:
       #- MYSQL_ROOT=root
-      - MYSQL_ROOT_PASSWORD=secret
-    #- MARIADB_AUTO_UPGRADE=true
+      - MYSQL_ROOT_PASSWORD=${EGW_DB_ROOT_PW}
+      #- MARIADB_AUTO_UPGRADE=true
     volumes:
       - db:/var/lib/mysql
     # to add an own persistent configuration
@@ -214,9 +204,7 @@ services:
     # set the ip-address of your docker host AND your official DNS name so Collabora
     # can access EGroupware without the need to go over your firewall
     #extra_hosts:
-    #- "my.host.name:ip-address"
-    extra_hosts:
-      - "devbox.egroupware.org:172.17.0.1"
+    #- "my.host.name:172.17.0.1"
     depends_on:
       - collabora-init
 
@@ -253,9 +241,7 @@ services:
     # set the ip-address of your docker host AND your official DNS name so Rocket.Chat
     # can access EGroupware without the need to go over your firewall
     #extra_hosts:
-    #- "my.host.name:ip-address"
-    extra_hosts:
-      - "devbox.egroupware.org:172.17.0.1"
+    #- "my.host.name:172.17.0.1"
 
   # MongoDB for Rocket.Chat
   mongo:
@@ -273,21 +259,6 @@ services:
     command: 'bash -c "for i in `seq 1 30`; do mongo mongo/rocketchat --eval \"rs.initiate({ _id: ''rs0'', members: [ { _id: 0, host: ''localhost:27017'' } ]})\" && s=$$? && break || s=$$?; echo \"Tried $$i times. Waiting 5 secs...\"; sleep 5; done; (exit $$s)"'
     depends_on:
       - mongo
-
-  # phpMyAdmin
-  phpmyadmin:
-    restart: unless-stopped
-    image: phpmyadmin
-    container_name: phpmyadmin
-    hostname: phpmyadmin
-    # pre 20.1 installs run MariaDB on the host and need to pass the socket (to use egroupware user and it's password only valid on localhost)
-    #volumes:
-    #  - /var/run/mysqld/mysqld.sock:/tmp/mysql.sock
-    environment:
-      # PMA_HOST: use localhost, if you use a socket (pre 20.1 install) or db for 20.1+ installations
-      - PMA_HOST=db
-      # phpMyAdmin needs the full URL incl. protocol, domain, path and a trailing slash!
-      - PMA_ABSOLUTE_URI=http://localhost/phpmyadmin/
 
   # Portainer: Docker GUI (needs to be enabled in nginx.conf too!)
 #   portainer:

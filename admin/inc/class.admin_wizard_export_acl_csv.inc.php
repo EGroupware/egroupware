@@ -48,6 +48,10 @@ class admin_wizard_export_acl_csv extends importexport_wizard_basic_export_csv
 		unset($this->export_fields['all_custom_fields']);
 		foreach($content['fields'] as $field_id => $field)
 		{
+			if(!is_array($field))
+			{
+				continue;
+			}
 			if($field['field'] == 'all_custom_fields')
 			{
 				unset($content['fields'][$field_id]);

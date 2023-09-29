@@ -73,9 +73,9 @@ import {Et2Dialog} from "./Et2Dialog/Et2Dialog";
 import {Et2Select} from "./Et2Select/Et2Select";
 import {loadWebComponent} from "./Et2Widget/Et2Widget";
 import {Et2AccountFilterHeader} from "./Et2Nextmatch/Headers/AccountFilterHeader";
-import {Et2SelectCategory} from "./Et2Select/Et2SelectCategory";
+import {Et2SelectCategory} from "./Et2Select/Select/Et2SelectCategory";
 import {Et2Searchbox} from "./Et2Textbox/Et2Searchbox";
-import {LitElement} from "@lion/core";
+import type {LitElement} from "lit";
 
 //import {et2_selectAccount} from "./et2_widget_SelectAccount";
 let keep_import : Et2AccountFilterHeader
@@ -1991,7 +1991,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			columns.push({
 				id: LETTERS,
 				caption: this.egw().lang('Search letter'),
-				visibility: (this.header.lettersearch.is(':visible') ? et2_dataview_column.ET2_COL_VISIBILITY_VISIBLE : et2_dataview_column.ET2_COL_VISIBILITY_ALWAYS_NOSELECT)
+				visibility: (this.header.lettersearch.is(':visible') ? et2_dataview_column.ET2_COL_VISIBILITY_VISIBLE : et2_dataview_column.ET2_COL_VISIBILITY_INVISIBLE)
 			});
 		}
 
@@ -2201,6 +2201,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			{
 				visibility[columnMgr.columns[i].id].visible = true;
 			}
+
 			// Custom fields are listed seperately in column list, but are only 1 column
 			if(widget && widget.instanceOf(et2_nextmatch_customfields))
 			{
@@ -2228,6 +2229,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 				}
 				(<et2_nextmatch_customfields><unknown>widget).set_visible(visible);
 			}
+			this.columns[i].visible = visibility[columnMgr.columns[i].id].visible;
 		}
 		columnMgr.setColumnVisibilitySet(visibility);
 
@@ -3464,7 +3466,6 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 			this.category = this._build_select('cat_id', settings.cat_is_select ?
 														 'et2-select' : 'et2-select-cat', settings.cat_id, settings.cat_is_select !== true, {
 				multiple: false,
-				tags: true,
 				class: "select-cat",
 				value_class: settings.cat_id_class
 			});
@@ -3482,7 +3483,6 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 			this.filter2 = this._build_select('filter2', 'et2-select', settings.filter2,
 				settings.filter2_no_lang, {
 					multiple: false,
-					tags: settings.filter2_tags,
 					class: "select-cat",
 					value_class: settings.filter2_class
 				});
@@ -3689,7 +3689,7 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 			// Not mail, since it needs to be different
 			&& !['mail'].includes(this.getInstanceManager().app))
 		{
-			widget_options.empty_label = this.egw().lang('All categories');
+			widget_options.emptyLabel = this.egw().lang('All categories');
 		}
 
 		// Create widget
@@ -3741,11 +3741,11 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 			});
 		}
 		// Sometimes the filter does not display the current value
-		// Call sync to try to get it to display
+		// Work-around: Request another update to get it to display
 		select.updateComplete.then(async() =>
 		{
 			await select.updateComplete;
-			select.syncItemsFromValue();
+			select.requestUpdate("value");
 		})
 		return select;
 	}
@@ -3935,7 +3935,13 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 			let change = function(_node)
 			{
 				// Call previously set change function
-				const result = widget_change?.call(_widget, _node, header.nextmatch, _widget);
+				const params = [_node, header.nextmatch, _widget];
+				if(widget_change?.toString().startsWith("function (ev, widget) {\n    // Dump the executed code for debugging"))
+				{
+					// Legacy - do not pass the nextmatch, it will override widget
+					params.splice(1, 1);
+				}
+				const result = widget_change?.apply(_widget, params);
 
 				// Find current value in activeFilters
 				let entry = header.nextmatch.activeFilters;
@@ -4190,12 +4196,17 @@ export class et2_nextmatch_customfields extends et2_customfields_list implements
 				{
 					field.values.splice(field.values.findIndex((i) => i.value == ''), 1);
 				}
+				let attrs = {
+					id: cf_id,
+					emptyLabel: field.label
+				};
+				if(field.values && field.values["@"])
+				{
+					attrs.searchUrl = field.values["@"];
+				}
 				widget = loadWebComponent(
 					field.type == 'select-account' ? 'et2-nextmatch-header-account' : "et2-nextmatch-header-filter",
-					{
-						id: cf_id,
-						empty_label: field.label
-					},
+					attrs,
 					this
 				);
 			}
@@ -4203,7 +4214,7 @@ export class et2_nextmatch_customfields extends et2_customfields_list implements
 			{
 				widget = loadWebComponent("et2-nextmatch-header-entry", {
 					id: cf_id,
-					only_app: field.type,
+					onlyApp: field.type,
 					placeholder: field.label
 				}, this);
 			}

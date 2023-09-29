@@ -8,7 +8,7 @@
  */
 
 
-import {html, LitElement} from "@lion/core";
+import {html, LitElement} from "lit";
 import {formatDate, parseDate} from "./Et2Date";
 import {et2_IDetachedDOM} from "../et2_core_interfaces";
 import {Et2Widget} from "../Et2Widget/Et2Widget";

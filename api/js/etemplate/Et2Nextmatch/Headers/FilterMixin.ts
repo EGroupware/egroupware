@@ -1,6 +1,6 @@
 import {egw} from "../../../jsapi/egw_global";
 import {et2_INextmatchHeader, et2_nextmatch} from "../../et2_extension_nextmatch";
-import {LitElement} from "@lion/core";
+import {LitElement} from "lit";
 
 // Export the Interface for TypeScript
 type Constructor<T = LitElement> = new (...args : any[]) => T;

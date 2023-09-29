@@ -903,3 +903,33 @@ function api_upgrade23_1_001()
 
 	return $GLOBALS['setup_info']['api']['currentver'] = '23.1.002';
 }
+
+function api_upgrade23_1_002()
+{
+	$GLOBALS['egw_setup']->oProc->AddColumn('egw_sharing', 'share_password', array(
+		'type'      => 'varchar',
+		'precision' => '128',
+		'comment'   => 'optional reversible password'
+	));
+
+	return $GLOBALS['setup_info']['api']['currentver'] = '23.1.003';
+}
+
+function api_upgrade23_1_003()
+{
+	$GLOBALS['egw_setup']->oProc->RenameColumn('egw_sharing', 'share_password', 'share_pw_reversable');
+	$GLOBALS['egw_setup']->oProc->AddColumn('egw_sharing', 'share_encryption',
+											array(
+												'type'    => 'int', 'nullable' => true,
+												'comment' => 'Type of encryption, user or system (See Credentials)'
+											)
+	);
+
+	$GLOBALS['egw_setup']->oProc->AddColumn('egw_sharing', 'share_modified',
+											array('type' => 'timestamp', 'precision' => '8', 'nullable' => False),
+	);
+	$GLOBALS['egw_setup']->oProc->AddColumn('egw_sharing', 'share_modifier',
+											array('type' => 'int', 'meta' => 'user', 'precision' => '4')
+	);
+	return $GLOBALS['setup_info']['api']['currentver'] = '23.1.004';
+}

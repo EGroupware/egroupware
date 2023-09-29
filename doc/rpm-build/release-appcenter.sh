@@ -8,6 +8,8 @@ packaging=`date +%Y%m%d`
 # default is now Docker!
 postfix=''
 project=stylite-epl
+# UCS version
+ucs=5.0
 
 while [ $# -gt 0 ]
 do
@@ -52,8 +54,6 @@ grep -q "$version.$packaging" $(dirname $0)/debian.changes || {
   }
 }
 
-ucs=4.4
-
 univention-appcenter-control list | tee /tmp/ucs-apps | egrep "$ucs/egroupware=$version.$packaging$postfix" || {
 	copy_app=$(cat /tmp/ucs-apps | egrep "$ucs/egroupware=$version\.[0-9.]+$postfix$" | tail -1)
 	[ -z "$copy_app" ] && copy_app=$ucs/egroupware
@@ -73,7 +73,7 @@ $debug univention-appcenter-control upload $ucs/egroupware=$version.$packaging$p
 # replace images so Univention can automatic fetch them into their repo
 #uni_version=$(curl https://appcenter-test.software-univention.de/univention-repository/4.4/maintained/component/ 2>/dev/null | grep egroupware_$packaging | sed 's|.*href="\(egroupware_[0-9]*\)/".*|\1|')
 #curl https://appcenter-test.software-univention.de/univention-repository/4.4/maintained/component/$uni_version/compose 2>/dev/null > /tmp/compose
-univention-appcenter-control get 4.4/egroupware=$version.$packaging$postfix --json | jq -r .compose > /tmp/compose
+univention-appcenter-control get $ucs/egroupware=$version.$packaging$postfix --json | jq -r .compose > /tmp/compose
 sed -i "" \
 	-e "s|image:.*docker.software-univention.de/egroupware-egroupware.*|image: download.egroupware.org/egroupware/epl:$version.$packaging|" \
 	-e "s|image:.*docker.software-univention.de/egroupware-push.*|image: phpswoole/swoole:5.0-php8.1-alpine|" \

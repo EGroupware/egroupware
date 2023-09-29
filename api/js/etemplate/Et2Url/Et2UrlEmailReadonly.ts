@@ -11,7 +11,6 @@
 import {IsEmail} from "../Validators/IsEmail";
 import {Et2UrlEmail} from "./Et2UrlEmail";
 import {Et2UrlReadonly} from "./Et2UrlReadonly";
-import {Et2EmailTag} from "../Et2Select/Tag/Et2EmailTag";
 
 /**
  * @customElement et2-url-email_ro
@@ -89,7 +88,7 @@ export class Et2UrlEmailReadonly extends Et2UrlReadonly
 			{
 				let email;
 				if (IsEmail.EMAIL_PREG.exec(email=this.value) ||
-					IsEmail.EMAIL_PREG.exec(email=this.value+' <'+this.statustext+'>'))
+					IsEmail.EMAIL_PREG.exec(email = '"' + this.value + '" <' + this.statustext + '>'))
 				{
 					Et2UrlEmail.action(email);
 				}

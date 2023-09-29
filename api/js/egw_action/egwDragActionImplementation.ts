@@ -1,3 +1,13 @@
+/**
+ * EGroupware egw_action framework - egw action framework
+ *
+ * @link https://www.egroupware.org
+ * @author Andreas Stöckel <as@stylite.de>
+ * @copyright 2011 by Andreas Stöckel
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @package egw_action
+ */
+
 import {EgwActionImplementation} from "./EgwActionImplementation";
 import {egw} from "../jsapi/egw_global";
 import {EgwActionObjectInterface} from "./EgwActionObjectInterface";
@@ -100,8 +110,10 @@ export class EgwDragActionImplementation implements EgwActionImplementation {
             }
 
             // Bind mouse handlers
-            //TODO can i just remove jquery.off??
-            //jQuery(node).off("mousedown")
+            //et2_dataview_view_aoi binds mousedown event in et2_dataview_rowAOI to "egwPreventSelect" function from egw_action_common via jQuery.mousedown
+            //jQuery(node).off("mousedown",egwPreventSelect)
+            //et2_dataview_view_aoi binds mousedown event in et2_dataview_rowAOI to "egwPreventSelect" function from egw_action_common via addEventListener
+            //node.removeEventListener("mousedown",egwPreventSelect)
             node.addEventListener("mousedown", (event) => {
                 if (_context.isSelection(event)) {
                     node.setAttribute("draggable", false);

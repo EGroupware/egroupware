@@ -2,7 +2,7 @@
  * Sharable colors definition styles constant
  */
 
-import {css} from "@lion/core";
+import {css} from "lit";
 
 export const colorsDefStyles = css`
 	:host {

@@ -965,12 +965,12 @@ export class CalendarApp extends EgwApp
 		let sortablejs = Sortable.create(sortable, {
 			ghostClass: 'srotable_cal_wk_ph',
 			draggable: state.view == 'day' ? '.calendar_calDayColHeader' : '.view_row',
-			handle: state.view == 'day' ? '.calendar_calToday' : '.calendar_calGridHeader',
+			handle: state.view == 'day' ? '.blue_title' : '.calendar_calGridHeader',
 			animation: 100,
 			filter: state.view == 'day' ? '.calendar_calTimeGridScroll' : '.calendar_calDayColHeader',
 			preventOnFilter: false, // Required for dnd fullday nonblocking
 			dataIdAttr: 'data-owner',
-			direction: state.view == 'day' ? 'horizental' : 'vertical',
+			direction: state.view == 'day' ? 'horizontal' : 'vertical',
 			sort: state.owner.length > 1 && (
 				state.view == 'day' && state.owner.length < parseInt('' + egw.preference('day_consolidate', 'calendar')) ||
 				(state.view == 'week' || state.view == 'day4') && state.owner.length < parseInt('' + egw.preference('week_consolidate', 'calendar'))), // enable/disable sort
@@ -2057,194 +2057,26 @@ export class CalendarApp extends EgwApp
 			//options.template = 'calendar.add';
 			return this.egw.open(null, 'calendar', 'edit', options, '_blank', 'calendar');
 		}
-		// Hold on to options, may have to pass them into edit (rather than all, just send what the programmer wanted)
-		this.quick_add = options;
-
-		// Open dialog to use as target
-		let add_dialog = Et2Dialog.show_dialog(null, '', 'Add new event', null, [], Et2Dialog.PLAIN_MESSAGE, "", this.egw);
-		add_dialog.id = "quick_add";
-		// Position by the event
-		if(event)
+		let menuaction = 'calendar.calendar_uiforms.edit&template=calendar.add';
+		for(const name in options)
 		{
-			add_dialog.config = {...add_dialog.config, referenceNode: event.getDOMNode()};
+			menuaction += '&'+name+'='+encodeURIComponent(options[name]);
 		}
-
-		// Call the server, get it into the dialog
-		options = jQuery.extend({menuaction: 'calendar.calendar_uiforms.ajax_add', template: 'calendar.add'}, options);
-		this.egw.json(
-			this.egw.link('/json.php', options),
-			[options],
-			function(data)
-			{
-				if(data.type)
-				{
-					return false;
-				}
-				var content = {
-					html: data[0],
-					js: ''
-				};
-
-				egw_seperateJavaScript(content);
-
-				// Check for right template in the response
-				if(content.html.indexOf('calendar-add') <= 0)
-				{
-					return false;
-				}
-				// Insert the content into the correct place
-				add_dialog._contentNode.replaceChildren();
-				add_dialog._contentNode.insertAdjacentHTML("beforeend", content.html);
-				let template = add_dialog.querySelector("[id='calendar-add']");
-				if(template)
-				{
-					template.addEventListener("load", add_dialog._adoptTemplateButtons);
-				}
-			}
-		).sendRequest();
-
-		add_dialog.addEventListener("close", (ev) =>
+		return this.egw.openDialog(menuaction).then(dialog =>
 		{
-			// Wait a bit to make sure etemplate button finishes processing, or it will error
-			window.setTimeout(function()
+			// When the dialog is closed, clean up the placeholder
+			dialog.getComplete().then(() =>
 			{
-				if(event && event.destroy)
+				if(event)
 				{
 					event.destroy();
 				}
-				let template = etemplate2.getById('calendar-add');
-				if(template && template.name === 'calendar.add')
-				{
-					template.clear();
-					delete app.calendar.quick_add;
-				}
-				else if(template || (template = etemplate2.getById("calendar-conflicts")))
-				{
-					// Open conflicts
-					var data = jQuery.extend(
-						{menuaction: 'calendar.calendar_uiforms.ajax_conflicts'},
-						template.widgetContainer.getArrayMgr('content').data,
-						app.calendar.quick_add
-					);
-
-					egw.openPopup(
-						egw.link(
-							'/index.php',
-							data
-						),
-						850, 300,
-						'conflicts', 'calendar'
-					);
-
-					delete app.calendar.quick_add;
-
-					// Do not submit this etemplate
-					return false;
-				}
-
-			  }.bind({dialog: add_dialog, event: ev}), 1000);
+			});
 		});
 	}
 
 	/**
-	 * Callback for save button in add dialog
-	 *
-	 * @param {Event} event
-	 * @param {et2_button} widget
-	 * @returns {Boolean}
-	 */
-	add_dialog_save(event, widget)
-	{
-		// Include all sent values so we can pass on things that we don't have UI widgets for
-		this.quick_add = this._add_dialog_values(widget);
-		widget.getInstanceManager().isInvalid().then((invalid) =>
-		{
-			if(invalid.filter((widget) => widget).length == 0)
-			{
-				// Close the dialog, if everything is OK
-				(<Et2Dialog><unknown>document.querySelector('et2-dialog#quick_add')).hide();
-			}
-		});
-
-		// Mess with opener so update opener in response works
-		window.opener = window;
-		window.setTimeout(function() {window.opener = null;}, 1000);
-
-		// Proceed with submit, though it will fail if something is invalid
-		return true;
-	}
-
-
-	/**
-	 * Callback for edit button in add dialog
-	 *
-	 * @param {Event} event
-	 * @param {et2_button} widget
-	 * @returns {Boolean}
-	 */
-	add_dialog_edit(event, widget)
-	{
-		var title=widget.getRoot().getWidgetById('title');
-		let options = jQuery.extend(this.quick_add, this._add_dialog_values(widget));
-
-		// Open regular edit
-		egw.open(null,'calendar','edit',options);
-
-		// Close the dialog
-		(<Et2Dialog><unknown>document.querySelector('et2-dialog#quick_add')).close()
-
-		// Do not submit this etemplate
-		return false;
-	}
-
-	/**
-	 * Include some additional values so we can pass on things that we don't have
-	 * UI widgets for in the add template
-	 *
-	 * @param {et2_widget} widget
-	 * @returns {Object}
-	 */
-	_add_dialog_values(widget)
-	{
-		// Some select things to pass on, since not everything will fit
-		var mgr = widget.getRoot().getArrayMgr('content');
-		var values : any = {
-			owner: typeof mgr.getEntry('owner') == 'object' ? mgr.getEntry('owner') : (mgr.getEntry('owner')+'').split(','),
-			participants: [],
-			whole_day: mgr.getEntry('whole_day')
-		};
-		if(mgr.getEntry('link_to') && typeof mgr.getEntry('link_to').to_id === 'object')
-		{
-			var links = mgr.getEntry('link_to').to_id;
-
-			values.link_app = [];
-			values.link_id = [];
-			for( var id in links)
-			{
-				values.link_app.push(links[id].app);
-				values.link_id.push(links[id].id);
-			}
-		}
-		for(var id in mgr.getEntry('participants'))
-		{
-			var participant = mgr.getEntry('participants')[id];
-			if (participant && participant.uid)
-			{
-				values.participants.push(participant.uid);
-			}
-		}
-		let send = jQuery.extend(
-				values,
-				widget.getInstanceManager().getValues(widget.getRoot())
-		);
-		// Don't need the checkbox
-		delete send.new_event_dialog;
-
-		return send;
-	}
-
-	/**
-	 * Open calendar entry, taking into accout the calendar integration of other apps
+	 * Open calendar entry, taking into account the calendar integration of other apps
 	 *
 	 * calendar_uilist::get_rows sets var js_calendar_integration object
 	 *
@@ -3800,7 +3632,7 @@ export class CalendarApp extends EgwApp
 		{
 			this._group_query_cache[cache_key] = this.egw.request("calendar.calendar_owner_etemplate_widget.ajax_owner", [groups]).then((data) =>
 			{
-				options = options.concat(Object.values(data));
+				options = option_owner.select_options.concat(Object.values(data));
 				option_owner.select_options = options;
 			}).finally(() =>
 			{
@@ -4178,8 +4010,17 @@ export class CalendarApp extends EgwApp
 		var all_loaded = this.sidebox_et2 !== null;
 
 		// Avoid home portlets using our templates, and get them right
-		if(_et2.uniqueId.indexOf('portlet') === 0) return;
-		if(_et2.uniqueId === 'calendar-add') return;
+		if(_et2.uniqueId.indexOf('portlet') === 0)
+		{
+			return;
+		}
+
+		// Skip templates not involved in main view
+		if(['calendar.conflicts', 'calendar.add'].includes(_name))
+		{
+			return;
+		}
+
 
 		// Flag to make sure we don't hide non-view templates
 		var view_et2 = false;

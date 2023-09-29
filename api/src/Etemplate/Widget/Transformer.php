@@ -219,15 +219,18 @@ abstract class Transformer extends Etemplate\Widget
 		elseif(is_array($action))
 		{
 			// case matches --> run all actions
-			if (isset($action[$attrs[$attr]]) || !isset($action[$attrs[$attr]]) && isset($action['__default__']))
+			if(isset($attrs[$attr]) && isset($action[$attrs[$attr]]) || (!isset($attrs[$attr]) || !isset($action[$attrs[$attr]])) && isset($action['__default__']))
 			{
-				$actions = isset($action[$attrs[$attr]]) ? $action[$attrs[$attr]] : $action['__default__'];
+				$actions = isset($attrs[$attr]) && isset($action[$attrs[$attr]]) ? $action[$attrs[$attr]] : $action['__default__'];
 				if(!is_array($actions))
 				{
 					$attrs[$attr] = $actions;
 					$actions = array($attr => $actions);
 				}
-				if (self::DEBUG) error_log(__METHOD__."(attr='$attr', action=".array2string($action).") attrs['$attr']=='{$attrs[$attr]}' --> running actions");
+				if(self::DEBUG)
+				{
+					error_log(__METHOD__ . "(attr='$attr', action=" . array2string($action) . ") attrs['$attr']=='{$attrs[$attr]}' --> running actions");
+				}
 				foreach($actions as $attr => $action)
 				{
 					$this->action($attr, $action, $attrs);

@@ -8,7 +8,7 @@
  * @author Nathan Gray
  */
 
-import {css, html, LitElement} from "@lion/core";
+import {css, html, LitElement} from "lit";
 import {ButtonMixin} from "./ButtonMixin";
 
 /**

@@ -7,7 +7,7 @@
  * @author Nathan Gray
  */
 
-import {formatDate, formatDateTime, formatTime, parseDateTime} from "./Et2Date";
+import {formatDate, formatTime, parseDateTime} from "./Et2Date";
 import {Et2DateReadonly} from "./Et2DateReadonly";
 
 /**
@@ -25,7 +25,7 @@ export class Et2DateTimeToday extends Et2DateReadonly
 
 	/**
 	 * Format date+time relative to "now"
-	 * If the date is today, we show just the time.  Otherwise, the date and time.
+	 * If the date is today, we show just the time.  Otherwise, the date.
 	 *
 	 * @param {Date} date
 	 * @param {import('@lion/localize/types/LocalizeMixinTypes').FormatDateOptions} [options] Intl options are available

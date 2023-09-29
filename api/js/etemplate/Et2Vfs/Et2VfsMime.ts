@@ -1,7 +1,7 @@
 import {ExposeValue} from "../Expose/ExposeMixin";
 import {et2_vfsMode} from "../et2_widget_vfs";
 import {Et2ImageExpose} from "../Expose/Et2ImageExpose";
-import {css, html} from "@lion/core";
+import {css, html} from "lit";
 
 
 export class Et2VfsMime extends Et2ImageExpose

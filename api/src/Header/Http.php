@@ -60,10 +60,10 @@ class Http
 	static function schema()
 	{
 		return !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' ||
-			$_SERVER['SERVER_PORT'] == 443 ||
-			!empty($GLOBALS['egw_info']['server']['enforce_ssl']) ||
-			$_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https' ?
-				'https' : 'http';
+		$_SERVER['SERVER_PORT'] == 443 ||
+		!empty($GLOBALS['egw_info']['server']['enforce_ssl']) ||
+		isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https' ?
+			'https' : 'http';
 	}
 
 	/**

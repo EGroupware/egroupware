@@ -143,7 +143,6 @@ re-enter your password	preferences	fr	Ré-entrez votre mot de passe
 read prefs for the specified application.	preferences	fr	Lire les préférences pour l'apllication spécifiée.
 reset qrcode	preferences	fr	Réinitialiser le QRCode
 revoke	preferences	fr	Révoquer
-revoke acccess tokens	preferences	fr	Révoquer les jetons d'accès
 revoke this token	preferences	fr	Révoquer ce jeton
 rich text editor theme	preferences	fr	Thème de l'éditeur de texte
 scan qrcode with a time-based one-time password (totp) app:	preferences	fr	Scanner le QRCode avec un mot de passe à durée limitée (TOTP) :

@@ -319,13 +319,23 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 				{
 					const formatDate = new Date(time.valueOf() + time.getTimezoneOffset() * 60 * 1000);
 					planner.vertical_bar
-						.html('<span>'+date(egw.preference('timeformat','calendar') == 12 ? 'h:ia' : 'H:i',formatDate)+'</span>')
+						.html('<span>' + date(egw.preference('timeformat', 'calendar') == 12 ? 'h:ia' : 'H:i', formatDate) + '</span>')
 						.show();
 
+					if(!planner.drag_create.event && planner.drag_create.start && time.toJSON() != planner.drag_create.start.date.toJSON())
+					{
+						planner._drag_create_start(planner.drag_create.start);
+						// Create the event immediately
+						planner._drag_create_event();
+					}
 					if(planner.drag_create.event && planner.drag_create.parent && planner.drag_create.end)
 					{
-
-						planner.drag_create.end.date = time.toJSON();
+						if(planner.drag_create.start?.date?.toJSON() == time.toJSON())
+						{
+							// Minimum drag size is time granularity or default
+							time.setUTCMinutes(time.getUTCMinutes() + parseInt(planner.egw().preference("defaultlength", "calendar")));
+						}
+						planner.drag_create.end.date = time;
 						planner._drag_update_event();
 					}
 				}
@@ -2539,10 +2549,22 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 	_mouse_down(event)
 	{
 		// Only left mouse button
-		if(event.which !== 1) return;
+		if(event.which !== 1)
+		{
+			return;
+		}
+
+		// Skip for events
+		if(event.target.closest(".calendar_calEvent"))
+		{
+			return;
+		}
 
 		// Ignore headers
-		if(this.headers.has(event.target).length !== 0) return false;
+		if(this.headers.has(event.target).length !== 0)
+		{
+			return false;
+		}
 
 		// Get time at mouse
 		if(this.options.group_by === 'month')
@@ -2569,9 +2591,8 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 		}
 		if(!this.drag_create.parent) return false;
 
+		this.drag_create.start = {date: time};
 		this.div.css('cursor', 'ew-resize');
-
-		return this._drag_create_start(jQuery.extend({},this.drag_create.parent.node.dataset,{date: time.toJSON()}));
 	}
 
 	/**
@@ -2591,7 +2612,16 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 			var time = this._get_time_from_position(event.offsetX, event.offsetY);
 		}
 
-		return this._drag_create_end(time ? {date: time.toJSON()} : false);
+		if(this.drag_create.end)
+		{
+			return this._drag_create_end(this.drag_create.end);
+		}
+		else if(this.drag_create.start)
+		{
+			// Not dragged enough to count, fake a click
+			event.stopImmediatePropagation();
+		}
+		this._drag_create_end();
 	}
 
 	/**

@@ -240,10 +240,20 @@ class Customfields extends Transformer
 				}
 		}
 		// need to encode values/select-options to keep their order
-		foreach($customfields as &$data)
+		foreach($customfields as $cf_name => &$data)
 		{
-			if (!empty($data['values']))
+			if(!empty($fields[$cf_name]) && !empty($data['values']))
 			{
+				// Full URL for options from file
+				if(!empty($data['values']['@']) && strpos($data['values']['@'], '/') == 0 && !str_contains($data['values']['@'], 'webdav.php') &&
+					$stat = Api\Vfs::stat($data['values']['@'])
+				)
+				{
+					$data['values']['@'] = $fields[$data['name']]['values']['@'] = Api\Framework::link(
+						Api\Vfs::download_url($data['values']['@']),
+						['download' => $stat['mtime']]
+					);
+				}
 				Select::fix_encoded_options($data['values']);
 			}
 		}
@@ -283,11 +293,14 @@ class Customfields extends Transformer
 	protected function _widget($fname, array $field)
 	{
 		static $link_types = null;
-		if (!isset($link_types)) $link_types = Api\Link::app_list ();
+		if(!isset($link_types))
+		{
+			$link_types = Api\Link::app_list();
+		}
 
 		$type = $field['type'];
 		// Link-tos needs to change from appname to link-to
-		if (!empty($link_types[$field['type']]))
+		if(!empty($link_types[$field['type']]))
 		{
 			if($type == 'filemanager')
 			{
@@ -355,21 +368,30 @@ class Customfields extends Transformer
 			case 'radio':
 				if (!empty($field['values']) && count($field['values']) == 1 && isset($field['values']['@']))
 				{
-					$field['values'] = Api\Storage\Customfields::get_options_from_file($field['values']['@']);
+					if(substr($type, 0, 7) !== 'select')
+					{
+						// Other widgets need the options, and select needs them for validation
+						$field['values'] = Api\Storage\Customfields::get_options_from_file($field['values']['@']);;
+					}
+					else
+					{
+						// Pass on no options, we do it directly through the file
+						$field['values'] = [];
+					}
 				}
 				// keep extra values set by app code, eg. addressbook advanced search
-				if (!empty(self::$request->sel_options[self::$prefix.$fname]) && is_array(self::$request->sel_options[self::$prefix.$fname]))
+				if(!empty(self::$request->sel_options[self::$prefix . $fname]) && is_array(self::$request->sel_options[self::$prefix . $fname]))
 				{
-					self::$request->sel_options[self::$prefix.$fname] += (array)$field['values'];
+					self::$request->sel_options[self::$prefix . $fname] += (array)$field['values'];
 				}
 				else
 				{
-					self::$request->sel_options[self::$prefix.$fname] = $field['values'];
+					self::$request->sel_options[self::$prefix . $fname] = $field['values'];
 				}
 				//error_log(__METHOD__."('$fname', ".array2string($field).") request->sel_options['".self::$prefix.$fname."']=".array2string(self::$request->sel_options[$this->id]));
 				// to keep order of numeric values, we have to explicit run fix_encoded_options, as sel_options are already encoded
-				$options = self::$request->sel_options[self::$prefix.$fname];
-				if (is_array($options))
+				$options = self::$request->sel_options[self::$prefix . $fname];
+				if(is_array($options))
 				{
 					Select::fix_encoded_options($options);
 					self::$request->sel_options[self::$prefix . $fname] = $options;
@@ -471,18 +493,46 @@ class Customfields extends Transformer
 				// run validation method of widget implementing this custom field
 				$widget = $this->_widget($fname, $field_settings);
 				// widget has no validate method, eg. is only displaying stuff --> nothing to validate
-				if (!method_exists($widget, 'validate')) continue;
+				if(!method_exists($widget, 'validate'))
+				{
+					continue;
+				}
+
+				// Selects only - do a local search through the file in the browser instead of sending all the options
+				// Here we need the options to validate
+				if($widget instanceof Select && !empty($field_settings['values']['@']))
+				{
+					$file_bits = explode("/webdav.php", Api\Vfs::parse_url($field_settings['values']['@'], PHP_URL_PATH));
+					$file = array_pop($file_bits);
+					$options = Api\Storage\Customfields::get_options_from_file($file);
+					// keep extra values set by app code, eg. addressbook advanced search
+					if(!empty(self::$request->sel_options[self::$prefix . $fname]) && is_array(self::$request->sel_options[self::$prefix . $fname]))
+					{
+						self::$request->sel_options[$widget->id] += (array)$options;
+					}
+					else
+					{
+						self::$request->sel_options[$widget->id] = $options;
+					}
+				}
+
 				$widget->validate($form_name != self::GLOBAL_ID ? $form_name : $cname, $expand, $content, $validated);
-				$field_name = $this->id[0] == self::$prefix && $customfields[substr($this->id,strlen($this->attrs['prefix']))] ? $this->id : self::form_name($form_name != self::GLOBAL_ID ? $form_name : $cname, $field);
+				$field_name = $this->id[0] == self::$prefix && $customfields[substr($this->id, strlen($this->attrs['prefix']))] ? $this->id : self::form_name($form_name != self::GLOBAL_ID ? $form_name : $cname, $field);
 				$valid =& self::get_array($validated, $field_name, true);
 
 				// Arrays are not valid, but leave filemanager alone, we'll catch it
 				// when saving.  This allows files for new entries.
-				if (is_array($valid) && $field_settings['type'] !== 'filemanager') $valid = implode(',', $valid);
+				if(is_array($valid) && $field_settings['type'] !== 'filemanager')
+				{
+					$valid = implode(',', $valid);
+				}
 
 				// NULL is valid for most fields, but not custom fields due to backend handling
 				// See so_sql_cf->save()
-				if (is_null($valid)) $valid = false;
+				if(is_null($valid))
+				{
+					$valid = false;
+				}
 				//error_log(__METHOD__."() $field_name: ".array2string($value).' --> '.array2string($valid));
 			}
 		}

@@ -105,8 +105,13 @@ class calendar_groupdav extends Api\CalDAV\Handler
 		$this->bo = new calendar_boupdate();
 		$this->vCalendar = new Horde_Icalendar;
 
+		if (Api\CalDAV::isJSON())
+		{
+			self::$path_attr = 'id';
+			self::$path_extension = '';
+		}
 		// since 1.9.003 we allow clients to specify the URL when creating a new event, as specified by CalDAV
-		if (version_compare($GLOBALS['egw_info']['apps']['calendar']['version'], '1.9.003', '>='))
+		elseif (version_compare($GLOBALS['egw_info']['apps']['calendar']['version'], '1.9.003', '>='))
 		{
 			self::$path_attr = 'caldav_name';
 			self::$path_extension = '';
@@ -170,14 +175,6 @@ class calendar_groupdav extends Api\CalDAV\Handler
 		if ($options['root']['name'] == 'free-busy-query')
 		{
 			return $this->free_busy_report($path, $options, $user);
-		}
-
-		if (isset($_GET['download']))
-		{
-			$this->caldav->propfind_options['props'] = array(array(
-				'xmlns' => Api\CalDAV::CALDAV,
-				'name'  => 'calendar-data',
-			));
 		}
 
 		// ToDo: add parameter to only return id & etag
@@ -254,6 +251,20 @@ class calendar_groupdav extends Api\CalDAV\Handler
 			$filter['sync-collection'] = true;
 			// no end-date / limit into the future, as unchanged entries would never be transferted later on
 			unset($filter['end']);
+		}
+
+		// check if we have to return the full calendar data or just the etag's
+		if (!($filter['calendar_data'] = $options['props'] == 'all' &&
+				$options['root']['ns'] == Api\CalDAV::CALDAV || isset($_GET['download'])) && is_array($options['props']))
+		{
+			foreach($options['props'] as $prop)
+			{
+				if ($prop['name'] == 'calendar-data')
+				{
+					$filter['calendar_data'] = true;
+					break;
+				}
+			}
 		}
 
 		if (isset($nresults))
@@ -346,8 +357,8 @@ class calendar_groupdav extends Api\CalDAV\Handler
 	{
 		if ($this->debug) $starttime = microtime(true);
 
-		$calendar_data = $this->caldav->prop_requested('calendar-data', Api\CalDAV::CALDAV, true);
-		if (!is_array($calendar_data)) $calendar_data = false;	// not in allprop or autoindex
+		$calendar_data = $filter['calendar_data'];
+		unset($filter['calendar_data']);
 
 		// yield extra resources like the root itself
 		$yielded = 0;
@@ -362,11 +373,13 @@ class calendar_groupdav extends Api\CalDAV\Handler
 		$sync_collection = $filter['sync-collection'];
 
 		$events = null;
+		$is_jscalendar = Api\CalDAV::isJSON();
 		for($chunk=0; (!$chunk || count($events) === self::CHUNK_SIZE) && // stop after we have not got a full chunk
-			($events =& $this->bo->search($filter+[
+			($events =& $this->bo->search([
 				'offset' => $chunk*self::CHUNK_SIZE,
 				'num_rows' => self::CHUNK_SIZE,
-			])); ++$chunk)
+				'date_format' => $is_jscalendar ? 'object' : 'server',
+			]+$filter)); ++$chunk)
 		{
 			foreach($events as $event)
 			{
@@ -404,7 +417,8 @@ class calendar_groupdav extends Api\CalDAV\Handler
 
 				//header('X-EGROUPWARE-EVENT-'.$event['id'].': '.$event['title'].': '.date('Y-m-d H:i:s',$event['start']).' - '.date('Y-m-d H:i:s',$event['end']));
 				$props = array(
-					'getcontenttype' => $this->agent != 'kde' ? 'text/calendar; charset=utf-8; component=VEVENT' : 'text/calendar',
+					'getcontenttype' => $is_jscalendar ? Api\CalDAV\JsCalendar::MIME_TYPE_JSEVENT :
+						($this->agent != 'kde' ? 'text/calendar; charset=utf-8; component=VEVENT' : 'text/calendar'),
 					'getetag' => '"'.$etag.'"',
 					'getlastmodified' => $event['modified'],
 					// user and timestamp of creation or last modification of event, used in calendarserver only for shared calendars
@@ -423,8 +437,8 @@ class calendar_groupdav extends Api\CalDAV\Handler
 					$content = $this->iCal($event, $filter['users'],
 						strpos($path, '/inbox/') !== false ? 'REQUEST' : null,
 						!isset($calendar_data['children']['expand']) ? false :
-							($calendar_data['children']['expand']['attrs'] ?: true), $exceptions);
-					$props['getcontentlength'] = bytes($content);
+							($calendar_data['children']['expand']['attrs'] ?: true), $exceptions, $is_jscalendar ? false : null);
+					$props['getcontentlength'] = bytes($is_jscalendar ? json_encode($content) : $content);
 					$props['calendar-data'] = Api\CalDAV::mkprop(Api\CalDAV::CALDAV,'calendar-data',$content);
 				}
 				/* Calendarserver reports new events with schedule-changes: action: create, which iCal request
@@ -556,10 +570,12 @@ class calendar_groupdav extends Api\CalDAV\Handler
 		}
 		if ($time)
 		{
-			$props['dtstamp'] = Api\CalDAV::mkprop(Api\CalDAV::CALENDARSERVER, 'dtstamp', gmdate('Ymd\\This\\Z', $time));
+			$dtstamp = Api\DateTime::to($time, 'object');
+			$dtstamp->setTimezone(new DateTimeZone('utc'));
+			$props['dtstamp'] = Api\CalDAV::mkprop(Api\CalDAV::CALENDARSERVER, 'dtstamp', $dtstamp->format('Ymd\\This\\Z'));
 		}
 		//error_log(__METHOD__."($user, $time) returning ".array2string($props));
-		return $props ? $props : '';
+		return $props ?: '';
 	}
 
 	/**
@@ -738,8 +754,17 @@ class calendar_groupdav extends Api\CalDAV\Handler
 			return $event;
 		}
 
-		$options['data'] = $this->iCal($event, $user, strpos($options['path'], '/inbox/') !== false ? 'REQUEST' : null);
-		$options['mimetype'] = 'text/calendar; charset=utf-8';
+		// jsEvent or iCal
+		if (($type=Api\CalDAV::isJSON()))
+		{
+			$options['data'] = $this->iCal($event, $user, strpos($options['path'], '/inbox/') !== false ? 'REQUEST' : null, false, null, $type);
+			$options['mimetype'] = Api\CalDAV\JsCalendar::MIME_TYPE_JSEVENT.';charset=utf-8';
+		}
+		else
+		{
+			$options['data'] = $this->iCal($event, $user, strpos($options['path'], '/inbox/') !== false ? 'REQUEST' : null, false, null);
+			$options['mimetype'] = 'text/calendar; charset=utf-8';
+		}
 		header('Content-Encoding: identity');
 		$schedule_tag = null;
 		header('ETag: "'.$this->get_etag($event, $schedule_tag).'"');
@@ -753,16 +778,17 @@ class calendar_groupdav extends Api\CalDAV\Handler
 	/**
 	 * Generate an iCal for the given event
 	 *
-	 * Taking into account virtual an real exceptions for recuring events
+	 * Taking into account virtual and real exceptions for recurring events
 	 *
 	 * @param array $event
 	 * @param int $user =null account_id of calendar to display
-	 * @param string $method =null eg. 'PUBLISH' for inbox, nothing anywhere else
+	 * @param string $method =null e.g. 'PUBLISH' for inbox, nothing anywhere else
 	 * @param boolean|array $expand =false true or array with values for 'start', 'end' to expand recurrences
 	 * @param array|null $events as returned by get_series() for !$expand (to not read them again)
-	 * @return string
+	 * @param bool|"pretty"|null $json null: iCal, false: return array with JSCalendar data, true+"pretty": return json-serialized JSCalendar
+	 * @return string|array array if $json === false
 	 */
-	private function iCal(array $event,$user=null, $method=null, $expand=false, array $events=null)
+	private function iCal(array $event,$user=null, $method=null, $expand=false, array $events=null, $json=null)
 	{
 		static $handler = null;
 		if (is_null($handler)) $handler = $this->_get_handler();
@@ -812,7 +838,7 @@ class calendar_groupdav extends Api\CalDAV\Handler
 			// pass in original event as master, as it has correct start-date even if first recurrence is an exception
 			if ($expand || !isset($events))
 			{
-				$events =& self::get_series($event['uid'], $this->bo, $expand, $user, $event);
+				$events =& self::get_series($event['uid'], $this->bo, $expand, $user, $event, isset($json) ? 'object' : 'server');
 			}
 			// as alarm is now only on next recurrence, set alarm from original event on master
 			if ($event['alarm']) $events[0]['alarm'] = $event['alarm'];
@@ -825,6 +851,10 @@ class calendar_groupdav extends Api\CalDAV\Handler
 			{
 				$events[0]['uid'] .= '-'.$event['id'];	// force a different uid
 			}
+		}
+		if (isset($json))
+		{
+			return Api\CalDAV\JsCalendar::JsEvent($events[0], $json, array_slice($events, 1));
 		}
 		return $handler->exportVCal($events, '2.0', $method);
 	}
@@ -841,7 +871,7 @@ class calendar_groupdav extends Api\CalDAV\Handler
 	 * @param array $master =null use provided event as master to fix wrong start-date if first recurrence is an exception
 	 * @return array
 	 */
-	private static function &get_series($uid,calendar_bo $bo=null, $expand=false, $user=null, $master=null)
+	private static function &get_series($uid,calendar_bo $bo=null, $expand=false, $user=null, $master=null, $date_format='server')
 	{
 		if (is_null($bo)) $bo = new calendar_boupdate();
 
@@ -849,7 +879,7 @@ class calendar_groupdav extends Api\CalDAV\Handler
 			'query' => array('cal_uid' => $uid),
 			'filter' => 'owner',  // return all possible entries
 			'daywise' => false,
-			'date_format' => 'server',
+			'date_format' => $date_format,
 			'cfs' => array(),	// read cfs as we use them to store X- attributes
 		);
 		if (is_array($expand)) $params += $expand;
@@ -860,7 +890,7 @@ class calendar_groupdav extends Api\CalDAV\Handler
 			return $events;
 		}
 
-		// find master, which is not always first event, eg. when first event is an exception
+		// find master, which is not always first event, e.g. when first event is an exception
 		$exceptions = array();
 		foreach($events as $k => &$recurrence)
 		{
@@ -873,7 +903,7 @@ class calendar_groupdav extends Api\CalDAV\Handler
 			}
 		}
 		// if recurring event starts in future behind horizont, nothing will be returned by bo::search()
-		if (!isset($master)) $master = $bo->read($uid);
+		if (!isset($master)) $master = $bo->read($uid, null, false, $date_format);
 
 		foreach($events as $k => &$recurrence)
 		{
@@ -881,7 +911,7 @@ class calendar_groupdav extends Api\CalDAV\Handler
 			if ($master && $recurrence['reference'] && $recurrence['reference'] != $master['id'])
 			{
 				unset($events[$k]);
-				continue;	// same uid, but references a different event or is own master
+				continue;	// same uid, but references a different event or its own master
 			}
 			if (!$master || $recurrence['id'] != $master['id'])	// real exception
 			{
@@ -898,7 +928,7 @@ class calendar_groupdav extends Api\CalDAV\Handler
 					$recurrence['participants'][$user] = 'R';
 				}
 				//error_log('real exception: '.array2string($recurrence));
-				// remove from masters recur_exception, as exception is include
+				// remove from masters recur_exception, as exception is included
 				// at least Lightning "understands" EXDATE as exception from what's included
 				// in the whole resource / VCALENDAR component
 				// not removing it causes Lightning to remove the exception itself
@@ -960,7 +990,7 @@ class calendar_groupdav extends Api\CalDAV\Handler
 	 * @param string $prefix =null user prefix from path (eg. /ralf from /ralf/addressbook)
 	 * @return mixed boolean true on success, false on failure or string with http status (eg. '404 Not Found')
 	 */
-	function put(&$options,$id,$user=null,$prefix=null)
+	function put(&$options,$id,$user=null,$prefix=null,$method='PUT')
 	{
 		if ($this->debug) error_log(__METHOD__."($id, $user)".print_r($options,true));
 
@@ -981,13 +1011,28 @@ class calendar_groupdav extends Api\CalDAV\Handler
 		{
 			$_SERVER['HTTP_IF_SCHEDULE_TAG_MATCH'] = $_SERVER['HTTP_IF_SCHEDULE'];
 		}
+		// Thunderbird or Lightning: for "412 Precondition Failed" update only participant data, as TB offers user to overwrite server state
+		// CalDAVSynchronizer: does NOT handle 412 well and fails the complete sync, updating participant data only is the better option
+		$handle_etag_failure_with_partial_update = in_array(self::get_agent(), ['thunderbird', 'lightning', 'caldavsynchronizer']);
+
 		$return_no_access = true;	// as handled by importVCal anyway and allows it to set the status for participants
 		$oldEvent = $this->_common_get_put_delete('PUT',$options,$id,$return_no_access,
-			isset($_SERVER['HTTP_IF_SCHEDULE_TAG_MATCH']));	// dont fail with 412 Precondition Failed in that case
-		if (!is_null($oldEvent) && !is_array($oldEvent))
+			isset($_SERVER['HTTP_IF_SCHEDULE_TAG_MATCH']), !$handle_etag_failure_with_partial_update);	// dont fail with 412 Precondition Failed in that case
+
+		if ($oldEvent === '412 Precondition Failed' && $handle_etag_failure_with_partial_update)
+		{
+			$oldEvent = $this->read($id);
+			$this->caldav->log("Handing 412 Precondition Failed for Thunderbird by only updating participant data!");
+		}
+		elseif (!is_null($oldEvent) && !is_array($oldEvent))
 		{
 			if ($this->debug) error_log(__METHOD__.': '.print_r($oldEvent,true).function_backtrace());
 			return $oldEvent;
+		}
+		else
+		{
+			// set it to false, as we have no precondition failure
+			$handle_etag_failure_with_partial_update = false;
 		}
 
 		if (is_null($oldEvent) && ($user >= 0 && !$this->bo->check_perms(Acl::ADD, 0, $user) ||
@@ -1050,7 +1095,7 @@ class calendar_groupdav extends Api\CalDAV\Handler
 
 				if ($schedule_tag_match !== $schedule_tag)
 				{
-					if ($this->debug) error_log(__METHOD__."(,,$user) schedule_tag missmatch: given '$schedule_tag_match' != '$schedule_tag'");
+					if ($this->debug) error_log(__METHOD__."(,,$user) schedule_tag mismatch: given '$schedule_tag_match' != '$schedule_tag'");
 					// honor Prefer: return=representation for 412 too (no need for client to explicitly reload)
 					$this->check_return_representation($options, $id, $user);
 					return '412 Precondition Failed';
@@ -1058,6 +1103,8 @@ class calendar_groupdav extends Api\CalDAV\Handler
 			}
 			// if no edit-rights (aka no organizer), update only attendee stuff: status and alarms
 			if (!$this->check_access(Acl::EDIT, $oldEvent) ||
+				// only update participant data, if precondition is NOT meet
+				$handle_etag_failure_with_partial_update ||
 				// we ignored Lightings If-None-Match: "*" --> do not overwrite event, just change status
 				!empty($workaround_lightning_if_none_match))
 			{
@@ -1135,7 +1182,7 @@ class calendar_groupdav extends Api\CalDAV\Handler
 						}
 						if (!isset($master) && !$event['recurrence']) $master = $event;
 					}
-					if (!$modified)	// NO modififictions, or none we understood --> log it and return Ok: "204 No Content"
+					if (!$modified)	// NO modification, or none we understood --> log it and return Ok: "204 No Content"
 					{
 						$this->caldav->log(__METHOD__."(,,$user) NO changes for current user events=".array2string($events).', old-event='.array2string($oldEvent));
 					}
@@ -1177,8 +1224,20 @@ class calendar_groupdav extends Api\CalDAV\Handler
 			$retval = '201 Created';
 		}
 
-		if (!($cal_id = $handler->importVCal($vCalendar, $eventId,
-			self::etag2value($this->http_if_match), false, 0, $this->caldav->current_user_principal, $user, $charset, $id)))
+		$type = null;
+		if (($is_json=Api\CalDAV::isJSON($type)))
+		{
+			$event = Api\CalDAV\JsCalendar::parseJsEvent($options['content'], $oldEvent ?? [], $type, $method, $user);
+			$cal_id = $this->bo->save($event);
+		}
+		else
+		{
+			$cal_id = $handler->importVCal($vCalendar, $eventId,
+				self::etag2value($this->http_if_match), false, 0, $this->caldav->current_user_principal, $user, $charset, $id);
+		}
+
+
+		if (!$cal_id)
 		{
 			if ($this->debug) error_log(__METHOD__."(,$id) eventId=$eventId: importVCal('$options[content]') returned ".array2string($cal_id));
 			if ($eventId && $cal_id === false)
@@ -1577,12 +1636,13 @@ class calendar_groupdav extends Api\CalDAV\Handler
 	{
 		if (strpos($column=self::$path_attr,'_') === false) $column = 'cal_'.$column;
 
-		$event = $this->bo->read(array($column => $id, 'cal_deleted IS NULL', 'cal_reference=0'), null, true, 'server');
+		$event = $this->bo->read(array($column => $id, 'cal_deleted IS NULL', 'cal_reference=0'), null, true,
+			$date_format = Api\CalDAV::isJSON() ? 'object' : 'server');
 		if ($event) $event = array_shift($event);	// read with array as 1. param, returns an array of events!
 
 		if (!($retval = $this->bo->check_perms(calendar_bo::ACL_FREEBUSY,$event, 0, 'server')) &&
 			// above can be true, if current user is not in master but just a recurrence
-			(!$event['recur_type'] || !($events = self::get_series($event['uid'], $this->bo))))
+			(!$event['recur_type'] || !($events = self::get_series($event['uid'], $this->bo, false, null, null, $date_format))))
 		{
 			if ($this->debug > 0) error_log(__METHOD__."($id) no READ or FREEBUSY rights returning ".array2string($retval));
 			return $retval;

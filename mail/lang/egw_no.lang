@@ -5,9 +5,13 @@ allways a new window	mail	no	altid et nytt vindu
 always show html emails	mail	no	Vis alltid HTML meldinger
 any of	mail	no	noen av
 attachments	mail	no	Vedlegg
+by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	no	Som standard erstattes 'http://' bare med 'https://'. Konfigurer gjerne 'https://proxy.egroupware.org/' til også å laste inn bilder som bare er tilgjengelige via http.
+caching of flags	mail	no	Bufring av flagg
+changing subject failed folder %1 does not exist	mail	no	Endring av emne mislyktes mappe %1 eksisterer ikke
 check message against next rule also	mail	no	Kontroller melding mot neste regel også
 compose	mail	no	Ny melding
 compress folder	mail	no	Komprimer mappe
+contact label	mail	no	Kontaktetikett
 contains	mail	no	inneholder
 copy to	mail	no	Kopier til
 date(newest first)	mail	no	Dato (nyeste først)
@@ -50,9 +54,11 @@ if message size	mail	no	dersom meldingsstørrelse
 imap	mail	no	IMAP
 imap server	mail	no	IMAP Tjener
 inbox	mail	no	Innboks
+information to show on email tag	mail	no	Informasjon som skal vises på e-posttaggen
 keep a copy of the message in your inbox	mail	no	behold en kopi av meldingen i din innboks
 kilobytes	mail	no	kilobytes
 less than	mail	no	mindre enn
+list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	no	Liste over handlinger som skal slås på/aktiveres som standard (f.eks. handlingen Mail composer lagre som InfoLog).
 mail settings	mail	no	Epost innstillinger
 mark as deleted	mail	no	Merk som slettet
 matches	mail	no	treff
@@ -60,17 +66,31 @@ matches regexp	mail	no	treffer regexp
 move selected to	mail	no	flytt valgt til
 move to	mail	no	flytt valgt til
 move to trash	mail	no	Flytt til søppelkurv
+name and email	mail	no	Navn og e-post
 never display html emails	mail	no	Vis aldri HTML e-post
 on	mail	no	på
 one address is not valid	mail	no	En av adressene er ikke gyldig
+only email	mail	no	Bare e-post
+only name	mail	no	Bare navn
 only one window	mail	no	Bare et vindu
+open in html mode	mail	no	Åpne i HTML-modus
+open in text mode	mail	no	Åpne i tekstmodus
+open with collabora office	mail	no	Åpne med Collabora Online
 organisation	admin	no	Organisasjon
 organization	mail	no	organisasjon
+organization | real name email	mail	no	Organisasjon | Ekte navn [E-post]
+original message	mail	no	Opprinnelig melding
+outbox	mail	no	Utboks
 permission denied	mail	no	Ingen tilgang
+please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	no	Konfigurer S/MIME-sertifikatet i kategorien Kryptering i dialogboksen Rediger konto.
 please select a address	mail	no	Vennligst velg en adresse
 please select the number of days to wait between responses	mail	no	Vennligst velg antall dager for vent melding tilbakemeldinger
 please supply the message to send with auto-responses	mail	no	Vennligst registrer meldingen som skal sendes som automatisk tilbakemelding
+preview pane	mail	no	Vindusoppsett
+printing	mail	no	Utskrift
+push notifications	mail	no	Push-varsler
 quicksearch	mail	no	Hurtigsøk
+quicksearch (with cc)	mail	no	Hurtigsøk (+Kopi)
 refresh time in minutes	mail	no	Oppdateringstid i minutter
 remove all	mail	no	Fjern alle
 remove immediately	mail	no	Fjern umiddelbart
@@ -83,6 +103,10 @@ replyto	mail	no	SvarTil
 save all	mail	no	Lagre alle
 select all	mail	no	Velg alle
 sent folder	mail	no	Sendt Mappe
+show notification for new arriving mails	mail	no	Vis varsel for nye innkommende e-poster
+show vertical	mail	no	Vis vertikalt
+show vertical with all columns	mail	no	Vis vertikalt med alle kolonner
+show/hide preview pane in mail list view	mail	no	Vis/skjul forhåndsvisningsrute i postlistevisningen
 signature	mail	no	Signatur
 size(...->0)	mail	no	Størrelse (...->0)
 size(0->...)	mail	no	Størrelse (0->...)
@@ -99,3 +123,5 @@ vacation notice	mail	no	Ferie melding
 when deleting messages	mail	no	Når du sletter meldinger
 write	mail	no	Lagre
 wrote	mail	no	skrev
+you can select what info to be displayed on email tag	mail	no	Du kan velge hvilken informasjon som skal vises på e-posttaggen.
+you've got new mail	mail	no	Du har fått ny e-post

@@ -12,7 +12,7 @@
 import {ExposeMixin, ExposeValue, MediaValue} from "./ExposeMixin";
 import {Et2Description} from "../Et2Description/Et2Description";
 import {et2_IDetachedDOM} from "../et2_core_interfaces";
-import {html} from "@lion/core";
+import {html} from "lit";
 
 /**
  * Shows a description and if you click on it, it shows the file specified by href in gallery.

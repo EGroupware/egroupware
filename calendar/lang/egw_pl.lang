@@ -241,6 +241,9 @@ mail all participants	calendar	pl	wyślij do wszystkich uczestników
 make freebusy information available to not logged in persons?	calendar	pl	Czy udostępnić informację wolny-zajęty dla gości (osób nie zalogowanych)?
 manage mapping	calendar	pl	Zarządzaj mapowaniem
 max. number of entries to show (leave empty for no restriction)	calendar	pl	Ile maksymalnie wpisów pokazać (puste - bez ograniczenia)
+maximum available quantity of %1 exceeded!	calendar	pl	Maksymalna dostępna ilość %1 przekroczona!
+minimum number of users for showing day view as consolidated.	calendar	pl	Minimalna liczba użytkowników do wyświetlenia widoku dziennego jako skonsolidowanego.
+minimum number of users for showing week view as consolidated.	calendar	pl	Minimalna liczba użytkowników do wyświetlenia skonsolidowanego widoku tygodnia.
 minutes	calendar	pl	minut
 modified	calendar	pl	Zmodyfikowany
 mon	calendar	pl	Pon
@@ -249,9 +252,12 @@ monthly	calendar	pl	Miesięczny
 monthly (by date)	calendar	pl	Co miesiąc (wg dat)
 monthly (by day)	calendar	pl	Co miesiąc (wg dni)
 monthview	calendar	pl	Widok Miesięczny
+move to	calendar	pl	Przejdź do
+multiple participants	calendar	pl	Wielu uczestników
 multiple week view	calendar	pl	Widok wielu tygodni
 name of current user, all other contact fields are valid too	calendar	pl	Nazwa aktualnego użytkownika, wszystkie pozostałe pola kontaktu są prawidłowe
 needs action	calendar	pl	Wymaga akcji
+never notify externals (non-users) about events i create	calendar	pl	Nigdy nie powiadamiaj osób z zewnątrz (niebędących użytkownikami) o wydarzeniach, które tworzę
 new	calendar	pl	Nowa
 new search with the above parameters	calendar	pl	nowe wyszukiwanie z powyższymi parametrami
 no events found	calendar	pl	Nie znaleziono pasujących terminów

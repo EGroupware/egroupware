@@ -375,6 +375,7 @@ monthly	calendar	en	Monthly
 monthly (by date)	calendar	en	Monthly -by date
 monthly (by day)	calendar	en	Monthly -by day
 monthview	calendar	en	Month view
+move to	calendar	en	Move to
 multiple participants	calendar	en	Multiple participants
 multiple week view	calendar	en	Multiple week view
 name of current user, all other contact fields are valid too	calendar	en	Name of current user, all other contact fields are valid too
@@ -423,7 +424,7 @@ olddate	calendar	en	Original date
 on %1 %2 %3 your meeting request for %4	calendar	en	On %1 %2 %3 your meeting request for %4
 on all modification, but responses	calendar	en	On all modification, but responses
 on any time change too	calendar	en	On any time change too
-on invitation / cancellation only	calendar	en	on invitation / cancellation only
+on invitation / cancellation only	calendar	en	On invitation / cancellation only
 on participant responses too	calendar	en	On participant responses too
 on time change of more than 4 hours too	calendar	en	On time change of more than 4 hours too
 one month	calendar	en	One month

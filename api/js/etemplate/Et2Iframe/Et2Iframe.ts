@@ -9,7 +9,8 @@
  */
 
 
-import {css, html, LitElement, SlotMixin} from "@lion/core";
+import {css, html, LitElement} from "lit";
+import {SlotMixin} from "@lion/core";
 import {Et2Widget} from "../Et2Widget/Et2Widget";
 
 export class Et2Iframe extends Et2Widget(SlotMixin(LitElement))

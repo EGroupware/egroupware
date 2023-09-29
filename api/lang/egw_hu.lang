@@ -76,6 +76,7 @@ and	common	hu	És
 andorra	common	hu	Andorra
 angola	common	hu	Angola
 anguilla	common	hu	Anguilla
+answering no will not ask you again for this browser.	common	hu	Ha nemmel válaszol, a továbbiakban nem kérdezzük meg a böngészőt.
 antarctica	common	hu	Antarktisz
 antigua and barbuda	common	hu	Antigua és Barbuda
 api	common	hu	EGroupware API
@@ -322,7 +323,9 @@ field must not be empty !!!	common	hu	A mezőt ki kell tölteni!!!
 fields	common	hu	Mezők
 fiji	common	hu	Fidzsi
 file	common	hu	Állomány
+file a file	common	hu	Fájl tárolása
 files	common	hu	Fájlok
+fileupload	common	hu	Fájl feltöltés
 filter	common	hu	Szűrő
 finland	common	hu	Finnország
 first	common	hu	Első
@@ -334,6 +337,9 @@ fixme!	common	hu	JAVÍTS KI!
 folder already exists.	common	hu	A mappa már létezik.
 force selectbox	common	hu	Kényszerített selectbox
 forever	common	hu	Örökre
+formatted business address	common	hu	Formázott üzleti cím
+formatted private address	common	hu	Formázott magáncím
+formatted text (html)	common	hu	Formázott szöveg (HTML)
 france	common	hu	Francaország
 french guiana	common	hu	Francia Guinea
 french polynesia	common	hu	Francia Polinézia
@@ -341,6 +347,7 @@ french southern territories	common	hu	Francia Déli Területek
 friday	common	hu	Péntek
 ftp	common	hu	FTP
 fullname	common	hu	Teljes név
+fullscreen	common	hu	Teljes képernyő
 fullscreen mode	common	hu	Teljes képernyős mód
 gabon	common	hu	Gabon
 gambia	common	hu	Gambia
@@ -420,6 +427,7 @@ insert placeholder	common	hu	Helyőrző beillesztése
 insert row after	common	hu	Sor beszúrása utána
 insert row before	common	hu	Sor beszúrása elé
 insert timestamp into description field	common	hu	Időbélyegző beillesztése a leírás mezőbe
+install egroupware as mail-handler?	common	hu	Telepítse az EGroupware-t levélkezelőként?
 international	common	hu	Nemzetközi
 invalid 2-factor authentication code	common	hu	Érvénytelen 2-faktoros hitelesítési kód
 invalid filename	common	hu	Érvénytelen állománynév
@@ -536,6 +544,7 @@ month	common	hu	Hónap
 montserrat	common	hu	Montserrat
 more	common	hu	Több
 morocco	common	hu	Marokkó
+move	common	hu	A  áthelyezése
 mozambique	common	hu	Mozambik
 multiple	common	hu	többszörös
 myanmar	common	hu	Mianmar (Burma)

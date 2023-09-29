@@ -31,7 +31,7 @@ class ApiHandler extends Api\CalDAV\Handler
 	/**
 	 * Options for json_encode of responses
 	 */
-	const JSON_RESPONSE_OPTIONS = JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES;
+	const JSON_RESPONSE_OPTIONS = JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES|JSON_THROW_ON_ERROR;
 
 	/**
 	 * Handle post request for mail (send or compose mail and upload attachments)
@@ -53,12 +53,21 @@ class ApiHandler extends Api\CalDAV\Handler
 		{
 			$prefix = '/'.Api\Accounts::id2name($user);
 			if (str_starts_with($path, $prefix)) $path = substr($path, strlen($prefix));
+			if ($user  != $GLOBALS['egw_info']['user']['account_id'])
+			{
+				throw new \Exception("/mail is NOT available for users other than the one you authenticated!", 403);
+			}
 		}
+		header('Content-Type: application/json');
 
 		try {
 			if (str_starts_with($path, '/mail/attachments/'))
 			{
 				return self::storeAttachment($path, $options['stream'] ?? $options['content']);
+			}
+			elseif (preg_match('#^/mail(/(\d+))?/vacation/?$#', $path, $matches))
+			{
+				return self::updateVacation($user, $options['content'], $matches[2]);
 			}
 			elseif (preg_match('#^/mail(/(\d+))?(/compose)?#', $path, $matches))
 			{
@@ -74,7 +83,8 @@ class ApiHandler extends Api\CalDAV\Handler
 					'body' => $data['bodyHtml'] ?? null ?: $data['body'] ?? '',
 					'mimeType' => !empty($data['bodyHtml']) ? 'html' : 'plain',
 					'identity' => $ident_id,
-				]+self::prepareAttachments($data['attachments'] ?? [], $data['attachmentType'] ?? 'attach', $do_compose));
+				]+self::prepareAttachments($data['attachments'] ?? [], $data['attachmentType'] ?? 'attach',
+					$data['shareExpiration'], $data['sharePassword'], $do_compose));
 
 				// for compose we need to construct a URL and push it to the client (or give an error if the client is not online)
 				if ($do_compose)
@@ -86,7 +96,6 @@ class ApiHandler extends Api\CalDAV\Handler
 					}
 					$push = new Api\Json\Push($user);
 					$push->call('egw.open', '', 'mail', 'add', ['preset' => $preset], '_blank', 'mail');
-					header('Content-Type: application/json');
 					echo json_encode([
 						'status' => 200,
 						'message' => 'Request to open compose window sent',
@@ -116,7 +125,6 @@ class ApiHandler extends Api\CalDAV\Handler
 				]+$preset);
 				if ($compose->send($preset, $acc_id))
 				{
-					header('Content-Type: application/json');
 					echo json_encode(array_filter([
 						'status' => 200,
 						'warning' => $warning ?? null,
@@ -131,20 +139,131 @@ class ApiHandler extends Api\CalDAV\Handler
 			throw new \Exception('Not Found', 404);
 		}
 		catch (\Throwable $e) {
-			_egw_log_exception($e);
-			header('Content-Type: application/json');
-			echo json_encode([
-				'error'   => $code = $e->getCode() ?: 500,
-				'message' => $e->getMessage(),
-			]+(empty($GLOBALS['egw_info']['server']['exception_show_trace']) ? [] : [
-				'trace' => array_map(static function($trace)
-				{
-					$trace['file'] = str_replace(EGW_SERVER_ROOT.'/', '', $trace['file']);
-					return $trace;
-				}, $e->getTrace())
-			]), self::JSON_RESPONSE_OPTIONS);
-			return (400 <= $code && $code < 600 ? $code : 500).' '.$e->getMessage();
+			return self::handleException($e);
 		}
+	}
+
+	/**
+	 * Get vacation array from server
+	 *
+	 * @param Api\Mail\Imap $imap
+	 * @param ?int $user
+	 * @return array
+	 */
+	protected static function getVacation(Api\Mail\Imap $imap, int $user=null)
+	{
+		if ($GLOBALS['egw']->session->token_auth)
+		{
+			return $imap->getVacationUser($user ?: $GLOBALS['egw_info']['user']['account_id']);
+		}
+		$sieve = new Api\Mail\Sieve($imap);
+		return $sieve->getVacation()+['script' => $sieve->script];
+	}
+
+	/**
+	 * Update vacation message/handling with JSON data given in $content
+	 *
+	 * @param int $user
+	 * @param array $content
+	 * @param int|null $identity
+	 * @return bool
+	 * @throws Api\Exception\AssertionFailed
+	 * @throws Api\Exception\NotFound
+	 */
+	protected static function updateVacation(int $user, string $content, int $identity=null)
+	{
+		$account = self::getMailAccount($user, $identity);
+		$vacation = $account->imapServer()->getVacationUser($user);
+		if (!($update = json_decode($content, true, 3, JSON_THROW_ON_ERROR)))
+		{
+			throw new \Exeception('Invalid request: no content', 400);
+		}
+		// Sieve class stores them as timestamps
+		foreach(['start', 'end'] as $name)
+		{
+			if (isset($update[$name]))
+			{
+				$vacation[$name.'_date'] = (new Api\DateTime($update[$name]))->format('ts');
+				if (empty($update['status'])) $update['status'] = 'by_date';
+			}
+			elseif (array_key_exists($name, $update))
+			{
+				$vacation[$name.'_date'] = null;
+				if (empty($update['status'])) $update['status'] = 'off';
+			}
+			unset($update[$name]);
+		}
+		// Sieve class stores them as comma-separated string
+		if (array_key_exists('forwards', $update))
+		{
+			$vacation['forwards'] = implode(',', self::parseAddressList($update['forwards'] ?? [], 'forwards'));
+			unset($update['forwards']);
+		}
+		if (array_key_exists('addresses', $update))
+		{
+			$update['addresses'] = self::parseAddressList($update['addresses'] ?? [], 'addresses');
+		}
+		static $modi = ['notice+store', 'notice', 'store'];
+		if (isset($update['modus']) && !in_array($update['modus'], $modi))
+		{
+			throw new \Exception("Invalid value '$update[modus]' for attribute modus, allowed values are: '".implode("', '", $modi)."'", 400);
+		}
+		if (($invalid=array_diff(array_keys($update), ['start','end','status','modus','text','addresses','forwards','days'])))
+		{
+			throw new \Exception("Invalid attribute: ".implode(', ', $invalid), 400);
+		}
+		$vacation_rule = null;
+		$vacation = array_merge([   // some defaults
+			'status' => 'on',
+			'addresses' => [Api\Accounts::id2name($user, 'account_email')],
+			'days' => 3,
+		], $vacation, $update);
+		// for token-auth we have to use the admin connection
+		if ($GLOBALS['egw']->session->token_auth)
+		{
+			if (!$account->imapServer()->setVacationUser($user, $vacation))
+			{
+				throw new \Exception($account->imapServer()->error ?: 'Error updating sieve-script');
+			}
+		}
+		else
+		{
+			$sieve = new Api\Mail\Sieve($account->imapServer());
+			$sieve->setVacation($vacation, null, $vacation_rule, true);
+		}
+		echo json_encode(array_filter([
+			'status' => 200,
+			'message' => 'Vacation handling updated',
+			'vacation_rule' => $vacation_rule,
+			'vacation' => self::returnVacation(self::getVacation($account->imapServer(), $user)),
+		]), self::JSON_RESPONSE_OPTIONS);
+		return true;
+	}
+
+	/**
+	 * Parse array of email addresses
+	 *
+	 * @param string[] $_addresses
+	 * @param string $name attribute name for exception
+	 * @return string[]
+	 * @throws \Exception if there is an invalid email address
+	 */
+	protected static function parseAddressList(array $_addresses, $name=null)
+	{
+		$parsed = iterator_to_array(Api\Mail::parseAddressList($_addresses));
+
+		if (count($parsed) !== count($_addresses) ||
+			array_filter($parsed, static function ($addr)
+			{
+				return !$addr->valid;
+			}))
+		{
+			throw new \Exception("Error parsing email-addresses in attribute $name: ".json_encode($_addresses));
+		}
+		return array_map(static function($addr)
+		{
+			return $addr->mailbox.'@'.$addr->host;
+		}, $parsed);
 	}
 
 	/**
@@ -201,13 +320,22 @@ class ApiHandler extends Api\CalDAV\Handler
 	/**
 	 * Convert an attachment name into an upload array for mail_compose::compose
 	 *
-	 * @param string[]? $attachments either "/mail/attachments/<token>" / file in temp_dir or VFS path
-	 * @param string? $attachmentType "attach" (default), "link", "share_ro", "share_rw"
+	 * @param string[] $attachments either "/mail/attachments/<token>" / file in temp_dir or VFS path
+	 * @param ?string $attachmentType "attach" (default), "link", "share_ro", "share_rw"
+	 * @param ?string $expiration "YYYY-mm-dd" or e.g. "+2days"
+	 * @param ?string $password optional password for the share
 	 * @param bool $compose true: for compose window, false: to send
-	 * @return array with values for keys "file", "name" and "filemode"
+	 * @return array with values for keys "file", "name", "filemode", "expiration" and "password"
 	 * @throws Exception if file not found or unreadable
 	 */
-	protected static function prepareAttachments(array $attachments, string $attachmentType=null, bool $compose=true)
+	/**
+	 * @param array $attachments
+	 * @param string|null $attachmentType
+	 * @param bool $compose
+	 * @return array
+	 * @throws Api\Exception
+	 */
+	protected static function prepareAttachments(array $attachments, string $attachmentType=null, string $expiration=null, string $password=null, bool $compose=true)
 	{
 		$ret = [];
 		foreach($attachments as $attachment)
@@ -262,6 +390,12 @@ class ApiHandler extends Api\CalDAV\Handler
 			{
 				throw new \Exception("Invalid value '$ret[filemode]' for attachmentType, must be one of: '".implode("', '", $valid)."'", 422);
 			}
+			// EPL share password and expiration
+			$ret['password'] = $password ?: null;
+			if (!empty($expiration))
+			{
+				$ret['expiration'] = (new Api\DateTime($expiration))->format('Y-m-d');
+			}
 		}
 		return $ret;
 	}
@@ -308,10 +442,97 @@ class ApiHandler extends Api\CalDAV\Handler
 	function get(&$options,$id,$user=null)
 	{
 		header('Content-Type: application/json');
-		echo json_encode($all=iterator_to_array(Api\Mail\Account::identities([], true, 'name',
-			$user ?: $GLOBALS['egw_info']['user']['account_id'])), JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);
-		return true;
+		try
+		{
+			$path = rtrim($options['path'], '/');
+			if (empty($user))
+			{
+				$user = $GLOBALS['egw_info']['user']['account_id'];
+			}
+			else
+			{
+				$prefix = '/'.Api\Accounts::id2name($user);
+				if (str_starts_with($path, $prefix)) $path = substr($path, strlen($prefix));
+				if ($user  != $GLOBALS['egw_info']['user']['account_id'])
+				{
+					throw new \Exception("/mail is NOT available for users other than the one you authenticated!", 403);
+				}
+			}
+			switch ($path)
+			{
+				case '/mail':
+					echo json_encode(iterator_to_array(Api\Mail\Account::identities([], true, 'name', $user)),
+						self::JSON_RESPONSE_OPTIONS);
+					return true;
+
+				case preg_match('#^/mail(/(\d+))?/vacation$#', $path, $matches) === 1:
+					$account = self::getMailAccount($user, $matches[2] ?? null);
+					echo json_encode(self::returnVacation(self::getVacation($account->imapServer(), $user)), self::JSON_RESPONSE_OPTIONS);
+					return true;
+			}
+		}
+		catch (\Throwable $e) {
+			return self::handleException($e);
+		}
 		return '501 Not Implemented';
+	}
+
+	protected static function returnVacation(array $vacation)
+	{
+		return array_filter([
+			'status' => $vacation['status'] ?? 'off',
+			'start' => isset($vacation['start_date']) ? Api\DateTime::to($vacation['start_date'], 'Y-m-d') : null,
+			'end' => $vacation['end_date'] ? Api\DateTime::to($vacation['end_date'], 'Y-m-d') : null,
+			'text' => $vacation['text'] ?? null,
+			'modus' => $vacation['modus'] ?? "notice+store",
+			'days' => (int)($vacation['days'] ?? 0),
+			'addresses' => $vacation['addresses'] ?? null,
+			'forwards' => empty($vacation['forwards']) ? [] : preg_split('/, ?/', $vacation['forwards']),
+			'script' => $vacation['script'] ?? null,
+		]);
+	}
+
+	/**
+	 * Get mail account specified by identity or users default one
+	 *
+	 * @param int $user
+	 * @param int|null $ident_id
+	 * @return Api\Mail\Account
+	 * @throws Api\Exception\NotFound
+	 */
+	protected static function getMailAccount(int $user, int $ident_id=null) : Api\Mail\Account
+	{
+		if (empty($ident_id))
+		{
+			return Api\Mail\Account::get_default();
+		}
+		$identity = Api\Mail\Account::read_identity($ident_id, false, $user);
+		return Api\Mail\Account::read($identity['acc_id']);
+	}
+
+	/**
+	 * Handle exception by returning an appropriate HTTP status and JSON content with an error message
+	 *
+	 * @param \Throwable $e
+	 * @return string
+	 */
+	protected function handleException(\Throwable $e) : string
+	{
+		_egw_log_exception($e);
+		header('Content-Type: application/json');
+		echo json_encode([
+				'error'   => $code = $e->getCode() ?: 500,
+				'message' => $e->getMessage(),
+				'details' => $e->details ?? null,
+				'script'  => $e->script ?? null,
+			]+(empty($GLOBALS['egw_info']['server']['exception_show_trace']) ? [] : [
+				'trace' => array_map(static function($trace)
+				{
+					$trace['file'] = str_replace(EGW_SERVER_ROOT.'/', '', $trace['file']);
+					return $trace;
+				}, $e->getTrace())
+			]), self::JSON_RESPONSE_OPTIONS);
+		return (400 <= $code && $code < 600 ? $code : 500).' '.$e->getMessage();
 	}
 
 	/**

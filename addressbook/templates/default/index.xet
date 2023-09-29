@@ -16,7 +16,7 @@
 				<column width="180"/>
 				<column width="40"/>
 				<column width="80" disabled="@no_customfields"/>
-                <column width="120"/>
+                <column width="120" disabled="@no_kanban"/>
 				<column width="60%" minWidth="100"/>
 				<column width="80" disabled="@no_distribution_list"/>
 				<column width="80"/>

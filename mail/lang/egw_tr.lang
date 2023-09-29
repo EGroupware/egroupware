@@ -5,7 +5,11 @@ after reply, visible during compose	mail	tr	Yanıttan sonra, oluşturma sırası
 aliases+forwards	mail	tr	Takma Adlar+İleri Yönler
 always show notifiction	mail	tr	Her zaman bildirim göster
 answered	mail	tr	Cevaplandı
+by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	tr	Varsayılan olarak 'http://' sadece 'https://' ile değiştirilir. 'https://proxy.egroupware.org/' adresini yalnızca http üzerinden kullanılabilen resimleri de yükleyecek şekilde yapılandırmaktan çekinmeyin.
+caching of flags	mail	tr	Bayrakların önbelleğe alınması
+changing subject failed folder %1 does not exist	mail	tr	Konu değiştirme başarısız %1 klasörü mevcut değil
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	tr	Yapılandırılan değerler, yeni bir e-posta oluşturulurken saygı duyulan alan için oluşturma iletişim kutusunda otomatik olarak ayarlanacaktır.
+contact label	mail	tr	İletişim etiketi
 cross account forward attachment is not allowed!	mail	tr	Çapraz hesap ileri ekine izin verilmez!
 current subject	mail	tr	Güncel konu
 default toolbar actions shown in mail's html editor	mail	tr	E-posta oluştururken HTML düzenleyici araç çubuğunda etkinleştirilen işlevler
@@ -20,6 +24,7 @@ enable	mail	tr	Etkinleştir
 event details follow	mail	tr	Etkinlik Detayları Ektedir
 extended	mail	tr	Genişletilmiş
 from	mail	tr	Nereden
+list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	tr	Varsayılan olarak açılacak/etkinleştirilecek eylemlerin listesi (örn. Mail compose olarak kaydet InfoLog eylemi)
 mail	common	tr	Posta
 mail acl	mail	tr	Erişim hakları
 mail filter	mail	tr	Posta filtresi
@@ -37,12 +42,30 @@ modify subject	mail	tr	Konuyu değiştir
 modify subject of this message	mail	tr	Bu mesajın konusunu değiştirin
 new subject	mail	tr	Yeni konu
 no sneak preview in list	mail	tr	Mesaj önizlemesi yok
+open in html mode	mail	tr	HTML modunda açın
+open in text mode	mail	tr	Metin modunda aç
+open with collabora office	mail	tr	Collabora Online ile Açın
+organisation	admin	tr	Organizasyon
+organization | real name email	mail	tr	Organizasyon | Gerçek ad [E-posta]
+original message	mail	tr	Orijinal mesaj
+outbox	mail	tr	Giden Kutusu
 permission denied	mail	tr	İzin verilmedi
+please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	tr	Lütfen S/MIME sertifikanızı Hesabı Düzenle iletişim kutusunda bulunan Şifreleme sekmesinde yapılandırın.
 predefined addresses for compose	mail	tr	Compose için önceden tanımlanmış adresler
+preview pane	mail	tr	Pencere düzeni
+printing	mail	tr	Baskı
+push notifications	mail	tr	Anlık bildirimler
+quicksearch	mail	tr	Hızlı Arama
+quicksearch (with cc)	mail	tr	Hızlı Arama (+Kopya)
+read / unread	mail	tr	Okundu / Okunmadı
 save all attachments to filemanager	mail	tr	Tüm ekleri filemanager'a kaydet
 select all	mail	tr	Tamam?n? seç
 select or insert email address	mail	tr	E-posta adresini seçin veya ekleyin
 set predefined values for compose...	mail	tr	Oluşturma için önceden tanımlanmış değerleri ayarlayın ...
+show notification for new arriving mails	mail	tr	Yeni gelen postalar için bildirim göster
+show vertical	mail	tr	Dikey göster
+show vertical with all columns	mail	tr	Tüm sütunlarla birlikte dikey göster
+show/hide preview pane in mail list view	mail	tr	Posta listesi görünümünde önizleme bölmesini gösterme/gizleme
 signature	mail	tr	İmza
 signature at top	mail	tr	üstteki imza
 signature position and visibility	mail	tr	İmza konumu ve görünürlüğü
@@ -52,3 +75,4 @@ smtp	mail	tr	SMTP
 sneak preview in list	mail	tr	Mesaj önizlemesi
 text	mail	tr	Metin
 write	mail	tr	Yaz
+you've got new mail	mail	tr	Yeni postanız var

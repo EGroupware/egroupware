@@ -18,6 +18,9 @@ export interface SelectOption
 	// Show the option, but it is not selectable.
 	// If multiple=true and the option is in the value, it is not removable.
 	disabled? : boolean;
+	// If a search is in progress, does this option match.
+	// Automatically changed.
+	isMatch? : boolean;
 }
 
 /**

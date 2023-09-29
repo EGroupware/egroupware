@@ -196,24 +196,27 @@ class Ads
 			}
 			$base_dn = implode(',', $base_dn_parts);
 
-			// check if a port is specified as host[:port] and pass it correctly to adLDAP
-			$matches = null;
-			if (preg_match('/:(\d+)/', $host=$config['ads_host'], $matches))
-			{
-				$port = $matches[1];
-				$host = preg_replace('/:(\d+)/', '', $config['ads_host']);
-			}
 			$options = array(
-				'domain_controllers' => preg_split('/[ ,]+/', $host),
-				'base_dn' => $base_dn ? $base_dn : null,
+				// always return an uri (incl. port), but no use_ssl or ad_port
+				'domain_controllers' => array_map(static function($uri_host_port) use ($config)
+				{
+					if (!preg_match('#^(ldaps?://)?([^:]+)(:\d+)?$#', $uri_host_port, $matches))
+					{
+						throw new \Exception("Invalid value for AD controller '$uri_host_port' in '$config[ads_host]'");
+					}
+					if ($matches[1] === 'ldaps://' || $config['ads_connection'] === 'ssl')
+					{
+						return 'ldaps://'.$matches[2].($matches[3] ?? '');
+					}
+					return 'ldap://'.$matches[2].($matches[3] ?? '');
+				}, preg_split('/[ ,]+/', trim($config['ads_host']))),
+				'base_dn' => $base_dn ?: null,
 				'account_suffix' => '@'.$config['ads_domain'],
 				'admin_username' => $config['ads_admin_user'],
 				'admin_password' => $config['ads_admin_passwd'],
 				'use_tls' => $config['ads_connection'] == 'tls',
-				'use_ssl' => $config['ads_connection'] == 'ssl',
 				'charset' => Api\Translation::charset(),
 			);
-			if (isset($port)) $options['ad_port'] = $port;
 
 			$adldap[$config['ads_domain']] = new adLDAP($options);
 			if (self::$debug) error_log(__METHOD__."() new adLDAP(".array2string($options).") returned ".array2string($adldap[$config['ads_domain']]).' '.function_backtrace());
@@ -725,10 +728,10 @@ class Ads
 				}
 			}
 		}
-		// attributes not (yet) suppored by adldap
+		// attributes not (yet) supported by adldap
 		if ($ldap && !($ret = @ldap_modify($ds=$this->ldap_connection(), $old['account_dn'], $ldap)))
 		{
-			error_log(__METHOD__."(".array2string($data).") ldap_modify($ds, '$old[account_dn]', ".array2string($ldap).') returned '.array2string($ret));
+			error_log(__METHOD__."(".array2string($data).") ldap_modify(\$ds, '$old[account_dn]', ".array2string($ldap).') returned '.array2string($ret));
 			return false;
 		}
 		return $old['account_id'];
@@ -879,7 +882,7 @@ class Ads
 		// attributes not (yet) suppored by adldap
 		if ($ldap && !($ret = @ldap_modify($ds=$this->ldap_connection(), $old['account_dn'], $ldap)))
 		{
-			error_log(__METHOD__."(".array2string($data).") ldap_modify($ds, '$old[account_dn]', ".array2string($ldap).') returned '.array2string($ret).' ('.ldap_error($ds).') '.function_backtrace());
+			error_log(__METHOD__."(".array2string($data).") ldap_modify(\$ds, '$old[account_dn]', ".array2string($ldap).') returned '.array2string($ret).' ('.ldap_error($ds).') '.function_backtrace());
 			return false;
 		}
 		//elseif ($ldap) error_log(__METHOD__."(".array2string($data).") ldap_modify($ds, '$old[account_dn]', ".array2string($ldap).') returned '.array2string($ret).' '.function_backtrace());
@@ -1439,8 +1442,6 @@ class adLDAP extends \adLDAP
 		throw $e;
 	}
 
-
-
 	/**
 	 * Not so random anymore ;)
 	 *
@@ -1449,6 +1450,16 @@ class adLDAP extends \adLDAP
 	function randomController()
 	{
 		return $this->_controller ?? parent::randomController();
+	}
+
+	/**
+	 * Reimplemented to check ldaps uri instead of the no longer used attribute $this->useSSL
+	 *
+	 * @return bool
+	 */
+	function getUseSSL()
+	{
+		return substr($this->_controller, 0, 8) === 'ldaps://';
 	}
 
 	/**
@@ -1605,7 +1616,7 @@ class adLDAPUsers extends \adLDAPUsers
 		// Add the entry
 		$result = ldap_add($ds=$this->adldap->getLdapConnection(), $dn="CN=" . $add["cn"][0] . "," . $attributes["container"] . "," . $this->adldap->getBaseDn(), $add);
 		if ($result != true) {
-			error_log(__METHOD__."(".array2string($attributes).") ldap_add($ds, '$dn', ".array2string($add).") returned ".array2string($result)." ldap_error()=".ldap_error($ds));
+			error_log(__METHOD__."(".array2string($attributes).") ldap_add(\$ds, '$dn', ".array2string($add).") returned ".array2string($result)." ldap_error()=".ldap_error($ds));
 			return false;
 		}
 
@@ -1620,7 +1631,7 @@ class adLDAPUsers extends \adLDAPUsers
 				$control_options = array("NORMAL_ACCOUNT");
 				$mod = array("userAccountControl" => $this->accountControl($control_options));
 				$result = ldap_modify($ds, $dn, $mod);
-				if (!$result) error_log(__METHOD__."(".array2string($attributes).") ldap_modify($ds, '$dn', ".array2string($mod).") returned ".array2string($result)." ldap_error()=".ldap_error($ds));
+				if (!$result) error_log(__METHOD__."(".array2string($attributes).") ldap_modify(\$ds, '$dn', ".array2string($mod).") returned ".array2string($result)." ldap_error()=".ldap_error($ds));
 			}
 		}
 
@@ -1666,7 +1677,7 @@ class adLDAPUsers extends \adLDAPUsers
     	$result = ldap_mod_replace($ds=$this->adldap->getLdapConnection(), $dn, array(
     		'unicodePwd' => $this->encodePassword($password),
     	));
-    	if (!$result) error_log(__METHOD__."('$dn', '$password') ldap_mod_replace($ds, '$dn', \$password) returned FALSE: ".ldap_error($ds));
+    	if (!$result) error_log(__METHOD__."('$dn', '$password') ldap_mod_replace(\$ds, '$dn', \$password) returned FALSE: ".ldap_error($ds));
     	return $result;
     }
 
@@ -1792,7 +1803,7 @@ class adLDAPUsers extends \adLDAPUsers
 	        $result = @ldap_modify($ds=$this->adldap->getLdapConnection(), $userDn, $mod);
 	        if ($result == false) {
 				if (isset($mod['unicodePwd'])) $mod['unicodePwd'] = '***';
-				error_log(__METHOD__."(".array2string($attributes).") ldap_modify($ds, '$userDn', ".array2string($mod).") returned ".array2string($result)." ldap_error()=".ldap_error($ds));
+				error_log(__METHOD__."(".array2string($attributes).") ldap_modify(\$ds, '$userDn', ".array2string($mod).") returned ".array2string($result)." ldap_error()=".ldap_error($ds));
 	        	return false;
 	        }
 		}

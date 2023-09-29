@@ -2,7 +2,6 @@
 %1 hours	calendar	no	%1 timer
 %1 records imported	calendar	no	%1 oppføringer importert
 %1 records read (not yet imported, you may go back and uncheck test import)	calendar	no	%1 oppføringer lest (ikke importert enda, du kan gå tilbake og hake av Test Import)
-<b>please note</b>: the calendar use the holidays of your country, which is set to %1. you can change it in your %2.<br />holidays are %3 automatic installed from %4. you can changed it in %5.	calendar	no	<b>Vennligst bemerk</b>: Kalenderen bruker helligdager for ditt land som er satt til %1.  Du kan endre dette i ditt %2.<b/>Helligdager er %3 automatisk lagt til for %4.  Du kan endre dette til %5.
 a non blocking event will not conflict with other events	calendar	no	En hendelse som ikke blokkerer vil ikke være i konflikt med andre hendelser
 accept	calendar	no	aksepter
 accept or reject an invitation	calendar	no	Aksepter eller avslå invitasjonen
@@ -27,8 +26,6 @@ all participants	calendar	no	Alle deltagere
 allows to edit the event again	calendar	no	Tillate endring av alarmen
 always	calendar	no	Alltid
 apply the changes	calendar	no	Oppdater endringene
-are you sure you want to delete this country ?	calendar	no	Er du sikker på at du vil slette dette landet?
-are you sure you want to delete this holiday ?	calendar	no	Er du sikker på at du vil slette denne ferien?
 back half a month	calendar	no	Tilbake en halv mnd.
 back one month	calendar	no	Tilbake en mnd.
 before current date	calendar	no	For inneværende dato
@@ -38,7 +35,6 @@ birthdays	admin	no	Fødselsdager
 busy	calendar	no	Opptatt
 by	calendar	no	av
 calendar event	calendar	no	Kalender Hendelse
-calendar holiday management	admin	no	Kalender Feriestyring
 calendar menu	calendar	no	Kalendermeny
 calendar preferences	calendar	no	Kalender Preferanser
 calendar settings	admin	no	Kalender Innstillinger
@@ -50,7 +46,6 @@ check all	calendar	no	Kontroller alle
 choose a category	calendar	no	Velg en kategori
 close the window	calendar	no	Lukk vinduet
 compose a mail to all participants after the event is saved	calendar	no	Komponer en mail til alle deltagere etter at hendelsen er lagret
-copy of:	calendar	no	Kopi av:
 copy this event	calendar	no	Kopier denne hendelsen
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	calendar	no	Kopier endringene dine til utklippstavlen, %1oppfrisk forekomsten%2 og sammenstill de
 countries	calendar	no	Land
@@ -79,13 +74,11 @@ delete this event	calendar	no	Slett denne hendelsen
 delete this exception	calendar	no	Slett dette unntaket
 delete this series of recurring events	calendar	no	Slett serie med repeterende hendelser
 deleted	calendar	no	slettet
-uninvited	calendar	no	Ikke lenger invitert
 display status of events	calendar	no	Vis Status av Hending
 displayed view	calendar	no	Gjeldende visning
 do you want a weekview with or without weekend?	calendar	no	Ønsker du ukevisning uten helg ?
 do you want to be notified about new or changed appointments? you are not notified about changes you made yourself.<br>you can limit the notifications to certain changes only. each item includes all notifications listed above. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get participant responses like acceptions or rejections too.	calendar	no	Vil du bli varslet om alle forandrede avtaler? Du blir varslet om alle endringer du selv utfører.<br>Du kan begrense varslingen til bare å gjelde spesifikke endringer. Hvert objekt inkluderer alle varslingene over det. Alle endringer inkluderer endringer av tittel, beskrivelse, men ikke deltakeres responser. Hvis eieren av en oppføring ber om varsling, vil han alltid få deltakeres responser som godkjenninger eller avslag også.
 do you want to receive a regularly summary of your appointments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	no	Ønsker du å motta regelmessige sammendrag av dine avtaler via e-post?<br>Oppsummeringen vil bli sendt til din standard e-post adresse på morgenen samme dag, eller på mandager for ukentlige sammendrag.<br>Den vil bare bli sendt når du har en avtale den dagen eller uken.
-do you wish to autoload calendar holidays files dynamically?	admin	no	Ønsker du å automatisk laste kalenderferiefiler?
 download	calendar	no	Last ned
 download this event as ical	calendar	no	Last ned denne hendelsen som iCal
 duration	calendar	no	Varighet
@@ -107,7 +100,6 @@ error: no participants selected !!!	calendar	no	Feil: Ingen deltagere valgt!
 error: saving the event !!!	calendar	no	Feil ved forsøk på lagring av hendelse!
 error: starttime has to be before the endtime !!!	calendar	no	Feil: Starttid må være før sluttid!
 error: the entry has been updated since you opened it for editing!	calendar	no	Feil: Denne forekomsten er endret siden du åpnet den for redigering!
-event copied - the copy can now be edited	calendar	no	Hendelse kopiert - kopien kan nå endres
 event deleted	calendar	no	Hendelse slettet
 event details follow	calendar	no	Hendelses Detaljer Følger
 event saved	calendar	no	Hendelse lagret
@@ -144,7 +136,6 @@ here is your requested alarm.	calendar	no	Her er varslingen du ba om.
 high priority	calendar	no	høy prioritet
 history	calendar	no	Historikk
 holiday	calendar	no	Ferie
-holiday management	calendar	no	Feriestyring
 holidays	calendar	no	Ferier
 hours	calendar	no	timer
 how far to search (from startdate)	calendar	no	Hvor langt skal det søkes (fra startdato)
@@ -154,7 +145,6 @@ ical export	calendar	no	iCal eksport
 ical file	calendar	no	iCal fil
 ical import	calendar	no	iCal import
 ical successful imported	calendar	no	iCal ble importert
-if checked holidays falling on a weekend, are taken on the monday after.	calendar	no	Hvis merket ferie faller på en helg, blir den tatt mandagen etter.
 if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	no	Dersom du ikke setter et passord her vil informasjonen være tilgjengelig for alle som kjenner nettadressen !
 ignore conflict	calendar	no	Ignorer konflikt
 import	calendar	no	Importer
@@ -169,10 +159,12 @@ links	calendar	no	Lenker
 links, attachments	calendar	no	Lenker, tillegg
 listview	calendar	no	Listevisning
 location	calendar	no	Lokasjon
-location to autoload from	admin	no	Lokasjon å automatisk laste fra
 location, start- and endtimes, ...	calendar	no	Lokasjon, start- og sluttid,...
 mail all participants	calendar	no	Send e-mail til deltagerne
 make freebusy information available to not logged in persons?	calendar	no	Skal informasjon om ledig/opptatt være tilgjengelig for personer som ikke er pålogget ?
+maximum available quantity of %1 exceeded!	calendar	no	Maksimalt tilgjengelig antall %1 overskredet!
+minimum number of users for showing day view as consolidated.	calendar	no	Minimum antall brukere for å vise dagvisning som konsolidert.
+minimum number of users for showing week view as consolidated.	calendar	no	Minimum antall brukere for å vise ukevisning som konsolidert.
 minutes	calendar	no	minutter
 modified	calendar	no	Endret
 mon	calendar	no	Man
@@ -181,6 +173,9 @@ monthly	calendar	no	Månedlig
 monthly (by date)	calendar	no	Månedlig (etter dato)
 monthly (by day)	calendar	no	Månedlig (etter dag)
 monthview	calendar	no	Månedlig visning
+move to	calendar	no	Flytt til
+multiple participants	calendar	no	Flere deltakere
+never notify externals (non-users) about events i create	calendar	no	Aldri varsle eksterne (ikke-brukere) om hendelser jeg oppretter
 new	calendar	no	Opprett
 new search with the above parameters	calendar	no	Nytt søk med ovenstårende parametre
 no events found	calendar	no	Ingen hendelser funnet
@@ -191,8 +186,8 @@ non blocking	calendar	no	Ikke blokkerende
 not	calendar	no	ikke
 notification messages for added events	calendar	no	Varslingsmeldinger for tillagte hendelser
 notification messages for canceled events	calendar	no	Varslingsmeldinger for avbrutte hendelser
-notification messages for uninvited participants	calendar	no	Varslingsmeldinger for avmeldte deltagere
 notification messages for modified events	calendar	no	Varslingsmeldinger for endrede hendelser
+notification messages for uninvited participants	calendar	no	Varslingsmeldinger for avmeldte deltagere
 notification messages for your alarms	calendar	no	Varslingsmeldinger for dine alarmer
 notification messages for your responses	calendar	no	Varslingsmeldinger for dine responser
 number of records to read (%1)	calendar	no	Antall rekker som leses (%1)
@@ -251,7 +246,6 @@ select a %1	calendar	no	Velg en %1
 select a time	calendar	no	velg en tid
 select resources	calendar	no	Velg ressurser
 select who should get the alarm	calendar	no	Velg hvem som skal motta alarmen
-set a year only for one-time / non-regular holidays.	calendar	no	Sett kun ett år for engangs / ikke faste ferier.
 set new events to private	calendar	no	Sett nye oppføringer som private
 should new events created as private by default ?	calendar	no	Skal nye oppføringer som blir laget, være private som standard?
 should the status of the event-participants (accept, reject, ...) be shown in brackets after each participants name ?	calendar	no	Skal status på oppførings-deltakere(godta, avslå,...) bli vist som bokser etter hver deltakers navn ?
@@ -277,8 +271,8 @@ this defines the start of your dayview. events before this time, are shown above
 this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	no	Denne gruppen er forhåndsvalgt når du starter planleggeren. Du kan endre den i planleggeren din når du måtte ønske.
 this message is sent for canceled or deleted events.	calendar	no	Denne meldingen blir sent for kansellerte eller slettede oppføringer.
 this message is sent for modified or moved events.	calendar	no	Denne meldingen er sendt for endrede eller flyttede oppføringer
-this message is sent to uninvited participants.	calendar	no	Denne meldingen er til avmeldte deltagere.
 this message is sent to every participant of events you own, who has requested notifcations about new events.<br>you can use certain variables which get substituted with the data of the event. the first line is the subject of the email.	calendar	no	Denne meldingen blir sendt til alle deltakere på denne oppføringen som du er eier av, som har bedt om en varsling om nye oppføringer.<br>Du kan bruke forskjellige alternativer som blir byttet med innholdet i denne oppføringen. Den første linjen er overskriften av e-posten.
+this message is sent to uninvited participants.	calendar	no	Denne meldingen er til avmeldte deltagere.
 this message is sent when you accept, tentative accept or reject an event.	calendar	no	Denne meldingen blir sendt når du godtar, forsøksvis godtar, eller avslår en oppføring.
 this message is sent when you set an alarm for a certain event. include all information you might need.	calendar	no	Denne meldingen blir sendt når du har satt en Alarm for en spesiell oppføring. Inkluder all den informasjonen du trenger.
 this module displays the current month	calendar	no	Denne modulen viser inneværende måned
@@ -292,6 +286,7 @@ to many might exceed your execution-time-limit	calendar	no	for mange vil muligen
 translation	calendar	no	Oversetting
 tue	calendar	no	Tir
 two weeks	calendar	no	To uker
+uninvited	calendar	no	Ikke lenger invitert
 updated	calendar	no	Oppdatert
 use end date	calendar	no	Bruk sluttdato
 use the selected time and close the popup	calendar	no	bruk valgt tid og lukk popup-vinduet

@@ -7,7 +7,7 @@
  * @author Ralf Becker <rb@egroupware.org>
  */
 
-import {Et2SelectAccountReadonly} from "../Et2Select/Et2SelectReadonly";
+import {Et2SelectAccountReadonly} from "../Et2Select/Select/Et2SelectReadonly";
 
 export class Et2VfsUid extends Et2SelectAccountReadonly
 {

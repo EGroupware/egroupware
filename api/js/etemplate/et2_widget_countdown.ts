@@ -101,6 +101,12 @@ export class et2_countdown extends et2_valueWidget {
 		if (isNaN(_time)) return;
 
 		super.set_value(_time);
+
+		if(this.timer)
+		{
+			clearInterval(this.timer);
+		}
+
 		this.time = new Date();
 		this.time.setSeconds(this.time.getSeconds() + parseInt(_time));
 

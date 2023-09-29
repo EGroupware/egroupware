@@ -123,7 +123,7 @@ class importexport_widget_filter extends Etemplate\Widget\Transformer
 						}
 						foreach((array)$field['values'] as $key => $val)
 						{
-							if (substr($val = lang($val),-1) != '*')
+							if(!is_array($val) && substr($val = lang($val), -1) != '*')
 							{
 								$field['values'][$key] = $val;
 							}

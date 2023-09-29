@@ -14,7 +14,7 @@ import '../Et2Image/Et2Image';
 import {SlIconButton} from "@shoelace-style/shoelace";
 import {ButtonMixin} from "./ButtonMixin";
 import shoelace from "../Styles/shoelace";
-import {css} from "@lion/core";
+import {css} from "lit";
 
 
 export class Et2ButtonIcon extends ButtonMixin(Et2InputWidget(SlIconButton))

@@ -17,12 +17,16 @@ any of	mail	fi	Mikä tahansa
 any status	mail	fi	Mikä tahansa tila
 attachments	mail	fi	Liitteet
 by date	mail	fi	Päivämäärän mukaan
+by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	fi	Oletusarvoisesti "http://" korvataan vain "https://". Voit vapaasti määrittää 'https://proxy.egroupware.org/' lataamaan myös kuvia, jotka ovat saatavilla vain http:n kautta.
+caching of flags	mail	fi	Lippujen välimuistiin tallentaminen
+changing subject failed folder %1 does not exist	mail	fi	Aiheen vaihtaminen epäonnistui kansiota %1 ei ole olemassa.
 check message against next rule also	mail	fi	Tarkista viesti myös seuraavaa sääntöä vastaan
 compose	mail	fi	Kirjoita viesti
 compose as new	mail	fi	Kirjoita uusi viesti
 compress folder	mail	fi	Tiivistä kansio
 condition	mail	fi	Ehdot
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	fi	Määritetyt arvot asetetaan automaattisesti laatimisvalintaikkunassa arvostetulle kentälle, kun laadit uutta sähköpostia.
+contact label	mail	fi	Yhteystieto etiketti
 contains	mail	fi	Sisältää
 copy to	mail	fi	Kopio
 cross account forward attachment is not allowed!	mail	fi	Tilin rajat ylittävä eteenpäin kiinnittäminen ei ole sallittua!
@@ -104,12 +108,14 @@ import of message %1 failed. destination folder not set.	mail	fi	Viestin %1 tuon
 import of message %1 failed. no contacts to merge and send to specified.	mail	fi	Viestin %1 tuonti epäonnistui. Kontaktia ei ole asetettu.
 importance	mail	fi	Tärkeys
 inbox	mail	fi	Saapuneet
+information to show on email tag	mail	fi	Sähköpostitunnisteessa näytettävät tiedot
 insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)	mail	fi	Aseta allekirjoitus oman viestisi alapuolelle vastatessasi sähköpostiin.
 junk	mail	fi	Roskaposti
 keep a copy of the message in your inbox	mail	fi	Pidä kopio viestistä Inboxissa
 kilobytes	mail	fi	Kilotavu(a)
 later	mail	fi	Jälkeen
 less than	mail	fi	Vähemmän kuin
+list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	fi	Luettelo toiminnoista, jotka kytketään/aktivoidaan oletusarvoisesti päälle (esim. Mail kompositio tallenna InfoLog-toimintona).
 mail	common	fi	Sähköpostit
 mail acl	mail	fi	Käyttöoikeudet
 mail filter	mail	fi	Postisuodatin
@@ -130,6 +136,7 @@ modify subject of this message	mail	fi	Muokkaa tämän viestin aihetta
 move selected to	mail	fi	Siirrä valitut
 move to	mail	fi	Siirrä valitut:
 move to trash	mail	fi	Siirrä roskakoriin
+name and email	mail	fi	Nimi ja sähköpostiosoite
 never display html emails	mail	fi	Älä näytä HTML -sähköposteja
 new subject	mail	fi	Uusi aihe
 no access	mail	fi	Ei pääsyä
@@ -143,19 +150,31 @@ no subject given!	mail	fi	Aihe puuttuu!
 none, create all	mail	fi	Ei mitään, luo kaikki
 nothing to change.	mail	fi	Ei muutettavaa.
 one address is not valid	mail	fi	Yksi osoite ei kelpaa
+only email	mail	fi	Vain sähköpostiosoite
+only name	mail	fi	Vain nimi
 only one window	mail	fi	Vain yksi ikkuna
 only send message, do not copy a version of the message to the configured sent folder	mail	fi	Ainoastaan lähetä viesti, älä kopoi sitä Lähetetyt-kansioon
+open in html mode	mail	fi	Avaa HTML-tilassa
+open in text mode	mail	fi	Avaa tekstitilassa
+open with collabora office	mail	fi	Avaa Collabora Online -ohjelmalla
 organisation	admin	fi	Organisaatio
 organization	mail	fi	Organisaatio
+organization | real name email	mail	fi	Organisaatio | Oikea nimi [Sähköposti]
 original message	mail	fi	Alkuperäinen viesti
+outbox	mail	fi	Lähtevä postilaatikko
 permission denied	mail	fi	Pääsy estetty
 please configure access to an existing individual imap account.	mail	fi	Konfiguroi jo olemassaolevan IMAP sähköpostitilisi asetukset.
+please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	fi	Määritä S/MIME-varmenne Encryption-välilehdellä, joka sijaitsee Muokkaa tiliä -valintaikkunassa.
 please select a address	mail	fi	Valitse osoite
 please select the number of days to wait between responses	mail	fi	Valitse päivien lukumäärä, joka vastausten välillä odotetaan
 please supply the message to send with auto-responses	mail	fi	Anna viesti joka lähetetään automaattisella vastauksella
 predefined addresses for compose	mail	fi	Ennalta määritetyt osoitteet laatimista varten
+preview pane	mail	fi	Ikkunan asettelu
+printing	mail	fi	Tulostus
 printview	mail	fi	Tulostuksen esikatselu
+push notifications	mail	fi	Push-ilmoitukset
 quicksearch	mail	fi	Pikahaku
+quicksearch (with cc)	mail	fi	Pikahaku (+kopiointi)
 refresh time in minutes	mail	fi	Päivitysaika minuutteina
 reject with	mail	fi	Hylkää
 remove all	mail	fi	Poista kaikki
@@ -183,6 +202,10 @@ sent	mail	fi	Lähetetyt
 sent folder	mail	fi	Lähetetyt kansio
 set flags	mail	fi	Merkitse sähköposti
 set predefined values for compose...	mail	fi	Aseta valmiiksi määritetyt arvot lähettämistä varten ...
+show notification for new arriving mails	mail	fi	Näytä ilmoitus uusista saapuneista sähköpostiviesteistä
+show vertical	mail	fi	Näytä pystysuora
+show vertical with all columns	mail	fi	Näytä pystysuora näkymä kaikkine sarakkeineen
+show/hide preview pane in mail list view	mail	fi	Näytä/piilota esikatseluruutu sähköpostiluettelonäkymässä
 sieve	mail	fi	Sieve
 sieve script name	mail	fi	Sieve skriptin nimi
 signature	mail	fi	Allekirjoitus
@@ -223,4 +246,5 @@ write	mail	fi	Kirjoita
 wrote	mail	fi	Kirjoitettu
 yes, offer copy option	mail	fi	Kyllä, tarjoa kopiointimahdollisuutta
 you can either choose to save as infolog or tracker, not both.	mail	fi	Voit tallentaa joko InfoLogina tai reklamaationa, et molempina!
+you can select what info to be displayed on email tag	mail	fi	Voit valita, mitä tietoja sähköpostitunnisteessa näytetään.
 you've got new mail	mail	fi	Sinulle on uusi sähköposti

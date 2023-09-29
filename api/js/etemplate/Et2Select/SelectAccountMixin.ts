@@ -1,5 +1,5 @@
 import {SelectOption} from "./FindSelectOptions";
-import {LitElement} from "@lion/core";
+import {LitElement} from "lit";
 
 /**
  * EGroupware eTemplate2 - SelectAccountMixin

@@ -274,6 +274,8 @@ maximum available quantity of %1 exceeded!	calendar	pt-br	A quantidade máxima d
 meeting request	calendar	pt-br	Pedido de reunião
 meetingrequest to all participants	calendar	pt-br	Meetingrequest a todos os participantes
 merge document...	calendar	pt-br	Mesclar documento ...
+minimum number of users for showing day view as consolidated.	calendar	pt-br	Número mínimo de usuários para mostrar a visualização do dia como consolidada.
+minimum number of users for showing week view as consolidated.	calendar	pt-br	Número mínimo de usuários para mostrar a visualização semanal como consolidada.
 minutes	calendar	pt-br	minutos
 modified	calendar	pt-br	Modificado
 modifier	calendar	pt-br	Modifier
@@ -283,9 +285,12 @@ monthly	calendar	pt-br	Mensalmente
 monthly (by date)	calendar	pt-br	mensalmente (por data)
 monthly (by day)	calendar	pt-br	mensalmente (por dia)
 monthview	calendar	pt-br	Visão mensal
+move to	calendar	pt-br	Mover para
+multiple participants	calendar	pt-br	Vários participantes
 multiple week view	calendar	pt-br	Exibição semanal múltipla
 name of current user, all other contact fields are valid too	calendar	pt-br	Nome do usuário atual, todos outros campos são válidos também
 needs action	calendar	pt-br	Necessidades ação
+never notify externals (non-users) about events i create	calendar	pt-br	Nunca notificar pessoas externas (não usuários) sobre eventos que eu criei
 new	calendar	pt-br	Novo
 new search with the above parameters	calendar	pt-br	nova pesquisa com os parâmetros acima
 no automatic purging	admin	pt-br	Sem purga automática

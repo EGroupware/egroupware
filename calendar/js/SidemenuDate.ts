@@ -92,7 +92,7 @@ export class SidemenuDate extends Et2Date
 		await super.init();
 
 		// This needs to wait until after everything is created
-		if(this._instance.daysContainer !== undefined)
+		if(this._instance?.daysContainer !== undefined)
 		{
 			this._instance.weekNumbers.addEventListener("mouseover", this._handleDayHover);
 			this._instance.weekNumbers.addEventListener("mouseout", this._clearHover);
@@ -108,6 +108,16 @@ export class SidemenuDate extends Et2Date
 	public getOptions()
 	{
 		let options = super.getOptions();
+
+		// No scroll - remove scroll plugin
+		options.plugins = [];
+
+		// Add "Ok" and "today" buttons back in, if desired
+		const buttons = this._buttonPlugin();
+		if(buttons)
+		{
+			options.plugins.push(buttons)
+		}
 
 		options.allowInput = false;
 		options.inline = true;

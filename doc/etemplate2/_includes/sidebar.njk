@@ -1,0 +1,46 @@
+<ul>
+  <li>
+    <h2>Getting Started</h2>
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="https://github.com/EGroupware/egroupware/wiki">Development</a></li>
+      <li><a href="/getting-started/widgets">Widgets</a></li>
+      <li><a href="/getting-started/styling">Styling</a></li>
+      <li><a href="/getting-started/customizing">Customizing</a></li>
+      <li><a href="/getting-started/localization">Localization</a></li>
+    </ul>
+  </li>
+  <li>
+    <h2>Resources</h2>
+    <ul>
+      <li><a href="https://help.egroupware.org">Community</a></li>
+      <li><a href="https://www.egroupware.org/en/professional-support">Help &amp; Support</a></li>
+      <li><a href="https://github.com/EGroupware/egroupware/releases">Changelog</a></li>
+    </ul>
+  </li>
+  <li>
+    <h2>Components</h2>
+    <ul>
+    <li><em><a href="/components/sandbox">Sandbox</a></em></li>
+      {% for component in meta.components %}
+        <li>
+          {% if component.tagName %}
+          <a href="/components/{{ component.tagName }}">
+            {{ component.name | classNameToComponentName }}
+          </a>
+          {% else %}
+            {{ component.name }}
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  </li>
+  <li>
+    <h2>Tutorials</h2>
+    <ul>
+	  <li><a href="/tutorials/creating-a-widget">Creating a widget</a></li>
+      <li><a href="/tutorials/integrating-with-egw">Integrating with EGroupware</a></li>
+      <li><a href="/tutorials/link-system">Implementing the linking system</a></li>
+    </ul>
+  </li>
+</ul>

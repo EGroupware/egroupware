@@ -139,7 +139,6 @@ re-enter your password	preferences	sk	Zadajte heslo znovu
 read prefs for the specified application.	preferences	sk	Načítať predvoľby pre vybranú aplikáciu.
 reset qrcode	preferences	sk	Reset QR kódu
 revoke	preferences	sk	Odvolať
-revoke acccess tokens	preferences	sk	Odvolať prístupový token
 revoke this token	preferences	sk	Odvolať tento token
 rich text editor theme	preferences	sk	Téma textového editora
 scan qrcode with a time-based one-time password (totp) app:	preferences	sk	Naskenujte QR kód aplikáciou pre časové jednorázové heslo (TOTP):

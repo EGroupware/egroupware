@@ -131,12 +131,18 @@ links, attachments	calendar	et	Lingid, Manused
 listview	calendar	et	Nimekirjavaade
 location	calendar	et	Asukoht
 mail all participants	calendar	et	saada mail kõigile osalejatele
+maximum available quantity of %1 exceeded!	calendar	et	Maksimaalne saadaolev kogus %1 on ületatud!
+minimum number of users for showing day view as consolidated.	calendar	et	Minimaalne kasutajate arv, et kuvada päevane vaade konsolideeritud kujul.
+minimum number of users for showing week view as consolidated.	calendar	et	Minimaalne kasutajate arv nädala vaate konsolideeritud näitamiseks.
 minutes	calendar	et	minutit
 modified	calendar	et	Muudetud
 mon	calendar	et	Esm
 month	calendar	et	Kuu
 monthly	calendar	et	Kuuti
 monthview	calendar	et	Kuuvaade
+move to	calendar	et	Liiguta
+multiple participants	calendar	et	Mitu osalejat
+never notify externals (non-users) about events i create	calendar	et	Mitte kunagi ei teavita väliseid (mittekasutajad) minu loodud sündmustest.
 new	calendar	et	Uus
 no events found	calendar	et	Sündmust ei leitud
 no filter	calendar	et	Filtrita

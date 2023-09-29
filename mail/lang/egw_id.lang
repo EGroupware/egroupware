@@ -14,11 +14,15 @@ any of	mail	id	sembarang
 any status	mail	id	status apapun
 attachments	mail	id	Lampiran
 by date	mail	id	menurut tanggal
+by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	id	Secara default, 'http://' hanya diganti dengan 'https://'. Jangan ragu untuk mengonfigurasi 'https://proxy.egroupware.org/' untuk juga memuat gambar yang hanya tersedia melalui http.
+caching of flags	mail	id	Menyimpan bendera dalam cache
+changing subject failed folder %1 does not exist	mail	id	Mengubah subjek gagal folder %1 tidak ada
 compose	mail	id	Tulis
 compose as new	mail	id	tulis sbg pesan baru
 compress folder	mail	id	Mampatkan folder
 condition	mail	id	kondisi
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	id	Nilai yang dikonfigurasi akan diatur secara otomatis pada dialog penulisan untuk bidang yang dihormati saat membuat email baru.
+contact label	mail	id	Label kontak
 contains	mail	id	mengandung
 copy to	mail	id	Salin ke
 cross account forward attachment is not allowed!	mail	id	Lampiran penerusan lintas akun tidak diperbolehkan!
@@ -68,10 +72,12 @@ imap	mail	id	IMAP
 imap server	mail	id	IMAP Server
 importance	mail	id	Importance
 inbox	mail	id	INBOX
+information to show on email tag	mail	id	Informasi untuk ditampilkan pada tag email
 junk	mail	id	Junk
 kilobytes	mail	id	kilobyte
 later	mail	id	Later
 less than	mail	id	kurang dari
+list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	id	Daftar tindakan yang akan diaktifkan/dialihkan secara default (misalnya, tindakan menulis surat simpan sebagai InfoLog)
 mail	common	id	Surat
 mail acl	mail	id	Hak akses
 mail filter	mail	id	Filter surat
@@ -90,6 +96,7 @@ matches regexp	mail	id	cocok regexp
 modify subject	mail	id	Ubah subjek
 modify subject of this message	mail	id	Ubah subjek pesan ini
 move to	mail	id	Pindahkan ke
+name and email	mail	id	Nama dan email
 new subject	mail	id	Subjek baru
 no access	mail	id	No access
 no folders	mail	id	tiada folder
@@ -97,13 +104,25 @@ no signature	mail	id	tiada tandatangan
 no sneak preview in list	mail	id	Tidak ada pratinjau pesan
 no subject given!	mail	id	tiada subyek diisikan!
 on	mail	id	pada
+only email	mail	id	Hanya email
+only name	mail	id	Hanya nama
+open in html mode	mail	id	Buka dalam mode HTML
+open in text mode	mail	id	Buka dalam mode Teks
+open with collabora office	mail	id	Buka dengan Collabora Online
 organisation	admin	id	Organisasi
 organization	mail	id	organisasi
-original message	mail	id	pesan asal
+organization | real name email	mail	id	Organisasi | Nama asli [Email]
+original message	mail	id	Pesan asli
+outbox	mail	id	Kotak keluar
 permission denied	mail	id	Ijin ditolak
+please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	id	Konfigurasikan sertifikat S/MIME Anda di tab Enkripsi yang terletak di dialog Edit Akun.
 predefined addresses for compose	mail	id	Alamat yang telah ditentukan sebelumnya untuk penulisan
+preview pane	mail	id	Tata letak jendela
+printing	mail	id	Pencetakan
 printview	mail	id	lihat cetakan
-quicksearch	mail	id	Cari cepat
+push notifications	mail	id	Pemberitahuan push
+quicksearch	mail	id	Pencarian cepat
+quicksearch (with cc)	mail	id	Pencarian Cepat (+Salin)
 reject with	mail	id	tolak dengan
 remove all	mail	id	Buang Semuanya
 remove immediately	mail	id	Buang segera
@@ -124,6 +143,10 @@ sender	mail	id	Pengirim
 sent	mail	id	Sent
 sent folder	mail	id	Sent Folder
 set predefined values for compose...	mail	id	Tetapkan nilai yang telah ditentukan sebelumnya untuk penulisan ...
+show notification for new arriving mails	mail	id	Tampilkan pemberitahuan untuk email baru yang masuk
+show vertical	mail	id	Tampilkan vertikal
+show vertical with all columns	mail	id	Tampilkan vertikal dengan semua kolom
+show/hide preview pane in mail list view	mail	id	Menampilkan/menyembunyikan panel pratinjau dalam tampilan daftar surat
 signature	mail	id	Tandatangan
 signature at top	mail	id	Tanda tangan di bagian atas
 signature position and visibility	mail	id	Posisi dan visibilitas tanda tangan
@@ -149,4 +172,5 @@ unread	mail	id	Tak dibaca
 vacation notice	mail	id	vacation notice
 write	mail	id	Tulis
 wrote	mail	id	menulis
+you can select what info to be displayed on email tag	mail	id	Anda dapat memilih informasi yang akan ditampilkan pada tag email.
 you've got new mail	mail	id	Anda mendapat email baru

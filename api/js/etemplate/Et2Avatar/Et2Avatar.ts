@@ -9,7 +9,7 @@
  */
 
 import {Et2Widget} from "../Et2Widget/Et2Widget";
-import {css, SlotMixin} from "@lion/core";
+import {css} from "lit";
 import {SlAvatar} from "@shoelace-style/shoelace";
 import {et2_IDetachedDOM} from "../et2_core_interfaces";
 import {egw} from "../../jsapi/egw_global";
@@ -18,7 +18,7 @@ import {Et2Dialog} from "../Et2Dialog/Et2Dialog";
 import "../../../../vendor/bower-asset/cropper/dist/cropper.min.js";
 import {cropperStyles} from "./cropperStyles";
 
-export class Et2Avatar extends Et2Widget(SlotMixin(SlAvatar)) implements et2_IDetachedDOM
+export class Et2Avatar extends Et2Widget(SlAvatar) implements et2_IDetachedDOM
 {
 	private _contactId;
 	private _delBtn: HTMLElement;
@@ -179,7 +179,7 @@ export class Et2Avatar extends Et2Widget(SlotMixin(SlAvatar)) implements et2_IDe
 
 		if (!_contactId)
 		{
-			parsedId = this.egw().user('account_id');
+			parsedId = null;
 		}
 		else if(_contactId.substr(0, 8) === 'account:')
 		{
@@ -200,7 +200,11 @@ export class Et2Avatar extends Et2Widget(SlotMixin(SlAvatar)) implements et2_IDe
 		let oldContactId = this._contactId;
 		this._contactId = _contactId;
 		// if our image (incl. cache-buster) already includes the correct id, use that one
-		if(!this.image || !this.image.match("(&|\\?)" + id + "=" + encodeURIComponent(parsedId) + "(&|$)"))
+		if (!parsedId)
+		{
+			this.image = null;
+		}
+		else if(!this.image || !this.image.match("(&|\\?)" + id + "=" + encodeURIComponent(parsedId) + "(&|$)"))
 		{
 			params[id] = parsedId;
 			this.image = egw.link('/api/avatar.php', params);
@@ -430,7 +434,8 @@ export class Et2Avatar extends Et2Widget(SlotMixin(SlAvatar)) implements et2_IDe
 		}
 	}
 }
-customElements.define("et2-avatar", Et2Avatar as any);
+
+customElements.define("et2-avatar", Et2Avatar);
 // make et2_avatar publicly available as we need to call it from templates
 {
 	window['et2_avatar'] = Et2Avatar;

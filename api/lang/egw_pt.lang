@@ -19,7 +19,6 @@
 '%1' copied to clipboard	common	pt	%1' copiado para prancheta
 '%1' has an invalid format	common	pt	'% 1' tem um formato inválido
 '%1' has an invalid format !!!	common	pt	'%1' tem um formato inválido !!!
-'%1' is no php file in the egw server root (%2)!	common	pt	'% 1' não é arquivo php na raiz do servidor eGW (% 2)!
 '%1' is not a valid date !!!	common	pt	'%1' não é uma data válida !!!
 '%1' is not a valid floatingpoint number !!!	common	pt	%1' não é um número de ponto de flutuação válido !!!
 '%1' is not a valid integer !!!	common	pt	'%1' não é um inteiro válido !!!
@@ -104,6 +103,7 @@ and	common	pt	E
 andorra	common	pt	Andorra
 angola	common	pt	Angola
 anguilla	common	pt	Anguila
+answering no will not ask you again for this browser.	common	pt	Se responder "não", este navegador deixará de ser solicitado.
 antarctica	common	pt	Antárctida
 antigua and barbuda	common	pt	Antígua e Barduda
 api	common	pt	API EGroupware
@@ -438,6 +438,7 @@ fields	common	pt	Campos
 fiji	common	pt	Fiji
 file	common	pt	Ficheiro
 file '%1' not found!	common	pt	Arquivo '% 1' não encontrado!
+file a file	common	pt	Armazenar um ficheiro
 file contains more than one etemplate, last one is shown !!!	common	pt	O ficheiro contém mais do que um modelo Web. Será exibido o último !!!
 file is of wrong type (%1 != %2)!	common	pt	Arquivo é o tipo errado (% 1! =% 2)!
 file writen	common	pt	Ficheiro editado
@@ -457,6 +458,8 @@ force	common	pt	força
 force selectbox	common	pt	Forçar caixa de selecção
 foreign key	common	pt	Chave estrangeira
 forever	common	pt	Para sempre
+formatted business address	common	pt	Endereço comercial formatado
+formatted private address	common	pt	Endereço privado formatado
 formatted text (html)	common	pt	Texto formatado (HTML)
 fr	common	pt	Fr
 france	common	pt	França
@@ -466,6 +469,7 @@ french southern territories	common	pt	Territórios Austrais e Antárticos France
 friday	common	pt	Sexta
 ftp	common	pt	FTP
 fullname	common	pt	Nome completo
+fullscreen	common	pt	Ecrã completo
 fullscreen mode	common	pt	Modo ecrã inteiro
 gabon	common	pt	Gabão
 gambia	common	pt	Gâmbia
@@ -578,6 +582,7 @@ insert placeholder	common	pt	Inserir o espaço reservado
 insert row after	common	pt	Inserir linha depois
 insert row before	common	pt	Inserir linha antes
 insert timestamp into description field	common	pt	Inserir carimbo da hora no campo de descrição
+install egroupware as mail-handler?	common	pt	Instalar o EGroupware como gestor de correio eletrónico?
 integer	common	pt	Inteiro
 international	common	pt	Internacional
 invalid 2-factor authentication code	common	pt	Código de autenticação de 2 factores inválidos
@@ -709,6 +714,7 @@ montserrat	common	pt	Montserrate
 more	common	pt	Mais
 more than 1 match for '%1'	common	pt	Mais do que um jogo para '% 1'
 morocco	common	pt	Marrocos
+move	common	pt	Mover
 mozambique	common	pt	Moçambique
 multicolumn indices	common	pt	Índices de várias colunas
 multiple	common	pt	vários/as

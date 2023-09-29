@@ -44,8 +44,11 @@ authentication	mail	nl	Authenticatie
 available personal email-accounts/profiles	mail	nl	Beschikbare persoonlijke mail-postbussen/Profielen
 but check shared folders	mail	nl	maar check gedeelde mappen
 by date	mail	nl	op datum
+by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	nl	Standaard wordt 'http://' gewoon vervangen door 'https://'. Voel je vrij om 'https://proxy.egroupware.org/' te configureren om ook afbeeldingen te laden die alleen beschikbaar zijn via http.
+caching of flags	mail	nl	Cachen van vlaggen
 can not open imap connection	mail	nl	Kan IMAP verbinding niet openen
 changed profile	mail	nl	Veranderd Profiel
+changing subject failed folder %1 does not exist	mail	nl	Onderwerp wijzigen mislukt map %1 bestaat niet
 check message against next rule also	mail	nl	Controleer het bercicht ook met de volgende regel
 check to receive a notification when the message is read (note: not all clients support this and/or the receiver may not authorize the notification)	mail	nl	Selecteer dit vakje, als u een melding wilt ontvangen als het bericht is gelezen (Let op : niet alle mail programma's ondersteunen of je een bevestiging kunt krijgen van de ontvanger dat hij of zij het bericht heeft gelezen)
 check to save as infolog on send	mail	nl	selecteer om ook als infolog te bewaren
@@ -62,6 +65,7 @@ confirm attach message	mail	nl	Bevestig toevoegen bericht
 confirm move to folder	mail	nl	Bevestig verplaats naar map
 connect to profile %1	mail	nl	Verbind naar profiel %1
 connection status	mail	nl	Status van de verbinding
+contact label	mail	nl	Label contact
 contains	mail	nl	bevat
 contains(*)	mail	nl	Bevat (*)
 convert mail to item and attach its attachments to this item (standard)	mail	nl	Converteer Bericht naar bestand en voeg de bijlagen aan dit bestand toe (Standaard)
@@ -229,6 +233,7 @@ importance	mail	nl	Mate van belang
 important	mail	nl	belangrijk
 in mailbox: %1, with id: %2, and partid: %3	mail	nl	In Berichtenmap:  %1 met ID:%@ en PartID: %3
 inbox	mail	nl	POSTVAK IN
+information to show on email tag	mail	nl	Informatie die op het e-maillabel moet worden weergegeven
 inline	mail	nl	Inline
 insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)	mail	nl	Voeg de handtekening in bovenaan in een nieuw bericht (of antwoord) als u een het samenstellen van een bericht opent (het kan mogelijk zijn dat u niet van handtekening kunt wisselen)
 job	mail	nl	Taak
@@ -238,6 +243,7 @@ keep a copy of the message in your inbox	mail	nl	Bewaar een kopie van het berich
 kilobytes	mail	nl	kilobytes
 later	mail	nl	later
 less than	mail	nl	minder dan
+list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	nl	Lijst met acties die standaard ingeschakeld/geactiveerd moeten worden (bijv. Mail compose opslaan als InfoLog actie)
 mail	common	nl	Mail
 mail acl	mail	nl	Toegangsrechten
 mail filter	mail	nl	Berichten filter
@@ -266,6 +272,7 @@ move selected to	mail	nl	verplaats geselecteeerde
 move to	mail	nl	Verplaats naar
 move to trash	mail	nl	Verplaatsen naar prullenmand
 moved %1 message(s) from %2 to %3	mail	nl	%1 bericht verplaatst van %2 naar %3
+name and email	mail	nl	Naam en e-mail
 name of account	mail	nl	Naam van
 never display html emails	mail	nl	Nooit HTML-emails weergeven
 new mail notification	mail	nl	Melding nieuw bericht
@@ -295,16 +302,21 @@ notify about new mail in this folders	mail	nl	Waarschuw bij nieuwe berichten in 
 notify when new mails arrive in these folders	mail	nl	Waarschuw bij nieuwe berichten in deze mappen
 on	mail	nl	op
 one address is not valid	mail	nl	Een adres is ongeldig
+only email	mail	nl	Alleen e-mail
+only name	mail	nl	Alleen naam
 only one window	mail	nl	uitsluitend één venster
 only send message, do not copy a version of the message to the configured sent folder	mail	nl	Verstuur alleen het bericht, sla geen kopie van dit bericht op in de toegewezen map verzonden
 open in html mode	mail	nl	Open in HTML mode
 open in text mode	mail	nl	Open in tekst mode
+open with collabora office	mail	nl	Openen met Collabora Online
 organisation	admin	nl	organisatie
 organization	mail	nl	Organisatie
-original message	mail	nl	originele bericht
-outbox	mail	nl	Te verzenden
+organization | real name email	mail	nl	Organisatie | Echte naam [Email]
+original message	mail	nl	Origineel bericht
+outbox	mail	nl	Postvak UIT
 permission denied	mail	nl	Toestemming geweigerd
 please configure access to an existing individual imap account.	mail	nl	Configureer alstublieft toegang tot een bestaand IMAP account
+please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	nl	Configureer uw S/MIME-certificaat op het tabblad Encryptie in het dialoogvenster Account bewerken.
 please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	nl	Neem contact op met uw administrateur om na te gaan of uw server filter op regels wordt ondersteund, en hoe u deze in EGroupware moet activeren voor uw actieve account (%1) met ID:(%2)
 please select a address	mail	nl	Kies s.v.p. een adres
 please select the number of days to wait between responses	mail	nl	Kies s.v.p. het aantal dagen dat gewacht moet worden tussen de antwoorden
@@ -315,11 +327,15 @@ prevent managing filters	mail	nl	Voorkom bewerken van filters
 prevent managing folders	mail	nl	Voorkom bewerken mappen
 prevent managing notifications	mail	nl	Voorkom bewerken meldingen
 prevent managing vacation notice	mail	nl	Voorkom bewerken vakantie medlingen
+preview pane	mail	nl	Vensterindeling
 primary profile	mail	nl	Primair Profiel
+printing	mail	nl	Afdrukken
 printview	mail	nl	afdrukweergave
 processing of file %1 failed. failed to meet basic restrictions.	mail	nl	Uitvoeren van bestand %1 mislukt. Mislukt om aan de basis beperkingen te voldoen.
 provide a default vacation text, (used on new vacation messages when there was no message set up previously)	admin	nl	Geef een standaard tekst op, (gebruikt bij nieuw bericht voor vakanties, wanneer er nog niet eerder een bericht was bewaard)
+push notifications	mail	nl	Pushmeldingen
 quicksearch	mail	nl	Snelzoeken
+quicksearch (with cc)	mail	nl	Snelzoeken (+Kopiëren)
 quota not provided by server	mail	nl	Quota niet toegewezen door server
 quota: %1	mail	nl	Quota: %1
 read	mail	nl	Lezen
@@ -390,8 +406,12 @@ should new messages show up on the home page	mail	nl	Moeten nieuwe bercihten get
 show all folders	mail	nl	Toon alle mappen
 show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	nl	Tool alle mappen, (geabonneerd EN niet) in hoofd scherm mappen paneel
 show new messages on home page	mail	nl	Toon nieuw bericht op begin pagina
+show notification for new arriving mails	mail	nl	Notificatie tonen voor nieuw binnengekomen mails
 show test connection section and control the level of info displayed?	mail	nl	Toon test connectie en controleer het niveau van informatie wat wordt getoond ?
 show test connection section and control the level of info displayed??	mail	nl	Toon test connectie en controleer het niveau van informatie wat wordt getoond ??
+show vertical	mail	nl	Verticaal tonen
+show vertical with all columns	mail	nl	Verticaal tonen met alle kolommen
+show/hide preview pane in mail list view	mail	nl	Voorbeeldvenster in e-maillijstweergave tonen/verbergen
 sieve	mail	nl	Sieve
 sieve connection status	mail	nl	Status Sieve connectie
 sieve not activated	mail	nl	Sieve niet geactiveerd
@@ -491,4 +511,5 @@ yes, only trigger connection reset	mail	nl	Ja, geef alleen herinitialering verbi
 yes, show all debug information available for the user	mail	nl	Ja, toon alle debug infromatie welke is beschikbaar voor de gebruiker
 yes, show basic info only	mail	nl	Ja, toon alleen basis infromatie
 you can either choose to save as infolog or tracker, not both.	mail	nl	U kunt kiezen om het bericht te bewaren als infolog of tracker maar niet allebei
-you've got new mail	mail	nl	Er is een nieuw bericht
+you can select what info to be displayed on email tag	mail	nl	U kunt selecteren welke informatie op de e-mailtag moet worden weergegeven.
+you've got new mail	mail	nl	Je hebt nieuwe mail

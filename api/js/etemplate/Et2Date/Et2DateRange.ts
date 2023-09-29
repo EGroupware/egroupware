@@ -1,6 +1,8 @@
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
 import {FormControlMixin} from "@lion/form-core";
-import {classMap, css, html, ifDefined, LitElement, TemplateResult} from "@lion/core";
+import {css, html, LitElement, TemplateResult} from "lit";
+import {classMap} from "lit/directives/class-map.js";
+import {ifDefined} from "lit/directives/if-defined.js";
 import shoelace from "../Styles/shoelace";
 import {dateStyles} from "./DateStyles";
 import {formatDate, parseDate} from "./Et2Date";

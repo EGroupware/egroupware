@@ -5,7 +5,7 @@
 		<grid width="100%" height="100%">
 			<columns>
 				<column width="30"/>
-				<column width="120"/> <!-- User / All user -->
+				<column width="120" disabled="@no_account_id"/> <!-- User / All user -->
 				<column width="25%"/> <!-- Applications -->
 				<column width="120"/> <!-- Expiration -->
 				<column width="120"/> <!-- Revoked / By -->
@@ -58,9 +58,9 @@
 		</grid>
 	</template>
 	<template id="admin.tokens.add" template="" lang="" group="0" version="1.9.001">
-		<et2-button label="Add" id="add" onclick="window.open('$cont[add_link]','_blank','dependent=yes,width=600,height=380,scrollbars=yes,status=yes'); return false;" noSubmit="true"></et2-button>
+		<et2-button label="Add" id="add" onclick="@add_action" noSubmit="true"></et2-button>
 	</template>
 	<template id="admin.tokens" template="" lang="" group="0" version="1.9.001">
-		<nextmatch id="nm" template="admin.tokens.rows" header_left="admin.tokens.add"/>
+		<nextmatch id="token" template="admin.tokens.rows" header_left="admin.tokens.add"/>
 	</template>
 </overlay>

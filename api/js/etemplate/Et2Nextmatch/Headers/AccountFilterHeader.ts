@@ -1,4 +1,4 @@
-import {Et2SelectAccount} from "../../Et2Select/Et2SelectAccount";
+import {Et2SelectAccount} from "../../Et2Select/Select/Et2SelectAccount";
 import {et2_INextmatchHeader} from "../../et2_extension_nextmatch";
 import {FilterMixin} from "./FilterMixin";
 

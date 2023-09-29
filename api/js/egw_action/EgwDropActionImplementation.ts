@@ -1,3 +1,13 @@
+/**
+ * EGroupware egw_action framework - egw action framework
+ *
+ * @link https://www.egroupware.org
+ * @author Andreas Stöckel <as@stylite.de>
+ * @copyright 2011 by Andreas Stöckel
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @package egw_action
+ */
+
 import {EgwActionImplementation} from "./EgwActionImplementation";
 import {EGW_AI_DRAG_ENTER, EGW_AI_DRAG_OUT, EGW_AI_DRAG_OVER, EGW_AO_EXEC_THIS} from "./egw_action_constants";
 import {egw_getObjectManager} from "./egw_action";

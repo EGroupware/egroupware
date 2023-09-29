@@ -697,7 +697,7 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 	set_disabled( disabled)
 	{
 		var old_value = this.options.disabled;
-		super.set_disabled(disabled);
+		this.disabled = disabled;
 
 		this.div.get(0).classList.toggle("hideme", disabled);
 
@@ -705,7 +705,7 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 		{
 			this.loader.show();
 		}
-		else if (old_value !== disabled)
+		else if(old_value !== disabled)
 		{
 			// Scroll to start of day - stops jumping in FF
 			// For some reason on Chrome & FF this doesn't quite get the day start
@@ -984,7 +984,8 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 		{
 			// Hidden on another tab, or no days for some reason
 			var dim = egw.getHiddenDimensions(this.days, false);
-			day_width = ( dim.w /Math.max(daycols_needed,1));
+			day_width = (dim.w / Math.max(daycols_needed, 1));
+			this.div.get(0).style.display = "";
 		}
 
 		// Create any needed widgets - otherwise, we'll just recycle
@@ -1971,7 +1972,7 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 		if(_ev.target.dataset.id || jQuery(_ev.target).parents('.calendar_calEvent').length)
 		{
 			// Event came from inside, maybe a calendar event
-			var event = this._get_event_info(_ev.originalEvent.target);
+			var event = this._get_event_info(_ev.target.closest(".calendar_calEvent"));
 			if(typeof this.onclick == 'function')
 			{
 				// Make sure function gets a reference to the widget, splice it in as 2. argument if not
@@ -2045,7 +2046,7 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 				date: target.dataset.date || this.options.date,
 				hour: target.dataset.hour || this._parent.options.day_start,
 				minute: target.dataset.minute || 0,
-				owner: this.options.owner
+				owner: this.daily_owner ? _ev.target.closest(".calendar_calDayCol").dataset.owner : this.options.owner
 			};
 			app.calendar.add(options);
 			_ev.preventDefault();
@@ -2072,7 +2073,7 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 		}
 
 		// Skip for events
-		if(event.target.parentElement.classList.contains("calendar_calEvent"))
+		if(event.target.closest(".calendar_calEvent"))
 		{
 			return;
 		}
@@ -2123,34 +2124,43 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 			var timegrid = this;
 			this.div.on('mousemove.dragcreate', function()
 			{
+				var end = jQuery.extend({}, timegrid.gridHover[0].dataset);
+				let date = timegrid.date_helper(end.date);
+				if(end.hour)
+				{
+					date.setUTCHours(end.hour);
+				}
+				if(end.minute)
+				{
+					date.setUTCMinutes(end.minute);
+				}
+				if(!timegrid.drag_create.event && date.toJSON() != start.date.toJSON())
+				{
+					timegrid._drag_create_start(start);
+					// Create the event immediately
+					timegrid._drag_create_event();
+				}
 				if(timegrid.drag_create.event && timegrid.drag_create.parent && timegrid.drag_create.end)
 				{
-					var end = jQuery.extend({}, timegrid.gridHover[0].dataset);
-					if(end.date)
+
+					timegrid.drag_create.end.date = date;
+					if(timegrid.drag_create.start.date.toJSON() == timegrid.drag_create.end.date.toJSON())
 					{
-						let date = timegrid.date_helper(end.date);
-						if(end.hour)
-						{
-							date.setUTCHours(end.hour);
-						}
-						if(end.minute)
-						{
-							date.setUTCMinutes(end.minute);
-						}
-						timegrid.drag_create.end.date = date;
+						// Minimum drag size is time granularity or default
+						timegrid.drag_create.end.date.setUTCMinutes(timegrid.drag_create.end.date.getUTCMinutes() + (timegrid.options.granularity || timegrid.egw().preference("defaultlength", "calendar")));
 					}
+
 					try
 					{
 						timegrid._drag_update_event();
 					}
-					catch (e)
+					catch(e)
 					{
 						timegrid._drag_create_end();
 					}
 				}
 			});
 		}
-		return this._drag_create_start(start);
 	}
 
 	/**
@@ -2160,7 +2170,10 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 	 */
 	_mouse_up(event)
 	{
-		if (this.options.readonly) return;
+		if(this.options.readonly)
+		{
+			return;
+		}
 		let end = {...this.gridHover[0].dataset};
 		if(end.date)
 		{
@@ -2178,7 +2191,16 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 		this.div.off('mousemove.dragcreate');
 		this.gridHover.css('cursor', '');
 
-		this._drag_create_end(this.drag_create.event ? {date: end.date} : undefined);
+		if(this.drag_create.end)
+		{
+			this._drag_create_end(this.drag_create.end);
+		}
+		else if(this.drag_create.start)
+		{
+			// Not dragged enough to count, fake a click
+			event.stopImmediatePropagation();
+			this.gridHover[0].dispatchEvent(new Event("click"));
+		}
 	}
 
 	/**

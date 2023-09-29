@@ -20,6 +20,7 @@ import {egwAction, egwActionObject} from '../../api/js/egw_action/egw_action';
 import {LitElement} from "@lion/core";
 import {et2_nextmatch} from "../../api/js/etemplate/et2_extension_nextmatch";
 import {et2_DOMWidget} from "../../api/js/etemplate/et2_core_DOMWidget";
+import {Et2SelectAccount} from "../../api/js/etemplate/Et2Select/Et2SelectAccount";
 
 /**
  * UI for Admin
@@ -710,8 +711,7 @@ class AdminApp extends EgwApp
 				sel_options.acl_appname = [];
 				for(let app in acl_rights)
 				{
-					sel_options.acl_appname.push({value: app, label: this.egw.lang(
-						<string>this.egw.link_get_registry(app, 'entries') || app)});
+					sel_options.acl_appname.push({value: app, label: app});
 				}
 				// Sort list
 				sel_options.acl_appname.sort(function(a,b) {
@@ -1365,6 +1365,28 @@ class AdminApp extends EgwApp
 	{
 		var use_default = this.et2.getWidgetById('notify_use_default');
 		if (use_default) use_default.set_value(false);
+	}
+
+	/**
+	 * onchange callback for mail account account_id (valid for)
+	 *
+	 * @param {object} _event
+	 * @param {et2_widget} _widget
+	 */
+	warnMailAccountForAllChanged(_event : Event, _widget : Et2SelectAccount)
+	{
+		const account_id = _widget.value;
+		const old_account_id = this.et2.getArrayMgr('content').getEntry('account_id');
+
+		// this is (no longer) an account for all
+		if ((Array.isArray(account_id) ? account_id.length : account_id) &&
+			// but this was an account for all
+			!(Array.isArray(old_account_id) ? old_account_id.length : old_account_id))
+		{
+			_widget.blur();
+			Et2Dialog.alert(this.egw.lang('By selecting a user or group you effectively delete the mail account for all other users!\n\nAre you really sure you want to do that?'),
+				this.egw.lang('This is a mail account for ALL users!'), Et2Dialog.WARNING_MESSAGE);
+		}
 	}
 
 	/**

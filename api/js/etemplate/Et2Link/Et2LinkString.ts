@@ -10,7 +10,8 @@
  */
 
 
-import {css, html, LitElement, PropertyValues, render, TemplateResult, until} from "@lion/core";
+import {css, html, LitElement, PropertyValues, render, TemplateResult} from "lit";
+import {until} from "lit/directives/until.js";
 import {Et2Widget} from "../Et2Widget/Et2Widget";
 import {Et2Link, LinkInfo} from "./Et2Link";
 import {et2_IDetachedDOM} from "../et2_core_interfaces";
@@ -300,7 +301,17 @@ export class Et2LinkString extends Et2Widget(LitElement) implements et2_IDetache
 		this._loadingPromise = <Promise<LinkInfo[]>>(this.egw().jsonq('EGroupware\\Api\\Etemplate\\Widget\\Link::ajax_link_list', [_value]))
 			.then(_value =>
 			{
-				this._addLinks(not_saved_links.concat(_value));
+				if(_value && Array.isArray(_value))
+				{
+					for(let link of <LinkInfo[]>_value)
+					{
+						if(!not_saved_links.some(l => l.app == link.app && l.id == link.id))
+						{
+							not_saved_links.push(link);
+						}
+					}
+				}
+				this._addLinks(not_saved_links);
 				this._loadingPromise = null;
 			})
 	}

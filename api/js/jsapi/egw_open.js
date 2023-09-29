@@ -57,6 +57,17 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 			bcc: match['bcc'] || []
 		};
 
+		// No CSV, split them here and pay attention to quoted commas
+		const split_regex = /("[^"]*" <[^>]*>)|("[^"]*")|('[^']*')|([^,]+)/g;
+		for (let index in content)
+		{
+			if (typeof content[index] == "string")
+			{
+				const matches = content[index].match(split_regex);
+				content[index] = matches ?? content[index];
+			}
+		}
+
 		// Encode html entities in the URI, otheerwise server XSS protection wont
 		// allow it to pass, because it may get mistaken for some forbiden tags,
 		// e.g., "Mathias <mathias@example.com>" the first part of email "<mathias"
@@ -70,7 +81,7 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 		{
 			if (content[index].length > 0)
 			{
-				var cLen = content[index].split(',');
+				var cLen = content[index];
 				egw.message(egw.lang('%1 email(s) added into %2', cLen.length, egw.lang(index)));
 				return;
 			}
@@ -376,6 +387,50 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 				_target = _target == '_phonecall' && _popup && _popup.indexOf('x') < 0 ? _popup:_target;
 				return _wnd.open(url, _target);
 			}
+		},
+
+		/**
+		 * Opens a menuaction in an Et2Dialog instead of a popup
+		 *
+		 * Please note:
+		 * This method does NOT (yet) work in popups, only in the main EGroupware window!
+		 * For popups you have to use the app.ts method openDialog(), which creates the dialog in the correct window / popup.
+		 *
+		 * @param string _menuaction
+		 * @return Promise<Et2Dialog>
+		 */
+		openDialog: function(_menuaction)
+		{
+			let resolver;
+			let rejector;
+			const dialog_promise = new Promise((resolve, reject) =>
+			{
+				resolver = value => resolve(value);
+				rejector = reason => reject(reason);
+			});
+			let request = egw.json(_menuaction.match(/^([^.:]+)/)[0] + '.jdots_framework.ajax_exec.template.' + _menuaction,
+				['index.php?menuaction=' + _menuaction, true], _response =>
+				{
+					if (Array.isArray(_response) && typeof _response[0] === 'string')
+					{
+						let dialog = jQuery(_response[0]).appendTo(_wnd.document.body);
+						if (dialog.length > 0 && dialog.get(0))
+						{
+							resolver(dialog.get(0));
+						}
+						else
+						{
+							console.log("Unable to add dialog with dialogExec('" + _menuaction + "')", _response);
+							rejector(new Error("Unable to add dialog"));
+						}
+					}
+					else
+					{
+						console.log("Invalid response to dialogExec('" + _menuaction + "')", _response);
+						rejector(new Error("Invalid response to dialogExec('" + _menuaction + "')"));
+					}
+				}).sendRequest();
+			return dialog_promise;
 		},
 
 		/**

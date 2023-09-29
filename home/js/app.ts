@@ -18,7 +18,7 @@ import "./Et2PortletLink";
 import "./Et2PortletList";
 import "./Et2PortletNote";
 import './Et2PortletWeather';
-import "../../calendar/js/Et2PortletCalendar"
+import "../../calendar/js/Et2PortletCalendar";
 import Sortable from "sortablejs/modular/sortable.complete.esm.js";
 
 /**

@@ -34,15 +34,23 @@
 					<et2-select-email  id="forwards" allowFreeEntries="true" width="100%" multiple="true" searchUrl="EGroupware\Api\Etemplate\Widget\Taglist::ajax_email" placeholder="do not forward"></et2-select-email>
 				</row>
 				<row>
-					<et2-description  value="Resend after how many days?"></et2-description>
-					<et2-number  id="days" min="1" max="31" precision="0"></et2-number>
+					<et2-description value="Vacation notice"></et2-description>
+					<et2-select id="modus">
+						<option value="notice+store">Send vacation notice and store message in INBOX</option>
+						<option value="notice">Send only a vacation notice, do NOT store message in INBOX</option>
+						<option value="store">Only store message in INBOX, do NOT send vacation notice</option>
+					</et2-select>
 				</row>
-				<row>
+				<row valign="top">
 					<et2-description  value="With message:"></et2-description>
 					<et2-vbox  span="all">
 						<et2-textarea  id="text" rows="10" class="et2_required" required="1"></et2-textarea>
 						<et2-description  id="by_date_label" value="You can use $$start$$ for the above start date and $$end$$ for the end date."></et2-description>
 					</et2-vbox>
+				</row>
+				<row>
+					<et2-description  value="Resend after how many days?"></et2-description>
+					<et2-number  id="days" min="1" max="31" precision="0"></et2-number>
 				</row>
 				<row>
 					<et2-description  value="Set it as default:" disabled="@is_not_admin_user"></et2-description>

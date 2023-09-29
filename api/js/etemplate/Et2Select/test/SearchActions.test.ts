@@ -9,7 +9,7 @@ import {Et2Box} from "../../Layout/Et2Box/Et2Box";
 import {Et2Select} from "../Et2Select";
 import {Et2Textbox} from "../../Et2Textbox/Et2Textbox";
 
-let keep_import : Et2Textbox = new Et2Textbox();
+let keep_import : Et2Textbox = null;
 
 // Stub global egw for cssImage to find
 // @ts-ignore
@@ -65,6 +65,7 @@ describe("Search actions", () =>
 				'</et2-select>';
 
 		container.loadFromXML(parser.parseFromString(node, "text/xml"));
+		await elementUpdated(container);
 
 		const change = sinon.spy();
 		let element = <Et2Select>container.getWidgetById('select');
@@ -72,7 +73,7 @@ describe("Search actions", () =>
 
 		await elementUpdated(element);
 
-		element.value = "two";
+		element.select.querySelector("[value='two']").dispatchEvent(new Event("click"));
 
 		await elementUpdated(element);
 
@@ -96,14 +97,14 @@ describe("Trigger search", () =>
 		// Create an element to test with, and wait until it's ready
 		// @ts-ignore
 		element = await fixture<Et2Select>(html`
-            <et2-select label="I'm a select" search=true>
-                <sl-menu-item value="one">One</sl-menu-item>
-                <sl-menu-item value="two">Two</sl-menu-item>
-                <sl-menu-item value="three">Three</sl-menu-item>
-                <sl-menu-item value="four">Four</sl-menu-item>
-                <sl-menu-item value="five">Five</sl-menu-item>
-                <sl-menu-item value="six">Six</sl-menu-item>
-                <sl-menu-item value="seven">Seven</sl-menu-item>
+            <et2-select label="I'm a select" search>
+                <sl-option value="one">One</sl-option>
+                <sl-option value="two">Two</sl-option>
+                <sl-option value="three">Three</sl-option>
+                <sl-option value="four">Four</sl-option>
+                <sl-option value="five">Five</sl-option>
+                <sl-option value="six">Six</sl-option>
+                <sl-option value="seven">Seven</sl-option>
             </et2-select>
 		`);
 		// Stub egw()
@@ -111,6 +112,7 @@ describe("Trigger search", () =>
 
 		await element.updateComplete;
 		await element._searchInputNode.updateComplete;
+		await elementUpdated(element);
 	});
 
 	afterEach(() =>
@@ -125,11 +127,11 @@ describe("Trigger search", () =>
 		let searchSpy = sinon.spy(element, "startSearch");
 
 		// Send two keypresses, but we need to explicitly set the value
-		element._searchInputNode.dispatchEvent(new KeyboardEvent("keydown", {"key": "o"}));
 		element._searchInputNode.value = "o";
+		element._searchInputNode.dispatchEvent(new KeyboardEvent("keydown", {"key": "o"}));
 		assert(searchSpy.notCalled);
-		element._searchInputNode.dispatchEvent(new KeyboardEvent("keydown", {"key": "n"}));
 		element._searchInputNode.value = "on";
+		element._searchInputNode.dispatchEvent(new KeyboardEvent("keydown", {"key": "n"}));
 		assert(searchSpy.notCalled);
 
 		// Skip the timeout
@@ -145,8 +147,8 @@ describe("Trigger search", () =>
 		let searchSpy = sinon.spy(element, "startSearch");
 
 		// Send two keypresses, but we need to explicitly set the value
-		element._searchInputNode.dispatchEvent(new KeyboardEvent("keydown", {"key": "o"}));
 		element._searchInputNode.value = "t";
+		element._searchInputNode.dispatchEvent(new KeyboardEvent("keydown", {"key": "o"}));
 		assert(searchSpy.notCalled);
 		element._searchInputNode.dispatchEvent(new KeyboardEvent("keydown", {"key": "Enter"}));
 
@@ -161,8 +163,8 @@ describe("Trigger search", () =>
 		let searchSpy = sinon.spy(element, "startSearch");
 
 		// Send two keypresses, but we need to explicitly set the value
-		element._searchInputNode.dispatchEvent(new KeyboardEvent("keydown", {"key": "t"}));
 		element._searchInputNode.value = "t";
+		element._searchInputNode.dispatchEvent(new KeyboardEvent("keydown", {"key": "t"}));
 		element._searchInputNode.dispatchEvent(new KeyboardEvent("keydown", {"key": "Escape"}));
 
 		assert(searchSpy.notCalled, "startSearch() was called");

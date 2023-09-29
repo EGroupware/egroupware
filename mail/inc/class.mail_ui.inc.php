@@ -1794,7 +1794,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		if (empty($rowsFetched['messages'])) $rowsFetched['messages'] = $rowsFetched['rowsFetched'];
 
 		//error_log(__METHOD__.__LINE__.' Rows fetched:'.$rowsFetched.' Data:'.array2string($sortResult));
-		$cols = array('row_id','uid','status','attachments','subject','address','toaddress','fromaddress','ccaddress','additionaltoaddress','date','size','modified','bodypreview', 'security');
+		$cols = array('row_id','uid','status','attachments','subject','address','toaddress','fromaddress','ccaddress','bccaddress','additionaltoaddress','date','size','modified','bodypreview', 'security');
 		if ($GLOBALS['egw_info']['user']['preferences']['common']['select_mode']=='EGW_SELECTMODE_TOGGLE') unset($cols[0]);
 		$rows = $mail_ui->header2gridelements($sortResult['header'],$cols, $_folderName, $folderType=$toSchema);
 
@@ -2101,6 +2101,10 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			if (in_array("ccaddress", $cols))
 			{
 				$data['ccaddress'] = $header['cc_addresses'];
+			}
+			if (in_array("bccaddress", $cols))
+			{
+				$data['bccaddress'] = $header['bcc_addresses'];
 			}
 			if (in_array("date", $cols))
 			{

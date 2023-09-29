@@ -17,7 +17,7 @@
                 </row>
                 <row class="select_definition">
                     <et2-description  value="Select definition"></et2-description>
-                    <et2-select  id="definition" onchange="widget.getInstanceManager().postSubmit(); return false;" noLang="1"></et2-select>
+                    <et2-select id="definition" onchange="1" noLang="1"></et2-select>
                 </row>
                 <row class="select_plugin">
                     <et2-description  value="Select plugin"></et2-description>

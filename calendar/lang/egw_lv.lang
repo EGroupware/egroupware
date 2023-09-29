@@ -91,6 +91,9 @@ lastname of person to notify	calendar	lv	Personas, kurai jāpaziņō, uzvārds
 link to view the event	calendar	lv	Saistīt, lai parādītu notikumu
 links	calendar	lv	Saites
 location	calendar	lv	Novietojums
+maximum available quantity of %1 exceeded!	calendar	lv	Pārsniegts %1 maksimālais pieejamais daudzums!
+minimum number of users for showing day view as consolidated.	calendar	lv	Minimālais lietotāju skaits dienas skata rādīšanai kā konsolidēts.
+minimum number of users for showing week view as consolidated.	calendar	lv	Minimālais lietotāju skaits, lai nedēļas skats tiktu parādīts kā konsolidēts.
 minutes	calendar	lv	minūtes
 modified	calendar	lv	Pārveidots
 mon	calendar	lv	Pirmdiena
@@ -99,6 +102,9 @@ monthly	calendar	lv	Ikmēneša
 monthly (by date)	calendar	lv	Ikmēneša(pēc datumiem)
 monthly (by day)	calendar	lv	Ikmēneša (pēc dienas)
 monthview	calendar	lv	Mēneša skats
+move to	calendar	lv	Pārvietot uz
+multiple participants	calendar	lv	Vairāki dalībnieki
+never notify externals (non-users) about events i create	calendar	lv	Nekad nepaziņot ārējiem lietotājiem (kas nav lietotāji) par manis izveidotiem notikumiem
 new	calendar	lv	Jauna
 no filter	calendar	lv	Bez filtra
 no matches found	calendar	lv	Nav atrasti atbilstoši ieraksti

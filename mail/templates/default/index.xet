@@ -47,6 +47,12 @@
                                                           rows="1" fullEmail="@emailTag=fullemail" onlyEmail="@emailTag=onlyemail"
                                                           onTagClick="app.mail.onclickCompose"></et2-select-email>
                                     </et2-hbox>
+                                    <et2-hbox disabled="!@bccaddress" width="100%">
+                                        <et2-description value="Bcc" class="firstColumnTitle"></et2-description>
+                                        <et2-select-email id="bccaddress" readonly="true" multiple="true"
+                                                          rows="1" fullEmail="@emailTag=fullemail" onlyEmail="@emailTag=onlyemail"
+                                                          onTagClick="app.mail.onclickCompose"></et2-select-email>
+                                    </et2-hbox>
                                     <et2-hbox width="100%" disabled="!@attachmentsBlock">
                                         <et2-description value="Attachments" class="firstColumnTitle"></et2-description>
                                         <et2-details overlaySummaryOnOpen="true" toggleAlign="right" toggleOnHover="true" hoist="true" class="attachments" >

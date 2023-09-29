@@ -85,6 +85,9 @@ last	calendar	tr	son
 lastname of person to notify	calendar	tr	Uyarılacak kişinin soyadı
 link to view the event	calendar	tr	Etkinliği görüntülemek için link
 location	calendar	tr	Konum
+maximum available quantity of %1 exceeded!	calendar	tr	1% maksimum kullanılabilir miktarı aşıldı!
+minimum number of users for showing day view as consolidated.	calendar	tr	Gün görünümünü konsolide olarak göstermek için minimum kullanıcı sayısı.
+minimum number of users for showing week view as consolidated.	calendar	tr	Hafta görünümünü konsolide olarak göstermek için minimum kullanıcı sayısı.
 minutes	calendar	tr	dakika
 modified	calendar	tr	Değiştirilmiş
 mon	calendar	tr	Ay
@@ -93,6 +96,9 @@ monthly	calendar	tr	Aylık
 monthly (by date)	calendar	tr	Aylık (tarihe göre)
 monthly (by day)	calendar	tr	Aylık (güne göre)
 monthview	calendar	tr	Ay Görünümü
+move to	calendar	tr	Geçmek
+multiple participants	calendar	tr	Çoklu katılımcılar
+never notify externals (non-users) about events i create	calendar	tr	Oluşturduğum olaylar hakkında harici kişileri (kullanıcı olmayanlar) asla bilgilendirmeyin
 new	calendar	tr	Yeni
 no matches found	calendar	tr	Eşleşme bulunamadı
 no response	calendar	tr	Yanıt Yok

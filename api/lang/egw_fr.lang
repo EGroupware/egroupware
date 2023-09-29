@@ -29,7 +29,6 @@
 '%1' copied to clipboard	common	fr	'%1' copié dans le presse-papiers
 '%1' has an invalid format	common	fr	'%1' a un format invalide
 '%1' has an invalid format !!!	common	fr	'%1' a un format invalide !!!
-'%1' is no php file in the egw server root (%2)!	common	fr	'%1' n'est pas un fichier php dans l'arborescence racine d'egw (%2) !
 '%1' is not a valid date !!!	common	fr	'%1'  n'est pas une date valide !
 '%1' is not a valid floatingpoint number !!!	common	fr	'%1' n'est pas un nombre à virgule flottante valide !
 '%1' is not a valid integer !!!	common	fr	'%1' n'est pas un entier valide !
@@ -137,6 +136,7 @@ and	common	fr	ET
 andorra	common	fr	ANDORRE
 angola	common	fr	ANGOLA
 anguilla	common	fr	ANGUILLA
+answering no will not ask you again for this browser.	common	fr	Si vous répondez non, ce navigateur ne vous sera plus demandé.
 antarctica	common	fr	ANTARCTIQUE
 antigua and barbuda	common	fr	ANTIGUE ET BARBADE
 api	common	fr	API EGroupware
@@ -737,6 +737,7 @@ insert row after	common	fr	Insérer une ligne après
 insert row before	common	fr	Insérer une ligne avant
 insert timestamp into description field	common	fr	Insérer un timestamp dans le champs description
 install	common	fr	Installer
+install egroupware as mail-handler?	common	fr	Installer EGroupware comme gestionnaire de courrier ?
 integer	common	fr	Nombre entier
 international	common	fr	International
 introduction	common	fr	Introduction
@@ -891,7 +892,7 @@ more	common	fr	Plus
 more than 1 match for '%1'	common	fr	Plusieurs résultats pour '%1'
 more then one active file %1 found, inactivating %2 older revisions!	admin	fr	Plus d'un fichier actif %1, désactivation %2 anciennes révisions !
 morocco	common	fr	MAROC
-move	common	fr	déplacer
+move	common	fr	Déplacer
 moved %1 children from directory fs_id=%2 to %3	admin	fr	Déplacement %1 enfants du répertoire fs_id=%2 vers %3
 moved unconnected %1 %2 to %3.	admin	fr	Déplacement de %1 non connectés %2 vers %3.
 mozambique	common	fr	MOZAMBIQUE

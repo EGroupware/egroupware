@@ -1116,7 +1116,7 @@ export class filemanagerAPP extends EgwApp
 			let clipboard = JSON.parse(egw.getSessionItem('phpgwapi', 'egw_clipboard'));
 
 			// Set a flag so apps can tell the difference, if they need to
-			action.set_onExecute(action.parent.onExecute.fnct);
+			action.set_onExecute(action.parent.onExecute.functionToPerform);
 			action.execute(clipboard.selected,selected[0]);
 
 			// Clear the clipboard, the files are not there anymore
@@ -1130,7 +1130,7 @@ export class filemanagerAPP extends EgwApp
 		};
 		for(let i = 0; i < actions.length; i++)
 		{
-			_action.getActionById(actions[i].id).onExecute = jQuery.extend(true, {}, _action.onExecute);
+			_action.getActionById(actions[i].id).onExecute = _action.onExecute.clone();
 
 			_action.getActionById(actions[i].id).set_onExecute(paste_exec);
 		}
@@ -1559,7 +1559,10 @@ export class filemanagerAPP extends EgwApp
 		let data = egw.dataGetUIDdata(_senders[0].id);
 		let mime = this.et2.getInstanceManager().widgetContainer.getWidgetById('$row');
 		let fe = egw.file_editor_prefered_mimes(data.data.mime);
-		if (fe && fe.mime && !fe.mime[data.data.mime]) return false;
+		if(!mime || fe && fe.mime && !fe.mime[data.data.mime])
+		{
+			return false;
+		}
 		return !!data.data.mime.match(mime.mime_odf_regex);
 	}
 

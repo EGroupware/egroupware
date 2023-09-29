@@ -19,13 +19,13 @@ egw_ready.then(function()
 			// do NOT react on bubbeling events from contained selectbox
 			var select = document.getElementById('quick_add_selectbox');
 			ev.stopImmediatePropagation();
-			if (select.dropdown.open)
+			if (select.open)
 			{
-				select.dropdown.hide();
+				select.hide();
 			}
 			else
 			{
-				select.dropdown.show();
+				select.show();
 			}
 
 		}

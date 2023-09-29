@@ -286,9 +286,10 @@ abstract class Handler
 	 * @param int|string& $id on return self::$path_extension got removed
 	 * @param boolean& $return_no_access =false if set to true on call, instead of '403 Forbidden' the entry is returned and $return_no_access===false
 	 * @param boolean $ignore_if_match =false if true, ignore If-Match precondition
+	 * @param boolean $check_return_representation =true if true, checking for Prefer: return=representation and output it, false: no check
 	 * @return array|string entry on success, string with http-error-code on failure, null for PUT on an unknown id
 	 */
-	function _common_get_put_delete($method,&$options,&$id,&$return_no_access=false,$ignore_if_match=false)
+	function _common_get_put_delete($method,&$options,&$id,&$return_no_access=false,$ignore_if_match=false,$check_return_representation=true)
 	{
 		if (self::$path_extension) $id = basename($id,self::$path_extension);
 
@@ -327,7 +328,7 @@ abstract class Handler
 				{
 					if ($this->debug) error_log(__METHOD__."($method,path=$options[path],$id) HTTP_IF_MATCH='$_SERVER[HTTP_IF_MATCH]', etag='$etag': 412 Precondition failed".array2string($entry));
 					// honor Prefer: return=representation for 412 too (no need for client to explicitly reload)
-					$this->check_return_representation($options, $id);
+					if ($check_return_representation) $this->check_return_representation($options, $id);
 					return '412 Precondition Failed';
 				}
 			}
@@ -347,7 +348,7 @@ abstract class Handler
 				{
 					if ($this->debug) error_log(__METHOD__."($method,,$id) HTTP_IF_NONE_MATCH='$_SERVER[HTTP_IF_NONE_MATCH]', etag='$etag': 412 Precondition failed");
 					// honor Prefer: return=representation for 412 too (no need for client to explicitly reload)
-					$this->check_return_representation($options, $id);
+					if ($check_return_representation) $this->check_return_representation($options, $id);
 					return '412 Precondition Failed';
 				}
 			}
@@ -460,8 +461,8 @@ abstract class Handler
 				'neon'              => 'neon',
 				'ical4ol'			=> 'ical4ol',	// iCal4OL client
 				'evolution'         => 'evolution',	// Evolution
-				'thunderbird'       => 'thunderbird',	// SOGo connector for addressbook, no Lightning installed
-				'caldavsynchronizer'=> 'caldavsynchronizer',	// Outlook CalDAV Synchroniser (https://caldavsynchronizer.org/)
+				'thunderbird'       => 'thunderbird',	// Thunderbird 115+ (no extra Lightning) or SOGo connector for addressbook, no Lightning installed
+				'caldavsynchronizer'=> 'caldavsynchronizer',	// Outlook CalDAV Synchronizer (https://caldavsynchronizer.org/)
 				'davx5'             => 'davx5',     // DAVx5 (https://www.davx5.com/)
 			) as $pattern => $name)
 			{

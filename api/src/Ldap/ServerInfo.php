@@ -83,7 +83,7 @@ class ServerInfo
 	 */
 	function __construct($host)
 	{
-		$this->host = $host;
+		$this->host = preg_match('#^ldaps?//([^:]+)#', $host, $matches) ? $matches[1] : $host;
 	}
 
 	/**

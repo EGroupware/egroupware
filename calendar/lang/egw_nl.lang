@@ -229,6 +229,9 @@ location, start- and endtimes, ...	calendar	nl	Plaats, begin- en eindtijden
 mail all participants	calendar	nl	Stuur een email naar alle deelnemers
 make freebusy information available to not logged in persons?	calendar	nl	Maak vrij/bezet informatie beschikbaar voor niet ingelogde personen?
 manage mapping	calendar	nl	Beheer de mappings
+maximum available quantity of %1 exceeded!	calendar	nl	Maximum beschikbare hoeveelheid van %1 overschreden!
+minimum number of users for showing day view as consolidated.	calendar	nl	Minimum aantal gebruikers voor het tonen van dagweergave als geconsolideerd.
+minimum number of users for showing week view as consolidated.	calendar	nl	Minimum aantal gebruikers voor weekweergave als geconsolideerd.
 minutes	calendar	nl	minuten
 modified	calendar	nl	Gewijzigd
 mon	calendar	nl	Maa
@@ -237,8 +240,11 @@ monthly	calendar	nl	Maandelijks
 monthly (by date)	calendar	nl	Maandelijks (op datum)
 monthly (by day)	calendar	nl	Maandelijks (op dag)
 monthview	calendar	nl	Maandweergave
+move to	calendar	nl	Verplaats naar
+multiple participants	calendar	nl	Meerdere deelnemers
 multiple week view	calendar	nl	Meerweekse weergave
 name of current user, all other contact fields are valid too	calendar	nl	Naam van de huidige gebruiker, alle andere contactvelden zijn ook geldig
+never notify externals (non-users) about events i create	calendar	nl	Stel externen (niet-gebruikers) nooit op de hoogte van gebeurtenissen die ik aanmaak
 new	calendar	nl	Nieuw
 new search with the above parameters	calendar	nl	opnieuw zoeken met de bovenstaande instellingen
 no events found	calendar	nl	Geen gebeurtenissen gevonden

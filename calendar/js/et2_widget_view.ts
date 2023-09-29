@@ -335,9 +335,9 @@ export class et2_calendar_view extends et2_valueWidget
 			// Ymd format: 20000101
 			date.setFullYear(parseInt(_value.substring(0, 4)));
 			// Avoid overflow into next month since it already has a value
-			date.setDate(1);
-			date.setMonth(parseInt(_value.substring(4, 6)) - 1);
-			date.setDate(parseInt(_value.substring(6, 8)));
+			date.setUTCDate(1);
+			date.setUTCMonth(parseInt(_value.substring(4, 6)) - 1);
+			date.setUTCDate(parseInt(_value.substring(6, 8)));
 			date.setUTCHours(0);
 			date.setUTCMinutes(0);
 			date.setUTCSeconds(0);
@@ -504,6 +504,12 @@ export class et2_calendar_view extends et2_valueWidget
 			widget_id = widget_id.split('event_');
 			widget_id.shift();
 			result.widget_id = 'event_' + widget_id.join('');
+
+			const widget = this.getWidgetById(result.widget_id);
+			if(widget)
+			{
+				result.title = widget.options.value.title;
+			}
 		}
 		return result;
 	}
@@ -519,12 +525,14 @@ export class et2_calendar_view extends et2_valueWidget
 	 */
 	_drag_create_start(start)
 	{
-		this.drag_create.start = jQuery.extend({},start);
+		this.drag_create.start = jQuery.extend({}, start);
 		if(!this.drag_create.start.date)
 		{
 			this.drag_create.start = null;
 		}
-		this.drag_create.end = start;
+		this.drag_create.end = {...start, date: new Date(start.date.valueOf())};
+		// Begin at default duration
+		this.drag_create.end.date.setUTCMinutes(this.drag_create.end.date.getUTCMinutes() + (this.egw().preference("defaultlength", "calendar") ?? 60));
 
 		// Clear some stuff, if last time did not complete
 		if(this.drag_create.event)
@@ -570,12 +578,16 @@ export class et2_calendar_view extends et2_valueWidget
 					whole_day_on_top: this.drag_create.start.whole_day
 				}
 			);
-			this.drag_create.event = <et2_calendar_event>et2_createWidget('calendar-event',{
-				id:'event_drag',
+			this.drag_create.event = <et2_calendar_event>et2_createWidget('calendar-event', {
+				id: 'event_drag',
 				value: value
-			},this.drag_create.parent);
+			}, this.drag_create.parent);
 			this.drag_create.event._values_check(value);
 			this.drag_create.event.doLoadingFinished();
+			if(this.drag_create.parent && typeof this.drag_create.parent.position_event == "function")
+			{
+				this.drag_create.parent.position_event(this.drag_create.event);
+			}
 		}
 
 	}
@@ -663,6 +675,16 @@ export class et2_calendar_view extends et2_valueWidget
 				this.drag_create.parent = null;
 				if(this.drag_create.event)
 				{
+					try
+					{
+						if(this.drag_create.event.destroy)
+						{
+							this.drag_create.event.destroy();
+						}
+					}
+					catch(e)
+					{
+					}
 					this.drag_create.event = null;
 				}
 			},this),100);

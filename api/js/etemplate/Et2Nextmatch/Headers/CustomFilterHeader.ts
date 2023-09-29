@@ -2,7 +2,7 @@ import {loadWebComponent} from "../../Et2Widget/Et2Widget";
 import {Et2Select} from "../../Et2Select/Et2Select";
 import {Et2InputWidget, Et2InputWidgetInterface} from "../../Et2InputWidget/Et2InputWidget";
 import {FilterMixin} from "./FilterMixin";
-import {html, LitElement} from "@lion/core";
+import {html, LitElement} from "lit";
 
 /**
  * Filter by some other type of widget

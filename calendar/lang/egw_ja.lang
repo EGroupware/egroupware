@@ -352,10 +352,13 @@ monthly	calendar	ja	月単位
 monthly (by date)	calendar	ja	月単位(日)
 monthly (by day)	calendar	ja	月単位(曜日)
 monthview	calendar	ja	月表示
+move to	calendar	ja	移動先
+multiple participants	calendar	ja	複数の参加者
 multiple week view	calendar	ja	複数週表示
 name of current user, all other contact fields are valid too	calendar	ja	ユーザ名（他のコンタクト項目も全て有効）
 name of the week (ex: monday), available for the first entry inside each day of week or daily table inside the selected range.	calendar	ja	曜日（例:月曜日）
 needs action	calendar	ja	アクションが必要
+never notify externals (non-users) about events i create	calendar	ja	自分が作成したイベントを外部（ユーザ以外）に通知しない
 new	calendar	ja	新規
 new event participants	calendar	ja	新規イベント作成時の参加者選択方法
 new search with the above parameters	calendar	ja	上記パラメータで再検索

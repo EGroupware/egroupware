@@ -8,7 +8,8 @@
  */
 
 /* eslint-disable import/no-extraneous-dependencies */
-import {css, dedupeMixin, html, LitElement, SlotMixin} from '@lion/core';
+import {css, html, LitElement} from 'lit';
+import {dedupeMixin, SlotMixin} from '@lion/core';
 import {Et2InputWidget, Et2InputWidgetInterface} from "../Et2InputWidget/Et2InputWidget";
 import {colorsDefStyles} from "../Styles/colorsDefStyles";
 

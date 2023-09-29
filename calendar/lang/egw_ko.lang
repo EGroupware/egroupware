@@ -25,14 +25,11 @@ all participants	calendar	ko	모든 참석자
 allows to edit the event again	calendar	ko	이벤트 재수정 허용
 always	calendar	ko	언제나
 apply the changes	calendar	ko	변경사항 적용
-are you sure you want to delete this country ?	calendar	ko	이 국가를 삭제 하시겠습니까?
-are you sure you want to delete this holiday ?	calendar	ko	이 공휴일을 삭제 하시겠습니까?
 before current date	calendar	ko	오늘 이전에
 before the event	calendar	ko	이벤트 전에
 birthday	calendar	ko	생일
 birthdays	admin	ko	생일
 calendar event	calendar	ko	일정 이벤트
-calendar holiday management	admin	ko	일정 공휴일 관리
 calendar menu	calendar	ko	일정 메뉴
 calendar preferences	calendar	ko	일정 환경설정
 calendar settings	admin	ko	일정 설정
@@ -41,7 +38,6 @@ canceled	calendar	ko	취소됨
 charset of file	calendar	ko	파일의 문자셋
 close the window	calendar	ko	창닫기
 compose a mail to all participants after the event is saved	calendar	ko	이벤트 저장후 모든 참석자에게 메일작성
-copy of:	calendar	ko	사본:
 copy this event	calendar	ko	이 이벤트 복사
 countries	calendar	ko	국가들
 country	calendar	ko	국가
@@ -68,12 +64,10 @@ delete this event	calendar	ko	이 이벤트 삭제
 delete this exception	calendar	ko	이 예외 삭제
 delete this series of recurring events	calendar	ko	이 연속 이벤트 삭제
 deleted	calendar	ko	삭제됨
-uninvited	calendar	ko	제외
 display status of events	calendar	ko	이벤트의 상태를 표시
 do you want a weekview with or without weekend?	calendar	ko	주간보기에 주말을 포함하시겠습니까? 포함하지 않겠습니까?
 do you want to be notified about new or changed appointments? you are not notified about changes you made yourself.<br>you can limit the notifications to certain changes only. each item includes all notifications listed above. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get participant responses like acceptions or rejections too.	calendar	ko	약속이 변경되거나 새로 만들어지면 알림메세지를 받으시겠습니까? 만약 그렇다면 자신이 작성한 약속에도 알림메세지를 받게 됩니다.<br> 알림메세지를 특정페이지에서만 동작하도록 제한할수 있습니다. 각 항목은 모든 알림메세지를 가지고 있게 됩니다. 제목, 설명, 참여자를 포함한 어떠한 수정사항이 발생하는 것도 포함합니다. 단 참여자의 응답은 제외합니다. 만약 이벤트의 주최자가 모든 알림메세지를 요구했을 경우 그는 언제든 참여자의 승낙과 거부등의 대답을 받을수 있습니다.
 do you want to receive a regularly summary of your appointments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	ko	약속을 요약한 이메일을 정기적 수신하시겠습니까?<br>요약문은 기본 이메일 주소로 매일 아침이나 매주 월요일 주별 요약을 발송합니다.<br> 그 날이나 그 주에 약속이 있을경우에만 발송됩니다.
-do you wish to autoload calendar holidays files dynamically?	admin	ko	공휴일 일정 자동로드를 동적으로 수행할까요?
 download	calendar	ko	내려받기
 download this event as ical	calendar	ko	이 이벤트 iCal로 다운로드
 duration	calendar	ko	기간
@@ -93,7 +87,6 @@ error: no participants selected !!!	calendar	ko	오류: 참석자가 선택되�
 error: saving the event !!!	calendar	ko	오류: 이벤트 저장
 error: starttime has to be before the endtime !!!	calendar	ko	오류: 시작시간이 종료시간보다 이릅니다.
 error: the entry has been updated since you opened it for editing!	calendar	ko	오류: 이 엔트리는 당신이 수정하는 중간에 업데이트 되었습니다.
-event copied - the copy can now be edited	calendar	ko	이벤트 복사됨 - 이 복사는 이제 수정이 가능합니다
 event deleted	calendar	ko	이벤트 삭제됨
 event details follow	calendar	ko	** 다음은 이벤트-설명
 event saved	calendar	ko	이벤트 저장됨
@@ -123,12 +116,10 @@ here is your requested alarm.	calendar	ko	요청하신 알람입니다.
 high priority	calendar	ko	높은 우선순위
 history	calendar	ko	내역
 holiday	calendar	ko	공휴일
-holiday management	calendar	ko	공휴일관리
 holidays	calendar	ko	공휴일
 hours	calendar	ko	시간
 ical / rfc2445	calendar	ko	iCal / rfc2445
 ical successful imported	calendar	ko	iCal 불러오기 성공
-if checked holidays falling on a weekend, are taken on the monday after.	calendar	ko	만약 주말에 공휴일이 있다면, 월요일로 공휴일 설정.
 ignore conflict	calendar	ko	겹치는 일정 무시하기
 import	calendar	ko	가져오기
 import csv-file	common	ko	컴마구분-파일 가져오기
@@ -141,8 +132,10 @@ links	calendar	ko	링크
 links, attachments	calendar	ko	링크, 첨부
 listview	calendar	ko	목록보기
 location	calendar	ko	장소
-location to autoload from	admin	ko	자동로드로 읽어온 위치정보
 mail all participants	calendar	ko	참석자에게 메일전송
+maximum available quantity of %1 exceeded!	calendar	ko	사용 가능한 최대 수량 %1을(를) 초과했습니다!
+minimum number of users for showing day view as consolidated.	calendar	ko	일별 보기를 통합된 상태로 표시하기 위한 최소 사용자 수입니다.
+minimum number of users for showing week view as consolidated.	calendar	ko	주 보기를 통합된 상태로 표시하기 위한 최소 사용자 수입니다.
 minutes	calendar	ko	분
 modified	calendar	ko	변경됨
 mon	calendar	ko	월요일
@@ -151,6 +144,9 @@ monthly	calendar	ko	월별
 monthly (by date)	calendar	ko	매월 (by date)
 monthly (by day)	calendar	ko	매월 (by day)
 monthview	calendar	ko	월 보기
+move to	calendar	ko	다음으로 이동
+multiple participants	calendar	ko	여러 참가자
+never notify externals (non-users) about events i create	calendar	ko	내가 만든 이벤트에 대해 외부인(비사용자)에게 알리지 않기
 new	calendar	ko	새로만들기
 new search with the above parameters	calendar	ko	아래의 값으로 다시 검색
 no events found	calendar	ko	이벤트를 찾을 수 없습니다
@@ -214,7 +210,6 @@ scheduling conflict	calendar	ko	일정 겹침
 select a %1	calendar	ko	%1 선택
 select a time	calendar	ko	시간선택
 select resources	calendar	ko	리소스 선택
-set a year only for one-time / non-regular holidays.	calendar	ko	1회만 있거나 정기적이지 않은 휴일을 포함한 년도 설정
 set new events to private	calendar	ko	새 개인 이벤트 설정
 should new events created as private by default ?	calendar	ko	새로 생성되는 이벤트는 개인 - 기본 으로 하시겠습니까?
 should the status of the event-participants (accept, reject, ...) be shown in brackets after each participants name ?	calendar	ko	이벤트-참가자의 상황이 각 참가자이름 이후에 괄호로 표시하시겠습니까? ( 승락, 거부, 등)
@@ -238,8 +233,8 @@ this defines the start of your dayview. events before this time, are shown above
 this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	ko	이 그룹은 플레너로 들어갈때 이미 선택되었습니다. 물론 플레너에서 언제든 바꾸고 싶으실때 바꾸실수 있습니다.
 this message is sent for canceled or deleted events.	calendar	ko	이 메세지는 취소되었거나 삭제된 이벤트에게 보내집니다.
 this message is sent for modified or moved events.	calendar	ko	이 메세지는 변경되거나 이동된 이벤트에게 보내집니다.
-this message is sent to uninvited participants.	calendar	ko	이 메세지는 제외된 참석자에게 전송됩니다.
 this message is sent to every participant of events you own, who has requested notifcations about new events.<br>you can use certain variables which get substituted with the data of the event. the first line is the subject of the email.	calendar	ko	이 메세지는 귀하가 주최한 이벤트에 보내지며 받아보실 분들은 새 이벤트 발생시 알림을 요구한 모든 분들에게 보내집니다.<br>특정 이벤트의 자료와 바꾸실 특정한 변수를 이용하실수 있으며, 첫번째 라인은 이 메일의 제목이 됩니다.
+this message is sent to uninvited participants.	calendar	ko	이 메세지는 제외된 참석자에게 전송됩니다.
 this message is sent when you accept, tentative accept or reject an event.	calendar	ko	이 메세지는 귀하가 승락, 시험적인 승락,거부를 하셨을때 보내집니다.
 this message is sent when you set an alarm for a certain event. include all information you might need.	calendar	ko	이 메세지는 특정이벤트에 알람을 설정하셨을때 보내지며 요청하신 모든 정보를 포함합니다.
 three month	calendar	ko	분기
@@ -249,6 +244,7 @@ to many might exceed your execution-time-limit	calendar	ko	너무 많을 경우 
 translation	calendar	ko	번역
 tue	calendar	ko	화요일
 two weeks	calendar	ko	보름
+uninvited	calendar	ko	제외
 updated	calendar	ko	갱신됨
 use end date	calendar	ko	마지막 날짜 사용
 view this event	calendar	ko	이 이벤트 보기

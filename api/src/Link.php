@@ -311,6 +311,7 @@ class Link extends Link\Storage
 					'add','add_app','add_id','add_popup','no_quick_add',
 					'edit','edit_id','edit_popup',
 					'list','list_popup',
+					'search',
 					'name','icon','query',
 					'mime','entry','entries',
 				)));

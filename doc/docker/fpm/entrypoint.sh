@@ -38,8 +38,12 @@ test "$PHP_VERSION" = "7.4" || {
   done
 }
 # sources of extra apps merged into our sources (--ignore-existing to NOT overwrite any regular sources!)
-test -d /usr/share/egroupware-extra && \
+test -d /usr/share/egroupware-extra && {
 	rsync -a --ignore-existing --exclude .git $EXCLUDE /usr/share/egroupware-extra/ /usr/share/egroupware/
+	# npm run build / rollupjs fails, if /usr/share/egroupware-extra is NOT owned by root!
+	chown -R root:root /usr/share/egroupware
+	chmod 775 /usr/share/egroupware
+}
 
 # check and if necessary change ownership of /var/lib/egroupware and our header.inc.php
 test $(stat -c '%U' /var/lib/egroupware) = "www-data" || \

@@ -95,25 +95,15 @@ export class et2_dialog extends Et2Dialog
 		return super._getButtons();
 	}
 
-	handleOpen()
+	handleOpen(event : CustomEvent)
 	{
-		super.handleOpen();
+		super.handleOpen(event);
 
 		// move the overlay dialog into appendTo dom since we want it to be shown in that container
 		if(this.appendTo)
 		{
 			document.getElementsByClassName(this.appendTo.replace('.', ''))[0].appendChild(this);
 		}
-	}
-
-	handleClose(ev : PointerEvent)
-	{
-		// revert the moved container back to its original position in order to be able to teardown the overlay properly
-		if(this.appendTo)
-		{
-			document.getElementsByClassName('global-overlays__overlay-container')[0].appendChild(this);
-		}
-		super.handleClose(ev);
 	}
 
 	/**

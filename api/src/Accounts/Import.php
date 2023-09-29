@@ -157,22 +157,23 @@ class Import
 			call_user_func($this->_logger, $message, $level);
 		}
 
+		$loglevel = $GLOBALS['egw_info']['server']['account_import_loglevel'] ?? 'info';
+		if ($loglevel === 'info' && in_array($level, ['debug', 'detail']) ||
+			$loglevel === 'detail' && $level === 'debug')
+		{
+			return;
+		}
+
 		// log to file too
 		$log = $GLOBALS['egw_info']['server']['files_dir'].'/'.self::LOG_FILE;
 		if (!file_exists($dir=dirname($log)) && !mkdir($dir) || !is_dir($dir) ||
 			!($fp = fopen($log, 'a+')))
 		{
-			if (!in_array($level, ['debug', 'detail']))
-			{
-				error_log(__METHOD__.' '.strtoupper($level).' '.$message);
-			}
+			error_log(__METHOD__.' '.strtoupper($level).' '.$message);
 		}
 		else
 		{
-			if ($this->_logger || !in_array($level, ['debug', 'detail']))
-			{
 				fwrite($fp, date('Y-m-d H:i:s O').' '.strtoupper($level).' '.$message."\n");
-			}
 		}
 		if (!empty($fp)) fclose($fp);
 	}
@@ -272,15 +273,24 @@ class Import
 			$start = ['', 500, &$cookie]; // cookie must be a reference!
 			do
 			{
-				foreach ($this->contacts->search('', false, '', 'account_lid', '', '', 'AND', $start, $filter) as $contact)
+				$contact = $reconnected = null;
+				foreach ($this->contacts->search('', false, '', ['account_lid', 'jpegphoto'], '', '', 'AND', $start, $filter) as $contact)
 				{
+					// if we have a regexp to filter the DN, continue on non-match
+					if (!empty($GLOBALS['egw_info']['server']['account_import_dn_regexp']) &&
+						!preg_match($GLOBALS['egw_info']['server']['account_import_dn_regexp'], $contact['dn']))
+					{
+						continue;
+					}
 					$new = null;
 					if (!isset($last_modified) || (int)$last_modified < (int)$contact['modified'])
 					{
 						$last_modified = $contact['modified'];
 					}
 					$account = $this->accounts->read($contact['account_id']);
-					$this->logger(++$num.'. User: '.json_encode($contact + $account, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE), 'debug');
+					// do NOT log binary content of image
+					$hide_binary = ['jpegphoto' => $contact['jpegphoto'] ? bytes($contact['jpegphoto']).' bytes binary data' : null];
+					$this->logger(++$num.'. User: '.json_encode($hide_binary + $contact + $account, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE), 'debug');
 					// check if account exists in sql
 					if (!($account_id = $this->accounts_sql->name2id($account['account_lid'])))
 					{
@@ -299,6 +309,7 @@ class Import
 						if ($dry_run)
 						{
 							$this->logger("Dry-run: would created user '$account[account_lid]' (#$account[account_id])", 'detail');
+							$new = true;
 						}
 						elseif (($account_id = $sql_account['account_id'] = $this->accounts_sql->save($sql_account, true)) > 0)
 						{
@@ -350,6 +361,7 @@ class Import
 							{
 								$this->logger("Dry-run: would updated user '$account[account_lid]' (#$account_id): " .
 									json_encode($diff, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES), 'detail');
+								$new = false;
 							}
 							else
 							{
@@ -430,6 +442,8 @@ class Import
 						$to_update = array_merge($sql_contact, array_filter($contact, static function ($attr) {
 							return $attr !== null && $attr !== '';
 						}));
+						// files need to be or'ed with the sql value, as otherwise e.g. picture would disappear
+						$to_update['files'] |= $sql_contact['files'];
 						unset($to_update['account_id']);    // no need to update, specially as account_id might be different!
 						$to_update['id'] = $sql_contact['id'];
 						if (($diff = array_diff_assoc($to_update, $sql_contact)))
@@ -457,6 +471,9 @@ class Import
 							}
 							Api\Vfs::$is_root = false;
 */
+							// photo_unchanged=true must be set, to no delete the photo, if it's not in LDAP
+							$this->contacts_sql->data['photo_unchanged'] = !isset($diff['files']) ||
+								($to_update['files']&Api\Contacts::FILES_BIT_PHOTO) === ($sql_contact['files']&Api\Contacts::FILES_BIT_PHOTO);
 							if ($need_update && $this->contacts_sql->save($to_update))
 							{
 								$this->logger("Error updating contact data of '$account[account_lid]' (#$account_id)", 'error');
@@ -491,6 +508,10 @@ class Import
 								{
 									$local_groups[$gid] = $this->accounts_sql->members($gid);
 								}
+								if ($local_groups)
+								{
+									$this->logger("Preserving members of local groups: ".implode(', ', array_diff($sql_groups, $groups)), 'detail');
+								}
 							}
 							$local_memberships = array_keys(array_filter($local_groups, static function($members) use ($account_id)
 							{
@@ -500,8 +521,8 @@ class Import
 						// we need to convert the account_id's of memberships, in case we use different ones in SQL
 						$this->accounts_sql->set_memberships(array_merge(array_filter(array_map(static function($account_lid) use ($groups)
 						{
-							return array_search($account_lid, $groups);
-						}, $account['memberships'])), $local_memberships), $account_id);
+							return array_search(self::strtolower($account_lid), $groups);
+						}, $account['memberships'] ?: [])), $local_memberships), $account_id);
 					}
 					// if only users are synced add new users to default group(s) as configured for auto-created accounts
 					elseif ($new && $default_memberships)
@@ -524,8 +545,15 @@ class Import
 					// remember the users we imported, to be able to delete the ones we dont
 					unset($sql_users[$account_id]);
 				}
+				/* check if connection was somehow lost / timed out and reconnect
+				if ($initial_import && !isset($contact) && ldap_errno($this->contacts->ds) === -1)
+				{
+					$this->contacts->ds = $this->accounts->ldap_connection(true);
+					$reconnected = true;
+					$this->logger("Reconnected to LDAP server", 'info');
+				}*/
 			}
-			while ($start[2] !== '');
+			while ($reconnected || $start[2] !== '');
 
 			if ($set_members)
 			{
@@ -640,25 +668,41 @@ class Import
 	{
 		// to delete no longer existing groups, we have to query all groups!
 		if ($modified) $delete = 'no';
+		$local_groups = in_array('local', explode('+', $GLOBALS['egw_info']['server']['account_import_type']));
 
 		// query all groups in SQL
 		$sql_groups = $groups = $set_members = [];
 		foreach($GLOBALS['egw']->db->select(Sql::TABLE, 'account_id,account_lid', ['account_type' => 'g'], __LINE__, __FILE__) as $row)
 		{
-			$sql_groups[-$row['account_id']] = $row['account_lid'];
+			$sql_groups[-$row['account_id']] = self::strtolower($row['account_lid']);
 		}
-		// fill groups with existing ones, for incremental sync, as we need to return all groups
-		if (!empty($modified))
+		// fill groups with existing ones, for incremental sync, but only if we have NO local groups, otherwise we need to query them all
+		$filter = ['type' => 'groups'];
+		if ($modified && !$local_groups)
 		{
 			$groups = $sql_groups;
+			$filter['modified'] = $modified;
 		}
 
 		$created = $updated = $uptodate = $errors = $deleted = $num = 0;
-		foreach($this->accounts->search(['type' => 'groups', 'modified' => $modified]) as $account_id => $group)
+		foreach($this->accounts->search($filter) as $account_id => $group)
 		{
+			// if we have a regexp to filter the DN, continue on non-match
+			if (!empty($GLOBALS['egw_info']['server']['account_import_dn_regexp']) &&
+				!preg_match($GLOBALS['egw_info']['server']['account_import_dn_regexp'], $group['account_dn']))
+			{
+				continue;
+			}
+			// for local-groups, we always have to read all groups (to be able to determine which ones are local and preserve their memberships)
+			if ($modified && $local_groups && $group['account_modified'] < $modified &&
+				($sql_id = $this->accounts_sql->name2id($group['account_lid'])))
+			{
+				$groups[$sql_id] = self::strtolower($group['account_lid']);
+				continue;   // not logging them as changed, just had to get them (efficient in one query)
+			}
 			$this->logger(++$num.'. Group: '.json_encode($group, JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES), 'debug');
 
-			if (!($sql_id = array_search($group['account_lid'], $sql_groups)))
+			if (!($sql_id = array_search(self::strtolower($group['account_lid']), $sql_groups)))
 			{
 				if ($this->accounts_sql->name2id($group['account_lid']) > 0)
 				{
@@ -740,7 +784,7 @@ class Import
 				// unset the updated groups, so we can delete the ones not returned from LDAP
 				unset($sql_groups[$sql_id]);
 			}
-			$groups[$sql_id] = $group['account_lid'];
+			$groups[$sql_id] = self::strtolower($group['account_lid']);
 
 			// we need to record and return the id's to update members, AFTER users are created/updated
 			// only for incremental run, initial run set's memberships with the user anyway (more efficient for LDAP!)
@@ -903,7 +947,7 @@ class Import
 			$import = new self();
 			$import->logger(date('Y-m-d H:i:s O').' LDAP account import started', 'info');
 			$import->run(false);
-			$import->logger(date('Y-m-d H:i:s O').' LDAP account import finished'.(!empty($fp)?"\n":''), 'info');
+			$import->logger(date('Y-m-d H:i:s O').' LDAP account import finished', 'info');
 		}
 		catch (\InvalidArgumentException $e) {
 			_egw_log_exception($e);
@@ -913,7 +957,7 @@ class Import
 		}
 		catch (\Exception $e) {
 			_egw_log_exception($e);
-			$import->logger('Error: '.$e->getMessage());
+			$import->logger('Error: '.$e->getMessage(), 'fatal');
 		}
 	}
 
@@ -1048,5 +1092,21 @@ class Import
 			'updated' => $updated,
 			'errors'  => $errors,
 		];
+	}
+
+	/**
+	 * Lowercase a string using mb_strtolower, if available
+	 *
+	 * @param string $str
+	 * @return string
+	 */
+	static protected function strtolower($str)
+	{
+		static $strtolower = null;
+		if (!isset($strtolower))
+		{
+			$strtolower = function_exists('mb_strtolower') ? 'mb_strtolower' : 'strtolower';
+		}
+		return $strtolower($str);
 	}
 }

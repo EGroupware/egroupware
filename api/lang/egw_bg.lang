@@ -68,6 +68,7 @@ and	common	bg	И
 andorra	common	bg	Андора
 angola	common	bg	Ангола
 anguilla	common	bg	Ангуила
+answering no will not ask you again for this browser.	common	bg	Ако отговорите с "не", този браузър повече няма да бъде изискван.
 antarctica	common	bg	Антарктика
 antigua and barbuda	common	bg	Антигуа и Барбуда
 application	common	bg	Приложение
@@ -293,7 +294,9 @@ field must not be empty !!!	common	bg	Полето не може да бъде �
 fields	common	bg	Полета
 fiji	common	bg	Острови Фиджи
 file	common	bg	Файл
+file a file	common	bg	Съхраняване на файл
 files	common	bg	Файлове
+fileupload	common	bg	Качване на файлове
 filter	common	bg	Филтър
 finland	common	bg	Финландия
 first name	common	bg	Първо име
@@ -304,6 +307,9 @@ fixme!	common	bg	ПОПРАВИ МЕ!
 folder already exists.	common	bg	Директорията вече съществува.
 force selectbox	common	bg	Принудително SelectBox
 forever	common	bg	Завинаги
+formatted business address	common	bg	Форматиран бизнес адрес
+formatted private address	common	bg	Форматиран частен адрес
+formatted text (html)	common	bg	Форматиран текст (HTML)
 france	common	bg	Франция
 french guiana	common	bg	Френска Гвиана
 french polynesia	common	bg	Френска Полинезия
@@ -311,6 +317,7 @@ french southern territories	common	bg	Френски Южни Територии
 friday	common	bg	Петък
 ftp	common	bg	FTP
 fullname	common	bg	Пълно име
+fullscreen	common	bg	Пълен екран
 fullscreen mode	common	bg	Режим на цял екран
 gabon	common	bg	Габон
 gambia	common	bg	Гамбия
@@ -386,6 +393,7 @@ insert placeholder	common	bg	Вмъкване на заместител
 insert row after	common	bg	Вмъкни ред след
 insert row before	common	bg	Вмъкни ред преди
 insert timestamp into description field	common	bg	Вмъкване на времеви печат в полето за описание
+install egroupware as mail-handler?	common	bg	Инсталиране на EGroupware като mail-handler?
 international	common	bg	Международен
 invalid 2-factor authentication code	common	bg	Невалиден код за двуфакторно удостоверяване
 invalid filename	common	bg	Грешно име на файл
@@ -494,6 +502,7 @@ montenegro	common	bg	Черна гора
 montserrat	common	bg	Монтсерат
 more	common	bg	повече
 morocco	common	bg	Мароко
+move	common	bg	Преместете
 mozambique	common	bg	Мозамбик
 multiple	common	bg	множество
 myanmar	common	bg	Мианмар

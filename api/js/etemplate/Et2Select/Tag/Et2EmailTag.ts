@@ -6,7 +6,8 @@
  * @link https://www.egroupware.org
  * @author Nathan Gray
  */
-import {classMap, css, html, nothing, PropertyValues, TemplateResult} from "@lion/core";
+import {css, html, nothing, PropertyValues, TemplateResult} from "lit";
+import {classMap} from "lit/directives/class-map.js";
 import shoelace from "../../Styles/shoelace";
 import {Et2Tag} from "./Et2Tag";
 
@@ -95,8 +96,8 @@ export class Et2EmailTag extends Et2Tag
 		this.onlyEmail = false;
 		this.handleMouseEnter = this.handleMouseEnter.bind(this);
 		this.handleMouseLeave = this.handleMouseLeave.bind(this);
-		this.handleClick = this.handleClick.bind(this);
-		this.handleContactClick = this.handleContactClick.bind(this);
+		this.handleMouseDown = this.handleMouseDown.bind(this);
+		this.handleContactMouseDown = this.handleContactMouseDown.bind(this);
 	}
 
 	connectedCallback()
@@ -117,18 +118,43 @@ export class Et2EmailTag extends Et2Tag
 		this.removeEventListener("mouseleave", this.handleMouseLeave);
 	}
 
+	static contact_request : Promise<any>;
+	static contact_requests : { [key: string]: Array<Function>; } = {};
+
 	public checkContact(email : string) : Promise<boolean | ContactInfo>
 	{
 		if(typeof Et2EmailTag.email_cache[email] !== "undefined")
 		{
 			return Promise.resolve(Et2EmailTag.email_cache[email]);
 		}
-		return this.egw().jsonq('EGroupware\\Api\\Etemplate\\Widget\\Url::ajax_contact', [email]).then(
-			(result) =>
-			{
-				Et2EmailTag.email_cache[email] = result;
-				return result;
-			});
+		if (!Et2EmailTag.contact_request)
+		{
+			Et2EmailTag.contact_request = this.egw().jsonq('EGroupware\\Api\\Etemplate\\Widget\\Url::ajax_contact', [[]], null, null,
+				(parameters) => {
+					for(const email in Et2EmailTag.contact_requests)
+					{
+						parameters[0].push(email);
+					}
+				}).then((result) =>
+				{
+					for(const email in Et2EmailTag.contact_requests)
+					{
+						Et2EmailTag.email_cache[email] = result[email];
+						Et2EmailTag.contact_requests[email].forEach((resolve) => {
+							resolve(result[email]);
+						});
+					}
+					Et2EmailTag.contact_request = null;
+					Et2EmailTag.contact_requests = {};
+				});
+		}
+		if (typeof Et2EmailTag.contact_requests[email] === 'undefined')
+		{
+			Et2EmailTag.contact_requests[email] = [];
+		}
+		return new Promise(resolve => {
+			Et2EmailTag.contact_requests[email].push(resolve);
+		});
 	}
 
 	handleMouseEnter(e : MouseEvent)
@@ -141,7 +167,7 @@ export class Et2EmailTag extends Et2Tag
 		this.shadowRoot.querySelector(".tag").classList.remove("contact_plus");
 	}
 
-	handleClick(e : MouseEvent)
+	handleMouseDown(e : MouseEvent)
 	{
 		e.stopPropagation();
 
@@ -152,7 +178,7 @@ export class Et2EmailTag extends Et2Tag
 		this.egw().open('', 'addressbook', 'add', extra);
 	}
 
-	handleContactClick(e : MouseEvent)
+	handleContactMouseDown(e : MouseEvent)
 	{
 		e.stopPropagation();
 		this.checkContact(this.value).then((result) =>
@@ -192,15 +218,15 @@ export class Et2EmailTag extends Et2Tag
 	{
 		let content = this.value;
 		// If there's a name, just show the name, otherwise show the email
-		if(!this.onlyEmail && Et2EmailTag.email_cache[this.value])
+		if(!this.onlyEmail && Et2EmailTag.email_cache[content])
 		{
 			// Append current value as email, data may have work & home email in it
-			content = (Et2EmailTag.email_cache[this.value]?.n_fn || "") + " <" + (Et2EmailTag.splitEmail(this.value)?.email || this.value) + ">"
+			content = (Et2EmailTag.email_cache[content]?.n_fn || "") + " <" + (Et2EmailTag.splitEmail(content)?.email || content) + ">"
 		}
 		if (this.onlyEmail)
 		{
 			const split = Et2EmailTag.splitEmail(content);
-			content = split.email || this.value;
+			content = split.email || content;
 		}
 		else if(!this.fullEmail)
 		{
@@ -230,7 +256,7 @@ export class Et2EmailTag extends Et2Tag
 
 			button_or_avatar = html`
                 <et2-lavatar slot="prefix" part="icon"
-                             @click=${this.handleContactClick}
+                             @mousedown=${this.handleContactMouseDown}
                              .size=${style.getPropertyValue("--icon-width")}
                              lname=${option.lname || nothing}
                              fname=${option.fname || nothing}
@@ -244,7 +270,7 @@ export class Et2EmailTag extends Et2Tag
 			// Show a button to add as new contact
 			classes['tag__has_plus'] = true;
 			button_or_avatar = html`
-                <et2-button-icon image="add" @click=${this.handleClick}
+                <et2-button-icon image="add" @mousedown=${this.handleMouseDown}
                                  label="${this.egw().lang("Add a new contact")}"
                                  statustext="${this.egw().lang("Add a new contact")}">
                 </et2-button-icon>`;

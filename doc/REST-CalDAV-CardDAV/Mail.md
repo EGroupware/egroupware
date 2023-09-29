@@ -46,7 +46,7 @@ The content of the POST request is a JSON encoded object with following attribut
   - "link" send as sharing link
   - "share_ro" send a readonly share using the current file content (VFS only)
   - "share_rw" send as writable share (VFS and EPL only)
-- ```shareExpiration```: "yyyy-mm-dd", default not accessed in 100 days (EPL only)
+- ```shareExpiration```: "yyyy-mm-dd" or e.g. "+2days", default not accessed in 100 days (EPL only)
 - ```sharePassword```: string with password required to access share, default none (EPL only)
 - ```folder```: folder to store send mail, default Sent folder
 - ```priority```: 1: high, 3: normal (default), 5: low
@@ -122,9 +122,71 @@ The content of the POST request is the attachment, a Location header in the resp
 to use in further requests, instead of the attachment.
   
 ```
-curl -i https://example.org/egroupware/groupdav.php/mail/attachment/<filename> --user <user> \
+curl -i https://example.org/egroupware/groupdav.php/mail/attachments/<filename> --user <user> \
     --data-binary @<file> -H 'Content-Type: <content-type-of-file>'
-HTTP/1.1 204 No Content
+HTTP/1.1 302 Found
 Location: https://example.org/egroupware/groupdav.php/mail/attachment/<token>
+
+{
+    "status": 200,
+    "message": "Attachment stored",
+    "location": "/mail/attachments/<filename>--xM35lY"
+}
+```
+> When using curl to upload attachments it's important to use ```--data-binary```, just ```-d``` or ```--data``` is NOT sufficient!
+</details>
+
+- ```POST /mail[/<id>]/vacation``` enable or disable vacation message or forwarding
+
+<details>
+  <summary>Example: Setting a vacation message with given start- and end-date</summary>
+
+The content of the POST request is a JSON encoded object with following attributes
+- ```status```: "on" (default, if not start/end), "off" or "by_date" (default, if start/end given)
+- ```start```: start-date "YYYY-mm-dd", or e.g. "+2days" (optional)
+- ```end```: end-date (last day of vacation) "YYYY-mm-dd" (optional)
+- ```text```: vacation notice to the sender (can container $$start$$ and $$end$$ placeholders)
+- ```modus```: "notice+store" (default) send vacation notice and store in INBOX, "notice": only send notice, "store": only store
+- ```forwards```: array of strings with (RFC882) email addresses (optional, default no forwarding)
+- ```addresses```: array of strings with (RFC882) email addresses (optional, default primary email address only)
+- ```days```: integer, after how many days should a sender get the vacation message again (optional, otherwise default is used)
+
+> The ```POST``` request is handled like a ```PATCH```, only the given attributes are replaced, use null to unset them.
+
+```
+curl -i https://example.org/egroupware/groupdav.php/mail/vacation --user <user> -X POST -H 'Content-Type: application/json' \
+  --data-binary '{"text":"I'm away from $$start$$ to $$end$$, will respond when I'm back.","start":"2023-01-01","end":"2023-01-10"}'
+    
+HTTP/1.1 200 Ok
+
+{
+    "status": 200,
+    "message": "Vacation handling stored"
+}
+```
+</details>
+
+- ```GET /mail[/<id>]/vacation``` get current vacation message/handling
+
+<details>
+  <summary>Example: Querying the current vacation handling</summary>
+
+For an explanation of the returned attributes of the returned object, see the POST request.
+
+```
+curl -i https://example.org/egroupware/groupdav.php/mail/vacation --user <user> -H 'Accept: application/json'
+    
+HTTP/1.1 200 Ok
+
+{
+  "start":"2023-01-01",
+  "end":"2023-01-10",
+  "status": "by_date",
+  "modus": "notice+store",
+  "text":"I'm away from $$start$$ to $$end$$, will respond when I'm back.",
+  "days": 5,
+  "addresses": ["me@example.org","webmaster@example.org"],
+  "forwards": ["hugo.meyer@example.org","sven@example.com"]
+}
 ```
 </details>

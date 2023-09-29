@@ -9,7 +9,7 @@
  */
 
 
-import {css, LitElement, PropertyValues} from "@lion/core";
+import {css, LitElement, PropertyValues} from "lit";
 import '../Et2Image/Et2Image';
 import shoelace from "../Styles/shoelace";
 

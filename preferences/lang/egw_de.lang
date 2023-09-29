@@ -45,6 +45,7 @@ default format block	preferences	de	Standard Formatierung
 default preferences	preferences	de	Voreinstellungen
 delete categories	preferences	de	Kategorie löschen
 deny following groups access to acl (grant access)	admin	de	Verweigere folgenden Gruppen den Zugriff in den ACL's
+deny following groups access to application passwords	preferences	de	Verweigere folgenden Gruppen den Zugriff zu Anwendungspasswörtern
 deny following groups access to edit categories	admin	de	Verweigere folgenden Gruppen den Zugriff zum Ändern der Kategorien
 deny following groups access to preferences	admin	de	Verweigere folgenden Gruppen den Zugriff zu den Einstellungen
 deny following groups access to security popup	admin	de	Verweigere folgenden Gruppen den Zugriff auf das Popup Sicherheit
@@ -144,7 +145,6 @@ re-enter your password	preferences	de	Neues Passwort wiederholen
 read prefs for the specified application.	preferences	de	Liest Einstellungen von den ausgewählten Anwendungen.
 reset qrcode	preferences	de	QR-Code zurücksetzen
 revoke	preferences	de	Zurückziehen
-revoke acccess tokens	preferences	de	Tokens zurückziehen
 revoke this token	preferences	de	Diese(s) Token(s) zurückziehen
 rich text editor theme	preferences	de	Farbschema des Editors
 scan qrcode with a time-based one-time password (totp) app:	preferences	de	QR-Code mit einer App für zeitbasierende Einmalpasswörter (TOTP Time-based One-time Password) abscannen:

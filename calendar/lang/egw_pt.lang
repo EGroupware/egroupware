@@ -194,6 +194,9 @@ location, start- and endtimes, ...	calendar	pt	Local, data de início e de fim, 
 mail all participants	calendar	pt	Enviar mensagens a todos os participantes
 make freebusy information available to not logged in persons?	calendar	pt	Deseja tornar acessível a informação sobre a disponibilidade a pessoas não ligadas?
 manage mapping	calendar	pt	Gerenciar mapeamento
+maximum available quantity of %1 exceeded!	calendar	pt	Quantidade máxima disponível de %1 excedida!
+minimum number of users for showing day view as consolidated.	calendar	pt	Número mínimo de utilizadores para mostrar a vista do dia como consolidada.
+minimum number of users for showing week view as consolidated.	calendar	pt	Número mínimo de utilizadores para mostrar a vista semanal como consolidada.
 minutes	calendar	pt	Minutos
 modified	calendar	pt	Modificado
 modifier	calendar	pt	Modifier
@@ -203,6 +206,9 @@ monthly	calendar	pt	Mensalmente
 monthly (by date)	calendar	pt	Mensalmente (por data)
 monthly (by day)	calendar	pt	Mensalmente (por dia)
 monthview	calendar	pt	Visualização mensal
+move to	calendar	pt	Mover para
+multiple participants	calendar	pt	Vários participantes
+never notify externals (non-users) about events i create	calendar	pt	Nunca notificar pessoas externas (não utilizadores) sobre eventos que eu criei
 new	calendar	pt	Novo
 new search with the above parameters	calendar	pt	Nova pesquisa com os parâmetros indicados em cima
 no events found	calendar	pt	Nenhum evento encontrado

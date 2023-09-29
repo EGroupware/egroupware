@@ -225,7 +225,7 @@ export class egwMenu
 
 	/**
 	 * Key handler to allow keyboard navigation of menu
-	 * TODO does this work?
+	 * TODO does not work
 	 *
 	 * @return {boolean} true if we dealt with the keypress
 	 */

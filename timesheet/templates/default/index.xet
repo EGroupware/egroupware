@@ -27,7 +27,7 @@
 				<column width="50"/>
 				<column width="10%" disabled="@no_ts_status"/>
 				<column width="15%"/>
-                <column width="120"/>
+                <column width="120" disabled="@no_kanban"/>
 			</columns>
 			<rows>
 				<row class="th">

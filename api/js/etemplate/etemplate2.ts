@@ -71,12 +71,7 @@ import './Et2Nextmatch/Headers/EntryHeader';
 import './Et2Nextmatch/Headers/FilterHeader';
 import './Et2Select/Et2Listbox';
 import './Et2Select/Et2Select';
-import './Et2Select/Et2SelectAccount';
-import './Et2Select/Et2SelectCategory';
-import './Et2Select/Et2SelectCountry';
-import './Et2Select/Et2SelectEmail';
-import './Et2Select/Et2SelectReadonly';
-import './Et2Select/Et2SelectThumbnail'
+import './Et2Select/SelectTypes';
 import './Et2Select/Tag/Et2Tag';
 import './Et2Select/Tag/Et2CategoryTag';
 import './Et2Select/Tag/Et2EmailTag';
@@ -147,6 +142,7 @@ import './et2_extension_nextmatch';
 import './et2_extension_customfields';
 import './vfsSelectUI';
 import {Et2Tabs} from "./Layout/Et2Tabs/Et2Tabs";
+import {Et2Dialog} from "./Et2Dialog/Et2Dialog";
 
 
 /**
@@ -318,7 +314,7 @@ export class etemplate2
 	 */
 	public clear(_keep_app_object? : boolean, _keep_session? : boolean)
 	{
-		jQuery(this._DOMContainer).trigger('clear');
+		this.DOMContainer.dispatchEvent(new Event("clear", {bubbles: true}));
 
 		// Remove any handlers on window (resize)
 		if(this.uniqueId)
@@ -458,6 +454,10 @@ export class etemplate2
 			this.close_prompt = this._close_changed_prompt.bind(this);
 			window.addEventListener("beforeunload", this.close_prompt);
 		}
+		else if (window == egw_topWindow())
+		{
+			window.addEventListener("beforeunload", this.destroy_session);
+		}
 		if(this._etemplate_exec_id)
 		{
 			this.destroy_session = jQuery.proxy(function(ev)
@@ -467,7 +467,7 @@ export class etemplate2
 					[this._etemplate_exec_id], null, null, "keepalive").sendRequest();
 			}, this);
 
-			window.addEventListener("beforeunload", this.destroy_session);
+			window.addEventListener("unload", this.destroy_session);
 		}
 	}
 
@@ -483,6 +483,7 @@ export class etemplate2
 
 		// Chrome requires returnValue to be set
 		e.returnValue = '';
+		return "";
 	}
 
 	public skip_close_prompt(skip = true)
@@ -1088,7 +1089,28 @@ export class etemplate2
 				{
 					api.loading_prompt('et2_submit_spinner', false);
 				}, this, async);
-				request.sendRequest();
+				const request_promise = request.sendRequest();
+
+				// Set up timeout for 30 seconds
+				let warning_message = null;
+				const timeout_id = window.setTimeout(() =>
+				{
+					// Do not abort request, it might still come
+					api.debug("warn", "Request '" + this.menuaction + "' timeout")
+					warning_message = api.message(api.lang("No response from server: your data is probably NOT saved"), "warning");
+					api.loading_prompt('et2_submit_spinner', false);
+				}, 30000);
+
+				// Cancel timeout
+				request_promise.then(() =>
+				{
+					// Responded  * and response processed *
+					clearTimeout(timeout_id);
+					if(warning_message)
+					{
+						warning_message.close();
+					}
+				});
 			}
 			else
 			{
@@ -1495,27 +1517,44 @@ export class etemplate2
 	{
 		// Check the parameters
 		const data = _response.data;
+		// window-close does NOT send data.DOMNodeID!
+		const dialog = <any>document.querySelector('et2-dialog > form' + (data.DOMNodeID ? '#' + data.DOMNodeID : '.dialog_content'))?.parentNode ??
+			// Reloaded into same container
+			(this?.DOMContainer?.parentNode instanceof Et2Dialog ? this.DOMContainer.parentNode : undefined);
+
+		if (dialog)
+		{
+			// stop dialogs from being closed on button click
+			dialog.callback = () => false;
+		}
 
 		// handle Api\Framework::refresh_opener()
 		if(Array.isArray(data['refresh-opener']))
 		{
-			if(window.opener)// && typeof window.opener.egw_refresh == 'function')
+			if(window.opener || dialog)// && typeof window.opener.egw_refresh == 'function')
 			{
-				var egw = window.egw(opener);
+				const egw = window.egw(dialog ? window : opener);
 				egw.refresh.apply(egw, data['refresh-opener']);
 			}
 		}
-		var egw = window.egw(window);
+		const egw = window.egw(window);
 
 		// need to set app_header before message, as message temp. replaces app_header
 		if(typeof data.data == 'object' && typeof data.data.app_header == 'string')
 		{
-			egw.app_header(data.data.app_header, data.data.currentapp || null);
+			if (dialog)
+			{
+				dialog.title = data.data.app_header;
+			}
+			else
+			{
+				egw.app_header(data.data.app_header, data.data.currentapp || null);
+			}
 			delete data.data.app_header;
 		}
 
 		// handle Api\Framework::message()
-		if(jQuery.isArray(data.message))
+		if(Array.isArray(data.message))
 		{
 			egw.message.apply(egw, data.message);
 		}
@@ -1526,6 +1565,10 @@ export class etemplate2
 			if(typeof data['window-close'] == 'string' && data['window-close'] !== 'true')
 			{
 				alert(data['window-close']);
+			}
+			if (dialog)
+			{
+				return dialog.close();
 			}
 			egw.close();
 			return true;
@@ -1538,7 +1581,7 @@ export class etemplate2
 		}
 
 		// handle framework.setSidebox calls
-		if(window.framework && jQuery.isArray(data.setSidebox))
+		if(!dialog && window.framework && Array.isArray(data.setSidebox))
 		{
 			if(data['fw-target'])
 			{
@@ -1551,14 +1594,16 @@ export class etemplate2
 		// regular et2 re-load
 		if(typeof data.url == "string" && typeof data.data === 'object')
 		{
+			let load : Promise<any>;
 			// @ts-ignore
 			if(this && typeof this.load == 'function')
 			{
 				// Called from etemplate
 				// set id in case serverside returned a different template
 				this._DOMContainer.id = this.uniqueId = data.DOMNodeID;
+
 				// @ts-ignore
-				return this.load(data.name, data.url, data.data);
+				load = this.load(data.name, data.url, data.data);
 			}
 			else
 			{
@@ -1582,13 +1627,30 @@ export class etemplate2
 						uniqueId = data.DOMNodeID.replace('.', '-') + '-' + data['open_target'];
 					}
 					const et2 = new etemplate2(node, data.data.menuaction, uniqueId);
-					return et2.load(data.name, data.url, data.data, null, null, null, data['fw-target']);
+					load = et2.load(data.name, data.url, data.data, null, null, null, data['fw-target']);
 				}
 				else
 				{
 					egw.debug("error", "Could not find target node %s", data.DOMNodeId);
 				}
 			}
+
+			// Extra handling for being loaded into a Et2Dialog
+			if(dialog)
+			{
+				load.then(() =>
+				{
+					// Move footer type buttons into dialog footer
+					const buttons = dialog._adoptTemplateButtons();
+
+					// Make sure adopted buttons are removed on clear
+					dialog.addEventListener("clear", () =>
+					{
+						buttons.forEach(n => n.remove());
+					});
+				});
+			}
+			return load;
 		}
 
 		throw("Error while parsing et2_load response");

@@ -251,6 +251,15 @@ egw.extend('tooltip', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 				tooltip_div.fadeOut(100);
 				tooltip_div.remove();
 			}
+		},
+
+		/**
+		 * Hide tooltip, cancel the timer
+		 */
+		tooltipCancel: function ()
+		{
+			hide();
+			current_elem = null;
 		}
 	};
 

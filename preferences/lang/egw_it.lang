@@ -137,7 +137,6 @@ re-enter your password	preferences	it	Reinserisci la password
 read prefs for the specified application.	preferences	it	Legge le preferenze per l'applicazione specificata.
 reset qrcode	preferences	it	Reimposta codice QR
 revoke	preferences	it	Revoca
-revoke acccess tokens	preferences	it	Revoca i token di accesso
 revoke this token	preferences	it	Revoca questo token
 rich text editor theme	preferences	it	Tema editor avanzato
 scan qrcode with a time-based one-time password (totp) app:	preferences	it	Scansiona il codice QR con una apposita app:

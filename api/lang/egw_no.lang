@@ -67,6 +67,7 @@ and	common	no	Og
 andorra	common	no	ANDORRA
 angola	common	no	ANGOLA
 anguilla	common	no	ANGUILLA
+answering no will not ask you again for this browser.	common	no	Hvis du svarer nei, vil du ikke lenger bli spurt om denne nettleseren.
 antarctica	common	no	ANTARKTIS
 antigua and barbuda	common	no	ANTIGUA OG BARBUDA
 application	common	no	Program
@@ -317,6 +318,7 @@ field must not be empty !!!	common	no	Feltet kan ikke være tomt!
 fields	common	no	Felter
 fiji	common	no	FIJI
 file	common	no	Fil
+file a file	common	no	Lagre en fil
 file contains more than one etemplate, last one is shown !!!	common	no	Filen inneholder mer enn en eMal. Den siste vises !
 file writen	common	no	Fil skrevet
 files	common	no	Filer
@@ -333,6 +335,8 @@ floating point	common	no	Flytpunkt
 force selectbox	common	no	Tvungen utvalgsboks
 foreign key	common	no	Fremmed nøkkel
 forever	common	no	For alltid
+formatted business address	common	no	Formatert forretningsadresse
+formatted private address	common	no	Formatert privatadresse
 formatted text (html)	common	no	Formatert tekst (HTML)
 france	common	no	FRANKRIKE
 french guiana	common	no	FRANSKE GUYANA
@@ -341,10 +345,14 @@ french southern territories	common	no	FRANSKE SYDTERRITORIUM
 friday	common	no	Fredag
 ftp	common	no	FTP
 fullname	common	no	Fullt navn
+fullscreen	common	no	Fullskjerm
+fullscreen mode	common	no	Fullskjermmodus
 gabon	common	no	GABUN
 gambia	common	no	GAMBIA
+general fields:	preferences	no	Generelle felt:
 general menu	common	no	Hovedmeny
 georgia	common	no	GEORGIA
+german	common	no	Tysk
 germany	common	no	TYSKLAND
 ghana	common	no	GHANA
 gibraltar	common	no	GIBRALTAR
@@ -426,6 +434,7 @@ insert new row after this one	common	no	Sett inn en linje etter denne
 insert new row in front of first line	common	no	Sett inn en linje foran første linje
 insert row after	common	no	Opprett rad etter
 insert row before	common	no	Opprett rad før
+install egroupware as mail-handler?	common	no	Installere EGroupware som e-postbehandler?
 integer	common	no	Heltall
 international	common	no	Internasjonal
 invalid filename	common	no	Ugyldig filnavn
@@ -534,6 +543,7 @@ month	common	no	Måned
 montserrat	common	no	MONTSERRAT
 more	common	no	Mer
 morocco	common	no	MAROKKO
+move	common	no	Flytt
 mozambique	common	no	MOSAMBIK
 myanmar	common	no	MYANMAR
 name	common	no	Navn

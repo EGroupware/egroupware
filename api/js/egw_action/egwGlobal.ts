@@ -1,3 +1,13 @@
+/**
+ * EGroupware egw_action framework - egw action framework
+ *
+ * @link https://www.egroupware.org
+ * @author Andreas Stöckel <as@stylite.de>
+ * @copyright 2011 by Andreas Stöckel
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @package egw_action
+ */
+
 import type {Iegw} from "../jsapi/egw_global";
 import type {nm_action} from "../etemplate/et2_extension_nextmatch_actions";
 
@@ -17,7 +27,6 @@ type EgwActionClasses = {
     default: EgwActionClassData,//
     actionManager: EgwActionClassData, drag: EgwActionClassData, drop: EgwActionClassData, popup: EgwActionClassData
 }
-//TODO egw global.js
 declare global {
     interface Window {
         _egwActionClasses: EgwActionClasses;

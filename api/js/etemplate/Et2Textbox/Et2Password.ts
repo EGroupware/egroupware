@@ -11,7 +11,9 @@
 import {Et2InvokerMixin} from "../Et2Url/Et2InvokerMixin";
 import {Et2Textbox} from "./Et2Textbox";
 import {Et2Dialog} from "../Et2Dialog/Et2Dialog";
-import {classMap, html, ifDefined} from "@lion/core";
+import {html} from "lit";
+import {classMap} from "lit/directives/class-map.js";
+import {ifDefined} from "lit/directives/if-defined.js";
 import {egw} from "../../jsapi/egw_global";
 
 const isChromium = navigator.userAgentData?.brands.some(b => b.brand.includes('Chromium'));
@@ -66,9 +68,16 @@ export class Et2Password extends Et2InvokerMixin(Et2Textbox)
 		}
 		attrs.type = 'password';
 
-		if(attrs.viewable)
+		if(typeof attrs.viewable !== "undefined")
 		{
-			attrs['toggle-password'] = true;
+			attrs['togglePassword'] = attrs.viewable;
+			delete attrs.viewable;
+		}
+		if(typeof attrs.togglePassword !== "undefined" && !attrs.togglePassword
+			|| typeof attrs.togglePassword == "string" && !this.getArrayMgr("content").parseBoolExpression(attrs.togglePassword))
+		{
+			// Unset togglePassword if its false.  It's from parent, and it doesn't handle string "false" = false
+			delete attrs.togglePassword;
 		}
 
 		super.transformAttributes(attrs);
@@ -149,8 +158,9 @@ export class Et2Password extends Et2InvokerMixin(Et2Textbox)
 
 		this.visible = !this.visible;	// can't access private isPasswordVisible
 
-		if (!this.visible || !this.encrypted)
+		if(!this.visible || !this.encrypted || !this.value)
 		{
+			this.type = this.visible ? 'text' : 'password';
 			return;
 		}
 
@@ -289,17 +299,17 @@ export class Et2Password extends Et2InvokerMixin(Et2Textbox)
                                 : ''
                         }
                         ${
-                                this.passwordToggle && !this.disabled
+                                this.togglePassword && !this.disabled
                                 ? html`
                                     <button
                                             part="password-toggle-button"
                                             class="input__password-toggle"
                                             type="button"
-                                            aria-label=${this.localize.term(this.passwordVisible ? 'hidePassword' : 'showPassword')}
+                                            aria-label=${this.localize.term(this.isPasswordVisible ? 'hidePassword' : 'showPassword')}
                                             @click=${this.handlePasswordToggle}
                                             tabindex="-1"
                                     >
-                                        ${this.passwordVisible
+                                        ${this.isPasswordVisible
                                           ? html`
                                                     <slot name="show-password-icon">
                                                         <sl-icon name="eye-slash" library="system"></sl-icon>
@@ -335,7 +345,7 @@ export class Et2Password extends Et2InvokerMixin(Et2Textbox)
 	{
 		if(!this.readonly)
 		{
-			this.shadowRoot.querySelector("input[type='password']").removeAttribute("readonly");
+			this.shadowRoot.querySelector("input").removeAttribute("readonly");
 		}
 		super.handleFocus(e);
 	}

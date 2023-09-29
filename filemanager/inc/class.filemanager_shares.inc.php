@@ -91,7 +91,10 @@ class filemanager_shares extends filemanager_ui
 		}
 		unset($query['col_filter']['share_passwd']);
 
-		$query['col_filter']['share_owner'] = $GLOBALS['egw_info']['user']['account_id'];
+		if(!$query['admin'] || !isset($GLOBALS['egw_info']['apps']['admin']))
+		{
+			$query['col_filter']['share_owner'] = $GLOBALS['egw_info']['user']['account_id'];
+		}
 
 		$readonlys = null;
 		$total = Sharing::so()->get_rows($query, $rows, $readonlys);
@@ -142,7 +145,7 @@ class filemanager_shares extends filemanager_ui
 				'group' => 1,
 				'icon' => 'edit',
 				'allowOnMultiple' => false,
-				'popup' => '500x200',
+				'popup' => '600x200',
 				'url' => 'menuaction=stylite.stylite_filemanager.edit_share&share_id=$id',
 				'disableIfNoEPL' => true
 			),
@@ -190,7 +193,10 @@ class filemanager_shares extends filemanager_ui
 			switch($content['nm']['action'])
 			{
 				case 'delete':
-					$where = array('share_owner' => $GLOBALS['egw_info']['user']['account_id']);
+					if(empty($GLOBALS['egw_info']['user']['apps']['admin']))
+					{
+						$where['share_owner'] = $GLOBALS['egw_info']['user']['account_id'];
+					}
 					if (!$content['nm']['select_all'])
 					{
 						$where['share_id'] = $content['nm']['selected'];
@@ -204,6 +210,11 @@ class filemanager_shares extends filemanager_ui
 			unset($content['nm']['id']);
 		}
 		$content['is_setup'] = self::$is_setup;
+		$content['nm']['admin'] = $content['nm']['admin'] || !empty($GLOBALS['egw_info']['user']['apps']['admin']) && $_GET['admin'];
+		if($content['nm']['admin'])
+		{
+			$content['nm']['columnselection_pref'] = "filemanager.shares.rows-admin";
+		}
 
 		$sel_options = array(
 			'type' => Sharing::$modes,
@@ -215,6 +226,7 @@ class filemanager_shares extends filemanager_ui
 		unset($sel_options['type'][Sharing::ATTACH]);
 
 		$tpl = new Etemplate('filemanager.shares');
+		$tpl->set_dom_id($tpl->name . ($content['nm']['admin'] ? '-admin' : ''));
 		$tpl->exec('filemanager.filemanager_shares.index', $content, $sel_options, null, $content);
 	}
 }

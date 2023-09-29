@@ -1,4 +1,14 @@
 /**
+ * EGroupware egw_action framework - egw action framework
+ *
+ * @link https://www.egroupware.org
+ * @author Andreas Stöckel <as@stylite.de>
+ * @copyright 2011 by Andreas Stöckel
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @package egw_action
+ */
+
+/**
  * The egwActionObjectInterface has to be implemented for each actual object in
  * the browser. E.g. for the object "DataGridRow", there has to be an
  * egwActionObjectInterface which is responsible for returning the outer DOMNode
@@ -10,7 +20,6 @@
  * @return {egwActionObjectInterface}
  */
 export interface EgwActionObjectInterface {
-    //TODO abstract class might be better
     //properties
     _state: number;
     stateChangeCallback: Function;
