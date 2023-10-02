@@ -64,9 +64,8 @@ export class CalendarOwner extends Et2StaticSelectMixin(Et2Select)
 			return html``;
 		}
 
-		// Tag used must match this.optionTag, but you can't use the variable directly.
-		// Pass option along so SearchMixin can grab it if needed
 		const value = (<string>option.value).replaceAll(" ", "___");
+		const classes = option.class ? Object.fromEntries((option.class).split(" ").map(k => [k, true])) : {};
 		return html`
             <sl-option
                     part="option"
@@ -76,7 +75,7 @@ export class CalendarOwner extends Et2StaticSelectMixin(Et2Select)
                     class=${classMap({
                         "match": option.isMatch,
                         "no-match": !option.isMatch,
-                        ...Object.fromEntries((option.class || "").split(" ").map(k => [k, true]))
+                        ...classes
                     })}
                     .option=${option}
                     .selected=${this.getValueAsArray().some(v => v == value)}
@@ -86,22 +85,6 @@ export class CalendarOwner extends Et2StaticSelectMixin(Et2Select)
                 ${this.noLang ? option.label : this.egw().lang(option.label)}
                 <span class="title" slot="suffix">${option.title}</span>
             </sl-option>`;
-	}
-
-	/**
-	 * Customise how tags are rendered.  Overridden from parent to add email to title for hover
-	 *
-	 * @param item
-	 * @protected
-	 */
-	protected _createTagNode(item)
-	{
-		const tag = super._createTagNode(item);
-		if(item.title)
-		{
-			tag.title = item.title;
-		}
-		return tag;
 	}
 
 	/**

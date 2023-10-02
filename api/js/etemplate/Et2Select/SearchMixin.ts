@@ -195,7 +195,7 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 				
 				/* Hide options that do not match current search text */
 
-				  .no-match {
+				  [searching] .no-match {
 					display: none;
 				}
 				/* Different cursor for editable tags */
@@ -1043,6 +1043,8 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 			// Stop timeout timer
 			clearTimeout(this._searchTimeout);
 
+			this.setAttribute("searching", "");
+
 			// Show a spinner
 			let spinner = document.createElement("sl-spinner");
 			spinner.slot = "expand-icon";
@@ -1066,6 +1068,7 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 				this.remoteSearch(this._searchInputNode.value, this.searchOptions)
 			]).then(async() =>
 			{
+				this.removeAttribute("searching");
 				// Remove spinner
 				spinner.remove();
 
@@ -1102,7 +1105,7 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 			let target = this._optionTargetNode || this;
 
 			this._keepSelectedRemote();
-			
+
 			this._remote_options = [];
 
 			// Not searching anymore, clear flag
