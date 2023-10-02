@@ -716,11 +716,12 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		return html`
             <sl-option
                     part="option"
+                    exportparts="prefix:tag__prefix, suffix:tag__suffix"
                     value="${value}"
                     title="${!option.title || this.noLang ? option.title : this.egw().lang(option.title)}"
                     class=${classMap({
-                        "match": option.isMatch,
-                        "no-match": !option.isMatch,
+                        "match": this.searchEnabled && option.isMatch,
+                        "no-match": this.searchEnabled && !option.isMatch,
                         ...Object.fromEntries((option.class || "").split(" ").map(k => [k, true]))
                     })}
                     .option=${option}

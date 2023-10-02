@@ -13,6 +13,7 @@ import {css, html, nothing, TemplateResult} from "@lion/core";
 import {IsEmail} from "../../api/js/etemplate/Validators/IsEmail";
 import {SelectOption} from "../../api/js/etemplate/Et2Select/FindSelectOptions";
 import {Et2StaticSelectMixin} from "../../api/js/etemplate/Et2Select/StaticOptions";
+import {classMap} from "lit/directives/class-map.js";
 
 /**
  * Select widget customised for calendar owner, which can be a user
@@ -56,16 +57,30 @@ export class CalendarOwner extends Et2StaticSelectMixin(Et2Select)
 	 */
 	_optionTemplate(option : SelectOption) : TemplateResult
 	{
+		// Exclude non-matches when searching
+		// unless they're already selected, in which case removing them removes them from value
+		if(typeof option.isMatch == "boolean" && !option.isMatch && !this.getValueAsArray().includes(option.value))
+		{
+			return html``;
+		}
+
+		// Tag used must match this.optionTag, but you can't use the variable directly.
+		// Pass option along so SearchMixin can grab it if needed
 		const value = (<string>option.value).replaceAll(" ", "___");
 		return html`
             <sl-option
                     part="option"
                     exportparts="prefix:tag__prefix, suffix:tag__suffix"
-                    value="${option.value}"
+                    value="${value}"
                     title="${!option.title || this.noLang ? option.title : this.egw().lang(option.title)}"
-                    class="${option.class}" .option=${option}
-                    ?disabled=${option.disabled}
+                    class=${classMap({
+                        "match": option.isMatch,
+                        "no-match": !option.isMatch,
+                        ...Object.fromEntries((option.class || "").split(" ").map(k => [k, true]))
+                    })}
+                    .option=${option}
                     .selected=${this.getValueAsArray().some(v => v == value)}
+                    ?disabled=${option.disabled}
             >
                 ${this._iconTemplate(option)}
                 ${this.noLang ? option.label : this.egw().lang(option.label)}
