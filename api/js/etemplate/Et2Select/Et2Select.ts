@@ -713,6 +713,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		// Tag used must match this.optionTag, but you can't use the variable directly.
 		// Pass option along so SearchMixin can grab it if needed
 		const value = (<string>option.value).replaceAll(" ", "___");
+		const classes = option.class ? Object.fromEntries((option.class).split(" ").map(k => [k, true])) : {};
 		return html`
             <sl-option
                     part="option"
@@ -720,9 +721,9 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
                     value="${value}"
                     title="${!option.title || this.noLang ? option.title : this.egw().lang(option.title)}"
                     class=${classMap({
-                        "match": this.searchEnabled && option.isMatch,
-                        "no-match": this.searchEnabled && !option.isMatch,
-                        ...Object.fromEntries((option.class || "").split(" ").map(k => [k, true]))
+                        "match": this.searchEnabled && (option.isMatch || false),
+                        "no-match": this.searchEnabled && !(option.isMatch || false),
+                        ...classes
                     })}
                     .option=${option}
                     .selected=${this.getValueAsArray().some(v => v == value)}

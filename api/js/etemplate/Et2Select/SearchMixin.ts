@@ -804,21 +804,7 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 
 			// Find and keep any selected remote entries
 			// Doing it here catches keypress changes too
-			this.select.querySelectorAll("[aria-selected=true].remote").forEach((node) =>
-			{
-				const value = node.value.replaceAll("___", " ");
-				if(!node.selected || this._selected_remote.some(o => o.value == value))
-				{
-					return;
-				}
-				const remote_option_index = this._remote_options.findIndex(o => o.value == value);
-				if(remote_option_index >= 0)
-				{
-					console.log("Keeping " + value, this._remote_options[remote_option_index]);
-					this._selected_remote.push(node.option);
-					this._remote_options.splice(remote_option_index, 1);
-				}
-			});
+			this._keepSelectedRemote();
 			return true;
 		}
 
@@ -845,13 +831,31 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 			// Find the tag
 			const path = event.composedPath();
 			const tag = <Et2Tag>path.find((el) => el instanceof Et2Tag);
-			this.dropdown.hide();
+			this.hide();
 			this.updateComplete.then(() =>
 			{
 				tag.startEdit(event);
 			});
 		}
 
+		_keepSelectedRemote()
+		{
+			this.select.querySelectorAll("[aria-selected=true].remote").forEach((node) =>
+			{
+				const value = node.value.replaceAll("___", " ");
+				if(!node.selected || this._selected_remote.some(o => o.value == value))
+				{
+					return;
+				}
+				const remote_option_index = this._remote_options.findIndex(o => o.value == value);
+				if(remote_option_index >= 0)
+				{
+					console.log("Keeping " + value, this._remote_options[remote_option_index]);
+					this._selected_remote.push(node.option);
+					this._remote_options.splice(remote_option_index, 1);
+				}
+			});
+		}
 		/**
 		 * An option was selected
 		 */
@@ -1097,12 +1101,8 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 		{
 			let target = this._optionTargetNode || this;
 
-			// Remove any previously selected remote options that aren't used anymore
-			this._selected_remote = this._selected_remote.filter((option) =>
-			{
-				return this.multiple ? this.value.indexOf(<string>option.value) != -1 : this.value == option.value;
-			});
-
+			this._keepSelectedRemote();
+			
 			this._remote_options = [];
 
 			// Not searching anymore, clear flag
