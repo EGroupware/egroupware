@@ -111,6 +111,39 @@ describe("Select widget", () =>
 			assert.includeMembers(option_keys, ["1", "2", "option"], "Option mis-match");
 			assert.equal(option_keys.length, 3);
 		});
+
+		it("actually shows the options", async() =>
+		{
+			// Create an element to test with, and wait until it's ready
+			// @ts-ignore
+			element = await fixture<Et2Select>(html`
+                <et2-select label="I'm a select"></et2-select>
+			`);
+			// Stub egw()
+			sinon.stub(element, "egw").returns(window.egw);
+			element.select_options = [
+				{value: "one", label: "one"},
+				{value: "two", label: "two"},
+				{value: "three", label: "three"},
+				{value: "four", label: "four"},
+				{value: "five", label: "five"}
+			];
+
+			await element.updateComplete;
+			await elementUpdated(element);
+
+			await element.show();
+
+			// Not actually testing if the browser renders, just if they show where expected
+			const options = element.select.querySelectorAll("sl-option");
+			assert.equal(options.length, 5, "Wrong number of options");
+
+			// Still not checking if they're _really_ visible, just that they have the correct display
+			options.forEach(o =>
+			{
+				assert.equal(getComputedStyle(o).display, "block", "Wrong style.display");
+			})
+		});
 	});
 
 	describe("Value tests", () =>

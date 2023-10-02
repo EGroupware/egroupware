@@ -313,6 +313,9 @@ describe("Search results", () =>
 		// Enable multiple
 		element.multiple = true;
 
+		// Clear auto-selected value
+		element.value = "";
+
 		// Enable searching
 		element.searchUrl = "test";
 
