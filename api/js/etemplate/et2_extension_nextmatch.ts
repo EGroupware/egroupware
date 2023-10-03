@@ -2238,6 +2238,11 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			}
 		}
 
+		columnMgr.setColumnVisibilitySet(visibility);
+
+		// We don't want to update user's preference, so directly update
+		this.dataview._updateColumns();
+
 		if(need_reload)
 		{
 			// We need to change preferences and reload to get columns that were hidden during the first load
@@ -2245,11 +2250,6 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			this.getInstanceManager().submit();
 			return;
 		}
-
-		columnMgr.setColumnVisibilitySet(visibility);
-
-		// We don't want to update user's preference, so directly update
-		this.dataview._updateColumns();
 
 		// Allow column widgets a chance to resize
 		this.iterateOver(function(widget)
