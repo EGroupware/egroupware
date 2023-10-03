@@ -2180,6 +2180,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 	{
 		const columnMgr = this.dataview.getColumnMgr();
 		const visibility = {};
+		let need_reload = false;
 
 		// Initialize to false
 		for(var i = 0; i < columnMgr.columns.length; i++)
@@ -2230,7 +2231,21 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 				(<et2_nextmatch_customfields><unknown>widget).set_visible(visible);
 			}
 			this.columns[i].visible = visibility[columnMgr.columns[i].id].visible;
+
+			if(this.dataview.rowProvider._columnIds.indexOf(columnMgr.columns[i].id) == -1)
+			{
+				need_reload = true;
+			}
 		}
+
+		if(need_reload)
+		{
+			// We need to change preferences and reload to get columns that were hidden during the first load
+			this.dataview.updateColumns();
+			this.getInstanceManager().submit();
+			return;
+		}
+
 		columnMgr.setColumnVisibilitySet(visibility);
 
 		// We don't want to update user's preference, so directly update
