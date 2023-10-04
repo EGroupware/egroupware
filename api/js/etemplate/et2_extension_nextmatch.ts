@@ -1618,7 +1618,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 		jQuery.merge(colDisplay, custom_fields);
 
 		// Update query value, so data source can use visible columns to exclude expensive sub-queries
-		const oldCols = this.activeFilters.selectcols ? this.activeFilters.selectcols : [];
+		const oldCols = this.get_columns();
 
 		this.activeFilters.selectcols = this.sortedColumnsList.length > 0 ? this.sortedColumnsList : colDisplay;
 
@@ -2234,7 +2234,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 
 			if(this.dataview.rowProvider._columnIds.indexOf(columnMgr.columns[i].id) == -1)
 			{
-				need_reload = true;
+				need_reload = need_reload || this.columns[i].visible;
 			}
 		}
 
