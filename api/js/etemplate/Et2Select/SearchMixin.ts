@@ -72,7 +72,6 @@ export declare class SearchMixinInterface
 	 *
 	 * @type {TemplateResult}
 	 */
-	_extraTemplate : TemplateResult | typeof nothing
 }
 
 /**

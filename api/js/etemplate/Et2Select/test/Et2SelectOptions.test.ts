@@ -4,6 +4,8 @@ import {Et2Select} from "../Et2Select";
 import * as sinon from "sinon";
 import {et2_arrayMgr} from "../../et2_core_arrayMgr";
 import {SelectOption} from "../FindSelectOptions";
+import '../Select/Et2SelectNumber';
+import {Et2SelectNumber} from "../Select/Et2SelectNumber";
 
 let parser = new window.DOMParser();
 
@@ -50,7 +52,7 @@ describe("Select widget", () =>
 
 	describe("Finds options", () =>
 	{
-		it("static", async() =>
+		it("from DOM/Template", async() =>
 		{
 			/** SETUP **/
 				// Create an element to test with, and wait until it's ready
@@ -59,13 +61,12 @@ describe("Select widget", () =>
 			container.loadFromXML(parser.parseFromString(node, "text/xml"));
 
 			// wait for asychronous changes to the DOM
-			// @ts-ignore TypeScript is not recognizing that this widget is a LitElement
 			await elementUpdated(container);
 			element = <Et2Select>container.getWidgetById('select');
 			await element.updateComplete;
 
 			/** TESTING **/
-			assert.isNotNull(element.select.querySelector("[value='option']"), "Missing static option");
+			assert.isNotNull(element.select.querySelector("[value='option']"), "Missing template option");
 		});
 
 		it("directly in sel_options", async() =>
@@ -79,7 +80,6 @@ describe("Select widget", () =>
 			container.loadFromXML(parser.parseFromString(node, "text/xml"));
 
 			// wait for asychronous changes to the DOM
-			// @ts-ignore TypeScript is not recognizing that this widget is a LitElement
 			await elementUpdated(container);
 			element = <Et2Select>container.getWidgetById('select');
 			await element.updateComplete;
@@ -88,7 +88,7 @@ describe("Select widget", () =>
 			assert.equal(element.select.querySelectorAll("sl-option").length, 2);
 		});
 
-		it("merges static options with sel_options", async() =>
+		it("merges template options with sel_options", async() =>
 		{
 			/** SETUP **/
 
@@ -100,16 +100,81 @@ describe("Select widget", () =>
 			container.loadFromXML(parser.parseFromString(node, "text/xml"));
 
 			// wait for asychronous changes to the DOM
-			// @ts-ignore TypeScript is not recognizing that this widget is a LitElement
 			await elementUpdated(container);
 			element = <Et2Select>container.getWidgetById('select');
 			await element.updateComplete;
 
 			/** TESTING **/
 			let option_keys = Object.values(element.select.querySelectorAll("sl-option")).map(o => o.value);
-			assert.include(option_keys, "option", "Static option missing");
+			assert.include(option_keys, "option", "Template option missing");
 			assert.includeMembers(option_keys, ["1", "2", "option"], "Option mis-match");
 			assert.equal(option_keys.length, 3);
+		});
+
+		it("static options (number)", async() =>
+		{
+			/** SETUP **/
+				// Create an element to test with, and wait until it's ready
+				// Default number options are 1-10
+			let element = await fixture<Et2SelectNumber>(html`
+                        <et2-select-number></et2-select-number>
+				`);
+
+			// wait for asychronous changes to the DOM
+			await elementUpdated(element);
+			await element.updateComplete;
+
+			/** TESTING **/
+			assert.equal(element.select.querySelectorAll("sl-option").length, 10);
+		});
+
+		it("merges static options with sel_options", async() =>
+		{
+			/** SETUP **/
+			let options = [
+				<SelectOption>{value: "one", label: "Option 1"},
+				<SelectOption>{value: "two", label: "Option 2"}
+			];
+			// Create an element to test with, and wait until it's ready
+			let node = '<et2-select-number id="select" label="I am a select" max="2"></et2-select-number>';
+			container.setArrayMgr("sel_options", new et2_arrayMgr({
+				select: options
+			}));
+			container.loadFromXML(parser.parseFromString(node, "text/xml"));
+
+			// wait for asychronous changes to the DOM
+			await elementUpdated(container);
+			element = <Et2Select>container.getWidgetById('select');
+			await element.updateComplete;
+
+			/** TESTING **/
+			let option_keys = Object.values(element.select.querySelectorAll("sl-option")).map(o => o.value);
+			assert.includeMembers(option_keys, ["1", "2", "one", "two"], "Option mis-match");
+			assert.equal(option_keys.length, 4);
+		});
+
+		it("merges static options with template options", async() =>
+		{
+			/** SETUP **/
+
+				// Create an element to test with, and wait until it's ready
+				// Default number options are 1-10
+			let element = await fixture<Et2SelectNumber>(html`
+                        <et2-select-number>
+                            <option value="option">option label</option>
+                        </et2-select-number>
+				`);
+
+			// wait for asychronous changes to the DOM
+			element.loadFromXML(element);
+			await elementUpdated(element);
+			await element.updateComplete;
+
+			/** TESTING **/
+			let option_keys = Object.values(element.select.querySelectorAll("sl-option")).map(o => o.value);
+			assert.include(option_keys, "option", "Template option missing");
+			assert.includeMembers(option_keys, ["1", "2", "option"], "Option mis-match");
+			assert.equal(option_keys.length, 11);
 		});
 
 		it("actually shows the options", async() =>
