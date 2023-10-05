@@ -1630,7 +1630,7 @@ class Session
 		}
 		else
 		{
-			$query[] = $prefix.'='.urlencode($values);
+			$query[] = $prefix.'='.urlencode($values ?? '');
 		}
 		return $query;
 	}
