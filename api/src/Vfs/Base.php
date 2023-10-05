@@ -291,9 +291,9 @@ class Base
 		// setting default user, passwd and domain, if it's not contained int the url
 		$defaults = array(
 			'user' => $GLOBALS['egw_info']['user']['account_lid'],
-			'pass' => urlencode($GLOBALS['egw_info']['user']['passwd']),
+			'pass' => urlencode($GLOBALS['egw_info']['user']['passwd'] ?? ''),
 			'host' => $GLOBALS['egw_info']['user']['domain'],
-			'home' => str_replace(array('\\\\', '\\'), array('', '/'), $GLOBALS['egw_info']['user']['homedirectory']),
+			'home' => str_replace(array('\\\\', '\\'), array('', '/'), $GLOBALS['egw_info']['user']['homedirectory'] ?? ''),
 		);
 		$parts = array_merge(Vfs::parse_url($_path), Vfs::parse_url($path) ?: [], $defaults);
 		if(!$parts['host'])
