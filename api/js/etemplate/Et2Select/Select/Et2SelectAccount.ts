@@ -53,19 +53,28 @@ export class Et2SelectAccount extends SelectAccountMixin(Et2StaticSelectMixin(Et
 		// Start fetch of select_options
 		const type = this.egw().preference('account_selection', 'common');
 		let fetch = [];
+		let process = (options) =>
+		{
+			// Shallow copy to avoid re-using the same object.
+			// Uses more memory, but otherwise multiple selectboxes get "tied" together
+			let cleaned = cleanSelectOptions(options)
+				// slice to avoid problems with lots of accounts
+				.slice(0, /* Et2WidgetWithSearch.RESULT_LIMIT */ 100);
+			this.account_options = this.account_options.concat(cleaned);
+		};
 		// for primary_group we only display owngroups == own memberships, not other groups
 		if(type === 'primary_group' && this.accountType !== 'accounts')
 		{
 			if(this.accountType === 'both')
 			{
-				fetch.push(this.egw().accounts('accounts').then(options => {this._static_options = this._static_options.concat(cleanSelectOptions(options))}));
+				fetch.push(this.egw().accounts('accounts').then(process));
 			}
 
-			fetch.push(this.egw().accounts('owngroups').then(options => {this._static_options = this._static_options.concat(cleanSelectOptions(options))}));
+			fetch.push(this.egw().accounts('owngroups').then(process));
 		}
-		else
+		else if(["primary_group", "groupmembers"].includes(type))
 		{
-			fetch.push(this.egw().accounts(this.accountType).then(options => {this._static_options = this._static_options.concat(cleanSelectOptions(options))}));
+			fetch.push(this.egw().accounts(this.accountType).then(process));
 		}
 		this.fetchComplete = Promise.all(fetch);
 	}

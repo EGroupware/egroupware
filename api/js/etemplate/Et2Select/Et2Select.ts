@@ -689,7 +689,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 	{
 		return html`${repeat(this.select_options
 			// Filter out empty values if we have empty label to avoid duplicates
-			.filter(o => this.emptyLabel ? o.value !== '' : o), this._groupTemplate.bind(this))
+			.filter(o => this.emptyLabel ? o.value !== '' : o), o => o.value, this._groupTemplate.bind(this))
 		}`;
 	}
 

@@ -15,6 +15,7 @@ import {StaticOptions} from "./StaticOptions";
 import {dedupeMixin} from "@open-wc/dedupe-mixin";
 import {SlOption} from "@shoelace-style/shoelace";
 import {Et2Textbox} from "../Et2Textbox/Et2Textbox";
+import {until} from "lit/directives/until.js";
 
 // Otherwise import gets stripped
 let keep_import : Et2Tag;
@@ -428,18 +429,20 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 
 			return html`
                 ${this._searchInputTemplate()}
-                ${this._moreResultsTemplate()}
+                ${until(this._moreResultsTemplate(), nothing)}
                 ${this._noResultsTemplate()}
 			`;
 		}
 
-		protected _moreResultsTemplate()
+		protected async _moreResultsTemplate()
 		{
-			if(this._total_result_count == 0 || this._total_result_count - this._remote_options.length == 0)
+			await this.updateComplete;
+			const moreCount = this._total_result_count - this.select?.querySelectorAll("sl-option.match").length;
+			if(this._total_result_count == 0 || moreCount == 0 || !this.select)
 			{
 				return nothing;
 			}
-			const more = this.egw().lang("%1 more...", this._total_result_count - this._remote_options.length);
+			const more = this.egw().lang("%1 more...", moreCount);
 
 			return html`<span class="more">${more}</span>`;
 		}
@@ -1107,6 +1110,8 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 
 			this._remote_options = [];
 
+			this._total_result_count = 0;
+
 			// Not searching anymore, clear flag
 			this.select_options.map((o) => o.isMatch = null);
 			this.requestUpdate("select_options");
@@ -1179,7 +1184,7 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 						return option.label.toLowerCase().includes(lower_search) || option.value.includes(search)
 					});
 					// Limit results
-					this._total_result_count = filtered.length;
+					this._total_result_count += filtered.length;
 					if(filtered.length > Et2WidgetWithSearch.RESULT_LIMIT)
 					{
 						filtered.splice(Et2WidgetWithSearch.RESULT_LIMIT);
@@ -1223,11 +1228,14 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 			{
 				// If results have a total included, pull it out.
 				// It will cause errors if left in the results
-				this._total_result_count = results.length;
 				if(typeof results.total !== "undefined")
 				{
-					this._total_result_count = results.total;
+					this._total_result_count += results.total;
 					delete results.total;
+				}
+				else
+				{
+					this._total_result_count += results.length;
 				}
 				let entries = cleanSelectOptions(results);
 				this.processRemoteResults(entries);

@@ -117,7 +117,7 @@ egw.extend('user', egw.MODULE_GLOBAL, function()
 					{
 						if (typeof data[t] === "object")
 						{
-							accountStore[t] = jQuery.extend(true, [], data[t] || []);
+							accountStore[t] = (Array.isArray(data[t]) ? data[t]:Object.values(data[t]) ?? []).map(a => {a.value = ""+a.value; return a});
 						}
 					}
 				}
