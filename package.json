@@ -88,6 +88,7 @@
     "blueimp-gallery": "^3.4.0",
     "colortranslator": "^1.9.2",
     "core-js": "^3.29.1",
+    "dexie": "^3.2.4",
     "lit": "^2.7.5",
     "lit-flatpickr": "^0.3.0",
     "shortcut-buttons-flatpickr": "^0.4.0",
