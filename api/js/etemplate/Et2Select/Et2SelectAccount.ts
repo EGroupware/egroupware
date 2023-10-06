@@ -63,7 +63,7 @@ export class Et2SelectAccount extends SelectAccountMixin(Et2StaticSelectMixin(Et
 
 			fetch.push(this.egw().accounts('owngroups').then(options => {this.static_options = this.static_options.concat(cleanSelectOptions(options))}));
 		}
-		else
+		else if(["primary_group", "groupmembers"].includes(type))
 		{
 			fetch.push(this.egw().accounts(this.accountType).then(options => {this.static_options = this.static_options.concat(cleanSelectOptions(options))}));
 		}
