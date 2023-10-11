@@ -48,15 +48,17 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 		protected _parent : Et2WidgetClass | et2_widget | null = null;
 		private _inst : etemplate2 | null = null;
 
-		/** et2_widget compatability **/
-			// @ts-ignore Some legacy widgets check their parent to see whats allowed
+		/**
+		 * et2_widget compatability
+		 * @deprecated Legacy compatability.  Some legacy widgets check their parent to see whats allowed
+		 **/
 		public supportedWidgetClasses = [];
 
 		/**
 		 * If we put the widget somewhere other than as a child of its parent, we need to record that so
 		 * we don't move it back to the parent.
 		 * @type {Element}
-		 * @protected
+		 * @internal
 		 */
 		protected _parent_node : Element;
 		/**
@@ -75,13 +77,26 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 		 * Internal Properties - default values, and actually creating them as fields
 		 * Do not include public property defined in properties()
 		 */
+
+		/**
+		 * Internal widget ID
+		 * @type {string}
+		 * @internal
+		 */
 		protected _widget_id : string = "";
+
+		/**
+		 * Actual DOM ID, which is different from the widget ID
+		 * @type {string}
+		 * @internal
+		 */
 		protected _dom_id : string = "";
 
 		/**
 		 * TypeScript & LitElement ensure type correctness, so we can't have a string value like "$row_cont[disable_me]"
 		 * as a boolean property so we store them here, and parse them when expanding.  Strings do not have this problem,
 		 * since $row_cont[disable_me] is still a valid string.
+		 * @internal
 		 */
 		protected _deferred_properties : { [key : string] : string } = {};
 
@@ -250,8 +265,10 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 
 		/**
 		 * List of properties that get translated
+		 *
 		 * Done separately to not interfere with properties - if we re-define label property,
 		 * labels go missing.
+		 * @internal
 		 * @returns {{statustext : boolean, label : boolean}}
 		 */
 		static get translate()
@@ -385,7 +402,7 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 		 *
 		 * @returns {string}
 		 */
-		get dom_id()
+		get dom_id() : string
 		{
 			return this.getAttribute("id");
 		}
@@ -429,7 +446,7 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 		 *
 		 * @returns {string}
 		 */
-		get id()
+		get id() : string
 		{
 			return this._widget_id;
 		}
@@ -500,6 +517,9 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 		/**
 		 * Any attribute that refers to row content cannot be resolved immediately, but some like booleans cannot stay a
 		 * string because it's a boolean attribute.  We store them for later, and parse when they're fully in their row.
+		 *
+		 * If you are creating a widget that can go in a nextmatch row, and it has boolean attributes that can change
+		 * for each row, add those attributes into deferredProperties
 		 */
 		get deferredProperties()
 		{
@@ -1026,7 +1046,7 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 
 		/**
 		 * Parent is different than what is specified in the template / hierarchy.
-		 * Find it and re-parent there.
+		 * Widget ID of another node to insert this node into instead of the normal location
 		 *
 		 * @param {string} parent
 		 */

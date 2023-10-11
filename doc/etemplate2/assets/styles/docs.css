@@ -228,6 +228,10 @@ code {
   padding: 0.125em 0.25em;
 }
 
+code.deprecated {
+	text-decoration: line-through;
+}
+
 .sl-theme-dark code {
   background-color: rgba(255 255 255 / 0.03);
 }

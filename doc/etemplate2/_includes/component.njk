@@ -94,7 +94,7 @@
         {% for prop in component.properties %}
           <tr>
             <td>
-              <code class="nowrap">{{ prop.name }}</code>
+              <code class="nowrap {%if prop.deprecated %} deprecated {% endif %}">{{ prop.name }}</code>
               {% if prop.attribute != prop.name %}
                 <br>
                 <sl-tooltip content="This attribute is different from its property">
@@ -108,6 +108,10 @@
             </td>
             <td>
               {{ prop.description | markdownInline | safe }}
+              {% if prop.deprecated %}
+              	<br />
+              	<small>{{ prop.deprecated }}</small>
+              {% endif %}
             </td>
             <td style="text-align: center;">
               {% if prop.reflects %}
@@ -200,8 +204,15 @@
       <tbody>
         {% for method in component.methods %}
           <tr>
-            <td class="nowrap"><code>{{ method.name }}()</code></td>
-            <td>{{ method.description | markdownInline | safe }}</td>
+            <td class="nowrap">
+              <code class="{% if method.deprecated %} deprecated {% endif %}">{{ method.name }}()</code>
+            </td>
+            <td>
+              {{ method.description | markdownInline | safe }}
+              {% if method.deprecated %}
+                <br /><small>{{ method.deprecated | markdownInline | safe }}</small>
+              {% endif %}
+            </td>
             <td>
               {% if method.parameters.length %}
                 <code>
