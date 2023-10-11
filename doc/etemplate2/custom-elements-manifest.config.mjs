@@ -26,9 +26,9 @@ function replace(string, terms)
 }
 
 export default {
-	globs: ["api/js/etemplate/**/Et2*/*.ts"],  // There's something wrong with some widgets, they break the parser
+	globs: ["api/js/etemplate/**/Et2*/*.ts"],
 	/** Globs to exclude */
-	exclude: ["*Date*"],//, 'et2_*.ts', '**/test/*', '**/*.styles.ts', '**/*.test.ts'],
+	exclude: [],//, 'et2_*.ts', '**/test/*', '**/*.styles.ts', '**/*.test.ts'],
 	dev: false,
 	litelement: true,
 	plugins: [
