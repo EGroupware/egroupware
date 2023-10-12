@@ -576,7 +576,6 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		{
 			super.et2HandleBlur(event);
 		}
-		this.dropdown?.hide();
 	}
 
 
@@ -834,6 +833,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
                     ?clearable=${this.clearable}
                     ?required=${this.required}
                     helpText=${this.helpText}
+                    tabindex="0"
                     hoist
                     placement=${this.placement}
                     .getTag=${this._tagTemplate}

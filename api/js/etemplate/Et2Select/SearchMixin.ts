@@ -147,7 +147,7 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 					display: none;
 				}
 
-				  :host([search][multiple]) sl-select[open]::part(expand-icon) {
+				  :host([search]) sl-select[open]::part(expand-icon) {
 					display: none;
 				  }
 
@@ -398,6 +398,7 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 			// One of the key properties has changed, need to add the needed nodes
 			if(changedProperties.has("search") || changedProperties.has("editModeEnabled") || changedProperties.has("allowFreeEntries"))
 			{
+				this._unbindListeners();
 				// Missing any of the required attributes?  Now we need to take it out.
 				if(!this.searchEnabled && !this.editModeEnabled && !this.allowFreeEntries || this.readonly)
 				{
@@ -405,8 +406,8 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 					return;
 				}
 
-				// Normally this should be handled in render(), but we have to add our nodes in
-				//this._addNodes();
+				// Listeners may have been skipped from connectedCallback()
+				this._bindListeners();
 			}
 			// Update any tags if edit mode changes
 			if(changedProperties.has("editModeEnabled") || changedProperties.has("readonly"))
@@ -417,6 +418,11 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 					tag.editable = this.editModeEnabled && !this.readonly;
 					tag.removable = !this.readonly;
 				});
+
+				if(this.readonly)
+				{
+					this._unbindListeners();
+				}
 			}
 		}
 
