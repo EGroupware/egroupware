@@ -2428,7 +2428,7 @@ class calendar_uiforms extends calendar_ui
 		}
 		$tpl = new Etemplate('calendar.meeting');
 		$tpl->exec('calendar.calendar_uiforms.meeting', $event, array(), $readonlys, $event+array(
-			'old' => $existing_event ?? [],
+			'old' => $existing_event ?: [],
 			'extern_organizer' => $extern_organizer ?? [],
 			'from_extern_organizer' => $from_extern_organizer ?? false,
 		), 2);
