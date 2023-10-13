@@ -1689,7 +1689,7 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 						}
 
 						// Leave the helper there until the update is done
-						var loading = action.ui.helper.clone(true).appendTo(jQuery('body'));
+						var loading = action.ui.draggable;
 
 						// and add a loading icon so user knows something is happening
 						if(jQuery('.calendar_timeDemo',loading).length == 0)
