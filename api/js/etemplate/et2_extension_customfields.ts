@@ -360,7 +360,7 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 		// Add in settings that are objects
 
 		// Customized settings for this widget (unlikely)
-		const data = this.getArrayMgr("modifications").getEntry(this.id) ?? {};
+		const data = this.id ? this.getArrayMgr("modifications").getEntry(this.id) ?? {} : {};
 		// Check for global settings
 		const global_data = this.getArrayMgr("modifications").getRoot().getEntry('~custom_fields~', true);
 		if(global_data)
