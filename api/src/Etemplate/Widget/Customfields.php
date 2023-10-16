@@ -176,7 +176,7 @@ class Customfields extends Transformer
 			}
 
 			// Remove filtered fields
-			if (!empty($field_filters) && in_array($key, $negate_fields) && in_array($key, $field_filters))
+			if(!empty($field_filters) && !in_array($key, $field_filters) || !empty($negate_fields) && in_array($key, $negate_fields))
 			{
 				unset($fields[$key]);
 			}
