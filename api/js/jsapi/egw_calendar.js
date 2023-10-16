@@ -130,7 +130,7 @@ egw.extend('calendar', egw.MODULE_GLOBAL, function (_app, _wnd)
 			// No country selected causes error, so skip if it's missing
 			if (!egw || !egw.preference('country', 'common'))
 			{
-				return {};
+				return Promise.resolve({});
 			}
 
 			if (typeof _holiday_cache[year] === 'undefined')
