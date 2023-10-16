@@ -41,6 +41,10 @@
     {% if component.summary %}
       {{ component.summary | markdownInline | safe }}
     {% endif %}
+    {% if component.description %}
+      <h2>Overview</h2>
+      {{ component.description | markdown | safe}}
+    {% endif %}
   </p>
 
   {# Markdown content #}

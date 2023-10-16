@@ -40,8 +40,6 @@ export interface DialogButton
 }
 
 /**
- * Et2Dialog widget
- *
  * A common dialog widget that makes it easy to inform users or prompt for information.
  *
  * It is possible to have a custom dialog by using a template, but you can also use
@@ -52,7 +50,7 @@ export interface DialogButton
  *
  * Or a more complete example:
  * ```js
- * 	let callback = function (button_id)
+ * let callback = function (button_id)
  *	{
  *		if(button_id == Et2Dialog.YES_BUTTON)
  *		{
@@ -83,22 +81,22 @@ export interface DialogButton
  * ```
  *
  * The parameters for the above are all optional, except callback (which can be null) and message:
- *	callback - function called when the dialog closes, or false/null.
+ * -	callback - function called when the dialog closes, or false/null.
  *		The ID of the button will be passed.  Button ID will be one of the Et2Dialog.*_BUTTON constants.
  *		The callback is _not_ called if the user closes the dialog with the X in the corner, or presses ESC.
- * 	message - (plain) text to display
- *	title - Dialog title
- *	value (for prompt)
- *	buttons - Et2Dialog BUTTONS_* constant, or an array of button settings.  Use DialogButton interface.
- *	dialog_type - Et2Dialog *_MESSAGE constant
- *	icon - URL of icon
+ * -	message - (plain) text to display
+ * -	title - Dialog title
+ * -	value (for prompt)
+ * -	buttons - Et2Dialog BUTTONS_* constant, or an array of button settings.  Use DialogButton interface.
+ * -	dialog_type - Et2Dialog *_MESSAGE constant
+ * -	icon - URL of icon
  *
  * Note that these methods will _not_ block program flow while waiting for user input unless you use "await" on getComplete().
  * The user's input will be provided to the callback.
  *
  * You can also create a custom dialog using an etemplate, even setting all the buttons yourself.
  * ```ts
- *  // Pass egw in the constructor
+ * // Pass egw in the constructor
  * 	let dialog = new Et2Dialog(my_egw_reference);
  *
  * 	// Set attributes.  They can be set in any way, but this is convenient.
@@ -136,6 +134,7 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 	 *
 	 * @type {IegwAppLocal}
 	 * @protected
+	 * @internal
 	 */
 	protected __egw : IegwAppLocal
 
@@ -145,6 +144,7 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 	 *
 	 * @type {et2_template | null}
 	 * @protected
+	 * @internal
 	 */
 	protected _template_widget : etemplate2 | null;
 	protected _template_promise : Promise<boolean>;
@@ -153,6 +153,7 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 	 * Treat the dialog as an atomic operation, and use this promise to notify when
 	 * "done" instead of (or in addition to) using the callback function.
 	 * It gives the button ID and the dialog value.
+	 * @internal
 	 */
 	protected _complete_promise : Promise<[number, Object]>;
 
@@ -171,6 +172,7 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 	 *
 	 * @type {number|null}
 	 * @protected
+	 * @internal
 	 */
 	protected _button_id : number | null;
 
