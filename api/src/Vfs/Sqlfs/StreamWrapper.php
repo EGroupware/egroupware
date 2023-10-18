@@ -110,9 +110,9 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 	 */
 	protected $opened_path;
 	/**
-	 * Mode of the file opened by stream_open
+	 * Mode of the file opened by stream_open: "r", "r+", "w", ...
 	 *
-	 * @var int
+	 * @var string
 	 */
 	protected $opened_mode;
 	/**
