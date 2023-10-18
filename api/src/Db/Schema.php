@@ -1164,6 +1164,12 @@ class Schema
 					}
 					break;
 				case 'decimal':
+					// some old and broken backups have that for timestamps, as it's invalid anyway (scale < 0), we translate it to timestamp
+					if ($col_data['precision'] === -1 && empty($col_data['scale']))
+					{
+						$ado_col = 'T';
+						break;
+					}
 					$ado_col = "N($col_data[precision].$col_data[scale])";
 					break;
 				case 'double':

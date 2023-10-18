@@ -822,6 +822,7 @@ class Db
 				if (in_array($e->getCode(), [
 					1064,   // You have an error in your SQL syntax
 					1062,   // Duplicate entry
+					1054,   // Unknown column 'X' in 'field list'
 				]))
 				{
 					throw new Db\Exception\InvalidSql($e->getMessage(), $e->getCode(), $e);
