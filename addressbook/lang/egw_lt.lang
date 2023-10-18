@@ -1,33 +1,117 @@
+%1 contact(s) %2, %3 failed because of %4 !!!	addressbook	lt	%1 kontaktas (-ai) %2, %3 nepavyko dėl %4 !!!
+%1 contacts updated (%2 errors).	addressbook	lt	%1 kontaktai atnaujinti (%2 klaidos).
+%1 key(s) added to public keyserver "%2".	addressbook	lt	%1 raktas (-ai) pridėtas (-i) į viešąjį raktų serverį "%2".
+%1 not implemented for %2!	addressbook	lt	%1 neįgyvendinta %2!
+%1 public keys added.	addressbook	lt	Pridėta %1 viešųjų raktų.
 %1 shared this contact on %2 with %3 %4	addressbook	lt	%1 pasidalijo šiuo kontaktu %2 %3 %4
+add customfield to links of addressbook, which displays in other applications. the default value is none customfield.	addressbook	lt	Į adresinės nuorodas pridėkite pasirinktinį lauką, kuris rodomas kitose programose. Numatytoji reikšmė yra none customfield.
+add to bcc	addressbook	lt	Pridėti prie aklųjų kopijų
+add to cc	addressbook	lt	Pridėti prie kopijos
+add to distribution list	addressbook	lt	Įtraukti į platinimo sąrašą
+add to distribution list:	addressbook	lt	Įtraukti į platinimo sąrašą:
+add to to	addressbook	lt	Pridėti prie Į
+addressbook list	addressbook	lt	Adresų knygos sąrašas
+all addressbooks	addressbook	lt	Visos adresų knygos
+all types	addressbook	lt	Visi tipai
+allow	addressbook	lt	Leisti
+allow for contacts only	addressbook	lt	Leisti tik kontaktams
+audio call	addressbook	lt	Garso skambutis
+browser location	addressbook	lt	Naršyklės vieta
+calendar integration	addressbook	lt	Kalendoriaus integracija
+change addressbook when updating	addressbook	lt	Keisti adresų knygelę atnaujinant
+choose pre-defined map source or use custom url (use %r = street, %t = city, %c = country, %z = zipcode)	admin	lt	Pasirinkite iš anksto nustatytą žemėlapio šaltinį arba naudokite pasirinktinį URL (naudokite %r = gatvė, %t = miestas, %c = šalis, %z = pašto indeksas)
+crm-view	addressbook	lt	CRM peržiūra
+default action on double-click	addressbook	lt	Numatytasis veiksmas dukart spustelėjus
+default geolocation source address	addressbook	lt	Numatytasis GeoLocation šaltinio adresas
+disable	addressbook	lt	Išjungti
+disable last/next event column	addressbook	lt	Išjungti stulpelį "Paskutinis / kitas įvykis".
+distribution list renamed	addressbook	lt	Pakeistas paskirstymo sąrašo pavadinimas
+distribution lists as groups	addressbook	lt	Paskirstymo sąrašai kaip grupės
 duplicate threshold	addressbook	lt	Dublikato riba
 duplicate warning	addressbook	lt	Įspėjimas dėl pasikartojimo
 duplicates	addressbook	lt	Dublikatai
+empty addressbook before importing	addressbook	lt	Ištrinti adresų knygos įrašus, kurių nėra CSV sąraše
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	addressbook	lt	Pavyzdys {{IF n_prefiksas~Mr~Hello Mr.~Hello Ms.}}} - ieškokite lauke "n_prefix" žodžio "Mr", jei radote, rašykite Hello Mr., kitu atveju rašykite Hello Ms.
+example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	preferences	lt	Pavyzdys {{{LETTERPREFIXCUSTOM n_prefix pavadinimas n_family}} - Pavyzdys: James Miller.
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	addressbook	lt	Pavyzdys {{{NELF vaidmuo}} - jei laukas role nėra tuščias, bus pateikta nauja eilutė su lauko role reikšme
+example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	addressbook	lt	Pavyzdys {{nenvlf role}} - jei laukas role nėra tuščias, nustatysite LF be jokios lauko reikšmės
+export definition to use for nextmatch export	addressbook	lt	Eksporto apibrėžtis, naudojama nextmatch eksportui
+export definitition to use for nextmatch export	addressbook	lt	Eksporto apibrėžtis, naudojama nextmatch eksportui
+exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	lt	Eksportuoja adresų knygelės kontaktus į CSV failą.  CSV reiškia "kableliais atskirtos vertės". Skirtuke Parinktys galite pasirinkti ir kitus skirtukus.
+favorite phone	addressbook	lt	Mėgstamiausias telefonas
+favorites	addressbook	lt	Mėgstamiausi
 fields to check for duplicates	addressbook	lt	Laukai, kuriuose tikrinama, ar nėra dublikatų
 fields to consider when looking for duplicate contacts.	addressbook	lt	Laukai, į kuriuos reikia atsižvelgti ieškant pasikartojančių kontaktų.
+for serial letter use this tag. put the content, you want to repeat between two tags.	addressbook	lt	Šią žymę naudokite serijinei raidei. Turinį, kurį norite pakartoti, patalpinkite tarp dviejų žymų.
+freebusy uri	addressbook	lt	FreeBusy URI
+geolocation	addressbook	lt	GeoLocation
+geolocation integration	admin	lt	GeoLocation integracija
 hide accounts from addressbook	addressbook	lt	Paslėpti naudotojų paskyras
 hide all accounts	addressbook	lt	Paslėpti visas paskyras
 hide user groups as distribution lists	addressbook	lt	Paslėpti naudotojų grupes kaip paskirstymo sąrašus
 hides accounts completly from the adressbook.	addressbook	lt	Visiškai paslėpti naudotojų paskyras iš adresų knygos.
 how many fields must match for the record to be considered a duplicate.	addressbook	lt	Kiek laukų turi sutapti, kad įrašas būtų laikomas dublikatu.
+importer's personal	addressbook	lt	Asmeninė importuotojo informacija
+imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	lt	Importuoja kontaktus į adresinę iš CSV failo. CSV reiškia "kableliais atskirtos vertės". Parinkčių skirtuke taip pat galite pasirinkti kitus skirtukus.
+imports contacts into your addressbook from a vcard file.	addressbook	lt	Importuokite kontaktus į adresinę iš vCard failo.
 infolog	addressbook	lt	InfoLog kontaktai
 infolog-organisation	addressbook	lt	InfoLog organizacija
+insufficent rights to delete this list!	addressbook	lt	Nepakankamos teisės šiam sąrašui ištrinti!
+insufficent rights to edit this list!	addressbook	lt	Nepakankamos teisės redaguoti šį sąrašą!
+invite to current call	addressbook	lt	Pakviesti į dabartinį skambutį
 load custom fields in index, even if custom field column is off (eg. to display them in a specific index column)	addressbook	lt	Įkelti pasirinktinius laukus į rodyklę, net jei pasirinktinių laukų stulpelis išjungtas (pvz., norint juos rodyti konkrečiame rodyklės stulpelyje)
+mail vcard	addressbook	lt	Pašto vCard
+main categories in their own field	addressbook	lt	Pagrindinės kategorijos atskirame lauke
 merge duplicates	addressbook	lt	Sujungti dublikatus
 merge into first or account, deletes all other!	addressbook	lt	Sujungti į pirmąją arba paskyrą, ištrina visus kitus!
 move to addressbook	addressbook	lt	Perkelti į adresų knygelę
+name, email, phone	addressbook	lt	Vardas, el. paštas, telefonas
 no country selected	addressbook	lt	Šalis nepasirinkta
 no distribution list	addressbook	lt	Nėra paskirstymo sąrašo
 not shared	addressbook	lt	nesidalijama
+open %1 crm view	addressbook	lt	Atidaryti %1 CRM rodinį
+open email addresses in external mail program	addressbook	lt	Atidaryti el. pašto adresus išorinėje pašto programoje
+open infolog crm view	preferences	lt	Atidaryti InfoLog CRM kontakto rodinį
+open tracking system crm view	preferences	lt	Atverti sekimo sistemos CRM vaizdą
+permissiong denied! ask your administrator to allow regular uses to update their public keys.	addressbook	lt	Leidimas nesuteiktas! Paprašykite administratoriaus, kad jis leistų nuolatiniams naudotojams atnaujinti savo viešuosius raktus.
+pgp key	addressbook	lt	PGP raktas
+phone number	common	lt	Telefono numeris
 prevent deleting of contacts	admin	lt	Neleisti ištrinti kontaktų
+private address	addressbook	lt	Privatus adresas
+public sharing url	addressbook	lt	Viešas dalijimosi URL
+remove from distribution list	addressbook	lt	Pašalinti iš paskirstymo sąrašo
+rename list	addressbook	lt	Pervardyti sąrašą
+rename selected distribution list	addressbook	lt	Pervardyti pasirinktą paskirstymo sąrašą
+schedule a video conference	addressbook	lt	Suplanuoti vaizdo konferenciją
 search letter	addressbook	lt	Paieškos raidė
+select a source address to be used in geolocation routing system	addressbook	lt	Pasirinkite šaltinio adresą, kuris bus naudojamas "GeoLocation" maršruto parinkimo sistemoje
+select an opened dialog	addressbook	lt	Pasirinkite atidarytą dialogo langą
+send fax via email by replacing fax number with an email address	addressbook	lt	Siųskite faksogramą el. paštu, pakeisdami fakso numerį el. pašto adresu
+send succeeded to %1	common	lt	Siųsti pavyko į %1
 share into addressbook	addressbook	lt	Bendrinti į adresinę
 share writable	addressbook	lt	Dalijimasis rašomas
 shared	addressbook	lt	bendrinama
 shared by me	addressbook	lt	Dalijamasi su manimi
 shared into addressbook %1	addressbook	lt	pasidalinta į adresų knygelę %1
 shared with	addressbook	lt	Dalijamasi su
+show active accounts	addressbook	lt	Rodyti aktyvias paskyras
+show all accounts	addressbook	lt	Rodyti visas paskyras
+smime key	addressbook	lt	S/MIME raktas
+special	addressbook	lt	Specialusis
+the zip extension is needed, to insert contact data in openoffice or msoffice documents.	addressbook	lt	Reikalingas zip plėtinys, kad kontaktų duomenis būtų galima įterpti į "LibreOffice" arba "MS Office" dokumentus.
+title	addressbook	lt	Užduoties pavadinimas
+type	addressbook	lt	Tipas
+unable to import into %1, using %2	addressbook	lt	Nepavyksta importuoti į %1, naudojant %2
+unknown type %1, imported as %2	addressbook	lt	Nežinomas tipas %1, importuotas kaip %2
 unshare	addressbook	lt	Daugiau nebesidalyti
 unshared	addressbook	lt	nebesidalijama
+use a category tree?	addressbook	lt	Kategorijų pasirinkimui naudoti medį
 user groups are automatically shown as distribution lists.	addressbook	lt	Vartotojų grupės automatiškai rodomos kaip paskirstymo sąrašai.
+video call	addressbook	lt	Vaizdo skambutis
+when viewing a contact, show linked entries from the selected application	addressbook	lt	Peržiūrint kontaktą, rodyti susietus pasirinktos programos įrašus
 when you merge entries into documents, they will be stored here.  if no directory is provided, they will be stored in your home directory (/home/unverricht)	addressbook	lt	Sujungiant įrašus į dokumentus, jie bus saugomi čia. Jei katalogas nenurodytas, jie bus saugomi jūsų namų kataloge (/home/...).
+yes, only admins can purge deleted items	admin	lt	Taip, ištrintus elementus gali išvalyti tik administratoriai
+yes, users can purge their deleted items	admin	lt	Taip, naudotojai gali išvalyti savo ištrintus elementus
 you are not allowed to share into the addressbook of %1	addressbook	lt	Jums neleidžiama bendrinti su adresų knyga %1
+you need to select some entries first	addressbook	lt	Pirmiausia reikia pasirinkti kai kuriuos įrašus
+your new public key has been stored in accounts addressbook.	addressbook	lt	Jūsų naujasis viešasis raktas buvo išsaugotas paskyrų adresų knygoje.

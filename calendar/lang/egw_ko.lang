@@ -1,7 +1,9 @@
 %1 %2 in %3	calendar	ko	%3에 %1 %2
+%1 events in ical file, only first one imported and displayed!	calendar	ko	iCal 파일에 있는 %1 이벤트 중 첫 번째 이벤트만 가져와서 표시했습니다!
 %1 hours	calendar	ko	%1 시간
 %1 records imported	calendar	ko	%1개의 레코드를 가져왔습니다.
 %1 records read (not yet imported, you may go back and uncheck test import)	calendar	ko	%1개 항목을 읽음 ( 아직 가져오기를 수행하지 않음, 뒤로돌아가기를 선택해서 가져오기테스트를 체크해제 할 수 있습니다)
+(%1 events in %2 seconds)	calendar	ko	(%2초 동안 %1개 이벤트)
 accept	calendar	ko	수락
 accept or reject an invitation	calendar	ko	초대에 대해 승락 혹은 거절
 accepted	calendar	ko	승락됨
@@ -9,6 +11,7 @@ access denied to the calendar of %1 !!!	calendar	ko	%1 일정의 접근이 금�
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	ko	알림 메세지를 발생하는 행동: 추가됨,취소됨,승락됨,거부됨, ...
 actions	calendar	ko	액션
 add alarm	calendar	ko	알람 추가
+add new event	calendar	ko	새 예약 추가
 add timesheet entry	calendar	ko	타임시트 엔트리에 추가
 added	calendar	ko	추가됨
 after current date	calendar	ko	오늘이후
@@ -25,6 +28,7 @@ all participants	calendar	ko	모든 참석자
 allows to edit the event again	calendar	ko	이벤트 재수정 허용
 always	calendar	ko	언제나
 apply the changes	calendar	ko	변경사항 적용
+attention	calendar	ko	주의
 before current date	calendar	ko	오늘 이전에
 before the event	calendar	ko	이벤트 전에
 birthday	calendar	ko	생일
@@ -35,6 +39,8 @@ calendar preferences	calendar	ko	일정 환경설정
 calendar settings	admin	ko	일정 설정
 calendar-fieldname	calendar	ko	일정-필드이름
 canceled	calendar	ko	취소됨
+category report	calendar	ko	카테고리 보고서
+changed event-data applied	calendar	ko	변경된 이벤트 데이터 적용
 charset of file	calendar	ko	파일의 문자셋
 close the window	calendar	ko	창닫기
 compose a mail to all participants after the event is saved	calendar	ko	이벤트 저장후 모든 참석자에게 메일작성
@@ -48,6 +54,7 @@ csv-filename	calendar	ko	컴마구분값-파일이름
 custom	calendar	ko	사용자정의
 custom fields	common	ko	사용자정의 필드
 daily	calendar	ko	매일
+date range	calendar	ko	날짜 범위
 day	calendar	ko	날
 days	calendar	ko	일동안
 days of the week for a weekly repeated event	calendar	ko	주간반복이벤트가 적용될 요일
@@ -92,6 +99,7 @@ event details follow	calendar	ko	** 다음은 이벤트-설명
 event saved	calendar	ko	이벤트 저장됨
 exception	calendar	ko	예외
 exceptions	calendar	ko	예외
+exclude weekend	calendar	ko	주말 제외
 existing links	calendar	ko	기존링크
 extended	calendar	ko	확장
 extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	ko	완전한 이벤트-설명을 항상 포함하는 확장. iCal은 특정 다른 일정 응용프로그램으로 가져오기를 할수 있습니다.
@@ -134,6 +142,7 @@ listview	calendar	ko	목록보기
 location	calendar	ko	장소
 mail all participants	calendar	ko	참석자에게 메일전송
 maximum available quantity of %1 exceeded!	calendar	ko	사용 가능한 최대 수량 %1을(를) 초과했습니다!
+min days	calendar	ko	최소 일수
 minimum number of users for showing day view as consolidated.	calendar	ko	일별 보기를 통합된 상태로 표시하기 위한 최소 사용자 수입니다.
 minimum number of users for showing week view as consolidated.	calendar	ko	주 보기를 통합된 상태로 표시하기 위한 최소 사용자 수입니다.
 minutes	calendar	ko	분
@@ -173,6 +182,7 @@ one month	calendar	ko	1개월
 one week	calendar	ko	1주
 one year	calendar	ko	1년
 open todo's:	calendar	ko	할일 열기 :
+output unit	calendar	ko	출력 단위
 overlap holiday	calendar	ko	** 겹치는 휴일
 participants	calendar	ko	참석자들
 participants uninvited from an event	calendar	ko	이벤트로부터 제외된 참석자
@@ -190,6 +200,7 @@ private only	calendar	ko	사생활만
 re-edit event	calendar	ko	이벤트 다시편집
 receive email updates	calendar	ko	갱신된 내용은 이메일로 받기
 receive summary of appointments	calendar	ko	약속 요약 받기
+recordings	calendar	ko	기록
 recurrence	calendar	ko	반복
 recurring event	calendar	ko	반복 이벤트
 rejected	calendar	ko	거부됨
@@ -200,6 +211,7 @@ repeating event information	calendar	ko	반복 이벤트 정보
 repeating interval, eg. 2 to repeat every second week	calendar	ko	반복 주기 (2는 매 2번째주를 의미함)
 repetition	calendar	ko	반복
 repetitiondetails (or empty)	calendar	ko	반복 세부 (이거나 공란)
+report	calendar	ko	보고서
 reset	calendar	ko	리셋
 resources	calendar	ko	리소스
 rule	calendar	ko	규칙
@@ -217,6 +229,7 @@ show list of upcoming events	calendar	ko	예정된 이벤트 목록 보기
 show this month	calendar	ko	이번달보기
 show this week	calendar	ko	이번주보기
 single event	calendar	ko	단독 이벤트
+sort by	calendar	ko	정렬 기준
 start	calendar	ko	시작
 start date/time	calendar	ko	시작 날짜/시간
 startdate	calendar	ko	시작일
@@ -247,6 +260,7 @@ two weeks	calendar	ko	보름
 uninvited	calendar	ko	제외
 updated	calendar	ko	갱신됨
 use end date	calendar	ko	마지막 날짜 사용
+utilities	calendar	ko	유틸리티
 view this event	calendar	ko	이 이벤트 보기
 wed	calendar	ko	수요일
 week	calendar	ko	주

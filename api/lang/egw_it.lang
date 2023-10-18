@@ -1,21 +1,23 @@
 %1 (%2 new) messages writen for application '%3' and languages '%4'	common	it	%1 (%2 nuovi) messaggi scritti per l'applicazione '%3' e linguaggi '%4'
-%1 active file(s) with same name as directory inactivated!	admin	it	% file attivi con lo stesso nome della cartella disattivata!
-%1 copied - the copy can now be edited	common	it	% copiato - la copia può adesso essere modificata
+%1 active file(s) with same name as directory inactivated!	admin	it	%1 file attivi con lo stesso nome della cartella disattivata!
+%1 copied - the copy can now be edited	common	it	%1 copiato - la copia può adesso essere modificata
 %1 directories %2 found!	admin	it	%1 cartelle trovate!
 %1 email addresses inserted	common	it	%1 indirizzi e-mail inseriti
-%1 entries found, select one ...	common	it	% voci trovate, selezionare una...
+%1 email(s) added into %2	common	it	%1 email aggiunte in %2
+%1 entries found, select one ...	common	it	%1 voci trovate, selezionare una...
 %1 etemplates deleted	common	it	%1 eTemplate cancellati
 %1 etemplates for application '%2' dumped to '%3'	common	it	%1 eTemplate per l'applicazione '%2' scaricati in '%3'
 %1 etemplates found	common	it	%1 eTemplate trovati
 %1 file	common	it	%1 file
 %1 is not executable by the webserver !!!	common	it	%1 non è eseguibile dal webserver !!!
 %1 matches on search criteria	common	it	%1 occorrenze trovate
+%1 more %2 selected ...	common	it	%1 più %2 selezionati...
 %1 more...	common	it	%1 ancora...
 %1 new etemplates imported for application '%2'	common	it	%1 nuovi eTemplate importati per l'Applicazione '%2'
 %1 not implemented for %2!	common	it	%1 non implementato per %2!
 %1 proxy of %2	common	it	%1 proxy di %2
 %1 setting "%2" = %3 disallows access via http!	admin	it	L'impostazione %1 "2" = "%3" vieta l'accesso via http!
-%1 to sync	groupdav	it	% per sincronizzare
+%1 to sync	groupdav	it	%1 per sincronizzare
 %1, duplicate id	common	it	%1, ID duplicato
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	it	%1Scegli un'altra directory%2<br />o rendi %3 scrivibile dal webserver
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	it	%1EGroupware%2 è una suite di collaborazione multiutente, web-based scritta in %3PHP%4.
@@ -30,6 +32,7 @@
 '%1' is not a valid date !!!	common	it	'%1'  non è una data valida
 '%1' is not a valid floatingpoint number !!!	common	it	'%1' non è un numero in virgola mobile valido
 '%1' is not a valid integer !!!	common	it	'%1' non è un intero valido
+'%1' is not a valid json file!	common	it	'%1' non è un file JSON valido.
 '%1' is not a valid timezone!	common	it	'%1' non è un fuso orario valido
 '%1' is not allowed ('%2')!	common	it	'%1' NON è permesso ('%2')!
 '%1' is not allowed%2)!	common	it	'%1' NON è permesso ('%2')!
@@ -109,11 +112,11 @@ alignment of the v/hbox containing table-cell	common	it	Allineamento del V/HBox 
 all	common	it	Tutto
 all addressbooks	groupdav	it	Tutte le rubriche
 all categories	common	it	Tutte le categorie
-all days	common	it	tutti i giorni
-all fields	common	it	tutti i campi
+all days	common	it	Tutti i giorni
+all fields	common	it	Tutti i campi
 all in one	groupdav	it	Tutto in uno
 all languages	common	it	Tutte le lingue
-all operations save the template!	common	it	tutte le operazioni salvano il template!
+all operations save the template!	common	it	Tutte le operazioni salvano il template!
 all users	common	it	Tutti gli utenti
 allow editing the %1	common	it	Consenti la modifica di %1
 allowed file type: %1	common	it	Tipo file consentito: %1
@@ -170,6 +173,7 @@ automatically hide the sidebox menu's?	common	it	Nascondere automaticamente i me
 automatically hide the sidebox menus?	common	it	Nascondo automaticamente i menù laterali ?
 automatically refresh list	common	it	Aggiorna l'elenco automaticamente
 autosave default category	common	it	Categoria predefinita per il salvataggio automatico
+avatar	common	it	Avatar
 azerbaijan	common	it	AZERBAIJAN
 back	common	it	Indietro
 back to user login	common	it	Torna al Login utente
@@ -209,6 +213,7 @@ box...	common	it	Box...
 brazil	common	it	BRASILE
 british indian ocean territory	common	it	TERRITORI BRITANNICI OCEANO INDIANO
 broken link	common	it	Link non funzionante
+browser %1 %2 is not recommended. you may experience issues and not working features. please use the latest version of chrome, firefox or edge. thank you!	common	it	Il browser %1 %2 non è consigliato. Potrebbero verificarsi problemi e funzioni non funzionanti. Utilizzare l'ultima versione di Chrome, Firefox o Edge. Grazie!
 brunei darussalam	common	it	BRUNEI DARUSSALAM
 bulgaria	common	it	BULGARIA
 bulgarian	common	it	Bulgaro
@@ -308,8 +313,8 @@ common preferences	common	it	Preferenze generiche
 comoros	common	it	COMORE
 company	common	it	Azienda
 confirm	common	it	conferma
-confirmation message or custom javascript (returning true or false)	common	it	messaggio di conferma o javascript personalizzato (che restituisce vero o falso)
-confirmation necesary or custom java-script	common	it	conferma necessaria o javascript personalizzato
+confirmation message or custom javascript (returning true or false)	common	it	messaggio di conferma o JavaScript personalizzato (che restituisce vero o falso)
+confirmation necesary or custom java-script	common	it	conferma necessaria o JavaScript personalizzato
 confirmation required	common	it	Conferma richiesta
 congo	common	it	CONGO
 congo, the democratic republic of the	common	it	CONGO, REPUBBLICA DEMOCRATICA DEL
@@ -351,7 +356,7 @@ current	common	it	Attuale
 current users	common	it	Sessioni attive
 custom	common	it	personalizzato
 custom fields	common	it	campi personalizzati
-custom javascript for onchange	common	it	javascript personalizzato per onChange
+custom javascript for onchange	common	it	JavaScript personalizzato per onChange
 cut	common	it	Taglia
 cyprus	common	it	CIPRO
 czech republic	common	it	REPUBBLICA CECA
@@ -361,6 +366,7 @@ data type	common	it	Tipo di dati
 database error	common	it	Errore del database!
 database error!	common	it	Errore del database!
 date	common	it	Data
+date + time	common	it	Data + Ora
 date due	common	it	Data richiesta
 date+time	common	it	Data+Ora
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	it	Porta data e ora.<br>Se utilizzi la porta 13, imposta correttamente il firewall prima di confermare questa pagina.<br>(Port: 13 / Host: 129.6.15.28)
@@ -443,6 +449,7 @@ domain name for mail-address, eg. "%1"	common	it	Nome dominio per l'indirizzo e-
 domestic	common	it	Domestico
 dominica	common	it	DOMINICA
 dominican republic	common	it	REPUBBLICA DOMINICANA
+don't ask again!	common	it	Non chiedere di nuovo!
 don't show this again	common	it	Non mostrare più
 done	common	it	Finito
 dos international	common	it	DOS International
@@ -486,7 +493,7 @@ email	common	it	E-Mail
 email-address of the user, eg. "%1"	common	it	Indirizzo e-mail per l'utente, es. "%1"
 embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	common	it	embeded CSS styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)
 empty file	common	it	File vuoto
-enable javascript onchange submit	common	it	abilita JavaScript onChange submit
+enable javascript onchange submit	common	it	Abilita JavaScript onChange submit
 enable logging	groupdav	it	Abilita registro
 enabled	common	it	Abilitato
 enables logging of caldav/carddav traffic to diagnose problems with devices.	groupdav	it	Abilita registro del traffico dati CalDAV/CardDAV per diagnosticare problemi con i dispositivi
@@ -533,6 +540,7 @@ everything	common	it	Tutto
 exact	common	it	esatta
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	preferences	it	Esempio {{IF n_prefix~Sig~Hello Mr.~Salve Sig.ra.}} -  ricerca nel campo  "n_prefix", per "Sig", se trovato scrivere "Salve Sig" altrimenti scrivere "Salve Sig.ra"
 example {{letterprefix}} - gives a letter prefix without double spaces, if the title is empty for example	preferences	it	Esempio {{LETTERPREFIX}} - Fornisce un prefisso senza doppi spazi, se per esempio il titolo fosse vuoto.
+example {{letterprefix}} - gives a letter prefix without double spaces, if the title is emty for  example	common	it	Esempio {{LETTERPREFIX}} - Fornisce un prefisso di lettere senza doppi spazi, se il titolo è vuoto, ad esempio
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	preferences	it	Esempio {{NELF role}} - se il campo "Ruolo" non è vuoto, si otterrà una riga con il valore del campo "Ruolo"
 example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	preferences	it	Esempio {{nenvlf role}} - se il campo non è vuoto, impostare un LF senza alcun valore del campo
 exchange this row with the one above	common	it	scambia questa riga con quella superiore
@@ -673,6 +681,7 @@ how many rows to print	common	it	Quante righe stampare
 how to show the general egroupware menu ?	common	it	Come mostrare il menù generale di EGroupware
 html	common	it	Html
 html link to the current record	common	it	Collegamento HTML al record attuale
+html links to any entries linked to the current record, excluding attached files	common	it	Collegamenti HTML a tutte le voci collegate al record corrente, esclusi i file allegati.
 hungary	common	it	UNGHERIA
 iceland	common	it	ISLANDA
 id	common	it	ID
@@ -722,11 +731,13 @@ insert placeholder	common	it	Inserire un segnaposto
 insert row after	common	it	Inserisci una riga dopo
 insert row before	common	it	Inserisci una riga prima
 insert timestamp into description field	common	it	Inserire il timestamp nel campo descrizione
+install	common	it	Installazione
 install egroupware as mail-handler?	common	it	Installare EGroupware come gestore di posta?
 integer	common	it	Intero
 international	common	it	Internazionale
 introduction	common	it	Introduzione
 invalid 2-factor authentication code	common	it	Codice di autenticazione a 2 fattori non valido
+invalid email	common	it	Email non valida
 invalid filename	common	it	Nome file non valido
 invalid ip address	common	it	Indirizzo IP errato
 invalid or expired 'remember me' token	common	it	Token "ricordami" non valido o scaduto
@@ -794,6 +805,7 @@ link is appended to mail allowing recipients to download currently attached vers
 link is appended to mail allowing recipients to download or modify up to date version of files (epl only)	common	it	Il collegamento viene allegato all'email permettendo ai destinatari di scaricare o modificare versioni aggiornate dei file (solo EPL)
 link is appended to mail allowing recipients to download up to date version of files	common	it	Il collegamento viene allegato all'email permettendo ai destinatari di scaricare versioni aggiornate dei file
 link target %1 not found!	common	it	Destinazione %1 del collegamento non trovata!
+link title of current record	common	it	Link titolo del record corrente
 linkapps	common	it	Applicazioni Link
 linked	common	it	Collegato
 linkentry	common	it	Voce Link
@@ -932,6 +944,7 @@ no filters	common	it	Nessun filtro
 no history for this record	common	it	Nessuna history per questo record
 no key for recipient:	common	it	Nessuna chiave per il destinatario:
 no matches found	common	it	Nessuna corrispondenza trovata.
+no response from server: your data is probably not saved	common	it	Nessuna risposta dal server: probabilmente i dati NON sono stati salvati
 no results match	common	it	Non ci sono risultati che corrispondono
 no rights to export more than %1 entries!	common	it	Diritti insufficienti per esportare più di %1 voci!
 no row to swap with !!!	common	it	nessuna riga con cui scambiare !!!
@@ -1024,7 +1037,8 @@ paste	common	it	Incolla
 path	common	it	Percorso
 path to user and group files has to be outside of the webservers document-root!!!	common	it	Il percorso per i files degli utenti e dei gruppi DEVE ESSERE ESTERNO alla document-root del webserver!!!
 permission denied!	common	it	Permesso negato
-permissions to the files/users directory	common	it	permessi per la directory dei files/utenti
+permission denied! this is an administration only feature.	common	it	Autorizzazione negata! Questa è una funzione riservata all'amministrazione.
+permissions to the files/users directory	common	it	Permessi per la directory dei files/utenti
 permisson denied!	common	it	Permesso negato
 personal	common	it	Personale
 peru	common	it	PERU
@@ -1033,7 +1047,7 @@ pg up	common	it	Pg su
 pgp encryption	common	it	Cifratura PGP
 pgp encryption installation	common	it	Installazione cifratura PGP
 philippines	common	it	FILIPPINE
-phone number	common	it	numero telefonico
+phone number	common	it	Numero telefonico
 pitcairn	common	it	PITCAIRN
 placeholders	common	it	Segnaposto (variabili metasintattiche)
 play/pause	common	it	Riproduzione/Pausa
@@ -1041,6 +1055,7 @@ please %1 by hand	common	it	Per favore %1 a mano
 please enter a name	common	it	Per favore inserisci un nome!
 please enter table-name first !!!	common	it	Please enter table-name first !!!
 please reload the egroupware desktop (f5 / cmd+r).	common	it	Per favore ricaricare il desktop di EGroupware (F5 / Ctrl+r).
+please remember to use '%1' as username for local login's from now on!	common	it	Ricordatevi di usare '%1' come nome utente per i login locali d'ora in poi!
 please run setup to become current	common	it	Per favore esegui setup per aggiornare
 please select	common	it	Per favore Seleziona
 please set your global preferences	common	it	Per favore imposta le preferenze globali !
@@ -1062,6 +1077,7 @@ preference	common	it	Preferenza
 preferences	common	it	Preferenze
 preferences for the %1 template set	preferences	it	Preferenze per il set %1 di template
 prev	common	it	Prec
+preview with entry	common	it	Anteprima con voce
 previous	common	it	Precedente
 previous page	common	it	Pagina precedente
 primary group	common	it	Gruppo primario
@@ -1106,6 +1122,8 @@ rename	common	it	Rinomina
 repeat password	common	it	Ripeti la password
 replace	common	it	Sostituisci
 replace with	common	it	Stostituisci con
+request could not be processed, please reload your window (press f5 or cmd r)!	common	it	La richiesta non è stata elaborata, ricaricare la finestra (premere F5 o Cmd R)!
+requested resource '%1' does not exist or has expired	common	it	La risorsa richiesta '%1' non esiste o è scaduta
 requests and full responses to files directory	common	it	Richieste e risposte alla cartella dei file
 requests and truncated responses to apache error-log	groupdav	it	Richieste e risposte troncate al registro errori di apache
 required	common	it	Richiesto
@@ -1262,7 +1280,7 @@ share link	common	it	Condividi indirizzo
 share this %1 via url	common	it	Condividi questo %1 via URL
 shift	common	it	Maiusc
 shift ⇧	common	it	Maiusc ⇧
-should the form be submitted or any custom javascript be executed	common	it	Il form andrebbe inviato oppure del javascript andrebbe eseguito?
+should the form be submitted or any custom javascript be executed	common	it	Il form andrebbe inviato oppure del JavaScript andrebbe eseguito?
 show	common	it	Mostra
 show (no save)	common	it	Mostra (non salva)
 show all	common	it	visualizza tutto
@@ -1294,7 +1312,7 @@ sierra leone	common	it	SIERRA LEONE
 sign up	common	it	Accedi
 simple	common	it	Semplice
 singapore	common	it	SINGAPORE
-site configuration	common	it	Configurazione per tutto il Sito
+site configuration	common	it	Configurazione dell'app
 size	common	it	Dimensione
 skip	common	it	Salta
 slovakia	common	it	SLOVACCHIA
@@ -1373,8 +1391,10 @@ the mail server returned	common	it	Il mail server ha risposto
 there already is a system-user with this name. user's should not have the same name as a systemuser	common	it	C'è già un sistema con questo nome. Per favore usane un altro.
 they will be sub-folders in users home (%1 attribute).	common	it	Saranno sottocartelle nella home dell'utente (attributo %1)
 this feature is only available in epl version.	common	it	Questa funzionalità è disponibile solo con la versione EPL.
+this is your own share.  to test it, use an anonymous / incognito window.<br/>%1	common	it	This is your own share. To test it, use an anonymous / incognito window.<br/>%1
 this name has been used already	common	it	Questo nome è già stato usato!
 this text gets displayed if the input-field is empty and has no focus (blur)	common	it	this text gets displayed if the input-field is empty and has no focus (blur)
+this will reset toolbar preferences for all users and set them to configured default prefs.	common	it	In questo modo si ripristinano le preferenze della barra degli strumenti per tutti gli utenti e si impostano quelle predefinite.
 thursday	common	it	Giovedì
 tiled	common	it	tiled
 time	common	it	Tempo
@@ -1432,6 +1452,7 @@ update	common	it	Aggiorna
 update a single entry by passing the fields.	common	it	Update a single entry by passing the fields.
 update from version '%s' to	common	it	Update from Version '%s' to
 update the clock per minute or per second	common	it	Aggiorna l'orologio ogni minuto o ogni secondo
+updating your account with new data from your identity provider failed!	common	it	L'aggiornamento dell'account con i nuovi dati del fornitore di identità non è riuscito!
 upload	common	it	Upload
 upload directory does not exist, or is not writeable by webserver	common	it	Cartella di upload inesistente o non scrivibile dal server
 upload file(s) from filemanager...	common	it	Carica file dal filemanager
@@ -1439,6 +1460,8 @@ upload new photo	common	it	Carica nuova foto
 upload requires the directory to be writable by the webserver!	common	it	Il caricamento richiede che il server possa scrivere nella cartella!
 uppercase letters	common	it	lettere maiuscole
 url	common	it	URL
+url of current record	common	it	URL del record corrente
+urls of any entries linked to the current record, excluding attached files	common	it	URL di tutte le voci collegate al record corrente, esclusi i file allegati.
 uruguay	common	it	URUGUAY
 use button to search for	common	it	Usa il pulsante per cercare
 use button to search for address	common	it	Usa il pulsante per cercare l'Indirizzo
@@ -1463,6 +1486,7 @@ version	common	it	Version
 version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)	common	it	version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)
 vertical alignment of row	common	it	allineamento verticale della riga
 vfs upload directory	common	it	Directory di upload VFS
+video tutorials	common	it	Tutorial video
 viet nam	common	it	VIET NAM
 view	common	it	Visualizza
 view linked %1 entries	common	it	Visualizza %1 voci collegate
@@ -1529,6 +1553,7 @@ you have not entered participants	common	it	Non hai inserito i partecipanti
 you have selected an invalid date	common	it	Hai selezionato una data non valida!
 you have selected an invalid main category	common	it	Hai selezionato una categoria principale non valida!
 you have successfully logged out	common	it	Ti sei disconesso con successo
+you may drag files out to your desktop	common	it	È possibile trascinare i file sul desktop
 you need to %1set your timezone preference%2.	common	it	Devi %1impostare la tua zona oraria%2
 you need to add the webserver user '%1' to the group '%2'.	common	it	Devi aggiungere l'utente '%1' del webserver al gruppo '%2'.
 you need to be an egroupware administrator to access this functionality!	common	it	Devi essere un amministratore per accedere a questa funzione!
@@ -1539,6 +1564,8 @@ you need to set enable logging to "%1" to create/update a log.	groupdav	it	Devi 
 you tried to automatically size a flex column, which always takes the rest of the space	common	it	Hai tentato di ridimensionare automaticamente una colonna flessibile, che prende sempre il resto dello spazio
 you will not be able to send or receive encrypted mails before completing that step!	common	it	Non potrai inviare e ricevere email cifrate senza completare questo step!
 you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	it	Non hai il permesso di accesso all'applicazione %1!
+your account has been updated with new data from your identity provider.	common	it	Il vostro account è stato aggiornato con i nuovi dati del vostro fornitore di identità.
+your browser is not up-to-date (javascript es6 compatible), you may experience some of the features not working.	common	it	Se il vostro browser non è aggiornato (compatibile con JavaScript ES6), è possibile che alcune funzioni non funzionino.
 your code is incorrect !!!	common	it	Codice errato!
 your key has been restored successfully.	common	it	La chiave è stata ripristinata con successo
 your message could <b>not</b> be sent!<br>	common	it	Il tuo messaggio <b>non</b> può essere inviato!<br>

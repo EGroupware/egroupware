@@ -2,12 +2,14 @@
 %1 days	calendar	nl	%1 dagen
 %1 event(s) %2	calendar	nl	%1 evenement(en) %2
 %1 event(s) %2, %3 failed because of insufficient rights !!!	calendar	nl	%1 evenment(en) %2, %3 mislukt vanwege onvoldoende rechten
+%1 events in ical file, only first one imported and displayed!	calendar	nl	%1 gebeurtenissen in iCal-bestand, alleen de eerste geïmporteerd en weergegeven!
 %1 hours	calendar	nl	%1 uren
 %1 minutes	calendar	nl	%1 minuten
 %1 participants removed because of missing invite grants	calendar	nl	%1 deelnemers verwijdert vanwege het ontbreken van uitnodigingen
 %1 records imported	calendar	nl	%1 records geïmporteerd
 %1 records read (not yet imported, you may go back and uncheck test import)	calendar	nl	%1 records gelezen (nog niet geïmporteerd, u kunt teruggaan en Test Import uitzetten)
 %1 weeks	calendar	nl	%1 weken
+(%1 events in %2 seconds)	calendar	nl	(%1 gebeurtenissen in %2 seconden)
 (empty = use global limit, no = no export at all)	admin	nl	(leeg = gebruik globale limiet, no = helemaal geen export)
 a non blocking event will not conflict with other events	calendar	nl	Een niet-blokkerende gebeurtenis zal geen conflicten met andere gebeurtenissen geven
 accept	calendar	nl	Accepteren
@@ -18,6 +20,7 @@ action that caused the notify: added, canceled, accepted, rejected, ...	calendar
 actions	calendar	nl	Acties
 actions...	calendar	nl	Acties...
 add alarm	calendar	nl	Alarm toevoegen
+add new event	calendar	nl	Nieuwe afspraak toevoegen
 add timesheet entry	calendar	nl	Urenregistratie toevoegen
 added	calendar	nl	Toegevoegd
 after	calendar	nl	na
@@ -37,6 +40,7 @@ all participants	calendar	nl	Alle deelnemers
 allows to edit the event again	calendar	nl	Staat toe om de gebeurtenis opnieuw te wijzigen
 always	calendar	nl	altijd
 apply the changes	calendar	nl	wijzigingen doorvoeren
+attention	calendar	nl	Attentie
 back half a month	calendar	nl	halve maand terug
 back one month	calendar	nl	één maand terug
 before %1	calendar	nl	Voor %1
@@ -57,7 +61,9 @@ calendar-fieldname	calendar	nl	Agenda - Veldnaam
 can't add alarms in the past !!!	calendar	nl	Herinneringen kunnen niet in het verleden aangemaakt worden !!!
 can't aquire lock!	calendar	nl	Kan geen lock plaatsen!
 canceled	calendar	nl	Geannuleerd
+category report	calendar	nl	Categorierapport
 change history	calendar	nl	Historie van wijzigingen
+changed event-data applied	calendar	nl	Gewijzigde gebeurtenisgegevens toegepast
 charset of file	calendar	nl	Karakterset van bestand
 check all	calendar	nl	Markeer alles
 choose a category	calendar	nl	Kies een categorie
@@ -81,6 +87,7 @@ custom fields	common	nl	Aangepaste velden
 custom_2	common	nl	vrij/bezet
 daily	calendar	nl	Dagelijks
 data exchange settings	calendar	nl	Data exchange instellingen
+date range	calendar	nl	Datumbereik
 day	calendar	nl	Dag
 days	calendar	nl	dagen
 days of the week for a weekly repeated event	calendar	nl	Dagen van de week voor een wekelijks herhalende gebeurtenis
@@ -141,6 +148,7 @@ example {{nenvlf role}} - if field role is not empty, set a lf without any value
 exception	calendar	nl	Uitzondering
 exception created - you can now edit or delete it	calendar	nl	Uitzondering aangemaakt - u kunt het nu bewerken of verwijderen
 exceptions	calendar	nl	Uitzonderingen
+exclude weekend	calendar	nl	Weekend uitsluiten
 execute a further action for this entry	calendar	nl	Voer een vervolg actie uit voor dit record
 existing links	calendar	nl	Bestaande links
 exists	calendar	nl	Bestaat
@@ -230,6 +238,7 @@ mail all participants	calendar	nl	Stuur een email naar alle deelnemers
 make freebusy information available to not logged in persons?	calendar	nl	Maak vrij/bezet informatie beschikbaar voor niet ingelogde personen?
 manage mapping	calendar	nl	Beheer de mappings
 maximum available quantity of %1 exceeded!	calendar	nl	Maximum beschikbare hoeveelheid van %1 overschreden!
+min days	calendar	nl	Min dagen
 minimum number of users for showing day view as consolidated.	calendar	nl	Minimum aantal gebruikers voor het tonen van dagweergave als geconsolideerd.
 minimum number of users for showing week view as consolidated.	calendar	nl	Minimum aantal gebruikers voor weekweergave als geconsolideerd.
 minutes	calendar	nl	minuten
@@ -274,6 +283,7 @@ one week	calendar	nl	één week
 one year	calendar	nl	één jaar
 only the initial date of that recurring event is checked!	calendar	nl	Alleen de begindatum van die terugkerende gebeurtenis is gecontroleerd!
 open todo's:	calendar	nl	Openstaande taken:
+output unit	calendar	nl	Uitvoereenheid
 overlap holiday	calendar	nl	vakantie overlapt
 participants	calendar	nl	Deelnemers
 participants uninvited from an event	calendar	nl	Deelnemers waarvan de uitnodiging is ingetrokken
@@ -293,6 +303,7 @@ quantity	calendar	nl	Hoeveelheid
 re-edit event	calendar	nl	Afspraak opnieuw bewerken
 receive email updates	calendar	nl	Ontvang email updates
 receive summary of appointments	calendar	nl	Ontvang overzicht van afspraken
+recordings	calendar	nl	Opnames
 recovered	calendar	nl	Teruggezet
 recurrence	calendar	nl	Herhalingen
 recurring event	calendar	nl	terugkerende afspraak
@@ -304,6 +315,7 @@ repeating event information	calendar	nl	Afspraak herhalings informatie
 repeating interval, eg. 2 to repeat every second week	calendar	nl	herhalingsinterval, bijvoorbeeld 2 herhaalt iedere tweede week
 repetition	calendar	nl	Herhalingspatroon
 repetitiondetails (or empty)	calendar	nl	Details herhaling (of leeg laten)
+report	calendar	nl	Rapport
 reset	calendar	nl	Herstel
 resources	calendar	nl	Hulpmiddelen
 resources except conflicting ones	calendar	nl	Hulpmiddelen behalve conflicterende
@@ -332,6 +344,7 @@ show only the date, not the year	admin	nl	Toon alleen de datum, niet het jaar
 show this month	calendar	nl	toon deze maand
 show this week	calendar	nl	toon deze week
 single event	calendar	nl	enkele afspraak
+sort by	calendar	nl	Sorteren op
 start	calendar	nl	Begin
 start date/time	calendar	nl	Begindatum/ -tijd
 startdate	calendar	nl	Startdatum
@@ -379,6 +392,7 @@ use end date	calendar	nl	Gebruik einddatum
 use the selected time and close the popup	calendar	nl	gebruik de geselecteerde tijd en sluit het popupvenster
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	calendar	nl	Gebruik deze tag voor adres labels.Plaats de inhoud welke je wilt herhalen tussen twee tags.
 user or group	calendar	nl	Gebruiker of groep
+utilities	calendar	nl	Hulpprogramma's
 view this event	calendar	nl	Bekijk deze gebeurtenis
 views with fixed time intervals	calendar	nl	Weergaves met vaste tijdsintervallen
 wed	calendar	nl	Woe

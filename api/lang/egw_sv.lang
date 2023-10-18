@@ -1,10 +1,12 @@
 %1 (%2 new) messages writen for application '%3' and languages '%4'	common	sv	%1 (%2 nya) Meddelanden skrivna för applikation '%3' och språken '%4'
 %1 email addresses inserted	common	sv	%1 e-postadresser tillagda
+%1 email(s) added into %2	common	sv	%1 e-postmeddelande(n) tillagda i %2
 %1 etemplates deleted	common	sv	%1 eTemplate raderad
 %1 etemplates for application '%2' dumped to '%3'	common	sv	%1 eTemplate för applikation '%2' skriven till '%3'
 %1 etemplates found	common	sv	Hittade %1 eTemplate
 %1 is not executable by the webserver !!!	common	sv	%1 är inte exekverbar av webbservern!
 %1 matches on search criteria	common	sv	%1 resultat hittade på sökning
+%1 more %2 selected ...	common	sv	%1 fler %2 valda...
 %1 new etemplates imported for application '%2'	common	sv	%1 nya eTemplate importerade för applikation '%2'
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	sv	%1Välj en annan katalog%2<br/> eller gör %3 skrivbar för webbservern
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	sv	%1EGroupware%2 är en webbaserad grupp-programvara skriven i %3PHP%4.
@@ -18,6 +20,7 @@
 '%1' is not a valid date !!!	common	sv	'%1' är ett ogiltigt datum
 '%1' is not a valid floatingpoint number !!!	common	sv	'%1' är inte ett giltigt flyttalsnummer
 '%1' is not a valid integer !!!	common	sv	'%1' är inte ett giltig heltal
+'%1' is not a valid json file!	common	sv	'%1' är inte en giltig JSON-fil
 00 (disable)	admin	sv	00 (inaktivera)
 1 day	common	sv	1 dag
 1 hour	common	sv	1 timme
@@ -126,6 +129,7 @@ autohide sidebox menus	common	sv	Autogöm Länkboxen
 automatically hide the sidebox menu's?	common	sv	Göm automatiskt Länkboxens menyer?
 automatically hide the sidebox menus?	common	sv	Göm automatiskt Länkboxens menyer?
 autosave default category	common	sv	Autospara standard kategori
+avatar	common	sv	Avatar
 azerbaijan	common	sv	AZERBAIJAN
 back	common	sv	Tillbaks
 back to user login	common	sv	Tillbaks till inloggningen
@@ -158,6 +162,7 @@ box	common	sv	Ruta
 box...	common	sv	Ruta ...
 brazil	common	sv	BRASILIEN
 british indian ocean territory	common	sv	BRITISH INDIAN OCEAN TERRITORY
+browser %1 %2 is not recommended. you may experience issues and not working features. please use the latest version of chrome, firefox or edge. thank you!	common	sv	Webbläsaren %1 %2 rekommenderas inte. Du kan uppleva problem och funktioner som inte fungerar. Använd den senaste versionen av Chrome, Firefox eller Edge. Tack för hjälpen!
 brunei darussalam	common	sv	BRUNEI DARUSSALAM
 bulgaria	common	sv	BULGARIEN
 burkina faso	common	sv	BURKINA FASO
@@ -193,6 +198,7 @@ change	common	sv	Ändra
 changed	common	sv	Ändrad
 charset	common	sv	utf-8
 check all	common	sv	Markera alla
+check for empty values in if statements.  example {{if url~empty~~website:}} - if url is not empty, writes "website:"	common	sv	Kontrollera om det finns tomma värden i IF-satser. Exempel {{IF url~EMPTY~~Webbplats:}} - Om url inte är tom, skriv "Webbplats:"
 check if content should only be displayed but not altered (the content is not send back then!)	common	sv	Kontrollera om innehållet bara ska visas men inte förändras (innehållet skickas då inte tillbaks)
 check if field has to be filled by user	common	sv	Kontrollera om fältet ska fyllas i av användare
 check installation	common	sv	Kontrollera installationen
@@ -235,8 +241,8 @@ common preferences	common	sv	Allmäna inställningar
 comoros	common	sv	KOMORERNA
 company	common	sv	Företag
 confirm	common	sv	bekräfta
-confirmation message or custom javascript (returning true or false)	common	sv	Bekräftelsemeddelande eller eget javascript (som returnerar sant eller falskt)
-confirmation necesary or custom java-script	common	sv	Bekräftelse nödvändig eller anpassat java skript
+confirmation message or custom javascript (returning true or false)	common	sv	Bekräftelsemeddelande eller eget JavaScript (som returnerar sant eller falskt)
+confirmation necesary or custom java-script	common	sv	Bekräftelse nödvändig eller anpassat JavaScript
 congo	common	sv	KONGO, REPUBLIKEN
 congo, the democratic republic of the	common	sv	KONGO, DEMOKRATISKA REPUBLIKEN
 contact	common	sv	Kontakt
@@ -273,12 +279,13 @@ current	common	sv	Aktuell
 current users	common	sv	Aktuella användare
 custom	common	sv	Anpassa
 custom fields	common	sv	Anpassade fält
-custom javascript for onchange	common	sv	Anpassat javaskript för onChange
+custom javascript for onchange	common	sv	Anpassat JavaScript för onChange
 cut	common	sv	Klipp ut
 cyprus	common	sv	CYPERN
 czech republic	common	sv	TJEKISKA REPUBLIKEN
 dark mode	common	sv	Mörkt läge
 date	common	sv	Datum
+date + time	common	sv	Datum + Tid
 date due	common	sv	Förfallodatum
 date+time	common	sv	Datum+Tid
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	sv	Datumtid port.<br>Om port 13, uppdatera brandväggen rätt innan du skickar med denna sida.<br>(Port: 13 / Host: 129.6.15.28)
@@ -341,6 +348,7 @@ domain name for mail-address, eg. "%1"	common	sv	E-postadressens domän, ex. "%1
 domestic	common	sv	Inrikes
 dominica	common	sv	DOMINICA
 dominican republic	common	sv	DOMINIKANSKA REPUBLIKEN
+don't ask again!	common	sv	Fråga inte igen!
 done	common	sv	Färdig
 download	common	sv	Ladda ned
 drop a table - this can not be undone	common	sv	Radera en tabell (kan INTE ångras)
@@ -401,6 +409,11 @@ etemplate reference	common	sv	eTemplate referens
 etemplate tutorial	common	sv	eTemplate hjälpinnehåll
 ethiopia	common	sv	ETIOPIEN
 exact	common	sv	Exakt
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	preferences	sv	Exempel {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - sök i fältet "n_prefix", efter "Mr", om det hittas, skriv Hello Mr., annars skriv Hello Ms.
+example {{letterprefix}} - gives a letter prefix without double spaces, if the title is empty for example	preferences	sv	Exempel {{LETTERPREFIX}} - Ger ett bokstavsprefix utan dubbla mellanslag, om titeln är tom till exempel
+example {{letterprefix}} - gives a letter prefix without double spaces, if the title is emty for  example	common	sv	Exempel {{LETTERPREFIX}} - Ger ett bokstavsprefix utan dubbla mellanslag, om titeln är tom till exempel
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	preferences	sv	Exempel {{NELF roll}} - om fältet roll inte är tomt kommer du att få en ny rad med värdet för fältet roll
+example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	preferences	sv	Exempel {{nenvlf roll}} - om fältet roll inte är tomt, ange en LF utan något värde för fältet
 exchange this row with the one above	common	sv	Byt denna rad mot den ovanför
 exchange this two columns	common	sv	Byt dessa två kolumner
 export the loaded etemplate into a xml-file	common	sv	Exportera den laddade eTemplate till XML fil
@@ -514,7 +527,7 @@ how many entries should the list show	common	sv	Hur många poster ska listan vis
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	sv	Hur många ikoner ska visas i Navigeringslisten (överst på sidan). Ikoner utöver dessa visas i Länkboxen som hämtas via ikonen längst till höger.
 how many rows to print	common	sv	Hur många rader som ska skrivas ut
 how to show the general egroupware menu ?	common	sv	Hur den allmänna EGroupware-menyn ska visas
-html	common	sv	Html
+html	common	sv	HTML
 hungary	common	sv	UNGERN
 iceland	common	sv	ISLAND
 id	common	sv	ID
@@ -555,10 +568,12 @@ insert placeholder	common	sv	Infoga en platshållare
 insert row after	common	sv	Infoga rad efter
 insert row before	common	sv	Infoga rad före
 insert timestamp into description field	common	sv	Infoga tidsstämpel i beskrivningsfältet
+install	common	sv	Installera
 install egroupware as mail-handler?	common	sv	Installera EGroupware som e-posthanterare?
 integer	common	sv	Heltal
 international	common	sv	Internationell
 invalid 2-factor authentication code	common	sv	Ogiltig kod för 2-faktorsautentisering
+invalid email	common	sv	Ogiltigt e-postmeddelande
 invalid filename	common	sv	Ogiltigt filnamn
 invalid ip address	common	sv	Ogiltig IP adress
 invalid or expired 'remember me' token	common	sv	Ogiltig eller förfallen "Kom ihåg mig"-token
@@ -799,9 +814,16 @@ password must have at least %1 characters	common	sv	Lösenordet måste innehåll
 paste	common	sv	Kopiera
 path	common	sv	Sökväg
 path to user and group files has to be outside of the webservers document-root!!!	common	sv	Sökvägen till användar- och gruppfiler måste vara utanför webbserverns dokument root!
+permission denied!	common	sv	Tillstånd nekat!
+permission denied! this is an administration only feature.	common	sv	Tillstånd nekat! Detta är en funktion som endast är tillgänglig för administratörer.
 permissions to the files/users directory	common	sv	Rättigheter på filer/användar bibliotek
+permisson denied!	common	sv	Tillstånd nekat!
 personal	common	sv	Personligt
 peru	common	sv	PERU
+pg down	common	sv	Sida ner
+pg up	common	sv	Sida upp
+pgp encryption	common	sv	PGP-kryptering
+pgp encryption installation	common	sv	Installation av PGP-kryptering
 philippines	common	sv	FILIPINERNA
 phone number	common	sv	Telefonnummer
 pitcairn	common	sv	PITCAIRNÖARNA
@@ -810,10 +832,14 @@ play/pause	common	sv	Spela/pausa
 please %1 by hand	common	sv	Var god och %1 för hand
 please enter a name	common	sv	Ange ett namn
 please enter table-name first !!!	common	sv	Var god och ange tabell namnet först
+please reload the egroupware desktop (f5 / cmd+r).	common	sv	Ladda om EGroupware-skrivbordet (F5 / Cmd+r).
+please remember to use '%1' as username for local login's from now on!	common	sv	Kom ihåg att använda '%1' som användarnamn för lokala inloggningar från och med nu!
 please run setup to become current	common	sv	Kör installationen för att uppdatera
 please select	common	sv	Välj
 please set your global preferences	common	sv	Gör dina globala inställningar
 please set your preferences for this application	common	sv	Gör dina inställningar för applikationen
+please type %1 more characters	common	sv	Vänligen skriv %1 mer tecken
+please type 1 more character	common	sv	Vänligen skriv 1 tecken till
 please wait...	common	sv	Var god vänta ...
 pm	common	sv	em
 poland	common	sv	POLEN
@@ -951,7 +977,7 @@ sets today as date	common	sv	Sätt dagens datum
 setup	common	sv	Installation
 setup main menu	common	sv	Installations Meny
 seychelles	common	sv	SEYCHELLERNA
-should the form be submitted or any custom javascript be executed	common	sv	Ska formuläret skickas eller något anpassat javaskript exekveras
+should the form be submitted or any custom javascript be executed	common	sv	Ska formuläret skickas eller något anpassat JavaScript exekveras
 show	common	sv	Visa
 show (no save)	common	sv	Visa (spara inte)
 show all	common	sv	Visa alla
@@ -963,6 +989,7 @@ show menu	common	sv	Visa meny
 show page generation time	common	sv	Visa sidans genereringstid
 show page generation time on the bottom of the page?	common	sv	Visa sidans genererings tid längst ner på sidan?
 show page generation time?	common	sv	Visa sidans genereringstid?
+show password	common	sv	Visa lösenord
 show the logo's of egroupware and x-desktop on the desktop.	common	sv	Visa EGroupware och x-desktop logotypen på skrivbordet
 show values	common	sv	Visa värden
 show/hide	common	sv	Visa/dölj sidofältet
@@ -973,8 +1000,9 @@ showing %1 - %2 of %3	common	sv	Visar %1 - %2 av %3
 shows / allows you to enter values into the etemplate for testing	common	sv	Visar / låter dig ange värden till eTemplate för testning
 shows/displays etemplate for testing, does not save it before	common	sv	visar eTemplate för testning, spara INTE före
 sierra leone	common	sv	SIERRA LEONE
+sign up	common	sv	Registrera dig
 singapore	common	sv	SINGAPORE
-site configuration	common	sv	Sajt alternativ
+site configuration	common	sv	Konfiguration av appar
 size	common	sv	Storlek
 slovakia	common	sv	SLOVAKIEN
 slovenia	common	sv	SLOVENIEN
@@ -1157,6 +1185,9 @@ you have selected an invalid date	common	sv	Ogiltigt datum
 you have selected an invalid main category	common	sv	Ogiltig huvudkategori
 you have successfully logged out	common	sv	Du är utloggad
 you need to add the webserver user '%1' to the group '%2'.	common	sv	Du behöver lägga till webbserver användare '%1' till gruppen '%2'.
+your account has been updated with new data from your identity provider.	common	sv	Ditt konto har uppdaterats med nya uppgifter från din identitetsleverantör.
+your browser is not up-to-date (javascript es6 compatible), you may experience some of the features not working.	common	sv	Din webbläsare är inte uppdaterad (JavaScript ES6-kompatibel), du kan uppleva att vissa av funktionerna inte fungerar.
+your key has been restored successfully.	common	sv	Din nyckel har återställts framgångsrikt.
 your message could <b>not</b> be sent!<br>	common	sv	Meddelandet <b>inte</b> skickat<br>
 your message has been sent	common	sv	Meddelandet skickat
 your password does not have required strength of %1 character classes and minimum length of %2 characters.	common	sv	Lösenordet har inte den styrka som krävs av %1 teckenklasser och den minsta längden av %2 tecken.

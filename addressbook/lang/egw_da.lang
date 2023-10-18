@@ -1,3 +1,6 @@
+%1 contact(s) %2, %3 failed because of %4 !!!	addressbook	da	%1 kontakt(er) %2, %3 mislykkedes på grund af %4 !!!
+%1 key(s) added to public keyserver "%2".	addressbook	da	%1 nøgle(r) tilføjet til offentlig nøgleserver "%2".
+%1 public keys added.	addressbook	da	%1 offentlige nøgler tilføjet.
 %1 records imported	addressbook	da	%1 posteringer importeret
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	da	%1 posteringer læst (ikke implamenteret endnu, du skalgå %2tilbage%3 og fravælge Test import
 %1 shared this contact on %2 with %3 %4	addressbook	da	%1 delte denne kontakt på %2 %3 %4
@@ -6,6 +9,12 @@
 @-eval() is only availible to admins!!!	addressbook	da	@-eval() er kun tilgængelig for administratorer!!!
 actions	addressbook	da	Handling
 add custom field	addressbook	da	Tilføj valgfrit felt
+add customfield to links of addressbook, which displays in other applications. the default value is none customfield.	addressbook	da	Add customfield to links of addressbook, which displays in other applications. The default value is none customfield.
+add to bcc	addressbook	da	Tilføj til Blindkopi
+add to cc	addressbook	da	Tilføj til Kopi
+add to distribution list	addressbook	da	Tilføj til distributionsliste
+add to distribution list:	addressbook	da	Tilføj til distributionsliste:
+add to to	addressbook	da	Tilføj til Til
 added	addressbook	da	Tilføjet
 address book	common	da	Adressebog
 address book - vcard in	addressbook	da	Adressebog - importer vCard
@@ -13,17 +22,24 @@ address book - view	addressbook	da	Adressebog - kig
 address line 2	addressbook	da	Adresse Linie 2
 address type	addressbook	da	Adresse Type
 addressbook	common	da	Adressebog
+addressbook list	addressbook	da	Liste over adressebøger
 addressbook preferences	addressbook	da	Adressebog preferencer
 addressbook-fieldname	addressbook	da	Adressebog feltnavn
 addvcard	addressbook	da	Tilføj vCard
 advanced search	addressbook	da	Avanceretsøgning
+all addressbooks	addressbook	da	Alle adressebøger
+all types	addressbook	da	Alle typer
+allow	addressbook	da	Tillad
+allow for contacts only	addressbook	da	Tillad kun for kontakter
 alt. csv import	addressbook	da	Alt. CSV Importering
 always	addressbook	da	Altid
 are you shure you want to delete this contact?	addressbook	da	Er du sikker på at du vil slette denne kontakt?
 are you sure you want to delete this field?	addressbook	da	Er du sikker på at du vil slette dette felt?
+audio call	addressbook	da	Lydopkald
 birthday	common	da	Fødselsdag
 birthdays	common	da	Fødselsdage
 blank	addressbook	da	Blank
+browser location	addressbook	da	Browser-placering
 business	common	da	Firma
 business city	addressbook	da	Firma By
 business country	addressbook	da	Firma Land
@@ -33,9 +49,12 @@ business phone	addressbook	da	Firma Telefonnummer
 business state	addressbook	da	Firma Stat
 business street	addressbook	da	Firma Adresse
 business zip code	addressbook	da	Firma Postnummer
+calendar integration	addressbook	da	Kalender-integration
 car phone	addressbook	da	Bil telefonnummer
 cell phone	addressbook	da	Mobil telefonnummer
+change addressbook when updating	addressbook	da	Skift adressebog ved opdatering
 charset of file	addressbook	da	Karakterset for fil
+choose pre-defined map source or use custom url (use %r = street, %t = city, %c = country, %z = zipcode)	admin	da	Vælg foruddefineret kortkilde eller brug brugerdefineret URL (brug %r = gade, %t = by, %c = land, %z = postnummer)
 city	common	da	By
 company	common	da	Firma
 company name	addressbook	da	Firma navn
@@ -50,15 +69,22 @@ copy your changes to the clipboard, %1reload the entry%2 and merge them.	address
 country	common	da	Land
 create new links	addressbook	da	Lav nyt link
 created	addressbook	da	Oprettet
+crm-view	addressbook	da	CRM-visning
 csv-fieldname	addressbook	da	CSV-Feltnavn
 csv-filename	addressbook	da	CVS-Filnavn
 custom	addressbook	da	Valgfri
 custom fields	addressbook	da	Valgfri Felter
 debug output in browser	addressbook	da	Vis fejlmeddelser i browser vinduet
 default	addressbook	da	Standard
+default action on double-click	addressbook	da	Standardhandling ved dobbeltklik
 default filter	addressbook	da	Standard Filter
+default geolocation source address	addressbook	da	Standard adresse for GeoLocation-kilde
 deleted	addressbook	da	slettet
 department	common	da	Afdeling
+disable	addressbook	da	Deaktiver
+disable last/next event column	addressbook	da	Deaktiver kolonnen Sidste/næste begivenhed
+distribution list renamed	addressbook	da	Distributionsliste omdøbt
+distribution lists as groups	addressbook	da	Distributionslister som grupper
 do your really want to delete this contact?	addressbook	da	Vil du slette denne kontakt ?
 doesn't matter	addressbook	da	det gør ikke noget
 domestic	addressbook	da	Indlands
@@ -72,15 +98,25 @@ duration	addressbook	da	Varighed
 edit custom field	addressbook	da	Ret Valgfrit Felt
 edit custom fields	admin	da	Ret Valgfrie Felter
 edit phonenumbers -	addressbook	da	Edit telefonnumre
+empty addressbook before importing	addressbook	da	Slet adressebogsposter Ikke i CSV-listen
 empty for all	addressbook	da	tøm for alt
 end	addressbook	da	Slut
 enter the path to the exported file here	addressbook	da	Indtast stien til den eksporteret fil her
 error: the entry has been updated since you opened it for editing!	addressbook	da	Fejl: Dette emne er opdateret siden du åbnede det for redigering
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	addressbook	da	Eksempel {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - søg i feltet "n_prefix", efter "Mr", hvis fundet, skriv Hello Mr. ellers skriv Hello Ms.
+example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	preferences	da	Eksempel {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Eksempel: Hr. Dr. James Miller
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	addressbook	da	Eksempel {{NELF rolle}} - Hvis feltet role ikke er tomt, får du en ny linje med værdien af feltet role.
+example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	addressbook	da	Eksempel {{nenvlf rolle}} - hvis feltet rolle ikke er tomt, sættes en LF uden nogen værdi for feltet
 existing links	addressbook	da	eksisterende links
 export contacts	addressbook	da	Eksporter Kontakter
+export definition to use for nextmatch export	addressbook	da	Eksportdefinition til brug for nextmatch-eksport
+export definitition to use for nextmatch export	addressbook	da	Eksportdefinition til brug for nextmatch-eksport
 export file name	addressbook	da	Eksporter filnavn
 export from addressbook	addressbook	da	Eksporter fra adressebogen
+exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	da	Eksporterer kontakter fra adressebogen til en CSV-fil.  CSV betyder 'kommaseparerede værdier'. Under fanen Indstillinger kan du også vælge andre separatorer.
 extra	addressbook	da	Ekstra
+favorite phone	addressbook	da	Favorit-telefon
+favorites	addressbook	da	Favoritter
 fax	addressbook	da	Fax
 fax number	common	da	Faxnummer
 field %1 has been added !	addressbook	da	Felt %1 er tilføjet!
@@ -90,9 +126,13 @@ fields to check for duplicates	addressbook	da	Felter, der skal kontrolleres for 
 fields to consider when looking for duplicate contacts.	addressbook	da	Felter, der skal tages i betragtning, når du leder efter dubletter af kontakter.
 fields to show in address list	addressbook	da	Felter der skal vises på adresselisten
 fieldseparator	addressbook	da	Feltseperator
+for serial letter use this tag. put the content, you want to repeat between two tags.	addressbook	da	Brug dette tag til seriebreve. Placer det indhold, du vil gentage, mellem to tags.
+freebusy uri	addressbook	da	FreeBusy URI
 full name	addressbook	da	Fulde Navn
 general	admin	da	Generelt
 geo	addressbook	da	GEO
+geolocation	addressbook	da	GeoLocation
+geolocation integration	admin	da	Integration af GeoLocation
 global categories	addressbook	da	Globale Kategorier
 grant addressbook access	common	da	Tildel adgang til adressbogen
 h	addressbook	da	h
@@ -118,9 +158,12 @@ import from outlook	addressbook	da	Importer fra Outlook
 import multiple vcard	addressbook	da	Importer mange vCards
 import next set	addressbook	da	Impoter næste
 import_instructions	addressbook	da	I Netscape, åben Adressebogen og vælg <b>Export</b> fra <b>File</b> menuen. Den eksporteret fil vil være i LDIF formatet.<p>Eller i Outlook, vælg din kontakt mappe, vælg <b>Import and Export...</b> fra b>File</b> menuen og eksporter dine kontakt personer til en komma separeret fil (CSV). <p>Eller, i Palm Desktop 4.0 eller nyere, brug adressebogen og vælg <b>Export</b> fra <b>File</b> menuen. Den eksporteret fil vil være i VCard formatet
+imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	da	Importerer kontakter til adressebogen fra en CSV-fil. CSV betyder 'kommaseparerede værdier'. I indstillingsfanen kan du også vælge andre separatorer.
 infolog	addressbook	da	InfoLog Kontakt
 infolog-organisation	addressbook	da	InfoLog Organisation
+insufficent rights to edit this list!	addressbook	da	Utilstrækkelige rettigheder til at redigere denne liste!
 international	addressbook	da	International
+invite to current call	addressbook	da	Inviter til aktuelt opkald
 label	addressbook	da	Mærkat
 last modified	addressbook	da	Sidst opdateret
 ldap context for contacts	admin	da	LDAP context til kontakter
@@ -130,7 +173,10 @@ line 2	addressbook	da	Linie 2
 links	addressbook	da	Links
 list all categories	addressbook	da	List alle kategorier
 list all customfields	addressbook	da	List alle tilpassede felter
+load custom fields in index, even if custom field column is off (eg. to display them in a specific index column)	addressbook	da	Indlæs brugerdefinerede felter i indekset, selvom kolonnen med brugerdefinerede felter er slået fra (f.eks. for at vise dem i en specifik indekskolonne)
 location	addressbook	da	Sted
+mail vcard	addressbook	da	eMail vCard
+main categories in their own field	addressbook	da	Hovedkategorier i deres eget felt
 mark records as private	addressbook	da	Markere posteringer som private
 merge duplicates	addressbook	da	Sammenlægning af dubletter
 merge into first or account, deletes all other!	addressbook	da	Flette ind i første eller konto, sletter alle andre!
@@ -142,6 +188,7 @@ modem phone	addressbook	da	Modem telefonnummer
 more ...	addressbook	da	Mere ...
 move to addressbook	addressbook	da	Flyt til adressebog
 multiple vcard	addressbook	da	Flere vCards
+name, email, phone	addressbook	da	Navn, e-mail, telefon
 no country selected	addressbook	da	Intet land valgt
 no distribution list	addressbook	da	Ingen distributionsliste
 no vcard	addressbook	da	Ingen vCard
@@ -154,6 +201,8 @@ other phone	addressbook	da	Andet Telefonnummer
 pager	common	da	Pager
 parcel	addressbook	da	Pakke
 participants	addressbook	da	Deltagere
+permissiong denied! ask your administrator to allow regular uses to update their public keys.	addressbook	da	Tilladelse nægtet! Bed din administrator om at tillade regelmæssige brugere at opdatere deres offentlige nøgler.
+pgp key	addressbook	da	PGP-nøgle
 phone number	common	da	Telefonnummer
 phone numbers	common	da	Telefonnumre
 please enter a name for that field !	addressbook	da	Skriv venligst et navn for det felt!
@@ -161,17 +210,27 @@ postal	common	da	Post
 pref	addressbook	da	foretrukket
 prefix	addressbook	da	Prefix
 prevent deleting of contacts	admin	da	Forhindrer sletning af kontakter
+private address	addressbook	da	Privat adresse
 public key	addressbook	da	Offentlig Nøgle
+public sharing url	addressbook	da	URL til offentlig deling
 read a list / search for entries.	addressbook	da	Læs liste / søg for elementer
 read a list of entries.	addressbook	da	Læs en liste af indtastninger
 read a single entry by passing the id and fieldlist.	addressbook	da	Læs et enkelt element ved at give id og fil-liste
 record access	addressbook	da	Posterings adgang
 record owner	addressbook	da	Posterings ejer
+remove from distribution list	addressbook	da	Fjern fra distributionsliste
+rename list	addressbook	da	Omdøb liste
+rename selected distribution list	addressbook	da	Omdøb den valgte distributionsliste
 repetition	addressbook	da	Gentagelse
+schedule a video conference	addressbook	da	Planlæg en videokonference
 search letter	addressbook	da	Søg bogstav
+select a source address to be used in geolocation routing system	addressbook	da	Vælg en kildeadresse, der skal bruges i GeoLocation-routingsystemet
 select all	addressbook	da	Vælg alle
+select an opened dialog	addressbook	da	Vælg en åbnet dialog
 select the type of conversion	addressbook	da	Vælg type af konvertering
 select the type of conversion:	addressbook	da	Vælg type af konvertering:
+send fax via email by replacing fax number with an email address	addressbook	da	Send fax via e-mail ved at erstatte faxnummeret med en e-mailadresse
+send succeeded to %1	common	da	Send lykkedes til %1
 share into addressbook	addressbook	da	Del til adressebog
 share writable	addressbook	da	Del kan skrives
 shared	addressbook	da	delt
@@ -179,6 +238,10 @@ shared by me	addressbook	da	Deles af mig
 shared into addressbook %1	addressbook	da	delt i adressebog %1
 shared with	addressbook	da	Deles med
 show	addressbook	da	Vis
+show active accounts	addressbook	da	Vis aktive konti
+show all accounts	addressbook	da	Vis alle konti
+smime key	addressbook	da	S/MIME-nøgle
+special	addressbook	da	Speciel
 start	admin	da	Start
 startrecord	addressbook	da	Start postering
 state	common	da	Land
@@ -188,26 +251,35 @@ suffix	addressbook	da	Suffix
 tel home	addressbook	da	Tlf. hjemme
 test import (show importable records <u>only</u> in browser)	addressbook	da	Test Import (viser <u>kun</u> importeret posteringer i browser vinduet)
 that field name has been used already !	addressbook	da	Det felt navn er allerede blevet brugt!
+the zip extension is needed, to insert contact data in openoffice or msoffice documents.	addressbook	da	Zip-udvidelsen er nødvendig for at indsætte kontaktdata i LibreOffice- eller MS Office-dokumenter.
 this person's first name was not in the address book.	addressbook	da	Denne persons fornavn var ikke i adressebogen.
 this person's last name was not in the address book.	addressbook	da	Denne persons efternavn var ikke i adressebogen.
+title	addressbook	da	Jobtitel
 to many might exceed your execution-time-limit	addressbook	da	for mange kan overskride din tildelte tid
 today is %1's birthday!	common	da	I dag er det %1's fødselsdag!
 tomorrow is %1's birthday.	common	da	I morgen er det %1's fødselsdag.
 translation	addressbook	da	Oversættelse
-type	addressbook	da	type
+type	addressbook	da	Skriv
+unable to import into %1, using %2	addressbook	da	Kan ikke importere til %1, bruger %2
+unknown type %1, imported as %2	addressbook	da	Ukendt type %1, importeret som %2
 unshare	addressbook	da	Ikke længere dele
 unshared	addressbook	da	ikke længere delt
 update a single entry by passing the fields.	addressbook	da	opdater et enkelt element ve at sende felter.
 updated	addressbook	da	Opdateret
+use a category tree?	addressbook	da	Brug et træ til at vælge kategorier
 use country list	addressbook	da	Brug Lande Liste
 user groups are automatically shown as distribution lists.	addressbook	da	Brugergrupper vises automatisk som distributionslister.
 vcard	common	da	vCard
 vcards require a first name entry.	addressbook	da	vCards kræver et fornavn indtastet.
 vcards require a last name entry.	addressbook	da	vCards kræver et efternavn indtastet.
+video call	addressbook	da	Videoopkald
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	da	ADVARSEL!! LDAP er kun tilgængeligt hvis du ikke bruger kontakter til at gemme kontoer!
 warning: all contacts found will be deleted!	addressbook	da	ADVARSEL: Alle fundne kontakter vil blive slettet !
+when viewing a contact, show linked entries from the selected application	addressbook	da	Når du ser en kontakt, skal du vise tilknyttede poster fra den valgte applikation
 when you merge entries into documents, they will be stored here.  if no directory is provided, they will be stored in your home directory (/home/unverricht)	addressbook	da	Når du fletter posteringer i dokumenter, gemmes de her. Hvis der ikke er angivet nogen mappe, vil de blive gemt i din hjemmemappe (/home/...)
 work phone	addressbook	da	Arbejds telefon
+yes, only admins can purge deleted items	admin	da	Ja, kun administratorer kan rydde slettede elementer
+yes, users can purge their deleted items	admin	da	Ja, brugere kan slette deres slettede emner
 you are not allowed to share into the addressbook of %1	addressbook	da	Du har ikke tilladelse til at dele til adressebog %1
 you are not permitted to delete contact %1	addressbook	da	Du har ikke ret til at slettekontakt %1
 you are not permittet to delete this contact	addressbook	da	Du har ikke tilladelse til at slette denne kontakt.
@@ -215,5 +287,7 @@ you are not permittet to edit this contact	addressbook	da	Du har ikke tilladelse
 you are not permittet to view this contact	addressbook	da	Du har ikke tilladelse til at se denne kontakt.
 you must select a vcard. (*.vcf)	addressbook	da	Du skal vælge et vCard. (*.vcf)
 you must select at least 1 column to display	addressbook	da	Du skal mindst vælge en kolonne
+you need to select some entries first	addressbook	da	Du er nødt til at vælge nogle poster først
+your new public key has been stored in accounts addressbook.	addressbook	da	Din nye offentlige nøgle er blevet gemt i accounts adressebog.
 zip code	common	da	Postnummer
 zip_note	addressbook	da	<p><b>Note:</b>Filen kan være en zip file med komprimeret .csv, .vcf eller .ldif filer. Men, importer kun en type ad gangen.

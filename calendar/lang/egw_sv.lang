@@ -1,9 +1,11 @@
 %1 %2 in %3	calendar	sv	%1 %2 i %3
+%1 events in ical file, only first one imported and displayed!	calendar	sv	%1 händelser i iCal-fil, endast den första importeras och visas!
 %1 hours	calendar	sv	%1 timmar
 %1 participants removed because of missing invite grants	calendar	sv	%1 deltagare har tagits bort pga avsaknad av bjudningsrätt
 %1 records imported	calendar	sv	%1 poster importerade
 %1 records read (not yet imported, you may go back and uncheck test import)	calendar	sv	%1 poster lästa (ännu inte importerade, gå tillbaks för att avmarkera Testimport)
 %1 weeks	calendar	sv	%1 veckor
+(%1 events in %2 seconds)	calendar	sv	(%1 händelser på %2 sekunder)
 a non blocking event will not conflict with other events	calendar	sv	En ej blockerande händelse påverkar inte andra händelser.
 accept	calendar	sv	Acceptera
 accept or reject an invitation	calendar	sv	Acceptera eller avvisa inbjudan
@@ -13,6 +15,7 @@ action that caused the notify: added, canceled, accepted, rejected, ...	calendar
 actions	calendar	sv	Åtgärder
 actions...	calendar	sv	Åtgärder
 add alarm	calendar	sv	Skapa larm
+add new event	calendar	sv	Lägg till nytt möte
 add timesheet entry	calendar	sv	Lägg till tidredovisnings post
 added	calendar	sv	Skapad
 after %1	calendar	sv	Efter %1
@@ -33,6 +36,7 @@ allows to edit the event again	calendar	sv	Tillåter fler ändringar av händels
 always	calendar	sv	Alltid
 apply the action on the whole query, not only the shown events	calendar	sv	Använd aktionen på hela frågan, inte bara visade händelser
 apply the changes	calendar	sv	Spara ändringar
+attention	calendar	sv	Uppmärksamhet
 back half a month	calendar	sv	Tillbaks en halv månad
 back one month	calendar	sv	Tillbaks en månad
 before %1	calendar	sv	Före %1
@@ -54,8 +58,10 @@ canceled	calendar	sv	Avbruten
 category %1 removed because of missing rights	calendar	sv	Kategori %1 har tagits bort pga saknade rättigheter
 category acl	common	sv	Kategori-ACL
 category acl only restrict adding a category to an event or changing status of a participant. it does not change the visibility of an event!	calendar	sv	Kategori-ACL begränsar bara inlagning av nya kategorier till en händelse samt ändra status för en deltagare. Det påverkar INTE synligheten av händelsen!
+category report	calendar	sv	Rapport om kategori
 chair	calendar	sv	Ägare
 change history	calendar	sv	Ändra historien
+changed event-data applied	calendar	sv	Ändrad händelse-data tillämpas
 charset of file	calendar	sv	Teckenuppsättning för filen
 check all	calendar	sv	Markera alla
 choose a category	calendar	sv	Välj kategori
@@ -77,6 +83,7 @@ custom	calendar	sv	Anpassade
 custom fields	common	sv	Anpassade fält
 custom_2	common	sv	Freebusy
 daily	calendar	sv	Daglig
+date range	calendar	sv	Datumintervall
 day	calendar	sv	Dag
 days	calendar	sv	Dagar
 days of the week for a weekly repeated event	calendar	sv	Dagar för veckovis återkommande händelse
@@ -135,6 +142,7 @@ every user can invite other users and groups	admin	sv	Varje användare kan bjuda
 exception	calendar	sv	Undantag
 exception created - you can now edit or delete it	calendar	sv	Undantag skapat - du kan nu ändra eller radera det
 exceptions	calendar	sv	Undantag
+exclude weekend	calendar	sv	Uteslut helg
 execute a further action for this entry	calendar	sv	Utför fler åtgärder för posten
 existing links	calendar	sv	Nuvarande länkar
 extended	calendar	sv	Utökad
@@ -212,6 +220,7 @@ location, start- and endtimes, ...	calendar	sv	Plats, start- och slut tid
 mail all participants	calendar	sv	Skicka e-post till alla deltagare
 make freebusy information available to not logged in persons?	calendar	sv	Gör freebusy åtkomlig för oinloggade personer också?
 maximum available quantity of %1 exceeded!	calendar	sv	Maximal tillgänglig kvantitet av %1 överskriden!
+min days	calendar	sv	Min dagar
 minimum number of users for showing day view as consolidated.	calendar	sv	Minsta antal användare för att visa dagsvyn som konsoliderad.
 minimum number of users for showing week view as consolidated.	calendar	sv	Minsta antal användare för att visa veckovyn som konsoliderad.
 minutes	calendar	sv	Minuter
@@ -263,6 +272,7 @@ only group-events	calendar	sv	Bara grupp-evenemang
 only the initial date of that recurring event is checked!	calendar	sv	Bara första förekomsten kontrolleras i denna återkommande uppgift!
 open todo's:	calendar	sv	Uppgifter:
 optional	calendar	sv	Valfri
+output unit	calendar	sv	Enhet för utdata
 overlap holiday	calendar	sv	Överlappande helgdag
 owner too	calendar	sv	Även ägaren
 participants	calendar	sv	Deltagare
@@ -283,6 +293,7 @@ quantity	calendar	sv	Antal
 re-edit event	calendar	sv	Ändra händelse
 receive email updates	calendar	sv	Mottag e-postuppdateringar
 receive summary of appointments	calendar	sv	Mottag summering av möten
+recordings	calendar	sv	Inspelningar
 recurrence	calendar	sv	Upprepning
 recurring event	calendar	sv	Återkommande händelse
 rejected	calendar	sv	Tackade nej
@@ -293,6 +304,7 @@ repeating event information	calendar	sv	Återkommande händelse information
 repeating interval, eg. 2 to repeat every second week	calendar	sv	Upprepande interval, ex. 2 för att återkommande varannan vecka
 repetition	calendar	sv	Återkommande
 repetitiondetails (or empty)	calendar	sv	Återkommande detaljer (eller tom)
+report	calendar	sv	Rapport
 requested	calendar	sv	Begärt
 require an acl grant to invite other users and groups	admin	sv	Kräv en ACL-tillåtelse för att bjuda in andra användare och grupper
 reset	calendar	sv	Återställ
@@ -334,6 +346,7 @@ show only the date, not the year	admin	sv	Visa bara datum, inte år
 show this month	calendar	sv	Visa denna månad
 show this week	calendar	sv	Visa denna vecka
 single event	calendar	sv	Enskild händelse
+sort by	calendar	sv	Sortera efter
 start	calendar	sv	Start
 start date/time	calendar	sv	Start Datum/Tid
 startdate	calendar	sv	Startdatum
@@ -390,6 +403,7 @@ use the selected time and close the popup	calendar	sv	Använd vald tid och stän
 use this timezone to export calendar data.	calendar	sv	Använd denna tidzon för att exportera kalenderdata.
 user or group	calendar	sv	Användare eller grupp
 users + groups: inviting both always requires an invite grant	admin	sv	Användare + grupper: Bjuda in båda kräver alltid rättigheter
+utilities	calendar	sv	Verktyg
 view exception	calendar	sv	Visa undantag
 view series	calendar	sv	Visa serie
 view this event	calendar	sv	Visa händelsen

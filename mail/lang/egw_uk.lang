@@ -1,12 +1,23 @@
 (leave empty for no quota)	mail	uk	(Залишити порожнім за відсутності квоти)
+acl rights retrieve failed, seems there are no rights set!	mail	uk	Не вдалося отримати права ACL, здається, не встановлено жодних прав!
 add all my aliases	mail	uk	Додати всі мої псевдоніми
+add files as %1	mail	uk	Додати файли як %1
 add raw message, ignore mail attachments	mail	uk	Перетворити лист на елемент, додати сире повідомлення (ігнорувати вкладення)
+adding %1 to blacklisted email addresses failed because of %2	mail	uk	Не вдалося додати %1 до чорного списку через причину %2
+adding %1 to whiltelisted email addresses failed because of %2	mail	uk	Не вдалося додати %1 до білого списку через причину %2
 after reply, visible during compose	mail	uk	Після відповіді, видно під час створення листа
 aliases+forwards	mail	uk	Псевдоніми + переадресація
 always show notifiction	mail	uk	Завжди показувати сповіщення
 answered	mail	uk	Відповіли
+attach files	mail	uk	Прикріплення файлів
+attach users vcard at compose to every new mail	mail	uk	Прикріплювати vCard користувача при створенні кожного нового листа
+attachment has been saved successfully.	mail	uk	Вкладення успішно збережено.
+attachments, ...	mail	uk	вкладення, ...
+be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	uk	Майте на увазі, що додавання всіх вибраних файлів в режимі %1 також змінить всі існуючі вкладення в списку на режим %2. \n \n Бажаєте продовжити?
+be aware that all attachments will be sent as %1!	mail	uk	Майте на увазі, що всі вкладення буде надіслано як %1!
 by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	uk	За замовчуванням 'http://' просто замінено на 'https://'. Ви можете налаштувати 'https://proxy.egroupware.org/', щоб також завантажувати зображення, доступні лише через http.
 caching of flags	mail	uk	Кешування прапорів
+changing subject failed because of %1	mail	uk	Не вдалося змінити тему через %1
 changing subject failed folder %1 does not exist	mail	uk	Змінити тему не вдалося, папка %1 не існує
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	uk	Налаштовані значення будуть автоматично встановлені в діалоговому вікні створення листа для відповідного поля при створенні нового листа.
 contact label	mail	uk	Мітка контакту
@@ -20,11 +31,61 @@ deleted	mail	uk	Видалено
 disable	mail	uk	Відключити
 disable caching of flags	mail	uk	Вимкнути кешування прапорів
 edit account	mail	uk	Редагувати рахунок
+emailadmin: profilemanagement	mail	uk	eMailAdmin: Керування профілем
+emails in whitelisted domains are not marked as spam	mail	uk	Листи в білих доменах не позначаються як спам
 enable	mail	uk	Включити
+enabled	mail	uk	Увімкнено
+encrypt your message with smime certificate	mail	uk	Шифрувати повідомлення за допомогою S/MIME сертифікату
 event details follow	mail	uk	Подробиці події
+everyone	mail	uk	Всі
+examine namespace to retrieve folders in others and shared	mail	uk	Вивчення простору імен для пошуку папок в інших та спільних теках
 extended	mail	uk	Розширений
+failed to delete %1	mail	uk	Не вдалося видалити %1
+failed to subscribe folder %1!	mail	uk	Не вдалося підписатися на папку %1!
+failed to unsubscribe folder %1!	mail	uk	Не вдалося відписати папку %1!
+file into	mail	uk	Перейдіть до
+file into:	mail	uk	Перейдіть до:
+filemode has been switched to %1	mail	uk	Перейдено до файлового режиму: %1
+flag / unflag	mail	uk	Встановити / зняти прапорець
+flagged %1 messages as %2 in %3	mail	uk	Позначити %1 повідомлення як %2 у %3
+flagged %1 messages as flagged in %2	mail	uk	Позначено %1 повідомлення як %2 у %2
+flagged %1 messages as unflagged in %2	mail	uk	Позначено %1 повідомлення як такі, що не позначені у %2
+folder %1 %2 failed because of %3!	mail	uk	Теку %1 %2 не вдалося створити через %3!
+folder %1 has been created successfully, although the subscription failed because of %2	mail	uk	Теку %1 успішно створено, хоча підписку не вдалося виконати через %2
 from	mail	uk	Від
+handling of external http images / mixed content in mails	mail	uk	Обробка зовнішніх http-зображень / змішаного контенту в листах
+html	mail	uk	HTML
+ident name	mail	uk	Ім'я користувача
+ident name email	mail	uk	Ідентифікаційне ім'я [Електронна пошта]
+ident name organization email	mail	uk	Ідентифікаційне ім'я Організація [Електронна пошта]
+identity label	mail	uk	Ідентифікаційна етикетка
+if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	uk	Якщо ви хочете переглянути попередній перегляд листа одним натисканням на тему, увімкніть цю опцію.
+if you would like to select multiple folders in one action, you can hold ctrl key then select a folder as start range and another folder within a same level as end range, all folders in between will be selected or unselected based on their current status.	mail	uk	Якщо ви хочете вибрати кілька папок за одну дію, ви можете утримувати клавішу ctrl, а потім вибрати папку як початковий діапазон і іншу папку в межах того ж рівня як кінцевий діапазон, всі папки між ними будуть виділені або не виділені залежно від їхнього поточного стану.
+imap	mail	uk	IMAP
+imap server	mail	uk	IMAP Server
+import of message %1 failed. could not save message to folder %2 due to: %3	mail	uk	Не вдалося імпортувати повідомлення %1. Не вдалося зберегти повідомлення до теки %2 через: %3
+import of message %1 failed. destination folder %2 does not exist.	mail	uk	Не вдалося імпортувати повідомлення %1. Папка призначення %2 не існує.
+import of message %1 failed. destination folder not set.	mail	uk	Не вдалося імпортувати повідомлення %1. Теку призначення не встановлено.
+import of message %1 failed. no contacts to merge and send to specified.	mail	uk	Не вдалося імпортувати повідомлення %1. Не вказано жодного контакту для об'єднання та надсилання.
+importance	mail	uk	важливість
+important	mail	uk	Важливо
+in mailbox: %1, with id: %2, and partid: %3	mail	uk	У поштовій скриньці: %1, з ID: %2 та PartID: %3
+in order to protect your privacy all external sources within this email are blocked.	mail	uk	З метою захисту вашої конфіденційності всі зовнішні джерела в цьому імейлі заблоковані.
+inbox	mail	uk	Вхідні
 information to show on email tag	mail	uk	Інформація, яка буде відображатися в тезі листа
+initialization of mail failed. please use the wizard to cope with the problem.	mail	uk	Не вдалося виконати ініціалізацію поштового модуля. Будь ласка, скористайтеся майстром конфігурації для виправлення конфігурації.
+inline	mail	uk	Вперед
+insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)	mail	uk	вставляти підпис у верхній частині нового повідомлення (або відповіді) при відкритті діалогового вікна створення (можливо, ви не зможете перемикати підписи)
+job	mail	uk	Робота
+junk	mail	uk	Видалення
+junk folder	mail	uk	Тека " Видалення
+keep a copy of the message in your inbox	mail	uk	зберігати копію повідомлення у папці "Вхідні
+kilobytes	mail	uk	кілобайт
+later	mail	uk	Пізніше
+learning as ham (not spam) failed because of %1	mail	uk	Навчання як шинка (не спам) не вдалося з причини %1
+learning as spam failed because of %1	mail	uk	Навчання як спам не вдалося з причини %1
+less than	mail	uk	менше ніж
+limit mailing list results when searching for addresses	mail	uk	Обмежити результати списку розсилки при пошуку адрес
 list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	uk	Перелік дій, які вмикаються/вимикаються за замовчуванням (наприклад, дія "Скласти лист і зберегти як інфолог")
 mail	common	uk	Пошта
 mail acl	mail	uk	Права доступу
@@ -36,6 +97,8 @@ mail-address	mail	uk	Поштова адреса
 mailaccount	mail	uk	Поштовий акаунт
 mailinglist	mail	uk	Список розсилки
 mails	common	uk	Листи
+mails can be copied to that folder via context menu, if folder is configured.	mail	uk	Листи можна копіювати до цієї теки за допомогою контекстного меню, якщо теку налаштовано.
+mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	uk	Поштовий сервер повідомив:\n%1 \nЧи бажаєте вилучити вибрані повідомлення негайно (натисніть кнопку ОК)?\nЯкщо ні, спробуйте очистити папку "Смітник", перш ніж продовжити. (натисніть кнопку скасувати)
 mark all as read	mail	uk	Позначити всі як прочитані
 mark all messages in folder as read	mail	uk	Позначити всі повідомлення в папці як прочитані
 mark as deleted	mail	uk	Позначити як видалені
@@ -62,6 +125,14 @@ push notifications	mail	uk	Push-повідомлення
 quicksearch	mail	uk	Швидкий пошук
 quicksearch (with cc)	mail	uk	Швидкий пошук (+Копіювати)
 read / unread	mail	uk	Прочитано / Не прочитано
+real name	mail	uk	Справжнє ім'я
+real name email	mail	uk	Справжнє ім'я [Email]
+real name organization email	mail	uk	Справжнє ім'я Організація [email] [email protected
+remember the password for	mail	uk	Запам'ятайте пароль для
+remove all	mail	uk	Видалити всі
+removing %1 from blacklisted email addresses failed because of %2	mail	uk	Видалення %1 з чорного списку не вдалося через %2
+removing %1 from whiltelisted email addresses failed because of %2	mail	uk	Видалення %1 з білого списку адрес не вдалося через %2
+replace 'http://' in image urls with (trailing / required!)	mail	uk	Замініть 'http://' в URL-адресах зображень на (обов'язково!)
 save all attachments to filemanager	mail	uk	Зберегти всі вкладення у файл-менеджер
 select or insert email address	mail	uk	Виберіть або вставте адресу електронної пошти
 set predefined values for compose...	mail	uk	ВстаВстановити заздалегідь визначені значення для створення ...новити заздалегідь визначені значення для створення ...
@@ -78,6 +149,17 @@ smime signed message	mail	uk	Повідомлення з підписом S/MIME
 smtp	mail	uk	SMTP
 sneak preview in list	mail	uk	Попередній перегляд повідомлень
 text	mail	uk	Текст
+the imap server need to meet certain requirements and be configured for it:	mail	uk	Сервер IMAP повинен відповідати певним вимогам і бути налаштований для цього:
+the rule with priority %1 successfully saved!	mail	uk	Правило з пріоритетом %1 успішно збережено!
+there is no space left to store sieve script, please check sieve_maxscriptsize option on your mailserver's config.	mail	uk	Не залишилося місця для зберігання скрипту sieve, будь ласка, перевірте параметр sieve_maxscriptsize у конфігурації вашого поштового сервера.
+this mail contains external images served via insecure http protocol. be aware showing or allowing them can compromise your security!	mail	uk	Цей лист містить зовнішні зображення, передані через незахищений протокол HTTP. Майте на увазі, що їх показ або дозвіл може поставити під загрозу вашу безпеку!
+this message is smime encrypted and password protected.	mail	uk	Це повідомлення зашифровано у форматі S/MIME і захищено паролем.
+timeout on connections to your imap server	mail	uk	Таймаут з'єднання з вашим IMAP-сервером
+to do	mail	uk	Щоб зробити
+toggle all folders view for %1	mail	uk	Увімкнути перегляд усіх папок для %1
+toggled on actions	mail	uk	Увімкнені дії
+trash	mail	uk	Смітник
+trash folder	mail	uk	папка сміття
 write	mail	uk	Записати
 you can select what info to be displayed on email tag	mail	uk	Ви можете вибрати, яка інформація буде відображатися в тезі листа.
 you've got new mail	mail	uk	Ви отримали новий лист

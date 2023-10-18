@@ -32,6 +32,7 @@
 '%1' is not a valid date !!!	common	fr	'%1'  n'est pas une date valide !
 '%1' is not a valid floatingpoint number !!!	common	fr	'%1' n'est pas un nombre à virgule flottante valide !
 '%1' is not a valid integer !!!	common	fr	'%1' n'est pas un entier valide !
+'%1' is not a valid json file!	common	fr	'%1' n'est pas un fichier JSON valide
 '%1' is not a valid timezone!	common	fr	'%1' n'est pas une timezone valide !
 '%1' is not allowed ('%2')!	common	fr	'%1' n'est PAS permis ('%2') !
 '%1' is not allowed%2)!	common	fr	'%1' n'est PAS permis '%2' !
@@ -318,8 +319,8 @@ common preferences	common	fr	Préférences communes
 comoros	common	fr	COMORRES
 company	common	fr	Société
 confirm	common	fr	Confirmer
-confirmation message or custom javascript (returning true or false)	common	fr	message de confirmation ou script java personnalisé (retournant true ou false)
-confirmation necesary or custom java-script	common	fr	Message de confirmation ou javascript personnalisé nécessaire
+confirmation message or custom javascript (returning true or false)	common	fr	message de confirmation ou JavaScript personnalisé (retournant true ou false)
+confirmation necesary or custom java-script	common	fr	Message de confirmation ou JavaScript personnalisé nécessaire
 confirmation required	common	fr	Confirmation requise
 congo	common	fr	CONGO
 congo, the democratic republic of the	common	fr	CONGO, REPUBLIQUE DEMOCRATIQUE DU
@@ -361,7 +362,7 @@ current	common	fr	Courant
 current users	common	fr	Utilisateurs connectés
 custom	common	fr	Personnalisé
 custom fields	common	fr	Champs personnalisés
-custom javascript for onchange	common	fr	Javascript personnalisé pour onChange
+custom javascript for onchange	common	fr	JavaScript personnalisé pour onChange
 cut	common	fr	Couper
 cyprus	common	fr	CHYPRE
 czech republic	common	fr	REPUBLIQUE TCHEQUE
@@ -371,6 +372,7 @@ data type	common	fr	Type de donnée
 database error	common	fr	Erreur de base de données
 database error!	common	fr	Erreur de base de données !
 date	common	fr	Date
+date + time	common	fr	Date + Heure
 date due	common	fr	Date butoire
 date+time	common	fr	Date+Heure
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	fr	Port Datetime.<br>Si vous utilisez le port 13, adaptez svp les règles de votre pare-feu avant de soumettre cette page.<br>(Port: 13 / Hôte: 129.6.15.28)
@@ -544,6 +546,7 @@ everything	common	fr	Tout
 exact	common	fr	exact
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	preferences	fr	Exemple {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - recherche le champ "n_prefix", sur "Mr", si trouvé, écrit Hello Mr., sinon écrit Hello Ms.
 example {{letterprefix}} - gives a letter prefix without double spaces, if the title is empty for example	preferences	fr	Exemple {{LETTERPREFIX}} - Ajoute un préfixe à une lettre sans double espaces, si le titre est vide par exemple.
+example {{letterprefix}} - gives a letter prefix without double spaces, if the title is emty for  example	common	fr	Exemple {{LETTERPREFIX}} - Donne une lettre préfixe sans double espace, si le titre est vide par exemple
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	preferences	fr	Exemple {{NEFL role}} - si le champ role n'est pas vide, ajoute une ligne vide puis la valeur du champ role
 example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	preferences	fr	Exemple {{nenvlf role}} - si le champ role n'est pas vide, ajoute une ligne vide sans la valeur du champ role
 exchange this row with the one above	common	fr	Intervertir cette ligne avec celle du dessus
@@ -601,6 +604,8 @@ forecolor	common	fr	Couleur
 foreign key	common	fr	Clé étrangère
 forever	common	fr	Toujours
 formatselect	common	fr	Format
+formatted business address	common	fr	Adresse professionnelle formatée
+formatted private address	common	fr	Adresse privée formatée
 formatted text (html)	common	fr	Texte Formaté (HTML)
 found unconnected %1 %2!	admin	fr	%1 %2 non connectés !
 fr	common	fr	Fr
@@ -686,6 +691,7 @@ how many rows to print	common	fr	Combien de lignes sont à imprimer
 how to show the general egroupware menu ?	common	fr	Comment afficher le menu général d'EGroupware ?
 html	common	fr	Html
 html link to the current record	common	fr	Lien HTML vers l'enregistrement courant
+html links to any entries linked to the current record, excluding attached files	common	fr	Liens HTML vers toutes les entrées liées à l'enregistrement actuel, à l'exclusion des fichiers joints
 hungary	common	fr	HONGRIE
 iceland	common	fr	ISLANDE
 id	common	fr	ID
@@ -811,6 +817,7 @@ link is appended to mail allowing recipients to download currently attached vers
 link is appended to mail allowing recipients to download or modify up to date version of files (epl only)	common	fr	Le lien est ajouté au mail permettant aux destinataires de télécharger ou modifier la version à jour des fichiers (EPL seulement)
 link is appended to mail allowing recipients to download up to date version of files	common	fr	Le lien est ajouté au mail permettant aux destinataires de télécharger la version à jour des fichiers
 link target %1 not found!	common	fr	Cible de lien %1 non trouvé
+link title of current record	common	fr	Link title of current record
 linkapps	common	fr	LinkApps
 linked	common	fr	Ligé
 linkentry	common	fr	LinkEntry
@@ -865,6 +872,7 @@ maybe	common	fr	Peut-être
 mayotte	common	fr	MAYOTTE
 medium	common	fr	Moyen
 menu	common	fr	Menu
+merged document filename	preferences	fr	Nom de fichier du document fusionné
 message	common	fr	Message
 message ...	common	fr	Message...
 message prepared for sending.	common	fr	Message prêt pour l'envoi.
@@ -1051,7 +1059,7 @@ pg up	common	fr	Pg suiv.
 pgp encryption	common	fr	Cryptage PGP
 pgp encryption installation	common	fr	Installation du Cryptage PGP
 philippines	common	fr	PHILIPPINES
-phone number	common	fr	numéro de téléphone
+phone number	common	fr	Numéro de téléphone
 pitcairn	common	fr	PITCAIRN
 placeholders	common	fr	Balises
 play/pause	common	fr	Lecture/Pause
@@ -1285,7 +1293,7 @@ share link	common	fr	Partager le lien
 share this %1 via url	common	fr	Partager ce %1 par URL
 shift	common	fr	Shift
 shift ⇧	common	fr	Maj ⇧
-should the form be submitted or any custom javascript be executed	common	fr	Est-ce que le formulaire doit être soumis ou un script java doit être exécuté
+should the form be submitted or any custom javascript be executed	common	fr	Est-ce que le formulaire doit être soumis ou un JavaScript doit être exécuté
 show	common	fr	Montrer
 show (no save)	common	fr	Montrer (pas de sauvegarde)
 show all	common	fr	Afficher tous les éléments
@@ -1317,7 +1325,7 @@ sierra leone	common	fr	SIERRA LEONE
 sign up	common	fr	S'inscrire
 simple	common	fr	Simple
 singapore	common	fr	SINGAPOUR
-site configuration	common	fr	Configuration du site
+site configuration	common	fr	Configuration de l'app
 size	common	fr	Taille
 skip	common	fr	Sauter
 slovakia	common	fr	SLOVAQUIE
@@ -1568,7 +1576,7 @@ you tried to automatically size a flex column, which always takes the rest of th
 you will not be able to send or receive encrypted mails before completing that step!	common	fr	Vous ne pourrez pas envoyer ou recevoir des mails crypté avant de remplir cette étape !
 you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	fr	Vous avez tenté d'ouvrir l'application EGroupware: %1, mais vous n'avez aucune permission d'y accéder.
 your account has been updated with new data from your identity provider.	common	fr	Votre compte a été mis à jour avec les nouvelles données de votre fournisseur d'identité.
-your browser is not up-to-date (javascript es6 compatible), you may experience some of the features not working.	common	fr	Votre navigateur n'est pas à jour (compatible javascript ES6), certaines fonctions ne fonctionneront pas.
+your browser is not up-to-date (javascript es6 compatible), you may experience some of the features not working.	common	fr	Votre navigateur n'est pas à jour (compatible JavaScript ES6), certaines fonctions ne fonctionneront pas.
 your code is incorrect !!!	common	fr	Ce code est incorrect !
 your key has been restored successfully.	common	fr	Votre clé a été restaurée avec succès.
 your message could <b>not</b> be sent!<br>	common	fr	Votre message n'a <b>pas</b> pu être envoyé !<br>

@@ -29,6 +29,7 @@ add alarm	calendar	ru	Добавить сигнал
 add appointments via shortened dialog or complete edit window	calendar	ru	Добавьте назначения через сокращенный диалог или завершите редактирование
 add current view as favorite	calendar	ru	Добавить текущий вид как избранный
 add new alarm	calendar	ru	Добавить новый сигнал
+add new event	calendar	ru	Добавить новую встречу
 add new participants or resource	calendar	ru	Добавитьновых участников или ресурс
 add timesheet entry	calendar	ru	Добавить запись Табеля
 added	calendar	ru	Добавлено
@@ -62,6 +63,7 @@ apply the changes	calendar	ru	Применить изменения
 appointment settings	calendar	ru	Установки события
 as an alternative you can %1download a mysql dump%2 and import it manually into egw_cal_timezones table.	calendar	ru	Альтернативно можете %1загрузить MySQL dump%2 и импортировать вручную в таблицу egw_cal_timezones.
 at start of the event	calendar	ru	при старте события
+attention	calendar	ru	Внимание
 automatically purge old events after	admin	ru	Автоматически стирать старые события после
 available for the first entry inside each day of week or daily table inside the selected range:	calendar	ru	Доступно для первого вхождения таблицы каждого дня недели или дневной таблицы выбранного диапазона:
 back half a month	calendar	ru	Назад на половину месяца
@@ -98,9 +100,11 @@ category %1 removed because of missing rights	calendar	ru	Категория %1 
 category acl	common	ru	Категория прав доступа
 category acl only restrict adding a category to an event or changing status of a participant. it does not change the visibility of an event!	calendar	ru	Категория прав доступа ограничивает только добавление категории к событию или изменение статуса участника. НЕ ИЗМЕНЯЕТ видимости событий!
 category automatically added to new events	calendar	ru	Категория добавлена автоматически для новых событий
+category report	calendar	ru	Отчет по категории
 chair	calendar	ru	Распорядитель
 change history	calendar	ru	Изменить историю
 change your status	calendar	ru	Изменить ваш статус
+changed event-data applied	calendar	ru	Применены измененные данные о событиях
 charset of file	calendar	ru	Кодировка файла
 check all	calendar	ru	Проверить все
 choose a category	calendar	ru	Изменить категорию
@@ -135,6 +139,7 @@ daily tables	calendar	ru	Ежедневные таблицы
 data exchange settings	calendar	ru	Установки обмена данных
 date for the day of the week	calendar	ru	Дата для дня недели
 date for the day of the week, available for the first entry inside each day of week or daily table inside the selected range.	calendar	ru	Дата для дня недели, доступно для первой записи каждого дня недели или дневной таблицы выбранного диапазона
+date range	calendar	ru	Диапазон дат
 day	calendar	ru	День
 day of week tables	calendar	ru	Таблицы дня недели
 days	calendar	ru	Дней
@@ -227,6 +232,7 @@ example {{nenvlf role}} - if field role is not empty, set a lf without any value
 exception	calendar	ru	Исключение
 exception created - you can now edit or delete it	calendar	ru	Исключение создано - теперь вы можете отредактировать либо удалить его
 exceptions	calendar	ru	Исключения
+exclude weekend	calendar	ru	Исключить выходные дни
 execute a further action for this entry	calendar	ru	Выполнить дальнейшее действие для этой записи
 existing links	calendar	ru	Существующие ссылки
 exists	calendar	ru	Существует
@@ -355,6 +361,7 @@ meeting request	calendar	ru	Требуется встреча
 meetingrequest to all participants	calendar	ru	Запрос встречи всем участникам
 merge document...	calendar	ru	Слияние документов...
 midnight	calendar	ru	Полночь
+min days	calendar	ru	Мин. дни
 minimum number of users for showing day view as consolidated.	calendar	ru	Минимальное число пользователей для отображения дня в  обобщённом представлении
 minimum number of users for showing week view as consolidated.	calendar	ru	Минимальное число пользователей для отображения недели в  обобщённом представлении
 minutes	calendar	ru	Минуты
@@ -426,6 +433,7 @@ only used for first viewing of calendar, afterwards last selected view is used.	
 open todo's:	calendar	ru	Открытые задачи (To-Do)
 optional	calendar	ru	Дополнительно
 organizer	calendar	ru	Организатор
+output unit	calendar	ru	Единица вывода
 overlap holiday	calendar	ru	Пересечение праздников
 owner too	calendar	ru	Владельца также
 participant names by type	calendar	ru	Имена участников по типу
@@ -455,6 +463,7 @@ re-edit event	calendar	ru	Отредактировать Событие
 receive email updates	calendar	ru	Получить e-mail обновления
 receive notifications about events you created/modified/deleted	calendar	ru	Получать уведомления о событиях, которые Вы создали, изменили или удалили ?
 receive summary of appointments	calendar	ru	Получить список назначенных встреч
+recordings	calendar	ru	Записи
 recover	calendar	ru	Восстановить
 recovered	calendar	ru	Восстановлено
 recurrence	calendar	ru	Повтор
@@ -473,6 +482,7 @@ repetition	calendar	ru	Повтор
 repetitiondetails (or empty)	calendar	ru	Детали повтора (или пусто)
 replacements for inserting events into documents	calendar	ru	Замены для событий, вставляемых в документы
 reply to meeting request	calendar	ru	Ответ на запрос о встрече
+report	calendar	ru	Отчет
 requested	calendar	ru	Затребовано
 requested date %1 outside allowed range of %2 days: recurring events obmitted!	calendar	ru	Требуется дата %1 вне разрешенного диапазона %2 дней: повторяющиеся события пропущены!
 requested meeting is in the past!	calendar	ru	Требуемая встреча уже прошла!
@@ -539,6 +549,7 @@ show this month	calendar	ru	показать этот месяц
 show this week	calendar	ru	показать эту неделю
 show year and age	calendar	ru	Отображать год и возраст
 single event	calendar	ru	одно событие
+sort by	calendar	ru	Сортировка по
 specify where url of the day links to	calendar	ru	Указать адрес ссылок на день
 start	calendar	ru	Начать
 start date/time	calendar	ru	Дата/время начала
@@ -629,7 +640,7 @@ user or group	calendar	ru	Пользователь или группа
 user selectable css file for the calendar setup	calendar	ru	Выбранный пользователем CSS файл для установок Календаря
 users + groups: inviting both always requires an invite grant	admin	ru	Пользователи + группы: приглашение обоих всегда требует прав на приглашение
 using already existing event on server.	calendar	ru	Используйте уже существующее событие на сервере.
-utilities	calendar	ru	Утилиты
+utilities	calendar	ru	Коммунальные услуги
 view exception	calendar	ru	Показать исключения
 view series	calendar	ru	Показать серию событий
 view settings	calendar	ru	Установки вида представления календаря

@@ -1,5 +1,6 @@
 %1 added	addressbook	el	%1 προστέθηκε
 %1 contact(s) %2	addressbook	el	%1 επαφή(ές) %2
+%1 contact(s) %2, %3 failed because of %4 !!!	addressbook	el	%1 επαφή(ες) %2, %3 απέτυχε λόγω %4 !!!
 %1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	el	%1 επαφή(ές) %2, %3 απέτυχαν εξαιτίας ανεπαρκών δικαιωμάτων !!!
 %1 contacts updated (%2 errors).	addressbook	el	%1 επαφές ενημερώθηκαν (%2 σφάλματα)
 %1 fields in %2 other organisation member(s) changed	addressbook	el	%1 πεδία σε %2 άλλου οργανισμού μέλος(η) άλλαξαν
@@ -78,6 +79,7 @@ are you shure you want to delete this contact?	addressbook	el	Είστε σίγ�
 are you sure you want to delete this field?	addressbook	el	Θέλετε σίγουρα να διαγραφεί αυτό το πεδίο;
 assistent	addressbook	el	Βοηθός
 assistent phone	addressbook	el	τηλέφωνο ανάγκης
+audio call	addressbook	el	Κλήση ήχου
 birthday	common	el	Ημέρα Γενεθλίων
 birthdays	common	el	Γενέθλια
 blank	addressbook	el	Κενό
@@ -225,11 +227,16 @@ empty	admin	el	Κενό
 empty addressbook before importing	addressbook	el	Διαγραφή καταχωρήσεων που δεν υπάρχουν στην κατάσταση CSV
 empty for all	addressbook	el	Κενό για όλα
 enable an extra private addressbook	addressbook	el	Ενεργοποιήστε ένα έξτρα προσωπικό βιβλίο διευθύνσεων
+enclosure	addressbook	el	Συνημμένο
 end	addressbook	el	Τέλος
 enter the path to the exported file here	addressbook	el	Εισάγετε τη διαδρομή για το αρχείο εξαγωγής εδώ
 error deleting the contact !!!	addressbook	el	Σφάλμα στη διαγραφή της επαφής !!!
 error saving the contact !!!	addressbook	el	Σφάλμα στην αποθήκευση της επαφής !!!
 error: the entry has been updated since you opened it for editing!	addressbook	el	Σφάλμα:η καταχώρηση έχει ενημερωθεί από όταν την ανοίξατε για προσαρμογή!
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	addressbook	el	Παράδειγμα {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - ψάξε στο πεδίο "n_prefix", για "Mr", αν βρεθεί, γράψε Hello Mr., αλλιώς γράψε Hello Ms.
+example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	preferences	el	Παράδειγμα {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Παράδειγμα: Mr Dr. James Miller
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	addressbook	el	Παράδειγμα {{NELF role}} - αν το πεδίο role δεν είναι κενό, θα λάβετε μια νέα γραμμή με την τιμή του πεδίου role
+example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	addressbook	el	Παράδειγμα {{nenvlf role}} - αν το πεδίο role δεν είναι κενό, θα ορίσετε μια LF χωρίς καμία τιμή του πεδίου
 existing links	addressbook	el	Υπάρχοντες σύνδεσμοι
 exists	addressbook	el	Υπάρχει
 export as csv	addressbook	el	Εξαγωγή ως CSV
@@ -248,6 +255,7 @@ extra	addressbook	el	Επιπλέον
 extra encodings	addressbook	el	Επιπλέον κωδικοποιήσεις
 extra private	addressbook	el	Επιπλέων προσωπικά
 failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	el	Απέτυχε η αλλαγή του-των μέλους(η) του %1 οργανισμού (ανεπαρκή δικαιώματα)!!!
+favorite phone	addressbook	el	Αγαπημένο τηλέφωνο
 favorites	addressbook	el	Αγαπημένα
 fax	addressbook	el	Fax
 fax (private)	addressbook	el	fax (προσ.)
@@ -263,6 +271,8 @@ fields to copy when copying an address?	admin	el	Πεδία που αντιγρ�
 fields to show in address list	addressbook	el	Πεδία που θα εμφανίζονται στη λίστα διευθύνσεων
 fieldseparator	addressbook	el	Διαχωριστής πεδίων
 for read only ldap	admin	el	Για ανάγνωση μόνο LDAP
+for serial letter use this tag. put the content, you want to repeat between two tags.	addressbook	el	Χρησιμοποιήστε αυτή την ετικέτα για σειριακό γράμμα. Τοποθετήστε το περιεχόμενο που θέλετε να επαναλάβετε μεταξύ δύο ετικετών.
+freebusy uri	addressbook	el	FreeBusy URI
 full name	addressbook	el	Πλήρες όνομα
 general	admin	el	Γενικά
 general fields:	addressbook	el	Γενικά πεδία:
@@ -304,6 +314,7 @@ import from outlook	addressbook	el	Εισαγωγή από το Outlook
 import multiple vcard	addressbook	el	Εισαγωγή  πολλαπλών vCard
 import next set	addressbook	el	Εισαγωγή επόμενου σετ
 import_instructions	addressbook	el	Στο Netscape, ανοίξτε την ατζέντα διευθύνσεων και επιλέξτε <b>Εξαγωγή</b> από το <b>Αρχείο</b>. Το εξαγώγιμο αρχείο θα είναι σε LDIF μορφή.<p>Ή, στο Outlook, επιλέξτε το φάκελο Eπαφών, επιλέξτε<b>Import and Export...</b> από το <b>File</b> menu και εξάγετε τις επαφές σας σε ένα CSV αρχείο.<p>Ή, στο Palm Desktop 4.0 ή μεγαλύτερο, επισκεφθείτε το βιβλίο διευθύνσεων σας και επιλέξτε <b>Export</b> από το <b>File</b> menu.Το εξαγώγιμο αρχείο θα ειναι σε vCard μορφή.
+importer's personal	addressbook	el	Προσωπικά του εισαγωγέα
 imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	el	Εισαγάγει επαφές στο βιβλίο διευθύνσεων από ένα αρχείο CSV ( 'Comma Separated Values'). Στις σχετικές ρυθμίσεις μπορείτε να επιλέξετε και χαρακτήρα διαχωρισμού.
 imports contacts into your addressbook from a vcard file.	addressbook	el	Εισαγάγει επαφές στο βιβλίο διευθύνσεων σας από ένα αρχείο vCard
 in %1 days (%2) is %3's birthday.	addressbook	el	Σε %1 ημέρες (%2) είναι του/της %3 τα γενέθλια.
@@ -315,6 +326,7 @@ insufficent rights to delete this list!	addressbook	el	Ανεπαρκή δικα
 insufficent rights to edit this list!	addressbook	el	Ανεπαρκή δικαιώματα για την επεξεργασία αυτής της λίστας!
 international	addressbook	el	Διεθνείς
 internet	addressbook	el	Διαδίκτυο
+invite to current call	addressbook	el	Πρόσκληση στην τρέχουσα κλήση
 label	addressbook	el	Ετικέττα
 last date	addressbook	el	Τελευτέα ημερομηνία
 last modified	addressbook	el	Τελευταία τροποποίηση
@@ -362,6 +374,7 @@ multiple vcard	addressbook	el	Πολλαπλή vCard
 name for the distribution list	addressbook	el	Όνομα για την λίστα διανομής
 name of current user, all other contact fields are valid too	addressbook	el	Όνομα του συνδεδεμένου χρήστη,  επίσης ισχύουν όλα τα πεδία επαφών.
 name, address	addressbook	el	Όνομα, Διεύθυνση
+name, email, phone	addressbook	el	Όνομα, email, τηλέφωνο
 new contact submitted by %1 at %2	addressbook	el	Νέα επαφή υπεβλήθει από %1 στις %2
 new window opened to edit infolog for your selection	addressbook	el	Νέο παράθυρο για την επεξεργασία του InfoLog
 next date	addressbook	el	Επόμενη ημερομηνία
@@ -407,6 +420,7 @@ prevent deleting of contacts	admin	el	Απαγόρευση διαγραφής ε
 private address	addressbook	el	Προσωπική διεύθυνση
 private custom fields	addressbook	el	Προσωπικά προσαρμοσμένα πεδία
 public key	addressbook	el	Δημόσιο κλειδί
+public sharing url	addressbook	el	Δημόσια διεύθυνση URL κοινής χρήσης
 publish into groups:	addressbook	el	Δημοσίευση σε ομάδες:
 read a list / search for entries.	addressbook	el	Ανάγνωση μιας λίστας/αναζήτηση για καταχωρήσεις.
 read a list of entries.	addressbook	el	Ανάγνωση λίστας καταχωρήσεων
@@ -426,6 +440,7 @@ replacements for inserting contacts into documents	addressbook	el	Αντικατ
 required fields *	addressbook	el	απαιτούμενα πεδία *
 role	addressbook	el	Ρόλος
 room	addressbook	el	Γραφείο
+schedule a video conference	addressbook	el	Προγραμματισμός μιας τηλεδιάσκεψης
 search letter	addressbook	el	Γράμμα αναζήτησης
 select a portrait format jpeg photo. it will be resized to 60 pixel width.	addressbook	el	Επιλέξτε μια jpeg φωτογραφία σε μορφή πορτραίτου. Θα επαναπροσδιοριστεί σε 60 pixel πλάτος.
 select a source address to be used in geolocation routing system	addressbook	el	Επιλέξτε μία διεύθυνση πηγής για χρήση στο σύστημα δρομολόγησης γεωγραφικού εντοπισμού
@@ -443,6 +458,7 @@ select the type of conversion:	addressbook	el	Επιλέξτε τύπο μετα
 select where you want to store / retrieve contacts	admin	el	Επιλέξτε που θέλετε να αποθηκεύετε/ανακτάτε τις επαφές
 selected contacts	addressbook	el	επιλεγμένες επαφές
 send emailcopy to receiver	addressbook	el	Αποστολή αντιγράφου στον παραλήπτη
+send fax via email by replacing fax number with an email address	addressbook	el	Αποστολή φαξ μέσω ηλεκτρονικού ταχυδρομείου αντικαθιστώντας τον αριθμό φαξ με μια διεύθυνση ηλεκτρονικού ταχυδρομείου
 send succeeded to %1	common	el	Η αποστολή ήταν επιτυχείς στο %1
 seperator	addressbook	el	Χαρακτήρας διαχωρισμού
 set full name and file as field in contacts of all users (either all or only empty values)	admin	el	Ορισμός πλήρους ονόματος και πεδίου 'αποθήκευση ως' για όλους τους χρήστες. Είτε όλα ή μόνο κενές τιμές.
@@ -483,7 +499,7 @@ the anonymous user has probably no add rights for this addressbook.	addressbook	
 the anonymous user needs add rights for it!	addressbook	el	Ο ανώνυμος χρήστης χρειάζεται δικαιώματα για να προσθέσει σε αυτό!
 the anonymous user needs read it!	addressbook	el	Ο ανώνυμος χρήστης χρειάζεται δικαιώματα ανάγνωσης!
 the following document-types are supported:	addressbook	el	Οι παρακάτω τύποι αρχείων υποστηρίζονται:
-the zip extension is needed, to insert contact data in openoffice or msoffice documents.	addressbook	el	Απαιτείται η επέκταση zip για την εισαγωγή στοιχείων επαφών σε αρχεία τύπου LibreOffice ή MSOffice.
+the zip extension is needed, to insert contact data in openoffice or msoffice documents.	addressbook	el	Απαιτείται η επέκταση zip για την εισαγωγή στοιχείων επαφών σε αρχεία τύπου LibreOffice ή MS Office.
 there was an error saving your data :-(	addressbook	el	Υπήρξε ένα σφάλμα κατά την αποθήκευση των δεδομένων σας :-(
 this module displays a contactform, that stores direct into the addressbook.	addressbook	el	Αυτή η ενότητα εμφανίζει μία φόρμα επαφών, που αποθηκεύεται απευθείας στο βιβλίο διευθύνσεων.
 this module displays block from a adddressbook group.	addressbook	el	Αυτή η ενότητα εμφανίζει μια  υπο-ενότητα του βιβλίου διευθύνσεων.
@@ -524,6 +540,7 @@ vcard	common	el	vCard
 vcards require a first name entry.	addressbook	el	vCards απαιτούν καταχώρηση ονόματος
 vcards require a last name entry.	addressbook	el	vCards απαιτούν καταχώρηση επίθετου
 verification	addressbook	el	Επαλήθευση
+video call	addressbook	el	Κλήση βίντεο
 view linked infolog entries	addressbook	el	Εμφάνιση συνδεδεμένων καταχωρήσεων του InfoLog
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	el	ΠΡΟΣΟΧΗ!! Το LDAP ισχύει μόνο εάν ΔΕΝ χρησιμοποιείτε τις επαφές για την αποθήκευση λογαριασμών!
 warning: all contacts found will be deleted!	addressbook	el	ΠΡΟΣΟΧΗ: Όλες οι επαφές που βρέθηκαν θα διαγραφούν!

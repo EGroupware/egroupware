@@ -1,12 +1,15 @@
 %1 %2 in %3	calendar	lv	%1 %2 iekš %3
+%1 events in ical file, only first one imported and displayed!	calendar	lv	%1 notikums iCal failā, importēts un parādīts tikai pirmais!
 %1 hours	calendar	lv	%1 stundas
 %1 records imported	calendar	lv	%1 ieraksti importēti
 %1 records read (not yet imported, you may go back and uncheck test import)	calendar	lv	%1 ieraksti nolasīti (vēl nav importēti, tu vari iet atpakaļ un noņemt Pārbaudīt importēšanu)
+(%1 events in %2 seconds)	calendar	lv	(%1 notikums %2 sekundēs)
 accept	calendar	lv	Akceptēt
 accepted	calendar	lv	Akceptēts
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	lv	Darbība, kas izsauca paziņojumu: Pievienots, Atcelts, Akceptēts, Noraidīts
 actions	calendar	lv	Darbības
 add alarm	calendar	lv	PIevienot trauksmi
+add new event	calendar	lv	Pievienot jaunu tikšanos
 added	calendar	lv	PIevienots
 alarm	calendar	lv	Trauksme
 alarm for %1 at %2 in %3	calendar	lv	Trauksme %1pie%2 %3
@@ -16,6 +19,7 @@ all categories	calendar	lv	visas kategorijas
 all day	calendar	lv	VIsu dienu
 always	calendar	lv	Vienmēr
 apply the changes	calendar	lv	Lietot izmaiņas
+attention	calendar	lv	Uzmanību
 before the event	calendar	lv	pirms šī notikuma
 birthday	calendar	lv	Dzimšanas diena
 birthdays	admin	lv	Dzimšanas dienas
@@ -24,6 +28,8 @@ calendar preferences	calendar	lv	Kalendāra izvēles
 calendar settings	admin	lv	Kalendāra uzstādījumi
 calendar-fieldname	calendar	lv	Kalendāra lauka nosaukums
 canceled	calendar	lv	Atcelts
+category report	calendar	lv	Kategorija Pārskats
+changed event-data applied	calendar	lv	Izmainīti notikuma datu lietojumi
 charset of file	calendar	lv	faila kodējums
 check all	calendar	lv	Parbaudīt visu
 choose a category	calendar	lv	Izvēlies sadaļu
@@ -36,6 +42,7 @@ csv-filename	calendar	lv	CSV- datnes nosaukums
 custom	calendar	lv	Mainīt
 custom fields	common	lv	Klienta lauki
 daily	calendar	lv	Ikdienas
+date range	calendar	lv	Datumu diapazons
 day	calendar	lv	Diena
 days	calendar	lv	dienas
 days repeated	calendar	lv	atkārtotas dienas
@@ -53,6 +60,7 @@ end date/time	calendar	lv	Beigu datums/laiks
 enddate	calendar	lv	beigu datums
 ends	calendar	lv	beidzas
 exceptions	calendar	lv	Izņēmumi
+exclude weekend	calendar	lv	Izslēgt nedēļas nogali
 existing links	calendar	lv	Eksistējošas saites
 extended	calendar	lv	Paplašinats
 fieldseparator	calendar	lv	Lauka atdalītājs
@@ -92,6 +100,7 @@ link to view the event	calendar	lv	Saistīt, lai parādītu notikumu
 links	calendar	lv	Saites
 location	calendar	lv	Novietojums
 maximum available quantity of %1 exceeded!	calendar	lv	Pārsniegts %1 maksimālais pieejamais daudzums!
+min days	calendar	lv	Min dienas
 minimum number of users for showing day view as consolidated.	calendar	lv	Minimālais lietotāju skaits dienas skata rādīšanai kā konsolidēts.
 minimum number of users for showing week view as consolidated.	calendar	lv	Minimālais lietotāju skaits, lai nedēļas skats tiktu parādīts kā konsolidēts.
 minutes	calendar	lv	minūtes
@@ -126,6 +135,7 @@ on time change of more than 4 hours too	calendar	lv	arī uz laiku vairāk par 4 
 one month	calendar	lv	viens mēnesis
 one week	calendar	lv	viena nedēļa
 open todo's:	calendar	lv	Atvērt Jādara vienības
+output unit	calendar	lv	Izvades vienība
 overlap holiday	calendar	lv	brīvdiena pārklājas
 participants	calendar	lv	Dalībnieki
 people holiday	calendar	lv	cilvēku brīvdienas
@@ -141,12 +151,14 @@ quantity	calendar	lv	Daudzums
 re-edit event	calendar	lv	pārrediģēt notikumu
 receive email updates	calendar	lv	Saņemt e-pasta atjauninājumus
 receive summary of appointments	calendar	lv	Saņemt kopsavilkumu par norunāto tikšanos
+recordings	calendar	lv	Ieraksti
 recurring event	calendar	lv	nepārtraukts notikums
 rejected	calendar	lv	Noraidīts
 repeat type	calendar	lv	Atkārtot tipu
 repeating event information	calendar	lv	Atkārtojamā notikuma informācija
 repetition	calendar	lv	Atkārtojums
 repetitiondetails (or empty)	calendar	lv	Atkārtojuma rekvizīti
+report	calendar	lv	Pārskats
 reset	calendar	lv	Atiestate
 resources	calendar	lv	resursi
 role	calendar	lv	Loma
@@ -156,6 +168,7 @@ scheduling conflict	calendar	lv	Pretrunas plānošana
 select resources	calendar	lv	Iezīmē resursus
 show list of upcoming events	calendar	lv	Rādīt gaidāmo notikumu sarakstu
 single event	calendar	lv	atsevišķs notikums
+sort by	calendar	lv	Atlasīt pēc
 start date/time	calendar	lv	Sākums datums/laiks
 startdate	calendar	lv	Sākumdatums
 startrecord	calendar	lv	Sākumieraksts
@@ -180,6 +193,7 @@ tue	calendar	lv	Otrdiena
 two weeks	calendar	lv	divas nedēļas
 updated	calendar	lv	Atjaunināts
 use end date	calendar	lv	LIetot beigu datumu
+utilities	calendar	lv	Komunālie pakalpojumi
 wed	calendar	lv	Trešdiena
 week	calendar	lv	Nedēļa
 weekday starts on	calendar	lv	Nedēļas diena sākas

@@ -1,12 +1,23 @@
 (leave empty for no quota)	mail	tr	(Kota olmaması için boş bırakın)
+acl rights retrieve failed, seems there are no rights set!	mail	tr	ACL hakları geri alma başarısız oldu, ayarlanmış hak yok gibi görünüyor!
 add all my aliases	mail	tr	Tüm takma adlarımı ekle
+add files as %1	mail	tr	Dosyaları %1 olarak ekle
 add raw message, ignore mail attachments	mail	tr	Postayı öğeye dönüştürün, ham mesaj ekleyin (posta eklerini yok sayın)
+adding %1 to blacklisted email addresses failed because of %2	mail	tr	Kara listedeki e-posta adreslerine %1 ekleme işlemi %2 nedeniyle başarısız oldu
+adding %1 to whiltelisted email addresses failed because of %2	mail	tr	Listelenen e-posta adreslerine %1 ekleme işlemi %2 nedeniyle başarısız oldu
 after reply, visible during compose	mail	tr	Yanıttan sonra, oluşturma sırasında görünür
 aliases+forwards	mail	tr	Takma Adlar+İleri Yönler
 always show notifiction	mail	tr	Her zaman bildirim göster
 answered	mail	tr	Cevaplandı
+attach files	mail	tr	Dosya ekleme
+attach users vcard at compose to every new mail	mail	tr	Her yeni postaya oluşturma sırasında kullanıcıların vCard'ını ekleyin
+attachment has been saved successfully.	mail	tr	Ek başarıyla kaydedildi.
+attachments, ...	mail	tr	ekler, ...
+be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	tr	Seçilen tüm dosyaları %1 modu olarak eklediğinizde, listedeki mevcut tüm ekleri de %2 moduna değiştireceğinizi unutmayın. \n \n Devam etmek ister misiniz?
+be aware that all attachments will be sent as %1!	mail	tr	Tüm eklerin %1 olarak gönderileceğini unutmayın!
 by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	tr	Varsayılan olarak 'http://' sadece 'https://' ile değiştirilir. 'https://proxy.egroupware.org/' adresini yalnızca http üzerinden kullanılabilen resimleri de yükleyecek şekilde yapılandırmaktan çekinmeyin.
 caching of flags	mail	tr	Bayrakların önbelleğe alınması
+changing subject failed because of %1	mail	tr	Konu değiştirme %1 nedeniyle başarısız oldu
 changing subject failed folder %1 does not exist	mail	tr	Konu değiştirme başarısız %1 klasörü mevcut değil
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	tr	Yapılandırılan değerler, yeni bir e-posta oluşturulurken saygı duyulan alan için oluşturma iletişim kutusunda otomatik olarak ayarlanacaktır.
 contact label	mail	tr	İletişim etiketi
@@ -20,10 +31,57 @@ deleted	mail	tr	Silindi
 disable	mail	tr	Engelle
 disable caching of flags	mail	tr	Bayrakların önbelleğe alınmasını devre dışı bırak
 edit account	mail	tr	Hesap düzenle
+emailadmin: profilemanagement	mail	tr	eMailAdmin: Profil yönetimi
+emails in whitelisted domains are not marked as spam	mail	tr	Beyaz listedeki alan adlarındaki e-postalar spam olarak işaretlenmez
 enable	mail	tr	Etkinleştir
+enabled	mail	tr	Etkin
+encrypt your message with smime certificate	mail	tr	Mesajınızı S/MIME sertifikası ile şifreleyin
 event details follow	mail	tr	Etkinlik Detayları Ektedir
+everyone	mail	tr	Herkes
+examine namespace to retrieve folders in others and shared	mail	tr	Diğer ve paylaşılan klasörleri almak için ad alanını inceleyin
 extended	mail	tr	Genişletilmiş
+failed to delete %1	mail	tr	%1 silinemedi
+failed to subscribe folder %1!	mail	tr	Klasör %1'e abone olunamadı!
+failed to unsubscribe folder %1!	mail	tr	Klasör %1 aboneliğinden çıkılamadı!
+file into	mail	tr	Şuraya taşı
+file into:	mail	tr	Şuraya taşı:
+filemode has been switched to %1	mail	tr	Dosya modu şu şekilde değiştirildi: %1
+flag / unflag	mail	tr	Bayrak / Bayrak Kaldır
+flagged %1 messages as %2 in %3	mail	tr	%1 mesaj(lar)ını %3 içinde %2 olarak işaretledi
+flagged %1 messages as flagged in %2	mail	tr	%1 mesaj(lar)ı %2'de işaretlendi olarak işaretlendi
+flagged %1 messages as unflagged in %2	mail	tr	%1 mesaj(lar)ını %2'de etiketlenmemiş olarak işaretledi
+folder %1 %2 failed because of %3!	mail	tr	Klasör %1 %2, %3 nedeniyle başarısız oldu!
+folder %1 has been created successfully, although the subscription failed because of %2	mail	tr	%1 klasörü başarıyla oluşturuldu, ancak abonelik %2 nedeniyle başarısız oldu
 from	mail	tr	Nereden
+handling of external http images / mixed content in mails	mail	tr	E-postalarda harici http görüntülerinin / karışık içeriğin işlenmesi
+html	mail	tr	HTML
+ident name	mail	tr	Kimlik adı
+ident name email	mail	tr	Kimlik adı [E-posta]
+ident name organization email	mail	tr	Kimlik adı Organizasyon [E-posta]
+identity label	mail	tr	Kimlik etiketi
+if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	tr	Konuya tek tıklayarak bir postanın önizlemesini görmek istiyorsanız, bunu etkinleştirin.
+if you would like to select multiple folders in one action, you can hold ctrl key then select a folder as start range and another folder within a same level as end range, all folders in between will be selected or unselected based on their current status.	mail	tr	Tek bir işlemde birden fazla klasör seçmek isterseniz, ctrl tuşunu basılı tutup başlangıç aralığı olarak bir klasör ve bitiş aralığı olarak aynı seviyedeki başka bir klasör seçebilirsiniz, aradaki tüm klasörler mevcut durumlarına göre seçilecek veya seçilmeyecektir.
+import of message %1 failed. could not save message to folder %2 due to: %3	mail	tr	%1 mesajının içe aktarımı başarısız oldu. Nedeniyle mesaj %2 klasörüne kaydedilemedi: %3
+import of message %1 failed. destination folder %2 does not exist.	mail	tr	%1 iletisinin içe aktarımı başarısız oldu. Hedef Klasör %2 mevcut değil.
+import of message %1 failed. destination folder not set.	mail	tr	%1 iletisinin içe aktarımı başarısız oldu. Hedef Klasör ayarlanmamış.
+import of message %1 failed. no contacts to merge and send to specified.	mail	tr	%1 mesajının içe aktarımı başarısız oldu. Birleştirilecek ve gönderilecek hiçbir Kişi belirtilmemiş.
+importance	mail	tr	ÖNEM
+important	mail	tr	Önemli
+in mailbox: %1, with id: %2, and partid: %3	mail	tr	Posta Kutusunda: %1, Kimlik: %2 ve PartID: %3 ile
+in order to protect your privacy all external sources within this email are blocked.	mail	tr	Gizliliğinizi korumak için bu e-postadaki tüm harici kaynaklar engellenmiştir.
+initialization of mail failed. please use the wizard to cope with the problem.	mail	tr	Posta modülünün başlatılması başarısız oldu. Yapılandırmayı düzeltmek için lütfen yapılandırma sihirbazını kullanın.
+inline	mail	tr	İleri
+insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)	mail	tr	Oluştur iletişim kutusunu açarken imzayı yeni (veya yanıt) mesajın en üstüne ekleyin (imzaları değiştiremeyebilirsiniz)
+job	mail	tr	İş
+junk	mail	tr	Hurda
+junk folder	mail	tr	Önemsiz klasör
+keep a copy of the message in your inbox	mail	tr	Mesajın bir kopyasını gelen kutunuzda saklayın
+kilobytes	mail	tr	kilobayt
+later	mail	tr	Daha sonra
+learning as ham (not spam) failed because of %1	mail	tr	Ham (spam değil) olarak öğrenme %1 nedeniyle başarısız oldu
+learning as spam failed because of %1	mail	tr	Spam olarak öğrenme %1 nedeniyle başarısız oldu
+less than	mail	tr	daha az
+limit mailing list results when searching for addresses	mail	tr	Adres ararken posta listesi sonuçlarını sınırlayın
 list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	tr	Varsayılan olarak açılacak/etkinleştirilecek eylemlerin listesi (örn. Mail compose olarak kaydet InfoLog eylemi)
 mail	common	tr	Posta
 mail acl	mail	tr	Erişim hakları
@@ -35,6 +93,8 @@ mail-address	mail	tr	Posta Adresi
 mailaccount	mail	tr	Posta hesabı
 mailinglist	mail	tr	Posta listesi
 mails	common	tr	Postalar
+mails can be copied to that folder via context menu, if folder is configured.	mail	tr	Klasör yapılandırılmışsa, postalar içerik menüsü aracılığıyla bu klasöre kopyalanabilir.
+mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	tr	Posta sunucusu rapor etti:\n%1 \nSeçili mesajları hemen silerek devam etmek istiyor musunuz (tamam'a tıklayın)? \nEğer istemiyorsanız, lütfen devam etmeden önce çöp klasörünüzü boşaltmayı deneyin. (iptal'e tıklayın)
 mark all as read	mail	tr	Hepsini okundu olarak işaretle
 mark all messages in folder as read	mail	tr	Klasördeki tüm iletileri okundu olarak işaretle
 mark as deleted	mail	tr	Silindi olarak işaretle
@@ -58,6 +118,14 @@ push notifications	mail	tr	Anlık bildirimler
 quicksearch	mail	tr	Hızlı Arama
 quicksearch (with cc)	mail	tr	Hızlı Arama (+Kopya)
 read / unread	mail	tr	Okundu / Okunmadı
+real name	mail	tr	Gerçek isim
+real name email	mail	tr	Gerçek isim [E-posta]
+real name organization email	mail	tr	Gerçek isim Organizasyon [E-posta]
+remember the password for	mail	tr	için şifreyi hatırlayın
+remove all	mail	tr	Tümünü kaldırın
+removing %1 from blacklisted email addresses failed because of %2	mail	tr	Kara listedeki e-posta adreslerinden %1'in kaldırılması %2 nedeniyle başarısız oldu
+removing %1 from whiltelisted email addresses failed because of %2	mail	tr	Listelenen e-posta adreslerinden %1'in kaldırılması %2 nedeniyle başarısız oldu
+replace 'http://' in image urls with (trailing / required!)	mail	tr	Resim URL'lerinde 'http://' yerine (sondaki / gerekli!)
 save all attachments to filemanager	mail	tr	Tüm ekleri filemanager'a kaydet
 select all	mail	tr	Tamam?n? seç
 select or insert email address	mail	tr	E-posta adresini seçin veya ekleyin
@@ -74,5 +142,16 @@ smime signed message	mail	tr	S/MIME imzalı mesaj
 smtp	mail	tr	SMTP
 sneak preview in list	mail	tr	Mesaj önizlemesi
 text	mail	tr	Metin
+the imap server need to meet certain requirements and be configured for it:	mail	tr	IMAP sunucusunun belirli gereksinimleri karşılaması VE bunun için yapılandırılmış olması gerekir:
+the rule with priority %1 successfully saved!	mail	tr	Öncelik %1 olan kural başarıyla kaydedildi!
+there is no space left to store sieve script, please check sieve_maxscriptsize option on your mailserver's config.	mail	tr	Sieve komut dosyasını depolamak için yer kalmadı, lütfen mailserver'ınızın yapılandırmasındaki sieve_maxscriptsize seçeneğini kontrol edin.
+this mail contains external images served via insecure http protocol. be aware showing or allowing them can compromise your security!	mail	tr	Bu posta, güvensiz HTTP protokolü aracılığıyla sunulan harici görüntüler içeriyor. Bunları göstermenin veya izin vermenin güvenliğinizi tehlikeye atabileceğini unutmayın!
+this message is smime encrypted and password protected.	mail	tr	Bu mesaj S/MIME şifrelidir ve parola korumalıdır.
+timeout on connections to your imap server	mail	tr	IMAP Sunucunuza bağlantılarda zaman aşımı
+to do	mail	tr	Yapmak için
+toggle all folders view for %1	mail	tr	%1 için tüm Klasörler görünümünü aç / kapat
+toggled on actions	mail	tr	Eylemler üzerinde geçiş yapıldı
+trash	mail	tr	Çöp
+trash folder	mail	tr	Çöp klasörü
 write	mail	tr	Yaz
 you've got new mail	mail	tr	Yeni postanız var

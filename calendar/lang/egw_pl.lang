@@ -1,5 +1,6 @@
 %1 %2 in %3	calendar	pl	%1 %2 w %3
 %1 days	calendar	pl	%1 dni
+%1 events in ical file, only first one imported and displayed!	calendar	pl	%1 zdarzeń w pliku iCal, tylko pierwsze zaimportowane i wyświetlone!
 %1 hours	calendar	pl	%1 godziny
 %1 minutes	calendar	pl	%1 minut
 %1 participants removed because of missing invite grants	calendar	pl	Usunięto %1 uczestników z powodu brakujących grantów zaproszeń
@@ -19,6 +20,7 @@ actions	calendar	pl	Operacje
 actions...	calendar	pl	Działania...
 add alarm	calendar	pl	Dodaj alarm
 add new alarm	calendar	pl	Dodaj nowy alarm
+add new event	calendar	pl	Dodawanie nowego spotkania
 add new participants or resource	calendar	pl	Dodaj nowych uczestników lub zasoby
 add timesheet entry	calendar	pl	Dodaj wpis czasu pracy
 added	calendar	pl	Dodano
@@ -42,6 +44,7 @@ always	calendar	pl	zawsze
 apply the action on the whole query, not only the shown events	calendar	pl	Zastosuj akcję na całym zapytaniu, nie tylko na wyświetlonych zdarzeniach
 apply the changes	calendar	pl	zastosuj zmiany
 as an alternative you can %1download a mysql dump%2 and import it manually into egw_cal_timezones table.	calendar	pl	Jako alternatywę, możesz %1pobrać zrzut MySQL%2 i importować go ręcznie do tabeli egw_cal_timezones
+attention	calendar	pl	Uwaga
 back half a month	calendar	pl	wstecz o pół miesiąca
 back one month	calendar	pl	wstecz o jeden miesiąc
 before	calendar	pl	przed
@@ -67,8 +70,10 @@ canceled	calendar	pl	Anulowany
 category %1 removed because of missing rights	calendar	pl	Kategoria %1 usunięta z powodu brakujących praw
 category acl	common	pl	ACL kategorii
 category acl only restrict adding a category to an event or changing status of a participant. it does not change the visibility of an event!	calendar	pl	ACL kategorii ograniczają tylko dodawanie kategorii do zdarzenia lub zmianę statusu uczestnika. Nie zmienia to widoczności zdarzenia!
+category report	calendar	pl	Raport kategorii
 chair	calendar	pl	Prowadzący
 change history	calendar	pl	Zmień historię
+changed event-data applied	calendar	pl	Zastosowano zmienione dane zdarzenia
 charset of file	calendar	pl	strona kodowa pliku
 check all	calendar	pl	Sprawdź wszystko
 choose a category	calendar	pl	Wybierz kategorię
@@ -91,6 +96,7 @@ custom	calendar	pl	Użytkownika
 custom fields	common	pl	Pola własne
 custom_2	common	pl	Wolny/Zajęty
 daily	calendar	pl	Codziennie
+date range	calendar	pl	Zakres dat
 day	calendar	pl	dzień
 days	calendar	pl	dni
 days of the week for a weekly repeated event	calendar	pl	Dni tygodnia dla tygodniowo powtarzanych terminów
@@ -153,6 +159,7 @@ every user can invite other users and groups	admin	pl	Każdy użytkownik może z
 exception	calendar	pl	Wyjątek
 exception created - you can now edit or delete it	calendar	pl	Wjątek utworzony - możesz teraz go edytować lub usunąć.
 exceptions	calendar	pl	Wyjątki
+exclude weekend	calendar	pl	Wyklucz weekend
 execute a further action for this entry	calendar	pl	Wykonaj dalszą akcję dla tego wpisu
 existing links	calendar	pl	Istniejące odnośniki
 exists	calendar	pl	istnieje
@@ -242,6 +249,7 @@ make freebusy information available to not logged in persons?	calendar	pl	Czy ud
 manage mapping	calendar	pl	Zarządzaj mapowaniem
 max. number of entries to show (leave empty for no restriction)	calendar	pl	Ile maksymalnie wpisów pokazać (puste - bez ograniczenia)
 maximum available quantity of %1 exceeded!	calendar	pl	Maksymalna dostępna ilość %1 przekroczona!
+min days	calendar	pl	Dni minimalne
 minimum number of users for showing day view as consolidated.	calendar	pl	Minimalna liczba użytkowników do wyświetlenia widoku dziennego jako skonsolidowanego.
 minimum number of users for showing week view as consolidated.	calendar	pl	Minimalna liczba użytkowników do wyświetlenia skonsolidowanego widoku tygodnia.
 minutes	calendar	pl	minut
@@ -294,6 +302,7 @@ only group-events	calendar	pl	Tylko zdarzenia grupowe
 only the initial date of that recurring event is checked!	calendar	pl	Tylko data początkowa dla tego terminu powtarzanego jest brana pod uwagę!
 open todo's:	calendar	pl	Otwarte Do Zrobienia:
 optional	calendar	pl	Opcjonalne
+output unit	calendar	pl	Jednostka wyjściowa
 overlap holiday	calendar	pl	nakładające się święto
 owner too	calendar	pl	Także właściciel
 participants	calendar	pl	Uczestnicy
@@ -315,6 +324,7 @@ re-edit event	calendar	pl	Edytuj zdarzenie
 receive email updates	calendar	pl	Otrzymuj powiadomienia pocztowe przy aktualizacjach
 receive notifications about events you created/modified/deleted	calendar	pl	Otrzymuj powiadomienia o zdarzeniach które stworzyłeś/zmodyfikowałeś/usunąłeś
 receive summary of appointments	calendar	pl	Otrzymuj podsumowania spotkań
+recordings	calendar	pl	Nagrania
 recovered	calendar	pl	odzyskany
 recurrence	calendar	pl	Powtarzanie
 recurring event	calendar	pl	Termin powtarzany
@@ -326,6 +336,7 @@ repeating event information	calendar	pl	Informacja o powtórkach
 repeating interval, eg. 2 to repeat every second week	calendar	pl	okres powtarzania, np. 2 oznacza co drugi tydzień
 repetition	calendar	pl	Powtarzanie
 repetitiondetails (or empty)	calendar	pl	Szczegóły powtórzenia (lub puste)
+report	calendar	pl	Raport
 requested	calendar	pl	Żądany
 require an acl grant to invite other users and groups	admin	pl	Wymagaj zezwolenia ACL aby zaprosić innych użytkowników i grupy
 reset	calendar	pl	Skasuj
@@ -377,6 +388,7 @@ show only the date, not the year	admin	pl	Pokaż tylko datę, bez roku
 show this month	calendar	pl	Pokaż ten miesiąc
 show this week	calendar	pl	Pokaż ten tydzień
 single event	calendar	pl	pojedyncze zdarzenie
+sort by	calendar	pl	Sortuj według
 specify where url of the day links to	calendar	pl	Gdzie ma prowadzić URL dnia
 start	calendar	pl	Rozpoczęcie
 start date/time	calendar	pl	Data/godzina rozpoczęcia

@@ -29,7 +29,7 @@ buy this article	resources	fr	Acheter cet article
 buy this resource	resources	fr	Acheter cette ressource
 buyable	resources	fr	Achetable
 category admin	resources	fr	Administrateur de catégorie
-category saved.	resources	fr	Catégorie enregistrée.
+category saved.	resources	fr	Catégorie sauvegardée.
 category:	resources	fr	Catégorie :
 check all	resources	fr	Tout cocher
 choose category admin	resources	fr	Choisir l'administrateur de la catégorie
@@ -42,8 +42,8 @@ create new accessory for this resource	resources	fr	Créer de nouveaux accessoir
 create new links	resources	fr	Créer de nouveaux liens
 custom etemplate for the contactform	resources	fr	eTemplate personnalisé pour le formulaire contact
 custom fields	resources	fr	Champs personnalisés
-data exchange settings	resources	fr	Paramètres d'échange de données
-days	resources	fr	jours
+days	resources	fr	Jours
+delete accessories of selected resources too?	resources	fr	Supprimer également les accessoires des ressources sélectionnées ?
 delete selected resources	resources	fr	Supprimer les ressources selectionnées
 delete this entry	resources	fr	Supprimer cette entrée
 deleted	resources	fr	supprimé
@@ -71,8 +71,8 @@ how many of this resource are usable	resources	fr	Combien sont utilisables
 how many of this resource exists	resources	fr	Combien en existe-t-il
 icon	resources	fr	Icône
 if you specify an export definition, it will be used when you export	resources	fr	Si vous spécifier un format d'export, il sera utilisé à l'export.
-implies booking permission	resources	fr	implique la permission de lire le calendrier
-implies read permission	resources	fr	implique la permission de lecture
+implies booking permission	resources	fr	Implique la permission de lire le calendrier
+implies read permission	resources	fr	Implique la permission de lecture
 imports a list of resources from a csv file.	resources	fr	Importe une liste de ressources depuis un fichier csv
 information about storage	resources	fr	Informations sur le lieu
 informations about the location of resource	resources	fr	Informations sur le lieu de la ressource
@@ -81,10 +81,8 @@ inventory number	resources	fr	Numéro d'inventaire
 inventory number:	resources	fr	Numéro d'inventaire :
 is resource bookable?	resources	fr	Peut-on réserver les ressources ?
 is resource buyable?	resources	fr	Peut-on acheter les ressources ?
-is the ressource bookable?	resources	fr	Peut-on réserver cette ressource ?
 is this resource bookable?	resources	fr	Peut-on réserver cette ressource ?
 is this resource buyable?	resources	fr	Peut on acheter cette ressource ?
-kanban	resources	fr	Kanban
 links	resources	fr	Liens
 location	resources	fr	Emplacement
 location of resource	resources	fr	Emplacementde la ressource
@@ -107,7 +105,7 @@ picture	resources	fr	Image
 picture source	resources	fr	Source de l'image
 picture type is not supported, sorry!	resources	fr	Type d'image non supporté, désolé !
 pictures or resource	resources	fr	Images ou ressource
-planer	resources	fr	planificateur
+planer	resources	fr	Planificateur
 please choose a different time:	resources	fr	Veuillez sélectionner une autre heure :
 prevent deleting	admin	fr	Empêcher la suppression
 prize	resources	fr	Prix
@@ -153,13 +151,13 @@ the anonymous user needs add rights for it!	resources	fr	L'utilisateur anonyme d
 the calendar of this resource	resources	fr	Le calendrier de cette ressource
 this module displays the resources app	resources	fr	Ce module montre l'application ressources
 too many matches	resources	fr	trop de résultats
+un-delete accessories of selected resources too?	resources	fr	Restaurer les accessoires des ressources sélectionnées ?
 unable to link to %1 "%2"	resources	fr	Incapable de lier %1 "%2"
 unable to process confirmation.	resources	fr	Incapable de procéder à la confirmation
-unwilling to save category with current settings. check for inconsistency:	resources	fr	Impossible de sauvegarder cette catégorie, vérifier les incohérences :
 use general resources icon	resources	fr	Utilisez  l'icône de la ressource générale
 use own picture	resources	fr	Utilisez  votre propre propre image
 use the category's icon	resources	fr	Utilisez l'icône de la catégorie
-useable	resources	fr	utilisable
+useable	resources	fr	Utilisable
 view accessories	resources	fr	Voir les accessoires
 view calendar	resources	fr	Voir le calendrier
 view this entry	resources	fr	Voir cette entrée

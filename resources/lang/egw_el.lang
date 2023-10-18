@@ -1,26 +1,52 @@
+%1 accessories now resources	resources	el	%1 αξεσουάρ τώρα πόροι
+%1 accessories restored	resources	el	%1 αξεσουάρ που έχουν αποκατασταθεί
+%1 resource(s) %2	resources	el	%1 πόροι %2
+%1 resource(s) %2, %3 failed	resources	el	%1 πόροι %2, %3 απέτυχαν
+%1 resource(s) %2, %3 failed because of insufficent rights !!!	resources	el	%1 resource(s) %2, %3 failed because of insufficent rights !!!
+%1 resource(s) booked	resources	el	%1 πόρος(-οι) κρατηθείς(-οι)
+%1 resource(s) view calendar	resources	el	%1 πόρος(οι) προβολή ημερολογίου
+accessories	resources	el	Αξεσουάρ
+accessories of	resources	el	Αξεσουάρ από
+accessories:	resources	el	Αξεσουάρ:
+accessory of	resources	el	Αξεσουάρ από
 actions	resources	el	Ενέργειες
+add group to event participants	resources	el	Προσθήκη ομάδας στους συμμετέχοντες στην εκδήλωση
 all categories	resources	el	Όλες οι κατηγορίες
+allow booking requests from any user when creating events?	resources	el	Να επιτρέπονται αιτήματα κράτησης από οποιονδήποτε χρήστη κατά τη δημιουργία εκδηλώσεων;
+booking requests	resources	el	Αιτήματα κράτησης
+category admin	resources	el	Διαχειριστής κατηγορίας
+category saved.	resources	el	Η κατηγορία αποθηκεύτηκε.
 check all	resources	el	Έλεγχος όλων
+choose category admin	resources	el	Επιλέξτε κατηγορία διαχειριστή
 configure access permissions	admin	el	Τροποποίηση Άδειας Εισόδου
 create new links	resources	el	Δημιουργία νέων συνδέσμων
 custom etemplate for the contactform	resources	el	Προσαρμογή eΤαμπλέτας για τη φόρμα επαφών
 custom fields	resources	el	Προσαρμοσμένα πεδία
 days	resources	el	ημέρες
+delete accessories of selected resources too?	resources	el	Διαγράψτε επίσης αξεσουάρ των επιλεγμένων πόρων;
 delete this entry	resources	el	δαγραφή αυτής της καταχώρησης
 deleted	resources	el	διεγράφη
+do you really want to delete this resource?	resources	el	Θέλετε πραγματικά να διαγράψετε αυτόν τον πόρο;
 edit this entry	resources	el	Επιμέλεια αυτής της καταχώρησης
 existing links	resources	el	Υπάρχοντες σύνδεσμοι
 general	resources	el	Γενικά
 global categories	resources	el	Παγκόσμιες κατηγορίες
 history logging	admin	el	Ιστορικό εισόδων
 hours	resources	el	Ωρες
+icon	resources	el	Εικονίδιο
 implies read permission	resources	el	υπονοεί άδεια ανάγνωσης
 links	resources	el	Σύνδεσμοι
 location	resources	el	Τοποθεσία
+no - leave them	resources	el	Όχι - Αφήστε τα
+no - make them resources	resources	el	Όχι - Να γίνουν πόροι
+no, users will need to contact users with direct booking permission	resources	el	Όχι, οι χρήστες θα πρέπει να επικοινωνήσουν με τους χρήστες με δικαίωμα άμεσης κράτησης
 quantity	resources	el	Ποσότητα
 read permissions	resources	el	Ανάγνωση αδειών
 resources	common	el	Πόροι
 select resources	common	el	Επιλέξτε πόρους
 the anonymous user needs add rights for it!	resources	el	Ο ανώνυμος χρήστης χρειάζεται δικαιώματα για να προσθέσει σε αυτό!
+un-delete accessories of selected resources too?	resources	el	Να επαναφέρετε τα αξεσουάρ των επιλεγμένων πόρων;
 write permissions	resources	el	Γραφή αδειών
+yes - delete accessories too	resources	el	Ναι - Διαγράψτε επίσης αξεσουάρ
+yes - un-delete accessories too	resources	el	Ναι - Επαναφορά και των αξεσουάρ
 yes, only admins can purge deleted items	admin	el	Ναι, μόνο ο διαχειριστής μπορεί να καθαρίσει τα αντικείμενα που έχουν διαγραφεί

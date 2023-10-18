@@ -1,7 +1,12 @@
 %1 added	addressbook	sv	%1 skapad
 %1 contact(s) %2	addressbook	sv	%1 kontakt(er) %2
+%1 contact(s) %2, %3 failed because of %4 !!!	addressbook	sv	%1 kontakt(er) %2, %3 misslyckades på grund av %4 !!!
 %1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	sv	%1 kontakt(er) %2,%3 misslyckades pga otillräckliga rättigheter
+%1 contacts updated (%2 errors).	addressbook	sv	%1 kontakter uppdaterade (%2 fel).
 %1 fields in %2 other organisation member(s) changed	addressbook	sv	%1 fält i %2 andra organisations medlemm(ar) ändrade
+%1 key(s) added to public keyserver "%2".	addressbook	sv	%1 nyckel(ar) tillagd till publik nyckelserver "%2".
+%1 not implemented for %2!	addressbook	sv	%1 inte implementerad för %2!
+%1 public keys added.	addressbook	sv	%1 offentliga nycklar tillagda.
 %1 records imported	addressbook	sv	%1 poster importerade
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	sv	%1 poster lästa (inte importerade ännu, du kan gå %2tillbaka%3 och kryssa ur "Testa Import")
 %1 starts with '%2'	addressbook	sv	%1 börjar med '%2'
@@ -16,6 +21,12 @@ add a contact to this organisation	addressbook	sv	Lägg till kontakt till organi
 add a new contact	addressbook	sv	Lägg till ny kontakt
 add a single entry by passing the fields.	addressbook	sv	Lägg till en enstaka post genom att fylla i fälten
 add custom field	addressbook	sv	Lägg till anpassat fält
+add customfield to links of addressbook, which displays in other applications. the default value is none customfield.	addressbook	sv	Lägg till anpassade fält till länkar i adressboken, som visas i andra program. Standardvärdet är inget anpassat fält.
+add to bcc	addressbook	sv	Lägg till i Blindkopia
+add to cc	addressbook	sv	Lägg till i Kopiera
+add to distribution list	addressbook	sv	Lägg till i distributionslista
+add to distribution list:	addressbook	sv	Lägg till i distributionslista:
+add to to	addressbook	sv	Lägg till i Till
 added	addressbook	sv	Skapad
 added by synchronisation	addressbook	sv	Infogad av synkroniseringen
 additional information about using ldap as contact repository	admin	sv	Övrig information om hur man använder LDAP som kontaktdatabas
@@ -25,13 +36,18 @@ address book - view	addressbook	sv	Adressbok - visa
 address line 2	addressbook	sv	Adressrad 2
 address type	addressbook	sv	Adresstyp
 addressbook	common	sv	Adressbok
+addressbook list	addressbook	sv	Lista över adressböcker
 addressbook menu	addressbook	sv	Adressbok meny
 addressbook preferences	addressbook	sv	Adressbok alternativ
 addressbook the contact should be saved to	addressbook	sv	Adressbok kontakten skall sparas till
 addressbook-fieldname	addressbook	sv	Adressbok fältnamn
 addvcard	addressbook	sv	Lägg till vCard
 advanced search	addressbook	sv	Avanserad sökning
+all addressbooks	addressbook	sv	Alla adressböcker
 all contacts	addressbook	sv	Alla kontakter
+all types	addressbook	sv	Alla typer
+allow	addressbook	sv	Tillåt
+allow for contacts only	addressbook	sv	Tillåt endast för kontakter
 allow users to maintain their own account-data	admin	sv	Tillåt användare att underhålla sin egen kontaktinformation
 alt. csv import	addressbook	sv	Alternativ CSV import
 always	addressbook	sv	Alltid
@@ -41,9 +57,11 @@ are you shure you want to delete this contact?	addressbook	sv	Är du säker på 
 are you sure you want to delete this field?	addressbook	sv	Är du säker på att du vill radera fältet?
 assistent	addressbook	sv	Assistent
 assistent phone	addressbook	sv	Assistent telefon
+audio call	addressbook	sv	Samtal via ljud
 birthday	common	sv	Födelsedag
 birthdays	common	sv	Födelsedagar
 blank	addressbook	sv	Tom
+browser location	addressbook	sv	Plats i webbläsaren
 business	common	sv	Företag
 business address	addressbook	sv	Företag: Adress
 business city	addressbook	sv	Företag: Stad
@@ -54,16 +72,19 @@ business phone	addressbook	sv	Företag: Telefon
 business state	addressbook	sv	Företag: Län
 business street	addressbook	sv	Företag: Gata
 business zip code	addressbook	sv	Företag: Postnummer
+calendar integration	addressbook	sv	Kalenderintegrering
 calendar uri	addressbook	sv	Kalender URI
 can be changed via setup >> configuration	admin	sv	Kan ändras via Installation >> Alternativ
 car phone	addressbook	sv	Mobiltelefon
 categories, notes, ...	addressbook	sv	Kategorier, Anteckningar, ...
 cell phone	addressbook	sv	Mobitelefon
+change addressbook when updating	addressbook	sv	Ändra adressbok vid uppdatering
 change all organisation members	addressbook	sv	Ändra organisationens alla medlemmar
 charset for the csv export	addressbook	sv	Teckenuppsättning för CSV export
 charset of file	addressbook	sv	Teckenuppsättning för filen
 check all	addressbook	sv	Markera alla
 choose an icon for this contact type	admin	sv	Välj ikon för kontaktens
+choose pre-defined map source or use custom url (use %r = street, %t = city, %c = country, %z = zipcode)	admin	sv	Välj fördefinierad kartkälla eller använd anpassad URL (använd %r = gata, %t = stad, %c = land, %z = postnummer)
 chosse an etemplate for this contact type	admin	sv	Välj eTemplate för kontakten
 city	common	sv	Stad
 company	common	sv	Företag
@@ -87,14 +108,17 @@ country	common	sv	Land
 create new links	addressbook	sv	Skapa ny länk
 created	addressbook	sv	Skapad
 credit	addressbook	sv	Erkännande
+crm-view	addressbook	sv	CRM-vy
 csv-fieldname	addressbook	sv	CSV-Fältnamn
 csv-filename	addressbook	sv	CSV-Filnamn
 custom	addressbook	sv	Anpassade
 custom fields	addressbook	sv	Anpassade fält
 debug output in browser	addressbook	sv	Felsök utdata i webbläsare
 default	addressbook	sv	Standard
+default action on double-click	addressbook	sv	Standardåtgärd vid dubbelklick
 default addressbook for adding contacts	addressbook	sv	Standard adressbok för nya kontakter
 default filter	addressbook	sv	Standard filter
+default geolocation source address	addressbook	sv	Standardadress för GeoLocation-källa
 delete a single entry by passing the id.	addressbook	sv	Radera en enstaka post genom att specificera ID
 delete this contact	addressbook	sv	Radera kontakten
 delete this organisation including all its contacts	addressbook	sv	Radera organisationen inklusive alla kontakter
@@ -102,7 +126,11 @@ deleted	addressbook	sv	Raderad
 deletes the photo	addressbook	sv	Raderar foto
 department	common	sv	Avdelning
 departments	addressbook	sv	Avdelningar
+disable	addressbook	sv	Inaktivera
+disable last/next event column	addressbook	sv	Inaktivera kolumnen Senaste/nästa händelse
 displays a remider for birthdays on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	sv	Visa en födelsedagspåminelse på Startsidan (sidan som först visas när du kommer till EGroupware eller klickar på Hem ikonen).
+distribution list renamed	addressbook	sv	Distributionslista har bytt namn
+distribution lists as groups	addressbook	sv	Distributionslistor som grupper
 do you want a private addressbook, which can not be viewed by users, you grant access to your personal addressbook?	addressbook	sv	Vill du ha en privat adressbok som ingen annan kan se, som du kan tilldela åtkomst till?
 do your really want to delete this contact?	addressbook	sv	Är du säker på att du vill radera kontakten?
 doesn't matter	addressbook	sv	Oviktigt
@@ -120,6 +148,7 @@ edit extra account-data in the addressbook	admin	sv	Ändra extra kontodata i adr
 edit phonenumbers -	addressbook	sv	Ändra telefon nummer
 email & internet	addressbook	sv	E-post och internet
 empty	admin	sv	Tom
+empty addressbook before importing	addressbook	sv	Ta bort adressboksposter Finns inte i CSV-listan
 empty for all	addressbook	sv	Töm för alla
 enable an extra private addressbook	addressbook	sv	Aktivera en extra privat adressbok
 end	addressbook	sv	Slut
@@ -127,16 +156,25 @@ enter the path to the exported file here	addressbook	sv	Skriv sökväg till expo
 error deleting the contact !!!	addressbook	sv	Fel vid radering av kontakten
 error saving the contact !!!	addressbook	sv	Fel vid sparande av kontakten
 error: the entry has been updated since you opened it for editing!	addressbook	sv	Posten har ändrats sedan du öppnade den för skrivning!
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	addressbook	sv	Exemplu {{IF n_prefix~Mr~Bună ziua domnule ~Bună ziua doamnă}} - caută în câmpul "n_prefix", pentru "Mr", dacă se găsește, scrie Hello Mr., altfel scrie Hello Ms.
+example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	preferences	sv	Exemplu {{LETTERPREFIXCUSTOM n_prefix titlu n_familie}}. - Exemplu: Dl Dr. James Miller
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	addressbook	sv	Exemplu {{NELF rol}} - dacă câmpul role nu este gol, se va obține o nouă linie cu valoarea câmpului role
+example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	addressbook	sv	Exemplu {{nenvlf role}} - dacă câmpul role nu este gol, se va seta un LF fără nicio valoare a câmpului
 existing links	addressbook	sv	Nuvarande länkar
 export as csv	addressbook	sv	Exportera som CSV
 export as vcard	addressbook	sv	Exportera som vCard
 export contacts	addressbook	sv	Exportera kontakter
+export definition to use for nextmatch export	addressbook	sv	Exportdefinition att använda för export av nextmatch
+export definitition to use for nextmatch export	addressbook	sv	Exportdefinition att använda för export av nästa matchning
 export file name	addressbook	sv	Exportens filnamn
 export from addressbook	addressbook	sv	Exportera från adressboken
 export selection	addressbook	sv	Exportera valda
 exported	addressbook	sv	Exporterade
+exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	sv	Exporterar kontakter från adressboken till en CSV-fil.  CSV betyder "kommaseparerade värden". På fliken Alternativ kan du även välja andra separatorer.
 extra	addressbook	sv	Extra
 failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	sv	kunde inte ändra %1 organisationens medlemmar (otillräckliga rättigheter)
+favorite phone	addressbook	sv	Favorit-telefon
+favorites	addressbook	sv	Favoriter
 fax	addressbook	sv	Telefax
 fax number	common	sv	Faxnummer
 field %1 has been added !	addressbook	sv	Fält %1 har lagts till!
@@ -149,10 +187,13 @@ fields to consider when looking for duplicate contacts.	addressbook	sv	Fält som
 fields to show in address list	addressbook	sv	Fält att visa i adresslistan
 fieldseparator	addressbook	sv	Fältavskiljare
 for read only ldap	admin	sv	för skrivskyddad LDAP
+for serial letter use this tag. put the content, you want to repeat between two tags.	addressbook	sv	Utilizați această etichetă pentru litera de serie. Așezați conținutul pe care doriți să îl repetați între două etichete.
 freebusy uri	addressbook	sv	Freebusy URI
 full name	addressbook	sv	Fullständigt namn
 general	admin	sv	Allmänt
 geo	addressbook	sv	GEO
+geolocation	addressbook	sv	GeoLokalisering
+geolocation integration	admin	sv	Integration av GeoLocation
 global categories	addressbook	sv	Globala kategorier
 grant addressbook access	common	sv	Reglera åtkomst till adressboken
 group %1	addressbook	sv	Grupp %1
@@ -183,18 +224,24 @@ import from outlook	addressbook	sv	Importera från OutLook
 import multiple vcard	addressbook	sv	Importera Flera vCard
 import next set	addressbook	sv	Importera nästa set
 import_instructions	addressbook	sv	I Netscape, öpnna adressboken och välj <b>Export</b> från <b>File</b> menyn. Filen kommer att exporteras i LDIF-format.<p>Eller, i Outlook, Välj kontaktmappen, välj sedan <b>Import och Export...</b> från <b>Fil</b> menyn och exportera dina kontakter som komma-separerad textfil (CSV). <p>Eller, i Palm Desktop 4.0 eller senare, Besök adressboken och välj <b>Export</b> från <b>File</b> menyn. Exportfilen kommer att vara i vCard-format.
+importer's personal	addressbook	sv	Importerarens personliga
+imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	sv	Importerar kontakter till adressboken från en CSV-fil. CSV betyder "kommaseparerade värden". På fliken Alternativ kan du även välja andra separatorer.
+imports contacts into your addressbook from a vcard file.	addressbook	sv	Importerar kontakter till din adressbok från en vCard-fil.
 in %1 days (%2) is %3's birthday.	addressbook	sv	Om %1 dagar (%2) fyller %3 år
 income	addressbook	sv	Inkomst
 infolog	addressbook	sv	InfoLog Kontakt
 infolog-organisation	addressbook	sv	InfoLog Organisation
+insufficent rights to delete this list!	addressbook	sv	Otillräckliga rättigheter för att radera denna lista!
+insufficent rights to edit this list!	addressbook	sv	Otillräckliga rättigheter för att redigera denna lista!
 international	addressbook	sv	Internationell
+invite to current call	addressbook	sv	Bjud in till aktuellt samtal
 label	addressbook	sv	Etikett
 last modified	addressbook	sv	Senast ändrad
 last modified by	addressbook	sv	Senast ändrad av
 ldap context for contacts	admin	sv	LDAP kontext för kontakter
 ldap host for contacts	admin	sv	LDAP server för kontakter
 ldap settings for contacts	admin	sv	LDAP inställningar för kontakter
-ldif	addressbook	sv	Ldif
+ldif	addressbook	sv	LDIF
 line 2	addressbook	sv	Rad 2
 link title for contacts show	addressbook	sv	Länktitel för kontakter
 links	addressbook	sv	Länkar
@@ -204,6 +251,8 @@ load custom fields in index, even if custom field column is off (eg. to display 
 load vcard	addressbook	sv	Ladda vCard
 location	addressbook	sv	Plats
 locations	addressbook	sv	Placering
+mail vcard	addressbook	sv	E-post vCard
+main categories in their own field	addressbook	sv	Huvudkategorier i egna fält
 mark records as private	addressbook	sv	Markera posten som privat
 merge duplicates	addressbook	sv	Slå ihop dubbletter
 merge into first or account, deletes all other!	addressbook	sv	Slå samman med första eller konto, radera all annan
@@ -220,11 +269,16 @@ move to addressbook	addressbook	sv	Flytta till adressboken
 moved	addressbook	sv	Flyttad
 multiple vcard	addressbook	sv	Multipla vCard
 name, address	addressbook	sv	Namn, adress
+name, email, phone	addressbook	sv	Namn, e-post, telefon
 no country selected	addressbook	sv	Inget land har valts
 no distribution list	addressbook	sv	Ingen distributionslista
 no vcard	addressbook	sv	Inget vCard
 number	addressbook	sv	Nummer
 number of records to read (%1)	addressbook	sv	Antal poster att läsa (%1)
+open %1 crm view	addressbook	sv	Öppna %1 CRM-vy
+open email addresses in external mail program	addressbook	sv	Öppna EMail-adresser i externt e-postprogram
+open infolog crm view	preferences	sv	Öppna InfoLog CRM-vy för kontakten
+open tracking system crm view	preferences	sv	Öppna Tracking System CRM-vy
 options for type	admin	sv	Alternativ för typen
 organisation	addressbook	sv	Organisation
 organisations	addressbook	sv	Organisationer
@@ -237,17 +291,21 @@ pager	common	sv	Personsökare
 parcel	addressbook	sv	Bud
 participants	addressbook	sv	Deltagare
 permission denied !!!	addressbook	sv	Åtkomst nekas
+permissiong denied! ask your administrator to allow regular uses to update their public keys.	addressbook	sv	Tillstånd nekat! Be din administratör att tillåta regelbundna användare att uppdatera sina offentliga nycklar.
+pgp key	addressbook	sv	PGP-nyckel
 phone number	common	sv	Telefonnummer
 phone numbers	common	sv	Telefonnummer
 photo	addressbook	sv	Foto
 please enter a name for that field !	addressbook	sv	Vänligen ge ett namn åt fältet
 please select only one category	addressbook	sv	Vänligen välj endast en kategori
 postal	common	sv	Post
-pref	addressbook	sv	pref
+pref	addressbook	sv	Pref
 preferred phone	addressbook	sv	Förvald telefon
 prefix	addressbook	sv	Prefix
 prevent deleting of contacts	admin	sv	Förhindra radering av kontakter
+private address	addressbook	sv	Privat adress
 public key	addressbook	sv	Publik kryptonyckel
+public sharing url	addressbook	sv	URL för offentlig delning
 publish into groups:	addressbook	sv	Publicera i grupperna:
 read a list / search for entries.	addressbook	sv	Titta på lista/sök efter poster
 read a list of entries.	addressbook	sv	Läs lista över poster
@@ -255,15 +313,21 @@ read a single entry by passing the id and fieldlist.	addressbook	sv	Läs en enst
 read only	addressbook	sv	Skrivskyddad
 record access	addressbook	sv	Åtkomst till posten
 record owner	addressbook	sv	Postens ägare
+remove from distribution list	addressbook	sv	Ta bort från distributionslista
+rename list	addressbook	sv	Byt namn på lista
+rename selected distribution list	addressbook	sv	Byt namn på vald distributionslista
 repetition	addressbook	sv	Återkommande
 role	addressbook	sv	Roll
 room	addressbook	sv	Rum
+schedule a video conference	addressbook	sv	Schemalägga en videokonferens
 search letter	addressbook	sv	Sök bokstav
 select a portrait format jpeg photo. it will be resized to 60 pixel width.	addressbook	sv	Välj ett jpeg porträtt foto. Bilden skalas om till 60 pixel.
+select a source address to be used in geolocation routing system	addressbook	sv	Välj en källadress som ska användas i GeoLocation-routingsystemet
 select a view	addressbook	sv	Välj vy
 select addressbook type	addressbook	sv	Välj adressbok typ
 select all	addressbook	sv	Välj samtliga
 select an action or addressbook to move to	addressbook	sv	Välj åtgärd eller adressbok att flytta till
+select an opened dialog	addressbook	sv	Välj en öppnad dialogruta
 select migration type	admin	sv	Välj migreringstyp
 select multiple contacts for a further action	addressbook	sv	Välj flera kontakter för åtgärd
 select phone number as prefered way of contact	addressbook	sv	Välj telefonnummer som kontaktväg
@@ -271,6 +335,8 @@ select the type of conversion	addressbook	sv	Välj konverteringstyp
 select the type of conversion:	addressbook	sv	Välj konverteringstyp
 select where you want to store / retrieve contacts	admin	sv	Välj var du vill spara / hämta kontakter
 selected contacts	addressbook	sv	Valda kontakter
+send fax via email by replacing fax number with an email address	addressbook	sv	Skicka fax via e-post genom att ersätta faxnumret med en e-postadress
+send succeeded to %1	common	sv	Skicka lyckat till %1
 share into addressbook	addressbook	sv	Dela i adressboken
 share writable	addressbook	sv	Dela skrivbart
 shared	addressbook	sv	delad
@@ -278,9 +344,13 @@ shared by me	addressbook	sv	Delad av mig
 shared into addressbook %1	addressbook	sv	delad i adressboken %1
 shared with	addressbook	sv	Delat med
 show	addressbook	sv	Visa
+show active accounts	addressbook	sv	Visa aktiva konton
+show all accounts	addressbook	sv	Visa alla konton
 show infolog entries for this organisation	addressbook	sv	Visa organisationens InfoLogg poster
 show the contacts of this organisation	addressbook	sv	Visa organisationens kontakter
 size of popup (wxh, eg.400x300, if a popup should be used)	admin	sv	Popup storlek (WxH, ex.400x300, on popup används)
+smime key	addressbook	sv	S/MIME-nyckel
+special	addressbook	sv	Särskild
 start	admin	sv	Start
 startrecord	addressbook	sv	Startpost
 state	common	sv	Län
@@ -291,17 +361,22 @@ tel home	addressbook	sv	Hem telefon
 telephony integration	admin	sv	Telefon integration
 test import (show importable records <u>only</u> in browser)	addressbook	sv	Testa import (visa importerade poster <u>enbart</u> i webbläsaren)
 that field name has been used already !	addressbook	sv	Fältnamnet finns redan
+the zip extension is needed, to insert contact data in openoffice or msoffice documents.	addressbook	sv	Zip-tillägget behövs för att infoga kontaktdata i LibreOffice- eller MS Office-dokument.
 this person's first name was not in the address book.	addressbook	sv	Personens förnamn finns inte i adressboken
 this person's last name was not in the address book.	addressbook	sv	Personens efternamn finns inte i adressboken
 timezone	addressbook	sv	Tidzon
+title	addressbook	sv	Titel på jobb
 to many might exceed your execution-time-limit	addressbook	sv	För många kan överstiga maxtiden
 today is %1's birthday!	common	sv	I dag har %1 födelsedag!
 tomorrow is %1's birthday.	common	sv	I morgon är det %1's födelsedag.
 translation	addressbook	sv	Översättning
 type	addressbook	sv	Typ
+unable to import into %1, using %2	addressbook	sv	Det gick inte att importera till %1, använd %2
+unknown type %1, imported as %2	addressbook	sv	Okänd typ %1, importerad som %2
 update a single entry by passing the fields.	addressbook	sv	Updatera enskild post genom att ange fälten
 updated	addressbook	sv	Uppdaterad
 upload or delete the photo	addressbook	sv	Ladda upp eller radera foto
+use a category tree?	addressbook	sv	Använd ett träd för att välja kategorier
 use country list	addressbook	sv	Använd nationslista
 use setup for a full account-migration	admin	sv	Använd installationen för en komplett konto migrering
 used for links and for the own sorting of the list	addressbook	sv	Används för länkar och sortering av listan
@@ -309,11 +384,13 @@ user groups are automatically shown as distribution lists.	addressbook	sv	Använ
 vcard	common	sv	vCard
 vcards require a first name entry.	addressbook	sv	vCard kräver ett förnamn
 vcards require a last name entry.	addressbook	sv	vCard kräver ett efternamn
+video call	addressbook	sv	Videosamtal
 view linked infolog entries	addressbook	sv	Visa länkade InfoLog poster
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	sv	WARNING!! LDAP är bara giltigt om du inte använder kontakter för att lagra konton
 warning: all contacts found will be deleted!	addressbook	sv	VARNING: Alla hittade kontakter raderas
 weekday	addressbook	sv	Veckodag
 what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	sv	Vad ska länkar till adressboken visa i andra applikationer? Tomma värden ignoreras. Do måste logga in återigen för att se förändringar.
+when viewing a contact, show linked entries from the selected application	addressbook	sv	När du visar en kontakt visas länkade poster från det valda programmet
 when you merge entries into documents, they will be stored here.  if no directory is provided, they will be stored in your home directory (/home/unverricht)	addressbook	sv	När du sammanför poster i dokument lagras de här. Om ingen katalog anges kommer de att lagras i din hemkatalog (/home/...).
 which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	sv	Vilken adressbok ska väljas när konstakter skapas men du saknar behörighet till aktuell?
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	sv	Vilken teckeuppsättning ska användas vid CSV export? Systemets standard är det som används av EGroupware.
@@ -325,6 +402,8 @@ yes, for the next three days	addressbook	sv	Ja, för kommande tre dagar
 yes, for the next two weeks	addressbook	sv	Ja, för kommande två veckor
 yes, for the next week	addressbook	sv	Ja, för nästa vecka
 yes, for today and tomorrow	addressbook	sv	Ja, för kommande två dagar
+yes, only admins can purge deleted items	admin	sv	Ja, endast administratörer kan rensa borttagna objekt
+yes, users can purge their deleted items	admin	sv	Ja, användare kan rensa sina raderade objekt
 you are not permitted to delete contact %1	addressbook	sv	Du har inte behörighet att radera kontakten %1
 you are not permittet to delete this contact	addressbook	sv	Du har inte behörighet att radera kontakten
 you are not permittet to edit this contact	addressbook	sv	Du har inte behörighet att redigera kontakten
@@ -334,5 +413,7 @@ you can respond by visiting:	addressbook	sv	Du kan svara genom att besöka:
 you must select a vcard. (*.vcf)	addressbook	sv	Du måste välja vCard (*.vcf)
 you must select at least 1 column to display	addressbook	sv	Du måste välja minst 1 kolumn att visa
 you need to select some contacts first	addressbook	sv	Du måste välja kontakter först
+you need to select some entries first	addressbook	sv	Du måste välja några poster först
+your new public key has been stored in accounts addressbook.	addressbook	sv	Din nya publika nyckel har lagrats i kontots adressbok.
 zip code	common	sv	Postnummer
 zip_note	addressbook	sv	<p><b>Notera:</b> Filen kan vara en .zip-fil med flera .csv, .vcf, eller .ldif files. MEN, blanda inte filtyper i en importoperation.

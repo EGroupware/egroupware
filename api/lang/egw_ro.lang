@@ -1,9 +1,13 @@
+%1 email(s) added into %2	common	ro	%1 e-mail(uri) adăugat(e) în %2
+%1 more %2 selected ...	common	ro	%1 mai multe %2 selectate...
 '%1' copied to clipboard	common	ro	'%1' copiat în clipboard
+'%1' is not a valid json file!	common	ro	"%1" nu este un fișier JSON valid
 1 day	common	ro	1 zi
 1 hour	common	ro	1 oră
 1 minute	common	ro	1 minut
 1 month	common	ro	1 lună
 1 week	common	ro	1 săptămână
+13 (ntp)	admin	ro	13 (ntp)
 15 minutes	common	ro	15 minute
 2-factor authentication code required	common	ro	Cod de autentificare cu 2 factori necesar
 2-factor-authentication	common	ro	Autentificare cu 2 factori
@@ -26,8 +30,11 @@ all in one	groupdav	ro	Toate într-una singură
 answering no will not ask you again for this browser.	common	ro	Dacă răspundeți "nu", nu vi se va mai solicita acest browser.
 attention: action will be applied to all rows, not only visible ones!	api	ro	Atenție: acțiunea se va aplica tuturor rândurilor, nu numai celor vizibile!
 authenticate	common	ro	Autentificare
+avatar	common	ro	Avatar
+browser %1 %2 is not recommended. you may experience issues and not working features. please use the latest version of chrome, firefox or edge. thank you!	common	ro	Browserul %1 %2 nu este recomandat. Este posibil să întâmpinați probleme și să nu funcționeze funcțiile. Vă rugăm să utilizați cea mai recentă versiune de Chrome, Firefox sau Edge. Vă mulțumim!
 cancel	common	ro	Renunţă
 charset	common	ro	utf-8
+check for empty values in if statements.  example {{if url~empty~~website:}} - if url is not empty, writes "website:"	common	ro	Verificați dacă există valori goale în declarațiile IF. Exemplu {{IF url~EMPTY~~~Website:}}} - Dacă url nu este gol, scrie "Website:"
 choose the default filename for merged documents.	preferences	ro	Alegeți numele de fișier implicit pentru documentele fuzionate.
 colour	common	ro	Culoare
 copy	common	ro	Copiați
@@ -42,6 +49,15 @@ created	common	ro	Creat
 created by	common	ro	Creat de
 created by %1	common	ro	Creat de %1
 dark mode	common	ro	Mod întunecat
+date + time	common	ro	Data + Ora
+date+time	common	ro	Data+Ora
+don't ask again!	common	ro	Nu întrebați din nou!
+egroupware	common	ro	EGroupware
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	preferences	ro	Exemplu {{IF n_prefix~Mr~Bună ziua domnule ~Bună ziua doamnă}} - caută în câmpul "n_prefix", pentru "Mr", dacă se găsește, scrie Hello Mr., altfel scrie Hello Ms.
+example {{letterprefix}} - gives a letter prefix without double spaces, if the title is empty for example	preferences	ro	Exemplu {{LETTERPREFIX}} - Oferă un prefix de literă fără spații duble, dacă titlul este gol, de exemplu
+example {{letterprefix}} - gives a letter prefix without double spaces, if the title is emty for  example	common	ro	Exemplu {{LETTERPREFIX}} - Oferă un prefix de literă fără spații duble, dacă titlul este gol, de exemplu
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	preferences	ro	Exemplu {{NELF rol}} - dacă câmpul rol nu este gol, se va primi o nouă linie cu valoarea câmpului rol
+example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	preferences	ro	Exemplu {{nenvlf role}} - dacă rolul câmpului nu este gol, se stabilește un LF fără nicio valoare a câmpului
 file a file	common	ro	Stocați un fișier
 fileupload	common	ro	Încărcarea fișierelor
 formatted business address	common	ro	Adresa de afaceri formatată
@@ -57,13 +73,16 @@ how many days to sync in the future (default %1)	groupdav	ro	Câte zile să se s
 how many days to sync in the past (default %1)	groupdav	ro	Câte zile de sincronizare în trecut (implicit %1)
 how many rows to print	common	ro	Câte rânduri să se tipărească
 how to show the general egroupware menu ?	common	ro	Cum se afișează meniul general EGroupware
+html links to any entries linked to the current record, excluding attached files	common	ro	Legături HTML către orice intrări legate de înregistrarea curentă, cu excepția fișierelor atașate
 if you use "2-factor-authentication", please enter the code here.	common	ro	Dacă utilizați "Autentificare cu 2 factori", introduceți codul aici.
 include access to any linked files (links tab)	common	ro	Includeți accesul la orice fișier legat (fila Links)
 infolog types to sync	common	ro	Tipuri de InfoLog de sincronizat
 insert placeholder	common	ro	Inserir espaço reservado
 insert timestamp into description field	common	ro	Introduceți data și ora în câmpul de descriere
+install	common	ro	Instalați
 install egroupware as mail-handler?	common	ro	Instalați EGroupware ca manager de e-mail?
 invalid 2-factor authentication code	common	ro	Código de autenticação de 2 fatores inválidos
+invalid email	common	ro	E-mail invalid
 invalid or expired 'remember me' token	common	ro	Ficha "lembre-se de mim" inválida ou vencida
 it is recommended to store your public key in addressbook, so other users can write you encrypted mails.	common	ro	É recomendável armazenar sua chave pública no Addressbook, para que outros usuários possam escrever seus e-mails criptografados.
 light mode	common	ro	Mod deschis
@@ -77,13 +96,32 @@ move	common	ro	Mutați
 new password	common	ro	Parolă nouă
 no filters	common	ro	Fără filtre
 ok	common	ro	Acceptă
+permission denied!	common	ro	Permisiune refuzată!
+permission denied! this is an administration only feature.	common	ro	Permisiune refuzată! Aceasta este o funcție rezervată administratorilor.
+permisson denied!	common	ro	Permisiune refuzată!
+personal	common	ro	Personal
+pg down	common	ro	Pagina a căzut
+pg up	common	ro	Pagina sus
+pgp encryption	common	ro	Criptare PGP
+pgp encryption installation	common	ro	Instalare PGP Encryption
 placeholders	common	ro	Placeholders
 play/pause	common	ro	Redare/Pauză
+please %1 by hand	common	ro	Vă rugăm să vă rugăm să vă folosiți manual de %1
+please reload the egroupware desktop (f5 / cmd+r).	common	ro	Vă rugăm să reîncărcați biroul EGroupware (F5 / Cmd+r).
+please remember to use '%1' as username for local login's from now on!	common	ro	Nu uitați să folosiți de acum înainte numele de utilizator "%1" pentru autentificarea locală!
+please type %1 more characters	common	ro	Vă rugăm să introduceți încă %1 caractere
+please type 1 more character	common	ro	Vă rugăm să introduceți încă 1 caracter
 preference	common	ro	Preferințe
 preferences	common	ro	Preferințe
 repeat password	common	ro	Repetarea parolei
 saved column sizes to preferences.	common	ro	Salvat dimensiunile coloanelor în preferințe.
+show password	common	ro	Afișare parolă
 show/hide	common	ro	afișați / ascundeți bara laterală
+sign up	common	ro	Înregistrare
+site configuration	common	ro	Configurația aplicației
+your account has been updated with new data from your identity provider.	common	ro	Contul dvs. a fost actualizat cu date noi de la furnizorul dvs. de identitate.
+your browser is not up-to-date (javascript es6 compatible), you may experience some of the features not working.	common	ro	Browserul dvs. nu este actualizat (compatibil cu JavaScript ES6), este posibil ca unele dintre caracteristici să nu funcționeze.
+your key has been restored successfully.	common	ro	Cheia dvs. a fost restaurată cu succes.
 your password does not have required strength of %1 character classes and minimum length of %2 characters.	common	ro	Parola dvs. nu are puterea necesară de %1 clase de caractere și lungimea minimă de %2 caractere.
 your password does not have required strength:	common	ro	Parola dvs. nu are puterea necesară:
 your password failed the following criteria:	common	ro	Parola dumneavoastră nu a îndeplinit următoarele criterii:

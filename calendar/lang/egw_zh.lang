@@ -12,6 +12,7 @@ action that caused the notify: added, canceled, accepted, rejected, ...	calendar
 actions	calendar	zh	操作
 actions...	calendar	zh	操作...
 add alarm	calendar	zh	添加闹铃
+add new event	calendar	zh	添加新预约
 add timesheet entry	calendar	zh	添加时间表条目
 added	calendar	zh	添加
 after %1	calendar	zh	在%1以后
@@ -30,6 +31,7 @@ all participants	calendar	zh	所有参与者
 allows to edit the event again	calendar	zh	允许再次编辑事件
 always	calendar	zh	永远
 apply the changes	calendar	zh	应用修改
+attention	calendar	zh	注意事项
 back half a month	calendar	zh	上半个月
 back one month	calendar	zh	上个月
 before %1	calendar	zh	在%1之前
@@ -48,6 +50,8 @@ calendar settings	admin	zh	日历设置
 calendar-fieldname	calendar	zh	日历-字段名
 can't add alarms in the past !!!	calendar	zh	不能在过去添加闹铃！
 canceled	calendar	zh	取消
+category report	calendar	zh	类别报告
+changed event-data applied	calendar	zh	应用更改后的事件数据
 charset of file	calendar	zh	文件的字符集
 check all	calendar	zh	全选
 choose a category	calendar	zh	选择分类
@@ -68,6 +72,7 @@ csv-filename	calendar	zh	CSV-字段名
 custom	calendar	zh	自定义
 custom fields	common	zh	自定义字段
 daily	calendar	zh	每日
+date range	calendar	zh	日期范围
 day	calendar	zh	日
 days	calendar	zh	日
 days of the week for a weekly repeated event	calendar	zh	一个每周重复事件在星期几
@@ -116,6 +121,7 @@ event will occupy the whole day	calendar	zh	事件将占用整天时间
 exception	calendar	zh	例外
 exception created - you can now edit or delete it	calendar	zh	例外已建立 - 现在您可以编辑或删除它
 exceptions	calendar	zh	例外
+exclude weekend	calendar	zh	不包括周末
 execute a further action for this entry	calendar	zh	为这一输入执行进一步的操作
 existing links	calendar	zh	已存在链接
 extended	calendar	zh	扩展
@@ -191,6 +197,7 @@ mail all participants	calendar	zh	发邮件给所有参与者
 make freebusy information available to not logged in persons?	calendar	zh	将可用的空闲/繁忙信息开放给未注册的人？
 manage mapping	calendar	zh	管理匹配
 maximum available quantity of %1 exceeded!	calendar	zh	超过 %1 的最大可用数量！
+min days	calendar	zh	最小天数
 minimum number of users for showing day view as consolidated.	calendar	zh	合并显示日视图的最少用户数。
 minimum number of users for showing week view as consolidated.	calendar	zh	合并显示周视图的最少用户数。
 minutes	calendar	zh	分钟
@@ -235,6 +242,7 @@ one week	calendar	zh	一星期
 one year	calendar	zh	一年
 only the initial date of that recurring event is checked!	calendar	zh	仅当重复事件的初始日期！
 open todo's:	calendar	zh	待办事项
+output unit	calendar	zh	输出单位
 overlap holiday	calendar	zh	重迭假日
 participants	calendar	zh	参与者
 participants uninvited from an event	calendar	zh	从一事件拒绝参与者
@@ -254,6 +262,7 @@ quantity	calendar	zh	数量
 re-edit event	calendar	zh	重新编辑事件
 receive email updates	calendar	zh	接收更新邮件
 receive summary of appointments	calendar	zh	接收约会概要
+recordings	calendar	zh	记录
 recurrence	calendar	zh	重复
 recurring event	calendar	zh	重复事件
 rejected	calendar	zh	拒绝
@@ -264,6 +273,7 @@ repeating event information	calendar	zh	重复事件信息
 repeating interval, eg. 2 to repeat every second week	calendar	zh	重复间隔，例如：2代表每隔两周重复一次
 repetition	calendar	zh	重复
 repetitiondetails (or empty)	calendar	zh	重复细节 (或空白)
+report	calendar	zh	报告
 requested	calendar	zh	请求
 reset	calendar	zh	重置
 resources	calendar	zh	资源
@@ -291,6 +301,7 @@ show only the date, not the year	admin	zh	只显示日期，不显示年份
 show this month	calendar	zh	显示这个月
 show this week	calendar	zh	显示这一周
 single event	calendar	zh	单一事件
+sort by	calendar	zh	排序方式
 start	calendar	zh	开始
 start date/time	calendar	zh	开始日期/时间
 startdate	calendar	zh	起始日期
@@ -331,6 +342,7 @@ updated	calendar	zh	更新日期
 use end date	calendar	zh	使用结束日期
 use the selected time and close the popup	calendar	zh	使用选定的时间并关闭弹出窗口
 user or group	calendar	zh	用户或群组
+utilities	calendar	zh	实用工具
 view this event	calendar	zh	查看该事件
 views with fixed time intervals	calendar	zh	有固定时间间隔的视图
 wed	calendar	zh	三

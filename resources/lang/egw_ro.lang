@@ -1,0 +1,30 @@
+%1 accessories now resources	resources	ro	%1 accesorii acum resurse
+%1 accessories restored	resources	ro	%1 accesorii restaurate
+%1 resource(s) %2	resources	ro	%1 resursă(e) %2
+%1 resource(s) %2, %3 failed	resources	ro	%1 resursă(e) %2, %3 nu a(u) reușit(e)
+%1 resource(s) %2, %3 failed because of insufficent rights !!!	resources	ro	%1 resursă(e) %2, %3 a(u) eșuat din cauza drepturilor insuficiente !!!!
+%1 resource(s) booked	resources	ro	%1 resursă(e) rezervată(e)
+%1 resource(s) view calendar	resources	ro	%1 resursă(e) vizualizează calendarul
+accessories	resources	ro	Accesorii
+accessories of	resources	ro	Accesorii de la
+accessories:	resources	ro	Accesorii:
+accessory of	resources	ro	Accesorii de la
+add group to event participants	resources	ro	Adăugați un grup la participanții la eveniment
+allow booking requests from any user when creating events?	resources	ro	Permiteți cererile de rezervare de la orice utilizator la crearea de evenimente?
+booking requests	resources	ro	Cereri de rezervare
+category admin	resources	ro	Categoria admin
+category saved.	resources	ro	Categorie salvată.
+choose category admin	resources	ro	Alegeți categoria admin
+delete accessories of selected resources too?	resources	ro	De asemenea, ștergeți accesoriile resurselor selectate?
+do you really want to delete this resource?	resources	ro	Chiar doriți să ștergeți această resursă?
+icon	resources	ro	Pictograma
+manage mapping	resources	ro	Gestionați cartografierea
+no - leave them	resources	ro	Nu - Lăsați-le
+no - make them resources	resources	ro	Nu - Faceți-le resurse
+no, users will need to contact users with direct booking permission	resources	ro	Nu, utilizatorii vor trebui să contacteze utilizatorii cu permisiunea de rezervare directă
+registration confirmed %1	resources	ro	Înregistrare confirmată %1
+remove accessories before changing accessory of	resources	ro	Îndepărtați accesoriile înainte de a schimba Accesoriu de
+un-delete accessories of selected resources too?	resources	ro	Restaurați accesoriile resurselor selectate?
+unable to link to %1 "%2"	resources	ro	Imposibil să se facă legătura cu %1 "%2"
+yes - delete accessories too	resources	ro	Da - Se șterg și accesoriile
+yes - un-delete accessories too	resources	ro	Da - Se restabilesc și accesoriile

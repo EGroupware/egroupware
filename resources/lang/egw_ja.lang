@@ -3,8 +3,8 @@
 %1 resource(s) %2	resources	ja	%1 個のリソースを %2
 %1 resource(s) %2, %3 failed	resources	ja	%1 個のリソースを %2, %3 個は失敗
 %1 resource(s) %2, %3 failed because of insufficent rights !!!	resources	ja	%1 個のリソースを %2, %3 個は権限不足のため失敗!!!
-%1 resource(s) View calendar	resources	ja	リソース・カレンダーを開きます。
-access by	resources	ja	アクセスするユーザ/グループ
+%1 resource(s) booked	resources	ja	%1リソースが予約されました
+%1 resource(s) view calendar	resources	ja	リソース %1 カレンダを表示
 accessories	resources	ja	アクセサリ
 accessories of	resources	ja	アクセサリ:
 accessories:	resources	ja	アクセサリ:
@@ -16,6 +16,7 @@ add resource	resources	ja	リソースを追加
 add resources	resources	ja	リソースを追加
 administrator	resources	ja	管理者
 all categories	resources	ja	全カテゴリ
+allow booking requests from any user when creating events?	resources	ja	イベント作成時にどのユーザーからの予約リクエストも許可しますか？
 allow ignore conflicts	admin	ja	衝突の無視を許可
 book	resources	ja	予約
 book resource	resources	ja	リソースを予約
@@ -23,13 +24,15 @@ book selected resources	resources	ja	選択されたリソースを予約
 book this resource	resources	ja	このリソースを予約
 bookable	resources	ja	予約可能
 booked	resources	ja	予約済み
+booking requests	resources	ja	予約リクエスト
 buy this article	resources	ja	この記事を購入
 buy this resource	resources	ja	このリソースを購入
 buyable	resources	ja	購入可能
-categories admin	resources	ja	カテゴリ管理者
+category admin	resources	ja	1 "%2" にリンクできません。
+category saved.	resources	ja	カテゴリが保存されました。
 category:	resources	ja	カテゴリ:
 check all	resources	ja	全て選択
-choose categories admin	resources	ja	カテゴリ管理者を選択
+choose category admin	resources	ja	カテゴリ管理者を選択
 clear selection	resources	ja	選択を解除
 configure access permissions	admin	ja	ACL を構成
 confirmation email text	resources	ja	メール終了確認
@@ -39,13 +42,14 @@ create new accessory for this resource	resources	ja	このリソースの新規�
 create new links	resources	ja	新規リンクの作成
 custom etemplate for the contactform	resources	ja	コンタクト・フォーム用に eTemplate をカスタマイズ
 custom fields	resources	ja	カスタム項目
-data from	resources	ja	データの取得元
 days	resources	ja	日
+delete accessories of selected resources too?	resources	ja	選択したリソースのアクセサリーも削除しますか？
 delete selected resources	resources	ja	選択されたリソースを削除
 delete this entry	resources	ja	この項目を削除
 deleted	resources	ja	削除済み
 description (short)	resources	ja	概要
 direct booking permissions	resources	ja	直接予約権限
+do you really want to delete this resource?	resources	ja	本当にこのリソースを削除しますか?
 don't use vfs (this will need a symlink --> see readme)	resources	ja	VFS使用禁止
 edit this entry	resources	ja	この項目を編集
 event start	resources	ja	イベント開始日時
@@ -59,13 +63,13 @@ general	resources	ja	一般
 general informations about resource	resources	ja	リソースの一般情報
 gernal resource	resources	ja	一般リソース
 global categories	resources	ja	グローバルカテゴリ
-history	admin	ja	履歴
 history logging	admin	ja	履歴を出力
 hours	resources	ja	時間
 how many of the resources are useable?	resources	ja	利用可能個数
 how many of them are useable?	resources	ja	利用可能個数
 how many of this resource are usable	resources	ja	利用可能個数
 how many of this resource exists	resources	ja	利用可能個数
+icon	resources	ja	アイコン
 if you specify an export definition, it will be used when you export	resources	ja	エクスポート時に使用する設定を指定します。
 implies booking permission	resources	ja	予約権限を伴う
 implies read permission	resources	ja	読み取り権限を伴う
@@ -85,14 +89,17 @@ location of resource	resources	ja	リソースの保管場所
 location:	resources	ja	保管場所:
 locations / rooms	resources	ja	保管場所 / 部屋
 long description	resources	ja	説明
-manage mapping	resources	ja	Manage mapping
+manage mapping	resources	ja	マッピングの管理
 name of resource	resources	ja	リソース名
 name:	resources	ja	名称:
 new accessory	resources	ja	新規アクセサリ
 new resource	resources	ja	新規リソース
+no - leave them	resources	ja	いいえ - 残す
+no - make them resources	resources	ja	いいえ - リソースにします
 no description available	resources	ja	説明無し
 no matches	resources	ja	一致が見つかりません
 no resources selected	resources	ja	リソースが選択されていません
+no, users will need to contact users with direct booking permission	resources	ja	いいえ、ユーザーは直接予約許可を持つユーザーに連絡する必要があります。
 notify your administrator to correct this situation	resources	ja	管理者にお問い合わせください。
 picture	resources	ja	写真
 picture source	resources	ja	写真のソース
@@ -108,9 +115,9 @@ quantity of resource	resources	ja	リソース総数
 quantity:	resources	ja	総数:
 read calendar permissions	resources	ja	カレンダー読み取り権限
 read permissions	resources	ja	読み取り権限
-registration confirmed %1	resources	ja	Registration confirmed %1
+registration confirmed %1	resources	ja	登録確認 %1
 related links	resources	ja	関連リンク
-remove accessories before changing accessory of	resources	ja	Remove accessories before changing Accessory of
+remove accessories before changing accessory of	resources	ja	のアクセサリーを変更する前にアクセサリーを削除してください。
 require confirmation	resources	ja	確認が必要です
 reserve	resources	ja	予約
 resource	resources	ja	リソース
@@ -126,7 +133,6 @@ resources csv import	resources	ja	リソースを CSV からインポート
 resources list	resources	ja	リソース一覧
 responsible:	resources	ja	責任者:
 restored	resources	ja	復元済み
-rights	resources	ja	権限
 saves entry and exits	resources	ja	項目を保存して終了しました
 select a category	resources	ja	カテゴリを選択
 select resource	resources	ja	リソースを選択
@@ -141,16 +147,16 @@ something went wrong by saving resource	resources	ja	リソース保存中にエ
 storage	resources	ja	保管
 storage information	resources	ja	保管
 storage information:	resources	ja	保管情報:
-the anonymous user needs add rights for it!	resources	ja	The anonymous user needs add rights for it!
+the anonymous user needs add rights for it!	resources	ja	匿名ユーザには追加権限が必要です！
 the calendar of this resource	resources	ja	リソース・カレンダー
 this module displays the resources app	resources	ja	リソース・アプリケーションを表示
 too many matches	resources	ja	一致が多過ぎます
-unable to link to %1 "%2"	resources	ja	Unable to link to %1 "%2"
+un-delete accessories of selected resources too?	resources	ja	選択したリソースのアクセサリを復元しますか？
+unable to link to %1 "%2"	resources	ja	%1 "%2" にリンクできません。
 unable to process confirmation.	resources	ja	確認を処理できません。
 use general resources icon	resources	ja	一般リソース・アイコンを使用
 use own picture	resources	ja	写真を使用
 use the category's icon	resources	ja	カテゴリ・アイコンを使用
-usable	resources	ja	利用可能数
 useable	resources	ja	利用可能数
 view accessories	resources	ja	アクセサリを表示
 view calendar	resources	ja	カレンダーを表示
@@ -160,6 +166,8 @@ web-site for this resource	resources	ja	このリソースのウェブ・サイ�
 where to find this resource?	resources	ja	保管場所情報
 which category does this resource belong to?	resources	ja	リソース・カテゴリ
 write permissions	resources	ja	書き込み権限
+yes - delete accessories too	resources	ja	はい - アクセサリも削除します。
+yes - un-delete accessories too	resources	ja	はい - アクセサリも復元します。
 yes, all users can ignore conflicts	resources	ja	はい（全ユーザが衝突を無視可能）
 yes, only admins can purge deleted items	admin	ja	はい（管理者のみが削除済み項目をパージ可能）
 yes, only users with direct booking permission	resources	ja	はい（直接予約権限保持ユーザのみ）

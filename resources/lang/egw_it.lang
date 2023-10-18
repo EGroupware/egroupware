@@ -3,6 +3,8 @@
 %1 resource(s) %2	resources	it	% risorse %2
 %1 resource(s) %2, %3 failed	resources	it	% risorse %2, %3 fallito
 %1 resource(s) %2, %3 failed because of insufficent rights !!!	resources	it	% risorse %2, %3 fallito a causa di permessi insufficienti
+%1 resource(s) booked	resources	it	%1 risorsa(e) prenotata(e)
+%1 resource(s) view calendar	resources	it	%1 risorsa(e) visualizza il calendario
 accessories	resources	it	Accessori
 accessories of	resources	it	Accessori di
 accessories:	resources	it	Accessori:
@@ -13,7 +15,8 @@ add group to event participants	resources	it	Aggiungi gruppo ai partecipanti del
 add resource	resources	it	aggiungi risorsa
 add resources	resources	it	Aggiungi risorse
 administrator	resources	it	Amministratore
-all categories	resources	it	tutte le categorie
+all categories	resources	it	Tutte le categorie
+allow booking requests from any user when creating events?	resources	it	Consentire le richieste di prenotazione da parte di qualsiasi utente durante la creazione di eventi?
 allow ignore conflicts	admin	it	Permetti di ignorare i conflitti
 book	resources	it	Prenota
 book resource	resources	it	Prenota risorsa
@@ -21,13 +24,15 @@ book selected resources	resources	it	prenota risorse selezionate
 book this resource	resources	it	Prenota questa risorsa
 bookable	resources	it	Prenotabile
 booked	resources	it	prenotato
+booking requests	resources	it	Richieste di prenotazione
 buy this article	resources	it	Compra questo articolo
 buy this resource	resources	it	Acquista questa risorsa
 buyable	resources	it	Acquistabile
-categories admin	resources	it	Gestione Categorie
+category admin	resources	it	Amministratore di categoria
+category saved.	resources	it	Categoria salvata.
 category:	resources	it	Categoria:
 check all	resources	it	Seleziona tutto
-choose categories admin	resources	it	gestione scelta categorie
+choose category admin	resources	it	Amministratore di categoria
 clear selection	resources	it	cancella selezione
 configure access permissions	admin	it	Configura Permessi Accesso
 confirmation email text	resources	it	Testo email di conferma
@@ -37,13 +42,15 @@ create new accessory for this resource	resources	it	Crea un nuovo accessorio per
 create new links	resources	it	Crea nuovi collegamenti
 custom etemplate for the contactform	resources	it	eTemplate personalizzato per i modulo di contatto
 custom fields	resources	it	Campi Personalizzati
-days	resources	it	giorni
-delete selected resources	resources	it	elimina risorse selezionate
+days	resources	it	Giorni
+delete accessories of selected resources too?	resources	it	Eliminare anche gli accessori delle risorse selezionate?
+delete selected resources	resources	it	Elimina risorse selezionate
 delete this entry	resources	it	Cancella questa voce
 deleted	resources	it	cancellato
 description (short)	resources	it	Descrizione (breve)
 direct booking permissions	resources	it	Permessi di prenotazione diretti
-don't use vfs (this will need a symlink --> see readme)	resources	it	Non usare vfs (servirà un symlink --> vedi README)
+do you really want to delete this resource?	resources	it	Vuoi davvero eliminare questa risorsa?
+don't use vfs (this will need a symlink --> see readme)	resources	it	Non usare VFS (servirà un symlink --> vedi README)
 edit this entry	resources	it	Modifica questa voce
 event start	resources	it	Inizio evento
 existing links	resources	it	Collegamenti esistenti
@@ -54,17 +61,18 @@ export definitition to use for nextmatch export	resources	it	Esporta la definizi
 exports a list of resources to a csv file.	resources	it	Esporta un elenco di risorse in un file CSV
 general	resources	it	Generale
 general informations about resource	resources	it	Informazioni generali sulla risorsa
-gernal resource	resources	it	risorsa generale
+gernal resource	resources	it	Risorsa generale
 global categories	resources	it	Categorie Globali
 history logging	admin	it	Registrazione dello storico
-hours	resources	it	ore
+hours	resources	it	Ore
 how many of the resources are useable?	resources	it	Quante risorse sono utilizzabili?
 how many of them are useable?	resources	it	Quante di loro sono utilizzabili?
 how many of this resource are usable	resources	it	Quante di questa risorse sono utilizzabili
 how many of this resource exists	resources	it	Quante di queste risorse esistono
+icon	resources	it	Icona
 if you specify an export definition, it will be used when you export	resources	it	Se specifichi una definizione di esportazione, allora verrà usata durante la relativa operazione
-implies booking permission	resources	it	implica permesso di prenotazione
-implies read permission	resources	it	implica permesso di lettura
+implies booking permission	resources	it	Implica permesso di prenotazione
+implies read permission	resources	it	Implica permesso di lettura
 imports a list of resources from a csv file.	resources	it	Importa un elenco di risorse da un file CSV
 information about storage	resources	it	Informazioni sullo stoccaggio
 informations about the location of resource	resources	it	Informazioni sulla localizzazione della risorsa
@@ -86,12 +94,15 @@ name of resource	resources	it	Nome della risorsa
 name:	resources	it	Nome:
 new accessory	resources	it	Nuovo accessorio
 new resource	resources	it	Nuova risorsa
+no - leave them	resources	it	No - Lasciarli
+no - make them resources	resources	it	No - Li rende risorse
 no description available	resources	it	nessuna descrizione disponibile
 no matches	resources	it	nessuna corrispondenza
 no resources selected	resources	it	Nessuna risorsa selezionata
+no, users will need to contact users with direct booking permission	resources	it	No, gli utenti dovranno contattare gli utenti con il permesso di prenotazione diretta.
 notify your administrator to correct this situation	resources	it	Avverti il tuo amministratore di correggere questa situazione
 picture	resources	it	Immagine
-picture source	resources	it	sorgente immagine
+picture source	resources	it	Sorgente immagine
 picture type is not supported, sorry!	resources	it	Tipo immagine non supportato, spiacente!
 pictures or resource	resources	it	Immagini della risorsa
 planer	resources	it	pianificatore
@@ -140,6 +151,7 @@ the anonymous user needs add rights for it!	resources	it	L'utente anonimo ha bis
 the calendar of this resource	resources	it	Il Calendario di questa risorsa
 this module displays the resources app	resources	it	Questo modulo visualizza l'applicazione risorse
 too many matches	resources	it	Troppe corrispondenze
+un-delete accessories of selected resources too?	resources	it	Ripristinare gli accessori delle risorse selezionate?
 unable to link to %1 "%2"	resources	it	Impossibile collegare %1 a "%2"
 unable to process confirmation.	resources	it	Impossibile processare la conferma
 use general resources icon	resources	it	Usa l'icona risorsa generica
@@ -154,6 +166,8 @@ web-site for this resource	resources	it	Pagina Web di questa risorsa
 where to find this resource?	resources	it	Dove trovare questa risorsa?
 which category does this resource belong to?	resources	it	A quale categoria appartiene questa risorsa?
 write permissions	resources	it	Permessi di scrittura
+yes - delete accessories too	resources	it	Sì - Elimina anche gli accessori
+yes - un-delete accessories too	resources	it	Sì - Ripristina anche gli accessori
 yes, all users can ignore conflicts	resources	it	Sì, tutti gli utenti possono ignorare i conflitti
 yes, only admins can purge deleted items	admin	it	Sì, solo gli amministratori possono cancellare definitivamente gli elementi
 yes, only users with direct booking permission	resources	it	Sì, solo utenti con permessi di prenotazione diretta

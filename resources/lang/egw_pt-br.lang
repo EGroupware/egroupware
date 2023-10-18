@@ -1,36 +1,51 @@
+%1 accessories now resources	resources	pt-br	%1 acessórios agora recursos
+%1 accessories restored	resources	pt-br	%1 acessórios restaurados
+%1 resource(s) %2	resources	pt-br	%1 recurso(s) %2
+%1 resource(s) %2, %3 failed	resources	pt-br	%1 recurso(s) %2, %3 falhou(s)
+%1 resource(s) %2, %3 failed because of insufficent rights !!!	resources	pt-br	%1 recurso(s) %2, %3 falhou(s) devido a direitos insuficientes !!!
+%1 resource(s) booked	resources	pt-br	%1 recurso(s) reservado(s)
+%1 resource(s) view calendar	resources	pt-br	%1 recurso(s) visualizado(s) no calendário
+accessories	resources	pt-br	Acessórios
 accessories of	resources	pt-br	Acessórios de
 accessories:	resources	pt-br	Acessórios:
+accessory of	resources	pt-br	Acessório de
 actions	resources	pt-br	Ações
 add accessory	resources	pt-br	Adicionar acessório
+add group to event participants	resources	pt-br	Adicionar grupo aos participantes do evento
 add resource	resources	pt-br	Adicionar recurso
 add resources	resources	pt-br	Adicionar recursos
 administrator	resources	pt-br	Administrador
 all categories	resources	pt-br	Todas as categorias
+allow booking requests from any user when creating events?	resources	pt-br	Permitir solicitações de reserva de qualquer usuário ao criar eventos?
 book	resources	pt-br	Reserva
 book selected resources	resources	pt-br	Reservar recursos selecionados
 book this resource	resources	pt-br	Reservar este recurso
 bookable	resources	pt-br	Pode ser reservado
+booking requests	resources	pt-br	Solicitações de agendamento
 buy this article	resources	pt-br	Comprar este artigo
 buy this resource	resources	pt-br	Comprar este recurso
 buyable	resources	pt-br	Comprável
-categories admin	resources	pt-br	Administrador de categorias
+category admin	resources	pt-br	Solicitações de agendamento
+category saved.	resources	pt-br	Categoria salva.
 category:	resources	pt-br	Categoria:
 check all	resources	pt-br	Checar tudo
-choose categories admin	resources	pt-br	Escolha o administrador de categorias
+choose category admin	resources	pt-br	Selecionar o administrador da categoria
 clear selection	resources	pt-br	Limpar seleção
 configure access permissions	admin	pt-br	Configurar permissões de acesso
 conflict	resources	pt-br	Conflito
 create new accessory for this resource	resources	pt-br	Criar novo acessório para este recurso
 create new links	resources	pt-br	Criar novos links
-custom etemplate for the contactform	resources	pt-br	eModelo personalizado para o formulário de contatos
+custom etemplate for the contactform	resources	pt-br	eTemplate personalizado para o formulário de contatos
 custom fields	resources	pt-br	Campos personalizados
-days	resources	pt-br	dias
+days	resources	pt-br	Dias
+delete accessories of selected resources too?	resources	pt-br	Excluir também os acessórios dos recursos selecionados?
 delete selected resources	resources	pt-br	Remover recursos selecionados
 delete this entry	resources	pt-br	Remover este registro
 deleted	resources	pt-br	removido
 description (short)	resources	pt-br	Descrição (curta)
 direct booking permissions	resources	pt-br	Permissões de reserva direta
-don't use vfs (this will need a symlink --> see readme)	resources	pt-br	Não usar vfs (isto necessitará de um symlink --> veja o README)
+do you really want to delete this resource?	resources	pt-br	Você realmente deseja excluir esse recurso?
+don't use vfs (this will need a symlink --> see readme)	resources	pt-br	Não usar VFS (isto necessitará de um symlink --> veja o README)
 edit this entry	resources	pt-br	Editar este registro
 existing links	resources	pt-br	Links existentes
 exists	resources	pt-br	Existe
@@ -40,11 +55,12 @@ general informations about resource	resources	pt-br	Informações gerais sobre r
 gernal resource	resources	pt-br	Recurso geral
 global categories	resources	pt-br	Categorias Globais
 history logging	admin	pt-br	Registro de histórico
-hours	resources	pt-br	horas
+hours	resources	pt-br	Horas
 how many of the resources are useable?	resources	pt-br	Quantos dos recursos podem ser usados?
 how many of them are useable?	resources	pt-br	Quantos deles podem ser usados?
 how many of this resource are usable	resources	pt-br	Quantos destes recursos podem ser usados?
 how many of this resource exists	resources	pt-br	Quantos destes recursos existem?
+icon	resources	pt-br	Ícone
 implies booking permission	resources	pt-br	Envolve permissões de reserva
 implies read permission	resources	pt-br	Envolve permissões de leitura
 information about storage	resources	pt-br	Informação sobre estoque
@@ -63,9 +79,12 @@ location:	resources	pt-br	Local:
 manage mapping	resources	pt-br	Gerenciar mapeamento
 name of resource	resources	pt-br	Nome do recurso
 name:	resources	pt-br	Nome:
+no - leave them	resources	pt-br	Não - Deixá-los
+no - make them resources	resources	pt-br	Não - Torná-los recursos
 no description available	resources	pt-br	Nenhuma descrição disponível
-no matches	resources	pt-br	nenhuma correspondência
+no matches	resources	pt-br	Nenhuma correspondência
 no resources selected	resources	pt-br	Nenhum recurso selecionado
+no, users will need to contact users with direct booking permission	resources	pt-br	Não, os usuários precisarão entrar em contato com os usuários com permissão de reserva direta
 notify your administrator to correct this situation	resources	pt-br	Notifique seu administrador para corrigir esta situação
 picture	resources	pt-br	Figura
 picture source	resources	pt-br	Origem da figura
@@ -78,7 +97,9 @@ quantity of resource	resources	pt-br	Quantidade do recurso
 quantity:	resources	pt-br	Quantidade:
 read calendar permissions	resources	pt-br	Permissões de leitura da Agenda de Eventos
 read permissions	resources	pt-br	Permissões de leitura
+registration confirmed %1	resources	pt-br	Registro confirmado %1
 related links	resources	pt-br	Links correlatos
+remove accessories before changing accessory of	resources	pt-br	Remova os acessórios antes de alterar o acessório de
 resources	common	pt-br	Recursos
 resources list	resources	pt-br	Lista de recursos
 responsible:	resources	pt-br	Responsável:
@@ -97,20 +118,21 @@ storage information:	resources	pt-br	Informação de estoque
 the anonymous user needs add rights for it!	resources	pt-br	O usuário anônimo precisa de permissão para adicioná-lo!
 the calendar of this resource	resources	pt-br	A agenda deste recurso
 this module displays the resources app	resources	pt-br	Este módulo exibe o aplicativo Recursos
-too many matches	resources	pt-br	muitas correspondências
-unable to link to %1 "%2"	resources	pt-br	Incapaz de ligação para% 1 "% 2"
+too many matches	resources	pt-br	Muitas correspondências
+un-delete accessories of selected resources too?	resources	pt-br	Restaurar os acessórios dos recursos selecionados?
+unable to link to %1 "%2"	resources	pt-br	Não é possível vincular a %1 "%2"
 use general resources icon	resources	pt-br	Usar ícone comum para recursos
 use own picture	resources	pt-br	Usar própria figura
 use the category's icon	resources	pt-br	Usar o ícone da categoria
 useable	resources	pt-br	Pode ser usado
-useable:	resources	pt-br	Pode ser usado:
-view accessories for this resource	resources	pt-br	Exibir acessórios para este recurso
 view this entry	resources	pt-br	Exibir este registro
 web-page of resource	resources	pt-br	Página web do recurso
 web-site for this resource	resources	pt-br	Site para este recurso
 where to find this resource?	resources	pt-br	Onde encontrar este recurso?
 which category does this resource belong to?	resources	pt-br	Qual categoria este recurso pertence?
 write permissions	resources	pt-br	Permissões de escrita
+yes - delete accessories too	resources	pt-br	Sim - Excluir também os acessórios
+yes - un-delete accessories too	resources	pt-br	Sim - Restaurar também os acessórios
 yes, only admins can purge deleted items	admin	pt-br	Sim, somente administradores podem limpar registros removidos
 you are not permitted to get information about this resource!	resources	pt-br	Você não tem permissão para ver informações sobre este recurso!
 you chose more resources than available	resources	pt-br	Você escolheu mais recursos do que disponível

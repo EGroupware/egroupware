@@ -1,5 +1,6 @@
 %1 added	addressbook	ja	%1 を追加しました
 %1 contact(s) %2	addressbook	ja	%1 個のコンタクトを %2
+%1 contact(s) %2, %3 failed because of %4 !!!	addressbook	ja	1 連絡先 %2、%3 が %4 のため失敗しました!
 %1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	ja	%1 個のコンタクトを %2, （権限不足のため %3 個は失敗!）
 %1 contacts updated (%2 errors).	addressbook	ja	%1 個のコンタクトを更新しました (%2 個のエラー)。
 %1 fields in %2 other organisation member(s) changed	addressbook	ja	%1 fields in %2 other organization member(s) changed.
@@ -66,6 +67,8 @@ all addressbooks	addressbook	ja	全アドレス帳
 all contacts	addressbook	ja	全コンタクト
 all in one field	addressbook	ja	1項目内に全て
 all types	addressbook	ja	全タイプ
+allow	addressbook	ja	許可
+allow for contacts only	addressbook	ja	連絡先のみ許可
 allow members of following groups to edit contact-data of accounts	addressbook	ja	下記グループに所属するメンバーによるコンタクト・データの更新を許可
 allow users to maintain their own account-data	admin	ja	ユーザ自身のコンタクト・データの更新を許可
 alt. csv import	addressbook	ja	CSVインポート
@@ -76,6 +79,7 @@ are you shure you want to delete this contact?	addressbook	ja	このコンタク
 are you sure you want to delete this field?	addressbook	ja	この項目を削除してよろしいですか？
 assistent	addressbook	ja	アシスタント
 assistent phone	addressbook	ja	アシスタントの電話番号
+audio call	addressbook	ja	オーディオ通話
 birthday	common	ja	誕生日
 birthdays	common	ja	誕生日
 blank	addressbook	ja	空白
@@ -93,6 +97,7 @@ business state	addressbook	ja	都道府県
 business street	addressbook	ja	町域
 business zip code	addressbook	ja	郵便番号
 calendar fields:	addressbook	ja	カレンダー項目:
+calendar integration	addressbook	ja	カレンダーの統合
 calendar uri	addressbook	ja	カレンダー URI
 can be changed via setup >> configuration	admin	ja	設定 >> 構成 で変更できます
 can't create dn %1	addressbook	ja	dn %1 を生成できません
@@ -104,6 +109,7 @@ categories, notes, ...	addressbook	ja	カテゴリ, 備考, ...
 category path	addressbook	ja	カテゴリ・パス
 category tree	admin	ja	カテゴリ・ツリー
 cell phone	addressbook	ja	セルラー電話
+change addressbook when updating	addressbook	ja	更新時にアドレス帳を変更
 change all organisation members	addressbook	ja	組織・団体の全メンバーを変更
 charset for the csv export	addressbook	ja	CSV エクスポート時の文字セット
 charset for the vcard export	addressbook	ja	vCard エクスポート時の文字セット
@@ -183,6 +189,8 @@ deletes the photo	addressbook	ja	写真を削除
 department	common	ja	部署
 departments	addressbook	ja	部署
 directory with documents to insert contacts	addressbook	ja	コンタクトを挿入するディレクトリ/ドキュメント
+disable	addressbook	ja	無効にする
+disable last/next event column	addressbook	ja	最終/次のイベント列を無効にする
 display contact	addressbook	ja	コンタクトを表示
 displays a remider for birthdays on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	ja	ホーム画面に誕生日を表示
 distribution list deleted	addressbook	ja	配信リストを削除しました
@@ -216,6 +224,7 @@ email & internet	addressbook	ja	メール & インターネット
 email (private)	addressbook	ja	メール・アドレス（個人）
 email addresses (comma separated) to send the contact data	addressbook	ja	コンタクト・データ送付先のメール・アドレス(コンマ区切り）
 empty	admin	ja	空
+empty addressbook before importing	addressbook	ja	CSVリストにないアドレス帳エントリを削除する
 empty for all	addressbook	ja	空に設定すると全て
 enable an extra private addressbook	addressbook	ja	拡張個人用アドレス帳
 enclosure	addressbook	ja	秘匿
@@ -246,6 +255,7 @@ extra	addressbook	ja	拡張
 extra encodings	addressbook	ja	拡張エンコーディング
 extra private	addressbook	ja	拡張（個人用）
 failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	ja	組織・団体のメンバーを更新できませんでした（権限不足）!
+favorite phone	addressbook	ja	お気に入り電話
 favorites	addressbook	ja	お気に入り
 fax	addressbook	ja	FAX
 fax (private)	addressbook	ja	FAX（個人用）
@@ -317,6 +327,7 @@ insufficent rights to delete this list!	addressbook	ja	このリストを削除�
 insufficent rights to edit this list!	addressbook	ja	このリストを編集する権限が不足しています!
 international	addressbook	ja	国際
 internet	addressbook	ja	インターネット
+invite to current call	addressbook	ja	現在の通話に招待
 label	addressbook	ja	ラベル
 last date	addressbook	ja	最終日
 last modified	addressbook	ja	最終更新日時
@@ -364,6 +375,7 @@ multiple vcard	addressbook	ja	複数 vCard
 name for the distribution list	addressbook	ja	配信リスト名
 name of current user, all other contact fields are valid too	addressbook	ja	ユーザ名、およびその他の項目は全て有効です。
 name, address	addressbook	ja	氏名, 住所
+name, email, phone	addressbook	ja	名前、メールアドレス、電話番号
 new contact submitted by %1 at %2	addressbook	ja	新規コンタクトは %1 によって %2 に送信されました。
 new window opened to edit infolog for your selection	addressbook	ja	インフォログ編集ウィンドウを新規に開きました。
 next date	addressbook	ja	次の日付
@@ -394,6 +406,7 @@ participants	addressbook	ja	参加者
 permission denied !!!	addressbook	ja	権限が拒否されました!
 permissiong denied! ask your administrator to allow regular uses to update their public keys.	addressbook	ja	権限が拒否されました! 公開キーを更新できるように管理者に依頼してください。
 pgp key	addressbook	ja	PGPキー
+phone number	common	ja	電話番号
 phone numbers	common	ja	電話番号
 photo	addressbook	ja	写真
 please enter a name for that field !	addressbook	ja	項目名を入力してください!
@@ -408,6 +421,7 @@ prevent deleting of contacts	admin	ja	コンタクトの削除を禁止
 private address	addressbook	ja	住所（個人）
 private custom fields	addressbook	ja	カスタム項目（個人）
 public key	addressbook	ja	パブリック・キー
+public sharing url	addressbook	ja	公開共有URL
 publish into groups:	addressbook	ja	グループに追加:
 read a list / search for entries.	addressbook	ja	リストを読み込む / 項目を検索
 read a list of entries.	addressbook	ja	項目リストを読み込む
@@ -427,6 +441,7 @@ replacements for inserting contacts into documents	addressbook	ja	ドキュメ�
 required fields *	addressbook	ja	必須項目 *
 role	addressbook	ja	職業
 room	addressbook	ja	部屋番号
+schedule a video conference	addressbook	ja	ビデオ会議のスケジュール
 search letter	addressbook	ja	文字検索
 select a portrait format jpeg photo. it will be resized to 60 pixel width.	addressbook	ja	ポートレート写真(JPEG)を選択してください（60ピクセル幅にリサイズされます）。
 select a source address to be used in geolocation routing system	addressbook	ja	位置情報の取得元を選択
@@ -435,6 +450,7 @@ select addressbook type	addressbook	ja	アドレス帳タイプを選択
 select all	addressbook	ja	全て選択
 select an action or addressbook to move to	addressbook	ja	アクション、または移動するアドレス帳を選択
 select an action or addressbook to move to...	addressbook	ja	アクション、または移動するアドレス帳を選択...
+select an opened dialog	addressbook	ja	開いているダイアログを選択
 select migration type	admin	ja	移行タイプを選択
 select multiple contacts for a further action	addressbook	ja	アクションのためのコンタクトを選択
 select phone number as prefered way of contact	addressbook	ja	優先コンタクト方法として電話番号を選択
@@ -443,6 +459,7 @@ select the type of conversion:	addressbook	ja	変換タイプを選択:
 select where you want to store / retrieve contacts	admin	ja	コンタクトの保存先/取得元を選択
 selected contacts	addressbook	ja	選択済みコンタクト
 send emailcopy to receiver	addressbook	ja	メールのコピーを送信
+send fax via email by replacing fax number with an email address	addressbook	ja	FAX番号をEメールアドレスに置き換えてEメールでFAX送信
 send succeeded to %1	common	ja	%1 への送信成功
 seperator	addressbook	ja	区切り文字
 set full name and file as field in contacts of all users (either all or only empty values)	admin	ja	ユーザの氏名、およびファイル名を設定してください。
@@ -483,7 +500,7 @@ the anonymous user has probably no add rights for this addressbook.	addressbook	
 the anonymous user needs add rights for it!	addressbook	ja	追加権限が必要です!
 the anonymous user needs read it!	addressbook	ja	読み取り権限が必要です!
 the following document-types are supported:	addressbook	ja	下記のドキュメント・タイプがサポートされます:
-the zip extension is needed, to insert contact data in openoffice or msoffice documents.	addressbook	ja	コンタクト・データをオフィス（OpenOffice / マイクロソフト・オフィス）に挿入するためには拡張子が ZIP である必要があります。
+the zip extension is needed, to insert contact data in openoffice or msoffice documents.	addressbook	ja	LibreOffice や MS Office ドキュメントに連絡先データを挿入するには、zip 拡張子が必要です。
 there was an error saving your data :-(	addressbook	ja	エラー: データ保存失敗!
 this module displays a contactform, that stores direct into the addressbook.	addressbook	ja	このモジュールは、アドレス帳に直接データを保存するフォームを表示します。
 this module displays block from a adddressbook group.	addressbook	ja	このモジュールは、アドレス帳グループからブロックを表示します。
@@ -527,6 +544,7 @@ vcard	common	ja	vCard
 vcards require a first name entry.	addressbook	ja	vCard には、名前（氏名の名）が必要です。
 vcards require a last name entry.	addressbook	ja	vCards には、姓（氏名の氏）が必要です。
 verification	addressbook	ja	検証
+video call	addressbook	ja	ビデオ通話
 view linked infolog entries	addressbook	ja	リンクするインフォログの項目を表示
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	ja	警告!! LDAP をアカウントの保存先としていない場合に限り、LDAP は有効です。
 warning: all contacts found will be deleted!	addressbook	ja	警告: 見つかったコンタクトは全て削除されます!

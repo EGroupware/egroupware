@@ -1,8 +1,12 @@
 (leave empty for no quota)	mail	sv	(Lämna tomt för ingen kvot)
 (no subject)	mail	sv	(ingen rubrik)
+acl rights retrieve failed, seems there are no rights set!	mail	sv	Hämtning av ACL-rättigheter misslyckades, det verkar inte finnas några rättigheter angivna!
 add all my aliases	mail	sv	Lägg till alla mina alias
+add files as %1	mail	sv	Lägg till filer som %1
 add raw message, ignore mail attachments	mail	sv	Konvertera e-post till objekt, lägg till obearbetat meddelande (ignorera bifogade filer)
 add to addressbook	mail	sv	Lägg till i Adressbok
+adding %1 to blacklisted email addresses failed because of %2	mail	sv	Att lägga till %1 till svartlistade e-postadresser misslyckades på grund av %2
+adding %1 to whiltelisted email addresses failed because of %2	mail	sv	Lägga till %1 till whiltelisted e-postadresser misslyckades på grund av %2
 after reply, visible during compose	mail	sv	Efter svar, synlig under sammansättning
 aliases+forwards	mail	sv	Alias+Framåt
 all of	mail	sv	Alla
@@ -12,10 +16,17 @@ always show notifiction	mail	sv	Visar alltid meddelande
 answered	mail	sv	Svarat
 any of	mail	sv	Någon av
 any status	mail	sv	Alla status
+attach files	mail	sv	Bifoga filer
+attach users vcard at compose to every new mail	mail	sv	Bifoga användarens vCard till varje nytt e-postmeddelande
+attachment has been saved successfully.	mail	sv	Bilagan har sparats framgångsrikt.
 attachments	mail	sv	Bilagor
+attachments, ...	mail	sv	bilagor, ...
+be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	sv	Tänk på att om du lägger till alla valda filer i %1-läge kommer även alla befintliga bilagor i listan att ändras till %2-läge. \n \n Vill du fortsätta?
+be aware that all attachments will be sent as %1!	mail	sv	Tänk på att alla bilagor kommer att skickas som %1!
 by date	mail	sv	Enligt datum
 by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	sv	Som standard ersätts 'http://' bara med 'https://'. Konfigurera gärna 'https://proxy.egroupware.org/' så att även bilder som endast är tillgängliga via http laddas.
 caching of flags	mail	sv	Cachelagring av flaggor
+changing subject failed because of %1	mail	sv	Byte av ämne misslyckades på grund av %1
 changing subject failed folder %1 does not exist	mail	sv	Byte av ämne misslyckades mappen %1 finns inte
 check message against next rule also	mail	sv	Verifiera meddelande även mot nästa regel
 compose	mail	sv	Skriv
@@ -57,15 +68,31 @@ drafts folder	mail	sv	Utkast katalog
 edit account	mail	sv	Ändra konto
 edit vacation settings	mail	sv	Ändra frånvaro alternativ
 emailaddress	admin	sv	E-post adress
+emailadmin: profilemanagement	mail	sv	E-postmeddelanden i vitlistade domäner markeras inte som skräppost
+emails in whitelisted domains are not marked as spam	mail	sv	E-postmeddelanden i vitlistade domäner markeras inte som skräppost
 empty trash	mail	sv	Töm Borttaget
 enable	mail	sv	Aktivera
+enabled	mail	sv	Aktiverad
+encrypt your message with smime certificate	mail	sv	Kryptera ditt meddelande med S/MIME-certifikat
 event details follow	mail	sv	Händelse detaljer följer
 everyone	mail	sv	Alla
+examine namespace to retrieve folders in others and shared	mail	sv	Undersök namnrymden för att hämta mappar i andra och delade
 extended	mail	sv	Utökad
+failed to delete %1	mail	sv	Radering av %1 misslyckades
+failed to subscribe folder %1!	mail	sv	Det gick inte att prenumerera på mappen %1!
+failed to unsubscribe folder %1!	mail	sv	Det gick inte att avsluta prenumerationen på mappen %1!
 file into	mail	sv	Flytta till
+file into:	mail	sv	Flytta till:
 filemanager	mail	sv	Filhanterare
+filemode has been switched to %1	mail	sv	Filemodus er endret til: %1
+flag / unflag	mail	sv	Flagga / Avflagga
 flagged	mail	sv	Flaggad
+flagged %1 messages as %2 in %3	mail	sv	Flaggade %1 meddelande(n) som %2 i %3
+flagged %1 messages as flagged in %2	mail	sv	Flaggade %1 meddelande(n) som flaggade i %2
+flagged %1 messages as unflagged in %2	mail	sv	Flaggade %1 meddelande(n) som flaggade i %2
 folder	mail	sv	Katalog
+folder %1 %2 failed because of %3!	mail	sv	Mapp %1 %2 misslyckades på grund av %3!
+folder %1 has been created successfully, although the subscription failed because of %2	mail	sv	Mappen %1 har skapats framgångsrikt, även om prenumerationen misslyckades på grund av %2
 folder settings	mail	sv	Katalog alternativ
 forward	mail	sv	Vidarebefodra
 forward to	mail	sv	Vidarebefodra till
@@ -74,20 +101,44 @@ from(a->z)	mail	sv	Från (A->Ö)
 from(z->a)	mail	sv	Från (Ö->A)
 general	admin	sv	Allmänt
 greater than	mail	sv	Större än
+handling of external http images / mixed content in mails	mail	sv	Hantering av externa http-bilder / blandat innehåll i e-postmeddelanden
 header lines	mail	sv	Brevhuvud
-html	mail	sv	Html
+html	mail	sv	HTML
+ident name	mail	sv	Identnamn
+ident name email	mail	sv	Identnamn [E-post]
+ident name organization email	mail	sv	Identnamn Organisation [E-post]
 identity	mail	sv	Identitet
+identity label	mail	sv	Identitetsetikett
 if	mail	sv	OM
 if mail header	mail	sv	om brevhuvud
 if message size	mail	sv	om meddelande storlek
+if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	sv	Om du vill se en förhandsgranskning av ett e-postmeddelande genom att klicka på ämnet ska du aktivera detta.
+if you would like to select multiple folders in one action, you can hold ctrl key then select a folder as start range and another folder within a same level as end range, all folders in between will be selected or unselected based on their current status.	mail	sv	Om du vill välja flera mappar i en åtgärd kan du hålla ned ctrl-tangenten och sedan välja en mapp som startintervall och en annan mapp inom samma nivå som slutintervall, alla mappar däremellan kommer att väljas eller avmarkeras baserat på deras aktuella status.
 imap	mail	sv	IMAP
 imap server	mail	sv	IMAP Server
+import of message %1 failed. could not save message to folder %2 due to: %3	mail	sv	Import av meddelande %1 misslyckades. Det gick inte att spara meddelandet i mappen %2 på grund av: %3
+import of message %1 failed. destination folder %2 does not exist.	mail	sv	Import av meddelande %1 misslyckades. Målmapp %2 finns inte.
+import of message %1 failed. destination folder not set.	mail	sv	Import av meddelande %1 misslyckades. Destination Folder inte angiven.
+import of message %1 failed. no contacts to merge and send to specified.	mail	sv	Import av meddelande %1 misslyckades. Inga kontakter att slå samman och skicka till angivna.
+importance	mail	sv	Viktigt
+important	mail	sv	Viktigt
+in mailbox: %1, with id: %2, and partid: %3	mail	sv	I brevlåda: %1, med ID: %2, och PartID: %3
+in order to protect your privacy all external sources within this email are blocked.	mail	sv	För att skydda din integritet är alla externa källor i detta e-postmeddelande blockerade.
 inbox	mail	sv	Inkorg
 information to show on email tag	mail	sv	Information som ska visas på e-postetiketten
+initialization of mail failed. please use the wizard to cope with the problem.	mail	sv	Initialiseringen av e-postmodulen misslyckades. Använd konfigurationsguiden för att korrigera konfigurationen.
+inline	mail	sv	Vidarebefordra
+insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)	mail	sv	infoga signaturen högst upp i det nya meddelandet (eller svarsmeddelandet) när du öppnar skrivdialogen (du kanske inte kan byta signatur)
+job	mail	sv	Arbete
+junk	mail	sv	Skräppost
+junk folder	mail	sv	Mapp för skräppost
 keep a copy of the message in your inbox	mail	sv	Spara en kopia av brev i din Inkorg
 kilobytes	mail	sv	Kb
 later	mail	sv	Senare
+learning as ham (not spam) failed because of %1	mail	sv	Inlärning som ham (inte spam) misslyckades på grund av %1
+learning as spam failed because of %1	mail	sv	Inlärning som spam misslyckades på grund av %1
 less than	mail	sv	Mindre än
+limit mailing list results when searching for addresses	mail	sv	Begränsa resultat från e-postlistor vid sökning efter adresser
 list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	sv	Lista över åtgärder som ska aktiveras/aktiveras som standard (t.ex. åtgärden Mail compos spara som InfoLog)
 mail	common	sv	E-post
 mail acl	mail	sv	Tillträdesrättigheter
@@ -99,6 +150,8 @@ mail-address	mail	sv	E-postadress
 mailaccount	mail	sv	E-postkonto
 mailinglist	mail	sv	Utskickslista
 mails	common	sv	E-post
+mails can be copied to that folder via context menu, if folder is configured.	mail	sv	E-postmeddelanden kan kopieras till den mappen via snabbmenyn, om mappen är konfigurerad.
+mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	sv	Mailservern rapporterade:\n%1 \nVill du fortsätta med att radera de valda meddelandena omedelbart (klicka ok)?\nOm inte, försök att tömma din skräppostmapp innan du fortsätter. (klicka på Avbryt)
 mark all as read	mail	sv	Markera alla som lästa
 mark all messages in folder as read	mail	sv	Markera alla meddelanden i mappen som lästa
 mark as deleted	mail	sv	Markera som raderad
@@ -138,11 +191,18 @@ printing	mail	sv	Utskrift
 push notifications	mail	sv	Push-meddelanden
 quicksearch	mail	sv	Snabbsök
 quicksearch (with cc)	mail	sv	Snabbsök (+Kopia)
+real name	mail	sv	Verkligt namn
+real name email	mail	sv	Verkligt namn [E-post]
+real name organization email	mail	sv	Verkligt namn Organisation [E-post]
 refresh time in minutes	mail	sv	Uppdaterings intervall i minuter
 reject with	mail	sv	Avvisa med
+remember the password for	mail	sv	Kom ihåg lösenordet för
 remove all	mail	sv	Radera samtliga
 remove immediately	mail	sv	Radera omedelbart
+removing %1 from blacklisted email addresses failed because of %2	mail	sv	Borttagning av %1 från svartlistade e-postadresser misslyckades på grund av %2
+removing %1 from whiltelisted email addresses failed because of %2	mail	sv	Borttagning av %1 från whiltelistade e-postadresser misslyckades på grund av %2
 rename folder	mail	sv	Byt namn på katalog
+replace 'http://' in image urls with (trailing / required!)	mail	sv	Ersätt 'http://' i bild-url:ar med (efterföljande / krävs!)
 replied	mail	sv	Svarade
 reply	mail	sv	Svara
 reply all	mail	sv	Svara alla
@@ -178,8 +238,18 @@ sneak preview in list	mail	sv	Förhandsgranskning av meddelande
 subject(a->z)	mail	sv	Ämne (A->Ö)
 subject(z->a)	mail	sv	Ämne (Ö->A)
 text	mail	sv	Text
+the imap server need to meet certain requirements and be configured for it:	mail	sv	IMAP-servern måste uppfylla vissa krav OCH vara konfigurerad för detta:
 the mimeparser can not parse this message.	mail	sv	MIME-tolken kunde inte tolka meddelandet
+the rule with priority %1 successfully saved!	mail	sv	Regeln med prioritet %1 sparades framgångsrikt!
 then	mail	sv	SEN
+there is no space left to store sieve script, please check sieve_maxscriptsize option on your mailserver's config.	mail	sv	Det finns inget utrymme kvar för att lagra sieve-skript, kontrollera alternativet sieve_maxscriptsize i e-postserverns konfiguration.
+this mail contains external images served via insecure http protocol. be aware showing or allowing them can compromise your security!	mail	sv	Detta e-postmeddelande innehåller externa bilder som serveras via osäkert HTTP-protokoll. Var medveten om att visa eller tillåta dem kan äventyra din säkerhet!
+this message is smime encrypted and password protected.	mail	sv	Detta meddelande är S/MIME-krypterat och lösenordsskyddat.
+timeout on connections to your imap server	mail	sv	Timeout för anslutningar till din IMAP-server
+to do	mail	sv	Att göra
+toggle all folders view for %1	mail	sv	Växla vyn Alla mappar för %1
+toggled on actions	mail	sv	Kopplad till åtgärder
+trash	mail	sv	Papperskorg
 trash folder	mail	sv	Borttaget
 unflagged	mail	sv	Oflaggad
 unread	mail	sv	Oläst

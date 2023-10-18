@@ -1,17 +1,49 @@
+%1 accessories now resources	resources	uk	%1 аксесуарів тепер є в наявності
+%1 accessories restored	resources	uk	%1 аксесуар відновлено
+%1 resource(s) %2	resources	uk	%1 ресурс(и) %2
+%1 resource(s) %2, %3 failed	resources	uk	%1 ресурс(и) %2, %3 не вдалося відкрити
+%1 resource(s) %2, %3 failed because of insufficent rights !!!	resources	uk	%1 ресурс(и) %2, %3 не вдалося відкрити через недостатні права!!!
+%1 resource(s) booked	resources	uk	%1 ресурс(и) заброньовано
+%1 resource(s) view calendar	resources	uk	%1 ресурс(и) переглядають календар
+accessories	resources	uk	Аксесуари
+accessories of	resources	uk	Аксесуари від
+accessories:	resources	uk	Аксесуари:
+accessory of	resources	uk	Аксесуари від
 actions	resources	uk	Дії
+add group to event participants	resources	uk	Додати групу до учасників заходу
+allow booking requests from any user when creating events?	resources	uk	Дозволити запити на бронювання від будь-якого користувача при створенні подій?
+booking requests	resources	uk	Запити на бронювання
+category admin	resources	uk	Адміністрування категорії
+category saved.	resources	uk	Категорія збережена.
+choose category admin	resources	uk	Виберіть адміністратора категорії
 configure access permissions	admin	uk	Надати Права доступу
 create new links	resources	uk	Створити нові посилання
 custom fields	resources	uk	Власні поля
 days	resources	uk	Дні
+delete accessories of selected resources too?	resources	uk	Також видалити аксесуари вибраних ресурсів?
 delete this entry	resources	uk	видалити цей запис
 deleted	resources	uk	Видалено
+do you really want to delete this resource?	resources	uk	Ви дійсно хочете видалити цей ресурс?
 edit this entry	resources	uk	Редагувати цей запис
 existing links	resources	uk	Існуючі посилання
 global categories	resources	uk	Глобальні категорії
 hours	resources	uk	години
+icon	resources	uk	Іконка
 implies read permission	resources	uk	Включає дозвіл на читання
 links	resources	uk	Посилання
 location	resources	uk	Місце
+manage mapping	resources	uk	Керування відображенням
+no - leave them	resources	uk	Ні - Залишити їх
+no - make them resources	resources	uk	Ні - Зробити їх ресурсами
+no matches	resources	uk	Немає збігів
+no, users will need to contact users with direct booking permission	resources	uk	Ні, вам потрібно буде зв'язатися з користувачами, щоб отримати прямий дозвіл на бронювання
 read permissions	resources	uk	Дозвіл на читання
+registration confirmed %1	resources	uk	Реєстрацію підтверджено %1
+remove accessories before changing accessory of	resources	uk	Видаліть аксесуари перед зміною Аксесуар з
+too many matches	resources	uk	Занадто багато збігів
+un-delete accessories of selected resources too?	resources	uk	Відновити аксесуари вибраних ресурсів?
+unable to link to %1 "%2"	resources	uk	Неможливо створити посилання на %1 "%2"
 view this entry	resources	uk	Переглянути цей запис
 write permissions	resources	uk	Дозвіл на запис
+yes - delete accessories too	resources	uk	Так - Також видалити аксесуари
+yes - un-delete accessories too	resources	uk	Так - Також відновити аксесуари

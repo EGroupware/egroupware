@@ -1,3 +1,11 @@
+%1 events in ical file, only first one imported and displayed!	calendar	ro	%1 evenimente în fișierul iCal, doar primul a fost importat și afișat!
+(%1 events in %2 seconds)	calendar	ro	(%1 evenimente în %2 secunde)
+add new event	calendar	ro	Adăugați o nouă programare
+attention	calendar	ro	În atenția
+category report	calendar	ro	Raport de categorie
+changed event-data applied	calendar	ro	S-a aplicat modificarea datelor de eveniment
+date range	calendar	ro	Intervalul de date
+exclude weekend	calendar	ro	Excludeți Weekend
 how many days to be removed in the future (default 365)	calendar	ro	Câte zile trebuie să fie eliminate în viitor (implicit 365)
 how many days to be removed in the past (default 100)	calendar	ro	Câte zile trebuie să fie eliminate în trecut (implicit 100)
 how many days to sync in the future (default %1)	calendar	ro	Câte zile trebuie sincronizate în viitor (implicit %1)
@@ -7,8 +15,14 @@ how many lines of all day events should be directly visible. further lines are a
 how many separate calendars to show before merging them together	calendar	ro	Numărul minim de utilizatori pentru a afișa o vizualizare consolidată a calendarului; dacă sunt selectați mai puțini utilizatori, calendarul este afișat separat pentru vizualizarea săptămânală sau zilnică.
 ical cannot change the owner of an existing event.  this applies to new events only.	calendar	ro	iCal nu poate schimba proprietarul unui eveniment existent. Acest lucru se aplică numai evenimentelor noi.
 maximum available quantity of %1 exceeded!	calendar	ro	Cantitatea maximă disponibilă de %1 a fost depășită!
+min days	calendar	ro	Zile minime
 minimum number of users for showing day view as consolidated.	calendar	ro	Numărul minim de utilizatori pentru afișarea vizualizării zilei ca fiind consolidată.
 minimum number of users for showing week view as consolidated.	calendar	ro	Numărul minim de utilizatori pentru a afișa vizualizarea săptămânală ca fiind consolidată.
 move to	calendar	ro	Treceți la
 multiple participants	calendar	ro	Participanți multipli
 never notify externals (non-users) about events i create	calendar	ro	Nu notificați niciodată persoanele externe (non-utilizatori) despre evenimentele pe care le creez
+output unit	calendar	ro	Unitate de ieșire
+recordings	calendar	ro	Înregistrări
+report	calendar	ro	Raport
+sort by	calendar	ro	Sortează după
+utilities	calendar	ro	Utilități

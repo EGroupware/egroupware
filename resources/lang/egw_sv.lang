@@ -1,22 +1,35 @@
-accessories of	resources	sv	Tillbehör till
+%1 accessories now resources	resources	sv	%1 tillbehör nu resurser
+%1 accessories restored	resources	sv	%1 tillbehör återställda
+%1 resource(s) %2	resources	sv	%1 resurs(er) %2
+%1 resource(s) %2, %3 failed	resources	sv	%1 resurs(er) %2, %3 misslyckades
+%1 resource(s) %2, %3 failed because of insufficent rights !!!	resources	sv	%1 resurs(er) %2, %3 misslyckades på grund av otillräckliga rättigheter !!!
+%1 resource(s) booked	resources	sv	%1 resurs(er) bokad
+%1 resource(s) view calendar	resources	sv	%1 resurs(er) visa kalender
+accessories	resources	sv	Tillbehör
+accessories of	resources	sv	Tillbehör från
 accessories:	resources	sv	Tillbehör:
+accessory of	resources	sv	Tillbehör från
 actions	resources	sv	Åtgärder
 add accessory	resources	sv	Lägg till tillbehör
+add group to event participants	resources	sv	Lägg till grupp till eventdeltagare
 add resource	resources	sv	Lägg till resurs
 add resources	resources	sv	Lägg till resurser
 administrator	resources	sv	Administratör
 all categories	resources	sv	Alla kategorier
+allow booking requests from any user when creating events?	resources	sv	Tillåt bokningsförfrågningar från alla användare när du skapar evenemang?
 book	resources	sv	Boka
 book selected resources	resources	sv	Boka valda resurser
 book this resource	resources	sv	Boka resursen
 bookable	resources	sv	Bokningsbar
+booking requests	resources	sv	Bokningsförfrågningar
 buy this article	resources	sv	Köp artikeln
 buy this resource	resources	sv	Köp resursen
 buyable	resources	sv	Till salu
-categories admin	resources	sv	Kategori administratör
+category admin	resources	sv	Kategori admin
+category saved.	resources	sv	Kategori sparad.
 category:	resources	sv	Kategori:
 check all	resources	sv	Markera alla
-choose categories admin	resources	sv	Välj kategori administratör
+choose category admin	resources	sv	Välj kategoriadministratör
 clear selection	resources	sv	Rensa markeringar
 configure access permissions	admin	sv	Reglera åtkomst
 conflict	resources	sv	Konflikt
@@ -24,11 +37,13 @@ create new accessory for this resource	resources	sv	Skapa tillbehör till resurs
 create new links	resources	sv	Skapa nya länkar
 custom fields	resources	sv	Anpassade fält
 days	resources	sv	Dagar
+delete accessories of selected resources too?	resources	sv	Ta även bort tillbehör till de valda resurserna?
 delete selected resources	resources	sv	Radera valda resurser
 delete this entry	resources	sv	Radera posten
 deleted	resources	sv	Raderad
 description (short)	resources	sv	Beskrivning (kort)
 direct booking permissions	resources	sv	Direkt bokningsrättigheter
+do you really want to delete this resource?	resources	sv	Vill du verkligen ta bort den här resursen?
 don't use vfs (this will need a symlink --> see readme)	resources	sv	Använd inte VFS (detta behöver en mjuklänk --> läs i README)
 edit this entry	resources	sv	Ändra post
 existing links	resources	sv	Befintliga länkar
@@ -41,6 +56,7 @@ how many of the resources are useable?	resources	sv	Hur många av resurserna är
 how many of them are useable?	resources	sv	Hur många av dem är tillgängliga
 how many of this resource are usable	resources	sv	Hur många av resursen är tillgängliga
 how many of this resource exists	resources	sv	Hur många av resursen finns
+icon	resources	sv	Ikon
 implies booking permission	resources	sv	Ger bokningsrättigheter
 implies read permission	resources	sv	Ger läsrättigheter
 information about storage	resources	sv	Information om lager
@@ -55,10 +71,14 @@ links	resources	sv	Länkar
 location	resources	sv	Placering
 location of resource	resources	sv	Resursens placering
 location:	resources	sv	Placering:
+manage mapping	resources	sv	Hantera mappning
 name of resource	resources	sv	Resuserns namn
 name:	resources	sv	Namn:
+no - leave them	resources	sv	Nej - låt dem vara kvar
+no - make them resources	resources	sv	Nej - Gör dem till resurser
 no description available	resources	sv	Ingen beskrivning tillgänglig
 no resources selected	resources	sv	Inga valda resuser
+no, users will need to contact users with direct booking permission	resources	sv	Nej, användare måste kontakta användare med direkt bokningsbehörighet
 notify your administrator to correct this situation	resources	sv	Meddela administratören om problemet
 picture	resources	sv	Bild
 picture source	resources	sv	Bildkälla
@@ -71,7 +91,9 @@ quantity of resource	resources	sv	Resurs antal
 quantity:	resources	sv	Antal:
 read calendar permissions	resources	sv	Kalender läsrättigheter
 read permissions	resources	sv	Läsrättigheter
+registration confirmed %1	resources	sv	Registrering bekräftad %1
 related links	resources	sv	Relaterade länkar
+remove accessories before changing accessory of	resources	sv	Ta bort tillbehör innan du ändrar Tillbehör till
 resources	common	sv	Resurser
 resources list	resources	sv	Resurslista
 responsible:	resources	sv	Ansvarig:
@@ -89,17 +111,19 @@ storage information	resources	sv	Lager information
 storage information:	resources	sv	Lager information:
 the calendar of this resource	resources	sv	Resursens kalender
 this module displays the resources app	resources	sv	Modulen visar resurs applikationen
+un-delete accessories of selected resources too?	resources	sv	Återställ tillbehör för de valda resurserna?
+unable to link to %1 "%2"	resources	sv	Det gick inte att länka till %1 "%2"
 use general resources icon	resources	sv	Använd allmän resurs ikon
 use own picture	resources	sv	Använd egen bild
 use the category's icon	resources	sv	Använd kategorins ikon
 useable	resources	sv	Användbara
-useable:	resources	sv	Användbara:
-view accessories for this resource	resources	sv	Visa resursens tillbehör
 view this entry	resources	sv	Visa posten
 web-page of resource	resources	sv	Resursens webbsida
 web-site for this resource	resources	sv	Resursens webbsajt
 where to find this resource?	resources	sv	Var hittas resursen
 which category does this resource belong to?	resources	sv	Vilken kategori tillhör resursen
 write permissions	resources	sv	Skrivrättigheter
+yes - delete accessories too	resources	sv	Ja - Ta även bort tillbehör
+yes - un-delete accessories too	resources	sv	Ja - Återställ även tillbehör
 you are not permitted to get information about this resource!	resources	sv	Du saknar behörighet att hämta information om resusen
 you chose more resources than available	resources	sv	Du valde fler resurser än tillgängliga

@@ -21,6 +21,7 @@ actions	calendar	fi	Toiminnot
 actions...	calendar	fi	Toiminnot
 add alarm	calendar	fi	Lisää hälytys
 add current view as favorite	calendar	fi	Lisää näkymä suosikkeihin
+add new event	calendar	fi	Lisää uusi tapaaminen
 add timesheet entry	calendar	fi	Lisää ajanhallinnan merkintä
 added	calendar	fi	Lisätty
 after	calendar	fi	Jälkeen
@@ -45,6 +46,7 @@ allows to edit the event again	calendar	fi	Salli tapahtuman muokkaaminen uudelle
 always	calendar	fi	Aina
 apply the action on the whole query, not only the shown events	calendar	fi	Suorita toiminto koko kyselylle, ei vain niille jotka näkyvät listalla.
 apply the changes	calendar	fi	Lisää muutokset
+attention	calendar	fi	Huomio
 automatically purge old events after	admin	fi	Poista vanhat tapahtumat automaattisesti
 back half a month	calendar	fi	Puoli kuukautta taaksepäin
 back one month	calendar	fi	Kuukausi taaksepäin
@@ -78,9 +80,11 @@ canceled	calendar	fi	Peruutettu
 category %1 removed because of missing rights	calendar	fi	Kategoria %1 poistettu puuttuvien ACL-oikeuksien takia!
 category acl	common	fi	Kategorioiden ACL
 category acl only restrict adding a category to an event or changing status of a participant. it does not change the visibility of an event!	calendar	fi	Kategorioiden ACL-oikeuksilla voidaan rajoittaa kategorioiden lisäämistä tapahtumaan tai osallistujan tilan  muuttamista. Tämä ei rajoita tapahtuman näkyvyyttä kalenterissa.
+category report	calendar	fi	Kategoria Raportti
 chair	calendar	fi	Kutsuja
 change history	calendar	fi	Muuta historiaa
 change your status	calendar	fi	Muuta tila
+changed event-data applied	calendar	fi	Muuttuneet tapahtumatiedot sovellettu
 charset of file	calendar	fi	Tiedoston merkistö
 check all	calendar	fi	Merkitse kaikki
 choose a category	calendar	fi	Valitse kategoria
@@ -104,6 +108,7 @@ custom	calendar	fi	Lisätiedot
 custom fields	common	fi	Lisäkentät
 custom_2	common	fi	Vapaa/Kiireinen
 daily	calendar	fi	Päivittäin
+date range	calendar	fi	Päivämääräalue
 day	calendar	fi	päivä
 days	calendar	fi	päivää
 days of the week for a weekly repeated event	calendar	fi	Viikonpäivät viikottain toistettavalle tapahtumalle
@@ -182,6 +187,7 @@ example {{nenvlf role}} - if field role is not empty, set a lf without any value
 exception	calendar	fi	Poikkeus
 exception created - you can now edit or delete it	calendar	fi	Poikkeus luotu - poikkeusta voidaan nyt muokata tai se voidaan poistaa
 exceptions	calendar	fi	Poikkeukset
+exclude weekend	calendar	fi	Viikonlopun poissulkeminen
 execute a further action for this entry	calendar	fi	Estä muutoksien tekeminen tähän tapahtumaan
 existing links	calendar	fi	Olemassaolevat linkit
 exists	calendar	fi	Olemassaoleva
@@ -292,6 +298,7 @@ manage mapping	calendar	fi	Hallitse mappingiä
 max. number of entries to show (leave empty for no restriction)	calendar	fi	Näkyvien tapahtumien maksimimäärä (tyhjä=ei rajoitusta)
 maximum available quantity of %1 exceeded!	calendar	fi	%1:n käytettävissä oleva enimmäismäärä ylitetty!
 merge document...	calendar	fi	Syötä asiakirjaan
+min days	calendar	fi	Min päivät
 minimum number of users for showing day view as consolidated.	calendar	fi	Käyttäjien vähimmäismäärä päiväkohtaisen näkymän näyttämiseksi konsolidoituna.
 minimum number of users for showing week view as consolidated.	calendar	fi	Käyttäjien vähimmäismäärä, jotta viikkonäkymä voidaan näyttää konsolidoituna.
 minutes	calendar	fi	minuuttia
@@ -350,6 +357,7 @@ only group-events	calendar	fi	Vain ryhmätapahtumat
 only the initial date of that recurring event is checked!	calendar	fi	Vain ensimmäinen aloituspäivä toistuvasta tapahtumasta valittu!
 open todo's:	calendar	fi	Avoimet tehtävät:
 optional	calendar	fi	Valinnainen
+output unit	calendar	fi	Tulostusyksikkö
 overlap holiday	calendar	fi	Päällekkäinen loma
 owner too	calendar	fi	Myös omistajana tai osallistujana
 participants	calendar	fi	Osallistujat
@@ -372,6 +380,7 @@ re-edit event	calendar	fi	Muokkaa tapahtumaa uudelleen
 receive email updates	calendar	fi	Vastaanota päivityksiä sähköpostilla
 receive notifications about events you created/modified/deleted	calendar	fi	Vastaanota huomautuksia tapahtumista jotka itse luot, muokkaat tai poistat.
 receive summary of appointments	calendar	fi	Vastaanota tapaamisten yhteenveto
+recordings	calendar	fi	Tallenteet
 recover	calendar	fi	Palauta
 recovered	calendar	fi	palautettu
 recurrence	calendar	fi	Toistuvuus
@@ -386,6 +395,7 @@ repeating interval, eg. 2 to repeat every second week	calendar	fi	Toiston tiheys
 repetition	calendar	fi	Toisto
 repetitiondetails (or empty)	calendar	fi	Toiston yksityiskohdat (tai tyhjä)
 replacements for inserting events into documents	calendar	fi	Sijaismerkinnät asiakirjoihin
+report	calendar	fi	Raportti
 requested	calendar	fi	Vaaditut
 requested meeting is in the past!	calendar	fi	Tapahtuma on menneisyydessä!
 require an acl grant to invite other users and groups	admin	fi	Muiden käyttäjien ja ryhmien kutsut/kutsumiset vaativat ACL-oikeudet.
@@ -445,6 +455,7 @@ show only the date, not the year	admin	fi	Näytä ainoastaan päiväys, ei vuott
 show this month	calendar	fi	Näytä tämä kuukausi
 show this week	calendar	fi	Näytä tämä viikko
 single event	calendar	fi	Yksittäinen tapahtuma
+sort by	calendar	fi	Lajittelu
 specify where url of the day links to	calendar	fi	Määrittele mihin päivämäärän URL linkittää
 start	calendar	fi	Aloita
 start date/time	calendar	fi	Aloituspäivä/-aika
@@ -521,6 +532,7 @@ use this timezone to import/export calendar data.	calendar	fi	Aikavyöhyke, jota
 user or group	calendar	fi	Käyttäjä tai ryhmä
 user selectable css file for the calendar setup	calendar	fi	Käytä valittavaa CSS tiedostoa kalenterin setupissa.
 users + groups: inviting both always requires an invite grant	admin	fi	Käyttäjät + Ryhmät: ACL-kutsuoikeudet vaaditaan aina.
+utilities	calendar	fi	Apuohjelmat
 view exception	calendar	fi	Näytä poikkeus
 view series	calendar	fi	Näytä sarjat
 view this event	calendar	fi	Katsele tätä tapahtumaa

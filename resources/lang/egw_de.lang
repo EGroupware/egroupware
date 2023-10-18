@@ -29,6 +29,7 @@ buy this article	resources	de	Diesen Artikel kaufen
 buy this resource	resources	de	Diese Ressource kaufen
 buyable	resources	de	käuflich
 category admin	resources	de	Verwalter der Kategorie
+category saved.	resources	de	Kategorie gespeichert.
 category:	resources	de	Kategorie:
 check all	resources	de	Alle auswählen
 choose category admin	resources	de	Wählen Sie einen Verwalter für diese Kategorie
@@ -42,20 +43,21 @@ create new links	resources	de	Neue Verknüpfung erstellen
 custom etemplate for the contactform	resources	de	Benutzerdefiniertes eTemlate für das Kontaktformular
 custom fields	resources	de	Benutzerdefinierte Felder
 days	resources	de	Tage
+delete accessories of selected resources too?	resources	de	Auch Zubehör der ausgewählten Ressourcen löschen?
 delete selected resources	resources	de	Ausgewählte Ressourcen löschen
 delete this entry	resources	de	Diesen Eintrag löschen
 deleted	resources	de	gelöscht
 description (short)	resources	de	Kurzbeschreibung
 direct booking permissions	resources	de	Erlaubnis direkt zu buchen
 do you really want to delete this resource?	resources	de	Wollen Sie diese Ressource wirklich löschen?
-don't use vfs (this will need a symlink --> see readme)	resources	de	Vfs nicht benutzen. (Dies erfordert einen symlink --> siehe README)
+don't use vfs (this will need a symlink --> see readme)	resources	de	VFS nicht benutzen. (Dies erfordert einen symlink --> siehe README)
 edit this entry	resources	de	Diesen Eintrag bearbeiten
 event start	resources	de	Ereignis startet
 existing links	resources	de	Bestehende Verknüpfungen
-exists	resources	de	besteht bereits
+exists	resources	de	Besteht bereits
 expiry	resources	de	Ablauf
 export definition to use for nextmatch export	resources	de	Exportdefinition für den nextmatch Export
-export definitition to use for nextmatch export	resources	de	Export Profil der Listenansicht  (Disketten Symbol)
+export definitition to use for nextmatch export	resources	de	Export Profil der Listenansicht
 exports a list of resources to a csv file.	resources	de	Exportiert eine Liste der Ressourcen als CSV-Datei
 general	resources	de	Generell
 general informations about resource	resources	de	Generelle Informationen über diese Ressource
@@ -67,13 +69,14 @@ how many of the resources are useable?	resources	de	Anzahl nutzbarer Ressourcen
 how many of them are useable?	resources	de	Anzahl nutzbarer Ressourcen
 how many of this resource are usable	resources	de	Anzahl nutzbarer Ressourcen
 how many of this resource exists	resources	de	Anzahl existierende Ressourcen
+icon	resources	de	Symbol
 if you specify an export definition, it will be used when you export	resources	de	Wählen Sie eine Export Definition für den Export.
 implies booking permission	resources	de	Impliziert Buchungsberechtigung
 implies read permission	resources	de	Impliziert Leseberechtigung
 imports a list of resources from a csv file.	resources	de	Importiert eine Liste im CSV Format
 information about storage	resources	de	Informationen zur Lagerung
 informations about the location of resource	resources	de	Informationen über den Lagerort der Ressource
-insert	resources	de	einfügen
+insert	resources	de	Einfügen
 inventory number	resources	de	Inventarnummer
 inventory number:	resources	de	Inventarnummer:
 is resource bookable?	resources	de	Ist diese Ressource buchbar?
@@ -91,6 +94,8 @@ name of resource	resources	de	Name der Ressource
 name:	resources	de	Name:
 new accessory	resources	de	Neues Zubehör
 new resource	resources	de	Neue Ressource
+no - leave them	resources	de	Nein - Belassen
+no - make them resources	resources	de	Nein - Sie zu Ressourcen machen
 no description available	resources	de	Keine Beschreibung vorhanden
 no matches	resources	de	Keine Treffer
 no resources selected	resources	de	Keine Ressource ausgewählt
@@ -98,11 +103,11 @@ no, users will need to contact users with direct booking permission	resources	de
 notify your administrator to correct this situation	resources	de	Benachrichtigen Sie ihren Administrator um diese Situation zu lösen
 picture	resources	de	Bild
 picture source	resources	de	Quelle des Bildes
-picture type is not supported, sorry!	resources	de	Entschuldigung, dieser Bild-Datei-Typ wird nicht unterstützt
+picture type is not supported, sorry!	resources	de	Dieser Bild-Datei-Typ wird nicht unterstützt.
 pictures or resource	resources	de	Bild der Ressource
 planer	resources	de	Planer
 please choose a different time:	resources	de	Bitte wählen Sie eine andere Zeit:
-prevent deleting	admin	de	Lösch-Airbag aktivieren
+prevent deleting	admin	de	Löschung verhindern aktivieren
 prize	resources	de	Preis
 prizeing information for booking or buying	resources	de	Preisinformation für Buchung und Kauf
 quantity	resources	de	Anzahl
@@ -146,6 +151,7 @@ the anonymous user needs add rights for it!	resources	de	Der anonyme Benutzer be
 the calendar of this resource	resources	de	Kalender der Ressource
 this module displays the resources app	resources	de	Dieses Modul zeigt die Ressourcen Anwendung an
 too many matches	resources	de	Zu viele Treffer
+un-delete accessories of selected resources too?	resources	de	Zubehör der ausgewählten Ressourcen wieder herstellen?
 unable to link to %1 "%2"	resources	de	Verknüpfung zu %1 %2 fehlgeschlagen
 unable to process confirmation.	resources	de	Bestätigung kann nicht durchgeführt werden.
 use general resources icon	resources	de	Generelles Bild benutzen
@@ -160,6 +166,8 @@ web-site for this resource	resources	de	Ausführliche Beschreibung der Ressource
 where to find this resource?	resources	de	Wo findet man diese Ressource?
 which category does this resource belong to?	resources	de	Zu welcher Kategorie gehört diese Ressource?
 write permissions	resources	de	Schreibberechtigung
+yes - delete accessories too	resources	de	Ja - Zubehör auch löschen
+yes - un-delete accessories too	resources	de	Ja - Auch Zubehör wieder herstellen
 yes, all users can ignore conflicts	resources	de	Alle Benutzer dürfen Konflikte ignorieren
 yes, only admins can purge deleted items	admin	de	Ja, nur Administratoren dürfen gelöschte Einträge endgültig löschen
 yes, only users with direct booking permission	resources	de	Nur Benutzer mit direkter Buchungserlaubnis

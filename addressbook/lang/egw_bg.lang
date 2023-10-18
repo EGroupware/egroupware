@@ -1,5 +1,6 @@
 %1 added	addressbook	bg	%1 добавен(и)
 %1 contact(s) %2	addressbook	bg	%1 контакт(а) %2
+%1 contact(s) %2, %3 failed because of %4 !!!	addressbook	bg	%1 контакт(и) %2, %3 се провали поради %4 !!!
 %1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	bg	%1 контакт(а) %2, %3 неуспешно поради недостатъчни права !!!
 %1 contacts updated (%2 errors).	addressbook	bg	%1 контактите са актуализирани (%2 errors).
 %1 fields in %2 other organisation member(s) changed	addressbook	bg	%1 полета в %2 друг(и) член(а) на организацията променени
@@ -78,6 +79,7 @@ are you shure you want to delete this contact?	addressbook	bg	Сигурни л�
 are you sure you want to delete this field?	addressbook	bg	Сигурни ли сте, че искате да изтриете това поле?
 assistent	addressbook	bg	Асистент
 assistent phone	addressbook	bg	Телефон на асистента
+audio call	addressbook	bg	Аудио повикване
 birthday	common	bg	Рожден ден
 birthdays	common	bg	Рождени дни
 blank	addressbook	bg	Празно
@@ -240,6 +242,8 @@ exists	addressbook	bg	Съществува
 export as csv	addressbook	bg	Експорт в CSV
 export as vcard	addressbook	bg	Експорт във vCard
 export contacts	addressbook	bg	Експорт на контактите
+export definition to use for nextmatch export	addressbook	bg	Дефиниция за експортиране, която да се използва за експортиране на nextmatch
+export definitition to use for nextmatch export	addressbook	bg	Дефиниция за износ, която да се използва за експорт на nextmatch
 export file name	addressbook	bg	Име на файла за експорт
 export from addressbook	addressbook	bg	Експорт от Адресния указател
 export selection	addressbook	bg	Експорт на избраните
@@ -251,6 +255,7 @@ extra	addressbook	bg	Допълнително
 extra encodings	addressbook	bg	Допълнително кодиране
 extra private	addressbook	bg	Допълнителна поверителност
 failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	bg	Неуспешна промяна на %1 член(а) на организацията поради недостатъчни права !!!
+favorite phone	addressbook	bg	Любим телефон
 favorites	addressbook	bg	Любими (Favorites)
 fax	addressbook	bg	Факс
 fax (private)	addressbook	bg	Факс (личен/ private )
@@ -322,6 +327,7 @@ insufficent rights to delete this list!	addressbook	bg	Недостатъчни 
 insufficent rights to edit this list!	addressbook	bg	Недостатъчни права за редактиране на този списък!
 international	addressbook	bg	Международен
 internet	addressbook	bg	Интернет
+invite to current call	addressbook	bg	Покана за текущо повикване
 label	addressbook	bg	Етикет
 last date	addressbook	bg	Крайна дата
 last modified	addressbook	bg	Последно модифициран
@@ -341,6 +347,7 @@ list already exists!	addressbook	bg	Списъкът вече съществув
 list created	addressbook	bg	Списъкът е създаден
 list creation failed, no rights!	addressbook	bg	Грешка при създаване на списъка: нямате права!
 list of files linked to the current record	addressbook	bg	Списък с файлове, свързани с текущия запис
+load custom fields in index, even if custom field column is off (eg. to display them in a specific index column)	addressbook	bg	Зареждане на потребителски полета в индекса, дори ако колоната с потребителски полета е изключена (например за да се показват в определена колона на индекса)
 load vcard	addressbook	bg	Зареждане на vCard
 location	addressbook	bg	Местоположение
 locations	addressbook	bg	Местоположения
@@ -368,6 +375,7 @@ multiple vcard	addressbook	bg	Множество vCard
 name for the distribution list	addressbook	bg	Име на пощенския списък
 name of current user, all other contact fields are valid too	addressbook	bg	Име на текущия потребител, останалите полета на контакта също са валидни
 name, address	addressbook	bg	Име, Адрес
+name, email, phone	addressbook	bg	Име, имейл, телефон
 new contact submitted by %1 at %2	addressbook	bg	Новият контакт е изпратен от %1 в %2
 new window opened to edit infolog for your selection	addressbook	bg	Отворен е нов прoзoрец за редакция в Дневника на избраните елементи
 next date	addressbook	bg	Следваща дата
@@ -413,6 +421,7 @@ prevent deleting of contacts	admin	bg	Предотвратяване изтри�
 private address	addressbook	bg	Лични адреси
 private custom fields	addressbook	bg	Лични полета по избор
 public key	addressbook	bg	Публичен ключ
+public sharing url	addressbook	bg	URL адрес за публично споделяне
 publish into groups:	addressbook	bg	Публикуване в групи:
 read a list / search for entries.	addressbook	bg	Четене на списък / търсене на записи.
 read a list of entries.	addressbook	bg	Четене на списък със записи.
@@ -432,6 +441,7 @@ replacements for inserting contacts into documents	addressbook	bg	Замени �
 required fields *	addressbook	bg	Задължителни полета *
 role	addressbook	bg	Роля
 room	addressbook	bg	Стая
+schedule a video conference	addressbook	bg	Планиране на видеоконференция
 search letter	addressbook	bg	Буква за търсене
 select a portrait format jpeg photo. it will be resized to 60 pixel width.	addressbook	bg	Изберете снимка във формат "портрет". Тя ще бъде преоразмерена на 60 пиксела ширина.
 select a source address to be used in geolocation routing system	addressbook	bg	Изберете източник на адрес, който ще се използва в
@@ -449,6 +459,7 @@ select the type of conversion:	addressbook	bg	Изберете тип на ко�
 select where you want to store / retrieve contacts	admin	bg	Къде желаете да се пазят / извличат контактите
 selected contacts	addressbook	bg	Избраните контакти
 send emailcopy to receiver	addressbook	bg	Изпращане на копие от мейла до получателя
+send fax via email by replacing fax number with an email address	addressbook	bg	Изпращане на факс по имейл, като замените номера на факса с имейл адрес
 send succeeded to %1	common	bg	Изпратено успешно до %1
 seperator	addressbook	bg	Разделител
 set full name and file as field in contacts of all users (either all or only empty values)	admin	bg	Задане на цялото име и поле „fileas“ в контактите на всички потребители. Или всички, или само празни стойности.
@@ -504,7 +515,7 @@ tomorrow is %1's birthday.	common	bg	Утре е рожденият ден на 
 translation	addressbook	bg	Превод
 two of: %1	addressbook	bg	Две от: % 1
 type	addressbook	bg	Тип
-un-delete	addressbook	bg	Un-delete
+un-delete	addressbook	bg	Отмяна на изтриването
 unable to convert "%1" to account id.  using plugin setting (%2) for owner.	addressbook	bg	Не може да се конвертира "%1" към ID на акаунта. Използване на настройката на плъгин (% 2) за собственика.
 unable to delete	addressbook	bg	Не е възможно да се изтрие
 unable to import into %1, using %2	addressbook	bg	Не е възможно да се импортира в %1, като се използва %2
@@ -533,6 +544,7 @@ vcard	common	bg	vCard
 vcards require a first name entry.	addressbook	bg	За vCard се изисква въвеждане на първо име.
 vcards require a last name entry.	addressbook	bg	За vCard се изисква въвеждане на фамилно име.
 verification	addressbook	bg	Проверка
+video call	addressbook	bg	Видеоразговор
 view linked infolog entries	addressbook	bg	Покзване на свързаните записи от Дневника
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	bg	ВНИМАНИЕ! LDAP е валиден избор само ако НЕ използвате контактите за съхранение и на потребителските акаунти!
 warning: all contacts found will be deleted!	addressbook	bg	ВНИМАНИЕ! Всички намерени контакти ще бъдат изтрити!

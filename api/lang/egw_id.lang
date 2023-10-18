@@ -1,11 +1,13 @@
 %1 (%2 new) messages writen for application '%3' and languages '%4'	common	id	%1 (%2 baru) Pesan dituliskan untuk Aplikasi '%3' dan Bahasa '%4'
 %1 email addresses inserted	common	id	%1 alamat email disisipkan
+%1 email(s) added into %2	common	id	%1 email ditambahkan ke dalam %2
 %1 entries found, select one ...	common	id	%1 entri ditemukan, pilih satu ...
 %1 etemplates deleted	common	id	%1 eTemplat dihapus
 %1 etemplates for application '%2' dumped to '%3'	common	id	%1 eTemplat untuk Aplikasi '%2' dituang ke '%3'
 %1 etemplates found	common	id	%1 eTemplat ditemukan
 %1 file	common	id	berkas %1
 %1 matches on search criteria	common	id	cocok %1 sesuai kriteria pencarian
+%1 more %2 selected ...	common	id	%1 lebih banyak %2 yang dipilih...
 %1 more...	common	id	%1 more...
 %1 new etemplates imported for application '%2'	common	id	%1 eTemplat baru diimpor untuk Aplikasi '%2'
 %1 not implemented for %2!	common	id	%1 tidak di-implementasikan untuk %2!
@@ -19,6 +21,7 @@
 '%1' is not a valid date !!!	common	id	'%1' is not a valid date !!!
 '%1' is not a valid floatingpoint number !!!	common	id	'%1' is not a valid floatingpoint number !!!
 '%1' is not a valid integer !!!	common	id	'%1' is not a valid integer !!!
+'%1' is not a valid json file!	common	id	'%1' bukan file JSON yang valid
 '%1' is not allowed ('%2')!	common	id	'%1' TIDAK dibolehkan ('%2')!
 00 (disable)	admin	id	00 (disable)
 1 day	common	id	1 Hari
@@ -119,6 +122,7 @@ austria	common	id	AUSTRIA
 authenticate	common	id	Autentikasi
 author	common	id	Penulis
 autosave default category	common	id	Simpan otomatis Kategori Bawaan
+avatar	common	id	Avatar
 azerbaijan	common	id	AZERBAIJAN
 back	common	id	Kembali
 background color:	common	id	Warna Belakang:
@@ -146,6 +150,7 @@ box	common	id	Box
 box...	common	id	Kotak...
 brazil	common	id	BRASIL
 british indian ocean territory	common	id	TERITORI SAMUDERA INDIA INGGRIS
+browser %1 %2 is not recommended. you may experience issues and not working features. please use the latest version of chrome, firefox or edge. thank you!	common	id	Browser %1 %2 tidak disarankan. Anda mungkin mengalami masalah dan fitur yang tidak berfungsi. Silakan gunakan versi terbaru Chrome, Firefox atau Edge. Terima kasih!
 brunei darussalam	common	id	BRUNEI DARUSALAM
 bulgaria	common	id	BULGARIA
 bulgarian	common	id	Bulgaria
@@ -175,6 +180,7 @@ change	common	id	Perubahan
 changed	common	id	Diubah
 charset	common	id	utf-8
 check all	common	id	Contreng semua
+check for empty values in if statements.  example {{if url~empty~~website:}} - if url is not empty, writes "website:"	common	id	Periksa nilai kosong dalam pernyataan IF. Contoh {{IF url~KOSONG~~Situs Web:}} - Jika url tidak kosong, tulis "Website:"
 check installation	common	id	Cek instalasi
 check now	common	id	Cek Sekarang
 checkbox	common	id	Checkbox
@@ -247,8 +253,9 @@ dark mode	common	id	Mode gelap
 database error	common	id	Database error
 database error!	common	id	Database error!
 date	common	id	Tanggal
+date + time	common	id	Tanggal + Waktu
 date due	common	id	Tanggal Berakhir
-date+time	common	id	Date+Time
+date+time	common	id	Tanggal+Waktu
 day	common	id	Hari
 days	common	id	hari
 db-tools	common	id	DB-Tools
@@ -290,6 +297,7 @@ domain	common	id	Domain
 domestic	common	id	Domestik
 dominica	common	id	DOMINIKA
 dominican republic	common	id	REPUBLIK DOMINIKA
+don't ask again!	common	id	Jangan tanya lagi!
 done	common	id	Selesai
 download	common	id	Unduh
 drop table	common	id	Buang Tabel
@@ -331,6 +339,11 @@ etemplate tutorial	common	id	Tutorial eTemplat
 ethiopia	common	id	ETHIOPIA
 everything	common	id	Segalanya
 exact	common	id	eksak
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	preferences	id	Contoh {{IF n_awalan ~ Bapak ~ Halo Pak ~ Halo Bu}} - cari di kolom "n_prefix", untuk "Mr", jika ditemukan, tulis Hello Mr, jika tidak, tulis Hello Ms.
+example {{letterprefix}} - gives a letter prefix without double spaces, if the title is empty for example	preferences	id	Contoh {{LETTERPREFIX}} - Memberikan awalan huruf tanpa spasi ganda, jika judulnya kosong misalnya
+example {{letterprefix}} - gives a letter prefix without double spaces, if the title is emty for  example	common	id	Contoh {{LETTERPREFIX}} - Memberikan awalan huruf tanpa spasi ganda, jika judulnya kosong misalnya
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	preferences	id	Contoh {{NELF role}} - jika field role tidak kosong, Anda akan mendapatkan baris baru dengan nilai field role
+example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	preferences	id	Contoh {{nenvlf role}} - jika peran ruas tidak kosong, tetapkan LF tanpa nilai ruas apa pun
 export xml	common	id	Ekspor XML
 extensions loaded:	common	id	Ekstensi dimuat:
 failed to change password.	common	id	Gagal mengubah password.
@@ -432,6 +445,7 @@ how many days to sync in the past (default %1)	groupdav	id	Berapa hari yang akan
 how many rows to print	common	id	Berapa banyak baris yang akan dicetak
 how to show the general egroupware menu ?	common	id	Cara menampilkan menu umum EGroupware
 html	common	id	HTML
+html links to any entries linked to the current record, excluding attached files	common	id	Tautan HTML ke entri apa pun yang ditautkan ke rekaman saat ini, tidak termasuk berkas yang dilampirkan
 hungary	common	id	HONGARIA
 iceland	common	id	ISLANDIA
 id	common	id	ID
@@ -453,9 +467,11 @@ insert in document	common	id	Sisipkan dalam dokumen
 insert row after	common	id	Sisipkan baris setelah
 insert row before	common	id	Sisipkan baris sebelum
 insert timestamp into description field	common	id	Masukkan cap waktu ke dalam bidang deskripsi
+install	common	id	Instal
 install egroupware as mail-handler?	common	id	Menginstal EGroupware sebagai penangan surat?
 integer	common	id	Integer
 international	common	id	Internasional
+invalid email	common	id	Email tidak valid
 invalid filename	common	id	Nama berkas salah
 invalid ip address	common	id	Alamat IP salah
 invalid password	common	id	Password salah
@@ -662,16 +678,26 @@ parcel	common	id	Parsel
 password	common	id	Password
 paste	common	id	Tempel
 path	common	id	Path
-permission denied!	common	id	Ijin ditolak!
+permission denied!	common	id	Izin ditolak!
+permission denied! this is an administration only feature.	common	id	Izin ditolak! Ini adalah fitur khusus administrasi.
+permisson denied!	common	id	Izin ditolak!
 personal	common	id	Pribadi
 peru	common	id	PERU
+pg down	common	id	Halaman turun
+pg up	common	id	Halaman atas
+pgp encryption	common	id	Enkripsi PGP
+pgp encryption installation	common	id	Instalasi Enkripsi PGP
 philippines	common	id	FILIPINA
 phone number	common	id	nomor telepon
 pitcairn	common	id	PITCAIRN
 placeholders	common	id	Penampung
 play/pause	common	id	Putar/Jeda
 please enter a name	common	id	Mohon masukan nama
+please reload the egroupware desktop (f5 / cmd+r).	common	id	Muat ulang desktop EGroupware (F5 / Cmd+r).
+please remember to use '%1' as username for local login's from now on!	common	id	Harap ingat untuk menggunakan '%1' sebagai nama pengguna untuk login lokal mulai sekarang!
 please select	common	id	Pilihlah
+please type %1 more characters	common	id	Silakan ketik %1 karakter lagi
+please type 1 more character	common	id	Silakan ketik 1 karakter lagi
 please wait...	common	id	Tunggu...
 pm	common	id	pm
 poland	common	id	POLANDIA
@@ -792,14 +818,16 @@ show as topmenu	common	id	Tampilkan sebagai Topmenu
 show clock?	common	id	Tampilkan Jam?
 show in sidebox	common	id	Tampilkan pada sidebox
 show menu	common	id	tampilkan menu
+show password	common	id	Tampilkan kata sandi
 show values	common	id	Tampilkan Nilai
 show_more_apps	common	id	Tunjukan Lebih banyak Aplikasi
 showing	common	id	menampilkan
 showing %1	common	id	menampilkan %1
 showing %1 - %2 of %3	common	id	menampilkan %1 - %2 dari %3
 sierra leone	common	id	SIERRA LEONE
+sign up	common	id	Mendaftar
 singapore	common	id	SINGAPURA
-site configuration	common	id	Konfigurasi Situs
+site configuration	common	id	Konfigurasi aplikasi
 size	common	id	Ukuran
 slovakia	common	id	SLOVAKIA
 slovenia	common	id	SLOVENIA
@@ -928,6 +956,9 @@ yes - delete	common	id	Ya - Hapus
 yes - delete including sub-entries	common	id	Ya - Hapus berikut sub-entrinya
 you can respond by visiting:	common	id	Untuk melihatnya, kunjungi:
 you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	id	Anda mencoba Aplikasi EGroupware: %1, namun anda tidak memiliki ijin untuk mengakses aplikasi ini.
+your account has been updated with new data from your identity provider.	common	id	Akun Anda telah diperbarui dengan data baru dari penyedia identitas Anda.
+your browser is not up-to-date (javascript es6 compatible), you may experience some of the features not working.	common	id	Browser Anda tidak mutakhir (kompatibel dengan JavaScript ES6), Anda mungkin mengalami beberapa fitur yang tidak berfungsi.
+your key has been restored successfully.	common	id	Kunci Anda telah berhasil dipulihkan.
 your message could <b>not</b> be sent!<br>	common	id	Pesan anda <b>tidak</b> dapat dikirimkan!<br>
 your message has been sent	common	id	Pesan telah terkirim
 your password does not have required strength of %1 character classes and minimum length of %2 characters.	common	id	Kata sandi Anda tidak memiliki kekuatan yang disyaratkan yaitu kelas karakter %1 dan panjang minimum %2 karakter.

@@ -1,3 +1,8 @@
+%1 contact(s) %2, %3 failed because of %4 !!!	addressbook	lv	%1 kontakts(-i) %2, %3 neizdevās, jo %4 !!!
+%1 contacts updated (%2 errors).	addressbook	lv	%1 kontakti atjaunināti (%2 kļūdas).
+%1 key(s) added to public keyserver "%2".	addressbook	lv	%1 atslēga(-as) pievienota(-as) publiskajam atslēgu serverim "%2".
+%1 not implemented for %2!	addressbook	lv	%1 nav ieviests %2!
+%1 public keys added.	addressbook	lv	%1 pievienotas publiskās atslēgas.
 %1 records imported	addressbook	lv	Tika importēti %1 ieraksti
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	lv	%1 ieraksti nolasīti (vēl nav importēti, tu vari atgriezties %2 atpakaļ %3 un izslēgt Importēšanas pārbaudi)
 %1 shared this contact on %2 with %3 %4	addressbook	lv	%1 kopīgojis šo kontaktu %2 %3 %4
@@ -7,6 +12,12 @@
 actions	addressbook	lv	Darbības
 add a single entry by passing the fields.	addressbook	lv	Pievienot vienu ierakstu apejot laukus
 add custom field	addressbook	lv	Pievienot papildus lauku
+add customfield to links of addressbook, which displays in other applications. the default value is none customfield.	addressbook	lv	Pievienojiet adrešu grāmatas saitēm pielāgotu lauku, kas tiek rādīts citās lietojumprogrammās. Noklusējuma vērtība ir none customfield.
+add to bcc	addressbook	lv	Pievienot Blindcopy
+add to cc	addressbook	lv	Pievienot kopijai
+add to distribution list	addressbook	lv	Pievienot izplatīšanas sarakstam
+add to distribution list:	addressbook	lv	Pievienot izplatīšanas sarakstam:
+add to to	addressbook	lv	Pievienot uz
 added	addressbook	lv	PIevienots
 address book	common	lv	Adrešu grāmata
 address book - vcard in	addressbook	lv	Adrešu grāmata - vCard iekš
@@ -14,16 +25,23 @@ address book - view	addressbook	lv	Adrešu grāmata - skats
 address line 2	addressbook	lv	Adreses 2. rindiņa
 address type	addressbook	lv	Adreses Tips
 addressbook	common	lv	Adrešu grāmata
+addressbook list	addressbook	lv	Adrešu grāmatas saraksts
 addressbook preferences	addressbook	lv	Adrešu grāmatas iestādījumi
 addressbook-fieldname	addressbook	lv	Adrešu grāmatas - Lauka nosaukums
 addvcard	addressbook	lv	Pievienot vCard
 advanced search	addressbook	lv	Uzlabota meklēšana
+all addressbooks	addressbook	lv	Visas adrešu grāmatas
+all types	addressbook	lv	Visi veidi
+allow	addressbook	lv	Atļaut
+allow for contacts only	addressbook	lv	Atļaut tikai kontaktiem
 alt. csv import	addressbook	lv	Alternatīva CSV importēšana
 always	addressbook	lv	Vienmēr
 are you sure you want to delete this field?	addressbook	lv	Vai esi drošs ka vēlies dzēst šo lauku?
+audio call	addressbook	lv	Audio zvans
 birthday	common	lv	Dzimšanas diena
 birthdays	common	lv	Dzimšanas dienas
 blank	addressbook	lv	Tukšs
+browser location	addressbook	lv	Pārlūkprogrammas atrašanās vieta
 business	common	lv	Darbības joma
 business city	addressbook	lv	Pilsēta
 business country	addressbook	lv	Valsts
@@ -33,10 +51,13 @@ business phone	addressbook	lv	Telefons
 business state	addressbook	lv	Štats
 business street	addressbook	lv	Iela
 business zip code	addressbook	lv	Pasta Indekss
+calendar integration	addressbook	lv	Kalendāra integrācija
 car phone	addressbook	lv	Automašīnas Telefons
 cell phone	addressbook	lv	Mobīlais telefons
+change addressbook when updating	addressbook	lv	Mainīt adrešu grāmatu atjaunināšanas laikā
 charset of file	addressbook	lv	faila kodējums
 check all	addressbook	lv	Parbaudīt visu
+choose pre-defined map source or use custom url (use %r = street, %t = city, %c = country, %z = zipcode)	admin	lv	Izvēlieties iepriekš noteiktu kartes avotu vai izmantojiet pielāgotu URL (izmantojiet %r = iela, %t = pilsēta, %c = valsts, %z = pasta indekss).
 city	common	lv	Pilsēta
 company	common	lv	Firma
 company name	addressbook	lv	Firmas Nosaukums
@@ -49,16 +70,23 @@ copied by %1, from record #%2.	addressbook	lv	Kopēja %1 no ieraksta #%2
 country	common	lv	Valsts
 create new links	addressbook	lv	Izveidot jaunas saites
 created	addressbook	lv	Izveidots
+crm-view	addressbook	lv	CRM skats
 csv-fieldname	addressbook	lv	CSV-Lauka nosaukums
 csv-filename	addressbook	lv	CSV-Faila nosaukums
 custom	addressbook	lv	Mainīt
 custom fields	addressbook	lv	Mainīti lauki
 debug output in browser	addressbook	lv	Parādīt izvadu pārlūkprogrammā
 default	addressbook	lv	Noklusējums
+default action on double-click	addressbook	lv	Noklusējuma darbība pēc dubultklikšķa
 default filter	addressbook	lv	Filtrs pēc noklusēšanas
+default geolocation source address	addressbook	lv	Noklusējuma GeoLocation avota adrese
 delete a single entry by passing the id.	addressbook	lv	Izdzēst vienu ierakstu apejot id
 deleted	addressbook	lv	Izdzēsts
 department	common	lv	Nodaļa
+disable	addressbook	lv	Izslēgt
+disable last/next event column	addressbook	lv	Izslēgt slejā Pēdējais/nākamais notikums
+distribution list renamed	addressbook	lv	Izplatīšanas saraksts pārdēvēts
+distribution lists as groups	addressbook	lv	Sadales saraksti kā grupas
 domestic	addressbook	lv	Kopmītne
 download	addressbook	lv	Lejupielādēt
 download export file (uncheck to debug output in browser)	addressbook	lv	Lejupieldēt eksporta failu (Atķeksē, lai redzētu izvadu pārlūkprogrammā)
@@ -69,13 +97,23 @@ duration	addressbook	lv	Izpildes laiks
 edit custom field	addressbook	lv	Mainīt lauku
 edit custom fields	admin	lv	Mainīt laukus
 empty	admin	lv	Tukšš
+empty addressbook before importing	addressbook	lv	Dzēst adrešu grāmatas ierakstus, kas nav CSV sarakstā
 empty for all	addressbook	lv	iztukšot visiem
 enter the path to the exported file here	addressbook	lv	Ievadiet ceļu līdz eksportētajam failam
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	addressbook	lv	Piemērs {{{IF n_prefikss~Mr~Hello Mr.~Hello Ms.}}} - meklēt laukā "n_prefix", lai atrastu "Mr", ja atrasts, rakstiet Hello Mr., citādi rakstiet Hello Ms.
+example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	preferences	lv	Piemērs {{{LETTERPREFIXCUSTOM n_prefiksa virsraksts n_dzimene}} - Piemērs: Dr. James Miller
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	addressbook	lv	Piemērs {{{NELF role}} - ja lauks role nav tukšs, parādīsies jauna rinda ar lauka role vērtību
+example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	addressbook	lv	Piemērs {{{nenvlf role}} - ja lauka loma nav tukša, iestatiet LF bez lauka vērtības
 existing links	addressbook	lv	Eksistējošas saites
 export contacts	addressbook	lv	Eksportēt kontaktus
+export definition to use for nextmatch export	addressbook	lv	Eksporta definīcija, ko izmantot nextmatch eksportam
+export definitition to use for nextmatch export	addressbook	lv	Eksporta definīcija, kas jāizmanto nextmatch eksportam
 export file name	addressbook	lv	Eksportējamā faila nosaukums
 export from addressbook	addressbook	lv	Eksportēt no adrešu grāmatas
+exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	lv	Eksportē kontaktus no adrešu grāmatas CSV failā.  CSV nozīmē "komatā atdalītas vērtības". Iespēju cilnē var izvēlēties arī citus atdalītājus.
 extra	addressbook	lv	Papildus
+favorite phone	addressbook	lv	Iecienītākais tālrunis
+favorites	addressbook	lv	Izlase
 fax	addressbook	lv	Fakss
 fax number	common	lv	Faksa numurs
 field %1 has been added !	addressbook	lv	Lauks %1 tika pievienots !
@@ -85,9 +123,13 @@ fields to check for duplicates	addressbook	lv	Lauki, kuros pārbauda, vai nav du
 fields to consider when looking for duplicate contacts.	addressbook	lv	Lauki, kas jāņem vērā, meklējot dublējošos kontaktus.
 fields to show in address list	addressbook	lv	Lauki kuri tiek rādīti adrešu sarakstā
 fieldseparator	addressbook	lv	Lauku atdal?t?js
+for serial letter use this tag. put the content, you want to repeat between two tags.	addressbook	lv	Izmantojiet šo tagu sērijas burtam. Ievietojiet saturu, kuru vēlaties atkārtot, starp divām tagiem.
+freebusy uri	addressbook	lv	FreeBusy URI
 full name	addressbook	lv	Pilns vārds
 general	admin	lv	Vispārējs
 geo	addressbook	lv	GEO
+geolocation	addressbook	lv	Ģeogrāfiskā atrašanās vieta
+geolocation integration	admin	lv	Ģeolokalizācijas integrācija
 global categories	addressbook	lv	Globālās kategorijas
 grant addressbook access	common	lv	Nodrošināt piekļuvi adrešu grāmatai
 h	addressbook	lv	h
@@ -113,9 +155,15 @@ import from ldif, csv, or vcard	addressbook	lv	Importēt no LDIF, CSV vai vCard
 import from outlook	addressbook	lv	Importēt no Outlook
 import multiple vcard	addressbook	lv	Importēt vairākas vCard
 import next set	addressbook	lv	Importēt nākošo porciju
+importer's personal	addressbook	lv	Importētāja personīgā
+imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	lv	Importē kontaktus adrešu grāmatiņā no CSV faila. CSV nozīmē "komatā atdalītas vērtības". Iespēju cilnē varat izvēlēties arī citus atdalītājus.
+imports contacts into your addressbook from a vcard file.	addressbook	lv	Importē kontaktus no vCard faila jūsu adrešu grāmatiņā.
 infolog	addressbook	lv	InfoLog Kontaktpersona
 infolog-organisation	addressbook	lv	InfoLog organizācija
+insufficent rights to delete this list!	addressbook	lv	Nepietiekamas tiesības dzēst šo sarakstu!
+insufficent rights to edit this list!	addressbook	lv	Nepietiekamas tiesības rediģēt šo sarakstu!
 international	addressbook	lv	Internacion?ls
+invite to current call	addressbook	lv	Uzaicināt uz pašreizējo zvanu
 label	addressbook	lv	Eti?ete (label)
 last modified	addressbook	lv	Pēdējo reizi pārveidots
 ldap context for contacts	admin	lv	LDAP konteksts kontaktiem
@@ -127,6 +175,8 @@ list all categories	addressbook	lv	Kategoriju saraksts
 load custom fields in index, even if custom field column is off (eg. to display them in a specific index column)	addressbook	lv	Ielādēt pielāgotos laukus indeksā, pat ja pielāgotā lauka sleja ir izslēgta (piemēram, lai tos parādītu konkrētā indeksa slejā).
 load vcard	addressbook	lv	Ielādēt vCard
 location	addressbook	lv	Novietojums
+mail vcard	addressbook	lv	Pasts vCard
+main categories in their own field	addressbook	lv	Galvenās kategorijas savā laukā
 mark records as private	addressbook	lv	Iezīmēt ierakstus kā privātus
 merge duplicates	addressbook	lv	Dublikātu apvienošana
 merge into first or account, deletes all other!	addressbook	lv	Apvienot pirmajā vai kontā, dzēš visus pārējos!
@@ -137,34 +187,51 @@ mobile phone	addressbook	lv	Mobīlais tālrunis
 modem phone	addressbook	lv	Modēma tālrunis
 move to addressbook	addressbook	lv	Pārvietot uz adrešu grāmatu
 multiple vcard	addressbook	lv	Vairākas vCard
+name, email, phone	addressbook	lv	Vārds, e-pasts, tālrunis
 no country selected	addressbook	lv	Nav izvēlēta neviena valsts
 no distribution list	addressbook	lv	Nav izplatīšanas saraksta
 no vcard	addressbook	lv	Nav vCard
 not shared	addressbook	lv	nav koplietoti
 number of records to read (%1)	addressbook	lv	Lasāmo ierakstu skaits (%1)
+open %1 crm view	addressbook	lv	Atvērt %1 CRM skatījumu
+open email addresses in external mail program	addressbook	lv	Atvērt e-pasta adreses ārējā pasta programmā
+open infolog crm view	preferences	lv	Atvērt InfoLog CRM kontakta skatu
+open tracking system crm view	preferences	lv	Atvērt izsekošanas sistēmas CRM skatu
 other number	addressbook	lv	Cits nummurs
 other phone	addressbook	lv	Cits telefons
 pager	common	lv	Peidžeris
 parcel	addressbook	lv	Sūtījums
 participants	addressbook	lv	Dalībnieki
 permission denied !!!	addressbook	lv	Atļauja liegta!!!
+permissiong denied! ask your administrator to allow regular uses to update their public keys.	addressbook	lv	Atļauja liegta! Palūdziet administratoram atļaut regulāri izmantot atjaunināt publiskās atslēgas.
+pgp key	addressbook	lv	PGP atslēga
 phone number	common	lv	Telefona numurs
 phone numbers	common	lv	Telefona numuri
 please enter a name for that field !	addressbook	lv	Lūdzu, ievadiet lauka nosaukumu !
 pref	addressbook	lv	prim
 prefix	addressbook	lv	Prefiks
 prevent deleting of contacts	admin	lv	Aizliegt kontaktu dzēšanu
+private address	addressbook	lv	Privātā adrese
 public key	addressbook	lv	Publiskā atslēga
+public sharing url	addressbook	lv	Publiskās kopīgošanas URL
 read a list of entries.	addressbook	lv	Lasīt ierakstu sarakstu.
 read a single entry by passing the id and fieldlist.	addressbook	lv	Lasīt vienu ierakstu, apejot id un lauku sarakstu
 record access	addressbook	lv	Piekļuve ierakstam
 record owner	addressbook	lv	Ieraksta īpašnieks
+remove from distribution list	addressbook	lv	Noņemt no izplatīšanas saraksta
+rename list	addressbook	lv	Pārdēvēt sarakstu
+rename selected distribution list	addressbook	lv	Pārdēvēt atlasīto sadales sarakstu
 repetition	addressbook	lv	Atkārtojums
 role	addressbook	lv	Loma
+schedule a video conference	addressbook	lv	Videokonferences plānošana
 search letter	addressbook	lv	Meklēt burtu
+select a source address to be used in geolocation routing system	addressbook	lv	Izvēlieties avota adresi, kas tiks izmantota GeoLocation maršrutēšanas sistēmā.
 select all	addressbook	lv	Iezīmēt visus
+select an opened dialog	addressbook	lv	Izvēlieties atvērto dialoglodziņu
 select the type of conversion	addressbook	lv	Iezīmēt sarunas veidu
 select the type of conversion:	addressbook	lv	Izvēlēties sarunas veidu:
+send fax via email by replacing fax number with an email address	addressbook	lv	Sūtīt faksu pa e-pastu, aizstājot faksa numuru ar e-pasta adresi
+send succeeded to %1	common	lv	Nosūtīt veiksmīgi uz %1
 share into addressbook	addressbook	lv	Kopīgot adrešu grāmatiņā
 share writable	addressbook	lv	Koplietošana rakstāms
 shared	addressbook	lv	kopīgots
@@ -172,6 +239,10 @@ shared by me	addressbook	lv	kopīgots ar mani
 shared into addressbook %1	addressbook	lv	kopīgots adrešu grāmatiņā %1
 shared with	addressbook	lv	Dalīta ar
 show	addressbook	lv	Rādīt
+show active accounts	addressbook	lv	Rādīt aktīvos kontus
+show all accounts	addressbook	lv	Rādīt visus kontus
+smime key	addressbook	lv	S/MIME atslēga
+special	addressbook	lv	Īpašais
 startrecord	addressbook	lv	Sākuma ieraksts
 state	common	lv	Štats
 street	common	lv	Iela
@@ -179,27 +250,38 @@ successfully imported %1 records into your addressbook.	addressbook	lv	Jūsu adr
 suffix	addressbook	lv	Suffiks
 test import (show importable records <u>only</u> in browser)	addressbook	lv	Testēt Importu (parādīt importējamos ierakstus <u>tikai</u> pārlūkprogrammā)
 that field name has been used already !	addressbook	lv	?is lauka nosaukums jau tiek izmantots !
+the zip extension is needed, to insert contact data in openoffice or msoffice documents.	addressbook	lv	Zip paplašinājums ir nepieciešams, lai ievietotu kontaktu datus LibreOffice vai MS Office dokumentos.
 this person's first name was not in the address book.	addressbook	lv	Šīs personas vārds nav adrešu grāmatā.
 this person's last name was not in the address book.	addressbook	lv	Sīs personas uzvārds nav adrešu grāmatā.
+title	addressbook	lv	Darba nosaukums
 to many might exceed your execution-time-limit	addressbook	lv	pārāk daudz, var pārsniegt izpildes laika limitu
 today is %1's birthday!	common	lv	Šodien ir %1 ir dzimšanas diena!
 tomorrow is %1's birthday.	common	lv	Rīt %1 ir dzimšanas diena.
 translation	addressbook	lv	Tulkojums
-type	addressbook	lv	Tips
+type	addressbook	lv	Veids
+unable to import into %1, using %2	addressbook	lv	Nevar importēt uz %1, izmantojot %2
+unknown type %1, imported as %2	addressbook	lv	Nav zināms tips %1, importēts kā %2
 unshare	addressbook	lv	vairs nav koplietošanas
 unshared	addressbook	lv	vairs nav koplietojams
 update a single entry by passing the fields.	addressbook	lv	Atjaunini vienu ierakstu apejot lauku
 updated	addressbook	lv	Atjaunināts
+use a category tree?	addressbook	lv	Kategoriju atlasei izmantot koku
 use country list	addressbook	lv	Izmantot valstu sarakstu
 user groups are automatically shown as distribution lists.	addressbook	lv	Lietotāju grupas automātiski tiek parādītas kā sadales saraksti.
 vcard	common	lv	vCard
 vcards require a first name entry.	addressbook	lv	vCard pieprasa vārda ievadīšanu
 vcards require a last name entry.	addressbook	lv	vCard pieprasa uzvārda ievadīšanu
+video call	addressbook	lv	Video zvans
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	lv	BRĪDINĀJUMS!! LDAP ir derīgs tikai tad, ja tu neizmanto kontaktus kontu glabātuvei!
+when viewing a contact, show linked entries from the selected application	addressbook	lv	Pārskatot kontaktu, parādīt saistītos ierakstus no izvēlētās lietojumprogrammas.
 when you merge entries into documents, they will be stored here.  if no directory is provided, they will be stored in your home directory (/home/unverricht)	addressbook	lv	Apvienojot ierakstus dokumentos, tie tiks saglabāti šeit. Ja direktorija nav norādīta, tie tiks saglabāti jūsu mājas direktorijā (/home/...).
 work phone	addressbook	lv	Darba telefons
+yes, only admins can purge deleted items	admin	lv	Jā, tikai administratori var attīrīt dzēstos vienumus
+yes, users can purge their deleted items	admin	lv	Jā, lietotāji var attīrīt savus dzēstos vienumus
 you are not allowed to share into the addressbook of %1	addressbook	lv	Jums nav atļauts kopīgot ar adrešu grāmatu %1
 you must select a vcard. (*.vcf)	addressbook	lv	Jums ir jāizvēlas vCard. (*.vcf)
 you must select at least 1 column to display	addressbook	lv	Jums ir jāzvēlas vismaz 1 kolonna ko parīdit
+you need to select some entries first	addressbook	lv	Vispirms jāizvēlas daži ieraksti
+your new public key has been stored in accounts addressbook.	addressbook	lv	Jūsu jaunā publiskā atslēga ir saglabāta kontu adrešu grāmatā.
 zip code	common	lv	Pasta inekss
 zip_note	addressbook	lv	<p><b>Piezīme:</b> Fails drīkst būt .zip ar sazipotiem .csv, .vcf, or .ldif failiem. Tomēr, vienā zip failā lieciet viena tipa failus.

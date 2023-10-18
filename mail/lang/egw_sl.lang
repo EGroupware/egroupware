@@ -12,7 +12,7 @@
 (select mails by clicking on the line, like a checkbox)	mail	sl	(izberite pošto s klikom na vrstico, na primer potrditveno polje)
 (with checkbox enforced)	mail	sl	(s potrditvenim poljem)
 account editable by user	mail	sl	račun, ki ga lahko uredi uporabnik
-acl rights retrieve failed, seems there are no rights set!	mail	sl	Pridobivanje pravic ACL ni uspelo, se zdi, da ni nobenih pravic!
+acl rights retrieve failed, seems there are no rights set!	mail	sl	Pridobitev pravic ACL ni bila uspešna, zdi se, da ni nastavljenih nobenih pravic!
 acl rights retrieved successfully	mail	sl	ACL pravice so bile uspešno pridobljene
 action	mail	sl	Ukrep
 activating by date requires a start- and end-date!	mail	sl	Aktiviranje glede na datum zahteva določitev začetnega in končnega datuma!
@@ -23,12 +23,13 @@ add "%1" into whitelisted emails	mail	sl	Dodajte "%1" v e-poštna sporočila z d
 add a new folder to %1:	mail	sl	Dodajte novo mapo v %1:
 add all my aliases	mail	sl	Dodaj vse moje vzdevke
 add as new	mail	sl	Dodaj kot nov
+add files as %1	mail	sl	Dodajte datoteke kot %1
 add folder	mail	sl	Dodaj mapo
 add raw message, ignore mail attachments	mail	sl	Pretvori pošto v element, dodaj neobdelano sporočilo (ne upoštevaj priponk)
 add this certificate into contact	mail	sl	Dodajte to potrdilo v stik
 add to addressbook	mail	sl	Dodaj v adresar
 add your domain as "%1" in options to list of email providers and enable api.	mail	sl	Dodajte svojo domeno kot "%1" v možnosti na seznam ponudnikov e-pošte in omogočite API.
-adding %1 to blacklisted email addresses failed because of %2	mail	sl	Dodajanje %1 na črne e-poštne naslove ni uspelo zaradi %2
+adding %1 to blacklisted email addresses failed because of %2	mail	sl	Dodajanje %1 na e-poštne naslove, ki so na seznamu, ni uspelo zaradi %2
 adding %1 to whiltelisted email addresses failed because of %2	mail	sl	Dodajanje %1 v privzete e-poštne naslove ni uspelo zaradi %2
 after reply, visible during compose	mail	sl	Po odgovoru, viden med sestavljanjem
 aliases+forwards	mail	sl	Psevdonim+Posredovanje
@@ -64,12 +65,17 @@ are you sure you want to delete all selected folders?	mail	sl	Ali ste prepričan
 are you sure you want to move folder %1 to folder %2?	mail	sl	Ali ste prepričani, da želite premakniti mapo %1 v mapo %2?
 arrival	mail	sl	Sprejeto
 ask for permission	mail	sl	Prosite za dovoljenje
-attach users vcard at compose to every new mail	mail	sl	priložite uporabnikom VCard in sestavite vsako novo pošto
+attach files	mail	sl	Priložite datoteke
+attach users vcard at compose to every new mail	mail	sl	Vsakemu novemu sporočilu priloži uporabniško kartico vCard ob sestavljanju
 attach vcard	mail	sl	Priloži vCard
 attachment	mail	sl	Priponka
+attachment has been saved successfully.	mail	sl	Priponka je bila uspešno shranjena.
 attachments	mail	sl	Priponke
+attachments, ...	mail	sl	priponke, ...
 authentication	mail	sl	Autentifikacija
 available personal email-accounts/profiles	mail	sl	razpoložljivi osebni računi EMail-a / Profili
+be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	sl	Zavedajte se, da se z dodajanjem vseh izbranih datotek v način %1 v način %2 spremenijo tudi vse obstoječe priponke na seznamu. \n \n Ali želite nadaljevati?
+be aware that all attachments will be sent as %1!	mail	sl	Zavedajte se, da bodo vse priloge poslane v načinu %1!
 before reply, visible during compose	mail	sl	Pred odgovorom, ki je viden med sestavljanjem
 blacklisted mails are marked as spam	mail	sl	Črna pošta je označena kot vsiljena pošta
 but check shared folders	mail	sl	vendar preverite mape v skupni rabi
@@ -82,6 +88,7 @@ canceled deletion due to user interaction	mail	sl	preklican izbris zaradi intera
 certificate info for email %1	mail	sl	Podatki o certifikatu za e-poštni naslov %1
 change editor type	mail	sl	preklopite urejevalnik v način HTML
 changed profile	mail	sl	spremenjen profil
+changing subject failed because of %1	mail	sl	Spreminjanje teme ni uspelo zaradi %1
 changing subject failed folder %1 does not exist	mail	sl	Spreminjanje teme ni uspelo mapa %1 ne obstaja
 check message against next rule also	mail	sl	Preverite sporočilo tudi z naslednjim pravilom
 check to receive a notification when the message is read (note: not all clients support this and/or the receiver may not authorize the notification)	mail	sl	preverite, ali ste prejeli obvestilo, ko se prebere sporočilo (opomba: ne podpirajo vsi odjemalci in / ali prejemnik ne more odobriti obvestila)
@@ -196,6 +203,7 @@ enable	mail	sl	Omogoči
 enabled	mail	sl	Omogočeno
 enabled!	mail	sl	omogočeno!
 encrypt	mail	sl	Šifriraj
+encrypt your message with smime certificate	mail	sl	Šifrirajte svoje sporočilo s certifikatom S/MIME
 encryption	mail	sl	Šifriranje
 enter the name for the new folder:	mail	sl	Vnesite ime za novo mapo:
 error saving %1!	mail	sl	Napaka pri shranjevanju %1!
@@ -210,19 +218,21 @@ error: message could not be displayed.	mail	sl	Napaka: ne morem prikazati sporo�
 esync will fail without a working email configuration!	mail	sl	eSync bo napačen brez delovne e-poštne konfiguracije!
 event details follow	mail	sl	Sledijo podrobnosti dogodka
 everyone	mail	sl	Vse
+examine namespace to retrieve folders in others and shared	mail	sl	Preuči imenski prostor, da pridobiš mape v drugih in v skupni rabi
 extended	mail	sl	Razširjen
 extra sent folders	mail	sl	Dodatno poslane mape
 failed to delete %1	mail	sl	%1 ni bilo mogoče izbrisati
-failed to delete %1 ! reason: %2	mail	sl	ni uspelo izbrisati %1 ! Razlog: %2
+failed to delete %1 ! reason: %2	mail	sl	Ni uspelo izbrisati %1 ! Razlog: %2
 failed to delete %1. server responded:	mail	sl	%1 ni bilo mogoče izbrisati. Strežnik je odgovoril:
-failed to move %1 ! reason: %2	mail	sl	ni uspel premakniti %1 ! Razlog: %2
-failed to rename %1 ! reason: %2	mail	sl	ni uspelo preimenovati %1 ! Razlog: %2
+failed to move %1 ! reason: %2	mail	sl	Ni uspel premakniti %1 ! Razlog: %2
+failed to rename %1 ! reason: %2	mail	sl	Ni uspelo preimenovati %1 ! Razlog: %2
 failed to subscribe folder %1!	mail	sl	Mape %1 ni bilo mogoče naročiti!
 failed to unsubscribe folder %1!	mail	sl	Mapa za odjavo ni uspela %1 !
-file into	mail	sl	Shrani v
-file into:	mail	sl	Datoteka v:
+file into	mail	sl	Premakni v
+file into:	mail	sl	Premakni v:
 file rejected, no %2. is:%1	mail	sl	Datoteka zavrnjena, ne %2. Je: %1
 filemanager	mail	sl	Dokumenti
+filemode has been switched to %1	mail	sl	Način datoteke je bil prestavljen na: %1
 files	mail	sl	Datoteke
 flag / unflag	mail	sl	Oznaka / BrezOznake
 flag or unflag a mail	mail	sl	Oznaka ali BrezOznake v ePošti
@@ -234,6 +244,7 @@ flagged / unflagged	mail	sl	Označeno / neoznačeno
 folder	mail	sl	Mapa
 folder %1 %2 failed because of %3!	mail	sl	Mapa %1% 2 ni uspela zaradi %3!
 folder %1 %2 failed!	mail	sl	Mapa %1 %2 ni uspela!
+folder %1 has been created successfully, although the subscription failed because of %2	mail	sl	Mapa %1 je bila uspešno ustvarjena, čeprav je bila naročnina neuspešna zaradi %2
 folder %1 is moving to folder %2	mail	sl	Mapa %1 se premakne v mapo %2
 folder management	mail	sl	Upravljanje map
 folder management ...	mail	sl	Upravljanje map ...
@@ -259,6 +270,7 @@ general settings	mail	sl	Splošne nastavitve
 get acl rights failed from imap server!	mail	sl	Pridobite ACL pravice iz strežnika IMAP!
 greater than	mail	sl	Večje kakor
 ham folder	mail	sl	Ham mapa
+handling of external http images / mixed content in mails	mail	sl	Ravnanje z zunanjimi slikami http / mešano vsebino v e-poštnih sporočilih
 header	mail	sl	Glava
 header lines	mail	sl	Glava sporočila
 high	mail	sl	visoko
@@ -270,7 +282,11 @@ how should the available information on identities be displayed	admin	sl	kako na
 how to forward messages	mail	sl	Kako naj se posreduje sporočilo
 html	mail	sl	HTML
 html mode	mail	sl	Način HTML
+ident name	mail	sl	Ime identitete
+ident name email	mail	sl	Ime identitete [E-pošta]
+ident name organization email	mail	sl	Identitetno ime Organizacija [Email]
 identity	mail	sl	Identiteta
+identity label	mail	sl	Oznaka identitete
 identity+signature	mail	sl	Identiteta+Podpis
 if	mail	sl	ČE
 if authentication required	mail	sl	če je potrebna overitev
@@ -296,7 +312,7 @@ import of message %1 failed. destination folder %2 does not exist.	mail	sl	Uvoz 
 import of message %1 failed. destination folder not set.	mail	sl	Uvoz sporočila %1 ni uspel. Ciljna mapa ni nastavljena.
 import of message %1 failed. no contacts to merge and send to specified.	mail	sl	Uvoz sporočila %1 ni uspel. Ni stikov, ki bi se združili in poslali na določeno.
 importance	mail	sl	pomembnost
-important	mail	sl	pomembno
+important	mail	sl	Pomembno
 in mailbox: %1, with id: %2, and partid: %3	mail	sl	V nabiralniku: %1, z ID: %2 in PartID: %3
 in order to protect your privacy all external sources within this email are blocked.	mail	sl	Da bi zaščitili vašo zasebnost, so vsi zunanji viri v tem e-poštnem sporočilu blokirani.
 inbox	mail	sl	Prejeto
@@ -304,7 +320,7 @@ information to show on email tag	mail	sl	Informacije, ki se prikažejo na oznaki
 initialization of mail failed. please use the wizard to cope with the problem.	mail	sl	Inicializacija pošte ni uspela. Prosimo, uporabite čarovnika za obvladovanje težave.
 inline	mail	sl	V vrsti
 insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)	mail	sl	vstavite podpis na vrh novega sporočila (ali odgovora), ko odprete pogovorno okno za sestavljanje (morda ne boste mogli zamenjati podpisov)
-job	mail	sl	delo
+job	mail	sl	Delo
 junk	mail	sl	Smeti
 junk folder	mail	sl	Neželena mapa
 keep a copy of the message in your inbox	mail	sl	Obdrži kopijo sporočila v mapi Prejeto
@@ -313,6 +329,7 @@ later	mail	sl	Pozneje
 learning as ham (not spam) failed because of %1	mail	sl	Učenje kot ham (ni vsiljena pošta) ni uspelo zaradi %1
 learning as spam failed because of %1	mail	sl	Učenje kot spam ni uspelo zaradi %1
 less than	mail	sl	Manj kot
+limit mailing list results when searching for addresses	mail	sl	Omejitev rezultatov poštnih seznamov pri iskanju naslovov
 list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	sl	Seznam akcij, ki bodo privzeto vklopljene/aktivirane (npr. akcija Mail composose shrani kot InfoLog)
 mail	common	sl	Pošta
 mail acl	mail	sl	Pošta ACL
@@ -428,6 +445,9 @@ quota: %1	mail	sl	Kvota: %1
 read	mail	sl	Prebrano
 read / unread	mail	sl	Branje / Neprebrano
 readable	mail	sl	berljivo
+real name	mail	sl	Pravo ime
+real name email	mail	sl	Resnično ime [E-pošta]
+real name organization email	mail	sl	Resnično ime Organizacija [Email]
 reason!	mail	sl	razlog!
 receive notification	mail	sl	Sprejmi obvestilo
 recursively	mail	sl	Rekurzivno
@@ -451,6 +471,7 @@ rename folder	mail	sl	Preimenuj mapo
 rename folder %1 ?	mail	sl	Preimenuj mapo %1 ?
 rename folder %1 to:	mail	sl	Preimenuj mapo %1 na:
 renamed folder %1 to %2	mail	sl	Preimenovana mapa %1 do %2
+replace 'http://' in image urls with (trailing / required!)	mail	sl	Zamenjajte 'http://' v slikovnih naslovih z (zahtevano je konično /!)
 replied	mail	sl	Odgovorjeno
 reply	mail	sl	Odgovori
 reply all	mail	sl	Odgovori vsem
@@ -587,15 +608,19 @@ the %1 's acl, including its subfolders, removed from the %2	mail	sl	Acl %1, vkl
 the entered passphrase is not correct! please try again.	mail	sl	Vnesena geslo ni pravilna! Prosim poskusite ponovno.
 the folder %1 's acls saved	mail	sl	Shranjeni so ACL-ji mape %1
 the folder <b>%1</b> will be used, if there is nothing set here, and no valid predefine given.	mail	sl	Uporabljena bo mapa <b>%1</b>, če tukaj ni ničesar in ne bo podana nobena veljavna prednastavitev.
+the imap server need to meet certain requirements and be configured for it:	mail	sl	Strežnik IMAP mora izpolnjevati določene zahteve IN biti konfiguriran zanj:
 the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	mail	sl	Pošiljatelj sporočila je zahteval potrdilo, da ste sporočilo prebrali. Želite poslati obvestilo o tem?
 the mimeparser can not parse this message.	mail	sl	Mimeparser ne more prebrati tega sporočila.
 the rule with priority %1 successfully saved!	mail	sl	Pravilo s prednostjo %1 je uspešno shranjeno!
 then	mail	sl	THEN
 there is no imap server configured.	mail	sl	Noben strežnik IMAP ni nastavljen.
+there is no space left to store sieve script, please check sieve_maxscriptsize option on your mailserver's config.	mail	sl	Za shranjevanje skripte sieve ni več prostora, preverite možnost sieve_maxscriptsize v konfiguraciji poštnega strežnika.
+this mail contains external images served via insecure http protocol. be aware showing or allowing them can compromise your security!	mail	sl	Ta pošta vsebuje zunanje slike, ki so postrežene prek nezanesljivega protokola HTTP. Zavedajte se, da njihovo prikazovanje ali dovoljevanje lahko ogrozi vašo varnost!
 this message is smime encrypted and password protected.	mail	sl	To sporočilo je šifrirano smime in zaščiteno z geslom.
 timeout on connections to your imap server	mail	sl	Časovna omejitev povezave s strežnikom IMAP
-to do	mail	sl	narediti
+to do	mail	sl	Narediti
 toggle all folders view for %1	mail	sl	Preklopi pogled vseh map% 1
+toggled on actions	mail	sl	Preklopi na dejanja
 trash	mail	sl	Koš
 trash folder	mail	sl	Mapa Koš
 trust servers seen / unseen info	mail	sl	zaupni strežniki SEEN / UNSEEN info

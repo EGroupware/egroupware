@@ -1,5 +1,6 @@
 %1 added	addressbook	cs	%1 přidáno
 %1 contact(s) %2	addressbook	cs	%1 kontakt(ů) %2
+%1 contact(s) %2, %3 failed because of %4 !!!	addressbook	cs	%1 kontakt(y) %2, %3 se nezdařil z důvodu %4 !!!
 %1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	cs	%1 kontakt(ů) %2, %3 selhal(o) z důvodu nedostatečných oprávnění !!!
 %1 contacts updated (%2 errors).	addressbook	cs	%1 kontaktů zaktualizováno (chyb: %2).
 %1 fields in %2 other organisation member(s) changed	addressbook	cs	%1 položek u %2 ostatních členů organizace změněno
@@ -71,13 +72,14 @@ allow for contacts only	addressbook	cs	Povolit pouze kontakty
 allow members of following groups to edit contact-data of accounts	addressbook	cs	Dovolit uživatelům patřících do těchto skupin upravovat kontaktní údaje účtů
 allow users to maintain their own account-data	admin	cs	Povolit uživatelům měnit jejich vlastní data
 alt. csv import	addressbook	cs	Alternativní import z CSV
-always	addressbook	cs	vždy
+always	addressbook	cs	Vždy
 apply changes to all members, whose fields have the same previous content	addressbook	cs	Aplikovat změny na všechny členy, jejichž položky mají stejný obsah
 apply the action on the whole query, not only the shown contacts!!!	addressbook	cs	Použít akci na celý dotaz, nejen zobrazené kontakty!!!
 are you shure you want to delete this contact?	addressbook	cs	Určitě chcete smazat tento kontakt?
 are you sure you want to delete this field?	addressbook	cs	Určitě chcete smazat tuto položku?
 assistent	addressbook	cs	Asistent(ka)
-assistent phone	addressbook	cs	telefon asistenta(ky)
+assistent phone	addressbook	cs	Telefon asistenta(ky)
+audio call	addressbook	cs	Zvukové volání
 birthday	common	cs	Narozeniny
 birthdays	common	cs	Narozeniny
 blank	addressbook	cs	Prázdný
@@ -95,18 +97,20 @@ business state	addressbook	cs	Firma - stát
 business street	addressbook	cs	Firma - Ulice
 business zip code	addressbook	cs	Firma - PSČ
 calendar fields:	addressbook	cs	Položky kalendáře:
+calendar integration	addressbook	cs	Integrace kalendáře
 calendar uri	addressbook	cs	URI kalendáře
 can be changed via setup >> configuration	admin	cs	Může být změněno přes Setup >> Konfigurace
 can't create dn %1	addressbook	cs	Není možné vytvořit dn %1
 car phone	addressbook	cs	Telefon do auta
-categorie	addressbook	cs	kategorie
-categorie added	addressbook	cs	kategorie přidány
-categorie delete	addressbook	cs	kategorie smazány
+categorie	addressbook	cs	Kategorie
+categorie added	addressbook	cs	Kategorie přidány
+categorie delete	addressbook	cs	Kategorie smazány
 categories, notes, ...	addressbook	cs	Kategorie, Poznámky, ...
 category path	addressbook	cs	Cesta kategorie
 category tree	admin	cs	Strom kategorií
 cell phone	addressbook	cs	Mobilní telefon
-change all organisation members	addressbook	cs	změnit všechny členy organizace
+change addressbook when updating	addressbook	cs	Změnit adresář při aktualizaci
+change all organisation members	addressbook	cs	Změnit všechny členy organizace
 charset for the csv export	addressbook	cs	Znaková sada pro export do CSV
 charset for the vcard export	addressbook	cs	Znaková sada pro export do formátu vCard
 charset for the vcard import and export	addressbook	cs	Znaková sada pro export a import  formátu vCard
@@ -139,11 +143,11 @@ contact saved	addressbook	cs	Kontakt uložen
 contact settings	admin	cs	Nastavení kontaktu
 contactform	addressbook	cs	Formulář kontaktu
 contacts	common	cs	Kontakty
-contacts and account contact-data to ldap	admin	cs	kontakty a kontaktní data uživatelských účtů do LDAP
-contacts and account contact-data to sql	admin	cs	kontakty a kontaktní data uživatelských účtů do SQL
-contacts to ldap	admin	cs	kontakty do LDAP
-contacts to ldap, account contact-data to sql	admin	cs	kontakty do LDAP, kontaktní data uživatelských účtů do SQL
-contains	addressbook	cs	obsahuje
+contacts and account contact-data to ldap	admin	cs	Kontakty a kontaktní data uživatelských účtů do LDAP
+contacts and account contact-data to sql	admin	cs	Kontakty a kontaktní data uživatelských účtů do SQL
+contacts to ldap	admin	cs	Kontakty do LDAP
+contacts to ldap, account contact-data to sql	admin	cs	Kontakty do LDAP, kontaktní data uživatelských účtů do SQL
+contains	addressbook	cs	Obsahuje
 copied	addressbook	cs	zkopírováno
 copied by %1, from record #%2.	addressbook	cs	Zkopírováno %1, ze záznamu #%2.
 copy a contact and edit the copy	addressbook	cs	Kopírovat kontakt a editovat kopii
@@ -165,7 +169,7 @@ custom etemplate for the contactform	addressbook	cs	Uživatelsky definovaná eŠ
 custom fields	addressbook	cs	Uživatelsky definovaná pole
 data exchange settings	addressbook	cs	Nastavení výměny dat
 debug output in browser	addressbook	cs	Debugovací výstup v prohlížeči
-default	addressbook	cs	výchozí
+default	addressbook	cs	Výchozí
 default action on double-click	addressbook	cs	Výchozí akce při dvojkliku
 default address format	addressbook	cs	Výchozí formát adresy
 default addressbook for adding contacts	addressbook	cs	Výchozí adresář pro přidávání kontaktů
@@ -180,11 +184,12 @@ delete a single entry by passing the id.	addressbook	cs	Vymazat záznam vložen�
 delete selected distribution list!	addressbook	cs	Smazat vybraný distribuční seznam!
 delete this contact	addressbook	cs	Smazat kontakt
 delete this organisation including all its contacts	addressbook	cs	Vymazat tuto organizaci včetně VŠECH jejích kontaktů.
-deleted	addressbook	cs	smazáno
+deleted	addressbook	cs	Smazáno
 deletes the photo	addressbook	cs	Maže fotografii
 department	common	cs	Oddělení
-departments	addressbook	cs	oddělení
+departments	addressbook	cs	Oddělení
 directory with documents to insert contacts	addressbook	cs	Adresář s dokumenty pro vložení kontaktů
+disable	addressbook	cs	Zakázat
 disable last/next event column	addressbook	cs	Zakázat sloupec Poslední/následující událost
 display contact	addressbook	cs	Zobrazit kontakt
 displays a remider for birthdays on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	cs	Zobrazuje připomínku narozenin na úvodní straně (stránka, na kterou se dostanete když se přihlásíte do EGroupware a kliknete na ikonu Hlavní strana).
@@ -201,7 +206,7 @@ domestic	addressbook	cs	Vnitrostátní
 don't hide empty columns	addressbook	cs	Neschovávat prázdné sloupce
 download	addressbook	cs	Stáhnout
 download export file (uncheck to debug output in browser)	addressbook	cs	Stáhnout exportní soubor (Odškrtněte debugovací výstup v prohlížeči)
-download this contact as vcard file	addressbook	cs	stáhnout kontakt jako vCard soubor
+download this contact as vcard file	addressbook	cs	Stáhnout kontakt jako vCard soubor
 duplicate threshold	addressbook	cs	Duplicitní práh
 duplicate warning	addressbook	cs	Opakované varování
 duplicates	addressbook	cs	Duplikáty
@@ -219,6 +224,7 @@ email & internet	addressbook	cs	E-mail & Internet
 email (private)	addressbook	cs	E-mailová adresa (soukromá)
 email addresses (comma separated) to send the contact data	addressbook	cs	E-mailové adresy (oddělené čárkou) na které mají být odeslána data kontaktu
 empty	admin	cs	Prázdné
+empty addressbook before importing	addressbook	cs	Odstranit položky adresáře, které nejsou v seznamu CSV
 empty for all	addressbook	cs	prázdné znamená vše
 enable an extra private addressbook	addressbook	cs	Povolit dodatečný privátní adresář
 enclosure	addressbook	cs	Uzavření
@@ -230,6 +236,7 @@ error: the entry has been updated since you opened it for editing!	addressbook	c
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	addressbook	cs	Příklad {{IF n_prefix~Pan~Vážený pane~Vážená paní}} - hledá se výskyt slova "Pan" v poli "n_prefix", pokud je nalezeno, vloží se  text Vážený pane, jinak Vážená paní.
 example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	preferences	cs	Příklad {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Příklad: Mr Dr. James Miller
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	addressbook	cs	Příklad {{NELF role}} - pokud pole role není prázdné, bude na nový řádek vypsán obsah pole role.
+example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	addressbook	cs	Příklad {{nenvlf role}} - pokud pole role není prázdné, nastavte LF bez jakékoli hodnoty pole
 existing links	addressbook	cs	Stávající odkazy
 exists	addressbook	cs	Stávající
 export as csv	addressbook	cs	Exportovat jako CSV
@@ -247,7 +254,8 @@ exports contacts from your addressbook into a vcard file.	addressbook	cs	Exportu
 extra	addressbook	cs	Extra
 extra encodings	addressbook	cs	Zvláštní kódování
 extra private	addressbook	cs	Extra soukromé
-failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	cs	nepodařilo se změnit %1 členů organizace (nedostatečná práva) !!!
+failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	cs	Nepodařilo se změnit %1 členů organizace (nedostatečná práva) !!!
+favorite phone	addressbook	cs	Oblíbený telefon
 favorites	addressbook	cs	Oblíbené
 fax	addressbook	cs	Fax
 fax (private)	addressbook	cs	Fax (soukromá)
@@ -319,10 +327,11 @@ insufficent rights to delete this list!	addressbook	cs	Nemáte dostatečná opr�
 insufficent rights to edit this list!	addressbook	cs	Nemáte dostatečná oprávnění k úpravě tohoto seznamu!
 international	addressbook	cs	Mezinárodní
 internet	addressbook	cs	Internet
+invite to current call	addressbook	cs	Pozvat k aktuálnímu hovoru
 label	addressbook	cs	Jmenovka
 last date	addressbook	cs	Poslední datum
-last modified	addressbook	cs	naposledy změněno
-last modified by	addressbook	cs	naposledy změnil(a)
+last modified	addressbook	cs	Naposledy změněno
+last modified by	addressbook	cs	Naposledy změnil(a)
 ldap context for contacts	admin	cs	LDAP kontext pro kontakty
 ldap host for contacts	admin	cs	LDAP server pro kontakty
 ldap settings for contacts	admin	cs	Nastavení LDAP pro kontakty
@@ -341,7 +350,7 @@ list of files linked to the current record	addressbook	cs	Seznam připojených s
 load custom fields in index, even if custom field column is off (eg. to display them in a specific index column)	addressbook	cs	Načtení vlastních polí v indexu, i když je sloupec vlastních polí vypnutý (např. pro jejich zobrazení v konkrétním sloupci indexu).
 load vcard	addressbook	cs	Nahrát vCard
 location	addressbook	cs	Umístění
-locations	addressbook	cs	umístění
+locations	addressbook	cs	Umístění
 mail vcard	addressbook	cs	Odeslat vizitku vCard
 main categories in their own field	addressbook	cs	Hlavní kategorie v jejich vlatním poli
 manage mapping	addressbook	cs	Spravovat mapování
@@ -349,7 +358,7 @@ mark records as private	addressbook	cs	Označit záznamy jako soukromé
 merge contacts	addressbook	cs	Sloučit kontakty
 merge duplicates	addressbook	cs	Sloučení duplicit
 merge into first or account, deletes all other!	addressbook	cs	Sloučení do prvního nebo do účtu, smaže všechny ostatní!
-merged	addressbook	cs	sloučeno
+merged	addressbook	cs	Sloučeno
 message after submitting the form	addressbook	cs	Zpráva po odeslání formuláře
 message phone	addressbook	cs	Telefon pro zprávy
 middle name	addressbook	cs	Prostřední jméno
@@ -366,10 +375,11 @@ multiple vcard	addressbook	cs	Více vCard
 name for the distribution list	addressbook	cs	Název distribučního seznamu
 name of current user, all other contact fields are valid too	addressbook	cs	Jméno aktuálního uživatele, všechny ostatní položky kontaktu jsou také platné
 name, address	addressbook	cs	Jméno, adresa
+name, email, phone	addressbook	cs	Jméno, e-mail, telefon
 new contact submitted by %1 at %2	addressbook	cs	Nový kontakt odeslal(a) %1 v %2
 new window opened to edit infolog for your selection	addressbook	cs	Otevřeno nové okno pro editaci InfoLog na základě vašeho výběru
 next date	addressbook	cs	Následující datum
-no categories selected	addressbook	cs	nebyly vybrány žádné kategorie
+no categories selected	addressbook	cs	Nebyly vybrány žádné kategorie
 no country selected	addressbook	cs	Žádná vybraná země
 no distribution list	addressbook	cs	Neexistuje rozesílací seznam
 no fallback	addressbook	cs	Žádné nouzové řešení
@@ -389,7 +399,7 @@ organisations by departments	addressbook	cs	Organizace dle oddělení
 organisations by location	addressbook	cs	Organizace dle umístění
 other number	addressbook	cs	Jiné číslo
 other phone	addressbook	cs	Jiný telefon
-own sorting	addressbook	cs	vlastní třídění
+own sorting	addressbook	cs	Vlastní třídění
 pager	common	cs	Pager
 parcel	addressbook	cs	Pozemek
 participants	addressbook	cs	Účastníci
@@ -402,34 +412,36 @@ photo	addressbook	cs	Fotografie
 please enter a name for that field !	addressbook	cs	Zadejte prosím název pro tuto položku!
 please select only one category	addressbook	cs	Vyberte prosím jen jednu kategorii
 postal	common	cs	PSČ
-pref	addressbook	cs	preferovaný
+pref	addressbook	cs	Preferovaný
 preferred email address to use in distribution lists	addressbook	cs	Preferovaná e-mailová adresa pro použití v rozesílacích seznamech
-preferred phone	addressbook	cs	preferovaný telefon
-preferred type of email address to add for distribution lists	addressbook	cs	preferovaný typ e-mailové adresy pro přidávání do rozesílacích seznamů
+preferred phone	addressbook	cs	Preferovaný telefon
+preferred type of email address to add for distribution lists	addressbook	cs	Preferovaný typ e-mailové adresy pro přidávání do rozesílacích seznamů
 prefix	addressbook	cs	Titul/Oslovení
 prevent deleting of contacts	admin	cs	Zabránit smazání kontaktů
 private address	addressbook	cs	Soukromá adresa
 private custom fields	addressbook	cs	Soukromá uživatelsky definovaná pole
 public key	addressbook	cs	Veřejný klíč
+public sharing url	addressbook	cs	Adresa URL pro veřejné sdílení
 publish into groups:	addressbook	cs	Zveřejnit ve skupinách:
 read a list / search for entries.	addressbook	cs	Načíst seznam / vyhledat záznamy.
 read a list of entries.	addressbook	cs	Načíst seznam záznamů.
 read a single entry by passing the id and fieldlist.	addressbook	cs	Načíst záznam zadáním id a seznamu položek.
-read only	addressbook	cs	jen ke čtení
+read only	addressbook	cs	Jen ke čtení
 record access	addressbook	cs	Přístup k záznamu
 record owner	addressbook	cs	Vlastník záznamu
 recovered	addressbook	cs	Obnovený
 region	addressbook	cs	Region
 remove from distribution list	addressbook	cs	Odebrat z rozesílacího seznamu
 remove selected contacts from distribution list	addressbook	cs	Odstranit vybrané kontakty z distribučního seznamu
-removed from distribution list	addressbook	cs	odstraněno z distribučního seznamu
+removed from distribution list	addressbook	cs	Odstraněno z distribučního seznamu
 rename list	addressbook	cs	Přejmenovat seznam
 rename selected distribution list	addressbook	cs	Přejmenovat vybraný rozesílací seznam
 repetition	addressbook	cs	Opakování
 replacements for inserting contacts into documents	addressbook	cs	Náhrady pro vkládání kontaktů do dokumentů
-required fields *	addressbook	cs	povinné položky *
+required fields *	addressbook	cs	Povinné položky *
 role	addressbook	cs	Role
 room	addressbook	cs	Místnost
+schedule a video conference	addressbook	cs	Naplánovat videokonferenci
 search letter	addressbook	cs	Hledat
 select a portrait format jpeg photo. it will be resized to 60 pixel width.	addressbook	cs	Vyberte portrét ve formátu jpeg. Bude upraven na šířku 60 pixelů.
 select a source address to be used in geolocation routing system	addressbook	cs	Vyberte zdrojovou adresu pro určování trasy
@@ -445,8 +457,9 @@ select phone number as prefered way of contact	addressbook	cs	vybrat telefonní 
 select the type of conversion	addressbook	cs	Vybrat typ konverze
 select the type of conversion:	addressbook	cs	Vybrat typ konverze:
 select where you want to store / retrieve contacts	admin	cs	Vybrat úložiště kontaktů
-selected contacts	addressbook	cs	vybrané kontakty
+selected contacts	addressbook	cs	Vybrané kontakty
 send emailcopy to receiver	addressbook	cs	Poslat kopii e-mailu příjemci
+send fax via email by replacing fax number with an email address	addressbook	cs	Odeslání faxu e-mailem nahrazením faxového čísla e-mailovou adresou
 send succeeded to %1	common	cs	Odeslání do %1 bylo úspěšné
 seperator	addressbook	cs	Oddělovač
 set full name and file as field in contacts of all users (either all or only empty values)	admin	cs	Nastavit celé jméno a evidovat jako pole v kontaktech všech uživatelů (buď všechny nebo jen prázdné hodnoty)
@@ -478,7 +491,7 @@ subject for email	addressbook	cs	Předmět e-mailu
 successfully imported %1 records into your addressbook.	addressbook	cs	Úspěšně importováno %1 záznamů do Vašeho adresáře.
 suffix	addressbook	cs	Za příjmením
 tag to mark positions for address labels	addressbook	cs	Značka pro vyznačení pozic v adresních štítcích
-tel home	addressbook	cs	telefon domů
+tel home	addressbook	cs	Telefon domů
 telephony integration	admin	cs	Integrace telefonie
 test import (show importable records <u>only</u> in browser)	addressbook	cs	Testovat import (zobrazit importovatelné záznamy <u>jen</u> v prohlížeči)
 thank you for contacting us.	addressbook	cs	Děkujeme, že jste nás kontaktoval(a).
@@ -487,7 +500,7 @@ the anonymous user has probably no add rights for this addressbook.	addressbook	
 the anonymous user needs add rights for it!	addressbook	cs	Anonymní uživatel potřebuje práva k přidávání záznamů.
 the anonymous user needs read it!	addressbook	cs	Anonymní uživatel potřebuje právo pro čtení!
 the following document-types are supported:	addressbook	cs	Jsou podporovány následující typy dokumentů:
-the zip extension is needed, to insert contact data in openoffice or msoffice documents.	addressbook	cs	Pro vložení kontaktních údajů do dokumentů OpenOffice nebo MS Office je vyžadován soubor s příponou ZIP.
+the zip extension is needed, to insert contact data in openoffice or msoffice documents.	addressbook	cs	Pro vložení kontaktních údajů do dokumentů LibreOffice nebo MS-Office je vyžadován soubor s příponou ZIP.
 there was an error saving your data :-(	addressbook	cs	Došlo k chybě při ukládání Vašich dat :-(
 this module displays a contactform, that stores direct into the addressbook.	addressbook	cs	Tento modul zobrazuje formulář kontaktu, který ukládá data přímo do adresáře.
 this module displays block from a adddressbook group.	addressbook	cs	Tento modul zobrazuje blok z adresářové skupiny.
@@ -515,8 +528,8 @@ update a single entry by passing the fields.	addressbook	cs	Aktualizovat záznam
 update fields by edited organisations?	admin	cs	Aktualizovat položky editovanými organizacemi?
 updated	addressbook	cs	Aktualizováno
 upload or delete the photo	addressbook	cs	Upload nebo smazání fotografie
-url (business)	addressbook	cs	url (firemní)
-url (private)	addressbook	cs	url (soukromá)
+url (business)	addressbook	cs	URL (firemní)
+url (private)	addressbook	cs	URL (soukromá)
 url to link telephone numbers to (use %1 = number to call, %u = account name, %t = account phone)	admin	cs	URL na které má telefonní číslo odkazovat (použijte %1 = vytáčené telefonní číslo, %u = název účtu, %t = telefon účtu)
 use a category tree?	addressbook	cs	Použijte stromové zobrazení pro výměr kategorií
 use addressbooks "own sorting" attribute	addressbook	cs	Použijte atribut "vlastní třídění" adresáře
@@ -531,6 +544,7 @@ vcard	common	cs	vCard
 vcards require a first name entry.	addressbook	cs	vCard vyžaduje křestní jméno v záznamu
 vcards require a last name entry.	addressbook	cs	vCard vyžaduje příjmení v záznamu
 verification	addressbook	cs	Ověření
+video call	addressbook	cs	Videohovor
 view linked infolog entries	addressbook	cs	Zobrazit odkazované záznamy v InfoLog
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	cs	VAROVÁNÍ!! LDAP je použitelný jen v případě, že NEpoužíváte kontakty pro ukládání uživatelských účtů!
 warning: all contacts found will be deleted!	addressbook	cs	VAROVÁNÍ: Všechny kontakty budou smazány!
@@ -538,14 +552,14 @@ weekday	addressbook	cs	Pracovní den
 what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	cs	Co mají odkazy na adresář zobrazovat v ostatních aplikacích. Prázdné hodnoty budou vynechány. Pokud změníte toto nastavení, musíte se znovu přihlásit!
 when viewing a contact, show linked entries from the selected application	addressbook	cs	Při zobrazení kontaktu zobrazovat také připojené záznamy z vybraných aplikací
 when you merge entries into documents, they will be stored here.  if no directory is provided, they will be stored in your home directory (/home/unverricht)	addressbook	cs	Při slučování záznamů do dokumentů budou uloženy právě zde. Pokud není zadán žádný adresář, budou uloženy v domovském adresáři (/home/...).
-where to add the email address	addressbook	cs	kam přidat e-mailovou adresu
+where to add the email address	addressbook	cs	Kam přidat e-mailovou adresu
 which address format should the addressbook use for countries it does not know the address format. if the address format of a country is known, it uses it independent of this setting.	addressbook	cs	Jaký formát adres má adresář používat u zemí, jejichž adresní formát nezná. Pokud je formát znám, je použit bez ohledu na toto nastavení.
 which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	cs	Který adresář má být vybrán v případě, že přidáváte kontakt a pro aktuální adresář nemáte dostatečná práva.
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	cs	Která znaková sada má být použita pro CSV export? Výchozí znakovou sadou je znaková sada použitá pro instalaci EGroupware.
 which charset should be used for the vcard export.	addressbook	cs	Jaká znaková sada má být použita při exportu do souboru vCard
 which charset should be used for the vcard import and export.	addressbook	cs	Jaká znaková sada má být použita při exportu a importu ze souboru vCard
 which fields should be exported. all means every field stored in the addressbook incl. the custom fields. the business or home address only contains name, company and the selected address.	addressbook	cs	Které položky budou exportovány. Všechny znamená každou položku včetně uživatelsky definovaných. Firemní nebo domácí obsahuje jen jméno, firmu a vybranou adresu.
-whole query	addressbook	cs	celý dotaz
+whole query	addressbook	cs	Celý dotaz
 work email if given, else home email	addressbook	cs	Pracovní e-mail, je-li definován, jinak domácí
 work phone	addressbook	cs	Pracovní telefon
 write (update or add) a single entry by passing the fields.	addressbook	cs	Zapsat (aktualizovat nebo přidat) záznam vyplněním položek.
@@ -560,7 +574,7 @@ you are not allowed to share into the addressbook of %1	addressbook	cs	Nejste op
 you are not permitted to delete contact %1	addressbook	cs	Nemáte oprávnění ke smazání kontaktu %1
 you are not permittet to delete this contact	addressbook	cs	Nemáte oprávnění ke smazání tohoto kontaktu
 you are not permittet to edit this contact	addressbook	cs	Nemáte oprávnění k editaci tohoto kontaktu
-you are not permittet to view this contact	addressbook	cs	nemáte oprávnění k prohlížení tohoto kontaktu
+you are not permittet to view this contact	addressbook	cs	Nemáte oprávnění k prohlížení tohoto kontaktu
 you can only use ldap as contact repository if the accounts are stored in ldap too!	admin	cs	LDAP můžete používat jako databázi kontaktů jen v případě, že máte v LDAP uloženy také uživatelské účty!
 you can respond by visiting:	addressbook	cs	Pro zobrazení navštivte:
 you must select a vcard. (*.vcf)	addressbook	cs	Musíte vybrat vCard. (*.vcf)

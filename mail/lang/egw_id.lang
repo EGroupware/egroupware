@@ -1,10 +1,14 @@
 %1 is not writable by you!	mail	id	%1 TIDAK dapat anda tulisi!
 (leave empty for no quota)	mail	id	(Biarkan kosong untuk tidak ada kuota)
 (no subject)	mail	id	(tanpa subyek)
+acl rights retrieve failed, seems there are no rights set!	mail	id	Pengambilan hak ACL gagal, tampaknya tidak ada hak yang ditetapkan!
 activating by date requires a start- and end-date!	mail	id	Pengaktifan menurut tanggal memerlukan tanggal awal DAN akhir!
 add all my aliases	mail	id	Tambahkan semua alias saya
+add files as %1	mail	id	Tambahkan file sebagai %1
 add raw message, ignore mail attachments	mail	id	Mengonversi email menjadi item, menambahkan pesan mentah (abaikan lampiran email)
 add to addressbook	mail	id	Tambahkan ke buku alamat
+adding %1 to blacklisted email addresses failed because of %2	mail	id	Menambahkan %1 ke alamat email daftar hitam gagal karena %2
+adding %1 to whiltelisted email addresses failed because of %2	mail	id	Menambahkan %1 ke alamat email daftar putih gagal karena %2
 after reply, visible during compose	mail	id	Setelah membalas, terlihat saat menulis
 aliases+forwards	mail	id	Nama samaran + Teruskan
 all of	mail	id	semua
@@ -12,10 +16,17 @@ always show notifiction	mail	id	Selalu tampilkan pemberitahuan
 answered	mail	id	Menjawab
 any of	mail	id	sembarang
 any status	mail	id	status apapun
+attach files	mail	id	Melampirkan file
+attach users vcard at compose to every new mail	mail	id	Lampirkan vCard pengguna saat menulis ke setiap email baru
+attachment has been saved successfully.	mail	id	Lampiran telah berhasil disimpan.
 attachments	mail	id	Lampiran
+attachments, ...	mail	id	lampiran, ...
+be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	id	Perlu diketahui bahwa dengan menambahkan semua file yang dipilih sebagai mode %1, ini juga akan mengubah semua lampiran yang ada dalam daftar menjadi mode %2. \n \n Apakah Anda ingin melanjutkan?
+be aware that all attachments will be sent as %1!	mail	id	Ketahuilah bahwa semua lampiran akan dikirim sebagai %1!
 by date	mail	id	menurut tanggal
 by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	id	Secara default, 'http://' hanya diganti dengan 'https://'. Jangan ragu untuk mengonfigurasi 'https://proxy.egroupware.org/' untuk juga memuat gambar yang hanya tersedia melalui http.
 caching of flags	mail	id	Menyimpan bendera dalam cache
+changing subject failed because of %1	mail	id	Mengubah subjek gagal karena %1
 changing subject failed folder %1 does not exist	mail	id	Mengubah subjek gagal folder %1 tidak ada
 compose	mail	id	Tulis
 compose as new	mail	id	tulis sbg pesan baru
@@ -43,40 +54,77 @@ draft folder	mail	id	draft folder
 drafts	mail	id	Drafts
 edit account	mail	id	Edit akoun
 emailaddress	admin	id	alamat email
+emailadmin: profilemanagement	mail	id	eMailAdmin: Manajemen profil
+emails in whitelisted domains are not marked as spam	mail	id	Email di domain yang masuk daftar putih tidak ditandai sebagai spam
 empty trash	mail	id	kosongkan trash
-enable	mail	id	enable
+enable	mail	id	Aktifkan
+enabled	mail	id	Diaktifkan
+encrypt your message with smime certificate	mail	id	Mengenkripsi pesan Anda dengan sertifikat S/MIME
 error saving %1!	mail	id	Error menyimpan %1!
 error:	mail	id	Error:
 event details follow	mail	id	Berikut adalah detil Kegiatan
-everyone	mail	id	everyone
+everyone	mail	id	Semua orang
+examine namespace to retrieve folders in others and shared	mail	id	Periksa ruang nama untuk mengambil folder di folder lain dan dibagikan
 extended	mail	id	Extended
-file into	mail	id	file into
+failed to subscribe folder %1!	mail	id	Gagal berlangganan folder %1!
+failed to unsubscribe folder %1!	mail	id	Gagal berhenti berlangganan folder %1!
+file into	mail	id	Pindah ke
+file into:	mail	id	Pindah ke:
 filemanager	mail	id	Manajer berkas
+filemode has been switched to %1	mail	id	Mode file telah dialihkan ke: %1
 flagged	mail	id	ditandai
-folder	mail	id	folder
+flagged %1 messages as %2 in %3	mail	id	Menandai%1 pesan sebagai%2 di%3
+flagged %1 messages as flagged in %2	mail	id	Menandai %1 pesan sebagai ditandai di %2
+flagged %1 messages as unflagged in %2	mail	id	Menandai %1 pesan sebagai tidak ditandai di %2
+folder	mail	id	Folder
+folder %1 %2 failed because of %3!	mail	id	Folder %1 %2 gagal karena %3!
+folder %1 has been created successfully, although the subscription failed because of %2	mail	id	Folder %1 telah berhasil dibuat, meskipun langganan gagal karena %2
 folder settings	mail	id	Pengaturan Folder
-forward	mail	id	Forward
-forward as attachment	mail	id	forward as attachment
-forward inline	mail	id	forward inline
-forward to	mail	id	forward to
+forward	mail	id	Teruskan
+forward as attachment	mail	id	Teruskan sebagai lampiran
+forward inline	mail	id	Teruskan
+forward to	mail	id	Teruskan ke
 from	mail	id	Dari
 from(a->z)	mail	id	Dari (A->Z)
 from(z->a)	mail	id	Dari (Z->A)
 general	admin	id	Umum
 greater than	mail	id	lebih dari
+handling of external http images / mixed content in mails	mail	id	Penanganan gambar http eksternal / konten campuran dalam email
 header lines	mail	id	Baris Header
 html	mail	id	HTML
-identity	mail	id	identitas
+ident name	mail	id	Nama identitas
+ident name email	mail	id	Nama identitas [Email]
+ident name organization email	mail	id	Nama identitas Organisasi [Email]
+identity	mail	id	Identitas
+identity label	mail	id	Label identitas
 if	mail	id	IF
+if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	id	Jika Anda ingin melihat pratinjau email dengan sekali klik pada subjek, aktifkan ini.
+if you would like to select multiple folders in one action, you can hold ctrl key then select a folder as start range and another folder within a same level as end range, all folders in between will be selected or unselected based on their current status.	mail	id	Jika Anda ingin memilih beberapa folder dalam satu tindakan, Anda dapat menahan tombol ctrl lalu memilih folder sebagai rentang awal dan folder lain dalam level yang sama sebagai rentang akhir, semua folder di antaranya akan dipilih atau tidak dipilih berdasarkan status saat ini.
 imap	mail	id	IMAP
 imap server	mail	id	IMAP Server
+import of message %1 failed. could not save message to folder %2 due to: %3	mail	id	Impor pesan %1 gagal. Tidak dapat menyimpan pesan ke folder %2 karena: %3
+import of message %1 failed. destination folder %2 does not exist.	mail	id	Impor pesan %1 gagal. Folder tujuan %2 tidak ada.
+import of message %1 failed. destination folder not set.	mail	id	Impor pesan %1 gagal. Folder Tujuan tidak ditetapkan.
+import of message %1 failed. no contacts to merge and send to specified.	mail	id	Impor pesan %1 gagal. Tidak ada Kontak yang akan digabungkan dan dikirim ke tujuan yang ditentukan.
 importance	mail	id	Importance
-inbox	mail	id	INBOX
+important	mail	id	Penting
+in mailbox: %1, with id: %2, and partid: %3	mail	id	Di Kotak Surat: %1, dengan ID: %2, dan PartID: %3
+in order to protect your privacy all external sources within this email are blocked.	mail	id	Untuk melindungi privasi Anda, semua sumber eksternal di dalam email ini diblokir.
+inbox	mail	id	Kotak masuk
 information to show on email tag	mail	id	Informasi untuk ditampilkan pada tag email
-junk	mail	id	Junk
+initialization of mail failed. please use the wizard to cope with the problem.	mail	id	Inisialisasi modul email gagal. Silakan gunakan wizard konfigurasi untuk memperbaiki konfigurasi.
+inline	mail	id	Teruskan
+insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)	mail	id	Teruskan
+job	mail	id	Bekerja
+junk	mail	id	Sampah
+junk folder	mail	id	Folder sampah
+keep a copy of the message in your inbox	mail	id	Menyimpan salinan pesan di kotak masuk Anda
 kilobytes	mail	id	kilobyte
 later	mail	id	Later
+learning as ham (not spam) failed because of %1	mail	id	Belajar sebagai ham (bukan spam) gagal karena %1
+learning as spam failed because of %1	mail	id	Belajar sebagai spam gagal karena %1
 less than	mail	id	kurang dari
+limit mailing list results when searching for addresses	mail	id	Membatasi hasil milis saat mencari alamat
 list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	id	Daftar tindakan yang akan diaktifkan/dialihkan secara default (misalnya, tindakan menulis surat simpan sebagai InfoLog)
 mail	common	id	Surat
 mail acl	mail	id	Hak akses
@@ -88,6 +136,8 @@ mail-address	mail	id	Alamat surat
 mailaccount	mail	id	Akun surat
 mailinglist	mail	id	Milis
 mails	common	id	Surat
+mails can be copied to that folder via context menu, if folder is configured.	mail	id	Pesan dapat disalin ke folder tersebut melalui menu konteks, jika folder dikonfigurasi.
+mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	id	Mailserver melaporkan:\n%1 \nApakah Anda ingin melanjutkan dengan segera menghapus pesan yang dipilih (klik ok)?\nJika tidak, cobalah mengosongkan folder sampah sebelum melanjutkan. (klik batal)
 mark all as read	mail	id	Tandai semua sebagai telah dibaca
 mark all messages in folder as read	mail	id	Tandai semua pesan dalam folder sebagai telah dibaca
 mark as deleted	mail	id	Tandai sbg terhapus
@@ -123,10 +173,17 @@ printview	mail	id	lihat cetakan
 push notifications	mail	id	Pemberitahuan push
 quicksearch	mail	id	Pencarian cepat
 quicksearch (with cc)	mail	id	Pencarian Cepat (+Salin)
+real name	mail	id	Nama asli
+real name email	mail	id	Nama asli [Email]
+real name organization email	mail	id	Nama asli Organisasi [Email]
 reject with	mail	id	tolak dengan
-remove all	mail	id	Buang Semuanya
+remember the password for	mail	id	Ingat kata sandi untuk
+remove all	mail	id	Buang semua
 remove immediately	mail	id	Buang segera
+removing %1 from blacklisted email addresses failed because of %2	mail	id	Menghapus %1 dari alamat email yang masuk daftar hitam gagal karena %2
+removing %1 from whiltelisted email addresses failed because of %2	mail	id	Menghapus %1 dari alamat email daftar putih gagal karena %2
 rename folder	mail	id	Ubah folder
+replace 'http://' in image urls with (trailing / required!)	mail	id	Ganti 'http://' pada url gambar dengan (diikuti/diwajibkan!)
 replied	mail	id	dibalas
 reply	mail	id	Balas
 reply all	mail	id	Balas ke Semua
@@ -164,7 +221,16 @@ template folder	mail	id	Folder Templat
 templates	mail	id	Templat
 text	mail	id	Text
 text/plain	mail	id	text/plain
+the imap server need to meet certain requirements and be configured for it:	mail	id	Server IMAP harus memenuhi persyaratan tertentu DAN dikonfigurasi untuk itu:
+the rule with priority %1 successfully saved!	mail	id	Aturan dengan prioritas %1 berhasil disimpan!
 then	mail	id	THEN
+there is no space left to store sieve script, please check sieve_maxscriptsize option on your mailserver's config.	mail	id	Tidak ada ruang yang tersisa untuk menyimpan skrip saringan, silakan periksa opsi sieve_maxscriptsize pada konfigurasi server email Anda.
+this mail contains external images served via insecure http protocol. be aware showing or allowing them can compromise your security!	mail	id	Email ini berisi gambar eksternal yang disajikan melalui protokol HTTP yang tidak aman. Berhati-hatilah, menampilkan atau mengizinkannya dapat membahayakan keamanan Anda!
+this message is smime encrypted and password protected.	mail	id	Pesan ini dienkripsi S/MIME dan dilindungi kata sandi.
+timeout on connections to your imap server	mail	id	Batas waktu koneksi ke Server IMAP Anda
+to do	mail	id	Melakukan
+toggle all folders view for %1	mail	id	Mengalihkan tampilan semua Folder untuk %1
+toggled on actions	mail	id	Mengaktifkan tindakan
 trash	mail	id	Trash
 trash folder	mail	id	Trash Folder
 unflagged	mail	id	tak ditandai

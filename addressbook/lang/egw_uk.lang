@@ -1,3 +1,9 @@
+%1 added	addressbook	uk	%1 додано
+%1 contact(s) %2, %3 failed because of %4 !!!	addressbook	uk	%1 контакт(и) %2, %3 не вдалося встановити через %4 !!!
+%1 contacts updated (%2 errors).	addressbook	uk	Оновлено %1 контакт (%2 помилки).
+%1 key(s) added to public keyserver "%2".	addressbook	uk	%1 ключ(и) додано до сервера відкритих ключів "%2".
+%1 not implemented for %2!	addressbook	uk	%1 не реалізовано для %2!
+%1 public keys added.	addressbook	uk	Додано %1 публічних ключів.
 %1 records imported	addressbook	uk	%1 записів імпортовано
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	uk	%1 записів прочитано (ще не імпортовано, %2поверніться%3 та зніміть відмітку Тестувати Імпорт)
 (e.g. 1969)	addressbook	uk	(наприклад 1969)
@@ -6,6 +12,12 @@
 actions	addressbook	uk	Дії
 add a single entry by passing the fields.	addressbook	uk	Додати один запис шляхом заповнення полів
 add custom field	addressbook	uk	Додати власне поле
+add customfield to links of addressbook, which displays in other applications. the default value is none customfield.	addressbook	uk	Додавання кастомного поля до посилань адресної книги, яке відображатиметься в інших програмах. Значення за замовчуванням - жодного поля.
+add to bcc	addressbook	uk	Додати до бліц-копії
+add to cc	addressbook	uk	Додати до копії
+add to distribution list	addressbook	uk	Додати до списку розсилки
+add to distribution list:	addressbook	uk	Додати до списку розсилки:
+add to to	addressbook	uk	Додати до До
 added	addressbook	uk	Добавлено
 address book	common	uk	Адресна Книга
 address book - vcard in	addressbook	uk	Адресна Книга - vCard in
@@ -13,15 +25,22 @@ address book - view	addressbook	uk	Адресна Книга - перегляд
 address line 2	addressbook	uk	Рядок 2
 address type	addressbook	uk	Тип адреси
 addressbook	common	uk	Адресна Книга
+addressbook list	addressbook	uk	Список адресних книг
 addressbook preferences	addressbook	uk	Параметри Адресної Книги
 addressbook-fieldname	addressbook	uk	Адресна Книга - назва поля
 addvcard	addressbook	uk	Додати vCard
+all addressbooks	addressbook	uk	Всі адресні книги
+all types	addressbook	uk	Усі типи
+allow	addressbook	uk	Дозволити
+allow for contacts only	addressbook	uk	Дозволити лише для контактів
 alt. csv import	addressbook	uk	Альтернативний CSV Імпорт
 always	addressbook	uk	Завжди
 are you sure you want to delete this field?	addressbook	uk	Ви дійсно хочете видалити цей запис?
+audio call	addressbook	uk	Аудіодзвінок
 birthday	common	uk	День народження
 birthdays	common	uk	Дні народження
 blank	addressbook	uk	Порожньо
+browser location	addressbook	uk	Розташування в браузері
 business	common	uk	Робоча адреса
 business city	addressbook	uk	Місто
 business country	addressbook	uk	Країна
@@ -31,9 +50,12 @@ business phone	addressbook	uk	Телефон
 business state	addressbook	uk	Область
 business street	addressbook	uk	Вулиця
 business zip code	addressbook	uk	Поштовий індекс
+calendar integration	addressbook	uk	Інтеграція з календарем
 car phone	addressbook	uk	Автомобільний телефон
 cell phone	addressbook	uk	Сотовий телефон
+change addressbook when updating	addressbook	uk	Змінювати адресну книгу при оновленні
 charset of file	addressbook	uk	Кодування файлу
+choose pre-defined map source or use custom url (use %r = street, %t = city, %c = country, %z = zipcode)	admin	uk	Виберіть попередньо визначене джерело мапи або використовуйте власну URL-адресу (використовуйте %r = вулиця, %t = місто, %c = країна, %z = поштовий індекс)
 city	common	uk	Місто
 company	common	uk	Компанія
 company name	addressbook	uk	Назва компанії
@@ -44,16 +66,23 @@ contact settings	admin	uk	Параметри Контакту
 copied by %1, from record #%2.	addressbook	uk	Скопійовано %1, з запису #%2.
 country	common	uk	Країна
 create new links	addressbook	uk	Створити нові посилання
-csv-fieldname	addressbook	uk	CSV-Fieldname
-csv-filename	addressbook	uk	CSV-Filename
+crm-view	addressbook	uk	Подання CRM
+csv-fieldname	addressbook	uk	Назва поля CSV
+csv-filename	addressbook	uk	Ім'я файлу CSV
 custom	addressbook	uk	Власне
 custom fields	addressbook	uk	Власні поля
-debug output in browser	addressbook	uk	Debug output in browser
+debug output in browser	addressbook	uk	Налагодження виводу у браузері
 default	addressbook	uk	По замовченню
+default action on double-click	addressbook	uk	Дія за замовчуванням при подвійному кліці
 default filter	addressbook	uk	Типовий фільтр
+default geolocation source address	addressbook	uk	Адреса джерела геолокації за замовчуванням
 delete a single entry by passing the id.	addressbook	uk	Видалити один запис по id.
 deleted	addressbook	uk	Видалено
 department	common	uk	Департамент
+disable	addressbook	uk	Вимкнути
+disable last/next event column	addressbook	uk	Вимкнути стовпчик Остання/Найближча подія
+distribution list renamed	addressbook	uk	Перейменовано список розсилки
+distribution lists as groups	addressbook	uk	Списки розсилки як групи
 domestic	addressbook	uk	Місцевий
 download	addressbook	uk	Загрузити
 duplicate threshold	addressbook	uk	Дублюючий поріг
@@ -62,13 +91,23 @@ duplicates	addressbook	uk	Дублікати
 duration	addressbook	uk	Тривалість
 edit custom field	addressbook	uk	Редагувати власне поле
 edit custom fields	admin	uk	Редагувати власні поля
+empty addressbook before importing	addressbook	uk	Видалення записів адресної книги, яких немає у списку CSV
 empty for all	addressbook	uk	Порожнє для всіх
 enter the path to the exported file here	addressbook	uk	Введіть шлях до файлу експорту
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	addressbook	uk	Приклад {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - шукає поле "n_prefix", для "Mr", якщо знайдено, пише "Hello Mr.", інакше пише "Hello Ms.".
+example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	preferences	uk	Приклад {{LETTERPREFIXCUSTOM n_префікс назва n_сім'я}} - Приклад: Пан доктор Джеймс Міллер
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	addressbook	uk	Приклад {{NELF роль}} - якщо поле role не порожнє, ви отримаєте новий рядок зі значенням поля role
+example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	addressbook	uk	Приклад {{nenvlf role}} - якщо поле role не порожнє, встановити LF без жодного значення поля
 existing links	addressbook	uk	Існуючі посилання
 export contacts	addressbook	uk	Експортувати контакти
+export definition to use for nextmatch export	addressbook	uk	Визначення експорту для експорту наступного матчу
+export definitition to use for nextmatch export	addressbook	uk	Визначення експорту для використання для експорту наступного матчу
 export file name	addressbook	uk	Назва файлу експорту
 export from addressbook	addressbook	uk	Експорт з Адресної книги
+exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	uk	Експортувати контакти з адресної книги у CSV-файл.  CSV означає "Значення, розділені комами". На вкладці параметрів ви також можете вибрати інші роздільники.
 extra	addressbook	uk	Додаткове
+favorite phone	addressbook	uk	Улюблений телефон
+favorites	addressbook	uk	Вибране
 fax	addressbook	uk	Факс
 fax number	common	uk	Номер факсу
 field %1 has been added !	addressbook	uk	Поле %1 додано!
@@ -78,8 +117,12 @@ fields to check for duplicates	addressbook	uk	Поля для перевірки
 fields to consider when looking for duplicate contacts.	addressbook	uk	Поля, які слід враховувати при пошуку дублікатів контактів.
 fields to show in address list	addressbook	uk	Видимі поля у переліку адрес
 fieldseparator	addressbook	uk	Розділитель полів
+for serial letter use this tag. put the content, you want to repeat between two tags.	addressbook	uk	Використовуйте цей тег для серійних літер. Помістіть вміст, який ви хочете повторити, між двома тегами.
+freebusy uri	addressbook	uk	FreeBusy URI
 full name	addressbook	uk	Повне ім'я
 geo	addressbook	uk	GEO
+geolocation	addressbook	uk	Геолокація
+geolocation integration	admin	uk	Інтеграція геолокації
 global categories	addressbook	uk	Глобальні категорії
 grant addressbook access	common	uk	Надати доступи до адресної книги
 hide accounts from addressbook	addressbook	uk	Приховати акаунти користувачів
@@ -102,9 +145,15 @@ import from ldif, csv, or vcard	addressbook	uk	Імпортувати LDIF, CSV 
 import from outlook	addressbook	uk	Імпорт з Outlook
 import next set	addressbook	uk	Імпортувати наступний набір
 import_instructions	addressbook	uk	В Нетскейпі(Мозілі) відкрийте Адресну книгу та виберіть <b>Експорт</b> з меню <b>Файл</b>. Файл буде експортовано в форматі LDIF. <p>В Outlook зайдіть в закладку Контакти, виберіть <b>Імпорт та Експорт...</b> в меню <b>Файл</b> та експортуйте ваші контакти в CSV-файл.<p>В  Palm Desktop 4.0 або вище, зайдіть в Адресну книгу та виберіть <b>Експорт</b> в меню <b>Файл</b>. Файл буде експортовано в форматі vCard.
-infolog	addressbook	uk	ІнфоЛог Контакт
-infolog-organisation	addressbook	uk	Організація "ІнфоЛог
+importer's personal	addressbook	uk	Особистий імпортер
+imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	uk	Імпортує контакти в адресну книгу з файлу CSV. CSV означає "Значення, розділені комами". У вкладці параметрів ви також можете вибрати інші роздільники.
+imports contacts into your addressbook from a vcard file.	addressbook	uk	Імпортує контакти до адресної книги з файлу vCard.
+infolog	addressbook	uk	Контакти InfoLog
+infolog-organisation	addressbook	uk	Організація InfoLog
+insufficent rights to delete this list!	addressbook	uk	Недостатньо прав для видалення цього списку!
+insufficent rights to edit this list!	addressbook	uk	Недостатньо прав для редагування цього списку!
 international	addressbook	uk	Міжнародний
+invite to current call	addressbook	uk	Запросити до поточного дзвінка
 label	addressbook	uk	Примітки
 last modified	addressbook	uk	Востаннє змінено
 ldif	addressbook	uk	LDIF
@@ -112,6 +161,8 @@ line 2	addressbook	uk	Рядок 2
 links	addressbook	uk	Посилання
 load custom fields in index, even if custom field column is off (eg. to display them in a specific index column)	addressbook	uk	Завантаження користувацьких полів в індекс, навіть якщо стовпець користувацьких полів вимкнено (наприклад, для відображення їх у певному стовпчику індексу)
 location	addressbook	uk	Місце
+mail vcard	addressbook	uk	Пошта vCard
+main categories in their own field	addressbook	uk	Основні категорії у власному полі
 mark records as private	addressbook	uk	Помітити записи як особисті
 merge duplicates	addressbook	uk	Об'єднати дублікати
 merge into first or account, deletes all other!	addressbook	uk	Об'єднання в перший або обліковий запис, видаляє всі інші!
@@ -120,34 +171,57 @@ middle name	addressbook	uk	По батькові
 mobile	addressbook	uk	Мобільний
 mobile phone	addressbook	uk	Мобільний телефон
 modem phone	addressbook	uk	Модемний телефон
+move to addressbook	addressbook	uk	Перейти до адресної книги
+name, email, phone	addressbook	uk	Ім'я, email, телефон
+no distribution list	addressbook	uk	Немає списку розсилки
 no vcard	addressbook	uk	немає vCard
 not shared	addressbook	uk	не розділяється
 number of records to read (%1)	addressbook	uk	Кількість записів для читання (%1)
+open %1 crm view	addressbook	uk	Відкрити %1 подання CRM
+open email addresses in external mail program	addressbook	uk	Відкрити адреси EMail у зовнішній поштовій програмі
+open infolog crm view	preferences	uk	Відкрити подання контакту в CRM InfoLog
+open tracking system crm view	preferences	uk	Відкрити перегляд CRM системи відстеження
 other number	addressbook	uk	Інший номер
 other phone	addressbook	uk	Інший телефон
 pager	common	uk	Пейджер
 parcel	addressbook	uk	Поштова скринька
 participants	addressbook	uk	Учасники
+permissiong denied! ask your administrator to allow regular uses to update their public keys.	addressbook	uk	У дозволіg відмовлено! Попросіть вашого адміністратора дозволити регулярне оновлення відкритих ключів.
+pgp key	addressbook	uk	Ключ PGP
 phone number	common	uk	Номер телефону
 phone numbers	common	uk	Телефонні номери
 please enter a name for that field !	addressbook	uk	Будь ласка введіть назву поля !
 postal	common	uk	Поштовий
 pref	addressbook	uk	ліпше
 prefix	addressbook	uk	Префікс
+private address	addressbook	uk	Приватна адреса
 public key	addressbook	uk	Публічний ключ
+public sharing url	addressbook	uk	Загальнодоступна URL-адреса
 read a list of entries.	addressbook	uk	Прочитати перелік записів
 read a single entry by passing the id and fieldlist.	addressbook	uk	Прочитати один запис по id та переліку полів.
 record access	addressbook	uk	Доступи запису
 record owner	addressbook	uk	Власник запису
+remove from distribution list	addressbook	uk	Видалити зі списку розсилки
+rename list	addressbook	uk	Перейменувати список
+rename selected distribution list	addressbook	uk	Перейменувати вибраний список розсилки
 repetition	addressbook	uk	Повторення
+schedule a video conference	addressbook	uk	Запланувати відеоконференцію
 search letter	addressbook	uk	Пошуковий лист
+select a source address to be used in geolocation routing system	addressbook	uk	Виберіть адресу джерела для використання в системі маршрутизації GeoLocation
+select an opened dialog	addressbook	uk	Виберіть відкрите діалогове вікно
 select the type of conversion	addressbook	uk	Виберіть тип конверсії
+send fax via email by replacing fax number with an email address	addressbook	uk	Надішліть факс електронною поштою, замінивши номер факсу на адресу електронної пошти
+send succeeded to %1	common	uk	Відправлення успішно виконано на %1
 share into addressbook	addressbook	uk	Поділитися в адресну книгу
 share writable	addressbook	uk	Поділитися можна редагувати
 shared	addressbook	uk	спільний
 shared by me	addressbook	uk	Поділюся з вами
 shared into addressbook %1	addressbook	uk	поділився в адресній книзі %1
 shared with	addressbook	uk	Спільно з
+show active accounts	addressbook	uk	Показати активні акаунти
+show all accounts	addressbook	uk	Показати всі акаунти
+smime key	addressbook	uk	S/MIME ключ
+special	addressbook	uk	Спеціальний
 startrecord	addressbook	uk	Початковий запис
 state	common	uk	Область
 street	common	uk	Вулиця
@@ -155,27 +229,43 @@ successfully imported %1 records into your addressbook.	addressbook	uk	В Адр
 suffix	addressbook	uk	Суфікс
 test import (show importable records <u>only</u> in browser)	addressbook	uk	Тестувати Імпорт (тільки показати записи, що можуть бути імпортовані)
 that field name has been used already !	addressbook	uk	Така назва поля вже використовується
+the zip extension is needed, to insert contact data in openoffice or msoffice documents.	addressbook	uk	Розширення zip необхідне для вставки контактних даних у документи LibreOffice або MS Office.
 this person's first name was not in the address book.	addressbook	uk	В Адресній книзі немає людини з таким ім'ям.
 this person's last name was not in the address book.	addressbook	uk	В Адресній книзі немає людини з таким прізвищем.
+title	addressbook	uk	Посада
 to many might exceed your execution-time-limit	addressbook	uk	надто багато може перевищити Ваш ліміт часу
 today is %1's birthday!	common	uk	Сьогодні день народження %1!
 tomorrow is %1's birthday.	common	uk	Завтра день народження %1.
 translation	addressbook	uk	Переклад
 type	addressbook	uk	Тип
+unable to convert "%1" to account id.  using plugin setting (%2) for owner.	addressbook	uk	Не вдається перетворити "%1" на ідентифікатор акаунта. Використовується налаштування плагіна (%2) для власника.
+unable to delete	addressbook	uk	Неможливо видалити
+unable to import into %1, using %2	addressbook	uk	Неможливо імпортувати до %1, використовуючи %2
+unknown type %1, imported as %2	addressbook	uk	Невідомий тип %1, імпортовано як %2
 unshare	addressbook	uk	Більше не ділитися
 unshared	addressbook	uk	більше не ділиться
 update a single entry by passing the fields.	addressbook	uk	Змінити один запис шляхом заповнення полів.
 updated	addressbook	uk	Змінено
+use a category tree?	addressbook	uk	Використовувати дерево для вибору категорій
+use addressbooks "own sorting" attribute	addressbook	uk	Використовувати атрибут адресних книг "власне сортування"
 use country list	addressbook	uk	Використовувати перелік країн
 user groups are automatically shown as distribution lists.	addressbook	uk	Групи користувачів автоматично відображаються у вигляді списків розсилки.
 vcard	common	uk	vCard
 vcards require a first name entry.	addressbook	uk	vCard потребує поле імені.
 vcards require a last name entry.	addressbook	uk	vCard потребує поле прізвища.
+video call	addressbook	uk	Відеодзвінок
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	uk	УВАГА!! LDAP можливий тільки якщо Ви НЕ використовуєте контакти для зберігання рахунків користувачів!
+when viewing a contact, show linked entries from the selected application	addressbook	uk	При перегляді контакту показувати пов'язані записи з вибраної програми
 when you merge entries into documents, they will be stored here.  if no directory is provided, they will be stored in your home directory (/home/unverricht)	addressbook	uk	При об'єднанні записів в документи вони будуть зберігатися тут. Якщо каталог не вказано, вони будуть зберігатися у вашому домашньому каталозі (/home/...)
+which charset should be used for the vcard export.	addressbook	uk	Яку кодування використовувати для експорту vCard?
+which charset should be used for the vcard import and export.	addressbook	uk	Дозволяє вказати, яку кодування слід використовувати для імпорту та експорту vCard.
 work phone	addressbook	uk	Робочий телефон
+yes, only admins can purge deleted items	admin	uk	Так, тільки адміністратори можуть очищати видалені елементи
+yes, users can purge their deleted items	admin	uk	Так, користувачі можуть очищати свої видалені елементи
 you are not allowed to share into the addressbook of %1	addressbook	uk	Ви не маєте права доступу до адресної книги %1
 you must select a vcard. (*.vcf)	addressbook	uk	Необхідно вказати vCard. (*.vcf)
 you must select at least 1 column to display	addressbook	uk	Необхідно вказати мінімум один стовпчик для показу
+you need to select some entries first	addressbook	uk	Спочатку потрібно вибрати кілька записів
+your new public key has been stored in accounts addressbook.	addressbook	uk	Ваш новий відкритий ключ було збережено в адресній книзі облікового запису.
 zip code	common	uk	Поштовий індекс
 zip_note	addressbook	uk	<p><b>Примітка:</b> Файл може бути zip архівом колекції .csv, .vcf, або .ldif файлів. Але не змішуйте типи файлів в імпорті.

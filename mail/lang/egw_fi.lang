@@ -1,10 +1,14 @@
 %1 is not writable by you!	mail	fi	%1, sinulla ei ole oikeutta kirjoittaa!
 (leave empty for no quota)	mail	fi	(Jätä tyhjäksi, jos kiintiötä ei ole)
 (no subject)	mail	fi	Ei aihetta
+acl rights retrieve failed, seems there are no rights set!	mail	fi	ACL-oikeuksien haku epäonnistui, näyttää siltä, että oikeuksia ei ole asetettu!
 activating by date requires a start- and end-date!	mail	fi	Aktivointi päiväyksen perusteella vaatii SEKÄ aloitus- ETTÄ lopetuspäivän!
 add all my aliases	mail	fi	Lisää kaikki peitenimeni
+add files as %1	mail	fi	Lisää tiedostot nimellä %1
 add raw message, ignore mail attachments	mail	fi	Muunna posti kohteeksi, lisää raaka viesti (jätä postin liitetiedostot huomiotta)
 add to addressbook	mail	fi	Lisää osoitekirjaan
+adding %1 to blacklisted email addresses failed because of %2	mail	fi	%1:n lisääminen mustalle listalle joutuneisiin sähköpostiosoitteisiin epäonnistui %2:n takia.
+adding %1 to whiltelisted email addresses failed because of %2	mail	fi	%1:n lisääminen luettelossa oleviin sähköpostiosoitteisiin epäonnistui %2:n takia.
 after reply, visible during compose	mail	fi	Vastauksen jälkeen, näkyvissä kokoamisen aikana
 aliases+forwards	mail	fi	Aliasit+Edelleenlähetys
 all of	mail	fi	kaikki /
@@ -15,10 +19,17 @@ always show notifiction	mail	fi	Näytä aina ilmoitus
 answered	mail	fi	Vastattu
 any of	mail	fi	Mikä tahansa
 any status	mail	fi	Mikä tahansa tila
+attach files	mail	fi	Tiedostojen liittäminen
+attach users vcard at compose to every new mail	mail	fi	Liitä käyttäjän vCard-kortti jokaiseen uuteen sähköpostiin laatimisen yhteydessä.
+attachment has been saved successfully.	mail	fi	Liite on tallennettu onnistuneesti.
 attachments	mail	fi	Liitteet
+attachments, ...	mail	fi	liitetiedostot, ...
+be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	fi	Huomaa, että kun kaikki valitut tiedostot lisätään %1-tilaan, myös kaikki luettelossa olevat liitetiedostot muutetaan %2-tilaan. \n \n Haluatko jatkaa?
+be aware that all attachments will be sent as %1!	mail	fi	Huomaa, että kaikki liitetiedostot lähetetään muodossa %1!
 by date	mail	fi	Päivämäärän mukaan
 by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	fi	Oletusarvoisesti "http://" korvataan vain "https://". Voit vapaasti määrittää 'https://proxy.egroupware.org/' lataamaan myös kuvia, jotka ovat saatavilla vain http:n kautta.
 caching of flags	mail	fi	Lippujen välimuistiin tallentaminen
+changing subject failed because of %1	mail	fi	Aiheen vaihtaminen epäonnistui %1:n takia
 changing subject failed folder %1 does not exist	mail	fi	Aiheen vaihtaminen epäonnistui kansiota %1 ei ole olemassa.
 check message against next rule also	mail	fi	Tarkista viesti myös seuraavaa sääntöä vastaan
 compose	mail	fi	Kirjoita viesti
@@ -67,8 +78,12 @@ edit account	mail	fi	Muokkaa käyttäjätiliä
 edit vacation settings	mail	fi	Muokkaa lomavastaaja-asetuksia
 email notification update failed	mail	fi	Sähköpostin huomautusviestipäivitys epäonnistui
 emailaddress	admin	fi	Sähköpostiosoite
+emailadmin: profilemanagement	mail	fi	eMailAdmin: : Profiilinhallinta
+emails in whitelisted domains are not marked as spam	mail	fi	Sähköposteja ei merkitä roskapostiksi valkoisen listan verkkotunnuksissa
 empty trash	mail	fi	Tyhjennä roskakori
 enable	mail	fi	Ota käyttöön
+enabled	mail	fi	Enabled
+encrypt your message with smime certificate	mail	fi	Salaa viestisi S/MIME-sertifikaatilla
 error saving %1!	mail	fi	Virhe tallennettaessa %1!
 error:	mail	fi	Virhe:
 error: could not save message as draft	mail	fi	Virhe: Viestiä ei voitu tallentaa luonnoksena.
@@ -77,11 +92,19 @@ error: could not send message.	mail	fi	Virhe: Viestiä ei voitu lähettää.
 error: message could not be displayed.	mail	fi	Virhe: Viestiä ei voida näyttää.
 event details follow	mail	fi	Tapahtuman yksityiskohdat alla
 everyone	mail	fi	Kaikki käyttäjät
+examine namespace to retrieve folders in others and shared	mail	fi	Tutki nimiavaruutta hakeaksesi kansioita toisissa ja jaetuissa
 extended	mail	fi	Laajennettu
-file into	mail	fi	Tiedosto
+file into	mail	fi	Siirry osoitteeseen
+file into:	mail	fi	Siirry osoitteeseen:
 filemanager	mail	fi	Tiedostonhallinta
+filemode has been switched to %1	mail	fi	Filemode on vaihdettu: %1
 flagged	mail	fi	Merkitty tunnuksella
+flagged %1 messages as %2 in %3	mail	fi	Merkittiin %1 viesti(t) %2:ksi %3:ssa %3:ssa
+flagged %1 messages as flagged in %2	mail	fi	Merkittiin %1 viesti(t) merkityksi %2:ssa.
+flagged %1 messages as unflagged in %2	mail	fi	Merkittiin %1 viesti(t) merkitsemättömäksi %2:ssa.
 folder	mail	fi	Kansio
+folder %1 %2 failed because of %3!	mail	fi	Kansio %1 %2 epäonnistui %3:n takia!
+folder %1 has been created successfully, although the subscription failed because of %2	mail	fi	Kansio %1 on luotu onnistuneesti, vaikka tilaus epäonnistui %2:n vuoksi.
 folder settings	mail	fi	Kansion asetukset
 forward	mail	fi	Välitä eteenpäin
 forward as attachment	mail	fi	Liitteenä
@@ -92,13 +115,20 @@ from(a->z)	mail	fi	A:sta Z:taan
 from(z->a)	mail	fi	Z:sta A:han
 general	admin	fi	Yleinen
 greater than	mail	fi	Suurempi kuin
+handling of external http images / mixed content in mails	mail	fi	Ulkoisten http-kuvien / sekasisällön käsittely sähköpostiviesteissä
 header lines	mail	fi	Ylätunnisterivit
 how to forward messages	mail	fi	Kuinka viestejä välitetään
 html	mail	fi	HTML
+ident name	mail	fi	Tunnuksen nimi
+ident name email	mail	fi	Tunnuksen nimi [Sähköposti]
+ident name organization email	mail	fi	Tunnuksen nimi Organisaatio [Sähköposti]
 identity	mail	fi	Identiteetti
+identity label	mail	fi	Tunnisteen etiketti
 if	mail	fi	JOS
 if mail header	mail	fi	Jos postin ylätunniste
 if message size	mail	fi	Jos viestin koko
+if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	fi	Jos haluat nähdä sähköpostin esikatselun napsauttamalla aiheen kohdalla, ota tämä käyttöön.
+if you would like to select multiple folders in one action, you can hold ctrl key then select a folder as start range and another folder within a same level as end range, all folders in between will be selected or unselected based on their current status.	mail	fi	Jos haluat valita useita kansioita yhdellä toiminnolla, voit pitää ctrl-näppäintä painettuna ja valita kansio aloitusalueeksi ja toinen kansio samalla tasolla loppualueeksi, jolloin kaikki välissä olevat kansiot valitaan tai poistetaan valinnasta niiden nykyisen tilan mukaan.
 imap	mail	fi	IMAP
 imap server	mail	fi	IMAP -palvelin
 import message	mail	fi	Tuo sähköpostiviesti
@@ -107,14 +137,24 @@ import of message %1 failed. destination folder %2 does not exist.	mail	fi	Viest
 import of message %1 failed. destination folder not set.	mail	fi	Viestin %1 tuonti epäonnistui. kohdekansiota ei asetettu.
 import of message %1 failed. no contacts to merge and send to specified.	mail	fi	Viestin %1 tuonti epäonnistui. Kontaktia ei ole asetettu.
 importance	mail	fi	Tärkeys
+important	mail	fi	Tärkeä
+in mailbox: %1, with id: %2, and partid: %3	mail	fi	Postilaatikossa: %1, ID: %2 ja PartID: %3.
+in order to protect your privacy all external sources within this email are blocked.	mail	fi	Yksityisyyden suojaamiseksi kaikki ulkoiset lähteet tässä sähköpostissa on estetty.
 inbox	mail	fi	Saapuneet
 information to show on email tag	mail	fi	Sähköpostitunnisteessa näytettävät tiedot
+initialization of mail failed. please use the wizard to cope with the problem.	mail	fi	Sähköpostimoduulin alustaminen epäonnistui. Käytä ohjatun konfiguroinnin korjaamiseen konfigurointiohjelmaa.
+inline	mail	fi	Lähetä eteenpäin
 insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)	mail	fi	Aseta allekirjoitus oman viestisi alapuolelle vastatessasi sähköpostiin.
+job	mail	fi	Työ
 junk	mail	fi	Roskaposti
+junk folder	mail	fi	Roskapostikansio
 keep a copy of the message in your inbox	mail	fi	Pidä kopio viestistä Inboxissa
 kilobytes	mail	fi	Kilotavu(a)
 later	mail	fi	Jälkeen
+learning as ham (not spam) failed because of %1	mail	fi	Learning as ham (ei roskapostia) epäonnistui, koska %1
+learning as spam failed because of %1	mail	fi	Oppiminen roskapostina epäonnistui %1:n takia
 less than	mail	fi	Vähemmän kuin
+limit mailing list results when searching for addresses	mail	fi	Rajoita postituslistan tuloksia osoitteita etsittäessä
 list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	fi	Luettelo toiminnoista, jotka kytketään/aktivoidaan oletusarvoisesti päälle (esim. Mail kompositio tallenna InfoLog-toimintona).
 mail	common	fi	Sähköpostit
 mail acl	mail	fi	Käyttöoikeudet
@@ -126,6 +166,8 @@ mail-address	mail	fi	Sähköpostiosoite
 mailaccount	mail	fi	Sähköpostitili
 mailinglist	mail	fi	Postituslista
 mails	common	fi	Sähköpostit
+mails can be copied to that folder via context menu, if folder is configured.	mail	fi	Sähköpostit voidaan kopioida kyseiseen kansioon kontekstivalikon kautta, jos kansio on määritetty.
+mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	fi	Postipalvelin ilmoitti:\n%1 \nTahdotko jatkaa poistamalla valitut viestit välittömästi (napsauta ok)?\nJos et, yritä tyhjentää roskapostikansio ennen kuin jatkat. (napsauta peruuta)
 mark all as read	mail	fi	Merkitse kaikki luetuiksi
 mark all messages in folder as read	mail	fi	Merkitse kaikki kansiossa olevat viestit luetuiksi
 mark as deleted	mail	fi	Merkitse poistetuksi
@@ -175,11 +217,18 @@ printview	mail	fi	Tulostuksen esikatselu
 push notifications	mail	fi	Push-ilmoitukset
 quicksearch	mail	fi	Pikahaku
 quicksearch (with cc)	mail	fi	Pikahaku (+kopiointi)
+real name	mail	fi	Oikea nimi
+real name email	mail	fi	Oikea nimi [Sähköposti]
+real name organization email	mail	fi	Oikea nimi Organisaatio [Sähköposti]
 refresh time in minutes	mail	fi	Päivitysaika minuutteina
 reject with	mail	fi	Hylkää
+remember the password for	mail	fi	Muista salasana
 remove all	mail	fi	Poista kaikki
 remove immediately	mail	fi	Poista heti
+removing %1 from blacklisted email addresses failed because of %2	mail	fi	%1:n poistaminen mustalle listalle joutuneista sähköpostiosoitteista epäonnistui %2:n takia.
+removing %1 from whiltelisted email addresses failed because of %2	mail	fi	%1:n poistaminen valkoisella listalla olevista sähköpostiosoitteista epäonnistui %2:n takia.
 rename folder	mail	fi	Nimeä kansio uudelleen
+replace 'http://' in image urls with (trailing / required!)	mail	fi	Korvaa 'http://' kuvan urlissa (perässä oleva / vaaditaan!)
 replied	mail	fi	Vastattu
 reply	mail	fi	Vastaa
 reply all	mail	fi	Vastaa kaikille
@@ -226,12 +275,21 @@ template folder	mail	fi	Mallipohjat -kansio
 templates	mail	fi	Mallipohjat
 text	mail	fi	Teksti
 text/plain	mail	fi	Pelkkä teksti
+the imap server need to meet certain requirements and be configured for it:	mail	fi	IMAP-palvelimen on täytettävä tietyt vaatimukset JA se on määritettävä sitä varten:
 the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	mail	fi	Viestin lähettäjä haluaa vahvistuksen, että olet saanut tämän viestin. Haluatko lähettää sen?
 the mimeparser can not parse this message.	mail	fi	Mimeparseri ei voi jäsentää tätä viestiä
+the rule with priority %1 successfully saved!	mail	fi	Sääntö, jonka prioriteetti on %1, tallennettiin onnistuneesti!
 then	mail	fi	TAI
 there is no imap server configured.	mail	fi	IMAP palvelinta ei ole konfiguroitu
+there is no space left to store sieve script, please check sieve_maxscriptsize option on your mailserver's config.	mail	fi	Sieve-skriptin tallentamiseen ei ole enää tilaa, tarkista sieve_maxscriptsize-asetus sähköpostipalvelimesi asetuksista.
+this mail contains external images served via insecure http protocol. be aware showing or allowing them can compromise your security!	mail	fi	Tämä sähköpostiviesti sisältää ulkoisia kuvia, jotka toimitetaan turvattoman HTTP-protokollan kautta. Huomaa, että niiden näyttäminen tai salliminen voi vaarantaa tietoturvan!
+this message is smime encrypted and password protected.	mail	fi	Tämä viesti on S/MIME-salattu ja salasanalla suojattu.
+timeout on connections to your imap server	mail	fi	IMAP-palvelimen yhteyksien aikakatkaisu
+to do	mail	fi	Toimi näin
+toggle all folders view for %1	mail	fi	Vaihda kaikki kansiot -näkymä %1:lle
+toggled on actions	mail	fi	Kytketty päälle toiminnot
 trash	mail	fi	Roskakori
-trash folder	mail	fi	Roskakori -kansio
+trash folder	mail	fi	Roskakori-kansio
 unflagged	mail	fi	Tunnukseton
 unread	mail	fi	Lukematon
 vacation notice	mail	fi	Lomavastaaja

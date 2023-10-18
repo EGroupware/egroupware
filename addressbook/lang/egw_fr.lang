@@ -1,12 +1,8 @@
-#	addressbook	fr	#
 %1 added	addressbook	fr	%1 ajouté
 %1 contact(s) %2	addressbook	fr	%1 contact(s) %2
 %1 contact(s) %2, %3 failed because of %4 !!!	addressbook	fr	%1 contact(s) %2, %3 en échec pour %4 !!!
 %1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	fr	%1 contact(s) %2, %3 en erreur (droits d'accès insuffisants).
-%1 contact(s) added as %2	addressbook	fr	%1 contact(s) ajouté(s) comme %2
 %1 contacts updated (%2 errors).	addressbook	fr	%1 contacts mis à jour (%2 erreurs).
-%1 entries %2, %3 failed.	addressbook	fr	%1 événement(s) %2, %3 en échec.
-%1 event(s) %2	addressbook	fr	%1 événement(s) %2
 %1 fields in %2 other organisation member(s) changed	addressbook	fr	Le champ %1 dans %2 autre(s) membre(s) de l'organisation a changé.
 %1 key(s) added to public keyserver "%2".	addressbook	fr	%1 clé(s) publique(s) ajoutée(s) au serveur de clés publiques "%2".
 %1 not implemented for %2!	addressbook	fr	%1 non implémenté pour %2 !
@@ -115,7 +111,6 @@ category tree	admin	fr	Arborescence de la catégorie
 cell phone	addressbook	fr	Téléphone portable
 change addressbook when updating	addressbook	fr	Changer le carnet d'adresse à la mise à jour
 change all organisation members	addressbook	fr	Modifier tous les membres de l'organisation
-changed type to %1	addressbook	fr	Type changé en %1
 charset for the csv export	addressbook	fr	Jeu de caractères pour l'export CSV
 charset for the vcard export	addressbook	fr	Jeu de caractères pour l'export vCard
 charset for the vcard import and export	addressbook	fr	Jeu de caractères pour l'export et l'import vCard
@@ -238,6 +233,10 @@ enter the path to the exported file here	addressbook	fr	Entrer ici le chemin ver
 error deleting the contact !!!	addressbook	fr	Erreur lors de la suppresion du contact
 error saving the contact !!!	addressbook	fr	Erreur lors de la sauvegarde du contact
 error: the entry has been updated since you opened it for editing!	addressbook	fr	Erreur: cette entrée a été mise à jour pendant que vous l'aviez ouverte pour la modifier!
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	addressbook	fr	Exemple {{IF n_prefix~Mr~Bonjour Mr.~Bonjour Ms.}} - recherche "Mr" dans le champ "n_prefix", si trouvé, écrire Hello Mr., sinon écrire Hello Ms.
+example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	preferences	fr	Exemple {{LETTERPREFIXCUSTOM n_prefixe titre n_famille}} - Exemple : M. Dr. James Miller
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	addressbook	fr	Exemple {{NELF rôle}} - si le champ rôle n'est pas vide, vous obtiendrez une nouvelle ligne avec la valeur du champ rôle
+example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	addressbook	fr	Exemple {{nenvlf rôle}} - si le champ role n'est pas vide, vous obtiendrez une nouvelle ligne avec la valeur du champ role.
 existing links	addressbook	fr	Liens existants
 exists	addressbook	fr	Existe
 export as csv	addressbook	fr	Exporter au format CSV
@@ -328,6 +327,7 @@ insufficent rights to delete this list!	addressbook	fr	Autorisations insuffisant
 insufficent rights to edit this list!	addressbook	fr	Autorisations insuffisantes pour modifier cette list e!
 international	addressbook	fr	International
 internet	addressbook	fr	Internet
+invite to current call	addressbook	fr	Inviter à l'appel en cours
 label	addressbook	fr	Label
 last date	addressbook	fr	Dernier contact
 last modified	addressbook	fr	Dernière modification
@@ -375,6 +375,7 @@ multiple vcard	addressbook	fr	vCard multiples
 name for the distribution list	addressbook	fr	Nom de la liste de diffusino
 name of current user, all other contact fields are valid too	addressbook	fr	Nom de l'utilisateur courant, tous les autres champs de contacts sont valides aussi
 name, address	addressbook	fr	Nom, adresse
+name, email, phone	addressbook	fr	Nom, email, téléphone
 new contact submitted by %1 at %2	addressbook	fr	Nouveau contact soumis par %1 à %2.
 new window opened to edit infolog for your selection	addressbook	fr	Nouvelle fenêtre ouverte pour modifier un InfoLog.
 next date	addressbook	fr	Date de prochain contact
@@ -420,6 +421,7 @@ prevent deleting of contacts	admin	fr	Empecher la suppression de contacts
 private address	addressbook	fr	Adresse privée
 private custom fields	addressbook	fr	Champs privés personnalisés
 public key	addressbook	fr	Clé publique
+public sharing url	addressbook	fr	URL de partage public
 publish into groups:	addressbook	fr	Publié dans les groupes:
 read a list / search for entries.	addressbook	fr	Lire une liste / rechercher des entrées.
 read a list of entries.	addressbook	fr	Lire une liste d'entrées.
@@ -439,6 +441,7 @@ replacements for inserting contacts into documents	addressbook	fr	Remplacements 
 required fields *	addressbook	fr	Champs nécessaires *
 role	addressbook	fr	Rôle
 room	addressbook	fr	Salle
+schedule a video conference	addressbook	fr	Programmer une vidéoconférence
 search letter	addressbook	fr	Chercher sur une lettre
 select a portrait format jpeg photo. it will be resized to 60 pixel width.	addressbook	fr	Sélectionner une photo jpeg en mode portrait. Elle sera reformatée en 60 pixels de largeur.
 select a source address to be used in geolocation routing system	addressbook	fr	Sélectionner une adresse source de géolocalisation à utiliser
@@ -456,6 +459,7 @@ select the type of conversion:	addressbook	fr	Sélectionner le type de convertio
 select where you want to store / retrieve contacts	admin	fr	Sélectionnez où vous voulez stocker / récupérer les contacts
 selected contacts	addressbook	fr	contacts choisis
 send emailcopy to receiver	addressbook	fr	Envoyer une copie email au destinataire
+send fax via email by replacing fax number with an email address	addressbook	fr	Envoyer un fax par email en remplaçant le numéro de fax par une adresse email
 send succeeded to %1	common	fr	Succès de l'envoi vers %1
 seperator	addressbook	fr	Séparateur
 set full name and file as field in contacts of all users (either all or only empty values)	admin	fr	Remplir le nom complet et le "afficher comme" dans les fiches contact de tous les utilisateurs. Soit tous, soit seulement les valeurs vides.
@@ -496,7 +500,7 @@ the anonymous user has probably no add rights for this addressbook.	addressbook	
 the anonymous user needs add rights for it!	addressbook	fr	L'utilisateur anonyme doit avoir des droits d'ajout !
 the anonymous user needs read it!	addressbook	fr	L'utilisateur anonyme doit avoir des droits de lecture !
 the following document-types are supported:	addressbook	fr	Les documents types suivants sont supportés :
-the zip extension is needed, to insert contact data in openoffice or msoffice documents.	addressbook	fr	l'extension zip est nécessaire pour insérer des données de contact dans des documents OpenOffice ou MSOffice
+the zip extension is needed, to insert contact data in openoffice or msoffice documents.	addressbook	fr	l'extension zip est nécessaire pour insérer des données de contact dans des documents LibreOffice ou MS Office
 there was an error saving your data :-(	addressbook	fr	ERREUR à l'enregistrement de données !
 this module displays a contactform, that stores direct into the addressbook.	addressbook	fr	Ce module affiche un formulaire de contact, qui stocke directement des informations dans le carnet d'adresses.
 this module displays block from a adddressbook group.	addressbook	fr	Ce module affiche un bloc de groupe du carnet d'adresses
@@ -540,6 +544,7 @@ vcard	common	fr	vCard
 vcards require a first name entry.	addressbook	fr	Les vCards nécessitent une entrée prénom.
 vcards require a last name entry.	addressbook	fr	Les vcards nécessitent une entrée nom de famille.
 verification	addressbook	fr	Vérification
+video call	addressbook	fr	Appel vidéo
 view linked infolog entries	addressbook	fr	Afficher les entrées liées à InfoLog
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	fr	ATTENTION!! LDAP est valide seulement si vous n'utilisez PAS les contacts pour le stockage des comptes!
 warning: all contacts found will be deleted!	addressbook	fr	AVERTISSEMENT : Tous les contacts trouvés seront supprimés!

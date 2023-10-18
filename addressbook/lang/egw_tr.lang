@@ -1,3 +1,4 @@
+%1 added	addressbook	tr	%1 eklendi
 %1 fields in %2 other organisation member(s) changed	addressbook	tr	%2 di?er organizasyon üyesinin %1 alan bilgisi de?i?tirildi.
 %1 records imported	addressbook	tr	%1 kay?t ithal edildi.
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	tr	%1 kay?t okundu. (Henüz ithal edilmedi, %2geri%3 giderek ?thal Etme seçene?indeki tik i?aretini kald?rabilirsiniz.)
@@ -11,6 +12,11 @@ add a contact to this organisation	addressbook	tr	Bu organizasyona bir ba?lant? 
 add a new contact	addressbook	tr	Yeni bir ba?lant? ekle
 add a single entry by passing the fields.	addressbook	tr	Gerekli alanlar? doldurarak bir girdi ekleyebilirsiniz.
 add custom field	addressbook	tr	Özel bir alan ekle
+add to bcc	addressbook	tr	Kör Kopya'ya ekle
+add to cc	addressbook	tr	Kopyaya Ekle
+add to distribution list	addressbook	tr	Dağıtım listesine ekle
+add to distribution list:	addressbook	tr	Dağıtım listesine ekle:
+add to to	addressbook	tr	Şuraya Ekle
 added	addressbook	tr	Eklendi
 address book	common	tr	Adres Defteri
 address book - vcard in	addressbook	tr	Adres Defteri - vCard
@@ -25,6 +31,7 @@ alt. csv import	addressbook	tr	CSV dosyas? ithal et
 always	addressbook	tr	her zaman
 are you shure you want to delete this contact?	addressbook	tr	Bu ba?lant?y? silmek istedi?inize emin misiniz?
 are you sure you want to delete this field?	addressbook	tr	Bu alan? silmek istedi?inize emin misiniz?
+audio call	addressbook	tr	Sesli Çağrı
 birthday	common	tr	Do?um Tarihi
 birthdays	common	tr	Do?um Tarihleri
 blank	addressbook	tr	Bo?
@@ -49,12 +56,14 @@ contact application	admin	tr	?leti?im Uygulamas?
 contact settings	admin	tr	?leti?im Ayarlar?
 copied by %1, from record #%2.	addressbook	tr	1% taraf?ndan, #2% kayd?ndan kopyalanm??t?r.
 country	common	tr	Ülke
+crm-view	addressbook	tr	CRM Görünümü
 csv-fieldname	addressbook	tr	CSV Alan-Ad?
 csv-filename	addressbook	tr	CSV Dosya Ad?
 custom	addressbook	tr	Özel
 custom fields	addressbook	tr	Özel Alanlar
 debug output in browser	addressbook	tr	Hata Ay?klama bilgilerini taray?c?da görüntüle
 default	addressbook	tr	Varsayılan
+default action on double-click	addressbook	tr	Çift tıklamada varsayılan eylem
 default filter	addressbook	tr	Varsay?lan süzgeç
 delete a single entry by passing the id.	addressbook	tr	ID'sini girerek bir girdiyi sil
 deleted	addressbook	tr	Silindi
@@ -62,14 +71,19 @@ department	common	tr	Bölüm
 domestic	addressbook	tr	Ev
 download	addressbook	tr	?ndir
 download export file (uncheck to debug output in browser)	addressbook	tr	?hraç edilen dosyay? indir. (Hata ay?klama bilgisini taray?c?da görüntülemek için tiki kald?r?n?z.)
+download this contact as vcard file	addressbook	tr	Bu kişiyi vCard dosyası olarak indirin
 duplicate threshold	addressbook	tr	Yineleme eşiği
 duplicate warning	addressbook	tr	Mükerrer uyarısı
 duplicates	addressbook	tr	Kopyalar
 duration	addressbook	tr	Süre
 edit custom field	addressbook	tr	Özel alan? düzenle
 edit custom fields	admin	tr	Özel alanlar? düzenle
-empty for all	addressbook	tr	Tamam? için bo?
+empty for all	addressbook	tr	Herkes için boş
 enter the path to the exported file here	addressbook	tr	?hraç edilecek dosya yolunu buraya giriniz.
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	addressbook	tr	Örnek {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - "n_prefix" alanında "Mr" için arama yapın, bulunursa Merhaba Mr. yazın, aksi takdirde Merhaba Ms. yazın.
+example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	preferences	tr	Örnek {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Örnek: Bay Dr. James Miller
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	addressbook	tr	Örnek {{NELF rolü}} - eğer rol alanı boş değilse, rol alanının değerini içeren yeni bir satır alırsınız
+example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	addressbook	tr	Örnek {{nenvlf rol}} - alan rolü boş değilse, alanın herhangi bir değeri olmadan bir LF ayarlayın
 export contacts	addressbook	tr	Ba?lant?lar? ihraç et
 export file name	addressbook	tr	?hraç dosyas? ad?
 export from addressbook	addressbook	tr	Adres defterinden ihraç et
@@ -83,6 +97,8 @@ fields to check for duplicates	addressbook	tr	Mükerrerlik kontrolü yapılacak 
 fields to consider when looking for duplicate contacts.	addressbook	tr	Mükerrer kişileri ararken dikkate alınacak alanlar.
 fields to show in address list	addressbook	tr	Adres listesinde görüntülecek alanlar
 fieldseparator	addressbook	tr	Alan ayrac?
+for serial letter use this tag. put the content, you want to repeat between two tags.	addressbook	tr	Seri harf için bu etiketi kullanın. Tekrarlamak istediğiniz içeriği iki etiket arasına yerleştirin.
+freebusy uri	addressbook	tr	Seri harf için bu etiketi kullanın. Tekrarlamak istediğiniz içeriği iki etiket arasına yerleştirin.
 full name	addressbook	tr	Tam ?sim
 geo	addressbook	tr	GEO
 global categories	addressbook	tr	Genel kategoriler
@@ -110,10 +126,13 @@ import from outlook	addressbook	tr	Outlook'tan ithal et
 import multiple vcard	addressbook	tr	Çoklu vCard ithal et
 import next set	addressbook	tr	S?radaki grubu ithal et
 import_instructions	addressbook	tr	Netscape kullan?c?lar?, Adressbook'u açmal? ve <b>Dosya</b> menüsündeki, <b>Export/?hraç Et</b> seçene?ini seçmelidirler. ?thal edilen dosyan?n biçimi LDIF olacakt?r.<p>Ya da, Outlook kullan?c?lar?, Contact klasörünü seçtikten sonra <b>File</b> menüsünden Export/Import seçene?ini kullanarak ba?lant?lar?n? CSV dosyas?na ithal edebilirler.<p>Palm Desktop 4.0 ve üstü kullan?c?lar?, AdressBook uygulamas?ndan <b>File</b> menüsündeki Export seçene?ini kullanaran ba?lant?lar?n? vCard oalrak ithal edebilirler.
+importer's personal	addressbook	tr	İthalatçının kişisel
 infolog	addressbook	tr	InfoLog İletişim
 infolog-organisation	addressbook	tr	InfoLog Organizasyon
 international	addressbook	tr	Uluslararas?
+invite to current call	addressbook	tr	Geçerli çağrıya davet et
 label	addressbook	tr	Etiket
+last modified	addressbook	tr	Son değişiklik
 ldap context for contacts	admin	tr	Ba?lant?lar için LDAP içeri?i
 ldap host for contacts	admin	tr	Ba?lant?lar için LDAP host
 ldif	addressbook	tr	LDIF
@@ -121,6 +140,7 @@ line 2	addressbook	tr	2. sat?r
 load custom fields in index, even if custom field column is off (eg. to display them in a specific index column)	addressbook	tr	Özel alan sütunu kapalı olsa bile özel alanları dizine yükleme (örneğin, bunları belirli bir dizin sütununda görüntülemek için)
 load vcard	addressbook	tr	vCard yükle
 location	addressbook	tr	Konum
+mail vcard	addressbook	tr	Posta vCard
 mark records as private	addressbook	tr	Kay?tlar? özel olarak i?aretle
 merge duplicates	addressbook	tr	Yinelenenleri birleştirme
 merge into first or account, deletes all other!	addressbook	tr	İlk veya hesapla birleştir, diğerlerini sil!
@@ -149,7 +169,10 @@ read a list of entries.	addressbook	tr	Bir girdi listesini oku
 read a single entry by passing the id and fieldlist.	addressbook	tr	ID ve alan listesini tarayarak bir girdi oku
 record access	addressbook	tr	Eri?imi kaydet
 record owner	addressbook	tr	Sahibini kaydet
+remove from distribution list	addressbook	tr	Dağıtım listesinden çıkar
+rename selected distribution list	addressbook	tr	Seçili dağıtım listesini yeniden adlandırın
 repetition	addressbook	tr	Tekrarlama
+schedule a video conference	addressbook	tr	Bir video konferans planlayın
 search letter	addressbook	tr	Harf ara
 select all	addressbook	tr	Tamam?n? seç
 select the type of conversion	addressbook	tr	Dönü?üm tipini seçiniz
@@ -160,6 +183,7 @@ shared	addressbook	tr	paylaşılan
 shared by me	addressbook	tr	Benim tarafımdan paylaşıldı
 shared into addressbook %1	addressbook	tr	adres defterinde paylaşılan %1
 shared with	addressbook	tr	İle paylaşıldı
+special	addressbook	tr	Özel
 startrecord	addressbook	tr	Kaydetmeye ba?la
 state	common	tr	Durum
 street	common	tr	Cadde
@@ -174,18 +198,31 @@ to many might exceed your execution-time-limit	addressbook	tr	çok fazlas? execu
 today is %1's birthday!	common	tr	Bugün %1'in do?um günü !
 tomorrow is %1's birthday.	common	tr	Yar?n %1'in do?um günü
 translation	addressbook	tr	Tercüme
+type	addressbook	tr	Tip
+unable to convert "%1" to account id.  using plugin setting (%2) for owner.	addressbook	tr	"%1" hesap kimliğine dönüştürülemiyor. Sahip için eklenti ayarı (%2) kullanılıyor.
+unable to delete	addressbook	tr	Silinemiyor
+unable to import into %1, using %2	addressbook	tr	2 kullanılarak %1 içine aktarılamıyor
+unknown type %1, imported as %2	addressbook	tr	Bilinmeyen tür %1, %2 olarak içe aktarıldı
 unshare	addressbook	tr	Artık paylaşılmıyor
 unshared	addressbook	tr	artık paylaşılmıyor
 update a single entry by passing the fields.	addressbook	tr	Alan de?erleri ile bir alan? güncelle.
 updated	addressbook	tr	Güncelle
+use a category tree?	addressbook	tr	Kategorileri seçmek için bir ağaç kullanın
+use addressbooks "own sorting" attribute	addressbook	tr	Adres defterlerinin "kendi sıralama" özelliğini kullanın
 use country list	addressbook	tr	Ülke listesi kullan
 user groups are automatically shown as distribution lists.	addressbook	tr	Kullanıcı grupları otomatik olarak dağıtım listeleri olarak gösterilir.
 vcard	common	tr	vCard
 vcards require a first name entry.	addressbook	tr	vCard özelli?i bir isim gerektirir.
 vcards require a last name entry.	addressbook	tr	vCard özelli?i bir soyad? gerektirir.
+video call	addressbook	tr	Görüntülü Arama
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	tr	UYARI!! LDAP sadece ba?lant?lar?n?z? hesap depolamakta kulland???n?zda geçerlidir.
+when viewing a contact, show linked entries from the selected application	addressbook	tr	Bir kişiyi görüntülerken, seçili uygulamadan bağlantılı girişleri gösterme
 when you merge entries into documents, they will be stored here.  if no directory is provided, they will be stored in your home directory (/home/unverricht)	addressbook	tr	Girişleri belgelerde birleştirdiğinizde, burada saklanacaktır. Herhangi bir dizin belirtilmemişse, bunlar ev dizininizde saklanacaktır (/home/...)
+which charset should be used for the vcard export.	addressbook	tr	vCard dışa aktarımı için hangi karakter kümesi kullanılmalıdır.
+which charset should be used for the vcard import and export.	addressbook	tr	vCard içe ve dışa aktarma için hangi karakter kümesi kullanılmalıdır.
 work phone	addressbook	tr	?? tel
+yes, only admins can purge deleted items	admin	tr	Evet, silinen öğeleri yalnızca yöneticiler temizleyebilir
+yes, users can purge their deleted items	admin	tr	Evet, kullanıcılar silinen öğelerini temizleyebilir
 you are not allowed to share into the addressbook of %1	addressbook	tr	Adres defteri %1 ile paylaşmanıza izin verilmiyor
 you must select a vcard. (*.vcf)	addressbook	tr	Bir vCard seçmelisiniz. (*.vcf)
 you must select at least 1 column to display	addressbook	tr	Görüntülemek için en az bir sütun seçmelisiniz.

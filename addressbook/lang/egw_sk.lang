@@ -79,6 +79,7 @@ are you shure you want to delete this contact?	addressbook	sk	Naozaj chcete odst
 are you sure you want to delete this field?	addressbook	sk	Naozaj mám odstrániť toto pole?
 assistent	addressbook	sk	Asistent
 assistent phone	addressbook	sk	Telefón asistenta
+audio call	addressbook	sk	Zvukový hovor
 birthday	common	sk	Narodeniny
 birthdays	common	sk	Narodeniny
 blank	addressbook	sk	Prázdne
@@ -101,7 +102,7 @@ calendar uri	addressbook	sk	URI Kalendára
 can be changed via setup >> configuration	admin	sk	Dá sa zmeniť cez Setup -> Konfigurácia
 can't create dn %1	addressbook	sk	Nedá sa vytvoriť dn %1
 car phone	addressbook	sk	Telefón do auta
-categorie	addressbook	sk	kategória
+categorie	addressbook	sk	Kategória
 categorie added	addressbook	sk	kategória bola pridaná
 categorie delete	addressbook	sk	kategória bola odstránená
 categories, notes, ...	addressbook	sk	Kategórie, Poznámky,...
@@ -146,7 +147,7 @@ contacts and account contact-data to ldap	admin	sk	kontakty a kontaktné údaje 
 contacts and account contact-data to sql	admin	sk	kontakty a kontaktné údaje účtu do SQL
 contacts to ldap	admin	sk	kontakty do LDAP
 contacts to ldap, account contact-data to sql	admin	sk	kontakty do LDAP, kontaktné údaje účtu do SQL
-contains	addressbook	sk	obsahuje
+contains	addressbook	sk	Obsahuje
 copied	addressbook	sk	skopírované
 copied by %1, from record #%2.	addressbook	sk	Skopíroval %1 od záznamu č.%2
 copy a contact and edit the copy	addressbook	sk	Kopírovať kontakt a upraviť kópiu
@@ -168,7 +169,7 @@ custom etemplate for the contactform	addressbook	sk	Vlastná eŠablóna pre tent
 custom fields	addressbook	sk	Vlastné polia
 data exchange settings	addressbook	sk	Nastavenia výmeny údajov
 debug output in browser	addressbook	sk	Ladiaci výstup v prehliadači
-default	addressbook	sk	predvolené
+default	addressbook	sk	Predvolené
 default action on double-click	addressbook	sk	Predvolená akcia pri dvojitom kliknutí
 default address format	addressbook	sk	Predvolený formát adresy
 default addressbook for adding contacts	addressbook	sk	Predvolený adresár pre pridávanie kontaktov
@@ -237,7 +238,7 @@ example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james m
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	addressbook	sk	Príklad {{NELF role}} - ak pole pozícia nie je prázdne, dostanete nový riadok s hodnotou poľa pozícia
 example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	addressbook	sk	Príklad {{nenvlf role}}  - ak pole pozícia nie je prázdne nastaví LF bez akejkoľvek hodnoty poľa
 existing links	addressbook	sk	Existujúce odkazy
-exists	addressbook	sk	existuje
+exists	addressbook	sk	Existuje
 export as csv	addressbook	sk	Exportovať ako CSV
 export as vcard	addressbook	sk	Exportovať ako vizitku vCard
 export contacts	addressbook	sk	Exportovať kontakty
@@ -302,7 +303,7 @@ how many contacts should non-admins be able to export	admin	sk	Koľko kontaktov 
 how many fields must match for the record to be considered a duplicate.	addressbook	sk	Koľko položiek sa musí zhodovať, aby sa záznam považoval za duplikát.
 html link to the current record	addressbook	sk	HTML odkaz na aktuálny záznam
 icon	addressbook	sk	Ikona
-if accounts are already in ldap	admin	sk	ak sú účty už v LDAP
+if accounts are already in ldap	admin	sk	Ak sú účty už v LDAP
 ignore first line	addressbook	sk	Ignorovať prvý riadok
 import	addressbook	sk	Import
 import contacts	addressbook	sk	Importovať kontakty
@@ -326,6 +327,7 @@ insufficent rights to delete this list!	addressbook	sk	Nemáte dostatočné prá
 insufficent rights to edit this list!	addressbook	sk	Nemáte dostatočné práva k úprave tohto zoznamu!
 international	addressbook	sk	Mezinárodný
 internet	addressbook	sk	Internet
+invite to current call	addressbook	sk	Pozvať na aktuálny hovor
 label	addressbook	sk	Označenie
 last date	addressbook	sk	Posledný dátum
 last modified	addressbook	sk	Posledná zmena
@@ -377,7 +379,7 @@ name, email, phone	addressbook	sk	Meno, e-mail, telefón
 new contact submitted by %1 at %2	addressbook	sk	Nový kontakt odoslal %1 o %2
 new window opened to edit infolog for your selection	addressbook	sk	Otvorilo sa nové okno pre úpravu Záznamníka pre váš výber
 next date	addressbook	sk	Nasledujúci dátum
-no categories selected	addressbook	sk	neboli vybrané kategórie
+no categories selected	addressbook	sk	Neboli vybrané kategórie
 no country selected	addressbook	sk	Žiadna vybraná krajina
 no distribution list	addressbook	sk	Bez distribučného zoznamu
 no fallback	addressbook	sk	Bez návratu
@@ -424,7 +426,7 @@ publish into groups:	addressbook	sk	Publikovať do skupín:
 read a list / search for entries.	addressbook	sk	Načítať zoznam / vyhľadať záznamy.
 read a list of entries.	addressbook	sk	Načítaj zoznam záznamov.
 read a single entry by passing the id and fieldlist.	addressbook	sk	Načítaj záznam podľa zadaného id a zoznamu polí.
-read only	addressbook	sk	iba na čítanie
+read only	addressbook	sk	Iba na čítanie
 record access	addressbook	sk	Prístup k záznamu
 record owner	addressbook	sk	Vlastník záznamu
 recovered	addressbook	sk	Obnovené
@@ -439,6 +441,7 @@ replacements for inserting contacts into documents	addressbook	sk	Náhrady pre v
 required fields *	addressbook	sk	Požadované polia *
 role	addressbook	sk	Pracovisko
 room	addressbook	sk	Miestnosť
+schedule a video conference	addressbook	sk	Naplánovať videokonferenciu
 search letter	addressbook	sk	Hľadať podľa písmena
 select a portrait format jpeg photo. it will be resized to 60 pixel width.	addressbook	sk	Vyberte obrázok jpeg orientovaný na výšku. Bude prispôsobený na výškový rozmer 60 pixlov.
 select a source address to be used in geolocation routing system	addressbook	sk	Vyberte zdrojovú adresu ktorá sa použije v smerovacom systéme GeoLokácie
@@ -454,7 +457,7 @@ select phone number as prefered way of contact	addressbook	sk	vybrať číslo te
 select the type of conversion	addressbook	sk	Vyberte typ prevodu
 select the type of conversion:	addressbook	sk	Vyberte typ prevodu:
 select where you want to store / retrieve contacts	admin	sk	Vyberte, kde chcete ukladať / získavať kontakty
-selected contacts	addressbook	sk	vybrané kontakty
+selected contacts	addressbook	sk	Vybrané kontakty
 send emailcopy to receiver	addressbook	sk	Poslať kópiu e-mailu adresátovi
 send fax via email by replacing fax number with an email address	addressbook	sk	Poslať fax e-mailom, číslo faxu sa nahradí e-mailovou adresou
 send succeeded to %1	common	sk	Odoslanie sa podarilo pre %1
@@ -488,7 +491,7 @@ subject for email	addressbook	sk	Predmet E-mailu
 successfully imported %1 records into your addressbook.	addressbook	sk	Do adresára bolo úspešne naimportovaných %1 záznamov.
 suffix	addressbook	sk	Prípona
 tag to mark positions for address labels	addressbook	sk	Značka pre označenie pozícií pre označenie adresy
-tel home	addressbook	sk	tel domov
+tel home	addressbook	sk	Tel domov
 telephony integration	admin	sk	Integrovanie telefónie
 test import (show importable records <u>only</u> in browser)	addressbook	sk	Otestovať import (importované záznamy sa zobrazia <u>len</u> v prehliadači)
 thank you for contacting us.	addressbook	sk	Ďakujeme, že ste nás kontaktovali.
@@ -510,7 +513,7 @@ to many might exceed your execution-time-limit	addressbook	sk	Príliš veľa zá
 today is %1's birthday!	common	sk	Dnes má narodeniny %1!
 tomorrow is %1's birthday.	common	sk	Zajtra má narodeniny %1.
 translation	addressbook	sk	Preklad
-two of: %1	addressbook	sk	dva z: %1
+two of: %1	addressbook	sk	Dva z: %1
 type	addressbook	sk	Typ
 un-delete	addressbook	sk	Obnoviť vymazané
 unable to convert "%1" to account id.  using plugin setting (%2) for owner.	addressbook	sk	Nepodarila sa konverzia "%1" na ID účtu. Používam nastavenie zásuvného modulu (%2) pre vlastníka.
@@ -541,6 +544,7 @@ vcard	common	sk	Vizitka vCard
 vcards require a first name entry.	addressbook	sk	Vizitky potrebujú zadané krstné meno.
 vcards require a last name entry.	addressbook	sk	Vizitky potřebujú zadané priezvisko.
 verification	addressbook	sk	Kontrola
+video call	addressbook	sk	Videohovor
 view linked infolog entries	addressbook	sk	Zobraziť pripojené položky Záznamníka
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	sk	VAROVANIE!! LDAP sa dá použiť jedine ak NEPOUŽÍVATE kontakty na uchovanie používateľských účtov!
 warning: all contacts found will be deleted!	addressbook	sk	POZOR: Všetky kontakty budú odstránené!

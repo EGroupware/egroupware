@@ -66,6 +66,7 @@ are you sure you want to move folder %1 to folder %2?	mail	bg	Сигурни л�
 arrival	mail	bg	Приет(и)
 ask for permission	mail	bg	Попитайте за разрешение
 attach files	mail	bg	Прикачи файлове
+attach users vcard at compose to every new mail	mail	bg	Прикачване на vCard на потребителите при съставяне на всяко ново писмо
 attach vcard	mail	bg	Прикачете vCard
 attachment	mail	bg	Приложение
 attachment has been saved successfully.	mail	bg	Приложението е запазено успешно.
@@ -73,6 +74,7 @@ attachments	mail	bg	Приложения
 attachments, ...	mail	bg	приложения, ...
 authentication	mail	bg	Заверка
 available personal email-accounts/profiles	mail	bg	налични лични имейл акаунти / профили
+be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	bg	Имайте предвид, че като добавите всички избрани файлове в режим %1, това ще промени и всички съществуващи прикачени файлове в списъка в режим %2. \n \n Искате ли да продължите?
 be aware that all attachments will be sent as %1!	mail	bg	Имайте предвид, че всички прикачени файлове ще бъдат изпратени като %1!
 before reply, visible during compose	mail	bg	Да бъде видим докато се съставя, преди отговор
 blacklisted mails are marked as spam	mail	bg	Имейли от "черния списък" да се маркират като спам
@@ -199,9 +201,10 @@ empty junk	mail	bg	изпразване на папка с отпадъци / с
 empty trash	mail	bg	изпразване на кошчето
 empty trash and junk	mail	bg	Празно кошче и отпадъци
 enable	mail	bg	позволява
+enabled	mail	bg	Разрешено
 enabled!	mail	bg	активиран!
 encrypt	mail	bg	Криптиране
-encrypt your message with smime certificate	mail	bg	Кодирай съобщението си със S / MIME сертификат
+encrypt your message with smime certificate	mail	bg	Кодирай съобщението си със S/MIME сертификат
 encryption	mail	bg	Кодиране
 enter the name for the new folder:	mail	bg	Въведете името на новата папка:
 error saving %1!	mail	bg	Грешка при запазването на %1!
@@ -216,6 +219,7 @@ error: message could not be displayed.	mail	bg	ГРЕШКА: Съобщение�
 esync will fail without a working email configuration!	mail	bg	eSync няма да бъде успешно, без работеща конфигурация на електронната поща!
 event details follow	mail	bg	Следват подробности за събитието
 everyone	mail	bg	Всеки
+examine namespace to retrieve folders in others and shared	mail	bg	Проучване на пространството от имена за извличане на папки в други и споделени
 extended	mail	bg	Разширен
 extra sent folders	mail	bg	Допълнително изпратени папки
 failed to delete %1	mail	bg	Изтриването на %1 не бе успешно
@@ -223,10 +227,13 @@ failed to delete %1 ! reason: %2	mail	bg	Изтриването на %1 не б�
 failed to delete %1. server responded:	mail	bg	Изтриването% 1 не бе успешно. Сървърът отговори:
 failed to move %1 ! reason: %2	mail	bg	Преместването на %1 не бе успешно! Причина: %2
 failed to rename %1 ! reason: %2	mail	bg	Преименуването на %1 не бе успешно! Причина: %2
-file into	mail	bg	файл в
-file into:	mail	bg	Файл в:
+failed to subscribe folder %1!	mail	bg	Не успя да се абонира за папка %1!
+failed to unsubscribe folder %1!	mail	bg	Неуспешен опит за отписване на папка %1!
+file into	mail	bg	Преместване в
+file into:	mail	bg	Преместване в:
 file rejected, no %2. is:%1	mail	bg	Файлът е отхвърлен, без %2. На негово място е: 1%
 filemanager	mail	bg	Файл мениджър
+filemode has been switched to %1	mail	bg	Файловият режим е променен на: %1
 files	mail	bg	Файлове
 flag / unflag	mail	bg	Маркирай/ Размаркирай с флагче
 flag or unflag a mail	mail	bg	Маркирайте или отмаркирайте имейл с флагче
@@ -262,6 +269,7 @@ general settings	mail	bg	Основни настройки
 get acl rights failed from imap server!	mail	bg	Получете ACL права от сървъра за IMAP!
 greater than	mail	bg	по-голямо от
 ham folder	mail	bg	Папка "Ham"
+handling of external http images / mixed content in mails	mail	bg	Обработка на външни http изображения / смесено съдържание в имейли
 header	mail	bg	Заглавка (Header)
 header lines	mail	bg	Заглавна част
 high	mail	bg	високо
@@ -300,13 +308,27 @@ imap timeout	mail	bg	Време за изчакване на IMAP
 import message	mail	bg	съобщение за импортиране
 import of message %1 failed. could not save message to folder %2 due to: %3	mail	bg	Импортирането на съобщение %1 не бе успешно. Не можа да се запише съобщение в папка %2 поради: %3
 import of message %1 failed. destination folder %2 does not exist.	mail	bg	Импортирането на съобщение% 1 не бе успешно. Дестинация папка% 2 не съществува.
+import of message %1 failed. destination folder not set.	mail	bg	Импортирането на съобщение %1 не е успешно. Не е зададена папка на местоназначението.
+import of message %1 failed. no contacts to merge and send to specified.	mail	bg	Импортирането на съобщението %1 е неуспешно. Не са зададени контакти, които да се обединят и изпратят.
+importance	mail	bg	значение
+important	mail	bg	Важно
+in mailbox: %1, with id: %2, and partid: %3	mail	bg	В пощенска кутия: %1, с ID: %2 и PartID: %3
+in order to protect your privacy all external sources within this email are blocked.	mail	bg	С цел защита на личните ви данни всички външни източници в рамките на този имейл са блокирани.
 inbox	mail	bg	Входящи
 information to show on email tag	mail	bg	Информация, която да се показва в етикета на имейла
+initialization of mail failed. please use the wizard to cope with the problem.	mail	bg	Инициализацията на пощенския модул е неуспешна. Моля, използвайте съветника за конфигуриране, за да коригирате конфигурацията.
+inline	mail	bg	Препращане
+insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)	mail	bg	вмъкнете подписа в горната част на новото съобщение (или отговора), когато отваряте диалоговия прозорец за съставяне (може да не можете да превключвате подписите)
+job	mail	bg	Работа
 junk	mail	bg	Нежелани
 junk folder	mail	bg	Папка с нежелани файлове
 keep a copy of the message in your inbox	mail	bg	запазване на копие от съобщението във Входящи
 kilobytes	mail	bg	килобайта
+later	mail	bg	По-късно
+learning as ham (not spam) failed because of %1	mail	bg	Ученето като хам (не спам) се провали заради %1
+learning as spam failed because of %1	mail	bg	Ученето като спам се е провалило поради %1
 less than	mail	bg	по-малко от
+limit mailing list results when searching for addresses	mail	bg	Ограничаване на резултатите от пощенски списъци при търсене на адреси
 list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	bg	Списък на действията, които трябва да се включат/активират по подразбиране (напр. действие Mail compose save as InfoLog)
 mail	common	bg	Поща
 mail acl	mail	bg	Права за достъп
@@ -318,6 +340,8 @@ mail-address	mail	bg	Mail-Address
 mailaccount	mail	bg	Пощенски акаунт
 mailinglist	mail	bg	Пощенски списък
 mails	common	bg	Поща
+mails can be copied to that folder via context menu, if folder is configured.	mail	bg	Писмата могат да бъдат копирани в тази папка чрез контекстното меню, ако папката е конфигурирана.
+mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	bg	Пощенският сървър съобщи:\n%1 \nИскате ли да продължите с изтриване на избраните съобщения незабавно (щракнете върху ОК)?\nАко не, моля, опитайте се да изпразните папката за боклук, преди да продължите. (щракнете върху отмени)
 mark all as read	mail	bg	Маркирайте всички като прочетени
 mark all messages in folder as read	mail	bg	Маркиране на всички съобщения в папката като прочетени
 mark as deleted	mail	bg	Маркирай като изтрито
@@ -362,11 +386,18 @@ printview	mail	bg	изглед за печат
 push notifications	mail	bg	Известия Push
 quicksearch	mail	bg	Бързо търсене
 quicksearch (with cc)	mail	bg	Бързо търсене (+Копиране)
+real name	mail	bg	Истинско име
+real name email	mail	bg	Истинско име [Имейл]
+real name organization email	mail	bg	Истинско име Организация [Имейл]
 refresh time in minutes	mail	bg	Време на опресняване в минути
 reject with	mail	bg	откажи с
+remember the password for	mail	bg	Запомнете паролата за
 remove all	mail	bg	Премахване на всички
 remove immediately	mail	bg	Премахни незабавно
+removing %1 from blacklisted email addresses failed because of %2	mail	bg	Премахването на %1 от имейл адресите в черния списък не е успяло поради %2
+removing %1 from whiltelisted email addresses failed because of %2	mail	bg	Премахването на %1 от имейл адреси, които са включени в списъка, не е успяло поради %2
 rename folder	mail	bg	Преименуване на папка
+replace 'http://' in image urls with (trailing / required!)	mail	bg	Заместете "http://" в урните на изображенията с (изисква се крайно /!)
 replied	mail	bg	изпратен отговор
 reply	mail	bg	Отговор
 reply all	mail	bg	Отговор до всички
@@ -407,10 +438,18 @@ subject(z->a)	mail	bg	Тема (Z->A)
 template folder	mail	bg	Папка "Шаблони"
 templates	mail	bg	Шаблони
 text/plain	mail	bg	текст
+the imap server need to meet certain requirements and be configured for it:	mail	bg	Сървърът на IMAP трябва да отговаря на определени изисквания И да бъде конфигуриран за него:
 the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	mail	bg	Подателят на съобщението е заявил обратна разписка. Желаете ли да му я изпратите?
+the rule with priority %1 successfully saved!	mail	bg	Правилото с приоритет %1 е записано успешно!
 then	mail	bg	ТОГАВА
+there is no space left to store sieve script, please check sieve_maxscriptsize option on your mailserver's config.	mail	bg	Не е останало място за съхраняване на скрипта на sieve, моля, проверете опцията sieve_maxscriptsize в конфигурацията на вашия пощенски сървър.
+this mail contains external images served via insecure http protocol. be aware showing or allowing them can compromise your security!	mail	bg	Тази поща съдържа външни изображения, обслужвани чрез несигурен протокол HTTP. Имайте предвид, че показването или разрешаването им може да компрометира сигурността ви!
+this message is smime encrypted and password protected.	mail	bg	Това съобщение е S/MIME криптирано и защитено с парола.
+to do	mail	bg	За да направите
+toggle all folders view for %1	mail	bg	Превключване на изгледа на всички папки за %1
+toggled on actions	mail	bg	Превключване на действията
 trash	mail	bg	Кошче
-trash folder	mail	bg	Папка "Кошче"
+trash folder	mail	bg	Папка за отпадъци
 unflagged	mail	bg	немаркирано
 unread	mail	bg	Непрочетено
 vacation notice	mail	bg	ваканционна бележка

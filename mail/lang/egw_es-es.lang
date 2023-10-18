@@ -74,6 +74,7 @@ attachments	mail	es-es	Adjuntos
 attachments, ...	mail	es-es	Adjuntos, ...
 authentication	mail	es-es	Autenticación
 available personal email-accounts/profiles	mail	es-es	Cuentas de correo-e/perfiles personales disponibles
+be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	es-es	Tenga en cuenta que al añadir todos los archivos seleccionados como modo %1, también cambiará todos los adjuntos existentes en la lista al modo %2. \¿Desea continuar?
 be aware that all attachments will be sent as %1!	mail	es-es	¡Tenga en cuenta que todos los archivos adjuntos se enviarán como %1!
 before reply, visible during compose	mail	es-es	Antes de la respuesta, visible durante la composición
 blacklisted mails are marked as spam	mail	es-es	Los mensajes en la lista negra están marcados como spam
@@ -87,6 +88,7 @@ canceled deletion due to user interaction	mail	es-es	supresión cancelada debido
 certificate info for email %1	mail	es-es	Información del certificado para el correo-e %1
 change editor type	mail	es-es	cambiar el editor al modo HTML
 changed profile	mail	es-es	perfil cambiado
+changing subject failed because of %1	mail	es-es	El cambio de asunto ha fallado debido a %1
 changing subject failed folder %1 does not exist	mail	es-es	Error al cambiar el asunto La carpeta %1 no existe
 check message against next rule also	mail	es-es	comprobar el mensaje también con la regla siguiente
 check to receive a notification when the message is read (note: not all clients support this and/or the receiver may not authorize the notification)	mail	es-es	marque para recibir una notificación cuando se lee el mensaje (nota: no todos los clientes apoyan esto y/o el receptor no puede autorizar la notificación)
@@ -192,14 +194,17 @@ email notification successfully updated!	mail	es-es	¡notificación por correo-e
 email notification update failed	mail	es-es	falló la actualización de la notificación de correo electrónico
 email notification update failed! you need to set an email address!	mail	es-es	¡Falló la actualización de la notificación por correo-e! ¡Necesita establecer una dirección de correo-e!
 emailaddress	admin	es-es	dirección de correo-e
+emailadmin: profilemanagement	mail	es-es	eMailAdmin: Gestión de perfiles
 emails in blacklisted domains are marked as spam	mail	es-es	Los correos-e en los dominios de la lista negra están marcados como spam
 emails in whitelisted domains are not marked as spam	mail	es-es	Los correos-e en los dominios de la lista blanca están no marcados como spam
-empty junk	mail	es-es	vaciar carpeta junk/spam
+empty junk	mail	es-es	Vaciar carpeta junk/spam
 empty trash	mail	es-es	vaciar papelera
 empty trash and junk	mail	es-es	vaciar papelera y correo basura
 enable	mail	es-es	Activar
+enabled	mail	es-es	Habilitado
 enabled!	mail	es-es	activado!
 encrypt	mail	es-es	Encriptar
+encrypt your message with smime certificate	mail	es-es	Cifrar su mensaje con certificado S/MIME
 encryption	mail	es-es	Encripción
 enter the name for the new folder:	mail	es-es	Introduzca el nombre de la nueva carpeta:
 error saving %1!	mail	es-es	¡Error al guardar %1!
@@ -214,6 +219,7 @@ error: message could not be displayed.	mail	es-es	ERROR: No se pudo mostrar el m
 esync will fail without a working email configuration!	mail	es-es	¡eSync fallará sin una configuración de eMail de trabajo!
 event details follow	mail	es-es	A continuación, los detalles del evento
 everyone	mail	es-es	todos
+examine namespace to retrieve folders in others and shared	mail	es-es	Examinar espacio de nombres para recuperar carpetas en otros y compartidas
 extended	mail	es-es	Extendido
 extra sent folders	mail	es-es	Carpetas adicionales enviadas
 failed to delete %1	mail	es-es	Falló al suprimir %1
@@ -223,10 +229,11 @@ failed to move %1 ! reason: %2	mail	es-es	¡Falló al mover %1! Razón: %2
 failed to rename %1 ! reason: %2	mail	es-es	¡Falló al renombrar %1! Razón: %2
 failed to subscribe folder %1!	mail	es-es	¡Falló al suscribir carpeta %1!
 failed to unsubscribe folder %1!	mail	es-es	¡Falló al dessuscribir carpeta %1!
-file into	mail	es-es	Información del fichero
-file into:	mail	es-es	Archivar en:
+file into	mail	es-es	Mover a
+file into:	mail	es-es	Mover a:
 file rejected, no %2. is:%1	mail	es-es	Archivo rechazado, no %2. Es: %1
 filemanager	mail	es-es	Administrador de archivos
+filemode has been switched to %1	mail	es-es	Se ha cambiado el modo de archivo a: %1
 files	mail	es-es	Archivos
 flag / unflag	mail	es-es	Marcar / Desmarcar
 flag or unflag a mail	mail	es-es	Marcar o desmarcar un correo
@@ -238,6 +245,7 @@ flagged / unflagged	mail	es-es	marcado/desmarcado
 folder	mail	es-es	Carpeta
 folder %1 %2 failed because of %3!	mail	es-es	¡Carpeta %1 %2 falló debido a 3%!
 folder %1 %2 failed!	mail	es-es	¡Carpeta %1 %2 falló!
+folder %1 has been created successfully, although the subscription failed because of %2	mail	es-es	La carpeta %1 se ha creado correctamente, aunque la suscripción ha fallado debido a %2
 folder %1 is moving to folder %2	mail	es-es	La carpeta %1 se mueve a la carpeta %2
 folder management	mail	es-es	Gestión de carpeta
 folder management ...	mail	es-es	Gestión de carpeta ...
@@ -270,9 +278,13 @@ hostname or ip	mail	es-es	Nombre de host o IP
 how often to check with the server for new mail	mail	es-es	Con qué frecuencia se debe comprobar el nuevo correo en el servidor
 how should the available information on identities be displayed	admin	es-es	cómo se debe mostrar la información disponible sobre identidades
 how to forward messages	mail	es-es	cómo reenviar mensajes
-html	mail	es-es	html
+html	mail	es-es	HTML
 html mode	mail	es-es	modo html
+ident name	mail	es-es	Nombre de identificación
+ident name email	mail	es-es	Nombre de Ident [Email]
+ident name organization email	mail	es-es	Ident name Organización [Email]
 identity	mail	es-es	identidad
+identity label	mail	es-es	Etiqueta de identidad
 identity+signature	mail	es-es	Identidad+Firma
 if	mail	es-es	SI
 if authentication required	mail	es-es	si se requiere autenticación
@@ -280,8 +292,8 @@ if different from email address	mail	es-es	si es diferente de la dirección de c
 if from contains:(*)	mail	es-es	Si de contiene: (*)
 if mail body content / attachment type	mail	es-es	Si el contenido del cuerpo del correo / el tipo de adjunto
 if mail body message type	mail	es-es	Si el tipo de mensaje del cuerpo del correo
-if mail header	mail	es-es	si el encabezado
-if message size	mail	es-es	si el tamaño del mensaje
+if mail header	mail	es-es	Si el encabezado
+if message size	mail	es-es	Si el tamaño del mensaje
 if shown, which folders should appear on the home page	mail	es-es	Si se muestran, qué carpetas deben aparecer en la página de inicio
 if subject contains:(*)	mail	es-es	Si el asunto contiene: (*)
 if to contains:(*)	mail	es-es	Si el destinatario contiene: (*)
@@ -298,22 +310,24 @@ import of message %1 failed. destination folder %2 does not exist.	mail	es-es	Fa
 import of message %1 failed. destination folder not set.	mail	es-es	Falló la importación del mensaje %1. La carpeta destino %2 no está configurada..
 import of message %1 failed. no contacts to merge and send to specified.	mail	es-es	Falló la importación del mensaje %1. No hay contactos para fusionar y enviar a especificado.
 importance	mail	es-es	importancia
-important	mail	es-es	importante
+important	mail	es-es	Importante
+in mailbox: %1, with id: %2, and partid: %3	mail	es-es	En el buzón: %1, con ID: %2, y PartID: %3
 in order to protect your privacy all external sources within this email are blocked.	mail	es-es	Para proteger su privacidad, todas las fuentes externas dentro de este correo-e están bloqueadas.
 inbox	mail	es-es	Bandeja de entrada
 information to show on email tag	mail	es-es	Información a mostrar en la etiqueta de correo electrónico
 initialization of mail failed. please use the wizard to cope with the problem.	mail	es-es	Error en la inicialización del correo. Por favor, use el asistente para hacer frente al problema.
 inline	mail	es-es	En línea
 insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)	mail	es-es	inserte la firma en la parte superior del mensaje al abrir el diálogo de redactar (quizás no pueda cambiar la firma)
-job	mail	es-es	trabajo
+job	mail	es-es	Trabajo
 junk	mail	es-es	Basura
 junk folder	mail	es-es	Carpeta de correo basura
-keep a copy of the message in your inbox	mail	es-es	guardar una copia del mensaje en la bandeja de entrada
+keep a copy of the message in your inbox	mail	es-es	Guardar una copia del mensaje en la bandeja de entrada
 kilobytes	mail	es-es	kilobytes
 later	mail	es-es	Más tarde
 learning as ham (not spam) failed because of %1	mail	es-es	El aprendizaje como ham (no spam) falló debido a %1
 learning as spam failed because of %1	mail	es-es	El aprendizaje como spam falló debido a %1
 less than	mail	es-es	menor que
+limit mailing list results when searching for addresses	mail	es-es	Limitar los resultados de las listas de correo al buscar direcciones
 list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	es-es	Lista de acciones que deben activarse por defecto (por ejemplo, la acción Guardar como InfoLog de Mail composose)
 mail	common	es-es	Correo
 mail acl	mail	es-es	Lista de control de acceso del correo
@@ -326,6 +340,7 @@ mailaccount	mail	es-es	Cuenta de correo
 mailinglist	mail	es-es	Lista de correo
 mails	common	es-es	Correos
 mails can be copied to that folder via context menu, if folder is configured.	mail	es-es	Los correos se pueden copiar a esa carpeta por medio del menú contextual, si la carpeta está configurada.
+mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	es-es	Servidor de correo informó:\n%1 \n¿Desea proceder con la eliminación de los mensajes seleccionados de inmediato (haga clic en Aceptar)? \nSi no es así, por favor, intente vaciar la papelera antes de continuar. (haga clic en cancelar)
 mark all as read	mail	es-es	marcar todo como leido
 mark all messages in folder as read	mail	es-es	marcar todos los mensajes de la carpeta como leídos
 mark as deleted	mail	es-es	marcar como borrado
@@ -417,6 +432,7 @@ read / unread	mail	es-es	Leído / No leído
 readable	mail	es-es	ilegible
 real name	mail	es-es	Nombre real
 real name email	mail	es-es	Nombre real [Correo-e]
+real name organization email	mail	es-es	Nombre real Organización [Correo-e]
 reason!	mail	es-es	¡razón!
 receive notification	mail	es-es	Recibir notificación
 recursively	mail	es-es	Recursivamente
@@ -426,6 +442,7 @@ refused to delete folder with subfolders	mail	es-es	Se negó a suprimir la carpe
 reject with	mail	es-es	rechazar con
 reloaded account %1	mail	es-es	Cuenta %1 recargada
 reloaded folder %1	mail	es-es	Carpeta %1 recargada
+remember the password for	mail	es-es	Recordar la contraseña para
 remove "%1" from blacklisted domains	mail	es-es	Suprimir "%1" de los dominios en la lista negra
 remove "%1" from blacklisted emails	mail	es-es	Suprimir "%1" de los correos-e en la lista negra
 remove "%1" from whiltelisted domains	mail	es-es	Suprimir "%1" de los dominios en la lista blanca
@@ -439,6 +456,7 @@ rename folder	mail	es-es	Renombrar carpeta
 rename folder %1 ?	mail	es-es	¿Renombrar la carpeta %1?
 rename folder %1 to:	mail	es-es	Renombrar la carpeta %1 a:
 renamed folder %1 to %2	mail	es-es	Renombrar carpeta %1 a %2
+replace 'http://' in image urls with (trailing / required!)	mail	es-es	Sustituir 'http://' en urls de imágenes por (¡se requiere / al final!)
 replied	mail	es-es	respondido
 reply	mail	es-es	Responder
 reply all	mail	es-es	Responder a todos
@@ -550,11 +568,19 @@ test connection and display basic information about the selected profile	mail	es
 text	mail	es-es	Texto
 text mode	mail	es-es	Modo texto
 text/plain	mail	es-es	text/plain
+the imap server need to meet certain requirements and be configured for it:	mail	es-es	El servidor IMAP debe cumplir ciertos requisitos Y estar configurado para ello:
 the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	mail	es-es	El remitente del mensaje ha solicitado una respuesta para indicar que usted ha leído este mensaje. ¿Desea enviar una confirmación?
 the mimeparser can not parse this message.	mail	es-es	El intérprete mime no puede interpretar este mensaje
+the rule with priority %1 successfully saved!	mail	es-es	La regla con prioridad %1 se ha guardado correctamente.
 then	mail	es-es	ENTONCES
 there is no imap server configured.	mail	es-es	No se ha configurado un servidor IMAP.
-to do	mail	es-es	por hacer
+there is no space left to store sieve script, please check sieve_maxscriptsize option on your mailserver's config.	mail	es-es	No queda espacio para almacenar el script sieve, por favor compruebe la opción sieve_maxscriptsize en la configuración de su servidor de correo.
+this mail contains external images served via insecure http protocol. be aware showing or allowing them can compromise your security!	mail	es-es	Este correo contiene imágenes externas servidas a través de un protocolo HTTP inseguro. Tenga en cuenta que mostrarlas o permitirlas puede comprometer su seguridad.
+this message is smime encrypted and password protected.	mail	es-es	Este mensaje está encriptado S/MIME y protegido por contraseña.
+timeout on connections to your imap server	mail	es-es	Tiempo de espera en las conexiones a su servidor IMAP
+to do	mail	es-es	Por hacer
+toggle all folders view for %1	mail	es-es	Activar la vista de todas las carpetas para %1
+toggled on actions	mail	es-es	Activar acciones
 trash	mail	es-es	Papelera
 trash folder	mail	es-es	Carpeta Papelera
 unflagged	mail	es-es	Sin marcar

@@ -1,21 +1,30 @@
 %1 (%2 new) messages writen for application '%3' and languages '%4'	common	sl	%1 (%2 novih) sporočil napisanih za program '%3' in jezik '%4'
 %1 active file(s) with same name as directory inactivated!	admin	sl	%1 aktivnih datotek z istim imenom, kot so inaktivirani imenik!
+%1 attachments	mail	sl	%1 priloge
 %1 copied - the copy can now be edited	common	sl	Kopirano je %1 - kopijo lahko zdaj urejate
 %1 directories %2 found!	admin	sl	%1 imenikov %2 najdenih!
 %1 email addresses inserted	common	sl	Vnesenih %1 E-naslovov
+%1 email(s) added into %2	common	sl	%1 e-poštno(-a) sporočilo(-a) dodano(-a) v %2
 %1 entries found, select one ...	common	sl	Najdenih je %1 vnosov, izberite enega ...
 %1 etemplates deleted	common	sl	%1 predlog zbrisanih
 %1 etemplates for application '%2' dumped to '%3'	common	sl	%1 ePredlog za program '%2' premaknjenih na '%3'
 %1 etemplates found	common	sl	%1 najdenih ePredlog
 %1 file	common	sl	%1 datoteka
+%1 has been added to blacklisted email addresses	mail	sl	%1 je bilo dodanih na črno listirane e-poštne naslove
+%1 has been added to whiltelisted email addresses	mail	sl	%1 je bil dodan na podrejene e-poštne naslove
+%1 has been removed from blacklisted email addresses	mail	sl	%1 je bil odstranjen iz e-poštnih naslovov, naštetih na črno listo
+%1 has been removed from whiltelisted email addresses	mail	sl	%1 je bil odstranjen iz e-poštnih naslovov, v katerih so bili vpisani
 %1 is not executable by the webserver !!!	common	sl	Spletni strežnik ne more zagnati %1!
+%1 is not writable by you!	mail	sl	Nimate pravice pisanja v %1!
+%1 mails selected	mail	sl	%1 Izbrane e-pošte
 %1 matches on search criteria	common	sl	%1 zadetkov za iskani kriterij
+%1 more %2 selected ...	common	sl	%1 več %2 izbranih...
 %1 more...	common	sl	%1 več ...
 %1 new etemplates imported for application '%2'	common	sl	%1 novih ePredlog uvoženih za program '%2'
 %1 not implemented for %2!	common	sl	%1 ni implementirano za %2!
 %1 proxy of %2	common	sl	%1 strežnik proxy %2
 %1 setting "%2" = %3 disallows access via http!	admin	sl	% 1 nastavitev "%2" =%3 onemogoča dostop prek http!
-%1 to sync	groupdav	sl	%1 sinhronizirati
+%1 to sync	admin	sl	%1 sinhronizirati
 %1, duplicate id	common	sl	%1, podvojena ID
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	sl	%1Izberite drugo mapo%2<br /> ali nastavite, da bo %3 zapisljiva za spletni strežnik
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	sl	%1EGroupware%2 je večuporabniški, spletno osnovani paket za skupinsko delo, napisan v %3PHP%4-ju.
@@ -34,7 +43,13 @@
 '%1' is not a valid timezone!	common	sl	'%1' ni datoteka php v koraku eGW strežnika (% 2)!
 '%1' is not allowed ('%2')!	common	sl	'%1' NI dovoljeno ('%2')!
 '%1' is not allowed%2)!	common	sl	'%1' NI dovoljeno %2)!
+(*) please consider, forward to multiple addresses will not work if number of addresses exceeds the limit. for most mail servers the limit is 4 by default, please contact your mail server administrator for further info.	mail	sl	(*) Upoštevajte, posredovanje več naslovom ne bo delovalo, če število naslovov presega omejitev. Za večino poštnih strežnikov je omejitev 4 privzeto, za dodatne informacije se obrnite na skrbnika poštnega strežnika.
+(leave empty for no quota)	mail	sl	(Pusti prazno brez kvote)
+(no subject)	mail	sl	(brez zadeve)
+(not connected)	mail	sl	(brez povezave)
+(select mails by clicking on the line, like a checkbox)	mail	sl	(izberite pošto s klikom na vrstico, na primer potrditveno polje)
 (session restored in %1 seconds)	common	sl	(seja je bila vzpostavljena v % sekundah)
+(with checkbox enforced)	mail	sl	(s potrditvenim poljem)
 00 (disable)	admin	sl	00 (izklopi)
 1 day	common	sl	1 dan
 1 hour	common	sl	1 ura
@@ -64,79 +79,125 @@ access not permitted	common	sl	Zavrnjen dostop
 accesskey	common	sl	Bližnjica
 accesskeys can also be specified with an & in the label (eg. &name)	common	sl	Bližnjico lahko določite tudi z znakom & v oznaki (npr. &Ime)
 account contactdata	common	sl	Kontaktni podatki računa
+account editable by user	mail	sl	račun, ki ga lahko uredi uporabnik
 account has been created	common	sl	Uporabniški račun je bil ustvarjen
 account has been deleted	common	sl	Uporabniški račun je bil izbrisan
 account has been updated	common	sl	Uporabniški račun je bil posodobljen
 account is expired	common	sl	Uporabniški račun je potekel
 accounts	common	sl	Računi
 acl	common	sl	ACL
+acl rights retrieve failed, seems there are no rights set!	mail	sl	Pridobitev pravic ACL ni bila uspešna, zdi se, da ni nastavljenih nobenih pravic!
+acl rights retrieved successfully	mail	sl	ACL pravice so bile uspešno pridobljene
 action	common	sl	Dejanje
-action when category is an email address	groupdav	sl	Dejanje, ko je kategorija naslov EMail
+action when category is an email address	admin	sl	Dejanje, ko je kategorija naslov EMail
 actions	common	sl	Dejanja
 actions...	common	sl	Dejanja ...
+activating by date requires a start- and end-date!	mail	sl	Aktiviranje glede na datum zahteva določitev začetnega in končnega datuma!
 active	common	sl	Aktiven
 active directory requires ssl or tls to change passwords!	common	sl	Za aktivni imenik potrebujete SSL ali TLS, če želite spremeniti gesla!
 add	common	sl	Dodaj
+add "%1" into blacklisted domains	mail	sl	Dodajte "%1" v domene na črno listo
+add "%1" into blacklisted emails	mail	sl	Dodajte "%1" v e-poštna sporočila na črno listo
+add "%1" into whiltelisted domains	mail	sl	Dodajte "%1" v domene, ki so pod zvrstjo
+add "%1" into whitelisted emails	mail	sl	Dodajte "%1" v e-poštna sporočila z dovoljenjem
 add %1	common	sl	Dodaj %1
 add %1 category for	common	sl	Dodaj kategorijo %1 za
 add a new column (after the existing ones)	common	sl	Dodaj nov stolpec (za obstoječimi)
 add a new contact	common	sl	Dodaj nov kontakt
 add a new entry of the selected application	common	sl	Dodaj nov vnos v izbrano aplikacijo
+add a new folder to %1:	mail	sl	Dodajte novo mapo v %1:
 add a new multi-column index	common	sl	Dodaj novo kazalo z več stolpci
+add all my aliases	mail	sl	Dodaj vse moje vzdevke
+add as new	mail	sl	Dodaj kot nov
 add category	common	sl	Dodaj kategorijo
 add column	common	sl	Dodaj stolpec
 add current	common	sl	Dodaj trenutnega
+add files as %1	mail	sl	Dodajte datoteke kot %1
+add folder	mail	sl	Dodaj mapo
 add index	common	sl	Dodaj kazalo
 add new	common	sl	Dodaj novo
+add raw message, ignore mail attachments	mail	sl	Pretvori pošto v element, dodaj neobdelano sporočilo (ne upoštevaj priponk)
 add shortcut	common	sl	Dodaj bližnjico
 add sub	common	sl	Dodaj pod
 add table	common	sl	Dodaj tabelo
+add this certificate into contact	mail	sl	Dodajte to potrdilo v stik
+add to addressbook	mail	sl	Dodaj v adresar
 add to clipboard	common	sl	Vse v odložišče
-add user to responsibles	groupdav	sl	dodajte uporabnika odgovornim osebam
-add user to responsibles, removing evtl. previous category user	groupdav	sl	dodajte uporabnika odgovornim, odstranite evtl. uporabnik prejšnje kategorije
+add user to responsibles	admin	sl	dodajte uporabnika odgovornim osebam
+add user to responsibles, removing evtl. previous category user	admin	sl	dodajte uporabnika odgovornim, odstranite evtl. uporabnik prejšnje kategorije
 add your domain as "%1" in options to list of email providers and enable api.	common	sl	Dodajte svojo domeno kot "%1" v možnosti na seznam ponudnikov e-pošte in omogočite API.
+adding %1 to blacklisted email addresses failed because of %2	mail	sl	Dodajanje %1 na e-poštne naslove, ki so na seznamu, ni uspelo zaradi %2
+adding %1 to whiltelisted email addresses failed because of %2	mail	sl	Dodajanje %1 v privzete e-poštne naslove ni uspelo zaradi %2
 addressbook	common	sl	Adresar
-addressbooks to sync in addition to personal addressbook	groupdav	sl	Imenik za sinhronizacijo poleg osebnega adresarja
+addressbooks to sync in addition to personal addressbook	admin	sl	Imenik za sinhronizacijo poleg osebnega adresarja
 admin	common	sl	Oskrbnik
 admin settings for %1	common	sl	Adminske nastavitve za %1
 administration	common	sl	Administracija
 advanced search	common	sl	Napredno iskanje
 afghanistan	common	sl	AFGANISTAN
+after reply, visible during compose	mail	sl	Po odgovoru, viden med sestavljanjem
 albania	common	sl	ALBANIJA
 algeria	common	sl	ALŽIRIJA
+aliases+forwards	mail	sl	Psevdonim+Posredovanje
 align	common	sl	Poravnaj
 alignment of label and input-field in table-cell	common	sl	Poravnava napisov in vnosnih polj v tabeli
 alignment of the v/hbox containing table-cell	common	sl	Poravnava V/H okvirjev s tabelarnimi celicami
 all	common	sl	Vse
-all addressbooks	groupdav	sl	Vsi adresarji
+all addressbooks	admin	sl	Vsi adresarji
+all adresses:	mail	sl	Vsi naslovi:
+all available info	admin	sl	vse razpoložljive informacije
 all categories	common	sl	Vse kategorije
 all days	common	sl	Vsi dnevi
 all fields	common	sl	vsa polja
-all in one	groupdav	sl	Vse v enem
+all filtered	mail	sl	vse filtrirane
+all in one	admin	sl	Vse v enem
 all languages	common	sl	vsi jeziki
+all messages in the folder will be lost	mail	sl	Vsa sporočila v mapi bodo izgubljena
+all my email addresses	mail	sl	vse moje e-poštne naslove
+all of	mail	sl	Vse od
 all operations save the template!	common	sl	Vse operacije shranijo predlogo!
+all subfolders will be deleted too, and all messages in all affected folders will be lost	mail	sl	Tudi vse podmape bodo izbrisane, vsa sporočila pa bodo izgubljena
 all users	common	sl	Vsi uporabniki
+allow	mail	sl	Dovolite
+allow external images	mail	sl	Dovoli zunanje fotografije
+allow external images from listed domains	mail	sl	Dovoli zunanje fotografije iz domen s seznama
+allow images from external sources in html emails	mail	sl	Dovoli slike iz zunanjih virov v sporočilih HTML
+allow images from listed domains in html emails	mail	sl	omogočite slike iz zunanjih virov v html e-poštnih sporočilih
+allow users to create further identities	mail	sl	uporabnikom omogočajo ustvarjanje nadaljnjih identitet
 allowed file type: %1	common	sl	Dovoljena vrsta datoteke: %1
-allows to modify responsible users from devices not supporting them, by setting email address of a user as category.	groupdav	sl	Omogoča, da odgovorne uporabnike spreminja iz naprav, ki jih ne podpirajo, tako da nastavite naslov e-poštnega naslova uporabnika kot kategorije.
+allows to modify responsible users from devices not supporting them, by setting email address of a user as category.	admin	sl	Omogoča, da odgovorne uporabnike spreminja iz naprav, ki jih ne podpirajo, tako da nastavite naslov e-poštnega naslova uporabnika kot kategorije.
+allways a new window	mail	sl	Vedno novo okno
 alt	common	sl	Alt
 alternate style-sheet:	common	sl	Nadomestna (CSS) predloga
+always	mail	sl	Vedno
+always allow external sources from %1	mail	sl	vedno prikaži html e-pošto
+always show html emails	mail	sl	Vedno prikaži HTML sporočila
+always show notifiction	mail	sl	Vedno prikaži obvestilo
 am	common	sl	dop
 american samoa	common	sl	AMERIŠKA SAMOA
 an admin required that you must change your password upon login.	common	sl	Administrator zahteva, da morate ob prijavi prijaviti svoje geslo.
+an error happend while trying to remove acl rights from the account %1!	mail	sl	Pri poskusu odstranitve pravic ACL iz računa %1 je prišlo do napake.
 an error happened	common	sl	Pojavila se je napaka
 an existing and by the webserver readable directory enables the image browser and upload.	common	sl	Obstoječa IN s strani spletnega strežnika berljiva mapa omogoča brskanje in nalaganje slik.
 an indexed column speeds up querys using that column (cost space on the disk !!!)	common	sl	Oštevilčen stolpec pospeši poizvedbe (zavzame več prostora na disku!)
 and	common	sl	in
+and the rule with priority %1, now got the priority %2	mail	sl	In pravilo s prioriteto %1 je zdaj dobilo prednost %2
 andorra	common	sl	ANDORA
 angola	common	sl	ANGOLA
 anguilla	common	sl	ANGVILA
+answered	mail	sl	Odgovorjeno
 answering no will not ask you again for this browser.	common	sl	Če odgovorite z ne, vas ta brskalnik ne bo več vprašal.
 antarctica	common	sl	ANTARKTIKA
 antigua and barbuda	common	sl	ANTIGVA IN BARBUDA
+any of	mail	sl	Katerikoli od
+any status	mail	sl	Katerikoli status
 api	common	sl	EGroupware API
 api-accounts	common	sl	Uporabniški račun
+append	mail	sl	dodajte
+appended after reply before sending	mail	sl	Dodano po odgovoru pred pošiljanjem
 application	common	sl	Aplikacija
 application has no etemplates (no file %1) to restore!	common	sl	Aplikacija nima eTemplates (brez datoteke %1) za obnovitev!
+application mail expected but got: %1	mail	sl	Pričakovana prijava je bila priąeta: %1
 application name needed to restore etemplates!	common	sl	Ime aplikacije, potrebno za obnovitev eTemplates!
 application name needed to write a langfile or dump the etemplates !!!	common	sl	Ime programa, ki je potreben za zapis jezikovne datoteke ali skladiščenje ePredlog
 applications	common	sl	Aplikacije
@@ -145,21 +206,33 @@ applies the changes to the given version of the template	common	sl	potrdi spreme
 apply	common	sl	Uporabi
 apply the action on the whole query, not only the shown entries	common	sl	Uporabite dejanje za celotno poizvedbo, NE samo prikazani vnosi
 april	common	sl	April
+archive folder	mail	sl	Arhiviraj mapo
+are you sure you want to delete all selected folders?	mail	sl	Ali ste prepričani, da želite izbrisati vse izbrane mape?
 are you sure you want to delete these entries ?	common	sl	Ste prepričani, da želite izbrisati te vnose?
 are you sure you want to delete this entry ?	common	sl	Ste prepričani, da želite izbrisati ta vnos?
+are you sure you want to move folder %1 to folder %2?	mail	sl	Ali ste prepričani, da želite premakniti mapo %1 v mapo %2?
 are you sure, you would like to delete the backup key?	common	sl	Ali ste prepričani, želite izbrisati varnostni ključ?
 argentina	common	sl	ARGENTINA
 armenia	common	sl	ARMENIJA
+arrival	mail	sl	Sprejeto
 aruba	common	sl	ARUBA
 as default	common	sl	Kot privzeto
+ask for permission	mail	sl	Prosite za dovoljenje
 attach	common	sl	Pripni
 attach file	common	sl	Pripni datoteko
+attach files	mail	sl	Priložite datoteke
+attach users vcard at compose to every new mail	mail	sl	Vsakemu novemu sporočilu priloži uporabniško kartico vCard ob sestavljanju
+attach vcard	mail	sl	Priloži vCard
 attachment	common	sl	Priponka
+attachment has been saved successfully.	mail	sl	Priponka je bila uspešno shranjena.
+attachments	mail	sl	Priponke
+attachments, ...	mail	sl	priponke, ...
 attention: action will be applied to all rows, not only visible ones!	api	sl	Pozor: akcija bo uporabljena za vse vrstice, ne le za vidne!
 august	common	sl	Avgust
 australia	common	sl	AVSTRALIJA
 austria	common	sl	AVSTRIJA
 authenticate	common	sl	Preverjanje pristnosti
+authentication	mail	sl	Autentifikacija
 author	common	sl	Avtor
 autohide sidebox menu's	common	sl	Samodejno skrij stranske menije
 autohide sidebox menus	common	sl	Samodejno skrivanje stranskih menijev
@@ -168,6 +241,8 @@ automatically hide the sidebox menu's?	common	sl	Samodejno skrijem stranske meni
 automatically hide the sidebox menus?	common	sl	Samodejno skrijem stranske menije?
 automatically refresh list	common	sl	Samodejno osveži seznam
 autosave default category	common	sl	Samodejno shrani privzeto kategorijo
+available personal email-accounts/profiles	mail	sl	razpoložljivi osebni računi EMail-a / Profili
+avatar	common	sl	Avatar
 azerbaijan	common	sl	AZARBEJDŽAN
 back	common	sl	Nazaj
 back to user login	common	sl	Nazaj na prijavno okno
@@ -182,13 +257,17 @@ bangladesh	common	sl	BANGLADEŠ
 barbados	common	sl	BARBADOS
 baseline	common	sl	Osnovna vrstica
 bcc	common	sl	BCC
+be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	sl	Zavedajte se, da se z dodajanjem vseh izbranih datotek v način %1 v način %2 spremenijo tudi vse obstoječe priponke na seznamu. \n \n Ali želite nadaljevati?
+be aware that all attachments will be sent as %1!	mail	sl	Zavedajte se, da bodo vse priloge poslane v načinu %1!
 before proceeding further, we do highly recommend you to watch this short video, to see how mailvelope plugin works with egroupware.	common	sl	Pred nadaljevanjem, vam zelo priporočamo, da si ogledate ta kratek videoposnetek, da vidite, kako plugin za mailplato deluje z EGroupware.
+before reply, visible during compose	mail	sl	Pred odgovorom, ki je viden med sestavljanjem
 belarus	common	sl	BELORUSIJA
 belgium	common	sl	BELGIJA
 belize	common	sl	BELIZE
 benin	common	sl	BENIN
 bermuda	common	sl	BERMUDI
 bhutan	common	sl	BUTAN
+blacklisted mails are marked as spam	mail	sl	Črna pošta je označena kot vsiljena pošta
 blocked, too many attempts	common	sl	Zaklenjeno: preveč poskusov.
 blue moono theme	common	sl	modra mono tema
 blurtext	common	sl	Zamaži tekst
@@ -205,19 +284,27 @@ box...	common	sl	Okvir...
 brazil	common	sl	BRAZILIJA
 british indian ocean territory	common	sl	BRITANSKO INDIJSKO OTOČJE
 broken link	common	sl	Prekinjena povezava
+browser %1 %2 is not recommended. you may experience issues and not working features. please use the latest version of chrome, firefox or edge. thank you!	common	sl	Brskalnik %1 %2 ni priporočljiv. Lahko pride do težav in nedelujočih funkcij. Uporabite najnovejšo različico brskalnika Chrome, Firefox ali Edge. Hvala!
 brunei darussalam	common	sl	BRUNEJ
 bulgaria	common	sl	BOLGARIJA
 bulgarian	common	sl	Bulgarian
 burkina faso	common	sl	BURKINA FASO
 burundi	common	sl	BURUNDI
+but check shared folders	mail	sl	vendar preverite mape v skupni rabi
+by date	mail	sl	Po datumu
+by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	sl	Privzeto se "http://" nadomesti z "https://". Lahko konfigurirate 'https://proxy.egroupware.org/' tudi za nalaganje slik, ki so na voljo samo prek protokola http.
+caching of flags	mail	sl	Predpomnjenje zastavic
 calendar	common	sl	Koledar
-calendars to sync in addition to personal calendar	groupdav	sl	Koledarji za sinhronizacijo poleg osebnega koledarja
+calendars to sync in addition to personal calendar	admin	sl	Koledarji za sinhronizacijo poleg osebnega koledarja
 cambodia	common	sl	KAMBODŽA
 cameroon	common	sl	KAMERUN
 can not have special sql-value null	common	sl	Posebna SQL vrednost ne more biti NULL
+can not open imap connection	mail	sl	Povezave IMAP ni mogoče odpreti
+can not resolve the winmail.dat attachment!	mail	sl	V priponki winmail.dat ni mogoče rešiti!
 can't create directory %1 to connect found unconnected nodes to it!	admin	sl	Ne morem ustvariti imenika %1 za povezavo najdenih nepovezanih vozlišč z njim!
 canada	common	sl	KANADA
 cancel	common	sl	Prekliči
+canceled deletion due to user interaction	mail	sl	preklican izbris zaradi interakcije uporabnika
 cannot replace %1 because it is a directory	common	sl	Ne morem nadomestiti %1, ker je mapa.
 cannot set a category as parent, which is part of this categorys subtree!	common	sl	Kategorija ni mogoče nastaviti kot staršev, ki je del poddelja te kategorije!
 cannot set this cat as its own parent!	common	sl	Te kategorije ni mogoče nastaviti kot lastnega starša!
@@ -243,16 +330,27 @@ cellspacing for the table-tag	common	sl	Razmik med celicami
 center	common	sl	Sredina
 centered	common	sl	Na sredini
 central african republic	common	sl	SREDNJEAFRIŠKA REPUBLIKA
+certificate info for email %1	mail	sl	Podatki o certifikatu za e-poštni naslov %1
 chad	common	sl	ČAD
 change	common	sl	Spremeni
+change editor type	mail	sl	preklopite urejevalnik v način HTML
 change owner	common	sl	Spremeni lastnika
 changed	common	sl	Spremenjeno
+changed profile	mail	sl	spremenjen profil
+changing subject failed because of %1	mail	sl	Spreminjanje teme ni uspelo zaradi %1
+changing subject failed folder %1 does not exist	mail	sl	Spreminjanje teme ni uspelo mapa %1 ne obstaja
 charset	common	sl	UTF-8
 check all	common	sl	Preveri vse
+check for empty values in if statements.  example {{if url~empty~~website:}} - if url is not empty, writes "website:"	common	sl	Preverite prazne vrednosti v stavkih IF. Primer {{IF url~EMPTY~~Website:}} - Če url ni prazen, napiše "Spletna stran:".
 check if content should only be displayed but not altered (the content is not send back then!)	common	sl	Preveri, če naj bo vsebina samo prikazana in ne spremenjena (na ta način ni poslana nazaj!)
 check if field has to be filled by user	common	sl	Preveri, če naj uporabnik izpolni polja
 check installation	common	sl	Preveri namestitev
+check message against next rule also	mail	sl	Preverite sporočilo tudi z naslednjim pravilom
 check now	common	sl	Preveri sedaj
+check to receive a notification when the message is read (note: not all clients support this and/or the receiver may not authorize the notification)	mail	sl	preverite, ali ste prejeli obvestilo, ko se prebere sporočilo (opomba: ne podpirajo vsi odjemalci in / ali prejemnik ne more odobriti obvestila)
+check to save as calendar event on send	mail	sl	preverite, ali želite shraniti kot dogodek ob pošiljanju
+check to save as infolog on send	mail	sl	preverite, ali želite shraniti kot infolog pri pošiljanju
+check to save as tracker entry on send	mail	sl	preverite, ali želite shraniti kot zapis za sledenje pri pošiljanju
 checkbox	common	sl	Izbirno polje
 chile	common	sl	ČILE
 china	common	sl	KITAJSKA
@@ -261,6 +359,7 @@ choose a background color for the icons	common	sl	Izberite barvo ozadja za ikone
 choose a background image.	common	sl	Izberite sliko za ozadje.
 choose a background style.	common	sl	Izberite slog ozadja.
 choose a text color for the icons	common	sl	Izberite barvo besedila za ikoneozadja
+choose file	mail	sl	Izberite datoteko
 choose file...	common	sl	Izberi datoteko...
 choose the category	common	sl	Izberi kategorijo
 choose the default filename for merged documents.	preferences	sl	Izberite privzeto ime datoteke za združene dokumente.
@@ -284,7 +383,7 @@ click or mouse over to show menus?	common	sl	Klik ali prehod z mišjo za prikaz 
 click this image on the navbar: %1	common	sl	Kliknite sliko v navbar: %1
 click to order after that criteria	common	sl	Kliknite za soritanje po tem kriteriju
 clickable path	common	sl	Pot s povezavo
-clients not explicitly stating a limit get limited to these many days. a too high limit may cause problems with some clients.	groupdav	sl	Stranke, ki ne izrecno navedejo omejitve, se omejujejo na te toliko dni. Prevelika omejitev lahko povzroči težave z nekaterimi strankami.
+clients not explicitly stating a limit get limited to these many days. a too high limit may cause problems with some clients.	admin	sl	Stranke, ki ne izrecno navedejo omejitve, se omejujejo na te toliko dni. Prevelika omejitev lahko povzroči težave z nekaterimi strankami.
 close	common	sl	Zapri
 close sidebox	common	sl	Zapri stranski meni
 closes the window without saving the changes	common	sl	Zapre okno brez shranjevanja sprememb
@@ -298,23 +397,40 @@ columnname	common	sl	Ime stolpca
 columns to print	common	sl	Stolpci za tiskanje
 command ⌘	common	sl	Ukaz ⌘
 comment	common	sl	Komentar
+common acl	mail	sl	Skupni ACL
 common preferences	common	sl	Skupne nastavitve
 comoros	common	sl	KOMORI
 company	common	sl	Podjetje
+compose	mail	sl	Novo sporočilo
+compose as new	mail	sl	Sestavi kot novo
+compress folder	mail	sl	Stisni mapo
+condition	mail	sl	Pogoj
+configuration settings	mail	sl	Nastavitve konfiguracije
+configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	sl	Prednastavljene vrednosti se bodo samodejno nastavile v pogovornem oknu compose za upoštevano polje pri sestavljanju novega e-poštnega sporočila.
 confirm	common	sl	Potrdi
-confirmation message or custom javascript (returning true or false)	common	sl	Potrjevanje sporočila ali poljubni javaskript (vrne resnično ali neresnično)
-confirmation necesary or custom java-script	common	sl	Potrebna je potrditev ali java-skripta po meri
+confirm attach message	mail	sl	Potrdite sporočilo o prijavi
+confirm move to folder	mail	sl	Potrdite premik v mapo
+confirmation message or custom javascript (returning true or false)	common	sl	Potrjevanje sporočila ali poljubni JavaScript (vrne resnično ali neresnično)
+confirmation necesary or custom java-script	common	sl	Potrebna je potrditev ali JavaScript po meri
 confirmation required	common	sl	Potrditev je potrebna
 congo	common	sl	KONGO
 congo, the democratic republic of the	common	sl	KONGO, DEMOKRATIČNA REPUBLIKA
+connect to profile %1	mail	sl	Povežite se z profilom% 1
+connection status	mail	sl	Stanje povezave
 contact	common	sl	Stik
 contact field to show	common	sl	Polje stika za prikaz
 contact fields	common	sl	Polja s stikom
+contact label	mail	sl	Oznaka za stike
 contacting server...	common	sl	Vzpostavljanje povezave ...
 contains	common	sl	Vsebuje
+contains(*)	mail	sl	Vsebuje (*)
 content type	common	sl	Vrsta vsebine
+convert mail to item and attach its attachments to this item (standard)	mail	sl	pretvorite pošto v element in priložite njene priloge temu elementu (standardni)
+convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	sl	pretvorite Mail v postavko, priložite njene priloge in dodajte surovo sporočilo (sporočilo / rfc822 (.eml)) kot prilogo
+convert only mail to item (ignore possible attachments)	mail	sl	pretvorite samo pošto v postavko (prezrite morebitne priloge)
 cook islands	common	sl	COOKOVI OTOKI
 cookies are required to login to this site	login	sl	Piškotki se morajo prijaviti na to spletno mesto
+copied %1 message(s) from %2 to %3	mail	sl	kopirali %1 sporočil od %2 do %3
 copy	common	sl	Kopiraj
 copy "%1"	common	sl	Kopiraj "%1"
 copy of:	common	sl	Kopija:
@@ -322,17 +438,21 @@ copy to	common	sl	Kopiraj v
 copy to clipboard	common	sl	Kopiraj v odložišče
 costa rica	common	sl	KOSTARIKA
 cote d ivoire	common	sl	SLONOKOŠČENA OBALA
+could not append message:	mail	sl	Ni bilo mogoče dodati sporočila:
 could not contact server. operation timed out!	common	sl	Nisem mogel vzpostaviti povezave s strežnikom. Časovna omejitev se je iztekla!
+could not save the acl because some names are empty	mail	sl	ACL ni bilo mogoče shraniti, ker so nekatera imena prazna
 create	common	sl	Ustvari
 create a new table for the application	common	sl	Naredi novo tabelo za program
 create directory	common	sl	Ustvari mapo
 create link	common	sl	Ustvari povezavo
+create new account	mail	sl	ustvariti nov račun
 created	common	sl	Ustvarjena
 created by	common	sl	Ustvaril
 created by %1	common	sl	Ustvarjeno z %1
 creates an english ('en') langfile from label and helptexts (for application in name)	common	sl	naredi angleško ('en') jezikovno datoteko iz napisov in besedila za pomoč (za program v polju Ime)
 creator	preferences	sl	Stvarnik
 croatia	common	sl	HRVAŠKA
+cross account forward attachment is not allowed!	mail	sl	Priključitev naprej med računi ni dovoljena!
 css class for the table-tag	common	sl	Razred CSS za značko table
 css properties	common	sl	Lastnosti CSS
 css-class name for this row, preset: 'nmh' = nextmatch header, 'nmr' = alternating nm row, 'nmr0'+'nmr1' nm rows	common	sl	Ime CSS razreda za to vrstico. Prednastavljeno: 'nmh' = NextMatch header, 'nmr' = alternating NM row, 'nmr0'+'nmr1' NM vrstic
@@ -342,10 +462,13 @@ ctrl	common	sl	Ctrl
 cuba	common	sl	KUBA
 currency	common	sl	Valuta
 current	common	sl	Trenutno
+current folder	mail	sl	trenutna mapa
+current subject	mail	sl	Trenutna tema
 current users	common	sl	Trenutni uporabniki
+currently:	mail	sl	Trenutno:
 custom	common	sl	Po meri
 custom fields	common	sl	Polja po meri
-custom javascript for onchange	common	sl	Javascript za onChange po meri
+custom javascript for onchange	common	sl	JavaScript za onChange po meri
 cut	common	sl	Izreži
 cyprus	common	sl	CIPER
 czech republic	common	sl	ČEŠKA REPUBLIKA
@@ -355,7 +478,10 @@ data type	common	sl	Podatkovni tip
 database error	common	sl	Napaka zbirke podatkov
 database error!	common	sl	Napaka zbirke podatkov!
 date	common	sl	Datum
+date + time	common	sl	Datum + Čas
 date due	common	sl	Rok
+date(newest first)	mail	sl	Datum (najprej novejši)
+date(oldest first)	mail	sl	Datum (najprej starejši)
 date+time	common	sl	Datum+Čas
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	sl	Vrata za datum in čas. Če uporabljate vrata 13, nastavite ustrezne parametre požarnega zidu preden potrdite to stran.<br> (Vrata: 13/ Strežnik: 129.6.15.28)
 day	common	sl	Dan
@@ -363,12 +489,19 @@ days	common	sl	Dnevi
 db ensures that every row has a unique value in that column	common	sl	Podatkovna baza zagotovi, da ima vsaka vrstica svojo vrednost v tem stolpcu
 db-specific index options (comma-sep.), eg. mysql(fulltext) or mysql(100) for the indexed length of a col	common	sl	Možnosti indeksiranja (ločene z vejico), specifične za podatkovno bazo. Npr. mysql(FULLTEXT) oziroma mysql (100) za indeksno dolžino stolpcev
 db-tools	common	sl	Orodja podatkovne baze
+deactive	mail	sl	Neaktiven
 december	common	sl	December
 deck	common	sl	Kup (interno)
 default	common	sl	Privzeto
 default category	common	sl	Privzeta kategorija
 default height for the windows	common	sl	Privzeta višina oken
+default sorting order	mail	sl	Privzet način razvrščanja
+default toolbar actions shown in mail's html editor	mail	sl	Funkcije, omogočene v orodni vrstici urejevalnika HTML pri sestavljanju e-pošte
+default value for remembering s/mime passphrase in minutes	mail	sl	Privzeta vrednost za pomnjenje gesla S/MIME v minutah
 default width for the windows	common	sl	Privzeta širina oken
+default your name and email	common	sl	privzeto ime in e-pošto
+defines what to show as contact label for added contact into to/cc/bcc when composing an email. default is firstname lastname and empty means include eveything available.	mail	sl	Določa, kaj se prikaže kot oznaka stika za dodan stik v To/Copy/Blind copy pri sestavljanju e-poštnega sporočila. Privzeto je ime priimek in prazen pomeni, da vključuje vse, kar je na voljo.
+defines what to show as identity label on mail folder header	common	sl	Določa, kaj se prikaže kot oznaka identitete v glavi poštne mape
 del	common	sl	Del
 delete	common	sl	Izbriši
 delete a single entry by passing the id.	common	sl	Izbriši en vnos z vnosom id-ja.
@@ -379,6 +512,8 @@ delete backup key	common	sl	Izbriši varnostni ključ
 delete category	common	sl	Izbriši kategorijo
 delete column	common	sl	Izbriši stolpec
 delete file	common	sl	Izbriši datoteko
+delete folder	mail	sl	Briši mapo
+delete folder %1 ?	mail	sl	DELETE Mapa %1 ?
 delete index	common	sl	Izbriši kazalo
 delete link	common	sl	Izbriši povezavo
 delete link?	common	sl	Izbrišem povezavo ?
@@ -386,38 +521,75 @@ delete row	common	sl	Izbriši vrstico
 delete selected entries?	common	sl	Izbrišem izbran vnos ?
 delete the spezified etemplate	common	sl	Izbriši določeno predlogo
 delete these entries	common	sl	Izbrišem ta vnos
+delete this acl	mail	sl	Izbrišite ta ACL
 delete this column	common	sl	Izbriši ta stolpec
 delete this entry	common	sl	Izbriši ta vnos
 delete this etemplate	common	sl	Izbriši to ePredlogo
 delete this file	common	sl	Izbriši to datoteko
 delete this row	common	sl	Izbriši to vrstico
 delete whole column (can not be undone!!!)	common	sl	Izbriši celoten stolpec (tega NI mogoče razveljaviti)
+deleted	mail	sl	Zbrisano
+deleted %1 messages in %2	mail	sl	izbrisanih %1 sporočil v %2
+deleted!	mail	sl	izbrisano!
 deletes the above spez. etemplate from the database, can not be undone	common	sl	Izbriše zgornjo ePredlogo iz podatkovne baze, brez razveljavitve
 deletes the etemplate spez. above	common	sl	Izbriše ePredlogo
 deletes this column	common	sl	Izbriše ta stolpec
 deletes this index	common	sl	Izbriše to kazalo
+deleting %1 folders in progress ...	mail	sl	Brisanje %1 map v teku ...
+deleting folders	mail	sl	Brisanje map
 denmark	common	sl	DANSKA
+deny certain groups access to following features	mail	sl	Nekatere skupine onemogočite dostop do naslednjih funkcij
 description	common	sl	Opis
 detail	common	sl	Podrobnost
 details	common	sl	Podrobnosti
 diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	sl	Onemogoči izvajanje skripte, ki popravi hrošča pri prikazu transparentnih PNG slik v Microsoft Internet Explorerju 5.5 in višjih?
 direction left to right	common	sl	Smer levo proti desni
+directories have to be shared.	mail	sl	Imeniki morajo biti v skupni rabi.
 directory	common	sl	Mapa
 directory does not exist, is not readable by the webserver or is not relative to the document root!	common	sl	Mapa ne obstaja, ni berljiva s strani spletnega strežnika ali ni podana relativno na koren dokumentov (document root)!
+disable	mail	sl	Onemogoči
+disable caching of flags	mail	sl	Onemogoči predpomnjenje zastavic
+disable horizontal rule for separation of mail body from signature	mail	sl	onemogočite horizontalno pravilo za ločitev telesa pošte od podpisa
 disable internet explorer png-image-bugfix	common	sl	Onemogoči popravek PNG hrošča v IE?
 disable slider effects	common	sl	Onemogoči učinek drsnika
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	sl	Onemogoči animirane učinke drsnika ob prikazu menija ob strani? Uporabniki Opere in Konquererja bodo verjetno hoteli to možnost.
 disable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	sl	Onemogočim izvajanje bugfixscript za Internet Explorer različica 5.5 in višja za prikaz prosojnosti v slikah PNG?
+disable use of flowed lines in plain text mails (rfc3676)	mail	sl	Onemogočite uporabo pretočnih vrstic v navadnih besedilnih poštah (RFC3676)
 disabled	common	sl	Onemogočeno
+disabled!	mail	sl	onemogočeno!
+discard	mail	sl	Zavrzi
 discard changes	common	sl	Razveljavi spremembe
+discard message	mail	sl	Zavrzi sporočilo
+display messages in multiple windows	mail	sl	Prikaži sporočila v več oknih
+display of html emails	mail	sl	Prikazovanje HTML sporočil
+display of identities	admin	sl	prikaz identitete
+display only when no plain text is available	mail	sl	Prikaži le, ko ni na voljo navadnega besedila
 displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	common	sl	Prikazan pred vnosom ali vstavljen pred izpisom za '%s' oznako (oznaka potrditvenega gumba ali ime datoteke slike)
 displayed in statusline of browser if input-field gets focus	common	sl	Prikazano v statusni vrstici brskalnika, če se vnosno polje označi
 displayed in the top line of the groupbox (legend)	common	sl	Prikazano v vrhnji liniji okvirja skupine (legenda)
-distribution lists as groups	groupdav	sl	Distribucijski seznami kot skupine
+displaying html messages is disabled	mail	sl	Prikazovanje sporočil HTML je onemogočeno
+displaying plain messages is disabled	mail	sl	prikazovanje navadnih sporočil je onemogočeno
+distribution lists as groups	admin	sl	Distribucijski seznami kot skupine
 djibouti	common	sl	DŽIBUTI
+do not auto create folders	mail	sl	nemogoče samodejno ustvarjanje map
+do not forward	mail	sl	ne posreduj naprej
 do not notify	common	sl	Ne obvesti
 do not notify of these changes	common	sl	Ob ustvarjanju ali spreminjanju ne pošiljajte obvestil
 do you also want to delete all subcategories ?	common	sl	Ali želite izbrisati tudi podkategorije?
+do you really want to apply %1 to all messages in the current view?	mail	sl	Ali res želite uporabiti %1 za vsa sporočila v trenutnem pogledu?
+do you really want to delete folder %1 ?	mail	sl	Ali res želite izbrisati mapo %1 ?
+do you really want to delete this rule	mail	sl	Ali res želite izbrisati pravilo %1 ?
+do you really want to mark all messages as read in the current folder?	mail	sl	Ali res želite označiti VSE sporočila, kot je prebrano v trenutni mapi?
+do you really want to remove all labels from all messages in the current folder?	mail	sl	Ali res želite odstraniti VSE oznake iz vseh sporočil v trenutni mapi?
+do you really want to remove all rights from this account?	mail	sl	Ali res želite odstraniti vse pravice iz tega računa?
+do you really want to toggle flag %1 for all messages in the current view?	mail	sl	Ali zares želite preklopiti označbo %1 za VSE sporočila v trenutnem pogledu?
+do you really want to toggle label %1 for all messages in the current view?	mail	sl	Ali zares želite preklopiti oznako %1 za VSE sporočila v trenutnem pogledu?
+do you want to be asked for confirmation before attaching selected messages to new mail?	mail	sl	Želite potrditi, preden pritrdite izbrana sporočila v novo pošto?
+do you want to be asked for confirmation before moving selected messages to another folder?	mail	sl	Želite biti vprašani za potrditev pred premikanjem izbranih sporočil v drugo mapo?
+do you want to prevent the editing/setup of filter rules (, even if sieve is enabled)?	mail	sl	Želite preprečiti urejanje/nastavljanje pravil filtrov (tudi če je Sieve omogočen)?
+do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	mail	sl	Želite preprečiti urejanje/nastavljanje obvestil po pošti na drugi e-naslov, če pride sporočilo (tudi če je Sieve omogočen)?
+do you want to prevent the editing/setup of the absent/vacation notice (, even if sieve is enabled)?	mail	sl	Želite preprečiti urejanje/nastavljanje obvestila o odsotnosti/dopustu (tudi če je Sieve omogočen)?
+do you want to prevent the managing of folders (creation, accessrights and subscribtion)?	mail	sl	Želite preprečiti upravljanje map (ustvarjanje, pravice dostopa in naročila)?
 do you want to save the changes you made in table %s?	common	sl	Ali želite shraniti spremembe v tabeli %s?
 do you want to send the message to all selected entries, without further editing?	common	sl	Želite poslati sporočilo vsem izbranim vnosom, BREZ nadaljnje urejanje?
 doctype:	common	sl	DOCTYPE:
@@ -425,17 +597,30 @@ document '%1' does not exist or is not readable for you!	preferences	sl	Dokument
 document properties	common	sl	Lastnosti dokumenta
 document title:	common	sl	Naziv dokumenta
 documentation	common	sl	Dokumentacija
+does not contain	mail	sl	Ne vsebuje
+does not exist on imap server.	mail	sl	Ne obstaja na strežniku IMAP.
+does not match	mail	sl	Se ne ujema
+does not match regexp	mail	sl	Se ne ujema z regularnim izrazom
 doesn't matter	common	sl	Ni pomembno
 domain	common	sl	Domena
 domain name for mail-address, eg. "%1"	common	sl	Ime domene za E-naslov, npr. "%1"
 domestic	common	sl	Domač
 dominica	common	sl	DOMINIKA
 dominican republic	common	sl	DOMINIKANSKA REPUBLIKA
+don't ask again!	common	sl	Ne sprašujte več!
 don't show this again	common	sl	To ne prikazujte znova
+don't use draft folder	mail	sl	Ne uporabljaj mape Osnutki
+don't use sent	mail	sl	Ne uporabljaj mape Poslano (Sent)
+don't use template folder	mail	sl	Ne uporabljaj mape s predlogami
+don't use trash	mail	sl	Ne uporabljaj mape Koš (Trash)
 done	common	sl	Končano
 dos international	common	sl	DOS International
 download	common	sl	Prenos
+download attachments	mail	sl	Prenesite priloge
 download link	common	sl	Prenos povezave
+draft folder	mail	sl	Mapa Osnutki
+drafts	mail	sl	Osnutki
+drafts folder	mail	sl	Osnutek mape
 drop a table - this can not be undone	common	sl	Izbriši (drop) tabelo - ni mogoče razveljaviti
 drop table	common	sl	Izbriši (drop) tabelo
 dump4setup	common	sl	Dump4Setup
@@ -446,17 +631,23 @@ eastern european	common	sl	Vzhodnoevropski
 ecuador	common	sl	EKVADOR
 edit	common	sl	Uredi
 edit %1 category for	common	sl	Popravi kategorijo %1 za
+edit account	mail	sl	Urejanje računa
+edit account ...	mail	sl	Urejanje računa ...
 edit avatar	common	sl	Uredi avatar
 edit categories	common	sl	Popravi kategorije
 edit category	common	sl	Popravi kategorijo
 edit embeded css styles or of the applications app.css file	common	sl	Uredi vgrajene sloge CSS ali datoteko aplikacije app.css
+edit folder acl	mail	sl	Urejanje mape ACL
+edit folder acl ...	mail	sl	Urejanje mape ACL ...
 edit the etemplate spez. above	common	sl	Uredi ePredlogo
+edit vacation settings	mail	sl	Uredi nastavitve odsotnosti
 edit...	common	sl	Uredi ...
 editable templates - db-tools	common	sl	Spremenljive predloge - Orodja podatkovne baze
 editable templates - delete template	common	sl	Spremenljive predloge - Izbriši predlogo
 editable templates - editor	common	sl	Spremenljive predloge - Urejevalnik
 editable templates - search	common	sl	Spremenljive predloge - Iskanje
 editable templates - show template	common	sl	Spremenljive predloge - Prikaži predlogo
+effective only if server supports acl at all	admin	sl	deluje samo, če strežnik sploh podpira ACL
 egroupware	common	sl	EGroupware
 egroupware administrators group, do not delete	common	sl	Skupine skrbnikov EGroupware NE izbrišite
 egroupware all users group, do not delete	common	sl	Vse skupine uporabnikov EGroupware , NE izbrišite
@@ -470,19 +661,35 @@ egypt	common	sl	EGIPT
 el salvador	common	sl	SALVADOR
 element role title	common	sl	Naslov vloge elementa
 email	common	sl	E-pošta
+email notification successfully updated!	mail	sl	obvestilo o e-pošti uspešno posodobljeno!
+email notification update failed	mail	sl	Posodobitev obvestila elektronske pošte ni uspelo
+email notification update failed! you need to set an email address!	mail	sl	posodobitev e-poštnega obvestila ni uspela! Morate nastaviti e-poštni naslov!
 email-address of the user, eg. "%1"	common	sl	E-naslov uporabnika, npr. "%1"
+emailaddress	admin	sl	Poštni naslov
+emailadmin: profilemanagement	mail	sl	eMailAdmin: Profilmanagement
+emails in blacklisted domains are marked as spam	mail	sl	E-poštna sporočila v domenah na črnem seznamu so označena kot vsiljena pošta
+emails in whitelisted domains are not marked as spam	mail	sl	E-poštna sporočila v domenah s seznamom dovoljenih prostorov niso označena kot vsiljena pošta
 embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	common	sl	Vključeni slogi CSS, npr. '.red { background: red; }' (pazite na '.' pred imenom razreda) ali '@import url(...)' (imena razredov so globalna za celo stran!)
 empty file	common	sl	Prazna datoteka
+empty junk	mail	sl	prazno mapo za neželeno / neželeno pošto
+empty trash	mail	sl	Izprazni smeti
+empty trash and junk	mail	sl	Prazni smeti in neželeni predmeti
+enable	mail	sl	Omogoči
 enable javascript onchange submit	common	sl	Omogoči Javascript onChange
-enable logging	groupdav	sl	Omogoči prijavo
+enable logging	admin	sl	Omogoči prijavo
 enabled	common	sl	Omogočeno
-enables logging of caldav/carddav traffic to diagnose problems with devices.	groupdav	sl	Enables logging of CalDAV/CardDAV traffic to diagnose problems with devices.
+enabled!	mail	sl	omogočeno!
+enables logging of caldav/carddav traffic to diagnose problems with devices.	admin	sl	Enables logging of CalDAV/CardDAV traffic to diagnose problems with devices.
+encrypt	mail	sl	Šifriraj
+encrypt your message with smime certificate	mail	sl	Šifrirajte svoje sporočilo s certifikatom S/MIME
+encryption	mail	sl	Šifriranje
 end date	common	sl	Končni datum
 end time	common	sl	Končni čas
 enter '' for an empty default, nothing mean no default	common	sl	Vnesite '' za prazno privzeto vrednost, brez vnosa pomeni, da privzete vrednosti ni
 enter a search pattern	common	sl	Vnesite iskalni niz
 enter filename to upload and attach, use [browse...] to search for it	common	sl	Vnesite ime datoteke za prenos v strežnik in priponko, uporabite [Poišči...], da jo izberete
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	sl	Vnesite URL EGroupware. Primer: http://www.domain.com/egroupware   ali   /egroupware<br><b>Brez zaključne poševnice!</b>
+enter the name for the new folder:	mail	sl	Vnesite ime za novo mapo:
 enter the new version number here (> old_version), empty for no update-file	common	sl	Sem vnesite novo številko različice (> stara_različica), prazno za ne-obnovo datoteke
 enter the new version number here (has to be > old_version)	common	sl	Sem vnesite novo številko različice  (mora biti > stara_različica)
 entry has been deleted sucessfully	common	sl	Vnos je bil uspešno izbrisan
@@ -499,12 +706,22 @@ error creating %1 %2 directory	common	sl	Napaka pri ustvarjanju %1 %2 mape
 error deleting %1 %2 directory	common	sl	Napaka pri brisanju %1 %2 mape
 error deleting %1!	common	sl	Napaka pri brisanju %1!
 error renaming %1 %2 directory	common	sl	Napaka ob preimenovanju %1 %2 mape
-error uploading file!	filemanager	sl	Napaka pri prenosu datoteke!
+error saving %1!	mail	sl	Napaka pri shranjevanju %1!
+error uploading file!	admin	sl	Napaka pri prenosu datoteke!
+error while setting acl for folder %1!	mail	sl	Napaka pri nastavljanju ACL za mapo %1!
+error while setting folder	mail	sl	Napaka med nastavljanjem mape
+error:	mail	sl	Napaka:
+error: could not save acl	mail	sl	Napaka: ACL ni bilo mogoče shraniti
+error: could not save message as draft	mail	sl	Napaka: ne morem shraniti sporočila kot osnutek
+error: could not save rule	mail	sl	Napaka: ne morem shraniti pravila
+error: could not send message.	mail	sl	Napaka: sporočila ni bilo mogoče poslati.
+error: message could not be displayed.	mail	sl	Napaka: ne morem prikazati sporočila.
 error: template not found !!!	common	sl	Napaka: ne najdem predloge!
 error: webserver is not allowed to write into '%1' !!!	common	sl	Napaka: spletni strežnik nima pravic za pisanje v '%1' !
 error: while saving !!!	common	sl	Napaka: med shranjevanjem!
 error: writing file (no write-permission for the webserver) !!!	common	sl	Napaka pri zapisovanju datoteke (ni pravic za pisanje v spletnem strežniku)
 estonia	common	sl	ESTONIJA
+esync will fail without a working email configuration!	mail	sl	eSync bo napačen brez delovne e-poštne konfiguracije!
 et2 rendering took %1s	common	sl	Preusmeritev eT2 je bila %1s
 etag	common	sl	ETag
 etemplate	common	sl	ePredloga
@@ -514,10 +731,14 @@ etemplate editor	common	sl	ePredloga - urejevalnik
 etemplate reference	common	sl	ePredloga - sklici
 etemplate tutorial	common	sl	ePredloga - priročnik
 ethiopia	common	sl	ETIOPIJA
+event details follow	mail	sl	Sledijo podrobnosti dogodka
+everyone	mail	sl	Vse
 everything	common	sl	Vse
 exact	common	sl	Natančno
+examine namespace to retrieve folders in others and shared	mail	sl	Preuči imenski prostor, da pridobiš mape v drugih in v skupni rabi
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	preferences	sl	Primer {{IF n_prefix ~ Mr ~ Pozdravljeni g. ~ Pozdravljeni gospa}} - poiščite polje »n_prefix«, za »gospod«, če najdete, pišite Hello Hello, drugače pišite Hello Ms.
 example {{letterprefix}} - gives a letter prefix without double spaces, if the title is empty for example	preferences	sl	Primer {{LETTERPREFIX}} - daje črkovno predpono brez dvojnih presledkov, če je naslov prazen, na primer
+example {{letterprefix}} - gives a letter prefix without double spaces, if the title is emty for  example	common	sl	Primer {{LETTERPREFIX}} - daje črkovno predpono brez dvojnih presledkov, če je naslov prazen, na primer
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	preferences	sl	Primer {{NELF vloga}} - če poljska vloga ni prazna, boste dobili novo vrstico z vrednostjo vloge na poljubnem mestu
 example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	preferences	sl	Primer {{nenvlf role}} - če poljska vloga ni prazna, nastavite LF brez poljubne vrednosti polja
 exchange this row with the one above	common	sl	Zamenjaj to vrstico z zgornjo
@@ -525,12 +746,21 @@ exchange this two columns	common	sl	Zamenjaj ta dva stolpca
 expiration	common	sl	Potek veljavnosti
 export the loaded etemplate into a xml-file	common	sl	Izvozi naloženo ePredlogo v datoteko XML
 export xml	common	sl	Izvozi XML
+extended	mail	sl	Razširjen
 extensions loaded:	common	sl	Razširitve naložene:
+extra sent folders	mail	sl	Dodatno poslane mape
 failed to change mode of required directory "%1" to %2!	admin	sl	Način zahtevanega imenika »%1« ni uspel spremeniti v %2!
 failed to change password.	common	sl	Napaka pri spreminjanju gesla.
 failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	sl	Povezava s strežnikom ni uspela oz. strežnik je javil napačen odgovor. Poskusite se ponovno prijaviti. Če vam ne uspe, kontaktirajte skrbnika.
 failed to create required directory "%1"!	admin	sl	Zahtevanega imenika »%1« ni bilo mogoče ustvariti!
+failed to delete %1	mail	sl	%1 ni bilo mogoče izbrisati
+failed to delete %1 ! reason: %2	mail	sl	Ni uspelo izbrisati %1 ! Razlog: %2
+failed to delete %1. server responded:	mail	sl	%1 ni bilo mogoče izbrisati. Strežnik je odgovoril:
+failed to move %1 ! reason: %2	mail	sl	Ni uspel premakniti %1 ! Razlog: %2
 failed to move unconnected %1 %2 to %3!	admin	sl	Neuspeli premakniti nepovezane %1% 2 do %3!
+failed to rename %1 ! reason: %2	mail	sl	Ni uspelo preimenovati %1 ! Razlog: %2
+failed to subscribe folder %1!	mail	sl	Mape %1 ni bilo mogoče naročiti!
+failed to unsubscribe folder %1!	mail	sl	Mapa za odjavo ni uspela %1 !
 falkland islands (malvinas)	common	sl	FALKLANDSKO OTOČJE
 faroe islands	common	sl	FERSKO OTOČJE
 favorite queries	common	sl	Najljubše poizvedbe
@@ -550,9 +780,14 @@ file '%1' not found!	common	sl	Datoteke »%1« ni mogoče najti!
 file a file	common	sl	Shranjevanje datoteke
 file contains more than one etemplate, last one is shown !!!	common	sl	Datoteka vsebuje več kot eno ePredlogo, prikazana je zadnja.
 file information	common	sl	Podatki o datoteki
+file into	mail	sl	Premakni v
+file into:	mail	sl	Premakni v:
 file is of wrong type (%1 != %2)!	common	sl	Datoteka je napačna (%1 !=%2)!
+file rejected, no %2. is:%1	mail	sl	Datoteka zavrnjena, ne %2. Je: %1
 file too large.  maximum %1	common	sl	Datoteka je prevelika. Največ %1
 file writen	common	sl	Datoteka zapisana
+filemanager	mail	sl	Dokumenti
+filemode has been switched to %1	mail	sl	Način datoteke je bil prestavljen na: %1
 files	common	sl	Datoteke
 files without content in physical filesystem will be removed.	admin	sl	Datoteke brez vsebine v fizičnem datotečnem sistemu bodo odstranjene.
 fileupload	common	sl	Prenos datoteke
@@ -564,16 +799,44 @@ first name of the user, eg. "%1"	common	sl	Ime uporabnika, npr. "%1"
 first page	common	sl	Prva stran
 firstname	common	sl	Ime
 fixme!	common	sl	POPRAVI ME!
+flag / unflag	mail	sl	Oznaka / BrezOznake
+flag or unflag a mail	mail	sl	Oznaka ali BrezOznake v ePošti
+flagged	mail	sl	Označeno
+flagged %1 messages as %2 in %3	mail	sl	označil %1 sporočilo kot %2 v %3
+flagged %1 messages as flagged in %2	mail	sl	označene oznake %1 označene kot označene v %2
+flagged %1 messages as unflagged in %2	mail	sl	označil %1 sporočilo kot neuglagano v %2
+flagged / unflagged	mail	sl	Označeno / neoznačeno
 floating point	common	sl	Decimalna vejica
+folder	mail	sl	Mapa
+folder %1 %2 failed because of %3!	mail	sl	Mapa %1% 2 ni uspela zaradi %3!
+folder %1 %2 failed!	mail	sl	Mapa %1 %2 ni uspela!
+folder %1 has been created successfully, although the subscription failed because of %2	mail	sl	Mapa %1 je bila uspešno ustvarjena, čeprav je bila naročnina neuspešna zaradi %2
+folder %1 is moving to folder %2	mail	sl	Mapa %1 se premakne v mapo %2
 folder already exists.	common	sl	Mapa že obstaja.
+folder management	mail	sl	Upravljanje map
+folder management ...	mail	sl	Upravljanje map ...
+folder settings	mail	sl	Nastavitve mape
+for e.g.: mpeg	mail	sl	npr e.g: mpeg
+for eg.: mpeg	mail	sl	npr eg.: mpeg
 for more than one contact in a document use the tag pagerepeat!	preferences	sl	Uporabite stran z oznako za več kot en stik v dokumentu!
 force	common	sl	vsili
+force html	mail	sl	vsili html
+force plain text	mail	sl	vsili navadnega besedila
 force selectbox	common	sl	Vsili izbirna polja
 foreign key	common	sl	Tuji ključ
 forever	common	sl	Za vedno
 formatted business address	common	sl	Formatiran poslovni naslov
 formatted private address	common	sl	Oblikovan zasebni naslov
 formatted text (html)	common	sl	Oblikovano besedilo (HTML)
+forward	mail	sl	Posreduj
+forward as attachment	mail	sl	Posreduj kot prilogo
+forward inline	mail	sl	Posreduj v sporočilu
+forward messages to:	mail	sl	Posreduj sporočila na:
+forward messages:	mail	sl	Posredovanje sporočil:
+forward to	mail	sl	Posreduj
+forward to address (*):	mail	sl	Posreduj na naslov (*):
+forwarding of this message failed because the content of this message seems to be encrypted and can not be decrypted properly. if you still wish to forward content of this encrypted message, you may try to use forward as attachment instead.	mail	sl	Posredovanje tega sporočila ni uspelo, ker je vsebina tega sporočila šifrirana in je ni mogoče pravilno dešifrirati. Če še vedno želite posredovati vsebino tega šifriranega sporočila, lahko poskusite uporabiti naprej kot pripono.
+forwards	mail	sl	Napredovanje
 found unconnected %1 %2!	admin	sl	Najdeno je nepovezano %1 %2!
 fr	common	sl	Fr
 france	common	sl	FRANCIJA
@@ -581,17 +844,23 @@ french guiana	common	sl	FRANCOSKA GVAJANA
 french polynesia	common	sl	FRANCOSKA POLINEZIJA
 french southern territories	common	sl	FRANCOSKI JUŽNI TERITORIJ
 friday	common	sl	Petek
+from	mail	sl	Od
+from(a->z)	mail	sl	Pošiljatelj (A->Z)
+from(z->a)	mail	sl	Pošiljatelj (Z->A)
 ftp	common	sl	FTP
 fullname	common	sl	Polno ime
 fullscreen	common	sl	Celozaslonska stran
 fullscreen mode	common	sl	Celozaslonski način
 gabon	common	sl	GABON
 gambia	common	sl	GAMBIJA
+general	admin	sl	Splošno
 general fields:	preferences	sl	Splošna polja:
 general menu	common	sl	Splošni meni
+general settings	mail	sl	Splošne nastavitve
 georgia	common	sl	GRUZIJA
 german	common	sl	Nemški
 germany	common	sl	NEMČIJA
+get acl rights failed from imap server!	mail	sl	Pridobite ACL pravice iz strežnika IMAP!
 ghana	common	sl	GANA
 gibraltar	common	sl	GIBRALTAR
 global	common	sl	Globalno
@@ -601,6 +870,7 @@ go to the last entry	common	sl	Pojdi na zadnji vnos
 go to the next page of entries	common	sl	Pojdi na naslednjo stran vnosov
 go to the previous page of entries	common	sl	Pojdi na prejšnjo stran vnosov
 grant access	common	sl	Dovoli dostop
+greater than	mail	sl	Večje kakor
 greece	common	sl	GRČIJA
 greek	common	sl	Grčija
 greenland	common	sl	GRENLANDIJA
@@ -628,7 +898,11 @@ guinea-bissau	common	sl	GVINEJA-BISAO
 guyana	common	sl	GVAJANA
 h	common	sl	h
 haiti	common	sl	HAITI
+ham folder	mail	sl	Ham mapa
+handling of external http images / mixed content in mails	mail	sl	Ravnanje z zunanjimi slikami http / mešano vsebino v e-poštnih sporočilih
 hbox	common	sl	Vodoravni okvir
+header	mail	sl	Glava
+header lines	mail	sl	Glava sporočila
 heard island and mcdonald islands	common	sl	OTOK HEARD IN MCDONALDOVI OTOKI
 height	common	sl	Višna
 height of row (in % or pixel)	common	sl	Višina vrstice (v % ali pikslih)
@@ -640,43 +914,85 @@ high	common	sl	Visoko
 highest	common	sl	Najvišje
 history	common	sl	História
 history log	common	sl	Dnevnik zgodovine
+hold %1 to drag files to your computer	mail	sl	Držite %1, da povlečete datoteke v računalnik
 hold [%1] key to select text eg. to copy it	common	sl	Držite tipko [%1], da izberete besedilo npr. da ga kopirate
 holy see (vatican city state)	common	sl	SVETI SEDEŽ (MESTNA DRŽAVA VATIKAN)
 home	common	sl	Domov
 home email	common	sl	Domači E-naslov
+home page folders	mail	sl	mape domače strani
 home screen	common	sl	Glavni zaslon
 honduras	common	sl	HONDURAS
 hong kong	common	sl	HONG KONG
 horizontal rule	common	sl	Vodoravno ravnilo
+hostname or ip	mail	sl	Ime gostitelja ali IP
 hour	common	sl	Ura
 hours	common	sl	Ur
-how many days to sync in the future (default %1)	groupdav	sl	Koliko dni za sinhronizacijo v prihodnosti (privzeta %1)
-how many days to sync in the past (default %1)	groupdav	sl	Koliko dni sinhronizacije v preteklosti (privzeta %1)
+how many days to sync in the future (default %1)	admin	sl	Koliko dni za sinhronizacijo v prihodnosti (privzeta %1)
+how many days to sync in the past (default %1)	admin	sl	Koliko dni sinhronizacije v preteklosti (privzeta %1)
 how many entries should the list show	common	sl	Koliko vnosov naj se prikaže v seznamu
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	sl	Koliko ikon naj se pokaže na orodni vrstici na vrhu strani? Preostale ikone gredo v dodaten meni, ki ga je moč priklicati s pomočjo ikone na desni strani orodne vrstice.
 how many rows to print	common	sl	Koliko vrstic za tiskanje
+how often to check with the server for new mail	mail	sl	Kako pogosto preverite s strežnikom za novo pošto
+how should the available information on identities be displayed	admin	sl	kako naj se prikažejo razpoložljive informacije o identitetah
+how to forward messages	mail	sl	Kako naj se posreduje sporočilo
 how to show the general egroupware menu ?	common	sl	Kako naj bo prikazan splošni meni EGroupware?
 html	common	sl	HTML
 html link to the current record	common	sl	Povezava HTML s trenutnim zapisom
+html links to any entries linked to the current record, excluding attached files	common	sl	Povezave HTML do vseh vnosov, povezanih s trenutnim zapisom, razen priloženih datotek
+html mode	mail	sl	Način HTML
 hungary	common	sl	MADŽARSKA
 iceland	common	sl	ISLANDIJA
 id	common	sl	ID
+ident name	mail	sl	Ime identitete
+ident name email	mail	sl	Ime identitete [E-pošta]
+ident name organization email	mail	sl	Identitetno ime Organizacija [Email]
+identity	mail	sl	Identiteta
+identity label	mail	sl	Oznaka identitete
+identity+signature	mail	sl	Identiteta+Podpis
 iespell not detected. click ok to go to download page.	common	sl	ieSpell ni bil zaznan. Kliknite V redu za obisk spletne strani za prenos.
+if	mail	sl	ČE
+if authentication required	mail	sl	če je potrebna overitev
+if different from email address	mail	sl	če se razlikuje od naslova EMail
 if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	common	sl	Če je polje izključeno, je prikazana prazna celica v tabeli, za začasno odstranitev polja/celice
+if from contains:(*)	mail	sl	Če vsebuje: (*)
+if mail body content / attachment type	mail	sl	Če je vsebina telesa pošte / vrsta priloge
+if mail body message type	mail	sl	Če je vrsta sporočila telesa pošte
+if mail header	mail	sl	Če glava elektronskega sporočila
+if message size	mail	sl	Če velikost sporočila
+if shown, which folders should appear on the home page	mail	sl	če je prikazano, katere mape naj se prikažejo na domači strani
+if subject contains:(*)	mail	sl	Če predmet vsebuje: (*)
 if the clock is enabled would you like it to update it every second or every minute?	common	sl	Če je ura omogočena, bi jo radi posodobili vsako sekundo ali vsako minutu?
 if the error persists, contact your administrator for help and ask to check the error-log of the webserver.	common	sl	Če se napaka ne odpravi, se za pomoč obrnite na skrbnika in povprašajte, da preverite dnevnik napak spletnega strežnika.
 if there are some images in the background folder you can choose the one you would like to see.	common	sl	Če so v mapi kakšne slike, lahko izberete tisto, ki jo želite videti.
+if to contains:(*)	mail	sl	Če vsebuje: (*)
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	preferences	sl	Če določite imenik, celotno pot vfs, %1 prikaže ukrep za vsak dokument. To dejanje omogoča prenos določenega dokumenta z vstavljenimi podatki.
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	preferences	sl	Če določite dokument, celotno pot vfs, %1 prikaže ikono dodatne dokumentacije za vsak vnos. Ta ikona omogoča prenos določenega dokumenta z vstavljenimi podatki.
 if you use "2-factor-authentication", please enter the code here.	common	sl	Če uporabljate 2-faktorsko preverjanje pristnosti, tukaj vnesite kodo.
+if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	sl	Če želite ogledati predogled pošte z enim klikom na zadevo, to omogočite.
+if you would like to select multiple folders in one action, you can hold ctrl key then select a folder as start range and another folder within a same level as end range, all folders in between will be selected or unselected based on their current status.	mail	sl	Če želite izbrati več map v enem dejanju, lahko držite tipko Ctrl, nato pa izberete mapo kot začetni obseg in drugo mapo na isti ravni kot končni razpon, bodo vse mape med njimi izbrane ali neizbrisane glede na njihovo trenutno stanje.
 image	common	sl	Slika
 image directory relative to document root (use / !), example:	common	sl	Mapa slik, relativno na koren dokumentov (document root, uporabite /!). Primer:
 image url	common	sl	URL podobe
+imap	mail	sl	IMAP
+imap - incoming mail	mail	sl	IMAP - dohodna pošta
+imap administration	mail	sl	Upravljanje IMAP
+imap server	mail	sl	Strežnik IMAP
+imap timeout	mail	sl	Časovna omejitev IMAP
 import	common	sl	Uvoz
 import an etemplate from a xml-file	common	sl	Uvozi ePredlogo iz datoteke XML
+import message	mail	sl	Uvozi sporočilo
+import of message %1 failed. could not save message to folder %2 due to: %3	mail	sl	Uvoz sporočila %1 ni uspel. Sporočila ni bilo mogoče shraniti v mapo %2 zaradi: %3
+import of message %1 failed. destination folder %2 does not exist.	mail	sl	Uvoz sporočila %1 ni uspel. Ciljna mapa %2 ne obstaja.
+import of message %1 failed. destination folder not set.	mail	sl	Uvoz sporočila %1 ni uspel. Ciljna mapa ni nastavljena.
+import of message %1 failed. no contacts to merge and send to specified.	mail	sl	Uvoz sporočila %1 ni uspel. Ni stikov, ki bi se združili in poslali na določeno.
 import table-definitions from existing db-table	common	sl	Uvozi definicije tabele iz obstoječe tabele podatkovne baze
 import xml	common	sl	Uvozi XML
+importance	mail	sl	pomembnost
+important	mail	sl	Pomembno
+in mailbox: %1, with id: %2, and partid: %3	mail	sl	V nabiralniku: %1, z ID: %2 in PartID: %3
 in order to copy to clipboard, you need to allow flash player by clicking on gray box.\nyou can permanently allow flash player for egroupware in your browser settings.	common	sl	Če želite kopirati v odložišče, morate omogočiti Flash predvajalnik tako, da kliknete sivo polje.\NTukaj lahko trajno dovolite Flash Player za EGroupware v nastavitvah brskalnika.
+in order to protect your privacy all external sources within this email are blocked.	mail	sl	Da bi zaščitili vašo zasebnost, so vsi zunanji viri v tem e-poštnem sporočilu blokirani.
+inbox	mail	sl	Prejeto
 include access to any linked files (links tab)	common	sl	Vključite dostop do vseh povezanih datotek (zavihek Povezave)
 increment version to not overwrite the existing template	common	sl	Povišaj različico, da ne prepišeš obstoječe podloge
 index/name of returned content (name of the template, link / method for image)	common	sl	Indeks/ime vrnjene vsebine (ime predloge, povezava/metoda za sliko)
@@ -685,7 +1001,10 @@ indexoptions	common	sl	Nastavitve kazala
 india	common	sl	INDIJA
 indonesia	common	sl	INDONEZIJA
 infolog types to sync	common	sl	Tip InfoLog za sinhronizacijo
+information to show on email tag	mail	sl	Informacije, ki se prikažejo na oznaki e-pošte
 initial	common	sl	Začetno
+initialization of mail failed. please use the wizard to cope with the problem.	mail	sl	Inicializacija pošte ni uspela. Prosimo, uporabite čarovnika za obvladovanje težave.
+inline	mail	sl	V vrsti
 input required	common	sl	Potreben je vnos
 insert a column before	common	sl	Vstavi stolpec spredaj
 insert a column behind	common	sl	Vstavi stolpec zadaj
@@ -706,12 +1025,15 @@ insert new row in front of first line	common	sl	Vstavi novo vrstico pred prvo vr
 insert placeholder	common	sl	Vstavljanje nadomestnega nosilca
 insert row after	common	sl	Vstavi vrstico za izbranim
 insert row before	common	sl	Vstavi vrstico pred izbrano
+insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)	mail	sl	vstavite podpis na vrh novega sporočila (ali odgovora), ko odprete pogovorno okno za sestavljanje (morda ne boste mogli zamenjati podpisov)
 insert timestamp into description field	common	sl	Vstavljanje časovnega žiga v polje z opisom
+install	common	sl	Namestitev
 install egroupware as mail-handler?	common	sl	Namestite EGroupware kot poštni strežnik?
 integer	common	sl	Celo število
 international	common	sl	Mednarodni
 introduction	common	sl	Uvod
 invalid 2-factor authentication code	common	sl	Neveljavna koda 2-faktorske avtentikacije
+invalid email	common	sl	Neveljavno elektronsko sporočilo
 invalid filename	common	sl	Napačno ime datotke
 invalid ip address	common	sl	Napačna IP številka
 invalid or expired 'remember me' token	common	sl	Nepravilen ali pretečen žeton "Zapomni si me"
@@ -729,19 +1051,24 @@ jamaica	common	sl	JAMAJKA
 january	common	sl	Januar
 japan	common	sl	JAPONSKA
 japanese	common	sl	Japonci
+job	mail	sl	Delo
 jordan	common	sl	JORDANIJA
 july	common	sl	Julij
 jun	common	sl	Jun
 june	common	sl	Junij
+junk	mail	sl	Smeti
+junk folder	mail	sl	Neželena mapa
 justify center	common	sl	Poravnaj po sredini
 justify full	common	sl	Poravnaj obojestransko
 justify left	common	sl	Poravnaj levo
 justify right	common	sl	Poravnaj desno
 kama theme	common	sl	kama tema
 kazakstan	common	sl	KAZAHSTAN
+keep a copy of the message in your inbox	mail	sl	Obdrži kopijo sporočila v mapi Prejeto
 kenya	common	sl	KENIJA
 key	common	sl	Ključ
 keywords	common	sl	Ključne  besede
+kilobytes	mail	sl	Kilobajtov
 kiribati	common	sl	KIRIBATI
 korea, democratic peoples republic of	common	sl	KOREJA, DEMOKRATIČNA REPUBLIKA
 korea, republic of	common	sl	KOREJA, REPUBLIKA
@@ -761,17 +1088,22 @@ last name	common	sl	Priimek
 last name of the user, eg. "%1"	common	sl	Priimek uporabnika, npr. "%1"
 last page	common	sl	Zadnja stran
 lastname	common	sl	Priimek
+later	mail	sl	Pozneje
 latvia	common	sl	LATVIJA
 ldap-mgr	common	sl	Upravitelj LDAP-a
+learning as ham (not spam) failed because of %1	mail	sl	Učenje kot ham (ni vsiljena pošta) ni uspelo zaradi %1
+learning as spam failed because of %1	mail	sl	Učenje kot spam ni uspelo zaradi %1
 lebanon	common	sl	LIBANON
 left	common	sl	Levi
 length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8	common	sl	Dolžina za char+varchar, natančnosti int: 2, 4, 8 in float: 4, 8
 lesotho	common	sl	LESOTO
+less than	mail	sl	Manj kot
 liberia	common	sl	LIBERIJA
 libyan arab jamahiriya	common	sl	LIBIJA
 license	common	sl	Licenca
 liechtenstein	common	sl	LICHTENSTEIN
 light mode	common	sl	Svetli način
+limit mailing list results when searching for addresses	mail	sl	Omejitev rezultatov poštnih seznamov pri iskanju naslovov
 line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>	common	sl	Vrstica %1: '%2'<br><b>Podatki csv vsebujejo ## zadnje preverjanje delovanja ## tabele %3 ==> prezrto</ b>
 line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	sl	Vrstica %1: '%2'<br><b>CSV podatki se ne ujemajo s številom stolpcev v tabeli %3==>zavrnjen</b>
 link	common	sl	Povezava
@@ -789,15 +1121,16 @@ linkstring	common	sl	Povezava - besedilo
 linkto	common	sl	Povezava na
 list	common	sl	Seznam
 list members	common	sl	Seznam članov
+list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	sl	Seznam akcij, ki bodo privzeto vklopljene/aktivirane (npr. akcija Mail composose shrani kot InfoLog)
 list of files linked to the current record	preferences	sl	Seznam datotek, povezanih s trenutnim zapisom
 lithuania	common	sl	LITVA
 load	common	sl	Naloži
 load this template into the editor	common	sl	Naloži to predlogo v urejevalnik
 loading	common	sl	Nalaganje
 local	common	sl	Lokalno
-location calendars	groupdav	sl	Koledarji lokacije
+location calendars	admin	sl	Koledarji lokacije
 locations	common	sl	Lokacije
-logging / debuging	groupdav	sl	Prijava / odpravljanje napak
+logging / debuging	admin	sl	Prijava / odpravljanje napak
 login	common	sl	Prijava
 login rejected by epl firewall, please contact your administrator	common	sl	Požarni zid EGroupware je zavrnil prijavo, obrnite se na skrbnika.
 loginid	common	sl	Uporabniško ime
@@ -811,7 +1144,19 @@ luxembourg	common	sl	LUKSEMBURG
 macau	common	sl	MACAO
 macedonia, the former yugoslav republic of	common	sl	MAKEDONIJA
 madagascar	common	sl	MADAGASKAR
+mail	common	sl	Pošta
+mail acl	mail	sl	Pošta ACL
 mail domain, eg. "%1"	common	sl	E-poštna domena, npr. "%1"
+mail filter	mail	sl	Mail filter
+mail filter rule	mail	sl	Pravilo poštnega filtra
+mail settings	mail	sl	E-poštne nastavitve
+mail source	mail	sl	Poštni vir
+mail-address	mail	sl	Poštni naslov
+mailaccount	mail	sl	E-poštni račun
+mailinglist	mail	sl	Poštni seznam
+mails	common	sl	E-pošta
+mails can be copied to that folder via context menu, if folder is configured.	mail	sl	E-poštna sporočila lahko kopirate v to mapo prek kontekstnega menija, če je mapa konfigurirana.
+mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	sl	Mailserver poroča: \ n %1 \ nŽelite nadaljevati tako, da takoj izbrišete izbrana sporočila (kliknite OK)? \ NČe ne, prosimo, poskusite izprazniti svojo mapo pred nadaljevanjem. (kliknite prekliči)
 mailvelope addon installation failed! please try again.	common	sl	Namestitev dodatka Mailvelope neuspešna! Poskusi še enkrat.
 mailvelope addon installation succeded. now you may configure the options.	common	sl	Namestitev dodatka Mailvelope je uspela. Zdaj lahko konfigurirate možnosti.
 main category	common	sl	Glavna kategorija
@@ -822,20 +1167,34 @@ maldives	common	sl	MALDIVI
 mali	common	sl	MALI
 malta	common	sl	MALTA
 march	common	sl	Marec
+mark all as read	mail	sl	označi vse kot prebrano
+mark all messages in folder as read	mail	sl	označite vsa sporočila v mapi kot prebrana
+mark as deleted	mail	sl	Označi kot izbrisano
 marshall islands	common	sl	MARSHALLOVO OTOČJE
 martinique	common	sl	MARTINIQUE
+match:	mail	sl	Ujemanje:
+matches	mail	sl	Se ujema z
+matches regexp	mail	sl	Se ujema z regularnim izrazom
 mauritania	common	sl	MAVRETANIJA
 mauritius	common	sl	MAVRICIUS
 max number of icons in navbar	common	sl	Največje število ikon v orodni vrstici
-maximum size for uploads	filemanager	sl	Največja velikost za prenos
+maximum size for uploads	admin	sl	Največja velikost za prenos
 may	common	sl	Maj
 maybe	common	sl	Mogoče
 mayotte	common	sl	MAYOTTE
+mbstring.func_overload=0 is required for correct mail processing!	mail	sl	mbstring.func_overload = 0 potreben za pravilno obdelavo pošte!
 medium	common	sl	Srednje
 menu	common	sl	Meni
 message	common	sl	Sporočilo
 message ...	common	sl	Sporočilo ...
+message body	mail	sl	telo sporočila
+message learned as ham (not spam) and moved back to inbox	mail	sl	Sporočilo se je naučilo kot ham(ni spam) in se je vrnilo v mapo »Prejeto«
+message learned as spam and moved to spam folder	mail	sl	Sporočilo se je naučilo kot vsiljeno pošto in preselilo v mapo z neželeno pošto
 message prepared for sending.	common	sl	Sporočilo je pripravljeno za pošiljanje.
+message preview area	mail	sl	Območje za predogled sporočila
+message saved successfully.	mail	sl	Sporočilo je bilo uspešno shranjeno.
+message send failed: %1	mail	sl	Poslano sporočilo ni uspelo:% 1
+message send successfully.	mail	sl	Sporočilo je uspešno poslano.
 message(s) send failed!	common	sl	Pošiljanje sporočil ni uspelo!
 message(s) send ok.	common	sl	Sporočilo (e) pošljite ok.
 mexico	common	sl	MEHIKA
@@ -843,10 +1202,13 @@ micronesia, federated states of	common	sl	MIKRONEZIJA
 middle	common	sl	Srednji
 minute	common	sl	Minuta
 minutes	common	sl	Minute
+miscellaneous	mail	sl	Razno
 missing: %1	common	sl	Manjka: %1
 mo	common	sl	Na
 mode of required directory "%1" changed to %2.	admin	sl	Način zahtevanega imenika »%1« je spremenjen v %2.
 modifier	preferences	sl	Modifikator
+modify subject	mail	sl	Spremeni predmet
+modify subject of this message	mail	sl	Spremeni predmet tega sporočila
 moldova, republic of	common	sl	MOLDAVIJA
 monaco	common	sl	MONAKO
 monday	common	sl	Ponedeljek
@@ -861,13 +1223,23 @@ more than 1 match for '%1'	common	sl	Več kot 1 se ujema z '%1'
 more then one active file %1 found, inactivating %2 older revisions!	admin	sl	Najdeno je več aktivnih datotek %1, inaktiviranje %2 starejših revizij!
 morocco	common	sl	MAROKO
 move	common	sl	Premaknite
+move folder	mail	sl	Premakni mapo
+move selected mails to archive	mail	sl	Premakni izbrana e-poštna sporočila v arhiv
+move selected to	mail	sl	Premakni označeno v
+move to	mail	sl	Premakni označeno v
+move to archive	mail	sl	Premakni v mapo za arhiviranje
+move to trash	mail	sl	Premakni v smeti
 moved %1 children from directory fs_id=%2 to %3	admin	sl	Odstranili so otroke %1 iz imenika fs_id=%2 do %3
+moved %1 message(s) from %2 to %3	mail	sl	premaknil %1 sporočil od %2 do %3
 moved unconnected %1 %2 to %3.	admin	sl	Premaknjeno nepovezano %1 %2 do %3.
+moving folders from one mailaccount to another is not supported	mail	sl	Premikanje map iz enega poštnega računa v drugega ni podprto
 mozambique	common	sl	MOZAMBIK
 multicolumn indices	common	sl	Kazala več stolpcev
 multiple	common	sl	Mnogokraten
 myanmar	common	sl	MJANMAR
 name	common	sl	Ime
+name and email	mail	sl	Ime in e-pošta
+name of account	mail	sl	Ime računa
 name of other table where column is a key from	common	sl	Ime tabele, iz katere je stolpec ključ
 name of phpgw-template set (e.g. verdilak): '' = default (will read pref. template, us 'default' to read default template '')	common	sl	Ime phpgw-predloge (npr.: verdilak): "=privzeto(izbrana bo privzeta predloga)"
 name of table to add	common	sl	Ime tabele za dodati
@@ -881,14 +1253,19 @@ nepal	common	sl	NEPAL
 netherlands	common	sl	NIZOZEMSKA
 netherlands antilles	common	sl	NIZOZEMSKI ANTILI
 never	common	sl	Nikoli
+never display html emails	mail	sl	Nikoli ne prikaži sporočil HTML
+never show	mail	sl	nikoli ne pokaži
 new	common	sl	Novo
 new caledonia	common	sl	NOVA KALEDONIJA
 new egroupware release %1 available	common	sl	Na voljo je nova izdaja programa EGroupware %1
 new entry added sucessfully	common	sl	Nov vnos je uspešno dodan.
 new favorite	common	sl	Nov priljubljeni
+new mail notification	mail	sl	Novo obvestilo o pošti
 new main category	common	sl	Nova glavna kategorija
+new message type	mail	sl	Nova vrsta sporočila
 new password	common	sl	Novo geslo
 new search	common	sl	Novo iskanje
+new subject	mail	sl	Nov predmet
 new table created	common	sl	Nova tabela ustvarjena
 new value	common	sl	Nova vrednost
 new zealand	common	sl	NOVA ZELANDIJA
@@ -906,25 +1283,45 @@ niger	common	sl	NIGER
 nigeria	common	sl	NIGERIJA
 niue	common	sl	NIUE
 no	common	sl	Ne
+no (valid) send folder set in preferences	mail	sl	Ne (veljavno) Pošljite nastavljeno mapo v nastavitvah
 no - cancel	common	sl	Ne - Prekliči
+no access	mail	sl	Ni dostopa
+no action defined!	mail	sl	Nobeno dejanje ni definirano!
+no address to/cc/bcc supplied, and no folder to save message to provided.	mail	sl	Ni bil podan niti naslov Za/Kp/Skp niti mapa, kamor naj bi se sporočilo shranilo.
+no adress, to send this mail to, supplied	mail	sl	ni bil poslan noben naslov komu poslati to pošto
 no column to swap with !!!	common	sl	Nobenega stolpca za zamenjavo!
 no default set	common	sl	Ni privzetega
 no entries found, try again ...	common	sl	Ne najdem vnosov. Poskusite ponovno...
 no file	common	sl	Ni datoteke
 no filename given or selected via browse...	common	sl	Nobena datoteka ni bila izbrana prek Prebrskaj ...
 no filters	common	sl	Ni filtrov
+no folder destination supplied, and no folder to save message or other measure to store the mail (save to infolog/tracker) provided, but required.	mail	sl	Dobavljeno ni nobeno mapo mape in nobena mapa, ki omogoča shranjevanje sporočila ali drugih ukrepov za shranjevanje pošte (shranite na infolog / tracker), ki je zagotovljena, a potrebna.
+no folders	mail	sl	Brez mapo
 no history for this record	common	sl	Ni zgodovine za ta zapis.
 no key for recipient:	common	sl	Brez ključa za prejemnika:
 no matches found	common	sl	Ni najdenih zadetkov
+no message body supplied	mail	sl	telo sporočila ni priloženo
+no plain text part found	mail	sl	Ni najdenega čistega besedila
+no recipient address given!	mail	sl	Ni nobenega nsalove prejemnika!
 no results match	common	sl	Ni rezultatov
 no rights to export more than %1 entries!	common	sl	Ni več pravic za izvoz več kot %1 vnosov!
 no row to swap with !!!	common	sl	Nobene vrstice za zamenjavo!
 no savant2 template directories were found in:	common	sl	Mape s predlogo Savant2 ni bilo mogoče najti v:
+no send folder set in preferences	mail	sl	Ne pošljite mape nastavljene v nastavitvah
+no signature	mail	sl	brez podpisa
+no sneak preview in list	mail	sl	Na seznamu ni predogleda
 no subject	common	sl	Brez zadeve
+no subject given!	mail	sl	Ni zadeve!
+no subject supplied	mail	sl	ni nobene zadeve
 no suggestions	common	sl	Ni predlogov
+no text body supplied, check attachments for message text	mail	sl	brez priloženega besedilnega telesa, preverite priloge za besedilo sporočila
 no thanks	common	sl	Ne hvala
+no vacation notice text provided. please enter a message.	mail	sl	Brez besedila o dopustu. Vnesite sporočilo.
+no valid %1 folder configured!	mail	sl	Ni veljavne mape %1 !
+non	mail	sl	Ne
 none	common	sl	Noben
 none of %1	common	sl	noben od %1
+none, create all	mail	sl	Prazno, ustvari vse
 norfolk island	common	sl	OTOK NORFOLK
 normal	common	sl	Običajno
 northern mariana islands	common	sl	SEVERNI MARIANSKI OTOKI
@@ -941,8 +1338,11 @@ nothing	common	sl	Nič
 nothing found - try again !!!	common	sl	Nič ni bilo najdeno - poskusite znova
 nothing in clipboard to paste !!!	common	sl	Na odložišču ni ničesar za prilepiti
 nothing matched search criteria !!!	common	sl	Nobenih zadetkov za iskan kriterij
+nothing to change.	mail	sl	Brez sprememb.
 nothing to save.	common	sl	Nič za shranjevanje.
 notifications	common	sl	Obvestila
+notify about new mail in this folders	mail	sl	V teh mapah obvestite o novi pošti
+notify when new mails arrive in these folders	mail	sl	obvestite, kdaj v te mape pride nova pošta
 notify window	common	sl	Okno za opozorila
 notify your administrator to correct this situation	common	sl	Obvestite administratorja, da odpravi problem
 november	common	sl	November
@@ -956,28 +1356,44 @@ off	common	sl	off
 ok	common	sl	V redu
 old value	common	sl	Stara vrednost
 oman	common	sl	OMAN
+on	mail	sl	Vključeno
 on *nix systems please type: %1	common	sl	Na *nix sistemih vnesite: %1
 on mouse over	common	sl	Ob prehodu z miško
 onchange	common	sl	onChange
 onclick	common	sl	onClick
+one address is not valid	mail	sl	En naslov ni veljaven
 only an other version found !!!	common	sl	Najdena je samo druga različica!
+only email	mail	sl	Samo e-pošta
+only makes sense, if you transport password through a different channel / outside of this mail to recipients!	mail	sl	Smiselno je samo, če geslo prenesete na drug kanal / izven te pošte prejemnikom!, če geslo prenesete na drug kanal / izven te pošte prejemnikom!
+only name	mail	sl	Samo ime
+only needed for some servers, that do not return all folders on root level queries to retrieve all folders for that level	mail	sl	potrebni samo za nekatere strežnike, ki ne vrnejo vseh map v poizvedbah korenskega nivoja, da bi naložili vse mape za to raven
+only one window	mail	sl	Le eno okno
 only private	common	sl	Samo zasebno
-only supported by a few fully conformant clients (eg. from apple). if you have to enter a url, it will most likely not be supported!	groupdav	sl	Podpira le nekaj popolnoma skladnih strank (npr. Iz Applea). Če morate vnesti URL, najverjetneje ne bo podprt!
+only send message, do not copy a version of the message to the configured sent folder	mail	sl	pošljite samo sporočilo, ne kopirajte različice sporočila v nastavljeno mapo
+only supported by a few fully conformant clients (eg. from apple). if you have to enter a url, it will most likely not be supported!	admin	sl	Podpira le nekaj popolnoma skladnih strank (npr. Iz Applea). Če morate vnesti URL, najverjetneje ne bo podprt!
 only yours	common	sl	Samo vaše
 oops! you caught us in the middle of system maintainance.	common	sl	Smo sredi vzdrževanja sistema.
 open	common	sl	Odpri
+open in html mode	mail	sl	Odpri v načinu HTML
+open in text mode	mail	sl	Odpri v besedilnem načinu
 open notify window	common	sl	Odpri okno z opozorilom
 open popup window	common	sl	Odpri pojavno okno
 open sidebox	common	sl	Odpri stranski meni
 open the online help.	common	sl	Odpri pomoč.
+open with collabora office	mail	sl	Odpiranje s programom Collabora Online
 operator	common	sl	Operator
 optional note about the link	common	sl	Morebitne opombe o povezavi
 options	common	sl	Možnosti
 or	common	sl	ali
 order to navigating by tab key through the form	common	sl	Vrstni red krmarjenja po obrazcu s tipko Tab
 ordered list	common	sl	Urejen seznam
+organisation	admin	sl	Organizacija
+organization	mail	sl	Organizacija
+organization | real name email	mail	sl	Organizacija | Resnično ime [E-pošta]
 original	common	sl	Izvirnik
+original message	mail	sl	Izvirno sporočilo
 other	common	sl	Ostalo
+outbox	mail	sl	V pošiljanju
 overflow	common	sl	Prenasičenost
 overview	common	sl	Pregled
 owner	common	sl	Lastnik
@@ -1004,10 +1420,13 @@ password must contain at least %1 numbers	common	sl	Geslo mora vsebovati najmanj
 password must contain at least %1 special characters	common	sl	Geslo mora vsebovati najmanj %1 številk
 password must contain at least %1 uppercase letters	common	sl	Geslo mora vsebovati najmanj %1 velikih črk
 password must have at least %1 characters	common	sl	Geslo mora imeti najmanj %1 znakov
+password protect	mail	sl	zaščita z geslom
 paste	common	sl	Prilepi
 path	common	sl	Pot
 path to user and group files has to be outside of the webservers document-root!!!	common	sl	Pot do uporabniških in skupinskih datotek NE SME BITI podrejena korenski mapi spletišča.
+permission denied	mail	sl	Dostop zavrnjen
 permission denied!	common	sl	Dostop zavrnjen!
+permission denied! this is an administration only feature.	common	sl	Dovoljenje zavrnjeno! To je funkcija samo za administracijo.
 permissions to the files/users directory	common	sl	Dovoljenja do mape datotek/uporabnikov
 permisson denied!	common	sl	Dostop zavrnjen!
 personal	common	sl	Zasebno
@@ -1020,14 +1439,24 @@ philippines	common	sl	FILIPINI
 phone number	common	sl	Telefonska številka
 pitcairn	common	sl	PITCAIRN
 placeholders	common	sl	Nadomestna polja (Ograde)
+play/pause	common	sl	Predvajaj/počasi
 please %1 by hand	common	sl	Prosim, ročno %1
+please configure access to an existing individual imap account.	mail	sl	nastavite dostop do obstoječega računa IMAP.
+please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	sl	Konfigurirajte svoj S / MIME potrdilo na kartici Šifriranje, ki se nahaja v pogovornem oknu Urejanje računa.
+please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	sl	Obrnite se na skrbnika, da potrdite, ali vaš strežnik podpira filtre za strežnike in kako jih omogočite v programu EGroupware za vaš aktivni račun (%1) z ID: %2.
+please contact your administrator to validate if your server supports serverside vacationmessages, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	sl	Prosimo, obrnite se na svojega skrbnika, da preverite, ali vaš strežnik podpira odhodne napotitve strežnika in kako jih omogočiti v programu EGroupware za vaš aktivni račun (%1) z ID:%2.
 please enter a name	common	sl	Vnesite ime!
+please enter password	mail	sl	Vnesite geslo
 please enter table-name first !!!	common	sl	Najprej vpišite ime tabele
 please reload the egroupware desktop (f5 / cmd+r).	common	sl	Ponovno naložite namizje programa EGroupware (F5 / Cmd + r).
+please remember to use '%1' as username for local login's from now on!	common	sl	Prosimo, ne pozabite od zdaj naprej za lokalno prijavo uporabljati uporabniško ime '%1'!
 please run setup to become current	common	sl	Poženite namestitev za posodobitev!
 please select	common	sl	Izberite
+please select a address	mail	sl	Izberite naslov
+please select the number of days to wait between responses	mail	sl	Izberite koliko dni naj počakam med odgovori
 please set your global preferences	common	sl	Vnesite splošne nastavitve.
 please set your preferences for this application	common	sl	Vnesite nastavitve za to aplikacijo!
+please supply the message to send with auto-responses	mail	sl	Vpišite sporočilo, ki se bo poslalo pri samodejnem odgovoru
 please type %1 more characters	common	sl	Vnesite %1 več znakov
 please type 1 more character	common	sl	Vnesite še 1 znak
 please wait...	common	sl	Prosimo, počakajte...
@@ -1037,68 +1466,129 @@ poland	common	sl	POLJSKA
 popup	common	sl	Pojavno okno
 popup with search	common	sl	Okno za iskanje
 portugal	common	sl	PORTUGALSKA
+post	mail	sl	prejem
 postal	common	sl	Poštno
 powered by	common	sl	Teče na
 pre	common	sl	Nat
 precision	common	sl	Natančnost
+predefined addresses for compose	mail	sl	Vnaprej določeni naslovi za sestavljanje
 preference	common	sl	Nastavitev
 preferences	common	sl	Nastavitve
 preferences for the %1 template set	preferences	sl	Nastavitve za nastavljeno predlogo %1
 prev	common	sl	Prej
+prevent managing filters	mail	sl	Preprečite upravljanje filtrov
+prevent managing folders	mail	sl	Preprečite upravljanje map
+prevent managing notifications	mail	sl	Preprečite upravljanje obvestil
+prevent managing vacation notice	mail	sl	Preprečite upravno obvestilo o dopustu
+preview pane	mail	sl	Postavitev okna
 previous page	common	sl	Prejšnja stran
 primary group	common	sl	Osnovna skupina
 primary key	common	sl	Primarni ključ
 primary key for the table, gets automaticaly indexed	common	sl	Primarni ključ za tabelo je samodejno indeksiran
+primary profile	mail	sl	Osnovni profil
 primary style-sheet:	common	sl	Glavna CSS predloga
 print	common	sl	Natisni
+printing	mail	sl	Tiskanje
+printview	mail	sl	Predogled tiskanja
 priority	common	sl	Prioriteta
 private	common	sl	Zasebno
+processing of file %1 failed. failed to meet basic restrictions.	mail	sl	Obdelava datoteke %1 ni uspela. Ni bilo mogoče zadostiti osnovnim omejitvam.
 programs	common	sl	Programi
 project	common	sl	Projekt
 properties	common	sl	Lastnosti
 protocol is required	common	sl	Potreben je protokol
+provide a default vacation text, (used on new vacation messages when there was no message set up previously)	admin	sl	podajte privzeto besedilo za počitnice (uporablja se za nova sporočila za počitnice, če predhodno ni bilo sporočila)
 public	common	sl	Javno
 puerto rico	common	sl	PORTORIKO
+push notifications	mail	sl	Potisna obvestila
 qatar	common	sl	KATAR
+quicksearch	mail	sl	Hitro iskanje
+quicksearch (with cc)	mail	sl	Hitro iskanje (+ kopiranje)
+quota not provided by server	mail	sl	Kvota, ki jo ne zagotavlja strežnik
+quota: %1	mail	sl	Kvota: %1
 radiobutton	common	sl	Radijski gumb
 read	common	sl	Beri
+read / unread	mail	sl	Branje / Neprebrano
 read a list of entries.	common	sl	Beri seznam vnosov.
 read a single entry by passing the id and fieldlist.	common	sl	Beri posamezni vnos s podano šifro in seznamom polj.
 read etemplate from database (for the keys above)	common	sl	Beri ePredlogo iz zbirke podatkov (za zgornje ključe)
 read this list of methods.	common	sl	Preberi ta seznam postopkov
+readable	mail	sl	berljivo
 reading	common	sl	Branje
 readonly	common	sl	Samo za branje
 readonly share	common	sl	Branje v skupni rabi
+real name	mail	sl	Pravo ime
+real name email	mail	sl	Resnično ime [E-pošta]
+real name organization email	mail	sl	Resnično ime Organizacija [Email]
+reason!	mail	sl	razlog!
+receive notification	mail	sl	Sprejmi obvestilo
+recursively	mail	sl	Rekurzivno
 refresh	common	sl	Osveži
+refresh time in minutes	mail	sl	Osvežitveni čas v minutah
+refused to delete folder inbox	mail	sl	zavrnil brisanje mape INBOX
+refused to delete folder with subfolders	mail	sl	zavrnil brisanje mape s podmapami
 register	common	sl	Registriraj
 regular	common	sl	Občasno
 reject	common	sl	Zavrni
+reject with	mail	sl	Zavrni z
+reloaded account %1	mail	sl	Ponovno nalaganje račun %1
+reloaded folder %1	mail	sl	Ponovno nalaganje mape %1
 remember me	common	sl	Zapomni se me
+remember the password for	mail	sl	Zapomni si geslo za
+remove "%1" from blacklisted domains	mail	sl	Odstranite "%1" iz domen s črnim seznamom
+remove "%1" from blacklisted emails	mail	sl	Odstranite "%1" iz e-poštnih sporočil, ki so na črni listi
+remove "%1" from whiltelisted domains	mail	sl	Odstranite "%1" iz domen, ki so na voljo
+remove "%1" from whiltelisted emails	mail	sl	Odstranite "%1" iz priljubljenih e-poštnih sporočil
+remove all	mail	sl	Odstrani vse
+remove immediately	mail	sl	Takoj odstrani
 remove row (can not be undone!!!)	common	sl	Odstrani vrstico (ni mogoče razveljaviti)
 remove selected accounts	common	sl	Odstrani izbrane račune
 remove shortcut	common	sl	Odstrani bližnjico
 remove this link (not the entry itself)	common	sl	Odstrani to povezavo (ne samega vnosa)
 removed (now) empty directory fs_id=%1	admin	sl	Odstranjen (zdaj) prazen imenik fs_id =%1
+removed folder %1	mail	sl	Odstranjena mapa %1
+removing %1 from blacklisted email addresses failed because of %2	mail	sl	Odstranjevanje %1 iz e-poštnih naslovov, naštetih na črno, ni uspelo zaradi %2
+removing %1 from whiltelisted email addresses failed because of %2	mail	sl	Odstranjevanje %1 iz e-poštnih naslovov z zavihki ni uspelo zaradi %2
 rename	common	sl	Preimenuj
+rename folder	mail	sl	Preimenuj mapo
+rename folder %1 ?	mail	sl	Preimenuj mapo %1 ?
+rename folder %1 to:	mail	sl	Preimenuj mapo %1 na:
+renamed folder %1 to %2	mail	sl	Preimenovana mapa %1 do %2
 repeat password	common	sl	Ponovitev gesla
 replace	common	sl	Zamenjaj
+replace 'http://' in image urls with (trailing / required!)	mail	sl	Zamenjajte 'http://' v slikovnih naslovih z (zahtevano je konično /!)
 replace with	common	sl	Zamenjaj z
+replied	mail	sl	Odgovorjeno
+reply	mail	sl	Odgovori
+reply all	mail	sl	Odgovori vsem
+reply message type	mail	sl	Vrsta odgovora
+reply to	mail	sl	Odgovori na naslov
+replying to this message failed because the content of this message seems to be encrypted and can not be decrypted properly. if you still wish to include content of this encrypted message, you may try to use forward as attachment instead.	mail	sl	Odgovarjanje na to sporočilo ni uspelo, ker je vsebina tega sporočila šifrirana in je ni mogoče pravilno dešifrirati. Če še vedno želite vključiti vsebino tega šifriranega sporočila, lahko poskusite uporabiti naprej kot pripono.
+replyto	mail	sl	Odgovori na
+report as ham	mail	sl	Poročaj kot Ham
+report as spam	mail	sl	Prijavite kot neželeno pošto
+report this email content as ham (not spam) - spam solutions like spamtitan will learn	mail	sl	Prijavite to e-poštno vsebino kot Ham (ne vsiljena pošta) - rešitve neželene pošte, kot je spamTitan, se bodo naučile
+report this email content as spam - spam solutions like spamtitan will learn	mail	sl	Prijavite to e-poštno vsebino kot spam-spam rešitve, kot je spamTitan
 requests and full responses to files directory	common	sl	Zahteve in popoln odgovor na imenik datotek
-requests and truncated responses to apache error-log	groupdav	sl	Zahteve in okrnjene odzive na dnevnik napak Apache
+requests and truncated responses to apache error-log	admin	sl	Zahteve in okrnjene odzive na dnevnik napak Apache
 required	common	sl	Zahtevano
 required directory "%1" created.	admin	sl	Zahtevan imenik »%1« je ustvarjen.
 required directory "%1" has wrong mode %2 instead of %3!	admin	sl	Zahtevan imenik "%1" ima napačen način %2 namesto %3!
 required directory "%1" not found!	admin	sl	Zahtevan imenik »%1« ni našel!
+required pear class mail/mimedecode.php not found.	mail	sl	Potreben PEAR razred Mail / mimeDecode.php ni našel.
+resend after how many days?	mail	sl	Ponovno pošlji po številu dni?
 reset	common	sl	Ponastavi
 reset all user's column preferences	common	sl	Ponastavite vse uporabniške nastavitve stolpca
-resource calendars	groupdav	sl	Koledarji virov
+resource calendars	admin	sl	Koledarji virov
 resource type	common	sl	Vrste virov
 resources	common	sl	Sredstva
+respond to mail sent to:	mail	sl	Odgovorite na pošto, poslano na:
 restore all	common	sl	Obnovite vse
 restore all application templates, overwriting existing ones with identical version number	common	sl	Obnovite vse predloge predlog, prepisujte obstoječe z isto številko različice
 restore failed	common	sl	Obnovitev je splodletela
 restore key	common	sl	Obnovi ključ
 restore password	common	sl	Obnovi geslo
+restrict acl management	admin	sl	omejiti upravljanje acl
 retry	common	sl	Ponovno poskusi
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	sl	Vrne poln seznam uporabnikov sistema. Pozor: seznam je lahko precej dolg.
 returns an array of todo items	common	sl	Vrne niz opravil
@@ -1106,10 +1596,15 @@ returns savely, without deleting	common	sl	Vrne varno, BREZ brisanja
 returns struct of users application access	common	sl	Vrne strukturo dostopanja uporabnikov do programa
 reunion	common	sl	REUNION
 right	common	sl	Desno
+rights	mail	sl	Pravice
 romania	common	sl	ROMUNIJA
 rotate left	common	sl	Obrni levo
 rotate right	common	sl	Obrni desno
+row order style	mail	sl	Slog zaporednih vrstic
 row...	common	sl	Vrstica ...
+rule priority position	mail	sl	Položaj prednostnega pravila
+rule with priority	mail	sl	pravilo s prednostjo
+rules	mail	sl	pravila
 russian	common	sl	Ruski
 russian federation	common	sl	RUSKA FEDERACIJA
 rwanda	common	sl	RUANDA
@@ -1127,14 +1622,35 @@ saudi arabia	common	sl	SAVDSKA ARABIJA
 savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	sl	Različica Savant2 se razlikuje od ovojnice Savant2. <br/>Ta različica: %1 <br/>Različica Savant: %2
 save	common	sl	Shrani
 save all	common	sl	Shrani vse
+save all attachments to filemanager	mail	sl	Shranite vse priponke v datotečni upravljalnik
 save as	common	sl	Shrani kot
+save as calendar	mail	sl	Shrani kot koledar
+save as default	mail	sl	shranite kot privzeto
+save as draft	mail	sl	Shrani kot osnutek
+save as draft and print	mail	sl	Shrani kot osnutek in natisni
+save as infolog	mail	sl	Shrani kot Infolog
+save as infolog on send	mail	sl	Shrani kot Infolog ob pošiljanju
+save as ticket	mail	sl	Shrani kot zahtevo
+save as tracker on send	mail	sl	Shrani kot zahtevek ob pošiljanju
 save as zip	common	sl	Shrani kot Zip
+save message to disk	mail	sl	Shrani sporočilo na disk
+save of message %1 failed. could not save message to folder %2 due to: %3	mail	sl	Shranjevanje sporočila %1 ni uspelo. Sporočila ni bilo mogoče shraniti v mapo %2 zaradi: %3
 save selected columns as default preference for all users.	common	sl	Shrani izbrane stolpce kot privzeto nastavitev za vse uporabnike.
 save the changes made and close the window	common	sl	Shrani spremembe in zapri okno
+save the drafted message as eml file into vfs	mail	sl	Shranite pripeto sporočilo kot datoteko eml v VFS
 save the etemplate under the above keys (name, ...), change them for a saveas	common	sl	Shrani ePredlogo pod gornjimi ključi (ime,...), spremeni jih za Shrani kot
+save to disk	mail	sl	Shrani na disk
+save to filemanager	mail	sl	Shrani v filemanager
+save:	mail	sl	Shrani:
 saved column sizes to preferences.	common	sl	Shranjene velikosti stolpcev v nastavitvah.
 saves changes to tables_current.inc.php	common	sl	Shrani spremembe v tables_current.inc.php
+saves subscription changes	mail	sl	Shrani spremembe naročnine
 saves the template with given version number and closes the window	common	sl	Shrani predlogo z dano številko različice in zapre okno
+saves this acl	mail	sl	Shranite ta ACL
+saves this rule	mail	sl	Shrani to pravilo
+saving of message %1 failed. destination folder %2 does not exist.	mail	sl	Shranjevanje sporočila %1 ni uspelo. Ciljna mapa %2 ne obstaja.
+saving of message %1 succeeded. check folder %2.	mail	sl	Shranjevanje sporočila %1 je uspelo. Preveri mapo %2.
+saving the rule failed:	mail	sl	Shranjevanje pravila ni uspelo:
 scale	common	sl	Stopnja
 scale for float	common	sl	Stopnja za decimalko
 scheduling inbox	common	sl	Razporejanje prejetih sporočil
@@ -1149,9 +1665,11 @@ search...	common	sl	Iskanje...
 second	common	sl	Sekunda
 section	common	sl	Odsek
 securest	common	sl	varen
+security	mail	sl	Varnost
+see attachments for content of the orignial mail	mail	sl	Glejte Priponke za vsebino originalne pošte
 select	common	sl	Izberi
-select "%1", if your client does not support multiple addressbooks.	groupdav	sl	Izberite »%1«, če vaš odjemalec ne podpira več adresarjev.
-select "%1", if your client support groups, eg. os x or ios addressbook.	groupdav	sl	Izberite "%1", če skupine podpore strankam, npr. OS X ali iOS imenik.
+select "%1", if your client does not support multiple addressbooks.	admin	sl	Izberite »%1«, če vaš odjemalec ne podpira več adresarjev.
+select "%1", if your client support groups, eg. os x or ios addressbook.	admin	sl	Izberite "%1", če skupine podpore strankam, npr. OS X ali iOS imenik.
 select a category	common	sl	Izberite kategorijo
 select a primary contact, to show in the list	common	sl	Označite primarni stik za prikaz v seznamu
 select access	common	sl	Izberite dostop
@@ -1165,6 +1683,8 @@ select an app to search in	common	sl	Izberite program, v katerem naj iščem
 select an application	common	sl	Izberite program
 select an application, (*) = uninstalled	common	sl	Izberite program, (*) = odstranjen
 select an entry to link with	common	sl	Izberite vnos za povezavo
+select an existing entry in order to append mail content to it	mail	sl	Izberite obstoječi vnos, če želite dodati e-poštno vsebino
+select an item to read	mail	sl	Izberite element, ki ga želite prebrati
 select an table of the application	common	sl	Izberite tabelo programa
 select application	common	sl	Izberite program
 select application to search	common	sl	Izberite aplikacijo za iskanje
@@ -1176,18 +1696,23 @@ select date	common	sl	Izberi datum
 select day	common	sl	Izberite dan
 select day of week	common	sl	Izberite dan v tednu
 select entry	common	sl	Izberite vnos
+select file to attach to message	mail	sl	Izberite datoteko, ki jo želite priložiti sporočilu
+select file to import into folder	mail	sl	Izberite datoteko, ki jo želite uvoziti v mapo
 select file(s) from vfs	common	sl	Izberite datoteke iz VFS
 select files from filemanager ...	common	sl	Izberite datoteke iz Filemanagerja ...
+select files to upload	mail	sl	Izberite datoteke za nalaganje
 select group	common	sl	Izberi skupino
 select home email address	common	sl	Izberi domači E-naslov
 select hour	common	sl	Izberite uro
 select if content of field should not be translated (label gets always translated)	common	sl	Označite, če naj vsebina polja ne bi bila prevedena (oznaka je vedno prevedena)
 select language	common	sl	Izberite jezik
 select month	common	sl	Vnesite mesec
+select multiple	mail	sl	Izberite več
 select multiple accounts	common	sl	Izberi več računov hkrati
 select number	common	sl	Vnesite število
 select one	common	sl	Izberi
 select one ...	common	sl	Izberite eno ...
+select or insert email address	mail	sl	Izberite ali vstavite e-poštni naslov
 select percentage	common	sl	Izberite odstotek
 select priority	common	sl	Izberite prioriteto
 select some options	common	sl	Izberite Nekatere možnosti
@@ -1203,10 +1728,18 @@ select which values to show	common	sl	Označite vrednosti za prikaz
 select work email address	common	sl	Izberi službeni E-naslov
 select year	common	sl	Izberite leto
 selectbox	common	sl	Izbirno polje
+selected	mail	sl	izbran
+selected date range (with quicksearch)	mail	sl	Izbrano časovno obdobje (s hitrim iskanjem)
 selection	common	sl	Izbor
 send	common	sl	Pošlji
+send a reject message:	mail	sl	Pošiljanje zavrnjenega sporočila:
+send files as	mail	sl	Pošiljanje datotek kot
+send message and move to send folder (if configured)	mail	sl	pošiljanje sporočila in premik v mapo za pošiljanje (če je konfigurirana)
 send succeeded to %1	common	sl	Pošiljanje je uspelo na %1
+sender	mail	sl	pošiljatelja
 senegal	common	sl	SENEGAL
+sent	mail	sl	Poslano
+sent folder	mail	sl	Mapa s poslanimi
 september	common	sl	September
 serbia	common	sl	Srbija
 server %1 has been added	common	sl	Dodan je bil strežnik %1.
@@ -1215,38 +1748,62 @@ server contacted. waiting for response...	common	sl	Povezava s strežnikom je bi
 server error	common	sl	Napaka strežnika
 server is unwilling to perform.	common	sl	Strežnik ni pripravljen za izvajanje.
 server name	common	sl	Ime strežnika
+server supports special-use folders	mail	sl	Strežnik podpira mape s posebnimi potrebami
+serverside filterrules (sieve) are not activated	mail	sl	Serverside Filterrules (Sieve) se ne aktivirajo
+serverside vacationnotice (via sieve) are not activated	mail	sl	Odsotna sporočila brez strežnika (prek Sieve) niso aktivirana
 session has been killed	common	sl	Seja je bila prekinjena.
+set / remove flags	mail	sl	Nastavite / Odstrani zastavice
+set / remove labels	mail	sl	Nastavite / Odstrani oznake
 set as default	common	sl	Nastavi kot privzeto
+set it as default:	mail	sl	ga nastavite kot privzeto:
+set predefined values for compose...	mail	sl	Nastavite vnaprej določene vrednosti za compose ...
 set these columns as the default	common	sl	Te stolpce nastavite kot privzete
-set user as only responsible user, but keeping groups	groupdav	sl	nastavi uporabnika kot edino odgovornega uporabnika, vendar ohranja skupine
-set user as only responsible, removing all existing responsibles	groupdav	sl	nastavite uporabnika kot edino odgovorno, tako da odstranite vse obstoječe odgovore
+set user as only responsible user, but keeping groups	admin	sl	nastavi uporabnika kot edino odgovornega uporabnika, vendar ohranja skupine
+set user as only responsible, removing all existing responsibles	admin	sl	nastavite uporabnika kot edino odgovorno, tako da odstranite vse obstoječe odgovore
 sets today as date	common	sl	Določi današnji datum za trenutni datum
 setup	common	sl	Namestitev
 setup main menu	common	sl	Glavni meni namestitve
 seychelles	common	sl	SEJEŠELI
 shift	common	sl	Shift
 shift ⇧	common	sl	Shift ⇧
-should the form be submitted or any custom javascript be executed	common	sl	Naj bo obrazec oddan ali naj bo izveden katerikoli javascript po meri
+should new messages show up on the home page	mail	sl	Če se na domači strani prikažejo nova sporočila
+should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	sl	Če je treba vstaviti podpis po (standardnem) ali pred odgovorom ali vnaprej, in ali mora biti podpis med zapisom viden in spremenljiv.
+should the form be submitted or any custom javascript be executed	common	sl	Naj bo obrazec oddan ali naj bo izveden katerikoli JavaScript po meri
 show	common	sl	Prikaži
 show (no save)	common	sl	Prikaži (ne shrani)
 show all	common	sl	Prikaži vse
 show all / cancel filter	common	sl	Pokaži vse / prekliči filter
+show all addresses	mail	sl	Prikaži vse naslove
+show all attachments	mail	sl	Pokaži vse priloge
 show all categorys	common	sl	Prikaži vse kategorije
+show all folders	mail	sl	prikaži vse mape
+show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	sl	prikaži vse mape, (naročene in odjavljene) v podoknu Main Screen Folder
 show as topmenu	common	sl	Prikaži kot meni na vrhu
 show clock?	common	sl	Prikažem uro?
 show home and logout button in main application bar?	common	sl	Prikažem gumba Domov in Odjavi v glavni vrstici aplikacije?
+show horizontal	mail	sl	prikazati vodoravno
+show horizontal, hide if none selected	mail	sl	prikazati vodoravno, skriti, če ni izbran
 show in sidebox	common	sl	Prikaži v stranskem okviru
-show log of following device	groupdav	sl	Prikažite dnevnik naslednje naprave
+show log of following device	admin	sl	Prikažite dnevnik naslednje naprave
 show logo's on the desktop.	common	sl	Prikaži logotip na namizju.
 show menu	common	sl	Prikaži meni
+show new messages on home page	mail	sl	prikaži nova sporočila na domači strani
 show next login	common	sl	Prikaži naslednjo prijavo
+show notification for new arriving mails	mail	sl	Prikaži obvestilo za novo prispela sporočila
 show now	common	sl	Pokaži zdaj
 show page generation time	common	sl	Prikaži čas generiranja strani
 show page generation time on the bottom of the page?	common	sl	Pokažem čas generiranja strani na dnu?
 show page generation time?	common	sl	Prikažem čas ustvarjanja strani?
+show password	common	sl	Prikaži geslo
+show test connection section and control the level of info displayed?	mail	sl	Prikaži povezavo Test Connection in nadzirajte prikazano raven informacij?
+show test connection section and control the level of info displayed??	mail	sl	Prikaži povezavo Test Connection in nadzor nivoja prikazane informacije?
 show the logo's of egroupware and x-desktop on the desktop.	common	sl	Prikaži logotipa EGroupware in x-desktop na namizju.
+show them this time only	mail	sl	Pokaži jih samo tokrat
 show values	common	sl	Prikaži vrednosti
+show vertical	mail	sl	prikazati navpično
+show vertical with all columns	mail	sl	Prikaži navpično z vsemi stolpci
 show/hide	common	sl	prikaži/skrij stransko vrstico
+show/hide preview pane in mail list view	mail	sl	Pokaži / Skrij podokno za predogled v pogledu e-poštnega seznama
 show_more_apps	common	sl	Prikaži več aplikacij
 showing	common	sl	Prikazovanje
 showing %1	common	sl	Prikazanih %1
@@ -1254,21 +1811,44 @@ showing %1 - %2 of %3	common	sl	Prikazani %1 - %2 od %3
 shows / allows you to enter values into the etemplate for testing	common	sl	Prikaže / omogoči vnos vrednosti v ePredlogo za testiranje
 shows/displays etemplate for testing, does not save it before	common	sl	Prikaže ePredlogo za testiranje, vendar je pred tem ne shrani
 sierra leone	common	sl	SIERRA LEONE
+sieve	mail	sl	Sieve
+sieve connection status	mail	sl	Stanje povezave
+sieve not activated	mail	sl	Sito ni aktivirano
+sieve script name	mail	sl	Ime skripte Sieve
+sieve server	mail	sl	Sieve strežnik
+sieve_edit_instructions	mail	sl	(*) se lahko uporabijo nadomestni znaki (* ,?). Če se želite ujemati * ali? sami, jih morate pobegniti s poševnico (\). Če preverite "Uporabi regularne izraze", morate uporabiti veljavne regularne izraze. Da bi pobegnili z vlamalnim znakom (!) Na začetku, ki se ne uporablja kot "NE", uporabite regex in poševnico (\) (npr. \!)
+sign up	common	sl	Prijavite se
+signature	mail	sl	Podpis
+signature at top	mail	sl	podpis na vrhu
+signature position and visibility	mail	sl	Položaj podpisa in prepoznavnost
 simple	common	sl	Preprosto
 singapore	common	sl	SINGAPUR
-site configuration	common	sl	Nastavitve strežnika
+site configuration	common	sl	Konfiguracija aplikacije
 size	common	sl	Velikost
+size(...->0)	mail	sl	Velikost (... -> 0)
+size(0->...)	mail	sl	Velikost (0 -> ...)
 skip	common	sl	Preskoči
 slovakia	common	sl	SLOVAŠKA
 slovenia	common	sl	SLOVENIJA
+small view	mail	sl	Skrčen pogled
+smime encrypted message	mail	sl	Šifrirano sporočilo S/MIME
+smime signed message	mail	sl	Podpisano sporočilo S/MIME
+smtp	mail	sl	SMTP
+sneak preview in list	mail	sl	Na seznamu ni predogleda
 solomon islands	common	sl	SOLOMONOVO OTOČJE
 somalia	common	sl	SOMALIJA
+some clients fail to detect correct charset, if flowed lines are enabled.	mail	sl	Nekateri odjemalci ne zaznajo pravilnega znaka, če so omogočene teče linije.
 sorry, your login has expired	login	sl	Oprostite, vaša prijava je potekla
+sort order	mail	sl	Način sortiranja
+source	mail	sl	Vir
+sources	mail	sl	Viri
 south africa	common	sl	JUŽNOAFRIŠKA REPUBLIKA
 south georgia and the south sandwich islands	common	sl	JUŽNA GEORGIJA IN JUŽNO OTOČJE SANDWICH
 space	common	sl	Presledek
 spacing	common	sl	Razmik
 spain	common	sl	ŠPANIJA
+spamtitan api url	mail	sl	URL za SpamTitan API
+spamtitan integration requires epl version	mail	sl	Integracija SpamTitan zahteva različico EPL
 span	common	sl	Razpon
 span, class	common	sl	Razpon, razred
 special characters	common	sl	posebne znake
@@ -1277,20 +1857,35 @@ stack	common	sl	Sklad
 start a new search, cancel this link	common	sl	Začne novo iskanje, prekliče to povezavo
 start date	common	sl	Začetni datum
 start directory for image browser of rich text editor in egroupware vfs (filemanager).	common	sl	Zaženite imenik za brskalnik slik bogatega urejevalnika besedil v upravitelju datotek skupine EGroupware
+start new messages with mime type plain/text or html?	mail	sl	Začnem novo sporočilo kot navadno besedilo ali kot HTML?
 start new search for the above pattern	common	sl	Začne novo iskanje po zgornjem vzorcu
+start reply messages with mime type plain/text or html or try to use the displayed format (default)?	mail	sl	začnite odgovarjati s sporočilom mime type plain / text ali html ali poskusite uporabiti prikazano obliko (privzeto)?
 start time	common	sl	Začetni čas
 start with	common	sl	Začni z
 starting up...	common	sl	Zaganjam ...
 status	common	sl	Status
+step 1: imap - incoming mail	mail	sl	Korak 1: IMAP - prihajajoča pošta
+step 2: folder	mail	sl	2. korak: Mapa
+step 3: sieve - server side mail filtering	mail	sl	Korak 3: Sieve - filtriranje strani na strani strežnika
+step 4: smtp - outgoing mail	mail	sl	4. korak: SMTP - odhodna pošta
+store to folder	mail	sl	Shranite v mapo
 store your public key in addressbook?	common	sl	Shranite javni ključ v adresarju?
 stretched	common	sl	Raztegnjeno
 su	common	sl	Za
 subject	common	sl	Zadeva
+subject(a->z)	mail	sl	Zadeva (A->Z)
+subject(z->a)	mail	sl	Zadeva (Z->A)
 submit	common	sl	Pošlji
 submit form	common	sl	Oddaj obrazec
 submitbutton	common	sl	Potrditveni gumb
+subscribe folder	mail	sl	Naroči mapo
+subscribe folder ...	mail	sl	Naroči mapo ...
+subscribe to folder %1	mail	sl	Naročite se na mapo %1
+subscription folders	mail	sl	Naročniške mape
+subscription successfully saved.	mail	sl	Naročnina je uspešno shranjena.
 substitutions and their meanings:	common	sl	Nadomestila in njihov pomen
 successful created new directory %1 for unconnected nods.	admin	sl	Uspešno je ustvaril nov imenik %1 za nepovezane klice.
+successfully connected	mail	sl	Uspešno povezana
 sudan	common	sl	SUDAN
 sunday	common	sl	Nedelja
 sure	common	sl	Sure
@@ -1302,10 +1897,11 @@ swap with next column	common	sl	Zamenjaj z naslednjim stolpcem
 swap with next row	common	sl	Zamenjaj z naslednjo vrstico
 swaziland	common	sl	SVAZILAND
 sweden	common	sl	ŠVEDSKA
+switch off encryption?	mail	sl	Izklopite šifriranje?
 switch to a parent widget	common	sl	Preklopi v nadrejeni gradnik
 switch to an other widgets of that container	common	sl	Preklopi na drug gradnik tega vsebovalnika
 switzerland	common	sl	ŠVICA
-sync all selected into one	groupdav	sl	Sinhroniziraj vse izbrane v eno
+sync all selected into one	admin	sl	Sinhroniziraj vse izbrane v eno
 syrian arab republic	common	sl	SIRIJA
 tab	common	sl	Tab
 tabindex	common	sl	Tabulatorsko mesto
@@ -1319,20 +1915,41 @@ tajikistan	common	sl	TADŽIKISTAN
 tanzania, united republic of	common	sl	TANZANIJA
 template	common	sl	Predloga
 template deleted	common	sl	Predloga zbrisana
+template folder	mail	sl	Mapa s predlogami
 template saved	common	sl	Predloga shranjena
+templates	mail	sl	Predloge
+templates folder	mail	sl	Predloge mape
+test connection	mail	sl	Preskusna povezava
+test connection and display basic information about the selected profile	mail	sl	Test Povezava in prikaz osnovnih informacij o izbranem profilu
 text	common	sl	Besedilo
 text color:	common	sl	Barva besedila:
+text mode	mail	sl	Način besedila
+text/plain	mail	sl	Navadno besedilo
 textarea	common	sl	Besedilno polje
 th	common	sl	Ta
 thailand	common	sl	TAJSKA
+the %1 's acl removed from the %2	mail	sl	Acl %1 je odstranjen iz %2
+the %1 's acl, including its subfolders, removed from the %2	mail	sl	Acl %1, vključno z njegovimi podmapami, je bil odstranjen iz %2
 the backup key has been deleted.	common	sl	Ključ varnostne kopije je bil izbrisan.
 the browser popup blocker is on. please click on ok button to see the pop-up.\n\nif you would like to not see this message for the next time, allow your browser pop-up blocker to open popups from %1	common	sl	Vključen je blokator pojavnih oken brskalnika. Prosimo, kliknite gumb »OK«, da se prikaže pojavno okno.\N\nČe ne želite, da se to sporočilo prikaže naslednjič, omogočite pojavu pojavnih oken v brskalniku, da odpre pojavne oken od %1
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	preferences	sl	Dokument lahko vsebuje vsebnika kot {{%3}}, ki jo je treba zamenjati s podatki. %1 Celoten seznam imen imenika %2.
+the entered passphrase is not correct! please try again.	mail	sl	Vnesena geslo ni pravilna! Prosim poskusite ponovno.
+the folder %1 's acls saved	mail	sl	Shranjeni so ACL-ji mape %1
+the folder <b>%1</b> will be used, if there is nothing set here, and no valid predefine given.	mail	sl	Uporabljena bo mapa <b>%1</b>, če tukaj ni ničesar in ne bo podana nobena veljavna prednastavitev.
 the following applications require upgrades	common	sl	Naslednje aplikacije je potrebno nadgraditi
 the following document-types are supported:	preferences	sl	Podprte so naslednje vrste dokumentov:
+the imap server need to meet certain requirements and be configured for it:	mail	sl	Strežnik IMAP mora izpolnjevati določene zahteve IN biti konfiguriran zanj:
 the mail server returned	common	sl	Poštni strežnik je vrnil
+the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	mail	sl	Pošiljatelj sporočila je zahteval potrdilo, da ste sporočilo prebrali. Želite poslati obvestilo o tem?
+the mimeparser can not parse this message.	mail	sl	Mimeparser ne more prebrati tega sporočila.
+the rule with priority %1 successfully saved!	mail	sl	Pravilo s prednostjo %1 je uspešno shranjeno!
+then	mail	sl	THEN
 there already is a system-user with this name. user's should not have the same name as a systemuser	common	sl	Obstaja že sistemski uporabnik s tem imenom. Izberite drugo ime.
+there is no imap server configured.	mail	sl	Noben strežnik IMAP ni nastavljen.
+there is no space left to store sieve script, please check sieve_maxscriptsize option on your mailserver's config.	mail	sl	Za shranjevanje skripte sieve ni več prostora, preverite možnost sieve_maxscriptsize v konfiguraciji poštnega strežnika.
 they will be sub-folders in users home (%1 attribute).	common	sl	V domovih uporabnikov bodo podmape (atribut %1).
+this mail contains external images served via insecure http protocol. be aware showing or allowing them can compromise your security!	mail	sl	Ta pošta vsebuje zunanje slike, ki so postrežene prek nezanesljivega protokola HTTP. Zavedajte se, da njihovo prikazovanje ali dovoljevanje lahko ogrozi vašo varnost!
+this message is smime encrypted and password protected.	mail	sl	To sporočilo je šifrirano smime in zaščiteno z geslom.
 this name has been used already	common	sl	To ime je že uporabljeno!
 this text gets displayed if the input-field is empty and has no focus (blur)	common	sl	To besedilo je prikazano, če je vnosno polje prazno in neoznačeno (zamegljeno)
 thursday	common	sl	Četrtek
@@ -1340,11 +1957,13 @@ tiled	common	sl	Razpostavljeno
 time	common	sl	Čas
 time zone	common	sl	Časovni pas
 time zone offset	common	sl	Odmik časovnega pasu
+timeout on connections to your imap server	mail	sl	Časovna omejitev povezave s strežnikom IMAP
 title	common	sl	Naziv
 titles of any entries linked to the current record, excluding attached files	preferences	sl	Naslovi vseh vnosov, povezanih s trenutnim zapisom, brez priloženih datotek
 to	common	sl	Prejemnik
 to correct this error for the future you will need to properly set the	common	sl	Za odpravo ponavljanja te napake bo potrebno pravilno nastaviti
 to disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty	common	sl	Onemogoči:[!=ni]<vrednost>[=<preveri>]npr:'!@podatek' onemogoči če je vsebina podatka prazna
+to do	mail	sl	Narediti
 to examine or reinstate inactived files, you might need to turn versioning on.	admin	sl	Če želite pregledati ali obnoviti neaktivne datoteke, boste morda morali vklopiti različico.
 to go back to the msg list, click <a href= %1 >here</a>	common	sl	Da pridete nazaj na seznam sporočil, kliknite <a href="%1">tu</a>.
 to start the db-tools	common	sl	Za zagon orodij podatkovne baze
@@ -1352,6 +1971,8 @@ to start the etemplate editor	common	sl	Za zagon urejevalnika ePredloge
 to start the search	common	sl	Za začetek iskanja
 today	common	sl	Danes
 todays date, eg. "%1"	common	sl	Današnji datum, npr. "%1"
+toggle all folders view for %1	mail	sl	Preklopi pogled vseh map% 1
+toggled on actions	mail	sl	Preklopi na dejanja
 togo	common	sl	TOGO
 tokelau	common	sl	TOKELAU
 tonga	common	sl	TONGA
@@ -1360,14 +1981,20 @@ top	common	sl	Na vrh
 total	common	sl	Skupaj
 total: %1 successful: %2 failed: %3 skipped: %4	common	sl	Skupaj: %1 Uspešno: %2 Neuspešno: %3 Preskočeno: %4
 transparant bg for the icons?	common	sl	Prosojno ozadnje ikon?
+trash	mail	sl	Koš
+trash folder	mail	sl	Mapa Koš
 tree	common	sl	Drevo
 trinidad and tobago	common	sl	TRINIDAD IN TOBAGO
+trust servers seen / unseen info	mail	sl	zaupni strežniki SEEN / UNSEEN info
+trust the server when retrieving the folder status. if you select no, we will search for the unseen messages and count them ourselves	mail	sl	Za pridobitev statusa mape zaupajte strežniku. če izberete ne, bomo poiskali sporočila UNSEEN in jih šteli sami
+trying to recover from session data	mail	sl	Poskus obnovitve iz podatkov o seji
 tu	common	sl	To
 tuesday	common	sl	Torek
 tunisia	common	sl	TUNIZIJA
 turkey	common	sl	TURČIJA
 turkmenistan	common	sl	TURKMENISTAN
 turks and caicos islands	common	sl	TURKS IN CAICOS
+turn off horizontal line between signature and composed message (this is not according to rfc).<br>if you use templates, this option is only applied to the text part of the message.	mail	sl	Izklopite vodoravno črto med podpisom in sestavljenim sporočilom (to ni v skladu z RFC). <br> Če uporabljate predloge, se ta možnost uporablja samo za besedilni del sporočila.
 tuvalu	common	sl	TUVALU
 type	common	sl	Vpišite
 type of the column	common	sl	Vrsta stolpca
@@ -1375,10 +2002,13 @@ type of the field (select label if field should be empty)	common	sl	Vrsta polja 
 uganda	common	sl	UGANDA
 ukraine	common	sl	UKRAJINA
 un-delete	common	sl	Povrni
+unable to fetch vacation!	mail	sl	Ni mogoče pridobiti počitnic!
 uncheck all	common	sl	Počistite vse
 unconnected nodes will be moved to %1.	admin	sl	Nepovezana vozlišča bodo premaknjena v %1.
 undefined	common	sl	nedoločeno
+undelete	mail	sl	Obnovi
 underline	common	sl	Podčrtano
+unflagged	mail	sl	Brez zastavice
 unicode	common	sl	Unicode
 unique	common	sl	Enoličen
 united arab emirates	common	sl	ZDRUŽENI ARABSKI EMIRATI
@@ -1387,6 +2017,9 @@ united states	common	sl	ZDRUŽENE DRŽAVE
 united states minor outlying islands	common	sl	CELINSKE ZDRUŽENE DRŽAVE
 unknown	common	sl	Neznano
 unlink	common	sl	Odstrani povezavo
+unread	mail	sl	Neprebrano
+unsubscribe folder	mail	sl	Mapa za odjavo
+unsubscribe from folder %1	mail	sl	Odjava iz mape %1
 update	common	sl	Obnovi
 update a single entry by passing the fields.	common	sl	Posodobi posamezen vnos s pošiljanjem polj
 update from version '%s' to	common	sl	Posodobi z različice '%s' na
@@ -1394,6 +2027,7 @@ update the clock per minute or per second	common	sl	Posodobi uro vsako minuto al
 upload	common	sl	Prenesi
 upload directory does not exist, or is not writeable by webserver	common	sl	Mapa za prenos ne obstaja ali pa ni zapisljiva s strani spletnega strežnika
 upload file(s) from filemanager...	common	sl	Naloži datoteke iz Filemanagerja ...
+upload files...	mail	sl	Naloži datoteke ...
 upload new photo	common	sl	Naloži novo fotografijo
 upload requires the directory to be writable by the webserver!	common	sl	Prenos zahteva, da je mapa zapisljiva s streni spletnega strežnika!
 uppercase letters	common	sl	velike črke
@@ -1403,6 +2037,11 @@ use button to search for	common	sl	Uporabi gumb za iskanje
 use button to search for address	common	sl	Uporabi gumb za iskanje naslova
 use button to search for calendarevent	common	sl	Uporabi gumb za iskanje dogodka v koledarju
 use button to search for project	common	sl	Uporabi gumb za iskanje projekta
+use default timeout (20 seconds)	mail	sl	uporabi privzeto zakasnitev (20 sekund)
+use regular expressions (see wikipedia for information on posix regular expressions)	mail	sl	Uporabite regularne izraze (glej wikipedia za informacije o regularnih izrazih POSIX)
+use source as displayed, if applicable	mail	sl	po potrebi uporabite vir, kot je prikazano
+use username+password from current user	mail	sl	Uporabite uporabniško ime in geslo trenutnega uporabnika
+use wizard to detect or verify configuration	mail	sl	Uporabite čarovnika za odkrivanje ali preverjanje konfiguracije
 user	common	sl	Uporabnik
 user accounts	common	sl	Uporabniški račun
 user groups	common	sl	Uporabniška skupina
@@ -1411,6 +2050,17 @@ username	common	sl	Uporabniško ime
 users	common	sl	Uporabniki
 users choice	common	sl	Uporabnikov izbor
 uzbekistan	common	sl	UZBEKISATAN
+vacation messages with start and end date require an admin account to be set!	mail	sl	Sporočila za počitnice z začetnim in končnim datumom zahtevajo nastavitev skrbniškega računa!
+vacation notice	mail	sl	Obvestilo o odsotnosti
+vacation notice is active	mail	sl	Obvestilo o odsotnosti je aktivno
+vacation notice is not saved yet! (but we filled in some defaults to cover some of the above errors. please correct and check your settings and save again.)	mail	sl	Obvestilo o počitnicah še ni shranjeno! (Vendar smo zapolnili nekatere privzete nastavitve za pokritje nekaterih zgornjih napak. Prosimo, popravite in preverite nastavitve in znova shranite.)
+vacation notice sucessfully updated.	mail	sl	Obvestilo o dopustu je uspešno posodobljeno.
+vacation notice update failed	mail	sl	Posodobitev obvestila o počitnica ni uspela
+vacation start-date must be before the end-date!	mail	sl	Začetni datum počitnic mora biti pred končnim
+vacation update failed	mail	sl	posodobitev dopusta ni uspela
+valid for	mail	sl	Velja za
+validate addresses on submit:	mail	sl	Potrdite naslove na naslovu:
+validate selected addresses on submit:	mail	sl	Potrdite izbrane naslove ob oddaji:
 valign	common	sl	Navpična poravnava
 value	common	sl	Vrednost
 value has to be at least '%1' !!!	common	sl	Vrednost mora biti vsaj '%1'!
@@ -1424,6 +2074,8 @@ vertical alignment of row	common	sl	Navpična porvnava vrstice
 vfs upload directory	common	sl	Imenik nalaganja VFS
 viet nam	common	sl	VIETNAM
 view	common	sl	Pregled
+view full mail source	mail	sl	Ogled celotnega poštnega vira
+view header lines	mail	sl	Pokaži glavo
 view linked %1 entries	common	sl	Oglejte si povezane vnose %1
 view this etemplate	common	sl	Poglej to predlogo
 view this linked entry in its application	common	sl	Poglej ta povezan vnos v svojem programu
@@ -1439,12 +2091,25 @@ welcome	common	sl	Dobrodošli
 western european	common	sl	Zahodna evropa
 western sahara	common	sl	ZAHODNA SAHARA
 what color should all the blank space on the desktop have	common	sl	Kakšne barve naj bo prazen prostor na namizju?
+what do do with html email	mail	sl	Kaj storiti s html e-pošto
 what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	sl	Kaj se zgodi s prenasičeno vsebino: vidna (privzeto), skrij, vklopi pomikanje, samodejno (se odloči brskalnik)
+what order the list columns are in	mail	sl	Kakšen je vrstni red stolpcev v seznamu
 what style would you like the image to have?	common	sl	Kakšen slog želite za sliko?
+what to do when you delete a message	mail	sl	kaj storiti, ko izbrišete sporočilo
+what to do when you send a message	mail	sl	kaj storiti, ko pošljete sporočilo
+when deleting messages	mail	sl	Ob brisanju sporočil
+when displaying messages in a popup, re-use the same popup for all or open a new popup for each message	mail	sl	Pri prikazu sporočil v pojavnem okencu ponovno uporabite isti pojavni okni ali za vsako sporočilo odpirajte novo pojavno okno
+when saving messages as item of a different app	mail	sl	pri shranjevanju sporočil kot elementa druge aplikacije
+when sending messages	mail	sl	pri pošiljanju sporočil
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	sl	Če odgovorite z Da, bosta gumba Domov in Odjavi v orodni vrstici aplikacij.
 where and how will the egroupware links like preferences, about and logout be displayed.	common	sl	Kje in kako naj egroupware prikaže povezave za nastavitve in odjavo.
+which folders (additional to the sent folder) should be displayed using the sent folder view schema	mail	sl	Katere mape (poleg Poslano) naj bodo prikazane z uporabo sheme Pogled mape Poslano
+which folders - in general - should not be automatically created, if not existing	mail	sl	Katere mape - na splošno - naj ne bodo samodejno ustvarjene, če že ne obstajajo
 which groups	common	sl	Katere skupine
 which infolog types should be synced with the device, default only tasks.	common	sl	Kateri tipi InfoLogov bi morali sinhronizirati z napravo, privzeti samo nalogi.
+which method to use when forwarding a message	mail	sl	Katero metodo uporabite pri posredovanju sporočila
+whitelisted mails are not marked as spam	mail	sl	Sporočila z belim seznamom niso označena kot vsiljena pošta
+whole message	mail	sl	celotno sporočilo
 whole query	common	sl	Celotno povpraševanje
 widget copied into clipboard	common	sl	Gradnik prekopiran na odložišče
 width	common	sl	Širina
@@ -1452,18 +2117,23 @@ width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@dat
 width of column (in % or pixel)	common	sl	Širina stolpca (v % in pixlih)
 width of the table in % or pixels for the table-tag and (optional) div	common	sl	Širina tabele v % ali pikslih za značko "table" in (neobvezno) značko div
 width, disabled	common	sl	Širina, onemogočeno
+with message:	mail	sl	S sporočilom:
+wizard	mail	sl	Čarovnik
 wk	common	sl	Ted
 work email	common	sl	Službeni E-naslov
 working days	common	sl	Delovniki
 works reliable for total size up to 1-2 mb, might work for 5-10 mb, most likely to fail for >10mb	common	sl	Deluje zanesljivo za skupno velikost do 1-2 MB, morda dela za 5-10 MB, najverjetneje ne bo več>10 MB
 would you like to display the page generation time at the bottom of every window?	common	sl	Želite na dnu vsakega okna prikazati čas ustvarjanja strani?
 writable share	common	sl	Pisanje v skupni rabi
+writable sharing requires epl version!	mail	sl	Za souporabo, ki omogoča pisanje, je potrebna različica EPL!
+write	mail	sl	Zapiši
 write <app>/setup/tables_current.inc.php	common	sl	Zapiši <app>/setup/tables_current.inc.php
 write langfile	common	sl	Zapiši jezikovno datoteko
 write tables	common	sl	Zapiši tabele
 writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of the app	common	sl	Zapiši datoteko 'etemplates.inc.php' (za ime aplikacije v namestitveno mapo aplikacije
 writing	common	sl	Pisanje
 written by:	common	sl	Napisal:
+wrote	mail	sl	Je napisal
 xml-file to import	common	sl	Datoteka XML za izvoz
 xslt template	common	sl	Predloga XSLT
 year	common	sl	Leto
@@ -1472,11 +2142,20 @@ yes	common	sl	Da
 yes - delete	common	sl	Da - Izbriši
 yes - delete including sub-entries	common	sl	Da - Izbriši, vključno s podrejenimi vnosi
 yes and allow non-admin users to do that too (recommended)	common	sl	Da in omogočite uporabnikom, ki niso skrbniki, da to storijo (priporočeno)
+yes, but mask all passwords	mail	sl	da, vendar prikrije vse gesla
+yes, but mask all usernames and passwords	mail	sl	da, vendar masko vsa uporabniška imena in gesla
+yes, offer copy option	mail	sl	Da, ponudi možnost Kopija
+yes, only trigger connection reset	mail	sl	Ja, samo sproži ponastavitev povezave
+yes, show all debug information available for the user	mail	sl	da, prikažite vse informacije o odpravi napak, ki so na voljo uporabniku
+yes, show basic info only	mail	sl	da, prikaži samo osnovne informacije
 you are not allowed to export more than %1 entries!	common	sl	Ni dovoljeno izvažati več kot %1 vnosov!
 you are required to change your password during your first login	common	sl	Ob prvi prijavi morate zamenjati geslo!
 you can customize how many icons and toolbars the editor shows.	common	sl	Prilagodite lahko koliko ikon in orodnih vrstic naj prikaže urejevalnik.
+you can either choose to save as infolog or tracker, not both.	mail	sl	Lahko se odločite, da shranite kot infolog OR tracker, ne oboje.
 you can not choose more then %1 item(s)!	common	sl	Ne morete izbrati več kot %1 elementov!
 you can respond by visiting:	common	sl	Za ogled pojdite na:
+you can select what info to be displayed on email tag	mail	sl	Izberete lahko, katere informacije bodo prikazane na e-poštni oznaki.
+you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	sl	Za začetni datum in $ $ end $ $ lahko uporabite $$ start $$ za končni datum.
 you have been successfully logged out	login	sl	Bili ste uspešno odjavljeni.
 you have not entered a title	common	sl	Niste vnesli naziva
 you have not entered a valid date	common	sl	Niste vnesli veljavnega datuma
@@ -1485,16 +2164,24 @@ you have not entered participants	common	sl	Niste vnesli udeležencev
 you have selected an invalid date	common	sl	Izbrali ste napačen datum
 you have selected an invalid main category	common	sl	Izbrali ste napačno glavno kategorijo
 you have successfully logged out	common	sl	Bili ste uspešno odjavljeni
+you may add this certificate into your contact, if you trust this signature.	mail	sl	To potrdilo lahko dodate v stik, če zaupate temu podpisu.
 you need to %1set your timezone preference%2.	common	sl	Morate nastaviti %1 nastavitev svojega časovnega pasu %2.
 you need to add the webserver user '%1' to the group '%2'.	common	sl	Uporabnika '%1' je potrebno dodati skupini '%2'.
 you need to be an egroupware administrator to access this functionality!	common	sl	Za dostop do te funkcionalnosti morate biti administrator!
+you need to enter your s/mime passphrase to send this message.	mail	sl	Za pošiljanje tega sporočila morate vnesti geslo za S / MIME.
+you need to install mailvelope plugin available for chrome and firefox from %1.	mail	sl	Morate namestiti vtičnik Mailvelope, ki je na voljo za Chrome in Firefox iz % .
 you need to install mailvelope plugin available for chrome and firefox from www.mailvelope.com or by clicking on install button.	common	sl	You need to install Mailvelope plugin available for Chrome and Firefox from www.mailvelope.com or by clicking on install button.
+you need to save the message as draft first before to be able to save it into vfs	mail	sl	Najprej morate shraniti sporočilo kot osnutek, da ga lahko shranite v VFS
 you need to select a file first!	common	sl	Najprej izberite datoteko!
 you need to select some entries first!	common	sl	Najprej morate izbrati nekaj vnosov!
-you need to set enable logging to "%1" to create/update a log.	groupdav	sl	Če želite ustvariti / posodobiti dnevnik, morate omogočiti beleženje omogočiti "%1".
+you need to set enable logging to "%1" to create/update a log.	admin	sl	Če želite ustvariti / posodobiti dnevnik, morate omogočiti beleženje omogočiti "%1".
 you tried to automatically size a flex column, which always takes the rest of the space	common	sl	Poskusili ste samodejno ustvariti kolono flex, ki vedno vzame preostanek prostora.
+you will loose current message body, unless you save it to your clipboard!	mail	sl	Izgubili boste trenutno telo sporočila, razen če ga shranite v odložišče!
 you will not be able to send or receive encrypted mails before completing that step!	common	sl	Pred zaključkom tega koraka NE boste mogli pošiljati ali prejemati šifriranih e-poštnih sporočil!
+you've got new mail	mail	sl	Imate novo pošto
 you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	sl	Poskusili ste odpreti aplikacijo %1 ampak nimate pravice dostopa.
+your account has been updated with new data from your identity provider.	common	sl	Vaš račun je bil posodobljen z novimi podatki vašega ponudnika identitete.
+your browser is not up-to-date (javascript es6 compatible), you may experience some of the features not working.	common	sl	Vaš brskalnik ni posodobljen (združljiv z JavaScript ES6), zato nekatere funkcije morda ne bodo delovale.
 your code is incorrect !!!	common	sl	Koda ni pravilna!
 your key has been restored successfully.	common	sl	Vaš ključ je bil uspešno obnovljen.
 your message could <b>not</b> be sent!<br>	common	sl	Vaše sporočilo <b>NI<b> bilo poslano! <br>
@@ -1504,6 +2191,7 @@ your password does not have required strength:	common	sl	Vaše geslo nima potreb
 your password failed the following criteria:	common	sl	Vaše geslo ni izpolnjeval naslednjih pogojev:
 your password is about to expire in %1 days, you may change your password now	common	sl	Vaše geslo bo kmalu poteklo v %1 dneh, zdaj pa lahko spremenite svoje geslo.
 your password might not match the password policy.	common	sl	Vaše geslo morda ne ustreza pravilniku o geslu.
+your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	sl	Preostala kvota %1 je prenizka, morda ne boste mogli pošiljati/prejemati nadaljnjih e-poštnih sporočil.\N Čeprav lahko čiščenje e-poštnih sporočil v smetnjak ali v neželeni mapi pomaga, da dobite nekaj prostega prostora nazaj.\N Če to ni pomagalo , vprašajte svojega skrbnika za več kvot.
 your search returned %1 matchs	common	sl	Najdenih %1 zadetkov
 your search returned 1 match	common	sl	Najden 1 zadetek
 your session timed out, please log in again	login	sl	Vaša seja je potekla, ponovno se prijavite

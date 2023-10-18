@@ -1,33 +1,118 @@
+%1 contact(s) %2, %3 failed because of %4 !!!	addressbook	ro	%1 contact(e) %2, %3 a eșuat din cauza lui %4 !!!
+%1 contacts updated (%2 errors).	addressbook	ro	%1 contacte actualizate (%2 erori).
+%1 key(s) added to public keyserver "%2".	addressbook	ro	%1 cheie(e) adăugată(e) la serverul public de chei "%2".
+%1 not implemented for %2!	addressbook	ro	%1 nu este implementat pentru %2!
+%1 public keys added.	addressbook	ro	%1 chei publice adăugate.
 %1 shared this contact on %2 with %3 %4	addressbook	ro	%1 a partajat acest contact pe %2 %3 %4
+add customfield to links of addressbook, which displays in other applications. the default value is none customfield.	addressbook	ro	Adăugați un câmp personalizat la legăturile din agenda de adrese, care se afișează în alte aplicații. Valoarea implicită este niciun câmp personalizat.
+add to bcc	addressbook	ro	Adăugați la copia oarbă
+add to cc	addressbook	ro	Adăugați la Copie
+add to distribution list	addressbook	ro	Adăugați la lista de distribuție
+add to distribution list:	addressbook	ro	Adăugați la lista de distribuție:
+add to to	addressbook	ro	Adăugați la Către
+addressbook list	addressbook	ro	Lista de adrese
+all addressbooks	addressbook	ro	Toate agendele de adrese
+all types	addressbook	ro	Toate tipurile
+allow	addressbook	ro	Permiteți
+allow for contacts only	addressbook	ro	Permite numai pentru contacte
+audio call	addressbook	ro	Apel audio
+browser location	addressbook	ro	Locație browser
+calendar integration	addressbook	ro	Integrare calendar
+change addressbook when updating	addressbook	ro	Schimbă agenda de adrese la actualizare
+choose pre-defined map source or use custom url (use %r = street, %t = city, %c = country, %z = zipcode)	admin	ro	Alegeți sursa predefinită a hărții sau utilizați un URL personalizat (utilizați %r = stradă, %t = oraș, %c = țară, %z = cod poștal)
+crm-view	addressbook	ro	Vizualizare CRM
+default action on double-click	addressbook	ro	Acțiune implicită la dublu clic
+default geolocation source address	addressbook	ro	Adresa predefinită a sursei GeoLocation
+disable	addressbook	ro	Dezactivați
+disable last/next event column	addressbook	ro	Dezactivați coloana Ultimul/ Următorul eveniment
+distribution list renamed	addressbook	ro	Listă de distribuție redenumită
+distribution lists as groups	addressbook	ro	Liste de distribuție ca grupuri
 duplicate threshold	addressbook	ro	Pragul de duplicare
 duplicate warning	addressbook	ro	Avertisment de duplicat
 duplicates	addressbook	ro	Dubluri
+empty addressbook before importing	addressbook	ro	Ștergerea intrărilor din Agendă nu se află în lista CSV
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	addressbook	ro	Exemplu {{IF n_prefix~Mr~Bună ziua domnule ~Bună ziua doamnă}} - caută în câmpul "n_prefix", pentru "Mr", dacă se găsește, scrie Hello Mr., altfel scrie Hello Ms.
+example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	preferences	ro	Exemplu {{LETTERPREFIXCUSTOM n_prefix titlu n_familie}}. - Exemplu: Dl Dr. James Miller
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	addressbook	ro	Exemplu {{NELF rol}} - dacă câmpul role nu este gol, se va obține o nouă linie cu valoarea câmpului role
+example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	addressbook	ro	Exemplu {{nenvlf role}} - dacă câmpul role nu este gol, se va seta un LF fără nicio valoare a câmpului
+export definition to use for nextmatch export	addressbook	ro	Definiție de export de utilizat pentru exportul nextmatch
+export definitition to use for nextmatch export	addressbook	ro	Definiția de export care trebuie utilizată pentru exportul nextmatch
+exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	ro	Exportă contactele din agenda de adrese într-un fișier CSV.  CSV înseamnă "Comma Separated Values" (Valori separate prin virgulă). În fila Opțiuni puteți alege și alți separatori.
+favorite phone	addressbook	ro	Telefon preferat
+favorites	addressbook	ro	Favorite
 fields to check for duplicates	addressbook	ro	Câmpuri pentru a verifica dacă există dubluri
 fields to consider when looking for duplicate contacts.	addressbook	ro	Câmpuri care trebuie luate în considerare atunci când se caută contacte duplicate.
+for serial letter use this tag. put the content, you want to repeat between two tags.	addressbook	ro	Utilizați această etichetă pentru litera de serie. Așezați conținutul pe care doriți să îl repetați între două etichete.
+freebusy uri	addressbook	ro	FreeBusy URI
+geolocation	addressbook	ro	GeoLocalizare
+geolocation integration	admin	ro	Integrare GeoLocalizare
 hide accounts from addressbook	addressbook	ro	Ascundeți conturile de utilizator
 hide all accounts	addressbook	ro	Ascundeți toate conturile
 hide user groups as distribution lists	addressbook	ro	Ascundeți grupurile de utilizatori ca liste de distribuție
 hides accounts completly from the adressbook.	addressbook	ro	Ascundeți complet conturile de utilizator din cartea de adrese.
 how many fields must match for the record to be considered a duplicate.	addressbook	ro	Câte câmpuri trebuie să corespundă pentru ca înregistrarea să fie considerată duplicat.
+importer's personal	addressbook	ro	Personal al importatorului
+imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	ro	Importă contactele în agendă dintr-un fișier CSV. CSV înseamnă "Comma Separated Values" (valori separate prin virgulă). În fila de opțiuni puteți alege și alți separatori.
+imports contacts into your addressbook from a vcard file.	addressbook	ro	Importă contacte în agendă dintr-un fișier vCard.
 infolog	addressbook	ro	InfoLog Contact
 infolog-organisation	addressbook	ro	Organizația InfoLog
+insufficent rights to delete this list!	addressbook	ro	Drepturi insuficiente pentru a șterge această listă!
+insufficent rights to edit this list!	addressbook	ro	Drepturi insuficiente pentru a edita această listă!
+invite to current call	addressbook	ro	Invitați la apelul curent
 load custom fields in index, even if custom field column is off (eg. to display them in a specific index column)	addressbook	ro	Încărcați câmpurile personalizate în index, chiar dacă coloana câmpurilor personalizate este dezactivată (de exemplu, pentru a le afișa într-o anumită coloană de index)
+mail vcard	addressbook	ro	Mail vCard
+main categories in their own field	addressbook	ro	Categorii principale în câmpul propriu
 merge duplicates	addressbook	ro	Unificarea dublurilor
 merge into first or account, deletes all other!	addressbook	ro	Fuzionează în primul sau în cont, șterge toate celelalte!
 move to addressbook	addressbook	ro	Mutarea în cartea de adrese
+name, email, phone	addressbook	ro	Nume, e-mail, telefon
 no country selected	addressbook	ro	Nici o țară selectată
 no distribution list	addressbook	ro	Nici o listă de distribuție
 not shared	addressbook	ro	nu este împărtășită
+open %1 crm view	addressbook	ro	Deschideți vizualizarea %1 CRM
+open email addresses in external mail program	addressbook	ro	Deschiderea adreselor de e-mail în programul de poștă electronică extern
+open infolog crm view	preferences	ro	Deschideți vizualizarea InfoLog CRM a contactului
+open tracking system crm view	preferences	ro	Deschideți vizualizarea CRM a sistemului de urmărire
+permissiong denied! ask your administrator to allow regular uses to update their public keys.	addressbook	ro	Permisiune refuzată! Solicitați administratorului dvs. să permită utilizatorilor obișnuiți să își actualizeze cheile publice.
+pgp key	addressbook	ro	Cheie PGP
+phone number	common	ro	Număr de telefon
+phone numbers	common	ro	Numere de telefon
 prevent deleting of contacts	admin	ro	Prevenirea ștergerii contactelor
+private address	addressbook	ro	Adresa privată
+public sharing url	addressbook	ro	URL de partajare publică
+remove from distribution list	addressbook	ro	Eliminare din lista de distribuție
+rename list	addressbook	ro	Redenumiți lista
+rename selected distribution list	addressbook	ro	Redenumiți lista de distribuție selectată
+schedule a video conference	addressbook	ro	Programarea unei conferințe video
 search letter	addressbook	ro	Scrisoare de căutare
+select a source address to be used in geolocation routing system	addressbook	ro	Selectați o adresă sursă care să fie utilizată în sistemul de rutare GeoLocation
+select an opened dialog	addressbook	ro	Selectați un dialog deschis
+send fax via email by replacing fax number with an email address	addressbook	ro	Trimiteți un fax prin e-mail înlocuind numărul de fax cu o adresă de e-mail
+send succeeded to %1	common	ro	Trimitere reușită către %1
 share into addressbook	addressbook	ro	Partajați în agenda de adrese
 share writable	addressbook	ro	Partajare inscriptibilă
 shared	addressbook	ro	partajat
 shared by me	addressbook	ro	Partajat de mine
 shared into addressbook %1	addressbook	ro	partajat în addressbook %1
 shared with	addressbook	ro	Împărtășit cu
+show active accounts	addressbook	ro	Afișați conturile active
+show all accounts	addressbook	ro	Afișați toate conturile
+smime key	addressbook	ro	Cheia S/MIME
+special	addressbook	ro	Special
+the zip extension is needed, to insert contact data in openoffice or msoffice documents.	addressbook	ro	Extensia zip este necesară, pentru a insera datele de contact în documente LibreOffice sau MS Office.
+title	addressbook	ro	Titlul postului
+type	addressbook	ro	Tip
+unable to import into %1, using %2	addressbook	ro	Imposibil de importat în %1, utilizând %2
+unknown type %1, imported as %2	addressbook	ro	Tip necunoscut %1, importat ca %2
 unshare	addressbook	ro	Nu mai partajați
 unshared	addressbook	ro	nu mai este partajat
+use a category tree?	addressbook	ro	Utilizați un arbore pentru selectarea categoriilor
 user groups are automatically shown as distribution lists.	addressbook	ro	Grupurile de utilizatori sunt afișate automat ca liste de distribuție.
+video call	addressbook	ro	Apel video
+when viewing a contact, show linked entries from the selected application	addressbook	ro	La vizualizarea unui contact, afișați intrările legate din aplicația selectată
 when you merge entries into documents, they will be stored here.  if no directory is provided, they will be stored in your home directory (/home/unverricht)	addressbook	ro	Atunci când unificați intrările în documente, acestea vor fi stocate aici. Dacă nu este furnizat niciun director, acestea vor fi stocate în directorul dvs. personal (/home/...).
+yes, only admins can purge deleted items	admin	ro	Da, numai administratorii pot curăța elementele șterse
+yes, users can purge their deleted items	admin	ro	Da, utilizatorii își pot curăța elementele șterse
 you are not allowed to share into the addressbook of %1	addressbook	ro	Nu aveți permisiunea de a partaja în cartea de adrese %1
+you need to select some entries first	addressbook	ro	Trebuie să selectați mai întâi câteva intrări
+your new public key has been stored in accounts addressbook.	addressbook	ro	Noua dvs. cheie publică a fost stocată în agenda de conturi.

@@ -3,6 +3,7 @@
 %1 copied - the copy can now be edited	common	ja	%1 をコピーしました - コピーを編集できます
 %1 directories %2 found!	admin	ja	%1 directories %2 found!
 %1 email addresses inserted	common	ja	%1 個の電子メール・アドレスを挿入しました。
+%1 email(s) added into %2	common	ja	%1 の電子メールが %2 に追加されました。
 %1 entries found, select one ...	common	ja	%1 個の項目がみつかりました。選択してください ...
 %1 etemplates deleted	common	ja	%1 個の eTemplates を削除しました。
 %1 etemplates for application '%2' dumped to '%3'	common	ja	%1 eTemplates for application '%2' dumped to '%3'
@@ -10,6 +11,7 @@
 %1 file	common	ja	%1 ファイル
 %1 is not executable by the webserver !!!	common	ja	%1 はウェブ・サーバー上で実行できません!
 %1 matches on search criteria	common	ja	%1 個の一致
+%1 more %2 selected ...	common	ja	%1 つ以上の %2 が選択されました。
 %1 more...	common	ja	%1 詳細...
 %1 new etemplates imported for application '%2'	common	ja	アプリケーション %2 向けの %1 個の新規 eTemplates をインポートしました
 %1 not implemented for %2!	common	ja	%2 で %1 は実装されていません!
@@ -30,7 +32,7 @@
 '%1' is not a valid date !!!	common	ja	'%1' の日付が不正です!
 '%1' is not a valid floatingpoint number !!!	common	ja	'%1' は不正な浮動小数です!
 '%1' is not a valid integer !!!	common	ja	'%1' は無効な整数です!
-'%1' is not a valid json file!	common	ja	'%1' is no json file in the eGW server root!
+'%1' is not a valid json file!	common	ja	'%1' は有効な json ファイルではありません。
 '%1' is not a valid timezone!	common	ja	'%1' は無効なタイムゾーンです!
 '%1' is not allowed ('%2')!	common	ja	'%1' は禁止されています ('%2')!
 '%1' is not allowed%2)!	common	ja	'%1' 禁止されています %2)!
@@ -169,6 +171,7 @@ automatically hide the sidebox menu's?	common	ja	サイドメニューを自動�
 automatically hide the sidebox menus?	common	ja	サイドメニューを自動的に隠しますか?
 automatically refresh list	common	ja	リストの自動リフレッシュ
 autosave default category	common	ja	既定のカテゴリを自動保存
+avatar	common	ja	アバター
 azerbaijan	common	ja	アゼルバイジャン
 back	common	ja	戻る
 back to user login	common	ja	ログイン画面に戻る
@@ -205,6 +208,7 @@ box...	common	ja	ボックス...
 brazil	common	ja	ブラジル
 british indian ocean territory	common	ja	イギリス領インド洋地域
 broken link	common	ja	破線
+browser %1 %2 is not recommended. you may experience issues and not working features. please use the latest version of chrome, firefox or edge. thank you!	common	ja	ブラウザ %1 %2 は推奨されません。問題が発生したり、機能が動作しない可能性があります。最新バージョンの Chrome、Firefox、または Edge を使用してください。ありがとうございました！
 brunei darussalam	common	ja	ブルネイ
 bulgaria	common	ja	ブルガリア
 bulgarian	common	ja	ブルガリア語
@@ -249,6 +253,7 @@ change owner	common	ja	所有者を変更
 changed	common	ja	変更済み
 charset	common	ja	utf-8
 check all	common	ja	全て選択
+check for empty values in if statements.  example {{if url~empty~~website:}} - if url is not empty, writes "website:"	common	ja	IF文で空の値をチェックします。例 {{IF url~EMPTY~~ウェブサイト:}}。- urlが空でない場合、"ウェブサイト: "と表示します。
 check if content should only be displayed but not altered (the content is not send back then!)	common	ja	Should content be displayed only, but not altered.
 check if field has to be filled by user	common	ja	Check if field has to be filled by user
 check installation	common	ja	インストールを検証
@@ -302,7 +307,7 @@ common preferences	common	ja	共通設定
 comoros	common	ja	コモロ
 company	common	ja	会社
 confirm	common	ja	確認
-confirmation message or custom javascript (returning true or false)	common	ja	Confirmation message or custom javascript, returning true or false.
+confirmation message or custom javascript (returning true or false)	common	ja	Confirmation message or custom JavaScript, returning true or false.
 confirmation necesary or custom java-script	common	ja	Confirmation necessary or custom java-script
 confirmation required	common	ja	確認が必要
 congo	common	ja	コンゴ
@@ -343,7 +348,7 @@ current	common	ja	現在
 current users	common	ja	現在のユーザ
 custom	common	ja	カスタム
 custom fields	common	ja	カスタム項目
-custom javascript for onchange	common	ja	Custom javascript for onChange
+custom javascript for onchange	common	ja	Custom JavaScript for onChange
 cut	common	ja	切り取り
 cyprus	common	ja	キプロス
 czech republic	common	ja	チェコ
@@ -353,6 +358,7 @@ data type	common	ja	データ・タイプ
 database error	common	ja	データベース・エラー
 database error!	common	ja	データベース・エラー!
 date	common	ja	日付
+date + time	common	ja	日付＋時間
 date due	common	ja	期限日
 date+time	common	ja	日時
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	ja	Date time port.<br>If using port 13, set firewall rules appropriately before submitting this page.<br>(Port: 13 / Host: 129.6.15.28).
@@ -429,6 +435,7 @@ domain name for mail-address, eg. "%1"	common	ja	メール・アドレスのド�
 domestic	common	ja	国内
 dominica	common	ja	ドミニカ
 dominican republic	common	ja	ドミニカ共和国
+don't ask again!	common	ja	再度尋ねない！
 don't show this again	common	ja	再び表示しない
 done	common	ja	終了
 dos international	common	ja	DOS International
@@ -515,6 +522,8 @@ ethiopia	common	ja	エチオピア
 everything	common	ja	Everything
 exact	common	ja	Exact
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	preferences	ja	例 {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - 項目 "n_prefix" を "Mr" で検索し, もし見つかれば「Hello Mr.」と出力し、見つからなければ「Hello Ms.」と出力。
+example {{letterprefix}} - gives a letter prefix without double spaces, if the title is empty for example	preferences	ja	例 {{LETTERPREFIX}}。- 例えばタイトルが空の場合、全角スペースを除いた文字の接頭辞を与えます。
+example {{letterprefix}} - gives a letter prefix without double spaces, if the title is emty for  example	common	ja	例 {{LETTERPREFIX}}。- 例えばタイトルが空の場合、全角スペースを除いた文字の接頭辞を与えます。
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	preferences	ja	例 {{NELF role}} - 項目のロールが空でない場合、項目ロールの値と改行を出力。
 example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	preferences	ja	例 {{nenvlf role}} - 項目のロールが空でない場合、項目の値でなく改行を出力。
 exchange this row with the one above	common	ja	この行を直上の行と入れ換える
@@ -655,6 +664,7 @@ how many rows to print	common	ja	印刷する行数
 how to show the general egroupware menu ?	common	ja	一般 EGroupware メニューの表示方法
 html	common	ja	HTML
 html link to the current record	common	ja	このレコードへのHTMLリンク
+html links to any entries linked to the current record, excluding attached files	common	ja	添付ファイルを除く、現在のレコードにリンクされたエントリへのHTMLリンク
 hungary	common	ja	ハンガリー
 iceland	common	ja	アイスランド
 id	common	ja	ID
@@ -704,10 +714,12 @@ insert placeholder	common	ja	プレースホルダーを挿入する
 insert row after	common	ja	Insert row after
 insert row before	common	ja	Insert row before
 insert timestamp into description field	common	ja	説明欄にタイムスタンプを挿入
+install	common	ja	インストール
 integer	common	ja	整数
 international	common	ja	国際
 introduction	common	ja	紹介
 invalid 2-factor authentication code	common	ja	2ファクタ認証のコードが無効です。
+invalid email	common	ja	無効な電子メール
 invalid filename	common	ja	ファイル名が不正です。
 invalid ip address	common	ja	IP アドレスが不正です。
 invalid or expired 'remember me' token	common	ja	Remember Me トークンが無効、または有効期限が切れている
@@ -989,20 +1001,21 @@ password contains with "%1" a parts of your user- or full-name (3 or more charac
 password could not be changed	common	ja	パスワードを変更できませんでした!
 password has been updated	common	ja	パスワードを更新しました。
 password must contain at least %1 lowercase letters	common	ja	Password must contain at least %1 lower case letters.
-password must contain at least %1 numbers	common	ja	Password must contain at least %1 numbers.
-password must contain at least %1 special characters	common	ja	Password must contain at least %1 special characters.
-password must contain at least %1 uppercase letters	common	ja	Password must contain at least %1 upper case letters.
-password must have at least %1 characters	common	ja	Password must have at least %1 characters.
+password must contain at least %1 numbers	common	ja	パスワードには少なくとも %1 の数字を含める必要があります。
+password must contain at least %1 special characters	common	ja	パスワードには、少なくとも %1 の特殊文字を含める必要があります。
+password must contain at least %1 uppercase letters	common	ja	パスワードには、少なくとも %1 の大文字が含まれている必要があります。
+password must have at least %1 characters	common	ja	パスワードは最低%1文字必要です。
 paste	common	ja	張り付け
 path	common	ja	パス
 path to user and group files has to be outside of the webservers document-root!!!	common	ja	Path to user and group files HAS TO BE OUTSIDE of the web servers document root!
 permission denied!	common	ja	権限が拒否されました!
-permissions to the files/users directory	common	ja	Permissions to the files/users directory
+permission denied! this is an administration only feature.	common	ja	パーミッションが拒否されました！これは管理者専用の機能です。
+permissions to the files/users directory	common	ja	ファイル/ユーザフォルダへの権限
 permisson denied!	common	ja	権限が拒否されました!
-personal	common	ja	パーソナル
+personal	common	ja	個人用
 peru	common	ja	ペルー
-pg down	common	ja	Pg down
-pg up	common	ja	Pg up
+pg down	common	ja	ページダウン
+pg up	common	ja	ページアップ
 pgp encryption	common	ja	PGP 暗号化
 pgp encryption installation	common	ja	PGP 暗号化のインストール
 philippines	common	ja	フィリピン
@@ -1010,11 +1023,12 @@ phone number	common	ja	電話番号
 pitcairn	common	ja	ピトケアン諸島
 placeholders	common	ja	プレースホルダ
 play/pause	common	ja	再生/一時停止
-please %1 by hand	common	ja	Please %1 by hand
+please %1 by hand	common	ja	1 を手で入力してください。
 please enter a name	common	ja	名前を入力してください!
 please enter table-name first !!!	common	ja	テーブル名を入力してください!
 please reload the egroupware desktop (f5 / cmd+r).	common	ja	デスクトップをリロードしてください（F5 または Cmd+r）。
-please run setup to become current	common	ja	Run setup to become current
+please remember to use '%1' as username for local login's from now on!	common	ja	今後、ローカルログインのユーザ名として '%1' を使用することを忘れないでください！
+please run setup to become current	common	ja	セットアップを実行して最新の状態にする
 please select	common	ja	選択してください
 please set your global preferences	common	ja	全体設定を設定してください!
 please set your preferences for this application	common	ja	アプリケーション用設定を設定してください!
@@ -1215,7 +1229,7 @@ setup main menu	common	ja	セットアップ・メニュー
 seychelles	common	ja	セーシェル
 shift	common	ja	Shift
 shift ⇧	common	ja	Shift ⇧
-should the form be submitted or any custom javascript be executed	common	ja	Should form be submitted or any custom javascript executed
+should the form be submitted or any custom javascript be executed	common	ja	Should form be submitted or any custom JavaScript executed
 show	common	ja	表示
 show (no save)	common	ja	表示 (保存しない)
 show all	common	ja	全て表示
@@ -1233,8 +1247,10 @@ show now	common	ja	表示
 show page generation time	common	ja	ページ生成時間を表示
 show page generation time on the bottom of the page?	common	ja	ページの下端にページ生成に要した時間を表示します。
 show page generation time?	common	ja	Show page generation time
+show password	common	ja	パスワードの表示
 show the logo's of egroupware and x-desktop on the desktop.	common	ja	Show the logo of EGroupware and x-desktop on the desktop.
 show values	common	ja	値を表示
+show/hide	common	ja	サイドバーの表示/非表示
 show_more_apps	common	ja	show_more_apps
 showing	common	ja	表示中
 showing %1	common	ja	表示数 %1
@@ -1242,9 +1258,10 @@ showing %1 - %2 of %3	common	ja	表示数 %1 - %2 of %3
 shows / allows you to enter values into the etemplate for testing	common	ja	Shows / allows to enter values into the eTemplate for testing
 shows/displays etemplate for testing, does not save it before	common	ja	Shows / displays eTemplate for testing, does NOT save it
 sierra leone	common	ja	シエラレオネ
+sign up	common	ja	サインアップ
 simple	common	ja	Simple
 singapore	common	ja	シンガポール
-site configuration	common	ja	サイト構成
+site configuration	common	ja	アプリの設定
 size	common	ja	サイズ
 skip	common	ja	スキップ
 slovakia	common	ja	スロバキア
@@ -1482,6 +1499,8 @@ you need to set enable logging to "%1" to create/update a log.	groupdav	ja	ロ�
 you tried to automatically size a flex column, which always takes the rest of the space	common	ja	You tried to automatically size a flex column, which always takes the rest of the space.
 you will not be able to send or receive encrypted mails before completing that step!	common	ja	この作業を完了しないと、暗号化メールの送受信を行なえません!
 you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	ja	アプリケーション %1 に対するアクセス権限がありません!
+your account has been updated with new data from your identity provider.	common	ja	あなたのアカウントはIDプロバイダーからの新しいデータで更新されました。
+your browser is not up-to-date (javascript es6 compatible), you may experience some of the features not working.	common	ja	お使いのブラウザが最新ではない場合（JavaScript ES6対応）、一部の機能が動作しない可能性があります。
 your code is incorrect !!!	common	ja	コードが不正です!!!
 your key has been restored successfully.	common	ja	キーを復元しました。
 your message could <b>not</b> be sent!<br>	common	ja	メッセージは<b>送信されませんでした</b>!<br>

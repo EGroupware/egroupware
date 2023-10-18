@@ -2,12 +2,14 @@
 %1 active file(s) with same name as directory inactivated!	admin	nl	%1 actieve bestand(en) met dezelfde naam als de map op niet-actief gezet!
 %1 directories %2 found!	admin	nl	1% mappen van %2 gevonden
 %1 email addresses inserted	common	nl	%1 emailadres ingevoerd
+%1 email(s) added into %2	common	nl	%1 e-mail(s) toegevoegd in %2
 %1 etemplates deleted	common	nl	%1 eTemplates verwijderd
 %1 etemplates for application '%2' dumped to '%3'	common	nl	%1 eTemplates voor applicatie '%2' gedumpt naar '%3'
 %1 etemplates found	common	nl	%1 eTemplates gevonden
 %1 file	common	nl	%1 bestand
 %1 is not executable by the webserver !!!	common	nl	%1 kan niet door de webserver uitgevoerd worden !!!
 %1 matches on search criteria	common	nl	%1 komt overeen met zoekcriteria
+%1 more %2 selected ...	common	nl	%1 meer %2 geselecteerd...
 %1 more...	common	nl	%1 meer...
 %1 new etemplates imported for application '%2'	common	nl	%1 nieuwe eTemplates geïmporteerd voor applicatie '%2'
 %1 not implemented for %2!	common	nl	%1 niet geimplemnteerd voor %2!
@@ -25,6 +27,7 @@
 '%1' is not a valid date !!!	common	nl	'%1' is geen geldige datum !!!
 '%1' is not a valid floatingpoint number !!!	common	nl	'%1' is geen geldig drijvende komma getal !!!
 '%1' is not a valid integer !!!	common	nl	'%1' is geen geldig geheel getal !!!
+'%1' is not a valid json file!	common	nl	'%1' is geen geldig JSON bestand
 '%1' is not allowed ('%2')!	common	nl	'%1' is NIET toegestaan ('%2')!
 (session restored in %1 seconds)	common	nl	(sessie hersteld in %1 seconden)
 00 (disable)	admin	nl	00 (uitschakelen)
@@ -151,6 +154,7 @@ automatic update check failed, you need to check manually!	common	nl	Automatisch
 automatically hide the sidebox menu's?	common	nl	Automatisch de menu's in de zijlijn verbergen?
 automatically hide the sidebox menus?	common	nl	Automatisch de menu's in de zijlijn verbergen?
 autosave default category	common	nl	Automatisch standaard categorie opslaan
+avatar	common	nl	Avatar
 azerbaijan	common	nl	AZERBEIDSJAN
 back	common	nl	Terug
 back to user login	common	nl	Terug naar gebruikers loginscherm
@@ -183,6 +187,7 @@ box	common	nl	Box
 box...	common	nl	Box...
 brazil	common	nl	BRAZILIË
 british indian ocean territory	common	nl	BRITISH INDIAN OCEAN TERRITORY
+browser %1 %2 is not recommended. you may experience issues and not working features. please use the latest version of chrome, firefox or edge. thank you!	common	nl	Browser %1 %2 wordt niet aanbevolen. U kunt problemen ondervinden en functies die niet werken. Gebruik de nieuwste versie van Chrome, Firefox of Edge. Bedankt!
 brunei darussalam	common	nl	BRUNEI DARUSSALAM
 bulgaria	common	nl	BULGARIJE
 bulgarian	common	nl	Bulgaars
@@ -227,6 +232,7 @@ change owner	common	nl	Verander eigenaar
 changed	common	nl	Veranderd
 charset	common	nl	utf-8
 check all	common	nl	Markeer alles
+check for empty values in if statements.  example {{if url~empty~~website:}} - if url is not empty, writes "website:"	common	nl	Controleer op lege waarden in IF statements. Voorbeeld {{IF url~EMPTY~~Website:}} - Als url niet leeg is, schrijft u "Website:".
 check if content should only be displayed but not altered (the content is not send back then!)	common	nl	aanvinken indien content alleen getoond moet worden maar niet niet gewijzigd (de content wordt dan niet teruggezonden!)
 check if field has to be filled by user	common	nl	Check of dit veld door de gebruiker moet worden ingevuld
 check installation	common	nl	Controleer installatie
@@ -279,8 +285,8 @@ common preferences	common	nl	Algemene voorkeuren
 comoros	common	nl	COMOROS
 company	common	nl	Bedrijf
 confirm	common	nl	bevestigen
-confirmation message or custom javascript (returning true or false)	common	nl	bevestigingsbericht of aangepast javascript (geeft true of false terug)
-confirmation necesary or custom java-script	common	nl	bevestiging nodig of aangepast javascript
+confirmation message or custom javascript (returning true or false)	common	nl	bevestigingsbericht of aangepast JavaScript (geeft true of false terug)
+confirmation necesary or custom java-script	common	nl	bevestiging nodig of aangepast JavaScript
 confirmation required	common	nl	Bevestiging vereist
 congo	common	nl	DEMOCRATISCHE REPUBLIEK CONGO
 congo, the democratic republic of the	common	nl	DEMOCRATISCHE REPUBLIEK CONGO
@@ -322,7 +328,7 @@ current	common	nl	Huidig
 current users	common	nl	Huidig aantal gebruikers
 custom	common	nl	aangepast
 custom fields	common	nl	aangepaste velden
-custom javascript for onchange	common	nl	aangepaste javascript voor onChange
+custom javascript for onchange	common	nl	aangepaste JavaScript voor onChange
 cut	common	nl	Knippen
 cyprus	common	nl	CYPRUS
 czech republic	common	nl	TSJECHIË
@@ -330,6 +336,7 @@ dark mode	common	nl	Donkere modus
 database error	common	nl	Database fout
 database error!	common	nl	Database fout!
 date	common	nl	Datum
+date + time	common	nl	Datum + Tijd
 date due	common	nl	Einddatum
 date+time	common	nl	Datum+Tijd
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	nl	Datetime poort<br />Indien poort 13 gebruikt wordt, pas dan s.v.p. de firewall regels eerst aan voordat u deze pagina verzendt.<br />(Port: 13 / Host: 129.6.15.28)
@@ -401,6 +408,7 @@ domain name for mail-address, eg. "%1"	common	nl	domeinnaam voor emailadres, bij
 domestic	common	nl	thuis
 dominica	common	nl	DOMINICA
 dominican republic	common	nl	DOMINICAANSE REPUBLIEK
+don't ask again!	common	nl	Niet opnieuw vragen!
 done	common	nl	Gereed
 dos international	common	nl	DOS Internationaal
 download	common	nl	Download
@@ -474,6 +482,8 @@ ethiopia	common	nl	ETHIOPIË
 everything	common	nl	Alles
 exact	common	nl	exact
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	preferences	nl	Example {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - search the field "n_prefix", for "Mr", if found, write Hello Mr., else write Hello Ms.
+example {{letterprefix}} - gives a letter prefix without double spaces, if the title is empty for example	preferences	nl	Voorbeeld {{LETTERPREFIX}} - Geeft een lettervoorvoegsel zonder dubbele spaties, als de titel bijvoorbeeld leeg is
+example {{letterprefix}} - gives a letter prefix without double spaces, if the title is emty for  example	common	nl	Voorbeeld {{LETTERPREFIX}} - Geeft een lettervoorvoegsel zonder dubbele spaties, als de titel bijvoorbeeld leeg is
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	preferences	nl	Example {{NELF role}} - if field role is not empty, you will get a new line with the value of field role
 example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	preferences	nl	Example {{nenvlf role}} - if field role is not empty, set a LF without any value of the field
 exchange this row with the one above	common	nl	verwissel deze rij met die erboven
@@ -605,6 +615,7 @@ how many rows to print	common	nl	Hoeveel rijen af te drukken
 how to show the general egroupware menu ?	common	nl	Hoe moet het algemene EGroupware menu weergegeven worden?
 html	common	nl	HTML
 html link to the current record	common	nl	HTML link naar huidig record
+html links to any entries linked to the current record, excluding attached files	common	nl	HTML-links naar alle vermeldingen gekoppeld aan het huidige record, uitgezonderd bijgevoegde bestanden
 hungary	common	nl	HONGARIJË
 iceland	common	nl	IJSLAND
 id	common	nl	ID
@@ -650,10 +661,12 @@ insert placeholder	common	nl	Plaatshouder invoegen
 insert row after	common	nl	Rij invoegen onder
 insert row before	common	nl	Rij invoegen boven
 insert timestamp into description field	common	nl	Tijdstempel invoegen in beschrijvingsveld
+install	common	nl	Installeer
 install egroupware as mail-handler?	common	nl	EGroupware installeren als mail-handler?
 integer	common	nl	Geheel getal
 international	common	nl	Internationaal
 invalid 2-factor authentication code	common	nl	Ongeldige 2-Factor Authenticatie code
+invalid email	common	nl	Ongeldige e-mail
 invalid filename	common	nl	Ongelde bestandsnaam
 invalid ip address	common	nl	Ongeldig IP-adres
 invalid or expired 'remember me' token	common	nl	Ongeldig of verlopen 'onthoud mij' token
@@ -927,12 +940,15 @@ paste	common	nl	Plakken
 path	common	nl	Pad
 path to user and group files has to be outside of the webservers document-root!!!	common	nl	Pad naar gebruikers- en groepsbestanden. Dit MOET BUITEN het pad liggen van de documentendirectorie van de webserver !!!
 permission denied!	common	nl	Toestemming geweigerd!
+permission denied! this is an administration only feature.	common	nl	Toestemming geweigerd! Dit is alleen voor beheerders.
 permissions to the files/users directory	common	nl	privileges aan de bestanden/gebruikers toekennen
-permisson denied!	common	nl	Toestemming geweigerd
+permisson denied!	common	nl	Toestemming geweigerd!
 personal	common	nl	Persoonlijk
 peru	common	nl	PERU
 pg down	common	nl	Pagina naar benenden
 pg up	common	nl	Pagina omhoog
+pgp encryption	common	nl	PGP-codering
+pgp encryption installation	common	nl	PGP-codering installeren
 philippines	common	nl	FILIPIJNEN
 phone number	common	nl	telefoonnummer
 pitcairn	common	nl	PITCAIRN (EILAND)
@@ -941,10 +957,14 @@ play/pause	common	nl	Afspelen/Pauze
 please %1 by hand	common	nl	Gelieve %1 handmatig uit te voeren
 please enter a name	common	nl	Vul a.u.b. een naam in !
 please enter table-name first !!!	common	nl	Vul a.u.b. eerst de tabelnaam in !!!
+please reload the egroupware desktop (f5 / cmd+r).	common	nl	Laad de EGroupware desktop opnieuw (F5 / Cmd+r).
+please remember to use '%1' as username for local login's from now on!	common	nl	Vergeet niet om vanaf nu '%1' te gebruiken als gebruikersnaam voor lokale aanmeldingen!
 please run setup to become current	common	nl	Voer a.u.b. de setup uit om een actuele versie te verkrijgen
 please select	common	nl	Selecteer a.u.b.
 please set your global preferences	common	nl	Stel a.u.b. uw persoonlijke voorkeuren in !
 please set your preferences for this application	common	nl	Stel a.u.b. uw voorkeuren in voor deze toepassing !
+please type %1 more characters	common	nl	Type nog %1 karakter(s)
+please type 1 more character	common	nl	Typ nog 1 karakter
 please wait...	common	nl	Even geduld a.u.b.
 please, check back with us shortly.	common	nl	Kom svp spoedig bij ons terug.
 pm	common	nl	pm
@@ -1124,7 +1144,7 @@ setup main menu	common	nl	Setup hoofdmenu
 seychelles	common	nl	SEYCHELLEN
 shift	common	nl	Shift
 shift ⇧	common	nl	Shift ⇧
-should the form be submitted or any custom javascript be executed	common	nl	Moet het formulier verzonden worden of aangepaste javascript worden uitgevoerd
+should the form be submitted or any custom javascript be executed	common	nl	Moet het formulier verzonden worden of aangepaste JavaScript worden uitgevoerd
 show	common	nl	Weergeven
 show (no save)	common	nl	Weergeven (niet opslaan)
 show all	common	nl	laat alles zien
@@ -1139,6 +1159,7 @@ show menu	common	nl	toon menu
 show page generation time	common	nl	Verlooptijd van de pagina's weergeven?
 show page generation time on the bottom of the page?	common	nl	Generatietijd van de pagina's weergeven onderaan de pagina?
 show page generation time?	common	nl	Verlooptijd pagina weergeven?
+show password	common	nl	Rodyti slaptažodį
 show the logo's of egroupware and x-desktop on the desktop.	common	nl	Toont de logo's van EGroupware en x-desktop op het bureaublad.
 show values	common	nl	Waarden weergeven
 show/hide	common	nl	zijbalk tonen/verbergen
@@ -1149,9 +1170,10 @@ showing %1 - %2 of %3	common	nl	weergegeven: %1 - %2 van %3
 shows / allows you to enter values into the etemplate for testing	common	nl	toont / staat u toe om testwaardes in de eTemplate in te vullen
 shows/displays etemplate for testing, does not save it before	common	nl	toont eTemplate om te testen, slaat het NIET eerder op
 sierra leone	common	nl	SIERRA LEONE
+sign up	common	nl	Užsiregistruoti
 simple	common	nl	Eenvoudig
 singapore	common	nl	SINGAPORE
-site configuration	common	nl	Siteconfiguratie
+site configuration	common	nl	App configuratie
 size	common	nl	Grootte
 slovakia	common	nl	SLOWAKIJË
 slovenia	common	nl	SLOVENIË
@@ -1365,6 +1387,9 @@ you need to be an egroupware administrator to access this functionality!	common	
 you need to select some entries first!	common	nl	U moet eerst enige gegevens selecteren !
 you need to set enable logging to "%1" to create/update a log.	groupdav	nl	U moet logging naar "%1" aanzetten om een log te maken en bij te houden
 you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	nl	U heeft geprobeerd om de EGroupware toepassing %1 te openen maar u heeft geen toestemming om deze toepassing te gebruiken.
+your account has been updated with new data from your identity provider.	common	nl	Uw account is bijgewerkt met nieuwe gegevens van uw identiteitsprovider.
+your browser is not up-to-date (javascript es6 compatible), you may experience some of the features not working.	common	nl	Uw browser is niet up-to-date (JavaScript ES6 compatibel), het kan zijn dat sommige functies niet werken.
+your key has been restored successfully.	common	nl	Uw sleutel is succesvol hersteld.
 your message could <b>not</b> be sent!<br>	common	nl	Uw bericht kon <b>niet</b> worden verzonden!<br />
 your message has been sent	common	nl	Uw bericht is verzonden
 your password does not have required strength of %1 character classes and minimum length of %2 characters.	common	nl	Uw wachtwoord heeft niet de juiste sterkte van %1 van de karakter klassen en een minimum lengte van %2 karakters

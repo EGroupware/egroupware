@@ -1,10 +1,12 @@
 %1 (%2 new) messages writen for application '%3' and languages '%4'	common	lv	%1(%2 jauns) Ziņojumi uzrakstīti aplikācijai %3 un valodām %4'
 %1 email addresses inserted	common	lv	%1 e-pasta adreses pievienotas
+%1 email(s) added into %2	common	lv	%1 e-pasts(-i) pievienots(-i) uz %2
 %1 etemplates deleted	common	lv	%1 eVeidnes izdzēstas
 %1 etemplates for application '%2' dumped to '%3'	common	lv	%1 eVeidnes %2' aplikācijai izmestas %3'
 %1 etemplates found	common	lv	atrasti %1 eVeidnes
 %1 is not executable by the webserver !!!	common	lv	%1 : Šo webserveris nevar palaist !!!
 %1 matches on search criteria	common	lv	meklēšanas kritērijiem atbilst %1 ieraksti
+%1 more %2 selected ...	common	lv	%1 atlasīts vēl %2...
 %1 new etemplates imported for application '%2'	common	lv	%2 Aplikācijai inmportētas %1 jauni eVeidnes
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	lv	%1EGroupware%2 ir daudzlietotāju, caur tīmekļa pārlūkprogrammu lietojama GrupuWare ,kas programmēta %3PHP%4.
 %s disabled	common	lv	%s nav atļauts
@@ -13,15 +15,26 @@
 %s onchange	common	lv	%s Mainās
 %s readonly	common	lv	%s tikai lasāms
 '%1' copied to clipboard	common	lv	'%1' nokopēts uz starpliktuvi
-'%1' has an invalid format !!!	common	lv	%1' nav derīgs formāts!!!
+'%1' has an invalid format !!!	common	lv	%1' nav derīgs formāts!
 '%1' is not a valid floatingpoint number !!!	common	lv	%1' nav derīgs peldošā komata skaitlis!!!
 '%1' is not a valid integer !!!	common	lv	%1' nav derīgs vesels skaitlis
+'%1' is not a valid json file!	common	lv	'%1' nav derīgs JSON fails
 00 (disable)	admin	lv	00 (disable)
-13 (ntp)	admin	lv	3 (ntp)
+1 day	common	lv	1 diena
+1 hour	common	lv	1 stunda
+1 minute	common	lv	1 minūte
+1 month	common	lv	1 mēnesis
+1 week	common	lv	1 nedēļa
+13 (ntp)	admin	lv	13 (ntp)
+15 minutes	common	lv	15 minūtes
 2-factor authentication code required	common	lv	Nepieciešams 2 faktoru autentifikācijas kods
 2-factor-authentication	common	lv	Autentifikācija ar 2 faktoriem
 2-factor-authentication required	common	lv	Nepieciešama 2 faktoru autentifikācija
 3 minutes	common	lv	3 minūtes
+30 minutes	common	lv	30 minūtes
+30 seconds	common	lv	30 sekundes
+5 minutes	common	lv	5 minūtes
+5 seconds	common	lv	5 sekundes
 80 (http)	admin	lv	80 (http)
 a pattern to be searched for	common	lv	meklējamais paraugs
 abort	common	lv	Abort
@@ -100,6 +113,7 @@ author	common	lv	Autors
 autohide sidebox menus	common	lv	Slēpt izvēlnes automātiski
 automatically hide the sidebox menus?	common	lv	Slēpt izvēlnes automātiski?
 autosave default category	common	lv	Automātiski saglabāt  Noklusēto Kategoriju
+avatar	common	lv	Avatar
 azerbaijan	common	lv	AZERBAIDŽĀNA
 back	common	lv	Atpakaļ
 back to user login	common	lv	Atpakaļ uz lietotāju izvēli
@@ -127,6 +141,7 @@ bottom	common	lv	augšā
 bouvet island	common	lv	BUVĒ SALA
 brazil	common	lv	BRAZĪLIJA
 british indian ocean territory	common	lv	BRITU INDIJAS OKEĀNA TERITORIJA
+browser %1 %2 is not recommended. you may experience issues and not working features. please use the latest version of chrome, firefox or edge. thank you!	common	lv	Pārlūkprogramma %1 %2 nav ieteicama. Var rasties problēmas un nedarboties funkcijas. Lūdzu, izmantojiet jaunāko Chrome, Firefox vai Edge versiju. Paldies!
 brunei darussalam	common	lv	BRUNEJA
 bulgaria	common	lv	BULGĀRIJA
 burkina faso	common	lv	BURKINAFASO
@@ -156,6 +171,7 @@ change	common	lv	Mainīt
 changed	common	lv	Mainīts
 charset	common	lv	utf-8
 check all	common	lv	Parbaudīt visu
+check for empty values in if statements.  example {{if url~empty~~website:}} - if url is not empty, writes "website:"	common	lv	Pārbaudiet, vai IF paziņojumos nav tukšu vērtību. Piemērs {{{IF url~EMPTY~~~Website:}}} - Ja url nav tukšs, raksta "Vietne:".
 check if content should only be displayed but not altered (the content is not send back then!)	common	lv	atzīmē, ja ierakstu vajag tikai parādīt nevis mainīt (saturs atpakaļ netiek sūtīts!)
 check if field has to be filled by user	common	lv	atzīmē, ja lauks jāaizpilda lietotājam
 check installation	common	lv	Pārbaudīt installāciju
@@ -220,6 +236,7 @@ cyprus	common	lv	KIPRA
 czech republic	common	lv	ČEHIJAS REPUBLIKA
 dark mode	common	lv	Tumšais režīms
 date	common	lv	Datums
+date + time	common	lv	Datums + Laiks
 date due	common	lv	Datums paredzēts
 date+time	common	lv	Datums+Laiks
 day	common	lv	Diena
@@ -262,6 +279,7 @@ domain name for mail-address, eg. "%1"	common	lv	domeina vārs e-pasta adresēm,
 domestic	common	lv	Kopmītne
 dominica	common	lv	DOMINIKA
 dominican republic	common	lv	DOMINIKĀNA
+don't ask again!	common	lv	Neprasiet vēlreiz!
 done	common	lv	Gatavs
 download	common	lv	Lejupielādēt
 drop a table - this can not be undone	common	lv	Pabeigt tabulu- tas nevar būt neizdarīts
@@ -316,6 +334,11 @@ etemplate editor	common	lv	eVeidnes redaktors
 etemplate tutorial	common	lv	eVeidnes pamācība
 ethiopia	common	lv	ETIOPIJA
 exact	common	lv	tieši
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	preferences	lv	Piemērs {{{IF n_prefikss~Mr~Sveiks kungs~Sveiks kundze}} - meklējiet laukā "n_prefix", meklējiet "Mr", ja atrasts, rakstiet Hello Mr., citādi rakstiet Hello Ms.
+example {{letterprefix}} - gives a letter prefix without double spaces, if the title is empty for example	preferences	lv	Piemērs {{{LETTERPREFIX}} - Sniedz burta prefiksu bez dubultām atstarpēm, ja virsraksts ir tukšs, piemēram
+example {{letterprefix}} - gives a letter prefix without double spaces, if the title is emty for  example	common	lv	Piemērs {{{LETTERPREFIX}} - Sniedz burta prefiksu bez dubultām atstarpēm, ja virsraksts ir tukšs, piemēram
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	preferences	lv	Piemērs {{{NELF role}} - ja lauks role nav tukšs, parādās jauna rinda ar lauka role vērtību
+example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	preferences	lv	Piemērs {{{nenvlf role}} - ja lauka loma nav tukša, nosaka LF bez lauka vērtības
 exchange this row with the one above	common	lv	samainīt šo rindu ar iepriekšējo
 exchange this two columns	common	lv	apmainīt šīs divas kolonnas
 export the loaded etemplate into a xml-file	common	lv	pārsūtīt ielādēto eVeidni xml datnē
@@ -418,6 +441,7 @@ how many icons should be shown in the navbar (top of the page). additional icons
 how many rows to print	common	lv	Cik rindu drukāt
 how to show the general egroupware menu ?	common	lv	Kā parādīt vispārējo EGroupware izvēlni
 html	common	lv	HTML
+html links to any entries linked to the current record, excluding attached files	common	lv	HTML saites uz visiem ierakstiem, kas saistīti ar pašreizējo ierakstu, izņemot pievienotos failus
 hungary	common	lv	UNGĀRIJA
 iceland	common	lv	ISLANDE
 id	common	lv	ID
@@ -443,10 +467,12 @@ insert new row after this one	common	lv	pēc šīs rindiņas ievieto jaunu rindi
 insert new row in front of first line	common	lv	pierms pirmās līnijas ievieto jaunu rindiņu
 insert placeholder	common	lv	Ievietot vietvārdu
 insert timestamp into description field	common	lv	Ievietot laika zīmogu apraksta laukā
+install	common	lv	Uzstādīt
 install egroupware as mail-handler?	common	lv	Instalēt EGroupware kā pasta apstrādātāju?
 integer	common	lv	Vesels skaitlis
 international	common	lv	Internacionāls
 invalid 2-factor authentication code	common	lv	Nederīgs 2 faktoru autentifikācijas kods
+invalid email	common	lv	Nederīgs e-pasts
 invalid filename	common	lv	Nederīgs lauka nosaukums
 invalid ip address	common	lv	Nederīga IP adrese
 invalid or expired 'remember me' token	common	lv	Nederīgs vai beidzies "atcerēties mani" žetona derīguma termiņš
@@ -648,20 +674,32 @@ password	common	lv	Parole
 password could not be changed	common	lv	Parole netika nomainīta
 password has been updated	common	lv	Parole tika atjaunināta
 path to user and group files has to be outside of the webservers document-root!!!	common	lv	Ceļam uz lietotāju un grupu failiem JĀBŪT ĀRPUS tīkla servera saknes dokumenta!!!
+permission denied!	common	lv	Atļauja liegta!
+permission denied! this is an administration only feature.	common	lv	Atļauja liegta! Šī ir tikai administrācijas funkcija.
 permissions to the files/users directory	common	lv	atļaujas datņu/lietotāju direktorijai
+permisson denied!	common	lv	Atļauja liegta!
 personal	common	lv	Personīgs
 peru	common	lv	PERU
+pg down	common	lv	Lapa nav atvērta
+pg up	common	lv	Lapas augšup
+pgp encryption	common	lv	PGP šifrēšana
+pgp encryption installation	common	lv	PGP šifrēšanas instalēšana
 philippines	common	lv	FILIPĪNAS
-phone number	common	lv	telefona nummurs
+phone number	common	lv	Telefona nummurs
 pitcairn	common	lv	PITKERNA
 placeholders	common	lv	Vietrāži
 play/pause	common	lv	Atskaņot/pauzēt
 please %1 by hand	common	lv	Lūdzu, %1 ar roku
 please enter a name	common	lv	Lūdzu, ieraksti savu vārdu !
 please enter table-name first !!!	common	lv	VIspirms norādiet tabulas nosaukumu, lūdzu !!!
+please reload the egroupware desktop (f5 / cmd+r).	common	lv	Lūdzu, pārlādējiet EGroupware darbvirsmu (F5 / Cmd+r).
+please remember to use '%1' as username for local login's from now on!	common	lv	Lūdzu, neaizmirstiet turpmāk vietējiem pieteikumiem kā lietotājvārdu izmantot '%1'!
+please run setup to become current	common	lv	Palaist iestatīšanu, lai kļūtu aktuāls
 please select	common	lv	Lūdzu izvēlies
 please set your global preferences	common	lv	Lūdzu ierakstiet galvenos datus par sevi !
 please set your preferences for this application	common	lv	Lūdzu uzstādi savas izvēles šai programmatūrai
+please type %1 more characters	common	lv	Lūdzu, ievadiet vēl %1 rakstzīmi(-es)
+please type 1 more character	common	lv	Lūdzu, ievadiet vēl 1 rakstzīmi
 please wait...	common	lv	Lūdzu uzgaidi...
 pm	common	lv	pēcpusdienā
 poland	common	lv	POLIJA
@@ -785,6 +823,7 @@ show all categorys	common	lv	Rādīt visas kategorijas
 show menu	common	lv	rādīt izvēlni
 show page generation time	common	lv	Parādīt lapas ģenerēšanas laiku
 show page generation time on the bottom of the page?	common	lv	Parādīt lapas ģenerēšanas laiku lapas apakšpusē?
+show password	common	lv	Rādīt paroli
 show values	common	lv	Rādīt vērtības
 show/hide	common	lv	parādīt/noslēpt sānu joslu
 show_more_apps	common	lv	rādīt_vairāk_aplikācijas
@@ -794,8 +833,9 @@ showing %1 - %2 of %3	common	lv	rādu %1 - %2 no %3
 shows / allows you to enter values into the etemplate for testing	common	lv	parāda/ ļauj ievadīt vērtības eVeidnē testēšanai
 shows/displays etemplate for testing, does not save it before	common	lv	parāda/ attēlo eVeidni testēšanai, pirms tam nesaglabājot
 sierra leone	common	lv	SJERRALEONE
+sign up	common	lv	Reģistrēties
 singapore	common	lv	SINGAPŪRA
-site configuration	common	lv	Lapas konfigurācija
+site configuration	common	lv	Lietotņu konfigurācija
 size	common	lv	Izmērs
 slovakia	common	lv	SLOVĀKIJA
 slovenia	common	lv	SLOVĒNIJA
@@ -941,6 +981,9 @@ you have selected an invalid date	common	lv	Jūs izvēlējāties nepareizu datum
 you have selected an invalid main category	common	lv	Jūs izvēlējāties nepareizu galveno katekoriju !
 you have successfully logged out	common	lv	Jūs veiksmīgi beidzāt darbu
 you need to add the webserver user '%1' to the group '%2'.	common	lv	Jums ir jāpievieno web servera lietotājs '%1' grupai '%2'.
+your account has been updated with new data from your identity provider.	common	lv	Jūsu konts ir atjaunināts ar jauniem datiem no jūsu identitātes nodrošinātāja.
+your browser is not up-to-date (javascript es6 compatible), you may experience some of the features not working.	common	lv	Jūsu pārlūkprogramma nav atjaunināta (saderīga ar JavaScript ES6), tāpēc dažas funkcijas var nedarboties.
+your key has been restored successfully.	common	lv	Jūsu atslēga ir veiksmīgi atjaunota.
 your message could <b>not</b> be sent!<br>	common	lv	Jūsu ziņa <b>netika<b> nosūtita!<br>
 your message has been sent	common	lv	Jūsu ziņa tika nosūtīta
 your password does not have required strength of %1 character classes and minimum length of %2 characters.	common	lv	Jūsu parolei nav nepieciešamās %1 rakstzīmju klases stipruma un minimālā garuma %2 rakstzīmju.

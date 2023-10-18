@@ -1,17 +1,31 @@
 %1 added	addressbook	et	%1 lisatud
+%1 contact(s) %2, %3 failed because of %4 !!!	addressbook	et	%1 kontakt(id) %2, %3 ebaõnnestusid %4 tõttu !!!
 %1 shared this contact on %2 with %3 %4	addressbook	et	%1 jagas seda kontakti %2 %3 %4
 accounts	addressbook	et	Kontod
 actions	addressbook	et	Tegevused
 add %1	addressbook	et	Lisa %1
 add a new contact	addressbook	et	Lisa uus kontakt
+add customfield to links of addressbook, which displays in other applications. the default value is none customfield.	addressbook	et	Lisa aadressiraamatu linkidele kohandatud väli, mis kuvatakse teistes rakendustes. Vaikeväärtus on none customfield.
+add to bcc	addressbook	et	Lisa Pimekopeeringusse
+add to cc	addressbook	et	Lisa koopia
+add to distribution list	addressbook	et	Lisada jaotamisnimekirja
+add to distribution list:	addressbook	et	Lisada jaotamisnimekirja:
+add to to	addressbook	et	Lisa juurde
 added	addressbook	et	Lisatud
 added by synchronisation	addressbook	et	lisatud sünkroniseerimise käigus
 advanced search	addressbook	et	Laiendatud Otsing
+allow	addressbook	et	Luba
+allow for contacts only	addressbook	et	Luba ainult kontaktidele
 always	addressbook	et	alati
+audio call	addressbook	et	Helikõne
 birthday	common	et	Sünnipäev
 birthdays	common	et	Sünnipäevad
+browser location	addressbook	et	Brauseri asukoht
+calendar integration	addressbook	et	Kalendri integreerimine
 cell phone	addressbook	et	Mobiil telefon
+change addressbook when updating	addressbook	et	Muuda aadressiraamatut uuendamisel
 check all	addressbook	et	Kontrolli kõik
+choose pre-defined map source or use custom url (use %r = street, %t = city, %c = country, %z = zipcode)	admin	et	Valige eelnevalt määratud kaardiallikas või kasutage kohandatud URL-i (kasutage %r = tänav, %t = linn, %c = riik, %z = postiindeks).
 city	common	et	Linn
 configuration	common	et	Konfiguratsioon
 contact	common	et	Kontakt
@@ -19,12 +33,17 @@ contains	addressbook	et	sisaldab
 country	common	et	Riik
 create new links	addressbook	et	Tee uued lingid
 created	addressbook	et	Tehtud
+crm-view	addressbook	et	CRM vaade
 csv-fieldname	addressbook	et	CSV-Väljanimi
 csv-filename	addressbook	et	CSV-Failinimi
 default	addressbook	et	Vaikimisi
+default action on double-click	addressbook	et	Topeltklõpsu vaikimisi tegevus
 default filter	addressbook	et	Vaikimisi Filter
+default geolocation source address	addressbook	et	Vaikimisi GeoLocation allika aadress
 delete this contact	addressbook	et	Kustuta see kontakt
 deleted	addressbook	et	kustutatud
+disable	addressbook	et	Lülita välja
+disable last/next event column	addressbook	et	Viimase/järgmise sündmuse veeru keelamine
 doesn't matter	addressbook	et	pole tähtis
 download	addressbook	et	Lae alla
 duplicate threshold	addressbook	et	Duplitseeritud künnis
@@ -32,15 +51,26 @@ duplicate warning	addressbook	et	Duplikaadi hoiatus
 duplicates	addressbook	et	Duplikaadid
 duration	addressbook	et	Kestvus
 email & internet	addressbook	et	Email & Internet
+empty addressbook before importing	addressbook	et	Kustutage aadressiraamatu kirjed, mis ei ole CSV-loendis
 empty for all	addressbook	et	tühi kõigijaoks
 end	addressbook	et	Lõpp
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	addressbook	et	Näide {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - otsi väljal "n_prefix", et leida "Mr", kui leitakse, siis kirjuta Hello Mr., muidu kirjuta Hello Ms.
+example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	preferences	et	Näide {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Näide: Mr Dr. James Miller
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	addressbook	et	Näide {{NELF roll}} - kui väli roll ei ole tühi, saate uue rea, kus on välja roll väärtus
+example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	addressbook	et	Näide {{nenvlf roll}} - kui väli roll ei ole tühi, seatakse LF ilma väljal oleva väärtuseta
 existing links	addressbook	et	Eksisteerivad lingid
+exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	et	Ekspordib kontaktid aadressiraamatust CSV-faili.  CSV tähendab 'Comma Separated Values' (komadega eraldatud väärtused). Valikute vahekaardil saate valida ka muid eraldajaid.
+favorite phone	addressbook	et	Lemmikutelefon
 fax	addressbook	et	Faks
 fields to check for duplicates	addressbook	et	Väljad duplikaatide kontrollimiseks
 fields to consider when looking for duplicate contacts.	addressbook	et	Väljad, mida dubleerivate kontaktide otsimisel arvesse võtta.
 fieldseparator	addressbook	et	Väljaeraldaja
+for serial letter use this tag. put the content, you want to repeat between two tags.	addressbook	et	Kasutage seda tagi sarikakirja jaoks. Asetage sisu, mida soovite korrata, kahe sildi vahele.
+freebusy uri	addressbook	et	FreeBusy URI
 full name	addressbook	et	Täis nimi
 general	admin	et	Üldine
+geolocation	addressbook	et	GeoLocation
+geolocation integration	admin	et	GeoLocation integratsioon
 global categories	addressbook	et	Globaalsed Kategooriad
 hide all accounts	addressbook	et	Peida kõik kontod
 hide user groups as distribution lists	addressbook	et	Peida kasutajarühmad kui jaotamisloendid
@@ -48,25 +78,37 @@ hides accounts completly from the adressbook.	addressbook	et	Peida kasutajakonto
 how many fields must match for the record to be considered a duplicate.	addressbook	et	Mitu välja peab kattuma, et kirjet saaks pidada duplikaadiks.
 icon	addressbook	et	Ikoon
 import	addressbook	et	Import
+importer's personal	addressbook	et	Importija isiklik
+imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	et	Impordib kontaktid aadressiraamatusse CSV-failist. CSV tähendab "komadega eraldatud väärtusi". Valikute vahekaardil saate valida ka teisi eraldajaid.
+imports contacts into your addressbook from a vcard file.	addressbook	et	Impordib kontaktid oma aadressiraamatusse vCard-failist.
 infolog	addressbook	et	InfoLog Kontakt
-infolog-organisation	addressbook	et	InfoLog Organisatsioon
+infolog-organisation	addressbook	et	InfoLogi korraldus
+invite to current call	addressbook	et	Kutsuda jooksvale kõnele
 last modified	addressbook	et	Viimati muudetud
 links	addressbook	et	Lingid
 location	addressbook	et	Asukoht
+mail vcard	addressbook	et	eMail vCard
 merge duplicates	addressbook	et	Dubleeringute ühendamine
 merge into first or account, deletes all other!	addressbook	et	Ühenda esimesse või kontosse, kustutab kõik teised!
 move to addressbook	addressbook	et	Liikumine aadressiraamatusse
+name, email, phone	addressbook	et	Nimi, e-post, telefon
 no country selected	addressbook	et	Riik ei ole valitud
 no distribution list	addressbook	et	Jaotamisloend puudub
 not shared	addressbook	et	ei ole jagatud
 organisation	addressbook	et	Organisatsioon
 participants	addressbook	et	Osalejad
 permission denied !!!	addressbook	et	Õigused puuduvad !!!
+pgp key	addressbook	et	PGP-võti
 photo	addressbook	et	Foto
 prevent deleting of contacts	admin	et	Kontaktide kustutamise vältimine
+public sharing url	addressbook	et	Avalik jagamise URL
+remove from distribution list	addressbook	et	Eemalda jaotamisloendist
 repetition	addressbook	et	Kordus
+schedule a video conference	addressbook	et	Videokonverentsi planeerimine
 search letter	addressbook	et	Otsi kirja
 select all	addressbook	et	Märgi kõik
+select an opened dialog	addressbook	et	Valige avatud dialoog
+send fax via email by replacing fax number with an email address	addressbook	et	Faksi saatmine e-posti teel, asendades faksinumbri e-posti aadressiga
 share into addressbook	addressbook	et	Jaga aadressiraamatusse
 share writable	addressbook	et	Jaga kirjutatav
 shared	addressbook	et	jagatud
@@ -74,16 +116,23 @@ shared by me	addressbook	et	Jagatud minu poolt
 shared into addressbook %1	addressbook	et	jagatud aadressiraamatusse %1
 shared with	addressbook	et	Jagatud koos
 show	addressbook	et	Näita
+smime key	addressbook	et	S/MIME võti
 start	admin	et	Start
 state	common	et	Maakond
 street	common	et	Tänav
+the zip extension is needed, to insert contact data in openoffice or msoffice documents.	addressbook	et	Zip-laiend on vajalik, et sisestada kontaktandmed LibreOffice'i või MS-Office'i dokumentidesse.
 translation	addressbook	et	Tõlkimine
+type	addressbook	et	Sisestage
 unshare	addressbook	et	Enam ei jaga
 unshared	addressbook	et	ei ole enam jagatud
 updated	addressbook	et	uuendatud
 user groups are automatically shown as distribution lists.	addressbook	et	Kasutajagrupid kuvatakse automaatselt jaotamisloenditena.
+video call	addressbook	et	Videokõne
 weekday	addressbook	et	Nädalati
+when viewing a contact, show linked entries from the selected application	addressbook	et	Kontaktide vaatamisel näitab lingitud kirjeid valitud rakendusest
 when you merge entries into documents, they will be stored here.  if no directory is provided, they will be stored in your home directory (/home/unverricht)	addressbook	et	Kui ühendate kirjeid dokumentidesse, salvestatakse need siia. Kui kataloogi pole antud, salvestatakse need teie kodukataloogi (/home/...).
 wrong - try again ...	addressbook	et	Vale - proovi uuesti ...
+yes, only admins can purge deleted items	admin	et	Jah, ainult administraatorid saavad kustutada kustutatud kirjeid
+yes, users can purge their deleted items	admin	et	Jah, kasutajad saavad kustutada oma kustutatud elemente
 you are not allowed to share into the addressbook of %1	addressbook	et	Teil ei ole lubatud jagada aadressiraamatusse %1
 you can respond by visiting:	addressbook	et	Sa saad vastata külastates:

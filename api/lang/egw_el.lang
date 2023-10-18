@@ -1,8 +1,11 @@
 %1 email addresses inserted	common	el	%1 διευθύνσεις email εισήχθησαν
+%1 email(s) added into %2	common	el	%1 email(s) που προστέθηκαν στο %2
 %1 is not executable by the webserver !!!	common	el	%1 δεν είναι εκτελέσιμο από τον webserver !!!
+%1 more %2 selected ...	common	el	%1 περισσότερα %2 επιλεγμένα...
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	el	%1Επιλέξτε έναν άλλο κατάλογο%2<br />ή κάντε %3 εγγράψιμο από τον webserver
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	el	%1EGroupware%2 είναι ένα multi-user, web-based groupware suite γραμμένο σε %3PHP%4.
 '%1' copied to clipboard	common	el	'%1' αντιγράφεται στο πρόχειρο
+'%1' is not a valid json file!	common	el	Το '%1' δεν είναι έγκυρο αρχείο JSON
 00 (disable)	admin	el	00 (Απενεργοποίηση)
 1 day	common	el	5 sekuntia
 1 hour	common	el	1 ώρα
@@ -91,6 +94,7 @@ autohide sidebox menus	common	el	Αυτόματη απόκρυψη μενού
 automatically hide the sidebox menu's?	common	el	Θέλετε αυτόματη απόκρυψη μενού;
 automatically hide the sidebox menus?	common	el	Θέλετε αυτόματη απόκρυψη μενού;
 autosave default category	common	el	Αυτόματη αποθήκευση της προεπιλεγμένης κατηγορίας
+avatar	common	el	Avatar
 azerbaijan	common	el	ΑΖΕΡΜΠΑΪΤΖΑΝ
 back	common	el	Επιστροφή
 back to user login	common	el	Επιστροφή στη σελίδα σύνδεσης
@@ -117,6 +121,7 @@ bottom	common	el	Κάτω τμήμα
 bouvet island	common	el	ΝΗΣΟΙ ΜΠΟΥΒΕ
 brazil	common	el	ΒΡΑΖΙΛΙΑ
 british indian ocean territory	common	el	ΒΡΕΤΑΝΙΚΕΣ ΚΤΗΣΕΙΣ ΙΝΔΙΚΟΥ ΩΚΕΑΝΟΥ
+browser %1 %2 is not recommended. you may experience issues and not working features. please use the latest version of chrome, firefox or edge. thank you!	common	el	Το πρόγραμμα περιήγησης %1 %2 δεν συνιστάται. Ενδέχεται να αντιμετωπίσετε προβλήματα και να μην λειτουργούν οι λειτουργίες. Παρακαλούμε χρησιμοποιήστε την τελευταία έκδοση του Chrome, του Firefox ή του Edge. Σας ευχαριστούμε!
 brunei darussalam	common	el	ΜΠΡΟΥΝΕΪ ΝΤΑΡΟΥΣΑΛΑΜ
 bulgaria	common	el	ΒΟΥΛΓΑΡΙΑ
 burkina faso	common	el	ΜΠΟΥΡΚΙΝΑ ΦΑΣΟ
@@ -144,6 +149,7 @@ change	common	el	Αλλαγή
 changed	common	el	Έγινε αλλαγή
 charset	common	el	utf-8
 check all	common	el	Έλεγχος όλων
+check for empty values in if statements.  example {{if url~empty~~website:}} - if url is not empty, writes "website:"	common	el	Έλεγχος για κενές τιμές σε δηλώσεις IF. Παράδειγμα {{IF url~EMPTY~~Website:}} - Εάν το url δεν είναι κενό, γράφει "Ιστοσελίδα:"
 check installation	common	el	Ελεγχος εγκατάστασης
 check now	common	el	Έλεγχος τώρα
 checkbox	common	el	Checkbox
@@ -206,7 +212,9 @@ cyprus	common	el	ΚΥΠΡΟΣ
 czech republic	common	el	ΤΣΕΧΙΑ
 dark mode	common	el	Σκοτεινή λειτουργία
 date	common	el	Ημερομηνία
+date + time	common	el	Ημερομηνία + Ώρα
 date due	common	el	Ημερομηνία ολοκλήρωσης
+date+time	common	el	Ημερομηνία+Ώρα
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	el	Datetime port.<br> Aν χρησιμοποιείται τη θύρα 13, παρακαλώ ορίστε καταλλήλως τους κανόνες του firewall πριν υποβάλετε αυτή τη σελίδα.<br>(Port: 13 / Host: 129.6.15.28)
 day	common	el	Ημέρα
 days	common	el	ημέρες
@@ -245,6 +253,7 @@ domain name for mail-address, eg. "%1"	common	el	Όνομα Τομέα για δ
 domestic	common	el	Εσωτερικός
 dominica	common	el	ΔΟΜΙΝΙΚΗ
 dominican republic	common	el	ΔΟΜΙΝΙΚΑΝΙΚΗ ΔΗΜΟΚΡΑΤΙΑ
+don't ask again!	common	el	Μη ρωτάτε ξανά!
 done	common	el	Ολοκληρώθηκε
 download	common	el	Καταβίβαση
 duration	common	el	Διάρκεια
@@ -278,6 +287,7 @@ estonia	common	el	ΕΣΘΟΝΙΑ
 ethiopia	common	el	ΑΙΘΙΟΠΙΑ
 everything	common	el	Όλα
 exact	common	el	ακριβώς
+example {{letterprefix}} - gives a letter prefix without double spaces, if the title is emty for  example	common	el	Παράδειγμα {{LETTERPREFIX}} - Δίνει ένα γράμμα προθέματος χωρίς διπλά κενά, αν ο τίτλος είναι άδειος για παράδειγμα
 failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	el	Αποτυχία Σύνδεσης με τον Server ή Άκυρη Απάντηση από τον Server. Προσπαθήστε να εισέλθετε ξανά. Επικοινωνήστε με τον Admin σε περίπτωση αποτυχίας.
 falkland islands (malvinas)	common	el	ΝΗΣΟΙ ΦΩΚΛΑΝΤ (ΜΑΛΒΙΝΑΣ)
 faroe islands	common	el	ΝΗΣΟΙ ΦΕΡΟΕ
@@ -364,6 +374,7 @@ how many icons should be shown in the navbar (top of the page). additional icons
 how many rows to print	common	el	Πόσες γραμμές θα εκτυπωθούν
 how to show the general egroupware menu ?	common	el	Πώς να εμφανίζεται το γενικό μενού EGroupware
 html	common	el	HTML
+html links to any entries linked to the current record, excluding attached files	common	el	Σύνδεσμοι HTML για όλες τις καταχωρήσεις που συνδέονται με την τρέχουσα εγγραφή, εκτός από τα συνημμένα αρχεία
 hungary	common	el	ΟΥΓΓΑΡΙΑ
 iceland	common	el	ΙΣΛΑΝΔΙΑ
 id	common	el	Id
@@ -386,9 +397,11 @@ insert placeholder	common	el	Εισαγωγή σημείου τοποθέτησ�
 insert row after	common	el	Εισαγωγή σειράς μετά
 insert row before	common	el	Εισαγωγή σειράς πριν
 insert timestamp into description field	common	el	Εισαγωγή χρονοσφραγίδας στο πεδίο περιγραφής
+install	common	el	Εγκατάσταση
 install egroupware as mail-handler?	common	el	Εγκατάσταση του EGroupware ως χειριστή αλληλογραφίας;
 international	common	el	Διεθνείς
 invalid 2-factor authentication code	common	el	Μη έγκυρος κωδικός ελέγχου ταυτότητας 2 παραγόντων
+invalid email	common	el	Μη έγκυρο email
 invalid filename	common	el	Άκυρο όνομα αρχείου
 invalid ip address	common	el	Ακυρη διεύθυνση ΙΡ
 invalid or expired 'remember me' token	common	el	Άκυρο ή ληγμένο κουπόνι 'θυμήσου με'
@@ -577,9 +590,16 @@ password must contain at least %1 numbers	common	el	Ο κωδικός πρέπε
 password must contain at least %1 special characters	common	el	Ο κωδικός πρέπει να περιέχει τουλάχιστον %1 ειδικούς χαρακτήρες
 password must have at least %1 characters	common	el	Ο κωδικός πρέπει να περιέχει τουλάχιστον %1 χαρακτήρες
 path to user and group files has to be outside of the webservers document-root!!!	common	el	Η διαδρομή του χρήστη και των αρχείων ομάδας ΠΡΕΠΕΙ ΝΑ ΕΙΝΑΙ ΕΚΤΟΣ του webserver document-root!!!
+permission denied!	common	el	Άδεια απορρίπτεται!
+permission denied! this is an administration only feature.	common	el	Άδεια απορρίπτεται! Αυτή είναι μια λειτουργία μόνο για διαχειριστές.
 permissions to the files/users directory	common	el	δικαιώματα για τον κατάλογο αρχείων/χρηστών
+permisson denied!	common	el	Άδεια απορρίπτεται!
 personal	common	el	Προσωπικό
 peru	common	el	ΠΕΡΟΥ
+pg down	common	el	Σελίδα κάτω
+pg up	common	el	Σελίδα επάνω
+pgp encryption	common	el	Κρυπτογράφηση PGP
+pgp encryption installation	common	el	Εγκατάσταση κρυπτογράφησης PGP
 philippines	common	el	ΦΙΛΙΠΠΙΝΕΣ
 phone number	common	el	Αριθμός τηλεφώνου
 pitcairn	common	el	ΠΙΤΚΕΡΝ
@@ -587,10 +607,14 @@ placeholders	common	el	Καταχωρητής
 play/pause	common	el	Възпроизвеждане/пауза
 please %1 by hand	common	el	Παρακαλώ %1 με το χέρι
 please enter a name	common	el	Παρακαλώ εισάγετε όνομα
+please reload the egroupware desktop (f5 / cmd+r).	common	el	Επαναφορτώστε την επιφάνεια εργασίας του EGroupware (F5 / Cmd+r).
+please remember to use '%1' as username for local login's from now on!	common	el	Παρακαλούμε θυμηθείτε να χρησιμοποιείτε το '%1' ως όνομα χρήστη για τοπικές συνδέσεις από εδώ και στο εξής!
 please run setup to become current	common	el	Παρακαλώ τρέξτε το setup για να γίνετε έγκυρος
 please select	common	el	Παρακαλώ επιλέξτε
 please set your global preferences	common	el	Παρακαλώ ορίστε τις παγκόσμιες ρυθμίσεις σας!
 please set your preferences for this application	common	el	Παρακαλώ ορίστε τις ρυθμίσεις σας γι' αυτή την εφαρμογή
+please type %1 more characters	common	el	Παρακαλώ πληκτρολογήστε %1 επιπλέον χαρακτήρα(-ους)
+please type 1 more character	common	el	Παρακαλώ πληκτρολογήστε 1 επιπλέον χαρακτήρα
 please wait...	common	el	Παρακαλώ περιμένετε
 poland	common	el	ΠΟΛΩΝΙΑ
 portugal	common	el	ΠΟΡΤΟΓΑΛΙΑ
@@ -697,15 +721,17 @@ show menu	common	el	Εμφάνιση του μενού
 show page generation time	common	el	Εμφάνιση χρόνου δημιουργίας σελίδας
 show page generation time on the bottom of the page?	common	el	Να εμφανισθεί ο χρόνος δημιουργίας της σελίδας στο τέλος της σελίδας;
 show page generation time?	common	el	Εμφάνιση σελίδας δημιουργίας ώρας;
+show password	common	el	Εμφάνιση κωδικού πρόσβασης
 show the logo's of egroupware and x-desktop on the desktop.	common	el	Εμφάνιση των λογότυπων του EGroupware και της "πρώην" επιφάνειας εργασίας στην επιφάνεια εργασίας
 show/hide	common	el	εμφάνιση/απόκρυψη πλευρικής μπάρας
 show_more_apps	common	el	show_more_apps
 showing %1	common	el	εμφάνιση %1
 showing %1 - %2 of %3	common	el	εμφάνιση %1 - %2 από %3
 sierra leone	common	el	ΣΙΕΡΡΑ ΛΕΟΝΕ
+sign up	common	el	Εγγραφή
 simple	common	el	Απλό
 singapore	common	el	ΣΙΓΚΑΠΟΥΡΗ
-site configuration	common	el	Διαμόρφωση ιστιοσελίδας
+site configuration	common	el	Διαμόρφωση εφαρμογής
 size	common	el	Μέγεθος
 slovakia	common	el	ΣΛΟΒΑΚΙΑ
 slovenia	common	el	ΣΛΟΒΕΝΙΑ
@@ -836,6 +862,9 @@ you have selected an invalid date	common	el	Επιλέξατε άκυρη ημε
 you have selected an invalid main category	common	el	Επιλέξατε άκυρη βασική κατηγορία!
 you have successfully logged out	common	el	Επιτυχής έξοδος
 you need to add the webserver user '%1' to the group '%2'.	common	el	Πρέπει να προσθέσετε τον webserver χρήστη '%1' στην ομάδα '%2'.
+your account has been updated with new data from your identity provider.	common	el	Ο λογαριασμός σας έχει ενημερωθεί με νέα δεδομένα από τον πάροχο της ταυτότητάς σας
+your browser is not up-to-date (javascript es6 compatible), you may experience some of the features not working.	common	el	Το πρόγραμμα περιήγησής σας δεν είναι ενημερωμένο (συμβατό με JavaScript ES6), ενδέχεται να παρατηρήσετε ότι ορισμένες από τις λειτουργίες δεν λειτουργούν.
+your key has been restored successfully.	common	el	Το κλειδί σας έχει αποκατασταθεί με επιτυχία.
 your message could <b>not</b> be sent!<br>	common	el	Το μήνυμά σας <b>δεν</b> μπόρεσε να σταλεί!<br>
 your message has been sent	common	el	To μήνυμά σας εστάλει
 your password does not have required strength of %1 character classes and minimum length of %2 characters.	common	el	Ο κωδικός πρόσβασής σας δεν έχει την απαιτούμενη ισχύ των κατηγοριών χαρακτήρων %1 και το ελάχιστο μήκος των χαρακτήρων %2.

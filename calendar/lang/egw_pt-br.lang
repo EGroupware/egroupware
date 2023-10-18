@@ -1,6 +1,7 @@
 %1 %2 in %3	calendar	pt-br	%1 %2 em %3
 %1 days	calendar	pt-br	%1 dias
 %1 event(s) %2	calendar	pt-br	%1 evento (s) 2%
+%1 events in ical file, only first one imported and displayed!	calendar	pt-br	%1 eventos no arquivo iCal, apenas o primeiro foi importado e exibido!
 %1 hours	calendar	pt-br	%1 horas
 %1 minutes	calendar	pt-br	%1 minutos
 %1 records imported	calendar	pt-br	%1 registro(s) importado(s)
@@ -23,6 +24,7 @@ actions...	calendar	pt-br	Ações...
 add alarm	calendar	pt-br	Adicionar aviso
 add current view as favorite	calendar	pt-br	Adicionar visão atual como favorita
 add new alarm	calendar	pt-br	Adicionar novo alarme
+add new event	calendar	pt-br	Adicionar novo compromisso
 add new participants or resource	calendar	pt-br	Adicionar novos participantes ou recurso
 add timesheet entry	calendar	pt-br	Adicionar registro à planilha de tempo
 added	calendar	pt-br	Adicionado
@@ -46,6 +48,7 @@ all participants	calendar	pt-br	Todos os participantes
 allows to edit the event again	calendar	pt-br	Permite editar o evento novamente
 always	calendar	pt-br	sempre
 apply the changes	calendar	pt-br	aplicar as alterações
+attention	calendar	pt-br	Atendimento
 automatically purge old events after	admin	pt-br	Purgar automaticamente eventos antigos depois
 back half a month	calendar	pt-br	voltar metade de um mês
 back one month	calendar	pt-br	voltar um mês
@@ -78,9 +81,11 @@ can't aquire lock!	calendar	pt-br	Não foi possível acesso exclusivo ao registr
 canceled	calendar	pt-br	Cancelado
 category %1 removed because of missing rights	calendar	pt-br	Categoria %1 removido por causa de direitos perdidos
 category acl	common	pt-br	Categoria ACL
+category report	calendar	pt-br	Relatório de categoria
 chair	calendar	pt-br	Cadeira
 change history	calendar	pt-br	Mudar a história
 change your status	calendar	pt-br	Alterar seu status
+changed event-data applied	calendar	pt-br	Dados de eventos alterados aplicados
 charset of file	calendar	pt-br	Charset do arquivo
 check all	calendar	pt-br	Verificar todos
 choose a category	calendar	pt-br	Escolha uma categoria
@@ -108,6 +113,7 @@ custom_2	common	pt-br	Free / Busy
 daily	calendar	pt-br	Diária
 daily tables	calendar	pt-br	Tabelas diárias
 data exchange settings	calendar	pt-br	Configurações de troca de dados
+date range	calendar	pt-br	Intervalo de datas
 day	calendar	pt-br	Dia
 day of week tables	calendar	pt-br	Dia de tabelas semana
 days	calendar	pt-br	dias
@@ -170,6 +176,7 @@ every user can invite other users and groups	admin	pt-br	Cada usuário pode conv
 exception	calendar	pt-br	Exceção
 exception created - you can now edit or delete it	calendar	pt-br	Exceção criada - você agora pode editá-la ou removê-la
 exceptions	calendar	pt-br	Exceções
+exclude weekend	calendar	pt-br	Excluir fim de semana
 execute a further action for this entry	calendar	pt-br	Executar uma outra ação para este registro
 existing links	calendar	pt-br	Links existentes
 exists	calendar	pt-br	Existe
@@ -274,6 +281,7 @@ maximum available quantity of %1 exceeded!	calendar	pt-br	A quantidade máxima d
 meeting request	calendar	pt-br	Pedido de reunião
 meetingrequest to all participants	calendar	pt-br	Meetingrequest a todos os participantes
 merge document...	calendar	pt-br	Mesclar documento ...
+min days	calendar	pt-br	Dias mínimos
 minimum number of users for showing day view as consolidated.	calendar	pt-br	Número mínimo de usuários para mostrar a visualização do dia como consolidada.
 minimum number of users for showing week view as consolidated.	calendar	pt-br	Número mínimo de usuários para mostrar a visualização semanal como consolidada.
 minutes	calendar	pt-br	minutos
@@ -333,6 +341,7 @@ one week	calendar	pt-br	uma semana
 one year	calendar	pt-br	um ano
 only the initial date of that recurring event is checked!	calendar	pt-br	Somente a data inicial do evento recorrente foi informada!
 open todo's:	calendar	pt-br	Abrir tarefas
+output unit	calendar	pt-br	Unidade de saída
 overlap holiday	calendar	pt-br	sobrepor feriado
 participants	calendar	pt-br	Participantes
 participants uninvited from an event	calendar	pt-br	Participantes desconvidados de um evento
@@ -352,6 +361,7 @@ quantity	calendar	pt-br	Quantidade
 re-edit event	calendar	pt-br	Reeditar evento
 receive email updates	calendar	pt-br	Receber atualizações via correio eletrônico
 receive summary of appointments	calendar	pt-br	Receber sumário dos compromissos
+recordings	calendar	pt-br	Registros
 recurrence	calendar	pt-br	Repetição
 recurring event	calendar	pt-br	Evento recorrente
 rejected	calendar	pt-br	Rejeitado
@@ -362,6 +372,7 @@ repeating event information	calendar	pt-br	Repetindo informação do evento
 repeating interval, eg. 2 to repeat every second week	calendar	pt-br	intervalo de repetição (2 para repetir a cada duas semanas)
 repetition	calendar	pt-br	Repetição
 repetitiondetails (or empty)	calendar	pt-br	detalhes da repetição (ou vazio)
+report	calendar	pt-br	Relatório
 reset	calendar	pt-br	Limpar
 resources	calendar	pt-br	Recursos
 role	calendar	pt-br	Função
@@ -388,6 +399,7 @@ show only the date, not the year	admin	pt-br	Exibir apenas a data, não o ano
 show this month	calendar	pt-br	Exibir este mês
 show this week	calendar	pt-br	Exibir esta semana
 single event	calendar	pt-br	Evento único
+sort by	calendar	pt-br	Ordenar por
 start	calendar	pt-br	Início
 start date/time	calendar	pt-br	Início Data/Hora
 startdate	calendar	pt-br	Data Inicial
@@ -431,6 +443,7 @@ updated	calendar	pt-br	Atualizado
 use end date	calendar	pt-br	Usar data de término
 use the selected time and close the popup	calendar	pt-br	Usar o horário selecionado e fechar a janela
 user or group	calendar	pt-br	Usuário ou Grupo
+utilities	calendar	pt-br	Utilitários
 view this event	calendar	pt-br	Exibir este evento
 views with fixed time intervals	calendar	pt-br	Exibir com tempo de intervalo fixo
 wed	calendar	pt-br	Qua

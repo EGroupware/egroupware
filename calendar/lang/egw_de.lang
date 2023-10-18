@@ -101,7 +101,9 @@ category %1 removed because of missing rights	calendar	de	Kategorie %1 entfernt 
 category acl	common	de	Kategorie-Rechte
 category acl only restrict adding a category to an event or changing status of a participant. it does not change the visibility of an event!	calendar	de	Kategorie-Rechte beschränken nur das Hinzufügen einer Kategorie zu einem Termin oder das Ändern des Status eines Teilnehmers. Sie ändern NICHT die Sichtbarkeit eines Termins!
 category automatically added to new events	calendar	de	Kategorie(n), welche automatisch zu neuen Terminen hinzugefügt wird.
+category report	calendar	de	Kategorie Bericht
 chair	calendar	de	Vorsitz
+change domain of participants in caldav requests	calendar	de	Domäne der Teilnehmer in CalDAV-Anfragen ändern
 change history	calendar	de	Änderungshistorie
 change your status	calendar	de	Eigenen Status ändern
 changed event-data applied	calendar	de	Änderungen am Termin angewendet
@@ -139,6 +141,7 @@ daily tables	calendar	de	Tabellen für tägliche Einträge
 data exchange settings	calendar	de	Einstellungen für den Datenaustausch
 date for the day of the week	calendar	de	Datum für den Tag
 date for the day of the week, available for the first entry inside each day of week or daily table inside the selected range.	calendar	de	Tagesdatum, erste Zeile der Tagesübersicht
+date range	calendar	de	Datumsbereich
 day	calendar	de	Tag
 day of week tables	calendar	de	Tabellen für die Wochenansicht
 days	calendar	de	Tage
@@ -200,6 +203,7 @@ edit series	calendar	de	Serie bearbeiten
 edit status or alarms for this particular day	calendar	de	Bearbeite Status oder Alarme für diesen speziellen Tag
 edit this event	calendar	de	Diesen Termin bearbeiten
 edit this series of recurring events	calendar	de	Diese Serie von wiederholenden Terminen bearbeiten
+email address migration	calendar	de	Migration von E-Mail-Adressen
 empty = no alarm	calendar	de	leer = kein Alarm
 empty for all	calendar	de	leer für alle
 empty target calendar before importing	calendar	de	Termine im Zielkalender vor dem Import im folgenden Zeitraum löschen
@@ -236,6 +240,7 @@ example {{nenvlf role}} - if field role is not empty, set a lf without any value
 exception	calendar	de	Ausnahme
 exception created - you can now edit or delete it	calendar	de	Ausnahme erzeugt - Sie können sie jetzt bearbeiten oder löschen
 exceptions	calendar	de	Ausnahmen
+exclude weekend	calendar	de	Wochenende ausschließen
 execute a further action for this entry	calendar	de	Führt einen weiteren Befehl für diesen Eintrag aus
 existing links	calendar	de	Bestehende Verknüpfungen
 exists	calendar	de	existiert
@@ -364,6 +369,7 @@ meeting request	calendar	de	Terminanfrage
 meetingrequest to all participants	calendar	de	Terminanforderung an alle Teilnehmer
 merge document...	calendar	de	Dokument einfügen...
 midnight	calendar	de	Mitternacht
+min days	calendar	de	Min Tage
 minimum number of users for showing day view as consolidated.	calendar	de	Mindestanzahl von Benutzern für die Anzeige der Tagesansicht als konsolidiert (keine einzelnen Kalender mehr)
 minimum number of users for showing week view as consolidated.	calendar	de	Mindestanzahl von Benutzern für die Anzeige der Wochenansicht als konsolidiert (keine einzelnen Kalender mehr)
 minutes	calendar	de	Minuten
@@ -438,6 +444,7 @@ only used for first viewing of calendar, afterwards last selected view is used.	
 open todo's:	calendar	de	unerledigte Aufgaben:
 optional	calendar	de	Optional
 organizer	calendar	de	Organisator
+output unit	calendar	de	Ausgabeeinheit
 overlap holiday	calendar	de	überlappender Feiertag
 owner too	calendar	de	Auch Besitzer
 participant names by type	calendar	de	Teilnehmernamen nach Typ
@@ -489,6 +496,7 @@ repetitiondetails (or empty)	calendar	de	Details der Wiederholung (oder leer)
 replacements for inserting events into documents	calendar	de	Platzhalter für das Einfügen von Terminen in Dokumente
 reply to meeting request	calendar	de	Antwort auf Terminanfrage
 replying "%1" is not a participant of the event! only continue if you want to add as new participant.	calendar	de	Der antwortende "%1" ist kein Teilnehmer des Termins! Nur weiter machen, wenn Sie ihn als neuen Teilnehmer hinzufügen wollen.
+report	calendar	de	Bericht
 requested	calendar	de	Erforderlich
 requested date %1 outside allowed range of %2 days: recurring events obmitted!	calendar	de	Gewünschtes Datum %1 außerhalb des erlauben Bereiches von %2 Tagen: wiederholende Termine ausgelassen!
 requested meeting is in the past!	calendar	de	Termin, zu dem eingeladen wird, ist in der Vergangenheit!
@@ -559,6 +567,7 @@ show this week	calendar	de	Diese Woche anzeigen
 show year and age	calendar	de	Zeige Jahr und Alter
 single event	calendar	de	Einzelner Termin
 single participant	calendar	de	Einzelner Teilnehmer
+sort by	calendar	de	Sortieren nach
 specify where url of the day links to	calendar	de	Gegen Sie an, wohin die URL des Tages linken soll
 start	calendar	de	Start
 start date/time	calendar	de	Startdatum/ -zeit

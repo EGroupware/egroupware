@@ -10,6 +10,7 @@ access denied to the calendar of %1 !!!	calendar	da	Adgang nægtet til %1's kale
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	da	Handlingen der forårsagede påmindelsen: Tilføjet, Annulleret, Accepteret, Forkastet, ...
 actions	calendar	da	Handlinger
 add alarm	calendar	da	Tilføj alarm
+add new event	calendar	da	Tilføj ny aftale
 added	calendar	da	Tilføjet
 after current date	calendar	da	Efter aktuel dato
 alarm	calendar	da	Alarm
@@ -25,6 +26,7 @@ all participants	calendar	da	Alle deltagere
 allows to edit the event again	calendar	da	Tillader at redigere aftalen igen
 always	calendar	da	Altid
 apply the changes	calendar	da	Acceptér ændringerne
+attention	calendar	da	Opmærksomhed
 back half a month	calendar	da	halv måned baglæns
 back one month	calendar	da	hel måned baglæns
 before current date	calendar	da	Før aktuel dato
@@ -40,6 +42,8 @@ calendar settings	admin	da	Kalender Indstillinger
 calendar-fieldname	calendar	da	Kalender-feltnavn
 can't add alarms in the past !!!	calendar	da	Kan ikke tilføje alarmer bagud !!!
 canceled	calendar	da	Annulleret
+category report	calendar	da	Kategori rapport
+changed event-data applied	calendar	da	Ændrede event-data anvendt
 charset of file	calendar	da	Karakterset for fil
 choose a category	calendar	da	Vælg en kategori
 close the window	calendar	da	Luk vindue
@@ -56,6 +60,7 @@ csv-filename	calendar	da	CSV-Filnavn
 custom	calendar	da	Valgfri
 custom fields	common	da	Egne felter
 daily	calendar	da	Daglig
+date range	calendar	da	Datointerval
 day	calendar	da	Dag
 days	calendar	da	dage
 days of the week for a weekly repeated event	calendar	da	Ugedage for en ugentlig gentaget aftale
@@ -104,6 +109,7 @@ event saved	calendar	da	Aftale gemt
 event will occupy the whole day	calendar	da	Aftale vil vare hele dagen
 exception	calendar	da	Undtagelse
 exceptions	calendar	da	Undtagelser
+exclude weekend	calendar	da	Ekskluder weekenden
 existing links	calendar	da	Eksisterende links
 extended	calendar	da	Udvidet
 extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	da	Udvidet updateringer indeholder alle hændelses detaljerne. iCal's kan importeres af visse andre kalendersystemer.
@@ -174,6 +180,7 @@ location, start- and endtimes, ...	calendar	da	Lokation, start- og sluttider,...
 mail all participants	calendar	da	E-mail alle deltagere
 make freebusy information available to not logged in persons?	calendar	da	Gør fri/optaget information tilgængelig for ikke-indloggede personer?
 maximum available quantity of %1 exceeded!	calendar	da	Maksimal tilgængelig mængde af %1 overskredet!
+min days	calendar	da	Min dage
 minimum number of users for showing day view as consolidated.	calendar	da	Minimum antal brugere for at vise dagsvisning som konsolideret.
 minimum number of users for showing week view as consolidated.	calendar	da	Minimum antal brugere for at vise ugevisning som konsolideret.
 minutes	calendar	da	Minutter
@@ -216,6 +223,7 @@ one week	calendar	da	en uge
 one year	calendar	da	et år
 only the initial date of that recurring event is checked!	calendar	da	Kun den initielle dato af den gentagne aftale er checket!
 open todo's:	calendar	da	Åben Opgave:
+output unit	calendar	da	Output-enhed
 overlap holiday	calendar	da	overlap helligdag
 participants	calendar	da	Deltagere
 participants uninvited from an event	calendar	da	Deltagere, af-inviteret fra en aftale
@@ -233,6 +241,7 @@ private only	calendar	da	Kun private
 re-edit event	calendar	da	Redigér igen
 receive email updates	calendar	da	Modtag e-mail opdateringer
 receive summary of appointments	calendar	da	Modtag opsummering af aftaler
+recordings	calendar	da	Optagelser
 recurrence	calendar	da	Gentagelse
 recurring event	calendar	da	Tilbagevendende hændelse
 rejected	calendar	da	Forkastet
@@ -243,6 +252,7 @@ repeating event information	calendar	da	Information for gentaget aftale
 repeating interval, eg. 2 to repeat every second week	calendar	da	Gentagelses interval, f.eks. 2 for hver anden uge
 repetition	calendar	da	Gentagelse
 repetitiondetails (or empty)	calendar	da	Gentagelse detaljer (eller tom)
+report	calendar	da	Rapport
 reset	calendar	da	Nulstil
 resources	calendar	da	Ressourcer
 rule	calendar	da	Regel
@@ -261,6 +271,7 @@ show list of upcoming events	calendar	da	vis liste over kommende aftaler
 show this month	calendar	da	vis denne måned
 show this week	calendar	da	vis denne uge
 single event	calendar	da	enkelt aftale
+sort by	calendar	da	Sorter efter
 start	calendar	da	Start
 start date/time	calendar	da	Start dato/tid
 startdate	calendar	da	Start dato
@@ -298,6 +309,7 @@ uninvited	calendar	da	Uinviteret
 updated	calendar	da	Opdateret
 use end date	calendar	da	brug slutdato
 use the selected time and close the popup	calendar	da	brug den valgte tid og luk pop-up
+utilities	calendar	da	Hjælpeprogrammer
 view this event	calendar	da	Vis denne hændelse
 views with fixed time intervals	calendar	da	Views med faste tidsintervaller
 wed	calendar	da	Ons
@@ -320,7 +332,7 @@ you can only set a year or a occurrence !!!	calendar	da	Du kan kun sætte et år
 you do not have permission to read this record!	calendar	da	Du har ikke rettigheder til at læse denne postering!
 you have a meeting scheduled for %1	calendar	da	Du har et møde planglagt d. (%1)
 you have been uninvited from the meeting at %1	calendar	da	Du er blevet fravalgt fra mødet : %1
-you need to select an ical file first	calendar	da	Du skal først vælge en iCAl
+you need to select an ical file first	calendar	da	Du skal først vælge en iCal
 you need to set either a day or a occurrence !!!	calendar	da	Du skal vælge en dag eller en hændelse !!!!
 your meeting scheduled for %1 has been canceled	calendar	da	Dit møde planlagt til %1 er blevet annulleret
 your meeting that had been scheduled for %1 has been rescheduled to %2	calendar	da	Dit møde der var planlagt d. %1 er blevet flyttet til %2

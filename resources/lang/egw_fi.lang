@@ -1,22 +1,35 @@
-accessories of	resources	fi	Lisätarvikkeet:
-accessories:	resources	fi	Lisätarvikkeet:
+%1 accessories now resources	resources	fi	%1 tarvikkeet nyt resursseja
+%1 accessories restored	resources	fi	%1 tarvikkeet palautettu
+%1 resource(s) %2	resources	fi	%1 resurssi(t) %2
+%1 resource(s) %2, %3 failed	resources	fi	%1 resurssi(t) %2, %3 epäonnistui (%1)
+%1 resource(s) %2, %3 failed because of insufficent rights !!!	resources	fi	%1 resurssi(t) %2, %3 epäonnistui riittämättömien oikeuksien vuoksi !!!!
+%1 resource(s) booked	resources	fi	%1 resurssi(t) varattu
+%1 resource(s) view calendar	resources	fi	%1 resurssi(t) Näytä kalenteri
+accessories	resources	fi	Tarvikkeet
+accessories of	resources	fi	Tarvikkeet alkaen
+accessories:	resources	fi	Tarvikkeet:
+accessory of	resources	fi	Tarvikkeet alkaen
 actions	resources	fi	Toiminnot
 add accessory	resources	fi	Lisää lisätarvike
+add group to event participants	resources	fi	Lisää ryhmä tapahtuman osallistujiin
 add resource	resources	fi	Lisää resurssi
 add resources	resources	fi	Lisää resursseja
 administrator	resources	fi	Ylläpitäjä
 all categories	resources	fi	Kaikki kategoriat
+allow booking requests from any user when creating events?	resources	fi	Salli varauspyynnöt miltä tahansa käyttäjältä tapahtumia luotaessa?
 book	resources	fi	Varaus
 book selected resources	resources	fi	Varaa valitsemasi resurssit
 book this resource	resources	fi	Varaa tämä resurssi
 bookable	resources	fi	Varattavissa
+booking requests	resources	fi	Varauspyynnöt
 buy this article	resources	fi	Osta tämä tuote
 buy this resource	resources	fi	Osta tämä resurssi
 buyable	resources	fi	Ostettavissa
-categories admin	resources	fi	Kategorioiden ylläpitäjä
+category admin	resources	fi	Kategorian ylläpitäjä
+category saved.	resources	fi	Luokka tallennettu.
 category:	resources	fi	Kategoria:
 check all	resources	fi	Valitse kaikki
-choose categories admin	resources	fi	Valitse kategorioiden ylläpitäjä
+choose category admin	resources	fi	Valitse kategorian ylläpitäjä
 clear selection	resources	fi	Poista valinnat
 configure access permissions	admin	fi	Myönnä ACL-oikeuksia
 conflict	resources	fi	Konflikti
@@ -24,13 +37,15 @@ create new accessory for this resource	resources	fi	Luo uusi lisätarvike tälle
 create new links	resources	fi	Luo uusi linkki
 custom etemplate for the contactform	resources	fi	Muokkaa eMallipohja yhteystietokaavakkeelle
 custom fields	resources	fi	Lisätiedot
-days	resources	fi	päivää
+days	resources	fi	Päivää
+delete accessories of selected resources too?	resources	fi	Poistaa myös valittujen resurssien lisävarusteet?
 delete selected resources	resources	fi	Poista valitut resurssit
 delete this entry	resources	fi	Poista tämä merkintä
 deleted	resources	fi	Poistettu
 description (short)	resources	fi	Kuvaus (lyhyt)
 direct booking permissions	resources	fi	Suora varausoikeus
-don't use vfs (this will need a symlink --> see readme)	resources	fi	Älä käytä vfs (tämä tarvitsee symbolisenlinkin --> katso LueMinut)
+do you really want to delete this resource?	resources	fi	Haluatko todella poistaa tämän resurssin?
+don't use vfs (this will need a symlink --> see readme)	resources	fi	Älä käytä VFS (tämä tarvitsee symbolisenlinkin --> katso LueMinut)
 edit this entry	resources	fi	Muokkaa tätä merkintää
 existing links	resources	fi	Olemassa olevat linkit
 exists	resources	fi	Olemassaoleva
@@ -47,6 +62,7 @@ how many of the resources are useable?	resources	fi	Kuinka moni resurssi on käy
 how many of them are useable?	resources	fi	Kuinka moni niistä on käytettävissä?
 how many of this resource are usable	resources	fi	Kuinka moni näistä resursseista on käytettävissä?
 how many of this resource exists	resources	fi	Kuinka monta näistä resursseista on olemassa?
+icon	resources	fi	Kuvake
 if you specify an export definition, it will be used when you export	resources	fi	Valitse viennin oletusasetus
 implies booking permission	resources	fi	Vaikuttaa varausoikeuksiin
 implies read permission	resources	fi	Vaikuttaa lukuoikeuksiin
@@ -68,8 +84,11 @@ long description	resources	fi	Kuvaus
 manage mapping	resources	fi	Valitse kentät
 name of resource	resources	fi	Resurssin nimi
 name:	resources	fi	Nimi:
+no - leave them	resources	fi	Ei - jätä ne
+no - make them resources	resources	fi	Ei - Tee niistä resursseja
 no description available	resources	fi	Kuvausta ei ole saatavilla
 no resources selected	resources	fi	Resursseja ei ole valittu
+no, users will need to contact users with direct booking permission	resources	fi	Ei, käyttäjien on otettava yhteyttä käyttäjiin, joilla on suora varausoikeus.
 notify your administrator to correct this situation	resources	fi	Ilmoita tästä ylläpitäjälle, jotta tilanne korjataan.
 picture	resources	fi	Kuva
 picture source	resources	fi	Kuvan lähde
@@ -106,12 +125,11 @@ storage information:	resources	fi	Varaston tiedot:
 the anonymous user needs add rights for it!	resources	fi	Tuntematon käyttäjä tarvitsee lisäämiseen tarvittavat ACL-oikeudet!
 the calendar of this resource	resources	fi	Tämän resurssin kalenteri
 this module displays the resources app	resources	fi	Tämä moduli näyttää resurssi-sovelluksen
+un-delete accessories of selected resources too?	resources	fi	Palauta valittujen resurssien lisävarusteet?
 use general resources icon	resources	fi	Käytä yleistä resurssin kuvaketta
 use own picture	resources	fi	Käytä omaa kuvaa
 use the category's icon	resources	fi	Käytä tämän kategorian kuvaketta
 useable	resources	fi	Käytettävissä
-useable:	resources	fi	Käytettävissä:
-view accessories for this resource	resources	fi	Näytä tämän resurssin lisätarvikkeet
 view calendar	resources	fi	Näytä kalenteri
 view this entry	resources	fi	Näytä tämä merkintä
 web-page of resource	resources	fi	Resurssien web-sivu
@@ -119,6 +137,8 @@ web-site for this resource	resources	fi	Resurssin web-sivu
 where to find this resource?	resources	fi	Resurssin sijaintitiedot
 which category does this resource belong to?	resources	fi	Resurssin kategoria
 write permissions	resources	fi	Kirjoitusoikeudet
+yes - delete accessories too	resources	fi	Kyllä - Poistaa myös lisävarusteet
+yes - un-delete accessories too	resources	fi	Kyllä - Palauta myös lisävarusteet
 yes, only admins can purge deleted items	admin	fi	Kyllä, ainoastaan ylläpitäjät voivat (lopullisesti) poistaa tapahtumia
 yes, users can purge their deleted items	admin	fi	Kyllä, käyttäjät voivat (lopullisesti) poistaa tapahtumia
 you are not permitted to delete this resource!	resources	fi	Sinulla ei ole riittäviä oikeuksia poistaa tätä resurssia!

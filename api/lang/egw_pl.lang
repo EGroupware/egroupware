@@ -1,5 +1,6 @@
 %1 (%2 new) messages writen for application '%3' and languages '%4'	common	pl	%1 (z czego %2 nowych) Komunikatów zapisanych dla Aplikacji '%3' i Języków '%4'
 %1 email addresses inserted	common	pl	%1 adresów email dodane
+%1 email(s) added into %2	common	pl	%1 email(e) dodane do %2
 %1 entries found, select one ...	common	pl	Znaleziono %1 wpisów, wybierz jeden ...
 %1 etemplates deleted	common	pl	Usunięto %1 e-Szablonów
 %1 etemplates for application '%2' dumped to '%3'	common	pl	Zrzucono %1 e-Szablonów dla aplikacji '%2' do '%3'
@@ -7,6 +8,7 @@
 %1 file	common	pl	%1 plik
 %1 is not executable by the webserver !!!	common	pl	%1 nie może być wykonany przez webserver !!!
 %1 matches on search criteria	common	pl	%1 spełniających kryteria wyszukiwania
+%1 more %2 selected ...	common	pl	Wybrano %1 więcej %2...
 %1 more...	common	pl	%1 więcej
 %1 new etemplates imported for application '%2'	common	pl	Zaimportowano %1 nowych e-Szablonów dla aplikacji '%2'
 %1 not implemented for %2!	common	pl	%1 nie zaimplementowany dla %2!
@@ -22,6 +24,7 @@
 '%1' is not a valid date !!!	common	pl	'%1' nie jest datą w poprawnym formacie!
 '%1' is not a valid floatingpoint number !!!	common	pl	'%1' nie jest poprawną liczbą zmiennoprzecinkową!
 '%1' is not a valid integer !!!	common	pl	'%1' nie jest poprawną liczbą całkowitą!
+'%1' is not a valid json file!	common	pl	'%1' nie jest prawidłowym plikiem JSON
 '%1' is not allowed ('%2')!	common	pl	'%1' nie jest dopuszczony ('%2')!
 (session restored in %1 seconds)	common	pl	(sesja będzie przywrócona po upływie %1 sekund)
 00 (disable)	admin	pl	00 (wyłączony)
@@ -138,6 +141,7 @@ autohide sidebox menus	common	pl	Automatyczne ukrywanie bocznych menu
 automatically hide the sidebox menu's?	common	pl	Czy ukrywać automatycznie menu boczne?
 automatically hide the sidebox menus?	common	pl	Automatycznie ukrywać menu boczne?
 autosave default category	common	pl	Automatyczny zapis domyślnej kategorii
+avatar	common	pl	Avatar
 azerbaijan	common	pl	AZERBEJDŻAN
 back	common	pl	Powrót
 back to user login	common	pl	Wróć do logowania uzytkowników
@@ -170,6 +174,7 @@ box	common	pl	Pudełko
 box...	common	pl	Pudełko...
 brazil	common	pl	BRAZYLIA
 british indian ocean territory	common	pl	BRYTYJSKIE TERYTORIUM OCEANU INDYJSKIEGO
+browser %1 %2 is not recommended. you may experience issues and not working features. please use the latest version of chrome, firefox or edge. thank you!	common	pl	Przeglądarka %1 %2 nie jest zalecana. Mogą wystąpić problemy i niedziałające funkcje. Prosimy o korzystanie z najnowszej wersji przeglądarki Chrome, Firefox lub Edge. Dziękujemy!
 brunei darussalam	common	pl	BRUNEI
 bulgaria	common	pl	BUŁGARIA
 bulgarian	common	pl	Bułgarski
@@ -208,6 +213,7 @@ change	common	pl	Zmień
 changed	common	pl	Zmieniono
 charset	common	pl	utf-8
 check all	common	pl	Zaznacz wszystkie
+check for empty values in if statements.  example {{if url~empty~~website:}} - if url is not empty, writes "website:"	common	pl	Sprawdzanie pustych wartości w instrukcjach IF. Przykład {{IF url~EMPTY~~Website:}} - Jeśli adres url nie jest pusty, wpisuje "Strona internetowa:"
 check if content should only be displayed but not altered (the content is not send back then!)	common	pl	zaznacz, jeżeli zawartość ma być wyświetlana, ale nie zmieniana (nie jest wtedy odsyłana z powrotem do przeglądarki)
 check if field has to be filled by user	common	pl	zaznacz, jeżeli pole musi być wypełnione przez użytkownika
 check installation	common	pl	Sprawdź instalację
@@ -254,8 +260,8 @@ common preferences	common	pl	Wspólne ustawienia
 comoros	common	pl	KOMORY
 company	common	pl	Firma
 confirm	common	pl	zatwierdź
-confirmation message or custom javascript (returning true or false)	common	pl	wiadomość potwierdzenia lub własny skrypt JS (zwracający 'true' lub 'false')
-confirmation necesary or custom java-script	common	pl	potwierdzenie konieczne lub skrypt JS
+confirmation message or custom javascript (returning true or false)	common	pl	wiadomość potwierdzenia lub własny JavaScript (zwracający 'true' lub 'false')
+confirmation necesary or custom java-script	common	pl	potwierdzenie konieczne lub JavaScript
 confirmation required	common	pl	Wymagane potwierdzenie
 congo	common	pl	KONGO
 congo, the democratic republic of the	common	pl	REPUBLIKA DEMOKRATYCZNA KONGA
@@ -295,7 +301,7 @@ current	common	pl	Bieżący
 current users	common	pl	Bieżący użytkownicy
 custom	common	pl	niestandardowy
 custom fields	common	pl	pola niestandardowe
-custom javascript for onchange	common	pl	niestandardowy kod JS dla zdarzenia onChange
+custom javascript for onchange	common	pl	niestandardowy kod JavaScript dla zdarzenia onChange
 cut	common	pl	Wytnij
 cyprus	common	pl	CYPR
 czech republic	common	pl	REPUBLIKA CZESKA
@@ -303,6 +309,7 @@ dark mode	common	pl	Tryb ciemny
 database error	common	pl	Bład bazy danych
 database error!	common	pl	Błąd bazy danych!
 date	common	pl	Data
+date + time	common	pl	Data + Czas
 date due	common	pl	Data wymagalności
 date+time	common	pl	Data+Czas
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	pl	Port datetime.<br>Jeżeli używasz portu 13, ustaw odpowiednio reguły firewall-a przed zaakceptowaniem tej zmiany.<br>(Port: 13 / Host: 129.6.15.28)
@@ -370,6 +377,7 @@ domain name for mail-address, eg. "%1"	common	pl	nawza domeny adresu mailowego, 
 domestic	common	pl	Domowy
 dominica	common	pl	DOMINIKA
 dominican republic	common	pl	DOMINIKANA
+don't ask again!	common	pl	Nie pytaj ponownie!
 done	common	pl	Gotowe
 download	common	pl	Pobierz
 drop a table - this can not be undone	common	pl	Usuń tabelę - czynność nie może być cofnięta!
@@ -401,7 +409,7 @@ el salvador	common	pl	SALWADOR
 email	common	pl	E-mail
 email-address of the user, eg. "%1"	common	pl	email użytkownika, np. "%1"
 embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	common	pl	osadzone style CSS, np. '.red { background: red; }'
-enable javascript onchange submit	common	pl	aktywuj przesłanie formularza poprzez JS na onChange
+enable javascript onchange submit	common	pl	aktywuj przesłanie formularza poprzez JavaScript na onChange
 enabled	common	pl	Aktywny
 end date	common	pl	Data końcowa
 end time	common	pl	Czas końcowy
@@ -440,6 +448,11 @@ etemplate tutorial	common	pl	e-Szablon - samouczek
 ethiopia	common	pl	ETIOPIA
 everything	common	pl	Wszystko
 exact	common	pl	dokładnie
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	preferences	pl	Przykład {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - przeszukaj pole "n_prefix", dla "Mr", jeśli znaleziono, napisz Hello Mr., w przeciwnym razie napisz Hello Ms.
+example {{letterprefix}} - gives a letter prefix without double spaces, if the title is empty for example	preferences	pl	Przykład {{LETTERPREFIX}} - Daje prefiks literowy bez podwójnych spacji, jeśli na przykład tytuł jest pusty
+example {{letterprefix}} - gives a letter prefix without double spaces, if the title is emty for  example	common	pl	Przykład {{LETTERPREFIX}} - Daje prefiks literowy bez podwójnych spacji, jeśli na przykład tytuł jest pusty
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	preferences	pl	Przykład {{NELF role}} - jeśli pole role nie jest puste, pojawi się nowy wiersz z wartością pola role.
+example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	preferences	pl	Przykład {{nenvlf role}} - jeśli pole rola nie jest puste, ustaw LF bez żadnej wartości pola
 exchange this row with the one above	common	pl	zamień ten wiersz z jego poprzednikiem
 exchange this two columns	common	pl	zamień te dwie kolumny
 export the loaded etemplate into a xml-file	common	pl	eksportuj załadowany e-Szablon do pliku XML
@@ -561,6 +574,7 @@ how many icons should be shown in the navbar (top of the page). additional icons
 how many rows to print	common	pl	Ile wierszy do wydrukowania
 how to show the general egroupware menu ?	common	pl	Jak wyświetlić ogólne menu EGroupware
 html	common	pl	HTML
+html links to any entries linked to the current record, excluding attached files	common	pl	Linki HTML do wszystkich wpisów powiązanych z bieżącym rekordem, z wyłączeniem załączonych plików
 hungary	common	pl	WĘGRY
 iceland	common	pl	ISLANDIA
 id	common	pl	ID
@@ -603,10 +617,12 @@ insert placeholder	common	pl	Wstaw miejsce
 insert row after	common	pl	Wstaw wiersz po
 insert row before	common	pl	Wstaw wiersz przed
 insert timestamp into description field	common	pl	Wstaw znacznik czasu do pola opisu
+install	common	pl	Zainstaluj
 install egroupware as mail-handler?	common	pl	Zainstalować EGroupware jako mail-handler?
 integer	common	pl	Liczba całkowita
 international	common	pl	Międzynarodowy
 invalid 2-factor authentication code	common	pl	Nieprawidłowy kod uwierzytelniania dwuczynnikowego
+invalid email	common	pl	Nieprawidłowa wiadomość e-mail
 invalid filename	common	pl	Niepoprawna nazwa pliku
 invalid ip address	common	pl	Zły adres IP
 invalid or expired 'remember me' token	common	pl	Nieprawidłowy lub wygasły token "zapamiętaj mnie".
@@ -863,22 +879,31 @@ paste	common	pl	Wklej
 path	common	pl	Ścieżka
 path to user and group files has to be outside of the webservers document-root!!!	common	pl	Ścieżka do plików użytkowników i grup MUSI BYĆ POZA rootem dokumentów serwera!!!
 permission denied!	common	pl	Odmowa!
-permissions to the files/users directory	common	pl	uprawnienia do katalogu plików/użytkowników
+permission denied! this is an administration only feature.	common	pl	Odmowa dostępu! Jest to funkcja tylko dla administracji.
+permissions to the files/users directory	common	pl	Uprawnienia do katalogu plików/użytkowników
 permisson denied!	common	pl	Dostęp zabroniony!
 personal	common	pl	Osobisty
 peru	common	pl	PERU
+pg down	common	pl	Strona w dół
+pg up	common	pl	Strona w górę
+pgp encryption	common	pl	Szyfrowanie PGP
+pgp encryption installation	common	pl	Instalacja szyfrowania PGP
 philippines	common	pl	FILIPINY
-phone number	common	pl	numer  telefonu
+phone number	common	pl	Numer  telefonu
 pitcairn	common	pl	PITCAIRN
 placeholders	common	pl	Placeholdery
 play/pause	common	pl	Odtwarzanie/Pauza
 please %1 by hand	common	pl	Proszę %1 ręcznie
 please enter a name	common	pl	Proszę podać nazwę
 please enter table-name first !!!	common	pl	Proszę wpierw wprowadzić nazwę tabeli!
+please reload the egroupware desktop (f5 / cmd+r).	common	pl	Przeładuj pulpit EGroupware (F5 / Cmd+r).
+please remember to use '%1' as username for local login's from now on!	common	pl	Pamiętaj, aby od teraz używać '%1' jako nazwy użytkownika do lokalnego logowania!
 please run setup to become current	common	pl	Proszę uruchom instalację (/setup) w celu uaktualnienia
 please select	common	pl	Proszę wybrać
 please set your global preferences	common	pl	Proszę wprowadzić swoje globalne preferencje !
 please set your preferences for this application	common	pl	Proszę wprowadzić ustawienia dla tej aplikacji
+please type %1 more characters	common	pl	Wpisz %1 więcej znaków
+please type 1 more character	common	pl	Wpisz jeszcze 1 znak
 please wait...	common	pl	Proszę czekac...
 please, check back with us shortly.	common	pl	Proszę spróbować ponownie w najbliższym czasie.
 pm	common	pl	po południu
@@ -1048,6 +1073,7 @@ show menu	common	pl	pokaż menu
 show page generation time	common	pl	Wyświetl czas generowania strony
 show page generation time on the bottom of the page?	common	pl	Wyświetlać czas generowania strony w jej stopce?
 show page generation time?	common	pl	Czy pokazywać czas generowania strony?
+show password	common	pl	Pokaż hasło
 show the logo's of egroupware and x-desktop on the desktop.	common	pl	Pokazuj logo EGroupware oraz x-desktop na pulpicie.
 show values	common	pl	Pokaż wartości
 show/hide	common	pl	pokaż/ukryj pasek boczny
@@ -1058,9 +1084,10 @@ showing %1 - %2 of %3	common	pl	Wyświetlanie %1 - %2 z %3
 shows / allows you to enter values into the etemplate for testing	common	pl	pokazuje / zezwala na wprowadzenie zmian do eSzablonu w celach testowych
 shows/displays etemplate for testing, does not save it before	common	pl	wyświetla eSzablon do testów, NIE zapisuje przed wyświetleniem
 sierra leone	common	pl	SIERRA LEONE
+sign up	common	pl	Zarejestruj się
 simple	common	pl	prosty
 singapore	common	pl	SINGAPUR
-site configuration	common	pl	Konfiguracja serwisu
+site configuration	common	pl	Konfiguracja aplikacji
 size	common	pl	Wielkość
 slovakia	common	pl	SŁOWACJA
 slovenia	common	pl	SŁOWENIA
@@ -1256,6 +1283,9 @@ you need to add the webserver user '%1' to the group '%2'.	common	pl	Musisz doda
 you need to be an egroupware administrator to access this functionality!	common	pl	Tylko administrator eGroupWaze ma dostęp do tej funkcji!
 you need to select a file first!	common	pl	Musisz najpierw wybrać plik!
 you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	pl	Próba otworzenia aplikacji %1 nie powiodła się, gdyż nie masz uprawnień dostępu to tej aplikacji.
+your account has been updated with new data from your identity provider.	common	pl	Twoje konto zostało zaktualizowane o nowe dane od dostawcy tożsamości.
+your browser is not up-to-date (javascript es6 compatible), you may experience some of the features not working.	common	pl	Twoja przeglądarka nie jest aktualna (zgodna z JavaScript ES6), niektóre funkcje mogą nie działać.
+your key has been restored successfully.	common	pl	Klucz został pomyślnie przywrócony.
 your message could <b>not</b> be sent!<br>	common	pl	Twoja wiadomość <b>nie</b> została wysłana!<br>
 your message has been sent	common	pl	Wiadomość została wysłana
 your password does not have required strength of %1 character classes and minimum length of %2 characters.	common	pl	Twoje hasło nie ma wymaganej siły klas znaków %1 i minimalnej długości %2 znaków.
@@ -1263,8 +1293,8 @@ your password does not have required strength:	common	pl	Twoje hasło nie ma wym
 your password failed the following criteria:	common	pl	Twoje hasło nie spełniło następujących kryteriów:
 your password is about to expire in %1 days, you may change your password now	common	pl	Twoje hasło wygasa za %1 dni, możesz zmienić swoje hasło już teraz.
 your password might not match the password policy.	common	pl	Twoje hasło może nie być zgodne z polityką haseł.
-your search returned %1 matchs	common	pl	wyszukiwanie zwróciło %1 trafień
-your search returned 1 match	common	pl	wyszukiwanie zwróciło 1 trafienie
+your search returned %1 matchs	common	pl	Wyszukiwanie zwróciło %1 trafień
+your search returned 1 match	common	pl	Wyszukiwanie zwróciło 1 trafienie
 your session timed out, please log in again	login	pl	Twoja sesja zakończyła się, zaloguj się ponownie.
 your settings have been updated	common	pl	Twoje ustawienia zostały uaktualnione
 zambia	common	pl	ZAMBIA

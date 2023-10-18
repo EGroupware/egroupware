@@ -74,6 +74,7 @@ attachments	mail	sk	Prílohy
 attachments, ...	mail	sk	prílohy, ...
 authentication	mail	sk	Overenie
 available personal email-accounts/profiles	mail	sk	Dostupné osobné e-mailové účty/profily
+be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	sk	Upozorňujeme, že pridaním všetkých vybraných súborov v režime %1 sa zmenia aj všetky existujúce prílohy v zozname na režim %2. \n \n Chcete pokračovať?
 be aware that all attachments will be sent as %1!	mail	sk	Upozornenie: všetky prílohy budú odoslané ako %1!
 before reply, visible during compose	mail	sk	Pred odpoveď, viditeľné počas písania
 blacklisted mails are marked as spam	mail	sk	E-maily na čiernej listine sa označia ako Spam
@@ -199,6 +200,7 @@ empty junk	mail	sk	Vyprázdniť priečinok SPAM
 empty trash	mail	sk	Vyprázdniť Odpadkový kôš
 empty trash and junk	mail	sk	Vyprázdniť Odpadkový kôš a Spam
 enable	mail	sk	Zapnúť
+enabled	mail	sk	Povolené
 enabled!	mail	sk	zapnuté!
 encrypt	mail	sk	Šifrovať
 encrypt your message with smime certificate	mail	sk	Šifrovať správu pomocou S/MIME certifikátu
@@ -216,6 +218,7 @@ error: message could not be displayed.	mail	sk	CHYBA: Správa sa nedá zobraziť
 esync will fail without a working email configuration!	mail	sk	eSync NEBUDE fungovať bez funkčnej konfigurácie E-mailu!
 event details follow	mail	sk	Podrobnosti o udalosti:
 everyone	mail	sk	Všetkých
+examine namespace to retrieve folders in others and shared	mail	sk	Preskúmanie menného priestoru na získanie priečinkov v iných a zdieľaných
 extended	mail	sk	Rozšírené
 extra sent folders	mail	sk	Prídavné priečinky odoslanej pošty
 failed to delete %1	mail	sk	Nepodarilo sa odstrániť %1
@@ -225,10 +228,11 @@ failed to move %1 ! reason: %2	mail	sk	Nepodarilo sa presunúť %1 ! Príčina: 
 failed to rename %1 ! reason: %2	mail	sk	Nepodarilo sa premenovať %1 ! Príčina: %2
 failed to subscribe folder %1!	mail	sk	Nepodarilo sa prihlásiť k priečinku %1 !
 failed to unsubscribe folder %1!	mail	sk	Nepodarilo sa odhlásiť z priečinku %1 !
-file into	mail	sk	súbor do
-file into:	mail	sk	Súbor do:
+file into	mail	sk	Presunúť do
+file into:	mail	sk	Presunúť do:
 file rejected, no %2. is:%1	mail	sk	Súbor odmietnutý, žiadny %2. Je:%1
 filemanager	mail	sk	Správca súborov
+filemode has been switched to %1	mail	sk	Filemode bol prepnutý na: %1
 files	mail	sk	Súbory
 flag / unflag	mail	sk	Značku Pridať / Odstrániť
 flag or unflag a mail	mail	sk	Označkovať alebo odznačkovať správu
@@ -266,6 +270,7 @@ general settings	mail	sk	Všeobecné nastavenia
 get acl rights failed from imap server!	mail	sk	Získanie ACL práv zlyalo pre IMAP server!
 greater than	mail	sk	väčšie než
 ham folder	mail	sk	Priečinok dobrých správ
+handling of external http images / mixed content in mails	mail	sk	Spracovanie externých obrázkov http / zmiešaného obsahu v e-mailoch
 header	mail	sk	Hlavička
 header lines	mail	sk	Riadky hlavičky
 hold %1 to drag files to your computer	mail	sk	Podržte %1 a presuňte súbory do počítača
@@ -276,7 +281,11 @@ how should the available information on identities be displayed	admin	sk	Ako sa 
 how to forward messages	mail	sk	Ako odosielať ďalej
 html	mail	sk	HTML
 html mode	mail	sk	HTML režim
+ident name	mail	sk	Identifikačný názov
+ident name email	mail	sk	Názov identifikátora [E-mail]
+ident name organization email	mail	sk	Názov identifikátora Organizácia [E-mail]
 identity	mail	sk	Identita
+identity label	mail	sk	Označenie identity
 identity+signature	mail	sk	Identita+Podpis
 if	mail	sk	AK
 if authentication required	mail	sk	ak sa vyžaduje overenie
@@ -319,6 +328,7 @@ later	mail	sk	Neskôr
 learning as ham (not spam) failed because of %1	mail	sk	Zapamätanie ako NIE nevyžiadanej správy zlyhalo z dôvodu: %1
 learning as spam failed because of %1	mail	sk	Zapamätanie ako nevyžiadanej správy zlyhalo z dôvodu: %1
 less than	mail	sk	menej než
+limit mailing list results when searching for addresses	mail	sk	Obmedziť výsledky poštového zoznamu pri vyhľadávaní adries
 list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	sk	Zoznam akcií, ktoré majú byť predvolene zapnuté/aktivované (napr. akcia Mail kompose uložiť ako InfoLog)
 mail	common	sk	E-mail
 mail acl	mail	sk	ACL pre Mail
@@ -436,6 +446,9 @@ quota: %1	mail	sk	Kvóta: %1
 read	mail	sk	prečítané
 read / unread	mail	sk	Prečítané / Neprečítané
 readable	mail	sk	Čitateľné
+real name	mail	sk	Skutočné meno
+real name email	mail	sk	Skutočné meno [E-mail]
+real name organization email	mail	sk	Skutočné meno Organizácia [E-mail]
 reason!	mail	sk	dôvod!
 receive notification	mail	sk	Vyžiadať potvrdenie o prečítaní
 recursively	mail	sk	Vrátane podpriečinkov
@@ -459,6 +472,7 @@ rename folder	mail	sk	Premenovať priečinok
 rename folder %1 ?	mail	sk	Premenovať priečinok %1 ?
 rename folder %1 to:	mail	sk	Premenovať priečinok %1 na:
 renamed folder %1 to %2	mail	sk	Priečinok %1 premenovaný na %2
+replace 'http://' in image urls with (trailing / required!)	mail	sk	Nahradiť 'http://' v obrázkových URL adresách pomocou (koncové / povinné!)
 replied	mail	sk	Zodpovedané
 reply	mail	sk	Odpoveď
 reply all	mail	sk	Odpoveď všetkým
@@ -600,15 +614,19 @@ the %1 's acl, including its subfolders, removed from the %2	mail	sk	ACL pre %1 
 the entered passphrase is not correct! please try again.	mail	sk	Zadané heslo je nesprávne! Prosím skúste to znovu.
 the folder %1 's acls saved	mail	sk	ACL priečinku %1 bolo uložené
 the folder <b>%1</b> will be used, if there is nothing set here, and no valid predefine given.	mail	sk	Ak tu nie je nič nastavené a nie je ani preddefinovaná hodnota, použije sa priečinok  <b>%1</b>
+the imap server need to meet certain requirements and be configured for it:	mail	sk	Server IMAP musí spĺňať určité požiadavky A musí byť preň nakonfigurovaný:
 the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	mail	sk	Odosielateľ správy si vyžiadal potvrdenie o tom, že ste si jeho správu už prečítali. Chcete, aby sa mu toto potvrdenie odoslalo?
 the mimeparser can not parse this message.	mail	sk	Analyzátor MIME nedokázal spracovať túto správu.
 the rule with priority %1 successfully saved!	mail	sk	Toto pravidlo s prioritou %1 bolo úspešne uložené!
 then	mail	sk	TAK
 there is no imap server configured.	mail	sk	Nie je nastavený žiadny IMAP server.
+there is no space left to store sieve script, please check sieve_maxscriptsize option on your mailserver's config.	mail	sk	Na uloženie skriptu sieve nezostalo miesto, skontrolujte prosím možnosť sieve_maxscriptsize v konfigurácii vášho poštového servera.
+this mail contains external images served via insecure http protocol. be aware showing or allowing them can compromise your security!	mail	sk	Tento mail obsahuje externé obrázky doručované prostredníctvom nezabezpečeného protokolu HTTP. Upozorňujeme, že ich zobrazenie alebo povolenie môže ohroziť vašu bezpečnosť!
 this message is smime encrypted and password protected.	mail	sk	Táto správa je šifrovaná pomocou SMIME a chránená heslom.
 timeout on connections to your imap server	mail	sk	Pripojenie na IMAP server - čas požiadavky vypršal.
 to do	mail	sk	Vybaviť
 toggle all folders view for %1	mail	sk	Prepnúť zobrazenie všetkých priečinkov pre %1
+toggled on actions	mail	sk	Prepínanie na akcie
 trash	mail	sk	Odpadkový kôš
 trash folder	mail	sk	Priečinok Odpadkový kôš
 trust servers seen / unseen info	mail	sk	Dôverovať príznaku servera o prečítaní/neprečítaní správy

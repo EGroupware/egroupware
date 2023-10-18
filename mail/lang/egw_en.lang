@@ -86,7 +86,7 @@ can not open imap connection	mail	en	Can not open IMAP connection
 can not resolve the winmail.dat attachment!	mail	en	Can not resolve the winmail.dat attachment!
 canceled deletion due to user interaction	mail	en	canceled deletion due to user interaction
 certificate info for email %1	mail	en	Certificate info for email %1
-change editor type	mail	en	switch editor to HTML mode
+change editor type	mail	en	Switch editor to HTML mode
 changed profile	mail	en	changed profile
 changing subject failed because of %1	mail	en	Changing subject failed because of %1
 changing subject failed folder %1 does not exist	mail	en	Changing subject failed folder %1 does not exist
@@ -223,14 +223,14 @@ examine namespace to retrieve folders in others and shared	mail	en	Examine names
 extended	mail	en	Extended
 extra sent folders	mail	en	Extra sent folders
 failed to delete %1	mail	en	Failed to delete %1
-failed to delete %1 ! reason: %2	mail	en	failed to delete %1 ! Reason: %2
+failed to delete %1 ! reason: %2	mail	en	Failed to delete %1 ! Reason: %2
 failed to delete %1. server responded:	mail	en	Failed to delete %1. Server responded:
-failed to move %1 ! reason: %2	mail	en	failed to move %1 ! Reason: %2
-failed to rename %1 ! reason: %2	mail	en	failed to rename %1 ! Reason: %2
+failed to move %1 ! reason: %2	mail	en	Failed to move %1 ! Reason: %2
+failed to rename %1 ! reason: %2	mail	en	Failed to rename %1 ! Reason: %2
 failed to subscribe folder %1!	mail	en	Failed to subscribe folder %1!
 failed to unsubscribe folder %1!	mail	en	Failed to unsubscribe folder %1!
-file into	mail	en	file into
-file into:	mail	en	File into:
+file into	mail	en	Move to
+file into:	mail	en	Move to:
 file rejected, no %2. is:%1	mail	en	File rejected, no %2. Is:%1
 filemanager	mail	en	Filemanager
 filemode has been switched to %1	mail	en	Filemode has been switched to: %1
@@ -238,9 +238,9 @@ files	mail	en	Files
 flag / unflag	mail	en	Flag / Unflag
 flag or unflag a mail	mail	en	Flag or Unflag a mail
 flagged	mail	en	flagged
-flagged %1 messages as %2 in %3	mail	en	flagged %1 message(s) as %2 in %3
-flagged %1 messages as flagged in %2	mail	en	flagged %1 message(s) as flagged in %2
-flagged %1 messages as unflagged in %2	mail	en	flagged %1 message(s) as unflagged in %2
+flagged %1 messages as %2 in %3	mail	en	Flagged %1 message(s) as %2 in %3
+flagged %1 messages as flagged in %2	mail	en	Flagged %1 message(s) as flagged in %2
+flagged %1 messages as unflagged in %2	mail	en	Flagged %1 message(s) as unflagged in %2
 flagged / unflagged	mail	en	Flagged / Unflagged
 folder	mail	en	Folder
 folder %1 %2 failed because of %3!	mail	en	Folder %1 %2 failed because of %3!
@@ -290,8 +290,8 @@ identity	mail	en	Identity
 identity label	mail	en	Identity label
 identity+signature	mail	en	Identity+Signature
 if	mail	en	IF
-if authentication required	mail	en	if authentication required
-if different from email address	mail	en	if different from EMail address
+if authentication required	mail	en	If authentication required
+if different from email address	mail	en	If different from EMail address
 if from contains:(*)	mail	en	If from contains:(*)
 if mail body content / attachment type	mail	en	If mail body content / attachment type
 if mail body message type	mail	en	If mail body message type
@@ -313,7 +313,7 @@ import of message %1 failed. destination folder %2 does not exist.	mail	en	Impor
 import of message %1 failed. destination folder not set.	mail	en	Import of message %1 failed. Destination Folder not set.
 import of message %1 failed. no contacts to merge and send to specified.	mail	en	Import of message %1 failed. No Contacts to merge and send to specified.
 importance	mail	en	importance
-important	mail	en	important
+important	mail	en	Important
 in mailbox: %1, with id: %2, and partid: %3	mail	en	In Mailbox: %1, with ID: %2, and PartID: %3
 in order to protect your privacy all external sources within this email are blocked.	mail	en	In order to protect your privacy all external sources within this email are blocked.
 inbox	mail	en	INBOX
@@ -326,7 +326,7 @@ junk	mail	en	Junk
 junk folder	mail	en	Junk folder
 keep a copy of the message in your inbox	mail	en	Keep a copy of the message in your inbox
 kilobytes	mail	en	kilobytes
-later	mail	en	later
+later	mail	en	Later
 learning as ham (not spam) failed because of %1	mail	en	Learning as ham (not spam) failed because of %1
 learning as spam failed because of %1	mail	en	Learning as spam failed because of %1
 less than	mail	en	less than
@@ -474,7 +474,7 @@ remove "%1" from blacklisted domains	mail	en	Remove "%1" from blacklisted domain
 remove "%1" from blacklisted emails	mail	en	Remove "%1" from blacklisted emails
 remove "%1" from whiltelisted domains	mail	en	Remove "%1" from whiltelisted domains
 remove "%1" from whiltelisted emails	mail	en	Remove "%1" from whiltelisted emails
-remove all	mail	en	Remove All
+remove all	mail	en	Remove all
 remove immediately	mail	en	Remove immediately
 removed folder %1	mail	en	Removed Folder %1
 removing %1 from blacklisted email addresses failed because of %2	mail	en	Removing %1 from blacklisted email addresses failed because of %2
@@ -643,11 +643,11 @@ there is no space left to store sieve script, please check sieve_maxscriptsize o
 this mail contains external images served via insecure http protocol. be aware showing or allowing them can compromise your security!	mail	en	This mail contains external images served via insecure HTTP protocol. Be aware showing or allowing them can compromise your security!
 this message is smime encrypted and password protected.	mail	en	This message is S/MIME encrypted and password protected.
 timeout on connections to your imap server	mail	en	Timeout on connections to your IMAP Server
-to do	mail	en	to do
+to do	mail	en	To do
 toggle all folders view for %1	mail	en	Toggle all Folders view for %1
 toggled on actions	mail	en	Toggled on actions
 trash	mail	en	Trash
-trash folder	mail	en	trash folder
+trash folder	mail	en	Trash folder
 trust servers seen / unseen info	mail	en	trust servers SEEN / UNSEEN info
 trust the server when retrieving the folder status. if you select no, we will search for the unseen messages and count them ourselves	mail	en	Trust the server when retrieving the folder status. if you select no, we will search for the UNSEEN messages and count them ourselves
 trying to recover from session data	mail	en	Trying to recover from session data

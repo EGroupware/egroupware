@@ -3,12 +3,16 @@
 (no subject)	mail	ru	(без темы)
 (select mails by clicking on the line, like a checkbox)	mail	ru	(выберите письма нажатием на строчку, как место выбора)
 (with checkbox enforced)	mail	ru	(с отмеченным флажком)
+acl rights retrieve failed, seems there are no rights set!	mail	ru	Не удалось получить права ACL, похоже, права не установлены!
 activating by date requires a start- and end-date!	mail	ru	Активация по дате требует наличия начальной и конечной даты!
 add all my aliases	mail	ru	Добавить все мои псевдонимы
 add as new	mail	ru	Новая запись
+add files as %1	mail	ru	Добавить файлы как %1
 add folder	mail	ru	Добавить папку
 add raw message, ignore mail attachments	mail	ru	Преобразование почты в элемент, добавление необработанного сообщения (игнорирование вложений почты)
 add to addressbook	mail	ru	добавить в адресную книгу
+adding %1 to blacklisted email addresses failed because of %2	mail	ru	Добавление %1 в черный список адресов электронной почты не удалось из-за %2
+adding %1 to whiltelisted email addresses failed because of %2	mail	ru	Добавление %1 к адресам электронной почты, занесенным в белый список, не удалось из-за %2
 after reply, visible during compose	mail	ru	После ответа, видно во время составления
 aliases+forwards	mail	ru	Псевдонимы+Пересылки
 all available info	admin	ru	Вся доступная информация
@@ -22,17 +26,22 @@ answered	mail	ru	ответил
 any of	mail	ru	Любой из
 any status	mail	ru	Любое состояние
 append	mail	ru	Дополнить
+attach files	mail	ru	Прикрепить файлы
 attach users vcard at compose to every new mail	mail	ru	Вкладывать визитку пользователя в каждое новое письмо
 attach vcard	mail	ru	Вложить vCard (визитку)
 attachment	mail	ru	Вложение
 attachment has been saved successfully.	mail	ru	Вложение успешно сохранено
 attachments	mail	ru	Вложения
+attachments, ...	mail	ru	Вложения, ...
 available personal email-accounts/profiles	mail	ru	доступные личные адреса эл.почты/Профили
+be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	ru	Имейте в виду, что если добавить все выбранные файлы в режиме %1, то все существующие вложения в списке также перейдут в режим %2. \n \n Вы хотите продолжить?
+be aware that all attachments will be sent as %1!	mail	ru	Имейте в виду, что все вложения будут отправлены в режиме %1!
 but check shared folders	mail	ru	Не проверены папки, к которым дан доступ
 by date	mail	ru	По дате
 by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	ru	По умолчанию 'http://' просто заменяется на 'https://'. Вы можете настроить 'https://proxy.egroupware.org/' так, чтобы он также загружал изображения, доступные только по http.
 caching of flags	mail	ru	Etichetă de contact
 can not open imap connection	mail	ru	Невозможно установить подключение IMAP
+changing subject failed because of %1	mail	ru	Не удалось изменить тему из-за %1
 changing subject failed folder %1 does not exist	mail	ru	Изменение темы не удалось, папка %1 не существует
 check message against next rule also	mail	ru	Проверить сообщение также на соответствие следующему правилу
 common acl	mail	ru	Права общего доступа
@@ -98,8 +107,11 @@ effective only if server supports acl at all	admin	ru	Действует, есл
 email notification update failed	mail	ru	Неудачное обновление уведомления по почте
 emailaddress	admin	ru	Адрес электронной почты
 emailadmin: profilemanagement	mail	ru	Администрирование почты: управление профилем
+emails in whitelisted domains are not marked as spam	mail	ru	Письма в белых списках доменов не помечаются как спам
 empty trash	mail	ru	Очистить корзину
 enable	mail	ru	Разрешить
+enabled	mail	ru	Включено
+encrypt your message with smime certificate	mail	ru	Шифрование сообщения с помощью сертификата S/MIME
 error saving %1!	mail	ru	Ошибка сохранения %1!
 error:	mail	ru	Ошибка:
 error: could not save message as draft	mail	ru	Ошибка: Не могу сохранить Сообщение как Черновик
@@ -109,15 +121,26 @@ error: message could not be displayed.	mail	ru	ОШИБКА: Сообщение 
 esync will fail without a working email configuration!	mail	ru	eSync не работает без действующей настройки eMail!
 event details follow	mail	ru	Детали события следуют
 everyone	mail	ru	Все
+examine namespace to retrieve folders in others and shared	mail	ru	Исследование пространства имен для получения папок в других и общих папках
 extended	mail	ru	Расширено.
 extra sent folders	mail	ru	Дополнительные каталоги отправленных
-file into	mail	ru	В файл
+failed to delete %1	mail	ru	Не удалось удалить %1
+failed to subscribe folder %1!	mail	ru	Не удалось подписаться на папку %1!
+failed to unsubscribe folder %1!	mail	ru	Не удалось отменить подписку на папку %1!
+file into	mail	ru	Переход к
+file into:	mail	ru	Переход к:
 file rejected, no %2. is:%1	mail	ru	Файл отвергнут, no %2. Is:%1
 filemanager	mail	ru	ФайлМенеджер
-flag / unflag	mail	ru	Отметить/Cнять отметку
+filemode has been switched to %1	mail	ru	Режим файла был переключен на: %1
+flag / unflag	mail	ru	Флаг / Снять флаг
 flag or unflag a mail	mail	ru	Отметить/Cнять отметку сообщения
 flagged	mail	ru	Отмечено
+flagged %1 messages as %2 in %3	mail	ru	Отмечено %1 сообщение(я) как %2 в %3
+flagged %1 messages as flagged in %2	mail	ru	Отмечено %1 сообщение(я) как отмеченное в %2
+flagged %1 messages as unflagged in %2	mail	ru	Отмечено %1 сообщение(я) как не отмеченное в %2
 folder	mail	ru	Папка
+folder %1 %2 failed because of %3!	mail	ru	Режим файла был переключен на: %1
+folder %1 has been created successfully, although the subscription failed because of %2	mail	ru	Папка %1 была создана успешно, хотя подписка не удалась из-за %2
 folder settings	mail	ru	Установки папки
 force html	mail	ru	Выводить как html
 force plain text	mail	ru	Выводить как текст
@@ -131,17 +154,24 @@ from(z->a)	mail	ru	От (Я->А)
 general	admin	ru	Общие
 general settings	mail	ru	Основные установки
 greater than	mail	ru	Больше чем
+handling of external http images / mixed content in mails	mail	ru	Обработка внешних http-изображений / смешанного содержимого в электронных письмах
 header	mail	ru	Заголовок
 header lines	mail	ru	Строки заголовка
 home page folders	mail	ru	Заголовки домашней страницы
 how often to check with the server for new mail	mail	ru	Интервал проверки почты на сервере
 how to forward messages	mail	ru	Как перенаправлять сообщения
-html	mail	ru	Html
+html	mail	ru	HTML
+ident name	mail	ru	Идентификационное имя
+ident name email	mail	ru	Идентификационное имя [Email]
+ident name organization email	mail	ru	Идентификационное имя Организация [Email]
 identity	mail	ru	Идентификация
+identity label	mail	ru	Метка идентификатора
 if	mail	ru	ЕСЛИ
 if mail header	mail	ru	Если заголовок письма
 if message size	mail	ru	Если размер сообщения
 if shown, which folders should appear on the home page	mail	ru	Если указано, какие каталоги отображать на домашней странице
+if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	ru	Если вы хотите видеть предварительный просмотр письма при однократном щелчке на теме, включите эту функцию.
+if you would like to select multiple folders in one action, you can hold ctrl key then select a folder as start range and another folder within a same level as end range, all folders in between will be selected or unselected based on their current status.	mail	ru	Если вы хотите выбрать несколько папок одним действием, удерживая клавишу ctrl, выберите папку в качестве начального диапазона, а другую папку на том же уровне - в качестве конечного диапазона, все папки между ними будут выбраны или не выбраны в зависимости от их текущего состояния.
 imap	mail	ru	IMAP
 imap server	mail	ru	Сервер IMAP
 imap timeout	mail	ru	Тайм-аут IMAP
@@ -152,15 +182,23 @@ import of message %1 failed. destination folder not set.	mail	ru	Невозмо�
 import of message %1 failed. no contacts to merge and send to specified.	mail	ru	Невозможно импортировать сообщение %1. Не указаны контакты для объединения и отправления.
 importance	mail	ru	Значение
 important	mail	ru	Важное
+in mailbox: %1, with id: %2, and partid: %3	mail	ru	В почтовом ящике: %1, с ID: %2 и PartID: %3
+in order to protect your privacy all external sources within this email are blocked.	mail	ru	В целях защиты конфиденциальности все внешние источники в этом письме заблокированы.
 inbox	mail	ru	Входящие (INBOX)
 information to show on email tag	mail	ru	Информация для отображения в теге электронной почты
+initialization of mail failed. please use the wizard to cope with the problem.	mail	ru	Не удалось выполнить инициализацию почтового модуля. Для исправления конфигурации воспользуйтесь мастером настройки.
+inline	mail	ru	Переслать
 insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)	mail	ru	Вставить подпись в начало нового сообщения  при открытии диалогового окна "создать"(или "ответить")
 job	mail	ru	Работа
 junk	mail	ru	Спам
+junk folder	mail	ru	Папка нежелательной почты
 keep a copy of the message in your inbox	mail	ru	Хранить копию сообщений в вашей папке Входящие (inbox)
 kilobytes	mail	ru	Килобайт
 later	mail	ru	Отложить
+learning as ham (not spam) failed because of %1	mail	ru	Обучение как ham (не спам) не удалось из-за %1
+learning as spam failed because of %1	mail	ru	Обучение как спам не удалось из-за %1
 less than	mail	ru	Меньше чем
+limit mailing list results when searching for addresses	mail	ru	Ограничение результатов списка рассылки при поиске адресов
 list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	ru	Список действий, которые должны включаться/активироваться по умолчанию (например, действие Mail compose сохранить как InfoLog)
 mail	common	ru	Почта
 mail acl	mail	ru	Права доступа
@@ -172,6 +210,8 @@ mail-address	mail	ru	Почтовый адрес
 mailaccount	mail	ru	Почтовый аккаунт
 mailinglist	mail	ru	Список рассылки
 mails	common	ru	Почта
+mails can be copied to that folder via context menu, if folder is configured.	mail	ru	Если папка настроена, письма могут быть скопированы в эту папку через контекстное меню.
+mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	ru	Mailserver сообщает:\n%1 \nХотите ли вы продолжить удаление выбранных сообщений немедленно (нажмите OK)?\nЕсли нет, попробуйте очистить папку для мусора, прежде чем продолжить. (нажмите кнопку отмена)
 mark all as read	mail	ru	Пометить всё как прочитанное
 mark all messages in folder as read	mail	ru	Пометить всю папку как прочитанное
 mark as deleted	mail	ru	Пометить как удалённое
@@ -241,11 +281,18 @@ push notifications	mail	ru	Push-уведомления
 quicksearch	mail	ru	Быстрый поиск
 quicksearch (with cc)	mail	ru	Быстрый поиск (включая 'Копия')
 read / unread	mail	ru	Прочитано / Непрочитано
+real name	mail	ru	Настоящее имя
+real name email	mail	ru	Реальное имя [Email]
+real name organization email	mail	ru	Реальное имя Организация [Email]
 refresh time in minutes	mail	ru	Время обновления в минутах
 reject with	mail	ru	Отклонить с
+remember the password for	mail	ru	Запомнить пароль для
 remove all	mail	ru	Удалить все
 remove immediately	mail	ru	Удалить немедленно
+removing %1 from blacklisted email addresses failed because of %2	mail	ru	Удаление %1 из черного списка адресов электронной почты не удалось из-за %2
+removing %1 from whiltelisted email addresses failed because of %2	mail	ru	Удаление %1 из почтовых адресов, занесенных в белый список, не удалось из-за %2
 rename folder	mail	ru	Переименовать папку
+replace 'http://' in image urls with (trailing / required!)	mail	ru	Замените 'http://' в URL-адресах изображений на (в конце / обязательно!)
 replied	mail	ru	Был ответ
 reply	mail	ru	Ответить
 reply all	mail	ru	Ответить всем
@@ -320,10 +367,16 @@ text/plain	mail	ru	Простой текст
 the folder <b>%1</b> will be used, if there is nothing set here, and no valid predefine given.	mail	ru	Каталог <b>%1</b> будет использоваться, если здесь не задано ничего иного, а также отсутствуют другие предварительные установки
 the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	mail	ru	Отправитель сообщения затребовал уведомление о прочтении сообщения. Вы хотите послать подтверждение о прочтении?
 the mimeparser can not parse this message.	mail	ru	Обработчик MIME не может обработать это сообщение.
+the rule with priority %1 successfully saved!	mail	ru	Правило с приоритетом %1 успешно сохранено!
 then	mail	ru	Тогда
 there is no imap server configured.	mail	ru	Нет настроенного сервера IMAP.
+there is no space left to store sieve script, please check sieve_maxscriptsize option on your mailserver's config.	mail	ru	Не осталось места для хранения скрипта sieve, пожалуйста, проверьте опцию sieve_maxscriptsize в конфигурации почтового сервера.
+this mail contains external images served via insecure http protocol. be aware showing or allowing them can compromise your security!	mail	ru	Это письмо содержит внешние изображения, передаваемые по небезопасному протоколу HTTP. Помните, что их показ или разрешение могут нарушить вашу безопасность!
+this message is smime encrypted and password protected.	mail	ru	Это письмо зашифровано по протоколу S/MIME и защищено паролем.
 timeout on connections to your imap server	mail	ru	Истекло время соединения с IMAP сервером
 to do	mail	ru	Сделать
+toggle all folders view for %1	mail	ru	Переключить просмотр всех папок для %1
+toggled on actions	mail	ru	Переключение на действия
 trash	mail	ru	Корзина
 trash folder	mail	ru	Папка Корзина
 trust servers seen / unseen info	mail	ru	Доверять информации серверов SEEN/UNSEEN
