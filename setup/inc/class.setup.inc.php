@@ -536,7 +536,7 @@ class setup
 					'app_name'		=> $appname,
 				], __LINE__, __FILE__);
 			}
-			catch (Api\Db\Exception\InvalidSql $e)
+			catch (Api\Db\Exception $e)
 			{
 				// ease update from pre 1.6 eg. 1.4 not having app_index, app_icon, app_icon_app columns
 				_egw_log_exception($e);
