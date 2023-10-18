@@ -1,12 +1,23 @@
 (leave empty for no quota)	mail	ro	(Lăsați gol pentru nici o cotă)
+acl rights retrieve failed, seems there are no rights set!	mail	ro	Recuperarea drepturilor ACL a eșuat, se pare că nu există drepturi setate!
 add all my aliases	mail	ro	Adăugați toate pseudonimele mele
+add files as %1	mail	ro	Adăugați fișiere ca %1
 add raw message, ignore mail attachments	mail	ro	Conversia mailului în articol, adăugarea mesajului brut (ignorați atașamentele de mail)
+adding %1 to blacklisted email addresses failed because of %2	mail	ro	Adăugarea lui %1 la adresele de e-mail de pe lista neagră a eșuat din cauza lui %2
+adding %1 to whiltelisted email addresses failed because of %2	mail	ro	Adăugarea lui %1 la adresele de e-mail de pe lista neagră a eșuat din cauza lui %2
 after reply, visible during compose	mail	ro	După răspuns, vizibil în timpul compunerii
 aliases+forwards	mail	ro	Aliasuri+Întoarcere
 always show notifiction	mail	ro	Afișează întotdeauna notificarea
 answered	mail	ro	Răspunsuri
+attach files	mail	ro	Atașați fișiere
+attach users vcard at compose to every new mail	mail	ro	Atașarea vCard-ului utilizatorului la fiecare e-mail nou în momentul compunerii.
+attachment has been saved successfully.	mail	ro	Atașamentul a fost salvat cu succes.
+attachments, ...	mail	ro	atașamente, ...
+be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	ro	Fiți atenți, prin adăugarea tuturor fișierelor selectate în modul %1, se vor schimba și toate atașamentele existente în listă în modul %2. \n \n \n Doriți să continuați?
+be aware that all attachments will be sent as %1!	mail	ro	Rețineți că toate atașamentele vor fi trimise în modul %1!
 by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	ro	În mod implicit, "http://" este înlocuit cu "https://". Nu ezitați să
 caching of flags	mail	ro	Memorarea în cache a steagurilor
+changing subject failed because of %1	mail	ro	Schimbarea subiectului a eșuat din cauza lui %1
 changing subject failed folder %1 does not exist	mail	ro	Schimbarea subiectului a eșuat folderul %1 nu există
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	ro	Valorile configurate vor fi setate automat în dialogul de compunere pentru câmpul respectat atunci când se compune un nou e-mail.
 contact label	mail	ro	Etichetă de contact
@@ -17,7 +28,59 @@ default value for remembering s/mime passphrase in minutes	mail	ro	Valoarea impl
 defines what to show as contact label for added contact into to/cc/bcc when composing an email. default is firstname lastname and empty means include eveything available.	mail	ro	Definește ce să se afișeze ca etichetă de contact pentru contactul adăugat în Către/Copie/Copie oarbă atunci când compuneți un e-mail. Valoarea implicită este Firstname Lastname (nume, prenume, nume), iar empty (gol) înseamnă că include tot ce este disponibil.
 defines what to show as identity label on mail folder header	common	ro	Definește ce să se afișeze ca etichetă de identitate în antetul dosarului de e-mail
 disable caching of flags	mail	ro	Dezactivarea memorării în cache a stegulețelor
+emailadmin: profilemanagement	mail	ro	eMailAdmin: Managementul profilurilor
+emails in whitelisted domains are not marked as spam	mail	ro	Emailurile din domeniile de pe lista albă nu sunt marcate ca spam
+enable	mail	ro	Activați
+enabled	mail	ro	Activat
+encrypt your message with smime certificate	mail	ro	Criptați mesajul cu certificat S/MIME
+everyone	mail	ro	Toată lumea
+examine namespace to retrieve folders in others and shared	mail	ro	Examinați spațiul de nume pentru a prelua folderele din altele și partajate
+failed to delete %1	mail	ro	Nu s-a reușit ștergerea lui %1
+failed to subscribe folder %1!	mail	ro	Nu s-a reușit abonarea folderului %1!
+failed to unsubscribe folder %1!	mail	ro	Nu s-a reușit să se dezaboneze folderul %1!
+file into	mail	ro	Treceți la
+file into:	mail	ro	Treceți la:
+filemode has been switched to %1	mail	ro	Modul de fișier a fost schimbat în: %1
+flag / unflag	mail	ro	Steguleț / Dezarhivare
+flagged %1 messages as %2 in %3	mail	ro	Mesaj(e) %1 marcat(e) ca %2 în %3
+flagged %1 messages as flagged in %2	mail	ro	Mesaj(e) %1 marcat(e) ca fiind marcat(e) în %2
+flagged %1 messages as unflagged in %2	mail	ro	Mesaj(e) %1 marcat(e) ca ne-marcat(e) în %2
+folder %1 %2 failed because of %3!	mail	ro	Dosarul %1 %2 a eșuat din cauza lui %3!
+folder %1 has been created successfully, although the subscription failed because of %2	mail	ro	Dosarul %1 a fost creat cu succes, deși abonarea a eșuat din cauza lui %2
+handling of external http images / mixed content in mails	mail	ro	Gestionarea imaginilor http externe / conținut mixt în e-mailuri
+html	mail	ro	HTML
+ident name	mail	ro	Nume ident.
+ident name email	mail	ro	Nume identitate [Email]
+ident name organization email	mail	ro	Nume identitate Organizație [Email]
+identity	mail	ro	Identitate
+identity label	mail	ro	Etichetă identitate
+if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	ro	Se quiser ver uma visualização prévia de um e-mail clicando uma vez no assunto, ative essa opção.
+if you would like to select multiple folders in one action, you can hold ctrl key then select a folder as start range and another folder within a same level as end range, all folders in between will be selected or unselected based on their current status.	mail	ro	Se quiser selecionar várias pastas em uma ação, mantenha pressionada a tecla ctrl e selecione uma pasta como intervalo inicial e outra pasta dentro do mesmo nível como intervalo final; todas as pastas intermediárias serão selecionadas ou desmarcadas com base em seu status atual.
+imap	mail	ro	IMAP
+imap server	mail	ro	IMAP Server
+import of message %1 failed. could not save message to folder %2 due to: %3	mail	ro	A importação da mensagem %1 falhou. Não foi possível salvar a mensagem na pasta %2 devido a: %3
+import of message %1 failed. destination folder %2 does not exist.	mail	ro	Falha na importação da mensagem %1. A pasta de destino %2 não existe.
+import of message %1 failed. destination folder not set.	mail	ro	Importul mesajului %1 a eșuat. Dosarul de destinație nu este setat.
+import of message %1 failed. no contacts to merge and send to specified.	mail	ro	Importul mesajului %1 a eșuat. Nu s-a specificat nicio persoană de contact pentru fuziune și trimitere.
+importance	mail	ro	importanță
+important	mail	ro	Importante
+in mailbox: %1, with id: %2, and partid: %3	mail	ro	În cutia poștală: %1, cu ID: %2 și PartID: %3.
+in order to protect your privacy all external sources within this email are blocked.	mail	ro	Pentru a vă proteja confidențialitatea, toate sursele externe din acest e-mail sunt blocate.
+inbox	mail	ro	Inbox
 information to show on email tag	mail	ro	Informații de afișat pe eticheta de e-mail
+initialization of mail failed. please use the wizard to cope with the problem.	mail	ro	A inicialização do módulo de correio falhou. Use o assistente de configuração para corrigir a configuração.
+inline	mail	ro	Înainte
+insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)	mail	ro	introduceți semnătura în partea de sus a mesajului nou (sau de răspuns) la deschiderea dialogului de redactare (este posibil să nu puteți schimba semnăturile)
+job	mail	ro	Lucru
+junk	mail	ro	Junk
+junk folder	mail	ro	Dosarul Junk
+keep a copy of the message in your inbox	mail	ro	Păstrați o copie a mesajului în căsuța de primire
+kilobytes	mail	ro	kilobiți
+later	mail	ro	Mai târziu
+learning as ham (not spam) failed because of %1	mail	ro	Învățarea ca ham (nu ca spam) a eșuat din cauza lui %1
+learning as spam failed because of %1	mail	ro	Învățarea ca spam a eșuat din cauza %1
+less than	mail	ro	mai puțin de
+limit mailing list results when searching for addresses	mail	ro	Limitarea rezultatelor din listele de corespondență la căutarea de adrese
 list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	ro	Listă de acțiuni care urmează să fie activate/activate în mod implicit (de exemplu, acțiunea de salvare a compoziției de e-mail ca InfoLog)
 mail	common	ro	Mail
 mail acl	mail	ro	Drepturi de acces
@@ -29,6 +92,8 @@ mail-address	mail	ro	Adresa de e-mail
 mailaccount	mail	ro	Contul de poștă
 mailinglist	mail	ro	Listă de corespondență
 mails	common	ro	Mesaje
+mails can be copied to that folder via context menu, if folder is configured.	mail	ro	Mesajele pot fi copiate în acest dosar prin intermediul meniului contextual, dacă dosarul este configurat.
+mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	ro	Mailserver a raportat:\n%1 \nDoriți să continuați prin ștergerea imediată a mesajelor selectate (faceți clic pe ok)?\nDacă nu, încercați să goliți dosarul de gunoi înainte de a continua. (faceți clic pe anulare)
 mark all as read	mail	ro	Marcați toate ca fiind citite
 mark all messages in folder as read	mail	ro	Marcați toate mesajele din dosar ca fiind citite
 mark as deleted	mail	ro	Marcați ca fiind șterse
@@ -53,6 +118,14 @@ printing	mail	ro	Imprimarea
 push notifications	mail	ro	Notificări push
 quicksearch	mail	ro	Căutare rapidă
 quicksearch (with cc)	mail	ro	Căutare rapidă (+Copiere)
+real name	mail	ro	Numele real
+real name email	mail	ro	Nume real [Email]
+real name organization email	mail	ro	Nume real Organizația [Email]
+remember the password for	mail	ro	Rețineți parola pentru
+remove all	mail	ro	Eliminați toate
+removing %1 from blacklisted email addresses failed because of %2	mail	ro	Eliminarea lui %1 din adresele de e-mail de pe lista neagră a eșuat din cauza lui %2
+removing %1 from whiltelisted email addresses failed because of %2	mail	ro	Eliminarea lui %1 din adresele de e-mail de pe lista albă a eșuat din cauza lui %2
+replace 'http://' in image urls with (trailing / required!)	mail	ro	Înlocuiți "http://" în uralele de imagini cu (este necesar / la sfârșit!)
 save all attachments to filemanager	mail	ro	Salvați toate atașamentele în filemanager
 select or insert email address	mail	ro	Selectați sau introduceți adresa de e-mail
 set predefined values for compose...	mail	ro	Setați valori predefinite pentru compunere ...
@@ -67,5 +140,16 @@ smime encrypted message	mail	ro	Mesaj criptat S/MIME
 smime signed message	mail	ro	Mesaj semnat S/MIME
 smtp	mail	ro	SMTP
 sneak preview in list	mail	ro	Previzualizare mesaj
+the imap server need to meet certain requirements and be configured for it:	mail	ro	Serverul IMAP trebuie să îndeplinească anumite cerințe ȘI să fie configurat în acest scop:
+the rule with priority %1 successfully saved!	mail	ro	Regula cu prioritatea %1 a fost salvată cu succes!
+there is no space left to store sieve script, please check sieve_maxscriptsize option on your mailserver's config.	mail	ro	Nu mai există spațiu pentru a stoca scriptul sieve, vă rugăm să verificați opțiunea sieve_maxscriptsize din configurația serverului de poștă electronică.
+this mail contains external images served via insecure http protocol. be aware showing or allowing them can compromise your security!	mail	ro	Acest mail conține imagini externe servite prin protocolul HTTP nesigur. Fiți conștienți că afișarea sau permiterea lor vă poate compromite securitatea!
+this message is smime encrypted and password protected.	mail	ro	Acest mesaj este criptat S/MIME și protejat cu parolă.
+timeout on connections to your imap server	mail	ro	Timpul de așteptare a conexiunilor la serverul IMAP
+to do	mail	ro	Pentru a face
+toggle all folders view for %1	mail	ro	Comutați vizualizarea tuturor folderelor pentru %1
+toggled on actions	mail	ro	Toggled on actions
+trash	mail	ro	Coș de gunoi
+trash folder	mail	ro	Dosar coș de gunoi
 you can select what info to be displayed on email tag	mail	ro	Puteți selecta ce informații să fie afișate pe eticheta de e-mail.
 you've got new mail	mail	ro	Ați primit un mesaj nou

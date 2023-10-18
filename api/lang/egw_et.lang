@@ -1,8 +1,11 @@
 %1 email addresses inserted	common	et	%1 email aadress sisestatud
+%1 email(s) added into %2	common	et	%1 email(id) lisatud %2-sse
 %1 is not executable by the webserver !!!	common	et	%1 pole veebiserverijaoks käivitatav !!!
+%1 more %2 selected ...	common	et	%1 rohkem %2 valitud...
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	et	%1Vali teine kaust%2<br />või tee %3 veebiserverijaoks kirjutatavaks
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	et	%1EGroupware%2 on multi-kasutaja, veebipõhine grupitöö vahend mis on kirjutatud %3PHP%4.
 '%1' copied to clipboard	common	et	'%1' kopeeritud lõikelauale
+'%1' is not a valid json file!	common	et	'%1' ei ole kehtiv JSON-fail.
 00 (disable)	admin	et	00 (keela)
 1 day	common	et	1 Päev
 1 hour	common	et	1 Tund
@@ -67,6 +70,7 @@ anguilla	common	et	ANGUILLA
 answering no will not ask you again for this browser.	common	et	Kui te vastate ei, ei küsita teilt enam seda brauserit.
 antarctica	common	et	ANTARKTIKA
 antigua and barbuda	common	et	ANTIGUA JA BARBUDA
+api	common	et	EGroupware API
 application	common	et	Rakendus
 applications	common	et	Rakendused
 apply	common	et	Uuenda
@@ -84,6 +88,7 @@ austria	common	et	AUSTRIA
 authenticate	common	et	Autentimine
 author	common	et	Autor
 autosave default category	common	et	Salvesta Automaatlselt Vaikimisi Kategooria
+avatar	common	et	Avatar
 azerbaijan	common	et	ASERBAIDŽAAN
 back	common	et	Tagasi
 back to user login	common	et	Tagasi kasutaja logimise juurde
@@ -109,6 +114,7 @@ bottom	common	et	Alla
 bouvet island	common	et	BOUVET SAAR
 brazil	common	et	BRASIILIA
 british indian ocean territory	common	et	BRITI INDIA OOKEANI ALA
+browser %1 %2 is not recommended. you may experience issues and not working features. please use the latest version of chrome, firefox or edge. thank you!	common	et	Brauser %1 %2 ei ole soovitatav. Teil võivad tekkida probleemid ja mitte toimivad funktsioonid. Palun kasutage Chrome'i, Firefoxi või Edge'i uusimat versiooni. Aitäh!
 brunei darussalam	common	et	BRUNEI DARUSSALAM
 bulgaria	common	et	BULGAARIA
 burkina faso	common	et	BURKINA FASO
@@ -135,6 +141,7 @@ chad	common	et	TŠAAD
 change	common	et	Muuda
 charset	common	et	utf-8
 check all	common	et	Kontrolli kõik
+check for empty values in if statements.  example {{if url~empty~~website:}} - if url is not empty, writes "website:"	common	et	Kontrollige tühje väärtusi IF-avaldustes. Näide {{IF url~EMPTY~~Website:}}} - Kui url ei ole tühi, kirjutab "Website:"
 check installation	common	et	Kontrolli installeeritust
 check now	common	et	Kontrolli Nüüd
 chile	common	et	TŠIILI
@@ -191,6 +198,7 @@ cyprus	common	et	KÜPROS
 czech republic	common	et	TŠEHHOSLOVAKKIA
 dark mode	common	et	Tume režiim
 date	common	et	Kuupäev
+date + time	common	et	Kuupäev + Aeg
 date due	common	et	Tähtaeg
 date+time	common	et	Kuupäev+Aeg
 day	common	et	Päev
@@ -227,6 +235,7 @@ domain name for mail-address, eg. "%1"	common	et	doomeninimi mail-aadressijaoks,
 domestic	common	et	Kodumaine
 dominica	common	et	DOMINICA
 dominican republic	common	et	DOMINIKAANI VABARIIK
+don't ask again!	common	et	Don't ask again!
 done	common	et	Valmis
 download	common	et	Lae alla
 duration	common	et	Kestvus
@@ -261,6 +270,10 @@ estonia	common	et	EESTI
 ethiopia	common	et	ETIOOPIA
 everything	common	et	Kõik
 exact	common	et	täpne
+example {{letterprefix}} - gives a letter prefix without double spaces, if the title is empty for example	preferences	et	Näide {{LETTERPREFIX}} - Annab kirja eesliite ilma topelt tühikuta, kui pealkiri on tühi näiteks
+example {{letterprefix}} - gives a letter prefix without double spaces, if the title is emty for  example	common	et	Näide {{LETTERPREFIX}} - Annab kirja eesliite ilma topelt tühikuta, kui pealkiri on tühi näiteks
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	preferences	et	Näide {{NELF roll}} - kui väli roll ei ole tühi, siis saate uue rea koos väljal role oleva väärtusega
+example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	preferences	et	Näide {{nenvlf roll}} - kui väli roll ei ole tühi, seatakse LF ilma väljal oleva väärtuseta
 export xml	common	et	Expordi XML
 failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	et	Ühendus serveriga ebaõnnestus või vigane serveri vastus. Proovi uuesti sisse logida. Kui ebaõnnestub kontakteeru Administraatoriga.
 fax number	common	et	faksi number
@@ -331,7 +344,8 @@ how many days to sync in the future (default %1)	groupdav	et	Mitu päeva tulevik
 how many days to sync in the past (default %1)	groupdav	et	Mitu päeva sünkroonida minevikus (vaikimisi %1)
 how many rows to print	common	et	Mitu rida printida
 how to show the general egroupware menu ?	common	et	Kuidas näidata EGroupware üldmenüüd
-html	common	et	Html
+html	common	et	HTML
+html links to any entries linked to the current record, excluding attached files	common	et	HTML-linkid kõikidele kirjetele, mis on seotud praeguse kirjega, välja arvatud lisatud failid
 hungary	common	et	UNGARI
 iceland	common	et	ISLAND
 id	common	et	ID
@@ -350,9 +364,11 @@ insert placeholder	common	et	Sisesta paigutuskoht
 insert row after	common	et	Sisesta rida enne
 insert row before	common	et	Sisesta rida peale
 insert timestamp into description field	common	et	Lisage ajatempel kirjeldusväljale
+install	common	et	Paigaldage
 install egroupware as mail-handler?	common	et	Installige EGroupware posti käsitlejana?
 international	common	et	rahvusvaheline
 invalid 2-factor authentication code	common	et	2-faktoorse autentimise kood on kehtetu
+invalid email	common	et	Invaliidne e-kiri
 invalid filename	common	et	Vigane failinimi
 invalid ip address	common	et	Vigane IP aadress
 invalid or expired 'remember me' token	common	et	Kehtetu või aegunud "mäleta mind" märgis
@@ -455,13 +471,24 @@ page was generated in %1 seconds	common	et	Leht genereeriti %1 sekundit
 password	common	et	Parool
 password has been updated	common	et	Parool on uuendatud
 path	common	et	Teekond
-personal	common	et	Personaalne
+permission denied!	common	et	Luba keelatud!
+permission denied! this is an administration only feature.	common	et	Luba keelatud! See on ainult administratsiooni funktsioon.
+permisson denied!	common	et	Luba keelatud!
+personal	common	et	Isiklik
+pg down	common	et	Lehekülg alla
+pg up	common	et	Lehekülg üles
+pgp encryption	common	et	PGP krüpteerimine
+pgp encryption installation	common	et	PGP krüpteerimise paigaldamine
 phone number	common	et	telefoni number
 placeholders	common	et	Paigaldajad
 play/pause	common	et	Esitus/peatus
 please enter a name	common	et	Palun sisesta nimi !
+please reload the egroupware desktop (f5 / cmd+r).	common	et	Palun laadige EGroupware'i töölaud uuesti (F5 / Cmd+r).
+please remember to use '%1' as username for local login's from now on!	common	et	Palun ärge unustage edaspidi kasutada kohalikul sisselogimisel kasutajanime '%1'!
 please select	common	et	Palun Vali
 please set your global preferences	common	et	Palun sisesta oma globaalsed eelistused !
+please type %1 more characters	common	et	Palun sisestage veel %1 tähemärk(id)
+please type 1 more character	common	et	Palun sisestage veel 1 tähemärk
 please wait...	common	et	Palun Oota...
 poland	common	et	POOLA
 portugal	common	et	PORTUGAL
@@ -546,14 +573,16 @@ show clock?	common	et	Näita kella?
 show menu	common	et	näita menüüd
 show page generation time	common	et	Näita lehe genereerimise aega
 show page generation time?	common	et	Näita lehe genereerimise aega?
+show password	common	et	Näita parooli
 show values	common	et	Näita Väärtusi
 show/hide	common	et	näita/peida külgriba
 show_more_apps	common	et	Näita rohkem programme
 showing	common	et	näitan
 showing %1	common	et	näitan %1
+sign up	common	et	Registreerimine
 simple	common	et	Lihtne
 singapore	common	et	SINGAPUR
-site configuration	common	et	Saidi seadistused
+site configuration	common	et	Konfiguratsioon
 size	common	et	suurus
 slovakia	common	et	SLOVAKIA
 slovenia	common	et	SLOVEENIA
@@ -640,6 +669,9 @@ you have not entered participants	common	et	Sa ei sisestanud osalejaid
 you have selected an invalid date	common	et	Sisestasid vigase kuupäeva !
 you have selected an invalid main category	common	et	Sisestasid vigase pea kategooria !
 you have successfully logged out	common	et	Oled õnnelikult välja loginud
+your account has been updated with new data from your identity provider.	common	et	Teie kontot on uuendatud teie identiteedipakkuja uute andmetega.
+your browser is not up-to-date (javascript es6 compatible), you may experience some of the features not working.	common	et	Teie brauser ei ole ajakohane (JavaScript ES6-ga ühilduv), mõned funktsioonid ei pruugi toimida.
+your key has been restored successfully.	common	et	Teie võti on edukalt taastatud.
 your message has been sent	common	et	Sinu kiri on saadetud
 your password does not have required strength of %1 character classes and minimum length of %2 characters.	common	et	Teie salasõna ei vasta %1 tähemärkide klassile ja %2 tähemärkide minimaalsele pikkusele.
 your password does not have required strength:	common	et	Teie salasõna ei ole nõutava tugevusega:

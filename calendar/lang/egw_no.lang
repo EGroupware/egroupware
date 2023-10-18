@@ -1,7 +1,9 @@
 %1 %2 in %3	calendar	no	%1 %2 i %3
+%1 events in ical file, only first one imported and displayed!	calendar	no	%1 hendelser i iCal-filen, bare den første importeres og vises!
 %1 hours	calendar	no	%1 timer
 %1 records imported	calendar	no	%1 oppføringer importert
 %1 records read (not yet imported, you may go back and uncheck test import)	calendar	no	%1 oppføringer lest (ikke importert enda, du kan gå tilbake og hake av Test Import)
+(%1 events in %2 seconds)	calendar	no	(%1 hendelser på %2 sekunder)
 a non blocking event will not conflict with other events	calendar	no	En hendelse som ikke blokkerer vil ikke være i konflikt med andre hendelser
 accept	calendar	no	aksepter
 accept or reject an invitation	calendar	no	Aksepter eller avslå invitasjonen
@@ -10,6 +12,7 @@ access denied to the calendar of %1 !!!	calendar	no	Ikke tilgang til %1 kalender
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	no	Handling som utløste denne meldingen: Lagt til, Kansellert, Akseptert, Avslått, ...
 actions	calendar	no	Aksjoner
 add alarm	calendar	no	Legg til alarm
+add new event	calendar	no	Legg til ny avtale
 add timesheet entry	calendar	no	Legg til forekomst i timeregistrering
 added	calendar	no	Lagt til
 after current date	calendar	no	Etter inneværende dato
@@ -26,6 +29,7 @@ all participants	calendar	no	Alle deltagere
 allows to edit the event again	calendar	no	Tillate endring av alarmen
 always	calendar	no	Alltid
 apply the changes	calendar	no	Oppdater endringene
+attention	calendar	no	Oppmerksomhet
 back half a month	calendar	no	Tilbake en halv mnd.
 back one month	calendar	no	Tilbake en mnd.
 before current date	calendar	no	For inneværende dato
@@ -41,6 +45,8 @@ calendar settings	admin	no	Kalender Innstillinger
 calendar-fieldname	calendar	no	Kalender-Feltnavn
 can't add alarms in the past !!!	calendar	no	Kan ikke legge til alarmer for passerte hendelser!
 canceled	calendar	no	Annullert
+category report	calendar	no	Kategorirapport
+changed event-data applied	calendar	no	Endrede hendelsesdata brukt
 charset of file	calendar	no	Karaktersett for filen
 check all	calendar	no	Kontroller alle
 choose a category	calendar	no	Velg en kategori
@@ -58,6 +64,7 @@ csv-filename	calendar	no	CSV-Filnavn
 custom	calendar	no	Egendefinert
 custom fields	common	no	Egendefinerte felt
 daily	calendar	no	Daglig
+date range	calendar	no	Datointervall
 day	calendar	no	Dag
 days	calendar	no	dager
 days of the week for a weekly repeated event	calendar	no	Ukedag for ukentlig repeterende hendelser
@@ -106,6 +113,7 @@ event saved	calendar	no	Hendelse lagret
 event will occupy the whole day	calendar	no	Hendelse opptar hele dagen
 exception	calendar	no	Unntak
 exceptions	calendar	no	Unntak
+exclude weekend	calendar	no	Ekskluder helg
 existing links	calendar	no	Eksisterende lenker
 extended	calendar	no	Forlenget
 extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	no	Forlengelses-endringer inkluderer alltid komplette hendelses-detaljer. iCal filer kan importeres i fler andre kalender programmer.
@@ -163,6 +171,7 @@ location, start- and endtimes, ...	calendar	no	Lokasjon, start- og sluttid,...
 mail all participants	calendar	no	Send e-mail til deltagerne
 make freebusy information available to not logged in persons?	calendar	no	Skal informasjon om ledig/opptatt være tilgjengelig for personer som ikke er pålogget ?
 maximum available quantity of %1 exceeded!	calendar	no	Maksimalt tilgjengelig antall %1 overskredet!
+min days	calendar	no	Min dager
 minimum number of users for showing day view as consolidated.	calendar	no	Minimum antall brukere for å vise dagvisning som konsolidert.
 minimum number of users for showing week view as consolidated.	calendar	no	Minimum antall brukere for å vise ukevisning som konsolidert.
 minutes	calendar	no	minutter
@@ -205,6 +214,7 @@ one week	calendar	no	en uke
 one year	calendar	no	et år
 only the initial date of that recurring event is checked!	calendar	no	Bare startdato for den repeterende handlingen blir kontrollert !
 open todo's:	calendar	no	Åpne gjøremål liste:
+output unit	calendar	no	Enhet for utdata
 overlap holiday	calendar	no	overlapp ferie
 participants	calendar	no	Deltakere
 participants uninvited from an event	calendar	no	Deltagere avmeldt fra en hendelse
@@ -224,6 +234,7 @@ quantity	calendar	no	Antall
 re-edit event	calendar	no	Omgjøre oppføring
 receive email updates	calendar	no	Motta e-post oppdateringer
 receive summary of appointments	calendar	no	Motta et sammendrag av avtaler
+recordings	calendar	no	Registreringer
 recurrence	calendar	no	Repeterende
 recurring event	calendar	no	periodisk oppføring
 rejected	calendar	no	Avslått
@@ -234,6 +245,7 @@ repeating event information	calendar	no	Gjenta oppføringsinformasjon
 repeating interval, eg. 2 to repeat every second week	calendar	no	Repeterende interval, feks. 2 for hver annen uke
 repetition	calendar	no	Gjentakelse
 repetitiondetails (or empty)	calendar	no	Repitasjonsdetaljer (eller tom)
+report	calendar	no	Rapport
 reset	calendar	no	Tilbakestill
 resources	calendar	no	Ressurser
 role	calendar	no	Rolle
@@ -253,6 +265,7 @@ show list of upcoming events	calendar	no	Vis liste av kommende oppføringer
 show this month	calendar	no	vis denne måneden
 show this week	calendar	no	vis denne uken
 single event	calendar	no	enkel oppføring
+sort by	calendar	no	Sorter etter
 start	calendar	no	Start
 start date/time	calendar	no	Start Dato/Tid
 startdate	calendar	no	Startdato
@@ -290,6 +303,7 @@ uninvited	calendar	no	Ikke lenger invitert
 updated	calendar	no	Oppdatert
 use end date	calendar	no	Bruk sluttdato
 use the selected time and close the popup	calendar	no	bruk valgt tid og lukk popup-vinduet
+utilities	calendar	no	Verktøy
 view this event	calendar	no	Vis denne hendelsen
 wed	calendar	no	Ons
 week	calendar	no	Uke

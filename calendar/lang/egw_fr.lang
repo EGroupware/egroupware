@@ -29,6 +29,7 @@ add alarm	calendar	fr	Ajouter une alarme
 add appointments via shortened dialog or complete edit window	calendar	fr	Ajouter les rendez-vous par une boîte de dialogue courte ou par une fenêtre complète
 add current view as favorite	calendar	fr	Ajouter cette vue aux favoris
 add new alarm	calendar	fr	Ajouter une alarme
+add new event	calendar	fr	Ajouter un nouvel événement
 add new participants or resource	calendar	fr	Ajouter de nouveaux participants ou ressources
 add timesheet entry	calendar	fr	Ajouter une entrée feuille de temps
 added	calendar	fr	Ajouté
@@ -62,6 +63,7 @@ apply the changes	calendar	fr	Appliquer les modifications
 appointment settings	calendar	fr	Paramètres des rendez-vous
 as an alternative you can %1download a mysql dump%2 and import it manually into egw_cal_timezones table.	calendar	fr	Alternativement, vous pouvez %1télécharger un dump mysql%2 et l'importer manuellement dans la table egw_cal_timezones.
 at start of the event	calendar	fr	au début de l'événement
+attention	calendar	fr	Attention
 automatically purge old events after	admin	fr	Purger autoamatiquement les anciens événement après
 available for the first entry inside each day of week or daily table inside the selected range:	calendar	fr	Disponible pour la première entrée sur chaque jour de la semaine ou sur la vue en tableau dans la sélection :
 back half a month	calendar	fr	15 jours dans le passé
@@ -99,9 +101,11 @@ category %1 removed because of missing rights	calendar	fr	Catégorie %1 supprim�
 category acl	common	fr	ACL sur les catégories
 category acl only restrict adding a category to an event or changing status of a participant. it does not change the visibility of an event!	calendar	fr	Les ACL sur les catégories restreignent seulement l'ajout d'une catégorie sur un événement ou le changement de statut d'un participant.  Cela ne joue pas sur la visibilité de l'événement.
 category automatically added to new events	calendar	fr	Catégorie ajoutée automatiquement aux nouveaux événements
+category report	calendar	fr	Rapport de catégorie
 chair	calendar	fr	Organisateur
 change history	calendar	fr	Historique des changements
 change your status	calendar	fr	Changer votre statut
+changed event-data applied	calendar	fr	Données d'événement modifiées appliquées
 charset of file	calendar	fr	Jeu de caractères du fichier
 check all	calendar	fr	Vérifier tout
 choose a category	calendar	fr	Choisissez une catégorie
@@ -136,6 +140,7 @@ daily tables	calendar	fr	Tableaux journaliers
 data exchange settings	calendar	fr	Paramètres d'échange de données
 date for the day of the week	calendar	fr	Date pour le jour de la semaine
 date for the day of the week, available for the first entry inside each day of week or daily table inside the selected range.	calendar	fr	Date pour le jour de la semaine, disponible pour la première entrée sur chaque jour de la semaine ou bien sur la vue journalière dans la plage sélectionnée.
+date range	calendar	fr	Plage de dates
 day	calendar	fr	Jour
 day of week tables	calendar	fr	Jour des tableaux  hebdomadaires
 days	calendar	fr	jours
@@ -228,6 +233,7 @@ example {{nenvlf role}} - if field role is not empty, set a lf without any value
 exception	calendar	fr	Exception
 exception created - you can now edit or delete it	calendar	fr	Exception créée - vous pouvez maintenant la modifier ou la supprimer.
 exceptions	calendar	fr	Exceptions
+exclude weekend	calendar	fr	Exclure le week-end
 execute a further action for this entry	calendar	fr	Exécuter une action supplémentaire pour cette entrée
 existing links	calendar	fr	Liens existants
 exists	calendar	fr	Existe
@@ -355,6 +361,7 @@ meeting request	calendar	fr	Demande de rendez-vous
 meetingrequest to all participants	calendar	fr	Demande de rendez-vous à tous les participants
 merge document...	calendar	fr	Fusionner un document...
 midnight	calendar	fr	Minuit
+min days	calendar	fr	Jours minimums
 minimum number of users for showing day view as consolidated.	calendar	fr	Nombre minimum d'utilisateurs pour afficher la vue journalière comme consolidée.
 minimum number of users for showing week view as consolidated.	calendar	fr	Nombre minimum d'utilisateurs pour afficher la vue hebdomadaire comme consolidée.
 minutes	calendar	fr	Minutes
@@ -426,6 +433,7 @@ only used for first viewing of calendar, afterwards last selected view is used.	
 open todo's:	calendar	fr	Tâches ouvertes
 optional	calendar	fr	Optionnel
 organizer	calendar	fr	Organisateur
+output unit	calendar	fr	Unité de sortie
 overlap holiday	calendar	fr	Jour fériés chevauchant
 owner too	calendar	fr	Aussi les "propriétaires"
 participant names by type	calendar	fr	Nom des participants par type
@@ -455,6 +463,7 @@ re-edit event	calendar	fr	Remodifier l'événement
 receive email updates	calendar	fr	Recevoir les mises à jour par EMail
 receive notifications about events you created/modified/deleted	calendar	fr	Recevoir des notification sur les événements que vous avez créé/modifié/supprimé ?
 receive summary of appointments	calendar	fr	Recevoir le résumé des rendez-vous
+recordings	calendar	fr	Enregistrements
 recover	calendar	fr	Récupérer
 recovered	calendar	fr	Recupéré(s).
 recurrence	calendar	fr	Récurrence
@@ -473,6 +482,7 @@ repetition	calendar	fr	Répétition
 repetitiondetails (or empty)	calendar	fr	Détails de répétition (ou vide)
 replacements for inserting events into documents	calendar	fr	Remplacement pour insérer des événements dans des documents
 reply to meeting request	calendar	fr	Répondre à une demande de rendez-vous
+report	calendar	fr	Rapport
 requested	calendar	fr	Requis
 requested date %1 outside allowed range of %2 days: recurring events obmitted!	calendar	fr	Date demandée %1 en dehors de la plage autorisée de %2 jours : événements récurrents omis !
 requested meeting is in the past!	calendar	fr	Le rendez-vous demandé est dans le passé !
@@ -537,6 +547,7 @@ show this month	calendar	fr	afficher ce mois
 show this week	calendar	fr	afficher cette semaine
 show year and age	calendar	fr	Afficher l'année et l'âge
 single event	calendar	fr	événement unique
+sort by	calendar	fr	Trier par
 specify where url of the day links to	calendar	fr	Spécifier où pointe l'url du jour
 start	calendar	fr	Début
 start date/time	calendar	fr	Date/Heure de début

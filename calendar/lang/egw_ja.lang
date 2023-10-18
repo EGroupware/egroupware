@@ -2,7 +2,7 @@
 %1 days	calendar	ja	%1 日前
 %1 event(s) %2	calendar	ja	%1 個のイベント: %2
 %1 event(s) %2, %3 failed because of insufficient rights !!!	calendar	ja	%1 個のイベント: %2, %3 個のイベント: 権限不足のため失敗!
-%1 events in ical file, only first one imported and displayed!	calendar	ja	%1 events in iCal file, only first one imported and displayed!
+%1 events in ical file, only first one imported and displayed!	calendar	ja	iCalファイルにイベントが1件あります！
 %1 hours	calendar	ja	%1 時間前
 %1 minutes	calendar	ja	%1 分前
 %1 participants removed because of missing invite grants	calendar	ja	招待権限が不足しているため、%1 人の参加者を削除しました。
@@ -10,7 +10,7 @@
 %1 records read (not yet imported, you may go back and uncheck test import)	calendar	ja	%1 件読み込みました(まだインポートされていません。戻ってTestインポートのチェックを外してやりなおしてください)
 %1 weeks	calendar	ja	%1 週間
 %s the event	calendar	ja	%s イベント
-(%1 events in %2 seconds)	calendar	ja	(%1 events in %2 seconds)
+(%1 events in %2 seconds)	calendar	ja	(%2 秒で %1 イベント)
 (empty = use global limit, no = no export at all)	admin	ja	(空欄 = グローバル・リミットを使用, no = 全てエクスポートしない)
 (without a custom url we use nation of user preference to load holidays from %s)	calendar	ja	（カスタム URL が指定されない場合は、ユーザ設定で指定された国の祝祭日定義を %s から取得します。）
 , exceptions preserved	calendar	ja	, 例外を保存済み
@@ -28,6 +28,7 @@ actions...	calendar	ja	アクション...
 add alarm	calendar	ja	アラームを追加
 add current view as favorite	calendar	ja	現在の表示をお気に入りに追加
 add new alarm	calendar	ja	新規アラームを追加
+add new event	calendar	ja	新規予約の追加
 add new participants or resource	calendar	ja	新規参加者またはリソースを追加
 add timesheet entry	calendar	ja	タイムシート・エントリーを追加
 added	calendar	ja	追加されました
@@ -57,6 +58,7 @@ apply the action on the whole query, not only the shown events	calendar	ja	ク�
 apply the changes	calendar	ja	変更を保存
 appointment settings	calendar	ja	イベント設定
 as an alternative you can %1download a mysql dump%2 and import it manually into egw_cal_timezones table.	calendar	ja	代替策として、MySQLダンプを入手して、テーブル egw_cal_timezones に手作業でインポートする方法があります。
+attention	calendar	ja	注意事項
 automatically purge old events after	admin	ja	下記経過後のイベントを自動削除:
 available for the first entry inside each day of week or daily table inside the selected range:	calendar	ja	週表示中の各日表内、または選択範囲内の日表内の最初の項目で利用可能。
 back half a month	calendar	ja	半月前
@@ -92,9 +94,11 @@ canceled	calendar	ja	キャンセルされました。
 category %1 removed because of missing rights	calendar	ja	権限不足のためカテゴリ %1 は削除されました
 category acl	common	ja	カテゴリー ACL
 category acl only restrict adding a category to an event or changing status of a participant. it does not change the visibility of an event!	calendar	ja	カテゴリ ACL は、イベントにカテゴリを追加すること、および参加者の状態を変更することを制限します。イベントの表示に影響は与えません。
+category report	calendar	ja	カテゴリーレポート
 chair	calendar	ja	幹事
 change history	calendar	ja	変更履歴
 change your status	calendar	ja	ステータスを変更
+changed event-data applied	calendar	ja	変更されたイベントデータ
 charset of file	calendar	ja	ファイルの文字セット
 check all	calendar	ja	全て選択
 choose a category	calendar	ja	カテゴリを選択
@@ -127,6 +131,7 @@ daily tables	calendar	ja	日表
 data exchange settings	calendar	ja	データ交換設定
 date for the day of the week	calendar	ja	曜日の日付
 date for the day of the week, available for the first entry inside each day of week or daily table inside the selected range.	calendar	ja	各曜日(または選択範囲内の日表）の最初の項目で利用可能な、曜日の日付。
+date range	calendar	ja	日付範囲
 day	calendar	ja	日
 day of week tables	calendar	ja	曜日表
 days	calendar	ja	日
@@ -214,6 +219,7 @@ example {{nenvlf role}} - if field role is not empty, set a lf without any value
 exception	calendar	ja	例外
 exception created - you can now edit or delete it	calendar	ja	例外を作成しました。
 exceptions	calendar	ja	例外
+exclude weekend	calendar	ja	週末を除く
 execute a further action for this entry	calendar	ja	このイベントで更にアクションを実行
 existing links	calendar	ja	定義済みリンク
 exists	calendar	ja	存在
@@ -341,6 +347,7 @@ meeting request	calendar	ja	ミーティング参加要請
 meetingrequest to all participants	calendar	ja	全参加者に参加要請
 merge document...	calendar	ja	ドキュメントのマージ...
 midnight	calendar	ja	深夜
+min days	calendar	ja	最小日数
 minimum number of users for showing day view as consolidated.	calendar	ja	日表示時に統合表示されるユーザの最低ユーザ数
 minimum number of users for showing week view as consolidated.	calendar	ja	週表示時に統合表示されるユーザの最低ユーザ数
 minutes	calendar	ja	分
@@ -406,6 +413,7 @@ only the initial date of that recurring event is checked!	calendar	ja	繰返し�
 only used for first viewing of calendar, afterwards last selected view is used.	calendar	ja	カレンダーを開く初回にのみ使用されます。それ以降は、最後に使用した表示が使用されます。
 open todo's:	calendar	ja	オープン状態の ToDo:
 optional	calendar	ja	任意参加
+output unit	calendar	ja	出力単位
 overlap holiday	calendar	ja	重複休日
 owner too	calendar	ja	所有者
 participant names by type	calendar	ja	タイプ別参加者名
@@ -434,6 +442,7 @@ re-edit event	calendar	ja	イベントを再編集
 receive email updates	calendar	ja	メールで通知を受信
 receive notifications about events you created/modified/deleted	calendar	ja	あなた自身が作成/変更/削除したイベントの通知を受信
 receive summary of appointments	calendar	ja	アポイントメントの概要を受信
+recordings	calendar	ja	記録
 recover	calendar	ja	復旧
 recovered	calendar	ja	復旧しました。
 recurrence	calendar	ja	繰返し
@@ -451,6 +460,7 @@ repetition	calendar	ja	繰返し
 repetitiondetails (or empty)	calendar	ja	繰返し条件詳細
 replacements for inserting events into documents	calendar	ja	ドキュメントにイベントを挿入する際の置換
 reply to meeting request	calendar	ja	ミーティング参加要請に回答
+report	calendar	ja	レポート
 requested	calendar	ja	参加要請
 requested date %1 outside allowed range of %2 days: recurring events obmitted!	calendar	ja	指定された日付 %1 は設定可能な範囲（%2日間）を逸脱しています。繰返しイベントは破棄されました。
 requested meeting is in the past!	calendar	ja	参加要請を受けているミーティング時刻は既に過ぎています!
@@ -517,6 +527,7 @@ show this month	calendar	ja	今月を表示
 show this week	calendar	ja	今週を表示
 show year and age	calendar	ja	生年と年齢を表示
 single event	calendar	ja	イベント
+sort by	calendar	ja	並べ替え
 specify where url of the day links to	calendar	ja	指定された日がリンクする URL を指定してください。
 start	calendar	ja	開始日時
 start date/time	calendar	ja	開始日時

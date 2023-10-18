@@ -1,4 +1,9 @@
 %1 added	addressbook	ko	%1 추가됨
+%1 contact(s) %2, %3 failed because of %4 !!!	addressbook	ko	%4 때문에 %1 연락처(들) %2, %3이(가) 실패했습니다!!!
+%1 contacts updated (%2 errors).	addressbook	ko	%1 연락처가 업데이트되었습니다(%2 오류).
+%1 key(s) added to public keyserver "%2".	addressbook	ko	공개 키 서버 "%2"에 %1키가 추가되었습니다.
+%1 not implemented for %2!	addressbook	ko	%2에 대해 %1이(가) 구현되지 않았습니다!
+%1 public keys added.	addressbook	ko	%1 공개 키가 추가되었습니다.
 %1 records imported	addressbook	ko	%1 개의 레코드를 가져왔습니다
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	ko	%1 개의 레코드를 읽음 (아직 가져오기는 수행되지 않았음, %2뒤로가기%2 해서 가져오기 테스트를 체크해제한 후 수행하세요)
 (e.g. 1969)	addressbook	ko	예 1969
@@ -13,6 +18,12 @@ add a new contact	addressbook	ko	새 연락처 추가
 add a new list	addressbook	ko	새 목록 추가
 add a single entry by passing the fields.	addressbook	ko	필드로 단일항목 추가
 add custom field	addressbook	ko	사용자정의 필드 추가
+add customfield to links of addressbook, which displays in other applications. the default value is none customfield.	addressbook	ko	다른 응용 프로그램에서 표시되는 주소록의 링크에 사용자 지정 필드를 추가합니다. 기본값은 사용자 지정 필드 없음입니다.
+add to bcc	addressbook	ko	블라인드카피에 추가
+add to cc	addressbook	ko	복사에 추가
+add to distribution list	addressbook	ko	배포 목록에 추가
+add to distribution list:	addressbook	ko	배포 목록에 추가:
+add to to	addressbook	ko	에 추가
 added	addressbook	ko	추가됨
 address book	common	ko	주소록
 address book - vcard in	addressbook	ko	주소록 - VCard
@@ -20,11 +31,16 @@ address book - view	addressbook	ko	주소록 - 보기
 address line 2	addressbook	ko	주소 2
 address type	addressbook	ko	주소 형태
 addressbook	common	ko	주소록
+addressbook list	addressbook	ko	주소록 목록
 addressbook preferences	addressbook	ko	주소록 환경설정
 addressbook-fieldname	addressbook	ko	주소록-필드이름
 addvcard	addressbook	ko	VCard 추가
 advanced search	addressbook	ko	상세 검색
+all addressbooks	addressbook	ko	모든 주소록
 all contacts	addressbook	ko	모든 연락처
+all types	addressbook	ko	모든 유형
+allow	addressbook	ko	허용
+allow for contacts only	addressbook	ko	연락처만 허용
 alt. csv import	addressbook	ko	다른 방법으로 CVS 가져오기
 always	addressbook	ko	언제나
 apply changes to all members, whose fields have the same previous content	addressbook	ko	이전 내용과 동일한 필드를 가진 모든 멤버들에 대한 변경사항이 적용됩니다
@@ -34,6 +50,7 @@ are you sure you want to delete this field?	addressbook	ko	이 필드를 삭제�
 birthday	common	ko	생일
 birthdays	common	ko	생일
 blank	addressbook	ko	공란
+browser location	addressbook	ko	브라우저 위치
 business	common	ko	업무
 business city	addressbook	ko	직장소제 도시
 business country	addressbook	ko	직장소제 국가
@@ -43,16 +60,18 @@ business phone	addressbook	ko	업무 전화
 business state	addressbook	ko	직장소제 주
 business street	addressbook	ko	직장주소
 business zip code	addressbook	ko	직장 우편번호
+calendar integration	addressbook	ko	캘린더 통합
 car phone	addressbook	ko	차량 전용 전화
 cell phone	addressbook	ko	이동전화
+change addressbook when updating	addressbook	ko	업데이트 시 주소록 변경
 charset of file	addressbook	ko	파일의 문자셋
+choose pre-defined map source or use custom url (use %r = street, %t = city, %c = country, %z = zipcode)	admin	ko	사전 정의된 지도 소스를 선택하거나 사용자 지정 URL 사용(%r = 거리, %t = 도시, %c = 국가, %z = 우편번호 사용)
 city	common	ko	도시
 company	common	ko	회사
 company name	addressbook	ko	회사 이름
 configuration	common	ko	구성
 contact	common	ko	주소록
 contact application	admin	ko	주소록 연동프로그램
-contact copied	addressbook	ko	연락처 복사됨
 contact deleted	addressbook	ko	연락처 삭제됨
 contact repository	admin	ko	연락처 저장소
 contact saved	addressbook	ko	연락처 저장됨
@@ -64,34 +83,51 @@ copied by %1, from record #%2.	addressbook	ko	#%2 레코드에서 %1이 복사�
 country	common	ko	국가
 create new links	addressbook	ko	새 링크 만들기
 created	addressbook	ko	생성됨
+crm-view	addressbook	ko	CRM 보기
 csv-fieldname	addressbook	ko	CSV-필드이름
 csv-filename	addressbook	ko	CSV-파일이름
 custom	addressbook	ko	사용자정의
 custom fields	addressbook	ko	사용자정의 필드
 debug output in browser	addressbook	ko	브라우저에서 디버그 출력
 default	addressbook	ko	기본
+default action on double-click	addressbook	ko	더블 클릭 시 기본 동작
 default filter	addressbook	ko	기본 필터
+default geolocation source address	addressbook	ko	기본 위치 정보 소스 주소
 delete a single entry by passing the id.	addressbook	ko	ID값으로 단일 엔트리 삭제
 delete this contact	addressbook	ko	이 연락처 삭제
 delete this organisation including all its contacts	addressbook	ko	이 조직과 포함하는 모든 연락처를 모두 삭제
 deleted	addressbook	ko	삭제됨
 department	common	ko	부서
 departments	addressbook	ko	부서
+disable	addressbook	ko	비활성화
+disable last/next event column	addressbook	ko	마지막/다음 이벤트 열 비활성화
+distribution list renamed	addressbook	ko	배포 목록 이름 변경
+distribution lists as groups	addressbook	ko	그룹으로 배포 목록
 domestic	addressbook	ko	기숙사
 download	addressbook	ko	내려받기
 download export file (uncheck to debug output in browser)	addressbook	ko	내보내기 파일 내려받기 (브라우저의 디버그 출력 체크해제)
 duration	addressbook	ko	기간
 edit custom field	addressbook	ko	사용자정의 필드 편집
 edit custom fields	admin	ko	복수의 사용자정의 필드 편집
+empty addressbook before importing	addressbook	ko	주소록 항목 삭제 CSV 목록에 없는 주소록 항목 삭제
 empty for all	addressbook	ko	모두 비우기
 end	addressbook	ko	종료
 enter the path to the exported file here	addressbook	ko	내보낸 파일 경로를 여기에 입력
 error: the entry has been updated since you opened it for editing!	addressbook	ko	오류: 이 엔트리는 당신이 수정하는 중간에 업데이트 되었습니다.
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	addressbook	ko	Contoh {{IF n_awalan~Mr~Hello Mr.~Hello Ms.}} - cari di kolom "n_awalan", untuk "Mr", jika ditemukan, tulis Hello Mr, jika tidak, tulis Hello Ms.
+example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	preferences	ko	Contoh {{LETTERPREFIXCUSTOM n_prefix judul n_keluarga}} - Contoh Bapak Dr. James Miller
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	addressbook	ko	Contoh {{NELF role}} - jika peran bidang tidak kosong, Anda akan mendapatkan baris baru dengan nilai peran bidang
+example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	addressbook	ko	Contoh {{nenvlf role}} - jika peran bidang tidak kosong, tetapkan LF tanpa nilai bidang apa pun
 existing links	addressbook	ko	기존링크
 export contacts	addressbook	ko	인적관계를 내보내기
+export definition to use for nextmatch export	addressbook	ko	다음 매치 내보내기에 사용할 내보내기 정의
+export definitition to use for nextmatch export	addressbook	ko	다음 매치 내보내기에 사용할 내보내기 정의
 export file name	addressbook	ko	파일이름 내보내기
 export from addressbook	addressbook	ko	주소록에서 내보내기
+exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	ko	주소록의 연락처를 CSV 파일로 내보냅니다.  CSV는 '쉼표로 구분된 값'을 의미합니다. 옵션 탭에서 다른 구분 기호를 선택할 수도 있습니다.
 extra	addressbook	ko	기타
+favorite phone	addressbook	ko	즐겨찾는 전화
+favorites	addressbook	ko	즐겨찾기
 fax	addressbook	ko	팩스
 fax number	common	ko	팩스 번호
 field %1 has been added !	addressbook	ko	%1 필드가 추가되었습니다!
@@ -99,8 +135,12 @@ field %1 has been updated !	addressbook	ko	%1 필드가 갱신되었습니다!
 field name	addressbook	ko	필드 이름
 fields to show in address list	addressbook	ko	주소 목록에서 보여질 필드
 fieldseparator	addressbook	ko	필드 구분자
+for serial letter use this tag. put the content, you want to repeat between two tags.	addressbook	ko	Gunakan tag ini untuk surat berantai. Tempatkan konten yang ingin Anda ulangi di antara dua tag.
+freebusy uri	addressbook	ko	URI BebasSibuk
 full name	addressbook	ko	이름
 general	admin	ko	일반
+geolocation	addressbook	ko	지리적 위치
+geolocation integration	admin	ko	지리적 위치 통합
 global categories	addressbook	ko	전역 카테고리
 grant addressbook access	common	ko	주소록 접근을 허용
 home city	addressbook	ko	집이 있는 도시
@@ -119,7 +159,13 @@ import from ldif, csv, or vcard	addressbook	ko	LDIF,CSV 나 VCard에서 가져�
 import from outlook	addressbook	ko	아웃룩에서 가져오기
 import next set	addressbook	ko	** 다음 집합(set)에서 가져오기
 import_instructions	addressbook	ko	넷스케입에서 주소록을 열고 <b>파일</b>메뉴에서 <b>내보내기</b>를 선택합니다. 파일이 LDIF형식으로 저장됩니다.<p> 아웃룩일때 컨텍(인적관리) 폴더로 가서 <b>파일</b>메뉴에 <b>가져오기 와 내보내기...</b>를 선택하면 컴마구분텍스트로 내보내기 되어 저장됩니다.<p> 팜 데스크탑 4.0이나 그 이상 버전에서는 , 주소록에 가서 <b>파일</b>메뉴에 <b>내보내기</b>를 선택하면 VCard 형식으로 파일이 내보내기 되어 저장됩니다.
+importer's personal	addressbook	ko	가져온 사람의 개인
+imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	ko	CSV 파일에서 주소록으로 연락처를 가져옵니다. CSV는 '쉼표로 구분된 값'을 의미합니다. 옵션 탭에서 다른 구분 기호를 선택할 수도 있습니다.
+imports contacts into your addressbook from a vcard file.	addressbook	ko	vCard 파일에서 주소록으로 연락처를 가져옵니다.
 infolog	addressbook	ko	인포로그
+infolog-organisation	addressbook	ko	정보 로그 조직
+insufficent rights to delete this list!	addressbook	ko	이 목록을 삭제할 권한이 없습니다!
+insufficent rights to edit this list!	addressbook	ko	이 목록을 편집할 수 있는 권한이 없습니다!
 international	addressbook	ko	국제
 label	addressbook	ko	라벨
 last modified	addressbook	ko	마지막 수정
@@ -129,34 +175,60 @@ ldif	addressbook	ko	LDIF
 line 2	addressbook	ko	2째 줄
 links	addressbook	ko	링크
 list all categories	addressbook	ko	모든 카테고리 목록
+load custom fields in index, even if custom field column is off (eg. to display them in a specific index column)	addressbook	ko	사용자 지정 필드 열이 꺼져 있어도 인덱스에 사용자 지정 필드 로드(예: 특정 인덱스 열에 표시하기 위해)
 location	addressbook	ko	장소
+mail vcard	addressbook	ko	vCard 메일
+main categories in their own field	addressbook	ko	고유한 분야의 주요 범주
 mark records as private	addressbook	ko	항목을 개인적인 것(private)으로 표기
 message phone	addressbook	ko	메세지 전화
 middle name	addressbook	ko	중간 이름
 mobile	addressbook	ko	핸드폰
 mobile phone	addressbook	ko	이동전화
 modem phone	addressbook	ko	모뎀 전화
+move to addressbook	addressbook	ko	주소록으로 이동
+name, email, phone	addressbook	ko	이름, 이메일, 전화
+no distribution list	addressbook	ko	배포 목록 없음
 no vcard	addressbook	ko	VCard 없음
 number of records to read (%1)	addressbook	ko	(%1) 읽을 레코드수
+open %1 crm view	addressbook	ko	%1 CRM 보기 열기
+open email addresses in external mail program	addressbook	ko	외부 메일 프로그램에서 이메일 주소 열기
+open infolog crm view	preferences	ko	연락처의 정보 로그 CRM 보기 열기
+open tracking system crm view	preferences	ko	추적 시스템 CRM 보기 열기
 other number	addressbook	ko	기타번호
 other phone	addressbook	ko	기타 전화
 pager	common	ko	삐삐
 parcel	addressbook	ko	소포
 participants	addressbook	ko	참석자들
+permissiong denied! ask your administrator to allow regular uses to update their public keys.	addressbook	ko	권한이 거부되었습니다! 관리자에게 공개 키를 정기적으로 업데이트할 수 있도록 허용해 달라고 요청하세요.
+pgp key	addressbook	ko	PGP 키
 phone number	common	ko	전화번호
 phone numbers	common	ko	전화번호
 please enter a name for that field !	addressbook	ko	필드의 이름을 입력하세요
 postal	common	ko	우편번호
 prefix	addressbook	ko	접두어
+private address	addressbook	ko	비공개 주소
 public key	addressbook	ko	공개키
+public sharing url	addressbook	ko	공개 공유 URL
 read a list of entries.	addressbook	ko	엔트리 목록을 읽음
 read a single entry by passing the id and fieldlist.	addressbook	ko	ID와 필드목록으로 단일 엔트리를 읽음
 record access	addressbook	ko	레코드 접근
 record owner	addressbook	ko	레코드 소유자
+remove from distribution list	addressbook	ko	배포 목록에서 제거
+rename list	addressbook	ko	목록 이름 바꾸기
+rename selected distribution list	addressbook	ko	선택한 배포 목록 이름 바꾸기
 repetition	addressbook	ko	반복
+schedule a video conference	addressbook	ko	화상 회의 예약하기
+select a source address to be used in geolocation routing system	addressbook	ko	지리적 위치 라우팅 시스템에서 사용할 소스 주소를 선택하세요.
 select all	addressbook	ko	모두 선택
+select an opened dialog	addressbook	ko	열린 대화상자 선택
 select the type of conversion	addressbook	ko	변환할 형식을 선택하세요
 select the type of conversion:	addressbook	ko	변환할 형식선택:
+send fax via email by replacing fax number with an email address	addressbook	ko	팩스 번호를 이메일 주소로 대체하여 이메일로 팩스 보내기
+send succeeded to %1	common	ko	%1로 전송에 성공했습니다.
+show active accounts	addressbook	ko	활성 계정 표시
+show all accounts	addressbook	ko	모든 계정 표시
+smime key	addressbook	ko	S/MIME 키
+special	addressbook	ko	특수
 start	admin	ko	시작
 startrecord	addressbook	ko	시작레코드
 state	common	ko	주
@@ -165,21 +237,32 @@ successfully imported %1 records into your addressbook.	addressbook	ko	%1 개의
 suffix	addressbook	ko	접미어
 test import (show importable records <u>only</u> in browser)	addressbook	ko	가져오기 테스트 (가져올수 있는 레코드 <u>오직</u> 브라우저에서만 보여줍니다)
 that field name has been used already !	addressbook	ko	필드 이름이 이미 사용되었습니다
+the zip extension is needed, to insert contact data in openoffice or msoffice documents.	addressbook	ko	LibreOffice 또는 MS Office 문서에 연락처 데이터를 삽입하려면 zip 확장자가 필요합니다.
 this person's first name was not in the address book.	addressbook	ko	이 사람의 이름이 주소록에 없습니다.
 this person's last name was not in the address book.	addressbook	ko	이 사람의 성이 주소록에 없습니다.
+title	addressbook	ko	직책
 to many might exceed your execution-time-limit	addressbook	ko	너무 많을 경우 최대실행시간(execution-time-limit)을 초과함
 today is %1's birthday!	common	ko	오늘은 %1의 생일입니다!
 tomorrow is %1's birthday.	common	ko	내일은 %1의 생일입니다.
 translation	addressbook	ko	번역
+type	addressbook	ko	유형
+unable to import into %1, using %2	addressbook	ko	%2를 사용하여 %1로 가져올 수 없습니다.
+unknown type %1, imported as %2	addressbook	ko	알 수 없는 유형 %1, %2로 가져왔습니다.
 update a single entry by passing the fields.	addressbook	ko	필드값으로 단일 엔트리 갱신
 updated	addressbook	ko	갱신됨
+use a category tree?	addressbook	ko	트리를 사용하여 범주 선택
 use country list	addressbook	ko	국가 목록 사용
-vcard	common	ko	VCard
-vcards require a first name entry.	addressbook	ko	VCard에는 이름 항목이 필요합니다.
-vcards require a last name entry.	addressbook	ko	VCard에는 성 항목이 필요합니다.
+vcard	common	ko	vCard
+vcards require a first name entry.	addressbook	ko	vCard에는 이름 항목이 필요합니다.
+vcards require a last name entry.	addressbook	ko	vCard에는 성 항목이 필요합니다.
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	ko	경고!! LDAP는 인적관계(contacts)를 계정 저장소(accounts storages)로 사용하지 않을때만 가능합니다!
+when viewing a contact, show linked entries from the selected application	addressbook	ko	연락처를 볼 때 선택한 애플리케이션에서 연결된 항목을 표시합니다.
 work phone	addressbook	ko	직장 전화
+yes, only admins can purge deleted items	admin	ko	예, 관리자만 삭제된 항목을 삭제할 수 있습니다.
+yes, users can purge their deleted items	admin	ko	예, 사용자도 삭제한 항목을 삭제할 수 있습니다.
 you must select a vcard. (*.vcf)	addressbook	ko	V카드를 선택해야만 합니다. (*.vcf)
 you must select at least 1 column to display	addressbook	ko	표시하기 위해선 적어도 1 열은은 선택해야합니다
+you need to select some entries first	addressbook	ko	먼저 몇 가지 항목을 선택해야 합니다.
+your new public key has been stored in accounts addressbook.	addressbook	ko	새 공개 키가 계정 주소록에 저장되었습니다.
 zip code	common	ko	우편번호
 zip_note	addressbook	ko	<p><b>주의:</b> 파일이 .csv .vcf 나 ldif 등의 파일 압축파일 묶음인듯 합니다.가져오기를 실행하기 위해선 파일 형식이 혼합되지 않도록 해주세요

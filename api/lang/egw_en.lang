@@ -32,7 +32,7 @@
 '%1' is not a valid date !!!	common	en	'%1' is not a valid date!
 '%1' is not a valid floatingpoint number !!!	common	en	'%1' is not a valid floating point number!
 '%1' is not a valid integer !!!	common	en	'%1' is not a valid integer!
-'%1' is not a valid json file!	common	en	'%1' is not a valid json file
+'%1' is not a valid json file!	common	en	'%1' is not a valid JSON file
 '%1' is not a valid timezone!	common	en	'%1' is not a valid timezone!
 '%1' is not allowed ('%2')!	common	en	'%1' is NOT allowed ('%2')!
 '%1' is not allowed%2)!	common	en	'%1' is NOT allowed%2)!
@@ -94,8 +94,8 @@ add shortcut	common	en	Add shortcut
 add sub	common	en	Add sub
 add table	common	en	Add table
 add to clipboard	common	en	Add to clipboard
-add user to responsibles	groupdav	en	add user to responsibles
-add user to responsibles, removing evtl. previous category user	groupdav	en	add user to responsibles, removing evtl. previous category user
+add user to responsibles	groupdav	en	Add user to responsibles
+add user to responsibles, removing evtl. previous category user	groupdav	en	Add user to responsibles, removing evtl. previous category user
 add your domain as "%1" in options to list of email providers and enable api.	common	en	Add your domain as "%1" in options to list of email providers and enable API.
 addressbook	common	en	Address Book
 addressbooks to sync in addition to personal addressbook	groupdav	en	Addressbooks to sync in addition to personal addressbook
@@ -319,8 +319,8 @@ common preferences	common	en	Common preferences
 comoros	common	en	COMOROS
 company	common	en	Company
 confirm	common	en	Confirm
-confirmation message or custom javascript (returning true or false)	common	en	Confirmation message or custom javascript, returning true or false.
-confirmation necesary or custom java-script	common	en	Confirmation necessary or custom java-script
+confirmation message or custom javascript (returning true or false)	common	en	Confirmation message or custom JavaScript, returning true or false.
+confirmation necesary or custom java-script	common	en	Confirmation necessary or custom JavaScript
 confirmation required	common	en	Confirmation required
 congo	common	en	CONGO
 congo, the democratic republic of the	common	en	CONGO, THE DEMOCRATIC REPUBLIC OF THE
@@ -362,7 +362,7 @@ current	common	en	Current
 current users	common	en	Current users
 custom	common	en	Custom
 custom fields	common	en	Custom fields
-custom javascript for onchange	common	en	Custom javascript for onChange
+custom javascript for onchange	common	en	Custom JavaScript for onChange
 cut	common	en	Cut
 cyprus	common	en	CYPRUS
 czech republic	common	en	CZECH REPUBLIC
@@ -1075,7 +1075,7 @@ please run setup to become current	common	en	Run setup to become current
 please select	common	en	Please select
 please set your global preferences	common	en	Set your global preferences!
 please set your preferences for this application	common	en	Set your preferences for this application!
-please type %1 more characters	common	en	Please type %1 more characters
+please type %1 more characters	common	en	Please type %1 more character(s)
 please type 1 more character	common	en	Please type 1 more character
 please wait...	common	en	please wait...
 please, check back with us shortly.	common	en	Please, check back with us shortly.
@@ -1298,7 +1298,7 @@ share link	common	en	Share link
 share this %1 via url	common	en	Share this %1 via URL
 shift	common	en	Shift
 shift ⇧	common	en	Shift ⇧
-should the form be submitted or any custom javascript be executed	common	en	Should form be submitted or any custom javascript executed
+should the form be submitted or any custom javascript be executed	common	en	Should form be submitted or any custom JavaScript executed
 show	common	en	Show
 show (no save)	common	en	Show (no save)
 show all	common	en	Show all
@@ -1330,7 +1330,7 @@ sierra leone	common	en	SIERRA LEONE
 sign up	common	en	Sign up
 simple	common	en	Simple
 singapore	common	en	SINGAPORE
-site configuration	common	en	Site configuration
+site configuration	common	en	App configuration
 size	common	en	Size
 skip	common	en	Skip
 slovakia	common	en	SLOVAKIA

@@ -1,17 +1,77 @@
+acl rights retrieve failed, seems there are no rights set!	mail	ko	ACL 권한 검색에 실패했습니다. 설정된 권한이 없는 것 같습니다.
+add files as %1	mail	ko	파일을 %1로 추가
+adding %1 to blacklisted email addresses failed because of %2	mail	ko	%2 때문에 블랙리스트에 추가된 전자 메일 주소에 %1을(를) 추가하지 못했습니다.
+adding %1 to whiltelisted email addresses failed because of %2	mail	ko	%2 때문에 허용되지 않은 전자 메일 주소에 %1을(를) 추가하지 못했습니다.
+attach files	mail	ko	파일 첨부
+attach users vcard at compose to every new mail	mail	ko	모든 새 메일에 작성 시 사용자 vCard를 첨부합니다.
+attachment has been saved successfully.	mail	ko	첨부 파일이 성공적으로 저장되었습니다.
+attachments, ...	mail	ko	첨부 파일, ...
+be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	ko	선택한 모든 파일을 %1 모드로 추가하면 목록에 있는 모든 기존 첨부 파일도 %2 모드로 변경되므로 주의하십시오. \계속하시겠습니까?
+be aware that all attachments will be sent as %1!	mail	ko	모든 첨부 파일이 %1로 전송된다는 점에 유의하세요!
 by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	ko	기본적으로 'http://'는 'https://'로 대체됩니다. 'https://proxy.egroupware.org/'를 설정하여 http를 통해서만 사용할 수 있는 이미지도 로드하도록 자유롭게 설정할 수 있습니다.
 caching of flags	mail	ko	플래그 캐싱
+changing subject failed because of %1	mail	ko	%1 때문에 제목을 변경하지 못했습니다.
 changing subject failed folder %1 does not exist	mail	ko	제목 변경 실패 폴더 %1이(가) 존재하지 않습니다.
 contact label	mail	ko	연락처 레이블
 deleted	mail	ko	삭제됨
 edit account	mail	ko	계정 편집
+emailadmin: profilemanagement	mail	ko	이메일 관리자: 프로필 관리
+emails in whitelisted domains are not marked as spam	mail	ko	화이트리스트 도메인의 이메일은 스팸으로 표시되지 않습니다.
+enable	mail	ko	사용
+enabled	mail	ko	사용
+encrypt your message with smime certificate	mail	ko	S/MIME 인증서로 메시지 암호화
 event details follow	mail	ko	** 다음은 이벤트-설명
 everyone	mail	ko	모두
+examine namespace to retrieve folders in others and shared	mail	ko	네임스페이스를 검사하여 다른 폴더 및 공유 폴더를 검색합니다.
 extended	mail	ko	확장
+failed to subscribe folder %1!	mail	ko	%1 폴더를 구독하지 못했습니다!
+failed to unsubscribe folder %1!	mail	ko	%1 폴더의 구독을 취소하지 못했습니다!
+file into	mail	ko	로 이동하십시오
+file into:	mail	ko	로 이동하십시오:
+filemode has been switched to %1	mail	ko	%1 폴더의 구독을 취소하지 못했습니다!
+flagged %1 messages as %2 in %3	mail	ko	%3에서 %1 메시지를 %2로 플래그 지정했습니다.
+flagged %1 messages as flagged in %2	mail	ko	%2에서 %1 메시지를 %2로 플래그 지정했습니다.
+flagged %1 messages as unflagged in %2	mail	ko	%2에서 %1 메시지를 플래그가 없는 것으로 플래그 지정했습니다.
+folder %1 %2 failed because of %3!	mail	ko	%3 때문에 %1 폴더 %2을(를) 구독하지 못했습니다!
+folder %1 has been created successfully, although the subscription failed because of %2	mail	ko	%2 때문에 구독이 실패했지만 %1 폴더를 성공적으로 만들었습니다.
 from	mail	ko	부터
 general	admin	ko	일반
+handling of external http images / mixed content in mails	mail	ko	전자 메일의 외부 http 이미지/혼합 콘텐츠 처리
+html	mail	ko	HTML
+ident name	mail	ko	아이디 이름
+ident name email	mail	ko	아이디 이름 [이메일]
+ident name organization email	mail	ko	식별자 이름 조직 [이메일]
+identity label	mail	ko	신원 라벨
+if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	ko	제목을 한 번 클릭하여 메일 미리 보기를 보려면 이 기능을 활성화하세요.
+if you would like to select multiple folders in one action, you can hold ctrl key then select a folder as start range and another folder within a same level as end range, all folders in between will be selected or unselected based on their current status.	mail	ko	한 번의 작업으로 여러 폴더를 선택하려면 Ctrl 키를 누른 상태에서 폴더를 시작 범위로, 같은 수준 내의 다른 폴더를 끝 범위로 선택하면 그 사이의 모든 폴더가 현재 상태에 따라 선택되거나 선택 해제됩니다.
+imap	mail	ko	IMAP
+imap server	mail	ko	IMAP Server
+import of message %1 failed. could not save message to folder %2 due to: %3	mail	ko	1 메시지를 가져오지 못했습니다. 다음 때문에 %2 폴더에 메시지를 저장할 수 없습니다: %3
+import of message %1 failed. destination folder %2 does not exist.	mail	ko	1 메시지를 가져오지 못했습니다. 대상 폴더 %2이(가) 없습니다.
+import of message %1 failed. destination folder not set.	mail	ko	%1 메시지를 가져오지 못했습니다. 대상 폴더가 설정되지 않았습니다.
+import of message %1 failed. no contacts to merge and send to specified.	mail	ko	%1 메시지를 가져오지 못했습니다. 병합하여 지정한 곳으로 보낼 연락처가 없습니다.
+importance	mail	ko	중요성
+important	mail	ko	중요
+in mailbox: %1, with id: %2, and partid: %3	mail	ko	사서함: %1, ID: %2 및 PartID: %3에 있습니다.
+in order to protect your privacy all external sources within this email are blocked.	mail	ko	개인 정보를 보호하기 위해 이 전자 메일 내의 모든 외부 소스가 차단되었습니다.
 information to show on email tag	mail	ko	이메일 태그에 표시할 정보
+initialization of mail failed. please use the wizard to cope with the problem.	mail	ko	메일 모듈을 초기화하지 못했습니다. 구성 마법사를 사용하여 구성을 수정하세요.
+inline	mail	ko	앞으로
+insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)	mail	ko	작성 대화 상자를 열 때 새(또는 답장) 메시지 상단에 서명을 삽입합니다(서명을 전환하지 못할 수 있음).
+job	mail	ko	작업
+junk	mail	ko	정크
+junk folder	mail	ko	정크 폴더
+keep a copy of the message in your inbox	mail	ko	받은 편지함에 메시지 사본을 보관합니다.
+kilobytes	mail	ko	킬로바이트
+later	mail	ko	나중에
+learning as ham (not spam) failed because of %1	mail	ko	때문에 %1 때문에 햄(스팸이 아님)으로 학습하지 못했습니다.
+learning as spam failed because of %1	mail	ko	%1 때문에 스팸으로 학습하지 못했습니다.
+less than	mail	ko	미만
+limit mailing list results when searching for addresses	mail	ko	주소 검색 시 메일 그룹 결과 제한
 list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	ko	기본적으로 전환/활성화할 작업 목록(예: 메일 작성 InfoLog 작업으로 저장)
 mail settings	mail	ko	메일 설정
+mails can be copied to that folder via context menu, if folder is configured.	mail	ko	폴더가 구성된 경우 상황에 맞는 메뉴를 통해 해당 폴더로 메일을 복사할 수 있습니다.
+mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	ko	메일 서버가 보고했습니다:\n%1 \n선택한 메시지를 즉시 삭제하여 계속 진행하시겠습니까(확인 클릭)\n그렇지 않은 경우 계속하기 전에 휴지통 폴더를 비우십시오. (취소 클릭)
 name and email	mail	ko	이름 및 이메일
 only email	mail	ko	이메일만
 only name	mail	ko	이름만
@@ -29,13 +89,31 @@ printing	mail	ko	인쇄
 push notifications	mail	ko	푸시 알림
 quicksearch	mail	ko	빠른 검색
 quicksearch (with cc)	mail	ko	빠른 검색(+복사)
-remove all	mail	ko	모두 삭제
+real name	mail	ko	실명
+real name email	mail	ko	실명 [이메일]
+real name organization email	mail	ko	실명 조직 [이메일]
+remember the password for	mail	ko	다음 비밀번호를 기억하세요.
+remove all	mail	ko	모두 제거
+removing %1 from blacklisted email addresses failed because of %2	mail	ko	2 때문에 블랙리스트에 추가된 전자 메일 주소에서 %1을(를) 제거하지 못했습니다.
+removing %1 from whiltelisted email addresses failed because of %2	mail	ko	2 때문에 허용된 이메일 주소에서 %1을(를) 제거하지 못했습니다.
+replace 'http://' in image urls with (trailing / required!)	mail	ko	이미지 URL에서 'http://'를 (후행/필수!)로 바꾸세요.
 select all	mail	ko	모두 선택
 show notification for new arriving mails	mail	ko	새 메일 도착 알림 표시
 show vertical	mail	ko	세로로 표시
 show vertical with all columns	mail	ko	모든 열을 세로로 표시
 show/hide preview pane in mail list view	mail	ko	메일 목록 보기에서 미리보기 창 표시/숨기기
 small view	mail	ko	미니뷰
+the imap server need to meet certain requirements and be configured for it:	mail	ko	IMAP 서버는 특정 요구 사항을 충족해야 하며 이를 위해 구성되어야 합니다:
+the rule with priority %1 successfully saved!	mail	ko	우선 순위가 %1인 규칙이 성공적으로 저장되었습니다!
+there is no space left to store sieve script, please check sieve_maxscriptsize option on your mailserver's config.	mail	ko	체 스크립트를 저장할 공간이 없으므로 메일 서버의 구성에서 sieve_maxscriptsize 옵션을 확인하세요.
+this mail contains external images served via insecure http protocol. be aware showing or allowing them can compromise your security!	mail	ko	이 메일에는 안전하지 않은 HTTP 프로토콜을 통해 제공되는 외부 이미지가 포함되어 있습니다. 이러한 이미지를 표시하거나 허용하면 보안이 손상될 수 있으니 주의하세요!
+this message is smime encrypted and password protected.	mail	ko	이 메시지는 S/MIME 암호화 및 비밀번호로 보호되어 있습니다.
+timeout on connections to your imap server	mail	ko	IMAP 서버에 대한 연결 시간 초과
+to do	mail	ko	할 일
+toggle all folders view for %1	mail	ko	1에 대한 모든 폴더 보기 토글
+toggled on actions	mail	ko	동작 토글
+trash	mail	ko	휴지통
+trash folder	mail	ko	휴지통 폴더
 write	mail	ko	쓰기
 you can select what info to be displayed on email tag	mail	ko	이메일 태그에 표시할 정보를 선택할 수 있습니다.
 you've got new mail	mail	ko	새 메일이 도착했습니다.

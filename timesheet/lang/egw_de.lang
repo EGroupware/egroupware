@@ -36,8 +36,8 @@ do you want to start your working time?	common	de	Wollen Sie Ihre Arbeitszeit st
 do you want to stop your working time?	common	de	Wollen Sie Ihre Arbeitszeit beenden?
 each value is a line like <id>[=<label>]	timesheet	de	jeder Wert ist eine Zeile in dem Format <id>[=|label>]
 edit status	common	de	Status bearbeiten
-edit this entry	timesheet	de	diesen Eintrag bearbeiten
-empty if identical to duration	timesheet	de	leer lassen wenn gleich Dauer
+edit this entry	timesheet	de	Diesen Eintrag bearbeiten
+empty if identical to duration	timesheet	de	Leer lassen wenn gleich Dauer
 end	timesheet	de	Ende
 entry deleted	timesheet	de	Eintrag gelöscht
 entry saved	timesheet	de	Eintrag gespeichert
@@ -52,7 +52,7 @@ example {{nenvlf role}} - if field role is not empty, set a lf without any value
 existing links	timesheet	de	Bestehende Verknüpfungen
 exists	timesheet	de	vorhanden sein
 export definition to use for nextmatch export	timesheet	de	Exportdefinition für den nextmatch Export
-export to openoffice spreadsheet	timesheet	de	zu Open Office exportieren
+export to openoffice spreadsheet	timesheet	de	Zu Office exportieren
 exports entries from your timesheet into a csv file.	timesheet	de	Exportiert Einträge des Stundenzettel Moduls in eine CSV Datei.
 exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	de	Exportiert die Einträge des Stundenzettels in eine CSV Datei. CSV bedeutet, Komma getrennte Werte. In dem Options-Tab können Sie andere Trennzeichen festlegen.
 favorites	timesheet	de	Favoriten
@@ -125,7 +125,7 @@ saves the changes made and leaves	timesheet	de	Änderungen  speichern und beende
 saves this entry and add a new one	timesheet	de	Speichert diesen Eintrag und fügt einen neuen hinzu
 select a price	timesheet	de	Preis auswählen
 select a project	timesheet	de	Projekt auswählen
-select a status of the timesheet	timesheet	de	einen Status auswählen
+select a status of the timesheet	timesheet	de	Einen Status auswählen
 select infolog	timesheet	de	InfoLog auswählen
 select multiple timeshhets for a further action	timesheet	de	Wählen Sie mehrere Stundenzettel für einen weitere Aktion aus
 select the predefined status, whan creating a new timesheet	preferences	de	Wählen Sie einen Status als Vorgabe für neu zu erstellende Stundenzettel aus
@@ -165,7 +165,7 @@ timesheet fields:	timesheet	de	Felder Stundenzettel
 timesheet id	timesheet	de	Stundenzettel ID
 timesheet list	timesheet	de	Stundenzettel Liste
 timesheet modified by %1 at %2	timesheet	de	Stundenzettel verändert von %1 am %2
-timesheet openoffice export	timesheet	de	Export des  Stundenzettels als Open Office
+timesheet openoffice export	timesheet	de	Export des  Stundenzettels als Office
 timesheet status-%1 '%2' added.	timesheet	de	Stundenzettel Status %1 '%2' hinzugefügt.
 timesheet-%1 '%2' updated.	timesheet	de	Stundenzettel Status %1 '%2' geändert
 timesheet-%1 deleted.	timesheet	de	Stundenzettel %1 gelöscht

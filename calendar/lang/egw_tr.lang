@@ -1,11 +1,14 @@
 %1 %2 in %3	calendar	tr	%3 içindeki %1 %2
+%1 events in ical file, only first one imported and displayed!	calendar	tr	iCal dosyasında %1 etkinlik, yalnızca ilki içe aktarıldı ve görüntülendi!
 %1 records imported	calendar	tr	%1 kayıt ithal edildi
 %1 records read (not yet imported, you may go back and uncheck test import)	calendar	tr	%1 kayıt okundu (henüz ithal edilmedi, geri dönüp 'İthal Etmeyi Test Et' seçeneğindeki seçimi kaldırabilirsiniz.)
+(%1 events in %2 seconds)	calendar	tr	(%2 saniye içinde %1 etkinlik)
 accept	calendar	tr	Kabul Et
 accepted	calendar	tr	Kabul Edildi
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	tr	Uyarıya sebep olan eylem: Eklendi, İptal Edildi, Onaylandı, Reddedildi,...
 actions	calendar	tr	Eylemler
 add alarm	calendar	tr	Alarm Ekle
+add new event	calendar	tr	Yeni randevu ekle
 added	calendar	tr	Eklendi
 alarm	calendar	tr	Alarm
 alarm for %1 at %2 in %3	calendar	tr	%1 (%2'de %3 içinde) için Alarm
@@ -13,6 +16,7 @@ alarm management	calendar	tr	Alarm Yönetimi
 alarms	calendar	tr	Alarmlar
 all day	calendar	tr	Tüm Gün
 always	calendar	tr	her zaman
+attention	calendar	tr	Dikkat
 before the event	calendar	tr	etkinlikten önce
 birthday	calendar	tr	Do?um Tarihi
 birthdays	admin	tr	Do?um Tarihleri
@@ -21,6 +25,8 @@ calendar preferences	calendar	tr	Takvim Seçenekleri
 calendar settings	admin	tr	Takvim Ayarları
 calendar-fieldname	calendar	tr	Takvim-Alan Adı
 canceled	calendar	tr	İptal Edildi
+category report	calendar	tr	Kategori Raporu
+changed event-data applied	calendar	tr	Değiştirilen olay verileri uygulandı
 charset of file	calendar	tr	Dosya Karakter Kümesi (char-set)
 countries	calendar	tr	Ülkeler
 country	calendar	tr	Ülke
@@ -29,6 +35,7 @@ csv-filename	calendar	tr	CSV-Alan adı
 custom	calendar	tr	Özel
 custom fields	common	tr	Özel Alanlar
 daily	calendar	tr	Günlük
+date range	calendar	tr	Tarih aralığı
 day	calendar	tr	Gün
 days	calendar	tr	gün
 days repeated	calendar	tr	tekrar eden gün
@@ -50,6 +57,7 @@ enddate	calendar	tr	BitişTarih
 ends	calendar	tr	bitiyor
 event details follow	calendar	tr	Etkinlik Detayları Ektedir
 exceptions	calendar	tr	İstisnalar
+exclude weekend	calendar	tr	Hafta Sonu Hariç
 extended	calendar	tr	Genişletilmiş
 extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	tr	Genişletilmiş güncellemeler daima etkinlik detaylarının tamamını içerir. iCal bir çok takvim uygulaması tarafından ithal edilebilen bir formatdır.
 fieldseparator	calendar	tr	Alan Ayracı
@@ -86,6 +94,7 @@ lastname of person to notify	calendar	tr	Uyarılacak kişinin soyadı
 link to view the event	calendar	tr	Etkinliği görüntülemek için link
 location	calendar	tr	Konum
 maximum available quantity of %1 exceeded!	calendar	tr	1% maksimum kullanılabilir miktarı aşıldı!
+min days	calendar	tr	Min gün
 minimum number of users for showing day view as consolidated.	calendar	tr	Gün görünümünü konsolide olarak göstermek için minimum kullanıcı sayısı.
 minimum number of users for showing week view as consolidated.	calendar	tr	Hafta görünümünü konsolide olarak göstermek için minimum kullanıcı sayısı.
 minutes	calendar	tr	dakika
@@ -118,6 +127,7 @@ on any time change too	calendar	tr	herhangi zaman değişiminde de
 on participant responses too	calendar	tr	katılımcı cavaplarında da
 on time change of more than 4 hours too	calendar	tr	4 saatten fazla zaman değişikliklerinde de
 open todo's:	calendar	tr	Yapılacak İşleri Aç:
+output unit	calendar	tr	Çıkış birimi
 overlap holiday	calendar	tr	çakışan tatil
 participants	calendar	tr	Katılımcılar
 password for not loged in users to your freebusy information?	calendar	tr	Giriş yapmamış kullanıcılar için sizin uygun/meşgul bilgisi şifreniz?
@@ -132,12 +142,14 @@ private only	calendar	tr	Sadece özel
 re-edit event	calendar	tr	Etkinliği yeniden değiştir
 receive email updates	calendar	tr	Email güncellemeleri al
 receive summary of appointments	calendar	tr	Toplantıların özetini maille al
+recordings	calendar	tr	Kayıtlar
 recurring event	calendar	tr	tekrarlanan etkinlik
 rejected	calendar	tr	Reddedildi
 repeat type	calendar	tr	Tekrar şekli
 repeating event information	calendar	tr	Tekrar Eden Etkinlik Bilgisi
 repetition	calendar	tr	Tekrarlama
 repetitiondetails (or empty)	calendar	tr	Tekrarlama Detayları (ya da boş)
+report	calendar	tr	Rapor
 reset	calendar	tr	Sıfırla
 rule	calendar	tr	Kural
 sat	calendar	tr	Cte
@@ -146,6 +158,7 @@ set new events to private	calendar	tr	Yeni etkinlikleri özel olarak ayarla
 should new events created as private by default ?	calendar	tr	Yeni etkinlikler varsayılan olarak 'özel' mi olmalı?
 show list of upcoming events	calendar	tr	Yaklaşan Etkinlikleri görüntüle
 single event	calendar	tr	tek etkinlik
+sort by	calendar	tr	Göre sırala
 start date/time	calendar	tr	Başlangıç Tarih/Zaman
 startdate	calendar	tr	Başlangıç tarihi
 startrecord	calendar	tr	Kaydetmeye başla
@@ -172,6 +185,7 @@ translation	calendar	tr	Tercüme
 tue	calendar	tr	Sal
 updated	calendar	tr	Güncelle
 use end date	calendar	tr	Bitiş tarihi kullan
+utilities	calendar	tr	Yardımcı Programlar
 wed	calendar	tr	Çar
 week	calendar	tr	Hafta
 weekday starts on	calendar	tr	Mesai günleri başlangıcı

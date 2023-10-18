@@ -1,9 +1,12 @@
 %1 added	addressbook	pl	%1 dodany
 %1 contact(s) %2	addressbook	pl	%1 kontakt(ów) %2
+%1 contact(s) %2, %3 failed because of %4 !!!	addressbook	pl	%1 kontakt(y) %2, %3 nie powiodło się z powodu %4 !!!
 %1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	pl	%1 kontakt(ów)%2, %3 nie było możliwe ponieważ nie masz odpowiednich praw !!!
 %1 contacts updated (%2 errors).	addressbook	pl	Zaktualizowano %1 kontaktów (%2 błędów)
 %1 fields in %2 other organisation member(s) changed	addressbook	pl	%1 pól w %2 członków innej organizacji zmieniono
+%1 key(s) added to public keyserver "%2".	addressbook	pl	Klucz(e) %1 dodany(e) do publicznego serwera kluczy "%2".
 %1 not implemented for %2!	addressbook	pl	%1 nie zaimplementowany dla %2!
+%1 public keys added.	addressbook	pl	Dodano %1 kluczy publicznych.
 %1 records imported	addressbook	pl	Zaimportowano %1 rekordów
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	pl	Wczytano %1 rekordów (ale jeszcze nie zaimportowano, możesz %2wrócić%3 i skasować zaznaczenie próbnego importu)
 %1 shared this contact on %2 with %3 %4	addressbook	pl	%1 udostępnił ten kontakt na %2 %3 %4
@@ -27,7 +30,11 @@ add business email of whole distribution list?	addressbook	pl	Dodaj email firmow
 add custom field	addressbook	pl	Dodaj pole użytkownika
 add emails of whole distribution list?	addressbook	pl	Dodać emaile całej listy dystrybucyjnej?
 add or delete categories	addressbook	pl	Dodaj lub usuń kategorie
+add to bcc	addressbook	pl	Dodaj do ukryte kopia
+add to cc	addressbook	pl	Dodaj do Kopia
+add to distribution list	addressbook	pl	Dodaj do listy dystrybucyjnej
 add to distribution list:	addressbook	pl	Dodaj do listy dystrybucyjnej:
+add to to	addressbook	pl	Dodaj do Do
 added	addressbook	pl	Dodano
 added by synchronisation	addressbook	pl	dodano poprzez synchronizację
 added to distribution list	addressbook	pl	dodano do listy dystrybucyjnej
@@ -41,6 +48,7 @@ addressbook	common	pl	Książka adresowa
 addressbook csv export	addressbook	pl	Eksport książki adresowej do CSV
 addressbook csv import	addressbook	pl	Import książki adresowej z CSV
 addressbook field	addressbook	pl	Pole książki adresowej
+addressbook list	addressbook	pl	Lista książek adresowych
 addressbook menu	addressbook	pl	Menu książki adresowej
 addressbook of	addressbook	pl	Książka adresowa
 addressbook preferences	addressbook	pl	Ustawienia książki adresowej
@@ -49,7 +57,11 @@ addressbook the contact should be shown	addressbook	pl	Książka adresowa w któ
 addressbook-fieldname	addressbook	pl	Nazwa pola adresowego
 addvcard	addressbook	pl	Dodaj kartkę elektroniczną
 advanced search	addressbook	pl	Wyszukiwanie szczegółowe
+all addressbooks	addressbook	pl	Wszystkie książki adresowe
 all contacts	addressbook	pl	Wszystkie kontakty
+all types	addressbook	pl	Wszystkie typy
+allow	addressbook	pl	Zezwalaj
+allow for contacts only	addressbook	pl	Zezwalaj tylko dla kontaktów
 allow users to maintain their own account-data	admin	pl	Pozwól użytkownikom zarządzać danymi własnego konta
 alt. csv import	addressbook	pl	Alt. CSV Import
 always	addressbook	pl	zawsze
@@ -59,9 +71,11 @@ are you shure you want to delete this contact?	addressbook	pl	Jesteś pewien, ż
 are you sure you want to delete this field?	addressbook	pl	Czy na pewno skasować to pole?
 assistent	addressbook	pl	Asystent
 assistent phone	addressbook	pl	Nr. telefonu asystenta
+audio call	addressbook	pl	Połączenie audio
 birthday	common	pl	Urodziny
 birthdays	common	pl	Urodziny
 blank	addressbook	pl	Puste
+browser location	addressbook	pl	Lokalizacja przeglądarki
 business	common	pl	Firma
 business address	addressbook	pl	Adres firmy
 business city	addressbook	pl	Miasto firmy
@@ -73,6 +87,7 @@ business state	addressbook	pl	Województwo
 business street	addressbook	pl	Ulica firmy
 business zip code	addressbook	pl	Kod pocztowy firmy
 calendar fields:	addressbook	pl	Pola kalendarza:
+calendar integration	addressbook	pl	Integracja z kalendarzem
 calendar uri	addressbook	pl	URI kalendarza
 can be changed via setup >> configuration	admin	pl	Może zostać zmieniony przez Ustawienia >> Konfiguracja
 car phone	addressbook	pl	Telefon w samochodzie
@@ -82,6 +97,7 @@ categorie delete	addressbook	pl	kategoria usunięta
 categories, notes, ...	addressbook	pl	Kategorie, notatki, ...
 category tree	admin	pl	Drzewo kategorii
 cell phone	addressbook	pl	Telefon komórkowy
+change addressbook when updating	addressbook	pl	Zmiana książki adresowej podczas aktualizacji
 change all organisation members	addressbook	pl	zmień wszystkich członków organizacji
 charset for the csv export	addressbook	pl	strona kodowa dla eksportu CSV
 charset for the vcard export	addressbook	pl	Strona kodowa dla eksportu vCard
@@ -89,6 +105,7 @@ charset of file	addressbook	pl	strona kodowa pliku
 check all	addressbook	pl	Zaznacz wszystkie
 choose an icon for this contact type	admin	pl	Wybierz ikonkę dla tego typu kontaktów
 choose owner of imported data	addressbook	pl	Wybierz właściciela zaimportowanych danych
+choose pre-defined map source or use custom url (use %r = street, %t = city, %c = country, %z = zipcode)	admin	pl	Wybierz wstępnie zdefiniowane źródło mapy lub użyj niestandardowego adresu URL (użyj %r = ulica, %t = miasto, %c = kraj, %z = kod pocztowy)
 chosse an etemplate for this contact type	admin	pl	Wybierz jakiś eTemplate dla tego typu kontaktów
 city	common	pl	Miasto
 cleanup addressbook fields (apply if synchronization creates duplicates)	addressbook	pl	Wyczyść pola książki adresowej (zastosuj jeśli synchronizacja tworzy duplikaty)
@@ -123,6 +140,7 @@ country	common	pl	Kraj
 create new links	addressbook	pl	Utwórz nowe linki
 created	addressbook	pl	Utworzony
 credit	addressbook	pl	Kredyt
+crm-view	addressbook	pl	Widok CRM
 csv-fieldname	addressbook	pl	Nazwa pola CSV
 csv-filename	addressbook	pl	Nazwa pliku CSV
 custom	addressbook	pl	Użytkownika
@@ -130,12 +148,14 @@ custom etemplate for the contactform	addressbook	pl	Własny eSzablon do formular
 custom fields	addressbook	pl	Pola użytkownika
 debug output in browser	addressbook	pl	Debuguj wynik w przeglądarce
 default	addressbook	pl	Domyślne
+default action on double-click	addressbook	pl	Domyślna akcja po dwukrotnym kliknięciu
 default address format	addressbook	pl	Domyślny format adresu
 default addressbook for adding contacts	addressbook	pl	Domyślna książka adresowa przy dodawaniu kontaktów
 default document to insert contacts	addressbook	pl	Domyślny dokument do wstawiania kontaktów
 default file as format	addressbook	pl	Domyślny plik jako format
 default filter	addressbook	pl	Filtr domyślny
 default format for fileas, eg. for new entries.	addressbook	pl	Domyślny format do zapisywania pliku, np. dla nowych wpisów
+default geolocation source address	addressbook	pl	Domyślny adres źródła geolokalizacji
 defines which email address (business or home) to use as the preferred one for distribution lists in mail.	addressbook	pl	Definiuje który adres email (domowy lub firmowy) ma być preferowany dla list dystrybucyjnych w poczcie.
 delete a single entry by passing the id.	addressbook	pl	Usuń jeden wpis według podanego id.
 delete selected distribution list!	addressbook	pl	Usuń wybraną listę dystrybucyjną!
@@ -146,10 +166,14 @@ deletes the photo	addressbook	pl	Usuń to zdjęcie
 department	common	pl	Oddział
 departments	addressbook	pl	oddziały
 directory with documents to insert contacts	addressbook	pl	Katalog z dokumentami do wstawiania kontaktów
+disable	addressbook	pl	Wyłącz
+disable last/next event column	addressbook	pl	Wyłącz kolumnę Ostatnie/Następne zdarzenie
 display contact	addressbook	pl	Wyświetl kontakt
 displays a remider for birthdays on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	pl	Przypominaj o urodzinach na stronie startowej (strona domowa z ikonką domu)
 distribution list deleted	addressbook	pl	Lista dystrybucyjna została usunięta
+distribution list renamed	addressbook	pl	Zmiana nazwy listy dystrybucyjnej
 distribution lists	addressbook	pl	Listy dystrybucyjne
+distribution lists as groups	addressbook	pl	Listy dystrybucyjne jako grupy
 distribution lists, ...	addressbook	pl	Listy dystrybucyjne, ...
 do you want a private addressbook, which can not be viewed by users, you grant access to your personal addressbook?	addressbook	pl	Czy chcesz prywatną księgę gości, niewidoczną dla innych użytkowników, którym nie dałeś praw do niej?
 do your really want to delete this contact?	addressbook	pl	Naprawdę chcesz usunąć ten kontakt?
@@ -171,6 +195,7 @@ either the configured email addesses are wrong or the mail configuration.	addres
 email & internet	addressbook	pl	Email i WWW
 email addresses (comma separated) to send the contact data	addressbook	pl	Adresy email (rozdzielone przecinkiem) na które chcesz przesłać dane kontaktu
 empty	admin	pl	Pusty
+empty addressbook before importing	addressbook	pl	Usuń wpisy książki adresowej, których nie ma na liście CSV
 empty for all	addressbook	pl	puste dla wszystkich
 enable an extra private addressbook	addressbook	pl	Włącz dodatkową prywatną książkę adresową
 enclosure	addressbook	pl	Obudowa
@@ -179,11 +204,17 @@ enter the path to the exported file here	addressbook	pl	Podaj ścieżkę do wyex
 error deleting the contact !!!	addressbook	pl	Błąd podczas kasowania kontaktu !!!
 error saving the contact !!!	addressbook	pl	Błąd podczas zapisywania kontaktu !!!
 error: the entry has been updated since you opened it for editing!	addressbook	pl	Błąd: wpis został zaktualizowany od czasu jego otwarcia do edycji!
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	addressbook	pl	Przykład {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - przeszukaj pole "n_prefix", dla "Mr", jeśli znaleziono, napisz Hello Mr., w przeciwnym razie napisz Hello Ms.
+example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	preferences	pl	Przykład {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Przykład: Pan Dr. James Miller
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	addressbook	pl	Przykład {{NELF role}} - jeśli pole role nie jest puste, pojawi się nowy wiersz z wartością pola role.
+example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	addressbook	pl	Przykład {{nenvlf role}} - jeśli rola pola nie jest pusta, ustaw LF bez żadnej wartości pola.
 existing links	addressbook	pl	Istniejące linki
 exists	addressbook	pl	istnieje
 export as csv	addressbook	pl	Eksport jako CSV
 export as vcard	addressbook	pl	Eksport jako vCard
 export contacts	addressbook	pl	Eksportuj kontakty
+export definition to use for nextmatch export	addressbook	pl	Definicja eksportu używana do eksportu nextmatch
+export definitition to use for nextmatch export	addressbook	pl	Definicja eksportu do użycia dla eksportu nextmatch
 export file name	addressbook	pl	Nazwa pliku
 export from addressbook	addressbook	pl	Eksport z książki adresowej
 export selection	addressbook	pl	Wyeksportuj wybrane
@@ -192,6 +223,7 @@ exports contacts from your addressbook into a csv file. csv means 'comma separat
 extra	addressbook	pl	Dodatkowe
 extra private	addressbook	pl	Dodatkowe prywatne
 failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	pl	nie udało się zmienić %1 członków organizacji (brak uprawnień)
+favorite phone	addressbook	pl	Ulubiony telefon
 favorites	addressbook	pl	Ulubione
 fax	addressbook	pl	Faks
 fax number	common	pl	Numer faksu
@@ -211,6 +243,8 @@ full name	addressbook	pl	Pełna nazwa
 general	admin	pl	Główne
 general fields:	addressbook	pl	Pola ogólne:
 geo	addressbook	pl	GEO
+geolocation	addressbook	pl	Geolokalizacja
+geolocation integration	admin	pl	Integracja geolokalizacji
 global categories	addressbook	pl	Kategorie globalne
 grant addressbook access	common	pl	Nadaj prawa dostępu do książki adresowej
 group %1	addressbook	pl	Grupa %1
@@ -244,15 +278,19 @@ import from outlook	addressbook	pl	Importuj z programu Outlook
 import multiple vcard	addressbook	pl	Importuj wiele plików VCard
 import next set	addressbook	pl	Importuj następny set
 import_instructions	addressbook	pl	W Netscape, otwórz Książkę Adresową (Addressbook) i wybierz z menu <b>Plik</b> (File) pozycję <b>Eksport</b>. Plik zostanie wyeksportowany w formacie LDIF.<p> W Outlooku, wybierz folder Kontakty, wybierz z menu <b>Plik</b> pozycję <b>Import i eksport</b> i wyeksportuj swoje kontakty do pliku tekstowego oddzielanego kropką (CSV).<p>W Palm Desktop 4.0 (lub wyższym), wejdź do książki adresowej i wybierz <b>Export</b> z menu <b>Plik</b>. Zostanie on wyeksportowany w formacie VCard.
+importer's personal	addressbook	pl	Importer's personal
 imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	pl	Importuj kontakty do Twojej książki adresowej z pliku CSV.
+imports contacts into your addressbook from a vcard file.	addressbook	pl	Importuje kontakty do książki adresowej z pliku vCard.
 in %1 days (%2) is %3's birthday.	addressbook	pl	Za %1 dni są urodziny %3
 income	addressbook	pl	Dochód
 infolog	addressbook	pl	InfoLog Kontakt
 infolog-organisation	addressbook	pl	Organizacja InfoLog
 insert	addressbook	pl	wstaw
 insufficent rights to delete this list!	addressbook	pl	Brak wystarczających uprawnień do usunięcia listy!
+insufficent rights to edit this list!	addressbook	pl	Niewystarczające uprawnienia do edycji tej listy!
 international	addressbook	pl	Międzynarodowy
 internet	addressbook	pl	Internet
+invite to current call	addressbook	pl	Zaproś do bieżącego połączenia
 label	addressbook	pl	Etykieta
 last date	addressbook	pl	Ostatnia data
 last modified	addressbook	pl	ostatnio zmodyfikowany
@@ -273,6 +311,8 @@ load custom fields in index, even if custom field column is off (eg. to display 
 load vcard	addressbook	pl	Ładuj vCard
 location	addressbook	pl	Lokalizacja
 locations	addressbook	pl	Lokacje
+mail vcard	addressbook	pl	Poczta vCard
+main categories in their own field	addressbook	pl	Główne kategorie w ich własnym polu
 manage mapping	addressbook	pl	Zarządzaj mapowaniem
 mark records as private	addressbook	pl	Zaznacz rekordy jako prywatne
 merge duplicates	addressbook	pl	Połącz duplikaty
@@ -293,6 +333,7 @@ multiple vcard	addressbook	pl	VCard z wieloma kontaktami
 name for the distribution list	addressbook	pl	Nazwa dla listy dystrybucyjnej
 name of current user, all other contact fields are valid too	addressbook	pl	Nazwa aktualnego użytkownika, wszystkie pozostałe pola kontaktu są prawidłowe
 name, address	addressbook	pl	Imię, adres
+name, email, phone	addressbook	pl	Imię i nazwisko, e-mail, telefon
 new contact submitted by %1 at %2	addressbook	pl	Nowy kontakt przesłany przez %1 , %2
 new window opened to edit infolog for your selection	addressbook	pl	Otwarto nowe okno do edycji Dziennika dla twojej selekcji
 next date	addressbook	pl	Następna data
@@ -304,6 +345,10 @@ no vcard	addressbook	pl	Bez VCard
 not shared	addressbook	pl	nie dzielony
 number	addressbook	pl	Numer
 number of records to read (%1)	addressbook	pl	Liczba rekordów do wczytania (%1)
+open %1 crm view	addressbook	pl	Otwórz widok %1 CRM
+open email addresses in external mail program	addressbook	pl	Otwórz adresy EMail w zewnętrznym programie pocztowym
+open infolog crm view	preferences	pl	Otwarcie widoku InfoLog CRM kontaktu
+open tracking system crm view	preferences	pl	Otwórz widok CRM systemu śledzenia
 options for type	admin	pl	Opcje typu
 organisation	addressbook	pl	organizacja
 organisations	addressbook	pl	Organizacje
@@ -316,6 +361,8 @@ pager	common	pl	Pager
 parcel	addressbook	pl	Paczka
 participants	addressbook	pl	Uczestnicy
 permission denied !!!	addressbook	pl	Dostęp wzbroniony !!!
+permissiong denied! ask your administrator to allow regular uses to update their public keys.	addressbook	pl	Odmowa pozwolenia! Poproś administratora, aby zezwolił zwykłym użytkownikom na aktualizację ich kluczy publicznych.
+pgp key	addressbook	pl	Klucz PGP
 phone number	common	pl	Numer telefonu
 phone numbers	common	pl	Numery telefonów
 photo	addressbook	pl	Zdjęcie
@@ -330,6 +377,7 @@ prefix	addressbook	pl	Prefiks (Pan/Pani)
 prevent deleting of contacts	admin	pl	Zapobieganie usuwaniu kontaktów
 private custom fields	addressbook	pl	Prywatne pola własne
 public key	addressbook	pl	Klucz publiczny
+public sharing url	addressbook	pl	Publiczny adres URL udostępniania
 publish into groups:	addressbook	pl	Opublikuj do grup:
 read a list / search for entries.	addressbook	pl	Czytaj listę / szukaj wpisów.
 read a list of entries.	addressbook	pl	Wczytaj listę wpisów
@@ -339,20 +387,26 @@ record access	addressbook	pl	Dostęp do rekordu
 record owner	addressbook	pl	Właściciel rekordu
 recovered	addressbook	pl	odzyskany
 region	addressbook	pl	Region
+remove from distribution list	addressbook	pl	Usuń z listy dystrybucyjnej
 remove selected contacts from distribution list	addressbook	pl	Usuń wybrane kontakty z listy dystrybucyjnej
 removed from distribution list	addressbook	pl	usunięto z listy dystrybucyjnej
+rename list	addressbook	pl	Zmiana nazwy listy
+rename selected distribution list	addressbook	pl	Zmiana nazwy wybranej listy dystrybucyjnej
 repetition	addressbook	pl	Powtarzanie
 replacements for inserting contacts into documents	addressbook	pl	Zamienniki do wstawiania kontaktów w dokuemntach
 required fields *	addressbook	pl	pola wymagane *
 role	addressbook	pl	Pozycja
 room	addressbook	pl	Pokój
+schedule a video conference	addressbook	pl	Planowanie wideokonferencji
 search letter	addressbook	pl	Wyszukaj literę
 select a portrait format jpeg photo. it will be resized to 60 pixel width.	addressbook	pl	Wybierz zdjęcie w formacie JPEG. Będzie zmniejszone do szerokości 60 pikseli.
+select a source address to be used in geolocation routing system	addressbook	pl	Wybierz adres źródłowy, który ma być używany w systemie routingu GeoLocation
 select a view	addressbook	pl	Wybierz wygląd
 select addressbook type	addressbook	pl	Wybierz typ książki adresowej
 select all	addressbook	pl	Zaznacz wszystkie
 select an action or addressbook to move to	addressbook	pl	Wybierz akcję lub książkę adresową, do której mam przesunąć
 select an action or addressbook to move to...	addressbook	pl	Wybierz akcję lub książkę adresową, do której mam przesunąć...
+select an opened dialog	addressbook	pl	Wybierz otwarte okno dialogowe
 select migration type	admin	pl	Wybierz typ migracji
 select multiple contacts for a further action	addressbook	pl	Wybierz parę kontaktów dla następującej akcji
 select phone number as prefered way of contact	addressbook	pl	wybierz numer telefonu jako preferowaną metodę kontaktowania
@@ -361,6 +415,8 @@ select the type of conversion:	addressbook	pl	Wybierz typ konwersji
 select where you want to store / retrieve contacts	admin	pl	Wybierz, dokąd mam zapisywać kontakty
 selected contacts	addressbook	pl	wybrane kontakty
 send emailcopy to receiver	addressbook	pl	Wyślij kopię email do odbiorcy
+send fax via email by replacing fax number with an email address	addressbook	pl	Wysyłanie faksu przez e-mail poprzez zastąpienie numeru faksu adresem e-mail
+send succeeded to %1	common	pl	Wyślij pomyślnie do %1
 seperator	addressbook	pl	Separator
 set full name and file as field in contacts of all users (either all or only empty values)	admin	pl	Ustawi pełną nazwą i plik jako pole w kontaktach wszystkich użytkowników (wszystkie lub tylko puste wartości)
 set only full name	addressbook	pl	Ustaw tylko pełną nazwę
@@ -372,9 +428,13 @@ shared into addressbook %1	addressbook	pl	udostępnione w książce adresowej %1
 shared with	addressbook	pl	Dzielony z
 should the columns photo and home address always be displayed, even if they are empty.	addressbook	pl	Czy kolumny: zdjęcie i adres domowy powinny być wyświetlane zawsze, nawet jeżeli są puste?
 show	addressbook	pl	Pokaż
+show active accounts	addressbook	pl	Pokaż aktywne konta
+show all accounts	addressbook	pl	Pokaż wszystkie konta
 show infolog entries for this organisation	addressbook	pl	Pokaż wpisy InfoLog tej organizacji
 show the contacts of this organisation	addressbook	pl	Pokaż kontakty tej organizacji
 size of popup (wxh, eg.400x300, if a popup should be used)	admin	pl	Wielkość okna 'popup' (szerokość na wysokość, np.: 400x300, jeśli chcesz z tego korzystać)
+smime key	addressbook	pl	Klucz S/MIME
+special	addressbook	pl	Specjalne
 stadt	addressbook	pl	Miasto
 start	admin	pl	Początek
 startrecord	addressbook	pl	Rekord początkowy
@@ -392,22 +452,25 @@ that field name has been used already !	addressbook	pl	Taka nazwa pola jest już
 the anonymous user has probably no add rights for this addressbook.	addressbook	pl	Anonimowy użytkownik prawdopodobnie nie ma praw do tej książki adresowej.
 the anonymous user needs add rights for it!	addressbook	pl	Anonimowy użytkownik potrzebuje praw dodawania!
 the anonymous user needs read it!	addressbook	pl	Anonimowy użytkownik potrzebuje praw odczytu!
-the zip extension is needed, to insert contact data in openoffice or msoffice documents.	addressbook	pl	Wymagane jest rozszerzenie zip aby wstawić kontakty w dokumenty OpenOffice lub MSOffice
+the zip extension is needed, to insert contact data in openoffice or msoffice documents.	addressbook	pl	Wymagane jest rozszerzenie zip aby wstawić kontakty w dokumenty LibreOffice lub MS Office
 there was an error saving your data :-(	addressbook	pl	Przy zapisie danych wystąpił błąd :(
 this module displays a contactform, that stores direct into the addressbook.	addressbook	pl	Ten moduł wyświetla formularz kontaktu, który zapisuje bezpośrednio do książki adresowej.
 this module displays block from a adddressbook group.	addressbook	pl	Ten moduł wyświetla blok z grupy książki adresowej.
 this person's first name was not in the address book.	addressbook	pl	Ksika adresowa nie zawiera imienia tej osoby
 this person's last name was not in the address book.	addressbook	pl	Ksika adresowa nie zawiera nazwiska tej osoby
 timezone	addressbook	pl	Strefa czasowa
+title	addressbook	pl	Tytuł zadania
 to many might exceed your execution-time-limit	addressbook	pl	zbyt wiele może spowodować przekroczenie czasu wykonywania
 today is %1's birthday!	common	pl	Dzi s urodziny %1
 tomorrow is %1's birthday.	common	pl	Jutro s urodziny  %1
 translation	addressbook	pl	Tłumaczenie
 two of: %1	addressbook	pl	podwójne: %2
-type	addressbook	pl	typ
+type	addressbook	pl	Typ
 un-delete	addressbook	pl	Przywróć
+unable to import into %1, using %2	addressbook	pl	Nie można zaimportować do %1, używając %2
 unique id (uid)	addressbook	pl	Unikatowy ID (UID)
 unique id<br />(to update existing records)	addressbook	pl	Unikatowy ID<br />Do aktualizacji istniejących wpisów
+unknown type %1, imported as %2	addressbook	pl	Nieznany typ %1, zaimportowany jako %2
 unshare	addressbook	pl	Nie dzielimy się już
 unshared	addressbook	pl	nie jest już udostępniany
 update a single entry by passing the fields.	addressbook	pl	Aktualizuj pojedyńczy wpis poprzez podawanie wartości pól.
@@ -415,6 +478,7 @@ update fields by edited organisations?	admin	pl	Zaktualizować pola przez edycje
 updated	addressbook	pl	Uaktualniony
 upload or delete the photo	addressbook	pl	Załaduj lub usuń zdjęcie
 url to link telephone numbers to (use %1 = number to call, %u = account name, %t = account phone)	admin	pl	Odnośnik URL do numerów telefonów (użyj %1 zamiast numeru telefonu, %2 zamiast nazwy konta, %3 zamiast numeru telefonu konta)
+use a category tree?	addressbook	pl	Używanie drzewa do wybierania kategorii
 use an extra tab for private custom fields?	admin	pl	Używać dodatkowej zakładki dla prywatnych pól własnych?
 use country list	addressbook	pl	Użyj listy krajów
 use setup for a full account-migration	admin	pl	użyj (/setup) w celu pełnej migracji kont
@@ -425,11 +489,13 @@ vcard	common	pl	Kartka elektroniczna (VCard)
 vcards require a first name entry.	addressbook	pl	Kartki elektroniczne (VCard) wymagają podania imienia.
 vcards require a last name entry.	addressbook	pl	Kartki elektroniczne (VCard) wymagają podania nazwiska
 verification	addressbook	pl	Weryfikacja
+video call	addressbook	pl	Połączenie wideo
 view linked infolog entries	addressbook	pl	Pokaż wpisy do InfoLog jako link
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	pl	UWAGA!! Można używać LDAP tylko kiedy NIE używa się kontaktów do przechowywania kont!
 warning: all contacts found will be deleted!	addressbook	pl	UWAGA: Wszystkie znalezione kontakty zostaną skasowane!
 weekday	addressbook	pl	dzień tygodnia
 what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	pl	Jaką treść powinny mieć odnośniki do książki adresowej widocznie w innych aplikacjach? Puste wartości zostaną pominięte. Musisz na nowo się zalogować, jeżeli zmienisz to ustawienie.
+when viewing a contact, show linked entries from the selected application	addressbook	pl	Podczas wyświetlania kontaktu pokazuje powiązane wpisy z wybranej aplikacji.
 when you merge entries into documents, they will be stored here.  if no directory is provided, they will be stored in your home directory (/home/unverricht)	addressbook	pl	Gdy łączysz wpisy w dokumenty, będą one przechowywane w tym miejscu. Jeśli nie podano żadnego katalogu, będą one przechowywane w katalogu domowym (/home/...)
 where to add the email address	addressbook	pl	gdzie dodać adres email
 which address format should the addressbook use for countries it does not know the address format. if the address format of a country is known, it uses it independent of this setting.	addressbook	pl	Jaki format adresu powinien być używany przez książkę adresową dla państw, które nie mają określonego formatu adresu? Jeżeli format dla danego państwa jest ustalony, ma pierwszeństwo przed powyższym.
@@ -446,6 +512,8 @@ yes, for the next three days	addressbook	pl	Tak, dla następnych trzech dni
 yes, for the next two weeks	addressbook	pl	Tak, dla następnych dwuch tygodni
 yes, for the next week	addressbook	pl	Tak, dla następnego tygodnia
 yes, for today and tomorrow	addressbook	pl	Tak, na dziś i jutro
+yes, only admins can purge deleted items	admin	pl	Tak, tylko administratorzy mogą usuwać usunięte elementy
+yes, users can purge their deleted items	admin	pl	Tak, użytkownicy mogą usuwać usunięte elementy
 you are not allowed to share into the addressbook of %1	addressbook	pl	Nie masz uprawnień do udostępniania w książce adresowej %1
 you are not permitted to delete contact %1	addressbook	pl	Nie masz uprawnień do kasowania kontaktu %1
 you are not permittet to delete this contact	addressbook	pl	Nie masz uprawnień do kasowania tego kontaktu
@@ -457,5 +525,7 @@ you must select a vcard. (*.vcf)	addressbook	pl	Musisz wybrać kartke adresową 
 you must select at least 1 column to display	addressbook	pl	Musisz wybrać przynajmniej jedną kolumnę do wyświetlenia
 you need to select a distribution list	addressbook	pl	Musisz wybrać listę dystrybucyjną
 you need to select some contacts first	addressbook	pl	Musisz najpierw wybrać kontakty
+you need to select some entries first	addressbook	pl	Najpierw należy wybrać niektóre wpisy
+your new public key has been stored in accounts addressbook.	addressbook	pl	Twój nowy klucz publiczny został zapisany w książce adresowej konta.
 zip code	common	pl	Kod pocztowy
 zip_note	addressbook	pl	<p><b>Uwaga:</b>Plik może być typu zip i zawierać zbiór plików typu .csv, .vcf lub .ldif. Mimo to proszę nie mieszać plików różnego typu w jednym archiwum.

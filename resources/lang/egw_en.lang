@@ -4,7 +4,7 @@
 %1 resource(s) %2, %3 failed	resources	en	%1 resource(s) %2, %3 failed
 %1 resource(s) %2, %3 failed because of insufficent rights !!!	resources	en	%1 resource(s) %2, %3 failed because of insufficent rights !!!
 %1 resource(s) booked	resources	en	%1 resource(s) booked
-%1 resource(s) view calendar	resources	en	%1 resource(s) View calendar
+%1 resource(s) view calendar	resources	en	%1 resource(s) view calendar
 accessories	resources	en	Accessories
 accessories of	resources	en	Accessories of
 accessories:	resources	en	Accessories:
@@ -29,6 +29,7 @@ buy this article	resources	en	Buy this article
 buy this resource	resources	en	Buy this resource
 buyable	resources	en	Buyable
 category admin	resources	en	Category admin
+category saved.	resources	en	Category saved.
 category:	resources	en	Category:
 check all	resources	en	Check all
 choose category admin	resources	en	Choose category admin
@@ -41,14 +42,15 @@ create new accessory for this resource	resources	en	Create new accessory for thi
 create new links	resources	en	Create new links
 custom etemplate for the contactform	resources	en	Custom eTemplate for the contactform
 custom fields	resources	en	Custom Fields
-days	resources	en	days
+days	resources	en	Days
+delete accessories of selected resources too?	resources	en	Delete accessories of selected resources too?
 delete selected resources	resources	en	Delete selected resources
 delete this entry	resources	en	Delete this entry
 deleted	resources	en	deleted
 description (short)	resources	en	Short description
 direct booking permissions	resources	en	Direct booking permissions
 do you really want to delete this resource?	resources	en	Do you really want to delete this resource?
-don't use vfs (this will need a symlink --> see readme)	resources	en	Don't use vfs (this will need a symlink --> see README)
+don't use vfs (this will need a symlink --> see readme)	resources	en	Don't use VFS (this will need a symlink --> see README)
 edit this entry	resources	en	Edit this entry
 event start	resources	en	Event start
 existing links	resources	en	Existing links
@@ -67,6 +69,7 @@ how many of the resources are useable?	resources	en	How many are usable
 how many of them are useable?	resources	en	How many are usable
 how many of this resource are usable	resources	en	How many are usable
 how many of this resource exists	resources	en	How many of this resource exists
+icon	resources	en	Icon
 if you specify an export definition, it will be used when you export	resources	en	If you specify an export definition, it will be used when you export
 implies booking permission	resources	en	Implies booking permission
 implies read permission	resources	en	Implies read permission
@@ -91,20 +94,22 @@ name of resource	resources	en	Name of resource
 name:	resources	en	Name:
 new accessory	resources	en	New accessory
 new resource	resources	en	New Resource
+no - leave them	resources	en	No - Leave them
+no - make them resources	resources	en	No - Make them resources
 no description available	resources	en	No description available.
-no matches	resources	en	no matches
+no matches	resources	en	No matches
 no resources selected	resources	en	No resources selected.
 no, users will need to contact users with direct booking permission	resources	en	No, users will need to contact users with direct booking permission
 notify your administrator to correct this situation	resources	en	Notify your administrator.
 picture	resources	en	Picture
 picture source	resources	en	Picture source
-picture type is not supported, sorry!	resources	en	Picture type is not supported, sorry!
+picture type is not supported, sorry!	resources	en	Picture type is not supported.
 pictures or resource	resources	en	Pictures or resource
 planer	resources	en	Planner
 please choose a different time:	resources	en	Please choose a different time:
 prevent deleting	admin	en	Prevent deleting
-prize	resources	en	Prize
-prizeing information for booking or buying	resources	en	Prizing information for booking or buying
+prize	resources	en	Price
+prizeing information for booking or buying	resources	en	Pricing information for booking or buying
 quantity	resources	en	Quantity
 quantity of resource	resources	en	Quantity of resource
 quantity:	resources	en	Quantity:
@@ -112,7 +117,7 @@ read calendar permissions	resources	en	Read calendar permissions
 read permissions	resources	en	Read permissions
 registration confirmed %1	resources	en	Registration confirmed %1
 related links	resources	en	Related links
-remove accessories before changing accessory of	resources	en	Remove accessories before changing Accessory of
+remove accessories before changing accessory of	resources	en	Remove accessories before changing accessory of
 require confirmation	resources	en	Require confirmation
 reserve	resources	en	Reserve
 resource	resources	en	Resource
@@ -145,7 +150,8 @@ storage information:	resources	en	Storage information:
 the anonymous user needs add rights for it!	resources	en	The anonymous user needs add rights for it!
 the calendar of this resource	resources	en	Calendar of the resource
 this module displays the resources app	resources	en	This module displays the resources app
-too many matches	resources	en	too many matches
+too many matches	resources	en	Too many matches
+un-delete accessories of selected resources too?	resources	en	Un-delete accessories of selected resources too?
 unable to link to %1 "%2"	resources	en	Unable to link to %1 "%2"
 unable to process confirmation.	resources	en	Unable to process confirmation.
 use general resources icon	resources	en	Use general resources icon
@@ -160,6 +166,8 @@ web-site for this resource	resources	en	Website for this resource
 where to find this resource?	resources	en	Location information
 which category does this resource belong to?	resources	en	Category of the resource
 write permissions	resources	en	Write permissions
+yes - delete accessories too	resources	en	Yes - Delete accessories too
+yes - un-delete accessories too	resources	en	Yes - Un-delete accessories too
 yes, all users can ignore conflicts	resources	en	Yes, all users can ignore conflicts
 yes, only admins can purge deleted items	admin	en	Yes, only admins can purge deleted items
 yes, only users with direct booking permission	resources	en	Yes, only users with direct booking permission

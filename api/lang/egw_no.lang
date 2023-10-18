@@ -1,10 +1,12 @@
 %1 (%2 new) messages writen for application '%3' and languages '%4'	common	no	%1 (%2 nye) meldinger skrevet for program '%3' og språk '%4'
 %1 email addresses inserted	common	no	%1 email adresser lagt til
+%1 email(s) added into %2	common	no	%1 e-post(er) lagt til i %2
 %1 etemplates deleted	common	no	%1 eMaler slettet
 %1 etemplates for application '%2' dumped to '%3'	common	no	%1 eMaler for program '%2' overført til '%3'
 %1 etemplates found	common	no	%1 eMaler funnet
 %1 is not executable by the webserver !!!	common	no	%1 er ikke eksekverbar på webtjener !!!
 %1 matches on search criteria	common	no	%1 treff for søkekriteria
+%1 more %2 selected ...	common	no	%1 flere %2 valgt...
 %1 new etemplates imported for application '%2'	common	no	%1 nye eMaler importert for program '%2'
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	no	%1EGroupware%2 er en flerbruker, web-basert gruppevare skrevet i %3PHP%4.
 %s disabled	common	no	%s ikke aktivt
@@ -16,12 +18,23 @@
 '%1' is not a valid date !!!	common	no	'%1' er ikke en gyldig dato
 '%1' is not a valid floatingpoint number !!!	common	no	'%1' er ikke et gyldig flyttalls nummer
 '%1' is not a valid integer !!!	common	no	'%1' er ikke et gyldig heltall!
+'%1' is not a valid json file!	common	no	'%1' er ikke en gyldig JSON-fil.
 00 (disable)	admin	no	00 (frakoblet)
 1 day	common	no	1 dag
 1 hour	common	no	1 time
+1 minute	common	no	1 minutt
 1 month	common	no	1 måned
 1 week	common	no	1 uke
 13 (ntp)	admin	no	13 (ntp)
+15 minutes	common	no	15 minutter
+2-factor authentication code required	common	no	2-faktor autentiseringskode kreves
+2-factor-authentication	common	no	2-faktor-godkjenning
+2-factor-authentication required	common	no	2-faktor-godkjenning kreves
+3 minutes	common	no	3 minutter
+30 minutes	common	no	30 minutter
+30 seconds	common	no	30 sekunder
+5 minutes	common	no	5 minutter
+5 seconds	common	no	5 sekunder
 80 (http)	admin	no	80 (http)
 a pattern to be searched for	common	no	en streng å søke med
 about	common	no	Om
@@ -54,10 +67,10 @@ albania	common	no	ALBANIA
 algeria	common	no	ALGERIE
 align	common	no	Juster
 all	common	no	Alle
-all days	common	no	alle dager
-all fields	common	no	alle felt
-all languages	common	no	alle språk
-all operations save the template!	common	no	alle operasjoner lagrer malen!
+all days	common	no	Alle dager
+all fields	common	no	Alle felt
+all languages	common	no	Alle språk
+all operations save the template!	common	no	Alle operasjoner lagrer malen!
 all users	common	no	Alle brukere
 alternate style-sheet:	common	no	Alternativt Style Sheet
 am	common	no	er
@@ -70,6 +83,7 @@ anguilla	common	no	ANGUILLA
 answering no will not ask you again for this browser.	common	no	Hvis du svarer nei, vil du ikke lenger bli spurt om denne nettleseren.
 antarctica	common	no	ANTARKTIS
 antigua and barbuda	common	no	ANTIGUA OG BARBUDA
+api	common	no	EGroupware API
 application	common	no	Program
 application name needed to write a langfile or dump the etemplates !!!	common	no	Programnavnet må skrives til en språkfil eller fjern eMalene!
 applications	common	no	Applikasjoner
@@ -91,6 +105,7 @@ author	common	no	Forfatter
 autohide sidebox menus	common	no	Gjem side-menyene automatisk
 automatically hide the sidebox menus?	common	no	Automatisk gjemme side-menyene?
 autosave default category	common	no	Autolagre standard kategori
+avatar	common	no	Avatar
 azerbaijan	common	no	AZERBADSJAN
 back	common	no	Tilbake
 back to user login	common	no	Tilbake til brukerpålogging
@@ -120,6 +135,7 @@ box	common	no	Boks
 box...	common	no	Boks..
 brazil	common	no	BRASIL
 british indian ocean territory	common	no	BRITISK INDISKE HAVTERRITORIUM
+browser %1 %2 is not recommended. you may experience issues and not working features. please use the latest version of chrome, firefox or edge. thank you!	common	no	Nettleser %1 %2 anbefales ikke. Du kan oppleve problemer og funksjoner som ikke fungerer. Bruk den nyeste versjonen av Chrome, Firefox eller Edge. Takk skal du ha!
 brunei darussalam	common	no	BRUNEI
 bulgaria	common	no	BULGARIA
 burkina faso	common	no	BURKINA FASO
@@ -148,6 +164,7 @@ change	common	no	Endre
 changed	common	no	Endret
 charset	common	no	utf-8
 check all	common	no	Kontroller alle
+check for empty values in if statements.  example {{if url~empty~~website:}} - if url is not empty, writes "website:"	common	no	Se etter tomme verdier i IF-setninger. Eksempel {{IF url~EMPTY~~Website:}} - Hvis url ikke er tom, skrives "Website:"
 check if content should only be displayed but not altered (the content is not send back then!)	common	no	Kryss av dersom innholdet kun skal vises og ikke endres(innholdet sendes da ikke tilbake!)
 check if field has to be filled by user	common	no	kryss av om feltet skal fylles ut av bruker
 check installation	common	no	Sjekk installasjon
@@ -205,6 +222,7 @@ cut	common	no	Klipp ut
 cyprus	common	no	KYPROS
 czech republic	common	no	TSJEKKIA
 date	common	no	Dato
+date + time	common	no	Dato + Tid
 date due	common	no	Dato Ferdig
 date+time	common	no	Dato+Tid
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	no	Datetime port.<br>Hvis port 13 brukes, vennligst påse at brannmur-reglene er riktige før du oppdaterer denne siden.<br>(Port: 13 / Host: 129.6.15.28)
@@ -254,6 +272,7 @@ domain name for mail-address, eg. "%1"	common	no	domene navn for mail adresser, 
 domestic	common	no	Innenlands
 dominica	common	no	DOMINICA
 dominican republic	common	no	DOMINIKANSKE REPUBLIKK
+don't ask again!	common	no	Ikke spør igjen!
 done	common	no	Ferdig
 download	common	no	Last ned
 drop a table - this can not be undone	common	no	Slette en tabell - dette kan ikke gjøres om !
@@ -304,6 +323,11 @@ etemplate reference	common	no	eMal referanse
 etemplate tutorial	common	no	eMal opplæring
 ethiopia	common	no	ETIOPIA
 exact	common	no	eksakt
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	preferences	no	Eksempel {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - søk i feltet "n_prefix", etter "Mr", hvis funnet, skriv Hello Mr., ellers skriv Hello Ms.
+example {{letterprefix}} - gives a letter prefix without double spaces, if the title is empty for example	preferences	no	Eksempel {{LETTERPREFIX}} - Gir et bokstavprefiks uten mellomrom, for eksempel hvis tittelen er tom.
+example {{letterprefix}} - gives a letter prefix without double spaces, if the title is emty for  example	common	no	Eksempel {{LETTERPREFIX}} - Gir et bokstavprefiks uten mellomrom, for eksempel hvis tittelen er tom.
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	preferences	no	Eksempel {{NELF rolle}} - hvis feltet rolle ikke er tomt, får du en ny linje med verdien for feltet rolle.
+example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	preferences	no	Eksempel {{nenvlf rolle}} - hvis feltet rolle ikke er tomt, settes en LF uten noen verdi for feltet
 exchange this row with the one above	common	no	Bytt om linjen med den ovenfor
 exchange this two columns	common	no	Bytt om disse to kolonnene
 export the loaded etemplate into a xml-file	common	no	eksporter gjeldende emal til en xml-fil
@@ -406,7 +430,8 @@ horizontal rule	common	no	Horisontal regel
 hour	common	no	Time
 hours	common	no	timer
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	no	Hvor mange ikoner som skal vises på navigasjonslinjen (på toppen av siden). Ekstra ikoner vises i en rullegardinmeny ved å trykke på ikonet lengst til høyre på navigasjonslinjen.
-html	common	no	Html
+html	common	no	HTML
+html links to any entries linked to the current record, excluding attached files	common	no	HTML-lenker til alle oppføringer som er knyttet til den aktuelle posten, unntatt vedlagte filer.
 hungary	common	no	UNGARN
 iceland	common	no	ISLAND
 id	common	no	Id
@@ -434,9 +459,11 @@ insert new row after this one	common	no	Sett inn en linje etter denne
 insert new row in front of first line	common	no	Sett inn en linje foran første linje
 insert row after	common	no	Opprett rad etter
 insert row before	common	no	Opprett rad før
+install	common	no	Installer
 install egroupware as mail-handler?	common	no	Installere EGroupware som e-postbehandler?
 integer	common	no	Heltall
 international	common	no	Internasjonal
+invalid email	common	no	Ugyldig e-post
 invalid filename	common	no	Ugyldig filnavn
 invalid ip address	common	no	Ugyldig IP adresse
 invalid password	common	no	Ugyldig passord
@@ -638,19 +665,31 @@ password has been updated	common	no	Passord har blitt oppdatert
 paste	common	no	Lim inn
 path	common	no	Sti
 path to user and group files has to be outside of the webservers document-root!!!	common	no	Sti til bruker- og gruppe-filer. MÅ VÆRE UTENFOR webserverens dokument-rot!!!
+permission denied!	common	no	Tillatelse avslått!
+permission denied! this is an administration only feature.	common	no	Tillatelse avslått! Dette er en funksjon som kun er tilgjengelig for administratorer.
 permissions to the files/users directory	common	no	tilgang til filmapper / brukermapper
+permisson denied!	common	no	Tillatelse avslått!
 personal	common	no	Personlig
 peru	common	no	PERU
+pg down	common	no	Side ned
+pg up	common	no	Side opp
+pgp encryption	common	no	PGP-kryptering
+pgp encryption installation	common	no	Installasjon av PGP-kryptering
 philippines	common	no	FILIPPINENE
 phone number	common	no	Telefonnummer
 pitcairn	common	no	PITCAIRN
+play/pause	common	no	Spill av/Pause
 please %1 by hand	common	no	Vennligst %1 for hånd
 please enter a name	common	no	Vennligst tast inn et navn !
 please enter table-name first !!!	common	no	Vennligst registrer et tabellnavn først !
+please reload the egroupware desktop (f5 / cmd+r).	common	no	Last inn EGroupware-skrivebordet på nytt (F5 / Cmd+r).
+please remember to use '%1' as username for local login's from now on!	common	no	Husk å bruke '%1' som brukernavn for lokal innlogging fra nå av!
 please run setup to become current	common	no	Vennligst kjør setup for å oppdatere til siste versjon
 please select	common	no	Velg
 please set your global preferences	common	no	Sett dine globale preferanser
 please set your preferences for this application	common	no	Sett dine preferanser for denne applikasjonen
+please type %1 more characters	common	no	Vennligst skriv inn %1 tegn til
+please type 1 more character	common	no	Vennligst skriv inn 1 tegn til
 please wait...	common	no	Vennligst vent...
 pm	common	no	PM
 poland	common	no	POLEN
@@ -775,14 +814,17 @@ show all categorys	common	no	Vis alle kategorier
 show menu	common	no	vis meny
 show page generation time	common	no	Vis sidegenereringstid
 show page generation time on the bottom of the page?	common	no	Vise sidegenereringstid på bunn av siden?
+show password	common	no	Vis passord
 show values	common	no	Vis verdier
+show/hide	common	no	Vis/skjul sidefelt
 show_more_apps	common	no	vis_flere_applikasjoner
 showing	common	no	viser
 showing %1	common	no	viser %1
 showing %1 - %2 of %3	common	no	viser %1 - %2 of %3
 sierra leone	common	no	SIERRA LEONE
+sign up	common	no	Registrer deg
 singapore	common	no	SINGAPORE
-site configuration	common	no	Konfigurasjon av nettsted
+site configuration	common	no	Konfigurasjon av app
 size	common	no	Størrelse
 slovakia	common	no	SLOVAKIA
 slovenia	common	no	SLOVENIA
@@ -927,6 +969,9 @@ you have selected an invalid date	common	no	Du har valgt en ugyldig dato !
 you have selected an invalid main category	common	no	Du har valgt en ugyldig hovedkategori !
 you have successfully logged out	common	no	Du har logget ut
 you need to add the webserver user '%1' to the group '%2'.	common	no	Du må melde brukeren '%1' inn i '%2' gruppen på webtjener.
+your account has been updated with new data from your identity provider.	common	no	Kontoen din er oppdatert med nye data fra identitetsleverandøren din.
+your browser is not up-to-date (javascript es6 compatible), you may experience some of the features not working.	common	no	Hvis nettleseren din ikke er oppdatert (JavaScript ES6-kompatibel), kan det hende at noen av funksjonene ikke fungerer.
+your key has been restored successfully.	common	no	Nøkkelen din har blitt gjenopprettet.
 your message could <b>not</b> be sent!<br>	common	no	Meldingen kunne <b>ikke</b> sendes!<br>
 your message has been sent	common	no	Din melding har blitt sent
 your search returned %1 matchs	common	no	ditt søk gav %1 treff

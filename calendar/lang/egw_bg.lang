@@ -29,6 +29,7 @@ add alarm	calendar	bg	Добавяне на "Аларма"
 add appointments via shortened dialog or complete edit window	calendar	bg	Добавяне на срещи, чрез съкратен диалогов прозорец или прозорец за редактиране
 add current view as favorite	calendar	bg	Добавяне на текущия изглед като любим
 add new alarm	calendar	bg	Добавяне на нова аларма
+add new event	calendar	bg	Добавяне на нова среща
 add new participants or resource	calendar	bg	Добавяне на нови участници или ресурс
 add timesheet entry	calendar	bg	Добави запис в Графика
 added	calendar	bg	Добавено
@@ -62,6 +63,7 @@ apply the changes	calendar	bg	Прилагане на промените
 appointment settings	calendar	bg	Настройки на уговорените срещи
 as an alternative you can %1download a mysql dump%2 and import it manually into egw_cal_timezones table.	calendar	bg	Като алтернатива може да изтеглите %1 a MySQL dump%2 и да го импортирате ръчно в egw_cal_timezones таблица.
 at start of the event	calendar	bg	в началото на събитието
+attention	calendar	bg	Внимание
 automatically purge old events after	admin	bg	Автоматично почистване на стари събития
 available for the first entry inside each day of week or daily table inside the selected range:	calendar	bg	Позволено за първия запис във всеки ден от седмицата или дневна таблица в избрания диапазон:
 back half a month	calendar	bg	Назад половин месец
@@ -98,9 +100,11 @@ category %1 removed because of missing rights	calendar	bg	Категория % 1
 category acl	common	bg	Категория ACL
 category acl only restrict adding a category to an event or changing status of a participant. it does not change the visibility of an event!	calendar	bg	Категория ACL ограничава само добавянето на категория към събитие, или промяна статуса на участник. НЕ променя видимостта на събитие!
 category automatically added to new events	calendar	bg	Категорията автоматично се добавя към нови събития
+category report	calendar	bg	Доклад за категория
 chair	calendar	bg	Председател
 change history	calendar	bg	Промяна на историята
 change your status	calendar	bg	Променете статуса си
+changed event-data applied	calendar	bg	Прилагане на променени данни за събития
 charset of file	calendar	bg	Символен набор на файла
 check all	calendar	bg	Маркира всички
 choose a category	calendar	bg	Избери категория
@@ -135,6 +139,7 @@ daily tables	calendar	bg	Дневни таблици
 data exchange settings	calendar	bg	Настройки за обмен на данни
 date for the day of the week	calendar	bg	Дата за деня от седмицата
 date for the day of the week, available for the first entry inside each day of week or daily table inside the selected range.	calendar	bg	Дата за деня от седмицата, налична за първия запис във всеки ден от седмицата или дневна таблица в избрания диапазон.
+date range	calendar	bg	Обхват на датата
 day	calendar	bg	Ден
 day of week tables	calendar	bg	Ден от седмичните таблици
 days	calendar	bg	Дни
@@ -224,6 +229,7 @@ example {{nenvlf role}} - if field role is not empty, set a lf without any value
 exception	calendar	bg	Изключение
 exception created - you can now edit or delete it	calendar	bg	Изключението е създадено - може да го редактирате или изтриете
 exceptions	calendar	bg	Изключения
+exclude weekend	calendar	bg	Изключване на уикенда
 execute a further action for this entry	calendar	bg	Изпълни допълнително за това събитие
 existing links	calendar	bg	Съществуващи връзки
 exists	calendar	bg	Съществува
@@ -351,6 +357,7 @@ meeting request	calendar	bg	Покана за среща
 meetingrequest to all participants	calendar	bg	Покана за среща до всички участници
 merge document...	calendar	bg	Обединяване на документа ...
 midnight	calendar	bg	Полунощ
+min days	calendar	bg	Минимум дни
 minimum number of users for showing day view as consolidated.	calendar	bg	Минимален брой потребители за показване на дневен изглед като консолидиран.
 minimum number of users for showing week view as consolidated.	calendar	bg	Минимален брой потребители за показване на седмичен изглед като консолидиран.
 minutes	calendar	bg	Минути
@@ -420,6 +427,7 @@ only used for first viewing of calendar, afterwards last selected view is used.	
 open todo's:	calendar	bg	Отвори Задачите
 optional	calendar	bg	По избор
 organizer	calendar	bg	Организатор
+output unit	calendar	bg	Изходна единица
 overlap holiday	calendar	bg	Застъпване на празник
 owner too	calendar	bg	Собственик също
 participant names by type	calendar	bg	Имена на участниците по тип
@@ -447,6 +455,7 @@ re-edit event	calendar	bg	Редактиране отново
 receive email updates	calendar	bg	Получаване на e-mail за актуализациите
 receive notifications about events you created/modified/deleted	calendar	bg	Получаване на известия за създадените / променените / изтритите от вас събития.
 receive summary of appointments	calendar	bg	Получаване на обобщение за ангажиментите
+recordings	calendar	bg	Записи
 recover	calendar	bg	Възстановяване
 recovered	calendar	bg	Възстановен(и).
 recurrence	calendar	bg	Повторение
@@ -464,6 +473,7 @@ repetition	calendar	bg	Повторение
 repetitiondetails (or empty)	calendar	bg	Детайли на повторение (или непопълнено)
 replacements for inserting events into documents	calendar	bg	Замени за вмъкване на събития в документи
 reply to meeting request	calendar	bg	Отговор на покана за среща
+report	calendar	bg	Отчет
 requested	calendar	bg	Заявена
 requested date %1 outside allowed range of %2 days: recurring events obmitted!	calendar	bg	Заявена дата % 1 извън допустимия диапазон от % 2 дни: повтарящи се събития са пропуснати!
 requested meeting is in the past!	calendar	bg	Заявената среща е в миналото!
@@ -525,6 +535,7 @@ show this month	calendar	bg	Покажи този месец
 show this week	calendar	bg	Покажи тази седмица
 show year and age	calendar	bg	Покажи година и възраст
 single event	calendar	bg	Еднократно събитие
+sort by	calendar	bg	Сортиране по
 specify where url of the day links to	calendar	bg	Посочете къде да се свърже URL на деня
 start	calendar	bg	Начало
 start date/time	calendar	bg	Начало Дата/Час
@@ -611,6 +622,7 @@ user or group	calendar	bg	Потребител или група
 user selectable css file for the calendar setup	calendar	bg	Потребителя сам избира CSS файл за настройка на Календара
 users + groups: inviting both always requires an invite grant	admin	bg	Потребители + групи: Покани всички, но Винаги изисквай потвърждение от потребител с повече права
 using already existing event on server.	calendar	bg	Използване на вече съществуващо събитие на сървъра.
+utilities	calendar	bg	Комунални услуги
 view exception	calendar	bg	Преглед на изключение(я)
 view series	calendar	bg	Преглед на сериите
 view settings	calendar	bg	Преглед на настройките

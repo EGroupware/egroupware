@@ -1,8 +1,10 @@
 %1 %2 in %3	calendar	hu	%1 %2 a %3-ban
+%1 events in ical file, only first one imported and displayed!	calendar	hu	%1 esemény az iCal fájlban, csak az elsőt importálja és jeleníti meg!
 %1 hours	calendar	hu	%1 órák
 %1 records imported	calendar	hu	%1 bejegyzés importálva
 %1 records read (not yet imported, you may go back and uncheck test import)	calendar	hu	%1 bejegyzés beolvasva (importálás nem történt, az előző lépésben a Test Import kikapcsolása után élesben történik a beolvasás)
 %1 weeks	calendar	hu	%1 hét
+(%1 events in %2 seconds)	calendar	hu	(%1 esemény %2 másodperc alatt)
 a non blocking event will not conflict with other events	calendar	hu	Egy Értesítés esemény nem fog ütközni más eseményekkel.
 accept	calendar	hu	elfogad
 accept or reject an invitation	calendar	hu	Elfogad vagy elutasít egy meghívást
@@ -12,6 +14,7 @@ action that caused the notify: added, canceled, accepted, rejected, ...	calendar
 actions	calendar	hu	Műveletek
 actions...	calendar	hu	Műveletek...
 add alarm	calendar	hu	Riasztás hozzáadása
+add new event	calendar	hu	Új találkozó hozzáadása
 add timesheet entry	calendar	hu	Regiszter bejegyzés hozzáadása
 added	calendar	hu	Hozzáadva
 after %1	calendar	hu	%1 után
@@ -31,6 +34,7 @@ all participants	calendar	hu	Összes résztvevő
 allows to edit the event again	calendar	hu	Esemény újra szerkesztésének engedélyezése
 always	calendar	hu	állandóan
 apply the changes	calendar	hu	Változások elfogadása
+attention	calendar	hu	Figyelem
 back half a month	calendar	hu	fél hónapot vissza
 back one month	calendar	hu	egy hónapot vissza
 before %1	calendar	hu	%1 előtt
@@ -50,7 +54,9 @@ calendar-fieldname	calendar	hu	Naptár-Mezőnév
 can't add alarms in the past !!!	calendar	hu	A múltban riasztást nem lehet létrehozni!
 can't aquire lock!	calendar	hu	Nem zárolható!
 canceled	calendar	hu	Törölve
+category report	calendar	hu	Kategória jelentés
 change history	calendar	hu	Történet módosítása
+changed event-data applied	calendar	hu	Módosított esemény-adatok alkalmazása
 charset of file	calendar	hu	Állomány karakterkészlete
 check all	calendar	hu	Összes kijelölese
 choose a category	calendar	hu	Válasszon kategóriát
@@ -72,6 +78,7 @@ custom	calendar	hu	Egyedi
 custom fields	common	hu	Egyedi Mezők
 custom_2	common	hu	szabad/foglalat
 daily	calendar	hu	Naponta
+date range	calendar	hu	Dátumtartomány
 day	calendar	hu	Nap
 days	calendar	hu	napok
 days of the week for a weekly repeated event	calendar	hu	A hét napjai a heti ismétlődésű eseményekhez
@@ -126,6 +133,7 @@ event will occupy the whole day	calendar	hu	Az esemény az egész napot lefoglal
 exception	calendar	hu	Kivétel
 exception created - you can now edit or delete it	calendar	hu	Kivétel létrehozva - most lehetősége van szerkeszteni vagy törölni
 exceptions	calendar	hu	Kivételek
+exclude weekend	calendar	hu	Hétvége kizárása
 execute a further action for this entry	calendar	hu	További művelet végrehajtása ezen a bejegyzésen
 existing links	calendar	hu	Meglévő hivatkozások
 extended	calendar	hu	Kibővített
@@ -204,6 +212,7 @@ location, start- and endtimes, ...	calendar	hu	Helyszín, kezdési- és befejez�
 mail all participants	calendar	hu	résztvevők email értesítése
 make freebusy information available to not logged in persons?	calendar	hu	Foglalt-Szabad információ elérhető-e a be nem jelentkezett személyeknek?
 maximum available quantity of %1 exceeded!	calendar	hu	A %1 maximálisan elérhető mennyiség túllépve!
+min days	calendar	hu	Min napok
 minimum number of users for showing day view as consolidated.	calendar	hu	A felhasználók minimális száma a napi nézet konszolidáltként való megjelenítéséhez.
 minimum number of users for showing week view as consolidated.	calendar	hu	A felhasználók minimális száma a heti nézet összevontként való megjelenítéséhez.
 minutes	calendar	hu	perc
@@ -248,6 +257,7 @@ one week	calendar	hu	egy hét
 one year	calendar	hu	egy év
 only the initial date of that recurring event is checked!	calendar	hu	Az ismétlődő esemény esetén ssak a kezdeti dátum van ellenőrizve!
 open todo's:	calendar	hu	Tennivalók Megnyitása:
+output unit	calendar	hu	Kimeneti egység
 overlap holiday	calendar	hu	szabadság átfedés
 owner too	calendar	hu	Tulajdonost is
 participants	calendar	hu	Résztvevők
@@ -268,6 +278,7 @@ quantity	calendar	hu	Mennyiség
 re-edit event	calendar	hu	Esemény módosítása
 receive email updates	calendar	hu	Email frissítések fogadása
 receive summary of appointments	calendar	hu	Találkozók összesítőjének fogadása
+recordings	calendar	hu	Felvételek
 recurrence	calendar	hu	Ismétlődés
 recurring event	calendar	hu	ismétlődő esemény
 rejected	calendar	hu	Elutasított
@@ -278,6 +289,7 @@ repeating event information	calendar	hu	Ismétlődő esemény információ
 repeating interval, eg. 2 to repeat every second week	calendar	hu	ismétlődés időtartama, pl. 2 jelenti a "minden második héten"-t.
 repetition	calendar	hu	Ismétlődés
 repetitiondetails (or empty)	calendar	hu	Ismétlődés jellemzők (vagy üres)
+report	calendar	hu	Jelentés
 reset	calendar	hu	Alaphelyzet
 resources	calendar	hu	Erőforrások
 resources except conflicting ones	calendar	hu	Erőforrások az ütközések kivételével
@@ -306,6 +318,7 @@ show only the date, not the year	admin	hu	Dátum megjelenítése év nélkül
 show this month	calendar	hu	hónap mutatása
 show this week	calendar	hu	hét mutatása
 single event	calendar	hu	egyetlen esemény
+sort by	calendar	hu	Rendezés
 start	calendar	hu	Kezdés
 start date/time	calendar	hu	Kezdés dátuma/ideje
 startdate	calendar	hu	Kezdés dátuma
@@ -348,6 +361,7 @@ updated	calendar	hu	Frissítve
 use end date	calendar	hu	befejezési dátum használata
 use the selected time and close the popup	calendar	hu	kiválasztott idő használata és a felbukkanó ablak bezárása
 user or group	calendar	hu	Felhasználó vagy csoport
+utilities	calendar	hu	Közművek
 view this event	calendar	hu	Esemény megtekintése
 views with fixed time intervals	calendar	hu	Fix időintervallumok nézete
 wed	calendar	hu	Szo

@@ -1,9 +1,12 @@
 %1 email addresses inserted	common	hu	%1 email cím beillesztve
+%1 email(s) added into %2	common	hu	%1 e-mail(ek) hozzáadva %2-hez
 %1 file	common	hu	% file
 %1 is not executable by the webserver !!!	common	hu	%1 nem futtatható a webszerver által!
+%1 more %2 selected ...	common	hu	%1 több %2 kiválasztott...
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	hu	%1Válasszon egy másik könyvtárat%2<br />vagy tegye írhatóvá a %3 könyvtárat a webszerver számára.
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	hu	Az %1EGroupware%2 egy php nyelven írt webalapú, többfelhasználós csoportmunkát támogató alkalmazáscsomag.
 '%1' copied to clipboard	common	hu	'%1' másolva a vágólapra
+'%1' is not a valid json file!	common	hu	'%1' nem érvényes JSON fájl
 (session restored in %1 seconds)	common	hu	(munkafázis visszaállítva %1 másodperc alatt)
 00 (disable)	admin	hu	00 (tiltva)
 1 day	common	hu	1 nap
@@ -102,6 +105,7 @@ autohide sidebox menus	common	hu	Oldalmenük automatikus elrejtése
 automatically hide the sidebox menu's?	common	hu	Az oldalmenüket automatikusan elrejtse?
 automatically hide the sidebox menus?	common	hu	Az oldalmenüket automatikusan elrejtse?
 autosave default category	common	hu	Alapértelmezett kategória automatikus mentése
+avatar	common	hu	Avatar
 azerbaijan	common	hu	Azerbajdzsán
 back	common	hu	Vissza
 back to user login	common	hu	Vissza a felhasználói bejelentkezéshez
@@ -130,6 +134,7 @@ bottom	common	hu	Alul
 bouvet island	common	hu	Bouvet-sziget
 brazil	common	hu	Brazília
 british indian ocean territory	common	hu	Brit Indiai Óceáni Területek
+browser %1 %2 is not recommended. you may experience issues and not working features. please use the latest version of chrome, firefox or edge. thank you!	common	hu	A böngésző %1 %2 nem ajánlott. Problémákat és nem működő funkciókat tapasztalhat. Kérjük, használja a Chrome, Firefox vagy Edge legújabb verzióját. Köszönjük!
 brunei darussalam	common	hu	Brunei
 bulgaria	common	hu	Bulgária
 bulgarian	common	hu	Bulgár
@@ -160,6 +165,7 @@ change	common	hu	Változtat
 changed	common	hu	Változott
 charset	common	hu	utf-8
 check all	common	hu	Összes kijelölese
+check for empty values in if statements.  example {{if url~empty~~website:}} - if url is not empty, writes "website:"	common	hu	Ellenőrizze az üres értékeket az IF utasításokban. Példa {{IF url~EMPTY~~Weboldal:}}} - Ha az url nem üres, akkor kiírja, hogy "Webhely:".
 check installation	common	hu	Telepítés ellenőrzése
 check now	common	hu	Ellenőrzés most
 checkbox	common	hu	Checkbox
@@ -229,7 +235,9 @@ dark mode	common	hu	Sötét üzemmód
 database error	common	hu	Adatbázis hiba
 database error!	common	hu	Adatbázis hiba!
 date	common	hu	Dátum
+date + time	common	hu	Dátum + Idő
 date due	common	hu	Határidő
+date+time	common	hu	Dátum+Idő
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	hu	Időszerver port.<br>A 13-as port használatához a tűzfalat ki kell nyitni, mielőtt ez az oldal elküldésre kerülne.<br>
 day	common	hu	Nap
 days	common	hu	napok
@@ -271,6 +279,7 @@ domain name for mail-address, eg. "%1"	common	hu	Tartománynév az email címhez
 domestic	common	hu	Belföldi
 dominica	common	hu	Dominika
 dominican republic	common	hu	Dominikai Köztársaság
+don't ask again!	common	hu	Ne kérdezd újra!
 done	common	hu	Kész
 download	common	hu	Letölt
 duration	common	hu	Időtartam
@@ -310,6 +319,11 @@ etemplate	common	hu	eTemplate
 ethiopia	common	hu	Etiópia
 everything	common	hu	Minden
 exact	common	hu	pontos
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	preferences	hu	Példa {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - keresse az "n_prefix" mezőben a "Mr" szót, ha talál, írja Hello Mr., különben írja Hello Ms.
+example {{letterprefix}} - gives a letter prefix without double spaces, if the title is empty for example	preferences	hu	Példa {{LETTERPREFIX}} - Egy betűelőtagot ad meg dupla szóközök nélkül, ha a cím üres, például
+example {{letterprefix}} - gives a letter prefix without double spaces, if the title is emty for  example	common	hu	Példa {{LETTERPREFIX}} - Egy betűelőtagot ad meg dupla szóközök nélkül, ha a cím üres, például
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	preferences	hu	Példa {{NELF szerep}} - ha a szerep mező nem üres, akkor egy új sort kap a szerep mező értékével.
+example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	preferences	hu	Példa {{nenvlf role}} - ha a mező szerepe nem üres, beállít egy LF-et a mező értéke nélkül
 failed to change password.	common	hu	Sikertelen jelszó változtatás.
 failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	hu	Szerverhez csatlakozás sikertelen vagy a szerver válasza érvénytelen. Próbáljon újra bejelentkezni. Hiba esetén értesítse az adminisztrátort.
 falkland islands (malvinas)	common	hu	Falkland-szigetek
@@ -404,6 +418,7 @@ how many icons should be shown in the navbar (top of the page). additional icons
 how many rows to print	common	hu	Hány sort kell kinyomtatni
 how to show the general egroupware menu ?	common	hu	Hogyan legyen az EGroupware menü megjelenítve?
 html	common	hu	HTML
+html links to any entries linked to the current record, excluding attached files	common	hu	HTML linkek az aktuális rekordhoz kapcsolódó bármely bejegyzéshez, kivéve a csatolt fájlokat
 hungary	common	hu	Magyarország
 iceland	common	hu	Izland
 id	common	hu	Azonosító
@@ -427,9 +442,11 @@ insert placeholder	common	hu	Helyőrző beillesztése
 insert row after	common	hu	Sor beszúrása utána
 insert row before	common	hu	Sor beszúrása elé
 insert timestamp into description field	common	hu	Időbélyegző beillesztése a leírás mezőbe
+install	common	hu	A  telepítése
 install egroupware as mail-handler?	common	hu	Telepítse az EGroupware-t levélkezelőként?
 international	common	hu	Nemzetközi
 invalid 2-factor authentication code	common	hu	Érvénytelen 2-faktoros hitelesítési kód
+invalid email	common	hu	Érvénytelen e-mail
 invalid filename	common	hu	Érvénytelen állománynév
 invalid ip address	common	hu	Érvénytelen IP cím
 invalid or expired 'remember me' token	common	hu	Érvénytelen vagy lejárt "emlékezz rám" token
@@ -639,21 +656,31 @@ password must have at least %1 characters	common	hu	A jelszónak legalább %1 ka
 paste	common	hu	Beilleszt
 path	common	hu	Útvonal
 path to user and group files has to be outside of the webservers document-root!!!	common	hu	A felhasználói és csoport állományokat tartalmazó könyvtár útvonala KÍVÜL KELL ESSEN a webszerver által használt könyvtáron!!! Pl. a /var/docroot lehet a /var/www/localhost/httpdocs/docroot helyett.
-permission denied!	common	hu	Hozzáférés elutasítva!
+permission denied!	common	hu	Engedély megtagadva!
+permission denied! this is an administration only feature.	common	hu	Engedély megtagadva! Ez egy csak adminisztrációs funkció.
 permissions to the files/users directory	common	hu	a files/users könyvtár jogai
+permisson denied!	common	hu	Engedély megtagadva!
 personal	common	hu	Személyes
 peru	common	hu	Peru
+pg down	common	hu	Oldal lefelé
+pg up	common	hu	Oldal fel
+pgp encryption	common	hu	PGP titkosítás
+pgp encryption installation	common	hu	PGP titkosítás telepítése
 philippines	common	hu	Fülöp-szigetek
-phone number	common	hu	telefonszám
+phone number	common	hu	Telefonszám
 pitcairn	common	hu	Pitcairn-szigetek
 placeholders	common	hu	Helytartók
 play/pause	common	hu	Lejátszás/szünet
 please %1 by hand	common	hu	Kérem %1 kézzel
 please enter a name	common	hu	Kérem adjon meg egy nevet!
+please reload the egroupware desktop (f5 / cmd+r).	common	hu	Kérjük, töltse újra az EGroupware asztalt (F5 / Cmd+r).
+please remember to use '%1' as username for local login's from now on!	common	hu	Kérjük, ne feledje, hogy mostantól a helyi bejelentkezéseknél a '%1' felhasználónevet használja!
 please run setup to become current	common	hu	Kérem futtassa a setup-ot hogy a változás érvényre jusson.
 please select	common	hu	Kérem válasszon
 please set your global preferences	common	hu	Kérem állítsa be a globális tulajdonságait!
 please set your preferences for this application	common	hu	Kérem állítsa be személyes beállításait ehhez az alkalmazáshoz!
+please type %1 more characters	common	hu	Kérjük, írjon be %1 további karaktert (karaktereket)
+please type 1 more character	common	hu	Kérjük, írjon be még 1 karaktert
 please wait...	common	hu	Kérem várjon és figyelje a homokórát a szemközti falon...
 please, check back with us shortly.	common	hu	Kérlek nézz vissza kicsit később.
 pm	common	hu	du
@@ -769,15 +796,17 @@ show menu	common	hu	menü mutatása
 show page generation time	common	hu	Oldal megjelentítési idő mutatása
 show page generation time on the bottom of the page?	common	hu	Mutassa az oldal generálására fordított időt az oldal alján?
 show page generation time?	common	hu	Oldal generálási idő megjelenítése?
+show password	common	hu	Jelszó megjelenítése
 show the logo's of egroupware and x-desktop on the desktop.	common	hu	EGroupware és x-desktop logójának megjelenítése az asztalon.
 show/hide	common	hu	oldalsáv megjelenítése/elrejtése
 show_more_apps	common	hu	Több alkalmazás mutatása
 showing %1	common	hu	%1 listázva
 showing %1 - %2 of %3	common	hu	listázva %1 - %2, össz: %3
 sierra leone	common	hu	Sierra Leone
+sign up	common	hu	Regisztráció
 simple	common	hu	Egyszerű
 singapore	common	hu	Szingapúr
-site configuration	common	hu	Webhely beállításai
+site configuration	common	hu	Konfiguráció
 size	common	hu	Méret
 slovakia	common	hu	Szlovákia
 slovenia	common	hu	Szlovénia
@@ -919,6 +948,9 @@ you have successfully logged out	common	hu	Sikeresen kijelentkezett a rendszerb�
 you need to add the webserver user '%1' to the group '%2'.	common	hu	A webszerver felhasználót '%1' hozzá kell adni a '%2' csoporthoz.
 you need to be an egroupware administrator to access this functionality!	common	hu	Ehhez a funkcióhoz EGroupware adminisztrátor szintű hozzáférés szükésges!
 you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	hu	Megpróbáltad elindítani %1 alkalmazást, de nincs jogosultságod hozzá.
+your account has been updated with new data from your identity provider.	common	hu	A fiókját frissítették a személyazonossági szolgáltatójától kapott új adatokkal.
+your browser is not up-to-date (javascript es6 compatible), you may experience some of the features not working.	common	hu	Böngészője nem naprakész (JavaScript ES6 kompatibilis), előfordulhat, hogy egyes funkciók nem működnek.
+your key has been restored successfully.	common	hu	A kulcsát sikeresen helyreállítottuk.
 your message could <b>not</b> be sent!<br>	common	hu	Az üzenet <b>nem<b> került elküldésre!<br>
 your message has been sent	common	hu	Üzenet elküldve
 your password does not have required strength of %1 character classes and minimum length of %2 characters.	common	hu	A jelszava nem rendelkezik az előírt %1 karakterosztályok erősségével és %2 karakter minimális hosszával.

@@ -1,8 +1,11 @@
 %1 email addresses inserted	common	bg	Вмъкнати %1 e-mail адреса
+%1 email(s) added into %2	common	bg	%1 имейл(и), добавен(и) в %2
 %1 is not executable by the webserver !!!	common	bg	%1 не е изпълним за WEB сървъра!!!
+%1 more %2 selected ...	common	bg	%1 още %2 избрани...
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	bg	%1Изберете друга директория%2<br />или позволете в %3 запис на WEB сървъра
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	bg	%1EGroupware%2 е многопотребителска, web-базирана система за работа в екип, написана на %3PHP%4.
 '%1' copied to clipboard	common	bg	'%1' е копирано в клипборда
+'%1' is not a valid json file!	common	bg	'%1' не е валиден JSON файл
 (session restored in %1 seconds)	common	bg	(сесията възстановена за %1 секунди)
 00 (disable)	admin	bg	00 (забранен)
 1 day	common	bg	1 ден
@@ -91,6 +94,7 @@ autohide sidebox menus	common	bg	Автоматично скриване на с
 automatically hide the sidebox menu's?	common	bg	Автоматично скриване на страничното меню?
 automatically hide the sidebox menus?	common	bg	Автоматично скриване на страничните менюта?
 autosave default category	common	bg	Автоматично запазване на категория Default
+avatar	common	bg	Avatar
 azerbaijan	common	bg	Азербайджан
 back	common	bg	Назад
 back to user login	common	bg	Назад към входа за потребители
@@ -118,6 +122,7 @@ bottom	common	bg	Долна част
 bouvet island	common	bg	Остров Буве
 brazil	common	bg	Бразилия
 british indian ocean territory	common	bg	Британски територии в Индийския океан
+browser %1 %2 is not recommended. you may experience issues and not working features. please use the latest version of chrome, firefox or edge. thank you!	common	bg	Браузърът %1 %2 не е препоръчителен. Възможно е да се появят проблеми и неработещи функции. Моля, използвайте най-новата версия на Chrome, Firefox или Edge. Благодарим ви!
 brunei darussalam	common	bg	Бруней Дарусалам
 bulgaria	common	bg	България
 burkina faso	common	bg	Буркина Фасо
@@ -145,6 +150,7 @@ chad	common	bg	Чад
 change	common	bg	Промяна
 charset	common	bg	utf-8
 check all	common	bg	Маркира всички
+check for empty values in if statements.  example {{if url~empty~~website:}} - if url is not empty, writes "website:"	common	bg	Проверка за празни стойности в декларациите IF. Пример {{IF url~EMPTY~~Website:}} - Ако url не е празен, пише "Уебсайт:".
 check installation	common	bg	Проверка на инсталацията
 check now	common	bg	Провери сега
 chile	common	bg	Чили
@@ -211,7 +217,9 @@ dark mode	common	bg	Тъмен режим
 database error	common	bg	Грешка в базата данни
 database error!	common	bg	Грешка в базата данни!
 date	common	bg	Дата
+date + time	common	bg	Дата + час
 date due	common	bg	Краен срок
+date+time	common	bg	Дата+час
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	bg	Порт за Datetime.<br>Ако използвате порт 13, моля настройте правилата на firewall-а правилно преди изпращане на тази страница.<br>(Port: 13 / Host: 129.6.15.28)
 days	common	bg	дни
 december	common	bg	Декември
@@ -248,6 +256,7 @@ domain name for mail-address, eg. "%1"	common	bg	Име на домейн за e
 domestic	common	bg	Домашен
 dominica	common	bg	Доминика
 dominican republic	common	bg	Доминиканска Република
+don't ask again!	common	bg	Не питайте отново!
 done	common	bg	Готово
 download	common	bg	Изтегляне
 duration	common	bg	Продължителност
@@ -284,6 +293,7 @@ estonia	common	bg	Естония
 ethiopia	common	bg	Етиопия
 everything	common	bg	Всичко
 exact	common	bg	точно
+example {{letterprefix}} - gives a letter prefix without double spaces, if the title is empty for example	preferences	bg	Пример {{LETTERPREFIX}} - Дава буквен префикс без двойни интервали, ако заглавието е празно, например
 failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	bg	Грешка при връзка със сървъра или невалиден отговор от него. Опитайте да влезете отново. В случай на проблем се свържете с администратора.
 falkland islands (malvinas)	common	bg	Фолклендски (Малвински) острови
 faroe islands	common	bg	Фаройски острови
@@ -371,6 +381,7 @@ how many icons should be shown in the navbar (top of the page). additional icons
 how many rows to print	common	bg	Колко реда да се отпечатат
 how to show the general egroupware menu ?	common	bg	Как да се покаже общото меню на EGroupware ?
 html	common	bg	HTML
+html links to any entries linked to the current record, excluding attached files	common	bg	HTML връзки към всички записи, свързани с текущия запис, с изключение на прикачени файлове
 hungary	common	bg	Унгария
 iceland	common	bg	Исландия
 id	common	bg	Документ за самоличност / ID
@@ -393,9 +404,11 @@ insert placeholder	common	bg	Вмъкване на заместител
 insert row after	common	bg	Вмъкни ред след
 insert row before	common	bg	Вмъкни ред преди
 insert timestamp into description field	common	bg	Вмъкване на времеви печат в полето за описание
+install	common	bg	Инсталирайте
 install egroupware as mail-handler?	common	bg	Инсталиране на EGroupware като mail-handler?
 international	common	bg	Международен
 invalid 2-factor authentication code	common	bg	Невалиден код за двуфакторно удостоверяване
+invalid email	common	bg	Невалиден имейл
 invalid filename	common	bg	Грешно име на файл
 invalid ip address	common	bg	Невалиден IP адрес
 invalid or expired 'remember me' token	common	bg	Невалиден или изтекъл токен "запомни ме
@@ -591,10 +604,15 @@ password must contain at least %1 uppercase letters	common	bg	Паролата �
 password must have at least %1 characters	common	bg	Паролата трябва да съдържа поне %1символа
 path to user and group files has to be outside of the webservers document-root!!!	common	bg	Пътят до файловете на потребители и групи ТРЯБВА ДА БЪДЕ ИЗВЪН Document Root на WEB сървъра!!!
 permission denied!	common	bg	Нямате право на достъп!
+permission denied! this is an administration only feature.	common	bg	Разрешението е отказано! Това е функция само за администрацията.
 permissions to the files/users directory	common	bg	Права на файловете / потребителите на директория
 permisson denied!	common	bg	Нямате право на достъп!
 personal	common	bg	Личен
 peru	common	bg	Перу
+pg down	common	bg	Lehekülg alla
+pg up	common	bg	Lehekülg üles
+pgp encryption	common	bg	PGP krüpteerimine
+pgp encryption installation	common	bg	PGP krüpteerimise paigaldamine
 philippines	common	bg	Филипини
 phone number	common	bg	телефонен номер
 pitcairn	common	bg	Острови Питкерн
@@ -602,10 +620,13 @@ placeholders	common	bg	Заместващи символи
 play/pause	common	bg	Възпроизвеждане/пауза
 please %1 by hand	common	bg	Моля %1 ръчно
 please enter a name	common	bg	Моля въведете име!
+please remember to use '%1' as username for local login's from now on!	common	bg	Моля, не забравяйте да използвате '%1' като потребителско име за локално влизане от сега нататък!
 please run setup to become current	common	bg	Моля минете през "инсталация", за да обновите
 please select	common	bg	Моля изберете
 please set your global preferences	common	bg	Моля задайте общите си настройки!
 please set your preferences for this application	common	bg	Моля задайте настройките си за това приложение!
+please type %1 more characters	common	bg	Palun sisestage veel %1 tähemärk(id)
+please type 1 more character	common	bg	Palun sisestage veel 1 tähemärk
 please wait...	common	bg	Моля изчакайте...
 please, check back with us shortly.	common	bg	Моля, опитайте след малко.
 poland	common	bg	Полша
@@ -710,14 +731,16 @@ show menu	common	bg	Показване на меню
 show page generation time	common	bg	Показване на времето за създаване на страниците
 show page generation time on the bottom of the page?	common	bg	Да се показва ли най-отдолу времето за създаване на страниците?
 show page generation time?	common	bg	Да се показва ли времето за генериране на страниците?
+show password	common	bg	Показване на парола
 show the logo's of egroupware and x-desktop on the desktop.	common	bg	Показване на логото на EGroupware и x-desktop на desktop-а.
 show/hide	common	bg	показване/скриване на страничната лента
 showing %1	common	bg	показване на %1
 showing %1 - %2 of %3	common	bg	показване на %1 до %2 от %3
 sierra leone	common	bg	Сиера Леоне
+sign up	common	bg	Регистрирайте се
 simple	common	bg	Опростен
 singapore	common	bg	Сингапур
-site configuration	common	bg	Конфиргурация на системата
+site configuration	common	bg	Конфигурация
 size	common	bg	Размер
 slovakia	common	bg	Словакия
 slovenia	common	bg	Словения
@@ -852,6 +875,9 @@ you have successfully logged out	common	bg	Излязохте успешно
 you need to add the webserver user '%1' to the group '%2'.	common	bg	Необходимо е да добавите потребителя на WEB сървъра '%1' към групата '%2'
 you need to be an egroupware administrator to access this functionality!	common	bg	Необходимо е да сте администратор в EGroupware за достъп до тези функции!
 you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	bg	Опитахте да отворите приложение на EGroupware: %1, но нямате права за достъп до него.
+your account has been updated with new data from your identity provider.	common	bg	Teie kontot on uuendatud teie identiteedipakkuja uute andmetega.
+your browser is not up-to-date (javascript es6 compatible), you may experience some of the features not working.	common	bg	Teie brauser ei ole ajakohane (JavaScript ES6-ga ühilduv), mõned funktsioonid ei pruugi toimida.
+your key has been restored successfully.	common	bg	Teie võti on edukalt taastatud.
 your message could <b>not</b> be sent!<br>	common	bg	Писмото ви <b>не може</b> да бъде изпратено!<br>
 your message has been sent	common	bg	Писмото ви беше изпратено
 your password does not have required strength of %1 character classes and minimum length of %2 characters.	common	bg	Вашата парола няма необходимата сила от класове символи %1 и минимална дължина от %2 символа.

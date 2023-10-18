@@ -1,22 +1,35 @@
+%1 accessories now resources	resources	zh	%1 配件资源
+%1 accessories restored	resources	zh	恢复 %1 配件
+%1 resource(s) %2	resources	zh	%1 资源 %2
+%1 resource(s) %2, %3 failed	resources	zh	%1 资源 %2, %3 失败
+%1 resource(s) %2, %3 failed because of insufficent rights !!!	resources	zh	%1 资源 %2, %3 因权限不足而失败！！！...........！
+%1 resource(s) booked	resources	zh	已预订 %1 资源
+%1 resource(s) view calendar	resources	zh	%1 资源查看日历
+accessories	resources	zh	附件
 accessories of	resources	zh	附属于
 accessories:	resources	zh	附件：
+accessory of	resources	zh	附件来自
 actions	resources	zh	操作
 add accessory	resources	zh	添加附件
+add group to event participants	resources	zh	为活动参与者添加组别
 add resource	resources	zh	添加资源
 add resources	resources	zh	添加资源
 administrator	resources	zh	管理员
 all categories	resources	zh	所有分类
+allow booking requests from any user when creating events?	resources	zh	创建活动时是否允许任何用户提出预订请求？
 book	resources	zh	预订资源
 book selected resources	resources	zh	预订所选资源
 book this resource	resources	zh	预订这个资源
 bookable	resources	zh	可预约
+booking requests	resources	zh	预订请求
 buy this article	resources	zh	购买这篇文章
 buy this resource	resources	zh	购买这个资源
 buyable	resources	zh	可购买的
-categories admin	resources	zh	类别管理
+category admin	resources	zh	类别管理员
+category saved.	resources	zh	保存的类别。
 category:	resources	zh	类别：
 check all	resources	zh	选择全部
-choose categories admin	resources	zh	选择类别管理者
+choose category admin	resources	zh	选择类别管理
 clear selection	resources	zh	明确的选择
 configure access permissions	admin	zh	设置访问权限
 create new accessory for this resource	resources	zh	添加此资源附件
@@ -24,11 +37,13 @@ create new links	resources	zh	添加链接
 custom etemplate for the contactform	resources	zh	为联系人表单自定义模板
 custom fields	resources	zh	自定义字段
 days	resources	zh	日
+delete accessories of selected resources too?	resources	zh	同时删除所选资源的附件？
 delete selected resources	resources	zh	删除所选资源
 delete this entry	resources	zh	删除此条目
 deleted	resources	zh	已删除
 description (short)	resources	zh	描述 (简短)
 direct booking permissions	resources	zh	直接预订权限
+do you really want to delete this resource?	resources	zh	您真的要删除此资源吗？
 don't use vfs (this will need a symlink --> see readme)	resources	zh	不要使用虚拟文件系统(这将需要使用符号链接，-->请参阅 README 文档说明)
 edit this entry	resources	zh	编辑此条目
 existing links	resources	zh	已存在链接
@@ -41,6 +56,7 @@ how many of the resources are useable?	resources	zh	有多少资源可以使用�
 how many of them are useable?	resources	zh	他们有多少可以使用？
 how many of this resource are usable	resources	zh	该资源有多少可以使用
 how many of this resource exists	resources	zh	该资源有多少
+icon	resources	zh	图标
 implies booking permission	resources	zh	包含预定权限
 implies read permission	resources	zh	包含读取权限
 information about storage	resources	zh	有关于储存的信息
@@ -58,8 +74,11 @@ location:	resources	zh	位置：
 manage mapping	resources	zh	管理匹配
 name of resource	resources	zh	资源名称
 name:	resources	zh	名称：
+no - leave them	resources	zh	不 - 保留它们
+no - make them resources	resources	zh	否 - 使其成为资源
 no description available	resources	zh	没有可用的描述
 no resources selected	resources	zh	没有选择资源
+no, users will need to contact users with direct booking permission	resources	zh	不，用户需要联系有直接预订权限的用户
 notify your administrator to correct this situation	resources	zh	通知您的系统管理者纠正该状况
 picture	resources	zh	图片
 picture source	resources	zh	图片来源
@@ -91,17 +110,18 @@ storage information:	resources	zh	存储信息：
 the anonymous user needs add rights for it!	resources	zh	匿名用户需要为它增加权限！
 the calendar of this resource	resources	zh	这一资源的日历
 this module displays the resources app	resources	zh	这一模块显示资源应用
+un-delete accessories of selected resources too?	resources	zh	恢复所选资源的附件？
 use general resources icon	resources	zh	使用通用资源图标
 use own picture	resources	zh	使用自己的图标
 use the category's icon	resources	zh	使用这一类别的图标
 useable	resources	zh	可用
-useable:	resources	zh	可用：
-view accessories for this resource	resources	zh	查看这一资源的附件
 view this entry	resources	zh	查看此条目
 web-page of resource	resources	zh	资源网页
 web-site for this resource	resources	zh	这一资源的网站
 where to find this resource?	resources	zh	从哪里找的到这一资源？
 which category does this resource belong to?	resources	zh	这一资源属于哪个类别？
 write permissions	resources	zh	写入权限
+yes - delete accessories too	resources	zh	是 - 也删除附件
+yes - un-delete accessories too	resources	zh	是 - 还原附件
 you are not permitted to get information about this resource!	resources	zh	您没有获取有关这个资源信息的权限！
 you chose more resources than available	resources	zh	您选择的资源超过了现有可用范围！

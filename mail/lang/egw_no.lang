@@ -1,12 +1,23 @@
 (no subject)	mail	no	(uten emne)
+acl rights retrieve failed, seems there are no rights set!	mail	no	Henting av ACL-rettigheter mislyktes, ser ut til at det ikke er angitt noen rettigheter!
+add files as %1	mail	no	Legg til filer som %1
 add to addressbook	mail	no	legg til i adressebok
+adding %1 to blacklisted email addresses failed because of %2	mail	no	Legge til %1 til svartelistede e-postadresser mislyktes på grunn av %2
+adding %1 to whiltelisted email addresses failed because of %2	mail	no	Legge til %1 til e-postadresser på hvilliste mislyktes på grunn av %2
 all of	mail	no	alle av
 allways a new window	mail	no	altid et nytt vindu
 always show html emails	mail	no	Vis alltid HTML meldinger
 any of	mail	no	noen av
+attach files	mail	no	Legge ved filer
+attach users vcard at compose to every new mail	mail	no	Legg ved brukerens vCard i hver ny e-post når du skriver den
+attachment has been saved successfully.	mail	no	Vedlegg har blitt lagret.
 attachments	mail	no	Vedlegg
+attachments, ...	mail	no	vedlegg, ...
+be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	no	Vær oppmerksom på at hvis du legger til alle valgte filer i %1-modus, endres også alle eksisterende vedlegg i listen til %2-modus. \n \n Vil du fortsette?
+be aware that all attachments will be sent as %1!	mail	no	Vær oppmerksom på at alle vedlegg vil bli sendt som %1!
 by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	no	Som standard erstattes 'http://' bare med 'https://'. Konfigurer gjerne 'https://proxy.egroupware.org/' til også å laste inn bilder som bare er tilgjengelige via http.
 caching of flags	mail	no	Bufring av flagg
+changing subject failed because of %1	mail	no	Endring av emne mislyktes på grunn av %1
 changing subject failed folder %1 does not exist	mail	no	Endring av emne mislyktes mappe %1 eksisterer ikke
 check message against next rule also	mail	no	Kontroller melding mot neste regel også
 compose	mail	no	Ny melding
@@ -30,15 +41,30 @@ don't use sent	mail	no	Ikke bruk Sendt
 don't use trash	mail	no	Ikke bruk Søppelkurv
 edit account	mail	no	Rediger konto
 edit vacation settings	mail	no	Redigere ferieinnstillinger
+emailadmin: profilemanagement	mail	no	eMailAdmin: Profiladministrasjon
+emails in whitelisted domains are not marked as spam	mail	no	E-poster i hvitelistede domener blir ikke merket som spam
 empty trash	mail	no	tøm søppelkurv
-enable	mail	no	muliggjør
+enable	mail	no	Aktivere
+enabled	mail	no	Aktivert
+encrypt your message with smime certificate	mail	no	Krypter meldingen din med S/MIME-sertifikat
 event details follow	mail	no	Hendelses Detaljer Følger
 everyone	mail	no	Alle
+examine namespace to retrieve folders in others and shared	mail	no	Undersøke navnerom for å hente mapper i andre og delte mapper
 extended	mail	no	Forlenget
-file into	mail	no	fil til
+failed to delete %1	mail	no	Kunne ikke slette %1
+failed to subscribe folder %1!	mail	no	Kunne ikke abonnere på mappen %1!
+failed to unsubscribe folder %1!	mail	no	Kunne ikke avslutte abonnementet på mappen %1!
+file into	mail	no	Flytt til
+file into:	mail	no	Flytt til:
 filemanager	mail	no	Filhåndterer
+filemode has been switched to %1	mail	no	Filemode har blitt byttet til: %1
 flagged	mail	no	flagget
+flagged %1 messages as %2 in %3	mail	no	Flagget %1 melding(er) som %2 i %3
+flagged %1 messages as flagged in %2	mail	no	Flagget %1 melding(er) som flagget i %2
+flagged %1 messages as unflagged in %2	mail	no	Flagget %1-melding(er) som ikke flagget i %2
 folder	mail	no	Mappe
+folder %1 %2 failed because of %3!	mail	no	Mappen %1 %2 mislyktes på grunn av %3!
+folder %1 has been created successfully, although the subscription failed because of %2	mail	no	Mappen %1 er opprettet, selv om abonnementet mislyktes på grunn av %2.
 folder settings	mail	no	Mappeinnstillinger
 forward	mail	no	Videresend
 from	mail	no	Fra
@@ -46,20 +72,45 @@ from(a->z)	mail	no	Fra (A -> Å)
 from(z->a)	mail	no	Fra (Å -> A)
 general	admin	no	Generell
 greater than	mail	no	Større enn
+handling of external http images / mixed content in mails	mail	no	Håndtering av eksterne http-bilder / blandet innhold i e-poster
 header lines	mail	no	Hodelinjer
-html	mail	no	Html
+html	mail	no	HTML
+ident name	mail	no	Identnavn
+ident name email	mail	no	Identnavn [E-post]
+ident name organization email	mail	no	Identnavn Organisasjon [E-post]
+identity label	mail	no	Identitetsetikett
 if	mail	no	Dersom
 if mail header	mail	no	dersom meldingshodet
 if message size	mail	no	dersom meldingsstørrelse
+if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	no	Hvis du vil se en forhåndsvisning av en e-post ved å klikke på emnet, kan du aktivere dette.
+if you would like to select multiple folders in one action, you can hold ctrl key then select a folder as start range and another folder within a same level as end range, all folders in between will be selected or unselected based on their current status.	mail	no	Hvis du vil velge flere mapper i én handling, kan du holde nede ctrl-tasten og deretter velge en mappe som startområde og en annen mappe på samme nivå som sluttområde. Alle mapper i mellom blir valgt eller fravalgt basert på gjeldende status.
 imap	mail	no	IMAP
 imap server	mail	no	IMAP Tjener
+import of message %1 failed. destination folder not set.	mail	no	Import av melding %1 mislyktes. Målmappe ikke angitt.
+import of message %1 failed. no contacts to merge and send to specified.	mail	no	Import av meldingen %1 mislyktes. Ingen kontakter å slå sammen og sende til angitt.
+importance	mail	no	viktighet
+important	mail	no	Viktig
+in mailbox: %1, with id: %2, and partid: %3	mail	no	I postkasse: %1, med ID: %2 og PartID: %3.
+in order to protect your privacy all external sources within this email are blocked.	mail	no	For å beskytte personvernet ditt er alle eksterne kilder i denne e-posten blokkert.
 inbox	mail	no	Innboks
 information to show on email tag	mail	no	Informasjon som skal vises på e-posttaggen
+initialization of mail failed. please use the wizard to cope with the problem.	mail	no	Initialiseringen av e-postmodulen mislyktes. Bruk konfigurasjonsveiviseren for å korrigere konfigurasjonen.
+inline	mail	no	Videresend
+insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)	mail	no	Sett inn signaturen øverst i den nye meldingen (eller svarmeldingen) når du åpner skrivedialogen (det er ikke sikkert du kan bytte signatur).
+job	mail	no	Arbeid
+junk	mail	no	Søppelpost
+junk folder	mail	no	søppelpost mappe
 keep a copy of the message in your inbox	mail	no	behold en kopi av meldingen i din innboks
 kilobytes	mail	no	kilobytes
+later	mail	no	Senere
+learning as ham (not spam) failed because of %1	mail	no	Læring som skinke (ikke spam) mislyktes på grunn av %1
+learning as spam failed because of %1	mail	no	Læring som spam mislyktes på grunn av %1
 less than	mail	no	mindre enn
+limit mailing list results when searching for addresses	mail	no	Begrense postlisteresultater når du søker etter adresser
 list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	no	Liste over handlinger som skal slås på/aktiveres som standard (f.eks. handlingen Mail composer lagre som InfoLog).
 mail settings	mail	no	Epost innstillinger
+mails can be copied to that folder via context menu, if folder is configured.	mail	no	E-postmeldinger kan kopieres til denne mappen via kontekstmenyen hvis mappen er konfigurert.
+mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	no	Mailserver rapporterte:\n%1 \nVil du fortsette med å slette de valgte meldingene umiddelbart (klikk ok)?\nHvis ikke, kan du prøve å tømme papirkurven før du fortsetter. (klikk på Avbryt)
 mark as deleted	mail	no	Merk som slettet
 matches	mail	no	treff
 matches regexp	mail	no	treffer regexp
@@ -91,10 +142,17 @@ printing	mail	no	Utskrift
 push notifications	mail	no	Push-varsler
 quicksearch	mail	no	Hurtigsøk
 quicksearch (with cc)	mail	no	Hurtigsøk (+Kopi)
+real name	mail	no	Ekte navn
+real name email	mail	no	Ekte navn [E-post]
+real name organization email	mail	no	Ekte navn Organisasjon [E-post]
 refresh time in minutes	mail	no	Oppdateringstid i minutter
+remember the password for	mail	no	Husk passordet for
 remove all	mail	no	Fjern alle
 remove immediately	mail	no	Fjern umiddelbart
+removing %1 from blacklisted email addresses failed because of %2	mail	no	Fjerning av %1 fra svartelistede e-postadresser mislyktes på grunn av %2
+removing %1 from whiltelisted email addresses failed because of %2	mail	no	Fjerning av %1 fra svartelistede e-postadresser mislyktes på grunn av %2
 rename folder	mail	no	Gi mappen nytt navn
+replace 'http://' in image urls with (trailing / required!)	mail	no	Erstatt 'http://' i bilde-URL-er med (etterfølgende / påkrevd!)
 replied	mail	no	svart
 reply	mail	no	Svar
 reply all	mail	no	Svar alle
@@ -115,9 +173,20 @@ sort order	mail	no	Sortering
 subject(a->z)	mail	no	Emne (A->Å)
 subject(z->a)	mail	no	Emne (Å->A)
 text	mail	no	Tekst
+the imap server need to meet certain requirements and be configured for it:	mail	no	IMAP-serveren må oppfylle visse krav OG være konfigurert for dette:
+the rule with priority %1 successfully saved!	mail	no	Regelen med prioritet %1 ble lagret!
 then	mail	no	DA
+there is no space left to store sieve script, please check sieve_maxscriptsize option on your mailserver's config.	mail	no	Det er ikke plass til å lagre sieve-skriptet, sjekk alternativet sieve_maxscriptsize i konfigurasjonen av e-postserveren.
+this mail contains external images served via insecure http protocol. be aware showing or allowing them can compromise your security!	mail	no	Denne e-posten inneholder eksterne bilder som sendes via en usikker HTTP-protokoll. Vær oppmerksom på at å vise eller tillate dem kan kompromittere sikkerheten din!
+this message is smime encrypted and password protected.	mail	no	Denne meldingen er S/MIME-kryptert og passordbeskyttet.
+timeout on connections to your imap server	mail	no	Tidsavbrudd på tilkoblinger til IMAP-serveren
+to do	mail	no	Å gjøre
+toggle all folders view for %1	mail	no	Slå på visning av alle mapper for %1
+toggled on actions	mail	no	Vekslet på handlinger
+trash	mail	no	Papirkurv
 trash folder	mail	no	Søppelmappe
-unflagged	mail	no	avflagget
+trust servers seen / unseen info	mail	no	Papirkurv-mappe
+unflagged	mail	no	Avflagget
 unread	mail	no	Ulest
 vacation notice	mail	no	Ferie melding
 when deleting messages	mail	no	Når du sletter meldinger

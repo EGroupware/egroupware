@@ -1,10 +1,12 @@
 %1 (%2 new) messages writen for application '%3' and languages '%4'	common	zh	应用程序'%3'和语言'%4'的文字讯息%1(%2新)
 %1 email addresses inserted	common	zh	已插入%1个电子邮件地址
+%1 email(s) added into %2	common	zh	%1 电子邮件已添加到 %2 中
 %1 etemplates deleted	common	zh	%1 个模板已删除
 %1 etemplates for application '%2' dumped to '%3'	common	zh	%1 个模板为应用程序 '%2' 转储到 '%3'
 %1 etemplates found	common	zh	找到 %1 个模板
 %1 is not executable by the webserver !!!	common	zh	Web 服务器无法执行%1！
 %1 matches on search criteria	common	zh	有 %1 条符合搜索条件的资料
+%1 more %2 selected ...	common	zh	选择了 %1 更多 %2...
 %1 new etemplates imported for application '%2'	common	zh	导入 %1 条应用程序 '%2' 的模板
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	zh	%1选择另一个目录%2<br />或使得 Web 服务器可以写入%3
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	zh	%1EGroupware%2 是一个多用户、基于 Web 的以 %3PHP%4 为基础开发的工作组套件。
@@ -18,6 +20,7 @@
 '%1' is not a valid date !!!	common	zh	'%1'不是有效的日期！
 '%1' is not a valid floatingpoint number !!!	common	zh	'%1' 不是正确的浮点数！
 '%1' is not a valid integer !!!	common	zh	'%1' 不是正确的整数！
+'%1' is not a valid json file!	common	zh	%1 "不是有效的 JSON 文件
 00 (disable)	admin	zh	00 (禁用)
 1 day	common	zh	1 天
 1 hour	common	zh	1 小时
@@ -131,6 +134,7 @@ autohide sidebox menus	common	zh	自动隐藏侧边栏菜单
 automatically hide the sidebox menu's?	common	zh	是否自动隐藏侧栏菜单？
 automatically hide the sidebox menus?	common	zh	是否自动隐藏侧栏菜单？
 autosave default category	common	zh	自动保存为默认类别
+avatar	common	zh	头像
 azerbaijan	common	zh	阿塞拜疆
 back	common	zh	返回
 back to user login	common	zh	返回登陆界面
@@ -163,6 +167,7 @@ box	common	zh	容器 Box
 box...	common	zh	容器 Box...
 brazil	common	zh	巴西
 british indian ocean territory	common	zh	英属印度洋地区
+browser %1 %2 is not recommended. you may experience issues and not working features. please use the latest version of chrome, firefox or edge. thank you!	common	zh	不推荐使用 %1 %2 浏览器。您可能会遇到问题或无法使用功能。请使用最新版本的 Chrome、Firefox 或 Edge。谢谢！
 brunei darussalam	common	zh	文莱
 bulgaria	common	zh	保加利亚
 burkina faso	common	zh	布基纳法索
@@ -199,6 +204,7 @@ change	common	zh	更改
 changed	common	zh	已更改
 charset	common	zh	utf-8
 check all	common	zh	全选
+check for empty values in if statements.  example {{if url~empty~~website:}} - if url is not empty, writes "website:"	common	zh	检查 IF 语句中的空值。示例 {{IF url~EMPTY~~Website:}} - 如果 url 不为空，则写入 "网站："
 check if content should only be displayed but not altered (the content is not send back then!)	common	zh	检查如果内容只是被显示，但不被改变 (当时不返回内容！)
 check if field has to be filled by user	common	zh	检查字段是否已被用户填写
 check installation	common	zh	检查安装
@@ -243,8 +249,8 @@ common preferences	common	zh	通用参数选择
 comoros	common	zh	科摩罗
 company	common	zh	公司
 confirm	common	zh	确认
-confirmation message or custom javascript (returning true or false)	common	zh	确认消息或自定义javascript(返回true或false)
-confirmation necesary or custom java-script	common	zh	需要确认或自定义 javascript
+confirmation message or custom javascript (returning true or false)	common	zh	确认消息或自定义JavaScript(返回true或false)
+confirmation necesary or custom java-script	common	zh	需要确认或自定义 JavaScript
 congo	common	zh	刚果
 congo, the democratic republic of the	common	zh	刚果民主共和国
 contact	common	zh	联系人
@@ -282,7 +288,7 @@ current	common	zh	当前
 current users	common	zh	当前用户
 custom	common	zh	自定义
 custom fields	common	zh	自定义字段
-custom javascript for onchange	common	zh	为 onChange 自定义 javascript
+custom javascript for onchange	common	zh	为 onChange 自定义 JavaScript
 cut	common	zh	剪切
 cyprus	common	zh	塞浦路斯
 czech republic	common	zh	捷克斯洛伐克共和国
@@ -290,6 +296,7 @@ dark mode	common	zh	深色模式
 database error	common	zh	数据库错误
 database error!	common	zh	数据库错误！
 date	common	zh	日期
+date + time	common	zh	日期 + 时间
 date due	common	zh	到期日
 date+time	common	zh	日期+时间
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	zh	日期时间端口。<br>如果使用端口13，请在提交前设置适当的防火墙规则。<br>(端口：13/主机：129.6.15.28)
@@ -353,6 +360,7 @@ domain name for mail-address, eg. "%1"	common	zh	邮件地址的域名，例如�
 domestic	common	zh	国内
 dominica	common	zh	多米尼加
 dominican republic	common	zh	多米尼加共和国
+don't ask again!	common	zh	不再询问！
 done	common	zh	完成
 download	common	zh	下载
 drop a table - this can not be undone	common	zh	删去数据表 - 这将无法撤消
@@ -417,6 +425,7 @@ etemplate tutorial	common	zh	模板教学指南
 ethiopia	common	zh	埃塞俄比亚
 everything	common	zh	全部
 exact	common	zh	准确的
+example {{letterprefix}} - gives a letter prefix without double spaces, if the title is empty for example	preferences	zh	例 {{LETTERPREFIX}} - 如果标题为空，则给出不含双空格的字母前缀，例如
 exchange this row with the one above	common	zh	用以上行替换这一行
 exchange this two columns	common	zh	交换这两列
 export the loaded etemplate into a xml-file	common	zh	将载入的模板导出到 XML-文件
@@ -533,6 +542,7 @@ how many icons should be shown in the navbar (top of the page). additional icons
 how many rows to print	common	zh	Колко реда да се отпечатат
 how to show the general egroupware menu ?	common	zh	如何显示通用 EGroupware 菜单
 html	common	zh	HTML
+html links to any entries linked to the current record, excluding attached files	common	zh	指向与当前记录链接的任何条目的 HTML 链接，不包括附加文件
 hungary	common	zh	匈牙利
 iceland	common	zh	冰岛
 id	common	zh	编号
@@ -575,10 +585,12 @@ insert placeholder	common	zh	插入占位符
 insert row after	common	zh	在之后插入行
 insert row before	common	zh	在之前插入行
 insert timestamp into description field	common	zh	在描述栏中插入时间戳
+install	common	zh	安装
 install egroupware as mail-handler?	common	zh	安装 EGroupware 作为邮件处理程序？
 integer	common	zh	整数
 international	common	zh	国际
 invalid 2-factor authentication code	common	zh	无效的2-Factor Authentication代码
+invalid email	common	zh	无效电子邮件
 invalid filename	common	zh	文件名不正确
 invalid ip address	common	zh	IP地址无效
 invalid or expired 'remember me' token	common	zh	无效或过期的 "记住我 "令牌
@@ -824,10 +836,15 @@ paste	common	zh	贴上
 path	common	zh	路径
 path to user and group files has to be outside of the webservers document-root!!!	common	zh	用户和群组的文件路径必须在服务器根目录以外！
 permission denied!	common	zh	没有权限！
+permission denied! this is an administration only feature.	common	zh	拒绝权限！此功能仅限管理员使用。
 permissions to the files/users directory	common	zh	文件/用户目录
 permisson denied!	common	zh	没有权限！
 personal	common	zh	个人
 peru	common	zh	秘鲁
+pg down	common	zh	页面向下
+pg up	common	zh	页面向上
+pgp encryption	common	zh	PGP 加密
+pgp encryption installation	common	zh	PGP 加密安装
 philippines	common	zh	菲律宾
 phone number	common	zh	电话号码
 pitcairn	common	zh	皮特凯恩
@@ -840,6 +857,8 @@ please run setup to become current	common	zh	请运行安装程序以成为当�
 please select	common	zh	请选择
 please set your global preferences	common	zh	请设置您的全局参数！
 please set your preferences for this application	common	zh	请为该应用程序设置用户参数！
+please type %1 more characters	common	zh	请再输入 %1 个字符
+please type 1 more character	common	zh	请再输入 1 个字符
 please wait...	common	zh	请稍候...
 please, check back with us shortly.	common	zh	对不起，稍后回来与我们检查。
 pm	common	zh	下午
@@ -989,7 +1008,7 @@ sets today as date	common	zh	设置为当前日期
 setup	common	zh	安装程序
 setup main menu	common	zh	安装主菜单
 seychelles	common	zh	塞舌尔
-should the form be submitted or any custom javascript be executed	common	zh	将表单提交或是执行任何自定义 javascript
+should the form be submitted or any custom javascript be executed	common	zh	将表单提交或是执行任何自定义 JavaScript
 show	common	zh	显示
 show (no save)	common	zh	显示 (不保存)
 show all	common	zh	全部显示
@@ -1003,6 +1022,7 @@ show menu	common	zh	显示菜单
 show page generation time	common	zh	显示页面的生成耗时
 show page generation time on the bottom of the page?	common	zh	是否在页面底部显示该页面生成所耗时间？
 show page generation time?	common	zh	显示页面的生成耗时？
+show password	common	zh	显示密码
 show the logo's of egroupware and x-desktop on the desktop.	common	zh	在桌面显示 EGroupware 和 x-desktop 的 logo。
 show values	common	zh	显示数值
 show_more_apps	common	zh	show_more_apps
@@ -1012,9 +1032,10 @@ showing %1 - %2 of %3	common	zh	显示%3的%1 - %2
 shows / allows you to enter values into the etemplate for testing	common	zh	显示/允许您输入用于测试的数值到模板中
 shows/displays etemplate for testing, does not save it before	common	zh	为测试显示/展示模板，在之前不保存
 sierra leone	common	zh	塞拉利昂
+sign up	common	zh	注册
 simple	common	zh	精简
 singapore	common	zh	新加坡
-site configuration	common	zh	站点配置
+site configuration	common	zh	应用程序配置
 size	common	zh	大小
 slovakia	common	zh	斯洛伐克
 slovenia	common	zh	斯洛文尼亚
@@ -1202,6 +1223,9 @@ you have successfully logged out	common	zh	注销成功
 you need to add the webserver user '%1' to the group '%2'.	common	zh	您必须将Web服务器的用户'%1'添加到用户组'%2'。
 you need to be an egroupware administrator to access this functionality!	common	zh	您必须具备EGroupware管理员身份才能访问此功能！
 you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	zh	你试图打开EGroupware应用程序：%1，但您没有访问该应用程序的权限。
+your account has been updated with new data from your identity provider.	common	zh	您的账户已使用身份供应商提供的新数据进行了更新。
+your browser is not up-to-date (javascript es6 compatible), you may experience some of the features not working.	common	zh	您的浏览器不是最新版本（与 JavaScript ES6 兼容），您可能会遇到某些功能无法使用的情况。
+your key has been restored successfully.	common	zh	您的密钥已成功恢复。
 your message could <b>not</b> be sent!<br>	common	zh	您的邮件<b>无法</b>发送！<br>
 your message has been sent	common	zh	您的邮件已发送
 your password does not have required strength of %1 character classes and minimum length of %2 characters.	common	zh	您的密码没有达到要求的强度%1和最小长度%2的字符数。

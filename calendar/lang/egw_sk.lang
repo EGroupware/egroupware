@@ -101,6 +101,7 @@ category %1 removed because of missing rights	calendar	sk	Kategória %1 odstrán
 category acl	common	sk	ACL pre kategórie
 category acl only restrict adding a category to an event or changing status of a participant. it does not change the visibility of an event!	calendar	sk	ACL pre kategórie obmedzujú len pridávanie kategórie k udalosti alebo zmene stavu účastníka. NEovplyvňujú viditeľnosť udalosti!
 category automatically added to new events	calendar	sk	Kategória ktorá sa automaticky pridáva k novým udalostiam
+category report	calendar	sk	Kategória Správa
 chair	calendar	sk	Predseda
 change history	calendar	sk	Zmeniť históriu
 change your status	calendar	sk	Zmeniť váš status
@@ -139,6 +140,7 @@ daily tables	calendar	sk	Denné tabuľky
 data exchange settings	calendar	sk	Nastavenia pre výmenu údajov
 date for the day of the week	calendar	sk	Dátum pre deň v týždni
 date for the day of the week, available for the first entry inside each day of week or daily table inside the selected range.	calendar	sk	Dátum pre deň-v-týždni, dostupný pre prvú položku v rámci každého dňa v týždni alebo dennej tabuľky v rámci vybraného rozsahu.
+date range	calendar	sk	Rozsah dátumu
 day	calendar	sk	deň
 day of week tables	calendar	sk	Tabuľky deň-v-týždni
 days	calendar	sk	dní
@@ -236,6 +238,7 @@ example {{nenvlf role}} - if field role is not empty, set a lf without any value
 exception	calendar	sk	Výnimka
 exception created - you can now edit or delete it	calendar	sk	Výnimka bola vytvorená -teraz ju môžete upraviť alebo zmazať
 exceptions	calendar	sk	Výnimky
+exclude weekend	calendar	sk	Vylúčiť víkend
 execute a further action for this entry	calendar	sk	Vykonať ďalšiu akciu pre tento záznam
 existing links	calendar	sk	Existujúce odkazy
 exists	calendar	sk	Existuje
@@ -364,6 +367,7 @@ meeting request	calendar	sk	Požiadavka na stretnutie
 meetingrequest to all participants	calendar	sk	Požiadavka na stretnutie všetkým účastníkom
 merge document...	calendar	sk	Zlúčiť dokument...
 midnight	calendar	sk	Polnoc
+min days	calendar	sk	Min. dní
 minimum number of users for showing day view as consolidated.	calendar	sk	Minimálny počet používaľov, kedy sa denný kalendár zobrazí vcelku.
 minimum number of users for showing week view as consolidated.	calendar	sk	Minimálny počet používaľov, kedy sa týždenný kalendár zobrazí vcelku.
 minutes	calendar	sk	minút
@@ -438,6 +442,7 @@ only used for first viewing of calendar, afterwards last selected view is used.	
 open todo's:	calendar	sk	Otvorené Úlohy:
 optional	calendar	sk	Voliteľné
 organizer	calendar	sk	Organizátor
+output unit	calendar	sk	Výstupná jednotka
 overlap holiday	calendar	sk	prekryť sviatky
 owner too	calendar	sk	Vrátane vlastníka
 participant names by type	calendar	sk	Mená účastníkov podľa typu
@@ -489,6 +494,7 @@ repetitiondetails (or empty)	calendar	sk	Detaily o opakovaní (alebo nič)
 replacements for inserting events into documents	calendar	sk	Náhrady pre vkladanie položiek do dokumentov
 reply to meeting request	calendar	sk	Odpoveď na požiadavku na stretnutie
 replying "%1" is not a participant of the event! only continue if you want to add as new participant.	calendar	sk	Odpovedajúci "%1" NIE je účastník udalosti! Pokračujte iba v prípade, že ho chcete pridať ako nového účastníka.
+report	calendar	sk	Správa
 requested	calendar	sk	Požiadané
 requested date %1 outside allowed range of %2 days: recurring events obmitted!	calendar	sk	Požadovaný dátum %1 je mimo povoleného intervalu %2 dní: opakujúce sa udalosti sú vynechané!
 requested meeting is in the past!	calendar	sk	Požiadavka na stretnutie ide do minulosti!
@@ -559,6 +565,7 @@ show this week	calendar	sk	Ukáž tento týždeň
 show year and age	calendar	sk	Ukázať rok a vek
 single event	calendar	sk	Samostatná udalosť
 single participant	calendar	sk	Jediný účastník
+sort by	calendar	sk	Triediť podľa
 specify where url of the day links to	calendar	sk	Vyberte, kam odkazuje URL daného dňa
 start	calendar	sk	Začiatok
 start date/time	calendar	sk	Dátum/čas začiatku

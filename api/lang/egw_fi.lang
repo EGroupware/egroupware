@@ -1,5 +1,6 @@
 %1 (%2 new) messages writen for application '%3' and languages '%4'	common	fi	%1(%2 uudet) viestit kirjoitetaan sovelluksella %3 ja kielillä %4
 %1 email addresses inserted	common	fi	%1 sähköpostiosoitetta lisätty.
+%1 email(s) added into %2	common	fi	%1 sähköposti(t) lisätty %2:een
 %1 entries found, select one ...	common	fi	%1 tapahtuma(a) löydetty, valitse yksi...
 %1 etemplates deleted	common	fi	%1 eMallipohja(a) poistettu
 %1 etemplates for application '%2' dumped to '%3'	common	fi	%1 sovelluksen %2  eMallipohja(a) viety %3
@@ -7,6 +8,7 @@
 %1 file	common	fi	%1 tiedosto(a)
 %1 is not executable by the webserver !!!	common	fi	%1 ei ole web-palvelimen suoritettavissa!
 %1 matches on search criteria	common	fi	Hakuehdolla löytyi %1 kpl
+%1 more %2 selected ...	common	fi	%1 lisää %2 valittu...
 %1 more...	common	fi	%1 lisää...
 %1 new etemplates imported for application '%2'	common	fi	%1 sovelluksen %2 uutta eMallipohjaa tuotu
 %1 not implemented for %2!	common	fi	%1 ei ole implementoitu '%2':een
@@ -147,6 +149,7 @@ autohide sidebox menus	common	fi	Piilota sivupalkin valikot automaattisesti
 automatically hide the sidebox menu's?	common	fi	Piilotetaanko sivupalkin valikot automaattisesti?
 automatically hide the sidebox menus?	common	fi	Piilotetaanko sivupalkin valikot automaattisesti?
 autosave default category	common	fi	Tallenna oletuskategoria automaattisesti
+avatar	common	fi	Avatar
 azerbaijan	common	fi	AZERBAIJAN
 back	common	fi	Takaisin
 back to user login	common	fi	Kirjaudu sisään
@@ -180,6 +183,7 @@ box...	common	fi	Valintalaatikko...
 brazil	common	fi	BRASILIA
 british indian ocean territory	common	fi	BRITTILÄISEN INTIAN VALTAMEREN ALUE
 broken link	common	fi	Virheellinen linkki
+browser %1 %2 is not recommended. you may experience issues and not working features. please use the latest version of chrome, firefox or edge. thank you!	common	fi	Selainta %1 %2 ei suositella. Saatat kokea ongelmia ja ei toimivia ominaisuuksia. Käytä uusinta Chrome-, Firefox- tai Edge-versiota. Kiitos!
 brunei darussalam	common	fi	BRUNEI DARUSSALAM
 bulgaria	common	fi	BULGARIA
 bulgarian	common	fi	Bulgarian
@@ -222,6 +226,7 @@ change owner	common	fi	Vaihda omistaja
 changed	common	fi	Muokattu
 charset	common	fi	utf-8
 check all	common	fi	Tarkista kaikki
+check for empty values in if statements.  example {{if url~empty~~website:}} - if url is not empty, writes "website:"	common	fi	Tarkista tyhjät arvot IF-lausekkeissa. Esimerkki {{IF url~EMPTY~~Website:}}} - Jos url ei ole tyhjä, kirjoittaa "Verkkosivusto:".
 check if content should only be displayed but not altered (the content is not send back then!)	common	fi	Onko sisältö vain nähtävillä mutta ei vaihdettavissa
 check if field has to be filled by user	common	fi	Valitse, jos kenttä on pakollinen
 check installation	common	fi	Tarkista asennus
@@ -268,7 +273,7 @@ common preferences	common	fi	Yleiset asetukset
 comoros	common	fi	KOMORIT
 company	common	fi	Yritys
 confirm	common	fi	Vahvista
-confirmation message or custom javascript (returning true or false)	common	fi	Vahvistusviesti tai oma javaskripti, palauttaa true=totta tai false=väärin
+confirmation message or custom javascript (returning true or false)	common	fi	Vahvistusviesti tai oma JavaScript, palauttaa true=totta tai false=väärin
 confirmation necesary or custom java-script	common	fi	Vahvistus vaaditaan tai oma javaskripti
 congo	common	fi	KONGO
 congo, the democratic republic of the	common	fi	KONGON DEMOKRAATTINEN KANSANTASAVALTA
@@ -309,7 +314,7 @@ current	common	fi	Nykyinen
 current users	common	fi	Nykyiset käyttäjät
 custom	common	fi	Valinnan mukaan
 custom fields	common	fi	Lisäkentät
-custom javascript for onchange	common	fi	Oma javascripti kohtaan onChange
+custom javascript for onchange	common	fi	Oma JavaScript kohtaan onChange
 cut	common	fi	Leikkaa
 cyprus	common	fi	KYPROS
 czech republic	common	fi	TSEKKI
@@ -317,6 +322,7 @@ dark mode	common	fi	Tumma tila
 database error	common	fi	Virhe tietokannassa
 database error!	common	fi	Virhe tietokannassa!
 date	common	fi	Päiväys
+date + time	common	fi	Päivämäärä ja aika
 date due	common	fi	Eräpäivä
 date+time	common	fi	Päivämäärä ja aika
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	fi	Date time-portti.<br>Jos käytät porttia 13, määrittele palomuuriasetukset oikein, ennen kuin lähetät tämän lomakkeen tiedot.<br>(Port: 13 / Host: 129.6.15.28)
@@ -384,6 +390,7 @@ domain name for mail-address, eg. "%1"	common	fi	Sähköpostiosoitteen domain, e
 domestic	common	fi	Kotimainen
 dominica	common	fi	DOMINICA
 dominican republic	common	fi	DOMINIKAANINEN TASAVALTA
+don't ask again!	common	fi	Älä kysy uudelleen!
 done	common	fi	Valmis
 dos international	common	fi	Dos International
 download	common	fi	Lataa
@@ -459,6 +466,7 @@ ethiopia	common	fi	ETIOPIA
 everything	common	fi	Kaikki
 exact	common	fi	Täsmällinen
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	preferences	fi	Esimerkki {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} --> etsii "n_prefix" kentästä  'Mr', jos olemassa kirjoita Hello Mr., muutoin kirjoita Hello Ms.
+example {{letterprefix}} - gives a letter prefix without double spaces, if the title is emty for  example	common	fi	Esimerkki {{LETTERPREFIX}} - Antaa kirjain etuliitteen ilman kaksoisvälilyöntejä, jos otsikko on tyhjä esim.
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	preferences	fi	Esimerkki {{NELF role}} ---> jos kenttä 'role' = 'rooli/asema' ei ole tyhjä, se kirjoitetaan seuraavalle riville
 example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	preferences	fi	Esimerkki {{nenvlf role}} ---> jos kenttä 'role' = 'rooli/asema' ei ole tyhjä, aseta LF ilman arvoa
 exchange this row with the one above	common	fi	Vaihda tämä rivi yläpuolella olevan kanssa
@@ -582,6 +590,7 @@ how many icons should be shown in the navbar (top of the page). additional icons
 how many rows to print	common	fi	Kuinka monta riviä tulostetaan
 how to show the general egroupware menu ?	common	fi	Kuinka päävalikko näytetään?
 html	common	fi	HTML
+html links to any entries linked to the current record, excluding attached files	common	fi	HTML-linkit kaikkiin nykyiseen tietueeseen linkitettyihin merkintöihin, lukuun ottamatta liitetiedostoja.
 hungary	common	fi	UNKARI
 iceland	common	fi	ISLANTI
 id	common	fi	Tunniste
@@ -626,10 +635,12 @@ insert placeholder	common	fi	Aseta paikanvaraaja
 insert row after	common	fi	Lisää rivi jälkeen
 insert row before	common	fi	Lisää rivi eteen
 insert timestamp into description field	common	fi	Lisää aikaleima kuvauskenttään
+install	common	fi	Asenna
 install egroupware as mail-handler?	common	fi	Asennetaanko EGroupware sähköpostin käsittelijäksi?
 integer	common	fi	Kokonaisluku
 international	common	fi	Kansainvälinen
 invalid 2-factor authentication code	common	fi	Virheellinen 2-tekijätodennuskoodi
+invalid email	common	fi	Virheellinen sähköpostiosoite
 invalid filename	common	fi	Virheellinen tiedostonnimi.
 invalid ip address	common	fi	Virheellinen IP-osoite.
 invalid or expired 'remember me' token	common	fi	Virheellinen tai vanhentunut "Muista minut" -merkki.
@@ -886,12 +897,15 @@ paste	common	fi	Liitä
 path	common	fi	Polku
 path to user and group files has to be outside of the webservers document-root!!!	common	fi	Käyttäjä- ja ryhmätiedostojen TÄYTYY OLLA web palvelimen juurihakemiston ulkopuolella!!!
 permission denied!	common	fi	Käyttöoikeus estetty!
+permission denied! this is an administration only feature.	common	fi	Lupa evätty! Tämä on vain järjestelmänvalvojille tarkoitettu ominaisuus.
 permissions to the files/users directory	common	fi	Tiedostojen/käyttäjien hakemiston käyttöoikeudet
 permisson denied!	common	fi	Käyttöoikeus estetty!
 personal	common	fi	Henkilökohtainen
 peru	common	fi	PERU
 pg down	common	fi	Sivu alas
 pg up	common	fi	Sivu ylös
+pgp encryption	common	fi	PGP-salaus
+pgp encryption installation	common	fi	PGP-salauksen asennus
 philippines	common	fi	FILIPPIINIT
 phone number	common	fi	Puhelin
 pitcairn	common	fi	PITCAIRN
@@ -900,10 +914,14 @@ play/pause	common	fi	Toista/tauko
 please %1 by hand	common	fi	Suorita manuaalisesti: %1
 please enter a name	common	fi	Anna nimi!
 please enter table-name first !!!	common	fi	Kirjoita ensin taulukon nimi !!!
+please reload the egroupware desktop (f5 / cmd+r).	common	fi	Lataa EGroupware-työpöytä uudelleen (F5 / Cmd+r).
+please remember to use '%1' as username for local login's from now on!	common	fi	Muista käyttää '%1' käyttäjätunnusta paikallisissa kirjautumisissa tästä lähtien!
 please run setup to become current	common	fi	Päivitä asennus
 please select	common	fi	Valitse
 please set your global preferences	common	fi	Määrittele yleiset asetukset!
 please set your preferences for this application	common	fi	Määrittele tämän sovelluksen asetukset!
+please type %1 more characters	common	fi	Kirjoita %1 lisää merkkiä (merkkejä)
+please type 1 more character	common	fi	Kirjoita 1 lisämerkki
 please wait...	common	fi	Odota hetki...
 please, check back with us shortly.	common	fi	Yritä hetken kuluttua uudestaan!
 pm	common	fi	pm
@@ -1082,6 +1100,7 @@ show menu	common	fi	Näytä valikko
 show page generation time	common	fi	Näytä sivun tekemiseen kulunut aika
 show page generation time on the bottom of the page?	common	fi	Näytä sivun tekemiseen kulunut aika sivun alareunassa.
 show page generation time?	common	fi	Näytä sivun tekemiseen kulunut aika
+show password	common	fi	Näytä salasana
 show the logo's of egroupware and x-desktop on the desktop.	common	fi	Näytä EGroupwaren ja x-desktopin logot työpöydällä
 show values	common	fi	Näytä arvot
 show/hide	common	fi	näytä/piilota sivupalkki
@@ -1092,9 +1111,10 @@ showing %1 - %2 of %3	common	fi	Näytetään %1 - %2 / %3
 shows / allows you to enter values into the etemplate for testing	common	fi	Näyttää / sallii arvojen syötön eMallipohjaan testitarkoituksessa.
 shows/displays etemplate for testing, does not save it before	common	fi	Näyttää eMallipohjan testitarkoituksessa, EI tallenna mallipohjaa.
 sierra leone	common	fi	SIERRA LEONE
+sign up	common	fi	Rekisteröidy
 simple	common	fi	Yksinkertainen
 singapore	common	fi	SINGAPORE
-site configuration	common	fi	Konfigurointi
+site configuration	common	fi	App konfigurointi
 size	common	fi	Koko
 slovakia	common	fi	SLOVAKIA
 slovenia	common	fi	SLOVENIA
@@ -1296,7 +1316,10 @@ you need to select a file first!	common	fi	Valitse tiedosto!
 you need to select some entries first!	common	fi	Valitse merkinnät!
 you need to set enable logging to "%1" to create/update a log.	groupdav	fi	Salli loki "%1" lokimerkinnöille.
 you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	fi	Sinulla ei ole käyttöoikeutta sovellukseen %1!
+your account has been updated with new data from your identity provider.	common	fi	Tilisi on päivitetty uusilla tiedoilla identiteetin tarjoajalta.
+your browser is not up-to-date (javascript es6 compatible), you may experience some of the features not working.	common	fi	Selaimesi ei ole ajan tasalla (JavaScript ES6 -yhteensopiva), joten jotkin ominaisuudet eivät ehkä toimi.
 your code is incorrect !!!	common	fi	Virheellinen koodi!
+your key has been restored successfully.	common	fi	Avaimesi on palautettu onnistuneesti.
 your message could <b>not</b> be sent!<br>	common	fi	Viestiä <b>ei</b> voitu lähettää!<br>
 your message has been sent	common	fi	Viesti on lähetetty
 your password does not have required strength of %1 character classes and minimum length of %2 characters.	common	fi	Salasanallasi ei ole vaadittua %1 merkkiluokan vahvuutta ja %2 merkin vähimmäispituutta.

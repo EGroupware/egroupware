@@ -1,34 +1,49 @@
-accessories of	resources	pt	acessórios de
+%1 accessories now resources	resources	pt	%1 acessórios agora recursos
+%1 accessories restored	resources	pt	%1 acessórios restaurados
+%1 resource(s) %2	resources	pt	%1 recurso(s) %2
+%1 resource(s) %2, %3 failed	resources	pt	%1 recurso(s) %2, %3 falhou(s)
+%1 resource(s) %2, %3 failed because of insufficent rights !!!	resources	pt	%1 recurso(s) %2, %3 falhou(s) devido a direitos insuficientes !!!
+%1 resource(s) booked	resources	pt	%1 recurso(s) reservado(s)
+%1 resource(s) view calendar	resources	pt	%1 recurso(s) ver calendário
+accessories	resources	pt	Acessórios
+accessories of	resources	pt	Acessórios de
 accessories:	resources	pt	Acessórios:
+accessory of	resources	pt	Acessório de
 actions	resources	pt	Acções
 add accessory	resources	pt	Adicionar acessório
+add group to event participants	resources	pt	Adicionar grupo aos participantes do evento
 add resource	resources	pt	Adicionar recurso
 add resources	resources	pt	Adicionar recursos
 administrator	resources	pt	Administrador
 all categories	resources	pt	Todas as categorias
+allow booking requests from any user when creating events?	resources	pt	Permitir pedidos de reserva de qualquer utilizador ao criar eventos?
 book	resources	pt	Agendar
 book selected resources	resources	pt	Agendar recursos seleccionados
 book this resource	resources	pt	Agendar este recurso
 bookable	resources	pt	Agendável
+booking requests	resources	pt	Pedidos de reserva
 buy this article	resources	pt	Comprar este artigo
 buy this resource	resources	pt	Comprar este recurso
 buyable	resources	pt	À venda
-categories admin	resources	pt	Categorias de administração
+category admin	resources	pt	Administrador da categoria
+category saved.	resources	pt	Categoria guardada.
 category:	resources	pt	Categoria
 check all	resources	pt	Marcar todas
-choose categories admin	resources	pt	escolher categorias de administração
+choose category admin	resources	pt	Selecionar o administrador da categoria
 clear selection	resources	pt	Limpar selecção
 configure access permissions	admin	pt	Configurar permissões de acesso
 create new accessory for this resource	resources	pt	Criar novo acessório para este recurso
 create new links	resources	pt	Criar novas ligações
 custom fields	resources	pt	Personalizar campos
 days	resources	pt	Dias
+delete accessories of selected resources too?	resources	pt	Eliminar também os acessórios dos recursos seleccionados?
 delete selected resources	resources	pt	Eliminar recursos seleccionados
 delete this entry	resources	pt	Eliminar este registo
 deleted	resources	pt	eliminado/a
 description (short)	resources	pt	Descrição (breve)
 direct booking permissions	resources	pt	Permissões de agendamento directo
-don't use vfs (this will need a symlink --> see readme)	resources	pt	Não utilize vfs (necessitará de um symlink --> ver README)
+do you really want to delete this resource?	resources	pt	Pretende mesmo eliminar este recurso?
+don't use vfs (this will need a symlink --> see readme)	resources	pt	Não utilize VFS (necessitará de um symlink --> ver README)
 edit this entry	resources	pt	Editar este registo
 existing links	resources	pt	Ligações existentes
 exists	resources	pt	Existe
@@ -44,8 +59,9 @@ how many of the resources are useable?	resources	pt	Quantos recursos estão func
 how many of them are useable?	resources	pt	Quantos deles estão funcionais?
 how many of this resource are usable	resources	pt	Quantos deste recurso estão funcionais
 how many of this resource exists	resources	pt	Quantos deste recurso existem
-implies booking permission	resources	pt	implica permissão de agendamento
-implies read permission	resources	pt	implica permissão de leitura
+icon	resources	pt	Ícone
+implies booking permission	resources	pt	Implica permissão de agendamento
+implies read permission	resources	pt	Implica permissão de leitura
 information about storage	resources	pt	Informações sobre armazenamento
 informations about the location of resource	resources	pt	Informações sobre a localização do recurso
 insert	resources	pt	Inserir
@@ -62,8 +78,11 @@ location:	resources	pt	Local:
 manage mapping	resources	pt	Gerenciar mapeamento
 name of resource	resources	pt	Nome do recurso
 name:	resources	pt	Nome:
-no description available	resources	pt	sem descrição disponível
+no - leave them	resources	pt	Não - Deixá-los
+no - make them resources	resources	pt	Não - Torná-los recursos
+no description available	resources	pt	Sem descrição disponível
 no resources selected	resources	pt	Nenhum recurso seleccionado
+no, users will need to contact users with direct booking permission	resources	pt	Não, os utilizadores terão de contactar os utilizadores com permissão de marcação direta
 notify your administrator to correct this situation	resources	pt	Notifique o administrador para que esta situação seja corrigida
 picture	resources	pt	Imagem
 picture source	resources	pt	Fonte da imagem
@@ -76,7 +95,9 @@ quantity of resource	resources	pt	Quantidade do recurso
 quantity:	resources	pt	Quantidade:
 read calendar permissions	resources	pt	Ler permissões de calendário
 read permissions	resources	pt	Ler permissões
+registration confirmed %1	resources	pt	Registo confirmado %1
 related links	resources	pt	Ligações relacionadas
+remove accessories before changing accessory of	resources	pt	Remover acessórios antes de alterar Acessório de
 resources	common	pt	Recursos
 resources list	resources	pt	Lista de recursos
 responsible:	resources	pt	Responsável:
@@ -94,18 +115,20 @@ storage information	resources	pt	Informações sobre armazenamento
 storage information:	resources	pt	Informações sobre armazenamento:
 the calendar of this resource	resources	pt	O calendário deste recurso
 this module displays the resources app	resources	pt	Este módulo apresenta as aplicações de recursos
+un-delete accessories of selected resources too?	resources	pt	Restaurar os acessórios dos recursos seleccionados?
+unable to link to %1 "%2"	resources	pt	Não é possível estabelecer uma ligação a %1 "%2"
 use general resources icon	resources	pt	Utilizar ícone de recursos gerais
 use own picture	resources	pt	Utilizar imagem própria
 use the category's icon	resources	pt	Utilizar o ícone da categoria
 useable	resources	pt	Usabilidade
-useable:	resources	pt	Usabilidade:
-view accessories for this resource	resources	pt	Ver acessórios para este recurso
 view this entry	resources	pt	Ver este registo
 web-page of resource	resources	pt	Recurso de página Web
 web-site for this resource	resources	pt	Página Web para este recurso
 where to find this resource?	resources	pt	Onde encontrar este recurso?
 which category does this resource belong to?	resources	pt	A que categoria pertence este recurso?
 write permissions	resources	pt	Permissões de escrita
+yes - delete accessories too	resources	pt	Sim - Eliminar também os acessórios
+yes - un-delete accessories too	resources	pt	Sim - Restaurar também os acessórios
 yes, only admins can purge deleted items	admin	pt	Sim, só os administradores podem remover os itens excluídos
 you are not permitted to get information about this resource!	resources	pt	Não tem permissões para aceder a informações sobre este recurso!
 you chose more resources than available	resources	pt	Escolheu mais recursos do que os disponíveis

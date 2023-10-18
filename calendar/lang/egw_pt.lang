@@ -1,7 +1,9 @@
 %1 %2 in %3	calendar	pt	%1 %2 em %3
+%1 events in ical file, only first one imported and displayed!	calendar	pt	%1 eventos no ficheiro iCal, apenas o primeiro foi importado e apresentado!
 %1 hours	calendar	pt	%1 horas
 %1 records imported	calendar	pt	%1 registos importados
 %1 records read (not yet imported, you may go back and uncheck test import)	calendar	pt	%1 registos lidos (ainda por importar: pode voltar atrás e desmarcar a opção Importação de Teste)
+(%1 events in %2 seconds)	calendar	pt	(%1 eventos em %2 segundos)
 a non blocking event will not conflict with other events	calendar	pt	Um evento não conflituoso não afectará com outros eventos
 accept	calendar	pt	aceitar
 accept or reject an invitation	calendar	pt	Aceitar ou rejeitar um convite
@@ -11,6 +13,7 @@ action that caused the notify: added, canceled, accepted, rejected, ...	calendar
 actions	calendar	pt	Acções
 actions...	calendar	pt	Ações ...
 add alarm	calendar	pt	Adicionar aviso
+add new event	calendar	pt	Adicionar novo compromisso
 add timesheet entry	calendar	pt	Adicionar registo da folha de tempo
 added	calendar	pt	Adicionado
 after current date	calendar	pt	Após data actual
@@ -27,6 +30,7 @@ all participants	calendar	pt	Todos os participantes
 allows to edit the event again	calendar	pt	Permite editar o evento
 always	calendar	pt	Sempre
 apply the changes	calendar	pt	Aplicar alterações
+attention	calendar	pt	Atenção
 back half a month	calendar	pt	Recuar meio mês
 back one month	calendar	pt	Recuar um mês
 before current date	calendar	pt	Antes da data actual
@@ -42,7 +46,9 @@ calendar settings	admin	pt	Configurações do calendário
 calendar-fieldname	calendar	pt	calendário-Nome do campo
 can't add alarms in the past !!!	calendar	pt	Não é possível adicionar avisos no passado !!!
 canceled	calendar	pt	Cancelado
+category report	calendar	pt	Relatório de categoria
 change history	calendar	pt	Mudar a história
+changed event-data applied	calendar	pt	Dados de eventos alterados aplicados
 charset of file	calendar	pt	Charset do ficheiro
 check all	calendar	pt	Marcar todas
 choose a category	calendar	pt	Escolher uma categoria
@@ -62,6 +68,7 @@ custom	calendar	pt	Personalizar
 custom fields	common	pt	Personalizar campos
 daily	calendar	pt	Diário/a
 data exchange settings	calendar	pt	Configurações de troca de dados
+date range	calendar	pt	Intervalo de datas
 day	calendar	pt	Dia
 days	calendar	pt	Dias
 days of the week for a weekly repeated event	calendar	pt	Dias da semana para um evento repetido semanalmente
@@ -113,6 +120,7 @@ event saved	calendar	pt	Evento guardado
 event will occupy the whole day	calendar	pt	Evento de dia inteiro
 exception	calendar	pt	Excepção
 exceptions	calendar	pt	Excepções
+exclude weekend	calendar	pt	Excluir fim de semana
 execute a further action for this entry	calendar	pt	Executar uma ação adicional para esta entrada
 existing links	calendar	pt	Ligações existentes
 exists	calendar	pt	Existe
@@ -195,6 +203,7 @@ mail all participants	calendar	pt	Enviar mensagens a todos os participantes
 make freebusy information available to not logged in persons?	calendar	pt	Deseja tornar acessível a informação sobre a disponibilidade a pessoas não ligadas?
 manage mapping	calendar	pt	Gerenciar mapeamento
 maximum available quantity of %1 exceeded!	calendar	pt	Quantidade máxima disponível de %1 excedida!
+min days	calendar	pt	Dias mínimos
 minimum number of users for showing day view as consolidated.	calendar	pt	Número mínimo de utilizadores para mostrar a vista do dia como consolidada.
 minimum number of users for showing week view as consolidated.	calendar	pt	Número mínimo de utilizadores para mostrar a vista semanal como consolidada.
 minutes	calendar	pt	Minutos
@@ -241,6 +250,7 @@ one week	calendar	pt	uma semana
 one year	calendar	pt	um ano
 only the initial date of that recurring event is checked!	calendar	pt	Apenas será verificada a data de início de um evento recorrente!
 open todo's:	calendar	pt	Abrir lista de tarefas
+output unit	calendar	pt	Unidade de saída
 overlap holiday	calendar	pt	saltar feriado
 participants	calendar	pt	Participantes
 participants uninvited from an event	calendar	pt	Participantes desconvidados de um evento
@@ -260,6 +270,7 @@ quantity	calendar	pt	Quantidade
 re-edit event	calendar	pt	Re-Editar evento
 receive email updates	calendar	pt	Receber actualizações de mensagens
 receive summary of appointments	calendar	pt	Receber resumos de compromissos
+recordings	calendar	pt	Registos
 recurrence	calendar	pt	Recorrência
 recurring event	calendar	pt	Evento recorrente
 rejected	calendar	pt	Rejeitado
@@ -270,6 +281,7 @@ repeating event information	calendar	pt	Repetir informação do evento
 repeating interval, eg. 2 to repeat every second week	calendar	pt	repetir intervalo, ex: 2 para repetir em todas as segundas semanas
 repetition	calendar	pt	Repetição
 repetitiondetails (or empty)	calendar	pt	Detalhes de repetição (ou vazio)
+report	calendar	pt	Relatório
 reset	calendar	pt	Limpar
 resources	calendar	pt	Fontes
 role	calendar	pt	Papel
@@ -292,6 +304,7 @@ show list of upcoming events	calendar	pt	Exibir lista de próximos eventos
 show this month	calendar	pt	Exibir este mês
 show this week	calendar	pt	Exibir esta semana
 single event	calendar	pt	evento único
+sort by	calendar	pt	Ordenar por
 start	calendar	pt	Início
 start date/time	calendar	pt	Data/hora de início
 startdate	calendar	pt	Data de início
@@ -323,14 +336,15 @@ til	calendar	pt	até
 timeframe	calendar	pt	Prazo
 timeframe to search	calendar	pt	Prazo para pesquisar
 title of the event	calendar	pt	Título do evento
-to many might exceed your execution-time-limit	calendar	pt	em demasia pode exceder o seu tempo limite de execução
+to many might exceed your execution-time-limit	calendar	pt	Em demasia pode exceder o seu tempo limite de execução
 translation	calendar	pt	Tradução
 tue	calendar	pt	Ter
-two weeks	calendar	pt	duas semanas
+two weeks	calendar	pt	Duas semanas
 uninvited	calendar	pt	Desconvidado
 updated	calendar	pt	Actualizado
 use end date	calendar	pt	Utilizar data de conclusão
-use the selected time and close the popup	calendar	pt	utilizar a hora seleccionada e fechar a janela
+use the selected time and close the popup	calendar	pt	Utilizar a hora seleccionada e fechar a janela
+utilities	calendar	pt	Utilitários
 view this event	calendar	pt	Visualizar este evento
 views with fixed time intervals	calendar	pt	Visualizar com intervalos de tempo fixos
 wed	calendar	pt	Qua

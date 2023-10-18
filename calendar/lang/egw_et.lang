@@ -3,6 +3,7 @@ accepted	calendar	et	Kinnitatud
 actions	calendar	et	Tegevused
 actions...	calendar	et	Tegevused...
 add alarm	calendar	et	Lisa alarm
+add new event	calendar	et	Lisa uus kohtumine
 add timesheet entry	calendar	et	Lisa Timesheet kirje
 added	calendar	et	Lisatud
 after %1	calendar	et	Pärast %1
@@ -20,6 +21,7 @@ all participants	calendar	et	Kõik osalejad
 allows to edit the event again	calendar	et	Luba muuta sündmust uuesti
 always	calendar	et	alati
 apply the changes	calendar	et	rakenda uuendused
+attention	calendar	et	Tähelepanu
 back half a month	calendar	et	pool kuud tagasi
 back one month	calendar	et	üks kuu tagasi
 before %1	calendar	et	Enne %1
@@ -34,6 +36,8 @@ calendar preferences	calendar	et	Kalendri seadistus
 calendar settings	admin	et	Kalendri häälestus
 can't add alarms in the past !!!	calendar	et	Alarmi ei saa lisada minevikku !!!
 canceled	calendar	et	Tühistatud
+category report	calendar	et	Kategooria aruanne
+changed event-data applied	calendar	et	Muudetud sündmuse andmed rakendatud
 check all	calendar	et	Kontrolli kõik
 choose a category	calendar	et	Vali kategooria
 close the window	calendar	et	Sule see aken
@@ -47,6 +51,7 @@ created	calendar	et	Tehtud
 csv-fieldname	calendar	et	CSV-Väljanimi
 csv-filename	calendar	et	CSV-Failinimi
 daily	calendar	et	Päeviti
+date range	calendar	et	Kuupäevade vahemik
 day	calendar	et	Päev
 days	calendar	et	päeva
 days of the week for a weekly repeated event	calendar	et	Päevad nädalas haaratud nädala sündmuste repordis
@@ -84,6 +89,7 @@ event will occupy the whole day	calendar	et	Sündmus hõlmab tervet päeva
 exception	calendar	et	Erand
 exception created - you can now edit or delete it	calendar	et	Erand tehtud - võid nüüd muuta või kustutada seda
 exceptions	calendar	et	Erandid
+exclude weekend	calendar	et	Välja arvatud nädalavahetus
 existing links	calendar	et	Eksisteerivad lingid
 extended	calendar	et	Laiendatud
 fieldseparator	calendar	et	Väljaeraldaja
@@ -132,6 +138,7 @@ listview	calendar	et	Nimekirjavaade
 location	calendar	et	Asukoht
 mail all participants	calendar	et	saada mail kõigile osalejatele
 maximum available quantity of %1 exceeded!	calendar	et	Maksimaalne saadaolev kogus %1 on ületatud!
+min days	calendar	et	Min päevad
 minimum number of users for showing day view as consolidated.	calendar	et	Minimaalne kasutajate arv, et kuvada päevane vaade konsolideeritud kujul.
 minimum number of users for showing week view as consolidated.	calendar	et	Minimaalne kasutajate arv nädala vaate konsolideeritud näitamiseks.
 minutes	calendar	et	minutit
@@ -154,12 +161,14 @@ one month	calendar	et	üks kuu
 one week	calendar	et	üks kuu
 one year	calendar	et	üks aasta
 open todo's:	calendar	et	ava ToDo's:
+output unit	calendar	et	Väljundi ühik
 participants	calendar	et	Osalejad
 permission denied	calendar	et	Ligipääs keelatud
 previous	calendar	et	eelmine
 private only	calendar	et	Privaatne Ainult
 quantity	calendar	et	Kogus
 re-edit event	calendar	et	Muuda uuesti sündmust
+recordings	calendar	et	Salvestused
 recurrence	calendar	et	Kordumised
 recurring event	calendar	et	Korduv sündmus
 rejected	calendar	et	Tagasilükatud
@@ -169,6 +178,7 @@ repeat type	calendar	et	Kordamise tüüp
 repeating event information	calendar	et	Kordan Sündmuse informatsiooni
 repetition	calendar	et	Kordus
 repetitiondetails (or empty)	calendar	et	Kordusdetailid (või tühi)
+report	calendar	et	Aruanne
 reset	calendar	et	Tühista
 resources	calendar	et	Resursid
 rule	calendar	et	Reegel
@@ -184,6 +194,7 @@ show list of upcoming events	calendar	et	näita nimekirja tulevastest sündmuste
 show this month	calendar	et	näita seda kuud
 show this week	calendar	et	näita seda nädalat
 single event	calendar	et	üksik sündmus
+sort by	calendar	et	Sorteerimine
 start	calendar	et	Start
 start date/time	calendar	et	Start Kuupäev/ Aeg
 startdate	calendar	et	Algus kuupäev
@@ -203,6 +214,7 @@ updated	calendar	et	Uuendatud
 use end date	calendar	et	vabalt valitav lõpuaeg
 use the selected time and close the popup	calendar	et	kasuta märgitud aega ja sule hüpikaken
 user or group	calendar	et	Kasutaja või Grupp
+utilities	calendar	et	Kommunaalteenused
 view this event	calendar	et	Näita seda sündmust
 wed	calendar	et	Kol
 week	calendar	et	Nädal

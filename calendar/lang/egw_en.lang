@@ -29,7 +29,7 @@ add alarm	calendar	en	Add alarm
 add appointments via shortened dialog or complete edit window	calendar	en	Add appointments via shortened dialog or complete edit window
 add current view as favorite	calendar	en	Add current view as favorite
 add new alarm	calendar	en	Add new alarm
-add new event	calendar	en	Add new event
+add new event	calendar	en	Add new appointment
 add new participants or resource	calendar	en	Add new participants or resource
 add timesheet entry	calendar	en	Add timesheet entry
 added	calendar	en	Added
@@ -101,7 +101,9 @@ category %1 removed because of missing rights	calendar	en	Category %1 removed be
 category acl	common	en	Category ACL
 category acl only restrict adding a category to an event or changing status of a participant. it does not change the visibility of an event!	calendar	en	Category ACL only restrict adding a category to an event or changing status of a participant. It does NOT change the visibility of an event!
 category automatically added to new events	calendar	en	Category automatically added to new events
+category report	calendar	en	Category Report
 chair	calendar	en	Chair
+change domain of participants in caldav requests	calendar	en	Change domain of participants in CalDAV requests
 change history	calendar	en	Change history
 change your status	calendar	en	Change your status
 changed event-data applied	calendar	en	Changed event-data applied
@@ -139,6 +141,7 @@ daily tables	calendar	en	Daily tables
 data exchange settings	calendar	en	Data exchange settings
 date for the day of the week	calendar	en	Date for the day of the week
 date for the day of the week, available for the first entry inside each day of week or daily table inside the selected range.	calendar	en	Date for the day of the week, available for the first entry inside each day of week or daily table inside the selected range.
+date range	calendar	en	Date range
 day	calendar	en	Day
 day of week tables	calendar	en	Day of week tables
 days	calendar	en	Days
@@ -200,6 +203,7 @@ edit series	calendar	en	Edit series
 edit status or alarms for this particular day	calendar	en	Edit status or alarms for this particular day
 edit this event	calendar	en	Edit this event
 edit this series of recurring events	calendar	en	Edit this series of recurring events
+email address migration	calendar	en	Email address migration
 empty = no alarm	calendar	en	empty = no alarm
 empty for all	calendar	en	Empty for all
 empty target calendar before importing	calendar	en	Empty target calendar before importing
@@ -236,6 +240,7 @@ example {{nenvlf role}} - if field role is not empty, set a lf without any value
 exception	calendar	en	Exception
 exception created - you can now edit or delete it	calendar	en	Exception created - you can now edit or delete it.
 exceptions	calendar	en	Exceptions
+exclude weekend	calendar	en	Exclude Weekend
 execute a further action for this entry	calendar	en	Execute a further action for this entry
 existing links	calendar	en	Existing links
 exists	calendar	en	Exists
@@ -364,6 +369,7 @@ meeting request	calendar	en	Meeting request
 meetingrequest to all participants	calendar	en	Meetingrequest to all participants
 merge document...	calendar	en	Merge document...
 midnight	calendar	en	Midnight
+min days	calendar	en	Min days
 minimum number of users for showing day view as consolidated.	calendar	en	Minimum number of users for showing day view as consolidated.
 minimum number of users for showing week view as consolidated.	calendar	en	Minimum number of users for showing week view as consolidated.
 minutes	calendar	en	Minutes
@@ -438,6 +444,7 @@ only used for first viewing of calendar, afterwards last selected view is used.	
 open todo's:	calendar	en	Open ToDo's:
 optional	calendar	en	Optional
 organizer	calendar	en	Organizer
+output unit	calendar	en	Output unit
 overlap holiday	calendar	en	Overlap holiday
 owner too	calendar	en	Owner too
 participant names by type	calendar	en	Participant names by type
@@ -489,6 +496,7 @@ repetitiondetails (or empty)	calendar	en	Repetition details (or empty)
 replacements for inserting events into documents	calendar	en	Replacements for inserting events into documents
 reply to meeting request	calendar	en	Reply to meeting request
 replying "%1" is not a participant of the event! only continue if you want to add as new participant.	calendar	en	Replying "%1" is NOT a participant of the event! Only continue if you want to add as new participant.
+report	calendar	en	Report
 requested	calendar	en	Requested
 requested date %1 outside allowed range of %2 days: recurring events obmitted!	calendar	en	Requested date %1 outside allowed range of %2 days: recurring events obmitted!
 requested meeting is in the past!	calendar	en	Requested meeting is in the past!
@@ -559,6 +567,7 @@ show this week	calendar	en	Show this week
 show year and age	calendar	en	Show year and age
 single event	calendar	en	Single event
 single participant	calendar	en	Single participant
+sort by	calendar	en	Sort by
 specify where url of the day links to	calendar	en	Specify where URL of the day links to
 start	calendar	en	Start
 start date/time	calendar	en	Start date / time

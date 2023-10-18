@@ -1,12 +1,14 @@
 %1 (%2 new) messages writen for application '%3' and languages '%4'	common	pt-br	%1 (%2 nova) Mensagens escritas para Aplicações '%3' e Idiomas '%4'
 %1 directories %2 found!	admin	pt-br	% 1% 2 diretórios encontrado!
 %1 email addresses inserted	common	pt-br	%1 endereço(s) de email(s) inseridos
+%1 email(s) added into %2	common	pt-br	%1 e-mail(s) adicionado(s) em %2
 %1 etemplates deleted	common	pt-br	%1 eModelo(s) removido(s)
 %1 etemplates for application '%2' dumped to '%3'	common	pt-br	%1 eModelo para a aplicação '%2' copiado para '%3'
 %1 etemplates found	common	pt-br	%1 eModelo encontrados
 %1 file	common	pt-br	% 1 arquivo
 %1 is not executable by the webserver !!!	common	pt-br	%1 não é executável pelo servidor web !!!
 %1 matches on search criteria	common	pt-br	%1 encontrados para os critérios da busca
+%1 more %2 selected ...	common	pt-br	%1 mais %2 selecionados...
 %1 more...	common	pt-br	mais %1...
 %1 new etemplates imported for application '%2'	common	pt-br	%1 novo eModelo importado para a aplicação '%2'
 %1 proxy of %2	common	pt-br	% 1% 2 de procuração
@@ -23,7 +25,7 @@
 '%1' is not a valid date !!!	common	pt-br	'%1' não é uma data válida !!!
 '%1' is not a valid floatingpoint number !!!	common	pt-br	%1' não é um número válido para o ponto flutuante!!!
 '%1' is not a valid integer !!!	common	pt-br	%1' não é um inteiro válido!!!
-'%1' is not a valid json file!	common	pt-br	'%1' não é um arquivo json na pasta raiz do servidor eGW!
+'%1' is not a valid json file!	common	pt-br	'%1' não é um arquivo JSON válido
 '%1' is not allowed ('%2')!	common	pt-br	'%1' não é permitido ('%2')!
 (session restored in %1 seconds)	common	pt-br	(sessão restaurada em %1 segundos)
 00 (disable)	admin	pt-br	00 (desabilitado)
@@ -143,6 +145,7 @@ autohide sidebox menus	common	pt-br	Auto ocultar caixa de menus laterais
 automatically hide the sidebox menu's?	common	pt-br	Ocultar automaticamente a caixa de menus laterais
 automatically hide the sidebox menus?	common	pt-br	Auto ocultar caixa de menus laterais ?
 autosave default category	common	pt-br	Salvar automaticamente categoria padrão
+avatar	common	pt-br	Avatar
 azerbaijan	common	pt-br	AZERBAIJÃO
 back	common	pt-br	Voltar
 back to user login	common	pt-br	Voltar a tela de login
@@ -175,6 +178,7 @@ box	common	pt-br	Caixa
 box...	common	pt-br	Caixa...
 brazil	common	pt-br	BRASIL
 british indian ocean territory	common	pt-br	TERRITÓRIO INGLÊS INDIANO
+browser %1 %2 is not recommended. you may experience issues and not working features. please use the latest version of chrome, firefox or edge. thank you!	common	pt-br	O navegador %1 %2 não é recomendado. Você pode ter problemas e recursos que não funcionam. Use a versão mais recente do Chrome, Firefox ou Edge. Obrigado!
 brunei darussalam	common	pt-br	BRUNEI DARUSSALAM
 bulgaria	common	pt-br	BULGÁRIA
 bulgarian	common	pt-br	Búlgaro
@@ -217,6 +221,7 @@ change owner	common	pt-br	Alterar proprietário
 changed	common	pt-br	Alterado
 charset	common	pt-br	utf-8
 check all	common	pt-br	Verificar todos
+check for empty values in if statements.  example {{if url~empty~~website:}} - if url is not empty, writes "website:"	common	pt-br	Verifique se há valores vazios nas instruções IF. Exemplo {{IF url~EMPTY~~Website:}} - Se o url não estiver vazio, escreve "Website:"
 check if content should only be displayed but not altered (the content is not send back then!)	common	pt-br	marque se o conteúdo está sómente sendo mostrado e não alterado (o conteúdo não pode ser desfeito!)
 check if field has to be filled by user	common	pt-br	marque se o campo tiver que ser preenchido pelo usuário
 check installation	common	pt-br	Verificar Instalação
@@ -267,8 +272,8 @@ common preferences	common	pt-br	Preferências comuns
 comoros	common	pt-br	COMOROS
 company	common	pt-br	Empresa
 confirm	common	pt-br	Confirmar
-confirmation message or custom javascript (returning true or false)	common	pt-br	Mensagem de confirmação ou javascript personalizado (retornando verdadeiro ou falso).
-confirmation necesary or custom java-script	common	pt-br	Confirmação necessária ou javascript personalizado.
+confirmation message or custom javascript (returning true or false)	common	pt-br	Mensagem de confirmação ou JavaScript personalizado (retornando verdadeiro ou falso).
+confirmation necesary or custom java-script	common	pt-br	Confirmação necessária ou JavaScript personalizado.
 confirmation required	common	pt-br	A confirmação exigida
 congo	common	pt-br	CONGO
 congo, the democratic republic of the	common	pt-br	REPÚBLICA DEMOCRÁTICA DO CONGO
@@ -309,7 +314,7 @@ current	common	pt-br	Atualizado
 current users	common	pt-br	Usuários ativos
 custom	common	pt-br	Personalizado
 custom fields	common	pt-br	Campos personalizados
-custom javascript for onchange	common	pt-br	Javascript personalizado para OnChange
+custom javascript for onchange	common	pt-br	JavaScript personalizado para OnChange
 cut	common	pt-br	Recortar
 cyprus	common	pt-br	CHIPRE
 czech republic	common	pt-br	REPÚBLICA CHECA
@@ -317,6 +322,7 @@ dark mode	common	pt-br	Modo escuro
 database error	common	pt-br	Erro de banco de dados
 database error!	common	pt-br	Erro de banco de dados!
 date	common	pt-br	Data
+date + time	common	pt-br	Data + Horário
 date due	common	pt-br	Até data
 date+time	common	pt-br	Data+Horário
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	pt-br	Porta da Data e hora.<br>Quando usar a porta 13, por favor configure os filtros do firewall antes de submeter as alterações.<br>(Porta: 13 / Host: 129.6.15.28)
@@ -388,6 +394,7 @@ domain name for mail-address, eg. "%1"	common	pt-br	Nome do domínio para endere
 domestic	common	pt-br	Doméstico
 dominica	common	pt-br	DOMINICA
 dominican republic	common	pt-br	REPÚBLICA DOMINICANA
+don't ask again!	common	pt-br	Não pergunte novamente!
 done	common	pt-br	Pronto
 dos international	common	pt-br	DOS Internacional
 download	common	pt-br	Baixar
@@ -458,6 +465,11 @@ etemplate tutorial	common	pt-br	Tutorial do eModelo
 ethiopia	common	pt-br	ETIÓPIA
 everything	common	pt-br	Tudo
 exact	common	pt-br	exato(a)
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	preferences	pt-br	Exemplo {{IF n_prefixo~Sr~Olá Sr.~Olá Sra.}} - pesquise o campo "n_prefix", para "Mr", se encontrado, escreva Hello Mr., caso contrário, escreva Hello Ms.
+example {{letterprefix}} - gives a letter prefix without double spaces, if the title is empty for example	preferences	pt-br	Exemplo {{LETTERPREFIX}} - Fornece um prefixo de letra sem espaços duplos, se o título estiver vazio, por exemplo
+example {{letterprefix}} - gives a letter prefix without double spaces, if the title is emty for  example	common	pt-br	Exemplo {{LETTERPREFIX}} - Fornece um prefixo de letra sem espaços duplos, se o título estiver vazio, por exemplo
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	preferences	pt-br	Exemplo {{NELF role}} - se o campo role não estiver vazio, você receberá uma nova linha com o valor do campo role
+example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	preferences	pt-br	Exemplo {{nenvlf role}} - se o campo função não estiver vazio, você definirá um LF sem nenhum valor do campo
 exchange this row with the one above	common	pt-br	troque esta linha com a acima
 exchange this two columns	common	pt-br	troque estas duas colunas
 export the loaded etemplate into a xml-file	common	pt-br	exportar o eModelo carregado para um arquivo xml
@@ -579,8 +591,9 @@ how many entries should the list show	common	pt-br	Quantos items a lista deverá
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	pt-br	Quantos ícones devem ser mostrados na barra de navegação (ao topo da página). Ícones adicionais serão colocados em um recurso adicional em forma de menú suspenso à direita da barra de navegação.
 how many rows to print	common	pt-br	Quantas filas para imprimir
 how to show the general egroupware menu ?	common	pt-br	Como exibir o menu geral do EGroupware ?
-html	common	pt-br	Html
+html	common	pt-br	HTML
 html link to the current record	common	pt-br	Link HTML para o registro atual
+html links to any entries linked to the current record, excluding attached files	common	pt-br	Links HTML para quaisquer entradas vinculadas ao registro atual, excluindo arquivos anexados
 hungary	common	pt-br	HUNGRIA
 iceland	common	pt-br	ISLÂNDIA
 id	common	pt-br	ID
@@ -625,10 +638,12 @@ insert placeholder	common	pt-br	Inserir espaço reservado
 insert row after	common	pt-br	Inserir linha depois
 insert row before	common	pt-br	Inserir linha antes
 insert timestamp into description field	common	pt-br	Insira o carimbo da hora no campo de descrição
+install	common	pt-br	Instalar
 install egroupware as mail-handler?	common	pt-br	Armazenar um arquivo
 integer	common	pt-br	Inteiro
 international	common	pt-br	Internacional
 invalid 2-factor authentication code	common	pt-br	Código de autenticação de 2 fatores inválidos
+invalid email	common	pt-br	E-mail inválido
 invalid filename	common	pt-br	Nome de arquivo inválido
 invalid ip address	common	pt-br	Endereço IP inválido
 invalid or expired 'remember me' token	common	pt-br	Ficha "lembre-se de mim" inválida ou vencida
@@ -896,12 +911,15 @@ paste	common	pt-br	Colar
 path	common	pt-br	Caminho
 path to user and group files has to be outside of the webservers document-root!!!	common	pt-br	O caminho para usuários e grupos deve ser FORA do servidor da extranet.!!!
 permission denied!	common	pt-br	Permissão negada!
+permission denied! this is an administration only feature.	common	pt-br	Permissão negada! Este é um recurso exclusivo da administração.
 permissions to the files/users directory	common	pt-br	Permissões do diretório para os arquivos/usuários
 permisson denied!	common	pt-br	Permissão negada!
 personal	common	pt-br	Pessoal
 peru	common	pt-br	PERU
 pg down	common	pt-br	Pg baixo
 pg up	common	pt-br	PG-se
+pgp encryption	common	pt-br	Criptografia PGP
+pgp encryption installation	common	pt-br	Instalação da criptografia PGP
 philippines	common	pt-br	FILIPINAS
 phone number	common	pt-br	Número de Telefone
 pitcairn	common	pt-br	PITCAIRN
@@ -910,10 +928,14 @@ play/pause	common	pt-br	Reproduzir/Pausar
 please %1 by hand	common	pt-br	%1 pela mão
 please enter a name	common	pt-br	Por favor, digite um nome !
 please enter table-name first !!!	common	pt-br	Informe primeiro o nome da tabela!!!
+please reload the egroupware desktop (f5 / cmd+r).	common	pt-br	Recarregue a área de trabalho do EGroupware (F5 / Cmd+r).
+please remember to use '%1' as username for local login's from now on!	common	pt-br	Lembre-se de usar "%1" como nome de usuário para login local a partir de agora!
 please run setup to become current	common	pt-br	Por favor execute a configuração para atualizar o sistema
 please select	common	pt-br	Por favor selecione
 please set your global preferences	common	pt-br	Por favor configure suas preferências gerais
 please set your preferences for this application	common	pt-br	Configure suas preferências para este aplicativo
+please type %1 more characters	common	pt-br	Por favor, digite mais %1 caractere(s)
+please type 1 more character	common	pt-br	Por favor, digite mais 1 caractere
 please wait...	common	pt-br	Aguarde...
 please, check back with us shortly.	common	pt-br	Por favor, tente novamente mais tarde.
 pm	common	pt-br	pm
@@ -1083,7 +1105,7 @@ setup	common	pt-br	Configurar
 setup main menu	common	pt-br	Menu principal de configurações
 seychelles	common	pt-br	SEYCHELLES
 shift	common	pt-br	Mudança
-should the form be submitted or any custom javascript be executed	common	pt-br	Deverá o formulário ser submetido ou qualquer javascript personalizado ser executado
+should the form be submitted or any custom javascript be executed	common	pt-br	Deverá o formulário ser submetido ou qualquer JavaScript personalizado ser executado
 show	common	pt-br	Exibir
 show (no save)	common	pt-br	Exibir (sem salvar)
 show all	common	pt-br	Exibir tudo
@@ -1098,6 +1120,7 @@ show menu	common	pt-br	Mostrar menu
 show page generation time	common	pt-br	Mostrar tempo de criação da página
 show page generation time on the bottom of the page?	common	pt-br	O tempo de criação da página deve ser mostrado no rodapé?
 show page generation time?	common	pt-br	Exibir tempo de geração da página?
+show password	common	pt-br	Mostrar senha
 show the logo's of egroupware and x-desktop on the desktop.	common	pt-br	Exibir o logotipo do EGroupware and X-Desktop na tela.
 show values	common	pt-br	Mostrar valores
 show/hide	common	pt-br	mostrar/ocultar barra lateral
@@ -1108,9 +1131,10 @@ showing %1 - %2 of %3	common	pt-br	Exibindo %1 - %2 de %3
 shows / allows you to enter values into the etemplate for testing	common	pt-br	exibir / permite que você informe valores ao eModelo apenas para testá-los
 shows/displays etemplate for testing, does not save it before	common	pt-br	exibir eModelo para teste, SEM SALVAR antes
 sierra leone	common	pt-br	SERRA LEOA
+sign up	common	pt-br	Registrar-se
 simple	common	pt-br	Simples
 singapore	common	pt-br	SINGAPURA
-site configuration	common	pt-br	Configuração do servidor
+site configuration	common	pt-br	Configuração do aplicativo
 size	common	pt-br	Tamanho
 slovakia	common	pt-br	ESLOVÁQUIA
 slovenia	common	pt-br	ESLOVÊNIA
@@ -1313,6 +1337,9 @@ you need to add the webserver user '%1' to the group '%2'.	common	pt-br	Você pr
 you need to be an egroupware administrator to access this functionality!	common	pt-br	Você precisa ser um administrador do EGroupware para acessar esta funcionalidade!
 you need to select some entries first!	common	pt-br	Você precisa selecionar algumas entradas em primeiro lugar!
 you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	pt-br	Você tentou abrir a aplicação: %1, mas você não possui permissão para acessá-la.
+your account has been updated with new data from your identity provider.	common	pt-br	Sua conta foi atualizada com novos dados do seu provedor de identidade.
+your browser is not up-to-date (javascript es6 compatible), you may experience some of the features not working.	common	pt-br	Seu navegador não está atualizado (compatível com JavaScript ES6); alguns dos recursos podem não estar funcionando.
+your key has been restored successfully.	common	pt-br	Sua chave foi restaurada com sucesso.
 your message could <b>not</b> be sent!<br>	common	pt-br	<b>Não</b> foi possível enviar sua mensagem!<br>
 your message has been sent	common	pt-br	Sua mensagem foi enviada.
 your password does not have required strength of %1 character classes and minimum length of %2 characters.	common	pt-br	Sua senha não requer força de %1 classes de caracteres e comprimento mínimo de %2 caracteres.

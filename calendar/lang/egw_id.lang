@@ -16,6 +16,7 @@ action that caused the notify: added, canceled, accepted, rejected, ...	calendar
 actions	calendar	id	Tindakan
 actions...	calendar	id	Tindakan...
 add alarm	calendar	id	Tambah alarm
+add new event	calendar	id	Tambahkan janji temu baru
 add timesheet entry	calendar	id	Tamba entri lembarwaktu
 added	calendar	id	Ditambahkan
 after	calendar	id	after
@@ -35,6 +36,7 @@ all incl. rejected	calendar	id	Semua termasuk yang ditolak
 all participants	calendar	id	Semua peserta
 always	calendar	id	selalu
 apply the changes	calendar	id	Terapkan perubahan
+attention	calendar	id	Perhatian
 back half a month	calendar	id	mundur setengah bulan
 back one month	calendar	id	mundur sebulan
 back one year	calendar	id	mundur setahun
@@ -58,8 +60,10 @@ calendar-fieldname	calendar	id	Nama Field Kalender
 canceled	calendar	id	Dibatalkan
 category %1 removed because of missing rights	calendar	id	Kategori %1 dibuang karena tiada hak
 category acl	common	id	Kategori ACL
+category report	calendar	id	Laporan Kategori
 chair	calendar	id	Pimpinan
 change history	calendar	id	Riwayat pengubahan
+changed event-data applied	calendar	id	Perubahan data acara yang diterapkan
 charset of file	calendar	id	Charset of file
 check all	calendar	id	Contreng semua
 choose a category	calendar	id	Pilih kategori
@@ -81,6 +85,7 @@ custom	calendar	id	Custom
 custom fields	common	id	Custom fields
 custom_2	common	id	Senggang/Sibuk
 daily	calendar	id	Harian
+date range	calendar	id	Rentang tanggal
 day	calendar	id	hari
 days	calendar	id	hari
 days of the week for a weekly repeated event	calendar	id	Hari-hari untuk kegiatan yang berulang setiap minggu
@@ -117,6 +122,7 @@ event will occupy the whole day	calendar	id	Kegiatan akan berlangsung sehari pen
 events	common	id	events
 exception	calendar	id	Pengecualian
 exceptions	calendar	id	Pengecualian
+exclude weekend	calendar	id	Kecualikan Akhir Pekan
 existing links	calendar	id	Tautan yang ada
 extended	calendar	id	Extended
 favorites	calendar	id	Favorit
@@ -179,6 +185,7 @@ location, start- and endtimes, ...	calendar	id	Lokasi, Waktu memulai dan berakhi
 mail all participants	calendar	id	Surati semua peserta
 manage mapping	calendar	id	Mengelola pemetaan
 maximum available quantity of %1 exceeded!	calendar	id	Jumlah maksimum yang tersedia sebesar %1 terlampaui!
+min days	calendar	id	Hari-hari minimum
 minimum number of users for showing day view as consolidated.	calendar	id	Jumlah minimum pengguna untuk menampilkan tampilan hari sebagai konsolidasi.
 minimum number of users for showing week view as consolidated.	calendar	id	Jumlah minimum pengguna untuk menampilkan tampilan minggu sebagai konsolidasi.
 minutes	calendar	id	Menit
@@ -213,6 +220,7 @@ one year	calendar	id	setahun
 only group-events	calendar	id	Hanya kegiatan-kelompok
 open todo's:	calendar	id	Buka ToDo:
 optional	calendar	id	Opsional
+output unit	calendar	id	Unit keluaran
 overlap holiday	calendar	id	Overlap holiday
 owner too	calendar	id	Termasuk Pemilik
 participants	calendar	id	Peserta
@@ -226,6 +234,7 @@ previous	calendar	id	sebelumnya
 private only	calendar	id	Hanya Privat
 quantity	calendar	id	Quantity
 re-edit event	calendar	id	Edit-ulang Kegiatan
+recordings	calendar	id	Rekaman
 recurrence	calendar	id	Berulang
 recurring event	calendar	id	Kegiatan berulang
 rejected	calendar	id	Ditolak
@@ -233,6 +242,7 @@ repeat days	calendar	id	Hari-hari pengulangan
 repeat type	calendar	id	Tipe pengulangan
 repeating event information	calendar	id	Informasi Kegiatan Berulang
 repetition	calendar	id	Pengulangan
+report	calendar	id	Laporan
 requested	calendar	id	Permintaan
 reset	calendar	id	Reset
 resources	calendar	id	Sumberdaya
@@ -254,6 +264,7 @@ show a calendar title	calendar	id	Tampilkan judul kalender
 show this month	calendar	id	Tampilkan bulan ini
 show this week	calendar	id	Tampilkan minggu ini
 single event	calendar	id	Kegiatan tunggal
+sort by	calendar	id	Urutkan berdasarkan
 start	calendar	id	Mulai
 start date/time	calendar	id	Tanggal/Waktu memulai
 startdate	calendar	id	Tanggal memulai
@@ -284,6 +295,7 @@ update timezones	common	id	Perbarui zonawaktu
 updated	calendar	id	Diperbarui
 use end date	calendar	id	Gunakan tanggal berakhir
 user or group	calendar	id	Pengguna atau Kelompok
+utilities	calendar	id	Utilitas
 view exception	calendar	id	Lihat pengecualian
 view series	calendar	id	Lihat runtun
 view this event	calendar	id	Lihat kegiatan ini

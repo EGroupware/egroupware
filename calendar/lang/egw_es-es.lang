@@ -29,6 +29,7 @@ add alarm	calendar	es-es	Añadir alarma
 add appointments via shortened dialog or complete edit window	calendar	es-es	Añada citas por medio de un diálogo reducido o complete la ventana de edición
 add current view as favorite	calendar	es-es	Añadir vista actual como favorita
 add new alarm	calendar	es-es	Añadir nueva alarma
+add new event	calendar	es-es	Añadir nueva cita
 add new participants or resource	calendar	es-es	Añadir nuevos participantes o recursos
 add timesheet entry	calendar	es-es	Añadir entrada en la hoja de tiempos
 added	calendar	es-es	Añadido
@@ -62,6 +63,7 @@ apply the changes	calendar	es-es	Aplicar los cambios
 appointment settings	calendar	es-es	Ajustes de Citas
 as an alternative you can %1download a mysql dump%2 and import it manually into egw_cal_timezones table.	calendar	es-es	Como alternativa, puede %1descargar un volcado de MySQL%2 e importarlo manualmente en la tabla egw_cal_timezones.
 at start of the event	calendar	es-es	al inicio del evento
+attention	calendar	es-es	Atención
 automatically purge old events after	admin	es-es	Purgar automáticamente eventos antiguos después de
 available for the first entry inside each day of week or daily table inside the selected range:	calendar	es-es	Disponible para la primera entrada dentro de cada día de la semana o tabla diaria dentro del rango seleccionado:
 back half a month	calendar	es-es	Medio mes hacia atrás
@@ -99,9 +101,11 @@ category %1 removed because of missing rights	calendar	es-es	Se ha eliminado la 
 category acl	common	es-es	ACL de la categoría
 category acl only restrict adding a category to an event or changing status of a participant. it does not change the visibility of an event!	calendar	es-es	La ACL de la categoría sólo restringe añadir una categoría a un evento o cambiar el estado de un participante. ¡Esto NO cambia la visibilidad de un evento!
 category automatically added to new events	calendar	es-es	Categoría agregada automáticamente a nuevos eventos
+category report	calendar	es-es	Informe de categoría
 chair	calendar	es-es	Silla
 change history	calendar	es-es	Cambiar historial
 change your status	calendar	es-es	Cambiar su estado
+changed event-data applied	calendar	es-es	Datos de eventos modificados aplicados
 charset of file	calendar	es-es	Juego de caracteres del fichero
 check all	calendar	es-es	Marcar todo
 choose a category	calendar	es-es	Elija una categoría
@@ -136,6 +140,7 @@ daily tables	calendar	es-es	Tablas diarias
 data exchange settings	calendar	es-es	Opciones para intercambio de datos
 date for the day of the week	calendar	es-es	Fecha para el día de la semana.
 date for the day of the week, available for the first entry inside each day of week or daily table inside the selected range.	calendar	es-es	Fecha para el día de la semana, disponible para la primera entrada dentro de cada día de la semana o tabla diaria dentro del rango seleccionado.
+date range	calendar	es-es	Rango de fechas
 day	calendar	es-es	Día
 day of week tables	calendar	es-es	Tablas de día de la semana
 days	calendar	es-es	Días
@@ -230,6 +235,7 @@ example {{nenvlf role}} - if field role is not empty, set a lf without any value
 exception	calendar	es-es	Excepción
 exception created - you can now edit or delete it	calendar	es-es	Se ha creado la excepción. Ahora puede editarla o borrarla.
 exceptions	calendar	es-es	Excepciones
+exclude weekend	calendar	es-es	Excluir fin de semana
 execute a further action for this entry	calendar	es-es	Ejecutar una acción más para esta entrada
 existing links	calendar	es-es	Enlaces existentes
 exists	calendar	es-es	Existe
@@ -358,6 +364,7 @@ meeting request	calendar	es-es	Solicitud de reunión
 meetingrequest to all participants	calendar	es-es	Solicitud de reunión a todos los participantes
 merge document...	calendar	es-es	Fusionar documento...
 midnight	calendar	es-es	Medianoche
+min days	calendar	es-es	Días mínimos
 minimum number of users for showing day view as consolidated.	calendar	es-es	Número mínimo de usuarios para mostrar la vista del día como consolidada.
 minimum number of users for showing week view as consolidated.	calendar	es-es	Número mínimo de usuarios para mostrar la vista de la semana como consolidada.
 minutes	calendar	es-es	Minutos
@@ -429,6 +436,7 @@ only used for first viewing of calendar, afterwards last selected view is used.	
 open todo's:	calendar	es-es	Abrir tareas pendientes
 optional	calendar	es-es	Opcional
 organizer	calendar	es-es	Organizador
+output unit	calendar	es-es	Unidad de salida
 overlap holiday	calendar	es-es	solapar festivo
 owner too	calendar	es-es	El propietario también
 participant names by type	calendar	es-es	Nombres de participantes por tipo
@@ -458,6 +466,7 @@ re-edit event	calendar	es-es	Volver a editar evento
 receive email updates	calendar	es-es	Recibir actualizaciones de correo
 receive notifications about events you created/modified/deleted	calendar	es-es	Recibir notificaciones de eventos que usted haya creado, modificado o borrado
 receive summary of appointments	calendar	es-es	Recibir resumen de las citas
+recordings	calendar	es-es	Grabaciones
 recover	calendar	es-es	Recuperar
 recovered	calendar	es-es	Recuperado.
 recurrence	calendar	es-es	Repeticiones
@@ -476,6 +485,7 @@ repetition	calendar	es-es	Repetición
 repetitiondetails (or empty)	calendar	es-es	Detalles de la repetición (o vacío)
 replacements for inserting events into documents	calendar	es-es	Reemplazos para insertar eventos en documentos
 reply to meeting request	calendar	es-es	Responder a solicitud de reunión
+report	calendar	es-es	Informe
 requested	calendar	es-es	Requerido
 requested date %1 outside allowed range of %2 days: recurring events obmitted!	calendar	es-es	Fecha solicitada %1 fuera del rango permitido de %2 días: ¡eventos recurrentes omitidos!
 requested meeting is in the past!	calendar	es-es	¡La reunión solicitada está en el pasado!
@@ -542,6 +552,7 @@ show this month	calendar	es-es	Mostrar este mes
 show this week	calendar	es-es	Mostrar esta semana
 show year and age	calendar	es-es	Mostrar año y edad
 single event	calendar	es-es	Evento simple
+sort by	calendar	es-es	Ordenar por
 specify where url of the day links to	calendar	es-es	Especificar la URL del día
 start	calendar	es-es	Inicio
 start date/time	calendar	es-es	Fecha/Hora inicio

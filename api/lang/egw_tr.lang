@@ -1,9 +1,13 @@
+%1 email(s) added into %2	common	tr	%1 e-posta(lar) %2'ye eklendi
+%1 more %2 selected ...	common	tr	%1 e-posta(lar) %2'ye eklendi
 '%1' copied to clipboard	common	tr	'%1' panoya kopyalandı
+'%1' is not a valid json file!	common	tr	'%1' geçerli bir JSON dosyası değil
 1 day	common	tr	1 gün
 1 hour	common	tr	1 saat
 1 minute	common	tr	1 dakika
 1 month	common	tr	1 ay
 1 week	common	tr	1 hafta
+13 (ntp)	admin	tr	13 (ntp)
 15 minutes	common	tr	15 dakika
 2-factor authentication code required	common	tr	2 Faktörlü Kimlik Doğrulama kodu gerekli
 2-factor-authentication	common	tr	2 Faktörlü Kimlik Doğrulama
@@ -39,12 +43,15 @@ application	common	tr	Uygulama
 apply	common	tr	uygula
 attention: action will be applied to all rows, not only visible ones!	api	tr	Dikkat: eylem yalnızca görünen satırlara değil, tüm satırlara uygulanacaktır!
 authenticate	common	tr	Kimlik Doğrulama
+avatar	common	tr	Avatar
 back	common	tr	Geri
 bottom	common	tr	taban
+browser %1 %2 is not recommended. you may experience issues and not working features. please use the latest version of chrome, firefox or edge. thank you!	common	tr	Tarayıcı %1 %2 önerilmez. Sorunlarla ve çalışmayan özelliklerle karşılaşabilirsiniz. Lütfen Chrome, Firefox veya Edge'in en son sürümünü kullanın. Teşekkürler!
 calendar	common	tr	Takvim
 cancel	common	tr	Ýptal
 change	common	tr	Deðiþtir
 charset	common	tr	utf-8
+check for empty values in if statements.  example {{if url~empty~~website:}} - if url is not empty, writes "website:"	common	tr	IF deyimlerinde boş değerleri kontrol edin. Örnek {{IF url~EMPTY~~Web Sitesi:}} - Eğer url boş değilse, "Web sitesi:" yazar
 choose the default filename for merged documents.	preferences	tr	Birleştirilen belgeler için varsayılan dosya adını seçin.
 colour	common	tr	Renk
 company	common	tr	?irket
@@ -61,15 +68,23 @@ created by	common	tr	Oluþturan
 created by %1	common	tr	%1 tarafından oluşturuldu
 creator	preferences	tr	Yaratıcı
 dark mode	common	tr	Karanlık mod
+date + time	common	tr	Tarih + Saat
+date+time	common	tr	Tarih+Saat
 delete category	common	tr	Kategori sil
 description	common	tr	Açýklama
 disabled	common	tr	engellendi
 domestic	common	tr	Ev
+don't ask again!	common	tr	Tekrar sorma!
 done	common	tr	tamam
 download	common	tr	?ndir
 edit	common	tr	Düzenle
 enabled	common	tr	etkin
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	tr	eGroupware URL'sini giriniz.<br>Örnek: http://www.domain.com/egroupware yada   /egroupware<br><b>Sonda bölü iþareti kullanmayýnýz.</b>
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	preferences	tr	Örnek {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - "n_prefix" alanında "Mr" için arama yapın, bulunursa Merhaba Mr. yazın, aksi takdirde Merhaba Ms. yazın.
+example {{letterprefix}} - gives a letter prefix without double spaces, if the title is empty for example	preferences	tr	Örnek {{LETTERPREFIX}} - Örneğin başlık boşsa, çift boşluk olmadan bir harf öneki verir
+example {{letterprefix}} - gives a letter prefix without double spaces, if the title is emty for  example	common	tr	Örnek {{LETTERPREFIX}} - Örneğin başlık boşsa, çift boşluk olmadan bir harf öneki verir
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	preferences	tr	Örnek {{NELF rolü}} - eğer rol alanı boş değilse, rol alanının değerini içeren yeni bir satır alırsınız
+example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	preferences	tr	Örnek {{nenvlf role}} - alan rolü boş değilse, alanın herhangi bir değeri olmadan bir LF ayarlayın
 fax number	common	tr	Fax No
 file a file	common	tr	Bir dosya saklayın
 fileupload	common	tr	Dosya yükleme
@@ -93,14 +108,17 @@ how many days to sync in the future (default %1)	groupdav	tr	Gelecekte kaç gün
 how many days to sync in the past (default %1)	groupdav	tr	Geçmişte kaç gün senkronize edilecek (varsayılan %1)
 how many rows to print	common	tr	Kaç satır yazdırılacağı
 how to show the general egroupware menu ?	common	tr	Genel EGroupware menüsü nasıl gösterilir
+html links to any entries linked to the current record, excluding attached files	common	tr	Ekli dosyalar hariç olmak üzere, geçerli kayda bağlı tüm girişlere HTML bağlantıları
 if you use "2-factor-authentication", please enter the code here.	common	tr	"2 Faktörlü Kimlik Doğrulama" kullanıyorsanız, lütfen kodu buraya girin.
 include access to any linked files (links tab)	common	tr	Bağlantılı dosyalara erişimi dahil edin (Bağlantılar sekmesi)
 infolog types to sync	common	tr	Senkronize edilecek InfoLog türleri
 insert placeholder	common	tr	Yer tutucu ekle
 insert timestamp into description field	common	tr	Açıklama alanına zaman damgası ekle
+install	common	tr	Kurulum
 install egroupware as mail-handler?	common	tr	EGroupware'i posta işleyicisi olarak yükleyin?
 international	common	tr	Uluslararas?
 invalid 2-factor authentication code	common	tr	Geçersiz 2 Faktörlü Kimlik Doğrulama kodu
+invalid email	common	tr	Geçersiz e-posta
 invalid or expired 'remember me' token	common	tr	Geçersiz veya süresi dolmuş 'beni hatırla' belirteci
 it is recommended to store your public key in addressbook, so other users can write you encrypted mails.	common	tr	Açık anahtarınızı Adres Defteri'nde saklamanız önerilir, böylece diğer kullanıcılar size şifreli postalar yazabilir.
 light mode	common	tr	Işık modu
@@ -123,12 +141,25 @@ ok	common	tr	Tamam
 or	common	tr	ya da
 original	common	tr	Orjinal
 parcel	common	tr	Parsel
+permission denied!	common	tr	İzin reddedildi!
+permission denied! this is an administration only feature.	common	tr	İzin reddedildi! Bu sadece yönetimin kullanabileceği bir özelliktir.
+permisson denied!	common	tr	İzin reddedildi!
+personal	common	tr	Kişisel
+pg down	common	tr	Sayfa aşağı
+pg up	common	tr	Sayfa yukarı
+pgp encryption	common	tr	PGP Şifreleme
+pgp encryption installation	common	tr	PGP Şifreleme Kurulumu
 phone number	common	tr	Tel no
 placeholders	common	tr	Yer Tutucular
 play/pause	common	tr	Oynat/Duraklat
+please %1 by hand	common	tr	Lütfen el ile %1
 please enter a name	common	tr	Litfen bir isim giriniz
+please reload the egroupware desktop (f5 / cmd+r).	common	tr	Lütfen EGroupware masaüstünü yeniden yükleyin (F5 / Cmd+r).
+please remember to use '%1' as username for local login's from now on!	common	tr	Lütfen bundan sonra yerel girişler için kullanıcı adı olarak '%1' kullanmayı unutmayın!
 please run setup to become current	common	tr	Güncel olmak için kurulumu çalýþtýrýnýz
 please select	common	tr	Lütfen seçiniz
+please type %1 more characters	common	tr	Lütfen %1 karakter daha yazın
+please type 1 more character	common	tr	Lütfen 1 karakter daha yazın
 postal	common	tr	Posta
 preference	common	tr	Tercih
 preferences	common	tr	Tercihler
@@ -139,7 +170,9 @@ repeat password	common	tr	Şifreyi tekrarla
 saved column sizes to preferences.	common	tr	Sütun boyutlarını tercihlere kaydedin.
 search accounts	common	tr	Hesaplarý ara
 select all	common	tr	Tamam?n? seç
-site configuration	common	tr	Site Ayarlarý
+show password	common	tr	Şifreyi göster
+sign up	common	tr	Kaydolun
+site configuration	common	tr	Konfigürasyon
 submit	common	tr	Gönder
 title	common	tr	Baþlýk
 today	common	tr	Bugün
@@ -153,6 +186,9 @@ you have not entered a title	common	tr	Bir baþlýk girmediniz
 you have not entered a valid date	common	tr	Geçerli bir tarih girmediniz
 you have not entered a valid time of day	common	tr	Geçerli bir gün saati girmediniz
 you have not entered participants	common	tr	Katýlýmcýlarý girmediniz
+your account has been updated with new data from your identity provider.	common	tr	Hesabınız, kimlik sağlayıcınızdan gelen yeni verilerle güncellendi.
+your browser is not up-to-date (javascript es6 compatible), you may experience some of the features not working.	common	tr	Tarayıcınız güncel değil (JavaScript ES6 uyumlu), bazı özelliklerin çalışmadığını görebilirsiniz.
+your key has been restored successfully.	common	tr	Anahtarınız başarıyla geri yüklendi.
 your password does not have required strength of %1 character classes and minimum length of %2 characters.	common	tr	Parolanız %1 karakter sınıfının gerekli gücüne ve %2 karakterlik minimum uzunluğa sahip değil.
 your password does not have required strength:	common	tr	Parolanız gerekli güce sahip değil:
 your password failed the following criteria:	common	tr	Parolanız aşağıdaki kriterlerde başarısız oldu:

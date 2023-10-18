@@ -263,7 +263,8 @@ change owner	common	es-es	Cambiar el propietario
 changed	common	es-es	Modificado
 charset	common	es-es	utf-8
 check all	common	es-es	Marcar todo
-check if content should only be displayed but not altered (the content is not send back then!)	common	es-es	marcar si desea mostrar el contenido sin modificar (el contenido no es devuelto)
+check for empty values in if statements.  example {{if url~empty~~website:}} - if url is not empty, writes "website:"	common	es-es	Compruebe si hay valores vacíos en las sentencias IF. Ejemplo {{IF url~EMPTY~~Website:}} - Si url no está vacío, escribe "Website:"
+check if content should only be displayed but not altered (the content is not send back then!)	common	es-es	Marcar si desea mostrar el contenido sin modificar (el contenido no es devuelto)
 check if field has to be filled by user	common	es-es	marcar si el campo tiene que rellenarlo el usuario
 check installation	common	es-es	Comprobar la instalación
 check now	common	es-es	Comprobar ahora
@@ -318,8 +319,8 @@ common preferences	common	es-es	Preferencias comunes
 comoros	common	es-es	COMOROS
 company	common	es-es	Compañía
 confirm	common	es-es	confirmar
-confirmation message or custom javascript (returning true or false)	common	es-es	mensaje de confirmación o javascript personalizado (devolviendo 'true' o 'false')
-confirmation necesary or custom java-script	common	es-es	confirmación necesaria o javascript personalizado
+confirmation message or custom javascript (returning true or false)	common	es-es	mensaje de confirmación o JavaScript personalizado (devolviendo 'true' o 'false')
+confirmation necesary or custom java-script	common	es-es	confirmación necesaria o JavaScript personalizado
 confirmation required	common	es-es	Se necesita confirmación
 congo	common	es-es	CONGO
 congo, the democratic republic of the	common	es-es	CONGO, THE DEMOCRATIC REPUBLIC OF THE
@@ -361,7 +362,7 @@ current	common	es-es	Actual
 current users	common	es-es	Usuarios actuales
 custom	common	es-es	personalizado
 custom fields	common	es-es	campos personalizados
-custom javascript for onchange	common	es-es	javascript personalizado para onChange
+custom javascript for onchange	common	es-es	JavaScript personalizado para onChange
 cut	common	es-es	Cortar
 cyprus	common	es-es	CHIPRE
 czech republic	common	es-es	REPUBLICA CHECA
@@ -371,11 +372,12 @@ data type	common	es-es	Tipo de dato
 database error	common	es-es	Error en la base de datos
 database error!	common	es-es	¡Error en la base de datos!
 date	common	es-es	Fecha
+date + time	common	es-es	Fecha + hora
 date due	common	es-es	Fecha límite
-date+time	common	es-es	Fecha + hora
+date+time	common	es-es	Fecha+hora
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	es-es	Puerto de fecha.<br>Si usa el puerto 13, por favor, configure adecuadamente las reglas del cortafuegos antes de enviar esta página.<br>
 day	common	es-es	Día
-days	common	es-es	días
+days	common	es-es	Días
 db ensures that every row has a unique value in that column	common	es-es	La base de datos se asegura de que cada fila tiene un valor único en esa columna
 db-specific index options (comma-sep.), eg. mysql(fulltext) or mysql(100) for the indexed length of a col	common	es-es	Opciones de índice específicas de la base de datos (separadas por comas), por ej. mysql(FULLTEXT) o mysql(100) para la longitud indexada de una columna
 db-tools	common	es-es	Herramientas de la base de datos
@@ -497,7 +499,7 @@ email	common	es-es	Correo electrónico
 email-address of the user, eg. "%1"	common	es-es	Dirección de correo electrónico del usuario, ej. '%1'
 embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	common	es-es	Estilos incrustados CSS, por ej. '.red { background: red; }' (ver el '.' delante del nombre de la clase) o '@import url(...)' (los nombres de las clases son globales para toda la página)
 empty file	common	es-es	Archivo vacío
-enable javascript onchange submit	common	es-es	activar enviar JavaScript onChange
+enable javascript onchange submit	common	es-es	Activar enviar JavaScript onChange
 enable logging	groupdav	es-es	Activar registro
 enabled	common	es-es	Habilitado
 enables logging of caldav/carddav traffic to diagnose problems with devices.	groupdav	es-es	Activa el registro de tráfico CalDAV/CardDAV para diagnosticar problemas con los dispositivos.
@@ -544,6 +546,7 @@ everything	common	es-es	Todo
 exact	common	es-es	exacto
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	preferences	es-es	Ejemplo {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - buscar el campo "n_prefix", para "Mr", si se encuentra, escribir  Hello Mr., si no, escribir Hello Ms.
 example {{letterprefix}} - gives a letter prefix without double spaces, if the title is empty for example	preferences	es-es	Ejemplo {{LETTERPREFIX}} - Da un prefijo de letra sin espacios dobles, si el título está vacío, por ejemplo
+example {{letterprefix}} - gives a letter prefix without double spaces, if the title is emty for  example	common	es-es	Ejemplo {{LETTERPREFIX}} - Da un prefijo de letra sin espacios dobles, si el título está vacío por ejemplo
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	preferences	es-es	Ejemplo {{NELF role}} - si el rol del campo no está vacío, obtendrá una línea nueva con el valor del rol del campo
 example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	preferences	es-es	Ejemplo {{nenvlf role}} - si el rol del campo no está vacío, establece un salto de línea (LF) sin ningún valor del campo
 exchange this row with the one above	common	es-es	Intercambiar esta fila con la de encima
@@ -688,6 +691,7 @@ how many rows to print	common	es-es	Cuantas filas a imprimir
 how to show the general egroupware menu ?	common	es-es	¿Cómo mostrar el menú general de EGroupware?
 html	common	es-es	Html
 html link to the current record	common	es-es	Enlace HTML al registro actual
+html links to any entries linked to the current record, excluding attached files	common	es-es	Enlaces HTML a cualquier entrada vinculada al registro actual, excluyendo los archivos adjuntos
 hungary	common	es-es	HUNGRÍA
 iceland	common	es-es	ISLANDIA
 id	common	es-es	ID
@@ -1052,7 +1056,7 @@ peru	common	es-es	PERU
 pg down	common	es-es	Av Pág
 pg up	common	es-es	Re Pág
 pgp encryption	common	es-es	Cifrado PGP
-pgp encryption installation	common	es-es	instalación del cifrado PGP
+pgp encryption installation	common	es-es	Instalación del cifrado PGP
 philippines	common	es-es	FILIPINAS
 phone number	common	es-es	Número de teléfono
 pitcairn	common	es-es	PITCAIRN
@@ -1062,6 +1066,7 @@ please %1 by hand	common	es-es	Por favor %1 manualmente
 please enter a name	common	es-es	Por favor, introduzca un nombre
 please enter table-name first !!!	common	es-es	Por favor, introduzca el nombre de la tabla primero
 please reload the egroupware desktop (f5 / cmd+r).	common	es-es	Vuelva a cargar el escritorio EGroupware (F5 / Cmd+r).
+please remember to use '%1' as username for local login's from now on!	common	es-es	Recuerde utilizar '%1' como nombre de usuario para el inicio de sesión local a partir de ahora.
 please run setup to become current	common	es-es	Por favor ejecute la instalación para actualizar
 please select	common	es-es	Por favor, seleccione
 please set your global preferences	common	es-es	Por favor, ponga sus preferencias globales
@@ -1277,7 +1282,7 @@ share files	common	es-es	Compartir archivos
 share link	common	es-es	Compartir enlace
 shift	common	es-es	May
 shift ⇧	common	es-es	May ⇧
-should the form be submitted or any custom javascript be executed	common	es-es	Se debe enviar el formulario o ejecutar cualquier javascript personalizado
+should the form be submitted or any custom javascript be executed	common	es-es	Se debe enviar el formulario o ejecutar cualquier JavaScript personalizado
 show	common	es-es	Mostrar
 show (no save)	common	es-es	Mostrar (sin guardar)
 show all	common	es-es	mostrar todo
@@ -1295,6 +1300,7 @@ show now	common	es-es	Mostrar ahora
 show page generation time	common	es-es	Mostrar el tiempo que tarda en generarse la página
 show page generation time on the bottom of the page?	common	es-es	¿Mostrar el tiempo que tarda en generarse la página en la parte inferior de la página?
 show page generation time?	common	es-es	¿Mostrar el tiempo que tarda en generarse la página?
+show password	common	es-es	Mostrar contraseña
 show the logo's of egroupware and x-desktop on the desktop.	common	es-es	Mostrar el logo de EGroupware y x-desktop en el escritorio.
 show values	common	es-es	Mostar valores
 show/hide	common	es-es	mostrar/ocultar barra lateral
@@ -1308,7 +1314,7 @@ sierra leone	common	es-es	SIERRA LEONA
 sign up	common	es-es	Registrarse
 simple	common	es-es	Simple
 singapore	common	es-es	SINGAPUR
-site configuration	common	es-es	Configuración del sitio
+site configuration	common	es-es	Configuración
 size	common	es-es	Tamaño
 skip	common	es-es	Saltar
 slovakia	common	es-es	ESLOVAQUIA
@@ -1546,6 +1552,7 @@ you need to set enable logging to "%1" to create/update a log.	groupdav	es-es	De
 you tried to automatically size a flex column, which always takes the rest of the space	common	es-es	Intentó dimensionar automáticamente una columna flexible, que siempre ocupa el resto del espacio.
 you will not be able to send or receive encrypted mails before completing that step!	common	es-es	¡NO podrá enviar ni recibir correos cifrados antes de completar ese paso!
 you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	es-es	Ha intentado abrir la aplicación de EGroupware %1, pero no tiene permiso para acceder a esta aplicación.
+your account has been updated with new data from your identity provider.	common	es-es	Su cuenta ha sido actualizada con los nuevos datos de su proveedor de identidad.
 your browser is not up-to-date (javascript es6 compatible), you may experience some of the features not working.	common	es-es	Su navegador no está actualizado (compatible con JavaScript ES6), es posible que algunas de las funciones no funcionen.
 your code is incorrect !!!	common	es-es	¡Código es incorrecto!
 your key has been restored successfully.	common	es-es	Su clave ha sido restaurada con éxito.
@@ -1556,8 +1563,8 @@ your password does not have required strength:	common	es-es	Su contraseña no ti
 your password failed the following criteria:	common	es-es	Su contraseña no cumplió los criterios siguientes:
 your password is about to expire in %1 days, you may change your password now	common	es-es	Su contraseña está a punto de caducar en %1 días, puede cambiarla ahora.
 your password might not match the password policy.	common	es-es	Su contraseña puede que no cumpla con la política de contraseñas.
-your search returned %1 matchs	common	es-es	su búsqueda devolvió %1 resultados
-your search returned 1 match	common	es-es	su búsqueda devolvió 1 resultado
+your search returned %1 matchs	common	es-es	Su búsqueda devolvió %1 resultados
+your search returned 1 match	common	es-es	Su búsqueda devolvió 1 resultado
 your session timed out, please log in again	login	es-es	Su sesión ha expirado, por favor inicie sesión de nuevo.
 your settings have been updated	common	es-es	Sus preferencias fueron actualizadas
 zambia	common	es-es	ZAMBIA

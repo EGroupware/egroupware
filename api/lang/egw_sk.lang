@@ -176,6 +176,7 @@ automatically hide the sidebox menu's?	common	sk	Automaticky skrývať ponuku bo
 automatically hide the sidebox menus?	common	sk	Automaticky skrývať ponuku bočného panelu?
 automatically refresh list	common	sk	Automaticky obnovovať zoznam
 autosave default category	common	sk	Automaticky ukladať štandardnú kategóriu
+avatar	common	sk	Avatar
 azerbaijan	common	sk	AZERBAJDŽÁN
 back	common	sk	Naspäť
 back to user login	common	sk	Naspäť na prihlásenie používateľa
@@ -316,8 +317,8 @@ common preferences	common	sk	Bežné predvoľby
 comoros	common	sk	KOMORY
 company	common	sk	Spoločnosť
 confirm	common	sk	Potvrdiť
-confirmation message or custom javascript (returning true or false)	common	sk	Potvrdzovacia správa alebo používateľský javascript (vracia true alebo false - pravda/nepravda)
-confirmation necesary or custom java-script	common	sk	Je nevyhnutné potvrdenie, alebo používateľský java-script
+confirmation message or custom javascript (returning true or false)	common	sk	Potvrdzovacia správa alebo používateľský JavaScript (vracia true alebo false - pravda/nepravda)
+confirmation necesary or custom java-script	common	sk	Je nevyhnutné potvrdenie, alebo používateľský JavaScript
 confirmation required	common	sk	Vyžaduje sa potvrdenie
 congo	common	sk	KONGO
 congo, the democratic republic of the	common	sk	KONGO, DEMOKRATICKÁ REPUBLIKA
@@ -357,7 +358,7 @@ current	common	sk	Aktuálne
 current users	common	sk	Prihlásených používateľov
 custom	common	sk	Vlastné
 custom fields	common	sk	Vlastné polia
-custom javascript for onchange	common	sk	Vlastný javaskript pre onChange
+custom javascript for onchange	common	sk	Vlastný JavaScript pre onChange
 cut	common	sk	Vystrihnúť
 cyprus	common	sk	CYPRUS
 czech republic	common	sk	ČESKÁ REPUBLIKA
@@ -367,6 +368,7 @@ data type	common	sk	Typ dát
 database error	common	sk	Chyba databázy
 database error!	common	sk	Chyba databázy!
 date	common	sk	Dátum
+date + time	common	sk	Dátum + čas
 date due	common	sk	Termín do
 date+time	common	sk	Dátum+Čas
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	sk	Port pre dátum/čas.<br>Ak používate port 13, prosím nastavte korektne filtrovacie pravidlá na firewall-e ešte predtým, než potvrdíte túto stránku.<br>(Port: 13 / Host: 129.6.15.28)
@@ -536,6 +538,7 @@ everything	common	sk	Všetko
 exact	common	sk	Presne
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	preferences	sk	Príklad {{IF n_prefix~pán~Dobrý deň pán~Dobrý deň pani}} - hľadá v poli "n_prefix" text "pán", ak nájde, napíše Dobrý deň pán, v opačnom prípade napíše Dobrý deň pani
 example {{letterprefix}} - gives a letter prefix without double spaces, if the title is empty for example	preferences	sk	Príklad {{LETTERPREFIX}} - Dáva listu prefix bez dvojitých medzier, ak je napríklad titulok prázdny
+example {{letterprefix}} - gives a letter prefix without double spaces, if the title is emty for  example	common	sk	Príklad {{LETTERPREFIX}} - Dáva listu prefix bez dvojitých medzier, ak je napríklad titulok prázdny
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	preferences	sk	Príklad {{NELF role}} - ak pole pozícia nie je prázdne, dostanete nový riadok s hodnotou poľa pozícia
 example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	preferences	sk	Príklad {{nenvlf role}}  - ak pole pozícia nie je prázdne nastaví LF bez akejkoľvek hodnoty poľa
 exchange this row with the one above	common	sk	Zameniť tento riadok s riadkom vyššie
@@ -679,6 +682,7 @@ how many rows to print	common	sk	Koľko riadkov sa vytlačí
 how to show the general egroupware menu ?	common	sk	Ako sa má zobrazovať základná ponuka EGroupware?
 html	common	sk	HTML
 html link to the current record	common	sk	HTML odkaz na aktuálny záznam
+html links to any entries linked to the current record, excluding attached files	common	sk	HTML odkazy na všetky záznamy spojené s aktuálnym záznamom, okrem pripojených súborov
 hungary	common	sk	MAĎARSKO
 iceland	common	sk	ISLAND
 id	common	sk	ID
@@ -1026,14 +1030,16 @@ path	common	sk	Cesta
 path to user and group files has to be outside of the webservers document-root!!!	common	sk	Cesta k súborom používateľa a skupiny MUSÍ BYŤ MIMO document-root webservera!
 permission denied!	common	sk	Prístup bol odopretý!
 permission denied! this is an administration only feature.	common	sk	Prístup odopretý! Táto funkcia je len pre správcov.
-permissions to the files/users directory	common	sk	oprávnenia k adresáru pre súbory / používateľov
+permissions to the files/users directory	common	sk	Oprávnenia k adresáru pre súbory / používateľov
 permisson denied!	common	sk	Prístup bol odopretý!
 personal	common	sk	Osobný
 peru	common	sk	PERU
+pg down	common	sk	Stránka je vypnutá
+pg up	common	sk	Stránka nahor
 pgp encryption	common	sk	PGP šifrovanie
 pgp encryption installation	common	sk	Inštalácia PGP šifrovania
 philippines	common	sk	FILIPÍNY
-phone number	common	sk	telefónne číslo
+phone number	common	sk	Telefónne číslo
 pitcairn	common	sk	PITCAIRNOVE OSTROVY
 placeholders	common	sk	Zástupcovia
 play/pause	common	sk	Prehrať/pozastaviť
@@ -1260,7 +1266,7 @@ share link	common	sk	Zdieľať odkaz
 share this %1 via url	common	sk	Zdieľať tento %1 pomocou URL
 shift	common	sk	Shift
 shift ⇧	common	sk	Shift ⇧
-should the form be submitted or any custom javascript be executed	common	sk	Má sa formulár odoslať alebo akýkoľvek používateľský javaskript spustiť
+should the form be submitted or any custom javascript be executed	common	sk	Má sa formulár odoslať alebo akýkoľvek používateľský JavaScript spustiť
 show	common	sk	Ukázať
 show (no save)	common	sk	Ukázať (neuložiť)
 show all	common	sk	Ukázať všetko
@@ -1292,7 +1298,7 @@ sierra leone	common	sk	SIERRA LEONE
 sign up	common	sk	Prihlásiť sa
 simple	common	sk	Jednoduché
 singapore	common	sk	SINGAPUR
-site configuration	common	sk	Nastavenia stránky
+site configuration	common	sk	Konfigurácia aplikácie
 size	common	sk	Veľkosť
 skip	common	sk	Preskočiť
 slovakia	common	sk	SLOVENSKO

@@ -108,7 +108,7 @@ admin queue and history	admin	de	Admin Queue und Historie
 admin username	admin	de	Administrator Benutzername
 administration	admin	de	Administration
 admins	admin	de	Administratoren
-advanced options	admin	de	erweiterte Einstellungen
+advanced options	admin	de	Erweiterte Einstellungen
 after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	de	Nach wie vielen erfolglosen Anmeldeversuchen soll ein Benutzerkonto gesperrt werden (Vorgabe 3)?
 after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	de	Nach wie vielen erfolglosen Anmeldeversuchen soll eine IP-Adresse gesperrt werden (Vorgabe 15)?
 aliases	admin	de	E-Mail-Alias
@@ -127,16 +127,16 @@ allow users to change forwards	admin	de	Anwender dürfen Weiterleitung bearbeite
 allow users to create identities for aliases	admin	de	Anwender dürfen Identitäten für Aliase anlegen
 allowed for get requests, default in modern browsers, if attribute is not set	admin	de	erlaubt für GET Requests, Vorgabe in modernen Browsern, wenn das Attribute nicht gesetzt ist
 allowed just as second factor	admin	de	ausschließlich als zweiter Faktor
-alternate email address	admin	de	zusätzliche E-Mail-Adressen
+alternate email address	admin	de	Zusätzliche E-Mail-Adressen
 and logged in	admin	de	und eingeloggt
 anonymous user	admin	de	Anonymer Benutzer
 anonymous user (not shown in list sessions)	admin	de	Anonymer Benutzer (wird bei 'Sitzungen anzeigen' nicht angezeigt)
 anonymous user does not exist!	admin	de	Anonymer Benutzer existiert NICHT!
 anonymous user has no run-rights for the application!	admin	de	Anonymer Benutzer hat KEINE Ausführungsrechte für die Anwendung!
 anonymous user. not shown in list sessions.	admin	de	Anonymer Benutzer. Wird in der Liste der Sitzungen nicht angezeigt.
-any application	admin	de	jede Anwendung
-any group	admin	de	jede Gruppe
-any user	admin	de	jeder Benutzer
+any application	admin	de	Jede Anwendung
+any group	admin	de	Jede Gruppe
+any user	admin	de	Jeder Benutzer
 appearance	admin	de	Aussehen
 application	admin	de	Anwendung
 application '%1' not found (maybe not installed or misspelled)!	admin	de	Anwendung '%1' nicht gefunden. (eventuell nicht installiert oder falsch geschrieben)!
@@ -252,7 +252,7 @@ country	admin	de	Land
 country selection	admin	de	Länderauswahl
 cram-md5 or digest-md5 requires the auth_sasl package to be installed.	admin	de	CRAM-MD5 oder DIGEST-MD5 erfordert, das das Auth_SASL Packet installiert ist.
 create group	admin	de	Erstelle Gruppe
-create new account	admin	de	Neues Mail-Konto erstellen
+create new account	admin	de	Neues E-Mail-Konto erstellen
 create new identity	admin	de	Neue Identität erstellen
 created	admin	de	Erstellt
 created with id #%1	admin	de	erstellt mit der ID #%1
@@ -308,7 +308,7 @@ delete this group	admin	de	Gruppe löschen
 delete this log entry	admin	de	Diesen Protokolleintrag löschen
 delete this user	admin	de	Benutzer löschen
 deleted	admin	de	gelöscht
-deletes this field	admin	de	löscht dieses Feld
+deletes this field	admin	de	Löscht dieses Feld
 deliver extern	admin	de	extern ausliefern
 deny access	admin	de	Zugriff verweigern
 deny access to access log	admin	de	Zugriff auf Zugangsprotokoll verbieten
@@ -339,9 +339,9 @@ disable minifying of javascript and css files	admin	de	Komprimierung von Javascr
 disable pgp encryption (mailvelope)	admin	de	PGP-Verschlüsselung deaktivieren (Mailvelope)
 disable wysiwyg-editor	admin	de	WYSIWYG Editor (formatierter Text) abschalten
 disabled	admin	de	Ausgeschaltet
-disabled (not recomended)	admin	de	abgeschaltet (nicht empfohlen)
-disabled, do not show on login page	admin	de	ausgeschaltet, wird auf der Anmelde-Seite nicht angezeigt
-display	admin	de	anzeigen
+disabled (not recomended)	admin	de	Abgeschaltet (nicht empfohlen)
+disabled, do not show on login page	admin	de	Ausgeschaltet, wird auf der Anmelde-Seite nicht angezeigt
+display	admin	de	Anzeigen
 displayed length of input field (set rows=1 to limit length)	admin	de	angezeigte Länge des Eingabefelds (setze Zeilen=1 um die Eingabe zu beschränken)
 displaying html messages is disabled	admin	de	Das Anzeigen von HTML Nachrichten ist deaktiviert
 displaying plain messages is disabled	admin	de	Das Anzeigen von Text Nachrichten ist deaktiviert

@@ -3,6 +3,7 @@
 %1 copied - the copy can now be edited	common	cs	zkopírováno - nyní můžete upravit
 %1 directories %2 found!	admin	cs	%1 složek %2 nenalezeno!
 %1 email addresses inserted	common	cs	%1 e-mailových adres vloženo
+%1 email(s) added into %2	common	cs	%1 e-mail(y) přidán(y) do %2
 %1 entries found, select one ...	common	cs	Nalezeno %1 záznamů, vyberte jeden ...
 %1 etemplates deleted	common	cs	%1 eŠablon smazáno
 %1 etemplates for application '%2' dumped to '%3'	common	cs	%1 eŠablon pro aplikaci '%2' vytvořilo výpis do '%3'
@@ -10,6 +11,7 @@
 %1 file	common	cs	soubor  %1
 %1 is not executable by the webserver !!!	common	cs	%1 není spustitelný pro webový server
 %1 matches on search criteria	common	cs	%1 shod s kritériem vyhledávání
+%1 more %2 selected ...	common	cs	%1 více %2 vybráno...
 %1 more...	common	cs	%1 více...
 %1 new etemplates imported for application '%2'	common	cs	%1 nových eŠablon importováno pro aplikaci '%2'
 %1 not implemented for %2!	common	cs	%1 není implementováno pro %2!
@@ -167,6 +169,7 @@ automatically hide the sidebox menu's?	common	cs	Automaticky skrývat menu postr
 automatically hide the sidebox menus?	common	cs	Automaticky skrývat menu postranního panelu?
 automatically refresh list	common	cs	Automatické obnova seznamu
 autosave default category	common	cs	Automatické ukládání výchozí kategorie
+avatar	common	cs	Avatar
 azerbaijan	common	cs	ÁZERBÁJDŹÁN
 back	common	cs	Zpět
 back to user login	common	cs	Zpět na přihlášení uživatele
@@ -204,6 +207,7 @@ box...	common	cs	Rámeček...
 brazil	common	cs	BRAZÍLIE
 british indian ocean territory	common	cs	BRITSKÉ INDICKOOCEÁNSKÉ ÚZEMÍ
 broken link	common	cs	Propojení je poškozené
+browser %1 %2 is not recommended. you may experience issues and not working features. please use the latest version of chrome, firefox or edge. thank you!	common	cs	Prohlížeč %1 %2 není doporučen. Mohou se vyskytnout problémy a nefunkční funkce. Používejte prosím nejnovější verzi prohlížeče Chrome, Firefox nebo Edge. Děkujeme!
 brunei darussalam	common	cs	BRUNEJ DARUSSALAM
 bulgaria	common	cs	BULHARSKO
 bulgarian	common	cs	bulharština
@@ -248,6 +252,7 @@ change owner	common	cs	Změna vlastníka
 changed	common	cs	Změněno
 charset	common	cs	utf-8
 check all	common	cs	Označit všechny
+check for empty values in if statements.  example {{if url~empty~~website:}} - if url is not empty, writes "website:"	common	cs	Kontrola prázdných hodnot v příkazech IF. Příklad {{IF url~EMPTY~~Webové stránky:}} - Pokud url není prázdná, napíše "Webové stránky:".
 check if content should only be displayed but not altered (the content is not send back then!)	common	cs	zaškrtněte, pokud má být obsah jen zobrazen, nikoli měněn (obsah pak není posílán zpět!)
 check if field has to be filled by user	common	cs	zaškrtněte, pokud musí uživatel položku vyplnit
 check installation	common	cs	Kontrola instalace
@@ -301,8 +306,8 @@ common preferences	common	cs	Společné předvolby
 comoros	common	cs	KOMORSKÉ OSTROVY
 company	common	cs	Společnost
 confirm	common	cs	potvrdit
-confirmation message or custom javascript (returning true or false)	common	cs	Potvrzující zpráva nebo uživatelsky definovaný javascript (vracející true nebo false)
-confirmation necesary or custom java-script	common	cs	vyžadováno potvrzení nebo uživatelský javaskript
+confirmation message or custom javascript (returning true or false)	common	cs	Potvrzující zpráva nebo uživatelsky definovaný JavaScript (vracející true nebo false)
+confirmation necesary or custom java-script	common	cs	vyžadováno potvrzení nebo uživatelský JavaScript
 confirmation required	common	cs	Je vyžadováno potvrzení
 congo	common	cs	KONGO
 congo, the democratic republic of the	common	cs	DEMOKRATICKÁ REPUBLIKA KONGO
@@ -344,7 +349,7 @@ current	common	cs	Aktuální
 current users	common	cs	Aktuální uživatelé
 custom	common	cs	uživatelsky definované
 custom fields	common	cs	uživatelsky definované položky
-custom javascript for onchange	common	cs	uživatelsky definovaný javaskript pro onChange (při změně)
+custom javascript for onchange	common	cs	uživatelsky definovaný JavaScipt pro onChange (při změně)
 cut	common	cs	Vyjmout
 cyprus	common	cs	KYPR
 czech republic	common	cs	ČESKÁ REPUBLIKA
@@ -354,6 +359,7 @@ data type	common	cs	Datový typ
 database error	common	cs	Databázová chyba
 database error!	common	cs	Databázová chyba!
 date	common	cs	Datum
+date + time	common	cs	Datum + čas
 date due	common	cs	Do data
 date+time	common	cs	Datum a čas
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	cs	Port pro datum a čas.<br>Pokud používáte port 13, nastavte prosím příslušná pravidla na firewallu dříve, než odešlete tuto stránku.<br>(Port: 13 / Host: 129.6.15.28)
@@ -430,6 +436,7 @@ domain name for mail-address, eg. "%1"	common	cs	jméno domény pro e-mailovou a
 domestic	common	cs	Vnitrostátní
 dominica	common	cs	DOMINIKA
 dominican republic	common	cs	DOMINIKÁNSKÁ REPUBLIKA
+don't ask again!	common	cs	Neptejte se znovu!
 don't show this again	common	cs	Již příště nezobrazovat
 done	common	cs	Hotovo
 dos international	common	cs	DOS International
@@ -471,7 +478,7 @@ email	common	cs	E-mail
 email-address of the user, eg. "%1"	common	cs	e-mailová adresa uživatele, např. "%1"
 embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	common	cs	vložené CSS styly, např. '.red { background: red; }' (všimněte si tečky před názvem třídy) nebo '@import url(...)' (názvy tříd jsou všeobecné pro celou stránku!)
 empty file	common	cs	Prázdný soubor
-enable javascript onchange submit	common	cs	povolit odesílání onChange v javaskriptu
+enable javascript onchange submit	common	cs	povolit odesílání onChange v JavaScript
 enable logging	groupdav	cs	Povolit logování provozu
 enabled	common	cs	Povoleno
 enables logging of caldav/carddav traffic to diagnose problems with devices.	groupdav	cs	Povoluje logování provozu CalDAV / CardDAV pro zjištění problémů se zařízeními.
@@ -516,6 +523,7 @@ everything	common	cs	Vše
 exact	common	cs	přesný (výraz)
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	preferences	cs	Příklad {{IF n_prefix~Pan~Vážený pane~Vážená paní}} - hledá se výskyt slova "Pan" v poli "n_prefix", pokud je nalezeno, vloží se  text Vážený pane, jinak Vážená paní.
 example {{letterprefix}} - gives a letter prefix without double spaces, if the title is empty for example	preferences	cs	Příklad {{LETTERPREFIX}} - vloží oslovení a pokud je titul nevyplněn, nevloží se mezery navíc.
+example {{letterprefix}} - gives a letter prefix without double spaces, if the title is emty for  example	common	cs	Příklad {{LETTERPREFIX}} - vloží oslovení a pokud je titul nevyplněn, nevloží se mezery navíc.
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	preferences	cs	Příklad {{NELF role}} - pokud pole role není prázdné, bude na nový řádek vypsán obsah pole role.
 example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	preferences	cs	Příklad {{nenvlf role}} - pokud pole role není prázdné, nastaví se pozice na nový řádek ale obsah pole role nebude vypsáno.
 exchange this row with the one above	common	cs	zaměnit tento řádek s řádkem nad ním
@@ -655,6 +663,7 @@ how many rows to print	common	cs	Kolik řádků se má vytisknout
 how to show the general egroupware menu ?	common	cs	Jak zobrazovat hlavní menu EGroupware?
 html	common	cs	HTML
 html link to the current record	common	cs	HTML odkaz na současný záznam
+html links to any entries linked to the current record, excluding attached files	common	cs	HTML odkazy na všechny záznamy spojené s aktuálním záznamem, kromě připojených souborů
 hungary	common	cs	MAĎARSKO
 iceland	common	cs	ISLAND
 id	common	cs	ID
@@ -704,11 +713,13 @@ insert placeholder	common	cs	Vložit zástupný symbol
 insert row after	common	cs	Vložit řádek za
 insert row before	common	cs	Vložit řádek před
 insert timestamp into description field	common	cs	Vložení časového razítka do pole popisu
+install	common	cs	Instalace
 install egroupware as mail-handler?	common	cs	Nainstalovat EGroupware jako mail-handler?
 integer	common	cs	Celé číslo
 international	common	cs	Mezinárodní
 introduction	common	cs	Úvod
 invalid 2-factor authentication code	common	cs	Neplatný kód dvoufaktorového ověřování
+invalid email	common	cs	Neplatný e-mail
 invalid filename	common	cs	Neplatné jméno souboru
 invalid ip address	common	cs	Neplatná IP adresa
 invalid or expired 'remember me' token	common	cs	Neplatný nebo prošlý token "zapamatuj si mě"
@@ -1003,6 +1014,7 @@ paste	common	cs	Vložit
 path	common	cs	Cesta
 path to user and group files has to be outside of the webservers document-root!!!	common	cs	Cesta k souborům uživatelů a skupin MUSÍ BÝT MIMO kořenový adresář dokumentů webového serveru!!!
 permission denied!	common	cs	Přístup zamítnut!
+permission denied! this is an administration only feature.	common	cs	Povolení zamítnuto! Jedná se o funkci určenou pouze pro správu.
 permissions to the files/users directory	common	cs	práva k souborům / uživatelským adresářům
 permisson denied!	common	cs	Přístup zamítnut!
 personal	common	cs	Osobní
@@ -1012,7 +1024,7 @@ pg up	common	cs	klávesa Page Up (o stranu výše)
 pgp encryption	common	cs	Šifrování PGP
 pgp encryption installation	common	cs	Instalace šifrování PGP
 philippines	common	cs	FILIPÍNY
-phone number	common	cs	telefonní číslo
+phone number	common	cs	Telefonní číslo
 pitcairn	common	cs	PITCAIRN
 placeholders	common	cs	Zástupci pro automatizaci
 play/pause	common	cs	Přehrát/pozastavit
@@ -1020,10 +1032,13 @@ please %1 by hand	common	cs	Prosím %1 ručně
 please enter a name	common	cs	Zadejte prosím jméno!
 please enter table-name first !!!	common	cs	Zadejte prosím nejprve název tabulky !!!
 please reload the egroupware desktop (f5 / cmd+r).	common	cs	Obnovte prosím stránku s EGroupwarem (klávesou F5 nebo Ctrl+r)
+please remember to use '%1' as username for local login's from now on!	common	cs	Nezapomeňte prosím od této chvíle používat jako uživatelské jméno pro místní přihlášení '%1'!
 please run setup to become current	common	cs	Spusťte prosím setup pro aktualizaci
 please select	common	cs	Prosím zvolte
 please set your global preferences	common	cs	Upravte prosím své všeobecné předvolby!
 please set your preferences for this application	common	cs	Upravte prosím své předvolby pro tuto aplikaci!
+please type %1 more characters	common	cs	Zadejte prosím %1 další znak(y)
+please type 1 more character	common	cs	Zadejte prosím 1 další znak
 please wait...	common	cs	Prosím čekejte...
 please, check back with us shortly.	common	cs	Prosíme, navštivte nás až za chvíli.
 pm	common	cs	odpol.
@@ -1218,7 +1233,7 @@ setup main menu	common	cs	Nastavit hlavní menu
 seychelles	common	cs	SEYCHELY
 shift	common	cs	Shift
 shift ⇧	common	cs	Shift ⇧
-should the form be submitted or any custom javascript be executed	common	cs	Má být odeslán formulář nebo spuštěn libovolný uživatelský javascript
+should the form be submitted or any custom javascript be executed	common	cs	Má být odeslán formulář nebo spuštěn libovolný uživatelský JavaScript
 show	common	cs	Zobrazit
 show (no save)	common	cs	Zobrazit (neukládat)
 show all	common	cs	zobrazit vše
@@ -1236,6 +1251,7 @@ show now	common	cs	Zobrazit nyní
 show page generation time	common	cs	Zobrazit časy generování stránek
 show page generation time on the bottom of the page?	common	cs	Přejete si zobrazit čas generování stránky na jejím zápatí?
 show page generation time?	common	cs	Zobrazit čas generovaní stránky?
+show password	common	cs	Zobrazit heslo
 show the logo's of egroupware and x-desktop on the desktop.	common	cs	Zobrazit logo EGroupware a x-desktopu na pracovní ploše.
 show values	common	cs	Zobrazit hodnoty
 show/hide	common	cs	zobrazit/skrýt postranní panel
@@ -1246,9 +1262,10 @@ showing %1 - %2 of %3	common	cs	zobrazeno %1 - %2 z %3
 shows / allows you to enter values into the etemplate for testing	common	cs	zobrazí / umožní Vám zadat hodnoty do eŠablony pro testování
 shows/displays etemplate for testing, does not save it before	common	cs	zobrazí eŠablonu pro testování, předtím jí NEukládá
 sierra leone	common	cs	SIERRA LEONE
+sign up	common	cs	Zaregistrovat se
 simple	common	cs	Jednoduchý
 singapore	common	cs	SINGAPUR
-site configuration	common	cs	Nastavení aplikace
+site configuration	common	cs	Konfigurace aplikace
 size	common	cs	Velikost
 skip	common	cs	Přeskočit
 slovakia	common	cs	SLOVENSKO
@@ -1486,6 +1503,8 @@ you need to set enable logging to "%1" to create/update a log.	groupdav	cs	Aby b
 you tried to automatically size a flex column, which always takes the rest of the space	common	cs	Pokusili jste se nastavit automatickou šířku pružného sloupce, který se vždy nastavuje na šířku volného místa.
 you will not be able to send or receive encrypted mails before completing that step!	common	cs	Dokud nedokončíte tento krok, nebude možné přijímat a odesílat šifrované e-maily!
 you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	cs	Pokusil(a) jste se otevřít aplikaci eGroupWaru: %1, ale nemáte oprávnění pro přístup k této aplikaci.
+your account has been updated with new data from your identity provider.	common	cs	Váš účet byl aktualizován novými údaji od poskytovatele identit.
+your browser is not up-to-date (javascript es6 compatible), you may experience some of the features not working.	common	cs	Váš prohlížeč není aktuální (kompatibilní s JavaScript ES6), některé funkce mohou být nefunkční.
 your code is incorrect !!!	common	cs	Kód není správný!
 your key has been restored successfully.	common	cs	Váš klíč byl v pořádku obnoven.
 your message could <b>not</b> be sent!<br>	common	cs	Vaše zpráva <b>nemůže</b> být odeslána!<br>

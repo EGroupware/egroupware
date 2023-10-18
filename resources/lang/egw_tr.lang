@@ -1,8 +1,40 @@
+%1 accessories now resources	resources	tr	%1 aksesuar şimdi kaynaklar
+%1 accessories restored	resources	tr	%1 aksesuar geri yüklendi
+%1 resource(s) %2	resources	tr	%1 kaynak(lar) %2
+%1 resource(s) %2, %3 failed	resources	tr	%1 kaynak(lar) %2, %3 başarısız oldu
+%1 resource(s) %2, %3 failed because of insufficent rights !!!	resources	tr	%1 kaynak(lar) %2, %3 yetersiz haklar nedeniyle başarısız oldu !!!
+%1 resource(s) booked	resources	tr	%1 kaynak(lar) rezerve edildi
+%1 resource(s) view calendar	resources	tr	%1 kaynak(lar) takvimi görüntüle
+accessories	resources	tr	Aksesuarlar
+accessories of	resources	tr	Aksesuarlar
+accessories:	resources	tr	Aksesuarlar:
+accessory of	resources	tr	Aksesuardan
 actions	resources	tr	Eylemler
+add group to event participants	resources	tr	Etkinlik katılımcılarına grup ekleme
+allow booking requests from any user when creating events?	resources	tr	Etkinlik oluştururken herhangi bir kullanıcıdan gelen rezervasyon taleplerine izin ver?
+booking requests	resources	tr	Rezervasyon istekleri
+category admin	resources	tr	Kategori Yöneticisi
+category saved.	resources	tr	Kategori kaydedildi.
+choose category admin	resources	tr	Kategori yöneticisini seçin
 custom fields	resources	tr	Özel Alanlar
-days	resources	tr	gün
+days	resources	tr	Gün
+delete accessories of selected resources too?	resources	tr	Seçilen kaynakların aksesuarlarını da siliyor musunuz?
 deleted	resources	tr	Silindi
+do you really want to delete this resource?	resources	tr	Bu kaynağı gerçekten silmek istiyor musunuz?
 global categories	resources	tr	Genel kategoriler
-hours	resources	tr	saat
+hours	resources	tr	Saat
+icon	resources	tr	Simge
 location	resources	tr	Konum
+manage mapping	resources	tr	Haritalamayı yönetin
+no - leave them	resources	tr	Hayır - Onları bırakın
+no - make them resources	resources	tr	Hayır - Onları kaynak yapın
+no matches	resources	tr	Eşleşme yok
+no, users will need to contact users with direct booking permission	resources	tr	Hayır, kullanıcıların doğrudan rezervasyon izni olan kullanıcılarla iletişime geçmesi gerekecektir
+registration confirmed %1	resources	tr	Kayıt onaylandı %1
+remove accessories before changing accessory of	resources	tr	Aksesuarını değiştirmeden önce aksesuarları çıkarın
+too many matches	resources	tr	Çok fazla kibrit
+un-delete accessories of selected resources too?	resources	tr	Seçilen kaynakların aksesuarlarını geri yükle?
+unable to link to %1 "%2"	resources	tr	%1 "%2" ile bağlantı kurulamıyor
 view this entry	resources	tr	Bu kaydı görüntüle
+yes - delete accessories too	resources	tr	Evet - Aksesuarları da silin
+yes - un-delete accessories too	resources	tr	Evet - Aksesuarları da geri yükleyin

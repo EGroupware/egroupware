@@ -29,6 +29,7 @@ buy this article	resources	sk	Kúpiť tento článok
 buy this resource	resources	sk	Kúpiť tento zdroj
 buyable	resources	sk	Na predaj
 category admin	resources	sk	Správca kategórie
+category saved.	resources	sk	Uložená kategória.
 category:	resources	sk	Kategória:
 check all	resources	sk	Označ všetko
 choose category admin	resources	sk	Vyberte správcu kategórie
@@ -41,14 +42,15 @@ create new accessory for this resource	resources	sk	Vytvoriť novú kategóriu p
 create new links	resources	sk	Vytvoriť nové odkazy
 custom etemplate for the contactform	resources	sk	Vlastná eŠablóna pre tento formulár kontaktu
 custom fields	resources	sk	Vlastné polia
-days	resources	sk	dní
+days	resources	sk	Dní
+delete accessories of selected resources too?	resources	sk	Odstrániť aj príslušenstvo vybraných zdrojov?
 delete selected resources	resources	sk	Odstrániť vybrané zdroje
 delete this entry	resources	sk	Odstrániť túto položku
 deleted	resources	sk	Odstránené
 description (short)	resources	sk	Popis (stručný)
 direct booking permissions	resources	sk	Priame rezervačné práva
 do you really want to delete this resource?	resources	sk	Skutočne chcete odstrániť tento zdroj?
-don't use vfs (this will need a symlink --> see readme)	resources	sk	Nepoužívať vfs (bude potrebný symlink --> prečítajte si README)
+don't use vfs (this will need a symlink --> see readme)	resources	sk	Nepoužívať VFS (bude potrebný symlink --> prečítajte si README)
 edit this entry	resources	sk	Uprav tento záznam
 event start	resources	sk	Začiatok udalosti
 existing links	resources	sk	Existujúce odkazy
@@ -67,6 +69,7 @@ how many of the resources are useable?	resources	sk	Koľko zdrojov je použíte�
 how many of them are useable?	resources	sk	Koľko z nich je použiteľných?
 how many of this resource are usable	resources	sk	Koľko kusov tohto zdroja je použiteľných
 how many of this resource exists	resources	sk	Koľko kusov tohto zdroja existuje
+icon	resources	sk	Ikona
 if you specify an export definition, it will be used when you export	resources	sk	Ak zadáte exportnú definíciu, bude sa používať pri exportoch
 implies booking permission	resources	sk	Z toho automaticky vyplýva aj rezervačné právo
 implies read permission	resources	sk	Z toho automaticky vyplýva aj právo na čítanie
@@ -91,6 +94,8 @@ name of resource	resources	sk	Názov zdroja:
 name:	resources	sk	Názov:
 new accessory	resources	sk	Nové príslušenstvo
 new resource	resources	sk	Nový zdroj
+no - leave them	resources	sk	Nie - ponechajte ich
+no - make them resources	resources	sk	Nie - Urobte z nich zdroje
 no description available	resources	sk	Žiadny popis sa nenašiel
 no matches	resources	sk	Žiadne zhody
 no resources selected	resources	sk	Nie sú vybrané žiadne zdroje
@@ -146,6 +151,7 @@ the anonymous user needs add rights for it!	resources	sk	Anonymný používateľ
 the calendar of this resource	resources	sk	Kalendár pre tento zdroj
 this module displays the resources app	resources	sk	Tento modul zobrazuje aplikáciu pre zdroje
 too many matches	resources	sk	Priveľa zhôd
+un-delete accessories of selected resources too?	resources	sk	Obnoviť príslušenstvo vybraných zdrojov?
 unable to link to %1 "%2"	resources	sk	Nedá sa vytvoriť odkaz na %1 "%2"
 unable to process confirmation.	resources	sk	Nepodarilo sa spracovať potvrdenie.
 use general resources icon	resources	sk	Použiť všeobecnú ikonu zdrojov
@@ -160,6 +166,8 @@ web-site for this resource	resources	sk	Webstránka tohto zdroja
 where to find this resource?	resources	sk	Kde sa dá nájsť tento zdroj
 which category does this resource belong to?	resources	sk	Do ktorej kategórie tento zdroj patrí?
 write permissions	resources	sk	Oprávnenia k zápisu
+yes - delete accessories too	resources	sk	Áno - Tiež odstrániť príslušenstvo
+yes - un-delete accessories too	resources	sk	Áno - Obnoviť aj príslušenstvo
 yes, all users can ignore conflicts	resources	sk	Áno, všetci používatelia môžu ignorovať konflikt
 yes, only admins can purge deleted items	admin	sk	Áno, iba správci môžu vymazať odstránené položky
 yes, only users with direct booking permission	resources	sk	Áno, iba používatelia s priamym právom rezervácie

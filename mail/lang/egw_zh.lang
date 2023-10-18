@@ -1,9 +1,13 @@
 (leave empty for no quota)	mail	zh	(留空表示没有配额)
 (no subject)	mail	zh	(无主题)
+acl rights retrieve failed, seems there are no rights set!	mail	zh	ACL 权限检索失败，似乎未设置任何权限！
 activating by date requires a start- and end-date!	mail	zh	以日期激活需要一个开始和结束日期！
 add all my aliases	mail	zh	添加我所有的别名
+add files as %1	mail	zh	添加文件为 %1
 add raw message, ignore mail attachments	mail	zh	将邮件转换为项目，添加原始信息（忽略邮件附件）。
 add to addressbook	mail	zh	添加至通讯录
+adding %1 to blacklisted email addresses failed because of %2	mail	zh	将 %1 添加到黑名单电子邮件地址失败，原因是 %2
+adding %1 to whiltelisted email addresses failed because of %2	mail	zh	将 %1 添加到已列入黑名单的电子邮件地址失败，原因是 %2
 after reply, visible during compose	mail	zh	回复后，在撰写过程中可见
 aliases+forwards	mail	zh	别名+转发
 all of	mail	zh	所有的
@@ -14,10 +18,17 @@ always show notifiction	mail	zh	总是显示通知
 answered	mail	zh	已回答
 any of	mail	zh	任何
 any status	mail	zh	任何状态
+attach files	mail	zh	附加文件
+attach users vcard at compose to every new mail	mail	zh	在撰写每封新邮件时附加用户的 vCard
+attachment has been saved successfully.	mail	zh	附件已成功保存。
 attachments	mail	zh	附件
+attachments, ...	mail	zh	附件，...
+be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	zh	请注意，将所有选定文件添加为 %1 模式时，也会将列表中的所有现有附件更改为 %2 模式。\n \n 您想继续吗？
+be aware that all attachments will be sent as %1!	mail	zh	请注意，所有附件都将以 %1 模式发送！
 by date	mail	zh	以日期
 by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	zh	默认情况下，"http://"只是用 "https://"代替。您可以随意配置 "https://proxy.egroupware.org/"，使其也能加载仅通过 http 提供的图片。
 caching of flags	mail	zh	标记缓存
+changing subject failed because of %1	mail	zh	更改主题失败，因为 %1
 changing subject failed folder %1 does not exist	mail	zh	更改主题失败 文件夹 %1 不存在
 check message against next rule also	mail	zh	也用下一个规则检查邮件
 compose	mail	zh	撰写
@@ -54,15 +65,29 @@ draft folder	mail	zh	草稿夹
 edit account	mail	zh	编辑账户
 edit vacation settings	mail	zh	编辑假期设置
 emailaddress	admin	zh	邮件地址
+emailadmin: profilemanagement	mail	zh	eMailAdmin： 资料管理
+emails in whitelisted domains are not marked as spam	mail	zh	白名单域名中的电子邮件不会被标记为垃圾邮件
 empty trash	mail	zh	清空回收站
 enable	mail	zh	启用
+enabled	mail	zh	已启用
+encrypt your message with smime certificate	mail	zh	使用 S/MIME 证书加密邮件
 event details follow	mail	zh	事件细节
 everyone	mail	zh	所有人
+examine namespace to retrieve folders in others and shared	mail	zh	检查命名空间以检索他人和共享文件夹
 extended	mail	zh	扩展
-file into	mail	zh	文件插入
+failed to subscribe folder %1!	mail	zh	订阅文件夹 %1 失败！
+failed to unsubscribe folder %1!	mail	zh	取消订阅文件夹 %1 失败！
+file into	mail	zh	移至
+file into:	mail	zh	移至：
 filemanager	mail	zh	文件管理器
+filemode has been switched to %1	mail	zh	文件模式已切换为 %1
 flagged	mail	zh	已标记
+flagged %1 messages as %2 in %3	mail	zh	在 %3 中将 %1 邮件标记为 %2
+flagged %1 messages as flagged in %2	mail	zh	将 %1 邮件标记为 %2 邮件
+flagged %1 messages as unflagged in %2	mail	zh	在 %2 中将 %1 邮件标记为未标记邮件
 folder	mail	zh	邮件夹
+folder %1 %2 failed because of %3!	mail	zh	文件夹 %1 %2 因 %3 而失败！
+folder %1 has been created successfully, although the subscription failed because of %2	mail	zh	文件夹 %1 已成功创建，但由于 %2 的原因订阅失败
 folder settings	mail	zh	邮件夹设置
 forward	mail	zh	转发
 forward to	mail	zh	转发到
@@ -71,20 +96,44 @@ from(a->z)	mail	zh	从 (A->Z)
 from(z->a)	mail	zh	从 (Z->A)
 general	admin	zh	通用
 greater than	mail	zh	大于
+handling of external http images / mixed content in mails	mail	zh	处理电子邮件中的外部 http 图像/混合内容
 header lines	mail	zh	邮件头
 html	mail	zh	HTML
+ident name	mail	zh	标识名称
+ident name email	mail	zh	身份名称 [电子邮件］
+ident name organization email	mail	zh	身份名称 组织 [电子邮件］
 identity	mail	zh	身份
+identity label	mail	zh	身份标签
 if	mail	zh	如果
 if mail header	mail	zh	如果邮件头
 if message size	mail	zh	如果邮件大小
+if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	zh	如果你想单击邮件主题查看邮件预览，请启用此功能。
+if you would like to select multiple folders in one action, you can hold ctrl key then select a folder as start range and another folder within a same level as end range, all folders in between will be selected or unselected based on their current status.	mail	zh	如果想在一次操作中选择多个文件夹，可以按住 ctrl 键，然后选择一个文件夹作为起始范围，选择同级别的另一个文件夹作为结束范围。
 imap	mail	zh	IMAP
 imap server	mail	zh	IMAP 服务器
+import of message %1 failed. could not save message to folder %2 due to: %3	mail	zh	导入邮件 %1 失败。由于以下原因，无法将邮件保存到 %2 文件夹： %3
+import of message %1 failed. destination folder %2 does not exist.	mail	zh	导入邮件 %1 失败。目标文件夹 %2 不存在。
+import of message %1 failed. destination folder not set.	mail	zh	导入信息 %1 失败。未设置目标文件夹。
+import of message %1 failed. no contacts to merge and send to specified.	mail	zh	导入信息 %1 失败。没有指定要合并和发送的联系人。
+importance	mail	zh	重要性
+important	mail	zh	重要信息
+in mailbox: %1, with id: %2, and partid: %3	mail	zh	邮箱中：%1，ID：%2，PartID：%3
+in order to protect your privacy all external sources within this email are blocked.	mail	zh	为了保护您的隐私，此电子邮件中的所有外部来源均已封锁。
 inbox	mail	zh	收件箱
 information to show on email tag	mail	zh	电子邮件标签上显示的信息
+initialization of mail failed. please use the wizard to cope with the problem.	mail	zh	邮件模块初始化失败。请使用配置向导更正配置。
+inline	mail	zh	转发
+insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)	mail	zh	打开撰写对话框时在新邮件（或回复）顶部插入签名（可能无法切换签名）
+job	mail	zh	工作
+junk	mail	zh	垃圾邮件
+junk folder	mail	zh	垃圾邮件文件夹
 keep a copy of the message in your inbox	mail	zh	在收件箱保留一个邮件副本
 kilobytes	mail	zh	kb
 later	mail	zh	晚一点
+learning as ham (not spam) failed because of %1	mail	zh	由于 %1 的原因，作为火腿肠（非垃圾邮件）学习失败
+learning as spam failed because of %1	mail	zh	学习垃圾邮件失败，因为 %1
 less than	mail	zh	少于
+limit mailing list results when searching for addresses	mail	zh	搜索地址时限制邮件列表结果
 list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	zh	默认开启/激活的操作列表（例如，邮件撰写保存为 InfoLog 操作）
 mail	common	zh	邮件
 mail acl	mail	zh	访问权限
@@ -96,6 +145,8 @@ mail-address	mail	zh	邮件地址
 mailaccount	mail	zh	邮件账户
 mailinglist	mail	zh	邮件列表
 mails	common	zh	邮件
+mails can be copied to that folder via context menu, if folder is configured.	mail	zh	如果已配置文件夹，则可通过上下文菜单将邮件复制到该文件夹。
+mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	zh	邮件服务器报告：\n%1 \您想立即删除所选邮件（单击“确定”）吗？\n如果没有，请在继续之前尝试清空垃圾文件夹。 （点击取消）
 mark all as read	mail	zh	标记所有为已读
 mark all messages in folder as read	mail	zh	将文件夹中的所有邮件标记为已读
 mark as deleted	mail	zh	标记为已删除
@@ -137,11 +188,18 @@ printing	mail	zh	打印
 push notifications	mail	zh	推送通知
 quicksearch	mail	zh	快速搜索
 quicksearch (with cc)	mail	zh	快速搜索（+复制）
+real name	mail	zh	真实姓名
+real name email	mail	zh	真实姓名 [电子邮件］
+real name organization email	mail	zh	真实姓名 组织 [电子邮件］
 refresh time in minutes	mail	zh	刷新时间分钟数
 reject with	mail	zh	拒绝
+remember the password for	mail	zh	记住以下密码
 remove all	mail	zh	全部删除
 remove immediately	mail	zh	立刻删除
+removing %1 from blacklisted email addresses failed because of %2	mail	zh	从黑名单电子邮件地址中移除 %1 失败，原因是 %2
+removing %1 from whiltelisted email addresses failed because of %2	mail	zh	从白名单电子邮件地址中移除 %1 失败，原因是 %2
 rename folder	mail	zh	重命名邮件夹
+replace 'http://' in image urls with (trailing / required!)	mail	zh	将图片网址中的 "http://"替换为（尾部/必须！）。
 replied	mail	zh	已回复
 reply	mail	zh	回复
 reply all	mail	zh	全部回复
@@ -176,8 +234,18 @@ sort order	mail	zh	分类排序
 subject(a->z)	mail	zh	主题 (A->Z)
 subject(z->a)	mail	zh	主题 (Z->A)
 text	mail	zh	文字
-the mimeparser can not parse this message.	mail	zh	mime 解析器不能解析这个邮件。
+the imap server need to meet certain requirements and be configured for it:	mail	zh	IMAP 服务器需要满足某些要求并为此进行配置：
+the mimeparser can not parse this message.	mail	zh	MIME 解析器不能解析这个邮件。
+the rule with priority %1 successfully saved!	mail	zh	优先级为 %1 的规则已成功保存！
 then	mail	zh	然后
+there is no space left to store sieve script, please check sieve_maxscriptsize option on your mailserver's config.	mail	zh	没有剩余空间存储筛子脚本，请检查邮件服务器配置中的 sieve_maxscriptsize 选项。
+this mail contains external images served via insecure http protocol. be aware showing or allowing them can compromise your security!	mail	zh	此邮件包含通过不安全 HTTP 协议提供的外部图片。请注意，显示或允许这些图片可能会危及您的安全！
+this message is smime encrypted and password protected.	mail	zh	此邮件经过 S/MIME 加密并受密码保护。
+timeout on connections to your imap server	mail	zh	IMAP 服务器连接超时
+to do	mail	zh	操作
+toggle all folders view for %1	mail	zh	切换 %1 的所有文件夹视图
+toggled on actions	mail	zh	切换操作
+trash	mail	zh	回收
 trash folder	mail	zh	回收站
 unflagged	mail	zh	已清除标记
 unread	mail	zh	未读

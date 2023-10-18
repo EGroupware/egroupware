@@ -1,8 +1,11 @@
 %1 email addresses inserted	common	da	%1 e-mail adresser insat
+%1 email(s) added into %2	common	da	%1 e-mail(e) tilføjet til %2
 %1 is not executable by the webserver !!!	common	da	%1 kan ikke udføres af Web server
+%1 more %2 selected ...	common	da	%1 flere %2 valgt...
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	da	%1Vælg en anden folder%2<br/>eller gør %3 skrivbar for Web server
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	da	%1EGroupware%2 er et multi-bruger, web-baseret sammenarbejds værktøj skrevet i %3PHP%4.
 '%1' copied to clipboard	common	da	'%1' kopieret til udklipsholderen
+'%1' is not a valid json file!	common	da	'%1' er ikke en gyldig JSON-fil
 00 (disable)	admin	da	00 (deaktiveret)
 1 day	common	da	1 hour
 1 hour	common	da	1 time
@@ -84,6 +87,7 @@ author	common	da	Forfatter
 autohide sidebox menus	common	da	Gem automatisk sidemenuen
 automatically hide the sidebox menus?	common	da	Skal sidemenuen automatisk gemmes?
 autosave default category	common	da	Autogem Standard Kategori
+avatar	common	da	Avatar
 azerbaijan	common	da	Azerbaijan
 back	common	da	Tilbage
 back to user login	common	da	Tilbage til bruger login
@@ -111,6 +115,7 @@ bottom	common	da	Bottom
 bouvet island	common	da	Bouvet Øen
 brazil	common	da	Brazilien
 british indian ocean territory	common	da	Britisk Indiske ocean
+browser %1 %2 is not recommended. you may experience issues and not working features. please use the latest version of chrome, firefox or edge. thank you!	common	da	Browseren %1 %2 anbefales ikke. Du kan opleve problemer og funktioner, der ikke fungerer. Brug venligst den nyeste version af Chrome, Firefox eller Edge. Tak for hjælpen!
 brunei darussalam	common	da	Brunei Darussalam
 bulgaria	common	da	Bulgarien
 burkina faso	common	da	Burkina Faso
@@ -136,6 +141,7 @@ chad	common	da	Chad
 change	common	da	Ændre
 changed	common	da	Ændret
 charset	common	da	utf-8
+check for empty values in if statements.  example {{if url~empty~~website:}} - if url is not empty, writes "website:"	common	da	Tjek for tomme værdier i IF-sætninger. Eksempel {{IF url~EMPTY~~Website:}} - Hvis url ikke er tom, skrives "Website:"
 check installation	common	da	Kontroller installation
 check now	common	da	Check nu
 checkbox	common	da	Afkrydsningsboks
@@ -197,7 +203,9 @@ cyprus	common	da	Cupern
 czech republic	common	da	Tjekkiet
 dark mode	common	da	Mørk tilstand
 date	common	da	Dato
+date + time	common	da	Dato + klokkeslæt
 date due	common	da	Skal være færdig
+date+time	common	da	Dato+klokkeslæt
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	da	Daytime port.<br>Hvis port 13 bruges, åben venligst din firewall før denne side gemmes.<br>(Port: 13 / Host: 129.6.15.28)
 day	common	da	Dag
 days	common	da	dage
@@ -234,6 +242,7 @@ domain name for mail-address, eg. "%1"	common	da	domænenavn til e-mail adresser
 domestic	common	da	Indenrigs
 dominica	common	da	Dominica
 dominican republic	common	da	Dominikanske Republik
+don't ask again!	common	da	Spørg ikke igen!
 done	common	da	Udført
 download	common	da	Download
 duration	common	da	Varighed
@@ -264,6 +273,7 @@ error renaming %1 %2 directory	common	da	Fejl ved omdøbningen af biblioteket %1
 estonia	common	da	Estland
 ethiopia	common	da	Etiopien
 exact	common	da	nøjagtig
+example {{letterprefix}} - gives a letter prefix without double spaces, if the title is emty for  example	common	da	Eksempel {{LETTERPREFIX}} - Giver et bogstavpræfiks uden dobbeltmellemrum, hvis titlen er tom, f.eks.
 failed to change password.	common	da	Det lykkedes ikke at ændre adgangskoden.
 failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	da	Kan ikke kontakte server eller ugyldigt svar fra server. Prøv at logge ind igen. Kontakt administrator i tilfælde af fejl.
 falkland islands (malvinas)	common	da	Falklands Øerne
@@ -349,6 +359,7 @@ how many icons should be shown in the navbar (top of the page). additional icons
 how many rows to print	common	da	Hvor mange rækker skal udskrives
 how to show the general egroupware menu ?	common	da	Sådan vises den generelle EGroupware-menu
 html	common	da	HTML
+html links to any entries linked to the current record, excluding attached files	common	da	HTML-links til alle poster, der er knyttet til den aktuelle post, undtagen vedhæftede filer
 hungary	common	da	Ungarn
 iceland	common	da	Island
 id	common	da	ID
@@ -366,9 +377,11 @@ insert placeholder	common	da	Indsæt pladsholder
 insert row after	common	da	Indsæt række efter
 insert row before	common	da	Indsæt række foran
 insert timestamp into description field	common	da	Insert timestamp into description field
+install	common	da	Installer
 install egroupware as mail-handler?	common	da	Installere EGroupware som mail-handler?
 international	common	da	International
 invalid 2-factor authentication code	common	da	Ugyldig kode for 2-faktor-autentifikation
+invalid email	common	da	Ugyldig e-mail
 invalid filename	common	da	Ugyldigt filnavn
 invalid ip address	common	da	Ugyldig IP
 invalid or expired 'remember me' token	common	da	Ugyldig eller udløbet "husk mig"-token
@@ -542,9 +555,16 @@ password	common	da	Adgangskode
 password could not be changed	common	da	Adgangskoden kunne ikke ændres
 password has been updated	common	da	Password er opdateret
 path to user and group files has to be outside of the webservers document-root!!!	common	da	Sti til bruger og gruppe filer SKAL VÆRE UDEN FOR webserverens dokument-rod!!!
+permission denied!	common	da	Tilladelse nægtet!
+permission denied! this is an administration only feature.	common	da	Tilladelse nægtet! Dette er kun en administrationsfunktion.
 permissions to the files/users directory	common	da	Rettigheder for fil/bruger mappen
+permisson denied!	common	da	Tilladelse nægtet!
 personal	common	da	Personlig
 peru	common	da	Peru
+pg down	common	da	Side ned
+pg up	common	da	Side op
+pgp encryption	common	da	PGP-kryptering
+pgp encryption installation	common	da	Installation af PGP-kryptering
 philippines	common	da	Fillipinerne
 phone number	common	da	Telefonnummer
 pitcairn	common	da	Pitcairn
@@ -552,10 +572,14 @@ placeholders	common	da	Pladsholdere
 play/pause	common	da	Afspilning/Pause
 please %1 by hand	common	da	Udfør venligst %1 manuelt
 please enter a name	common	da	Indtast venligst et navn!
+please reload the egroupware desktop (f5 / cmd+r).	common	da	Genindlæs venligst EGroupware-skrivebordet (F5 / Cmd+r).
+please remember to use '%1' as username for local login's from now on!	common	da	Husk at bruge '%1' som brugernavn til lokale login fra nu af!
 please run setup to become current	common	da	Kør venligst setup for at blive opdateret
 please select	common	da	Vælg venligst
 please set your global preferences	common	da	Indstil venligst dine globale indstillinger!
 please set your preferences for this application	common	da	Indtast venligst dine præferencer for denne applikation
+please type %1 more characters	common	da	Skriv venligst %1 tegn mere
+please type 1 more character	common	da	Skriv venligst 1 tegn mere
 please wait...	common	da	Vent venligst...
 poland	common	da	Polen
 popup with search	common	da	Popup vindue med søg
@@ -639,12 +663,14 @@ show all categorys	common	da	Vis alle kategorier
 show menu	common	da	vis menu
 show page generation time	common	da	Vis side generations tid
 show page generation time on the bottom of the page?	common	da	Vis side generations tiden i bunden af siden?
+show password	common	da	Vis adgangskode
 show_more_apps	common	da	vis_flere_applikationer
 showing %1	common	da	Viser: %1
 showing %1 - %2 of %3	common	da	Viser: %1 - %2 ud af %3
 sierra leone	common	da	Sierra Leone
+sign up	common	da	Tilmelding
 singapore	common	da	Singapore
-site configuration	common	da	Site konfiguration
+site configuration	common	da	Konfiguration app
 size	common	da	Størrelse
 slovakia	common	da	Slovakiet
 slovenia	common	da	Slovenien
@@ -761,6 +787,9 @@ you have not entered participants	common	da	Du har ikke indtastet deltagere
 you have selected an invalid date	common	da	Du har valgt en ugyldig dato!
 you have selected an invalid main category	common	da	Du har valgt en ugyldig hovedkategori!
 you have successfully logged out	common	da	Du har logget ud
+your account has been updated with new data from your identity provider.	common	da	Din konto er blevet opdateret med nye data fra din identitetsudbyder.
+your browser is not up-to-date (javascript es6 compatible), you may experience some of the features not working.	common	da	Din browser er ikke opdateret (JavaScript ES6-kompatibel), du kan opleve, at nogle af funktionerne ikke virker.
+your key has been restored successfully.	common	da	Din nøgle er blevet gendannet med succes.
 your message could <b>not</b> be sent!<br>	common	da	Din besked kunne <b>ikke</b> sendes!
 your message has been sent	common	da	Din besked er afsendt
 your password does not have required strength of %1 character classes and minimum length of %2 characters.	common	da	Din adgangskode har ikke den krævede styrke på %1 tegnklasser og en minimumslængde på %2 tegn.

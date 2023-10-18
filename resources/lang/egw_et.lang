@@ -1,23 +1,46 @@
+%1 accessories now resources	resources	et	%1 tarvikud nüüd ressursid
+%1 accessories restored	resources	et	%1 tarvikud taastatud
+%1 resource(s) %2	resources	et	%1 ressurss(id) %2
+%1 resource(s) %2, %3 failed	resources	et	%1 ressurss(id) %2, %3 ebaõnnestus(id)
+%1 resource(s) %2, %3 failed because of insufficent rights !!!	resources	et	%1 ressurss(id) %2, %3 ebaõnnestus ebapiisavate õiguste tõttu !!!
+%1 resource(s) booked	resources	et	%1 ressurss(id) broneeritud
+%1 resource(s) view calendar	resources	et	%1 ressurss(id) vaadata kalendrit
+accessories	resources	et	Aksessuaarid
+accessories of	resources	et	Aksessuaarid alates
+accessories:	resources	et	Tilbehør:
+accessory of	resources	et	Tarvikud alates
 actions	resources	et	Tegevused
+add group to event participants	resources	et	Lisa grupp ürituse osalejatele
 all categories	resources	et	Kõik kategooriad
+allow booking requests from any user when creating events?	resources	et	Luba broneerimistaotlusi igalt kasutajalt sündmuste loomisel?
+booking requests	resources	et	Broneerimistaotlused
+category admin	resources	et	Kategooria administraator
+category saved.	resources	et	Kategooria salvestatud.
 check all	resources	et	Kontrolli kõik
+choose category admin	resources	et	Valige kategooria admin
 configure access permissions	admin	et	Konfigureeri Ligipääsu Õigusi
 create new links	resources	et	Tee uued lingid
 days	resources	et	päeva
+delete accessories of selected resources too?	resources	et	Samuti kustutada valitud ressursside tarvikud?
 delete this entry	resources	et	kustuta see kirje
 deleted	resources	et	kustutatud
+do you really want to delete this resource?	resources	et	Kas te tõesti soovite seda ressurssi kustutada?
 edit this entry	resources	et	Muuda seda kirjet
 existing links	resources	et	Eksisteerivad lingid
 general	resources	et	Üldine
 global categories	resources	et	Globaalsed Kategooriad
-hours	resources	et	tundi
+hours	resources	et	Tundi
+icon	resources	et	Ikoon
 inventory number	resources	et	Inventari number
 inventory number:	resources	et	Inventari number:
 links	resources	et	Lingid
 location	resources	et	Asukoht
 location:	resources	et	Asukoht:
 name:	resources	et	Nimi:
+no - leave them	resources	et	Ei - jätke need alles
+no - make them resources	resources	et	Ei - muuta need ressurssideks
 no description available	resources	et	Kirjeldust ei ole
+no, users will need to contact users with direct booking permission	resources	et	Ei, kasutajad peavad võtma ühendust kasutajatega, kellel on otsene broneerimisõigus
 picture	resources	et	Pilt
 quantity	resources	et	Kogus
 quantity:	resources	et	Kogus:
@@ -26,6 +49,8 @@ resources	common	et	Resursid
 select a category	resources	et	Vali Kategooria
 select resources	common	et	Vali resursid
 short description	resources	et	Lühike kirjeldus
+un-delete accessories of selected resources too?	resources	et	Taastada valitud ressursside tarvikud?
 useable	resources	et	kasutatav
-useable:	resources	et	Kasutatav:
 write permissions	resources	et	Kirjutamise õigused
+yes - delete accessories too	resources	et	Jah - kustutada ka tarvikud
+yes - un-delete accessories too	resources	et	Jah - taastada ka tarvikud

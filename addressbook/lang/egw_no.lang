@@ -1,3 +1,8 @@
+%1 contact(s) %2, %3 failed because of %4 !!!	addressbook	no	%1 kontakt(er) %2, %3 mislyktes på grunn av %4!!!
+%1 contacts updated (%2 errors).	addressbook	no	%1 kontakter oppdatert (%2 feil).
+%1 key(s) added to public keyserver "%2".	addressbook	no	%1-nøkkel(er) lagt til på den offentlige nøkkelserveren "%2".
+%1 not implemented for %2!	addressbook	no	%1 ikke implementert for %2!
+%1 public keys added.	addressbook	no	%1 offentlige nøkler lagt til.
 %1 records imported	addressbook	no	%1 rekker importert
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	no	%1 rekker lest (ikke importert enda, du kan gå %2tilbake%3 og fjerne haken på Test Import.
 (e.g. 1969)	addressbook	no	(eks. 1969)
@@ -6,24 +11,37 @@
 actions	addressbook	no	Funksjoner
 add a single entry by passing the fields.	addressbook	no	Legg til ett enkelt innslag ved å fylle inn feltene.
 add custom field	addressbook	no	Legg til egendefinert felt
+add customfield to links of addressbook, which displays in other applications. the default value is none customfield.	addressbook	no	Legg til egendefinert felt i lenker i adresseboken, som vises i andre programmer. Standardverdien er ingen egendefinerte felt.
+add to bcc	addressbook	no	Legg til i Blindkopi
+add to cc	addressbook	no	Legg til i Kopi
+add to distribution list	addressbook	no	Legg til i distribusjonslisten
+add to distribution list:	addressbook	no	Legg til i distribusjonslisten:
+add to to	addressbook	no	Legg til i Til
 added	addressbook	no	Lagt til
 address book	common	no	Addressebok
-address book - vcard in	addressbook	no	Adressebok - VCard inn
+address book - vcard in	addressbook	no	Adressebok - vCard inn
 address book - view	addressbook	no	Adressebok - vis
 address line 2	addressbook	no	Adresse Linje 2
 address type	addressbook	no	Adressetype
 addressbook	common	no	Adressebok
+addressbook list	addressbook	no	Liste over adressebøker
 addressbook preferences	addressbook	no	Adressebok preferanser
 addressbook-fieldname	addressbook	no	Adressebok-Feltnavn
-addvcard	addressbook	no	Legg til VCard
+addvcard	addressbook	no	Legg til vCard
 advanced search	addressbook	no	Avansert søk
+all addressbooks	addressbook	no	Alle adressebøker
+all types	addressbook	no	Alle typer
+allow	addressbook	no	Tillat
+allow for contacts only	addressbook	no	Tillat kun for kontakter
 alt. csv import	addressbook	no	Alt. CSV Import
 always	addressbook	no	Alltid
 are you shure you want to delete this contact?	addressbook	no	Er du sikker på at du ønsker å slette denne kontakten?
 are you sure you want to delete this field?	addressbook	no	Er du sikker du vil slette dette feltet?
+audio call	addressbook	no	Lydanrop
 birthday	common	no	Fødselsdag
 birthdays	common	no	Fødselsdager
 blank	addressbook	no	Tom
+browser location	addressbook	no	Nettleserplassering
 business	common	no	Arbeid
 business city	addressbook	no	By, Arbeid
 business country	addressbook	no	Land, Arbeid
@@ -33,11 +51,14 @@ business phone	addressbook	no	Telefon, Arbeid
 business state	addressbook	no	Fylke, Arbeid
 business street	addressbook	no	Gate, Arbeid
 business zip code	addressbook	no	Postkode, Arbeid
+calendar integration	addressbook	no	Kalenderintegrering
 car phone	addressbook	no	Bil Telefon
 cell phone	addressbook	no	Mobiltelefon
+change addressbook when updating	addressbook	no	Endre adressebok ved oppdatering
 charset of file	addressbook	no	Karaktersett for filen
 check all	addressbook	no	Kontroller alle
 choose an icon for this contact type	admin	no	Velg et ikon for denne kontakttype
+choose pre-defined map source or use custom url (use %r = street, %t = city, %c = country, %z = zipcode)	admin	no	Velg forhåndsdefinert kartkilde eller bruk egendefinert URL (bruk %r = gate, %t = by, %c = land, %z = postnummer)
 chosse an etemplate for this contact type	admin	no	Velg en emal for denne kontakttype
 city	common	no	By
 company	common	no	Firma
@@ -47,23 +68,30 @@ contact	common	no	Kontakt
 contact application	admin	no	Kontakt program
 contact saved	addressbook	no	Kontakt lagret
 contact settings	admin	no	Kontakt Innstillinger
-contains	addressbook	no	inneholder
+contains	addressbook	no	Inneholder
 copied by %1, from record #%2.	addressbook	no	Kopiert av %1, fra rekke #%2.
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	addressbook	no	Kopier endringene dine til utklippstavlen, %1oppfrisk forekomsten%2 og sammenstill de
 country	common	no	Land
 create new links	addressbook	no	Opprette nye lenker
 created	addressbook	no	Opprettet
 credit	addressbook	no	Krediter
+crm-view	addressbook	no	CRM-visning
 csv-fieldname	addressbook	no	CSV-Feltnavn
 csv-filename	addressbook	no	CSV-FIlnavn
 custom	addressbook	no	Egendefinert
 custom fields	addressbook	no	Egendefinerte Felter
 debug output in browser	addressbook	no	Feilsøkingsmeldinger i webleser
 default	addressbook	no	Standard
+default action on double-click	addressbook	no	Standardhandling ved dobbeltklikk
 default filter	addressbook	no	Standard Filter
+default geolocation source address	addressbook	no	Standard adresse for GeoLocation-kilde
 delete a single entry by passing the id.	addressbook	no	Oppgi id for å slette ett enkelt innslag.
 deleted	addressbook	no	slettet
 department	common	no	Avdeling
+disable	addressbook	no	Deaktiver
+disable last/next event column	addressbook	no	Deaktiver kolonnen Siste/neste hendelse
+distribution list renamed	addressbook	no	Distribusjonsliste har fått nytt navn
+distribution lists as groups	addressbook	no	Distribusjonslister som grupper
 do your really want to delete this contact?	addressbook	no	Ønsker du virkelig å slette denne kontakten?
 doesn't matter	addressbook	no	Spiller ingen rolle
 domestic	addressbook	no	Innenlands
@@ -76,15 +104,25 @@ edit custom fields	admin	no	Endre egendefinerte felter
 edit phonenumbers -	addressbook	no	Endre telefonnummere
 email & internet	addressbook	no	E-mail og Internett
 empty	admin	no	Uten innhold
+empty addressbook before importing	addressbook	no	Slett adressebokoppføringer som ikke er i CSV-listen
 empty for all	addressbook	no	tom for alle
 end	addressbook	no	Slutt
 enter the path to the exported file here	addressbook	no	Skriv inn sti til den eksporterte filen her
 error: the entry has been updated since you opened it for editing!	addressbook	no	Feil: Denne forekomsten er endret siden du åpnet den for redigering!
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	addressbook	no	Eksempel {{IF n_prefiks~Mr~Hallo Mr.~Hello Ms.}} - søk i feltet "n_prefix" etter "Mr", hvis funnet, skriv Hello Mr., ellers skriv Hello Ms.
+example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	preferences	no	Eksempel {{LETTERPREFIXCUSTOM n_prefiks tittel n_familie}} - Eksempel: Herr Dr. James Miller
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	addressbook	no	Eksempel {{NELF rolle}} - hvis feltet rolle ikke er tomt, får du en ny linje med verdien for feltet rolle.
+example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	addressbook	no	Eksempel {{nenvlf rolle}} - hvis feltet rolle ikke er tomt, settes en LF uten noen verdi for feltet.
 existing links	addressbook	no	Eksisterende lenker
 export contacts	addressbook	no	Eksporter Kontakter
+export definition to use for nextmatch export	addressbook	no	Eksportdefinisjon som skal brukes til nextmatch-eksport
+export definitition to use for nextmatch export	addressbook	no	Eksportdefinisjon som skal brukes til nextmatch-eksport
 export file name	addressbook	no	Eksport filnavn
 export from addressbook	addressbook	no	Eksport fra Adresseliste
+exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	no	Eksporterer kontakter fra adresseboken til en CSV-fil.  CSV betyr "kommaseparerte verdier". I alternativfanen kan du også velge andre separatorer.
 extra	addressbook	no	Ekstra
+favorite phone	addressbook	no	Favoritt-telefon
+favorites	addressbook	no	Favoritter
 fax	addressbook	no	Telefaks
 fax number	common	no	Telefaks Nummer
 field %1 has been added !	addressbook	no	Felt %1 ble lagt til !
@@ -92,9 +130,13 @@ field %1 has been updated !	addressbook	no	Felt %1 ble oppdatert!
 field name	addressbook	no	Felt Navn
 fields to show in address list	addressbook	no	Felt som skal vises i adresseliste
 fieldseparator	addressbook	no	Feltskiller
+for serial letter use this tag. put the content, you want to repeat between two tags.	addressbook	no	Bruk denne taggen for seriebokstaver. Plasser innholdet du vil gjenta mellom to tagger.
+freebusy uri	addressbook	no	FreeBusy URI
 full name	addressbook	no	Fullt Navn
 general	admin	no	Generell
 geo	addressbook	no	GEO
+geolocation	addressbook	no	GeoLocation
+geolocation integration	admin	no	Integrering av GeoLocation
 global categories	addressbook	no	Globale Kategorier
 grant addressbook access	common	no	Gi adressebok tilgang
 h	addressbook	no	t
@@ -111,14 +153,21 @@ import contacts	addressbook	no	Importer Kontakter
 import csv-file into addressbook	addressbook	no	Importer CSV-fil i Adresselisten
 import file	addressbook	no	Importer Fil
 import from	addressbook	no	Importer fra
-import from ldif, csv, or vcard	addressbook	no	Importer fra LDIF, CSV eller VCard
+import from ldif, csv, or vcard	addressbook	no	Importer fra LDIF, CSV eller vCard
 import from outlook	addressbook	no	Importer fra Outlook
-import multiple vcard	addressbook	no	Importer flere VCard
+import multiple vcard	addressbook	no	Importer flere vCard
 import next set	addressbook	no	Importer neste sett
-import_instructions	addressbook	no	I Netscape, åpne adresselisten og velg <b>Eksporter</b> fra <b>Fil</b> menyen. Den eksporterte filen vil være i LDIF format. I Outlook velger du Kontakter mappen, så <b>Import og eksport...</b> fra <b>Fil</b> menyen, og eksporterer kontaktene til en kommaseparert (CSV) fil.<p>For Palm Desktop 4.0 og høyere, gå til adresseliste og velg <b>Eksport</b> fra <b>Fil</b> menyen. Den eksporterte filen vil være på VCard format.
+import_instructions	addressbook	no	I Netscape, åpne adresselisten og velg <b>Eksporter</b> fra <b>Fil</b> menyen. Den eksporterte filen vil være i LDIF format. I Outlook velger du Kontakter mappen, så <b>Import og eksport...</b> fra <b>Fil</b> menyen, og eksporterer kontaktene til en kommaseparert (CSV) fil.<p>For Palm Desktop 4.0 og høyere, gå til adresseliste og velg <b>Eksport</b> fra <b>Fil</b> menyen. Den eksporterte filen vil være på vCard format.
+importer's personal	addressbook	no	Importerer personlig
+imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	no	Importerer kontakter til adresseboken fra en CSV-fil. CSV betyr "kommaseparerte verdier". I alternativfanen kan du også velge andre separatorer.
+imports contacts into your addressbook from a vcard file.	addressbook	no	Importerer kontakter til adresseboken fra en vCard-fil.
 income	addressbook	no	Inntekt
 infolog	addressbook	no	Infologg
+infolog-organisation	addressbook	no	InfoLog-organisasjon
+insufficent rights to delete this list!	addressbook	no	Utilstrekkelige rettigheter til å slette denne listen!
+insufficent rights to edit this list!	addressbook	no	Utilstrekkelige rettigheter til å redigere denne listen!
 international	addressbook	no	Internasjonal
+invite to current call	addressbook	no	Inviter til gjeldende samtale
 label	addressbook	no	Etikett
 last modified	addressbook	no	Sist endret
 ldap context for contacts	admin	no	LDAP område for kontakter
@@ -128,8 +177,11 @@ line 2	addressbook	no	Linje 2
 links	addressbook	no	Lenker
 list all categories	addressbook	no	Liste alle kategorier
 list all customfields	addressbook	no	Liste alle egendefinerte felt
-load vcard	addressbook	no	Last VCard
+load custom fields in index, even if custom field column is off (eg. to display them in a specific index column)	addressbook	no	Last inn egendefinerte felt i indeksen, selv om kolonnen for egendefinerte felt er av (f.eks. for å vise dem i en spesifikk indekskolonne)
+load vcard	addressbook	no	Last vCard
 location	addressbook	no	Lokasjon
+mail vcard	addressbook	no	E-post vCard
+main categories in their own field	addressbook	no	Hovedkategorier i eget felt
 mark records as private	addressbook	no	Merk rekkene som private
 message phone	addressbook	no	Meldings Telefon?
 middle name	addressbook	no	Mellomnavn
@@ -137,10 +189,17 @@ mobile	addressbook	no	Mobil
 mobile phone	addressbook	no	Mobiltelefon
 modem phone	addressbook	no	Modem Telefon
 more ...	addressbook	no	Mere...
-multiple vcard	addressbook	no	Flere VCard
-no vcard	addressbook	no	Ingen VCard
+move to addressbook	addressbook	no	Flytt til adressebok
+multiple vcard	addressbook	no	Flere vCard
+name, email, phone	addressbook	no	Navn, e-post, telefon
+no distribution list	addressbook	no	Ingen distribusjonsliste
+no vcard	addressbook	no	Ingen vCard
 number	addressbook	no	Nummer
 number of records to read (%1)	addressbook	no	Antall rekker som leses (%1)
+open %1 crm view	addressbook	no	Åpne %1 CRM-visning
+open email addresses in external mail program	addressbook	no	Åpne EMail-adresser i eksternt e-postprogram
+open infolog crm view	preferences	no	Åpne InfoLog CRM-visning av kontakten
+open tracking system crm view	preferences	no	Åpne sporingssystemets CRM-visning
 options for type	admin	no	Valg for type
 organisation	addressbook	no	Organisasjon
 other number	addressbook	no	Annet Nummer
@@ -149,25 +208,41 @@ pager	common	no	Personsøker
 parcel	addressbook	no	Pakken
 participants	addressbook	no	Deltakere
 permission denied !!!	addressbook	no	Adgang nektet !
+permissiong denied! ask your administrator to allow regular uses to update their public keys.	addressbook	no	Tillatelse avslått! Be administratoren din om å tillate vanlige brukere å oppdatere sine offentlige nøkler.
+pgp key	addressbook	no	PGP-nøkkel
 phone number	common	no	Telefon Nummer
 phone numbers	common	no	Telefon Numre
 please enter a name for that field !	addressbook	no	Vennligst skriv inn feltnavn !
 postal	common	no	Post
 pref	addressbook	no	Pref.
 prefix	addressbook	no	Forstavelse
+private address	addressbook	no	Privat adresse
 public key	addressbook	no	Offentlig Nøkkel
+public sharing url	addressbook	no	URL for offentlig deling
 publish into groups:	addressbook	no	Publiser i grupper :
 read a list / search for entries.	addressbook	no	Les en liste / søk etter forekomster
 read a list of entries.	addressbook	no	Lese liste
 read a single entry by passing the id and fieldlist.	addressbook	no	Les ett enkelt innslag ved å gi id og feltliste.
 record access	addressbook	no	Rekketilgang
 record owner	addressbook	no	Rekkeeier
+remove from distribution list	addressbook	no	Fjern fra distribusjonsliste
+rename list	addressbook	no	Endre navn på liste
+rename selected distribution list	addressbook	no	Endre navn på valgt distribusjonsliste
 repetition	addressbook	no	Gjentakelse
 role	addressbook	no	Rolle
+schedule a video conference	addressbook	no	Planlegge en videokonferanse
+select a source address to be used in geolocation routing system	addressbook	no	Velg en kildeadresse som skal brukes i GeoLocation-rutingssystemet.
 select all	addressbook	no	Velg alle
+select an opened dialog	addressbook	no	Velg en åpnet dialogboks
 select the type of conversion	addressbook	no	Velg konverteringstype
 select the type of conversion:	addressbook	no	Velg konverterings type:
+send fax via email by replacing fax number with an email address	addressbook	no	Send faks via e-post ved å erstatte faksnummeret med en e-postadresse
+send succeeded to %1	common	no	Send vellykket til %1
 show	addressbook	no	Vis
+show active accounts	addressbook	no	Vis aktive kontoer
+show all accounts	addressbook	no	Vis alle kontoer
+smime key	addressbook	no	S/MIME-nøkkel
+special	addressbook	no	Spesiell
 start	admin	no	Start
 startrecord	addressbook	no	Startrekke
 state	common	no	Fylke
@@ -177,27 +252,38 @@ suffix	addressbook	no	Endelse
 tel home	addressbook	no	Tlf. hjemme
 test import (show importable records <u>only</u> in browser)	addressbook	no	Test Import (vis <u>kun</u> importerbare rekker i webleser)
 that field name has been used already !	addressbook	no	Feltnavnet er allerede i bruk !
+the zip extension is needed, to insert contact data in openoffice or msoffice documents.	addressbook	no	Zip-utvidelsen er nødvendig for å sette inn kontaktdata i LibreOffice- eller MS Office-dokumenter.
 this person's first name was not in the address book.	addressbook	no	Personens fornavn var ikke i adresseboken
 this person's last name was not in the address book.	addressbook	no	Personens etternavn var ikke i adresseboken
-to many might exceed your execution-time-limit	addressbook	no	for mange vil muligens overskride din eksekverings-tidsgrense
+title	addressbook	no	Jobbtittel
+to many might exceed your execution-time-limit	addressbook	no	For mange vil muligens overskride din eksekverings-tidsgrense
 today is %1's birthday!	common	no	I dag har %1 fødselsdag!
 tomorrow is %1's birthday.	common	no	I morgen er det %1's fødselsdag.
 translation	addressbook	no	Oversetting
 type	addressbook	no	Type
+unable to import into %1, using %2	addressbook	no	Kunne ikke importere til %1, bruker %2
+unknown type %1, imported as %2	addressbook	no	Ukjent type %1, importert som %2
 update a single entry by passing the fields.	addressbook	no	Oppdater ett enkelt innslag ved å legge inn felter.
 updated	addressbook	no	Oppdatert
+use a category tree?	addressbook	no	Bruk et tre for å velge kategorier
 use country list	addressbook	no	Bruk landliste
-vcard	common	no	VCard
-vcards require a first name entry.	addressbook	no	VCard krever fornavn.
-vcards require a last name entry.	addressbook	no	VCard krever etternavn.
+vcard	common	no	vCard
+vcards require a first name entry.	addressbook	no	vCard krever fornavn.
+vcards require a last name entry.	addressbook	no	vCard krever etternavn.
+video call	addressbook	no	Videoanrop
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	no	ADVARSEL!! LDAP er kun aktuellt dersom du IKKE bruker kontakter til konto lagring!
 warning: all contacts found will be deleted!	addressbook	no	Advarsel: Alle kontakter funnet vil bli slettet!
+when viewing a contact, show linked entries from the selected application	addressbook	no	Når du viser en kontakt, kan du vise koblede oppføringer fra det valgte programmet.
 work phone	addressbook	no	Telefon arbeid
+yes, only admins can purge deleted items	admin	no	Ja, bare administratorer kan slette slettede elementer
+yes, users can purge their deleted items	admin	no	Ja, brukere kan slette slettede elementer
 you are not permitted to delete contact %1	addressbook	no	Du har ikke tillatelse til å slette kontakt %1
 you are not permittet to delete this contact	addressbook	no	Du har ikke tillatelse til å slette denne kontakten
 you are not permittet to edit this contact	addressbook	no	Du har ikke tillatelse til å endre denne kontakten
 you are not permittet to view this contact	addressbook	no	Du har ikke tillatelse til å vise denne kontakten
-you must select a vcard. (*.vcf)	addressbook	no	Du må velge et vcard. (*.vcf)
+you must select a vcard. (*.vcf)	addressbook	no	Du må velge et vCard. (*.vcf)
 you must select at least 1 column to display	addressbook	no	Du må velge minst en kolonne for visning
+you need to select some entries first	addressbook	no	Du må velge noen oppføringer først
+your new public key has been stored in accounts addressbook.	addressbook	no	Den nye offentlige nøkkelen din er lagret i kontoens adressebok.
 zip code	common	no	Postnummer
 zip_note	addressbook	no	<p><b>Merk:</b>Denne filen kan være en pakket samling av .csv, .vcf eller .ldif filer. Du må ikke blande filtyper under import.

@@ -1,45 +1,61 @@
-accessories of	resources	no	Tilbehør til:
-accessories:	resources	no	Rekvisita
+%1 accessories now resources	resources	no	%1 tilbehør nå ressurser
+%1 accessories restored	resources	no	%1 tilbehør gjenopprettet
+%1 resource(s) %2	resources	no	%1 ressurs(er) %2
+%1 resource(s) %2, %3 failed	resources	no	%1 ressurs(er) %2, %3 mislyktes
+%1 resource(s) %2, %3 failed because of insufficent rights !!!	resources	no	%1 ressurs(er) %2, %3 mislyktes på grunn av utilstrekkelige rettigheter !!!!
+%1 resource(s) booked	resources	no	%1 ressurs(er) booket
+%1 resource(s) view calendar	resources	no	%1 ressurs(er) se kalender
+accessories	resources	no	Tilbehør
+accessories of	resources	no	Tilbehør fra
+accessories:	resources	no	Tilbehør:
+accessory of	resources	no	Tilbehør fra
 actions	resources	no	Aksjoner
 add accessory	resources	no	Legg til rekvista
+add group to event participants	resources	no	Legg til gruppe til deltakere på arrangementet
 add resource	resources	no	Legg til ressurs
 add resources	resources	no	Legg til ressurser
 administrator	resources	no	Administrator
 all categories	resources	no	Alle kategorier
+allow booking requests from any user when creating events?	resources	no	Tillate bestillingsforespørsler fra alle brukere når du oppretter arrangementer?
 book	resources	no	Bestill
 book selected resources	resources	no	Bestill valgte ressurser
 book this resource	resources	no	Bestille denne ressursen
 bookable	resources	no	Mulig å bestille
+booking requests	resources	no	Bestillingsforespørsler
 buy this article	resources	no	Kjøp denne artikkelen
 buy this resource	resources	no	Kjøp denne ressursen
 buyable	resources	no	Mulig å kjøpe
-categories admin	resources	no	Admin. av kategorier
+category admin	resources	no	Kategoriadministrator
+category saved.	resources	no	Kategorien er lagret.
 category:	resources	no	Kategori
 check all	resources	no	Kontroller alle
-choose categories admin	resources	no	Velg admin. for kategoriene
+choose category admin	resources	no	Velg kategoriadministrator
 clear selection	resources	no	Opphev valgene
 configure access permissions	admin	no	Konfigurer aksesstillatelser
 create new accessory for this resource	resources	no	Opprette nytt tilbehør til denne ressursen
 create new links	resources	no	Opprette nye lenker
 custom fields	resources	no	Egendefinerte Felter
-days	resources	no	dager
+days	resources	no	Dager
+delete accessories of selected resources too?	resources	no	Kan du også slette tilbehøret til de valgte ressursene?
 delete selected resources	resources	no	Slett valgte ressurser
 delete this entry	resources	no	Slett denne registreringen
 deleted	resources	no	slettet
 description (short)	resources	no	Beskrivelse (kort)
 direct booking permissions	resources	no	Deleger bestillingsrettigheter
-don't use vfs (this will need a symlink --> see readme)	resources	no	Ikke bruke vfs (dette trenger en symlink-->Se LESMEG
+do you really want to delete this resource?	resources	no	Vil du virkelig slette denne ressursen?
+don't use vfs (this will need a symlink --> see readme)	resources	no	Ikke bruke VFS (dette trenger en symlink-->Se LESMEG
 edit this entry	resources	no	Endre denne registreringen
 existing links	resources	no	Eksisterende lenker
 general	resources	no	Generell
 general informations about resource	resources	no	Generell informasjon om ressursen
 gernal resource	resources	no	Generell ressurs
 global categories	resources	no	Globale Kategorier
-hours	resources	no	timer
+hours	resources	no	Timer
 how many of the resources are useable?	resources	no	Hvor mange av ressursene er brukbare ?
 how many of them are useable?	resources	no	Hvor mange av dem er brukbare ?
 how many of this resource are usable	resources	no	Hvor mange av denne ressursen er brukbare ?
 how many of this resource exists	resources	no	Hvor mange eksisterer det av denne ressursen
+icon	resources	no	Ikon
 implies booking permission	resources	no	Innbefatter bestillingsrettigheter
 implies read permission	resources	no	Innbefatter leserettigheter
 information about storage	resources	no	Informasjon om lagersted
@@ -54,10 +70,14 @@ links	resources	no	Lenker
 location	resources	no	Lokasjon
 location of resource	resources	no	Lokasjon av ressurser
 location:	resources	no	Lokasjon:
+manage mapping	resources	no	Administrere kartlegging
 name of resource	resources	no	Navn på ressurs
 name:	resources	no	Navn:
+no - leave them	resources	no	Nei - la dem ligge
+no - make them resources	resources	no	Nei - gjør dem til ressurser
 no description available	resources	no	Ingen beskrivelse tilgjengelig
 no resources selected	resources	no	Ingen ressurser valgt
+no, users will need to contact users with direct booking permission	resources	no	Nei, brukere må kontakte brukere med direkte bestillingstillatelse.
 notify your administrator to correct this situation	resources	no	Gjør din EDB-ansvarlige beskjed om å korrigere denne situasjonen
 picture	resources	no	Bilde
 picture source	resources	no	Bildekilde
@@ -70,7 +90,9 @@ quantity of resource	resources	no	Antall av  ressurs
 quantity:	resources	no	Antall :
 read calendar permissions	resources	no	Kalendertillatelser for visning
 read permissions	resources	no	Lesetillatelser
+registration confirmed %1	resources	no	Registrering bekreftet %1
 related links	resources	no	Relaterte lenker
+remove accessories before changing accessory of	resources	no	Fjern tilbehør før du endrer Tilbehør til
 resources	common	no	Ressurser
 resources list	resources	no	Liste over ressurser
 responsible:	resources	no	Ansvarlig :
@@ -88,17 +110,19 @@ storage information	resources	no	Lagringsinformasjon
 storage information:	resources	no	Lagringsinformasjon:
 the calendar of this resource	resources	no	Kalender for denne ressursen
 this module displays the resources app	resources	no	Denne modulen viser ressursprogrammet
+un-delete accessories of selected resources too?	resources	no	Gjenopprette tilbehøret til de valgte ressursene?
+unable to link to %1 "%2"	resources	no	Kunne ikke lenke til %1 "%2"
 use general resources icon	resources	no	Bruk generelt ikon for ressursen
 use own picture	resources	no	Bruk eget bilde
 use the category's icon	resources	no	Bruk kategoriens ikon
 useable	resources	no	Brukbare
-useable:	resources	no	Brukbare:
-view accessories for this resource	resources	no	Vis tilbehør til denne ressursen
 view this entry	resources	no	Vis denne oppføringen
 web-page of resource	resources	no	Nettsider for ressursen
 web-site for this resource	resources	no	Nettsted for denne ressursen
 where to find this resource?	resources	no	Hvor finnes denne ressursen ?
 which category does this resource belong to?	resources	no	Hvilken kategori hører denne ressursen hjemme i
 write permissions	resources	no	Skrivetillatelser
+yes - delete accessories too	resources	no	Ja - Slett også tilbehør
+yes - un-delete accessories too	resources	no	Ja - Gjenopprett også tilbehør
 you are not permitted to get information about this resource!	resources	no	Du har ikke tillatelse til å få informasjon om denne ressursen
 you chose more resources than available	resources	no	Du valgte flere ressurser enn tilgjengelige

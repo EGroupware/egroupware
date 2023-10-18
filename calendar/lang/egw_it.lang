@@ -29,6 +29,7 @@ add alarm	calendar	it	Aggiungi Allarme
 add appointments via shortened dialog or complete edit window	calendar	it	Aggiunti appuntamenti con una finestra di dialogo più corta oppure con la finestra completa
 add current view as favorite	calendar	it	Aggiungi questa visualizzazione come preferita
 add new alarm	calendar	it	Aggiungi allarme
+add new event	calendar	it	Aggiungi un nuovo appuntamento
 add new participants or resource	calendar	it	Aggiungi nuovi partecipanti o risorse
 add timesheet entry	calendar	it	Aggiungi foglio ore
 added	calendar	it	Aggiunto
@@ -58,10 +59,11 @@ always	calendar	it	Sempre
 always use full edit dialog	calendar	it	Usa sempre l'immissione rapida
 always use the full edit dialog, not this little dialog	calendar	it	Usa sempre l'immissione completa
 apply the action on the whole query, not only the shown events	calendar	it	Applica all'intera interrogazione, NON solo agli eventi mostrati
-apply the changes	calendar	it	apllica le modifiche
+apply the changes	calendar	it	Apllica le modifiche
 appointment settings	calendar	it	Impostazioni appuntamenti
 as an alternative you can %1download a mysql dump%2 and import it manually into egw_cal_timezones table.	calendar	it	Come alternativa puoi %scaricare un dump del MySQL%2 e importare manualmente nella tabella egw_cal_timezones
 at start of the event	calendar	it	all'inizio dell'evento
+attention	calendar	it	Attenzione
 automatically purge old events after	admin	it	Cancella automaticamente gli eventi vecchi dopo
 available for the first entry inside each day of week or daily table inside the selected range:	calendar	it	Disponibile per la prima immissione in ogni giorno della settimana o tabella giornaliera all'interno dell'intervallo selezionato:
 back half a month	calendar	it	indietro di metà mese
@@ -99,9 +101,11 @@ category %1 removed because of missing rights	calendar	it	Categoria %1 rimossa, 
 category acl	common	it	ACL di categoria
 category acl only restrict adding a category to an event or changing status of a participant. it does not change the visibility of an event!	calendar	it	Gli ACL di categoria, applicano restrizioni solamente all'inserimento di una categoria ad un evento oppure la modifica dello stato di un partecipante. NON modifica la visibilità di un evento!
 category automatically added to new events	calendar	it	Categoria automaticamente assegnata a nuovi eventi
+category report	calendar	it	Categoria Rapporto
 chair	calendar	it	Presiede
 change history	calendar	it	Cambia storico
 change your status	calendar	it	Cambia stato
+changed event-data applied	calendar	it	Dati evento modificati applicati
 charset of file	calendar	it	Set di Caratteri del file
 check all	calendar	it	Controlla tutti
 choose a category	calendar	it	Seleziona una categoria
@@ -136,6 +140,7 @@ daily tables	calendar	it	Tabelle giornaliere
 data exchange settings	calendar	it	Impostazioni di scambio dati
 date for the day of the week	calendar	it	Data per il giorno della settimana
 date for the day of the week, available for the first entry inside each day of week or daily table inside the selected range.	calendar	it	Data per il giorno della settimana, disponibile per la prima voce in ogni giorno della settimana oppure tabella giornaliera nell'intervallo selezionato.
+date range	calendar	it	Intervallo di date
 day	calendar	it	giorno
 day of week tables	calendar	it	Tabelle giorno della settimana
 days	calendar	it	giorni
@@ -231,6 +236,7 @@ example {{nenvlf role}} - if field role is not empty, set a lf without any value
 exception	calendar	it	Eccezione
 exception created - you can now edit or delete it	calendar	it	Eccezione creata - adesso puoi modificarla o eliminarla
 exceptions	calendar	it	Eccezioni
+exclude weekend	calendar	it	Escludere il fine settimana
 execute a further action for this entry	calendar	it	Esegui ancora una azione per questo inserimento
 existing links	calendar	it	Collegamenti esistenti
 exists	calendar	it	Esiste
@@ -359,6 +365,7 @@ meeting request	calendar	it	Richiesta meeting
 meetingrequest to all participants	calendar	it	Richiesta di riunione a tutti i partecipanti
 merge document...	calendar	it	Unire documento...
 midnight	calendar	it	Mezzanotte
+min days	calendar	it	Giorni minimi
 minimum number of users for showing day view as consolidated.	calendar	it	Numero minimo di utenti per mostrare la vista giornaliera come consolidata.
 minimum number of users for showing week view as consolidated.	calendar	it	Numero minimo di utenti per mostrare la vista settimanale come consolidata.
 minutes	calendar	it	Minuti
@@ -433,6 +440,7 @@ only used for first viewing of calendar, afterwards last selected view is used.	
 open todo's:	calendar	it	ToDo Aperti:
 optional	calendar	it	Opzionale
 organizer	calendar	it	Organizzatore
+output unit	calendar	it	Unità di uscita
 overlap holiday	calendar	it	sovrapposizione di una festività
 owner too	calendar	it	Anche il proprietario
 participant names by type	calendar	it	Nomi dei partecipanti per tipo
@@ -463,6 +471,7 @@ re-edit event	calendar	it	Ri-modifica l'evento
 receive email updates	calendar	it	Ricevi aggiornamenti via e-mail
 receive notifications about events you created/modified/deleted	calendar	it	Ricevi notifiche per eventi che hai creato/modificato/eliminato
 receive summary of appointments	calendar	it	Ricevi il resoconto degli appuntamenti
+recordings	calendar	it	Registrazioni
 recover	calendar	it	Recupera
 recovered	calendar	it	recuperato
 recurrence	calendar	it	Ricorrenza
@@ -482,6 +491,7 @@ repetition	calendar	it	Ripetizione
 repetitiondetails (or empty)	calendar	it	Dettagli Ripetizione (o vuoto)
 replacements for inserting events into documents	calendar	it	Sostituzion per l'inserimento in documenti
 reply to meeting request	calendar	it	Risposta a richiesta di riunione
+report	calendar	it	Rapporto
 requested	calendar	it	Richiesto
 requested date %1 outside allowed range of %2 days: recurring events obmitted!	calendar	it	La data richiesta %1 è al di fuori dell'intervallo di %2 giorni: eventi ricorrenti omessi!
 requested meeting is in the past!	calendar	it	Il meeting richiesto è nel passato!
@@ -552,6 +562,7 @@ show this week	calendar	it	mostra questa settimana
 show year and age	calendar	it	Mostra anno e età
 single event	calendar	it	singolo evento
 single participant	calendar	it	Singolo partecipante
+sort by	calendar	it	Ordina per
 specify where url of the day links to	calendar	it	Specifica l'URL del collegamento del giorno
 start	calendar	it	Inizio
 start date/time	calendar	it	Data/Ora Inizio

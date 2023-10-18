@@ -32,7 +32,7 @@
 '%1' is not a valid date !!!	common	de	'%1' ist ein ungültiges Datum !!!
 '%1' is not a valid floatingpoint number !!!	common	de	'%1' ist keine gültige Gleitkommazahl !!!
 '%1' is not a valid integer !!!	common	de	'%1' ist keine gültige Ganzzahl !!!
-'%1' is not a valid json file!	common	de	'%1' ist keine json Datei in dem EGW Server Wurzelverzeichnis!
+'%1' is not a valid json file!	common	de	'%1' ist keine gültigeJSON Datei
 '%1' is not a valid timezone!	common	de	'%1' ist keine gültige Zeitzone!
 '%1' is not allowed ('%2')!	common	de	'%1' ist NICHT erlaubt ('%2')!
 '%1' is not allowed%2)!	common	de	'%1' ist NICHT erlaubt '%2'!
@@ -319,8 +319,8 @@ common preferences	common	de	Allgemeine Einstellungen
 comoros	common	de	KOMOREN
 company	common	de	Unternehmen
 confirm	common	de	bestätigen
-confirmation message or custom javascript (returning true or false)	common	de	Bestätigungsmeldung oder spezielles Javascript (true oder false zurückliefernd)
-confirmation necesary or custom java-script	common	de	Bestätigung notwendig oder spezielles Javascript
+confirmation message or custom javascript (returning true or false)	common	de	Bestätigungsmeldung oder spezielles JavaScript (true oder false zurückliefernd)
+confirmation necesary or custom java-script	common	de	Bestätigung notwendig oder spezielles JavaScript
 confirmation required	common	de	Bestätigung erforderlich
 congo	common	de	KONGO
 congo, the democratic republic of the	common	de	KONGO, DIE DEMOKRATISCHE REPUBLIK DES
@@ -362,7 +362,7 @@ current	common	de	derzeit
 current users	common	de	Aktive Benutzersitzungen
 custom	common	de	Benutzerdefiniert
 custom fields	common	de	Benutzerdefinierte Felder
-custom javascript for onchange	common	de	Benutzerdefiniertes Javascript für onChange
+custom javascript for onchange	common	de	Benutzerdefiniertes JavaScript für onChange
 cut	common	de	Ausschneiden
 cyprus	common	de	ZYPERN
 czech republic	common	de	TSCHECHISCHE REPUBLIK
@@ -374,7 +374,7 @@ database error!	common	de	Datenbank Fehler!
 date	common	de	Datum
 date + time	common	de	Datum + Zeit
 date due	common	de	fällig am
-date+time	common	de	Datum+Uhrzeit
+date+time	common	de	Datum+Zeit
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	de	Datum-Zeit Port.<br>Wenn Sie Port 13 benutzen, passen Sie bitte die Regeln der Firewall an bevor Sie die Seite speichern.<br>(Port: 13 / Host: 129.6.15.28)
 day	common	de	Tag
 days	common	de	Tage
@@ -389,7 +389,7 @@ default document to insert entries	preferences	de	Standarddokument für Einfüge
 default height for the windows	common	de	Vorgabewert für Höhe des Fensters
 default visible actions	common	de	Standardmäßig sichtbare Aktionen
 default width for the windows	common	de	Vorgabewert für Breite des Fensters
-del	common	de	entf
+del	common	de	Entf
 delete	common	de	Löschen
 delete a single entry by passing the id.	common	de	Löscht einen einzelnen Eintrag über seine Id.
 delete all selected etemplates, without further inquiry	common	de	löscht ALLE ausgewählten eTemplates OHNE weitere Rückfrage
@@ -434,8 +434,8 @@ disable the execution a bugfixscript for internet explorer 5.5 and higher to sho
 disabled	common	de	Deaktiviert
 discard changes	common	de	verwirft Änderungen
 displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	common	de	wird vor dem Eingabefeld angezeigt oder das Feld wird für ein '%s' eingefügt (Beschriftung einer Schaltfläche oder Dateiname eine Grafik)
-displayed in statusline of browser if input-field gets focus	common	de	wird in der Statuszeile des Browsers angezeigt, wenn das Eingabefeld angesprochen wird
-displayed in the top line of the groupbox (legend)	common	de	wird oben in der Umrandung der Gruppierung angezeigt (Legende)
+displayed in statusline of browser if input-field gets focus	common	de	Wird in der Statuszeile des Browsers angezeigt, wenn das Eingabefeld angesprochen wird
+displayed in the top line of the groupbox (legend)	common	de	Wird oben in der Umrandung der Gruppierung angezeigt (Legende)
 distribution lists as groups	groupdav	de	Verteilerlisten als Gruppen
 djibouti	common	de	DSCHIBUTI
 do not notify	common	de	Nicht benachrichtigen
@@ -838,7 +838,7 @@ location calendars	groupdav	de	Kalender von Räumen
 locations	common	de	Räume
 logging / debuging	groupdav	de	Logging / Fehlersuche
 login	common	de	Anmelden
-login rejected by epl firewall, please contact your administrator	common	de	Anmeldung von der EPL-Firewall abgelehnt, bitte wenden Sie sich an Ihren Administrator.
+login rejected by epl firewall, please contact your administrator	common	de	Anmeldung von der EPL-Firewall abgelehnt, bitte wenden Sie sich an Ihren EHroupware-Administrator.
 loginid	common	de	Benutzerkennung
 logout	common	de	Abmelden
 lost login id	common	de	Anmeldenamen vergessen
@@ -1055,7 +1055,7 @@ permission denied!	common	de	Zugriff verweigert!
 permission denied! this is an administration only feature.	common	de	Zugriff verweigert! Dies ist eine reine Verwaltungsfunktion für Administratoren.
 permissions to the files/users directory	common	de	Zugriffsrechte zu den Dateien / Benutzerordner
 permisson denied!	common	de	Zugriff verweigert!
-personal	common	de	persönlich
+personal	common	de	Persönlich
 peru	common	de	PERU
 pg down	common	de	Seite runter
 pg up	common	de	Seite hoch
@@ -1075,7 +1075,7 @@ please run setup to become current	common	de	Bitte rufen Sie Setup auf um zu akt
 please select	common	de	Bitte wählen
 please set your global preferences	common	de	Bitte editieren Sie Ihre globalen Einstellungen !
 please set your preferences for this application	common	de	Bitte editieren Sie Ihre Einstellungen für diese Anwendung !
-please type %1 more characters	common	de	Bitte %1 weiteres Zeichen eingeben
+please type %1 more characters	common	de	Bitte %1 weitere(s) Zeichen eingeben
 please type 1 more character	common	de	Bitte 1 weiteres Zeichen eingeben
 please wait...	common	de	bitte warten ...
 please, check back with us shortly.	common	de	Bitte schauen Sie bald wieder vorbei.
@@ -1114,8 +1114,8 @@ quick add	common	de	Schnelles Hinzufügen
 radiobutton	common	de	Radioknopf
 read	common	de	Lesen
 read a list of entries.	common	de	Liest eine Liste von Einträgen.
-read a single entry by passing the id and fieldlist.	common	de	Liste einen einzelnen Eintrag durch Übergabe seiner Id und Feldliste.
-read etemplate from database (for the keys above)	common	de	ließt ein eTemplate aus der Datenbank (für die Schlüssel darüber)
+read a single entry by passing the id and fieldlist.	common	de	Liste einen einzelnen Eintrag durch Übergabe seiner ID und Feldliste.
+read etemplate from database (for the keys above)	common	de	Ließt ein eTemplate aus der Datenbank (für die Schlüssel darüber)
 read this list of methods.	common	de	Diese Liste der Methoden lesen.
 reading	common	de	lesen
 readonly	common	de	nur lesen
@@ -1330,7 +1330,7 @@ sierra leone	common	de	SIERRA LEONE
 sign up	common	de	Registrieren
 simple	common	de	Einfach
 singapore	common	de	SINGAPUR
-site configuration	common	de	Konfiguration der Anwendung
+site configuration	common	de	App-Konfiguration
 size	common	de	Größe
 skip	common	de	Auslassen
 slovakia	common	de	SLOVAKEI
@@ -1348,9 +1348,9 @@ span, class	common	de	Span, Class
 special characters	common	de	Sonderzeichen
 sri lanka	common	de	SRI LANKA
 stack	common	de	Stapel
-start a new search, cancel this link	common	de	neue Suche Starten, diese Verknüpfung abbrechen
+start a new search, cancel this link	common	de	Neue Suche starten, diese Verknüpfung abbrechen
 start date	common	de	Startdatum
-start directory for image browser of rich text editor in egroupware vfs (filemanager).	common	de	Startprdner für Bildsuche des Editors für formatierten Text im EGroupware-Dateimanager
+start directory for image browser of rich text editor in egroupware vfs (filemanager).	common	de	Startordner für Bildsuche des Editors für formatierten Text im EGroupware-Dateimanager
 start new search for the above pattern	common	de	neue Suche für das obige Muster starten
 start time	common	de	Startzeit
 start with	common	de	beginnt mit
@@ -1398,7 +1398,7 @@ template deleted	common	de	Template gelöscht
 template saved	common	de	Template gespeichert
 text	common	de	Textfeld
 text color:	common	de	Textfarbe:
-textarea	common	de	mehrzeiliges Textfeld
+textarea	common	de	Mehrzeiliges Textfeld
 th	common	de	Do
 thailand	common	de	THAILAND
 the backup key has been deleted.	common	de	Der Backup Schlüssel wurde gelöscht.
@@ -1409,7 +1409,7 @@ the following document-types are supported:	preferences	de	Im Moment werden die 
 the mail server returned	common	de	Der E-Mail-Server liefert zurück
 there already is a system-user with this name. user's should not have the same name as a systemuser	common	de	Es gibt schon einen System Benutzer mit dem selben Namen. Die Benutzer sollten nicht die gleichen Namen haben, wie die Systembenutzer.
 they will be sub-folders in users home (%1 attribute).	common	de	Diese werden Unterordner im Homeordner des Benutzers (%1 Attribute).
-this feature is only available in epl version.	common	de	diese Funktion ist nur in der EPL-Version verfügbar.
+this feature is only available in epl version.	common	de	Diese Funktion ist in der EPL-Version verfügbar.
 this is your own share.  to test it, use an anonymous / incognito window.<br/>%1	common	de	Dies ist Ihre eigene Freigabe. Verwenden Sie zum Testen ein anonymes / Inkognito-Fenster.<br/>%1
 this name has been used already	common	de	Dieser Name ist bereits in Benutzung !
 this text gets displayed if the input-field is empty and has no focus (blur)	common	de	dieser Text wird im Eingabefeld angezeigt, wenn es leer ist und nicht im Fokus ist (engl. blur)
@@ -1426,9 +1426,9 @@ to correct this error for the future you will need to properly set the	common	de
 to disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty	common	de	zum deaktivieren: [! = nicht]<wert>[=<test>] zB.: '!@data' deaktiviert wenn data leer ist
 to examine or reinstate inactived files, you might need to turn versioning on.	admin	de	Um inaktive Dateien zu begutachten, sollten die Sie Versionierung von Dateien aktivieren.
 to go back to the msg list, click <a href= %1 >here</a>	common	de	Um zur Liste der Meldungen zurück zu gehen, <a href="%1">hier</a> anklicken
-to start the db-tools	common	de	startet die DB-Tools
+to start the db-tools	common	de	Startet die DB-Tools
 to start the etemplate editor	common	de	startet den eTemplate Editor
-to start the search	common	de	startet die Suche
+to start the search	common	de	Startet die Suche
 today	common	de	Heute
 todays date, eg. "%1"	common	de	heutiges Datum, z.B. "%1"
 togo	common	de	TOGO

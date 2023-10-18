@@ -1,10 +1,14 @@
 %1 is not writable by you!	mail	hu	%1-hez nincs írási jogosultságod!
 (leave empty for no quota)	mail	hu	(Ha nincs kvóta, hagyja üresen)
 (no subject)	mail	hu	(nincs tárgy)
+acl rights retrieve failed, seems there are no rights set!	mail	hu	Az ACL-jogok lekérdezése sikertelen, úgy tűnik, nincsenek jogok beállítva!
 activating by date requires a start- and end-date!	mail	hu	Dátum szeretni aktiváláshoz kezdés ÉS befejezés időpont is szükséges!
 add all my aliases	mail	hu	Az összes álnevem hozzáadása
+add files as %1	mail	hu	Fájlok hozzáadása %1-ként
 add raw message, ignore mail attachments	mail	hu	Leveleket elemmé alakítani, nyers üzenetet hozzáadni (figyelmen kívül hagyni a levél mellékleteket)
 add to addressbook	mail	hu	címjegyzékhez hozzáad
+adding %1 to blacklisted email addresses failed because of %2	mail	hu	%1 hozzáadása a feketelistán szereplő e-mail címekhez %2 miatt sikertelen.
+adding %1 to whiltelisted email addresses failed because of %2	mail	hu	%1 hozzáadása a listán szereplő e-mail címekhez %2 miatt sikertelen.
 after reply, visible during compose	mail	hu	Válasz után, látható az összeállítás során
 aliases+forwards	mail	hu	Aliasok+Továbbítás
 all of	mail	hu	összes innnen
@@ -15,16 +19,23 @@ always show notifiction	mail	hu	Mindig megjeleníti az értesítést
 answered	mail	hu	Válaszolt
 any of	mail	hu	bármennyi
 any status	mail	hu	bármilyen állapot
+attach files	mail	hu	Fájlok csatolása
+attach users vcard at compose to every new mail	mail	hu	A felhasználók vCard-jának csatolása minden új levélhez a komponáláskor
+attachment has been saved successfully.	mail	hu	A csatolás sikeresen mentésre került.
 attachments	mail	hu	Mellékletek
+attachments, ...	mail	hu	mellékletek, ...
+be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	hu	Figyeljen arra, hogy az összes kiválasztott fájl %1 módban történő hozzáadásával a listában lévő összes meglévő mellékletet is %2 módra változtatja. \n \n Szeretné folytatni?
+be aware that all attachments will be sent as %1!	mail	hu	Vegye figyelembe, hogy az összes mellékletet %1 módban küldi el!
 by date	mail	hu	dátum szerint
 by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	hu	Alapértelmezés szerint a "http://" helyébe a "https://" lép. Nyugodtan konfigurálhatja a 'https://proxy.egroupware.org/'-t úgy, hogy csak http-n keresztül elérhető képeket is betöltsön.
 caching of flags	mail	hu	A zászlók gyorsítótárazása
+changing subject failed because of %1	mail	hu	A tárgy módosítása nem sikerült %1 miatt
 changing subject failed folder %1 does not exist	mail	hu	A téma módosítása sikertelen %1 mappa nem létezik.
-check message against next rule also	mail	hu	üzenet ellenőrzése a következő szabály szerint is
+check message against next rule also	mail	hu	Üzenet ellenőrzése a következő szabály szerint is
 compose	mail	hu	Szerkeszt
-compose as new	mail	hu	szerkesztés újként
+compose as new	mail	hu	Szerkesztés újként
 compress folder	mail	hu	Mappa tömörítése
-condition	mail	hu	feltétel
+condition	mail	hu	Feltétel
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	hu	A beállított értékek automatikusan beállítódnak a kompozíció párbeszédpanelen az adott mezőhöz, amikor új e-mailt állít össze.
 contact label	mail	hu	Kapcsolat címke
 contains	mail	hu	tartalmaz
@@ -69,46 +80,82 @@ edit account	mail	hu	Azonosító szerkesztése
 edit vacation settings	mail	hu	szabadság beállítások szerkesztése
 email notification update failed	mail	hu	e-mail értesítő frissítés mező
 emailaddress	admin	hu	E-Mail cím
+emailadmin: profilemanagement	mail	hu	eMailAdmin: Profilkezelés
+emails in whitelisted domains are not marked as spam	mail	hu	A fehérlistás tartományok e-mailjei nem kerülnek spamként megjelölésre
 empty trash	mail	hu	Szemetes ürítése
-enable	mail	hu	engedélyez
+enable	mail	hu	Engedélyez
+enabled	mail	hu	Enabled
+encrypt your message with smime certificate	mail	hu	Az üzenet titkosítása S/MIME tanúsítvánnyal
 error saving %1!	mail	hu	Hiba %1 mentése során!
 error:	mail	hu	Hiba:
 error: could not save message as draft	mail	hu	Hiba: üzenet mentése piszkozatként nem sikerült
 error: message could not be displayed.	mail	hu	Hiba: az üzenet nem megjeleníthető
 event details follow	mail	hu	Esemény jellemzőinek követése
-everyone	mail	hu	bárki
+everyone	mail	hu	Mindenki
+examine namespace to retrieve folders in others and shared	mail	hu	Névtér vizsgálata a másokban és a megosztott mappák lekérdezéséhez
 extended	mail	hu	Kibővített
-file into	mail	hu	állományba
+failed to delete %1	mail	hu	A %1 törlése sikertelen volt
+failed to subscribe folder %1!	mail	hu	Nem sikerült feliratkozni a %1 mappára!
+failed to unsubscribe folder %1!	mail	hu	Nem sikerült leiratkozni a %1 mappáról!
+file into	mail	hu	Áthelyezés a következő helyre
+file into:	mail	hu	Áthelyezés a következő helyre:
 filemanager	mail	hu	Filekezelő
+filemode has been switched to %1	mail	hu	Fájlmódra váltott: %1
+flag / unflag	mail	hu	Zászló / Zászló visszavonása
 flagged	mail	hu	megjelölt
-folder	mail	hu	mappa
+flagged %1 messages as %2 in %3	mail	hu	%1 üzenet(ek) megjelölése %2-ként %3-ban
+flagged %1 messages as flagged in %2	mail	hu	%1 üzenet(ek) megjelölve %2-ben megjelölve %2-ben
+flagged %1 messages as unflagged in %2	mail	hu	%1 üzenet(ek) megjelölése %2-ben nem megjelölve
+folder	mail	hu	Mappa
+folder %1 %2 failed because of %3!	mail	hu	A %1 %2 mappa %3 miatt nem sikerült!
+folder %1 has been created successfully, although the subscription failed because of %2	mail	hu	A %1 mappa sikeresen létrejött, bár a feliratkozás %2 miatt sikertelen volt.
 folder settings	mail	hu	Mappa beállításai
 forward	mail	hu	Továbbít
-forward as attachment	mail	hu	továbbítás mellékletként
-forward inline	mail	hu	továbbítás beágyazva
+forward as attachment	mail	hu	Továbbítás mellékletként
+forward inline	mail	hu	Továbbítás beágyazva
 forward to	mail	hu	Továbbítás ide
 from	mail	hu	Tól:
 from(a->z)	mail	hu	Feladó (A->Z)
 from(z->a)	mail	hu	Feladó (Z->A)
 general	admin	hu	Általános
 greater than	mail	hu	nagyobb mint
+handling of external http images / mixed content in mails	mail	hu	Külső http képek / vegyes tartalom kezelése e-mailekben
 header lines	mail	hu	Email fejléce
 how to forward messages	mail	hu	Üzenet továbbítás módja
 html	mail	hu	HTML
+ident name	mail	hu	Azonosító neve
+ident name email	mail	hu	Azonosító neve [Email]
+ident name organization email	mail	hu	Azonosító neve Szervezet [Email]
 identity	mail	hu	azonosító
+identity label	mail	hu	Azonosító címke
 if	mail	hu	HA
 if mail header	mail	hu	ha a levél fejléce
 if message size	mail	hu	ha a levél mérete
+if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	hu	Ha a tárgyra kattintva előnézetet szeretne látni a levélről, engedélyezze ezt.
+if you would like to select multiple folders in one action, you can hold ctrl key then select a folder as start range and another folder within a same level as end range, all folders in between will be selected or unselected based on their current status.	mail	hu	Ha több mappát szeretne egy műveletben kiválasztani, akkor tartsa lenyomva a ctrl billentyűt, majd válasszon ki egy mappát kezdő tartományként, és egy másik mappát ugyanazon a szinten belül végtartományként, a közte lévő összes mappa az aktuális állapotuk alapján lesz kiválasztva vagy kijelölve.
 imap	mail	hu	IMAP
 imap server	mail	hu	IMAP szerver
+import of message %1 failed. destination folder not set.	mail	hu	A %1 üzenet importálása sikertelen. A célmappa nincs beállítva.
+import of message %1 failed. no contacts to merge and send to specified.	mail	hu	A %1 üzenet importálása sikertelen. Nincs megadott egyesítendő és elküldendő kapcsolat.
 importance	mail	hu	Fontosság
+important	mail	hu	Fontos
+in mailbox: %1, with id: %2, and partid: %3	mail	hu	A postafiókban: %1, azonosítóval: %2 és PartID-vel: %3.
+in order to protect your privacy all external sources within this email are blocked.	mail	hu	A magánélet védelme érdekében az e-mailben található összes külső forrás blokkolva van.
 inbox	mail	hu	Bejövő
 information to show on email tag	mail	hu	Az e-mail címkén megjelenítendő információk
-junk	mail	hu	Spam
+initialization of mail failed. please use the wizard to cope with the problem.	mail	hu	A levelezőmodul inicializálása sikertelen volt. Kérjük, használja a konfigurációs varázslót a konfiguráció javításához.
+inline	mail	hu	Továbbítás
+insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)	mail	hu	az új (vagy válasz) üzenet tetején lévő aláírás beillesztése a komponálási párbeszédpanel megnyitásakor (az aláírásokat nem biztos, hogy át lehet váltani).
+job	mail	hu	Munka
+junk	mail	hu	Szemét
+junk folder	mail	hu	Szemét mappa
 keep a copy of the message in your inbox	mail	hu	másolat megőrzése a Bejövő postafiókban
 kilobytes	mail	hu	kilobájt
 later	mail	hu	Később
+learning as ham (not spam) failed because of %1	mail	hu	A sonkaként (nem spamként) való tanulás sikertelen a %1 miatt.
+learning as spam failed because of %1	mail	hu	A spamként való tanulás %1 miatt nem sikerült
 less than	mail	hu	kisebb mint
+limit mailing list results when searching for addresses	mail	hu	Levelezőlista találatok korlátozása címek keresésekor
 list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	hu	Az alapértelmezés szerint bekapcsolandó/aktiválandó műveletek listája (pl. Mail compose mentés InfoLog műveletként)
 mail	common	hu	E-mail
 mail acl	mail	hu	Hozzáférési jogok
@@ -120,6 +167,8 @@ mail-address	mail	hu	Levelezési cím
 mailaccount	mail	hu	Mail fiók
 mailinglist	mail	hu	Levelezési lista
 mails	common	hu	Mailek
+mails can be copied to that folder via context menu, if folder is configured.	mail	hu	A levelek a kontextusmenüben másolhatók ebbe a mappába, ha a mappa be van állítva.
+mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	hu	Mailserver jelentette:\n%1 \nKívánja folytatni a kiválasztott üzenetek azonnali törlését (kattintson az ok gombra)?\nHa nem, kérjük, próbálja meg kiüríteni a szemétmappát, mielőtt folytatja. (kattintson a törlés gombra)
 mark all as read	mail	hu	Mindent olvasottnak jelölni
 mark all messages in folder as read	mail	hu	A mappa összes üzenetének olvasottként való megjelölése
 mark as deleted	mail	hu	Törlésre megjelöl
@@ -168,10 +217,18 @@ push notifications	mail	hu	Push értesítések
 quicksearch	mail	hu	Gyorskeresés
 quicksearch (with cc)	mail	hu	Gyorskeresés (+másolás)
 read / unread	mail	hu	Olvasott / Olvasatlan
+real name	mail	hu	Valódi név
+real name email	mail	hu	Valódi név [Email]
+real name organization email	mail	hu	Valódi név Szervezet [Email]
 refresh time in minutes	mail	hu	Frissítési időintervallum percben
 reject with	mail	hu	elutasítás
+remember the password for	mail	hu	Emlékezzen a jelszóra
+remove all	mail	hu	Összes eltávolítása
 remove immediately	mail	hu	Azonnali eltávolítás
+removing %1 from blacklisted email addresses failed because of %2	mail	hu	A %1 feketelistán szereplő e-mail címek eltávolítása %2 miatt nem sikerült.
+removing %1 from whiltelisted email addresses failed because of %2	mail	hu	%1 eltávolítása a listán szereplő e-mail címekről nem sikerült %2 miatt.
 rename folder	mail	hu	Mappa átnevezése
+replace 'http://' in image urls with (trailing / required!)	mail	hu	A 'http://' helyettesítése a kép url-ekben (a végigfutó / kötelező!)
 replied	mail	hu	megválaszolt
 reply	mail	hu	Válasz
 reply all	mail	hu	Válasz mindenkinek
@@ -213,13 +270,22 @@ template folder	mail	hu	Sablonok mappa
 templates	mail	hu	Sablonok
 text	mail	hu	Szöveg
 text/plain	mail	hu	szöveg
+the imap server need to meet certain requirements and be configured for it:	mail	hu	Az IMAP-kiszolgálónak meg kell felelnie bizonyos követelményeknek ÉS be kell lennie konfigurálva:
 the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	mail	hu	A feladó kéri tértivevényt küldését amely jelzi, hogy megkaptad az üzenetet. Szeretnéd hogy elküldjem?
 the mimeparser can not parse this message.	mail	hu	A MIME feldolgozó nem tudta feldolgozni ezt az üzenetet.
+the rule with priority %1 successfully saved!	mail	hu	A %1 prioritású szabály sikeresen mentve!
 then	mail	hu	AKKOR
 there is no imap server configured.	mail	hu	Nincs IMAP szerver beállítva.
-trash	mail	hu	Törölt üzenetek
-trash folder	mail	hu	"Szemetes" mappa
-unflagged	mail	hu	jelöletlen
+there is no space left to store sieve script, please check sieve_maxscriptsize option on your mailserver's config.	mail	hu	Nincs elég hely a sieve szkript tárolására, kérjük, ellenőrizze a sieve_maxscriptsize opciót a mailserver konfigurációjában.
+this mail contains external images served via insecure http protocol. be aware showing or allowing them can compromise your security!	mail	hu	Ez a levél külső képeket tartalmaz, amelyeket nem biztonságos HTTP protokollon keresztül szolgáltatnak ki. Legyen tudatában, hogy ezek megjelenítése vagy engedélyezése veszélyeztetheti a biztonságot!
+this message is smime encrypted and password protected.	mail	hu	Ez az üzenet S/MIME titkosított és jelszóval védett.
+timeout on connections to your imap server	mail	hu	Időkorlátozás az IMAP-kiszolgálóhoz való kapcsolódásnál
+to do	mail	hu	Tenni
+toggle all folders view for %1	mail	hu	Kapcsolja ki az összes mappa nézetét %1 esetében
+toggled on actions	mail	hu	Bekapcsolt műveletek
+trash	mail	hu	Szemét
+trash folder	mail	hu	Szemét mappa
+unflagged	mail	hu	Jelöletlen
 unread	mail	hu	Olvasatlan
 vacation notice	mail	hu	szabadság értesítés
 vacation notice is active	mail	hu	Szabadság értesítő aktív

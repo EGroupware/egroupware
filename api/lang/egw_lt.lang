@@ -1,5 +1,7 @@
-%1 email addresses inserted	common	lt	įkelta el. pašto adresų: %1
+%1 email addresses inserted	common	lt	Jkelta el. pašto adresų: %1
+%1 email(s) added into %2	common	lt	%1 el. laiškas (-ai) įtrauktas (-i) į %2
 '%1' copied to clipboard	common	lt	'%1' nukopijuota į iškarpinę
+'%1' is not a valid json file!	common	lt	'%1' nėra galiojantis JSON failas
 00 (disable)	admin	lt	00 (išjungti)
 1 day	common	lt	1 diena
 1 hour	common	lt	1 valanda
@@ -51,6 +53,7 @@ australia	common	lt	AUSTRALIJA
 austria	common	lt	AUSTRIJA
 authenticate	common	lt	Autentiškumo nustatymas
 author	common	lt	Autorius
+avatar	common	lt	Avatar
 back	common	lt	Atgal
 bcc	common	lt	Bcc
 belarus	common	lt	BALTARUSIJA
@@ -61,6 +64,7 @@ blocked, too many attempts	common	lt	Užblokuota, per daug bandymų
 bolivia	common	lt	BOLIVIJA
 border	common	lt	Rėmelis
 brazil	common	lt	BRAZILIJA
+browser %1 %2 is not recommended. you may experience issues and not working features. please use the latest version of chrome, firefox or edge. thank you!	common	lt	Naršyklė %1 %2 nerekomenduojama. Gali kilti problemų ir neveikti funkcijos. Naudokite naujausią "Chrome", "Firefox" arba "Edge" versiją. Ačiū!
 bulgaria	common	lt	BULGARIJA
 calendar	common	lt	Kalendorius
 cambodia	common	lt	KAMBODŽA
@@ -70,6 +74,7 @@ category	common	lt	Kategorija
 cc	common	lt	Cc
 chad	common	lt	ČADAS
 charset	common	lt	utf-8
+check for empty values in if statements.  example {{if url~empty~~website:}} - if url is not empty, writes "website:"	common	lt	Patikrinkite, ar IF teiginiuose nėra tuščių reikšmių. Pavyzdys {{IF url~EMPTY~~~Website:}} - Jei url nėra tuščias, rašoma "Svetainė:".
 chile	common	lt	ČILĖ
 china	common	lt	KINIJA
 choose the default filename for merged documents.	preferences	lt	Pasirinkite numatytąjį sujungtų dokumentų failo pavadinimą.
@@ -93,6 +98,8 @@ cyprus	common	lt	KIPRAS
 czech republic	common	lt	ČEKIJA
 dark mode	common	lt	Tamsus režimas
 date	common	lt	Data
+date + time	common	lt	Data + Laikas
+date+time	common	lt	Data+Laikas
 december	common	lt	Gruodis
 default category	common	lt	Numatyta kategorija
 default height for the windows	common	lt	Numatytas langų aukštis
@@ -102,6 +109,7 @@ delete row	common	lt	Trinti eilutę
 denmark	common	lt	DANIJA
 description	common	lt	Apibūdinimas
 djibouti	common	lt	DŽIBUTIS
+don't ask again!	common	lt	Nepaklauskite dar kartą!
 e-mail	common	lt	El. paštas
 ecuador	common	lt	EKVADORAS
 edit	common	lt	Redaguoti
@@ -114,6 +122,11 @@ email-address of the user, eg. "%1"	common	lt	naudotojo el. pašto adresas, pvz.
 error	common	lt	Klaida
 estonia	common	lt	ESTIJA
 ethiopia	common	lt	ETIOPIJA
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	preferences	lt	Pavyzdys {{IF n_prefiksas~Mr~Sveikas ponas~Sveikas ponia}} - laukelyje "n_prefix" ieškokite žodžio "Mr", jei radote, rašykite Hello Mr., kitu atveju rašykite Hello Ms.
+example {{letterprefix}} - gives a letter prefix without double spaces, if the title is empty for example	preferences	lt	Pavyzdys {{{LETTERPREFIX}} - Suteikia raidės priešdėlį be dvigubų tarpų, jei pavadinimas tuščias, pvz.
+example {{letterprefix}} - gives a letter prefix without double spaces, if the title is emty for  example	common	lt	Pavyzdys {{{LETTERPREFIX}} - Suteikia raidės priešdėlį be dvigubų tarpų, jei pavadinimas tuščias, pvz.
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	preferences	lt	Pavyzdys {{NELF role}} - jei laukas role nėra tuščias, gausite naują eilutę su lauko role reikšme
+example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	preferences	lt	Pavyzdys {{nenvlf role}} - jei lauko vaidmuo nėra tuščias, nustatomas LF be jokios lauko reikšmės
 fax number	common	lt	fakso numeris
 february	common	lt	Vasaris
 file a file	common	lt	Failo išsaugojimas
@@ -146,6 +159,7 @@ how many days to sync in the future (default %1)	groupdav	lt	Kiek dienų sinchro
 how many days to sync in the past (default %1)	groupdav	lt	Kiek dienų sinchronizuoti praeityje (numatytoji %1)
 how many rows to print	common	lt	Kiek eilučių spausdinti
 how to show the general egroupware menu ?	common	lt	Kaip rodyti bendrąjį EGroupware meniu
+html links to any entries linked to the current record, excluding attached files	common	lt	HTML nuorodos į bet kokius su dabartiniu įrašu susietus įrašus, išskyrus pridėtus failus
 hungary	common	lt	VENGRIJA
 iceland	common	lt	ISLANDIJA
 if you use "2-factor-authentication", please enter the code here.	common	lt	Jei naudojate "2 veiksnių autentifikavimą", čia įveskite kodą.
@@ -155,8 +169,10 @@ indonesia	common	lt	INDONEZIJA
 infolog types to sync	common	lt	Sinchronizuojami informacijos žurnalo tipai
 insert placeholder	common	lt	Įterpti pakaitinę antraštę
 insert timestamp into description field	common	lt	Laiko žymos įterpimas į aprašymo lauką
+install	common	lt	Įdiekite
 install egroupware as mail-handler?	common	lt	Įdiegti "EGroupware" kaip pašto tvarkyklę?
 invalid 2-factor authentication code	common	lt	Neteisingas 2 veiksnių autentiškumo patvirtinimo kodas
+invalid email	common	lt	Netinkamas el. paštas
 invalid or expired 'remember me' token	common	lt	Netinkamas arba pasibaigęs "Prisimink mane" žetono galiojimo laikas
 iran, islamic republic of	common	lt	IRANAS
 iraq	common	lt	IRAKAS
@@ -222,10 +238,21 @@ pakistan	common	lt	PAKISTANAS
 panama	common	lt	PANAMA
 paraguay	common	lt	PARAGVAJUS
 password	common	lt	Slaptažodis
+permission denied!	common	lt	Leidimas neišduotas!
+permission denied! this is an administration only feature.	common	lt	Leidimas nesuteiktas! Tai tik administravimo funkcija.
+permisson denied!	common	lt	Leidimas neišduotas!
+personal	common	lt	Asmeninis
 peru	common	lt	PERU
-phone number	common	lt	telefono numeris
+pg down	common	lt	Puslapis išjungtas
+pg up	common	lt	Puslapis aukštyn
+pgp encryption	common	lt	PGP šifravimas
+pgp encryption installation	common	lt	PGP šifravimo įdiegimas
+phone number	common	lt	Telefono numeris
 placeholders	common	lt	Vietos ženklai
 play/pause	common	lt	Grojimas / pauzė
+please %1 by hand	common	lt	Prašome %1 ranka
+please reload the egroupware desktop (f5 / cmd+r).	common	lt	Perkraukite EGroupware darbalaukį (F5 / Cmd+r).
+please remember to use '%1' as username for local login's from now on!	common	lt	Prašome nepamiršti nuo šiol vietiniams prisijungimams kaip vartotojo vardą naudoti "%1"!
 poland	common	lt	LENKIJA
 portugal	common	lt	PORTUGALIJA
 postal	common	lt	Pašto kodas
@@ -235,8 +262,14 @@ project	common	lt	Projektas
 qatar	common	lt	KATARAS
 repeat password	common	lt	Pakartoti slaptažodį
 saved column sizes to preferences.	common	lt	Išsaugoti stulpelių dydžius nustatymuose.
+show password	common	lt	Rodyti slaptažodį
 show/hide	common	lt	rodyti/paslėpti šoninę juostą
+sign up	common	lt	Užsiregistruoti
+site configuration	common	lt	Programos konfigūracija
 yemen	common	lt	JEMENAS
+your account has been updated with new data from your identity provider.	common	lt	Jūsų paskyra buvo atnaujinta naujais jūsų tapatybės paslaugų teikėjo duomenimis.
+your browser is not up-to-date (javascript es6 compatible), you may experience some of the features not working.	common	lt	Jūsų naršyklė nėra atnaujinta (suderinama su JavaScript ES6), gali būti, kad neveiks kai kurios funkcijos.
+your key has been restored successfully.	common	lt	Jūsų raktas sėkmingai atkurtas.
 your password does not have required strength of %1 character classes and minimum length of %2 characters.	common	lt	Jūsų slaptažodis neatitinka reikalaujamos %1 simbolių klasės stiprumo ir minimalaus %2 simbolių ilgio.
 your password does not have required strength:	common	lt	Jūsų slaptažodis neturi reikalaujamo stiprumo:
 your password failed the following criteria:	common	lt	Jūsų slaptažodis neatitinka šių kriterijų:

@@ -6,14 +6,18 @@
 (not connected)	mail	pt	(Não conectado)
 (with checkbox enforced)	mail	pt	(Com caixa reforçado)
 account editable by user	mail	pt	onta editável pelo usuário
+acl rights retrieve failed, seems there are no rights set!	mail	pt	A recuperação de direitos ACL falhou, parece que não existem direitos definidos!
 acl rights retrieved successfully	mail	pt	Direitos ACL retrieved com sucesso
 action	mail	pt	Ação
 activating by date requires a start- and end-date!	mail	pt	Ativação por data requer um começo e final-date!
 add a new folder to %1:	mail	pt	Adicionar uma nova pasta para% 1:
 add all my aliases	mail	pt	Adicionar todos os meus aliases
+add files as %1	mail	pt	Adicionar ficheiros como %1
 add folder	mail	pt	Adicionar pasta
 add raw message, ignore mail attachments	mail	pt	Converter correio em item, adicionar mensagem em bruto (ignorar anexos de correio)
 add to addressbook	mail	pt	adicionar ao livro de endereços
+adding %1 to blacklisted email addresses failed because of %2	mail	pt	A adição de %1 a endereços de correio eletrónico na lista negra falhou devido a %2
+adding %1 to whiltelisted email addresses failed because of %2	mail	pt	A adição de %1 aos endereços de correio eletrónico incluídos na lista negra falhou devido a %2
 after reply, visible during compose	mail	pt	Após resposta, visível durante a composição
 aliases+forwards	mail	pt	Pseudónimos+Avanços
 all adresses:	mail	pt	Todos os Endereços:
@@ -30,18 +34,24 @@ answered	mail	pt	Respondeu
 any of	mail	pt	algum de
 any status	mail	pt	qualquer estado
 append	mail	pt	anexar
+attach files	mail	pt	Anexar ficheiros
 attach users vcard at compose to every new mail	mail	pt	anexar usuários VCard a compor a cada novo e-mail
 attach vcard	mail	pt	Anexar vCard
 attachment	mail	pt	Acessório
+attachment has been saved successfully.	mail	pt	O anexo foi guardado com êxito.
 attachments	mail	pt	Anexos
+attachments, ...	mail	pt	anexos, ...
 authentication	mail	pt	Autenticação
 available personal email-accounts/profiles	mail	pt	EMail-Accounts/Profiles pessoais disponíveis
+be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	pt	Tenha em atenção que, ao adicionar todos os ficheiros seleccionados como modo %1, também irá alterar todos os anexos existentes na lista para o modo %2. \n \n Gostaria de continuar?
+be aware that all attachments will be sent as %1!	mail	pt	Tenha em atenção que todos os anexos serão enviados como %1!
 but check shared folders	mail	pt	mas verifique as pastas compartilhadas
 by date	mail	pt	Por data
 by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	pt	Por defeito, 'http://' é simplesmente substituído por 'https://'. Pode configurar 'https://proxy.egroupware.org/' para carregar também imagens disponíveis apenas via http.
 caching of flags	mail	pt	Armazenamento em cache de bandeiras
 can not open imap connection	mail	pt	Não é possível abrir conexão IMAP
 changed profile	mail	pt	perfil alterado
+changing subject failed because of %1	mail	pt	A alteração do assunto falhou devido a %1
 changing subject failed folder %1 does not exist	mail	pt	Falha na alteração do assunto A pasta %1 não existe
 check message against next rule also	mail	pt	Verifique mensagem contra seguinte regra também
 check to save as infolog on send	mail	pt	verificar para salvar como infolog em enviar
@@ -118,9 +128,12 @@ email notification successfully updated!	mail	pt	notificação de email atualiza
 email notification update failed	mail	pt	atualização notificação por email falhou
 emailaddress	admin	pt	endereço de email
 emailadmin: profilemanagement	mail	pt	emailadmin: ProfileManagement
+emails in whitelisted domains are not marked as spam	mail	pt	Os e-mails em domínios da lista branca não são marcados como spam
 empty trash	mail	pt	Esvaziar o Lixo
-enable	mail	pt	Permitir
+enable	mail	pt	Ativar
+enabled	mail	pt	Ativado
 enabled!	mail	pt	habilitado!
+encrypt your message with smime certificate	mail	pt	Encriptar a sua mensagem com o certificado S/MIME
 enter the name for the new folder:	mail	pt	Digite o nome para a nova pasta:
 error saving %1!	mail	pt	Economizando% 1 Error!
 error:	mail	pt	Erro:
@@ -130,27 +143,33 @@ error: could not save rule	mail	pt	Erro: Não foi possível salvar regra
 error: could not send message.	mail	pt	Erro: Não foi possível enviar mensagem.
 error: message could not be displayed.	mail	pt	ERRO: A mensagem não pode ser exibida.
 event details follow	mail	pt	Seguem detalhes do evento
-everyone	mail	pt	Todo o mundo
+everyone	mail	pt	Todos
+examine namespace to retrieve folders in others and shared	mail	pt	Examinar o espaço de nomes para obter pastas noutros e partilhadas
 extended	mail	pt	Estendido
 extra sent folders	mail	pt	Pastas extras enviados
-failed to delete %1 ! reason: %2	mail	pt	não conseguiu apagar% 1! Motivo:% 2
+failed to delete %1	mail	pt	Falha ao eliminar %1
+failed to delete %1 ! reason: %2	mail	pt	Não conseguiu apagar% 1! Motivo:% 2
 failed to delete %1. server responded:	mail	pt	Falha ao excluir% 1. Servidor respondeu:
-failed to move %1 ! reason: %2	mail	pt	falhou ao mover% 1! Motivo:% 2
-failed to rename %1 ! reason: %2	mail	pt	não conseguiu renomear% 1! Motivo:% 2
-file into	mail	pt	Ficheiro em
-file into:	mail	pt	Arquivo em:
+failed to move %1 ! reason: %2	mail	pt	Falhou ao mover% 1! Motivo:% 2
+failed to rename %1 ! reason: %2	mail	pt	Não conseguiu renomear% 1! Motivo:% 2
+failed to subscribe folder %1!	mail	pt	Falha ao subscrever a pasta %1!
+failed to unsubscribe folder %1!	mail	pt	Falha ao anular a subscrição da pasta %1!
+file into	mail	pt	Mover para
+file into:	mail	pt	Mover para:
 file rejected, no %2. is:%1	mail	pt	Arquivo rejeitado, sem% 2. É: 1%
 filemanager	mail	pt	Gestor de ficheiros
 files	mail	pt	Arquivos
-flag / unflag	mail	pt	Bandeira / Unflag
+flag / unflag	mail	pt	Marcar / Retirar marcação
 flag or unflag a mail	mail	pt	Bandeira ou Unflag um e-mail
 flagged	mail	pt	marcado
-flagged %1 messages as %2 in %3	mail	pt	sinalizado% 1% 2 mensagens como em 3%
-flagged %1 messages as flagged in %2	mail	pt	sinalizado% 1 mensagens, como assinalado no% 2
-flagged %1 messages as unflagged in %2	mail	pt	sinalizado% 1 mensagens como unflagged em 2%
+flagged %1 messages as %2 in %3	mail	pt	Sinalizado% 1% 2 mensagens como em 3%
+flagged %1 messages as flagged in %2	mail	pt	Sinalizado% 1 mensagens, como assinalado no% 2
+flagged %1 messages as unflagged in %2	mail	pt	Sinalizado% 1 mensagens como unflagged em 2%
 flagged / unflagged	mail	pt	Sinalizadas / unflagged
 folder	mail	pt	Pasta
+folder %1 %2 failed because of %3!	mail	pt	Falha ao anular a subscrição da pasta %1!
 folder %1 %2 failed!	mail	pt	Pasta% 1% 2 falhou!
+folder %1 has been created successfully, although the subscription failed because of %2	mail	pt	A pasta %1 foi criada com êxito, embora a subscrição tenha falhado devido a %2
 folder settings	mail	pt	Definições das pastas
 for e.g.: mpeg	mail	pt	por exemplo: mpeg
 for eg.: mpeg	mail	pt	por exemplo:. mpeg
@@ -170,6 +189,7 @@ general	admin	pt	Geral
 general settings	mail	pt	Definições gerais
 get acl rights failed from imap server!	mail	pt	Seja direitos ACL com falha do servidor IMAP!
 greater than	mail	pt	maior que
+handling of external http images / mixed content in mails	mail	pt	Tratamento de imagens http externas / conteúdo misto em mensagens de correio eletrónico
 header	mail	pt	Cabeçalho
 header lines	mail	pt	Linhas de cabeçalho
 home page folders	mail	pt	pastas home page
@@ -178,11 +198,15 @@ how often to check with the server for new mail	mail	pt	Quantas vezes a verifica
 how to forward messages	mail	pt	como encaminhar mensagens
 html	mail	pt	HTML
 html mode	mail	pt	Modo HTML
+ident name	mail	pt	Nome de identificação
+ident name email	mail	pt	Nome de identificação [Email]
+ident name organization email	mail	pt	Nome de identificação Organização [Email]
 identity	mail	pt	Identidade
+identity label	mail	pt	Etiqueta de identidade
 identity+signature	mail	pt	Identidade + Assinatura
 if	mail	pt	Se
-if authentication required	mail	pt	se a autenticação exigida
-if different from email address	mail	pt	se for diferente do endereço de email
+if authentication required	mail	pt	Se a autenticação exigida
+if different from email address	mail	pt	Se for diferente do endereço de email
 if from contains:(*)	mail	pt	Se a partir contém: (*)
 if mail body content / attachment type	mail	pt	Se o tipo de conteúdo do corpo correio / anexo
 if mail body message type	mail	pt	Se o tipo de corpo da mensagem de correio
@@ -190,25 +214,37 @@ if mail header	mail	pt	Se cabeçalho da mensagem
 if message size	mail	pt	Se o tamanho da mensagem
 if subject contains:(*)	mail	pt	Se assunto contém: (*)
 if to contains:(*)	mail	pt	Se a contém: (*)
+if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	pt	Se pretender ver uma pré-visualização de um e-mail clicando uma vez no assunto, active esta opção.
+if you would like to select multiple folders in one action, you can hold ctrl key then select a folder as start range and another folder within a same level as end range, all folders in between will be selected or unselected based on their current status.	mail	pt	Se pretender selecionar várias pastas numa só ação, pode manter premida a tecla ctrl e selecionar uma pasta como intervalo inicial e outra pasta dentro do mesmo nível como intervalo final.
 imap	mail	pt	IMAP
 imap - incoming mail	mail	pt	IMAP - de entrada de correio
 imap administration	mail	pt	Administração IMAP
 imap server	mail	pt	Servidor IMAP
 imap timeout	mail	pt	IMAP tempo limite
 import message	mail	pt	mensagem de importação
+import of message %1 failed. could not save message to folder %2 due to: %3	mail	pt	A importação da mensagem %1 falhou. Não foi possível guardar a mensagem na pasta %2 devido a: %3
+import of message %1 failed. destination folder %2 does not exist.	mail	pt	A importação da mensagem %1 falhou. A pasta de destino %2 não existe.
+import of message %1 failed. destination folder not set.	mail	pt	A importação da mensagem %1 falhou. Pasta de destino não definida.
+import of message %1 failed. no contacts to merge and send to specified.	mail	pt	A importação da mensagem %1 falhou. Não foram especificados contactos para fundir e enviar.
 importance	mail	pt	importância
-important	mail	pt	importância
+important	mail	pt	Importância
 in mailbox: %1, with id: %2, and partid: %3	mail	pt	Na caixa de correio:% 1, com ID:% 2, e PartID:% 3
+in order to protect your privacy all external sources within this email are blocked.	mail	pt	Para proteger a sua privacidade, todas as fontes externas desta mensagem de correio eletrónico estão bloqueadas.
 inbox	mail	pt	CAIXA DE ENTRADA
 information to show on email tag	mail	pt	Informações a mostrar na etiqueta de correio eletrónico
+initialization of mail failed. please use the wizard to cope with the problem.	mail	pt	A inicialização do módulo de correio falhou. Utilize o assistente de configuração para corrigir a configuração.
 inline	mail	pt	Em linha
-job	mail	pt	trabalho
-junk	mail	pt	Junco
+insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)	mail	pt	inserir a assinatura na parte superior da mensagem nova (ou de resposta) ao abrir a caixa de diálogo de composição (pode não ser possível mudar de assinatura)
+job	mail	pt	Trabalho
+junk	mail	pt	Lixo
 junk folder	mail	pt	Pasta de Lixo
 keep a copy of the message in your inbox	mail	pt	Mantenha uma cópia da mensagem em sua caixa de entrada
 kilobytes	mail	pt	kilobytes
-later	mail	pt	mais tarde
+later	mail	pt	Lais tarde
+learning as ham (not spam) failed because of %1	mail	pt	A aprendizagem como correio não solicitado (não spam) falhou devido a %1
+learning as spam failed because of %1	mail	pt	A aprendizagem como spam falhou devido a %1
 less than	mail	pt	menos de
+limit mailing list results when searching for addresses	mail	pt	Limitar os resultados da lista de correio eletrónico ao procurar endereços
 list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	pt	Lista de acções a ativar/ativar por predefinição (por exemplo, ação de composição de correio eletrónico guardar como InfoLog)
 mail	common	pt	Correio
 mail acl	mail	pt	Direitos de acesso
@@ -220,6 +256,8 @@ mail-address	mail	pt	Mail-Endereço
 mailaccount	mail	pt	Mailaccount
 mailinglist	mail	pt	Mailinglist
 mails	common	pt	Correio
+mails can be copied to that folder via context menu, if folder is configured.	mail	pt	Os e-mails podem ser copiados para essa pasta através do menu de contexto, se a pasta estiver configurada.
+mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	pt	O servidor de correio informou:\n%1 \nDeseja prosseguir com a eliminação imediata das mensagens seleccionadas (clique em ok)?\nEm caso negativo, tente esvaziar a pasta de lixo antes de continuar. (clique em cancelar)
 mark all as read	mail	pt	Marcar tudo como lido
 mark all messages in folder as read	mail	pt	Marcar todas as mensagens em pasta como lidas
 mark as deleted	mail	pt	Marcar como apagada
@@ -297,18 +335,25 @@ quota: %1	mail	pt	Quota: 1%
 read	mail	pt	ler
 read / unread	mail	pt	Lido / não lido
 readable	mail	pt	legível
+real name	mail	pt	Nome real
+real name email	mail	pt	Nome real [Email]
+real name organization email	mail	pt	Nome real Organização [Email]
 reason!	mail	pt	razão!
 receive notification	mail	pt	Receber notificação
 recursively	mail	pt	Recursively
 refresh time in minutes	mail	pt	Actualizar (em minutos)
-refused to delete folder inbox	mail	pt	Recursively
+refused to delete folder inbox	mail	pt	Recusou-se a eliminar a pasta INBOX
 refused to delete folder with subfolders	mail	pt	recusou-se a excluir a pasta com subpastas
 reject with	mail	pt	rejeitar com
-remove all	mail	pt	Remover todas
+remember the password for	mail	pt	Lembrar a palavra-passe para
+remove all	mail	pt	Remover tudo
 remove immediately	mail	pt	Eliminar imediatamente
+removing %1 from blacklisted email addresses failed because of %2	mail	pt	A remoção de %1 da lista negra de endereços de correio eletrónico falhou devido a %2
+removing %1 from whiltelisted email addresses failed because of %2	mail	pt	A remoção de %1 dos endereços de correio eletrónico incluídos na lista negra falhou devido a %2
 rename folder	mail	pt	Mudar o nome de pastas
 rename folder %1 ?	mail	pt	Renomear pasta% 1?
 rename folder %1 to:	mail	pt	Renomear pasta% 1 para:
+replace 'http://' in image urls with (trailing / required!)	mail	pt	Substituir 'http://' em urls de imagens por (trailing / obrigatório!)
 replied	mail	pt	respondido
 reply	mail	pt	Responder
 reply all	mail	pt	Responder a Todos
@@ -397,13 +442,18 @@ test connection	mail	pt	Teste de conexão
 text	mail	pt	Texto
 text mode	mail	pt	O modo de texto
 text/plain	mail	pt	text / plain
+the imap server need to meet certain requirements and be configured for it:	mail	pt	O servidor IMAP tem de cumprir determinados requisitos E estar configurado para o efeito:
 the mimeparser can not parse this message.	mail	pt	O mimeparser não pode analisar estas mensagem.
 the rule with priority %1 successfully saved!	mail	pt	A regra com prioridade 1% salvo com sucesso!
 then	mail	pt	então
 there is no imap server configured.	mail	pt	Não há IMAP servidor configurado.
+there is no space left to store sieve script, please check sieve_maxscriptsize option on your mailserver's config.	mail	pt	Não há espaço para armazenar o script sieve, verifique a opção sieve_maxscriptsize na configuração do seu servidor de correio eletrónico.
+this mail contains external images served via insecure http protocol. be aware showing or allowing them can compromise your security!	mail	pt	Este correio contém imagens externas servidas através de um protocolo HTTP inseguro. Tenha em atenção que mostrá-las ou permiti-las pode comprometer a sua segurança!
+this message is smime encrypted and password protected.	mail	pt	Esta mensagem está encriptada com S/MIME e protegida por palavra-passe.
 timeout on connections to your imap server	mail	pt	Timeout em ligações para o seu servidor IMAP
-to do	mail	pt	fazer
+to do	mail	pt	Para fazer
 toggle all folders view for %1	mail	pt	Alternar todas as pastas para visualizar% 1
+toggled on actions	mail	pt	Acções alternadas
 trash	mail	pt	Lixo
 trash folder	mail	pt	Pasta Lixo
 trust servers seen / unseen info	mail	pt	servidores de confiança VISTO / info UNSEEN

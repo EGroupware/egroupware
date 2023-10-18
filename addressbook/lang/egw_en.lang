@@ -79,6 +79,7 @@ are you shure you want to delete this contact?	addressbook	en	Are you sure you w
 are you sure you want to delete this field?	addressbook	en	Are you sure you want to delete this field?
 assistent	addressbook	en	Assistant
 assistent phone	addressbook	en	Assistant phone
+audio call	addressbook	en	Audio Call
 birthday	common	en	Birthday
 birthdays	common	en	Birthdays
 blank	addressbook	en	Blank
@@ -257,7 +258,7 @@ failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	
 favorite phone	addressbook	en	Favorite phone
 favorites	addressbook	en	Favorites
 fax	addressbook	en	Fax
-fax (private)	addressbook	en	fax (private)
+fax (private)	addressbook	en	Fax (private)
 fax number	common	en	Fax number
 field %1 has been added !	addressbook	en	Field %1 has been added!
 field %1 has been updated !	addressbook	en	Field %1 has been updated!
@@ -326,6 +327,7 @@ insufficent rights to delete this list!	addressbook	en	Insufficient rights to de
 insufficent rights to edit this list!	addressbook	en	Insufficent rights to edit this list!
 international	addressbook	en	International
 internet	addressbook	en	Internet
+invite to current call	addressbook	en	Invite to current call
 label	addressbook	en	Label
 last date	addressbook	en	Last date
 last modified	addressbook	en	Last modified
@@ -402,7 +404,7 @@ pager	common	en	Pager
 parcel	addressbook	en	Parcel
 participants	addressbook	en	Participants
 permission denied !!!	addressbook	en	Permission denied!
-permissiong denied! ask your administrator to allow regular uses to update their public keys.	addressbook	en	Permissiong denied! Ask your administrator to allow regular uses to update their public keys.
+permissiong denied! ask your administrator to allow regular uses to update their public keys.	addressbook	en	Permission denied! Ask your administrator to allow regular uses to update their public keys.
 pgp key	addressbook	en	PGP key
 phone number	common	en	Phone number
 phone numbers	common	en	Phone numbers
@@ -439,6 +441,7 @@ replacements for inserting contacts into documents	addressbook	en	Replacements f
 required fields *	addressbook	en	Required fields *
 role	addressbook	en	Occupation
 room	addressbook	en	Room
+schedule a video conference	addressbook	en	Schedule a video conference
 search letter	addressbook	en	Search letter
 select a portrait format jpeg photo. it will be resized to 60 pixel width.	addressbook	en	Select a portrait format jpeg photo. It will be re-sized to 60 pixel width.
 select a source address to be used in geolocation routing system	addressbook	en	Select a source address to be used in GeoLocation routing system
@@ -497,7 +500,7 @@ the anonymous user has probably no add rights for this addressbook.	addressbook	
 the anonymous user needs add rights for it!	addressbook	en	The anonymous user needs add rights!
 the anonymous user needs read it!	addressbook	en	The anonymous user needs read rights!
 the following document-types are supported:	addressbook	en	The following document-types are supported:
-the zip extension is needed, to insert contact data in openoffice or msoffice documents.	addressbook	en	The zip extension is needed, to insert contact data in OpenOffice or MSOffice documents.
+the zip extension is needed, to insert contact data in openoffice or msoffice documents.	addressbook	en	The zip extension is needed, to insert contact data in LibreOffice or MS Office documents.
 there was an error saving your data :-(	addressbook	en	ERROR saving data!
 this module displays a contactform, that stores direct into the addressbook.	addressbook	en	This module displays a contact form, that stores directly into the address book.
 this module displays block from a adddressbook group.	addressbook	en	This module displays a block from address book group.
@@ -525,11 +528,11 @@ update a single entry by passing the fields.	addressbook	en	Update a single entr
 update fields by edited organisations?	admin	en	Fields to update of edited organizations
 updated	addressbook	en	Updated
 upload or delete the photo	addressbook	en	Upload or delete the photo
-url (business)	addressbook	en	url (business)
-url (private)	addressbook	en	url (private)
+url (business)	addressbook	en	URL (business)
+url (private)	addressbook	en	URL (private)
 url to link telephone numbers to (use %1 = number to call, %u = account name, %t = account phone)	admin	en	URL to link telephone numbers to. Use %1 = number to call, %u = account name, %t = account phone.
 use a category tree?	addressbook	en	Use a tree for selecting categories
-use addressbooks "own sorting" attribute	addressbook	en	use addressbooks "own sorting" attribute
+use addressbooks "own sorting" attribute	addressbook	en	Use addressbooks "own sorting" attribute
 use an extra tab for private custom fields?	admin	en	Use an extra tab for private custom fields
 use country list	addressbook	en	Use country list
 use setup for a full account-migration	admin	en	Use setup for a full account migration
@@ -541,6 +544,7 @@ vcard	common	en	vCard
 vcards require a first name entry.	addressbook	en	vCards require a first name entry.
 vcards require a last name entry.	addressbook	en	vCards require a last name entry.
 verification	addressbook	en	Verification
+video call	addressbook	en	Video Call
 view linked infolog entries	addressbook	en	View linked InfoLog entries
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	en	WARNING!! LDAP is valid only if you are NOT using contacts for accounts storage!
 warning: all contacts found will be deleted!	addressbook	en	WARNING: All contacts found will be deleted!

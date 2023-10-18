@@ -1,21 +1,47 @@
+%1 accessories now resources	resources	da	%1 tilbehør nu ressourcer
+%1 accessories restored	resources	da	%1 tilbehør restaureret
+%1 resource(s) %2	resources	da	%1 ressource(r) %2
+%1 resource(s) %2, %3 failed	resources	da	%1 ressource(r) %2, %3 mislykkedes
+%1 resource(s) %2, %3 failed because of insufficent rights !!!	resources	da	%1 ressource(r) %2, %3 mislykkedes på grund af utilstrækkelige rettigheder !!!
+%1 resource(s) booked	resources	da	%1 ressource(r) booket
+%1 resource(s) view calendar	resources	da	%1 ressource(r) se kalender
+accessories	resources	da	Tilbehør
+accessories of	resources	da	Tilbehør fra
+accessories:	resources	da	Tilbehør:
+accessory of	resources	da	Tilbehør fra
 actions	resources	da	Handling
+add group to event participants	resources	da	Tilføj gruppe til eventdeltagere
 all categories	resources	da	Alle kategorier
+allow booking requests from any user when creating events?	resources	da	Tillad bookinganmodninger fra enhver bruger, når du opretter begivenheder?
+booking requests	resources	da	Booking-anmodninger
+category admin	resources	da	Kategoriadministrator
+category saved.	resources	da	Gemt kategori.
+choose category admin	resources	da	Vælg kategoriadministrator
 configure access permissions	admin	da	Konfigurer adgangsrettigheder
 create new links	resources	da	Lav nyt link
 custom fields	resources	da	Valgfri Felter
-days	resources	da	dage
+days	resources	da	Dage
+delete accessories of selected resources too?	resources	da	Sletter du også tilbehør til de valgte ressourcer?
 delete this entry	resources	da	Slet denne indtastning
 deleted	resources	da	slettet
+do you really want to delete this resource?	resources	da	Ønsker du virkelig at slette denne ressource?
 edit this entry	resources	da	Redigér denne indstasning
-existing links	resources	da	eksisterende links
+existing links	resources	da	Eksisterende links
 general	resources	da	Generelt
 global categories	resources	da	Globale Kategorier
 hours	resources	da	timer
+icon	resources	da	Ikon
 implies read permission	resources	da	læserettigheder underforstået
 links	resources	da	Links
 location	resources	da	Sted
+no - leave them	resources	da	Nej - lad dem være
+no - make them resources	resources	da	Nej - Gør dem til ressourcer
+no, users will need to contact users with direct booking permission	resources	da	Nej, brugere skal kontakte brugere med direkte bookingtilladelse.
 read permissions	resources	da	Læserettigheder
 resources	common	da	Ressourcer
 select a category	resources	da	Vælg en kategori
 select resources	common	da	Vælg ressourcer
+un-delete accessories of selected resources too?	resources	da	Gendan tilbehør til de valgte ressourcer?
 write permissions	resources	da	Skriverettigheder
+yes - delete accessories too	resources	da	Ja - Slet også tilbehør
+yes - un-delete accessories too	resources	da	Ja - Gendan også tilbehør

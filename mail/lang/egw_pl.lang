@@ -1,10 +1,14 @@
 %1 is not writable by you!	mail	pl	%1 nie jest zapisywalny przez ciebie!
 (leave empty for no quota)	mail	pl	(Pozostaw puste miejsce dla braku kwoty)
 (no subject)	mail	pl	(bez tematu)
+acl rights retrieve failed, seems there are no rights set!	mail	pl	Pobieranie uprawnień ACL nie powiodło się, wygląda na to, że nie ustawiono żadnych uprawnień!
 activating by date requires a start- and end-date!	mail	pl	Aktywacja wymaga daty rozpoczęcia i zakończenia
 add all my aliases	mail	pl	Dodaj wszystkie moje aliasy
+add files as %1	mail	pl	Dodaj pliki jako %1
 add raw message, ignore mail attachments	mail	pl	Konwersja poczty do elementu, dodanie surowej wiadomości (ignorowanie załączników do poczty)
 add to addressbook	mail	pl	dodaj do książki adresowej
+adding %1 to blacklisted email addresses failed because of %2	mail	pl	Dodanie %1 do adresów e-mail na czarnej liście nie powiodło się z powodu %2
+adding %1 to whiltelisted email addresses failed because of %2	mail	pl	Dodanie %1 do adresów e-mail z białej listy nie powiodło się z powodu %2
 after reply, visible during compose	mail	pl	Po odpowiedzi, widoczne podczas komponowania
 aliases+forwards	mail	pl	Aliasy+Przekazy
 all of	mail	pl	wszystkie z
@@ -15,10 +19,17 @@ always show notifiction	mail	pl	Zawsze pokazuj powiadomienia
 answered	mail	pl	Odpowiedź na
 any of	mail	pl	dowolny z
 any status	mail	pl	dowolny status
+attach files	mail	pl	Dołączanie plików
+attach users vcard at compose to every new mail	mail	pl	Dołączanie wizytówki vCard użytkownika podczas tworzenia wiadomości do każdego nowego maila
+attachment has been saved successfully.	mail	pl	Załącznik został pomyślnie zapisany.
 attachments	mail	pl	Załączniki
+attachments, ...	mail	pl	załączniki, ...
+be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	pl	Należy pamiętać, że dodanie wszystkich wybranych plików w trybie %1 spowoduje również zmianę wszystkich istniejących załączników na liście w tryb %2. \Czy chcesz kontynuować?
+be aware that all attachments will be sent as %1!	mail	pl	Pamiętaj, że wszystkie załączniki zostaną wysłane w trybie %1!
 by date	mail	pl	Według daty
 by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	pl	Domyślnie "http://" jest po prostu zastępowane przez "https://". Możesz skonfigurować 'https://proxy.egroupware.org/', aby ładować również obrazy dostępne tylko przez http.
 caching of flags	mail	pl	Buforowanie flag
+changing subject failed because of %1	mail	pl	Zmiana tematu nie powiodła się z powodu %1
 changing subject failed folder %1 does not exist	mail	pl	Zmiana tematu nie powiodła się folder %1 nie istnieje
 check message against next rule also	mail	pl	sprawdź również kolejnę regułę
 compose	mail	pl	Utwórz
@@ -68,21 +79,36 @@ edit account	mail	pl	Edytuj konto użytkownika
 edit vacation settings	mail	pl	edytuj ustawienia autorespondera
 email notification update failed	mail	pl	aktualizacja powiadomień e-mail nie powiodła się
 emailaddress	admin	pl	adres_email
+emailadmin: profilemanagement	mail	pl	eMailAdmin: Zarządzanie profilami
+emails in whitelisted domains are not marked as spam	mail	pl	Wiadomości e-mail w domenach z białej listy nie są oznaczane jako spam
 empty trash	mail	pl	opróżnij kosz
-enable	mail	pl	włącz
+enable	mail	pl	Włącz
+enabled	mail	pl	Włączone
+encrypt your message with smime certificate	mail	pl	Szyfrowanie wiadomości za pomocą certyfikatu S/MIME
 error saving %1!	mail	pl	Błąd zapisu %1!
 error:	mail	pl	Błąd:
 error: could not save message as draft	mail	pl	Błąd: Nie można zapisać wiadomości jako Szkic
 error: could not save rule	mail	pl	Błąd: Nie można zapisać zasady
 error: message could not be displayed.	mail	pl	Bład: Wiadomość nie może być wyświetlona.
 event details follow	mail	pl	Detale Wydarzenia Następują
-everyone	mail	pl	każdy
+everyone	mail	pl	Wszyscy
+examine namespace to retrieve folders in others and shared	mail	pl	Zbadaj przestrzeń nazw, aby pobrać foldery w innych i udostępnione
 extended	mail	pl	Rozszerzone
-file into	mail	pl	informacja o pliku
+failed to delete %1	mail	pl	Nie udało się usunąć %1
+failed to subscribe folder %1!	mail	pl	Nie udało się zasubskrybować folderu %1!
+failed to unsubscribe folder %1!	mail	pl	Nie udało się anulować subskrypcji folderu %1!
+file into	mail	pl	Przenieś do
+file into:	mail	pl	Przenieś do:
 file rejected, no %2. is:%1	mail	pl	Plik odrzucony. Jest %1 nie %2.
 filemanager	mail	pl	Pliki
+filemode has been switched to %1	mail	pl	Tryb pliku został przełączony na: %1
 flagged	mail	pl	oflagowano
+flagged %1 messages as %2 in %3	mail	pl	Oznaczono %1 wiadomości jako %2 w %3
+flagged %1 messages as flagged in %2	mail	pl	Oznaczono %1 wiadomości jako oznaczone w %2
+flagged %1 messages as unflagged in %2	mail	pl	Oznaczono %1 wiadomości jako nieoznaczone w %2
 folder	mail	pl	Katalog
+folder %1 %2 failed because of %3!	mail	pl	Folder %1 %2 nie powiódł się z powodu %3!
+folder %1 has been created successfully, although the subscription failed because of %2	mail	pl	Folder %1 został utworzony pomyślnie, chociaż subskrypcja nie powiodła się z powodu %2.
 folder settings	mail	pl	Ustawienia foldera
 forward	mail	pl	Prześlij dalej
 forward as attachment	mail	pl	Prześlij dalej jako załącznik
@@ -93,26 +119,46 @@ from(a->z)	mail	pl	Od (A->Z)
 from(z->a)	mail	pl	Od (Z->A)
 general	admin	pl	Główne
 greater than	mail	pl	większe niż
+handling of external http images / mixed content in mails	mail	pl	Obsługa zewnętrznych obrazów http / zawartości mieszanej w wiadomościach e-mail
 header lines	mail	pl	Linie nagłówka
 how to forward messages	mail	pl	sposób przekazywania wiadomości
 html	mail	pl	HTML
-identity	mail	pl	tożsamość
+ident name	mail	pl	Nazwa identyfikatora
+ident name email	mail	pl	Nazwa identyfikatora [Email]
+ident name organization email	mail	pl	Nazwa identyfikatora Organizacja [Email]
+identity	mail	pl	Tożsamość
+identity label	mail	pl	Etykieta tożsamości
 if	mail	pl	JEŻELI
 if mail header	mail	pl	jeżeli nagłówek wiadomości
 if message size	mail	pl	jeżeli rozmiar wiadomości
+if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	pl	Jeśli chcesz zobaczyć podgląd wiadomości po pojedynczym kliknięciu tematu, włącz tę opcję.
+if you would like to select multiple folders in one action, you can hold ctrl key then select a folder as start range and another folder within a same level as end range, all folders in between will be selected or unselected based on their current status.	mail	pl	Jeśli chcesz wybrać wiele folderów w jednej akcji, możesz przytrzymać klawisz Ctrl, a następnie wybrać folder jako zakres początkowy i inny folder na tym samym poziomie jako zakres końcowy, wszystkie foldery pomiędzy nimi zostaną wybrane lub odznaczone na podstawie ich bieżącego stanu.
 imap	mail	pl	IMAP
 imap server	mail	pl	Serwer IMAP
 import message	mail	pl	importuj wiadomość
+import of message %1 failed. could not save message to folder %2 due to: %3	mail	pl	Import wiadomości %1 nie powiódł się. Nie można zapisać wiadomości w folderze %2 z powodu: %3
+import of message %1 failed. destination folder %2 does not exist.	mail	pl	Import wiadomości %1 nie powiódł się. Folder docelowy %2 nie istnieje.
+import of message %1 failed. destination folder not set.	mail	pl	Import wiadomości %1 nie powiódł się. Folder docelowy nie został ustawiony.
+import of message %1 failed. no contacts to merge and send to specified.	mail	pl	Import wiadomości %1 nie powiódł się. Nie określono kontaktów do scalenia i wysłania.
 importance	mail	pl	ważność
-important	mail	pl	ważny
+important	mail	pl	Ważny
+in mailbox: %1, with id: %2, and partid: %3	mail	pl	W skrzynce pocztowej: %1, z ID: %2 i PartID: %3
+in order to protect your privacy all external sources within this email are blocked.	mail	pl	W celu ochrony prywatności wszystkie zewnętrzne źródła w tej wiadomości e-mail są zablokowane.
 inbox	mail	pl	ODEBRANE
 information to show on email tag	mail	pl	Informacje wyświetlane na tagu e-mail
-job	mail	pl	służbowy
+initialization of mail failed. please use the wizard to cope with the problem.	mail	pl	Inicjalizacja modułu poczty nie powiodła się. Użyj kreatora konfiguracji, aby poprawić konfigurację.
+inline	mail	pl	Do przodu
+insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)	mail	pl	wstaw podpis na górze nowej wiadomości (lub odpowiedzi) podczas otwierania okna dialogowego tworzenia (może nie być możliwe przełączanie podpisów).
+job	mail	pl	Służbowy
 junk	mail	pl	Śmieci
+junk folder	mail	pl	Folder śmieci
 keep a copy of the message in your inbox	mail	pl	zachowaj kopię wiadomości w folderze ODEBRANE
 kilobytes	mail	pl	kilobajtów
 later	mail	pl	Później
+learning as ham (not spam) failed because of %1	mail	pl	Uczenie się jako szynka (nie spam) nie powiodło się z powodu %1
+learning as spam failed because of %1	mail	pl	Nauka jako spam nie powiodła się z powodu %1
 less than	mail	pl	mniej niż
+limit mailing list results when searching for addresses	mail	pl	Ograniczanie wyników list mailingowych podczas wyszukiwania adresów
 list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	pl	Lista akcji, które mają być domyślnie włączone/aktywowane (np. akcja Mail composose zapisz jako InfoLog)
 mail	common	pl	Poczta
 mail acl	mail	pl	Prawa dostępu
@@ -124,6 +170,8 @@ mail-address	mail	pl	Adres pocztowy
 mailaccount	mail	pl	Konto pocztowe
 mailinglist	mail	pl	Lista mailingowa
 mails	common	pl	Poczta
+mails can be copied to that folder via context menu, if folder is configured.	mail	pl	Wiadomości można kopiować do tego folderu za pomocą menu kontekstowego, jeśli folder jest skonfigurowany.
+mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	pl	Serwer pocztowy zgłosił:\n%1 \nCzy chcesz kontynuować, usuwając wybrane wiadomości natychmiast (kliknij ok)? \nJeśli nie, spróbuj opróżnić folder śmieci przed kontynuowaniem. (kliknij anuluj)
 mark all as read	mail	pl	Zaznacz wszystko jako przeczytane
 mark all messages in folder as read	mail	pl	Zaznacz wszystkie wiadomości w folderze jako przeczytane
 mark as deleted	mail	pl	Zaznacz jako usunietą
@@ -174,11 +222,18 @@ processing of file %1 failed. failed to meet basic restrictions.	mail	pl	Przetwa
 push notifications	mail	pl	Powiadomienia push
 quicksearch	mail	pl	Szybkie wyszukiwanie
 quicksearch (with cc)	mail	pl	szybkie wyszukiwanie (+Kopia)
+real name	mail	pl	Prawdziwe imię i nazwisko
+real name email	mail	pl	Prawdziwe imię i nazwisko [Email]
+real name organization email	mail	pl	Prawdziwa nazwa Organizacja [Email]
 refresh time in minutes	mail	pl	Czas odświeżania w minutach
 reject with	mail	pl	odrzuć z
+remember the password for	mail	pl	Zapamiętaj hasło dla
 remove all	mail	pl	Usuń wszystko
-remove immediately	mail	pl	usuń natychmiast
+remove immediately	mail	pl	Usuń natychmiast
+removing %1 from blacklisted email addresses failed because of %2	mail	pl	Usunięcie %1 z czarnej listy adresów e-mail nie powiodło się z powodu %2
+removing %1 from whiltelisted email addresses failed because of %2	mail	pl	Usunięcie %1 z adresów e-mail znajdujących się na czarnej liście nie powiodło się z powodu %2
 rename folder	mail	pl	Zmień nazwę foldera
+replace 'http://' in image urls with (trailing / required!)	mail	pl	Zastąp "http://" w adresach URL obrazów (końcowe / wymagane!)
 replied	mail	pl	odpowiedziano
 reply	mail	pl	Odpowiedz
 reply all	mail	pl	Odpowiedz wszystkim
@@ -222,14 +277,22 @@ template folder	mail	pl	Katalog szablnów
 templates	mail	pl	Szablony
 text	mail	pl	Tekst
 text/plain	mail	pl	zwykły tekst
+the imap server need to meet certain requirements and be configured for it:	mail	pl	Serwer IMAP musi spełniać określone wymagania ORAZ być odpowiednio skonfigurowany:
 the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	mail	pl	Nadawca wiadomości poprosił o potwierdzenie przeczytania wiadomości. Czy chcesz je wysłać?
 the mimeparser can not parse this message.	mail	pl	Nie udało się przetworzyć zawartości MIME tej wiadomości
+the rule with priority %1 successfully saved!	mail	pl	Reguła z priorytetem %1 została pomyślnie zapisana!
 then	mail	pl	WTEDY
 there is no imap server configured.	mail	pl	Brak skonfigurowanego serwera IMAP
-to do	mail	pl	Do wykonania
+there is no space left to store sieve script, please check sieve_maxscriptsize option on your mailserver's config.	mail	pl	Nie ma już miejsca na przechowywanie skryptu sito, sprawdź opcję sieve_maxscriptsize w konfiguracji serwera pocztowego.
+this mail contains external images served via insecure http protocol. be aware showing or allowing them can compromise your security!	mail	pl	Ta wiadomość zawiera zewnętrzne obrazy obsługiwane przez niezabezpieczony protokół HTTP. Należy pamiętać, że wyświetlanie lub zezwalanie na nie może zagrozić bezpieczeństwu!
+this message is smime encrypted and password protected.	mail	pl	Ta wiadomość jest szyfrowana S/MIME i chroniona hasłem.
+timeout on connections to your imap server	mail	pl	Limit czasu połączeń z serwerem IMAP
+to do	mail	pl	Aby wykonać
+toggle all folders view for %1	mail	pl	Przełącz widok wszystkich folderów dla %1
+toggled on actions	mail	pl	Włączone akcje
 trash	mail	pl	Kosz
 trash folder	mail	pl	Folder Kosza
-unflagged	mail	pl	nie oflagowano
+unflagged	mail	pl	Nie oflagowano
 unread	mail	pl	nieprzeczytane
 vacation notice	mail	pl	powiadomienie urlopowe
 vacation notice is active	mail	pl	Powiadomienie urlopowe jest aktywne

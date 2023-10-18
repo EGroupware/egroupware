@@ -1,23 +1,49 @@
+%1 accessories now resources	resources	bg	%1 аксесоари сега ресурси
+%1 accessories restored	resources	bg	%1 възстановени аксесоари
+%1 resource(s) %2	resources	bg	%1 ресурс(и) %2
+%1 resource(s) %2, %3 failed	resources	bg	%1 ресурс(и) %2, %3 не са функционирали
+%1 resource(s) %2, %3 failed because of insufficent rights !!!	resources	bg	%1 ресурс(и) %2, %3 не са успешни поради недостатъчни права!!!
+%1 resource(s) booked	resources	bg	%1 ресурс(и) резервиран(и)
+%1 resource(s) view calendar	resources	bg	%1 ресурс(и) - преглед на календара
+accessories	resources	bg	Аксесоари
+accessories of	resources	bg	Аксесоар от
+accessories:	resources	bg	Аксесоари:
+accessory of	resources	bg	Аксесоар от
 actions	resources	bg	Действия
+add group to event participants	resources	bg	Добавяне на група към участниците в събитието
 all categories	resources	bg	Всички категории
+allow booking requests from any user when creating events?	resources	bg	Да разрешавате заявки за резервации от всеки потребител при създаване на събития?
+booking requests	resources	bg	Заявки за резервация
+category admin	resources	bg	Администратор на категория
+category saved.	resources	bg	Запазена категория.
 check all	resources	bg	Маркира всички
+choose category admin	resources	bg	Изберете администратор на категория
 create new links	resources	bg	Създаване на нови връзки
 custom etemplate for the contactform	resources	bg	eTemplate по избор за формата за контакти
 custom fields	resources	bg	Полета по избор
 days	resources	bg	дни
+delete accessories of selected resources too?	resources	bg	Изтрийте и аксесоарите на избраните ресурси?
 delete this entry	resources	bg	изтриване на този запис
 deleted	resources	bg	изтрит
+do you really want to delete this resource?	resources	bg	Наистина ли искате да изтриете този ресурс?
 edit this entry	resources	bg	Редактиране на записа
 existing links	resources	bg	Съществуващи връзки
 general	resources	bg	Общи
 global categories	resources	bg	Глобални категории
 history logging	admin	bg	Запис на история
 hours	resources	bg	часа
+icon	resources	bg	Икона
 links	resources	bg	Връзки
 location	resources	bg	Местоположение
 manage mapping	resources	bg	Управление на съответствията
+no - leave them	resources	bg	Не - оставете ги
+no - make them resources	resources	bg	Не - направете ги ресурси
+no, users will need to contact users with direct booking permission	resources	bg	Не, потребителите ще трябва да се свържат с потребителите с разрешение за директни резервации
 quantity	resources	bg	Количество
 resources	common	bg	Ресурси
 select resources	common	bg	Изберете ресурси
+un-delete accessories of selected resources too?	resources	bg	Възстановяване на аксесоарите на избраните ресурси?
 view this entry	resources	bg	Преглед на записа
+yes - delete accessories too	resources	bg	Да - Също така изтрийте аксесоарите
+yes - un-delete accessories too	resources	bg	Да - Възстановявайте и аксесоарите
 yes, only admins can purge deleted items	admin	bg	Да, само администраторите могат да заличават изтрити записи

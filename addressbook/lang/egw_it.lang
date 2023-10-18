@@ -1,5 +1,6 @@
 %1 added	addressbook	it	%1 aggiunto
 %1 contact(s) %2	addressbook	it	%1 contatto(i) %2
+%1 contact(s) %2, %3 failed because of %4 !!!	addressbook	it	%1 contatto/i %2, %3 non è riuscito a causa di %4 !!!
 %1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	it	%1 contatto/i %2, %3 fallita a causa di diritti insufficienti !!!
 %1 contacts updated (%2 errors).	addressbook	it	%1 contatti aggiornati (%2 errori)
 %1 fields in %2 other organisation member(s) changed	addressbook	it	%1 campi in %2 altro/i membro/i dell'organizzazione modificati.
@@ -78,6 +79,7 @@ are you shure you want to delete this contact?	addressbook	it	Vuoi davvero elimi
 are you sure you want to delete this field?	addressbook	it	Vuoi davvero eliminare questo campo?
 assistent	addressbook	it	Assistente
 assistent phone	addressbook	it	Telefono assistente
+audio call	addressbook	it	Chiamata audio
 birthday	common	it	Data di nascita
 birthdays	common	it	Compleanni
 blank	addressbook	it	Vuoto
@@ -253,6 +255,7 @@ extra	addressbook	it	Extra
 extra encodings	addressbook	it	Codifiche extra
 extra private	addressbook	it	Extra privato
 failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	it	Permessi insufficenti per modificare %1 membri dell'organizzazione
+favorite phone	addressbook	it	Telefono preferito
 favorites	addressbook	it	Preferiti
 fax	addressbook	it	Fax
 fax (private)	addressbook	it	Fax (privato)
@@ -324,6 +327,7 @@ insufficent rights to delete this list!	addressbook	it	Permessi insufficienti pe
 insufficent rights to edit this list!	addressbook	it	Permessi insufficienti per modificare questa lista!
 international	addressbook	it	Internazionale
 internet	addressbook	it	Internet
+invite to current call	addressbook	it	Invita alla chiamata corrente
 label	addressbook	it	Etichetta
 last date	addressbook	it	Ultima data
 last modified	addressbook	it	ultima modifica
@@ -371,6 +375,7 @@ multiple vcard	addressbook	it	Molteplici vCard
 name for the distribution list	addressbook	it	Nome della lista di distribuzione
 name of current user, all other contact fields are valid too	addressbook	it	Nome dell'utente corrente, tutti gli altri campi di contatto sono validi pure.
 name, address	addressbook	it	Nome, Indirizzo
+name, email, phone	addressbook	it	Nome, e-mail, telefono
 new contact submitted by %1 at %2	addressbook	it	Nuovo contatto inviato da %1 alle %2
 new window opened to edit infolog for your selection	addressbook	it	Nuova finestra aperta per modificare la scheda di Attività
 next date	addressbook	it	Prossima data
@@ -416,6 +421,7 @@ prevent deleting of contacts	admin	it	Proteggi i contatti dall'eliminazione
 private address	addressbook	it	Indirizzo privato
 private custom fields	addressbook	it	Campi personalizzati privati
 public key	addressbook	it	Chiave Pubblica
+public sharing url	addressbook	it	URL di condivisione pubblico
 publish into groups:	addressbook	it	Pubblica nei gruppi:
 read a list / search for entries.	addressbook	it	Leggi un elenco / cerca delle voci.
 read a list of entries.	addressbook	it	Leggi un elenco di voci
@@ -435,6 +441,7 @@ replacements for inserting contacts into documents	addressbook	it	Sostituzioni p
 required fields *	addressbook	it	Campi obbligatori *
 role	addressbook	it	Ruolo
 room	addressbook	it	Stanza
+schedule a video conference	addressbook	it	Programmare una videoconferenza
 search letter	addressbook	it	Cerca per lettera
 select a portrait format jpeg photo. it will be resized to 60 pixel width.	addressbook	it	Seleziona una foto jpeg in formato ritratto. Sarà ridimensionata ad una larghezza di 60 pixel.
 select a source address to be used in geolocation routing system	addressbook	it	Selezionare un indirizzo sorgente da utilizzare nel sistema di routing della Geolocalizzazione
@@ -452,6 +459,7 @@ select the type of conversion:	addressbook	it	Seleziona il tipo di conversione:
 select where you want to store / retrieve contacts	admin	it	Seleziona dove vuoi registrare / recuperare i contatti
 selected contacts	addressbook	it	Contatti selezionati
 send emailcopy to receiver	addressbook	it	Invia copia al destinatario
+send fax via email by replacing fax number with an email address	addressbook	it	Inviare un fax via e-mail sostituendo il numero di fax con un indirizzo e-mail
 send succeeded to %1	common	it	Inviato con successo a %1
 seperator	addressbook	it	Separatore
 set full name and file as field in contacts of all users (either all or only empty values)	admin	it	Imposta i campi nome completo e "salva come" nei contatti di tutti gli utenti. Tutti o solo quelli vuoti.
@@ -492,7 +500,7 @@ the anonymous user has probably no add rights for this addressbook.	addressbook	
 the anonymous user needs add rights for it!	addressbook	it	L'utente anonimo ha bisogno di permessi di inserimento
 the anonymous user needs read it!	addressbook	it	L'utente anonimo ha bisogno di permessi di lettura
 the following document-types are supported:	addressbook	it	I seguenti tipi di documenti sono supportati:
-the zip extension is needed, to insert contact data in openoffice or msoffice documents.	addressbook	it	L'estensione "zip" è necessaria per inserire dati di contatto in documenti OpenOffice o MS Office
+the zip extension is needed, to insert contact data in openoffice or msoffice documents.	addressbook	it	L'estensione "zip" è necessaria per inserire dati di contatto in documenti LibreOffice o MS Office
 there was an error saving your data :-(	addressbook	it	ERRORE durante il salvataggio dei dati!
 this module displays a contactform, that stores direct into the addressbook.	addressbook	it	Questo modulo mostra un form di contatto, che salva direttamente nella rubrica!
 this module displays block from a adddressbook group.	addressbook	it	Questo modulo mostra un blocco di indirizzi dalla rubrica di gruppo
@@ -536,6 +544,7 @@ vcard	common	it	vCard
 vcards require a first name entry.	addressbook	it	Le vCard richiedono un valore per il nome.
 vcards require a last name entry.	addressbook	it	Le vCards richiedono un valore per il cognome
 verification	addressbook	it	Verifica
+video call	addressbook	it	Videochiamata
 view linked infolog entries	addressbook	it	Visualizzare le schede Attività collegate
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	it	ATTENZIONE!! LDAP è utilizzabile solo se NON stai usando i contatti per la memorizzazione dei dati sugli account!
 warning: all contacts found will be deleted!	addressbook	it	ATTENZIONE: Tutti i contatti trovati saranno cancellati!

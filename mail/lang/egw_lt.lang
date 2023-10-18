@@ -1,12 +1,23 @@
 (leave empty for no quota)	mail	lt	(palikite tuščią, jei kvotos nėra)
+acl rights retrieve failed, seems there are no rights set!	mail	lt	ACL teisių atkūrimas nepavyko, atrodo, kad nėra nustatytų teisių!
 add all my aliases	mail	lt	Pridėti visus mano slapyvardžius
+add files as %1	mail	lt	Pridėti failus kaip %1
 add raw message, ignore mail attachments	mail	lt	Konvertuoti laiškus į elementą, pridėti neapdorotą pranešimą (ignoruoti laiškų priedus)
+adding %1 to blacklisted email addresses failed because of %2	mail	lt	Pridėti %1 į juodąjį sąrašą įtrauktų el. pašto adresų nepavyko dėl %2
+adding %1 to whiltelisted email addresses failed because of %2	mail	lt	Įtraukti %1 į "whiltelisted" el. pašto adresus nepavyko dėl %2
 after reply, visible during compose	mail	lt	Po atsakymo, matomas sudarymo metu
 aliases+forwards	mail	lt	Slapyvardžiai + persiuntimas
 always show notifiction	mail	lt	Visada rodyti pranešimą
 answered	mail	lt	Atsakyta
+attach files	mail	lt	Pridėti failus
+attach users vcard at compose to every new mail	mail	lt	Pridėti naudotojų vCard prie kiekvieno naujo laiško sudarymo metu
+attachment has been saved successfully.	mail	lt	Priedas sėkmingai išsaugotas.
+attachments, ...	mail	lt	Priedai, ...
+be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	lt	Atkreipkite dėmesį, kad pridedant visus pasirinktus failus kaip %1 režimą, taip pat bus pakeisti visi sąraše esami priedai į %2 režimą. \n \n Ar norite tęsti?
+be aware that all attachments will be sent as %1!	mail	lt	Žinokite, kad visi priedai bus išsiųsti kaip %1!
 by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	lt	Pagal numatytuosius nustatymus "http://" tiesiog pakeičiama "https://". Galite laisvai konfigūruoti 'https://proxy.egroupware.org/', kad taip pat būtų įkeliami vaizdai, prieinami tik per http.
 caching of flags	mail	lt	Vėliavų spartinimas
+changing subject failed because of %1	mail	lt	Pakeisti temą nepavyko dėl %1
 changing subject failed folder %1 does not exist	mail	lt	Pakeisti temą nepavyko aplankas %1 neegzistuoja
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	lt	Nustatytos reikšmės bus automatiškai nustatytos komponavimo dialogo lange gerbiamam laukui, kai kuriamas naujas el. laiškas.
 contact label	mail	lt	Kontaktų etiketė
@@ -17,7 +28,55 @@ default value for remembering s/mime passphrase in minutes	mail	lt	Numatytoji S/
 defines what to show as contact label for added contact into to/cc/bcc when composing an email. default is firstname lastname and empty means include eveything available.	mail	lt	Nustato, ką rodyti kaip pridėto kontakto etiketę į To/Copy/Blind copy (Į / Kopijuoti / Akloji kopija) kuriant el. laišką. Numatytoji reikšmė yra vardas pavardė pavardė, o tuščia reiškia, kad įtraukiama viskas, kas įmanoma.
 defines what to show as identity label on mail folder header	common	lt	Nustato, ką rodyti kaip tapatybės etiketę pašto aplanko antraštėje
 disable caching of flags	mail	lt	Išjungti vėliavų spartinimą
+emailadmin: profilemanagement	mail	lt	eMailAdmin: Profilio valdymas
+emails in whitelisted domains are not marked as spam	mail	lt	Į baltąjį sąrašą įtrauktų domenų laiškai nepažymimi kaip šlamštas
+enable	mail	lt	Įjungti
+enabled	mail	lt	Įjungta
+encrypt your message with smime certificate	mail	lt	Užšifruokite pranešimą naudodami S/MIME sertifikatą
+everyone	mail	lt	Visi
+examine namespace to retrieve folders in others and shared	mail	lt	Išnagrinėti vardų sritį, kad gautumėte aplankus kituose ir bendrintuose
+failed to subscribe folder %1!	mail	lt	Nepavyko prenumeruoti aplanko %1!
+failed to unsubscribe folder %1!	mail	lt	Nepavyko atsisakyti aplanko %1!
+file into	mail	lt	Perkelti į
+file into:	mail	lt	Perkelti į:
+filemode has been switched to %1	mail	lt	Failų režimas perjungtas į: %1
+flagged %1 messages as %2 in %3	mail	lt	%1 pranešimas (-ai) pažymėtas (-i) kaip %2 %3
+flagged %1 messages as flagged in %2	mail	lt	%1 pranešimas (-ai) pažymėtas (-i) kaip pažymėtas (-i) %2
+flagged %1 messages as unflagged in %2	mail	lt	%1 pranešimas(-ai) pažymėtas(-i) kaip nepažymėtas(-i) %2
+folder %1 %2 failed because of %3!	mail	lt	Aplankas %1 %2 nepavyko dėl %3!
+folder %1 has been created successfully, although the subscription failed because of %2	mail	lt	Aplankas %1 sukurtas sėkmingai, nors prenumerata nepavyko dėl %2
+handling of external http images / mixed content in mails	mail	lt	Išorinių http vaizdų / mišraus turinio tvarkymas el. laiškuose
+html	mail	lt	HTML
+ident name	mail	lt	Identifikatoriaus pavadinimas
+ident name email	mail	lt	Identifikatoriaus pavadinimas [El. paštas]
+ident name organization email	mail	lt	Identifikatoriaus pavadinimas Organizacija [El. paštas]
+identity label	mail	lt	Tapatybės ženklas
+if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	lt	Jei norite matyti laiško peržiūrą vienu spustelėjimu ant temos, įjunkite šią funkciją.
+if you would like to select multiple folders in one action, you can hold ctrl key then select a folder as start range and another folder within a same level as end range, all folders in between will be selected or unselected based on their current status.	mail	lt	Jei vienu veiksmu norite pasirinkti kelis aplankus, galite laikyti paspaudę klavišą ctrl, tada pasirinkti aplanką kaip pradžios diapazoną, o kitą to paties lygio aplanką - kaip pabaigos diapazoną; visi tarp jų esantys aplankai bus pasirinkti arba nepasirinkti atsižvelgiant į jų dabartinę būseną.
+imap	mail	lt	IMAP
+imap server	mail	lt	IMAP Server
+import of message %1 failed. could not save message to folder %2 due to: %3	mail	lt	Pranešimo %1 importas nepavyko. Nepavyko išsaugoti pranešimo į aplanką %2 dėl: %3
+import of message %1 failed. destination folder %2 does not exist.	mail	lt	Pranešimo %1 importas nepavyko. Paskirties aplankas %2 neegzistuoja.
+import of message %1 failed. destination folder not set.	mail	lt	Pranešimo %1 importas nepavyko. Nenustatytas paskirties aplankas.
+import of message %1 failed. no contacts to merge and send to specified.	mail	lt	Pranešimo %1 importas nepavyko. Nenurodyti jokie kontaktai, kuriuos reikia sujungti ir išsiųsti.
+importance	mail	lt	svarba
+important	mail	lt	Svarbu
+in mailbox: %1, with id: %2, and partid: %3	mail	lt	Pašto dėžutėje: %1, su ID: %2 ir PartID: %3
+in order to protect your privacy all external sources within this email are blocked.	mail	lt	Siekiant apsaugoti jūsų privatumą, visi išoriniai šaltiniai šiame laiške yra užblokuoti.
 information to show on email tag	mail	lt	Informacija, kuri turi būti rodoma el. pašto žymoje
+initialization of mail failed. please use the wizard to cope with the problem.	mail	lt	Nepavyko inicializuoti pašto modulio. Konfigūracijai pataisyti naudokite konfigūracijos vedlį.
+inline	mail	lt	Persiųsti
+insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)	mail	lt	atidarant komponavimo dialogo langą naujo (arba atsakymo) pranešimo viršuje įterpkite parašą (gali būti, kad parašų perjungti nepavyks)
+job	mail	lt	Darbas
+junk	mail	lt	Šiukšlių
+junk folder	mail	lt	Šiukšlių aplankas
+keep a copy of the message in your inbox	mail	lt	Laikykite žinutės kopiją gautųjų laiškų dėžutėje
+kilobytes	mail	lt	kilobaitai
+later	mail	lt	Vėliau
+learning as ham (not spam) failed because of %1	mail	lt	Mokytis kaip šlamšto (ne šlamšto) nepavyko dėl %1
+learning as spam failed because of %1	mail	lt	Mokymasis kaip šlamštas nepavyko dėl %1
+less than	mail	lt	mažiau nei
+limit mailing list results when searching for addresses	mail	lt	Apriboti pašto sąrašo rezultatus ieškant adresų
 list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	lt	Veiksmų, kurie turi būti įjungti ir (arba) įjungti pagal numatytuosius nustatymus, sąrašas (pvz., veiksmas "Mail kompose išsaugoti kaip "InfoLog")
 mail	common	lt	Paštas
 mail acl	mail	lt	Prieigos teisės
@@ -29,6 +88,8 @@ mail-address	mail	lt	Pašto adresas
 mailaccount	mail	lt	Pašto paskyra
 mailinglist	mail	lt	Pašto sąrašas
 mails	common	lt	Laiškai
+mails can be copied to that folder via context menu, if folder is configured.	mail	lt	Jei aplankas sukonfigūruotas, laiškus į šį aplanką galima nukopijuoti per kontekstinį meniu.
+mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	lt	Pašto serveris pranešė:\n%1 \nAr norite tęsti iš karto ištrindami pasirinktus pranešimus (spauskite "ok")?\nJei ne, prieš tęsdami pabandykite ištuštinti šiukšlių aplanką. (spustelėkite atšaukti)
 mark all as read	mail	lt	Pažymėti visus kaip perskaitytus
 mark all messages in folder as read	mail	lt	Pažymėti visus aplanke esančius pranešimus kaip perskaitytus
 mark as deleted	mail	lt	Pažymėti kaip ištrintus
@@ -53,6 +114,14 @@ printing	mail	lt	Spausdinimas
 push notifications	mail	lt	"Push" pranešimai
 quicksearch	mail	lt	Greita paieška
 quicksearch (with cc)	mail	lt	Greita paieška (+ kopijavimas)
+real name	mail	lt	Tikrasis vardas
+real name email	mail	lt	Tikrasis vardas [El. paštas]
+real name organization email	mail	lt	Tikrasis vardas Organizacija [El. paštas]
+remember the password for	mail	lt	Prisiminti slaptažodį
+remove all	mail	lt	Pašalinti visus
+removing %1 from blacklisted email addresses failed because of %2	mail	lt	Pašalinti %1 iš juodojo sąrašo el. pašto adresų nepavyko dėl %2
+removing %1 from whiltelisted email addresses failed because of %2	mail	lt	Pašalinti %1 iš visų į sąrašą įtrauktų el. pašto adresų nepavyko dėl %2
+replace 'http://' in image urls with (trailing / required!)	mail	lt	Pakeiskite "http://" paveikslėlių adresų nuorodose į (būtina naudoti galinį /!)
 save all attachments to filemanager	mail	lt	Įrašyti visus priedus į failų tvarkyklę
 select or insert email address	mail	lt	Pasirinkite arba įterpkite el. pašto adresą
 set predefined values for compose...	mail	lt	Nustatykite iš anksto nustatytas reikšmes compose ...
@@ -67,5 +136,16 @@ smime encrypted message	mail	lt	S/MIME užšifruotas pranešimas
 smime signed message	mail	lt	S/MIME pasirašytas pranešimas
 smtp	mail	lt	SMTP
 sneak preview in list	mail	lt	Pranešimo peržiūra
+the imap server need to meet certain requirements and be configured for it:	mail	lt	IMAP serveris turi atitikti tam tikrus reikalavimus IR būti sukonfigūruotas:
+the rule with priority %1 successfully saved!	mail	lt	Taisyklė su prioritetu %1 sėkmingai išsaugota!
+there is no space left to store sieve script, please check sieve_maxscriptsize option on your mailserver's config.	mail	lt	Neliko vietos sieve scenarijui saugoti, patikrinkite sieve_maxscriptsize parinktį savo pašto serverio konfigūracijoje.
+this mail contains external images served via insecure http protocol. be aware showing or allowing them can compromise your security!	mail	lt	Šiame laiške yra išorinių paveikslėlių, pateiktų nesaugiu HTTP protokolu. Atkreipkite dėmesį, kad jų rodymas arba leidimas juos rodyti gali pakenkti jūsų saugumui!
+this message is smime encrypted and password protected.	mail	lt	Šis laiškas užšifruotas S/MIME ir apsaugotas slaptažodžiu.
+timeout on connections to your imap server	mail	lt	Jungčių prie IMAP serverio laiko limitas
+to do	mail	lt	Atlikti
+toggle all folders view for %1	mail	lt	Perjunkite visų aplankų rodinį %1
+toggled on actions	mail	lt	Perjungti veiksmus
+trash	mail	lt	Šiukšliadėžė
+trash folder	mail	lt	Aplankas šiukšliadėžė
 you can select what info to be displayed on email tag	mail	lt	Galite pasirinkti, kokia informacija bus rodoma el. pašto žymoje.
 you've got new mail	mail	lt	Gavote naują laišką

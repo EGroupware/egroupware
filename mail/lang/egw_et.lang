@@ -1,6 +1,10 @@
 (leave empty for no quota)	mail	et	(jäta tühjaks, kui kvooti ei ole)
+acl rights retrieve failed, seems there are no rights set!	mail	et	ACL-i õiguste päring ebaõnnestus, tundub, et õigusi ei ole määratud!
 add all my aliases	mail	et	Lisa kõik minu varjunimed
+add files as %1	mail	et	Lisage failid %1
 add raw message, ignore mail attachments	mail	et	Konverteeri post objektiks, lisa toores sõnum (ignoreeri posti manuseid)
+adding %1 to blacklisted email addresses failed because of %2	mail	et	%1 lisamine musta nimekirja kantud e-posti aadressidele ebaõnnestus %2 tõttu.
+adding %1 to whiltelisted email addresses failed because of %2	mail	et	%1 lisamine valimisse kantud e-posti aadressidele ebaõnnestus %2 tõttu.
 after reply, visible during compose	mail	et	Pärast vastamist, nähtav koostamise ajal
 aliases+forwards	mail	et	Pseudonimed + Edasisaatmine
 all of	mail	et	kõik välja
@@ -8,9 +12,16 @@ always show html emails	mail	et	Alati näita HTML emaile
 always show notifiction	mail	et	Näita alati teavitust
 answered	mail	et	Vastatud
 any status	mail	et	kõik staatused
+attach files	mail	et	Failide lisamine
+attach users vcard at compose to every new mail	mail	et	Lisada kasutajate vCard iga uue posti koostamisel.
+attachment has been saved successfully.	mail	et	Lisa on edukalt salvestatud.
+attachments, ...	mail	et	manused, ...
+be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	et	Olge teadlik, et kui lisate kõik valitud failid %1 režiimi, muudab see ka kõik olemasolevad manused nimekirjas samuti %2 režiimi. \n \n Kas soovite jätkata?
+be aware that all attachments will be sent as %1!	mail	et	Olge teadlik, et kõik manused saadetakse kui %1!
 by date	mail	et	Kuupäeva järgi
 by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	et	Vaikimisi asendatakse "http://" lihtsalt "https://". Saate vabalt konfigureerida 'https://proxy.egroupware.org/', et laadida ka pilte, mis on saadaval ainult http kaudu.
 caching of flags	mail	et	Lipude vahemälu
+changing subject failed because of %1	mail	et	Teema muutmine ebaõnnestus %1 tõttu
 changing subject failed folder %1 does not exist	mail	et	Teema muutmine ebaõnnestus kaust %1 ei ole olemas.
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	et	Konfigureeritud väärtused määratakse automaatselt koostamise dialoogis kinnipeetavale väljale, kui koostate uue e-kirja.
 contact label	mail	et	Kontakt silt
@@ -37,20 +48,58 @@ don't use sent	mail	et	Ära kasuta Sent
 don't use trash	mail	et	Ära kasuta Trash
 draft	mail	et	Eelnõu
 edit account	mail	et	Muuda kontot
+emailadmin: profilemanagement	mail	et	eMailAdmin: Profiili haldamine
+emails in whitelisted domains are not marked as spam	mail	et	Lubatud
 empty trash	mail	et	tühjenda prügi
-enable	mail	et	luba
+enable	mail	et	Luba
+enabled	mail	et	Lubatud
+encrypt your message with smime certificate	mail	et	Krüpteerige oma sõnum S/MIME sertifikaadiga
+examine namespace to retrieve folders in others and shared	mail	et	Uurige nimeruumi, et otsida kaustu teistes ja jagatud
 extended	mail	et	Laiendatud
-file into	mail	et	faili info
+failed to subscribe folder %1!	mail	et	Ei õnnestunud tellida kausta %1!
+failed to unsubscribe folder %1!	mail	et	Ebaõnnestus kausta %1 tühistamine!
+file into	mail	et	Liiguta
+file into:	mail	et	Liiguta:
+filemode has been switched to %1	mail	et	Filemode on vahetatud: %1
+flagged %1 messages as %2 in %3	mail	et	Märgistatud %1 sõnum(id) kui %2 aastal %3
+flagged %1 messages as flagged in %2	mail	et	Märgistatud %1 sõnum(id) kui märgistatud %2-s.
+flagged %1 messages as unflagged in %2	mail	et	Märgistatud %1 sõnum(id) kui märkimata %2-s.
+folder %1 %2 failed because of %3!	mail	et	Kaust %1 %2 ebaõnnestus, sest %3!
+folder %1 has been created successfully, although the subscription failed because of %2	mail	et	Kaust %1 on edukalt loodud, kuigi tellimine ebaõnnestus %2 tõttu.
 folder settings	mail	et	Kausta setingud
 forward	mail	et	Edasi
 general	admin	et	Üldine
-html	mail	et	Html
+handling of external http images / mixed content in mails	mail	et	Välise http-pildi / segatud sisu käsitlemine e-kirjades
+html	mail	et	HTML
+ident name	mail	et	Tunnuse nimi
+ident name email	mail	et	Ident name [Email]
+ident name organization email	mail	et	Ident name Organisatsioon [Email]
+identity label	mail	et	Identiteedi silt
 if	mail	et	KUI
+if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	et	Kui soovite näha e-kirja eelvaadet, kui klõpsate ainsa klõpsuga teemale, siis lubage see.
+if you would like to select multiple folders in one action, you can hold ctrl key then select a folder as start range and another folder within a same level as end range, all folders in between will be selected or unselected based on their current status.	mail	et	Kui soovite valida mitu kausta ühe toiminguga, võite hoida all ctrl-klahvi ja valida algusväliks ühe kausta ja lõppvahemikuks teise samal tasemel oleva kausta, kõik vahepealsed kaustad valitakse või tühistatakse vastavalt nende praegusele olekule.
 imap	mail	et	IMAP
 imap server	mail	et	IMAP Server
+import of message %1 failed. destination folder not set.	mail	et	Sõnumi %1 importimine ebaõnnestus. Sihtkaust ei ole määratud.
+import of message %1 failed. no contacts to merge and send to specified.	mail	et	Sõnumi %1 importimine ebaõnnestus. Pole määratud ühtegi ühendatavat ja saadetavat kontakti.
+importance	mail	et	tähtsus
+important	mail	et	Oluline
+in mailbox: %1, with id: %2, and partid: %3	mail	et	Postkastis: %1, ID: %2 ja PartID: %3.
+in order to protect your privacy all external sources within this email are blocked.	mail	et	Teie privaatsuse kaitsmiseks on kõik välised allikad selles e-kirjas blokeeritud.
 information to show on email tag	mail	et	E-posti sildil kuvatav teave
+initialization of mail failed. please use the wizard to cope with the problem.	mail	et	Postimooduli initsialiseerimine ebaõnnestus. Palun kasutage konfiguratsiooni parandamiseks konfiguratsioonivõtijat.
+inline	mail	et	Edasi
+insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)	mail	et	sisestage allkiri uue (või vastuse) sõnumi ülaosas, kui avate koostamise dialoogi (allkirja ei pruugi olla võimalik vahetada)
+job	mail	et	Töö
+junk	mail	et	Junk
+junk folder	mail	et	Junkkaust
+keep a copy of the message in your inbox	mail	et	Hoidke sõnumi koopia oma postkastis
+kilobytes	mail	et	kilobaidid
 later	mail	et	Hiljem
+learning as ham (not spam) failed because of %1	mail	et	Learning as ham (mitte rämpsposti) ebaõnnestus, sest %1
+learning as spam failed because of %1	mail	et	Õppimine rämpspostina ebaõnnestus, sest %1
 less than	mail	et	vähem kui
+limit mailing list results when searching for addresses	mail	et	Postiloendi tulemuste piiramine aadresside otsimisel
 list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	et	Loetelu tegevustest, mis tuleb vaikimisi sisse lülitada/aktiveerida (nt Mail compose save as InfoLog action).
 mail	common	et	E-postid
 mail acl	mail	et	Juurdepääsuõigused
@@ -62,6 +111,8 @@ mail-address	mail	et	Mail-aadress
 mailaccount	mail	et	Maili konto
 mailinglist	mail	et	Mailinglist
 mails	common	et	E-postid
+mails can be copied to that folder via context menu, if folder is configured.	mail	et	Kirju saab sellesse kausta kopeerida kontekstmenüü kaudu, kui kaust on konfigureeritud.
+mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	et	Mailserver teatas:\n%1 \nKas soovite jätkata valitud sõnumite kohese kustutamisega (klõpsake ok)?\nKui mitte, proovige enne jätkamist tühjendada prügikasti. (klõpsake tühistamiseks)
 mark all as read	mail	et	Märgi kõik loetud
 mark all messages in folder as read	mail	et	Märgista kõik kaustas olevad sõnumid loetuks
 mark as deleted	mail	et	Märgi kui kustutatud
@@ -91,9 +142,16 @@ printing	mail	et	Trükkimine
 push notifications	mail	et	Push-teated
 quicksearch	mail	et	Kiirotsing
 quicksearch (with cc)	mail	et	Kiirotsing (+Kopeerimine)
+real name	mail	et	Tegelik nimi
+real name email	mail	et	Tegelik nimi [E-post]
+real name organization email	mail	et	Tegelik nimi Organisatsioon [E-post]
 refresh time in minutes	mail	et	Värkendamise aeg minutites
+remember the password for	mail	et	Jäta meelde parool
 remove all	mail	et	Eemalda Kõik
 remove immediately	mail	et	Eemalda koheselt!
+removing %1 from blacklisted email addresses failed because of %2	mail	et	Mustas nimekirjas olevate e-posti aadresside %1 eemaldamine ebaõnnestus %2 tõttu
+removing %1 from whiltelisted email addresses failed because of %2	mail	et	%1 eemaldamine valimisse kantud e-posti aadressidest ebaõnnestus %2 tõttu.
+replace 'http://' in image urls with (trailing / required!)	mail	et	Asendage 'http://' pildi urlites (tagumine / nõutav!)
 replied	mail	et	vastatud
 reply	mail	et	Vasta
 save all attachments to filemanager	mail	et	Salvesta kõik manused failihaldurisse
@@ -116,7 +174,17 @@ smime signed message	mail	et	S/MIME allkirjastatud sõnum
 smtp	mail	et	SMTP
 sneak preview in list	mail	et	Sõnumi eelvaade
 text	mail	et	Tekst
-trash folder	mail	et	Trash Kaust
+the imap server need to meet certain requirements and be configured for it:	mail	et	IMAP-server peab vastama teatavatele nõuetele JA olema selleks konfigureeritud:
+the rule with priority %1 successfully saved!	mail	et	Reegel prioriteediga %1 edukalt salvestatud!
+there is no space left to store sieve script, please check sieve_maxscriptsize option on your mailserver's config.	mail	et	Sieve skripti salvestamiseks ei ole enam ruumi, palun kontrollige sieve_maxscriptsize valikut oma mailserveri seadistuses.
+this mail contains external images served via insecure http protocol. be aware showing or allowing them can compromise your security!	mail	et	See post sisaldab väliseid pilte, mida edastatakse ebaturvalise HTTP-protokolli kaudu. Olge teadlik, et nende näitamine või lubamine võib ohustada teie turvalisust!
+this message is smime encrypted and password protected.	mail	et	See sõnum on S/MIME-krüpteeritud ja parooliga kaitstud.
+timeout on connections to your imap server	mail	et	IMAP-serveriga ühenduse aegumistähtaeg
+to do	mail	et	Teha
+toggle all folders view for %1	mail	et	Lülitage kõigi kaustade vaade %1 jaoks ümber
+toggled on actions	mail	et	Tegevuste sisselülitamine
+trash	mail	et	Prügikasti
+trash folder	mail	et	Prügikasti kaust
 unread	mail	et	lugematta
 write	mail	et	Kirjuta
 you can select what info to be displayed on email tag	mail	et	Saate valida, millist teavet kuvatakse e-posti sildil.

@@ -1,16 +1,27 @@
 (leave empty for no quota)	mail	da	(Lad det være tomt for ingen kvote)
 (no subject)	mail	da	(ingen emne)
+acl rights retrieve failed, seems there are no rights set!	mail	da	ACL-rettighedshentning mislykkedes, der er tilsyneladende ikke indstillet nogen rettigheder!
 add all my aliases	mail	da	Tilføj alle mine aliasser
+add files as %1	mail	da	Tilføj filer som %1
 add raw message, ignore mail attachments	mail	da	Konverter mail til emne, tilføj rå besked (ignorer vedhæftede filer)
 add to addressbook	mail	da	tilføj til adressebog
+adding %1 to blacklisted email addresses failed because of %2	mail	da	Tilføjelse af %1 til sortlistede e-mailadresser mislykkedes på grund af %2
+adding %1 to whiltelisted email addresses failed because of %2	mail	da	Tilføjelse af %1 til whiltelisted e-mail-adresser mislykkedes på grund af %2
 after reply, visible during compose	mail	da	Efter svar, synlig under sammensætning
 aliases+forwards	mail	da	Fremmedord + viderestillinger
 always show html emails	mail	da	Vis altid HTML e-mails
 always show notifiction	mail	da	Vis altid meddelelse
 answered	mail	da	Besvaret
-attachments	mail	da	vedhæftet filer
+attach files	mail	da	Vedhæft filer
+attach users vcard at compose to every new mail	mail	da	Vedhæft brugerens vCard til hver ny mail ved oprettelse
+attachment has been saved successfully.	mail	da	Vedhæftningen er blevet gemt.
+attachments	mail	da	Vedhæftet filer
+attachments, ...	mail	da	vedhæftede filer, ...
+be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	da	Vær opmærksom på, at ved at tilføje alle valgte filer som %1-tilstand, vil det også ændre alle eksisterende vedhæftede filer på listen til %2-tilstand. \n \n Vil du gerne fortsætte?
+be aware that all attachments will be sent as %1!	mail	da	Vær opmærksom på, at alle vedhæftede filer vil blive sendt som %1!
 by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	da	Som standard erstattes 'http://' bare med 'https://'. Du er velkommen til at konfigurere 'https://proxy.egroupware.org/' til også at indlæse billeder, der kun er tilgængelige via http.
 caching of flags	mail	da	Caching af flag
+changing subject failed because of %1	mail	da	Ændring af emne mislykkedes på grund af %1
 changing subject failed folder %1 does not exist	mail	da	Ændring af emne mislykkedes mappe %1 findes ikke
 compose	mail	da	Ny meddelse
 compress folder	mail	da	Komprimere mappe
@@ -41,27 +52,67 @@ draft folder	mail	da	Udkast til mappe
 drafts	mail	da	Udkast
 drafts folder	mail	da	Mappe med udkast
 edit account	mail	da	Redigér konto
-empty trash	mail	da	tøm skraldespanden
-enable	mail	da	aktivere
+emailadmin: profilemanagement	mail	da	eMailAdmin: Profilhåndtering
+emails in whitelisted domains are not marked as spam	mail	da	E-mails i hvidlistede domæner markeres ikke som spam
+empty trash	mail	da	Tøm skraldespanden
+enable	mail	da	Aktivere
+enabled	mail	da	Aktiveret
+encrypt your message with smime certificate	mail	da	Cifrar su mensaje con certificado S/MIME
 event details follow	mail	da	Hændelses detajler følger
 everyone	mail	da	enhver
+examine namespace to retrieve folders in others and shared	mail	da	Undersøg navnerummet for at hente mapper i andre og delte mapper
 extended	mail	da	Udvidet
-file into	mail	da	akivere til
+file into	mail	da	Flyt til
+file into:	mail	da	Flyt til:
 filemanager	mail	da	Filhåndtering
+filemode has been switched to %1	mail	da	Filemode er blevet skiftet til: %1
 flagged	mail	da	Flag sat
+flagged %1 messages as %2 in %3	mail	da	Markerede %1 besked(er) som %2 i %3
+flagged %1 messages as flagged in %2	mail	da	Flaggede %1 besked(er) som flagget i %2
+flagged %1 messages as unflagged in %2	mail	da	Flagede %1 besked(er) som ikke-flagede i %2
 folder	mail	da	Bibliotek
+folder %1 %2 failed because of %3!	mail	da	Mappen %1 %2 mislykkedes på grund af %3!
+folder %1 has been created successfully, although the subscription failed because of %2	mail	da	Mappen %1 er blevet oprettet, selvom abonnementet mislykkedes på grund af %2.
 folder settings	mail	da	Mappe indstillinger
 forward	mail	da	Vidersend
 from	mail	da	Fra
 from(a->z)	mail	da	Fra (A->Z)
 from(z->a)	mail	da	Fra (Z->A)
 general	admin	da	Generelt
+handling of external http images / mixed content in mails	mail	da	Håndtering af eksterne http-billeder / blandet indhold i mails
 html	mail	da	HTML
+ident name	mail	da	Ident navn
+ident name email	mail	da	Ident navn [E-mail]
+ident name organization email	mail	da	Identnavn Organisation [E-mail]
+identity label	mail	da	Identitetsmærke
 if	mail	da	HVIS
+if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	da	Hvis du vil se en forhåndsvisning af en mail ved at klikke på emnet, skal du aktivere dette.
+if you would like to select multiple folders in one action, you can hold ctrl key then select a folder as start range and another folder within a same level as end range, all folders in between will be selected or unselected based on their current status.	mail	da	Hvis du vil vælge flere mapper i én handling, kan du holde ctrl-tasten nede og vælge en mappe som startområde og en anden mappe på samme niveau som slutområde. Alle mapper derimellem vil blive valgt eller fravalgt baseret på deres aktuelle status.
 imap	mail	da	IMAP
 imap server	mail	da	IMAP Server
+import of message %1 failed. could not save message to folder %2 due to: %3	mail	da	Import af besked %1 mislykkedes. Kunne ikke gemme beskeden i mappen %2 pga: %3
+import of message %1 failed. destination folder %2 does not exist.	mail	da	Import af besked %1 mislykkedes. Destinationsmappen %2 findes ikke.
+import of message %1 failed. destination folder not set.	mail	da	Import af meddelelse %1 mislykkedes. Destinationsmappe ikke indstillet.
+import of message %1 failed. no contacts to merge and send to specified.	mail	da	Import af besked %1 mislykkedes. Ingen kontakter at flette og sende til angivet.
+importance	mail	da	Vigtighed
+important	mail	da	Vigtigt
+in mailbox: %1, with id: %2, and partid: %3	mail	da	I postkasse: %1, med ID: %2, og PartID: %3
+in order to protect your privacy all external sources within this email are blocked.	mail	da	For at beskytte dit privatliv er alle eksterne kilder i denne e-mail blokeret.
 inbox	mail	da	Indbakke
 information to show on email tag	mail	da	Oplysninger, der skal vises på e-mail-tagget
+initialization of mail failed. please use the wizard to cope with the problem.	mail	da	Initialiseringen af mailmodulet mislykkedes. Brug venligst konfigurationsguiden til at rette konfigurationen.
+inline	mail	da	Videresend
+insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)	mail	da	Indsæt signaturen øverst i den nye (eller svar) besked, når du åbner skrivedialogen (du kan muligvis ikke skifte signatur).
+job	mail	da	Virksomhed
+junk	mail	da	Junk
+junk folder	mail	da	Junk-mappe
+keep a copy of the message in your inbox	mail	da	Opbevar en kopi af beskeden i din indbakke
+kilobytes	mail	da	Kilobyte
+later	mail	da	Senere
+learning as ham (not spam) failed because of %1	mail	da	Læring som skinke (ikke spam) mislykkedes på grund af %1
+learning as spam failed because of %1	mail	da	Læring som spam mislykkedes på grund af %1
+less than	mail	da	mindre end
+limit mailing list results when searching for addresses	mail	da	Begræns mailinglisteresultater, når du søger efter adresser
 list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	da	Liste over handlinger, der skal slås til/aktiveres som standard (f.eks. Mail compose save as InfoLog action)
 mail	common	da	Mail
 mail acl	mail	da	Adgangsrettigheder
@@ -73,6 +124,8 @@ mail-address	mail	da	Mail-Address
 mailaccount	mail	da	Mailkonto
 mailinglist	mail	da	Mailingliste
 mails	common	da	Mails
+mails can be copied to that folder via context menu, if folder is configured.	mail	da	Mails kan kopieres til denne mappe via kontekstmenuen, hvis mappen er konfigureret.
+mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	da	Mailserver rapporterede:\n%1 \nVil du fortsætte med at slette de valgte beskeder med det samme (klik ok)?\nHvis ikke, så prøv at tømme din papirkurv-mappe, før du fortsætter. (klik på cancel)
 mark all as read	mail	da	Markér alle som læst
 mark all messages in folder as read	mail	da	Markér alle meddelelser i mappen som læste
 mark as deleted	mail	da	Marker som slettet
@@ -105,9 +158,17 @@ printing	mail	da	Udskrivning
 push notifications	mail	da	Push-meddelelser
 quicksearch	mail	da	Hurtigsøgning
 quicksearch (with cc)	mail	da	Hurtigsøgning (+Kopi)
+real name	mail	da	Rigtigt navn
+real name email	mail	da	Rigtigt navn [e-mail]
+real name organization email	mail	da	Rigtigt navn Organisation [E-mail]
 refresh time in minutes	mail	da	Opdaterings interval i minutter
+remember the password for	mail	da	Husk adgangskoden til
+remove all	mail	da	Fjern alle
 remove immediately	mail	da	Fjern nu
+removing %1 from blacklisted email addresses failed because of %2	mail	da	Fjernelse af %1 fra sortlistede e-mailadresser mislykkedes på grund af %2
+removing %1 from whiltelisted email addresses failed because of %2	mail	da	Fjernelse af %1 fra whiltelisted e-mail-adresser mislykkedes på grund af %2
 rename folder	mail	da	Omdøb mappe
+replace 'http://' in image urls with (trailing / required!)	mail	da	Erstat 'http://' i billed-URL'er med (efterfølgende / påkrævet!)
 replied	mail	da	Besvaret
 reply	mail	da	Besvar
 reply all	mail	da	Besvar Alle
@@ -138,8 +199,18 @@ sort order	mail	da	Soterings rækkefølge
 subject(a->z)	mail	da	Emne (A->Z)
 subject(z->a)	mail	da	Emne (Z->A)
 text	mail	da	Tekst
+the imap server need to meet certain requirements and be configured for it:	mail	da	IMAP-serveren skal opfylde visse krav OG være konfigureret til det:
+the rule with priority %1 successfully saved!	mail	da	Reglen med prioritet %1 er gemt med succes!
 then	mail	da	SÅ
-trash folder	mail	da	Skraldespands mappen
+there is no space left to store sieve script, please check sieve_maxscriptsize option on your mailserver's config.	mail	da	Der er ikke plads til at gemme sieve-script, tjek venligst sieve_maxscriptsize-indstillingen i din mailservers konfiguration.
+this mail contains external images served via insecure http protocol. be aware showing or allowing them can compromise your security!	mail	da	Denne mail indeholder eksterne billeder serveret via en usikker HTTP-protokol. Vær opmærksom på, at hvis du viser eller tillader dem, kan det kompromittere din sikkerhed!
+this message is smime encrypted and password protected.	mail	da	Denne besked er S/MIME-krypteret og adgangskodebeskyttet.
+timeout on connections to your imap server	mail	da	Timeout på forbindelser til din IMAP-server
+to do	mail	da	Sådan gør du
+toggle all folders view for %1	mail	da	Slå visning af alle mapper til for %1
+toggled on actions	mail	da	Aktiveret på handlinger
+trash	mail	da	Papirkurv
+trash folder	mail	da	Papirkurv-mappe
 unflagged	mail	da	Flag ikke sat
 unread	mail	da	ulæst
 when deleting messages	mail	da	Når meddelser slettes

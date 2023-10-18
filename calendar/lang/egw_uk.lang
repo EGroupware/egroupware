@@ -1,11 +1,14 @@
+%1 events in ical file, only first one imported and displayed!	calendar	uk	%1 подій у файлі iCal, імпортовано та показано лише першу!
 %1 hours	calendar	uk	%1 годин
 %1 records imported	calendar	uk	%1 записів імпортовано
 %1 records read (not yet imported, you may go back and uncheck test import)	calendar	uk	%1 записів прочитано (ще не імпортовано, Ви повинні повернутися та зняти відмітку Тестувати Імпорт)
+(%1 events in %2 seconds)	calendar	uk	(%1 подій за %2 секунди)
 accept	calendar	uk	Прийняти
 accepted	calendar	uk	Прийнято
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	uk	Дії, що призводять то сповіщення: Добавлено, Відмінено, Прийнято, Відхилено...
 actions	calendar	uk	Дії
 add alarm	calendar	uk	Добавити попередження
+add new event	calendar	uk	Додати нову зустріч
 added	calendar	uk	Добавлено
 alarm	calendar	uk	Попередження
 alarm for %1 at %2 in %3	calendar	uk	Попередження для %1 о %2 в %3
@@ -13,6 +16,7 @@ alarm management	calendar	uk	Керування попередженнями
 alarms	calendar	uk	Попередження
 all day	calendar	uk	На повний день
 always	calendar	uk	Завжди
+attention	calendar	uk	До уваги
 before the event	calendar	uk	перед подією
 birthday	calendar	uk	День народження
 birthdays	admin	uk	Дні народження
@@ -21,6 +25,8 @@ calendar preferences	calendar	uk	Параметри Календарю
 calendar settings	admin	uk	Установки Календарю
 calendar-fieldname	calendar	uk	Календар - Ім'я поля
 canceled	calendar	uk	Відмінено
+category report	calendar	uk	Звіт по категоріям
+changed event-data applied	calendar	uk	Застосовано змінені дані про подію
 charset of file	calendar	uk	Кодування файлу
 countries	calendar	uk	Країни
 country	calendar	uk	Країна
@@ -30,6 +36,7 @@ csv-filename	calendar	uk	CSV-Filename
 custom	calendar	uk	Власне
 custom fields	common	uk	Власні поля
 daily	calendar	uk	Поденно
+date range	calendar	uk	Діапазон дат
 day	calendar	uk	День
 days	calendar	uk	Дні
 days repeated	calendar	uk	Дні повтору
@@ -52,6 +59,7 @@ enddate	calendar	uk	Число закінчення
 ends	calendar	uk	закінчується
 event details follow	calendar	uk	Подробиці події
 exceptions	calendar	uk	Виключення
+exclude weekend	calendar	uk	Виключити вихідні
 existing links	calendar	uk	Існуючі посилання
 extended	calendar	uk	Розширений
 extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	uk	Розширені зміни завжди включають всі подробиці події. iCal формат може бути імпортовано іншими програмами ведення Календарю.
@@ -90,6 +98,7 @@ lastname of person to notify	calendar	uk	Прізвище людини для п
 links	calendar	uk	Посилання
 location	calendar	uk	Місце
 maximum available quantity of %1 exceeded!	calendar	uk	Максимально доступну кількість %1 перевищено!
+min days	calendar	uk	Мінімум днів
 minimum number of users for showing day view as consolidated.	calendar	uk	Мінімальна кількість користувачів для відображення зведеного перегляду за день.
 minimum number of users for showing week view as consolidated.	calendar	uk	Мінімальна кількість користувачів для відображення тижневого перегляду як консолідованого.
 minutes	calendar	uk	хвилини
@@ -123,6 +132,7 @@ on invitation / cancellation only	calendar	uk	тільки при запроше
 on participant responses too	calendar	uk	також при відповідях учасників
 on time change of more than 4 hours too	calendar	uk	також при зміні часу більше чим на 4 години
 open todo's:	calendar	uk	Відкриті записи Завдань:
+output unit	calendar	uk	Одиниця виміру
 overlap holiday	calendar	uk	свята включно
 participants	calendar	uk	Учасники
 people holiday	calendar	uk	народні свята
@@ -136,12 +146,14 @@ private only	calendar	uk	Тільки особисте
 re-edit event	calendar	uk	Повторне редагування Події
 receive email updates	calendar	uk	Отримувати зміни по email
 receive summary of appointments	calendar	uk	Отримувати резюме зустрічей
+recordings	calendar	uk	Записи
 recurring event	calendar	uk	Періодична подія
 rejected	calendar	uk	Відхилено
 repeat type	calendar	uk	Тип повтору
 repeating event information	calendar	uk	Інформація періодичної події
 repetition	calendar	uk	Повторення
 repetitiondetails (or empty)	calendar	uk	Деталі повторення (або порожнє)
+report	calendar	uk	Звіт
 reset	calendar	uk	Переввести
 rule	calendar	uk	Правило
 sat	calendar	uk	Сб
@@ -151,6 +163,7 @@ should new events created as private by default ?	calendar	uk	Чи повинн�
 should the status of the event-participants (accept, reject, ...) be shown in brackets after each participants name ?	calendar	uk	Показувати відмітки учасників події (прийнято, відхилено,...) в дужках після кожного імені учасника?
 show list of upcoming events	calendar	uk	Показувати перелік найближчих подій
 single event	calendar	uk	Одиночна подія
+sort by	calendar	uk	Відсортувати по
 start date/time	calendar	uk	Число/Час початку
 startdate	calendar	uk	Число початку
 startrecord	calendar	uk	Початковий запис
@@ -175,6 +188,7 @@ translation	calendar	uk	Переклад
 tue	calendar	uk	Вт
 updated	calendar	uk	Змінено
 use end date	calendar	uk	Використати дату закінчення
+utilities	calendar	uk	Утиліти
 wed	calendar	uk	Ср
 week	calendar	uk	Тиждень
 weekday starts on	calendar	uk	Тиждень починається в

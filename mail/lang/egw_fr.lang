@@ -12,6 +12,7 @@
 (select mails by clicking on the line, like a checkbox)	mail	fr	(sélectionner des emails en cliquant sur la ligne, comme pour une case à cocher)
 (with checkbox enforced)	mail	fr	avec les cases à cocher forcées
 account editable by user	mail	fr	compte modifiable par l'utilisateur
+acl rights retrieve failed, seems there are no rights set!	mail	fr	L'extraction des droits ACL a échoué, il semble qu'il n'y ait pas de droits définis !
 acl rights retrieved successfully	mail	fr	Droits ACL récupérés avec succès
 action	mail	fr	Action
 activating by date requires a start- and end-date!	mail	fr	Activation par date nécessite une date de début ET de fin !
@@ -28,6 +29,8 @@ add raw message, ignore mail attachments	mail	fr	Convertir le courrier en élém
 add this certificate into contact	mail	fr	Ajouter ce certificat sur le contact
 add to addressbook	mail	fr	Ajouter au carnet d'adresses
 add your domain as "%1" in options to list of email providers and enable api.	mail	fr	Ajouter votre domaine comme "%1" dans les options pour lister tous les fournisseurs et activer les API.
+adding %1 to blacklisted email addresses failed because of %2	mail	fr	L'ajout de %1 aux adresses email de la liste noire a échoué à cause de %2
+adding %1 to whiltelisted email addresses failed because of %2	mail	fr	L'ajout de %1 aux adresses email de la liste blanche a échoué à cause de %2
 after reply, visible during compose	mail	fr	Après la réponse, visible pendant la rédaction
 aliases+forwards	mail	fr	Alias + Transferts
 all	mail	fr	tout
@@ -71,6 +74,7 @@ attachments	mail	fr	Pièces jointes
 attachments, ...	mail	fr	pièces jointes...
 authentication	mail	fr	Authentification
 available personal email-accounts/profiles	mail	fr	Profils et comptes emails personnels disponibles
+be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	fr	Attention, en ajoutant tous les fichiers sélectionnés en mode %1, toutes les pièces jointes existantes dans la liste seront également modifiées en mode %2. \Voulez-vous continuer ?
 be aware that all attachments will be sent as %1!	mail	fr	Attention, toutes les pièces jointes seront envoyées comme %1 !
 before reply, visible during compose	mail	fr	Avant la réponse, visible pendant la rédaction
 blacklisted mails are marked as spam	mail	fr	Les mails en liste noire sont marqués comme spam
@@ -189,10 +193,12 @@ email notification update failed! you need to set an email address!	mail	fr	Eche
 emailaddress	admin	fr	adresse email
 emailadmin: profilemanagement	mail	fr	eMailAdmin : gestion des profils
 emails in blacklisted domains are marked as spam	mail	fr	Les emails des domaines de la liste noire sont marqués comme spam
+emails in whitelisted domains are not marked as spam	mail	fr	Les courriers électroniques des domaines figurant sur la liste blanche ne sont pas marqués comme spam
 empty junk	mail	fr	Vider le dossier Courrier Indésirable / Junk / Spam
 empty trash	mail	fr	Vider la Corbeille
 empty trash and junk	mail	fr	Vider la Corbeille et le Courrier indésirable
 enable	mail	fr	Autoriser
+enabled	mail	fr	Activé
 enabled!	mail	fr	autorisé !
 encrypt	mail	fr	Chiffre
 encrypt your message with smime certificate	mail	fr	Chiffre votre message avec le certificat smime
@@ -210,6 +216,7 @@ error: message could not be displayed.	mail	fr	ERREUR : Impossible d'afficher le
 esync will fail without a working email configuration!	mail	fr	eSync ne peut fonctionner sans une configuration email fonctionnelle !
 event details follow	mail	fr	Les détails de l'événement suivent
 everyone	mail	fr	Tout le monde
+examine namespace to retrieve folders in others and shared	mail	fr	Examiner l'espace de noms pour récupérer les dossiers dans les autres et partagés
 extended	mail	fr	Etendu.
 extra sent folders	mail	fr	Dossiers supplémentaires pour les messages envoyés
 failed to delete %1	mail	fr	Impossible de supprimer %1
@@ -219,17 +226,23 @@ failed to move %1 ! reason: %2	mail	fr	Impossible de déplacer %1! Motif : 2%
 failed to rename %1 ! reason: %2	mail	fr	Impossible de renommer %1! Motif : 2%
 failed to subscribe folder %1!	mail	fr	Impossible de vous abonner au dossier %1!
 failed to unsubscribe folder %1!	mail	fr	Impossible de vous désabonner du dossier %1!
-file into	mail	fr	Fichier dans
-file into:	mail	fr	Fichier dans :
+file into	mail	fr	Déplacer vers
+file into:	mail	fr	Déplacer vers :
 file rejected, no %2. is:%1	mail	fr	Fichier rejeté, pas de %2.  Fichiers permis : %1
 filemanager	mail	fr	Gestionnaire de fichiers
+filemode has been switched to %1	mail	fr	Le mode de fichier a été changé en : %1
 files	mail	fr	Fichiers
 flag / unflag	mail	fr	Marquer / Non marquer
 flag or unflag a mail	mail	fr	Marquer ou non marquer un mail
 flagged	mail	fr	Marqué
+flagged %1 messages as %2 in %3	mail	fr	Message(s) marqué(s) %1 comme %2 dans %3
+flagged %1 messages as flagged in %2	mail	fr	Message(s) marqué(s) %1 comme marqué(s) en %2
+flagged %1 messages as unflagged in %2	mail	fr	Marqué %1 message(s) comme non marqué dans %2
 flagged / unflagged	mail	fr	Marqué / Non marqué
 folder	mail	fr	Dossier
+folder %1 %2 failed because of %3!	mail	fr	Le dossier %1 %2 a échoué à cause de %3 !
 folder %1 %2 failed!	mail	fr	Dossier %1 %2 en échec !
+folder %1 has been created successfully, although the subscription failed because of %2	mail	fr	Le dossier %1 a été créé avec succès, bien que l'abonnement ait échoué à cause de %2.
 folder %1 is moving to folder %2	mail	fr	Le dossier %1 est déplacé vers le dossier %2
 folder management	mail	fr	Gestion des dossiers
 folder management ...	mail	fr	Gestion des dossiers...
@@ -252,6 +265,7 @@ from(z->a)	mail	fr	De (Z->A)
 general	admin	fr	General
 general settings	mail	fr	Paramètres principaux
 greater than	mail	fr	plus grand que
+handling of external http images / mixed content in mails	mail	fr	Traitement des images http externes / contenu mixte dans les courriers électroniques
 header	mail	fr	En-tête
 header lines	mail	fr	Lignes d'en-tête
 high	mail	fr	haute
@@ -263,6 +277,9 @@ how should the available information on identities be displayed	admin	fr	Comment
 how to forward messages	mail	fr	Comment les messages doivent-ils être transférés ?
 html	mail	fr	Html
 html mode	mail	fr	mode HTML
+ident name	mail	fr	Nom de l'identifiant
+ident name email	mail	fr	Nom de l'identifiant [Email]
+ident name organization email	mail	fr	Nom de l'identifiant Organisation [Email]
 identity	mail	fr	Identité
 identity label	mail	fr	Label d'identité
 identity+signature	mail	fr	Identité + signature
@@ -272,31 +289,42 @@ if different from email address	mail	fr	Si différent de l'adresse mail
 if from contains:(*)	mail	fr	Si "de" contient : (*)
 if mail body content / attachment type	mail	fr	Si le type de corps de message ou de pièce jointe
 if mail body message type	mail	fr	Si le type de corps de message
-if mail header	mail	fr	si l'en-tête du mail
-if message size	mail	fr	si la taille du message
+if mail header	mail	fr	Si l'en-tête du mail
+if message size	mail	fr	Si la taille du message
 if shown, which folders should appear on the home page	mail	fr	Si affichés, quels dossiers doivent apparaître sur la page d'accueil
 if subject contains:(*)	mail	fr	Si le sujet contient : (*)
 if to contains:(*)	mail	fr	Si le destinataire contient : (*)
+if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	fr	Si vous souhaitez voir un aperçu d'un courrier en cliquant sur l'objet, activez cette option.
+if you would like to select multiple folders in one action, you can hold ctrl key then select a folder as start range and another folder within a same level as end range, all folders in between will be selected or unselected based on their current status.	mail	fr	Si vous souhaitez sélectionner plusieurs dossiers en une seule action, vous pouvez maintenir la touche ctrl enfoncée et sélectionner un dossier comme plage de départ et un autre dossier situé au même niveau comme plage de fin, tous les dossiers intermédiaires seront sélectionnés ou désélectionnés en fonction de leur état actuel.
 imap	mail	fr	IMAP
 imap - incoming mail	mail	fr	IMAP - mail entrant
 imap administration	mail	fr	Administration IMPA
 imap server	mail	fr	Serveur IMAP
 imap timeout	mail	fr	Timeout IMAP
 import message	mail	fr	Importer le message
+import of message %1 failed. could not save message to folder %2 due to: %3	mail	fr	L'importation du message %1 a échoué. Impossible d'enregistrer le message dans le dossier %2 en raison de : %3
+import of message %1 failed. destination folder %2 does not exist.	mail	fr	L'importation du message %1 a échoué. Le dossier de destination %2 n'existe pas.
+import of message %1 failed. destination folder not set.	mail	fr	L'importation du message %1 a échoué. Dossier de destination non défini.
+import of message %1 failed. no contacts to merge and send to specified.	mail	fr	L'importation du message %1 a échoué. Aucun contact à fusionner et à envoyer n'a été spécifié.
 importance	mail	fr	Importance
-important	mail	fr	important
+important	mail	fr	Important
+in mailbox: %1, with id: %2, and partid: %3	mail	fr	Dans la boîte aux lettres : %1, avec ID : %2, et PartID : %3
+in order to protect your privacy all external sources within this email are blocked.	mail	fr	Afin de protéger votre vie privée, toutes les sources externes de cet e-mail sont bloquées.
 inbox	mail	fr	Boîte de réception
 information to show on email tag	mail	fr	Informations à faire figurer sur l'étiquette du courrier électronique
 initialization of mail failed. please use the wizard to cope with the problem.	mail	fr	L'initialisation du courrier en échec. Veuillez utiliser l'assistant pour traiter le problème.
 inline	mail	fr	Transférer
 insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)	mail	fr	insérer la signature en haut du message (ou réponse) à l'ouverture de la fenêtre de rédaction (vous pourriez alors ne as pouvoir changer de signature)
-job	mail	fr	traité
+job	mail	fr	Travail
 junk	mail	fr	Indésirables
 junk folder	mail	fr	Dossier des indésirables
 keep a copy of the message in your inbox	mail	fr	Garder une copie du message dans votre boite de réception
 kilobytes	mail	fr	kilo-octets
 later	mail	fr	Plus tard
+learning as ham (not spam) failed because of %1	mail	fr	L'apprentissage en tant que ham (pas spam) a échoué à cause de %1
+learning as spam failed because of %1	mail	fr	L'apprentissage en tant que spam a échoué à cause de %1
 less than	mail	fr	Moins que
+limit mailing list results when searching for addresses	mail	fr	Limiter les résultats de la liste de diffusion lors de la recherche d'adresses
 list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	fr	Liste des actions à activer par défaut (par exemple, l'action "Mail compose save as InfoLog")
 mail	common	fr	Mail
 mail acl	mail	fr	ACL Mail
@@ -306,8 +334,10 @@ mail settings	mail	fr	Réglages email
 mail source	mail	fr	Source des emails
 mail-address	mail	fr	Adresse email
 mailaccount	mail	fr	Compte mail
-mailinglist	mail	fr	liste de diffusion
+mailinglist	mail	fr	Liste de diffusion
 mails	common	fr	Emails
+mails can be copied to that folder via context menu, if folder is configured.	mail	fr	Les messages peuvent être copiés dans ce dossier via le menu contextuel, si le dossier est configuré.
+mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	fr	Mailserver reported:\n%1 \nVoulez-vous procéder à la suppression immédiate des messages sélectionnés (cliquez sur ok) ? \nSi ce n'est pas le cas, essayez de vider votre dossier de corbeille avant de continuer. (cliquez sur annuler)
 mark all as read	mail	fr	Marquer tout comme lu
 mark all messages in folder as read	mail	fr	Marquer tous les messages du dossier comme lus
 mark as deleted	mail	fr	Marquer comme effacé
@@ -424,10 +454,13 @@ remove "%1" from whiltelisted emails	mail	fr	Retirer "%1" de la liste noire des 
 remove all	mail	fr	Supprimer l'étiquette
 remove immediately	mail	fr	Enlever immédiatement
 removed folder %1	mail	fr	Dossier %1 supprimé
+removing %1 from blacklisted email addresses failed because of %2	mail	fr	La suppression de %1 des adresses électroniques figurant sur la liste noire a échoué en raison de %2
+removing %1 from whiltelisted email addresses failed because of %2	mail	fr	La suppression de %1 des adresses électroniques figurant sur la liste blanche a échoué en raison de %2
 rename folder	mail	fr	Renommer le dossier
 rename folder %1 ?	mail	fr	Renommer le dossier %1 ?
 rename folder %1 to:	mail	fr	Renommer le dossier %1 en :
 renamed folder %1 to %2	mail	fr	Dossier %1 renommé en %2
+replace 'http://' in image urls with (trailing / required!)	mail	fr	Remplacer 'http://' dans les urls d'images par (trailing / required !)
 replied	mail	fr	Répondu
 reply	mail	fr	Répondre
 reply all	mail	fr	Répondre à tous
@@ -553,12 +586,19 @@ text mode	mail	fr	Mode texte
 text/plain	mail	fr	text/plain
 the %1 's acl removed from the %2	mail	fr	Les ACL %1 ont été supprimés de %2
 the folder %1 's acls saved	mail	fr	Les ACL du dossier %1 sont enregistré
+the imap server need to meet certain requirements and be configured for it:	mail	fr	Le serveur IMAP doit répondre à certaines exigences ET être configuré pour cela :
 the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	mail	fr	L'expéditeur du message a demandé une réponse pour indiquer que vous avez lu ce message. Souhaitez-vous envoyer un accusé de réception?
 the mimeparser can not parse this message.	mail	fr	L'analyseur mime ne peut pas décoder ce message.
+the rule with priority %1 successfully saved!	mail	fr	La règle avec la priorité %1 a été sauvegardée avec succès !
 then	mail	fr	ALORS
 there is no imap server configured.	mail	fr	Il n'y a pas de serveur IMAP configuré.
+there is no space left to store sieve script, please check sieve_maxscriptsize option on your mailserver's config.	mail	fr	Il n'y a plus d'espace pour stocker le script sieve, veuillez vérifier l'option sieve_maxscriptsize dans la configuration de votre serveur de messagerie.
+this mail contains external images served via insecure http protocol. be aware showing or allowing them can compromise your security!	mail	fr	Ce courrier contient des images externes servies via un protocole HTTP non sécurisé. Attention, le fait de les afficher ou de les autoriser peut compromettre votre sécurité !
+this message is smime encrypted and password protected.	mail	fr	Ce message est crypté S/MIME et protégé par un mot de passe.
 timeout on connections to your imap server	mail	fr	Timout sur les connexion à votre serveur IMAP
-to do	mail	fr	à faire
+to do	mail	fr	A faire
+toggle all folders view for %1	mail	fr	Basculer l'affichage de tous les dossiers pour %1
+toggled on actions	mail	fr	Actions activées
 trash	mail	fr	Corbeille
 trash folder	mail	fr	Dossier Corbeille
 unable to fetch vacation!	mail	fr	Impossible de rechercher le message d'absense !
