@@ -1174,10 +1174,10 @@ class CalDAV extends HTTP_WebDAV_Server
 			}
 		}
 
-		// ToDo: client want data filtered
+		// client want data filtered
 		if (isset($_GET['filters']))
 		{
-
+			$propfind_options['filters'] = $_GET['filters'];
 		}
 
 		// properties to NOT get the default address-data for addressbook-collections and "all" for the rest

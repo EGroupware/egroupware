@@ -72,12 +72,18 @@ curl https://example.org/egroupware/groupdav.php/<username>/addressbook/ -H "Acc
 ```
 </details>
        
-  following GET parameters are supported to customize the returned properties:
+  Following GET parameters are supported to customize the returned properties:
   - props[]=<DAV-prop-name> eg. props[]=getetag to return only the ETAG (multiple DAV properties can be specified)
     Default for addressbook collections is to only return address-data (JsContact), other collections return all props.
   - sync-token=<token> to only request change since last sync-token, like rfc6578 sync-collection REPORT
   - nresults=N limit number of responses (only for sync-collection / given sync-token parameter!)
     this will return a "more-results"=true attribute and a new "sync-token" attribute to query for the next chunk
+
+  The GET parameter `filters` allows to filter or search for a pattern in an addressbook:
+  - `filters[search]=<pattern>` searches for `<pattern>` in the whole contact like the search in the GUI
+  - `filters[search][%23<custom-field-name>]=<custom-field-value>` filters by a custom-field value
+  - `filters[<database-column>]=<value>` filters by a DB-column name and value
+  > Please note: filters use the database column-names, not JSContact property-names!
 
 <details>
    <summary>Example: Getting just ETAGs and displayname of all contacts in a given AB</summary>
