@@ -55,7 +55,7 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 	 * G = primary group
 	 * D = distribution lists as groups
 	 * O = sync all in one (/<username>/addressbook/)
-	 * or nummerical account_id, but not user itself
+	 * or numerical account_id, but not user itself
 	 *
 	 * @var array
 	 */
@@ -269,7 +269,9 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 		if (!in_array(self::$path_attr,$cols)) $cols[] = self::$path_attr;
 		// we need tid for sync-collection report
 		if (array_key_exists('tid', $filter) && !isset($filter['tid']) && !in_array('tid', $cols)) $cols[] = 'tid';
-		for($chunk=0; ($contacts =& $this->bo->search([], $cols, $order, '', '', False, 'AND',
+		$search = $filter['search'] ?? [];
+		unset($filter['search']);
+		for($chunk=0; ($contacts =& $this->bo->search($search, $cols, $order, '', '', False, 'AND',
 			[$chunk*self::CHUNK_SIZE, self::CHUNK_SIZE], $filter)); ++$chunk)
 		{
 			// filter[tid] === null also returns no longer shared contacts, to remove them from devices, we need to mark them here as deleted
@@ -449,14 +451,19 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 	 * Process the filters from the CalDAV REPORT request
 	 *
 	 * @param array $options
-	 * @param array &$cal_filters
+	 * @param array &$filters
 	 * @param string $id
 	 * @param int &$nresult on return limit for number or results or unchanged/null
 	 * @return boolean true if filter could be processed
 	 */
-	function _report_filters($options,&$filters,$id, &$nresults)
+	function _report_filters($options, &$filters, $id, &$nresults)
 	{
-		if ($options['filters'])
+		// in case of JSON/REST API pass filters to report
+		if (Api\CalDAV::isJSON() && !empty($options['filters']) && is_array($options['filters']))
+		{
+			$filters += $options['filters'];    // using += to no allow overwriting existing filters
+		}
+		elseif (!empty($options['filters']))
 		{
 			/* Example of a complex filter used by Mac Addressbook
 			  <B:filter test="anyof">
