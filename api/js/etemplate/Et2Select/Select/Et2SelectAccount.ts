@@ -51,6 +51,17 @@ export class Et2SelectAccount extends SelectAccountMixin(Et2StaticSelectMixin(Et
 		super.connectedCallback();
 
 		// Start fetch of select_options
+		this.fetchComplete = this._getAccounts();
+	}
+
+	/**
+	 * Pre-fill the account list according to type & preferences
+	 *
+	 * @protected
+	 * @internal
+	 */
+	protected _getAccounts()
+	{
 		const type = this.egw().preference('account_selection', 'common');
 		let fetch = [];
 		let process = (options) =>
@@ -72,11 +83,15 @@ export class Et2SelectAccount extends SelectAccountMixin(Et2StaticSelectMixin(Et
 
 			fetch.push(this.egw().accounts('owngroups').then(process));
 		}
-		else if(["primary_group", "groupmembers"].includes(type))
+		else if(type !== "none")
 		{
 			fetch.push(this.egw().accounts(this.accountType).then(process));
 		}
-		this.fetchComplete = Promise.all(fetch);
+
+		return Promise.all(fetch).then(() =>
+		{
+			this.requestUpdate("select_options");
+		});
 	}
 
 	set accountType(type : AccountType)
