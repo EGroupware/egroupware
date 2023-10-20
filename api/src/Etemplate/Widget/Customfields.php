@@ -158,7 +158,10 @@ class Customfields extends Transformer
 					$f= substr($f,1);
 					$negate_fields[]= $f;
 				}
-				$field_filters []= $f;
+				else
+				{
+					$field_filters [] = $f;
+				}
 			}
 		}
 
