@@ -226,6 +226,49 @@ class Ads
 	}
 
 	/**
+	 * Well known SIDs / RIDs NOT using the local DOMAIN-SID as prefix
+	 *
+	 * @link https://learn.microsoft.com/en-us/windows/win32/secauthz/well-known-sids
+	 * @var string[]
+	 */
+	static $well_known_sids = [
+		544 => 'S-1-5-32-544',  // BUILDIN\Administrators
+		545 => 'S-1-5-32-545',  // BUILDIN\Users
+		546 => 'S-1-5-32-546',  // BUILDIN\Guests
+		547 => 'S-1-5-32-547',
+		548 => 'S-1-5-32-548',
+		549 => 'S-1-5-32-549',
+		550 => 'S-1-5-32-550',
+		551 => 'S-1-5-32-551',
+		552 => 'S-1-5-32-552',
+		553 => 'S-1-5-32-553',
+		554 => 'S-1-5-32-554',
+		555 => 'S-1-5-32-555',
+		556 => 'S-1-5-32-556',
+		557 => 'S-1-5-32-557',
+		558 => 'S-1-5-32-558',
+		559 => 'S-1-5-32-559',
+		560 => 'S-1-5-32-560',
+		561 => 'S-1-5-32-561',
+		562 => 'S-1-5-32-562',
+		568 => 'S-1-5-32-568',
+		569 => 'S-1-5-32-569',
+		571 => 'S-1-5-32-571',
+		572 => 'S-1-5-32-572',
+		573 => 'S-1-5-32-573',
+		574 => 'S-1-5-32-574',
+		575 => 'S-1-5-32-575',
+		576 => 'S-1-5-32-576',
+		577 => 'S-1-5-32-577',
+		578 => 'S-1-5-32-578',
+		579 => 'S-1-5-32-579',
+		580 => 'S-1-5-32-579',
+		581 => 'S-1-5-32-581',
+		582 => 'S-1-5-32-582',
+		583 => 'S-1-5-32-583',
+	];
+
+	/**
 	 * Get SID of domain or an account
 	 *
 	 * @param int $account_id
@@ -233,6 +276,11 @@ class Ads
 	 */
 	public function get_sid($account_id=null)
 	{
+		if (isset($account_id) && $account_id < 0 && abs($account_id) < 1000 && isset(self::$well_known_sids[abs($account_id)]))
+		{
+			return self::$well_known_sids[abs($account_id)];
+		}
+
 		static $domain_sid = null;
 		if (!isset($domain_sid))
 		{
