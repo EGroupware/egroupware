@@ -186,6 +186,7 @@ class infolog_hooks
 				)),
 				'Custom fields, type and status' => Egw::link('/index.php',array(
 					'menuaction' => 'infolog.infolog_customfields.index',
+					'use_private' => 1,
 					'ajax' => 'true',
 				)),
 			);
