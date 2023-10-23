@@ -350,6 +350,13 @@ class Etemplate extends Etemplate\Widget\Template
 	}
 
 	/**
+	 * Unvalidated content, use with caution!
+	 *
+	 * @var array
+	 */
+	static public $contentUnvalidated;
+
+	/**
 	 * Process via Ajax submitted content
 	 *
 	 * @param string $etemplate_exec_id
@@ -388,7 +395,7 @@ class Etemplate extends Etemplate\Widget\Template
 			'cont' => &self::$request->content,
 		);
 		$template->run('validate', array('', $expand, $_content, &$validated), true);	// $respect_disabled=true: do NOT validate disabled widgets and children
-
+		self::$contentUnvalidated = $_content;
 		if ($no_validation)
 		{
 			self::$validation_errors = array();
