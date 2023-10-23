@@ -933,3 +933,25 @@ function api_upgrade23_1_003()
 	);
 	return $GLOBALS['setup_info']['api']['currentver'] = '23.1.004';
 }
+
+/**
+ * Columns to support S3 storage for files
+ *
+ * @return string
+ */
+function api_upgrade23_1_004()
+{
+	$GLOBALS['egw_setup']->oProc->AddColumn('egw_sqlfs','fs_s3_flags',array(
+		'type' => 'int',
+		'precision' => '1',
+		'default' => '0'
+	));
+	$GLOBALS['egw_setup']->oProc->CreateIndex('egw_sqlfs', 'fs_s3_flags');
+
+	$GLOBALS['egw_setup']->oProc->AddColumn('egw_sqlfs','fs_aes_key',array(
+		'type' => 'binary',
+		'precision' => '32'
+	));
+
+	return $GLOBALS['setup_info']['api']['currentver'] = '23.1.005';
+}
