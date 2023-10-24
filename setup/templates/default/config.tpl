@@ -508,7 +508,7 @@
     <td>{lang_How_frequent_should_the_import_run?}:</td>
     <td>
      {lang_Every}
-     <input type="number" name="newsettings[account_import_frequency]" style="width: 3em" value="{value_account_import_frequency}"/>
+     <input type="number" name="newsettings[account_import_frequency]" style="width: 3em" value="{value_account_import_frequency}" step="0.1"/>
      {lang_hours_at}
      <input type="time" name="newsettings[account_import_time]" value="{value_account_import_time}"/>
      {lang_Log-Level}: <select name="newsettings[account_import_loglevel]">
