@@ -232,7 +232,7 @@ class Sql
 			$to_write['account_lastpwd_change'] = time();
 		}
 		if ($data['mustchangepassword'] == 1) $to_write['account_lastpwd_change']=0;
-		if ($force_create || !(int)$data['account_id'] || !$this->id2name($data['account_id']))
+		if ($force_create || !(int)$data['account_id'] || !$this->read($data['account_id']))
 		{
 			if ($to_write['account_id'] < 0) $to_write['account_id'] *= -1;
 
@@ -343,7 +343,7 @@ class Sql
 	}
 
 	/**
-	 * Sets the memberships of the account this class is instanciated for
+	 * Sets the memberships of the account this class is instantiated for
 	 *
 	 * @param array $groups array with gidnumbers
 	 * @param int $account_id numerical account-id
@@ -668,7 +668,7 @@ class Sql
 	 *
 	 * Uses the read method to fetch all data.
 	 *
-	 * @param int $account_id numerica account_id
+	 * @param int $account_id numeric account_id
 	 * @param string $which ='account_lid' type to convert to: account_lid (default), account_email, ...
 	 * @return string/false converted value or false on error ($account_id not found)
 	 */
