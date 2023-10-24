@@ -31,25 +31,25 @@ class Backup
 	 *
 	 * @var Api\Db\Schema
 	 */
-	var $schema_proc;
+	protected $schema_proc;
 	/**
 	 * Reference to ADOdb (connection) object
 	 *
 	 * @var ADOConnection
 	 */
-	var $adodb;
+	protected $adodb;
 	/**
 	 * DB schemas, as array tablename => schema
 	 *
 	 * @var array
 	 */
-	var $schemas = array();
+	protected $schemas = array();
 	/**
 	 * Tables to exclude from the backup: sessions, diverse caches which get automatic rebuild
 	 *
 	 * @var array
 	 */
-	var $exclude_tables = array(
+	public $exclude_tables = array(
 		'egw_sessions','egw_app_sessions','phpgw_sessions','phpgw_app_sessions',	// eGW's session-tables
 		'phpgw_anglemail',	// email's cache
 		'egw_felamimail_cache','egw_felamimail_folderstatus','phpgw_felamimail_cache','phpgw_felamimail_folderstatus',	// felamimail's cache
@@ -60,13 +60,13 @@ class Backup
 	 *
 	 * @var string|boolean
 	 */
-	var $system_tables = false;
+	public $system_tables = false;
 	/**
 	 * Regular expression to identify eGW tables => if set only they are used
 	 *
 	 * @var string|boolean
 	 */
-	var $egw_tables = false;
+	public $egw_tables = false;
 	/**
 	 * Regular expression to identify a Guacamole table OR view
 	 */
@@ -76,25 +76,25 @@ class Backup
 	 *
 	 * @var string
 	 */
-	var $backup_dir;
+	public $backup_dir;
 	/**
 	 * Minimum number of backup files to keep. Zero for: Disable cleanup.
 	 *
 	 * @var integer
 	 */
-	var $backup_mincount;
+	public $backup_mincount;
 	/**
 	 * Backup Files config value, will be overwritten by the availability of the ZibArchive libraries
 	 *
 	 * @var boolean
 	 */
-	var $backup_files = false ;
+	public $backup_files = false ;
 	/**
 	 * Reference to schema_proc's Api\Db object
 	 *
 	 * @var Api\Db
 	 */
-	var $db;
+	protected $db;
 
 	/**
 	 * Constructor
@@ -179,65 +179,66 @@ class Backup
 	/**
 	 * Opens the backup-file using the highest available compression
 	 *
-	 * @param $name =false string/boolean filename to use, or false for the default one
-	 * @param $reading =false opening for reading ('rb') or writing ('wb')
-	 * @return string/resource/zip error-msg of file-handle
+	 * @param ?string $name =false string/boolean filename to use, or false for the default one
+	 * @param bool $reading =false opening for reading ('rb') or writing ('wb')
+	 * @param bool $un_compress true: opening file with (un)compression wrapper, false: opening as it is for download
+	 * @return resource file-handle
+	 * @throws \Exception on error
 	 */
-	function fopen_backup($name=false,$reading=false)
+	public function fopen_backup(string $name=null, bool $reading=false, bool $un_compress=true)
 	{
-		//echo "function fopen_backup($name,$reading)<br>";	// !
+		if ($name)
+		{
+			$name = $this->backup_dir.'/'.basename($name);
+		}
 		if (!$name)
 		{
-			//echo '-> !$name<br>';	// !
 			if (empty($this->backup_dir) || !is_writable($this->backup_dir))
 			{
 				$this->log($name, $reading, null, lang("backupdir '%1' is not writeable by the webserver", $this->backup_dir));
-				return lang("backupdir '%1' is not writeable by the webserver",$this->backup_dir);
+				throw new Exception(lang("backupdir '%1' is not writeable by the webserver", $this->backup_dir));
 			}
 			$name = $this->backup_dir.'/db_backup-'.date('YmdHi');
 		}
-		else	// remove the extension, to use the correct wrapper based on the extension
+		// remove the extension, to use the correct wrapper based on the extension
+		elseif ($un_compress)
 		{
-			//echo '-> else<br>';	// !
 			$name = preg_replace('/\.(bz2|gz)$/i','',$name);
 		}
 		$mode = $reading ? 'rb' : 'wb';
-		list( , $type) = explode('.', basename($name));
-		if($type == 'zip' && $reading && $this->backup_files)
+		$lang_mode = $reading ? lang("reading") : lang("writing");
+		[, $type] = explode('.', basename($name));
+		if($un_compress && $type == 'zip' && $reading && $this->backup_files)
 		{
 			//echo '-> $type == "zip" && $reading<br>';	// !
 			if(!class_exists('ZipArchive', false))
 			{
 				$this->backup_files = false;
 				$this->log($name, $reading, null, lang("Cant open %1, needs ZipArchive", $name));
-				return lang("Cant open %1, needs ZipArchive", $name)."<br>\n";
+				throw new \Exception(lang("Cant open %1, needs ZipArchive", $name));
 			}
 			if(!($f = fopen($path=$name, $mode)))
 			{
-				//echo '   -> !($f = fopen($name, $mode))<br>';	// !
-				$lang_mode = $reading ? lang("reading") : lang("writing");
 				$this->log($name, $reading, null, lang("Cant open '%1' for %2", $name, $lang_mode));
-				return lang("Cant open '%1' for %2", $name, $lang_mode)."<br>";
+				throw new \Exception(lang("Cant open '%1' for %2", $name, $lang_mode));
 			}
 		}
-		elseif (class_exists('ZipArchive', false) && !$reading && $this->backup_files)
+		elseif ($un_compress && class_exists('ZipArchive', false) && !$reading && $this->backup_files)
 		{
 			//echo '-> (new ZipArchive) != NULL && !$reading; '.$name.'<br>';	// !
 			if (!($f = fopen($path=$name, $mode)))
 			{
-				$lang_mode = $reading ? lang("reading") : lang("writing");
 				$this->log($name, $reading, null, lang("Cant open '%1' for %2", $name, $lang_mode));
-				return lang("Cant open '%1' for %2", $name, $lang_mode)."<br>";
+				throw new \Exception(lang("Cant open '%1' for %2", $name, $lang_mode));
 			}
 		}
-		elseif (!($f = fopen('compress.bzip2://'.($path=$name.'.bz2'), $mode)) &&
-	 		!($f = fopen('compress.zlib://'.($path=$name.'.gz'),$mode)) &&
- 		 	!($f = fopen($path=$name,$mode))
-		)
+		elseif (!($un_compress && (
+				($f = fopen('compress.bzip2://'.($path=$name.'.bz2'), $mode)) ||
+	 		    ($f = fopen('compress.zlib://'.($path=$name.'.gz'),$mode)))) &&
+ 		 	!($f = fopen($path=$name,$mode)))
 		{
-			$lang_mode = $reading ? lang("reading") : lang("writing");
 			$this->log($name, $reading, null, lang("Cant open '%1' for %2", $name, $lang_mode));
-			return lang("Cant open '%1' for %2", $name, $lang_mode)."<br>";
+			throw new \Exception(lang("Cant open '%1' for %2", $name, $lang_mode));
 		}
 
 		// Log start of backup/restore
@@ -1227,6 +1228,89 @@ class Backup
 		{
 			error_log("Could NOT open ".self::LOG_FILE.': '.$msg);
 		}
+	}
+
+	/**
+	 * Move uploaded file to backup-directory
+	 *
+	 * @param array $file values for keys "tmp_name", "name", "size"
+	 * @return ?string success message or null on error
+	 */
+	public function upload(array $file) : ?string
+	{
+		if (move_uploaded_file($file['tmp_name'], $filename = $this->backup_dir . '/' . basename($file['name'])))
+		{
+			$msg = lang("succesfully uploaded file %1", $filename . ', ' .
+					sprintf('%3.1f MB (%d)', $file['size'] / (1024 * 1024), $file['size'])) .
+				', md5=' . md5_file($file['tmp_name']) . ', sha1=' . sha1_file($file['tmp_name']);
+			$this->log($filename, $msg);
+		}
+		return $msg ?? null;
+	}
+
+	/**
+	 * Delete a backup
+	 *
+	 * @param string $name filename
+	 * @return string|null success message or null on error
+	 */
+	public function delete(string $name) : ?string
+	{
+		if (unlink($file = $this->backup_dir.'/'.basename($name)))	// basename to not allow to change the dir
+		{
+			$this->log($file, $msg = lang("backup '%1' deleted", $file));
+		}
+		return $msg ?? null;
+	}
+
+	/**
+	 * Rename a backup
+	 * @param string $file
+	 * @param string $new_name
+	 * @return string|null success message or null on error
+	 */
+	public function rename(string $file, string $new_name) : ?string
+	{
+		[$ending] = array_reverse(explode('.', $file));
+		[$new_ending, $has_ending] = array_reverse(explode('.', $new_name));
+		if (!$has_ending || $new_ending != $ending)
+		{
+			$new_name .= '.' . $ending;
+		}
+		$file = $this->backup_dir.'/'.basename($file);	// basename to not allow to change the dir
+		$ext = preg_match('/(\.gz|\.bz2)+$/i',$file,$matches) ? $matches[1] : '';
+		$new_file = $this->backup_dir.'/'.preg_replace('/(\.gz|\.bz2)+$/i','',basename($new_name)).$ext;
+		if (rename($file, $new_file))
+		{
+			$this->log($new_file, $msg=lang("backup '%1' renamed to '%2'", basename($file), basename($new_file)));
+		}
+		return $msg ?? null;
+	}
+
+	/**
+	 * List available backups for restore
+	 *
+	 * @return array filename => [$ctime, $size] pairs
+	 */
+	public function index() : array
+	{
+		$files = [];
+		if (($handle = opendir($this->backup_dir)))
+		{
+			while(($file = readdir($handle)))
+			{
+				if ($file != '.' && $file != '..')
+				{
+					$files[$file] = [
+						'ctime' => filectime($this->backup_dir.'/'.$file),
+						'size' => filesize($this->backup_dir.'/'.$file)
+					];
+				}
+			}
+			closedir($handle);
+		}
+		arsort($files);
+		return $files;
 	}
 }
 

@@ -3,36 +3,55 @@
  * EGroupware - Admin - DB backup and restore
  *
  * @link http://www.egroupware.org
- * @author Ralf Becker <RalfBecker@outdoor-training.de>
+ * @author Ralf Becker <rb@egroupware.org>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package admin
- * @version $Id$
  */
 
 use EGroupware\Api;
+use EGroupware\Stylite\Vfs\S3;
 
 class admin_db_backup
 {
-	var $public_functions = array(
+	/**
+	 * @var true[]
+	 */
+	public $public_functions = array(
 		'index' => true,
 	);
-	var $db_backup;
+	/**
+	 * @var Api\Db\Backup
+	 */
+	protected $db_backup;
 
 	/**
-	 * Method for sheduled backups, called via asynservice
+	 * Method for scheduled backups, called via asynservice
 	 */
 	function do_backup()
 	{
-		$this->db_backup = new Api\Db\Backup();
+		if (class_exists(S3\Backup::class) && S3\Backup::available())
+		{
+			$this->db_backup = new S3\Backup();
+		}
+		else
+		{
+			$this->db_backup = new Api\Db\Backup();
+		}
 
- 		if (($f = $this->db_backup->fopen_backup()))
- 		{
+		try {
+			$f = $this->db_backup->fopen_backup();
 			$this->db_backup->backup($f);
-			if(is_resource($f))
+			if (is_resource($f))
+			{
 				fclose($f);
+			}
 			/* Remove old backups. */
 			$this->db_backup->housekeeping();
 		}
+ 		catch (\Exception $e) {
+			// log error
+		    _egw_log_exception($e);
+	    }
 	}
 
 	/**

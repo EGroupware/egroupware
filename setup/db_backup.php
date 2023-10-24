@@ -13,6 +13,7 @@ use EGroupware\Api;
 use EGroupware\Api\Framework;
 use EGroupware\Api\Egw;
 use EGroupware\Api\Vfs;
+use EGroupware\Stylite\Vfs\S3;
 
 if (!is_object(@$GLOBALS['egw']))	// called from outside EGw ==> setup
 {
@@ -34,23 +35,31 @@ if (!is_object(@$GLOBALS['egw']))	// called from outside EGw ==> setup
 	$self = 'db_backup.php';
 	$is_setup = true;
 }
-$db_backup = new Api\Db\Backup();
+if (class_exists(S3\Backup::class) && S3\Backup::available())
+{
+	$db_backup = new S3\Backup();
+}
+else
+{
+	$db_backup = new Api\Db\Backup();
+}
 $asyncservice = new Api\Asyncservice();
 
 // download a backup, has to be before any output !!!
 if (!empty($_POST['download']))
 {
-	$file = key($_POST['download']);
-	$file = $db_backup->backup_dir.'/'.basename($file);	// basename to not allow to change the dir
+	$filename = $db_backup->backup_dir.'/'.key($_POST['download']);
+	$file = $db_backup->fopen_backup($filename, true, false);
 
 	// FIRST: switch off zlib.output_compression, as this would limit downloads in size to memory_limit
 	ini_set('zlib.output_compression',0);
 	// SECOND: end all active output buffering
 	while(ob_end_clean()) {}
 
-	Api\Header\Content::type(basename($file));
-	readfile($file);
-	$db_backup->log($file, 'Downloaded');
+	Api\Header\Content::type(basename($filename));
+	fpassthru($file);
+	fclose($file);
+	$db_backup->log($filename, 'Downloaded');
 	exit;
 }
 $setup_tpl = new Framework\Template($tpl_root);
@@ -100,7 +109,7 @@ if (!empty($_POST['save_backup_settings']))
 		$minCount = 0;
 		$setup_tpl->set_var('error_msg',htmlspecialchars(lang("'%1' must be integer", lang("backup min count"))));
 	}
-	$db_backup->saveConfig($minCount,$is_setup ? (boolean)$filesBackup : null);
+	$db_backup->saveConfig($minCount,!empty($is_setup) ? $filesBackup : null);
 
 	if (is_int($minCount) && $minCount > 0)
 	{
@@ -126,12 +135,14 @@ if (!empty($_POST['mount']))
 // create a backup now
 if (!empty($_POST['backup']))
 {
-	if (is_resource($f = $db_backup->fopen_backup()))
-	{
+	try {
+		$f = $db_backup->fopen_backup();
 		$starttime = microtime(true);
 		$db_backup->backup($f);
 		if(is_resource($f))
+		{
 			fclose($f);
+		}
 		$setup_tpl->set_var('error_msg', lang('backup finished').': '. number_format(microtime(true)-$starttime, 1).'s');
 
 		/* Remove old backups. */
@@ -142,9 +153,8 @@ if (!empty($_POST['backup']))
 			echo '<div align="center">'.lang('entry has been deleted sucessfully').': '.$file."</div>\n";
 		}
 	}
-	else
-	{
-		$setup_tpl->set_var('error_msg',$f);
+	catch (\Exception $e) {
+		$setup_tpl->set_var('error_msg', $e->getMessage());
 	}
 }
 $setup_tpl->set_var('backup_now_button','<input type="submit" name="backup" title="'.
@@ -161,43 +171,20 @@ $setup_tpl->set_var('backup_save_settings','<input type="submit" name="save_back
 $setup_tpl->set_var('backup_mount','<input type="submit" name="mount" value="'.htmlspecialchars(lang('Mount backup directory to %1','/backup')).'" />');
 
 if (!empty($_POST['upload']) && is_array($_FILES['uploaded']) && !$_FILES['uploaded']['error'] &&
-	is_uploaded_file($_FILES['uploaded']['tmp_name']))
+	is_uploaded_file($_FILES['uploaded']['tmp_name']) && ($msg = $db_backup->upload($_FILES['uploaded'])))
 {
-	move_uploaded_file($_FILES['uploaded']['tmp_name'], $filename=$db_backup->backup_dir.'/'.$_FILES['uploaded']['name']);
-
-	$md5 = ', md5='.md5_file($filename).', sha1='.sha1_file($filename);
-
-	$setup_tpl->set_var('error_msg', ($msg=lang("succesfully uploaded file %1", $filename.', '.
-		sprintf('%3.1f MB (%d)',$_FILES['uploaded']['size']/(1024*1024),$_FILES['uploaded']['size']))).$md5);
-	$db_backup->log($filename, $msg);
+	$setup_tpl->set_var('error_msg', $msg);
 }
 // delete a backup
-if (!empty($_POST['delete']))
+if (!empty($_POST['delete']) && ($msg = $db_backup->delete(key($_POST['delete']))))
 {
-	$file = $db_backup->backup_dir.'/'.basename(key($_POST['delete']));	// basename to not allow to change the dir
-	$db_backup->log($file, lang("backup '%1' deleted", $file));
-
-	if (unlink($file)) $setup_tpl->set_var('error_msg',lang("backup '%1' deleted",$file));
+	$setup_tpl->set_var('error_msg', $msg);
 }
 // rename a backup
-if (!empty($_POST['rename']))
+if (!empty($file=$_POST['rename']) && !empty($_POST['new_name'][$file]) &&
+	($msg = $db_backup->rename($file, $_POST['new_name'][$file])))
 {
-	$file = key($_POST['rename']);
-	$new_name = $_POST['new_name'][$file];
-	if (!empty($new_name))
-	{
-		list($ending) = array_reverse(explode('.', $file));
-		list($new_ending, $has_ending) = array_reverse(explode('.', $new_name));
-		if(!$has_ending || $new_ending != $ending) $new_name .= '.'.$ending;
-		$file = $db_backup->backup_dir.'/'.basename($file);	// basename to not allow to change the dir
-		$ext = preg_match('/(\.gz|\.bz2)+$/i',$file,$matches) ? $matches[1] : '';
-		$new_file = $db_backup->backup_dir.'/'.preg_replace('/(\.gz|\.bz2)+$/i','',basename($new_name)).$ext;
-		if (rename($file,$new_file))
-		{
-			$setup_tpl->set_var('error_msg',lang("backup '%1' renamed to '%2'",basename($file),basename($new_file)));
-			$db_backup->log($new_file, lang("backup '%1' renamed to '%2'",basename($file),basename($new_file)));
-		}
-	}
+	$setup_tpl->set_var('error_msg', $msg);
 }
 // restore a backup
 if (!empty($_POST['restore']))
@@ -205,12 +192,12 @@ if (!empty($_POST['restore']))
 	$file = key($_POST['restore']);
 	$file = $db_backup->backup_dir.'/'.basename($file);	// basename to not allow to change the dir
 
-	if (is_resource($f = $db_backup->fopen_backup($file,true)))
-	{
+	try {
+		$f = $db_backup->fopen_backup($file,true);
 		$start = time();
-		$db_backup->restore($f, true, $file);	// allways convert to current system charset on restore
+		$db_backup->restore($f, true, $file);	// always convert to current system charset on restore
 		$setup_tpl->set_var('error_msg',lang("backup '%1' restored",$file).' ('.(time()-$start).' s)');
-		if ($run_in_egw)
+		if (isset($run_in_egw))
 		{
 			// updating the backup
 			$cmd = new setup_cmd_update($GLOBALS['egw']->session->account_domain,
@@ -220,9 +207,9 @@ if (!empty($_POST['restore']))
 			echo '<h3>'.lang('You should %1log out%2 and in again, to update your current session!','<a href="'.Egw::link('/logout.php').'" target="_parent">','</a>')."</h3>\n";
 		}
 	}
-	else
+	catch (\Exception $e)
 	{
-		$setup_tpl->set_var('error_msg',$f);
+		$setup_tpl->set_var('error_msg', $e->getMessage());
 	}
 }
 // create a new scheduled backup
@@ -256,28 +243,16 @@ $setup_tpl->set_var('next_run','&nbsp;');
 $setup_tpl->set_var('actions','<input type="submit" name="schedule" value="'.htmlspecialchars(lang('schedule')).'" />');
 $setup_tpl->parse('schedule_rows','schedule_row',true);
 
-// listing the availible backup sets
+// listing the available backups
 $setup_tpl->set_var('backup_dir',$db_backup->backup_dir);
 $setup_tpl->set_var('set_rows','');
-$handle = @opendir($db_backup->backup_dir);
-$files = array();
-while($handle && ($file = readdir($handle)))
-{
-	if ($file != '.' && $file != '..')
-	{
-		$files[$file] = filectime($db_backup->backup_dir.'/'.$file);
-	}
-}
-if ($handle) closedir($handle);
 
-arsort($files);
-foreach($files as $file => $ctime)
+foreach($db_backup->index() as $file => $attrs)
 {
-	$size = filesize($db_backup->backup_dir.'/'.$file);
 	$setup_tpl->set_var(array(
 		'filename'	=> $file,
-		'mod'		=> date('Y-m-d H:i',$ctime),
-		'size'		=> sprintf('%3.1f MB (%d)',$size/(1024*1024),$size),
+		'mod'		=> date('Y-m-d H:i', $attrs['ctime']),
+		'size'		=> sprintf('%3.1f MB (%d)',$attrs['size']/(1024*1024), $attrs['size']),
 		'actions'	=> '<input type="submit" name="download['.$file.']" value="'.htmlspecialchars(lang('download')).'" />&nbsp;'."\n".
 			($file === Api\Db\Backup::LOG_FILE ? '' :
 			'<input type="submit" name="delete['.$file.']" value="'.htmlspecialchars(lang('delete')).'" onclick="return confirm(\''.
@@ -315,7 +290,7 @@ $setup_tpl->set_var(array(
 $setup_tpl->set_var('self',$self);
 $setup_tpl->pparse('out','T_db_backup');
 
-if ($run_in_egw)
+if (isset($run_in_egw))
 {
 	echo $GLOBALS['egw']->framework->footer();
 }
