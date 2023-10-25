@@ -322,7 +322,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		}
 
 		// emptyLabel is fine
-		if(this.value === "" && this.emptyLabel)
+		if(!(this.value) && this.value !== '0' && (this.emptyLabel || this.placeholder))
 		{
 			return;
 		}
