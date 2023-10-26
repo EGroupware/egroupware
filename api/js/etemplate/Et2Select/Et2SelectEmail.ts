@@ -315,8 +315,9 @@ export class Et2SelectEmail extends Et2Select
 			selection.deleteFromDocument();
 		}
 
+		let preg = this.allowPlaceholder ? IsEmail.EMAIL_PLACEHOLDER_PREG : IsEmail.EMAIL_PREG;
 		// Trim line start / end anchors off validation regex, make global
-		let regex = new RegExp(IsEmail.EMAIL_PREG.toString().substring(2, IsEmail.EMAIL_PREG.toString().length - 3), 'g');
+		let regex = new RegExp(preg.toString().substring(2, preg.toString().length - 3), 'g');
 		let values = paste.match(regex);
 		values.forEach(v =>
 		{
