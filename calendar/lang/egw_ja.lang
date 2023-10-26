@@ -26,6 +26,7 @@ action that caused the notify: added, canceled, accepted, rejected, ...	calendar
 actions	calendar	ja	アクション
 actions...	calendar	ja	アクション...
 add alarm	calendar	ja	アラームを追加
+add appointments via shortened dialog or complete edit window	calendar	ja	短縮ダイアログまたは完全な編集ウィンドウで予定を追加
 add current view as favorite	calendar	ja	現在の表示をお気に入りに追加
 add new alarm	calendar	ja	新規アラームを追加
 add new event	calendar	ja	新規予約の追加
@@ -51,9 +52,12 @@ all exceptions are converted into single events.	calendar	ja	全例外を1個の
 all future	calendar	ja	未来方向の全て
 all incl. rejected	calendar	ja	全参加者（参加辞退者を含む）
 all participants	calendar	ja	全参加者
+allow booking requests from any user when creating events?	calendar	ja	イベント作成時にどのユーザーからの予約リクエストも許可しますか?
 allow users to prevent change notifications ('do not notify')	calendar	ja	ユーザに「通知無し」Allow users to prevent change notifications 'Do not notify'
 allows to edit the event again	calendar	ja	イベントの再編集を許可
 always	calendar	ja	常に
+always use full edit dialog	calendar	ja	常に完全な編集ダイアログを使用
+always use the full edit dialog, not this little dialog	calendar	ja	この小さなダイアログではなく、常に完全な編集ダイアログを使用してください。
 apply the action on the whole query, not only the shown events	calendar	ja	クエリ全体にアクションを適用（非表示分の項目にも適用）
 apply the changes	calendar	ja	変更を保存
 appointment settings	calendar	ja	イベント設定
@@ -186,6 +190,7 @@ edit series	calendar	ja	繰返しイベントを編集
 edit status or alarms for this particular day	calendar	ja	ステータス/アラームを編集
 edit this event	calendar	ja	このイベントを編集
 edit this series of recurring events	calendar	ja	繰返しイベントを編集
+email address migration	calendar	ja	電子メール・アドレスの移行
 empty = no alarm	calendar	ja	空欄 = アラーム無し
 empty for all	calendar	ja	空欄に設定すると全て
 end	calendar	ja	終了日時
@@ -195,6 +200,7 @@ enddate / -time of the meeting, eg. for more then one day	calendar	ja	ミーテ�
 enddate of the export	calendar	ja	エクスポート終了日
 ends	calendar	ja	終了
 error adding the alarm	calendar	ja	アラーム追加エラー
+error notifying %1	calendar	ja	通知エラー %1
 error saving the event!	calendar	ja	イベント保存エラー
 error: can't delete original series!	calendar	ja	エラー: 元の繰返しイベントを削除できません。
 error: duration of event longer then recurrence interval!	calendar	ja	エラー: イベントの長さが、繰返し周期を超過しています。
@@ -390,8 +396,11 @@ notification messages for uninvited participants	calendar	ja	参加依頼を取�
 notification messages for your alarms	calendar	ja	アラームの通知メッセージ
 notification messages for your responses	calendar	ja	回答の通知メッセージ
 notification settings	calendar	ja	通知設定
+notify	calendar	ja	通知する
+notify all externals (non-users) about this event	calendar	ja	このイベントをすべての外部 (ユーザ以外) に通知します。
 notify non-egroupware users about event updates	calendar	ja	非EGroupwareユーザに対してイベントの更新を通知
 number of records to read (%1)	calendar	ja	読み込むレコード数（%1）
+number of resources to be booked	calendar	ja	予約するリソースの数
 number of weeks to show	calendar	ja	表示週数
 observance rule	calendar	ja	遵守ルール
 occurence	calendar	ja	事象
@@ -435,6 +444,7 @@ prevent deleting of entries	admin	ja	項目の削除を禁止
 previous	calendar	ja	前
 private and global public	calendar	ja	プライベートとパブリック
 private and group public	calendar	ja	プライベートとグループ・パブリック
+private event	calendar	ja	非公開イベント
 private only	calendar	ja	プライベートのみ
 quantity	calendar	ja	数量
 range fields	calendar	ja	範囲項目
@@ -451,6 +461,7 @@ recurrences and conflict check	calendar	ja	繰返し予約衝突検出
 recurring event	calendar	ja	繰返しイベント
 reject	calendar	ja	不参加回答
 rejected	calendar	ja	不参加回答済み
+removes the event from my calendar	calendar	ja	カレンダーからイベントを削除します
 repeat days	calendar	ja	繰返し日数
 repeat the event until which date (empty means unlimited)	calendar	ja	いつまで繰り返すかを指定します。空欄を指定すると無期限に繰り返します。
 repeat type	calendar	ja	繰返しタイプ
@@ -460,6 +471,7 @@ repetition	calendar	ja	繰返し
 repetitiondetails (or empty)	calendar	ja	繰返し条件詳細
 replacements for inserting events into documents	calendar	ja	ドキュメントにイベントを挿入する際の置換
 reply to meeting request	calendar	ja	ミーティング参加要請に回答
+replying "%1" is not a participant of the event! only continue if you want to add as new participant.	calendar	ja	返信"%1 "はイベントの参加者ではありません！新しい参加者として追加したい場合のみ続けてください。
 report	calendar	ja	レポート
 requested	calendar	ja	参加要請
 requested date %1 outside allowed range of %2 days: recurring events obmitted!	calendar	ja	指定された日付 %1 は設定可能な範囲（%2日間）を逸脱しています。繰返しイベントは破棄されました。
@@ -493,6 +505,8 @@ select who should get the alarm	calendar	ja	アラーム送信先を選択
 selected range	calendar	ja	選択された期間
 selected users/groups	calendar	ja	選択されたユーザ/グループ
 send meetingrequest to all participants after the event is saved	calendar	ja	イベントを保存して全参加者に参加要請を送信
+send notifications	calendar	ja	通知を送る
+send notifications to users right now	calendar	ja	今すぐ参加者に通知を送信する
 series deleted	calendar	ja	削除されました
 set new events to private	calendar	ja	新規イベントをプライベートに設定
 setting lock time calender	admin	ja	カレンダー・データのロック時間（既定値: 1 秒）
@@ -504,6 +518,7 @@ should the number of weeks be shown on top of the calendar	calendar	ja	カレン
 should the number of weeks be shown on top of the calendar (only if offset = 0)	calendar	ja	カレンダー上部に週番号を表示するか否かを指定します（offset = 0 の場合のみ）。
 should the planner display an empty row for users or categories without any appointment.	calendar	ja	予定表で、予定が何もない行を表示するか否かを指定します。
 should the status of the event-participants (accept, reject, ...) be shown in brackets after each participants name ?	calendar	ja	参加者の状態（受諾, 辞退, ...）を参加者名の隣に表示するか否かを指定します。
+show %1 from %2	calendar	ja	2から%1を表示する
 show a calendar title	calendar	ja	カレンダー・タイトルを表示
 show all events, as if they were private	calendar	ja	全イベントをプライベート・イベントとして表示
 show all status incl. rejected events	calendar	ja	全ての回答状態を表示（参加辞退済みイベントを含む）
@@ -527,6 +542,7 @@ show this month	calendar	ja	今月を表示
 show this week	calendar	ja	今週を表示
 show year and age	calendar	ja	生年と年齢を表示
 single event	calendar	ja	イベント
+single participant	calendar	ja	単一の参加者
 sort by	calendar	ja	並べ替え
 specify where url of the day links to	calendar	ja	指定された日がリンクする URL を指定してください。
 start	calendar	ja	開始日時
@@ -537,6 +553,7 @@ startdate / -time	calendar	ja	開始日時
 startdate and -time of the search	calendar	ja	検索開始日時
 startdate of the export	calendar	ja	エクスポート開始日時
 startrecord	calendar	ja	開始項目
+status	calendar	ja	ステータス
 status already applied	calendar	ja	状態は適用済み。
 status changed	calendar	ja	状態変更日時
 status for all future scheduled days changed	calendar	ja	未来方向の予定の状態が変更されました。
@@ -551,9 +568,12 @@ test import (show importable records <u>only</u> in browser)	calendar	ja	イン�
 the apple ical apps use this color to display events from this calendar.	calendar	ja	Apple iCal アプリは、カレンダーにイベントを表示する際にこの色を使用します。
 the document can contain placeholder like {{%1}}, to be replaced with the data.	calendar	ja	ドキュメントにはプレース・ホルダー（例: {{%1}}）を埋め込むことができ、ドキュメント保存時に実データで置換されます。
 the exceptions are deleted together with the series.	calendar	ja	繰返しイベントおよび例外を削除しました。
+the extern organizer changed the event!	calendar	ja	外部主催者がイベントを変更しました！
 the following document-types are supported:	calendar	ja	下記のドキュメント・タイプがサポートされます:
 the original series will be terminated today and a new series be created.	calendar	ja	元の繰返しイベントは本日終了し、新規繰返しイベントが作成されます。
 the resource you selected is already overbooked:	calendar	ja	指定されたリソースは既に重複予約されています:
+the sender "%1" is not the extern organizer "%2", proceed with caution!	calendar	ja	送信者 "%1" は外部オーガナイザ "%2" ではありません！
+the sender "%1" is not the participant replying "%2", proceed with caution!	calendar	ja	送信者 "%1" は "%2" に返信している参加者ではありません！
 this day is shown as first day in the week or month view.	calendar	ja	週表示/月表示で、先頭に表示される曜日を指定します。
 this defines the end of your dayview. events after this time, are shown below the dayview.	calendar	ja	日表示の終了時刻を設定します。この時刻より後のイベントは日表示の下側に表示されます。
 this defines the start of your dayview. events before this time, are shown above the dayview.<br>this time is also used as a default starttime for new events.	calendar	ja	日表示の開始時刻を設定します。この時刻より前のイベントは日表示の上側に表示されます。<br>この時刻は、新規イベントの既定開始時刻としても用いられます。
@@ -593,6 +613,7 @@ to many might exceed your execution-time-limit	calendar	ja	数量が多過ぎる
 to-firstname	calendar	ja	名前を使用
 to-fullname	calendar	ja	氏名を使用
 to-lastname	calendar	ja	苗字を使用
+toggle weekend	calendar	ja	週末を切り替える
 tomorrow	calendar	ja	明日
 translation	calendar	ja	翻訳
 tue	calendar	ja	火

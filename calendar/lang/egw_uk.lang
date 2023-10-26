@@ -1,3 +1,4 @@
+%1 event(s) %2, %3 failed because of insufficient rights !!!	calendar	uk	Подія(и) %1, %2, %3 не відбулася через недостатні права!
 %1 events in ical file, only first one imported and displayed!	calendar	uk	%1 подій у файлі iCal, імпортовано та показано лише першу!
 %1 hours	calendar	uk	%1 годин
 %1 records imported	calendar	uk	%1 записів імпортовано
@@ -8,14 +9,19 @@ accepted	calendar	uk	Прийнято
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	uk	Дії, що призводять то сповіщення: Добавлено, Відмінено, Прийнято, Відхилено...
 actions	calendar	uk	Дії
 add alarm	calendar	uk	Добавити попередження
+add appointments via shortened dialog or complete edit window	calendar	uk	Додавання зустрічей через скорочений діалог або повне вікно редагування
 add new event	calendar	uk	Додати нову зустріч
 added	calendar	uk	Добавлено
+added by synchronization	calendar	uk	Додано шляхом синхронізації
 alarm	calendar	uk	Попередження
 alarm for %1 at %2 in %3	calendar	uk	Попередження для %1 о %2 в %3
 alarm management	calendar	uk	Керування попередженнями
 alarms	calendar	uk	Попередження
 all day	calendar	uk	На повний день
+allow booking requests from any user when creating events?	calendar	uk	Дозволити запити на бронювання від будь-якого користувача при створенні подій?
 always	calendar	uk	Завжди
+always use full edit dialog	calendar	uk	Завжди використовувати повне вікно редагування
+always use the full edit dialog, not this little dialog	calendar	uk	Завжди використовувати повне діалогове вікно редагування, а не це маленьке діалогове вікно
 attention	calendar	uk	До уваги
 before the event	calendar	uk	перед подією
 birthday	calendar	uk	День народження

@@ -1,4 +1,5 @@
 %1 %2 in %3	calendar	hu	%1 %2 a %3-ban
+%1 event(s) %2, %3 failed because of insufficient rights !!!	calendar	hu	%1 esemény(ek) %2, %3 nem sikerült, mert a jogok nem elegendőek!
 %1 events in ical file, only first one imported and displayed!	calendar	hu	%1 esemény az iCal fájlban, csak az elsőt importálja és jeleníti meg!
 %1 hours	calendar	hu	%1 órák
 %1 records imported	calendar	hu	%1 bejegyzés importálva
@@ -14,9 +15,12 @@ action that caused the notify: added, canceled, accepted, rejected, ...	calendar
 actions	calendar	hu	Műveletek
 actions...	calendar	hu	Műveletek...
 add alarm	calendar	hu	Riasztás hozzáadása
+add appointments via shortened dialog or complete edit window	calendar	hu	Időpontok hozzáadása rövidített párbeszédpanelen vagy teljes szerkesztőablakon keresztül
 add new event	calendar	hu	Új találkozó hozzáadása
 add timesheet entry	calendar	hu	Regiszter bejegyzés hozzáadása
 added	calendar	hu	Hozzáadva
+added by synchronization	calendar	hu	Hozzáadás szinkronizálással
+after	calendar	hu	A  után
 after %1	calendar	hu	%1 után
 after current date	calendar	hu	Mai dátum után
 alarm	calendar	hu	Riasztás
@@ -31,8 +35,11 @@ all events	calendar	hu	Összes esemény
 all future	calendar	hu	Összes jövőbeli
 all incl. rejected	calendar	hu	Összes, elutasítottakkal együtt
 all participants	calendar	hu	Összes résztvevő
+allow booking requests from any user when creating events?	calendar	hu	Események létrehozásakor bármely felhasználó foglalási kéréseinek engedélyezése?
 allows to edit the event again	calendar	hu	Esemény újra szerkesztésének engedélyezése
-always	calendar	hu	állandóan
+always	calendar	hu	Mindig
+always use full edit dialog	calendar	hu	Mindig a teljes szerkesztési párbeszédpanel használata
+always use the full edit dialog, not this little dialog	calendar	hu	Mindig a teljes szerkesztési párbeszédpanelt használja, nem ezt a kis párbeszédpanelt.
 apply the changes	calendar	hu	Változások elfogadása
 attention	calendar	hu	Figyelem
 back half a month	calendar	hu	fél hónapot vissza

@@ -126,7 +126,7 @@ allow user to set 'remember me' token	admin	de	Erlaube Benutzer ein "An mich eri
 allow users to change forwards	admin	de	Anwender dürfen Weiterleitung bearbeiten
 allow users to create identities for aliases	admin	de	Anwender dürfen Identitäten für Aliase anlegen
 allowed for get requests, default in modern browsers, if attribute is not set	admin	de	erlaubt für GET Requests, Vorgabe in modernen Browsern, wenn das Attribute nicht gesetzt ist
-allowed just as second factor	admin	de	ausschließlich als zweiter Faktor
+allowed just as second factor	admin	de	Ausschließlich als zweiter Faktor
 alternate email address	admin	de	Zusätzliche E-Mail-Adressen
 and logged in	admin	de	und eingeloggt
 anonymous user	admin	de	Anonymer Benutzer
@@ -241,7 +241,7 @@ configuration saved.	admin	de	Die Konfiguration wurde erfolgreich gespeichert.
 connection dropped by imap server.	admin	de	Verbindung von IMAP-Server beendet.
 connection is not secure! everyone can read eg. your credentials.	admin	de	Die Verbindung ist NICHT sicher! Jeder kann zB. Ihr Passwort lesen.
 continue	admin	de	Weiter
-cookie domain (default empty means use full domain name, for sitemgr eg. ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com)	admin	de	Cookie Domain (Vorgabe 'leer' bedeutet den kompletten Domainnamen, für SiteMgr erlaubt zB. ".domain.com" das gleiche Cookie für egw.domain.com und www.domain.com zu verwenden)
+cookie domain (default empty means use full domain name, for sitemgr eg. ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com)	admin	de	Cookie Domain<br>(Vorgabe 'leer' bedeutet den kompletten Domainnamen, für SiteMgr erlaubt z.B. ".domain.com" das gleiche Cookie für egw.domain.com und www.domain.com zu verwenden)
 cookie path (allows multiple egw sessions with different directories, has problemes with sitemgr!)	admin	de	Cookie Pfad (erlaubt mehrere EGw-Sitzungen mit unterschiedlichen Verzeichnissen, hat Probleme mit SiteMgr!)
 could not append message:	admin	de	Diese Mail lässt sich nicht anzeigen
 could not complete request. reason given: %s	admin	de	Konnte Anfrage nicht beenden. Grund: %s
@@ -330,17 +330,17 @@ deny all users access to grant other users access to their entries ?	admin	de	Al
 deny all users access to preferences ?	admin	de	Allen Benutzer Zugriff auf die Einstellungen verbieten?
 description can not exceed 255 characters in length !	admin	de	Die Beschreibung darf nicht länger als 255 Zeichen sein!
 destination account #%1 does exist and is not renamed itself! can not merge accounts, it will violate unique contains. delete with transfer of data instead.	admin	de	Zielkonto #%1 besteht und wurde nicht umbenannt. Konten wurden nicht zusammengeführt, da die eindeutige Kennzeichnung gestört würde. Alternativ sollten Sie löschen mit übertragen des Inhalts anwählen.
-determines the order the fields are displayed	admin	de	bestimmt die Reihenfolge der angezeigten Felder
-direct login without password or second factor	admin	de	direkter Login ohne Passwort oder als zweiter Faktor
+determines the order the fields are displayed	admin	de	Bestimmt die Reihenfolge der angezeigten Felder
+direct login without password or second factor	admin	de	Direkter Login ohne Passwort oder als zweiter Faktor
 disable	admin	de	abschalten
 disable "auto completion" of the login form	admin	de	Automatisches Vervollständigen der Logindaten abschalten
 disable all	admin	de	Alle Video-Anleitungen deaktivieren
 disable minifying of javascript and css files	admin	de	Komprimierung von Javascript und CSS Dateien deaktivieren
 disable pgp encryption (mailvelope)	admin	de	PGP-Verschlüsselung deaktivieren (Mailvelope)
 disable wysiwyg-editor	admin	de	WYSIWYG Editor (formatierter Text) abschalten
-disabled	admin	de	Ausgeschaltet
+disabled	admin	de	Deaktiviert
 disabled (not recomended)	admin	de	Abgeschaltet (nicht empfohlen)
-disabled, do not show on login page	admin	de	Ausgeschaltet, wird auf der Anmelde-Seite nicht angezeigt
+disabled, do not show on login page	admin	de	Deaktiviert, wird auf der Anmelde-Seite nicht angezeigt
 display	admin	de	Anzeigen
 displayed length of input field (set rows=1 to limit length)	admin	de	angezeigte Länge des Eingabefelds (setze Zeilen=1 um die Eingabe zu beschränken)
 displaying html messages is disabled	admin	de	Das Anzeigen von HTML Nachrichten ist deaktiviert
@@ -419,7 +419,7 @@ enter the site username for peer servers	admin	de	Site-Benutzername für Peer-Se
 enter the title for your site	admin	de	Titel der EGroupware-Installation
 enter the title of your logo	admin	de	Titel Ihres Logos
 enter the url where your logo should link to	admin	de	URL mit der das Logo verlinkt werden soll
-enter the vfs-path where additional images, icons or logos can be placed (and found by egroupwares applications). the path must start with /,and be readable by all users	admin	de	Geben Sie den VFS-Pfad an, in dem noch mehr Bilder oder Symbole abgelegt und von EGroupware-Applikationen verwendet werden können. Der Pfad muss mit einem "/" beginnen und von allen Benutzern lesbar sein
+enter the vfs-path where additional images, icons or logos can be placed (and found by egroupwares applications). the path must start with /,and be readable by all users	admin	de	Geben Sie den VFS-Pfad an, in dem noch mehr Bilder oder Symbole abgelegt und von EGroupware-Applikationen verwendet werden können.<br> Pfad muss mit einem "/" beginnen und von allen Benutzern lesbar sein.
 enter your default ftp server	admin	de	Standard-FTP-Server
 enter your default mail domain ( from: user@domain )	admin	de	Standard E-Mail-Domain (Von: benutzer@domain)
 enter your default mail domain (from: user@domain)	admin	de	Standard E-Mail-Domain (Von: benutzer@domain)
@@ -804,7 +804,7 @@ search accounts	admin	de	Benutzerkonten durchsuchen
 search categories	admin	de	Kategorien durchsuchen
 search groups	admin	de	Gruppen durchsuchen
 search peer servers	admin	de	Serververbund durchsuchen
-secret deleted, two factor authentication disabled.	admin	de	Geheimnis gelöscht, 2-Faktor-Authentifizierung ausgeschaltet.
+secret deleted, two factor authentication disabled.	admin	de	Geheimnis gelöscht, 2-Faktor-Authentifizierung deaktiviert.
 secure connection	admin	de	Sichere Verbindung
 security	admin	de	Sicherheit
 select accounts for which the custom field should be visible	admin	de	Benutzer auswählen, für die dieses benutzerdefinierte Feld sichtbar sein soll.
@@ -841,8 +841,8 @@ should exceptions contain a trace (including function arguments)	admin	de	Sollen
 should the login page include a language selectbox (useful for demo-sites) ?	admin	de	Soll die Anmeldeseite eine Sprachauswahl beinhalten?
 show 'powered by' logo on	admin	de	Zeige "powered by" Logo
 show access log	admin	de	Zugangsprotokoll anzeigen
-show as optional, but required once user has it setup	admin	de	als optional anzeigen, aber erforderlich wenn der Benutzer sie eingerichtet hat
-show as required, but only once user has it setup	admin	de	als benötigt anzeigen, aber nur benötigt, wenn Benutzer sie eingerichtet hat
+show as optional, but required once user has it setup	admin	de	Als optional anzeigen, aber erforderlich wenn der Benutzer sie eingerichtet hat
+show as required, but only once user has it setup	admin	de	Als benötigt anzeigen, aber nur benötigt, wenn Benutzer sie eingerichtet hat
 show current action	admin	de	aktuelle Aktion anzeigen
 show error log	admin	de	Fehlerprotokoll anzeigen
 show members	admin	de	Mitglieder dieser Gruppe anzeigen
@@ -877,7 +877,7 @@ start	admin	de	Start
 start testjob!	admin	de	Testjob starten!
 starts with	admin	de	startet mit
 stationery	admin	de	Briefpapier
-strictly required, user can not login without	admin	de	unbedingt benötigt, Benutzer können sich ohne nicht mehr anmelden
+strictly required, user can not login without	admin	de	Unbedingt benötigt, Benutzer können sich ohne nicht mehr anmelden
 submit changes	admin	de	Änderungen speichern
 submit displayed information?	admin	de	Angezeigte Informationen übertragen?
 submit statistic information	admin	de	Statistische Informationen übertragen
@@ -890,7 +890,7 @@ successful connected to %1 server%2.	admin	de	Erfolgreich zu %1 Server verbunden
 successfull, but no refresh-token received!	admin	de	Erfolgreiche, aber keine Refresh-Token erhalten!
 switch back to standard identity to save account.	admin	de	Kehren Sie zur Standard-Identität zurück um das Konto zu speichern.
 switch back to standard identity to save other account data.	admin	de	Kehren Sie zur Standard-Identität zurück um andere Kontendaten zu speichern.
-switch it off, if users are randomly thrown out	admin	de	schalten Sie es aus, wenn Benutzer immer wieder zufällig rausgeworfen werden
+switch it off, if users are randomly thrown out	admin	de	Schalten Sie es aus, wenn Benutzer immer wieder zufällig rausgeworfen werden
 template selection	admin	de	Auswahl der Benutzeroberfläche
 templates	admin	de	Templates
 text entry	admin	de	Texteingabe

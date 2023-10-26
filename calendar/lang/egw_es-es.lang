@@ -103,6 +103,7 @@ category acl only restrict adding a category to an event or changing status of a
 category automatically added to new events	calendar	es-es	Categoría agregada automáticamente a nuevos eventos
 category report	calendar	es-es	Informe de categoría
 chair	calendar	es-es	Silla
+change domain of participants in caldav requests	calendar	es-es	Cambiar el dominio de los participantes en las solicitudes CalDAV
 change history	calendar	es-es	Cambiar historial
 change your status	calendar	es-es	Cambiar su estado
 changed event-data applied	calendar	es-es	Datos de eventos modificados aplicados
@@ -147,6 +148,8 @@ days	calendar	es-es	Días
 days of the week for a weekly repeated event	calendar	es-es	Días de la semana para un evento de repetición semanal
 days repeated	calendar	es-es	Días repetidos
 dayview	calendar	es-es	Vista diaria
+default alarm added for yourself or all participants	calendar	es-es	La alarma se inserta automáticamente para las nuevas citas.<br>Para usted mismo o para todos los participantes.
+default alarm for	calendar	es-es	Alarma por defecto para
 default alarm for regular events	calendar	es-es	Alarma por defecto para eventos regulares
 default alarm for whole-day events	calendar	es-es	Alarma por defecto para eventos de todo el día
 default appointment length (in minutes)	calendar	es-es	Duración de la cita por defecto en minutos
@@ -178,6 +181,7 @@ displays this calendar view on the home page (page you get when you enter egroup
 distribution list	calendar	es-es	Lista de distribución
 do not import conflicting events	calendar	es-es	No importar eventos conflictivos
 do not include events of group members	calendar	es-es	No incluir los eventos de los miembros del grupo
+do not notify externals (non-users) about this event	calendar	es-es	NO notificar a externos (no usuarios) sobre este evento
 do you really want to change the start of this series? if you do, the original series will be terminated as of %1 and a new series for the future reflecting your changes will be created.	calendar	es-es	¿Realmente desea cambiar el principio de la serie? Si lo hace, la serie original terminará %1 y se creará otra serie nueva para el futuro reflejando los cambios.
 do you want a weekview with or without weekend?	calendar	es-es	¿Desea una vista de la semana con o sin fin de semana?
 do you want non-egroupware participants of events you created to be automatically notified about new or changed appointments?	calendar	es-es	¿Desea que los participantes que no son de EGroupware de los eventos que creó sean notificados automáticamente sobre citas nuevas o modificadas?
@@ -199,6 +203,7 @@ edit series	calendar	es-es	Editar series
 edit status or alarms for this particular day	calendar	es-es	Editar el estado de las alarmas para este día en particular
 edit this event	calendar	es-es	Editar este evento
 edit this series of recurring events	calendar	es-es	Editar esta serie de eventos recurrentes
+email address migration	calendar	es-es	Migración de direcciones de correo electrónico
 empty = no alarm	calendar	es-es	vacío = sin alarma
 empty for all	calendar	es-es	Vacío para todos
 empty target calendar before importing	calendar	es-es	Vaciar calendario de destino antes de importar
@@ -410,9 +415,12 @@ notification messages for uninvited participants	calendar	es-es	Mensajes de noti
 notification messages for your alarms	calendar	es-es	Mensajes de notificación para sus alarmas
 notification messages for your responses	calendar	es-es	Mensajes de notificación para sus respuestas
 notification settings	calendar	es-es	Configuración de notificaciones
+notify	calendar	es-es	Notificar a
+notify all externals (non-users) about this event	calendar	es-es	Notificar a todos los externos (no usuarios) sobre este evento
 notify externals	calendar	es-es	Notificar a los externos
 notify non-egroupware users about event updates	calendar	es-es	Notificar a los usuarios que no son de EGroupware sobre actualizaciones de eventos
 number of records to read (%1)	calendar	es-es	Número de registros a leer (%1)
+number of resources to be booked	calendar	es-es	Número de recursos a reservar
 number of weeks to show	calendar	es-es	Número de semanas a mostrar
 observance rule	calendar	es-es	Regla de observación
 occurence	calendar	es-es	Ocurrencia
@@ -458,6 +466,7 @@ prevent deleting of entries	admin	es-es	Prevenir el borrado de entradas
 previous	calendar	es-es	Anterior
 private and global public	calendar	es-es	Privado y público global
 private and group public	calendar	es-es	Privado y público global
+private event	calendar	es-es	Evento privado
 private only	calendar	es-es	Privado solamente
 quantity	calendar	es-es	Cantidad
 quick add	calendar	es-es	Añadir rápido
@@ -476,6 +485,7 @@ recurring event	calendar	es-es	evento recurrente
 regular edit	calendar	es-es	Edición regular
 reject	calendar	es-es	Rechazar
 rejected	calendar	es-es	Rechazado
+removes the event from my calendar	calendar	es-es	Eliminar el evento de mi calendario
 repeat days	calendar	es-es	Días de repetición
 repeat the event until which date (empty means unlimited)	calendar	es-es	repetir el evento hasta qué fecha (en blanco significa sin límite)
 repeat type	calendar	es-es	Tipo repetición
@@ -485,6 +495,7 @@ repetition	calendar	es-es	Repetición
 repetitiondetails (or empty)	calendar	es-es	Detalles de la repetición (o vacío)
 replacements for inserting events into documents	calendar	es-es	Reemplazos para insertar eventos en documentos
 reply to meeting request	calendar	es-es	Responder a solicitud de reunión
+replying "%1" is not a participant of the event! only continue if you want to add as new participant.	calendar	es-es	Respondiendo "%1" ¡NO es un participante del evento! Continúa sólo si quieres añadirlo como nuevo participante.
 report	calendar	es-es	Informe
 requested	calendar	es-es	Requerido
 requested date %1 outside allowed range of %2 days: recurring events obmitted!	calendar	es-es	Fecha solicitada %1 fuera del rango permitido de %2 días: ¡eventos recurrentes omitidos!
@@ -518,6 +529,8 @@ select who should get the alarm	calendar	es-es	Seleccionar quién debe obtener l
 selected range	calendar	es-es	Rango seleccionado
 selected users/groups	calendar	es-es	Usuarios/grupos seleccionados
 send meetingrequest to all participants after the event is saved	calendar	es-es	Enviar solicitud de reunión a todos los participantes después de guardar el evento
+send notifications	calendar	es-es	Enviar notificaciones
+send notifications to users right now	calendar	es-es	Enviar notificaciones a los participantes ahora mismo
 series deleted	calendar	es-es	Serie borrada
 set new events to private	calendar	es-es	Poner los eventos nuevos como privados
 setting lock time calender	admin	es-es	Estableciendo el tiempo de bloqueo para el calendario (predeterminado: 1 segundo)
@@ -529,6 +542,7 @@ should the number of weeks be shown on top of the calendar	calendar	es-es	Deben 
 should the number of weeks be shown on top of the calendar (only if offset = 0)	calendar	es-es	Deben mostrarse el número de semanas encima del calendario (sólo si offset = 0)
 should the planner display an empty row for users or categories without any appointment.	calendar	es-es	¿Debe mostrarse en el planificador una fila vacía para los usuarios o categorías sin ninguna cita?
 should the status of the event-participants (accept, reject, ...) be shown in brackets after each participants name ?	calendar	es-es	¿Mostrar el estado de cada evento (aceptar, rechazar, etc) entre corchetes detrás del nombre de cada participante?
+show %1 from %2	calendar	es-es	Mostrar %1 de %2
 show a calendar title	calendar	es-es	Mostrar un título para el calendario
 show all events, as if they were private	calendar	es-es	Mostrar todos los eventos, como si fueran privados
 show all status incl. rejected events	calendar	es-es	Mostrar todos los estados, incluyendo los eventos rechazados
@@ -552,6 +566,7 @@ show this month	calendar	es-es	Mostrar este mes
 show this week	calendar	es-es	Mostrar esta semana
 show year and age	calendar	es-es	Mostrar año y edad
 single event	calendar	es-es	Evento simple
+single participant	calendar	es-es	Participante individual
 sort by	calendar	es-es	Ordenar por
 specify where url of the day links to	calendar	es-es	Especificar la URL del día
 start	calendar	es-es	Inicio
@@ -562,6 +577,7 @@ startdate / -time	calendar	es-es	Fecha de incio / -hora
 startdate and -time of the search	calendar	es-es	Fecha de inicio y -hora de la búsqueda
 startdate of the export	calendar	es-es	Fecha de inicio de la exportación
 startrecord	calendar	es-es	Registro inicial
+status	calendar	es-es	Estado
 status already applied	calendar	es-es	Estado ya aplicado
 status changed	calendar	es-es	Estado modificado
 status for all future scheduled days changed	calendar	es-es	El estado para las planificaciones futuras se ha modificado
@@ -572,11 +588,16 @@ sun	calendar	es-es	Dom
 tag to mark positions for address labels	calendar	es-es	Etiqueta para marcar las posiciones para las etiquetas de direcciones
 tentative	calendar	es-es	Provisional
 test import (show importable records <u>only</u> in browser)	calendar	es-es	Probar Importar (mostrar <u>solamente</u> registros importables en el navegador)
+the apple ical apps use this color to display events from this calendar.	calendar	es-es	Las aplicaciones iCal de Apple utilizan este color para mostrar los eventos de este calendario.
+the document can contain placeholder like {{%1}}, to be replaced with the data.	calendar	es-es	El documento puede contener marcadores de posición como {{%1}}, que se sustituirán por los datos.
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	calendar	es-es	El documento puede contener un marcador como {{%3}}, para sustituirlo con los datos (%1lista completa de nombres de marcadores%2).
 the exceptions are deleted together with the series.	calendar	es-es	Las excepciones se borran junto con las series.
+the extern organizer changed the event!	calendar	es-es	El organizador externo ha cambiado el evento.
 the following document-types are supported:	calendar	es-es	Los siguientes tipos de documentos están soportados:
 the original series will be terminated today and a new series be created.	calendar	es-es	La serie original terminará hoy y se creará una serie nueva.
 the resource you selected is already overbooked:	calendar	es-es	El recurso que ha seleccionado ya está reservado:
+the sender "%1" is not the extern organizer "%2", proceed with caution!	calendar	es-es	El remitente "%1" NO es el organizador externo "%2", ¡tenga cuidado!
+the sender "%1" is not the participant replying "%2", proceed with caution!	calendar	es-es	El remitente "%1" NO es el participante que responde a "%2", ¡tenga cuidado!
 this day is shown as first day in the week or month view.	calendar	es-es	Este día se mostrará como el primer día en las vistas de semana o de mes.
 this defines the end of your dayview. events after this time, are shown below the dayview.	calendar	es-es	Esto define el final de la vista del día. Los eventos posteriores a esta hora se muestran debajo de la vista del día.
 this defines the start of your dayview. events before this time, are shown above the dayview.<br>this time is also used as a default starttime for new events.	calendar	es-es	Esto define el inicio de la vista del día. Los eventos anteriores a esta hora se muestran encima de la vista del día.<br>Esta hora se usa también como hora predeterminada para nuevos eventos.
@@ -616,6 +637,7 @@ to many might exceed your execution-time-limit	calendar	es-es	Muchos podrían ex
 to-firstname	calendar	es-es	Para nombre
 to-fullname	calendar	es-es	Para nombre completo
 to-lastname	calendar	es-es	Para apellido
+toggle weekend	calendar	es-es	Alternar fin de semana
 tomorrow	calendar	es-es	Mañana
 translation	calendar	es-es	Traducción
 tue	calendar	es-es	Mar

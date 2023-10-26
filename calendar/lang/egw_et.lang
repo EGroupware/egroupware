@@ -1,11 +1,14 @@
+%1 event(s) %2, %3 failed because of insufficient rights !!!	calendar	et	%1 sündmus(ed) %2, %3 ebaõnnestus ebapiisavate õiguste tõttu!
 accept	calendar	et	kinnita
 accepted	calendar	et	Kinnitatud
 actions	calendar	et	Tegevused
 actions...	calendar	et	Tegevused...
 add alarm	calendar	et	Lisa alarm
+add appointments via shortened dialog or complete edit window	calendar	et	Kohtumiste lisamine lühendatud dialoogiakna või täieliku redigeerimisakna kaudu
 add new event	calendar	et	Lisa uus kohtumine
 add timesheet entry	calendar	et	Lisa Timesheet kirje
 added	calendar	et	Lisatud
+added by synchronization	calendar	et	Lisatud sünkroniseerimise teel
 after %1	calendar	et	Pärast %1
 after current date	calendar	et	Pärast käesolevat kuupäeva
 alarm	calendar	et	Alarm
@@ -14,12 +17,15 @@ alarm deleted	calendar	et	Alarm kustutatud
 alarm management	calendar	et	Alarmide manageerimine
 alarms	calendar	et	Alarmid
 all categories	calendar	et	Kõik kategooriad
-all day	calendar	et	terve päev
+all day	calendar	et	Terve päev
 all events	calendar	et	Kõik sündmused
 all future	calendar	et	Kõik tulevikus
 all participants	calendar	et	Kõik osalejad
+allow booking requests from any user when creating events?	calendar	et	Lubage sündmuste loomisel broneerimistaotlusi igalt kasutajalt?
 allows to edit the event again	calendar	et	Luba muuta sündmust uuesti
-always	calendar	et	alati
+always	calendar	et	Alati
+always use full edit dialog	calendar	et	Kasutage alati täielikku redigeerimisdialoogi
+always use the full edit dialog, not this little dialog	calendar	et	Kasutage alati täielikku redigeerimisdialoogi, mitte seda väikest dialoogiakent
 apply the changes	calendar	et	rakenda uuendused
 attention	calendar	et	Tähelepanu
 back half a month	calendar	et	pool kuud tagasi
@@ -75,12 +81,14 @@ duration	calendar	et	Kestvus
 edit exception	calendar	et	Muuda erandit
 edit series	calendar	et	Muuda seerijat
 edit this event	calendar	et	Muuda seda sündmust
+email address migration	calendar	et	E-posti aadressi migratsioon
 empty for all	calendar	et	tühi kõigijaoks
 end	calendar	et	Lõpp
 end date/time	calendar	et	Lõpu Kuupäev/ Aeg
 enddate	calendar	et	Lõpukuupäev
 ends	calendar	et	lõppes
 error adding the alarm	calendar	et	Viga alarmi lisamisel
+error notifying %1	calendar	et	Viga, mis teavitab %1
 error: saving the event !!!	calendar	et	Viga: sündmuse salvestamisel !!!
 error: starttime has to be before the endtime !!!	calendar	et	Viga: Startimisaeg peab olema enne
 event deleted	calendar	et	Sündmus kustutatud
@@ -156,6 +164,9 @@ no filter	calendar	et	Filtrita
 no matches found	calendar	et	sobivaid ei leitud
 no response	calendar	et	Pole vastust
 non blocking	calendar	et	mitte blokeerida
+notify	calendar	et	Teavita
+notify all externals (non-users) about this event	calendar	et	Teavitage kõiki väliseid (mittekasutajad) sellest sündmusest.
+number of resources to be booked	calendar	et	Broneeritavate ressursside arv
 old startdate	calendar	et	Vana Algusaeg
 one month	calendar	et	üks kuu
 one week	calendar	et	üks kuu
@@ -165,6 +176,7 @@ output unit	calendar	et	Väljundi ühik
 participants	calendar	et	Osalejad
 permission denied	calendar	et	Ligipääs keelatud
 previous	calendar	et	eelmine
+private event	calendar	et	Privaatne sündmus
 private only	calendar	et	Privaatne Ainult
 quantity	calendar	et	Kogus
 re-edit event	calendar	et	Muuda uuesti sündmust
@@ -172,12 +184,14 @@ recordings	calendar	et	Salvestused
 recurrence	calendar	et	Kordumised
 recurring event	calendar	et	Korduv sündmus
 rejected	calendar	et	Tagasilükatud
+removes the event from my calendar	calendar	et	Eemaldab sündmuse minu kalendrist
 repeat days	calendar	et	Korda päevadel
 repeat the event until which date (empty means unlimited)	calendar	et	korda sündmust kuni kuupäevani (tühi tähendab lõpmatuseni)
 repeat type	calendar	et	Kordamise tüüp
 repeating event information	calendar	et	Kordan Sündmuse informatsiooni
 repetition	calendar	et	Kordus
 repetitiondetails (or empty)	calendar	et	Kordusdetailid (või tühi)
+replying "%1" is not a participant of the event! only continue if you want to add as new participant.	calendar	et	Vastus "%1" EI OLE ürituse osaleja! Jätkake ainult siis, kui soovite lisada uue osalejana.
 report	calendar	et	Aruanne
 reset	calendar	et	Tühista
 resources	calendar	et	Resursid
@@ -188,25 +202,37 @@ select a time	calendar	et	vali aeg
 select resources	calendar	et	Vali resursid
 select who should get the alarm	calendar	et	Vali keda alarmeeritakse
 selected range	calendar	et	Vali vahemik
+send notifications	calendar	et	Saatke teateid
+send notifications to users right now	calendar	et	Saatke osalejatele kohe teateid
 should new events created as private by default ?	calendar	et	Kas uued sündmused tehakse privaatsed vaikimisi ?
+show %1 from %2	calendar	et	Näita %1 alates %2
+show birthdays as all day non-blocking events as well as via mouseover of the date.	calendar	et	Näita kogu päeva mitteblokeerivate sündmuste kujul, samuti kuupäeva hiirega üleval hoidmise kaudu.
 show empty rows in planner	calendar	et	Näita tühju ridu Planeerijas
 show list of upcoming events	calendar	et	näita nimekirja tulevastest sündmustest
-show this month	calendar	et	näita seda kuud
-show this week	calendar	et	näita seda nädalat
-single event	calendar	et	üksik sündmus
+show this month	calendar	et	Näita seda kuud
+show this week	calendar	et	Näita seda nädalat
+single event	calendar	et	Üksik sündmus
+single participant	calendar	et	Üksik osaleja
 sort by	calendar	et	Sorteerimine
 start	calendar	et	Start
 start date/time	calendar	et	Start Kuupäev/ Aeg
 startdate	calendar	et	Algus kuupäev
 startdate / -time	calendar	et	Startkuupäev / -aeg
+status	calendar	et	Staatus
 status changed	calendar	et	Staatus muudetud
 sun	calendar	et	Püh
 tentative	calendar	et	Ebakindel
+the apple ical apps use this color to display events from this calendar.	calendar	et	Apple iCal Apps kasutab seda värvi selle kalendri sündmuste kuvamiseks.
+the document can contain placeholder like {{%1}}, to be replaced with the data.	calendar	et	Dokument võib sisaldada paigutussätteid nagu {{%1}}, mis asendatakse andmetega.
+the extern organizer changed the event!	calendar	et	Väline korraldaja muutis sündmust!
+the sender "%1" is not the extern organizer "%2", proceed with caution!	calendar	et	Saatja "%1" EI ole väline korraldaja "%2", tegutsege ettevaatlikult!
+the sender "%1" is not the participant replying "%2", proceed with caution!	calendar	et	Saatja "%1" EI ole osaleja, kes vastab "%2", olge ettevaatlik!
 three month	calendar	et	kolm kuud
 thu	calendar	et	Nel
 timeframe	calendar	et	Ajavahemik
 timeframe to search	calendar	et	Ajavahemik otsingus
 title of the event	calendar	et	Sündmuse pealkiri
+toggle weekend	calendar	et	Vahetage nädalavahetus
 translation	calendar	et	Tõlkimine
 tue	calendar	et	Tei
 two weeks	calendar	et	kaks nädalat

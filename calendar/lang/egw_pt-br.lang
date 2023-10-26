@@ -1,6 +1,7 @@
 %1 %2 in %3	calendar	pt-br	%1 %2 em %3
 %1 days	calendar	pt-br	%1 dias
 %1 event(s) %2	calendar	pt-br	%1 evento (s) 2%
+%1 event(s) %2, %3 failed because of insufficient rights !!!	calendar	pt-br	%1 evento(s) %2, %3 falhou devido a direitos insuficientes!
 %1 events in ical file, only first one imported and displayed!	calendar	pt-br	%1 eventos no arquivo iCal, apenas o primeiro foi importado e exibido!
 %1 hours	calendar	pt-br	%1 horas
 %1 minutes	calendar	pt-br	%1 minutos
@@ -22,12 +23,14 @@ action that caused the notify: added, canceled, accepted, rejected, ...	calendar
 actions	calendar	pt-br	Ações
 actions...	calendar	pt-br	Ações...
 add alarm	calendar	pt-br	Adicionar aviso
+add appointments via shortened dialog or complete edit window	calendar	pt-br	Adicionar compromissos por meio de uma caixa de diálogo reduzida ou de uma janela de edição completa
 add current view as favorite	calendar	pt-br	Adicionar visão atual como favorita
 add new alarm	calendar	pt-br	Adicionar novo alarme
 add new event	calendar	pt-br	Adicionar novo compromisso
 add new participants or resource	calendar	pt-br	Adicionar novos participantes ou recurso
 add timesheet entry	calendar	pt-br	Adicionar registro à planilha de tempo
 added	calendar	pt-br	Adicionado
+added by synchronization	calendar	pt-br	Adicionado por sincronização
 after	calendar	pt-br	após
 after %1	calendar	pt-br	Após %1
 after current date	calendar	pt-br	Após data atual
@@ -45,8 +48,11 @@ all exceptions are converted into single events.	calendar	pt-br	Todas as exceç�
 all future	calendar	pt-br	Todos futuros
 all incl. rejected	calendar	pt-br	Todos incl. rejeitado
 all participants	calendar	pt-br	Todos os participantes
+allow booking requests from any user when creating events?	calendar	pt-br	Permitir solicitações de agendamento de qualquer usuário ao criar eventos?
 allows to edit the event again	calendar	pt-br	Permite editar o evento novamente
 always	calendar	pt-br	sempre
+always use full edit dialog	calendar	pt-br	Sempre usar a caixa de diálogo de edição completa
+always use the full edit dialog, not this little dialog	calendar	pt-br	Sempre use a caixa de diálogo de edição completa, não essa pequena caixa de diálogo
 apply the changes	calendar	pt-br	aplicar as alterações
 attention	calendar	pt-br	Atendimento
 automatically purge old events after	admin	pt-br	Purgar automaticamente eventos antigos depois

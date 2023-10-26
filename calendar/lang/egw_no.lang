@@ -1,4 +1,5 @@
 %1 %2 in %3	calendar	no	%1 %2 i %3
+%1 event(s) %2, %3 failed because of insufficient rights !!!	calendar	no	%1 hendelse(r) %2, %3 mislyktes på grunn av utilstrekkelige rettigheter!
 %1 events in ical file, only first one imported and displayed!	calendar	no	%1 hendelser i iCal-filen, bare den første importeres og vises!
 %1 hours	calendar	no	%1 timer
 %1 records imported	calendar	no	%1 oppføringer importert
@@ -12,9 +13,11 @@ access denied to the calendar of %1 !!!	calendar	no	Ikke tilgang til %1 kalender
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	no	Handling som utløste denne meldingen: Lagt til, Kansellert, Akseptert, Avslått, ...
 actions	calendar	no	Aksjoner
 add alarm	calendar	no	Legg til alarm
+add appointments via shortened dialog or complete edit window	calendar	no	Legg til avtaler via forkortet dialogboks eller fullstendig redigeringsvindu
 add new event	calendar	no	Legg til ny avtale
 add timesheet entry	calendar	no	Legg til forekomst i timeregistrering
 added	calendar	no	Lagt til
+added by synchronization	calendar	no	Lagt til ved synkronisering
 after current date	calendar	no	Etter inneværende dato
 alarm	calendar	no	Alarm
 alarm added	calendar	no	Alarm lagt til
@@ -26,8 +29,11 @@ all categories	calendar	no	Alle kategorier
 all day	calendar	no	Hele Dagen
 all events	calendar	no	Alle hendelser
 all participants	calendar	no	Alle deltagere
+allow booking requests from any user when creating events?	calendar	no	Tillate bestillingsforespørsler fra alle brukere når du oppretter hendelser?
 allows to edit the event again	calendar	no	Tillate endring av alarmen
 always	calendar	no	Alltid
+always use full edit dialog	calendar	no	Bruk alltid hele redigeringsdialogen
+always use the full edit dialog, not this little dialog	calendar	no	Bruk alltid hele redigeringsdialogen, ikke denne lille dialogen.
 apply the changes	calendar	no	Oppdater endringene
 attention	calendar	no	Oppmerksomhet
 back half a month	calendar	no	Tilbake en halv mnd.

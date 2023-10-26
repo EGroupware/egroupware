@@ -1,4 +1,5 @@
 %1 %2 in %3	calendar	da	%1 %2 i %3
+%1 event(s) %2, %3 failed because of insufficient rights !!!	calendar	da	%1 begivenhed(er) %2, %3 mislykkedes på grund af utilstrækkelige rettigheder!
 %1 hours	calendar	da	%1 timer
 %1 records imported	calendar	da	%1 posteringer importeret
 %1 records read (not yet imported, you may go back and uncheck test import)	calendar	da	%1 posteringer læst (ikke importeret endnu, du skal gå tilbage og fravælge Test Import)
@@ -10,8 +11,10 @@ access denied to the calendar of %1 !!!	calendar	da	Adgang nægtet til %1's kale
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	da	Handlingen der forårsagede påmindelsen: Tilføjet, Annulleret, Accepteret, Forkastet, ...
 actions	calendar	da	Handlinger
 add alarm	calendar	da	Tilføj alarm
+add appointments via shortened dialog or complete edit window	calendar	da	Tilføj aftaler via forkortet dialog eller komplet redigeringsvindue
 add new event	calendar	da	Tilføj ny aftale
 added	calendar	da	Tilføjet
+added by synchronization	calendar	da	Tilføjet ved synkronisering
 after current date	calendar	da	Efter aktuel dato
 alarm	calendar	da	Alarm
 alarm added	calendar	da	Alarm tilføjet
@@ -23,8 +26,11 @@ all categories	calendar	da	Alle kategorier
 all day	calendar	da	Hele dagen
 all events	calendar	da	Alle aftaler
 all participants	calendar	da	Alle deltagere
+allow booking requests from any user when creating events?	calendar	da	Tillad bookinganmodninger fra alle brugere, når du opretter begivenheder?
 allows to edit the event again	calendar	da	Tillader at redigere aftalen igen
 always	calendar	da	Altid
+always use full edit dialog	calendar	da	Brug altid den fulde redigeringsdialog
+always use the full edit dialog, not this little dialog	calendar	da	Brug altid den fulde redigeringsdialog, ikke denne lille dialogboks.
 apply the changes	calendar	da	Acceptér ændringerne
 attention	calendar	da	Opmærksomhed
 back half a month	calendar	da	halv måned baglæns
@@ -90,6 +96,7 @@ edit exception	calendar	da	Rediger undtagelse
 edit series	calendar	da	Rediger rækker
 edit this event	calendar	da	Rediger denne aftale
 edit this series of recurring events	calendar	da	Rediger denne række af gentagne aftaler
+email address migration	calendar	da	Migrering af e-mailadresser
 empty for all	calendar	da	tøm for alle
 end	calendar	da	Slut
 end date/time	calendar	da	Slut Dato/Tid
@@ -98,6 +105,7 @@ enddate / -time of the meeting, eg. for more then one day	calendar	da	Slutdato /
 enddate of the export	calendar	da	Slutdato for eksporten
 ends	calendar	da	slutter
 error adding the alarm	calendar	da	Fejl ved tilføjelse af alarm
+error notifying %1	calendar	da	Fejl ved underretning af %1
 error: importing the ical	calendar	da	Fejl: I at importere iCal'en
 error: no participants selected !!!	calendar	da	Fejl: Ingen deltagere valgt !!!
 error: saving the event !!!	calendar	da	Fejl: ved gem af aftale !!!
@@ -208,7 +216,10 @@ notification messages for modified events	calendar	da	Påmindelses besked for æ
 notification messages for uninvited participants	calendar	da	Påmindelses besked for ikke-inviterede deltagere
 notification messages for your alarms	calendar	da	Påmindelses besked for dine alarmer
 notification messages for your responses	calendar	da	Påmindelses besked for dine besvarelser
+notify	calendar	da	Giv besked
+notify all externals (non-users) about this event	calendar	da	Giv alle eksterne (ikke-brugere) besked om denne begivenhed
 number of records to read (%1)	calendar	da	Antal posteringer at læse (%1)
+number of resources to be booked	calendar	da	Antal ressourcer, der skal bookes
 observance rule	calendar	da	Iagtag Regel
 occurence	calendar	da	Hændelse
 old startdate	calendar	da	Gammel startdato
@@ -234,9 +245,10 @@ planner by category	calendar	da	Planlægger sorteret efter kategori
 planner by user	calendar	da	Planlægger sorteret efter bruger
 please note: you can configure the field assignments after you uploaded the file.	calendar	da	Bemærk: Du kan ændre feltets assigments EFTER du har uploaded filen.
 preselected group for entering the planner	calendar	da	Forud valgte gruppe valgt i planlæggeren
-previous	calendar	da	tidligere
-private and global public	calendar	da	privat og globalt offentlig
-private and group public	calendar	da	privat og gruppe offentlig
+previous	calendar	da	Tidligere
+private and global public	calendar	da	Privat og globalt offentlig
+private and group public	calendar	da	Privat og gruppe offentlig
+private event	calendar	da	Privat begivenhed
 private only	calendar	da	Kun private
 re-edit event	calendar	da	Redigér igen
 receive email updates	calendar	da	Modtag e-mail opdateringer
@@ -245,6 +257,7 @@ recordings	calendar	da	Optagelser
 recurrence	calendar	da	Gentagelse
 recurring event	calendar	da	Tilbagevendende hændelse
 rejected	calendar	da	Forkastet
+removes the event from my calendar	calendar	da	Fjerner begivenheden fra min kalender
 repeat days	calendar	da	Gentag antal dage
 repeat the event until which date (empty means unlimited)	calendar	da	Gentag aftale indtil hvilken dato (tom betyder : uendeligt)
 repeat type	calendar	da	Gentagelsestype
@@ -252,6 +265,7 @@ repeating event information	calendar	da	Information for gentaget aftale
 repeating interval, eg. 2 to repeat every second week	calendar	da	Gentagelses interval, f.eks. 2 for hver anden uge
 repetition	calendar	da	Gentagelse
 repetitiondetails (or empty)	calendar	da	Gentagelse detaljer (eller tom)
+replying "%1" is not a participant of the event! only continue if you want to add as new participant.	calendar	da	Besvarelsen "%1" er IKKE en deltager i begivenheden! Fortsæt kun, hvis du vil tilføje en ny deltager.
 report	calendar	da	Rapport
 reset	calendar	da	Nulstil
 resources	calendar	da	Ressourcer
@@ -264,13 +278,18 @@ select a %1	calendar	da	vælg en %1
 select a time	calendar	da	vælg et tidspunkt
 select resources	calendar	da	Vælg ressourcer
 select who should get the alarm	calendar	da	Vælg hvem der skal have sat alarm
+send notifications	calendar	da	Send notifikationer
+send notifications to users right now	calendar	da	Send notifikationer til deltagere lige nu
 set new events to private	calendar	da	Marker nye aftaler som private
 should new events created as private by default ?	calendar	da	Skal nye aftaler markeres private som standard?
 should the status of the event-participants (accept, reject, ...) be shown in brackets after each participants name ?	calendar	da	Skal status for deltagere (accepteret, forkastet...) vises i parentes efter hver deltagers navn?
+show %1 from %2	calendar	da	Vis %1 fra %2
+show birthdays as all day non-blocking events as well as via mouseover of the date.	calendar	da	Vis som ikke-blokerende begivenheder hele dagen samt via mouseover på datoen.
 show list of upcoming events	calendar	da	vis liste over kommende aftaler
 show this month	calendar	da	vis denne måned
 show this week	calendar	da	vis denne uge
 single event	calendar	da	enkelt aftale
+single participant	calendar	da	Enkelt deltager
 sort by	calendar	da	Sorter efter
 start	calendar	da	Start
 start date/time	calendar	da	Start dato/tid
@@ -279,11 +298,17 @@ startdate / -time	calendar	da	Startdato / tid
 startdate and -time of the search	calendar	da	Søgningens startdato og tid
 startdate of the export	calendar	da	Startdato for exporten
 startrecord	calendar	da	Startpostering
+status	calendar	da	Status
 status changed	calendar	da	Status ændret
 submit to repository	calendar	da	Indsend til EGroupware.org
 sun	calendar	da	Søn
 tentative	calendar	da	Prøve
 test import (show importable records <u>only</u> in browser)	calendar	da	Test inportering (vis importerbare date <u>kun</u> i browseren)
+the apple ical apps use this color to display events from this calendar.	calendar	da	Apple iCal Apps bruger denne farve til at vise begivenheder fra denne kalender.
+the document can contain placeholder like {{%1}}, to be replaced with the data.	calendar	da	Dokumentet kan indeholde pladsholdere som {{%1}}, der skal erstattes med data.
+the extern organizer changed the event!	calendar	da	Den eksterne arrangør har ændret begivenheden!
+the sender "%1" is not the extern organizer "%2", proceed with caution!	calendar	da	Afsenderen "%1" er IKKE den eksterne arrangør "%2", fortsæt med forsigtighed!
+the sender "%1" is not the participant replying "%2", proceed with caution!	calendar	da	Afsenderen "%1" er IKKE deltageren, der svarer "%2", fortsæt med forsigtighed!
 this day is shown as first day in the week or month view.	calendar	da	Denne dag bliver vist som den første dag i uge eller måned visning.
 this defines the end of your dayview. events after this time, are shown below the dayview.	calendar	da	Dette definerer dagens slutning i dags visning. Aftaler efter dette tidspunkt vil blive vist under alle andre aftaler.
 this defines the start of your dayview. events before this time, are shown above the dayview.<br>this time is also used as a default starttime for new events.	calendar	da	Dette definerer starten på dagen i dags visning. Aftaler før denne tid vil blive vist over alle andre aftaler.
@@ -301,14 +326,15 @@ til	calendar	da	til
 timeframe	calendar	da	Tidsramme
 timeframe to search	calendar	da	Tidsramme for søgning
 title of the event	calendar	da	Titlen på handlingen
-to many might exceed your execution-time-limit	calendar	da	for mange vil måske overstige din eksekvere tids begrænsning
+to many might exceed your execution-time-limit	calendar	da	For mange vil måske overstige din eksekvere tids begrænsning
+toggle weekend	calendar	da	Skift weekend
 translation	calendar	da	Oversættelse
 tue	calendar	da	Tir
-two weeks	calendar	da	to uger
+two weeks	calendar	da	To uger
 uninvited	calendar	da	Uinviteret
 updated	calendar	da	Opdateret
-use end date	calendar	da	brug slutdato
-use the selected time and close the popup	calendar	da	brug den valgte tid og luk pop-up
+use end date	calendar	da	Brug slutdato
+use the selected time and close the popup	calendar	da	Brug den valgte tid og luk pop-up
 utilities	calendar	da	Hjælpeprogrammer
 view this event	calendar	da	Vis denne hændelse
 views with fixed time intervals	calendar	da	Views med faste tidsintervaller

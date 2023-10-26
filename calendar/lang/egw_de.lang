@@ -1,7 +1,7 @@
 %1 %2 in %3	calendar	de	%1 %2 im %3
 %1 days	calendar	de	%1 Tage
 %1 event(s) %2	calendar	de	%1 Termin(e) %2
-%1 event(s) %2, %3 failed because of insufficient rights !!!	calendar	de	%1 Termin(e) %2, %3 wegen fehlender Rechte !!!
+%1 event(s) %2, %3 failed because of insufficient rights !!!	calendar	de	%1 Termin(e) %2, %3 wegen fehlender Rechte!
 %1 events in ical file, only first one imported and displayed!	calendar	de	%1 Termine in der iCal Datei, nur der erste wurde importiert und angezeigt!
 %1 hours	calendar	de	%1 Stunden
 %1 minutes	calendar	de	%1 Minuten
@@ -46,7 +46,7 @@ alarm for %1 at %2 in %3	calendar	de	Alarm für %1 am %2 in %3
 alarm management	calendar	de	Alarm Management
 alarms	calendar	de	Alarme
 all categories	calendar	de	Alle Kategorien
-all day	calendar	de	ganztägig
+all day	calendar	de	Ganztägig
 all events	calendar	de	Alle Termine
 all exceptions are converted into single events.	calendar	de	Alle Ausnahmen wurden zu Einzelterminen konvertiert.
 all future	calendar	de	Alle zukünftigen

@@ -1,6 +1,7 @@
 %1 %2 in %3	calendar	sl	%1 %2 v %3
 %1 days	calendar	sl	%1 dni
 %1 event(s) %2	calendar	sl	%1 dogodki %2
+%1 event(s) %2, %3 failed because of insufficient rights !!!	calendar	sl	%1 dogodek(-i) %2, %3 ni uspel zaradi nezadostnih pravic!
 %1 events in ical file, only first one imported and displayed!	calendar	sl	%1 dogodkov %2, %3 ni uspelo zaradi nezadostnih pravic!
 %1 hours	calendar	sl	%1 ur
 %1 minutes	calendar	sl	%1 minut
@@ -25,12 +26,14 @@ action that caused the notify: added, canceled, accepted, rejected, ...	calendar
 actions	calendar	sl	Dejanja
 actions...	calendar	sl	Dejanja ...
 add alarm	calendar	sl	Dodaj opomnik
+add appointments via shortened dialog or complete edit window	calendar	sl	Dodajanje sestankov prek skrajšanega pogovornega okna ali celotnega okna za urejanje
 add current view as favorite	calendar	sl	Dodaj trenutni pogled med priljubljene
 add new alarm	calendar	sl	Dodaj nov alarm
 add new event	calendar	sl	Dodajanje novega sestanka
 add new participants or resource	calendar	sl	Dodajanje novih udeležencev ali virov
 add timesheet entry	calendar	sl	Dodaj vnos timeheet
 added	calendar	sl	Dodano
+added by synchronization	calendar	sl	Dodano s sinhronizacijo
 after	calendar	sl	Po
 after %1	calendar	sl	Po %1
 after current date	calendar	sl	Za trenutnim datumom
@@ -49,9 +52,12 @@ all exceptions are converted into single events.	calendar	sl	Vse izjeme se pretv
 all future	calendar	sl	Vsi v prihodnosti
 all incl. rejected	calendar	sl	Vse, vlkj. zavrnjene
 all participants	calendar	sl	Vsi udeleženci
+allow booking requests from any user when creating events?	calendar	sl	Pri ustvarjanju dogodkov dovoliti zahteve za rezervacijo od katerega koli uporabnika?
 allow users to prevent change notifications ('do not notify')	calendar	sl	Uporabnikom dovolite, da preprečijo obvestila o spremembah »Ne obvesti«
 allows to edit the event again	calendar	sl	Dovoli ponovno urejanje dogodka
 always	calendar	sl	Vedno
+always use full edit dialog	calendar	sl	Vedno uporabite celotno pogovorno okno za urejanje
+always use the full edit dialog, not this little dialog	calendar	sl	Vedno uporabite celotno pogovorno okno za urejanje in ne tega majhnega pogovornega okna
 apply the action on the whole query, not only the shown events	calendar	sl	Uporabite dejanje za celotno poizvedbo, NE samo prikazani dogodki.
 apply the changes	calendar	sl	Uveljavi spremembe
 appointment settings	calendar	sl	Nastavitve imenovanja
@@ -178,6 +184,7 @@ edit exception	calendar	sl	Uredi izjemo
 edit series	calendar	sl	Uredi serije
 edit status or alarms for this particular day	calendar	sl	Urejanje stanja ali alarmov za ta dan
 edit this event	calendar	sl	Uredi ta dogodek
+email address migration	calendar	sl	Migracija e-poštnega naslova
 empty = no alarm	calendar	sl	prazno = brez alarma
 empty for all	calendar	sl	izprazni za vse
 end	calendar	sl	Konec
@@ -187,6 +194,7 @@ enddate / -time of the meeting, eg. for more then one day	calendar	sl	Končni da
 enddate of the export	calendar	sl	Končni datum izvoza
 ends	calendar	sl	Konča
 error adding the alarm	calendar	sl	Napaka pri dodajanju alarma
+error notifying %1	calendar	sl	Napaka pri obveščanju %1
 error saving the event!	calendar	sl	Napaka pri shranjevanju dogodka!
 error: can't delete original series!	calendar	sl	Napaka: Izvirne serije ni mogoče izbrisati!
 error: duration of event longer then recurrence interval!	calendar	sl	Napaka: trajanje dogodka je daljši od intervala ponovitve!
@@ -374,8 +382,11 @@ notification messages for modified events	calendar	sl	Sporočilo ob spremenjenih
 notification messages for your alarms	calendar	sl	Sporočilo ob vaših opomnikih
 notification messages for your responses	calendar	sl	Sporočilo ob vaših odgovorih
 notification settings	calendar	sl	Nastavitve obvestil
+notify	calendar	sl	Obvesti
+notify all externals (non-users) about this event	calendar	sl	Obvesti vse zunanje osebe (ki niso uporabniki) o tem dogodku
 notify non-egroupware users about event updates	calendar	sl	Obveščajte uporabnike, ki niso člani skupine, o posodobitvah dogodkov
 number of records to read (%1)	calendar	sl	Število zapisov za branje (%1)
+number of resources to be booked	calendar	sl	Število virov, ki jih je treba rezervirati
 number of weeks to show	calendar	sl	Število tednov za prikaz
 observance rule	calendar	sl	Pravilo opazovanja
 occurence	calendar	sl	Dogodek
@@ -417,6 +428,7 @@ prevent deleting of entries	admin	sl	Preprečite brisanje vnosov
 previous	calendar	sl	Prejšnji
 private and global public	calendar	sl	Zasebno in ostali
 private and group public	calendar	sl	Zasebno in skupina
+private event	calendar	sl	Zasebni dogodek
 private only	calendar	sl	Samo zasebno
 quantity	calendar	sl	Količina
 range fields	calendar	sl	Razpon polja
@@ -433,6 +445,7 @@ recurrences and conflict check	calendar	sl	Ponovitve in preverjanje konfliktov
 recurring event	calendar	sl	Ponavljajoči dogodek
 reject	calendar	sl	Zavrni
 rejected	calendar	sl	Zavrnjeno
+removes the event from my calendar	calendar	sl	Odstrani dogodek iz mojega koledarja
 repeat days	calendar	sl	Ponavljajoči dnevi
 repeat the event until which date (empty means unlimited)	calendar	sl	Oo katerega datuma naj se dogodek ponavlja (prazno pomeni brez omejitve)
 repeat type	calendar	sl	Ponovi tip
@@ -442,6 +455,7 @@ repetition	calendar	sl	Ponovitev
 repetitiondetails (or empty)	calendar	sl	Podrobnosti ponovitev (ali prazno)
 replacements for inserting events into documents	calendar	sl	Zamenjava za vstavljanje dogodkov v dokumente
 reply to meeting request	calendar	sl	Odgovor na zahtevo za sestanek
+replying "%1" is not a participant of the event! only continue if you want to add as new participant.	calendar	sl	Odgovor "%1" NI udeleženec dogodka! Nadaljujte samo, če želite dodati novega udeleženca.
 report	calendar	sl	Poročilo
 requested	calendar	sl	Zahtevano
 requested date %1 outside allowed range of %2 days: recurring events obmitted!	calendar	sl	Zahtevani datum %1 zunaj dovoljenega obsega %2 dni: ponavljajoči se dogodki so dovoljeni!
@@ -474,6 +488,8 @@ select who should get the alarm	calendar	sl	Izberite, kdo naj dodi sporočilo al
 selected range	calendar	sl	Izbrani obseg
 selected users/groups	calendar	sl	Izbrani uporabniki / skupine
 send meetingrequest to all participants after the event is saved	calendar	sl	Pošljite sporočilo za vse udeležence, ko se dogodek shrani
+send notifications	calendar	sl	Pošljite obvestila
+send notifications to users right now	calendar	sl	Pošljite obvestila udeležencem zdaj
 series deleted	calendar	sl	Serija je izbrisana
 set new events to private	calendar	sl	Novi dogodki naj bodo označeni kot zasebni
 setting lock time calender	admin	sl	Nastavitev časa Datalock za koledar (privzeto je 1 sekunda)
@@ -484,6 +500,7 @@ should the grid be shown in the calendar	calendar	sl	Če je mreža prikazana v k
 should the number of weeks be shown on top of the calendar	calendar	sl	Če je na vrhu koledarja prikazano število tednov
 should the number of weeks be shown on top of the calendar (only if offset = 0)	calendar	sl	Če je na vrhu koledarja prikazano število tednov (samo, če je offset = 0)
 should the planner display an empty row for users or categories without any appointment.	calendar	sl	Naj načrtovalec prikaže prazno vrstico za uporabnike ali kategorije brez dogodkov?
+show %1 from %2	calendar	sl	Prikaži %1 iz %2
 show a calendar title	calendar	sl	Prikaži naslov koledarja
 show all events, as if they were private	calendar	sl	Pokaži vse dogodke, kot če bi bili zasebni
 show all status incl. rejected events	calendar	sl	Prikaži vse stanje vklj. Zavrnjeni dogodki
@@ -507,6 +524,7 @@ show this month	calendar	sl	Prikaži ta mesec
 show this week	calendar	sl	Prikaži ta teden
 show year and age	calendar	sl	Prikaži leto in starost
 single event	calendar	sl	Pposamezen dogodek
+single participant	calendar	sl	Posamezen udeleženec
 sort by	calendar	sl	Razvrsti po
 specify where url of the day links to	calendar	sl	Določite, kje je URL dnevnika
 start	calendar	sl	Začetek
@@ -574,6 +592,7 @@ to many might exceed your execution-time-limit	calendar	sl	Preveč lahko presež
 to-firstname	calendar	sl	Na ime
 to-fullname	calendar	sl	Na ime in priiimek
 to-lastname	calendar	sl	Na priimek
+toggle weekend	calendar	sl	Preklopi vikend
 tomorrow	calendar	sl	Jutri
 translation	calendar	sl	Prevod
 tue	calendar	sl	Tor
