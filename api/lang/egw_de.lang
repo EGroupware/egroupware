@@ -113,14 +113,14 @@ alignleft	common	de	Linksbündig ausrichten
 alignment of label and input-field in table-cell	common	de	Ausrichtung der Beschriftung und des Eingabefeldes in der Tabellenzelle
 alignment of the v/hbox containing table-cell	common	de	Ausrichtung der die V/HBox enthaltenden Tabellenzelle
 alignright	common	de	Rechtsbündig ausrichten
-all	common	de	alle
+all	common	de	Alle
 all addressbooks	groupdav	de	Alle Adressbücher
 all categories	common	de	Alle Kategorien
 all days	common	de	alle Tage
 all fields	common	de	alle Felder
 all in one	groupdav	de	Gemeinsam in einem
 all languages	common	de	Alle Sprachen
-all operations save the template!	common	de	alle Operation speichern das Template!
+all operations save the template!	common	de	Alle Operation speichern das Template!
 all users	common	de	Alle Benutzer
 allow editing the %1	common	de	Erlaube das Bearbeiten von %1
 allowed file type: %1	common	de	Erlaubter Dateityp: %1
@@ -147,7 +147,7 @@ application has no etemplates (no file %1) to restore!	common	de	Anwendung hat k
 application name needed to restore etemplates!	common	de	Anwendungsname wir benötigt zum wiederherstellen der eTemplates!
 application name needed to write a langfile or dump the etemplates !!!	common	de	Name der Anwendung benötigt um eine Sprachdatei oder eTemplate-Distibutionsdate zu schreiben !!!
 applications	common	de	Anwendungen
-applies the changes made	common	de	übernimmt die Änderungen
+applies the changes made	common	de	Übernimmt die Änderungen
 applies the changes to the given version of the template	common	de	übernimmt die Änderungen in die angegebene Version des Templates
 apply	common	de	Übernehmen
 apply the action on the whole query, not only the shown entries	common	de	Befehl auf die gesamte Abfrage anwenden, NICHT nur auf die angezeigten Einträge
@@ -160,7 +160,7 @@ are you sure, you would like to delete the backup key?	common	de	Sind Sie sicher
 argentina	common	de	ARGENTINIEN
 armenia	common	de	ARMENIEN
 aruba	common	de	ARUBA
-as default	common	de	als Vorgabe
+as default	common	de	Als Vorgabe
 attach	common	de	Anhängen
 attach file	common	de	Datei anhängen
 attachment	common	de	Anhang
@@ -258,16 +258,16 @@ center	common	de	Zentriert
 centered	common	de	zentriert
 central african republic	common	de	ZENTRAL AFRIKANISCHE REPUBLIK
 chad	common	de	TSCHAD
-change	common	de	ändern
+change	common	de	Ändern
 change owner	common	de	Eigentümer ändern
 changed	common	de	Geändert
 charset	common	de	UTF-8
 check all	common	de	Alle auswählen
 check for empty values in if statements.  example {{if url~empty~~website:}} - if url is not empty, writes "website:"	common	de	Sie können auch auf EMPTY prüfen in If-Abfragen. Beispiel {{IF url~EMPTY~~Webseite: }}{{IF url~EMPTY~~url}} - fügt Webseite & URL ein, falls das Feld url nicht leer ist.
 check if content should only be displayed but not altered (the content is not send back then!)	common	de	abhaken wenn der Inhalt nur angezeigt aber nicht geändert werden soll (der Inhalt wird dann nicht zurückgesendet!)
-check if field has to be filled by user	common	de	abhaken wenn das Eingabefeld vom Benutzer zwingend ausgefüllt werden muss
+check if field has to be filled by user	common	de	Abhaken wenn das Eingabefeld vom Benutzer zwingend ausgefüllt werden muss
 check installation	common	de	Installation überprüfen
-check now	common	de	jetzt überprüfen
+check now	common	de	Jetzt überprüfen
 checkbox	common	de	Checkbox
 chile	common	de	CHILE
 china	common	de	CHINA
@@ -289,17 +289,17 @@ clear	common	de	Zurücksetzen
 clear form	common	de	Eingaben löschen
 clear window	common	de	Fenster löschen
 click	common	de	Klicken
-click here to attach the file	common	de	hier klicken um die Datei anzuhängen
-click here to create the link	common	de	hier klicken um die Verknüpfung anzulegen
+click here to attach the file	common	de	Hier klicken um die Datei anzuhängen
+click here to create the link	common	de	Hier klicken um die Verknüpfung anzulegen
 click here to resume your egroupware session.	common	de	Hier klicken um die EGroupware Sitzung wieder aufzunehmen.
-click here to start the search	common	de	hier klicken um die Suche zu starten
-click here to upload the file	common	de	hier klicken um die Datei hochzuladen
+click here to start the search	common	de	Hier klicken um die Suche zu starten
+click here to upload the file	common	de	Hier klicken um die Datei hochzuladen
 click or mouse over to show menus	common	de	Klicken oder "mit dem Mauszeiger darüber fahren" um das Menü anzuzeigen.
 click or mouse over to show menus?	common	de	Klicken oder "mit dem Mauszeiger darüber fahren" um das Menü anzuzeigen?
 click this image on the navbar: %1	common	de	Klicken Sie auf dieses Symbol in der Navigation: %1
 click to open colorpicker	common	de	Farbauswahl
-click to order after that criteria	common	de	anklicken um nach diesem Kriterium zu sortieren
-clickable path	common	de	anklickbarer Pfad
+click to order after that criteria	common	de	Anklicken um nach diesem Kriterium zu sortieren
+clickable path	common	de	Anklickbarer Pfad
 clients not explicitly stating a limit get limited to these many days. a too high limit may cause problems with some clients.	groupdav	de	Geräte die kein explicites Limit setzen, verwenden die angegebene Anzahl Tage. Ein zu hohes Limit kann bei einigen Geräte zu Problemen führen.
 close	common	de	Schließen
 close sidebox	common	de	Seitenmenü schließen
@@ -373,7 +373,7 @@ database error	common	de	Datenbank Fehler
 database error!	common	de	Datenbank Fehler!
 date	common	de	Datum
 date + time	common	de	Datum + Zeit
-date due	common	de	fällig am
+date due	common	de	Fällig am
 date+time	common	de	Datum+Zeit
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	de	Datum-Zeit Port.<br>Wenn Sie Port 13 benutzen, passen Sie bitte die Regeln der Firewall an bevor Sie die Seite speichern.<br>(Port: 13 / Host: 129.6.15.28)
 day	common	de	Tag
@@ -526,6 +526,7 @@ error create parent directory %1!	common	de	Fehler beim Anlegen des Elternordner
 error creating %1 %2 directory	common	de	Fehler beim Erstellen des Ordners %1 %2
 error deleting %1 %2 directory	common	de	Fehler beim Löschen des Ordners %1 %2
 error deleting %1!	common	de	Fehler beim Löschen von %1!
+error enabling push	common	de	Fehler beim Aktivieren von Push.
 error renaming %1 %2 directory	common	de	Fehler beim Umbenennen des Ordners %1 %2
 error uploading file!	filemanager	de	Fehler beim Hochladen der Datei!
 error: template not found !!!	common	de	Fehler: eTemplate nicht gefunden !!!
@@ -747,7 +748,7 @@ install egroupware as mail-handler?	common	de	EGroupware als Mail-Handler instal
 integer	common	de	Ganzzahl
 international	common	de	International
 introduction	common	de	Einführung
-invalid 2-factor authentication code	common	de	Ungültiger 2-Faktor Authentifizierungscode
+invalid 2-factor authentication code	common	de	Ungültiger 2-Faktor-Authentifizierungscode
 invalid email	common	de	Ungültige E-Mail-Adresse
 invalid filename	common	de	Ungültiger Dateiname
 invalid ip address	common	de	Ungültige IP-Adresse
@@ -1402,7 +1403,7 @@ textarea	common	de	Mehrzeiliges Textfeld
 th	common	de	Do
 thailand	common	de	THAILAND
 the backup key has been deleted.	common	de	Der Backup Schlüssel wurde gelöscht.
-the browser popup blocker is on. please click on ok button to see the pop-up.\n\nif you would like to not see this message for the next time, allow your browser pop-up blocker to open popups from %1	common	de	Ihr Browser hat das Öffnen eines Pop-up-Dialogs blockiert. Bitte klicken Sie OK, um das Pop-up angezeigt zu bekommen.\n\nWenn Sie die Meldung nicht nochmals erhalten wollen, erlauben Sie bitte in den Einstellungen vom Browser für %1 das Öffnen von Pop-ups.
+the browser popup blocker is on. please click on ok button to see the pop-up.\n\nif you would like to not see this message for the next time, allow your browser pop-up blocker to open popups from %1	common	de	Ihr Browser hat das Öffnen eines Pop-up-Dialogs blockiert.Pop-up-Dialogs.<br>Bitte klicken Sie OK, um das Pop-up angezeigt zu bekommen. Wenn Sie die Meldung nicht nochmals erhalten wollen, erlauben Sie bitte in den Einstellungen vom Browser für %1 das Öffnen von Pop-ups.
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	preferences	de	Das Dokument kann Platzhalter wie {{%3}} enthalten, die mit den Daten ersetzt werden (%1komplette Liste der Platzhalter%2).
 the following applications require upgrades	common	de	Die folgenden Anwendungen benötigen eine Aktualisierung
 the following document-types are supported:	preferences	de	Im Moment werden die folgenden Dokumenttypen unterstützt:

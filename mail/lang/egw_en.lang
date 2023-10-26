@@ -198,7 +198,7 @@ emailadmin: profilemanagement	mail	en	eMailAdmin: Profilemanagement
 emails in blacklisted domains are marked as spam	mail	en	Emails in blacklisted domains are marked as spam
 emails in whitelisted domains are not marked as spam	mail	en	Emails in whitelisted domains are not marked as spam
 empty junk	mail	en	Empty junk folder
-empty trash	mail	en	empty trash
+empty trash	mail	en	Empty trash
 empty trash and junk	mail	en	Empty trash and junk
 enable	mail	en	Enable
 enabled	mail	en	Enabled
@@ -451,7 +451,7 @@ provide a default vacation text, (used on new vacation messages when there was n
 push notifications	mail	en	Push notifications
 quicksearch	mail	en	Quicksearch
 quicksearch (with cc)	mail	en	Quicksearch (+Copy)
-quota limit warning in megabyte (recommended value is 30 mb).	mail	en	Quota limit warning in MegaByte (recommended value is 30 MB).
+quota limit warning in megabyte (recommended value is 30 mb).	mail	en	Quota limit warning in megabyte (recommended value is 30 MB).
 quota not provided by server	mail	en	Quota not provided by server
 quota: %1	mail	en	Quota: %1
 read	mail	en	read

@@ -1,4 +1,5 @@
 %1 %2 in %3	calendar	ko	%3에 %1 %2
+%1 event(s) %2, %3 failed because of insufficient rights !!!	calendar	ko	권한이 부족하여 %1 이벤트(들) %2, %3에 실패했습니다!
 %1 events in ical file, only first one imported and displayed!	calendar	ko	iCal 파일에 있는 %1 이벤트 중 첫 번째 이벤트만 가져와서 표시했습니다!
 %1 hours	calendar	ko	%1 시간
 %1 records imported	calendar	ko	%1개의 레코드를 가져왔습니다.
@@ -11,9 +12,11 @@ access denied to the calendar of %1 !!!	calendar	ko	%1 일정의 접근이 금�
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	ko	알림 메세지를 발생하는 행동: 추가됨,취소됨,승락됨,거부됨, ...
 actions	calendar	ko	액션
 add alarm	calendar	ko	알람 추가
+add appointments via shortened dialog or complete edit window	calendar	ko	단축 대화 상자 또는 전체 편집 창을 통해 약속을 추가합니다.
 add new event	calendar	ko	새 예약 추가
 add timesheet entry	calendar	ko	타임시트 엔트리에 추가
 added	calendar	ko	추가됨
+added by synchronization	calendar	ko	동기화에 의해 추가됨
 after current date	calendar	ko	오늘이후
 alarm	calendar	ko	알람
 alarm added	calendar	ko	알람 추가됨
@@ -25,8 +28,11 @@ all categories	calendar	ko	모든 카테고리
 all day	calendar	ko	하루종일
 all events	calendar	ko	모든 이벤트
 all participants	calendar	ko	모든 참석자
+allow booking requests from any user when creating events?	calendar	ko	이벤트를 만들 때 모든 사용자의 예약 요청을 허용하시겠습니까?
 allows to edit the event again	calendar	ko	이벤트 재수정 허용
 always	calendar	ko	언제나
+always use full edit dialog	calendar	ko	항상 전체 편집 대화 상자 사용
+always use the full edit dialog, not this little dialog	calendar	ko	항상 이 작은 대화 상자가 아닌 전체 편집 대화 상자를 사용하세요.
 apply the changes	calendar	ko	변경사항 적용
 attention	calendar	ko	주의
 before current date	calendar	ko	오늘 이전에
@@ -83,12 +89,14 @@ edit exception	calendar	ko	예외 편집
 edit series	calendar	ko	연속 편집
 edit this event	calendar	ko	이 이벤트 편집
 edit this series of recurring events	calendar	ko	이 연속된 반복 이벤트 편집
+email address migration	calendar	ko	이메일 주소 마이그레이션
 empty for all	calendar	ko	모두 비우기
 end	calendar	ko	종료
 end date/time	calendar	ko	끝나는 날짜/시간
 enddate	calendar	ko	종료일
 ends	calendar	ko	종료
 error adding the alarm	calendar	ko	알람 추가중 오류발생
+error notifying %1	calendar	ko	%1을(를) 알리는 동안 오류가 발생했습니다.
 error: importing the ical	calendar	ko	오류: ical 불러오기 오류
 error: no participants selected !!!	calendar	ko	오류: 참석자가 선택되지 않았습니다.
 error: saving the event !!!	calendar	ko	오류: 이벤트 저장
@@ -168,7 +176,10 @@ notification messages for canceled events	calendar	ko	취소된 이벤트에 알
 notification messages for modified events	calendar	ko	변경된 이벤트에 알림 메세지
 notification messages for your alarms	calendar	ko	알람에 알림 메세지
 notification messages for your responses	calendar	ko	응답에 알림 메세지
+notify	calendar	ko	알림
+notify all externals (non-users) about this event	calendar	ko	모든 외부인(비사용자)에게 이 이벤트에 대해 알립니다.
 number of records to read (%1)	calendar	ko	읽을 레코드수 (%1)
+number of resources to be booked	calendar	ko	예약할 리소스 수
 observance rule	calendar	ko	준수할 규칙
 occurence	calendar	ko	일정(Occurence)
 old startdate	calendar	ko	이전 시작날짜
@@ -196,6 +207,7 @@ preselected group for entering the planner	calendar	ko	플레너에 입력할 �
 previous	calendar	ko	이전
 private and global public	calendar	ko	사생활 과 전역공용
 private and group public	calendar	ko	사생활 과 전역공용
+private event	calendar	ko	비공개 이벤트
 private only	calendar	ko	사생활만
 re-edit event	calendar	ko	이벤트 다시편집
 receive email updates	calendar	ko	갱신된 내용은 이메일로 받기
@@ -204,6 +216,7 @@ recordings	calendar	ko	기록
 recurrence	calendar	ko	반복
 recurring event	calendar	ko	반복 이벤트
 rejected	calendar	ko	거부됨
+removes the event from my calendar	calendar	ko	내 캘린더에서 이벤트를 제거합니다.
 repeat days	calendar	ko	반복일수
 repeat the event until which date (empty means unlimited)	calendar	ko	언제까지 이벤트를 반복할까요? (공백은 무한)
 repeat type	calendar	ko	반복방법
@@ -211,6 +224,7 @@ repeating event information	calendar	ko	반복 이벤트 정보
 repeating interval, eg. 2 to repeat every second week	calendar	ko	반복 주기 (2는 매 2번째주를 의미함)
 repetition	calendar	ko	반복
 repetitiondetails (or empty)	calendar	ko	반복 세부 (이거나 공란)
+replying "%1" is not a participant of the event! only continue if you want to add as new participant.	calendar	ko	"%1"은 이벤트 참가자가 아닙니다! 새 참가자로 추가하려는 경우에만 계속 진행하세요.
 report	calendar	ko	보고서
 reset	calendar	ko	리셋
 resources	calendar	ko	리소스
@@ -222,24 +236,35 @@ scheduling conflict	calendar	ko	일정 겹침
 select a %1	calendar	ko	%1 선택
 select a time	calendar	ko	시간선택
 select resources	calendar	ko	리소스 선택
+send notifications	calendar	ko	알림 보내기
+send notifications to users right now	calendar	ko	지금 참가자에게 알림 보내기
 set new events to private	calendar	ko	새 개인 이벤트 설정
 should new events created as private by default ?	calendar	ko	새로 생성되는 이벤트는 개인 - 기본 으로 하시겠습니까?
 should the status of the event-participants (accept, reject, ...) be shown in brackets after each participants name ?	calendar	ko	이벤트-참가자의 상황이 각 참가자이름 이후에 괄호로 표시하시겠습니까? ( 승락, 거부, 등)
+show %1 from %2	calendar	ko	%2에서 %1 표시
+show birthdays as all day non-blocking events as well as via mouseover of the date.	calendar	ko	하루 종일 차단되지 않는 이벤트로 표시하거나 날짜를 마우스오버하여 표시할 수 있습니다.
 show list of upcoming events	calendar	ko	예정된 이벤트 목록 보기
 show this month	calendar	ko	이번달보기
 show this week	calendar	ko	이번주보기
 single event	calendar	ko	단독 이벤트
+single participant	calendar	ko	단일 참가자
 sort by	calendar	ko	정렬 기준
 start	calendar	ko	시작
 start date/time	calendar	ko	시작 날짜/시간
 startdate	calendar	ko	시작일
 startdate / -time	calendar	ko	시작 날짜/-시간
 startrecord	calendar	ko	시작레코드
+status	calendar	ko	상태
 status changed	calendar	ko	상태 변경됨
 submit to repository	calendar	ko	저장소로 보내기(서브밋)
 sun	calendar	ko	일요일
 tentative	calendar	ko	시험적인
 test import (show importable records <u>only</u> in browser)	calendar	ko	가져오기시험 ( 브라우저에 가져올수 있는 레코드 <u> 만 </u> 봅니다 )
+the apple ical apps use this color to display events from this calendar.	calendar	ko	Apple iCal 앱에서는 이 색상을 사용하여 이 캘린더의 이벤트를 표시합니다.
+the document can contain placeholder like {{%1}}, to be replaced with the data.	calendar	ko	문서에 데이터로 대체할 {{%1}}과 같은 자리 표시자를 포함할 수 있습니다.
+the extern organizer changed the event!	calendar	ko	외부 주최자가 이벤트를 변경했습니다!
+the sender "%1" is not the extern organizer "%2", proceed with caution!	calendar	ko	보낸 사람 "%1"이(가) 외부 주최자 "%2"이(가) 아니므로 주의해서 진행하세요!
+the sender "%1" is not the participant replying "%2", proceed with caution!	calendar	ko	보낸 사람 "%1"이(가) "%2"에 응답하는 참가자가 아니므로 주의해서 계속 진행하세요!
 this day is shown as first day in the week or month view.	calendar	ko	이날은 월단위 보기 나 주단위 보기에 첫째날로 보여집니다.
 this defines the end of your dayview. events after this time, are shown below the dayview.	calendar	ko	이 정의는 하루 보기에 가장 끝입니다. 이 시간 이후에 이벤트는 하루보기 아래에 나타납니다.
 this defines the start of your dayview. events before this time, are shown above the dayview.<br>this time is also used as a default starttime for new events.	calendar	ko	이 정의는 하루 보기에 가장 처음입니다. 이 시간 이전에 이벤트는 하루보기 위에 나타납니다.<br>이 시간은 새로 발생하는 이벤트의 기본 하루 시작 시간으로 사용됩니다.
@@ -254,6 +279,7 @@ three month	calendar	ko	분기
 thu	calendar	ko	목요일
 title of the event	calendar	ko	이벤트 제목
 to many might exceed your execution-time-limit	calendar	ko	너무 많을 경우 최대실행시간(execution-time-limit)를 초과하게 됩니다
+toggle weekend	calendar	ko	주말 전환
 translation	calendar	ko	번역
 tue	calendar	ko	화요일
 two weeks	calendar	ko	보름

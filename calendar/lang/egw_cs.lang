@@ -197,6 +197,7 @@ edit series	calendar	cs	Editovat řadu pravidelného opakování
 edit status or alarms for this particular day	calendar	cs	Editovat stav nebo alarmy pro tento konkrétní den
 edit this event	calendar	cs	Editovat tuto událost
 edit this series of recurring events	calendar	cs	Editovat tuto řadu pravidelných opakování
+email address migration	calendar	cs	Migrace e-mailové adresy
 empty = no alarm	calendar	cs	prázdné = bez připomínky
 empty for all	calendar	cs	prázdné znamená vše
 empty target calendar before importing	calendar	cs	Prázdný cílový kalendář před importem
@@ -454,6 +455,7 @@ prevent deleting of entries	admin	cs	Nedovolit smazat události
 previous	calendar	cs	Předchozí
 private and global public	calendar	cs	soukromé a veřejně přístupné
 private and group public	calendar	cs	soukromé a přístupné pro skupinu
+private event	calendar	cs	Soukromá událost
 private only	calendar	cs	Jen soukromé
 quantity	calendar	cs	Množství
 range fields	calendar	cs	Rozsah polí
@@ -470,6 +472,7 @@ recurrences and conflict check	calendar	cs	Pravidelné opakování a kontrola ko
 recurring event	calendar	cs	Pravidelně se opakující událost
 reject	calendar	cs	Odmítnout
 rejected	calendar	cs	Odmítnuto
+removes the event from my calendar	calendar	cs	Odstraní událost z mého kalendáře
 repeat days	calendar	cs	Opakovat ve dnech
 repeat the event until which date (empty means unlimited)	calendar	cs	opakovat událost až do data (nevyplněno znamená bez omezení)
 repeat type	calendar	cs	Typ opakování
@@ -479,6 +482,7 @@ repetition	calendar	cs	Opakování
 repetitiondetails (or empty)	calendar	cs	Detaily opakování (nebo ponechte prázdné)
 replacements for inserting events into documents	calendar	cs	Zástupci pro vkládání informací o událostech do dokumentů
 reply to meeting request	calendar	cs	Odpovědět na požadavek schůzky
+replying "%1" is not a participant of the event! only continue if you want to add as new participant.	calendar	cs	Odpověď "%1" NENÍ účastníkem události! Pokračujte pouze v případě, že chcete přidat jako nového účastníka.
 report	calendar	cs	Zpráva
 requested	calendar	cs	účast nutná
 requested date %1 outside allowed range of %2 days: recurring events obmitted!	calendar	cs	Požadované datum %1 je mimo povolený rozsah %2 dnů: opakování události není možné!
@@ -573,9 +577,12 @@ test import (show importable records <u>only</u> in browser)	calendar	cs	Testova
 the apple ical apps use this color to display events from this calendar.	calendar	cs	Aplikace Apple iCal používá tuto barvu pro zobrazení událostí z tohoto kalendáře.
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	calendar	cs	Dokument může obsahovat zástupce jako např. {{%3}},  které budou nahrazeny za skutečné informace (%1 celý seznam názvů zástupců %2)
 the exceptions are deleted together with the series.	calendar	cs	Výjimky jsou smazány spolu s pravidelným opakováním.
+the extern organizer changed the event!	calendar	cs	Externí organizátor změnil událost!
 the following document-types are supported:	calendar	cs	Jsou podporovány následující typy dokumentů:
 the original series will be terminated today and a new series be created.	calendar	cs	Původní pravidelné opakování bude k dnešnímu dni přerušeno a bude vytvořeno nové pravidelné opakování.
 the resource you selected is already overbooked:	calendar	cs	Vybraný zdroj je již příliš obsazen.
+the sender "%1" is not the extern organizer "%2", proceed with caution!	calendar	cs	Odesílatel "%1" NENÍ externí organizátor "%2", postupujte opatrně!
+the sender "%1" is not the participant replying "%2", proceed with caution!	calendar	cs	Odesílatel "%1" NENÍ účastník, který odpovídá "%2", postupujte opatrně!
 this day is shown as first day in the week or month view.	calendar	cs	Tento den se zobrazí jako první v týdenním nebo měsíčním pohledu.
 this defines the end of your dayview. events after this time, are shown below the dayview.	calendar	cs	Tento čas ukončí Váš denní pohled. Následující události se zobrazí pod Vaším denním pohledem.
 this defines the start of your dayview. events before this time, are shown above the dayview.<br>this time is also used as a default starttime for new events.	calendar	cs	Tímto časem začne Váš denní pohled. Předcházející události se zobrazí nad Vaším denním pohledem.<br>Tento čas je také brán jako výchozí počáteční čas pro nové události.
@@ -615,6 +622,7 @@ to many might exceed your execution-time-limit	calendar	cs	příliš mnoho můž
 to-firstname	calendar	cs	Na křestní jméno
 to-fullname	calendar	cs	Na celé jméno
 to-lastname	calendar	cs	Na příjmení
+toggle weekend	calendar	cs	Přepnout víkend
 tomorrow	calendar	cs	Zítra
 translation	calendar	cs	Překlad
 tue	calendar	cs	Út

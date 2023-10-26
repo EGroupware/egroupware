@@ -526,6 +526,7 @@ error create parent directory %1!	common	en	Error creating parent folder %1!
 error creating %1 %2 directory	common	en	Error creating %1 %2 folder!
 error deleting %1 %2 directory	common	en	Error deleting %1 %2 folder!
 error deleting %1!	common	en	Error deleting %1!
+error enabling push	common	en	Error enabling push
 error renaming %1 %2 directory	common	en	Error renaming %1 %2 folder!
 error uploading file!	filemanager	en	Error uploading file!
 error: template not found !!!	common	en	Error: Template not found!

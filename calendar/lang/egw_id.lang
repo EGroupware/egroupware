@@ -16,9 +16,11 @@ action that caused the notify: added, canceled, accepted, rejected, ...	calendar
 actions	calendar	id	Tindakan
 actions...	calendar	id	Tindakan...
 add alarm	calendar	id	Tambah alarm
+add appointments via shortened dialog or complete edit window	calendar	id	Menambahkan janji temu melalui dialog yang dipersingkat atau jendela edit lengkap
 add new event	calendar	id	Tambahkan janji temu baru
 add timesheet entry	calendar	id	Tamba entri lembarwaktu
 added	calendar	id	Ditambahkan
+added by synchronization	calendar	id	Ditambahkan dengan sinkronisasi
 after	calendar	id	after
 after %1	calendar	id	Setelah %1
 after current date	calendar	id	Setelah tanggal sekarang
@@ -34,7 +36,10 @@ all events	calendar	id	Semua kegiatan
 all future	calendar	id	Mendatang
 all incl. rejected	calendar	id	Semua termasuk yang ditolak
 all participants	calendar	id	Semua peserta
+allow booking requests from any user when creating events?	calendar	id	Izinkan permintaan pemesanan dari pengguna mana pun saat membuat acara?
 always	calendar	id	selalu
+always use full edit dialog	calendar	id	Selalu gunakan dialog edit lengkap
+always use the full edit dialog, not this little dialog	calendar	id	Selalu gunakan dialog edit lengkap, bukan dialog kecil ini
 apply the changes	calendar	id	Terapkan perubahan
 attention	calendar	id	Perhatian
 back half a month	calendar	id	mundur setengah bulan
@@ -109,12 +114,14 @@ edit series	calendar	id	Edit runtun
 edit status or alarms for this particular day	calendar	id	Edit status atau alarm untuk hari tersebut
 edit this event	calendar	id	Edit kegiatan ini
 edit this series of recurring events	calendar	id	Edit runtun kegiatan yang berulang ini
+email address migration	calendar	id	Migrasi alamat email
 empty for all	calendar	id	Kosongkan semua
 end	calendar	id	Akhir
 end date/time	calendar	id	Tanggal/Jam berakhir
 enddate	calendar	id	Tanggal berakhir
 enddate of the export	calendar	id	Tanggal akhir untuk ekspor
 ends	calendar	id	selesai
+error notifying %1	calendar	id	Kesalahan memberitahukan %1
 event deleted	calendar	id	Kegiatan dihapus
 event details follow	calendar	id	Berikut adalah detil Kegiatan
 event saved	calendar	id	Kegiatan disimpan
@@ -209,7 +216,10 @@ no response	calendar	id	Tiada tanggapan
 non blocking	calendar	id	non blocking
 not	calendar	id	not
 not rejected	calendar	id	Tidak ditolak
+notify	calendar	id	Memberitahukan
+notify all externals (non-users) about this event	calendar	id	Memberitahukan semua pihak luar (bukan pengguna) tentang peristiwa ini
 number of records to read (%1)	calendar	id	Jumlah rekord yang dibaca (%1)
+number of resources to be booked	calendar	id	Jumlah sumber daya yang akan dipesan
 observance rule	calendar	id	Aturan Observance
 occurence	calendar	id	Occurence
 old startdate	calendar	id	Tanggal memulai yang lama
@@ -231,6 +241,7 @@ permission denied	calendar	id	Ijin Ditolak
 planner by category	calendar	id	Planner menurut kategori
 planner by user	calendar	id	Planner menurut pengguna
 previous	calendar	id	sebelumnya
+private event	calendar	id	Acara pribadi
 private only	calendar	id	Hanya Privat
 quantity	calendar	id	Quantity
 re-edit event	calendar	id	Edit-ulang Kegiatan
@@ -238,10 +249,12 @@ recordings	calendar	id	Rekaman
 recurrence	calendar	id	Berulang
 recurring event	calendar	id	Kegiatan berulang
 rejected	calendar	id	Ditolak
+removes the event from my calendar	calendar	id	Menghapus acara dari kalender saya
 repeat days	calendar	id	Hari-hari pengulangan
 repeat type	calendar	id	Tipe pengulangan
 repeating event information	calendar	id	Informasi Kegiatan Berulang
 repetition	calendar	id	Pengulangan
+replying "%1" is not a participant of the event! only continue if you want to add as new participant.	calendar	id	Membalas "%1" BUKAN peserta acara! Lanjutkan saja jika Anda ingin menambahkan sebagai peserta baru.
 report	calendar	id	Laporan
 requested	calendar	id	Permintaan
 reset	calendar	id	Reset
@@ -259,11 +272,16 @@ select multiple contacts for a further action	calendar	id	Pilih beberapa kontak 
 select resources	calendar	id	Pilih sumber daya
 select who should get the alarm	calendar	id	Pilih siapa saja yang akan menerima alarm
 selected range	calendar	id	Jangkah terpilih
+send notifications	calendar	id	Mengirim pemberitahuan
+send notifications to users right now	calendar	id	Kirim notifikasi ke peserta sekarang juga
 set new events to private	calendar	id	Tetapkan kegiatan baru sebagai privat
+show %1 from %2	calendar	id	Tampilkan %1 dari %2
 show a calendar title	calendar	id	Tampilkan judul kalender
+show birthdays as all day non-blocking events as well as via mouseover of the date.	calendar	id	Tampilkan sebagai acara sepanjang hari yang tidak diblokir serta melalui mouseover pada tanggal.
 show this month	calendar	id	Tampilkan bulan ini
 show this week	calendar	id	Tampilkan minggu ini
 single event	calendar	id	Kegiatan tunggal
+single participant	calendar	id	Peserta tunggal
 sort by	calendar	id	Urutkan berdasarkan
 start	calendar	id	Mulai
 start date/time	calendar	id	Tanggal/Waktu memulai
@@ -272,11 +290,17 @@ startdate / -time	calendar	id	Tanggal / -waktu mulai
 startdate and -time of the search	calendar	id	Tanggal dan -waktu untuk memulai pencarian
 startdate of the export	calendar	id	Tanggal awal untuk ekspor
 startrecord	calendar	id	Awal Rekaman
+status	calendar	id	Status
 status changed	calendar	id	Status berubah
 sun	calendar	id	Min
 tentative	calendar	id	Tentative
 test import (show importable records <u>only</u> in browser)	calendar	id	Tes Impor (tampilkan rekaman yang dapat diimpor <em>hanya</em> dalam browser)
+the apple ical apps use this color to display events from this calendar.	calendar	id	Aplikasi Apple iCal menggunakan warna ini untuk menampilkan acara dari kalender ini.
+the document can contain placeholder like {{%1}}, to be replaced with the data.	calendar	id	Dokumen dapat berisi placeholder seperti {{%1}}, untuk diganti dengan data.
+the extern organizer changed the event!	calendar	id	Penyelenggara eksternal mengubah acara!
 the resource you selected is already overbooked:	calendar	id	Sumber daya yang anda pilih sudah dipesan:
+the sender "%1" is not the extern organizer "%2", proceed with caution!	calendar	id	Pengirim "%1" BUKAN penyelenggara luar "%2", lanjutkan dengan hati-hati!
+the sender "%1" is not the participant replying "%2", proceed with caution!	calendar	id	Pengirim "%1" BUKAN peserta yang membalas "%2", lanjutkan dengan hati-hati!
 this day is shown as first day in the week or month view.	calendar	id	Hari tersebut akan ditampilkan sebagai hari pertama pada tampilann mingguan atau bulanan
 this entry is currently opened by %1!	calendar	id	Entri ini sedang dibuka oleh %1!
 three month	calendar	id	Tiga bulan
@@ -286,6 +310,7 @@ timeframe	calendar	id	Kerangka waktu
 timeframe to search	calendar	id	Kerangka waktu untuk pencarian
 timezone	calendar	id	Zona waktu
 title of the event	calendar	id	Judul kegiatan
+toggle weekend	calendar	id	Ganti akhir pekan
 tomorrow	calendar	id	Esok
 translation	calendar	id	Terjemahan
 tue	calendar	id	Sel

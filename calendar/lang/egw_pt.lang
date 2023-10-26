@@ -1,4 +1,5 @@
 %1 %2 in %3	calendar	pt	%1 %2 em %3
+%1 event(s) %2, %3 failed because of insufficient rights !!!	calendar	pt	%1 evento(s) %2, %3 falhou devido a direitos insuficientes!
 %1 events in ical file, only first one imported and displayed!	calendar	pt	%1 eventos no ficheiro iCal, apenas o primeiro foi importado e apresentado!
 %1 hours	calendar	pt	%1 horas
 %1 records imported	calendar	pt	%1 registos importados
@@ -13,9 +14,11 @@ action that caused the notify: added, canceled, accepted, rejected, ...	calendar
 actions	calendar	pt	Acções
 actions...	calendar	pt	Ações ...
 add alarm	calendar	pt	Adicionar aviso
+add appointments via shortened dialog or complete edit window	calendar	pt	Adicionar marcações através de uma caixa de diálogo abreviada ou de uma janela de edição completa
 add new event	calendar	pt	Adicionar novo compromisso
 add timesheet entry	calendar	pt	Adicionar registo da folha de tempo
 added	calendar	pt	Adicionado
+added by synchronization	calendar	pt	Adicionadas por sincronização
 after current date	calendar	pt	Após data actual
 alarm	calendar	pt	Aviso
 alarm added	calendar	pt	Aviso adicionado
@@ -27,8 +30,11 @@ all categories	calendar	pt	Todas as categorias
 all day	calendar	pt	Todo o dia
 all events	calendar	pt	Todos os eventos
 all participants	calendar	pt	Todos os participantes
+allow booking requests from any user when creating events?	calendar	pt	Permitir pedidos de marcação de qualquer utilizador ao criar eventos?
 allows to edit the event again	calendar	pt	Permite editar o evento
 always	calendar	pt	Sempre
+always use full edit dialog	calendar	pt	Utilizar sempre a caixa de diálogo de edição completa
+always use the full edit dialog, not this little dialog	calendar	pt	Utilizar sempre a caixa de diálogo de edição completa, não esta pequena caixa de diálogo
 apply the changes	calendar	pt	Aplicar alterações
 attention	calendar	pt	Atenção
 back half a month	calendar	pt	Recuar meio mês

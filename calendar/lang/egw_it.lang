@@ -103,6 +103,7 @@ category acl only restrict adding a category to an event or changing status of a
 category automatically added to new events	calendar	it	Categoria automaticamente assegnata a nuovi eventi
 category report	calendar	it	Categoria Rapporto
 chair	calendar	it	Presiede
+change domain of participants in caldav requests	calendar	it	Modifica del dominio dei partecipanti nelle richieste CalDAV
 change history	calendar	it	Cambia storico
 change your status	calendar	it	Cambia stato
 changed event-data applied	calendar	it	Dati evento modificati applicati
@@ -147,6 +148,8 @@ days	calendar	it	giorni
 days of the week for a weekly repeated event	calendar	it	Giorni della settimana per un evento con ricorrenza settimanale
 days repeated	calendar	it	giorni ripetuti
 dayview	calendar	it	Vista Giornaliera
+default alarm added for yourself or all participants	calendar	it	L'allarme viene inserito automaticamente per i nuovi appuntamenti.<br>Per sé o per tutti i partecipanti.
+default alarm for	calendar	it	Allarme predefinito per
 default alarm for regular events	calendar	it	Allarme predefinito per eventi regolari
 default alarm for whole-day events	calendar	it	Allarme predefinito per eventi di un giorno intero
 default appointment length (in minutes)	calendar	it	lunghezza predefinita degli appuntamenti (in minuti)
@@ -200,6 +203,7 @@ edit series	calendar	it	Modifica Serie
 edit status or alarms for this particular day	calendar	it	Modifica lo stato degli allarmi per questo giorno in particolare
 edit this event	calendar	it	Modifica questo evento
 edit this series of recurring events	calendar	it	Modifica questa serie di eventi ricorrenti
+email address migration	calendar	it	Migrazione dell'indirizzo e-mail
 empty = no alarm	calendar	it	vuoto = nessun allarme
 empty for all	calendar	it	vuoto per tutti
 empty target calendar before importing	calendar	it	Svuotare il calendario di destinazione prima di importare
@@ -491,6 +495,7 @@ repetition	calendar	it	Ripetizione
 repetitiondetails (or empty)	calendar	it	Dettagli Ripetizione (o vuoto)
 replacements for inserting events into documents	calendar	it	Sostituzion per l'inserimento in documenti
 reply to meeting request	calendar	it	Risposta a richiesta di riunione
+replying "%1" is not a participant of the event! only continue if you want to add as new participant.	calendar	it	La risposta "%1" NON è un partecipante all'evento! Continuare solo se si desidera aggiungere un nuovo partecipante.
 report	calendar	it	Rapporto
 requested	calendar	it	Richiesto
 requested date %1 outside allowed range of %2 days: recurring events obmitted!	calendar	it	La data richiesta %1 è al di fuori dell'intervallo di %2 giorni: eventi ricorrenti omessi!
@@ -588,9 +593,12 @@ the apple ical apps use this color to display events from this calendar.	calenda
 the document can contain placeholder like {{%1}}, to be replaced with the data.	calendar	it	Questo documento può contenere un segnaposto come {{%1}}, da rimpiazzare con i dati.
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	calendar	it	Il documento può contenere variabili metasintattiche come {{%3}}, da rimpiazzare con i dati (%1elenco completo delle variabili metasintattiche%2)
 the exceptions are deleted together with the series.	calendar	it	Le eccezioni sono eliminate insieme alla serie
+the extern organizer changed the event!	calendar	it	L'organizzatore esterno ha cambiato l'evento!
 the following document-types are supported:	calendar	it	I seguenti tipi di documenti sono supportati:
 the original series will be terminated today and a new series be created.	calendar	it	La serie originale terminerà oggi e una nuova serie verrà creata
 the resource you selected is already overbooked:	calendar	it	La risorsa selezionata è già in overbooking
+the sender "%1" is not the extern organizer "%2", proceed with caution!	calendar	it	Il mittente "%1" NON è l'organizzatore esterno "%2", procedere con cautela!
+the sender "%1" is not the participant replying "%2", proceed with caution!	calendar	it	Il mittente "%1" NON è il partecipante che risponde a "%2", procedere con cautela!
 this day is shown as first day in the week or month view.	calendar	it	Questo giorno è visualizzato come primo giorno nella vista settimanale o in quella mensile.
 this defines the end of your dayview. events after this time, are shown below the dayview.	calendar	it	Questo definisce la fine della tua vista giornaliera. Eventi dopo quest'ora sono mostrati dopo la vista giornaliera.
 this defines the start of your dayview. events before this time, are shown above the dayview.<br>this time is also used as a default starttime for new events.	calendar	it	Questo definisce l'inizio della tua vista giornaliera. Eventi prima di quest'ora sono visualizzati prima della vista giornaliera.<br>Quest'ora è utilizzata anche come ora d'inizio dei nuovi eventi.
@@ -630,6 +638,7 @@ to many might exceed your execution-time-limit	calendar	it	troppi potrebbero sup
 to-firstname	calendar	it	A Nome
 to-fullname	calendar	it	A nome completo
 to-lastname	calendar	it	A Cognome
+toggle weekend	calendar	it	Cambia il fine settimana
 tomorrow	calendar	it	Domani
 translation	calendar	it	Traduzione
 tue	calendar	it	Mar

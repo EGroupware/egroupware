@@ -1,10 +1,18 @@
+%1 event(s) %2, %3 failed because of insufficient rights !!!	calendar	lt	%1 įvykis (-iai) %2, %3 nepavyko dėl nepakankamų teisių!
 %1 events in ical file, only first one imported and displayed!	calendar	lt	iCal faile yra %1 įvykis, importuotas ir rodomas tik pirmasis!
 (%1 events in %2 seconds)	calendar	lt	(%1 įvykis per %2 sekundes)
+add appointments via shortened dialog or complete edit window	calendar	lt	Įtraukti susitikimus per sutrumpintą dialogo langą arba visą redagavimo langą
 add new event	calendar	lt	Pridėti naują paskyrimą
+added by synchronization	calendar	lt	Pridėta sinchronizuojant
+allow booking requests from any user when creating events?	calendar	lt	Kuriant įvykius leisti užsakymų užklausas iš bet kurio naudotojo?
+always use full edit dialog	calendar	lt	Visada naudokite visą redagavimo dialogo langą
+always use the full edit dialog, not this little dialog	calendar	lt	Visada naudokite visą redagavimo langą, o ne šį mažą langą
 attention	calendar	lt	Dėmesio
 category report	calendar	lt	Kategorija Ataskaita
 changed event-data applied	calendar	lt	Taikomi pakeisti įvykio duomenys
 date range	calendar	lt	Datų intervalas
+email address migration	calendar	lt	El. pašto adreso perkėlimas
+error notifying %1	calendar	lt	Klaida pranešant %1
 exclude weekend	calendar	lt	Neįtraukti savaitgalio
 how many days to be removed in the future (default 365)	calendar	lt	Kiek dienų bus pašalinta ateityje (numatytoji 365)
 how many days to be removed in the past (default 100)	calendar	lt	Kiek dienų turi būti pašalinta praeityje (numatytoji reikšmė 100)
@@ -21,8 +29,26 @@ minimum number of users for showing week view as consolidated.	calendar	lt	Maži
 move to	calendar	lt	Perkelti į
 multiple participants	calendar	lt	Keli dalyviai
 never notify externals (non-users) about events i create	calendar	lt	Niekada nepranešti išoriniams asmenims (ne naudotojams) apie mano sukurtus įvykius
+notify	calendar	lt	Pranešti
+notify all externals (non-users) about this event	calendar	lt	Pranešti visiems išoriniams asmenims (ne naudotojams) apie šį įvykį
+number of resources to be booked	calendar	lt	Užsakomų išteklių skaičius
 output unit	calendar	lt	Išvesties vienetas
+private event	calendar	lt	Privatus renginys
 recordings	calendar	lt	Įrašai
+removes the event from my calendar	calendar	lt	Pašalina įvykį iš mano kalendoriaus
+replying "%1" is not a participant of the event! only continue if you want to add as new participant.	calendar	lt	Atsakymas "%1" NĖRA renginio dalyvis! Tęskite tik tuo atveju, jei norite įtraukti kaip naują dalyvį.
 report	calendar	lt	Ataskaita
+send notifications	calendar	lt	Siųsti pranešimus
+send notifications to users right now	calendar	lt	Siųsti pranešimus dalyviams dabar
+show %1 from %2	calendar	lt	Rodyti %1 iš %2
+show birthdays as all day non-blocking events as well as via mouseover of the date.	calendar	lt	Rodyti kaip visos dienos neblokuojamus įvykius, taip pat per datos žymėjimą pelės žymekliu.
+single participant	calendar	lt	Vienas dalyvis
 sort by	calendar	lt	Rūšiuoti pagal
+status	calendar	lt	Būsena
+the apple ical apps use this color to display events from this calendar.	calendar	lt	Šią spalvą "Apple iCal" programos naudoja šio kalendoriaus įvykiams rodyti.
+the document can contain placeholder like {{%1}}, to be replaced with the data.	calendar	lt	Dokumente gali būti tokios pakaitinės žymos kaip {{%1}}, kurios bus pakeistos duomenimis.
+the extern organizer changed the event!	calendar	lt	Išorinis organizatorius pakeitė įvykį!
+the sender "%1" is not the extern organizer "%2", proceed with caution!	calendar	lt	Siuntėjas "%1" NĖRA išorinis organizatorius "%2", elkitės atsargiai!
+the sender "%1" is not the participant replying "%2", proceed with caution!	calendar	lt	Siuntėjas "%1" NĖRA atsakantis dalyvis "%2", elkitės atsargiai!
+toggle weekend	calendar	lt	Perjungti savaitgalį
 utilities	calendar	lt	Komunalinės paslaugos

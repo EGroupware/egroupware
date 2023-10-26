@@ -1,6 +1,12 @@
+%1 event(s) %2, %3 failed because of insufficient rights !!!	calendar	ro	%1 eveniment(e) %2, %3 a eșuat din cauza drepturilor insuficiente!
 %1 events in ical file, only first one imported and displayed!	calendar	ro	%1 evenimente în fișierul iCal, doar primul a fost importat și afișat!
 (%1 events in %2 seconds)	calendar	ro	(%1 evenimente în %2 secunde)
+add appointments via shortened dialog or complete edit window	calendar	ro	Adăugați programări prin intermediul unei ferestre de dialog scurtate sau al unei ferestre de editare completă
 add new event	calendar	ro	Adăugați o nouă programare
+added by synchronization	calendar	ro	Adăugat prin sincronizare
+allow booking requests from any user when creating events?	calendar	ro	Permiteți cererile de rezervare de la orice utilizator la crearea de evenimente?
+always use full edit dialog	calendar	ro	Utilizați întotdeauna fereastra de editare completă
+always use the full edit dialog, not this little dialog	calendar	ro	Utilizați întotdeauna fereastra de editare completă, nu această fereastră de dialog redusă
 attention	calendar	ro	În atenția
 category report	calendar	ro	Raport de categorie
 changed event-data applied	calendar	ro	S-a aplicat modificarea datelor de eveniment

@@ -451,7 +451,7 @@ provide a default vacation text, (used on new vacation messages when there was n
 push notifications	mail	de	Push Benachrichtigungen
 quicksearch	mail	de	Schnellsuche
 quicksearch (with cc)	mail	de	Schnellsuche (+ Kopie)
-quota limit warning in megabyte (recommended value is 30 mb).	mail	de	Quota-Limit-Warnung in MegaByte (empfohlener Wert ist 30 MB).
+quota limit warning in megabyte (recommended value is 30 mb).	mail	de	Quota-Limit-Warnung in Megabyte (empfohlener Wert ist 30 MB).
 quota not provided by server	mail	de	Quota wird vom Mailserver nicht unterstützt
 quota: %1	mail	de	Quota: %1
 read	mail	de	gelesen
@@ -496,7 +496,7 @@ report as spam	mail	de	Als Spam kennzeichnen
 report this email content as ham (not spam) - spam solutions like spamtitan will learn	mail	de	Markiert die Nachricht als "gute E-Mail" (kein Spam) - Spam-Lösungen wie SpamTitan lernen entsprechend
 report this email content as spam - spam solutions like spamtitan will learn	mail	de	Markiert die Nachricht als Spam - Spam-Lösungen wie SpamTitan lernen entsprechend
 required pear class mail/mimedecode.php not found.	mail	de	Die benötigte PEAR Klasse Mail/mimeDecode.php konnte nicht gefunden werden.
-required to disable if you use dovecot with private seen flags on shared or user folder!	mail	de	Muss ausgeschaltet werden, wenn Sie Dovecot mit privaten Gelesen Flags auf geteilten oder freigegebenen Ordnern benutzern!
+required to disable if you use dovecot with private seen flags on shared or user folder!	mail	de	Muss ausgeschaltet werden, wenn Sie Dovecot mit privaten Gelesen Flags auf geteilten oder freigegebenen Ordnern benutzen!
 resend after how many days?	mail	de	Nach wie vielen Tagen erneut senden?
 respond to mail sent to:	mail	de	Benachrichtigung für
 restrict acl management	admin	de	ACL-Verwaltung beschränken
@@ -504,7 +504,7 @@ rights	mail	de	Zugriffsrechte
 row order style	mail	de	Spaltenanordnung
 rule priority position	mail	de	Priorität der Filterregel
 rule with priority	mail	de	Regel mit Priorität
-rules	mail	de	Filter Regeln
+rules	mail	de	Filter-Regeln
 s/mime encryption failed because no certificate has been found for sender address: %1	mail	de	Die S/MIME-Verschlüsselung ist fehlgeschlagen, weil kein Zertifikat für die Absenderadresse gefunden wurde: %1
 save all	mail	de	Alle speichern
 save all attachments to filemanager	mail	de	Alle Anhänge im Dateimanager speichern
@@ -583,8 +583,8 @@ shows a temporary visible notification including from address, subject and a sni
 sieve	mail	de	Sieve
 sieve connection status	mail	de	Sieve Verbindungsstatus
 sieve not activated	mail	de	Sieve nicht aktiviert
-sieve script name	mail	de	Stellen Sie den Sieve Skript Namen ein.
-sieve server	mail	de	Sieve Server
+sieve script name	mail	de	Stellen Sie den Sieve-Skript-Namen ein.
+sieve server	mail	de	Sieve-Server
 sieve_edit_instructions	mail	de	(*) Platzhalter (*,?) können verwendet werden. Wenn Sie * oder ? selbst finden wollen, dann müssen Sie diesen Zeichen je einen Backslash (\) voranstellen. Wenn Sie "reguläre Ausdrücke verwenden" aktivieren, dann müssen Sie jedoch gültige reguläre Ausdrücke angeben. Zur Verwendung von Ausrufezeichen (!), das NICHT als "NICHT" interprtiert werden soll, muss ein regulärer Ausdruck verwendet werden und ein Backslash - also "\!".
 sign your message with smime certificate	mail	de	Signieren Sie Ihre Nachricht mit einem S/MIME-Zertifikat
 signature	mail	de	Signatur
@@ -597,7 +597,7 @@ smime encrypted message	mail	de	S/MIME-verschlüsselte Nachricht
 smime signed message	mail	de	S/MIME-signierte Nachricht
 smtp	mail	de	Postausgangs-Server
 sneak preview in list	mail	de	Mit Kurzvorschau
-some clients fail to detect correct charset, if flowed lines are enabled.	mail	de	Einige Mailprogramme haben Probleme den Zeichensatz zu erkennen, wenn variabler Zeilenumbruch verwendet wird.
+some clients fail to detect correct charset, if flowed lines are enabled.	mail	de	Einige Mail-Programme haben Probleme den Zeichensatz zu erkennen, wenn variabler Zeilenumbruch verwendet wird.
 sort order	mail	de	Sortierreihenfolge
 source	mail	de	Quelltext
 sources	mail	de	HTML-Quellcode
@@ -668,7 +668,7 @@ vacation messages with start and end date require an admin account to be set!	ma
 vacation notice	mail	de	Abwesenheitsnotiz
 vacation notice is active	mail	de	Abwesenheitsnotiz ist aktiv
 vacation notice is not saved yet! (but we filled in some defaults to cover some of the above errors. please correct and check your settings and save again.)	mail	de	Die Abwesenheitsnotiz ist noch nicht gespeichert! (Wir haben einige Standardwerte gesetzt, um einige der oben gemeldeten Probleme zu beheben. Bitte prüfen/korrigieren Sie Ihre Einstellungen und speichern diese erneut ab.)
-vacation notice sucessfully updated.	mail	de	Abwesenheitsnotiz erfolgreich aktualisiert.
+vacation notice sucessfully updated.	mail	de	Abwesenheitsnotiz erfolgreich aktualisiert
 vacation notice update failed	mail	de	Aktualisierung der Abwesenheitsnotiz fehlgeschlagen
 vacation start-date must be before the end-date!	mail	de	Startdatum der Abwesenheitsnotiz muss VOR dem Enddatum liegen!
 vacation update failed	mail	de	Aktualisierung der Abwesenheitsnotiz fehlgeschlagen
@@ -703,7 +703,7 @@ yes, show all debug information available for the user	mail	de	Ja, zeige alle de
 yes, show basic info only	mail	de	Ja, nur Basis Informationen anzeigen
 you can either choose to save as infolog or tracker, not both.	mail	de	Sie können eine E-Mail entweder als InfoLog-, ODER als Ticket-Eintrag speichern, nicht beides gleichzeitig.
 you can select what info to be displayed on email tag	mail	de	Sie können auswählen, welche Informationen auf dem E-Mail-Tag angezeigt werden sollen. Die zusätzliche Anzeige der E-Mail-Adresse ermöglicht die Absenderadresse zu überprüfen.
-you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	de	Sie können $$start$$ für das obige Start- und $$end$$ für das Enddatum verwenden.
+you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	de	Sie können $$start$$ für das obige Start- und $$end$$ für das End-Datum verwenden.
 you may add this certificate into your contact, if you trust this signature.	mail	de	Sie können dieses Zertifikat in Ihren Kontakt speichern, wenn Sie dieser Signatur trauen.
 you need to enter your s/mime passphrase to send this message.	mail	de	Sie müssen Ihr S/MIME-Passwort eingeben um diese Nachricht zu senden.
 you need to install mailvelope plugin available for chrome and firefox from %1.	mail	de	Sie müssen das Mailvelope Plugin für Chrome oder Firefox von %1 installieren.

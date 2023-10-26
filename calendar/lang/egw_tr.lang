@@ -1,4 +1,5 @@
 %1 %2 in %3	calendar	tr	%3 içindeki %1 %2
+%1 event(s) %2, %3 failed because of insufficient rights !!!	calendar	tr	%1 etkinlik(ler) %2, %3 yetersiz haklar nedeniyle başarısız oldu!
 %1 events in ical file, only first one imported and displayed!	calendar	tr	iCal dosyasında %1 etkinlik, yalnızca ilki içe aktarıldı ve görüntülendi!
 %1 records imported	calendar	tr	%1 kayıt ithal edildi
 %1 records read (not yet imported, you may go back and uncheck test import)	calendar	tr	%1 kayıt okundu (henüz ithal edilmedi, geri dönüp 'İthal Etmeyi Test Et' seçeneğindeki seçimi kaldırabilirsiniz.)
@@ -8,14 +9,19 @@ accepted	calendar	tr	Kabul Edildi
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	tr	Uyarıya sebep olan eylem: Eklendi, İptal Edildi, Onaylandı, Reddedildi,...
 actions	calendar	tr	Eylemler
 add alarm	calendar	tr	Alarm Ekle
+add appointments via shortened dialog or complete edit window	calendar	tr	Kısaltılmış iletişim kutusu veya tam düzenleme penceresi aracılığıyla randevu ekleyin
 add new event	calendar	tr	Yeni randevu ekle
 added	calendar	tr	Eklendi
+added by synchronization	calendar	tr	Senkronizasyon tarafından eklendi
 alarm	calendar	tr	Alarm
 alarm for %1 at %2 in %3	calendar	tr	%1 (%2'de %3 içinde) için Alarm
 alarm management	calendar	tr	Alarm Yönetimi
 alarms	calendar	tr	Alarmlar
 all day	calendar	tr	Tüm Gün
-always	calendar	tr	her zaman
+allow booking requests from any user when creating events?	calendar	tr	Etkinlik oluştururken herhangi bir kullanıcıdan gelen rezervasyon taleplerine izin verin?
+always	calendar	tr	Her zaman
+always use full edit dialog	calendar	tr	Her zaman tam düzenleme iletişim kutusunu kullanın
+always use the full edit dialog, not this little dialog	calendar	tr	Her zaman tam düzenleme iletişim kutusunu kullanın, bu küçük iletişim kutusunu değil
 attention	calendar	tr	Dikkat
 before the event	calendar	tr	etkinlikten önce
 birthday	calendar	tr	Do?um Tarihi

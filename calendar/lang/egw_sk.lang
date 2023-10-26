@@ -202,6 +202,7 @@ edit series	calendar	sk	Upraviť sériu
 edit status or alarms for this particular day	calendar	sk	Upraviť stav alebo pripomienky pre tento konkrétny deň
 edit this event	calendar	sk	Upraviť túto udalosť
 edit this series of recurring events	calendar	sk	Upraviť túto sériu pravidelných udalostí
+email address migration	calendar	sk	Migrácia e-mailovej adresy
 empty = no alarm	calendar	sk	prázdne = bez pripomienky
 empty for all	calendar	sk	prázdne znamená všetko
 empty target calendar before importing	calendar	sk	Pred importom vyprázdniť cieľový kalendár
@@ -588,6 +589,7 @@ tag to mark positions for address labels	calendar	sk	Značka pre vyznačenie poz
 tentative	calendar	sk	Predbežne prijaté
 test import (show importable records <u>only</u> in browser)	calendar	sk	Otestovať import (importované záznamy sa zobrazia <u>len</u> v prehliadači)
 the apple ical apps use this color to display events from this calendar.	calendar	sk	Aplikácie Apple iCal používajú túto farbu na zobrazenie udalostí z tohto kalendára
+the document can contain placeholder like {{%1}}, to be replaced with the data.	calendar	sk	Dokument môže obsahovať zástupné znaky ako {{%1}}, ktoré sa nahradia údajmi.
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	calendar	sk	Dokument môže obsahovať premennú, napr. {{%3}} ktorá sa nahradí údajmi (%1úplný zoznam názvov premenných%2).
 the exceptions are deleted together with the series.	calendar	sk	Výnimky boli odstránené spolu so sériou.
 the extern organizer changed the event!	calendar	sk	Externý organizér zmenil udalosť!
