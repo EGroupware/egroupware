@@ -69,6 +69,10 @@ class ApiHandler extends Api\CalDAV\Handler
 			{
 				return self::updateVacation($user, $options['content'], $matches[2]);
 			}
+			elseif (preg_match('#^/mail(/(\d+))?/view/?$#', $path, $matches))
+			{
+				return self::viewEml($user, $options['stream'] ?? $options['content'], $matches[2]);
+			}
 			elseif (preg_match('#^/mail(/(\d+))?(/compose)?#', $path, $matches))
 			{
 				$ident_id = $matches[2] ?? self::defaultIdentity($user);
@@ -298,6 +302,61 @@ class ApiHandler extends Api\CalDAV\Handler
 			return $ret;
 		}
 		throw new \Exception('Error storing attachment');
+	}
+
+	/**
+	 * View posted eml file
+	 *
+	 * @param int $user
+	 * @param string|stream $content
+	 * @param ?int $acc_id mail account to import in Drafts folder
+	 * @return string HTTP status
+	 * @throws \Exception on error
+	 */
+	protected static function viewEml(int $user, $content, int $acc_id=null)
+	{
+		if (empty($acc_id))
+		{
+			$acc_id = self::defaultIdentity($user);
+		}
+
+		// check and bail, if user is not online
+		if (!Api\Json\Push::isOnline($user))
+		{
+			$account_lid = Api\Accounts::id2name($user);
+			throw new \Exception("User '$account_lid' (#$user) is NOT online", 404);
+		}
+
+		// save posted eml to a temp-dir
+		$eml = tempnam($GLOBALS['egw_info']['server']['temp_dir'], 'view-eml-');
+		if (!(is_resource($content) ?
+			stream_copy_to_stream($content, $fp = fopen($eml, 'w')) :
+			file_put_contents($eml, $content)))
+		{
+			throw new \Exception('Error storing attachment');
+		}
+		if (isset($fp)) fclose($fp);
+
+		// import mail into drafts folder
+		$mail = Api\Mail::getInstance(false, $acc_id);
+		$folder = $mail->getDraftFolder();
+		$mailer = new Api\Mailer();
+		$mail->parseFileIntoMailObject($mailer, $eml);
+		$mail->openConnection();
+		$message_uid = $mail->appendMessage($folder, $mailer->getRaw(), null, '\\Seen');
+
+		// tell browser to view eml from drafts folder
+		$push = new Api\Json\Push($user);
+		$push->call('egw.open', \mail_ui::generateRowID($acc_id, $folder, $message_uid, true),
+			'mail', 'view', ['mode' => 'display'], '_blank', 'mail');
+
+		// respond with success message
+		echo json_encode([
+			'status' => 200,
+			'message' => 'Request to open view window sent',
+		], self::JSON_RESPONSE_OPTIONS);
+
+		return true;
 	}
 
 	/**
