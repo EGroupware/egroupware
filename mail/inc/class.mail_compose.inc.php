@@ -1018,6 +1018,11 @@ class mail_compose
 					//error_log(__METHOD__.__LINE__.':'.$name.'->'. $_REQUEST['preset'][$name]);
 					if (!empty($_REQUEST['preset'][$name])) $content[$name] = $_REQUEST['preset'][$name];
 				}
+				// if we preset the body, we always want the signature below (independent of user preference for replay or forward!)
+				if (!empty($_REQUEST['preset']['body']))
+				{
+					$insertSigOnTop = 'below';
+				}
 			}
 			// is the to address set already?
 			if (!empty($_REQUEST['send_to']))
@@ -1165,6 +1170,11 @@ class mail_compose
 			{
 				$before = $disableRuler ? "\r\n" : "\r\n-- \r\n";
 				$start = $inbetween = "\r\n";
+			}
+			// if we already have a body in compose (not reply or forward!), do NOT add an empty line above it
+			if (!empty($content['body']) && !$isReply)
+			{
+				$start = '';
 			}
 			if ($content['mimeType'] === 'html')
 			{
