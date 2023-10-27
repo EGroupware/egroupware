@@ -4,7 +4,7 @@ const path = require('path');
 const lunr = require('lunr');
 const {capitalCase} = require('change-case');
 const {JSDOM} = require('jsdom');
-const {customElementsManifest, getAllComponents} = require('./_utilities/cem.cjs');
+const {customElementsManifest, getAllComponents, getShoelaceVersion} = require('./_utilities/cem.cjs');
 const egwFlavoredMarkdown = require('./_utilities/markdown.cjs');
 const activeLinks = require('./_utilities/active-links.cjs');
 const anchorHeadings = require('./_utilities/anchor-headings.cjs');
@@ -44,6 +44,7 @@ module.exports = function (eleventyConfig)
 		image: 'images/logo.svg',
 		version: customElementsManifest.package.version,
 		components: allComponents,
+		shoelaceVersion: getShoelaceVersion(),
 		cdndir,
 		npmdir
 	});
@@ -61,15 +62,7 @@ module.exports = function (eleventyConfig)
 	//eleventyConfig.addPassthroughCopy({"../../api/js": "assets/scripts/chunks"});
 	eleventyConfig.addPassthroughCopy({"../../api/js/etemplate/etemplate2.js": "assets/scripts/etemplate/etemplate2.js"});
 
-	// Shoelace
-	eleventyConfig.addPassthroughCopy({"../../node_modules/@shoelace-style/shoelace/dist/": "assets/shoelace/"});
-	/*
-	eleventyConfig.addPassthroughCopy({"../../node_modules/@shoelace-style/shoelace/dist/shoelace-autoloader.js": "assets/shoelace/shoelace-autoloader.js"});
-	eleventyConfig.addPassthroughCopy({"../../node_modules/@shoelace-style/shoelace/dist/themes/*": "assets/shoelace/themes/"});
-	eleventyConfig.addPassthroughCopy({"../../node_modules/@shoelace-style/shoelace/dist/chunks/*": "assets/shoelace/chunks/"});
-	eleventyConfig.addPassthroughCopy({"../../node_modules/@shoelace-style/shoelace/dist/assets/*": "assets/shoelace/assets/"});
-	eleventyConfig.addPassthroughCopy({"../../node_modules/@shoelace-style/shoelace/dist/components/*": "assets/shoelace/components/"});
-	*/
+	// Shoelace is done via CDN in default.njk
 
 	//
 	// Copy assets

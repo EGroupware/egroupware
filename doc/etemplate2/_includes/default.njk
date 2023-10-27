@@ -3,6 +3,7 @@
   lang="en"
   data-layout="{{ layout }}"
   data-egroupware-version="{{ meta.version }}"
+  data-shoelace-version="{{ meta.shoelaceVersion }}"
 >
   <head>
     {# Metadata #}
@@ -32,13 +33,12 @@
     {# API Viewer Element #}
 	<script type="module" src="https://jspm.dev/api-viewer-element"></script>
 
+    {# Shoelace #}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@{{ meta.shoelaceVersion }}/cdn/themes/light.css" />
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@{{ meta.shoelaceVersion }}/cdn/shoelace-autoloader.js"></script>
+
     {# EGroupware #}
     <!--<script src="{{ assetUrl('scripts/etemplate/etemplate2.js') }}" type="module"></script>-->
-
-    {# Shoelace #}
-    <link rel="stylesheet" href="{{ assetUrl('shoelace/themes/light.css') }}" />
-    <link rel="stylesheet" href="{{ assetUrl('shoelace/themes/dark.css') }}" />
-    <script type="module" src="{{ assetUrl('shoelace/shoelace.js') }}"></script>
 
     {# Set the initial theme and menu states here to prevent flashing #}
     <script>
@@ -109,7 +109,7 @@
         <sl-button size="small" class="repo-button repo-button--star" href="https://github.com/EGroupware/egroupware/stargazers" target="_blank">
           <sl-icon slot="prefix" name="star-fill"></sl-icon> Star
         </sl-button>
-        <sl-button size="small" class="repo-button repo-button--twitter" href="https://egroupware.org" target="_blank">
+        <sl-button size="small" class="repo-button" href="https://egroupware.org" target="_blank">
           <sl-icon slot="prefix" name="box-arrow-up-right"></sl-icon> EGroupware
         </sl-button>
       </div>

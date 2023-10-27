@@ -1,4 +1,5 @@
 const customElementsManifest = require('../../dist/custom-elements.json');
+const fs = require('fs');
 
 //
 // Export it here so we can import it elsewhere and use the same version
@@ -87,3 +88,11 @@ module.exports.getAllComponents = function ()
 		return 0;
 	});
 };
+
+module.exports.getShoelaceVersion = function ()
+{
+	const shoelace = "@shoelace-style/shoelace"
+
+	const package = JSON.parse(fs.readFileSync('../../package.json', "utf8")) || {dependencies: {}}
+	return package.dependencies[shoelace] || "";
+}

@@ -81,6 +81,7 @@
 	}
 
 	const egwVersion = document.documentElement.getAttribute('data-egroupware-version');
+	const shoelaceVersion = document.documentElement.getAttribute('data-shoelace-version');
 	const reactVersion = '18.2.0';
 	const cdndir = 'cdn';
 	const npmdir = 'dist';
@@ -218,7 +219,7 @@
 			if (!isReact)
 			{
 				htmlTemplate =
-					`<script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@${egwVersion}/${cdndir}/shoelace.js"></script>\n` +
+					`<script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@${shoelaceVersion}/cdn/shoelace.js"></script>\n` +
 					`\n${htmlExample}`;
 				jsTemplate = '';
 			}
@@ -228,12 +229,11 @@
 			{
 				htmlTemplate = '<div id="root"></div>';
 				jsTemplate =
-					`import React from 'https://esm.sh/react@${reactVersion}';\n` +
 					`import ReactDOM from 'https://esm.sh/react-dom@${reactVersion}';\n` +
-					`import { setBasePath } from 'https://esm.sh/@shoelace-style/shoelace@${egwVersion}/${cdndir}/utilities/base-path';\n` +
+					`import { setBasePath } from 'https://esm.sh/@shoelace-style/shoelace@${shoelaceVersion}/${cdndir}/utilities/base-path';\n` +
 					`\n` +
 					`// Set the base path for Shoelace assets\n` +
-					`setBasePath('https://esm.sh/@shoelace-style/shoelace@${egwVersion}/${npmdir}/')\n` +
+					`setBasePath('https://esm.sh/@shoelace-style/shoelace@${shoelaceVersion}/${npmdir}/')\n` +
 					`\n${convertModuleLinks(reactExample)}\n` +
 					`\n` +
 					`ReactDOM.render(<App />, document.getElementById('root'));`;
@@ -241,7 +241,7 @@
 
 			// CSS templates
 			cssTemplate =
-				`@import 'https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@${egwVersion}/${cdndir}/themes/${
+				`@import 'https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@${shoelaceVersion}/${cdndir}/themes/${
 					isDark ? 'dark' : 'light'
 				}.css';\n` +
 				'\n' +
