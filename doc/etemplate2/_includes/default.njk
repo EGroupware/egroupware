@@ -35,10 +35,11 @@
 
     {# Shoelace #}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@{{ meta.shoelaceVersion }}/cdn/themes/light.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@{{ meta.shoelaceVersion }}/cdn/themes/dark.css" />
     <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@{{ meta.shoelaceVersion }}/cdn/shoelace-autoloader.js"></script>
 
     {# EGroupware #}
-    <!--<script src="{{ assetUrl('scripts/etemplate/etemplate2.js') }}" type="module"></script>-->
+    <script src="{{ assetUrl('scripts/sub/dir/etemplate/etemplate2.js') }}" type="module" id="egw_script_id"></script>
 
     {# Set the initial theme and menu states here to prevent flashing #}
     <script>

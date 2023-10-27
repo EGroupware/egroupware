@@ -7,5 +7,6 @@
  * @subpackage ajax
  * @author Ralf Becker <rb@egroupware.org>
  */
+import "../../../vendor/bower-asset/jquery/dist/jquery.min.js";
 
 jQuery.noConflict();

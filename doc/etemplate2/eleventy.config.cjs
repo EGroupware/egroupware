@@ -57,10 +57,24 @@ module.exports = function (eleventyConfig)
 	//
 	// Copy EGw stuff in
 	//
+	// General assets
 	eleventyConfig.addPassthroughCopy({"../../api/templates/default/images/logo.svg": "assets/images/logo.svg"});
 	eleventyConfig.addPassthroughCopy({"../../pixelegg/css/monochrome.css": "assets/styles/monochrome.css"});
-	//eleventyConfig.addPassthroughCopy({"../../api/js": "assets/scripts/chunks"});
-	eleventyConfig.addPassthroughCopy({"../../api/js/etemplate/etemplate2.js": "assets/scripts/etemplate/etemplate2.js"});
+
+	// vendor requirements
+	eleventyConfig.addPassthroughCopy({
+		"../../vendor/bower-asset/jquery/dist/jquery.min.js": "assets/scripts/vendor/bower-asset/jquery/dist/jquery.min.js",
+		"../../vendor/bower-asset/cropper/dist/cropper.min.js": "assets/scripts/vendor/bower-asset/cropper/dist/cropper.min.js",
+		"../../vendor/bower-asset/diff2html/dist/diff2html.min.js": "assets/scripts/vendor/bower-asset/diff2html/dist/diff2html.min.js",
+		"../../vendor/tinymce/tinymce/tinymce.min.js": "assets/scripts/vendor/tinymce/tinymce/tinymce.min.js",
+	})
+
+	// Etemplate2
+	eleventyConfig.addPassthroughCopy({"../../chunks": "assets/scripts/chunks"});
+	eleventyConfig.addPassthroughCopy({"../../api/js/etemplate/etemplate2.js": "assets/scripts/sub/dir/etemplate/etemplate2.js"});
+
+	//eleventyConfig.addPassthroughCopy({"../../vendor/**/*min.js": "assets/scripts/vendor/"});
+	//eleventyConfig.addPassthroughCopy("../dist/etemplate2.js", "assets/scripts/etemplate2.js");
 
 	// Shoelace is done via CDN in default.njk
 

@@ -1706,7 +1706,7 @@ function transformAttributes(widget, mgr : et2_arrayMgr, attributes)
  */
 export function cssImage(image_name : string, app_name? : string)
 {
-	let url = egw?.image(image_name, app_name);
+	let url = egw?.image && egw?.image(image_name, app_name);
 	if(url)
 	{
 		return css`url(${unsafeCSS(url)})`;

@@ -94,7 +94,7 @@ async function buildTheDocs(watch = false)
 //
 async function buildTheSource()
 {
-	const alwaysExternal = ['@lit'];
+	const alwaysExternal = [/*'@lit',*/ 'jquery'];
 
 	const cdnConfig = {
 		format: 'esm',
@@ -104,21 +104,21 @@ async function buildTheSource()
 			// NOTE: Entry points must be mapped in package.json > exports, otherwise users won't be able to import them!
 			//
 			// The whole shebang
-			'./src/shoelace.ts',
+			'./api/js/etemplate/etemplate2.ts',
 			// The auto-loader
-			'./src/shoelace-autoloader.ts',
+			//'./src/shoelace-autoloader.ts',
 			// Components
-			...(await globby('./src/components/**/!(*.(style|test)).ts')),
+			//...(await globby('./src/components/**/!(*.(style|test)).ts')),
 			// Translations
-			...(await globby('./src/translations/**/*.ts')),
+			//...(await globby('./src/translations/**/*.ts')),
 			// Public utilities
-			...(await globby('./src/utilities/**/!(*.(style|test)).ts')),
+			//...(await globby('./src/utilities/**/!(*.(style|test)).ts')),
 			// Theme stylesheets
-			...(await globby('./src/themes/**/!(*.test).ts')),
+			//...(await globby('./src/themes/**/!(*.test).ts')),
 			// React wrappers
-			...(await globby('./src/react/**/*.ts'))
+			//...(await globby('./src/react/**/*.ts'))
 		],
-		outdir: cdndir,
+		outdir: sitedir + '/assets/scripts',
 		chunkNames: 'chunks/[name].[hash]',
 		define: {
 			// Floating UI requires this to be set
