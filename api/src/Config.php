@@ -322,8 +322,10 @@ class Config
 
 	/**
 	 * Initialise class: reference to db and self::$configs cache
+	 *
+	 * @param bool $force_reload
 	 */
-	public static function init_static()
+	public static function init_static(bool $force_reload=false)
 	{
 		// we use a reference here (no clone), as we no longer use Db::row() or Db::next_record()!
 		if (isset($GLOBALS['egw_setup']) && $GLOBALS['egw_setup']->db instanceof Db)
@@ -335,7 +337,7 @@ class Config
 			self::$db = $GLOBALS['egw']->db;
 		}
 		// if item is not cached or cache is not looking alright --> query config from database
-		if (!(self::$configs = Cache::getInstance(__CLASS__, 'configs')) || !is_array(self::$configs['phpgwapi']))
+		if ($force_reload || !(self::$configs = Cache::getInstance(__CLASS__, 'configs')) || !is_array(self::$configs['phpgwapi']))
 		{
 			self::$configs = array();
 			foreach(self::$db->select(self::TABLE,'*',false,__LINE__,__FILE__) as $row)

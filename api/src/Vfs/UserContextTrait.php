@@ -32,7 +32,7 @@ trait UserContextTrait
 	public $context;
 
 	/**
-	 * Contructor to set context/user incl. from user in url or passed in context
+	 * Constructor to set context/user incl. from user in url or passed in context
 	 *
 	 * @param resource|string|null $url_or_context url with user or context to set
 	 */

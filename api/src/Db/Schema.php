@@ -130,6 +130,7 @@ class Schema
 				$this->max_varchar_length = 8000;
 				break;
 			case 'mysql':
+			case 'mysqli':
 				// since MySQL 5.0 65535, but with utf8 and row-size-limit of 64k:
 				// it's effective 65535/3 - size of other columns, so we use 20000 (mysql silently convert to text anyway)
 				if ((float)$this->m_odb->ServerInfo['version'] >= 5.0)
@@ -1251,7 +1252,7 @@ class Schema
 	 * The definition might not be as accurate, depending on the DB!
 	 *
 	 * @param string $sTableName table-name
-	 * @return array|boolean table-defition, like $phpgw_baseline[$sTableName] after including tables_current, or false on error
+	 * @return array|boolean table-definition, like $phpgw_baseline[$sTableName] after including tables_current, or false on error
 	 */
 	function GetTableDefinition($sTableName)
 	{
@@ -1307,9 +1308,17 @@ class Schema
 					}
 					break;
 				case 'C': case 'C2':
+					// (var)binary column --> binary
+					if ($column->binary || $column->type === 'varbinary')
+					{
+						$definition['fd'][$name]['type'] = 'binary';
+					}
 					// ascii columns are reported as varchar
-					$definition['fd'][$name]['type'] = $this->m_odb->get_column_attribute($name, $sTableName, true, 'type') === 'ascii' ?
-						'ascii' : 'varchar';
+					else
+					{
+						$definition['fd'][$name]['type'] = $this->m_odb->get_column_attribute($name, $sTableName, true, 'type') === 'ascii' ?
+							'ascii' : 'varchar';
+					}
 					$definition['fd'][$name]['precision'] = $column->max_length;
 					break;
 				case 'B':

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a1ebad77744e2ba1fadcf06b93dde612",
+    "content-hash": "0f2d8bfa2ed3bde041af7da260016181",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -834,16 +834,16 @@
         },
         {
             "name": "egroupware/adodb-php",
-            "version": "5.20.8",
+            "version": "5.20.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/ADOdb.git",
-                "reference": "7c926a1e8435a172a0947bbd54dd33c6388ee3ba"
+                "reference": "695e4d98fd18869056aa06be14eb9ed248580d1b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/ADOdb/zipball/7c926a1e8435a172a0947bbd54dd33c6388ee3ba",
-                "reference": "7c926a1e8435a172a0947bbd54dd33c6388ee3ba",
+                "url": "https://api.github.com/repos/EGroupware/ADOdb/zipball/695e4d98fd18869056aa06be14eb9ed248580d1b",
+                "reference": "695e4d98fd18869056aa06be14eb9ed248580d1b",
                 "shasum": ""
             },
             "require": {
@@ -884,7 +884,11 @@
                 "library",
                 "php"
             ],
-            "time": "2023-01-30T18:10:47+00:00"
+            "support": {
+                "issues": "https://github.com/ADOdb/ADOdb/issues",
+                "source": "https://github.com/ADOdb/ADOdb"
+            },
+            "time": "2023-10-30T11:00:40+00:00"
         },
         {
             "name": "egroupware/bookmarks",

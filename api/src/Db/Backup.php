@@ -127,7 +127,7 @@ class Backup
 				}
 				if (!($this->backup_dir = $this->db->query("SELECT config_value FROM {$GLOBALS['egw_setup']->config_table} WHERE config_app='phpgwapi' AND config_name='backup_dir'",__LINE__,__FILE__)->fetchColumn()))
 				{
-					$this->backup_dir = $this->files_dir.'/db_backup';
+					$this->backup_dir = dirname($this->files_dir).'/backup';
 				}
 				$this->charset = $this->db->query("SELECT config_value FROM {$GLOBALS['egw_setup']->config_table} WHERE config_app='phpgwapi' AND config_name='system_charset'",__LINE__,__FILE__)->fetchColumn();
 				$this->api_version = $this->db->select($GLOBALS['egw_setup']->applications_table,'app_version',array('app_name'=>array('api','phpgwapi')),
@@ -143,7 +143,7 @@ class Backup
 		{
 			if (!($this->backup_dir = $GLOBALS['egw_info']['server']['backup_dir']))
 			{
-				$this->backup_dir = $GLOBALS['egw_info']['server']['files_dir'].'/db_backup';
+				$this->backup_dir = dirname($GLOBALS['egw_info']['server']['files_dir']).'/backup';
 			}
 			$this->files_dir = $GLOBALS['egw_info']['server']['files_dir'];
 			$this->backup_mincount = $GLOBALS['egw_info']['server']['backup_mincount'];
@@ -335,7 +335,7 @@ class Backup
 	);
 
 	/**
-	 * Backup all data in the form of a (compressed) csv file
+	 * Restore a backup
 	 *
 	 * @param resource $f file opened with fopen for reading
 	 * @param boolean $convert_to_system_charset =true obsolet, it's now allways done
@@ -394,7 +394,7 @@ class Backup
 		// it could be an old backup
 		list( , $type) = explode('.', basename($filename));
 		$dir = $this->files_dir; // $GLOBALS['egw_info']['server']['files_dir'];
-		// we may have to clean up old backup - left overs
+		// we may have to clean up old backup - leftovers
 		if (is_dir($dir.'/database_backup'))
 		{
 			self::remove_dir_content($dir.'/database_backup/');
@@ -594,7 +594,10 @@ class Backup
 				$blobs = array();
 				foreach($this->schemas[$table]['fd'] as $col => $data)
 				{
-					if ($data['type'] == 'blob') $blobs[] = $col;
+					if (in_array($data['type'], ['blob', 'binary']))
+					{
+						$blobs[] = $col;
+					}
 				}
 				// check if we have an old PostgreSQL backup using 't'/'f' for bool values
 				// --> convert them to MySQL and our new PostgreSQL format of 1/0
@@ -866,6 +869,7 @@ class Backup
 				case 'timestamp':
 					break;
 				case 'blob':
+				case 'binary':
 					$data = base64_encode($data);
 					break;
 				case 'bool':	// we use MySQL 0, 1 in csv, not PostgreSQL 't', 'f'
@@ -890,6 +894,7 @@ class Backup
 	 * @param boolean $lock_table =null true: allways, false: never, null: if no primary key
 	 *	default of null limits memory usage if there is no primary key, by locking table and use ROW_CHUCK
 	 * @param bool $skip_files_backup =false true: do not backup files, even if config / $this->backup_files is set (used by upgrade)
+	 * @return string|true true: on success, string with error-message on failure
 	 * @todo use https://github.com/maennchen/ZipStream-PHP to not assemble all files in memmory
 	 */
 	function backup($f, $lock_table=null, bool $skip_files_backup=false)
@@ -1182,7 +1187,7 @@ class Backup
 	 * @param string $file filename
 	 * @param bool|string $restore true: 'Restore', false: 'Backup', string with custom label
 	 * @param bool $start true: start of operation, false: end, null: neither
-	 * @return void
+	 * @param ?string $error_msg optional error-msg to log
 	 */
 	public function log(string $file, $restore, bool $start=null, string $error_msg=null)
 	{
