@@ -122,6 +122,15 @@ class multi_video extends HTMLElement {
 	}
 
 	/**
+	 * Calls load method for all its sub videos
+	 * https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/load
+	 */
+	load()
+	{
+		this._videos.forEach(_item =>{_item.node.load()});
+	}
+
+	/**
 	 * init/update video tags
 	 * @param _value
 	 * @private
