@@ -72,13 +72,12 @@ class Ldap implements Backend
 		{
 			$filter = "(&$filter(objectclass=posixaccount))";
 		}
-		$sri = ldap_search($ldap, $GLOBALS['egw_info']['server']['ldap_context'], $filter, $attributes);
-		$allValues = ldap_get_entries($ldap, $sri);
 
-		if ($allValues['count'] > 0)
+		if (($sri = ldap_search($ldap, $GLOBALS['egw_info']['server']['ldap_context'], $filter, $attributes)) &&
+			($allValues = ldap_get_entries($ldap, $sri)) && $allValues['count'] > 0)
 		{
-			if ($GLOBALS['egw_info']['server']['case_sensitive_username'] == true &&
-				$allValues[0]['uid'][0] != $username)
+			if (!empty($GLOBALS['egw_info']['server']['case_sensitive_username']) &&
+				$allValues[0]['uid'][0] !== $username)
 			{
 				if ($this->debug) error_log(__METHOD__."('$username',\$password) wrong case in username!");
 				return false;
@@ -93,7 +92,7 @@ class Ldap implements Backend
 
 			// try to bind as the user with user suplied password
 			// only if a non-empty password given, in case anonymous search is enabled
-			if (!empty($passwd) && ($ret = @ldap_bind($ldap, $userDN, $passwd)))
+			if (!empty($passwd) && ($ret = ldap_bind($ldap, $userDN, $passwd)))
 			{
 				if ($GLOBALS['egw_info']['server']['account_repository'] != 'ldap')
 				{
@@ -141,7 +140,7 @@ class Ldap implements Backend
 				{
 					$matches = null;
 					// try to query password from ldap server (might fail because of ACL) and check if we need to migrate the hash
-					if (($sri = @ldap_search($ldap, $userDN,"(objectclass=*)", array('userPassword'))) &&
+					if (($sri = ldap_search($ldap, $userDN,"(objectclass=*)", array('userPassword'))) &&
 						($values = ldap_get_entries($ldap, $sri)) && isset($values[0]['userpassword'][0]) &&
 						($type = preg_match('/^{(.+)}/',$values[0]['userpassword'][0],$matches) ? strtolower($matches[1]) : 'plain') &&
 						// for crypt use Api\Auth::crypt_compare to detect correct sub-type, strlen("{crypt}")=7
@@ -183,16 +182,15 @@ class Ldap implements Backend
 		$attributes	= array('uid','dn','shadowexpire','shadowlastchange','sambaPwdLastSet','krb5PasswordEnd');
 
 		$filter = str_replace(array('%user','%domain'),array(Api\Ldap::quote($username),$GLOBALS['egw_info']['user']['domain']),
-			$GLOBALS['egw_info']['server']['ldap_search_filter'] ? $GLOBALS['egw_info']['server']['ldap_search_filter'] : '(uid=%user)');
+			$GLOBALS['egw_info']['server']['ldap_search_filter'] ?? '(uid=%user)');
 
 		if ($GLOBALS['egw_info']['server']['account_repository'] == 'ldap')
 		{
 			$filter = "(&$filter(objectclass=posixaccount))";
 		}
-		$sri = @ldap_search($ldap, $GLOBALS['egw_info']['server']['ldap_context'], $filter, $attributes);
-		$allValues = $sri ? ldap_get_entries($ldap, $sri) : [];
 
-		if ($allValues['count'] > 0)
+		if (($sri = ldap_search($ldap, $GLOBALS['egw_info']['server']['ldap_context'], $filter, $attributes)) &&
+			($allValues = ldap_get_entries($ldap, $sri)) && $allValues['count'] > 0)
 		{
 			// there are several schema-specific ways to express the user must change the password
 			if (isset($allValues[0]['shadowlastchange']) && (string)$allValues[0]['shadowlastchange'][0] === '0' ||
@@ -207,8 +205,8 @@ class Ldap implements Backend
 				if ($this->debug) error_log(__METHOD__."('$username') no shadowlastchange attribute!");
 				return false;
 			}
-			if ($GLOBALS['egw_info']['server']['case_sensitive_username'] == true &&
-				$allValues[0]['uid'][0] != $username)
+			if (!empty($GLOBALS['egw_info']['server']['case_sensitive_username']) &&
+				$allValues[0]['uid'][0] !== $username)
 			{
 				if ($this->debug) error_log(__METHOD__."('$username') wrong case in username!");
 				return false;
@@ -253,9 +251,12 @@ class Ldap implements Backend
 		$filter = str_replace(array('%user','%domain'),array($username,$GLOBALS['egw_info']['user']['domain']),
 			$GLOBALS['egw_info']['server']['ldap_search_filter'] ? $GLOBALS['egw_info']['server']['ldap_search_filter'] : '(uid=%user)');
 
-		$ds = Api\Ldap::factory();
-		$sri = ldap_search($ds, $GLOBALS['egw_info']['server']['ldap_context'], $filter);
-		$allValues = ldap_get_entries($ds, $sri);
+		if (!($ds = Api\Ldap::factory()) ||
+			!($sri = ldap_search($ds, $GLOBALS['egw_info']['server']['ldap_context'], $filter)) ||
+			!($allValues = ldap_get_entries($ds, $sri)))
+		{
+			return false;
+		}
 
 		$entry['shadowlastchange'] = (is_null($lastpwdchange) || $lastpwdchange<0 ? round((time()-date('Z')) / (24*3600)):$lastpwdchange);
 
@@ -265,7 +266,7 @@ class Ldap implements Backend
 		{
 			$ds = Api\Ldap::factory(true, '', $dn, $passwd);
 		}
-		if (!@ldap_modify($ds, $dn, $entry))
+		if (!$ds || !ldap_modify($ds, $dn, $entry))
 		{
 			return false;
 		}
@@ -300,11 +301,14 @@ class Ldap implements Backend
 		if ($this->debug) error_log(__METHOD__."('$old_passwd','$new_passwd',$account_id, $update_lastchange) username='$username'");
 
 		$filter = str_replace(array('%user','%domain'),array($username,$GLOBALS['egw_info']['user']['domain']),
-			$GLOBALS['egw_info']['server']['ldap_search_filter'] ? $GLOBALS['egw_info']['server']['ldap_search_filter'] : '(uid=%user)');
+			$GLOBALS['egw_info']['server']['ldap_search_filter'] ?? '(uid=%user)');
 
-		$ds = $ds_admin = Api\Ldap::factory();
-		$sri = ldap_search($ds, $GLOBALS['egw_info']['server']['ldap_context'], $filter);
-		$allValues = ldap_get_entries($ds, $sri);
+		if (!($ds = $ds_admin = Api\Ldap::factory()) ||
+			!($sri = ldap_search($ds, $GLOBALS['egw_info']['server']['ldap_context'], $filter)) ||
+			!($allValues = ldap_get_entries($ds, $sri)))
+		{
+			return false;
+		}
 
 		$entry['userpassword'] = Api\Auth::encrypt_password($new_passwd);
 		if ($update_lastchange)
@@ -326,7 +330,7 @@ class Ldap implements Backend
 		}
 		// try changing password bind as user or as admin, to cater for all sorts of ldap configuration
 		// where either only user is allowed to change his password, or only admin user is allowed to
-		if (!@ldap_modify($ds, $dn, $entry) && (!$old_passwd || !@ldap_modify($ds_admin, $dn, $entry)))
+		if (!ldap_modify($ds, $dn, $entry) && (!$old_passwd || !ldap_modify($ds_admin, $dn, $entry)))
 		{
 			return false;
 		}
