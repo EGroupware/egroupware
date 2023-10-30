@@ -841,6 +841,10 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
                     .value=${value}
                     @sl-change=${this.handleValueChange}
                     @mouseup=${this.handleOptionClick}
+                    @mousewheel=${
+                            // Grab & stop mousewheel to prevent scrolling sidemenu when scrolling through options
+                            e => e.stopImmediatePropagation()
+                    }
             >
                 ${icon}
                 ${this._emptyLabelTemplate()}
