@@ -103,9 +103,18 @@ export class CalendarOwner extends Et2StaticSelectMixin(Et2Select)
 		let missing_labels = [];
 		this.updateComplete.then(() =>
 		{
+			// find that can handle option groups
+			const find = (option) =>
+			{
+				if(Array.isArray(option.value))
+				{
+					return option.find(find);
+				}
+				return option.value == this.value[i];
+			}
 			for(var i = 0; i < this.value.length; i++)
 			{
-				if(!this.select_options.find(o => o.value == this.value[i]))
+				if(!this.select_options.find(find))
 				{
 					missing_labels.push(this.value[i]);
 				}
@@ -134,7 +143,6 @@ export class CalendarOwner extends Et2StaticSelectMixin(Et2Select)
 						}
 					}
 					this.requestUpdate("select_options");
-					this.updateComplete.then(() => {this.syncItemsFromValue();});
 				}, this, true, this).sendRequest();
 			}
 		});
@@ -159,7 +167,7 @@ export class CalendarOwner extends Et2StaticSelectMixin(Et2Select)
 	 * @param option
 	 * @protected
 	 */
-	protected _iconTemplate(option)
+	protected _iconTemplate(option : SelectOption)
 	{
 		// Not a user / contact, no icon - use app image
 		if(!option.fname && !option.lname && !option.icon && option.app)

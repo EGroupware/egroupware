@@ -1119,7 +1119,18 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 			this._total_result_count = 0;
 
 			// Not searching anymore, clear flag
-			this.select_options.map((o) => o.isMatch = null);
+			const clear_flag = (option) =>
+			{
+				if(Array.isArray(option.value))
+				{
+					option.map(clear_flag)
+				}
+				else
+				{
+					option.isMatch = null
+				}
+			}
+			this.select_options.map(clear_flag);
 			this.requestUpdate("select_options");
 		}
 
@@ -1238,6 +1249,8 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 				{
 					this._total_result_count += results.total;
 					delete results.total;
+					// Make it an array, since it was probably an object, and cleanSelectOptions() treats objects differently
+					results = Object.values(results);
 				}
 				else
 				{
@@ -1260,20 +1273,32 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 			{
 				return Promise.resolve();
 			}
-			// Add a "remote" class so we can tell these apart from any local results
-			for(let i = entries.length - 1; i >= 0; i--)
+			const process = (entries) =>
 			{
-				const entry = entries[i];
-				entry.class = (entry.class || "") + " remote";
-				// Server says it's a match
-				entry.isMatch = true;
-
-				// Avoid duplicates with existing options
-				if(this.select_options.some(o => o.value == entry.value))
+				// Add a "remote" class so we can tell these apart from any local results
+				for(let i = entries.length - 1; i >= 0; i--)
 				{
-					entries.splice(i, 1);
+					const entry = entries[i];
+					entry.class = (entry.class || "") + " remote";
+
+					// Handle option groups
+					if(Array.isArray(entry.value))
+					{
+						process(entry.value);
+						continue;
+					}
+
+					// Server says it's a match
+					entry.isMatch = true;
+
+					// Avoid duplicates with existing options
+					if(this.select_options.some(o => o.value == entry.value))
+					{
+						entries.splice(i, 1);
+					}
 				}
 			}
+			process(entries);
 
 			this._remote_options = entries;
 			this.requestUpdate("select_options");

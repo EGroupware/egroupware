@@ -739,7 +739,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 	 * @param option
 	 * @protected
 	 */
-	protected _iconTemplate(option)
+	protected _iconTemplate(option : SelectOption)
 	{
 		if(!option.icon)
 		{
@@ -767,7 +767,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 	{
 		const readonly = (this.readonly || option && typeof (option.disabled) != "undefined" && option.disabled);
 		const isEditable = this.editModeEnabled && !readonly;
-		const image = this._iconTemplate(option);
+		const image = this._iconTemplate(option.option ?? option);
 		const tagName = this.tagTag;
 		return html`
             <${tagName}

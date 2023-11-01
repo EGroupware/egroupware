@@ -300,7 +300,7 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 				continue;
 			}
 
-			foreach(array_unique($_results, SORT_REGULAR) as $id => $title)
+			foreach($_results as $id => $title)
 			{
 				if($id && $title)
 				{
@@ -309,7 +309,11 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 			}
 			if(count($mapped))
 			{
-				$results = array_merge($results, $mapped);
+				$results[] = [
+					'label' => $data['app'],
+					'value' => $mapped,
+					'icon'  => $data['icon'] ?? Link::get_registry($data['app'], 'icon')
+				];
 			}
 		}
 		if($total)
@@ -411,6 +415,9 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 			default :
 				// do nothing
 		}
+		// Make sure ID (value) is string
+		$value['value'] = (string)$value['value'];
+
 		return $value;
 	}
 
