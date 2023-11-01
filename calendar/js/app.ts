@@ -1708,7 +1708,7 @@ export class CalendarApp extends EgwApp
 			// Make the Id from selected button by checking the index
 			var selectedId = _widget.id.match(/^select\[([0-9])\]$/i)[1];
 
-			var sTime = <et2_date> this.et2.getWidgetById(selectedId+'start');
+			var sTime = <Et2Select><unknown>this.et2.getWidgetById(selectedId + 'start');
 
 			//check the parent window is still open before to try to access it
 			if (window.opener && sTime)

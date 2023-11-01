@@ -2859,7 +2859,7 @@ class calendar_uiforms extends calendar_ui
 				{
 					$e = $s + $duration;
 					$end_date = $e-$daybegin > DAY_s ? lang(date('l',$e)).' '.date($this->common_prefs['dateformat'],$e).' ' : '';
-					$times[$s] = date($time_format,$s).' - '.$end_date.date($time_format,$e);
+					$times[Api\DateTime::to($s, Api\DateTime::ET2)] = date($time_format, $s) . ' - ' . $end_date . date($time_format, $e);
 				}
 				$sel_options[$n.'start'] = $times;
 			}
