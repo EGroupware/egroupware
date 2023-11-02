@@ -32,6 +32,10 @@ export class CalendarOwner extends Et2StaticSelectMixin(Et2Select)
 			.select__tags {
 				max-height: 10em;
 			}
+
+			  .title {
+				float: right;
+			  }
 			`
 		];
 	}
@@ -84,7 +88,7 @@ export class CalendarOwner extends Et2StaticSelectMixin(Et2Select)
             >
                 ${this._iconTemplate(option)}
                 ${this.noLang ? option.label : this.egw().lang(option.label)}
-                <span class="title" slot="suffix">${option.title}</span>
+                <span class="title">${option.title}</span>
             </sl-option>`;
 	}
 

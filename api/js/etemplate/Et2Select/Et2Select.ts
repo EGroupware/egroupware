@@ -201,6 +201,12 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 				opacity: 1;
 				border: none;
 			  }
+
+			  /* Position & style of group titles */
+
+			  small {
+				padding: var(--sl-spacing-medium);
+			  }
 			`
 		];
 	}
