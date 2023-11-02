@@ -260,6 +260,13 @@ class admin_ui
 				'group' => 2,
 				'allowOnMultiple' => false
 			),
+			'run_rights' => array(
+				'onExecute'       => 'javaScript:app.admin.group_run_rights',
+				'caption'         => 'Run rights for applications',
+				'icon'            => 'lock',
+				'group'           => 2,
+				'allowOnMultiple' => true
+			)
 		);
 		if (!$GLOBALS['egw']->acl->check('account_access',64,'admin'))	// no rights to set ACL-rights
 		{

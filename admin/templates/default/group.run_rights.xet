@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
+<overlay>
+    <template id="admin.group.run_rights" template="" lang="" group="0" version="23.001">
+        <et2-vbox>
+            <et2-select-account id="groups" readonly="true" multiple="true" rows="8"></et2-select-account>
+            <et2-select-app id="apps" rows="8" multiple="1" autofocus="true"></et2-select-app>
+        </et2-vbox>
+        <et2-button id="add" slot="buttons" label="Add" noSubmit="true"></et2-button>
+        <et2-button id="remove" slot="buttons" image="minus" label="Remove" noSubmit="true"></et2-button>
+        <et2-button id="cancel" slot="buttons" align="right" label="Cancel" noSubmit="true"></et2-button>
+        <styles>
+            #_groups {
+            max-height: 8em;
+            overflow-y: auto;
+            flex-grow: 2;
+            }
+        </styles>
+    </template>
+</overlay>
