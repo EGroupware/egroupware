@@ -789,9 +789,6 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 						$contact['cat_id'] = $oldContact['cat_id'];
 					}
 					break;
-				default:
-					//
-					$contact['cat_id'] = null;
 			}
 		}
 		if (is_array($oldContact))
