@@ -80,7 +80,7 @@ export class CalendarOwner extends Et2StaticSelectMixin(Et2Select)
                     .option=${option}
                     .selected=${this.getValueAsArray().some(v => v == value)}
                     ?disabled=${option.disabled}
-                    .getTextLabel=${() => {return option.label}}
+                    .getTextLabel=${() => {return option.label ?? option.value}}
             >
                 ${this._iconTemplate(option)}
                 ${this.noLang ? option.label : this.egw().lang(option.label)}
@@ -109,7 +109,7 @@ export class CalendarOwner extends Et2StaticSelectMixin(Et2Select)
 			{
 				if(Array.isArray(option.value))
 				{
-					return option.find(find);
+					return option.value.find(find);
 				}
 				return option.value == this.value[i];
 			}
