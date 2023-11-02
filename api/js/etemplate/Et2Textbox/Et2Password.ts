@@ -91,7 +91,7 @@ export class Et2Password extends Et2InvokerMixin(Et2Textbox)
 		if (this._invokerNode)
 		{
 			const invokerNode = /** @type {HTMLElement & {disabled: boolean}} */ (this._invokerNode);
-			invokerNode.disabled = this.disabled;
+			invokerNode.disabled = this.disabled || this.readonly;
 		}
 	}
 
@@ -161,6 +161,8 @@ export class Et2Password extends Et2InvokerMixin(Et2Textbox)
 			this.type = this.visible ? 'text' : 'password';
 			return;
 		}
+
+		if (this.plaintext) return;	// no need to query user-password, if the password is plaintext
 
 		// Need username & password to decrypt
 		Et2Dialog.show_prompt(
