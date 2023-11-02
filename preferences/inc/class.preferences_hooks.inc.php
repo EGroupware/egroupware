@@ -105,6 +105,8 @@ class preferences_hooks
 			'all'       => '['.lang('username').'] '.lang('Lastname').','.lang('Firstname'),
 			'firstgroup'=> lang('Firstname').' '.lang('Lastname').' ('.lang('primary group').')',
 			'lastgroup' => lang('Lastname').', '.lang('Firstname').' ('.lang('primary group').')',
+			'firstemail' => lang('Firstname') . ' ' . lang('Lastname') . ' [' . lang('email') . ']',
+			'lastemail'  => lang('Lastname') . ', ' . lang('Firstname') . ' [' . lang('email') . ']',
 			'firstinital' => lang('Firstname').' '.lang('Initial'),
 			'firstid'   => lang('Firstname').' ['.lang('ID').']',
 		);
