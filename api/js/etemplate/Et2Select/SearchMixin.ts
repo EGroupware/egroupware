@@ -855,13 +855,22 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 				{
 					return;
 				}
-				const remote_option_index = this._remote_options.findIndex(o => o.value == value);
-				if(remote_option_index >= 0)
+				const filter = (options) =>
 				{
-					console.log("Keeping " + value, this._remote_options[remote_option_index]);
-					this._selected_remote.push(node.option);
-					this._remote_options.splice(remote_option_index, 1);
+					for(let i = options.length - 1; i >= 0; i--)
+					{
+						if(Array.isArray(options[i].value))
+						{
+							filter(options[i].value);
+						}
+						else if(options[i].value == value)
+						{
+							this._selected_remote.push(options[i]);
+							options.splice(i, 1);
+						}
+					}
 				}
+				filter(this._remote_options)
 			});
 		}
 		/**
@@ -1123,7 +1132,7 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 			{
 				if(Array.isArray(option.value))
 				{
-					option.map(clear_flag)
+					option.value.map(clear_flag)
 				}
 				else
 				{
@@ -1207,7 +1216,7 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 						filtered.splice(Et2WidgetWithSearch.RESULT_LIMIT);
 					}
 					// Add the matches
-					this.processRemoteResults(filtered);
+					this._total_result_count -= this.processRemoteResults(filtered);
 					return filtered;
 				})
 				.catch((_err) =>
@@ -1257,22 +1266,30 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 					this._total_result_count += results.length;
 				}
 				let entries = cleanSelectOptions(results);
-				this.processRemoteResults(entries);
+				let entryCount = entries.length;
+				this._total_result_count -= this.processRemoteResults(entries);
+
 				return entries;
 			});
 		}
 
 		/**
 		 * Add in remote results
+		 *
+		 * Any results that already exist will be removed to avoid duplicates
+		 *
 		 * @param results
+		 * @return Duplicate count
 		 * @protected
 		 */
 		protected processRemoteResults(entries)
 		{
 			if(!entries?.length)
 			{
-				return Promise.resolve();
+				return 0;
 			}
+			let duplicateCount = 0;
+
 			const process = (entries) =>
 			{
 				// Add a "remote" class so we can tell these apart from any local results
@@ -1294,6 +1311,7 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 					// Avoid duplicates with existing options
 					if(this.select_options.some(o => o.value == entry.value))
 					{
+						duplicateCount++
 						entries.splice(i, 1);
 					}
 				}
@@ -1302,6 +1320,8 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 
 			this._remote_options = entries;
 			this.requestUpdate("select_options");
+
+			return duplicateCount;
 		}
 
 		/**
