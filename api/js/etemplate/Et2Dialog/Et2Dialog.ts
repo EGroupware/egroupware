@@ -240,6 +240,10 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 					margin-top: 0.5em;
 				}
 
+			  .dialog_content {
+				height: var(--height, auto);
+			  }
+
 			  /* Non-modal dialogs don't have an overlay */
 
 			  :host(:not([ismodal])) .dialog, :host(:not([isModal])) .dialog__overlay {
@@ -884,7 +888,7 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 		}
 		if(this.height)
 		{
-			styles.height = "--height: " + this.height;
+			styles["--height"] = this.height;
 		}
 
 		return html`
