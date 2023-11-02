@@ -215,7 +215,7 @@ if (!empty($_POST['restore']))
 			// updating the backup
 			$cmd = new setup_cmd_update($GLOBALS['egw']->session->account_domain,
 				$GLOBALS['egw_info']['server']['header_admin_user']='admin',
-				$GLOBALS['egw_info']['server']['header_admin_password']=uniqid('pw',true),false,true);
+				$GLOBALS['egw_info']['server']['header_admin_password']=uniqid('pw',true),false);
 			echo $cmd->run()."\n";
 			echo '<h3>'.lang('You should %1log out%2 and in again, to update your current session!','<a href="'.Egw::link('/logout.php').'" target="_parent">','</a>')."</h3>\n";
 		}
