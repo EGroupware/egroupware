@@ -20,7 +20,10 @@ import {egwAction, egwActionObject} from '../../api/js/egw_action/egw_action';
 import {LitElement} from "@lion/core";
 import {et2_nextmatch} from "../../api/js/etemplate/et2_extension_nextmatch";
 import {et2_DOMWidget} from "../../api/js/etemplate/et2_core_DOMWidget";
-import {Et2SelectAccount} from "../../api/js/etemplate/Et2Select/Et2SelectAccount";
+import {Et2SelectAccount} from "../../api/js/etemplate/Et2Select/Select/Et2SelectAccount";
+import {EgwAction} from "../../api/js/egw_action/EgwAction";
+import {EgwActionObject} from "../../api/js/egw_action/EgwActionObject";
+import type {Et2Button} from "../../api/js/etemplate/Et2Button/Et2Button";
 
 /**
  * UI for Admin
@@ -548,6 +551,61 @@ class AdminApp extends EgwApp
 				}
 				break;
 		}
+	}
+
+	/**
+	 * Opens a dialog to add / remove application run rights for one or more groups
+	 *
+	 * @param _action
+	 * @param _senders
+	 */
+	group_run_rights(_action : EgwAction, _senders : EgwActionObject[])
+	{
+		let ids = [];
+		let row_ids = []
+		_senders.forEach((sender) => {
+			row_ids.push(sender.id);
+			ids.push(sender.id.split("::").pop());
+		})
+		const dialog = new Et2Dialog(this.egw);
+		let attrs = {
+			template: this.egw.webserverUrl + "/admin/templates/default/group.run_rights.xet",
+			title: "Applications",
+			hideOnEscape: true,
+			width: "400",
+			height: "300px",
+			value: {
+				content: {groups: ids}
+			},
+			callback: (button_id, value) => {
+				if(button_id == "_cancel") return;
+
+				let acl_id = [];
+				(value.apps ?? []).forEach(app => {
+					ids.forEach(account => {
+						acl_id.push(app + ":" + account +":run");
+					})
+				});
+				if(value && value.apps && acl_id.length)
+				{
+					const button = <Et2Button>dialog.querySelector("[id*='"+button_id+"']");
+					if(button) button.disabled=true;
+					this.egw.request(
+						'admin_acl::ajax_change_acl',
+						[acl_id, button_id == "_add" ? 1 : 0, [], this.et2.getInstanceManager().etemplate_exec_id]
+					).then((_data) => {
+						this.et2.getInstanceManager().refresh(_data.msg, this.appname,row_ids,'update');
+						dialog.close();
+					});
+					return false;
+				}
+			}
+		}
+		dialog.transformAttributes(attrs);
+		this.et2.getInstanceManager().DOMContainer.appendChild(dialog);
+		dialog.updateComplete.then(() => {
+			dialog.template.widgetContainer.getWidgetById("apps").focus();
+		});
 	}
 
 	/**
