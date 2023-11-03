@@ -44,12 +44,47 @@ export class EgwDragActionImplementation implements EgwActionImplementation {
         const pseudoNumRows = (_selected[0]?._context?._selectionMgr?._selectAll) ?
             _selected[0]._context?._selectionMgr?._total : _selected.length;
 
-        for (const egwActionObject of _selected) {
-            const row: Node = (egwActionObject.iface.getDOMNode()).cloneNode(true);
-            if (row) {
-                rows.push(row);
-                table.append(row);
-            }
+		// Clone nodes but use copy webComponent properties
+		const carefulClone = (node) =>
+		{
+			// Don't clone text nodes, it causes duplication in et2-description
+			if(node.nodeType == node.TEXT_NODE)
+			{
+				return;
+			}
+
+			let clone = node.cloneNode();
+
+			let widget_class = window.customElements.get(clone.localName);
+			let properties = widget_class ? widget_class.properties : [];
+			for(let key in properties)
+			{
+				clone[key] = node[key];
+			}
+			// Children
+			node.childNodes.forEach(c =>
+			{
+				const child = carefulClone(c)
+				if(child)
+				{
+					clone.appendChild(child);
+				}
+			})
+			if(widget_class)
+			{
+				clone.requestUpdate();
+			}
+			return clone;
+		}
+
+		for(const egwActionObject of _selected)
+		{
+			const row : Node = carefulClone(egwActionObject.iface.getDOMNode());
+			if(row)
+			{
+				rows.push(row);
+				table.append(row);
+			}
             index++;
             if (index == maxRows) {
                 // Label to show number of items
@@ -195,9 +230,33 @@ export class EgwDragActionImplementation implements EgwActionImplementation {
 
                 event.dataTransfer.setData('application/json', JSON.stringify(data))
 
-                event.dataTransfer.setDragImage(ai.helper, 12, 12);
+				// Wait for any webComponents to finish
+				let wait = [];
+				const webComponents = [];
+				const check = (element) =>
+				{
+					if(typeof element.updateComplete !== "undefined")
+					{
+						webComponents.push(element)
+						element.requestUpdate();
+						wait.push(element.updateComplete);
+					}
+					element.childNodes.forEach(child => check(child));
+				}
+				check(ai.helper);
+				// Clumsily force widget update, since we can't do it async
+				Promise.all(wait).then(() =>
+				{
+					wait = [];
+					webComponents.forEach(e => wait.push(e.updateComplete));
+					Promise.all(wait).then(() =>
+					{
+						event.dataTransfer.setDragImage(ai.helper, 12, 12);
+						debugger;
+					});
+				});
 
-                this.setAttribute('data-egwActionObjID', JSON.stringify(data.selected));
+				this.setAttribute('data-egwActionObjID', JSON.stringify(data.selected));
             };
 
             const dragend = (_) => {

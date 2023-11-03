@@ -3469,6 +3469,7 @@ div.et2_image_tooltipPopup {
 div.et2_egw_action_ddHelper {
     z-index: -100;
     position: relative;
+	max-width: fit-content;
 }
 
 /* The last div which shows Ctrl tip to user*/
@@ -3489,6 +3490,7 @@ div.et2_egw_action_ddHelper table.et2_egw_action_ddHelper_row {
     background-color: rgba(255, 194, 0, 0.70);
     box-shadow: 6px 6px 8px gray;
     border: 1px solid black;
+	max-width: 400px;
 }
 
 table.et2_egw_action_ddHelper_row tr {
@@ -3496,10 +3498,10 @@ table.et2_egw_action_ddHelper_row tr {
     max-height: 20px;
 }
 
-/* Apply to all displaied rows in order to get same result*/
-table.et2_egw_action_ddHelper_row * {
+/* Apply to all displayed rows in order to get same result*/
+table.et2_egw_action_ddHelper_row > *, table.et2_egw_action_ddHelper_row .innerContainer {
     white-space: nowrap !important;
-    max-height: 15px;
+	max-height: 2em;
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 400px;
