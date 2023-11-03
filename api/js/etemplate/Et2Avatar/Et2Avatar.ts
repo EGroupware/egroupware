@@ -246,10 +246,10 @@ export class Et2Avatar extends Et2Widget(SlAvatar) implements et2_IDetachedDOM
 	{
 		let self = this;
 		this._editBtn = document.createElement('et2-button-icon');
-		this._editBtn.setAttribute('name', 'pencil');
+		this._editBtn.setAttribute('image', 'pencil');
 		this._editBtn.setAttribute('part', 'edit');
 		this._delBtn = document.createElement('et2-button-icon');
-		this._delBtn.setAttribute('name', 'trash');
+		this._delBtn.setAttribute('image', 'delete');
 		this._delBtn.setAttribute('part', 'edit');
 		this._baseNode.append(this._editBtn);
 		this._baseNode.append(this._delBtn);
