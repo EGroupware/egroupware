@@ -790,6 +790,7 @@ rows	admin	de	Zeilen
 rpm or debian package	admin	de	RPM oder Debian Pakete
 run	admin	de	Ausführen
 run asynchronous services	admin	de	Asynchrone Dienste ausführen
+run rights for applications	admin	de	Ausführungsrechte für Anwendungen
 samesite cookie attribute (send cookie if browser addressbar show a different domain)	admin	de	SameSite Cooke Attribute (Cookie übertragen, wenn die Adressleiste des Browsers eine andere Domain anzeigt)
 save as default	admin	de	Als Vorgabe speichern
 save changes	admin	de	Änderungen speichern
