@@ -1324,7 +1324,14 @@ class AddressbookApp extends EgwApp
 	 */
 	getWindowTitle()
 	{
-		return this.et2.getValueById('n_fn');
+		try
+		{
+			return this.et2.getValueById('n_fn');
+		}
+		catch(e)
+		{
+			return "";
+		}
 	}
 
 	/**
