@@ -793,6 +793,7 @@ rows	admin	en	Rows
 rpm or debian package	admin	en	RPM or Debian package
 run	admin	en	run
 run asynchronous services	admin	en	Run Asynchronous services
+run rights for applications	admin	en	run rights for applications
 samesite cookie attribute (send cookie if browser addressbar show a different domain)	admin	en	SameSite cookie attribute (send cookie if browser addressbar show a different domain)
 save as default	admin	en	save as default
 save changes	admin	en	Save changes
