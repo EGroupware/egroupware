@@ -396,8 +396,6 @@ app.classes.mail = AppJS.extend(
 						return false;
 					}
 				});
-				// Init key handler
-				this.init_keyHandler();
 
 				// Set focus on To/body field
 				// depending on To field value
@@ -5073,31 +5071,6 @@ app.classes.mail = AppJS.extend(
 			},100);
 		}
 
-	},
-
-	/**
-	 * Keyhandler for compose window
-	 * Use this one so we can handle keys even on inputs
-	 */
-	init_keyHandler: function()
-	{
-		jQuery(document).on('keydown', function(e) {
-			// Translate the given key code and make it valid
-			var keyCode = e.which;
-			keyCode = egw_keycode_translation_function(keyCode);
-			keyCode = egw_keycode_makeValid(keyCode);
-
-			// Only go on if this is a valid key code - call the key handler
-			if (keyCode != -1)
-			{
-				if (egw_keyHandler(keyCode, e.shiftKey, e.ctrlKey || e.metaKey, e.altKey))
-				{
-					// If the key handler successfully passed the key event to some
-					// sub component, prevent the default action
-					e.preventDefault();
-				}
-			}
-		});
 	},
 
 	/**
