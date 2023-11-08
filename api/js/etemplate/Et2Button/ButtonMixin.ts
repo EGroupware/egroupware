@@ -12,6 +12,7 @@
 import {css, LitElement, PropertyValues} from "lit";
 import '../Et2Image/Et2Image';
 import shoelace from "../Styles/shoelace";
+import {egw_registerGlobalShortcut} from "../../egw_action/egw_keymanager";
 
 type Constructor<T = LitElement> = new (...args : any[]) => T;
 export const ButtonMixin = <T extends Constructor>(superclass : T) => class extends superclass
@@ -47,6 +48,12 @@ export const ButtonMixin = <T extends Constructor>(superclass : T) => class exte
 		et2_button_cancel: /cancel(&|\]|$)/,		// yellow
 		et2_button_question: /(yes|no)(&|\]|$)/,	// yellow
 		et2_button_delete: /delete(&|\]|$)/			// red
+	};
+
+	static readonly default_keys : object = {
+		//egw_shortcutIdx : id regex
+		_83_C: /save(&|\]|$)/,   // CTRL+S
+		_27_: /cancel(&|\]|$)/,  // Esc
 	};
 
 	static get styles()
@@ -321,6 +328,38 @@ export const ButtonMixin = <T extends Constructor>(superclass : T) => class exte
 			}
 		}
 		return "";
+	}
+
+	/**
+	 * If button ID has a default keyboard shortcut (eg: Save: Ctrl+S), register with egw_keymanager
+	 *
+	 * @param {string} check_id
+	 */
+	_register_default_keyhandler(check_id : string)
+	{
+		if(!check_id)
+		{
+			return;
+		}
+		// @ts-ignore
+		for(const keyindex in this.constructor.default_keys)
+		{
+			// @ts-ignore
+			if(check_id.match(this.constructor.default_keys[keyindex]))
+			{
+				let [keycode, modifiers] = keyindex.substring(1).split("_");
+				egw_registerGlobalShortcut(
+					parseInt(keycode),
+					modifiers.includes("S"), modifiers.includes("C"), modifiers.includes("A"),
+					() =>
+					{
+						this.dispatchEvent(new MouseEvent("click"));
+						return true;
+					},
+					this
+				)
+			}
+		}
 	}
 
 	/**

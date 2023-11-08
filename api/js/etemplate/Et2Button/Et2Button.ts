@@ -30,6 +30,9 @@ export class Et2Button extends ButtonMixin(Et2InputWidget(SlButton))
 	{
 		super.firstUpdated(_changedProperties);
 
+		// Register default keyboard shortcut, if applicable
+		this._register_default_keyhandler(this.id);
+
 		if(!this.label && this.__image)
 		{
 			/*
