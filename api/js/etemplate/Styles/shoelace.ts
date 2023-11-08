@@ -56,7 +56,7 @@ export default [sl_css, css`
 	--indicator-color: #696969;
 	--sl-input-focus-ring-color: #26537C;
 	--sl-focus-ring-width: 2px;
-      --sl-color-gray-150: #f0f0f0;
+	--sl-color-gray-150: #f0f0f0;
       
   }
   .tab-group--top .tab-group__tabs {

@@ -283,7 +283,8 @@ pre {
 	word-wrap: break-word;
 }
 #mail-index {
-	position: relative
+	position: relative;
+	--size: 2.75em
 }
 /*Keeps the scrollbar in the window in Firefox*/
 #mail-index	table.egwGridView_outer {
@@ -1142,4 +1143,13 @@ et2-split#mail-index_mailSplitter.squeezed .mail-index_quotabox{
 et2-details.mail-index_datefilter::part(base) {
 	height: var(--sl-input-height-medium);
 	border-radius: var(--sl-border-radius-small);
+}
+
+/* Give DnD helper more height to show from + subject, but less gap */
+table.et2_egw_action_ddHelper_row .innerContainer {
+	max-height: 2.5em;
+}
+
+.et2_egw_action_ddHelper_row et2-vbox::part(base) {
+	gap: 1px;
 }

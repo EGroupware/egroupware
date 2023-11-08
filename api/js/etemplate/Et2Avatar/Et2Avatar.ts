@@ -91,6 +91,10 @@ export class Et2Avatar extends Et2Widget(SlAvatar) implements et2_IDetachedDOM
 
 			crop: {type: Boolean},
 
+			/**
+			 * Explicitly specify the avatar size.
+			 * Better to set the --size CSS variable in app.css, since it allows inheritance and overriding
+			 */
 			size: {type: String}
 		}
 	}
@@ -103,7 +107,6 @@ export class Et2Avatar extends Et2Widget(SlAvatar) implements et2_IDetachedDOM
 		this.contactId = "";
 		this.editable = false;
 		this.crop = false;
-		this.size = "2.7em";
 		this.icon = "";
 		this.shape = "rounded";
 	}

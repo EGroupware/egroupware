@@ -3493,6 +3493,10 @@ div.et2_egw_action_ddHelper table.et2_egw_action_ddHelper_row {
 	max-width: 400px;
 }
 
+div.et2_egw_action_ddHelper et2-avatar, div.et2_egw_action_ddHelper et2-lavatar {
+	flex-grow: 0;
+	--size: 2em;
+}
 table.et2_egw_action_ddHelper_row tr {
     background: none;
     max-height: 20px;
@@ -3733,6 +3737,10 @@ td.avatar {
     width: 40px;
     border: none;
     box-shadow: none;
+}
+
+et2-avatar, et2-lavatar {
+	--size: 2.7em;
 }
 
 .et2_searchbox {
