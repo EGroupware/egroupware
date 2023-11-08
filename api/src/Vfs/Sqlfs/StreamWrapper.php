@@ -1673,6 +1673,7 @@ GROUP BY A.fs_id';
 		{
 			$query = '/* '.__METHOD__.': '.__LINE__.' */ '.$query;
 		}
+		self::connection();
 		$stmt = self::$pdo->prepare($query);
 
 		$stmt->execute(array($fs_id));
