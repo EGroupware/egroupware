@@ -264,7 +264,8 @@ class Utils extends StreamWrapper
 		do {
 			$num = 0;
 			$select_stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
-			foreach($select_stmt->execute() as $row)
+			$select_stmt->execute();
+			foreach($select_stmt as $row)
 			{
 				++$num;
 				if (!file_exists($phy_path=self::_fs_path($row['fs_id'])))
@@ -340,7 +341,8 @@ class Utils extends StreamWrapper
 		{
 			$num = 0;
 			$stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
-			foreach ($stmt->execute() as $row)
+			$stmt->execute();
+			foreach ($stmt as $row)
 			{
 				++$num;
 				if ($check_only)
