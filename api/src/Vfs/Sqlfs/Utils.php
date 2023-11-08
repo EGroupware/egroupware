@@ -259,7 +259,8 @@ class Utils extends StreamWrapper
 		$limit = 500;
 		$offset = 0;
 		$select_stmt = self::$pdo->prepare('SELECT fs_id FROM '.self::TABLE.
-			" WHERE fs_mime!='httpd/unix-directory' AND fs_content IS NULL AND fs_link IS NULL LIMIT $limit OFFSET :offset");
+			" WHERE fs_mime!='httpd/unix-directory' AND fs_content IS NULL AND fs_link IS NULL AND (fs_s3_flags&7)=0".
+			" LIMIT $limit OFFSET :offset");
 		$select_stmt->setFetchMode(PDO::FETCH_ASSOC);
 		do {
 			$num = 0;
