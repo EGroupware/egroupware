@@ -24,3 +24,29 @@ Some handy excerpts:
 
 }
 ```
+
+### Useful CSS classes
+
+#### hide
+
+Hides the element using css```display: none```
+
+#### hideme
+
+Hides the element using css```display: none !important;```
+
+#### et2-label-fixed
+
+Use on a widget to force its label to have a fixed width. This helps line up labels and widgets into columns without
+having to use a grid, which allows them to reflow if needed. Set the CSS variable ```--label_width``` to change how much
+space the labels get.
+
+These widgets are in an et2-vbox:
+
+|                ![fixed label example #1](/assets/images/styling_et2-label-fixed_2.png )                 |
+|:-------------------------------------------------------------------------------------------------------:|  
+|                                     *Without et2-label-fixed class*                                     |
+|                 ![fixed label example #2](/assets/images/styling_et2-label-fixed_1.png)                 |
+|                               *Fixed width labels using et2-label-fixed*                                |
+|                 ![fixed label example #3](/assets/images/styling_et2-label-fixed_3.png)                 |
+| *--label_width CSS variable changed for more space*            <br/>Note how 'Responsible' widget wraps |
