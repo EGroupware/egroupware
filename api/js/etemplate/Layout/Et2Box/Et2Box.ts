@@ -149,6 +149,14 @@ export class Et2HBox extends Et2Box
 
 customElements.define("et2-hbox", Et2HBox);
 
+/**
+ * @summary Vertically align child widgets
+ *
+ * This box includes styling to stop children from growing vertically.
+ * Set css```flex-grow: 1``` on the child to allow it to grow.
+ *
+ * @slot - Any other widget
+ */
 export class Et2VBox extends Et2Box
 {
 	static get styles()
