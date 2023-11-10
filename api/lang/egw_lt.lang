@@ -27,9 +27,13 @@ access	common	lt	Prieiga
 access not permitted	common	lt	Prieiga negalima
 add current	common	lt	Dabartinis vaizdas kaip mėgstamiausias
 add to clipboard	common	lt	Pridėti į iškarpinę
+add user to responsibles	groupdav	lt	Pridėti naudotoją prie atsakingų asmenų
+add user to responsibles, removing evtl. previous category user	groupdav	lt	Pridėti naudotoją prie atsakingų, galbūt pašalinti ankstesnės kategorijos naudotojus
+add your domain as "%1" in options to list of email providers and enable api.	common	lt	Pridėkite savo domeną kaip "%1" į el. pašto paslaugų teikėjų sąrašo parinktis ir įjunkite API.
 addressbook	common	lt	Adresų knyga
 addressbooks to sync in addition to personal addressbook	groupdav	lt	Sinchronizuojamos ne tik asmeninės adresinės, bet ir adresų knygelės
 admin	common	lt	Administratoriaus
+admin settings	common	lt	Administratoriaus nustatymai
 admin settings for %1	common	lt	Administratoriaus nustatymai %1
 administration	common	lt	Administravimas
 advanced search	common	lt	Išplėstinė paieška
@@ -39,6 +43,7 @@ algeria	common	lt	ALŽYRAS
 all addressbooks	groupdav	lt	Visos adresų knygelės
 all categories	common	lt	Visos kategorijos
 all in one	groupdav	lt	Viskas viename
+allow editing the %1	common	lt	Leisti redaguoti %1
 andorra	common	lt	ANDORA
 angola	common	lt	ANGOLA
 answering no will not ask you again for this browser.	common	lt	Jei atsakysite "ne", šios naršyklės jūsų nebebus prašoma.

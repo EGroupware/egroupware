@@ -28,15 +28,20 @@ add	common	tr	ekle
 add a new contact	common	tr	Yeni bir ba?lant? ekle
 add current	common	tr	Favori olarak mevcut görünüm
 add to clipboard	common	tr	Panoya ekle
+add user to responsibles	groupdav	tr	Kullanıcıyı sorumlulara ekle
+add user to responsibles, removing evtl. previous category user	groupdav	tr	Sorumluya kullanıcı ekleyin, muhtemelen önceki kategori kullanıcılarını kaldırın
+add your domain as "%1" in options to list of email providers and enable api.	common	tr	Alan adınızı e-posta sağlayıcıları listesine seçeneklerde "%1" olarak ekleyin ve API'yi etkinleştirin.
 addressbook	common	tr	Adres Defteri
 addressbooks to sync in addition to personal addressbook	groupdav	tr	Kişisel adres defterine ek olarak senkronize edilecek adres defterleri
 admin	common	tr	Yönetici
+admin settings	common	tr	Yönetici ayarları
 admin settings for %1	common	tr	%1 için yönetici ayarları
 administration	common	tr	Yönetim
 advanced search	common	tr	Gelişmiş arama
 all addressbooks	groupdav	tr	Tüm adres defterleri
 all categories	common	tr	Tüm kategoriler
 all in one	groupdav	tr	Hepsi bir arada
+allow editing the %1	common	tr	%1'in düzenlenmesine izin ver
 and	common	tr	Ve
 answering no will not ask you again for this browser.	common	tr	Hayır yanıtını verirseniz, artık bu tarayıcı istenmeyecektir.
 application	common	tr	Uygulama

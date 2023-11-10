@@ -5,15 +5,15 @@
 %1 email addresses inserted	common	sk	%1 e-mailových adries bolo vložených
 %1 email(s) added into %2	common	sk	%1 e-mailov bolo pridaných do %2
 %1 entries found, select one ...	common	sk	Našlo sa %1 položiek, vyberte si jednu ...
-%1 etemplates deleted	common	sk	%1 eŠablón bolo odstránených
-%1 etemplates for application '%2' dumped to '%3'	common	sk	%1 eŠablón pre aplikáciu '%2' urobilo výpis do '%3'
-%1 etemplates found	common	sk	Našlo sa %1 eŠablón.
+%1 etemplates deleted	common	sk	%1 eTemplate bolo odstránených
+%1 etemplates for application '%2' dumped to '%3'	common	sk	%1 eTemplate pre aplikáciu '%2' urobilo výpis do '%3'
+%1 etemplates found	common	sk	Našlo sa %1 eTemplate.
 %1 file	common	sk	%1 súbor
 %1 is not executable by the webserver !!!	common	sk	%1 sa na webserveri nedá spustiť!!!
 %1 matches on search criteria	common	sk	Nájdených bolo %1 zhôd s vyhľadávacím kritériom
 %1 more %2 selected ...	common	sk	Vybraných bolo o %1 viac %2 ...
 %1 more...	common	sk	O %1 viac...
-%1 new etemplates imported for application '%2'	common	sk	Naimportovaných %1 nových eŠablón pre aplikáciu '%2'
+%1 new etemplates imported for application '%2'	common	sk	Naimportovaných %1 nových eTemplate pre aplikáciu '%2'
 %1 not implemented for %2!	common	sk	%1 nie je implementované pre %2!
 %1 proxy of %2	common	sk	%1 proxy k %2
 %1 setting "%2" = %3 disallows access via http!	admin	sk	%1nastavenie "%2" = %3 neumožňuje prístup cez http!
@@ -32,7 +32,7 @@
 '%1' is not a valid date !!!	common	sk	'%1' nie je platný dátum!
 '%1' is not a valid floatingpoint number !!!	common	sk	'%1' nie je platné číslo s plávajúcou desatinnou čiarkou!
 '%1' is not a valid integer !!!	common	sk	'%1' nie je platné celé číslo !
-'%1' is not a valid json file!	common	sk	'%1' nie je json súborom v root adresári eGW servera!
+'%1' is not a valid json file!	common	sk	'%1' nie je platný súbor JSON
 '%1' is not a valid timezone!	common	sk	'%1' nie je platné časové pásmo!
 '%1' is not allowed ('%2')!	common	sk	'%1' NIE je dovolené ('%2')!
 '%1' is not allowed%2)!	common	sk	'%1' NIE je dovolené %2)!
@@ -100,6 +100,7 @@ add your domain as "%1" in options to list of email providers and enable api.	co
 addressbook	common	sk	Adresár
 addressbooks to sync in addition to personal addressbook	groupdav	sk	Adresár ktorý sa má synchronizovať popri osobnom adresári
 admin	common	sk	Správca
+admin settings	common	sk	Nastavenia správcu
 admin settings for %1	common	sk	Správcovské nastavenia pre %1
 administration	common	sk	Správa
 advanced search	common	sk	Pokročilé hľadanie
@@ -142,9 +143,9 @@ antigua and barbuda	common	sk	ANTIQUA BARBUDA
 api	common	sk	EGroupware API
 api-accounts	common	sk	Používateľské účty
 application	common	sk	Aplikácia
-application has no etemplates (no file %1) to restore!	common	sk	Aplikácia nemá eŠablóny (žiadny súbor %1) ktoré by sa dali obnoviť!
-application name needed to restore etemplates!	common	sk	Pre obnovu eŠablón je potrebný názov aplikácie!
-application name needed to write a langfile or dump the etemplates !!!	common	sk	Názov aplikácie potrebuje zapísať jazykový súbor alebo urobiť výpis z eŠablón !!!
+application has no etemplates (no file %1) to restore!	common	sk	Aplikácia nemá eTemplates (žiadny súbor %1) ktoré by sa dali obnoviť!
+application name needed to restore etemplates!	common	sk	Pre obnovu eTemplates je potrebný názov aplikácie!
+application name needed to write a langfile or dump the etemplates !!!	common	sk	Názov aplikácie potrebuje zapísať jazykový súbor alebo urobiť výpis z eTemplates !!!
 applications	common	sk	Aplikácie
 applies the changes made	common	sk	Uplatnia sa vykonané zmeny
 applies the changes to the given version of the template	common	sk	vykoná zmeny urobené na danej verzii šablóny
@@ -388,7 +389,7 @@ default width for the windows	common	sk	Predvolená šírka okien
 del	common	sk	Del
 delete	common	sk	Odstrániť
 delete a single entry by passing the id.	common	sk	Odstrániť položku podľa zadaného ID.
-delete all selected etemplates, without further inquiry	common	sk	Odstrániť VŠETKY označené eŠablóny, BEZ ďalšieho varovania
+delete all selected etemplates, without further inquiry	common	sk	Odstrániť VŠETKY označené eTemplates, BEZ ďalšieho varovania
 delete backup	common	sk	Odstrániť zálohu
 delete backup key	common	sk	Odstrániť záložný kľúč
 delete category	common	sk	Odstrániť kategóriu
@@ -399,17 +400,17 @@ delete link	common	sk	Odstrániť odkaz
 delete link?	common	sk	Odstrániť odkaz?
 delete row	common	sk	Odstrániť Riadok
 delete selected entries?	common	sk	Odstrániť vybrané položky?
-delete the spezified etemplate	common	sk	Odstrániť vybranú eŠablónu
+delete the spezified etemplate	common	sk	Odstrániť vybranú eTemplate
 delete these entries	common	sk	Odstrániť tieto položky
 delete this column	common	sk	Odstrániť tento stĺpec
 delete this entry	common	sk	Odstrániť túto položku
-delete this etemplate	common	sk	Odstrániť túto eŠablónu
+delete this etemplate	common	sk	Odstrániť túto eTemplate
 delete this file	common	sk	Odstrániť tento súbor
 delete this photo?	common	sk	Odstrániť túto fotografiu?
 delete this row	common	sk	Odstrániť tento riadok
 delete whole column (can not be undone!!!)	common	sk	Odstrániť celý stĺpec (NEDÁ sa vrátiť späť !!!)
-deletes the above spez. etemplate from the database, can not be undone	common	sk	Odstráni vyššieuvedenú eŠablónu, NEDÁ sa vrátiť späť
-deletes the etemplate spez. above	common	sk	Odstráni vyššieuvedenú eŠablónu
+deletes the above spez. etemplate from the database, can not be undone	common	sk	Odstráni vyššieuvedenú eTemplate, NEDÁ sa vrátiť späť
+deletes the etemplate spez. above	common	sk	Odstráni vyššieuvedenú eTemplate
 deletes this column	common	sk	Odstráni tento stĺpec
 deletes this index	common	sk	Odstráni tento index
 denmark	common	sk	DÁNSKO
@@ -469,7 +470,7 @@ edit avatar	common	sk	Upraviť obrázok používateľa
 edit categories	common	sk	Upraviť kategórie
 edit category	common	sk	Upraviť kategóriu
 edit embeded css styles or of the applications app.css file	common	sk	upraviť vložené CSS štýly alebo súbor app.css aplikácie
-edit the etemplate spez. above	common	sk	Upraviť túto eŠablónu
+edit the etemplate spez. above	common	sk	Upraviť túto eTemplate
 edit...	common	sk	Upraviť...
 editable templates - db-tools	common	sk	Upraviteľné šablóny - DB-Nástroje
 editable templates - delete template	common	sk	Upraviteľné šablóny - Odstrániť šablónu
@@ -527,12 +528,12 @@ error: writing file (no write-permission for the webserver) !!!	common	sk	Chyba 
 estonia	common	sk	ESTÓNSKO
 et2 rendering took %1s	common	sk	eT2 rendering trval %1s
 etag	common	sk	EZnačka
-etemplate	common	sk	eŠablóna
-etemplate '%1' imported, use save to put it in the database	common	sk	eŠablóna '%1' naimportovaná, použite Uložiť pre vloženie do databázy
-etemplate '%1' written to '%2'	common	sk	eŠablóna '%1' zapísaná do '%2'
-etemplate editor	common	sk	Editor eŠablón
-etemplate reference	common	sk	Referenčná príručka eŠablón
-etemplate tutorial	common	sk	Tutoriál eŠablón
+etemplate	common	sk	eTemplate
+etemplate '%1' imported, use save to put it in the database	common	sk	eTemplate '%1' naimportovaná, použite Uložiť pre vloženie do databázy
+etemplate '%1' written to '%2'	common	sk	eTemplate '%1' zapísaná do '%2'
+etemplate editor	common	sk	Editor eTemplate
+etemplate reference	common	sk	Referenčná príručka eTemplate
+etemplate tutorial	common	sk	Tutoriál eTemplate
 ethiopia	common	sk	ETIÓPIA
 everything	common	sk	Všetko
 exact	common	sk	Presne
@@ -544,7 +545,7 @@ example {{nenvlf role}} - if field role is not empty, set a lf without any value
 exchange this row with the one above	common	sk	Zameniť tento riadok s riadkom vyššie
 exchange this two columns	common	sk	Zameniť tieto dva stĺpce
 expiration	common	sk	Expirácia
-export the loaded etemplate into a xml-file	common	sk	Exportovať nahranú eŠablónu do súboru XML
+export the loaded etemplate into a xml-file	common	sk	Exportovať nahranú eTemplate do súboru XML
 export xml	common	sk	Exportovať XML
 extensions loaded:	common	sk	Nahraté rozšírenia:
 failed to change mode of required directory "%1" to %2!	admin	sk	Zmena režimu požadovaného priečinka "%1" na "%2" zlyhala!
@@ -569,7 +570,7 @@ file %1 has no content in physical filesystem %2 --> file removed!	admin	sk	Súb
 file %1 has no content in physical filesystem %2!	admin	sk	Súbor %1 nemá obsah na fyzickom súborovom systéme %2 !
 file '%1' not found!	common	sk	Súbor '%1' sa nenašiel!
 file a file	common	sk	Uloženie súboru
-file contains more than one etemplate, last one is shown !!!	common	sk	Súbor obsahuje viac než jednu eŠablónu, zobrazuje sa iba posledná!!!
+file contains more than one etemplate, last one is shown !!!	common	sk	Súbor obsahuje viac než jednu eTemplate, zobrazuje sa iba posledná!!!
 file information	common	sk	Informácie o súbore
 file is of wrong type (%1 != %2)!	common	sk	Súbor je nesprávneho typu (%1 != %2)!
 file too large.  maximum %1	common	sk	Súbor je príliš veľký. Maximum je %1
@@ -698,7 +699,7 @@ image	common	sk	Obrázok
 image directory relative to document root (use / !), example:	common	sk	Adresár obrázkov vzťahujúci sa na koreňový adresár dokumentov (použite / !), príklad:
 image url	common	sk	URL adresa obrázka
 import	common	sk	Import
-import an etemplate from a xml-file	common	sk	Importovať eŠablónu zo súboru XML
+import an etemplate from a xml-file	common	sk	Importovať eTemplate zo súboru XML
 import table-definitions from existing db-table	common	sk	Importovať definície tabuľky z existujúcej db-tabuľky
 import xml	common	sk	Importovať XML
 in order to copy to clipboard, you need to allow flash player by clicking on gray box.\nyou can permanently allow flash player for egroupware in your browser settings.	common	sk	Ak chcete používať funkciu scránky, musíte povoliť prehrávač Flashkliknutím v šedom okienku.\nAk chcete prehrávač Flash povoliť natrvalo, urobte tak v nastaveniach vášho prehliadača.
@@ -899,7 +900,7 @@ myanmar	common	sk	MYANMAR
 name	common	sk	Meno
 name of other table where column is a key from	common	sk	názov inej tabuľky, kde stĺpec je kľúčom z
 name of table to add	common	sk	Názov tabuľky, ktorá sa má pridať
-name of the etemplate, should be in form application.function[.subtemplate]	common	sk	Názov eŠablóny, mal by byť vo forme aplikácia.funkcia[.podŠablóna]
+name of the etemplate, should be in form application.function[.subtemplate]	common	sk	Názov eTemplate, mal by byť vo forme aplikácia.funkcia[.podŠablóna]
 name of the user, eg. "%1"	common	sk	Meno používateľa, napr. "%1"
 namespace	common	sk	Menný priestor
 namibia	common	sk	NAMÍBIA
@@ -1088,7 +1089,7 @@ radiobutton	common	sk	Tlačítko vypnutia
 read	common	sk	Čítať
 read a list of entries.	common	sk	Čítať zoznam záznamov
 read a single entry by passing the id and fieldlist.	common	sk	Načítať jednotlivý záznam pomocou zadania id a zoznamu.
-read etemplate from database (for the keys above)	common	sk	Načítať eŠablónu z databázy (pre vyššieuvedené kľúče)
+read etemplate from database (for the keys above)	common	sk	Načítať eTemplate z databázy (pre vyššieuvedené kľúče)
 read this list of methods.	common	sk	Čítaj tento zoznam metód.
 reading	common	sk	Načítavam
 readonly	common	sk	Iba na čítanie
@@ -1162,7 +1163,7 @@ save as	common	sk	Uložiť ako
 save as zip	common	sk	Uložiť ako ZIP
 save selected columns as default preference for all users.	common	sk	Uložiť vybrané stĺpce ako predvolené nastavenie pre všetkých používateľov.
 save the changes made and close the window	common	sk	Uložiť vykonané zmeny a zavrieť okno
-save the etemplate under the above keys (name, ...), change them for a saveas	common	sk	Uložiť eŠablónu pod uvedenými hodnotami (názov,...), zmente ich ak chcete Uložiť Ako
+save the etemplate under the above keys (name, ...), change them for a saveas	common	sk	Uložiť eTemplate pod uvedenými hodnotami (názov,...), zmente ich ak chcete Uložiť Ako
 saved column sizes to preferences.	common	sk	Uložené veľkosti stĺpcov do predvolieb.
 saves changes to tables_current.inc.php	common	sk	Uloží zmeny do tables_current.inc.php
 saves the template with given version number and closes the window	common	sk	Uloží šablónu s uvedeným číslom verzie a zavrie okno.
@@ -1227,7 +1228,7 @@ select the columns to display in the list	common	sk	Vyberte, ktoré stĺpce sa m
 select the default height for the application windows	common	sk	Vyberte predvolenú výšku okien aplikácií
 select the default width for the application windows	common	sk	Vyberte predvolenú šírku okien aplikácií
 select the indexed columns in their desired order	common	sk	Vyberte indexované stĺpce v požadovanom poradí
-select this etemplate to delete it	common	sk	Vyberte túto eŠablónu, aby sa mohla odstrániť
+select this etemplate to delete it	common	sk	Vyberte túto eTemplate, aby sa mohla odstrániť
 select user	common	sk	Vyberte používateľa
 select user or group	common	sk	Vyberte používateľa alebo skupinu
 select which accounts to show	common	sk	Vyberte, ktoré účty zobraziť
@@ -1292,8 +1293,8 @@ show_more_apps	common	sk	ukázať viacero aplikácií
 showing	common	sk	Zobrazujem
 showing %1	common	sk	zobrazujem %1
 showing %1 - %2 of %3	common	sk	zobrazujem %1 - %2 z %3
-shows / allows you to enter values into the etemplate for testing	common	sk	Zobrazí / umožní zadať hodnoty do eŠablóny pre testovacie účely
-shows/displays etemplate for testing, does not save it before	common	sk	Zobrazí eŠablónu pre testovanie, NEuloží ju predtým
+shows / allows you to enter values into the etemplate for testing	common	sk	Zobrazí / umožní zadať hodnoty do eTemplate pre testovacie účely
+shows/displays etemplate for testing, does not save it before	common	sk	Zobrazí eTemplate pre testovanie, NEuloží ju predtým
 sierra leone	common	sk	SIERRA LEONE
 sign up	common	sk	Prihlásiť sa
 simple	common	sk	Jednoduché
@@ -1390,7 +1391,7 @@ to correct this error for the future you will need to properly set the	common	sk
 to examine or reinstate inactived files, you might need to turn versioning on.	admin	sk	Ak chcete preskúmať alebo obnoviť deaktivované súbory, musíte mať zapnuté verzovanie.
 to go back to the msg list, click <a href= %1 >here</a>	common	sk	<a href="%1">Naspäť na zoznam správ</a>
 to start the db-tools	common	sk	pre spustenie DB-nástrojov
-to start the etemplate editor	common	sk	pre spustenie editora eŠablón
+to start the etemplate editor	common	sk	pre spustenie editora eTemplate
 to start the search	common	sk	pre spustenie hľadania
 today	common	sk	Dnes
 todays date, eg. "%1"	common	sk	Dnešný dátum, napr. "%1"
@@ -1469,7 +1470,7 @@ video tutorials	common	sk	Videonávody
 viet nam	common	sk	VIETNAM
 view	common	sk	Zobraziť
 view linked %1 entries	common	sk	Zobraziť odkazovaných %1 položiek
-view this etemplate	common	sk	Zobraziť túto eŠablónu
+view this etemplate	common	sk	Zobraziť túto eTemplate
 view this linked entry in its application	common	sk	Zobraziť tento pripojený záznam v jeho aplikácii
 virgin islands, british	common	sk	PANENSKÉ OSTROVY, BRITSKÉ
 virgin islands, u.s.	common	sk	PANENSKÉ OSTROVY, AMERICKÉ

@@ -95,11 +95,12 @@ add sub	common	de	Untergeordnete hinzufügen
 add table	common	de	Tabelle zufügen
 add to clipboard	common	de	Zur Zwischenablage hinzufügen
 add user to responsibles	groupdav	de	Füge Benutzer zu Verantwortlichen hinzu
-add user to responsibles, removing evtl. previous category user	groupdav	de	füge Benutzer zu Verantwortlichen hinzu, entferne Benutzer der vorherigen Kategorie
+add user to responsibles, removing evtl. previous category user	groupdav	de	Füge Benutzer zu Verantwortlichen hinzu, entferne Benutzer der vorherigen Kategorie
 add your domain as "%1" in options to list of email providers and enable api.	common	de	Fügen Sie Ihre Domain als "%1" unter Optionen in der Liste der E-Mail-Anbieter hinzu und schalten Sie API ein.
 addressbook	common	de	Adressbuch
 addressbooks to sync in addition to personal addressbook	groupdav	de	Adressbücher die zusätzlich zum persönlichen synchronisiert werden sollen
 admin	common	de	Admin
+admin settings	common	de	Admin-Einstellungen
 admin settings for %1	common	de	Administrative Einstellungen für %1
 administration	common	de	Administration
 advanced search	common	de	Erweiterte Suche
@@ -318,7 +319,7 @@ comment	common	de	Kommentar
 common preferences	common	de	Allgemeine Einstellungen
 comoros	common	de	KOMOREN
 company	common	de	Unternehmen
-confirm	common	de	bestätigen
+confirm	common	de	Bestätigen
 confirmation message or custom javascript (returning true or false)	common	de	Bestätigungsmeldung oder spezielles JavaScript (true oder false zurückliefernd)
 confirmation necesary or custom java-script	common	de	Bestätigung notwendig oder spezielles JavaScript
 confirmation required	common	de	Bestätigung erforderlich

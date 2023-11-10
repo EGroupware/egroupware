@@ -3,6 +3,7 @@
 %1 more %2 selected ...	common	uk	Вибрано ще %1 %2...
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	uk	%1EGroupware%2 is a multi-user, web-based groupware suite written in %3PHP%4.
 '%1' copied to clipboard	common	uk	'%1' скопійовано в буфер обміну
+'%1' is not a valid json file!	common	uk	'%1' не є коректним JSON-файлом
 00 (disable)	admin	uk	00 (disable)
 1 day	common	uk	1 день
 1 hour	common	uk	1 година
@@ -39,9 +40,13 @@ add category	common	uk	Додати категорію
 add current	common	uk	Поточний перегляд у вибраному
 add sub	common	uk	Додати підкатегорію
 add to clipboard	common	uk	Додати в буфер обміну
+add user to responsibles	groupdav	uk	Додати користувача до відповідальних
+add user to responsibles, removing evtl. previous category user	groupdav	uk	Додайте користувача до відповідальних, можливо, видаліть користувачів попередніх категорій
+add your domain as "%1" in options to list of email providers and enable api.	common	uk	Додайте ваш домен як "%1" в опціях до списку поштових провайдерів та увімкніть API.
 addressbook	common	uk	Адресна книга
 addressbooks to sync in addition to personal addressbook	groupdav	uk	Адресні книги для синхронізації на додаток до особистої адресної книги
 admin	common	uk	Адміністрування
+admin settings	common	uk	Налаштування адміністратора
 admin settings for %1	common	uk	Налаштування адміністратора для %1
 administration	common	uk	Адміністрація
 advanced search	common	uk	Розширений пошук
@@ -53,6 +58,7 @@ all addressbooks	groupdav	uk	Всі адресні книги
 all categories	common	uk	Всі категорії
 all in one	groupdav	uk	Все в одному
 all users	common	uk	Всі користувачі
+allow editing the %1	common	uk	Дозволити редагування %1
 andorra	common	uk	АНДОРРА
 angola	common	uk	АНГОЛА
 answering no will not ask you again for this browser.	common	uk	Якщо ви відповісте "ні", вам більше не буде запропоновано цей браузер.

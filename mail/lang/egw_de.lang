@@ -1,8 +1,8 @@
 %1 attachments	mail	de	%1 Anhänge
-%1 has been added to blacklisted email addresses	mail	de	%1 wurde als E-Mail-Adresse zur Blackliste hinzugefügt
-%1 has been added to whiltelisted email addresses	mail	de	%1 wurde als E-Mail-Adresse zur Whiteliste hinzugefügt
-%1 has been removed from blacklisted email addresses	mail	de	%1 wurde als E-Mailadresse von der Blackliste entfernt
-%1 has been removed from whiltelisted email addresses	mail	de	%1 wurde als E-Mail-Adresse von der Whiteliste entfernt
+%1 has been added to blacklisted email addresses	mail	de	%1 wurde als E-Mail-Adresse zur Blacklist hinzugefügt
+%1 has been added to whiltelisted email addresses	mail	de	%1 wurde als E-Mail-Adresse zur Whitelist hinzugefügt
+%1 has been removed from blacklisted email addresses	mail	de	%1 wurde als E-Mail-Adresse von der Blacklist entfernt
+%1 has been removed from whiltelisted email addresses	mail	de	%1 wurde als E-Mail-Adresse von der Whitelist entfernt
 %1 is not writable by you!	mail	de	%1 ist nicht beschreibbar für Sie
 %1 mails selected	mail	de	%1 E-Mail(s)  ausgewählt
 (*) please consider, forward to multiple addresses will not work if number of addresses exceeds the limit. for most mail servers the limit is 4 by default, please contact your mail server administrator for further info.	mail	de	(*)  Achtung: Eine Weiterleitung an mehr als 4 E-Mail-Adressen funktioniert bei den einigen Mailservern nicht. Daher ist das als Limit zur Eingabe festgelegt. Für weitere Informationen kontaktieren sie bitte Ihren Administrator.
@@ -19,7 +19,7 @@ activating by date requires a start- and end-date!	mail	de	Die Aktivierung nach 
 add "%1" into blacklisted domains	mail	de	Domain "%1" zu Blacklist hinzufügen
 add "%1" into blacklisted emails	mail	de	E-Mail-Adresse "%1" zu Blacklist hinzufügen
 add "%1" into whiltelisted domains	mail	de	Domain "%1" zu Whitelist hinzufügen
-add "%1" into whitelisted emails	mail	de	E-Mai-Adresse "%1" zu Whitelist hinzufügen
+add "%1" into whitelisted emails	mail	de	E-Mail-Adresse "%1" zu Whitelist hinzufügen
 add a new folder to %1:	mail	de	Einen neuen Ordner erstellen unter:  %1
 add all my aliases	mail	de	Alle Alias-Adressen hinzufügen
 add as new	mail	de	Neues Ticket erstellen
@@ -27,12 +27,12 @@ add files as %1	mail	de	Dateien hinzufügen als %1
 add folder	mail	de	Ordner hinzufügen
 add raw message, ignore mail attachments	mail	de	Konvertiere E-Mail zum Eintrag und füge die original E-Mail an (aber keine Anhänge)
 add this certificate into contact	mail	de	Dieses Zertifikat dem Kontakt hinzufügen
-add to addressbook	mail	de	zum Adressbuch hinzufügen
+add to addressbook	mail	de	Zum Adressbuch hinzufügen
 add your domain as "%1" in options to list of email providers and enable api.	mail	de	Fügen Sie Ihre Domain als "%1" in Optionen zu der Liste der E-Mail-Anbieter hinzu und schalten sie API ein.
-adding %1 to blacklisted email addresses failed because of %2	mail	de	Hinzufügen von %1 als E-Mailadresse zur Blackliste ist fehlgeschlagen, da %2
-adding %1 to whiltelisted email addresses failed because of %2	mail	de	Hinzufügen von %1 als E-Mailadresse zur Whiteliste ist fehlgeschlagen, da %2
+adding %1 to blacklisted email addresses failed because of %2	mail	de	Hinzufügen von %1 als E-Mailadresse zur Blacklist ist fehlgeschlagen, da %2
+adding %1 to whiltelisted email addresses failed because of %2	mail	de	Hinzufügen von %1 als E-Mailadresse zur Whitelist ist fehlgeschlagen, da %2
 after reply, visible during compose	mail	de	Unter dem zitierten Text, sichtbar während der Bearbeitung
-aliases+forwards	mail	de	Aliase+Weiterleitungen
+aliases+forwards	mail	de	Aliase + Weiterleitungen
 all	mail	de	alle
 all adresses:	mail	de	Alle Adressen
 all available info	admin	de	alle verfügbaren Informationen
@@ -89,7 +89,7 @@ certificate info for email %1	mail	de	Zertifikat-Info für E-Mail %1
 change editor type	mail	de	Als HTML-E-Mail verfassen
 changed profile	mail	de	Profil geändert
 changing subject failed because of %1	mail	de	Ändern des Betreffs fehlgeschlagen wegen %1
-changing subject failed folder %1 does not exist	mail	de	Ändern des Betreffs fehlgeschlagen Ordner %1 existiert nicht
+changing subject failed folder %1 does not exist	mail	de	Ändern des Betreffs fehlgeschlagen, Ordner %1 existiert nicht
 check message against next rule also	mail	de	Nachricht auch gegen nächste Regel prüfen
 check to receive a notification when the message is read (note: not all clients support this and/or the receiver may not authorize the notification)	mail	de	Markieren Sie diese Option, damit Sie eine Empfangsbestätigung erhalten, wenn der Empfänger diese E-Mail gelesen hat. (Beachten Sie bitte, das nicht alle Programme diese Option unterstützen bzw. manche Empfänger keine Bestätigung senden möchten.)
 check to save as calendar event on send	mail	de	Nach dem Versenden als Termin erstellen
@@ -195,8 +195,8 @@ email notification update failed	mail	de	Die Benachrichtigung über den Gelesen-
 email notification update failed! you need to set an email address!	mail	de	Aktualisierung der E-Mail Benachrichtigungen fehlgeschlagen! Es muss eine E-Mail-Adresse ausgewählt sein!
 emailaddress	admin	de	E-Mail
 emailadmin: profilemanagement	mail	de	E-Mail-Admin: Profilmanagement
-emails in blacklisted domains are marked as spam	mail	de	E-Mailadressen aus der Domain-Blackliste, werden als Spam markiert
-emails in whitelisted domains are not marked as spam	mail	de	E-Mailadressen aus der Domain-Whiteliste, werden nicht als Spam markiert
+emails in blacklisted domains are marked as spam	mail	de	E-Mailadressen auf der Domain-Blacklist werden als Spam markiert
+emails in whitelisted domains are not marked as spam	mail	de	E-Mailadressen auf der Domain-Whitelist, werden nicht als Spam markiert
 empty junk	mail	de	Spam-Ordner leeren
 empty trash	mail	de	Papierkorb leeren
 empty trash and junk	mail	de	Papierkorb und Spam-Ordner leeren
@@ -398,7 +398,7 @@ no sneak preview in list	mail	de	Ohne Kurzvorschau
 no subject given!	mail	de	Kein Betreff angegeben!
 no subject supplied	mail	de	Kein Betreff angegeben!
 no text body supplied, check attachments for message text	mail	de	Keine Text vorhanden, bitte sehen Sie sich die Anlagen dieser E-Mail an.
-no vacation notice text provided. please enter a message.	mail	de	Kein Nachrichtentext vorhanden. Sie müssen einen Nachrichtentext eingeben um Ihre Abwesendheitsnotiz speichern (ändern, aktivieren oder deaktivieren) zu können.
+no vacation notice text provided. please enter a message.	mail	de	Kein Nachrichtentext vorhanden.<br>Sie müssen einen Nachrichtentext eingeben um Ihre Abwesenheitsnotiz speichern (ändern, aktivieren oder deaktivieren) zu können.
 no valid %1 folder configured!	mail	de	Kein gültiger %1 Ordner eingestellt!
 non	mail	de	Kein
 none, create all	mail	de	keine, erstellt alle
@@ -471,14 +471,14 @@ reloaded account %1	mail	de	Lade das Konto %1 neu
 reloaded folder %1	mail	de	Ordner %1 neu geladen
 remember the password for	mail	de	Passwort merken für
 remove "%1" from blacklisted domains	mail	de	Lösche "%1" aus der Blacklist Domainliste
-remove "%1" from blacklisted emails	mail	de	Lösche "%1" aus der E-Mail Blackliste
+remove "%1" from blacklisted emails	mail	de	Lösche "%1" aus der E-Mail Blacklist
 remove "%1" from whiltelisted domains	mail	de	Lösche "%1" aus der Whitelist Domainliste
-remove "%1" from whiltelisted emails	mail	de	Lösche "%1" aus der E-Mail Whiteliste
+remove "%1" from whiltelisted emails	mail	de	Lösche "%1" aus der E-Mail Whitelist
 remove all	mail	de	Alle entfernen
 remove immediately	mail	de	Sofort löschen
 removed folder %1	mail	de	Ordner %1 gelöscht
-removing %1 from blacklisted email addresses failed because of %2	mail	de	Löschen von %1 als E-Mailadresse von der Blackliste fehlgeschlagen, da %2
-removing %1 from whiltelisted email addresses failed because of %2	mail	de	Löschen von %1 als E-Mailadresse von der Whiteliste fehlgeschlagen, da %2
+removing %1 from blacklisted email addresses failed because of %2	mail	de	Löschen von %1 als E-Mailadresse von der Blacklist fehlgeschlagen, da %2
+removing %1 from whiltelisted email addresses failed because of %2	mail	de	Löschen von %1 als E-Mailadresse von der Whitelist fehlgeschlagen, da %2
 rename folder	mail	de	Umbenennen
 rename folder %1 ?	mail	de	Ordner %1 umbenennen?
 rename folder %1 to:	mail	de	Ordner %1 umbenennen in:
@@ -604,7 +604,7 @@ sources	mail	de	HTML-Quellcode
 spamtitan api url	mail	de	SpamTitan API URL
 spamtitan integration requires epl version	mail	de	SpamTitan-Integration benötigt die EPL Version
 start new messages with mime type plain/text or html?	mail	de	Sollen neue E-Mails als Text- oder HTML-Nachrichten verfasst werden?
-start reply messages with mime type plain/text or html or try to use the displayed format (default)?	mail	de	Antworten auf und weiterleiten von E-Mails im Text-, im HTML-Format oder entsprechend des Formats, in dem die E-Mail vom Sender ursprünglich verfasst wurde.
+start reply messages with mime type plain/text or html or try to use the displayed format (default)?	mail	de	Antworten auf und weiterleiten von E-Mails im Text-, im HTML-Format oder entsprechend des Formats, in dem die E-Mail vom Sender ursprünglich verfasst wurde (Standard).
 step 1: imap - incoming mail	mail	de	1. Schritt: Posteingang (IMAP) einrichten
 step 2: folder	mail	de	2. Schritt: Ordner einrichten
 step 3: sieve - server side mail filtering	mail	de	3. Schritt: Serverseitige Filterregeln (Sieve) einrichten
@@ -634,7 +634,7 @@ the entered passphrase is not correct! please try again.	mail	de	Das eingegebene
 the folder %1 's acls saved	mail	de	Die Zugriffskontrollrechte des Ordners %1 wurden gespeichert
 the folder <b>%1</b> will be used, if there is nothing set here, and no valid predefine given.	mail	de	Der Ordner <b>%1</b> wird verwendet, wenn hier nichts gesetzt ist und kein gültiger Vorgabewert eingetragen ist.
 the imap server need to meet certain requirements and be configured for it:	mail	de	Der IMAP Server muss verschiedene Vorraussetzungen erfüllen UND dafür konfiguriert sein:
-the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	mail	de	Der Absender hat eine Empfangsbestätigung angefordert, um sicherzustellen, dass Sie diese E-Mail gelesen haben. Möchten Sie eine Empfangsbestätigung senden?
+the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	mail	de	Der Absender hat eine Empfangsbestätigung angefordert, um sicher zu stellen, dass Sie diese E-Mail gelesen haben.<br>Möchten Sie eine Empfangsbestätigung senden?
 the mimeparser can not parse this message.	mail	de	Der MIME Parser versteht diese Nachricht nicht.
 the rule with priority %1 successfully saved!	mail	de	Die Regel mit Priorität %1 wurde erfolgreich gespeichert!
 then	mail	de	dann
@@ -660,7 +660,7 @@ unsubscribe folder	mail	de	Ordner abbestellen
 unsubscribe from folder %1	mail	de	Ordner %1 abbestellen
 upload files...	mail	de	Anhang
 use default timeout (20 seconds)	mail	de	verwende Standard Timeout (20 Sekunden)
-use regular expressions (see wikipedia for information on posix regular expressions)	mail	de	Reguläre Ausdrücke verwenden (siehe Wikipedia Artikel bzgl. POSIX Regular Expressions)
+use regular expressions (see wikipedia for information on posix regular expressions)	mail	de	Reguläre Ausdrücke verwenden (siehe <a href="https://en.wikipedia.org/wiki/Regular_expression" target="_blank">Wikipedia: Regular expression</a>)
 use source as displayed, if applicable	mail	de	Format wie E-Mail-Anzeige
 use username+password from current user	mail	de	Verwendet Benutzername+Passwort des angemeldeten Benutzers
 use wizard to detect or verify configuration	mail	de	Benutze Assistent um die Konfiguration zu erstellen und/oder zu verifizieren
@@ -688,7 +688,7 @@ when sending messages	mail	de	Wenn Nachrichten versendet werden
 which folders (additional to the sent folder) should be displayed using the sent folder view schema	mail	de	Welche E-Mail-Ordner, zusätzlich zum Gesendet-Ordner, sollen im Anzeigenschema analog des Gesendet-Ordners  dargestellt werden (Empfänger-Adresse, anstatt der Absender-Adresse).
 which folders - in general - should not be automatically created, if not existing	mail	de	Welche E-Mail-Ordner sollen generell NICHT automatisch angelegt werden, wenn Sie nicht existieren? Wählen Sie hier die Ordner aus, die NICHT von EGroupware automatisch angelegt werden dürfen.
 which method to use when forwarding a message	mail	de	Wählen Sie die Methode zum Weiterleiten von Nachrichten.
-whitelisted mails are not marked as spam	mail	de	E-Mail-Adressen aus der Domain-Whiteliste, werden nicht als Spam markiert
+whitelisted mails are not marked as spam	mail	de	E-Mail-Adressen auf der Domain-Whitelist, werden nicht als Spam markiert
 whole message	mail	de	gesamte Nachricht
 with message:	mail	de	mit folgender Nachricht:
 wizard	mail	de	Assistent

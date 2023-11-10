@@ -32,7 +32,7 @@
 '%1' is not a valid date !!!	common	ja	'%1' の日付が不正です!
 '%1' is not a valid floatingpoint number !!!	common	ja	'%1' は不正な浮動小数です!
 '%1' is not a valid integer !!!	common	ja	'%1' は無効な整数です!
-'%1' is not a valid json file!	common	ja	'%1' は有効な json ファイルではありません。
+'%1' is not a valid json file!	common	ja	'%1' は有効な JSON ファイルではありません。
 '%1' is not a valid timezone!	common	ja	'%1' は無効なタイムゾーンです!
 '%1' is not allowed ('%2')!	common	ja	'%1' は禁止されています ('%2')!
 '%1' is not allowed%2)!	common	ja	'%1' 禁止されています %2)!
@@ -100,6 +100,7 @@ add your domain as "%1" in options to list of email providers and enable api.	co
 addressbook	common	ja	アドレス帳
 addressbooks to sync in addition to personal addressbook	groupdav	ja	個人アドレス帳に加えて同期するアドレス帳
 admin	common	ja	管理
+admin settings	common	ja	管理者設定
 admin settings for %1	common	ja	管理者設定 %1
 administration	common	ja	管理
 advanced search	common	ja	詳細検索
@@ -118,6 +119,7 @@ all in one	groupdav	ja	ひとつにまとめる
 all languages	common	ja	全言語
 all operations save the template!	common	ja	All operations save the template!
 all users	common	ja	全ユーザ
+allow editing the %1	common	ja	%1 の編集を許可します。
 allowed file type: %1	common	ja	利用可能なファイル・タイプ: %1
 allows to modify responsible users from devices not supporting them, by setting email address of a user as category.	groupdav	ja	電子メール・アドレスをカテゴリとして設定することにより、機能を持たないデバイスからでも責任者を変更することを許可します。
 alt	common	ja	Alt

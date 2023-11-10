@@ -4,8 +4,10 @@
 acl rights retrieve failed, seems there are no rights set!	mail	pl	Pobieranie uprawnień ACL nie powiodło się, wygląda na to, że nie ustawiono żadnych uprawnień!
 activating by date requires a start- and end-date!	mail	pl	Aktywacja wymaga daty rozpoczęcia i zakończenia
 add all my aliases	mail	pl	Dodaj wszystkie moje aliasy
+add as new	mail	pl	Dodaj jako nowy
 add files as %1	mail	pl	Dodaj pliki jako %1
 add raw message, ignore mail attachments	mail	pl	Konwersja poczty do elementu, dodanie surowej wiadomości (ignorowanie załączników do poczty)
+add this certificate into contact	mail	pl	Dodaj ten certyfikat do kontaktu
 add to addressbook	mail	pl	dodaj do książki adresowej
 adding %1 to blacklisted email addresses failed because of %2	mail	pl	Dodanie %1 do adresów e-mail na czarnej liście nie powiodło się z powodu %2
 adding %1 to whiltelisted email addresses failed because of %2	mail	pl	Dodanie %1 do adresów e-mail z białej listy nie powiodło się z powodu %2
@@ -29,13 +31,15 @@ be aware that all attachments will be sent as %1!	mail	pl	Pamiętaj, że wszystk
 by date	mail	pl	Według daty
 by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	pl	Domyślnie "http://" jest po prostu zastępowane przez "https://". Możesz skonfigurować 'https://proxy.egroupware.org/', aby ładować również obrazy dostępne tylko przez http.
 caching of flags	mail	pl	Buforowanie flag
+can not resolve the winmail.dat attachment!	mail	pl	Nie można rozwiązać załącznika winmail.dat!
+certificate info for email %1	mail	pl	Informacje o certyfikacie dla wiadomości e-mail %1
 changing subject failed because of %1	mail	pl	Zmiana tematu nie powiodła się z powodu %1
 changing subject failed folder %1 does not exist	mail	pl	Zmiana tematu nie powiodła się folder %1 nie istnieje
-check message against next rule also	mail	pl	sprawdź również kolejnę regułę
+check message against next rule also	mail	pl	Sprawdź również kolejnę regułę
 compose	mail	pl	Utwórz
 compose as new	mail	pl	Utwórz nowe
 compress folder	mail	pl	Kompaktuj folder
-condition	mail	pl	warunek
+condition	mail	pl	Warunek
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	pl	Skonfigurowane wartości zostaną ustawione automatycznie w oknie dialogowym kompilacji dla wybranego pola podczas tworzenia nowej wiadomości e-mail.
 contact label	mail	pl	Etykieta kontaktu
 contains	mail	pl	zawiera
@@ -54,11 +58,14 @@ deleted	mail	pl	skasowany
 disable	mail	pl	Wyłącz
 disable caching of flags	mail	pl	Wyłączenie buforowania flag
 discard	mail	pl	odrzuć
-discard message	mail	pl	odrzuć wiadomość
+discard message	mail	pl	Odrzuć wiadomość
 display messages in multiple windows	mail	pl	wyświetl wiadomości w wielu oknach
 display of html emails	mail	pl	Wyświetlaj wiadomość w HTML
 display only when no plain text is available	mail	pl	Wyświetlaj jedynie, jeżeli nie ma wersji tekstowej
 displaying html messages is disabled	mail	pl	Wyświetlanie wiadomości w HTML jest wyłączone
+do you really want to toggle flag %1 for all messages in the current view?	mail	pl	Czy naprawdę chcesz przełączyć flagę %1 dla WSZYSTKICH wiadomości w bieżącym widoku?
+do you really want to toggle label %1 for all messages in the current view?	mail	pl	Czy naprawdę chcesz przełączyć etykietę %1 dla WSZYSTKICH wiadomości w bieżącym widoku?
+do you want to be asked for confirmation before attaching selected messages to new mail?	mail	pl	Czy chcesz zostać poproszony o potwierdzenie przed dołączeniem wybranych wiadomości do nowej wiadomości e-mail?
 do you want to be asked for confirmation before moving selected messages to another folder?	mail	pl	Czy chcesz być pytany o potwierdzenie przed przeniesieniem wybranej wiadomości do innego folderu?
 do you want to prevent the editing/setup of filter rules (, even if sieve is enabled)?	mail	pl	Czy chcesz zapobiec edycji / konfigurowaniu reguł filtra (nawet jeśli Sieve jest włączone)?
 do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	mail	pl	Czy chcesz zapobiec edycji / konfigurowaniu powiadomienia wysyłanego na inne adresy email jeśli pojawią się nowe wiadomości (nawet jeśli Sieve jest włączone)?
@@ -118,7 +125,9 @@ from	mail	pl	Z
 from(a->z)	mail	pl	Od (A->Z)
 from(z->a)	mail	pl	Od (Z->A)
 general	admin	pl	Główne
+get acl rights failed from imap server!	mail	pl	Pobieranie uprawnień ACL z serwera IMAP nie powiodło się!
 greater than	mail	pl	większe niż
+ham folder	mail	pl	Folder Ham
 handling of external http images / mixed content in mails	mail	pl	Obsługa zewnętrznych obrazów http / zawartości mieszanej w wiadomościach e-mail
 header lines	mail	pl	Linie nagłówka
 how to forward messages	mail	pl	sposób przekazywania wiadomości
@@ -178,27 +187,32 @@ mark as deleted	mail	pl	Zaznacz jako usunietą
 matches	mail	pl	pasuje do
 matches regexp	mail	pl	pasuje do wyrażenia regularnego
 message body	mail	pl	wiadomość
+message learned as spam and moved to spam folder	mail	pl	Wiadomość została rozpoznana jako spam i przeniesiona do folderu spamu
 modify subject	mail	pl	Zmień temat
 modify subject of this message	mail	pl	Zmień temat tej wiadomości
-move selected to	mail	pl	przenieś wiadomości do
-move to	mail	pl	przenieś wiadomości do
-move to trash	mail	pl	przenieś do kosza
+move selected to	mail	pl	Przenieś wiadomości do
+move to	mail	pl	Przenieś wiadomości do
+move to trash	mail	pl	Przenieś do kosza
 name and email	mail	pl	Imię i adres e-mail
 never display html emails	mail	pl	Nigdy nie wyświetlaj emaili HTML
 no access	mail	pl	Brak dostępu
 no address to/cc/bcc supplied, and no folder to save message to provided.	mail	pl	Nie podano adresu (TO/CC/BCC) ani folderu do zapisania wiadomości.
+no folder destination supplied, and no folder to save message or other measure to store the mail (save to infolog/tracker) provided, but required.	mail	pl	Nie podano miejsca docelowego folderu ani folderu do zapisania wiadomości lub innego środka do przechowywania poczty (zapisz w InfoLog/Ticketsystem), ale jest to wymagane.
 no folders	mail	pl	brak folderów
-no plain text part found	mail	pl	brak części 'czystym' tekstem
+no plain text part found	mail	pl	Brak części 'czystym' tekstem
 no recipient address given!	mail	pl	Nie podano adresu docelowego!
 no signature	mail	pl	brak podpisu
 no sneak preview in list	mail	pl	Brak podglądu wiadomości
 no subject given!	mail	pl	Nie podano tematu!
+non	mail	pl	Nie
 none, create all	mail	pl	żaden, utwórz wszystko
 nothing to change.	mail	pl	Brak elementów do wprowadzenia zmian.
 on	mail	pl	na
 one address is not valid	mail	pl	Jeden adres nie jest poprawny
 only email	mail	pl	Tylko email
+only makes sense, if you transport password through a different channel / outside of this mail to recipients!	mail	pl	Ma sens tylko w przypadku przesyłania hasła innym kanałem / poza tą pocztą do odbiorców!
 only name	mail	pl	Tylko nazwa
+only needed for some servers, that do not return all folders on root level queries to retrieve all folders for that level	mail	pl	Potrzebne tylko w przypadku niektórych serwerów, które nie zwracają wszystkich folderów na poziomie głównym, aby pobrać wszystkie foldery dla tego poziomu.
 only one window	mail	pl	tylko jedno okno
 open in html mode	mail	pl	Otwórz w trybie HTML
 open in text mode	mail	pl	Otwórz w trybie tekstowym
@@ -211,14 +225,19 @@ outbox	mail	pl	Skrzynka nadawcza
 permission denied	mail	pl	Dostęp zabroniony
 please configure access to an existing individual imap account.	mail	pl	proszę skonfigurować dostęp do istniejącego konta IMAP.
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	pl	Skonfiguruj certyfikat S/MIME w zakładce Szyfrowanie znajdującej się w oknie dialogowym Edytuj konto.
+please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	pl	Skontaktuj się z administratorem, aby sprawdzić, czy serwer obsługuje reguły filtrowania po stronie serwera i jak włączyć je w EGroupware dla aktywnego konta (%1) z ID:%2.
+please contact your administrator to validate if your server supports serverside vacationmessages, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	pl	Skontaktuj się z administratorem, aby sprawdzić, czy serwer obsługuje wiadomości urlopowe po stronie serwera i jak włączyć je w EGroupware dla aktywnego konta (%1) z ID:%2.
+please enter password	mail	pl	Wprowadź hasło
 please select a address	mail	pl	Proszę wybrać adres
 please select the number of days to wait between responses	mail	pl	Wybierz, ile dni czekać między odpowiedziami
 please supply the message to send with auto-responses	mail	pl	Proszę wprowadzić wiadomość przesyłaną w automatycznych odpowiedziach
+post	mail	pl	wysłać
 predefined addresses for compose	mail	pl	Predefiniowane adresy dla kompozycji
 preview pane	mail	pl	Układ okna
 printing	mail	pl	Drukowanie
 printview	mail	pl	wydrukuj widok
 processing of file %1 failed. failed to meet basic restrictions.	mail	pl	Przetwarzanie pliku %1 nie powiodło się. Nie dotrzymano podstawowych restrykcji.
+provide a default vacation text, (used on new vacation messages when there was no message set up previously)	admin	pl	Podaj domyślny tekst urlopu (używany w nowych wiadomościach urlopowych, gdy nie było wcześniej skonfigurowanej wiadomości).
 push notifications	mail	pl	Powiadomienia push
 quicksearch	mail	pl	Szybkie wyszukiwanie
 quicksearch (with cc)	mail	pl	szybkie wyszukiwanie (+Kopia)
@@ -238,25 +257,51 @@ replied	mail	pl	odpowiedziano
 reply	mail	pl	Odpowiedz
 reply all	mail	pl	Odpowiedz wszystkim
 reply to	mail	pl	Odpowiedz
+replying to this message failed because the content of this message seems to be encrypted and can not be decrypted properly. if you still wish to include content of this encrypted message, you may try to use forward as attachment instead.	mail	pl	Odpowiadanie na tę wiadomość nie powiodło się, ponieważ treść tej wiadomości wydaje się być zaszyfrowana i nie można jej poprawnie odszyfrować. Jeśli nadal chcesz dołączyć treść tej zaszyfrowanej wiadomości, możesz zamiast tego spróbować użyć opcji prześlij jako załącznik.
 replyto	mail	pl	Odpowiedz
+report as ham	mail	pl	Zgłoś jako Ham
+report as spam	mail	pl	Zgłoś jako spam
+report this email content as ham (not spam) - spam solutions like spamtitan will learn	mail	pl	Zgłoś tę wiadomość jako spam - rozwiązania antyspamowe, takie jak SpamTitan, nauczą się.
+report this email content as spam - spam solutions like spamtitan will learn	mail	pl	Zgłoś tę treść wiadomości e-mail jako spam - rozwiązania antyspamowe, takie jak spamTitan, będą się uczyć
+required pear class mail/mimedecode.php not found.	mail	pl	Nie znaleziono wymaganej klasy PEAR Mail/mimeDecode.php.
+required to disable if you use dovecot with private seen flags on shared or user folder!	mail	pl	Wymagane do wyłączenia, jeśli używasz Dovecot z prywatnymi flagami widocznymi w folderze współdzielonym lub folderze użytkownika!
 row order style	mail	pl	styl porządku wierszy
 save all	mail	pl	Zapisz wszystko
 save all attachments to filemanager	mail	pl	Zapisz wszystkie załączniki do menadżera plików
-save as draft	mail	pl	zapisz jako szkic
-save as infolog	mail	pl	zapisz jako zadanie Dziennika CRM
-save message to disk	mail	pl	zachowaj wiadomość na dysku
+save as draft	mail	pl	Zapisz jako szkic
+save as infolog	mail	pl	Zapisz jako zadanie Dziennika CRM
+save as infolog on send	mail	pl	Sprawdź przycisk, aby utworzyć jako InfoLog po wysłaniu
+save as tracker on send	mail	pl	Zaznacz przycisk, aby utworzyć jako bilet po wysłaniu
+save message to disk	mail	pl	Zachowaj wiadomość na dysku
+save the drafted message as eml file into vfs	mail	pl	Zapisz przygotowaną wiadomość jako plik eml w Menedżerze plików
+saving of message %1 failed. destination folder %2 does not exist.	mail	pl	Zapisanie wiadomości %1 nie powiodło się. Folder docelowy %2 nie istnieje.
+saving of message %1 succeeded. check folder %2.	mail	pl	Zapisanie wiadomości %1 powiodło się. Sprawdź folder %2.
+saving the rule failed:	mail	pl	Zapisanie reguły nie powiodło się:
+security	mail	pl	Bezpieczeństwo
+see attachments for content of the orignial mail	mail	pl	Zobacz załączniki dla treści oryginalnej wiadomości e-mail
 select all	mail	pl	Zaznacz wszystkie
+select an existing entry in order to append mail content to it	mail	pl	Wybierz istniejący wpis, aby dołączyć do niego treść wiadomości e-mail
+select an item to read	mail	pl	Wybierz element do przeczytania
 select or insert email address	mail	pl	Wybierz lub wstaw adres e-mail
 selected date range (with quicksearch)	mail	pl	Zakres dat ( z szybkim wyszukiwaniem)
+send message and move to send folder (if configured)	mail	pl	Wyślij wiadomość i przenieś do folderu wysyłania (jeśli skonfigurowano)
+send message pgp encrypted: requires keys from all recipients!	mail	pl	Wysyłanie wiadomości zaszyfrowanych PGP: wymaga kluczy od wszystkich odbiorców!
 sender	mail	pl	nadawca
 sent	mail	pl	Wysłano
 sent folder	mail	pl	Folder Wysłane
+server supports special-use folders	mail	pl	Serwer obsługuje foldery specjalnego przeznaczenia
 set flags	mail	pl	Oznacz e-mail jako
 set predefined values for compose...	mail	pl	Ustaw predefiniowane wartości dla komponowania ...
+should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	pl	Czy podpis powinien być wstawiany po (standardowo) lub przed odpowiedzią lub przesłaniem dalej oraz czy podpis powinien być widoczny i możliwy do zmiany podczas tworzenia.
+show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	pl	pokazywanie wszystkich folderów (subskrybowanych i niesubskrybowanych) w panelu folderów na ekranie głównym
 show notification for new arriving mails	mail	pl	Wyświetlaj powiadomienia o nowych wiadomościach
+show test connection section and control the level of info displayed?	mail	pl	Pokazywać sekcję połączenia testowego i kontrolować poziom wyświetlanych informacji?
+show test connection section and control the level of info displayed??	mail	pl	Pokazać sekcję połączenia testowego i kontrolować poziom wyświetlanych informacji?
+show them this time only	mail	pl	Pokaż je tylko tym razem
 show vertical	mail	pl	Pokaż w pionie
 show vertical with all columns	mail	pl	Pokaż w pionie ze wszystkimi kolumnami
 show/hide preview pane in mail list view	mail	pl	Pokaż/ukryj panel podglądu w widoku listy wiadomości
+shows a temporary visible notification including from address, subject and a snippet of the mail	mail	pl	Wyświetla tymczasowo widoczne powiadomienie zawierające adres, temat i fragment wiadomości e-mail.
 sieve	mail	pl	Sieve
 sieve script name	mail	pl	Nazwa skryptu Sieve
 signature	mail	pl	Sygnaturka
@@ -294,10 +339,10 @@ trash	mail	pl	Kosz
 trash folder	mail	pl	Folder Kosza
 unflagged	mail	pl	Nie oflagowano
 unread	mail	pl	nieprzeczytane
-vacation notice	mail	pl	powiadomienie urlopowe
+vacation notice	mail	pl	Powiadomienie urlopowe
 vacation notice is active	mail	pl	Powiadomienie urlopowe jest aktywne
 vacation start-date must be before the end-date!	mail	pl	Start Urlopu musi być wcześniejszy niż jego koniec
-view header lines	mail	pl	pokaż linie nagłówka
+view header lines	mail	pl	Pokaż linie nagłówka
 when deleting messages	mail	pl	Gdy usuwasz wiadomość
 which folders (additional to the sent folder) should be displayed using the sent folder view schema	mail	pl	które foldery (oprócz Wysłane) powinny być wyświetlone z użyciem schematy folderu "Wysłane"
 which folders - in general - should not be automatically created, if not existing	mail	pl	które foldery - ogólnie - nie powinny być automatycznie tworzone jeśli nie istnieją
@@ -305,5 +350,15 @@ whole message	mail	pl	cała wiadomość
 write	mail	pl	Zapisz
 wrote	mail	pl	zapisano
 yes, offer copy option	mail	pl	tak, oferuj opcję kopii
+yes, only trigger connection reset	mail	pl	tak, wyzwalać tylko reset połączenia
+yes, show all debug information available for the user	mail	pl	tak, wyświetla wszystkie informacje debugowania dostępne dla użytkownika
+you can either choose to save as infolog or tracker, not both.	mail	pl	Możesz wybrać zapisywanie jako InfoLog LUB tracker, nie oba.
 you can select what info to be displayed on email tag	mail	pl	Możesz wybrać, jakie informacje mają być wyświetlane w tagu e-mail.
+you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	pl	Możesz użyć $$start$$ dla powyższej daty początkowej i $$end$$ dla daty końcowej.
+you may add this certificate into your contact, if you trust this signature.	mail	pl	Możesz dodać ten certyfikat do swojego kontaktu, jeśli ufasz temu podpisowi.
+you need to enter your s/mime passphrase to send this message.	mail	pl	Aby wysłać tę wiadomość, należy wprowadzić hasło S/MIME.
+you need to install mailvelope plugin available for chrome and firefox from %1.	mail	pl	Musisz zainstalować wtyczkę Mailvelope dostępną dla Chrome i Firefox z %1.
+you need to save the message as draft first before to be able to save it into vfs	mail	pl	Aby móc zapisać wiadomość w VFS, należy najpierw zapisać ją jako wersję roboczą.
+you will loose current message body, unless you save it to your clipboard!	mail	pl	Utracisz aktualną treść wiadomości, chyba że zapiszesz ją w schowku!
 you've got new mail	mail	pl	Masz nową pocztę
+your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	pl	Twój pozostały limit %1 jest zbyt niski, możesz nie być w stanie wysyłać/odbierać kolejnych wiadomości e-mail.\n Chociaż wyczyszczenie wiadomości e-mail w koszu lub folderze śmieci może pomóc odzyskać trochę wolnego miejsca.\n Jeśli to nie pomogło, poproś administratora o zwiększenie limitu.

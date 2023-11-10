@@ -44,9 +44,13 @@ add current	common	da	Nuværende visning som favorit
 add shortcut	common	da	Tilføj forkortelse
 add sub	common	da	Tilføj underkategori
 add to clipboard	common	da	Tilføj til udklipsholder
+add user to responsibles	groupdav	da	Tilføj bruger til ansvarlige
+add user to responsibles, removing evtl. previous category user	groupdav	da	Tilføj bruger til ansvarlig, fjern evt. tidligere kategoribrugere
+add your domain as "%1" in options to list of email providers and enable api.	common	da	Tilføj dit domæne som "%1" i indstillingerne til listen over e-mailudbydere, og aktiver API.
 addressbook	common	da	Adressebog
 addressbooks to sync in addition to personal addressbook	groupdav	da	Adressebøger til synkronisering ud over den personlige adressebog
 admin	common	da	Admin
+admin settings	common	da	Admin-indstillinger
 admin settings for %1	common	da	Admin-indstillinger for %1
 administration	common	da	Administration
 advanced search	common	da	Avanceretsøgning
@@ -59,6 +63,7 @@ all categories	common	da	Alle kategorier
 all fields	common	da	alle felter
 all in one	groupdav	da	Alle i én
 all users	common	da	Alle brugere
+allow editing the %1	common	da	Tillad redigering af %1
 alternate style-sheet:	common	da	Alternativt style-sheet
 american samoa	common	da	Amerikansk Samoa
 and	common	da	Og

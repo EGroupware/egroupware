@@ -4,8 +4,10 @@
 acl rights retrieve failed, seems there are no rights set!	mail	fi	ACL-oikeuksien haku epäonnistui, näyttää siltä, että oikeuksia ei ole asetettu!
 activating by date requires a start- and end-date!	mail	fi	Aktivointi päiväyksen perusteella vaatii SEKÄ aloitus- ETTÄ lopetuspäivän!
 add all my aliases	mail	fi	Lisää kaikki peitenimeni
+add as new	mail	fi	Lisää uutena
 add files as %1	mail	fi	Lisää tiedostot nimellä %1
 add raw message, ignore mail attachments	mail	fi	Muunna posti kohteeksi, lisää raaka viesti (jätä postin liitetiedostot huomiotta)
+add this certificate into contact	mail	fi	Lisää tämä todistus yhteystietoihin
 add to addressbook	mail	fi	Lisää osoitekirjaan
 adding %1 to blacklisted email addresses failed because of %2	mail	fi	%1:n lisääminen mustalle listalle joutuneisiin sähköpostiosoitteisiin epäonnistui %2:n takia.
 adding %1 to whiltelisted email addresses failed because of %2	mail	fi	%1:n lisääminen luettelossa oleviin sähköpostiosoitteisiin epäonnistui %2:n takia.
@@ -29,6 +31,8 @@ be aware that all attachments will be sent as %1!	mail	fi	Huomaa, että kaikki l
 by date	mail	fi	Päivämäärän mukaan
 by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	fi	Oletusarvoisesti "http://" korvataan vain "https://". Voit vapaasti määrittää 'https://proxy.egroupware.org/' lataamaan myös kuvia, jotka ovat saatavilla vain http:n kautta.
 caching of flags	mail	fi	Lippujen välimuistiin tallentaminen
+can not resolve the winmail.dat attachment!	mail	fi	Winmail.dat-liitettä ei voida ratkaista!
+certificate info for email %1	mail	fi	Sähköpostin %1 varmenteen tiedot
 changing subject failed because of %1	mail	fi	Aiheen vaihtaminen epäonnistui %1:n takia
 changing subject failed folder %1 does not exist	mail	fi	Aiheen vaihtaminen epäonnistui kansiota %1 ei ole olemassa.
 check message against next rule also	mail	fi	Tarkista viesti myös seuraavaa sääntöä vastaan
@@ -57,7 +61,9 @@ display messages in multiple windows	mail	fi	Näytä viesti uudessa ikkunassa?
 display of html emails	mail	fi	HTML sähköpostien näkymä
 display only when no plain text is available	mail	fi	Näytä vain kun "pelkkä teksti" ei ole saatavilla
 displaying html messages is disabled	mail	fi	HTML viestien näyttäminen on estetty
-do you want to be asked for confirmation before attaching selected messages to new mail?	mail	fi	haluatko, että sinulta varmistetaan asia ennenkuin liität tiedostoja?
+do you really want to toggle flag %1 for all messages in the current view?	mail	fi	Haluatko todella vaihtaa lippua %1 KAIKILLE nykyisessä näkymässä oleville viesteille?
+do you really want to toggle label %1 for all messages in the current view?	mail	fi	Haluatko todella vaihtaa merkin %1 kaikille viesteille nykyisessä näkymässä?
+do you want to be asked for confirmation before attaching selected messages to new mail?	mail	fi	Haluatko, että sinulta kysytään vahvistusta ennen valittujen viestien liittämistä uuteen sähköpostiin?
 do you want to be asked for confirmation before moving selected messages to another folder?	mail	fi	Haluatko, että sinulta varmistetaan asia ennenkuin siirrät valitut viestit toiseen kansioon?
 do you want to prevent the editing/setup of filter rules (, even if sieve is enabled)?	mail	fi	Haluatko estää suodatinsääntöjen (Filter rules) muokkauksen/käyttöönoton, (vaikka Sieve on käytössä)?
 do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	mail	fi	Haluatko estää houmautussviestien muokkauksen /käyttöönoton, kun sähköpostin saapuessa tiettyyn kansioon huomautusvieti lähetettäisiin toiseen kansioon, (vaikka Sieve on käytössä)?
@@ -114,7 +120,9 @@ from	mail	fi	Mistä
 from(a->z)	mail	fi	A:sta Z:taan
 from(z->a)	mail	fi	Z:sta A:han
 general	admin	fi	Yleinen
+get acl rights failed from imap server!	mail	fi	ACL-oikeuksien hakeminen epäonnistui IMAP-palvelimelta!
 greater than	mail	fi	Suurempi kuin
+ham folder	mail	fi	Ham-kansio
 handling of external http images / mixed content in mails	mail	fi	Ulkoisten http-kuvien / sekasisällön käsittely sähköpostiviesteissä
 header lines	mail	fi	Ylätunnisterivit
 how to forward messages	mail	fi	Kuinka viestejä välitetään
@@ -173,6 +181,7 @@ mark all messages in folder as read	mail	fi	Merkitse kaikki kansiossa olevat vie
 mark as deleted	mail	fi	Merkitse poistetuksi
 matches	mail	fi	Täsmäävät
 matches regexp	mail	fi	Täsmäävät merkkijonoon
+message learned as spam and moved to spam folder	mail	fi	Viesti tunnistettiin roskapostiksi ja siirrettiin roskapostikansioon
 modify subject	mail	fi	Aiheen muuttaminen
 modify subject of this message	mail	fi	Muokkaa tämän viestin aihetta
 move selected to	mail	fi	Siirrä valitut
@@ -183,17 +192,21 @@ never display html emails	mail	fi	Älä näytä HTML -sähköposteja
 new subject	mail	fi	Uusi aihe
 no access	mail	fi	Ei pääsyä
 no address to/cc/bcc supplied, and no folder to save message to provided.	mail	fi	Osoitetta ei ole annettu kohtaan Kenelle/Kopio/Piilokopio , eikä Kansiota, mihin viesti pitäisi tallentaa löydy.
+no folder destination supplied, and no folder to save message or other measure to store the mail (save to infolog/tracker) provided, but required.	mail	fi	Kansiokohtaa ei ole annettu, eikä kansiota viestin tallentamiseksi tai muuta toimenpidettä postin tallentamiseksi (tallenna InfoLogiin/lippujärjestelmään) ole annettu, mutta sitä vaaditaan.
 no folders	mail	fi	Ei kansioita
 no plain text part found	mail	fi	Pelkkää tekstiä ei löytynyt
 no recipient address given!	mail	fi	Vastaanottajan osoite puuttuu!
 no signature	mail	fi	Ei allekirjoitusta
 no sneak preview in list	mail	fi	Ei viestin esikatselua
 no subject given!	mail	fi	Aihe puuttuu!
+non	mail	fi	Ei
 none, create all	mail	fi	Ei mitään, luo kaikki
 nothing to change.	mail	fi	Ei muutettavaa.
 one address is not valid	mail	fi	Yksi osoite ei kelpaa
 only email	mail	fi	Vain sähköpostiosoite
+only makes sense, if you transport password through a different channel / outside of this mail to recipients!	mail	fi	Vain järkevää, jos kuljetat salasanan eri kanavan kautta / tämän sähköpostin ulkopuolella vastaanottajille!
 only name	mail	fi	Vain nimi
+only needed for some servers, that do not return all folders on root level queries to retrieve all folders for that level	mail	fi	Tarvitaan vain joillakin palvelimilla, jotka eivät palauta kaikkia kansioita juuritason kyselyillä, jotta voidaan hakea kaikki kyseisen tason kansiot.
 only one window	mail	fi	Vain yksi ikkuna
 only send message, do not copy a version of the message to the configured sent folder	mail	fi	Ainoastaan lähetä viesti, älä kopoi sitä Lähetetyt-kansioon
 open in html mode	mail	fi	Avaa HTML-tilassa
@@ -207,13 +220,19 @@ outbox	mail	fi	Lähtevä postilaatikko
 permission denied	mail	fi	Pääsy estetty
 please configure access to an existing individual imap account.	mail	fi	Konfiguroi jo olemassaolevan IMAP sähköpostitilisi asetukset.
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	fi	Määritä S/MIME-varmenne Encryption-välilehdellä, joka sijaitsee Muokkaa tiliä -valintaikkunassa.
+please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	fi	Ota yhteyttä järjestelmänvalvojaan varmistaaksesi, tukeeko palvelimesi palvelinpuolen suodatinsääntöjä ja miten ne otetaan käyttöön EGroupwaressa aktiiviselle tilillesi (%1), jonka tunnus on %2.
+please contact your administrator to validate if your server supports serverside vacationmessages, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	fi	Ota yhteyttä järjestelmänvalvojaan varmistaaksesi, tukeeko palvelimesi palvelinpuolen lomaviestejä ja miten ne otetaan käyttöön EGroupwaressa aktiiviselle tilillesi (%1) ID:llä %2.
+please enter password	mail	fi	Syötä salasana
 please select a address	mail	fi	Valitse osoite
 please select the number of days to wait between responses	mail	fi	Valitse päivien lukumäärä, joka vastausten välillä odotetaan
 please supply the message to send with auto-responses	mail	fi	Anna viesti joka lähetetään automaattisella vastauksella
+post	mail	fi	lähetä
 predefined addresses for compose	mail	fi	Ennalta määritetyt osoitteet laatimista varten
 preview pane	mail	fi	Ikkunan asettelu
 printing	mail	fi	Tulostus
 printview	mail	fi	Tulostuksen esikatselu
+processing of file %1 failed. failed to meet basic restrictions.	mail	fi	Tiedoston %1 käsittely epäonnistui. Perusrajoitukset eivät täyttyneet.
+provide a default vacation text, (used on new vacation messages when there was no message set up previously)	admin	fi	Anna oletuslomateksti (käytetään uusissa lomaviesteissä, kun viestiä ei ole aiemmin määritetty).
 push notifications	mail	fi	Push-ilmoitukset
 quicksearch	mail	fi	Pikahaku
 quicksearch (with cc)	mail	fi	Pikahaku (+kopiointi)
@@ -233,28 +252,53 @@ replied	mail	fi	Vastattu
 reply	mail	fi	Vastaa
 reply all	mail	fi	Vastaa kaikille
 reply to	mail	fi	Vastaanottaja
+replying to this message failed because the content of this message seems to be encrypted and can not be decrypted properly. if you still wish to include content of this encrypted message, you may try to use forward as attachment instead.	mail	fi	Tähän viestiin vastaaminen epäonnistui, koska viestin sisältö näyttää olevan salattu eikä sitä voida purkaa kunnolla. Jos haluat silti sisällyttää tämän salatun viestin sisällön, voit yrittää käyttää sen sijaan lähetä edelleen liitetiedostona.
 replyto	mail	fi	Vastaanottaja
+report as ham	mail	fi	Ilmoita Ham
+report this email content as ham (not spam) - spam solutions like spamtitan will learn	mail	fi	Ilmoita tämä sähköpostin sisältö Hamina (ei roskapostina) - roskapostiratkaisut, kuten spamTitan, oppivat siitä.
+report this email content as spam - spam solutions like spamtitan will learn	mail	fi	Ilmoita tämä sähköpostin sisältö roskapostina - spamTitanin kaltaiset roskapostiratkaisut oppivat siitä.
+required pear class mail/mimedecode.php not found.	mail	fi	Tarvittavaa PEAR-luokkaa Mail/mimeDecode.php ei löydy.
+required to disable if you use dovecot with private seen flags on shared or user folder!	mail	fi	Vaaditaan poistettavaksi käytöstä, jos käytät Dovecotia, jossa on private seen -liput jaetussa tai käyttäjäkansiossa!
 row order style	mail	fi	Rivijärjestyksen muotoilu
 save all	mail	fi	Tallenna kaikki
 save all attachments to filemanager	mail	fi	Tallenna kaikki liitetiedostot tiedostonhallintaan
 save as draft	mail	fi	Tallenna luonnoksena
 save as infolog	mail	fi	Tallenna InfoLogina
+save as infolog on send	mail	fi	Tarkista painike, jolla luodaan InfoLog lähetyksen jälkeen.
 save as ticket	mail	fi	Tallenna reklamaationa
+save as tracker on send	mail	fi	Tarkista painike, jolla voit luoda lipun lähetyksen jälkeen
 save message to disk	mail	fi	Tallenna viesti levylle
 save of message %1 failed. could not save message to folder %2 due to: %3	mail	fi	Viestin %1 tallennus epäonnistui. Viestiä ei voitu tallentaa kansioon %2. Syy: %3
+save the drafted message as eml file into vfs	mail	fi	Tallenna laadittu viesti eml-tiedostona Tiedostonhallintaan.
 save:	mail	fi	Tallenna:
+saving of message %1 failed. destination folder %2 does not exist.	mail	fi	Viestin %1 tallentaminen epäonnistui. Kohdekansiota %2 ei ole olemassa.
+saving of message %1 succeeded. check folder %2.	mail	fi	Viestin %1 tallentaminen onnistui. Tarkista kansio %2.
+saving the rule failed:	mail	fi	Säännön tallentaminen epäonnistui:
+security	mail	fi	Suojaus
+see attachments for content of the orignial mail	mail	fi	Katso alkuperäisen sähköpostiviestin sisältö liitteistä.
 select all	mail	fi	Valitse kaikki
+select an existing entry in order to append mail content to it	mail	fi	Valitse olemassa oleva merkintä, jotta voit liittää siihen sähköpostin sisällön.
+select an item to read	mail	fi	Valitse kohde luettavaksi
 select or insert email address	mail	fi	Valitse tai lisää sähköpostiosoite
-send message and move to send folder (if configured)	mail	fi	Lähetä viesti ja siirrä Lähetetyt kansioon
+selected date range (with quicksearch)	mail	fi	Valittu päivämääräväli (pikahaun avulla)
+send message and move to send folder (if configured)	mail	fi	Lähetä viesti ja siirrä se lähetyskansioon (jos määritetty).
+send message pgp encrypted: requires keys from all recipients!	mail	fi	Lähetä viesti PGP-salattuna: vaatii kaikkien vastaanottajien avaimet!
 sender	mail	fi	Lähettäjä
 sent	mail	fi	Lähetetyt
 sent folder	mail	fi	Lähetetyt kansio
+server supports special-use folders	mail	fi	Palvelin tukee erityiskäytössä olevia kansioita
 set flags	mail	fi	Merkitse sähköposti
 set predefined values for compose...	mail	fi	Aseta valmiiksi määritetyt arvot lähettämistä varten ...
+should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	fi	Pitäisikö allekirjoitus lisätä vastauksen tai edelleenlähetyksen jälkeen (vakio) tai ennen vastausta tai eteenpäinlähetystä ja pitäisikö allekirjoituksen olla näkyvissä ja muutettavissa laatimisen aikana.
+show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	fi	Näytä kaikki kansiot (tilatut ja tilaamattomat) päänäytön kansioruudussa.
 show notification for new arriving mails	mail	fi	Näytä ilmoitus uusista saapuneista sähköpostiviesteistä
+show test connection section and control the level of info displayed?	mail	fi	Näytä testiyhteysosio ja säädä näytettävien tietojen tasoa?
+show test connection section and control the level of info displayed??	mail	fi	Näytä testiyhteysosio ja säädä näytettävien tietojen tasoa???
+show them this time only	mail	fi	Näytä ne vain tällä kertaa
 show vertical	mail	fi	Näytä pystysuora
 show vertical with all columns	mail	fi	Näytä pystysuora näkymä kaikkine sarakkeineen
 show/hide preview pane in mail list view	mail	fi	Näytä/piilota esikatseluruutu sähköpostiluettelonäkymässä
+shows a temporary visible notification including from address, subject and a snippet of the mail	mail	fi	Näyttää tilapäisen näkyvän ilmoituksen, joka sisältää lähettäjän osoitteen, aiheen ja pätkän sähköpostista.
 sieve	mail	fi	Sieve
 sieve script name	mail	fi	Sieve skriptin nimi
 signature	mail	fi	Allekirjoitus
@@ -303,6 +347,15 @@ which folders - in general - should not be automatically created, if not existin
 write	mail	fi	Kirjoita
 wrote	mail	fi	Kirjoitettu
 yes, offer copy option	mail	fi	Kyllä, tarjoa kopiointimahdollisuutta
+yes, only trigger connection reset	mail	fi	kyllä, vain yhteyden nollaaminen
+yes, show all debug information available for the user	mail	fi	kyllä, näyttää kaikki käyttäjän saatavilla olevat virheenkorjaustiedot.
 you can either choose to save as infolog or tracker, not both.	mail	fi	Voit tallentaa joko InfoLogina tai reklamaationa, et molempina!
 you can select what info to be displayed on email tag	mail	fi	Voit valita, mitä tietoja sähköpostitunnisteessa näytetään.
+you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	fi	Voit käyttää $$start$$ edellä mainittua alkamispäivää ja $$end$$ loppumispäivää.
+you may add this certificate into your contact, if you trust this signature.	mail	fi	Voit lisätä tämän varmenteen yhteystietoihin, jos luotat tähän allekirjoitukseen.
+you need to enter your s/mime passphrase to send this message.	mail	fi	Sinun on syötettävä S/MIME-salalauseesi tämän viestin lähettämistä varten.
+you need to install mailvelope plugin available for chrome and firefox from %1.	mail	fi	Sinun on asennettava Mailvelope-lisäosa, joka on saatavilla Chromeen ja Firefoxiin osoitteesta %1.
+you need to save the message as draft first before to be able to save it into vfs	mail	fi	Sinun on tallennettava viesti ensin luonnoksena, ennen kuin voit tallentaa sen VFS:ään.
+you will loose current message body, unless you save it to your clipboard!	mail	fi	Menetät nykyisen viestin rungon, ellet tallenna sitä leikepöydälle!
 you've got new mail	mail	fi	Sinulle on uusi sähköposti
+your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	fi	Jäljellä oleva kiintiö %1 on liian pieni, et ehkä pysty lähettämään/vastaanottamaan lisää sähköposteja.\n Vaikka sähköpostien siivoaminen roskakoriin tai roskapostikansioon saattaa auttaa sinua saamaan hieman vapaata tilaa takaisin.\n Jos tämä ei auttanut, pyydä ylläpitäjältäsi lisää kiintiötä.

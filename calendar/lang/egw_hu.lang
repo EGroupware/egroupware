@@ -119,6 +119,7 @@ edit exception	calendar	hu	Kivétel szerkesztése
 edit series	calendar	hu	Sorozat szerkesztése
 edit this event	calendar	hu	Esemény szerkesztése
 edit this series of recurring events	calendar	hu	Ismétlődő esemény szerkesztése
+email address migration	calendar	hu	E-mail cím migráció
 empty for all	calendar	hu	összes törlése
 end	calendar	hu	Befejezés
 end date/time	calendar	hu	Befejezés dátuma/ideje
@@ -127,6 +128,7 @@ enddate / -time of the meeting, eg. for more then one day	calendar	hu	A megbesz�
 enddate of the export	calendar	hu	Utolsó időpont az export során
 ends	calendar	hu	vége
 error adding the alarm	calendar	hu	Hiba a riasztás hozzáadásakor
+error notifying %1	calendar	hu	Hiba értesítő %1
 error: importing the ical	calendar	hu	Hiba az iCal importálásakor
 error: no participants selected !!!	calendar	hu	Hiba: nincs résztvevő kiválasztva
 error: resources reservation in private events is not allowed!!!	calendar	hu	Hiba: eszközök lefoglalása magán eseményekre nem engedélyezett!
@@ -249,7 +251,10 @@ notification messages for modified events	calendar	hu	Értesítési üzenet a m�
 notification messages for uninvited participants	calendar	hu	Értesítési üzenet a törölt résztvevőknek
 notification messages for your alarms	calendar	hu	Értesítési üzenet az Ön riasztásaihoz
 notification messages for your responses	calendar	hu	Értesítési üzenet az Ön válaszaihoz
+notify	calendar	hu	Értesítés
+notify all externals (non-users) about this event	calendar	hu	Értesíteni minden külsőst (nem felhasználót) erről az eseményről.
 number of records to read (%1)	calendar	hu	A beolvasandó bejegyzések száma (%1)
+number of resources to be booked	calendar	hu	A lefoglalandó erőforrások száma
 observance rule	calendar	hu	Betartási szabály
 occurence	calendar	hu	Előfordulás
 old startdate	calendar	hu	Régi Kezdési Dátum
@@ -280,6 +285,7 @@ preselected group for entering the planner	calendar	hu	Előre kiválasztott csop
 previous	calendar	hu	előző
 private and global public	calendar	hu	Személyes és globális publikus
 private and group public	calendar	hu	Személyes és csoport publikus
+private event	calendar	hu	Zártkörű esemény
 private only	calendar	hu	Csak személyes
 quantity	calendar	hu	Mennyiség
 re-edit event	calendar	hu	Esemény módosítása
@@ -289,6 +295,7 @@ recordings	calendar	hu	Felvételek
 recurrence	calendar	hu	Ismétlődés
 recurring event	calendar	hu	ismétlődő esemény
 rejected	calendar	hu	Elutasított
+removes the event from my calendar	calendar	hu	Eltávolítja az eseményt a naptáramból
 repeat days	calendar	hu	Ismétlődő napok
 repeat the event until which date (empty means unlimited)	calendar	hu	ismételje az eseményt a következő dátumig (üres esetén nincs utolsó dátum)
 repeat type	calendar	hu	Ismétlődés típusa
@@ -296,6 +303,7 @@ repeating event information	calendar	hu	Ismétlődő esemény információ
 repeating interval, eg. 2 to repeat every second week	calendar	hu	ismétlődés időtartama, pl. 2 jelenti a "minden második héten"-t.
 repetition	calendar	hu	Ismétlődés
 repetitiondetails (or empty)	calendar	hu	Ismétlődés jellemzők (vagy üres)
+replying "%1" is not a participant of the event! only continue if you want to add as new participant.	calendar	hu	Válaszoló "%1" NEM résztvevője az eseménynek! Csak akkor folytassa, ha új résztvevőként szeretné hozzáadni.
 report	calendar	hu	Jelentés
 reset	calendar	hu	Alaphelyzet
 resources	calendar	hu	Erőforrások
@@ -313,11 +321,15 @@ select multiple contacts for a further action	calendar	hu	Válasszon ki több ka
 select resources	calendar	hu	Erőforrások választása
 select who should get the alarm	calendar	hu	Válassza ki, hogy ki kapjon riasztást
 selected range	calendar	hu	Kiválasztott tartomány
+send notifications	calendar	hu	Értesítések küldése
+send notifications to users right now	calendar	hu	Értesítések küldése a résztvevőknek most azonnal
 set new events to private	calendar	hu	Új magán események megadása
 setting lock time calender	admin	hu	Adatzárolás ideje a Naptár modulban (alapértelmezett 1 mp.)
 should new events created as private by default ?	calendar	hu	Alapértelmezésként az új esemény lehet privát?
 should the planner display an empty row for users or categories without any appointment.	calendar	hu	A tervező megjelenítsen egy üres sort a találkozókkal nem rendelkező felhasználók vagy kategóriák számára?
 should the status of the event-participants (accept, reject, ...) be shown in brackets after each participants name ?	calendar	hu	Az esemény résztvevök státusza (elfogad, elutasít, ...) megjeleníthetö minden résztvevö neve után?
+show %1 from %2	calendar	hu	%1 megjelenítése %2-től
+show birthdays as all day non-blocking events as well as via mouseover of the date.	calendar	hu	Egész napos nem blokkoló eseményként, valamint a dátum egérrel való áthelyezésével megjeleníthető.
 show birthdays from addressbook	admin	hu	Születésnapok megjelenítse a címjegyzék alalpján
 show empty rows in planner	calendar	hu	Üres sorok megjelenítése a Tervezőben
 show list of upcoming events	calendar	hu	Megmutatja a bejövő események listáját
@@ -325,6 +337,7 @@ show only the date, not the year	admin	hu	Dátum megjelenítése év nélkül
 show this month	calendar	hu	hónap mutatása
 show this week	calendar	hu	hét mutatása
 single event	calendar	hu	egyetlen esemény
+single participant	calendar	hu	Egyetlen résztvevő
 sort by	calendar	hu	Rendezés
 start	calendar	hu	Kezdés
 start date/time	calendar	hu	Kezdés dátuma/ideje
@@ -333,12 +346,18 @@ startdate / -time	calendar	hu	Kezdés dátuma/ideje
 startdate and -time of the search	calendar	hu	Kereséshez használt kezdés dátuma / ideje
 startdate of the export	calendar	hu	Az exportálás kezdési időpontja
 startrecord	calendar	hu	Kezdő bejegyzés
+status	calendar	hu	Állapot
 status changed	calendar	hu	Státusz megváltozott
 submit to repository	calendar	hu	Gyűjtőbe helyezés
 sun	calendar	hu	Va
 tentative	calendar	hu	Ideiglenesen elfogadva
 test import (show importable records <u>only</u> in browser)	calendar	hu	Import tesztelése (<u>csak</u> a nem beolvasható bejegyzések mutatása a böngészőben)
+the apple ical apps use this color to display events from this calendar.	calendar	hu	Az Apple iCal alkalmazások ezt a színt használják a naptár eseményeinek megjelenítésére.
+the document can contain placeholder like {{%1}}, to be replaced with the data.	calendar	hu	A dokumentum tartalmazhat helyőrzőt, például {{%1}}, amelyet az adatokkal kell helyettesíteni.
+the extern organizer changed the event!	calendar	hu	A külső szervező megváltoztatta az eseményt!
 the resource you selected is already overbooked:	calendar	hu	A kiválasztott eszköz már foglalt:
+the sender "%1" is not the extern organizer "%2", proceed with caution!	calendar	hu	A "%1" feladó NEM a "%2" külső szervező, járjon el óvatosan!
+the sender "%1" is not the participant replying "%2", proceed with caution!	calendar	hu	A "%1" feladó NEM a "%2" válaszoló résztvevő, járjon el óvatosan!
 this day is shown as first day in the week or month view.	calendar	hu	Ez a nap lesz az első nap a heti vagy havi nézetben.
 this defines the end of your dayview. events after this time, are shown below the dayview.	calendar	hu	Ez beállítja a napi nézet végét. Az ez utáni események lejjebb jelennek meg a napi nézetben.
 this defines the start of your dayview. events before this time, are shown above the dayview.<br>this time is also used as a default starttime for new events.	calendar	hu	Ez beállítja a napi nézet kezdetét. Az ez előtti események feljebb szerepelnek a napi nézetben. <b>Ezt az időt használjuk szintén mint az alapértelmezett kezdési időt az új eseményekhez.
@@ -360,6 +379,7 @@ timeframe to search	calendar	hu	Kereséshez időkeret
 timezone	calendar	hu	Időzóna
 title of the event	calendar	hu	Esemény címe
 to many might exceed your execution-time-limit	calendar	hu	Futtatási időkorlát túllépés
+toggle weekend	calendar	hu	Hétvége átkapcsolása
 translation	calendar	hu	Fordítás
 tue	calendar	hu	Ke
 two weeks	calendar	hu	két hét

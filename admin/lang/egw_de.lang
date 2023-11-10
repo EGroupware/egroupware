@@ -419,7 +419,7 @@ enter the site username for peer servers	admin	de	Site-Benutzername für Peer-Se
 enter the title for your site	admin	de	Titel der EGroupware-Installation
 enter the title of your logo	admin	de	Titel Ihres Logos
 enter the url where your logo should link to	admin	de	URL mit der das Logo verlinkt werden soll
-enter the vfs-path where additional images, icons or logos can be placed (and found by egroupwares applications). the path must start with /,and be readable by all users	admin	de	Geben Sie den VFS-Pfad an, in dem noch mehr Bilder oder Symbole abgelegt und von EGroupware-Applikationen verwendet werden können.<br> Pfad muss mit einem "/" beginnen und von allen Benutzern lesbar sein.
+enter the vfs-path where additional images, icons or logos can be placed (and found by egroupwares applications). the path must start with /,and be readable by all users	admin	de	Geben Sie den VFS-Pfad an, in dem noch mehr Bilder oder Symbole abgelegt und von EGroupware-Applikationen verwendet werden können.<br> Der Pfad muss mit einem "/" beginnen und von allen Benutzern lesbar sein.
 enter your default ftp server	admin	de	Standard-FTP-Server
 enter your default mail domain ( from: user@domain )	admin	de	Standard E-Mail-Domain (Von: benutzer@domain)
 enter your default mail domain (from: user@domain)	admin	de	Standard E-Mail-Domain (Von: benutzer@domain)
@@ -450,7 +450,7 @@ error: %1 not found or other error !!!	admin	de	Fehler: %1 nicht gefunden oder a
 event details follow	admin	de	Hier die Details des Termins
 exists	admin	de	existiert
 expired	admin	de	abgelaufen
-expires	admin	de	läuft ab
+expires	admin	de	Läuft ab
 explanation of ldapman	admin	de	Dieses Modul ist derzeit nur für folgende Konfiguration getestet: Postfix, LDAP, Courier-Imap, Procmail und erfordert die Schemas: core und qmail(OID 7914). Weitere Konfigurationshinweise sind im README.ldapman im DOC Verzeichnis des Moduls ADMIN zu finden.
 export certificate as p12	admin	de	Exportiere Zertifikat als p12 Datei
 exports groups into a csv file.	admin	de	Benutzergruppen in eine CSV-Datei exportieren.
@@ -997,7 +997,7 @@ user-agent	admin	de	Browser
 userdata	admin	de	Benutzerkonto
 userid@domain eg. u1234@domain	admin	de	UserId@domain z.B. u1234@domain
 username (standard)	admin	de	Benutzername (Standard)
-username specified below for all	admin	de	Unter angegebener Benutzername für alle
+username specified below for all	admin	de	Unten angegebener Benutzername für alle
 username/password defined by admin	admin	de	Benutzername / Passwort vordefiniert
 username@domainname (virtual mail manager)	admin	de	Benutzername@Domänenname (Virtual MAIL ManaGeR)
 users can define their own emailaccounts	admin	de	Anwender können ihre eigenen Konten definieren

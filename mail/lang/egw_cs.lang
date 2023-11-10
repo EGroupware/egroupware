@@ -14,9 +14,11 @@ action	mail	cs	Akce
 activating by date requires a start- and end-date!	mail	cs	Aktivace datumem vyžaduje nastavení počátečního A koncového data!
 add a new folder to %1:	mail	cs	Přidat novou složku do %1:
 add all my aliases	mail	cs	Přidat všechny mé aliasy
+add as new	mail	cs	Přidat jako nový
 add files as %1	mail	cs	Přidat soubory jako %1
 add folder	mail	cs	Přidat složku
 add raw message, ignore mail attachments	mail	cs	Převést poštu na položku, přidat nezpracovanou zprávu (ignorovat přílohy pošty)
+add this certificate into contact	mail	cs	Přidat tento certifikát do kontaktu
 add to addressbook	mail	cs	přidat do adresáře
 add your domain as "%1" in options to list of email providers and enable api.	mail	cs	Přidat vaši doménu jako "%1" v možnostech pro zobrazení poskytovatelů e-mailu a povolení API.
 adding %1 to blacklisted email addresses failed because of %2	mail	cs	Přidání %1 na černou listinu e-mailových adres se nezdařilo kvůli %2.
@@ -31,10 +33,15 @@ all messages in the folder will be lost	mail	cs	Všechny zprávy ve vybrané slo
 all my email addresses	mail	cs	Všechny mé e-mailové adresy
 all of	mail	cs	vše z
 all subfolders will be deleted too, and all messages in all affected folders will be lost	mail	cs	Budou také smazány všechny podsložky a všechny e-maily v této složce a jejích podsložkách budou smazány
+allow	mail	cs	Povolit
 allow external images	mail	cs	Umožnit náhled  z externích zdrojů
+allow external images from listed domains	mail	cs	Povolit externí obrázky z uvedených domén
 allow images from external sources in html emails	mail	cs	Povolit obrázky z externích zdrojů v HTML e-mailech
+allow images from listed domains in html emails	mail	cs	Povolit obrázky z uvedených domén v e-mailech HTML
 allow users to create further identities	mail	cs	Dovolit uživatelům vytvářet další identity
 allways a new window	mail	cs	Vždy nové okno
+always	mail	cs	Vždy
+always allow external sources from %1	mail	cs	Vždy povolit externí zdroje z %1
 always show html emails	mail	cs	Vždy zobrazovat HTML e-maily
 always show notifiction	mail	cs	Vždy zobrazit oznámení
 an error happend while trying to remove acl rights from the account %1!	mail	cs	Při pokusu o odebrání ACL práv z účtu %1 došlo k chybě!
@@ -49,6 +56,7 @@ archive folder	mail	cs	Složka archívu
 are you sure you want to delete all selected folders?	mail	cs	Opravdu chcete smazat všechny vybrané složky?
 are you sure you want to move folder %1 to folder %2?	mail	cs	Opravdu chcete přesunout složku %1 do složky %2?
 arrival	mail	cs	Přijato
+ask for permission	mail	cs	Požádat o povolení
 attach files	mail	cs	Připojit soubory
 attach users vcard at compose to every new mail	mail	cs	Ke každému novému e-mailu přiložit vizitky vCard uživatelů
 attach vcard	mail	cs	Přidat vCard
@@ -66,7 +74,9 @@ by date	mail	cs	datumem
 by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	cs	Ve výchozím nastavení je "http://" nahrazeno pouze "https://". Nebojte se nastavit 'https://proxy.egroupware.org/' tak, aby načítal také obrázky dostupné pouze přes http.
 caching of flags	mail	cs	Ukládání příznaků do mezipaměti
 can not open imap connection	mail	cs	Není možné otevřít spojení se serverem IMAP.
+can not resolve the winmail.dat attachment!	mail	cs	Nelze vyřešit přílohu winmail.dat!
 canceled deletion due to user interaction	mail	cs	Mazání bylo přerušeno uživatelem
+certificate info for email %1	mail	cs	Informace o certifikátu pro e-mail %1
 change editor type	mail	cs	Přepnout editor do HTML režimu
 changed profile	mail	cs	Změněný profil
 changing subject failed because of %1	mail	cs	Změna předmětu se nezdařila z důvodu %1
@@ -180,11 +190,13 @@ emails in blacklisted domains are marked as spam	mail	cs	E-maily v doménách na
 emails in whitelisted domains are not marked as spam	mail	cs	E-maily v doménách na bílé listině nejsou označeny jako spam
 empty junk	mail	cs	Vyprázdnit složku spam
 empty trash	mail	cs	Vyprázdnit koš
-enable	mail	cs	povolit
+empty trash and junk	mail	cs	Vyprázdnění odpadků a harampádí
+enable	mail	cs	Povolit
 enabled	mail	cs	Povoleno
 enabled!	mail	cs	Povoleno!
 encrypt	mail	cs	Zakódovat
 encrypt your message with smime certificate	mail	cs	Šifrování zprávy pomocí certifikátu S/MIME
+encryption	mail	cs	Šifrování
 enter the name for the new folder:	mail	cs	Zadejte jméno nové složky:
 error saving %1!	mail	cs	Chyba při ukládání %1!
 error while setting acl for folder %1!	mail	cs	Chyba při nastavování ACL pro složku %1!
@@ -240,6 +252,7 @@ forward messages to:	mail	cs	Přeposlat zprávu:
 forward messages:	mail	cs	Přeposlat zprávu:
 forward to	mail	cs	Přeposlat zprávu
 forward to address (*):	mail	cs	Přeposlat zprávu na adresu (*):
+forwarding of this message failed because the content of this message seems to be encrypted and can not be decrypted properly. if you still wish to forward content of this encrypted message, you may try to use forward as attachment instead.	mail	cs	Přeposlání této zprávy se nezdařilo, protože obsah této zprávy je zřejmě zašifrován a nelze jej správně dešifrovat. Pokud si přesto přejete přeposlat obsah této šifrované zprávy, můžete místo toho zkusit použít předání jako přílohu.
 forwards	mail	cs	Přeposlat
 from	mail	cs	Od
 from(a->z)	mail	cs	Od (A->Z)
@@ -248,9 +261,11 @@ general	admin	cs	Obecné
 general settings	mail	cs	Obecné nastavení
 get acl rights failed from imap server!	mail	cs	Získání práv ACL ze serveru IMAP se nezdařilo!
 greater than	mail	cs	větší než
+ham folder	mail	cs	Složka Ham
 handling of external http images / mixed content in mails	mail	cs	Zpracování externích obrázků http / smíšeného obsahu v e-mailech
 header	mail	cs	Záhlaví
 header lines	mail	cs	Řádky hlavičky
+high	mail	cs	vysoký
 hold %1 to drag files to your computer	mail	cs	Stiskněte a držte %1 pro přetažení souborů do vašeho počítače
 home page folders	mail	cs	Složky domovské stránky
 hostname or ip	mail	cs	Jméno nebo IP adresa serveru
@@ -334,6 +349,8 @@ message preview area	mail	cs	Plocha pro náhled zprávy
 message saved successfully.	mail	cs	Zpráva úspěšně uložena
 message send failed: %1	mail	cs	Odeslání e-mailu nebylo úspěšné: %1
 message send successfully.	mail	cs	E-mail byl úspěšně odeslán
+message verified successfully but the signer’s certificate could not be verified.	mail	cs	Zpráva byla úspěšně ověřena, ale certifikát podepisující osoby se nepodařilo ověřit.
+message verified successfully.	mail	cs	Zpráva byla úspěšně ověřena.
 miscellaneous	mail	cs	Různé
 modify subject	mail	cs	Upravit předmět
 modify subject of this message	mail	cs	Upravit předmět této zprávy
@@ -348,9 +365,14 @@ moved %1 message(s) from %2 to %3	mail	cs	%1 zpráv bylo přesunuto z %2 do %3
 moving folders from one mailaccount to another is not supported	mail	cs	Přesouvání složek z jednoho e-mailového účtu do jiného není podporováno
 name and email	mail	cs	Jméno a e-mail
 name of account	mail	cs	Název účtu
+name of imap servers (space separated host or host:port)	mail	cs	Název serverů IMAP (hostitel nebo hostitel:port oddělený mezerou)
 never display html emails	mail	cs	Nikdy nezobrazovat HTML e-maily
+never show	mail	cs	Nikdy nezobrazovat
+never show notification	mail	cs	Nikdy nezobrazovat oznámení
+new mail from %1	mail	cs	Nová pošta z %1
 new mail notification	mail	cs	Oznámení o novém e-mailu
 new message type	mail	cs	Typ nového e-mailu
+new subject	mail	cs	Nový předmět
 no (valid) send folder set in preferences	mail	cs	V parametrech není nastavena správná složka pro odeslanou poštu
 no access	mail	cs	Přístup zakázán
 no action defined!	mail	cs	Není definována žádná akce!
@@ -375,13 +397,17 @@ nothing to change.	mail	cs	Není třeba nic měnit.
 notify about new mail in this folders	mail	cs	Oznámit nový e-mail v těchto složkách
 notify when new mails arrive in these folders	mail	cs	Oznámí, pokud do těchto složkek bude doručen nový e-mail
 on	mail	cs	na
+on behalf of	mail	cs	jménem
+on vacation	mail	cs	Na dovolené
 one address is not valid	mail	cs	Jedna adresa není platná
 only email	mail	cs	Pouze e-mail
+only if currently in an other app	mail	cs	Pouze pokud je právě v jiné aplikaci
 only makes sense, if you transport password through a different channel / outside of this mail to recipients!	mail	cs	Připadá v úvahu, pouze pokud heslo odesíláte jiným způsobem / mino tento e-mail!
 only name	mail	cs	Pouze jméno
 only needed for some servers, that do not return all folders on root level queries to retrieve all folders for that level	mail	cs	Je vyžadováno pouze pro některé servery, které nevracejí všechny složky na hlavní úrovni
 only one window	mail	cs	Jen jedno okno
 only send message, do not copy a version of the message to the configured sent folder	mail	cs	Pouze odešle zprávu a kopie zprávy nebude uložena do složky pro odeslanou poštu
+only store message in inbox, do not send vacation notice	mail	cs	Uložit zprávu pouze do INBOXU, NEodesílat oznámení o dovolené
 open in html mode	mail	cs	Otevřít v režimu HTML
 open in text mode	mail	cs	Otevřit v textovém režimu
 open with collabora office	mail	cs	Otevřít pomocí Collabora Online
@@ -396,9 +422,11 @@ please configure access to an existing individual imap account.	mail	cs	Nakonfig
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	cs	Nakonfigurujte prosím svůj certifikát S/MIME na kartě Šifrování v dialogovém okně Upravit účet.
 please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	cs	Kontaktujte správce svého e-mailového serveru pro ověření, zda váš server podporuje pravidla a jak je v eGroupWaru pro váš účet %1 s identifikací %2 povolit.
 please contact your administrator to validate if your server supports serverside vacationmessages, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	cs	Kontaktujte správce svého e-mailového serveru pro ověření, zda váš server podporuje automatické odpovědi a jak je v eGroupWaru pro váš účet %1 s identifikací %2 povolit.
+please enter password	mail	cs	Zadejte prosím heslo
 please select a address	mail	cs	Prosím vyberte adresu
 please select the number of days to wait between responses	mail	cs	Vyberte prosím počet dní, jak dlouho čekat mezi odpovědmi
 please supply the message to send with auto-responses	mail	cs	Zadejte prosím zprávu, která se má odesílat v rámci automatické odpovědi
+please wait while sending your mail	mail	cs	Při odesílání pošty vyčkejte
 post	mail	cs	Pošta
 predefined addresses for compose	mail	cs	Předdefinované adresy pro compose
 prevent managing filters	mail	cs	Zabránit změně filtrovacích pravidel
@@ -414,6 +442,7 @@ provide a default vacation text, (used on new vacation messages when there was n
 push notifications	mail	cs	Oznámení Push
 quicksearch	mail	cs	Rychlé hledání
 quicksearch (with cc)	mail	cs	Rychlé hledání (včetně příjemce v kopii)
+quota limit warning in megabyte (recommended value is 30 mb).	mail	cs	Upozornění na limit kvóty v megabajtech (doporučená hodnota je 30 MB).
 quota not provided by server	mail	cs	Kvóty nejsou serverem podporovány
 quota: %1	mail	cs	Kvóta: %1
 read	mail	cs	Přečtené
@@ -447,12 +476,14 @@ reply	mail	cs	Odpovědět
 reply all	mail	cs	Odpovědět všem
 reply message type	mail	cs	Formátovat  e-mail při odpovídání / přeposílání
 reply to	mail	cs	Odpovědět (komu)
+replying to this message failed because the content of this message seems to be encrypted and can not be decrypted properly. if you still wish to include content of this encrypted message, you may try to use forward as attachment instead.	mail	cs	Odpověď na tuto zprávu se nezdařila, protože obsah této zprávy je zřejmě zašifrován a nelze jej správně dešifrovat. Pokud si přesto přejete obsah této zašifrované zprávy uvést, můžete místo toho zkusit použít předání jako přílohu.
 replyto	mail	cs	Odpovědět (komu)
 report as ham	mail	cs	Nahlásit jako ham
 report as spam	mail	cs	Nahlásit jako spam
 report this email content as ham (not spam) - spam solutions like spamtitan will learn	mail	cs	Nahlásit tento e-mail jako ham (ne spam)
 report this email content as spam - spam solutions like spamtitan will learn	mail	cs	Nahlásit tento e-mail jako spam
 required pear class mail/mimedecode.php not found.	mail	cs	Požadovaná třída  PEAR class Mail/mimeDecode.php nebyla nalezena
+required to disable if you use dovecot with private seen flags on shared or user folder!	mail	cs	Nutné vypnout, pokud používáte Dovecot s příznaky private seen na sdílené nebo uživatelské složce!
 resend after how many days?	mail	cs	Po kolika dnech opakovat odeslání?
 respond to mail sent to:	mail	cs	Odpovědět:
 restrict acl management	admin	cs	Omezení správy ACL
@@ -461,6 +492,7 @@ row order style	mail	cs	Způsob řazení řádků
 rule priority position	mail	cs	Priorita pravidla
 rule with priority	mail	cs	Pravidlo s prioritou
 rules	mail	cs	Pravidla
+s/mime encryption failed because no certificate has been found for sender address: %1	mail	cs	Šifrování S/MIME selhalo, protože pro adresu odesílatele nebyl nalezen žádný certifikát: %1
 save all	mail	cs	Uložit vše
 save all attachments to filemanager	mail	cs	Uložit všechny přílohy do správce souborů
 save as calendar	mail	cs	Termín uložit do kalendáře
@@ -471,6 +503,9 @@ save as infolog	mail	cs	Uložit jako úkol
 save as infolog on send	mail	cs	Uložit jako úkol při odeslání
 save as ticket	mail	cs	Uložit do sledovacího systému
 save as tracker on send	mail	cs	Uložit do sledovacího systému při odeslání
+save attachment	mail	cs	Uložit přílohu
+save attachments	mail	cs	Uložit přílohy
+save email	mail	cs	Uložit e-mail
 save message to disk	mail	cs	Uložit zprávu na disk
 save of message %1 failed. could not save message to folder %2 due to: %3	mail	cs	Uložení zprávy %1 nebylo úspěšné. Není možné uložit zprávu do složky %2 z důvodu: %3
 save the drafted message as eml file into vfs	mail	cs	Uložit zozepsanou zprávu jako eml fo VFS
@@ -483,9 +518,12 @@ saves this rule	mail	cs	Uložit toto pravidlo
 saving of message %1 failed. destination folder %2 does not exist.	mail	cs	Uložení zprávy %1 nebylo úspěšné. Složka %2 neexistuje.
 saving of message %1 succeeded. check folder %2.	mail	cs	Uložení zprávy %1 bylo úspěšné, zkontrolujte složku %2.
 saving the rule failed:	mail	cs	Uložení pravidla nebylo úspěšné:
+security	mail	cs	Zabezpečení
 see attachments for content of the orignial mail	mail	cs	Podívejte se do příloh v původním e-mailu
+select a date	mail	cs	Výběr data
 select all	mail	cs	Vybrat vše
 select an existing entry in order to append mail content to it	mail	cs	Vyberte existující záznam, aby se do něj mohl vložit obsah e-mailu
+select an item to read	mail	cs	Vyberte položku, kterou chcete přečíst
 select file to attach to message	mail	cs	Vyberte soubor, který se má přiložit do e-mailu
 select file to import into folder	mail	cs	Vyberte soubor, který se má importovat do složky
 select file(s) from vfs	mail	cs	Vyberte soubor(y) z VFS
@@ -497,6 +535,9 @@ selected date range (with quicksearch)	mail	cs	Zvolený rozsah datumu (pro rychl
 send a reject message:	mail	cs	Odeslat odmítnutí:
 send files as	mail	cs	Odeslat soubor jako
 send message and move to send folder (if configured)	mail	cs	Odeslat zprávu a uložit ji do složky pro odeslanou poštu (je-li nastavená)
+send message pgp encrypted: requires keys from all recipients!	mail	cs	Odeslat zprávu šifrovanou PGP: vyžaduje klíče od všech příjemců!
+send only a vacation notice, do not store message in inbox	mail	cs	Odeslat pouze oznámení o dovolené, zprávu NEukládat do INBOXU
+send vacation notice and store message in inbox	mail	cs	Odeslat oznámení o dovolené a uložit zprávu do INBOXU
 sender	mail	cs	Odesílatel
 sent	mail	cs	Odeslané
 sent folder	mail	cs	Odeslané
@@ -515,19 +556,24 @@ show all addresses	mail	cs	Zobrazit všechny korespondenty
 show all attachments	mail	cs	Zobrazit všechny přílohy
 show all folders	mail	cs	Vyberte všechny složky
 show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	cs	Zobrazit všechny složky (přihlášené i nepřihlášené k odběru) na Hlavní stránce?
+show horizontal	mail	cs	Zobrazit horizontální
+show horizontal, hide if none selected	mail	cs	Zobrazit horizontálně, skrýt, pokud není vybráno žádné
 show new messages on home page	mail	cs	Zobrazit nové zprávy na Hlavní stránce
 show notification for new arriving mails	mail	cs	Zobrazit oznámení o nově příchozích e-mailech
 show test connection section and control the level of info displayed?	mail	cs	Zobrazit sekci s testem připojení a s řízením úrovně zobrazovaných informací?
 show test connection section and control the level of info displayed??	mail	cs	Zobrazit sekci s testem připojení a s řízením úrovně zobrazovaných informací?
+show them this time only	mail	cs	Tentokrát je zobrazit pouze
 show vertical	mail	cs	Zobrazit vertikální
 show vertical with all columns	mail	cs	Zobrazit vertikálně se všemi sloupci
 show/hide preview pane in mail list view	mail	cs	Zobrazit / skrýt náhled v seznamu zpráv
+shows a temporary visible notification including from address, subject and a snippet of the mail	mail	cs	Zobrazí dočasně viditelné oznámení včetně adresy od, předmětu a úryvku zprávy
 sieve	mail	cs	Sieve
 sieve connection status	mail	cs	Stav podmínek Sieve
 sieve not activated	mail	cs	Sieve není aktivovaný
 sieve script name	mail	cs	Jméno Sieve skriptu
 sieve server	mail	cs	Sieve server
 sieve_edit_instructions	mail	cs	(*) Můžete použít zástupné znaky (*,?). Pokud chcete hledat znaky * nebo ? jako takové, je nutné před ně vložit zpětné lomítko \. Pokud zaškrtnete možnost regulárního dotazu, musíte zadat platný regulární výraz. Pokud v regulárním výrazu potřebujete použít vykřičník, který ale nemá reprezentovat negaci (NOT),  je nutné před něj vložit zpětné lomítko \ (např. \!).
+sign your message with smime certificate	mail	cs	Podepište zprávu certifikátem S/MIME
 signature	mail	cs	Podpis
 signature at top	mail	cs	Podpis nahoře
 signature position and visibility	mail	cs	Pozice a viditelnost podpisu
@@ -542,6 +588,8 @@ some clients fail to detect correct charset, if flowed lines are enabled.	mail	c
 sort order	mail	cs	Pořadí řazení
 source	mail	cs	Záhlaví
 sources	mail	cs	Zdroje
+spamtitan api url	mail	cs	SpamTitan API URL
+spamtitan integration requires epl version	mail	cs	Integrace SpamTitan vyžaduje verzi EPL
 start new messages with mime type plain/text or html?	mail	cs	Začínat psaní nových zpráv jako MIME typ plain/text nebo html?
 start reply messages with mime type plain/text or html or try to use the displayed format (default)?	mail	cs	Začínat psaní nových zpráv jako MIME typ plain/text nebo html, nebo zkusit použít zobrazený formát (výchozí)?
 step 1: imap - incoming mail	mail	cs	Krok 1: IMAP - příchozí e-mail
@@ -556,6 +604,7 @@ subscribe folder ...	mail	cs	Odebírání nebo přidávání složek ...
 subscribe to folder %1	mail	cs	Přihlásit složku %1 k odběru
 subscription folders	mail	cs	Složky přihlášené k odběru
 subscription successfully saved.	mail	cs	Nastavení odběru složek bylo úspěšně uloženo
+succeeded on %1 folders, failed on %2	mail	cs	Úspěšně na %1 složky, neúspěšně na %2
 successfully connected	mail	cs	Připojení bylo úspěšné
 switch off encryption?	mail	cs	Vypnout šifrování?
 template folder	mail	cs	Složka šablon
@@ -568,6 +617,7 @@ text mode	mail	cs	Textový režim
 text/plain	mail	cs	prostý text
 the %1 's acl removed from the %2	mail	cs	%1 práv ACL bylo odebráno z %2
 the %1 's acl, including its subfolders, removed from the %2	mail	cs	%1 práv ACL, včetně podsložek bylo odebráno z %2
+the entered passphrase is not correct! please try again.	mail	cs	Zadaná přístupová fráze není správná! Zkuste to prosím znovu.
 the folder %1 's acls saved	mail	cs	ACL práva pro složku %1 byla úspěšně uložena
 the folder <b>%1</b> will be used, if there is nothing set here, and no valid predefine given.	mail	cs	Pokud na tomto místě není nic nastaveno a neexistuje platná předdefinovaná hodnota, bude použita složka <b>%1</b>
 the imap server need to meet certain requirements and be configured for it:	mail	cs	Server IMAP musí splňovat určité požadavky a být pro něj nakonfigurován:
@@ -627,6 +677,7 @@ which folders - in general - should not be automatically created, if not existin
 which method to use when forwarding a message	mail	cs	Jakým způsobem přeposlat zprávu
 whole message	mail	cs	Všechny zprávy
 with message:	mail	cs	Se zprávou:
+wizard	mail	cs	Průvodce
 writable sharing requires epl version!	mail	cs	Sdílení s povoleným zápisem vyžaduje předplatné EPL!
 write	mail	cs	Uložit
 wrote	mail	cs	napsal
@@ -639,7 +690,10 @@ yes, show basic info only	mail	cs	Ano, zobrazit pouze základní informace
 you can either choose to save as infolog or tracker, not both.	mail	cs	Můžete zvolit buď uložení jako úkol, nebo sledovací systém, ne však obojí.
 you can select what info to be displayed on email tag	mail	cs	Můžete vybrat, jaké informace se mají zobrazit na e-mailové značce.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	cs	Jako počáteční datum můžete použít $$start$$, jako koncové pak $$end$$.
+you may add this certificate into your contact, if you trust this signature.	mail	cs	Tento certifikát můžete přidat do svého kontaktu, pokud tomuto podpisu důvěřujete.
+you need to enter your s/mime passphrase to send this message.	mail	cs	Pro odeslání této zprávy musíte zadat svou přístupovou frázi S/MIME.
 you need to install mailvelope plugin available for chrome and firefox from %1.	mail	cs	Je nutné nainstalovat zásuvný modul Mailvelope pro Chrome a Firefox z %1.
 you need to save the message as draft first before to be able to save it into vfs	mail	cs	Před tím, než bude možné zprávu uložit do VFS je nutné uložit ji jako koncept.
 you will loose current message body, unless you save it to your clipboard!	mail	cs	Vlastní obsah zprávy (tělo) bude ztracen, nezkopírujete-li si jej do schránky!
 you've got new mail	mail	cs	Přišel Vám nový e-mail
+your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	cs	Vaše zbývající kvóta %1 je příliš nízká, možná nebudete moci odesílat/přijímat další e-maily.\n I když vyčištění e-mailů v koši nebo složce nevyžádané pošty by vám mohlo pomoci získat zpět nějaké volné místo.\n Pokud to nepomohlo, požádejte prosím svého správce o navýšení kvóty.

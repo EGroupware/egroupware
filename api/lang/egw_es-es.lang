@@ -100,6 +100,7 @@ add your domain as "%1" in options to list of email providers and enable api.	co
 addressbook	common	es-es	Libreta de direcciones
 addressbooks to sync in addition to personal addressbook	groupdav	es-es	Libretas de direcciones a sincronizar además de la libreta personal
 admin	common	es-es	Administración
+admin settings	common	es-es	Configuración administrativa
 admin settings for %1	common	es-es	Configuraciones de administrador para %1
 administration	common	es-es	Administración
 advanced search	common	es-es	Búsqueda avanzada

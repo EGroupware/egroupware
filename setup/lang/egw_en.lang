@@ -437,6 +437,7 @@ limit access to setup to the following addresses, networks or hostnames (e.g. 12
 list availible values	setup	en	List available values
 list of availible translations	setup	en	List of available translations
 local groups includes groups and their memberships deleted on the ad/ldap server!	setup	en	Local groups includes groups and their memberships deleted on the AD/LDAP server!
+log-level	setup	en	Log-Level
 login as user postgres, eg. by using su as root	setup	en	Login as user postgres, eg. by using su as root
 login to mysql -	setup	en	Login to mysql -
 loginname needed for domain configuration	setup	en	Login name needed for domain configuration

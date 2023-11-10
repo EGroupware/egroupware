@@ -5,6 +5,7 @@ applications	common	no	Applikasjoner
 cancel editing %1 without saving	filemanager	no	Avbryt redigering %1 uten å lagre
 cannot create directory because it begins or ends in a space	filemanager	no	Kan ikke opprette mappe fordi den begynner eller slutter med mellomrom
 check all	filemanager	no	Kontroller alle
+classic	filemanager	no	Standard verktøylinje
 comment	filemanager	no	Kommentar
 copied %1 to %2	filemanager	no	Kopiert %1 til %2
 copy to	filemanager	no	Kopier til
@@ -20,39 +21,84 @@ created %1,%2	filemanager	no	Opprettet %1, %2
 created directory %1	filemanager	no	Opprettet mappe %1
 custom fields	filemanager	no	Egendefinerte Felter
 cut	filemanager	no	Klipp ut
+default action on double-click	filemanager	no	Standardhandling ved dobbeltklikk
+default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	no	Standard = Nei. Koblingen vises ikke, men du kan fortsatt navigere til denne plasseringen eller konfigurere denne plasseringen som startmappe eller mappekobling.
+defines how to handle double click action on a document file. images are always opened in the expose-view and emails with email application. all other mime-types are handled by the browser itself.	filemanager	no	Definerer hvordan dobbeltklikk på en dokumentfil skal håndteres. Bilder åpnes alltid i eksponeringsvisningen og e-poster med e-postprogrammet. Alle andre MIME-typer håndteres av nettleseren selv.
 deleted %1	filemanager	no	Slettet %1
 directory	filemanager	no	Mappe
 directory %1 already exists	filemanager	no	Mappe %1 finnes allerede
 directory %1 does not exist	filemanager	no	Mappe %1 finnes ikke
 disable	filemanager	no	Deaktiver
 download	filemanager	no	Last ned
+download documents	filemanager	no	Last ned dokumenter
 edit comments	filemanager	no	Rediger kommentarer
+edit share	filemanager	no	Rediger deling
 enable	filemanager	no	muliggjør
+enter a file size, e.g. 100k, 200m or 2g	filemanager	no	Angi en filstørrelse, f.eks. 100K, 200M eller 2G.
+enter your file name	filemanager	no	Skriv inn filnavnet ditt
 everyone	filemanager	no	Alle
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	filemanager	no	Eksempel {{IF n_prefiks~Mr~Hallo Mr.~Hallo Ms.}} - søk i feltet "n_prefix" etter "Mr", hvis funnet, skriv Hello Mr., ellers skriv Hello Ms.
+example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	filemanager	no	Eksempel {{LETTERPREFIXCUSTOM n_prefiks tittel n_familie}} - Eksempel: Herr Dr. James Miller
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	filemanager	no	Eksempel {{NELF rolle}} - hvis feltet rolle ikke er tomt, får du en ny linje med verdien for feltet rolle.
+example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	filemanager	no	Eksempel {{nenvlf rolle}} - hvis feltet rolle ikke er tomt, settes en LF uten noen verdi for feltet
+excludes selected mime types	filemanager	no	Ekskluderer utvalgte MIME-typer
+excludes selected mime types from being opened by editor	filemanager	no	Ekskluderer utvalgte MIME-typer fra å bli åpnet av Collabora Online.<br>Disse dokumenttypene åpnes enten i nettleseren eller lastes ned.
+executable	filemanager	no	Kjørbar
 expires	filemanager	no	Går ut
+export definition to use for nextmatch export	filemanager	no	Eksportdefinisjon som skal brukes for nextmatch-eksport
+extended access control list	filemanager	no	Utvidet tilgangskontrolliste
+extended acl	filemanager	no	Utvidet tilgangskontrolliste
+failed to change permissions of %1!	filemanager	no	Kunne ikke endre tillatelser for %1!
+failed to create directory!	filemanager	no	Opprettelse av mappe mislyktes!
+favorites	filemanager	no	Favoritter
 file	common	no	Fil
+file %1 already exists	filemanager	no	Filen %1 finnes allerede
 file %1 could not be created.	filemanager	no	Filen %1 kunne ikke opprettes
+file %1 may be too big. contact your systemadministrator for further info	filemanager	no	Filen %1 kan være for stor.
+file a file is only available with an epl subscription.	filemanager	no	Filen er bare tilgjengelig med et EPL-abonnement.
 file names cannot contain "%1"	filemanager	no	Filnavn kan ikke inneholde "%1"
 filemanager	common	no	Filhåndterer
 files in this directory	filemanager	no	Filer i denne mappen
+filesystem	filemanager	no	Filsystem
+filesystem check reported no problems.	filemanager	no	Kontrollen av filsystemet rapporterte ingen problemer.
+filesystem: mount directory (inside /var/lib/egroupware!) from host filesystem	filemanager	no	Filsystem: montere katalog (i /var/lib/egroupware !) fra vertsfilsystemet
+finally delete	filemanager	no	Slett til slutt
+finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	no	Slett til slutt alle eldre versjoner og slettede filer under en gitt mappe.\n\n\nDette kan IKKE angres!
+finally delete this version	filemanager	no	Slett endelig denne versjonen
+fix reported problems	filemanager	no	Løs rapporterte problemer
 folder up	filemanager	no	Mappe opp
+for files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available.  see the specific application for a list of available placeholders.	filemanager	no	For filer som er knyttet til en applikasjonsoppføring (i /apps/appname/id/), er plassholderne for applikasjonen også tilgjengelige. Se den spesifikke applikasjonen for en liste over tilgjengelige plassholdere.
+for files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available. see the specific application for a list of placeholders	filemanager	no	For filer som er koblet til en applikasjonsoppføring (i /apps/appname/id/), er også plassholderne for denne applikasjonen tilgjengelige. Se den spesifikke applikasjonen for en liste over plassholdere.
+for serial letter use this tag. put the content, you want to repeat between two tags.	filemanager	no	Bruk denne taggen for seriebokstaver. Sett innholdet du vil gjenta mellom to tagger.
 general	filemanager	no	Generell
-go home	filemanager	no	gå hjem
+go home	filemanager	no	Gå hjem
 go to	filemanager	no	Gå til
 go to your home directory	filemanager	no	Gå til hjemmemappe
-go up	filemanager	no	gå opp
+go up	filemanager	no	Gå opp
+group home quota	filemanager	no	Gruppens hjemmekvote
+hostname/ip for webdav and smb	filemanager	no	Vertsnavn/IP for WebDAV og SMB
 id	filemanager	no	Id
+if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	no	Hvis du angir en mappe (full VFS-bane) her, viser %1 en handling for hvert dokument. Denne handlingen gjør det mulig å laste ned det angitte dokumentet med %1-dataene satt inn.
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	no	Hvis du angir en mappe (full VFS-bane) her, viser %1 et ekstra dokumentikon for hver oppføring. Dette ikonet gjør det mulig å laste ned det angitte dokumentet med de innsatte dataene.
 link	filemanager	no	Lenke
+list view	filemanager	no	Listevisning
 location	filemanager	no	Lokasjon
+mail paste	filemanager	no	Lim inn e-post
+merge print open handler	filemanager	no	Slå sammen utskriftsåpen håndterer
 mime type	filemanager	no	MIME type
-modified	filemanager	no	Endret
+modified	filemanager	no	Modifisert
+modified between	filemanager	no	Modifisert mellom
+mountpoints	filemanager	no	Monteringspunkter
 move	filemanager	no	flytt
 move to	filemanager	no	Flytt til
 moved %1 to %2	filemanager	no	Flyttet %1 til %2
 no files in this directory.	filemanager	no	Ingen filer i mappen
 no version history for this file/directory	filemanager	no	Ingen versjon for denne filen/mappen
+notebookbar	filemanager	no	Feltet
 open	filemanager	no	åpen
 operation	filemanager	no	Operasjon
+password for webdav and smb, use $pass for password of logged in user	filemanager	no	Passord for WebDAV og SMB, bruk $pass for passordet til den innloggede brukeren.
+path and query-parameters, smb: share and optional path (with /)	filemanager	no	Sti og spørringsparametere, SMB: deling og valgfri sti (med /)
 percentage	filemanager	no	Prosent
 permissions	filemanager	no	Tillatelser
 please select a file to delete.	filemanager	no	Vennligst velg en fil å slette
@@ -61,6 +107,10 @@ preview %1	filemanager	no	Forhåndsvis %1
 preview of %1	filemanager	no	Forhåndsvining av %1
 projectmanager	filemanager	no	Prosjektadm.
 quick jump to	filemanager	no	Hurtighopp til
+quota	filemanager	no	Kvote
+quota exceeded	filemanager	no	Kvote overskredet
+recalculate	filemanager	no	Beregne på nytt
+recalculated %1 directories in %2 iterations and %3 seconds	filemanager	no	Beregnet %1 kataloger på nytt i %2 iterasjoner og %3 sekunder
 reload	filemanager	no	Last på nytt
 renamed %1 to %2	filemanager	no	Ga %1 nytt navn til %2
 replaced %1	filemanager	no	Erstattet %1

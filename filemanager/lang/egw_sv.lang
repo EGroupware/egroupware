@@ -6,6 +6,7 @@ applications	common	sv	Applikationer
 cancel editing %1 without saving	filemanager	sv	Avbryt ändring av %1 utan att spara
 cannot create directory because it begins or ends in a space	filemanager	sv	Kan inte skapa katalog eftersom namnet börjar eller slutar med ett mellanslag
 check all	filemanager	sv	Markera alla
+classic	filemanager	sv	Standardverktygsfält
 clear search	filemanager	sv	Rensa sökning
 comment	filemanager	sv	Kommentar
 configuration changed.	filemanager	sv	Konfigurationen ändrad
@@ -23,43 +24,96 @@ created %1,%2	filemanager	sv	Skapade %1, %2
 created directory %1	filemanager	sv	Skapade katalogen %1
 custom fields	filemanager	sv	Anpassade fält
 cut	filemanager	sv	Klipp ut
+default action on double-click	filemanager	sv	Standardåtgärd vid dubbelklick
+default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	sv	Standard = Nej. Länken visas inte, men du kan fortfarande navigera till denna plats eller konfigurera just denna plats som startmapp eller mapplänk.
+defines how to handle double click action on a document file. images are always opened in the expose-view and emails with email application. all other mime-types are handled by the browser itself.	filemanager	sv	Definierar hur dubbelklick på en dokumentfil ska hanteras. Bilder öppnas alltid i exponeringsvyn och e-postmeddelanden skickas med e-postprogrammet. Alla andra MIME-typer hanteras av webbläsaren själv.
 deleted %1	filemanager	sv	Raderade %1
 directory	filemanager	sv	Katalog
 directory %1 already exists	filemanager	sv	Katalogen %1 finns redan
 directory %1 does not exist	filemanager	sv	Katalogen %1 finns inte
 disable	filemanager	sv	Inaktivera
 download	filemanager	sv	Ladda ned
+download documents	filemanager	sv	Ladda ner dokument
 edit comments	filemanager	sv	Ändra kommentar
+edit share	filemanager	sv	Redigera delning
 enable	filemanager	sv	Aktivera
+enter a file size, e.g. 100k, 200m or 2g	filemanager	sv	Ange en filstorlek, t.ex. 100K, 200M eller 2G
+enter the complete vfs path to specify your desired start folder.	filemanager	sv	Ange den fullständiga VFS-sökvägen för att ange din startmapp
+enter your file name	filemanager	sv	Ange ditt filnamn
+error adding the acl!	filemanager	sv	Fel vid tillägg av ACL!
+error creating symlink to target %1!	filemanager	sv	Fel vid skapande av symlänk till målet %1!
+error deleting the acl entry!	filemanager	sv	Fel vid borttagning av ACL-posten!
+error mounting %1 on %2!	filemanager	sv	Fel vid montering av %1 på %2!
+error unmounting %1!	filemanager	sv	Fel vid demontering av %1!
+error uploading file!	filemanager	sv	Fel vid uppladdning av fil!
+error while creating directory.	filemanager	sv	Fel vid skapande av mapp
 everyone	filemanager	sv	Alla
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	filemanager	sv	Exempel {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - sök i fältet "n_prefix" efter "Mr", om det hittas, skriv Hello Mr., annars skriv Hello Ms.
+example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	filemanager	sv	Exempel {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Exempel: Herr Dr. James Miller
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	filemanager	sv	Exempel {{NELF roll}} - om fältet role inte är tomt får du en ny rad med värdet i fältet role
+example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	filemanager	sv	Exempel {{nenvlf roll}} - om fältet role inte är tomt, skapa en LF utan något värde för fältet
+excludes selected mime types	filemanager	sv	Utesluter utvalda MIME-typer
+excludes selected mime types from being opened by editor	filemanager	sv	Utesluter valda MIME-typer från att öppnas av Collabora Online.<br>Dessa dokumenttyper öppnas antingen i webbläsaren eller laddas ner.
+executable	filemanager	sv	Körbar
 expires	filemanager	sv	Förfaller
+export definition to use for nextmatch export	filemanager	sv	Exportdefinition att använda för nextmatch-export
+extended access control list	filemanager	sv	Utökad åtkomstkontrollista
+extended acl	filemanager	sv	Utökad ACL
+failed to change permissions of %1!	filemanager	sv	Det gick inte att ändra behörigheten för %1!
+failed to create directory!	filemanager	sv	Det gick inte att skapa mappen!
+favorites	filemanager	sv	Favoriter
 file	common	sv	Fil
+file %1 already exists	filemanager	sv	Filen %1 finns redan
 file %1 could not be created.	filemanager	sv	Fil % kunde inte skapas
+file %1 may be too big. contact your systemadministrator for further info	filemanager	sv	Filen %1 kan vara för stor.
+file a file is only available with an epl subscription.	filemanager	sv	Fil en fil är endast tillgänglig med en EPL-prenumeration.
+file deleted.	filemanager	sv	Filen är borttagen.
 file names cannot contain "%1"	filemanager	sv	Filnamn kan inte innehålla "%1"
 filemanager	common	sv	Filhanterare
 files in this directory	filemanager	sv	Objekt i katalogen
+filesystem	filemanager	sv	Filsystem
+filesystem check reported no problems.	filemanager	sv	Kontrollen av filsystemet visade inga problem.
+filesystem: mount directory (inside /var/lib/egroupware!) from host filesystem	filemanager	sv	Filsystem: montera katalog (inuti /var/lib/egroupware !) från värdfilsystemet
+finally delete	filemanager	sv	Ta bort till slut
+finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	sv	Ta bort alla äldre versioner och borttagna filer under en viss mapp.\n\nDetta kan INTE ångras!
+finally delete this version	filemanager	sv	Ta bort den här versionen
+fix reported problems	filemanager	sv	Åtgärda rapporterade problem
 folder up	filemanager	sv	Upp ett steg
+for files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available.  see the specific application for a list of available placeholders.	filemanager	sv	För filer som är länkade till en programpost (inuti /apps/appname/id/) är platshållarna för det programmet också tillgängliga. Se den specifika applikationen för en lista över tillgängliga platshållare.
+for files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available. see the specific application for a list of placeholders	filemanager	sv	För filer som är länkade till en applikationspost (inuti /apps/appname/id/) är platshållarna för den applikationen också tillgängliga. Se den specifika applikationen för en lista över platshållare.
 general	filemanager	sv	Allmänt
 go home	filemanager	sv	Gå hem
 go to	filemanager	sv	Gå till
 go to your home directory	filemanager	sv	Gå till din hemkatalog
 go up	filemanager	sv	Gå upp
+group home quota	filemanager	sv	Kvot för gruppens hem
 hidden upload	filemanager	sv	Dold uppladdning
 hidden uploads	filemanager	sv	Dolda uppladdningar
+hostname/ip for webdav and smb	filemanager	sv	Värdnamn/IP för WebDAV och SMB
 id	filemanager	sv	ID
+if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	sv	Om du anger en mapp (fullständig VFS-sökväg) här, visar %1 en åtgärd för varje dokument. Den åtgärden gör det möjligt att hämta det angivna dokumentet med %1-data infogade.
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	sv	Om du anger en mapp (fullständig VFS-sökväg) här, visar %1 en extra dokumentikon för varje post. Med den ikonen kan du ladda ner det angivna dokumentet med de infogade uppgifterna.
 link	filemanager	sv	Länk
+list view	filemanager	sv	Visa lista
 location	filemanager	sv	Plats
 lock	filemanager	sv	Lås
+mail paste	filemanager	sv	Klistra in e-post
+merge print open handler	filemanager	sv	Öppna hanterare för sammanfogad utskrift
 mime type	filemanager	sv	MIME-typ
 modified	filemanager	sv	Ändrad
+modified between	filemanager	sv	Ändrad mellan
+mountpoints	filemanager	sv	Monteringspunkter
 move	filemanager	sv	Flytta
 move to	filemanager	sv	Flytta
 moved %1 to %2	filemanager	sv	Flyttade %1 till %2
 no files in this directory.	filemanager	sv	Inga filer i katalogen
 no version history for this file/directory	filemanager	sv	Ingen versionshistorik för filen/katalogen
 noone	filemanager	sv	Ingen
+notebookbar	filemanager	sv	Flikad
 open	filemanager	sv	Öppen
 operation	filemanager	sv	Åtgärd
+password for webdav and smb, use $pass for password of logged in user	filemanager	sv	Lösenord för WebDAV och SMB, använd $pass för lösenord för inloggad användare
+path and query-parameters, smb: share and optional path (with /)	filemanager	sv	Sökväg och frågeparametrar, SMB: delning och valfri sökväg (med /)
 permissions	filemanager	sv	Behörigheter
 please select a file to delete.	filemanager	sv	Välj fil för radering
 preview	filemanager	sv	Förhandsgranska
@@ -67,6 +121,10 @@ preview %1	filemanager	sv	Förhandsgranska %1
 preview of %1	filemanager	sv	Förhandsgransking av %1
 projectmanager	filemanager	sv	Projekthantering
 quick jump to	filemanager	sv	Hoppa till
+quota	filemanager	sv	Kvot
+quota exceeded	filemanager	sv	Kvoten har överskridits
+recalculate	filemanager	sv	Räkna om
+recalculated %1 directories in %2 iterations and %3 seconds	filemanager	sv	Omräknade %1 kataloger i %2 iterationer och %3 sekunder
 reload	filemanager	sv	Ladda om
 renamed %1 to %2	filemanager	sv	Döpte om %1 till %2
 replaced %1	filemanager	sv	Ersatte %2

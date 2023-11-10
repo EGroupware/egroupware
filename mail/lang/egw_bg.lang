@@ -347,6 +347,7 @@ mark all messages in folder as read	mail	bg	Маркиране на всички
 mark as deleted	mail	bg	Маркирай като изтрито
 matches	mail	bg	съвпада с
 matches regexp	mail	bg	съвпада с рег. израз
+message learned as spam and moved to spam folder	mail	bg	Съобщението е разпознато като спам и е преместено в папката за спам
 modify subject	mail	bg	Tárgy módosítása
 modify subject of this message	mail	bg	Az üzenet tárgyának módosítása
 move selected to	mail	bg	премести избраните в
@@ -357,14 +358,18 @@ never display html emails	mail	bg	Не показва HTML съобщения
 new subject	mail	bg	Új tárgy
 no access	mail	bg	Няма достъп
 no address to/cc/bcc supplied, and no folder to save message to provided.	mail	bg	Не е посочен адрес ДО/Копие/Скрито копие и не е зададена папка за запазване на съобщението.
+no folder destination supplied, and no folder to save message or other measure to store the mail (save to infolog/tracker) provided, but required.	mail	bg	Не е предоставена дестинация на папката и не е предоставена папка за записване на съобщението или друга мярка за съхраняване на пощата (записване в InfoLog/Ticketsystem), но се изисква.
 no plain text part found	mail	bg	липсва текстова част
 no recipient address given!	mail	bg	Не е посочен адрес на получател!
 no signature	mail	bg	няма подпис
 no sneak preview in list	mail	bg	Няма предварителен преглед на съобщението
 no subject given!	mail	bg	Не е посочена Тема!
+non	mail	bg	Не
 on	mail	bg	на
 only email	mail	bg	Само имейл
+only makes sense, if you transport password through a different channel / outside of this mail to recipients!	mail	bg	Има смисъл, само ако пренасяте паролата по друг канал / извън тази поща до получателите!
 only name	mail	bg	Само име
+only needed for some servers, that do not return all folders on root level queries to retrieve all folders for that level	mail	bg	Необходим само за някои сървъри, които не връщат всички папки при заявки на коренно ниво за извличане на всички папки за това ниво
 only one window	mail	bg	само в един прозорец
 open in html mode	mail	bg	Отваряне в режим HTML
 open in text mode	mail	bg	Отваряне в текстов режим
@@ -376,13 +381,19 @@ original message	mail	bg	Оригинално съобщение
 outbox	mail	bg	Изходяща поща
 permission denied	mail	bg	Не е позволено
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	bg	Моля, конфигурирайте сертификата си S/MIME в раздела Encryption (Шифроване), намиращ се в диалоговия прозорец за редактиране на акаунта.
+please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	bg	Моля, свържете се с вашия администратор, за да потвърдите дали сървърът ви поддържа филтърни правила на сървъра и как да ги активирате в EGroupware за вашия активен акаунт (%1) с ID:%2.
+please contact your administrator to validate if your server supports serverside vacationmessages, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	bg	Моля, свържете се с Вашия администратор, за да потвърдите дали Вашият сървър поддържа съобщения за ваканция от страна на сървъра и как да ги активирате в EGroupware за Вашия активен акаунт (%1) с ID:%2.
+please enter password	mail	bg	Моля, въведете парола
 please select a address	mail	bg	Моля, изберете адрес
 please select the number of days to wait between responses	mail	bg	Моля, изберете брой дни за изчакване между отговорите
 please supply the message to send with auto-responses	mail	bg	Моля, въведете съобщение за изпращане като Автоматичен отговор
+post	mail	bg	изпратете
 predefined addresses for compose	mail	bg	Предварително зададени адреси за compose
 preview pane	mail	bg	Оформление на прозореца
 printing	mail	bg	Отпечатване
 printview	mail	bg	изглед за печат
+processing of file %1 failed. failed to meet basic restrictions.	mail	bg	Обработката на файл %1 не е успешна. Не успя да отговори на основните ограничения.
+provide a default vacation text, (used on new vacation messages when there was no message set up previously)	admin	bg	Предоставете текст по подразбиране за ваканция (използва се при нови съобщения за ваканция, когато преди това не е имало създадено съобщение)
 push notifications	mail	bg	Известия Push
 quicksearch	mail	bg	Бързо търсене
 quicksearch (with cc)	mail	bg	Бързо търсене (+Копиране)
@@ -402,24 +413,50 @@ replied	mail	bg	изпратен отговор
 reply	mail	bg	Отговор
 reply all	mail	bg	Отговор до всички
 reply to	mail	bg	Отговор До
+replying to this message failed because the content of this message seems to be encrypted and can not be decrypted properly. if you still wish to include content of this encrypted message, you may try to use forward as attachment instead.	mail	bg	Отговорът на това съобщение не е успешен, тъй като съдържанието на това съобщение изглежда е криптирано и не може да бъде декриптирано правилно. Ако все пак желаете да включите съдържанието на това криптирано съобщение, можете да опитате да използвате препращане като прикачен файл вместо това.
 replyto	mail	bg	Отговор До
+report as ham	mail	bg	Докладвайте като Ham
+report as spam	mail	bg	Докладвайте като спам
+report this email content as ham (not spam) - spam solutions like spamtitan will learn	mail	bg	Докладвайте това съдържание на имейла като Ham (не спам) - решенията за спам като spamTitan ще се научат
+report this email content as spam - spam solutions like spamtitan will learn	mail	bg	Докладвайте това имейл съдържание като спам - спам решения като spamTitan ще се научат
+required pear class mail/mimedecode.php not found.	mail	bg	Не е намерен необходимият PEAR клас Mail/mimeDecode.php.
+required to disable if you use dovecot with private seen flags on shared or user folder!	mail	bg	Задължително се деактивира, ако използвате Dovecot с флагове за частно виждане на споделена или потребителска папка!
 row order style	mail	bg	Стил на изгледа
 save all attachments to filemanager	mail	bg	Minden melléklet mentése a fájlkezelőbe
 save as draft	mail	bg	запис като чернова
 save as infolog	mail	bg	запис в Дневника
+save as infolog on send	mail	bg	Запазване като InfoLog при изпращане
 save message to disk	mail	bg	запис на съобщението на диска
+save the drafted message as eml file into vfs	mail	bg	Запазване на изготвеното съобщение като eml файл във файловия мениджър
+saving of message %1 failed. destination folder %2 does not exist.	mail	bg	Запазването на съобщението %1 не е успешно. Папката на местоназначението %2 не съществува.
+saving of message %1 succeeded. check folder %2.	mail	bg	Записването на съобщение %1 е успешно. Проверете папка %2.
+saving the rule failed:	mail	bg	Запазването на правилото не е успешно:
+security	mail	bg	Сигурност
+see attachments for content of the orignial mail	mail	bg	Вижте прикачените файлове за съдържанието на оригиналната поща
 select all	mail	bg	Избиране на всичко
+select an existing entry in order to append mail content to it	mail	bg	Изберете съществуващ запис, за да добавите към него съдържанието на пощата
+select an item to read	mail	bg	Изберете елемент, който да прочетете
 select or insert email address	mail	bg	Válassza ki vagy illessze be az e-mail címet
+selected date range (with quicksearch)	mail	bg	Избран диапазон от дати (с бързо търсене)
+send message and move to send folder (if configured)	mail	bg	Изпращане на съобщение и преместване в папката за изпращане (ако е конфигурирано)
+send message pgp encrypted: requires keys from all recipients!	mail	bg	Изпращане на съобщение, криптирано с PGP: изисква ключове от всички получатели!
 sent	mail	bg	Изпратени
 sent folder	mail	bg	Папка "Изпратени"
+server supports special-use folders	mail	bg	Сървърът поддържа папки за специална употреба
 serverside filterrules (sieve) are not activated	mail	bg	Филтърните правила от страна на сървъра (Sieve) не са активирани
 serverside vacationnotice (via sieve) are not activated	mail	bg	Съобщенията за отсъствие от страна на сървъра (чрез Sieve) не са активирани
 set flags	mail	bg	Маркирайте имейл като
 set predefined values for compose...	mail	bg	Задаване на предварително определени стойности за compose ...
+should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	bg	Трябва ли подписът да се поставя след (стандартно) или преди отговор или препращане и трябва ли подписът да е видим и да може да се променя по време на съставяне.
+show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	bg	Показва всички папки (абонирани и неабонирани) в панела с папки на главния екран
 show notification for new arriving mails	mail	bg	Показване на известие за нови пристигащи писма
+show test connection section and control the level of info displayed?	mail	bg	Да се показва раздел за тестова връзка и да се контролира нивото на показваната информация?
+show test connection section and control the level of info displayed??	mail	bg	Показване на раздел за тестова връзка и контрол на нивото на показваната информация??
+show them this time only	mail	bg	Покажете ги само този път
 show vertical	mail	bg	Покажи вертикално
 show vertical with all columns	mail	bg	Показвайте вертикално с всички колони
 show/hide preview pane in mail list view	mail	bg	Показване/скриване на панела за предварителен преглед в изгледа на списъка с имейли
+shows a temporary visible notification including from address, subject and a snippet of the mail	mail	bg	Показва временно видимо известие, включващо от адрес, тема и откъс от имейл
 sieve script name	mail	bg	име на sieve скрипт
 sieve_edit_instructions	mail	bg	(*) могат да се използват "заместващи символи" (* ,?) Ако се опитвате да съчетаете помежду си * или ?, трябва да ги избегнете с наклонена черта (\). Ако поставите отметка „Използване на регулярни изрази“, трябва да използвате валидни регулярни изрази. За да избегнете удивителен знак (!) в началото, който не се използва като "НЕ", използвайте регекс и обратна черта (\) (например \!)
 signature	mail	bg	Подпис
@@ -459,4 +496,15 @@ view header lines	mail	bg	Заглавна част (Header)
 when deleting messages	mail	bg	При изтриване на съобщения
 which folders - in general - should not be automatically created, if not existing	mail	bg	кои папки НЕ следва са се създават автоматично, ако не съществуват.
 wrote	mail	bg	написа
+yes, only trigger connection reset	mail	bg	да, само да задействате нулиране на връзката
+yes, show all debug information available for the user	mail	bg	да, показва цялата налична за потребителя информация за отстраняване на грешки
+you can either choose to save as infolog or tracker, not both.	mail	bg	Можете да изберете да запазите като InfoLog ИЛИ като тракер, но не и двете.
 you can select what info to be displayed on email tag	mail	bg	Можете да изберете каква информация да се показва на имейл тага.
+you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	bg	Можете да използвате $$start$$ за горната начална дата и $$end$$ за крайната дата.
+you may add this certificate into your contact, if you trust this signature.	mail	bg	Можете да добавите този сертификат в контакта си, ако имате доверие на този подпис.
+you need to enter your s/mime passphrase to send this message.	mail	bg	За да изпратите това съобщение, трябва да въведете своята S/MIME парола.
+you need to install mailvelope plugin available for chrome and firefox from %1.	mail	bg	Трябва да инсталирате приставката Mailvelope, която е налична за Chrome и Firefox от %1.
+you need to save the message as draft first before to be able to save it into vfs	mail	bg	Трябва първо да запазите съобщението като чернова, преди да можете да го запазите във VFS
+you will loose current message body, unless you save it to your clipboard!	mail	bg	Ще загубите текущото тяло на съобщението, освен ако не го запазите в клипборда си!
+you've got new mail	mail	bg	Получили сте нов имейл
+your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	bg	Оставащата ви квота %1 е твърде ниска, може да не сте в състояние да изпращате/получавате по-нататъшни имейли.\n Въпреки че почистването на имейли в кошчето или папката с нежелани съобщения може да ви помогне да си върнете малко свободно място.\n Ако това не е помогнало, моля, помолете администратора си за повече квота.

@@ -86,9 +86,11 @@ add table	common	nl	Tabel toevoegen
 add to clipboard	common	nl	Voeg toe aan klembord
 add user to responsibles	groupdav	nl	Voeg gebruiker toe aan verantwoordelijkheden
 add user to responsibles, removing evtl. previous category user	groupdav	nl	voeg gebruikers toe aan verantwoordelijkheden, verwijder eventuele eerdere categorieën van gebruiker
+add your domain as "%1" in options to list of email providers and enable api.	common	nl	Voeg uw domein toe als "%1" in opties aan lijst met e-mailproviders en schakel API in.
 addressbook	common	nl	Adresboek
 addressbooks to sync in addition to personal addressbook	groupdav	nl	Adresboeken welke ook moeten worden gesynchroniseerd buiten het eigen adresboek.
 admin	common	nl	Beheer
+admin settings	common	nl	Beheerdersinstellingen
 admin settings for %1	common	nl	Beheerdersinstellingen voor %1
 administration	common	nl	Beheer
 advanced search	common	nl	Geavanceerd zoeken
@@ -107,6 +109,7 @@ all in one	groupdav	nl	Alles in een
 all languages	common	nl	alle talen
 all operations save the template!	common	nl	alle bewerkingen slaan de template op!
 all users	common	nl	Alle gebruikers
+allow editing the %1	common	nl	Bewerken van %1 toestaan
 allows to modify responsible users from devices not supporting them, by setting email address of a user as category.	groupdav	nl	Sta verantwoordelijke gebruikers toe om apparaten welke niet door hun worden ondersteund te wijzigen, doormiddel van gebruik Mail adres of een gebruiker als categorie.
 alt	common	nl	Alt
 alternate style-sheet:	common	nl	Afwisselende style-sheet:

@@ -4,7 +4,7 @@
 %1 has been removed from blacklisted email addresses	mail	fr	%1 retiré de la liste noire
 %1 has been removed from whiltelisted email addresses	mail	fr	%1 retiré de la la liste blanche
 %1 is not writable by you!	mail	fr	%1 n'est pas accessible en écriture !
-%1 mails selected	mail	fr	% mails sélectionnés
+%1 mails selected	mail	fr	%1 mails sélectionnés
 (*) please consider, forward to multiple addresses will not work if number of addresses exceeds the limit. for most mail servers the limit is 4 by default, please contact your mail server administrator for further info.	mail	fr	(*) Veuillez considérer que le fait d'envoyer à plusieurs destinataires peut ne pas fonctionner selon la limite définie par le serveur. Veuillez contacter votre administrateur pour plus d'informations.
 (leave empty for no quota)	mail	fr	(laisser vide pour ne ne pas mettre de quota)
 (no subject)	mail	fr	Pas de sujet
@@ -163,6 +163,9 @@ do you really want to delete this rule	mail	fr	Voulez-vous vraiment supprimer ce
 do you really want to mark all messages as read in the current folder?	mail	fr	Voulez-vous vraiment marquer TOUS les messages de ce dossier comme "lus" ?
 do you really want to remove all labels from all messages in the current folder?	mail	fr	Voulez-vous vraiment supprimer TOUS les labels de TOUS le message du dossier actif ?
 do you really want to remove all rights from this account?	mail	fr	Voulez-vous vraiment supprimer tous les droits de ce compte ?
+do you really want to toggle flag %1 for all messages in the current view?	mail	fr	Voulez-vous vraiment activer l'indicateur %1 pour TOUS les messages de la vue actuelle ?
+do you really want to toggle label %1 for all messages in the current view?	mail	fr	Voulez-vous vraiment faire basculer l'étiquette %1 pour TOUS les messages de la vue actuelle ?
+do you want to be asked for confirmation before attaching selected messages to new mail?	mail	fr	Voulez-vous qu'une confirmation vous soit demandée avant d'attacher les messages sélectionnés à un nouvel e-mail ?
 do you want to be asked for confirmation before moving selected messages to another folder?	mail	fr	Voulez-vous recevoir une notification de confirmation avant de déplacer les messages sélectionnés dans un autre dossier ?
 do you want to prevent the editing/setup of filter rules (, even if sieve is enabled)?	mail	fr	Voulez-vous prévenir l'édition/configuration des règles de filtrages (même si Sieve est activé) ?
 do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	mail	fr	Voulez-vous prévenir l'édition/configuration de la notification par email à d'autres adresses emails si des emails arrivent (même si Sieve est activé) ?
@@ -258,13 +261,16 @@ forward messages to:	mail	fr	Transférer les messages à
 forward messages:	mail	fr	Transférer les messages
 forward to	mail	fr	Transférer à
 forward to address (*):	mail	fr	Transférer aux adresses (*)
+forwarding of this message failed because the content of this message seems to be encrypted and can not be decrypted properly. if you still wish to forward content of this encrypted message, you may try to use forward as attachment instead.	mail	fr	Le transfert de ce message a échoué car le contenu de ce message semble être crypté et ne peut être décrypté correctement. Si vous souhaitez toujours transférer le contenu de ce message crypté, vous pouvez essayer d'utiliser le transfert en tant que pièce jointe.
 forwards	mail	fr	Transférés
 from	mail	fr	De
 from(a->z)	mail	fr	De (A->Z)
 from(z->a)	mail	fr	De (Z->A)
 general	admin	fr	General
 general settings	mail	fr	Paramètres principaux
+get acl rights failed from imap server!	mail	fr	Obtenir les droits ACL du serveur IMAP sans succès !
 greater than	mail	fr	plus grand que
+ham folder	mail	fr	Dossier Ham
 handling of external http images / mixed content in mails	mail	fr	Traitement des images http externes / contenu mixte dans les courriers électroniques
 header	mail	fr	En-tête
 header lines	mail	fr	Lignes d'en-tête
@@ -344,11 +350,16 @@ mark as deleted	mail	fr	Marquer comme effacé
 match:	mail	fr	Résultat :
 matches	mail	fr	correspond
 matches regexp	mail	fr	correspond
+mbstring.func_overload=0 is required for correct mail processing!	mail	fr	mbstring.func_overload=0 est nécessaire pour un traitement correct du courrier !
 message body	mail	fr	corps du message
+message learned as ham (not spam) and moved back to inbox	mail	fr	Message considéré comme ham (pas spam) et déplacé vers la boîte de réception
+message learned as spam and moved to spam folder	mail	fr	Message considéré comme spam et déplacé dans le dossier spam
 message preview area	mail	fr	Zone de prévisualisation
 message saved successfully.	mail	fr	Message sauvegardé avec succès
 message send failed: %1	mail	fr	Echec du message envoyé : %1
 message send successfully.	mail	fr	Message envoyé avec succès
+message verified successfully but the signer’s certificate could not be verified.	mail	fr	Message vérifié avec succès mais le certificat du signataire n'a pas pu être vérifié.
+message verified successfully.	mail	fr	Message vérifié avec succès.
 miscellaneous	mail	fr	Divers
 modify subject	mail	fr	Modifier le sujet
 modify subject of this message	mail	fr	Modifier l'objet de cet message
@@ -363,6 +374,7 @@ moved %1 message(s) from %2 to %3	mail	fr	Déplacer %1 message(s) de %2 vers %3
 moving folders from one mailaccount to another is not supported	mail	fr	Déplacer des dossiers d'un compte à un autre n'est pas supporté
 name and email	mail	fr	Nom et email
 name of account	mail	fr	Nom du compte
+name of imap servers (space separated host or host:port)	mail	fr	Nom des serveurs IMAP (hôte séparé par des espaces ou hôte:port)
 never display html emails	mail	fr	Ne jamais afficher les messages HTML
 never show	mail	fr	Ne jamais afficher
 never show notification	mail	fr	Ne jamais afficher de notifications
@@ -375,9 +387,10 @@ no access	mail	fr	Pas d'accès
 no action defined!	mail	fr	Aucune action définie !
 no address to/cc/bcc supplied, and no folder to save message to provided.	mail	fr	Aucune adresse POUR/CC/BCC n'a été fournie et aucun répertoire pour sauvegarder le message a été indiqué.
 no adress, to send this mail to, supplied	mail	fr	pas d'adresse de destinataire
+no folder destination supplied, and no folder to save message or other measure to store the mail (save to infolog/tracker) provided, but required.	mail	fr	Aucune destination de dossier n'est fournie, et aucun dossier pour enregistrer le message ou autre mesure pour stocker le courrier (enregistrement dans InfoLog/Ticketsystem) n'est fourni, mais nécessaire.
 no folders	mail	fr	Pas de dossier
-no message body supplied	mail	fr	pas de corps de message
-no plain text part found	mail	fr	aucune section texte plein trouvée
+no message body supplied	mail	fr	Pas de corps de message
+no plain text part found	mail	fr	Aucune section texte plein trouvée
 no recipient address given!	mail	fr	Il n'a pas d'adresse de destinataire
 no send folder set in preferences	mail	fr	Aucun dossier "Envoyés" défini dans les préférences
 no signature	mail	fr	Pas de signature !
@@ -394,11 +407,16 @@ notify about new mail in this folders	mail	fr	M'avertir des nouveaux messages da
 notify when new mails arrive in these folders	mail	fr	M'avertir lorsque de nouveaux messages arrivent dans ces dossiers
 on	mail	fr	le
 on behalf of	mail	fr	De la part de
+on vacation	mail	fr	En vacances
 one address is not valid	mail	fr	Une adresse n'est pas valide
 only email	mail	fr	Seulement le email
+only if currently in an other app	mail	fr	Seulement si vous êtes dans une autre application
+only makes sense, if you transport password through a different channel / outside of this mail to recipients!	mail	fr	N'a de sens que si vous transportez le mot de passe par un canal différent / en dehors de ce courrier vers les destinataires !
 only name	mail	fr	Seulement le nom
+only needed for some servers, that do not return all folders on root level queries to retrieve all folders for that level	mail	fr	Nécessaire uniquement pour certains serveurs qui ne renvoient pas tous les dossiers au niveau de la racine afin de récupérer tous les dossiers pour ce niveau.
 only one window	mail	fr	Seulement une fenêtre
 only send message, do not copy a version of the message to the configured sent folder	mail	fr	Envoyer le message uniquement, ne pas copier vers le dossier des messages envoyés
+only store message in inbox, do not send vacation notice	mail	fr	Ne conserver le message que dans INBOX, ne PAS envoyer d'avis de départ en vacances
 open in html mode	mail	fr	Ouvrir en mode HTML
 open in text mode	mail	fr	Ouvrir en mode texte
 open with collabora office	mail	fr	Ouvrir avec Collabora Online
@@ -411,11 +429,14 @@ password protect	mail	fr	protection par mot de passe
 permission denied	mail	fr	Permission refusée
 please configure access to an existing individual imap account.	mail	fr	Veuillez configurer l'accès à un compte IMAP individuel existant.
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	fr	Veuillez configurer votre certificat S/MIME dans l'onglet Encryption situé dans la boîte de dialogue Edit Account.
+please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	fr	Veuillez contacter votre administrateur pour savoir si votre serveur prend en charge les règles de filtrage côté serveur et comment les activer dans EGroupware pour votre compte actif (%1) avec ID:%2.
+please contact your administrator to validate if your server supports serverside vacationmessages, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	fr	Veuillez contacter votre administrateur pour savoir si votre serveur prend en charge les messages de vacances côté serveur et comment les activer dans EGroupware pour votre compte actif (%1) avec ID:%2.
 please enter password	mail	fr	Veuillez entrer un mot de passe
 please select a address	mail	fr	Sélectionner une adresse
 please select the number of days to wait between responses	mail	fr	Sélectionner le nombre de jours pour attendre entre les réponses
 please supply the message to send with auto-responses	mail	fr	Ecriver le message pour envoyer en réponse automatique
 please wait while sending your mail	mail	fr	Veuillez patienter pendant l'envoi de votre email
+post	mail	fr	envoyer
 predefined addresses for compose	mail	fr	Adresses prédéfinies pour la composition
 prevent managing filters	mail	fr	Empêcher la gestion des filtres
 prevent managing folders	mail	fr	Empêcher la gestion des dossiers
@@ -425,10 +446,12 @@ preview pane	mail	fr	Disposition des fenêtres
 primary profile	mail	fr	Profil primaire
 printing	mail	fr	Impression
 printview	mail	fr	Vue d'impression
+processing of file %1 failed. failed to meet basic restrictions.	mail	fr	Le traitement du fichier %1 a échoué. Les restrictions de base n'ont pas été respectées.
 provide a default vacation text, (used on new vacation messages when there was no message set up previously)	admin	fr	fournir un message d'absence par défaut (pour les nouveaux messages d'absence lorsque aucun message n'existait auparavant)
 push notifications	mail	fr	Notifications push
 quicksearch	mail	fr	Recherche Rapide
 quicksearch (with cc)	mail	fr	Recherche rapide (avec les CC)
+quota limit warning in megabyte (recommended value is 30 mb).	mail	fr	Avertissement de limite de quota en mégaoctets (la valeur recommandée est de 30 Mo).
 quota not provided by server	mail	fr	Quota non indiqué par le serveur
 quota: %1	mail	fr	Quota : %1
 read	mail	fr	Lu
@@ -466,18 +489,23 @@ reply	mail	fr	Répondre
 reply all	mail	fr	Répondre à tous
 reply message type	mail	fr	Type de réponse
 reply to	mail	fr	Répondre à
+replying to this message failed because the content of this message seems to be encrypted and can not be decrypted properly. if you still wish to include content of this encrypted message, you may try to use forward as attachment instead.	mail	fr	La réponse à ce message a échoué car le contenu de ce message semble être crypté et ne peut pas être décrypté correctement. Si vous souhaitez toujours inclure le contenu de ce message crypté, vous pouvez essayer de l'envoyer en tant que pièce jointe.
 replyto	mail	fr	Répondre A
 report as ham	mail	fr	Marqué comme HAM
 report as spam	mail	fr	Marqué comme SPAM
+report this email content as ham (not spam) - spam solutions like spamtitan will learn	mail	fr	Signaler le contenu de cet e-mail comme Ham (pas spam) - les solutions anti-spam comme spamTitan apprendront.
+report this email content as spam - spam solutions like spamtitan will learn	mail	fr	Signaler le contenu de cet e-mail en tant que spam - les solutions anti-spam comme spamTitan vont apprendre
 required pear class mail/mimedecode.php not found.	mail	fr	Classe PEAR class Mail/mimeDecode.php non trouvée.
+required to disable if you use dovecot with private seen flags on shared or user folder!	mail	fr	Doit être désactivée si vous utilisez Dovecot avec des drapeaux "private seen" sur des dossiers partagés ou des dossiers d'utilisateurs !
 resend after how many days?	mail	fr	Ré-envoyer après combien de jours ?
 respond to mail sent to:	mail	fr	Répondre à l'email envoyé à :
 restrict acl management	admin	fr	restreindre la gestion des ACL
 rights	mail	fr	Droits
 row order style	mail	fr	style d'ordonnancement de ligne
-rule priority position	mail	fr	position des règles
+rule priority position	mail	fr	Position des règles
 rule with priority	mail	fr	règle avec la priorité
 rules	mail	fr	règles
+s/mime encryption failed because no certificate has been found for sender address: %1	mail	fr	Le cryptage S/MIME a échoué car aucun certificat n'a été trouvé pour l'adresse de l'expéditeur : %1
 save all	mail	fr	Enregistrer tout
 save all attachments to filemanager	mail	fr	Enregistrer toutes les pièces jointes vers le gestionnaire de fichiers
 save as calendar	mail	fr	Enregistrer dans le Calendrier
@@ -507,6 +535,7 @@ security	mail	fr	Sécurité
 see attachments for content of the orignial mail	mail	fr	Voir les pièces jointes pour le contenu du message d'origine
 select a date	mail	fr	Choisir une date
 select all	mail	fr	Tout sélectionner
+select an existing entry in order to append mail content to it	mail	fr	Sélectionner une entrée existante afin d'y ajouter le contenu du courrier
 select an item to read	mail	fr	Sélectionner un élément à lire
 select file to attach to message	mail	fr	Sélectionner le fichier à joindre au message
 select file to import into folder	mail	fr	Sélectionner le fichier à importer dans le dossier
@@ -519,9 +548,13 @@ selected date range (with quicksearch)	mail	fr	Plage de dates (recherche rapide)
 send a reject message:	mail	fr	Envoyer un message de rejet
 send files as	mail	fr	Envoyer les fichiers comme
 send message and move to send folder (if configured)	mail	fr	Envoyer le message et le déplacer vers le dossier des messages envoyés
+send message pgp encrypted: requires keys from all recipients!	mail	fr	Envoi d'un message crypté PGP : les clés de tous les destinataires sont nécessaires !
+send only a vacation notice, do not store message in inbox	mail	fr	Envoyer uniquement un avis de vacances, ne PAS stocker le message dans INBOX
+send vacation notice and store message in inbox	mail	fr	Envoyer un avis de vacances et stocker le message dans INBOX
 sender	mail	fr	Emetteur
 sent	mail	fr	Envoyés
 sent folder	mail	fr	Dossier contenant les messages envoyés
+server supports special-use folders	mail	fr	Le serveur prend en charge les dossiers à usage spécial
 serverside filterrules (sieve) are not activated	mail	fr	Les règles de filtrage côté serveur (Sieve) ne sont pas activées
 serverside vacationnotice (via sieve) are not activated	mail	fr	Les messages d'avis d'absence côté serveur (via Sieve) ne sont pas activés.
 set / remove flags	mail	fr	Marquer
@@ -530,17 +563,23 @@ set flags	mail	fr	Marquer l'e-mail comme
 set it as default:	mail	fr	Définir par défaut :
 set predefined values for compose...	mail	fr	Définir les valeurs prédéfinies pour la composition ...
 should new messages show up on the home page	mail	fr	Est-ce que les nouveaux messages doivent apparaître sur la page d'accueil
+should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	fr	La signature doit-elle être insérée après (standard) ou avant une réponse ou un transfert, et doit-elle être visible et modifiable pendant la rédaction ?
 show	mail	fr	Afficher
 show all addresses	mail	fr	Afficher toutes les adresses
 show all attachments	mail	fr	Afficher toutes les pièces jointes
 show all folders	mail	fr	Afficher tous les dossiers
+show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	fr	afficher tous les dossiers (abonnés ET désabonnés) dans le volet des dossiers de l'écran principal
 show horizontal	mail	fr	Afficher à l'horizontale
 show horizontal, hide if none selected	mail	fr	Afficher à l'horizontale, cacher si aucun sélectionner
 show new messages on home page	mail	fr	Afficher les nouveaux messages sur la page d'accueil
 show notification for new arriving mails	mail	fr	Afficher une notification pour les nouveaux mails reçus
+show test connection section and control the level of info displayed?	mail	fr	Afficher la section de connexion de test et contrôler le niveau d'information affiché ?
+show test connection section and control the level of info displayed??	mail	fr	Afficher la section de connexion de test et contrôler le niveau d'information affiché ?
+show them this time only	mail	fr	Les afficher cette fois-ci seulement
 show vertical	mail	fr	Afficher à la verticale
 show vertical with all columns	mail	fr	Afficher l'écran vertical avec toutes les colonnes
 show/hide preview pane in mail list view	mail	fr	Afficher/Maquer le panneau de prévisualisation dans la vue liste
+shows a temporary visible notification including from address, subject and a snippet of the mail	mail	fr	Affiche une notification temporaire visible comprenant l'adresse du destinataire, l'objet et un extrait du message.
 sieve	mail	fr	Sieve
 sieve connection status	mail	fr	Statut de connexion à Sieve
 sieve not activated	mail	fr	Sieve non activé
@@ -558,10 +597,14 @@ smime encrypted message	mail	fr	Message crypté S/MIME
 smime signed message	mail	fr	Message signé S/MIME
 smtp	mail	fr	SMTP
 sneak preview in list	mail	fr	Masquer la prévisualisation
+some clients fail to detect correct charset, if flowed lines are enabled.	mail	fr	Certains clients ne parviennent pas à détecter le jeu de caractères correct si les lignes fluides sont activées.
 sort order	mail	fr	Ordre de tri
 source	mail	fr	Source
 sources	mail	fr	Sources
+spamtitan api url	mail	fr	SpamTitan API URL
+spamtitan integration requires epl version	mail	fr	L'intégration de SpamTitan nécessite la version EPL
 start new messages with mime type plain/text or html?	mail	fr	Créer les nouveaux messages au format plain/text ou HTML ?
+start reply messages with mime type plain/text or html or try to use the displayed format (default)?	mail	fr	Répondre aux courriels et les transférer au format texte, au format HTML ou selon le format dans lequel le courriel a été initialement composé par l'expéditeur (par défaut).
 step 1: imap - incoming mail	mail	fr	Etape 1 : mail entrant
 step 2: folder	mail	fr	Etape 2 : Dossier
 step 3: sieve - server side mail filtering	mail	fr	Etape 3 : Sieve, les règles de courrier côté serveur
@@ -574,6 +617,7 @@ subscribe folder ...	mail	fr	S'abonner au dossier...
 subscribe to folder %1	mail	fr	S'abonner au dossier %1
 subscription folders	mail	fr	Abonnement dossiers
 subscription successfully saved.	mail	fr	Abonnement sauvegardé avec succès
+succeeded on %1 folders, failed on %2	mail	fr	Réussi sur %1 dossiers, échoué sur %2
 successfully connected	mail	fr	Connecté avec succès !
 switch off encryption?	mail	fr	Désactiver l'encryption
 template folder	mail	fr	Dossier de modèles
@@ -585,7 +629,10 @@ text	mail	fr	Texte
 text mode	mail	fr	Mode texte
 text/plain	mail	fr	text/plain
 the %1 's acl removed from the %2	mail	fr	Les ACL %1 ont été supprimés de %2
+the %1 's acl, including its subfolders, removed from the %2	mail	fr	L'ACL de %1, y compris ses sous-dossiers, a été supprimée de l'ACL de %2.
+the entered passphrase is not correct! please try again.	mail	fr	La phrase de passe saisie n'est pas correcte ! Veuillez réessayer.
 the folder %1 's acls saved	mail	fr	Les ACL du dossier %1 sont enregistré
+the folder <b>%1</b> will be used, if there is nothing set here, and no valid predefine given.	mail	fr	Le dossier <b>%1</b> sera utilisé si rien n'est défini ici et si aucune prédéfinition valide n'est donnée.
 the imap server need to meet certain requirements and be configured for it:	mail	fr	Le serveur IMAP doit répondre à certaines exigences ET être configuré pour cela :
 the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	mail	fr	L'expéditeur du message a demandé une réponse pour indiquer que vous avez lu ce message. Souhaitez-vous envoyer un accusé de réception?
 the mimeparser can not parse this message.	mail	fr	L'analyseur mime ne peut pas décoder ce message.
@@ -601,6 +648,10 @@ toggle all folders view for %1	mail	fr	Basculer l'affichage de tous les dossiers
 toggled on actions	mail	fr	Actions activées
 trash	mail	fr	Corbeille
 trash folder	mail	fr	Dossier Corbeille
+trust servers seen / unseen info	mail	fr	Confiance dans les informations du serveur SEEN / UNSEEN
+trust the server when retrieving the folder status. if you select no, we will search for the unseen messages and count them ourselves	mail	fr	Faites confiance au serveur lors de la récupération de l'état du dossier. Si vous sélectionnez non, nous rechercherons les messages UNSEEN et les compterons nous-mêmes.
+trying to recover from session data	mail	fr	Essai de récupération des données de session
+turn off horizontal line between signature and composed message (this is not according to rfc).<br>if you use templates, this option is only applied to the text part of the message.	mail	fr	Désactiver la ligne horizontale entre la signature et le message composé (ce n'est pas conforme à la RFC). <br>Si vous utilisez des modèles, cette option ne s'applique qu'à la partie texte du message.
 unable to fetch vacation!	mail	fr	Impossible de rechercher le message d'absense !
 undelete	mail	fr	Restaurer
 unflagged	mail	fr	Non-marqué
@@ -609,10 +660,14 @@ unsubscribe folder	mail	fr	Se désinscrire du dossier
 unsubscribe from folder %1	mail	fr	Se désabonner du dossier %1
 upload files...	mail	fr	Uploader des fichiers...
 use default timeout (20 seconds)	mail	fr	Utiliser le timeout par défaut (20 secondes)
+use regular expressions (see wikipedia for information on posix regular expressions)	mail	fr	Use regular expressions (see <a href="https://en.wikipedia.org/wiki/Regular_expression" target="_blank">Wikipedia: Regular expression</a>)
+use source as displayed, if applicable	mail	fr	Utiliser la source telle qu'elle est affichée, le cas échéant
 use username+password from current user	mail	fr	Utilisez le nom d'utilisateur + mot de passe de l'utilisateur courant
+use wizard to detect or verify configuration	mail	fr	Utiliser l'assistant pour détecter ou vérifier la configuration
 vacation messages with start and end date require an admin account to be set!	mail	fr	Vous devez avoir un compte admin pour définir un message de vacances  avec une date de début et une date de fin
 vacation notice	mail	fr	Message d'absence
 vacation notice is active	mail	fr	Le message d'absence est activé
+vacation notice is not saved yet! (but we filled in some defaults to cover some of the above errors. please correct and check your settings and save again.)	mail	fr	L'avis de vacances n'est pas encore enregistré ! (Mais nous avons introduit des valeurs par défaut pour couvrir certaines des erreurs susmentionnées. Veuillez corriger et vérifier vos paramètres et enregistrer à nouveau).
 vacation notice sucessfully updated.	mail	fr	Message d'absence mis à jour avec succès
 vacation notice update failed	mail	fr	Echec de la mise à jour du message d'absence
 vacation start-date must be before the end-date!	mail	fr	La date de début du message d'absence doit être ANTERIEURE à la date de fin.
@@ -627,6 +682,8 @@ what order the list columns are in	mail	fr	Quel ordre pour les colonnes de la li
 what to do when you delete a message	mail	fr	Ce qu'il faut faire quand vous supprimez un message
 what to do when you send a message	mail	fr	Ce qu'il faut faire quand vous envoyez un message
 when deleting messages	mail	fr	Quand j'efface les messages
+when displaying messages in a popup, re-use the same popup for all or open a new popup for each message	mail	fr	Lorsque vous affichez des messages dans une fenêtre contextuelle, vous pouvez réutiliser la même fenêtre pour tous les messages ou ouvrir une nouvelle fenêtre pour chaque message.
+when saving messages as item of a different app	mail	fr	lors de l'enregistrement des messages en tant qu'éléments d'une autre application
 when sending messages	mail	fr	Quand j'envoie des messages
 which folders (additional to the sent folder) should be displayed using the sent folder view schema	mail	fr	Quels dossiers (en plus du dossier Envoyés) doivent être affichés en utilisant le Schéma des Éléments Envoyés ?
 which folders - in general - should not be automatically created, if not existing	mail	fr	Quels dossiers - en général - NE doivent PAS être automatiquement créés, s'il n'existent pas au préalable ?
@@ -641,9 +698,14 @@ wrote	mail	fr	Ecrivait
 yes, but mask all passwords	mail	fr	Oui, mais masquer les mots de passe
 yes, but mask all usernames and passwords	mail	fr	Oui, mais masquer les noms d'utilisateur et mots de passe
 yes, offer copy option	mail	fr	oui, proposer une option de copie
+yes, only trigger connection reset	mail	fr	oui, seulement pour déclencher la réinitialisation de la connexion
+yes, show all debug information available for the user	mail	fr	oui, afficher toutes les informations de débogage disponibles pour l'utilisateur
 yes, show basic info only	mail	fr	Oui, afficher seulement les informations de base
 you can either choose to save as infolog or tracker, not both.	mail	fr	Vous pouvez choisir de sauvegarder soit dans infolog soit dans tracker, pas les 2
 you can select what info to be displayed on email tag	mail	fr	Vous pouvez sélectionner les informations à afficher sur l'étiquette de l'e-mail.
+you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	fr	Vous pouvez utiliser $$start$$ pour la date de début et $$end$$ pour la date de fin.
+you may add this certificate into your contact, if you trust this signature.	mail	fr	Vous pouvez ajouter ce certificat à votre contact si vous avez confiance en cette signature.
+you need to enter your s/mime passphrase to send this message.	mail	fr	Vous devez saisir votre phrase de passe S/MIME pour envoyer ce message.
 you need to install mailvelope plugin available for chrome and firefox from %1.	mail	fr	Vous devez installer le plugin Mailvelope, disponbible pour Chrome et Firefox depuis %1.
 you need to save the message as draft first before to be able to save it into vfs	mail	fr	Vous devez enregistrer votre message comme brouillon avant de pouvoir l'enregistrer dans le VFS
 you will loose current message body, unless you save it to your clipboard!	mail	fr	Vous allez perdre le contenu de votre message, sauf si vous l'avez dans votre presse-papier !

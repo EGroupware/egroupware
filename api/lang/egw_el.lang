@@ -46,9 +46,13 @@ add category	common	el	Προσθήκη κατηγορίας
 add current	common	el	Τρέχουσα άποψη ως αγαπημένη
 add shortcut	common	el	Προσθήκη Συντόμευσης
 add sub	common	el	Προσθήκη υπo
+add user to responsibles	groupdav	el	Προσθήκη χρήστη στους υπεύθυνους
+add user to responsibles, removing evtl. previous category user	groupdav	el	Προσθήκη χρήστη στους υπεύθυνους, πιθανή αφαίρεση χρηστών προηγούμενης κατηγορίας
+add your domain as "%1" in options to list of email providers and enable api.	common	el	Προσθέστε τον τομέα σας ως "%1" στις επιλογές στη λίστα των παρόχων ηλεκτρονικού ταχυδρομείου και ενεργοποιήστε το API.
 addressbook	common	el	Επαφές
 addressbooks to sync in addition to personal addressbook	groupdav	el	Βιβλία διευθύνσεων για συγχρονισμό εκτός από το προσωπικό βιβλίο διευθύνσεων
 admin	common	el	Διαχειριστής
+admin settings	common	el	Ρυθμίσεις διαχειριστή
 admin settings for %1	common	el	Ρυθμίσεις διαχειριστή για %1
 administration	common	el	Διαχείριση
 advanced search	common	el	Αναζήτηση για προχωρημένους
@@ -60,6 +64,7 @@ all addressbooks	groupdav	el	Όλα τα βιβλία διευθύνσεων
 all categories	common	el	Όλες οι κατηγορίες
 all fields	common	el	όλα τα πεδία
 all users	common	el	Ολοι οι χρήστες
+allow editing the %1	common	el	Επιτρέψτε την επεξεργασία του %1
 alternate style-sheet:	common	el	Εναλλακτικό στυλ-φύλλου
 american samoa	common	el	ΑΜΕΡΙΚΑΝΙΚΗ ΣΑΜΟΑ
 an existing and by the webserver readable directory enables the image browser and upload.	common	el	Ένας υπάρχον ΚΑΙ από τον webserver αναγνώσιμος κατάλογος ενεργοποιεί τον εικονικό browser και τον φορτώνει.

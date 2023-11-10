@@ -72,9 +72,13 @@ add shortcut	common	id	Tambah Shortcut
 add sub	common	id	Tambah sub
 add table	common	id	Add Index
 add to clipboard	common	id	Tambahkan ke papan klip
+add user to responsibles	groupdav	id	Menambahkan pengguna ke penanggung jawab
+add user to responsibles, removing evtl. previous category user	groupdav	id	Menambahkan pengguna ke penanggung jawab, mungkin menghapus pengguna kategori sebelumnya
+add your domain as "%1" in options to list of email providers and enable api.	common	id	Tambahkan domain Anda sebagai "%1" pada opsi daftar penyedia email dan aktifkan API.
 addressbook	common	id	Buku Alamat
 addressbooks to sync in addition to personal addressbook	groupdav	id	Buku alamat untuk disinkronkan selain buku alamat pribadi
 admin	common	id	Admin
+admin settings	common	id	Pengaturan admin
 admin settings for %1	common	id	Pengaturan admin untuk %1
 administration	common	id	Administrasi
 advanced search	common	id	Pencarian Canggih
@@ -90,6 +94,7 @@ all fields	common	id	semua field
 all in one	groupdav	id	Semua dalam satu
 all languages	common	id	semua bahasa
 all users	common	id	Semua pengguna
+allow editing the %1	common	id	Mengizinkan pengeditan %1
 allowed file type: %1	common	id	Tipe yang dibolehkan: %1
 alternate style-sheet:	common	id	Alternate style-sheet:
 am	common	id	am

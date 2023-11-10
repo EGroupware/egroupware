@@ -31,6 +31,7 @@ cancel editing %1 without saving	filemanager	pl	Przerwij edycję %1 bez zapisywa
 cannot create directory because it begins or ends in a space	filemanager	pl	Nie moge utworzyć katalogu, ponieważ nazwa zaczyna lub konczy się spacją
 cautiously rejecting to remove folder '%1'!	filemanager	pl	Z ostrożności nie usuwam folderu '%1'!
 check all	filemanager	pl	Zaznacz wszystkie
+classic	filemanager	pl	Standardowy pasek narzędzi
 clear search	filemanager	pl	wyczyść wyszukiwanie
 comment	filemanager	pl	Komentarz
 configuration changed.	filemanager	pl	Konfiguracja została zmieniona
@@ -54,7 +55,9 @@ current directory	filemanager	pl	Katalog aktualny
 custom fields	filemanager	pl	Pola użytkownika
 cut	filemanager	pl	Wytnij
 cut to clipboard	filemanager	pl	Wytnij do schowka
+default action on double-click	filemanager	pl	Domyślna akcja po dwukrotnym kliknięciu
 default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	pl	Domyślne zachowanie to NIE. Link nie będzie wyświetlany, ale możesz przejść do tej lokalizacji i skonfigurować tą lokację jako folder startowy lub link do folderu.
+defines how to handle double click action on a document file. images are always opened in the expose-view and emails with email application. all other mime-types are handled by the browser itself.	filemanager	pl	Określa sposób obsługi dwukrotnego kliknięcia pliku dokumentu. Obrazy są zawsze otwierane w widoku ekspozycji, a wiadomości e-mail za pomocą aplikacji e-mail. Wszystkie inne typy MIME są obsługiwane przez samą przeglądarkę.
 delete this file or directory	filemanager	pl	Usuń ten plik lub katalog
 deleted %1	filemanager	pl	Skasowano %1
 directories sorted in	filemanager	pl	Katalogi przechowywane w
@@ -67,28 +70,44 @@ display and modification of content	filemanager	pl	Wyświetlanie i modyfikacja z
 display of content	filemanager	pl	Wyświetlanie zawartości
 do you want to overwrite the existing file %1?	filemanager	pl	Czy chcesz nadpisać istniejący plik %1?
 download	filemanager	pl	Pobierz
+download documents	filemanager	pl	Pobieranie dokumentów
 edit comments	filemanager	pl	Edycja komentarza
 edit settings	filemanager	pl	Edytuj ustawienia
+edit share	filemanager	pl	Edytuj udział
 enable	filemanager	pl	włącz
+enter a file size, e.g. 100k, 200m or 2g	filemanager	pl	Wprowadź rozmiar pliku, np. 100K, 200M lub 2G
 enter setup user and password	filemanager	pl	Wprowadź nazwę użytkownika setup i hasło
 enter setup user and password to get root rights	filemanager	pl	Wprowadź nazwę użytkownika setup i hasło aby uzyskać prawa roota
 enter the complete vfs path to specify a fast access link to a folder	filemanager	pl	Wprowadź ścieżkę w systemie plików aby zdefiniować link szybkiego dostępu do folderu
 enter the complete vfs path to specify your desired start folder.	filemanager	pl	Wprowadź ścieżkę w systemie plików do twojego folderu startowego.
+enter your file name	filemanager	pl	Wprowadź nazwę pliku
 error adding the acl!	filemanager	pl	Błąd przy dodawaniu ACL!
 error creating symlink to target %1!	filemanager	pl	Błąd przy tworzeniu linku do %1!
 error deleting the acl entry!	filemanager	pl	Błąd przy usuwaniu wpisu ACL!
+error mounting %1 on %2!	filemanager	pl	Błąd montażu %1 na %2!
+error unmounting %1!	filemanager	pl	Błąd odmontowania %1!
 error uploading file!	filemanager	pl	Błąd przy ładowaniu pliku!
+error while creating directory.	filemanager	pl	Błąd podczas tworzenia folderu
 everyone	filemanager	pl	każdy
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	filemanager	pl	Przykład {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - przeszukaj pole "n_prefix", dla "Mr", jeśli zostanie znalezione, napisz Hello Mr., w przeciwnym razie napisz Hello Ms.
+example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	filemanager	pl	Przykład {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Przykład: Pan Dr. James Miller
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	filemanager	pl	Przykład {{NELF role}} - jeśli pole role nie jest puste, pojawi się nowy wiersz z wartością pola role.
+example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	filemanager	pl	Przykład {{nenvlf role}} - jeśli pole role nie jest puste, ustaw LF bez żadnej wartości pola
+excludes selected mime types	filemanager	pl	Wyklucza wybrane typy MIME
+excludes selected mime types from being opened by editor	filemanager	pl	Wyklucza wybrane typy MIME z otwierania przez Collabora Online.<br>Te typy dokumentów są otwierane w przeglądarce lub pobierane.
 executable	filemanager	pl	Wykonywalny
 expires	filemanager	pl	Ważne do
+export definition to use for nextmatch export	filemanager	pl	Definicja eksportu używana do eksportu nextmatch
 extended access control list	filemanager	pl	Rozszerzona lista kontroli dostępu
 extended acl	filemanager	pl	Rozszerzona ACL
 failed to change permissions of %1!	filemanager	pl	Błąd przy zmianie uprawnień do %1!
 failed to create directory!	filemanager	pl	Błąd przy tworzeniu katalogu!
 favorites	filemanager	pl	Ulubione
 file	common	pl	Plik
+file %1 already exists	filemanager	pl	Plik %1 już istnieje
 file %1 could not be created.	filemanager	pl	Plik %1 nie może być utworzony
 file %1 may be too big. contact your systemadministrator for further info	filemanager	pl	Plik %1 może być za duży. Skontaktuj się z administratorem systemu aby uzyskać więcej informacji.
+file a file is only available with an epl subscription.	filemanager	pl	Plik jest dostępny tylko w ramach subskrypcji EPL.
 file deleted.	filemanager	pl	Plik usunięty.
 file names cannot contain "%1"	filemanager	pl	Plik nie zawiera "%1"
 file or directory not found!	filemanager	pl	Nie znaleziono pliku lub katalogu!
@@ -97,7 +116,16 @@ filemanager	common	pl	Pliki
 filemanager configuration	admin	pl	Konfiguracja managera plików
 files from subdirectories	filemanager	pl	Plików z podkatalogów
 files in this directory	filemanager	pl	Pliki w tym katalogu
+filesystem	filemanager	pl	System plików
+filesystem check reported no problems.	filemanager	pl	Kontrola systemu plików nie wykazała żadnych problemów.
+filesystem: mount directory (inside /var/lib/egroupware!) from host filesystem	filemanager	pl	System plików: zamontuj katalog (wewnątrz /var/lib/egroupware !) z systemu plików hosta
+finally delete	filemanager	pl	Ostateczne usunięcie
+finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	pl	Ostatecznie usuwa wszystkie starsze wersje i usunięte pliki w danym folderze. Nie można tego cofnąć!
+finally delete this version	filemanager	pl	Ostatecznie usuń tę wersję
+fix reported problems	filemanager	pl	Napraw zgłoszone problemy
 folder up	filemanager	pl	Folder w górę
+for files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available.  see the specific application for a list of available placeholders.	filemanager	pl	W przypadku plików powiązanych z wpisem aplikacji (wewnątrz /apps/appname/id/) dostępne są również symbole zastępcze dla tej aplikacji. Lista dostępnych symboli zastępczych znajduje się w konkretnej aplikacji.
+for files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available. see the specific application for a list of placeholders	filemanager	pl	W przypadku plików powiązanych z wpisem aplikacji (wewnątrz /apps/appname/id/) dostępne są również symbole zastępcze dla tej aplikacji. Lista symboli zastępczych znajduje się w konkretnej aplikacji.
 for serial letter use this tag. put the content, you want to repeat between two tags.	filemanager	pl	Użyj tego tagu dla listów seryjnych. Wstaw zawartość którą chcesz powtórzyć pomiędzy dwa tagi.
 general	filemanager	pl	Główne
 general fields:	filemanager	pl	Pola ogólne:
@@ -105,21 +133,29 @@ go home	filemanager	pl	Idź do strony głównej
 go to	filemanager	pl	Idź do
 go to your home directory	filemanager	pl	Idź do katalogu domowego
 go up	filemanager	pl	w górę
+group home quota	filemanager	pl	Limit grupy domowej
 hidden upload	filemanager	pl	Ukryty upload
 hidden uploads	filemanager	pl	Ukryte ładunki
+hostname/ip for webdav and smb	filemanager	pl	Nazwa hosta/IP dla WebDAV i SMB
 id	filemanager	pl	id
+if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	pl	Jeśli określisz tutaj folder (pełną ścieżkę VFS), %1 wyświetli akcję dla każdego dokumentu. Ta akcja umożliwia pobranie określonego dokumentu z wstawionymi danymi %1.
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	pl	Jeśli określisz folder (pełna ścieżka VFS), %1 wyświetli dodatkową ikonę dokumentu dla każdego wpisu. Ikona ta umożliwia pobranie określonego dokumentu z wstawionymi danymi.
 inherited	filemanager	pl	Odziedziczone
 link	filemanager	pl	Link do zdarzenia
 link %1: %2	filemanager	pl	Link %1: %2
 link target %1 not found!	filemanager	pl	Cel linku %1 nie odnaleziony!
+list view	filemanager	pl	Widok listy
 location	filemanager	pl	Położenie
 lock	filemanager	pl	Zablokuj
 log out as superuser	filemanager	pl	Wyloguj jako superuser
+mail paste	filemanager	pl	Wklejanie poczty
 max folderlinks	admin	pl	maksymalna ilość linków folderów
+merge print open handler	filemanager	pl	Scalanie obsługi otwierania wydruku
 mime type	filemanager	pl	Typ MIME
 modified	filemanager	pl	Zmodyfikowany
-modified between	filemanager	pl	zmodyfikowany pomiędzy
+modified between	filemanager	pl	Zmodyfikowany pomiędzy
 modify all subdirectories and their content	filemanager	pl	Modyfikuj wszystkie podkatalogi i ich zawartość
+mountpoints	filemanager	pl	Punkty montowania
 move	filemanager	pl	przenieś
 move to	filemanager	pl	Przenieś do
 moved %1 to %2	filemanager	pl	Przeniesiono %1 do %2
@@ -129,9 +165,12 @@ no files in this directory.	filemanager	pl	Nie ma plików w tym katalogu
 no preview available	filemanager	pl	Podgląd niedostępny
 no version history for this file/directory	filemanager	pl	Nie istnieje historia wersji tego pliku/katalogu
 noone	filemanager	pl	Nikt, ale naprawdę nikt
+notebookbar	filemanager	pl	Zakładka
 only owner can rename or delete the content	filemanager	pl	Tylko właściciel może zmienić nazwę lub usunąć zawartość
 open	filemanager	pl	Otwórz
 operation	filemanager	pl	Operacja
+password for webdav and smb, use $pass for password of logged in user	filemanager	pl	Hasło dla WebDAV i SMB, użyj $pass dla hasła zalogowanego użytkownika
+path and query-parameters, smb: share and optional path (with /)	filemanager	pl	Ścieżka i parametry zapytania, SMB: udział i opcjonalna ścieżka (z /)
 percentage	filemanager	pl	w procentach
 permission denied!	filemanager	pl	Dostęp zabroniony!
 permissions	filemanager	pl	Uprawnienia
@@ -143,8 +182,12 @@ preview of %1	filemanager	pl	Podgląd %1
 projectmanager	filemanager	pl	Menedżer Projektów
 properties saved.	filemanager	pl	Zapisano właściwości
 quick jump to	filemanager	pl	Szybki skok do
+quota	filemanager	pl	Limit
+quota exceeded	filemanager	pl	Przekroczono limit
 read & write access	filemanager	pl	Dostęp do odczytu i zapisu
 read access only	filemanager	pl	Tylko do odczytu
+recalculate	filemanager	pl	Przelicz
+recalculated %1 directories in %2 iterations and %3 seconds	filemanager	pl	Przeliczono %1 katalogów w %2 iteracjach i %3 sekundach.
 reload	filemanager	pl	odśwież
 rename of %1 to %2 failed!	filemanager	pl	Zmiana nazwy %1 na %2 nie powiodła się!
 rename, change permissions or ownership	filemanager	pl	Zmień nazwę, zmień uprawnienia lub właściciela

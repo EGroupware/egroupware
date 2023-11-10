@@ -4,8 +4,10 @@
 acl rights retrieve failed, seems there are no rights set!	mail	hu	Az ACL-jogok lekérdezése sikertelen, úgy tűnik, nincsenek jogok beállítva!
 activating by date requires a start- and end-date!	mail	hu	Dátum szeretni aktiváláshoz kezdés ÉS befejezés időpont is szükséges!
 add all my aliases	mail	hu	Az összes álnevem hozzáadása
+add as new	mail	hu	Újként hozzáadni
 add files as %1	mail	hu	Fájlok hozzáadása %1-ként
 add raw message, ignore mail attachments	mail	hu	Leveleket elemmé alakítani, nyers üzenetet hozzáadni (figyelmen kívül hagyni a levél mellékleteket)
+add this certificate into contact	mail	hu	Adja hozzá ezt a tanúsítványt a kapcsolathoz
 add to addressbook	mail	hu	címjegyzékhez hozzáad
 adding %1 to blacklisted email addresses failed because of %2	mail	hu	%1 hozzáadása a feketelistán szereplő e-mail címekhez %2 miatt sikertelen.
 adding %1 to whiltelisted email addresses failed because of %2	mail	hu	%1 hozzáadása a listán szereplő e-mail címekhez %2 miatt sikertelen.
@@ -29,6 +31,8 @@ be aware that all attachments will be sent as %1!	mail	hu	Vegye figyelembe, hogy
 by date	mail	hu	dátum szerint
 by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	hu	Alapértelmezés szerint a "http://" helyébe a "https://" lép. Nyugodtan konfigurálhatja a 'https://proxy.egroupware.org/'-t úgy, hogy csak http-n keresztül elérhető képeket is betöltsön.
 caching of flags	mail	hu	A zászlók gyorsítótárazása
+can not resolve the winmail.dat attachment!	mail	hu	Nem tudja feloldani a winmail.dat csatolmányt!
+certificate info for email %1	mail	hu	Tanúsítvány-információ az e-mail %1-hez
 changing subject failed because of %1	mail	hu	A tárgy módosítása nem sikerült %1 miatt
 changing subject failed folder %1 does not exist	mail	hu	A téma módosítása sikertelen %1 mappa nem létezik.
 check message against next rule also	mail	hu	Üzenet ellenőrzése a következő szabály szerint is
@@ -59,6 +63,9 @@ display messages in multiple windows	mail	hu	üzenetek megjelenítése több abl
 display of html emails	mail	hu	HTML email-ek megjelenítése
 display only when no plain text is available	mail	hu	Csak akkor jelenítse meg, ha nincs egyszerű szöveg
 displaying html messages is disabled	mail	hu	HTML levelek megjelenítése tiltva
+do you really want to toggle flag %1 for all messages in the current view?	mail	hu	Tényleg az aktuális nézetben lévő MINDEN üzenetre ki akarja kapcsolni a %1 jelzést?
+do you really want to toggle label %1 for all messages in the current view?	mail	hu	Tényleg az aktuális nézetben MINDEN üzenetre vonatkozóan szeretné a %1 címkét átkapcsolni?
+do you want to be asked for confirmation before attaching selected messages to new mail?	mail	hu	Szeretné, hogy megerősítést kérjen, mielőtt a kiválasztott üzeneteket új e-mailhez csatolná?
 do you want to be asked for confirmation before moving selected messages to another folder?	mail	hu	Szeretnél megerősítést a kijelölt üzenetek áthelyezése előtt?
 do you want to prevent the editing/setup of filter rules (, even if sieve is enabled)?	mail	hu	Meg szeretnéd akadályozni a szűrő szabályok létrehozását és alkalmazását? (engedélyezett Sieve esetén is)
 do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	mail	hu	Meg szeretnéd akadályozni más címre küldött figyelmeztető e-mail beállítását beérkező üzenet esetén? (engedélyezett Sieve esetén is)
@@ -118,7 +125,9 @@ from	mail	hu	Tól:
 from(a->z)	mail	hu	Feladó (A->Z)
 from(z->a)	mail	hu	Feladó (Z->A)
 general	admin	hu	Általános
+get acl rights failed from imap server!	mail	hu	Az ACL-jogok lekérdezése sikertelen az IMAP-kiszolgálóról!
 greater than	mail	hu	nagyobb mint
+ham folder	mail	hu	Ham mappa
 handling of external http images / mixed content in mails	mail	hu	Külső http képek / vegyes tartalom kezelése e-mailekben
 header lines	mail	hu	Email fejléce
 how to forward messages	mail	hu	Üzenet továbbítás módja
@@ -174,6 +183,7 @@ mark all messages in folder as read	mail	hu	A mappa összes üzenetének olvasot
 mark as deleted	mail	hu	Törlésre megjelöl
 matches	mail	hu	egyezés
 matches regexp	mail	hu	reguláris kifejezés egyezése
+message learned as spam and moved to spam folder	mail	hu	Az üzenetet spamnek tanulták és a spam mappába helyezték át
 modify subject	mail	hu	Tárgy módosítása
 modify subject of this message	mail	hu	Az üzenet tárgyának módosítása
 move selected to	mail	hu	kijelöltek mozgatása
@@ -184,17 +194,21 @@ never display html emails	mail	hu	Soha ne jelenítse meg a HTML formátumú emai
 new subject	mail	hu	Új tárgy
 no access	mail	hu	Nincs hozzáférés
 no address to/cc/bcc supplied, and no folder to save message to provided.	mail	hu	Nincs címzett és mappa az üzenet mentéséhez beállítva.
+no folder destination supplied, and no folder to save message or other measure to store the mail (save to infolog/tracker) provided, but required.	mail	hu	Nincs megadott mappa célállomás, és nincs mappa az üzenet mentésére vagy más intézkedés a levelek tárolására (mentés az InfoLog/Ticketystembe), de szükséges.
 no folders	mail	hu	nincs mappa
 no plain text part found	mail	hu	nem található egyszerű szöveges tartalom
 no recipient address given!	mail	hu	Címzett nincs megadva!
 no signature	mail	hu	nincs aláírás
 no sneak preview in list	mail	hu	Nincs üzenet előnézet
 no subject given!	mail	hu	Az üzenethez nincs tárgy megadva.
+non	mail	hu	Nem
 none, create all	mail	hu	egyik sem, összes létrehozása
 on	mail	hu	be
 one address is not valid	mail	hu	Egy cím érvénytelen
 only email	mail	hu	Csak e-mail
+only makes sense, if you transport password through a different channel / outside of this mail to recipients!	mail	hu	Csak akkor van értelme, ha a jelszót más csatornán keresztül / ezen a levélen kívül a címzettekhez továbbítja!
 only name	mail	hu	Csak név
+only needed for some servers, that do not return all folders on root level queries to retrieve all folders for that level	mail	hu	Csak néhány olyan szerver esetében szükséges, amely nem adja vissza az összes mappát a gyökérszintű lekérdezéseknél, hogy az összes mappát lekérje az adott szinthez.
 only one window	mail	hu	csak egy ablak
 open in html mode	mail	hu	Megnyitás HTML módban
 open in text mode	mail	hu	Megnyitás szöveges módban
@@ -206,6 +220,9 @@ original message	mail	hu	Eredeti üzenet
 outbox	mail	hu	Kimenő postaláda
 permission denied	mail	hu	Hozzáférés megtagadva
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	hu	Kérjük, konfigurálja az S/MIME tanúsítványt a Fiók szerkesztése párbeszédpanelen található Titkosítás fülön.
+please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	hu	Kérjük, forduljon a rendszergazdához, hogy ellenőrizze, támogatja-e a szerver a szerveroldali szűrőszabályokat, és hogyan engedélyezheti azokat az EGroupware-ben az Ön aktív fiókja (%1) számára az ID:%2 azonosítóval.
+please contact your administrator to validate if your server supports serverside vacationmessages, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	hu	Kérjük, lépjen kapcsolatba a rendszergazdával annak ellenőrzéséhez, hogy a kiszolgáló támogatja-e a kiszolgálói holidaymessages-t, és hogyan engedélyezheti azokat az EGroupware-ben az ID:%2 azonosítóval rendelkező aktív fiókja (%1) számára.
+please enter password	mail	hu	Kérjük, adja meg a jelszót
 please select a address	mail	hu	Kérlek válassz címet
 please select the number of days to wait between responses	mail	hu	Kérlek add hány napot várjon a válaszok között
 please supply the message to send with auto-responses	mail	hu	Kérlek add meg az automatikus válaszüzenetet
@@ -213,6 +230,8 @@ predefined addresses for compose	mail	hu	Előre definiált címek az összeáll�
 preview pane	mail	hu	Ablak elrendezés
 printing	mail	hu	Nyomtatás
 printview	mail	hu	nyomtatási kép
+processing of file %1 failed. failed to meet basic restrictions.	mail	hu	A %1 fájl feldolgozása sikertelen. Az alapvető korlátozások nem teljesültek.
+provide a default vacation text, (used on new vacation messages when there was no message set up previously)	admin	hu	Adjon meg egy alapértelmezett vakáció szöveget (új vakációs üzeneteknél használatos, ha korábban nem volt üzenet beállítva).
 push notifications	mail	hu	Push értesítések
 quicksearch	mail	hu	Gyorskeresés
 quicksearch (with cc)	mail	hu	Gyorskeresés (+másolás)
@@ -233,24 +252,51 @@ replied	mail	hu	megválaszolt
 reply	mail	hu	Válasz
 reply all	mail	hu	Válasz mindenkinek
 reply to	mail	hu	Válasz
+replying to this message failed because the content of this message seems to be encrypted and can not be decrypted properly. if you still wish to include content of this encrypted message, you may try to use forward as attachment instead.	mail	hu	Az üzenetre való válaszadás sikertelen volt, mert az üzenet tartalma titkosítottnak tűnik, és nem lehet megfelelően visszafejteni. Ha továbbra is szeretné a titkosított üzenet tartalmát, próbálja meg helyette a csatolmányként való továbbítást használni.
 replyto	mail	hu	Válasz
+report as ham	mail	hu	Jelentés Ham-ként
+report as spam	mail	hu	Spamként jelenteni
+report this email content as ham (not spam) - spam solutions like spamtitan will learn	mail	hu	Jelentse ezt az e-mail tartalmát Ham-ként (nem spamként) - a spam megoldások, mint a spamTitan, megtanulják
+report this email content as spam - spam solutions like spamtitan will learn	mail	hu	Jelentse ezt az e-mail tartalmat Spamként - a spam megoldások, mint a spamTitan megtanulják.
+required pear class mail/mimedecode.php not found.	mail	hu	A szükséges PEAR osztály Mail/mimeDecode.php nem található.
+required to disable if you use dovecot with private seen flags on shared or user folder!	mail	hu	Kötelező letiltani, ha a Dovecot-ot privát látott zászlókkal használja a megosztott vagy felhasználói mappán!
 row order style	mail	hu	sorok rendezése
 save all	mail	hu	Összes mentése
 save all attachments to filemanager	mail	hu	Minden melléklet mentése a fájlkezelőbe
 save as draft	mail	hu	Mentés vázlatként
 save as infolog	mail	hu	Mentés InfoLog-ként
+save as infolog on send	mail	hu	Ellenőrizze a gombot az InfoLog létrehozásához küldés után
+save as tracker on send	mail	hu	Ellenőrizze a gombot, hogy a küldés után jegyként hozza létre
 save message to disk	mail	hu	Üzenet mentése lemezre
+save the drafted message as eml file into vfs	mail	hu	Mentse a megfogalmazott üzenetet eml fájlként a Fájlkezelőbe
+saving of message %1 failed. destination folder %2 does not exist.	mail	hu	A %1 üzenet mentése sikertelen. A %2 célmappa nem létezik.
+saving of message %1 succeeded. check folder %2.	mail	hu	A %1 üzenet mentése sikeres volt. Ellenőrizze a %2 mappát.
+saving the rule failed:	mail	hu	A szabály mentése sikertelen:
+security	mail	hu	Biztonság
+see attachments for content of the orignial mail	mail	hu	Az eredeti e-mail tartalmát lásd a csatolmányoknál
 select all	mail	hu	Minden kiválasztása
+select an existing entry in order to append mail content to it	mail	hu	Válasszon ki egy meglévő bejegyzést a levél tartalmának hozzácsatolásához.
+select an item to read	mail	hu	Válasszon ki egy elemet az olvasáshoz
 select or insert email address	mail	hu	E-mail cím kiválasztása vagy beillesztése
+selected date range (with quicksearch)	mail	hu	Kiválasztott dátumtartomány (gyorskereséssel)
+send message and move to send folder (if configured)	mail	hu	Üzenet küldése és áthelyezése a küldési mappába (ha konfigurálva van)
+send message pgp encrypted: requires keys from all recipients!	mail	hu	Üzenet küldése PGP titkosítással: minden címzettől kulcsot igényel!
 sender	mail	hu	Feladó
 sent	mail	hu	Elköldött üzenetek
 sent folder	mail	hu	'Elküldött' mappa
+server supports special-use folders	mail	hu	A kiszolgáló támogatja a speciális felhasználású mappákat
 set flags	mail	hu	Jelölje meg az e-mailt
 set predefined values for compose...	mail	hu	Előre meghatározott értékek beállítása az összeállításhoz ...
+should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	hu	Az aláírás a válasz vagy a továbbítás után (standard) vagy előtt legyen-e beillesztve, és az aláírás látható és módosítható legyen-e az összeállítás során.
+show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	hu	az összes mappa (feliratkozott és leiratkozott) megjelenítése a fő képernyő mappatábláján.
 show notification for new arriving mails	mail	hu	Értesítés megjelenítése az újonnan érkező levelekről
+show test connection section and control the level of info displayed?	mail	hu	Tesztkapcsolat szakasz megjelenítése és a megjelenített információk szintjének szabályozása?
+show test connection section and control the level of info displayed??	mail	hu	Tesztkapcsolat szakasz megjelenítése és a megjelenített információk szintjének szabályozása???
+show them this time only	mail	hu	Csak ezúttal mutassa meg őket
 show vertical	mail	hu	Függőleges megjelenítés
 show vertical with all columns	mail	hu	Függőleges megjelenítés minden oszloppal
 show/hide preview pane in mail list view	mail	hu	Előnézeti ablak megjelenítése/elrejtése a levelek listájának nézetében
+shows a temporary visible notification including from address, subject and a snippet of the mail	mail	hu	Ideiglenesen látható értesítés megjelenítése, amely tartalmazza a címtől, a tárgyat és az e-mail egy részletét.
 sieve	mail	hu	Sieve
 sieve script name	mail	hu	Sieve szűrő szkript neve
 signature	mail	hu	Aláírás
@@ -296,5 +342,14 @@ which folders (additional to the sent folder) should be displayed using the sent
 which folders - in general - should not be automatically created, if not existing	mail	hu	Melyik mappa ne legyen automatikusan létrehozva?
 write	mail	hu	Írás
 wrote	mail	hu	írta
+yes, only trigger connection reset	mail	hu	igen, csak a kapcsolat visszaállítását váltja ki
+yes, show all debug information available for the user	mail	hu	yes, a felhasználó számára elérhető összes hibakeresési információ megjelenítése
 you can select what info to be displayed on email tag	mail	hu	Kiválaszthatja, hogy milyen információk jelenjenek meg az e-mail címke.
+you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	hu	A fenti kezdő dátumhoz használhatja a $$start$$$-t, a végdátumhoz pedig a $$end$$$-t.
+you may add this certificate into your contact, if you trust this signature.	mail	hu	Ezt a tanúsítványt hozzáadhatod a kapcsolatodhoz, ha megbízol ebben az aláírásban.
+you need to enter your s/mime passphrase to send this message.	mail	hu	Az üzenet elküldéséhez meg kell adnia az S/MIME jelszavát.
+you need to install mailvelope plugin available for chrome and firefox from %1.	mail	hu	Telepítenie kell a Chrome-hoz és Firefoxhoz elérhető Mailvelope plugint a %1 oldalról.
+you need to save the message as draft first before to be able to save it into vfs	mail	hu	Az üzenetet először vázlatként kell elmentenie, mielőtt a VFS-be menthetné.
+you will loose current message body, unless you save it to your clipboard!	mail	hu	Elveszíti az aktuális üzenettörzset, hacsak nem menti el a vágólapra!
 you've got new mail	mail	hu	Új levelek érkeztek
+your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	hu	A fennmaradó kvóta %1 túl alacsony, ezért lehet, hogy nem tud további e-maileket küldeni/venni.\n Bár a szemétben vagy a levélszemét mappában lévő e-mailek kitakarítása segíthet, hogy visszanyerjen egy kis szabad helyet.\n Ha ez nem segített, kérjen több kvótát a rendszergazdától.

@@ -63,9 +63,13 @@ add new	common	lv	Pievienot jaunu
 add sub	common	lv	Pievienot apakškategoriju
 add table	common	lv	PIevienot tabulu
 add to clipboard	common	lv	Pievienot starpliktuvei
+add user to responsibles	groupdav	lv	Lietotāja pievienošana responsibles
+add user to responsibles, removing evtl. previous category user	groupdav	lv	Pievienot lietotāju atbildīgajam, iespējams, dzēst iepriekšējās kategorijas lietotājus
+add your domain as "%1" in options to list of email providers and enable api.	common	lv	Pievienojiet savu domēnu kā "%1" e-pasta pakalpojumu sniedzēju sarakstā opcijās un iespējojiet API.
 addressbook	common	lv	Adrešu grāmata
 addressbooks to sync in addition to personal addressbook	groupdav	lv	Papildus personīgajai adrešu grāmatiņai sinhronizējamās adrešu grāmatiņas
 admin	common	lv	Administrators
+admin settings	common	lv	Administratora iestatījumi
 admin settings for %1	common	lv	Administratora iestatījumi %1
 administration	common	lv	Administrēšana
 advanced search	common	lv	Uzlabota meklēšana
@@ -81,6 +85,7 @@ all categories	common	lv	Visas kategorijas
 all fields	common	lv	visi lauki
 all in one	groupdav	lv	Viss vienā
 all users	common	lv	Visi lietotāji
+allow editing the %1	common	lv	Atļaut rediģēt %1
 alternate style-sheet:	common	lv	Alternatīvs stila-izklājums:
 am	common	lv	noo rīta
 american samoa	common	lv	AMERIKĀŅU SAMOA

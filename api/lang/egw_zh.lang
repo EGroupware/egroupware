@@ -73,9 +73,13 @@ add shortcut	common	zh	添加快捷键
 add sub	common	zh	添加子类别
 add table	common	zh	添加表
 add to clipboard	common	zh	添加到剪贴板
+add user to responsibles	groupdav	zh	将用户添加到责任中
+add user to responsibles, removing evtl. previous category user	groupdav	zh	将用户添加到责任人中，并可能移除以前的类别用户
+add your domain as "%1" in options to list of email providers and enable api.	common	zh	在电子邮件提供商列表选项中将您的域名添加为"%1"，并启用 API。
 addressbook	common	zh	通讯簿
 addressbooks to sync in addition to personal addressbook	groupdav	zh	除了个人通讯录，还可以同步通讯录
 admin	common	zh	系统管理
+admin settings	common	zh	管理员设置
 admin settings for %1	common	zh	管理员对%1的设置
 administration	common	zh	系统管理
 advanced search	common	zh	高级搜索
@@ -94,6 +98,7 @@ all in one	groupdav	zh	一体化
 all languages	common	zh	所有语言
 all operations save the template!	common	zh	所有操作保存模板！
 all users	common	zh	所有用户
+allow editing the %1	common	zh	允许编辑 %1
 alternate style-sheet:	common	zh	替代的样式表：
 am	common	zh	上午
 american samoa	common	zh	东萨摩亚

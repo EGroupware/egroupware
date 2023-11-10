@@ -72,9 +72,13 @@ add shortcut	common	sv	Lägg till genväg
 add sub	common	sv	Lägg till under
 add table	common	sv	Skapa tabell
 add to clipboard	common	sv	Lägg till i urklipp
+add user to responsibles	groupdav	sv	Lägg till användare i ansvarsområden
+add user to responsibles, removing evtl. previous category user	groupdav	sv	Lägg till användare till ansvariga, ta bort ev. tidigare kategori användare
+add your domain as "%1" in options to list of email providers and enable api.	common	sv	Lägg till din domän som "%1" i alternativ till lista över e-postleverantörer och aktivera API.
 addressbook	common	sv	Adressbok
 addressbooks to sync in addition to personal addressbook	groupdav	sv	Adressböcker som ska synkroniseras utöver den personliga adressboken
 admin	common	sv	Admin
+admin settings	common	sv	Admin-inställningar
 admin settings for %1	common	sv	Admininställningar för %1
 administration	common	sv	Administration
 advanced search	common	sv	Avancerad sökning
@@ -92,6 +96,7 @@ all fields	common	sv	Alla fält
 all in one	groupdav	sv	Alla i en
 all operations save the template!	common	sv	Alla operationer sparar template
 all users	common	sv	Alla användare
+allow editing the %1	common	sv	Tillåt redigering av %1
 alternate style-sheet:	common	sv	Alternerande style-sheet:
 am	common	sv	fm
 american samoa	common	sv	AMERIKANSKA SAMOA

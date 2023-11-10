@@ -25,7 +25,7 @@
 '%1' is not a valid date !!!	common	fi	%1 on epäkelpo päiväys!
 '%1' is not a valid floatingpoint number !!!	common	fi	%1 ei ole desimaaliluku!
 '%1' is not a valid integer !!!	common	fi	%1 ei ole kokonaisluku!
-'%1' is not a valid json file!	common	fi	'%1' ei ole json tiedosto EGroupwaren server rootissa!
+'%1' is not a valid json file!	common	fi	'%1' ei ole kelvollinen JSON-tiedosto
 '%1' is not allowed ('%2')!	common	fi	'%1' ei ole sallittu ('%2')!
 (session restored in %1 seconds)	common	fi	Istunto palautettu %1 sekunnissa.
 00 (disable)	admin	fi	00 (ei käytössä)
@@ -83,9 +83,11 @@ add table	common	fi	Lisää taulukko
 add to clipboard	common	fi	Lisää leikepöydälle
 add user to responsibles	groupdav	fi	Lisää käyttäjä vastuulliseksi
 add user to responsibles, removing evtl. previous category user	groupdav	fi	Lisää käyttäjä vastuulliseksi, poistaa edellisen vastuulisen henkilön
+add your domain as "%1" in options to list of email providers and enable api.	common	fi	Lisää verkkotunnuksesi "%1" asetuksissa sähköpostipalveluntarjoajien luetteloon ja ota API käyttöön.
 addressbook	common	fi	Osoitekirja
 addressbooks to sync in addition to personal addressbook	groupdav	fi	Yksityisen osoitekirjan lisäksi synkronoitavat osoitekirjat
 admin	common	fi	Ylläpito
+admin settings	common	fi	Ylläpitäjän asetukset
 admin settings for %1	common	fi	Ylläpitäjän asetukset %1 :lle
 administration	common	fi	Ylläpito
 advanced search	common	fi	Tarkempi haku
@@ -104,6 +106,7 @@ all in one	groupdav	fi	Kaikki samaan
 all languages	common	fi	Kaikki kielet
 all operations save the template!	common	fi	Kaikki toiminnot tallentavat mallipohjan!
 all users	common	fi	Kaikki käyttäjät
+allow editing the %1	common	fi	Salli muokkaus %1
 allowed file type: %1	common	fi	Sallittu tiedostotyyppi: %1
 allows to modify responsible users from devices not supporting them, by setting email address of a user as category.	groupdav	fi	Sallii vastuuhenkilöiden muokkaamisen laitteissa, mitkä eivät tue toimintoa, asettamalla käyttäjän sähköpostiosoitteen kategoriaksi
 alt	common	fi	Alt

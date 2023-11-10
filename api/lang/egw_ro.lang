@@ -20,13 +20,18 @@
 abort	common	ro	Abandonați
 add current	common	ro	Vizualizarea curentă ca favorită
 add to clipboard	common	ro	Adaugă în clipboard
+add user to responsibles	groupdav	ro	Adăugați utilizatorul la responsabilități
+add user to responsibles, removing evtl. previous category user	groupdav	ro	Adăugați un utilizator la responsabili, eventual eliminați utilizatorii din categoria anterioară
+add your domain as "%1" in options to list of email providers and enable api.	common	ro	Adăugați domeniul dvs. ca "%1" în opțiuni la lista de furnizori de e-mail și activați API.
 addressbooks to sync in addition to personal addressbook	groupdav	ro	Cărți de adrese de sincronizat în plus față de agenda personală
 admin	common	ro	Admin
+admin settings	common	ro	Setări de administrare
 admin settings for %1	common	ro	Setări administrative pentru %1
 advanced search	common	ro	Căutare avansată
 all addressbooks	groupdav	ro	Toate agendele de adrese
 all categories	common	ro	Toate categoriile
 all in one	groupdav	ro	Toate într-una singură
+allow editing the %1	common	ro	Permiteți editarea lui %1
 answering no will not ask you again for this browser.	common	ro	Dacă răspundeți "nu", nu vi se va mai solicita acest browser.
 attention: action will be applied to all rows, not only visible ones!	api	ro	Atenție: acțiunea se va aplica tuturor rândurilor, nu numai celor vizibile!
 authenticate	common	ro	Autentificare

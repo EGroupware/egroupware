@@ -107,6 +107,7 @@ edit exception	calendar	pt	Editar excepção
 edit series	calendar	pt	Editar conjuntos
 edit this event	calendar	pt	Editar este evento
 edit this series of recurring events	calendar	pt	Editar este conjunto de eventos recorrentes
+email address migration	calendar	pt	Migração de endereços de correio eletrónico
 empty for all	calendar	pt	vazio para todos
 end	calendar	pt	Fim
 end date/time	calendar	pt	Data/Hora de conclusão
@@ -115,6 +116,7 @@ enddate / -time of the meeting, eg. for more then one day	calendar	pt	Data/hora 
 enddate of the export	calendar	pt	Data para o fim da exportação
 ends	calendar	pt	termina
 error adding the alarm	calendar	pt	Erro ao adicionar aviso
+error notifying %1	calendar	pt	Erro ao notificar %1
 error: importing the ical	calendar	pt	Erro ao importar o iCal
 error: no participants selected !!!	calendar	pt	Erro: nenhum participante seleccionado !!!
 error: saving the event !!!	calendar	pt	Erro ao guardar o evento !!!
@@ -240,7 +242,10 @@ notification messages for uninvited participants	calendar	pt	Mensagens de aviso:
 notification messages for your alarms	calendar	pt	Mensagens de aviso: Os seus avisos
 notification messages for your responses	calendar	pt	Mensagens de aviso: As suas respostas
 notification settings	calendar	pt	Configurações de notificação
+notify	calendar	pt	Notificar
+notify all externals (non-users) about this event	calendar	pt	Notificar todos os externos (não utilizadores) sobre este evento
 number of records to read (%1)	calendar	pt	Número de registos por ler (%1)
+number of resources to be booked	calendar	pt	Número de recursos a reservar
 observance rule	calendar	pt	Observação
 occurence	calendar	pt	Ocorrência
 old fixed definition	calendar	pt	Definição fixa Velho
@@ -271,6 +276,7 @@ preselected group for entering the planner	calendar	pt	Grupo pré-seleccionado p
 previous	calendar	pt	anterior
 private and global public	calendar	pt	Privado e público globalmente
 private and group public	calendar	pt	Privado e público ao grupo
+private event	calendar	pt	Evento privado
 private only	calendar	pt	Privado somente
 quantity	calendar	pt	Quantidade
 re-edit event	calendar	pt	Re-Editar evento
@@ -280,6 +286,7 @@ recordings	calendar	pt	Registos
 recurrence	calendar	pt	Recorrência
 recurring event	calendar	pt	Evento recorrente
 rejected	calendar	pt	Rejeitado
+removes the event from my calendar	calendar	pt	Remove o evento do meu calendário
 repeat days	calendar	pt	Repetir dias
 repeat the event until which date (empty means unlimited)	calendar	pt	repetir o evento até (campo vazio significa ilimitado)
 repeat type	calendar	pt	Tipo de repetição
@@ -287,6 +294,7 @@ repeating event information	calendar	pt	Repetir informação do evento
 repeating interval, eg. 2 to repeat every second week	calendar	pt	repetir intervalo, ex: 2 para repetir em todas as segundas semanas
 repetition	calendar	pt	Repetição
 repetitiondetails (or empty)	calendar	pt	Detalhes de repetição (ou vazio)
+replying "%1" is not a participant of the event! only continue if you want to add as new participant.	calendar	pt	A resposta "%1" NÃO é um participante do evento! Continuar apenas se pretender adicionar um novo participante.
 report	calendar	pt	Relatório
 reset	calendar	pt	Limpar
 resources	calendar	pt	Fontes
@@ -303,13 +311,18 @@ select an action...	calendar	pt	Selecione uma ação ...
 select multiple contacts for a further action	calendar	pt	Selecionar vários contatos para uma nova acção
 select resources	calendar	pt	Seleccionar fontes
 select who should get the alarm	calendar	pt	Seleccionar quem deve ser avisado
+send notifications	calendar	pt	Enviar notificações
+send notifications to users right now	calendar	pt	Enviar notificações aos participantes neste momento
 set new events to private	calendar	pt	Definir novos eventos com acesso privado
 should new events created as private by default ?	calendar	pt	Deseja que os novos eventos sejam criados como privados por omissão?
 should the status of the event-participants (accept, reject, ...) be shown in brackets after each participants name ?	calendar	pt	Deseja que o estado dos participantes do evento (aceite, rejeitado, ...) seja exibido entre parenteses depois do nome de cada participante ?
+show %1 from %2	calendar	pt	Mostrar %1 a partir de %2
+show birthdays as all day non-blocking events as well as via mouseover of the date.	calendar	pt	Mostrar como eventos não bloqueantes durante todo o dia, bem como através do cursor do rato sobre a data.
 show list of upcoming events	calendar	pt	Exibir lista de próximos eventos
 show this month	calendar	pt	Exibir este mês
 show this week	calendar	pt	Exibir esta semana
 single event	calendar	pt	evento único
+single participant	calendar	pt	Participante individual
 sort by	calendar	pt	Ordenar por
 start	calendar	pt	Início
 start date/time	calendar	pt	Data/hora de início
@@ -318,13 +331,19 @@ startdate / -time	calendar	pt	Data/hora de início
 startdate and -time of the search	calendar	pt	Data/hora de início da pesquisa
 startdate of the export	calendar	pt	Data de início da exportação
 startrecord	calendar	pt	Registo inicial
+status	calendar	pt	Estado
 status changed	calendar	pt	Estado alterado
 submit to repository	calendar	pt	Submeter no Repositório
 sun	calendar	pt	Dom
 tag to mark positions for address labels	calendar	pt	Tag para marcar posições para etiquetas de endereço
 tentative	calendar	pt	Tentativa
 test import (show importable records <u>only</u> in browser)	calendar	pt	Importação de Teste (exibir registos a importar <u>apenas</u> no navegador)
+the apple ical apps use this color to display events from this calendar.	calendar	pt	As aplicações iCal da Apple utilizam esta cor para apresentar eventos deste calendário.
+the document can contain placeholder like {{%1}}, to be replaced with the data.	calendar	pt	O documento pode conter um marcador de posição como {{%1}}, que será substituído pelos dados.
+the extern organizer changed the event!	calendar	pt	O organizador externo alterou o evento!
 the following document-types are supported:	calendar	pt	Os seguintes tipos de documentos são suportados:
+the sender "%1" is not the extern organizer "%2", proceed with caution!	calendar	pt	O remetente "%1" NÃO é o organizador externo "%2", proceda com cuidado!
+the sender "%1" is not the participant replying "%2", proceed with caution!	calendar	pt	O remetente "%1" NÃO é o participante que está a responder "%2", tenha cuidado!
 this day is shown as first day in the week or month view.	calendar	pt	Este dia é exibido como o primeiro dia da visualização semanal ou mensal.
 this defines the end of your dayview. events after this time, are shown below the dayview.	calendar	pt	Este campo define o fim da sua visualização diária. Os eventos fora deste horário serão exibidos abaixo da visualização diária.
 this defines the start of your dayview. events before this time, are shown above the dayview.<br>this time is also used as a default starttime for new events.	calendar	pt	Este campo define o início da sua visualização diária.<b>Este horário será igualmente aplicado como data de início de novos eventos por omissão.
@@ -343,6 +362,7 @@ timeframe	calendar	pt	Prazo
 timeframe to search	calendar	pt	Prazo para pesquisar
 title of the event	calendar	pt	Título do evento
 to many might exceed your execution-time-limit	calendar	pt	Em demasia pode exceder o seu tempo limite de execução
+toggle weekend	calendar	pt	Alternar fim de semana
 translation	calendar	pt	Tradução
 tue	calendar	pt	Ter
 two weeks	calendar	pt	Duas semanas

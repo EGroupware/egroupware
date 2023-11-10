@@ -2,27 +2,78 @@
 actions	filemanager	et	Tegevused
 applications	common	et	Rakendused
 check all	filemanager	et	Kontrolli kõik
+classic	filemanager	et	Standardne tööriistariba
 comment	filemanager	et	Kommentaar
 created	filemanager	et	Tehtud
 cut	filemanager	et	Lõika
+default action on double-click	filemanager	et	Topeltklõpsu vaikimisi toiming
+default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	et	Vaikimisi = Ei. Linki ei kuvata, kuid teil on siiski võimalik navigeerida sellesse asukohta või konfigureerida see konkreetne asukoht algkaustaks või kausta lingiks.
+defines how to handle double click action on a document file. images are always opened in the expose-view and emails with email application. all other mime-types are handled by the browser itself.	filemanager	et	Määrab, kuidas käsitleda dokumendi faili topeltklõpsu tegevust. Pildid avatakse alati eksponeerimisvaates ja e-kirjad e-kirjarakendusega. Kõiki teisi MIME-tüüpe käsitleb brauser ise.
 disable	filemanager	et	Keela
 download	filemanager	et	Lae alla
-enable	filemanager	et	luba
+download documents	filemanager	et	Dokumentide allalaadimine
+edit share	filemanager	et	Redigeerige jagamist
+enable	filemanager	et	Luba
+enter a file size, e.g. 100k, 200m or 2g	filemanager	et	Sisestage faili suurus, nt 100K, 200M või 2G.
+enter your file name	filemanager	et	Sisestage faili nimi
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	filemanager	et	Näide {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - otsi väljal "n_prefix", otsi "Mr", kui leitakse, kirjuta Hello Mr., muidu kirjuta Hello Ms.
+example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	filemanager	et	Näide {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Näide: Mr Dr. James Miller
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	filemanager	et	Näide {{NELF roll}} - kui väli roll ei ole tühi, saate uue rea, kus on välja roll väärtus
+example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	filemanager	et	Näide {{nenvlf roll}} - kui väli roll ei ole tühi, seatakse LF ilma väljal oleva väärtuseta
+excludes selected mime types	filemanager	et	Välistab valitud MIME-tüübid
+excludes selected mime types from being opened by editor	filemanager	et	Välistab valitud MIME-tüübid, mida Collabora Online ei ava.<br> Need dokumenditüübid avatakse kas brauseris või laaditakse alla.
+executable	filemanager	et	Käivitatav
 expires	filemanager	et	Aegub
+export definition to use for nextmatch export	filemanager	et	Ekspordimääratlus, mida kasutada nextmatch'i ekspordiks
+extended access control list	filemanager	et	Laiendatud juurdepääsu kontrollnimekiri
+extended acl	filemanager	et	Laiendatud ACL
+failed to change permissions of %1!	filemanager	et	Ei õnnestunud muuta õigusi %1!
+failed to create directory!	filemanager	et	Kausta loomine ebaõnnestus!
+favorites	filemanager	et	Lemmikud
 file	common	et	Pail
+file %1 already exists	filemanager	et	Fail %1 on juba olemas
+file %1 could not be created.	filemanager	et	Faili %1 ei saanud luua.
+file %1 may be too big. contact your systemadministrator for further info	filemanager	et	Faili %1 võib olla liiga suur.
+file a file is only available with an epl subscription.	filemanager	et	Faili a fail on saadaval ainult EPL-tellimuse korral.
+filesystem	filemanager	et	Failisüsteem
+filesystem check reported no problems.	filemanager	et	Failisüsteemi kontroll ei ole probleeme.
+filesystem: mount directory (inside /var/lib/egroupware!) from host filesystem	filemanager	et	Failisüsteem: mount-kataloog (/var/lib/egroupware sees !) host-failisüsteemist.
+finally delete	filemanager	et	Lõpuks kustutage
+finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	et	Lõplikult kustutab kõik vanemad versioonid ja kustutatud failid antud kausta alt.\n\nSeda ei saa tühistada!
+finally delete this version	filemanager	et	Lõplikult kustutada see versioon
+fix reported problems	filemanager	et	Parandage teatatud probleemid
+for files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available.  see the specific application for a list of available placeholders.	filemanager	et	Rakenduse kirjega seotud failide puhul (/apps/appname/id/ sees) on ka selle rakenduse paigutussätted saadaval. Vt konkreetse rakenduse puhul loetelu olemasolevatest paigutussalvestitest.
+for files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available. see the specific application for a list of placeholders	filemanager	et	Rakenduse kirjega (/apps/appname/id/ sees) seotud failide puhul on saadaval ka selle rakenduse paigutussalvestid. Vt konkreetset rakendust paigutussalvestite loetelu.
+for serial letter use this tag. put the content, you want to repeat between two tags.	filemanager	et	Seerianumbrite jaoks kasutage seda tagi. Pange sisu, mida soovite korrata kahe tagi vahele.
 general	filemanager	et	Üldine
+group home quota	filemanager	et	Rühma kodukvoot
 hidden upload	filemanager	et	Varjatud üleslaadimine
 hidden uploads	filemanager	et	Varjatud üleslaadimised
+hostname/ip for webdav and smb	filemanager	et	Hostnimi/IP WebDAV ja SMB puhul
 id	filemanager	et	Id
+if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	et	Kui te määrate siin kausta (täielik VFS-pada), siis %1 kuvab iga dokumendi jaoks toimingu. See tegevus võimaldab laadida alla määratud dokumendi koos sisestatud %1 andmetega.
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	et	Kui te määrate siin kausta (täielik VFS-tee), kuvab %1 iga kirje jaoks lisadokumendi ikooni. See ikoon võimaldab allalaadida määratud dokumenti koos sisestatud andmetega.
 link	filemanager	et	Link
+list view	filemanager	et	Nimekirja vaade
 location	filemanager	et	Asukoht
 lock	filemanager	et	Lukusta
+mail paste	filemanager	et	Maili kleepimine
+merge print open handler	filemanager	et	Ühinemise printimise avatud käsitseja
 modified	filemanager	et	Muudetud
+modified between	filemanager	et	Muudetud vahel
+mountpoints	filemanager	et	Mountpoints
 move	filemanager	et	liiguta
 noone	filemanager	et	Mittekeegi
+notebookbar	filemanager	et	Tabbed
 open	filemanager	et	avatud
+password for webdav and smb, use $pass for password of logged in user	filemanager	et	Parool WebDAVi ja SMB jaoks, kasutage $pass sisselogitud kasutaja parooliks.
+path and query-parameters, smb: share and optional path (with /)	filemanager	et	Path ja päringuparameetrid, SMB: share ja valikuline tee (koos /-ga)
 permissions	filemanager	et	Õigused
 preview	filemanager	et	Eelvaade
+quota	filemanager	et	Kvoot
+quota exceeded	filemanager	et	Kvoot ületatud
+recalculate	filemanager	et	Arvutage uuesti
+recalculated %1 directories in %2 iterations and %3 seconds	filemanager	et	Arvutati %1 kataloogi %2 korduse ja %3 sekundi jooksul uuesti.
 save changes	filemanager	et	Salvesta muudatused
 show	filemanager	et	Näita
 size	filemanager	et	suurus

@@ -85,7 +85,7 @@ cut to clipboard	filemanager	en	Cut to clipboard
 default action on double-click	filemanager	en	Default action on double-click
 default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	en	Default = No. The link will not be shown, but you are still able to navigate to this location, or configure this particular location as start folder or folder link.
 default document to insert entries	filemanager	en	Default document to insert entries
-defines how to handle double click action on a document file. images are always opened in the expose-view and emails with email application. all other mime-types are handled by the browser itself.	filemanager	en	Defines how to handle double click action on a document file. Images are always opened in the expose-view and emails with email application. All other MIME-types are handled by the browser itself.
+defines how to handle double click action on a document file. images are always opened in the expose-view and emails with email application. all other mime-types are handled by the browser itself.	filemanager	en	Defines how to handle double click action on a document file. Images are always opened in the expose-view and emails with mail application. All other MIME-types are handled by the browser itself.
 defines how to open a merge print document	filemanager	en	Defines how to open a merge print document
 delete all older versions and deleted files older then %s days	filemanager	en	Delete all older versions and deleted files older than %s days
 delete these files or directories?	filemanager	en	Delete these files or directories?
@@ -109,7 +109,7 @@ do you want more information about epl subscription?	common	en	Do you want more 
 do you want to overwrite existing file %1 in directory %2?	filemanager	en	Do you want to overwrite existing file %1 in folder %2?
 do you want to overwrite the existing file %1?	filemanager	en	Do you want to overwrite the existing file %1?
 download	filemanager	en	Download
-download documents	filemanager	en	download documents
+download documents	filemanager	en	Download documents
 edit comments	filemanager	en	Edit comments
 edit settings	filemanager	en	Edit settings
 edit share	filemanager	en	Edit share
@@ -134,7 +134,7 @@ example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james m
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	filemanager	en	Example {{NELF role}} - if field role is not empty, you will get a new line with the value of field role
 example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	filemanager	en	Example {{nenvlf role}} - if field role is not empty, set a LF without any value of the field
 excludes selected mime types	filemanager	en	Excludes selected MIME-types
-excludes selected mime types from being opened by editor	filemanager	en	Excludes selected MIME-types from being opened by editor
+excludes selected mime types from being opened by editor	filemanager	en	Excludes selected MIME-types from being opened by Collabora Online.<br>These document types are either opened in the browser or downloaded.
 executable	filemanager	en	Executable
 expires	filemanager	en	Expires
 export definition to use for nextmatch export	filemanager	en	Export definition to use for nextmatch export
@@ -162,7 +162,7 @@ files from subdirectories	filemanager	en	Files from sub directories
 files in this directory	filemanager	en	Files in this Folder
 filesystem	filemanager	en	Filesystem
 filesystem check reported no problems.	filemanager	en	Filesystem check reported no problems.
-filesystem: mount directory (inside /var/lib/egroupware!) from host filesystem	filemanager	en	Filesystem: mount directory (inside /var/lib/egroupware!) from host filesystem
+filesystem: mount directory (inside /var/lib/egroupware!) from host filesystem	filemanager	en	Filesystem: mount directory (inside /var/lib/egroupware !) from host filesystem
 finally delete	filemanager	en	Finally delete
 finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	en	Finally delete all older versions and deleted files under given folder.\n\nThis can NOT be undone!
 finally delete this version	filemanager	en	Finally delete this version
@@ -182,8 +182,8 @@ hidden upload	filemanager	en	Hidden upload
 hidden uploads	filemanager	en	Hidden uploads
 hostname/ip for webdav and smb	filemanager	en	Hostname/IP for WebDAV and SMB
 id	filemanager	en	ID
-if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	en	If you specify a folder (full vfs path) here, %1 displays an action for each document. That action allows to download the specified document with the %1 data inserted.
-if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	en	If you specify a folder (full vfs path) here, %1 displays an extra document icon for each entry. That icon allows to download the specified document with the data inserted.
+if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	en	If you specify a folder (full VFS path) here, %1 displays an action for each document. That action allows to download the specified document with the %1 data inserted.
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	en	If you specify a folder (full VFS path) here, %1 displays an extra document icon for each entry. That icon allows to download the specified document with the data inserted.
 if you specify an export definition, it will be used when you export	filemanager	en	If you specify an export definition, it will be used when you export
 if you specify an export definition, it will be used when you export*	filemanager	en	If you specify an export definition, it will be used when you export*
 inherited	filemanager	en	Inherited
@@ -223,8 +223,8 @@ notebookbar	filemanager	en	Tabbed
 older versions or deleted files	filemanager	en	Older versions or deleted files
 only owner can rename or delete the content	filemanager	en	Only owner can rename or delete the content.
 open	filemanager	en	Open
-open documents with collabora, if permissions are given	filemanager	en	open documents with Collabora, if permissions are given
-open odt documents with collabeditor	filemanager	en	open odt documents with CollabEditor
+open documents with collabora, if permissions are given	filemanager	en	Open documents with Collabora Online, if permissions are given
+open odt documents with collabeditor	filemanager	en	Open odt documents with Collabora Online
 operation	filemanager	en	Operation
 password for webdav and smb, use $pass for password of logged in user	filemanager	en	Password for WebDAV and SMB, use $pass for password of logged in user
 paste link	filemanager	en	Paste Link
@@ -263,7 +263,7 @@ root access granted.	filemanager	en	Root access granted.
 root access stopped.	filemanager	en	Root access stopped.
 save %1	filemanager	en	Save %1
 save %1, and go back to file listing	filemanager	en	Save %1, and go back to file listing.
-save as zip	filemanager	en	Save as Zip
+save as zip	filemanager	en	Save as ZIP
 save changes	filemanager	en	Save changes
 saved %1	filemanager	en	Saved %1
 saving properties failed!	filemanager	en	Saving properties failed!
@@ -291,7 +291,7 @@ size	filemanager	en	Size
 smb, webdavs and vfs require a username!	filemanager	en	SMB, WebDAVs and VFS require a username!
 smb: mount samba or windows fileserver shares	filemanager	en	SMB: mount Samba or Windows fileserver shares
 some functionalities require superuser permissions, please login here as filemanager superuser - allowed users are defined in setup.	filemanager	en	Some functionalities require superuser permissions, please login here as filemanager superuser - allowed users are defined in setup.
-sqlfs statistics	filemanager	en	sqlFS Statistics
+sqlfs statistics	filemanager	en	VFS Statistics
 start search	filemanager	en	Start search
 startfolder	filemanager	en	Start folder
 successful mounted %1 on %2.	filemanager	en	Successful mounted %1 on %2.

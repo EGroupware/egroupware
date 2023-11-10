@@ -44,6 +44,7 @@ cannot create directory because it begins or ends in a space	filemanager	ru	Не
 cautiously rejecting to remove folder '%1'!	filemanager	ru	Отказано в перемещении папки %1
 check all	filemanager	ru	Проверить все
 check virtual filesystem	common	ru	Проверить файловую систему
+classic	filemanager	ru	Стандартная панель инструментов
 clear search	filemanager	ru	Очистить результаты поиска
 clipboard is empty!	filemanager	ru	Буфер обмена пуст!
 comment	filemanager	ru	Комментарий
@@ -69,8 +70,10 @@ current directory	filemanager	ru	Текущий каталог
 custom fields	filemanager	ru	Пользовательские поля
 cut	filemanager	ru	Вырезать
 cut to clipboard	filemanager	ru	Вырезать в буфер обмена
+default action on double-click	filemanager	ru	Действие по умолчанию при двойном щелчке
 default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	ru	По умолчанию = No. Ссылка будет показана, но все еще можно перейти к этому положению или назначить это положение как начальная папка или папка для ссылки.
 default document to insert entries	filemanager	ru	Документ по умолчанию для вставки записей
+defines how to handle double click action on a document file. images are always opened in the expose-view and emails with email application. all other mime-types are handled by the browser itself.	filemanager	ru	Определяет, как обрабатывать действие двойного щелчка на файле документа. Изображения всегда открываются в expose-view, а письма - в почтовом приложении. Все остальные MIME-типы обрабатываются самим браузером.
 delete these files or directories?	filemanager	ru	Удалить эти файлы или каталоги?
 delete this file or directory	filemanager	ru	Удалить этот файл или каталог
 deleted %1	filemanager	ru	Удалено %1
@@ -87,14 +90,18 @@ display and modification of content	filemanager	ru	Показ и модифик�
 display of content	filemanager	ru	Показ содержания
 do you want to overwrite the existing file %1?	filemanager	ru	Хотите перезаписать существующий файл %1?
 download	filemanager	ru	Загрузить
+download documents	filemanager	ru	Загрузить документы
 edit comments	filemanager	ru	Редактировать комментарии
 edit settings	filemanager	ru	Редактировать настройки
+edit share	filemanager	ru	Редактировать общий ресурс
 enable	filemanager	ru	Разрешить
 enable versioning for given mountpoint	filemanager	ru	Включить контроль версий для данной точки монтирования
+enter a file size, e.g. 100k, 200m or 2g	filemanager	ru	Введите размер файла, например, 100K, 200M или 2G
 enter setup user and password	filemanager	ru	Введите имя пользователя и пароль
 enter setup user and password to get root rights	filemanager	ru	Введите имя пользователя и пароль для получения прав root
 enter the complete vfs path to specify a fast access link to a folder	filemanager	ru	Введите полный путь для быстрого доступа к ссылке на папку
 enter the complete vfs path to specify your desired start folder.	filemanager	ru	Введите полный путь для указания вашей начальной папки
+enter your file name	filemanager	ru	Введите имя файла
 error adding the acl!	filemanager	ru	Ошибка добавления прав доступа ACL!
 error creating symlink to target %1!	filemanager	ru	Ошибка создания простой ссылки на цель %1!
 error deleting the acl entry!	filemanager	ru	Ошибка уничтожения записи ACL!
@@ -107,6 +114,8 @@ example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", fo
 example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	filemanager	ru	Пример {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Пример: Mr Dr. James Miller
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	filemanager	ru	Пример {{NELF role}} - если поле Роль не пусто, получите новую строку с величиной поля Роль
 example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	filemanager	ru	Пример: {{nenvlf role}} — если поле «роль» не пусто, устанавливает поле LF пустым
+excludes selected mime types	filemanager	ru	Исключение выбранных MIME-типов
+excludes selected mime types from being opened by editor	filemanager	ru	Исключает открытие выбранных MIME-типов в Collabora Online.<br> Эти типы документов либо открываются в браузере, либо загружаются.
 executable	filemanager	ru	Выполнимо
 expires	filemanager	ru	Истекает
 export definition to use for nextmatch export	filemanager	ru	Определение экспорта для последующего использования
@@ -116,8 +125,10 @@ failed to change permissions of %1!	filemanager	ru	Неудача при изм�
 failed to create directory!	filemanager	ru	Неудача при создании каталога!
 favorites	filemanager	ru	Избранное
 file	common	ru	Файл
+file %1 already exists	filemanager	ru	Файл %1 уже существует
 file %1 could not be created.	filemanager	ru	Файл %1 не может быть создан.
 file %1 may be too big. contact your systemadministrator for further info	filemanager	ru	Файл %1 может быть очень большим.
+file a file is only available with an epl subscription.	filemanager	ru	Файл доступен только при наличии подписки EPL.
 file deleted.	filemanager	ru	Файл удален.
 file names cannot contain "%1"	filemanager	ru	Имя файла не может содержать "%1"
 file or directory not found!	filemanager	ru	Файл или каталог не найден!
@@ -128,7 +139,11 @@ filemanager fields:	filemanager	ru	Поля ФайлМенеджера:
 filename must not be empty!	filemanager	ru	Имя файла не должно быть пустым!
 files from subdirectories	filemanager	ru	Файлы из подкаталогов
 files in this directory	filemanager	ru	Файлы в этом каталоге
+filesystem	filemanager	ru	Файловая система
 filesystem check reported no problems.	filemanager	ru	Проверка файловой системы проблем не выявила
+filesystem: mount directory (inside /var/lib/egroupware!) from host filesystem	filemanager	ru	Файловая система: смонтировать каталог (внутри /var/lib/egroupware !) из файловой системы хоста
+finally delete	filemanager	ru	Окончательно удалить
+finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	ru	Окончательно удаляет все старые версии и удаленные файлы в данной папке.\n\nЭто НЕ может быть отменено!
 finally delete this version	filemanager	ru	Окончательно удалить эту версию
 fix reported problems	filemanager	ru	Зафиксировано сообщение о проблемах
 folder up	filemanager	ru	Папка на один уровень выше
@@ -141,8 +156,10 @@ go home	filemanager	ru	Переход Домой
 go to	filemanager	ru	Переход к
 go to your home directory	filemanager	ru	Переход к домашнему каталогу
 go up	filemanager	ru	Переход выше
+group home quota	filemanager	ru	Квота на групповой дом
 hidden upload	filemanager	ru	Скрытая загрузка
 hidden uploads	filemanager	ru	Скрытые загрузки
+hostname/ip for webdav and smb	filemanager	ru	Имя хоста/IP для WebDAV и SMB
 id	filemanager	ru	Идентификатор ID
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	ru	Если здесь указать каталог с полным путем, %1 покажет действие для каждого документа. Действие позволит загрузить указанный документ с %1 вставленными данными.
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	ru	Если указан документ с полным путем, %1 показывает пиктограмму внешнего документам для каждой записи. Эти пиктограмма позволяет загрузить указанный документ со вставленными данными.
@@ -153,11 +170,14 @@ link	filemanager	ru	Ссылка
 link %1: %2	filemanager	ru	Ссылка %1: %2
 link target	filemanager	ru	Целевая ссылка
 link target %1 not found!	filemanager	ru	Целевая ссылка %1 не найдена!
+list view	filemanager	ru	Просмотр списка
 location	filemanager	ru	Положение
 lock	filemanager	ru	Заблокировать
 log out as superuser	filemanager	ru	Выход из режима суперпользователь
 mail files	filemanager	ru	Отправить файлы
+mail paste	filemanager	ru	Вставка сообщений
 max folderlinks	admin	ru	Максимальные связи папки
+merge print open handler	filemanager	ru	Обработчик открытия печати слияния
 mime type	filemanager	ru	Тип Mime
 modified	filemanager	ru	Изменено
 modified between	filemanager	ru	Изменено между
@@ -174,11 +194,14 @@ no files in this directory.	filemanager	ru	Нет файлов в этом ка�
 no preview available	filemanager	ru	Предварительный просмотр невозможен.
 no version history for this file/directory	filemanager	ru	Нет истории версий для этого файла/каталога.
 noone	filemanager	ru	Никто
+notebookbar	filemanager	ru	Вкладка
 older versions or deleted files	filemanager	ru	Старые версии или удалённые файлы
 only owner can rename or delete the content	filemanager	ru	Только владелец может переименовать или удалить содержимое.
 open	filemanager	ru	Открыть
 operation	filemanager	ru	Операция
+password for webdav and smb, use $pass for password of logged in user	filemanager	ru	Пароль для WebDAV и SMB, используйте $pass для пароля вошедшего пользователя
 path %1 not found or not a directory!	filemanager	ru	Путь %1 не найден или нет директории!
+path and query-parameters, smb: share and optional path (with /)	filemanager	ru	Путь и параметры запроса, SMB: общий ресурс и необязательный путь (с /)
 percentage	filemanager	ru	Проценты
 permission denied!	filemanager	ru	Отсутствует разрешение!
 permissions	filemanager	ru	Разрешения
@@ -190,8 +213,12 @@ preview of %1	filemanager	ru	Просмотр %1
 projectmanager	filemanager	ru	Проекты
 properties saved.	filemanager	ru	Свойства сохранены.
 quick jump to	filemanager	ru	Быстрый переход к
+quota	filemanager	ru	Квота
+quota exceeded	filemanager	ru	Квота превышена
 read & write access	filemanager	ru	Доступ к чтению/записи
 read access only	filemanager	ru	Доступ только к чтению
+recalculate	filemanager	ru	Пересчитать
+recalculated %1 directories in %2 iterations and %3 seconds	filemanager	ru	Пересчитано %1 каталогов за %2 итераций и %3 секунд
 reload	filemanager	ru	Перезагрузка
 rename of %1 to %2 failed!	filemanager	ru	Переименование %1 в %2 закончилось неудачно!
 rename, change permissions or ownership	filemanager	ru	Переименование, изменение разрешений или владельца

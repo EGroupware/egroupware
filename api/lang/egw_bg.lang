@@ -48,9 +48,13 @@ add current	common	bg	Текущ изглед като любим
 add shortcut	common	bg	Добави пряк път
 add sub	common	bg	Добави подкатегория
 add to clipboard	common	bg	Добавяне в клипборда
+add user to responsibles	groupdav	bg	Добавяне на потребител към responsibles
+add user to responsibles, removing evtl. previous category user	groupdav	bg	Добавяне на потребител към responsibles, като се премахва предишната категория потребител
+add your domain as "%1" in options to list of email providers and enable api.	common	bg	Добавете домейна си като "%1" в опциите към списъка с доставчици на електронна поща и разрешете API.
 addressbook	common	bg	Адресен указател
 addressbooks to sync in addition to personal addressbook	groupdav	bg	Синхронизиране на адресни книги в допълнение към личната адресна книга
 admin	common	bg	Админ
+admin settings	common	bg	Настройки на администратора
 admin settings for %1	common	bg	Настройки на администратора за %1
 administration	common	bg	Администрация
 advanced search	common	bg	Разширено търсене
@@ -63,6 +67,7 @@ all categories	common	bg	Всички категории
 all fields	common	bg	всички полета
 all in one	groupdav	bg	Всичко в едно
 all users	common	bg	Всички потребители
+allow editing the %1	common	bg	Разрешете редактирането на %1
 alternate style-sheet:	common	bg	Алтернативен style-sheet:
 american samoa	common	bg	Американска Самоа
 an error happened	common	bg	Възникнала е грешка

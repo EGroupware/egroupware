@@ -100,6 +100,7 @@ edit exception	calendar	no	Rediger unntak
 edit series	calendar	no	Redigere Serie
 edit this event	calendar	no	Endre hendelse
 edit this series of recurring events	calendar	no	Endre denne serien med repeterende hendelser
+email address migration	calendar	no	Migrering av e-postadresser
 empty for all	calendar	no	tøm for alle
 end	calendar	no	Slutt
 end date/time	calendar	no	Slutt Dato/Tid
@@ -108,6 +109,7 @@ enddate / -time of the meeting, eg. for more then one day	calendar	no	Sluttdato 
 enddate of the export	calendar	no	Sluttdato for eksport
 ends	calendar	no	slutter
 error adding the alarm	calendar	no	Feil ved forsøk på å sette alarm
+error notifying %1	calendar	no	Feil ved varsling av %1
 error: importing the ical	calendar	no	Feil: Ved import av iCal
 error: no participants selected !!!	calendar	no	Feil: Ingen deltagere valgt!
 error: saving the event !!!	calendar	no	Feil ved forsøk på lagring av hendelse!
@@ -205,7 +207,10 @@ notification messages for modified events	calendar	no	Varslingsmeldinger for end
 notification messages for uninvited participants	calendar	no	Varslingsmeldinger for avmeldte deltagere
 notification messages for your alarms	calendar	no	Varslingsmeldinger for dine alarmer
 notification messages for your responses	calendar	no	Varslingsmeldinger for dine responser
+notify	calendar	no	Varsle
+notify all externals (non-users) about this event	calendar	no	Varsle alle eksterne (ikke-brukere) om denne hendelsen
 number of records to read (%1)	calendar	no	Antall rekker som leses (%1)
+number of resources to be booked	calendar	no	Antall ressurser som skal bestilles
 observance rule	calendar	no	Regel
 occurence	calendar	no	Hendelse
 old startdate	calendar	no	Gammel Startdato
@@ -235,6 +240,7 @@ preselected group for entering the planner	calendar	no	Forhåndsvelg gruppe når
 previous	calendar	no	Foregående
 private and global public	calendar	no	Privat og Felles
 private and group public	calendar	no	Privat og Felles
+private event	calendar	no	Privat arrangement
 private only	calendar	no	Bare Privat
 quantity	calendar	no	Antall
 re-edit event	calendar	no	Omgjøre oppføring
@@ -244,6 +250,7 @@ recordings	calendar	no	Registreringer
 recurrence	calendar	no	Repeterende
 recurring event	calendar	no	periodisk oppføring
 rejected	calendar	no	Avslått
+removes the event from my calendar	calendar	no	Fjerner arrangementet fra kalenderen min
 repeat days	calendar	no	Repeterende dag
 repeat the event until which date (empty means unlimited)	calendar	no	Repeter hendelse til hvilken dato (tom setter ingen grense)
 repeat type	calendar	no	Gjenta type
@@ -251,6 +258,7 @@ repeating event information	calendar	no	Gjenta oppføringsinformasjon
 repeating interval, eg. 2 to repeat every second week	calendar	no	Repeterende interval, feks. 2 for hver annen uke
 repetition	calendar	no	Gjentakelse
 repetitiondetails (or empty)	calendar	no	Repitasjonsdetaljer (eller tom)
+replying "%1" is not a participant of the event! only continue if you want to add as new participant.	calendar	no	Svarende "%1" er IKKE deltaker på arrangementet! Fortsett bare hvis du vil legge til en ny deltaker.
 report	calendar	no	Rapport
 reset	calendar	no	Tilbakestill
 resources	calendar	no	Ressurser
@@ -264,13 +272,18 @@ select a %1	calendar	no	Velg en %1
 select a time	calendar	no	velg en tid
 select resources	calendar	no	Velg ressurser
 select who should get the alarm	calendar	no	Velg hvem som skal motta alarmen
+send notifications	calendar	no	Send varsler
+send notifications to users right now	calendar	no	Send varsler til deltakere akkurat nå
 set new events to private	calendar	no	Sett nye oppføringer som private
 should new events created as private by default ?	calendar	no	Skal nye oppføringer som blir laget, være private som standard?
 should the status of the event-participants (accept, reject, ...) be shown in brackets after each participants name ?	calendar	no	Skal status på oppførings-deltakere(godta, avslå,...) bli vist som bokser etter hver deltakers navn ?
+show %1 from %2	calendar	no	Vis %1 fra %2
+show birthdays as all day non-blocking events as well as via mouseover of the date.	calendar	no	Vises som ikke-blokkerende arrangementer hele dagen samt via mouseover på datoen.
 show list of upcoming events	calendar	no	Vis liste av kommende oppføringer
 show this month	calendar	no	vis denne måneden
 show this week	calendar	no	vis denne uken
 single event	calendar	no	enkel oppføring
+single participant	calendar	no	Enkelt deltaker
 sort by	calendar	no	Sorter etter
 start	calendar	no	Start
 start date/time	calendar	no	Start Dato/Tid
@@ -279,11 +292,17 @@ startdate / -time	calendar	no	Startdato /-tid
 startdate and -time of the search	calendar	no	Startdato og -tid i søket
 startdate of the export	calendar	no	Startdato for eksport
 startrecord	calendar	no	Startrekke
+status	calendar	no	Status
 status changed	calendar	no	Status endret
 submit to repository	calendar	no	Send til Arkiv
 sun	calendar	no	Søn
 tentative	calendar	no	Foreløpig
 test import (show importable records <u>only</u> in browser)	calendar	no	Test import (vis importerte registreringer <u>bare</u> i nettleseren)
+the apple ical apps use this color to display events from this calendar.	calendar	no	Apple iCal-appene bruker denne fargen til å vise hendelser fra denne kalenderen.
+the document can contain placeholder like {{%1}}, to be replaced with the data.	calendar	no	Dokumentet kan inneholde plassholdere som {{%1}}, som erstattes med dataene.
+the extern organizer changed the event!	calendar	no	Den eksterne arrangøren har endret hendelsen!
+the sender "%1" is not the extern organizer "%2", proceed with caution!	calendar	no	Avsenderen "%1" er IKKE den eksterne arrangøren "%2", fortsett med forsiktighet!
+the sender "%1" is not the participant replying "%2", proceed with caution!	calendar	no	Avsenderen "%1" er IKKE deltakeren som svarer "%2", vær forsiktig!
 this day is shown as first day in the week or month view.	calendar	no	Denne dagen blir vist som første dag i uke- eller måneds-visning
 this defines the end of your dayview. events after this time, are shown below the dayview.	calendar	no	Dette definerer slutten på din dagvisning. Oppføringer etter denne tiden vil bli vist under dagvisningen.
 this defines the start of your dayview. events before this time, are shown above the dayview.<br>this time is also used as a default starttime for new events.	calendar	no	Dette definerer starten på din dagvisning. Oppføringer før denne tiden vil bli vist over dagvisningen.<br>Denne tiden vil også bli brukt som standard start-tid for nye oppføringer.
@@ -302,6 +321,7 @@ timeframe	calendar	no	Tidsrom
 timeframe to search	calendar	no	Tidrom for søk
 title of the event	calendar	no	Tittel på oppføringen
 to many might exceed your execution-time-limit	calendar	no	for mange vil muligens overskride din eksekverings-tidsgrense
+toggle weekend	calendar	no	Bytt helg
 translation	calendar	no	Oversetting
 tue	calendar	no	Tir
 two weeks	calendar	no	To uker

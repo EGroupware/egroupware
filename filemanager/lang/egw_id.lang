@@ -34,39 +34,71 @@ download	filemanager	id	Unduh
 edit comments	filemanager	id	Edit komentar
 edit settings	filemanager	id	Edit pengaturan
 enable	filemanager	id	enable
+enter a file size, e.g. 100k, 200m or 2g	filemanager	id	Masukkan ukuran berkas, misalnya 100K, 200M atau 2G
 everyone	filemanager	id	everyone
+excludes selected mime types	filemanager	id	Tidak termasuk jenis MIME yang dipilih
+excludes selected mime types from being opened by editor	filemanager	id	Mengecualikan jenis MIME tertentu agar tidak dibuka oleh Collabora Online.<>Jenis dokumen ini dapat dibuka di browser atau diunduh.
 executable	filemanager	id	Executable
 expires	filemanager	id	Kadaluarsa
+export definition to use for nextmatch export	filemanager	id	Definisi ekspor yang akan digunakan untuk ekspor pertandingan berikutnya
+extended access control list	filemanager	id	Daftar kontrol akses yang diperluas
 extended acl	filemanager	id	Extended ACL
+failed to change permissions of %1!	filemanager	id	Gagal mengubah izin %1!
+failed to create directory!	filemanager	id	Gagal membuat folder!
 favorites	filemanager	id	Favorit
 file	common	id	Berkas
+file %1 already exists	filemanager	id	File %1 sudah ada
+file %1 could not be created.	filemanager	id	File %1 tidak dapat dibuat.
+file %1 may be too big. contact your systemadministrator for further info	filemanager	id	File %1 mungkin terlalu besar.
+file a file is only available with an epl subscription.	filemanager	id	Mengarsipkan file hanya tersedia dengan langganan EPL.
 file deleted.	filemanager	id	Berkas dihapus.
 filemanager	common	id	Manajer Berkas
 filemanager configuration	admin	id	konfigurasi manajer berkas
+filesystem	filemanager	id	Sistem berkas
+filesystem check reported no problems.	filemanager	id	Pemeriksaan sistem file melaporkan tidak ada masalah.
+filesystem: mount directory (inside /var/lib/egroupware!) from host filesystem	filemanager	id	Sistem berkas: mount direktori (di dalam /var/lib/egroupware !) dari sistem berkas hos
+finally delete	filemanager	id	Akhirnya hapus
+finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	id	Terakhir, hapus semua versi lama dan file yang dihapus di bawah folder tertentu.\n\nIni TIDAK dapat dibatalkan!
+finally delete this version	filemanager	id	Akhirnya hapus versi ini
+fix reported problems	filemanager	id	Memperbaiki masalah yang dilaporkan
 folder up	filemanager	id	Folder Up
+for files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available.  see the specific application for a list of available placeholders.	filemanager	id	Untuk file yang ditautkan ke entri aplikasi (di dalam /apps/appname/id/), penampung tempat untuk aplikasi tersebut juga tersedia. Lihat aplikasi tertentu untuk daftar placeholder yang tersedia.
+for files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available. see the specific application for a list of placeholders	filemanager	id	Untuk file yang ditautkan ke entri aplikasi (di dalam /apps/appname/id/), penampung untuk aplikasi tersebut juga tersedia. Lihat aplikasi tertentu untuk daftar placeholder.
+for serial letter use this tag. put the content, you want to repeat between two tags.	filemanager	id	Untuk surat berantai, gunakan tag ini. Letakkan konten yang ingin Anda ulangi di antara dua Tag.
 general	filemanager	id	Umum
 general fields:	filemanager	id	Field Umum:
-go home	filemanager	id	go home
+go home	filemanager	id	pulang
 go to	filemanager	id	Menuju
-go up	filemanager	id	go up
+go up	filemanager	id	Naik
+group home quota	filemanager	id	Kuota rumah grup
 hidden upload	filemanager	id	Unggahan tersembunyi
 hidden uploads	filemanager	id	Unggahan tersembunyi
+hostname/ip for webdav and smb	filemanager	id	Nama host/IP untuk WebDAV dan SMB
 id	filemanager	id	ID
+if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	id	Jika Anda menentukan folder (jalur VFS lengkap) di sini, %1 menampilkan tindakan untuk setiap dokumen. Tindakan itu memungkinkan untuk mengunduh dokumen yang ditentukan dengan data %1 yang dimasukkan.
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	id	Jika Anda menentukan folder (jalur VFS lengkap) di sini, %1 menampilkan ikon dokumen tambahan untuk setiap entri. Ikon tersebut memungkinkan untuk mendownload dokumen yang ditentukan dengan data yang dimasukkan.
 inherited	filemanager	id	Inherited
 link	filemanager	id	Tautan
+list view	filemanager	id	Tampilan daftar
 location	filemanager	id	Lokasi
 lock	filemanager	id	Kunci
+mail paste	filemanager	id	Tempel surat
 max folderlinks	admin	id	max folderlinks
+merge print open handler	filemanager	id	Gabungkan penangan terbuka cetak
 mime type	filemanager	id	mime type
-modified	filemanager	id	diubah
-modified between	filemanager	id	diubah antara
+modified	filemanager	id	Dimodifikasi
+modified between	filemanager	id	Dimodifikasi antara
+mountpoints	filemanager	id	Titik pemasangan
 move	filemanager	id	Pindahkan
 move to	filemanager	id	Pindahkan ke
 moved %1 to %2	filemanager	id	%1 dipindahkan ke %2
 no access	filemanager	id	No access
 noone	filemanager	id	Noone
+notebookbar	filemanager	id	Tab
 open	filemanager	id	Open
 operation	filemanager	id	Operasi
+password for webdav and smb, use $pass for password of logged in user	filemanager	id	Kata sandi untuk WebDAV dan SMB, gunakan $pass untuk kata sandi pengguna yang masuk
+path and query-parameters, smb: share and optional path (with /)	filemanager	id	Parameter jalur dan kueri, SMB: berbagi dan jalur opsional (dengan /)
 percentage	filemanager	id	Percentage
 permission denied!	filemanager	id	Ijin ditolak!
 permissions	filemanager	id	Ijin
@@ -75,8 +107,12 @@ preview %1	filemanager	id	Preview %1
 projectmanager	filemanager	id	Manajer Proyek
 properties saved.	filemanager	id	Properties saved.
 quick jump to	filemanager	id	Loncat ke
+quota	filemanager	id	Kuota
+quota exceeded	filemanager	id	Kuota terlampaui
 read & write access	filemanager	id	Akses Baca & Tulis
 read access only	filemanager	id	Hanya akses baca
+recalculate	filemanager	id	Hitung ulang
+recalculated %1 directories in %2 iterations and %3 seconds	filemanager	id	Menghitung ulang%1 direktori dalam%2 iterasi dan%3 detik
 reload	filemanager	id	muat ulang
 replaced %1	filemanager	id	%1 digantikan
 rights	filemanager	id	Hak

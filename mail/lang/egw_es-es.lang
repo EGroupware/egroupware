@@ -54,9 +54,9 @@ always show html emails	mail	es-es	Mostrar siempre los correos HTML
 always show notifiction	mail	es-es	Mostrar siempre notificación
 an error happend while trying to remove acl rights from the account %1!	mail	es-es	Se ha producido un error al intentar eliminar los derechos ACL (lista de control de acceso) de la cuenta %1.
 and the rule with priority %1, now got the priority %2	mail	es-es	Y la regla con prioridad% 1, ahora tiene la prioridad %2
-answered	mail	es-es	respondió
-any of	mail	es-es	cualquiera de
-any status	mail	es-es	cualquier estado
+answered	mail	es-es	Respondió
+any of	mail	es-es	Cualquiera de
+any status	mail	es-es	Cualquier estado
 append	mail	es-es	adjuntar
 appended after reply before sending	mail	es-es	Adjuntado después de la respuesta antes del envío
 application mail expected but got: %1	mail	es-es	Correo de la aplicación esperado, pero recibió: %1
@@ -261,6 +261,7 @@ forward messages to:	mail	es-es	Reenviar mensajes a:
 forward messages:	mail	es-es	Reenviar mensajes:
 forward to	mail	es-es	reenviar a
 forward to address (*):	mail	es-es	Reenviar a la dirección (*):
+forwarding of this message failed because the content of this message seems to be encrypted and can not be decrypted properly. if you still wish to forward content of this encrypted message, you may try to use forward as attachment instead.	mail	es-es	El reenvío de este mensaje ha fallado porque el contenido del mensaje parece estar encriptado y no se puede desencriptar correctamente. Si aún desea reenviar el contenido de este mensaje cifrado, puede intentar reenviarlo como archivo adjunto.
 forwards	mail	es-es	Reenvíos
 from	mail	es-es	De
 from(a->z)	mail	es-es	De (A-> Z)
@@ -269,6 +270,8 @@ general	admin	es-es	General
 general settings	mail	es-es	Opciones generales
 get acl rights failed from imap server!	mail	es-es	¡Falló obtener los derechos de la lista de control de acceso del servidor IMAP!
 greater than	mail	es-es	mayor que
+ham folder	mail	es-es	Carpeta Ham
+handling of external http images / mixed content in mails	mail	es-es	Tratamiento de imágenes http externas / contenido mixto en los correos
 header	mail	es-es	Encabezado
 header lines	mail	es-es	Líneas de encabezado
 high	mail	es-es	alto
@@ -347,12 +350,16 @@ mark as deleted	mail	es-es	marcar como borrado
 match:	mail	es-es	Coincidir
 matches	mail	es-es	coincide
 matches regexp	mail	es-es	coincide con la expresión
+mbstring.func_overload=0 is required for correct mail processing!	mail	es-es	mbstring.func_overload=0 es necesario para procesar correctamente el correo.
 message body	mail	es-es	cuerpo del mensaje
+message learned as ham (not spam) and moved back to inbox	mail	es-es	Mensaje detectado como ham (no spam) y devuelto a la bandeja de entrada
 message learned as spam and moved to spam folder	mail	es-es	Mensaje aprendido como spam y movido a la carpeta de spam
 message preview area	mail	es-es	Área de previsualización de mensajes
 message saved successfully.	mail	es-es	Mensaje grabado exitosamente.
 message send failed: %1	mail	es-es	Error al enviar el mensaje: %1
 message send successfully.	mail	es-es	Mensaje enviado exitosamente.
+message verified successfully but the signer’s certificate could not be verified.	mail	es-es	Mensaje verificado correctamente pero no se ha podido verificar el certificado del firmante.
+message verified successfully.	mail	es-es	Mensaje verificado correctamente.
 miscellaneous	mail	es-es	Misceláneo
 modify subject	mail	es-es	Modificar asunto
 modify subject of this message	mail	es-es	Modificar asunto de este mensaje
@@ -361,23 +368,29 @@ move folder	mail	es-es	Mover carpeta
 move selected mails to archive	mail	es-es	Mover los correos seleccionados al archivo
 move selected to	mail	es-es	Mover los seleccionados a
 move to	mail	es-es	Mover a
-move to trash	mail	es-es	mover a la papelera
-moved %1 message(s) from %2 to %3	mail	es-es	movido %1 mensaje(s) de %2 a %3
+move to archive	mail	es-es	Mover a carpeta de archivo
+move to trash	mail	es-es	Mover a la papelera
+moved %1 message(s) from %2 to %3	mail	es-es	Movido %1 mensaje(s) de %2 a %3
 moving folders from one mailaccount to another is not supported	mail	es-es	Mover carpetas de una cuenta de correo a otra no está soportada
 name and email	mail	es-es	Nombre y correo electrónico
 name of account	mail	es-es	Nombre de la cuenta
+name of imap servers (space separated host or host:port)	mail	es-es	Nombre de los servidores IMAP (host separado por espacios o host:puerto)
 never display html emails	mail	es-es	nunca mostrar los correos en HTML
 never show	mail	es-es	nunca mostrar
+never show notification	mail	es-es	Nunca mostrar notificación
+new mail from %1	mail	es-es	Nuevo correo de %1
 new mail notification	mail	es-es	Nueva notificación de correo
 new message type	mail	es-es	Nuevo tipo de mensaje
 new subject	mail	es-es	Nuevo asunto
+no (valid) send folder set in preferences	mail	es-es	Mover a carpeta de archivo
 no access	mail	es-es	sin acceso
 no action defined!	mail	es-es	¡No hay acción definida!
 no address to/cc/bcc supplied, and no folder to save message to provided.	mail	es-es	No se ha suministrado dirección para el campo A/CC/CCO, ni carpeta donde guardar el mensaje.
 no adress, to send this mail to, supplied	mail	es-es	no se proporcionó dirección a quien enviar este correo
+no folder destination supplied, and no folder to save message or other measure to store the mail (save to infolog/tracker) provided, but required.	mail	es-es	No se proporciona ninguna carpeta de destino, y no se proporciona ninguna carpeta para guardar el mensaje u otra medida para almacenar el correo (guardar en InfoLog/Sistema de tickets), pero se requiere.
 no folders	mail	es-es	no hay carpetas
-no message body supplied	mail	es-es	no se suministró ningún cuerpo de mensaje
-no plain text part found	mail	es-es	no se encontró ninguna parte con texto sencillo
+no message body supplied	mail	es-es	No se suministró ningún cuerpo de mensaje
+no plain text part found	mail	es-es	No se encontró ninguna parte con texto sencillo
 no recipient address given!	mail	es-es	¡No se han indicado destinatarios!
 no send folder set in preferences	mail	es-es	No hay carpeta de envío configurada en preferencias
 no signature	mail	es-es	sin firma
@@ -387,16 +400,23 @@ no subject supplied	mail	es-es	Sin asunto
 no text body supplied, check attachments for message text	mail	es-es	no se suministró ningún cuerpo de texto, verifique los archivos adjuntos para el texto del mensaje
 no vacation notice text provided. please enter a message.	mail	es-es	No se proporcionó aviso de vacaciones. Introduzca un mensaje.
 no valid %1 folder configured!	mail	es-es	¡No se ha configurado ninguna carpeta %1 válida!
+non	mail	es-es	No
 none, create all	mail	es-es	ninguno, crear todo
 nothing to change.	mail	es-es	No hay nada que cambiar.
 notify about new mail in this folders	mail	es-es	Notificar sobre el correo nuevo en estas carpetas
 notify when new mails arrive in these folders	mail	es-es	notificar cuando llegan nuevos correos a estas carpetas
 on	mail	es-es	en
+on behalf of	mail	es-es	En nombre de
+on vacation	mail	es-es	En vacaciones
 one address is not valid	mail	es-es	Una dirección no es válida
 only email	mail	es-es	Sólo email
+only if currently in an other app	mail	es-es	Sólo si está en otra aplicación
+only makes sense, if you transport password through a different channel / outside of this mail to recipients!	mail	es-es	¡Sólo tiene sentido, si transporta la contraseña a través de un canal diferente / fuera de este correo a los destinatarios!
 only name	mail	es-es	Sólo nombre
+only needed for some servers, that do not return all folders on root level queries to retrieve all folders for that level	mail	es-es	Sólo es necesario para algunos servidores, que no devuelven todas las carpetas en el nivel raíz consultas para recuperar todas las carpetas para ese nivel
 only one window	mail	es-es	sólo una ventana
 only send message, do not copy a version of the message to the configured sent folder	mail	es-es	sólo enviar mensaje, no copia una versión del mensaje a la carpeta de envío configurada
+only store message in inbox, do not send vacation notice	mail	es-es	Sólo almacenar mensaje en INBOX, NO enviar aviso de vacaciones
 open in html mode	mail	es-es	Abrir en modo HTML
 open in text mode	mail	es-es	Abrir en modo texto
 open with collabora office	mail	es-es	Abrir con Collabora Online
@@ -409,9 +429,14 @@ password protect	mail	es-es	protegido por contraseña
 permission denied	mail	es-es	Permiso denegado
 please configure access to an existing individual imap account.	mail	es-es	por favor, configure el acceso a una cuenta individual IMAP.
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	es-es	Por favor, configure su certificado S/MIME en la pestaña Cifrado del cuadro de diálogo Editar cuenta.
+please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	es-es	Póngase en contacto con su administrador para comprobar si su servidor admite reglas de filtrado en el servidor y cómo habilitarlas en EGroupware para su cuenta activa (%1) con ID:%2.
+please contact your administrator to validate if your server supports serverside vacationmessages, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	es-es	Por favor, póngase en contacto con su administrador para validar si su servidor soporta mensajes de vacaciones, y cómo habilitarlos en EGroupware para su cuenta activa (%1) con ID:%2.
+please enter password	mail	es-es	Por favor, introduzca la contraseña
 please select a address	mail	es-es	Por favor, seleccione una dirección
 please select the number of days to wait between responses	mail	es-es	Por favor, seleccione el número de días a esperar entre las respuestas
 please supply the message to send with auto-responses	mail	es-es	Por favor, indique el mensaje a enviar para respuestas automáticas
+please wait while sending your mail	mail	es-es	Por favor, espere mientras envía su correo
+post	mail	es-es	enviar
 predefined addresses for compose	mail	es-es	Direcciones predefinidas para componer
 prevent managing filters	mail	es-es	Impedir la gestión de filtros
 prevent managing folders	mail	es-es	Impedir la gestión de carpetas
@@ -422,9 +447,11 @@ primary profile	mail	es-es	Perfil principal
 printing	mail	es-es	Impresión
 printview	mail	es-es	vista de impresión
 processing of file %1 failed. failed to meet basic restrictions.	mail	es-es	Error al procesar el archivo %1. No se cumplieron las restricciones básicas.
+provide a default vacation text, (used on new vacation messages when there was no message set up previously)	admin	es-es	Proporciona un texto de vacaciones por defecto, (utilizado en nuevos mensajes de vacaciones cuando no había ningún mensaje configurado previamente)
 push notifications	mail	es-es	Notificaciones push
 quicksearch	mail	es-es	Búsqueda rápida
 quicksearch (with cc)	mail	es-es	Búsqueda rápida (incluyendo copia a)
+quota limit warning in megabyte (recommended value is 30 mb).	mail	es-es	Aviso de límite de cuota en megabytes (el valor recomendado es 30 MB).
 quota not provided by server	mail	es-es	Cuota no proporcionada por el servidor
 quota: %1	mail	es-es	Cuota: %1
 read	mail	es-es	leer
@@ -462,9 +489,14 @@ reply	mail	es-es	Responder
 reply all	mail	es-es	Responder a todos
 reply message type	mail	es-es	Tipo de mensaje de respuesta
 reply to	mail	es-es	Responder a
+replying to this message failed because the content of this message seems to be encrypted and can not be decrypted properly. if you still wish to include content of this encrypted message, you may try to use forward as attachment instead.	mail	es-es	La respuesta a este mensaje ha fallado porque el contenido de este mensaje parece estar encriptado y no se puede desencriptar correctamente. Si aún desea incluir el contenido de este mensaje cifrado, puede intentar reenviarlo como archivo adjunto.
 replyto	mail	es-es	Responder a
+report as ham	mail	es-es	Informar como Ham
 report as spam	mail	es-es	Reportar como spam
+report this email content as ham (not spam) - spam solutions like spamtitan will learn	mail	es-es	Informar de este contenido de correo electrónico como Ham (no spam) - soluciones de spam como spamTitan aprenderán
 report this email content as spam - spam solutions like spamtitan will learn	mail	es-es	Reportar este contenido de correo-e como Spam - soluciones antispam como spamTitan aprenderán
+required pear class mail/mimedecode.php not found.	mail	es-es	Requerido PEAR clase Mail/mimeDecode.php no se encuentra.
+required to disable if you use dovecot with private seen flags on shared or user folder!	mail	es-es	¡Requerido para deshabilitar si usa Dovecot con banderas vistas privadas en carpeta compartida o de usuario!
 resend after how many days?	mail	es-es	¿Reenviar después de cuántos días?
 respond to mail sent to:	mail	es-es	Responder al correo enviado a:
 restrict acl management	admin	es-es	restringir gestión de lista de control de acceso
@@ -473,6 +505,7 @@ row order style	mail	es-es	estilo de ordenar filas
 rule priority position	mail	es-es	Posición de prioridad de la regla
 rule with priority	mail	es-es	Regla con prioridad
 rules	mail	es-es	reglas
+s/mime encryption failed because no certificate has been found for sender address: %1	mail	es-es	S/MIME Encryption failed because no certificate has been found for sender address: %1
 save all	mail	es-es	Grabar todo
 save all attachments to filemanager	mail	es-es	Guardar todos los archivos adjuntos en el gestor de archivos
 save as calendar	mail	es-es	Grabar como calendario
@@ -480,18 +513,29 @@ save as default	mail	es-es	grabar como predeterminado
 save as draft	mail	es-es	Grabar como borrador
 save as draft and print	mail	es-es	Grabar como borrador e imprimir
 save as infolog	mail	es-es	Grabar como registro de notas y tareas
+save as infolog on send	mail	es-es	Guardar como Infolog al enviar
 save as ticket	mail	es-es	Grabar como gestión (ticket)
 save as tracker on send	mail	es-es	Grabar como seguimiento al enviar
+save attachment	mail	es-es	Guardar archivos adjuntos
+save attachments	mail	es-es	Guardar adjuntos
 save email	mail	es-es	Grabar correo-e
 save message to disk	mail	es-es	Grabar mensaje en el disco
 save of message %1 failed. could not save message to folder %2 due to: %3	mail	es-es	Error al guardar el mensaje %1. No se pudo guardar el mensaje en la carpeta %2 debido a: %3
+save the drafted message as eml file into vfs	mail	es-es	Guardar el mensaje redactado como archivo eml en el gestor de archivos
 save to disk	mail	es-es	Grabar en el disco
 save to filemanager	mail	es-es	Grabar en el Administrador de archivos
 save:	mail	es-es	Grabar:
 saves subscription changes	mail	es-es	Grabar cambios de suscripción
 saves this acl	mail	es-es	Grabar esta lista de control de acceso
 saves this rule	mail	es-es	Grabar esta regla
+saving of message %1 failed. destination folder %2 does not exist.	mail	es-es	Error al guardar el mensaje %1. La carpeta de destino %2 no existe.
+saving of message %1 succeeded. check folder %2.	mail	es-es	Se ha guardado correctamente el mensaje %1. Compruebe la carpeta %2.
+saving the rule failed:	mail	es-es	Error al guardar la regla:
+security	mail	es-es	Seguridad
+see attachments for content of the orignial mail	mail	es-es	Ver archivos adjuntos para el contenido del correo original
+select a date	mail	es-es	Seleccione una fecha
 select all	mail	es-es	Seleccionar todo
+select an existing entry in order to append mail content to it	mail	es-es	Seleccione una entrada existente para adjuntarle el contenido del correo
 select an item to read	mail	es-es	Seleccione un elemento para leer
 select file to attach to message	mail	es-es	Seleccionar archivo para adjuntar al mensaje
 select file to import into folder	mail	es-es	Seleccionar archivo para importar a la carpeta
@@ -500,11 +544,17 @@ select files to upload	mail	es-es	Seleccionar archivos para subir
 select multiple	mail	es-es	Seleccionar varios
 select or insert email address	mail	es-es	Seleccionar o insertar la dirección de correo electrónico
 selected	mail	es-es	seleccionado
+selected date range (with quicksearch)	mail	es-es	Rango de fechas seleccionado (con búsqueda rápida)
 send a reject message:	mail	es-es	Enviar un mensaje de rechazo:
 send files as	mail	es-es	Enviar archivos como
+send message and move to send folder (if configured)	mail	es-es	enviar mensaje y mover a la carpeta de envío (si está configurado)
+send message pgp encrypted: requires keys from all recipients!	mail	es-es	Enviar mensaje encriptado PGP: ¡necesita claves de todos los destinatarios!
+send only a vacation notice, do not store message in inbox	mail	es-es	Enviar sólo un aviso de vacaciones, NO almacenar el mensaje en INBOX
+send vacation notice and store message in inbox	mail	es-es	Enviar aviso de vacaciones y guardar el mensaje en la bandeja de entrada
 sender	mail	es-es	remitente
 sent	mail	es-es	Enviados
 sent folder	mail	es-es	carpeta de enviados
+server supports special-use folders	mail	es-es	Enviar mensaje encriptado PGP: ¡necesita claves de todos los destinatarios!
 serverside filterrules (sieve) are not activated	mail	es-es	Las reglas de filtrado del lado del servidor (Sieve) no están activadas
 serverside vacationnotice (via sieve) are not activated	mail	es-es	Los mensajes de aviso de ausencia del servidor (vía Sieve) no están activados
 set / remove flags	mail	es-es	Establecer / quitar marcas
@@ -513,23 +563,30 @@ set flags	mail	es-es	Marcar el correo electrónico como
 set it as default:	mail	es-es	establezca como predeterminado:
 set predefined values for compose...	mail	es-es	Establecer valores predefinidos para componer ...
 should new messages show up on the home page	mail	es-es	Nuevos mensajes deberían aparecer en la página principal
+should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	es-es	Si la firma debe insertarse después (estándar) o antes de una respuesta o reenvío, y si la firma debe ser visible y modificable durante la redacción.
 show	mail	es-es	Mostrar
 show all addresses	mail	es-es	Mostrar todas las direcciones
 show all attachments	mail	es-es	Mostrar todos los archivos adjuntos
 show all folders	mail	es-es	mostrar todas las carpetas
+show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	es-es	Mostrar todas las carpetas, (suscritas Y no suscritas) en el panel de carpetas de la pantalla principal.
 show horizontal	mail	es-es	mostrar horizontal
 show horizontal, hide if none selected	mail	es-es	mostrar horizontal, ocultar si no hay seleccionados
 show new messages on home page	mail	es-es	mostrar nuevos mensajes en la página principal
 show notification for new arriving mails	mail	es-es	Mostrar notificación de nuevos correos recibidos
+show test connection section and control the level of info displayed?	mail	es-es	¿Mostrar la sección de conexión de prueba y controlar el nivel de información mostrada?
+show test connection section and control the level of info displayed??	mail	es-es	¿Mostrar la sección de conexión de prueba y controlar el nivel de información mostrada?
+show them this time only	mail	es-es	Mostrar sólo esta vez
 show vertical	mail	es-es	mostrar vertical
 show vertical with all columns	mail	es-es	Mostrar vertical con todas las columnas
 show/hide preview pane in mail list view	mail	es-es	Mostrar/ocultar el panel de vista previa en la vista de lista de correo
+shows a temporary visible notification including from address, subject and a snippet of the mail	mail	es-es	Muestra una notificación temporal visible que incluye la dirección del remitente, el asunto y un fragmento del correo
 sieve	mail	es-es	Sieve
 sieve connection status	mail	es-es	Estado de la conexión Sieve
 sieve not activated	mail	es-es	Sieve no está activado
 sieve script name	mail	es-es	nombre del script sieve
 sieve server	mail	es-es	Servidor Sieve
 sieve_edit_instructions	mail	es-es	(*) Se pueden utilizar comodines (*,?). Si está intentando igualar * o? en sí, debe escapar estos con una barra invertida (\). Si marca "Utilizar expresiones regulares" debe utilizar expresiones regulares válidas. Con el fin de escapar de signo de exclamación (!) en el inicio no siendo usado "NO", utilizar regex y barra invertida (\) (e.g. \!)
+sign your message with smime certificate	mail	es-es	Firme su mensaje con un certificado S/MIME
 signature	mail	es-es	Firma
 signature at top	mail	es-es	firma en la parte superior
 signature position and visibility	mail	es-es	Posición y visibilidad de la firma
@@ -547,6 +604,7 @@ sources	mail	es-es	Fuentes
 spamtitan api url	mail	es-es	URL del API SpamTitan
 spamtitan integration requires epl version	mail	es-es	La integración de SpamTitan requiere la versión EPL
 start new messages with mime type plain/text or html?	mail	es-es	¿Comenzar nuevos mensajes con el tipo MIME plain/text o html?
+start reply messages with mime type plain/text or html or try to use the displayed format (default)?	mail	es-es	Responda y reenvíe mensajes de correo electrónico en formato de texto, en formato HTML o según el formato en que el remitente redactó originalmente el mensaje (por defecto).
 step 1: imap - incoming mail	mail	es-es	Paso 1: IMAP - correo entrante
 step 2: folder	mail	es-es	Paso 2: Carpeta
 step 3: sieve - server side mail filtering	mail	es-es	Paso 3: Sieve - filtro de correo del lado del servidor
@@ -557,7 +615,9 @@ subject(z->a)	mail	es-es	Asunto (Z->A)
 subscribe folder	mail	es-es	Suscribir carpeta
 subscribe folder ...	mail	es-es	Suscribir carpeta ...
 subscribe to folder %1	mail	es-es	Suscribirse a la carpeta %1
+subscription folders	mail	es-es	Carpetas de suscripción
 subscription successfully saved.	mail	es-es	La suscripción se ha grabado correctamente.
+succeeded on %1 folders, failed on %2	mail	es-es	Se ha realizado correctamente en %1 carpetas, ha fallado en %2
 successfully connected	mail	es-es	Conectado correctamente
 switch off encryption?	mail	es-es	¿Desea desactivar el cifrado?
 template folder	mail	es-es	Carpeta de plantillas
@@ -568,6 +628,11 @@ test connection and display basic information about the selected profile	mail	es
 text	mail	es-es	Texto
 text mode	mail	es-es	Modo texto
 text/plain	mail	es-es	text/plain
+the %1 's acl removed from the %2	mail	es-es	El %1 's ACL eliminado del %2
+the %1 's acl, including its subfolders, removed from the %2	mail	es-es	La ACL de %1, incluidas sus subcarpetas, eliminada de %2
+the entered passphrase is not correct! please try again.	mail	es-es	La contraseña introducida no es correcta. Inténtelo de nuevo.
+the folder %1 's acls saved	mail	es-es	Las ACL de la carpeta %1 guardadas
+the folder <b>%1</b> will be used, if there is nothing set here, and no valid predefine given.	mail	es-es	Se utilizará la carpeta <b>%1</b>, si no hay nada establecido aquí, y no se ha dado ninguna predefinición válida.
 the imap server need to meet certain requirements and be configured for it:	mail	es-es	El servidor IMAP debe cumplir ciertos requisitos Y estar configurado para ello:
 the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	mail	es-es	El remitente del mensaje ha solicitado una respuesta para indicar que usted ha leído este mensaje. ¿Desea enviar una confirmación?
 the mimeparser can not parse this message.	mail	es-es	El intérprete mime no puede interpretar este mensaje
@@ -583,28 +648,42 @@ toggle all folders view for %1	mail	es-es	Activar la vista de todas las carpetas
 toggled on actions	mail	es-es	Activar acciones
 trash	mail	es-es	Papelera
 trash folder	mail	es-es	Carpeta Papelera
+trust servers seen / unseen info	mail	es-es	servidores de confianza información VISTA / NO VISTA
+trust the server when retrieving the folder status. if you select no, we will search for the unseen messages and count them ourselves	mail	es-es	Confiar en el servidor al recuperar el estado de la carpeta. si selecciona no, buscaremos los mensajes NO VISTADOS y los contaremos nosotros mismos.
+trying to recover from session data	mail	es-es	Intentar recuperar los datos de la sesión
+turn off horizontal line between signature and composed message (this is not according to rfc).<br>if you use templates, this option is only applied to the text part of the message.	mail	es-es	Desactivar la línea horizontal entre la firma y el mensaje compuesto (esto no está de acuerdo con RFC).<br>Si utiliza plantillas, esta opción sólo se aplica a la parte de texto del mensaje.
+unable to fetch vacation!	mail	es-es	No se pueden recuperar las vacaciones
+undelete	mail	es-es	Deshacer
 unflagged	mail	es-es	Sin marcar
 unread	mail	es-es	No leído
+unsubscribe folder	mail	es-es	Cancelar suscripción
 unsubscribe from folder %1	mail	es-es	Dessuscribirse de la carpeta %1
 upload files...	mail	es-es	Cargar archivos...
+use default timeout (20 seconds)	mail	es-es	utilizar el tiempo de espera por defecto (20 segundos)
 use regular expressions (see wikipedia for information on posix regular expressions)	mail	es-es	Use expresiones regulares (consulte Wikipedia para obtener información sobre expresiones regulares POSIX)
+use source as displayed, if applicable	mail	es-es	utilizar la fuente mostrada, si procede
 use username+password from current user	mail	es-es	Usar el usuario y la contraseña del usuario actual
 use wizard to detect or verify configuration	mail	es-es	Use el asistente para detectar o verificar la configuración
 vacation messages with start and end date require an admin account to be set!	mail	es-es	¡Los mensajes de vacaciones con fecha inicial y final requieren ser establecidas por una cuenta de administrador!
 vacation notice	mail	es-es	aviso de vacaciones
 vacation notice is active	mail	es-es	El aviso de vacaciones está activo
+vacation notice is not saved yet! (but we filled in some defaults to cover some of the above errors. please correct and check your settings and save again.)	mail	es-es	El aviso de vacaciones aún no se ha guardado. (Pero hemos rellenado algunos valores por defecto para cubrir algunos de los errores anteriores. Por favor, corrija y compruebe su configuración y vuelva a guardar).
 vacation notice sucessfully updated.	mail	es-es	Aviso de vacaciones actualizado con éxito.
 vacation notice update failed	mail	es-es	Error en la actualización del aviso de vacaciones
 vacation start-date must be before the end-date!	mail	es-es	¡La fecha de inicio de las vacaciones debe ser ANTES de la fecha de fin!
+vacation update failed	mail	es-es	actualización de vacaciones fallida
 valid for	mail	es-es	Válido para
 validate addresses on submit:	mail	es-es	Validar direcciones al enviar:
 validate selected addresses on submit:	mail	es-es	Validar las direcciones seleccionadas al enviar:
 view full mail source	mail	es-es	Ver toda la fuente de correo
 view header lines	mail	es-es	Ver líneas del encabezado
 what do do with html email	mail	es-es	Qué hacer con el correo-e html
+what order the list columns are in	mail	es-es	En qué orden están las columnas de la lista
 what to do when you delete a message	mail	es-es	qué hacer cuando elimina un mensaje
 what to do when you send a message	mail	es-es	qué hacer cuando envía un mensaje
 when deleting messages	mail	es-es	Al borrar mensajes
+when displaying messages in a popup, re-use the same popup for all or open a new popup for each message	mail	es-es	Cuando se muestran mensajes en un pop-up, reutilizar el mismo pop-up para todos o abrir un nuevo pop-up para cada mensaje
+when saving messages as item of a different app	mail	es-es	al guardar mensajes como elemento de una aplicación diferente
 when sending messages	mail	es-es	al enviar mensajes
 which folders (additional to the sent folder) should be displayed using the sent folder view schema	mail	es-es	qué carpetas (además de la de Enviados) debe mostrarse usando el equema de la vista de Enviados
 which folders - in general - should not be automatically created, if not existing	mail	es-es	qué carpetas, en general, NO deben crearse automáticamente si no existen
@@ -619,10 +698,15 @@ wrote	mail	es-es	escribió
 yes, but mask all passwords	mail	es-es	si, pero enmascarar todas las contraseñas
 yes, but mask all usernames and passwords	mail	es-es	si, pero enmascarar todos los usuarios y las contraseñas
 yes, offer copy option	mail	es-es	sí, ofrecer la opción de copiar
+yes, only trigger connection reset	mail	es-es	sí, sólo desencadenar el restablecimiento de la conexión
 yes, show all debug information available for the user	mail	es-es	si, mostrar toda la información de depuración disponible para el usuario
 yes, show basic info only	mail	es-es	si, sólo mostrar información básica
 you can either choose to save as infolog or tracker, not both.	mail	es-es	Puede elegir guardar como infolog o seguimiento, no ambos.
 you can select what info to be displayed on email tag	mail	es-es	Puede seleccionar la información que se mostrará en la etiqueta de correo electrónico.
+you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	es-es	Puede utilizar $$start$$ para la fecha de inicio y $$end$$ para la fecha de finalización.
+you may add this certificate into your contact, if you trust this signature.	mail	es-es	Puede añadir este certificado a su contacto, si confía en esta firma.
+you need to enter your s/mime passphrase to send this message.	mail	es-es	Debe introducir su frase de contraseña S/MIME para enviar este mensaje.
+you need to install mailvelope plugin available for chrome and firefox from %1.	mail	es-es	Necesita instalar el plugin Mailvelope disponible para Chrome y Firefox desde %1.
 you need to save the message as draft first before to be able to save it into vfs	mail	es-es	Debe guardar primero el mensaje como borrador para poder guardarlo en VFS
 you will loose current message body, unless you save it to your clipboard!	mail	es-es	Usted perderá el cuerpo del mensaje actual, a menos que lo guarde en su portapapeles!
 you've got new mail	mail	es-es	Tiene correo nuevo

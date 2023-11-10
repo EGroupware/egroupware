@@ -103,6 +103,7 @@ category acl only restrict adding a category to an event or changing status of a
 category automatically added to new events	calendar	sk	Kategória ktorá sa automaticky pridáva k novým udalostiam
 category report	calendar	sk	Kategória Správa
 chair	calendar	sk	Predseda
+change domain of participants in caldav requests	calendar	sk	Zmena domény účastníkov v požiadavkách CalDAV
 change history	calendar	sk	Zmeniť históriu
 change your status	calendar	sk	Zmeniť váš status
 changed event-data applied	calendar	sk	Zmeny v údajoch udalosti boli uložené
@@ -683,6 +684,7 @@ weekview	calendar	sk	Týždenný pohľad
 weekview with weekend	calendar	sk	Týždenný pohľad s víkendom
 weekview without weekend	calendar	sk	Týždenný pohľad bez víkendu
 what should links to the calendar events display in other applications.	calendar	sk	Čo majú zobrazovať odkazy na udalosť kalendára v iných aplikáciách.
+when changing the month	calendar	sk	Pri zmene mesiaca a roka.<br>Ak áno, odstráni sa začiarkavacie políčko na prijatie.
 when selected, birthdays and/or holidays will be displayed as events in your calendar. please note that this option only changes the appereance inside of egroupware, but does not change the information being sent via ical or other calendar interfaces.	calendar	sk	Keď je označené, narodeniny a/alebo sviatky sa zobrazia ako udalosti v kalendári. Upozornenie: táto možnosť zmení len zobrazenie v rámci EGroupware, nezmení však informácie posielané cez iCal alebo iné rozhrania Kalendára.
 which view to show on home page	calendar	sk	Aký pohľad použiť pre domovskú stránku
 while selecting up to x users day- and weekview is not consolidated (5 is used when not set)	admin	sk	Minimálny počet používateľov pre zobrazenie denného a týždenného pohľadu v konsolidovanom tvare. Predvolené = 5.

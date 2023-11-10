@@ -6,6 +6,7 @@ applications	common	pt	Aplicações
 cancel editing %1 without saving	filemanager	pt	Cancelar edição de %1 sem guardar
 cannot create directory because it begins or ends in a space	filemanager	pt	Não é possível criar a directoria porque seu nome inicia ou termina com um espaço em branco
 check all	filemanager	pt	Marcar todas
+classic	filemanager	pt	Barra de ferramentas padrão
 comment	filemanager	pt	Comentário
 copied %1 to %2	filemanager	pt	Copiado %1 para %2
 copy to	filemanager	pt	Copiar para
@@ -21,7 +22,10 @@ created %1,%2	filemanager	pt	Criado %1,%2
 created directory %1	filemanager	pt	Directoria %1 criada
 custom fields	filemanager	pt	Personalizar campos
 cut	filemanager	pt	Cortar
+default action on double-click	filemanager	pt	Ação predefinida ao fazer duplo clique
+default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	pt	Padrão = Não. O link não será mostrado, mas ainda é possível navegar para este local, ou configurar este local específico como pasta inicial ou link de pasta.
 default document to insert entries	filemanager	pt	Documento padrão para inserir entradas
+defines how to handle double click action on a document file. images are always opened in the expose-view and emails with email application. all other mime-types are handled by the browser itself.	filemanager	pt	Define como lidar com a ação de duplo clique num ficheiro de documento. As imagens são sempre abertas na vista exposta e as mensagens de correio eletrónico com a aplicação de correio eletrónico. Todos os outros tipos de MIME são geridos pelo próprio browser.
 deleted %1	filemanager	pt	%1 eliminado
 directory	filemanager	pt	Directoria
 directory %1 already exists	filemanager	pt	A directoria %1 já existe
@@ -29,42 +33,89 @@ directory %1 does not exist	filemanager	pt	A directoria %1 não existe
 directory with documents to insert entries	filemanager	pt	Diretório com documentos para inserir entradas
 disable	filemanager	pt	Desactivar
 download	filemanager	pt	Transferir
+download documents	filemanager	pt	Transferir documentos
 edit comments	filemanager	pt	Editar comentários
+edit share	filemanager	pt	Editar partilha
 enable	filemanager	pt	Activar
+enter a file size, e.g. 100k, 200m or 2g	filemanager	pt	Introduzir um tamanho de ficheiro, por exemplo, 100K, 200M ou 2G
+enter your file name	filemanager	pt	Introduzir o nome do ficheiro
+error adding the acl!	filemanager	pt	Erro ao adicionar a ACL!
+error creating symlink to target %1!	filemanager	pt	Erro ao criar uma ligação simbólica para o destino %1!
+error deleting the acl entry!	filemanager	pt	Erro ao eliminar a entrada ACL!
+error mounting %1 on %2!	filemanager	pt	Erro ao montar %1 em %2!
+error unmounting %1!	filemanager	pt	Erro ao desmontar %1!
 error uploading file!	filemanager	pt	O upload de arquivos de erro!
+error while creating directory.	filemanager	pt	Erro ao criar pasta
 everyone	filemanager	pt	Todo o mundo
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	filemanager	pt	Exemplo {{IF n_prefixo~Sr~Olá Sr.~Olá Sra.}} - procura no campo "n_prefixo", por "Sr.", se encontrado, escreve Olá Sr., senão escreve Olá Sra.
+example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	filemanager	pt	Exemplo {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Exemplo: Sr. Dr. James Miller
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	filemanager	pt	Exemplo {{NELF role}} - se o campo função não estiver vazio, obterá uma nova linha com o valor do campo função
+example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	filemanager	pt	Exemplo {{nenvlf role}} - se o campo função não estiver vazio, definirá um LF sem qualquer valor do campo
+excludes selected mime types	filemanager	pt	Exclui tipos MIME seleccionados
+excludes selected mime types from being opened by editor	filemanager	pt	Exclui os tipos MIME seleccionados de serem abertos pelo Collabora Online.<br>Estes tipos de documentos são abertos no browser ou descarregados.
+executable	filemanager	pt	Executável
 expires	filemanager	pt	Expira
 export definition to use for nextmatch export	filemanager	pt	Definição Exportar para usar para exportação NextMatch
+extended access control list	filemanager	pt	Lista de controlo de acesso alargada
+extended acl	filemanager	pt	ACL alargada
+failed to change permissions of %1!	filemanager	pt	Falha ao alterar as permissões de %1!
+failed to create directory!	filemanager	pt	Falha ao criar pasta!
 favorites	filemanager	pt	Favoritos
 file	common	pt	Ficheiro
+file %1 already exists	filemanager	pt	O ficheiro %1 já existe
 file %1 could not be created.	filemanager	pt	O ficheiro %1 não pôde ser criado.
+file %1 may be too big. contact your systemadministrator for further info	filemanager	pt	O ficheiro %1 pode ser demasiado grande.
+file a file is only available with an epl subscription.	filemanager	pt	Um ficheiro só está disponível com uma subscrição EPL.
+file deleted.	filemanager	pt	Ficheiro eliminado.
 file names cannot contain "%1"	filemanager	pt	Os nomes de ficheiros não podem conter "%1"
 filemanager	common	pt	Gestor de ficheiros
 files in this directory	filemanager	pt	Ficheiros nesta directoria
+filesystem	filemanager	pt	Sistema de ficheiros
+filesystem check reported no problems.	filemanager	pt	A verificação do sistema de ficheiros não reportou problemas.
+filesystem: mount directory (inside /var/lib/egroupware!) from host filesystem	filemanager	pt	Sistema de ficheiros: montar diretório (dentro de /var/lib/egroupware !) a partir do sistema de ficheiros do anfitrião
+finally delete	filemanager	pt	Eliminar finalmente
+finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	pt	Elimina finalmente todas as versões mais antigas e ficheiros eliminados numa determinada pasta.
+finally delete this version	filemanager	pt	Eliminar finalmente esta versão
+fix reported problems	filemanager	pt	Corrigir problemas reportados
 folder up	filemanager	pt	Subir um nível
+for files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available.  see the specific application for a list of available placeholders.	filemanager	pt	Para ficheiros ligados a uma entrada de aplicação (dentro de /apps/appname/id/), os espaços reservados para essa aplicação também estão disponíveis. Consulte a aplicação específica para obter uma lista dos marcadores de posição disponíveis.
+for files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available. see the specific application for a list of placeholders	filemanager	pt	Para ficheiros ligados a uma entrada de aplicação (dentro de /apps/appname/id/), os marcadores de posição para essa aplicação também estão disponíveis. Consulte a aplicação específica para obter uma lista de marcadores de posição.
+for serial letter use this tag. put the content, you want to repeat between two tags.	filemanager	pt	Para a letra de série, utilize esta etiqueta. Coloque o conteúdo que pretende repetir entre duas etiquetas.
 general	filemanager	pt	Geral
 general fields:	filemanager	pt	Campos gerais:
 go home	filemanager	pt	Ir para directoria principal
 go to	filemanager	pt	Ir para
 go to your home directory	filemanager	pt	Ir para sua pasta Home
 go up	filemanager	pt	Subir
+group home quota	filemanager	pt	Quota da casa do grupo
 hidden upload	filemanager	pt	Carregamento oculto
 hidden uploads	filemanager	pt	Carregamentos ocultos
+hostname/ip for webdav and smb	filemanager	pt	Nome do anfitrião/IP para WebDAV e SMB
 id	filemanager	pt	ID
+if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	pt	Se especificar uma pasta (caminho VFS completo) aqui, %1 apresenta uma ação para cada documento. Essa ação permite descarregar o documento especificado com os dados %1 inseridos.
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	pt	Se especificar uma pasta (caminho VFS completo) aqui, %1 apresenta um ícone de documento extra para cada entrada. Esse ícone permite descarregar o documento especificado com os dados inseridos.
 link	filemanager	pt	Ligação
 link target %1 not found!	filemanager	pt	Destino do link% 1 não encontrado!
+list view	filemanager	pt	Vista de lista
 location	filemanager	pt	Local
 lock	filemanager	pt	Fechadura
+mail paste	filemanager	pt	Colar correio
+merge print open handler	filemanager	pt	Manipulador de abertura de impressão de mesclagem
 mime type	filemanager	pt	Tipo MIME
 modified	filemanager	pt	Modificado
+modified between	filemanager	pt	Modificado entre
+mountpoints	filemanager	pt	Pontos de montagem
 move	filemanager	pt	Mover
 move to	filemanager	pt	Mover para
 moved %1 to %2	filemanager	pt	Movido de %1 para %2
 no access	filemanager	pt	sem acesso
 no files in this directory.	filemanager	pt	Nenhum ficheiro nesta directoria.
 no version history for this file/directory	filemanager	pt	Sem histórico de versão para este ficheiro/directoria
+notebookbar	filemanager	pt	Tabulado
 open	filemanager	pt	Abrir
 operation	filemanager	pt	Operação
+password for webdav and smb, use $pass for password of logged in user	filemanager	pt	Palavra-passe para WebDAV e SMB, utilizar $pass para a palavra-passe do utilizador com sessão iniciada
+path and query-parameters, smb: share and optional path (with /)	filemanager	pt	Caminho e parâmetros de consulta, SMB: partilha e caminho opcional (com /)
 percentage	filemanager	pt	Percentagem
 permissions	filemanager	pt	Permissões
 please select a file to delete.	filemanager	pt	Por favor, seleccione o ficheiro a eliminar.
@@ -73,6 +124,10 @@ preview %1	filemanager	pt	Pré-visualizar %1
 preview of %1	filemanager	pt	Pré-visualização de %1
 projectmanager	filemanager	pt	Gestor de projectos
 quick jump to	filemanager	pt	Saltar para
+quota	filemanager	pt	Quota
+quota exceeded	filemanager	pt	Quota excedida
+recalculate	filemanager	pt	Recalcular
+recalculated %1 directories in %2 iterations and %3 seconds	filemanager	pt	Recalculou %1 directórios em %2 iterações e %3 segundos
 reload	filemanager	pt	Recarregar
 renamed %1 to %2	filemanager	pt	Renomeado de %1 para %2
 replaced %1	filemanager	pt	Substituído %1

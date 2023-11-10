@@ -48,7 +48,7 @@ deny following groups access to acl (grant access)	admin	de	Verweigere folgenden
 deny following groups access to application passwords	preferences	de	Verweigere folgenden Gruppen den Zugriff zu Anwendungspasswörtern
 deny following groups access to edit categories	admin	de	Verweigere folgenden Gruppen den Zugriff zum Ändern der Kategorien
 deny following groups access to preferences	admin	de	Verweigere folgenden Gruppen den Zugriff zu den Einstellungen
-deny following groups access to security popup	admin	de	Verweigere folgenden Gruppen den Zugriff auf das Popup Sicherheit
+deny following groups access to security popup	admin	de	Verweigere folgenden Gruppen den Zugriff auf das Pop-up Sicherheit
 description can not exceed 255 characters in length !	preferences	de	Die Beschreibung darf nicht länger als 255 Zeichen sein !
 disable	preferences	de	Deaktivieren
 disable two factor auth	preferences	de	2-Faktor-Authentifizierung deaktivieren
@@ -150,7 +150,7 @@ rich text editor theme	preferences	de	Farbschema des Editors
 scan qrcode with a time-based one-time password (totp) app:	preferences	de	QR-Code mit einer App für zeitbasierende Einmalpasswörter (TOTP Time-based One-time Password) abscannen:
 secret deleted, two factor authentication disabled.	preferences	de	Schlüssel gelöscht, die Zweifaktor Authentifizierung ist jetzt abgeschaltet.
 select additional lines in lists by	preferences	de	Zusätzliche Zeilen in Listen auswählen durch
-select different theme	preferences	de	anderes Schema wählen
+select different theme	preferences	de	Anderes Schema wählen
 select one	preferences	de	Bitte wählen
 select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	de	Wählen sie die Sprache der Texte und Mitteilungen innerhalb der EGroupware.<br>Manche Sprachen enthalten evtl. nicht alle Texte, in diesem Fall wird der englische Text angezeigt.
 select the language of the spellchecker integrated into the rich text editor.	preferences	de	Sprache der integrierten Rechtschreibprüfung des Editors.
@@ -179,7 +179,7 @@ spellchecker language	addressbook	de	Sprache Rechtschreibprüfung
 stay open	preferences	de	Liste auflassen
 stay open, but not for email	preferences	de	Liste auflassen, aber nicht für E-Mail
 text editor settings	preferences	de	Einstellungen des Texteditors
-text only	preferences	de	nur Text
+text only	preferences	de	Nur Text
 the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	de	Diese Anwendung wird gestartet, wenn sie EGroupware neu starten oder auf das Symbol der Startseite klicken. Sie können auch mehrere Anwendungen auf Ihrer Startseite anzeigen, dazu wählen sie keine Anwendung aus. Welche Anwendungen dann angezeigt werden, wird in den Einstellungen der jeweiligen Anwendungen konfiguriert.
 the old password is not correct	preferences	de	Das alte Passwort ist nicht korrekt
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	de	Das Auswahlfeld zeigt alle verfügbaren Benutzer (kann sehr langsam sein bei großen Installationen mit vielen Benutzern). Das Pop-up ist ein extra Fenster, in dem nach Namen oder Gruppen gesucht werden kann.

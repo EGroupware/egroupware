@@ -1,5 +1,70 @@
 %1 files unlocked.	filemanager	ro	%1 fișiere deblocate.
+classic	filemanager	ro	Bara de instrumente standard
+default action on double-click	filemanager	ro	Acțiune implicită la dublu clic
+default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	ro	Implicit = Nu. Legătura nu va fi afișată, dar aveți în continuare posibilitatea de a naviga în această locație sau de a configura această locație specială ca dosar de pornire sau legătură de dosar.
+defines how to handle double click action on a document file. images are always opened in the expose-view and emails with email application. all other mime-types are handled by the browser itself.	filemanager	ro	Definește modul de gestionare a acțiunii de dublu clic pe un fișier document. Imaginile se deschid întotdeauna în vizualizarea expunere și e-mailurile cu aplicația de e-mail. Toate celelalte tipuri MIME sunt gestionate de browserul propriu-zis.
+download documents	filemanager	ro	Descărcarea documentelor
+edit share	filemanager	ro	Editare partaj
+enter a file size, e.g. 100k, 200m or 2g	filemanager	ro	Introduceți o dimensiune a fișierului, de exemplu, 100K, 200M sau 2G
+enter the complete vfs path to specify your desired start folder.	filemanager	ro	Introduceți calea VFS completă pentru a specifica dosarul de pornire
+enter your file name	filemanager	ro	Introduceți numele fișierului dvs.
+error adding the acl!	filemanager	ro	Eroare la adăugarea ACL!
+error creating symlink to target %1!	filemanager	ro	Eroare la crearea unui link simbolic către ținta %1!
+error deleting the acl entry!	filemanager	ro	Eroare la ștergerea intrării ACL!
+error mounting %1 on %2!	filemanager	ro	Eroare la montarea lui %1 pe %2!
+error unmounting %1!	filemanager	ro	Eroare la demontarea lui %1!
+error uploading file!	filemanager	ro	Eroare la încărcarea fișierului!
+error while creating directory.	filemanager	ro	Eroare la crearea unui dosar
+everyone	filemanager	ro	Toată lumea
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	filemanager	ro	Exemplu {{IF n_prefix~Mr~Bună ziua domnule ~Bună ziua doamnă }}} - caută în câmpul "n_prefix", pentru "Mr", dacă se găsește, scrie Hello Mr., altfel scrie Hello Ms.
+example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	filemanager	ro	Exemplu {{LETTERPREFIXCUSTOM n_prefix titlu n_familie}}. - Exemplu: Dl Dr. James Miller
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	filemanager	ro	Exemplu {{NELF rol}} - dacă câmpul role nu este gol, se va obține o nouă linie cu valoarea câmpului role
+example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	filemanager	ro	Exemplu {{nenvlf role}} - dacă câmpul role nu este gol, se va seta un LF fără nicio valoare a câmpului
+excludes selected mime types	filemanager	ro	Exclude tipurile MIME selectate
+excludes selected mime types from being opened by editor	filemanager	ro	Exclude tipurile MIME selectate pentru a nu fi deschise de Collabora Online.<br> Aceste tipuri de documente sunt deschise în browser sau descărcate.
+executable	filemanager	ro	Executabil
+expires	filemanager	ro	Expiră
+export definition to use for nextmatch export	filemanager	ro	Definiția de export care trebuie utilizată pentru exportul nextmatch
+extended access control list	filemanager	ro	Lista extinsă de control al accesului
+extended acl	filemanager	ro	ACL extinsă
+failed to change permissions of %1!	filemanager	ro	Nu s-a reușit modificarea permisiunilor lui %1!
+failed to create directory!	filemanager	ro	Nu s-a reușit crearea unui dosar!
+favorites	filemanager	ro	Favorite
+file	common	ro	Fișier
+file %1 already exists	filemanager	ro	Fișierul %1 există deja
+file %1 could not be created.	filemanager	ro	Fișierul %1 nu a putut fi creat.
+file %1 may be too big. contact your systemadministrator for further info	filemanager	ro	Este posibil ca fișierul %1 să fie prea mare.
+file a file is only available with an epl subscription.	filemanager	ro	Fișier un fișier este disponibil numai cu un abonament EPL.
+file deleted.	filemanager	ro	Fișier șters.
+file names cannot contain "%1"	filemanager	ro	Numele fișierelor nu poate conține "%1"
+filesystem	filemanager	ro	Sistem de fișiere
+filesystem check reported no problems.	filemanager	ro	Verificarea sistemului de fișiere nu a raportat probleme.
+filesystem: mount directory (inside /var/lib/egroupware!) from host filesystem	filemanager	ro	Filesystem: mount directory (în interiorul /var/lib/egroupware !) din sistemul de fișiere gazdă
+finally delete	filemanager	ro	În cele din urmă, ștergeți
+finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	ro	Șterge în cele din urmă toate versiunile mai vechi și fișierele șterse din folderul dat.\n\nAcest lucru NU poate fi anulat!
+finally delete this version	filemanager	ro	În sfârșit, ștergeți această versiune
+fix reported problems	filemanager	ro	Remediați problemele raportate
+for files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available.  see the specific application for a list of available placeholders.	filemanager	ro	Pentru fișierele legate de o intrare de aplicație (în interiorul /apps/appname/id/), sunt disponibile, de asemenea, și locurile pentru acea aplicație. Consultați aplicația specifică pentru o listă de caractere de poziție disponibile.
+for files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available. see the specific application for a list of placeholders	filemanager	ro	Pentru fișierele legate de o intrare a unei aplicații (în interiorul /apps/appname/id/) sunt disponibile, de asemenea, și caracterele de poziție pentru aplicația respectivă. Consultați aplicația specifică pentru o listă de caractere de poziție.
+for serial letter use this tag. put the content, you want to repeat between two tags.	filemanager	ro	Pentru litera de serie, utilizați această etichetă. Puneți conținutul pe care doriți să îl repetați între două etichete.
+group home quota	filemanager	ro	Cota de grup de acasă
 hidden upload	filemanager	ro	Încărcare ascunsă
 hidden uploads	filemanager	ro	Încărcări ascunse
+hostname/ip for webdav and smb	filemanager	ro	Hostname/IP pentru WebDAV și SMB
+if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	ro	Dacă specificați aici un folder (calea VFS completă), %1 afișează o acțiune pentru fiecare document. Acțiunea respectivă permite descărcarea documentului specificat cu datele %1 inserate.
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	ro	Dacă specificați aici un dosar (calea VFS completă), %1 afișează o pictogramă suplimentară a documentului pentru fiecare intrare. Această pictogramă permite descărcarea documentului specificat cu datele inserate.
+list view	filemanager	ro	Vizualizare listă
 lock	filemanager	ro	Blocați
+mail paste	filemanager	ro	Lipirea corespondenței
+merge print open handler	filemanager	ro	Manipulator de deschidere a imprimării combinate
+modified	filemanager	ro	Modificat
+modified between	filemanager	ro	Modificat între
+mountpoints	filemanager	ro	Puncte de montare
+notebookbar	filemanager	ro	Tabulat
+password for webdav and smb, use $pass for password of logged in user	filemanager	ro	Parola pentru WebDAV și SMB, utilizați $pass pentru parola utilizatorului conectat
+path and query-parameters, smb: share and optional path (with /)	filemanager	ro	Path și parametrii de interogare, SMB: share și calea opțională (cu /)
+quota	filemanager	ro	Cota
+quota exceeded	filemanager	ro	Cotă depășită
+recalculate	filemanager	ro	Recalculați
+recalculated %1 directories in %2 iterations and %3 seconds	filemanager	ro	Recalculat %1 directoare în %2 iterații și %3 secunde
 you need to become root, to enable or disable versioning on a directory!	filemanager	ro	Trebuie să deveniți superuser, pentru a activa sau dezactiva versionarea pe un dosar!

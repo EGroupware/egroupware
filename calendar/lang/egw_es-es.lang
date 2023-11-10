@@ -584,6 +584,7 @@ status for all future scheduled days changed	calendar	es-es	El estado para las p
 status for this particular day changed	calendar	es-es	El estado para este día en particular se ha modificado
 status of participants set to unknown because of missing category rights	calendar	es-es	El estado de los participantes se ha establecido a desconocido debido a la fata de derechos en la categoría
 submit to repository	calendar	es-es	Enviar al repositorio
+summary of participant status: 3 participants: 1 accepted, 2 unknown	calendar	es-es	Resumen de la situación de los participantes: 3 Participantes: 1 Aceptado, 2 Desconocido
 sun	calendar	es-es	Dom
 tag to mark positions for address labels	calendar	es-es	Etiqueta para marcar las posiciones para las etiquetas de direcciones
 tentative	calendar	es-es	Provisional
@@ -649,7 +650,11 @@ update calendar view immediately when navigation calendar in sidebox is changed	
 update timezones	common	es-es	Actualizar zonas horarias
 updated	calendar	es-es	Actualizado
 use end date	calendar	es-es	Usar fecha final
+use event tz	calendar	es-es	Utilizar la zona horaria del evento
+use given criteria:	calendar	es-es	Utilizar criterios dados:
 use quick add or full edit dialog when creating a new event	calendar	es-es	Usar el añadido rápido o el cuadro de diálogo d eedición completa al crear un nuevo evento
+use range-views to optimise calendar queries?	calendar	es-es	¿Utilizar vistas de rango para optimizar las consultas de calendario?
+use side menu to filter participants	calendar	es-es	Utilizar el menú lateral para filtrar a los participantes
 use the selected time and close the popup	calendar	es-es	usar la hora seleccionada y cerrar la ventana
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	calendar	es-es	Usar esta etiqueta para las etiquetas de direcciones. Ponga el contenido que quiera repetir entre dos etiquetas.
 use this timezone to export calendar data.	calendar	es-es	Usar esta zona horaria para exportar datos de calendario.
@@ -678,7 +683,11 @@ weeks offset (for multi-column display)	calendar	es-es	Desplazamiento de semanas
 weekview	calendar	es-es	Vista semanal
 weekview with weekend	calendar	es-es	vista semanal con fin de semana
 weekview without weekend	calendar	es-es	Vista semanal sin fin de semana
+what should links to the calendar events display in other applications.	calendar	es-es	¿Qué deberían mostrar los enlaces a los eventos del calendario en otras aplicaciones?
+when changing the month	calendar	es-es	Al cambiar el mes y el año.<br>En caso afirmativo, se elimina la marca de verificación para adoptar.
+when selected, birthdays and/or holidays will be displayed as events in your calendar. please note that this option only changes the appereance inside of egroupware, but does not change the information being sent via ical or other calendar interfaces.	calendar	es-es	Cuando se selecciona, los cumpleaños y/o días festivos se mostrarán como eventos en su calendario. Tenga en cuenta que esta opción sólo cambia la apariencia dentro de EGroupware, pero no cambia la información que se envía a través de iCal u otras interfaces de calendario.
 which view to show on home page	calendar	es-es	Cuál vista a mostrar en la página de inicio
+while selecting up to x users day- and weekview is not consolidated (5 is used when not set)	admin	es-es	Número mínimo de usuarios para mostrar las vistas de día y semana como consolidadas. Por defecto = 5
 whole day	calendar	es-es	Todo el día
 with credentials included	calendar	es-es	Con credenciales incluidas
 wk	calendar	es-es	Semana
@@ -695,6 +704,7 @@ yes, users can purge their deleted items	admin	es-es	Sí, los usuarios pueden pu
 you already replied to this invitation with	calendar	es-es	Usted ya respondió a esta invitación con
 you are not allowed to book the resource selected:	calendar	es-es	No tiene permiso para reservar el recurso seleccionado:
 you are not invited to that event!	calendar	es-es	¡Usted no está invitado a ese evento!
+you attempt to mail a meetingrequest to the recipients above. depending on the client this mail is opened with, the recipient may or may not see the mailbody below, but only see the meeting request attached.	calendar	es-es	Se intenta enviar por correo una convocatoria de reunión a los destinatarios arriba indicados. Dependiendo del cliente con el que se abra este correo, el destinatario puede o no ver el mensaje que aparece a continuación, sino sólo la convocatoria de reunión adjunta.
 you can either set a year or a occurrence, not both !!!	calendar	es-es	Puede poner un año o una ocurrencia, pero no ambos.
 you can only set a year or a occurrence !!!	calendar	es-es	Sólo puede poner un año o una ocurrencia
 you do not have permission to read this record!	calendar	es-es	¡No tiene permiso para leer este registro!

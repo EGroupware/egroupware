@@ -46,9 +46,13 @@ add current	common	et	Praegune vaade kui lemmik
 add shortcut	common	et	Lisa Kiirklahv
 add sub	common	et	Lisa alam
 add to clipboard	common	et	Lisa lõikelauale
+add user to responsibles	groupdav	et	Lisage kasutaja vastutavatele isikutele
+add user to responsibles, removing evtl. previous category user	groupdav	et	Lisa kasutaja vastutavale, võimalusel eemalda eelmiste kategooriate kasutajad
+add your domain as "%1" in options to list of email providers and enable api.	common	et	Lisage oma domeen kui "%1" valikud e-posti teenusepakkujate nimekirja ja lubage API.
 addressbook	common	et	Aadressiraamat
 addressbooks to sync in addition to personal addressbook	groupdav	et	Aadressiraamatute sünkroonimine lisaks isiklikule aadressiraamatule
 admin	common	et	Admin
+admin settings	common	et	Administraatori seaded
 admin settings for %1	common	et	Administraatori seaded %1 jaoks
 administration	common	et	Administreerimine
 advanced search	common	et	Laiendatud Otsing
@@ -61,6 +65,7 @@ all categories	common	et	Kõik kategooriad
 all fields	common	et	kõik väljad
 all in one	groupdav	et	Kõik ühes
 all users	common	et	Kõik kasutajad
+allow editing the %1	common	et	Lubage muuta %1
 alternate style-sheet:	common	et	Alternatiivne stiilileht:
 american samoa	common	et	AMEERIKA SAMOA
 and	common	et	Ja

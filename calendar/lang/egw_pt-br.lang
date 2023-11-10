@@ -158,6 +158,7 @@ edit exception	calendar	pt-br	Editar exceção
 edit series	calendar	pt-br	Editar séries
 edit this event	calendar	pt-br	Editar este evento
 edit this series of recurring events	calendar	pt-br	Editar esta série de eventos recorrentes
+email address migration	calendar	pt-br	Migração de endereço de e-mail
 empty for all	calendar	pt-br	vazio para todos
 end	calendar	pt-br	Fim
 end date/time	calendar	pt-br	Data/Hora do término
@@ -166,6 +167,7 @@ enddate / -time of the meeting, eg. for more then one day	calendar	pt-br	Data Fi
 enddate of the export	calendar	pt-br	Data Final da exportação
 ends	calendar	pt-br	termina
 error adding the alarm	calendar	pt-br	Erro adicionando o alarme
+error notifying %1	calendar	pt-br	Erro ao notificar %1
 error saving the event!	calendar	pt-br	Erro salvando o evento!
 error: can't delete original series!	calendar	pt-br	Erro: Não é possível excluir série original!
 error: importing the ical	calendar	pt-br	Erro importanto o iCal
@@ -328,8 +330,11 @@ notification messages for uninvited participants	calendar	pt-br	Mensagem para no
 notification messages for your alarms	calendar	pt-br	Mensagem para notificação de seus alarmes
 notification messages for your responses	calendar	pt-br	Mensagem para notificação de suas respostas
 notification settings	calendar	pt-br	Configurações de notificação
+notify	calendar	pt-br	Notificar
+notify all externals (non-users) about this event	calendar	pt-br	Notifique todos os externos (não usuários) sobre este evento
 notify non-egroupware users about event updates	calendar	pt-br	Notifique os usuários não EGroupware sobre atualizações de eventos
 number of records to read (%1)	calendar	pt-br	Número de registros a serem lidos (%1)
+number of resources to be booked	calendar	pt-br	Número de recursos a serem reservados
 number of weeks to show	calendar	pt-br	Número de semanas para mostrar
 observance rule	calendar	pt-br	Regra de observância
 occurence	calendar	pt-br	Ocorrência
@@ -362,6 +367,7 @@ preselected group for entering the planner	calendar	pt-br	Grupo pré-selecionado
 previous	calendar	pt-br	anterior
 private and global public	calendar	pt-br	Particular e público globalmente
 private and group public	calendar	pt-br	Particular e público ao grupo
+private event	calendar	pt-br	Evento privado
 private only	calendar	pt-br	Particular somente
 quantity	calendar	pt-br	Quantidade
 re-edit event	calendar	pt-br	Reeditar evento
@@ -371,6 +377,7 @@ recordings	calendar	pt-br	Registros
 recurrence	calendar	pt-br	Repetição
 recurring event	calendar	pt-br	Evento recorrente
 rejected	calendar	pt-br	Rejeitado
+removes the event from my calendar	calendar	pt-br	Remove o evento do meu calendário
 repeat days	calendar	pt-br	Dias para repetição
 repeat the event until which date (empty means unlimited)	calendar	pt-br	repetir o evento até qual data (vazio para sempre)
 repeat type	calendar	pt-br	Tipo de repetição
@@ -378,26 +385,31 @@ repeating event information	calendar	pt-br	Repetindo informação do evento
 repeating interval, eg. 2 to repeat every second week	calendar	pt-br	intervalo de repetição (2 para repetir a cada duas semanas)
 repetition	calendar	pt-br	Repetição
 repetitiondetails (or empty)	calendar	pt-br	detalhes da repetição (ou vazio)
+replying "%1" is not a participant of the event! only continue if you want to add as new participant.	calendar	pt-br	A resposta "%1" NÃO é um participante do evento! Continue somente se você quiser adicionar um novo participante.
 report	calendar	pt-br	Relatório
 reset	calendar	pt-br	Limpar
 resources	calendar	pt-br	Recursos
 role	calendar	pt-br	Função
 rule	calendar	pt-br	Regra
 sat	calendar	pt-br	Sáb
-saves the changes made	calendar	pt-br	salvar as alterações feitas
+saves the changes made	calendar	pt-br	Salvar as alterações feitas
 saves the event ignoring the conflict	calendar	pt-br	Salvar o evento ignorando o conflito
 scheduling conflict	calendar	pt-br	Conflito de agendamento
-select a %1	calendar	pt-br	selecionar um %1
-select a time	calendar	pt-br	selecionar um horário
+select a %1	calendar	pt-br	Selecionar um %1
+select a time	calendar	pt-br	Selecionar um horário
 select multiple contacts for a further action	calendar	pt-br	Selecione múltiplos contatos para ação posterior
 select resources	calendar	pt-br	Selecionar recursos
 select who should get the alarm	calendar	pt-br	Selecionar quem deverá receber o alarme
 selected range	calendar	pt-br	Selecione período
+send notifications	calendar	pt-br	Enviar notificações
+send notifications to users right now	calendar	pt-br	Enviar notificações aos participantes neste exato momento
 set new events to private	calendar	pt-br	Colocar novos itens como particular
 setting lock time calender	admin	pt-br	Definindo tempo de travamento de registros da Agenda (padrão 1 segundo)
 should new events created as private by default ?	calendar	pt-br	Novos eventos criados devem ser colocados como privados por padrão?
 should the planner display an empty row for users or categories without any appointment.	calendar	pt-br	O Organizador deverá exibir uma linha vazia para usuários ou categorias sem nenhum compromisso.
 should the status of the event-participants (accept, reject, ...) be shown in brackets after each participants name ?	calendar	pt-br	O status de cada participante (aceito, rejeitado, ...) deve ser mostrado entre parenteses logo após o nome do mesmo?
+show %1 from %2	calendar	pt-br	Mostrar %1 de %2
+show birthdays as all day non-blocking events as well as via mouseover of the date.	calendar	pt-br	Mostrar como eventos não bloqueados durante todo o dia, bem como por meio do mouseover da data.
 show birthdays from addressbook	admin	pt-br	Exibir aniversários da Agenda
 show empty rows in planner	calendar	pt-br	Exibir linhas vazias no Organizador
 show list of upcoming events	calendar	pt-br	Exibir a lista de eventos futuros
@@ -405,6 +417,7 @@ show only the date, not the year	admin	pt-br	Exibir apenas a data, não o ano
 show this month	calendar	pt-br	Exibir este mês
 show this week	calendar	pt-br	Exibir esta semana
 single event	calendar	pt-br	Evento único
+single participant	calendar	pt-br	Participante único
 sort by	calendar	pt-br	Ordenar por
 start	calendar	pt-br	Início
 start date/time	calendar	pt-br	Início Data/Hora
@@ -413,13 +426,19 @@ startdate / -time	calendar	pt-br	Data Inicial / Horário
 startdate and -time of the search	calendar	pt-br	Início e horário para pesquisar
 startdate of the export	calendar	pt-br	Data Inicial da exportação
 startrecord	calendar	pt-br	Registro inicial
+status	calendar	pt-br	Status
 status changed	calendar	pt-br	Status alterado
 submit to repository	calendar	pt-br	Enviar para o repositório
 sun	calendar	pt-br	Dom
 tag to mark positions for address labels	calendar	pt-br	Tag para marcar posições para etiquetas de endereço
 tentative	calendar	pt-br	Tentativa
 test import (show importable records <u>only</u> in browser)	calendar	pt-br	Testar Importação (mostar <u>somente</u> registros que podem ser importados no navegador)
+the apple ical apps use this color to display events from this calendar.	calendar	pt-br	Os aplicativos iCal da Apple usam essa cor para exibir eventos desse calendário.
+the document can contain placeholder like {{%1}}, to be replaced with the data.	calendar	pt-br	O documento pode conter um espaço reservado como {{%1}}, a ser substituído pelos dados.
+the extern organizer changed the event!	calendar	pt-br	O organizador externo alterou o evento!
 the following document-types are supported:	calendar	pt-br	Os seguintes tipos de documentos são suportados:
+the sender "%1" is not the extern organizer "%2", proceed with caution!	calendar	pt-br	O remetente "%1" NÃO é o organizador externo "%2", proceda com cuidado!
+the sender "%1" is not the participant replying "%2", proceed with caution!	calendar	pt-br	O remetente "%1" NÃO é o participante que está respondendo "%2", prossiga com cuidado!
 this day is shown as first day in the week or month view.	calendar	pt-br	Esse dia será mostrado como primeiro dia da semana na visão semanal e mensal
 this defines the end of your dayview. events after this time, are shown below the dayview.	calendar	pt-br	Isso define o último horário da visão diária. Eventos além desse horário são mostrados abaixo do dia.
 this defines the start of your dayview. events before this time, are shown above the dayview.<br>this time is also used as a default starttime for new events.	calendar	pt-br	Isso define o primeiro horário da visão diária. Eventos antes desse horário são mostrados acima do dia.<br>Esse horário também será o horário inicial para novos eventos.
@@ -441,6 +460,7 @@ timeframe to search	calendar	pt-br	Período a pesquisar
 timezone	calendar	pt-br	Zona de horário
 title of the event	calendar	pt-br	Título do evento
 to many might exceed your execution-time-limit	calendar	pt-br	muitos podem exceder seu tempo limite de execução
+toggle weekend	calendar	pt-br	Alternar fim de semana
 translation	calendar	pt-br	Tradução
 tue	calendar	pt-br	Ter
 two weeks	calendar	pt-br	duas semanas
