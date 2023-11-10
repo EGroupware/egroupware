@@ -287,13 +287,19 @@ class ApiHandler extends Api\CalDAV\Handler
 			file_put_contents($attachment_path, $content))
 		{
 			if (isset($fp)) fclose($fp);
-			header('Location: '.($location = '/mail/attachments/'.substr(basename($attachment_path), 8)));
+			$location = '/mail/attachments/'.substr(basename($attachment_path), 8);
+			// allow to suppress location header with an "X-No-Location: true" header
+			if (($location_header = empty($_SERVER['HTTP_X_NO_LOCATION'])))
+			{
+				header('Location: '.Api\Framework::getUrl(Api\Framework::link('/groupdav.php'.$location)));
+			}
+			$ret = $location_header ? '201 Created' : '200 Ok';
 			echo json_encode([
-				'status'   => 200,
+				'status'   => (int)$ret,
 				'message'  => 'Attachment stored',
 				'location' => $location,
 			], self::JSON_RESPONSE_OPTIONS);
-			return '200 Ok';
+			return $ret;
 		}
 		throw new \Exception('Error storing attachment');
 	}
@@ -528,6 +534,15 @@ class ApiHandler extends Api\CalDAV\Handler
 					$account = self::getMailAccount($user, $matches[2] ?? null);
 					echo json_encode(self::returnVacation(self::getVacation($account->imapServer(), $user)), self::JSON_RESPONSE_OPTIONS);
 					return true;
+
+				case preg_match('#^/mail/attachments/(([^/]+)--[^/.-]{6,})$#', $path, $matches) === 1:
+					if (!file_exists($tmp=$GLOBALS['egw_info']['server']['temp_dir'].'/attach--'.$matches[1]))
+					{
+						throw new \Exception("Attachment $path NOT found", 404);
+					}
+					Api\Header\Content::type($matches[2], '', filesize($tmp));
+					readfile($tmp);
+					exit;
 			}
 		}
 		catch (\Throwable $e) {

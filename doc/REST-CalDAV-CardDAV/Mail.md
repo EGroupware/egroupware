@@ -125,16 +125,18 @@ to use in further requests, instead of the attachment.
 ```
 curl -i https://example.org/egroupware/groupdav.php/mail/attachments/<filename> --user <user> \
     --data-binary @<file> -H 'Content-Type: <content-type-of-file>'
-HTTP/1.1 302 Found
-Location: https://example.org/egroupware/groupdav.php/mail/attachment/<token>
+HTTP/1.1 201 Created
+Location: https://example.org/egroupware/groupdav.php/mail/attachments/<token>
 
 {
-    "status": 200,
+    "status": 201,
     "message": "Attachment stored",
-    "location": "/mail/attachments/<filename>--xM35lY"
+    "location": "/mail/attachments/<token>"
 }
 ```
 > When using curl to upload attachments it's important to use ```--data-binary```, just ```-d``` or ```--data``` is NOT sufficient!
+
+> Use a `X-No-Location: true` header to get NO `Location: <url>` header with HTTP status `201 Created` back, but a simple `200 Ok`!
 </details>
 
 - ```POST /mail[/<id>]/view``` view an eml file
