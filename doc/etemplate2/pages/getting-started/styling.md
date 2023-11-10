@@ -1,11 +1,11 @@
-## Styling
+# Styling
 
 Our overall styling is a combination of our site-wide style (pixelegg), etemplate2.css
 and [Shoelace](https://shoelace.style/) styles
 
 Some handy excerpts:
 
-### Global CSS variables
+## Global CSS variables
 
 ```css
 :root {
@@ -25,17 +25,17 @@ Some handy excerpts:
 }
 ```
 
-### Useful CSS classes
+## Useful CSS classes
 
-#### hide
+### hide
 
 Hides the element using css```display: none```
 
-#### hideme
+### hideme
 
 Hides the element using css```display: none !important;```
 
-#### et2-label-fixed
+### et2-label-fixed
 
 Use on a widget to force its label to have a fixed width. This helps line up labels and widgets into columns without
 having to use a grid, which allows them to reflow if needed. Set the CSS variable ```--label_width``` to change how much
