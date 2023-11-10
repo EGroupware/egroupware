@@ -166,8 +166,29 @@ class IcalIterator extends Horde_Icalendar implements \Iterator
 		// check if end of container reached
 		if ($this->container && $line && substr($line,0,4+strlen($this->base)) === 'END:'.$this->base)
 		{
-			$this->unread_line($line);	// put back end-of-container, to continue to return false
-			$line = false;
+			// But maybe there's another one after?
+			// Try to advance to beginning of next container
+			$just_checking = [];
+			while(($next_line = $this->read_line()) && substr($next_line, 0, 6 + strlen($this->base)) !== 'BEGIN:' . $this->base)
+			{
+				$just_checking[] = $next_line;
+			}
+			if(!$next_line)
+			{
+				// No containers after
+				$this->unread_line($line);    // put back end-of-container, to continue to return false
+				foreach($just_checking as $check_line)
+				{
+					$this->unread_line($check_line);
+				}
+				return false;
+			}
+			// Found start of another container, quietly cross into it and advance
+			while(($line = $this->read_line()) && strcasecmp(substr($line, 0, 6), 'BEGIN:') !== 0)
+			{
+				// ignore it
+			}
+			return $line;
 		}
 		//error_log(__METHOD__."() returning ".($line === false ? 'FALSE' : "'$line'"));
 
