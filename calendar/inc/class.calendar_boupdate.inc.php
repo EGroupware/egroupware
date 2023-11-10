@@ -1573,7 +1573,7 @@ class calendar_boupdate extends calendar_bo
 			$event['created'] = $save_event['created'] = $this->now;
 			$event['creator'] = $save_event['creator'] = $this->user;
 		}
-		$set_recurrences = $old_event ? abs(Api\DateTime::to($event['recur_enddate']??null, 'utc') - Api\DateTime::to($old_event['recur_enddate']??null, 'utc')) > 1 : false;
+		$set_recurrences = $old_event ? abs(Api\DateTime::to($event['recur_enddate'] ?? null, 'utc') - Api\DateTime::to($old_event['recur_enddate'] ?? null, 'utc')) > 1 || count($old_event['recur_exception']) != count($event['recur_exception']) : false;
 		$set_recurrences_start = 0;
 		if (($cal_id = $this->so->save($event,$set_recurrences,$set_recurrences_start,0,$event['etag'])) && $set_recurrences && $event['recur_type'] != MCAL_RECUR_NONE)
 		{
@@ -2931,7 +2931,7 @@ class calendar_boupdate extends calendar_bo
 	  * 		the corresponding series master event array
 	  * 		NOTE: this param is false if event is of type SERIES-MASTER
      */
-	function get_event_info($event)
+	function get_event_info(&$event)
 	{
 		$type = 'SINGLE'; // default
 		$master_event = false; //default
@@ -3008,7 +3008,8 @@ class calendar_boupdate extends calendar_bo
 					else
 					{
 						// try to find a suitable pseudo exception date
-						$egw_rrule = calendar_rrule::event2rrule($master_event, false);
+						// Checks are all in server time
+						$egw_rrule = calendar_rrule::event2rrule($master_event, false, $GLOBALS['egw_info']['server']['server_timezone']);
 						$egw_rrule->current = clone $egw_rrule->time;
 						while ($egw_rrule->valid())
 						{
@@ -3023,7 +3024,8 @@ class calendar_boupdate extends calendar_bo
 							{
 								$type = 'SERIES-PSEUDO-EXCEPTION'; // let's try a pseudo exception
 								$recurrence_event = $master_event;
-								$recurrence_event['start'] = $occurrence;
+								// Update the event's recurrence too
+								$recurrence_event['start'] = $event['recurrence'] = $occurrence;
 								$recurrence_event['end'] -= $master_event['start'] - $occurrence;
 								break 2;
 							}
