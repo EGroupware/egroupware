@@ -1,5 +1,5 @@
 %1 '%2' does not exist, is not readable by the webserver or contains no egroupware installation!	setup	de	%1 '%2' existiert NICHT, ist nicht vom Webserver lesbar oder enthält keine EGroupware Installation!
-%1 accounts to copy found.	setup	de	%1 Benutzerkonten zum kopieren gefunden.
+%1 accounts to copy found.	setup	de	%1 Benutzerkonten zum Kopieren gefunden.
 %1 already exists in %2.	setup	de	%1 existiert bereits in %2.
 %1 created in %2.	setup	de	%1 in %2 angelegt.
 %1 database %2 on %3 already contains the following tables:	setup	de	%1 Datenbank %2 auf %3 enthält bereits die folgenden Tabellen:
@@ -38,7 +38,7 @@ activate safe password check	setup	de	Aktiviere die "sichere Passwort" Überprü
 add auto-created users to this group ('default' will be attempted if this is empty.)	setup	de	Automatisch erzeugte Benutzer zu dieser Gruppe hinzufügen ("Default" wird versucht wenn nichts angegeben.)
 add new database instance (egw domain)	setup	de	Neue Datenbankinstanz (EGw Domain) hinzufügen
 add or edit a domain: [domain-name(default)],[db-name(egroupware)],[db-user(egroupware)],db-password,[db-type(mysql)],[db-host(localhost)],[db-port(db specific)],[config-user(as header)],[config-passwd(as header)]	setup	de	Domain hinzufügen oder bearbeiten: [Domainname(default)],[DB-Name(egroupware)],[DB-Benutzer(egroupware)],DB-Passwort,[DB-Typ(mysql)],[DB-Host(localhost)],[DB-Port(DB spezifisch)],[Konfigurationsbenutzer(wie Header)],[Konfig-Passwort(wie Header)]
-adding, editing or deleting an egroupware domain / database instance:	setup	de	Hinzufügen, bearbeiten oder Löschen einer EGroupware Domain / Datenbank Instanz
+adding, editing or deleting an egroupware domain / database instance:	setup	de	Hinzufügen, bearbeiten oder Löschen einer EGroupware-Domain / Datenbank-Instanz
 additional group filter (optional)	setup	de	Zusätzlicher Filter für Gruppen (optional)
 additional options and there defaults (in brackets)	setup	de	Zusätzliche Optionen und ihre Vorgaben (in Klammer)
 additional settings	setup	de	Zusätzliche Einstellungen
@@ -67,7 +67,7 @@ allow password migration	setup	de	Erlaube Password Migration
 allow saml logins to join existing accounts	setup	de	Erlaube SAML Logins sich mit bestehenden Benutzerkonten zu verbinden
 allow usernames identical to system users?	setup	de	Erlaube Benutzernamen identisch zu denen von Systembenutzern?
 allowed migration types (comma-separated)	setup	de	Erlaubte Migrationstypen (Komma separiert)
-alternatively domains can be accessed by logging in with <i>username@domain</i>.	setup	de	Auf Domains kann alternative auch durch Anmelden als <i>benutzer@domain</i> zugegriffen werden.
+alternatively domains can be accessed by logging in with <i>username@domain</i>.	setup	de	Auf Domains kann alternativ auch durch Anmelden als <i>benutzer@domain</i> zugegriffen werden.
 alternatively you can use %1composer%2 to install all requirements at once. downloading it and run:	setup	de	Alternativ können Sie auch %1Composer%2 verwenden um alle Abhängigkeiten auf einmal zu installieren. Laden Sie es herunter und starten:
 and is up to date	setup	de	und ist aktuell
 and reload your webserver, so the above changes take effect !!!	setup	de	UND reloaden Sie ihren Webserver, damit die obigen Änderungen in Kraft treten!!!
@@ -94,6 +94,7 @@ attempt to use correct mimetype for ftp instead of default 'application/octet-st
 attributes for new users	setup	de	Attribute für neue Benutzer
 authentication / accounts	setup	de	Authentifizierung / Benutzerkonten
 authentication type for application	setup	de	Authentifizierungstyp für die Anwendung
+authentication type for http host	setup	de	Authentifizierungstyp für HTTP-Host
 authentification mode:	setup	de	Art der Authentifizierung:
 auto create account records for authenticated users	setup	de	Benutzerkonten für authentifizierte Benutzer automatisch anlegen
 auto login anonymous user	setup	de	Anonymen Benutzer automatisch einloggen
@@ -112,7 +113,7 @@ backup files (needs ziparchive)	setup	de	Datensicherung der  EGroupware Dateiumg
 backup finished	setup	de	Datensicherung beendet
 backup housekeeping	setup	de	Backups mit Standard-Namen können automatisch aufgeräumt werden. Umbenannte Backup-Dateien werden nie aufgeräumt.
 backup min count	setup	de	Min. Anzahl der Backups
-backup now	setup	de	jetzt sichern
+backup now	setup	de	Jetzt sichern
 backup sets	setup	de	Datensicherungen
 backup skipped!	setup	de	Datensicherung ausgelassen!
 backup started, this might take a few minutes ...	setup	de	Datensicherung gestartet, das kann einige Minuten dauern ...
@@ -255,7 +256,7 @@ details for admin account	setup	de	Details des Admin-Kontos
 developers' table schema toy	setup	de	Entwickler Tabellen Schema "Spielzeug"
 did not find any valid db support!	setup	de	Konnte keine gültige Datenbankunterstützung finden!
 do not check for deleted user	setup	de	Nicht auf gelöschte Benutzer prüfen
-do you want persistent connections (higher performance, but consumes more resources)	setup	de	Wollen Sie eine permanente Datenbankverbindung (höhere Performance, braucht aber mehr Ressourcen)
+do you want persistent connections (higher performance, but consumes more resources)	setup	de	Wollen Sie eine permanente Datenbankverbindung verwenden?<br>(höhere Performance, braucht aber mehr Ressourcen)
 do you want to manage homedirectory and loginshell attributes?	setup	de	Wollen Sie Benutzerverzeichnisse und Login-Shell Attribute verwalten?
 documentation	setup	de	Dokumentation
 does not exist	setup	de	existiert nicht
@@ -288,9 +289,10 @@ egroupware is already installed!	setup	de	EGroupware ist bereits installiert!
 egroupware requires several dependencies installed via: %1	setup	de	EGroupware hängt von diversen Paketen ab, die installiert werden müssen mit: %1
 egroupware sources in '%1' are not complete, file '%2' missing !!!	setup	de	EGroupware Quellen in '%1' sind nicht komplett, Datei '%2' fehlt !!!
 email (standard maildomain should be set)	setup	de	email (Standard Maildomaine muss gesetzt sein)
-email-address	setup	de	EMail Adresse
+email-address	setup	de	E-Mail Adresse
+emailadmin mail account saved:	setup	de	EMailAdmin Mailkonto gespeichert:
 emailadmin profile updated:	setup	de	EMailAdmin Profil aktualisiert:
-enable for extra debug-messages	setup	de	ankreuzen für zusätzliche Diagnosemeldungen
+enable for extra debug-messages	setup	de	Ankreuzen für zusätzliche Diagnosemeldungen
 enable logging of authentication to files-directory	setup	de	Aktiviere Logging der Authentifizierung in das Datei Verzeichnis
 enable mcrypt	setup	de	MCrypt einschalten
 enforce ssl (allows to specify just a path above)	setup	de	Erzwinge SSL (erlaubt darüber nur einen Pfad anzugeben)
@@ -302,10 +304,10 @@ enter the full path for users and group files.<br />examples: /files, e:\files	s
 enter the full path for users and group files.<br />examples: /files, e:files	setup	de	Vollständiger Pfad für Benutzer- und Gruppendateien.<br />Beispiel: /files, E:\Files
 enter the full path to the backup directory.<br />if empty: files directory	setup	de	Vollständiger Pfad für das Datensicherungsverzeichnis.<br />Wenn leer: Dateiverzeichnis
 enter the hostname of the machine on which this server is running	setup	de	Hostname des Computers auf dem der Server läuft
-enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	de	URL zur EGroupware Installation.<br />Beispiel: http://www.domain.com/egroupware   or   /egroupware<br /><b>keinen nachfolgenden Slash /</b>
+enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	de	URL zur EGroupware Installation.<br />Beispiel: http://www.domain.com/egroupware   or   /egroupware<br /><b>Keinen nachfolgenden Slash /</b>
 enter the site password for peer servers	setup	de	Site Passwort für Peer Server
 enter the site username for peer servers	setup	de	Site Benutzername für Peer Server
-enter the title for your site	setup	de	Titel der EGroupware Installation
+enter the title for your site	setup	de	Titel der EGroupware-Installation
 enter your default ftp server	setup	de	Standard-FTP-Server
 enter your http proxy server	setup	de	HTTP-Proxy-Server
 enter your http proxy server password	setup	de	Passwort des HTTP-Proxy-Servers
@@ -332,11 +334,12 @@ filename	setup	de	Dateiname
 filesystem	setup	de	Dateisystem
 filesystem (default)	setup	de	Dateisystem (Vorgabe)
 find and register all application hooks	setup	de	Suche und registiere alle Hooks der Anwendungen
+folders: sent,trash,drafts,templates,junk	setup	de	Ordner: Gesendet, Papierkorb, Entwürfe, Vorlagen, Junk
 force selectbox	setup	de	Auswahl erzwingen
 found, but unknown version	setup	de	Gefunden, aber unbekannte Version
 give admin access to all installed apps	setup	de	Admin Zugang zu allen installierten Anwendungen geben
-give ldap root dn and password, if you need to create an instance specific admin user, user- or group-context	setup	de	Tragen Sie das LDAP root DN und Passwort ein, wenn Sie einen Instanzspezifischen Adminbenutzer oder Gruppen-Kontext benötigen
-gives further options	setup	de	gibt zusätzliche Optionen
+give ldap root dn and password, if you need to create an instance specific admin user, user- or group-context	setup	de	Tragen Sie das LDAP root DN und Passwort ein, wenn Sie einen instanzspezifischen Adminbenutzer oder Gruppen-Kontext benötigen
+gives further options	setup	de	Gibt zusätzliche Optionen
 go back	setup	de	Zurück gehen
 go to	setup	de	Gehen zu
 grant access	setup	de	Zugriff gewähren
@@ -385,6 +388,7 @@ if you did not receive any errors, your tables have been	setup	de	Wenn Sie keine
 if you running this the first time, don't forget to manualy %1 !!!	setup	de	Wenn Sie das zum ersten Mal ausführen, vergessen Sie nicht manuell die %1 !!!
 if you use only languages of the same charset (eg. western european ones) you dont need to set a system-charset!	setup	de	Wenn Sie nur Sprachen des gleichen Zeichensatzes (zB. westeuropäische) benützen, brauchen Sie keinen Systemzeichensatz zu setzten!
 image type selection order	setup	de	Auswahlreihenfolge der Bilddateitypen
+imap: admin user,password,emailadmin_imap(|_cyrus|_dovecot)	setup	de	IMAP: Adminuser,Passwort,emailadmin_imap(|_cyrus|_dovecot)
 import has been completed!	setup	de	Import ist beendet!
 include_path need to contain "." - the current directory	setup	de	include_path muss "." - das aktuelle Verzeichnis - enthalten
 incremental import	setup	de	Inkrementeller Import
@@ -433,6 +437,7 @@ limit access to setup to the following addresses, networks or hostnames (e.g. 12
 list availible values	setup	de	Listen der verfügbaren Werte
 list of availible translations	setup	de	Liste der verfügbaren Sprachen
 local groups includes groups and their memberships deleted on the ad/ldap server!	setup	de	Lokale Gruppen enthalten auch Gruppen und deren Mitgliedschaften die auf dem AD/LDAP Server gelöscht wurden!
+log-level	setup	de	Log-Level
 login as user postgres, eg. by using su as root	setup	de	Als Benutzer postgres einlogen, zB. durch benutzen von su als root
 login to mysql -	setup	de	mysql aufrufen -
 loginname needed for domain configuration	setup	de	Benutzername für die Konfiguration der Domain
@@ -465,7 +470,7 @@ minimum account id (e.g. 500 or 100, etc.)	setup	de	Minimum für Benutzer-ID (z.
 minute	setup	de	Minute
 missing or uncomplete mailserver configuration	setup	de	Fehlende oder nicht komplette Mailserver Konfiguration
 modifications have been completed!	setup	de	Änderung ist abgeschlossen!
-modified	setup	de	geändert
+modified	setup	de	Geändert
 modify	setup	de	Ändern
 month	setup	de	Monat
 more information	setup	de	Mehr Informationen
@@ -477,7 +482,7 @@ name of db user egroupware uses to connect	setup	de	Name des Datenbank-Benutzers
 needs extra configuration on dc and webserver!	setup	de	Benötigt extra Konfiguration auf Domain Controller und Webserver!
 never	setup	de	niemals
 new	setup	de	Neu
-next run	setup	de	nächste Ausführung
+next run	setup	de	Nächste Ausführung
 no	setup	de	Nein
 no %1 support found. disabling	setup	de	Keine Unterstützung für %1 gefunden. Abgeschaltet
 no accounts existing	setup	de	Keine Benutzerkonten gefunden
@@ -542,13 +547,13 @@ please login	setup	de	Bitte einloggen
 please login to egroupware and run the admin application for additional site configuration	setup	de	Bitte in EGroupware einloggen und für weitere Konfigurationseinstellungen die Administrationsanwendung aufrufen
 please make the following change in your php.ini	setup	de	Bitte nehmen Sie die folgenden Änderungen an Ihrer php.ini Datei vor
 please wait...	setup	de	Bitte warten ...
-pop/imap mail server hostname or ip address	setup	de	POP/IMAP Mail Server Hostname oder IP Adresse
+pop/imap mail server hostname or ip address	setup	de	POP/IMAP Mail-Server-Hostname oder IP-Adresse
 port	setup	de	Port
 possible reasons	setup	de	Mögliche Gründe
 possible solutions	setup	de	Mögliche Lösungen
 post-install dependency failure	setup	de	Abhängigkeitsfehler nach der Installation
 postfix with ldap: [yes(user edit forwarding)]	setup	de	Postfix mit LDAP: [yes(Benutzer Weiterleitung ändern)]
-postgres: leave it empty to use the prefered unix domain sockets instead of a tcp/ip connection	setup	de	Postgres: Leer lassen für die empfohlenen Unix Domain Sockets anstatt einer tcp/ip Verbindung
+postgres: leave it empty to use the prefered unix domain sockets instead of a tcp/ip connection	setup	de	Postgres: Leer lassen für die empfohlenen Unix Domain Sockets anstatt einer TCP/IP-Verbindung
 potential problem	setup	de	Potentielles Problem
 preferences	setup	de	Einstellungen
 problem resolution	setup	de	Problem Lösung
@@ -590,14 +595,14 @@ run installation tests	setup	de	Installationstests starten
 safe_mode is turned on, which is generaly a good thing as it makes your install more secure.	setup	de	safe_mode ist eingeschaltet, was ist generell gut, da es Ihre Installation sicherer macht.
 save	setup	de	Speichern
 save this text as contents of your header.inc.php	setup	de	Speichern Sie diesen Text als Datei header.inc.php
-schedule	setup	de	planen
+schedule	setup	de	Planen
 scheduled backups	setup	de	Regelmäßige Datensicherungen
 securest	setup	de	sicherste
 select an app, enter a target version, then submit to process to that version.<br />if you do not enter a version, only the baseline tables will be installed for the app.<br /><blink>this will drop all of the apps' tables first!</blink>	setup	de	Wählen Sie eine Applikation, geben Sie eine Zielversion ein, dann bestätigen Sie den Vorgang.<br />Wenn Sie keine Version angeben, werden nur die Basis-Tabellen der Applikation installiert werden.<br /><blink>DIES WIRD ZUERST ALLE TABELLEN DER APPLI
 select one...	setup	de	Einen auswählen...
 select the default applications to which your users will have access	setup	de	Wählen Sie die voreingestellten Anwendungen, zu denen Ihre Benutzer Zugriff haben werden
 select the desired action(s) from the available choices	setup	de	Wählen Sie die verlangten Aktion(en) aus der verfügbaren Auswahl
-select to download file	setup	de	Auswähle um die Datei herunterzuladen
+select to download file	setup	de	Auswählen um die Datei herunterzuladen
 select where you want to store/retrieve user accounts	setup	de	Wo wollen Sie die Benutzerkonten speichern
 select which group(s) will be exported	setup	de	Wählen Sie die zu exportierende(n) Gruppe(n)
 select which group(s) will be imported (group membership will be maintained)	setup	de	Wählen Sie die zu importierende(n) Gruppe(n) (Gruppenmitgliedschaft wird erhalten)
@@ -628,7 +633,7 @@ show 'powered by' logo on	setup	de	Zeige "powered by" Logo
 sieve: host[,port(4190)]	setup	de	Sieve: Rechner[,Port(4190)]
 size	setup	de	Größe
 skip the installation tests (not recommended)	setup	de	Installationstests überspringen (nicht empfohlen)
-smtp server hostname or ip address	setup	de	SMTP Server Hostname oder IP Adresse
+smtp server hostname or ip address	setup	de	SMTP Server Hostname oder IP-Adresse
 smtp server port	setup	de	SMTP Server Port
 smtp-authentication required	setup	de	SMTP Authentifizierung benötigt
 some information for the own service provider metadata	setup	de	Einige Information für die Metadaten des eigenen Service Provider / Dienst
@@ -736,7 +741,7 @@ use --update to do so.	setup	de	Benutzen Sie --update dafür.
 use account description to store saml username	setup	de	Benutze Beschreibung des Benutzers um den SAML Benutzernamen zu speichern
 use cookies to pass sessionid	setup	de	SitzungsId in einem Cookie speichern
 use mcrypt to crypt session-data: {off(default) | on},[mcrypt-init-vector(default randomly generated)],[mcrypt-version]	setup	de	benutze mcrypt zur Verschlüsselung der Sitzungsdaten: {off(Vorgabe) | on},[mcrypt Initialisierung(Vorgabe ist zufällig erzeugt)],[mcrypt Version]
-use persistent db connections: {on(default) | off}	setup	de	benutze permanente Datenbankverbindung: {on(Vorgabe) | off}
+use persistent db connections: {on(default) | off}	setup	de	Benutze permanente Datenbankverbindung: {on(Vorgabe) | off}
 use pure html compliant code (not fully working yet)	setup	de	Vollständig HTML kompatiblen Code verwenden (nicht vollständig implementiert)
 use space to separate multiple	setup	de	Leerzeichen benutzen um mehrere anzugeben
 use tls or ssl encryption	setup	de	Benutze TLS oder SSL Verschlüsselung
@@ -768,7 +773,7 @@ weekly	setup	de	wöchentlich
 welcome to the egroupware installation	setup	de	Herzlich willkommen zur EGroupware Installation
 what to do in egroupware if an user get deleted?	setup	de	Was soll gemacht werden in EGroupware, wenn ein Benutzer gelöscht wurde?
 what to import?	setup	de	Was soll importiert werden?
-where should egroupware store file content	setup	de	Wo soll EGroupware den Inhalt von Dateien speichern
+where should egroupware store file content	setup	de	Wo soll EGroupware Dateien speichern?
 which database type do you want to use with egroupware?	setup	de	Welchen Datenbanktyp wollen Sie mit EGroupware verwenden?
 will be downloaded once, unless changed.	setup	de	Wird einmalig heruntergeladen, außer bei Änderung.
 with	setup	de	mit

@@ -49,6 +49,7 @@ cannot create directory because it begins or ends in a space	filemanager	bg	Не
 cautiously rejecting to remove folder '%1'!	filemanager	bg	Деликатно отказва да премахне папката '% 1'!
 check all	filemanager	bg	Маркирай всички
 check virtual filesystem	common	bg	Проверете виртуалната файлова система
+classic	filemanager	bg	Стандартна лента с инструменти
 clear search	filemanager	bg	Изтрий търсенето
 clipboard is empty!	filemanager	bg	Клипборда е празен!
 collab editor settings	filemanager	bg	Настройки на "Collab" редактора
@@ -109,6 +110,7 @@ edit comments	filemanager	bg	Редактиране на коментарите
 edit settings	filemanager	bg	Редактиране на атрибути
 edit share	filemanager	bg	Редактиране на споделяне
 enable	filemanager	bg	Позволява
+enter a file size, e.g. 100k, 200m or 2g	filemanager	bg	Въведете размер на файла, например 100K, 200M или 2G
 enter setup user and password	filemanager	bg	Въведете потребител и парола за настройка
 enter setup user and password to get root rights	filemanager	bg	Въведете потребител и парола за настройка, за да получите основни права
 enter the complete vfs path to specify a fast access link to a folder	filemanager	bg	Въведете пълния VFS път, за да зададете връзка за бърз достъп до директория
@@ -122,11 +124,12 @@ error unmounting %1!	filemanager	bg	Грешка при демонтиране �
 error uploading file!	filemanager	bg	Грешка при качване на файла!
 error while creating directory.	filemanager	bg	Грешка при създаването на директория
 everyone	filemanager	bg	Всеки
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	filemanager	bg	Пример {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - търсете в полето "n_prefix" за "Mr", ако е намерено, напишете Hello Mr., в противен случай напишете Hello Ms.
 example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	filemanager	bg	Например {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Пример: г-н д-р Джеймс Милър
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	filemanager	bg	Например {{NELF role}} - ако позицията не е празна, ще получите нов ред със стойността ù.
 example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	filemanager	bg	Например {{nenvlf role}} - ако позицията не е празна, задайте LF без никаква стойност на полето.
 excludes selected mime types	filemanager	bg	Изключва избраните MIME-типове
-excludes selected mime types from being opened by editor	filemanager	bg	Изключва избраните MIME-типове от възможност за отваряне от редактора
+excludes selected mime types from being opened by editor	filemanager	bg	Изключва избрани типове MIME от отваряне от Collabora Online.<br>Тези типове документи се отварят в браузъра или се изтеглят.
 executable	filemanager	bg	Изпълним
 expires	filemanager	bg	Изтича
 export definition to use for nextmatch export	filemanager	bg	Определение за експортиране, което да се използва за nextmatch експорт
@@ -152,23 +155,30 @@ files	common	bg	Файлове
 files from links	filemanager	bg	Файлове от връзки /линкове
 files from subdirectories	filemanager	bg	Файлове от поддиректориите
 files in this directory	filemanager	bg	Файлове в тази директория
+filesystem	filemanager	bg	Файлова система
 filesystem check reported no problems.	filemanager	bg	При проверката на файловата система няма проблеми.
+filesystem: mount directory (inside /var/lib/egroupware!) from host filesystem	filemanager	bg	Файлова система: монтиране на директория (вътре в /var/lib/egroupware !) от файловата система на хоста
 finally delete	filemanager	bg	Изтриване без отмяна!
 finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	bg	Накрая изтрийте всички по-стари версии и изтрити файлове в дадена директория. \n\n Това НЕ МОЖЕ да бъде отменено!
 finally delete this version	filemanager	bg	Накрая изтрийте тази версия
 fix reported problems	filemanager	bg	Поправете докладваните проблеми
 folder up	filemanager	bg	Нагоре (в директориите)
+for files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available.  see the specific application for a list of available placeholders.	filemanager	bg	За файловете, свързани с вписване на приложение (вътре в /apps/appname/id/), са налични и заместителите за това приложение. Вижте конкретното приложение за списък на наличните заместващи символи.
+for files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available. see the specific application for a list of placeholders	filemanager	bg	За файлове, свързани с вписване на приложение (вътре в /apps/appname/id/), са налични и заместителите за това приложение. Вижте конкретното приложение за списък на заместителите.
+for serial letter use this tag. put the content, you want to repeat between two tags.	filemanager	bg	За серийно писмо използвайте този таг. Поставете съдържанието, което искате да повторите, между два тага.
 general	filemanager	bg	Общи
 general fields:	filemanager	bg	Общи полета:
 go home	filemanager	bg	Към домашната
 go to	filemanager	bg	промени в текущ
 go to your home directory	filemanager	bg	Към домашната (home) директория
 go up	filemanager	bg	нагоре
+group home quota	filemanager	bg	Квота за дома на групата
 hidden upload	filemanager	bg	Скрито качване
 hidden uploads	filemanager	bg	Скрито качване
+hostname/ip for webdav and smb	filemanager	bg	Име на хост/IP за WebDAV и SMB
 id	filemanager	bg	ID (ИД - документ за самоличност)
-if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	bg	Ако посочите тук директория (full vfs path), %1 показва действие за всеки документ. Това действие позволява да изтеглите указания документ с вмъкнати данни %1.
-if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	bg	Ако посочите тук документ (full vfs path), %1 показва допълнителна иконка на документ за всеки запис. Тази иконка позволява да изтеглите посочения документ с вмъкнатите данни.
+if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	bg	Ако посочите тук директория (full VFS path), %1 показва действие за всеки документ. Това действие позволява да изтеглите указания документ с вмъкнати данни %1.
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	bg	Ако посочите тук документ (full VFS path), %1 показва допълнителна иконка на документ за всеки запис. Тази иконка позволява да изтеглите посочения документ с вмъкнатите данни.
 if you specify an export definition, it will be used when you export	filemanager	bg	Ако посочите дефиниция за експортиране, тя ще се използва, когато експортирате.
 if you specify an export definition, it will be used when you export*	filemanager	bg	Ако посочите дефиниция за експортиране, тя ще се използва, когато експортирате*
 inherited	filemanager	bg	Наследени
@@ -178,17 +188,21 @@ link %1: %2	filemanager	bg	Връзка %1: %2
 link into folder	filemanager	bg	Връзка в папка
 link target	filemanager	bg	Целева връзка
 link target %1 not found!	filemanager	bg	Целева връзка %1 не е намерена!
+list view	filemanager	bg	Изглед на списъка
 location	filemanager	bg	Местоположение
 lock	filemanager	bg	Заключване на
 log out as superuser	filemanager	bg	Излез от профила си като супер потребител
 mail files	filemanager	bg	Файлове за поща
+mail paste	filemanager	bg	Поставяне на поща
 max folderlinks	admin	bg	макс. връзки към директории
+merge print open handler	filemanager	bg	Обслужване на отворен печат за сливане
 mime type	filemanager	bg	MIME тип
-modified	filemanager	bg	променян на
+modified	filemanager	bg	Модифициран
 modified between	filemanager	bg	променян между
 modify all subdirectories and their content	filemanager	bg	Промяна на всички поддиректории и съдържанието им
 mount	filemanager	bg	Монтиране
 mount /etemplates to allow customizing of etemplates	filemanager	bg	Монтиране на /etemplates, за да позволи персонализирането им
+mountpoints	filemanager	bg	Точки за монтиране
 move	filemanager	bg	Преместване
 move into folder	filemanager	bg	Преместване в папка
 move to	filemanager	bg	Премести в
@@ -200,14 +214,17 @@ no files in this directory.	filemanager	bg	В тази директория ня
 no preview available	filemanager	bg	Няма възможност за преглед
 no version history for this file/directory	filemanager	bg	За този файл/директория няма история на версиите
 noone	filemanager	bg	Никой (я)
+notebookbar	filemanager	bg	Таблици
 older versions or deleted files	filemanager	bg	По-стари версии или изтрити файлове
 only owner can rename or delete the content	filemanager	bg	Само Собственикът може да преименува или изтрива съдържанието
 open	filemanager	bg	Отвори
 open documents with collabora, if permissions are given	filemanager	bg	отворете документите с Collabora, ако имате дадени разрешения
 open odt documents with collabeditor	filemanager	bg	отворете "odt" документи с CollabEditor
 operation	filemanager	bg	Действие
+password for webdav and smb, use $pass for password of logged in user	filemanager	bg	Парола за WebDAV и SMB, използвайте $pass за паролата на влезлия потребител
 paste link	filemanager	bg	Поставяне на копираната връзка (линк)
 path %1 not found or not a directory!	filemanager	bg	Посочената директория %1 не е намерена или не е директория!
+path and query-parameters, smb: share and optional path (with /)	filemanager	bg	Път и параметри на заявката, SMB: дял и незадължителен път (с /)
 percentage	filemanager	bg	Процент
 permission denied!	filemanager	bg	Достъпът отказан!
 permissions	filemanager	bg	Права
@@ -219,9 +236,13 @@ preview of %1	filemanager	bg	Преглед на %1
 projectmanager	filemanager	bg	Мениджър проекти (Project Manager)
 properties saved.	filemanager	bg	Свойствата са запазени.
 quick jump to	filemanager	bg	Бърз преход към
+quota	filemanager	bg	Квота
+quota exceeded	filemanager	bg	Превишена квота
 read & write access	filemanager	bg	Достъп за четене и запис
 read access only	filemanager	bg	Достъп само за четене
 readonly share link	filemanager	bg	"Само за четене" линк за споделяне
+recalculate	filemanager	bg	Преизчисляване на
+recalculated %1 directories in %2 iterations and %3 seconds	filemanager	bg	Преизчислява %1 директории за %2 итерации и %3 секунди
 reload	filemanager	bg	Презареди
 rename of %1 to %2 failed!	filemanager	bg	Преименуването на %1 в %2 неуспешно!
 rename, change permissions or ownership	filemanager	bg	Преименуване, промяна на права или собственост

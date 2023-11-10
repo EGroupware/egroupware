@@ -1,5 +1,59 @@
 %1 files unlocked.	filemanager	lt	%1 failai atrakinti.
+classic	filemanager	lt	Standartinė įrankių juosta
+default action on double-click	filemanager	lt	Numatytasis veiksmas dukart spustelėjus
+default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	lt	Numatytoji reikšmė = Ne. Nuoroda nebus rodoma, tačiau vis tiek galėsite pereiti į šią vietą arba konfigūruoti šią konkrečią vietą kaip pradžios aplanką arba aplanko nuorodą.
+defines how to handle double click action on a document file. images are always opened in the expose-view and emails with email application. all other mime-types are handled by the browser itself.	filemanager	lt	Nustato, kaip elgtis su dokumento failo dvigubo spustelėjimo veiksmu. Vaizdai visada atidaromi eksponuojamoje peržiūroje, o el. laiškai - su el. pašto programa. Visus kitus MIME tipus tvarko pati naršyklė.
+download documents	filemanager	lt	Atsisiųsti dokumentus
+edit share	filemanager	lt	Redaguoti bendrinimą
+enter a file size, e.g. 100k, 200m or 2g	filemanager	lt	Įveskite failo dydį, pvz., 100K, 200M arba 2G
+enter your file name	filemanager	lt	Įveskite failo pavadinimą
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	filemanager	lt	Pavyzdys {{IF n_prefiksas~Mr~Sveikas ponas~Sveikas ponia}} - paieškokite lauke "n_prefix", ieškodami "Mr", jei radote, rašykite Hello Mr, kitu atveju rašykite Hello Ms.
+example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	filemanager	lt	Pavyzdys {{{LETTERPREFIXCUSTOM n_prefix pavadinimas n_family}} - Pavyzdys: James Miller.
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	filemanager	lt	Pavyzdys {{{NELF vaidmuo}} - jei laukas role nėra tuščias, bus pateikta nauja eilutė su lauko role reikšme
+example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	filemanager	lt	Pavyzdys {{nenvlf role}} - jei laukas role nėra tuščias, nustatysite LF be jokios lauko reikšmės
+excludes selected mime types	filemanager	lt	Neįtraukia pasirinktų MIME tipų
+excludes selected mime types from being opened by editor	filemanager	lt	Pašalina pasirinktus MIME tipus iš "Collabora Online" atidarymo.<br>Šie dokumentų tipai atidaromi naršyklėje arba atsisiunčiami.
+executable	filemanager	lt	Vykdomas
+expires	filemanager	lt	Expires
+export definition to use for nextmatch export	filemanager	lt	Eksporto apibrėžtis, kuri bus naudojama nextmatch eksportui
+extended access control list	filemanager	lt	Išplėstinis prieigos kontrolės sąrašas
+extended acl	filemanager	lt	Išplėstinis ACL
+failed to change permissions of %1!	filemanager	lt	Nepavyko pakeisti %1 leidimų!
+failed to create directory!	filemanager	lt	Nepavyko sukurti aplanko!
+favorites	filemanager	lt	Mėgstamiausi
+file	common	lt	Failas
+file %1 already exists	filemanager	lt	Failas %1 jau egzistuoja
+file %1 could not be created.	filemanager	lt	Failo %1 nepavyko sukurti.
+file %1 may be too big. contact your systemadministrator for further info	filemanager	lt	Failas %1 gali būti per didelis.
+file a file is only available with an epl subscription.	filemanager	lt	Failas failas prieinamas tik su EPL prenumerata.
+filesystem	filemanager	lt	Failų sistema
+filesystem check reported no problems.	filemanager	lt	Patikrinus failų sistemą, jokių problemų nepastebėta.
+filesystem: mount directory (inside /var/lib/egroupware!) from host filesystem	filemanager	lt	Failų sistema: prijungti katalogą (viduje /var/lib/egroupware !) iš priimančiosios failų sistemos
+finally delete	filemanager	lt	Galiausiai ištrinkite
+finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	lt	Galiausiai ištrinkite visas senesnes versijas ir ištrintus failus iš nurodyto aplanko.\n\nŠio veiksmo negalima atšaukti!
+finally delete this version	filemanager	lt	Galiausiai ištrinti šią versiją
+fix reported problems	filemanager	lt	Ištaisykite praneštas problemas
+for files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available.  see the specific application for a list of available placeholders.	filemanager	lt	Failų, susietų su programos įrašu (viduje /apps/appname/id/), atveju taip pat galima naudoti tos programos žymenis. Galimų vietos žymenų sąrašą rasite konkrečioje programoje.
+for files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available. see the specific application for a list of placeholders	filemanager	lt	Failų, susietų su programos įrašu (viduje /apps/appname/id/), atveju taip pat galima naudoti tos programos vietos žymenis. Vietos žymenų sąrašą žr. konkrečioje programoje.
+for serial letter use this tag. put the content, you want to repeat between two tags.	filemanager	lt	Serijinei raidei naudokite šią žymą. Įdėkite turinį, kurį norite pakartoti, tarp dviejų žymų.
+group home quota	filemanager	lt	Grupės namų kvota
 hidden upload	filemanager	lt	Paslėptas įkėlimas
 hidden uploads	filemanager	lt	Paslėptas įkėlimas
+hostname/ip for webdav and smb	filemanager	lt	Hostname/IP WebDAV ir SMB
+if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	lt	Jei čia nurodysite aplanką (visą VFS kelią), %1 rodys kiekvieno dokumento veiksmą. Šis veiksmas leidžia atsisiųsti nurodytą dokumentą su įterptais %1 duomenimis.
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	lt	Jei čia nurodysite aplanką (visą VFS kelią), %1 kiekvienam įrašui rodoma papildoma dokumento piktograma. Ši piktograma leidžia atsisiųsti nurodytą dokumentą su įterptais duomenimis.
+list view	filemanager	lt	Sąrašo rodinys
 lock	filemanager	lt	Užrakinti
+mail paste	filemanager	lt	Pašto įklijavimas
+merge print open handler	filemanager	lt	Sujungti spausdinti atvirą tvarkyklę
+modified	filemanager	lt	Pakeista
+modified between	filemanager	lt	Pakeista tarp
+mountpoints	filemanager	lt	Montavimo taškai
+notebookbar	filemanager	lt	Skirtukas
+password for webdav and smb, use $pass for password of logged in user	filemanager	lt	WebDAV ir SMB slaptažodis, naudokite $pass prisijungusio naudotojo slaptažodį
+path and query-parameters, smb: share and optional path (with /)	filemanager	lt	Kelias ir užklausos parametrai, SMB: bendroji dalis ir neprivalomas kelias (su /)
+quota	filemanager	lt	Kvota
+quota exceeded	filemanager	lt	Viršyta kvota
+recalculate	filemanager	lt	Perskaičiuokite
+recalculated %1 directories in %2 iterations and %3 seconds	filemanager	lt	Perskaičiuota %1 katalogų per %2 iteracijas ir %3 sekundes
 you need to become root, to enable or disable versioning on a directory!	filemanager	lt	Kad įjungtumėte arba išjungtumėte aplanko versijų nustatymą, turite tapti superuser!

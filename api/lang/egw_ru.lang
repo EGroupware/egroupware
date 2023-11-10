@@ -87,9 +87,11 @@ add table	common	ru	Добавить таблицу
 add to clipboard	common	ru	Добавить буфер обмена
 add user to responsibles	groupdav	ru	добавить пользователя к ответственным
 add user to responsibles, removing evtl. previous category user	groupdav	ru	добавить пользователя к ответственным, удалив пользователя категории
+add your domain as "%1" in options to list of email providers and enable api.	common	ru	Добавьте ваш домен как "%1" в опциях к списку почтовых провайдеров и включите API.
 addressbook	common	ru	Контакты
 addressbooks to sync in addition to personal addressbook	groupdav	ru	Адресная книга для синхронизации в дополнение к личной адресной книге
 admin	common	ru	Администратор
+admin settings	common	ru	Настройки администратора
 admin settings for %1	common	ru	Настройки администратора для %1
 administration	common	ru	Администрирование
 advanced search	common	ru	Расширенный поиск
@@ -108,6 +110,7 @@ all in one	groupdav	ru	Всё в одном
 all languages	common	ru	Все языки
 all operations save the template!	common	ru	все действия сохраняют шаблон!
 all users	common	ru	Все пользователи
+allow editing the %1	common	ru	Разрешить редактирование %1
 allowed file type: %1	common	ru	Допустимый тип файла: %1
 allows to modify responsible users from devices not supporting them, by setting email address of a user as category.	groupdav	ru	Позволяет менять ответственных пользователей с не поддерживающих это устройств установкой e-mail адреса пользователя как категории.
 alt	common	ru	Alt

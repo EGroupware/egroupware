@@ -2,8 +2,10 @@
 (no subject)	mail	sv	(ingen rubrik)
 acl rights retrieve failed, seems there are no rights set!	mail	sv	Hämtning av ACL-rättigheter misslyckades, det verkar inte finnas några rättigheter angivna!
 add all my aliases	mail	sv	Lägg till alla mina alias
+add as new	mail	sv	Lägg till som ny
 add files as %1	mail	sv	Lägg till filer som %1
 add raw message, ignore mail attachments	mail	sv	Konvertera e-post till objekt, lägg till obearbetat meddelande (ignorera bifogade filer)
+add this certificate into contact	mail	sv	Lägg till detta certifikat i kontakt
 add to addressbook	mail	sv	Lägg till i Adressbok
 adding %1 to blacklisted email addresses failed because of %2	mail	sv	Att lägga till %1 till svartlistade e-postadresser misslyckades på grund av %2
 adding %1 to whiltelisted email addresses failed because of %2	mail	sv	Lägga till %1 till whiltelisted e-postadresser misslyckades på grund av %2
@@ -26,6 +28,8 @@ be aware that all attachments will be sent as %1!	mail	sv	Tänk på att alla bil
 by date	mail	sv	Enligt datum
 by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	sv	Som standard ersätts 'http://' bara med 'https://'. Konfigurera gärna 'https://proxy.egroupware.org/' så att även bilder som endast är tillgängliga via http laddas.
 caching of flags	mail	sv	Cachelagring av flaggor
+can not resolve the winmail.dat attachment!	mail	sv	Kan inte lösa winmail.dat-bilagan!
+certificate info for email %1	mail	sv	Certifikatinformation för e-post %1
 changing subject failed because of %1	mail	sv	Byte av ämne misslyckades på grund av %1
 changing subject failed folder %1 does not exist	mail	sv	Byte av ämne misslyckades mappen %1 finns inte
 check message against next rule also	mail	sv	Verifiera meddelande även mot nästa regel
@@ -55,6 +59,9 @@ display messages in multiple windows	mail	sv	Visa meddelanden i flera fönster
 display of html emails	mail	sv	Visning av HTML e-post
 display only when no plain text is available	mail	sv	Visa endast när textformat inte är tillgängligt
 displaying html messages is disabled	mail	sv	Cisa HTML meddelanden är inaktiverat
+do you really want to toggle flag %1 for all messages in the current view?	mail	sv	Vill du verkligen växla flaggan %1 för ALLA meddelanden i den aktuella vyn?
+do you really want to toggle label %1 for all messages in the current view?	mail	sv	Vill du verkligen växla etiketten %1 för ALLA meddelanden i den aktuella vyn?
+do you want to be asked for confirmation before attaching selected messages to new mail?	mail	sv	Vill du bli ombedd att bekräfta innan du bifogar valda meddelanden till ett nytt e-postmeddelande?
 does not contain	mail	sv	Innehåller inte
 does not match	mail	sv	Matchar inte
 does not match regexp	mail	sv	Matchar inte regexp
@@ -100,7 +107,9 @@ from	mail	sv	Från
 from(a->z)	mail	sv	Från (A->Ö)
 from(z->a)	mail	sv	Från (Ö->A)
 general	admin	sv	Allmänt
+get acl rights failed from imap server!	mail	sv	Få ACL-rättigheter misslyckades från IMAP-server!
 greater than	mail	sv	Större än
+ham folder	mail	sv	Ham-mappen
 handling of external http images / mixed content in mails	mail	sv	Hantering av externa http-bilder / blandat innehåll i e-postmeddelanden
 header lines	mail	sv	Brevhuvud
 html	mail	sv	HTML
@@ -157,6 +166,7 @@ mark all messages in folder as read	mail	sv	Markera alla meddelanden i mappen so
 mark as deleted	mail	sv	Markera som raderad
 matches	mail	sv	Matchar
 matches regexp	mail	sv	Matchar regexp
+message learned as spam and moved to spam folder	mail	sv	Meddelandet har identifierats som skräppost och flyttats till skräppostmappen
 modify subject	mail	sv	Ändra ämne
 modify subject of this message	mail	sv	Ändra ämnet för detta meddelande
 move selected to	mail	sv	Flytta valda till
@@ -165,12 +175,16 @@ move to trash	mail	sv	Flytta till Borttaget
 name and email	mail	sv	Namn och e-post
 never display html emails	mail	sv	Visa inte HTML meddelanden
 new subject	mail	sv	Nytt ämne
+no folder destination supplied, and no folder to save message or other measure to store the mail (save to infolog/tracker) provided, but required.	mail	sv	Ingen mappdestination angiven, och ingen mapp för att spara meddelandet eller annan åtgärd för att lagra posten (spara till InfoLog/Ticketsystem) angiven, men krävs.
 no plain text part found	mail	sv	Hittade inget textfält
 no sneak preview in list	mail	sv	Ingen förhandsgranskning av meddelanden
+non	mail	sv	Nej
 on	mail	sv	På
 one address is not valid	mail	sv	En adress är ogiltig
 only email	mail	sv	Endast e-post
+only makes sense, if you transport password through a different channel / outside of this mail to recipients!	mail	sv	Endast meningsfullt om du transporterar lösenord via en annan kanal / utanför denna e-post till mottagarna!
 only name	mail	sv	Endast namn
+only needed for some servers, that do not return all folders on root level queries to retrieve all folders for that level	mail	sv	Behövs endast för vissa servrar, som inte returnerar alla mappar på rotnivå för att hämta alla mappar för den nivån
 only one window	mail	sv	Endast ett fönster
 open in html mode	mail	sv	Öppna i HTML-läge
 open in text mode	mail	sv	Öppna i textläge
@@ -182,12 +196,18 @@ original message	mail	sv	Ursprungligt meddelande
 outbox	mail	sv	Utkorg
 permission denied	mail	sv	Åtkomst nekad
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	sv	Konfigurera ditt S/MIME-certifikat på fliken Kryptering i dialogrutan Redigera konto.
+please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	sv	Kontakta din administratör för att kontrollera om din server stöder filterregler på serversidan och hur du aktiverar dem i EGroupware för ditt aktiva konto (%1) med ID:%2.
+please contact your administrator to validate if your server supports serverside vacationmessages, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	sv	Kontakta din administratör för att kontrollera om din server stöder semestermeddelanden på servern och hur du aktiverar dem i EGroupware för ditt aktiva konto (%1) med ID:%2.
+please enter password	mail	sv	Ange lösenord
 please select a address	mail	sv	Välj adress
 please select the number of days to wait between responses	mail	sv	Antal dagar mellan svar
 please supply the message to send with auto-responses	mail	sv	Meddelande att skicka med autosvar
+post	mail	sv	skicka
 predefined addresses for compose	mail	sv	Fördefinierade adresser för sammansättning
 preview pane	mail	sv	Fönsterlayout
 printing	mail	sv	Utskrift
+processing of file %1 failed. failed to meet basic restrictions.	mail	sv	Bearbetning av fil %1 misslyckades. Misslyckades med att uppfylla grundläggande begränsningar.
+provide a default vacation text, (used on new vacation messages when there was no message set up previously)	admin	sv	Ange en standardtext för semester, (används i nya semestermeddelanden när inget meddelande har ställts in tidigare)
 push notifications	mail	sv	Push-meddelanden
 quicksearch	mail	sv	Snabbsök
 quicksearch (with cc)	mail	sv	Snabbsök (+Kopia)
@@ -207,22 +227,49 @@ replied	mail	sv	Svarade
 reply	mail	sv	Svara
 reply all	mail	sv	Svara alla
 reply to	mail	sv	Svara till
+replying to this message failed because the content of this message seems to be encrypted and can not be decrypted properly. if you still wish to include content of this encrypted message, you may try to use forward as attachment instead.	mail	sv	Att svara på detta meddelande misslyckades eftersom innehållet i detta meddelande verkar vara krypterat och inte kan dekrypteras korrekt. Om du fortfarande vill inkludera innehållet i detta krypterade meddelande kan du försöka använda vidarebefordra som bilaga istället.
 replyto	mail	sv	Svara till
+report as ham	mail	sv	Rapportera som Ham
+report as spam	mail	sv	Rapportera som skräppost
+report this email content as ham (not spam) - spam solutions like spamtitan will learn	mail	sv	Rapportera det här e-postmeddelandet som Ham (inte spam) - spamlösningar som spamTitan kommer att lära sig
+report this email content as spam - spam solutions like spamtitan will learn	mail	sv	Rapportera detta e-postmeddelande som Spam - spamlösningar som spamTitan kommer att lära sig
+required pear class mail/mimedecode.php not found.	mail	sv	PEAR-klassen Mail/mimeDecode.php hittades inte.
+required to disable if you use dovecot with private seen flags on shared or user folder!	mail	sv	Krävs för att inaktivera om du använder Dovecot med privata flaggor på delad eller användarmapp!
 row order style	mail	sv	Rad sortering
 save all	mail	sv	Spara alla
 save all attachments to filemanager	mail	sv	Spara alla bilagor i filhanteraren
 save as draft	mail	sv	Spara som utkast
 save as infolog	mail	sv	Spara som InfoLogg
+save as infolog on send	mail	sv	Kontrollera knappen för att skapa som InfoLog efter att ha skickat
+save as tracker on send	mail	sv	Markera knappen för att skapa ett ärende efter sändning
 save message to disk	mail	sv	Spara meddelanden till disk
+save the drafted message as eml file into vfs	mail	sv	Spara det utkastade meddelandet som eml-fil i filhanteraren
+saving of message %1 failed. destination folder %2 does not exist.	mail	sv	Sparande av meddelande %1 misslyckades. Målmappen %2 finns inte.
+saving of message %1 succeeded. check folder %2.	mail	sv	Sparande av meddelande %1 lyckades. Kontrollera mapp %2.
+saving the rule failed:	mail	sv	Sparandet av regeln misslyckades:
+security	mail	sv	Säkerhet
+see attachments for content of the orignial mail	mail	sv	Se bilagor för innehåll i det ursprungliga e-postmeddelandet
 select all	mail	sv	Välj samtliga
+select an existing entry in order to append mail content to it	mail	sv	Välj en befintlig post för att bifoga e-postinnehåll till den
+select an item to read	mail	sv	Välj en artikel att läsa
 select or insert email address	mail	sv	Välj eller infoga e-postadress
+selected date range (with quicksearch)	mail	sv	Valt datumintervall (med snabbsökning)
+send message and move to send folder (if configured)	mail	sv	Skicka meddelande och flytta till mappen Skicka (om konfigurerat)
+send message pgp encrypted: requires keys from all recipients!	mail	sv	Skicka meddelandet PGP-krypterat: kräver nycklar från alla mottagare!
 sent folder	mail	sv	Skickat katalog
+server supports special-use folders	mail	sv	Servern stöder mappar för särskild användning
 set flags	mail	sv	Markera e-post som
 set predefined values for compose...	mail	sv	Ställ in fördefinierade värden för sammansättning ...
+should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	sv	Ska signatur infogas efter (standard) eller före ett svar eller vidarebefordran, och ska signaturen vara synlig och ändringsbar under komponeringen.
+show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	sv	Visa alla mappar (prenumererade OCH avprenumererade) i huvudskärmens mappfönster
 show notification for new arriving mails	mail	sv	Visa avisering för nya inkommande e-postmeddelanden
+show test connection section and control the level of info displayed?	mail	sv	Visa testanslutningsavsnitt och kontrollera nivån på den information som visas?
+show test connection section and control the level of info displayed??	mail	sv	Visa testanslutningsavsnittet och kontrollera nivån på den information som visas?
+show them this time only	mail	sv	Visa dem endast denna gång
 show vertical	mail	sv	Visa vertikalt
 show vertical with all columns	mail	sv	Visa vertikalt med alla kolumner
 show/hide preview pane in mail list view	mail	sv	Visa/dölj förhandsgranskningsfönstret i e-postlistan
+shows a temporary visible notification including from address, subject and a snippet of the mail	mail	sv	Visar ett tillfälligt synligt meddelande inklusive från-adress, ämne och ett utdrag ur e-postmeddelandet
 sieve	mail	sv	Sieve
 sieve script name	mail	sv	Sieve skript namn
 signature	mail	sv	Signatur
@@ -258,5 +305,15 @@ view header lines	mail	sv	Visa brevhuvudet
 when deleting messages	mail	sv	Vid meddelande radering
 write	mail	sv	Skriv
 wrote	mail	sv	Skrev
+yes, only trigger connection reset	mail	sv	ja, endast utlösa återställning av anslutning
+yes, show all debug information available for the user	mail	sv	ja, visa all felsökningsinformation som är tillgänglig för användaren
+you can either choose to save as infolog or tracker, not both.	mail	sv	Du kan antingen välja att spara som InfoLog ELLER tracker, inte båda.
 you can select what info to be displayed on email tag	mail	sv	Du kan välja vilken information som ska visas på e-posttaggen.
+you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	sv	Du kan använda $$start$$ för ovanstående startdatum och $$end$$ för slutdatum.
+you may add this certificate into your contact, if you trust this signature.	mail	sv	Du kan lägga till detta certifikat i din kontakt, om du litar på denna signatur.
+you need to enter your s/mime passphrase to send this message.	mail	sv	Du måste ange din S/MIME lösenfras för att skicka detta meddelande.
+you need to install mailvelope plugin available for chrome and firefox from %1.	mail	sv	Du måste installera Mailvelope-plugin som finns tillgängligt för Chrome och Firefox från %1.
+you need to save the message as draft first before to be able to save it into vfs	mail	sv	Du måste spara meddelandet som utkast först innan du kan spara det i VFS
+you will loose current message body, unless you save it to your clipboard!	mail	sv	Du kommer att förlora den aktuella meddelandetexten om du inte sparar den i Urklipp!
 you've got new mail	mail	sv	Du har fått ny e-post
+your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	sv	Din återstående kvot %1 är för låg, du kanske inte kan skicka/ta emot fler e-postmeddelanden.\n Även om du rensar bort e-postmeddelanden i papperskorgen kan det hjälpa dig att få tillbaka lite ledigt utrymme.\n Om det inte hjälpte kan du be din administratör om mer kvot.

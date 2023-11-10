@@ -1,8 +1,10 @@
 (leave empty for no quota)	mail	et	(jäta tühjaks, kui kvooti ei ole)
 acl rights retrieve failed, seems there are no rights set!	mail	et	ACL-i õiguste päring ebaõnnestus, tundub, et õigusi ei ole määratud!
 add all my aliases	mail	et	Lisa kõik minu varjunimed
+add as new	mail	et	Lisada uueks
 add files as %1	mail	et	Lisage failid %1
 add raw message, ignore mail attachments	mail	et	Konverteeri post objektiks, lisa toores sõnum (ignoreeri posti manuseid)
+add this certificate into contact	mail	et	Lisa see sertifikaat kontakti
 adding %1 to blacklisted email addresses failed because of %2	mail	et	%1 lisamine musta nimekirja kantud e-posti aadressidele ebaõnnestus %2 tõttu.
 adding %1 to whiltelisted email addresses failed because of %2	mail	et	%1 lisamine valimisse kantud e-posti aadressidele ebaõnnestus %2 tõttu.
 after reply, visible during compose	mail	et	Pärast vastamist, nähtav koostamise ajal
@@ -21,6 +23,8 @@ be aware that all attachments will be sent as %1!	mail	et	Olge teadlik, et kõik
 by date	mail	et	Kuupäeva järgi
 by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	et	Vaikimisi asendatakse "http://" lihtsalt "https://". Saate vabalt konfigureerida 'https://proxy.egroupware.org/', et laadida ka pilte, mis on saadaval ainult http kaudu.
 caching of flags	mail	et	Lipude vahemälu
+can not resolve the winmail.dat attachment!	mail	et	Ei saa lahendada winmail.dat manustust!
+certificate info for email %1	mail	et	Sertifikaadi info e-posti %1 jaoks
 changing subject failed because of %1	mail	et	Teema muutmine ebaõnnestus %1 tõttu
 changing subject failed folder %1 does not exist	mail	et	Teema muutmine ebaõnnestus kaust %1 ei ole olemas.
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	et	Konfigureeritud väärtused määratakse automaatselt koostamise dialoogis kinnipeetavale väljale, kui koostate uue e-kirja.
@@ -43,6 +47,9 @@ display messages in multiple windows	mail	et	Näita kirju mitmes aknas
 display of html emails	mail	et	Näita HTML emaile
 display only when no plain text is available	mail	et	Näita ainult kui plain tekst pole saadaval
 displaying html messages is disabled	mail	et	html kirjade näitamine on välja lülitatud
+do you really want to toggle flag %1 for all messages in the current view?	mail	et	Kas te tõesti tahate lülitada lipukese %1 kõigi praeguses vaates olevate sõnumite jaoks?
+do you really want to toggle label %1 for all messages in the current view?	mail	et	Kas te tõesti tahate lülitada märgistuse %1 kõigi sõnumite jaoks praeguses vaates?
+do you want to be asked for confirmation before attaching selected messages to new mail?	mail	et	Kas soovite, et enne valitud sõnumite lisamist uuele e-kirjale küsitaks kinnitust?
 does not contain	mail	et	ei sisalda
 don't use sent	mail	et	Ära kasuta Sent
 don't use trash	mail	et	Ära kasuta Trash
@@ -69,6 +76,8 @@ folder %1 has been created successfully, although the subscription failed becaus
 folder settings	mail	et	Kausta setingud
 forward	mail	et	Edasi
 general	admin	et	Üldine
+get acl rights failed from imap server!	mail	et	ACL-õiguste saamine IMAP-serverist ebaõnnestus!
+ham folder	mail	et	Ham kaust
 handling of external http images / mixed content in mails	mail	et	Välise http-pildi / segatud sisu käsitlemine e-kirjades
 html	mail	et	HTML
 ident name	mail	et	Tunnuse nimi
@@ -116,17 +125,22 @@ mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messa
 mark all as read	mail	et	Märgi kõik loetud
 mark all messages in folder as read	mail	et	Märgista kõik kaustas olevad sõnumid loetuks
 mark as deleted	mail	et	Märgi kui kustutatud
+message learned as spam and moved to spam folder	mail	et	Sõnum õpiti rämpspostiks ja viidi rämpsposti kausta
 modify subject	mail	et	Muuda teemat
 modify subject of this message	mail	et	Muuda selle sõnumi teemat
 move to trash	mail	et	Liiguta trash-i
 name and email	mail	et	Nimi ja e-posti aadress
 never display html emails	mail	et	Ära näita kunagi HTML emaile
 new subject	mail	et	Uus teema
+no folder destination supplied, and no folder to save message or other measure to store the mail (save to infolog/tracker) provided, but required.	mail	et	Kaustade sihtkoht puudub, samuti ei ole ette nähtud kausta sõnumi salvestamiseks või muud meedet posti salvestamiseks (salvestada InfoLogi/Ticketsüsteemi), kuid see on vajalik.
 no signature	mail	et	pole signatuuri
 no sneak preview in list	mail	et	Sõnumi eelvaade puudub
+non	mail	et	Mitte
 on	mail	et	:
 only email	mail	et	Ainult e-post
+only makes sense, if you transport password through a different channel / outside of this mail to recipients!	mail	et	Ainult siis mõttekas, kui te edastate parooli läbi teise kanali / väljaspool seda posti saajatele!
 only name	mail	et	Ainult nimi
+only needed for some servers, that do not return all folders on root level queries to retrieve all folders for that level	mail	et	Vajalik ainult mõnede serverite puhul, mis ei tagasta kõiki kaustu juurtasandi päringutele, et saada kõik kaustad selle taseme jaoks kätte.
 only one window	mail	et	ainult üks aken
 open with collabora office	mail	et	Avamine Collabora Online'iga
 organisation	admin	et	Organisatsioon
@@ -135,10 +149,16 @@ original message	mail	et	Algne sõnum
 outbox	mail	et	Väljaminev postkast
 permission denied	mail	et	Õigused puuduvad
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	et	Palun konfigureerige oma S/MIME-sertifikaat vahekaardil Encryption, mis asub dialoogis Muuda kontot.
+please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	et	Palun võtke ühendust oma administraatoriga, et kontrollida, kas teie server toetab serveripoolseid filterreegleid ja kuidas neid EGroupware'is lubada teie aktiivse konto (%1) jaoks ID:%2.
+please contact your administrator to validate if your server supports serverside vacationmessages, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	et	Palun võtke ühendust oma administraatoriga, et kontrollida, kas teie server toetab serveripoolseid puhkussõnumeid ja kuidas neid EGroupware'is lubada teie aktiivse konto (%1) jaoks ID:%2.
+please enter password	mail	et	Palun sisestage parool
 please select a address	mail	et	Palun vali aadress
+post	mail	et	saatke
 predefined addresses for compose	mail	et	Koostamise jaoks etteantud aadressid
 preview pane	mail	et	Akna paigutus
 printing	mail	et	Trükkimine
+processing of file %1 failed. failed to meet basic restrictions.	mail	et	Faili %1 töötlemine ebaõnnestus. Ei õnnestunud täita põhipiiranguid.
+provide a default vacation text, (used on new vacation messages when there was no message set up previously)	admin	et	Anda vaikimisi puhkuse tekst (kasutatakse uute puhkuse sõnumite puhul, kui varem ei ole sõnumit määratud).
 push notifications	mail	et	Push-teated
 quicksearch	mail	et	Kiirotsing
 quicksearch (with cc)	mail	et	Kiirotsing (+Kopeerimine)
@@ -154,15 +174,40 @@ removing %1 from whiltelisted email addresses failed because of %2	mail	et	%1 ee
 replace 'http://' in image urls with (trailing / required!)	mail	et	Asendage 'http://' pildi urlites (tagumine / nõutav!)
 replied	mail	et	vastatud
 reply	mail	et	Vasta
+replying to this message failed because the content of this message seems to be encrypted and can not be decrypted properly. if you still wish to include content of this encrypted message, you may try to use forward as attachment instead.	mail	et	Sellele sõnumile vastamine ebaõnnestus, sest selle sõnumi sisu näib olevat krüpteeritud ja seda ei saa korralikult dekrüpteerida. Kui soovite selle krüpteeritud sõnumi sisu siiski lisada, võite proovida selle asemel kasutada edastamist manusena.
+report as ham	mail	et	Teatada kui Ham
+report this email content as ham (not spam) - spam solutions like spamtitan will learn	mail	et	Teatage sellest e-posti sisust kui Ham (mitte rämpspost) - rämpsposti lahendused nagu spamTitan õpivad ära
+report this email content as spam - spam solutions like spamtitan will learn	mail	et	Teatage sellest e-posti sisust kui rämpspost - rämpsposti lahendused, nagu spamTitan, õpivad ära
+required pear class mail/mimedecode.php not found.	mail	et	Vajalikku PEAR klassi Mail/mimeDecode.php ei leitud.
+required to disable if you use dovecot with private seen flags on shared or user folder!	mail	et	Vajalik keelata, kui kasutate Dovecot'i koos privaatse nähtud lipuga jagatud või kasutaja kausta!
 save all attachments to filemanager	mail	et	Salvesta kõik manused failihaldurisse
+save as infolog on send	mail	et	Salvesta infoLogina saatmisel
+save the drafted message as eml file into vfs	mail	et	Salvesta koostatud sõnum eml-failina failihaldurisse
+saving of message %1 failed. destination folder %2 does not exist.	mail	et	Sõnumi %1 salvestamine ebaõnnestus. Sihtkaust %2 ei ole olemas.
+saving of message %1 succeeded. check folder %2.	mail	et	Sõnumi %1 salvestamine õnnestus. Kontrollige kausta %2.
+saving the rule failed:	mail	et	Reegli salvestamine ebaõnnestus:
+security	mail	et	Turvalisus
+see attachments for content of the orignial mail	mail	et	Vaata manuseid esialgse e-kirja sisu kohta.
 select all	mail	et	Märgi kõik
+select an existing entry in order to append mail content to it	mail	et	Valige olemasolev kirje, et lisada sellele posti sisu
+select an item to read	mail	et	Valige kirje lugemiseks
 select or insert email address	mail	et	Valige või sisestage e-posti aadress
+selected date range (with quicksearch)	mail	et	Valitud kuupäevavahemik (kiirotsinguga)
+send message and move to send folder (if configured)	mail	et	Sõnumi saatmine ja liigutamine saatekausta (kui see on konfigureeritud)
+send message pgp encrypted: requires keys from all recipients!	mail	et	Sõnumi saatmine PGP-krüpteeritult: nõuab kõigi vastuvõtjate võtmeid!
+server supports special-use folders	mail	et	Server toetab erikasutuskaustu
 set flags	mail	et	Märgista e-kiri kui
 set predefined values for compose...	mail	et	Määrake komplekteerimise jaoks etteantud väärtused ...
+should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	et	Kas allkiri peaks olema lisatud pärast (standard) või enne vastust või edastamist ning kas allkiri peaks olema nähtav ja muudetav koostamise ajal.
+show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	et	näidata kõiki kaustu (tellitud JA mitte-tellitud) põhiekraani kaustapaneelil.
 show notification for new arriving mails	mail	et	Näita teateid uute saabunud kirjade kohta
+show test connection section and control the level of info displayed?	mail	et	Näidata testühenduse osa ja kontrollida kuvatava info taset?
+show test connection section and control the level of info displayed??	mail	et	Näita testühenduse osa ja kontrollida kuvatava teabe taset??
+show them this time only	mail	et	Näita neid seekord ainult
 show vertical	mail	et	Näita vertikaalset
 show vertical with all columns	mail	et	Näita vertikaalselt kõiki veergusid
 show/hide preview pane in mail list view	mail	et	Näita/peida eelvaatepaneel postide loendi vaates
+shows a temporary visible notification including from address, subject and a snippet of the mail	mail	et	Näitab ajutiselt nähtavat teadet, mis sisaldab aadressi, teemat ja katkendit e-kirjast
 signature	mail	et	Allkiri
 signature at top	mail	et	allkiri üleval
 signature position and visibility	mail	et	Allkirja asukoht ja nähtavus
@@ -187,4 +232,15 @@ trash	mail	et	Prügikasti
 trash folder	mail	et	Prügikasti kaust
 unread	mail	et	lugematta
 write	mail	et	Kirjuta
+yes, only trigger connection reset	mail	et	jah, ainult ühenduse lähtestamine
+yes, show all debug information available for the user	mail	et	jah, näidata kogu kasutajale kättesaadavat silumisandmeid
+you can either choose to save as infolog or tracker, not both.	mail	et	Saate valida, kas salvestada InfoLogi VÕI jälgimisseadmena, mitte mõlemat.
 you can select what info to be displayed on email tag	mail	et	Saate valida, millist teavet kuvatakse e-posti sildil.
+you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	et	Saate kasutada $$start$$ ülaltoodud alguskuupäeva ja $$end$$$ lõppkuupäeva jaoks.
+you may add this certificate into your contact, if you trust this signature.	mail	et	Te võite lisada selle sertifikaadi oma kontakti, kui te usaldate seda allkirja.
+you need to enter your s/mime passphrase to send this message.	mail	et	Selle sõnumi saatmiseks peate sisestama oma S/MIME parooli.
+you need to install mailvelope plugin available for chrome and firefox from %1.	mail	et	Teil on vaja paigaldada Mailvelope'i plugin, mis on saadaval Chrome'ile ja Firefoxile alates %1.
+you need to save the message as draft first before to be able to save it into vfs	mail	et	Te peate enne sõnumi VFS-i salvestamist salvestama selle eelnõuna.
+you will loose current message body, unless you save it to your clipboard!	mail	et	Te kaotate praeguse sõnumi teksti, kui te ei salvesta seda lõikelauale!
+you've got new mail	mail	et	Teil on uus e-kiri
+your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	et	Teie järelejäänud kvoot %1 on liiga väike, te ei saa enam e-kirju saata/vastuvõtta.\n Kuigi kirjade koristamine prügikastis või rämpskaustas võib aidata teil vaba ruumi tagasi saada.\n Kui see ei aidanud, paluge administraatoril suurendada kvooti.

@@ -86,7 +86,7 @@ default action on double-click	filemanager	de	Aktion beim Doppelklick einer Date
 default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	de	Vorgabe ist NEIN. Der Verweis wird nicht angezeigt, Sie können aber immer zu diesem Ordner navigieren, Sie können aber den Ordner als Startordner oder als Ordnerverweis konfigurieren.
 default document to insert entries	filemanager	de	Standarddokument zum Einfügen von Daten
 defines how to handle double click action on a document file. images are always opened in the expose-view and emails with email application. all other mime-types are handled by the browser itself.	filemanager	de	Legt fest, wie Dokumente behandelt werden beim Doppelklick auf die Datei. Bilder werden immer in der Exposé-Ansicht geöffnet und E-Mails mit der E-Mail-Anwendung. Alle anderen MIME-Typen werden vom Browser selbst behandelt.
-defines how to open a merge print document	filemanager	de	Was soll mit Dokumenten nach dem Füllen passieren?<br> Mit verfügbarem Collabora Online können diese Dokumente direkt im Browser mit Collabora Online geöffnet (und weiter verarbeitet) werde.<br><br>  <b>Ohne Collabora Online</b> wird ein gefülltest Dokument zum Herunterladen angeboten.  Siehe auch:<br> <a href="https://www.egroupware.org/online-office" target="_blank">Collabora Online Office in EGroupware</a>
+defines how to open a merge print document	filemanager	de	Was soll mit Dokumenten nach dem Füllen passieren?<br>Mit verfügbarem Collabora Online können diese Dokumente direkt im Browser mit Collabora Online geöffnet (und weiter verarbeitet) werden.<br><br> <b>Ohne Collabora Online</b> wird ein gefülltes Dokument zum Herunterladen angeboten.  Siehe auch:<br> <a href="https://www.egroupware.org/online-office" target="_blank">Collabora Online Office in EGroupware</a>
 delete all older versions and deleted files older then %s days	filemanager	de	Lösche alle alten Versionen und gelöschte Dateien älter als %s Tage
 delete these files or directories?	filemanager	de	Diese Dateien oder Ordner löschen?
 delete these shares?	filemanager	de	Diese Freigaben löschen?
@@ -134,7 +134,7 @@ example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james m
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	filemanager	de	Beispiel: {{NELF role}} - Wenn das Feld "role" nicht leer ist, dann wird der Inhalt des Feldes "role" in eine neue Zeile geschrieben.
 example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	filemanager	de	Beispiel: {{nenvlf role}} - Wenn das Feld "role" nicht leer ist, dann wird eine neue Zeile angelegt ohne den Inhalt des Feldes "role" einzufügen.
 excludes selected mime types	filemanager	de	Schließt ausgewählte MIME-Typen aus
-excludes selected mime types from being opened by editor	filemanager	de	Schließt ausgewählte MIME-Typen vom Öffnen durch den Editor aus. Diese Dokument-Typen werden entweder im Browser geöffnet oder heruntergeladen.
+excludes selected mime types from being opened by editor	filemanager	de	Schließt ausgewählte MIME-Typen vom Öffnen durch Collabora Online aus.<br>Diese Dokument-Typen werden entweder im Browser geöffnet oder heruntergeladen.
 executable	filemanager	de	Ausführbar
 expires	filemanager	de	Läuft ab
 export definition to use for nextmatch export	filemanager	de	Exportdefinition für den nextmatch Export
@@ -161,7 +161,7 @@ files from links	filemanager	de	Zeige Dateien aus verknüpften Einträgen
 files from subdirectories	filemanager	de	Dateien aus Unterordner
 files in this directory	filemanager	de	Dateien in diesem Ordner
 filesystem	filemanager	de	Dateisystem
-filesystem check reported no problems.	filemanager	de	Überprüfung des Dateisystems ergab keine Probleme
+filesystem check reported no problems.	filemanager	de	Die Überprüfung des des Dateisystems ergab keine Probleme.
 filesystem: mount directory (inside /var/lib/egroupware!) from host filesystem	filemanager	de	Dateisystem: Mounted Verzeichnisse (innerhalb von /var/lib/egroupware) vom Dateisystem des Hosts
 finally delete	filemanager	de	Endgültig löschen
 finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	de	Ältere Versionen und gelöschte Dateien unter dem angegebenen Ordner endgültig löschen.\n\nDas kann NICHT rückgängig gemacht werden!
@@ -176,7 +176,7 @@ general fields:	filemanager	de	Allgemeine Platzhalter
 go home	filemanager	de	Gehe zum Heimordner
 go to	filemanager	de	Gehe zu
 go to your home directory	filemanager	de	Zu Ihrem persönlichen Ordner wechseln
-go up	filemanager	de	in den übergeordneten Ordner wechseln
+go up	filemanager	de	In den übergeordneten Ordner wechseln
 group home quota	filemanager	de	Quota Gruppen Home-Verzeichnis
 hidden upload	filemanager	de	Hochladen nicht einsehbar
 hidden uploads	filemanager	de	Hochladen nicht einsehbar
@@ -202,13 +202,13 @@ mail paste	filemanager	de	per E-Mail versenden
 max folderlinks	admin	de	maximale Anzahl von Links zu Ordner
 merge print open handler	filemanager	de	Handler für das Einfügen in Dokument
 mime type	filemanager	de	MIME-Typ
-modified	filemanager	de	verändert
-modified between	filemanager	de	verändert zwischen
+modified	filemanager	de	Verändert
+modified between	filemanager	de	Verändert zwischen
 modify all subdirectories and their content	filemanager	de	Änderungen auf alle Unterordner und ihre Inhalte anwenden
 mount	filemanager	de	Mount
 mount /etemplates to allow customizing of etemplates	filemanager	de	/etemplates mounten um eTemplate anpassen zu können
 mountpoints	filemanager	de	Mountpunkte
-move	filemanager	de	verschieben
+move	filemanager	de	Verschieben
 move into folder	filemanager	de	Verschieben in Ordner
 move to	filemanager	de	Verschieben nach
 moved %1 to %2	filemanager	de	%1 nach %2 verschoben
@@ -291,7 +291,7 @@ size	filemanager	de	Größe
 smb, webdavs and vfs require a username!	filemanager	de	SMB, WebDAVs und VFS benötigen einen Benutzernamen!
 smb: mount samba or windows fileserver shares	filemanager	de	SMB: Mounten von Freigaben eines Samba- oder Windows-Dateiserver
 some functionalities require superuser permissions, please login here as filemanager superuser - allowed users are defined in setup.	filemanager	de	Einige Funktionalitäten benötigen Superuser-Rechte. Bitte loggen sie sich hier als Dateimanager Superuser ein (Zulässige Benutzer werden im Setup festgelegt).
-sqlfs statistics	filemanager	de	sqlFS Statistik
+sqlfs statistics	filemanager	de	VFS Statistik
 start search	filemanager	de	Suche starten
 startfolder	filemanager	de	Anfangsordner
 successful mounted %1 on %2.	filemanager	de	%1 erfolgreich nach %2 gemounted.

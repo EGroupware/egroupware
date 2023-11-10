@@ -5,6 +5,7 @@ administrators	filemanager	da	administratorer
 applications	common	da	Applikationer
 cancel editing %1 without saving	filemanager	da	annullere redigéring af %1 uden at gemme
 cannot create directory because it begins or ends in a space	filemanager	da	Kan ikke oprette biblioteket fordi den begynder eller slutter med et mellemrum
+classic	filemanager	da	Standard værktøjslinje
 comment	filemanager	da	Kommentar
 copied %1 to %2	filemanager	da	Kopieret %1 til %2
 copy to	filemanager	da	Kopier til
@@ -19,48 +20,96 @@ created	filemanager	da	Oprettet
 created %1,%2	filemanager	da	Oprettede %1, %2
 created directory %1	filemanager	da	Oprettede biblioteket %1
 custom fields	filemanager	da	Valgfri Felter
+default action on double-click	filemanager	da	Standardhandling ved dobbeltklik
+default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	da	Standard = Nej. Linket vil ikke blive vist, men du kan stadig navigere til denne placering eller konfigurere denne placering som startmappe eller mappelink.
+defines how to handle double click action on a document file. images are always opened in the expose-view and emails with email application. all other mime-types are handled by the browser itself.	filemanager	da	Definerer, hvordan dobbeltklik på en dokumentfil skal håndteres. Billeder åbnes altid i expose-view og e-mails med e-mailprogrammet. Alle andre MIME-typer håndteres af browseren selv.
 deleted %1	filemanager	da	Slettede %1
 directory	filemanager	da	Bibliotek
 directory %1 already exists	filemanager	da	Biblioteket %1 findes eksistere allerede
 directory %1 does not exist	filemanager	da	Biblioteket %1 eksistere ikke
 disable	filemanager	da	Deaktivere
 download	filemanager	da	Hent
+download documents	filemanager	da	Download dokumenter
 edit comments	filemanager	da	Redigér kommentar
+edit share	filemanager	da	Rediger deling
 enable	filemanager	da	aktivere
+enter a file size, e.g. 100k, 200m or 2g	filemanager	da	Indtast en filstørrelse, f.eks. 100K, 200M eller 2G
+enter your file name	filemanager	da	Indtast dit filnavn
 everyone	filemanager	da	enhver
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	filemanager	da	Eksempel {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - søg i feltet "n_prefix", efter "Mr", hvis fundet, skriv Hello Mr. ellers skriv Hello Ms.
+example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	filemanager	da	Eksempel {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Eksempel: Hr. Dr. James Miller
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	filemanager	da	Eksempel {{NELF rolle}} - Hvis feltet role ikke er tomt, får du en ny linje med værdien af feltet role.
+example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	filemanager	da	Eksempel {{nenvlf rolle}} - hvis feltet rolle ikke er tomt, sættes en LF uden nogen værdi for feltet
+excludes selected mime types	filemanager	da	Ekskluderer udvalgte MIME-typer
+excludes selected mime types from being opened by editor	filemanager	da	Udelukker udvalgte MIME-typer fra at blive åbnet af Collabora Online.<br>Disse dokumenttyper åbnes enten i browseren eller downloades.
+executable	filemanager	da	Eksekverbar
 expires	filemanager	da	Udløber
+export definition to use for nextmatch export	filemanager	da	Eksportdefinition, der skal bruges til nextmatch-eksport
+extended access control list	filemanager	da	Udvidet adgangskontrol-liste
+extended acl	filemanager	da	Udvidet ACL
+failed to change permissions of %1!	filemanager	da	Kunne ikke ændre tilladelser for %1!
+failed to create directory!	filemanager	da	Kunne ikke oprette mappe!
+favorites	filemanager	da	Favoritter
 file	common	da	Fil
+file %1 already exists	filemanager	da	Filen %1 findes allerede
 file %1 could not be created.	filemanager	da	Filen %1 kunne ikke oprettes.
+file %1 may be too big. contact your systemadministrator for further info	filemanager	da	Filen %1 er muligvis for stor.
+file a file is only available with an epl subscription.	filemanager	da	Fil en fil er kun tilgængelig med et EPL-abonnement.
 file names cannot contain "%1"	filemanager	da	Filnavne kan ikke indeholde "%1"
 filemanager	common	da	Filhåndtering
 files in this directory	filemanager	da	Filer i dette bibliotek
+filesystem	filemanager	da	Filsystem
+filesystem check reported no problems.	filemanager	da	Filsystemtjekket rapporterede ingen problemer.
+filesystem: mount directory (inside /var/lib/egroupware!) from host filesystem	filemanager	da	Filsystem: mount directory (inde i /var/lib/egroupware !) fra værtens filsystem
+finally delete	filemanager	da	Slet til sidst
+finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	da	Slet til sidst alle ældre versioner og slettede filer under en given mappe.\n\nDette kan IKKE fortrydes!
+finally delete this version	filemanager	da	Slet endelig denne version
+fix reported problems	filemanager	da	Løs rapporterede problemer
 folder up	filemanager	da	Bibliotek op
+for files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available.  see the specific application for a list of available placeholders.	filemanager	da	For filer, der er knyttet til en programpost (inde i /apps/appname/id/), er pladsholderne for det pågældende program også tilgængelige. Se den specifikke applikation for en liste over tilgængelige pladsholdere.
+for files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available. see the specific application for a list of placeholders	filemanager	da	For filer, der er linket til en applikationspost (inde i /apps/appname/id/), er pladsholderne for den pågældende applikation også tilgængelige. Se den specifikke applikation for en liste over pladsholdere.
+for serial letter use this tag. put the content, you want to repeat between two tags.	filemanager	da	Brug dette tag til seriebreve. Sæt det indhold, du vil gentage, mellem to tags.
 general	filemanager	da	Generelt
 go home	filemanager	da	gå hjem
 go to	filemanager	da	Gå til
 go to your home directory	filemanager	da	Gå til hjemmebibliotek
-go up	filemanager	da	gå op
+go up	filemanager	da	Gå op
+group home quota	filemanager	da	Gruppens hjemmekvote
 hidden upload	filemanager	da	Skjult upload
 hidden uploads	filemanager	da	Skjult uploads
+hostname/ip for webdav and smb	filemanager	da	Værtsnavn/IP for WebDAV og SMB
 id	filemanager	da	ID
+if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	da	Hvis du angiver en mappe (fuld VFS-sti) her, viser %1 en handling for hvert dokument. Denne handling gør det muligt at downloade det angivne dokument med %1-data indsat.
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	da	Hvis du angiver en mappe (fuld VFS-sti) her, viser %1 et ekstra dokumentikon for hver post. Dette ikon gør det muligt at downloade det angivne dokument med de indsatte data.
 link	filemanager	da	Link
+list view	filemanager	da	Listevisning
 location	filemanager	da	Sti
 lock	filemanager	da	Lås
+mail paste	filemanager	da	Mail indsæt
+merge print open handler	filemanager	da	Flet udskrivning åben handler
 mime type	filemanager	da	MIME type
-modified	filemanager	da	Ændret
-move	filemanager	da	flyt
+modified	filemanager	da	Modificeret
+mountpoints	filemanager	da	Monteringspunkter
+move	filemanager	da	Flyt
 move to	filemanager	da	Flyt til
 moved %1 to %2	filemanager	da	Flyttede %1 til %2
 no files in this directory.	filemanager	da	Ingen filer i dette bibliotek.
 no version history for this file/directory	filemanager	da	Ingen versions historie for denne fil/bibliotek
+notebookbar	filemanager	da	Faneblad
 open	filemanager	da	åben
 operation	filemanager	da	Operation
+password for webdav and smb, use $pass for password of logged in user	filemanager	da	Adgangskode til WebDAV og SMB, brug $pass for adgangskoden til den indloggede bruger
+path and query-parameters, smb: share and optional path (with /)	filemanager	da	Sti og forespørgselsparametre, SMB: share og valgfri sti (med /)
 permissions	filemanager	da	Rettigheder
 please select a file to delete.	filemanager	da	Vælg venligst filen som skal slettes.
 preview	filemanager	da	Snig vis
 preview %1	filemanager	da	Snig kik %1
 preview of %1	filemanager	da	Snig kik af %1
 quick jump to	filemanager	da	Hop til
+quota	filemanager	da	Kvote
+quota exceeded	filemanager	da	Kvote overskredet
+recalculate	filemanager	da	Genberegning
+recalculated %1 directories in %2 iterations and %3 seconds	filemanager	da	Genberegnede %1 mapper i %2 iterationer og %3 sekunder
 reload	filemanager	da	opdater
 renamed %1 to %2	filemanager	da	Omdøbte %1 til %2
 replaced %1	filemanager	da	%1 erstattet

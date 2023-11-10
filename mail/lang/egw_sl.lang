@@ -93,7 +93,7 @@ changing subject failed folder %1 does not exist	mail	sl	Spreminjanje teme ni us
 check message against next rule also	mail	sl	Preverite sporočilo tudi z naslednjim pravilom
 check to receive a notification when the message is read (note: not all clients support this and/or the receiver may not authorize the notification)	mail	sl	preverite, ali ste prejeli obvestilo, ko se prebere sporočilo (opomba: ne podpirajo vsi odjemalci in / ali prejemnik ne more odobriti obvestila)
 check to save as calendar event on send	mail	sl	preverite, ali želite shraniti kot dogodek ob pošiljanju
-check to save as infolog on send	mail	sl	preverite, ali želite shraniti kot infolog pri pošiljanju
+check to save as infolog on send	mail	sl	preverite, ali želite shraniti kot InfoLog pri pošiljanju
 check to save as tracker entry on send	mail	sl	preverite, ali želite shraniti kot zapis za sledenje pri pošiljanju
 choose file	mail	sl	Izberite datoteko
 common acl	mail	sl	Skupni ACL
@@ -180,6 +180,7 @@ don't use sent	mail	sl	Ne uporabljaj mape Poslano (Sent)
 don't use template folder	mail	sl	Ne uporabljaj mape s predlogami
 don't use trash	mail	sl	Ne uporabljaj mape Koš (Trash)
 download attachments	mail	sl	Prenesite priloge
+draft	mail	sl	Osnutek
 draft folder	mail	sl	Mapa Osnutki
 drafts	mail	sl	Osnutki
 drafts folder	mail	sl	Osnutek mape
@@ -357,6 +358,8 @@ message preview area	mail	sl	Območje za predogled sporočila
 message saved successfully.	mail	sl	Sporočilo je bilo uspešno shranjeno.
 message send failed: %1	mail	sl	Poslano sporočilo ni uspelo:% 1
 message send successfully.	mail	sl	Sporočilo je uspešno poslano.
+message verified successfully but the signer’s certificate could not be verified.	mail	sl	Sporočilo je bilo uspešno preverjeno, vendar podpisnikovega potrdila ni bilo mogoče preveriti.
+message verified successfully.	mail	sl	Sporočilo je bilo uspešno preverjeno.
 miscellaneous	mail	sl	Razno
 modify subject	mail	sl	Spremeni predmet
 modify subject of this message	mail	sl	Spremeni predmet tega sporočila
@@ -371,8 +374,11 @@ moved %1 message(s) from %2 to %3	mail	sl	premaknil %1 sporočil od %2 do %3
 moving folders from one mailaccount to another is not supported	mail	sl	Premikanje map iz enega poštnega računa v drugega ni podprto
 name and email	mail	sl	Ime in e-pošta
 name of account	mail	sl	Ime računa
+name of imap servers (space separated host or host:port)	mail	sl	Ime strežnikov IMAP (gostitelj ali gostitelj:vrata)
 never display html emails	mail	sl	Nikoli ne prikaži sporočil HTML
-never show	mail	sl	nikoli ne pokaži
+never show	mail	sl	Nikoli ne pokaži
+never show notification	mail	sl	Nikoli ne prikažite obvestila
+new mail from %1	mail	sl	Nova pošta od %1
 new mail notification	mail	sl	Novo obvestilo o pošti
 new message type	mail	sl	Nova vrsta sporočila
 new subject	mail	sl	Nov predmet
@@ -381,7 +387,7 @@ no access	mail	sl	Ni dostopa
 no action defined!	mail	sl	Nobeno dejanje ni definirano!
 no address to/cc/bcc supplied, and no folder to save message to provided.	mail	sl	Ni bil podan niti naslov Za/Kp/Skp niti mapa, kamor naj bi se sporočilo shranilo.
 no adress, to send this mail to, supplied	mail	sl	ni bil poslan noben naslov komu poslati to pošto
-no folder destination supplied, and no folder to save message or other measure to store the mail (save to infolog/tracker) provided, but required.	mail	sl	Dobavljeno ni nobeno mapo mape in nobena mapa, ki omogoča shranjevanje sporočila ali drugih ukrepov za shranjevanje pošte (shranite na infolog / tracker), ki je zagotovljena, a potrebna.
+no folder destination supplied, and no folder to save message or other measure to store the mail (save to infolog/tracker) provided, but required.	mail	sl	Dobavljeno ni nobeno mapo mape in nobena mapa, ki omogoča shranjevanje sporočila ali drugih ukrepov za shranjevanje pošte (shranite na InfoLog / tracker), ki je zagotovljena, a potrebna.
 no folders	mail	sl	Brez mapo
 no message body supplied	mail	sl	telo sporočila ni priloženo
 no plain text part found	mail	sl	Ni najdenega čistega besedila
@@ -400,13 +406,17 @@ nothing to change.	mail	sl	Brez sprememb.
 notify about new mail in this folders	mail	sl	V teh mapah obvestite o novi pošti
 notify when new mails arrive in these folders	mail	sl	obvestite, kdaj v te mape pride nova pošta
 on	mail	sl	Vključeno
+on behalf of	mail	sl	v imenu
+on vacation	mail	sl	Na dopustu
 one address is not valid	mail	sl	En naslov ni veljaven
 only email	mail	sl	Samo e-pošta
+only if currently in an other app	mail	sl	Samo če ste trenutno v drugi aplikaciji
 only makes sense, if you transport password through a different channel / outside of this mail to recipients!	mail	sl	Smiselno je samo, če geslo prenesete na drug kanal / izven te pošte prejemnikom!, če geslo prenesete na drug kanal / izven te pošte prejemnikom!
 only name	mail	sl	Samo ime
 only needed for some servers, that do not return all folders on root level queries to retrieve all folders for that level	mail	sl	potrebni samo za nekatere strežnike, ki ne vrnejo vseh map v poizvedbah korenskega nivoja, da bi naložili vse mape za to raven
 only one window	mail	sl	Le eno okno
 only send message, do not copy a version of the message to the configured sent folder	mail	sl	pošljite samo sporočilo, ne kopirajte različice sporočila v nastavljeno mapo
+only store message in inbox, do not send vacation notice	mail	sl	Sporočilo shranite samo v mapo INBOX, NE pošiljajte obvestila o dopustu
 open in html mode	mail	sl	Odpri v načinu HTML
 open in text mode	mail	sl	Odpri v besedilnem načinu
 open with collabora office	mail	sl	Odpiranje s programom Collabora Online
@@ -425,6 +435,7 @@ please enter password	mail	sl	Vnesite geslo
 please select a address	mail	sl	Izberite naslov
 please select the number of days to wait between responses	mail	sl	Izberite koliko dni naj počakam med odgovori
 please supply the message to send with auto-responses	mail	sl	Vpišite sporočilo, ki se bo poslalo pri samodejnem odgovoru
+please wait while sending your mail	mail	sl	Prosimo, počakajte med pošiljanjem pošte
 post	mail	sl	prejem
 predefined addresses for compose	mail	sl	Vnaprej določeni naslovi za sestavljanje
 prevent managing filters	mail	sl	Preprečite upravljanje filtrov
@@ -440,6 +451,7 @@ provide a default vacation text, (used on new vacation messages when there was n
 push notifications	mail	sl	Potisna obvestila
 quicksearch	mail	sl	Hitro iskanje
 quicksearch (with cc)	mail	sl	Hitro iskanje (+ kopiranje)
+quota limit warning in megabyte (recommended value is 30 mb).	mail	sl	Opozorilo o omejitvi kvote v megabajtih (priporočena vrednost je 30 MB).
 quota not provided by server	mail	sl	Kvota, ki jo ne zagotavlja strežnik
 quota: %1	mail	sl	Kvota: %1
 read	mail	sl	Prebrano
@@ -484,24 +496,29 @@ report as spam	mail	sl	Prijavite kot neželeno pošto
 report this email content as ham (not spam) - spam solutions like spamtitan will learn	mail	sl	Prijavite to e-poštno vsebino kot Ham (ne vsiljena pošta) - rešitve neželene pošte, kot je spamTitan, se bodo naučile
 report this email content as spam - spam solutions like spamtitan will learn	mail	sl	Prijavite to e-poštno vsebino kot spam-spam rešitve, kot je spamTitan
 required pear class mail/mimedecode.php not found.	mail	sl	Potreben PEAR razred Mail / mimeDecode.php ni našel.
+required to disable if you use dovecot with private seen flags on shared or user folder!	mail	sl	Potrebno onemogočiti, če uporabljate Dovecot z zastavicami private seen na skupni ali uporabniški mapi!
 resend after how many days?	mail	sl	Ponovno pošlji po številu dni?
 respond to mail sent to:	mail	sl	Odgovorite na pošto, poslano na:
-restrict acl management	admin	sl	omejiti upravljanje acl
+restrict acl management	admin	sl	omejiti upravljanje ACL
 rights	mail	sl	Pravice
 row order style	mail	sl	Slog zaporednih vrstic
 rule priority position	mail	sl	Položaj prednostnega pravila
 rule with priority	mail	sl	pravilo s prednostjo
 rules	mail	sl	pravila
+s/mime encryption failed because no certificate has been found for sender address: %1	mail	sl	Šifriranje S/MIME ni uspelo, ker za naslov pošiljatelja ni bilo najdeno nobeno potrdilo: %1
 save all	mail	sl	Shrani vse
 save all attachments to filemanager	mail	sl	Shranite vse priponke v datotečni upravljalnik
 save as calendar	mail	sl	Shrani kot koledar
 save as default	mail	sl	shranite kot privzeto
 save as draft	mail	sl	Shrani kot osnutek
 save as draft and print	mail	sl	Shrani kot osnutek in natisni
-save as infolog	mail	sl	Shrani kot Infolog
-save as infolog on send	mail	sl	Shrani kot Infolog ob pošiljanju
+save as infolog	mail	sl	Shrani kot InfoLog
+save as infolog on send	mail	sl	Shrani kot InfoLog ob pošiljanju
 save as ticket	mail	sl	Shrani kot zahtevo
 save as tracker on send	mail	sl	Shrani kot zahtevek ob pošiljanju
+save attachment	mail	sl	Shrani priponko
+save attachments	mail	sl	Shranite priponke
+save email	mail	sl	Shrani e-pošto
 save message to disk	mail	sl	Shrani sporočilo na disk
 save of message %1 failed. could not save message to folder %2 due to: %3	mail	sl	Shranjevanje sporočila %1 ni uspelo. Sporočila ni bilo mogoče shraniti v mapo %2 zaradi: %3
 save the drafted message as eml file into vfs	mail	sl	Shranite pripeto sporočilo kot datoteko eml v VFS
@@ -516,6 +533,7 @@ saving of message %1 succeeded. check folder %2.	mail	sl	Shranjevanje sporočila
 saving the rule failed:	mail	sl	Shranjevanje pravila ni uspelo:
 security	mail	sl	Varnost
 see attachments for content of the orignial mail	mail	sl	Glejte Priponke za vsebino originalne pošte
+select a date	mail	sl	Izberite datum
 select all	mail	sl	Izberi vse
 select an existing entry in order to append mail content to it	mail	sl	Izberite obstoječi vnos, če želite dodati e-poštno vsebino
 select an item to read	mail	sl	Izberite element, ki ga želite prebrati
@@ -530,6 +548,9 @@ selected date range (with quicksearch)	mail	sl	Izbrano časovno obdobje (s hitri
 send a reject message:	mail	sl	Pošiljanje zavrnjenega sporočila:
 send files as	mail	sl	Pošiljanje datotek kot
 send message and move to send folder (if configured)	mail	sl	pošiljanje sporočila in premik v mapo za pošiljanje (če je konfigurirana)
+send message pgp encrypted: requires keys from all recipients!	mail	sl	Pošljite sporočilo šifrirano s PGP: zahteva ključe vseh prejemnikov!
+send only a vacation notice, do not store message in inbox	mail	sl	Pošljite samo obvestilo o dopustu, sporočila NE shranjujte v mapo INBOX
+send vacation notice and store message in inbox	mail	sl	Pošljite obvestilo o dopustu in shranite sporočilo v INBOX
 sender	mail	sl	pošiljatelja
 sent	mail	sl	Poslano
 sent folder	mail	sl	Mapa s poslanimi
@@ -538,6 +559,7 @@ serverside filterrules (sieve) are not activated	mail	sl	Serverside Filterrules 
 serverside vacationnotice (via sieve) are not activated	mail	sl	Odsotna sporočila brez strežnika (prek Sieve) niso aktivirana
 set / remove flags	mail	sl	Nastavite / Odstrani zastavice
 set / remove labels	mail	sl	Nastavite / Odstrani oznake
+set flags	mail	sl	Nastavitev zastavic
 set it as default:	mail	sl	ga nastavite kot privzeto:
 set predefined values for compose...	mail	sl	Nastavite vnaprej določene vrednosti za compose ...
 should new messages show up on the home page	mail	sl	Če se na domači strani prikažejo nova sporočila
@@ -557,12 +579,14 @@ show them this time only	mail	sl	Pokaži jih samo tokrat
 show vertical	mail	sl	prikazati navpično
 show vertical with all columns	mail	sl	Prikaži navpično z vsemi stolpci
 show/hide preview pane in mail list view	mail	sl	Pokaži / Skrij podokno za predogled v pogledu e-poštnega seznama
+shows a temporary visible notification including from address, subject and a snippet of the mail	mail	sl	Prikaže začasno vidno obvestilo, vključno z naslovom od, predmetom in odlomkom pošte
 sieve	mail	sl	Sieve
 sieve connection status	mail	sl	Stanje povezave
 sieve not activated	mail	sl	Sito ni aktivirano
 sieve script name	mail	sl	Ime skripte Sieve
 sieve server	mail	sl	Sieve strežnik
 sieve_edit_instructions	mail	sl	(*) se lahko uporabijo nadomestni znaki (* ,?). Če se želite ujemati * ali? sami, jih morate pobegniti s poševnico (\). Če preverite "Uporabi regularne izraze", morate uporabiti veljavne regularne izraze. Da bi pobegnili z vlamalnim znakom (!) Na začetku, ki se ne uporablja kot "NE", uporabite regex in poševnico (\) (npr. \!)
+sign your message with smime certificate	mail	sl	Podpišite sporočilo s potrdilom S/MIME
 signature	mail	sl	Podpis
 signature at top	mail	sl	podpis na vrhu
 signature position and visibility	mail	sl	Položaj podpisa in prepoznavnost
@@ -593,6 +617,7 @@ subscribe folder ...	mail	sl	Naroči mapo ...
 subscribe to folder %1	mail	sl	Naročite se na mapo %1
 subscription folders	mail	sl	Naročniške mape
 subscription successfully saved.	mail	sl	Naročnina je uspešno shranjena.
+succeeded on %1 folders, failed on %2	mail	sl	Uspešno v %1 mapi, neuspešno v %2
 successfully connected	mail	sl	Uspešno povezana
 switch off encryption?	mail	sl	Izklopite šifriranje?
 template folder	mail	sl	Mapa s predlogami
@@ -603,8 +628,8 @@ test connection and display basic information about the selected profile	mail	sl
 text	mail	sl	Besedilo
 text mode	mail	sl	Način besedila
 text/plain	mail	sl	Navadno besedilo
-the %1 's acl removed from the %2	mail	sl	Acl %1 je odstranjen iz %2
-the %1 's acl, including its subfolders, removed from the %2	mail	sl	Acl %1, vključno z njegovimi podmapami, je bil odstranjen iz %2
+the %1 's acl removed from the %2	mail	sl	ACL %1 je odstranjen iz %2
+the %1 's acl, including its subfolders, removed from the %2	mail	sl	ACL %1, vključno z njegovimi podmapami, je bil odstranjen iz %2
 the entered passphrase is not correct! please try again.	mail	sl	Vnesena geslo ni pravilna! Prosim poskusite ponovno.
 the folder %1 's acls saved	mail	sl	Shranjeni so ACL-ji mape %1
 the folder <b>%1</b> will be used, if there is nothing set here, and no valid predefine given.	mail	sl	Uporabljena bo mapa <b>%1</b>, če tukaj ni ničesar in ne bo podana nobena veljavna prednastavitev.
@@ -614,7 +639,7 @@ the mimeparser can not parse this message.	mail	sl	Mimeparser ne more prebrati t
 the rule with priority %1 successfully saved!	mail	sl	Pravilo s prednostjo %1 je uspešno shranjeno!
 then	mail	sl	THEN
 there is no imap server configured.	mail	sl	Noben strežnik IMAP ni nastavljen.
-there is no space left to store sieve script, please check sieve_maxscriptsize option on your mailserver's config.	mail	sl	Za shranjevanje skripte sieve ni več prostora, preverite možnost sieve_maxscriptsize v konfiguraciji poštnega strežnika.
+there is no space left to store sieve script, please check sieve_maxscriptsize option on your mailserver's config.	mail	sl	Za shranjevanje skripte Sieve ni več prostora, preverite možnost Sieve_maxscriptsize v konfiguraciji poštnega strežnika.
 this mail contains external images served via insecure http protocol. be aware showing or allowing them can compromise your security!	mail	sl	Ta pošta vsebuje zunanje slike, ki so postrežene prek nezanesljivega protokola HTTP. Zavedajte se, da njihovo prikazovanje ali dovoljevanje lahko ogrozi vašo varnost!
 this message is smime encrypted and password protected.	mail	sl	To sporočilo je šifrirano smime in zaščiteno z geslom.
 timeout on connections to your imap server	mail	sl	Časovna omejitev povezave s strežnikom IMAP
@@ -676,7 +701,7 @@ yes, offer copy option	mail	sl	Da, ponudi možnost Kopija
 yes, only trigger connection reset	mail	sl	Ja, samo sproži ponastavitev povezave
 yes, show all debug information available for the user	mail	sl	da, prikažite vse informacije o odpravi napak, ki so na voljo uporabniku
 yes, show basic info only	mail	sl	da, prikaži samo osnovne informacije
-you can either choose to save as infolog or tracker, not both.	mail	sl	Lahko se odločite, da shranite kot infolog OR tracker, ne oboje.
+you can either choose to save as infolog or tracker, not both.	mail	sl	Lahko se odločite, da shranite kot InfoLog OR tracker, ne oboje.
 you can select what info to be displayed on email tag	mail	sl	Izberete lahko, katere informacije bodo prikazane na e-poštni oznaki.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	sl	Za začetni datum in $ $ end $ $ lahko uporabite $$ start $$ za končni datum.
 you may add this certificate into your contact, if you trust this signature.	mail	sl	To potrdilo lahko dodate v stik, če zaupate temu podpisu.

@@ -3,8 +3,10 @@
 acl rights retrieve failed, seems there are no rights set!	mail	zh	ACL 权限检索失败，似乎未设置任何权限！
 activating by date requires a start- and end-date!	mail	zh	以日期激活需要一个开始和结束日期！
 add all my aliases	mail	zh	添加我所有的别名
+add as new	mail	zh	添加为新内容
 add files as %1	mail	zh	添加文件为 %1
 add raw message, ignore mail attachments	mail	zh	将邮件转换为项目，添加原始信息（忽略邮件附件）。
+add this certificate into contact	mail	zh	将此证书添加到联系人
 add to addressbook	mail	zh	添加至通讯录
 adding %1 to blacklisted email addresses failed because of %2	mail	zh	将 %1 添加到黑名单电子邮件地址失败，原因是 %2
 adding %1 to whiltelisted email addresses failed because of %2	mail	zh	将 %1 添加到已列入黑名单的电子邮件地址失败，原因是 %2
@@ -28,6 +30,8 @@ be aware that all attachments will be sent as %1!	mail	zh	请注意，所有附�
 by date	mail	zh	以日期
 by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	zh	默认情况下，"http://"只是用 "https://"代替。您可以随意配置 "https://proxy.egroupware.org/"，使其也能加载仅通过 http 提供的图片。
 caching of flags	mail	zh	标记缓存
+can not resolve the winmail.dat attachment!	mail	zh	无法解析 winmail.dat 附件！
+certificate info for email %1	mail	zh	电子邮件 %1 的证书信息
 changing subject failed because of %1	mail	zh	更改主题失败，因为 %1
 changing subject failed folder %1 does not exist	mail	zh	更改主题失败 文件夹 %1 不存在
 check message against next rule also	mail	zh	也用下一个规则检查邮件
@@ -55,6 +59,9 @@ display messages in multiple windows	mail	zh	在多窗口显示邮件
 display of html emails	mail	zh	显示HTML邮件
 display only when no plain text is available	mail	zh	仅当邮件非纯文本时显示
 displaying html messages is disabled	mail	zh	显示HTML邮件被禁用
+do you really want to toggle flag %1 for all messages in the current view?	mail	zh	您真的想在当前视图中为所有邮件切换标记 %1 吗？
+do you really want to toggle label %1 for all messages in the current view?	mail	zh	您真的想在当前视图中为所有邮件切换标签 %1 吗？
+do you want to be asked for confirmation before attaching selected messages to new mail?	mail	zh	您是否希望在将选定邮件附加到新邮件之前要求确认？
 does not contain	mail	zh	不包含
 does not match	mail	zh	不符合
 does not match regexp	mail	zh	不符合条件
@@ -95,7 +102,9 @@ from	mail	zh	从
 from(a->z)	mail	zh	从 (A->Z)
 from(z->a)	mail	zh	从 (Z->A)
 general	admin	zh	通用
+get acl rights failed from imap server!	mail	zh	从 IMAP 服务器获取 ACL 权限失败！
 greater than	mail	zh	大于
+ham folder	mail	zh	垃圾邮件文件夹
 handling of external http images / mixed content in mails	mail	zh	处理电子邮件中的外部 http 图像/混合内容
 header lines	mail	zh	邮件头
 html	mail	zh	HTML
@@ -152,6 +161,7 @@ mark all messages in folder as read	mail	zh	将文件夹中的所有邮件标记
 mark as deleted	mail	zh	标记为已删除
 matches	mail	zh	符合
 matches regexp	mail	zh	符合规则
+message learned as spam and moved to spam folder	mail	zh	邮件被识别为垃圾邮件并移至垃圾邮件文件夹
 modify subject	mail	zh	修改主题
 modify subject of this message	mail	zh	修改此信息的主题
 move selected to	mail	zh	将选定邮件移至
@@ -161,15 +171,19 @@ name and email	mail	zh	姓名和电子邮件
 never display html emails	mail	zh	从不显示 HTML 邮件
 new subject	mail	zh	新的主题
 no access	mail	zh	无访问
+no folder destination supplied, and no folder to save message or other measure to store the mail (save to infolog/tracker) provided, but required.	mail	zh	未提供文件夹目标，也未提供用于保存邮件的文件夹或用于保存邮件的其他措施（保存到信息日志/票务系统），但必须提供。
 no plain text part found	mail	zh	未找到纯文本部分
 no recipient address given!	mail	zh	没有给定收件人地址！
 no signature	mail	zh	没有签名
 no sneak preview in list	mail	zh	没有信息预览
 no subject given!	mail	zh	没有指定的主题！
+non	mail	zh	非
 on	mail	zh	在
 one address is not valid	mail	zh	其中一个地址无效
 only email	mail	zh	仅电子邮件
+only makes sense, if you transport password through a different channel / outside of this mail to recipients!	mail	zh	只有在通过不同渠道/在此邮件之外向收件人发送密码时才有意义！
 only name	mail	zh	仅名称
+only needed for some servers, that do not return all folders on root level queries to retrieve all folders for that level	mail	zh	只有在某些服务器上才需要，这些服务器不会返回根级别查询的所有文件夹，以检索该级别的所有文件夹
 only one window	mail	zh	只一个窗口
 open with collabora office	mail	zh	使用 Collabora Online 打开
 organisation	admin	zh	组织
@@ -179,12 +193,18 @@ original message	mail	zh	原始信息
 outbox	mail	zh	发件箱
 permission denied	mail	zh	没有权限
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	zh	请在 "编辑帐户 "对话框的 "加密 "选项卡中配置您的 S/MIME 证书。
+please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	zh	请联系您的管理员，确认您的服务器是否支持服务器端过滤规则，以及如何在 EGroupware 中为 ID:%2 的活动帐户 (%1) 启用这些规则。
+please contact your administrator to validate if your server supports serverside vacationmessages, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	zh	请联系您的管理员，确认服务器是否支持服务器端休假信息，以及如何在 EGroupware 中为 ID:%2 的活动帐户 (%1) 启用这些信息。
+please enter password	mail	zh	请输入密码
 please select a address	mail	zh	请选择地址
 please select the number of days to wait between responses	mail	zh	请选择回复之间要等待的天数
 please supply the message to send with auto-responses	mail	zh	请提供要自动回复的内容
+post	mail	zh	发送
 predefined addresses for compose	mail	zh	撰写的预定义地址
 preview pane	mail	zh	窗口布局
 printing	mail	zh	打印
+processing of file %1 failed. failed to meet basic restrictions.	mail	zh	处理文件 %1 失败。不符合基本限制。
+provide a default vacation text, (used on new vacation messages when there was no message set up previously)	admin	zh	提供默认的假期文本，（用于之前未设置假期的新邮件）
 push notifications	mail	zh	推送通知
 quicksearch	mail	zh	快速搜索
 quicksearch (with cc)	mail	zh	快速搜索（+复制）
@@ -204,21 +224,47 @@ replied	mail	zh	已回复
 reply	mail	zh	回复
 reply all	mail	zh	全部回复
 reply to	mail	zh	回复到
+replying to this message failed because the content of this message seems to be encrypted and can not be decrypted properly. if you still wish to include content of this encrypted message, you may try to use forward as attachment instead.	mail	zh	回复此邮件失败，因为邮件内容似乎已加密，无法正常解密。如果您仍希望包含此加密邮件的内容，可以尝试使用转发作为附件。
 replyto	mail	zh	回复到
+report as ham	mail	zh	报告为垃圾邮件
+report as spam	mail	zh	报告为垃圾邮件
+report this email content as ham (not spam) - spam solutions like spamtitan will learn	mail	zh	将此电子邮件内容报告为垃圾邮件（非垃圾邮件） - 垃圾邮件解决方法（如 spamTitan）将学习
+report this email content as spam - spam solutions like spamtitan will learn	mail	zh	将此电子邮件内容报告为垃圾邮件 - 垃圾邮件解决方案（如 spamTitan）将学习
+required pear class mail/mimedecode.php not found.	mail	zh	未找到所需的 PEAR 类 Mail/mimeDecode.php。
+required to disable if you use dovecot with private seen flags on shared or user folder!	mail	zh	如果您使用 Dovecot 并在共享文件夹或用户文件夹上设置了私人可见标志，则需要禁用！
 row order style	mail	zh	行排序类型
 save all	mail	zh	保存所有
 save all attachments to filemanager	mail	zh	保存所有附件到文件管理器
 save as draft	mail	zh	存为草稿
 save as infolog	mail	zh	存为记事本
+save as infolog on send	mail	zh	发送时保存为 InfoLog
 save message to disk	mail	zh	保存邮件到磁盘
+save the drafted message as eml file into vfs	mail	zh	在文件管理器中将起草的邮件保存为 eml 文件
+saving of message %1 failed. destination folder %2 does not exist.	mail	zh	保存邮件 %1 失败。目标文件夹 %2 不存在。
+saving of message %1 succeeded. check folder %2.	mail	zh	保存邮件 %1 成功。检查文件夹 %2。
+saving the rule failed:	mail	zh	保存规则失败：
+security	mail	zh	安全
+see attachments for content of the orignial mail	mail	zh	原始邮件内容见附件
 select all	mail	zh	全选
+select an existing entry in order to append mail content to it	mail	zh	选择一个现有条目，以便将邮件内容添加到该条目中
+select an item to read	mail	zh	选择一个项目阅读
 select or insert email address	mail	zh	选择或插入电子邮件地址
+selected date range (with quicksearch)	mail	zh	选定日期范围（使用快速搜索）
+send message and move to send folder (if configured)	mail	zh	发送信息并移至发送文件夹（如果已配置）
+send message pgp encrypted: requires keys from all recipients!	mail	zh	发送 PGP 加密邮件：需要所有收件人提供密钥！
 sent folder	mail	zh	发件夹
+server supports special-use folders	mail	zh	服务器支持特殊用途文件夹
 set predefined values for compose...	mail	zh	设置用于撰写的预定义值...
+should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	zh	是否应在回复或转发之后（标准）或之前插入签名，以及是否应在撰写过程中显示和更改签名。
+show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	zh	在主屏幕文件夹窗格中显示所有文件夹（已订阅和未订阅文件夹
 show notification for new arriving mails	mail	zh	显示新到邮件通知
+show test connection section and control the level of info displayed?	mail	zh	显示测试连接部分并控制显示信息的级别？
+show test connection section and control the level of info displayed??	mail	zh	显示测试连接部分并控制显示信息的级别？
+show them this time only	mail	zh	仅在此时显示
 show vertical	mail	zh	垂直显示
 show vertical with all columns	mail	zh	垂直显示所有列
 show/hide preview pane in mail list view	mail	zh	在邮件列表视图中显示/隐藏预览窗格
+shows a temporary visible notification including from address, subject and a snippet of the mail	mail	zh	显示临时可见通知，包括发件人地址、主题和邮件片段
 sieve script name	mail	zh	Sieve 脚本名
 signature	mail	zh	签名
 signature at top	mail	zh	签名在顶部
@@ -256,4 +302,15 @@ view header lines	mail	zh	查看邮件头
 when deleting messages	mail	zh	当删除邮件时
 write	mail	zh	写入
 wrote	mail	zh	写信
+yes, only trigger connection reset	mail	zh	是，只触发连接重置
+yes, show all debug information available for the user	mail	zh	是，显示用户可用的所有调试信息
+you can either choose to save as infolog or tracker, not both.	mail	zh	您可以选择保存为信息日志或跟踪器，但不能同时选择。
 you can select what info to be displayed on email tag	mail	zh	您可以选择要在电子邮件标签上显示的信息。
+you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	zh	您可以使用 $$start$$ 表示上述开始日期，使用 $$end$$ 表示结束日期。
+you may add this certificate into your contact, if you trust this signature.	mail	zh	如果您信任此签名，可以将此证书添加到联系人中。
+you need to enter your s/mime passphrase to send this message.	mail	zh	您需要输入 S/MIME 密码才能发送此邮件。
+you need to install mailvelope plugin available for chrome and firefox from %1.	mail	zh	您需要安装 Mailvelope 插件，该插件可从 %1 安装到 Chrome 浏览器和 Firefox 浏览器。
+you need to save the message as draft first before to be able to save it into vfs	mail	zh	您需要先将邮件保存为草稿，然后才能将其保存到 VFS 中。
+you will loose current message body, unless you save it to your clipboard!	mail	zh	您将丢失当前邮件正文，除非将其保存到剪贴板！
+you've got new mail	mail	zh	您有新邮件
+your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	zh	您的剩余配额 %1 太少，您可能无法继续收发邮件。

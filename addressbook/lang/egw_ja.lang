@@ -1,15 +1,15 @@
 %1 added	addressbook	ja	%1 を追加しました
 %1 contact(s) %2	addressbook	ja	%1 個のコンタクトを %2
-%1 contact(s) %2, %3 failed because of %4 !!!	addressbook	ja	1 連絡先 %2、%3 が %4 のため失敗しました!
+%1 contact(s) %2, %3 failed because of %4 !!!	addressbook	ja	%1 連絡先 %2、%3 が %4 のため失敗しました!
 %1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	ja	%1 個のコンタクトを %2, （権限不足のため %3 個は失敗!）
 %1 contacts updated (%2 errors).	addressbook	ja	%1 個のコンタクトを更新しました (%2 個のエラー)。
-%1 fields in %2 other organisation member(s) changed	addressbook	ja	%1 fields in %2 other organization member(s) changed.
+%1 fields in %2 other organisation member(s) changed	addressbook	ja	他の組織メンバ %2 の %1 フィールドが変更されました。
 %1 key(s) added to public keyserver "%2".	addressbook	ja	%1 個のキーを公開キー・サーバー "%2" に追加しました。
 %1 not implemented for %2!	addressbook	ja	%2 用 %1 は実装されていません!
 %1 public keys added.	addressbook	ja	%1 公開キーを追加しました。
 %1 records imported	addressbook	ja	%1 件インポートしました
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	ja	%1 個のレコードを読み込みましたが、まだインポートされていません。画面を戻って予行演習モードを解除してください。
-%1 shared this contact on %2 with %3 %4	addressbook	ja	1 はこのコンタクトを %2 で %3 %4 と共有しました。
+%1 shared this contact on %2 with %3 %4	addressbook	ja	%1 はこのコンタクトを %2 で %3 %4 と共有しました。
 %1 starts with '%2'	addressbook	ja	%1 を %2 で開始
 %s please calculate the result	addressbook	ja	%s 結果を計算してください
 (e.g. 1969)	addressbook	ja	(例 1969)
@@ -73,8 +73,8 @@ allow members of following groups to edit contact-data of accounts	addressbook	j
 allow users to maintain their own account-data	admin	ja	ユーザ自身のコンタクト・データの更新を許可
 alt. csv import	addressbook	ja	CSVインポート
 always	addressbook	ja	常に
-apply changes to all members, whose fields have the same previous content	addressbook	ja	Apply changes to all members, whose fields have the same previous content.
-apply the action on the whole query, not only the shown contacts!!!	addressbook	ja	Apply the action on the whole query, NOT only the shown contacts!
+apply changes to all members, whose fields have the same previous content	addressbook	ja	フィールドの以前の内容が同じであるすべてのメンバに変更を適用します。
+apply the action on the whole query, not only the shown contacts!!!	addressbook	ja	表示されている連絡先だけでなく、クエリ全体にアクションを適用します！
 are you shure you want to delete this contact?	addressbook	ja	このコンタクトを削除してよろしいですか？
 are you sure you want to delete this field?	addressbook	ja	この項目を削除してよろしいですか？
 assistent	addressbook	ja	アシスタント
@@ -136,7 +136,7 @@ contact fields:	addressbook	ja	コンタクト項目:
 contact id	addressbook	ja	コンタクト ID
 contact id cannot be changed by import	addressbook	ja	インポートによるコンタクト ID の変更はできません。
 contact maintenance	admin	ja	コンタクト保守
-contact modified by %1 at %2	addressbook	ja	Contact modified by %1 at %2 .
+contact modified by %1 at %2	addressbook	ja	%2 で %1 が変更した連絡先。
 contact not found!	addressbook	ja	コンタクトが見つかりません!
 contact repository	admin	ja	コンタクト・リポジトリ
 contact saved	addressbook	ja	コンタクトを保存しました
@@ -316,7 +316,7 @@ import multiple vcard	addressbook	ja	複数の vCards をインポート
 import next set	addressbook	ja	次のセットをインポート
 import_instructions	addressbook	ja	In Netscape, open the Address book and select <b>Export</b> from the <b>File</b> menu.  The file exported will be in LDIF format.<p>Or, in Outlook, select your Contacts folder, select <b>Import and Export...</b> from the <b>File</b> menu and export your contacts into a comma separated text (CSV) file.  <p>Or, in Palm Desktop 4.0 or greater, visit your address book and select <b>Export</b> from the <b>File</b> menu.  The file exported will be in vCard format.
 importer's personal	addressbook	ja	インポート実行者
-imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	ja	Imports contacts into address book from a CSV File. CSV means 'Comma Separated Values'. In the options tab you can also choose other separators.
+imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	ja	CSVファイルからアドレス帳に連絡先をインポートします。CSVは「カンマ区切り値」を意味します。オプションタブで他のセパレータを選択することもできます。
 imports contacts into your addressbook from a vcard file.	addressbook	ja	vCard ファイルからアドレス帳にコンタクトをインポート。
 in %1 days (%2) is %3's birthday.	addressbook	ja	%1 日後（%2）は %3 さんの誕生日です。
 income	addressbook	ja	収入
@@ -561,7 +561,7 @@ which charset should be used for the vcard import and export.	addressbook	ja	vCa
 which fields should be exported. all means every field stored in the addressbook incl. the custom fields. the business or home address only contains name, company and the selected address.	addressbook	ja	どの項目をエクスポートするかを指定します。「全て」を選択下場合、カスタム項目を含む全ての項目が対象となります。仕事住所のみ、または自宅住所のみを選択すると、氏名、会社名および指定された住所だけが対象となります。
 whole query	addressbook	ja	クエリ全体
 work email if given, else home email	addressbook	ja	メール・アドレス（仕事または自宅）
-work phone	addressbook	ja	勤務先TEL
+work phone	addressbook	ja	仕事用電話
 write (update or add) a single entry by passing the fields.	addressbook	ja	項目を送信してデータを更新/追加
 wrong - try again ...	addressbook	ja	不正 - 要 再試行 ...
 yes, for the next three days	addressbook	ja	はい（翌3日間）

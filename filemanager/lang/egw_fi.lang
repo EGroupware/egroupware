@@ -40,6 +40,7 @@ cancel editing %1 without saving	filemanager	fi	Peru %1:n muokkaus tallentamatta
 cannot create directory because it begins or ends in a space	filemanager	fi	Hakemistoa ei voi luoda, koska nimi alkaa tai päättyy välilyöntiin
 check all	filemanager	fi	Valitse kaikki
 check virtual filesystem	common	fi	Tarkista VFS
+classic	filemanager	fi	Standardityökalurivi
 clear search	filemanager	fi	Tyhjennä haku
 clipboard is empty!	filemanager	fi	Leikepöytä on tyhjä!
 comment	filemanager	fi	Kommentti
@@ -66,8 +67,10 @@ current directory	filemanager	fi	Nykyinen hakemisto
 custom fields	filemanager	fi	Lisäkentät
 cut	filemanager	fi	Leikkaa
 cut to clipboard	filemanager	fi	Leikkaa leikepöydälle
+default action on double-click	filemanager	fi	Kaksoisnapsautuksen oletustoiminto
 default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	fi	Oletus on EI. Linkkiä ei näytetä, mutta voit silti navigoida osoitteeseen tai konfiguroida sen aloituskansioksi tai kansiolinkiksi.
 default document to insert entries	filemanager	fi	Oletusasiakirja
+defines how to handle double click action on a document file. images are always opened in the expose-view and emails with email application. all other mime-types are handled by the browser itself.	filemanager	fi	Määrittää, miten asiakirjatiedoston kaksoisnapsautustoimintoa käsitellään. Kuvat avataan aina paljastus-näkymässä ja sähköpostit sähköpostisovelluksella. Kaikki muut MIME-tyypit käsitellään selaimessa itse.
 delete these files or directories?	filemanager	fi	Poista nämä tiedostot tai hakemistot?
 delete this file or directory	filemanager	fi	Poista tämä tiedosto tai hakemisto.
 deleted %1	filemanager	fi	Poistettiin %1
@@ -84,14 +87,18 @@ display and modification of content	filemanager	fi	Sisällön muokaus ja näytt�
 display of content	filemanager	fi	Sisällön näyttö (lukuoikeus)
 do you want to overwrite the existing file %1?	filemanager	fi	Haluatko tallentaa jo olemassaolevan tiedoston %1 päälle (overwrite)?
 download	filemanager	fi	Lataa
+download documents	filemanager	fi	Lataa asiakirjoja
 edit comments	filemanager	fi	Muokkaa kommentteja
 edit settings	filemanager	fi	Muokkaa asetuksia
+edit share	filemanager	fi	Muokkaa jakoa
 enable	filemanager	fi	Ota käyttöön
 enable versioning for given mountpoint	filemanager	fi	Salli versiointi
+enter a file size, e.g. 100k, 200m or 2g	filemanager	fi	Anna tiedoston koko, esim. 100K, 200M tai 2G.
 enter setup user and password	filemanager	fi	Anna käyttäjänimi ja salasana
 enter setup user and password to get root rights	filemanager	fi	Anna ROOT käyttäjänimi ja salasana
 enter the complete vfs path to specify a fast access link to a folder	filemanager	fi	Anna täydellinen VFS polku kansiolinkille.
 enter the complete vfs path to specify your desired start folder.	filemanager	fi	Anna täydellinen VFS polku aloituskansiolle.
+enter your file name	filemanager	fi	Kirjoita tiedoston nimi
 error adding the acl!	filemanager	fi	Virhe ACL -oikeuksia lisättäessä!
 error creating symlink to target %1!	filemanager	fi	Virhe luotaessa symlinkkiä kohteeseen %1!
 error deleting the acl entry!	filemanager	fi	Virhe ACL -oikeuksia poistettaessa!
@@ -104,6 +111,9 @@ example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", fo
 example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	filemanager	fi	Esimerkki {{LETTERPREFIXCUSTOM n_prefix title n_family}} ---> Mr Dr. James Miller
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	filemanager	fi	Esimerkki {{NELF role}} ---> jos kenttä 'role' = 'rooli/asema' ei ole tyhjä, se kirjoitetaan seuraavalle riville
 example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	filemanager	fi	Esimerkki {{nenvlf role}} ---> jos kenttä 'role' = 'rooli/asema' ei ole tyhjä, aseta LF ilman arvoa
+excludes selected mime types	filemanager	fi	Sulkee pois valitut MIME-tyypit
+excludes selected mime types from being opened by editor	filemanager	fi	Sulkee valitut MIME-tyypit pois Collabora Online -ohjelmasta.<br> Nämä asiakirjatyypit joko avataan selaimessa tai ladataan.
+executable	filemanager	fi	Suoritettava
 expires	filemanager	fi	Vanhentuu
 export definition to use for nextmatch export	filemanager	fi	Vienti asetukset 'nextmatch' vientiin
 extended access control list	filemanager	fi	Laajennetut ACL -oikeudet
@@ -112,8 +122,10 @@ failed to change permissions of %1!	filemanager	fi	%1, oikeuksien myöntäminen 
 failed to create directory!	filemanager	fi	Hakemiston luominen epäonnistui
 favorites	filemanager	fi	Suosikit
 file	common	fi	Tiedosto
+file %1 already exists	filemanager	fi	Tiedosto %1 on jo olemassa
 file %1 could not be created.	filemanager	fi	Tiedostoa %1 ei voitu luoda.
 file %1 may be too big. contact your systemadministrator for further info	filemanager	fi	Tiedosto %1 voi olla liian suuri. Ota yhteys ylläpitäjiin lisätietojen saamiseksi!
+file a file is only available with an epl subscription.	filemanager	fi	Tiedosto tiedosto on käytettävissä vain EPL-tilauksella.
 file deleted.	filemanager	fi	Tiedosto poistettu
 file names cannot contain "%1"	filemanager	fi	Tiedoston nimessä ei saa olla "%1"
 file or directory not found!	filemanager	fi	Tiedostoa tai hakemistoa ei löytynyt!
@@ -124,19 +136,30 @@ filemanager fields:	filemanager	fi	Tiedostonhallinnan kentät:
 filename must not be empty!	filemanager	fi	Tiedoston nimi ei voi olla tyhjä!
 files from subdirectories	filemanager	fi	Alakansioiden tiedostot
 files in this directory	filemanager	fi	Tiedostot tässä kansiossa
+filesystem	filemanager	fi	Tiedostojärjestelmä
+filesystem check reported no problems.	filemanager	fi	Tiedostojärjestelmän tarkistus ei raportoinut ongelmia.
+filesystem: mount directory (inside /var/lib/egroupware!) from host filesystem	filemanager	fi	Tiedostojärjestelmä: mount-hakemisto (sisällä /var/lib/egroupware !) isännän tiedostojärjestelmästä.
+finally delete	filemanager	fi	Lopuksi poista
+finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	fi	Poistaa lopullisesti kaikki vanhemmat versiot ja poistetut tiedostot annetusta kansiosta.\n\nTätä ei voi peruuttaa!
 finally delete this version	filemanager	fi	Poista tämä versio
+fix reported problems	filemanager	fi	Korjaa raportoidut ongelmat
 folder up	filemanager	fi	Ylempi kansio
+for files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available.  see the specific application for a list of available placeholders.	filemanager	fi	Sovelluksen merkintään (/apps/appname/id/:n sisällä) linkitetyille tiedostoille ovat myös kyseisen sovelluksen paikannimet käytettävissä. Katso luetteloa käytettävissä olevista paikanhaltijoista kyseisestä sovelluksesta.
+for files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available. see the specific application for a list of placeholders	filemanager	fi	Sovelluksen nimikkeeseen (sisällä /apps/appname/id/) linkitetyissä tiedostoissa ovat käytettävissä myös kyseisen sovelluksen paikannimet. Katso luettelo paikanhaltijoista kyseisestä sovelluksesta.
 for serial letter use this tag. put the content, you want to repeat between two tags.	filemanager	fi	Käytä tätä Tagia sarjakirjeille (serial letter). Lisää toistettava sisältö kahden Tagin väliin
 general	filemanager	fi	Yleinen
 general fields:	filemanager	fi	Yleiset kentät:
 go home	filemanager	fi	Kotiin
 go to	filemanager	fi	Mene
 go to your home directory	filemanager	fi	Kotihakemistoon
-go up	filemanager	fi	ylös
+go up	filemanager	fi	Ylös
+group home quota	filemanager	fi	Ryhmän kotikiintiö
 hidden upload	filemanager	fi	Piilotettu lataus
 hidden uploads	filemanager	fi	Piilotetut lataukset
+hostname/ip for webdav and smb	filemanager	fi	Isäntänimi/IP WebDAV:lle ja SMB:lle.
 id	filemanager	fi	Id
-if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	fi	Määrittele tiedosto (koko vfs polku), ja %1 näyttää kaikki ylimääräisen kuvakkeen jokaiselle merkinnälle. Määritelty tiedosto voidaan ladata kuvaketta klikkaamalla, sisältäen tiedostoon automaattisesti syötetyt tiedot..
+if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	fi	Jos määrität tässä kansion (koko VFS-polku), %1 näyttää kunkin asiakirjan toiminnon. Toiminnon avulla voit ladata määritetyn asiakirjan, johon on lisätty %1-tiedot.
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	fi	Määrittele tiedosto (koko VFS polku), ja %1 näyttää kaikki ylimääräisen kuvakkeen jokaiselle merkinnälle. Määritelty tiedosto voidaan ladata kuvaketta klikkaamalla, sisältäen tiedostoon automaattisesti syötetyt tiedot..
 if you specify an export definition, it will be used when you export	filemanager	fi	Valitse viennin oletusasetus
 if you specify an export definition, it will be used when you export*	filemanager	fi	Valitse viennin oletusasetus
 inherited	filemanager	fi	Perityt oikeudet
@@ -144,15 +167,19 @@ link	filemanager	fi	Linkki
 link %1: %2	filemanager	fi	Linkki %1: %2
 link target	filemanager	fi	Linkkikohde
 link target %1 not found!	filemanager	fi	Linkkikohdetta %1 ei löytynyt!
+list view	filemanager	fi	Luettelonäkymä
 location	filemanager	fi	Sijainti
 lock	filemanager	fi	Lukitse
 log out as superuser	filemanager	fi	Kirjaudu ulos SuperUserina
 mail files	filemanager	fi	Lähetä sähköpostilla
+mail paste	filemanager	fi	Sähköpostin liittäminen
 max folderlinks	admin	fi	Kansioiden maksimilinkkimäärä
+merge print open handler	filemanager	fi	Yhdistämistulostuksen avoimen käsittelyn käsittelijä
 mime type	filemanager	fi	MIME-tyyppi
 modified	filemanager	fi	Muokattu
 modified between	filemanager	fi	Muokattu välillä
 modify all subdirectories and their content	filemanager	fi	Muokkaa kaikkia alahakemistoja ja niiden sisältöä
+mountpoints	filemanager	fi	Mountpoints
 move	filemanager	fi	Siirrä
 move into folder	filemanager	fi	Siirrä kansioon
 move to	filemanager	fi	Siirrä
@@ -164,11 +191,14 @@ no files in this directory.	filemanager	fi	Kansiossa ei ole tiedostoja
 no preview available	filemanager	fi	Esikatselu ei ole käytössä
 no version history for this file/directory	filemanager	fi	Tiedostolla/kansiolla ei ole versioita
 noone	filemanager	fi	Ei kukaan
+notebookbar	filemanager	fi	Tabbed
 older versions or deleted files	filemanager	fi	Vanhat versiot ja/tai poistetut tiedostot
 only owner can rename or delete the content	filemanager	fi	Ainoastaan omistaja voi uudellennimetä tai poistaa sisällön
 open	filemanager	fi	Avoin
 operation	filemanager	fi	Operaatio
+password for webdav and smb, use $pass for password of logged in user	filemanager	fi	Salasana WebDAV:lle ja SMB:lle, käytä $pass kirjautuneen käyttäjän salasanaa.
 path %1 not found or not a directory!	filemanager	fi	Polkua %1 ei löytynyt tai kansiota ei ole olemassa!
+path and query-parameters, smb: share and optional path (with /)	filemanager	fi	Polku ja kyselyparametrit, SMB: jako ja valinnainen polku (/:n kanssa).
 percentage	filemanager	fi	Prosentti
 permission denied!	filemanager	fi	Pääsy estetty!
 permissions	filemanager	fi	ACL-oikeudet
@@ -180,8 +210,12 @@ preview of %1	filemanager	fi	%1 esikatselu
 projectmanager	filemanager	fi	Projektinhallinta
 properties saved.	filemanager	fi	Asetukset tallennettu.
 quick jump to	filemanager	fi	Mene
+quota	filemanager	fi	Kiintiö
+quota exceeded	filemanager	fi	Kiintiö ylitetty
 read & write access	filemanager	fi	Luku- ja kirjoitusoikeudet (ACL)
 read access only	filemanager	fi	Ainoastaan lukuoikeus
+recalculate	filemanager	fi	Laske uudelleen
+recalculated %1 directories in %2 iterations and %3 seconds	filemanager	fi	Laskettiin uudelleen %1 hakemistoa %2 iteraatiossa ja %3 sekunnissa.
 reload	filemanager	fi	Lataa uudelleen
 rename of %1 to %2 failed!	filemanager	fi	%1:n uudelleennimeäminen %1:ksi epäonnistui!
 rename, change permissions or ownership	filemanager	fi	Nimeä uudelleen, Muuta ACL-oikeuksia tai omistajaa

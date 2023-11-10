@@ -1,6 +1,8 @@
 (no subject)	mail	no	(uten emne)
 acl rights retrieve failed, seems there are no rights set!	mail	no	Henting av ACL-rettigheter mislyktes, ser ut til at det ikke er angitt noen rettigheter!
+add as new	mail	no	Legg til som ny
 add files as %1	mail	no	Legg til filer som %1
+add this certificate into contact	mail	no	Legg til dette sertifikatet i kontakt
 add to addressbook	mail	no	legg til i adressebok
 adding %1 to blacklisted email addresses failed because of %2	mail	no	Legge til %1 til svartelistede e-postadresser mislyktes på grunn av %2
 adding %1 to whiltelisted email addresses failed because of %2	mail	no	Legge til %1 til e-postadresser på hvilliste mislyktes på grunn av %2
@@ -17,6 +19,8 @@ be aware by adding all selected files as %1 mode, it will also change all existi
 be aware that all attachments will be sent as %1!	mail	no	Vær oppmerksom på at alle vedlegg vil bli sendt som %1!
 by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	no	Som standard erstattes 'http://' bare med 'https://'. Konfigurer gjerne 'https://proxy.egroupware.org/' til også å laste inn bilder som bare er tilgjengelige via http.
 caching of flags	mail	no	Bufring av flagg
+can not resolve the winmail.dat attachment!	mail	no	Kan ikke løse vedlegget winmail.dat!
+certificate info for email %1	mail	no	Sertifikatinfo for e-post %1
 changing subject failed because of %1	mail	no	Endring av emne mislyktes på grunn av %1
 changing subject failed folder %1 does not exist	mail	no	Endring av emne mislyktes mappe %1 eksisterer ikke
 check message against next rule also	mail	no	Kontroller melding mot neste regel også
@@ -34,6 +38,9 @@ disable	mail	no	Deaktiver
 discard message	mail	no	Forkast melding
 display of html emails	mail	no	Visning av HTML e-post
 display only when no plain text is available	mail	no	Vis bare når ingen normal tekst er tilgjengelig
+do you really want to toggle flag %1 for all messages in the current view?	mail	no	Vil du virkelig veksle mellom flagget %1 for ALLE meldinger i gjeldende visning?
+do you really want to toggle label %1 for all messages in the current view?	mail	no	Vil du virkelig veksle mellom etiketten %1 for ALLE meldinger i gjeldende visning?
+do you want to be asked for confirmation before attaching selected messages to new mail?	mail	no	Vil du bli bedt om bekreftelse før du legger ved valgte meldinger i en ny e-post?
 does not contain	mail	no	inneholder ikke
 does not match	mail	no	stemmer ikke
 does not match regexp	mail	no	stemmer ikke med regexp
@@ -71,7 +78,9 @@ from	mail	no	Fra
 from(a->z)	mail	no	Fra (A -> Å)
 from(z->a)	mail	no	Fra (Å -> A)
 general	admin	no	Generell
+get acl rights failed from imap server!	mail	no	Få ACL-rettigheter mislyktes fra IMAP-serveren!
 greater than	mail	no	Større enn
+ham folder	mail	no	Mappe for søppelpost
 handling of external http images / mixed content in mails	mail	no	Håndtering av eksterne http-bilder / blandet innhold i e-poster
 header lines	mail	no	Hodelinjer
 html	mail	no	HTML
@@ -114,8 +123,9 @@ mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messa
 mark as deleted	mail	no	Merk som slettet
 matches	mail	no	treff
 matches regexp	mail	no	treffer regexp
-move selected to	mail	no	flytt valgt til
-move to	mail	no	flytt valgt til
+message learned as spam and moved to spam folder	mail	no	Melding oppdaget som søppelpost og flyttet til søppelpostmappen
+move selected to	mail	no	Flytt valgt til
+move to	mail	no	Flytt valgt til
 move to trash	mail	no	Flytt til søppelkurv
 name and email	mail	no	Navn og e-post
 never display html emails	mail	no	Vis aldri HTML e-post
@@ -158,13 +168,37 @@ reply	mail	no	Svar
 reply all	mail	no	Svar alle
 reply to	mail	no	Svar til
 replyto	mail	no	SvarTil
+report as spam	mail	no	Rapporter som søppelpost
+report this email content as ham (not spam) - spam solutions like spamtitan will learn	mail	no	Rapporter denne e-posten som Ham (ikke spam) - spam-løsninger som spamTitan vil lære av dette.
+report this email content as spam - spam solutions like spamtitan will learn	mail	no	Rapporter denne e-posten som søppelpost - spamløsninger som spamTitan vil lære seg det
+required pear class mail/mimedecode.php not found.	mail	no	Påkrevd PEAR-klasse Mail/mimeDecode.php ikke funnet.
+required to disable if you use dovecot with private seen flags on shared or user folder!	mail	no	Påkrevd å deaktivere hvis du bruker Dovecot med private seen-flagg på delt mappe eller brukermappe!
 save all	mail	no	Lagre alle
+save as infolog on send	mail	no	Kryss av for knappen for å opprette som InfoLog etter sending
+save as tracker on send	mail	no	Kryss av for at meldingen skal opprettes som ticket etter sending
+save the drafted message as eml file into vfs	mail	no	Lagre den utarbeidede meldingen som eml-fil i Filbehandling
+saving of message %1 failed. destination folder %2 does not exist.	mail	no	Lagring av melding %1 mislyktes. Målmappen %2 finnes ikke.
+saving of message %1 succeeded. check folder %2.	mail	no	Lagring av meldingen %1 lyktes. Sjekk mappe %2.
+saving the rule failed:	mail	no	Lagring av regelen mislyktes:
+security	mail	no	Sikkerhet
+see attachments for content of the orignial mail	mail	no	Se vedlegg for innholdet i den opprinnelige e-posten.
 select all	mail	no	Velg alle
+select an existing entry in order to append mail content to it	mail	no	Velg en eksisterende oppføring for å legge til e-postinnhold i den.
+selected date range (with quicksearch)	mail	no	Valgt datointervall (med hurtigsøk)
+send message and move to send folder (if configured)	mail	no	Send melding og flytt til sendemappe (hvis konfigurert)
+send message pgp encrypted: requires keys from all recipients!	mail	no	Send meldingen PGP-kryptert: krever nøkler fra alle mottakere!
 sent folder	mail	no	Sendt Mappe
+server supports special-use folders	mail	no	Serveren støtter mapper for spesialbruk
+should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	no	Skal signaturen settes inn etter (standard) eller før et svar eller videresending, og skal signaturen være synlig og kunne endres under skriving?
+show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	no	Vis alle mapper (abonnerte OG ikke-abonnerte) i hovedskjermens mapperute.
 show notification for new arriving mails	mail	no	Vis varsel for nye innkommende e-poster
+show test connection section and control the level of info displayed?	mail	no	Vis testtilkoblingsdelen og kontroller nivået på informasjonen som vises?
+show test connection section and control the level of info displayed??	mail	no	Vis testtilkoblingsdelen og kontroller nivået på informasjonen som vises?
+show them this time only	mail	no	Vis dem bare denne gangen
 show vertical	mail	no	Vis vertikalt
 show vertical with all columns	mail	no	Vis vertikalt med alle kolonner
 show/hide preview pane in mail list view	mail	no	Vis/skjul forhåndsvisningsrute i postlistevisningen
+shows a temporary visible notification including from address, subject and a snippet of the mail	mail	no	Viser et midlertidig synlig varsel med avsenderadresse, emne og et utdrag av e-posten.
 signature	mail	no	Signatur
 size(...->0)	mail	no	Størrelse (...->0)
 size(0->...)	mail	no	Størrelse (0->...)
@@ -192,5 +226,15 @@ vacation notice	mail	no	Ferie melding
 when deleting messages	mail	no	Når du sletter meldinger
 write	mail	no	Lagre
 wrote	mail	no	skrev
+yes, only trigger connection reset	mail	no	taip, tik paleisti ryšio atstatymą
+yes, show all debug information available for the user	mail	no	taip, rodo visą naudotojui prieinamą derinimo informaciją
+you can either choose to save as infolog or tracker, not both.	mail	no	Galite pasirinkti, ar norite išsaugoti kaip "InfoLog", ar kaip "Tracker", bet ne kaip abu.
 you can select what info to be displayed on email tag	mail	no	Du kan velge hvilken informasjon som skal vises på e-posttaggen.
+you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	no	Pirmiau nurodytai pradžios datai galite naudoti $$start$$, o pabaigos datai - $$end$$.
+you may add this certificate into your contact, if you trust this signature.	mail	no	Šį sertifikatą galite įtraukti į savo kontaktą, jei pasitikite šiuo parašu.
+you need to enter your s/mime passphrase to send this message.	mail	no	Norėdami išsiųsti šią žinutę, turite įvesti savo S/MIME slaptažodį.
+you need to install mailvelope plugin available for chrome and firefox from %1.	mail	no	Jums reikia įdiegti "Mailvelope" įskiepį, kurį "Chrome" ir "Firefox" galima įsigyti iš %1.
+you need to save the message as draft first before to be able to save it into vfs	mail	no	Kad galėtumėte išsaugoti pranešimą kaip juodraštį, pirmiausia turite jį išsaugoti VFS
+you will loose current message body, unless you save it to your clipboard!	mail	no	Prarasite esamą žinutės tekstą, nebent išsaugosite jį iškarpinėje!
 you've got new mail	mail	no	Du har fått ny e-post
+your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	no	Jūsų likusi kvota %1 yra per maža, galite nebegalėti siųsti / gauti daugiau laiškų.\n Nors išvalę laiškus iš šiukšlių ar nepageidaujamų laiškų aplanko galite atgauti šiek tiek laisvos vietos.\n Jei tai nepadėjo, paprašykite administratoriaus suteikti daugiau kvotos.

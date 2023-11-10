@@ -11,6 +11,8 @@ attention	calendar	ro	În atenția
 category report	calendar	ro	Raport de categorie
 changed event-data applied	calendar	ro	S-a aplicat modificarea datelor de eveniment
 date range	calendar	ro	Intervalul de date
+email address migration	calendar	ro	Migrarea adresei de e-mail
+error notifying %1	calendar	ro	Eroare de notificare %1
 exclude weekend	calendar	ro	Excludeți Weekend
 how many days to be removed in the future (default 365)	calendar	ro	Câte zile trebuie să fie eliminate în viitor (implicit 365)
 how many days to be removed in the past (default 100)	calendar	ro	Câte zile trebuie să fie eliminate în trecut (implicit 100)
@@ -27,8 +29,26 @@ minimum number of users for showing week view as consolidated.	calendar	ro	Numă
 move to	calendar	ro	Treceți la
 multiple participants	calendar	ro	Participanți multipli
 never notify externals (non-users) about events i create	calendar	ro	Nu notificați niciodată persoanele externe (non-utilizatori) despre evenimentele pe care le creez
+notify	calendar	ro	Notificare
+notify all externals (non-users) about this event	calendar	ro	Notifică toate persoanele externe (non-utilizatori) despre acest eveniment
+number of resources to be booked	calendar	ro	Numărul de resurse care urmează să fie rezervate
 output unit	calendar	ro	Unitate de ieșire
+private event	calendar	ro	Eveniment privat
 recordings	calendar	ro	Înregistrări
+removes the event from my calendar	calendar	ro	Elimină evenimentul din calendarul meu
+replying "%1" is not a participant of the event! only continue if you want to add as new participant.	calendar	ro	Răspundeți "%1" NU este un participant la eveniment! Continuați numai dacă doriți să adăugați un nou participant.
 report	calendar	ro	Raport
+send notifications	calendar	ro	Trimiteți notificări
+send notifications to users right now	calendar	ro	Trimiteți notificări participanților chiar acum
+show %1 from %2	calendar	ro	Afișați %1 din %2
+show birthdays as all day non-blocking events as well as via mouseover of the date.	calendar	ro	Afișează ca evenimente care nu se blochează toată ziua, precum și prin trecerea mouse-ului peste data.
+single participant	calendar	ro	Participant unic
 sort by	calendar	ro	Sortează după
+status	calendar	ro	Stare
+the apple ical apps use this color to display events from this calendar.	calendar	ro	Aplicațiile Apple iCal utilizează această culoare pentru a afișa evenimentele din acest calendar.
+the document can contain placeholder like {{%1}}, to be replaced with the data.	calendar	ro	Documentul poate conține caractere de subsol precum {{%1}}, care vor fi înlocuite cu datele.
+the extern organizer changed the event!	calendar	ro	Organizatorul extern a modificat evenimentul!
+the sender "%1" is not the extern organizer "%2", proceed with caution!	calendar	ro	Expeditorul "%1" NU este organizatorul extern "%2", procedați cu prudență!
+the sender "%1" is not the participant replying "%2", proceed with caution!	calendar	ro	Expeditorul "%1" NU este participantul care răspunde la "%2", procedați cu prudență!
+toggle weekend	calendar	ro	Comutați weekendul
 utilities	calendar	ro	Utilități

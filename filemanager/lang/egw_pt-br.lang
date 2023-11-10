@@ -41,6 +41,7 @@ cannot create directory because it begins or ends in a space	filemanager	pt-br	N
 cautiously rejecting to remove folder '%1'!	filemanager	pt-br	Cautelosamente rejeitando para remover a pasta '% 1'!
 check all	filemanager	pt-br	Checar todos
 check virtual filesystem	common	pt-br	Verifique o sistema de arquivos virtual
+classic	filemanager	pt-br	Barra de ferramentas padrão
 clear search	filemanager	pt-br	limpar pesquisa
 clipboard is empty!	filemanager	pt-br	Clipboard está vazio!
 comment	filemanager	pt-br	Comentário
@@ -67,7 +68,10 @@ current directory	filemanager	pt-br	Diretório atual
 custom fields	filemanager	pt-br	Campos personalizados
 cut	filemanager	pt-br	recortar
 cut to clipboard	filemanager	pt-br	Recortar para a área de transferência
+default action on double-click	filemanager	pt-br	Ação padrão ao clicar duas vezes
+default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	pt-br	Padrão = Não. O link não será exibido, mas você ainda poderá navegar para esse local ou configurar esse local específico como pasta inicial ou link de pasta.
 default document to insert entries	filemanager	pt-br	Documento padrão para inserir entradas
+defines how to handle double click action on a document file. images are always opened in the expose-view and emails with email application. all other mime-types are handled by the browser itself.	filemanager	pt-br	Define como lidar com a ação de clique duplo em um arquivo de documento. As imagens são sempre abertas na visualização de exposição e os e-mails são enviados com o aplicativo de e-mail. Todos os outros tipos de MIME são tratados pelo próprio navegador.
 delete these files or directories?	filemanager	pt-br	Excluir esses arquivos ou diretórios?
 delete this file or directory	filemanager	pt-br	Remover este arquivo ou diretório
 deleted %1	filemanager	pt-br	Removido %1
@@ -84,14 +88,18 @@ display and modification of content	filemanager	pt-br	Exibe a alteração do con
 display of content	filemanager	pt-br	Exibe o conteúdo
 do you want to overwrite the existing file %1?	filemanager	pt-br	Você quer substituir o arquivo existente 1%?
 download	filemanager	pt-br	Download
+download documents	filemanager	pt-br	Baixar documentos
 edit comments	filemanager	pt-br	Editar comentários
 edit settings	filemanager	pt-br	Editar configurações
+edit share	filemanager	pt-br	Editar compartilhamento
 enable	filemanager	pt-br	permitir
 enable versioning for given mountpoint	filemanager	pt-br	Ativar versão para determinado ponto de montagem
+enter a file size, e.g. 100k, 200m or 2g	filemanager	pt-br	Digite um tamanho de arquivo, por exemplo, 100K, 200M ou 2G
 enter setup user and password	filemanager	pt-br	Digite o usuário e senha de configuração
 enter setup user and password to get root rights	filemanager	pt-br	Digite o usuário de configuração e senha para obter direitos de root
 enter the complete vfs path to specify a fast access link to a folder	filemanager	pt-br	Informe o caminho VFS completo para especificar um link rápido à pasta
 enter the complete vfs path to specify your desired start folder.	filemanager	pt-br	Informe o caminho VFS completo para especificar sua pasta inicial desejada.
+enter your file name	filemanager	pt-br	Digite o nome do arquivo
 error adding the acl!	filemanager	pt-br	Erro editanto a ACL!
 error creating symlink to target %1!	filemanager	pt-br	Erro ao criar link simbólico para atingir 1%!
 error deleting the acl entry!	filemanager	pt-br	Erro removendo o registro ACL!
@@ -100,6 +108,12 @@ error unmounting %1!	filemanager	pt-br	Erro desmontar% 1!
 error uploading file!	filemanager	pt-br	Erro carregando arquivo!
 error while creating directory.	filemanager	pt-br	Erro ao criar diretório
 everyone	filemanager	pt-br	todo o mundo
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	filemanager	pt-br	Exemplo {{IF n_prefixo~Sr~Olá Sr.~Olá Sra.}} - pesquise no campo "n_prefix", por "Mr", se encontrado, escreva Hello Mr.
+example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	filemanager	pt-br	Exemplo {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Exemplo: Sr. Dr. James Miller
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	filemanager	pt-br	Exemplo {{NELF role}} - se o campo role não estiver vazio, você obterá uma nova linha com o valor do campo role
+example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	filemanager	pt-br	Exemplo {{nenvlf role}} - se a função do campo não estiver vazia, você definirá uma LF sem nenhum valor do campo
+excludes selected mime types	filemanager	pt-br	Exclui tipos MIME selecionados
+excludes selected mime types from being opened by editor	filemanager	pt-br	Exclui tipos MIME selecionados de serem abertos pelo Collabora Online.<br>Esses tipos de documentos são abertos no navegador ou baixados.
 executable	filemanager	pt-br	Executável
 expires	filemanager	pt-br	Expira
 export definition to use for nextmatch export	filemanager	pt-br	Definição Exportar para usar para o próximo jogo exportação
@@ -112,6 +126,7 @@ file	common	pt-br	Arquivo
 file %1 already exists	filemanager	pt-br	Arquivo% 1 já existe
 file %1 could not be created.	filemanager	pt-br	Arquivo %1 não pôde ser criado.
 file %1 may be too big. contact your systemadministrator for further info	filemanager	pt-br	Arquivo %1 pode ser muito grande. Entre em contato com o administrador do sistema para maiores informações.
+file a file is only available with an epl subscription.	filemanager	pt-br	Um arquivo só está disponível com uma assinatura EPL.
 file deleted.	filemanager	pt-br	Arquivo removido.
 file names cannot contain "%1"	filemanager	pt-br	Nomes de arquivos não podem contem "%1"
 file or directory not found!	filemanager	pt-br	Arquivo ou diretório não encontrado!
@@ -122,10 +137,16 @@ filemanager fields:	filemanager	pt-br	Gerente de Campos do arquivo:
 filename must not be empty!	filemanager	pt-br	Matrícula não pode estar vazio!
 files from subdirectories	filemanager	pt-br	Arquivos de subdiretórios
 files in this directory	filemanager	pt-br	Arquivos neste diretório
+filesystem	filemanager	pt-br	Sistema de arquivos
 filesystem check reported no problems.	filemanager	pt-br	Verificação do sistema de arquivos não relatou nenhum problema.
+filesystem: mount directory (inside /var/lib/egroupware!) from host filesystem	filemanager	pt-br	Sistema de arquivos: monte o diretório (dentro de /var/lib/egroupware !) a partir do sistema de arquivos do host
+finally delete	filemanager	pt-br	Excluir finalmente
+finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	pt-br	Exclui finalmente todas as versões mais antigas e os arquivos excluídos em uma determinada pasta.
 finally delete this version	filemanager	pt-br	Finalmente eliminar versão
 fix reported problems	filemanager	pt-br	Corrigir problemas relatados
 folder up	filemanager	pt-br	Pasta acima
+for files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available.  see the specific application for a list of available placeholders.	filemanager	pt-br	Para arquivos vinculados a uma entrada de aplicativo (dentro de /apps/appname/id/), os espaços reservados para esse aplicativo também estão disponíveis. Consulte o aplicativo específico para obter uma lista dos placeholders disponíveis.
+for files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available. see the specific application for a list of placeholders	filemanager	pt-br	Para arquivos vinculados a uma entrada de aplicativo (dentro de /apps/appname/id/), os espaços reservados para esse aplicativo também estão disponíveis. Consulte o aplicativo específico para obter uma lista de placeholders.
 for serial letter use this tag. put the content, you want to repeat between two tags.	filemanager	pt-br	Para cartas em série use esta tag. Coloque o conteúdo, que você quer que repita, entre duas Tags.
 general	filemanager	pt-br	Geral
 general fields:	filemanager	pt-br	Campos gerais:
@@ -133,23 +154,29 @@ go home	filemanager	pt-br	ir à pasta Home
 go to	filemanager	pt-br	Ir Para
 go to your home directory	filemanager	pt-br	Ir à sua pasta Home
 go up	filemanager	pt-br	Acima
+group home quota	filemanager	pt-br	Cota inicial do grupo
 hidden upload	filemanager	pt-br	Carregamento oculto
 hidden uploads	filemanager	pt-br	Carregamentos ocultos
+hostname/ip for webdav and smb	filemanager	pt-br	Nome do host/IP para WebDAV e SMB
 id	filemanager	pt-br	ID
+if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	pt-br	Se você especificar uma pasta (caminho VFS completo) aqui, %1 exibirá uma ação para cada documento. Essa ação permite fazer o download do documento especificado com os dados %1 inseridos.
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	pt-br	Se você especificar uma pasta (caminho VFS completo) aqui, %1 exibirá um ícone de documento extra para cada entrada. Esse ícone permite baixar o documento especificado com os dados inseridos.
 inherited	filemanager	pt-br	Herdado
 link	filemanager	pt-br	Link
 link %1: %2	filemanager	pt-br	Link %1: %2
-link target	filemanager	pt-br	destino do link
+link target	filemanager	pt-br	Destino do link
 link target %1 not found!	filemanager	pt-br	Destino do link% 1 não encontrado!
+list view	filemanager	pt-br	Exibição de lista
 location	filemanager	pt-br	Localização
 lock	filemanager	pt-br	Fechadura
 log out as superuser	filemanager	pt-br	Sair como superusuário
-mail files	filemanager	pt-br	arquivos de correio
+mail files	filemanager	pt-br	Arquivos de correio
 mail paste	filemanager	pt-br	Correio pasta
-max folderlinks	admin	pt-br	máximo de links para pastas
+max folderlinks	admin	pt-br	Máximo de links para pastas
+merge print open handler	filemanager	pt-br	Manipulador de abertura de impressão mesclada
 mime type	filemanager	pt-br	Tipo MIME
 modified	filemanager	pt-br	Modificado
-modified between	filemanager	pt-br	moficiado entre
+modified between	filemanager	pt-br	Moficiado entre
 modify all subdirectories and their content	filemanager	pt-br	Modificar todos os subdiretórios e seus conteúdos
 mount	filemanager	pt-br	monte
 mountpoints	filemanager	pt-br	Pontos de Montagem
@@ -163,13 +190,16 @@ no access	filemanager	pt-br	Sem acesso
 no files in this directory.	filemanager	pt-br	Nenhum arquivo neste diretório
 no preview available	filemanager	pt-br	Pré-visualização indisponível
 no version history for this file/directory	filemanager	pt-br	Nenhum histórico de versões para este arquivo/diretório
-noone	filemanager	pt-br	ninguém
+noone	filemanager	pt-br	Ninguém
+notebookbar	filemanager	pt-br	Com guias
 older versions or deleted files	filemanager	pt-br	As versões mais antigas ou arquivos apagados
 only owner can rename or delete the content	filemanager	pt-br	Apenas o proprietário pode renomear ou remover o conteúdo
 open	filemanager	pt-br	abrir
 operation	filemanager	pt-br	Operação
+password for webdav and smb, use $pass for password of logged in user	filemanager	pt-br	Senha para WebDAV e SMB, use $pass para a senha do usuário conectado
 paste link	filemanager	pt-br	Colar vínculo
 path %1 not found or not a directory!	filemanager	pt-br	Path% 1 não foi encontrado ou não um diretório!
+path and query-parameters, smb: share and optional path (with /)	filemanager	pt-br	Caminho e parâmetros de consulta, SMB: compartilhamento e caminho opcional (com /)
 percentage	filemanager	pt-br	percentagem
 permission denied!	filemanager	pt-br	Permissão negada!
 permissions	filemanager	pt-br	Permissões
@@ -181,8 +211,12 @@ preview of %1	filemanager	pt-br	Pré-visualização de %1
 projectmanager	filemanager	pt-br	Gerenciador de Projetos
 properties saved.	filemanager	pt-br	Propriedades salvas.
 quick jump to	filemanager	pt-br	Saltar para
+quota	filemanager	pt-br	Cota
+quota exceeded	filemanager	pt-br	Cota excedida
 read & write access	filemanager	pt-br	Acesso de leitura e gravação
 read access only	filemanager	pt-br	Somente acesso de leitura
+recalculate	filemanager	pt-br	Recalcular
+recalculated %1 directories in %2 iterations and %3 seconds	filemanager	pt-br	Recalculou %1 diretórios em %2 iterações e %3 segundos
 reload	filemanager	pt-br	recarregar
 rename of %1 to %2 failed!	filemanager	pt-br	Falha ao renomar %1 para %2
 rename, change permissions or ownership	filemanager	pt-br	Renomear, alterar permissões e propriedade

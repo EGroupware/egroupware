@@ -1,22 +1,29 @@
-%1 - %2 of %3 user accounts	admin	ja	%1 - %2 of %3 user accounts
-%1 - %2 of %3 user groups	admin	ja	%1 - %2 of %3 user groups
+%1 %2 rights for %3 on %4 to %5	admin	ja	%4 から %5 の %3 の %1 %2 の権利。
+%1 - %2 of %3 user accounts	admin	ja	%1 - %3 ユーザ・アカウントの %2
+%1 - %2 of %3 user groups	admin	ja	%1 - %3 ユーザーグループの %2
 %1 access to other data	admin	ja	「%1」が他者のデータにアクセス可能
+%1 accounts being activated	admin	ja	%1 アカウントがアクティブになりました。
 %1 acl entries deleted.	admin	ja	%1 個の ACL 項目を削除しました。
 %1 acl records of not (longer) existing accounts deleted.	admin	ja	%1 ACL records of not longer existing accounts deleted.
 %1 categories of not (longer) existing accounts deleted.	admin	ja	%1 categories of not (longer) existing accounts deleted.
+%1 category '%2' %3	admin	ja	%1 カテゴリ '%2' %3
 %1 category(s) %2	admin	ja	%1 個のカテゴリを%2
 %1 category(s) %2, %3 failed because of insufficent rights !!!	admin	ja	%1 category(s) %2, %3 failed because of insufficent rights !!!
-%1 class not instanciated	admin	ja	%1 class not instanciated
+%1 class not instanciated	admin	ja	%1 クラスがインスタンス化されていません。
+%1 entries deleted	admin	ja	%1 つのエントリが削除されました。
 %1 entries deleted.	admin	ja	%1 個の項目を削除しました。
-%1 group %2	admin	ja	%1 group %2
+%1 group %2	admin	ja	%1 グループ %2
 %1 is no command!	admin	ja	%1 はコマンドではありません!
 %1 log entries deleted.	admin	ja	%1 個のログ項目を削除しました。
+%1 mail credentials deleted	admin	ja	%1 メール資格情報が削除されました。
 %1 not found or not executable !!!	admin	ja	%1 が見つからないか、実行可能ではありません!
 %1 phrases saved.	admin	ja	%1 個のフレーズを保存しました。
-%1 rights for %2 and applications %3	admin	ja	%1 rights for %2 and applications %3 .
+%1 rights for %2 and applications %3	admin	ja	%2 とアプリケーション %3 の %1 権限。
 %1 run rights for applications	admin	ja	「%1」が実行可能なアプリケーション
 %1 sessions killed	admin	ja	%1 個のセッションを切断しました。
-%1 user %2	admin	ja	%1 user %2
+%1 successful	admin	ja	%1 成功
+%1 token %2.	admin	ja	%1 トークン %2。
+%1 user %2	admin	ja	%1 ユーザ %2
 (de)activate mail accounts	admin	ja	メール・アカウントを有効化/無効化
 (default no, leave it off if you dont use it)	admin	ja	既定 = いいえ（使用しない場合はいいえ）
 (imapclass must support this feature by querying the corresponding config value and pass it as defaultquota to the imapserver)	admin	ja	(imapclass must support this feature by querying the corresponding config value and pass it as defaultquota to the imapserver)

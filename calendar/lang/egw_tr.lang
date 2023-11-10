@@ -57,10 +57,12 @@ do you want to be notified about new or changed appointments? you are not notifi
 download	calendar	tr	İndir
 duration	calendar	tr	Süre
 edit series	calendar	tr	Seriyi düzenle
+email address migration	calendar	tr	E-posta adresi taşıma
 empty for all	calendar	tr	tamamı için boş
 end date/time	calendar	tr	Bitiş Tarih/Zaman
 enddate	calendar	tr	BitişTarih
 ends	calendar	tr	bitiyor
+error notifying %1	calendar	tr	%1 bildirilirken hata oluştu
 event details follow	calendar	tr	Etkinlik Detayları Ektedir
 exceptions	calendar	tr	İstisnalar
 exclude weekend	calendar	tr	Hafta Sonu Hariç
@@ -122,7 +124,10 @@ notification messages for canceled events	calendar	tr	İptal edilen etkinlikler 
 notification messages for modified events	calendar	tr	Değiştirilmiş etkinlikler için uyarı mesajları
 notification messages for your alarms	calendar	tr	Alarmlarınız için uyarı mesajları
 notification messages for your responses	calendar	tr	Sizin yanıtlarınız için uyarı mesajları
+notify	calendar	tr	Bildir
+notify all externals (non-users) about this event	calendar	tr	Tüm harici kişileri (kullanıcı olmayanlar) bu olay hakkında bilgilendirin
 number of records to read (%1)	calendar	tr	Okunacak kayıt sayısı (%1)
+number of resources to be booked	calendar	tr	Rezervasyon yapılacak kaynak sayısı
 observance rule	calendar	tr	Yerine Getirme Kuralı
 occurence	calendar	tr	Oluş
 old startdate	calendar	tr	Eski Başlama Tarihi
@@ -144,34 +149,47 @@ planner by user	calendar	tr	Kullanıcıya göre planlama
 preselected group for entering the planner	calendar	tr	Planlamaya girmek için önceden seçilmiş grup
 private and global public	calendar	tr	Özel ve Genel Umumi (Public)
 private and group public	calendar	tr	Özel ve Umumi Grup
+private event	calendar	tr	Özel etkinlik
 private only	calendar	tr	Sadece özel
 re-edit event	calendar	tr	Etkinliği yeniden değiştir
 receive email updates	calendar	tr	Email güncellemeleri al
 receive summary of appointments	calendar	tr	Toplantıların özetini maille al
 recordings	calendar	tr	Kayıtlar
-recurring event	calendar	tr	tekrarlanan etkinlik
+recurring event	calendar	tr	Tekrarlanan etkinlik
 rejected	calendar	tr	Reddedildi
+removes the event from my calendar	calendar	tr	Etkinliği takvimimden kaldırır
 repeat type	calendar	tr	Tekrar şekli
 repeating event information	calendar	tr	Tekrar Eden Etkinlik Bilgisi
 repetition	calendar	tr	Tekrarlama
 repetitiondetails (or empty)	calendar	tr	Tekrarlama Detayları (ya da boş)
+replying "%1" is not a participant of the event! only continue if you want to add as new participant.	calendar	tr	Yanıtlayan "%1" etkinliğin katılımcısı DEĞİL! Yalnızca yeni katılımcı olarak eklemek istiyorsanız devam edin.
 report	calendar	tr	Rapor
 reset	calendar	tr	Sıfırla
 rule	calendar	tr	Kural
 sat	calendar	tr	Cte
 scheduling conflict	calendar	tr	Zamanlama çakışması
+send notifications	calendar	tr	Bildirim gönder
+send notifications to users right now	calendar	tr	Katılımcılara hemen bildirim gönderin
 set new events to private	calendar	tr	Yeni etkinlikleri özel olarak ayarla
 should new events created as private by default ?	calendar	tr	Yeni etkinlikler varsayılan olarak 'özel' mi olmalı?
+show %1 from %2	calendar	tr	%2'den %1'i göster
+show birthdays as all day non-blocking events as well as via mouseover of the date.	calendar	tr	Tüm gün engelleme olmayan etkinlikler olarak ve tarihin üzerine fare ile gelindiğinde gösterilir.
 show list of upcoming events	calendar	tr	Yaklaşan Etkinlikleri görüntüle
-single event	calendar	tr	tek etkinlik
+single event	calendar	tr	Tek katılımcı
 sort by	calendar	tr	Göre sırala
 start date/time	calendar	tr	Başlangıç Tarih/Zaman
 startdate	calendar	tr	Başlangıç tarihi
 startrecord	calendar	tr	Kaydetmeye başla
+status	calendar	tr	Durum
 submit to repository	calendar	tr	Depoya gönder
 sun	calendar	tr	Paz
 tentative	calendar	tr	Geçici
 test import (show importable records <u>only</u> in browser)	calendar	tr	İthal etmeyi test et (İthal edilecek kayıtları <u>sadece</u> tarayıcıda göster.)
+the apple ical apps use this color to display events from this calendar.	calendar	tr	Apple iCal Uygulamaları bu takvimdeki etkinlikleri görüntülemek için bu rengi kullanır.
+the document can contain placeholder like {{%1}}, to be replaced with the data.	calendar	tr	Belge, verilerle değiştirilmek üzere {{%1}} gibi yer tutucu içerebilir.
+the extern organizer changed the event!	calendar	tr	Harici düzenleyici etkinliği değiştirdi!
+the sender "%1" is not the extern organizer "%2", proceed with caution!	calendar	tr	Gönderen "%1", harici düzenleyici "%2" DEĞİLDİR, dikkatli olun!
+the sender "%1" is not the participant replying "%2", proceed with caution!	calendar	tr	"%1" göndericisi "%2" yanıtını veren katılımcı DEĞİL, dikkatli olun!
 this day is shown as first day in the week or month view.	calendar	tr	Bu gün, aylık ve haftalık görünümde ilk gün olarak görünülenir.
 this defines the end of your dayview. events after this time, are shown below the dayview.	calendar	tr	Bu günlük görünümünüzün sonunu tanımlar. Bundan sonraki etkinlikler günlük görünümün altında görüntülenir.
 this defines the start of your dayview. events before this time, are shown above the dayview.<br>this time is also used as a default starttime for new events.	calendar	tr	Bu günlük görünümüzün başlangıcını tanımlar. Bu zamandan önceki etkinlikler günlük görünümün üzerinde görüntülenir.<br>Bu zaman aynı zamanda yeni etkinlikler için varsayılan başlangıç zamanı olarak kullanılır.
@@ -187,6 +205,7 @@ to many might exceed your execution-time-limit	calendar	tr	çok fazla, çalışt
 to-firstname	calendar	tr	Alıcı-İsim
 to-fullname	calendar	tr	Alıcı-İsim ve Soyad
 to-lastname	calendar	tr	Alıcı-Soyad
+toggle weekend	calendar	tr	Hafta sonunu değiştir
 translation	calendar	tr	Tercüme
 tue	calendar	tr	Sal
 updated	calendar	tr	Güncelle

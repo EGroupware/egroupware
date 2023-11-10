@@ -52,6 +52,7 @@ cannot create directory because it begins or ends in a space	filemanager	sl	Mapa
 cautiously rejecting to remove folder '%1'!	filemanager	sl	Ne morem odstraniti mape '%1'!
 check all	filemanager	sl	Preveri vse
 check virtual filesystem	common	sl	Preverite virtualni datotečni sistem
+classic	filemanager	sl	Standardna orodna vrstica
 clear search	filemanager	sl	Izbriši iskanje
 clipboard is empty!	filemanager	sl	Odložišče je prazno!
 collab editor settings	filemanager	sl	Nastavitve urejevalnika Collab
@@ -81,12 +82,15 @@ current directory	filemanager	sl	Trenutna mapa
 custom fields	filemanager	sl	Polja po meri
 cut	filemanager	sl	Izreži
 cut to clipboard	filemanager	sl	Izreži v odložišče
+default action on double-click	filemanager	sl	Privzeto dejanje ob dvojnem kliku
 default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	sl	Privzeta nastavitev je NE. Povezava ne bo prikazana, vseeno pa boste lahko prišli do lokacije ali določili to lokacijo kot začetno mapo ali povezavo na mapo.
 default document to insert entries	filemanager	sl	Privzeti dokument za vstavljanje
+defines how to handle double click action on a document file. images are always opened in the expose-view and emails with email application. all other mime-types are handled by the browser itself.	filemanager	sl	Opredeljuje, kako ravnati z dejanjem dvojnega klika na datoteko dokumenta. Slike se vedno odprejo v izpostavljenem pogledu, e-poštna sporočila pa z aplikacijo za elektronsko pošto. Vse druge tipe MIME obravnava brskalnik sam.
 defines how to open a merge print document	filemanager	sl	Določa, kako naj odpre dokument za združitev
 delete all older versions and deleted files older then %s days	filemanager	sl	Izbrišite vse starejše različice in izbrisane datoteke, starejše od %s dni
 delete these files or directories?	filemanager	sl	Izbrišem te datoteke ali mape?
 delete these shares?	filemanager	sl	Želite izbrisati to skupno rabo?
+delete this extended acl?	filemanager	sl	Brisanje tega razširjenega ACL?
 delete this file or directory	filemanager	sl	Izbriši to datoteko ali mapo
 deleted %1	filemanager	sl	Izbrisano %1
 directories sorted in	filemanager	sl	Mape razvrščene po
@@ -105,14 +109,18 @@ do you want more information about epl subscription?	common	sl	Želite več info
 do you want to overwrite existing file %1 in directory %2?	filemanager	sl	Želite prepisati obstoječo datoteko %1 v imeniku %2?
 do you want to overwrite the existing file %1?	filemanager	sl	Želite prepisati obstoječo datoteko %1?
 download	filemanager	sl	Prenesi
+download documents	filemanager	sl	Prenos dokumentov
 edit comments	filemanager	sl	Uredi komentarje
 edit settings	filemanager	sl	Uredi nastavitve
+edit share	filemanager	sl	Urejanje deleža
 enable	filemanager	sl	Omogoči
 enable versioning for given mountpoint	filemanager	sl	Omogoči spremljanje različic za to priklop
+enter a file size, e.g. 100k, 200m or 2g	filemanager	sl	Vnesite velikost datoteke, npr. 100K, 200M ali 2G
 enter setup user and password	filemanager	sl	Vnesite uporabniško ime in geslo za namestitev
 enter setup user and password to get root rights	filemanager	sl	Vnesite uporabniško ime in geslo za namestitev za pridobitev pravic root-a
 enter the complete vfs path to specify a fast access link to a folder	filemanager	sl	Vnesite celotno pot VFS, da določite hiter dostop do mape.
 enter the complete vfs path to specify your desired start folder.	filemanager	sl	Vnesite celotno pot VFS, da določite želeno začetno mapo.
+enter your file name	filemanager	sl	Vnesite ime datoteke
 error adding the acl!	filemanager	sl	Napaka pri dodajanju ACL!
 error creating symlink to target %1!	filemanager	sl	Napaka pri ustvarjanju povezave do colja %1!
 error deleting the acl entry!	filemanager	sl	Napaka pri brisanju ACL!
@@ -152,7 +160,9 @@ files	common	sl	Datoteke
 files from links	filemanager	sl	Datoteke iz povezav
 files from subdirectories	filemanager	sl	Datoteke iz podmap
 files in this directory	filemanager	sl	Datoteke v mapi
+filesystem	filemanager	sl	Datotečni sistem
 filesystem check reported no problems.	filemanager	sl	Preverjanje datotečnega sistema ni poročalo o težavah.
+filesystem: mount directory (inside /var/lib/egroupware!) from host filesystem	filemanager	sl	Datotečni sistem: namestite imenik (znotraj /var/lib/egroupware !) iz gostiteljskega datotečnega sistema
 finally delete	filemanager	sl	Končno izbrišite
 finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	sl	Končno izbrišite vse starejše različice in izbrisane datoteke pod določenim imenikom.\N\nTega ne morete razveljaviti!
 finally delete this version	filemanager	sl	Dokončno izbriši to različico
@@ -167,11 +177,13 @@ go home	filemanager	sl	Pojdi domov
 go to	filemanager	sl	Pojdi na
 go to your home directory	filemanager	sl	Pojdi na domačo mapo
 go up	filemanager	sl	Pojdi navzgor
+group home quota	filemanager	sl	Kvota domače skupine
 hidden upload	filemanager	sl	Skrito nalaganje
 hidden uploads	filemanager	sl	Skriti prenosi
+hostname/ip for webdav and smb	filemanager	sl	Ime gostitelja/IP za WebDAV in SMB
 id	filemanager	sl	Šifra
-if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	sl	Če določite imenik (celotna pot vfs), bo %1 prikazalo dejanje za vsak dokument. To dejanje omogoča prenos določenega dokumenta z vstavljenimi podatki %1.
-if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	sl	Če določite dokument (celotno pot vfs) tukaj, %1 prikaže ikono dodatne ikone za vsak vnos. Ta ikona omogoča prenos določenega dokumenta z vstavljenimi podatki.
+if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	sl	Če določite imenik (celotna pot VFS), bo %1 prikazalo dejanje za vsak dokument. To dejanje omogoča prenos določenega dokumenta z vstavljenimi podatki %1.
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	sl	Če določite dokument (celotno pot VFS) tukaj, %1 prikaže ikono dodatne ikone za vsak vnos. Ta ikona omogoča prenos določenega dokumenta z vstavljenimi podatki.
 if you specify an export definition, it will be used when you export	filemanager	sl	Če določite definicijo izvoza, se bo uporabil, ko boste izvozili
 if you specify an export definition, it will be used when you export*	filemanager	sl	Če določite definicijo izvoza, se bo uporabil, ko boste izvozili *
 inherited	filemanager	sl	Podedovano
@@ -207,12 +219,17 @@ no files in this directory.	filemanager	sl	V tej mapi ni datotek
 no preview available	filemanager	sl	Predogled ni na voljo
 no version history for this file/directory	filemanager	sl	Ni zgodovine različic za to datoteko/mapo.
 noone	filemanager	sl	Nihče
+notebookbar	filemanager	sl	Zavihek
 older versions or deleted files	filemanager	sl	Starejše različice ali izbrisane datoteke
 only owner can rename or delete the content	filemanager	sl	Samo lastnik sme preimenovati ali izbrisati vsebino
 open	filemanager	sl	Odpri
+open documents with collabora, if permissions are given	filemanager	sl	Odpiranje dokumentov s Collabora Online, če so podana dovoljenja
+open odt documents with collabeditor	filemanager	sl	Odpiranje dokumentov odt s storitvijo Collabora Online
 operation	filemanager	sl	Operacija
+password for webdav and smb, use $pass for password of logged in user	filemanager	sl	Geslo za WebDAV in SMB, uporabite $pass za geslo prijavljenega uporabnika
 paste link	filemanager	sl	Prilepi povezavo
 path %1 not found or not a directory!	filemanager	sl	Pot %1 ni nila najdena ali pa ni mapa!
+path and query-parameters, smb: share and optional path (with /)	filemanager	sl	Pot in parametri poizvedbe, SMB: delež in neobvezna pot (z /)
 percentage	filemanager	sl	Odstotek
 permission denied!	filemanager	sl	Dostop zavrnjen!
 permissions	filemanager	sl	Pravice
@@ -223,10 +240,16 @@ preview %1	filemanager	sl	Predogled %1
 preview of %1	filemanager	sl	Predogled %1
 projectmanager	filemanager	sl	Upravljalec projektov
 properties saved.	filemanager	sl	Lastnosti so bile shranjene.
+protocol to use	filemanager	sl	Protokol za uporabo
+protocols	filemanager	sl	Protokoli
 quick jump to	filemanager	sl	Hiter skok v
+quota	filemanager	sl	Kvota
+quota exceeded	filemanager	sl	Kvota je presežena
 read & write access	filemanager	sl	Pravice branja in pisanja
 read access only	filemanager	sl	Dostop samo za branje
 readonly share link	filemanager	sl	Povezava samo za branje
+recalculate	filemanager	sl	Ponovno izračunajte
+recalculated %1 directories in %2 iterations and %3 seconds	filemanager	sl	Preračunano %1 imenikov v %2 iteracijah in %3 sekundah
 reload	filemanager	sl	Osveži
 rename of %1 to %2 failed!	filemanager	sl	Preimenovanje %1 v %1 ni bilo uspešno!
 rename, change permissions or ownership	filemanager	sl	Preimenuj, spremeni previce ali lastništvo
@@ -252,6 +275,8 @@ select file to upload in current directory	filemanager	sl	Izberite datoteko za p
 select file(s) from vfs	common	sl	Izberite datoteke iz VFS
 setting for document merge saved.	filemanager	sl	Nastavitev za združitev dokumentov je shranjena.
 share files	filemanager	sl	Skupna raba datotek
+share link copied into clipboard	filemanager	sl	Kopiranje povezave v skupno rabo v odložišče
+share mounted at %1.<br/>please close this tab.	filemanager	sl	Skupna raba je nameščena na %1.<br/>Prosimo, zaprite ta zavihek.
 shared files	filemanager	sl	Skupne datoteke
 shared with	filemanager	sl	V skupni rabi
 show	filemanager	sl	Prikaži
@@ -263,6 +288,8 @@ show link "your home directory" in side box menu?	filemanager	sl	Prikažite pove
 show link "your home directory*" in side box menu?*	filemanager	sl	Prikaži povezavo »Vaš domači imenik *« v meniju stranskega okenca? *
 show link to filemanagers basedirectory (/) in side box menu?	filemanager	sl	Prikažem povezavo do osnovne mape Upravljalca datotek (/) v stranski menijski vrstici?
 size	filemanager	sl	Velikost
+smb, webdavs and vfs require a username!	filemanager	sl	SMB, WebDAV in VFS zahtevajo uporabniško ime!
+smb: mount samba or windows fileserver shares	filemanager	sl	SMB: namestitev delnic Samba ali datotečnih strežnikov Windows
 some functionalities require superuser permissions, please login here as filemanager superuser - allowed users are defined in setup.	filemanager	sl	Nekatere funkcionalnosti zahtevajo dovoljenje za superuporabo, se prijavite tukaj kot nadrejenec filemanager - dovoljeni uporabniki so določeni v nastavitvi.
 sqlfs statistics	filemanager	sl	Statistike sqlFS
 start search	filemanager	sl	Začni iskanje
@@ -276,12 +303,15 @@ the default start folder is your personal folder. the default is used, if you le
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	filemanager	sl	Dokument lahko vsebuje mesto, na primer {{%3}}, ki ga je treba zamenjati s podatki (%1 popoln seznam imen imenika %2).
 the following document-types are supported:	filemanager	sl	Podprte so naslednje vrste dokumentov:
 the requested path %1 is not available.	filemanager	sl	Pot %1 ni na voljo.
+the uploaded file is only visible to the person sharing these files with you, not to yourself or other people knowing this sharing link.	filemanager	sl	Prenesena datoteka je vidna samo osebi, ki z vami deli te datoteke, ne pa tudi vam ali drugim osebam, ki poznajo to povezavo za deljenje.
 there's already a directory with that name!	filemanager	sl	Mapa s tem imenom že obstaja.
 there's already a file with that name!	filemanager	sl	Datoteka s tem imenom že obstaja!
 tile view	filemanager	sl	Pogled na ploščico
 to overwrite the existing file store again.	filemanager	sl	Če želite prepisati obstoječo datoteko, shranite še enkrat.
 total files	filemanager	sl	Vseh datotek
+ui mode	filemanager	sl	Standardna orodna vrstica
 under directory	filemanager	sl	pod imenikom
+unlock	filemanager	sl	Odklepanje
 unmount	filemanager	sl	Odklopi
 unused space	filemanager	sl	Neuporabljen prostor
 up	filemanager	sl	Navzgor
@@ -291,15 +321,21 @@ upload files	filemanager	sl	Naloži datoteke
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	filemanager	sl	Uporabi to značko za naslov nalepk. Stik, ki ga želite ponoviti, dajte med dve znački.
 used space	filemanager	sl	Uporabljen prostor
 user color indicator	filemanager	sl	Kazalnik barve uporabnika
+user home quota	filemanager	sl	Uporabniška domača kvota
+username for webdav and smb, use $user for name of logged in user	filemanager	sl	Uporabniško ime za WebDAV in SMB, uporabite $user za ime prijavljenega uporabnika
 users and groups	filemanager	sl	Uporabniki in skupine
 versioning	filemanager	sl	Vodenje različic
+versioning requires egroupware epl	filemanager	sl	Za izdelavo različic je potreben program EGroupware EPL
 vfs mounts and versioning	common	sl	VFS namestitve in različice
+view link	filemanager	sl	Ogled povezave
 webdav link copied into clipboard	filemanager	sl	Povezava WebDAV je bila kopirana v odložišče
+webdavs: mount egroupware or *cloud shares	filemanager	sl	WebDAV: priklop delnic EGroupware ali *Cloud
 who should be allowed to finally delete deleted files or old versions of a file:	filemanager	sl	Kdo ima pravice dokončno izbrisati starejše različice dokumenta ali izbrisane datoteke:
 writable share link	filemanager	sl	Povezava, ki jo je mogoče zapisati
 wrong username or password!	filemanager	sl	Napačno uporabniško ime ali geslo!
 you are not allowed to finally delete older versions and deleted files!	filemanager	sl	NISO dovoliti, da končno izbrišete starejše različice in izbrisane datoteke!
 you are not allowed to upload a script!	filemanager	sl	Nimate dovoljenja nalagati skripte
+you can either delete some files or get in touch with your administrator to get more space	filemanager	sl	Lahko izbrišete nekatere datoteke ali stopite v stik s svojim skrbnikom, da dobite več prostora
 you can only grant additional rights, you can not take rights away!	filemanager	sl	Dodatne pravice lahko samo dodelte, ne morete jih odvzeti.
 you can use regular upload [+] button to upload files.	filemanager	sl	Za nalaganje datotek lahko uporabite gumb za običajni prenos [+].
 you do not have access to %1	filemanager	sl	Nimate dostopa do %1

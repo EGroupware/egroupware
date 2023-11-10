@@ -14,7 +14,7 @@
 %1 files deleted.	filemanager	ja	%1 個のファイルを削除しました。
 %1 files moved.	filemanager	ja	%1 個のファイルを移動しました。
 %1 files or directories deleted in %2 seconds.	filemanager	ja	%1 個のファイル/ディレクトリを削除しました。(所要時間 %2秒）
-%1 files unlocked.	filemanager	ja	1ファイルのロックが解除されました。
+%1 files unlocked.	filemanager	ja	%1ファイルのロックが解除されました。
 %1 shares deleted.	filemanager	ja	%1 個の共有を削除しました。
 %1 starts with '%2'	filemanager	ja	%1 は '%2' から始まります。
 %1 successful unmounted.	filemanager	ja	%1 をアンマウントしました。
@@ -52,6 +52,7 @@ cannot create directory because it begins or ends in a space	filemanager	ja	空�
 cautiously rejecting to remove folder '%1'!	filemanager	ja	フォルダ '%1' の削除が拒否されました!
 check all	filemanager	ja	全て選択
 check virtual filesystem	common	ja	仮想ファイルシステムをチェック
+classic	filemanager	ja	標準ツールバー
 clear search	filemanager	ja	検索をクリア
 clipboard is empty!	filemanager	ja	クリップボードが空です!
 collab editor settings	filemanager	ja	Collab エディタ設定
@@ -81,8 +82,10 @@ current directory	filemanager	ja	カレント・ディレクトリ
 custom fields	filemanager	ja	カスタム項目
 cut	filemanager	ja	切り取る
 cut to clipboard	filemanager	ja	クリップボードに切り取る
+default action on double-click	filemanager	ja	ダブルクリック時のデフォルト動作
 default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	ja	既定値は「いいえ」。リンクは表示されませんが、開始フォルダ/フォルダ・リンクとして構成することができます。
 default document to insert entries	filemanager	ja	項目を挿入する既定のドキュメント
+defines how to handle double click action on a document file. images are always opened in the expose-view and emails with email application. all other mime-types are handled by the browser itself.	filemanager	ja	ドキュメントファイルのダブルクリック操作の処理方法を定義します。画像は常にexposure-viewで開かれ、電子メールは電子メールアプリケーションで開かれます。それ以外のMIME-typesはブラウザ自身が処理します。
 defines how to open a merge print document	filemanager	ja	マージ印刷ドキュメントを開く方法を指定
 delete all older versions and deleted files older then %s days	filemanager	ja	古いバージョン、および %s 日以上前に削除したファイルを全て削除
 delete these files or directories?	filemanager	ja	これらのファイル/ディレクトリを削除しますか？
@@ -106,14 +109,18 @@ do you want more information about epl subscription?	common	ja	EPL サブスク�
 do you want to overwrite existing file %1 in directory %2?	filemanager	ja	ディレクトリ %2 のファイル %1 に上書き保存してよろしいですか？
 do you want to overwrite the existing file %1?	filemanager	ja	ファイル %1 に上書き保存してよろしいですか？
 download	filemanager	ja	ダウンロード
+download documents	filemanager	ja	ドキュメントのダウンロード
 edit comments	filemanager	ja	コメントを編集
 edit settings	filemanager	ja	設定を編集
+edit share	filemanager	ja	共有の編集
 enable	filemanager	ja	有効化する
 enable versioning for given mountpoint	filemanager	ja	このマウントポイントについてバージョン管理を有効化
+enter a file size, e.g. 100k, 200m or 2g	filemanager	ja	ファイルサイズを入力（例：100K、200M、2G
 enter setup user and password	filemanager	ja	設定ユーザ/パスワードを入力してください
 enter setup user and password to get root rights	filemanager	ja	ルート権限を得るために設定ユーザ/パスワードを入力してください
 enter the complete vfs path to specify a fast access link to a folder	filemanager	ja	フォルダに対するファスト・アクセス・リンクにする完全VFSパスを入力してください。
-enter the complete vfs path to specify your desired start folder.	filemanager	ja	Enter the complete VFS path to specify your start folder開始フォルダにする完全VFSパスを入力してください。
+enter the complete vfs path to specify your desired start folder.	filemanager	ja	開始フォルダを指定するために、VFSの完全なパスを入力します。
+enter your file name	filemanager	ja	ファイル名を入力してください
 error adding the acl!	filemanager	ja	ACL 追加中にエラー!
 error creating symlink to target %1!	filemanager	ja	%1 に対するシンボリック・リンク作成中にエラー!
 error deleting the acl entry!	filemanager	ja	ACL 項目の削除中にエラー!
@@ -153,7 +160,9 @@ files	common	ja	ファイル
 files from links	filemanager	ja	リンク先ファイル
 files from subdirectories	filemanager	ja	サブディレクトリのファイル
 files in this directory	filemanager	ja	ディレクトリ内のファイル
+filesystem	filemanager	ja	ファイルシステム
 filesystem check reported no problems.	filemanager	ja	ファイルシステムに問題は見つかりませんでした。
+filesystem: mount directory (inside /var/lib/egroupware!) from host filesystem	filemanager	ja	ファイルシステム：ホストファイルシステムからマウントディレクトリ（/var/lib/egroupware !)
 finally delete	filemanager	ja	完全削除
 finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	ja	ディレクトリ内の古いバージョン、および削除済みファイルを完全に削除します。\n\nこの作業は元に戻せません。
 finally delete this version	filemanager	ja	このバージョンを完全削除
@@ -168,8 +177,10 @@ go home	filemanager	ja	ホーム
 go to	filemanager	ja	移動:
 go to your home directory	filemanager	ja	ホーム・ディレクトリに移動
 go up	filemanager	ja	上に移動
+group home quota	filemanager	ja	グループホームクォータ
 hidden upload	filemanager	ja	隠しアップロード
 hidden uploads	filemanager	ja	非表示のアップロード
+hostname/ip for webdav and smb	filemanager	ja	WebDAVとSMBのホスト名/IP
 id	filemanager	ja	ID
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	ja	ディレクトリ（VFS フルパス）を指定すると、%1上で各ドキュメントに対するアクションが表示され、ドキュメントをダウンロードすることができるようになります。
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	ja	ドキュメント（VFS フルパス）を指定すると、%1の各項目ごとに拡張ドキュメント・アイコンが表示され、ドキュメントをダウンロードすることができるようになります。
@@ -208,12 +219,15 @@ no files in this directory.	filemanager	ja	ファイルがありません。
 no preview available	filemanager	ja	プリビュー無し
 no version history for this file/directory	filemanager	ja	バージョン履歴がありません。
 noone	filemanager	ja	禁止
+notebookbar	filemanager	ja	タブ
 older versions or deleted files	filemanager	ja	古いバージョン、または削除済みファイル
 only owner can rename or delete the content	filemanager	ja	所有者だけが名称変更したり内容変更/削除できます。
 open	filemanager	ja	開く
 operation	filemanager	ja	オペレーション
+password for webdav and smb, use $pass for password of logged in user	filemanager	ja	WebDAVとSMBのパスワード、ログインユーザーのパスワードには$passを使用
 paste link	filemanager	ja	リンクを貼り付ける
 path %1 not found or not a directory!	filemanager	ja	%1 が見つかりません!
+path and query-parameters, smb: share and optional path (with /)	filemanager	ja	パスとクエリパラメータ、SMB：共有とオプションのパス（/付き）
 percentage	filemanager	ja	パーセンテージ
 permission denied!	filemanager	ja	権限が拒否されました!
 permissions	filemanager	ja	パーミッション
@@ -225,9 +239,13 @@ preview of %1	filemanager	ja	プリビュー: %1
 projectmanager	filemanager	ja	プロジェクト・マネージャ
 properties saved.	filemanager	ja	プロパティを保存しました。
 quick jump to	filemanager	ja	クイック・ジャンプ:
+quota	filemanager	ja	クォータ
+quota exceeded	filemanager	ja	クォータ超過
 read & write access	filemanager	ja	読み書き
 read access only	filemanager	ja	読み取り専用
 readonly share link	filemanager	ja	読み取り専用共有リンク
+recalculate	filemanager	ja	再計算
+recalculated %1 directories in %2 iterations and %3 seconds	filemanager	ja	%2 回の繰り返しと %3 秒で %1 ディレクトリを再計算しました。
 reload	filemanager	ja	リロード
 rename of %1 to %2 failed!	filemanager	ja	%1 から %2 への名称変更に失敗しました!
 rename, change permissions or ownership	filemanager	ja	名称/パーミッション/所有者の変更
@@ -283,6 +301,7 @@ tile view	filemanager	ja	タイル表示
 to overwrite the existing file store again.	filemanager	ja	上書き保存するには、再度ファイルを保存してください。
 total files	filemanager	ja	ファイル合計
 under directory	filemanager	ja	ディレクトリ下
+unlock	filemanager	ja	ロック解除
 unmount	filemanager	ja	アンマウント
 unused space	filemanager	ja	未使用領域
 up	filemanager	ja	上
@@ -292,15 +311,21 @@ upload files	filemanager	ja	ファイルをアップロード
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	filemanager	ja	アドレスラベル向けタグ。任意のコンテンツをこのタグで囲んで使用します。
 used space	filemanager	ja	使用領域
 user color indicator	filemanager	ja	ユーザ色標識
+user home quota	filemanager	ja	ユーザーホームクォータ
+username for webdav and smb, use $user for name of logged in user	filemanager	ja	WebDAVとSMBのユーザー名、ログインユーザー名には$userを使用します。
 users and groups	filemanager	ja	ユーザとグループ
 versioning	filemanager	ja	バージョン管理
+versioning requires egroupware epl	filemanager	ja	バージョン管理にはEGroupware EPLが必要です。
 vfs mounts and versioning	common	ja	VFS マウントとバージョン管理
+view link	filemanager	ja	リンクの表示
 webdav link copied into clipboard	filemanager	ja	WebDAV リンクをクリップボードにコピーしました
+webdavs: mount egroupware or *cloud shares	filemanager	ja	WebDAV：EGroupwareまたは*Cloud共有のマウント
 who should be allowed to finally delete deleted files or old versions of a file:	filemanager	ja	完全削除（古いバージョンや削除済みファイルを削除すること）ができるユーザ:
 writable share link	filemanager	ja	書き込み可能共有リンク
 wrong username or password!	filemanager	ja	ユーザ名またはパスワードが不正です!
 you are not allowed to finally delete older versions and deleted files!	filemanager	ja	完全削除を実行する権限がありません!
 you are not allowed to upload a script!	filemanager	ja	スクリプトをアップロードする権限がありません!
+you can either delete some files or get in touch with your administrator to get more space	filemanager	ja	いくつかのファイルを削除するか、管理者に連絡して容量を増やすことができます。
 you can only grant additional rights, you can not take rights away!	filemanager	ja	権限を追加することはできますが剥奪することはできません!
 you can use regular upload [+] button to upload files.	filemanager	ja	ファイルをアップロードするには、アップロード・ボタン（＋）を使用します。
 you do not have access to %1	filemanager	ja	%1 に対するアクセス権がありません

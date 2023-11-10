@@ -358,6 +358,8 @@ message preview area	mail	it	Area di anteprima dei messaggi
 message saved successfully.	mail	it	Messaggio salvato correttamente
 message send failed: %1	mail	it	L'invio del messaggio non è riuscito: %1
 message send successfully.	mail	it	Messaggio correttamente inviato.
+message verified successfully but the signer’s certificate could not be verified.	mail	it	Messaggio verificato con successo, ma non è stato possibile verificare il certificato del firmatario.
+message verified successfully.	mail	it	Messaggio verificato con successo.
 miscellaneous	mail	it	Miscellanea
 modify subject	mail	it	Modificare l'oggetto
 modify subject of this message	mail	it	Modificare l'oggetto di questo messaggio
@@ -372,8 +374,11 @@ moved %1 message(s) from %2 to %3	mail	it	spostato %1 messaggi(o) da %2 a %3
 moving folders from one mailaccount to another is not supported	mail	it	Lo spostamento di cartelle fra account non è consentito.
 name and email	mail	it	Nome e email
 name of account	mail	it	Nome account
+name of imap servers (space separated host or host:port)	mail	it	Nome dei server IMAP (host separati da spazi o host:porta)
 never display html emails	mail	it	Non visualizzare mai le e-mail scritte in HTML
 never show	mail	it	non mostrare mai
+never show notification	mail	it	Non mostrare mai la notifica
+new mail from %1	mail	it	Nuova posta da %1
 new mail notification	mail	it	Notifica di nuovo messaggio email
 new message type	mail	it	Nuovo tipo di messaggio
 new subject	mail	it	Nuovo oggetto
@@ -401,13 +406,17 @@ nothing to change.	mail	it	Nulla da modificare
 notify about new mail in this folders	mail	it	Notifica quando arrivano nuovi messaggi in questa cartella
 notify when new mails arrive in these folders	mail	it	Notifica quando arrivano nuovi messaggi in queste cartelle
 on	mail	it	Su
+on behalf of	mail	it	Per conto di
+on vacation	mail	it	In vacanza
 one address is not valid	mail	it	Un indirizzo non è valido
 only email	mail	it	Solo l'e-mail
+only if currently in an other app	mail	it	Solo se si è in un'altra applicazione
 only makes sense, if you transport password through a different channel / outside of this mail to recipients!	mail	it	Ha senso soltanto se il trasporto password avviene attraverso canale diverso al di fuori di questa email ai destinatari!
 only name	mail	it	Solo nome
 only needed for some servers, that do not return all folders on root level queries to retrieve all folders for that level	mail	it	necessario solo per alcuni server che non restituiscono le tutte le cartelle del livello radice (root)
 only one window	mail	it	solo una finestra
 only send message, do not copy a version of the message to the configured sent folder	mail	it	Invia semplicemente i messaggio, non copiarli nella cartella della posta inviata
+only store message in inbox, do not send vacation notice	mail	it	Memorizza il messaggio solo nella INBOX, NON invia l'avviso di vacanza
 open in html mode	mail	it	Apri in modalità HTML
 open in text mode	mail	it	Apri in modalità testo
 open with collabora office	mail	it	Aprire con Collabora Online
@@ -426,6 +435,7 @@ please enter password	mail	it	Per favore inserire la password
 please select a address	mail	it	Prego seleziona un indirizzo
 please select the number of days to wait between responses	mail	it	Prego seleziona il numero di giorni da aspettare tra le risposte
 please supply the message to send with auto-responses	mail	it	Prego fornisci il messaggio ta inviare con la risposta automatica
+please wait while sending your mail	mail	it	Attendere durante l'invio del messaggio
 post	mail	it	post
 predefined addresses for compose	mail	it	Indirizzi predefiniti per la composizione
 prevent managing filters	mail	it	Inibire la gestione dei filtri
@@ -441,6 +451,7 @@ provide a default vacation text, (used on new vacation messages when there was n
 push notifications	mail	it	Notifiche push
 quicksearch	mail	it	ricerca Veloce
 quicksearch (with cc)	mail	it	ricerca veloce (incluso CC)
+quota limit warning in megabyte (recommended value is 30 mb).	mail	it	Avviso sul limite di quota in megabyte (il valore consigliato è 30 MB).
 quota not provided by server	mail	it	Il server non fornisce informazioni sulla quota email
 quota: %1	mail	it	Quota: %1
 read	mail	it	letti
@@ -485,6 +496,7 @@ report as spam	mail	it	Segnala come Spam
 report this email content as ham (not spam) - spam solutions like spamtitan will learn	mail	it	Segnala questo contenuto della mail come Ham (non Spam) - soluzioni antispam come spamTitan riescono ad apprendere
 report this email content as spam - spam solutions like spamtitan will learn	mail	it	Segnala questo contenuto della mail come Spam - soluzioni antispam come spamTitan riescono ad apprendere
 required pear class mail/mimedecode.php not found.	mail	it	La classe PEAR Mail /mimeDecode.php necessaria, non è stata trovata
+required to disable if you use dovecot with private seen flags on shared or user folder!	mail	it	Da disabilitare se si usa Dovecot con flag di visualizzazione privata su cartelle condivise o utente!
 resend after how many days?	mail	it	Dopo quanti giorni tentare di reinviare?
 respond to mail sent to:	mail	it	Rispondi a email inviate a:
 restrict acl management	admin	it	restringi la gestione dei permessi ACL
@@ -493,6 +505,7 @@ row order style	mail	it	Stile dell'ordinameno per righe
 rule priority position	mail	it	Posizione di priorità della regola
 rule with priority	mail	it	regola con priorità
 rules	mail	it	regole
+s/mime encryption failed because no certificate has been found for sender address: %1	mail	it	Crittografia S/MIME fallita perché non è stato trovato alcun certificato per l'indirizzo del mittente: %1
 save all	mail	it	Salva tutti
 save all attachments to filemanager	mail	it	Salva tutti gli allegati nel filemanager
 save as calendar	mail	it	Salva come Agenda
@@ -503,6 +516,9 @@ save as infolog	mail	it	Salva come scheda attività
 save as infolog on send	mail	it	Salva come scheda attività all'invio
 save as ticket	mail	it	Salva come ticket
 save as tracker on send	mail	it	Salva come ticket all'invio
+save attachment	mail	it	Salvare l'allegato
+save attachments	mail	it	Salva allegati
+save email	mail	it	Salva e-mail
 save message to disk	mail	it	Salva messaggio sul disco
 save of message %1 failed. could not save message to folder %2 due to: %3	mail	it	Salvataggio del messaggio %1 non riuscito. Non sono riuscito a salvare nella cartella %2. Causa: %3
 save the drafted message as eml file into vfs	mail	it	Salva la bozza come file eml nel VFS
@@ -517,6 +533,7 @@ saving of message %1 succeeded. check folder %2.	mail	it	Salvataggio del messagg
 saving the rule failed:	mail	it	Il salvataggio della regola non è riuscito:
 security	mail	it	Sicurezza
 see attachments for content of the orignial mail	mail	it	Vedi allegati per il contenuto della mail originale
+select a date	mail	it	Selezionare una data
 select all	mail	it	Seleziona tutto
 select an existing entry in order to append mail content to it	mail	it	Selezionare una voce esistente per aggiungervi contenuto mail.
 select an item to read	mail	it	Seleziona un elemento da leggere
@@ -531,6 +548,9 @@ selected date range (with quicksearch)	mail	it	Selezionare intervallo di date
 send a reject message:	mail	it	Invia un messaggio di rigetto
 send files as	mail	it	Invia i file come
 send message and move to send folder (if configured)	mail	it	Invia messaggio e spostalo nella cartella della posta inviata
+send message pgp encrypted: requires keys from all recipients!	mail	it	Invia un messaggio crittografato PGP: richiede le chiavi di tutti i destinatari!
+send only a vacation notice, do not store message in inbox	mail	it	Inviare solo un avviso di ferie, NON archiviare il messaggio nella INBOX
+send vacation notice and store message in inbox	mail	it	Inviare un avviso di ferie e memorizzare il messaggio nella INBOX
 sender	mail	it	Mittente
 sent	mail	it	Inviata
 sent folder	mail	it	Cartella Posta Inviata
@@ -559,12 +579,14 @@ show them this time only	mail	it	Mostrali solo per questa volta
 show vertical	mail	it	mostra in verticale
 show vertical with all columns	mail	it	Mostra verticale con tutte le colonne
 show/hide preview pane in mail list view	mail	it	Mostra/Nascondi pannello di anteprima nella vista elenco mail
+shows a temporary visible notification including from address, subject and a snippet of the mail	mail	it	Mostra una notifica temporanea visibile che include l'indirizzo di provenienza, l'oggetto e un frammento del messaggio.
 sieve	mail	it	Sieve
 sieve connection status	mail	it	Stato della connessione Sieve
 sieve not activated	mail	it	Sieve non attivato
 sieve script name	mail	it	Nome script Sieve
 sieve server	mail	it	Server Sieve
 sieve_edit_instructions	mail	it	(*) possono essere usate le wildcard (jolly). Se si cerca il carattere * o ? invece, bisogna usare (\) davanti. Se si seleziona "Usa espressioni regolari" è necessario usare espressioni regolari valide. Per il punto esclamativo quando non usato come operatore "NOT", usare regex e backslash (\) (p.es. \!)
+sign your message with smime certificate	mail	it	Firma il messaggio con il certificato S/MIME
 signature	mail	it	Firma
 signature at top	mail	it	firma in cima
 signature position and visibility	mail	it	Posizione e visibilità della firma
@@ -595,6 +617,7 @@ subscribe folder ...	mail	it	Sottoscrivi cartella...
 subscribe to folder %1	mail	it	Sottoscrivi cartella %1
 subscription folders	mail	it	Cartelle da sottoscrivere
 subscription successfully saved.	mail	it	Sottoscrizione salvata corretamente.
+succeeded on %1 folders, failed on %2	mail	it	Riuscito su %1 cartelle, fallito su %2
 successfully connected	mail	it	Connesso con successo
 switch off encryption?	mail	it	Disabilitare la cifratura?
 template folder	mail	it	Cartella dei modelli

@@ -42,6 +42,9 @@ allow a maximum of the above configured folderlinks to be configured in settings
 and all it's childeren	filemanager	sk	a všetkých jeho potomkov
 application fields	filemanager	sk	Polia aplikácie
 applications	common	sk	Aplikácie
+backend	filemanager	sk	Backend
+backend url	filemanager	sk	Backend URL
+backend url to mount	filemanager	sk	Adresa URL backendu na pripojenie
 basedirectory	filemanager	sk	Základný priečinok
 can't open directory %1!	filemanager	sk	Nepodarilo sa otvoriť priečinok %1!
 cancel editing %1 without saving	filemanager	sk	Zrušiť úpravy %1 bez uloženia
@@ -49,6 +52,7 @@ cannot create directory because it begins or ends in a space	filemanager	sk	Nem�
 cautiously rejecting to remove folder '%1'!	filemanager	sk	Z opatrnosti odmietam odstrániť priečinok '%1'!
 check all	filemanager	sk	Označiť všetko
 check virtual filesystem	common	sk	Skontrolovať virtuálny súborový systém
+classic	filemanager	sk	Štandardný panel nástrojov
 clear search	filemanager	sk	Vyčistiť hľadanie
 clipboard is empty!	filemanager	sk	Schránka je prázdna!
 collab editor settings	filemanager	sk	Nastavenia pre Collab Editor
@@ -82,6 +86,7 @@ default action on double-click	filemanager	sk	Predvolená akcia po dvojitom klik
 default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	sk	Predvolené správanie je NIE. Odkaz sa nezobrazí, ale stále je možné dostať sa do tohto umiestnenia, alebo nastaviť niektorú oblasť ako štartovací priečinok alebo priečinkový odkaz.
 default document to insert entries	filemanager	sk	Predvolený dokument pre vloženie položiek
 defines how to handle double click action on a document file. images are always opened in the expose-view and emails with email application. all other mime-types are handled by the browser itself.	filemanager	sk	Definuje, čo sa udeje po dvojitom kliknutí na súbor dokumentu. Obrázky sa vždy otvoria v prehliadači a e-maily pomocou e-mailovej aplikácie. Všetky ostatné MIME typy otvára webový prehliadač podľa jeho vlastných nastavení.
+defines how to open a merge print document	filemanager	sk	Definuje, ako otvoriť zlúčený tlačový dokument
 delete all older versions and deleted files older then %s days	filemanager	sk	Odstrániť všetky staršie verzie a odstránené súbory staršie než %s dní
 delete these files or directories?	filemanager	sk	Odstrániť tieto súbory alebo priečinky?
 delete these shares?	filemanager	sk	Odstrániť tieto zdieľané priečinky?
@@ -142,6 +147,7 @@ file	common	sk	Súbor
 file %1 already exists	filemanager	sk	Súbor %1 už existuje
 file %1 could not be created.	filemanager	sk	Súbor %1 sa nepodarilo vytvoriť.
 file %1 may be too big. contact your systemadministrator for further info	filemanager	sk	Súbor %1 je zrejme priveľký. Kontaktujte svojho správcu systému.
+file a file is only available with an epl subscription.	filemanager	sk	Súbor a súbor je dostupný len s predplatným EPL.
 file deleted.	filemanager	sk	Súbor bol odstránený.
 file names cannot contain "%1"	filemanager	sk	Názov súboru nesmie obsahovať "%1"
 file or directory not found!	filemanager	sk	Súbor alebo priečinok sa nenašiel!
@@ -162,6 +168,8 @@ finally delete all older versions and deleted files under given directory.\n\nth
 finally delete this version	filemanager	sk	Definitívne odstrániť túto verziu
 fix reported problems	filemanager	sk	Opraviť objavené problémy
 folder up	filemanager	sk	O priečinok vyššie
+for files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available.  see the specific application for a list of available placeholders.	filemanager	sk	Pre súbory prepojené so záznamom aplikácie (vo vnútri /apps/názov aplikácie/id/) sú k dispozícii aj zástupné znaky pre danú aplikáciu. Zoznam dostupných zástupných symbolov nájdete v konkrétnej aplikácii.
+for files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available. see the specific application for a list of placeholders	filemanager	sk	Pre súbory prepojené so záznamom aplikácie (vnútri /apps/názov aplikácie/id/) sú k dispozícii aj zástupné symboly pre danú aplikáciu. Zoznam dostupných zástupných symbolov nájdete v konkrétnej aplikácii.
 for serial letter use this tag. put the content, you want to repeat between two tags.	filemanager	sk	Túto značku použite pre hromadný list. Obsah, ktorý chcete opakovať, zadajte medzi dve značky.
 general	filemanager	sk	Všeobecné
 general fields:	filemanager	sk	Všeobecné polia:
@@ -172,9 +180,10 @@ go up	filemanager	sk	nahor
 group home quota	filemanager	sk	Kvóta skupiny pre domovský priečinok
 hidden upload	filemanager	sk	Skryté nahrávanie
 hidden uploads	filemanager	sk	Skryté nahrávanie
+hostname/ip for webdav and smb	filemanager	sk	Názov hostiteľa/IP pre WebDAV a SMB
 id	filemanager	sk	Id
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	sk	Ak tu určíte adresár (plná cesta VFS), %1 zobrazí akciu pre každý dokument. Táto akcia umožňuje stiahnuť vybraný dokument s vloženými údajmi %1.
-if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	sk	Ak zadáte dokument, plnú vfs cestu, %1 zobrazí samostatnú ikonu dokumentu pre každú položku. Táto ikona umožní stiahnuť vybraný dokument s vloženými dátami.
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	sk	Ak zadáte dokument, plnú VFS cestu, %1 zobrazí samostatnú ikonu dokumentu pre každú položku. Táto ikona umožní stiahnuť vybraný dokument s vloženými dátami.
 if you specify an export definition, it will be used when you export	filemanager	sk	Ak zadáte exportnú definíciu, bude sa používať pri exportoch
 if you specify an export definition, it will be used when you export*	filemanager	sk	Ak zadáte exportnú definíciu, bude sa používať pri exportoch
 inherited	filemanager	sk	Dedičné
@@ -190,7 +199,8 @@ lock	filemanager	sk	Uzamknúť
 log out as superuser	filemanager	sk	Odhlásiť sa ako supervízor
 mail files	filemanager	sk	Odoslať súbory mailom
 mail paste	filemanager	sk	Prilepiť správu
-max folderlinks	admin	sk	max priečinkových odkazov
+max folderlinks	admin	sk	Max priečinkových odkazov
+merge print open handler	filemanager	sk	Zlúčiť tlač otvorenej obsluhy
 mime type	filemanager	sk	MIME typ
 modified	filemanager	sk	Zmenené
 modified between	filemanager	sk	Zmenené medzi

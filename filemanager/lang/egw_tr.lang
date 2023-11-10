@@ -1,16 +1,80 @@
 %1 files unlocked.	filemanager	tr	%1 dosyanın kilidi açıldı.
 actions	filemanager	tr	Eylemler
 applications	common	tr	Uygulamalar
+classic	filemanager	tr	Standart Araç Çubuğu
 custom fields	filemanager	tr	Özel Alanlar
+default action on double-click	filemanager	tr	Çift tıklamada varsayılan eylem
+default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	tr	Varsayılan = Hayır. Bağlantı gösterilmez, ancak yine de bu konuma gidebilir veya bu belirli konumu başlangıç klasörü veya klasör bağlantısı olarak yapılandırabilirsiniz.
+defines how to handle double click action on a document file. images are always opened in the expose-view and emails with email application. all other mime-types are handled by the browser itself.	filemanager	tr	Bir belge dosyası üzerinde çift tıklama eyleminin nasıl işleneceğini tanımlar. Görüntüler her zaman expose-view'da ve e-postalar e-posta uygulamasıyla açılır. Diğer tüm MIME türleri tarayıcının kendisi tarafından ele alınır.
 disable	filemanager	tr	Engelle
-download	filemanager	tr	?ndir
+download	filemanager	tr	İndirmek için
+download documents	filemanager	tr	Belgeleri indirin
+edit share	filemanager	tr	Paylaşımı düzenle
 enable	filemanager	tr	Etkinleştir
+enter a file size, e.g. 100k, 200m or 2g	filemanager	tr	Bir dosya boyutu girin, örneğin 100K, 200M veya 2G
+enter the complete vfs path to specify your desired start folder.	filemanager	tr	Başlangıç klasörünüzü belirtmek için VFS yolunun tamamını girin
+enter your file name	filemanager	tr	Dosya adınızı girin
+error adding the acl!	filemanager	tr	ACL eklenirken hata oluştu!
+error creating symlink to target %1!	filemanager	tr	Hedef %1'e sembolik bağlantı oluşturulurken hata oluştu!
+error deleting the acl entry!	filemanager	tr	ACL girişi silinirken hata oluştu!
+error mounting %1 on %2!	filemanager	tr	%1'i %2'ye bağlarken hata oluştu!
+error unmounting %1!	filemanager	tr	%1'in montajı kaldırılırken hata oluştu!
+error uploading file!	filemanager	tr	Dosya yüklenirken hata oluştu!
+error while creating directory.	filemanager	tr	Klasör oluşturulurken hata oluştu
+everyone	filemanager	tr	Herkes
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	filemanager	tr	Örnek {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - "n_prefix" alanında "Mr" için arama yapın, bulunursa Merhaba Mr. yazın, aksi takdirde Merhaba Ms. yazın.
+example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	filemanager	tr	Örnek {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Örnek: Bay Dr. James Miller
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	filemanager	tr	Örnek {{NELF rolü}} - eğer rol alanı boş değilse, rol alanının değerini içeren yeni bir satır alırsınız
+example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	filemanager	tr	Örnek {{nenvlf role}} - alan rolü boş değilse, alanın herhangi bir değeri olmadan bir LF ayarlayın
+excludes selected mime types	filemanager	tr	Seçili MIME türlerini hariç tutar
+excludes selected mime types from being opened by editor	filemanager	tr	Seçili MIME türlerinin Collabora Online tarafından açılmasını engeller.<br>Bu belge türleri ya tarayıcıda açılır ya da indirilir.
+executable	filemanager	tr	Yürütülebilir
 expires	filemanager	tr	Sona Eriyor
+export definition to use for nextmatch export	filemanager	tr	Nextmatch dışa aktarımı için kullanılacak dışa aktarım tanımı
+extended access control list	filemanager	tr	Genişletilmiş erişim kontrol listesi
+extended acl	filemanager	tr	Genişletilmiş ACL
+failed to change permissions of %1!	filemanager	tr	%1'in izinleri değiştirilemedi!
+failed to create directory!	filemanager	tr	Klasör oluşturulamadı!
+favorites	filemanager	tr	Favoriler
+file	common	tr	Dosya
+file %1 already exists	filemanager	tr	%1 dosyası zaten mevcut
+file %1 could not be created.	filemanager	tr	%1 dosyası oluşturulamadı.
+file %1 may be too big. contact your systemadministrator for further info	filemanager	tr	%1 dosyası çok büyük olabilir.
+file a file is only available with an epl subscription.	filemanager	tr	Bir dosya yalnızca EPL aboneliği ile kullanılabilir.
+file deleted.	filemanager	tr	Dosya silindi.
+file names cannot contain "%1"	filemanager	tr	Dosya adları "%1" içeremez
+filesystem	filemanager	tr	Dosya Sistemi
+filesystem check reported no problems.	filemanager	tr	Dosya sistemi kontrolü herhangi bir sorun bildirmedi.
+filesystem: mount directory (inside /var/lib/egroupware!) from host filesystem	filemanager	tr	Dosya sistemi: ana dosya sisteminden dizin bağlama (/var/lib/egroupware içinde !)
+finally delete	filemanager	tr	Son olarak sil
+finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	tr	Son olarak verilen klasör altındaki tüm eski sürümleri ve silinmiş dosyaları silin.\n\nBu geri alınamaz!
+finally delete this version	filemanager	tr	Son olarak bu sürümü silin
+fix reported problems	filemanager	tr	Bildirilen sorunları düzeltin
+for files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available.  see the specific application for a list of available placeholders.	filemanager	tr	Bir uygulama girişine bağlı dosyalar için (/apps/appname/id/ içinde) o uygulamaya ait yer tutucular da kullanılabilir. Kullanılabilir yer tutucuların listesi için ilgili uygulamaya bakın.
+for files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available. see the specific application for a list of placeholders	filemanager	tr	Bir uygulama girişine (/apps/appname/id/ içinde) bağlı dosyalar için o uygulamaya ait yer tutucular da kullanılabilir. Yer tutucuların listesi için ilgili uygulamaya bakın.
+go home	filemanager	tr	Evine git.
+go up	filemanager	tr	Yukarı çık.
+group home quota	filemanager	tr	Grup ev kotası
 hidden upload	filemanager	tr	Gizli yükleme
 hidden uploads	filemanager	tr	Gizli yüklemeler
+hostname/ip for webdav and smb	filemanager	tr	WebDAV ve SMB için Ana Bilgisayar Adı/IP
+if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	tr	Burada bir klasör (tam VFS yolu) belirtirseniz, %1 her belge için bir eylem görüntüler. Bu eylem, belirtilen belgenin %1 veri eklenmiş olarak indirilmesini sağlar.
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	tr	Burada bir klasör (tam VFS yolu) belirtirseniz, %1 her giriş için ekstra bir belge simgesi görüntüler. Bu simge, belirtilen belgenin eklenen verilerle birlikte indirilmesini sağlar.
 link	filemanager	tr	Link
+list view	filemanager	tr	Liste görünümü
 location	filemanager	tr	Konum
 lock	filemanager	tr	Kilit
+mail paste	filemanager	tr	Posta yapıştırma
+merge print open handler	filemanager	tr	Baskı açma işleyicisini birleştirme
 modified	filemanager	tr	Değiştirilmiş
+modified between	filemanager	tr	Değiştirilmiş değiştirildi
+mountpoints	filemanager	tr	Mountpoints
+notebookbar	filemanager	tr	Sekmeli
+password for webdav and smb, use $pass for password of logged in user	filemanager	tr	WebDAV ve SMB için şifre, oturum açmış kullanıcının şifresi için $pass kullanın
+path and query-parameters, smb: share and optional path (with /)	filemanager	tr	Yol ve sorgu parametreleri, SMB: paylaşım ve isteğe bağlı yol (/ ile)
 permissions	filemanager	tr	Ayarlar
+quota	filemanager	tr	Kota
+quota exceeded	filemanager	tr	Kota aşıldı
+recalculate	filemanager	tr	Yeniden hesapla
+recalculated %1 directories in %2 iterations and %3 seconds	filemanager	tr	1 dizinleri %2 yineleme ve %3 saniye içinde yeniden hesapladı
 you need to become root, to enable or disable versioning on a directory!	filemanager	tr	Bir klasörde sürümlemeyi etkinleştirmek veya devre dışı bırakmak için superuser olmanız gerekir!

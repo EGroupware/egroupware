@@ -2,8 +2,10 @@
 (no subject)	mail	da	(ingen emne)
 acl rights retrieve failed, seems there are no rights set!	mail	da	ACL-rettighedshentning mislykkedes, der er tilsyneladende ikke indstillet nogen rettigheder!
 add all my aliases	mail	da	Tilføj alle mine aliasser
+add as new	mail	da	Tilføj som ny
 add files as %1	mail	da	Tilføj filer som %1
 add raw message, ignore mail attachments	mail	da	Konverter mail til emne, tilføj rå besked (ignorer vedhæftede filer)
+add this certificate into contact	mail	da	Tilføj dette certifikat til kontakt
 add to addressbook	mail	da	tilføj til adressebog
 adding %1 to blacklisted email addresses failed because of %2	mail	da	Tilføjelse af %1 til sortlistede e-mailadresser mislykkedes på grund af %2
 adding %1 to whiltelisted email addresses failed because of %2	mail	da	Tilføjelse af %1 til whiltelisted e-mail-adresser mislykkedes på grund af %2
@@ -21,6 +23,8 @@ be aware by adding all selected files as %1 mode, it will also change all existi
 be aware that all attachments will be sent as %1!	mail	da	Vær opmærksom på, at alle vedhæftede filer vil blive sendt som %1!
 by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	da	Som standard erstattes 'http://' bare med 'https://'. Du er velkommen til at konfigurere 'https://proxy.egroupware.org/' til også at indlæse billeder, der kun er tilgængelige via http.
 caching of flags	mail	da	Caching af flag
+can not resolve the winmail.dat attachment!	mail	da	Kan ikke løse winmail.dat-vedhæftningen!
+certificate info for email %1	mail	da	Certifikatinfo for e-mail %1
 changing subject failed because of %1	mail	da	Ændring af emne mislykkedes på grund af %1
 changing subject failed folder %1 does not exist	mail	da	Ændring af emne mislykkedes mappe %1 findes ikke
 compose	mail	da	Ny meddelse
@@ -42,6 +46,9 @@ disable	mail	da	Deaktivere
 disable caching of flags	mail	da	Deaktiver caching af flag
 display of html emails	mail	da	Vis HTML i emails
 display only when no plain text is available	mail	da	Vis kun når ren tekst version er tilgængelig
+do you really want to toggle flag %1 for all messages in the current view?	mail	da	Ønsker du virkelig at skifte flag %1 for ALLE beskeder i den aktuelle visning?
+do you really want to toggle label %1 for all messages in the current view?	mail	da	Ønsker du virkelig at skifte etiketten %1 for ALLE beskeder i den aktuelle visning?
+do you want to be asked for confirmation before attaching selected messages to new mail?	mail	da	Ønsker du at blive bedt om at bekræfte, før du vedhæfter udvalgte beskeder til en ny e-mail?
 does not contain	mail	da	indeholder ikke
 does not match	mail	da	passer ikke sammen
 does not match regexp	mail	da	passer ikke til regexp
@@ -79,6 +86,8 @@ from	mail	da	Fra
 from(a->z)	mail	da	Fra (A->Z)
 from(z->a)	mail	da	Fra (Z->A)
 general	admin	da	Generelt
+get acl rights failed from imap server!	mail	da	Få ACL-rettigheder mislykkedes fra IMAP-server!
+ham folder	mail	da	Ham-mappe
 handling of external http images / mixed content in mails	mail	da	Håndtering af eksterne http-billeder / blandet indhold i mails
 html	mail	da	HTML
 ident name	mail	da	Ident navn
@@ -131,17 +140,27 @@ mark all messages in folder as read	mail	da	Markér alle meddelelser i mappen so
 mark as deleted	mail	da	Marker som slettet
 matches	mail	da	resultater
 matches regexp	mail	da	resultater regexp
+message learned as spam and moved to spam folder	mail	da	Besked opdaget som spam og flyttet til spam-mappen
+message verified successfully but the signer’s certificate could not be verified.	mail	da	Meddelelsen er bekræftet, men underskriverens certifikat kunne ikke verificeres.
+message verified successfully.	mail	da	Besked bekræftet med succes.
 modify subject	mail	da	Ændre emne
 modify subject of this message	mail	da	Ændre emnet for denne meddelelse
 move selected to	mail	da	flyt valgte til
 move to	mail	da	flyt valgte til
 move to trash	mail	da	Flyt til skraldespanden
 name and email	mail	da	Navn og e-mail
+name of imap servers (space separated host or host:port)	mail	da	Navn på IMAP-servere (mellemrumssepareret host eller host:port)
 never display html emails	mail	da	Vis aldrig HTML emails
+never show notification	mail	da	Vis aldrig meddelelse
+new mail from %1	mail	da	Ny mail fra %1
 new subject	mail	da	Nyt emne
+no folder destination supplied, and no folder to save message or other measure to store the mail (save to infolog/tracker) provided, but required.	mail	da	Ingen mappedestination angivet, og ingen mappe til at gemme beskeden eller anden foranstaltning til at gemme mailen (gem til InfoLog/Ticketsystem) angivet, men påkrævet.
 no sneak preview in list	mail	da	Ingen visning af meddelelser
+non	mail	da	Nej
 only email	mail	da	Kun e-mail
+only makes sense, if you transport password through a different channel / outside of this mail to recipients!	mail	da	Giver kun mening, hvis du transporterer adgangskoden gennem en anden kanal/uden for denne mail til modtageren!
 only name	mail	da	Kun navn
+only needed for some servers, that do not return all folders on root level queries to retrieve all folders for that level	mail	da	Kun nødvendigt for nogle servere, der ikke returnerer alle mapper på rodniveau-forespørgsler for at hente alle mapper for det niveau.
 open in html mode	mail	da	Åbn i HTML-tilstand
 open in text mode	mail	da	Åbn i teksttilstand
 open with collabora office	mail	da	Åbn med Collabora Online
@@ -152,9 +171,16 @@ original message	mail	da	Original besked
 outbox	mail	da	Udbakke
 permission denied	mail	da	Adgang nægtet
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	da	Konfigurer dit S/MIME-certifikat under fanen Encryption i dialogboksen Rediger konto.
+please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	da	Kontakt din administrator for at få bekræftet, om din server understøtter filterregler på serversiden, og hvordan du aktiverer dem i EGroupware for din aktive konto (%1) med ID:%2.
+please contact your administrator to validate if your server supports serverside vacationmessages, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	da	Kontakt din administrator for at få bekræftet, om din server understøtter feriemeddelelser, og hvordan du aktiverer dem i EGroupware for din aktive konto (%1) med ID:%2.
+please enter password	mail	da	Indtast venligst adgangskode
+please select a address	mail	da	Vælg venligst en adresse
+post	mail	da	Send
 predefined addresses for compose	mail	da	Foruddefinerede adresser til sammensætning
 preview pane	mail	da	Vindueslayout
 printing	mail	da	Udskrivning
+processing of file %1 failed. failed to meet basic restrictions.	mail	da	Behandling af fil %1 mislykkedes. Opfyldte ikke de grundlæggende begrænsninger.
+provide a default vacation text, (used on new vacation messages when there was no message set up previously)	admin	da	Angiv en standard ferietekst, (bruges på nye feriebeskeder, når der ikke var oprettet en besked tidligere)
 push notifications	mail	da	Push-meddelelser
 quicksearch	mail	da	Hurtigsøgning
 quicksearch (with cc)	mail	da	Hurtigsøgning (+Kopi)
@@ -173,18 +199,44 @@ replied	mail	da	Besvaret
 reply	mail	da	Besvar
 reply all	mail	da	Besvar Alle
 reply to	mail	da	Besvar Til
+replying to this message failed because the content of this message seems to be encrypted and can not be decrypted properly. if you still wish to include content of this encrypted message, you may try to use forward as attachment instead.	mail	da	Besvarelse af denne besked mislykkedes, fordi indholdet af denne besked ser ud til at være krypteret og ikke kan dekrypteres korrekt. Hvis du stadig ønsker at inkludere indholdet af denne krypterede besked, kan du prøve at bruge videresend som vedhæftet fil i stedet.
 replyto	mail	da	Besvar Til
+report as ham	mail	da	Rapporter som skinke
+report as spam	mail	da	Rapporter som spam
+report this email content as ham (not spam) - spam solutions like spamtitan will learn	mail	da	Rapporter denne e-mail som Ham (ikke spam) - spamløsninger som spamTitan vil lære det
+report this email content as spam - spam solutions like spamtitan will learn	mail	da	Rapporter denne e-mail som spam - spamløsninger som spamTitan vil lære det
+required pear class mail/mimedecode.php not found.	mail	da	Påkrævet PEAR-klasse Mail/mimeDecode.php ikke fundet.
+required to disable if you use dovecot with private seen flags on shared or user folder!	mail	da	Påkrævet at deaktivere, hvis du bruger Dovecot med private seen flags på delt eller brugermappe!
 save all	mail	da	Gem alle
 save all attachments to filemanager	mail	da	Gem alle vedhæftede filer i filemanager
+save as infolog on send	mail	da	Gem som InfoLog ved afsendelse
+save the drafted message as eml file into vfs	mail	da	Gem den udarbejdede besked som eml-fil i Filhåndtering
+saving of message %1 failed. destination folder %2 does not exist.	mail	da	Gemning af besked %1 mislykkedes. Destinationsmappen %2 findes ikke.
+saving of message %1 succeeded. check folder %2.	mail	da	Gemning af besked %1 lykkedes. Tjek mappe %2.
+saving the rule failed:	mail	da	Gemning af reglen mislykkedes:
+security	mail	da	Sikkerhed
+see attachments for content of the orignial mail	mail	da	Se vedhæftede filer for indholdet af den oprindelige e-mail
 select all	mail	da	Vælg alle
+select an existing entry in order to append mail content to it	mail	da	Vælg en eksisterende post for at tilføje mailindhold til den
+select an item to read	mail	da	Vælg et element at læse
 select or insert email address	mail	da	Vælg eller indsæt e-mail-adresse
+selected date range (with quicksearch)	mail	da	Valgt datointerval (med hurtigsøgning)
+send message and move to send folder (if configured)	mail	da	Send besked og flyt til sendemappe (hvis konfigureret)
+send message pgp encrypted: requires keys from all recipients!	mail	da	Send beskeden PGP-krypteret: kræver nøgler fra alle modtagere!
 sent folder	mail	da	Sendt Mappe
+server supports special-use folders	mail	da	Serveren understøtter mapper til særlig brug
 set flags	mail	da	Markér e-mail som
 set predefined values for compose...	mail	da	Indstil foruddefinerede værdier for sammensætning ...
+should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	da	Skal signaturen indsættes efter (standard) eller før et svar eller en videresendelse, og skal signaturen være synlig og kunne ændres under udarbejdelsen.
+show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	da	Vis alle mapper (abonnerede OG ikke-abonnerede) i hovedskærmens mapperude
 show notification for new arriving mails	mail	da	Vis notifikation for nye ankomne mails
+show test connection section and control the level of info displayed?	mail	da	Vis testforbindelsessektion og kontroller niveauet af vist info?
+show test connection section and control the level of info displayed??	mail	da	Vis testforbindelsessektionen, og kontroller niveauet af de viste oplysninger?
+show them this time only	mail	da	Vis dem kun denne gang
 show vertical	mail	da	Vis lodret
 show vertical with all columns	mail	da	Vis lodret med alle kolonner
 show/hide preview pane in mail list view	mail	da	Vis/skjul forhåndsvisningsrude i postlistevisning
+shows a temporary visible notification including from address, subject and a snippet of the mail	mail	da	Viser en midlertidig synlig notifikation med afsenderadresse, emne og et uddrag af e-mailen
 signature	mail	da	Signatur
 signature at top	mail	da	signatur øverst
 signature position and visibility	mail	da	Signaturens placering og synlighed
@@ -216,4 +268,15 @@ unread	mail	da	ulæst
 when deleting messages	mail	da	Når meddelser slettes
 write	mail	da	Skriv
 wrote	mail	da	skrev
+yes, only trigger connection reset	mail	da	ja, udløser kun nulstilling af forbindelsen
+yes, show all debug information available for the user	mail	da	ja, vis alle tilgængelige debug-informationer for brugeren
+you can either choose to save as infolog or tracker, not both.	mail	da	Du kan enten vælge at gemme som InfoLog ELLER tracker, ikke begge dele.
 you can select what info to be displayed on email tag	mail	da	Du kan vælge, hvilke oplysninger der skal vises på e-mail-tagget.
+you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	da	Du kan bruge $$start$$ for ovenstående startdato og $$end$$ for slutdatoen.
+you may add this certificate into your contact, if you trust this signature.	mail	da	Du kan tilføje dette certifikat til din kontakt, hvis du stoler på denne signatur.
+you need to enter your s/mime passphrase to send this message.	mail	da	Du skal indtaste din S/MIME-passphrase for at sende denne besked.
+you need to install mailvelope plugin available for chrome and firefox from %1.	mail	da	Du skal installere Mailvelope-plugin, der er tilgængeligt til Chrome og Firefox fra %1.
+you need to save the message as draft first before to be able to save it into vfs	mail	da	Du skal først gemme beskeden som kladde, før du kan gemme den i VFS.
+you will loose current message body, unless you save it to your clipboard!	mail	da	Du vil miste den aktuelle meddelelsestekst, medmindre du gemmer den i udklipsholderen!
+you've got new mail	mail	da	Du har fået en ny e-mail
+your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	da	Din resterende kvote %1 er for lav, du kan muligvis ikke sende/modtage flere e-mails.\n Selvom oprydning af e-mails i papirkurven eller junk-mappen måske kan hjælpe dig med at få noget ledig plads tilbage.\n Hvis det ikke hjalp, kan du bede din administrator om mere kvote.

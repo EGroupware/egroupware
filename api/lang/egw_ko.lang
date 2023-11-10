@@ -36,8 +36,13 @@ add	common	ko	추가
 add a new contact	common	ko	새 연락처 추가
 add category	common	ko	카테고리 추가
 add sub	common	ko	하위 추가
+add user to responsibles	groupdav	ko	책임에 사용자 추가
+add user to responsibles, removing evtl. previous category user	groupdav	ko	사용자를 책임에 추가하고 이전 카테고리 사용자를 제거할 수 있습니다.
+add your domain as "%1" in options to list of email providers and enable api.	common	ko	이메일 공급자 목록 옵션에 도메인을 '%1'로 추가하고 API를 사용 설정합니다.
 addressbook	common	ko	주소록
 admin	common	ko	관리
+admin settings	common	ko	관리자 설정
+admin settings for %1	common	ko	%1에 대한 관리자 설정
 administration	common	ko	관리
 advanced search	common	ko	상세 검색
 all	common	ko	모두

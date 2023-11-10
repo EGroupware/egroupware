@@ -6,6 +6,7 @@ applications	common	lv	Aplikācijas
 cancel editing %1 without saving	filemanager	lv	Pārtraukt rediģēt %1 un nesaglabāt izmaiņas
 cannot create directory because it begins or ends in a space	filemanager	lv	Nevar izveidot mapi jo tās nosaukums sākas vai beidzas ar atstarpi
 check all	filemanager	lv	Parbaudīt visu
+classic	filemanager	lv	Standarta rīkjosla
 comment	filemanager	lv	Komentārs
 copied %1 to %2	filemanager	lv	Pārkopēja %1 uz %2
 copy to	filemanager	lv	Kopēt Uz:
@@ -20,42 +21,87 @@ created	filemanager	lv	Izveidots
 created %1,%2	filemanager	lv	Izveidots %1,%2
 created directory %1	filemanager	lv	Izveidota direktorija %1
 custom fields	filemanager	lv	Mainīti lauki
+default action on double-click	filemanager	lv	Noklusējuma darbība pēc dubultklikšķa
+default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	lv	Noklusējuma iestatījums = Nē. Saite netiks parādīta, bet jūs joprojām varēsiet pārvietoties uz šo atrašanās vietu vai konfigurēt šo konkrēto atrašanās vietu kā sākuma mapi vai mapes saiti.
+defines how to handle double click action on a document file. images are always opened in the expose-view and emails with email application. all other mime-types are handled by the browser itself.	filemanager	lv	Nosaka, kā apstrādāt dubultklikšķa darbību uz dokumenta faila. Attēli vienmēr tiek atvērti ekspozīcijas skatā un e-pasta ziņojumos ar e-pasta lietojumprogrammu. Visus pārējos MIME tipus apstrādā pats pārlūks.
 deleted %1	filemanager	lv	Izdzēsa %1
 directory	filemanager	lv	Direktorija
 directory %1 already exists	filemanager	lv	Direktorija %1 jau pastāv
 directory %1 does not exist	filemanager	lv	Direktorija %1 nepastāv
 disable	filemanager	lv	Deaktivizēt
 download	filemanager	lv	Lejupielādēt
+download documents	filemanager	lv	Dokumentu lejupielāde
 edit comments	filemanager	lv	Rediģēt komentārus
+edit share	filemanager	lv	Rediģēt koplietojumu
 enable	filemanager	lv	Aktivizēt
+enter a file size, e.g. 100k, 200m or 2g	filemanager	lv	Ievadiet faila lielumu, piemēram, 100K, 200M vai 2G.
+enter your file name	filemanager	lv	Ievadiet faila nosaukumu
 everyone	filemanager	lv	ikviens
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	filemanager	lv	Piemērs {{IF n_prefikss~Mr~Sveiks kungs~Sveiks kundze}} - meklējiet laukā "n_prefix", lai atrastu "Mr", ja atrasts, ierakstiet Hello Mr., citādi ierakstiet Hello Ms.
+example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	filemanager	lv	Piemērs {{{LETTERPREFIXCUSTOM n_prefiksa virsraksts n_dzimene}} - Piemērs: Dr. James Miller
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	filemanager	lv	Piemērs {{{NELF role}} - ja lauks role nav tukšs, parādīsies jauna rinda ar lauka role vērtību
+example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	filemanager	lv	Piemērs {{{nenvlf role}} - ja lauka loma nav tukša, iestatiet LF bez lauka vērtības
+excludes selected mime types	filemanager	lv	Izslēdz atlasītos MIME tipus
+excludes selected mime types from being opened by editor	filemanager	lv	Izslēdz izvēlētos MIME tipus no Collabora Online atvēršanas.<br>Šie dokumentu tipi tiek atvērti pārlūkprogrammā vai lejupielādēti.
+executable	filemanager	lv	Izpildāms
 expires	filemanager	lv	Beigas
-file	common	lv	Datne
+export definition to use for nextmatch export	filemanager	lv	Eksporta definīcija, ko izmantot nextmatch eksportam
+extended access control list	filemanager	lv	Paplašinātais piekļuves kontroles saraksts
+extended acl	filemanager	lv	Paplašinātais ACL
+failed to change permissions of %1!	filemanager	lv	Neizdevās mainīt %1 atļaujas!
+failed to create directory!	filemanager	lv	Neizdevās izveidot mapi!
+favorites	filemanager	lv	Izlase
+file	common	lv	Faila
+file %1 already exists	filemanager	lv	Failiņš %1 jau pastāv
 file %1 could not be created.	filemanager	lv	Datne %1 netika izveidota.
+file %1 may be too big. contact your systemadministrator for further info	filemanager	lv	Faila %1 izmērs varētu būt pārāk liels.
+file a file is only available with an epl subscription.	filemanager	lv	Faila fails ir pieejams tikai ar EPL abonementu.
 file names cannot contain "%1"	filemanager	lv	Datnes nosaukumā nedrīkst būt "%1"
 filemanager	common	lv	Datņu pārvaldnieks
 files in this directory	filemanager	lv	Datnes šajā direktorijā
+filesystem	filemanager	lv	Failu sistēma
+filesystem check reported no problems.	filemanager	lv	Failu sistēmas pārbaude ziņoja, ka problēmu nav.
+filesystem: mount directory (inside /var/lib/egroupware!) from host filesystem	filemanager	lv	Failu sistēma: pievienojiet direktoriju (iekšpusē /var/lib/egroupware !) no resursdatora failu sistēmas.
+finally delete	filemanager	lv	Visbeidzot dzēst
+finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	lv	Beidzot izdzēš visas vecākās versijas un izdzēstos failus dotajā mapē.\n\nTo nevar atcelt!
+finally delete this version	filemanager	lv	Beidzot dzēst šo versiju
+fix reported problems	filemanager	lv	Labot ziņotās problēmas
 folder up	filemanager	lv	Mapi uz augšu
+for files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available.  see the specific application for a list of available placeholders.	filemanager	lv	Failiem, kas saistīti ar lietojumprogrammas ierakstu (iekšpusē /apps/appname/id/), ir pieejamas arī šīs lietojumprogrammas vietzīmes. Skatiet konkrēto lietojumprogrammu, lai iegūtu pieejamo vietrāžu sarakstu.
+for files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available. see the specific application for a list of placeholders	filemanager	lv	Failiem, kas saistīti ar lietojumprogrammas ierakstu (iekšpusē /apps/appname/id/), ir pieejamas arī šīs lietojumprogrammas vietzīmes. Vietu turētāju sarakstu skatiet konkrētajā lietojumprogrammā.
+for serial letter use this tag. put the content, you want to repeat between two tags.	filemanager	lv	Sērijas burtam izmantojiet šo birku. Ievietojiet saturu, kuru vēlaties atkārtot, starp divām birkām.
 general	filemanager	lv	Vispārējs
 go home	filemanager	lv	iet uz Mājām
 go to	filemanager	lv	Iet Uz
 go to your home directory	filemanager	lv	Iet uz mājas direktoriju
 go up	filemanager	lv	pārvietoties uz augšu
+group home quota	filemanager	lv	Grupas mājas kvota
 hidden upload	filemanager	lv	Slēptā augšupielāde
 hidden uploads	filemanager	lv	Slēptās augšupielādes
+hostname/ip for webdav and smb	filemanager	lv	Uzņēmēja vārds/IP WebDAV un SMB
 id	filemanager	lv	ID
+if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	lv	Ja šeit norādāt mapi (pilnu VFS ceļu), %1 katram dokumentam tiek parādīta darbība. Šī darbība ļauj lejupielādēt norādīto dokumentu ar ievietotajiem %1 datiem.
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	lv	Ja šeit norādāt mapi (pilnu VFS ceļu), %1 katram ierakstam tiek parādīta papildu dokumenta ikona. Šī ikona ļauj lejupielādēt norādīto dokumentu ar ievietotajiem datiem.
 link	filemanager	lv	Saite
+list view	filemanager	lv	Saraksta skats
 location	filemanager	lv	Atrašanās vieta
 lock	filemanager	lv	Bloķēt
+mail paste	filemanager	lv	Pasta ielīmēšana
+merge print open handler	filemanager	lv	Apvienot drukas atvēršanas apstrādātājs
 mime type	filemanager	lv	MIME tips
-modified	filemanager	lv	Pārveidots
+modified	filemanager	lv	Modificēts
+modified between	filemanager	lv	Modificēts starp
+mountpoints	filemanager	lv	Montāžas punkti
 move	filemanager	lv	pārvietot
 move to	filemanager	lv	Pārvietot Uz:
 moved %1 to %2	filemanager	lv	Pārvietoja %1 uz %2
 no files in this directory.	filemanager	lv	Šajā direktorijā datņu nav.
 no version history for this file/directory	filemanager	lv	Nav vēstures par šo datni vai direktoriju
+notebookbar	filemanager	lv	Cilnē
 open	filemanager	lv	atvērt
 operation	filemanager	lv	Operācija
+password for webdav and smb, use $pass for password of logged in user	filemanager	lv	Parole WebDAV un SMB, izmantojiet $pass kā pieteiktā lietotāja paroli.
+path and query-parameters, smb: share and optional path (with /)	filemanager	lv	Ceļš un vaicājuma parametri, SMB: koplietošana un izvēles ceļš (ar /)
 percentage	filemanager	lv	Procenti
 permissions	filemanager	lv	Atļaujas
 please select a file to delete.	filemanager	lv	Lūdzu norādi failu, kuru izdzēst
@@ -64,6 +110,10 @@ preview %1	filemanager	lv	Priekšskatīt %1
 preview of %1	filemanager	lv	%1 priekšskatījums
 projectmanager	filemanager	lv	Projekta Vadītājs
 quick jump to	filemanager	lv	Ātri pārlekt uz
+quota	filemanager	lv	Kvota
+quota exceeded	filemanager	lv	Pārsniegta kvota
+recalculate	filemanager	lv	Pārrēķināt
+recalculated %1 directories in %2 iterations and %3 seconds	filemanager	lv	Pārrēķināts %1 direktoriju %2 iterācijās un %3 sekundēs.
 reload	filemanager	lv	pārlādēt
 renamed %1 to %2	filemanager	lv	%1 pārsaukts par %2
 replaced %1	filemanager	lv	Aizvietots

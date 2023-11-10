@@ -115,6 +115,7 @@ edit settings	filemanager	it	Modifica le impostazioni
 edit share	filemanager	it	modifica condivisione
 enable	filemanager	it	Abilita
 enable versioning for given mountpoint	filemanager	it	Abilitare il controllo delle versioni per il mountpoint selezionato
+enter a file size, e.g. 100k, 200m or 2g	filemanager	it	Inserire una dimensione del file, ad esempio 100K, 200M o 2G.
 enter setup user and password	filemanager	it	Inserisci il nome utente e la password dell'utente di setup.
 enter setup user and password to get root rights	filemanager	it	Inserisci il nome utente e la password dell'utente di setup per ottenere diritti amministrativi (root)
 enter the complete vfs path to specify a fast access link to a folder	filemanager	it	Inserisci il percorso VFS completo per specificare un link veloce verso una cartella
@@ -132,8 +133,8 @@ example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", fo
 example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	filemanager	it	Esempio {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Esempio: Sig. Dr. Giorgio Rossi
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	filemanager	it	Esempio {{NELF role}} - se il campo "Ruolo" non è vuoto, otterrai una nuova riga col valore del campo "Ruolo"
 example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	filemanager	it	Example {{nenvlf role}} - se il campo "Ruolo" non è vuoto, imposta un LF senza alcun valore del campo
-excludes selected mime types	filemanager	it	Esclude i tipi mime selezionati
-excludes selected mime types from being opened by editor	filemanager	it	Esclude i tipi mime selezionati dall'essere aperti dall'editor
+excludes selected mime types	filemanager	it	Esclude i tipi MIME selezionati
+excludes selected mime types from being opened by editor	filemanager	it	Esclude i tipi di MIME selezionati dall'apertura di Collabora Online.<br>Questi tipi di documenti vengono aperti nel browser o scaricati.
 executable	filemanager	it	Eseguibile
 expires	filemanager	it	Scade
 export definition to use for nextmatch export	filemanager	it	Definizione da usare per l'esportazione nextmatch (corrispondenza successiva)
@@ -176,12 +177,13 @@ go home	filemanager	it	Vai alla Home
 go to	filemanager	it	Vai A
 go to your home directory	filemanager	it	Vai alla tua directory Home
 go up	filemanager	it	Vai su
+group home quota	filemanager	it	Quota di gruppo
 hidden upload	filemanager	it	Caricamento nascosto
 hidden uploads	filemanager	it	Caricamenti nascosti
 hostname/ip for webdav and smb	filemanager	it	Nome/IP per WebDAV e SMB
 id	filemanager	it	ID
-if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	it	Se specifichi una directory (percorso vfs completo), %1 mostrerà l'azione per ogni documento. Quella azione permette di scaricare il documento specificato con i dati %1 inseriti
-if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	it	Se specifichi una directory (percorso vfs completo), %1 mostrerà un'icona in più per ogni voce. Quell'icona permette di scaricare il documento specificato con i dati inseriti
+if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	it	Se specifichi una directory (percorso VFS completo), %1 mostrerà l'azione per ogni documento. Quella azione permette di scaricare il documento specificato con i dati %1 inseriti
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	it	Se specifichi una directory (percorso VFS completo), %1 mostrerà un'icona in più per ogni voce. Quell'icona permette di scaricare il documento specificato con i dati inseriti
 if you specify an export definition, it will be used when you export	filemanager	it	Se specifichi una definizione di esportazione, allora verrà usata durante la relativa operazione
 if you specify an export definition, it will be used when you export*	filemanager	it	Verrà usata quando esporti, se specifichi qui una definizione di esportazione
 inherited	filemanager	it	Ereditato
@@ -227,6 +229,7 @@ operation	filemanager	it	Operazione
 password for webdav and smb, use $pass for password of logged in user	filemanager	it	Password per WebDAV e SMB, usa $pass per la password dell'utente che ha effettuato l'accesso
 paste link	filemanager	it	Incolla collegamento
 path %1 not found or not a directory!	filemanager	it	Il percorso %1 non è stato trovato, oppure non è una directory!
+path and query-parameters, smb: share and optional path (with /)	filemanager	it	Percorso e parametri di interrogazione, SMB: condivisione e percorso opzionale (con /)
 percentage	filemanager	it	Percentuale
 permission denied!	filemanager	it	Permesso negato
 permissions	filemanager	it	Permessi
@@ -240,9 +243,13 @@ properties saved.	filemanager	it	Proprietà salvate.
 protocol to use	filemanager	it	Protocollo da usare
 protocols	filemanager	it	Protocolli
 quick jump to	filemanager	it	Salta a
+quota	filemanager	it	Quota
+quota exceeded	filemanager	it	Quota superata
 read & write access	filemanager	it	Lettura e scrittura
 read access only	filemanager	it	Sola lettura
 readonly share link	filemanager	it	Collegamento condiviso in sola lettura
+recalculate	filemanager	it	Ricalcolare
+recalculated %1 directories in %2 iterations and %3 seconds	filemanager	it	Ha ricalcolato %1 directory in %2 iterazioni e %3 secondi.
 reload	filemanager	it	Ricarica
 rename of %1 to %2 failed!	filemanager	it	Non è stato possibile rinominare %1 a %2
 rename, change permissions or ownership	filemanager	it	Rinomina, modifica permessi oppure proprietario
@@ -256,7 +263,7 @@ root access granted.	filemanager	it	Accesso root conesso
 root access stopped.	filemanager	it	Accesso root fermato.
 save %1	filemanager	it	Salva %1
 save %1, and go back to file listing	filemanager	it	Salva %1 e torna alla lista dei file
-save as zip	filemanager	it	Salva come file compresso (zip)
+save as zip	filemanager	it	Salva come file compresso (ZIP)
 save changes	filemanager	it	Salva le modifiche
 saved %1	filemanager	it	Ho salvato %1
 saving properties failed!	filemanager	it	Non è stato possibile salvare le proprietà
@@ -304,6 +311,7 @@ to overwrite the existing file store again.	filemanager	it	Per sovrascrivere l'e
 total files	filemanager	it	File totali
 ui mode	filemanager	it	Barra degli strumenti predefinita
 under directory	filemanager	it	sotto la cartella
+unlock	filemanager	it	Sbloccare
 unmount	filemanager	it	Smonta
 unused space	filemanager	it	Spazio inutilizzato
 up	filemanager	it	Su
@@ -313,17 +321,21 @@ upload files	filemanager	it	Carica File
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	filemanager	it	Usa questo tag per le etichette di indirizzo. Posiziona il contenuto da ripetere, tra due tag.
 used space	filemanager	it	Spazio utilizzato
 user color indicator	filemanager	it	Indicatore colorato utente
+user home quota	filemanager	it	Quota casa utente
+username for webdav and smb, use $user for name of logged in user	filemanager	it	Nome utente per WebDAV e SMB, utilizzare $user per il nome dell'utente connesso
 users and groups	filemanager	it	Utenti e gruppo
 versioning	filemanager	it	Registrazione Versioni di file
 versioning requires egroupware epl	filemanager	it	Registrazione Versioni di file necessita di EGroupware EPL
 vfs mounts and versioning	common	it	Montaggi VFS e registrazione versioni
 view link	filemanager	it	Mostra Indirizzo
 webdav link copied into clipboard	filemanager	it	Link webDAV copiato negli appunti
+webdavs: mount egroupware or *cloud shares	filemanager	it	WebDAV: montare le condivisioni EGroupware o *Cloud
 who should be allowed to finally delete deleted files or old versions of a file:	filemanager	it	Chi dovrebbe poter eliminare definitivamente file o vecchie versioni di file:
 writable share link	filemanager	it	Collegamento condiviso in scrittura
 wrong username or password!	filemanager	it	Nome utente o password errati!
 you are not allowed to finally delete older versions and deleted files!	filemanager	it	Non hai i permessi per eliminare definitivamente i file vecchi e/o eliminati
 you are not allowed to upload a script!	filemanager	it	Non hai il permesso di caricamento di script!
+you can either delete some files or get in touch with your administrator to get more space	filemanager	it	È possibile eliminare alcuni file o contattare l'amministratore per ottenere più spazio.
 you can only grant additional rights, you can not take rights away!	filemanager	it	Puoi soltanto concedere diritti aggiuntivi, non puoi toglierne!
 you can use regular upload [+] button to upload files.	filemanager	it	E' possibile usare il pulsante regolare [+] per caricare file.
 you do not have access to %1	filemanager	it	Non hai accesso a %1

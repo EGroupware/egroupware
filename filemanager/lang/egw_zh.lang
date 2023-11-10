@@ -18,6 +18,7 @@ applications	common	zh	应用程序
 cancel editing %1 without saving	filemanager	zh	取消编辑%1， 不保存
 cannot create directory because it begins or ends in a space	filemanager	zh	无法创建目录, 目录名开头或末尾不能带有空格
 check all	filemanager	zh	全选
+classic	filemanager	zh	标准工具栏
 clear search	filemanager	zh	清除搜索
 comment	filemanager	zh	注释
 configuration changed.	filemanager	zh	配置已更改。
@@ -39,6 +40,9 @@ current directory	filemanager	zh	当前目录
 custom fields	filemanager	zh	自定义字段
 cut	filemanager	zh	剪切
 cut to clipboard	filemanager	zh	剪切到剪贴板
+default action on double-click	filemanager	zh	双击时的默认操作
+default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	zh	不会显示链接，但仍可导航至此位置，或将此特定位置配置为起始文件夹或文件夹链接。
+defines how to handle double click action on a document file. images are always opened in the expose-view and emails with email application. all other mime-types are handled by the browser itself.	filemanager	zh	定义如何处理双击文档文件的操作。图片总是在曝光视图中打开，电子邮件则通过电子邮件应用程序打开。所有其他 MIME 类型均由浏览器自行处理。
 deleted %1	filemanager	zh	%1已删除
 directory	filemanager	zh	目录
 directory %1 already exists	filemanager	zh	目录%1已存在
@@ -48,37 +52,73 @@ disable	filemanager	zh	禁用
 display and modification of content	filemanager	zh	内容显示和更改
 display of content	filemanager	zh	内容显示
 download	filemanager	zh	下载
+download documents	filemanager	zh	下载文件
 edit comments	filemanager	zh	编辑注释
+edit share	filemanager	zh	编辑共享
 enable	filemanager	zh	启用
+enter a file size, e.g. 100k, 200m or 2g	filemanager	zh	输入文件大小，如 100K、200M 或 2G
+enter your file name	filemanager	zh	输入文件名
 error uploading file!	filemanager	zh	上传文件错误！
 everyone	filemanager	zh	所有人
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	filemanager	zh	示例 {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - 搜索字段 "n_prefix"，查找 "Mr"，如果找到，则写入 Hello Mr.，否则写入 Hello Ms.。
+example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	filemanager	zh	示例 {{LETTERPREFIXCUSTOM n_prefix title n_family}} - 示例 詹姆斯-米勒博士先生
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	filemanager	zh	例 {{NELF role}} - 如果字段角色不为空，则会得到一行新的字段角色值
+example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	filemanager	zh	例 {{nenvlf role}} - 如果字段角色不为空，则设置一行 LF，但不包含字段的任何值
+excludes selected mime types	filemanager	zh	排除选定的 MIME 类型
+excludes selected mime types from being opened by editor	filemanager	zh	将选定的 MIME 类型排除在 Collabora Online 打开的范围之外。<br>这些文档类型可以在浏览器中打开或下载。
+executable	filemanager	zh	可执行
 expires	filemanager	zh	期限
+export definition to use for nextmatch export	filemanager	zh	用于导出 nextmatch 的导出定义
+extended access control list	filemanager	zh	扩展访问控制列表
+extended acl	filemanager	zh	扩展 ACL
+failed to change permissions of %1!	filemanager	zh	更改 %1 的权限失败！
 failed to create directory!	filemanager	zh	创建目录失败！
+favorites	filemanager	zh	收藏夹
 file	common	zh	文件
+file %1 already exists	filemanager	zh	文件 %1 已存在
 file %1 could not be created.	filemanager	zh	文件 %1 不能创建。
 file %1 may be too big. contact your systemadministrator for further info	filemanager	zh	文件%1太大，请联系系统管理员取得更多信息
+file a file is only available with an epl subscription.	filemanager	zh	文件 %1 只能通过 EPL 订阅获得。
 file deleted.	filemanager	zh	文件已删除。
 file names cannot contain "%1"	filemanager	zh	文件名不能包含"%1"
 file or directory not found!	filemanager	zh	文件或目录不存在！
 file successful uploaded.	filemanager	zh	文件上传成功。
 filemanager	common	zh	文件管理器
 files in this directory	filemanager	zh	文件在此目录中
+filesystem	filemanager	zh	文件系统
+filesystem check reported no problems.	filemanager	zh	文件系统检查报告没有问题。
+filesystem: mount directory (inside /var/lib/egroupware!) from host filesystem	filemanager	zh	文件系统：从主机文件系统挂载目录（在 /var/lib/egroupware 内 !
+finally delete	filemanager	zh	最后删除
+finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	zh	最后删除指定文件夹下的所有旧版本和已删除文件！
+finally delete this version	filemanager	zh	最后删除此版本
+fix reported problems	filemanager	zh	修复报告的问题
 folder up	filemanager	zh	向上
+for files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available.  see the specific application for a list of available placeholders.	filemanager	zh	对于链接到应用程序条目的文件（在 /apps/appname/id/ 内），该应用程序的占位符也可用。有关可用占位符的列表，请参阅特定应用程序。
+for files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available. see the specific application for a list of placeholders	filemanager	zh	对于链接到应用程序条目的文件（在 /apps/appname/id/ 内），该应用程序的占位符也可用。有关占位符列表，请参阅特定应用程序。
+for serial letter use this tag. put the content, you want to repeat between two tags.	filemanager	zh	对于序列字母，请使用此标签。将要重复的内容放在两个标签之间。
 general	filemanager	zh	通用
 general fields:	filemanager	zh	通用字段：
 go home	filemanager	zh	返回首页
 go to	filemanager	zh	跳转到
 go to your home directory	filemanager	zh	跳转到主目录
 go up	filemanager	zh	向上
+group home quota	filemanager	zh	组主页配额
 hidden upload	filemanager	zh	隐藏的上传
 hidden uploads	filemanager	zh	隐藏的上传
+hostname/ip for webdav and smb	filemanager	zh	WebDAV 和 SMB 的主机名/IP
 id	filemanager	zh	编号
+if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	zh	如果在此指定文件夹（完整 VFS 路径），%1 会为每个文档显示一个操作。该操作允许下载插入 %1 数据的指定文档。
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	zh	如果在此指定文件夹（完整 VFS 路径），%1 会为每个条目显示一个额外的文档图标。通过该图标可以下载指定的文档和插入的数据。
 link	filemanager	zh	链接
+list view	filemanager	zh	列表查看
 location	filemanager	zh	文件位置
 lock	filemanager	zh	锁定
+mail paste	filemanager	zh	邮件粘贴
+merge print open handler	filemanager	zh	合并打印打开处理程序
 mime type	filemanager	zh	MIME类型
-modified	filemanager	zh	修改日期
-modified between	filemanager	zh	修改介于
+modified	filemanager	zh	已修改
+modified between	filemanager	zh	修改之间
+mountpoints	filemanager	zh	安装点
 move	filemanager	zh	移动
 move to	filemanager	zh	移动到
 moved %1 to %2	filemanager	zh	%1已移动到%2
@@ -87,8 +127,11 @@ no access	filemanager	zh	无访问
 no files in this directory.	filemanager	zh	该目录为空。
 no version history for this file/directory	filemanager	zh	该文件/目录夹无版本历史记录
 noone	filemanager	zh	没有人
+notebookbar	filemanager	zh	标签
 open	filemanager	zh	待决事项
 operation	filemanager	zh	操作
+password for webdav and smb, use $pass for password of logged in user	filemanager	zh	WebDAV 和 SMB 的密码，使用 $pass 作为登录用户的密码
+path and query-parameters, smb: share and optional path (with /)	filemanager	zh	路径和查询参数，SMB：共享和可选路径（带/）。
 percentage	filemanager	zh	百分比
 permissions	filemanager	zh	访问权限
 please select a file to delete.	filemanager	zh	请选择要删除文件。
@@ -97,8 +140,12 @@ preview %1	filemanager	zh	预览%1
 preview of %1	filemanager	zh	%1的预览
 projectmanager	filemanager	zh	项目管理
 quick jump to	filemanager	zh	快速跳转到
+quota	filemanager	zh	配额
+quota exceeded	filemanager	zh	超出配额
 read & write access	filemanager	zh	读写访问
 read access only	filemanager	zh	只读访问
+recalculate	filemanager	zh	重新计算
+recalculated %1 directories in %2 iterations and %3 seconds	filemanager	zh	在 %2 次迭代和 %3 秒内重新计算 %1 目录
 reload	filemanager	zh	重新载入
 renamed %1 to %2	filemanager	zh	%1已重命名为%2
 renamed %1 to %2.	filemanager	zh	%1已重命名为%2。

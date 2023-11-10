@@ -32,7 +32,7 @@
 '%1' is not a valid date !!!	common	cs	'%1' není platné datum !!!
 '%1' is not a valid floatingpoint number !!!	common	cs	'%1' není platné číslo s pohyblivou desetinnou čárkou !!!
 '%1' is not a valid integer !!!	common	cs	'%1' není platné celé číslo
-'%1' is not a valid json file!	common	cs	'%1' není json souborem v server root EGw!
+'%1' is not a valid json file!	common	cs	'%1' není platný soubor JSON
 '%1' is not a valid timezone!	common	cs	'%1' není platní časová zóna!
 '%1' is not allowed ('%2')!	common	cs	'%1' NENÍ povoleno ('%2')!
 '%1' is not allowed%2)!	common	cs	'%1' NENÍ povoleno ('%2')!
@@ -99,6 +99,7 @@ add your domain as "%1" in options to list of email providers and enable api.	co
 addressbook	common	cs	Adresář
 addressbooks to sync in addition to personal addressbook	groupdav	cs	Adresáře k synchronizaci pro přidání do osobních adresářů
 admin	common	cs	Správce
+admin settings	common	cs	Nastavení správce
 admin settings for %1	common	cs	Nastavení správce pro %1
 administration	common	cs	Správa
 advanced search	common	cs	Rozšířené hledání
@@ -117,6 +118,7 @@ all in one	groupdav	cs	Vše v jednom
 all languages	common	cs	Všechny jazyky
 all operations save the template!	common	cs	Všechny operace ukládají šablonu !
 all users	common	cs	Všichni uživatelé
+allow editing the %1	common	cs	Povolit úpravu %1
 allowed file type: %1	common	cs	Povolený typ souboru: %1
 allows to modify responsible users from devices not supporting them, by setting email address of a user as category.	groupdav	cs	Dovoluje upravit zodpovědné uživatele ze zařízení, které je nepodporují, nastavením e-mailové adresy uživatele jako kategorii.
 alt	common	cs	Alt

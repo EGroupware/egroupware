@@ -58,8 +58,13 @@ add column	common	no	Legg til kolonne
 add index	common	no	Legg til innholdsfortegnelse
 add sub	common	no	Legg til underkategori
 add table	common	no	Legg til tabell
+add user to responsibles	groupdav	no	Legg til bruker i ansvarlige
+add user to responsibles, removing evtl. previous category user	groupdav	no	Legge til bruker i ansvarlig, eventuelt fjerne tidligere kategoribrukere
+add your domain as "%1" in options to list of email providers and enable api.	common	no	Legg til domenet ditt som "%1" i listen over e-postleverandører og aktiver API.
 addressbook	common	no	Adresseliste
 admin	common	no	Admin
+admin settings	common	no	Admin-innstillinger
+admin settings for %1	common	no	Administratorinnstillinger for %1
 administration	common	no	Administrasjon
 advanced search	common	no	Avansert søk
 afghanistan	common	no	AFGANISTAN
@@ -72,6 +77,7 @@ all fields	common	no	Alle felt
 all languages	common	no	Alle språk
 all operations save the template!	common	no	Alle operasjoner lagrer malen!
 all users	common	no	Alle brukere
+allow editing the %1	common	no	Tillat redigering av %1
 alternate style-sheet:	common	no	Alternativt Style Sheet
 am	common	no	er
 american samoa	common	no	SAMOA

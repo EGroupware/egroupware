@@ -90,11 +90,11 @@ change editor type	mail	sk	prepnúť editor do režimu HTML
 changed profile	mail	sk	zmenený profil
 changing subject failed because of %1	mail	sk	Zmena predmetu sa nepodarila. Príčina: %1
 changing subject failed folder %1 does not exist	mail	sk	Zmena predmetu sa nepodarila, priečinok %1 neexistuje
-check message against next rule also	mail	sk	skontrolovať správu aj voči ďalšiemu pravidlu
+check message against next rule also	mail	sk	Skontrolovať správu aj voči ďalšiemu pravidlu
 check to receive a notification when the message is read (note: not all clients support this and/or the receiver may not authorize the notification)	mail	sk	Zaškrtnite, ak chcete dostať potvrdenie o prečítaní správy (poznámka: nepodporujú to všetci poštoví klienti a adresát nemusí povoliť odoslanie ptvrdenia)
-check to save as calendar event on send	mail	sk	zaškrtnite, ak chcete pri odoslaní uložiť ako udalosť
-check to save as infolog on send	mail	sk	zaškrtnite, ak to chcete pri odoslaní uložiť ako položku Záznamníka
-check to save as tracker entry on send	mail	sk	zaškrtnite, ak to chcete pri odoslaní uložiť ako položku Sledovača
+check to save as calendar event on send	mail	sk	Zaškrtnite, ak chcete pri odoslaní uložiť ako udalosť
+check to save as infolog on send	mail	sk	Zaškrtnite, ak to chcete pri odoslaní uložiť ako položku Záznamníka
+check to save as tracker entry on send	mail	sk	Zaškrtnite, ak to chcete pri odoslaní uložiť ako položku Sledovača
 choose file	mail	sk	Vyberte súbor
 common acl	mail	sk	Bežné ACL
 compose	mail	sk	Nová správa
@@ -180,6 +180,7 @@ don't use sent	mail	sk	Nepoužívať [Odoslana pošta]
 don't use template folder	mail	sk	Nepoužívať [Šablóny]
 don't use trash	mail	sk	Nepoužívať [Odpadkový kôš]
 download attachments	mail	sk	Stiahnuť prílohy
+draft	mail	sk	Návrh
 draft folder	mail	sk	Priečinok návrhov
 drafts	mail	sk	Návrhy
 drafts folder	mail	sk	Priečinok návrhov
@@ -273,6 +274,7 @@ ham folder	mail	sk	Priečinok dobrých správ
 handling of external http images / mixed content in mails	mail	sk	Spracovanie externých obrázkov http / zmiešaného obsahu v e-mailoch
 header	mail	sk	Hlavička
 header lines	mail	sk	Riadky hlavičky
+high	mail	sk	vysoká
 hold %1 to drag files to your computer	mail	sk	Podržte %1 a presuňte súbory do počítača
 home page folders	mail	sk	Priečinky domovskej stránky
 hostname or ip	mail	sk	Názov stroja alebo IP
@@ -356,6 +358,8 @@ message preview area	mail	sk	Oblasť náhľadu správy
 message saved successfully.	mail	sk	Správa bola úspešne uložená.
 message send failed: %1	mail	sk	Odoslanie správy zlyhalo: %1
 message send successfully.	mail	sk	Správa bola úspešne odoslaná.
+message verified successfully but the signer’s certificate could not be verified.	mail	sk	Správa bola úspešne overená, ale certifikát podpisovateľa sa nepodarilo overiť.
+message verified successfully.	mail	sk	Správa bola úspešne overená.
 miscellaneous	mail	sk	Rôzne
 modify subject	mail	sk	Upraviť predmet
 modify subject of this message	mail	sk	Upraviť predmet správy
@@ -370,8 +374,11 @@ moved %1 message(s) from %2 to %3	mail	sk	%1 správ bolo presunutých z %2 do %3
 moving folders from one mailaccount to another is not supported	mail	sk	Presúvanie priečinkov z jedného poštového účtu do druhého nie je podporované.
 name and email	mail	sk	Meno a e-mail
 name of account	mail	sk	Názov účtu
+name of imap servers (space separated host or host:port)	mail	sk	Názov serverov IMAP (hostiteľ alebo hostiteľ:port oddelený medzerou)
 never display html emails	mail	sk	Nezobrazovať HTML správy
 never show	mail	sk	Nikdy nezobrazovať
+never show notification	mail	sk	Nikdy nezobrazovať oznámenie
+new mail from %1	mail	sk	Nová pošta od %1
 new mail notification	mail	sk	Nová e-mailová pripomienka
 new message type	mail	sk	Nový typ správy
 new subject	mail	sk	Nový predmet
@@ -400,13 +407,16 @@ notify about new mail in this folders	mail	sk	Upozorniť na nové správy v týc
 notify when new mails arrive in these folders	mail	sk	Upozorniť keď sa nové správy objavia v týchto priečinkoch
 on	mail	sk	ohľadom
 on behalf of	mail	sk	V mene
+on vacation	mail	sk	Na dovolenke
 one address is not valid	mail	sk	Jedna adresa je neplatná
 only email	mail	sk	Iba e-mail
+only if currently in an other app	mail	sk	Iba ak sa práve nachádza v inej aplikácii
 only makes sense, if you transport password through a different channel / outside of this mail to recipients!	mail	sk	Má to zmysel iba v prípade, keď heslo doručíte adresátom iným spôsobom, mimo tejto správy!
 only name	mail	sk	Iba meno
 only needed for some servers, that do not return all folders on root level queries to retrieve all folders for that level	mail	sk	Niektoré servre nevracajú všetky priečinky pri požiadavkách na koreňovej úrovni. Tieto servre to potrebujú aby načítali všetky priečinky na danej úrovni.
 only one window	mail	sk	Iba jedno okno
 only send message, do not copy a version of the message to the configured sent folder	mail	sk	Správu iba odoslať, nekopírovať do priečinka Odoslanej pošty
+only store message in inbox, do not send vacation notice	mail	sk	Uložiť správu len do INBOXU, NEposielať oznámenie o dovolenke
 open in html mode	mail	sk	Otvoriť v režime HTML
 open in text mode	mail	sk	Otvoriť v textovom režime
 open with collabora office	mail	sk	Otvoriť pomocou Collabora Online
@@ -441,6 +451,7 @@ provide a default vacation text, (used on new vacation messages when there was n
 push notifications	mail	sk	Oznámenia Push
 quicksearch	mail	sk	Rýchle hľadanie
 quicksearch (with cc)	mail	sk	Rýchle hľadanie (vrátane kópie)
+quota limit warning in megabyte (recommended value is 30 mb).	mail	sk	Upozornenie na limit kvóty v megabajtoch (odporúčaná hodnota je 30 MB).
 quota not provided by server	mail	sk	Server neposkytuje kvóty
 quota: %1	mail	sk	Kvóta: %1
 read	mail	sk	prečítané
@@ -485,6 +496,7 @@ report as spam	mail	sk	Označiť ako nevyžiadanú
 report this email content as ham (not spam) - spam solutions like spamtitan will learn	mail	sk	Označiť správu ako dobrú (NIE nevyžiadanú) - filtre ako napr. spamTitan sa podľa toho učia rozpoznávať dobré správy
 report this email content as spam - spam solutions like spamtitan will learn	mail	sk	Označiť správu ako nevyžiadanú) - filtre ako napr. spamTitan sa podľa toho učia rozpoznávať Spam
 required pear class mail/mimedecode.php not found.	mail	sk	Nenašla sa požadovaná trieda PEAR Mail / mimeDecode.php
+required to disable if you use dovecot with private seen flags on shared or user folder!	mail	sk	Nutné vypnúť, ak používate Dovecot s príznakmi private seen na zdieľanom alebo používateľskom priečinku!
 resend after how many days?	mail	sk	Po koľkých dňoch znovu odoslať?
 respond to mail sent to:	mail	sk	Odpovedať na správu odoslanú na adresu:
 restrict acl management	admin	sk	Obmedziť spravovanie ACL
@@ -493,6 +505,7 @@ row order style	mail	sk	Štýl usporiadania riadkov
 rule priority position	mail	sk	Pozícia priority pravidla
 rule with priority	mail	sk	Pravidlo s prioritou
 rules	mail	sk	Pravidlá
+s/mime encryption failed because no certificate has been found for sender address: %1	mail	sk	Šifrovanie S/MIME zlyhalo, pretože pre adresu odosielateľa nebol nájdený žiadny certifikát: %1
 save all	mail	sk	Uložiť všetko
 save all attachments to filemanager	mail	sk	Uložiť všetky prílohy do Správcu súborov
 save as calendar	mail	sk	Uložiť ako kalendár
@@ -520,6 +533,7 @@ saving of message %1 succeeded. check folder %2.	mail	sk	Ukladanie správy %1 sa
 saving the rule failed:	mail	sk	Ukladanie pravidla zlyhalo:
 security	mail	sk	Bezpečnosť
 see attachments for content of the orignial mail	mail	sk	Pre obsah pôvodnej správy pozrite prílohy
+select a date	mail	sk	Výber dátumu
 select all	mail	sk	Označiť všetko
 select an existing entry in order to append mail content to it	mail	sk	Vyberte existujúcu položku ku ktorej sa pripojí obsah správy
 select an item to read	mail	sk	Vyberte položku na čítanie
@@ -535,6 +549,8 @@ send a reject message:	mail	sk	Poslať správu o odmietnutí:
 send files as	mail	sk	Poslať súbor ako
 send message and move to send folder (if configured)	mail	sk	Odoslať správu a presunúť ju do priečinka Odoslanej pošty
 send message pgp encrypted: requires keys from all recipients!	mail	sk	Poslať správu zašifrovanú pomocou PGP; vyžadujú sa kľúče všetkých adresátov!
+send only a vacation notice, do not store message in inbox	mail	sk	Odoslať len oznámenie o dovolenke, správu NEUKLADÁVAJTE do INBOXU
+send vacation notice and store message in inbox	mail	sk	Odoslať len oznámenie o dovolenke, správu NEUKLADÁVAJTE do INBOXU
 sender	mail	sk	Odosielateľ
 sent	mail	sk	Odoslaná pošta
 sent folder	mail	sk	Priečinok Odoslaná pošta
@@ -543,6 +559,7 @@ serverside filterrules (sieve) are not activated	mail	sk	Filtrovanie na strane s
 serverside vacationnotice (via sieve) are not activated	mail	sk	Správy o neprítomnosti na strane servera (pomocou Sieve) nie sú aktivované.
 set / remove flags	mail	sk	Pridať / Odstrániť značky
 set / remove labels	mail	sk	Pridať / Odstrániť menovky
+set flags	mail	sk	Nastavenie príznakov
 set it as default:	mail	sk	nastaviť to ako predvolené:
 set predefined values for compose...	mail	sk	Nastavenie preddefinovaných hodnôt pre compose ...
 should new messages show up on the home page	mail	sk	Chcete, aby sa nové správy zobrazovali na domovskej stránke?
@@ -562,6 +579,7 @@ show them this time only	mail	sk	Zobraziť ich len v tomto prípade
 show vertical	mail	sk	Zobraziť zvisle
 show vertical with all columns	mail	sk	Zobraziť vertikálne so všetkými stĺpcami
 show/hide preview pane in mail list view	mail	sk	Zobraziť/Skryť náhľad pri zobrazení zoznamu správ
+shows a temporary visible notification including from address, subject and a snippet of the mail	mail	sk	Zobrazí dočasne viditeľné oznámenie vrátane adresy od, predmetu a úryvku správy
 sieve	mail	sk	Sieve
 sieve connection status	mail	sk	Stav spojenia Sieve
 sieve not activated	mail	sk	Sieve nie je zapnutý
@@ -599,6 +617,7 @@ subscribe folder ...	mail	sk	Prihlásiť priečinok ...
 subscribe to folder %1	mail	sk	Prihlásiť priečinok %1
 subscription folders	mail	sk	Prihlásené priečinky
 subscription successfully saved.	mail	sk	Stav prihlásenia úspešne uložené.
+succeeded on %1 folders, failed on %2	mail	sk	Úspešné na %1 priečinkov, neúspešné na %2
 successfully connected	mail	sk	Pripojenie úspešné
 switch off encryption?	mail	sk	Vypnúť šifrovanie?
 template folder	mail	sk	Priečinok Šablóny
@@ -620,7 +639,7 @@ the mimeparser can not parse this message.	mail	sk	Analyzátor MIME nedokázal s
 the rule with priority %1 successfully saved!	mail	sk	Toto pravidlo s prioritou %1 bolo úspešne uložené!
 then	mail	sk	TAK
 there is no imap server configured.	mail	sk	Nie je nastavený žiadny IMAP server.
-there is no space left to store sieve script, please check sieve_maxscriptsize option on your mailserver's config.	mail	sk	Na uloženie skriptu sieve nezostalo miesto, skontrolujte prosím možnosť sieve_maxscriptsize v konfigurácii vášho poštového servera.
+there is no space left to store sieve script, please check sieve_maxscriptsize option on your mailserver's config.	mail	sk	Na uloženie skriptu Sieve nezostalo miesto, skontrolujte prosím možnosť sieve_maxscriptsize v konfigurácii vášho poštového servera.
 this mail contains external images served via insecure http protocol. be aware showing or allowing them can compromise your security!	mail	sk	Tento mail obsahuje externé obrázky doručované prostredníctvom nezabezpečeného protokolu HTTP. Upozorňujeme, že ich zobrazenie alebo povolenie môže ohroziť vašu bezpečnosť!
 this message is smime encrypted and password protected.	mail	sk	Táto správa je šifrovaná pomocou SMIME a chránená heslom.
 timeout on connections to your imap server	mail	sk	Pripojenie na IMAP server - čas požiadavky vypršal.

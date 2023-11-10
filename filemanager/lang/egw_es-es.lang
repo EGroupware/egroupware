@@ -42,6 +42,9 @@ allow a maximum of the above configured folderlinks to be configured in settings
 and all it's childeren	filemanager	es-es	y todos los subdirectorios
 application fields	filemanager	es-es	Campos de la aplicación
 applications	common	es-es	Aplicaciones
+backend	filemanager	es-es	Backend
+backend url	filemanager	es-es	URL del backend
+backend url to mount	filemanager	es-es	URL del backend a montar
 basedirectory	filemanager	es-es	Directorio base
 can't open directory %1!	filemanager	es-es	¡No se puede abrir el directorio %1!
 cancel editing %1 without saving	filemanager	es-es	Cancelar la edición %1 sin guardar
@@ -112,6 +115,7 @@ edit settings	filemanager	es-es	Editar configuración
 edit share	filemanager	es-es	Editar compartición
 enable	filemanager	es-es	Activar
 enable versioning for given mountpoint	filemanager	es-es	Habilitar el control de versiones para un punto de montaje dado
+enter a file size, e.g. 100k, 200m or 2g	filemanager	es-es	Introduzca un tamaño de archivo, por ejemplo 100K, 200M o 2G
 enter setup user and password	filemanager	es-es	Introducir usuario de configuración y contraseña
 enter setup user and password to get root rights	filemanager	es-es	Introduzca usuario de configuración y contraseña para obtener permisos de administrador
 enter the complete vfs path to specify a fast access link to a folder	filemanager	es-es	Introduzca la ruta VFS completa para especificar un acceso rápido a una carpeta
@@ -130,7 +134,7 @@ example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james m
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	filemanager	es-es	Ejemplo {{NELF role}} - si el rol del campo no está vacío, obtendrá una línea nueva con el valor del rol del campo
 example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	filemanager	es-es	Ejemplo {{nenvlf role}} - si el rol del campo no está vacío, establece un salto de línea (LF) sin ningún valor del campo
 excludes selected mime types	filemanager	es-es	Excluye tipos MIME seleccionados
-excludes selected mime types from being opened by editor	filemanager	es-es	Excluye los tipos MIME seleccionados de ser abiertos por el editor
+excludes selected mime types from being opened by editor	filemanager	es-es	Excluye los tipos MIME seleccionados de ser abiertos por Collabora Online.<br>Estos tipos de documentos se abren en el navegador o se descargan.
 executable	filemanager	es-es	Ejecutable
 expires	filemanager	es-es	Expira
 export definition to use for nextmatch export	filemanager	es-es	Exportar la definición a usar para exportar nextmatch
@@ -158,6 +162,7 @@ files from subdirectories	filemanager	es-es	Ficheros de subdirectorios
 files in this directory	filemanager	es-es	Ficheros en este directorio
 filesystem	filemanager	es-es	Sistema de archivos
 filesystem check reported no problems.	filemanager	es-es	La comprobación del sistema de archivos no ha encontrado problemas
+filesystem: mount directory (inside /var/lib/egroupware!) from host filesystem	filemanager	es-es	Sistema de archivos: montar directorio (dentro de /var/lib/egroupware !) desde el sistema de archivos del host
 finally delete	filemanager	es-es	Fnalmente suprimido
 finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	es-es	Finalmente suprime todas las versiones anteriores y los archivos borrados en el directorio dado.\n\n¡Esto NO se puede deshacer!
 finally delete this version	filemanager	es-es	Finalmente suprime esta versión
@@ -172,8 +177,10 @@ go home	filemanager	es-es	ir al inicio
 go to	filemanager	es-es	Ir A
 go to your home directory	filemanager	es-es	Ir al directorio personal
 go up	filemanager	es-es	Subir
+group home quota	filemanager	es-es	Cuota de inicio de grupo
 hidden upload	filemanager	es-es	Subida oculta
 hidden uploads	filemanager	es-es	Subidas ocultas
+hostname/ip for webdav and smb	filemanager	es-es	Nombre de host/IP para WebDAV y SMB
 id	filemanager	es-es	Id
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	es-es	Si especifica un directorio aquí (la ruta vgs completa), %1 muestra una acción para cada documento. Esa acción permite descargar el documento especificado con los datos %1 insertados.
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	es-es	Si especifica un directorio aquí (la ruta vgs completa), %1 muestra un icono extra de documento para cada entrada. Ese icono permite descargar el documento especificado con los datos insertados.
@@ -212,14 +219,17 @@ no files in this directory.	filemanager	es-es	No hay ficheros en este directorio
 no preview available	filemanager	es-es	No hay vista previa disponible
 no version history for this file/directory	filemanager	es-es	No hay historial para este fichero/directorio
 noone	filemanager	es-es	Nadie
+notebookbar	filemanager	es-es	Con pestañas
 older versions or deleted files	filemanager	es-es	Versiones anteriores o archivos borrados
 only owner can rename or delete the content	filemanager	es-es	Sólo el propietario puede renombrar o borrar el contenido
 open	filemanager	es-es	Abrir
 open documents with collabora, if permissions are given	filemanager	es-es	abrir documentos con Collabora, si se otorgan permisos
 open odt documents with collabeditor	filemanager	es-es	abrir documentos odt con CollabEditor
 operation	filemanager	es-es	Operación
+password for webdav and smb, use $pass for password of logged in user	filemanager	es-es	Contraseña para WebDAV y SMB, utilice $pass para la contraseña del usuario conectado
 paste link	filemanager	es-es	Pegar enlace
 path %1 not found or not a directory!	filemanager	es-es	¡Ruta %1 no encontrada o no es un directorio!
+path and query-parameters, smb: share and optional path (with /)	filemanager	es-es	Ruta y parámetros de consulta, SMB: recurso compartido y ruta opcional (con /)
 percentage	filemanager	es-es	Porcentaje
 permission denied!	filemanager	es-es	¡Permiso denegado!
 permissions	filemanager	es-es	Permisos
@@ -239,6 +249,7 @@ read & write access	filemanager	es-es	Derechos de lectura y escritura
 read access only	filemanager	es-es	Sólo derecho de lectura
 readonly share link	filemanager	es-es	Enlace de compartir en solo lectura
 recalculate	filemanager	es-es	Recalcular
+recalculated %1 directories in %2 iterations and %3 seconds	filemanager	es-es	Recalculados %1 directorios en %2 iteraciones y %3 segundos
 reload	filemanager	es-es	recargar
 rename of %1 to %2 failed!	filemanager	es-es	¡Fallo al renombrar %1 a %2!
 rename, change permissions or ownership	filemanager	es-es	Renombrar, cambiar los permisos o propietario
@@ -252,7 +263,7 @@ root access granted.	filemanager	es-es	Permiso de administrador concedido.
 root access stopped.	filemanager	es-es	Acceso de administrador detenido.
 save %1	filemanager	es-es	Guardar %1
 save %1, and go back to file listing	filemanager	es-es	Guardar %1, y volver al listado
-save as zip	filemanager	es-es	Guardar como zip
+save as zip	filemanager	es-es	Guardar como ZIP
 save changes	filemanager	es-es	Guardar cambios
 saved %1	filemanager	es-es	Guardado %1
 saving properties failed!	filemanager	es-es	¡Fallo al guardar las propiedades!
@@ -265,6 +276,7 @@ select file(s) from vfs	common	es-es	Seleccionar ficheros desde VFS
 setting for document merge saved.	filemanager	es-es	Se ha guardado la configuración para mezclar documentos.
 share files	filemanager	es-es	Compartir archivos
 share link copied into clipboard	filemanager	es-es	Compartir enlace copiado al portapapeles
+share mounted at %1.<br/>please close this tab.	filemanager	es-es	Compartir montado en %1.<br/>Por favor, cierra esta pestaña.
 shared files	filemanager	es-es	Archivos compartidos
 shared with	filemanager	es-es	Compartido con
 show	filemanager	es-es	Mostrar
@@ -276,6 +288,8 @@ show link "your home directory" in side box menu?	filemanager	es-es	¿Mostrar el
 show link "your home directory*" in side box menu?*	filemanager	es-es	¿Mostrar el enlace "Directorio personal" en el menú del recuadro lateral?
 show link to filemanagers basedirectory (/) in side box menu?	filemanager	es-es	¿Mostrar enlace al directorio base del administrador de archivos (/) en el menú lateral?
 size	filemanager	es-es	Tamaño
+smb, webdavs and vfs require a username!	filemanager	es-es	SMB, WebDAV y VFS requieren un nombre de usuario.
+smb: mount samba or windows fileserver shares	filemanager	es-es	SMB: montar recursos compartidos de servidores de archivos Samba o Windows
 some functionalities require superuser permissions, please login here as filemanager superuser - allowed users are defined in setup.	filemanager	es-es	Algunas funcionalidades requieren permisos de superusuario, inicie sesión aquí como superusuario administrador de archivos - los usuarios permitidos se definen en la configuración.
 sqlfs statistics	filemanager	es-es	Estadísticas sqlFS
 start search	filemanager	es-es	comenzar la búsqueda
@@ -289,6 +303,7 @@ the default start folder is your personal folder. the default is used, if you le
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	filemanager	es-es	El documento puede contener un marcador como {{%3}}, para sustituirlo con los datos (%1lista completa de nombres de marcadores%2).
 the following document-types are supported:	filemanager	es-es	Los siguientes tipos de documentos están soportados:
 the requested path %1 is not available.	filemanager	es-es	La ruta solicitada %1 no está disponible.
+the uploaded file is only visible to the person sharing these files with you, not to yourself or other people knowing this sharing link.	filemanager	es-es	Il file caricato è visibile solo alla persona che lo condivide con voi, non a voi stessi o ad altre persone che conoscono il link di condivisione.
 there's already a directory with that name!	filemanager	es-es	¡Ya existe un directorio con ese nombre!
 there's already a file with that name!	filemanager	es-es	¡Ya existe un fichero con ese nombre!
 tile view	filemanager	es-es	Vista de teja
@@ -296,6 +311,7 @@ to overwrite the existing file store again.	filemanager	es-es	Para sobreescribir
 total files	filemanager	es-es	Total ficheros
 ui mode	filemanager	es-es	Barra de herramientas estandar
 under directory	filemanager	es-es	bajo el directorio
+unlock	filemanager	es-es	Sbloccare
 unmount	filemanager	es-es	Desmontar
 unused space	filemanager	es-es	Espacio sin utilizar
 up	filemanager	es-es	Arriba
@@ -305,15 +321,21 @@ upload files	filemanager	es-es	Subir ficheros
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	filemanager	es-es	Use esta estiqueta para etiquetas de direcciones. Ponga el contenido que desee repetir entre dos etiquetas.
 used space	filemanager	es-es	Espacio utilizado
 user color indicator	filemanager	es-es	Indicador de color del usuario
+user home quota	filemanager	es-es	Quota casa utente
+username for webdav and smb, use $user for name of logged in user	filemanager	es-es	Nome utente per WebDAV e SMB, utilizzare $user per il nome dell'utente connesso
 users and groups	filemanager	es-es	Usuarios y grupos
 versioning	filemanager	es-es	Versionado
+versioning requires egroupware epl	filemanager	es-es	Il versioning richiede EGroupware EPL
 vfs mounts and versioning	common	es-es	Montajes y versiones de VFS
+view link	filemanager	es-es	Link di visualizzazione
 webdav link copied into clipboard	filemanager	es-es	Enlace WebDAV copiado en el portapapeles
+webdavs: mount egroupware or *cloud shares	filemanager	es-es	WebDAV: montare le condivisioni EGroupware o *Cloud
 who should be allowed to finally delete deleted files or old versions of a file:	filemanager	es-es	A quién se le debe permitir suprimir definitivamente los archivos eliminados o las versiones antiguas de un archivo:
 writable share link	filemanager	es-es	Enlace de compratir escribible
 wrong username or password!	filemanager	es-es	¡El usuario o contraseña son incorrectos!
 you are not allowed to finally delete older versions and deleted files!	filemanager	es-es	¡NO le está permitido suprimir definitivamente versiones anteriores y archivos borrados!
 you are not allowed to upload a script!	filemanager	es-es	¡NO tiene permiso para subir un script!
+you can either delete some files or get in touch with your administrator to get more space	filemanager	es-es	È possibile eliminare alcuni file o contattare l'amministratore per ottenere più spazio.
 you can only grant additional rights, you can not take rights away!	filemanager	es-es	¡Sólo se pueden conceder permisos adicionales, NO recortar permisos!
 you can use regular upload [+] button to upload files.	filemanager	es-es	Puede usar el botón de carga regular [+] para cargar archivos.
 you do not have access to %1	filemanager	es-es	No tiene acceso a %1

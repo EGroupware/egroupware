@@ -95,11 +95,12 @@ add sub	common	en	Add sub
 add table	common	en	Add table
 add to clipboard	common	en	Add to clipboard
 add user to responsibles	groupdav	en	Add user to responsibles
-add user to responsibles, removing evtl. previous category user	groupdav	en	Add user to responsibles, removing evtl. previous category user
+add user to responsibles, removing evtl. previous category user	groupdav	en	Add user to responsible, possibly remove previous category users
 add your domain as "%1" in options to list of email providers and enable api.	common	en	Add your domain as "%1" in options to list of email providers and enable API.
 addressbook	common	en	Address Book
 addressbooks to sync in addition to personal addressbook	groupdav	en	Addressbooks to sync in addition to personal addressbook
 admin	common	en	Admin
+admin settings	common	en	Admin settings
 admin settings for %1	common	en	Admin settings for %1
 administration	common	en	Administration
 advanced search	common	en	Advanced search

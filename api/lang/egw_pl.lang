@@ -79,9 +79,13 @@ add shortcut	common	pl	Dodaj skrót
 add sub	common	pl	Dodaj podrzędne
 add table	common	pl	Dodaj tablicę
 add to clipboard	common	pl	Dodaj do schowka
+add user to responsibles	groupdav	pl	Dodawanie użytkownika do odpowiedzialnych
+add user to responsibles, removing evtl. previous category user	groupdav	pl	Dodaj użytkownika do odpowiedzialnych, ewentualnie usuń użytkowników z poprzedniej kategorii
+add your domain as "%1" in options to list of email providers and enable api.	common	pl	Dodaj swoją domenę jako "%1" w opcjach do listy dostawców poczty e-mail i włącz API.
 addressbook	common	pl	Książka adresowa
 addressbooks to sync in addition to personal addressbook	groupdav	pl	Książki adresowe do synchronizacji oprócz osobistej książki adresowej
 admin	common	pl	Administrator
+admin settings	common	pl	Ustawienia administratora
 admin settings for %1	common	pl	Ustawienia administratora dla %1
 administration	common	pl	Administracja
 advanced search	common	pl	Wyszukiwanie zaawansowane
@@ -100,6 +104,7 @@ all in one	groupdav	pl	Wszystko w jednym
 all languages	common	pl	wszystkie języki
 all operations save the template!	common	pl	wszystkie operacje prowadzą do zapisu wzorca
 all users	common	pl	Wszyscy użytkownicy
+allow editing the %1	common	pl	Zezwól na edycję %1
 allowed file type: %1	common	pl	Dopuszczony typ pliku: %1
 alternate style-sheet:	common	pl	Alternatywny arkusz stylu
 am	common	pl	przed południem

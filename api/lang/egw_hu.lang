@@ -53,9 +53,13 @@ add shortcut	common	hu	Gyorsbillentyű hozzáadása
 add sub	common	hu	Albejegyzés hozzáadása
 add table	common	hu	Táblázat hozzáadása
 add to clipboard	common	hu	Hozzáadás a vágólaphoz
+add user to responsibles	groupdav	hu	Felhasználó hozzáadása a felelősökhöz
+add user to responsibles, removing evtl. previous category user	groupdav	hu	Felhasználó hozzáadása a felelősökhöz, esetleg korábbi kategóriájú felhasználók eltávolítása
+add your domain as "%1" in options to list of email providers and enable api.	common	hu	Adja hozzá a domainjét "%1"-ként az opciókban az e-mail szolgáltatók listájához, és engedélyezze az API-t.
 addressbook	common	hu	Címjegyzék
 addressbooks to sync in addition to personal addressbook	groupdav	hu	Címkönyvek szinkronizálása a személyes címjegyzék mellett
 admin	common	hu	Admin
+admin settings	common	hu	Admin beállítások
 admin settings for %1	common	hu	Admin beállítások %1 számára
 administration	common	hu	Adminisztráció
 advanced search	common	hu	Kiterjesztett keresés
@@ -70,6 +74,7 @@ all fields	common	hu	Összes mező
 all in one	groupdav	hu	Mindent egyben
 all languages	common	hu	minden nyelv
 all users	common	hu	Összes felhasználó
+allow editing the %1	common	hu	Engedélyezze a %1 szerkesztését
 alternate style-sheet:	common	hu	Stíluslap változtatása
 am	common	hu	de
 american samoa	common	hu	Amerikai Szamoa

@@ -30,6 +30,7 @@ can't open directory %1!	filemanager	hu	%1 mappa nem nyitható meg!
 cancel editing %1 without saving	filemanager	hu	%1 szerkesztésének megszakítása, mentés nélkül
 cannot create directory because it begins or ends in a space	filemanager	hu	Könyvtár létrehozása nem lehetséges, mert a név elején/végén 'fehér' karakter szerepel (space).
 check all	filemanager	hu	Összes kijelölése
+classic	filemanager	hu	Standard eszköztár
 clear search	filemanager	hu	keresés eredményének törlése
 comment	filemanager	hu	Megjegyzés
 copied	filemanager	hu	másolva
@@ -53,7 +54,9 @@ current directory	filemanager	hu	aktuális mappa
 custom fields	filemanager	hu	egyedi mező
 cut	filemanager	hu	kivágás
 cut to clipboard	filemanager	hu	Kivágás a vágólapra
+default action on double-click	filemanager	hu	Alapértelmezett művelet dupla kattintásra
 default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	hu	Alapértelmezett beállítás NEM. A link nem lesz megjelenítve, de beléphetsz erre a helyre vagy beállíthatod alapértelmezett kezdeti mappának.
+defines how to handle double click action on a document file. images are always opened in the expose-view and emails with email application. all other mime-types are handled by the browser itself.	filemanager	hu	Meghatározza, hogyan kezelje a dokumentumfájlok dupla kattintási műveletét. A képek mindig az expozíciós nézetben nyílnak meg, és az e-mailek az e-mail alkalmazással. Minden más MIME-típust maga a böngésző kezel.
 delete this file or directory	filemanager	hu	Kijelölt file vagy mappa törlése.
 deleted %1	filemanager	hu	%1 törölve
 directories sorted in	filemanager	hu	Mappák tárolva a
@@ -66,28 +69,44 @@ display and modification of content	filemanager	hu	A tartalom megjelenítése é
 display of content	filemanager	hu	A tartalom megjelenítése
 do you want to overwrite the existing file %1?	filemanager	hu	Felülírod a létező %1 filet?
 download	filemanager	hu	Letölt
+download documents	filemanager	hu	Dokumentumok letöltése
 edit comments	filemanager	hu	Megjegyzés szerkesztése
 edit settings	filemanager	hu	Beállítások módosítása
+edit share	filemanager	hu	Megosztás szerkesztése
 enable	filemanager	hu	engedélyez
+enter a file size, e.g. 100k, 200m or 2g	filemanager	hu	Adja meg a fájl méretét, pl. 100K, 200M vagy 2G
 enter setup user and password	filemanager	hu	Kérem az operator felhasználónevét és jelszavát
 enter setup user and password to get root rights	filemanager	hu	Kérem az operator felhasználónevét és jelszavát
 enter the complete vfs path to specify a fast access link to a folder	filemanager	hu	Add meg a teljes VFS elérési utat a gyors mappa-hozzáféréshez
 enter the complete vfs path to specify your desired start folder.	filemanager	hu	Add meg a teljes VFS elérési utat kiinduló mappa meghatározásához.
+enter your file name	filemanager	hu	Adja meg a fájl nevét
 error adding the acl!	filemanager	hu	HIba a hozzáférés létrehozása során!
 error creating symlink to target %1!	filemanager	hu	Hiba a sylink létrehozása során %1 céhoz!
 error deleting the acl entry!	filemanager	hu	Hiba a hozzáférés törlése során!
+error mounting %1 on %2!	filemanager	hu	Hiba a %1 mountolása a %2-n!
+error unmounting %1!	filemanager	hu	Hiba a %1 leválasztása!
 error uploading file!	filemanager	hu	HIba a file feltöltése során!
+error while creating directory.	filemanager	hu	Hiba a mappa létrehozásakor
 everyone	filemanager	hu	bárki
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	filemanager	hu	Példa {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - keresse meg az "n_prefix" mezőben a "Mr" szót, ha találja, írja Hello Mr., különben írja Hello Ms.
+example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	filemanager	hu	Példa {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Példa: Mr Dr. James Miller
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	filemanager	hu	Példa {{NELF role}} - ha a szerep mező nem üres, akkor egy új sort kap a szerep mező értékével.
+example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	filemanager	hu	Példa {{nenvlf role}} - ha a mező szerep nem üres, akkor a mező értéke nélkül egy LF-t állít be.
+excludes selected mime types	filemanager	hu	Kizárja a kiválasztott MIME-típusokat
+excludes selected mime types from being opened by editor	filemanager	hu	Kizárja a kiválasztott MIME-típusokat a Collabora Online általi megnyitásból.<br>Ezek a dokumentumtípusok vagy a böngészőben kerülnek megnyitásra, vagy letöltésre.
 executable	filemanager	hu	Végrehajtható
 expires	filemanager	hu	Lejár
+export definition to use for nextmatch export	filemanager	hu	A nextmatch exportáláshoz használandó export-definíció
 extended access control list	filemanager	hu	Kiterjeszett hozzáférés korlátozás lista
 extended acl	filemanager	hu	Kiterjeszett hozzáférés korlátozás
 failed to change permissions of %1!	filemanager	hu	Hiba a %1 hozzáférés módosítása során!
 failed to create directory!	filemanager	hu	Hiba a mappa léterhozása során!
 favorites	filemanager	hu	Kedvencek
 file	common	hu	File
+file %1 already exists	filemanager	hu	%1 fájl már létezik
 file %1 could not be created.	filemanager	hu	%1 fájl nem hozható létre.
 file %1 may be too big. contact your systemadministrator for further info	filemanager	hu	%1 file mérete túl nagy, további információért lépj kapcsolatba a rendszergazdával.
+file a file is only available with an epl subscription.	filemanager	hu	A fájl csak EPL előfizetéssel érhető el.
 file deleted.	filemanager	hu	File törölve.
 file names cannot contain "%1"	filemanager	hu	Állománynév nem tartalmazhatja: "%1"
 file or directory not found!	filemanager	hu	File vagy mappa nem található!
@@ -96,28 +115,45 @@ filemanager	common	hu	Fájlkezelő
 filemanager configuration	admin	hu	Filekezelő beállítása
 files from subdirectories	filemanager	hu	Alkönyvtárak filejai
 files in this directory	filemanager	hu	A könyvtár fájljai
+filesystem	filemanager	hu	Fájlrendszer
+filesystem check reported no problems.	filemanager	hu	A fájlrendszer ellenőrzése nem jelentett problémát.
+filesystem: mount directory (inside /var/lib/egroupware!) from host filesystem	filemanager	hu	Fájlrendszer: könyvtár mountolása (a /var/lib/egroupware könyvtáron belül !) a hoszt fájlrendszeréből
+finally delete	filemanager	hu	Végül törölje
+finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	hu	Végül törli az összes régebbi verziót és törölt fájlt az adott mappa alatt.\n\nEzt NEM lehet visszacsinálni!
+finally delete this version	filemanager	hu	Végül törölje ezt a verziót
+fix reported problems	filemanager	hu	Jelentett problémák javítása
 folder up	filemanager	hu	Felső mappa
-general	filemanager	hu	general
+for files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available.  see the specific application for a list of available placeholders.	filemanager	hu	Az alkalmazás bejegyzéséhez (az /apps/alkalmazásnév/id/-n belül) kapcsolódó fájlok esetében az adott alkalmazás helyőrzői is elérhetők. A rendelkezésre álló helyőrzőket lásd az adott alkalmazásnál.
+for files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available. see the specific application for a list of placeholders	filemanager	hu	Az alkalmazás bejegyzéséhez (az /apps/appname/id/-n belül) kapcsolódó fájlok esetében az adott alkalmazás helyőrzői is elérhetők. A helytartók listáját lásd az adott alkalmazásnál.
+general	filemanager	hu	General
 general fields:	filemanager	hu	Általános mezők:
 go home	filemanager	hu	Saját mappára ugrás
 go to	filemanager	hu	Ugorj ide
 go to your home directory	filemanager	hu	Saját mappára ugrás
 go up	filemanager	hu	Egy szinttel feljebb
+group home quota	filemanager	hu	Csoport otthoni kvóta
 hidden upload	filemanager	hu	Elrejtett feltöltés
 hidden uploads	filemanager	hu	Rejtett feltöltések
+hostname/ip for webdav and smb	filemanager	hu	Hostnév/IP a WebDAV és az SMB esetében
 id	filemanager	hu	Azonosító
+if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	hu	Ha itt egy mappát (teljes VFS elérési útvonal) ad meg, a %1 minden dokumentumhoz megjelenít egy műveletet. Ez a művelet lehetővé teszi a megadott dokumentum letöltését a %1 adatainak beillesztésével.
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	hu	Ha itt egy mappát (teljes VFS elérési útvonal) ad meg, a %1 minden egyes bejegyzéshez megjelenít egy extra dokumentum ikont. Ez az ikon lehetővé teszi a megadott dokumentum letöltését a beillesztett adatokkal együtt.
 inherited	filemanager	hu	lemásolva
 link	filemanager	hu	Link
 link %1: %2	filemanager	hu	Link %1: %2
 link target %1 not found!	filemanager	hu	Link célpontja nem található (%1)!
+list view	filemanager	hu	Lista nézet
 location	filemanager	hu	Hely
 lock	filemanager	hu	Lock
 log out as superuser	filemanager	hu	Rendszergazda kijelentkezés
-max folderlinks	admin	hu	maximális mappalink száma
+mail paste	filemanager	hu	Mail beillesztés
+max folderlinks	admin	hu	Maximális mappalink száma
+merge print open handler	filemanager	hu	Összevonás nyomtatás megnyitása kezelő
 mime type	filemanager	hu	MIME típus
 modified	filemanager	hu	Módosítva
-modified between	filemanager	hu	módosítva
+modified between	filemanager	hu	Módosítva között
 modify all subdirectories and their content	filemanager	hu	Összes könyvtár és tartalmának módosítása.
+mountpoints	filemanager	hu	Mountpoints
 move	filemanager	hu	Mozgat
 move to	filemanager	hu	Mozgatás ide:
 moved %1 to %2	filemanager	hu	%1 mozgatása ide: %2
@@ -126,9 +162,12 @@ no files in this directory.	filemanager	hu	Nincs állomány ebben a könyvtárba
 no preview available	filemanager	hu	Előnézet nem áll rendelkezésre
 no version history for this file/directory	filemanager	hu	Nincs elérhető verzió történet ehhez az állományhoz/könyvtárhoz
 noone	filemanager	hu	Senki
+notebookbar	filemanager	hu	Tabbed
 only owner can rename or delete the content	filemanager	hu	Csak a tulajdonos tudja átnevezni és törölni a tartalmat
 open	filemanager	hu	Megnyit
 operation	filemanager	hu	Művelet
+password for webdav and smb, use $pass for password of logged in user	filemanager	hu	Jelszó a WebDAV és SMB esetében, a $pass a bejelentkezett felhasználó jelszavát jelöli.
+path and query-parameters, smb: share and optional path (with /)	filemanager	hu	Útvonal és lekérdezési paraméterek, SMB: megosztás és opcionális útvonal (/-vel)
 percentage	filemanager	hu	Százalék
 permission denied!	filemanager	hu	Hozzáférés elutasítva!
 permissions	filemanager	hu	Hozzáférés
@@ -140,8 +179,12 @@ preview of %1	filemanager	hu	%1 előnézete
 projectmanager	filemanager	hu	Projektmanager
 properties saved.	filemanager	hu	Tulajdosnágok elmentve.
 quick jump to	filemanager	hu	Gyors ugrás ide
+quota	filemanager	hu	Kvóta
+quota exceeded	filemanager	hu	Kvóta túllépése
 read & write access	filemanager	hu	Olvasás és írási hozzáférés
 read access only	filemanager	hu	Csak olvasási hozzáférés
+recalculate	filemanager	hu	Újraszámítás
+recalculated %1 directories in %2 iterations and %3 seconds	filemanager	hu	%1 könyvtár újraszámítása %2 ismétlés és %3 másodperc alatt.
 reload	filemanager	hu	Újratölt
 rename of %1 to %2 failed!	filemanager	hu	%1 átnevezése %2-re nem sikerült!
 rename, change permissions or ownership	filemanager	hu	Átnevezés, hozzáférés- vagy tulajdonos módosítás

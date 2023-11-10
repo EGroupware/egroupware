@@ -82,9 +82,12 @@ add sub	common	pt-br	Adicionar sub-tarefa
 add table	common	pt-br	Adicionar Tabela
 add to clipboard	common	pt-br	Adicionar à prancheta
 add user to responsibles	groupdav	pt-br	adicionar o usuário para responsáveis
+add user to responsibles, removing evtl. previous category user	groupdav	pt-br	Adicionar usuário a responsável, possivelmente remover usuários da categoria anterior
+add your domain as "%1" in options to list of email providers and enable api.	common	pt-br	Adicione seu domínio como "%1" nas opções da lista de provedores de e-mail e ative a API.
 addressbook	common	pt-br	Contatos
 addressbooks to sync in addition to personal addressbook	groupdav	pt-br	Catálogos de endereços para sincronizar, além do catálogo de endereços pessoal
 admin	common	pt-br	Administrador
+admin settings	common	pt-br	Configurações de administrador
 admin settings for %1	common	pt-br	Configurações de administrador para %1
 administration	common	pt-br	Administração
 advanced search	common	pt-br	Pesquisa avançada
@@ -103,6 +106,7 @@ all in one	groupdav	pt-br	Tudo em um
 all languages	common	pt-br	Todos os idiomas
 all operations save the template!	common	pt-br	Todas as operações salvam o modelo!
 all users	common	pt-br	Todos usuários
+allow editing the %1	common	pt-br	Permitir a edição de %1
 alt	common	pt-br	Alt
 alternate style-sheet:	common	pt-br	Estilo de folha alternativo
 am	common	pt-br	am

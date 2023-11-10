@@ -100,6 +100,7 @@ add your domain as "%1" in options to list of email providers and enable api.	co
 addressbook	common	fr	Carnet d'adresses
 addressbooks to sync in addition to personal addressbook	groupdav	fr	Carnets d'adresses à synchroniser en plus du carnet personnel
 admin	common	fr	Admin
+admin settings	common	fr	Paramètres administratifs
 admin settings for %1	common	fr	Réglages Admin pour %1
 administration	common	fr	Administration
 advanced search	common	fr	Recherche avancée
