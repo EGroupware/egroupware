@@ -25,6 +25,7 @@ const allComponents = getAllComponents();
 let hasBuiltSearchIndex = false;
 
 // Write component data to file, 11ty will pick it up and create pages - the name & location are important
+fs.mkdirSync("_data");
 fs.writeFileSync("_data/components.json", JSON.stringify(allComponents));
 
 // Put it here too, since addPassthroughCopy() ignores it
