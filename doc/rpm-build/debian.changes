@@ -1,3 +1,17 @@
+egroupware-docker (23.1.20231110) hardy; urgency=low
+
+  * Collabora: fix inserting images from filemanager
+  * Notifications: aggregate messages by app:id to return only latest one, also added a cut-off date of 30 days and cleaning older messages
+  * Addressbook/REST API: categories were lost, when updating existing contacts
+  * Mail/REST API: always add signature below supplied body (independent of user preference for reply/forward)
+  * Calendar/REST API: adding of participants to events
+  * ActiveDirectory: supporting well-known SIDs not matching the domain-SID e.g. S-1-5-32-544 for BUILDIN\Administrators
+  * AD Import: run full group import for AD, as it does not update modification time of group, when memberships change
+  * AD/LDAP Import: allow setting import frequency < 1h eg. .1: every 5min, .5: every 30min
+  * Api: converted action-system to TypeScript
+
+ -- Ralf Becker <rb@egroupware.org>  Fri, 10 Nov 2023 07:03:04 +0100
+
 egroupware-docker (23.1.20230911) hardy; urgency=low
 
   * Mail: equal sign followed by numbers is mangled in plain-text mails (e.g. =22 becomes a ")
