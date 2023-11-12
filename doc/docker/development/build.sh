@@ -2,7 +2,7 @@
 
 REPO=egroupware
 IMAGE=development
-BASE=ubuntu:22.04
+BASE=ubuntu:20.04
 RECOMMENDED_PHP_VERSION=8.1
 
 PHP_VERSION=${1:-8.1}
