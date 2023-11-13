@@ -10,8 +10,9 @@
  */
 
 
-import {css, html, repeat, TemplateResult} from "@lion/core";
-import {Et2Link, LinkInfo} from "./Et2Link";
+import {css, html, TemplateResult} from "lit";
+import {repeat} from "lit/directives/repeat.js";
+import {LinkInfo} from "./Et2Link";
 import {egw} from "../../jsapi/egw_global";
 import {Et2LinkString} from "./Et2LinkString";
 import {egwMenu} from "../../egw_action/egw_menu";

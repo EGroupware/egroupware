@@ -8,7 +8,8 @@
  */
 
 import {Et2InputWidget, Et2InputWidgetInterface} from "../Et2InputWidget/Et2InputWidget";
-import {html, LitElement, PropertyValues, render, TemplateResult} from "@lion/core";
+import {html, LitElement, PropertyValues, render, TemplateResult} from "lit";
+import {property} from "lit/decorators/property.js";
 import {et2_readAttrWithDefault} from "../et2_core_xml";
 import {cleanSelectOptions, find_select_options, SelectOption} from "./FindSelectOptions";
 import {SearchMixinInterface} from "./SearchMixin";
@@ -17,7 +18,7 @@ import {SearchMixinInterface} from "./SearchMixin";
  * Base class for things that do selectbox type behaviour, to avoid putting too much or copying into read-only
  * selectboxes, also for common handling of properties for more special selectboxes.
  *
- * As with most other widgets that extend Lion components, do not override render().
+ * As with most other widgets that extend Shoelace components, do not override render() without good reason.
  * To extend this mixin, override:
  * - _optionTargetNode(): Return the HTMLElement where the "options" go.
  * - _optionTemplate(option:SelectOption): Renders the option.  To use a special widget, use its tag in render.
@@ -46,46 +47,54 @@ import {SearchMixinInterface} from "./SearchMixin";
  * You can specify something else, or return {} to do your own thing.  This is a little more complicated.  You should
  * also override _inputGroupInputTemplate() to do what you normally would in render().
  *
- *
- * Technical note:
- * LionSelect (and any other LionField) use slots to wrap a real DOM node.  ET2 doesn't expect this,
- * so we have to create the input node (via slots()) and respect that it is _external_ to the Web Component.
- * This complicates things like adding the options, since we can't just override _inputGroupInputTemplate()
- * and include them when rendering - the parent expects to find the <select> added via a slot, render() would
- * put it inside the shadowDOM.  That's fine, but then it doesn't get created until render(), and the parent
- * (LionField) can't find it when it looks for it before then.
- *
  */
 // Export the Interface for TypeScript
 type Constructor<T = {}> = new (...args : any[]) => T;
 
-export const Et2widgetWithSelectMixin = <T extends Constructor<LitElement>>(superclass : T) =>
+export const Et2WidgetWithSelectMixin = <T extends Constructor<LitElement>>(superclass : T) =>
 {
 	class Et2WidgetWithSelect extends Et2InputWidget(superclass)
 	{
-		static get properties()
-		{
-			return {
-				...super.properties,
-				/**
-				 * Textual label for first row, eg: 'All' or 'None'.  It's value will be ''
-				 */
-				emptyLabel: String,
-
-				/**
-				 * Select box options
-				 *
-				 * Will be found automatically based on ID and type, or can be set explicitly in the template using
-				 * <option/> children, or using widget.select_options = SelectOption[]
-				 */
-				select_options: {type: Object, noAccessor: true},
-
-				/**
-				 * Limit size
-				 */
-				rows: {type: Number, noAccessor: true, reflect: true}
+		/**
+		 * The current value of the select, submitted as a name/value pair with form data. When `multiple` is enabled, the
+		 * value attribute will be a space-delimited list of values based on the options selected, and the value property will
+		 * be an array.
+		 *
+		@property({
+			noAccessor: true,
+			converter: {
+				fromAttribute: (value : string) => value.split(',')
 			}
-		}
+		})
+		value : string | string[] = "";
+		 */
+
+		/**
+		 * Textual label for first row, eg: 'All' or 'None'.  It's value will be ''
+		 */
+		@property({type: String})
+		emptyLabel : String = "";
+
+		/**
+		 * Limit size
+		 */
+		@property({type: Number, noAccessor: true, reflect: true})
+
+
+		/**
+		 * Internal list of possible select options
+		 *
+		 * This is where we keep options sent from the server.  This is not always the complete list, as extending
+		 * classes may have their own options to add in.  For example, static options are kept separate, as are search
+		 * results.  The select_options getter should give the complete list.
+		 */
+		private __select_options : SelectOption[] = [];
+
+		/**
+		 * When we create the select option elements, it takes a while.
+		 * If we don't wait for them, it causes issues in SlSelect
+		 */
+		protected _optionRenderPromise : Promise<void> = Promise.resolve();
 
 		/**
 		 * Options found in the XML when reading the template
@@ -99,6 +108,13 @@ export const Et2widgetWithSelectMixin = <T extends Constructor<LitElement>>(supe
 			super(...args);
 
 			this.__select_options = <SelectOption[]>[];
+		}
+
+		async getUpdateComplete() : Promise<boolean>
+		{
+			const result = await super.getUpdateComplete();
+			await this._optionRenderPromise;
+			return result;
 		}
 
 		/** @param {import('@lion/core').PropertyValues } changedProperties */
@@ -116,18 +132,39 @@ export const Et2widgetWithSelectMixin = <T extends Constructor<LitElement>>(supe
 				}
 			}
 
+		}
+
+		willUpdate(changedProperties : PropertyValues<this>)
+		{
 			// Add in actual option tags to the DOM based on the new select_options
 			if(changedProperties.has('select_options') || changedProperties.has("emptyLabel"))
 			{
 				// Add in options as children to the target node
-				this._renderOptions();
+				const optionPromise = this._renderOptions();
 
 				// This is needed to display initial load value in some cases, like infolog nm header filters
-				if(this.handleMenuSlotChange && !this.hasUpdated)
+				if(typeof this.selectionChanged !== "undefined")
 				{
-					this.handleMenuSlotChange();
+					optionPromise.then(async() =>
+					{
+						await this.updateComplete;
+						this.selectionChanged();
+					});
 				}
 			}
+		}
+
+		public getValueAsArray()
+		{
+			if(Array.isArray(this.value))
+			{
+				return this.value;
+			}
+			if(this.value == "null" || this.value == null || typeof this.value == "undefined" || !this.emptyLabel && this.value == "")
+			{
+				return [];
+			}
+			return [this.value];
 		}
 
 		/**
@@ -136,6 +173,7 @@ export const Et2widgetWithSelectMixin = <T extends Constructor<LitElement>>(supe
 		 */
 		protected _renderOptions()
 		{
+			return Promise.resolve();
 			// Add in options as children to the target node
 			if(!this._optionTargetNode)
 			{
@@ -156,7 +194,7 @@ export const Et2widgetWithSelectMixin = <T extends Constructor<LitElement>>(supe
 				.map(this._groupTemplate.bind(this))}`;
 
 			render(options, temp_target);
-			return Promise.all(([...temp_target.querySelectorAll(":scope > *")].map(item => item.render)))
+			this._optionRenderPromise = Promise.all(([...temp_target.querySelectorAll(":scope > *")].map(item => item.render)))
 				.then(() =>
 				{
 					this._optionTargetNode.replaceChildren(
@@ -168,23 +206,7 @@ export const Et2widgetWithSelectMixin = <T extends Constructor<LitElement>>(supe
 						this.handleMenuSlotChange();
 					}
 				});
-
-		}
-
-		/**
-		 * Overwritten as sometimes called before this._inputNode is available
-		 *
-		 * @param {*} v - modelValue: can be an Object, Number, String depending on the
-		 * input type(date, number, email etc)
-		 * @returns {string} formattedValue
-		 */
-		formatter(v)
-		{
-			if (!this._inputNode)
-			{
-				return v;
-			}
-			return super.formatter(v);
+			return this._optionRenderPromise;
 		}
 
 		/**
@@ -212,6 +234,13 @@ export const Et2widgetWithSelectMixin = <T extends Constructor<LitElement>>(supe
 			this.select_options = <SelectOption[]>new_options;
 		}
 
+		/**
+		 * Select box options
+		 *
+		 * Will be found automatically based on ID and type, or can be set explicitly in the template using
+		 * <option/> children, or using widget.select_options = SelectOption[]
+		 */
+		@property({type: Object})
 		get select_options() : SelectOption[]
 		{
 			return this.__select_options;
@@ -262,7 +291,7 @@ export const Et2widgetWithSelectMixin = <T extends Constructor<LitElement>>(supe
 		 * @param {SelectOption} option
 		 * @returns {TemplateResult}
 		 */
-		_optionTemplate(option : SelectOption) : TemplateResult
+		protected _optionTemplate(option : SelectOption) : TemplateResult
 		{
 			return html`
                 <span>Override _optionTemplate(). ${option.value} => ${option.label}</span>`;
@@ -276,7 +305,7 @@ export const Et2widgetWithSelectMixin = <T extends Constructor<LitElement>>(supe
 			}
 			return html`
 
-                <sl-menu-label>${this.noLang ? option.label : this.egw().lang(option.label)}</sl-menu-label>
+                <small>${this.noLang ? option.label : this.egw().lang(option.label)}</small>
                 ${option.value.map(this._optionTemplate.bind(this))}
                 <sl-divider></sl-divider>
 			`;

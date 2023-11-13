@@ -7,13 +7,13 @@
  * @author Ralf Becker <rb@egroupware.org>
  */
 
-import {Et2Select} from "./Et2Select";
-import {cleanSelectOptions, SelectOption} from "./FindSelectOptions";
-import {SelectAccountMixin} from "./SelectAccountMixin";
-import {Et2StaticSelectMixin} from "./StaticOptions";
-import {html, nothing} from "@lion/core";
+import {Et2Select} from "../Et2Select";
+import {cleanSelectOptions, SelectOption} from "../FindSelectOptions";
+import {SelectAccountMixin} from "../SelectAccountMixin";
+import {Et2StaticSelectMixin} from "../StaticOptions";
+import {html, nothing} from "lit";
 
-export type AccountType = 'accounts'|'groups'|'both'|'owngroups';
+export type AccountType = 'accounts' | 'groups' | 'both' | 'owngroups';
 
 /**
  * @customElement et2-select-account
@@ -51,32 +51,47 @@ export class Et2SelectAccount extends SelectAccountMixin(Et2StaticSelectMixin(Et
 		super.connectedCallback();
 
 		// Start fetch of select_options
+		this.fetchComplete = this._getAccounts();
+	}
+
+	/**
+	 * Pre-fill the account list according to type & preferences
+	 *
+	 * @protected
+	 * @internal
+	 */
+	protected _getAccounts()
+	{
 		const type = this.egw().preference('account_selection', 'common');
 		let fetch = [];
+		let process = (options) =>
+		{
+			// Shallow copy to avoid re-using the same object.
+			// Uses more memory, but otherwise multiple selectboxes get "tied" together
+			let cleaned = cleanSelectOptions(options)
+				// slice to avoid problems with lots of accounts
+				.slice(0, /* Et2WidgetWithSearch.RESULT_LIMIT */ 100);
+			this.account_options = this.account_options.concat(cleaned);
+		};
 		// for primary_group we only display owngroups == own memberships, not other groups
 		if(type === 'primary_group' && this.accountType !== 'accounts')
 		{
 			if(this.accountType === 'both')
 			{
-				fetch.push(this.egw().accounts('accounts').then(options => {this.static_options = this.static_options.concat(cleanSelectOptions(options))}));
+				fetch.push(this.egw().accounts('accounts').then(process));
 			}
 
-			fetch.push(this.egw().accounts('owngroups').then(options => {this.static_options = this.static_options.concat(cleanSelectOptions(options))}));
+			fetch.push(this.egw().accounts('owngroups').then(process));
 		}
-		else if(["primary_group", "groupmembers"].includes(type))
+		else if(type !== "none")
 		{
-			fetch.push(this.egw().accounts(this.accountType).then(options => {this.static_options = this.static_options.concat(cleanSelectOptions(options))}));
+			fetch.push(this.egw().accounts(this.accountType).then(process));
 		}
-		this.fetchComplete = Promise.all(fetch)
-			.then(() => this._renderOptions());
-	}
 
-
-	firstUpdated(changedProperties?)
-	{
-		super.firstUpdated(changedProperties);
-		// Due to the different way Et2SelectAccount handles options, we call this explicitly
-		this._renderOptions();
+		return Promise.all(fetch).then(() =>
+		{
+			this.requestUpdate("select_options");
+		});
 	}
 
 	set accountType(type : AccountType)
@@ -102,12 +117,7 @@ export class Et2SelectAccount extends SelectAccountMixin(Et2StaticSelectMixin(Et
 		{
 			return [];
 		}
-		let select_options : Array<SelectOption> = [...(this.static_options || []), ...super.select_options];
-
-		return select_options.filter((value, index, self) =>
-		{
-			return self.findIndex(v => v.value === value.value) === index;
-		});
+		return super.select_options;
 	}
 
 	set select_options(new_options : SelectOption[])

@@ -71,12 +71,7 @@ import './Et2Nextmatch/Headers/EntryHeader';
 import './Et2Nextmatch/Headers/FilterHeader';
 import './Et2Select/Et2Listbox';
 import './Et2Select/Et2Select';
-import './Et2Select/Et2SelectAccount';
-import './Et2Select/Et2SelectCategory';
-import './Et2Select/Et2SelectCountry';
-import './Et2Select/Et2SelectEmail';
-import './Et2Select/Et2SelectReadonly';
-import './Et2Select/Et2SelectThumbnail'
+import './Et2Select/SelectTypes';
 import './Et2Select/Tag/Et2Tag';
 import './Et2Select/Tag/Et2CategoryTag';
 import './Et2Select/Tag/Et2EmailTag';
@@ -104,6 +99,7 @@ import "./Et2Vfs/Et2VfsMime";
 import "./Et2Vfs/Et2VfsUid";
 import "./Et2Textbox/Et2Password";
 import './Et2Textbox/Et2Searchbox';
+import "./Et2TreeWidget/Et2Tree";
 
 /* Include all widget classes here, we only care about them registering, not importing anything*/
 import './et2_widget_vfs'; // Vfs must be first (before et2_widget_file) due to import cycle
@@ -457,6 +453,10 @@ export class etemplate2
 		{
 			this.close_prompt = this._close_changed_prompt.bind(this);
 			window.addEventListener("beforeunload", this.close_prompt);
+		}
+		else if (window == egw_topWindow())
+		{
+			window.addEventListener("beforeunload", this.destroy_session);
 		}
 		if(this._etemplate_exec_id)
 		{

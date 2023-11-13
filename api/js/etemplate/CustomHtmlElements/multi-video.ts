@@ -122,6 +122,15 @@ class multi_video extends HTMLElement {
 	}
 
 	/**
+	 * Calls load method for all its sub videos
+	 * https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/load
+	 */
+	load()
+	{
+		this._videos.forEach(_item =>{_item.node.load()});
+	}
+
+	/**
 	 * init/update video tags
 	 * @param _value
 	 * @private
@@ -130,15 +139,24 @@ class multi_video extends HTMLElement {
 	{
 		let value = _value.split(',');
 		let video = null;
+		let duration = 0;
 		for (let i=0;i<value.length;i++)
 		{
 			video = document.createElement('video');
+
+			if (value[i].match(/&duration=/))
+			{
+				// get duration from url duration param which is necessary for setting duration time of webm file
+				let params = new URLSearchParams(value[i]);
+				duration = parseInt(params.get('duration'));
+				value[i] = value[i].replace(/&duration.*/, '');
+			}
 			video.src = value[i];
 			this._videos[i] = {
 				node:this._wrapper.appendChild(video),
 				loadedmetadata: false,
 				timeupdate: false,
-				duration: 0,
+				duration: duration ? duration : 0,
 				previousDurations: 0,
 				currentTime: 0,
 				active: false,
@@ -201,7 +219,7 @@ class multi_video extends HTMLElement {
 		});
 		if (allReady) {
 			this._videos.forEach(_item => {
-				_item.duration = _item.node.duration;
+				_item.duration = _item.duration ? _item.duration : _item.node.duration;
 				_item.previousDurations = _item.index > 0 ? this._videos[_item.index-1]['duration'] + this._videos[_item.index-1]['previousDurations'] : 0;
 			});
 			this.duration = this.__duration();

@@ -15,8 +15,9 @@ import {SlCard} from "@shoelace-style/shoelace";
 import interact from "@interactjs/interactjs";
 import type {InteractEvent} from "@interactjs/core/InteractEvent";
 import {egw} from "../../jsapi/egw_global";
-import {classMap, css, html, TemplateResult} from "@lion/core";
-import {HasSlotController} from "@shoelace-style/shoelace/dist/internal/slot";
+import {css, html, TemplateResult} from "lit";
+import {classMap} from "lit/directives/class-map.js";
+import type {HasSlotController} from "../../../../node_modules/@shoelace-style/shoelace/dist/internal/slot";
 import shoelace from "../Styles/shoelace";
 import {Et2Dialog} from "../Et2Dialog/Et2Dialog";
 import {et2_IResizeable} from "../et2_core_interfaces";
@@ -92,11 +93,11 @@ export class Et2Portlet extends Et2Widget(SlCard)
 				user-select: none;
 			  }
 
-			  .portlet__header et2-button-icon {
+			  .portlet__header .portlet__settings-icon {
 				display: none;
 			  }
 
-			  .portlet__header:hover et2-button-icon {
+			  .portlet__header:hover .portlet__settings-icon {
 				display: initial;
 			  }
 
@@ -577,8 +578,9 @@ export class Et2Portlet extends Et2Widget(SlCard)
 
                 <header class="portlet__header">
                     <slot name="header" part="header" class="card__header">${this.headerTemplate()}</slot>
-                    <et2-button-icon id="settings" name="gear" label="Settings" noSubmit=true
-                                     @click="${() => this.edit_settings()}"></et2-button-icon>
+                    <sl-icon-button id="settings" name="gear" label="Settings" class="portlet__settings-icon"
+                                    @click="${() => this.edit_settings()}">
+                    </sl-icon-button>
                 </header>
                 <slot part="body" class="card__body">${this.bodyTemplate()}</slot>
                 <slot name="footer" part="footer" class="card__footer">${this.footerTemplate()}</slot>

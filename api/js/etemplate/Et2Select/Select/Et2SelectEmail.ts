@@ -7,11 +7,12 @@
  * @author Nathan Gray
  */
 
-import {Et2Select} from "./Et2Select";
-import {css, html, nothing, PropertyValues} from "@lion/core";
-import {IsEmail} from "../Validators/IsEmail";
+import {Et2Select} from "../Et2Select";
+import {css, html, nothing, PropertyValues} from "lit";
+import {IsEmail} from "../../Validators/IsEmail";
 import interact from "@interactjs/interact";
 import {Validator} from "@lion/form-core";
+import {classMap} from "lit/directives/class-map.js";
 
 /**
  * Select email address(es)
@@ -100,6 +101,7 @@ export class Et2SelectEmail extends Et2Select
 		this.defaultValidators.push(new IsEmail(this.allowPlaceholder));
 	}
 
+
 	/** @param {import('@lion/core').PropertyValues } changedProperties */
 	willUpdate(changedProperties : PropertyValues)
 	{
@@ -112,9 +114,38 @@ export class Et2SelectEmail extends Et2Select
 		}
 	}
 
-	connectedCallback()
+	updated(changedProperties : Map<string, any>)
 	{
-		super.connectedCallback();
+		// Make tags draggable
+		if(!this.readonly && this.allowFreeEntries && this.allowDragAndDrop)
+		{
+			let dragTranslate = {x: 0, y: 0};
+			const tags = this.shadowRoot.querySelectorAll(".select__tags [part='tag']");
+			let draggable = interact(tags).draggable({
+				startAxis: 'xy',
+				listeners: {
+					start: function(e)
+					{
+						let dragPosition = {x: e.page.x, y: e.page.y};
+						dragTranslate = {x: 0, y: 0};
+						e.target.setAttribute('style', `width:${e.target.clientWidth}px !important`);
+						e.target.style.position = 'fixed';
+						e.target.style.zIndex = 10;
+						e.target.style.transform =
+							`translate(${dragPosition.x}px, ${dragPosition.y}px)`;
+					},
+					move: function(e)
+					{
+						dragTranslate.x += e.delta.x;
+						dragTranslate.y += e.delta.y;
+						e.target.style.transform =
+							`translate(${dragTranslate.x}px, ${dragTranslate.y}px)`;
+					}
+				}
+			});
+			// set parent_node with widget context in order to make it accessible after drop
+			draggable.parent_node = this;
+		}
 	}
 
 	protected _bindListeners()
@@ -145,7 +176,7 @@ export class Et2SelectEmail extends Et2Select
 			}
 		});
 	}
-
+	
 	/**
 	 * Handle keypresses inside the search input
 	 * Overridden from parent to also skip the hidden selected options, which other selects do not do
@@ -187,55 +218,27 @@ export class Et2SelectEmail extends Et2Select
 	 *
 	 * @returns {string}
 	 */
-	get tagTag() : string
+	_tagTemplate(option, index)
 	{
-		return "et2-email-tag";
-	}
+		const readonly = (this.readonly || option && typeof (option.disabled) != "undefined" && option.disabled);
+		const isEditable = this.editModeEnabled && !readonly;
 
-	/**
-	 * override tag creation in order to add DND functionality
-	 * @param item
-	 * @protected
-	 */
-	protected _createTagNode(item)
-	{
-		let tag = super._createTagNode(item);
-
-		tag.fullEmail = this.fullEmail;
-		tag.onlyEmail = this.onlyEmail;
-
-		// Re-set after setting fullEmail as that can change what we show
-		tag.textContent = item.getTextLabel().trim();
-
-		if(!this.readonly && this.allowFreeEntries && this.allowDragAndDrop)
-		{
-			let dragTranslate = {x: 0, y: 0};
-			tag.class = item.classList.value + " et2-select-draggable";
-			let draggable = interact(tag).draggable({
-				startAxis: 'xy',
-				listeners: {
-					start: function(e)
-					{
-						let dragPosition = {x:e.page.x, y:e.page.y};
-						e.target.setAttribute('style', `width:${e.target.clientWidth}px !important`);
-						e.target.style.position = 'fixed';
-						e.target.style.zIndex = 10;
-						e.target.style.transform =
-							`translate(${dragPosition.x}px, ${dragPosition.y}px)`;
-					},
-					move : function(e)
-					{
-						dragTranslate.x += e.delta.x;
-						dragTranslate.y += e.delta.y;
-						e.target.style.transform =
-							`translate(${dragTranslate.x}px, ${dragTranslate.y}px)`;
-					}
-				}
-			});
-			// set parent_node with widget context in order to make it accessible after drop
-			draggable.parent_node = this;
-		}
-		return tag;
+		return html`
+            <et2-email-tag
+                    class=${classMap({
+                        ...option.classList,
+                        "et2-select-draggable": !this.readonly && this.allowFreeEntries && this.allowDragAndDrop
+                    })}
+                    .fullEmail=${this.fullEmail}
+                    .onlyEmail=${this.onlyEmail}
+                    ?removable=${!readonly}
+                    ?readonly=${readonly}
+                    ?editable=${isEditable}
+                    .value=${option.value.replaceAll("___", " ")}
+            >
+                ${option.getTextLabel().trim()}
+            </et2-email-tag>
+		`;
 	}
 
 	/**
@@ -256,16 +259,6 @@ export class Et2SelectEmail extends Et2Select
                          image=${option.icon || nothing}
             >
             </et2-lavatar>`;
-	}
-
-	/**
-	 * Override image to skip it, we add images in Et2EmailTag using CSS
-	 * @param item
-	 * @protected
-	 */
-	protected _createImage(item)
-	{
-		return this.multiple ? "" : super._createImage(item);
 	}
 
 	/**

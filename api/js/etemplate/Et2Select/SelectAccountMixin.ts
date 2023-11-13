@@ -1,5 +1,5 @@
 import {SelectOption} from "./FindSelectOptions";
-import {LitElement} from "@lion/core";
+import {LitElement} from "lit";
 
 /**
  * EGroupware eTemplate2 - SelectAccountMixin
@@ -110,7 +110,8 @@ export const SelectAccountMixin = <T extends Constructor<LitElement>>(superclass
 
 		get select_options()
 		{
-			return [...(this.account_options || []), ...super.select_options];
+			return [...new Map([...this.account_options, ...(super.select_options || [])].map(item =>
+				[item.value, item])).values()];
 		}
 
 		set select_options(value : SelectOption[])

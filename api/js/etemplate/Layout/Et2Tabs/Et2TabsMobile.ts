@@ -1,5 +1,7 @@
 import {Et2Tabs} from "./Et2Tabs";
-import {classMap, html, repeat, TemplateResult} from "@lion/core";
+import {html, TemplateResult} from "lit";
+import {classMap} from "lit/directives/class-map.js";
+import {repeat} from "lit/directives/repeat.js";
 import {Et2Details} from "../Et2Details/Et2Details";
 import {SlTab, SlTabPanel} from "@shoelace-style/shoelace";
 

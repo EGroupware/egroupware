@@ -554,10 +554,11 @@ export class et2_calendar_event extends et2_valueWidget implements et2_IDetached
 						{
 								// Click handler is set in _bind_videoconference()
 								location += (this.options.value.location.trim() ? '<br />' : '') +
-										'<span data-videoconference="' + this.options.value['##videoconference'] +
-										'" data-id="' + this.options.value['id'] + '" data-title="' + this.options.value['title'] +
-										'" data-start="' + this.options.value['start'].toJSON() + '" data-end="' + this.options.value['end'].toJSON() + '">' +
-										this.egw().lang('Video conference') +
+									'<span data-videoconference="' + this.options.value['##videoconference'] +
+									'" data-id="' + this.options.value['id'] + '" data-app_id="' + this.options.value['app_id'] +
+									'" data-title="' + this.options.value['title'] +
+									'" data-start="' + this.options.value['start'].toJSON() + '" data-end="' + this.options.value['end'].toJSON() + '">' +
+									this.egw().lang('Video conference') +
 										'<img src="' + this.egw().image('videoconference', 'calendar') + '"/></span>';
 								this._bind_videoconference();
 						}
@@ -726,8 +727,8 @@ export class et2_calendar_event extends et2_valueWidget implements et2_IDetached
 				jQuery('body').off(vc_event)
 						.on(vc_event, '[data-videoconference]', function (event)
 						{
-								let data = egw.dataGetUIDdata("calendar::" + this.dataset.id);
-								app.calendar.joinVideoConference(this.dataset.videoconference, data.data || this.dataset);
+							let data = egw.dataGetUIDdata("calendar::" + this.dataset.app_id);
+							app.calendar.joinVideoConference(this.dataset.videoconference, data?.data || this.dataset);
 						});
 		}
 

@@ -1711,13 +1711,14 @@ abstract class Merge
 		{
 			if(str_starts_with($cf_sub, '#'))
 			{
-				$expand_sub_cfs[$cf[$index]] .= '$$' . $cf_sub . '$$ ';
+				$expand_sub_cfs[$cf[$index]] = (isset($expand_sub_cfs[$cf[$index]]) ? $expand_sub_cfs[$cf[$index]] : '') .
+					'$$' . $cf_sub . '$$ ';
 			}
 		}
 
 		foreach($cf as $index => $field)
 		{
-			if($cfs[$field])
+			if(isset($cfs[$field]))
 			{
 				if(in_array($cfs[$field]['type'], array_keys($GLOBALS['egw_info']['apps'])))
 				{
@@ -1747,18 +1748,18 @@ abstract class Merge
 				}
 
 				// Get replacements for that application
-				if(!$app_replacements[$field])
+				if(!isset($app_replacements[$field]))
 				{
 					// If we send the real content it can result in infinite loop of lookups
 					// so we send only the used fields
 					$content = $expand_sub_cfs[$field] ?? $matches[0][$index];
 					$app_replacements[$field] = $this->get_app_replacements($field_app, $values['#' . $field], $content);
 				}
-				$replacements[$placeholders[$index]] = $app_replacements[$field]['$$' . $sub[$index] . '$$'];
+				$replacements[$placeholders[$index]] = $app_replacements[$field]['$$' . $sub[$index] . '$$'] ?? '';
 			}
 			else
 			{
-				if($cfs[$field]['type'] == 'date' || $cfs[$field]['type'] == 'date-time')
+				if(isset($cfs[$field]) && ($cfs[$field]['type'] == 'date' || $cfs[$field]['type'] == 'date-time'))
 				{
 					$this->date_fields[] = '#' . $field;
 				}

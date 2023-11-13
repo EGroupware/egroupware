@@ -82,11 +82,21 @@ export function inputBasicTests(before : Function, test_value : string, value_se
 		{
 			element = await before();
 		});
-		it("no value gives empty string", () =>
+		it("no value gives empty string", async() =>
 		{
+			element.set_value("");
+			await elementUpdated(element);
+
 			// Shows as empty / no value
 			let value = (<Element><unknown>element).querySelector(value_selector) || (<Element><unknown>element).shadowRoot.querySelector(value_selector);
+			assert.isDefined(value, "Bad value selector '" + value_selector + "'");
+			debugger;
 			assert.equal(value.textContent.trim(), "", "Displaying something when there is no value");
+			if(element.multiple)
+			{
+				assert.isEmpty(element.get_value());
+				return;
+			}
 			// Gives no value
 			assert.equal(element.get_value(), "", "Value mismatch");
 		});
@@ -94,7 +104,7 @@ export function inputBasicTests(before : Function, test_value : string, value_se
 		it("value out matches value in", async() =>
 		{
 			element.set_value(test_value);
-
+			debugger;
 			// wait for asychronous changes to the DOM
 			await elementUpdated(<Element><unknown>element);
 

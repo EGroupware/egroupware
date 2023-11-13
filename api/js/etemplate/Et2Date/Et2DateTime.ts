@@ -9,7 +9,7 @@
  */
 
 
-import {css} from "@lion/core";
+import {css} from "lit";
 import {Et2Date, formatDate, formatDateTime} from "./Et2Date";
 import type {Instance} from "flatpickr/dist/types/instance";
 import {default as ShortcutButtonsPlugin} from "shortcut-buttons-flatpickr/dist/shortcut-buttons-flatpickr";

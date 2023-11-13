@@ -698,6 +698,10 @@ class preferences_settings
 						$def = is_array($value[$def]) ? $value[$def]['label'] : $value[$def];
 						break;
 					}
+					elseif(is_array($value) && isset($value['label']) && $value['value'] == $def)
+					{
+						$def = $value['label'];
+					}
 				}
 			}
 			if ($lang) $def = lang($def);

@@ -15,7 +15,7 @@ import {egw} from "../../jsapi/egw_global";
 registerIconLibrary('default', {
 	resolver: name =>
 	{
-		return typeof egw !== "undefined" ? `${egw.webserverUrl}/node_modules/@shoelace-style/shoelace/dist/assets/icons/${name}.svg` : ''
+		return typeof egw !== "undefined" ? `${egw.webserverUrl || ""}/node_modules/@shoelace-style/shoelace/dist/assets/icons/${name}.svg` : ''
 	},
 });
 
@@ -24,12 +24,15 @@ registerIconLibrary('default', {
  * @example <sl-icon library="egw" name="infolog/navbar"/>
  * @example <sl-icon library="egw" name="5_day_view"/>
  */
-registerIconLibrary('egw', {
-	resolver: name =>
-	{
-		return typeof egw !== "undefined" ? (egw.image(name) || '') : ''
-	},
-});
+if(typeof egw !== "undefined" && typeof egw.image == "function")
+{
+	registerIconLibrary('egw', {
+		resolver: name =>
+		{
+			return (egw.image(name) || '');
+		},
+	});
+}
 
 /**
  * Customise shoelace styles to match our stuff
@@ -39,10 +42,10 @@ export default [sl_css, css`
   :root,
   :host,
   .sl-theme-light {
-	--sl-font-size-medium: ${typeof egw != "undefined" && egw.preference('textsize', 'common') != '12' ? parseInt(egw.preference('textsize', 'common')) : 12}px;
+	--sl-font-size-medium: ${typeof egw != "undefined" && egw.preference && egw.preference('textsize', 'common') != '12' ? parseInt(egw.preference('textsize', 'common')) : 12}px;
 	--sl-input-height-small: 24px;
 	--sl-input-height-medium: 32px;
-	--sl-button-font-size-medium: ${typeof egw != "undefined" && egw.preference('textsize', 'common') != '12' ? parseInt(egw.preference('textsize', 'common')) : 12}px;
+	--sl-button-font-size-medium: ${typeof egw != "undefined" && egw.preference && egw.preference('textsize', 'common') != '12' ? parseInt(egw.preference('textsize', 'common')) : 12}px;
 	--sl-input-help-text-font-size-medium: var(--sl-font-size-medium);
 	--sl-spacing-small: 0.1rem;
 	--sl-spacing-medium: 0.5rem;
@@ -53,7 +56,7 @@ export default [sl_css, css`
 	--indicator-color: #696969;
 	--sl-input-focus-ring-color: #26537C;
 	--sl-focus-ring-width: 2px;
-      --sl-color-gray-150: #f0f0f0;
+	--sl-color-gray-150: #f0f0f0;
       
   }
   .tab-group--top .tab-group__tabs {

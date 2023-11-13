@@ -744,22 +744,20 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 				});
 				event.body.css({
 					'padding-top': timegrid.scrolling.scrollTop() - event.div.position().top + title_height,
-					'margin-top' : -title_height
+					'margin-top': -title_height
 				});
 			}
 			// Too many in gridlist view, show indicator
 			else if (this.display_settings.granularity === 0 && hidden)
 			{
-				if(jQuery('.hiddenEventAfter',this.div).length == 0)
+				if(jQuery('.hiddenEventAfter', this.div).length == 0)
 				{
-					this.event_wrapper.css('overflow','hidden');
+					this.event_wrapper.css('overflow', 'hidden');
 				}
-				this._hidden_indicator(event, false, function() {
+				this._hidden_indicator(event, false, function()
+				{
 					app.calendar.update_state({view: 'day', date: day.date});
 				});
-				// Avoid partially visible events
-				// We need to hide all, or the next row will be visible
-				event.div.hide(0);
 			}
 			// Completely out of view, show indicator
 			else if (hidden.completely)
@@ -859,8 +857,8 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 			indicator.attr('data-hidden_count', count);
 			if(this.display_settings.granularity === 0)
 			{
-				indicator.append(event.div.clone());
-				indicator.attr('data-hidden_label', day.egw().lang('%1 event(s) %2',indicator.attr('data-hidden_count'),''));
+				indicator.append(event.div);
+				indicator.attr('data-hidden_label', day.egw().lang('%1 event(s) %2', indicator.attr('data-hidden_count'), ''));
 			}
 			else if (!fixed_height)
 			{

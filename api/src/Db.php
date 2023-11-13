@@ -37,9 +37,9 @@ if(empty($GLOBALS['egw_info']['server']['db_type']))
  *		$cnt = $db->query("SELECT COUNT(*) FROM ...")->fetchColumn($column_num=0);
  *
  * To fetch a next (single) row, you can use:
- *		$row = $db->query("SELECT COUNT(*) FROM ...")->fetch($fetchmod=null);
+ *		$row = $db->query("SELECT * FROM ...")->fetch($fetchmod=null);
  *
- * Api\Db allows to use exceptions to catch sql-erros, not existing tables or failure to connect to the database, eg.:
+ * Api\Db allows to use exceptions to catch sql-errors, not existing tables or failure to connect to the database, eg.:
  *		try {
  *			$this->db->connect();
  *			$num_config = $this->db->select(config::TABLE,'COUNT(config_name)',false,__LINE__,__FILE__)->fetchColumn();
@@ -1631,8 +1631,8 @@ class Db
 		// MySQL and MariaDB not 10.1 need 4-byte utf8 chars replaced with our default utf8 charset
 		// (MariaDB 10.1 does the replacement automatic, 10.0 cuts everything off behind and MySQL gives an error)
 		// (MariaDB 10.3 gives an error too: Incorrect string value: '\xF0\x9F\x98\x8A\x0AW...')
-		// Changing charset to utf8mb4 requires schema update, shortening of some indexes and probably have negative impact on performace!
-		if (isset($value) && substr($this->Type, 0, 5) === 'mysql')
+		// Changing charset to utf8mb4 requires schema update, shortening of some indexes and probably have negative impact on performance!
+		if (isset($value) && substr($this->Type, 0, 5) === 'mysql' && !in_array($type, ['binary', 'blob']))
 		{
 			$value = preg_replace('/[\x{10000}-\x{10FFFF}]/u', "\xEF\xBF\xBD", $value);
 		}

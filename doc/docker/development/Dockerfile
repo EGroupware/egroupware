@@ -3,11 +3,11 @@
 ## EGroupware development container using Ubuntu 20.04 and PHP from ondrej/php PPA
 ##
 ################################################################################
-FROM ubuntu:22.04
+FROM ubuntu:20.04
 MAINTAINER rb@egroupware.org
 
 ARG VERSION=dev-master
-ARG PHP_VERSION=8.1
+ARG PHP_VERSION=8.2
 
 # keeping build-arg in environment for entrypoint.sh
 ENV VERSION=$VERSION
@@ -48,10 +48,12 @@ RUN apt-get update \
 	&& mkdir -p /run/php \
 	# send logs to stderr to be viewed by docker logs
 	&& ln -s /dev/stderr /var/log/php$PHP_VERSION-fpm.log \
-	# install nodejs 16.x PPA (Shoelace requires >= 14.17, Ubuntu 22.04 only has 12.x)
-	&& curl -fsSL https://deb.nodesource.com/setup_16.x | bash - \
+	# install nodejs 20.x (Shoelace requires >= 14.17, Ubuntu 22.04 only has 12.x) \
+    && mkdir -p /etc/apt/keyrings \
+    && curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg \
+    && echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_20.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list \
 	# install tools to build EGroupware
-	&& apt-get install -y rsync nodejs zip curl sudo cron patch \
+	&& apt-get install -y rsync nodejs npm zip curl sudo cron patch \
 	&& npm install -g grunt-cli \
 	&& bash -c \
 'EXPECTED_SIGNATURE=$(curl https://composer.github.io/installer.sig); \

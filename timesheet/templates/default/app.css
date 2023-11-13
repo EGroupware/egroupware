@@ -14,7 +14,7 @@
 }
 
 table.egwGridView_grid tbody td[align=right] {
-	padding-top: 1px;
+	padding-top: 0px;
 }
 
 /* Let category & total columns line up vertically with the 2-element headers (Duration, Total, etc) */

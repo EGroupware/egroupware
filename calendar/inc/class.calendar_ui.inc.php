@@ -787,7 +787,7 @@ class calendar_ui
 		$event['non_blocking'] = (bool)$event['non_blocking'];
 
 		$matches = null;
-		if(!(int)$event['id'] && preg_match('/^([a-z_-]+)([0-9]+)$/i',$event['id'],$matches))
+		if(!(int)$event['id'] && preg_match('/^([a-z_-]+)([0-9]+)([:-].+)?$/i', $event['id'], $matches))
 		{
 			$app = $matches[1];
 			$app_id = $matches[2];

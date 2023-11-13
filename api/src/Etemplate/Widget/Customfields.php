@@ -273,7 +273,10 @@ class Customfields extends Transformer
 
 		// Re-format date custom fields from Y-m-d
 		$field_settings =& self::get_array(self::$request->modifications, "{$this->id}[customfields]",true);
-		if (true) $field_settings = array();
+		if(!is_array($field_settings))
+		{
+			$field_settings = array();
+		}
 		$link_types = Api\Link::app_list();
 		foreach($fields as $fname => $field)
 		{

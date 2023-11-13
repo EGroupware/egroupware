@@ -115,7 +115,7 @@
   box-shadow: none;
 }
 /* Hide email in sidebox */
-#calendar-sidebox_owner .title {
+#calendar-sidebox_owner sl-option::part(suffix) {
   display: none;
 }
 /* Conflict display */

@@ -13,6 +13,7 @@ import {css, html, nothing, TemplateResult} from "@lion/core";
 import {IsEmail} from "../../api/js/etemplate/Validators/IsEmail";
 import {SelectOption} from "../../api/js/etemplate/Et2Select/FindSelectOptions";
 import {Et2StaticSelectMixin} from "../../api/js/etemplate/Et2Select/StaticOptions";
+import {classMap} from "lit/directives/class-map.js";
 
 /**
  * Select widget customised for calendar owner, which can be a user
@@ -31,6 +32,10 @@ export class CalendarOwner extends Et2StaticSelectMixin(Et2Select)
 			.select__tags {
 				max-height: 10em;
 			}
+
+			  .title {
+				float: right;
+			  }
 			`
 		];
 	}
@@ -56,34 +61,35 @@ export class CalendarOwner extends Et2StaticSelectMixin(Et2Select)
 	 */
 	_optionTemplate(option : SelectOption) : TemplateResult
 	{
-		// Tag used must match this.optionTag, but you can't use the variable directly.
-		// Pass option along so SearchMixin can grab it if needed
+		// Exclude non-matches when searching
+		// unless they're already selected, in which case removing them removes them from value
+		if(typeof option.isMatch == "boolean" && !option.isMatch && !this.getValueAsArray().includes(option.value))
+		{
+			return html``;
+		}
+
+		const value = (<string>option.value).replaceAll(" ", "___");
+		const classes = option.class ? Object.fromEntries((option.class).split(" ").map(k => [k, true])) : {};
 		return html`
-            <sl-menu-item value="${option.value}"
-                          title="${!option.title || this.noLang ? option.title : this.egw().lang(option.title)}"
-                          class="${option.class}" .option=${option}
-                          ?disabled=${option.disabled}
+            <sl-option
+                    part="option"
+                    exportparts="prefix:tag__prefix, suffix:tag__suffix"
+                    value="${value}"
+                    title="${!option.title || this.noLang ? option.title : this.egw().lang(option.title)}"
+                    class=${classMap({
+                        "match": option.isMatch,
+                        "no-match": !option.isMatch,
+                        ...classes
+                    })}
+                    .option=${option}
+                    .selected=${this.getValueAsArray().some(v => v == value)}
+                    ?disabled=${option.disabled}
+                    .getTextLabel=${() => {return option.label ?? option.value}}
             >
                 ${this._iconTemplate(option)}
                 ${this.noLang ? option.label : this.egw().lang(option.label)}
-                <span class="title" slot="suffix">${option.title}</span>
-            </sl-menu-item>`;
-	}
-
-	/**
-	 * Customise how tags are rendered.  Overridden from parent to add email to title for hover
-	 *
-	 * @param item
-	 * @protected
-	 */
-	protected _createTagNode(item)
-	{
-		const tag = super._createTagNode(item);
-		if(item.title)
-		{
-			tag.title = item.title;
-		}
-		return tag;
+                <span class="title">${option.title}</span>
+            </sl-option>`;
 	}
 
 	/**
@@ -102,9 +108,18 @@ export class CalendarOwner extends Et2StaticSelectMixin(Et2Select)
 		let missing_labels = [];
 		this.updateComplete.then(() =>
 		{
+			// find that can handle option groups
+			const find = (option) =>
+			{
+				if(Array.isArray(option.value))
+				{
+					return option.value.find(find);
+				}
+				return option.value == this.value[i];
+			}
 			for(var i = 0; i < this.value.length; i++)
 			{
-				if(!this.select_options.find(o => o.value == this.value[i]))
+				if(!this.select_options.find(find))
 				{
 					missing_labels.push(this.value[i]);
 				}
@@ -133,7 +148,6 @@ export class CalendarOwner extends Et2StaticSelectMixin(Et2Select)
 						}
 					}
 					this.requestUpdate("select_options");
-					this.updateComplete.then(() => {this.syncItemsFromValue();});
 				}, this, true, this).sendRequest();
 			}
 		});
@@ -158,7 +172,7 @@ export class CalendarOwner extends Et2StaticSelectMixin(Et2Select)
 	 * @param option
 	 * @protected
 	 */
-	protected _iconTemplate(option)
+	protected _iconTemplate(option : SelectOption)
 	{
 		// Not a user / contact, no icon - use app image
 		if(!option.fname && !option.lname && !option.icon && option.app)

@@ -114,7 +114,7 @@ class Date extends Transformer
 			return $value;
 		}    // otherwise we will get current date or 1970-01-01 instead of an empty value
 
-		$format = $this->attrs['dataFormat'] ?? $this->attrs['data_format'];
+		$format = $this->attrs['dataFormat'] ?? $this->attrs['data_format'] ?? "";
 		// for DateTime objects (regular PHP and Api\DateTime ones), set user timezone
 		if($value instanceof \DateTime)
 		{

@@ -506,40 +506,59 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 		link_quick_add: function(_parent)
 		{
 			// check if quick-add selectbox is already there, only create it again if not
-			if (document.getElementById('quick_add_selectbox') || egwIsMobile()) return;
+			if (document.getElementById('quick_add_selectbox') || egwIsMobile())
+			{
+				return;
+			}
 
+			// Use node as the trigger
+			const parent = document.getElementById(_parent);
 			const select = document.createElement('et2-select');
 			select.setAttribute('id', 'quick_add_selectbox');
-			document.getElementById(_parent).append(select);
+			// Empty label is required to clear value, but we hide it
+			select.emptyLabel = "Select";
+			select.placement = "bottom end";
+			parent.append(select);
+			const plus = parent.querySelector("span");
+			plus.addEventListener("click", () => {
+				select.show();
+			})
+
 			// bind change handler
 			select.addEventListener('change', () =>
 			{
-				if (select.value) this.open('', select.value, 'add', {}, undefined, select.value, true);
+				if (select.value)
+				{
+					this.open('', select.value, 'add', {}, undefined, select.value, true);
+				}
 				select.value = '';
 			});
 			// need to load common translations for app-names
 			this.langRequire(window, [{app: 'common', lang: this.preference('lang')}], () =>
 			{
-				let options = [{value:'', label: this.lang('Select one...')}];
+				let options = [];
 				const apps = this.link_app_list('add');
 				for(let app in apps)
 				{
-					if(this.link_get_registry(app, 'no_quick_add'))
+					if (this.link_get_registry(app, 'no_quick_add'))
 					{
 						continue;
 					}
 					options.push({
-						value:app,
-						label:this.lang(this.link_get_registry(app,'entry') || apps[app]),
+						value: app,
+						label: this.lang(this.link_get_registry(app, 'entry') || apps[app]),
 						icon: this.image('navbar', app)
 					});
 				}
 				select.select_options = options;
+				/*
 				select.updateComplete.then(() =>
 				{
-					select.dropdown.trigger.style.visibility = 'hidden';
-					select.dropdown.trigger.style.height = '0px';
+					// Adjust popup positioning to account for hidden select parts
+					select.popup.distance = -32;
 				});
+
+				 */
 			});
 		},
 

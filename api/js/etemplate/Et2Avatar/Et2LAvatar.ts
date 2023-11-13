@@ -10,7 +10,7 @@
 
 import {Et2Avatar} from "./Et2Avatar";
 import shoelace from "../Styles/shoelace";
-import {css} from "@lion/core";
+import {css} from "lit";
 
 export class Et2LAvatar extends Et2Avatar
 {
@@ -126,4 +126,5 @@ export class Et2LAvatar extends Et2Avatar
 		return {background: bg, initials: text};
 	}
 }
-customElements.define("et2-lavatar", Et2LAvatar as any);
+
+customElements.define("et2-lavatar", Et2LAvatar);

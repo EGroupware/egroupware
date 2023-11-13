@@ -5617,12 +5617,16 @@ div.timesheet_timer {
   height: 0px;
   float: left;
   display: inline-block;
-  /* do NOT show empty label */
 }
-#egw_fw_topmenu_info_items #topmenu_info_quick_add #quick_add_selectbox sl-menu-item[value=""],
-#egw_fw_topmenu_info_items #topmenu_info_timer #quick_add_selectbox sl-menu-item[value=""],
-#egw_fw_topmenu_info_items #topmenu_info_quick_add #timer_selectbox sl-menu-item[value=""],
-#egw_fw_topmenu_info_items #topmenu_info_timer #timer_selectbox sl-menu-item[value=""] {
+#egw_fw_topmenu_info_items #topmenu_info_quick_add #quick_add_selectbox sl-option,
+#egw_fw_topmenu_info_items #topmenu_info_timer #quick_add_selectbox sl-option,
+#egw_fw_topmenu_info_items #topmenu_info_quick_add #timer_selectbox sl-option,
+#egw_fw_topmenu_info_items #topmenu_info_timer #timer_selectbox sl-option {
+  white-space: nowrap;
+}
+#egw_fw_topmenu_info_items #topmenu_info_quick_add #quick_add_selectbox::part(emptyLabel),
+#egw_fw_topmenu_info_items #topmenu_info_timer #quick_add_selectbox::part(emptyLabel) {
+  /* do NOT show empty label, required for clearing value */
   display: none;
 }
 #egw_fw_topmenu_info_items #topmenu_info_quick_add #quick_add_selectbox::part(form-control-input),
@@ -5637,11 +5641,19 @@ div.timesheet_timer {
 #egw_fw_topmenu_info_items #topmenu_info_timer #timer_selectbox::part(form-control) {
   margin-left: -3em;
 }
-#egw_fw_topmenu_info_items #topmenu_info_quick_add #quick_add_selectbox::part(menu),
-#egw_fw_topmenu_info_items #topmenu_info_timer #quick_add_selectbox::part(menu),
+#egw_fw_topmenu_info_items #topmenu_info_quick_add #quick_add_selectbox::part(listbox),
+#egw_fw_topmenu_info_items #topmenu_info_timer #quick_add_selectbox::part(listbox),
 #egw_fw_topmenu_info_items #topmenu_info_quick_add #timer_selectbox::part(menu),
 #egw_fw_topmenu_info_items #topmenu_info_timer #timer_selectbox::part(menu) {
   max-height: 60vh;
+}
+#egw_fw_topmenu_info_items #topmenu_info_quick_add #quick_add_selectbox::part(listbox),
+#egw_fw_topmenu_info_items #topmenu_info_timer #quick_add_selectbox::part(listbox) {
+  float: right;
+}
+#egw_fw_topmenu_info_items #topmenu_info_quick_add #quick_add_selectbox::part(combobox),
+#egw_fw_topmenu_info_items #topmenu_info_timer #quick_add_selectbox::part(combobox) {
+  visibility: hidden;
 }
 #egw_fw_topmenu_info_items img#topmenu_info_error {
   width: 16px;
@@ -6916,7 +6928,6 @@ span.egw_tutorial_title {
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul a#topmenu_calls {
   background-image: url(../../api/templates/default/images/phone.svg);
   background-repeat: no-repeat;
-  background-size: 20px;
   background-position-x: -2px;
 }
 div.dhtmlxMenu_egw_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl tr.sub_item td.sub_item_icon img[src*="svg"] {

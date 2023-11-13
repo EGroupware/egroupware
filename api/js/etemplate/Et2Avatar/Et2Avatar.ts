@@ -9,7 +9,7 @@
  */
 
 import {Et2Widget} from "../Et2Widget/Et2Widget";
-import {css, SlotMixin} from "@lion/core";
+import {css} from "lit";
 import {SlAvatar} from "@shoelace-style/shoelace";
 import {et2_IDetachedDOM} from "../et2_core_interfaces";
 import {egw} from "../../jsapi/egw_global";
@@ -18,7 +18,7 @@ import {Et2Dialog} from "../Et2Dialog/Et2Dialog";
 import "../../../../vendor/bower-asset/cropper/dist/cropper.min.js";
 import {cropperStyles} from "./cropperStyles";
 
-export class Et2Avatar extends Et2Widget(SlotMixin(SlAvatar)) implements et2_IDetachedDOM
+export class Et2Avatar extends Et2Widget(SlAvatar) implements et2_IDetachedDOM
 {
 	private _contactId;
 	private _delBtn: HTMLElement;
@@ -91,6 +91,10 @@ export class Et2Avatar extends Et2Widget(SlotMixin(SlAvatar)) implements et2_IDe
 
 			crop: {type: Boolean},
 
+			/**
+			 * Explicitly specify the avatar size.
+			 * Better to set the --size CSS variable in app.css, since it allows inheritance and overriding
+			 */
 			size: {type: String}
 		}
 	}
@@ -103,7 +107,6 @@ export class Et2Avatar extends Et2Widget(SlotMixin(SlAvatar)) implements et2_IDe
 		this.contactId = "";
 		this.editable = false;
 		this.crop = false;
-		this.size = "2.7em";
 		this.icon = "";
 		this.shape = "rounded";
 	}
@@ -246,10 +249,10 @@ export class Et2Avatar extends Et2Widget(SlotMixin(SlAvatar)) implements et2_IDe
 	{
 		let self = this;
 		this._editBtn = document.createElement('et2-button-icon');
-		this._editBtn.setAttribute('name', 'pencil');
+		this._editBtn.setAttribute('image', 'pencil');
 		this._editBtn.setAttribute('part', 'edit');
 		this._delBtn = document.createElement('et2-button-icon');
-		this._delBtn.setAttribute('name', 'trash');
+		this._delBtn.setAttribute('image', 'delete');
 		this._delBtn.setAttribute('part', 'edit');
 		this._baseNode.append(this._editBtn);
 		this._baseNode.append(this._delBtn);
@@ -434,7 +437,8 @@ export class Et2Avatar extends Et2Widget(SlotMixin(SlAvatar)) implements et2_IDe
 		}
 	}
 }
-customElements.define("et2-avatar", Et2Avatar as any);
+
+customElements.define("et2-avatar", Et2Avatar);
 // make et2_avatar publicly available as we need to call it from templates
 {
 	window['et2_avatar'] = Et2Avatar;

@@ -25,11 +25,13 @@ async function before()
 	// Create an element to test with, and wait until it's ready
 	// @ts-ignore
 	element = await fixture<Et2Select>(html`
-        <et2-select label="I'm a select"/>
+        <et2-select label="I'm a select">
+        </et2-select>
 	`);
 
 	// Stub egw()
 	sinon.stub(element, "egw").returns(window.egw);
+	await elementUpdated(element);
 
 	return element;
 }
@@ -48,7 +50,6 @@ describe("Select widget basics", () =>
 	it('has a label', async() =>
 	{
 		element.set_label("Label set");
-		// @ts-ignore TypeScript doesn't recognize widgets as Elements
 		await elementUpdated(element);
 
 		assert.equal(element.querySelector("[slot='label']").textContent, "Label set");
@@ -58,6 +59,36 @@ describe("Select widget basics", () =>
 	{
 		assert.notExists(element.querySelector("option"), "Static option not found in DOM");
 		assert.deepEqual(element.select_options, [], "Unexpected option(s)");
+	})
+
+	it("closes when losing focus", async() =>
+	{
+	// WIP
+		const blurSpy = sinon.spy();
+		element.addEventListener('sl-hide', blurSpy);
+		const showPromise = new Promise(resolve =>
+		{
+			element.addEventListener("sl-after-show", resolve);
+		});
+		const hidePromise = new Promise(resolve =>
+		{
+			element.addEventListener("sl-hide", resolve);
+		});
+		await elementUpdated(element);
+		element.focus();
+
+		await showPromise;
+		await elementUpdated(element);
+
+		element.blur();
+		await elementUpdated(element);
+
+		await hidePromise;
+
+		sinon.assert.calledOnce(blurSpy);
+
+		// Check that it actually closed dropdown
+		assert.isFalse(element.select?.hasAttribute("open"));
 	})
 });
 
@@ -69,10 +100,11 @@ describe("Multiple", () =>
 		// @ts-ignore
 		element = await fixture<Et2Select>(html`
             <et2-select label="I'm a select" multiple="true">
-                <sl-menu-item value="one">One</sl-menu-item>
-                <sl-menu-item value="two">Two</sl-menu-item>
+                <option value="one">One</option>
+                <option value="two">Two</option>
             </et2-select>
 		`);
+		element.loadFromXML(element);
 		element.set_value("one,two");
 
 		// Stub egw()
@@ -83,14 +115,14 @@ describe("Multiple", () =>
 
 	it("Can remove tags", async() =>
 	{
-		assert.equal(element.querySelectorAll("sl-menu-item").length, 2, "Did not find options");
+		assert.equal(element.select.querySelectorAll("sl-option").length, 2, "Did not find options");
 
 		assert.sameMembers(element.value, ["one", "two"]);
-		let tags = element.shadowRoot.querySelectorAll('.select__tags > *');
+		let tags = element.select.combobox.querySelectorAll('.select__tags et2-tag');
 
 		// Await tags to render
 		let tag_updates = []
-		element.shadowRoot.querySelectorAll(element.tagTag).forEach((t : Et2Tag) => tag_updates.push(t.updateComplete));
+		element.select.combobox.querySelectorAll("et2-tag").forEach((t : Et2Tag) => tag_updates.push(t.updateComplete));
 		await Promise.all(tag_updates);
 
 		assert.equal(tags.length, 2);
@@ -110,15 +142,21 @@ describe("Multiple", () =>
 		// Wait for widget to update
 		await element.updateComplete;
 		tag_updates = []
-		element.shadowRoot.querySelectorAll(element.tagTag).forEach((t : Et2Tag) => tag_updates.push(t.updateComplete));
+		element.select.combobox.querySelectorAll('et2-tag').forEach((t : Et2Tag) => tag_updates.push(t.updateComplete));
 		await Promise.all(tag_updates);
 
 		// Check
 		assert.sameMembers(element.value, ["two"], "Removing tag did not remove value");
-		tags = element.shadowRoot.querySelectorAll('.select__tags > *');
+		tags = element.select.combobox.querySelectorAll('.select__tags et2-tag');
 		assert.equal(tags.length, 1, "Removed tag is still there");
 	});
 
 });
 
-inputBasicTests(before, "", "select");
+inputBasicTests(async() =>
+{
+	const element = await before();
+	element.noLang = true;
+	element.select_options = [{value: "", label: ""}];
+	return element
+}, "", "sl-select");

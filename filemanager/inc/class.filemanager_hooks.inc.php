@@ -96,14 +96,15 @@ class filemanager_hooks
 
 		$file = array(
 			//'Site Configuration' => Egw::link('/index.php','menuaction=admin.admin_config.index&appname='.self::$appname.'&ajax=true'),
-			'Custom fields'             => Egw::link('/index.php', 'menuaction=admin.admin_customfields.index&appname=' . self::$appname . '&ajax=true'),
-			'Check virtual filesystem'  => Egw::link('/index.php', 'menuaction=filemanager.filemanager_admin.fsck'),
-			'Quota'                     => Egw::link('/index.php', 'menuaction=filemanager.filemanager_admin.quota&ajax=true'),
 			'VFS mounts and versioning' => Egw::link('/index.php', 'menuaction=filemanager.filemanager_admin.index&ajax=true'),
+			'Check virtual filesystem'  => Egw::link('/index.php', 'menuaction=filemanager.filemanager_admin.fsck'),
+			'Custom fields'             => Egw::link('/index.php', 'menuaction=admin.admin_customfields.index&appname=' . self::$appname . '&ajax=true'),
+			'Quota'                     => Egw::link('/index.php', 'menuaction=filemanager.filemanager_admin.quota&ajax=true'),
 		);
-		if($GLOBALS['egw_info']['user']['apps']['stylite'])
+		if (!empty($GLOBALS['egw_info']['user']['apps']['stylite']))
 		{
 			$file['Sharing'] = Egw::link('/index.php', 'menuaction=filemanager.filemanager_shares.index&admin=true&ajax=true');
+			$file['S3 configuration'] = Egw::link('/index.php', 'menuaction=stylite.'.EGroupware\Stylite\Vfs\S3\StreamWrapper::class.'.config&ajax=true');
 		}
 		if ($location == 'admin')
 		{

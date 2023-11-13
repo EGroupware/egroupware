@@ -12,8 +12,8 @@
  * @copyright Nathan Gray 2012
  */
 
-import type {Et2SelectAccountReadonly} from "./Et2Select/Et2SelectReadonly";
-import type {Et2SelectAccount} from "./Et2Select/Et2SelectAccount";
+import type {Et2SelectAccountReadonly} from "./Et2Select/Select/Et2SelectReadonly";
+import type {Et2SelectAccount} from "./Et2Select/Select/Et2SelectAccount";
 
 /**
  * @deprecated use Et2SelectAccount

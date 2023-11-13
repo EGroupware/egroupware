@@ -8,11 +8,18 @@
  * @param {type} widget
  */
 import {sprintf} from "../../egw_action/egw_action_common";
-import {Et2SelectReadonly} from "./Et2SelectReadonly";
+import {Et2SelectReadonly} from "./Select/Et2SelectReadonly";
 import {cleanSelectOptions, find_select_options, SelectOption} from "./FindSelectOptions";
 import {Et2Select, Et2WidgetWithSelect} from "./Et2Select";
+import {state} from "lit/decorators/state.js";
 
 export type Et2SelectWidgets = Et2Select | Et2WidgetWithSelect | Et2SelectReadonly;
+type NumberOptions = {
+	min? : number,
+	max? : number,
+	interval? : number,
+	format? : string
+};
 
 // Export the Interface for TypeScript
 type Constructor<T = {}> = new (...args : any[]) => T;
@@ -31,27 +38,25 @@ export const Et2StaticSelectMixin = <T extends Constructor<Et2WidgetWithSelect>>
 
 		// Hold the static widget options separately so other options (like sent from server in sel_options) won't
 		// conflict or be wiped out
-		protected static_options : SelectOption[];
+		@state()
+		protected _static_options : SelectOption[] = [];
 
 		// If widget needs to fetch options from server, we might want to wait for them
-		protected fetchComplete : Promise<SelectOption[] | void>;
+		@state()
+		protected fetchComplete : Promise<SelectOption[] | void> = Promise.resolve();
 
-		constructor(...args)
+		async getUpdateComplete() : Promise<boolean>
 		{
-			super(...args);
-
-			this.static_options = [];
-			this.fetchComplete = Promise.resolve();
-
-			// Trigger the options to get rendered into the DOM
-			this.requestUpdate("select_options");
+			const result = await super.getUpdateComplete();
+			await this.fetchComplete;
+			return result;
 		}
 
 		get select_options() : SelectOption[]
 		{
 			// @ts-ignore
 			const options = super.select_options || [];
-			const statics = this.static_options || [];
+			const statics = this._static_options || [];
 
 			if(options.length == 0)
 			{
@@ -62,7 +67,7 @@ export const Et2StaticSelectMixin = <T extends Constructor<Et2WidgetWithSelect>>
 				return options;
 			}
 			// Merge & make sure result is unique
-			return [...new Map([...options, ...statics].map(item =>
+			return [...new Map([...options, ...(this._static_options || [])].map(item =>
 				[item.value, item])).values()];
 
 		}
@@ -75,7 +80,7 @@ export const Et2StaticSelectMixin = <T extends Constructor<Et2WidgetWithSelect>>
 
 		set_static_options(new_static_options)
 		{
-			this.static_options = new_static_options;
+			this._static_options = new_static_options;
 			this.requestUpdate("select_options");
 		}
 
@@ -273,19 +278,14 @@ export const StaticOptions = new class StaticOptionsType
 		];
 	}
 
-	number(widget : Et2SelectWidgets, attrs = {
-		min: undefined,
-		max: undefined,
-		interval: undefined,
-		format: undefined
-	}) : SelectOption[]
+	number(widget : Et2SelectWidgets, attrs : NumberOptions = {}) : SelectOption[]
 	{
 
-		var options = [];
-		var min = parseFloat(attrs.min ?? widget.min ?? 1);
-		var max = parseFloat(attrs.max ?? widget.max ?? 10);
-		var interval = parseFloat(attrs.interval ?? widget.interval ?? 1);
-		var format = attrs.format ?? '%d';
+		const options = [];
+		const min = parseFloat(attrs.min ?? widget.min ?? 1);
+		const max = parseFloat(attrs.max ?? widget.max ?? 10);
+		let interval = parseFloat(attrs.interval ?? widget.interval ?? 1);
+		let format = attrs.format ?? '%d';
 
 		// leading zero specified in interval
 		if(widget.leading_zero && widget.leading_zero[0] == '0')
@@ -313,7 +313,7 @@ export const StaticOptions = new class StaticOptionsType
 
 	percent(widget : Et2SelectWidgets) : SelectOption[]
 	{
-		return this.number(widget, {min: 0, max: 100, interval: 10, format: undefined});
+		return this.number(widget, {min: 0, max: 100, interval: 10, format: "%d%%"});
 	}
 
 	year(widget : Et2SelectWidgets, attrs?) : SelectOption[]
@@ -323,15 +323,14 @@ export const StaticOptions = new class StaticOptionsType
 			attrs = {}
 		}
 		var t = new Date();
-		attrs.min = t.getFullYear() + parseInt(widget.min);
-		attrs.max = t.getFullYear() + parseInt(widget.max);
+		attrs.min = t.getFullYear() + parseInt(attrs.min ?? widget.min ?? -3);
+		attrs.max = t.getFullYear() + parseInt(attrs.max ?? widget.max ?? 2);
 		return this.number(widget, attrs);
 	}
 
 	day(widget : Et2SelectWidgets, attrs) : SelectOption[]
 	{
-		attrs.other = [1, 31, 1];
-		return this.number(widget, attrs);
+		return this.number(widget, {min: 1, max: 31, interval: 1});
 	}
 
 	hour(widget : Et2SelectWidgets, attrs) : SelectOption[]
@@ -394,9 +393,9 @@ export const StaticOptions = new class StaticOptionsType
 		return this.cached_server_side(widget, 'select-lang', options);
 	}
 
-	timezone(widget : Et2SelectWidgets, attrs) : SelectOption[] | Promise<SelectOption[]>
+	timezone(widget : Et2SelectWidgets, attrs) : Promise<SelectOption[]>
 	{
 		var options = ',' + (attrs.other || []).join(',');
-		return this.cached_server_side(widget, 'select-timezone', options);
+		return <Promise<SelectOption[]>>this.cached_server_side(widget, 'select-timezone', options, true);
 	}
 }

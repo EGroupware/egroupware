@@ -7,7 +7,7 @@
  * @author Nathan Gray
  */
 
-import {css} from "@lion/core";
+import {css} from "lit";
 import {Et2Select} from "../Et2Select/Et2Select";
 import {Et2LinkAppSelect} from "./Et2LinkAppSelect";
 import {Et2Link} from "./Et2Link";
@@ -86,9 +86,9 @@ export class Et2LinkSearch extends Et2Select
 		super.updated(changedProperties);
 
 		// Set a value we don't have as an option?  That's OK, we'll just add it
-		if(changedProperties.has("value") && this.value && (
-			this.menuItems && this.menuItems.length == 0 ||
-			this.menuItems?.filter && this.menuItems.filter(item => this.value.includes(item.value)).length == 0
+		if(changedProperties.has("value") && this.value && this.value.length > 0 && (
+			this.select_options.length == 0 ||
+			this.select_options.filter && this.select_options.filter(item => this.getValueAsArray().includes(item.value)).length == 0
 		))
 		{
 			this._missingOption(this.value)
@@ -120,19 +120,16 @@ export class Et2LinkSearch extends Et2Select
 			option.label = title || Et2Link.MISSING_TITLE;
 			option.class = "";
 			// It's probably already been rendered, find the item
-			let item = this.menuItems.find(i => i.value === option.value);
+			let item = this.getAllOptions().find(i => i.value === option.value);
 			if(item)
 			{
 				item.textContent = title;
 				item.classList.remove("loading");
-				this.syncItemsFromValue();
 			}
 			else
 			{
 				// Not already rendered, update the select option
 				this.requestUpdate("select_options");
-				// update the displayed text
-				this.updateComplete.then(() => this.syncItemsFromValue());
 			}
 		});
 	}

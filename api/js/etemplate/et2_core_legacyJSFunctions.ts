@@ -99,6 +99,11 @@ export function et2_compileLegacyJS(_code, _widget, _context)
 			}
 			// Code is app.appname.function, add the arguments so it can be executed
 			_code += '(ev,widget)';
+			// Return what the function returns
+			if(_code.indexOf("return") == -1)
+			{
+				_code = "return " + _code;
+			}
 		}
 		// use app object from etemplate2, which might be private and not just window.app
 		_code = _code.replace(/(window\.)?app\./, 'widget.getInstanceManager().app_obj.');

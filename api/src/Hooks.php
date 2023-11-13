@@ -266,7 +266,7 @@ class Hooks
 						if (is_int($location))
 						{
 							$location = $methods;
-							$methods = '/'.$appname.'/inc/hook_'.$methods.'.inc.php';
+							$methods = '/' . $appname . '/inc/hook_' . $methods . '.inc.php';
 						}
 						$locations[$location][$appname] = (array)$methods;
 					}

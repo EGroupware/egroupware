@@ -20,8 +20,8 @@ import {et2_register_widget, WidgetConfig} from "./et2_core_widget";
 import {et2_inputWidget} from "./et2_core_inputWidget";
 import {ClassWithAttributes} from "./et2_core_inheritance";
 import {et2_valueWidget} from "./et2_core_valueWidget";
-import {et2_selectbox} from "./et2_widget_selectbox";
 import {et2_IDetachedDOM} from "./et2_core_interfaces";
+import {find_select_options} from "./Et2Select/FindSelectOptions";
 
 /**
  * Using AJAX, this widget allows a type-ahead find similar to a ComboBox, where as the user enters information,
@@ -122,7 +122,7 @@ export class et2_ajaxSelect extends et2_inputWidget
 			delay: 100,
 			source: this.options.get_rows ?
 				this.options.get_rows :
-				et2_selectbox.find_select_options(this, this.options.values),
+					find_select_options(this, this.options.values),
 			select: function(event, ui) {
 				widget.value = ui.item[widget.options.id_field];
 				if(widget.options.get_title)

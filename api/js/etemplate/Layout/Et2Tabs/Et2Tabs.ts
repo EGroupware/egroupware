@@ -10,7 +10,7 @@
 import {SlTab, SlTabGroup, SlTabPanel} from "@shoelace-style/shoelace";
 import {loadWebComponent} from "../../Et2Widget/Et2Widget";
 import {et2_directChildrenByTagName, et2_filteredNodeIterator, et2_readAttrWithDefault} from "../../et2_core_xml";
-import {css, PropertyValues} from "@lion/core";
+import {css, PropertyValues} from "lit";
 import shoelace from "../../Styles/shoelace";
 import {et2_createWidget} from "../../et2_core_widget";
 import {colorsDefStyles} from "../../Styles/colorsDefStyles";
@@ -391,9 +391,14 @@ export class Et2Tabs extends Et2InputWidget(SlTabGroup) implements et2_IResizeab
 		});
 	}
 
+	/**
+	 * Overridden to allow et2-tab-panel as well as sl-tab-panel
+	 *
+	 * @returns {[SlTabPanel]}
+	 */
 	getAllPanels()
 	{
-		const slot = this.body.querySelector('slot')!;
+		const slot = this.body!;
 		return [...slot.assignedElements()].filter(el => ['et2-tab-panel', 'sl-tab-panel'].indexOf(el.tagName.toLowerCase()) != -1) as [SlTabPanel];
 	}
 

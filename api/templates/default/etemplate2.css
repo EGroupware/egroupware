@@ -78,36 +78,8 @@
     display: none;
 }
 
-/* Put widget label to the left of the widget, with fixed width */
-::part(form-control) {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-}
-
-::part(form-control-label) {
-    flex: 0 0 auto;
-    white-space: normal;
-}
-
-::part(form-control-input) {
-    flex: 1 1 auto;
-    position: relative;
-    max-width: 100%;
-}
-
-::part(form-control-help-text) {
-    flex-basis: 100%;
-    position: relative;
-}
-
-/* Use .et2-label-fixed class to give fixed label size */
-.et2-label-fixed::part(form-control-label) {
-    width: initial;
-    width: var(--label-width, 8em);
-}
-.et2-label-fixed::part(form-control-help-text) {
-    left: calc(var(--sl-spacing-medium) + var(--label-width,8em));
+*[hidden] {
+	display: none !important;
 }
 
 /**
@@ -544,6 +516,14 @@ textarea.et2_textbox_ro {
 /**
  * Multi-select widget
  */
+[search][open] et2-textbox::part(base) {
+	border: none;
+	box-shadow: none;
+}
+
+[search][open]::part(combobox) {
+	flex-flow: wrap;
+}
 button.et2_selectbox_expand {
     width: 16px;
     display: inline-block;
@@ -1451,15 +1431,15 @@ div.et2_vfsPath li img {
 }
 
 /* Category indents in select options */
-sl-menu-item.cat_level1::part(label) {
+sl-option.cat_level1::part(label) {
 	padding-left: var(--sl-spacing-medium, 1em);
 }
 
-sl-menu-item.cat_level2::part(label) {
+sl-option.cat_level2::part(label) {
 	padding-left: calc(2 * var(--sl-spacing-medium, 1em));
 }
 
-sl-menu-item.cat_level3::part(label) {
+sl-option.cat_level3::part(label) {
 	padding-left: calc(3 * var(--sl-spacing-medium, 1em));
 }
 
@@ -3489,6 +3469,7 @@ div.et2_image_tooltipPopup {
 div.et2_egw_action_ddHelper {
     z-index: -100;
     position: relative;
+	max-width: fit-content;
 }
 
 /* The last div which shows Ctrl tip to user*/
@@ -3509,17 +3490,22 @@ div.et2_egw_action_ddHelper table.et2_egw_action_ddHelper_row {
     background-color: rgba(255, 194, 0, 0.70);
     box-shadow: 6px 6px 8px gray;
     border: 1px solid black;
+	max-width: 400px;
 }
 
+div.et2_egw_action_ddHelper et2-avatar, div.et2_egw_action_ddHelper et2-lavatar {
+	flex-grow: 0;
+	--size: 2em;
+}
 table.et2_egw_action_ddHelper_row tr {
     background: none;
     max-height: 20px;
 }
 
-/* Apply to all displaied rows in order to get same result*/
-table.et2_egw_action_ddHelper_row * {
+/* Apply to all displayed rows in order to get same result*/
+table.et2_egw_action_ddHelper_row > *, table.et2_egw_action_ddHelper_row .innerContainer {
     white-space: nowrap !important;
-    max-height: 15px;
+	max-height: 2em;
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 400px;
@@ -3751,6 +3737,10 @@ td.avatar {
     width: 40px;
     border: none;
     box-shadow: none;
+}
+
+et2-avatar, et2-lavatar {
+	--size: 2.7em;
 }
 
 .et2_searchbox {

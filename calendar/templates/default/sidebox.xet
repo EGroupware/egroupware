@@ -21,7 +21,7 @@ Egroupware
             <et2-select-cat id="cat_id" placeholder="All categories" onchange="app.calendar.update_state({cat_id: widget.getValue()});" emptyLabel="All categories" multiple="true"></et2-select-cat>
             <et2-select id="status_filter" onchange="app.calendar.update_state({status_filter: widget.getValue()});" noLang="true"></et2-select>
             <hrule/>
-            <et2-calendar-owner id="owner" onchange="app.calendar.update_state({owner: widget.getValue()}); return false;" multiple="true" allowFreeEntries="false" autocompleteParams="{&quot;checkgrants&quot;: true}"/>
+            <et2-calendar-owner id="owner" onchange="app.calendar.update_state({owner: widget.getValue()}); return false;" multiple="true" allowFreeEntries="false" tabindex="0"/>
             <hrule/>
             <et2-box>
                 <grid id="integration" disabled="!@integration" width="100%">

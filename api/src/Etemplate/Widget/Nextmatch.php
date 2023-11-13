@@ -135,8 +135,8 @@ class Nextmatch extends Etemplate\Widget
 			list($app) = explode('.', $this->attrs['template']);
 		}
 
-		// Check for sort preference.  We only apply this on first load so it can be changed
-		if($GLOBALS['egw_info']['user']['preferences'][$app][$this->attrs['template'] . "_sort"])
+		// Check for sort preference.  We only apply this on first load, so it can be changed
+		if(array_key_exists($this->attrs['template'] . "_sort", $GLOBALS['egw_info']['user']['preferences'][$app] ?? []))
 		{
 			$send_value['sort'] = $GLOBALS['egw_info']['user']['preferences'][$app][$this->attrs['template'] . "_sort"];
 		}

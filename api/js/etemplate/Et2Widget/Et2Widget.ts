@@ -8,7 +8,8 @@ import {et2_cloneObject, et2_csvSplit} from "../et2_core_common";
 import type {IegwAppLocal} from "../../jsapi/egw_global";
 import {egw} from "../../jsapi/egw_global";
 import {ClassWithAttributes, ClassWithInterfaces} from "../et2_core_inheritance";
-import {css, dedupeMixin, LitElement, PropertyValues, unsafeCSS} from "@lion/core";
+import {css, LitElement, PropertyValues, unsafeCSS} from "lit";
+import {dedupeMixin} from "@lion/core";
 import type {et2_container} from "../et2_core_baseWidget";
 import type {et2_DOMWidget} from "../et2_core_DOMWidget";
 
@@ -47,15 +48,17 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 		protected _parent : Et2WidgetClass | et2_widget | null = null;
 		private _inst : etemplate2 | null = null;
 
-		/** et2_widget compatability **/
-			// @ts-ignore Some legacy widgets check their parent to see whats allowed
+		/**
+		 * et2_widget compatability
+		 * @deprecated Legacy compatability.  Some legacy widgets check their parent to see whats allowed
+		 **/
 		public supportedWidgetClasses = [];
 
 		/**
 		 * If we put the widget somewhere other than as a child of its parent, we need to record that so
 		 * we don't move it back to the parent.
 		 * @type {Element}
-		 * @protected
+		 * @internal
 		 */
 		protected _parent_node : Element;
 		/**
@@ -74,13 +77,26 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 		 * Internal Properties - default values, and actually creating them as fields
 		 * Do not include public property defined in properties()
 		 */
+
+		/**
+		 * Internal widget ID
+		 * @type {string}
+		 * @internal
+		 */
 		protected _widget_id : string = "";
+
+		/**
+		 * Actual DOM ID, which is different from the widget ID
+		 * @type {string}
+		 * @internal
+		 */
 		protected _dom_id : string = "";
 
 		/**
 		 * TypeScript & LitElement ensure type correctness, so we can't have a string value like "$row_cont[disable_me]"
 		 * as a boolean property so we store them here, and parse them when expanding.  Strings do not have this problem,
 		 * since $row_cont[disable_me] is still a valid string.
+		 * @internal
 		 */
 		protected _deferred_properties : { [key : string] : string } = {};
 
@@ -102,6 +118,41 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 				:host([align="right"]) .input-group__input {
 					justify-content: flex-end;
 				}
+
+				  /* Put widget label to the left of the widget */
+
+				  ::part(form-control) {
+					display: flex;
+					align-items: center;
+					flex-wrap: wrap;
+				  }
+
+				  ::part(form-control-label) {
+					flex: 0 0 auto;
+					white-space: normal;
+				  }
+
+				  ::part(form-control-input) {
+					flex: 1 1 auto;
+					position: relative;
+					max-width: 100%;
+				  }
+
+				  ::part(form-control-help-text) {
+					flex-basis: 100%;
+					position: relative;
+				  }
+
+				  /* Use .et2-label-fixed class to give fixed label size */
+
+				  :host(.et2-label-fixed)::part(form-control-label) {
+					width: initial;
+					width: var(--label-width, 8em);
+				  }
+
+				  :host(.et2-label-fixed)::part(form-control-help-text) {
+					left: calc(var(--sl-spacing-medium) + var(--label-width, 8em));
+				  }
             `];
 		}
 
@@ -125,10 +176,26 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 				class: {type: String, reflect: true},
 
 				/**
-				 * Defines whether this widget is visible.
-				 * Not to be confused with an input widget's HTML attribute 'disabled'.",
+				 * Defines whether this widget is visibly disabled.
+				 *
+				 * The widget is still visible, but clearly cannot be interacted with.  Widgets disabled in the template
+				 * will not return a value to the application code, even if re-enabled via javascript before submitting.
+				 * To allow a disabled widget to be re-enabled and return a value, disable via javascript in the app's
+				 * et2_ready() instead of an attribute in the template file.
 				 */
 				disabled: {
+					type: Boolean,
+					reflect: true
+				},
+
+				/**
+				 * The widget is not visible.
+				 *
+				 * As far as the user is concerned, the widget does not exist.  Widgets hidden with an attribute in the
+				 * template may not be created in the DOM, and will not return a value.  Widgets can be hidden after creation,
+				 * and they may return a value if hidden this way.
+				 */
+				hidden: {
 					type: Boolean,
 					reflect: true
 				},
@@ -198,8 +265,10 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 
 		/**
 		 * List of properties that get translated
+		 *
 		 * Done separately to not interfere with properties - if we re-define label property,
 		 * labels go missing.
+		 * @internal
 		 * @returns {{statustext : boolean, label : boolean}}
 		 */
 		static get translate()
@@ -314,12 +383,17 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 		/**
 		 * Wrapper on this.disabled because legacy had it.
 		 *
+		 * @deprecated Use widget.disabled for visually disabled, widget.hidden for visually hidden.
+		 * 	Widgets that are hidden from the server via attribute or $readonlys will not be created.
+		 * 	Widgets that are disabled from the server will not return a value to the application code.
+		 *
 		 * @param {boolean} value
 		 */
 		set_disabled(value : boolean)
 		{
 			let oldValue = this.disabled;
 			this.disabled = value;
+			this.hidden = value;
 			this.requestUpdate("disabled", oldValue);
 		}
 
@@ -328,7 +402,7 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 		 *
 		 * @returns {string}
 		 */
-		get dom_id()
+		get dom_id() : string
 		{
 			return this.getAttribute("id");
 		}
@@ -372,7 +446,7 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 		 *
 		 * @returns {string}
 		 */
-		get id()
+		get id() : string
 		{
 			return this._widget_id;
 		}
@@ -443,6 +517,9 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 		/**
 		 * Any attribute that refers to row content cannot be resolved immediately, but some like booleans cannot stay a
 		 * string because it's a boolean attribute.  We store them for later, and parse when they're fully in their row.
+		 *
+		 * If you are creating a widget that can go in a nextmatch row, and it has boolean attributes that can change
+		 * for each row, add those attributes into deferredProperties
 		 */
 		get deferredProperties()
 		{
@@ -724,7 +801,7 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 			{
 				widget = loadWebComponent(_nodeName, _node, this);
 
-				if(this.addChild)
+				if(this.addChild && widget)
 				{
 					// webcomponent going into old et2_widget
 					this.addChild(widget);
@@ -969,7 +1046,7 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 
 		/**
 		 * Parent is different than what is specified in the template / hierarchy.
-		 * Find it and re-parent there.
+		 * Widget ID of another node to insert this node into instead of the normal location
 		 *
 		 * @param {string} parent
 		 */
@@ -1398,6 +1475,13 @@ export function loadWebComponent(_nodeName : string, _template_node : Element|{[
 			throw Error("Unknown or unregistered WebComponent '" + _nodeName + "', could not find class.  Also checked for " + tries.join(','));
 		}
 	}
+
+	// Don't need to create hidden elements
+	if(parent?.hidden || attrs["hidden"] && parent?.getArrayMgr("content") && parent.getArrayMgr("content").parseBoolExpression(attrs["hidden"]))
+	{
+		//return null;
+	}
+
 	const readonly = parent?.getArrayMgr("readonlys") ?
 					 (<any>parent.getArrayMgr("readonlys")).isReadOnly(
 						 attrs["id"], attrs["readonly"],
@@ -1622,7 +1706,7 @@ function transformAttributes(widget, mgr : et2_arrayMgr, attributes)
  */
 export function cssImage(image_name : string, app_name? : string)
 {
-	let url = egw?.image(image_name, app_name);
+	let url = egw?.image && egw?.image(image_name, app_name);
 	if(url)
 	{
 		return css`url(${unsafeCSS(url)})`;

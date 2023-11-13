@@ -456,7 +456,7 @@ class calendar_uilist extends calendar_ui
 			}
 
 			$matches = null;
-			if(!(int)$event['id'] && preg_match('/^([a-z_-]+)([0-9]+)$/i',$event['id'],$matches))
+			if(!(int)$event['id'] && preg_match('/^([a-z_-]+)([0-9]+)([:-].+)?$/i', $event['id'], $matches))
 			{
 				$app = $matches[1];
 				$app_id = $matches[2];
@@ -474,14 +474,14 @@ class calendar_uilist extends calendar_ui
 			else
 			{
 				$is_private = !$this->bo->check_perms(Acl::READ,$event);
+				$event['app'] = 'calendar';
+				$event['app_id'] = $event['id'];
 			}
 			if ($is_private)
 			{
 				$event['class'] .= 'rowNoView ';
 			}
 
-			$event['app'] = 'calendar';
-			$event['app_id'] = $event['id'];
 
 			// Edit link
 			if($app && $app_id)

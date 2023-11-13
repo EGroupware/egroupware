@@ -394,11 +394,13 @@ class Accounts
 			case 'firstname':
 			case 'firstall':
 			case 'firstgroup':
+			case 'firstemail':
 				$order = 'account_firstname,account_lastname';
 				break;
 			case 'lastname':
 			case 'lastall':
 			case 'firstgroup':
+			case 'lastemail':
 				$order = 'account_lastname,account_firstname';
 				break;
 			default:
@@ -607,6 +609,14 @@ class Accounts
 			case 'lastgroup':
 				$group = Accounts::id2name($lid, 'account_primary_group');
 				$name = $lastname . $delimiter . $firstname . ($is_group ? '' : ' ('.Accounts::id2name($group).')');
+				break;
+			case 'firstemail':
+				$email = Accounts::id2name($lid, 'account_email');
+				$name = $firstname . ' ' . $lastname . ($email ? ' [' . $email . ']' : '');
+				break;
+			case 'lastemail':
+				$email = Accounts::id2name($lid, 'account_email');
+				$name = $lastname . $delimiter . $firstname . ($email ? ' [' . $email . ']' : '');
 				break;
 			case 'firstinital':
 				$name = $firstname.' '.mb_substr($lastname, 0, 1).'.';

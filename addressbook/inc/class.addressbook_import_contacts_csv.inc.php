@@ -58,7 +58,6 @@ class addressbook_import_contacts_csv extends importexport_basic_import_csv  {
 	 */
 	public function import( $_stream, importexport_definition $_definition ) {
 		parent::import($_stream, $_definition);
-
 		if($_definition->plugin_options['empty_addressbook'])
 		{
 			$this->empty_addressbook($this->user, $this->ids);
@@ -115,6 +114,45 @@ class addressbook_import_contacts_csv extends importexport_basic_import_csv  {
 			$contact_owner = $this->user;
 		}
 		$this->user = $contact_owner;
+
+		// Special case fast lookup for simple condition "field exists"
+		// We find ALL matches first to save DB queries.  This saves 1 query per row, at the cost of RAM
+		// Should be 10x faster for large (thousands of rows) files, may be slower for small (tens of rows) files
+		$this->cached_condition = [];
+		foreach($definition->plugin_options['conditions'] as $condition)
+		{
+			$contacts = array();
+			$this->cached_condition[$condition['string']] = [];
+			switch($condition['type'])
+			{
+				// exists
+				case 'exists' :
+					$searchcondition = $condition['string'][0] == Api\Storage::CF_PREFIX ? [$condition['string']] : [];
+
+					// if we use account_id for the condition, we need to set the owner for filtering, as this
+					// enables Api\Contacts\Storage to decide what backend is to be used
+					if($condition['string'] == 'account_id')
+					{
+						$searchcondition['owner'] = 0;
+					}
+					$field = $condition['string'][0] == Api\Storage::CF_PREFIX ? 'contact_value' : $condition['string'];
+					$contacts = $this->bocontacts->search(
+					//array( $condition['string'] => $record[$condition['string']],),
+						'',
+						['contact_id', 'cat_id', $field],
+						'', '', '', false, 'AND', false,
+						$searchcondition
+					);
+					foreach($contacts as $contact)
+					{
+						if(!isset($this->cached_condition[$condition['string']][$contact[$field]]))
+						{
+							$this->cached_condition[$condition['string']][$contact[$field]] = [];
+						}
+						$this->cached_condition[$condition['string']][$contact[$field]][] = $contact;
+					}
+			}
+		}
 	}
 
 	/**
@@ -215,18 +253,9 @@ class addressbook_import_contacts_csv extends importexport_basic_import_csv  {
 				switch ( $condition['type'] ) {
 					// exists
 					case 'exists' :
-						if($record_array[$condition['string']]) {
-							$searchcondition = array( $condition['string'] => $record_array[$condition['string']]);
-							// if we use account_id for the condition, we need to set the owner for filtering, as this
-							// enables Api\Contacts\Storage to decide what backend is to be used
-							if ($condition['string']=='account_id') $searchcondition['owner']=0;
-							$contacts = $this->bocontacts->search(
-								//array( $condition['string'] => $record[$condition['string']],),
-								'',
-								$this->definition->plugin_options['update_cats'] == 'add' ? false : true,
-								'', '', '', false, 'AND', false,
-								$searchcondition
-							);
+						if($record_array[$condition['string']] && $this->cached_condition[$condition['string']])
+						{
+							$contacts = $this->cached_condition[$condition['string']][$record_array[$condition['string']]];
 						}
 						if ( is_array( $contacts ) && count( array_keys( $contacts ) ) >= 1 ) {
 							// apply action to all contacts matching this exists condition

@@ -73,9 +73,9 @@ import {Et2Dialog} from "./Et2Dialog/Et2Dialog";
 import {Et2Select} from "./Et2Select/Et2Select";
 import {loadWebComponent} from "./Et2Widget/Et2Widget";
 import {Et2AccountFilterHeader} from "./Et2Nextmatch/Headers/AccountFilterHeader";
-import {Et2SelectCategory} from "./Et2Select/Et2SelectCategory";
+import {Et2SelectCategory} from "./Et2Select/Select/Et2SelectCategory";
 import {Et2Searchbox} from "./Et2Textbox/Et2Searchbox";
-import {LitElement} from "@lion/core";
+import type {LitElement} from "lit";
 
 //import {et2_selectAccount} from "./et2_widget_SelectAccount";
 let keep_import : Et2AccountFilterHeader
@@ -1991,7 +1991,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			columns.push({
 				id: LETTERS,
 				caption: this.egw().lang('Search letter'),
-				visibility: (this.header.lettersearch.is(':visible') ? et2_dataview_column.ET2_COL_VISIBILITY_VISIBLE : et2_dataview_column.ET2_COL_VISIBILITY_ALWAYS_NOSELECT)
+				visibility: (this.header.lettersearch.is(':visible') ? et2_dataview_column.ET2_COL_VISIBILITY_VISIBLE : et2_dataview_column.ET2_COL_VISIBILITY_INVISIBLE)
 			});
 		}
 
@@ -3481,7 +3481,6 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 			this.category = this._build_select('cat_id', settings.cat_is_select ?
 														 'et2-select' : 'et2-select-cat', settings.cat_id, settings.cat_is_select !== true, {
 				multiple: false,
-				tags: true,
 				class: "select-cat",
 				value_class: settings.cat_id_class
 			});
@@ -3499,7 +3498,6 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 			this.filter2 = this._build_select('filter2', 'et2-select', settings.filter2,
 				settings.filter2_no_lang, {
 					multiple: false,
-					tags: settings.filter2_tags,
 					class: "select-cat",
 					value_class: settings.filter2_class
 				});
@@ -3706,7 +3704,7 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 			// Not mail, since it needs to be different
 			&& !['mail'].includes(this.getInstanceManager().app))
 		{
-			widget_options.empty_label = this.egw().lang('All categories');
+			widget_options.emptyLabel = this.egw().lang('All categories');
 		}
 
 		// Create widget
@@ -3758,11 +3756,11 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 			});
 		}
 		// Sometimes the filter does not display the current value
-		// Call sync to try to get it to display
+		// Work-around: Request another update to get it to display
 		select.updateComplete.then(async() =>
 		{
 			await select.updateComplete;
-			select.syncItemsFromValue();
+			select.requestUpdate("value");
 		})
 		return select;
 	}

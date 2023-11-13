@@ -824,7 +824,6 @@ export class filemanagerAPP extends EgwApp
 	 */
 	_do_action_callback(_data)
 	{
-		if(typeof _data.action == "undefined") return;
 		if(this.egw.pushAvailable())
 		{
 			// No need to refresh, push will handle it

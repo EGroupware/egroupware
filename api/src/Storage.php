@@ -550,7 +550,7 @@ class Storage extends Storage\Base
 					$extra_join_added = true;
 				}
 				$extra_columns = $this->db->get_table_definitions($this->app, $this->extra_table);
-				if(is_string($name) && $extra_columns['fd'][array_search($name, $this->db_cols)] ?? null)
+				if(is_string($name) && !empty($extra_columns['fd'][array_search($name, $this->db_cols)]))
 				{
 					$criteria[] = $this->db->expression($this->table_name,$this->table_name.'.',array(
 						array_search($name, $this->db_cols) => $val,

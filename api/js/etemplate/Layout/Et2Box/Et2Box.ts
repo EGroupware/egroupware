@@ -9,10 +9,16 @@
  */
 
 
-import {classMap, css, html, LitElement} from "@lion/core";
+import {css, html, LitElement} from "lit";
+import {classMap} from "lit/directives/class-map.js";
 import {Et2Widget} from "../../Et2Widget/Et2Widget";
 import {et2_IDetachedDOM} from "../../et2_core_interfaces";
 
+/**
+ * @summary A basic wrapper to group other widgets
+ *
+ * @slot - Any other widget
+ */
 export class Et2Box extends Et2Widget(LitElement) implements et2_IDetachedDOM
 {
 	static get styles()
@@ -108,7 +114,7 @@ export class Et2Box extends Et2Widget(LitElement) implements et2_IDetachedDOM
 	 */
 	getDetachedAttributes(_attrs)
 	{
-		_attrs.push('data');
+		_attrs.push('data', 'onclick');
 	}
 
 	getDetachedNodes()
@@ -143,6 +149,14 @@ export class Et2HBox extends Et2Box
 
 customElements.define("et2-hbox", Et2HBox);
 
+/**
+ * @summary Vertically align child widgets
+ *
+ * This box includes styling to stop children from growing vertically.
+ * Set css```flex-grow: 1``` on the child to allow it to grow.
+ *
+ * @slot - Any other widget
+ */
 export class Et2VBox extends Et2Box
 {
 	static get styles()

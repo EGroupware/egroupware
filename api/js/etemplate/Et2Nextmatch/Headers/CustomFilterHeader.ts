@@ -2,7 +2,8 @@ import {loadWebComponent} from "../../Et2Widget/Et2Widget";
 import {Et2Select} from "../../Et2Select/Et2Select";
 import {Et2InputWidget, Et2InputWidgetInterface} from "../../Et2InputWidget/Et2InputWidget";
 import {FilterMixin} from "./FilterMixin";
-import {html, LitElement} from "@lion/core";
+import {html, LitElement} from "lit";
+import {cleanSelectOptions} from "../../Et2Select/FindSelectOptions";
 
 /**
  * Filter by some other type of widget
@@ -81,6 +82,20 @@ export class Et2CustomFilterHeader extends FilterMixin(Et2InputWidget(LitElement
 			{
 				this.filter_node.addEventListener("change", this.handleChange);
 			})
+		}
+	}
+
+	/**
+	 * New filter options from server
+	 * @param new_options
+	 */
+	set_select_options(new_options)
+	{
+		const widget_class = window.customElements.get(this.filter_node?.localName);
+		const property = widget_class.getPropertyOptions('select_options');
+		if(this.filter_node && property)
+		{
+			this.filter_node.select_options = cleanSelectOptions(new_options);
 		}
 	}
 

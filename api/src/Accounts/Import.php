@@ -273,7 +273,8 @@ class Import
 			$start = ['', 500, &$cookie]; // cookie must be a reference!
 			do
 			{
-				foreach ($this->contacts->search('', false, '', 'account_lid', '', '', 'AND', $start, $filter) as $contact)
+				$contact = $reconnected = null;
+				foreach ($this->contacts->search('', false, '', ['account_lid', 'jpegphoto'], '', '', 'AND', $start, $filter) as $contact)
 				{
 					// if we have a regexp to filter the DN, continue on non-match
 					if (!empty($GLOBALS['egw_info']['server']['account_import_dn_regexp']) &&
@@ -287,7 +288,9 @@ class Import
 						$last_modified = $contact['modified'];
 					}
 					$account = $this->accounts->read($contact['account_id']);
-					$this->logger(++$num.'. User: '.json_encode($contact + $account, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE), 'debug');
+					// do NOT log binary content of image
+					$hide_binary = ['jpegphoto' => $contact['jpegphoto'] ? bytes($contact['jpegphoto']).' bytes binary data' : null];
+					$this->logger(++$num.'. User: '.json_encode($hide_binary + $contact + $account, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE), 'debug');
 					// check if account exists in sql
 					if (!($account_id = $this->accounts_sql->name2id($account['account_lid'])))
 					{
@@ -542,8 +545,15 @@ class Import
 					// remember the users we imported, to be able to delete the ones we dont
 					unset($sql_users[$account_id]);
 				}
+				/* check if connection was somehow lost / timed out and reconnect
+				if ($initial_import && !isset($contact) && ldap_errno($this->contacts->ds) === -1)
+				{
+					$this->contacts->ds = $this->accounts->ldap_connection(true);
+					$reconnected = true;
+					$this->logger("Reconnected to LDAP server", 'info');
+				}*/
 			}
-			while ($start[2] !== '');
+			while ($reconnected || $start[2] !== '');
 
 			if ($set_members)
 			{

@@ -12,7 +12,8 @@
 
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
 import {FormControlMixin, ValidateMixin} from "@lion/form-core";
-import {css, html, LitElement, ScopedElementsMixin} from "@lion/core";
+import {css, html, LitElement} from "lit";
+import {ScopedElementsMixin} from "@lion/core";
 import {et2_createWidget, et2_widget} from "../et2_core_widget";
 import {et2_file} from "../et2_widget_file";
 import {Et2Button} from "../Et2Button/Et2Button";
@@ -140,7 +141,7 @@ export class Et2LinkTo extends Et2InputWidget(ScopedElementsMixin(FormControlMix
             <et2-link-entry .onlyApp="${this.onlyApp}"
                             .applicationList="${this.applicationList}"
                             .readonly=${this.readonly}
-                            @sl-select=${this.handleEntrySelected}
+                            @sl-change=${this.handleEntrySelected}
                             @sl-clear="${this.handleEntryCleared}">
             </et2-link-entry>
             <et2-button id="link_button" label="Link" class="link" .noSubmit=${true}
@@ -357,6 +358,8 @@ export class Et2LinkTo extends Et2InputWidget(ScopedElementsMixin(FormControlMix
 
 		// Clear link entry
 		this.select.value = {app: this.select.app, id: ""};
+		this.select._searchNode.clearSearch();
+		this.select._searchNode.select_options = [];
 	}
 
 	/**
@@ -404,6 +407,7 @@ export class Et2LinkTo extends Et2InputWidget(ScopedElementsMixin(FormControlMix
 		if(event.target == this.select._searchNode)
 		{
 			this.classList.add("can_link");
+			this.link_button.focus();
 		}
 	}
 

@@ -8,8 +8,8 @@
  * @author Nathan Gray
  */
 
-
-import {css, html, LitElement, render, SlotMixin} from "@lion/core";
+import {css, html, LitElement, render} from "lit";
+import {SlotMixin} from "@lion/core";
 import {Et2Widget} from "../Et2Widget/Et2Widget";
 import {et2_IDetachedDOM} from "../et2_core_interfaces";
 
@@ -248,4 +248,4 @@ export class Et2Image extends Et2Widget(SlotMixin(LitElement)) implements et2_ID
 	}
 }
 
-customElements.define("et2-image", Et2Image as any, {extends: 'img'});
+customElements.define("et2-image", Et2Image, {extends: 'img'});

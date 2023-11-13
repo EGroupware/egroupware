@@ -325,11 +325,13 @@ $phpgw_baseline = array(
 			'fs_modifier' => array('type' => 'int','meta' => 'user','precision' => '4'),
 			'fs_active' => array('type' => 'bool','nullable' => False,'default' => 't'),
 			'fs_content' => array('type' => 'blob'),
-			'fs_link' => array('type' => 'varchar','precision' => '255')
+			'fs_link' => array('type' => 'varchar','precision' => '255'),
+			'fs_s3_flags' => array('type' => 'int','precision' => '1','default' => '0'),
+			'fs_aes_key' => array('type' => 'binary','precision' => '32')
 		),
 		'pk' => array('fs_id'),
 		'fk' => array(),
-		'ix' => array(array('fs_dir','fs_active','fs_name(16)')),
+		'ix' => array('fs_s3_flags',array('fs_dir','fs_active')),
 		'uc' => array()
 	),
 	'egw_locks' => array(
@@ -397,12 +399,10 @@ $phpgw_baseline = array(
 			'share_writable' => array('type' => 'int','precision' => '1','nullable' => False,'default' => '0','comment' => '0=readable, 1=writable'),
 			'share_with' => array('type' => 'varchar','precision' => '4096','comment' => 'email addresses, comma seperated'),
 			'share_passwd' => array('type' => 'varchar','precision' => '128','comment' => 'optional password-hash'),
-			'share_pw_reversable' => array('type' => 'varchar', 'precision' => '128',
-									  'comment' => 'optional reversible password'),
-			'share_encryption'    => array('type'    => 'int', 'nullable' => true,
-										   'comment' => 'Type of encryption, user or system (See Credentials)'),
-			'share_modified'      => array('type' => 'timestamp', 'precision' => '8', 'nullable' => False),
-			'share_modifier'      => array('type' => 'int', 'meta' => 'user', 'precision' => '4'),
+			'share_pw_reversable' => array('type' => 'varchar','precision' => '128','comment' => 'optional reversible password'),
+			'share_encryption' => array('type' => 'int','nullable' => True,'comment' => 'Type of encryption, user or system (See Credentials)'),
+			'share_modified' => array('type' => 'timestamp','precision' => '8','nullable' => False),
+			'share_modifier' => array('type' => 'int','meta' => 'user','precision' => '4'),
 			'share_created' => array('type' => 'timestamp','nullable' => False,'comment' => 'creation date'),
 			'share_last_accessed' => array('type' => 'timestamp','comment' => 'last access of share')
 		),
