@@ -28,6 +28,7 @@ type VideoTagsArray = Array<{
 // Create a class for the element
 class multi_video extends HTMLElement {
 
+	private _src : string = '';
 	/**
 	 * shadow dom container
 	 * @private
@@ -111,7 +112,7 @@ class multi_video extends HTMLElement {
 		switch(name)
 		{
 			case 'src':
-				this.__buildVideoTags(newVal);
+				this.src = newVal;
 				break;
 			case 'type':
 				this._videos.forEach(_item => {
@@ -132,25 +133,20 @@ class multi_video extends HTMLElement {
 
 	/**
 	 * init/update video tags
-	 * @param _value
+	 * @param array|string _value
 	 * @private
 	 */
 	private __buildVideoTags (_value)
 	{
-		let value = _value.split(',');
+		let value = Array.isArray(_value) ? _value : _value.split(',');
 		let video = null;
 		let duration = 0;
 		for (let i=0;i<value.length;i++)
 		{
 			video = document.createElement('video');
-
-			if (value[i].match(/&duration=/))
-			{
-				// get duration from url duration param which is necessary for setting duration time of webm file
-				let params = new URLSearchParams(value[i]);
-				duration = parseInt(params.get('duration'));
-				value[i] = value[i].replace(/&duration.*/, '');
-			}
+			// get duration from url duration param which is necessary for setting duration time of webm file
+			let params = new URLSearchParams(value[i].match(/\?.*/)[0]);
+			duration = parseInt(params.get('duration')||'0');
 			video.src = value[i];
 			this._videos[i] = {
 				node:this._wrapper.appendChild(video),
@@ -249,8 +245,9 @@ class multi_video extends HTMLElement {
 	 */
 	set src(_value)
 	{
+		this._src = _value;
 		let value = _value.split(',');
-		this._wrapper.children.forEach(_ch=>{
+		Array.from(this._wrapper?.children)?.forEach(_ch=>{
 			_ch.remove();
 		});
 		this.__buildVideoTags(value);
@@ -262,7 +259,7 @@ class multi_video extends HTMLElement {
 	 */
 	get src ()
 	{
-		return this.src;
+		return this._src;
 	}
 
 	/**
