@@ -1573,7 +1573,8 @@ class calendar_boupdate extends calendar_bo
 			$event['created'] = $save_event['created'] = $this->now;
 			$event['creator'] = $save_event['creator'] = $this->user;
 		}
-		$set_recurrences = $old_event ? abs(Api\DateTime::to($event['recur_enddate'] ?? null, 'utc') - Api\DateTime::to($old_event['recur_enddate'] ?? null, 'utc')) > 1 || count($old_event['recur_exception']) != count($event['recur_exception']) : false;
+		$set_recurrences = $old_event ? abs(Api\DateTime::to($event['recur_enddate'] ?? null, 'utc') - Api\DateTime::to($old_event['recur_enddate'] ?? null, 'utc')) > 1 ||
+			count($old_event['recur_exception'] ?? []) != count($event['recur_exception'] ?? []) : false;
 		$set_recurrences_start = 0;
 		if (($cal_id = $this->so->save($event,$set_recurrences,$set_recurrences_start,0,$event['etag'])) && $set_recurrences && $event['recur_type'] != MCAL_RECUR_NONE)
 		{
