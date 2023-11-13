@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0f2d8bfa2ed3bde041af7da260016181",
+    "content-hash": "971a88d5fd5c10e1e1ed5524d2cb5095",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -1349,16 +1349,16 @@
         },
         {
             "name": "egroupware/icalendar",
-            "version": "2.2.0",
+            "version": "2.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/Icalendar.git",
-                "reference": "317865f044a2303dd6e547f455123cc8df4c0e4f"
+                "reference": "cdcd9580952b8424f5ef85f3f51eb78f81cd6e1e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/Icalendar/zipball/317865f044a2303dd6e547f455123cc8df4c0e4f",
-                "reference": "317865f044a2303dd6e547f455123cc8df4c0e4f",
+                "url": "https://api.github.com/repos/EGroupware/Icalendar/zipball/cdcd9580952b8424f5ef85f3f51eb78f81cd6e1e",
+                "reference": "cdcd9580952b8424f5ef85f3f51eb78f81cd6e1e",
                 "shasum": ""
             },
             "require": {
@@ -1406,6 +1406,9 @@
             ],
             "description": "iCalendar and vCard library",
             "homepage": "https://www.horde.org/libraries/Horde_Icalendar",
+            "support": {
+                "source": "https://github.com/EGroupware/Icalendar/tree/2.2.1"
+            },
             "time": "2019-02-09T00:00:00+00:00"
         },
         {

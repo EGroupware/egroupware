@@ -89,7 +89,7 @@
 		"egroupware/exception": "^2.1.0",
 		"egroupware/hstream": "^1.7.0",
 		"egroupware/http": "^2.2.0",
-		"egroupware/icalendar": "^2.2.0",
+		"egroupware/icalendar": "^2.2.1",
 		"egroupware/idna": "^1.2.0",
 		"egroupware/imap-client": "^2.31.0",
 		"egroupware/listheaders": "^1.3.0",
