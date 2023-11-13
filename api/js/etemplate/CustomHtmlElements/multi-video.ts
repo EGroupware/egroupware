@@ -145,7 +145,7 @@ class multi_video extends HTMLElement {
 		{
 			video = document.createElement('video');
 			// get duration from url duration param which is necessary for setting duration time of webm file
-			let params = new URLSearchParams(value[i].match(/\?.*/)[0]);
+			let params = new URLSearchParams(value[i].split('?')[1]||'');
 			duration = parseInt(params.get('duration')||'0');
 			video.src = value[i];
 			this._videos[i] = {
