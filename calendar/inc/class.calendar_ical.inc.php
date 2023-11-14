@@ -1718,6 +1718,11 @@ class calendar_ical extends calendar_boupdate
 						$event_to_store = $event; // prevent $event from being changed by update method
 						$this->server2usertime($event_to_store);
 						$updated_id = $this->update($event_to_store, true,true,false,true,$msg,$skip_notification);
+						// Make sure it's marked as a recurrence exception, not an additional event
+						$this->so->recurrence($updated_id,
+											  Api\DateTime::to($event_to_store['start'], 'server'),
+											  Api\DateTime::to($event_to_store['end'], 'server'), [], true
+						);
 						unset($event_to_store);
 					}
 					break;
