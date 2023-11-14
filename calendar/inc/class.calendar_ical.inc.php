@@ -610,13 +610,13 @@ class calendar_ical extends calendar_boupdate
 							// write start + end of whole day events as dates
 							if(!is_object($event['end']))
 							{
-								$event['end'] = new Api\DateTime($event['end']);
+								$event['end'] = new Api\DateTime($event['end'], self::$tz_cache[$event['tzid']]);
 							}
 							$event['end-nextday'] = clone $event['end'];
 							$event['end-nextday']->add("1 day");	// we need the date of the next day, as DTEND is non-inclusive (= exclusive) in rfc2445
 							foreach (array('start' => 'DTSTART','end-nextday' => 'DTEND') as $f => $t)
 							{
-								$time = new Api\DateTime($event[$f],Api\DateTime::$server_timezone);
+								$time = new Api\DateTime($event[$f], self::$tz_cache[$event['tzid']]);
 								$arr = Api\DateTime::to($time,'array');
 								$vevent->setAttribute($t, array('year' => $arr['year'],'month' => $arr['month'],'mday' => $arr['day']),
 									array('VALUE' => 'DATE'));
