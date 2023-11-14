@@ -299,7 +299,7 @@ class Credentials
 	public static function from_session(array $data, $set_identity=true)
 	{
 		// if the username contains non-ascii chars, try email address, as Dovecot does NOT deal with non-ascii usernames
-		if ($data['acc_imap_type'] === Api\Mail\Imap\Dovecot::class &&
+		if (is_a($data['acc_imap_type'], Api\Mail\Imap\Dovecot::class, true) &&
 			in_array($data['acc_imap_logintype'], ['standard', 'vmailmgr']) &&
 			preg_match('/[^\x20-\x7e]/', $GLOBALS['egw_info']['user']['account_lid']))
 		{
