@@ -150,7 +150,7 @@ and is then viewed from there.
 The user has the ability to answer or forward the message, or download attachments.
 
 ```
-curl -i https://example.org/egroupware/groupdav.php/mail/attachments/<filename> --user <user> \
+curl -i https://example.org/egroupware/groupdav.php/mail/view --user <user> \
     --data-binary @<eml-file> -H 'Content-Type: message/rfc822'
 HTTP/1.1 200 Ok
 
