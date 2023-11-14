@@ -2748,6 +2748,27 @@ class calendar_ical extends calendar_boupdate
 					$vcardData += calendar_rrule::parseRrule($attributes['value'], false, $vcardData);
 					if (!empty($vcardData['recur_enddate'])) self::check_fix_endate ($vcardData);
 					break;
+				case 'RDATE':
+					$hour = date('H', $vcardData['start']);
+					$minutes = date('i', $vcardData['start']);
+					$seconds = date('s', $vcardData['start']);
+					if($attributes['params']['VALUE'] == 'PERIOD')
+					{
+						$vcardData['recur_type'] = calendar_rrule::PERIOD;
+						$vcardData['recur_exception'] = [];
+						foreach($attributes['values'] as $date)
+						{
+							$vcardData['recur_exception'][] = mktime(
+								$hour,
+								$minutes,
+								$seconds,
+								$date['month'],
+								$date['mday'],
+								$date['year']
+							);
+						}
+					}
+					break;
 				case 'EXDATE':	// current Horde_Icalendar returns dates, no timestamps
 					if ($attributes['values'])
 					{

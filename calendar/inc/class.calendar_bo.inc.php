@@ -945,7 +945,8 @@ class calendar_bo
 		}
 		foreach($events as $event)
 		{
-			$is_exception = in_array(Api\DateTime::to($event['start'], true), $exceptions);
+			// PERIOD
+			$is_exception = $event['recur_type'] != calendar_rrule::PERIOD && in_array(Api\DateTime::to($event['start'], true), $exceptions);
 			$start = $this->date2ts($event['start'],true);
 			if ($event['whole_day'])
 			{
@@ -1164,12 +1165,20 @@ class calendar_bo
 				new Api\DateTime($event['recur_enddate'], calendar_timezones::DateTimeZone($event['tzid']));
 
 		// unset exceptions, as we need to add them as recurrence too, but marked as exception
-		unset($event['recur_exception']);
+		// (Period needs them though)
+		if($event['recur_type'] != calendar_rrule::PERIOD)
+		{
+			unset($event['recur_exception']);
+		}
 		// loop over all recurrences and insert them, if they are after $start
  		$rrule = calendar_rrule::event2rrule($event, !$event['whole_day'], // true = we operate in usertime, like the rest of calendar_bo
 			// For whole day events, just stay in server time
 			$event['whole_day'] ? Api\DateTime::$server_timezone->getName() : Api\DateTime::$user_timezone->getName()
 		);
+		if($event['recur_type'] == calendar_rrule::PERIOD)
+		{
+			unset($event['recur_exception']);
+		}
 		foreach($rrule as $time)
 		{
 			// $time is in timezone of event, convert it to usertime used here
