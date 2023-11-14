@@ -140,12 +140,17 @@ class Sql extends Mail\Smtp
 			{
 				$account_id[] = $id;
 			}
-			foreach($this->db->select(self::TABLE, 'account_id', array(
-				'mail_type' => self::TYPE_ALIAS,
-				'mail_value' => $user,
-			), __LINE__, __FILE__, false, '', self::APP) as $row)
-			{
-				if (!in_array($row['account_id'], $account_id)) $account_id[] = $row['account_id'];
+			try {
+				foreach($this->db->select(self::TABLE, 'account_id', array(
+					'mail_type' => self::TYPE_ALIAS,
+					'mail_value' => $user,
+				), __LINE__, __FILE__, false, '', self::APP) as $row)
+				{
+					if (!in_array($row['account_id'], $account_id)) $account_id[] = $row['account_id'];
+				}
+			}
+			catch (Api\Db\Exception $e) {
+				_egw_log_exception($e); // happens if username contains a non-ascii char
 			}
 			//error_log(__METHOD__."('$user') account_id=".array2string($account_id));
 		}
