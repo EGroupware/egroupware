@@ -320,11 +320,11 @@ class Sql extends Mail\Smtp
 		// set mailbox address, if not yet set
 		elseif (!$_forwarding_only && empty($mailbox))
 		{
-			$flags[self::TYPE_MAILBOX] = $this->mailbox_addr(array(
+			$flags[self::TYPE_MAILBOX] = Api\Translation::to_ascii($this->mailbox_addr(array(
 				'account_id' => $_uidnumber,
 				'account_lid' => $this->accounts->id2name($_uidnumber, 'account_lid'),
 				'account_email' => $_mailLocalAddress,
-			));
+			)));
 		}
 		// store all new values
 		foreach($flags+array(
