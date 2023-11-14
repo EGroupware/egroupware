@@ -66,6 +66,12 @@ class calendar_rrule implements Iterator
 	const MINUTELY = 7;
 
 	/**
+	 * By date or period
+	 * (a list of dates)
+	 */
+	const PERIOD = 9;
+
+	/**
 	 * Translate recure types to labels
 	 *
 	 * @var array
@@ -77,6 +83,7 @@ class calendar_rrule implements Iterator
 		self::MONTHLY_WDAY => 'Monthly (by day)',
 		self::MONTHLY_MDAY => 'Monthly (by date)',
 		self::YEARLY       => 'Yearly',
+		self::PERIOD => 'By date or period'
 	);
 
 	/**
@@ -90,6 +97,7 @@ class calendar_rrule implements Iterator
 		self::YEARLY       => 'YEARLY',
 		self::HOURLY       => 'HOURLY',
 		self::MINUTELY     => 'MINUTELY',
+		self::PERIOD => 'PERIOD'
 	);
 
 	/**
@@ -134,6 +142,12 @@ class calendar_rrule implements Iterator
 	 * @var int
 	 */
 	public $monthly_bymonthday;
+
+	/**
+	 * Period list
+	 * @var
+	 */
+	public $period = [];
 
 	/**
 	 * Enddate of recurring event or null, if not ending
@@ -261,7 +275,8 @@ class calendar_rrule implements Iterator
 
 		$this->time = $time instanceof Api\DateTime ? $time : new Api\DateTime($time);
 
-		if (!in_array($type,array(self::NONE, self::DAILY, self::WEEKLY, self::MONTHLY_MDAY, self::MONTHLY_WDAY, self::YEARLY, self::HOURLY, self::MINUTELY)))
+		if(!in_array($type, array(self::NONE, self::DAILY, self::WEEKLY, self::MONTHLY_MDAY, self::MONTHLY_WDAY,
+								  self::YEARLY, self::HOURLY, self::MINUTELY, self::PERIOD)))
 		{
 			throw new Api\Exception\WrongParameter(__METHOD__."($time,$type,$interval,$enddate,$weekdays,...) type $type is NOT valid!");
 		}
@@ -302,6 +317,19 @@ class calendar_rrule implements Iterator
 		$this->interval = (int)$interval;
 
 		$this->enddate = $enddate;
+		if($type == self::PERIOD)
+		{
+			foreach($exceptions as $exception)
+			{
+				$exception->setTimezone($this->time->getTimezone());
+				$this->period[] = $exception;
+			}
+			$enddate = clone(count($this->period) ? end($this->period) : $this->time);
+			// Make sure to include the last date as valid
+			$enddate->modify('+1 second');
+			reset($this->period);
+			unset($exceptions);
+		}
 		// no recurrence --> current date is enddate
 		if ($type == self::NONE)
 		{
@@ -468,6 +496,16 @@ class calendar_rrule implements Iterator
 
 			case self::MINUTELY:
 				$this->current->modify($this->interval.' minute');
+				break;
+			case self::PERIOD:
+				$index = array_search($this->current, $this->period);
+				$next = $this->enddate ?? new Api\DateTime();
+				if($index !== false && $index + 1 < count($this->period))
+				{
+					$next = $this->period[$index + 1];
+				}
+				$this->current->setDate($next->format('Y'), $next->format('m'), $next->format('d'));
+				$this->current->setTime($next->format('H'), $next->format('i'), $next->format('s'), 0);
 				break;
 
 			default:
@@ -737,6 +775,13 @@ class calendar_rrule implements Iterator
 					$rrule['BYDAY'] = $this->monthly_byday_num .
 						strtoupper(substr($this->time->format('l'),0,2));
 					break;
+				case self::PERIOD:
+					$period = [];
+					foreach($this->period as $date)
+					{
+						$period[] = $date->format("Ymd\THms\Z");
+					}
+					$rrule['PERIOD'] = implode(',', $period);
 			}
 			if ($this->interval > 1)
 			{
