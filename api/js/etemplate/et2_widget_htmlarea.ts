@@ -542,7 +542,8 @@ export class et2_htmlarea extends et2_editableWidget implements et2_IResizeable
 	 */
 	applyDefaultFont()
 	{
-		const edit_area = this.editor.editorContainer.querySelector('iframe').contentDocument;
+		const edit_area = this.editor?.editorContainer.querySelector('iframe').contentDocument;
+		if (!edit_area) return false;
 		const font_family = egw.preference('rte_font', 'common') || 'arial, helvetica, sans-serif';
 		edit_area.querySelectorAll('h1:not([style*="font-family"]),h2:not([style*="font-family"]),h3:not([style*="font-family"]),h4:not([style*="font-family"]),h5:not([style*="font-family"]),h6:not([style*="font-family"]),' +
 			'div:not([style*="font-family"]),li:not([style*="font-family"]),p:not([style*="font-family"]),blockquote:not([style*="font-family"]),' +
@@ -556,6 +557,7 @@ export class et2_htmlarea extends et2_editableWidget implements et2_IResizeable
 		{
 			elem.style.fontSize = font_size;
 		});
+		return true;
 	}
 
 	/**
