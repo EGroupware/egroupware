@@ -189,9 +189,22 @@ export class Et2SelectEmail extends Et2Select
 	 */
 	protected remoteQuery(search : string, options : object)
 	{
-		return this.egw().request(this.searchUrl, [search, {includeLists: this.includeLists}]).then((result) =>
+		return this.egw().request(this.searchUrl, [search, {includeLists: this.includeLists}]).then((results) =>
 		{
-			this.processRemoteResults(result);
+			// If results have a total included, pull it out.
+			// It will cause errors if left in the results
+			if(typeof results.total !== "undefined")
+			{
+				this._total_result_count += results.total;
+				delete results.total;
+				// Make it an array, since it was probably an object, and cleanSelectOptions() treats objects differently
+				results = Object.values(results);
+			}
+			else
+			{
+				this._total_result_count += results.length;
+			}
+			this._total_result_count -= this.processRemoteResults(results);
 		});
 	}
 
