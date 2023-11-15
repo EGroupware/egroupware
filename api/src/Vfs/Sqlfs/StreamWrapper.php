@@ -607,7 +607,7 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 			$stmt = self::$pdo->prepare('DELETE FROM '.self::PROPS_TABLE.' WHERE fs_id=?');
 			$stmt->execute(array($stat['ino']));
 
-			if ($stat['mime'] !== self::SYMLINK_MIME_TYPE)
+			if($stat['mime'] !== self::SYMLINK_MIME_TYPE && is_array($parent_stat))
 			{
 				$this->adjustDirSize($parent_stat['ino'], -$stat['size']);
 			}
