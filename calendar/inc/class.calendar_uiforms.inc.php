@@ -457,7 +457,8 @@ class calendar_uiforms extends calendar_ui
 						case 'participant':
 							foreach($data as $participant)
 							{
-								if (is_null($participant))
+								// Participant widget returns "" when no value is selected
+								if(is_null($participant) || !trim($participant))
 								{
 									continue;
 								}
