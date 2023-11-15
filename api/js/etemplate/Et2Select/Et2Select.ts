@@ -184,7 +184,6 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 				min-width: fit-content;
 				border-radius: var(--sl-border-radius-small);
 				border: 1px solid var(--sl-color-neutral-200);
-				max-height: 15em;
 				overflow-y: auto;
 			  }
 
