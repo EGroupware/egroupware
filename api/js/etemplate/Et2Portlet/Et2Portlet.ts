@@ -17,7 +17,7 @@ import type {InteractEvent} from "@interactjs/core/InteractEvent";
 import {egw} from "../../jsapi/egw_global";
 import {css, html, TemplateResult} from "lit";
 import {classMap} from "lit/directives/class-map.js";
-import type {HasSlotController} from "../../../../node_modules/@shoelace-style/shoelace/dist/internal/slot";
+import {HasSlotController} from "../Et2Widget/slot";
 import shoelace from "../Styles/shoelace";
 import {Et2Dialog} from "../Et2Dialog/Et2Dialog";
 import {et2_IResizeable} from "../et2_core_interfaces";
@@ -81,8 +81,7 @@ export class Et2Portlet extends Et2Widget(SlCard)
 				font-size: var(--sl-font-size-medium);
 				line-height: var(--sl-line-height-dense);
 				padding: 0px;
-				padding-left: var(--header-spacing);
-				padding-right: calc(2em + var(--header-spacing));
+				padding-left: 0px;
 				margin: 0px;
 				position: relative;
 			  }
@@ -111,8 +110,12 @@ export class Et2Portlet extends Et2Widget(SlCard)
 				height: 100%
 			  }
 
-			  .card_header {
-				margin-right: calc(var(--sl-spacing-medium) + 1em);
+			  .card__header {
+				display: flex;
+				width: 100%;
+				padding: 0px;
+				padding-left: var(--sl-spacing-medium);
+				padding-right: calc(2em + var(--header-spacing));
 			  }
 
 			  .card__body {
