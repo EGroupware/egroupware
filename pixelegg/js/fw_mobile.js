@@ -834,7 +834,7 @@ import {tapAndSwipe} from "../../api/js/tapandswipe";
 			{
 				for (var i=0; i < window.framework.popups.length; i++)
 				{
-					if (window.framework.popups[i].$iFrame[0].contentWindow === _wnd)
+					if (window.framework.popups[i].$iFrame && window.framework.popups[i].$iFrame[0].contentWindow === _wnd)
 					{
 						return i;
 					}

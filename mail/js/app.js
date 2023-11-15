@@ -4700,7 +4700,7 @@ app.classes.mail = AppJS.extend(
 
 			if (typeof widgets[widget].widget != 'undefined'
 					&& typeof widgets[expanderBtn].widget != 'undefined'
-					&& widgets[widget].widget.get_value().length == 0
+					&& (!widgets[widget].widget.value || !widgets[widget].widget.value.length)
 					&& actions.indexOf(expanderBtn)<0)
 			{
 				widgets[expanderBtn].widget.set_disabled(false);
