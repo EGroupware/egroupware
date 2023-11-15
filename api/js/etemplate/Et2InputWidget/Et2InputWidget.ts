@@ -569,11 +569,11 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 			validators.map(async validator =>
 			{
 				let values = this.getValue();
-				if(!Array.isArray(values))
+				if(values !== null && !Array.isArray(values))
 				{
 					values = [values];
 				}
-				if(!values.length)
+				if(values !== null && !values.length)
 				{
 					values = [''];
 				}	// so required validation works
@@ -588,7 +588,7 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 				}
 					// Only validate if field is required, or not required and has a value
 				// Don't bother to validate empty fields
-				else if(this.required || !this.required && this.getValue() != '')
+				else if(this.required || !this.required && this.getValue() != '' && this.getValue() !== null)
 				{
 					// Validate each individual item
 					values.forEach((value) => doCheck(value, validator));
