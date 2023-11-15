@@ -3751,7 +3751,7 @@ class mail_compose
 
 		//error_log(__METHOD__.__LINE__.array2string($jsArray));
 		header('Content-Type: application/json; charset=utf-8');
-		echo json_encode($results);
+		echo json_encode(array_values(array_unique($results, SORT_REGULAR)));
 		exit();
 	}
 
