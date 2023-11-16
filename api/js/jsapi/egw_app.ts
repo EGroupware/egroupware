@@ -1742,7 +1742,7 @@ export abstract class EgwApp
 				},
 				template: egw.webserverUrl + '/api/templates/default/pgp_backup_restore.xet',
 				class: "pgp_backup_restore",
-				modal: true
+				isModal: true
 			});
 			return dialog;
 		};
@@ -1801,7 +1801,7 @@ export abstract class EgwApp
 				},
 				template: egw.webserverUrl + '/api/templates/default/pgp_installation.xet',
 				class: "pgp_installation",
-				modal: true
+				isModal: true
 				//resizable:false,
 			});
 		};
