@@ -208,7 +208,7 @@ class notifications_ajax
 				'notify_type' => self::_type,
 				'notify_created > '.$cut_off,
 				"notify_data <> '[]'",  // does not return NULL or '[]' rows
-			]) as $row)
+			], __LINE__, __FILE__, false,'', self::_appname) as $row)
 			{
 				if (($data = json_decode($row['notify_data'], true)) &&
 					isset($data['data']['id']) && in_array($data['data']['id'], $app_ids[$data['appname']] ?? []))
