@@ -327,7 +327,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		}
 
 		// emptyLabel is fine
-		if(!(this.value) && this.value !== '0' && (this.emptyLabel || this.placeholder))
+		if((this.value == '' || this.value == []) && (this.emptyLabel || this.placeholder))
 		{
 			return;
 		}
@@ -856,6 +856,9 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
                 ${this._optionsTemplate()}
                 ${this._extraTemplate()}
                 <slot></slot>
+                <div slot="help-text">
+                    <slot name="feedback"></slot>
+                </div>
             </sl-select>
 		`;
 	}

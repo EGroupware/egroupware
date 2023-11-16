@@ -7,6 +7,9 @@ import {LionValidationFeedback, Validator} from "@lion/form-core";
 import {et2_csvSplit} from "../et2_core_common";
 import {dedupeMixin} from "@lion/core";
 
+// LionValidationFeedback needs to be registered manually
+window.customElements.define('lion-validation-feedback', LionValidationFeedback);
+
 /**
  * This mixin will allow any LitElement to become an Et2InputWidget
  *
@@ -87,7 +90,7 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 					width: 100%;
 				  }
 
-				  .form-field__feedback {
+				  .form-control__help-text {
 					position: relative;
 				  }
 				`
