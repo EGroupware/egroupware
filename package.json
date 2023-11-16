@@ -7,7 +7,8 @@
   "scripts": {
     "build": "rollup -c",
     "build:watch": "rollup -cw",
-    "build:dev": "node doc/scripts/build.mjs --dev --serve",
+    "docs": "node doc/scripts/build.mjs --dev",
+    "docs:serve": "node doc/scripts/build.mjs --dev --serve",
     "jstest": "tsc &> /dev/null; web-test-runner",
     "jstest:watch": "web-test-runner --watch"
   },
