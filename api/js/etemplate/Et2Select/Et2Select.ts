@@ -327,7 +327,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		}
 
 		// emptyLabel is fine
-		if((this.value === '' || Array.isArray(this.value) && this.value.length == 0) && (this.emptyLabel || this.placeholder))
+		if((this.value == '' || this.value == []) && (this.emptyLabel || this.placeholder))
 		{
 			return;
 		}
