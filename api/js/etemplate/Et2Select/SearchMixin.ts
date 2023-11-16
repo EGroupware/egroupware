@@ -1252,25 +1252,38 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 			return this.egw().request(this.egw().link(this.egw().ajaxUrl(this.egw().decodePath(this.searchUrl)),
 				{query: search, ...sendOptions}), [search, sendOptions]).then((results) =>
 			{
-				// If results have a total included, pull it out.
-				// It will cause errors if left in the results
-				if(typeof results.total !== "undefined")
-				{
-					this._total_result_count += results.total;
-					delete results.total;
-					// Make it an array, since it was probably an object, and cleanSelectOptions() treats objects differently
-					results = Object.values(results);
-				}
-				else
-				{
-					this._total_result_count += results.length;
-				}
-				let entries = cleanSelectOptions(results);
-				let entryCount = entries.length;
-				this._total_result_count -= this.processRemoteResults(entries);
-
-				return entries;
+				return this._processResultCount(results);
 			});
+		}
+
+		/**
+		 * Update total result count, checking results for a total attribute, then further processing the results
+		 * into select options
+		 *
+		 * @param results
+		 * @returns {SelectOption[]}
+		 * @protected
+		 */
+		protected _processResultCount(results)
+		{
+			// If results have a total included, pull it out.
+			// It will cause errors if left in the results
+			if(typeof results.total !== "undefined")
+			{
+				this._total_result_count += results.total;
+				delete results.total;
+				// Make it an array, since it was probably an object, and cleanSelectOptions() treats objects differently
+				results = Object.values(results);
+			}
+			else
+			{
+				this._total_result_count += results.length;
+			}
+			let entries = cleanSelectOptions(results);
+			let entryCount = entries.length;
+			this._total_result_count -= this.processRemoteResults(entries);
+
+			return entries;
 		}
 
 		/**
