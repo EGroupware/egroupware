@@ -82,6 +82,12 @@ export const Et2StaticSelectMixin = <T extends Constructor<Et2WidgetWithSelect>>
 		{
 			this._static_options = new_static_options;
 			this.requestUpdate("select_options");
+
+			// Shoelace select may have rejected our value due to missing option by now, so re-set it
+			if(this.value && this.select && this.value !== this.select.value)
+			{
+				this.value = this.value;
+			}
 		}
 
 		/**

@@ -91,6 +91,12 @@ export class Et2SelectCategory extends Et2StaticSelectMixin(Et2Select)
 			{
 				this._static_options = cleanSelectOptions(options);
 				this.requestUpdate("select_options");
+
+				// Shoelace select has rejected our value due to missing option by now, so re-set it
+				this.updateComplete.then(() =>
+				{
+					this.value = this.value;
+				});
 			});
 		}
 	}
