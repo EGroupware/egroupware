@@ -701,7 +701,7 @@ export function ExposeMixin<B extends Constructor<LitElement>>(superclass : B)
 				buttons: button,
 				minWidth: 350,
 				minHeight: 200,
-				modal: false,
+				isModal: false,
 				position: "right bottom,right-50 bottom-10",
 				value: {
 					content: {
