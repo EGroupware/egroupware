@@ -419,6 +419,10 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		{
 			this.__value = this.__value != "" ? [this.__value] : [];
 		}
+		else if(!this.multiple && Array.isArray(this.__value))
+		{
+			this.__value = this.__value.toString();
+		}
 		if(this.select)
 		{
 			this.select.value = this.__value;
