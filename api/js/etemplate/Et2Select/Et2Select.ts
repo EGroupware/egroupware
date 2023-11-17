@@ -854,6 +854,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
                             // Grab & stop mousewheel to prevent scrolling sidemenu when scrolling through options
                             e => e.stopImmediatePropagation()
                     }
+                    size=${this.size || "medium"}
             >
                 ${icon}
                 ${this._emptyLabelTemplate()}
