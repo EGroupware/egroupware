@@ -133,8 +133,11 @@ class Date extends Transformer
 			}
 			catch (\Exception $e) {
 				// do NOT stall for somehow invalid values: log it and return empty
-				$e->details = $this->id.': '.json_encode($value);
-				_egw_log_exception($e);
+				if($value)
+				{
+					$e->details = $this->id . ': ' . json_encode($value);
+					_egw_log_exception($e);
+				}
 				return null;
 			}
 		}
