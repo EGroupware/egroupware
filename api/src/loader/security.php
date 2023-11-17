@@ -66,13 +66,13 @@ function _check_script_tag(&$var,$name='',$log=true)
 					{
 						if($log)
 						{
-							error_log("*** _check_script_tag($name): unset(${name}[$key]) with value '$val'");
+							error_log("*** _check_script_tag($name): unset({$name}[$key]) with value '$val'");
 						}
 						unset($var[$key]);
 					}
 					elseif($log)
 					{
-						error_log("*** _check_script_tag($name): HtmlLawed::purify(${name}[$key]) succeeded '$val' --> '{$var[$key]}'");
+						error_log("*** _check_script_tag($name): HtmlLawed::purify({$name}[$key]) succeeded '$val' --> '{$var[$key]}'");
 					}
 				}
 			}
