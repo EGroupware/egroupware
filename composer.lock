@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "971a88d5fd5c10e1e1ed5524d2cb5095",
+    "content-hash": "dcd6d053a68e1835ffa9ec7383d3b920",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -798,12 +798,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/activesync.git",
-                "reference": "f78ab4d18ca2c5a85c5ee206cbaaf3c0511a1236"
+                "reference": "9bf874b6ea79ca7be0518ab91227bc06be5b6596"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/activesync/zipball/f78ab4d18ca2c5a85c5ee206cbaaf3c0511a1236",
-                "reference": "f78ab4d18ca2c5a85c5ee206cbaaf3c0511a1236",
+                "url": "https://api.github.com/repos/EGroupware/activesync/zipball/9bf874b6ea79ca7be0518ab91227bc06be5b6596",
+                "reference": "9bf874b6ea79ca7be0518ab91227bc06be5b6596",
                 "shasum": ""
             },
             "require": {
@@ -830,7 +830,10 @@
             ],
             "description": "EGroupware support for ActiveSync protocol using z-Push",
             "homepage": "https://www.egroupware.org/",
-            "time": "2023-02-28T07:49:35+00:00"
+            "support": {
+                "source": "https://github.com/EGroupware/activesync/tree/23.1"
+            },
+            "time": "2023-10-18T14:38:36+00:00"
         },
         {
             "name": "egroupware/adodb-php",
@@ -896,12 +899,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/bookmarks.git",
-                "reference": "6c538b1f277c87038444190a1cecbffc84c75d00"
+                "reference": "ee3c8a2395dc841f713599f28b46570e7f3b813d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/bookmarks/zipball/6c538b1f277c87038444190a1cecbffc84c75d00",
-                "reference": "6c538b1f277c87038444190a1cecbffc84c75d00",
+                "url": "https://api.github.com/repos/EGroupware/bookmarks/zipball/ee3c8a2395dc841f713599f28b46570e7f3b813d",
+                "reference": "ee3c8a2395dc841f713599f28b46570e7f3b813d",
                 "shasum": ""
             },
             "type": "egroupware-app",
@@ -917,7 +920,10 @@
             ],
             "description": "EGroupware app to manage bookmarks",
             "homepage": "https://www.egroupware.org/",
-            "time": "2023-02-28T07:49:35+00:00"
+            "support": {
+                "source": "https://github.com/EGroupware/bookmarks/tree/23.1"
+            },
+            "time": "2023-06-23T14:10:52+00:00"
         },
         {
             "name": "egroupware/collabora",
@@ -925,12 +931,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/collabora.git",
-                "reference": "c04d84ef4bf4817f8bf1455011432bceb91248a1"
+                "reference": "404a6e526261c702dfada90bf81e3750c83ff7d4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/collabora/zipball/c04d84ef4bf4817f8bf1455011432bceb91248a1",
-                "reference": "c04d84ef4bf4817f8bf1455011432bceb91248a1",
+                "url": "https://api.github.com/repos/EGroupware/collabora/zipball/404a6e526261c702dfada90bf81e3750c83ff7d4",
+                "reference": "404a6e526261c702dfada90bf81e3750c83ff7d4",
                 "shasum": ""
             },
             "type": "egroupware-app",
@@ -954,7 +960,10 @@
             ],
             "description": "EGroupware integration for Collabora Online Office",
             "homepage": "https://www.egroupware.org/",
-            "time": "2023-03-30T16:19:54+00:00"
+            "support": {
+                "source": "https://github.com/EGroupware/collabora/tree/23.1"
+            },
+            "time": "2023-11-10T05:32:18+00:00"
         },
         {
             "name": "egroupware/compress",
@@ -1023,6 +1032,9 @@
             ],
             "description": "Compression library",
             "homepage": "https://www.horde.org/libraries/Horde_Compress",
+            "support": {
+                "source": "https://github.com/EGroupware/Compress/tree/2.3.0"
+            },
             "time": "2020-03-11T00:00:00+00:00"
         },
         {
@@ -1083,6 +1095,9 @@
             ],
             "description": "Cryptography library",
             "homepage": "https://www.horde.org/libraries/Horde_Crypt",
+            "support": {
+                "source": "https://github.com/EGroupware/Crypt/tree/2.8.0"
+            },
             "time": "2017-11-11T00:00:00+00:00"
         },
         {
@@ -1132,6 +1147,9 @@
             ],
             "description": "Blowfish encryption library",
             "homepage": "https://www.horde.org/libraries/Horde_Crypt_Blowfish",
+            "support": {
+                "source": "https://github.com/EGroupware/Crypt_Blowfish/tree/1.2.0"
+            },
             "time": "2017-11-11T00:00:00+00:00"
         },
         {
@@ -1187,6 +1205,9 @@
             ],
             "description": "Date library",
             "homepage": "https://www.horde.org/libraries/Horde_Date",
+            "support": {
+                "source": "https://github.com/EGroupware/Date/tree/2.5.0"
+            },
             "time": "2017-11-11T00:00:00+00:00"
         },
         {
@@ -1243,6 +1264,9 @@
             ],
             "description": "Exception handler library",
             "homepage": "https://www.horde.org/libraries/Horde_Exception",
+            "support": {
+                "source": "https://github.com/EGroupware/Exception/tree/2.1.0"
+            },
             "time": "2017-11-11T00:00:00+00:00"
         },
         {
@@ -1291,6 +1315,9 @@
             ],
             "description": "PHP streams library",
             "homepage": "https://www.horde.org/libraries/Horde_Stream",
+            "support": {
+                "source": "https://github.com/EGroupware/HStream/tree/1.7.0"
+            },
             "time": "2017-11-11T00:00:00+00:00"
         },
         {
@@ -1345,6 +1372,9 @@
             ],
             "description": "HTTP client library",
             "homepage": "https://www.horde.org/libraries/Horde_Http",
+            "support": {
+                "source": "https://github.com/EGroupware/Http/tree/2.2.0"
+            },
             "time": "2017-11-11T00:00:00+00:00"
         },
         {
@@ -1456,6 +1486,9 @@
             ],
             "description": "IDNA normalization library",
             "homepage": "https://www.horde.org",
+            "support": {
+                "source": "https://github.com/EGroupware/Idna/tree/1.2.0"
+            },
             "time": "2017-11-11T00:00:00+00:00"
         },
         {
@@ -1523,6 +1556,9 @@
             ],
             "description": "IMAP client library",
             "homepage": "https://www.horde.org/libraries/Horde_Imap_Client",
+            "support": {
+                "source": "https://github.com/EGroupware/Imap_Client/tree/2.31.2"
+            },
             "time": "2019-09-29T00:00:00+00:00"
         },
         {
@@ -1572,6 +1608,9 @@
             ],
             "description": "List headers parsing library",
             "homepage": "https://www.horde.org/libraries/Horde_ListHeaders",
+            "support": {
+                "source": "https://github.com/EGroupware/ListHeaders/tree/1.3.0"
+            },
             "time": "2017-11-11T00:00:00+00:00"
         },
         {
@@ -1627,6 +1666,9 @@
             ],
             "description": "Mail library",
             "homepage": "https://www.horde.org/libraries/Horde_Mail",
+            "support": {
+                "source": "https://github.com/EGroupware/Mail/tree/2.7.1"
+            },
             "time": "2017-11-11T00:00:00+00:00"
         },
         {
@@ -1675,6 +1717,9 @@
             ],
             "description": "ManageSieve client library",
             "homepage": "https://www.horde.org",
+            "support": {
+                "source": "https://github.com/EGroupware/ManageSieve/tree/1.1.0"
+            },
             "time": "2021-02-17T00:00:00+00:00"
         },
         {
@@ -1719,6 +1764,9 @@
             ],
             "description": "MAPI utility library",
             "homepage": "https://www.horde.org",
+            "support": {
+                "source": "https://github.com/EGroupware/Mapi/tree/1.1.0"
+            },
             "time": "2017-11-11T00:00:00+00:00"
         },
         {
@@ -1783,6 +1831,9 @@
             ],
             "description": "MIME library",
             "homepage": "https://www.horde.org/libraries/Horde_Mime",
+            "support": {
+                "source": "https://github.com/EGroupware/Mime/tree/2.13.1"
+            },
             "time": "2018-01-14T00:00:00+00:00"
         },
         {
@@ -1791,12 +1842,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/news_admin.git",
-                "reference": "aae99a9699ef6be4d75aeaa90a61ff6d049223b2"
+                "reference": "25eff9c239e01f1952f75b8b4e7c60115aaa0b10"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/news_admin/zipball/aae99a9699ef6be4d75aeaa90a61ff6d049223b2",
-                "reference": "aae99a9699ef6be4d75aeaa90a61ff6d049223b2",
+                "url": "https://api.github.com/repos/EGroupware/news_admin/zipball/25eff9c239e01f1952f75b8b4e7c60115aaa0b10",
+                "reference": "25eff9c239e01f1952f75b8b4e7c60115aaa0b10",
                 "shasum": ""
             },
             "type": "egroupware-app",
@@ -1812,7 +1863,10 @@
             ],
             "description": "EGroupware app to supply and aggregate RSS/Atom feeds",
             "homepage": "https://www.egroupware.org/",
-            "time": "2023-04-12T09:14:09+00:00"
+            "support": {
+                "source": "https://github.com/EGroupware/news_admin/tree/23.1"
+            },
+            "time": "2023-10-18T14:37:52+00:00"
         },
         {
             "name": "egroupware/nls",
@@ -1865,6 +1919,9 @@
             ],
             "description": "Native language support library",
             "homepage": "https://www.horde.org/libraries/Horde_Nls",
+            "support": {
+                "source": "https://github.com/EGroupware/Nls/tree/2.3.0"
+            },
             "time": "2017-11-11T00:00:00+00:00"
         },
         {
@@ -1873,12 +1930,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/openid.git",
-                "reference": "7f994cbbbe60eb3d04cf391bed8f6d854af1d3c3"
+                "reference": "8d7b4c09f286ca6ed1586b4f1f21c751fc60e274"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/openid/zipball/7f994cbbbe60eb3d04cf391bed8f6d854af1d3c3",
-                "reference": "7f994cbbbe60eb3d04cf391bed8f6d854af1d3c3",
+                "url": "https://api.github.com/repos/EGroupware/openid/zipball/8d7b4c09f286ca6ed1586b4f1f21c751fc60e274",
+                "reference": "8d7b4c09f286ca6ed1586b4f1f21c751fc60e274",
                 "shasum": ""
             },
             "require": {
@@ -1914,7 +1971,10 @@
             ],
             "description": "EGroupware OpenID Connect / OAuth2 server",
             "homepage": "https://www.egroupware.org/",
-            "time": "2023-02-28T07:49:36+00:00"
+            "support": {
+                "source": "https://github.com/EGroupware/openid/tree/23.1"
+            },
+            "time": "2023-11-09T14:54:57+00:00"
         },
         {
             "name": "egroupware/projectmanager",
@@ -1922,12 +1982,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/projectmanager.git",
-                "reference": "9c423e14805242861e2e265bec1d3620f41cefd5"
+                "reference": "004e20e9fa80c3de873a664e7157120b4e891717"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/projectmanager/zipball/9c423e14805242861e2e265bec1d3620f41cefd5",
-                "reference": "9c423e14805242861e2e265bec1d3620f41cefd5",
+                "url": "https://api.github.com/repos/EGroupware/projectmanager/zipball/004e20e9fa80c3de873a664e7157120b4e891717",
+                "reference": "004e20e9fa80c3de873a664e7157120b4e891717",
                 "shasum": ""
             },
             "require": {
@@ -1954,7 +2014,10 @@
             ],
             "description": "EGroupware project-management application",
             "homepage": "https://www.egroupware.org/",
-            "time": "2023-04-17T22:19:37+00:00"
+            "support": {
+                "source": "https://github.com/EGroupware/projectmanager/tree/23.1"
+            },
+            "time": "2023-11-13T09:00:02+00:00"
         },
         {
             "name": "egroupware/registration",
@@ -1962,12 +2025,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/registration.git",
-                "reference": "2d117c3ea86183f9f6736873b2b97ca2c698fcfc"
+                "reference": "53313308b77152a33d094d8f3664ef9089acb680"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/registration/zipball/2d117c3ea86183f9f6736873b2b97ca2c698fcfc",
-                "reference": "2d117c3ea86183f9f6736873b2b97ca2c698fcfc",
+                "url": "https://api.github.com/repos/EGroupware/registration/zipball/53313308b77152a33d094d8f3664ef9089acb680",
+                "reference": "53313308b77152a33d094d8f3664ef9089acb680",
                 "shasum": ""
             },
             "type": "egroupware-app",
@@ -2000,7 +2063,10 @@
             ],
             "description": "EGroupware app to allow self-registration of users",
             "homepage": "https://www.egroupware.org/",
-            "time": "2023-04-12T09:11:51+00:00"
+            "support": {
+                "source": "https://github.com/EGroupware/registration/tree/23.1"
+            },
+            "time": "2023-11-10T16:15:28+00:00"
         },
         {
             "name": "egroupware/rocketchat",
@@ -2008,12 +2074,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/rocketchat.git",
-                "reference": "82c216d22446cbb878ee2d5026fbe7a501d517ec"
+                "reference": "e8736eae0577c2055e0b148541f5d227228b56b3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/rocketchat/zipball/82c216d22446cbb878ee2d5026fbe7a501d517ec",
-                "reference": "82c216d22446cbb878ee2d5026fbe7a501d517ec",
+                "url": "https://api.github.com/repos/EGroupware/rocketchat/zipball/e8736eae0577c2055e0b148541f5d227228b56b3",
+                "reference": "e8736eae0577c2055e0b148541f5d227228b56b3",
                 "shasum": ""
             },
             "type": "egroupware-app",
@@ -2037,7 +2103,10 @@
             ],
             "description": "EGroupware Rocket.Chat app allowing to access Rocket.Chat from within EGroupware",
             "homepage": "https://www.egroupware.org/",
-            "time": "2023-04-12T09:10:52+00:00"
+            "support": {
+                "source": "https://github.com/EGroupware/rocketchat/tree/23.1"
+            },
+            "time": "2023-04-25T15:00:26+00:00"
         },
         {
             "name": "egroupware/secret",
@@ -2091,6 +2160,9 @@
             ],
             "description": "Secret key encryption library",
             "homepage": "https://www.horde.org/libraries/Horde_Secret",
+            "support": {
+                "source": "https://github.com/EGroupware/Secret/tree/2.1.0"
+            },
             "time": "2017-11-11T00:00:00+00:00"
         },
         {
@@ -2099,12 +2171,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/smallpart.git",
-                "reference": "4f344885e09a9baf73deee6febf43ca4a5ad7fff"
+                "reference": "bd3a5f1bb1dee9bcb14749c31ef2feffee479614"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/smallpart/zipball/4f344885e09a9baf73deee6febf43ca4a5ad7fff",
-                "reference": "4f344885e09a9baf73deee6febf43ca4a5ad7fff",
+                "url": "https://api.github.com/repos/EGroupware/smallpart/zipball/bd3a5f1bb1dee9bcb14749c31ef2feffee479614",
+                "reference": "bd3a5f1bb1dee9bcb14749c31ef2feffee479614",
                 "shasum": ""
             },
             "require": {
@@ -2136,7 +2208,10 @@
             ],
             "description": "EGroupware smallPART - selfdirected media assisted learning lectures & Process Analysis Reflection Tool",
             "homepage": "https://www.smallpart.de/",
-            "time": "2023-04-19T09:26:48+00:00"
+            "support": {
+                "source": "https://github.com/EGroupware/smallpart/tree/23.1"
+            },
+            "time": "2023-11-13T11:53:54+00:00"
         },
         {
             "name": "egroupware/smtp",
@@ -2189,6 +2264,9 @@
             ],
             "description": "SMTP client library",
             "homepage": "https://www.horde.org",
+            "support": {
+                "source": "https://github.com/EGroupware/Smtp/tree/1.10.0"
+            },
             "time": "2020-11-19T00:00:00+00:00"
         },
         {
@@ -2235,6 +2313,9 @@
             ],
             "description": "Network socket client library",
             "homepage": "https://www.horde.org",
+            "support": {
+                "source": "https://github.com/EGroupware/Socket_Client/tree/2.2.0"
+            },
             "time": "2020-03-12T00:00:00+00:00"
         },
         {
@@ -2243,12 +2324,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/status.git",
-                "reference": "c082ba5b2f0716aa21392b7975cf54261547631c"
+                "reference": "c5ce3fd26e0530e78c94fedc3d03b5c45bd92ce1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/status/zipball/c082ba5b2f0716aa21392b7975cf54261547631c",
-                "reference": "c082ba5b2f0716aa21392b7975cf54261547631c",
+                "url": "https://api.github.com/repos/EGroupware/status/zipball/c5ce3fd26e0530e78c94fedc3d03b5c45bd92ce1",
+                "reference": "c5ce3fd26e0530e78c94fedc3d03b5c45bd92ce1",
                 "shasum": ""
             },
             "require": {
@@ -2275,7 +2356,10 @@
             ],
             "description": "EGroupware status / presence app showing logged in and/or in chat active users",
             "homepage": "https://www.egroupware.org/",
-            "time": "2023-04-12T09:10:08+00:00"
+            "support": {
+                "source": "https://github.com/EGroupware/status/tree/23.1"
+            },
+            "time": "2023-10-18T14:34:30+00:00"
         },
         {
             "name": "egroupware/stream-filter",
@@ -2325,6 +2409,9 @@
             ],
             "description": "PHP stream filters library",
             "homepage": "https://www.horde.org/libraries/Horde_Stream_Filter",
+            "support": {
+                "source": "https://github.com/EGroupware/Stream_Filter/tree/2.1.0"
+            },
             "time": "2017-11-11T00:00:00+00:00"
         },
         {
@@ -2372,6 +2459,9 @@
             ],
             "description": "PHP stream wrappers library",
             "homepage": "https://www.horde.org/libraries/Horde_Stream_Wrapper",
+            "support": {
+                "source": "https://github.com/EGroupware/Stream_Wrapper/tree/2.2.0"
+            },
             "time": "2018-01-25T00:00:00+00:00"
         },
         {
@@ -2430,6 +2520,9 @@
             ],
             "description": "Supporting library",
             "homepage": "https://www.horde.org/libraries/Horde_Support",
+            "support": {
+                "source": "https://github.com/EGroupware/Support/tree/2.3.1"
+            },
             "time": "2017-11-11T00:00:00+00:00"
         },
         {
@@ -2438,12 +2531,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/swoolepush.git",
-                "reference": "c8b7842c98d187a2448753e7491b80075acb3c32"
+                "reference": "e8371be98df7945ffce861d2a554d23c1c3ce464"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/swoolepush/zipball/c8b7842c98d187a2448753e7491b80075acb3c32",
-                "reference": "c8b7842c98d187a2448753e7491b80075acb3c32",
+                "url": "https://api.github.com/repos/EGroupware/swoolepush/zipball/e8371be98df7945ffce861d2a554d23c1c3ce464",
+                "reference": "e8371be98df7945ffce861d2a554d23c1c3ce464",
                 "shasum": ""
             },
             "require": {
@@ -2471,7 +2564,10 @@
             ],
             "description": "EGroupware push server using Swoole",
             "homepage": "https://www.egroupware.org/",
-            "time": "2023-02-28T07:49:34+00:00"
+            "support": {
+                "source": "https://github.com/EGroupware/swoolepush/tree/23.1"
+            },
+            "time": "2023-08-09T07:34:08+00:00"
         },
         {
             "name": "egroupware/text-diff",
@@ -2525,6 +2621,9 @@
             ],
             "description": "Text diff generation and rendering library",
             "homepage": "https://www.horde.org/libraries/Horde_Text_Diff",
+            "support": {
+                "source": "https://github.com/EGroupware/Text_Diff/tree/2.3.0"
+            },
             "time": "2017-11-11T00:00:00+00:00"
         },
         {
@@ -2571,6 +2670,9 @@
             ],
             "description": "Flowed text library",
             "homepage": "https://www.horde.org/libraries/Horde_Text_Flowed",
+            "support": {
+                "source": "https://github.com/EGroupware/Text_Flowed/tree/2.1.0"
+            },
             "time": "2019-12-15T00:00:00+00:00"
         },
         {
@@ -2579,12 +2681,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/tracker.git",
-                "reference": "748cd9febc832adad4b470162d21a44598ea7383"
+                "reference": "45540bfa1cd3bd60b3b3a625fe07c1bc7de660c7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/tracker/zipball/748cd9febc832adad4b470162d21a44598ea7383",
-                "reference": "748cd9febc832adad4b470162d21a44598ea7383",
+                "url": "https://api.github.com/repos/EGroupware/tracker/zipball/45540bfa1cd3bd60b3b3a625fe07c1bc7de660c7",
+                "reference": "45540bfa1cd3bd60b3b3a625fe07c1bc7de660c7",
                 "shasum": ""
             },
             "type": "egroupware-app",
@@ -2608,7 +2710,10 @@
             ],
             "description": "EGroupware bug-tracker and helpdesk application",
             "homepage": "https://www.egroupware.org/",
-            "time": "2023-04-12T09:09:17+00:00"
+            "support": {
+                "source": "https://github.com/EGroupware/tracker/tree/23.1"
+            },
+            "time": "2023-11-16T20:37:20+00:00"
         },
         {
             "name": "egroupware/translation",
@@ -2654,6 +2759,9 @@
             ],
             "description": "Translation library",
             "homepage": "https://www.horde.org/libraries/Horde_Translation",
+            "support": {
+                "source": "https://github.com/EGroupware/Translation/tree/2.3.0"
+            },
             "time": "2017-11-11T00:00:00+00:00"
         },
         {
@@ -2705,6 +2813,9 @@
             ],
             "description": "URL library",
             "homepage": "https://www.horde.org/libraries/Horde_Url",
+            "support": {
+                "source": "https://github.com/EGroupware/Url/tree/2.3.0"
+            },
             "time": "2017-11-11T00:00:00+00:00"
         },
         {
@@ -2769,6 +2880,9 @@
             ],
             "description": "Utility library",
             "homepage": "https://www.horde.org/libraries/Horde_Util",
+            "support": {
+                "source": "https://github.com/EGroupware/Util/tree/2.7.0"
+            },
             "time": "2017-11-11T00:00:00+00:00"
         },
         {
@@ -2822,6 +2936,9 @@
                 "stream",
                 "wrapper"
             ],
+            "support": {
+                "source": "https://github.com/EGroupware/WebDAV/tree/0.4.0"
+            },
             "time": "2023-01-03T21:13:18+00:00"
         },
         {
@@ -2848,6 +2965,9 @@
             ],
             "description": "Z-Push is an open-source application to synchronize ActiveSync compatible devices",
             "homepage": "http://z-push.org/",
+            "support": {
+                "source": "https://github.com/EGroupware/z-push/tree/2.5.0.1"
+            },
             "time": "2015-09-02T00:00:00+00:00"
         },
         {
