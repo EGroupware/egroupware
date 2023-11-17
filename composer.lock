@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "dcd6d053a68e1835ffa9ec7383d3b920",
+    "content-hash": "308be89363af48d9ddca60715f4e00ca",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -12083,7 +12083,7 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=7.4,<=8.1",
+        "php": ">=7.4,<=8.2",
         "ext-gd": "*",
         "ext-json": "*",
         "ext-mysqli": "*",
