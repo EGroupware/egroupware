@@ -1,9 +1,9 @@
-import {SlMenu} from "@shoelace-style/shoelace";
 import {Et2WidgetWithSelectMixin} from "./Et2WidgetWithSelectMixin";
 import {RowLimitedMixin} from "../Layout/RowLimitedMixin";
 import shoelace from "../Styles/shoelace";
-import {css, html, TemplateResult} from "lit";
+import {css, html, LitElement, TemplateResult} from "lit";
 import {SelectOption} from "./FindSelectOptions";
+import {repeat} from "lit/directives/repeat.js";
 
 /**
  * A selectbox that shows more than one row at a time
@@ -12,7 +12,7 @@ import {SelectOption} from "./FindSelectOptions";
  *
  * Use Et2Selectbox in most cases, it's better.
  */
-export class Et2Listbox extends RowLimitedMixin(Et2WidgetWithSelectMixin(SlMenu))
+export class Et2Listbox extends RowLimitedMixin(Et2WidgetWithSelectMixin(LitElement))
 {
 
 	static get styles()
@@ -47,8 +47,8 @@ export class Et2Listbox extends RowLimitedMixin(Et2WidgetWithSelectMixin(SlMenu)
     			/* This is usually not used due to flex, but is the basis for ellipsis calculation */
     			width: 10ex;
 			}
-			
-			:host([rows])::part(base) {
+
+			  :host([rows]) .menu {
 				height: calc(var(--rows, 5) * 1.9rem);
 				overflow-y: auto;
 			}
@@ -163,6 +163,15 @@ export class Et2Listbox extends RowLimitedMixin(Et2WidgetWithSelectMixin(SlMenu)
                 ${icon}
                 ${this.noLang ? option.label : this.egw().lang(option.label)}
             </sl-option>`;
+	}
+
+	render()
+	{
+		return html`
+            <sl-menu class="menu">
+                ${repeat(this.select_options, (o) => o.value, (option : SelectOption) => this._optionTemplate(option))}
+            </sl-menu>
+		`
 	}
 }
 
