@@ -135,7 +135,8 @@ export class et2_dataview_view_resizable
 
 		// Bind the "mousedown" event in the "resize" namespace
 		_elem.bind("mousedown.resize", function(e) {
-			var stopResize = false;
+			// Only do resize on the column edge, ignore mousedown on widgets
+			var stopResize = e.target.tagName.toLowerCase() !== "th";
 			// Stop resize if the mouse position is more intended
 			// for scrollbar not the resize edge
 			// 8pixel is an arbitary number for scrolbar area
