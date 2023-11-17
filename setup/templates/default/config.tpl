@@ -466,6 +466,29 @@
    </tr>
 
    <tr class="th">
+    <td colspan="2">
+        <b>{lang_If_using_OpenIDConnect_(authentication as client agains an other OID IdP)}:</b><br/>
+        {lang_The_OIC_IdP_must_support_autoconfiguration_under_the_above_given_URL (.well-known/openid-configuration).}
+    </td>
+   </tr>
+   <tr class="row_off">
+     <td>{lang_URL_of_the_IdP_(without_path)}:</td>
+     <td><input name="newsettings[oic_provider]" value="{value_oic_provider}" size="80" /></td>
+   </tr>
+   <tr class="row_on">
+     <td>{lang_Client_ID}:</td>
+     <td><input name="newsettings[oic_client_id]" value="{value_oic_client_id}" size="40" /></td>
+   </tr>
+   <tr class="row_off">
+     <td>{lang_Client_secret}:</td>
+     <td><input type="password" name="newsettings[oic_client_secret]" value="{value_oic_client_secret}" size="40" /></td>
+   </tr>
+
+   <tr class="row_off">
+    <td colspan="2">&nbsp;</td>
+   </tr>
+
+   <tr class="th">
     <td colspan="2"><b>{lang_Periodic_import_from_ADS_or_LDAP_into_EGroupware_database}:</b></td>
    </tr>
 

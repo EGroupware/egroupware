@@ -440,11 +440,13 @@ class setup_cmd_config extends setup_cmd
 		static $auth_types = array(
 			'sql'  => 'SQL',
 			'ldap' => 'LDAP',
-			'mail' => 'Mail',
 			'ads'  => 'Active Directory',
+			'openidconnect' => 'OpenID Connect',
+			'saml' => 'SAML',
+			'mail' => 'Mail',
 			'http' => 'HTTP',
-			'fallback' => 'Fallback LDAP --> SQL',
-			'fallbackmail2sql' => 'Fallback Mail --> SQL',
+			'fallback' => false,    // do NOT show, they get migrated to fallback-auth automatic
+			'fallbackmail2sql' => false,
 			'sqlssl' => 'SQL / SSL',
 		);
 		static $scan_done = null;
@@ -457,11 +459,15 @@ class setup_cmd_config extends setup_cmd
 				if (preg_match('/^([a-z0-9]+)\.php$/i', $file, $matches) &&
 					!isset($auth_types[strtolower($matches[1])]) &&
 					!interface_exists($class='EGroupware\\Api\\Auth\\'.$matches[1]) &&
-					is_subclass_of($class, Api\Auth\Backend::class))
+					is_subclass_of($class, Api\Auth\Backend::class) &&
+					$auth_types[$matches[1]] !== false)
 				{
 					$auth_types[strtolower($matches[1])] = $matches[1];
 				}
 			}
+			// remove (obsolete) auth-types marked with false
+			$auth_types = array_filter($auth_types);
+
 			foreach(self::$options['--account-auth'] as &$param)
 			{
 				if ($param['name'] == 'auth_type')

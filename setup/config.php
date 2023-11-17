@@ -116,6 +116,23 @@ else
 	{
 		$current_config[$row['config_name']] = $row['config_value'];
 	}
+	// migrate old fallback types to auth_fallback="True"
+	switch ($current_config['auth_type'])
+	{
+		case 'fallback':
+			$current_config['auth_type'] = 'ldap';
+			$current_config['auth_fallback'] = 'True';
+			break;
+		case 'fallbackmail2sql':
+			$current_config['auth_type'] = 'mail';
+			$current_config['auth_fallback'] = 'True';
+			break;
+		case 'fallbackads2sql':
+		case 'fallbackad2sql':
+			$current_config['auth_type'] = 'ads';
+			$current_config['auth_fallback'] = 'True';
+			break;
+	}
 }
 $setup_tpl->pparse('out','T_config_pre_script');
 
