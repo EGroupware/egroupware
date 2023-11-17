@@ -120,7 +120,7 @@ export class Et2SelectEmail extends Et2Select
 		if(!this.readonly && this.allowFreeEntries && this.allowDragAndDrop)
 		{
 			let dragTranslate = {x: 0, y: 0};
-			const tags = this.shadowRoot.querySelectorAll(".select__tags [part='tag']");
+			const tags = Array.from(this.shadowRoot.querySelectorAll(".select__tags et2-email-tag"));
 			let draggable = interact(tags).draggable({
 				startAxis: 'xy',
 				listeners: {
