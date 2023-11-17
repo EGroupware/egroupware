@@ -240,7 +240,7 @@ echo "Updating to: $target\n";
 
 // Update EGroupware itself and further apps installed via git
 $failed = array();
-$succieded = 0;
+$succeeded = 0;
 foreach(scandir(__DIR__) as $dir)
 {
 	if ($dir !== '..' && file_exists(__DIR__.'/'.$dir.'/.git'))
@@ -273,7 +273,21 @@ foreach(scandir(__DIR__) as $dir)
 
 // update composer managed dependencies
 $cmd = $composer.' install '.implode(' ', $composer_args);
-run_cmd($cmd, 'composer');
+if (run_cmd($cmd, 'composer') === 0 && in_array('--prefer-source', $composer_args))
+{
+	// check composer has not replaced .git checkouts of apps
+	$composer_json = json_decode(file_get_contents(__DIR__.'/composer.json'), true);
+	foreach($composer_json['require'] as $package => $version)
+	{
+		if (str_starts_with($package, 'egroupware/') && !in_array($package, ['egroupware/mail']) &&
+            file_exists(substr($package, 11)) && !file_exists(substr($package, 11).'/.git'))
+		{
+			--$succeeded;
+            $failed[] = $cmd.' changed/installed package "'.$package.'" NOT as source / git clone!';
+            break;
+        }
+	}
+}
 
 // update npm dependencies, run grunt to minify css and rollup to build javascript
 if ($npm)
@@ -297,7 +311,7 @@ if ($npm)
 	run_cmd($npm .' run build', 'rollup (npm run build)');
 }
 
-echo "\n$succieded tasks successful run".
+echo "\n$succeeded tasks successful run".
 	($failed ? ', '.count($failed).' failed: '.implode(', ', $failed) : '')."\n\n";
 exit(count($failed));
 
@@ -310,14 +324,14 @@ exit(count($failed));
  */
 function run_cmd($cmd, $name)
 {
-	global $verbose, $failed, $succieded;
+	global $verbose, $failed, $succeeded;
 
 	if ($verbose) echo "$cmd\n";
 	$ret = null;
 	system($cmd, $ret);
 	if ($ret == 0)
 	{
-		$succieded++;
+		$succeeded++;
 	}
 	else
 	{
@@ -332,7 +346,7 @@ function run_cmd($cmd, $name)
  * cd and git command is echoed to stderr
  *
  * @param array $argv
- * @param booelan $main_too =true true: run in main-dir too, false: only app-dirs
+ * @param boolean $main_too =true true: run in main-dir too, false: only app-dirs
  * @return int exit-code of last git command, breaks on first non-zero exit-code
  */
 function run_git(array $argv, $main_too=true)
