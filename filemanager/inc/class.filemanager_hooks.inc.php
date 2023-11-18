@@ -104,7 +104,7 @@ class filemanager_hooks
 		if (!empty($GLOBALS['egw_info']['user']['apps']['stylite']))
 		{
 			$file['Sharing'] = Egw::link('/index.php', 'menuaction=filemanager.filemanager_shares.index&admin=true&ajax=true');
-			$file['S3 configuration'] = Egw::link('/index.php', 'menuaction=stylite.'.EGroupware\Stylite\Vfs\S3\StreamWrapper::class.'.config&ajax=true');
+			$file['S3 configuration'] = Egw::link('/index.php', 'menuaction=stylite.'.EGroupware\Stylite\Vfs\S3\Config::class.'.config&ajax=true');
 		}
 		if ($location == 'admin')
 		{
