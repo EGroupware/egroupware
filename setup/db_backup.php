@@ -126,7 +126,7 @@ if (!empty($_POST['mount']))
 {
 	Vfs::$is_root = true;
 	echo '<div align="center">'.
-		(Vfs::mount('filesystem://default'.$db_backup->backup_dir.'?group=Admins&mode=070','/backup',false) ?
+		(Vfs::mount(($db_backup->backup_dir[0] === '/' ? 'filesystem://default' : '').$db_backup->backup_dir.'?group=Admins&mode=070','/backup',false) ?
 			lang('Backup directory %1 mounted as %2',$db_backup->backup_dir,'/backup') :
 			lang('Failed to mount Backup directory!')).
 		"</div>\n";
