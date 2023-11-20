@@ -794,7 +794,7 @@ class Storage extends Storage\Base
 	 */
 	function is_cf($field)
 	{
-		return $field[0] == self::CF_PREFIX;
+		return !empty($field) && $field[0] == self::CF_PREFIX;
 	}
 
 	/**
