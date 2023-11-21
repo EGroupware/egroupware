@@ -1,6 +1,7 @@
 %1 days in advance	infolog	id	%1 hari dimuka
 %1 deleted	infolog	id	%1 dihapus
 %1 deleted by %2 at %3	infolog	id	%1 dihapus oleh %2 pada %3
+%1 entries %2, %3 failed.	infolog	id	Entri %1, %2, %3 gagal.
 %1 modified	infolog	id	%1 diubah
 %1 modified by %2 at %3	infolog	id	%1 diubah oleh %2 pada %3
 %1 records imported	infolog	id	%1 rekaman diimpor
@@ -9,6 +10,7 @@
 %1 you are responsible for is starting at %2	infolog	id	%1 dimana anda bertanggungjawab akan mulai pada %2
 %1 you delegated is due at %2	infolog	id	%1 dimana anda didelegasikan akan berakhir pada %2
 %1 you delegated is starting at %2	infolog	id	%1 dimana anda didelegasikan akan mulai pada %2
+(and children) deleted	infolog	id	(dan anak-anak) dihapus.
 (no subject)	infolog	id	(tanpa subyek)
 - subprojects from	infolog	id	- Sub-proyek dari
 0%	infolog	id	0%
@@ -42,8 +44,12 @@ added	infolog	id	ditambahkan
 addressbook placeholders available	infolog	id	Tersedia tempat penampung buku alamat
 all	infolog	id	Semua
 all links and attachments	infolog	id	semua tautan dan lampiran
+all other %1 fields are valid	infolog	id	Semua bidang %1 lainnya valid
 all projects	infolog	id	Semua Proyek
+allow to save entries with due date in the past	infolog	id	Memungkinkan untuk menyimpan entri dengan tanggal jatuh tempo di masa lalu
 alternatives	infolog	id	Pengganti
+always show them	infolog	id	Selalu tampilkan
+application mail expected but got: %1	infolog	id	Email aplikasi yang diharapkan namun tidak diterima: %1
 apply the changes	infolog	id	Terapkan perubahan
 archive	infolog	id	arsip
 are you shure you want to close this entry ?	infolog	id	Apakah anda yakin hendak menutup entri ini?
@@ -52,15 +58,19 @@ attach a file	infolog	id	Lampirkan berkas
 attach file	infolog	id	Lampirkan berkas
 attachments	infolog	id	Lampiran
 attention: no contact with address %1 found.	infolog	id	Perhatian: Tidak ditemukan Kontak dengan alamat %1.
+automatically check 'do not notify' for these types	infolog	id	Centang 'Jangan beri tahu' secara otomatis untuk jenis ini
 back to main list	infolog	id	Kembali ke daftar utama
 billed	infolog	id	ditagihkan
 both	infolog	id	both
 call	infolog	id	panggilan
+can not return an exact number of rows and therefore hides the count.	admin	id	Tidak dapat mengembalikan jumlah baris yang tepat dan oleh karena itu menyembunyikan hitungan.
 cancel	infolog	id	Batal
-cancelled	infolog	id	dibatalkan
+cancelled	infolog	id	Dibatalkan
 categories	infolog	id	Kategori
 category	infolog	id	Kategori
+change	infolog	id	Ubah
 change history	infolog	id	Riwayat pengubahan
+change responsible	infolog	id	Ubah yang bertanggung jawab
 click here to create the link	infolog	id	klik disini untuk membuat tautan
 click here to start the search	infolog	id	Klik disini untuk memulai pencarian
 close	infolog	id	Tutup
@@ -72,43 +82,63 @@ completed	infolog	id	Lengkap
 configuration	infolog	id	Konfigurasi
 confirm	infolog	id	konfirmasi
 contact	infolog	id	Kontak
+contact cf	infolog	id	Hubungi CF
 contact fields	infolog	id	Field Kontak
+convert to a ticket	infolog	id	Ubah menjadi tiket
 copy of:	infolog	id	Salinan dari:
 create new links	infolog	id	Bikin tautan baru
+created	infolog	id	Dibuat
 creates a new field	infolog	id	bikin field baru
 creation	infolog	id	Creation
 csv-fieldname	infolog	id	CSV-Fieldname
 csv-filename	infolog	id	CSV-Filename
 csv-import	common	id	CSV-Import
+current user	infolog	id	Pengguna saat ini
 custom	infolog	id	Custom
 custom fields	infolog	id	Custom Fields
 custom fields, type and status	common	id	Custom fields, tipe dan status
 custom from	infolog	id	Custom from
 custom regarding	infolog	id	Custom regarding
 customfields	infolog	id	Customfields
+data exchange settings	infolog	id	Pengaturan pertukaran data
 date completed	infolog	id	Tanggal selesai
 datecreated	infolog	id	tanggal dibuat
 dates, status, access	infolog	id	Tanggal, Status, Akses
-days	infolog	id	hari
+days	infolog	id	Hari
 default category for new infolog entries	infolog	id	Kategori bawaan untuk entri baru InfoLog
+default document to insert entries	infolog	id	Dokumen default untuk memasukkan entri
 default filter for infolog	infolog	id	Saringan bawaan untuk InfoLog
 default status for a new log entry	infolog	id	Status bawaan untuk entri baru InfoLog
-delegated	infolog	id	didelegasikan
-delegated open	infolog	id	delegated open
-delegated overdue	infolog	id	delegated overdue
-delegated upcomming	infolog	id	delegated upcomming
+delegated	infolog	id	Didelegasikan
+delegated open	infolog	id	Delegated open
+delegated open and upcoming	infolog	id	Didelegasikan terbuka dan mendatang
+delegated overdue	infolog	id	Didelegasikan terlambat
+delegated upcomming	infolog	id	Didelegasikan akan datang
 delegation	infolog	id	Delegasi
 delete	infolog	id	Hapus
+delete selected entries?	infolog	id	Menghapus entri yang dipilih?
 delete this entry and all listed sub-entries	infolog	id	Hapus entri ini dan semua sub-entri tercamtum
-deleted	infolog	id	terhapus
-deletes this field	infolog	id	hapus field ini
-deletes this status	infolog	id	hapus status ini
+deleted	infolog	id	Terhapus
+deletes this field	infolog	id	Hapus field ini
+deletes this status	infolog	id	Hapus status ini
 description	infolog	id	Uraian
-determines the order the fields are displayed	infolog	id	menentukan urutan field ditampilkan
+determines the order the fields are displayed	infolog	id	Menentukan urutan field ditampilkan
+directory with documents to insert entries	infolog	id	Folder dengan dokumen untuk memasukkan entri
+do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	id	Apakah Anda ingin konfirmasi tentang siapa yang bertanggung jawab untuk menerima, menyelesaikan tugas, atau keduanya
+do you want a notification if items owned by groups you are part of get updated ?	infolog	id	Apakah Anda ingin mendapatkan notifikasi jika item yang dimiliki oleh grup yang Anda ikuti diperbarui?
+do you want a notification, if items get assigned to you or assigned items get updated?	infolog	id	Dapatkan pemberitahuan jika entri ditugaskan kepada Anda atau entri yang ditugaskan diperbarui.
+do you want a notification, if items you are responsible for are about to start?	infolog	id	Dapatkan pemberitahuan jika entri yang menjadi tanggung jawab Anda akan dimulai.
+do you want a notification, if items you are responsible for are due?	infolog	id	Dapatkan pemberitahuan jika entri yang menjadi tanggung jawab Anda telah jatuh tempo.
+do you want a notification, if items you created get updated?	infolog	id	Dapatkan pemberitahuan jika entri yang Anda buat diperbarui.
+do you want a notification, if items you delegated are about to start?	infolog	id	Dapatkan pemberitahuan jika entri yang Anda delegasikan akan dimulai.
+do you want a notification, if items you delegated are due?	infolog	id	Dapatkan pemberitahuan jika entri yang Anda delegasikan sudah jatuh tempo.
+do you want to receive notifications as html-mails or plain text?	infolog	id	Menerima pemberitahuan sebagai email HTML atau teks biasa.
 don't show infolog	infolog	id	JANGAN tampilkan InfoLog
-done	infolog	id	selesai
+done	infolog	id	Selesai
 download	infolog	id	Unduh
-due %1	infolog	id	Berakhir %1
+download url for links	infolog	id	Unduh URL untuk tautan
+due %1	infolog	id	Jatuh Tempo %1
+due date	infolog	id	Tanggal jatuh tempo
 duration	infolog	id	Durasi
 e-mail:	infolog	id	E-mail:
 each value is a line like <id>[=<label>]	infolog	id	setiap nilai adalah sebuah baris seperti <id>[=<label>]
@@ -122,24 +152,54 @@ encrypt description	infolog	id	Mengenkripsi deskripsi
 end	infolog	id	Akhir
 enddate	infolog	id	Tanggal jatuh-tempo
 enddate can not be before startdate	infolog	id	Tanggal jatuh-tempo tidak dapat sebelum tanggal memulai
+enter the query pattern	infolog	id	Masukkan pola kueri
+entry and all files	infolog	id	Entri dan semua file
+error: no mail (mailbox / uid) given!	infolog	id	Kesalahan: tidak ada email (Kotak surat / UID) yang diberikan!
+error: saving the entry	infolog	id	Kesalahan menyimpan entri!
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	infolog	id	Contoh {{IF n_awalan~Mr~Hello Mr.~Hello Ms.}} - cari di kolom "n_awalan", untuk "Mr", jika ditemukan, tulis Hello Mr, jika tidak, tulis Hello Ms.
+example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	infolog	id	Contoh {{LETTERPREFIXCUSTOM n_prefix judul n_keluarga}} - Contoh Bapak Dr. James Miller
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	infolog	id	Contoh {{NELF role}} - jika peran bidang tidak kosong, Anda akan mendapatkan baris baru dengan nilai peran bidang
+example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	infolog	id	Contoh {{nenvlf role}} - jika peran bidang tidak kosong, tetapkan LF tanpa nilai bidang apa pun
+execute a further action for this entry	infolog	id	Menjalankan tindakan lebih lanjut untuk entri ini
 existing links	infolog	id	Tautan yang ada
+exists	infolog	id	Ada
+export definition to use for nextmatch export	infolog	id	Definisi ekspor yang akan digunakan untuk ekspor nextmatch
+exports in ical format.	infolog	id	Ekspor dalam format iCal.
+exports infolog entries into a csv file.	infolog	id	Mengekspor entri InfoLog ke dalam file CSV.
 favorites	infolog	id	Favorit
 fax	infolog	id	Fax
 field must not be empty !!!	infolog	id	Field tidak boleh kosong !!!
+fields to exclude when copying an infolog:	infolog	id	Bidang yang harus dikecualikan saat menyalin InfoLog:
+fields to exclude when creating a sub-entry:	infolog	id	Bidang yang akan dikecualikan saat membuat sub entri:
 fieldseparator	infolog	id	Pemisah field
 finish	infolog	id	rampung
+first argument for preg_replace	infolog	id	Argumen pertama untuk preg_replace
+for infolog type %1, %2 is required	infolog	id	Untuk jenis InfoLog %1, %2 diperlukan
+for serial letter use this tag. put the content, you want to repeat between two tags.	infolog	id	Untuk huruf seri, gunakan tag ini. Tempatkan konten yang ingin Anda ulangi di antara dua tag.
 from	infolog	id	Dari
 full list of placeholder names	infolog	id	Daftar lengkap nama placeholder
 general fields:	infolog	id	Field Umum:
+general settings	infolog	id	Pengaturan umum
 global categories	infolog	id	Kategori Global
-high	infolog	id	tinggi
+group owner for	infolog	id	Pemilik grup untuk
+high	infolog	id	Tinggi
 history	infolog	id	Riwayat
 history logging	infolog	id	Catatan riwayat
 history logging and deleting of items	infolog	id	Riwayat catatan dan penghapusan item
+how many description lines should be directly visible. further lines are available via a scrollbar.	infolog	id	Berapa banyak baris deskripsi yang harus terlihat secara langsung. Baris lebih lanjut tersedia melalui bilah gulir.
+how wide should the description area be. this value is numeric and interpreted as em; 60 works reasonably well.	infolog	id	Seberapa lebar area deskripsi seharusnya. Nilai ini berupa angka, misalnya 60.
+html link to the current record	infolog	id	Tautan HTML ke rekaman saat ini
 id	infolog	id	ID
 id#	infolog	id	ID#
+if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	id	Jika sebuah tipe memiliki pemilik grup, semua entri dari tipe tersebut akan dimiliki oleh grup tersebut dan BUKAN pengguna yang membuatnya!
+if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	id	Jika tidak diatur, baris dengan pencarian dan filter akan disembunyikan untuk entri yang kurang dari "kecocokan maksimum per halaman", seperti yang ditentukan dalam preferensi umum Anda.
+if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	infolog	id	Jika Anda menentukan folder (jalur VFS lengkap) di sini, %1 menampilkan tindakan untuk setiap dokumen. Tindakan tersebut memungkinkan untuk mengunduh dokumen yang ditentukan dengan data yang dimasukkan.
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	infolog	id	Jika Anda menentukan dokumen (jalur VFS lengkap) di sini, %1 menampilkan ikon dokumen tambahan untuk setiap entri. Ikon tersebut memungkinkan untuk mengunduh dokumen yang ditentukan dengan data yang dimasukkan.
+if you specify an export definition, it will be used when you export	infolog	id	Jika Anda menentukan definisi ekspor, definisi tersebut akan digunakan saat Anda mengekspor
 import next set	infolog	id	Impor kelompok berikutnya
 importance	infolog	id	Importance
+imports entries into the infolog from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	infolog	id	Mengimpor entri ke dalam InfoLog dari file CSV. CSV berarti 'Comma Separated Values'. Pada tab opsi, Anda juga bisa memilih pemisah lainnya.
+imports todos into infolog from an ical file.	infolog	id	Mengimpor TODO ke dalam InfoLog dari file iCal.
 info log	common	id	InfoLog
 infolog	common	id	InfoLog
 infolog - delete	infolog	id	InfoLog - Hapus
@@ -148,20 +208,35 @@ infolog - import csv-file	infolog	id	InfoLog - Impor berkas-CSV
 infolog - new	infolog	id	InfoLog - Baru
 infolog - new subproject	infolog	id	InfoLog - Subproyek Baru
 infolog - subprojects from	infolog	id	InfoLog - Subproyek dari
+infolog csv export	infolog	id	Ekspor CSV InfoLog
+infolog csv import	infolog	id	Impor CSV InfoLog
 infolog encryption requires epl subscription	infolog	id	Enkripsi InfoLog memerlukan Langganan EPL
+infolog entry deleted	infolog	id	Entri InfoLog dihapus
+infolog entry saved	infolog	id	Entri InfoLog disimpan
+infolog fields:	infolog	id	Bidang InfoLog:
+infolog filter for the home screen	infolog	id	Filter InfoLog untuk layar beranda
+infolog ical export	infolog	id	Ekspor InfoLog iCal
+infolog ical import	infolog	id	Impor InfoLog iCal
+infolog id	infolog	id	InfoLog ID
 infolog list	infolog	id	Daftar InfoLog
 infolog preferences	common	id	Kesukaan InfoLog
 infolog-fieldname	infolog	id	Nama field-InfoLog
+insert	infolog	id	Menyisipkan
 insert in document	infolog	id	Sisipkan dalam dokumen
 insert timestamp into description field	infolog	id	Menyisipkan stempel waktu ke dalam bidang deskripsi
 invalid filename	infolog	id	Nama berkas keliru
+invalid owner id: %1.  might be a bad field translation.  used %2 instead.	infolog	id	ID pemilik tidak valid: %1. Sebagai gantinya, gunakan %2.
+invalid status for entry type %1.	infolog	id	Status tidak valid untuk jenis entri %1.
 label<br>helptext	infolog	id	Label<br>Helptext
 last changed	infolog	id	Pengubahan terakhir
 last modified	infolog	id	Pengubahan terakhir
+leave blank to get the used time calculated by timesheet entries	infolog	id	Biarkan kosong agar waktu yang digunakan dihitung oleh entri lembar waktu
 leave it empty	infolog	id	biarkan kosong
 leave it empty for a full week	infolog	id	Biarkan kosong bila seminggu penuh
 leave without saveing the entry	infolog	id	tinggalkan tanpa menyimpan entri
 leaves without saveing	infolog	id	tinggalkan tanpa menyimpan
+length	infolog	id	Panjang
+limit list to last n month, if ordering by last-modified and not searching.	admin	id	Batasi daftar hingga N bulan terakhir, jika memesan berdasarkan perubahan terakhir dan tidak mencari.
 link	infolog	id	Tautan
 links	infolog	id	Tautan
 list all categories	infolog	id	Daftar semua kategori
@@ -226,6 +301,7 @@ re-planned	infolog	id	Perencanaan ulang
 re-planned time	infolog	id	Waktu Perencanaan ulang
 re:	infolog	id	Re:
 remark	infolog	id	Remark
+respect timesheet run and read permissions for time totals	infolog	id	Hormati izin menjalankan dan membaca lembar waktu untuk total waktu
 responsible	infolog	id	penanggungjawab
 responsible open	infolog	id	responsible open
 responsible overdue	infolog	id	responsible overdue
@@ -270,6 +346,7 @@ sum	infolog	id	Jml
 task	infolog	id	ToDo
 template	infolog	id	Templat
 test import (show importable records <u>only</u> in browser)	infolog	id	Tes Impor (tampilkan rekaman yang dapat diimpor <em>hanya</em> dalam browser)
+the document can contain placeholder like {{%1}}, to be replaced with the data.	infolog	id	Dokumen dapat berisi placeholder seperti {{%1}}, untuk diganti dengan data.
 times	infolog	id	Waktu
 today	infolog	id	Hari ini
 todays date	infolog	id	Tanggal sekarang
@@ -287,8 +364,18 @@ urgent	infolog	id	mendesak
 used time	infolog	id	waktu yang dihabiskan
 view parent	infolog	id	Lihat leluhur
 view subs	infolog	id	view Subs
-will-call	infolog	id	will call
+which implicit acl rights should the responsible get	infolog	id	Hak ACL implisit mana yang harus didapatkan oleh penanggung jawab
+which participants should be preselected when scheduling an appointment.	infolog	id	Peserta mana yang harus dipilih sebelumnya saat menjadwalkan janji temu.
+which types should the calendar show	infolog	id	Jenis apa saja yang harus ditampilkan oleh kalender
+which types should the calendar show like events?	infolog	id	Jenis apa yang harus ditampilkan kalender seperti acara?
+will-call	infolog	id	Akan menelepon
 yes - close	infolog	id	Ya - Tutup
 yes - close including sub-entries	infolog	id	Ya - Tutup berikut sub-entrinya
 yes - delete	infolog	id	Ya - Hapus
 yes - delete including sub-entries	infolog	id	Ya - Hapus berikut sub-entrinya
+you can choose a categorie to be preselected, when you create a new infolog entry	infolog	id	Anda dapat memilih kategori yang akan dipilih sebelumnya, ketika Anda membuat entri InfoLog baru.
+you can't delete one of the stock types !!!	infolog	id	Anda tidak dapat menghapus salah satu jenis stok!
+you have to enter a name, to create a new type!	infolog	id	Anda harus memasukkan nama, untuk membuat tipe baru!
+you need to select an entry for linking.	infolog	id	Anda harus memilih entri untuk ditautkan.
+you need to select some entries first	infolog	id	Anda harus memilih beberapa entri terlebih dahulu.
+your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	infolog	id	Database Anda TIDAK mutakhir (%1 vs %2), silakan jalankan %3setup%4 untuk memperbarui database Anda.

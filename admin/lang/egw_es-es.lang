@@ -10,15 +10,19 @@
 %1 category(s) %2	admin	es-es	%1 categorías %2
 %1 category(s) %2, %3 failed because of insufficent rights !!!	admin	es-es	%1 categorías %2, %3 fallaron por permisos insuficiente
 %1 class not instanciated	admin	es-es	La clase %1 no está instanciada
+%1 entries deleted	admin	es-es	%1 entradas borradas
 %1 entries deleted.	admin	es-es	%1 entradas suprimidas.
 %1 group %2	admin	es-es	%1 grupo %2
 %1 is no command!	admin	es-es	¡%1 no es un comando!
 %1 log entries deleted.	admin	es-es	Se han borrado %1 entradas del log.
+%1 mail credentials deleted	admin	es-es	%1 credenciales de correo borradas
 %1 not found or not executable !!!	admin	es-es	No se encontró %1 o no es un ejecutable
 %1 phrases saved.	admin	es-es	Se han guardado %1 frases.
 %1 rights for %2 and applications %3	admin	es-es	Derechos de %1 para %2 y aplicaciones %3
 %1 run rights for applications	admin	es-es	derecho de ejecución %1 para aplicaciones
 %1 sessions killed	admin	es-es	Se han matado %1 sesiones
+%1 successful	admin	es-es	%1 con éxito
+%1 token %2.	admin	es-es	%1 token %2.
 %1 user %2	admin	es-es	%1 usuario %2
 (de)activate mail accounts	admin	es-es	(des)activar cuentas de correo
 (default no, leave it off if you dont use it)	admin	es-es	(por defecto, No, desactivar si no se usa)

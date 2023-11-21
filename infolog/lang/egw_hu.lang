@@ -1,6 +1,9 @@
 %1 days in advance	infolog	hu	%1 napot előre
 %1 deleted	infolog	hu	%1 törölve
 %1 deleted by %2 at %3	infolog	hu	%1 törölve %2 által, ekkor: %3
+%1 entries %2	infolog	hu	%1 bejegyzések %2
+%1 entries %2, %3 failed because of insufficent rights !!!	infolog	hu	%1 bejegyzések %2, %3 sikertelenek nem megfelelő jogok miatt !!!
+%1 entries %2, %3 failed.	infolog	hu	%1 bejegyzés %2, %3 sikertelen.
 %1 modified	infolog	hu	%1 módosítva
 %1 modified by %2 at %3	infolog	hu	%1 módosítva %2 által, ekkor: %3
 %1 records imported	infolog	hu	%1 bejegyzés importálva
@@ -9,6 +12,7 @@
 %1 you are responsible for is starting at %2	infolog	hu	%1 felelőseként  a kezdés ideje %2
 %1 you delegated is due at %2	infolog	hu	%1 megbízottjaként a határidő %2
 %1 you delegated is starting at %2	infolog	hu	%1 megbízottjaként a kezdés ideje %2
+(and children) deleted	infolog	hu	(és gyermekei) törölve.
 (no subject)	infolog	hu	(nincs tárgy)
 - subprojects from	infolog	hu	- Alprojektek innen
 0%	infolog	hu	0%
@@ -44,9 +48,13 @@ added	infolog	hu	Hozzáadva
 addressbook placeholders available	infolog	hu	Címjegyzék helyőrzői elérhetőek
 all	infolog	hu	Összes
 all links and attachments	infolog	hu	Minden hivatkozás és melléklet
+all other %1 fields are valid	infolog	hu	Minden más %1 mező érvényes
 all projects	infolog	hu	Minden projekt
+allow to save entries with due date in the past	infolog	hu	Lehetővé teszi a múltbeli esedékességű bejegyzések mentését
 allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	hu	engedélyezi a bejegyzés állapotának állíthatóságát; pl. egy ToDo-nál a Kész állapotot kell beállítani, ha megvalósult a feladat (az értékek bejegyzéstípusonként eltérhetnek)
 alternatives	infolog	hu	Alternatívák
+always show them	infolog	hu	Mindig megjeleníti őket
+application mail expected but got: %1	infolog	hu	Alkalmazási e-mail várt, de megkapta: %1
 apply the changes	infolog	hu	Változások végrehajtása
 archive	infolog	hu	archív
 are you shure you want to close this entry ?	infolog	hu	Valóban le akarod zárni ezt a bejegyzést?
@@ -55,16 +63,20 @@ attach a file	infolog	hu	Állomány csatolása
 attach file	infolog	hu	Állomány csatolása
 attachments	infolog	hu	Mellékletek
 attention: no contact with address %1 found.	infolog	hu	Figyelem: %1 címmel Kapcsolat nem található.
+automatically check 'do not notify' for these types	infolog	hu	Automatikusan ellenőrizze a "Ne értesítsen" opciót az ilyen típusok esetében.
 back to main list	infolog	hu	Vissza a fő listára
 billed	infolog	hu	számlázva
 both	infolog	hu	mindkettő
 call	infolog	hu	hívás
 can be used to show further infolog types in the calendar or limit it to show eg. only tasks.	infolog	hu	Alkalmazható további InfoLog típusok megjelenítésére a naptárban vagy korlátozható pl. csak a teendők megjelenítésére.
+can not return an exact number of rows and therefore hides the count.	admin	hu	Nem tud pontos sorszámot visszaadni, ezért elrejti a sorok számát.
 cancel	infolog	hu	Mégsem
 cancelled	infolog	hu	megszakítva
 categories	infolog	hu	Kategóriák
 category	infolog	hu	Kategória
+change	infolog	hu	Változás
 change history	infolog	hu	Történet módosítása
+change responsible	infolog	hu	Változás felelős
 change the status of an entry, eg. close it	infolog	hu	Bejegyzés státusza megváltozott, pl. lezárták
 check to set startday	infolog	hu	Kezdőnap beállításhoz ikszelje be
 check to specify custom contact	infolog	hu	Kapcsolja be az egyéni kapcsolat megadásához
@@ -80,9 +92,12 @@ completed	infolog	hu	Teljesítve
 configuration	infolog	hu	Konfiguráció
 confirm	infolog	hu	Megerősít
 contact	infolog	hu	Kapcsolat
+contact cf	infolog	hu	Kapcsolat CF
+convert to a ticket	infolog	hu	Jegyzetté alakítás
 copy of:	infolog	hu	Másolás
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	infolog	hu	A változásokat másolja a Vágóasztalra, %1újra olvassa be a bejegyzést%2 és fűzze össze őket
 create new links	infolog	hu	Új hivatkozás létrehozása
+created	infolog	hu	Létrehozva
 creates a new field	infolog	hu	Új mező létrehozása
 creates a new status with the given values	infolog	hu	Új állapot létrehozása az adott értékkel
 creates a new typ with the given name	infolog	hu	Új típus létrehozása az adott néven
@@ -90,6 +105,7 @@ creation	infolog	hu	Létrehozás
 csv-fieldname	infolog	hu	CSV-Mezőnév
 csv-filename	infolog	hu	CSV-Fájlnév
 csv-import	common	hu	CSV-Import
+current user	infolog	hu	Jelenlegi felhasználó
 custom	infolog	hu	Egyedi
 custom contact-address, leave empty to use information from most recent link	infolog	hu	Egyedi kapcsolat cím, hagyja üresen annak az információnak a használatához ami a legújabb hivatkozásban található
 custom contact-information, leave emtpy to use information from most recent link	infolog	hu	Egyedi kapcsolat információ, hagyja üresen annak az információnak a használatához ami a legújabb hivatkozásban található
@@ -153,32 +169,54 @@ enter a textual description of the log-entry	infolog	hu	bejegyzés szöveges le�
 enter the query pattern	infolog	hu	Lekérdező minta megadása
 entry and all files	infolog	hu	Bejegyzés és minden állomány
 error: importing the ical	infolog	hu	Hiba az iCal importálásakor
+error: no mail (mailbox / uid) given!	infolog	hu	Hiba: nincs megadva levél (postafiók / UID)!
 error: saving the entry	infolog	hu	Hiba a bejegyzés mentésekor
 error: the entry has been updated since you opened it for editing!	infolog	hu	Hiba: a bejegyzés megváltozott azóta, hogy megnyitotta szerkesztésre! Másvalaki frissítette.
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	infolog	hu	Példa {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - keressük az "n_prefix" mezőben a "Mr" szót, ha találunk, írjuk Hello Mr., különben írjuk Hello Ms.
+example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	infolog	hu	Példa {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Példa: Mr Dr. James Miller
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	infolog	hu	Példa {{NELF role}} - ha a szerep mező nem üres, akkor egy új sort kap a szerep mező értékével.
+example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	infolog	hu	Példa {{nenvlf role}} - ha a mező szerep nem üres, akkor a mező értéke nélkül egy LF-t állít be.
 execute a further action for this entry	infolog	hu	További művelet végrehajtása ezen a bejegyzésen
 existing links	infolog	hu	Létező hivatkozások
+exists	infolog	hu	Létezik
+export definition to use for nextmatch export	infolog	hu	A nextmatch exportáláshoz használandó export-definíció
+exports in ical format.	infolog	hu	iCal formátumban történő exportálás.
+exports infolog entries into a csv file.	infolog	hu	Az InfoLog bejegyzéseket CSV fájlba exportálja.
 favorites	infolog	hu	Kedvencek
 fax	infolog	hu	Fax
 field must not be empty !!!	infolog	hu	A mezőt ki kell tölteni!!!
+fields to exclude when copying an infolog:	infolog	hu	Az InfoLog másolásakor kizárandó mezők:
+fields to exclude when creating a sub-entry:	infolog	hu	Albejegyzés létrehozásakor kizárandó mezők:
 fieldseparator	infolog	hu	Mező elválasztó
-finish	infolog	hu	befejez
-for which types should this field be used	infolog	hu	használható típusok a mezőben
+finish	infolog	hu	Befejezés
+first argument for preg_replace	infolog	hu	A preg_replace első argumentuma
+for infolog type %1, %2 is required	infolog	hu	A %1 típusú InfoLog esetében %2 szükséges.
+for serial letter use this tag. put the content, you want to repeat between two tags.	infolog	hu	A soros betűhöz használja ezt a taget. Helyezze az ismétlendő tartalmat két tag közé.
+for which types should this field be used	infolog	hu	Használható típusok a mezőben
 from	infolog	hu	Feladó
 full list of placeholder names	infolog	hu	A helyőrző nevek teljes listája
 general fields:	infolog	hu	Általános mezők:
+general settings	infolog	hu	Általános beállítások
 global categories	infolog	hu	Globális kategóriák
 group owner for	infolog	hu	Csoport tulajdonos
-high	infolog	hu	magas
+high	infolog	hu	Magas
 history	infolog	hu	Történet
 history logging	infolog	hu	Történet követése (log)
 history logging and deleting of items	infolog	hu	Történet követése (log) és bejegyzések törlése
 how many description lines should be directly visible. further lines are available via a scrollbar.	infolog	hu	Mennyi leírás sor legyen látható? További sorokat a csúszka használatával lehet megtekinteni.
+how wide should the description area be. this value is numeric and interpreted as em; 60 works reasonably well.	infolog	hu	Milyen széles legyen a leírási terület. Ez az érték numerikus, pl. 60.
+html link to the current record	infolog	hu	HTML-link az aktuális rekordhoz
 id	infolog	hu	Azonosító
 id#	infolog	hu	Azonosító#
 if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	hu	Ha egy típusnak van csoport tulajdonosa, akkor az ezzel a típussal létrehozott bejegyzések tulajdonosa a megadott CSOPORT és nem az a felhasználó, aki létrehozta!
 if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	hu	Ha nincs beállítva, a kereső és szűrő sor rejtve marad abban az esetben, ha a "maximális egyezés egy lapon" limittől kevesebb találat volt (ahogy az Általános beállítások alatt be van állítva)
+if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	infolog	hu	Ha itt egy mappát (teljes VFS-útvonal) ad meg, a %1 minden egyes dokumentumhoz megjelenít egy műveletet. Ez a művelet lehetővé teszi a megadott dokumentum letöltését a beillesztett adatokkal együtt.
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	infolog	hu	Ha itt egy dokumentumot (teljes VFS-útvonal) ad meg, a %1 minden egyes bejegyzéshez megjelenít egy külön dokumentum ikont. Ez az ikon lehetővé teszi a megadott dokumentum letöltését a beillesztett adatokkal együtt.
+if you specify an export definition, it will be used when you export	infolog	hu	Ha exportálási definíciót ad meg, akkor az exportáláskor ezt fogja használni.
 import next set	infolog	hu	Következő széria importálása
 importance	infolog	hu	Fontosság
+imports entries into the infolog from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	infolog	hu	Bejegyzések importálása az InfoLogba egy CSV-fájlból. A CSV a 'vesszővel elválasztott értékek' szót jelenti. Az opciók lapon más elválasztójeleket is választhat.
+imports todos into infolog from an ical file.	infolog	hu	TODO-k importálása az InfoLogba iCal fájlból.
 info log	common	hu	InfoLog
 infolog	common	hu	InfoLog
 infolog - delete	infolog	hu	InfoLog - Törlés
@@ -191,6 +229,9 @@ infolog encryption requires epl subscription	infolog	hu	Az InfoLog titkosítás�
 infolog entry deleted	infolog	hu	InfoLog bejegyzés törölve
 infolog entry saved	infolog	hu	InfoLog bejegyzés elmentve
 infolog filter for the home screen	infolog	hu	InfoLog szűrő a fő képernyőn
+infolog ical export	infolog	hu	InfoLog iCal exportálása
+infolog ical import	infolog	hu	InfoLog iCal importálás
+infolog id	infolog	hu	InfoLog ID
 infolog list	infolog	hu	InfoLog lista
 infolog preferences	common	hu	InfoLog tulajdonságok
 infolog-fieldname	infolog	hu	InfoLog - Mezőnév
@@ -292,6 +333,7 @@ receive notifications about starting entries you delegated	infolog	hu	Értesít�
 receive notifications as html-mails	infolog	hu	Értesítés mint html email
 remark	infolog	hu	Megjegyzés
 remove this link (not the entry itself)	infolog	hu	Hivatkozás eltávolítása (nem a bejegyzést magát)
+respect timesheet run and read permissions for time totals	infolog	hu	A munkaidő-nyilvántartás futtatási és olvasási engedélyek tiszteletben tartása az időösszegek esetében
 responsible	infolog	hu	Felelős
 responsible open	infolog	hu	Felelős nyitott
 responsible overdue	infolog	hu	Felelős lejárt
@@ -352,6 +394,7 @@ sum	infolog	hu	Összesen
 task	infolog	hu	Tennivaló
 template	infolog	hu	Sablon
 test import (show importable records <u>only</u> in browser)	infolog	hu	Test Import (<u>csupán</u> az importálható bejegyzések mutatása a böngészöben)
+the document can contain placeholder like {{%1}}, to be replaced with the data.	infolog	hu	A dokumentum tartalmazhat helyőrzőt, például {{%1}}, amelyet az adatokkal kell helyettesíteni.
 the name used internaly (<= 10 chars), changeing it makes existing data unavailible	infolog	hu	Belső használatú név (<= 10 karakter), megváltoztatása esetén a meglévő adatok elérhetetlenek lesznek!!
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	infolog	hu	Belső használatú név (<= 20 karakter), megváltoztatása esetén a meglévő adatok elérhetetlenek lesznek!!
 the text displayed to the user	infolog	hu	a szöveg megjelenítve a felhasználónak
@@ -383,8 +426,11 @@ view the parent of this entry and all his subs	infolog	hu	Szülő bejegyzés és
 view this linked entry in its application	infolog	hu	hivatkozott bejegyzés megtekintése a hozzá tartozó alkalmazással
 when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	hu	Ha egy tennivaló vagy telefonhívás elindult, a nyitott (vagy saját nyitott) szűrőbe bekerül a dátuma (ezt is ki kell találni, hogy hol szerepel)
 which additional fields should the responsible be allowed to edit without having edit rights?	infolog	hu	A bejegyzés felelőse mely mezőket szerkesztheti anélkül, hogy egyébként szerkesztési jogosultságai lennének?
+which implicit acl rights should the responsible get	infolog	hu	Milyen implicit ACL-jogokat kell kapnia a felelősnek?
+which participants should be preselected when scheduling an appointment.	infolog	hu	Mely résztvevők legyenek előzetesen kiválasztva egy találkozó ütemezésekor.
 which types should the calendar show	infolog	hu	Mely típust mutasson a naptár
-will-call	infolog	hu	hívni fog
+which types should the calendar show like events?	infolog	hu	Mely típusokat kell a naptárban eseményként megjeleníteni?
+will-call	infolog	hu	Hívni fogja
 write (add or update) a record by passing its fields.	infolog	hu	Kiír (hozzáad vagy módosít) egy bejegyzést a mezők átadásával.
 yes - close	infolog	hu	Igen - lezárni
 yes - close including sub-entries	infolog	hu	Igen - lezárni az albejegyzésekkel együtt
@@ -398,5 +444,8 @@ you can choose a categorie to be preselected, when you create a new infolog entr
 you can't delete one of the stock types !!!	infolog	hu	Gyári típust nem lehet törölni !!!
 you have entered an invalid ending date	infolog	hu	Helytelen befejezési dátum
 you have entered an invalid starting date	infolog	hu	Helytelen kezdési dátum
+you have to enter a name, to create a new type!	infolog	hu	Új típus létrehozásához nevet kell megadni!
 you must enter a subject or a description	infolog	hu	Meg kell adni a tárgyat vagy a leírást
+you need to select an entry for linking.	infolog	hu	Ki kell választania egy bejegyzést a linkeléshez.
+you need to select some entries first	infolog	hu	Először ki kell választania néhány bejegyzést.
 your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	infolog	hu	Az adatbázis frissítésre szorul (%1 <-> %2), kérem futtassa a %3beállításokat%4 az adatbázis frissítéséhez.

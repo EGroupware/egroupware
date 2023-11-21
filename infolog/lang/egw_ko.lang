@@ -1,5 +1,7 @@
+%1 entries %2, %3 failed.	infolog	ko	%1 항목 %2, %3이(가) 실패했습니다.
 %1 records imported	infolog	ko	%1 개의 레코드를 가져왔습니다
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	infolog	ko	%1 개의 레코드를 읽음 (아직 가져오기는 수행되지 않았음, %2뒤로가기%2 해서 가져오기 테스트를 체크해제한 후 수행하세요)
+(and children) deleted	infolog	ko	(및 하위) 항목이 삭제되었습니다.
 a short subject for the entry	infolog	ko	이 엔트리의 짧은 제목
 abort without deleting	infolog	ko	삭제없이 취소
 accept	infolog	ko	수락
@@ -16,54 +18,94 @@ add sub	infolog	ko	하위 추가
 add timesheet entry	infolog	ko	타임시트 엔트리에 추가
 add:	infolog	ko	추가:
 added	infolog	ko	추가됨
+addressbook placeholders available	infolog	ko	주소록 자리 표시자를 사용할 수 있습니다.
 all	infolog	ko	모두
 all links and attachments	infolog	ko	모든 첨부와 링크들
+all other %1 fields are valid	infolog	ko	다른 모든 %1 필드가 유효합니다.
+allow to save entries with due date in the past	infolog	ko	과거에 마감일이 있는 항목 저장 허용
+always show them	infolog	ko	항상 표시
+application mail expected but got: %1	infolog	ko	신청 이메일이 예상되었으나 받지 못했습니다: %1
 apply the changes	infolog	ko	변경사항 적용
 are you shure you want to delete this entry ?	infolog	ko	정말로 이 엔트리를 삭제하시겠습니까?
 attach a file	infolog	ko	파일 첨부
 attach file	infolog	ko	파일 첨부
+automatically check 'do not notify' for these types	infolog	ko	다음 유형에 대해 '알림 안 함'을 자동으로 확인합니다.
 back to main list	infolog	ko	메인 목록으로 돌아가기
 both	infolog	ko	모두
 call	infolog	ko	통화
+can not return an exact number of rows and therefore hides the count.	admin	ko	정확한 행 수를 반환할 수 없으므로 개수를 숨깁니다.
 cancel	infolog	ko	취소
 cancelled	infolog	ko	취소됨
 categories	infolog	ko	카테고리들
 category	infolog	ko	카테고리
+change	infolog	ko	변경
+change responsible	infolog	ko	담당자 변경
 change the status of an entry, eg. close it	infolog	ko	엔트리의 상태를 변경 (예: 만료)
 check to set startday	infolog	ko	시작일 설정을 확인
 click here to create the link	infolog	ko	새 링크를 생성하려면 클릭하세요
 click here to start the search	infolog	ko	검색을 시작하려면 클릭하세요
 close	infolog	ko	만료
+colon (:) separated list of field names to use if value is empty or to sum up	infolog	ko	값이 비어 있거나 합산할 때 사용할 콜론(:)으로 구분된 필드 이름 목록입니다.
 comment	infolog	ko	커멘트
 completed	infolog	ko	완료됨
 configuration	infolog	ko	설정
 confirm	infolog	ko	확인
 contact	infolog	ko	연락
+contact cf	infolog	ko	CF에 문의
+convert to a ticket	infolog	ko	티켓으로 전환하기
 copy of:	infolog	ko	사본:
 create new links	infolog	ko	새 링크 만들기
+created	infolog	ko	생성됨
 creates a new field	infolog	ko	새 필드 만들기
 creates a new status with the given values	infolog	ko	주어진 값으로 새 상태 만들기
 creates a new typ with the given name	infolog	ko	주어진 이름으로 새 형식 만들기
 creation	infolog	ko	생성
 csv-fieldname	infolog	ko	CSV-필드이름
 csv-filename	infolog	ko	CSV-파일이름
+current user	infolog	ko	현재 사용자
 custom	infolog	ko	사용자정의
 custom fields	infolog	ko	사용자정의 필드
+custom from	infolog	ko	사용자 지정
+customfields	infolog	ko	사용자 지정 필드
+data exchange settings	infolog	ko	데이터 교환 설정
 date completed	infolog	ko	완료일
+date completed (leave it empty to have it automatic set if status is done or billed)	infolog	ko	완료된 날짜입니다. 상태가 완료 또는 청구된 경우 자동으로 설정되도록 비워 두세요.
 datecreated	infolog	ko	개설일
 days	infolog	ko	일동안
+default category for new infolog entries	infolog	ko	새 정보 로그 항목의 기본 카테고리
+default document to insert entries	infolog	ko	항목을 삽입할 기본 문서
+delegated	infolog	ko	위임됨
+delegated open	infolog	ko	위임된 공개
+delegated open and upcoming	infolog	ko	위임된 공개 및 예정
+delegated overdue	infolog	ko	위임 기한 초과
+delegated upcomming	infolog	ko	위임 예정
 delegation	infolog	ko	위임
 delete	infolog	ko	삭제
+delete selected entries?	infolog	ko	선택한 항목을 삭제하시겠습니까?
 delete this entry and all listed sub-entries	infolog	ko	하위 엔트리를 포함 삭제
 deleted	infolog	ko	삭제됨
 deletes the selected typ	infolog	ko	선택된 형식 삭제
 deletes this field	infolog	ko	이 필드 삭제
 deletes this status	infolog	ko	이 상태 삭제
 description	infolog	ko	내용
+directory with documents to insert entries	infolog	ko	항목을 삽입할 문서가 있는 폴더
+do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	ko	작업 수락, 완료 또는 둘 다에 대한 책임자 확인을 원하시나요?
+do you want a notification if items owned by groups you are part of get updated ?	infolog	ko	내가 속한 그룹이 소유한 항목이 업데이트될 때 알림을 받으시겠습니까?
+do you want a notification, if items get assigned to you or assigned items get updated?	infolog	ko	나에게 항목이 할당되거나 할당된 항목이 업데이트되면 알림을 받습니다.
+do you want a notification, if items you are responsible for are about to start?	infolog	ko	내가 담당하고 있는 항목이 곧 시작될 경우 알림을 받습니다.
+do you want a notification, if items you are responsible for are due?	infolog	ko	내가 담당하는 항목의 마감일이 다가오면 알림을 받습니다.
+do you want a notification, if items you created get updated?	infolog	ko	내가 만든 항목이 업데이트되면 알림을 받습니다.
+do you want a notification, if items you delegated are about to start?	infolog	ko	위임한 항목이 곧 시작될 경우 알림을 받습니다.
+do you want a notification, if items you delegated are due?	infolog	ko	위임한 항목의 마감일이 다가오면 알림을 받습니다.
+do you want to receive notifications as html-mails or plain text?	infolog	ko	HTML 이메일 또는 일반 텍스트로 통지를 받습니다.
 don't show infolog	infolog	ko	인포로그 보이지 않기
 done	infolog	ko	완료
 download	infolog	ko	다운로드
+download url for links	infolog	ko	링크 다운로드 URL
+due %1	infolog	ko	마감일 %1
+due date	infolog	ko	마감일
 duration	infolog	ko	기간
+e-mail:	infolog	ko	이메일:
 edit	infolog	ko	수정
 edit or create categories for ingolog	infolog	ko	인포로그전용 카테고리 편집/수정
 edit rights (full edit rights incl. making someone else responsible!)	infolog	ko	편집 권한 (특정인 혹은 응답자를 포함한 수정의 모든권한)
@@ -75,17 +117,56 @@ end	infolog	ko	종료
 enddate	infolog	ko	만기일
 enddate can not be before startdate	infolog	ko	만기일은 시작일보다 앞설수 없습니다.
 enter the query pattern	infolog	ko	질의 패턴 입력
+entry and all files	infolog	ko	항목 및 모든 파일
 error: importing the ical	infolog	ko	오류: ical 불러오기 오류
+error: no mail (mailbox / uid) given!	infolog	ko	오류: 메일(사서함/UID)이 지정되지 않았습니다!
 error: saving the entry	infolog	ko	오류: 엔트리 저장
 error: the entry has been updated since you opened it for editing!	infolog	ko	오류: 이 엔트리는 당신이 수정하는 중간에 업데이트 되었습니다.
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	infolog	ko	예 {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - "n_prefix" 필드에서 "Mr"을 검색하여 찾으면 Hello Mr., 그렇지 않으면 Hello Ms.
+example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	infolog	ko	예 {{LETTERPREFIXCUSTOM n_접두사 제목 n_family}} - 예제: 미스터 제임스 밀러 박사
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	infolog	ko	예 {{NELF 역할}} - 필드 역할이 비어 있지 않으면 필드 역할의 값이 있는 새 줄이 표시됩니다.
+example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	infolog	ko	예 {{NENVLF 역할}} - 필드 역할이 비어 있지 않은 경우 필드 값 없이 LF를 설정합니다.
+execute a further action for this entry	infolog	ko	이 항목에 대한 추가 작업을 실행합니다.
 existing links	infolog	ko	기존 링크
+exists	infolog	ko	존재
+export definition to use for nextmatch export	infolog	ko	다음 경기 내보내기에 사용할 내보내기 정의
+exports in ical format.	infolog	ko	iCal 형식으로 내보냅니다.
+exports infolog entries into a csv file.	infolog	ko	인포로그 항목을 CSV 파일로 내보냅니다.
+favorites	infolog	ko	즐겨찾기
 fax	infolog	ko	팩스
+field must not be empty !!!	infolog	ko	필드가 비어 있지 않아야 합니다!
+fields to exclude when copying an infolog:	infolog	ko	인포로그를 복사할 때 제외할 필드입니다:
+fields to exclude when creating a sub-entry:	infolog	ko	하위 항목을 만들 때 제외할 필드입니다:
 fieldseparator	infolog	ko	필드구분자
 finish	infolog	ko	완료
+first argument for preg_replace	infolog	ko	preg_replace의 첫 번째 인수
+for infolog type %1, %2 is required	infolog	ko	인포로그 유형 %1의 경우 %2가 필요합니다.
+for serial letter use this tag. put the content, you want to repeat between two tags.	infolog	ko	일련 문자의 경우 이 태그를 사용합니다. 반복할 콘텐츠를 두 태그 사이에 배치합니다.
+for which types should this field be used	infolog	ko	이 필드를 사용해야 하는 유형
 from	infolog	ko	부터
+full list of placeholder names	infolog	ko	자리 표시자 이름의 전체 목록
+general fields:	infolog	ko	일반 필드입니다:
+general settings	infolog	ko	일반 설정
 global categories	infolog	ko	전역 카테고리
+group owner for	infolog	ko	그룹 소유자
+high	infolog	ko	높음
 history	infolog	ko	내역
+history logging	infolog	ko	히스토리 로깅
+history logging and deleting of items	infolog	ko	항목의 히스토리 로깅 및 삭제
+how many description lines should be directly visible. further lines are available via a scrollbar.	infolog	ko	직접 표시할 설명 줄의 수입니다. 스크롤 막대를 통해 추가 줄을 사용할 수 있습니다.
+how wide should the description area be. this value is numeric and interpreted as em; 60 works reasonably well.	infolog	ko	설명 영역의 너비. 이 값은 숫자입니다(예: 60).
+html link to the current record	infolog	ko	현재 레코드에 대한 HTML 링크
+id	infolog	ko	ID
+id#	infolog	ko	ID#
+if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	ko	유형에 그룹 소유자가 있는 경우, 해당 유형의 모든 항목은 해당 항목을 만든 사용자가 아닌 해당 그룹이 소유하게 됩니다!
+if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	ko	설정하지 않으면 일반 환경설정에 정의된 "페이지당 최대 일치 항목 수"보다 적은 수의 항목에 대해 검색 및 필터가 있는 줄이 숨겨집니다.
+if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	infolog	ko	여기에 폴더(전체 VFS 경로)를 지정하면 %1은 각 문서에 대한 작업을 표시합니다. 이 작업을 통해 데이터가 삽입된 지정된 문서를 다운로드할 수 있습니다.
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	infolog	ko	여기에 문서(전체 VFS 경로)를 지정하면 %1은(는) 각 항목에 대해 추가 문서 아이콘을 표시합니다. 이 아이콘을 사용하면 데이터가 삽입된 지정한 문서를 다운로드할 수 있습니다.
+if you specify an export definition, it will be used when you export	infolog	ko	내보내기 정의를 지정하면 내보낼 때 이 정의가 사용됩니다.
 import next set	infolog	ko	** 다음 집합(set)에서 가져오기
+importance	infolog	ko	가져오기
+imports entries into the infolog from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	infolog	ko	CSV 파일에서 InfoLog로 항목을 가져옵니다. CSV는 '쉼표로 구분된 값'을 의미합니다. 옵션 탭에서 다른 구분 기호를 선택할 수도 있습니다.
+imports todos into infolog from an ical file.	infolog	ko	iCal 파일에서 InfoLog로 할 일 가져오기.
 info log	common	ko	인포로그
 infolog	common	ko	인포로그
 infolog - delete	infolog	ko	인포로그 - 삭제
@@ -94,18 +175,35 @@ infolog - import csv-file	infolog	ko	인포로그 - 불러오기 CSV
 infolog - new	infolog	ko	인포로그 - 신규
 infolog - new subproject	infolog	ko	인포로그 - 새 하위프로젝트
 infolog - subprojects from	infolog	ko	인포로그 - 서브프로젝트로부터
+infolog csv export	infolog	ko	InfoLog CSV 내보내기
+infolog csv import	infolog	ko	InfoLog CSV 가져오기
+infolog encryption requires epl subscription	infolog	ko	InfoLog 암호화를 사용하려면 EPL 구독이 필요합니다.
 infolog entry deleted	infolog	ko	인포로그 엔트리가 삭제됨
 infolog entry saved	infolog	ko	인포로그 엔트리가 저장됨
-InfoLog filter for the home screen	infolog	ko	메인화면의 인포로그 필터
+infolog fields:	infolog	ko	인포로그 필드:
+infolog filter for the home screen	infolog	ko	메인화면의 인포로그 필터
+infolog ical export	infolog	ko	InfoLog iCal 내보내기
+infolog ical import	infolog	ko	InfoLog iCal 가져오기
+infolog id	infolog	ko	InfoLog ID
 infolog list	infolog	ko	인포로그 목록
 infolog preferences	common	ko	인포로그 설정
 infolog-fieldname	infolog	ko	인포로그 - 필드명
+insert	infolog	ko	삽입
+insert in document	infolog	ko	문서에 삽입
+insert timestamp into description field	infolog	ko	설명 필드에 타임스탬프 삽입
 invalid filename	infolog	ko	잘못된 파일명
+invalid owner id: %1.  might be a bad field translation.  used %2 instead.	infolog	ko	잘못된 소유자 ID: %1. 대신 %2을(를) 사용했습니다.
+invalid status for entry type %1.	infolog	ko	항목 유형 %1에 대한 유효하지 않은 상태입니다.
+label<br>helptext	infolog	ko	레이블<br>헬프텍스트
 last changed	infolog	ko	마지막 변경
 last modified	infolog	ko	마지막 수정
+leave blank to get the used time calculated by timesheet entries	infolog	ko	작업표 항목으로 계산된 사용 시간을 얻으려면 비워둡니다.
 leave it empty	infolog	ko	빈채로 남겨두기
+leave it empty for a full week	infolog	ko	일주일 내내 비워두기
 leave without saveing the entry	infolog	ko	엔트리를 저장없이 나가기
 leaves without saveing	infolog	ko	저장없이 나가기
+length	infolog	ko	길이
+limit list to last n month, if ordering by last-modified and not searching.	admin	ko	마지막으로 수정한 순서대로 정렬하고 검색하지 않는 경우 목록을 지난 N월로 제한합니다.
 link	infolog	ko	링크
 links	infolog	ko	링크들
 links of this entry	infolog	ko	이 엔트리의 링크
@@ -153,6 +251,7 @@ priority	infolog	ko	중요도
 private	infolog	ko	개인
 project	infolog	ko	프로젝트
 re:	infolog	ko	회신:
+respect timesheet run and read permissions for time totals	infolog	ko	작업표 실행 및 시간 총계에 대한 읽기 권한 존중
 responsible	infolog	ko	응답대상
 responsible open	infolog	ko	응답자 개설
 responsible overdue	infolog	ko	응답자 만기초과
@@ -191,6 +290,7 @@ sub	infolog	ko	하위
 subject	infolog	ko	제목
 task	infolog	ko	할일
 test import (show importable records <u>only</u> in browser)	infolog	ko	가져오기 테스트 (가져올수 있는 레코드 <u>오직</u> 브라우저에서만 보여줍니다)
+the document can contain placeholder like {{%1}}, to be replaced with the data.	infolog	ko	문서에 데이터로 대체할 {{%1}}과 같은 자리 표시자를 포함할 수 있습니다.
 times	infolog	ko	시간
 to many might exceed your execution-time-limit	infolog	ko	너무 많을 경우 최대실행시간(execution-time-limit)을 초과함
 today	infolog	ko	오늘
@@ -210,11 +310,21 @@ view other subs	infolog	ko	다른 하위보기
 view parent	infolog	ko	상위보기
 view subs	infolog	ko	하위보기
 view the parent of this entry and all his subs	infolog	ko	이 상위에 속한 모든 하위보기
-will-call	infolog	ko	통화 예약
+which implicit acl rights should the responsible get	infolog	ko	책임자에게 어떤 묵시적 ACL 권한이 부여되어야 하나요?
+which participants should be preselected when scheduling an appointment.	infolog	ko	약속을 예약할 때 어떤 참가자를 미리 선택해야 하는지.
+which types should the calendar show	infolog	ko	캘린더에 표시해야 하는 유형
+which types should the calendar show like events?	infolog	ko	캘린더에 이벤트와 같이 표시해야 하는 유형은 무엇인가요?
+will-call	infolog	ko	전화
+yes - close	infolog	ko	예 - 닫기
+yes - close including sub-entries	infolog	ko	예 - 하위 항목을 포함하여 닫기
 yes - delete	infolog	ko	예 - 삭제
 yes - delete including sub-entries	infolog	ko	예 - 하위 엔트리 포함삭제
+you can choose a categorie to be preselected, when you create a new infolog entry	infolog	ko	새 정보 로그 항목을 만들 때 미리 선택할 카테고리를 선택할 수 있습니다.
 you can't delete one of the stock types !!!	infolog	ko	기본형식을 삭제할 수 없습니다.
 you have entered an invalid ending date	infolog	ko	만기일을 잘못입력하였습니다.
 you have entered an invalid starting date	infolog	ko	시작일을 잘못입력하였습니다.
-you have to enter a name, to create a new typ!!!	infolog	ko	새 형식을 만들기 위해서는 이름을 입력하여야 합니다.
+you have to enter a name, to create a new type!	infolog	ko	새 유형을 만들려면 이름을 입력해야 합니다!
 you must enter a subject or a description	infolog	ko	제목이나 내용을 필히 입력하여야 합니다.
+you need to select an entry for linking.	infolog	ko	연결할 항목을 선택해야 합니다.
+you need to select some entries first	infolog	ko	먼저 몇 가지 항목을 선택해야 합니다.
+your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	infolog	ko	데이터베이스가 최신 상태가 아닙니다(%1 대 %2). 데이터베이스를 업데이트하려면 %3setup%4을(를) 실행하세요.

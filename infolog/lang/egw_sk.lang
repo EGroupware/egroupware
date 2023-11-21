@@ -47,6 +47,7 @@ add sub	infolog	sk	Pridať Podradený záznam
 add timesheet entry	infolog	sk	Pridať záznam do Harmonogramu
 add:	infolog	sk	Pridať:
 added	infolog	sk	Pridané
+addressbook placeholders available	infolog	sk	K dispozícii sú zástupné symboly adresára
 all	infolog	sk	Všetko
 all links and attachments	infolog	sk	Všetky odkazy a prílohy
 all other %1 fields are valid	infolog	sk	Všetky ostatné %1 polia sú platné
@@ -233,8 +234,8 @@ id	infolog	sk	ID
 id#	infolog	sk	ID#
 if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	sk	Ak tento typ MÁ skupinového vlastníka, všetky záznamy tohto typu bude vlastniť zadaná skupina a NIE používateľ, ktorý záznam vytvoril!
 if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	sk	Ak nie je nastavené, riadok vyhľadávania a filtrov je skrytý pre menej záznamov než "maximálny počet záznamov zobrazených na stránke" (ako je definované v bežných nastaveniach).
-if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	infolog	sk	Ak zadáte priečinok, plnú vfs cestu, %1 zobrazí akciu pre každý dokument. Táto akcia umožní stiahnuť vybraný dokument s vloženými dátami.
-if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	infolog	sk	Ak zadáte dokument, plnú vfs cestu, %1 zobrazí samostatnú ikonu dokumentu pre každú položku. Táto ikona umožní stiahnuť vybraný dokument s vloženými dátami.
+if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	infolog	sk	Ak zadáte priečinok, plnú VFS cestu, %1 zobrazí akciu pre každý dokument. Táto akcia umožní stiahnuť vybraný dokument s vloženými dátami.
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	infolog	sk	Ak zadáte dokument, plnú VFS cestu, %1 zobrazí samostatnú ikonu dokumentu pre každú položku. Táto ikona umožní stiahnuť vybraný dokument s vloženými dátami.
 if you specify an export definition, it will be used when you export	infolog	sk	Ak zadáte exportnú definíciu, bude sa používať pri exportoch.
 import next set	infolog	sk	Importovať ďalšiu sadu
 importance	infolog	sk	Dôležitosť
@@ -396,6 +397,7 @@ removed	infolog	sk	Odstránené.
 removed category	infolog	sk	Odstránená kategória
 replacement	infolog	sk	Náhrada
 replacements for inserting entries into documents	infolog	sk	Náhrady pre vkladanie polí do dokumentov
+respect timesheet run and read permissions for time totals	infolog	sk	Rešpektovať oprávnenia na spúšťanie a čítanie časových súčtov
 responsible	infolog	sk	Zodpovednosť
 responsible open	infolog	sk	Zodpovednosť - otvorené
 responsible open and upcoming	infolog	sk	Zodpovednosť - otvorené a blížiace sa
@@ -476,6 +478,7 @@ task	infolog	sk	Úloha
 tasks of	infolog	sk	Úlohy pre
 template	infolog	sk	Šablóna
 test import (show importable records <u>only</u> in browser)	infolog	sk	Test importu (zobraz importovateľné záznamy <u>iba</u> v prehliadači)
+the document can contain placeholder like {{%1}}, to be replaced with the data.	infolog	sk	Dokument môže obsahovať zástupné znaky ako {{%1}}, ktoré sa nahradia údajmi.
 the following document-types are supported:	infolog	sk	Podporované sú nasledovné typy dokumentov:
 the name used internaly (<= 10 chars), changeing it makes existing data unavailible	infolog	sk	vnútorne používané meno (<= 10 znakov), jeho zmena zneprístupní existujúce údaje
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	infolog	sk	vnútorne používané meno (<= 20 znakov), jeho zmena zneprístupní existujúce údaje

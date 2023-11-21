@@ -27,9 +27,9 @@
 80%	infolog	de	80%
 90%	infolog	de	90%
 <b>file-attachments via symlinks</b> instead of uploads and retrieval via file:/path for direct lan-clients	infolog	de	<b>Dateianhänge über Symlinks</b> anstatt sie hochzuladen und Zugriff mit file:/Pfad für lokale Benutzer
-a short subject for the entry	infolog	de	einen kurzen Titel für diesen Eintrag
+a short subject for the entry	infolog	de	Einen kurzen Titel für diesen Eintrag
 abort without deleting	infolog	de	Abbruch ohne zu Löschen
-accept	infolog	de	bei Annahme
+accept	infolog	de	Bei Annahme
 action	infolog	de	Befehle
 actions...	infolog	de	Befehle...
 actual date and time	infolog	de	aktuelles Datum und Uhrzeit
@@ -262,15 +262,15 @@ infolog id	infolog	de	InfoLog ID
 infolog list	infolog	de	InfoLog Liste
 infolog preferences	common	de	InfoLog Einstellungen
 infolog-fieldname	infolog	de	InfoLog-Feldname
-insert	infolog	de	einfügen
+insert	infolog	de	Einfügen
 insert in document	infolog	de	In ein Dokument einfügen
 insert timestamp into description field	infolog	de	Zeitstempel in das Beschreibungs-Feld einfügen
 invalid filename	infolog	de	Ungültiger Dateiname
 invalid owner id: %1.  might be a bad field translation.  used %2 instead.	infolog	de	Ungültige Eigentümer ID: %1. Ist möglicher Weise eine falsche Feld Übersetzung. Es wird %2 anstatt dem ursprünglichen Wert verwendet.
 invalid status for entry type %1.	infolog	de	Ungültiger Status für den eingegebenen Typ %1
-label<br>helptext	infolog	de	Beschriftung\nHilfetext
-last changed	infolog	de	letzte Änderung
-last modified	infolog	de	zuletzt geändert
+label<br>helptext	infolog	de	Beschriftung<br>Hilfetext
+last changed	infolog	de	Letzte Änderung
+last modified	infolog	de	Zuletzt geändert
 leave blank to get the used time calculated by timesheet entries	infolog	de	Leer lassen um die Zeit nach den Stundenzetteln zu bekommen
 leave it empty	infolog	de	leer lassen
 leave it empty for a full week	infolog	de	leer lassen, für eine gesamte Woche
@@ -289,7 +289,7 @@ links to specified application.  example: {{links/infolog}}	infolog	de	Verknüpf
 links wrapped in an href tag with download link	infolog	de	Verknüpfungen in einem Anker Tag (HREF) mit einem Download Link
 list all categories	infolog	de	Alle Kategorien anzeigen
 list of files linked to the current record	infolog	de	Liste der Dateien die mit dem aktuellen Datensatz verknüpft sind
-load custom fields in index, if filtered by selected types (eg. to display them in a type-specific index template)	infolog	de	Benutzerdefinierte Felder in Liste laden, wenn nach einem der folgenden InfoLog Typen gefiltert wird (z. B. für ein type-spezifisches Listen-Template)
+load custom fields in index, if filtered by selected types (eg. to display them in a type-specific index template)	infolog	de	Benutzerdefinierte Felder in Liste laden, wenn nach einem der folgenden InfoLog-Typen gefiltert wird (z. B. für ein type-spezifisches Listen-Template)
 location	infolog	de	Ort
 longer textual description	infolog	de	längere textliche Beschreibung
 low	infolog	de	niedrig
@@ -356,7 +356,7 @@ path to user and group files has to be outside of the webservers document-root!!
 pattern for search in addressbook	infolog	de	Muster für Suche im Adressbuch
 pattern for search in projects	infolog	de	Muster für Suche des Projekts
 percent completed	infolog	de	Prozent erledigt
-performance optimization for huge infolog tables	admin	de	Performance Optimierung für sehr große InfoLog Tabellen
+performance optimization for huge infolog tables	admin	de	Performance-Optimierung für sehr große InfoLog Tabellen
 permission denied	infolog	de	Zugriff verweigert
 permissions error - %1 could not %2	infolog	de	Fehler in den Zugriffsberechtigungen - %1 nicht möglich %2
 phone	infolog	de	Anruf
@@ -484,7 +484,7 @@ the name used internaly (<= 10 chars), changeing it makes existing data unavaili
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	infolog	de	Der Name wird intern benutzt (<= 20 Zeichen). Wenn er geändert wird, werden existierende Daten unzugänglich
 the text displayed to the user	infolog	de	der Text der dem Benutzer angezeigt wird
 this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	de	Das ist der Filter, den InfoLog benutzt wenn es das erste mal aufgerufen wird. Filter beschränken die aktuelle Anzeige. Es gibt Filter um nur beendete, offene oder zukünftige Einträge von Ihnen oder allen Benutzern anzuzeigen.
-til when should the todo or phonecall be finished	infolog	de	Bis wann soll die Aufgabe oder der Anruf erledigt sein
+til when should the todo or phonecall be finished	infolog	de	Bis wann soll das InfoLog erledigt sein?
 times	infolog	de	Zeiten
 titles of any entries linked to the current record, excluding attached files	infolog	de	Liste aller Einträge die mit dem aktuellen Datensatz verknüpft sind, mit Ausnahme von Dateianhängen.
 to many might exceed your execution-time-limit	infolog	de	zu viel können Ihre Laufzeitbeschränkung überschreiten

@@ -1,5 +1,18 @@
+%1 days in advance	infolog	no	%1 dager i forveien
+%1 deleted	infolog	no	%1 slettet.
+%1 deleted by %2 at %3	infolog	no	%1 slettet av %2 kl. %3
+%1 entries %2	infolog	no	%1 oppføringer %2
+%1 entries %2, %3 failed because of insufficent rights !!!	infolog	no	%1 oppføringer %2, %3 mislyktes på grunn av utilstrekkelige rettigheter !!!
+%1 entries %2, %3 failed.	infolog	no	%1 oppføringer %2, %3 mislyktes.
+%1 modified	infolog	no	%1 endret
+%1 modified by %2 at %3	infolog	no	%1 endret av %2 kl. %3
 %1 records imported	infolog	no	%1 rekker importert
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	infolog	no	%1 rekker lest (ikke importert enda, du må evt. gå %2back%3 å fjerne haken på Test Import.
+%1 you are responsible for is due at %2	infolog	no	%1 som du er ansvarlig for, forfaller til betaling %2
+%1 you are responsible for is starting at %2	infolog	no	%1 du er ansvarlig for starter kl. %2
+%1 you delegated is due at %2	infolog	no	%1 du har delegert, forfaller til %2
+%1 you delegated is starting at %2	infolog	no	%1 du har delegert begynner på %2
+(and children) deleted	infolog	no	(og barn) slettet.
 (no subject)	infolog	no	(uten emne)
 - subprojects from	infolog	no	- Underprosjekter fra
 0%	infolog	no	0%
@@ -14,9 +27,9 @@
 80%	infolog	no	80%
 90%	infolog	no	90%
 <b>file-attachments via symlinks</b> instead of uploads and retrieval via file:/path for direct lan-clients	infolog	no	<b>fil-vedlegg via symbol-lenker</b> istedenfor opplasting og henting via file:/sti for nettverksklienter
-a short subject for the entry	infolog	no	en kort emnebeskrivelse for innslaget
+a short subject for the entry	infolog	no	En kort emnebeskrivelse for innslaget
 abort without deleting	infolog	no	Avslutt uten å slette
-accept	infolog	no	aksepter
+accept	infolog	no	Aksepter
 action	infolog	no	Funksjon
 actual date and time	infolog	no	Aktuell dato og tid
 add	infolog	no	Legg til
@@ -31,62 +44,86 @@ add sub	infolog	no	legg til under
 add timesheet entry	infolog	no	Legg til forekomst i timeregistrering
 add:	infolog	no	Legg til:
 added	infolog	no	Lagt til
+addressbook placeholders available	infolog	no	Plassholdere i adresseboken er tilgjengelige
 all	infolog	no	Alle
-all links and attachments	infolog	no	alle lenker og vedlegg
+all links and attachments	infolog	no	Alle lenker og vedlegg
+all other %1 fields are valid	infolog	no	Alle andre %1-felt er gyldige
+allow to save entries with due date in the past	infolog	no	Tillat å lagre oppføringer med forfallsdato i fortiden
 allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	no	Tillater å sette status på et innslag, f.eks sette Gjøremål til Ferdig (verdiene avhenger av innslagstype)
+always show them	infolog	no	Vis dem alltid
+application mail expected but got: %1	infolog	no	Forventet, men mottatt søknads-e-post: %1
 apply the changes	infolog	no	Lagre endringene
 archive	infolog	no	Arkiver
 are you shure you want to delete this entry ?	infolog	no	Er du sikker på at du vil slette dette innslaget?
 attach a file	infolog	no	Vedlegg en fil
 attach file	infolog	no	Vedlegg fil
 attachments	infolog	no	Vedlegg
+automatically check 'do not notify' for these types	infolog	no	Kryss automatisk av for "Ikke varsle" for disse typene
 back to main list	infolog	no	Tilbake til hovedliste
 billed	infolog	no	fakturert
 both	infolog	no	begge
 call	infolog	no	ring
+can not return an exact number of rows and therefore hides the count.	admin	no	Kan ikke returnere et eksakt antall rader og skjuler derfor antallet.
 cancel	infolog	no	Avbryt
 cancelled	infolog	no	Kansellert
 categories	infolog	no	Kategorier
 category	infolog	no	Kategori
+change	infolog	no	Endre
+change responsible	infolog	no	Ansvarlig for endring
 change the status of an entry, eg. close it	infolog	no	Endre status på innslag, f.eks lukke saken
 check to set startday	infolog	no	velg for å sette startdag
 click here to create the link	infolog	no	klikk her for å lage lenke
 click here to start the search	infolog	no	klikk her for å starte søket
 close	infolog	no	Lukk
 close all	infolog	no	lukk alle
+colon (:) separated list of field names to use if value is empty or to sum up	infolog	no	kolon (:)-separert liste over feltnavn som skal brukes hvis verdien er tom eller for å summere opp
 comment	infolog	no	Kommentar
 completed	infolog	no	Utført
 configuration	infolog	no	Konfigurasjon
 confirm	infolog	no	Bekreft
 contact	infolog	no	Kontakt
+contact cf	infolog	no	Kontakt CF
+convert to a ticket	infolog	no	Konverter til en billett
 copy of:	infolog	no	Kopi av:
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	infolog	no	Kopier endringene dine til utklippstavlen, %1oppfrisk forekomsten%2 og sammenstill de
 create new links	infolog	no	Lag ny lenke
-creates a new field	infolog	no	lager nytt felt
-creates a new status with the given values	infolog	no	lager ny status med oppgitte verdier
-creates a new typ with the given name	infolog	no	lager ny type med oppgitt navn
+created	infolog	no	Opprettet
+creates a new field	infolog	no	Lager nytt felt
+creates a new status with the given values	infolog	no	Lager ny status med oppgitte verdier
+creates a new typ with the given name	infolog	no	Lager ny type med oppgitt navn
 creation	infolog	no	Opprettet
 csv-fieldname	infolog	no	CSV-Feltnavn
 csv-filename	infolog	no	CSV-Filnavn
 csv-import	common	no	CSV-Import
+current user	infolog	no	Nåværende bruker
 custom	infolog	no	Egendefinert
 custom contact-address, leave empty to use information from most recent link	infolog	no	Egendefinert kontakt-adresse, la være tom for å bruke informasjonen fra sist brukte lenke
 custom contact-information, leave emtpy to use information from most recent link	infolog	no	Egendefinert kontaktinformasjon, la være tom for å bruke informasjonen fra sist brukte lenke
 custom fields	infolog	no	Egendefinert felt
 custom fields, type and status	common	no	Egendefinerte felter, type og status
+custom from	infolog	no	Tilpasset fra
 custom regarding	infolog	no	Egendefinert angående
 custom status for typ	infolog	no	Egendefinert status for type
 customfields	infolog	no	Egendefinertfelt
+data exchange settings	infolog	no	Innstillinger for datautveksling
 date completed	infolog	no	Dato utført
 date completed (leave it empty to have it automatic set if status is done or billed)	infolog	no	Dato utført (la den stå tom for å settes automatisk ved status er lik utført eller ved fakturering)
-datecreated	infolog	no	dato opprettet
+datecreated	infolog	no	Dato opprettet
 dates, status, access	infolog	no	Datoer, Status, Tilgang
-days	infolog	no	dager
-default filter for infolog	infolog	no	Standard filter for InfoLogg
-default status for a new log entry	infolog	no	standard status for nye logg-innslag
+days	infolog	no	Dager
+default category for new infolog entries	infolog	no	Standardkategori for nye InfoLog-oppføringer
+default document to insert entries	infolog	no	Standarddokument for å legge inn oppføringer
+default filter for infolog	infolog	no	Standard filter for InfoLog
+default status for a new log entry	infolog	no	Standard status for nye log-innslag
+delegated	infolog	no	Delegert
+delegated open	infolog	no	Delegert åpen
+delegated open and upcoming	infolog	no	Delegert åpen og kommende
+delegated overdue	infolog	no	Delegert forfalt
+delegated upcomming	infolog	no	Delegert kommende
 delegation	infolog	no	Delegering
 delete	infolog	no	Slett
 delete one record by passing its id.	infolog	no	Slett en rekke etter ID
+delete selected entries?	infolog	no	Slette valgte oppføringer?
 delete this entry and all listed sub-entries	infolog	no	Slette dette forekomsten og alle listede underforekomster
 deleted	infolog	no	slettet
 deletes the selected typ	infolog	no	sletter valgt type
@@ -94,14 +131,28 @@ deletes this field	infolog	no	sletter dette feltet
 deletes this status	infolog	no	sletter denne status
 description	infolog	no	Beskrivelse
 determines the order the fields are displayed	infolog	no	avgjør rekkefølge feltene vises i
+directory with documents to insert entries	infolog	no	Slette valgte oppføringer?
 disables a status without deleting it	infolog	no	kobler ut status uten å slette
 do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	no	vil du ha bekreftelse fra ansvarlig ang: akseptering, ferdigstilling eller begge
+do you want a notification if items owned by groups you are part of get updated ?	infolog	no	Vil du bli varslet hvis oppføringer som eies av grupper du er en del av, blir oppdatert?
+do you want a notification, if items get assigned to you or assigned items get updated?	infolog	no	Bli varslet hvis oppføringer blir tildelt deg eller tildelte oppføringer blir oppdatert.
+do you want a notification, if items you are responsible for are about to start?	infolog	no	Bli varslet hvis oppføringer du er ansvarlig for, er i ferd med å starte.
+do you want a notification, if items you are responsible for are due?	infolog	no	Bli varslet hvis oppføringer du er ansvarlig for, forfaller.
+do you want a notification, if items you created get updated?	infolog	no	Bli varslet hvis oppføringer du har opprettet, oppdateres.
+do you want a notification, if items you delegated are about to start?	infolog	no	Bli varslet hvis oppføringer du har delegert er i ferd med å starte.
+do you want a notification, if items you delegated are due?	infolog	no	Bli varslet hvis oppføringer du har delegert, forfaller.
+do you want to receive notifications as html-mails or plain text?	infolog	no	Motta varsler som HTML-e-post eller ren tekst.
+don't show infolog	infolog	no	IKKE vis InfoLog
 done	infolog	no	Ferdig
 download	infolog	no	Nedlasting
+download url for links	infolog	no	Last ned URL for lenker
+due %1	infolog	no	Forfall %1
+due date	infolog	no	Forfallsdato
 duration	infolog	no	Varighet
+e-mail:	infolog	no	E-post:
 each value is a line like <id>[=<label>]	infolog	no	hver verdi er en linje som <id>[=<label>]
 edit	infolog	no	Endre
-edit or create categories for ingolog	infolog	no	Endre eller lage kategorier for InfoLogg
+edit or create categories for ingolog	infolog	no	Endre eller lage kategorier for InfoLog
 edit status	infolog	no	Endre status
 edit the entry	infolog	no	Endre dette innslaget
 edit this entry	infolog	no	Endre dette innslaget
@@ -115,34 +166,70 @@ enter a textual description of the log-entry	infolog	no	skriv inn ordrett beskri
 enter the query pattern	infolog	no	Skriv inn søkemønster
 entry and all files	infolog	no	Innslag og alle filer
 error: importing the ical	infolog	no	Feil: Ved import av iCal
+error: no mail (mailbox / uid) given!	infolog	no	Feil: ingen post (postkasse / UID) oppgitt!
 error: saving the entry	infolog	no	Feil: ved lagring av forekomst
 error: the entry has been updated since you opened it for editing!	infolog	no	Feil: Denne forekomsten er endret siden du åpnet den for redigering!
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	infolog	no	Eksempel {{IF n_prefiks~Mr~Hallo Mr.~Hello Ms.}} - søk i feltet "n_prefix" etter "Mr", hvis funnet, skriv Hello Mr., ellers skriv Hello Ms.
+example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	infolog	no	Eksempel {{LETTERPREFIXCUSTOM n_prefiks tittel n_familie}} - Eksempel: Herr Dr. James Miller
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	infolog	no	Eksempel {{NELF rolle}} - hvis feltet rolle ikke er tomt, får du en ny linje med verdien for feltet rolle.
+example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	infolog	no	Eksempel {{nenvlf rolle}} - hvis feltet rolle ikke er tomt, settes en LF uten noen verdi for feltet
+execute a further action for this entry	infolog	no	Utfør en ytterligere handling for denne oppføringen
 existing links	infolog	no	Eksisterende lenker
+exists	infolog	no	Eksisterer
+export definition to use for nextmatch export	infolog	no	Eksportdefinisjon som skal brukes for nextmatch-eksport
+exports in ical format.	infolog	no	Eksporterer i iCal-format.
+exports infolog entries into a csv file.	infolog	no	Eksporterer InfoLog-oppføringer til en CSV-fil.
+favorites	infolog	no	Favoritter
 fax	infolog	no	Telefaks
 field must not be empty !!!	infolog	no	Feltet kan ikke være tomt!
+fields to exclude when copying an infolog:	infolog	no	Felt som skal ekskluderes ved kopiering av en InfoLog:
+fields to exclude when creating a sub-entry:	infolog	no	Felt som skal ekskluderes når du oppretter en underpost:
 fieldseparator	infolog	no	Feltseparator
 finish	infolog	no	ferdig
-for which types should this field be used	infolog	no	hvilke typer skal feltet brukes til
+first argument for preg_replace	infolog	no	Første argument for preg_replace
+for infolog type %1, %2 is required	infolog	no	For InfoLog-typen %1 er %2 påkrevd.
+for serial letter use this tag. put the content, you want to repeat between two tags.	infolog	no	Bruk denne taggen for seriebokstaver. Plasser innholdet du vil gjenta mellom to tagger.
+for which types should this field be used	infolog	no	Hvilke typer skal feltet brukes til
 from	infolog	no	Fra
+full list of placeholder names	infolog	no	Fullstendig liste over plassholdernavn
+general fields:	infolog	no	Generelle felt:
+general settings	infolog	no	Generelle innstillinger
 global categories	infolog	no	Globale Kategorier
-high	infolog	no	høy
+group owner for	infolog	no	Gruppeeier for
+high	infolog	no	Høy
 history	infolog	no	Historikk
-id	infolog	no	Id
+history logging	infolog	no	Loggføring av historikk
+history logging and deleting of items	infolog	no	Historikklogging og sletting av elementer
+how many description lines should be directly visible. further lines are available via a scrollbar.	infolog	no	Hvor mange beskrivelseslinjer som skal være direkte synlige. Flere linjer er tilgjengelige via en rullefelt.
+how wide should the description area be. this value is numeric and interpreted as em; 60 works reasonably well.	infolog	no	Hvor bredt skal beskrivelsesområdet være. Denne verdien er numerisk, f.eks. 60.
+html link to the current record	infolog	no	HTML-lenke til den aktuelle posten
+id	infolog	no	ID
+id#	infolog	no	ID#
+if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	no	Hvis en type har en gruppeeier, vil alle oppføringer av den typen eies av den gitte gruppen og IKKE av brukeren som opprettet den!
 if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	no	Dersom ikke satt, linjen med søk og filter er skjult dersom færre antall enn "maks antall pr. side" (som definert i globale preferanser).
+if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	infolog	no	Hvis du angir en mappe (full VFS-bane) her, viser %1 en handling for hvert dokument. Denne handlingen gjør det mulig å laste ned det angitte dokumentet med de innsatte dataene.
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	infolog	no	Hvis du angir et dokument (full VFS-bane) her, viser %1 et ekstra dokumentikon for hver oppføring. Dette ikonet gjør det mulig å laste ned det angitte dokumentet med de innsatte dataene.
+if you specify an export definition, it will be used when you export	infolog	no	Hvis du angir en eksportdefinisjon, vil den bli brukt når du eksporterer.
 import next set	infolog	no	importer neste sett
-info log	common	no	Infologg
-infolog	common	no	Infologg
-infolog - delete	infolog	no	Infologg - Slett
-infolog - edit	infolog	no	Infologg - Editer
-infolog - import csv-file	infolog	no	Infologg - Importer CSV-fil
-infolog - new	infolog	no	Infologg - Ny
-infolog - new subproject	infolog	no	Infologg - Nytt underprosjekt
-infolog - subprojects from	infolog	no	Infologg - Underprosjekter fra
-infolog entry deleted	infolog	no	Infologgforekomst slettet
-infolog entry saved	infolog	no	Infologgforekomst lagret
-infolog list	infolog	no	Infologg liste
-infolog preferences	common	no	Infologg preferanser
-infolog-fieldname	infolog	no	Infologg-Feltnavn
+importance	infolog	no	Betydning
+imports entries into the infolog from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	infolog	no	Importerer oppføringer til InfoLog fra en CSV-fil. CSV betyr "kommaseparerte verdier". I alternativfanen kan du også velge andre separatorer.
+imports todos into infolog from an ical file.	infolog	no	Importerer TODOs til InfoLog fra en iCal-fil.
+info log	common	no	InfoLog
+infolog	common	no	InfoLog
+infolog - delete	infolog	no	InfoLog - Slett
+infolog - edit	infolog	no	InfoLog - Editer
+infolog - import csv-file	infolog	no	InfoLog - Importer CSV-fil
+infolog - new	infolog	no	InfoLog - Ny
+infolog - new subproject	infolog	no	InfoLog - Nytt underprosjekt
+infolog - subprojects from	infolog	no	InfoLog - Underprosjekter fra
+infolog encryption requires epl subscription	infolog	no	Kryptering av InfoLog krever EPL-abonnement
+infolog entry deleted	infolog	no	InfoLogforekomst slettet
+infolog entry saved	infolog	no	InfoLogforekomst lagret
+infolog ical export	infolog	no	InfoLog iCal-eksport
+infolog ical import	infolog	no	InfoLog iCal-import
+infolog list	infolog	no	InfoLog liste
+infolog preferences	common	no	InfoLog preferanser
+infolog-fieldname	infolog	no	InfoLog-Feltnavn
 invalid filename	infolog	no	Ugyldig filnavn
 label<br>helptext	infolog	no	Etikett<br>Hjelpetekst
 last changed	infolog	no	Sist endret
@@ -216,6 +303,7 @@ re:	infolog	no	Ang:
 read one record by passing its id.	infolog	no	Les en rekke ved å oppgi rekke-ID.
 remark	infolog	no	Merknad
 remove this link (not the entry itself)	infolog	no	Slett denne lenken (ikke selve innslaget)
+respect timesheet run and read permissions for time totals	infolog	no	Respekter kjøring av timelister og lesetillatelser for tidstotaler
 responsible	infolog	no	Ansvarlig
 responsible open	infolog	no	Ansvarlig for åpne
 responsible overdue	infolog	no	Ansvarlig for overskredne
@@ -240,13 +328,13 @@ select an entry to link with	infolog	no	Velg innslag som skal lenkes med
 select to filter by owner	infolog	no	Velg å filtrere for eier
 select to filter by responsible	infolog	no	Velg å filtrere for ansvarlig
 sets the status of this entry and its subs to done	infolog	no	Sett status på denne forekomsten samt underliggende til utført.
-should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	no	Skal InfoLogg vise under-oppgaver, -oppkall eller -notater som normalvisning eller ikke. Du kan alltids nå underoppgavene via hovedoppgavene.
-should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	no	Skal InfoLogg viser lenkene til andre programmer og/eller filtilknytningene i InfoLogglisten (Normal visning når du starter InfoLogg)
-should infolog use full names (surname and familyname) or just the loginnames.	infolog	no	Skal InfoLogg vise fulle navn (fornavn og etternavn) eller kun påloggingsnavn.
+should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	no	Skal InfoLog vise under-oppgaver, -oppkall eller -notater som normalvisning eller ikke. Du kan alltids nå underoppgavene via hovedoppgavene.
+should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	no	Skal InfoLog viser lenkene til andre programmer og/eller filtilknytningene i InfoLoglisten (Normal visning når du starter InfoLog)
+should infolog use full names (surname and familyname) or just the loginnames.	infolog	no	Skal InfoLog vise fulle navn (fornavn og etternavn) eller kun pålogingsnavn.
 should this entry only be visible to you and people you grant privat access via the acl	infolog	no	skal dette innslaget vises kun til deg selv og personer du gir access vha. tilgangslister (ACL)
 show a column for used and planned times in the list.	infolog	no	Vis en kolonne for brukte og planlagte tider i listen.
 show full usernames	infolog	no	Vise fulle brukernavn
-show in the infolog list	infolog	no	Vise i InfoLogg listen
+show in the infolog list	infolog	no	Vise i InfoLog listen
 show times	infolog	no	Vis tider
 small view	infolog	no	liten visning
 start	infolog	no	Start
@@ -263,10 +351,11 @@ subject	infolog	no	Emne
 task	infolog	no	Gjøremål
 template	infolog	no	Mal
 test import (show importable records <u>only</u> in browser)	infolog	no	Test Import (vis importerbare rekker, <u>kun</u> i webleser)
+the document can contain placeholder like {{%1}}, to be replaced with the data.	infolog	no	Dokumentet kan inneholde plassholdere som {{%1}}, som erstattes med dataene.
 the name used internaly (<= 10 chars), changeing it makes existing data unavailible	infolog	no	navnet benyttet intertnt(<= 10 kar.), endring gjør eksisterende data utilgjengelige.
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	infolog	no	navnet benyttet intertnt(<= 20 kar.), endring gjør eksisterende data utilgjengelige.
 the text displayed to the user	infolog	no	teksten som vises til bruker
-this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	no	Dette er filteret InfoLogg bruker når du starter applikasjonen. Et filter begrenser antall innslag som vises på skjermen. Det finnes filter som viser kun lukkede, åpne eller fremtidige innslag for deg selv eller alle brukere.
+this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	no	Dette er filteret InfoLog bruker når du starter applikasjonen. Et filter begrenser antall innslag som vises på skjermen. Det finnes filter som viser kun lukkede, åpne eller fremtidige innslag for deg selv eller alle brukere.
 til when should the todo or phonecall be finished	infolog	no	innen hvilket tidspunkt skal gjøremål eller telefonoppkall være avsluttet
 times	infolog	no	Ant. ganger
 to many might exceed your execution-time-limit	infolog	no	for mange kan overgå din uførelse-tids-begrensning
@@ -292,13 +381,20 @@ view subs	infolog	no	vis Subs
 view the parent of this entry and all his subs	infolog	no	Vis hovedsak for dette innslaget og alle subs
 view this linked entry in its application	infolog	no	vis lenken i den egens applikasjon
 when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	no	når gjøremål eller telefonoppkall startes vil dette vises fra den datoen blablabla
-will-call	infolog	no	ringer
+which implicit acl rights should the responsible get	infolog	no	Hvilke implisitte ACL-rettigheter skal den ansvarlige få?
+which types should the calendar show	infolog	no	Hvilke typer skal kalenderen vise
+which types should the calendar show like events?	infolog	no	Hvilke deltakere skal forhåndsvelges når du planlegger en avtale?
+will-call	infolog	no	Vil ringe
 write (add or update) a record by passing its fields.	infolog	no	Skriv (legg til eller oppdater) en rekke ved å skrive inn felter
+yes - close	infolog	no	Ja - Lukk
+yes - close including sub-entries	infolog	no	Ja - Lukk inkludert underoppføringer
 yes - delete	infolog	no	Ja - Slett
 yes - delete including sub-entries	infolog	no	Ja - Slett inklusiv underordnede
 you can't delete one of the stock types !!!	infolog	no	Du kan ikke slette en av lagertypene !!!
 you have entered an invalid ending date	infolog	no	Du har skrevet inn en ugyldig sluttdato
 you have entered an invalid starting date	infolog	no	Du har skrevet inn en ugyldig startdato
-you have to enter a name, to create a new typ!!!	infolog	no	Du må skrive inn et navn for å lage en ny type!!!
+you have to enter a name, to create a new type!	infolog	no	Du må oppgi et navn for å opprette en ny type!
 you must enter a subject or a description	infolog	no	Du må skrive inn emne eller beskrivelse
+you need to select an entry for linking.	infolog	no	Du må velge en oppføring for kobling.
+you need to select some entries first	infolog	no	Du må først velge noen oppføringer.
 your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	infolog	no	Din database er ikke oppdatert /%1 vs.%2,), vennligst kjør %3setup%4 for å oppdatere databasen.

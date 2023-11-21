@@ -10,15 +10,19 @@
 %1 category(s) %2	admin	fr	%1 catégorie(s) %2
 %1 category(s) %2, %3 failed because of insufficent rights !!!	admin	fr	%1 catégorie(s) %2, %3 en échec pour droits insuffisants !!!
 %1 class not instanciated	admin	fr	Classe %1 non instanciée
+%1 entries deleted	admin	fr	%1 entrées supprimées
 %1 entries deleted.	admin	fr	%1 éléments supprimés.
 %1 group %2	admin	fr	%1 groupe %2
 %1 is no command!	admin	fr	%1 n'est pas une commande !
 %1 log entries deleted.	admin	fr	%1 entrées dans le log effacées.
+%1 mail credentials deleted	admin	fr	%1 mail credentials deleted
 %1 not found or not executable !!!	admin	fr	%1 introuvable ou pas exécutable !!!
 %1 phrases saved.	admin	fr	%1 phrases enregistrées.
 %1 rights for %2 and applications %3	admin	fr	Droits en %1 pour %2 et l'application %3.
-%1 run rights for applications	admin	fr	% droits d'exécution des applications
+%1 run rights for applications	admin	fr	%1 droits d'exécution des applications
 %1 sessions killed	admin	fr	%1 session(s) tuée(s).
+%1 successful	admin	fr	%1 réussi
+%1 token %2.	admin	fr	%1 jeton %2.
 %1 user %2	admin	fr	%1 utilisateur %2
 (de)activate mail accounts	admin	fr	(dés)activer les comptes email
 (default no, leave it off if you dont use it)	admin	fr	(Non par défaut, ne pas modifier si vous ne l'utilisez pas)

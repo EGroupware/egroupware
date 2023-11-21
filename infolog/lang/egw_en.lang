@@ -56,7 +56,7 @@ allow to save entries with due date in the past	infolog	en	Allow to save entries
 allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	en	Allows to set the status of an entry, e.g. set a ToDo to done if it's finished. Values depend on entry type.
 alternatives	infolog	en	Alternatives
 always show them	infolog	en	Always show them
-application mail expected but got: %1	infolog	en	Application mail expected but got: %1
+application mail expected but got: %1	infolog	en	Application email expected but got: %1
 apply the action on the whole query, not only the shown entries!!!	infolog	en	Apply the action on the whole query, NOT only the shown entries!!!
 apply the changes	infolog	en	Apply the changes
 archive	infolog	en	Archive
@@ -159,18 +159,18 @@ determines the order the fields are displayed	infolog	en	Determines the order th
 directory with documents to insert entries	infolog	en	Folder with documents to insert entries
 disables a status without deleting it	infolog	en	Disables a status without deleting it
 do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	en	Do you want a confirmation of the responsible on accepting, finishing the task or both
-do you want a notification if items owned by groups you are part of get updated ?	infolog	en	Do you want a notification if items owned by groups you are part of get updated ?
+do you want a notification if items owned by groups you are part of get updated ?	infolog	en	Do you want a notification if items owned by groups you are part of get updated?
 do you want a notification, if items get assigned to you or assigned items get updated?	infolog	en	Get notified if entries are assigned to you or assigned entries get updated.
 do you want a notification, if items you are responsible for are about to start?	infolog	en	Get notified if entries if you are responsible for are about to start.
 do you want a notification, if items you are responsible for are due?	infolog	en	Get notified if entries you are responsible for are due.
 do you want a notification, if items you created get updated?	infolog	en	Get notified if entries you created get updated.
 do you want a notification, if items you delegated are about to start?	infolog	en	Get notified if entries you delegated are about to start.
 do you want a notification, if items you delegated are due?	infolog	en	Get notified if entries you delegated are due.
-do you want to receive notifications as html-mails or plain text?	infolog	en	Receive notifications as HTML mails or plain text.
+do you want to receive notifications as html-mails or plain text?	infolog	en	Receive notifications as HTML emails or plain text.
 don't show infolog	infolog	en	DON'T show InfoLog
 done	infolog	en	Done
 download	infolog	en	Download
-download url for links	infolog	en	Download url for links
+download url for links	infolog	en	Download URL for links
 due %1	infolog	en	Due %1
 due date	infolog	en	Due date
 duration	infolog	en	Duration
@@ -234,8 +234,8 @@ id	infolog	en	ID
 id#	infolog	en	ID#
 if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	en	If a type has a group owner, all entries of that type will be owned by the given group and NOT the user who created it!
 if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	en	If not set, the line with search and filters is hidden for less entries than "max matches per page", as defined in your common preferences.
-if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	infolog	en	If you specify a folder (full vfs path) here, %1 displays an action for each document. That action allows to download the specified document with the data inserted.
-if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	infolog	en	If you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. That icon allows to download the specified document with the data inserted.
+if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	infolog	en	If you specify a folder (full VFS path) here, %1 displays an action for each document. That action allows to download the specified document with the data inserted.
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	infolog	en	If you specify a document (full VFS path) here, %1 displays an extra document icon for each entry. That icon allows to download the specified document with the data inserted.
 if you specify an export definition, it will be used when you export	infolog	en	If you specify an export definition, it will be used when you export
 import next set	infolog	en	Import next set
 importance	infolog	en	Importance
@@ -389,7 +389,7 @@ receive notifications about items of type owned by groups you are part of	infolo
 receive notifications about own items	infolog	en	Receive notifications about own items
 receive notifications about starting entries you are responsible for	infolog	en	Receive notifications about starting entries you are responsible for
 receive notifications about starting entries you delegated	infolog	en	Receive notifications about starting entries you delegated
-receive notifications as html-mails	infolog	en	Receive notifications as HTML mails.
+receive notifications as html-mails	infolog	en	Receive notifications as HTML emails.
 regular expression	infolog	en	Regular expression
 remark	infolog	en	Remark
 remove this link (not the entry itself)	infolog	en	Remove this link -not the entry itself.
@@ -484,7 +484,7 @@ the name used internaly (<= 10 chars), changeing it makes existing data unavaili
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	infolog	en	The name used internally, <= 20 chars, changing it makes existing data unavailable.
 the text displayed to the user	infolog	en	The text displayed to the user
 this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	en	Default filter when entering the application. Filters limit the entries to show in the actual view.
-til when should the todo or phonecall be finished	infolog	en	When should the ToDo or Phone call be finished
+til when should the todo or phonecall be finished	infolog	en	When should the InfoLog be finished
 times	infolog	en	Times
 titles of any entries linked to the current record, excluding attached files	infolog	en	Titles of any entries linked to the current record, excluding attached files
 to many might exceed your execution-time-limit	infolog	en	Too many might exceed your execution time limit

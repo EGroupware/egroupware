@@ -1,7 +1,13 @@
+%1 %2 rights for %3 on %4 to %5	admin	id	%1 %2 hak untuk %3 pada %4 hingga %5
 %1 - %2 of %3 user accounts	admin	id	%1 - %2 dari %3 akoun pengguna
 %1 - %2 of %3 user groups	admin	id	%1 - %2 dari %3 kelompok pengguna
+%1 entries deleted	admin	id	%1 entri dihapus
 %1 entries deleted.	admin	id	%1 entri dihapus.
 %1 group %2	admin	id	%1 kelompok %2
+%1 mail credentials deleted	admin	id	%1 kredensial email dihapus
+%1 sessions killed	admin	id	%1 sesi dimatikan.
+%1 successful	admin	id	%1 berhasil
+%1 token %2.	admin	id	%1 token %2.
 %1 user %2	admin	id	%1 pengguna %2
 (no subject)	admin	id	(tanpa subyek)
 -  type	admin	id	- tipe

@@ -1,35 +1,97 @@
+%1 entries %2	infolog	tr	1 girişler %2
+%1 entries %2, %3 failed because of insufficent rights !!!	infolog	tr	1 girişler %2, %3 yetersiz haklar nedeniyle başarısız oldu !!!
+%1 entries %2, %3 failed.	infolog	tr	1 girişleri %2, %3 başarısız oldu.
 %1 records imported	infolog	tr	%1 kay?t ithal edildi.
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	infolog	tr	%1 kay?t okundu. (Henüz ithal edilmedi, %2geri%3 giderek ?thal Etme seçene?indeki tik i?aretini kald?rabilirsiniz.)
+(and children) deleted	infolog	tr	(ve çocuklar) silindi.
 accept	infolog	tr	Kabul Et
 action	infolog	tr	Eylem
 add	infolog	tr	ekle
 added	infolog	tr	Eklendi
 addressbook placeholders available	infolog	tr	Adres defteri yer tutucuları mevcut
+all other %1 fields are valid	infolog	tr	Diğer tüm %1 alanları geçerlidir
+allow to save entries with due date in the past	infolog	tr	Son tarihi geçmişte olan girişleri kaydetmeye izin verin
+always show them	infolog	tr	Her zaman göster onlara
+application mail expected but got: %1	infolog	tr	Başvuru e-postası bekleniyordu ancak alındı: %1
+automatically check 'do not notify' for these types	infolog	tr	Bu türler için 'Bildirme' seçeneğini otomatik olarak işaretleyin
+can not return an exact number of rows and therefore hides the count.	admin	tr	Tam bir satır sayısı döndüremez ve bu nedenle sayıyı gizler.
 cancel	infolog	tr	İptal
 change	infolog	tr	Değiştir
+change responsible	infolog	tr	Sorumlu değişikliği
 configuration	infolog	tr	Ayarlar
 contact	infolog	tr	?leti?im
+contact cf	infolog	tr	İletişim CF
+convert to a ticket	infolog	tr	Bilete dönüştürme
+created	infolog	tr	Oluşturuldu
 csv-fieldname	infolog	tr	CSV Alan-Ad?
 csv-filename	infolog	tr	CSV Dosya Ad?
+current user	infolog	tr	Mevcut kullanıcı
 custom	infolog	tr	Özel
 custom fields	infolog	tr	Özel Alanlar
 days	infolog	tr	gün
 deleted	infolog	tr	Silindi
 description	infolog	tr	Açıklama
-done	infolog	tr	tamam
+done	infolog	tr	Tamam
 download	infolog	tr	?ndir
 duration	infolog	tr	Süre
 edit	infolog	tr	Düzenle
 empty for all	infolog	tr	Tamam? için bo?
 encrypt description	infolog	tr	Açıklamayı şifrele
 enddate	infolog	tr	BitişTarih
+enter the query pattern	infolog	tr	Sorgu desenini girin
+entry and all files	infolog	tr	Giriş ve tüm dosyalar
+error: no mail (mailbox / uid) given!	infolog	tr	Hata: posta (Posta Kutusu / UID) verilmedi!
+error: saving the entry	infolog	tr	Giriş kaydedilirken hata oluştu!
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	infolog	tr	Örnek {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - "n_prefix" alanında "Mr" için arama yapın, bulunursa Merhaba Mr. yazın, aksi takdirde Merhaba Ms. yazın.
+example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	infolog	tr	Örnek {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Örnek: Bay Dr. James Miller
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	infolog	tr	Örnek {{NELF rolü}} - eğer rol alanı boş değilse, rol alanının değerini içeren yeni bir satır alırsınız
+example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	infolog	tr	Örnek {{nenvlf role}} - alan rolü boş değilse, alanın herhangi bir değeri olmadan bir LF ayarlayın
+execute a further action for this entry	infolog	tr	Bu giriş için başka bir eylem yürütme
+exists	infolog	tr	Mevcut
+export definition to use for nextmatch export	infolog	tr	Nextmatch dışa aktarımı için kullanılacak dışa aktarım tanımı
+exports in ical format.	infolog	tr	iCal formatında dışa aktarır.
+exports infolog entries into a csv file.	infolog	tr	InfoLog girişlerini bir CSV dosyasına aktarır.
+favorites	infolog	tr	Sık Kullanılanlar
 fax	infolog	tr	Fax
+field must not be empty !!!	infolog	tr	Alan boş olmamalıdır!
+fields to exclude when copying an infolog:	infolog	tr	Bir InfoLog kopyalanırken hariç tutulacak alanlar:
+fields to exclude when creating a sub-entry:	infolog	tr	Bir alt giriş oluştururken hariç tutulacak alanlar:
 fieldseparator	infolog	tr	Alan ayrac?
+finish	infolog	tr	Bitirmek
+first argument for preg_replace	infolog	tr	preg_replace için ilk bağımsız değişken
+for infolog type %1, %2 is required	infolog	tr	InfoLog türü %1 için %2 gereklidir
+for serial letter use this tag. put the content, you want to repeat between two tags.	infolog	tr	Seri harf için bu etiketi kullanın. Tekrarlamak istediğiniz içeriği iki etiket arasına yerleştirin.
+for which types should this field be used	infolog	tr	Bu alan hangi tipler için kullanılmalıdır
 from	infolog	tr	Nereden
 full list of placeholder names	infolog	tr	Yer tutucu adların tam listesi
+general fields:	infolog	tr	Genel alanlar:
+general settings	infolog	tr	Genel ayarlar
 global categories	infolog	tr	Genel kategoriler
-import next set	infolog	tr	S?radaki grubu ithal et
+group owner for	infolog	tr	Grup sahibi için
+high	infolog	tr	Yüksek
+history	infolog	tr	Tarih
+history logging	infolog	tr	Tarih kaydı
+history logging and deleting of items	infolog	tr	Geçmiş kaydı ve öğelerin silinmesi
+how many description lines should be directly visible. further lines are available via a scrollbar.	infolog	tr	Kaç açıklama satırının doğrudan görünür olması gerektiği. Diğer satırlar bir kaydırma çubuğu aracılığıyla kullanılabilir.
+how wide should the description area be. this value is numeric and interpreted as em; 60 works reasonably well.	infolog	tr	Açıklama alanı ne kadar geniş olmalıdır. Bu değer sayısaldır, örneğin 60.
+html link to the current record	infolog	tr	Geçerli kayda HTML bağlantısı
+id	infolog	tr	ID
+id#	infolog	tr	ID#
+if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	tr	Bir türün bir grup sahibi varsa, bu türün tüm girdileri, onu oluşturan kullanıcıya DEĞİL, verilen gruba ait olacaktır!
+if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	tr	Ayarlanmamışsa, ortak tercihlerinizde tanımlandığı gibi "sayfa başına maksimum eşleşme" değerinden daha az giriş için arama ve filtrelerin bulunduğu satır gizlenir.
+if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	infolog	tr	Burada bir klasör (tam VFS yolu) belirtirseniz, %1 her belge için bir eylem görüntüler. Bu eylem, belirtilen belgenin eklenen verilerle birlikte indirilmesini sağlar.
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	infolog	tr	Burada bir belge (tam VFS yolu) belirtirseniz, %1 her giriş için ekstra bir belge simgesi görüntüler. Bu simge, belirtilen belgenin eklenen verilerle birlikte indirilmesini sağlar.
+if you specify an export definition, it will be used when you export	infolog	tr	Bir dışa aktarma tanımı belirtirseniz, dışa aktardığınızda bu tanım kullanılır
+import next set	infolog	tr	Sonraki seti içe aktar
+importance	infolog	tr	Önem
+imports entries into the infolog from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	infolog	tr	Girdileri bir CSV dosyasından InfoLog'a aktarır. CSV, 'Virgülle Ayrılmış Değerler' anlamına gelir. Seçenekler sekmesinde diğer ayırıcıları da seçebilirsiniz.
+imports todos into infolog from an ical file.	infolog	tr	TODO'ları bir iCal Dosyasından InfoLog'a aktarır.
+info log	common	tr	InfoLog
+infolog	common	tr	InfoLog
+infolog - subprojects from	infolog	tr	InfoLog - Alt projeler
 infolog encryption requires epl subscription	infolog	tr	InfoLog şifrelemesi EPL Aboneliği gerektirir
+infolog ical export	infolog	tr	InfoLog iCal dışa aktarma
+infolog ical import	infolog	tr	InfoLog iCal içe aktarma
 insert timestamp into description field	infolog	tr	Açıklama alanına zaman damgası ekle
 link	infolog	tr	Link
 location	infolog	tr	Konum
@@ -39,10 +101,27 @@ permission denied	infolog	tr	İzin verilmedi
 print this infolog	infolog	tr	Bu InfoLog'u yazdırın
 printing...	infolog	tr	Baskı...
 project	infolog	tr	Proje
+respect timesheet run and read permissions for time totals	infolog	tr	Zaman toplamları için zaman çizelgesi çalıştırma ve okuma izinlerine saygı gösterin
 search for:	infolog	tr	Arama yap:
 startdate	infolog	tr	Başlangıç tarihi
 startrecord	infolog	tr	Kaydetmeye ba?la
 test import (show importable records <u>only</u> in browser)	infolog	tr	?thal test (?thal edilebilecek ba?lant?lar? <u>sadece</u> görüntüle.
+the document can contain placeholder like {{%1}}, to be replaced with the data.	infolog	tr	Belge, verilerle değiştirilmek üzere {{%1}} gibi yer tutucu içerebilir.
 times	infolog	tr	Kere
 to many might exceed your execution-time-limit	infolog	tr	çok fazlas? execution-time-limit'inizi a?abilir!
 today	infolog	tr	Bugün
+which implicit acl rights should the responsible get	infolog	tr	Sorumlu hangi örtük ACL haklarını almalıdır
+which participants should be preselected when scheduling an appointment.	infolog	tr	Bir randevu planlanırken hangi katılımcılar önceden seçilmelidir.
+which types should the calendar show	infolog	tr	Takvim hangi türleri göstermelidir
+which types should the calendar show like events?	infolog	tr	Takvim hangi tür etkinlikleri göstermelidir?
+will-call	infolog	tr	Arayacak
+yes - close	infolog	tr	Evet - Kapat
+yes - close including sub-entries	infolog	tr	Evet - Alt girişler dahil kapat
+yes - delete	infolog	tr	Evet - Sil
+yes - delete including sub-entries	infolog	tr	Evet - Alt girişler dahil silme
+you can choose a categorie to be preselected, when you create a new infolog entry	infolog	tr	Yeni bir InfoLog girişi oluşturduğunuzda, önceden seçilecek bir kategori seçebilirsiniz.
+you can't delete one of the stock types !!!	infolog	tr	Stok tiplerinden birini silemezsiniz!
+you have to enter a name, to create a new type!	infolog	tr	Yeni bir tür oluşturmak için bir isim girmeniz gerekir!
+you need to select an entry for linking.	infolog	tr	Bağlantı için bir giriş seçmeniz gerekir.
+you need to select some entries first	infolog	tr	Önce bazı girişleri seçmeniz gerekir.
+your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	infolog	tr	Veritabanınız güncel DEĞİL (%1 vs. %2), veritabanınızı güncellemek için lütfen %3setup%4'ü çalıştırın.

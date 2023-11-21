@@ -1,15 +1,21 @@
+%1 %2 rights for %3 on %4 to %5	admin	fi	%1 %2 oikeudet %3:lle %4:stä %5:een %1 %2:n osalta
 %1 - %2 of %3 user accounts	admin	fi	%1 - %2 / %3 käyttäjätunnusta
 %1 - %2 of %3 user groups	admin	fi	%1 - %2 / %3 käyttäjäryhmää
 %1 acl records of not (longer) existing accounts deleted.	admin	fi	%1 ACL tietuetta ei (enää) löydy, käyttäjätili(t) poistettu.
 %1 categories of not (longer) existing accounts deleted.	admin	fi	%1 kategoriaa poistettu
 %1 category(s) %2	admin	fi	%1 kategoriaa %2
 %1 category(s) %2, %3 failed because of insufficent rights !!!	admin	fi	%1 kategoriaa %2, %3 epäonnistui käyttäjäoikeuksien takia.
+%1 entries deleted	admin	fi	%1 merkinnät poistettu
 %1 entries deleted.	admin	fi	%1 tapahtumaa poistettu
 %1 group %2	admin	fi	%1 ryhmä %2
 %1 is no command!	admin	fi	%1 ei ole käsky!
 %1 log entries deleted.	admin	fi	%1 lokitietuetta poistettu!
+%1 mail credentials deleted	admin	fi	%1 sähköpostitunnukset poistettu
 %1 not found or not executable !!!	admin	fi	%1 ei löydy tai ei voida suorittaa !!!
 %1 rights for %2 and applications %3	admin	fi	%1 oikeudet %1 ja sovelluksille %3
+%1 sessions killed	admin	fi	%1 istuntoa lopetettu.
+%1 successful	admin	fi	%1 onnistui
+%1 token %2.	admin	fi	%1 merkki %2.
 %1 user %2	admin	fi	%1 käyttäjä %2
 (default no, leave it off if you dont use it)	admin	fi	(Oletuksena ei, jätä tyhjäksi jollet halua käyttää sitä)
 (no subject)	admin	fi	Ei aihetta

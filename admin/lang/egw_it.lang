@@ -10,15 +10,19 @@
 %1 category(s) %2	admin	it	%1 categoria(e) %2
 %1 category(s) %2, %3 failed because of insufficent rights !!!	admin	it	%1 categoria(e) %2, %3 fallito per mancanza di permessi sufficienti!
 %1 class not instanciated	admin	it	%1 classe not istanziata
+%1 entries deleted	admin	it	%1 voci cancellate
 %1 entries deleted.	admin	it	%1 inserimenti cancellati
 %1 group %2	admin	it	%1 gruppo %2
 %1 is no command!	admin	it	%1 non è un comando!
-%1 log entries deleted.	admin	it	%1voci di registro eliminate.
+%1 log entries deleted.	admin	it	%1 voci di registro eliminate.
+%1 mail credentials deleted	admin	it	%1 credenziali di posta eliminate
 %1 not found or not executable !!!	admin	it	%1 non trovato o non eseguibile !!!
 %1 phrases saved.	admin	it	%1 frasi salvate
 %1 rights for %2 and applications %3	admin	it	%1 diritti per %2 e applicazioni %3 .
 %1 run rights for applications	admin	it	%1 diritti di esecuzione per applicazioni
 %1 sessions killed	admin	it	%1 sessioni terminate.
+%1 successful	admin	it	%1 successo
+%1 token %2.	admin	it	%1 token %2.
 %1 user %2	admin	it	%1 utente %2
 (de)activate mail accounts	admin	it	(dis)attivare account email
 (default no, leave it off if you dont use it)	admin	it	Predefinito = No, lascialo così se non lo usi

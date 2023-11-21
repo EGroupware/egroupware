@@ -1,5 +1,10 @@
 %1 - %2 of %3 user accounts	admin	da	%1 - %2 af %3 bruger kontier
+%1 entries deleted	admin	da	%1 条目已删除
+%1 mail credentials deleted	admin	da	删除了 %1 个邮件凭证
 %1 not found or not executable !!!	admin	da	%1 er ikke fundet eller er ikke eksekverbar!!!
+%1 sessions killed	admin	da	%1 会话已删除。
+%1 successful	admin	da	%1 成功
+%1 token %2.	admin	da	%1 标记 %2.
 (no subject)	admin	da	(ingen emne)
 (stored password will not be shown here)	admin	da	(Gemte adgangskoder vil ikke blive vist her)
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	da	(For at installere nye applikationer brug <br><a href="setup/" target="setup">Setup</a> [Administrere Applikationer] !!!)

@@ -50,9 +50,13 @@ added	infolog	ru	Добавлено
 addressbook placeholders available	infolog	ru	Доступны держатели адресной книги
 all	infolog	ru	Все
 all links and attachments	infolog	ru	все ссылки и вложения
+all other %1 fields are valid	infolog	ru	Все остальные поля %1 действительны
 all projects	infolog	ru	Все проекты
+allow to save entries with due date in the past	infolog	ru	Разрешить сохранять записи с датой выполнения в прошлом
 allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	ru	Позволяет установить состояние записи, например, установить Задание в состояние "выполнено" если оно окончено (значение зависит от типа записи)
 alternatives	infolog	ru	Альтернативы
+always show them	infolog	ru	Всегда показывать их
+application mail expected but got: %1	infolog	ru	Ожидалось письмо от приложения, но получено: %1
 apply the action on the whole query, not only the shown entries!!!	infolog	ru	Применить действие ко всему запросу, НЕ ТОЛЬКО к показываемым записям !!!
 apply the changes	infolog	ru	Применить изменения
 archive	infolog	ru	Архивировать
@@ -62,11 +66,13 @@ attach a file	infolog	ru	Прикрепить файл
 attach file	infolog	ru	Прикрепить файл
 attachments	infolog	ru	Приложения
 attention: no contact with address %1 found.	infolog	ru	Внимание: Контакт с адресом %1 не найден
+automatically check 'do not notify' for these types	infolog	ru	Автоматически устанавливать флажок 'Не уведомлять' для этих типов сообщений
 back to main list	infolog	ru	Назад к основному списку
 billed	infolog	ru	оплачно
 both	infolog	ru	оба
 call	infolog	ru	звонок
 can be used to show further infolog types in the calendar or limit it to show eg. only tasks.	infolog	ru	Может быть использовано для показа будущих типов Журнала или для ограничения показываемого например только задачами.
+can not return an exact number of rows and therefore hides the count.	admin	ru	Не может вернуть точное количество строк и поэтому скрывает счетчик.
 cancel	infolog	ru	Отмена
 cancelled	infolog	ru	отменено
 categories	infolog	ru	Категории
@@ -77,6 +83,7 @@ change completed	infolog	ru	Изменения завершены.
 change completion	infolog	ru	Завершение изменений
 change history	infolog	ru	Изменить историю
 change owner when updating	infolog	ru	Изменит владельца при обновлении
+change responsible	infolog	ru	Ответственный за изменение
 change the status of an entry, eg. close it	infolog	ru	Изменить состояние записи, например, закрыть ее
 changed category to %1	infolog	ru	Изменена категория на %1
 changed completion to %1%	infolog	ru	Завершено изменение на %1
@@ -101,9 +108,11 @@ contact	infolog	ru	Контакт
 contact cf	infolog	ru	Контакт CF
 contact fields	infolog	ru	Поля контакта
 contactfield	infolog	ru	Поле контакта
+convert to a ticket	infolog	ru	Преобразование в билет
 copy of:	infolog	ru	Копия:
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	infolog	ru	Скопируйте изменения в буфер обмена, %1перезагрузите запись%2 и объедините их.
 create new links	infolog	ru	Создать новые ссылки
+created	infolog	ru	Создано
 creates a new field	infolog	ru	Создать новое поле
 creates a new status with the given values	infolog	ru	создает новое состояние с данными значениями
 creates a new typ with the given name	infolog	ru	создает новый тип с данным именем
@@ -163,6 +172,7 @@ done	infolog	ru	Выполнено
 download	infolog	ru	Загрузить
 download url for links	infolog	ru	Загрузить URL ссылок
 due %1	infolog	ru	Выполнено %1
+due date	infolog	ru	Дата выполнения
 duration	infolog	ru	Продолжительность
 e-mail:	infolog	ru	Адрес электронной почты:
 each value is a line like <id>[=<label>]	infolog	ru	Каждое значение - это строка вида <идентификатор>[=<метка>]
@@ -183,6 +193,7 @@ enter a textual description of the log-entry	infolog	ru	Введите текс�
 enter the query pattern	infolog	ru	Введите шаблон вопроса
 entry and all files	infolog	ru	Запись и все файлы
 error: importing the ical	infolog	ru	Ошибка: импорт iCal
+error: no mail (mailbox / uid) given!	infolog	ru	Ошибка: не указан почтовый ящик (Mailbox / UID)!
 error: saving the entry	infolog	ru	Ошибка: сохраниние записи
 error: the entry has been updated since you opened it for editing!	infolog	ru	Ошибка: запись была обновлена с тех пор, как Вы открыли её для редактирования!
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	infolog	ru	Пример: {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}}— поиск по полю "n_prefix" значения "Mr", если найдено, пишет Hello Mr., иначе пишет Hello Ms.
@@ -265,6 +276,8 @@ leave it empty	infolog	ru	Оставьте это незаполненным
 leave it empty for a full week	infolog	ru	Оставьте пустым для полной недели
 leave without saveing the entry	infolog	ru	выйти без сохранения записи
 leaves without saveing	infolog	ru	выйти без сохранения
+length	infolog	ru	Длина
+limit list to last n month, if ordering by last-modified and not searching.	admin	ru	Ограничить список последними N месяцами, если упорядочивать по последнему изменению и не искать.
 limit number of description lines (default 5, 0 for no limit)	infolog	ru	Количество строк описания. По умолчанию = 5, 0 = без ограничения.
 limit width of description column ((effective only if lines limit is set), 0 for no limit)	infolog	ru	Ширина столбца описания. Работает только если количество строк установлено 0 = без ограничения
 link	infolog	ru	Ссылка
@@ -380,6 +393,7 @@ removed	infolog	ru	Удалено.
 removed category	infolog	ru	Удаленная категория
 replacement	infolog	ru	Замена
 replacements for inserting entries into documents	infolog	ru	Замены для вставки записей в документы
+respect timesheet run and read permissions for time totals	infolog	ru	Rešpektovať oprávnenia na spúšťanie a čítanie časových súčtov
 responsible	infolog	ru	Ответственный
 responsible open	infolog	ru	Ответственного открытые
 responsible open and upcoming	infolog	ru	Ответственного открытые и наступающие
@@ -458,6 +472,7 @@ task	infolog	ru	Задание
 tasks of	infolog	ru	Задание
 template	infolog	ru	Шаблон
 test import (show importable records <u>only</u> in browser)	infolog	ru	Тест Импорта (показывает импортируемые записи <u>только</u> в браузере)
+the document can contain placeholder like {{%1}}, to be replaced with the data.	infolog	ru	Dokument môže obsahovať zástupné znaky ako {{%1}}, ktoré sa nahradia údajmi.
 the following document-types are supported:	infolog	ru	Поддерживаются следующие типы документов:
 the name used internaly (<= 10 chars), changeing it makes existing data unavailible	infolog	ru	имя, используется внутри (<=10 символов), его изменение делает существующие данные недоступными
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	infolog	ru	имя, используется внутри (<=20 символов), его изменение делает существующие данные недоступными
@@ -499,8 +514,10 @@ view the parent of this entry and all his subs	infolog	ru	Показать ро�
 view this linked entry in its application	infolog	ru	Показать данную запись в ее приложении
 when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	ru	когда Задание или Телефонный Звонок должны начаться, они показываются с этой даты при открытии фильтра или просто открытии (стартовая страница) (?..)
 which additional fields should the responsible be allowed to edit without having edit rights?	infolog	ru	Какие дополнительные поля должен мочь редактировать ответственный, не имея прав на редактирование?
+which implicit acl rights should the responsible get	infolog	ru	Какие неявные права ACL должен получить ответственный
 which participants should be preselected when scheduling an appointment.	infolog	ru	Какие участники должны быть предварительно выбраны для расписания встречи.
 which types should the calendar show	infolog	ru	Какие типы календарь должен показывать
+which types should the calendar show like events?	infolog	ru	Какие типы должны отображаться в календаре как события?
 will-call	infolog	ru	Позвонит
 write (add or update) a record by passing its fields.	infolog	ru	Запишите (добавьте или обновите) запись прохождением её полей.
 yes - close	infolog	ru	Да - Закрыть
@@ -515,6 +532,7 @@ you can choose a categorie to be preselected, when you create a new infolog entr
 you can't delete one of the stock types !!!	infolog	ru	Вы не можете удалить один из основных типов!!!
 you have entered an invalid ending date	infolog	ru	Вы ввели неверную дату окончания
 you have entered an invalid starting date	infolog	ru	Вы ввели неверную дату начала
+you have to enter a name, to create a new type!	infolog	ru	Для создания нового типа необходимо ввести имя!
 you must enter a subject or a description	infolog	ru	Вы должны ввести тему или описание
 you need to select an entry for linking.	infolog	ru	Необходимо выбрать запись для ссылки.
 you need to select some entries first	infolog	ru	Необходимо сначала выбрать записи.
