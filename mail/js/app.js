@@ -2638,8 +2638,12 @@ app.classes.mail = AppJS.extend(
 		{
 			var af = obj_manager.manager.data.nextmatch.activeFilters;
 			// merge startdate and enddate into the active filters (if set)
-			if (this.et2.getWidgetById('startdate') && this.et2.getWidgetById('startdate').get_value()) af["startdate"] = this.et2.getWidgetById('startdate').date;
-			if (this.et2.getWidgetById('enddate') && this.et2.getWidgetById('enddate').get_value()) af["enddate"] = this.et2.getWidgetById('enddate').date;
+			['startdate','enddate'].forEach((date) => {
+				if (this.et2.getWidgetById(date)?.value)
+				{
+					af[date] = this.et2.getWidgetById(date).value.split('T')[0];
+				}
+			});
 			return af;
 		}
 		return false;
