@@ -599,7 +599,7 @@ class mail_ui
 		catch (Exception $e)
 		{
 			// do not exit here. mail-tree should be build. if we exit here, we never get there.
-			error_log(__METHOD__.__LINE__.$e->getMessage().($e->details?', '.$e->details:'').' Menuaction:'.$_GET['menuaction'].'.'.function_backtrace());
+			_egw_log_exception($e);
 			if (isset($this->mail_bo))
 			{
 				if (empty($etpl))
