@@ -3749,9 +3749,19 @@ class mail_compose
 		 // switch regular JSON response handling off
 		Api\Json\Request::isJSONRequest(false);
 
+		$results = array_reduce($results, function ($result, $option)
+		{
+			$value = $option['value'];
+			if(!array_key_exists($value, $result))
+			{
+				$result[$value] = $option;
+			}
+			return $result;
+		},                      []);
+
 		//error_log(__METHOD__.__LINE__.array2string($jsArray));
 		header('Content-Type: application/json; charset=utf-8');
-		echo json_encode(array_values(array_unique($results, SORT_REGULAR)));
+		echo json_encode(array_values($results));
 		exit();
 	}
 
