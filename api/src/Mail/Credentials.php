@@ -244,7 +244,7 @@ class Credentials
 					{
 						unset($results[$prefix.'password']);
 						$results[$prefix.'refresh_token'] = self::UNAVAILABLE;  // no need to make it available
-						$results[$prefix.'access_token'] = self::getAccessToken($row['cred_username'], $password, $mailserver);
+						$results[$prefix.'access_token'] = self::getAccessToken($row['cred_username'], $password, $mailserver, $acc_id, $row['account_id']);
 						// if no extra imap&smtp username set, set the oauth one
 						foreach(['acc_imap_', 'acc_smtp_'] as $pre)
 						{
@@ -267,11 +267,13 @@ class Credentials
 	 * @param string $username
 	 * @param string $refresh_token
 	 * @param string|null $mailserver mailserver to detect oauth hosts
+	 * @param ?int $acc_id to store updated refresh-token
+	 * @param ?int $account_id ----------- " ------------
 	 * @return string|null
 	 */
-	static protected function getAccessToken($username, $refresh_token, $mailserver=null)
+	static protected function getAccessToken(string $username, string $refresh_token, string $mailserver=null, int $acc_id=null, int $account_id=null)
 	{
-		return Api\Cache::getInstance(__CLASS__, 'access-token-'.$username.'-'.md5($refresh_token), static function() use ($username, $refresh_token, $mailserver)
+		return Api\Cache::getInstance(__CLASS__, 'access-token-'.$username.'-'.md5($refresh_token), static function() use ($acc_id, $account_id, $username, $refresh_token, $mailserver)
 		{
 			if (!($oidc = Api\Auth\OpenIDConnectClient::byDomain($username, $mailserver)))
 			{
@@ -280,13 +282,24 @@ class Credentials
 			try
 			{
 				$token = $oidc->refreshToken($refresh_token);
-				return $token->access_token;
+				// if we got a new refresh-token, store it
+				if (isset($token->refresh_token) && $refresh_token !== $token->refresh_token && $acc_id > 0 && $account_id > 0)
+				{
+					self::write($acc_id, $username, $token->refresh_token, self::OAUTH_REFRESH_TOKEN, $account_id);
+					//error_log("Mail\\Credentials::getAccessToken($acc_id, $account_id, '$username', ..., ".json_encode($mailserver).") stored new refresh-token: ".json_encode($token));
+				}
+				if (isset($token->access_token))
+				{
+					return $token->access_token;
+				}
+				// we did NOT get an access-token
+				error_log("Mail\\Credentials::getAccessToken($acc_id, $account_id, '$username', '$refresh_token', ".json_encode($mailserver).") got NO access-token: ".json_encode($token));
 			}
 			catch (OpenIDConnectClientException $e) {
 				_egw_log_exception($e);
 			}
 			return null;
-		}, [], 3500);   // access-token have a livetime of 3600s, give it some margin
+		}, [], 3500);   // access-token have a lifetime of 3600s, give it some margin
 	}
 
 	/**
