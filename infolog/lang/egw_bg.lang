@@ -1,6 +1,9 @@
 %1 days in advance	infolog	bg	%1 дена предварително
 %1 deleted	infolog	bg	%1 е изтрит
 %1 deleted by %2 at %3	infolog	bg	%1 е изтрит от %2 в %3
+%1 entries %2	infolog	bg	%1 вписвания %2
+%1 entries %2, %3 failed because of insufficent rights !!!	infolog	bg	%1 записи %2, %3 не успя да се извърши поради недостатъчни права !!!
+%1 entries %2, %3 failed.	infolog	bg	%1 вписвания %2, %3 не са успешни.
 %1 modified	infolog	bg	%1 е променен
 %1 modified by %2 at %3	infolog	bg	%1 е променен от %2 в %3
 %1 records imported	infolog	bg	%1 записа са импортирани
@@ -9,6 +12,7 @@
 %1 you are responsible for is starting at %2	infolog	bg	%1, за което отговаряте, започва на %2
 %1 you delegated is due at %2	infolog	bg	%1, делегирано от Вас приключва на %2
 %1 you delegated is starting at %2	infolog	bg	%1, делегирано от Вас започва на %2
+(and children) deleted	infolog	bg	(и деца) изтрити.
 (no subject)	infolog	bg	(без тема)
 - subprojects from	infolog	bg	- Подпроекти от
 0%	infolog	bg	0%
@@ -22,6 +26,7 @@
 70%	infolog	bg	70%
 80%	infolog	bg	80%
 90%	infolog	bg	90%
+<b>file-attachments via symlinks</b> instead of uploads and retrieval via file:/path for direct lan-clients	infolog	bg	<b>прикачване на файлове чрез симлинкове</b> вместо качване и извличане чрез file:/path за директни lan-клиенти
 a short subject for the entry	infolog	bg	тема на записа накратко
 abort without deleting	infolog	bg	Отказ без изтриване
 accept	infolog	bg	приемане
@@ -43,8 +48,12 @@ added	infolog	bg	добавен
 addressbook placeholders available	infolog	bg	Налични заместители на адресната книга
 all	infolog	bg	Всички
 all links and attachments	infolog	bg	всички връзки и приложения
+all other %1 fields are valid	infolog	bg	Всички други полета %1 са валидни
 all projects	infolog	bg	Всички проекти
+allow to save entries with due date in the past	infolog	bg	Позволява да се запазват записи с дата на падеж в миналото
 allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	bg	позволява установяване статуса на запис, напр. Предстоящо като Изпълнено, ако е приключило (стойностите зависят от типа на записа)
+always show them	infolog	bg	Винаги ги показвайте
+application mail expected but got: %1	infolog	bg	Имейл за кандидатстване, който е очакван, но е получен: %1
 apply the changes	infolog	bg	Приложи промените
 archive	infolog	bg	архив
 are you shure you want to delete this entry ?	infolog	bg	Желаете ли да изтриете този запис ?
@@ -52,15 +61,19 @@ attach a file	infolog	bg	Прилагане на файл
 attach file	infolog	bg	Приложи файл
 attachments	infolog	bg	Приложения
 attention: no contact with address %1 found.	infolog	bg	Внимание! Не е намерен контакт с адрес %1.
+automatically check 'do not notify' for these types	infolog	bg	Автоматична проверка на "Не уведомявай" за тези типове
 back to main list	infolog	bg	Обратно към основния списък
 billed	infolog	bg	таксуван
 both	infolog	bg	и двете
 call	infolog	bg	обаждане
 can be used to show further infolog types in the calendar or limit it to show eg. only tasks.	infolog	bg	Може да се използва за нови типове елементи в Дневника и Календара, или за филтър, напр. само Задачи
+can not return an exact number of rows and therefore hides the count.	admin	bg	Не може да върне точен брой редове и затова скрива броя.
 cancel	infolog	bg	Отмени
 cancelled	infolog	bg	отменен
 categories	infolog	bg	Категории
 category	infolog	bg	Категория
+change	infolog	bg	Промяна
+change responsible	infolog	bg	Отговорник за промяната
 change the status of an entry, eg. close it	infolog	bg	Променя статуса на запис, напр. приключва го
 check to set startday	infolog	bg	отбележете за начална дата
 check to specify custom contact	infolog	bg	отбележете за използване на контакт по избор
@@ -74,9 +87,12 @@ completed	infolog	bg	Приключен
 configuration	infolog	bg	Конфигурация
 confirm	infolog	bg	Потвърди
 contact	infolog	bg	Контакт
+contact cf	infolog	bg	Контакт CF
+convert to a ticket	infolog	bg	Преобразуване в билет
 copy of:	infolog	bg	Копие на:
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	infolog	bg	Копирайте промените в клипборда, %1презаредете записа%2 и ги съберете.
 create new links	infolog	bg	Създаване на нови връзки
+created	infolog	bg	Създаден
 creates a new field	infolog	bg	създава ново поле
 creates a new status with the given values	infolog	bg	създава нов статус съз зададените стойности
 creates a new typ with the given name	infolog	bg	създава нов тип със зададеното име
@@ -84,6 +100,7 @@ creation	infolog	bg	Създаване
 csv-fieldname	infolog	bg	Име на полето в CSV
 csv-filename	infolog	bg	Име на CSV файла
 csv-import	common	bg	Импорт на CSV
+current user	infolog	bg	Текущ потребител
 custom	infolog	bg	По избор
 custom contact-address, leave empty to use information from most recent link	infolog	bg	Адрес на контакт по избор, ако не се попълни използва последната връзка
 custom contact-information, leave emtpy to use information from most recent link	infolog	bg	Информация за контакт по избор, ако не се попълни използва последната връзка
@@ -93,21 +110,25 @@ custom from	infolog	bg	Форма по избор
 custom regarding	infolog	bg	По избор - относно
 custom status for typ	infolog	bg	По избор - статус за тип
 customfields	infolog	bg	Полета по избор
+data exchange settings	infolog	bg	Настройки за обмен на данни
 date completed	infolog	bg	Дата на завършване
 date completed (leave it empty to have it automatic set if status is done or billed)	infolog	bg	Дата на завършване (непопълнена се установява автоматично при статус Изпълнен или Таксуван)
 datecreated	infolog	bg	дата на създаване
 dates, status, access	infolog	bg	Дати, Статус, Достъп
 days	infolog	bg	дни
 default category for new infolog entries	infolog	bg	Категория по подразбиране за нови записи в Дневника
+default document to insert entries	infolog	bg	Документ по подразбиране за вмъкване на записи
 default filter for infolog	infolog	bg	Филтър по подразбиране в Дневника
 default status for a new log entry	infolog	bg	Сатус по подразбиране на новите записи
 delegated	infolog	bg	делегиран
 delegated open	infolog	bg	делегиран - отворен
+delegated open and upcoming	infolog	bg	Делегирано отваряне и предстоящо
 delegated overdue	infolog	bg	делегиран - просрочен
 delegated upcomming	infolog	bg	делегиран - предстоящ
 delegation	infolog	bg	Делегиране
 delete	infolog	bg	Изтриване
 delete one record by passing its id.	infolog	bg	Изтриване на един запис чрез предаване на ИД №
+delete selected entries?	infolog	bg	Изтриване на избрани записи?
 delete this entry and all listed sub-entries	infolog	bg	Изтриване на този запис и всички показани под-записи
 deleted	infolog	bg	изтрит
 deletes the selected typ	infolog	bg	изтрива избрания тип
@@ -115,8 +136,10 @@ deletes this field	infolog	bg	изтрива това поле
 deletes this status	infolog	bg	изтрива този статус
 description	infolog	bg	Описание
 determines the order the fields are displayed	infolog	bg	определя реда за показване на полетата
+directory with documents to insert entries	infolog	bg	Папка с документи за вмъкване на записи
 disables a status without deleting it	infolog	bg	забранява даден статус, без да го изтрива
 do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	bg	Изисква потвърждение от отговорния при: приемане на задачата, приключването й или и двете
+do you want a notification if items owned by groups you are part of get updated ?	infolog	bg	Искате ли да получавате известие, ако се актуализират елементи, притежавани от групи, в които участвате?
 do you want a notification, if items get assigned to you or assigned items get updated?	infolog	bg	Желаете ли известие при назначаване задачи или при актуализация на вече назначените?
 do you want a notification, if items you are responsible for are about to start?	infolog	bg	Желаете ли известие преди началото на задачи, за които отговаряте?
 do you want a notification, if items you are responsible for are due?	infolog	bg	Желаете ли известие при достигане на крайния срок за задачи, за които отговаряте?
@@ -127,7 +150,11 @@ do you want to receive notifications as html-mails or plain text?	infolog	bg	И�
 don't show infolog	infolog	bg	НЕ показвай Дневника
 done	infolog	bg	приключен
 download	infolog	bg	Изтегляне
+download url for links	infolog	bg	URL адрес за изтегляне на връзки
+due %1	infolog	bg	Задължение %1
+due date	infolog	bg	Дата на падежа
 duration	infolog	bg	Продължителност
+e-mail:	infolog	bg	Имейл:
 each value is a line like <id>[=<label>]	infolog	bg	всяка стойност е ред във формат <id>[=<label>]
 edit	infolog	bg	Редактиране
 edit or create categories for ingolog	infolog	bg	Редактиране или създаване на категории за Дневника
@@ -146,29 +173,54 @@ enter a textual description of the log-entry	infolog	bg	въведете тек�
 enter the query pattern	infolog	bg	Въведете низ за запитване
 entry and all files	infolog	bg	Записа и всички файлове
 error: importing the ical	infolog	bg	Грешка при импорт на iCal
+error: no mail (mailbox / uid) given!	infolog	bg	Грешка: не е зададена поща (Пощенска кутия / UID)!
 error: saving the entry	infolog	bg	Грешка при запис
 error: the entry has been updated since you opened it for editing!	infolog	bg	Грешка: записът е бил обновен, след като сте го отворили за редакция!
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	infolog	bg	Пример {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - потърсете в полето "n_prefix" за "Mr", ако е намерено, напишете Hello Mr., в противен случай напишете Hello Ms.
+example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	infolog	bg	Пример {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Пример: Г-н д-р Джеймс Милър
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	infolog	bg	Пример {{NELF role}} - ако полето role не е празно, ще получите нов ред със стойността на полето role
+example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	infolog	bg	Пример {{nenvlf role}} - ако полето role не е празно, се задава LF без никаква стойност на полето
 execute a further action for this entry	infolog	bg	Изпълни допълнително за това събитие
 existing links	infolog	bg	Съществуващи връзки
+exists	infolog	bg	Съществува
+export definition to use for nextmatch export	infolog	bg	Определение за износ, което да се използва за износ на nextmatch
+exports in ical format.	infolog	bg	Експортира във формат iCal.
+exports infolog entries into a csv file.	infolog	bg	Експортира записи от InfoLog в CSV файл.
+favorites	infolog	bg	Любими
 fax	infolog	bg	Факс
 field must not be empty !!!	infolog	bg	Полето не може да бъде празно !!!
+fields to exclude when copying an infolog:	infolog	bg	Полета за изключване при копиране на InfoLog:
+fields to exclude when creating a sub-entry:	infolog	bg	Полета за изключване при създаване на подзапис:
 fieldseparator	infolog	bg	Разделител на полетата
 finish	infolog	bg	край
+first argument for preg_replace	infolog	bg	Първи аргумент за preg_replace
+for infolog type %1, %2 is required	infolog	bg	За тип InfoLog %1 се изисква %2
+for serial letter use this tag. put the content, you want to repeat between two tags.	infolog	bg	За серийно писмо използвайте този етикет. Поставете съдържанието, което искате да повторите, между два тага.
 for which types should this field be used	infolog	bg	за кои типове да се използва полето
 from	infolog	bg	От
 full list of placeholder names	infolog	bg	Пълен списък на имената на заместителите
 general fields:	infolog	bg	Общи полета:
+general settings	infolog	bg	Общи настройки
 global categories	infolog	bg	Глобални категории
 group owner for	infolog	bg	Група-собственик на
 high	infolog	bg	висок
 history	infolog	bg	История
 history logging	infolog	bg	Запис на история
 history logging and deleting of items	infolog	bg	Запис на история и изтриване на елементи
+how many description lines should be directly visible. further lines are available via a scrollbar.	infolog	bg	Колко реда на описанието трябва да се виждат директно. Допълнителни редове са достъпни чрез лента за превъртане.
+how wide should the description area be. this value is numeric and interpreted as em; 60 works reasonably well.	infolog	bg	Колко широка трябва да бъде областта за описание. Тази стойност е цифрова, напр. 60.
+html link to the current record	infolog	bg	HTML връзка към текущия запис
 id	infolog	bg	No.
-id#	infolog	bg	No.
+id#	infolog	bg	No#
 if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	bg	Ако за даден тип собственика е група, всички записи от този тип ще бъдат собственост на групата, НЕ на потребителя, който ги е създал!
 if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	bg	Ако не е зададен, редът за търсене и филтър е скрит за брой елементи, по-малък от "Максимален брой резултати на страница", дефиниран в настройките
+if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	infolog	bg	Ако тук посочите папка (пълен път до VFS), %1 показва действие за всеки документ. Това действие позволява да се изтегли посоченият документ с вмъкнатите данни.
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	infolog	bg	Ако посочите документ (пълен път до VFS) тук, %1 показва допълнителна икона на документ за всеки запис. Тази икона позволява да се изтегли посоченият документ с вмъкнатите данни.
+if you specify an export definition, it will be used when you export	infolog	bg	Ако посочите дефиниция за експорт, тя ще бъде използвана при експорт
 import next set	infolog	bg	импорт на следващ набор
+importance	infolog	bg	Важност
+imports entries into the infolog from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	infolog	bg	Импортира записи в InfoLog от CSV файл. CSV означава "стойности, разделени със запетая". В раздела с опции можете да изберете и други разделители.
+imports todos into infolog from an ical file.	infolog	bg	Импортиране на TODOs в InfoLog от iCal файл.
 info log	common	bg	Дневник
 infolog	common	bg	Дневник
 infolog - delete	infolog	bg	Дневник - Изтриване
@@ -177,22 +229,35 @@ infolog - import csv-file	infolog	bg	Дневник - Импорт на CSV-фа
 infolog - new	infolog	bg	Дневник - Нов
 infolog - new subproject	infolog	bg	Дневник - Нов подпроект
 infolog - subprojects from	infolog	bg	Дневник - Подпроект от
+infolog csv export	infolog	bg	Експорт на InfoLog в iCal
+infolog csv import	infolog	bg	Импорт на InfoLog iCal
+infolog encryption requires epl subscription	infolog	bg	Криптирането на InfoLog изисква абонамент за EPL
 infolog entry deleted	infolog	bg	Записът е изтрит от Дневника
 infolog entry saved	infolog	bg	Записът е запазен в Дневника
+infolog fields:	infolog	bg	Полета на InfoLog:
 infolog filter for the home screen	infolog	bg	Филтър за главния екран на Дневника
+infolog ical export	infolog	bg	Експорт на InfoLog в iCal
+infolog ical import	infolog	bg	Импорт на InfoLog iCal
+infolog id	infolog	bg	ID на InfoLog
 infolog list	infolog	bg	Дневник - списък
 infolog preferences	common	bg	Дневник - настройки
 infolog-fieldname	infolog	bg	Дневник - име на поле
+insert	infolog	bg	Вмъкване на
 insert in document	infolog	bg	Вмъкване в документа
 insert timestamp into description field	infolog	bg	Вмъкване на времева марка в полето за описание
 invalid filename	infolog	bg	Невалидно име на файл
+invalid owner id: %1.  might be a bad field translation.  used %2 instead.	infolog	bg	Невалиден идентификатор на собственика: %1. Вместо това използвайте %2.
+invalid status for entry type %1.	infolog	bg	Невалиден статус за тип запис %1.
 label<br>helptext	infolog	bg	Етикет<br>Помощен текст
 last changed	infolog	bg	Последна промяна
 last modified	infolog	bg	Последно изменение
+leave blank to get the used time calculated by timesheet entries	infolog	bg	Оставете празно поле, за да получите използваното време, изчислено от записите в таблицата за работното време
 leave it empty	infolog	bg	оставете непопълнено
 leave it empty for a full week	infolog	bg	Непопълнено - цяла седмица
 leave without saveing the entry	infolog	bg	изход без запис
 leaves without saveing	infolog	bg	изход без запис
+length	infolog	bg	Дължина
+limit list to last n month, if ordering by last-modified and not searching.	admin	bg	Ограничаване на списъка до последния N месец, ако се подрежда по последна промяна и не се търси.
 link	infolog	bg	Връзка
 links	infolog	bg	Връзки
 links of this entry	infolog	bg	Връзки на записа
@@ -274,6 +339,7 @@ receive notifications about starting entries you delegated	infolog	bg	Извес
 receive notifications as html-mails	infolog	bg	Получаване на известия във вид на HTML E-mail-и
 remark	infolog	bg	Забележка
 remove this link (not the entry itself)	infolog	bg	Премахване на връзката (не и на записа)
+respect timesheet run and read permissions for time totals	infolog	bg	Спазвайте правата за стартиране и четене на таблицата за работното време за общите суми
 responsible	infolog	bg	отговорен
 responsible open	infolog	bg	отворен от отговорника
 responsible overdue	infolog	bg	просрочен от отговорника
@@ -331,6 +397,7 @@ subject	infolog	bg	Тема
 task	infolog	bg	Предстоящо
 template	infolog	bg	Шаблон
 test import (show importable records <u>only</u> in browser)	infolog	bg	Тестов импорт (показва импортируемите записи <u>само</u> в браузъра)
+the document can contain placeholder like {{%1}}, to be replaced with the data.	infolog	bg	Документът може да съдържа заместители като {{%1}}, които да бъдат заменени с данните.
 the name used internaly (<= 10 chars), changeing it makes existing data unavailible	infolog	bg	името, използвано в системата (до 10 символа) Промяната му прави съществуващите данни недостъпни
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	infolog	bg	името, използвано в системата (до 20 символа) Промяната му прави съществуващите данни недостъпни
 the text displayed to the user	infolog	bg	текстът, показван на потребителя
@@ -360,10 +427,16 @@ view parent	infolog	bg	Показва "Родителя"
 view subs	infolog	bg	показва Под-
 view the parent of this entry and all his subs	infolog	bg	Показва Родителя на записа и всичките му под-
 view this linked entry in its application	infolog	bg	показва свързания запис в съотв. приложение
+when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	bg	Кога трябва да се започне изпълнението на задачата или телефонното обаждане, то се показва от тази дата в отворения филтър или собственото отваряне (начална страница)
 which additional fields should the responsible be allowed to edit without having edit rights?	infolog	bg	Кои допълнителни полета да бъдат достъпни за редакция от отговорника, без да има съответните права?
+which implicit acl rights should the responsible get	infolog	bg	Кои имплицитни ACL права трябва да получи отговорникът
+which participants should be preselected when scheduling an appointment.	infolog	bg	Кои участници трябва да бъдат предварително избрани при насрочване на среща.
 which types should the calendar show	infolog	bg	Кои типове да се показват в Календара
+which types should the calendar show like events?	infolog	bg	Кои типове трябва да се показват в календара като събития?
 will-call	infolog	bg	ще телефонира
 write (add or update) a record by passing its fields.	infolog	bg	Запис (добавяне или актуализация) на запис чрез подаване на полетата му
+yes - close	infolog	bg	Да - Затвори
+yes - close including sub-entries	infolog	bg	Да - Затваряне, включително подзаписи
 yes - delete	infolog	bg	Да - Изтриване
 yes - delete including sub-entries	infolog	bg	Да - Изтриване с под-записите
 yes, noone can purge deleted items	infolog	bg	Да, никой не може да заличава изтрити записи
@@ -371,7 +444,11 @@ yes, only admins can purge deleted items	infolog	bg	Да, само админи�
 yes, with larger fontsize	infolog	bg	Да, с по-голям размер на шрифта
 yes, with purging of deleted items possible	infolog	bg	Да, с възможност за заличаване на изтрити записи
 you can choose a categorie to be preselected, when you create a new infolog entry	infolog	bg	Може да настроите предварителен избор на категория при създаване на нов запис
+you can't delete one of the stock types !!!	infolog	bg	Не можете да изтриете един от типовете акции!
 you have entered an invalid ending date	infolog	bg	Въвели сте невалидна дата на приключване
 you have entered an invalid starting date	infolog	bg	Въвели сте невалидна начална дата
+you have to enter a name, to create a new type!	infolog	bg	Трябва да въведете име, за да създадете нов тип!
 you must enter a subject or a description	infolog	bg	Необходимо е да въведете тема или описание
+you need to select an entry for linking.	infolog	bg	Трябва да изберете запис за свързване.
+you need to select some entries first	infolog	bg	Първо трябва да изберете някои записи.
 your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	infolog	bg	Базата данни не е обновена (%1 вм. %2). Моля, използвайте %3setup%4 за обновяване.

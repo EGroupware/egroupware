@@ -52,6 +52,7 @@ all	infolog	sl	Vse
 all links and attachments	infolog	sl	Vse povezave in priponke
 all other %1 fields are valid	infolog	sl	Vsa druga polja %1 so veljavna
 all projects	infolog	sl	Vsi projekti
+allow to save entries with due date in the past	infolog	sl	Omogoči shranjevanje vnosov z datumom zapadlosti v preteklosti
 allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	sl	Dovoli spreminjanje statusov zapisov, npr. določi Opravilo kot končano, če se konča (vrednost je odvisna od tipa vhoda)
 alternatives	infolog	sl	Alternativa
 always show them	infolog	sl	Vedno jih pokažite
@@ -65,11 +66,13 @@ attach a file	infolog	sl	Pripni datoteko
 attach file	infolog	sl	Pripni datoteko
 attachments	infolog	sl	Priponke
 attention: no contact with address %1 found.	infolog	sl	Pozor: Stik z naslovom %1 ni bil najden.
+automatically check 'do not notify' for these types	infolog	sl	Za te vrste samodejno preverite možnost "Ne obveščaj".
 back to main list	infolog	sl	Nazaj na glavni seznam
 billed	infolog	sl	Obračunan
 both	infolog	sl	Oba
 call	infolog	sl	Klic
 can be used to show further infolog types in the calendar or limit it to show eg. only tasks.	infolog	sl	Lahko se uporabi za prikaz nadaljnjih vrst Infodnevnika v koledarju ali za omejitev prikaza npr. samp opravil.
+can not return an exact number of rows and therefore hides the count.	admin	sl	Ne more vrniti točnega števila vrstic, zato skrije število.
 cancel	infolog	sl	Prekliči
 cancelled	infolog	sl	Preklicano
 categories	infolog	sl	Kategorije
@@ -80,6 +83,7 @@ change completed	infolog	sl	Sprememba je končana.
 change completion	infolog	sl	Spremeni zaključeno
 change history	infolog	sl	Spremembe
 change owner when updating	infolog	sl	Spremenite lastnika ob posodabljanju
+change responsible	infolog	sl	Odgovoren za spremembo
 change the status of an entry, eg. close it	infolog	sl	Sprememba statusa vnosa, npr. zapiranje
 changed category to %1	infolog	sl	Spremenjena kategorija v %1
 changed completion to %1%	infolog	sl	Sprememba končanja na %1%
@@ -168,6 +172,7 @@ done	infolog	sl	Končano
 download	infolog	sl	Prenos
 download url for links	infolog	sl	Prenesi url za povezave
 due %1	infolog	sl	Zaradi %1
+due date	infolog	sl	Datum zapadlosti
 duration	infolog	sl	Trajanje
 e-mail:	infolog	sl	E-naslov:
 each value is a line like <id>[=<label>]	infolog	sl	vsaka vrednost je vrstice kot <šifra>[=<oznaka>]
@@ -222,17 +227,19 @@ high	infolog	sl	Visoko
 history	infolog	sl	Zgodovina
 history logging	infolog	sl	Beleenje zgodovine
 history logging and deleting of items	infolog	sl	Beleenje zgodovine in brisanje elementov
+how many description lines should be directly visible. further lines are available via a scrollbar.	infolog	sl	Koliko opisnih vrstic mora biti neposredno vidnih. Dodatne vrstice so na voljo v vrstici za pomikanje.
 how wide should the description area be. this value is numeric and interpreted as em; 60 works reasonably well.	infolog	sl	Kako široko bi bilo treba opisno območje. Ta vrednost je številka, npr. 60.
 html link to the current record	infolog	sl	Povezava HTML s trenutnim zapisom
 id	infolog	sl	Šifra
 id#	infolog	sl	ID#
 if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	sl	Če ima vrsta skupinskega lastnika, bo lastnik vseh vnosov te vrste dana skupina in NE uporabnik, ki jo je ustvaril!
 if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	sl	Če ni nastavljen, je vrstica za iskanje in filtriranje skrita za manj vnosov kakor "maksimalno število zadetkov na stran" (kakor je definirano v vaših nastavitvah.
-if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	infolog	sl	Če določite imenik (celotna pot vfs), bo %1 prikazalo dejanje za vsak dokument. To dejanje omogoča prenos določenega dokumenta z vstavljenimi podatki.
-if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	infolog	sl	Če določite dokument (celotno pot vfs) tukaj,%1 prikaže ikono dodatne ikone za vsak vnos. Ta ikona omogoča prenos določenega dokumenta z vstavljenimi podatki.
+if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	infolog	sl	Če določite imenik (celotna pot VFS), bo %1 prikazalo dejanje za vsak dokument. To dejanje omogoča prenos določenega dokumenta z vstavljenimi podatki.
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	infolog	sl	Če določite dokument (celotno pot VFS) tukaj,%1 prikaže ikono dodatne ikone za vsak vnos. Ta ikona omogoča prenos določenega dokumenta z vstavljenimi podatki.
 if you specify an export definition, it will be used when you export	infolog	sl	Če določite definicijo izvoza, se bo uporabil, ko boste izvozili
 import next set	infolog	sl	Uvozi naslednji niz
 importance	infolog	sl	Pomen
+imports entries into the infolog from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	infolog	sl	Uvoz vnosov v dnevnik InfoLog iz datoteke CSV. CSV pomeni "vrednosti, ločene z vejico". V zavihku Možnosti lahko izberete tudi druga ločila.
 imports todos into infolog from an ical file.	infolog	sl	Uvozi TODO v Infolog iz iCal datoteke.
 info log	common	sl	InfoDnevnik
 infolog	common	sl	InfoDnevnik
@@ -270,6 +277,7 @@ leave it empty for a full week	infolog	sl	Pustite prazen cel teden
 leave without saveing the entry	infolog	sl	Zapusti brez shranjevanja zapisa
 leaves without saveing	infolog	sl	Zapusti brez shranjevanja
 length	infolog	sl	Dolžina
+limit list to last n month, if ordering by last-modified and not searching.	admin	sl	Omejite seznam na zadnjih N mesecev, če se razvršča po zadnjem spremenjenem in ne išče.
 limit number of description lines (default 5, 0 for no limit)	infolog	sl	Omejite število opisnih vrstic. Privzeto = 5, 0 = brez omejitve.
 limit width of description column ((effective only if lines limit is set), 0 for no limit)	infolog	sl	Omejitev širine opisnega stolpca. Učinkovita le, če je nastavljena omejitev vrstic. 0 = brez omejitve.
 link	infolog	sl	Povezava
@@ -388,6 +396,7 @@ removed	infolog	sl	Odstranjeno.
 removed category	infolog	sl	odstranjena kategorija
 replacement	infolog	sl	Zamenjava
 replacements for inserting entries into documents	infolog	sl	Zamenjava za vstavljanje vnose v dokumente
+respect timesheet run and read permissions for time totals	infolog	sl	Upoštevajte dovoljenja za zagon časovnice in branje za skupne seštevke časa
 responsible	infolog	sl	Odgovoren
 responsible open	infolog	sl	Odgovoren odprt
 responsible open and upcoming	infolog	sl	Odgovoren odprt in prihajajoči
@@ -512,6 +521,7 @@ view the parent of this entry and all his subs	infolog	sl	Poglej nadrejenega in 
 view this linked entry in its application	infolog	sl	Poglej ta povezani vnos v njegovi aplikaciji
 when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	sl	Kdaj naj se Opravila ali Telefonski klic zaženejo?
 which additional fields should the responsible be allowed to edit without having edit rights?	infolog	sl	Katera dodatna polja lahko odgovorni ureja brez pravic za urejanje?
+which implicit acl rights should the responsible get	infolog	sl	Katere implicitne pravice ACL mora dobiti odgovorna oseba
 which participants should be preselected when scheduling an appointment.	infolog	sl	Kateri udeleženci je treba predhodno izbirati pri načrtovanju sestanka.
 which types should the calendar show	infolog	sl	Katere vrste naj koledar prikaže
 which types should the calendar show like events?	infolog	sl	Katere vrste naj koledar prikaže kot dogodki?
@@ -529,6 +539,7 @@ you can choose a categorie to be preselected, when you create a new infolog entr
 you can't delete one of the stock types !!!	infolog	sl	Ne morete izbrisati glavnega tipa!
 you have entered an invalid ending date	infolog	sl	Vnesli ste napačen končni datum
 you have entered an invalid starting date	infolog	sl	Vnesli ste napačen začetni datum
+you have to enter a name, to create a new type!	infolog	sl	Če želite ustvariti novo vrsto, morate vnesti ime!
 you must enter a subject or a description	infolog	sl	Vpisati morate predmet ali opis
 you need to select an entry for linking.	infolog	sl	Izbrati morate vnos za povezovanje.
 you need to select some entries first	infolog	sl	Najprej morate izbrati nekaj vnosov.

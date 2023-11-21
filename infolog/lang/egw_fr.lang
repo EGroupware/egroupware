@@ -196,6 +196,10 @@ error: importing the ical	infolog	fr	Erreur : lors de l'importation de l'iCal
 error: no mail (mailbox / uid) given!	infolog	fr	Erreur : pas d'email indiqué (mailbox / uid) !
 error: saving the entry	infolog	fr	Erreur: lors de l'enregistrement de l'entrée
 error: the entry has been updated since you opened it for editing!	infolog	fr	Erreur: cette entrée a été mise à jour pendant que vous l'aviez ouverte pour la modifier!
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	infolog	fr	Exemple {{IF n_prefix~Mr~Bonjour Mr.~Bonjour Ms.}} - recherche "Mr" dans le champ "n_prefix", si trouvé, écrire Hello Mr., sinon écrire Hello Ms.
+example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	infolog	fr	Exemple {{LETTERPREFIXCUSTOM n_prefixe titre n_famille}} - Exemple : M. Dr. James Miller
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	infolog	fr	Exemple {{NELF rôle}} - si le champ role n'est pas vide, vous obtiendrez une nouvelle ligne avec la valeur du champ role
+example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	infolog	fr	Exemple {{nenvlf rôle}} - si le champ role n'est pas vide, vous obtiendrez une nouvelle ligne avec la valeur du champ role.
 execute a further action for this entry	infolog	fr	Exécuter une action de plus pour cette entrée
 existing links	infolog	fr	Liens existants
 exists	infolog	fr	Existe
@@ -226,14 +230,14 @@ history logging and deleting of items	infolog	fr	Enregistrement de l'historique 
 how many description lines should be directly visible. further lines are available via a scrollbar.	infolog	fr	Combien de lignes de descriptions devraient être directement visibles. Les lignes supplémentaires sont disponibles via une barre de défilement.
 how wide should the description area be. this value is numeric and interpreted as em; 60 works reasonably well.	infolog	fr	Quelle largeur devrait avoir la zone de description. Cette valeur est numérique, par ex 60.
 html link to the current record	infolog	fr	Lien HTML vers l'enregistrement courant
-id	infolog	fr	Id
-id#	infolog	fr	Id#
+id	infolog	fr	ID
+id#	infolog	fr	ID#
 if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	fr	Si un type a un propriétaire de groupe, toutes les entrées de ce type appartiendront à ce groupe, et NON à l'utilisateur qui l'a créé!
 if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	fr	Si non renseigné, la ligne contenant la recherche et les filtres est cachée lorsqu'il y a plus d'entrées que le "Nombre max d'occurences correspondantes par page" (défini dans les préférences).
-if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	infolog	fr	Si vous spécifiez un répertoire (chemin vfs complet), %1 affiche une action pour chaque document. Cette action autorise le téléchargement du document spécifié avec les données insérées.
-if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	infolog	fr	Si vous spécifiez un répertoire (chemin vfs complet), %1 affiche une icône de document supplémentaire pour chaque entrée. Cette icône autorise le téléchargement du document spécifié avec les données insérée
+if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	infolog	fr	Si vous spécifiez un répertoire (chemin VFS complet), %1 affiche une action pour chaque document. Cette action autorise le téléchargement du document spécifié avec les données insérées.
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	infolog	fr	Si vous spécifiez un répertoire (chemin VFS complet), %1 affiche une icône de document supplémentaire pour chaque entrée. Cette icône autorise le téléchargement du document spécifié avec les données insérée
 if you specify an export definition, it will be used when you export	infolog	fr	Si vous spécifier un format d'export, il sera utilisé à l'export.
-import next set	infolog	fr	importer l´élément suivant
+import next set	infolog	fr	Importer l´élément suivant
 importance	infolog	fr	Importance
 imports entries into the infolog from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	infolog	fr	Importe les entrées dans l'Infolog depuis un fichier CSV. CSV veut dire 'Valeurs Séparées par des Virgules". Dans l'onglet d'options, vous pouvez aussi choisir d'autres séparateurs.
 imports todos into infolog from an ical file.	infolog	fr	Importer des tâches dans l'InfoLog depuis un fichier iCal.
@@ -270,8 +274,8 @@ last modified	infolog	fr	Dernière modification
 leave blank to get the used time calculated by timesheet entries	infolog	fr	Laisser blanc pour que le temps utilisé soit calculé par les entrées dans les feuilles de temps
 leave it empty	infolog	fr	laisser vide
 leave it empty for a full week	infolog	fr	Laisser vide pour une semaine complète
-leave without saveing the entry	infolog	fr	quitter sans enregistrer l'entrée
-leaves without saveing	infolog	fr	quitte sans enregistrer
+leave without saveing the entry	infolog	fr	Quitter sans enregistrer l'entrée
+leaves without saveing	infolog	fr	Quitte sans enregistrer
 length	infolog	fr	Longueur
 limit list to last n month, if ordering by last-modified and not searching.	admin	fr	Limiter la liste aux N derniers mois, en cas de tri par la date de modification et non par une recherche
 limit number of description lines (default 5, 0 for no limit)	infolog	fr	Limiter le nombre de lignes de description. Défaut = 5, 0 = pas de limite.
@@ -295,11 +299,11 @@ modifier	infolog	fr	Editeur
 modifierer	infolog	fr	Editeur
 name must not be empty !!!	infolog	fr	Le nom ne peut pas être vide !!!
 name of current user, all other contact fields are valid too	infolog	fr	Nom de l'utilisateur courant, tous les autres champs de contacts sont valides aussi
-name of new type to create	infolog	fr	nom du nouveau type à créer
+name of new type to create	infolog	fr	Nom du nouveau type à créer
 never hide search and filters	infolog	fr	Ne jamais cacher la recherche et les filtres
 new %1	infolog	fr	Nouveau %1
 new %1 created by %2 at %3	infolog	fr	Nouveau %1 créé par %2 à %3
-new name	infolog	fr	nouveau nom
+new name	infolog	fr	Nouveau nom
 new search	infolog	fr	Nouvelle recherche
 no - cancel	infolog	fr	Non - Abandonner
 no custom field "%1" for %2.	infolog	fr	Pas de champ personnalisé "%1" pour %2
@@ -393,6 +397,7 @@ removed	infolog	fr	Enlevé.
 removed category	infolog	fr	catégorie supprimée
 replacement	infolog	fr	Remplacement
 replacements for inserting entries into documents	infolog	fr	Remplacements pour insertion d'entrées dans des documents
+respect timesheet run and read permissions for time totals	infolog	fr	Respecter les droits d'exécution et de lecture des feuilles de temps pour les totaux de temps
 responsible	infolog	fr	Responsable
 responsible open	infolog	fr	Responsable ouverture
 responsible open and upcoming	infolog	fr	Responsable, ouvert et à venir
@@ -473,6 +478,7 @@ task	infolog	fr	ToDo
 tasks of	infolog	fr	Tâche de
 template	infolog	fr	Modèle
 test import (show importable records <u>only</u> in browser)	infolog	fr	Tester l'importation (montrer les enregistrements importables <u>seulement</u> dans le navigateur)
+the document can contain placeholder like {{%1}}, to be replaced with the data.	infolog	fr	Le document peut contenir des caractères génériques tels que {{%1}}, qui seront remplacés par les données.
 the following document-types are supported:	infolog	fr	Les types de documents suivants sont autorisés :
 the name used internaly (<= 10 chars), changeing it makes existing data unavailible	infolog	fr	le nom utilisé en interne (<= 10 caractères), le modifier rend les données indisponible
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	infolog	fr	le nom est utilisé en interne (<= 20 caractères), si vous le modifiez vous rendez les données indisponibles

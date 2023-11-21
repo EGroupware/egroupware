@@ -3,6 +3,7 @@
 %1 deleted by %2 at %3	infolog	fi	%1 poistanut: %2, klo %3
 %1 entries %2	infolog	fi	%1 merkintää %2
 %1 entries %2, %3 failed because of insufficent rights !!!	infolog	fi	%1 merkintää %2 epäonnistui riittämättömien oikeuksien takia!
+%1 entries %2, %3 failed.	infolog	fi	%1 merkinnät %2, %3 epäonnistui.
 %1 modified	infolog	fi	%1 muokattu
 %1 modified by %2 at %3	infolog	fi	%1 muokannut: %2, klo %3
 %1 records imported	infolog	fi	%1 tietue(tta) tuotu
@@ -49,9 +50,13 @@ added	infolog	fi	Lisätty
 addressbook placeholders available	infolog	fi	Osoitekirjan paikannimet käytettävissä
 all	infolog	fi	Kaikki
 all links and attachments	infolog	fi	Kaikki linkit ja liitteet
+all other %1 fields are valid	infolog	fi	Kaikki muut %1-kentät ovat kelvollisia
 all projects	infolog	fi	Kaikki projektit
+allow to save entries with due date in the past	infolog	fi	Salli tallentaa merkinnät, joiden eräpäivä on menneisyydessä.
 allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	fi	Salli tilan muokkaaminen, esim. tehtävän tehdyksi asettaminen, jos se on päättynyt (arvot riippuvat sisällön muodosta).
 alternatives	infolog	fi	Vaihtoehdot
+always show them	infolog	fi	Näytä ne aina
+application mail expected but got: %1	infolog	fi	Hakemussähköpostia odotettiin mutta saatiin: %1
 apply the action on the whole query, not only the shown entries!!!	infolog	fi	Lisää muutokset kaikkiin valttuihin, EI vain näkyvissä oleviin!!
 apply the changes	infolog	fi	Hyväksy muutokset
 archive	infolog	fi	Arkisto
@@ -61,11 +66,13 @@ attach a file	infolog	fi	Liitä tiedosto
 attach file	infolog	fi	Liitä tiedosto
 attachments	infolog	fi	Liitteet
 attention: no contact with address %1 found.	infolog	fi	Huomio: Yhteytietoja/Kontaktia %1 ei löytynyt
+automatically check 'do not notify' for these types	infolog	fi	Tarkista automaattisesti "Älä ilmoita" näille tyyppeille.
 back to main list	infolog	fi	Takaisin päälistaan
 billed	infolog	fi	Laskutettu
 both	infolog	fi	Molemmat
 call	infolog	fi	Puhelinsoitto
 can be used to show further infolog types in the calendar or limit it to show eg. only tasks.	infolog	fi	Valitse tehtävätyypit joiden haluat näkyvän kalenterissa. Voit myös rajoittaa kalenterissa näkyvien määrän vain esim. Tehtäviin.
+can not return an exact number of rows and therefore hides the count.	admin	fi	Ei voi palauttaa tarkkaa rivien lukumäärää ja piilottaa siksi lukumäärän.
 cancel	infolog	fi	Peruuta
 cancelled	infolog	fi	Peruutettu
 categories	infolog	fi	Kategoriat
@@ -76,6 +83,7 @@ change completed	infolog	fi	Muuta valmistumista
 change completion	infolog	fi	Muuta valmisprosenttia
 change history	infolog	fi	Muuta historiaa
 change owner when updating	infolog	fi	Muuta omistaja päivitettäessä
+change responsible	infolog	fi	Muutos vastuussa
 change the status of an entry, eg. close it	infolog	fi	Vaihda merkinnän tilaa, esim. "Valmis"
 changed category to %1	infolog	fi	Kategoria muutettu: %1
 changed completion to %1%	infolog	fi	Valmisprosentti muutettu: %1
@@ -90,6 +98,7 @@ close	infolog	fi	Sulje
 close all	infolog	fi	Sulje kaikki
 close this entry and all listed sub-entries	infolog	fi	Sulje tämä merkintä ja kaikki sen alamerkinnät
 closed	infolog	fi	Suljettu
+colon (:) separated list of field names to use if value is empty or to sum up	infolog	fi	Kaksoispisteellä (:) erotettu luettelo kenttien nimistä, joita käytetään, jos arvo on tyhjä tai jos halutaan laskea yhteen.
 comment	infolog	fi	Kommentti
 compare	infolog	fi	Vertaa
 completed	infolog	fi	Valmis
@@ -99,9 +108,11 @@ contact	infolog	fi	Yhteystieto
 contact cf	infolog	fi	Yhteystiedon lisäkentät
 contact fields	infolog	fi	Yhteystietokentät
 contactfield	infolog	fi	Yhteystietokenttä
+convert to a ticket	infolog	fi	Muunna tikettiin
 copy of:	infolog	fi	Kopio:
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	infolog	fi	Kopioi tekemäsi muutokset leikepöydälle, %1 lataa merkintä %2 ja sulauta ne.
 create new links	infolog	fi	Luo uusi linkki
+created	infolog	fi	Created
 creates a new field	infolog	fi	Luo uusi kenttä
 creates a new status with the given values	infolog	fi	Luo uusi tila annetuilla arvoilla
 creates a new typ with the given name	infolog	fi	Luo uusi tyyppi annetuilla nimillä
@@ -109,6 +120,7 @@ creation	infolog	fi	Luo uusi
 csv-fieldname	infolog	fi	CSV -kentän nimi
 csv-filename	infolog	fi	CSV -tiedoston nimi
 csv-import	common	fi	CSV -Tuonti
+current user	infolog	fi	Nykyinen käyttäjä
 custom	infolog	fi	Muokkaa
 custom contact-address, leave empty to use information from most recent link	infolog	fi	Yhteystieto, jätä tyhjäksi jos viimeisintä linkkiä käytetään
 custom contact-information, leave emtpy to use information from most recent link	infolog	fi	Yhteystieto, jätä tyhjäksi jos viimeisintä linkkiä käytetään
@@ -118,11 +130,12 @@ custom from	infolog	fi	Muokkaa:
 custom regarding	infolog	fi	Muokkaa:
 custom status for typ	infolog	fi	Muokattava tila tehtävätyypille
 customfields	infolog	fi	Lisäkentät
+data exchange settings	infolog	fi	Tiedonvaihtoasetukset
 date completed	infolog	fi	Valmistumispäivä
 date completed (leave it empty to have it automatic set if status is done or billed)	infolog	fi	Valmistumispäivä (jätä tyhjäksi automaattista asetusta varten, jos tilana on "Valmis" tai "Laskutettu")
 datecreated	infolog	fi	Luotu
 dates, status, access	infolog	fi	Päivämäärä, tila, käyttöoikeudet
-days	infolog	fi	päivää
+days	infolog	fi	Päivää
 default category for new infolog entries	infolog	fi	Oletuskategoria uusille tehtävämerkinnöille
 default document to insert entries	infolog	fi	Oletusasiakirja merkinnöille
 default filter for infolog	infolog	fi	Tehtävien oletussuodatin
@@ -146,6 +159,7 @@ determines the order the fields are displayed	infolog	fi	Määrittelee näkyviss
 directory with documents to insert entries	infolog	fi	Asiakirjojen oletuskansio
 disables a status without deleting it	infolog	fi	Ota tila pois käytöstä poistamatta sitä
 do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	fi	Haluatko vahvistuksen vastuuhenkilöltä: tehtävän hyväksymisestä, tehtävän valmistumisesta vai molemmista?
+do you want a notification if items owned by groups you are part of get updated ?	infolog	fi	Kas soovite teateid, kui teiega seotud rühmadele kuuluvad kirjed saavad uuendatud?
 do you want a notification, if items get assigned to you or assigned items get updated?	infolog	fi	Haluatko muistutusviestin, jos sinulle delegoidaan tai delegoimaasi merkintää/tehtävää päivitetään?
 do you want a notification, if items you are responsible for are about to start?	infolog	fi	Haluatko muistutusviestin, kun merkinnän/tehtävän alkamispäivä lähestyy, jos olet vastuuhenkilönä?
 do you want a notification, if items you are responsible for are due?	infolog	fi	Haluatko muistutusviestin, kun merkinnän/tehtävän eräpäivä lähestyy, jos olet vastuuhenkilönä?
@@ -178,6 +192,7 @@ enter a textual description of the log-entry	infolog	fi	Syötä tekstimuotoinen 
 enter the query pattern	infolog	fi	Anna tiedustelun malli
 entry and all files	infolog	fi	Merkintä ja kaikki tiedostot
 error: importing the ical	infolog	fi	Virhe tuotaessa iCal-tiedostoa
+error: no mail (mailbox / uid) given!	infolog	fi	Virhe: postia (postilaatikko / UID) ei ole annettu!
 error: saving the entry	infolog	fi	Virhe tallentaessa merkintää
 error: the entry has been updated since you opened it for editing!	infolog	fi	Virhe: Merkintää on päivitetty sen jälkeen kun avasit sen muokattavaksi!
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	infolog	fi	Esimerkki {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} --> etsii "n_prefix" kentästä  'Mr', jos olemassa kirjoita Hello Mr., muutoin kirjoita Hello Ms.
@@ -188,17 +203,23 @@ execute a further action for this entry	infolog	fi	Estä muutoksien tekeminen t�
 existing links	infolog	fi	Olemassa olevat linkit
 exists	infolog	fi	Olemassaoleva
 export definition to use for nextmatch export	infolog	fi	Vienti asetukset 'nextmatch' vientiin
+exports in ical format.	infolog	fi	Vie iCal-muodossa.
 exports infolog entries into a csv file.	infolog	fi	Tuo merkintöjä CSV tiedostoon
 favorites	infolog	fi	Suosikit
 fax	infolog	fi	Faksi
 field must not be empty !!!	infolog	fi	Kenttää ei voi jättää tyhjäksi!!
+fields to exclude when copying an infolog:	infolog	fi	Kentät, jotka jätetään pois InfoLogia kopioitaessa:
+fields to exclude when creating a sub-entry:	infolog	fi	Kentät, jotka jätetään pois, kun luodaan alikirjaus:
 fieldseparator	infolog	fi	Kenttäerotin
 finish	infolog	fi	Lopeta
+first argument for preg_replace	infolog	fi	Ensimmäinen argumentti preg_replace:lle
+for infolog type %1, %2 is required	infolog	fi	InfoLog-tyypin %1 osalta vaaditaan %2.
 for serial letter use this tag. put the content, you want to repeat between two tags.	infolog	fi	Käytä tägiä toistettaviin dokumentteihin. Lisää sisältö kahden tägin väliin.
 for which types should this field be used	infolog	fi	Mitkä tehtävätyypit käyttävät tätä kenttää?
 from	infolog	fi	Lähettäjä:
 full list of placeholder names	infolog	fi	Täydellinen luettelo paikanhaltijoiden nimistä
 general fields:	infolog	fi	Yleiset kentät
+general settings	infolog	fi	Yleiset asetukset
 global categories	infolog	fi	Yleiset kategoriat
 group owner for	infolog	fi	Ryhmän omistaja
 high	infolog	fi	Korkea
@@ -207,16 +228,18 @@ history logging	infolog	fi	Merkintöjen historia
 history logging and deleting of items	infolog	fi	Historia ja poistettujen merkintöjen lopullinen poistaminen. Kenellä on oikeus tarkastella ja poistaa lopullisesti (deletoituja) merkintöjä?
 how many description lines should be directly visible. further lines are available via a scrollbar.	infolog	fi	Kuinka monta riviä kuvaustekstiä on näkyvillä. Loput rivit ovat näkyvillä scroll barissa.
 how wide should the description area be. this value is numeric and interpreted as em; 60 works reasonably well.	infolog	fi	Merkitse kuvauskentän leveys numeerisena arvona esim. 60
+html link to the current record	infolog	fi	HTML-linkki nykyiseen tietueeseen
 id	infolog	fi	ID
 id#	infolog	fi	ID#
 if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	fi	Jos tyypin omistaa ryhmä, kaikki tapahtumat/merkinnät omistaa ryhmä, EI käyttäjä joka loi sen!
 if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	fi	Jos ei asetusta, Haku ja Suotimet ovat piilotettuina jos merkintöjä on vähemmän kuin saetettu kohdassa "maksimimäärä tuloksia per sivu".
-if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	infolog	fi	Määrittele kansio (koko vfs polku), ja %1 näyttää kaikki kansiossa olevat tiedostot. Valittu tiedosto voidaan ladata, sisältäen tiedostoon automaattisesti syötetyt tiedot.
-if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	infolog	fi	Määrittele tiedosto (koko vfs polku), ja %1 näyttää kaikki ylimääräisen kuvakkeen jokaiselle merkinnälle. Määritelty tiedosto voidaan ladata kuvaketta klikkaamalla, sisältäen tiedostoon automaattisesti syötetyt tiedot..
+if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	infolog	fi	Määrittele kansio (koko VFS polku), ja %1 näyttää kaikki kansiossa olevat tiedostot. Valittu tiedosto voidaan ladata, sisältäen tiedostoon automaattisesti syötetyt tiedot.
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	infolog	fi	Määrittele tiedosto (koko VFS polku), ja %1 näyttää kaikki ylimääräisen kuvakkeen jokaiselle merkinnälle. Määritelty tiedosto voidaan ladata kuvaketta klikkaamalla, sisältäen tiedostoon automaattisesti syötetyt tiedot..
 if you specify an export definition, it will be used when you export	infolog	fi	Valitse viennin oletusasetus
 import next set	infolog	fi	Tuo seuraava osa
 importance	infolog	fi	Tärkeys
 imports entries into the infolog from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	infolog	fi	Tuo merkintöjä CSV tiedostosta tehtävienhallintaan. CSV 'Comma Separated Values' tarkoittaa pilkulla eroitettuja arvoja. Voit valita myös muita erotustapoja.
+imports todos into infolog from an ical file.	infolog	fi	Tuo TODO-merkinnät InfoLogiin iCal-tiedostosta.
 info log	common	fi	Tehtävienhallinta
 infolog	common	fi	Tehtävienhallinta
 infolog - delete	infolog	fi	Tehtävä - Poista
@@ -225,13 +248,15 @@ infolog - import csv-file	infolog	fi	Tehtävienhallinta - Tuo CSV-tiedosto
 infolog - new	infolog	fi	Tehtävä - Uusi
 infolog - new subproject	infolog	fi	Tehtävienhallinta - Uusi aliprojekti
 infolog - subprojects from	infolog	fi	Tehtävienhallinta - Aliprojektit kohteesta
-infolog csv export	infolog	fi	CSV vienti
-infolog csv import	infolog	fi	CSV tuonti
+infolog csv export	infolog	fi	InfoLog CSV-vienti
+infolog csv import	infolog	fi	InfoLog CSV tuonti
 infolog encryption requires epl subscription	infolog	fi	InfoLog-salaus vaatii EPL-tilauksen.
 infolog entry deleted	infolog	fi	Merkintä poistettu
 infolog entry saved	infolog	fi	Merkintä tallennettu
 infolog fields:	infolog	fi	Kentät:
 infolog filter for the home screen	infolog	fi	Tehtävienhallinnan suodatin etusivulle
+infolog ical export	infolog	fi	InfoLog iCal -vienti
+infolog ical import	infolog	fi	InfoLog iCal tuonti
 infolog id	infolog	fi	Tehtävän ID
 infolog list	infolog	fi	Tehtävienhallinnan lista
 infolog preferences	common	fi	Tehtävienhallinnan asetukset
@@ -250,6 +275,8 @@ leave it empty	infolog	fi	Jätä tyhjäksi
 leave it empty for a full week	infolog	fi	Jätä tyhjäksi, jos kyseessä on koko viikko
 leave without saveing the entry	infolog	fi	Poistu tallentamatta merkintää
 leaves without saveing	infolog	fi	Poistu tallentamatta
+length	infolog	fi	Pituus
+limit list to last n month, if ordering by last-modified and not searching.	admin	fi	Rajoita luettelo viimeiseen N kuukauteen, jos järjestetään viimeisimmän muutetun mukaan eikä haeta.
 limit number of description lines (default 5, 0 for no limit)	infolog	fi	Rajoita kuvauskentän rivien määrää (Oletus on 5, merkitse 0, jos et halua rajoitusta).
 limit width of description column ((effective only if lines limit is set), 0 for no limit)	infolog	fi	Rajoita kuvauskentän kokoa, jos rivirajoitus on myös asetettu. 0=ei rajoitusta
 link	infolog	fi	Linkki
@@ -356,6 +383,7 @@ remove this link (not the entry itself)	infolog	fi	Poista tämä linkki (ei pois
 removed	infolog	fi	Poistettu.
 replacement	infolog	fi	Sijaismerkintä
 replacements for inserting entries into documents	infolog	fi	Asiakirjoihin syötettävät sijaismerkinnät
+respect timesheet run and read permissions for time totals	infolog	fi	Kunnioita työaikataulujen ajo- ja lukuoikeuksia aikasummia varten.
 responsible	infolog	fi	Vastuuhenkilö
 responsible open	infolog	fi	Vastuuhenkilö, avoimet
 responsible open and upcoming	infolog	fi	Vastuuhenkilö, avoimet ja tulevat
@@ -429,6 +457,7 @@ task	infolog	fi	Tehtävä
 tasks of	infolog	fi	Tehtävät:
 template	infolog	fi	Mallipohja
 test import (show importable records <u>only</u> in browser)	infolog	fi	Testi Tuonti (näytä tuotavat tietueet <u>vain</u> selaimessa)
+the document can contain placeholder like {{%1}}, to be replaced with the data.	infolog	fi	Asiakirjassa voi olla paikanmerkkejä, kuten {{%1}}, jotka korvataan tiedoilla.
 the following document-types are supported:	infolog	fi	Seuraavat tiedostotyypit ovat tuettuja:
 the name used internaly (<= 10 chars), changeing it makes existing data unavailible	infolog	fi	Nimi on sisäisessä käytössä (<= 10 merkkiä), sen muuttaminen aiheuttaa nykyisen tiedon menettämisen.
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	infolog	fi	Nimi on sisäisessä käytössä (<= 10 merkkiä), sen muuttaminen aiheuttaa nykyisen tiedon menettämisen.
@@ -468,7 +497,10 @@ view the parent of this entry and all his subs	infolog	fi	Näytä tämän merkin
 view this linked entry in its application	infolog	fi	Näytä tämä linkitetty merkintä sovelluksessa
 when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	fi	Millon tehtävän tai puhelinsoiton pitäisi alkaa, se näkyy sinä päivä avoimissa tai omissa avoimissa tehtävissä (aloitussivulla)?
 which additional fields should the responsible be allowed to edit without having edit rights?	infolog	fi	Mitä muita kenttiä vastuuhenkilö saa muokata, ilman että hänellä on muokkas oikeuksia?
+which implicit acl rights should the responsible get	infolog	fi	Mitkä implisiittiset ACL-oikeudet vastuullisen pitäisi saada?
+which participants should be preselected when scheduling an appointment.	infolog	fi	Mitkä osallistujat pitäisi valita ennalta, kun varataan tapaaminen.
 which types should the calendar show	infolog	fi	Mitkä Tehtävätyypit kalenterin tulisi näyttää
+which types should the calendar show like events?	infolog	fi	Mitkä tyypit kalenterin pitäisi näyttää kuten tapahtumat?
 will-call	infolog	fi	Soita
 write (add or update) a record by passing its fields.	infolog	fi	Kirjoita, lisää tai päivitä merkintä
 yes - close	infolog	fi	Kyllä - Sulje
@@ -483,6 +515,7 @@ you can choose a categorie to be preselected, when you create a new infolog entr
 you can't delete one of the stock types !!!	infolog	fi	Et voi poistaa mitään tyyppien ryhmästä !!!
 you have entered an invalid ending date	infolog	fi	Virheellinen erääntymispäivä
 you have entered an invalid starting date	infolog	fi	Virheellinen alkamispäivä
+you have to enter a name, to create a new type!	infolog	fi	Du skal indtaste et navn for at oprette en ny type!
 you must enter a subject or a description	infolog	fi	Anna aihe tai kuvaus
 you need to select an entry for linking.	infolog	fi	Valitse linkitettävä merkintä
 you need to select some entries first	infolog	fi	Valitse merkintä

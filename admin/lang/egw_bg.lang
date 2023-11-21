@@ -10,14 +10,19 @@
 %1 category(s) %2	admin	bg	%1 категория(и) %2
 %1 category(s) %2, %3 failed because of insufficent rights !!!	admin	bg	%1 категория(и) %2, %3 отпада поради недостатъчни права!!!
 %1 class not instanciated	admin	bg	%1 клас не е представен
+%1 entries deleted	admin	bg	%1 изтрити записи
 %1 entries deleted.	admin	bg	% 1 записа бяха изтрити.
 %1 group %2	admin	bg	% 1 група % 2
 %1 is no command!	admin	bg	% 1 не е "команда"!
-%1 log entries deleted.	admin	bg	% записи за регистрация са изтрити.
+%1 log entries deleted.	admin	bg	%1 записи за регистрация са изтрити.
+%1 mail credentials deleted	admin	bg	%1 изтрити пълномощни за поща
 %1 not found or not executable !!!	admin	bg	% 1 не е намерен или не е изпълним!
 %1 phrases saved.	admin	bg	% 1 запазени фрази.
 %1 rights for %2 and applications %3	admin	bg	% 1 има права за % 2 и приложение(я)% 3.
 %1 run rights for applications	admin	bg	%1 има права за приложенията
+%1 sessions killed	admin	bg	%1 убити сесии.
+%1 successful	admin	bg	%1 успешно
+%1 token %2.	admin	bg	%1 токен %2.
 %1 user %2	admin	bg	% 1 потребител % 2
 (de)activate mail accounts	admin	bg	(де)активиране на имейл акаунти
 (default no, leave it off if you dont use it)	admin	bg	По подразбиране = Не, остави го изключен, ако не се ползва

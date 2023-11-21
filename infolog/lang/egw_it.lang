@@ -27,7 +27,7 @@
 80%	infolog	it	80%
 90%	infolog	it	90%
 <b>file-attachments via symlinks</b> instead of uploads and retrieval via file:/path for direct lan-clients	infolog	it	<b>allegati via symlinks</b> invece che caricamento e recupero via file:/path per i lan-client diretti
-a short subject for the entry	infolog	it	un breve oggetto per la nota
+a short subject for the entry	infolog	it	Un breve oggetto per la nota
 abort without deleting	infolog	it	Annulla senza cancellare
 accept	infolog	it	Accetta
 action	infolog	it	Azione
@@ -189,7 +189,7 @@ enddate	infolog	it	Data Fine
 enddate can not be before startdate	infolog	it	La data finale non può precedere la data iniziale
 enter a custom contact, leave empty if linked entry should be used	infolog	it	inserisci un contatto personalizzato, lascia vuoto se vuoi usare la voce linkata
 enter a custom phone/email, leave empty if linked entry should be used	infolog	it	inserisci un numero di telefono/email personalizzato, lascia vuoto se vuoi usare la voce linkata
-enter a textual description of the log-entry	infolog	it	inserisci una descrizione testuale per il log della voce
+enter a textual description of the log-entry	infolog	it	Inserisci una descrizione testuale per il log della voce
 enter the query pattern	infolog	it	Inserisci la stringa di ricerca
 entry and all files	infolog	it	Inserimenti e tutti i files
 error: importing the ical	infolog	it	Errore: importando iCal
@@ -234,13 +234,13 @@ id	infolog	it	ID
 id#	infolog	it	ID #
 if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	it	Se un tipo di schede ha come proprietario un gruppo, tutte le voci di quel tipo saranno di quel gruppo e NON dell'utente che le ha create!
 if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	it	Se non impostato, la linea con ricerca e filtri viene nascosta per meno voci di "massime occorrenze per pagina" (come definito nelle tue preferenze comuni).
-if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	infolog	it	Se qui viene specificata una directory (un percorso completo vfs), %1 visualizza una azione per ogni documento. Questa azione consente di scaricare lo specifico documento
-if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	infolog	it	Se qui viene specificato un documento (un percorso completo vfs), %1 visualizza una icona di documento aggiuntiva per ogni voce. Questa icona consente di scaricare lo specifico documento.
+if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	infolog	it	Se qui viene specificata una directory (un percorso completo VFS), %1 visualizza una azione per ogni documento. Questa azione consente di scaricare lo specifico documento
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	infolog	it	Se qui viene specificato un documento (un percorso completo VFS), %1 visualizza una icona di documento aggiuntiva per ogni voce. Questa icona consente di scaricare lo specifico documento.
 if you specify an export definition, it will be used when you export	infolog	it	Se viene specificata un formato di esportazione, verrà utilizzato quando esporterai.
-import next set	infolog	it	importa il prossimo set
+import next set	infolog	it	Importa il prossimo set
 importance	infolog	it	Importanza
 imports entries into the infolog from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	infolog	it	Importa le schede attività in un file CSV. Puoi selezionare separatori anche diversi dalla virgola nella scheda opzioni.
-imports todos into infolog from an ical file.	infolog	it	Importa i ToDo da Attività in un file iCal
+imports todos into infolog from an ical file.	infolog	it	Importa i TODO da Attività in un file iCal
 info log	common	it	Attività
 infolog	common	it	Attività
 infolog - delete	infolog	it	Attività - Cancella
@@ -397,6 +397,7 @@ removed	infolog	it	Rimosso
 removed category	infolog	it	categoria rimossa
 replacement	infolog	it	Sostituzione
 replacements for inserting entries into documents	infolog	it	Sostituzioni per l'inserimento di voci in documenti
+respect timesheet run and read permissions for time totals	infolog	it	Rispettare le autorizzazioni di esecuzione e lettura del timesheet per i totali di tempo
 responsible	infolog	it	Responsabile
 responsible open	infolog	it	Responsabile aperte
 responsible open and upcoming	infolog	it	Responsabile aperte prossime

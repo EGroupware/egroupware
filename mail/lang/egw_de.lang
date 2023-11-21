@@ -293,7 +293,7 @@ if	mail	de	Wenn
 if authentication required	mail	de	Wenn Benutzeranmeldung erforderlich ist
 if different from email address	mail	de	Falls abweichend zur E-Mailadresse
 if from contains:(*)	mail	de	wenn Von enthält:(*)
-if mail body content / attachment type	mail	de	wenn E-Mail Text enthält /Anhang Type
+if mail body content / attachment type	mail	de	wenn E-Mail Text enthält/<br>Anhang Type
 if mail body message type	mail	de	wenn E-Mail Text
 if mail header	mail	de	wenn E-Mail-Header
 if message size	mail	de	wenn Nachrichtengröße
@@ -660,7 +660,7 @@ unsubscribe folder	mail	de	Ordner abbestellen
 unsubscribe from folder %1	mail	de	Ordner %1 abbestellen
 upload files...	mail	de	Anhang
 use default timeout (20 seconds)	mail	de	verwende Standard Timeout (20 Sekunden)
-use regular expressions (see wikipedia for information on posix regular expressions)	mail	de	Reguläre Ausdrücke verwenden (siehe <a href="https://en.wikipedia.org/wiki/Regular_expression" target="_blank">Wikipedia: Regular expression</a>)
+use regular expressions (see wikipedia for information on posix regular expressions)	mail	de	Reguläre Ausdrücke verwenden<br>(siehe https://en.wikipedia.org/wiki/Regular_expression)
 use source as displayed, if applicable	mail	de	Format wie E-Mail-Anzeige
 use username+password from current user	mail	de	Verwendet Benutzername+Passwort des angemeldeten Benutzers
 use wizard to detect or verify configuration	mail	de	Benutze Assistent um die Konfiguration zu erstellen und/oder zu verifizieren

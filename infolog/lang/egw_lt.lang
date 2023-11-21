@@ -1,7 +1,141 @@
+%1 entries %2, %3 failed.	infolog	lt	%1 įrašai %2, %3 nepavyko.
+(and children) deleted	infolog	lt	(ir vaikai) ištrinti.
 addressbook placeholders available	infolog	lt	Galimos adresų knygelės vietos žymos
+all other %1 fields are valid	infolog	lt	Visi kiti %1 laukai galioja
+allow to save entries with due date in the past	infolog	lt	Leisti išsaugoti įrašus, kurių terminai yra praėję
+always show them	infolog	lt	Visada juos rodyti
+application mail expected but got: %1	infolog	lt	Paraiškos el. pašto laukiama, bet gauta: %1
+automatically check 'do not notify' for these types	infolog	lt	Automatiškai pažymėti "Nepranešti" šiems tipams
+can not return an exact number of rows and therefore hides the count.	admin	lt	Negali grąžinti tikslaus eilučių skaičiaus, todėl paslepia skaičių.
+change	infolog	lt	Keisti
+change responsible	infolog	lt	Atsakingas už pokytį
+colon (:) separated list of field names to use if value is empty or to sum up	infolog	lt	Dvitaškiu (:) atskirtas laukų pavadinimų sąrašas, kurį reikia naudoti, jei reikšmė yra tuščia, arba sumuoti.
+contact cf	infolog	lt	Susisiekite su CF
+convert to a ticket	infolog	lt	Konvertuoti į bilietą
+created	infolog	lt	Sukurta
+current user	infolog	lt	Dabartinis naudotojas
+custom from	infolog	lt	Pasirinktinis iš
+customfields	infolog	lt	Pasirinktiniai laukai
+data exchange settings	infolog	lt	Keitimosi duomenimis nustatymai
+date completed	infolog	lt	Įvykdymo data
+date completed (leave it empty to have it automatic set if status is done or billed)	infolog	lt	Įvykdymo data. Palikite tuščią, jei norite, kad ji būtų nustatyta automatiškai, jei būsena yra baigta arba išrašyta sąskaita.
+default category for new infolog entries	infolog	lt	Numatytoji naujų "InfoLog" įrašų kategorija
+default document to insert entries	infolog	lt	Numatytasis dokumentas įrašams įterpti
+delegated	infolog	lt	Deleguota
+delegated open	infolog	lt	Deleguota atidaryti
+delegated open and upcoming	infolog	lt	Deleguotas atviras ir būsimas
+delegated overdue	infolog	lt	Deleguotas vėluojantis
+delegated upcomming	infolog	lt	Deleguotas būsimas
+delete selected entries?	infolog	lt	Ištrinti pasirinktus įrašus?
+delete this entry and all listed sub-entries	infolog	lt	Ištrinti šį įrašą ir visus išvardytus subįrašus
+directory with documents to insert entries	infolog	lt	Aplankas su dokumentais įrašams įterpti
+do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	lt	Ar norite gauti atsakingo asmens patvirtinimą apie užduoties priėmimą, jos užbaigimą, ar apie abu dalykus?
+do you want a notification if items owned by groups you are part of get updated ?	infolog	lt	Ar norite gauti pranešimą, jei atnaujinami grupėms, kurioms priklausote, priklausantys elementai?
+do you want a notification, if items get assigned to you or assigned items get updated?	infolog	lt	Gaukite pranešimą, jei jums priskirti įrašai arba priskirti įrašai atnaujinami.
+do you want a notification, if items you are responsible for are about to start?	infolog	lt	Gauti pranešimą, jei pradedami kurti įrašai, už kuriuos esate atsakingas.
+do you want a notification, if items you are responsible for are due?	infolog	lt	Gauti pranešimą, jei turi būti pradėti įrašai, už kuriuos esate atsakingas.
+do you want a notification, if items you created get updated?	infolog	lt	Gauti pranešimą, jei atnaujinami jūsų sukurti įrašai.
+do you want a notification, if items you delegated are about to start?	infolog	lt	Gaukite pranešimą, jei jūsų deleguoti įrašai netrukus bus pradėti.
+do you want a notification, if items you delegated are due?	infolog	lt	Gaukite pranešimą, jei jūsų deleguoti įrašai turi būti pradėti.
+do you want to receive notifications as html-mails or plain text?	infolog	lt	Gaukite pranešimus kaip HTML el. laiškus arba paprastą tekstą.
+don't show infolog	infolog	lt	NERODYTI informacijos žurnalo
+download	infolog	lt	Atsisiųsti
+download url for links	infolog	lt	Atsisiųsti nuorodų URL
+due %1	infolog	lt	Dėl %1
+due date	infolog	lt	Terminas
+e-mail:	infolog	lt	El:
 encrypt description	infolog	lt	Šifruoti aprašymą
+enddate	infolog	lt	Terminas
+enter the query pattern	infolog	lt	Įveskite užklausos šabloną
+entry and all files	infolog	lt	Įrašas ir visi failai
+error: no mail (mailbox / uid) given!	infolog	lt	Klaida: nepateiktas joks paštas (pašto dėžutė / UID)!
+error: saving the entry	infolog	lt	Klaida išsaugant įrašą!
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	infolog	lt	Pavyzdys {{IF n_prefiksas~Mr~Hello Mr.~Hello Ms.}}} - ieškokite lauke "n_prefix" žodžio "Mr", jei radote, rašykite Hello Mr., kitu atveju rašykite Hello Ms.
+example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	infolog	lt	Pavyzdys {{{LETTERPREFIXCUSTOM n_prefix pavadinimas n_family}} - Pavyzdys: James Miller.
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	infolog	lt	Pavyzdys {{{NELF vaidmuo}} - jei laukas role nėra tuščias, bus pateikta nauja eilutė su lauko role reikšme
+example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	infolog	lt	Pavyzdys {{nenvlf role}} - jei laukas role nėra tuščias, nustatysite LF be jokios lauko reikšmės
+execute a further action for this entry	infolog	lt	Atlikti tolesnį šio įrašo veiksmą
+exists	infolog	lt	Egzistuoja
+export definition to use for nextmatch export	infolog	lt	Eksporto apibrėžtis, kurią reikia naudoti nextmatch eksportui
+exports in ical format.	infolog	lt	Eksportuoja iCal formatu.
+exports infolog entries into a csv file.	infolog	lt	Eksportuoja InfoLog įrašus į CSV failą.
+favorites	infolog	lt	Mėgstamiausi
+fax	infolog	lt	Fax
+field must not be empty !!!	infolog	lt	Laukas negali būti tuščias!
+fields to exclude when copying an infolog:	infolog	lt	Laukai, į kuriuos reikia neįtraukti kopijuojant InfoLog:
+fields to exclude when creating a sub-entry:	infolog	lt	Laukai, kurių reikia neįtraukti kuriant papildomą įrašą:
+first argument for preg_replace	infolog	lt	Pirmasis preg_replace argumentas
+for infolog type %1, %2 is required	infolog	lt	InfoLog tipui %1, %2 yra privalomas
+for serial letter use this tag. put the content, you want to repeat between two tags.	infolog	lt	Serijinei raidei naudokite šią žymą. Turinį, kurį norite pakartoti, patalpinkite tarp dviejų žymų.
 full list of placeholder names	infolog	lt	Pilnas vietos laikiklių pavadinimų sąrašas
+general settings	infolog	lt	Bendrieji nustatymai
+global categories	infolog	lt	Bendrosios kategorijos
+group owner for	infolog	lt	Grupės savininkas
+high	infolog	lt	Didelė
+history	infolog	lt	Istorija
+history logging	infolog	lt	Istorijos registravimas
+history logging and deleting of items	infolog	lt	Istorijos registravimas ir elementų šalinimas
+how many description lines should be directly visible. further lines are available via a scrollbar.	infolog	lt	Kiek aprašymo eilučių turėtų būti tiesiogiai matoma. Daugiau eilučių galima matyti per slinkties juostą.
+how wide should the description area be. this value is numeric and interpreted as em; 60 works reasonably well.	infolog	lt	Kokio pločio turėtų būti aprašymo sritis. Ši reikšmė yra skaitinė, pvz., 60.
+html link to the current record	infolog	lt	HTML nuoroda į esamą įrašą
+id	infolog	lt	ID
+id#	infolog	lt	ID#
+if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	lt	Jei tipas turi grupės savininką, visi to tipo įrašai priklausys nurodytai grupei, o NE jį sukūrusiam naudotojui!
+if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	lt	Jei nenustatyta, eilutė su paieška ir filtrais bus paslėpta, jei įrašų yra mažiau nei "max matches per page", kaip nustatyta jūsų bendrosiose nuostatose.
+if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	infolog	lt	Jei čia nurodote aplanką (visą VFS kelią), %1 parodo kiekvieno dokumento veiksmą. Šis veiksmas leidžia atsisiųsti nurodytą dokumentą su įterptais duomenimis.
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	infolog	lt	Jei čia nurodote dokumentą (visą VFS kelią), %1 kiekvienam įrašui rodo papildomą dokumento piktogramą. Ši piktograma leidžia atsisiųsti nurodytą dokumentą su įterptais duomenimis.
+if you specify an export definition, it will be used when you export	infolog	lt	Jei nurodysite eksporto apibrėžtį, ji bus naudojama eksportuojant
+import next set	infolog	lt	Importuoti kitą rinkinį
+importance	infolog	lt	Svarbumas
+imports entries into the infolog from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	infolog	lt	Importuoja įrašus į InfoLog iš CSV failo. CSV reiškia "kableliais atskirtos vertės". Skirtuke Options (parinktys) taip pat galite pasirinkti kitus skirtukus.
+imports todos into infolog from an ical file.	infolog	lt	Importuoja TODO į "InfoLog" iš "iCal" failo.
+info log	common	lt	InfoLog
+infolog	common	lt	InfoLog
+infolog - delete	infolog	lt	InfoLog - Ištrinti
+infolog - edit	infolog	lt	InfoLog - Redaguoti
+infolog - import csv-file	infolog	lt	InfoLog - Importuoti CSV failą
+infolog - new	infolog	lt	InfoLog - Naujas
+infolog - new subproject	infolog	lt	InfoLog - Naujas paprojektis
+infolog - subprojects from	infolog	lt	InfoLog - Subprojektai iš
+infolog csv export	infolog	lt	InfoLog CSV eksportas
+infolog csv import	infolog	lt	InfoLog CSV importas
 infolog encryption requires epl subscription	infolog	lt	InfoLog šifravimui reikalinga EPL prenumerata
+infolog entry deleted	infolog	lt	InfoLog įrašas ištrintas
+infolog entry saved	infolog	lt	InfoLog įrašas išsaugotas
+infolog fields:	infolog	lt	InfoLog laukai:
+infolog filter for the home screen	infolog	lt	InfoLog filtras pagrindiniame ekrane
+infolog ical export	infolog	lt	InfoLog iCal eksportas
+infolog ical import	infolog	lt	InfoLog iCal importas
+infolog id	infolog	lt	InfoLog ID
+infolog list	infolog	lt	InfoLog sąrašas
+infolog preferences	common	lt	InfoLog nuostatos
+infolog-fieldname	infolog	lt	InfoLog lauko pavadinimas
+insert	infolog	lt	Įdėkite
+insert in document	infolog	lt	Įterpti į dokumentą
 insert timestamp into description field	infolog	lt	Laiko žymos įterpimas į aprašymo lauką
+invalid filename	infolog	lt	Netinkamas failo pavadinimas.
+invalid owner id: %1.  might be a bad field translation.  used %2 instead.	infolog	lt	Netinkamas savininko ID: %1. Vietoj jo naudokite %2.
+invalid status for entry type %1.	infolog	lt	Netinkama įrašo tipo %1 būsena.
+leave it empty	infolog	lt	Palikite tuščią
+leave it empty for a full week	infolog	lt	Palikite jį tuščią visai savaitei
+length	infolog	lt	Ilgis
+limit list to last n month, if ordering by last-modified and not searching.	admin	lt	Apriboti sąrašą iki paskutinio N mėnesio, jei eiliškumas nustatomas pagal paskutinį pakeitimą ir neieškoma.
 print this infolog	infolog	lt	Spausdinti šį informacinį žurnalą
 printing...	infolog	lt	Spausdinti...
+respect timesheet run and read permissions for time totals	infolog	lt	Laikykitės darbo laiko apskaitos žiniaraščio paleidimo ir skaitymo leidimų laiko sumoms
+the document can contain placeholder like {{%1}}, to be replaced with the data.	infolog	lt	Dokumente gali būti tokios pakaitinės žymos kaip {{%1}}, kurios bus pakeistos duomenimis.
+which implicit acl rights should the responsible get	infolog	lt	Kokias numanomas ACL teises turėtų gauti atsakingas asmuo
+which participants should be preselected when scheduling an appointment.	infolog	lt	Kurie dalyviai turėtų būti iš anksto pasirinkti planuojant susitikimą.
+which types should the calendar show	infolog	lt	Kokius tipus turėtų rodyti kalendorius
+which types should the calendar show like events?	infolog	lt	Kokius tipus kalendorius turėtų rodyti kaip įvykius?
+will-call	infolog	lt	Bus skambinama
+yes - close	infolog	lt	Taip - Uždaryti
+yes - close including sub-entries	infolog	lt	Taip - Uždaryti, įskaitant papildomus įrašus
+yes - delete	infolog	lt	Taip - Ištrinti
+yes - delete including sub-entries	infolog	lt	Taip - Ištrinti, įskaitant subįrašus
+you can choose a categorie to be preselected, when you create a new infolog entry	infolog	lt	Galite pasirinkti kategoriją, kuri bus iš anksto parinkta, kai kursite naują InfoLog įrašą.
+you can't delete one of the stock types !!!	infolog	lt	Negalima ištrinti vieno iš atsargų tipų!
+you have to enter a name, to create a new type!	infolog	lt	Norėdami sukurti naują tipą, turite įvesti pavadinimą!
+you need to select an entry for linking.	infolog	lt	Turite pasirinkti įrašą susiejimui.
+you need to select some entries first	infolog	lt	Pirmiausia turite pasirinkti kai kuriuos įrašus.
+your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	infolog	lt	Jūsų duomenų bazė NĖRA atnaujinta (%1 vs. %2), paleiskite %3setup%4 , kad atnaujintumėte duomenų bazę.

@@ -1,11 +1,16 @@
 %1 - %2 of %3 user accounts	admin	zh	共有%3个用户帐户, 正显示其中的第%1～%2个
 %1 - %2 of %3 user groups	admin	zh	第%1 到 %2 /共 %3 个用户组
+%1 acl entries deleted.	admin	zh	%1 条目已删除
 %1 acl records of not (longer) existing accounts deleted.	admin	zh	不 (再) 存在帐户%1的 ACL 纪录已被删除。
-%1 class not instanciated	admin	zh	%1类没有实例化
-%1 group %2	admin	zh	%1群组%2
-%1 is no command!	admin	zh	%1没有命令！
-%1 not found or not executable !!!	admin	zh	%1找不到或无法执行！
-%1 rights for %2 and applications %3	admin	zh	%2的权限%1和应用程序%3
+%1 class not instanciated	admin	zh	%1 类没有实例化
+%1 group %2	admin	zh	%1 群组%2
+%1 is no command!	admin	zh	%1 没有命令！
+%1 mail credentials deleted	admin	zh	删除了 %1 个邮件凭证
+%1 not found or not executable !!!	admin	zh	%1 找不到或无法执行！
+%1 rights for %2 and applications %3	admin	zh	%2 的权限%1和应用程序%3
+%1 sessions killed	admin	zh	%1 会话已删除。
+%1 successful	admin	zh	%1 成功
+%1 token %2.	admin	zh	%1 标记 %2.
 %1 user %2	admin	zh	%1用户%2
 (default no, leave it off if you dont use it)	admin	zh	(默认为否，如果您不打算使用请不要修改)
 (no subject)	admin	zh	(无主题)

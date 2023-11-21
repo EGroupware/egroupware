@@ -1,11 +1,18 @@
+%1 %2 rights for %3 on %4 to %5	admin	nl	%1 %2 rechten voor %3 op %4 tot %5
 %1 - %2 of %3 user accounts	admin	nl	%1 - %2 van %3 gebruikersaccounts
 %1 - %2 of %3 user groups	admin	nl	%1 - %2 van %3 gebruikersgroepen
 %1 acl records of not (longer) existing accounts deleted.	admin	nl	%1 ACL records van niet (meer) bestaande accounts zijn verwijderd.
 %1 class not instanciated	admin	nl	%1 klasse niet geinstantieerd
+%1 entries deleted	admin	nl	%1 vermeldingen verwijderd
+%1 entries deleted.	admin	nl	%1 vermeldingen verwijderd.
 %1 group %2	admin	nl	%1 groep %2
 %1 is no command!	admin	nl	%1 is geen commando!
+%1 mail credentials deleted	admin	nl	%1 mailgegevens verwijderd
 %1 not found or not executable !!!	admin	nl	%1 niet gevonden of niet uitvoerbaar!
 %1 rights for %2 and applications %3	admin	nl	%1 rechten voor %2 en toepassingen %3
+%1 sessions killed	admin	nl	%1 sessies beëindigd.
+%1 successful	admin	nl	%1 succesvol
+%1 token %2.	admin	nl	%1 token %2.
 %1 user %2	admin	nl	%1 gebruiker %2
 (default no, leave it off if you dont use it)	admin	nl	(standaard Nee, laat dit uit als je het niet gebruikt)
 (no subject)	admin	nl	(geen onderwerp)

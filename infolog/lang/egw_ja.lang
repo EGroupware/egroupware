@@ -5,7 +5,7 @@
 %1 entries %2, %3 failed because of insufficent rights !!!	infolog	ja	%1 個の項目を %2, %3 個は権限不足のため失敗。!!!
 %1 entries %2, %3 failed.	infolog	ja	%1 個の項目を %2, %3 個は失敗。
 %1 modified	infolog	ja	%1 を変更しました。
-%1 modified by %2 at %3	infolog	ja	%1 modified by %2 at %3
+%1 modified by %2 at %3	infolog	ja	%1 は %3 で %2 によって変更されました。
 %1 records imported	infolog	ja	%1 件インポートしました
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	infolog	ja	%1 個のレコードを読み込みましたが、まだインポートはしていません。ページを戻って、テスト・モードを解除してください。
 %1 you are responsible for is due at %2	infolog	ja	あなたが責任者である %1 の締切日は %2 です。
@@ -52,6 +52,7 @@ all	infolog	ja	全て
 all links and attachments	infolog	ja	全リンク/添付
 all other %1 fields are valid	infolog	ja	%1 以外の項目は有効です。
 all projects	infolog	ja	全プロジェクト
+allow to save entries with due date in the past	infolog	ja	期限日が過去のエントリの保存を許可する
 allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	ja	項目状態の設定を許可する。
 alternatives	infolog	ja	代替
 always show them	infolog	ja	常に表示
@@ -65,11 +66,13 @@ attach a file	infolog	ja	ファイルを添付
 attach file	infolog	ja	ファイルを添付
 attachments	infolog	ja	添付ファイル
 attention: no contact with address %1 found.	infolog	ja	注意: メール・アドレスが %1 のコンタクトを見つけることができません。
+automatically check 'do not notify' for these types	infolog	ja	これらのタイプに対して「通知しない」を自動的にチェックする
 back to main list	infolog	ja	一覧に戻る
 billed	infolog	ja	課金済み
 both	infolog	ja	両方
 call	infolog	ja	電話発呼
 can be used to show further infolog types in the calendar or limit it to show eg. only tasks.	infolog	ja	カレンダーで表示するインフォログのタイプを指定します。
+can not return an exact number of rows and therefore hides the count.	admin	ja	正確な行数を返せないため、カウントを隠します。
 cancel	infolog	ja	キャンセル
 cancelled	infolog	ja	キャンセルしました。
 categories	infolog	ja	カテゴリ
@@ -80,6 +83,7 @@ change completed	infolog	ja	変更を完了しました。
 change completion	infolog	ja	変更管理用
 change history	infolog	ja	履歴変更
 change owner when updating	infolog	ja	更新時に所有者を変更
+change responsible	infolog	ja	変更責任者
 change the status of an entry, eg. close it	infolog	ja	項目の状態を変更しました。
 changed category to %1	infolog	ja	カテゴリを %1 に変更しました。
 changed completion to %1%	infolog	ja	進捗度を %1% に変更しました。
@@ -167,7 +171,8 @@ don't show infolog	infolog	ja	インフォログを表示しない
 done	infolog	ja	完了
 download	infolog	ja	ダウンロード
 download url for links	infolog	ja	ダウンロード URL
-due %1	infolog	ja	Due %1
+due %1	infolog	ja	期限 %1
+due date	infolog	ja	期限
 duration	infolog	ja	期間
 e-mail:	infolog	ja	メール:
 each value is a line like <id>[=<label>]	infolog	ja	各値はそれぞれ1行で定義され、行書式は <id>[=<label>]
@@ -272,6 +277,7 @@ leave it empty for a full week	infolog	ja	全曜日を指定する場合は空�
 leave without saveing the entry	infolog	ja	項目を保存せずに終了。
 leaves without saveing	infolog	ja	保存せずに終了
 length	infolog	ja	長さ
+limit list to last n month, if ordering by last-modified and not searching.	admin	ja	last-modified で並べ替え、検索しない場合は、リストを最後の N ヶ月に制限します。
 limit number of description lines (default 5, 0 for no limit)	infolog	ja	説明文の行数制限。既定値 = 5, 0 = 無制限。
 limit width of description column ((effective only if lines limit is set), 0 for no limit)	infolog	ja	説明文の桁数制限。行数制限が指定されている場合のみ有効。0 = 無制限。
 link	infolog	ja	リンク
@@ -513,6 +519,7 @@ view the parent of this entry and all his subs	infolog	ja	この項目の親と�
 view this linked entry in its application	infolog	ja	この項目のリンク先情報を表示
 when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	ja	ToDo、または電話発呼を開始する日。指定日以降、フィルター「オープン」または「所有者 オープン」で表示されます。
 which additional fields should the responsible be allowed to edit without having edit rights?	infolog	ja	責任者が、編集権限無しでも編集可能な追加項目。
+which implicit acl rights should the responsible get	infolog	ja	担当者が取得すべき暗黙の ACL 権限はどれですか?
 which participants should be preselected when scheduling an appointment.	infolog	ja	約束をスケジュールする際に、あらかじめ選択される参加者を指定します。
 which types should the calendar show	infolog	ja	カレンダーで表示するタイプ
 which types should the calendar show like events?	infolog	ja	カレンダーで表示すべきタイプ（イベント等）。
@@ -530,6 +537,7 @@ you can choose a categorie to be preselected, when you create a new infolog entr
 you can't delete one of the stock types !!!	infolog	ja	システム定義タイプを削除することはできません!
 you have entered an invalid ending date	infolog	ja	不正な締切日が入力されました！
 you have entered an invalid starting date	infolog	ja	不正な開始日が入力されました！
+you have to enter a name, to create a new type!	infolog	ja	新しいタイプを作成するには、名前を入力する必要があります！
 you must enter a subject or a description	infolog	ja	件名、または説明を入力する必要があります。
 you need to select an entry for linking.	infolog	ja	リンクする項目を選択する必要があります。
 you need to select some entries first	infolog	ja	はじめに項目を選択する必要があります。

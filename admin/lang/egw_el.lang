@@ -1,6 +1,13 @@
+%1 %2 rights for %3 on %4 to %5	admin	el	%1 %2 δικαιώματα για %3 από %4 έως %5
 %1 - %2 of %3 user accounts	admin	el	%1 - %2 of %3 user accounts
 %1 acl records of not (longer) existing accounts deleted.	admin	el	%1 ACL εγγραφές από μη υπάρχοντες λογαριασμούς διαγράφηκαν.
+%1 entries deleted	admin	el	%1 εγγραφές διαγράφηκαν
+%1 entries deleted.	admin	el	%1 εγγραφές διαγράφηκαν.
+%1 mail credentials deleted	admin	el	%1 διαπιστευτήρια αλληλογραφίας διαγράφηκαν
 %1 not found or not executable !!!	admin	el	%1 not found or not executable !!!
+%1 sessions killed	admin	el	%1 συνεδρίες που τερματίστηκαν.
+%1 successful	admin	el	%1 επιτυχής
+%1 token %2.	admin	el	%1 token %2.
 (default no, leave it off if you dont use it)	admin	el	(προεπιλεγμένο Νο, να μείνει απενεργοποιημένο αν δεν χρησιμοποιείται)
 (no subject)	admin	el	(κανένα θέμα)
 (stored password will not be shown here)	admin	el	(Τα αποθηκευμένα password δεν θα εμφανίζονται εδω)

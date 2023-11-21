@@ -27,9 +27,9 @@
 80%	infolog	cs	80%
 90%	infolog	cs	90%
 <b>file-attachments via symlinks</b> instead of uploads and retrieval via file:/path for direct lan-clients	infolog	cs	<b>soubory připojené přes symbolické odkazy</b> místo uploadování a stahování přes file:/cesta pro přímé klienty LAN
-a short subject for the entry	infolog	cs	stručný předmět záznamu
+a short subject for the entry	infolog	cs	Stručný předmět záznamu
 abort without deleting	infolog	cs	Zrušit bez smazání
-accept	infolog	cs	přijmout
+accept	infolog	cs	Přijmout
 action	infolog	cs	Akce
 actions...	infolog	cs	Akce...
 actual date and time	infolog	cs	aktuální datum a čas
@@ -52,6 +52,7 @@ all	infolog	cs	Vše
 all links and attachments	infolog	cs	všechny odkazy a přílohy
 all other %1 fields are valid	infolog	cs	Všech ostatních %1 souborů je v pořádku
 all projects	infolog	cs	Všechny projekty
+allow to save entries with due date in the past	infolog	cs	Povolit uložení záznamů s datem splatnosti v minulosti
 allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	cs	umožňuje nastavit stav záznamu, např. úkol jako dokončený, když je dořešen (hodnota závisí na typu záznamu)
 alternatives	infolog	cs	Alternativy
 always show them	infolog	cs	vždy zobrazit
@@ -65,11 +66,13 @@ attach a file	infolog	cs	Připojit soubor
 attach file	infolog	cs	Připojit soubor
 attachments	infolog	cs	Přílohy
 attention: no contact with address %1 found.	infolog	cs	Upozornění: Žádný kontakt s adresou %1 nebyl nalezen.
+automatically check 'do not notify' for these types	infolog	cs	Automaticky zaškrtnout "Neoznamovat" u těchto typů
 back to main list	infolog	cs	Zpět na hlavní seznam
 billed	infolog	cs	vyúčtováno
 both	infolog	cs	obojí
 call	infolog	cs	hovor
 can be used to show further infolog types in the calendar or limit it to show eg. only tasks.	infolog	cs	Může být použit pro zobrazení dalších typů položek InfoLogu v kalendáři nebo naopak k jejich omezení např. jen na úkoly.
+can not return an exact number of rows and therefore hides the count.	admin	cs	Nemůže vrátit přesný počet řádků, a proto skrývá počet.
 cancel	infolog	cs	Zrušit
 cancelled	infolog	cs	zrušeno
 categories	infolog	cs	Kategorie
@@ -80,6 +83,7 @@ change completed	infolog	cs	Změna provedena
 change completion	infolog	cs	Provedení změn
 change history	infolog	cs	Změnit historii
 change owner when updating	infolog	cs	Při úpravě změnit vlastníka
+change responsible	infolog	cs	Zodpovídá za změnu
 change the status of an entry, eg. close it	infolog	cs	Změnit stav záznamu, např. jej uzavřít
 changed category to %1	infolog	cs	Kategorie byla změněna na %1
 changed completion to %1%	infolog	cs	Provedena změna na %1
@@ -168,6 +172,7 @@ done	infolog	cs	hotovo
 download	infolog	cs	Stáhnout
 download url for links	infolog	cs	Stáhnout URL propojení
 due %1	infolog	cs	Do %1
+due date	infolog	cs	期限
 duration	infolog	cs	Trvání
 e-mail:	infolog	cs	E-mail:
 each value is a line like <id>[=<label>]	infolog	cs	každá hodnota je řádkem jako <id>[=<label>]
@@ -188,7 +193,7 @@ enter a textual description of the log-entry	infolog	cs	zadejte textový popis z
 enter the query pattern	infolog	cs	Zadejte výraz pro vyhledávání
 entry and all files	infolog	cs	Záznam a všechny soubory
 error: importing the ical	infolog	cs	Chyba při importu iCal
-error: no mail (mailbox / uid) given!	infolog	cs	Chyba: není nastavena e-mailová schránka!
+error: no mail (mailbox / uid) given!	infolog	cs	Chyba: není zadán žádný mail (Mailbox / UID)!
 error: saving the entry	infolog	cs	Chyba při ukládání záznamu
 error: the entry has been updated since you opened it for editing!	infolog	cs	Chyba: záznam byl zaktualizován v době, kdy jste ho měl(a) otevřený pro editaci!
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	infolog	cs	Příklad {{IF n_prefix~Pan~Vážený pane~Vážená paní}} - hledá se výskyt slova "Pan" v poli "n_prefix", pokud je nalezeno, vloží se  text Vážený pane, jinak Vážená paní.
@@ -225,14 +230,14 @@ history logging and deleting of items	infolog	cs	Protokolování historie a maz�
 how many description lines should be directly visible. further lines are available via a scrollbar.	infolog	cs	Kolik řádek popisu má být vidět přímo. Ostatní řádky budou dostupné přes posouvací lištu.
 how wide should the description area be. this value is numeric and interpreted as em; 60 works reasonably well.	infolog	cs	Šířka pole pro popis, hodnota je číslo, např. 60.
 html link to the current record	infolog	cs	HTML odkaz na aktuální záznam
-id	infolog	cs	Id
-id#	infolog	cs	Id#
+id	infolog	cs	ID
+id#	infolog	cs	ID#
 if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	cs	Pokud má typ skupinového vlastníka, všechny položky toho typu bude vlastnit daná skupina, nikoli uživatel, který je vytvořil!
 if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	cs	Pokud není nastaveno, je řádek s filtry a hledáním skryt, je-li záznamů méně, než udává hodnota "maximum výsledků na stránku" (definovaná ve společných předvolbách).
-if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	infolog	cs	Pokud specifikujete složku (celou cestu vfs), %1 zobrazí se akce pro každý dokument. Touto akcí bude možné stáhnout požadovaný dokument s doplněnými údaji.
-if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	infolog	cs	Pokud specifikujete dokument (včetně celé cesty vfs), zobrazí se samostatná ikona pro každý záznam. Pomocí této ikony pak bude možné stáhnout požadovaný dokument s doplněnými údaji.
+if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	infolog	cs	Pokud specifikujete složku (celou cestu VFS), %1 zobrazí se akce pro každý dokument. Touto akcí bude možné stáhnout požadovaný dokument s doplněnými údaji.
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	infolog	cs	Pokud specifikujete dokument (včetně celé cesty VFS), zobrazí se samostatná ikona pro každý záznam. Pomocí této ikony pak bude možné stáhnout požadovaný dokument s doplněnými údaji.
 if you specify an export definition, it will be used when you export	infolog	cs	Pokud specifikujete definici pro export, bude při exportu použita.
-import next set	infolog	cs	importovat následující sadu
+import next set	infolog	cs	Importovat následující sadu
 importance	infolog	cs	Důležitost
 imports entries into the infolog from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	infolog	cs	Import záznamů do Úkolů ze souboru CSV (textový soubor s oddělovači). V záložce s možnostmi je možné vybrat druh oddělovače.
 imports todos into infolog from an ical file.	infolog	cs	Import záznamů do Úkolů ze souboru iCal.
@@ -267,11 +272,12 @@ label<br>helptext	infolog	cs	Označení<br>Text nápovědy
 last changed	infolog	cs	Naposledy změněno
 last modified	infolog	cs	Naposledy změněno
 leave blank to get the used time calculated by timesheet entries	infolog	cs	Ponechte prázdné, pro výpočet spotřebovaného času na základě pracovních výkazů
-leave it empty	infolog	cs	ponechat prázdné
+leave it empty	infolog	cs	Ponechat prázdné
 leave it empty for a full week	infolog	cs	Ponechte prázdné pro celý týden
-leave without saveing the entry	infolog	cs	ukončit bez uložení záznamu
-leaves without saveing	infolog	cs	ukončí bez ukládání
+leave without saveing the entry	infolog	cs	Ukončit bez uložení záznamu
+leaves without saveing	infolog	cs	Ukončí bez ukládání
 length	infolog	cs	Délka
+limit list to last n month, if ordering by last-modified and not searching.	admin	cs	Omezit seznam na posledních N měsíců, pokud se řadí podle poslední změny a nehledá se.
 limit number of description lines (default 5, 0 for no limit)	infolog	cs	Omezit počet řádek popisu (výchozí 5, pro zrušení limitu 0)
 limit width of description column ((effective only if lines limit is set), 0 for no limit)	infolog	cs	Omezení šířky pole pro popis. Má význam pouze, pokud je také nastaveno omezení pro počet řádků. Nula znamená bez omezení.
 link	infolog	cs	Propojení
@@ -514,6 +520,7 @@ view the parent of this entry and all his subs	infolog	cs	Zobrazit rodiče tohot
 view this linked entry in its application	infolog	cs	zobrazit odkazovaný záznam v jeho aplikaci
 when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	cs	kdy má být úkol nebo telefonní hovor započat (od tohoto data se ve filtru na úvodní straně zobrazuje jako otevřený nebo vlastní otevřený)
 which additional fields should the responsible be allowed to edit without having edit rights?	infolog	cs	Které dodatečné položky má mít odpovědná osoba možnost editovat bez toho, že by měla práva k editaci?
+which implicit acl rights should the responsible get	infolog	cs	Která implicitní práva ACL by měl odpovědný subjekt získat
 which participants should be preselected when scheduling an appointment.	infolog	cs	Kteří účastníci by měli být automaticky pozváni při vytváření schůzky.
 which types should the calendar show	infolog	cs	Které typy záznamů má kalendář zobrazovat
 which types should the calendar show like events?	infolog	cs	Které typy záznamů má kalendář zobrazovat jako událost?
@@ -531,6 +538,7 @@ you can choose a categorie to be preselected, when you create a new infolog entr
 you can't delete one of the stock types !!!	infolog	cs	Nemůžete smazat jeden z kmenových typů !!!
 you have entered an invalid ending date	infolog	cs	Zadal(a) jste neplatné datum dokočení
 you have entered an invalid starting date	infolog	cs	Zadal(a) jste neplatné počáteční datum
+you have to enter a name, to create a new type!	infolog	cs	Musíte zadat název, abyste mohli vytvořit nový typ!
 you must enter a subject or a description	infolog	cs	Musíte zadat předmět nebo popis
 you need to select an entry for linking.	infolog	cs	Pro vytvoření propojení musíte nejprve vybrat nějaký záznam.
 you need to select some entries first	infolog	cs	Nejprve musíte vybrat nějaký záznam.

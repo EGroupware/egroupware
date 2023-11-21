@@ -3,6 +3,7 @@
 %1 deleted by %2 at %3	infolog	es-es	%1 borrado por %2 a las %3
 %1 entries %2	infolog	es-es	%1 entradas %2
 %1 entries %2, %3 failed because of insufficent rights !!!	infolog	es-es	%1 entradas %2, %3 fallaron por permisos insuficientes
+%1 entries %2, %3 failed.	infolog	es-es	%1 entradas %2, %3 fallidas.
 %1 modified	infolog	es-es	%1 modificado
 %1 modified by %2 at %3	infolog	es-es	%1 modificado por %2 a las %3
 %1 records imported	infolog	es-es	%1 registros importados
@@ -11,6 +12,7 @@
 %1 you are responsible for is starting at %2	infolog	es-es	%1 usted es responsable y comienza en %2
 %1 you delegated is due at %2	infolog	es-es	%1 usted ha delegado y vence en %2
 %1 you delegated is starting at %2	infolog	es-es	%1 usted ha delegado y comienza en %2
+(and children) deleted	infolog	es-es	(e hijos) borradas.
 (no subject)	infolog	es-es	(Sin asunto)
 - subprojects from	infolog	es-es	- Subproyectos de
 0%	infolog	es-es	0%
@@ -25,9 +27,9 @@
 80%	infolog	es-es	80%
 90%	infolog	es-es	90%
 <b>file-attachments via symlinks</b> instead of uploads and retrieval via file:/path for direct lan-clients	infolog	es-es	<b>ficheros adjuntos por enlaces smbólicos</b> en vez de subir y recuperar con file:/ruta para clientes de la red local
-a short subject for the entry	infolog	es-es	descripción corta para la entrada
+a short subject for the entry	infolog	es-es	Descripción corta para la entrada
 abort without deleting	infolog	es-es	Cancelar sin eliminar
-accept	infolog	es-es	aceptar
+accept	infolog	es-es	Aceptar
 action	infolog	es-es	Acción
 actions...	infolog	es-es	Acciones...
 actual date and time	infolog	es-es	Fecha y hora actuales
@@ -48,9 +50,13 @@ added	infolog	es-es	añadido
 addressbook placeholders available	infolog	es-es	Marcadores de direcciones disponibles
 all	infolog	es-es	Todos
 all links and attachments	infolog	es-es	todos los enlaces y ficheros adjuntos
+all other %1 fields are valid	infolog	es-es	Todos los demás campos %1 son válidos
 all projects	infolog	es-es	Todos los proyectos
+allow to save entries with due date in the past	infolog	es-es	Permitir guardar entradas con fecha de vencimiento en el pasado
 allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	es-es	permite establecer el estado de una entrada, p.e. poner una tarea pendiente cono finalizada si está terminada (los valores dependen del tipo de entrada)
 alternatives	infolog	es-es	Alternativas
+always show them	infolog	es-es	Mostrarlas siempre
+application mail expected but got: %1	infolog	es-es	Correo electrónico de solicitud esperado pero recibido: %1
 apply the action on the whole query, not only the shown entries!!!	infolog	es-es	¡Aplicar la acción a toda la consulta, NO sólo a las entradas mostradas!
 apply the changes	infolog	es-es	Aplicar los cambios
 archive	infolog	es-es	archivar
@@ -60,20 +66,24 @@ attach a file	infolog	es-es	Adjuntar un archivo
 attach file	infolog	es-es	Adjuntar archivo
 attachments	infolog	es-es	Adjuntos
 attention: no contact with address %1 found.	infolog	es-es	Atención: no se encontraron contactos con la dirección %1
+automatically check 'do not notify' for these types	infolog	es-es	Marcar automáticamente 'No notificar' para estos tipos
 back to main list	infolog	es-es	Volver a lista principal
 billed	infolog	es-es	facturado
 both	infolog	es-es	ambos
 call	infolog	es-es	llamar
 can be used to show further infolog types in the calendar or limit it to show eg. only tasks.	infolog	es-es	Se puede usar para mostrar más tipos de entrada del registro en el calendario o limitar para mostrar, por ejemplo, sólo las tareas.
+can not return an exact number of rows and therefore hides the count.	admin	es-es	No puede devolver un número exacto de filas y, por tanto, oculta el recuento.
 cancel	infolog	es-es	Cancelar
 cancelled	infolog	es-es	Cancelado
 categories	infolog	es-es	Categorías
 category	infolog	es-es	Categoría
+change	infolog	es-es	Cambiar
 change category	infolog	es-es	Cambiar categoría
 change completed	infolog	es-es	Cambio completado
 change completion	infolog	es-es	Completado del cambio
 change history	infolog	es-es	Cambiar historial
 change owner when updating	infolog	es-es	Cambiar el propietario al actualizar
+change responsible	infolog	es-es	Modificar responsable
 change the status of an entry, eg. close it	infolog	es-es	Cambiar el estado de una entrada, p. ej. cerrarlo
 changed category to %1	infolog	es-es	La categoría se ha cambiado a %1
 changed completion to %1%	infolog	es-es	Se ha completado el cambio al %1%
@@ -95,11 +105,14 @@ completed	infolog	es-es	Completado
 configuration	infolog	es-es	Configuración
 confirm	infolog	es-es	Confirmar
 contact	infolog	es-es	Contacto
+contact cf	infolog	es-es	Contacto CF
 contact fields	infolog	es-es	Campos de contacto
 contactfield	infolog	es-es	Campo de contacto
+convert to a ticket	infolog	es-es	Convertir en ticket
 copy of:	infolog	es-es	Copia de:
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	infolog	es-es	Copiar los cambios al portapapeles, %1recargar la entrada%2 e incluirlos.
 create new links	infolog	es-es	Crear nuevos enlaces
+created	infolog	es-es	Creado
 creates a new field	infolog	es-es	crea un campo nuevo
 creates a new status with the given values	infolog	es-es	crea un nuevo estado con los valores dados
 creates a new typ with the given name	infolog	es-es	crea un nuevo tipo con el nombre dado
@@ -107,6 +120,7 @@ creation	infolog	es-es	Creación
 csv-fieldname	infolog	es-es	CSV-Nombre de campo
 csv-filename	infolog	es-es	CSV-Nombre de archivo
 csv-import	common	es-es	CSV-Importar
+current user	infolog	es-es	Usuario actual
 custom	infolog	es-es	Personalizado
 custom contact-address, leave empty to use information from most recent link	infolog	es-es	Dirección de contacto personalizada. Dejar en blanco para usar la información del enlace más reciente
 custom contact-information, leave emtpy to use information from most recent link	infolog	es-es	Información de contacto personalizada. Dejar en blanco para usar la información del enlace más reciente
@@ -145,6 +159,7 @@ determines the order the fields are displayed	infolog	es-es	determina el orden e
 directory with documents to insert entries	infolog	es-es	Directorio con documentos para insertar entradas
 disables a status without deleting it	infolog	es-es	deshabilita un estado sin eliminarlo
 do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	es-es	¿Desea una confirmación del responsable al aceptar, terminar la tarea, o ambos?
+do you want a notification if items owned by groups you are part of get updated ?	infolog	es-es	¿Quieres recibir una notificación si se actualizan los artículos que pertenecen a los grupos de los que formas parte?
 do you want a notification, if items get assigned to you or assigned items get updated?	infolog	es-es	¿Desea una notificación, si se le asignan elementos o se actualizan los elementos asignados?
 do you want a notification, if items you are responsible for are about to start?	infolog	es-es	¿Desea una notificación, si los elementos de los que usted es responsable van a empezar?
 do you want a notification, if items you are responsible for are due?	infolog	es-es	¿Desea una notificación, si los elementos de los que es responsable han vencido?
@@ -153,9 +168,11 @@ do you want a notification, if items you delegated are about to start?	infolog	e
 do you want a notification, if items you delegated are due?	infolog	es-es	¿Desea una notificación, si los elementos delegados por usted han vencido?
 do you want to receive notifications as html-mails or plain text?	infolog	es-es	¿Desea recibir las notifaciones como correo en html o texto sencillo?
 don't show infolog	infolog	es-es	NO mostrar el Registro de notas y tareas
-done	infolog	es-es	hecho
+done	infolog	es-es	Hecho
 download	infolog	es-es	Descargar
+download url for links	infolog	es-es	Descargar URL para enlaces
 due %1	infolog	es-es	Vencido %1
+due date	infolog	es-es	Fecha de vencimiento
 duration	infolog	es-es	Duración
 e-mail:	infolog	es-es	Dirección de correo:
 each value is a line like <id>[=<label>]	infolog	es-es	cada valor es una línea como <id>[=<etiqueta>]
@@ -176,6 +193,7 @@ enter a textual description of the log-entry	infolog	es-es	Introduzca un texto d
 enter the query pattern	infolog	es-es	Introduzca el patrón de búsqueda
 entry and all files	infolog	es-es	Entrada y todos los archivos
 error: importing the ical	infolog	es-es	Error al importar el fichero iCal
+error: no mail (mailbox / uid) given!	infolog	es-es	Error: ¡no se ha proporcionado ningún correo (Buzón / UID)!
 error: saving the entry	infolog	es-es	Error al guardar la entrada
 error: the entry has been updated since you opened it for editing!	infolog	es-es	Error: ¡La entrada ha sido actualizada desde que la abrió para editar!
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	infolog	es-es	Ejemplo {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - buscar el campo "n_prefix", para "Mr", si se encuentra, escribir  Hello Mr., si no, escribir Hello Ms.
@@ -186,13 +204,17 @@ execute a further action for this entry	infolog	es-es	Ejecutar una acción más 
 existing links	infolog	es-es	Enlaces existentes
 exists	infolog	es-es	Existe
 export definition to use for nextmatch export	infolog	es-es	Exportar la definición a usar para exportar nextmatch
+exports in ical format.	infolog	es-es	Exporta en formato iCal.
 exports infolog entries into a csv file.	infolog	es-es	Exporta entradas en un fichero CSV.
 favorites	infolog	es-es	Favoritos
 fax	infolog	es-es	Fax
 field must not be empty !!!	infolog	es-es	¡El campo no debe estar vacío!
+fields to exclude when copying an infolog:	infolog	es-es	Campos a excluir al copiar un InfoLog:
+fields to exclude when creating a sub-entry:	infolog	es-es	Campos a excluir al crear una subentrada:
 fieldseparator	infolog	es-es	Separador de campos
-finish	infolog	es-es	finalizar
-first argument for preg_replace	infolog	es-es	primer argumento para preg_replace
+finish	infolog	es-es	Finalizar
+first argument for preg_replace	infolog	es-es	Primer argumento para preg_replace
+for infolog type %1, %2 is required	infolog	es-es	Para el tipo de InfoLog %1, se requiere %2
 for serial letter use this tag. put the content, you want to repeat between two tags.	infolog	es-es	Para carta de serie use esta etiqueta. Ponga el contenido que quiera repetir entre dos etiquetas.
 for which types should this field be used	infolog	es-es	para qué tipos se usa este campo
 from	infolog	es-es	De
@@ -208,15 +230,17 @@ history logging and deleting of items	infolog	es-es	Registro histórico y borrad
 how many description lines should be directly visible. further lines are available via a scrollbar.	infolog	es-es	Cuántas líneas de descripción deben estar visibles directamente. Las líneas siguientes se ven mediante una barra de desplazamiento.
 how wide should the description area be. this value is numeric and interpreted as em; 60 works reasonably well.	infolog	es-es	Ancho deseado del área de descripción. Este valor es numérico y se interpreta como em; 60 funciona razonablemente bien.
 html link to the current record	infolog	es-es	Enlace HTML al registro actual
-id	infolog	es-es	Id
-id#	infolog	es-es	Id nº
+id	infolog	es-es	ID
+id#	infolog	es-es	ID nº
 if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	es-es	Si un tipo tiene un propietario para el grupo, todas las entradas de ese tipo pertenecerán al grupo y NO al usuario que las creó.
 if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	es-es	Si no hay valor inicial, la línea con los filtros de búsqueda y filtros está oculta para menos entradas que "máx. por página" (como se definió en las preferencias comunes).
+if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	infolog	es-es	Si especifica aquí una carpeta (ruta VFS completa), %1 muestra una acción para cada documento. Esa acción permite descargar el documento especificado con los datos insertados.
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	infolog	es-es	Si especifica un directorio aquí (la ruta vgs completa), %1 muestra un icono extra de documento para cada entrada. Ese icono permite descargar el documento especificado con los datos insertados.
 if you specify an export definition, it will be used when you export	infolog	es-es	Si especifica una definición de exportación, se usará al exportar
-import next set	infolog	es-es	importar juego siguiente
+import next set	infolog	es-es	Importar juego siguiente
 importance	infolog	es-es	Importancia
 imports entries into the infolog from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	infolog	es-es	Importa entradas en el registro desde un fichero CSV. CSV significa 'Valores Separados por Comas'. Sin embargo, en la pestaña de opciones también puede elegir otros separadores.
+imports todos into infolog from an ical file.	infolog	es-es	Importa TODOs a InfoLog desde un archivo iCal.
 info log	common	es-es	Registro de notas y tareas
 infolog	common	es-es	Registro de notas y tareas
 infolog - delete	infolog	es-es	Registro - Eliminar
@@ -232,6 +256,8 @@ infolog entry deleted	infolog	es-es	Se ha borrado la entrada del registro
 infolog entry saved	infolog	es-es	Se ha guardado la entrada en el registro
 infolog fields:	infolog	es-es	Campos del registro:
 infolog filter for the home screen	infolog	es-es	Filtro para el registro en la pantalla principal
+infolog ical export	infolog	es-es	InfoLog iCal exportar
+infolog ical import	infolog	es-es	InfoLog iCal importar
 infolog id	infolog	es-es	ID del Registro
 infolog list	infolog	es-es	Lista del registro
 infolog preferences	common	es-es	Preferencias del registro
@@ -246,10 +272,12 @@ label<br>helptext	infolog	es-es	Etiqueta<br>Texto de ayuda
 last changed	infolog	es-es	Último cambio
 last modified	infolog	es-es	Última modificación
 leave blank to get the used time calculated by timesheet entries	infolog	es-es	Dejar en blanco para conseguir el tiempo acumulado por las hojas de presencia
-leave it empty	infolog	es-es	dejar en blanco
+leave it empty	infolog	es-es	Dejar en blanco
 leave it empty for a full week	infolog	es-es	Dejar en blanco durante una semana completa
-leave without saveing the entry	infolog	es-es	abandonar sin guardar la entrada
-leaves without saveing	infolog	es-es	abandonar sin guardar
+leave without saveing the entry	infolog	es-es	Abandonar sin guardar la entrada
+leaves without saveing	infolog	es-es	Abandonar sin guardar
+length	infolog	es-es	Longitud
+limit list to last n month, if ordering by last-modified and not searching.	admin	es-es	Limitar la lista a los últimos N meses, si se ordena por último modificado y no se busca.
 limit number of description lines (default 5, 0 for no limit)	infolog	es-es	Limitar el número de líneas de la descripción (predeterminado: 5, 0 para ilimitadas)
 limit width of description column ((effective only if lines limit is set), 0 for no limit)	infolog	es-es	Limitar el ancho de la columna de la descripción (efectivo sólo si hay límite para las líneas, 0 para sin límites)
 link	infolog	es-es	Enlace
@@ -466,7 +494,10 @@ view the parent of this entry and all his subs	infolog	es-es	Ver el padre de est
 view this linked entry in its application	infolog	es-es	ver esta entrada vinculada en su aplicación
 when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	es-es	Cuándo se debe iniciar las tareas pendientes o llamada de teléfono. Se muestra en la fecha del filtro o al abrir manualmente en la página de inicio
 which additional fields should the responsible be allowed to edit without having edit rights?	infolog	es-es	¿Qué campos adicionales puede editar el responsable sin tener derechos de edición?
+which implicit acl rights should the responsible get	infolog	es-es	¿Qué derechos ACL implícitos debe tener el responsable?
+which participants should be preselected when scheduling an appointment.	infolog	es-es	¿Qué participantes deberían preseleccionarse al programar una cita?
 which types should the calendar show	infolog	es-es	Qué tipos debe mostrar el calendario
+which types should the calendar show like events?	infolog	es-es	¿Qué tipos debe mostrar el calendario como eventos?
 will-call	infolog	es-es	va a llamar
 write (add or update) a record by passing its fields.	infolog	es-es	Escribir (añadir o actualizar) un registro pasando sus campos.
 yes - close	infolog	es-es	Sí, cerrar
@@ -481,6 +512,7 @@ you can choose a categorie to be preselected, when you create a new infolog entr
 you can't delete one of the stock types !!!	infolog	es-es	¡¡No puede borrar uno de los tipos almacenados!!
 you have entered an invalid ending date	infolog	es-es	Ha introducido una fecha de finalización que no es válida
 you have entered an invalid starting date	infolog	es-es	Ha introducido una fecha de inicio que no es válida
+you have to enter a name, to create a new type!	infolog	es-es	Debe introducir un nombre para crear un nuevo tipo.
 you must enter a subject or a description	infolog	es-es	Debe introducir un asunto o descripción
 you need to select an entry for linking.	infolog	es-es	Necesita seleccionar una entrada para vincular.
 you need to select some entries first	infolog	es-es	Necesita seleccionar antes algunas entradas

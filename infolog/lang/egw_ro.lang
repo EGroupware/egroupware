@@ -1,7 +1,122 @@
+%1 entries %2	infolog	ro	%1 intrări %2
+%1 entries %2, %3 failed because of insufficent rights !!!	infolog	ro	%1 intrări %2, %3 au eșuat din cauza drepturilor insuficiente !!!
+%1 entries %2, %3 failed.	infolog	ro	%1 intrări %1 %2, %3 au eșuat.
+(and children) deleted	infolog	ro	(și copii) șterse.
 addressbook placeholders available	infolog	ro	Carnet de adrese disponibile
+all other %1 fields are valid	infolog	ro	Toate celelalte câmpuri %1 sunt valide
+allow to save entries with due date in the past	infolog	ro	Permiteți salvarea intrărilor cu data scadentă în trecut
+always show them	infolog	ro	Afișați-le întotdeauna
+application mail expected but got: %1	infolog	ro	E-mail de cerere așteptat, dar primit: %1
+automatically check 'do not notify' for these types	infolog	ro	Bifați automat "Do not notify" pentru aceste tipuri de cereri
+can not return an exact number of rows and therefore hides the count.	admin	ro	Nu poate returna un număr exact de rânduri și, prin urmare, ascunde numărul.
+change	infolog	ro	Modificare
+change responsible	infolog	ro	Schimbare responsabilă
+colon (:) separated list of field names to use if value is empty or to sum up	infolog	ro	listă de nume de câmpuri separate prin două puncte (:) care trebuie utilizate dacă valoarea este goală sau pentru a însuma
+contact cf	infolog	ro	Contact CF
+convert to a ticket	infolog	ro	Conversia într-un bilet
+created	infolog	ro	Creat
+current user	infolog	ro	Utilizator curent
+custom from	infolog	ro	Personalizat de la
+customfields	infolog	ro	Câmpuri personalizate
+data exchange settings	infolog	ro	Setări privind schimbul de date
+date completed	infolog	ro	Data finalizării
+date completed (leave it empty to have it automatic set if status is done or billed)	infolog	ro	Data finalizării. Lăsați gol pentru ca aceasta să fie setată automat dacă statutul este terminat sau facturat.
+default category for new infolog entries	infolog	ro	Categoria implicită pentru noile intrări InfoLog
+default document to insert entries	infolog	ro	Documentul implicit pentru inserarea intrărilor
+delegated	infolog	ro	Delegat
+delegated open	infolog	ro	Delegat deschis
+delegated open and upcoming	infolog	ro	Delegat deschis și viitor
+delegated overdue	infolog	ro	Delegat în întârziere
+delegated upcomming	infolog	ro	Delegat viitoare
+delete selected entries?	infolog	ro	Ștergeți intrările selectate?
+delete this entry and all listed sub-entries	infolog	ro	Ștergeți această intrare și toate subînregistrările enumerate
+directory with documents to insert entries	infolog	ro	Dosar cu documente pentru a introduce intrări
+do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	ro	Doriți o confirmare a responsabilului la acceptare, la terminarea sarcinii sau la ambele.
+do you want a notification if items owned by groups you are part of get updated ?	infolog	ro	Doriți o notificare în cazul în care elementele deținute de grupurile din care faceți parte sunt actualizate?
+do you want a notification, if items get assigned to you or assigned items get updated?	infolog	ro	Primiți o notificare dacă se actualizează intrările care vă sunt atribuite sau intrările atribuite.
+do you want a notification, if items you are responsible for are about to start?	infolog	ro	Primiți o notificare dacă intrările de care sunteți responsabil sunt pe cale să înceapă.
+do you want a notification, if items you are responsible for are due?	infolog	ro	Primiți o notificare dacă intrările de care sunteți responsabil sunt scadente.
+do you want a notification, if items you created get updated?	infolog	ro	Primiți notificări dacă intrările pe care le-ați creat sunt actualizate.
+do you want a notification, if items you delegated are about to start?	infolog	ro	Primiți o notificare dacă intrările pe care le-ați delegat sunt pe cale să înceapă.
+do you want a notification, if items you delegated are due?	infolog	ro	Primiți notificări dacă intrările pe care le-ați delegat sunt scadente.
+do you want to receive notifications as html-mails or plain text?	infolog	ro	Primiți notificări sub formă de e-mailuri HTML sau text simplu.
+don't show infolog	infolog	ro	NU afișați InfoLog
+download	infolog	ro	Descărcați
+download url for links	infolog	ro	URL de descărcare pentru linkuri
+due %1	infolog	ro	Due %1
+due date	infolog	ro	Data scadentă
+e-mail:	infolog	ro	Email:
 encrypt description	infolog	ro	Criptare descriere
+enddate	infolog	ro	Data scadentă
+error: no mail (mailbox / uid) given!	infolog	ro	Eroare: nu s-a dat niciun mail (Mailbox / UID)!
+error: saving the entry	infolog	ro	Eroare de salvare a intrării!
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	infolog	ro	Exemplu {{IF n_prefix~Mr~Bună ziua domnule ~Bună ziua doamnă}} - caută în câmpul "n_prefix", pentru "Mr", dacă se găsește, scrie Hello Mr., altfel scrie Hello Ms.
+example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	infolog	ro	Exemplu {{LETTERPREFIXCUSTOM n_prefix titlu n_familie}}. - Exemplu: Dl Dr. James Miller
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	infolog	ro	Exemplu {{NELF rol}} - dacă câmpul role nu este gol, se va obține o nouă linie cu valoarea câmpului role
+example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	infolog	ro	Exemplu {{nenvlf role}} - dacă câmpul rol nu este gol, se va seta un LF fără nicio valoare a câmpului
+execute a further action for this entry	infolog	ro	Executați o acțiune suplimentară pentru această intrare
+exists	infolog	ro	Există
+export definition to use for nextmatch export	infolog	ro	Definiția de export care trebuie utilizată pentru exportul nextmatch
+exports in ical format.	infolog	ro	Exportă în format iCal.
+exports infolog entries into a csv file.	infolog	ro	Exportă intrările InfoLog într-un fișier CSV.
+favorites	infolog	ro	Favorite
+fax	infolog	ro	Fax
+field must not be empty !!!	infolog	ro	Câmpul nu trebuie să fie gol!
+fields to exclude when copying an infolog:	infolog	ro	Câmpuri de exclus la copierea unui InfoLog:
+fields to exclude when creating a sub-entry:	infolog	ro	Câmpuri care trebuie excluse la crearea unei intrări secundare:
+fieldseparator	infolog	ro	Separator de câmpuri
+finish	infolog	ro	Terminare
+first argument for preg_replace	infolog	ro	Primul argument pentru preg_replace
+for infolog type %1, %2 is required	infolog	ro	Pentru tipul de InfoLog %1, este necesar %2
+for serial letter use this tag. put the content, you want to repeat between two tags.	infolog	ro	Pentru litera de serie se utilizează această etichetă. Așezați conținutul pe care doriți să îl repetați între două etichete.
+for which types should this field be used	infolog	ro	Pentru ce tipuri ar trebui utilizat acest câmp
+from	infolog	ro	De la
 full list of placeholder names	infolog	ro	Lista completă a numelor de caractere de poziție
+general fields:	infolog	ro	Câmpuri generale:
+general settings	infolog	ro	Setări generale
+global categories	infolog	ro	Categorii globale
+group owner for	infolog	ro	Proprietarul grupului pentru
+high	infolog	ro	Mare
+history	infolog	ro	Istoric
+history logging	infolog	ro	Înregistrarea istoricului
+history logging and deleting of items	infolog	ro	Înregistrarea istoricului și ștergerea elementelor
+how many description lines should be directly visible. further lines are available via a scrollbar.	infolog	ro	Câte linii de descriere trebuie să fie direct vizibile. Liniile suplimentare sunt disponibile prin intermediul unei bare de derulare.
+how wide should the description area be. this value is numeric and interpreted as em; 60 works reasonably well.	infolog	ro	Cât de largă trebuie să fie zona de descriere. Această valoare este numerică, de exemplu, 60.
+html link to the current record	infolog	ro	Legătură HTML către înregistrarea curentă
+id	infolog	ro	ID
+id#	infolog	ro	ID#
+if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	ro	Dacă un tip are un proprietar de grup, toate intrările din acel tip vor fi deținute de grupul dat și NU de utilizatorul care l-a creat!
+if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	ro	Dacă nu este setată, linia cu căutare și filtre este ascunsă pentru mai puține intrări decât "max matches per page" (număr maxim de potriviri pe pagină), așa cum este definit în preferințele dvs. comune.
+if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	infolog	ro	Dacă specificați aici un dosar (calea completă VFS), %1 afișează o acțiune pentru fiecare document. Acțiunea respectivă permite descărcarea documentului specificat cu datele inserate.
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	infolog	ro	Dacă specificați aici un document (cale VFS completă), %1 afișează o pictogramă suplimentară a documentului pentru fiecare înregistrare. Această pictogramă permite descărcarea documentului specificat cu datele inserate.
+if you specify an export definition, it will be used when you export	infolog	ro	Dacă specificați o definiție de export, aceasta va fi utilizată atunci când exportați
+import next set	infolog	ro	Importați următorul set
+importance	infolog	ro	Importanță
+imports entries into the infolog from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	infolog	ro	Importă intrările în InfoLog dintr-un fișier CSV. CSV înseamnă "Comma Separated Values" (valori separate prin virgulă). În fila "Opțiuni" puteți alege și alți separatori.
+imports todos into infolog from an ical file.	infolog	ro	Importă TODO-uri în InfoLog dintr-un fișier iCal.
+info log	common	ro	InfoLog
+infolog	common	ro	InfoLog
+infolog - subprojects from	infolog	ro	InfoLog - Subproiecte din
 infolog encryption requires epl subscription	infolog	ro	Criptarea InfoLog necesită abonament EPL
+infolog ical export	infolog	ro	Export InfoLog iCal
+infolog ical import	infolog	ro	Import InfoLog iCal
 insert timestamp into description field	infolog	ro	Inserarea datei și a orei în câmpul de descriere
 print this infolog	infolog	ro	Tipăriți acest InfoLog
 printing...	infolog	ro	Imprimarea...
+respect timesheet run and read permissions for time totals	infolog	ro	Respectați permisiunile de execuție și de citire a foii de pontaj pentru totalurile de timp
+the document can contain placeholder like {{%1}}, to be replaced with the data.	infolog	ro	Documentul poate conține caractere de subsol, cum ar fi {{%1}}, care vor fi înlocuite cu datele.
+which implicit acl rights should the responsible get	infolog	ro	Ce drepturi ACL implicite ar trebui să primească responsabilul
+which participants should be preselected when scheduling an appointment.	infolog	ro	Ce participanți ar trebui să fie preselectați la programarea unei întâlniri.
+which types should the calendar show	infolog	ro	Ce tipuri ar trebui să afișeze calendarul
+which types should the calendar show like events?	infolog	ro	Ce tipuri ar trebui să afișeze calendarul ca evenimente?
+will-call	infolog	ro	Se va apela
+yes - close	infolog	ro	Da - Închide
+yes - close including sub-entries	infolog	ro	Da - Închidere, inclusiv subînregistrări
+yes - delete	infolog	ro	Da - Șterge
+yes - delete including sub-entries	infolog	ro	Da - Șterge, inclusiv subînregistrările
+you can choose a categorie to be preselected, when you create a new infolog entry	infolog	ro	Puteți alege o categorie care să fie preselectată, atunci când creați o nouă intrare InfoLog.
+you can't delete one of the stock types !!!	infolog	ro	Nu puteți șterge unul dintre tipurile de stoc!
+you have to enter a name, to create a new type!	infolog	ro	Trebuie să introduceți un nume, pentru a crea un nou tip!
+you need to select an entry for linking.	infolog	ro	Trebuie să selectați o intrare pentru a o lega.
+you need to select some entries first	infolog	ro	Trebuie să selectați mai întâi câteva intrări.
+your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	infolog	ro	Baza dvs. de date NU este actualizată (%1 vs. %2), vă rugăm să rulați %3setup%4 pentru a vă actualiza baza de date.

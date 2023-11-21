@@ -1,5 +1,7 @@
+%1 entries %2, %3 failed.	infolog	lv	%1 ieraksti %2, %3 neizdevās.
 %1 records imported	infolog	lv	%1 ieraksti importēti
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	infolog	lv	%1 ieraksti izlasīti (vēl nav importēti, tu vari iet %2atpakaļ%3 un noņnemt atzīmi Test Import)
+(and children) deleted	infolog	lv	(un bērni) dzēsti.
 (no subject)	infolog	lv	(nav temata)
 - subprojects from	infolog	lv	Apakšprojekti no
 0%	infolog	lv	0%
@@ -26,72 +28,113 @@ add a new todo	infolog	lv	Pievienot jaunu Jādara
 add file	infolog	lv	Pievienot datni
 add:	infolog	lv	Pievienot:
 added	infolog	lv	PIevienots
+addressbook placeholders available	infolog	lv	Pieejamas adrešu grāmatas vietzīmes
 all	infolog	lv	Viss
 all links and attachments	infolog	lv	visas saites un piellikumi
+all other %1 fields are valid	infolog	lv	Visi pārējie %1 lauki ir derīgi
+allow to save entries with due date in the past	infolog	lv	Atļaut saglabāt ierakstus ar pagātnes termiņu
 allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	lv	ļauj uzstādīt ieraksta statusu, piem., uzstādi izdarīts uz Jādara, ja tas nav pabeigts(vērtības atkarīgas no ierakstu tipa)
+always show them	infolog	lv	Vienmēr tos parādīt
+application mail expected but got: %1	infolog	lv	Pieteikuma e-pasts gaidīts, bet saņemts: %1
 apply the changes	infolog	lv	Lietot izmaiņas
 archive	infolog	lv	Arhīvs
 are you shure you want to delete this entry ?	infolog	lv	Vai esi pārliecināts, ka vēlies dzēst šo ierakstu?
 attach a file	infolog	lv	Pievienot datni
 attach file	infolog	lv	Pievienot datni
 attachments	infolog	lv	Pielikumi
+automatically check 'do not notify' for these types	infolog	lv	Automātiski atzīmēt "Nepaziņot" šiem tipiem
 back to main list	infolog	lv	Atpakaļ uz galveno sarakstu
 both	infolog	lv	abi
 call	infolog	lv	izsaukt
+can not return an exact number of rows and therefore hides the count.	admin	lv	Nevar atgriezt precīzu rindu skaitu, tāpēc slēpj skaitli.
 cancel	infolog	lv	Atcelt
 categories	infolog	lv	Kategorijas
 category	infolog	lv	Kategorija
+change	infolog	lv	Mainīt
+change responsible	infolog	lv	Atbildīgais par izmaiņām
 change the status of an entry, eg. close it	infolog	lv	Nomainīt ieraksta statusu, piem., aizvērt to
-check to set startday	infolog	lv	pārbaudi, lai uzstādītu sākuma dienu
-click here to create the link	infolog	lv	noklikšķini šeit, lai izveidotu linku
-click here to start the search	infolog	lv	noklikšķini šeit, lai sāktu meklēšanu
+check to set startday	infolog	lv	Pārbaudi, lai uzstādītu sākuma dienu
+click here to create the link	infolog	lv	Noklikšķini šeit, lai izveidotu linku
+click here to start the search	infolog	lv	Noklikšķini šeit, lai sāktu meklēšanu
 close	infolog	lv	Aizvērt
 close all	infolog	lv	aizvērt visu
+colon (:) separated list of field names to use if value is empty or to sum up	infolog	lv	Ar divpunktu (:) atdalīts saraksts ar lauku nosaukumiem, ko izmantot, ja vērtība ir tukša, vai summēt.
 comment	infolog	lv	Komentārs
 completed	infolog	lv	Pabeigts
 configuration	infolog	lv	Konfigurācija
 confirm	infolog	lv	Apstiprināt
 contact	infolog	lv	Kontakts
+contact cf	infolog	lv	Sazināties ar CF
+convert to a ticket	infolog	lv	Konvertēt uz biļeti
 create new links	infolog	lv	Izveidot jaunas saites
-creates a new field	infolog	lv	veido jaunu lauku
-creates a new status with the given values	infolog	lv	veido jaunu statusu ar dotajām vērtībām
-creates a new typ with the given name	infolog	lv	veido jaunu tipu ar doto nosaukumu
+created	infolog	lv	Izveidots
+creates a new field	infolog	lv	Veido jaunu lauku
+creates a new status with the given values	infolog	lv	Veido jaunu statusu ar dotajām vērtībām
+creates a new typ with the given name	infolog	lv	Veido jaunu tipu ar doto nosaukumu
 csv-fieldname	infolog	lv	CSV-lauka nosaukums
 csv-filename	infolog	lv	CSV- datnes nosaukums
 csv-import	common	lv	CSV- importēt
+current user	infolog	lv	Pašreizējais lietotājs
 custom	infolog	lv	Klients
 custom contact-address, leave empty to use information from most recent link	infolog	lv	Klienta kontakts-adrese, atstāj tukšu, lai izmantotu informāciju no pēdējās saites
 custom contact-information, leave emtpy to use information from most recent link	infolog	lv	Klienta kontakts- informācija, atstāj tukšu, lai izmantotu informāciju no pēdējās saites
 custom fields	infolog	lv	Klienta lauki
 custom fields, type and status	common	lv	Klienta lauki, tips un statuss
+custom from	infolog	lv	Pielāgots no
 custom regarding	infolog	lv	Par klientu
 custom status for typ	infolog	lv	Klienta veida statuss
 customfields	infolog	lv	Klienta lauki
-datecreated	infolog	lv	datums, kad izveidots
+data exchange settings	infolog	lv	Datu apmaiņas iestatījumi
+date completed	infolog	lv	Pabeigšanas datums
+date completed (leave it empty to have it automatic set if status is done or billed)	infolog	lv	Pabeigšanas datums. Atstājiet tukšu, lai tas tiktu iestatīts automātiski, ja statuss ir pabeigts vai rēķins.
+datecreated	infolog	lv	Datums, kad izveidots
 dates, status, access	infolog	lv	Datumi, Statuss, PIeeja
-days	infolog	lv	dienas
+days	infolog	lv	Dienas
+default category for new infolog entries	infolog	lv	Jaunu InfoLog ierakstu noklusējuma kategorija
+default document to insert entries	infolog	lv	Noklusējuma dokuments ierakstu ievietošanai
 default filter for infolog	infolog	lv	Noklusējuma filtrs Info logam
-default status for a new log entry	infolog	lv	noklusējus statuss jauna pieteikuma ierakstam
+default status for a new log entry	infolog	lv	Noklusējus statuss jauna pieteikuma ierakstam
+delegated	infolog	lv	Deleģētais
+delegated open	infolog	lv	Deleģētais atvērts
+delegated open and upcoming	infolog	lv	Deleģētais atvērts un gaidāmais
+delegated overdue	infolog	lv	Deleģēts kavēts
+delegated upcomming	infolog	lv	Deleģēts gaidāmais
 delegation	infolog	lv	Deliģēšana
 delete	infolog	lv	Dzēst
+delete selected entries?	infolog	lv	Dzēst atlasītos ierakstus?
+delete this entry and all listed sub-entries	infolog	lv	Dzēst šo ierakstu un visus uzskaitītos apakšierakstus
 deleted	infolog	lv	Izdzēsts
 deletes the selected typ	infolog	lv	dzēš atzīmēto tipu
 deletes this field	infolog	lv	dzēš šo lauku
 deletes this status	infolog	lv	dzēš šo statusu
 description	infolog	lv	Apraksts
 determines the order the fields are displayed	infolog	lv	nosaka kārtību, kādā tiek attēloti lauki
+directory with documents to insert entries	infolog	lv	Mapes ar dokumentiem, lai ievietotu ierakstus
 disables a status without deleting it	infolog	lv	deaktivizē statusu bez tā izdzēšanas
 do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	lv	vai vēlies apstiprinājumu par pieejamību:piekrišana,darbības beigšana vai abas
-done	infolog	lv	izdarīts
+do you want a notification if items owned by groups you are part of get updated ?	infolog	lv	Vai vēlaties saņemt paziņojumu, ja tiek atjaunināti vienumi, kas pieder grupām, kuru dalībnieks esat?
+do you want a notification, if items get assigned to you or assigned items get updated?	infolog	lv	Saņemiet paziņojumu, ja jums tiek piešķirti ieraksti vai tiek atjaunināti piešķirti ieraksti.
+do you want a notification, if items you are responsible for are about to start?	infolog	lv	Saņemt paziņojumu, ja tiek sākti ieraksti, par kuriem esat atbildīgs.
+do you want a notification, if items you are responsible for are due?	infolog	lv	Saņemiet paziņojumu, ja ir jāsāk darbu pie ierakstiem, par kuriem esat atbildīgs.
+do you want a notification, if items you created get updated?	infolog	lv	Saņemiet paziņojumu, ja tiek atjaunināti jūsu izveidotie ieraksti.
+do you want a notification, if items you delegated are about to start?	infolog	lv	Saņemiet paziņojumu, ja drīz sāksies jūsu deleģētie ieraksti.
+do you want a notification, if items you delegated are due?	infolog	lv	Saņemiet paziņojumu, ja jūsu deleģētajiem ierakstiem ir pienācis termiņš.
+do you want to receive notifications as html-mails or plain text?	infolog	lv	Saņemiet paziņojumus kā HTML e-pasta ziņojumus vai vienkāršu tekstu.
+don't show infolog	infolog	lv	NEPIEDĀVĀT InfoLog
+done	infolog	lv	Izdarīts
 download	infolog	lv	Lejupielādēt
+download url for links	infolog	lv	Lejupielādējiet URL saites
+due %1	infolog	lv	Pienākums %1
+due date	infolog	lv	Termiņš
 duration	infolog	lv	Izpildes laiks
+e-mail:	infolog	lv	E-pasts:
 each value is a line like <id>[=<label>]	infolog	lv	katra vēr'tiba ir līniija kā <id>[=<iezīme>]
 edit	infolog	lv	Rediģēt
 edit or create categories for ingolog	infolog	lv	Rediģēt vai izveidot kategorijas <i>IngoLog</i>
 edit status	infolog	lv	Rediģēt statusu
 edit the entry	infolog	lv	Rediģēt ierakstu
 edit this entry	infolog	lv	Rediģēt šo ierakstu
-empty for all	infolog	lv	iztukšot visu
+empty for all	infolog	lv	Iztukšot visu
 enddate	infolog	lv	Beigu datums
 enddate can not be before startdate	infolog	lv	Beigu datums nevar būt pirms sākuma datuma
 enter a custom contact, leave empty if linked entry should be used	infolog	lv	ievadi klienta kontaktu, atstāj tukšu, ja saistīto ierakstu vajadzētu lietot
@@ -99,18 +142,51 @@ enter a custom phone/email, leave empty if linked entry should be used	infolog	l
 enter a textual description of the log-entry	infolog	lv	ievadi teksta aprakstu pieteikuma ierakstam
 enter the query pattern	infolog	lv	Ievadi pieprasījuma paraugu
 entry and all files	infolog	lv	Ieraksti un visas datnes
+error: no mail (mailbox / uid) given!	infolog	lv	Kļūda: nav norādīts e-pasts (Pastkastīte / UID)!
+error: saving the entry	infolog	lv	Kļūda ieraksta saglabāšanā!
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	infolog	lv	Piemērs {{{IF n_prefikss~Mr~Hello Mr.~Hello Ms.}}} - meklēt laukā "n_prefix", lai atrastu "Mr", ja atrasts, rakstiet Hello Mr., citādi rakstiet Hello Ms.
+example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	infolog	lv	Piemērs {{{LETTERPREFIXCUSTOM n_prefiksa virsraksts n_dzimene}} - Piemērs: Dr. James Miller
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	infolog	lv	Piemērs {{{NELF role}} - ja lauks role nav tukšs, parādīsies jauna rinda ar lauka role vērtību
+example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	infolog	lv	Piemērs {{{nenvlf role}} - ja lauka loma nav tukša, iestatiet LF bez lauka vērtības
+execute a further action for this entry	infolog	lv	Izpildīt turpmāku darbību šim ierakstam
 existing links	infolog	lv	Eksistējošas saites
+exists	infolog	lv	Pastāv
+export definition to use for nextmatch export	infolog	lv	Eksporta definīcija, kas jāizmanto nextmatch eksportam
+exports in ical format.	infolog	lv	Eksportē iCal formātā.
+exports infolog entries into a csv file.	infolog	lv	Eksportē InfoLog ierakstus CSV failā.
+favorites	infolog	lv	Izlase
 fax	infolog	lv	Fakss
 field must not be empty !!!	infolog	lv	Lauks nedīkst būt tukšs
+fields to exclude when copying an infolog:	infolog	lv	Lauki, kas jāizslēdz, kopējot InfoLog:
+fields to exclude when creating a sub-entry:	infolog	lv	Lauki, kas jāizslēdz, veidojot apakšierakstu:
 fieldseparator	infolog	lv	Lauku atdalītājs
-finish	infolog	lv	beigas
-for which types should this field be used	infolog	lv	kuriem tipiem lauks būtu jālieto
+finish	infolog	lv	Beigas
+first argument for preg_replace	infolog	lv	Pirmais preg_replace arguments
+for infolog type %1, %2 is required	infolog	lv	InfoLog tipam %1 ir nepieciešams %2
+for serial letter use this tag. put the content, you want to repeat between two tags.	infolog	lv	Sērijas burtam izmantojiet šo birku. Saturu, ko vēlaties atkārtot, ievietojiet starp divām tagiem.
+for which types should this field be used	infolog	lv	Kuriem tipiem lauks būtu jālieto
 from	infolog	lv	No
+general settings	infolog	lv	Vispārīgie iestatījumi
 global categories	infolog	lv	Globālās kategorijas
-high	infolog	lv	augsts
+group owner for	infolog	lv	Grupas īpašnieks
+high	infolog	lv	Augsts
 history	infolog	lv	Vēsture
+history logging	infolog	lv	Vēstures reģistrēšana
+history logging and deleting of items	infolog	lv	Vēstures reģistrēšana un elementu dzēšana
+how many description lines should be directly visible. further lines are available via a scrollbar.	infolog	lv	Cik daudzām apraksta rindām jābūt tieši redzamām. Papildu rindas ir pieejamas, izmantojot ritināšanas joslu.
+how wide should the description area be. this value is numeric and interpreted as em; 60 works reasonably well.	infolog	lv	Cik platai jābūt apraksta jomai. Šī vērtība ir skaitliska, piemēram, 60.
+html link to the current record	infolog	lv	HTML saite uz pašreizējo ierakstu
 id	infolog	lv	ID
+id#	infolog	lv	ID#
+if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	lv	Ja tipam ir grupas īpašnieks, visi šī tipa ieraksti piederēs attiecīgajai grupai, nevis lietotājam, kas to izveidojis!
+if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	lv	Ja nav iestatīts, rinda ar meklēšanu un filtriem tiek paslēpta, ja ierakstu skaits ir mazāks par "maksimālo atbilstību vienā lapā", kā noteikts jūsu kopīgajās preferencēs.
+if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	infolog	lv	Ja šeit norādīta mape (pilns VFS ceļš), %1 parāda darbību katram dokumentam. Šī darbība ļauj lejupielādēt norādīto dokumentu ar ievietotajiem datiem.
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	infolog	lv	Ja šeit norādāt dokumentu (pilnu VFS ceļu), %1 katram ierakstam parāda papildu dokumenta ikonu. Šī ikona ļauj lejupielādēt norādīto dokumentu ar ievietotajiem datiem.
+if you specify an export definition, it will be used when you export	infolog	lv	Ja norādāt eksporta definīciju, tā tiks izmantota, eksportējot
 import next set	infolog	lv	importēt nākamo uzstādījumu
+importance	infolog	lv	Svarīgums
+imports entries into the infolog from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	infolog	lv	Importē ierakstus InfoLog no CSV faila. CSV nozīmē "komatā atdalītas vērtības". Iespēju cilnē var izvēlēties arī citus atdalītājus.
+imports todos into infolog from an ical file.	infolog	lv	Importē TODO ierakstus InfoLog no iCal faila.
 info log	common	lv	Projekti
 infolog	common	lv	Projekti
 infolog - delete	infolog	lv	Projekti- dzēst
@@ -119,15 +195,35 @@ infolog - import csv-file	infolog	lv	Projekti- Importēt CSV datni
 infolog - new	infolog	lv	Projekti- Jauns
 infolog - new subproject	infolog	lv	Projekti- Jauns apakšprojekts
 infolog - subprojects from	infolog	lv	Projekti- Apakšprojekts no
+infolog csv export	infolog	lv	InfoLog CSV eksports
+infolog csv import	infolog	lv	InfoLog CSV imports
+infolog encryption requires epl subscription	infolog	lv	InfoLog šifrēšanai nepieciešama EPL abonēšana
+infolog entry deleted	infolog	lv	InfoLog ieraksta dzēšana
+infolog entry saved	infolog	lv	InfoLog ieraksts saglabāts
+infolog fields:	infolog	lv	InfoLog lauki:
+infolog filter for the home screen	infolog	lv	InfoLog filtrs sākuma ekrānam
+infolog ical export	infolog	lv	InfoLog iCal eksports
+infolog ical import	infolog	lv	InfoLog iCal imports
+infolog id	infolog	lv	InfoLog ID
 infolog list	infolog	lv	Projektu saraksts
 infolog preferences	common	lv	Projektu preferences
 infolog-fieldname	infolog	lv	Projekti - Lauku nosaukums
+insert	infolog	lv	Ievietot
+insert in document	infolog	lv	Ievietot dokumentā
+insert timestamp into description field	infolog	lv	Ievietot laika zīmogu apraksta laukā
 invalid filename	infolog	lv	Nederīgs lauka nosaukums
+invalid owner id: %1.  might be a bad field translation.  used %2 instead.	infolog	lv	Nederīgs īpašnieka ID: %1. Tā vietā izmantojiet %2.
+invalid status for entry type %1.	infolog	lv	Nederīgs statuss ieraksta tipam %1.
 label<br>helptext	infolog	lv	Iezīme<br>Palīgteksts
 last changed	infolog	lv	Pēdējo reizi mainīts
 last modified	infolog	lv	Pēdējo reizi pārveidots
-leave without saveing the entry	infolog	lv	aiziet, nesaglabājot ierakstu
-leaves without saveing	infolog	lv	aiziet bez saglabāšanas
+leave blank to get the used time calculated by timesheet entries	infolog	lv	Atstāt tukšu, lai iegūtu izmantoto laiku, kas aprēķināts pēc darba laika uzskaites ierakstiem
+leave it empty	infolog	lv	Atstājiet tukšu
+leave it empty for a full week	infolog	lv	Atstājiet to tukšu visai nedēļai
+leave without saveing the entry	infolog	lv	Aiziet, nesaglabājot ierakstu
+leaves without saveing	infolog	lv	Aiziet bez saglabāšanas
+length	infolog	lv	Garums
+limit list to last n month, if ordering by last-modified and not searching.	admin	lv	Ierobežojiet sarakstu līdz pēdējam N mēnesim, ja sakārtojat pēc pēdējās izmaiņas un nemeklējat.
 link	infolog	lv	Saite
 links	infolog	lv	Saites
 links of this entry	infolog	lv	Ierakstu saites
@@ -176,6 +272,7 @@ projectmanager	infolog	lv	Projekta Vadītājs
 re:	infolog	lv	Re:
 remark	infolog	lv	Piezīme
 remove this link (not the entry itself)	infolog	lv	Pārvieto šo saiti(pašu ierakstu nē)
+respect timesheet run and read permissions for time totals	infolog	lv	Ievērot darba laika uzskaites izpildes un lasīšanas atļaujas attiecībā uz laika kopsummām
 responsible	infolog	lv	Atbildīgs
 returns a list / search for records.	infolog	lv	Atgriež sarakstu/ meklē ierakstus
 rows	infolog	lv	Rindas
@@ -206,6 +303,7 @@ subject	infolog	lv	Tēma
 task	infolog	lv	Jādara
 template	infolog	lv	Veidne
 test import (show importable records <u>only</u> in browser)	infolog	lv	Testēt Importu (parādīt importējamos ierakstus <u>tikai</u> pārlūkprogrammā)
+the document can contain placeholder like {{%1}}, to be replaced with the data.	infolog	lv	Dokumentā var būt tādas vietzīmes kā {{%1}}, kas jāaizstāj ar datiem.
 the text displayed to the user	infolog	lv	lietotājam parādīts teksts
 til when should the todo or phonecall be finished	infolog	lv	līdz kuram laikam vajadzētu pabeigt  Jādara vai Telefona zvans
 times	infolog	lv	Reizes
@@ -228,10 +326,21 @@ view parent	infolog	lv	Rādīt vecākus
 view subs	infolog	lv	Rādīt apakškategorijas
 view the parent of this entry and all his subs	infolog	lv	Rādīt šī ieraksta vecākus un visus tā apakšierakstus
 view this linked entry in its application	infolog	lv	rādīt šo saistīto ierakstu tā aplikācijā
-will-call	infolog	lv	izsauks
+which implicit acl rights should the responsible get	infolog	lv	Kādas netiešās ACL tiesības būtu jāpiešķir atbildīgajam.
+which participants should be preselected when scheduling an appointment.	infolog	lv	Kuriem dalībniekiem jābūt iepriekš atlasītiem, plānojot tikšanos.
+which types should the calendar show	infolog	lv	Kādus veidus vajadzētu parādīt kalendārā
+which types should the calendar show like events?	infolog	lv	Kādus tipus kalendāram vajadzētu rādīt kā notikumus?
+will-call	infolog	lv	Vai izsauks
+yes - close	infolog	lv	Jā - Aizvērt
+yes - close including sub-entries	infolog	lv	Jā - Aizvērt, ieskaitot apakšierakstus
 yes - delete	infolog	lv	Jā- izdzēst
+yes - delete including sub-entries	infolog	lv	Jā - dzēst, ieskaitot apakšierakstus
+you can choose a categorie to be preselected, when you create a new infolog entry	infolog	lv	Veidojot jaunu Infožurnāla ierakstu, varat izvēlēties iepriekš atlasītu kategoriju.
 you can't delete one of the stock types !!!	infolog	lv	Tu nevari izdzēst vienu no krājumā esošiem tipiem!
 you have entered an invalid ending date	infolog	lv	Tu esi ievadījjis nederīgu beigu datumu
 you have entered an invalid starting date	infolog	lv	Tu esi ievadījis nederīgu sākuma datumu
-you have to enter a name, to create a new typ!!!	infolog	lv	Tev jāievada vārds, lai izveidotu jaunu tipu !!!
+you have to enter a name, to create a new type!	infolog	lv	Lai izveidotu jaunu veidu, ir jāievada nosaukums!
 you must enter a subject or a description	infolog	lv	Tev jāievada temats vai apraksts
+you need to select an entry for linking.	infolog	lv	Jums ir jāizvēlas ieraksts sasaistei.
+you need to select some entries first	infolog	lv	Vispirms ir jāizvēlas daži ieraksti.
+your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	infolog	lv	Jūsu datubāze NAV atjaunināta (%1 pret %2), lūdzu, palaidiet %3setup%4 , lai atjauninātu datubāzi.

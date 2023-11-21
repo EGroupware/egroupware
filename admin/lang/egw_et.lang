@@ -1,3 +1,8 @@
+%1 entries deleted.	admin	et	%1 kirjed kustutatud
+%1 mail credentials deleted	admin	et	%1 maili mandaat kustutatud
+%1 sessions killed	admin	et	%1 sessioonid tapetud.
+%1 successful	admin	et	%1 edukas
+%1 token %2.	admin	et	%1 sümbol %2.
 (default no, leave it off if you dont use it)	admin	et	(vaikimisi Ei, jäta see välja kui sa seda ei kasuta)
 1 year	admin	et	1 aasta
 2 month	admin	et	2 kuud

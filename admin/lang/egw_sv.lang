@@ -1,7 +1,14 @@
+%1 %2 rights for %3 on %4 to %5	admin	sv	%1 %2 rättigheter för %3 på %4 till %5
 %1 - %2 of %3 user accounts	admin	sv	%1 - %2 av %3 användarkonton
 %1 - %2 of %3 user groups	admin	sv	%1 - %2 av %3 användargrupper
 %1 acl records of not (longer) existing accounts deleted.	admin	sv	%1 ACL poster med inte längre existernade konton raderade.
+%1 entries deleted	admin	sv	%1 poster raderade
+%1 entries deleted.	admin	sv	%1 poster raderade.
+%1 mail credentials deleted	admin	sv	%1 autentiseringsuppgifter för e-post borttagna
 %1 not found or not executable !!!	admin	sv	Kunde inte hitta %1 eller så är den inte körbar!!!
+%1 sessions killed	admin	sv	%1 sessioner dödade.
+%1 successful	admin	sv	%1 framgångsrik
+%1 token %2.	admin	sv	%1 token %2.
 (default no, leave it off if you dont use it)	admin	sv	(standard Nej, lämna tom om du inte använder det)
 (no subject)	admin	sv	(ingen rubrik)
 (stored password will not be shown here)	admin	sv	(lagrade lösenord visas ej här)
