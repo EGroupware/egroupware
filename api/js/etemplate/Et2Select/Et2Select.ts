@@ -93,7 +93,8 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 			  }
 
 			  /* Ellipsis when too small */
-			  .select__tags {
+
+			  ::part(tags) {
 				max-width: 100%;
 			  }
 			  .select__label {
@@ -112,29 +113,24 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 
 			  /* Maximum height + scrollbar on tags (+ other styling) */
 
-			  .select__tags {
+			  ::part(tags) {
 				margin-left: 0px;
 				max-height: initial;
 				overflow-y: auto;
 				gap: 0.1rem 0.5rem;
 			  }
 
-			  .select--medium .select__tags {
-				padding-top: 2px;
-				padding-bottom: 2px;
+			  :host([rows]) ::part(tags) {
+				max-height: calc(var(--rows, 5) * 2.3em);
 			  }
 
-			  :host([rows]) .select__control > .select__label > .select__tags {
-				max-height: calc(var(--rows, 5) * 29px);
-			  }
-
-			  :host([rows='1']) .select__tags {
+			  :host([rows='1']) ::part(tags) {
 				overflow: hidden;
 			  }
 
 			  /* Keep overflow tag right-aligned.  It's the only sl-tag. */
 
-			  .select__tags sl-tag {
+			  ::part(tags) sl-tag {
 				margin-left: auto;
 			  }
 
