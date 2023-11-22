@@ -116,11 +116,11 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 			  ::part(tags) {
 				margin-left: 0px;
 				max-height: initial;
-				overflow-y: auto;
 				gap: 0.1rem 0.5rem;
 			  }
 
 			  :host([rows]) ::part(tags) {
+				overflow-y: auto;
 				max-height: calc(var(--rows, 5) * 2.3em);
 			  }
 
