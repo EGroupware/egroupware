@@ -22,6 +22,7 @@ $config = array(
 	'packaging' => date('Ymd'), // '20160520'
 	'branch'  => 'master',        // checked out branch
 	'tag' => '$version.$packaging',	// name of tag
+    'last-tag' => null, // tag to generate changelog from, default latest tag of given branch
 	'checkoutdir' => '~/epl-23.1-checkout',	//realpath(__DIR__.'/../..'),
 	'egw_buildroot' => '/tmp/build_root/epl_23.1_buildroot',
 	'sourcedir' => '~/download/archives/egroupware-23.1',
@@ -283,6 +284,11 @@ function get_modules_per_repo()
 function get_last_git_tag()
 {
 	global $config;
+
+    if (!empty($config['last-tag']))
+    {
+        return $config['last-tag'];
+    }
 
 	if (!is_dir($config['checkoutdir']))
 	{
