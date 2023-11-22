@@ -195,7 +195,7 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 				
 				/* Hide options that do not match current search text */
 
-				  [searching] .no-match {
+				  :host([search]) sl-option.no-match {
 					display: none;
 				}
 				/* Different cursor for editable tags */
@@ -1155,6 +1155,13 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 			}
 			this.select_options.map(clear_flag);
 			this.requestUpdate("select_options");
+
+			// Rendering options using repeat() means we need to explicitly update the nodes since they
+			// don't always get re-rendered
+			for(const option of this.select.querySelectorAll(".no-match"))
+			{
+				option.classList.remove("no-match", "match");
+			}
 		}
 
 		/**
@@ -1393,7 +1400,8 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 				this.__select_options.push(<SelectOption>{
 					value: text.trim(),
 					label: text.trim(),
-					class: "freeEntry"
+					class: "freeEntry",
+					isMatch: false
 				});
 				this.requestUpdate('select_options');
 			}
