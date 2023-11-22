@@ -54,7 +54,9 @@ RUN apt-get update \
     && echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_20.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list \
     && apt-get update \
 	# install tools to build EGroupware
-	&& apt-get install -y rsync nodejs npm zip curl sudo cron patch \
+	&& apt-get install -y rsync nodejs zip curl sudo cron patch \
+    # nodejs PPA does NOT exist for ppc64le, therefore we need to install npm separate, as not included in stock nodejs on Ubuntu
+    && test -f /usr/bin/npm || apt-get install -y npm \
 	&& npm install -g grunt-cli \
 	&& bash -c \
 'EXPECTED_SIGNATURE=$(curl https://composer.github.io/installer.sig); \

@@ -85,7 +85,9 @@ RUN set -e \
     && curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg \
     && echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_20.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list \
     && apt-get update \
-    && apt-get install -y nodejs npm \
+    && apt-get install -y nodejs \
+    # nodejs PPA does NOT exist for ppc64le, therefore we need to install npm separate, as not included in stock nodejs on Ubuntu
+    && test -f /usr/bin/npm || apt-get install -y npm \
 	&& npm install -g grunt-cli \
 	&& npm install \
 	&& grunt \
