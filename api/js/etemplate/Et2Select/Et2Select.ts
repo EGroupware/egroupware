@@ -764,6 +764,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
                       icon:icon
                     "
                     class=${"search_tag " + option.classList.value}
+                    tabindex="-1"
                     ?pill=${this.pill}
                     size=${this.size || "medium"}
                     ?removable=${!readonly}
@@ -828,7 +829,6 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
                     ?clearable=${this.clearable}
                     ?required=${this.required}
                     helpText=${this.helpText}
-                    tabindex="0"
                     hoist
                     placement=${this.placement}
                     .getTag=${this._tagTemplate}

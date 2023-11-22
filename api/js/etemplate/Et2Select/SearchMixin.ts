@@ -470,6 +470,7 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
                              exportparts="base:search__base"
                              clearable
                              autocomplete="off"
+                             tabindex="-1"
                              placeholder="${this.egw().lang("search")}"
                              style="flex: 1 1 auto;"
                                @keydown=${this._handleSearchKeyDown}
@@ -950,6 +951,19 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 
 				// Strip out hidden non-matching selected & disabled items so key navigation works
 				// TODO
+				return;
+			}
+			else if(event.key == "Tab" && !this._searchInputNode.value)
+			{
+				// Mess with tabindexes to allow focus to easily go to next control
+				const input = this.select.shadowRoot.querySelector('[tabindex="0"]');
+				input.setAttribute("tabindex", "-1");
+				this.updateComplete.then(() =>
+				{
+					// Set it back so we can get focus again later
+					input.setAttribute("tabindex", "0");
+				})
+				// Allow to propagate
 				return;
 			}
 			event.stopPropagation();

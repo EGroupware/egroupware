@@ -264,7 +264,7 @@ export class Et2EmailTag extends Et2Tag
 			const option = Et2EmailTag.email_cache[this.value];
 
 			button_or_avatar = html`
-                <et2-lavatar slot="prefix" part="icon"
+                <et2-lavatar slot="prefix" part="icon" tabindex="-1"
                              @mousedown=${this.handleContactMouseDown}
                              .size=${style.getPropertyValue("--icon-width")}
                              lname=${option.lname || nothing}
@@ -279,7 +279,7 @@ export class Et2EmailTag extends Et2Tag
 			// Show a button to add as new contact
 			classes['tag__has_plus'] = true;
 			button_or_avatar = html`
-                <et2-button-icon image="add" @mousedown=${this.handleMouseDown}
+                <et2-button-icon image="add" tabindex="-1" @mousedown=${this.handleMouseDown}
                                  label="${this.egw().lang("Add a new contact")}"
                                  statustext="${this.egw().lang("Add a new contact")}">
                 </et2-button-icon>`;
