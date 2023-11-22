@@ -425,7 +425,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		}
 		if(this.select)
 		{
-			this.select.value = this.__value;
+			this.select.value = this.shoelaceValue;
 		}
 		this.requestUpdate("value", oldValue);
 	}
@@ -515,19 +515,6 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		}
 	}
 
-	update(changedProperties : PropertyValues)
-	{
-		super.update(changedProperties);
-		if(changedProperties.has("select_options") && changedProperties.has("value"))
-		{
-			// Force select to stay in sync, avoids value not shown when select options arrive late
-			if(this.select && this.value !== null && typeof this.value !== "undefined")
-			{
-				this.select.value = this.value;
-			}
-		}
-	}
-
 	/**
 	 * Tag used for rendering tags when multiple=true
 	 * Used for creating, finding & filtering options.
@@ -547,27 +534,6 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		}
 		this.hide();
 	}
-
-	/* Parent should be fine now?
-	private handleTagRemove(event : CustomEvent, option)
-	{
-		event.stopPropagation();
-
-		if(!this.disabled)
-		{
-			option.selected = false;
-			let index = this.value.indexOf(option.value);
-			if(index > -1)
-			{
-				this.value.splice(index, 1);
-			}
-			this.dispatchEvent(new CustomEvent('sl-input'));
-			this.dispatchEvent(new CustomEvent('sl-change'));
-			this.validate();
-		}
-	}
-
-	 */
 
 	/**
 	 * Apply the user preference to close the dropdown if an option is clicked, even if multiple=true.
@@ -829,11 +795,22 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		return typeof super._extraTemplate == "function" ? super._extraTemplate() : nothing;
 	}
 
+	/**
+	 * Shoelace select uses space as multiple separator, so our values cannot have a space in them.
+	 * We replace spaces with "___" before passing the value to SlSelect
+	 *
+	 * @protected
+	 */
+	protected get shoelaceValue() : string | string[]
+	{
+		return Array.isArray(this.value) ?
+			   this.value.map(v => { return v.replaceAll(" ", "___"); }) :
+			   (typeof this.value == "string" ? this.value.replaceAll(" ", "___") : "");
+	}
+
 	public render()
 	{
-		const value = Array.isArray(this.value) ?
-					  this.value.map(v => { return v.replaceAll(" ", "___"); }) :
-					  (typeof this.value == "string" ? this.value.replaceAll(" ", "___") : "");
+		const value = this.shoelaceValue;
 
 		let icon : TemplateResult | typeof nothing = nothing;
 		if(!this.multiple)
