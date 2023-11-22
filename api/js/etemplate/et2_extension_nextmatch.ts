@@ -2230,7 +2230,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 				}
 				(<et2_nextmatch_customfields><unknown>widget).set_visible(visible);
 			}
-			this.columns[i].visible = visibility[columnMgr.columns[i].id].visible;
+			this.columns[i].visible = visibility[columnMgr.columns[i].id]?.visible;
 
 			if(this.dataview.rowProvider._columnIds.indexOf(columnMgr.columns[i].id) == -1)
 			{
