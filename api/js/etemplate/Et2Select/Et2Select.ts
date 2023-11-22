@@ -421,7 +421,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		}
 		if(this.select)
 		{
-			this.select.value = this.__value;
+			this.select.value = this.shoelaceValue;
 		}
 		this.requestUpdate("value", oldValue);
 	}
@@ -508,19 +508,6 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 			{
 				this.fix_bad_value();
 			});
-		}
-	}
-
-	update(changedProperties : PropertyValues)
-	{
-		super.update(changedProperties);
-		if(changedProperties.has("select_options") && changedProperties.has("value"))
-		{
-			// Force select to stay in sync, avoids value not shown when select options arrive late
-			if(this.select && this.value !== null && typeof this.value !== "undefined")
-			{
-				this.select.value = this.value;
-			}
 		}
 	}
 
@@ -804,7 +791,13 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		return typeof super._extraTemplate == "function" ? super._extraTemplate() : nothing;
 	}
 
-	public render()
+	/**
+	 * Shoelace select uses space as multiple separator, so our values cannot have a space in them.
+	 * We replace spaces with "___" before passing the value to SlSelect
+	 *
+	 * @protected
+	 */
+	protected get shoelaceValue() : string | string[]
 	{
 		return Array.isArray(this.value) ?
 			   this.value.map(v => { return v.replaceAll(" ", "___"); }) :
