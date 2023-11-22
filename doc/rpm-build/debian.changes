@@ -1,3 +1,21 @@
+egroupware-docker (23.1.20231122) hardy; urgency=low
+
+  * THIS IS A PRE-RELEASE for testing, you need to explicitly set the tag in your docker-compose.override.yml
+  * SmallPART: new live feedback feature allows to get audience feedback on live recorded sessions 
+  * API: support OpenID Connect for authentication against another OIC IdP 
+  * PHP: updated container to PHP version 8.2.12 as 8.1 reached end of active maintenance 
+  * eTemplate: update webcomponent library Shoelace to version 2.8.0 
+  * Mail/Sieve: fix vacation message with redirect kept mail in INBOX, even if rule moved it to a folder 
+  * REST API/Mail: viewing uploaded EML files, allowing user to answer, forward or download attachments 
+  * REST API/Mail: support an "X-No-Location: true" header to avoid getting a "Location" header when uploading attachments 
+  * Mail/GMail/Microsoft365: store/update received refresh-token and redirect to IdP, if refresh-token is expired 
+  * Tracker: big performance optimisation for huge installations (causing high browser load before)
+  * ProjectManager/Calendar: new option to show projects in calendar by data customfields or notify by date customfields
+  * Registration: fix usage of customfields for registration
+  * EPL: new feature to store files and backups encrypted in multiple S3 buckets and regions
+
+ -- Ralf Becker <rb@egroupware.org>  Wed, 22 Nov 2023 10:44:10 +0100
+
 egroupware-docker (23.1.20231110) hardy; urgency=low
 
   * Collabora: fix inserting images from filemanager
