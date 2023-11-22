@@ -8,7 +8,7 @@ FROM ${ARCH}ubuntu:20.04
 MAINTAINER rb@egroupware.org
 
 ARG VERSION=dev-master
-ARG PHP_VERSION=8.1
+ARG PHP_VERSION=8.2
 
 # keeping build-arg in environment for entrypoint.sh
 ENV VERSION=$VERSION
@@ -77,13 +77,15 @@ exit $RESULT' \
 	&& composer.phar create-project $COMPOSER_EXTRA --prefer-dist --no-scripts --no-dev egroupware/egroupware:$VERSION \
 	# clean up and remove caches
 	&& composer.phar clear-cache \
-	&& rm -f /usr/local/bin/composer.phar \
+	&& rm -f /usr/local/bin/composer.phar
+RUN set -e \
 	&& cd /usr/share/egroupware \
-    # install nodejs 16.x PPA (Shoelace requires >= 14.17, Ubuntu 22.04 only has 12.x)
-    && curl -fsSL https://deb.nodesource.com/setup_16.x | bash - \
-    && apt-get install -y nodejs \
-    # nodejs PPA does NOT exist for ppc64le, therefore we need to install npm separate, as not included in stock nodejs on Ubuntu
-    && test -f /usr/bin/npm || apt-get install -y npm \
+	# install nodejs 20.x (Shoelace requires >= 14.17, Ubuntu 22.04 only has 12.x) \
+    && mkdir -p /etc/apt/keyrings \
+    && curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg \
+    && echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_20.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list \
+    && apt-get update \
+    && apt-get install -y nodejs npm \
 	&& npm install -g grunt-cli \
 	&& npm install \
 	&& grunt \
