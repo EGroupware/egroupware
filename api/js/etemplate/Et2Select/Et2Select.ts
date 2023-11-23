@@ -19,6 +19,7 @@ import {property} from "lit/decorators/property.js";
 import {SlChangeEvent, SlOption, SlSelect} from "@shoelace-style/shoelace";
 import {repeat} from "lit/directives/repeat.js";
 import {classMap} from "lit/directives/class-map.js";
+import {state} from "lit/decorators/state.js";
 
 // export Et2WidgetWithSelect which is used as type in other modules
 export class Et2WidgetWithSelect extends RowLimitedMixin(Et2WidgetWithSelectMixin(LitElement))
@@ -128,10 +129,12 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 				overflow: hidden;
 			  }
 
-			  /* Keep overflow tag right-aligned.  It's the only sl-tag. */
+			  /* No rows set, default height limit about 5 rows */
 
-			  ::part(tags) sl-tag {
-				margin-left: auto;
+			  :host(:not([rows])) ::part(tags) {
+				min-height: inherit;
+				max-height: 11em;
+				overflow-y: auto;
 			  }
 
 			  select:hover {
@@ -140,20 +143,22 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 
 			  /* Hide dropdown trigger when multiple & readonly */
 
-			  :host([readonly][multiple])::part(expand-icon) {
+			  :host([readonly][multiple]):not([rows="1"])::part(expand-icon) {
 				display: none;
 			  }
 
 			  /* Style for tag count if rows=1 */
 
-			  :host([readonly][multiple][rows])::part(tags) {
+			  .tag_limit {
 				position: absolute;
 				right: 0px;
-				top: 1px;
+				top: 0px;
+				bottom: 0px;
 				box-shadow: rgb(0 0 0/50%) -1.5ex 0px 1ex -1ex, rgb(0 0 0 / 0%) 0px 0px 0px 0px;
 			  }
 
-			  :host([readonly][multiple][rows]) .select__tags sl-tag::part(base) {
+			  .tag_limit::part(base) {
+				height: 100%;
 				background-color: var(--sl-input-background-color);
 				border-top-left-radius: 0;
 				border-bottom-left-radius: 0;
@@ -164,12 +169,16 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 
 			  /* Show all rows on hover if rows=1 */
 
-			  :host([readonly][multiple][rows]):hover .select__tags {
+			  :host([ readonly ][ multiple ][ rows ]) .hover__popup {
 				width: -webkit-fill-available;
 				width: -moz-fill-available;
 				width: fill-available;
 			  }
 
+			  :host([ readonly ][ multiple ][ rows ]) .hover__popup .select__tags {
+				display: flex;
+				flex-wrap: wrap;
+			  }
 			  ::part(listbox) {
 				z-index: 1;
 				background: var(--sl-input-background-color);
@@ -254,8 +263,13 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 	/** The select's required attribute. */
 	@property({type: Boolean, reflect: true}) required = false;
 
+	/** If the select is limited to 1 row, we show the number of tags not visible */
+	@state()
+	protected _tagsHidden = 0;
 
 	private __value : string | string[] = "";
+
+	protected tagOverflowObserver : IntersectionObserver = null;
 
 	constructor()
 	{
@@ -263,6 +277,9 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		this.hoist = true;
 
 		this._tagTemplate = this._tagTemplate.bind(this);
+		this._handleMouseEnter = this._handleMouseEnter.bind(this);
+		this._handleMouseLeave = this._handleMouseLeave.bind(this);
+		this._handleTagOverflow = this._handleTagOverflow.bind(this);
 	}
 	/**
 	 * List of properties that get translated
@@ -287,6 +304,9 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 			this.select?.requestUpdate("value");
 			// Fixes incorrect opening position
 			this.select?.popup?.handleAnchorChange();
+
+			// requestUpdate("value") above means we need to check tags again
+			this.select.updateComplete.then(() => {this.checkTagOverflow(); });
 		});
 	}
 
@@ -512,6 +532,49 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 	}
 
 	/**
+	 * After render, DOM nodes are there
+	 *
+	 * Check to see if tags overflow, set the counter flag
+	 *
+	 * @param {PropertyValues} changedProperties
+	 */
+	updated(changedProperties : PropertyValues)
+	{
+		super.updated(changedProperties);
+
+		this.checkTagOverflow();
+	}
+
+	protected checkTagOverflow()
+	{
+		// Create / destroy intersection observer
+		if(this.readonly && this.rows == "1" && this.multiple && this.tagOverflowObserver == null)
+		{
+			this.tagOverflowObserver = new IntersectionObserver(this._handleTagOverflow, {
+				root: this.select.shadowRoot.querySelector(".select__tags"),
+				threshold: 0.1
+			});
+		}
+		else if((!this.readonly || this.rows !== "1" || !this.multiple) && this.tagOverflowObserver !== null)
+		{
+			this.tagOverflowObserver.disconnect();
+			this.tagOverflowObserver = null;
+		}
+
+		if(this.tagOverflowObserver)
+		{
+			this.select.updateComplete.then(() =>
+			{
+				// @ts-ignore
+				for(const tag of this.select.shadowRoot.querySelectorAll(".select__tags *:not(div):not(sl-tag)"))
+				{
+					this.tagOverflowObserver.observe(tag);
+				}
+			});
+		}
+	}
+
+	/**
 	 * Tag used for rendering tags when multiple=true
 	 * Used for creating, finding & filtering options.
 	 * @see createTagNode()
@@ -600,6 +663,111 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 			event.stopPropagation();
 		}
 
+	}
+
+	/**
+	 * Callback for the intersection observer so we know when tags don't fit
+	 *
+	 * Here we set the flag to show how many more tags are hidden, but this only happens
+	 * when there are more tags than space.
+	 *
+	 * @param entries
+	 * @protected
+	 */
+	protected _handleTagOverflow(entries : IntersectionObserverEntry[])
+	{
+		const oldCount = this._tagsHidden;
+		let visibleTagCount = this.value.length - this._tagsHidden;
+		let update = false;
+		// If we have all tags, start from 0, otherwise it's just a change
+		if(entries.length == this.value.length)
+		{
+			visibleTagCount = 0;
+		}
+		else
+		{
+			update = true;
+		}
+		for(const tag of entries)
+		{
+			if(tag.isIntersecting)
+			{
+				visibleTagCount++;
+			}
+			else if(update && !tag.isIntersecting)
+			{
+				visibleTagCount--;
+			}
+			else
+			{
+				break;
+			}
+		}
+		if(visibleTagCount && visibleTagCount < this.value.length)
+		{
+			this._tagsHidden = this.value.length - visibleTagCount;
+		}
+		else
+		{
+			this._tagsHidden = 0;
+		}
+		this.requestUpdate("_tagsHidden", oldCount);
+	}
+
+	/**
+	 * If rows=1 and multiple=true, when they put the mouse over the widget show all tags
+	 * @param {MouseEvent} e
+	 * @private
+	 */
+	protected _handleMouseEnter(e : MouseEvent)
+	{
+		if(this.rows == 1 && this.multiple == true && this.value.length > 1)
+		{
+			e.stopPropagation();
+
+			let distance = (-1 * parseInt(getComputedStyle(this).height));
+
+			// Bind to turn this all off
+			this.addEventListener("mouseleave", this._handleMouseLeave);
+
+			// Popup - this might get wiped out next render(), might not
+			this.updateComplete.then(() =>
+			{
+				let tags = this.select.shadowRoot.querySelector(".select__tags");
+				let popup = document.createElement("sl-popup");
+				popup.anchor = this;
+				popup.distance = distance;
+				popup.placement = "bottom";
+				popup.strategy = "fixed";
+				popup.active = true;
+				popup.sync = "width";
+				popup.setAttribute("exportparts", "tags");
+				popup.classList.add("hover__popup", "details", "hoist", "details__body");
+				this.shadowRoot.append(popup);
+				popup.appendChild(tags);
+				tags.style.width = getComputedStyle(this).width;
+				tags.style.margin = 0;
+			});
+		}
+	}
+
+	/**
+	 * If we're showing all rows because of _handleMouseEnter, reset when mouse leaves
+	 * @param {MouseEvent} e
+	 * @private
+	 */
+	protected _handleMouseLeave(e : MouseEvent)
+	{
+		let popup = this.shadowRoot.querySelector("sl-popup");
+		if(popup)
+		{
+			// Popup still here.  Remove it
+			let tags = popup.firstChild;
+			this.select.shadowRoot.querySelector(".select__combobox").append(tags);
+			popup.remove();
+		}
+		this.removeEventListener("mouseleave", this._handleMouseLeave);
+		this.select.requestUpdate();
 	}
 
 	/** Shows the listbox. */
@@ -781,6 +949,21 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		`;
 	}
 
+	protected _tagLimitTemplate() : TemplateResult | typeof nothing
+	{
+		if(this._tagsHidden == 0)
+		{
+			return nothing;
+		}
+		return html`
+            <sl-tag
+                    part="tag__limit"
+                    class="tag_limit"
+                    slot="expand-icon"
+            >+${this._tagsHidden}
+            </sl-tag>`;
+	}
+
 	/**
 	 * Additional customisation template
 	 * Override if needed.  Added after select options.
@@ -835,6 +1018,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
                     .maxOptionsVisible=${0}
                     .value=${value}
                     @sl-change=${this.handleValueChange}
+                    @mouseenter=${this._handleMouseEnter}
                     @mouseup=${this.handleOptionClick}
                     @mousewheel=${
                             // Grab & stop mousewheel to prevent scrolling sidemenu when scrolling through options
@@ -845,6 +1029,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
                 ${icon}
                 ${this._emptyLabelTemplate()}
                 ${this._optionsTemplate()}
+                ${this._tagLimitTemplate()}
                 ${this._extraTemplate()}
                 <slot></slot>
                 <div slot="help-text">

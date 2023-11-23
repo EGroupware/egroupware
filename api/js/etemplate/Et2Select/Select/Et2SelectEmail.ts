@@ -116,6 +116,8 @@ export class Et2SelectEmail extends Et2Select
 
 	updated(changedProperties : Map<string, any>)
 	{
+		super.updated(changedProperties);
+		
 		// Make tags draggable
 		if(!this.readonly && this.allowFreeEntries && this.allowDragAndDrop)
 		{
