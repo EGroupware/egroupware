@@ -118,6 +118,7 @@ class File extends Etemplate\Widget
 			{
 				$widget = $template->getElementById($matches[1].':$cont[id]:'.$matches[3]);
 			}
+			$mime = null;
 			if($widget && $widget->attrs['mime'])
 			{
 				$mime = $widget->attrs['mime'];
