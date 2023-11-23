@@ -105,7 +105,7 @@ namespace EGroupware\Api;
  *	}
  * All entries are optional, thought you only get conected functionality, if you implement them ...
  *
- * The BO-layer implementes some extra features on top of the so-layer:
+ * The BO-layer implements some extra features on top of the so-layer:
  * 1) It handles links to not already existing entries. This is used by the eTemplate link-widget, which allows to
  *    setup links even for new / not already existing entries, before they get saved.
  * 	  In that case you have to set the first id to 0 for the link-static function and pass the array returned in that id
@@ -291,8 +291,8 @@ class Link extends Link\Storage
 	/**
 	 * Get clientside relevant attributes from app registry in json format
 	 *
-	 * Only transfering relevant information cuts approx. half of the size.
-	 * Also only transfering information relevant to apps user has access too.
+	 * Only transferring relevant information cuts approx. half of the size.
+	 * Also only transferring information relevant to apps user has access too.
 	 * Important eg. for mime-registry, to not use calendar for opening iCal files, if user has no calendar!
 	 * As app can store additonal types, we have to check the registring app $data['app'] too!
 	 *
