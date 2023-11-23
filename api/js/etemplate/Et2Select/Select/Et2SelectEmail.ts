@@ -117,12 +117,24 @@ export class Et2SelectEmail extends Et2Select
 	updated(changedProperties : Map<string, any>)
 	{
 		super.updated(changedProperties);
-		
+
 		// Make tags draggable
 		if(!this.readonly && this.allowFreeEntries && this.allowDragAndDrop)
 		{
+			this._makeDraggable();
+		}
+	}
+
+	/**
+	 * Make the tags draggable
+	 * @protected
+	 */
+	protected _makeDraggable()
+	{
+		this.select.updateComplete.then(() =>
+		{
 			let dragTranslate = {x: 0, y: 0};
-			const tags = this.shadowRoot.querySelectorAll(".select__tags [part='tag']");
+			const tags = Array.from(this.select.shadowRoot.querySelectorAll(".select__tags et2-email-tag"));
 			let draggable = interact(tags).draggable({
 				startAxis: 'xy',
 				listeners: {
@@ -147,7 +159,7 @@ export class Et2SelectEmail extends Et2Select
 			});
 			// set parent_node with widget context in order to make it accessible after drop
 			draggable.parent_node = this;
-		}
+		});
 	}
 
 	protected _bindListeners()
