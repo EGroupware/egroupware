@@ -175,6 +175,11 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 				width: fill-available;
 			  }
 
+			  :host([readonly][multiple][rows]) .hover__popup::part(popup) {
+				z-index: var(--sl-z-index-dropdown);
+				background-color: white;
+			  }
+
 			  :host([ readonly ][ multiple ][ rows ]) .hover__popup .select__tags {
 				display: flex;
 				flex-wrap: wrap;
@@ -741,7 +746,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 				popup.strategy = "fixed";
 				popup.active = true;
 				popup.sync = "width";
-				popup.setAttribute("exportparts", "tags");
+				popup.setAttribute("exportparts", "tags, popup");
 				popup.classList.add("hover__popup", "details", "hoist", "details__body");
 				this.shadowRoot.append(popup);
 				popup.appendChild(tags);
