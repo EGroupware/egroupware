@@ -145,7 +145,7 @@ class Vfs extends File
 	protected static function process_uploaded_file($field, Array &$file, $mime, Array &$file_data)
 	{
 		parent::process_uploaded_file($field, $file, $mime, $file_data);
-		$path = self::store_file($_REQUEST['path'] ? $_REQUEST['path'] : $_REQUEST['widget_id'], $file);
+		$path = self::store_file($_REQUEST['path'] ?: $_REQUEST['widget_id'], $file);
 		if($path)
 		{
 			$file_data[basename($file['tmp_name'])]['name'] = $file['name'];
@@ -156,7 +156,7 @@ class Vfs extends File
 		else
 		{
 			// Something happened with the VFS
-			$file_data[basename($file['tmp_name'])] = lang('Server error');
+			$file_data[basename($file['tmp_name'])] = self::get_validation_errors($_REQUEST['widget_id']) ?? lang('Server error');
 		}
 	}
 

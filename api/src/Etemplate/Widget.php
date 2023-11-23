@@ -1030,6 +1030,20 @@ class Widget
 	}
 
 	/**
+	 * Sets a validation error, to be displayed in the next exec
+	 *
+	 * @param string $name (complete) name of the widget causing the error
+	 * @param string $cname =null set it to '', if the name is already a form-name, defaults to self::$name_vars
+	 * @return string|null error-message already translated or null if there's none for the given $name
+	 */
+	public static function get_validation_errors($name, $cname=null)
+	{
+		if ($cname) $name = self::form_name($cname,$name);
+
+		return self::$validation_errors[$name] ?? null;
+	}
+
+	/**
 	* Check if we have not ignored validation errors
 	*
 	* @param string $ignore_validation ='' if not empty regular expression for validation-errors to ignore
