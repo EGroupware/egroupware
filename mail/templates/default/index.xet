@@ -114,7 +114,7 @@
         </et2-box>
     </template>
     <template id="mail.index.splitter" height="100%" template="" lang="" group="0" version="1.9.001">
-        <et2-split id="mailSplitter" style="--min: 30%;--max:min(70%,calc(100% - 400px));" vertical="false" primary="start">
+        <et2-split id="mailSplitter" style="--min: 30%;--max:min(70%,calc(100% - 30em));" vertical="false" primary="start">
             <nextmatch id="nm" onselect="app.mail.mail_preview" class="" template="mail.index.rows.vertical" header_left="mail.index.add" header_right="mail.index.header_right" disable_selection_advance="true"/>
             <template id="mail.index.preview"/>
         </et2-split>
