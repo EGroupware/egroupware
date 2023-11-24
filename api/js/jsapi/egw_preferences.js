@@ -26,7 +26,7 @@ egw.extend('preferences', egw.MODULE_GLOBAL, function()
 	 * @access: private, use egw.preferences() or egw.set_perferences()
 	 */
 	var prefs = {
-		common:{texsize:12}
+		common:{textsize:12}
 	};
 	var grants = {};
 
