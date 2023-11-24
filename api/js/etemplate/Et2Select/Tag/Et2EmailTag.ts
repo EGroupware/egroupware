@@ -105,7 +105,7 @@ export class Et2EmailTag extends Et2Tag
 		this.onlyEmail = false;
 		this.handleMouseEnter = this.handleMouseEnter.bind(this);
 		this.handleMouseLeave = this.handleMouseLeave.bind(this);
-		this.handleMouseDown = this.handleMouseDown.bind(this);
+		this.handleMouseClick = this.handleMouseClick.bind(this);
 		this.handleContactMouseDown = this.handleContactMouseDown.bind(this);
 	}
 
@@ -176,7 +176,7 @@ export class Et2EmailTag extends Et2Tag
 		this.shadowRoot.querySelector(".tag").classList.remove("contact_plus");
 	}
 
-	handleMouseDown(e : MouseEvent)
+	handleMouseClick(e : MouseEvent)
 	{
 		e.stopPropagation();
 
@@ -279,7 +279,7 @@ export class Et2EmailTag extends Et2Tag
 			// Show a button to add as new contact
 			classes['tag__has_plus'] = true;
 			button_or_avatar = html`
-                <et2-button-icon image="add" tabindex="-1" @mousedown=${this.handleMouseDown}
+                <et2-button-icon image="add" tabindex="-1" @click=${this.handleMouseClick}
                                  label="${this.egw().lang("Add a new contact")}"
                                  statustext="${this.egw().lang("Add a new contact")}">
                 </et2-button-icon>`;
