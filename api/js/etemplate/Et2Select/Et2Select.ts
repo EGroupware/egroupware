@@ -730,7 +730,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		{
 			e.stopPropagation();
 
-			let distance = (-1 * parseInt(getComputedStyle(this).height));
+			let distance = (-1 * parseInt(getComputedStyle(this).height)) + 2;
 
 			// Bind to turn this all off
 			this.addEventListener("mouseleave", this._handleMouseLeave);
@@ -749,7 +749,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 				popup.setAttribute("exportparts", "tags, popup");
 				popup.classList.add("hover__popup", "details", "hoist", "details__body");
 				this.shadowRoot.append(popup);
-				popup.appendChild(tags);
+				popup.appendChild(tags.cloneNode(true));
 				tags.style.width = getComputedStyle(this).width;
 				tags.style.margin = 0;
 			});
@@ -767,8 +767,6 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		if(popup)
 		{
 			// Popup still here.  Remove it
-			let tags = popup.firstChild;
-			this.select.shadowRoot.querySelector(".select__combobox").append(tags);
 			popup.remove();
 		}
 		this.removeEventListener("mouseleave", this._handleMouseLeave);
