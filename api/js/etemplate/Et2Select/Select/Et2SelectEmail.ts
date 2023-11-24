@@ -43,6 +43,16 @@ export class Et2SelectEmail extends Et2Select
 			{
 				display: none;
 			}
+
+			  /*** Drag & Drop ***/
+
+			  .et2-select-draggable {
+				touch-action: none;
+			  }
+
+			  :host(.et2_dropZone)::part(combobox) {
+				background-color: transparent;
+			  }
 			`
 		];
 	}
@@ -99,6 +109,8 @@ export class Et2SelectEmail extends Et2Select
 		this.fullEmail = false;
 		this.onlyEmail = false;
 		this.defaultValidators.push(new IsEmail(this.allowPlaceholder));
+
+		this.handleMouseDown = this.handleMouseDown.bind(this);
 	}
 
 
@@ -112,6 +124,11 @@ export class Et2SelectEmail extends Et2Select
 			this.defaultValidators = (<Array<Validator>>this.defaultValidators).filter(v => !(v instanceof IsEmail));
 			this.defaultValidators.push(new IsEmail(this.allowPlaceholder));
 		}
+	}
+
+	firstUpdated()
+	{
+		this.select.addEventListener("mousedown", this.handleMouseDown);
 	}
 
 	updated(changedProperties : Map<string, any>)
@@ -135,11 +152,12 @@ export class Et2SelectEmail extends Et2Select
 		{
 			let dragTranslate = {x: 0, y: 0};
 			const tags = Array.from(this.select.shadowRoot.querySelectorAll(".select__tags et2-email-tag"));
-			let draggable = interact(tags).draggable({
+			let draggable = interact(".et2-select-draggable").draggable({
 				startAxis: 'xy',
 				listeners: {
 					start: function(e)
 					{
+						this.hide();
 						let dragPosition = {x: e.page.x, y: e.page.y};
 						dragTranslate = {x: 0, y: 0};
 						e.target.setAttribute('style', `width:${e.target.clientWidth}px !important`);
@@ -147,13 +165,18 @@ export class Et2SelectEmail extends Et2Select
 						e.target.style.zIndex = 10;
 						e.target.style.transform =
 							`translate(${dragPosition.x}px, ${dragPosition.y}px)`;
-					},
+					}.bind(this),
 					move: function(e)
 					{
 						dragTranslate.x += e.delta.x;
 						dragTranslate.y += e.delta.y;
 						e.target.style.transform =
 							`translate(${dragTranslate.x}px, ${dragTranslate.y}px)`;
+					},
+					end: function(e)
+					{
+						// Restore dragged tag to where it came from
+						e.target.removeAttribute("style");
 					}
 				}
 			});
@@ -169,28 +192,40 @@ export class Et2SelectEmail extends Et2Select
 		{
 			return;
 		}
-		interact(this).dropzone({
-			accept: `.et2-select-draggable`,
-			ondrop: function(e)
-			{
-				// Add in as free entry
-				e.target.createFreeEntry(e.draggable.target.value);
-				e.target.classList.remove('et2_dropZone');
+		this.updateComplete.then(() =>
+		{
+			interact(this).dropzone({
+				accept: `.et2-select-draggable`,
+				ondrop: function(e)
+				{
+					// Restore dragged tag
+					e.relatedTarget.removeAttribute("style");
 
-				// remove the dragged value from its origin source
-				e.draggable.parent_node.value = e.draggable.parent_node.value.filter(_item => {return e.draggable.target.value !== _item;})
-			},
-			ondragenter: function(e)
-			{
-				e.target.classList.add('et2_dropZone');
-			},
-			ondragleave: function(e)
-			{
-				e.target.classList.remove('et2_dropZone');
-			}
+					const source = e.relatedTarget.getRootNode().host // Containing sl-select
+						.getRootNode().host                           // Containing et2-select-email
+					// remove the dragged value from its origin source
+					source.value = source.value.filter(_item => {return e.relatedTarget.value !== _item;})
+
+					// Add in as free entry
+					e.target.createFreeEntry(e.relatedTarget.value);
+					e.target.classList.remove('et2_dropZone');
+				},
+				ondragenter: function(e)
+				{
+					this.hide();
+					this.classList.add('et2_dropZone');
+				}.bind(this),
+				ondragleave: function(e)
+				{
+					this.classList.remove('et2_dropZone');
+				}.bind(this)
+			});
 		});
 	}
-	
+
+	protected handleMouseDown(e : MouseEvent)
+	{
+	}
 	/**
 	 * Handle keypresses inside the search input
 	 * Overridden from parent to also skip the hidden selected options, which other selects do not do
@@ -254,7 +289,7 @@ export class Et2SelectEmail extends Et2Select
             <et2-email-tag
                     class=${classMap({
                         ...option.classList,
-                        "et2-select-draggable": !this.readonly && this.allowFreeEntries && this.allowDragAndDrop
+                        "et2-select-draggable": !this.readonly && this.allowFreeEntries && this.allowDragAndDrop,
                     })}
                     .fullEmail=${this.fullEmail}
                     .onlyEmail=${this.onlyEmail}
