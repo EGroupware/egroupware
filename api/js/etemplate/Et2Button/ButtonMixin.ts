@@ -38,6 +38,7 @@ export const ButtonMixin = <T extends Constructor>(superclass : T) => class exte
 		cancelled: /no(&|\]|$)/,
 		ok: /ok(&|\]|$)/,
 		close: /close(&|\]|$)/,
+		link: /link(&|\]|_|$)/,
 		add: /(add(&|\]|$)|create)/	// customfields use create*
 	};
 
