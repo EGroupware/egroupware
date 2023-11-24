@@ -122,7 +122,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 
 			  :host([rows]) ::part(tags) {
 				overflow-y: auto;
-				max-height: calc(var(--rows, 5) * 2.3em);
+				max-height: calc(var(--rows, 5) * (var(--sl-input-height-medium) * 0.8))
 			  }
 
 			  :host([rows='1']) ::part(tags) {
@@ -769,7 +769,6 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 			// Popup still here.  Remove it
 			popup.remove();
 		}
-		this.removeEventListener("mouseleave", this._handleMouseLeave);
 		this.select.requestUpdate();
 	}
 
