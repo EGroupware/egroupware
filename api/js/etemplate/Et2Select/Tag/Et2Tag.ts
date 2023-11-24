@@ -107,7 +107,7 @@ export class Et2Tag extends Et2Widget(SlTag)
             ${this.editable ? html`
                 <et2-button-icon
                         label=${this.egw().lang("edit")}
-                        name="pencil"
+                        image="pencil"
                         @click=${this.startEdit}
                 ></et2-button-icon>` : ''
             }
@@ -193,6 +193,7 @@ export class Et2Tag extends Et2Widget(SlTag)
 		{
 			event.stopPropagation();
 		}
+		this.getRootNode().host.hide()
 		this.isEditing = true;
 		this.requestUpdate();
 		this.updateComplete.then(() =>
