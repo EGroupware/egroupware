@@ -180,7 +180,7 @@ abstract class Entry extends Transformer
 		$id = is_array($data) ? static::get_array($data, $data_id) : $data;
 		if(!$app || !$type || !isset($GLOBALS['egw_info']['apps'][$app]) || !$id ||
 			// Simple CF, already there
-			isset($data[$attrs['field']])
+			is_array($data) && isset($data[$attrs['field']])
 		)
 		{
 			return;
