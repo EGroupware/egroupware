@@ -2,12 +2,12 @@
 
 REPO=egroupware
 IMAGE=development
-BASE=ubuntu:20.04
-RECOMMENDED_PHP_VERSION=8.1
+BASE=node:20-bookworm-slim
+RECOMMENDED_PHP_VERSION=8.2
 
-PHP_VERSION=${1:-8.1}
+PHP_VERSION=${1:-$RECOMMENDED_PHP_VERSION}
 
-TAG=$(docker run --rm -i --entrypoint bash $REPO/$IMAGE:latest -c "apt update && apt search php$PHP_VERSION-fpm" 2>/dev/null|grep php$PHP_VERSION-fpm|sed "s|^php$PHP_VERSION-fpm/[^ ]* .*\([78]\.[0-9]*\.[0-9]*\).*|\1|g")
+TAG=$(docker run --rm -i --entrypoint bash $REPO/$IMAGE:latest -c "apt update && apt search php$PHP_VERSION-fpm" 2>/dev/null|grep php$PHP_VERSION-fpm|head -1|sed "s|^php$PHP_VERSION-fpm/[^ ]* .*\([78]\.[0-9]*\.[0-9]*\).*|\1|g")
 test -z "$TAG" && {
 	echo "Can't get new tag of $REPO/$IMAGE container --> existing"
 	exit 1

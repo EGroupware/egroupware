@@ -1,9 +1,9 @@
 ################################################################################
 ##
-## EGroupware development container using Ubuntu 20.04 and PHP from ondrej/php PPA
+## EGroupware development container using Debian 12/Bookworm, NodeJS 20 and PHP from ondrej/php PPA
 ##
 ################################################################################
-FROM ubuntu:20.04
+FROM node:20-bookworm-slim
 MAINTAINER rb@egroupware.org
 
 ARG VERSION=dev-master
@@ -13,11 +13,16 @@ ARG PHP_VERSION=8.2
 ENV VERSION=$VERSION
 ENV PHP_VERSION=$PHP_VERSION
 
-RUN apt-get update \
-	&& apt-get install -y software-properties-common curl \
-	&& LC_ALL=C.UTF-8 add-apt-repository -y ppa:ondrej/php \
+RUN set -e \
+    && apt-get update \
+	&& apt-get install -y apt-transport-https software-properties-common curl \
+    && curl -o /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg \
+    && echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" > /etc/apt/sources.list.d/php.list \
 	&& apt-get update \
-	&& bash -c "apt-get install -y php$PHP_VERSION-{cli,mysql,gd,xsl,bz2,opcache,apcu,tidy,zip,bcmath,mbstring,smbclient,ldap,curl,fpm,pgsql,gmp}" \
+	&& bash -c "apt-get install -y php$PHP_VERSION-{cli,mysql,gd,xsl,bz2,opcache,tidy,zip,bcmath,mbstring,ldap,curl,fpm,pgsql,gmp}" \
+    # there's (hopefully not yet) a php8.3 package for
+    && apt-get install -y php$PHP_VERSION-apcu || true \
+    && apt-get install -y php$PHP_VERSION-smbclient || true \
 	# PHP 8.0 no longer has a separate json extension
     && apt-get install -y php$PHP_VERSION-json || true \
 	# fpm and php.ini settings
@@ -48,15 +53,8 @@ RUN apt-get update \
 	&& mkdir -p /run/php \
 	# send logs to stderr to be viewed by docker logs
 	&& ln -s /dev/stderr /var/log/php$PHP_VERSION-fpm.log \
-	# install nodejs 20.x (Shoelace requires >= 14.17, Ubuntu 22.04 only has 12.x) \
-    && mkdir -p /etc/apt/keyrings \
-    && curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg \
-    && echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_20.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list \
-    && apt-get update \
 	# install tools to build EGroupware
-	&& apt-get install -y rsync nodejs zip curl sudo cron patch \
-    # nodejs PPA does NOT exist for ppc64le, therefore we need to install npm separate, as not included in stock nodejs on Ubuntu
-    && test -f /usr/bin/npm || apt-get install -y npm \
+	&& apt-get install -y rsync zip curl sudo cron patch \
 	&& npm install -g grunt-cli \
 	&& bash -c \
 'EXPECTED_SIGNATURE=$(curl https://composer.github.io/installer.sig); \
@@ -76,7 +74,10 @@ exit $RESULT' \
 	&& echo "TLS_REQCERT never" >> /etc/ldap/ldap.conf
 
 # install diverse developper tools, not installed above / in stock container
-RUN apt-get install -y php$PHP_VERSION-cli php$PHP_VERSION-xdebug inetutils-ping iproute2 git vim yarn \
+RUN set -e \
+    && apt-get install -y inetutils-ping iproute2 git vim yarn \
+    # there's not yet a php8.3-xdebug package
+    && apt-get install -y php$PHP_VERSION-cli php$PHP_VERSION-xdebug || true \
 	&& echo "xdebug.mode=debug" >> /etc/php/$PHP_VERSION/fpm/conf.d/20-xdebug.ini \
 	&& echo "xdebug.client_port=9001" >> /etc/php/$PHP_VERSION/fpm/conf.d/20-xdebug.ini \
 	&& echo "xdebug.client_host=172.17.0.1" >> /etc/php/$PHP_VERSION/fpm/conf.d/20-xdebug.ini \
