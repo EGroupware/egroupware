@@ -2052,13 +2052,14 @@ class infolog_ui
 			{
 				Framework::window_close(lang('Permission denied!'));
 			}
-			if (is_numeric($_REQUEST['cat_id']))
-			{
-				$content['info_cat'] = (int)$_REQUEST['cat_id'];
-			}
 			if (!$content)
 			{
 				$content['info_cat'] = $this->prefs['cat_add_default'];
+				$content['info_modifier'] = $GLOBALS['egw_info']['user']['account_id'];
+			}
+			if (is_numeric($_REQUEST['cat_id']))
+			{
+				$content['info_cat'] = (int)$_REQUEST['cat_id'];
 			}
 			if ($_GET['msg']) $content['msg'] = strip_tags($_GET['msg']);	// dont allow HTML!
 
