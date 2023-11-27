@@ -743,8 +743,11 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 		{
 			if(this.searchEnabled || this.allowFreeEntries)
 			{
-				this._searchInputNode.focus();
-				this._searchInputNode.select();
+				this.updateComplete.then(() =>
+				{
+					this._searchInputNode.focus();
+					this._searchInputNode.select();
+				});
 			}
 			return;
 			// Need to give positioner a chance to position.
