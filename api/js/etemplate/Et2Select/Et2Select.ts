@@ -1016,6 +1016,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
                     helpText=${this.helpText}
                     hoist
                     placement=${this.placement}
+                    tabindex="0"
                     .getTag=${this._tagTemplate}
                     .maxOptionsVisible=${0}
                     .value=${value}
