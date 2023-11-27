@@ -225,6 +225,9 @@ export class Et2SelectEmail extends Et2Select
 
 	protected handleMouseDown(e : MouseEvent)
 	{
+		// We need this hidden _now_ because of drag & drop, can't wait until update
+		this._activeControls.classList.remove("active");
+		this.select.shadowRoot.querySelector("sl-popup").active = false;
 	}
 	/**
 	 * Handle keypresses inside the search input
