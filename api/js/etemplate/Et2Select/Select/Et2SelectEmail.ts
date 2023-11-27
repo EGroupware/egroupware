@@ -13,6 +13,7 @@ import {IsEmail} from "../../Validators/IsEmail";
 import interact from "@interactjs/interact";
 import {Validator} from "@lion/form-core";
 import {classMap} from "lit/directives/class-map.js";
+import {state} from "lit/decorators/state.js";
 
 /**
  * Select email address(es)
@@ -91,6 +92,9 @@ export class Et2SelectEmail extends Et2Select
 		}
 	}
 
+	/* Drag and drop has issues with positioning when we automatically open.  Don't open if the user clicks on a tag. */
+	@state() _cancelOpen = false;
+
 	constructor(...args : any[])
 	{
 		super(...args);
@@ -136,6 +140,7 @@ export class Et2SelectEmail extends Et2Select
 		super.updated(changedProperties);
 
 		// Make tags draggable
+		this._cancelOpen = false;
 		if(!this.readonly && this.allowFreeEntries && this.allowDragAndDrop)
 		{
 			this._makeDraggable();
@@ -225,9 +230,14 @@ export class Et2SelectEmail extends Et2Select
 
 	protected handleMouseDown(e : MouseEvent)
 	{
-		// We need this hidden _now_ because of drag & drop, can't wait until update
-		this._activeControls.classList.remove("active");
-		this.select.shadowRoot.querySelector("sl-popup").active = false;
+		if(this._cancelOpen)
+		{
+			e.stopImmediatePropagation();
+
+			// We need this hidden _now_ because of drag & drop, can't wait until update
+			this._activeControls.classList.remove("active");
+			this.select.shadowRoot.querySelector("sl-popup").active = false;
+		}
 	}
 	/**
 	 * Handle keypresses inside the search input
@@ -299,6 +309,7 @@ export class Et2SelectEmail extends Et2Select
                     ?removable=${!readonly}
                     ?readonly=${readonly}
                     ?editable=${isEditable}
+                    @mousedown=${(e) => {this._cancelOpen = true;}}
                     .value=${option.value.replaceAll("___", " ")}
             >
                 ${option.getTextLabel().trim()}
