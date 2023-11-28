@@ -736,8 +736,9 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 		}
 
 		/**
-		 * Reposition the dropdown to allow space for current value and search.  If the dropdown was positioned above
-		 * instead of below, we don't need the extra space - remove it.
+		 * Focus the search input after showing the dropdown so user can just type.
+		 *
+		 * Timeout is needed for some systems to properly focus
 		 */
 		_handleAfterShow()
 		{
@@ -749,28 +750,6 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 					this._searchInputNode.select();
 				}, 100);
 			}
-			return;
-			// Need to give positioner a chance to position.
-			// If we call it right away, it has not updated.
-			// I haven't found an event or Promise to hook on to
-			window.setTimeout(() =>
-			{
-				if(this.dropdown?.getAttribute("distance") && this.dropdown?.popup?.dataset.currentPlacement == "top")
-				{
-					this.dropdown.setAttribute("distance", 0);
-					this.dropdown.reposition();
-				}
-				else
-				{
-					this.dropdown?.setAttribute("distance",
-						!this._activeControls || this._activeControls?.classList.contains("novalue") ?
-						parseInt(getComputedStyle(this.control).getPropertyValue("border-width")) :
-							// Make room for search below
-						parseInt(getComputedStyle(this._activeControls).getPropertyValue("--sl-input-height-medium"))
-					);
-				}
-			}, 100);
-
 		}
 
 		focus()
