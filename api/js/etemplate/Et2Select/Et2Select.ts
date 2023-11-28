@@ -143,7 +143,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 
 			  /* Hide dropdown trigger when multiple & readonly */
 
-			  :host([readonly][multiple]):not([rows="1"])::part(expand-icon) {
+			  :host([readonly][multiple]:not([rows='1']))::part(expand-icon) {
 				display: none;
 			  }
 
