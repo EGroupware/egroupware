@@ -276,7 +276,11 @@ class Script
 
 		if (!$this->extensions['vacation']) $this->vacation = false;
 
-		$newscriptbody = "";
+		// for vacation with redirect we need to keep track were the mail goes, to add an explicit keep
+		if ($this->extensions['variables'] && $this->vacation)
+		{
+			$newscriptbody = 'set "action" "inbox";'."\n\n";
+		}
 		$continue = 1;
 
 		foreach ($this->rules as $rule) {
@@ -405,7 +409,16 @@ class Script
 				if (preg_match("/flags/i",$rule['action'])) {
 					$newruletext .= "addflag \"".$rule['action_arg']."\";";
 				}
-				if ($rule['keep']) $newruletext .= "\n\tkeep;";
+				if ($rule['keep'])
+				{
+					$newruletext .= "\n\tkeep;";
+				}
+				// for vacation with redirect we need to keep track were the mail goes, to NOT add an explicit keep
+				elseif ($this->extensions['variables'] && $this->vacation &&
+					preg_match('/(folder|reject|address|discard)/', $rule['action']))
+				{
+					$newruletext .= "\n\tset \"action\" \"$rule[action]\";";
+				}
 				if (!$rule['unconditional']) $newruletext .= "\n}";
 
 				$continue = 0;
@@ -468,7 +481,11 @@ class Script
 					{
 						$vac_rule .= "\tredirect \"" . trim($addr) . "\";\n";
 					}
-					$vac_rule .= "\tkeep;\n}\n";
+					// if there is no other action e.g. fileinto before, we need to add an explicit keep, as the implicit on is canceled by the vaction redirect!
+					if ($this->extensions['variables']) $vac_rule .= "\tif string :is \"\${action}\" \"inbox\" {\n";
+					$vac_rule .= "\t\tkeep;\n";
+					if ($this->extensions['variables']) $vac_rule .= "\t}\n";
+					$vac_rule .= "}\n";
 				}
 				if (!isset($vacation['modus']) || $vacation['modus'] !== 'store')
 				{
@@ -585,9 +602,10 @@ class Script
 		} else {
 			// no active rules, but might still have an active vacation rule
 			$closeRequired = false;
-			if ($this->vacation && $vacation_active)
+			if ($this->vacation)
 			{
 				$newscripthead .= "require [\"vacation\"";
+				if ($this->extensions['variables']) $newscripthead .= ',"variables"';
 				if ($this->extensions['regex'] && $regexused) $newscripthead .= ",\"regex\"";
 				if ($this->extensions['date']) $newscripthead .= ",\"date\"";
 				if ($this->extensions['relational']) $newscripthead .= ",\"relational\"";
