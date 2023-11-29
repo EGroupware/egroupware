@@ -561,7 +561,7 @@ abstract class Handler
 	 */
 	function get_path($entry)
 	{
-		return (is_array($entry) ? $entry[self::$path_attr] : $entry).self::$path_extension;
+		return (is_array($entry) ? $entry[static::$path_attr] : $entry).static::$path_extension;
 	}
 
 	/**
