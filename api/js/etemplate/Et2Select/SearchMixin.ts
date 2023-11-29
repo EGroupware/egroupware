@@ -638,6 +638,7 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 				{
 					this._selected_remote.push(option);
 				}
+				this.requestUpdate();
 			});
 		}
 
