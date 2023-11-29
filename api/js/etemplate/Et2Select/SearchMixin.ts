@@ -899,9 +899,6 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 			if(!this.multiple && this.searchEnabled)
 			{
 				this._handleSearchAbort(e);
-
-				// Start searching again
-				this._handleMenuShow();
 			}
 		}
 
