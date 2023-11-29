@@ -1,3 +1,10 @@
+egroupware-docker (23.1.20231129) hardy; urgency=low
+
+  * API: fixed several regressions around updated select and email entry widgets
+  * SmallPART: fixed some problems with new LiveFeedback feature and updated Shoelace widgets
+
+ -- Ralf Becker <rb@egroupware.org>  Wed, 29 Nov 2023 07:35:16 +0100
+
 egroupware-docker (23.1.20231122) hardy; urgency=low
 
   * THIS IS A PRE-RELEASE for testing, you need to explicitly set the tag in your docker-compose.override.yml
