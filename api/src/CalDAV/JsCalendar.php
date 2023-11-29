@@ -19,12 +19,13 @@ use EGroupware\Api;
  * @link https://datatracker.ietf.org/doc/html/rfc8984
  * @link https://jmap.io/spec-calendars.html
  */
-class JsCalendar
+class JsCalendar extends JsBase
 {
+	const APP = 'calendar';
+
 	const MIME_TYPE = "application/jscalendar+json";
 	const MIME_TYPE_JSEVENT = "application/jscalendar+json;type=event";
 	const MIME_TYPE_JSTASK = "application/jscalendar+json;type=task";
-	const MIME_TYPE_JSON = "application/json";
 
 	const TYPE_EVENT = 'Event';
 
@@ -200,174 +201,6 @@ class JsCalendar
 		return $event;
 	}
 
-	const URN_UUID_PREFIX = 'urn:uuid:';
-	const UUID_PREG = '/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/i';
-
-	/**
-	 * Get UID with either "urn:uuid:" prefix for UUIDs or just the text
-	 *
-	 * @param string $uid
-	 * @return string
-	 */
-	protected static function uid(string $uid)
-	{
-		return preg_match(self::UUID_PREG, $uid) ? self::URN_UUID_PREFIX.$uid : $uid;
-	}
-
-	/**
-	 * Parse and optionally generate UID
-	 *
-	 * @param string|null $uid
-	 * @param string|null $old old value, if given it must NOT change
-	 * @param bool $generate_when_empty true: generate UID if empty, false: throw error
-	 * @return string without urn:uuid: prefix
-	 * @throws \InvalidArgumentException
-	 */
-	protected static function parseUid(string $uid=null, string $old=null, bool $generate_when_empty=false)
-	{
-		if (empty($uid) || strlen($uid) < 12)
-		{
-			if (!$generate_when_empty)
-			{
-				throw new \InvalidArgumentException("Invalid or missing UID: ".json_encode($uid));
-			}
-			$uid = \HTTP_WebDAV_Server::_new_uuid();
-		}
-		if (strpos($uid, self::URN_UUID_PREFIX) === 0)
-		{
-			$uid = substr($uid, strlen(self::URN_UUID_PREFIX));
-		}
-		if (isset($old) && $old !== $uid)
-		{
-			throw new \InvalidArgumentException("You must NOT change the UID ('$old'): ".json_encode($uid));
-		}
-		return $uid;
-	}
-
-	/**
-	 * JSON options for errors thrown as exceptions
-	 */
-	const JSON_OPTIONS_ERROR = JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE;
-
-	const AT_TYPE = '@type';
-
-	/**
-	 * Return EGroupware custom fields
-	 *
-	 * @param array $contact
-	 * @return array
-	 */
-	protected static function customfields(array $contact)
-	{
-		$fields = [];
-		foreach(Api\Storage\Customfields::get('calendar') as $name => $data)
-		{
-			$value = $contact['#'.$name];
-			if (isset($value))
-			{
-				switch($data['type'])
-				{
-					case 'date-time':
-						$value = Api\DateTime::to($value, Api\DateTime::RFC3339);
-						break;
-					case 'float':
-						$value = (double)$value;
-						break;
-					case 'int':
-						$value = (int)$value;
-						break;
-					case 'select':
-						$value = explode(',', $value);
-						break;
-				}
-				$fields[$name] = array_filter([
-					'value' => $value,
-					'type' => $data['type'],
-					'label' => $data['label'],
-					'values' => $data['values'],
-				]);
-			}
-		}
-		return $fields;
-	}
-
-	/**
-	 * Parse custom fields
-	 *
-	 * Not defined custom fields are ignored!
-	 * Not send custom fields are set to null!
-	 *
-	 * @param array $cfs name => object with attribute data and optional type, label, values
-	 * @return array
-	 */
-	protected static function parseCustomfields(array $cfs)
-	{
-		$contact = [];
-		$definitions = Api\Storage\Customfields::get('calendar');
-
-		foreach($definitions as $name => $definition)
-		{
-			$data = $cfs[$name];
-			if (isset($data))
-			{
-				if (is_scalar($data))
-				{
-					$data = ['value' => $data];
-				}
-				if (!is_array($data) || !array_key_exists('value', $data))
-				{
-					throw new \InvalidArgumentException("Invalid customfield object $name: ".json_encode($data, self::JSON_OPTIONS_ERROR));
-				}
-				switch($definition['type'])
-				{
-					case 'date-time':
-						$data['value'] = Api\DateTime::to($data['value'], 'object');
-						break;
-					case 'float':
-						$data['value'] = (double)$data['value'];
-						break;
-					case 'int':
-						$data['value'] = round($data['value']);
-						break;
-					case 'select':
-						if (is_scalar($data['value'])) $data['value'] = explode(',', $data['value']);
-						$data['value'] = array_intersect(array_keys($definition['values']), $data['value']);
-						$data['value'] = $data['value'] ? implode(',', (array)$data['value']) : null;
-						break;
-				}
-				$contact['#'.$name] = $data['value'];
-			}
-			// set not return cfs to null
-			else
-			{
-				$contact['#'.$name] = null;
-			}
-		}
-		// report not existing cfs to log
-		if (($not_existing=array_diff(array_keys($cfs), array_keys($definitions))))
-		{
-			error_log(__METHOD__."() not existing/ignored custom fields: ".implode(', ', $not_existing));
-		}
-		return $contact;
-	}
-
-	/**
-	 * Return object of category-name(s) => true
-	 *
-	 * @link https://datatracker.ietf.org/doc/html/draft-ietf-jmap-jscontact-07#section-2.5.4
-	 * @param ?string $cat_ids comma-sep. cat_id's
-	 * @return true[]
-	 */
-	protected static function categories(?string $cat_ids)
-	{
-		$cat_ids = array_filter($cat_ids ? explode(',', $cat_ids): []);
-
-		return array_combine(array_map(static function ($cat_id)
-		{
-			return Api\Categories::id2name($cat_id);
-		}, $cat_ids), array_fill(0, count($cat_ids), true));
-	}
-
 	/**
 	 * Parse categories object
 	 *
@@ -419,29 +252,6 @@ class JsCalendar
 	protected static function parseString(string $value=null)
 	{
 		return $value;
-	}
-
-	/**
-	 * Return a date-time value in UTC
-	 *
-	 * @link https://datatracker.ietf.org/doc/html/rfc8984#section-1.4.4
-	 * @param null|string|\DateTime $date
-	 * @return string|null
-	 */
-	protected static function UTCDateTime($date)
-	{
-		static $utc=null;
-		if (!isset($utc)) $utc = new \DateTimeZone('UTC');
-
-		if (!isset($date))
-		{
-			return null;
-		}
-		$date = Api\DateTime::to($date, 'object');
-		$date->setTimezone($utc);
-
-		// we need to use "Z", not "+00:00"
-		return substr($date->format(Api\DateTime::RFC3339), 0, -6).'Z';
 	}
 
 	const DATETIME_FORMAT = 'Y-m-d\TH:i:s';
@@ -872,76 +682,6 @@ class JsCalendar
 			]);
 		}
 		return $alerts;
-	}
-
-	/**
-	 * Patch JsEvent
-	 *
-	 * @param array $patches JSON path
-	 * @param array $jsevent to patch
-	 * @param bool $create =false true: create missing components
-	 * @return array patched $jsevent
-	 */
-	public static function patch(array $patches, array $jsevent, bool $create=false)
-	{
-		foreach($patches as $path => $value)
-		{
-			$parts = explode('/', $path);
-			$target = &$jsevent;
-			foreach($parts as $n => $part)
-			{
-				if (!isset($target[$part]) && $n < count($parts)-1 && !$create)
-				{
-					throw new \InvalidArgumentException("Trying to patch not existing attribute with path $path!");
-				}
-				$parent = $target;
-				$target = &$target[$part];
-			}
-			if (isset($value))
-			{
-				$target = $value;
-			}
-			else
-			{
-				unset($parent[$part]);
-			}
-		}
-		return $jsevent;
-	}
-
-	/**
-	 * Map all kind of exceptions while parsing to a JsCalendarParseException
-	 *
-	 * @param \Throwable $e
-	 * @param string $type
-	 * @param ?string $name
-	 * @param mixed $value
-	 * @throws JsCalendarParseException
-	 */
-	protected static function handleExceptions(\Throwable $e, $type='JsCalendar', ?string $name, $value)
-	{
-		try {
-			throw $e;
-		}
-		catch (\JsonException $e) {
-			throw new JsCalendarParseException("Error parsing JSON: ".$e->getMessage(), 422, $e);
-		}
-		catch (\InvalidArgumentException $e) {
-			throw new JsCalendarParseException("Error parsing $type attribute '$name': ".
-				str_replace('"', "'", $e->getMessage()), 422);
-		}
-		catch (\TypeError $e) {
-			$message = $e->getMessage();
-			if (preg_match('/must be of the type ([^ ]+( or [^ ]+)*), ([^ ]+) given/', $message, $matches))
-			{
-				$message = "$matches[1] expected, but got $matches[3]: ".
-					str_replace('"', "'", json_encode($value, self::JSON_OPTIONS_ERROR));
-			}
-			throw new JsCalendarParseException("Error parsing $type attribute '$name': $message", 422, $e);
-		}
-		catch (\Throwable $e) {
-			throw new JsCalendarParseException("Error parsing $type attribute '$name': ". $e->getMessage(), 422, $e);
-		}
 	}
 
 	/**

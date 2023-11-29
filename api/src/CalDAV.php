@@ -19,7 +19,7 @@ use EGroupware\Api\CalDAV\Principals;
 // explicit import non-namespaced classes
 require_once(__DIR__.'/WebDAV/Server.php');
 
-use EGroupware\Api\Contacts\JsContactParseException;
+use EGroupware\Api\CalDAV\JsParseException;
 use HTTP_WebDAV_Server;
 use calendar_hooks;
 
@@ -1156,7 +1156,9 @@ class CalDAV extends HTTP_WebDAV_Server
 				'address-data' => self::mkprop(self::CARDDAV, 'address-data', '')
 			] : ($is_calendar ? [
 				'calendar-data' => self::mkprop(self::CALDAV, 'calendar-data', ''),
-			] : 'all'),
+			] : [
+				'data' => self::mkprop(self::CALDAV, 'data', '')
+			]),
 			'other' => [],
 		);
 
@@ -1262,7 +1264,7 @@ class CalDAV extends HTTP_WebDAV_Server
 			// check if this is a property-object
 			elseif (count($prop) === 3 && isset($prop['name']) && isset($prop['ns']) && isset($prop['val']))
 			{
-				$value = in_array($prop['name'], ['address-data', 'calendar-data']) ? $prop['val'] : self::jsonProps($prop['val']);
+				$value = in_array($prop['name'], ['address-data', 'calendar-data', 'data']) ? $prop['val'] : self::jsonProps($prop['val']);
 			}
 			else
 			{
@@ -2557,7 +2559,7 @@ class CalDAV extends HTTP_WebDAV_Server
 		if (self::isJSON())
 		{
 			header('Content-Type: application/json; charset=utf-8');
-			if (is_a($e, JsContactParseException::class))
+			if (is_a($e, JsParseException::class))
 			{
 				$status = '422 Unprocessable Entity';
 			}

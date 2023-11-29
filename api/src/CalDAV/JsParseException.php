@@ -18,7 +18,7 @@ use Throwable;
  *
  * @link  * @link https://datatracker.ietf.org/doc/html/rfc8984
  */
-class JsCalendarParseException extends \InvalidArgumentException
+class JsParseException extends \InvalidArgumentException
 {
 	public function __construct($message = "", $code = 422, Throwable $previous = null)
 	{
