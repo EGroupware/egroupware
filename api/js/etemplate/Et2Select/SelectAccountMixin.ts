@@ -85,7 +85,8 @@ export const SelectAccountMixin = <T extends Constructor<LitElement>>(superclass
 				}
 
 				let account_name = null;
-				let option = <SelectOption>{value: "" + id, label: id + " ..."};
+				const tempLabel = id + " ..."
+				let option = <SelectOption>{value: "" + id, label: tempLabel};
 				this.account_options.push(option);
 				if(this.value && (account_name = this.egw().link_title('api-accounts', id, false)))
 				{
@@ -97,7 +98,16 @@ export const SelectAccountMixin = <T extends Constructor<LitElement>>(superclass
 					this.egw().link_title('api-accounts', id, true).then(title =>
 					{
 						option.label = title || '';
-						this.requestUpdate('select_options');
+						this.requestUpdate();
+
+						// Directly update if it's already there
+						const slOption = this.select?.querySelector('[value="' + id + '"]');
+						if(slOption)
+						{
+							// Replace instead of changing the whole thing to preserve LitElement marker comments
+							slOption.textContent.replace(tempLabel, title);
+							this.select.requestUpdate("value");
+						}
 					});
 				}
 			}
