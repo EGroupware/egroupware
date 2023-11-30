@@ -74,6 +74,14 @@ export const SelectAccountMixin = <T extends Constructor<LitElement>>(superclass
 			}
 		}
 
+		/**
+		 * OVerridden to do nothing, we handle it differently in _find_options()
+		 * @param {string} newValueElement
+		 * @protected
+		 */
+		protected _missingOption(newValueElement : string)
+		{}
+
 		_find_options(val)
 		{
 			for(let id of val)
@@ -100,6 +108,7 @@ export const SelectAccountMixin = <T extends Constructor<LitElement>>(superclass
 						option.label = title || '';
 						this.requestUpdate();
 
+						this.account_options.sort(this.optionSort);
 						// Directly update if it's already there
 						const slOption = this.select?.querySelector('[value="' + id + '"]');
 						if(slOption)
@@ -111,6 +120,7 @@ export const SelectAccountMixin = <T extends Constructor<LitElement>>(superclass
 					});
 				}
 			}
+			this.account_options.sort(this.optionSort);
 		}
 
 		get value()
@@ -121,12 +131,40 @@ export const SelectAccountMixin = <T extends Constructor<LitElement>>(superclass
 		get select_options()
 		{
 			return [...new Map([...this.account_options, ...(super.select_options || [])].map(item =>
-				[item.value, item])).values()];
+				[item.value, item])).values()].sort(this.optionSort);
 		}
 
 		set select_options(value : SelectOption[])
 		{
 			super.select_options = value;
+		}
+
+		/**
+		 * Sort options
+		 * @param a
+		 * @param b
+		 * @returns {number}
+		 * @protected
+		 */
+		protected optionSort(a : SelectOption, b : SelectOption)
+		{
+			// Sort accounts before groups, then by label
+			let int_a = 0;
+			let int_b = 0;
+			if(typeof a.value === "string")
+			{
+				int_a = parseInt(a.value) ?? 0;
+			}
+			if(typeof b.value === "string")
+			{
+				int_b = parseInt(b.value) ?? 0;
+			}
+			if(int_a < 0 && int_b < 0 || int_a > 0 && int_b > 0)
+			{
+				return ('' + a.label).localeCompare(b.label);
+			}
+			// Accounts before groups
+			return int_b - int_a;
 		}
 	}
 
