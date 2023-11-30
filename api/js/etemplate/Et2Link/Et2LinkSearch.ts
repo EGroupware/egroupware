@@ -110,6 +110,7 @@ export class Et2LinkSearch extends Et2Select
 			label: Et2Link.MISSING_TITLE,
 			class: "loading"
 		}
+
 		// Weird call instead of just unshift() to make sure to trigger setter
 		this.select_options = Object.assign([option], this.__select_options);
 		this.egw()?.link_title(this.app, option.value, true).then(title =>
@@ -117,10 +118,13 @@ export class Et2LinkSearch extends Et2Select
 			option.label = title || Et2Link.MISSING_TITLE;
 			option.class = "";
 			// It's probably already been rendered, find the item
-			let item = this.getAllOptions().find(i => i.value === option.value);
+			let item = this.select?.querySelector('[value="' + option.value + '"]');
 			if(item)
 			{
-				item.textContent = title;
+				// Replace instead of changing the whole thing to preserve LitElement marker comments
+				item.innerHTML = item.innerHTML.replace(Et2Link.MISSING_TITLE, title);
+				this.select.requestUpdate("value");
+
 				item.classList.remove("loading");
 			}
 			else
