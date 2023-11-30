@@ -115,13 +115,14 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 			  /* Maximum height + scrollbar on tags (+ other styling) */
 
 			  ::part(tags) {
+				overflow-y: auto;
 				margin-left: 0px;
 				max-height: initial;
+				min-height: auto;
 				gap: 0.1rem 0.5rem;
 			  }
 
 			  :host([rows]) ::part(tags) {
-				overflow-y: auto;
 				max-height: calc(var(--rows, 5) * (var(--sl-input-height-medium) * 0.8))
 			  }
 
@@ -132,9 +133,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 			  /* No rows set, default height limit about 5 rows */
 
 			  :host(:not([rows])) ::part(tags) {
-				min-height: inherit;
 				max-height: 11em;
-				overflow-y: auto;
 			  }
 
 			  select:hover {
