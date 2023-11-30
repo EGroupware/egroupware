@@ -151,11 +151,11 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 					display: none;
 				  }
 
-				  :host([multiple]) sl-select[open]::part(tags) {
+				  sl-select[open][multiple]::part(tags) {
 					flex-basis: 100%;
 				  }
 
-				  :host([multiple]) sl-select[open]::part(combobox) {
+				  sl-select[open][multiple]::part(combobox) {
 					flex-flow: wrap;
 				  }
 
