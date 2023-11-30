@@ -25,7 +25,7 @@ import {egw_getAppObjectManager, egwActionObject} from '../../api/js/egw_action/
 import {egw} from "../../api/js/jsapi/egw_global";
 import {et2_container} from "../../api/js/etemplate/et2_core_baseWidget";
 import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";
-import {formatDate, formatTime} from "../../api/js/etemplate/Et2Date/Et2Date";
+import {formatDate, formatDateTime, formatTime} from "../../api/js/etemplate/Et2Date/Et2Date";
 import {ColorTranslator} from "colortranslator";
 import {StaticOptions as so} from "../../api/js/etemplate/Et2Select/StaticOptions";
 import {Et2Select} from "../../api/js/etemplate/Et2Select/Et2Select";
@@ -519,8 +519,8 @@ export class et2_calendar_event extends et2_valueWidget implements et2_IDetached
 
 			const times = !this.options.value.multiday ?
 						  '<span class="calendar_calEventLabel">' + this.egw().lang('Time') + '</span>: ' + timespan :
-						  '<span class="calendar_calEventLabel">' + this.egw().lang('Start') + '</span>: ' + start + ' ' +
-							  '<span class="calendar_calEventLabel">' + this.egw().lang('End') + '</span>: ' + end;
+						  '<span class="calendar_calEventLabel">' + this.egw().lang('Start') + '</span>:&nbsp;' + formatDateTime(start).replace(' ', '&nbsp;') + ' ' +
+							  '<span class="calendar_calEventLabel">' + this.egw().lang('End') + '</span>:&nbsp;' + formatDateTime(end).replace(' ', '&nbsp;');
 			let cat_label : (string | string[]) = '';
 			if(this.options.value.category)
 			{
