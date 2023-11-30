@@ -455,7 +455,7 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 		{
 			await this.updateComplete;
 			const moreCount = this._total_result_count - this.select?.querySelectorAll("sl-option.match").length;
-			if(this._total_result_count == 0 || moreCount == 0 || !this.select)
+			if(this._total_result_count <= 0 || moreCount == 0 || !this.select)
 			{
 				return nothing;
 			}
