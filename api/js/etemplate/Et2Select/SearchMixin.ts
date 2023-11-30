@@ -633,12 +633,13 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 			// Given a value we need to search for - this will add in all matches, including the one needed
 			this.remoteSearch(newValueElement, this.searchOptions).then((result : SelectOption[]) =>
 			{
-				const option = <SelectOption>result.find(o => o.value == newValueElement);
-				if(option && !this._selected_remote.some(o => o.value == newValueElement))
+				// Re-set / update value since SlSelect probably removed it by now due to missing option
+				if(typeof this.select != "undefined")
 				{
-					this._selected_remote.push(option);
+					this.select.value = this.shoelaceValue ?? this.value;
+					this.select.requestUpdate("value");
 				}
-				this.requestUpdate();
+				this.requestUpdate("value");
 			});
 		}
 
