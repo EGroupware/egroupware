@@ -1,3 +1,10 @@
+egroupware-docker (23.1.20231201) hardy; urgency=low
+
+  * Api: more fixes around select-widgets
+  * Mail: one remainig problem: email-addresses can NOT (yet) again be re-ordered by drag-n-drop
+
+ -- Ralf Becker <rb@egroupware.org>  Fri, 01 Dec 2023 07:06:30 +0100
+
 egroupware-docker (23.1.20231129) hardy; urgency=low
 
   * API: fixed several regressions around updated select and email entry widgets
