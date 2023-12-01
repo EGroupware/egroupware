@@ -2196,6 +2196,12 @@ class infolog_ui
 			// remove types owned by groups the user has no edit grant (current type is made readonly)
 			foreach($this->bo->group_owners as $type => $group)
 			{
+				// Allow the group if the entry is unsaved and they have add access
+				if(!$content['info_id'] && (($this->bo->grants[$group] ?? 0) & Acl::ADD))
+				{
+					continue;
+				}
+
 				if (!(($this->bo->grants[$group]??0) & Acl::EDIT))
 				{
 					if ($type == $content['info_type'])
