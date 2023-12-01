@@ -377,10 +377,21 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 				}
 				if(this.searchEnabled)
 				{
+					let search = function(options, value)
+					{
+						return options.some((option) =>
+						{
+							if(Array.isArray(option.value))
+							{
+								return search(option.value, value);
+							}
+							return option.value == value;
+						});
+					};
 					// Check to see if value is for an option we do not have
 					for(const newValueElement of this.getValueAsArray())
 					{
-						if(this.select_options.some(o => o.value == newValueElement))
+						if(search(this.select_options, newValueElement))
 						{
 							continue;
 						}
@@ -1347,7 +1358,7 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 		 * @returns {boolean}
 		 * @protected
 		 */
-		protected searchMatch(search, option : SelectOption) : boolean
+		protected searchMatch(search : string, option : SelectOption) : boolean
 		{
 			if(!option || !option.value)
 			{
