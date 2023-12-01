@@ -1,10 +1,11 @@
-#!/bin/bash -x
+#!/bin/bash -e
 # To build PHP 8 snapshots out of master: doc/docker/fpm/build.sh 8.0 21.1.<date> master
 
 cd $(dirname $0)
 
-DEFAULT_PHP_VERSION=8.1
+DEFAULT_PHP_VERSION=8.2
 PHP_VERSION=$DEFAULT_PHP_VERSION
+BASE=ubuntu:20.04
 # which architectures to build for multi-platform images, if buildx is available on a Docker desktop or newer Docker installation
 PLATFORMS=linux/amd64,linux/ppc64le,linux/arm/v7,linux/arm64/v8
 
@@ -33,7 +34,7 @@ BRANCH=$(echo $VERSION|sed 's/\.[0-9]\{8\}$//')
 # add PHP_VERSION to TAG, if not the default PHP version
 [ $PHP_VERSION != $DEFAULT_PHP_VERSION ] && TAG=$TAG-$PHP_VERSION
 
-docker pull ubuntu:20.04
+docker pull $BASE
 
 # add further tags for default PHP version only
 [ $PHP_VERSION = $DEFAULT_PHP_VERSION -a "$BRANCH" != $VERSION -a "dev-${BRANCH}" != $VERSION ] && {

@@ -1,6 +1,6 @@
 ################################################################################
 ##
-## EGroupware FPM container using Ubuntu 20.04 and PHP 8.1 from ondrej/php PPA
+## EGroupware FPM container using Ubuntu 20.04, NodeJS 20 and PHP 8.2 from ondrej/php PPA
 ##
 ################################################################################
 ARG ARCH=
@@ -9,6 +9,9 @@ MAINTAINER rb@egroupware.org
 
 ARG VERSION=dev-master
 ARG PHP_VERSION=8.2
+# Set environment variable for non-interactive install
+ARG DEBIAN_FRONTEND=noninteractive
+ARG TARGETPLATFORM
 
 # keeping build-arg in environment for entrypoint.sh
 ENV VERSION=$VERSION
@@ -56,7 +59,7 @@ RUN set -e \
 	&& ln -s /dev/stderr /var/log/php$PHP_VERSION-fpm.log \
 	&& update-alternatives --install /usr/sbin/php-fpm php-fpm /usr/sbin/php-fpm$PHP_VERSION 5 \
 	# install tools to build EGroupware
-	&& apt-get install -y rsync zip curl sudo cron patch \
+	&& apt-get install -y xz-utils rsync zip curl sudo cron patch \
 	&& bash -c \
 'EXPECTED_SIGNATURE=$(curl https://composer.github.io/installer.sig); \
 curl https://getcomposer.org/installer > composer-setup.php; \
@@ -81,13 +84,17 @@ exit $RESULT' \
 RUN set -e \
 	&& cd /usr/share/egroupware \
 	# install nodejs 20.x (Shoelace requires >= 14.17, Ubuntu 22.04 only has 12.x) \
-    && mkdir -p /etc/apt/keyrings \
-    && curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg \
-    && echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_20.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list \
-    && apt-get update \
-    && apt-get install -y nodejs \
-    # nodejs PPA does NOT exist for ppc64le, therefore we need to install npm separate, as not included in stock nodejs on Ubuntu
-    && test -f /usr/bin/npm || apt-get install -y npm \
+	&& if [ "$TARGETPLATFORM" = "linux/ppc64le" ]; then \
+        dist_node_v20=https://nodejs.org/dist/latest-v20.x/ \
+        dist_node_v20_ppc64le=$(curl $dist_node_v20|grep ppc64le.tar.xz|cut -d'"' -f2) \
+        curl $dist_node_v20$dist_node_v20_ppc64le | tar --directory=/usr/local/ -xJvf - ; \
+    else \
+    	mkdir -p /etc/apt/keyrings \
+        && curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg \
+        && echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_20.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list \
+        && apt-get update \
+        && apt-get install -y nodejs libatomic1 ; \
+    fi \
 	&& npm install -g grunt-cli \
 	&& npm install \
 	&& grunt \
