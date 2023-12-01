@@ -115,7 +115,7 @@ cas server port:<br />example: 443	setup	sl	Vrata stežnika cas:<br />Primer: 44
 cas server uri:	setup	sl	URI strežnika cas:
 certificate (pem or ca):	setup	sl	Certifikat (CA ali PEM):
 change system-charset	setup	sl	Spremeni sistemski nabor znakov
-charset	setup	sl	utf-8
+charset	setup	sl	charset
 charset to convert to	setup	sl	Nabor znakov za pretvorbo
 charsets used by the different languages	setup	sl	Nabori znakov, uporabljeni iz različnih jezikov
 check can only be performed, if called via a webserver, as the user-id/-name of the webserver is not known.	setup	sl	Preverjanje je mogoče le, če se izvede v spletnem brskalniku. Uporabniški ID/ime spletnega strežnika ni znan.
@@ -336,7 +336,7 @@ ldap groups context	setup	sl	Kontekst LDAP skupin
 ldap host	setup	sl	LDAP strežnik
 ldap import	setup	sl	LDAP uvoz
 ldap root password	setup	sl	LDAP root geslo
-ldap rootdn	setup	sl	LDAP rootdn
+ldap rootdn	setup	sl	LDAP Root DN
 ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setup	sl	Iskalni filter LDAP računov, privzet: ("uid=%user"), %domain=EGw-domain
 leave empty to keep current.	setup	sl	Pustite prazno, da ohranite obstoječe.
 limit access	setup	sl	Omeji dostop
@@ -447,13 +447,20 @@ re-enter password	setup	sl	Ponovite vnos gesla
 read translations from	setup	sl	Preberi prevode iz
 readable by the webserver	setup	sl	ima omogočeno branje spletnega strežnika
 really uninstall all applications	setup	sl	RES odstranim vse aplikacije
+refusing to delete dn "%1"!	setup	sl	Zavrača brisanje DN "%1"!
 register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	sl	Vrednost "register_globals" je nastavljena na "On", EGw NE zahteva spremembe vendar je na splošno bolj varno, če je nastavljena na "Off"
-registered	setup	sl	registriran
+registered	setup	sl	Registriran
+regular expression to filter by dn	setup	sl	Regularni izraz za filtriranje po DN
 rejected lines	setup	sl	Zavržene vrstice
 remove	setup	sl	Odstrani
 remove all	setup	sl	Odstrani vse
 rename	setup	sl	preimenuj
+replace username and email	setup	sl	Zamenjajte uporabniško ime in e-pošto
+replace username and keep email	setup	sl	Zamenjajte uporabniško ime in ohranite e-pošto
+required to change passwords	setup	sl	potrebno za spremembo gesel
+requires "reset password" privilege, to change passwords!	setup	sl	Za spreminjanje gesel je potreben privilegij "Ponastavi geslo"!
 requires reinstall or manual repair	setup	sl	Potrebuje namestitev ali ročno popravljanje
+requires saml optional on login page and user to specify username and password	setup	sl	Zahteva, da je na prijavni strani SAML neobvezen in da uporabnik določi uporabniško ime in geslo.
 requires upgrade	setup	sl	Potrebuje posodobitev
 resolve	setup	sl	Razreši
 restore	setup	sl	obnovi
@@ -492,7 +499,7 @@ server root	setup	sl	Strežniški Root
 session handler class used.	setup	sl	Uporabljen je razred upravljalca sej.
 sessions handler	setup	sl	Uravljalec sej
 set	setup	sl	nastavi
-setting the system-charset to utf-8 (unicode) allows the coexistens of data from languages of different charsets.	setup	sl	Nastavitev sistemskega nabora znakov v UTF-8 (Unocode) omogoče hkratno uporabo različnih jezikov in kodnih tabel.
+setting the system-charset to utf-8 (unicode) allows the coexistens of data from languages of different charsets.	setup	sl	Nastavitev sistemskega nabora znakov v UTF-8 (Unicode) omogoče hkratno uporabo različnih jezikov in kodnih tabel.
 settings	setup	sl	Nastavitve
 setup	setup	sl	Namestitev
 setup main menu	setup	sl	Namesti glavni meni
@@ -565,7 +572,7 @@ this will create a first user in egroupware or reset password and admin rights o
 to a version it does not know about	setup	sl	v različico, ki je ne pozna
 to allow password authentification add the following line to your pg_hba.conf (above all others) and restart postgres:	setup	sl	Če želite dovoliti avtentikacijo z geslom, dodajte v pg_hba.conf sledečo vrstico (nad vsemi) IN ponovno zaženite Postgres:
 to change the charset: back up your database, deinstall all applications and re-install the backup with "convert backup to charset selected" checked.	setup	sl	Če želite spremeniti nabor znakov: naredite varnostno kopijo zbirke podatkov, odstranite vse programe in ponovno namestite podatke iz varnostne kopije z označenim poljem "pretvori varnostno kopijo v označeni nabor znakov".
-to setup 1 admin account and 3 demo accounts.	setup	sl	za kreiranj 1 upravljalskega in 3 demo računov.
+to setup 1 admin account and 3 demo accounts.	setup	sl	Za kreiranj 1 upravljalskega in 3 demo računov.
 top	setup	sl	vrh
 translations added	setup	sl	prevodi dodani
 translations removed	setup	sl	prevodi odstranjeni

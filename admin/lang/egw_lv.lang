@@ -10,7 +10,9 @@
 2-factor-authentication for interactive login	admin	lv	2 faktoru autentifikācija interaktīvai pieteikšanās sistēmai
 3 month	admin	lv	3 mēneši
 6 month	admin	lv	6 mēneši
+access token revoked.	admin	lv	Piekļuves žetons atsaukts.
 accesslog and bruteforce defense	admin	lv	Piekļuves logs un nesankcionētās pieejas aizsardzība
+account	admin	lv	Konts
 account active	admin	lv	Konts aktīvs
 account has been created	common	lv	Konts tika izveidots
 account has been deleted	common	lv	Konts tika izdzēsts
@@ -18,6 +20,7 @@ account has been updated	common	lv	Konts tika atjaunināts
 account list	admin	lv	Kontu saraksts
 account permissions	admin	lv	Konta atļaujas
 account preferences	admin	lv	Konta iestatījumi
+acl csv export	admin	lv	ACL CSV eksports
 acl manager	admin	lv	ACL pārvaldnieks
 acl rights	common	lv	ACL tiesības
 action	admin	lv	Darbība
@@ -55,7 +58,7 @@ all categories	admin	lv	visas kategorijas
 all records and account information will be lost!	admin	lv	Visi ieraksti un konta informācija tiks pazaudēta!!!!
 all users	admin	lv	Visi lietotāji
 allow anonymous access to this app	admin	lv	Atļaut nezināmajam lietotājam piekļūt šai aplikācijai
-alternate email address	admin	lv	alternatīvas e-pasta adreses
+alternate email address	admin	lv	Alternatīvas e-pasta adreses
 anonymous user	admin	lv	Nezināmais lietotājs
 anonymous user (not shown in list sessions)	admin	lv	Nezināmais lietotājs (netiek parādīts sesiju sarakstā)
 appearance	admin	lv	Izskats
@@ -64,7 +67,7 @@ application name	admin	lv	Programmatūras nosaukums
 application title	admin	lv	Aplikācijas nosaukums/virsraksts(title)
 applications	admin	lv	Aplikācijas
 applications list	admin	lv	Aplikāciju saraksts
-applies the changes	admin	lv	apstiprināt izmaiņas
+applies the changes	admin	lv	Apstiprināt izmaiņas
 apply the changes	admin	lv	Lietot izmaiņas
 are you sure you want to delete the application %1 ?	admin	lv	Vai esi pārliecināts, ka vēlies dzēst  aplikāciju %1?
 are you sure you want to delete this account ?	admin	lv	Esi pārliecināts, ka vēlies dzēst šo kontu?
@@ -103,6 +106,9 @@ create group	admin	lv	Izveidot grupu
 created	admin	lv	Izveidots
 creates a new field	admin	lv	veido jaunu lauku
 crontab only (recomended)	admin	lv	tikai crontab (ieteicams)
+custom 1	admin	lv	Pielāgotais 1
+custom 2	admin	lv	Pielāgotais 2
+custom 3	admin	lv	Pielāgotais 3
 custom fields	admin	lv	Mainīti lauki
 cyrus imap server	admin	lv	Cyrus IMAP serveris
 cyrus imap server administration	admin	lv	Cyrus IMAP servera administrēšana
@@ -110,7 +116,7 @@ data	admin	lv	Dati
 day	admin	lv	Diena
 day of week<br>(0-6, 0=sun)	admin	lv	Nedēļas diena <br>(0-6, 0=SV)
 db backup and restore	admin	lv	DV dublējums un atjaunināšana
-default	admin	lv	noklusējums
+default	admin	lv	Noklusējums
 default file system space per user	admin	lv	Noklusētā disku apjoma vērtība lietotājam
 default file system space per user/group ?	admin	lv	Noklusētā disku apjoma vērtība lietotājam/grupai?
 deinstall crontab	admin	lv	Atinstalēt crontab
@@ -120,13 +126,13 @@ delete application	admin	lv	Izdzēst aplikāciju
 delete category	admin	lv	Izdzēst kategoriju
 delete group	admin	lv	Izdzēst grupu
 delete peer server	admin	lv	Izdzēst vinādranga serveri
-delete the category	admin	lv	izdzēst kategoriju
-delete the group	admin	lv	izdzēst grupu
-delete this category	admin	lv	izdzēst šo kategoriju
-delete this group	admin	lv	izdzēst šo grupu
-delete this user	admin	lv	izdzēst šo lietotāju
+delete the category	admin	lv	Izdzēst kategoriju
+delete the group	admin	lv	Izdzēst grupu
+delete this category	admin	lv	Izdzēst šo kategoriju
+delete this group	admin	lv	Izdzēst šo grupu
+delete this user	admin	lv	Izdzēst šo lietotāju
 deleted	admin	lv	Izdzēsts
-deletes this field	admin	lv	dzēš šo lauku
+deletes this field	admin	lv	Dzēš šo lauku
 deny access	admin	lv	Liegt pieeju
 deny access to access log	admin	lv	Liegt pieeju piekļuves logam
 deny access to application registery	admin	lv	Liegt pieeju aplikācijas reģistrēšanai
@@ -143,7 +149,7 @@ deny access to site configuration	admin	lv	Liegt pieeju vietnes(site) konfigurā
 deny access to user accounts	admin	lv	Liegt pieeju lietotāju kontiem
 deny all users access to grant other users access to their entries ?	admin	lv	Liegt visu lietotāju pieeju atļaut citiem lietotajiem piekļūt viņū ierakstiem?
 description can not exceed 255 characters in length !	admin	lv	Apraksts nedrīkst pārsniegt 255 simbolus!
-determines the order the fields are displayed	admin	lv	nosaka kārtību, kādā tiek attēloti lauki
+determines the order the fields are displayed	admin	lv	Nosaka kārtību, kādā tiek attēloti lauki
 disable	admin	lv	Deaktivizēt
 disable "auto completion" of the login form	admin	lv	Neatļaut automātikso aizpildīšanos autorizācijas formā
 disable wysiwyg-editor	admin	lv	neatļaut  WYSIWYG redaktoru
@@ -224,7 +230,7 @@ group has been updated	common	lv	Grupa tika atjaunināta
 group list	admin	lv	Grupu saraksts
 group manager	admin	lv	Grupu pārvaldnieks
 group name	admin	lv	Grupas nosaukums
-hide php information	admin	lv	noslēpt php informāciju
+hide php information	admin	lv	noslēpt PHP informāciju
 home directory	admin	lv	Mājas direktorija
 home screen message	admin	lv	Galvenā loga ziņojums
 host information	admin	lv	Host informācija
@@ -257,6 +263,7 @@ last %1 logins for %2	admin	lv	Pēdējās %1 autorizācijas %2
 last login	admin	lv	pēdējā autorizācija
 last login from	admin	lv	pēdējā autorizācija no
 last time read	admin	lv	Pēdējo reizi lasīts
+last updated	admin	lv	Pēdējo reizi atjaunināts
 ldap accounts context	admin	lv	LDAP kontu konteksts
 ldap basedn	admin	lv	LDAP bāzes dn
 ldap default homedirectory prefix (e.g. /home for /home/username)	admin	lv	LDAP noklusētais mājasdirektorijas prefikss (piem./home for /home/username)
@@ -272,10 +279,12 @@ ldap server admin dn	admin	lv	LDAP servera administratora DN
 ldap server admin password	admin	lv	LDAP servera administratora parole
 ldap server hostname or ip address	admin	lv	LDAP servera hosta vārds vai IP adrese
 ldap settings	admin	lv	LDAP uzstādījumi
+leave empty for no quota	admin	lv	Atstāj tukšu, ja kvotas nav
+leave empty to use oauth, if supported	admin	lv	Atstāj tukšu, lai izmantotu OAuth, ja tas tiek atbalstīts
 leave the category untouched and return back to the list	admin	lv	Atstāt kategoriju neskartu un atgriezties uz sarakstu
 leave the group untouched and return back to the list	admin	lv	Atstāt grupu neskartu un atgriezties pie saraksta
-leave without saveing the entry	admin	lv	aiziet, nesaglabājot ierakstu
-leaves without saveing	admin	lv	aiziet bez saglabāšanas
+leave without saveing the entry	admin	lv	Aiziet, nesaglabājot ierakstu
+leaves without saveing	admin	lv	Aiziet bez saglabāšanas
 length<br>rows	admin	lv	Garums<br>Rindas
 list config settings	admin	lv	Uzskaitīt konfigurācijas uzstādījumus
 list current sessions	admin	lv	Uzskaitīt esošās sesijas
@@ -304,8 +313,8 @@ new name	admin	lv	jaunais nosaukums
 new password [ leave blank for no change ]	admin	lv	Jauna parole (atstāt tukšu, ja nemainās)
 next run	admin	lv	Nākošais solis
 no algorithms available	admin	lv	Nav pieejami algoritmi
-no alternate email address	admin	lv	nav alternatīvas e-pasta adreses
-no forwarding email address	admin	lv	nav pārsūtāmās e-pasta adreses
+no alternate email address	admin	lv	Nav alternatīvas e-pasta adreses
+no forwarding email address	admin	lv	Nav pārsūtāmās e-pasta adreses
 no jobs in the database !!!	admin	lv	Datubāzē uzdevumu nav!!!
 no login history exists for this user	admin	lv	Šim lietotājam nav autorizāciju vētures
 no matches found	admin	lv	Nav atbilstošu ierakstu
@@ -313,7 +322,7 @@ no modes available	admin	lv	Nav pieejamu režīmu
 no permission to add groups	admin	lv	Nav atļaujas, lai pievienotu grupas
 no permission to add users	admin	lv	Nav atļaujas, lai pievienotu lietotājus
 no permission to create groups	admin	lv	Nav atļaujas, lai izveidotu grupas
-note: ssl available only if php is compiled with curl support	admin	lv	Piezīme: SSl pieejams tikai tad, ja PHP ir ar CURL atbalstu
+note: ssl available only if php is compiled with curl support	admin	lv	Piezīme: SSL pieejams tikai tad, ja PHP ir ar CURL atbalstu
 oauth authentiction	admin	lv	OAuth autentifikācija
 offer to installing egroupware as mail-handler	admin	lv	Piedāvājums instalēt EGroupware kā pasta apstrādātāju
 one day	admin	lv	Viena diena
@@ -341,8 +350,8 @@ please enter a name for that server !	admin	lv	Lūzdu ievadi servera vārdu
 please select	admin	lv	Lūdzu atzīmē
 pop3 server hostname or ip address	admin	lv	POP3 servera hosta vārds vai IP adrese
 pop3 server port	admin	lv	POP3 servera ports
-preferences	admin	lv	Iestatījumi
-primary group	admin	lv	galvenā grupa
+preferences	admin	lv	Lestatījumi
+primary group	admin	lv	Galvenā grupa
 profile list	admin	lv	Profila saraksts
 profile name	admin	lv	Profila vārds
 re-enter password	admin	lv	atkārtoti ievadi paroli
@@ -398,7 +407,7 @@ sorry, that group name has already been taken.	admin	lv	Atvainojiet, šis grupas
 sorry, the above users are still a member of the group %1	admin	lv	Atvainojiet, iepriekšminētie lietotāji joprojām pieder grupai %1
 sorry, the follow users are still a member of the group %1	admin	lv	Atvainojiet, sekojošie lietotāji joprojām pieder grupai %1
 sort the entries	admin	lv	grupēt ierakstus
-ssl	admin	lv	ssl
+ssl	admin	lv	SSL
 standard	admin	lv	Standarta
 standard imap server	admin	lv	Standarta IMAP serveris
 standard pop3 server	admin	lv	Standarta POP3 serveris

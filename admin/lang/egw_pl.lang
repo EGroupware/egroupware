@@ -19,7 +19,9 @@
 2-factor-authentication for interactive login	admin	pl	2-Factor-Authentication dla interaktywnego logowania
 3 month	admin	pl	3 miesiące
 6 month	admin	pl	6 miesięcy
+access token revoked.	admin	pl	Token dostępu został cofnięty.
 accesslog and bruteforce defense	admin	pl	Dziennik dostępu oraz ochrona przed atakiem typu BruteForce
+account	admin	pl	Konto
 account %1 %2	admin	pl	Konto %1 %2
 account '%1' deleted.	admin	pl	Konto '%1' usunięte
 account '%1' not found !!!	admin	pl	Konto '%1' nie zostało znalezione!
@@ -33,6 +35,7 @@ account permissions	admin	pl	Prawa do konta
 account preferences	admin	pl	Ustawienia konta
 account-id's have to be integers!	admin	pl	ID konta musi być liczbą!
 acl added.	admin	pl	Dodano ACL.
+acl csv export	admin	pl	Eksport ACL CSV
 acl deleted.	admin	pl	Usunięto ACL.
 acl manager	admin	pl	Meneder ACL
 acl rights	common	pl	Prawa ACL
@@ -163,6 +166,9 @@ created	admin	pl	Utworzony
 created with id #%1	admin	pl	utworzono z id #%1
 creates a new field	admin	pl	utwórz nowe pole
 crontab only (recomended)	admin	pl	wyłącznie crontab (zalecane!)
+custom 1	admin	pl	Niestandardowe 1
+custom 2	admin	pl	Niestandardowe 2
+custom 3	admin	pl	Niestandardowe 3
 custom fields	admin	pl	Pola własne
 cyrus imap server	admin	pl	Serwer IMAP Cyrus
 cyrus imap server administration	admin	pl	Administracja serwerem IMAP Cyrus
@@ -385,6 +391,7 @@ last login	admin	pl	Ostatnie logowanie
 last login from	admin	pl	Ostatnie logowanie z
 last submission:	admin	pl	Ostatni wpis:
 last time read	admin	pl	Data ostatniego odczytu
+last updated	admin	pl	Ostatnia aktualizacja
 ldap accounts context	admin	pl	Kontekst kont użytkowników w LDAP
 ldap basedn	admin	pl	Bazowy DN w LDAP
 ldap default homedirectory prefix (e.g. /home for /home/username)	admin	pl	Domyślny prefix katalogu domowego w LDAP (np. /home dla /home/użytkownik)
@@ -401,6 +408,7 @@ ldap server admin password	admin	pl	Hasło administratora serwera LDAP
 ldap server hostname or ip address	admin	pl	Nazwa hosta lub IP serwera LDAP
 ldap settings	admin	pl	Ustawienia LDAP
 leave empty for no quota	admin	pl	zostaw puste aby wyłączyć quota
+leave empty to use oauth, if supported	admin	pl	Pozostaw puste, aby użyć OAuth, jeśli jest obsługiwany
 leave the category untouched and return back to the list	admin	pl	pozostaw kategorie nietknięte i wróć do listy
 leave the group untouched and return back to the list	admin	pl	Pozostaw grupę nietkniętą i wróć do listy
 leave without saveing the entry	admin	pl	cofnij bez zapisywania wpisu
@@ -646,10 +654,10 @@ translation	admin	pl	Tłumaczenie
 true	admin	pl	prawda
 trust level	admin	pl	Poziom zaufania
 trust relationship	admin	pl	Relacja zaufania (bezpieńczestwa)
-two days	admin	pl	dwa dni
-two hours	admin	pl	dwie godziny
-two months	admin	pl	dwa miesiące
-two weeks	admin	pl	dwa tygodnie
+two days	admin	pl	Dwa dni
+two hours	admin	pl	Dwie godziny
+two months	admin	pl	Dwa miesiące
+two weeks	admin	pl	Dwa tygodnie
 type '%1' already exists !!!	admin	pl	typ '%1' już istnieje !!!
 type of customfield	admin	pl	Typ pola użytkownika
 under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	pl	Pod Windows musisz zainstalować asyncservice %1ręcznie%2 albo używać trybu 'powrotu'. 'Powrót' oznacza sprawdzanie i - jeśli konieczne startowanie - czynności po każdym pokazaniu strony.

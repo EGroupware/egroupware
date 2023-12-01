@@ -249,6 +249,7 @@ read & write access	filemanager	es-es	Derechos de lectura y escritura
 read access only	filemanager	es-es	Sólo derecho de lectura
 readonly share link	filemanager	es-es	Enlace de compartir en solo lectura
 recalculate	filemanager	es-es	Recalcular
+recalculate directory sizes	filemanager	es-es	Recalcular el tamaño de los directorios
 recalculated %1 directories in %2 iterations and %3 seconds	filemanager	es-es	Recalculados %1 directorios en %2 iteraciones y %3 segundos
 reload	filemanager	es-es	recargar
 rename of %1 to %2 failed!	filemanager	es-es	¡Fallo al renombrar %1 a %2!

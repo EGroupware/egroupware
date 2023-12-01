@@ -26,7 +26,7 @@
 00 (disable)	setup	en	00 (disable / recommended)
 13 (ntp)	setup	en	13 (ntp)
 80 (http)	setup	en	80 (http)
-<b>charset to use</b> (use utf-8 if you plan to use languages with different charsets):	setup	en	<b>charset to use.</b> Use utf-8 if you plan to use languages with different charsets:
+<b>charset to use</b> (use utf-8 if you plan to use languages with different charsets):	setup	en	<b>charset to use.</b> Use UTF-8 if you plan to use languages with different charsets:
 ==> different group '%1' under that gidnumber %2, not setting memberships!	setup	en	==> different group '%1' under that gidNumber %2, NOT setting memberships!
 [header-password],[header-user],[new-password],[new-user]	setup	en	[header-password],[header-user],[new-password],[new-user]
 access denied: wrong username or password for manage-header !!!	setup	en	Access denied: wrong username or password for manage-header !
@@ -53,7 +53,7 @@ admin user	setup	en	Admin user
 admin user for header manager	setup	en	Admin user for header manager
 admin username	setup	en	Admin username
 admins	setup	en	Admins
-ads dn "%1" not found!	setup	en	Ads dn "%1" NOT found!
+ads dn "%1" not found!	setup	en	ADS DN "%1" NOT found!
 after backing up your tables first.	setup	en	After backing up your tables first.
 after retrieving the file, put it into place as the header.inc.php.  then, click "continue".	setup	en	After retrieving the file, put it into place as the header.inc.php.  Then, click "continue".
 all applications	setup	en	All applications
@@ -117,7 +117,7 @@ backup now	setup	en	Backup now
 backup sets	setup	en	Backup sets
 backup skipped!	setup	en	Backup skipped!
 backup started, this might take a few minutes ...	setup	en	Backup started, this might take a few minutes ...
-base dn "%1" not found!	setup	en	Base dn "%1" NOT found!
+base dn "%1" not found!	setup	en	Base DN "%1" NOT found!
 because an application it depends upon was upgraded	setup	en	Because an application it depends upon was upgraded
 because it depends upon	setup	en	Because it depends upon
 because it is not a user application, or access is controlled via acl	setup	en	Because it is not a user application, or access is controlled via ACL
@@ -141,13 +141,13 @@ can not instancate accounts object for %1	setup	en	Can NOT instancate accounts o
 can only be change via setup!	setup	en	Can only be change via Setup!
 cancel	setup	en	Cancel
 cannot create the header.inc.php due to file permission restrictions.<br /> instead you can %1 or %2 the file.	setup	en	Cannot create the header.inc.php due to file permission restrictions.<br /> Instead you can %1 or %2 the file.
-cas server host name:<br />example: sso-cas.univ-rennes1.fr	setup	en	cas server host name:<br />example: sso-cas.univ-rennes1.fr
-cas server port:<br />example: 443	setup	en	cas server port:<br />Example: 443
-cas server uri:	setup	en	cas server uri:
+cas server host name:<br />example: sso-cas.univ-rennes1.fr	setup	en	CAS server host name:<br />example: sso-cas.univ-rennes1.fr
+cas server port:<br />example: 443	setup	en	CAS server port:<br />Example: 443
+cas server uri:	setup	en	CAS server URI:
 certificate (pem or ca):	setup	en	Certificate (PEM or CA):
 certificate metadata is signed with	setup	en	Certificate Metadata is signed with
 change system-charset	setup	en	Change system-charset
-charset	setup	en	utf-8
+charset	setup	en	charset
 charset to convert to	setup	en	Charset to convert to
 charsets used by the different languages	setup	en	Charsets used by the different languages
 check can only be performed, if called via a webserver, as the user-id/-name of the webserver is not known.	setup	en	Check can only be performed, if called via a web server, as the user-id/-name of the web server is not known.
@@ -313,17 +313,17 @@ enter your http proxy server	setup	en	Enter your HTTP proxy server
 enter your http proxy server password	setup	en	Enter your HTTP proxy server password
 enter your http proxy server port	setup	en	Enter your HTTP proxy server port
 enter your http proxy server username	setup	en	Enter your HTTP proxy server username
-error deleting "dn=%1"!	setup	en	Error deleting "dn=%1"!
+error deleting "dn=%1"!	setup	en	Error deleting "DN=%1"!
 error dropping user!	setup	en	Error dropping User!
 error in admin-creation !!!	setup	en	Error in admin creation!
 error in group-creation !!!	setup	en	Error in group creation!
-error listing "dn=%1"!	setup	en	Error listing "dn=%1"!
-error modifying dn=%1: %2='%3'!	setup	en	Error modifying dn=%1: %2='%3'!
-error searching "dn=%1" for "%2"!	setup	en	Error searching "dn=%1" for "%2"!
+error listing "dn=%1"!	setup	en	Error listing "DN=%1"!
+error modifying dn=%1: %2='%3'!	setup	en	Error modifying DN=%1: %2='%3'!
+error searching "dn=%1" for "%2"!	setup	en	Error searching "DN=%1" for "%2"!
 every	setup	en	Every
 export has been completed!	setup	en	Export has been completed!
 failed to mount backup directory!	setup	en	Failed to mount Backup directory!
-failed updating user "%1" dn="%2"!	setup	en	Failed updating user "%1" dn="%2"!
+failed updating user "%1" dn="%2"!	setup	en	Failed updating user "%1" DN="%2"!
 failed writing configuration file header.inc.php, check the permissions !!!	setup	en	Failed writing configuration file header.inc.php, check the permissions!
 fallback authentication	setup	en	Fallback Authentication
 false	setup	en	False
@@ -338,7 +338,7 @@ folders: sent,trash,drafts,templates,junk	setup	en	Folders: Sent,Trash,Drafts,Te
 force selectbox	setup	en	Force select box
 found, but unknown version	setup	en	Found, but unknown version
 give admin access to all installed apps	setup	en	Give admin access to all installed apps
-give ldap root dn and password, if you need to create an instance specific admin user, user- or group-context	setup	en	Give LDAP root DN and password, if you need to create an instance specific admin user, user- or group-context
+give ldap root dn and password, if you need to create an instance specific admin user, user- or group-context	setup	en	Give LDAP Root DN and password, if you need to create an instance specific admin user, user- or group-context
 gives further options	setup	en	Gives further options
 go back	setup	en	Go back
 go to	setup	en	Go to
@@ -376,12 +376,12 @@ if primary authentication is not successful fall back to passwords synced into a
 if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	en	If safe_mode is turned on, EGw is not able to change certain settings on runtime, nor can we load any not yet loaded module.
 if the application has no defined tables, selecting upgrade should remedy the problem	setup	en	If the application has no defined tables, selecting upgrade should remedy the problem
 if using ads (active directory)	setup	en	If using ADS (Active Directory) authentication
-if using cas (central authentication service):	setup	en	if using cas (Central Authentication Service):
+if using cas (central authentication service):	setup	en	if using CAS (Central Authentication Service):
 if using ldap	setup	en	If using LDAP
 if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	en	If using LDAP, do you want to manage home directory and login shell attributes?
 if using mail authentication	setup	en	If using Mail authentication
 if using multiple authentication providers:	setup	en	If using Multiple authentication providers:
-if using saml 2.0 / shibboleth / simplesamlphp	setup	en	If using SAML 2.0 / Shibboleth / SimpleSAMLphp
+if using saml 2.0 / shibboleth / simplesamlphp	setup	en	If using SAML 2.0 / Shibboleth / SimpleSAML
 if you can only access the docroot choose <b>database</b> for where to store the file content and use same path as for temporary files.	setup	en	If you can only access the docroot choose <b>Database</b> for where to store the file content AND use same path as for temporary files.
 if you did not receive any errors, your applications have been	setup	en	If you did not receive any errors, your applications have been
 if you did not receive any errors, your tables have been	setup	en	If you did not receive any errors, your tables have been
@@ -422,13 +422,13 @@ ldap accounts context	setup	en	LDAP accounts context
 ldap config	setup	en	LDAP configuration
 ldap default homedirectory prefix (e.g. /home for /home/username)	setup	en	LDAP Default home directory prefix (e.g. /home for /home/username)
 ldap default shell (e.g. /bin/bash)	setup	en	LDAP default shell (e.g. /bin/bash)
-ldap dn="%1" with %2 entries deleted.	setup	en	LDAP dn="%1" with %2 entries deleted.
+ldap dn="%1" with %2 entries deleted.	setup	en	LDAP DN="%1" with %2 entries deleted.
 ldap encryption type	setup	en	LDAP encryption type
 ldap groups context	setup	en	LDAP groups context
 ldap host	setup	en	LDAP host
 ldap import	setup	en	LDAP import
 ldap root password	setup	en	LDAP root password
-ldap rootdn	setup	en	LDAP rootdn
+ldap rootdn	setup	en	LDAP Root DN
 ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setup	en	LDAP search filter for accounts, default: "(uid=%user)", %domain=EGw-domain
 leave empty to keep current.	setup	en	Leave empty to keep current.
 leave empty to use default	setup	en	leave empty to use default
@@ -553,7 +553,7 @@ possible reasons	setup	en	Possible reasons
 possible solutions	setup	en	Possible solutions
 post-install dependency failure	setup	en	Post-install dependency failure
 postfix with ldap: [yes(user edit forwarding)]	setup	en	Postfix with LDAP: [yes(user edit forwarding)]
-postgres: leave it empty to use the prefered unix domain sockets instead of a tcp/ip connection	setup	en	Postgres: Leave it empty to use the preferred unix domain sockets instead of a tcp/ip connection
+postgres: leave it empty to use the prefered unix domain sockets instead of a tcp/ip connection	setup	en	PostgreSQL: Leave it empty to use the preferred unix domain sockets instead of a TCP/IP connection
 potential problem	setup	en	Potential problem
 preferences	setup	en	Preferences
 problem resolution	setup	en	Problem resolution
@@ -564,9 +564,10 @@ re-enter password	setup	en	Re-enter password
 read translations from	setup	en	Read translations from
 readable by the webserver	setup	en	Readable by the web server
 really uninstall all applications	setup	en	REALLY uninstall all applications
-refusing to delete dn "%1"!	setup	en	Refusing to delete dn "%1"!
+refusing to delete dn "%1"!	setup	en	Refusing to delete DN "%1"!
 register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	en	register_globals is turned On, EGroupware does NOT require it and it's generally more secure to have it turned Off
 registered	setup	en	Registered
+regular expression to filter by dn	setup	en	Regular expression to filter by DN
 rejected lines	setup	en	Rejected lines
 remove	setup	en	Remove
 remove all	setup	en	Remove all
@@ -667,7 +668,7 @@ tables dropped	setup	en	Tables dropped.
 tables installed, unless there are errors printed above	setup	en	Tables installed, unless there are errors printed above.
 tables upgraded	setup	en	Tables upgraded.
 target version	setup	en	Target version
-tcp port number of database server	setup	en	TCP port number of database server
+tcp port number of database server	setup	en	Port number of database server
 technical contact	setup	en	Technical contact
 text entry	setup	en	Text entry
 the %1 extension is needed from: %2.	setup	en	The %1 extension is needed from: %2.
@@ -683,8 +684,8 @@ the function %1 is needed from: %2.	setup	en	The function %1 is needed from: %2.
 the imagecreatefromjpeg function is supplied by the gd extension (complied with jpeg support!). it's needed to upload photos for contacts.	setup	en	The imagecreatefromjpeg function is supplied by the gd extension (complied with jpeg support!). It's needed to upload photos for contacts.
 the json extension is required by egroupware for ajax.	setup	en	The json extension is required by EGroupware for AJAX.
 the ldap extension is needed, if you use ldap as account or contact storage, authenticate against ldap or active directory. it's not needed for a standard sql installation.	setup	en	The ldap extension is needed, if you use ldap as account or contact storage, authenticate against ldap or active directory. It's not needed for a standard SQL installation.
-the mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	en	The mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.
-the mbstring.func_overload = 7 is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	en	The mbstring.func_overload = 7 is needed to fully support unicode (utf-8) or other multibyte-charsets.
+the mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	en	The mbstring extension is needed to fully support unicode (UTF-8) or other multibyte-charsets.
+the mbstring.func_overload = 7 is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	en	The mbstring.func_overload = 7 is needed to fully support unicode (UTF-8) or other multibyte-charsets.
 the mcrypt extension is used, to store etemplate form state on the client, which is the prefered way to store it.	setup	en	The mcrypt extension is used, to store eTemplate form state on the client, which is the prefered way to store it.
 the pdo extension plus a database specific driver is needed by the vfs (virtual file system)!	setup	en	The PDO extension plus a database specific driver is needed by the VFS (virtual file system)!
 the session extension is needed to use php sessions (db-sessions work without).	setup	en	The session extension is needed to use php sessions (db-sessions work without).
@@ -708,7 +709,7 @@ this should be around 30 bytes in length.<br />note: the default has been random
 this stage is completed<br />	setup	en	This stage is completed<br />
 this will create a first user in egroupware or reset password and admin rights of an exiting user	setup	en	This will create a first user in EGroupware or reset password and admin rights of an exiting user
 to a version it does not know about	setup	en	To a version it does not know about
-to allow password authentification add the following line to your pg_hba.conf (above all others) and restart postgres:	setup	en	To allow password authentication add the following line to your pg_hba.conf (above all others) AND restart postgres:
+to allow password authentification add the following line to your pg_hba.conf (above all others) and restart postgres:	setup	en	To allow password authentication add the following line to your pg_hba.conf (above all others) AND restart PostgreSQL:
 to change the charset: back up your database, deinstall all applications and re-install the backup with "convert backup to charset selected" checked.	setup	en	To change the charset: back up your database, deinstall all applications and re-install the backup with "convert backup to charset selected" checked.
 to setup 1 admin account and 3 demo accounts.	setup	en	To setup 1 admin account and 3 demo accounts.
 top	setup	en	Top
@@ -716,7 +717,7 @@ translations added	setup	en	Translations added.
 translations removed	setup	en	Translations removed.
 translations upgraded	setup	en	Translations upgraded.
 true	setup	en	True
-try to configure your php to support one of the above mentioned dbms, or install egroupware by hand.	setup	en	Try to configure your php to support one of the above mentioned DBMS, or install EGroupware manually.
+try to configure your php to support one of the above mentioned dbms, or install egroupware by hand.	setup	en	Try to configure your PHP to support one of the above mentioned DBMS, or install EGroupware manually.
 two weeks	setup	en	Two weeks
 uninstall	setup	en	Uninstall
 uninstall all applications	setup	en	Uninstall all applications
@@ -746,7 +747,7 @@ use pure html compliant code (not fully working yet)	setup	en	Use pure HTML comp
 use space to separate multiple	setup	en	use space to separate multiple
 use tls or ssl encryption	setup	en	Use TLS or SSL encryption
 user	setup	en	User
-user "%1" dn="%2" successful updated.	setup	en	User "%1" dn="%2" successful updated.
+user "%1" dn="%2" successful updated.	setup	en	User "%1" DN="%2" successful updated.
 user "%1" not found!	setup	en	User "%1" not found!
 user account prefix	setup	en	User account prefix
 user for smtp-authentication (leave it empty if no auth required)	setup	en	User for SMTP-authentication (leave it empty if no auth required)
@@ -756,7 +757,7 @@ users choice	setup	en	Users choice
 users, groups and memberships	setup	en	users, groups and memberships
 users, groups and memberships, keep local groups	setup	en	users, groups and memberships, keep local groups
 usually more annoying.<br />admins can use admin >> manage accounts or groups to give access to further apps.	setup	en	Usually more annoying.<br />Admins can use Admin >> Manage accounts or groups to give access to further apps.
-utf-8 (unicode)	setup	en	utf-8 (Unicode)
+utf-8 (unicode)	setup	en	UTF-8 (Unicode)
 validation errors	setup	en	Validation errors
 version	setup	en	Version
 version mismatch	setup	en	Version mis-match

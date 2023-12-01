@@ -36,6 +36,7 @@
 access by	admin	sk	Koho prístup
 access control	admin	sk	Riadenie prístupu
 access to %1 data by others	admin	sk	Prístup ostatných k dátam %1
+access token revoked.	admin	sk	Prístupový token bol zrušený.
 accesslog and bruteforce defense	admin	sk	Prístupové záznamy a Ochrana proti útoku hrubou silou
 account	admin	sk	Účet
 account "%1" has no email address --> not notified!	admin	sk	Účet "%1" nemá emailovú adresu --> nedostal pripomienku!
@@ -56,6 +57,7 @@ account preferences	admin	sk	Predvoľby účtu
 account saved.	admin	sk	Účet bol uložený.
 account-id's have to be integers!	admin	sk	ID účtov musia byť celé čísla!
 acl added.	admin	sk	ACL bolo pridané.
+acl csv export	admin	sk	Export ACL CSV
 acl deleted.	admin	sk	ACL bolo odstránené.
 acl entry deleted.	admin	sk	Položka ACL odstránená.
 acl entry not found!	admin	sk	Položka ACL sa nenašla!
@@ -559,6 +561,7 @@ last login from	admin	sk	Ostatné prihlásenie od
 last password change	admin	sk	Ostatná zmena hesla
 last submission:	admin	sk	Naposledy odoslané:
 last time read	admin	sk	Naposledy Prečítané
+last updated	admin	sk	Posledná aktualizácia
 ldap accounts context	admin	sk	LDAP kontext účtov
 ldap basedn	admin	sk	LDAP basedn
 ldap default homedirectory prefix (e.g. /home for /home/username)	admin	sk	Predpona LDAP domovského adresára (napr. /home pre /home/používateľ)

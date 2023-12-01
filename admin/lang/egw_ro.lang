@@ -4,6 +4,18 @@
 2-factor-authentication for interactive login	admin	ro	Autentificare cu 2 factori pentru autentificarea interactivă
 3 month	admin	ro	3 luni
 6 month	admin	ro	6 luni
+access token revoked.	admin	ro	Token de acces revocat.
+account	admin	ro	Cont
+acl csv export	admin	ro	Export ACL CSV
+custom 1	admin	ro	Personalizat 1
+custom 2	admin	ro	Personalizat 2
+custom 3	admin	ro	Personalizat 3
+last %1 logins	admin	ro	Ultimele %1 accesări
+last %1 logins for %2	admin	ro	Ultimele %1 autentificări pentru %2
+last time read	admin	ro	Ultima dată când a fost citit
+last updated	admin	ro	Ultima actualizare
+leave empty for no quota	admin	ro	Lăsați gol pentru nici o cotă
+leave empty to use oauth, if supported	admin	ro	Lăsați gol pentru a utiliza OAuth, dacă este acceptat
 oauth authentiction	admin	ro	Autentificare OAuth
 offer to installing egroupware as mail-handler	admin	ro	Ofertă pentru instalarea EGroupware ca mail-handler
 one day	admin	ro	O zi
@@ -14,3 +26,7 @@ other security configuration	admin	ro	Alte configurații de securitate
 own categories	admin	ro	Categorii proprii
 own install id	admin	ro	Propria instalare ID
 own install id:	admin	ro	Propria instalare ID:
+soap	admin	ro	SOAP
+ssl	admin	ro	SSL
+total records	admin	ro	Total înregistrări
+xml-rpc	admin	ro	XML-RPC

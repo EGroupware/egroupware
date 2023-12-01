@@ -37,7 +37,7 @@ all	mail	de	alle
 all adresses:	mail	de	Alle Adressen
 all available info	admin	de	alle verfügbaren Informationen
 all filtered	mail	de	Alle gefilterten
-all messages in the folder will be lost	mail	de	Alle Nachrichten in dem ausgewählten Ordner werden unwiderruflich gelöscht
+all messages in the folder will be lost	mail	de	<br>Alle Nachrichten in dem ausgewählten Ordner werden unwiderruflich gelöscht.
 all my email addresses	mail	de	alle meine E-Mail-Adressen
 all of	mail	de	alle
 all subfolders will be deleted too, and all messages in all affected folders will be lost	mail	de	Alle Unterordner und Nachrichten in den betroffenen Ordnern werden unwiederruflich gelöscht.
@@ -206,7 +206,7 @@ enabled!	mail	de	aktiviert!
 encrypt	mail	de	Verschlüsseln
 encrypt your message with smime certificate	mail	de	Verschlüsseln Sie Ihre Nachricht mit einem S/MIME-Zertifikat
 encryption	mail	de	Verschlüsselung
-enter the name for the new folder:	mail	de	Tragen Sie hier den Namen für den neuen Ordner ein:
+enter the name for the new folder:	mail	de	Name für den neuen Ordner:
 error saving %1!	mail	de	Fehler beim Speichern von %1!
 error while setting acl for folder %1!	mail	de	Fehler beim Speichern von Zugriffsrechten für den Ordner %1!
 error while setting folder	mail	de	Fehler beim Speichern eines Ordners
@@ -334,7 +334,7 @@ limit mailing list results when searching for addresses	mail	de	Limitierung der 
 list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	de	Liste der Aktionen, die standardmäßig eingeschaltet bzw. aktiviert werden sollen (z.B. E-Mail verfassen und als InfoLog speichern)
 mail	common	de	E-Mail
 mail acl	mail	de	Zugriffsrechte
-mail filter	mail	de	Filter-Regeln
+mail filter	mail	de	Filter
 mail filter rule	mail	de	Filter-Regel
 mail settings	mail	de	E-Mail-Einstellungen
 mail source	mail	de	Nachrichtenquelltext anzeigen
@@ -504,7 +504,7 @@ rights	mail	de	Zugriffsrechte
 row order style	mail	de	Spaltenanordnung
 rule priority position	mail	de	Priorität der Filterregel
 rule with priority	mail	de	Regel mit Priorität
-rules	mail	de	Filter-Regeln
+rules	mail	de	Regeln
 s/mime encryption failed because no certificate has been found for sender address: %1	mail	de	Die S/MIME-Verschlüsselung ist fehlgeschlagen, weil kein Zertifikat für die Absenderadresse gefunden wurde: %1
 save all	mail	de	Alle speichern
 save all attachments to filemanager	mail	de	Alle Anhänge im Dateimanager speichern
@@ -535,7 +535,7 @@ security	mail	de	Sicherheit
 see attachments for content of the orignial mail	mail	de	Die Original Nachricht wurde als Anhang an diese E-Mail angehängt
 select a date	mail	de	Wählen Sie ein Datum
 select all	mail	de	Alle Auswählen
-select an existing entry in order to append mail content to it	mail	de	Bestehendes Ticket auswählen, zu dem die Mail als Kommentar hinzugefügt werden soll.
+select an existing entry in order to append mail content to it	mail	de	Bestehendes Ticket auswählen, zu dem die E-Mail als Kommentar hinzugefügt werden soll.
 select an item to read	mail	de	Wählen Sie ein zu lesendes Element aus
 select file to attach to message	mail	de	Wählen Sie die Dateien aus, die Sie an diese Nachricht anhängen möchten.
 select file to import into folder	mail	de	Wählen Sie ein E-Mail als Datei aus, damit Sie in ein Ordner importiert werden kann.
@@ -660,7 +660,7 @@ unsubscribe folder	mail	de	Ordner abbestellen
 unsubscribe from folder %1	mail	de	Ordner %1 abbestellen
 upload files...	mail	de	Anhang
 use default timeout (20 seconds)	mail	de	verwende Standard Timeout (20 Sekunden)
-use regular expressions (see wikipedia for information on posix regular expressions)	mail	de	Reguläre Ausdrücke verwenden<br>(siehe https://en.wikipedia.org/wiki/Regular_expression)
+use regular expressions (see wikipedia for information on posix regular expressions)	mail	de	Reguläre Ausdrücke verwenden (siehe https://en.wikipedia.org/wiki/Regular_expression)
 use source as displayed, if applicable	mail	de	Format wie E-Mail-Anzeige
 use username+password from current user	mail	de	Verwendet Benutzername+Passwort des angemeldeten Benutzers
 use wizard to detect or verify configuration	mail	de	Benutze Assistent um die Konfiguration zu erstellen und/oder zu verifizieren

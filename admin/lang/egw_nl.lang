@@ -25,6 +25,7 @@
 2-factor-authentication for interactive login	admin	nl	2-Factor-Authenticatie voor interactief inloggen
 3 month	admin	nl	3 maanden
 6 month	admin	nl	6 maanden
+access token revoked.	admin	nl	Toegangstoken ingetrokken.
 accesslog and bruteforce defense	admin	nl	Toegangslogboek en bescherming procesvermogen
 account	admin	nl	Account
 account %1 %2	admin	nl	Account %1 %2
@@ -40,6 +41,7 @@ account permissions	admin	nl	Toegangsrechten account
 account preferences	admin	nl	Voorkeuren account
 account-id's have to be integers!	admin	nl	Account-ids moeten integers zijn!
 acl added.	admin	nl	ACL toegevoegd.
+acl csv export	admin	nl	ACL CSV export
 acl deleted.	admin	nl	ACL verwijderd.
 acl manager	admin	nl	ACL-beheerder
 acl rights	common	nl	ACL-rechten
@@ -167,6 +169,9 @@ created	admin	nl	Aangemaakt
 created with id #%1	admin	nl	aangemaakt met id #%1
 creates a new field	admin	nl	creëert een nieuw veld
 crontab only (recomended)	admin	nl	Alleen crontab (aanbevolen)
+custom 1	admin	nl	Aangepast 1
+custom 2	admin	nl	Aangepast 2
+custom 3	admin	nl	Aangepast 3
 custom fields	admin	nl	Aangepaste velden
 cyrus imap server	admin	nl	Cyrus IMAP-server
 cyrus imap server administration	admin	nl	Cyrus IMAP-serverbeheer
@@ -379,6 +384,7 @@ last %1 logins for %2	admin	nl	Laatste %1 logins voor %2
 last login	admin	nl	Laatste login
 last login from	admin	nl	Laatste login vanaf
 last time read	admin	nl	Laatste keer gelezen
+last updated	admin	nl	Laatst bijgewerkt
 ldap accounts context	admin	nl	LDAP accountscontext
 ldap basedn	admin	nl	LDAP basedn
 ldap default homedirectory prefix (e.g. /home for /home/username)	admin	nl	LDAP standaard homedirectory voorvoegsel (bij.: /home/ voor /home/gebruikersnaam)
@@ -395,6 +401,7 @@ ldap server admin password	admin	nl	LDAP-server admin wachtwoord
 ldap server hostname or ip address	admin	nl	LDAP-serverhostnaam of IP-adres
 ldap settings	admin	nl	LDAP-instellingen
 leave empty for no quota	admin	nl	Laat leeg voor geen quota
+leave empty to use oauth, if supported	admin	nl	Leeg laten om OAuth te gebruiken, indien ondersteund
 leave the category untouched and return back to the list	admin	nl	laat de categorie ongewijzigd en ga terug naar de lijst
 leave the group untouched and return back to the list	admin	nl	laat de groep ongewijzigd en ga terug naar de lijst
 leave without saveing the entry	admin	nl	weggaan zonder op te slaan

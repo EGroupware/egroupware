@@ -258,15 +258,25 @@ leave without saveing the entry	infolog	bg	изход без запис
 leaves without saveing	infolog	bg	изход без запис
 length	infolog	bg	Дължина
 limit list to last n month, if ordering by last-modified and not searching.	admin	bg	Ограничаване на списъка до последния N месец, ако се подрежда по последна промяна и не се търси.
+limit number of description lines (default 5, 0 for no limit)	infolog	bg	Ограничаване на броя на редовете за описание. По подразбиране = 5, 0 = няма ограничение.
+limit width of description column ((effective only if lines limit is set), 0 for no limit)	infolog	bg	Ограничаване на ширината на колоната с описание. Ефективно само ако е зададено ограничение на редовете. 0 = няма ограничение.
 link	infolog	bg	Връзка
+linked to %1	infolog	bg	Свързан с %1
 links	infolog	bg	Връзки
+links and attached files	infolog	bg	Връзки и прикачени файлове
 links of this entry	infolog	bg	Връзки на записа
+links to specified application.  example: {{links/infolog}}	infolog	bg	Връзки към определено приложение. Пример: {{връзки/инфолог}}
+links wrapped in an href tag with download link	infolog	bg	Връзки, обвити в таг HREF с връзка за изтегляне
 list all categories	infolog	bg	Покажи всички категории
+list of files linked to the current record	infolog	bg	Списък на файловете, свързани с текущия запис
+load custom fields in index, if filtered by selected types (eg. to display them in a type-specific index template)	infolog	bg	Зареждане на потребителски полета в индекса, ако са филтрирани по избрани типове (напр. за показване в шаблон на индекс, специфичен за даден тип)
 location	infolog	bg	Местонахождение
 longer textual description	infolog	bg	по-дълго текстово описание
 low	infolog	bg	нисък
 manage mapping	infolog	bg	Управление на съответствията
 max length of the input [, length of the inputfield (optional)]	infolog	bg	макс. дължина на входа[, дължнина на вх.поле (опция)]
+modifier	infolog	bg	Модификатор
+modifierer	infolog	bg	Модификатор
 name must not be empty !!!	infolog	bg	Името трябва да бъде попълнено!!!
 name of current user, all other contact fields are valid too	infolog	bg	Име на текущия потребител, останалите полета на контакта също са валидни
 name of new type to create	infolog	bg	име на новия тип
@@ -276,6 +286,7 @@ new %1 created by %2 at %3	infolog	bg	Нов %1, създаден от %2 в %3
 new name	infolog	bg	ново име
 new search	infolog	bg	Ново търсене
 no - cancel	infolog	bg	Не - Отменя
+no custom field "%1" for %2.	infolog	bg	Няма потребителско поле "%1" за %2.
 no describtion, links or attachments	infolog	bg	няма описание, връзки или приложения
 no details	infolog	bg	без детайли
 no entries found, try again ...	infolog	bg	няма намерени записи, опитайте отново

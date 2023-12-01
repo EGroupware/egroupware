@@ -73,8 +73,21 @@ notebookbar	filemanager	tr	Sekmeli
 password for webdav and smb, use $pass for password of logged in user	filemanager	tr	WebDAV ve SMB için şifre, oturum açmış kullanıcının şifresi için $pass kullanın
 path and query-parameters, smb: share and optional path (with /)	filemanager	tr	Yol ve sorgu parametreleri, SMB: paylaşım ve isteğe bağlı yol (/ ile)
 permissions	filemanager	tr	Ayarlar
+protocol to use	filemanager	tr	Kullanılacak Protokol
+protocols	filemanager	tr	Protokoller
 quota	filemanager	tr	Kota
 quota exceeded	filemanager	tr	Kota aşıldı
+read & write access	filemanager	tr	Okuma ve yazma erişimi
+read access only	filemanager	tr	Yalnızca okuma erişimi
+readonly share link	filemanager	tr	Salt okunur Paylaşım bağlantısı
 recalculate	filemanager	tr	Yeniden hesapla
+recalculate directory sizes	filemanager	tr	Dizin boyutlarını yeniden hesaplama
 recalculated %1 directories in %2 iterations and %3 seconds	filemanager	tr	1 dizinleri %2 yineleme ve %3 saniye içinde yeniden hesapladı
+reload	filemanager	tr	Yeniden Yükle
+rename of %1 to %2 failed!	filemanager	tr	%1'in %2 olarak yeniden adlandırılması başarısız oldu!
+rename, change permissions or ownership	filemanager	tr	Yeniden adlandır, izinleri veya sahipliği değiştir
+renamed %1 to %2	filemanager	tr	%1'in adı %2 olarak değiştirildi
+renamed %1 to %2.	filemanager	tr	%1'in adı %2 olarak değiştirildi
+replacements for inserting entries into documents	filemanager	tr	Belgelere giriş eklemek için değiştirmeler
+save as zip	filemanager	tr	ZIP olarak kaydet
 you need to become root, to enable or disable versioning on a directory!	filemanager	tr	Bir klasörde sürümlemeyi etkinleştirmek veya devre dışı bırakmak için superuser olmanız gerekir!

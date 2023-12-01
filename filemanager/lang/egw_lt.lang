@@ -52,8 +52,20 @@ mountpoints	filemanager	lt	Montavimo taškai
 notebookbar	filemanager	lt	Skirtukas
 password for webdav and smb, use $pass for password of logged in user	filemanager	lt	WebDAV ir SMB slaptažodis, naudokite $pass prisijungusio naudotojo slaptažodį
 path and query-parameters, smb: share and optional path (with /)	filemanager	lt	Kelias ir užklausos parametrai, SMB: bendroji dalis ir neprivalomas kelias (su /)
+protocol to use	filemanager	lt	Naudojamas protokolas
+protocols	filemanager	lt	Protokolai
 quota	filemanager	lt	Kvota
 quota exceeded	filemanager	lt	Viršyta kvota
+read & write access	filemanager	lt	Skaitymo ir rašymo prieiga
+read access only	filemanager	lt	Tik skaitymo prieiga
+readonly share link	filemanager	lt	Tik skaitymui Bendrinti nuorodą
 recalculate	filemanager	lt	Perskaičiuokite
+recalculate directory sizes	filemanager	lt	Perskaičiuokite katalogų dydžius
 recalculated %1 directories in %2 iterations and %3 seconds	filemanager	lt	Perskaičiuota %1 katalogų per %2 iteracijas ir %3 sekundes
+reload	filemanager	lt	Perkrauti
+rename of %1 to %2 failed!	filemanager	lt	Nepavyko pervadinti %1 į %2!
+rename, change permissions or ownership	filemanager	lt	Pervardyti, pakeisti teises arba nuosavybę
+renamed %1 to %2	filemanager	lt	Pervadinta %1 į %2
+renamed %1 to %2.	filemanager	lt	Pervadinta %1 į %2
+save as zip	filemanager	lt	Išsaugoti kaip ZIP
 you need to become root, to enable or disable versioning on a directory!	filemanager	lt	Kad įjungtumėte arba išjungtumėte aplanko versijų nustatymą, turite tapti superuser!

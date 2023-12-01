@@ -23,7 +23,9 @@
 2-factor-authentication for interactive login	admin	zh	交互式登录的双因素认证
 3 month	admin	zh	3个月
 6 month	admin	zh	6个月
+access token revoked.	admin	zh	访问令牌已撤销。
 accesslog and bruteforce defense	admin	zh	存取纪录与恶意攻击防御
+account	admin	zh	账户
 account %1 %2	admin	zh	帐户 %1 %2
 account '%1' deleted.	admin	zh	帐户 '%1' 已删除。
 account '%1' not found !!!	admin	zh	帐户 '%1' 未发现！
@@ -35,6 +37,7 @@ account list	admin	zh	列举帐户
 account permissions	admin	zh	帐户权限
 account preferences	admin	zh	帐户参数选择
 account-id's have to be integers!	admin	zh	帐户 ID 必须是整数！
+acl csv export	admin	zh	导出 ACL CSV
 acl manager	admin	zh	ACL管理器
 acl rights	common	zh	ACL权限
 action	admin	zh	操作
@@ -154,6 +157,9 @@ created	admin	zh	创建日期
 created with id #%1	admin	zh	以 ID #%1 创建
 creates a new field	admin	zh	创建一新字段
 crontab only (recomended)	admin	zh	仅 Crontab (推荐命令)
+custom 1	admin	zh	自定义 1
+custom 2	admin	zh	自定义 2
+custom 3	admin	zh	自定义 3
 custom fields	admin	zh	自定义字段
 cyrus imap server	admin	zh	Cyrus IMAP 服务器
 cyrus imap server administration	admin	zh	Cyrus IMAP 服务器管理
@@ -354,6 +360,7 @@ last %1 logins for %2	admin	zh	%2最近有%1次登录
 last login	admin	zh	最近登录
 last login from	admin	zh	最近登录来自
 last time read	admin	zh	最近读取时间
+last updated	admin	zh	最后更新
 ldap accounts context	admin	zh	LDAP 账户上下文
 ldap basedn	admin	zh	LDAP basedn
 ldap default homedirectory prefix (e.g. /home for /home/username)	admin	zh	LDAP 默认主目录的前缀 (例如：/home/username 的前缀是：/home)
@@ -370,6 +377,7 @@ ldap server admin password	admin	zh	LDAP 服务器管管理员密码
 ldap server hostname or ip address	admin	zh	LDAP 服务器主机名或 IP 地址
 ldap settings	admin	zh	LDAP 设置
 leave empty for no quota	admin	zh	留空表示无限额
+leave empty to use oauth, if supported	admin	zh	如果支持 OAuth，留空表示使用 OAuth
 leave the category untouched and return back to the list	admin	zh	不更改类别，返回列表
 leave the group untouched and return back to the list	admin	zh	不更改组，返回列表
 leave without saveing the entry	admin	zh	取消, 不保存对该事项的操作

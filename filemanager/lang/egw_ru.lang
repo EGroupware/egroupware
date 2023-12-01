@@ -212,12 +212,16 @@ preview %1	filemanager	ru	Просмотр %1
 preview of %1	filemanager	ru	Просмотр %1
 projectmanager	filemanager	ru	Проекты
 properties saved.	filemanager	ru	Свойства сохранены.
+protocol to use	filemanager	ru	Используемый протокол
+protocols	filemanager	ru	Протоколы
 quick jump to	filemanager	ru	Быстрый переход к
 quota	filemanager	ru	Квота
 quota exceeded	filemanager	ru	Квота превышена
 read & write access	filemanager	ru	Доступ к чтению/записи
 read access only	filemanager	ru	Доступ только к чтению
+readonly share link	filemanager	ru	Доступ только для чтения Ссылка на общий доступ
 recalculate	filemanager	ru	Пересчитать
+recalculate directory sizes	filemanager	ru	Пересчитать размеры каталога
 recalculated %1 directories in %2 iterations and %3 seconds	filemanager	ru	Пересчитано %1 каталогов за %2 итераций и %3 секунд
 reload	filemanager	ru	Перезагрузка
 rename of %1 to %2 failed!	filemanager	ru	Переименование %1 в %2 закончилось неудачно!
@@ -232,6 +236,7 @@ root access granted.	filemanager	ru	Доступ с правами root пред
 root access stopped.	filemanager	ru	Доступ с правами root прекращен.
 save %1	filemanager	ru	Сохранить %1
 save %1, and go back to file listing	filemanager	ru	Сохранить %1 и вернуться к списку файлов.
+save as zip	filemanager	ru	Сохранить в формате ZIP
 save changes	filemanager	ru	Сохранить изменения
 saved %1	filemanager	ru	Сохранено %1
 saving properties failed!	filemanager	ru	Сохранение свойств завершилось неудачно!

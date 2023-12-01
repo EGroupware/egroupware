@@ -249,6 +249,7 @@ read & write access	filemanager	it	Lettura e scrittura
 read access only	filemanager	it	Sola lettura
 readonly share link	filemanager	it	Collegamento condiviso in sola lettura
 recalculate	filemanager	it	Ricalcolare
+recalculate directory sizes	filemanager	it	Ricalcolo delle dimensioni delle directory
 recalculated %1 directories in %2 iterations and %3 seconds	filemanager	it	Ha ricalcolato %1 directory in %2 iterazioni e %3 secondi.
 reload	filemanager	it	Ricarica
 rename of %1 to %2 failed!	filemanager	it	Non è stato possibile rinominare %1 a %2

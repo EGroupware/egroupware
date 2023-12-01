@@ -249,6 +249,7 @@ read & write access	filemanager	sl	Pravice branja in pisanja
 read access only	filemanager	sl	Dostop samo za branje
 readonly share link	filemanager	sl	Povezava samo za branje
 recalculate	filemanager	sl	Ponovno izračunajte
+recalculate directory sizes	filemanager	sl	Preračunavanje velikosti imenikov
 recalculated %1 directories in %2 iterations and %3 seconds	filemanager	sl	Preračunano %1 imenikov v %2 iteracijah in %3 sekundah
 reload	filemanager	sl	Osveži
 rename of %1 to %2 failed!	filemanager	sl	Preimenovanje %1 v %1 ni bilo uspešno!

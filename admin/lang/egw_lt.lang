@@ -4,6 +4,18 @@
 2-factor-authentication for interactive login	admin	lt	2 veiksnių autentiškumo nustatymas interaktyviam prisijungimui
 3 month	admin	lt	3 mėn
 6 month	admin	lt	6 mėn
+access token revoked.	admin	lt	Prieigos žetonas atšauktas.
+account	admin	lt	Paskyra
+acl csv export	admin	lt	ACL CSV eksportas
+custom 1	admin	lt	Pasirinktinis 1
+custom 2	admin	lt	Pasirinktinis 2
+custom 3	admin	lt	Pasirinktinis 3
+last %1 logins	admin	lt	Paskutiniai %1 prisijungimai
+last %1 logins for %2	admin	lt	Paskutiniai %1 prisijungimai prie %2
+last time read	admin	lt	Paskutinį kartą perskaitytas
+last updated	admin	lt	Paskutinį kartą atnaujinta
+leave empty for no quota	admin	lt	Palikite tuščią, jei kvotos nėra
+leave empty to use oauth, if supported	admin	lt	Palikite tuščią, jei norite naudoti OAuth, jei palaikoma
 oauth authentiction	admin	lt	OAuth autentiškumo nustatymas
 offer to installing egroupware as mail-handler	admin	lt	Pasiūlymas įdiegti EGroupware kaip pašto tvarkytuvą
 one day	admin	lt	Vieną dieną
@@ -14,3 +26,4 @@ other security configuration	admin	lt	Kita saugumo konfigūracija
 own categories	admin	lt	Savos kategorijos
 own install id	admin	lt	Nuosavas diegimo ID
 own install id:	admin	lt	Nuosavas diegimo ID:
+total records	admin	lt	Iš viso įrašų

@@ -236,33 +236,44 @@ last changed	infolog	no	Sist endret
 last modified	infolog	no	Sist endret
 leave it empty	infolog	no	La stå tom
 leave it empty for a full week	infolog	no	La stå tom for en full uke
-leave without saveing the entry	infolog	no	avslutt uten å lagre innslaget
-leaves without saveing	infolog	no	avslutt uten å lagre
+leave without saveing the entry	infolog	no	Avslutt uten å lagre innslaget
+leaves without saveing	infolog	no	Avslutt uten å lagre
+limit number of description lines (default 5, 0 for no limit)	infolog	no	Begrensning av antall beskrivelseslinjer. Standard = 5, 0 = ingen begrensning.
+limit width of description column ((effective only if lines limit is set), 0 for no limit)	infolog	no	Begrens bredde på beskrivelseskolonnen. Gjelder bare hvis linjegrensen er satt. 0 = ingen begrensning.
 link	infolog	no	Lenke
+linked to %1	infolog	no	Lenket til %1
 links	infolog	no	Lenker
+links and attached files	infolog	no	Lenker og vedlagte filer
 links of this entry	infolog	no	Lenker i dette innslaget
+links to specified application.  example: {{links/infolog}}	infolog	no	Lenker til det angitte programmet. Eksempel: {{links/infolog}}
+links wrapped in an href tag with download link	infolog	no	Lenker pakket inn i en HREF-tagg med nedlastingslenke
 list all categories	infolog	no	Liste over alle kategorier
+list of files linked to the current record	infolog	no	Liste over filer som er knyttet til den aktuelle posten
+load custom fields in index, if filtered by selected types (eg. to display them in a type-specific index template)	infolog	no	Last inn egendefinerte felt i indeksen, hvis filtrert etter valgte typer (f.eks. for å vise dem i en typespesifikk indeksmal)
 location	infolog	no	Lokasjon
-longer textual description	infolog	no	lenger ordrett beskrivelse
-low	infolog	no	lav
+longer textual description	infolog	no	Lenger ordrett beskrivelse
+low	infolog	no	Lav
 max length of the input [, length of the inputfield (optional)]	infolog	no	maks. lengde på innslag [,feltlengde (valgfri)]
+modifier	infolog	no	Modifikators
+modifierer	infolog	no	Modifikator
 name must not be empty !!!	infolog	no	Navn kan ikke være tomt !!!
-name of new type to create	infolog	no	navn på ny type som lages
+name of new type to create	infolog	no	Navn på ny type som lages
 never hide search and filters	infolog	no	Skjul aldri søk og filtere
-new name	infolog	no	nytt navn
+new name	infolog	no	Nytt navn
 new search	infolog	no	Nytt søk
 no - cancel	infolog	no	Nei - Avbryt
-no describtion, links or attachments	infolog	no	ingen beskrivelse, lenker eller tillagte dokumenter
+no custom field "%1" for %2.	infolog	no	Ingen egendefinerte felt "%1" for %2.
+no describtion, links or attachments	infolog	no	Ingen beskrivelse, lenker eller tillagte dokumenter
 no details	infolog	no	Ingen detaljer
 no entries found, try again ...	infolog	no	ingen innslag funnet, prøv igjen ...
-no filter	infolog	no	ufiltrert
-no links or attachments	infolog	no	ingen lenker eller vedlegg
+no filter	infolog	no	Ufiltrert
+no links or attachments	infolog	no	Ingen lenker eller vedlegg
 nonactive	infolog	no	Ikke aktiv
 none	infolog	no	Ingen
-normal	infolog	no	normal
-not	infolog	no	ikke
-not assigned	infolog	no	ikke tildelt
-not-started	infolog	no	ikke påbegynt
+normal	infolog	no	Normal
+not	infolog	no	Ikke
+not assigned	infolog	no	Ikke tildelt
+not-started	infolog	no	Ikke påbegynt
 note	infolog	no	Notat
 number of records to read (%1)	infolog	no	Antall rekker som skal leses (%1)
 number of row for a multiline inputfield or line of a multi-select-box	infolog	no	antall rekker i multi-linje felter eller linjer i multi-valg bokser

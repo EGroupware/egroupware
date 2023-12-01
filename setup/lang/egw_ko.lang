@@ -1,7 +1,7 @@
 %1 does not exist !!!	setup	ko	%1 은 존재하지 않습니다.
 %1 is %2%3 !!!	setup	ko	%1은 %2 %3 !!!
 *** do not update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your db in an unrecoverable state (your data is lost) !!!	setup	ko	*** 설정을 통해 데이터베이스를 갱신하지 마세요, 최대실행시간(max_execution_time) 설정때문에 중지된 업데이트는 데이터베이스에 남겨져 복구할수 없는 상태가 됩니다.(즉 데이터를 잃게됩니다) !!!
-*** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	ko	*** eGW이 완전히 동작 하기 위해서는 php.ini를 직접 수정해주어야 합니다 !!!
+*** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	ko	*** EGw이 완전히 동작 하기 위해서는 php.ini를 직접 수정해주어야 합니다 !!!
 00 (disable)	setup	ko	00 ( 미사용 / 추천 )
 13 (ntp)	setup	ko	13 (ntp)
 80 (http)	setup	ko	80 (http)
@@ -57,7 +57,7 @@ because the enable flag for this app is set to 0, or is undefined	setup	ko	이 �
 bottom	setup	ko	하단
 cancel	setup	ko	취소
 change system-charset	setup	ko	시스템 문자셋 바꾸기
-charset	setup	ko	utf-8
+charset	setup	ko	문자 집합
 charset to convert to	setup	ko	전환할 문자셋
 check can only be performed, if called via a webserver, as the user-id/-name of the webserver is not known.	setup	ko	웹서버를 통해 호출되지만 그 웹서버가 사용자ID와 이름을 모르는 상태에서 실행된다면 체크하세요
 check installation	setup	ko	설치 확인
@@ -140,7 +140,7 @@ enter some random text for app_session <br />encryption (requires mcrypt)	setup	
 enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	ko	임시 파일의 완전한경로를 입력하세요.<br />예: /tmp, C:\TEMP
 enter the full path for users and group files.<br />examples: /files, e:\files	setup	ko	사용자와 그룹파일을 위한 완전한경로를 입력하세요. <br />예: /files, E:\FILES
 enter the hostname of the machine on which this server is running	setup	ko	이 서버가 실행되고 있는 장비의 호스트 이름을 입력하세요
-enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	ko	EGroupware의 URL을 입력<br />예: http://domain.com/egroupware &nbsp;이나 &nbsp/egroupware<br /><b>단 슬래시(/)로 끝나지 않게 하세요</b>
+enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	ko	EGroupware의 URL을 입력<br />예: http://domain.com/egroupware  이나 &nbsp/egroupware<br /><b>단 슬래시(/)로 끝나지 않게 하세요</b>
 enter the site password for peer servers	setup	ko	피어서버의 사이트암호 입력
 enter the site username for peer servers	setup	ko	피어서버의 사이트사용자이름 입력
 enter the title for your site	setup	ko	귀하의 사이트 제목을 입력
@@ -171,7 +171,7 @@ hostname/ip of database server	setup	ko	데이터베이스서버의 호스트이
 however, the application is otherwise installed	setup	ko	어쨌든, 응용프로그램이 설치됨
 however, the application may still work	setup	ko	어쨌든, 응용프로그램이 계속 동작중
 if no acl records for user or any group the user is a member of	setup	ko	ACL 레코드가 없는 사용자나, 어떤 그룹의 구성원이 아닌 사용자라면
-if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	ko	안전모드가 켜졌으면, eGW는 실행중엔 어떤 설정도 바꿀수 없을 뿐만 아니라,아직까지 로드되지 않은 어떤 모듈도 로드할수 없습니다
+if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	ko	안전모드가 켜졌으면, EGw는 실행중엔 어떤 설정도 바꿀수 없을 뿐만 아니라,아직까지 로드되지 않은 어떤 모듈도 로드할수 없습니다
 if the application has no defined tables, selecting upgrade should remedy the problem	setup	ko	응용프로그램이 정의된 테이블이 없으면 업그레이드를 선택하는게 문제를 해결할수 있을 것입니다
 if using ldap	setup	ko	만약 LDAP를 사용한다면
 if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	ko	LDAP를 사용한다면, 홈디렉토리와 로그인쉘 속성을 관리 하시겠습니까?
@@ -202,7 +202,7 @@ ldap groups context	setup	ko	LDAP 그룹 컨텍스트
 ldap host	setup	ko	LDAP 호스트
 ldap import	setup	ko	LDAP 가져오기
 ldap root password	setup	ko	LDAP 루트암호
-ldap rootdn	setup	ko	LDAP rootdn
+ldap rootdn	setup	ko	LDAP Root DN
 limit access to setup to the following addresses, networks or hostnames (e.g. 127.0.0.1,10.1.1,myhost.dnydns.org)	setup	ko	주소나 네트웍, 호스트이름 설정에 접근을 제한함 (예: 127.0.0.1,101.1.1,myhost.dnydns.org)
 login to mysql -	setup	ko	mysql로 접속 -
 logout	setup	ko	접속해제
@@ -260,7 +260,7 @@ persistent connections	setup	ko	지속적 연결
 please check for sql scripts within the application's directory	setup	ko	응용프로그램 디렉토리에 포함된 sql 스크립트들을 확인해보세요
 please check read/write permissions on directories, or back up and use another option.	setup	ko	디렉토리의 읽기/쓰기 권한을 확인하시가나 돌아가셔서 다른 옵션을 사용해주세요
 please configure egroupware for your environment	setup	ko	귀하에게 맞는 EGroupware 설정을 해주세요
-please consult the %1.	setup	ko	** %1 을(를) 고려해주세요.
+please consult the %1.	setup	ko	%1 을(를) 고려해주세요.
 please fix the above errors (%1) and warnings(%2)	setup	ko	위와 같은 에러 (%1) 와 경고(%2)를 수정해주세요
 please install	setup	ko	설치해 주세요
 please login	setup	ko	로그인 해주세요
@@ -282,10 +282,17 @@ readable by the webserver	setup	ko	웹 서버가 읽을수 있음
 really uninstall all applications	setup	ko	모든 응용프로그램을 삭제
 register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	ko	register_globals 이 켜져 있습니다, EGroupware에서는 필요없는 기능이며 보안상으로도 Off로 설정하시는 것이 좋습니다
 registered	setup	ko	등록됨
+regular expression to filter by dn	setup	ko	DN으로 필터링하는 정규식
 rejected lines	setup	ko	거부된 라인
 remove	setup	ko	삭제
 remove all	setup	ko	모두 삭제
+rename	setup	ko	이름 바꾸기
+replace username and email	setup	ko	사용자 아이디 및 이메일 바꾸기
+replace username and keep email	setup	ko	사용자 아이디 바꾸기 및 이메일 유지
+required to change passwords	setup	ko	비밀번호 변경에 필요
+requires "reset password" privilege, to change passwords!	setup	ko	비밀번호를 변경하려면 '비밀번호 재설정' 권한이 필요합니다!
 requires reinstall or manual repair	setup	ko	재설치하거나 직접 수리가 필요함
+requires saml optional on login page and user to specify username and password	setup	ko	로그인 페이지에서 SAML 옵션이 필요하며 사용자가 사용자 이름과 비밀번호를 지정해야 합니다.
 requires upgrade	setup	ko	업그레이드가 필요함
 resolve	setup	ko	해결(Resolve)
 return to setup	setup	ko	설정으로 돌아감
@@ -312,7 +319,7 @@ select which user(s) will have admin privileges	setup	ko	어떤 사용자들이 
 select your old version	setup	ko	귀하의 이전 버전을 선택
 selectbox	setup	ko	선택상자
 server root	setup	ko	서버 루트
-set	setup	ko	** 셋(set)
+set	setup	ko	셋(set)
 setting the system-charset to utf-8 (unicode) allows the coexistens of data from languages of different charsets.	setup	ko	시스템-문자셋을 UTF-8(유니코드)로 설정하면 서로 다른 언어의 문자셋이 공존할수 있습니다
 settings	setup	ko	설정
 setup	setup	ko	설정
@@ -345,7 +352,7 @@ the mbstring extension is needed to fully support unicode (utf-8) or other multi
 the table definition was correct, and the tables were installed	setup	ko	테이블 정의가 수정되었고 테이블들이 설치되었습니다
 the tables	setup	ko	여러 테이블
 there was a problem trying to connect to your ldap server. <br />	setup	ko	LDAP서버에 접속하는데 문제가 있습니다.<br />
-there was a problem trying to connect to your ldap server. <br />please check your ldap server configuration	setup	ko	+* LDAP서버에 접속하는데 문제가 있습니다.<br /> 귀하의 LDAP 서버의 구성을 확인해보세요
+there was a problem trying to connect to your ldap server. <br />please check your ldap server configuration	setup	ko	LDAP서버에 접속하는데 문제가 있습니다.<br /> 귀하의 LDAP 서버의 구성을 확인해보세요
 this has to be outside the webservers document-root!!!	setup	ko	웹서버의 DocumentRoot 외부에 있어야 합니다!!!
 this might take a while, please wait ...	setup	ko	약간 시간이 걸립니다, 잠시만 기다리세요...
 this program will convert your database to a new system-charset.	setup	ko	이 프로그램은 귀하의 데이터베이스를 새 시스템-문자셋으로 변환해줍니다
@@ -368,13 +375,13 @@ upgrade	setup	ko	업그레이드
 upgrade all	setup	ko	모두 업그레이드
 upgraded	setup	ko	업그레이드됨
 upgrading tables	setup	ko	테이블을 업그레이드중
-use cookies to pass sessionid	setup	ko	sessionid 를 전달하기 위해 쿠키 사용
+use cookies to pass sessionid	setup	ko	Session ID 를 전달하기 위해 쿠키 사용
 use pure html compliant code (not fully working yet)	setup	ko	순수 HTML 호환 코드 사용 ( 아직 완벽하게 동작하지 않습니다)
 user account prefix	setup	ko	사용자계정 접두어(prefix)
 user for smtp-authentication (leave it empty if no auth required)	setup	ko	사용자 SMTP-인증 (인증이 필요없을경우 비워둡니다)
 usernames are casesensitive	setup	ko	사용자이름은 대소문자구분함
 users choice	setup	ko	사용자 선택
-utf-8 (unicode)	setup	ko	utf-8 (유니코드)
+utf-8 (unicode)	setup	ko	UTF-8 (유니코드)
 version	setup	ko	버전
 version mismatch	setup	ko	버전이 일치하지 않음
 view	setup	ko	보기

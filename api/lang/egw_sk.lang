@@ -1388,16 +1388,18 @@ title	common	sk	Titulok
 titles of any entries linked to the current record, excluding attached files	preferences	sk	Názvy akýchkoľvek položiek pripojených na súčasný záznam, okrem priložených súborov
 to	common	sk	Komu
 to correct this error for the future you will need to properly set the	common	sk	= Aby sa chyba neobjavovala v budúcnosti, musíte správne nastaviť
+to disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty	common	sk	Zakázanie: [! = not]<value>[=<check>] napr.: '!@data' zakáže, ak je obsah údajov prázdny
 to examine or reinstate inactived files, you might need to turn versioning on.	admin	sk	Ak chcete preskúmať alebo obnoviť deaktivované súbory, musíte mať zapnuté verzovanie.
 to go back to the msg list, click <a href= %1 >here</a>	common	sk	<a href="%1">Naspäť na zoznam správ</a>
-to start the db-tools	common	sk	pre spustenie DB-nástrojov
-to start the etemplate editor	common	sk	pre spustenie editora eTemplate
-to start the search	common	sk	pre spustenie hľadania
+to start the db-tools	common	sk	Pre spustenie DB-nástrojov
+to start the etemplate editor	common	sk	Pre spustenie editora eTemplate
+to start the search	common	sk	Pre spustenie hľadania
 today	common	sk	Dnes
 todays date, eg. "%1"	common	sk	Dnešný dátum, napr. "%1"
 togo	common	sk	TOGO
 tokelau	common	sk	TOKELAU
 tonga	common	sk	TONGA
+too many rows selected.<br />select all, or less than %1 rows	common	sk	Vybraných príliš veľa riadkov.<br />Vyberte všetky alebo menej ako %1 riadkov
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	sk	Príliš veľa neúspešných pokusov o prihlásenie: %1 na používateľa '%2', %3 na IP %4
 top	common	sk	Vrch
 total	common	sk	Celkovo

@@ -106,16 +106,26 @@ preview	filemanager	no	Forhåndsvis
 preview %1	filemanager	no	Forhåndsvis %1
 preview of %1	filemanager	no	Forhåndsvining av %1
 projectmanager	filemanager	no	Prosjektadm.
+protocol to use	filemanager	no	Protokoller som skal brukes
+protocols	filemanager	no	Protokoller
 quick jump to	filemanager	no	Hurtighopp til
 quota	filemanager	no	Kvote
 quota exceeded	filemanager	no	Kvote overskredet
+read & write access	filemanager	no	Lese- og skrivetilgang
+read access only	filemanager	no	Kun lesetilgang
+readonly share link	filemanager	no	Kun lesetilgang Del lenke
 recalculate	filemanager	no	Beregne på nytt
+recalculate directory sizes	filemanager	no	Beregne katalogstørrelser på nytt
 recalculated %1 directories in %2 iterations and %3 seconds	filemanager	no	Beregnet %1 kataloger på nytt i %2 iterasjoner og %3 sekunder
 reload	filemanager	no	Last på nytt
+rename of %1 to %2 failed!	filemanager	no	Endre navn på %1 til %2 mislyktes!
+rename, change permissions or ownership	filemanager	no	Endre navn, endre tillatelser eller eierskap
 renamed %1 to %2	filemanager	no	Ga %1 nytt navn til %2
+renamed %1 to %2.	filemanager	no	Ga %1 nytt navn til %2
 replaced %1	filemanager	no	Erstattet %1
 save %1	filemanager	no	Lagret %1
 save %1, and go back to file listing	filemanager	no	Lagre %1, og gå tilbake til filliste
+save as zip	filemanager	no	Lagre som ZIP
 save changes	filemanager	no	Lagre endringer
 saved %1	filemanager	no	Lagret %1
 show	filemanager	no	Vis

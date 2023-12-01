@@ -249,6 +249,7 @@ read & write access	filemanager	sk	Prístup na čítanie a zápis
 read access only	filemanager	sk	Prístup iba na čítanie
 readonly share link	filemanager	sk	Zdieľaný odkaz iba na čítanie
 recalculate	filemanager	sk	Prepočítať
+recalculate directory sizes	filemanager	sk	Prepočítať veľkosti adresárov
 recalculated %1 directories in %2 iterations and %3 seconds	filemanager	sk	Prepočítaných %1 priečinkov v %2 prechodov za %3 sekúnd
 reload	filemanager	sk	Znovunačítať
 rename of %1 to %2 failed!	filemanager	sk	Premenovanie %1 na %2 zlyhalo!

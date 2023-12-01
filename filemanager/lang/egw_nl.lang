@@ -219,14 +219,18 @@ preview %1	filemanager	nl	Afdrukvoorbeeld %1
 preview of %1	filemanager	nl	Afdrukvoorbeeld van %1
 projectmanager	filemanager	nl	Projectmanager
 properties saved.	filemanager	nl	Eigenschappen opgeslagen.
+protocol to use	filemanager	nl	Te gebruiken protocol
+protocols	filemanager	nl	Protocollen
 quick jump to	filemanager	nl	Snel springen naar
 quota	filemanager	nl	Quota
 quota exceeded	filemanager	nl	Quota overschreden
 read & write access	filemanager	nl	Lees en schrijf toegang
 read access only	filemanager	nl	Alleen lezen toegang
+readonly share link	filemanager	nl	Alleen-lezen Koppeling delen
 recalculate	filemanager	nl	Herbereken
+recalculate directory sizes	filemanager	nl	Mapgrootte herberekenen
 recalculated %1 directories in %2 iterations and %3 seconds	filemanager	nl	%1 mappen herberekend in %2 iteraties en %3 seconden
-reload	filemanager	nl	herladen
+reload	filemanager	nl	Herladen
 rename of %1 to %2 failed!	filemanager	nl	Hernoemen van %1 in %2 is mislukt!
 rename, change permissions or ownership	filemanager	nl	Hernoemen, wijzig toestemmingen of eigendom
 renamed %1 to %2	filemanager	nl	%1 hernoemd in %2
@@ -239,7 +243,7 @@ root access granted.	filemanager	nl	Root toegang verleend.
 root access stopped.	filemanager	nl	Root toegang ingetrokken.
 save %1	filemanager	nl	Bewaar %1
 save %1, and go back to file listing	filemanager	nl	Bewaar %1 en ga terug naar de bestandenlijst
-save as zip	filemanager	nl	Bewaar als Zip
+save as zip	filemanager	nl	Bewaar als ZIP
 save changes	filemanager	nl	Wijzigingen bewaren
 saved %1	filemanager	nl	%1 is bewaard
 saving properties failed!	filemanager	nl	Opslaan van eigenschappen is mislukt!

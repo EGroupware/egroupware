@@ -26,6 +26,7 @@
 2-factor-authentication for interactive login	admin	ru	Двухфакторная аутентификация для интерактивного входа в систему
 3 month	admin	ru	3 месяц
 6 month	admin	ru	6 месяц
+access token revoked.	admin	ru	Токен доступа отозван.
 accesslog and bruteforce defense	admin	ru	Журнал доступа и защита от взлома подбором
 account	admin	ru	Учетная запись
 account "%1" has no email address --> not notified!	admin	ru	Учётная запись «%1» не имеет E-mail адреса и поэтому не получает извещений!
@@ -43,6 +44,7 @@ account permissions	admin	ru	Разрешения учётной записи
 account preferences	admin	ru	Настройки учётной записи
 account-id's have to be integers!	admin	ru	Идентификаторы учётных записей должны быть целыми числами!
 acl added.	admin	ru	Права доступа ACL добавлены.
+acl csv export	admin	ru	Экспорт ACL CSV
 acl deleted.	admin	ru	Права доступа ACL удалены.
 acl manager	admin	ru	Менеджер ACL
 acl rights	common	ru	Права ACL
@@ -188,6 +190,9 @@ creates / updates user groups from csv file	admin	ru	Создание/обнов
 creates a new field	admin	ru	Создать новое поле
 crontab only (recomended)	admin	ru	Только crontab (рекомендуется)
 current hash	admin	ru	Действующий хэш
+custom 1	admin	ru	Пользовательский 1
+custom 2	admin	ru	Пользовательский 2
+custom 3	admin	ru	Пользовательский 3
 custom fields	admin	ru	Пользовательские поля
 custom translation	admin	ru	Изменённый перевод
 cyrus imap server	admin	ru	IMAP сервер Cyrus
@@ -432,6 +437,7 @@ last login from	admin	ru	Последнее подключение с
 last password change	admin	ru	Последнее изменение пароля
 last submission:	admin	ru	Последний вход:
 last time read	admin	ru	Время последнего просмотра
+last updated	admin	ru	Последнее обновление
 ldap accounts context	admin	ru	Контекст учётных записей LDAP
 ldap basedn	admin	ru	Начальный DN LDAP
 ldap default homedirectory prefix (e.g. /home for /home/username)	admin	ru	Префикс домашних каталогов в LDAP, устанавливаемый по умолчанию (например: /home для /home/username)
@@ -448,6 +454,7 @@ ldap server admin password	admin	ru	Пароль администратора с
 ldap server hostname or ip address	admin	ru	Имя сервера LDAP или его ip-адрес
 ldap settings	admin	ru	Настройки LDAP
 leave empty for no quota	admin	ru	Оставьте пустым для отключения квот
+leave empty to use oauth, if supported	admin	ru	Оставить пустым для использования OAuth, если поддерживается
 leave the category untouched and return back to the list	admin	ru	Оставить категорию нетронутой и вернуться назад к списку
 leave the group untouched and return back to the list	admin	ru	Оставить группу нетронутой и вернуться назад к списку
 leave unchanged	admin	ru	Оставить без изменений
@@ -660,7 +667,7 @@ sorry, that group name has already been taken.	admin	ru	Извините, так
 sorry, the above users are still a member of the group %1	admin	ru	Извините, указанные выше пользователи являются членами группы %1
 sorry, the follow users are still a member of the group %1	admin	ru	Извините, следующие пользователи являются членами группы %1
 sort the entries	admin	ru	Сортировать записи
-ssl	admin	ru	ssl
+ssl	admin	ru	SSL
 standard	admin	ru	Стандартный
 standard imap server	admin	ru	Стандартный IMAP сервер
 standard pop3 server	admin	ru	Стандартный POP3 сервер

@@ -9,8 +9,8 @@
 %1 is needed by: %2.	setup	it	%1 è richiesto da: %2
 %1 is set to %2, you will not be able to upload or attach files bigger then that!	setup	it	%1 è impostato a %2, non sarà possibile caricare o allegare file più grandi di questo limite!
 %1 is set to %2. this is not recommeded for a production system, as displayed error messages can contain passwords or other sensitive information!	setup	it	%1 è impostato a %2. NON è un valore raccomandabile per un sistema in produzione, poiché i messaggi di errore possono contenere password e/o altre informazioni sensibili!
-%1 users and %2 groups created, %3 errors	setup	it	%1 utenti e %2 gruppi creati, %3 errori
 %1 the configuration file.	setup	it	%1 il file di configurazione
+%1 users and %2 groups created, %3 errors	setup	it	%1 utenti e %2 gruppi creati, %3 errori
 '%1' is no valid domain name!	setup	it	'%1' non è un nome di dominio valido!
 '%1' is not allowed as %2. arguments of option %3 !!!	setup	it	'%1' non è permesso come %2. Argomenti dell'opzione %3!
 '%1' must be integer	setup	it	%1 deve essere un valore intero
@@ -233,21 +233,21 @@ install	setup	it	Installa
 install all	setup	it	Installa tutto
 install applications	setup	it	Installa Applicazioni
 install language	setup	it	Installa Lingue
-installed	setup	it	installato
+installed	setup	it	Installato
 instructions for creating the database in %1:	setup	it	Istruzioni per creare il database in %1:
 invalid argument '%1' !!!	setup	it	Argomento '%1' non valido
 invalid ip address	setup	it	Indirizzo IP errato
 invalid password	setup	it	Password errata
 is broken	setup	it	non funziona
 is disabled	setup	it	è disabilitato
-ldap accounts context	setup	it	contesto account LDAP
+ldap accounts context	setup	it	Contesto account LDAP
 ldap default homedirectory prefix (e.g. /home for /home/username)	setup	it	prefisso predefinito per le homedirectory LDAP (es. /home per /home/username)
-ldap default shell (e.g. /bin/bash)	setup	it	shell predefinita LDAP (es: /bin/bash)
-ldap encryption type	setup	it	tipo di cifratura LDAP
-ldap groups context	setup	it	contesto gruppi LDAP
-ldap host	setup	it	host LDAP
-ldap root password	setup	it	password di root LDAP
-ldap rootdn	setup	it	LDAP rootdn
+ldap default shell (e.g. /bin/bash)	setup	it	Shell predefinita LDAP (es: /bin/bash)
+ldap encryption type	setup	it	Tipo di cifratura LDAP
+ldap groups context	setup	it	Contesto gruppi LDAP
+ldap host	setup	it	Host LDAP
+ldap root password	setup	it	Password di root LDAP
+ldap rootdn	setup	it	LDAP Root DN
 login to mysql -	setup	it	Login a Mysql -
 logout	setup	it	Esci
 mail server login type	setup	it	Mail server login type
@@ -305,16 +305,24 @@ potential problem	setup	it	Problema Potenziale
 preferences	setup	it	Preferenze
 problem resolution	setup	it	Risoluzione del problema
 process	setup	it	Processo
-re-check my database	setup	it	ricontrolla il mio database
-re-check my installation	setup	it	ricontrolla la mia installazione
+re-check my database	setup	it	Ricontrolla il mio database
+re-check my installation	setup	it	Ricontrolla la mia installazione
 re-enter password	setup	it	Reinserisci la password
 read translations from	setup	it	Leggi traduzioni da
 readable by the webserver	setup	it	leggibile dal webserver
 really uninstall all applications	setup	it	DAVVERO Disinstalla tutte le applicazioni
-registered	setup	it	registrato
+registered	setup	it	Registrato
+regular expression to filter by dn	setup	it	Espressione regolare per filtrare in base al DN
+rejected lines	setup	it	Linee rifiutate
 remove	setup	it	Rimuovi
 remove all	setup	it	Rimuovi tutto
+rename	setup	it	Rinominare
+replace username and email	setup	it	Sostituire il nome utente e l'e-mail
+replace username and keep email	setup	it	Sostituire il nome utente e mantenere l'email
+required to change passwords	setup	it	richiesto di cambiare le password
+requires "reset password" privilege, to change passwords!	setup	it	Richiede il privilegio "Reset Password" per cambiare le password!
 requires reinstall or manual repair	setup	it	Richiede reinstallazione o riparazione manuale
+requires saml optional on login page and user to specify username and password	setup	it	Richiede SAML opzionale nella pagina di login e l'utente deve specificare nome utente e password.
 requires upgrade	setup	it	Richiede aggiornamento
 resolve	setup	it	Risolvi
 return to setup	setup	it	Ritorna al Setup

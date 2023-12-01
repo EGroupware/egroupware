@@ -40,6 +40,7 @@
 access by	admin	ja	アクセスするユーザ/グループ
 access control	admin	ja	アクセス制御
 access to %1 data by others	admin	ja	他者が「%1」のデータにアクセス可能
+access token revoked.	admin	ja	アクセストークンが失効しました。
 accesslog and bruteforce defense	admin	ja	AccessLog and BruteForce defense
 account	admin	ja	アカウント
 account "%1" has no email address --> not notified!	admin	ja	アカウント "%1" のメール・アドレスが未定義です。通知が送信されません!
@@ -227,6 +228,9 @@ creates / updates user groups from csv file	admin	ja	CSV ファイルからグ�
 creates a new field	admin	ja	新規項目を作成します
 crontab only (recomended)	admin	ja	crontab のみ（推奨）
 current hash	admin	ja	現在のハッシュ値:
+custom 1	admin	ja	カスタム1
+custom 2	admin	ja	カスタム2
+custom 3	admin	ja	カスタム3
 custom fields	admin	ja	カスタム項目
 custom translation	admin	ja	カスタム翻訳
 cyrus imap server	admin	ja	Cyrus IMAP サーバー
@@ -501,13 +505,14 @@ kill these sessions	admin	ja	セッションを切断
 kill this session	admin	ja	セッションを切断
 languages	admin	ja	言語
 last %1 logins	admin	ja	直近のログイン（%1）
-last %1 logins for %2	admin	ja	Last %1 logins for %2
+last %1 logins for %2	admin	ja	%2 の最後のログイン %1
 last action	admin	ja	最終アクション
 last login	admin	ja	最終ログイン
 last login from	admin	ja	最終ログインIP
 last password change	admin	ja	最終パスワード変更日時
 last submission:	admin	ja	最終送信:
-last time read	admin	ja	Last time read
+last time read	admin	ja	最終読み取り時間
+last updated	admin	ja	最終更新日
 ldap accounts context	admin	ja	LDAP アカウント・コンテキスト
 ldap basedn	admin	ja	LDAP basedn
 ldap default homedirectory prefix (e.g. /home for /home/username)	admin	ja	既定のホーム・ディレクトリ・プレフィックス<br /> （例: プリフィックスが /home ならば /home/uername となります）
@@ -523,7 +528,8 @@ ldap server admin dn	admin	ja	LDAP サーバー admin DN
 ldap server admin password	admin	ja	LDAP サーバー管理者パスワード
 ldap server hostname or ip address	admin	ja	LDAP サーバーのホスト名/IPアドレス
 ldap settings	admin	ja	LDAP 設定
-leave empty for no quota	admin	ja	Leave empty for no quota
+leave empty for no quota	admin	ja	クォータを使用しない場合は空のままにしてください。
+leave empty to use oauth, if supported	admin	ja	OAuthを使用する場合は空のままにします。
 leave the category untouched and return back to the list	admin	ja	Leave the category untouched and return back to the list.
 leave the group untouched and return back to the list	admin	ja	Leave the group untouched and return back to the list.
 leave unchanged	admin	ja	変更しない

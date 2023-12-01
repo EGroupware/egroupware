@@ -1,9 +1,11 @@
-%1 - %2 of %3 user accounts	admin	ko	** %1 - %3 의 %2 사용자 계정
-%1 - %2 of %3 user groups	admin	ko	** %1 - %3 의 %2 유저 그룹
-%1 not found or not executable !!!	admin	ko	** %1 , 찾거나 실행할수 없습니다!!
+%1 - %2 of %3 user accounts	admin	ko	%1 - %3 의 %2 사용자 계정
+%1 - %2 of %3 user groups	admin	ko	%1 - %3 의 %2 유저 그룹
+%1 not found or not executable !!!	admin	ko	%1 , 찾거나 실행할수 없습니다!!
 (stored password will not be shown here)	admin	ko	(저장된 패스워드는 여기에 보이지 않습니다)
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	ko	새 응용프로그램을 설치하기 위해서 <br><a href="setup/" target="setup">설정</a>[응용프로그램 관리]!!!)
+access token revoked.	admin	ko	액세스 토큰이 해지되었습니다.
 accesslog and bruteforce defense	admin	ko	접근 로그와 브루탈포스 방어
+account	admin	ko	계정
 account active	admin	ko	계정 활정화
 account has been created	common	ko	계정이 생성되었습니다
 account has been deleted	common	ko	계정이 삭제되었습니다
@@ -11,6 +13,7 @@ account has been updated	common	ko	계정이 갱신되었습니다
 account list	admin	ko	계정 목록
 account permissions	admin	ko	계정 권한
 account preferences	admin	ko	계정 환경설정
+acl csv export	admin	ko	ACL CSV 내보내기
 acl manager	admin	ko	ACL 메니저
 acl rights	common	ko	ACL 권한
 action	admin	ko	액션
@@ -25,7 +28,7 @@ add account	admin	ko	계정 추가
 add application	admin	ko	응용프로그램 추가
 add auto-created users to this group ('default' will be attempted if this is empty.)	admin	ko	이 그룹에 자동-생성 사용자를 추가 (이 란이 비어있으면 '기본'이 시도됨)
 add global category	admin	ko	전역 카테고리 추가
-add global category for %1	admin	ko	** %1의 전역 카테고리 추가 (Add global category for %1)
+add global category for %1	admin	ko	%1의 전역 카테고리 추가 (Add global category for %1)
 add group	admin	ko	그룹 추가
 add new account	admin	ko	새 계정 추가
 add new application	admin	ko	새 응용프로그램 추가
@@ -34,9 +37,10 @@ add sub-category	admin	ko	하위-카테고리 추가
 admin email	admin	ko	관리자 이메일
 admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	ko	블럭되면 알림 메일 발송될 관리자 이메일 주소들 (컴마구분,비어있으면 안알림)
 admin name	admin	ko	관리자 이름
+admin password	admin	ko	관리자 암호
+admin username	admin	ko	관리사용자 이름
 administration	admin	ko	관리자
 admins	admin	ko	관리자
-after how many unsuccessful attempts to login, an account should be blocked (default 15) ?	admin	ko	접속 시도할때 몇번 실패하면 계정을 막겠습니까? ( 기본 3번 )
 after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	ko	접속 시도할때 몇번 실패하면 IP를 막겠습니까? ( 기본 3번 )
 all applications	admin	ko	모든 응용프로그램
 all categories	admin	ko	모든 카테고리
@@ -80,15 +84,19 @@ change acl rights	admin	ko	ACL 권한 변경
 change config settings	admin	ko	구성 설정 변경
 change login screen message	admin	ko	주 화면 메세지 변경
 check ip address of all sessions	admin	ko	모든 세션에 ip 주소 확인
-check items to <b>%1</b> to %2 for %3	admin	ko	** %3의 항목을 <b>%1</b>에서 %2로 체크
+check items to <b>%1</b> to %2 for %3	admin	ko	%3의 항목을 <b>%1</b>에서 %2로 체크
 click to select a color	admin	ko	클릭해서 색깔을 선택
 color	admin	ko	색
+continue	admin	ko	계속
 country	admin	ko	국가
 country selection	admin	ko	국가 선택
 create group	admin	ko	새 그룹 만들기
 created	admin	ko	생성됨
 creates a new field	admin	ko	새 필드 만들기
 crontab only (recomended)	admin	ko	크론탭 만 ( 추천 )
+custom 1	admin	ko	사용자 지정 1
+custom 2	admin	ko	사용자 지정 2
+custom 3	admin	ko	사용자 지정 3
 custom fields	admin	ko	사용자정의 필드
 data	admin	ko	데이터
 day	admin	ko	날
@@ -124,7 +132,7 @@ deny access to peer servers	admin	ko	거부된 접근을 피어 서버로
 deny access to phpinfo	admin	ko	거부된 접근을 phpinfo로
 deny access to site configuration	admin	ko	거부된 접근을 사이트 구성으로
 deny access to user accounts	admin	ko	거부된 접근을 사용자 계정으로
-deny all users access to grant other users access to their entries ?	admin	ko	** 허락된 다른 사용자들이 자신의 항목에 접근하는 것 이외에 다른 모든 사용자의 접근을 막는다
+deny all users access to grant other users access to their entries ?	admin	ko	허락된 다른 사용자들이 자신의 항목에 접근하는 것 이외에 다른 모든 사용자의 접근을 막는다
 description can not exceed 255 characters in length !	admin	ko	설명은 255 글자길이를 초과 할수 없습니다!
 disable "auto completion" of the login form	admin	ko	접속시 "자동완성" 기능 비활성화
 disable wysiwyg-editor	admin	ko	위지웍-편집기 비활성화
@@ -157,13 +165,12 @@ enter the background color for the site title	admin	ko	사이트 제목의 배�
 enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	ko	임시 파일의 완전경로 입력<br>예:/tmp,C:\TEMP
 enter the full path for users and group files.<br>examples: /files, e:\files	admin	ko	사용자와 그룹 파일의 완전경로 입력<br>예:/files ,E:\FILES
 enter the hostname of the machine on which this server is running	admin	ko	이 서버의 호스트이름 입력
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	ko	EGroupware의 URL의 위치를 입력.<br>예: http://www.domain.com/egroupware &nbsp; 이나 &nbsp; /egroupware<br><b>마지막에는 /(슬래쉬)</b>를 붙히지 말것
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	ko	EGroupware의 URL의 위치를 입력.<br>예: http://www.domain.com/egroupware   이나   /egroupware<br><b>마지막에는 /(슬래쉬)</b>를 붙히지 말것
 enter the search string. to show all entries, empty this field and press the submit button again	admin	ko	검색할 문자열을 입력. 모든 항목을 보기위해선, 이 필드를 비우고 보내기(Submit) 버튼을 다시 누르세요
 enter the site password for peer servers	admin	ko	피어서버의 사이트 암호 입력
 enter the site username for peer servers	admin	ko	피어서버의 사이트 사용자이름 입력
 enter the title for your site	admin	ko	귀하의 사이트 제목을 입력
 enter the title of your logo	admin	ko	귀하의 로고의 제목을 입력
-enter the url or filename (in api/templates/default/images) of your logo	admin	ko	귀하의 로고의 URL 이나 파일이름을 입력 ( api/templates/default/images 안에 )
 enter the url where your logo should link to	admin	ko	귀하의 로고가 링크될 URL 을 입력
 enter your default ftp server	admin	ko	기본 FTP 서버주소 입력
 enter your default mail domain ( from: user@domain )	admin	ko	기본 메일 도메인을 입력 ( From : 유저@도메인 )
@@ -174,6 +181,7 @@ enter your smtp server port	admin	ko	SMTP 서버 포트 입력
 error canceling timer, maybe there's none set !!!	admin	ko	타이머를 취소하는데 오류발생,  설정안되어 있을수도 있습니다!!!
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	ko	타이머를 설정오류 발생, 문법이 틀렸거나 이미 작동중일 수 있습니다!!!
 error: %1 not found or other error !!!	admin	ko	오류 : %1을 찾을수 없거나 다른 오류입니다!!!
+event details follow	admin	ko	다음은 이벤트-설명
 expires	admin	ko	만료
 failed to change password.	admin	ko	암호를 바꾸는데 실패했습니다. 관리자에게 문의하세요
 fallback (after each pageview)	admin	ko	폴백 (각 페이지보기 이후)
@@ -193,8 +201,9 @@ group has been updated	common	ko	그룹이 갱신되었습니다
 group list	admin	ko	그룹 리스트
 group manager	admin	ko	그룹 관리자
 group name	admin	ko	그룹이름
-hide php information	admin	ko	php 정보를 숨김
+hide php information	admin	ko	PHP 정보를 숨김
 home directory	admin	ko	홈 디렉토리
+home screen message	admin	ko	주 화면 메세지
 host information	admin	ko	호스트 정보
 hour<br>(0-23)	admin	ko	시간<br>(0-23)
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	ko	접근 로그에 항목을 삭제되기까지 일간 유지할까요 (기본 90) ?
@@ -212,11 +221,12 @@ ip	admin	ko	IP
 jobs	admin	ko	작업(Jobs)
 kill	admin	ko	종료
 kill session	admin	ko	세션 종료
-last %1 logins	admin	ko	** Last %1 logins
-last %1 logins for %2	admin	ko	** Last %1 logins for %2
+last %1 logins	admin	ko	마지막 %1 로그인
+last %1 logins for %2	admin	ko	2에 대한 마지막 %1 로그인
 last login	admin	ko	마지막 접속
 last login from	admin	ko	마지막 접속 위치는
 last time read	admin	ko	마지막 읽은 시각
+last updated	admin	ko	마지막 업데이트
 ldap accounts context	admin	ko	LDAP 계정 컨텍스트
 ldap default homedirectory prefix (e.g. /home for /home/username)	admin	ko	LDAP 기본 홈디렉토리 접두어 (예:/home/username 의 /home)
 ldap default shell (e.g. /bin/bash)	admin	ko	LDAP 기본 쉘 (예 /bin/bash)
@@ -225,6 +235,8 @@ ldap groups context	admin	ko	LDAP 그룹 컨텍스트
 ldap host	admin	ko	LDAP 호스트
 ldap root password	admin	ko	LDAP 최고관리자 암호
 ldap rootdn	admin	ko	LDAP rootdn
+leave empty for no quota	admin	ko	할당량 없음을 위해 비워 두기
+leave empty to use oauth, if supported	admin	ko	지원되는 경우 OAuth를 사용하려면 비워 둡니다.
 leave the category untouched and return back to the list	admin	ko	카테고리를 손대지 않고 목록으로 되돌아 가기
 leave the group untouched and return back to the list	admin	ko	그룹을 손대지 않고 목록으로 되돌아 가기
 leave without saveing the entry	admin	ko	엔트리를 저장없이 나가기
@@ -239,7 +251,6 @@ login shell	admin	ko	로그인 쉘
 login time	admin	ko	접속 시간
 loginid	admin	ko	접속ID
 mail settings	admin	ko	메일 설정
-home screen message	admin	ko	주 화면 메세지
 manager	admin	ko	관리자
 maximum account id (e.g. 65535 or 1000000)	admin	ko	최대 계정ID  (예 65535 나 1000000)
 maximum entries in click path history	admin	ko	경로 기록의 최대 항목
@@ -267,7 +278,7 @@ note: ssl available only if php is compiled with curl support	admin	ko	주의: P
 one month	admin	ko	1개월
 one week	admin	ko	1주
 outbound	admin	ko	아웃바운드
-passthrough	admin	ko	** 통과(passthrough)
+passthrough	admin	ko	통과(passthrough)
 password for smtp-authentication	admin	ko	SMTP-인증 암호
 path information	admin	ko	경로 정보
 peer server list	admin	ko	피어서버 목록
@@ -290,7 +301,6 @@ register application hooks	admin	ko	응용프로그램 훅(hooks) 등록
 remove	admin	ko	삭제
 remove all users from this group	admin	ko	이 그룹의 모든 사용자를 삭제
 remove all users from this group ?	admin	ko	이 그룹의 모든 사용자를 삭제?
-return to view account	admin	ko	계정 보기로 돌아가기
 rows	admin	ko	줄
 run asynchronous services	admin	ko	비동기 서비스 실행
 save the category	admin	ko	카테고리 저장
@@ -330,7 +340,7 @@ sorry, that group name has already been taken.	admin	ko	죄송합니다, 입력�
 sorry, the above users are still a member of the group %1	admin	ko	죄송합니다 위의 사용자는 아직 %1 그룹의 구성원입니다.
 sorry, the follow users are still a member of the group %1	admin	ko	죄송합니다 다음의 사용자는 아직 %1 그룹의 구성원입니다.
 sort the entries	admin	ko	항목들을 정렬
-ssl	admin	ko	ssl
+ssl	admin	ko	SSL
 standard	admin	ko	기본
 start	admin	ko	시작
 start testjob!	admin	ko	테스트작업(TestJob) 시작
@@ -360,7 +370,7 @@ timeout for application session data in seconds (default 86400 = 1 day)	admin	ko
 timeout for sessions in seconds (default 14400 = 4 hours)	admin	ko	세션 타임아웃 초 (기본 14400 = 4시간)
 times	admin	ko	시간
 top	admin	ko	상위
-total records	admin	ko	Total records
+total records	admin	ko	총 기록
 translation	admin	ko	번역
 true	admin	ko	참
 trust level	admin	ko	신용등급
@@ -369,6 +379,7 @@ two weeks	admin	ko	보름
 under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	ko	윈도우에서는 비동기 서비스를 설치하기위해 %1수동으로%2 하셔야 하거나 fallback 모드여야 합니다. fallback은 작업이 각 페이지-뷰를 마친후 체크되는 의미입니다!!!
 updated	admin	ko	갱신됨
 use cookies to pass sessionid	admin	ko	sessionid 를 전달하기 위해 쿠키 사용
+use default	admin	ko	기본 사용
 use pure html compliant code (not fully working yet)	admin	ko	순수 HTML 호환 코드 사용 (아직 완전하지 않습니다)
 use theme	admin	ko	테마 사용
 user accounts	admin	ko	사용자 계정
@@ -384,8 +395,8 @@ view error log	admin	ko	오류 기록 보기
 view sessions	admin	ko	세션 보기
 view this user	admin	ko	이 사용자를보기
 view user account	admin	ko	사용자 계정 보기
-who would you like to transfer all records owned by the deleted user to?	admin	ko	** 누구에게 삭제된 사용자 소유의 모든 레코드를 전송 하시겠습니까?
-would you like egroupware to cache the egw info array ?	admin	ko	EGroupware가 egw info 배열을 캐쉬하도록 하겠습니까?
+who would you like to transfer all records owned by the deleted user to?	admin	ko	누구에게 삭제된 사용자 소유의 모든 레코드를 전송 하시겠습니까?
+would you like egroupware to cache the egw info array ?	admin	ko	EGroupware가 info 배열을 캐쉬하도록 하겠습니까?
 would you like egroupware to check for a new version<br>when admins login ?	admin	ko	관리자가 접속 할때<br>EGroupware가 새버전을 확인하겠습니까?
 would you like egroupware to check for new application versions when admins login ?	admin	ko	관리자가 접속 할때 EGroupware가 새 응용프로그램 버전을 확인하시겠습니까?
 would you like to automaticaly load new langfiles (at login-time) ?	admin	ko	새로운 언어 파일을 자동적으로 읽겠습니까? (접속 할때)
@@ -402,12 +413,3 @@ you must enter an application title.	admin	ko	응용프로그램 제목을 입�
 you must select a file type	admin	ko	파일 타입을 선택해야 합니다.
 you will need to remove the subcategories before you can delete this category	admin	ko	이 카테고리를 삭제하기 전에 하위카테고리를 삭제해야 합니다!
 your session could not be verified.	admin	ko	세션이 검증되지 않았습니다
-admin password	admin	ko	관리자 암호
-admin username	admin	ko	관리사용자 이름
-continue	admin	ko	계속
-default	admin	ko	기본
-event details follow	admin	ko	** 다음은 이벤트-설명
-mail settings	admin	ko	메일 설정
-remove	admin	ko	삭제
-standard	admin	ko	기본
-use default	admin	ko	기본 사용

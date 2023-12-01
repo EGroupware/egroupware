@@ -105,13 +105,22 @@ please select a file to delete.	filemanager	da	Vælg venligst filen som skal sle
 preview	filemanager	da	Snig vis
 preview %1	filemanager	da	Snig kik %1
 preview of %1	filemanager	da	Snig kik af %1
+protocol to use	filemanager	da	Protokol til brug
+protocols	filemanager	da	Protokoller
 quick jump to	filemanager	da	Hop til
 quota	filemanager	da	Kvote
 quota exceeded	filemanager	da	Kvote overskredet
+read & write access	filemanager	da	Læse- og skriveadgang
+read access only	filemanager	da	Kun læseadgang
+readonly share link	filemanager	da	Kun læseadgang Del link
 recalculate	filemanager	da	Genberegning
+recalculate directory sizes	filemanager	da	Genberegning af mappestørrelser
 recalculated %1 directories in %2 iterations and %3 seconds	filemanager	da	Genberegnede %1 mapper i %2 iterationer og %3 sekunder
-reload	filemanager	da	opdater
+reload	filemanager	da	Opdater
+rename of %1 to %2 failed!	filemanager	da	Omdøbning af %1 til %2 mislykkedes!
+rename, change permissions or ownership	filemanager	da	Omdøb, skift tilladelser eller ejerskab
 renamed %1 to %2	filemanager	da	Omdøbte %1 til %2
+renamed %1 to %2.	filemanager	da	Omdøbt %1 til %2
 replaced %1	filemanager	da	%1 erstattet
 save %1	filemanager	da	Gem %1
 save %1, and go back to file listing	filemanager	da	Gem %1, og gå tilbage til fil visning

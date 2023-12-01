@@ -15,8 +15,8 @@
 %1 not allowed to create in univention.	setup	sk	Nie je dovolené vytvoriť %1 v Univention.
 %1 password set in %2.	setup	sk	Heslo %1 nastavené v %2.
 %1 passwords updated, %3 errors	setup	sk	Aktualizovaných %1 hesiel, %3 chýb.
-%1 users and %2 groups created, %3 errors	setup	sk	Bolo vytvorených %1 používateľov a %2 skupín, %3 chýb
 %1 the configuration file.	setup	sk	%1 konfiguračný súbor.
+%1 users and %2 groups created, %3 errors	setup	sk	Bolo vytvorených %1 používateľov a %2 skupín, %3 chýb
 '%1' is no valid domain name!	setup	sk	'%1' nie je platný názov domény!
 '%1' is not allowed as %2. arguments of option %3 !!!	setup	sk	'%1' nie je povolené ako %2. argumenty k voľbe %3 !!!
 '%1' must be integer	setup	sk	%1 musí byť celočíselná hodnota.
@@ -51,7 +51,7 @@ admin user	setup	sk	Správca - používateľ
 admin user for header manager	setup	sk	Správcov používateľský účet do Správy hlavičiek
 admin username	setup	sk	Správcovo používateľské meno
 admins	setup	sk	Správcovia
-ads dn "%1" not found!	setup	sk	Ads dn "%1" sa NEnašlo!
+ads dn "%1" not found!	setup	sk	ADS DN "%1" sa NEnašlo!
 after backing up your tables first.	setup	sk	Až po zálohovaní Vašich tabuliek (databáz).
 after retrieving the file, put it into place as the header.inc.php.  then, click "continue".	setup	sk	Po získaní súboru, uložte ho na miesto header.inc.php a kliknite na "pokračovať".
 all applications	setup	sk	všetky aplikácie
@@ -301,17 +301,17 @@ enter your http proxy server	setup	sk	Zadajte váš HTTP proxy server
 enter your http proxy server password	setup	sk	Zadajte heslo vášho HTTP proxy servera
 enter your http proxy server port	setup	sk	Zadajte port vášho HTTP proxy servera
 enter your http proxy server username	setup	sk	Zadajte používateľské meno vášho HTTP proxy servera
-error deleting "dn=%1"!	setup	sk	Chyba pri odstraňovaní "dn=%1"!
+error deleting "dn=%1"!	setup	sk	Chyba pri odstraňovaní "DN=%1"!
 error dropping user!	setup	sk	Chyba pri odstraňovaní používateľa!
 error in admin-creation !!!	setup	sk	Chyba pri vytváraní správcu!!!
 error in group-creation !!!	setup	sk	Chyba pri vytváraní skupiny!!!
-error listing "dn=%1"!	setup	sk	Chyba pri listovaní "dn=%1"!
-error modifying dn=%1: %2='%3'!	setup	sk	Chyba pri menení v dn=%1: %2='%3'!
-error searching "dn=%1" for "%2"!	setup	sk	Chyba pri hľadaní "%2" v "dn=%1"!
+error listing "dn=%1"!	setup	sk	Chyba pri listovaní "DN=%1"!
+error modifying dn=%1: %2='%3'!	setup	sk	Chyba pri menení v DN=%1: %2='%3'!
+error searching "dn=%1" for "%2"!	setup	sk	Chyba pri hľadaní "%2" v "DN=%1"!
 every	setup	sk	Každý
 export has been completed!	setup	sk	Export bol dokončený!
 failed to mount backup directory!	setup	sk	Pripojenie zálohovacieho priečinka zlyhalo!
-failed updating user "%1" dn="%2"!	setup	sk	Nepodarilo sa aktualizovať používateľa  "%1" dn="%2"!
+failed updating user "%1" dn="%2"!	setup	sk	Nepodarilo sa aktualizovať používateľa  "%1" DN="%2"!
 failed writing configuration file header.inc.php, check the permissions !!!	setup	sk	Zápis do konfiguračného súboru header.inc.php sa NEPODARIL, skontrolujte prístupové práva !!!
 false	setup	sk	NIE
 file	setup	sk	Súbor
@@ -407,7 +407,7 @@ ldap groups context	setup	sk	LDAP kontext skupín
 ldap host	setup	sk	LDAP hostiteľ
 ldap import	setup	sk	LDAP Import
 ldap root password	setup	sk	LDAP root heslo
-ldap rootdn	setup	sk	LDAP koreňový dn
+ldap rootdn	setup	sk	LDAP koreňový DN
 ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setup	sk	LDAP vyhľadávací filter pre účty, predvolený: "(uid=%user)", %domain=EGw-domain
 leave empty to keep current.	setup	sk	Ponechajte prázdne ak chcete zachovať súčasný stav.
 leave empty to use default	setup	sk	Ponechajte prázdne ak chcete použiť predvolenú hodnotu
@@ -542,9 +542,10 @@ re-enter password	setup	sk	Znovuzadajte heslo
 read translations from	setup	sk	Načítať preklady z
 readable by the webserver	setup	sk	Čitateľné pre webserver
 really uninstall all applications	setup	sk	SKUTOČNE odinštalovať všetky aplikácie
-refusing to delete dn "%1"!	setup	sk	Odmietam odstrániť dn "%1"!
+refusing to delete dn "%1"!	setup	sk	Odmietam odstrániť DN "%1"!
 register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	sk	register_globals sú zapnuté, EGroupware to NEvyžaduje a je celkovo omnoho bezpečnejšie VYPNÚŤ ich
 registered	setup	sk	Registrované
+regular expression to filter by dn	setup	sk	Regulárny výraz na filtrovanie podľa DN
 rejected lines	setup	sk	Odmietnuté riadky
 remove	setup	sk	Odstrániť
 remove all	setup	sk	Odstrániť všetko
@@ -722,7 +723,7 @@ use pure html compliant code (not fully working yet)	setup	sk	Používať čist�
 use space to separate multiple	setup	sk	na oddelenie položiek použiť medzerník
 use tls or ssl encryption	setup	sk	Použiť šifrovanie TLS alebo SSL
 user	setup	sk	Používateľ
-user "%1" dn="%2" successful updated.	setup	sk	Používateľ "%1" dn="%2" úspešne aktualizovaný.
+user "%1" dn="%2" successful updated.	setup	sk	Používateľ "%1" DN="%2" úspešne aktualizovaný.
 user "%1" not found!	setup	sk	Používateľ  "%1" sa nenašiel!
 user account prefix	setup	sk	Predpona používateľského účtu
 user for smtp-authentication (leave it empty if no auth required)	setup	sk	Používateľ pre SMTP-autentifikáciu (ak netreba, nechajte prázdne)

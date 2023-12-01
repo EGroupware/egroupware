@@ -209,12 +209,16 @@ preview %1	filemanager	fi	Esikatsele %1
 preview of %1	filemanager	fi	%1 esikatselu
 projectmanager	filemanager	fi	Projektinhallinta
 properties saved.	filemanager	fi	Asetukset tallennettu.
+protocol to use	filemanager	fi	Käytettävä protokolla
+protocols	filemanager	fi	Pöytäkirjat
 quick jump to	filemanager	fi	Mene
 quota	filemanager	fi	Kiintiö
 quota exceeded	filemanager	fi	Kiintiö ylitetty
 read & write access	filemanager	fi	Luku- ja kirjoitusoikeudet (ACL)
 read access only	filemanager	fi	Ainoastaan lukuoikeus
+readonly share link	filemanager	fi	Vain lukuoikeus Jaa linkki
 recalculate	filemanager	fi	Laske uudelleen
+recalculate directory sizes	filemanager	fi	Hakemiston koon uudelleenlaskenta
 recalculated %1 directories in %2 iterations and %3 seconds	filemanager	fi	Laskettiin uudelleen %1 hakemistoa %2 iteraatiossa ja %3 sekunnissa.
 reload	filemanager	fi	Lataa uudelleen
 rename of %1 to %2 failed!	filemanager	fi	%1:n uudelleennimeäminen %1:ksi epäonnistui!
@@ -229,6 +233,7 @@ root access granted.	filemanager	fi	Root -access myönnetty.
 root access stopped.	filemanager	fi	Root -access katkaistu.
 save %1	filemanager	fi	Tallenna %1
 save %1, and go back to file listing	filemanager	fi	Tallenna %1 ja palaa hakemistoon
+save as zip	filemanager	fi	Tallenna ZIP-muodossa
 save changes	filemanager	fi	Tallenna muutokset
 saved %1	filemanager	fi	Tallennettiin %1
 saving properties failed!	filemanager	fi	Asetusten tallentaminen epäonnistui!

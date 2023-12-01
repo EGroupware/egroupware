@@ -120,16 +120,27 @@ preview	filemanager	sv	Förhandsgranska
 preview %1	filemanager	sv	Förhandsgranska %1
 preview of %1	filemanager	sv	Förhandsgransking av %1
 projectmanager	filemanager	sv	Projekthantering
+protocol to use	filemanager	sv	Protokoll att använda
+protocols	filemanager	sv	Protokoll
 quick jump to	filemanager	sv	Hoppa till
 quota	filemanager	sv	Kvot
 quota exceeded	filemanager	sv	Kvoten har överskridits
+read & write access	filemanager	sv	Läs- och skrivåtkomst
+read access only	filemanager	sv	Endast läsbehörighet
+readonly share link	filemanager	sv	Endast läsning Dela länk
 recalculate	filemanager	sv	Räkna om
+recalculate directory sizes	filemanager	sv	Beräkna katalogstorlekar på nytt
 recalculated %1 directories in %2 iterations and %3 seconds	filemanager	sv	Omräknade %1 kataloger i %2 iterationer och %3 sekunder
 reload	filemanager	sv	Ladda om
+rename of %1 to %2 failed!	filemanager	sv	Byte av namn från %1 till %2 misslyckades!
+rename, change permissions or ownership	filemanager	sv	Byt namn, ändra behörigheter eller ägande
 renamed %1 to %2	filemanager	sv	Döpte om %1 till %2
+renamed %1 to %2.	filemanager	sv	Döpte om %1 till %2
 replaced %1	filemanager	sv	Ersatte %2
+replacements for inserting entries into documents	filemanager	sv	Ersättare för att infoga poster i dokument
 save %1	filemanager	sv	Spara %1
 save %1, and go back to file listing	filemanager	sv	Spara %1 och gå tillbaka till fillistan
+save as zip	filemanager	sv	Spara som ZIP
 save changes	filemanager	sv	Spara ändringar
 saved %1	filemanager	sv	Sparade %1
 search for '%1'	filemanager	sv	Sök efter '%1'

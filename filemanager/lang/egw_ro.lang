@@ -63,8 +63,21 @@ mountpoints	filemanager	ro	Puncte de montare
 notebookbar	filemanager	ro	Tabulat
 password for webdav and smb, use $pass for password of logged in user	filemanager	ro	Parola pentru WebDAV și SMB, utilizați $pass pentru parola utilizatorului conectat
 path and query-parameters, smb: share and optional path (with /)	filemanager	ro	Path și parametrii de interogare, SMB: share și calea opțională (cu /)
+protocol to use	filemanager	ro	Protocolul de utilizat
+protocols	filemanager	ro	Protocoale
 quota	filemanager	ro	Cota
 quota exceeded	filemanager	ro	Cotă depășită
+read & write access	filemanager	ro	Acces la citire și scriere
+read access only	filemanager	ro	Numai acces la citire
+readonly share link	filemanager	ro	Readonly Readonly Share link
 recalculate	filemanager	ro	Recalculați
+recalculate directory sizes	filemanager	ro	Recalculați dimensiunile directoarelor
 recalculated %1 directories in %2 iterations and %3 seconds	filemanager	ro	Recalculat %1 directoare în %2 iterații și %3 secunde
+reload	filemanager	ro	Reîncărcare
+rename of %1 to %2 failed!	filemanager	ro	Redenumirea lui %1 în %2 a eșuat!
+rename, change permissions or ownership	filemanager	ro	Redenumiți, modificați permisiunile sau proprietatea
+renamed %1 to %2	filemanager	ro	Redenumit %1 în %2
+renamed %1 to %2.	filemanager	ro	Redenumit %1 în %2
+replacements for inserting entries into documents	filemanager	ro	Înlocuitori pentru inserarea de intrări în documente
+save as zip	filemanager	ro	Salvați ca ZIP
 you need to become root, to enable or disable versioning on a directory!	filemanager	ro	Trebuie să deveniți superuser, pentru a activa sau dezactiva versionarea pe un dosar!

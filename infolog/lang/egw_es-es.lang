@@ -135,7 +135,7 @@ date completed	infolog	es-es	Fecha completada
 date completed (leave it empty to have it automatic set if status is done or billed)	infolog	es-es	Fecha completada (dejar en blanco para tenerlo automático si el estado es hecho o facturado)
 datecreated	infolog	es-es	fecha de creación
 dates, status, access	infolog	es-es	Fechas, estado, acceso
-days	infolog	es-es	días
+days	infolog	es-es	Días
 default category for new infolog entries	infolog	es-es	Categoría predeterminada para nuevas entradas del Registro
 default document to insert entries	infolog	es-es	Documento predeterminado para insertar entradas
 default filter for infolog	infolog	es-es	Filtro predeterminado para el Registro
@@ -281,16 +281,18 @@ limit list to last n month, if ordering by last-modified and not searching.	admi
 limit number of description lines (default 5, 0 for no limit)	infolog	es-es	Limitar el número de líneas de la descripción (predeterminado: 5, 0 para ilimitadas)
 limit width of description column ((effective only if lines limit is set), 0 for no limit)	infolog	es-es	Limitar el ancho de la columna de la descripción (efectivo sólo si hay límite para las líneas, 0 para sin límites)
 link	infolog	es-es	Enlace
-linked to %1	infolog	es-es	enlazado a %1
+linked to %1	infolog	es-es	Enlazado a %1
 links	infolog	es-es	Enlaces
 links and attached files	infolog	es-es	Enlaces y ficheros adjuntos
 links of this entry	infolog	es-es	Enlaces de la entrada
 links to specified application.  example: {{links/infolog}}	infolog	es-es	Enlaces a la aplicación especificada. Ejemplo: {{links/infolog}}
+links wrapped in an href tag with download link	infolog	es-es	Enlaces envueltos en una etiqueta HREF con enlace de descarga
 list all categories	infolog	es-es	Lista de todas las categorías
 list of files linked to the current record	infolog	es-es	Lista de ficheros vinculados al registro actual
+load custom fields in index, if filtered by selected types (eg. to display them in a type-specific index template)	infolog	es-es	Cargar campos personalizados en el índice, si se filtran por tipos seleccionados (por ejemplo, para mostrarlos en una plantilla de índice específica de un tipo)
 location	infolog	es-es	Ubicación
-longer textual description	infolog	es-es	descripción larga de la entrada
-low	infolog	es-es	baja
+longer textual description	infolog	es-es	Descripción larga de la entrada
+low	infolog	es-es	Baja
 manage mapping	infolog	es-es	Administrar los mapeos
 max length of the input [, length of the inputfield (optional)]	infolog	es-es	longitud máxima de la entrada [, longitud del campo de entrada (opcional)]
 modifier	infolog	es-es	Modificador
@@ -301,28 +303,29 @@ name of new type to create	infolog	es-es	Nombre del nuevo tipo para crear
 never hide search and filters	infolog	es-es	No ocultar búsquedas y filtros
 new %1	infolog	es-es	Nuevo %1
 new %1 created by %2 at %3	infolog	es-es	Nuevo %1 creado por %2 en %3
-new name	infolog	es-es	nuevo nombre
+new name	infolog	es-es	Nuevo nombre
 new search	infolog	es-es	Nueva búsqueda
 no - cancel	infolog	es-es	No - Cancelar
-no describtion, links or attachments	infolog	es-es	no hay descripción, enlaces o adjuntos
-no details	infolog	es-es	no hay detalles
-no entries found, try again ...	infolog	es-es	no se encontraron registros, inténtelo de nuevo ...
-no filter	infolog	es-es	sin filtro
-no links or attachments	infolog	es-es	sin enlaces o adjuntos
+no custom field "%1" for %2.	infolog	es-es	No hay campo personalizado "%1" para %2.
+no describtion, links or attachments	infolog	es-es	No hay descripción, enlaces o adjuntos
+no details	infolog	es-es	No hay detalles
+no entries found, try again ...	infolog	es-es	No se encontraron registros, inténtelo de nuevo ...
+no filter	infolog	es-es	Sin filtro
+no links or attachments	infolog	es-es	Sin enlaces o adjuntos
 no project	infolog	es-es	Sin proyecto
-nonactive	infolog	es-es	no activo
+nonactive	infolog	es-es	No activo
 none	infolog	es-es	Ninguno
-normal	infolog	es-es	normal
-not	infolog	es-es	no
-not assigned	infolog	es-es	sin asignar
-not-started	infolog	es-es	sin empezar
+normal	infolog	es-es	Normal
+not	infolog	es-es	No
+not assigned	infolog	es-es	Sin asignar
+not-started	infolog	es-es	Sin empezar
 note	infolog	es-es	Nota
 number of records to read (%1)	infolog	es-es	Número de registros a leer (%1)
 number of row for a multiline inputfield or line of a multi-select-box	infolog	es-es	Número de fila para un cuadro de texto multilínea o lista despleglabe multiselección
-offer	infolog	es-es	ofrecer
-one day after	infolog	es-es	un día después
-one day in advance	infolog	es-es	una día por adelantado
-ongoing	infolog	es-es	en curso
+offer	infolog	es-es	Ofrecer
+one day after	infolog	es-es	Un día después
+one day in advance	infolog	es-es	Una día por adelantado
+ongoing	infolog	es-es	En curso
 only for details	infolog	es-es	Sólo para los detalles
 only if i get assigned or removed	infolog	es-es	Sólo si se me asigna o se me borra
 only the attachments	infolog	es-es	sólo los adjuntos

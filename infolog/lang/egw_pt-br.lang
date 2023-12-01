@@ -253,39 +253,46 @@ leave it empty	infolog	pt-br	Deixe em branco
 leave it empty for a full week	infolog	pt-br	Deixar vazio para uma semana inteira
 leave without saveing the entry	infolog	pt-br	Sair sem salvar o registro
 leaves without saveing	infolog	pt-br	Sair sem salvar
+limit number of description lines (default 5, 0 for no limit)	infolog	pt-br	Limite do número de linhas de descrição. Padrão = 5, 0 = sem limite.
+limit width of description column ((effective only if lines limit is set), 0 for no limit)	infolog	pt-br	Limitar a largura da coluna de descrição. Só entra em vigor se o limite de linhas estiver definido. 0 = sem limite.
 link	infolog	pt-br	Link
+linked to %1	infolog	pt-br	Link para %1
 links	infolog	pt-br	Links
 links and attached files	infolog	pt-br	Links e arquivos anexados
 links of this entry	infolog	pt-br	Links para este registro
+links to specified application.  example: {{links/infolog}}	infolog	pt-br	Links para o aplicativo especificado. Exemplo: {{links/infolog}}
+links wrapped in an href tag with download link	infolog	pt-br	Links embrulhados em uma tag HREF com link para download
 list all categories	infolog	pt-br	Listar todas as categorias
 list of files linked to the current record	infolog	pt-br	Lista de arquivos vinculados ao registro atual
+load custom fields in index, if filtered by selected types (eg. to display them in a type-specific index template)	infolog	pt-br	Carregar campos personalizados no índice, se filtrados por tipos selecionados (por exemplo, para exibi-los em um modelo de índice específico do tipo)
 location	infolog	pt-br	Local
-longer textual description	infolog	pt-br	descrição detalhada
-low	infolog	pt-br	baixo
+longer textual description	infolog	pt-br	Descrição detalhada
+low	infolog	pt-br	Baixo
 manage mapping	infolog	pt-br	Gerenciar mapeamento
-max length of the input [, length of the inputfield (optional)]	infolog	pt-br	tamanho máximo para inclusão [, tamanho para o campo (opcional)]
+max length of the input [, length of the inputfield (optional)]	infolog	pt-br	Tamanho máximo para inclusão [, tamanho para o campo (opcional)]
 modifier	infolog	pt-br	Modifier
 modifierer	infolog	pt-br	Modificador
 name must not be empty !!!	infolog	pt-br	O campo nome não pode estar vazio!!!
 name of current user, all other contact fields are valid too	infolog	pt-br	Nome do usuário atual, todos outros campos são válidos também
-name of new type to create	infolog	pt-br	nome para o novo tipo
+name of new type to create	infolog	pt-br	Nome para o novo tipo
 never hide search and filters	infolog	pt-br	Nunca ocultar Pesquisa e Filtros
 new %1	infolog	pt-br	Novo %1
 new %1 created by %2 at %3	infolog	pt-br	Novo %1 criado por %2 em %3
 new name	infolog	pt-br	novo nome
 new search	infolog	pt-br	Nova pesquisa
 no - cancel	infolog	pt-br	Não - Cancelar
+no custom field "%1" for %2.	infolog	pt-br	Nenhum campo personalizado "%1" para %2.
 no describtion, links or attachments	infolog	pt-br	Sem descrição, links ou anexos
 no details	infolog	pt-br	Sem detalhes
-no entries found, try again ...	infolog	pt-br	nenhum registro encontrado, tente novamente ...
-no filter	infolog	pt-br	sem filtro
-no links or attachments	infolog	pt-br	sem links ou anexos
+no entries found, try again ...	infolog	pt-br	Nenhum registro encontrado, tente novamente ...
+no filter	infolog	pt-br	Sem filtro
+no links or attachments	infolog	pt-br	Sem links ou anexos
 no project	infolog	pt-br	Nenhum projeto
-nonactive	infolog	pt-br	não ativo
+nonactive	infolog	pt-br	Não ativo
 none	infolog	pt-br	Nenhum
-normal	infolog	pt-br	normal
-not	infolog	pt-br	não
-not assigned	infolog	pt-br	não atribuido
+normal	infolog	pt-br	Normal
+not	infolog	pt-br	Não
+not assigned	infolog	pt-br	Não atribuido
 not-started	infolog	pt-br	Não iniciada
 note	infolog	pt-br	Nota
 notification settings	infolog	pt-br	Configurações de notificação

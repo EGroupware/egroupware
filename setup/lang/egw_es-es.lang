@@ -9,8 +9,8 @@
 %1 is needed by: %2.	setup	es-es	%1 es necesario para: %2
 %1 is set to %2, you will not be able to upload or attach files bigger then that!	setup	es-es	¡%1 está establecido a %2, NO podrá subir o adjuntar ficheros mayores de ese valor!
 %1 is set to %2. this is not recommeded for a production system, as displayed error messages can contain passwords or other sensitive information!	setup	es-es	%1 está establecido en %2. ¡Esto NO se recomienda para un sistema en producción, ya que los mensajes de error pueden contener contraseñas o alguna otra información sensible!
-%1 users and %2 groups created, %3 errors	setup	es-es	Se han creado %1 usuarios y %2 grupos, %3 errores
 %1 the configuration file.	setup	es-es	%1 el fichero de configuración.
+%1 users and %2 groups created, %3 errors	setup	es-es	Se han creado %1 usuarios y %2 grupos, %3 errores
 '%1' is no valid domain name!	setup	es-es	'%1' no es un nombre válido de dominio
 '%1' is not allowed as %2. arguments of option %3 !!!	setup	es-es	¡¡'%1' no está permitido como %2. argumentos de la opción %3 !!
 '%1' must be integer	setup	es-es	%1 debe ser un valor entero
@@ -20,7 +20,7 @@
 00 (disable)	setup	es-es	00 (desactivar / recomendado)
 13 (ntp)	setup	es-es	13 (ntp)
 80 (http)	setup	es-es	80 (http)
-<b>charset to use</b> (use utf-8 if you plan to use languages with different charsets):	setup	es-es	<b>juego de caracteres a usar</b> (usar utf-8 si se van a usar idiomas con distintos juegos de caracteres):
+<b>charset to use</b> (use utf-8 if you plan to use languages with different charsets):	setup	es-es	<b>juego de caracteres a usar</b> (usar UTF-8 si se van a usar idiomas con distintos juegos de caracteres):
 ==> different group '%1' under that gidnumber %2, not setting memberships!	setup	es-es	==> Hay un grupo distinto, '%1', bajo ese número, %2, por lo que NO se ponen los miembros
 [header-password],[header-user],[new-password],[new-user]	setup	es-es	[contraseña del encabezado],[usuario del encabezado],[nueva contraseña],[nuevo usuario]
 access denied: wrong username or password for manage-header !!!	setup	es-es	Acceso denegado: ¡usuario o contraseña incorrectas para el administrador de encabezados!
@@ -102,7 +102,7 @@ backup now	setup	es-es	hacer copia de seguridad ahora
 backup sets	setup	es-es	conjuntos de copia de seguridad
 backup skipped!	setup	es-es	¡Se ha omitido la copia de seguridad!
 backup started, this might take a few minutes ...	setup	es-es	copia de seguridad iniciada, puede tardar unos minutos...
-base dn "%1" not found!	setup	es-es	¡NO se ha encontrado el dn base "%1"!
+base dn "%1" not found!	setup	es-es	¡NO se ha encontrado el DN base "%1"!
 because an application it depends upon was upgraded	setup	es-es	porque se actualizó una aplicación de la que depende
 because it depends upon	setup	es-es	porque depende de
 because it is not a user application, or access is controlled via acl	setup	es-es	porque no es una aplicación de usuario, o el acceso está controlado por ACL
@@ -127,7 +127,7 @@ cas server port:<br />example: 443	setup	es-es	Puerto del servidor de CAs:<br />
 cas server uri:	setup	es-es	URI del servidor de CAs:
 certificate (pem or ca):	setup	es-es	Certificado (PEM o CA):
 change system-charset	setup	es-es	Cambiar el juego de caracteres del sistema
-charset	setup	es-es	utf-8
+charset	setup	es-es	charset
 charset to convert to	setup	es-es	Juego de caracteres al que convertir
 charsets used by the different languages	setup	es-es	Juegos de caracteres usados por los distintos idiomas
 check can only be performed, if called via a webserver, as the user-id/-name of the webserver is not known.	setup	es-es	Sólo se puede realizar a través de un servidor web, mientras no sea conocido el id de usuario o nombre del servidor web.
@@ -274,12 +274,12 @@ enter your http proxy server	setup	es-es	Introduzca el servidor proxy HTTP
 enter your http proxy server password	setup	es-es	Introduzca la contraseña del servidor proxy HTTP
 enter your http proxy server port	setup	es-es	Introduzca el puerto del servidor proxy HTTP
 enter your http proxy server username	setup	es-es	Introduzca el usuario del servidor proxy HTTP
-error deleting "dn=%1"!	setup	es-es	¡Error al borrar "dn=%1"!
+error deleting "dn=%1"!	setup	es-es	¡Error al borrar "DN=%1"!
 error dropping user!	setup	es-es	¡Error al borrar el usuario!
 error in admin-creation !!!	setup	es-es	¡Error al crear administrador!
 error in group-creation !!!	setup	es-es	¡Error al crear grupo!
-error listing "dn=%1"!	setup	es-es	¡Error al listar "dn=%1"!
-error modifying dn=%1: %2='%3'!	setup	es-es	¡Error al modificar dn=%1: %2='%3'!
+error listing "dn=%1"!	setup	es-es	¡Error al listar "DN=%1"!
+error modifying dn=%1: %2='%3'!	setup	es-es	¡Error al modificar DN=%1: %2='%3'!
 export has been completed!	setup	es-es	¡La exportación se ha completado!
 failed to mount backup directory!	setup	es-es	Fallo el montar el directorio de backup
 failed writing configuration file header.inc.php, check the permissions !!!	setup	es-es	Fallo al escribir el fichero de configuración header.inc.php. ¡Compruebe los permisos!
@@ -361,13 +361,13 @@ ldap accounts context	setup	es-es	Contexto de las cuentas LDAP
 ldap config	setup	es-es	Configuración LDAP
 ldap default homedirectory prefix (e.g. /home for /home/username)	setup	es-es	Prefijo del directorio personal predeterminado (p. ej. /home para /home/<usuario>)
 ldap default shell (e.g. /bin/bash)	setup	es-es	Shell LDAP predeterminada (p. ej. /bin/bash)
-ldap dn="%1" with %2 entries deleted.	setup	es-es	LDAP dn="%1" con %2 entradas borradas.
+ldap dn="%1" with %2 entries deleted.	setup	es-es	LDAP DN="%1" con %2 entradas borradas.
 ldap encryption type	setup	es-es	Tipo de cifrado LDAP
 ldap groups context	setup	es-es	Contexto de grupos LDAP
 ldap host	setup	es-es	Servidor LDAP
 ldap import	setup	es-es	Importar LDAP
 ldap root password	setup	es-es	Contraseña del administrador LDAP
-ldap rootdn	setup	es-es	rootdn LDAP
+ldap rootdn	setup	es-es	Root DN LDAP
 ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setup	es-es	Filtro de búsqueda LDAP para las cuentas. Predeterminado: "(uid=%user)", %domain=EGw-domain
 leave empty to keep current.	setup	es-es	Dejar en blanco para mantener el actual
 limit access	setup	es-es	Limitar aceso
@@ -481,14 +481,20 @@ re-enter password	setup	es-es	Confirme la contraseña
 read translations from	setup	es-es	Leer traducciones de
 readable by the webserver	setup	es-es	lectura para el servidor web
 really uninstall all applications	setup	es-es	REALMENTE quiere desinstalar todas las aplicaciones
-refusing to delete dn "%1"!	setup	es-es	¡Se ha rechazado borrar dn "%1"!
+refusing to delete dn "%1"!	setup	es-es	¡Se ha rechazado borrar DN "%1"!
 register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	es-es	register_globals está activado, y EGroupware NO lo necesita, así que es más seguro tenerlo en Off (desactivado).
-registered	setup	es-es	registrado
+registered	setup	es-es	Registrado
+regular expression to filter by dn	setup	es-es	Expresión regular para filtrar por DN
 rejected lines	setup	es-es	Líneas rechazadas
 remove	setup	es-es	Eliminar
 remove all	setup	es-es	Eliminar todo
-rename	setup	es-es	renombrar
+rename	setup	es-es	Renombrar
+replace username and email	setup	es-es	Sustituir nombre de usuario y correo electrónico
+replace username and keep email	setup	es-es	Sustituir nombre de usuario y mantener email
+required to change passwords	setup	es-es	Requiere cambiar contraseñas
+requires "reset password" privilege, to change passwords!	setup	es-es	¡Requiere el privilegio "Restablecer contraseña", para cambiar las contraseñas!
 requires reinstall or manual repair	setup	es-es	Requiere reinstalación o reparación manual
+requires saml optional on login page and user to specify username and password	setup	es-es	Requiere SAML opcional en la página de inicio de sesión y que el usuario especifique el nombre de usuario y la contraseña
 requires upgrade	setup	es-es	Requiere actualización
 resolve	setup	es-es	Resolver
 restore	setup	es-es	restaurar
@@ -583,8 +589,8 @@ the function %1 is needed from: %2.	setup	es-es	La función %1 se necesita para:
 the imagecreatefromjpeg function is supplied by the gd extension (complied with jpeg support!). it's needed to upload photos for contacts.	setup	es-es	La función imagecreatefromjpeg viene con la extensión gd (compilada con soporte jpeg). Se necesita para subir fotos para los contactos.
 the json extension is required by egroupware for ajax.	setup	es-es	Se requiere la extensión json para que funcione AJAX en EGroupware.
 the ldap extension is needed, if you use ldap as account or contact storage, authenticate against ldap or active directory. it's not needed for a standard sql installation.	setup	es-es	La extension LDAP es necesaria si usa LDAP como almacenamiento de cuentas o contactos, identificarse en un servidor LDAP o directorio activo. No es necesaria para una instalación SQL estándar.
-the mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	es-es	La extensión mbstring es necesaria para el soporte total de unicode (utf-8) u otros juegos de caracteres multibyte.
-the mbstring.func_overload = 7 is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	es-es	El valor mbstring.func_overload = 7 es necesario para el soporte total de unicode (utf-8) u otros juegos de caracteres multibyte.
+the mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	es-es	La extensión mbstring es necesaria para el soporte total de unicode (UTF-8) u otros juegos de caracteres multibyte.
+the mbstring.func_overload = 7 is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	es-es	El valor mbstring.func_overload = 7 es necesario para el soporte total de unicode (UTF-8) u otros juegos de caracteres multibyte.
 the mcrypt extension is used, to store etemplate form state on the client, which is the prefered way to store it.	setup	es-es	La extensión mcrypt se usa para el formulario de estado de eTemplate en el cliente, que es el lugar preferido para almacenarlo.
 the pdo extension plus a database specific driver is needed by the vfs (virtual file system)!	setup	es-es	La extensión PDO junto a un controlador específico de base de datos es necesario para el VFS (sistema de ficheros virtual)
 the session extension is needed to use php sessions (db-sessions work without).	setup	es-es	La extensión de sesión es necesaria para usar sesiones php (las sesiones db funcionan sin ella).
@@ -640,7 +646,7 @@ usernames (comma-separated) which can get vfs root access (beside setup user)	se
 usernames are casesensitive	setup	es-es	Los nombres de usuario distinguen mayúsculas
 users choice	setup	es-es	A elegir por el usuario
 usually more annoying.<br />admins can use admin >> manage accounts or groups to give access to further apps.	setup	es-es	Normalmente es mas molesto. <br />Los administradores pueden usar Administración -> Cuentas de usuario o grupo para dar acceso a más aplicaciones.
-utf-8 (unicode)	setup	es-es	utf-8 (Unicode)
+utf-8 (unicode)	setup	es-es	UTF-8 (Unicode)
 validation errors	setup	es-es	Errores de validación
 version	setup	es-es	versión
 version mismatch	setup	es-es	Las versiones no coinciden

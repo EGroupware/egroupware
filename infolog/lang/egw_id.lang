@@ -237,29 +237,41 @@ leave without saveing the entry	infolog	id	tinggalkan tanpa menyimpan entri
 leaves without saveing	infolog	id	tinggalkan tanpa menyimpan
 length	infolog	id	Panjang
 limit list to last n month, if ordering by last-modified and not searching.	admin	id	Batasi daftar hingga N bulan terakhir, jika memesan berdasarkan perubahan terakhir dan tidak mencari.
+limit number of description lines (default 5, 0 for no limit)	infolog	id	Batasi jumlah baris deskripsi. Default = 5, 0 = tanpa batas.
+limit width of description column ((effective only if lines limit is set), 0 for no limit)	infolog	id	Batasi lebar kolom deskripsi. Hanya efektif jika batas baris ditetapkan. 0 = tidak ada batas.
 link	infolog	id	Tautan
+linked to %1	infolog	id	Ditautkan ke %1
 links	infolog	id	Tautan
+links and attached files	infolog	id	Tautan dan berkas terlampir
+links of this entry	infolog	id	Tautan dari entri ini
+links to specified application.  example: {{links/infolog}}	infolog	id	Tautan ke aplikasi tertentu. Contoh: {{links/infolog}}
+links wrapped in an href tag with download link	infolog	id	Tautan yang dibungkus dengan tag HREF dengan tautan unduhan
 list all categories	infolog	id	Daftar semua kategori
+list of files linked to the current record	infolog	id	Daftar file yang ditautkan ke rekaman saat ini
+load custom fields in index, if filtered by selected types (eg. to display them in a type-specific index template)	infolog	id	Memuat bidang khusus dalam indeks, jika difilter berdasarkan jenis yang dipilih (misalnya untuk menampilkannya dalam templat indeks khusus jenis)
 location	infolog	id	Lokasi
-low	infolog	id	rendah
+low	infolog	id	Rendah
 manage mapping	infolog	id	Mengelola pemetaan
+modifier	infolog	id	Pengubah
+modifierer	infolog	id	Pengubah
 new %1	infolog	id	Baru %1
 new %1 created by %2 at %3	infolog	id	Baru %1 dibikin oleh %2 pada %3
-new name	infolog	id	nama baru
+new name	infolog	id	Nama baru
 new search	infolog	id	Pencarian baru
 no - cancel	infolog	id	Tidak - Batal
-no describtion, links or attachments	infolog	id	tiada uraian, tautan atau lampiran
-no details	infolog	id	tiada kejelasan
-no entries found, try again ...	infolog	id	tiada entri ditemukan, coba lagi ...
-no filter	infolog	id	tiada Saringan
-no links or attachments	infolog	id	tiada tautan dan lampiran
+no custom field "%1" for %2.	infolog	id	Tidak ada bidang khusus "%1" untuk %2.
+no describtion, links or attachments	infolog	id	Tiada uraian, tautan atau lampiran
+no details	infolog	id	Tiada kejelasan
+no entries found, try again ...	infolog	id	Tiada entri ditemukan, coba lagi ...
+no filter	infolog	id	Tiada Saringan
+no links or attachments	infolog	id	Tiada tautan dan lampiran
 no project	infolog	id	Tiada proyek
-nonactive	infolog	id	tidak aktif
+nonactive	infolog	id	Tidak aktif
 none	infolog	id	Tiada
-normal	infolog	id	normal
-not	infolog	id	not
-not assigned	infolog	id	not assigned
-not-started	infolog	id	belum dimulai
+normal	infolog	id	Normal
+not	infolog	id	Not
+not assigned	infolog	id	Not assigned
+not-started	infolog	id	Belum dimulai
 note	infolog	id	Catatan
 number of records to read (%1)	infolog	id	Jumlah rekord yang dibaca (%1)
 number of row for a multiline inputfield or line of a multi-select-box	infolog	id	number of row for a multiline inputfield or line of a multi-select-box

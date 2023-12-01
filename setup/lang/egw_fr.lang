@@ -13,8 +13,8 @@
 %1 is set to %2. this is not recommeded for a production system, as displayed error messages can contain passwords or other sensitive information!	setup	fr	%1 est défini à %2. Ceci n'est pas recommandé pour un système en production, car les messages d'erreur affichés peuvent contenir des mots de passe ou d'autres informations sensibles !
 %1 password set in %2.	setup	fr	%1 mot de passe défini dans %2.
 %1 passwords updated, %3 errors	setup	fr	%1 mots de passe mis à jour, %3 erreur(s)
-%1 users and %2 groups created, %3 errors	setup	fr	%1 utilisateurs et %2 groupes créés, %3 erreurs.
 %1 the configuration file.	setup	fr	%1 le fichier de configuration.
+%1 users and %2 groups created, %3 errors	setup	fr	%1 utilisateurs et %2 groupes créés, %3 erreurs.
 '%1' is no valid domain name!	setup	fr	'%1'  n'est pas un nom de domaine valide !
 '%1' is not allowed as %2. arguments of option %3 !!!	setup	fr	'%1' n'est pas autorisé en tant que %2ème argument de l'option %3 !!!
 '%1' must be integer	setup	fr	%1 doit être un nombre entier.
@@ -110,7 +110,7 @@ backup now	setup	fr	Sauvegarder maintenant
 backup sets	setup	fr	Jeux de sauvegardes
 backup skipped!	setup	fr	Sauvegarde omise !
 backup started, this might take a few minutes ...	setup	fr	La sauvegarde a démarré, ceci peut prendre quelques minutes...
-base dn "%1" not found!	setup	fr	Base dn  "%1" non trouvée !
+base dn "%1" not found!	setup	fr	Base DN  "%1" non trouvée !
 because an application it depends upon was upgraded	setup	fr	car une application dont laquelle il dépend a été mise à jour
 because it depends upon	setup	fr	car cela dépend de
 because it is not a user application, or access is controlled via acl	setup	fr	car ce n'est pas une application utilisateur, ou l'accès est contrôlé par ACL
@@ -291,12 +291,12 @@ enter your http proxy server	setup	fr	Entrez votre serveur proxy HTTP
 enter your http proxy server password	setup	fr	Entrez le mot de passe pour le proxy HTTP
 enter your http proxy server port	setup	fr	Entrez le port de votre serveur proxy HTTP
 enter your http proxy server username	setup	fr	Entrez le nom d'utilisateur pour le proxy HTTP
-error deleting "dn=%1"!	setup	fr	Erreur à la suppression de "dn=%1" !
+error deleting "dn=%1"!	setup	fr	Erreur à la suppression de "DN=%1" !
 error dropping user!	setup	fr	Erreur à la suppression de l'utilisateur !
 error in admin-creation !!!	setup	fr	Erreur lors de la création de l'admin !
 error in group-creation !!!	setup	fr	Erreur lors de la création du groupe !
-error listing "dn=%1"!	setup	fr	Erreur au listage "dn=%1" !
-error modifying dn=%1: %2='%3'!	setup	fr	Erreur à la modification  dn=%1: %2='%3'!
+error listing "dn=%1"!	setup	fr	Erreur au listage "DN=%1" !
+error modifying dn=%1: %2='%3'!	setup	fr	Erreur à la modification  DN=%1: %2='%3'!
 export has been completed!	setup	fr	L'exportation est terminée!
 failed to mount backup directory!	setup	fr	Echec du montage du répertoire Backup !
 failed writing configuration file header.inc.php, check the permissions !!!	setup	fr	L'écriture du fichier de configuration header.inc.php a échoué, vérifiez les permissions !
@@ -381,13 +381,13 @@ ldap accounts context	setup	fr	Contexte des comptes LDAP
 ldap config	setup	fr	Configuration LDAP
 ldap default homedirectory prefix (e.g. /home for /home/username)	setup	fr	Préfixe par défaut du répertoire d'accueil LDAP (p.e. /home pour /home/utilisateur)
 ldap default shell (e.g. /bin/bash)	setup	fr	Shell LDAP par défaut (p.e. /bin/bash)
-ldap dn="%1" with %2 entries deleted.	setup	fr	LDAP dn="%1" avec %2 éléments supprimés.
+ldap dn="%1" with %2 entries deleted.	setup	fr	LDAP DN="%1" avec %2 éléments supprimés.
 ldap encryption type	setup	fr	Type de cryptage LDAP
 ldap groups context	setup	fr	Contexte des groupes LDAP
 ldap host	setup	fr	Hôte LDAP
 ldap import	setup	fr	Import LDAP
 ldap root password	setup	fr	Mot de passe root LDAP
-ldap rootdn	setup	fr	Rootdn LDAP
+ldap rootdn	setup	fr	Root DN LDAP
 ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setup	fr	Filtre de recherche LDAP pour les comptes, par défaut: "(uid=%user)", %domain=domaineEGW
 leave empty to keep current.	setup	fr	Laisser vide pour conserver la valeur actuelle.
 leave empty to use default	setup	fr	Laisser vide pour utiliser la valeur par défaut.
@@ -511,16 +511,20 @@ re-enter password	setup	fr	Réentrer mon mot de passe
 read translations from	setup	fr	Lire les traductions depuis
 readable by the webserver	setup	fr	lisible par le serveur Web
 really uninstall all applications	setup	fr	Désinstaller VRAIMENT toutes les applications
-refusing to delete dn "%1"!	setup	fr	Refus de la suppression de dn "%1" !
+refusing to delete dn "%1"!	setup	fr	Refus de la suppression de DN "%1" !
 register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	fr	L'option register_globals est activé, EGroupware n'a pas besoin de cela et cela est il est généralement plus sécurisé en le désactivant.
 registered	setup	fr	Enregistré
+regular expression to filter by dn	setup	fr	Expression régulière pour filtrer par DN
 rejected lines	setup	fr	Lignes rejetées
 remove	setup	fr	Enlever
 remove all	setup	fr	Enlever tout
-rename	setup	fr	renommer
+rename	setup	fr	Renommer
+replace username and email	setup	fr	Remplacer le nom d'utilisateur et l'adresse électronique
+replace username and keep email	setup	fr	Remplacer le nom d'utilisateur et conserver l'adresse électronique
 required to change passwords	setup	fr	nécessaire pour changer les mots de passe
 requires "reset password" privilege, to change passwords!	setup	fr	Nécessite le privilège  "Reset Password" pour changer les mots de passe !
 requires reinstall or manual repair	setup	fr	Nécessite une réinstallation ou une réparation manuelle
+requires saml optional on login page and user to specify username and password	setup	fr	Nécessite l'option SAML sur la page de connexion et l'utilisateur doit spécifier son nom d'utilisateur et son mot de passe.
 requires upgrade	setup	fr	Nécessite une mise à jour
 resolve	setup	fr	Résoudre
 restore	setup	fr	récupérer

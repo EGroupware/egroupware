@@ -19,7 +19,9 @@
 2-factor-authentication for interactive login	admin	el	Πιστοποίηση 2 παραγόντων για διαδραστική σύνδεση
 3 month	admin	el	3 μήνες
 6 month	admin	el	6 μήνες
+access token revoked.	admin	el	Το Token πρόσβασης ανακλήθηκε.
 accesslog and bruteforce defense	admin	el	AccessLog και BruteForce άμυνα
+account	admin	el	Λογαριασμός
 account active	admin	el	Λογαριασμός ενεργός
 account has been created	common	el	Ο λογαριασμός έχει δημιουργηθεί
 account has been deleted	common	el	Ο λογαριασμός έχει διαγραφεί
@@ -120,6 +122,9 @@ create group	admin	el	Δημιουργία ομάδας
 created	admin	el	Δημιουργήθηκε
 creates a new field	admin	el	δημιουργεί νέο πεδίο
 crontab only (recomended)	admin	el	μόνο cronetab (προτείνεται)
+custom 1	admin	el	Προσαρμοσμένο 1
+custom 2	admin	el	Προσαρμοσμένο 2
+custom 3	admin	el	Προσαρμοσμένο 3
 custom fields	admin	el	Σύνηθη πεδία
 data	admin	el	Δεδομένα
 day	admin	el	Ημέρα
@@ -277,6 +282,7 @@ last %1 logins for %2	admin	el	Τελευταίες %1 εισόδους για %
 last login	admin	el	τελευταία είσοδος
 last login from	admin	el	τελευταία είσοδος από
 last time read	admin	el	Διάβασμα τελευταίας φοράς
+last updated	admin	el	Τελευταία ενημέρωση
 ldap accounts context	admin	el	LDAP περιβάλλον λογαριασμών
 ldap default homedirectory prefix (e.g. /home for /home/username)	admin	el	LDAP προκαθορισμένο πρόθεμα αρχικού διαμερίσματος (π.χ. /home για /home/username)
 ldap default shell (e.g. /bin/bash)	admin	el	LDAP Προκαθορισμένο κέλυφος (π.χ. /bin/bash)
@@ -286,6 +292,7 @@ ldap host	admin	el	LDAP host
 ldap root password	admin	el	LDAP root συνθηματικό
 ldap rootdn	admin	el	LDAP rootdn
 leave empty for no quota	admin	el	να μείνει κενό για μη ποσοστόσεις
+leave empty to use oauth, if supported	admin	el	Αφήστε το κενό για χρήση OAuth, εάν υποστηρίζεται
 leave the category untouched and return back to the list	admin	el	Αφείστε την κατηγορία ανέπαφη και επιστρέψτε στην λίστα
 leave the group untouched and return back to the list	admin	el	Αφείστε την ομάδα ανέπαφη και επιστρέψτε στην λίστα
 leave without saveing the entry	admin	el	αποχώρηση χωρίς αποθήκευση της καταχώρησης

@@ -31,7 +31,7 @@ bottom	setup	id	bottom
 ca certificate	setup	id	CA certificate
 cancel	setup	id	Batal
 change system-charset	setup	id	Change system-charset
-charset	setup	id	utf-8
+charset	setup	id	Charset
 check installation	setup	id	Cek instalasi
 checking php.ini	setup	id	Checking php.ini
 click here	setup	id	Klik disini
@@ -58,7 +58,7 @@ current configuration:	setup	id	Current configuration:
 current system-charset	setup	id	Current system-charset
 current version	setup	id	Current Version
 database	setup	id	Database
-day	setup	id	hari
+day	setup	id	Hari
 db host	setup	id	DB Host
 db name	setup	id	DB Name
 db password	setup	id	DB Password
@@ -93,7 +93,7 @@ historylog removed	setup	id	Historylog removed
 hooks deregistered	setup	id	hooks deregistered
 hooks registered	setup	id	hooks registered
 host information	setup	id	Host information
-hour (0-24)	setup	id	jam (0-24)
+hour (0-24)	setup	id	Jam (0-24)
 install	setup	id	Instal
 install all	setup	id	Instal Semuanya
 install applications	setup	id	Instal Aplikasi
@@ -112,7 +112,7 @@ ldap groups context	setup	id	LDAP groups context
 ldap host	setup	id	LDAP host
 ldap import	setup	id	LDAP Import
 ldap root password	setup	id	LDAP root password
-ldap rootdn	setup	id	LDAP rootdn
+ldap rootdn	setup	id	LDAP Root DN
 limit access	setup	id	Limit access
 logout	setup	id	Keluar
 manage applications	setup	id	Manage Applications
@@ -151,16 +151,23 @@ preferences	setup	id	Kesukaan
 problem resolution	setup	id	Penyelesaian Masalah
 process	setup	id	Proses
 re-enter password	setup	id	Re-enter password
-registered	setup	id	terdaftar
+registered	setup	id	Terdaftar
+regular expression to filter by dn	setup	id	Ekspresi reguler untuk memfilter berdasarkan DN
 rejected lines	setup	id	Rejected lines
 remove	setup	id	Buang
 remove all	setup	id	Buang Semuanya
 rename	setup	id	rename
+replace username and email	setup	id	Mengganti nama pengguna dan email
+replace username and keep email	setup	id	Mengganti nama pengguna dan menyimpan email
+required to change passwords	setup	id	diperlukan untuk mengubah kata sandi
+requires "reset password" privilege, to change passwords!	setup	id	Memerlukan hak istimewa "Atur Ulang Kata Sandi", untuk mengubah kata sandi!
+requires reinstall or manual repair	setup	id	Memerlukan penginstalan ulang atau perbaikan manual
+requires saml optional on login page and user to specify username and password	setup	id	Memerlukan SAML opsional pada halaman login dan pengguna untuk menentukan nama pengguna dan kata sandi
 requires upgrade	setup	id	Requires upgrade
 resolve	setup	id	Resolve
 restore	setup	id	restore
 restore failed	setup	id	Restore failed
-restore finished	setup	id	restore finished
+restore finished	setup	id	Restore finished
 save	setup	id	Simpan
 schedule	setup	id	schedule
 scheduled backups	setup	id	scheduled backups
@@ -198,7 +205,7 @@ upgrading tables	setup	id	Upgrading Tables
 upload backup	setup	id	upload backup
 user	setup	id	user
 users choice	setup	id	Pilihan Pengguna
-utf-8 (unicode)	setup	id	utf-8 (Unicode)
+utf-8 (unicode)	setup	id	UTF-8 (Unicode)
 validation errors	setup	id	Validation errors
 version	setup	id	versi
 version mismatch	setup	id	Versi Tidak Sesuai

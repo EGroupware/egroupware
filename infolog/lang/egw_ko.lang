@@ -204,18 +204,29 @@ leave without saveing the entry	infolog	ko	엔트리를 저장없이 나가기
 leaves without saveing	infolog	ko	저장없이 나가기
 length	infolog	ko	길이
 limit list to last n month, if ordering by last-modified and not searching.	admin	ko	마지막으로 수정한 순서대로 정렬하고 검색하지 않는 경우 목록을 지난 N월로 제한합니다.
+limit number of description lines (default 5, 0 for no limit)	infolog	ko	설명 줄 수를 제한합니다. 기본값 = 5, 0 = 제한 없음.
+limit width of description column ((effective only if lines limit is set), 0 for no limit)	infolog	ko	설명 열의 너비를 제한합니다. 줄 수 제한이 설정된 경우에만 유효합니다. 0 = 제한 없음.
 link	infolog	ko	링크
+linked to %1	infolog	ko	%1에 링크됨
 links	infolog	ko	링크들
+links and attached files	infolog	ko	링크 및 첨부 파일
 links of this entry	infolog	ko	이 엔트리의 링크
+links to specified application.  example: {{links/infolog}}	infolog	ko	지정된 응용 프로그램에 대한 링크입니다. 예시: {{links/infolog}}
+links wrapped in an href tag with download link	infolog	ko	다운로드 링크와 함께 HREF 태그로 래핑된 링크
 list all categories	infolog	ko	모든 카테고리 목록
+list of files linked to the current record	infolog	ko	현재 레코드에 링크된 파일 목록
+load custom fields in index, if filtered by selected types (eg. to display them in a type-specific index template)	infolog	ko	선택한 유형으로 필터링된 경우 인덱스에 사용자 정의 필드 로드(예: 유형별 인덱스 템플릿에 표시하기 위해)
 location	infolog	ko	장소
 low	infolog	ko	낮음
+modifier	infolog	ko	수정자
+modifierer	infolog	ko	수정자
 name must not be empty !!!	infolog	ko	이름을 입력하세요
 name of new type to create	infolog	ko	새 형식을 만들기 위한 명칭
 never hide search and filters	infolog	ko	검색 및 필터 숨기지 않음
 new name	infolog	ko	새 이름
 new search	infolog	ko	새 검색
 no - cancel	infolog	ko	아니오 - 취소
+no custom field "%1" for %2.	infolog	ko	%2에 대한 사용자 지정 필드 "%1"이 없습니다.
 no describtion, links or attachments	infolog	ko	설명,링크,첨부 제외
 no details	infolog	ko	내용제외
 no entries found, try again ...	infolog	ko	항목이 없습니다. 다시해주세요

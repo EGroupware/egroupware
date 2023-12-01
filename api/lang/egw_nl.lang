@@ -1261,20 +1261,23 @@ to correct this error for the future you will need to properly set the	common	nl
 to disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty	common	nl	om uit te schakelen: [! = niet]<value>[=<check>] voorbeeld: '!@data' schakelt uit als data geen inhoud heeft
 to examine or reinstate inactived files, you might need to turn versioning on.	admin	nl	Om bestanden te bekijken of opnieuw te activeren, moet u misschien versiebeheer aanzetten.
 to go back to the msg list, click <a href= %1 >here</a>	common	nl	Klik <a href="%1">hier</a> om terug te gaan in de berichtenlijst.
-to start the db-tools	common	nl	om de DB-tools te starten
-to start the etemplate editor	common	nl	om de eTemplate editor te starten
-to start the search	common	nl	om de zoekactie te starten
+to start the db-tools	common	nl	Om de DB-tools te starten
+to start the etemplate editor	common	nl	Om de eTemplate editor te starten
+to start the search	common	nl	Om de zoekactie te starten
 today	common	nl	Vandaag
-todays date, eg. "%1"	common	nl	datum vandaag, bijv. "%1"
+todays date, eg. "%1"	common	nl	Datum vandaag, bijv. "%1"
 togo	common	nl	TOGO
 tokelau	common	nl	TOKELAU
 tonga	common	nl	TONGA
+too many rows selected.<br />select all, or less than %1 rows	common	nl	Te veel rijen geselecteerd.<br />Selecteer alles, of minder dan %1 rijen
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	nl	De veel mislukte pogingen om in te loggen: %1 voor de gebruiker '%2', %3 voor het IP %4
 top	common	nl	Bovenzijde
 total	common	nl	Totaal
+total: %1 successful: %2 failed: %3 skipped: %4	common	nl	Totaal: %1 Geslaagd: %2 Niet gelukt: %3 Overgeslagen: %4
 transparant bg for the icons?	common	nl	Transparante achtergrond voor de pictogrammen?
 tree	common	nl	Boom
 trinidad and tobago	common	nl	TRINIDAD EN TOBAGO
+tu	common	nl	Tu
 tuesday	common	nl	Dinsdag
 tunisia	common	nl	TUNISIË
 turkey	common	nl	TURKIJË

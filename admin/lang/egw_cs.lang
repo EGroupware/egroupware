@@ -26,7 +26,9 @@
 2-factor-authentication for interactive login	admin	cs	2-faktorové ověřování pro interaktivní přihlášení
 3 month	admin	cs	3 měsíce
 6 month	admin	cs	6 měsíců
+access token revoked.	admin	cs	Přístupový token byl zrušen.
 accesslog and bruteforce defense	admin	cs	Přístupový protokol a obrana proti útoku hrubou silou
+account	admin	cs	Účet
 account %1 %2	admin	cs	Účet %1 %2
 account '%1' deleted.	admin	cs	Účet '%1' byl smazán.
 account '%1' not found !!!	admin	cs	Účet '%1' nebyl nalezen !!!
@@ -115,7 +117,7 @@ asynchronous timed services	admin	cs	Asynchornně časované služby
 asyncservices not yet installed or other error (%1) !!!	admin	cs	asynchronní služby nebyly dosud nainstalovány nebo jiná chyba (%1) !!!
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	cs	Pokuste se použít správný MIME typ pro FTP místo výchozího 'application/octet-stream'
 attribute accountstatus explained	admin	cs	Toto pracuje s atributem <b><i>-accountStatus-</i></b> z QMAIL schématu.
-attribute mail explained	admin	cs	Toto pracuje s atributem <b><i>-mail-</i></b> z QMAIL schématu a nikdy by nemělo být prázdné. Je také interním e-mailovým polem eGroupWaru.
+attribute mail explained	admin	cs	Toto pracuje s atributem <b><i>-mail-</i></b> z QMAIL schématu a nikdy by nemělo být prázdné. Je také interním e-mailovým polem EGroupware.
 attribute mailalternateaddress explained	admin	cs	Toto pracuje s atributem <b><i>-mailAlternateAddress-</i></b> z QMAIL schématu a může být použito jako virtuální mapování nebo aliasy.
 attribute mailforwardingaddress explained	admin	cs	Toto pracuje s atributem <b><i>-mailForwardingAddress-</i></b> z QMAIL schématu a pokud je nastavené, nesmí být prázdné.
 authentication / accounts	admin	cs	Autentikace / Účty
@@ -157,7 +159,7 @@ config password or md5 hash from the header.inc.php	admin	cs	Heslo konfigurace n
 connection dropped by imap server.	admin	cs	Připojení ukončeno IMAP serverem.
 continue	admin	cs	Pokračovat
 cookie domain (default empty means use full domain name, for sitemgr eg. ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com)	admin	cs	Cookie doména (výchozí prázdná hodnota znamená použití celého doménového jména; ve Správci webu např. ".domena.cz" dovoluje použít stejnou cookie pro egw.domena.cz i www.domena.cz)
-cookie path (allows multiple egw sessions with different directories, has problemes with sitemgr!)	admin	cs	Cookie cesta (umožňuje několik eGW relací s různými adresáři, nefunguje korektně ve Správci webu!)
+cookie path (allows multiple egw sessions with different directories, has problemes with sitemgr!)	admin	cs	Cookie cesta (umožňuje několik EGroupware relací s různými adresáři, nefunguje korektně ve Správci webu!)
 could not complete request. reason given: %s	admin	cs	Nemohu dokončit požadavek. Důvod: %s
 could not open secure connection to the imap server. %s : %s.	admin	cs	Nemohu otevřít zabezpečené připojení na IMAP server. %s : %s.
 could not remote execute the command	admin	cs	Příkaz nebylo možné vzdáleně spustit.
@@ -169,6 +171,9 @@ created	admin	cs	Vytvořeno
 created with id #%1	admin	cs	vytvořeno s ID #%1
 creates a new field	admin	cs	vytvoří novou položku
 crontab only (recomended)	admin	cs	jen crontab (doporučeno)
+custom 1	admin	cs	Vlastní 1
+custom 2	admin	cs	Vlastní 2
+custom 3	admin	cs	Vlastní 3
 custom fields	admin	cs	Uživatelsky definované položky
 cyrus imap server	admin	cs	Cyrus IMAP Server
 cyrus imap server administration	admin	cs	Administrace Cyrus IMAP serveru
@@ -246,8 +251,8 @@ edit this user	admin	cs	editovat tohoto uživatele
 edit user	admin	cs	editovat uživatele
 edit user account	admin	cs	Editovat uživatelský účet
 educational: universities, schools, ...	admin	cs	Vzdělávací: školy, univerzity, ...
-egroupware directory	admin	cs	Adresář eGroupWaru
-egroupware version	admin	cs	Verze eGroupWaru
+egroupware directory	admin	cs	Adresář EGroupware
+egroupware version	admin	cs	Verze EGroupware
 either install id and config password needed or the remote hash!	admin	cs	Je zapotřebí instalační ID a konfigurační heslo nebo vzdálený hash!
 email account active	admin	cs	E-mailový účet aktivní
 email address	admin	cs	E-mailová adresa
@@ -273,14 +278,14 @@ enter the background color for the site title	admin	cs	Zadejte barvu pozadí pro
 enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	cs	Zadejte celou cestu k dočasným souborům.<br>Například: /tmp, C:\TEMP
 enter the full path for users and group files.<br>examples: /files, e:files	admin	cs	Zadejte celou cestu k souborům uživatelů a skupin.<br>Například: /files, E:\FILES
 enter the hostname of the machine on which this server is running	admin	cs	Zadejte DNS jméno stroje, na kterém server běží
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	cs	Zadejte umístění URL eGroupWaru.<br>Příklad: http://www.domain.com/egroupware   nebo   /egroupware<br><b>Bez koncového lomítka</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	cs	Zadejte umístění URL EGroupware.<br>Příklad: http://www.domain.com/egroupware   nebo   /egroupware<br><b>Bez koncového lomítka</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	cs	Zadejte vyhledávací řetězec. Pro zobrazení všech záznamů ponechte pole prázdné a znovu stiskněte tlačítko Odeslat
 enter the site password for peer servers	admin	cs	Zadejte heslo webu pro peer servery
 enter the site username for peer servers	admin	cs	Zadejte uživatelské jméno webu pro peer servery
 enter the title for your site	admin	cs	Zadejte nadpis pro Váš web
 enter the title of your logo	admin	cs	Zadejte nadpis pro Vaše logo
 enter the url where your logo should link to	admin	cs	Zadejte URL, kam by Vaše logo mělo odkazovat
-enter the vfs-path where additional images, icons or logos can be placed (and found by egroupwares applications). the path must start with /,and be readable by all users	admin	cs	Zadejte VFS cestu, kam mohou být umístěny dodatečné obrázky, ikony a loga (kde budou k dispozici pro aplikace eGroupWaru). Cesta MUSÍ začínat lomítkem / a mít nastaveno oprávnění ke čtení pro všechny uživatele.
+enter the vfs-path where additional images, icons or logos can be placed (and found by egroupwares applications). the path must start with /,and be readable by all users	admin	cs	Zadejte VFS cestu, kam mohou být umístěny dodatečné obrázky, ikony a loga (kde budou k dispozici pro aplikace EGroupware). Cesta MUSÍ začínat lomítkem / a mít nastaveno oprávnění ke čtení pro všechny uživatele.
 enter your default ftp server	admin	cs	Zadejte Váš výchozí FTP server
 enter your default mail domain ( from: user@domain )	admin	cs	Zadejte Vaší výchozí poštovní doménu ( Od: uživatel@doména )
 enter your default mail domain (from: user@domain)	admin	cs	Zadejte Vaši výchozí poštovní doménu (z: uživatel@doména)
@@ -335,7 +340,7 @@ group list	admin	cs	Seznam skupin
 group manager	admin	cs	Správce skupin
 group name	admin	cs	Název skupiny
 hash	admin	cs	Hash
-hide php information	admin	cs	skrýt php informace
+hide php information	admin	cs	Skrýt PHP informace
 home directory	admin	cs	Domovský adresář
 home screen message	admin	cs	Zpráva na hlavní obrazovce
 host information	admin	cs	Informace o serveru (host)
@@ -385,10 +390,11 @@ kill	admin	cs	Ukončit
 kill session	admin	cs	Ukončit relaci
 last %1 logins	admin	cs	Posledních %1 přihlášení
 last %1 logins for %2	admin	cs	Posledních %1 přihlášení pro %2
-last login	admin	cs	poslední přihlášení
-last login from	admin	cs	poslední příhlášení z
+last login	admin	cs	Poslední přihlášení
+last login from	admin	cs	Poslední příhlášení z
 last submission:	admin	cs	Naposledy odesláno:
 last time read	admin	cs	Naposledy přečteno
+last updated	admin	cs	Poslední aktualizace
 ldap accounts context	admin	cs	LDAP kontext účtů
 ldap basedn	admin	cs	LDAP basedn
 ldap default homedirectory prefix (e.g. /home for /home/username)	admin	cs	LDAP výchozí prefix domovského adresáře (např. /home pro /home/username)
@@ -404,7 +410,8 @@ ldap server admin dn	admin	cs	DN (distinguished name) administrátora LDAP serve
 ldap server admin password	admin	cs	Heslo administrátora LDAP serveru
 ldap server hostname or ip address	admin	cs	DNS jméno nebo IP adresa LDAP serveru
 ldap settings	admin	cs	LDAP nastavení
-leave empty for no quota	admin	cs	ponechte prázdné, nechcete-li kvótu
+leave empty for no quota	admin	cs	Ponechte prázdné, nechcete-li kvótu
+leave empty to use oauth, if supported	admin	cs	Nechte prázdné, pokud chcete použít OAuth, pokud je podporován.
 leave the category untouched and return back to the list	admin	cs	ponechat kategorii bez změny a vrátit se zpět na seznam
 leave the group untouched and return back to the list	admin	cs	ponechat skupinu bez změny a vrátit se zpět na seznam
 leave without saveing the entry	admin	cs	ukončit bez uložení záznamu
@@ -442,7 +449,7 @@ month	admin	cs	Měsíc
 more secure	admin	cs	bezpečnější
 name must not be empty !!!	admin	cs	Název nemůže být prázdný !!!
 name of organisation	admin	cs	Název organizace
-name of the egroupware instance, eg. default	admin	cs	Název instace eGroupWaru, např. default
+name of the egroupware instance, eg. default	admin	cs	Název instace EGroupware, např. default
 new group name	admin	cs	Název nové skupiny
 new name	admin	cs	nový název
 new password [ leave blank for no change ]	admin	cs	Nové heslo [ Ponechte prázdné, nechcete-li měnit ]
@@ -465,11 +472,11 @@ non profit: clubs, associations, ...	admin	cs	Neziskové: kluby, asociace, ...
 note: ssl available only if php is compiled with curl support	admin	cs	Upozornění: SSL je k dispozici jen v případě, že je PHP zkompilováno s podporou curl
 number of active users	admin	cs	počet aktivních uživatelů
 number of row for a multiline inputfield or line of a multi-select-box	admin	cs	počet řádků ve víceřádkovém vstupním poli nebo ve výběrovém okně
-number of sessions / egroupware logins in the last 30 days	admin	cs	Počet relací / Přihlášení do eGroupWaru během posledních 3O dní
+number of sessions / egroupware logins in the last 30 days	admin	cs	Počet relací / Přihlášení do EGroupware během posledních 3O dní
 number of users	admin	cs	Počet uživatelů
 oauth authentiction	admin	cs	Ověřování OAuth
 offer to installing egroupware as mail-handler	admin	cs	Nabídka instalace EGroupware jako mail-handleru
-official egroupware usage statistic	admin	cs	Oficiální statistiky využití eGroupWaru
+official egroupware usage statistic	admin	cs	Oficiální statistiky využití EGroupware
 one day	admin	cs	jeden den
 one hour	admin	cs	jednu hodinu
 one month	admin	cs	jeden měsíc
@@ -583,8 +590,10 @@ sieve server port	admin	cs	Port Sieve serveru
 sieve settings	admin	cs	Nastavení Sieve
 site	admin	cs	Web
 skip imap	admin	cs	Vynechat IMAP
+skipping imap configuration!	admin	cs	Přeskočení konfigurace IMAP!
 smtp authentication	admin	cs	SMTP autentikace
 smtp options	admin	cs	Volby SMTP
+smtp server	admin	cs	Server SMTP
 smtp server name	admin	cs	Jméno SMTP serveru
 smtp settings	admin	cs	Nastavení SMTP
 smtp-server hostname or ip address	admin	cs	DNS jméno nebo IP adresa SMTP serveru
@@ -593,15 +602,19 @@ soap	admin	cs	SOAP
 sorry, that group name has already been taken.	admin	cs	Lituji, takové jméno skupiny už bylo použito.
 sorry, the above users are still a member of the group %1	admin	cs	Lituji, výše uvedení uživatelé jsou stále členy skupiny %1
 sorry, the follow users are still a member of the group %1	admin	cs	Lituji, následující uživatelé jsou stále členy skupiny %1
-sort the entries	admin	cs	třídit záznamy
+sort the entries	admin	cs	Třídit záznamy
+source account #%1 does not exist!	admin	cs	Zdrojový účet #%1 NEexistuje!
 ssl	admin	cs	SSL
 standard	admin	cs	Standardní
+standard identity	admin	cs	Standardní identita
 standard imap server	admin	cs	Standardní IMAP server
 standard pop3 server	admin	cs	Standardní POP3 server
 standard smtp-server	admin	cs	Standardní SMTP server
 start	admin	cs	Start
 start testjob!	admin	cs	Zahájit testovací úlohu
+starts with	admin	cs	Začíná na
 stationery	admin	cs	Šablony
+strictly required, user can not login without	admin	cs	striktně vyžadováno, uživatel se nemůže přihlásit bez
 submit changes	admin	cs	Odeslat změny
 submit displayed information?	admin	cs	Odeslat zobrazené informace?
 submit statistic information	admin	cs	Odeslat statistické údaje
@@ -609,7 +622,7 @@ submit the search string	admin	cs	Odeslat hledaný řetězec
 submit to egroupware.org	admin	cs	Odeslat na egroupware.org
 subtype	admin	cs	Podtyp
 subversion checkout	admin	cs	Kontrola subversion
-success	admin	cs	podařilo se
+success	admin	cs	Podařilo se
 switch it off, if users are randomly thrown out	admin	cs	vypněte, pokud jsou uživatelé náhodně vyhazováni
 template selection	admin	cs	Výběr šablony
 templates	admin	cs	Šablony
@@ -644,19 +657,25 @@ timeout for sessions in seconds (default 14400 = 4 hours)	admin	cs	Časový limi
 times	admin	cs	Časy
 to allow us to track the growth of your individual installation use this submit id, otherwise delete it:	admin	cs	Pokud nám chcete umožnit sledovat vývoj Vaší instalace, použijte následující ID. V opačném případě ho smažte:
 to use a tls connection, you must be running a version of php 5.1.0 or higher.	admin	cs	Pro použití TLS připojení musíte provozovat verzi PHP 5.1.0 nebo vyšší.
-top	admin	cs	nahoře
+token created.	admin	cs	Vytvořený žeton.
+token not found!	admin	cs	Token nebyl nalezen!
+token revoked.	admin	cs	Token odvolán.
+token saved.	admin	cs	Token uložen.
+top	admin	cs	Nahoře
+total of %1 accounts deleted.	admin	cs	Celkem %1 účtů smazáno.
 total of %1 id's changed.	admin	cs	Celkem změněno %1 ID.
 total records	admin	cs	Celkem záznamů
 translation	admin	cs	Překlad
-true	admin	cs	ano
+true	admin	cs	Ano
 trust level	admin	cs	Stupeň důvěry
 trust relationship	admin	cs	Vztah důvěry
-two days	admin	cs	dva dny
-two hours	admin	cs	dvě hodiny
-two months	admin	cs	dva měsíce
+two days	admin	cs	Dva dny
+two hours	admin	cs	Dvě hodiny
+two months	admin	cs	Dva měsíce
 two weeks	admin	cs	dva týdny
 type '%1' already exists !!!	admin	cs	typ '%1' již existuje !!!
 type of customfield	admin	cs	Typ uživatelsky definované položky
+type of field	admin	cs	Typ pole
 under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	cs	Pod Windows musíte nainstalovat asynchronní službu %1ručně%2 nebo použít náhradní režim. Náhradní režim funguje tak, že úlohy jsou zkontrolovány jen po každém zobrazení stránky !!!
 unexpected response from server to authenticate command.	admin	cs	Neočekávaná odpověď serveru na příkaz AUTHENTICATE.
 unexpected response from server to digest-md5 response.	admin	cs	Neočekávaná odpověď serveru na Digest-MD5 odpověď.
@@ -666,10 +685,11 @@ unknown command %1!	admin	cs	Neznámý příkaz %1!
 unknown imap response from the server. server responded: %s	admin	cs	Neznámá IMAP odpověď server. Odpověděl: %s
 unknown option %1	admin	cs	Neznámá volba %1
 unsupported action '%1' !!!	admin	cs	Nepodporovaná akce '%1' !!!
+unwilling to save category with current settings. check for inconsistency:	admin	cs	Nelze uložit kategorii s aktuálním nastavením. Zkontrolujte nekonzistenci:
 up	admin	cs	nahoru
 update current email address:	admin	cs	Aktualizovat současnou e-mailovou adresu:
 updated	admin	cs	aktualizováno
-url of the egroupware installation, eg. http://domain.com/egroupware	admin	cs	URL instalace eGroupWaru, např. http://domain.com/egroupware
+url of the egroupware installation, eg. http://domain.com/egroupware	admin	cs	URL instalace EGroupware, např. http://domain.com/egroupware
 usage	admin	cs	Využití
 use cookies to pass sessionid	admin	cs	Požívat cookies pro předání id relace
 use default	admin	cs	Použít výchozí
@@ -703,7 +723,7 @@ view sessions	admin	cs	Zobrazit relace
 view this user	admin	cs	Zobrazit uživatele
 view user account	admin	cs	Zobrazit uživatelský účet
 virtual mail manager	admin	cs	Virtuální správce pošty
-we ask for the data to improve our profile in the press and to get a better understanding of egroupware's user base and it's needs.	admin	cs	Tyto údaje poptáváme jen pro statistické účely, abychom získali obecný přehled o používání eGroupWaru ve světě.
+we ask for the data to improve our profile in the press and to get a better understanding of egroupware's user base and it's needs.	admin	cs	Tyto údaje poptáváme jen pro statistické účely, abychom získali obecný přehled o používání EGroupware ve světě.
 we hope you understand the importance for this voluntary statistic and not deny it lightly.	admin	cs	Neuchováváme žádné údaje o Vaší identitě.
 who would you like to transfer all records owned by the deleted user to?	admin	cs	Komu chcete přesunout VŠECHNY záznamy vlastněné smazaným uživatelem?
 would you like egroupware to cache the egw info array ?	admin	cs	Chcete aby EGroupware použil vyrovnávací paměť pro pole egw info?

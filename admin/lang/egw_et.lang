@@ -10,6 +10,8 @@
 2-factor-authentication for interactive login	admin	et	2-faktoriline autentimine interaktiivseks sisselogimiseks
 3 month	admin	et	3 kuu
 6 month	admin	et	6 kuud
+access token revoked.	admin	et	Juurdepääsutunnistus tühistatud.
+account	admin	et	Konto
 account '%1' not found !!!	admin	et	Kontot '%1' ei leitud !!!
 account active	admin	et	Konto aktiivne
 account has been created	common	et	Konto on tehtud
@@ -18,6 +20,7 @@ account has been updated	common	et	Konto on uuendatud
 account list	admin	et	Konto nimekiri
 account permissions	admin	et	Konto õigused
 account preferences	admin	et	Konto eelistused
+acl csv export	admin	et	ACL CSV eksport
 acl manager	admin	et	ACL Manageerija
 acl rights	common	et	ACL Õigused
 actions	admin	et	Tegevused
@@ -78,6 +81,9 @@ country selection	admin	et	Riigi Valik
 create group	admin	et	Tee Grupp
 created	admin	et	Tehtud
 creates a new field	admin	et	teeb uue välja
+custom 1	admin	et	Kohandatud 1
+custom 2	admin	et	Kohandatud 2
+custom 3	admin	et	Kohandatud 3
 cyrus imap server	admin	et	Cyrus IMAP Server
 cyrus imap server administration	admin	et	Cyrus IMAP server administreerimine
 day	admin	et	Päev
@@ -176,11 +182,16 @@ ip	admin	et	IP
 kill	admin	et	Tapa
 kill session	admin	et	Tapa sessioon
 last %1 logins	admin	et	Viimased %1 logimised
+last %1 logins for %2	admin	et	Viimased %1 sisselogimised %2 jaoks
 last login	admin	et	viimane login
+last time read	admin	et	Viimane lugemisaeg
+last updated	admin	et	Viimati uuendatud
 ldap encryption type	admin	et	LDAP krüpteeringu tüüp
 ldap root password	admin	et	LDAP root parool
 ldap rootdn	admin	et	LDAP rootdn
 ldap settings	admin	et	LDAP setingud
+leave empty for no quota	admin	et	Jäta tühjaks, kui kvooti ei ole
+leave empty to use oauth, if supported	admin	et	Jäta tühjaks, et kasutada OAuthi, kui see on toetatud.
 leaves without saveing	admin	et	lahkub ilma salvestamatta
 list current sessions	admin	et	Nimekiri hetke sessioonidest
 list of current users	admin	et	nimekiri hetke kasutajatest

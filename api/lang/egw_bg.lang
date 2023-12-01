@@ -792,16 +792,23 @@ title	common	bg	Заглавие
 to	common	bg	До
 to correct this error for the future you will need to properly set the	common	bg	За да отстраните тази грешка е необходимо правилно да настроите
 to go back to the msg list, click <a href= %1 >here</a>	common	bg	За връщане към списъка със съобщения, натиснете <a href="%1">тук</a>
+to start the db-tools	common	bg	Стартиране на инструментите на DB
+to start the etemplate editor	common	bg	Стартиране на редактора на eTemplate
+to start the search	common	bg	Стартиране на търсене
 today	common	bg	Днес
 todays date, eg. "%1"	common	bg	днешна дата, напр. "%1"
 togo	common	bg	Того
 tokelau	common	bg	Токелау
 tonga	common	bg	Тонга
+too many rows selected.<br />select all, or less than %1 rows	common	bg	Избрани са твърде много редове.<br />Изберете всички или по-малко от %1 редове
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	bg	Твърде много неуспешни опита за влизане: %1 за потребител '%2', %3 от IP адрес %4
 top	common	bg	Горе
 total	common	bg	общо
+total: %1 successful: %2 failed: %3 skipped: %4	common	bg	Общо: %1 Успешно: %2 Неуспешно: %3 Пропуснато: %4
 transparant bg for the icons?	common	bg	Прозрачен фон за иконите?
+tree	common	bg	Дърво
 trinidad and tobago	common	bg	Тринидад и Тобаго
+tu	common	bg	Tu
 tuesday	common	bg	Вторник
 tunisia	common	bg	Тунис
 turkey	common	bg	Турция
@@ -809,6 +816,7 @@ turkmenistan	common	bg	Туркменистан
 turks and caicos islands	common	bg	Острови Търкс и Кайкос
 tuvalu	common	bg	Тувалу
 type	common	bg	Тип
+type of the column	common	bg	Вид на колоната
 uganda	common	bg	Уганда
 ukraine	common	bg	Украйна
 underline	common	bg	Подчертаване

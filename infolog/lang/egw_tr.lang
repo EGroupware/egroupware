@@ -1,12 +1,12 @@
-%1 entries %2	infolog	tr	1 girişler %2
+%1 entries %2	infolog	tr	%1 girişler %2
 %1 entries %2, %3 failed because of insufficent rights !!!	infolog	tr	1 girişler %2, %3 yetersiz haklar nedeniyle başarısız oldu !!!
-%1 entries %2, %3 failed.	infolog	tr	1 girişleri %2, %3 başarısız oldu.
+%1 entries %2, %3 failed.	infolog	tr	%1 girişleri %2, %3 başarısız oldu.
 %1 records imported	infolog	tr	%1 kay?t ithal edildi.
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	infolog	tr	%1 kay?t okundu. (Henüz ithal edilmedi, %2geri%3 giderek ?thal Etme seçene?indeki tik i?aretini kald?rabilirsiniz.)
 (and children) deleted	infolog	tr	(ve çocuklar) silindi.
 accept	infolog	tr	Kabul Et
 action	infolog	tr	Eylem
-add	infolog	tr	ekle
+add	infolog	tr	Ekle
 added	infolog	tr	Eklendi
 addressbook placeholders available	infolog	tr	Adres defteri yer tutucuları mevcut
 all other %1 fields are valid	infolog	tr	Diğer tüm %1 alanları geçerlidir
@@ -27,13 +27,28 @@ csv-fieldname	infolog	tr	CSV Alan-Ad?
 csv-filename	infolog	tr	CSV Dosya Ad?
 current user	infolog	tr	Mevcut kullanıcı
 custom	infolog	tr	Özel
-custom fields	infolog	tr	Özel Alanlar
-days	infolog	tr	gün
+custom fields	infolog	tr	Özel alanlar
+days	infolog	tr	Gün
+default category for new infolog entries	infolog	tr	Yeni InfoLog girişleri için varsayılan kategori
+default document to insert entries	infolog	tr	Girişleri eklemek için varsayılan belge
+delegated	infolog	tr	Yetkilendirilmiş
+delegated open	infolog	tr	Yetkilendirilmiş açık
+delegated open and upcoming	infolog	tr	Delege edilmiş açık ve gelecek
+delegated overdue	infolog	tr	Delege edilmiş gecikmiş
+delegated upcomming	infolog	tr	Devredilen yaklaşan
+delete selected entries?	infolog	tr	Seçili girişleri sil?
+delete this entry and all listed sub-entries	infolog	tr	Bu girişi ve listelenen tüm alt girişleri sil
 deleted	infolog	tr	Silindi
 description	infolog	tr	Açıklama
+directory with documents to insert entries	infolog	tr	Girişleri eklemek için belgelerin bulunduğu klasör
+do you want a notification if items owned by groups you are part of get updated ?	infolog	tr	Dahil olduğunuz grupların sahip olduğu öğeler güncellendiğinde bildirim almak ister misiniz?
 done	infolog	tr	Tamam
-download	infolog	tr	?ndir
+download	infolog	tr	İndir
+download url for links	infolog	tr	Bağlantılar için URL'yi indirin
+due %1	infolog	tr	Son ödeme tarihi %1
+due date	infolog	tr	Son tarih
 duration	infolog	tr	Süre
+e-mail:	infolog	tr	E-posta:
 edit	infolog	tr	Düzenle
 empty for all	infolog	tr	Tamam? için bo?
 encrypt description	infolog	tr	Açıklamayı şifrele
@@ -93,8 +108,22 @@ infolog encryption requires epl subscription	infolog	tr	InfoLog şifrelemesi EPL
 infolog ical export	infolog	tr	InfoLog iCal dışa aktarma
 infolog ical import	infolog	tr	InfoLog iCal içe aktarma
 insert timestamp into description field	infolog	tr	Açıklama alanına zaman damgası ekle
+limit number of description lines (default 5, 0 for no limit)	infolog	tr	Açıklama satırlarının sayısını sınırlayın. Varsayılan = 5, 0 = sınır yok.
+limit width of description column ((effective only if lines limit is set), 0 for no limit)	infolog	tr	Açıklama sütununun genişliğini sınırlar. Yalnızca satır sınırı ayarlanmışsa etkilidir. 0 = sınır yok.
 link	infolog	tr	Link
+linked to %1	infolog	tr	%1 ile bağlantılı
+links and attached files	infolog	tr	Bağlantılar ve ekli dosyalar
+links of this entry	infolog	tr	Bu yazının bağlantıları
+links to specified application.  example: {{links/infolog}}	infolog	tr	Belirtilen uygulamaya bağlantılar. Örnek: {{links/infolog}}
+links wrapped in an href tag with download link	infolog	tr	İndirme bağlantısı içeren bir HREF etiketine sarılmış bağlantılar
+list all categories	infolog	tr	Tüm kategorileri listele
+list of files linked to the current record	infolog	tr	Geçerli kayda bağlı dosyaların listesi
+load custom fields in index, if filtered by selected types (eg. to display them in a type-specific index template)	infolog	tr	Seçilen türlere göre filtrelenmişse özel alanları dizine yükleyin (örneğin, türe özgü bir dizin şablonunda görüntülemek için)
 location	infolog	tr	Konum
+modifier	infolog	tr	Değiştirici
+modifierer	infolog	tr	Değiştirici
+name of current user, all other contact fields are valid too	infolog	tr	Mevcut kullanıcının adı, diğer tüm iletişim alanları da geçerlidir
+no custom field "%1" for %2.	infolog	tr	%2 için "%1" özel alanı yok.
 number of records to read (%1)	infolog	tr	Okunacak kay?t say?s? (1%)
 order	infolog	tr	Sıralama
 permission denied	infolog	tr	İzin verilmedi
