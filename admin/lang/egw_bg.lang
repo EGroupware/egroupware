@@ -38,6 +38,7 @@
 6 month	admin	bg	6 месеца
 access by	admin	bg	Достъпен от
 access control	admin	bg	Контрол на достъпа
+access token revoked.	admin	bg	Токенът за достъп е отнет.
 accesslog and bruteforce defense	admin	bg	AccessLog и BruteForce защита
 account	admin	bg	Акаунт
 account "%1" has no email address --> not notified!	admin	bg	Акаунтът "% 1" няма имейл адрес -> не е уведомен!
@@ -58,6 +59,7 @@ account preferences	admin	bg	Преференции на акаунти
 account saved.	admin	bg	Акаунтът е запазен.
 account-id's have to be integers!	admin	bg	ID-то на акаунта трябва да е с цели числа!
 acl added.	admin	bg	ACL е добавен.
+acl csv export	admin	bg	Експорт на ACL CSV
 acl deleted.	admin	bg	ACL е изтрит.
 acl entry deleted.	admin	bg	ACL записът е изтрит.
 acl entry not found!	admin	bg	ACL записът не е намерен!
@@ -105,12 +107,17 @@ all categories	admin	bg	Всички категории
 apply the changes	admin	bg	Прилагане на промените
 country	admin	bg	Държава
 created	admin	bg	Създаден
+custom 1	admin	bg	Потребителски 1
+custom 2	admin	bg	Потребителски 2
+custom 3	admin	bg	Потребителски 3
 custom fields	admin	bg	Полета по избор
 day	admin	bg	Ден
 deleted	admin	bg	Изтрит
 event details follow	admin	bg	Следват подробности за събитието
 exists	admin	bg	Съществува
 global categories	common	bg	Глобални категории
+last updated	admin	bg	Последна актуализация
+leave empty to use oauth, if supported	admin	bg	Оставете празно, за да използвате OAuth, ако се поддържа
 manage mapping	admin	bg	Управление на съответствията
 modified	admin	bg	Редактирано
 month	admin	bg	Месец

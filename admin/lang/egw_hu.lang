@@ -13,7 +13,9 @@
 2-factor-authentication for interactive login	admin	hu	2-faktoros hitelesítés interaktív bejelentkezéshez
 3 month	admin	hu	3 hónap
 6 month	admin	hu	6 hónap
+access token revoked.	admin	hu	Hozzáférési token visszavonva.
 accesslog and bruteforce defense	admin	hu	Log elérése és brute force védelem
+account	admin	hu	Fiók
 account %1 %2	admin	hu	Felhasználói hozzáférés %1 %2
 account '%1' deleted.	admin	hu	'%1' felhasználói hozzáférés törölve.
 account '%1' not found !!!	admin	hu	'%1' felhasználói azonosító nem található!
@@ -26,6 +28,7 @@ account permissions	admin	hu	Azonosító jogosultságai
 account preferences	admin	hu	Azonosító beállításai
 account-id's have to be integers!	admin	hu	Felhasználói azonosító egész szám kell legyen!
 acl added.	admin	hu	hozzáférés engedélyezve
+acl csv export	admin	hu	ACL CSV exportálása
 acl deleted.	admin	hu	hozzáférés törölve
 acl manager	admin	hu	ACL kezelő
 acl rights	common	hu	ACL jogok
@@ -143,6 +146,9 @@ created	admin	hu	Létrehozva
 created with id #%1	admin	hu	létrehozva a #%1 azonosítóval
 creates a new field	admin	hu	Új mező létrehozása
 crontab only (recomended)	admin	hu	csak crontab (ajánlott)
+custom 1	admin	hu	Egyéni 1
+custom 2	admin	hu	Egyéni 2
+custom 3	admin	hu	Egyéni 3
 custom fields	admin	hu	Egyedi mezők
 cyrus imap server	admin	hu	Cyrus IMAP-kiszolgáló
 cyrus imap server administration	admin	hu	Cyrus IMAP-kiszolgáló adminisztrációja
@@ -292,7 +298,7 @@ group has been updated	common	hu	A csoport frissítése megtörtént
 group list	admin	hu	Csoportlista
 group manager	admin	hu	Csoportmenedzser
 group name	admin	hu	Csoport neve
-hide php information	admin	hu	php információ elrejtése
+hide php information	admin	hu	PHP információ elrejtése
 home directory	admin	hu	Home könyvtár
 home screen message	admin	hu	Főképernyőn megjelenő szöveg
 host information	admin	hu	Host információ
@@ -334,6 +340,7 @@ last %1 logins for %2	admin	hu	%2 utolsó %1 bejelentkezése
 last login	admin	hu	utolsó bejelentkezés
 last login from	admin	hu	utolsó bejelentkezés címe
 last time read	admin	hu	Utolsó olvasás időpontja
+last updated	admin	hu	Utolsó frissítés
 ldap accounts context	admin	hu	LDAP fiók környezet
 ldap basedn	admin	hu	LDAP basedn
 ldap default homedirectory prefix (e.g. /home for /home/username)	admin	hu	LDAP Alapértelmezett Saját könyvtár előtagja (pl. /home a /home/felhasználó formához)
@@ -349,7 +356,8 @@ ldap server admin dn	admin	hu	LDAP szerver admin DN
 ldap server admin password	admin	hu	LDAP szerver adminisztrátorának jelszava
 ldap server hostname or ip address	admin	hu	LDAP szerver hosztneve vagy IP címe
 ldap settings	admin	hu	LDAP beállítások
-leave empty for no quota	admin	hu	hagyja üresen a kvóta figyelmen kívül hagyásához
+leave empty for no quota	admin	hu	Hagyja üresen a kvóta figyelmen kívül hagyásához
+leave empty to use oauth, if supported	admin	hu	Üresen hagyva OAuth használata, ha támogatott
 leave the category untouched and return back to the list	admin	hu	hagyja érintetlenül a kategóriát és térjen vissza a listához
 leave the group untouched and return back to the list	admin	hu	Hagyja érintetlenül a csoportot és térjen vissza a listához
 leave without saveing the entry	admin	hu	kilépés mentés nélkül
@@ -511,7 +519,7 @@ sorry, that group name has already been taken.	admin	hu	Már létezik csoport ez
 sorry, the above users are still a member of the group %1	admin	hu	A fenti felhasználók már tagjai az alábbi csoportnak: %1
 sorry, the follow users are still a member of the group %1	admin	hu	A következő felhasználók már a(z) %1 csoport tagjai
 sort the entries	admin	hu	elemek rendezése
-ssl	admin	hu	ssl
+ssl	admin	hu	SSL
 standard	admin	hu	Szabványos
 standard imap server	admin	hu	Szabványos IMAP-kiszolgáló
 standard pop3 server	admin	hu	Szabványos POP3-kiszolgáló

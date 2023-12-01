@@ -100,7 +100,7 @@ but we <u>highly recommend backing up</u> your tables in case the script causes 
 cancel	setup	zh	取消
 cannot create the header.inc.php due to file permission restrictions.<br /> instead you can %1 or %2 the file.	setup	zh	由于文件权限的限制，无法创造 header.inc.php。<br />你可以替换%1或%2文件。
 change system-charset	setup	zh	更改系统编码
-charset	setup	zh	utf-8
+charset	setup	zh	字符集
 charset to convert to	setup	zh	更改系统编码为
 charsets used by the different languages	setup	zh	不同的语言使用不同的字符编码
 check can only be performed, if called via a webserver, as the user-id/-name of the webserver is not known.	setup	zh	当Web服务器 user-ID/-name 未知时，通过服务器访问就只能执行检查。
@@ -111,7 +111,6 @@ checking file-permissions of %1 for %2 %3: %4	setup	zh	检查 %1 文件权限是
 checking for gd support...	setup	zh	检查对 GD 的支持...
 checking function %1 exists	setup	zh	Checking function %1 exists
 checking if php.ini setting session.save_path='%1' is writable by the webserver	setup	zh	检查如果 php.ini 设置 session.save_path='%1' 且是可写的
-checking pear%1 is installed	setup	zh	检查 PEAR %1 安装
 checking php.ini	setup	zh	检查 php.ini
 checking required php version %1 (recommended %2)	setup	zh	检查 PHP 版本 %1(建议 %2)
 checking the egroupware installation	setup	zh	检查 EGroupware 安装
@@ -314,7 +313,7 @@ ldap groups context	setup	zh	LDAP 组内容
 ldap host	setup	zh	LDAP 主机
 ldap import	setup	zh	LADP 导入
 ldap root password	setup	zh	LDAP root 密码
-ldap rootdn	setup	zh	LDAP rootdn ("cn=root, o=yourdomain, c=us")
+ldap rootdn	setup	zh	LDAP Root DN ("cn=root, o=yourdomain, c=us")
 ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setup	zh	LDAP 帐户搜索过滤器，默认："(uid=%user)", %domain=EGw-domain
 leave empty to keep current.	setup	zh	留空保持当前。
 limit access	setup	zh	访问限制
@@ -392,8 +391,6 @@ path information	setup	zh	路径信息
 path of egroupware install directory (default auto-detected)	setup	zh	EGroupware 安装路径(默认会自动检测)
 path to user and group files has to be outside of the webservers document-root!!!	setup	zh	用户与群组的文件存储路径必须在网络服务器根目录以外！
 path to various directories: have to exist and be writeable by the webserver	setup	zh	几个文件夹的路径：必须存在且网络服务器能够写入。
-pear (%1) is a php repository and is usually in a package called %2.	setup	zh	PEAR(%1)是一个 php 库，通常 PEAR 包被称为%2。
-pear%1 is needed by: %2.	setup	zh	PEAR%1 需要由：%2。
 persistent connections	setup	zh	持续连接
 please check for sql scripts within the application's directory	setup	zh	请在应用程序所在目录中检查 SQL 脚本
 please check read/write permissions on directories, or back up and use another option.	setup	zh	请检查对目录的读/写权限，或者备份后采取其它措施。
@@ -421,13 +418,20 @@ re-enter password	setup	zh	重新输入密码
 read translations from	setup	zh	读取转换信息
 readable by the webserver	setup	zh	网络服务器可读取
 really uninstall all applications	setup	zh	确实卸载所有应用程序
+refusing to delete dn "%1"!	setup	zh	拒绝删除 DN"%1"！
 register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	zh	register_globals 开启中，EGroupware 不需要这个设定，而且关闭它通常比较安全
 registered	setup	zh	注册
+regular expression to filter by dn	setup	zh	通过 DN 过滤的正则表达式
 rejected lines	setup	zh	拒绝的行
 remove	setup	zh	删除
 remove all	setup	zh	全部删除
 rename	setup	zh	重命名
+replace username and email	setup	zh	替换用户名和电子邮件
+replace username and keep email	setup	zh	替换用户名并保留电子邮件
+required to change passwords	setup	zh	需要更改密码
+requires "reset password" privilege, to change passwords!	setup	zh	更改密码需要 "重置密码 "权限！
 requires reinstall or manual repair	setup	zh	需要重新安装或者手动修复
+requires saml optional on login page and user to specify username and password	setup	zh	需要在登录页面上选择 SAML，并要求用户指定用户名和密码
 requires upgrade	setup	zh	需要升级
 resolve	setup	zh	解决
 restore	setup	zh	还原
@@ -508,7 +512,7 @@ the following applications need to be upgraded:	setup	zh	以下这些应用程�
 the function %1 is needed from: %2.	setup	zh	功能 %1 需要从：%2。
 the imagecreatefromjpeg function is supplied by the gd extension (complied with jpeg support!). it's needed to upload photos for contacts.	setup	zh	从 jpeg 创建图片功能是由 gd 扩展提供的(依从 jpeg 支持！)。它需要为联系人上传照片。
 the ldap extension is needed, if you use ldap as account or contact storage, authenticate against ldap or active directory. it's not needed for a standard sql installation.	setup	zh	如果您使用 ldap 作为帐户或联系人储存，需要 ldap 扩展并依靠 ldap 或活动目录进行认证。作为标准的 SQL 安装时不需要的。
-the mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	zh	如果您希望系统完全支持多国语言编码(utf-8)，您会需要mbstring扩展。
+the mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	zh	如果您希望系统完全支持多国语言编码(UTF-8)，您会需要mbstring扩展。
 the mbstring.func_overload = 7 is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	zh	要完全支持多国语言(UTF-8) 或是其它双字节编码，您必须设置 mbstring.func_overload = 7。
 the session extension is needed to use php sessions (db-sessions work without).	setup	zh	要使用 php session 就必须安装 session 扩展(通过数据库储存则不需要)。
 the table definition was correct, and the tables were installed	setup	zh	数据表定义正确，并且已经安装完毕
@@ -561,7 +565,7 @@ user for smtp-authentication (leave it empty if no auth required)	setup	zh	SMTP 
 usernames are casesensitive	setup	zh	用户帐户区分大小写
 users choice	setup	zh	用户选择
 usually more annoying.<br />admins can use admin >> manage accounts or groups to give access to further apps.	setup	zh	通常不需要，管理员可以通过账户或群组管理进一步对访问进行授权。
-utf-8 (unicode)	setup	zh	utf-8 (Unicode)
+utf-8 (unicode)	setup	zh	UTF-8 (Unicode)
 validation errors	setup	zh	验证错误
 version	setup	zh	版本
 version mismatch	setup	zh	版本不符

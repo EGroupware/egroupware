@@ -285,8 +285,10 @@ links	infolog	fi	Linkit
 links and attached files	infolog	fi	Linkit ja liitetyt tiedostot
 links of this entry	infolog	fi	Tämän merkinnän linkit
 links to specified application.  example: {{links/infolog}}	infolog	fi	Linkki määriteltyyn sovellukseen. Esim. {{links/infolog}}
+links wrapped in an href tag with download link	infolog	fi	HREF-tunnisteeseen käärityt linkit, joissa on latauslinkki.
 list all categories	infolog	fi	Listaa kaikki kategoriat
 list of files linked to the current record	infolog	fi	Lista liitetyistä tiedostoista
+load custom fields in index, if filtered by selected types (eg. to display them in a type-specific index template)	infolog	fi	Lataa mukautettuja kenttiä indeksiin, jos ne on suodatettu valittujen tyyppien mukaan (esim. niiden näyttämiseksi tyyppikohtaisessa indeksimallissa).
 location	infolog	fi	Sijainti
 longer textual description	infolog	fi	Pitempi tekstikuvaus
 low	infolog	fi	Matala
@@ -303,6 +305,7 @@ new %1 created by %2 at %3	infolog	fi	Uusi %1, luonut %1, %3
 new name	infolog	fi	Uusi nimi
 new search	infolog	fi	Uusi haku
 no - cancel	infolog	fi	Ei - Peruuta
+no custom field "%1" for %2.	infolog	fi	Ei mukautettua kenttää "%1" prosentille %2.
 no describtion, links or attachments	infolog	fi	Ei kuvausta, linkkejä tai liitetiedostoja
 no details	infolog	fi	Ei lisätietoja
 no entries found, try again ...	infolog	fi	Merkintöjä ei löytynyt, yritä uudelleen ...

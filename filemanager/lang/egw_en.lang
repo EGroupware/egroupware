@@ -249,6 +249,7 @@ read & write access	filemanager	en	Read & write access
 read access only	filemanager	en	Read access only
 readonly share link	filemanager	en	Readonly Share link
 recalculate	filemanager	en	Recalculate
+recalculate directory sizes	filemanager	en	Recalculate directory sizes
 recalculated %1 directories in %2 iterations and %3 seconds	filemanager	en	Recalculated %1 directories in %2 iterations and %3 seconds
 reload	filemanager	en	Reload
 rename of %1 to %2 failed!	filemanager	en	Rename of %1 to %2 failed!

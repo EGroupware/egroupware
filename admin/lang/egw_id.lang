@@ -17,6 +17,8 @@
 2-factor-authentication for interactive login	admin	id	Autentikasi 2-Faktor untuk login interaktif
 3 month	admin	id	3 bulan
 6 month	admin	id	6 bulan
+access token revoked.	admin	id	Token Akses dicabut.
+account	admin	id	Akun
 account %1 %2	admin	id	Akoun %1 %2
 account '%1' deleted.	admin	id	Akoun '%1' dihapus.
 account '%1' not found !!!	admin	id	Akoun '%1' tidak ditemukan !!!
@@ -28,6 +30,7 @@ account list	admin	id	Daftar Akoun
 account permissions	admin	id	Ijin-ijin Akoun
 account preferences	admin	id	Kesukaan Akoun
 acl added.	admin	id	ACL ditambakan.
+acl csv export	admin	id	Ekspor ACL CSV
 acl deleted.	admin	id	ACL dihapus.
 acl manager	admin	id	Manajer ACL
 acl rights	common	id	Hak-hak ACL
@@ -88,7 +91,7 @@ bi-dir passthrough	admin	id	bi-dir passthrough
 bi-directional	admin	id	bi-directional
 bottom	admin	id	bawah
 calculate next run	admin	id	Calculate next run
-can change password	admin	id	Can change password
+can change password	admin	id	Dapat mengubah kata sandi
 cancel testjob!	admin	id	Batalkan TestJob!
 categories list	admin	id	Daftar Kategori
 category %1 has been saved !	admin	id	Kategori %1 telah disimpan!
@@ -112,13 +115,16 @@ created	admin	id	Dibuat
 created with id #%1	admin	id	dibuat dengan ID #%1
 creates a new field	admin	id	bikin field baru
 crontab only (recomended)	admin	id	hanya crontab (rekomendasi)
+custom 1	admin	id	Kustom 1
+custom 2	admin	id	Kustom 2
+custom 3	admin	id	Kustom 3
 custom fields	admin	id	Custom fields
 cyrus imap server	admin	id	Server Cyrus IMAP
 cyrus imap server administration	admin	id	Administrasi server Cyrus IMAP
 data	admin	id	Data
 day	admin	id	Hari
 day of week<br>(0-6, 0=sun)	admin	id	Hari-hari<br>(0-6, 0=Min)
-default	admin	id	bawaan
+default	admin	id	Bawaan
 deinstall crontab	admin	id	Deinstall crontab
 delete account	admin	id	Hapus akoun
 delete account %s	admin	id	Hapus akoun %s
@@ -184,8 +190,8 @@ expires	admin	id	Kadaluarsa
 failed to change password.	admin	id	Gagal mengubah password.
 false	admin	id	false
 file space	admin	id	File space
-filtered by account	admin	id	saringan menurut Akoun
-filtered by group	admin	id	saringan menurut Kelompok
+filtered by account	admin	id	Saringan menurut Akoun
+filtered by group	admin	id	Saringan menurut Kelompok
 forward only	admin	id	Hanya Forward
 full name	admin	id	Nama Lengkap
 general	admin	id	Umum
@@ -206,8 +212,8 @@ host information	admin	id	Host information
 hour<br>(0-23)	admin	id	Jam<br>(0-23)
 icon	admin	id	Ikon
 idle	admin	id	idle
-imap admin password	admin	id	password admin IMAP
-imap admin user	admin	id	admin IMAP
+imap admin password	admin	id	Password admin IMAP
+imap admin user	admin	id	Admin IMAP
 imap c-client version < 2001	admin	id	IMAP C-Client Version < 2001
 imap server	admin	id	IMAP Server
 importance	admin	id	Importance
@@ -223,16 +229,17 @@ installed crontab	admin	id	Installed crontab
 instance	admin	id	Instance
 interface	admin	id	Interface
 ip	admin	id	IP
-jobs	admin	id	Jobs*
-kill	admin	id	Kill*
-kill session	admin	id	Kill session*
-last %1 logins	admin	id	Last %1 logins*
-last %1 logins for %2	admin	id	Last %1 logins for %2*
-last login	admin	id	last login*
-last login from	admin	id	last login from*
-last submission:	admin	id	Last submission:*
-last time read	admin	id	Last Time Read*
-ldap accounts context	admin	id	LDAP accounts context*
+jobs	admin	id	Jobs
+kill	admin	id	Kill
+kill session	admin	id	Kill session
+last %1 logins	admin	id	Last %1 logins
+last %1 logins for %2	admin	id	Last %1 logins for %2
+last login	admin	id	last login
+last login from	admin	id	last login from
+last submission:	admin	id	Last submission:
+last time read	admin	id	Last Time Read
+last updated	admin	id	Terakhir diperbarui
+ldap accounts context	admin	id	LDAP accounts context
 ldap basedn	admin	id	LDAP basedn
 ldap encryption type	admin	id	LDAP encryption type
 ldap groups context	admin	id	LDAP groups context
@@ -241,7 +248,7 @@ ldap root password	admin	id	LDAP root password
 ldap rootdn	admin	id	LDAP rootdn
 ldap server	admin	id	LDAP server
 ldap settings	admin	id	Pengaturan LDAP
-leave empty for no quota	admin	id	kosongkan bila tanpa kuota
+leave empty for no quota	admin	id	Kosongkan bila tanpa kuota
 leave without saveing the entry	admin	id	tinggalkan tanpa menyimpan entri
 leaves without saveing	admin	id	tinggalkan tanpa menyimpan
 length<br>rows	admin	id	Length<br>Rows
@@ -282,10 +289,10 @@ no modes available	admin	id	no modes available
 number of row for a multiline inputfield or line of a multi-select-box	admin	id	number of row for a multiline inputfield or line of a multi-select-box
 oauth authentiction	admin	id	Otentikasi OAuth
 offer to installing egroupware as mail-handler	admin	id	Menawarkan untuk menginstal EGroupware sebagai penangan email
-one day	admin	id	satu hari
-one hour	admin	id	satu jam
-one month	admin	id	satu bulan
-one week	admin	id	satu minggu
+one day	admin	id	Satu hari
+one hour	admin	id	Satu jam
+one month	admin	id	Satu bulan
+one week	admin	id	Satu minggu
 operating system	admin	id	Sistem Operasi
 order	admin	id	Urutan
 organisation	admin	id	Organisasi
@@ -325,7 +332,7 @@ requested	admin	id	Diminta
 reset filter	admin	id	ulangi penyaringan
 rights	admin	id	Hak
 rows	admin	id	Rows
-save the category	admin	id	simpan kategori ini
+save the category	admin	id	Simpan kategori ini
 saves the changes made and leaves	admin	id	simpan perubahan dan tinggalkan
 saves this entry	admin	id	Simpan entri ini
 search accounts	admin	id	Cari akoun
@@ -338,7 +345,7 @@ select type of imap server	admin	id	Pilih tipe Server IMAP
 select type of imap/pop3 server	admin	id	Pilih tipe Server IMAP/POP3
 select type of smtp server	admin	id	Pilih tipe Server SMTP
 selectbox	admin	id	Selectbox
-send using this email-address	admin	id	kirim menggunakan alamat eMail ini
+send using this email-address	admin	id	Kirim menggunakan alamat eMail ini
 server list	admin	id	Server List
 server password	admin	id	Server Password
 server settings	admin	id	Pengaturan Server
@@ -361,7 +368,7 @@ smtp settings	admin	id	Pengaturan SMTP
 smtp-server hostname or ip address	admin	id	Nama atau alamat IP server SMTP
 smtp-server port	admin	id	Port server SMTP
 soap	admin	id	SOAP
-sort the entries	admin	id	urutkan entri
+sort the entries	admin	id	Urutkan entri
 ssl	admin	id	SSL
 standard	admin	id	Standar
 standard imap server	admin	id	Server IMAP Standar
@@ -391,10 +398,10 @@ translation	admin	id	Terjemahan
 true	admin	id	true
 trust level	admin	id	Trust Level
 trust relationship	admin	id	Trust Relationship
-two days	admin	id	dua hari
-two hours	admin	id	dua jam
-two months	admin	id	dua bulan
-two weeks	admin	id	dua minggu
+two days	admin	id	Dua hari
+two hours	admin	id	Dua jam
+two months	admin	id	Dua bulan
+two weeks	admin	id	Dua minggu
 type of customfield	admin	id	Type of customfield
 unexpected response from server to login command.	admin	id	Unexpected response from server to LOGIN command.
 unknown account: %1 !!!	admin	id	Akoun takdikenal: %1 !!!

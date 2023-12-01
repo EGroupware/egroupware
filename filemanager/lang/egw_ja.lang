@@ -238,6 +238,8 @@ preview %1	filemanager	ja	%1 プリビュー
 preview of %1	filemanager	ja	プリビュー: %1
 projectmanager	filemanager	ja	プロジェクト・マネージャ
 properties saved.	filemanager	ja	プロパティを保存しました。
+protocol to use	filemanager	ja	使用プロトコル
+protocols	filemanager	ja	プロトコル
 quick jump to	filemanager	ja	クイック・ジャンプ:
 quota	filemanager	ja	クォータ
 quota exceeded	filemanager	ja	クォータ超過
@@ -245,6 +247,7 @@ read & write access	filemanager	ja	読み書き
 read access only	filemanager	ja	読み取り専用
 readonly share link	filemanager	ja	読み取り専用共有リンク
 recalculate	filemanager	ja	再計算
+recalculate directory sizes	filemanager	ja	ディレクトリサイズの再計算
 recalculated %1 directories in %2 iterations and %3 seconds	filemanager	ja	%2 回の繰り返しと %3 秒で %1 ディレクトリを再計算しました。
 reload	filemanager	ja	リロード
 rename of %1 to %2 failed!	filemanager	ja	%1 から %2 への名称変更に失敗しました!

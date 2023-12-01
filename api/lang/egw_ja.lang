@@ -1361,6 +1361,7 @@ todays date, eg. "%1"	common	ja	今日の日付（例: "%1"）
 togo	common	ja	トーゴ
 tokelau	common	ja	トケラウ
 tonga	common	ja	トンガ
+too many rows selected.<br />select all, or less than %1 rows	common	ja	選択された行が多すぎます。<br />すべて選択するか、%1 行未満を選択してください。
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	ja	試行回数の上限に達しました: %1 （ユーザ '%2'）, %3 （IPアドレス %4）
 top	common	ja	上部
 total	common	ja	合計

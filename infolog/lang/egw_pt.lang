@@ -272,22 +272,27 @@ leave it empty	infolog	pt	Deixar vazio
 leave it empty for a full week	infolog	pt	Deixar vário para uma semana interira
 leave without saveing the entry	infolog	pt	Continua sem guardar o registo
 leaves without saveing	infolog	pt	Continua sem guardar
+limit number of description lines (default 5, 0 for no limit)	infolog	pt	Limite do número de linhas de descrição. Predefinição = 5, 0 = sem limite.
+limit width of description column ((effective only if lines limit is set), 0 for no limit)	infolog	pt	Limitar a largura da coluna de descrição. Só é efetivo se o limite de linhas estiver definido. 0 = sem limite.
 link	infolog	pt	Ligação
 linked to %1	infolog	pt	Ligado a 1%
 links	infolog	pt	Ligações
 links and attached files	infolog	pt	Links e arquivos anexados
 links of this entry	infolog	pt	Ligações para este registo
+links to specified application.  example: {{links/infolog}}	infolog	pt	Ligações para a aplicação especificada. Exemplo: {{links/infolog}}
 links wrapped in an href tag with download link	infolog	pt	Ligações envolto em uma tag HREF com link para download
 list all categories	infolog	pt	Listar todas as categorias
 list of files linked to the current record	infolog	pt	Lista de arquivos vinculados ao registro atual
+load custom fields in index, if filtered by selected types (eg. to display them in a type-specific index template)	infolog	pt	Carregar campos personalizados no índice, se filtrados por tipos seleccionados (por exemplo, para os apresentar num modelo de índice específico do tipo)
 location	infolog	pt	Local
 longer textual description	infolog	pt	Descrição textual mais desenvolvida
-low	infolog	pt	baixa
+low	infolog	pt	Baixa
 manage mapping	infolog	pt	Gerenciar mapeamento
 max length of the input [, length of the inputfield (optional)]	infolog	pt	Comprimento máximo do campo [, comprimento do campo (opcional)]
 modifier	infolog	pt	Modifier
 modifierer	infolog	pt	Modifier
 name must not be empty !!!	infolog	pt	O campo do nome não pode estar vazio !!!
+name of current user, all other contact fields are valid too	infolog	pt	Nome do utilizador atual, todos os outros campos de contacto também são válidos
 name of new type to create	infolog	pt	Nome do novo tipo a criar
 never hide search and filters	infolog	pt	Nunca esconder a pesquisa e filtros
 new %1	infolog	pt	Nova% 1
@@ -305,7 +310,7 @@ no project	infolog	pt	Nenhum projeto
 nonactive	infolog	pt	Não activo
 none	infolog	pt	Nenhum(a)
 normal	infolog	pt	Normal
-not	infolog	pt	não
+not	infolog	pt	Não
 not assigned	infolog	pt	Por assinar
 not-started	infolog	pt	Por iniciar
 note	infolog	pt	Nota

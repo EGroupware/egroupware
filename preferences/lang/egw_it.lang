@@ -9,11 +9,13 @@ a theme defines the colors and fonts used by the template.	preferences	it	Un Tem
 access token revoked.	preferences	it	Token di accesso revocato.
 acl grants have been updated	preferences	it	Le autorizzazioni ACL sono state aggiornate
 any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	it	Ogni lista in EGroupware visualizzerà questo numero di voci o di linee per pagina.<br>Un numero elevato rallenta la visualizzazione della pagina, troppo poche ti costringono ad un lavoro aggiuntivo.
+applications list scroll area	preferences	it	Area di scorrimento dell'elenco delle applicazioni
 are you sure you want to delete this category ?	preferences	it	Sei sicuro di voler eliminare questa categoria?
 audio effect	preferences	it	Avviso sonoro
 audio effect enables|disables sound effects used in the theme	preferences	it	L'impostazione dell'effetto sonoro abilita/disabilita i suoni usati nel tema
 automatically start with this font	preferences	it	Comincia automaticamente con questo font
 automatically start with this font size	preferences	it	Comincia automaticamente con questa dimensione font
+automatically start with this format block. small paragraph adds less line space between new lines.	preferences	it	Inizia automaticamente con questo blocco di formato.<br/><b>Small Paragraph</b> aggiunge meno spazio tra le nuove righe.
 br	preferences	it	br
 change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	it	Modifica la password di un utente passando la vecchia e nuova password. Restituisce TRUE se ha successo, FALSE se fallisce.
 change password	preferences	it	Cambia password
@@ -24,6 +26,7 @@ charset for the csv export	addressbook	it	Set di Caratteri per esportazione CSV
 charset for the csv export/import	preferences	it	Set di caratteri
 click to install	preferences	it	click per installare
 click to select a color	preferences	it	Clicca per selezionare un colore
+close after selection	preferences	it	Chiudere dopo la selezione
 code is invalid	preferences	it	Codice non valido
 color	preferences	it	Colore
 country	preferences	it	Paese
@@ -38,11 +41,14 @@ default	preferences	it	predefinito
 default application	preferences	it	Applicazione predefinita
 default font	preferences	it	Font predefinito
 default font size	preferences	it	Dimensione font predefinita
+default format block	preferences	it	Blocco di formato predefinito
 default preferences	preferences	it	Preferenze Predefinite
 delete categories	preferences	it	Elimina Categorie
 deny following groups access to acl (grant access)	admin	it	Nega ai seguenti gruppi la possibilità di impostare delle regole di accesso
+deny following groups access to application passwords	preferences	it	Negare ai seguenti gruppi l'accesso alle password delle applicazioni
 deny following groups access to edit categories	admin	it	Nega ai seguenti gruppi la possibilità di modificare categorie
 deny following groups access to preferences	admin	it	Nega ai seguenti gruppi la possibilità di accedere alle preferenze
+deny following groups access to security popup	admin	it	Negare ai seguenti gruppi l'accesso al popup di sicurezza
 description can not exceed 255 characters in length !	preferences	it	La descrizione non può essere più lunga di 255 caratteri!
 disable	preferences	it	Disabilita
 disable two factor auth	preferences	it	Disabilita l'autenticazione a due fattori
@@ -79,6 +85,7 @@ general settings	preferences	it	Impostazioni generali
 generate new qrcode to disable existing one, after enabling the new one!	preferences	it	Generare un nuovo codice QR per disabilitare l'attuale, solo dopo aver abilitato quello nuovo!
 google authenticator for android	preferences	it	Google Authenticator per Android
 google authenticator for ios	preferences	it	Google Authenticator per iOS
+heading %1	preferences	it	Intestazione %1
 help off	preferences	it	Nessun aiuto
 holding ctrl/cmd key and click on the line	preferences	it	premere Ctrl/Cmd e cliccare sulla riga
 hours	preferences	it	ore
@@ -99,6 +106,7 @@ interface/template selection	preferences	it	Selezione Interfaccia/Template
 it sets content size (text only) according to selected size.	preferences	it	Imposta le dimensioni del contenuto (solo testo) in base alle dimensioni selezionate.
 just clicking on the line, like a checkbox	preferences	it	semplicemente cliccando sulla riga come se fosse una casella da spuntare
 kama theme	preferences	it	Tema Kama
+keep list open for selecting multiple	preferences	it	Mantenere l'elenco aperto per la selezione di più elementi
 language	preferences	it	Lingua
 look & feel	preferences	it	Look & Feel
 lowercase letters	preferences	it	lettere minuscole
@@ -168,6 +176,8 @@ show_more_apps	common	it	Visualizza altre applicazioni
 small paragraph	preferences	it	Carattere piccolo
 special characters	preferences	it	caratteri speciali
 spellchecker language	addressbook	it	Lingua del correttore ortografico
+stay open	preferences	it	Rimanere aperti
+stay open, but not for email	preferences	it	Rimanete aperti, ma non per le e-mail
 text editor settings	preferences	it	Impostazioni dell'editor di testo
 text only	preferences	it	Solo Testo
 the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	it	L'applicazione predefinita partirà quando entri in EGroupware o premi sull'icona della homepage.<br>Puoi avere più di una applicazione visualizzata in homepage, se non scegli un'applicazione specifica (dovrà esser configurato nelle preferenze di ogni applicazione).
@@ -188,6 +198,7 @@ unit of displayed font sizes: either "px" as used eg. for web-pages or "pt" as u
 uppercase letters	preferences	it	lettere maiuscole
 use default	preferences	it	Usa il predefinito
 users choice	preferences	it	Scelta dell'utente
+when you can select multiple options, should the option list stay open until you close it, or close after you pick an option.	preferences	it	Quando è possibile selezionare più opzioni, l'elenco delle opzioni deve rimanere aperto finché non lo si chiude o chiudersi dopo aver scelto un'opzione.
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	it	Quando dici sì i pulsanti Home e Uscita sono presentati come applicazioni nella barra principale superiore.
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	it	Seleziona un set di caratteri per l'importazione/esportazione CSV
 which currency symbol or name should be used in egroupware.	preferences	it	Quale simbolo monetario o nome deve essere usato in EGroupware.

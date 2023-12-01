@@ -9,8 +9,8 @@
 %1 is needed by: %2.	setup	ru	%1 нужен для: %2
 %1 is set to %2, you will not be able to upload or attach files bigger then that!	setup	ru	%1 установлено в %2, вы не сможете выгружать или прикреплять файлы большего размера!
 %1 is set to %2. this is not recommeded for a production system, as displayed error messages can contain passwords or other sensitive information!	setup	ru	%1 установлено в  %2. Это не рекомендуется для производственных систем, поскольку служебные сообщения могут содержать пароли и другую чувствительную информацию
-%1 users and %2 groups created, %3 errors	setup	ru	Создано %1 пользователей и %2 групп, ошибок %3.
 %1 the configuration file.	setup	ru	%1 файла(ов) конфигурации
+%1 users and %2 groups created, %3 errors	setup	ru	Создано %1 пользователей и %2 групп, ошибок %3.
 '%1' is no valid domain name!	setup	ru	'%1' - неверное имя домена!
 '%1' is not allowed as %2. arguments of option %3 !!!	setup	ru	'%1' недопустим как %2. Возможны аргументы %3 !
 '%1' must be integer	setup	ru	%1 должно быть целым числом.
@@ -103,7 +103,7 @@ backup now	setup	ru	создать резервную копию сейчас
 backup sets	setup	ru	резервная копия устанавливается
 backup skipped!	setup	ru	Резервное копирование пропущено!
 backup started, this might take a few minutes ...	setup	ru	резервное копирование запущено, это может занять несколько минут
-base dn "%1" not found!	setup	ru	Базовый dn "%1" не найден!
+base dn "%1" not found!	setup	ru	Базовый DN "%1" не найден!
 because an application it depends upon was upgraded	setup	ru	в связи с тем, что приложение от которго имеется зависимость было обновлено
 because it depends upon	setup	ru	в связи с тем, что зависит от
 because it is not a user application, or access is controlled via acl	setup	ru	в связи с тем, что это не пользовательское приложение, либо доступ ограничен ACL
@@ -277,12 +277,12 @@ enter your http proxy server	setup	ru	Укажите HTTP прокси серв�
 enter your http proxy server password	setup	ru	Введите пароль HTTP прокси сервера
 enter your http proxy server port	setup	ru	Введите порт HTTP прокси сервера
 enter your http proxy server username	setup	ru	Введите имя пользователя HTTP прокси сервера
-error deleting "dn=%1"!	setup	ru	Ошибка удаления "dn=%1"!
+error deleting "dn=%1"!	setup	ru	Ошибка удаления "DN=%1"!
 error dropping user!	setup	ru	Ошибка удаления пользователя!
 error in admin-creation !!!	setup	ru	Ошибка при создании администратора !!!
 error in group-creation !!!	setup	ru	Ошибка при создании группы
-error listing "dn=%1"!	setup	ru	Ошибка отображения "dn=%1"!
-error modifying dn=%1: %2='%3'!	setup	ru	Ошибка изменения dn=%1: %2='%3'!
+error listing "dn=%1"!	setup	ru	Ошибка отображения "DN=%1"!
+error modifying dn=%1: %2='%3'!	setup	ru	Ошибка изменения DN=%1: %2='%3'!
 export has been completed!	setup	ru	Экспорт завершен!
 failed to mount backup directory!	setup	ru	Невозможно подключение Backup каталога!
 failed writing configuration file header.inc.php, check the permissions !!!	setup	ru	Ошибка записи файла конфигурации header.inc.php, проверьте возможность доступа!
@@ -295,7 +295,7 @@ filesystem	setup	ru	Файловая система
 filesystem (default)	setup	ru	Файловая система по умолчанию
 force selectbox	setup	ru	Принудительный список выбора
 give admin access to all installed apps	setup	ru	Выдать полный доступ ко всем установленным приложениям
-give ldap root dn and password, if you need to create an instance specific admin user, user- or group-context	setup	ru	Предоставляет LDAP root DN и пароль, в случае необходимости создания инстанции специального пользователя-администратора (в контексте пользователя или группы)
+give ldap root dn and password, if you need to create an instance specific admin user, user- or group-context	setup	ru	Предоставляет LDAP Root DN и пароль, в случае необходимости создания инстанции специального пользователя-администратора (в контексте пользователя или группы)
 gives further options	setup	ru	в дальнейшем дает дополнительные параметры(?)
 go back	setup	ru	Вернуться
 go to	setup	ru	Перейти к
@@ -363,13 +363,13 @@ ldap accounts context	setup	ru	LDAP контекст
 ldap config	setup	ru	LDAP конфигурация
 ldap default homedirectory prefix (e.g. /home for /home/username)	setup	ru	Префикс домашней папки LDAP по уполчанию (напр. /home для /home/username
 ldap default shell (e.g. /bin/bash)	setup	ru	LDAP оболочка по умолчанию (напр. /bin/bash)
-ldap dn="%1" with %2 entries deleted.	setup	ru	LDAP dn="%1" и %2 записей удалено.
+ldap dn="%1" with %2 entries deleted.	setup	ru	LDAP DN="%1" и %2 записей удалено.
 ldap encryption type	setup	ru	Тип шифрования LDAP
 ldap groups context	setup	ru	Контекст групп LDAP
 ldap host	setup	ru	Имя сервера LDAP
 ldap import	setup	ru	Импорт  LDAP
 ldap root password	setup	ru	Пароль LDAP
-ldap rootdn	setup	ru	Корневой dn LDAP
+ldap rootdn	setup	ru	Корневой DN LDAP
 ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setup	ru	Фильтр поиска учетных записей LDAP, по умолчанию: "(uid=%user)",%domain=EGw-domain
 leave empty to keep current.	setup	ru	Оставьте пустым для сохранения текущего значения.
 limit access	setup	ru	Ограничить доступ
@@ -485,14 +485,20 @@ re-enter password	setup	ru	Введите пароль повторно
 read translations from	setup	ru	Прочитать переводы из
 readable by the webserver	setup	ru	веб-сервер может читать
 really uninstall all applications	setup	ru	Действительно деинсталировать все приложения?
-refusing to delete dn "%1"!	setup	ru	Отказано в удалении dn "%1"!
+refusing to delete dn "%1"!	setup	ru	Отказано в удалении DN "%1"!
 register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	ru	параметр   register_globals  включен, EGroupware этого НЕ требует и в основном защищенность выше когда он выключен
 registered	setup	ru	зарегистрировано
+regular expression to filter by dn	setup	ru	Регулярное выражение для фильтрации по DN
 rejected lines	setup	ru	Отклоненные строки
 remove	setup	ru	Удалить
 remove all	setup	ru	Удалить все
 rename	setup	ru	переименовать
+replace username and email	setup	ru	Заменить имя пользователя и электронную почту
+replace username and keep email	setup	ru	Заменить имя пользователя и сохранить электронную почту
+required to change passwords	setup	ru	требуется для изменения паролей
+requires "reset password" privilege, to change passwords!	setup	ru	Для смены пароля требуется привилегия "Сброс пароля"!
 requires reinstall or manual repair	setup	ru	Требует переустановки или ручного восстановления
+requires saml optional on login page and user to specify username and password	setup	ru	Требуется наличие опции SAML на странице входа в систему и указание пользователем имени пользователя и пароля
 requires upgrade	setup	ru	Требует обновления
 resolve	setup	ru	Решение
 restore	setup	ru	восстановить

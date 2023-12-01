@@ -236,29 +236,40 @@ last modified	infolog	da	Sidst ændret
 leave blank to get the used time calculated by timesheet entries	infolog	da	Lad det være tomt for at få den brugte tid beregnet ud fra tidsregistreringerne.
 leave it empty	infolog	da	Lad det være tomt
 leave it empty for a full week	infolog	da	Lad det være tomt i en hel uge
-leave without saveing the entry	infolog	da	forlad uden at gemme indtastningen
-leaves without saveing	infolog	da	forlad uden at gemme
+leave without saveing the entry	infolog	da	Forlad uden at gemme indtastningen
+leaves without saveing	infolog	da	Forlad uden at gemme
 length	infolog	da	Længde
 limit list to last n month, if ordering by last-modified and not searching.	admin	da	Begræns listen til de sidste N måneder, hvis der bestilles efter sidst ændret og ikke søges.
+limit number of description lines (default 5, 0 for no limit)	infolog	da	Begræns antallet af beskrivelseslinjer. Standard = 5, 0 = ingen grænse.
+limit width of description column ((effective only if lines limit is set), 0 for no limit)	infolog	da	Begræns bredden af beskrivelseskolonnen. Virker kun, hvis linjegrænsen er sat. 0 = ingen grænse.
 link	infolog	da	Link
+linked to %1	infolog	da	Linket til %1
 links	infolog	da	Links
+links and attached files	infolog	da	Links og vedhæftede filer
 links of this entry	infolog	da	Links til denne postering
+links to specified application.  example: {{links/infolog}}	infolog	da	Links til det angivne program. Eksempel: {{links/infolog}}
+links wrapped in an href tag with download link	infolog	da	Links pakket ind i et HREF-tag med downloadlink
 list all categories	infolog	da	Vis alle kategorier
+list of files linked to the current record	infolog	da	Liste over filer, der er linket til den aktuelle post
+load custom fields in index, if filtered by selected types (eg. to display them in a type-specific index template)	infolog	da	Indlæs brugerdefinerede felter i indeks, hvis filtreret efter valgte typer (f.eks. for at vise dem i en typespecifik indeksskabelon)
 location	infolog	da	Sted
 longer textual description	infolog	da	Længere tekstet beskrivelse
 low	infolog	da	lav
 max length of the input [, length of the inputfield (optional)]	infolog	da	maks længde af inputtet [længde af input feltet (valg frit)]
+modifier	infolog	da	Modifikator
+modifierer	infolog	da	Modifikator
 name must not be empty !!!	infolog	da	Navn må ikke være tomt!!!
 name of new type to create	infolog	da	navn på den nye type der skal oprettes
 never hide search and filters	infolog	da	Gem aldrig 'Søg' og ' Filtre'
-new name	infolog	da	nyt navn
+new name	infolog	da	Nyt navn
 new search	infolog	da	Ny søgning
 no - cancel	infolog	da	No - Annullere
+no custom field "%1" for %2.	infolog	da	Intet brugerdefineret felt "%1" for %2.
 no describtion, links or attachments	infolog	da	Ingen beskrivelse, links eller vedhæftelser
 no details	infolog	da	Ingen detaljer
 no entries found, try again ...	infolog	da	ingen resultater fundet, prøv igen....
-no filter	infolog	da	ingen filter
-no links or attachments	infolog	da	ingen links eller vedhæftet filer
+no filter	infolog	da	Ingen filter
+no links or attachments	infolog	da	Ingen links eller vedhæftet filer
 none	infolog	da	Ingen
 normal	infolog	da	normal
 not	infolog	da	ikke

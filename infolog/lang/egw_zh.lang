@@ -245,16 +245,25 @@ leave without saveing the entry	infolog	zh	取消, 不保存对该事项的操�
 leaves without saveing	infolog	zh	取消, 不作保存
 length	infolog	zh	长度
 limit list to last n month, if ordering by last-modified and not searching.	admin	zh	如果按最后修改排序且不搜索，则将列表限制为最近 N 个月。
+limit number of description lines (default 5, 0 for no limit)	infolog	zh	限制说明行数。默认 = 5，0 = 无限制。
+limit width of description column ((effective only if lines limit is set), 0 for no limit)	infolog	zh	限制说明栏的宽度。仅在设置了行数限制时有效。0 = 无限制。
 link	infolog	zh	关联
+linked to %1	infolog	zh	链接到 %1
 links	infolog	zh	关联
+links and attached files	infolog	zh	链接和附加文件
 links of this entry	infolog	zh	设定与事项相关的条目或文件
+links to specified application.  example: {{links/infolog}}	infolog	zh	指向指定应用程序的链接。示例： {{links/infolog}}
+links wrapped in an href tag with download link	infolog	zh	用带下载链接的 HREF 标记包装的链接
 list all categories	infolog	zh	列出所有类别
+list of files linked to the current record	infolog	zh	链接到当前记录的文件列表
+load custom fields in index, if filtered by selected types (eg. to display them in a type-specific index template)	infolog	zh	在索引中加载自定义字段（如果通过所选类型进行筛选）（例如，在特定类型的索引模板中显示自定义字段
 location	infolog	zh	位置
 longer textual description	infolog	zh	设定事项的具体内容
 low	infolog	zh	低
 manage mapping	infolog	zh	管理匹配
 max length of the input [, length of the inputfield (optional)]	infolog	zh	输入文本的最大长度[,文本框的宽度]
 modifier	infolog	zh	修改人
+modifierer	infolog	zh	修改人
 name must not be empty !!!	infolog	zh	名称不能为空!!!
 name of current user, all other contact fields are valid too	infolog	zh	目前用户的名称，所有其他联系人字段也是正确的
 name of new type to create	infolog	zh	请输入新建类型的名称
@@ -262,6 +271,7 @@ new %1	infolog	zh	新建%1
 new name	infolog	zh	新名称
 new search	infolog	zh	重新搜索
 no - cancel	infolog	zh	否
+no custom field "%1" for %2.	infolog	zh	%2 没有自定义字段"%1"。
 no details	infolog	zh	没有细节
 no entries found, try again ...	infolog	zh	未发现条目, 再次尝试 ...
 no filter	infolog	zh	所有事项

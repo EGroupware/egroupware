@@ -1,7 +1,7 @@
 actions	setup	da	Handling
 add auto-created users to this group ('default' will be attempted if this is empty.)	setup	da	Tilføj automatisk-oprettede bruger til denne gruppe ('Default' vil blive brugt hvis tom)
-admin password	setup	da	admin adgangskode
-admin username	setup	da	admin brugernavn
+admin password	setup	da	Admin adgangskode
+admin username	setup	da	Admin brugernavn
 admins	setup	da	Administratore
 all users	setup	da	Alle brugere
 application title	setup	da	Applikation titel
@@ -36,7 +36,7 @@ ldap encryption type	setup	da	LDAP krypterings type
 ldap groups context	setup	da	LDAP gruppe contekst
 ldap host	setup	da	LDAP host
 ldap root password	setup	da	LDAP root adgangskode
-ldap rootdn	setup	da	LDAP rootdn
+ldap rootdn	setup	da	LDAP Root DN
 mail server login type	setup	da	Post server login type
 maximum account id (e.g. 65535 or 1000000)	setup	da	Maksimum konto id (f.eks. 65535 eller 10000000)
 min backup count	setup	da	Maksimalt antal sikkerhedskopier, der bevares (nul: alle)
@@ -47,20 +47,31 @@ month	setup	da	Måned
 new	setup	da	Ny
 next run	setup	da	Næste kørsel
 no algorithms available	setup	da	Ingen algoritmer tilgængelig
-not	setup	da	ikke
-not set	setup	da	ikke set
-one month	setup	da	en måned
-one week	setup	da	en uge
+not	setup	da	Ikke
+not set	setup	da	Ikke set
+one month	setup	da	En måned
+one week	setup	da	En uge
 or	setup	da	eller
 re-enter password	setup	da	Genindtast adgangskode
+refusing to delete dn "%1"!	setup	da	Nægter at slette dn "%1"!
+regular expression to filter by dn	setup	da	Regulært udtryk til at filtrere efter DN
+rejected lines	setup	da	Afviste linjer
 remove	setup	da	Fjern
+remove all	setup	da	Fjern alle
+rename	setup	da	Omdøb
+replace username and email	setup	da	Udskift brugernavn og e-mail
+replace username and keep email	setup	da	Udskift brugernavn og behold e-mail
+required to change passwords	setup	da	påkrævet for at ændre adgangskoder
+requires "reset password" privilege, to change passwords!	setup	da	Kræver rettigheden "Nulstil adgangskode" for at ændre adgangskoder!
+requires reinstall or manual repair	setup	da	Kræver geninstallation eller manuel reparation
+requires saml optional on login page and user to specify username and password	setup	da	Kræver valgfri SAML på login-siden, og at brugeren angiver brugernavn og adgangskode
 select where you want to store/retrieve user accounts	setup	da	Vælg hvor du vil gemme/modtage bruger kontier
 selectbox	setup	da	Selectboks
-settings	setup	da	indstillinger
+settings	setup	da	Indstillinger
 show 'powered by' logo on	setup	da	Vis 'leveret af' logo i
 size	setup	da	Størrelse
 text entry	setup	da	Tekst indtastning
-two weeks	setup	da	to uger
+two weeks	setup	da	To uger
 use cookies to pass sessionid	setup	da	Brug cookies som sessionid
 use pure html compliant code (not fully working yet)	setup	da	Brug ren HTML godkendt kode (virker ikke 100% endnu)
 would you like to show each application's upgrade status ?	setup	da	Vil du gerne have vist hver applikations opgraderings status?

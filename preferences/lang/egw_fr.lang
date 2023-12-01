@@ -26,6 +26,7 @@ charset for the csv export	addressbook	fr	Jeu de caractères pour l'exportation 
 charset for the csv export/import	preferences	fr	Jeu de caractères
 click to install	preferences	fr	cliquer pour installer
 click to select a color	preferences	fr	Cliquez pour sélectionner une couleur
+close after selection	preferences	fr	Fermer après sélection
 code is invalid	preferences	fr	Code invalide
 color	preferences	fr	Couleur
 country	preferences	fr	Pays
@@ -44,6 +45,7 @@ default format block	preferences	fr	Format de block par défaut
 default preferences	preferences	fr	Préférences par défaut
 delete categories	preferences	fr	Supprimer les catégories
 deny following groups access to acl (grant access)	admin	fr	Refuser aux groupes suivants l'accès aux ACL (autoriser l'accès)
+deny following groups access to application passwords	preferences	fr	Interdire aux groupes suivants l'accès aux mots de passe des applications
 deny following groups access to edit categories	admin	fr	Refuser aux groupes suivants de modifier les catégories
 deny following groups access to preferences	admin	fr	Refuser aux groupes suivants l'accès aux préférences
 deny following groups access to security popup	admin	fr	Refuser aux groupes suivants l'accès à la fenêtre de sécurité
@@ -104,8 +106,8 @@ interface/template selection	preferences	fr	Sélection de l'interface/modèle
 it sets content size (text only) according to selected size.	preferences	fr	Il définit la taille du contenu (texte uniquement) en fonction de la taille sélectionnée.
 just clicking on the line, like a checkbox	preferences	fr	cliquer juste sur la ligne, comme sur un case à cocher
 kama theme	preferences	fr	Thème Kama
+keep list open for selecting multiple	preferences	fr	Garder la liste ouverte pour la sélection multiple
 language	preferences	fr	Langue
-large	preferences	fr	grand
 look & feel	preferences	fr	Ergonomie
 lowercase letters	preferences	fr	lettres minuscules
 make applications list scrollable with up/down scroll buttons (usefull for users working with mouse with no scrollwheel)	preferences	fr	Rendre la liste d'applications scrollable avec les boutons haut/bas (utile pour les utilisateurs avec une souris sans molette)
@@ -132,8 +134,8 @@ password is invalid	preferences	fr	Mot de passe invalide
 password must have at least %1 characters	preferences	fr	Le mot de passe doit avoir au moins %1 caractères
 permanent time zone selection	preferences	fr	Fuseau horaire permanent
 please select timezones, you want to be able to quickly switch between. switch is not shown, if less then two are selected.	preferences	fr	Sélectionner les fuseaux horaires
-please select your timezone.	preferences	fr	Chosir votre fuseau horaire
-please, select a new theme	preferences	fr	SVP, choisissez un nouveau thème
+please select your timezone.	preferences	fr	Sélectionnez votre fuseau horaire.
+please, select a new theme	preferences	fr	Sélectionner un nouveau thème
 popup with search	preferences	fr	Ouvre une fenêtre Popup avec la recherche
 preferences saved.	preferences	fr	Préférences enregistrées.
 preformatted	preferences	fr	Préformaté
@@ -171,10 +173,11 @@ show qrcode	preferences	fr	Afficher le QRCode
 show qrcode to enable on an additional device.	preferences	fr	Afficher le QRCode pour ajouter un périphérique
 show text on navigation icons	preferences	fr	Montrer le texte sur les icônes de navigation
 show_more_apps	common	fr	Montrer plus d'Applications
-small	preferences	fr	petit
 small paragraph	preferences	fr	Paragraphe petit
 special characters	preferences	fr	caractères spéciaux
 spellchecker language	addressbook	fr	Language de correcteur orthographique
+stay open	preferences	fr	Rester ouvert
+stay open, but not for email	preferences	fr	Rester ouvert, mais pas pour le courrier électronique
 text editor settings	preferences	fr	Paramètre de l'éditeur de texte
 text only	preferences	fr	Texte seulement
 the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	fr	L'application par défaut sera exécutée quand vous entrez dans EGroupware ou cliquez sur l'icône de la page d'accueil.<br>Vous pouvez aussi avoir plus d'une application s'affichant sur la page d'accueil, si vous ne choisissez pas d'application spécifique ici (ceci doit être configuré dans les préférences de chaque application).
@@ -195,12 +198,11 @@ unit of displayed font sizes: either "px" as used eg. for web-pages or "pt" as u
 uppercase letters	preferences	fr	lettres majuscules
 use default	preferences	fr	Utiliser le défaut
 users choice	preferences	fr	Choix des utilisateurs
+when you can select multiple options, should the option list stay open until you close it, or close after you pick an option.	preferences	fr	Lorsque vous pouvez sélectionner plusieurs options, la liste d'options doit-elle rester ouverte jusqu'à ce que vous la fermiez ou se fermer après que vous avez choisi une option ?
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	fr	Si vous dites Oui, les boutons Accueil et Déconnexion sont présentés comme des applications dans la barre de navigation.
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	fr	Quel jeu de caractères faut-il utiliser pour l'exportation CSV. Le paramétrage par défaut est celui utilisé lors de l'installation d'EGroupware.
 which currency symbol or name should be used in egroupware.	preferences	fr	Quel symbole de monnaie ou nom devrait être utilisé dans EGroupware.
 write prefs for the specified application.	preferences	fr	Ecrire les préférences pour l'apllication spécifiée.
-x-large	preferences	fr	x-large
-x-small	preferences	fr	x-small
 you can show the applications as icons only, icons with app-name or both.	preferences	fr	Vous pouvez montrer les applications comme des icônes seulement, des icônes avec le nom de l'application ou les deux.
 you can show the linked entries with icons only, icons with app-name or both.	common	fr	Monter les applications avec des icônes seulement, icônes avec des noms d'application ou les deux.
 you do not have permission to set acl's in this mode!	preferences	fr	Vous n'avez pas les droits pour régler les ACLs dans ce mode!

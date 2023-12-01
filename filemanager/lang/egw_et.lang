@@ -70,10 +70,21 @@ password for webdav and smb, use $pass for password of logged in user	filemanage
 path and query-parameters, smb: share and optional path (with /)	filemanager	et	Path ja päringuparameetrid, SMB: share ja valikuline tee (koos /-ga)
 permissions	filemanager	et	Õigused
 preview	filemanager	et	Eelvaade
+protocol to use	filemanager	et	Kasutatav protokoll
+protocols	filemanager	et	Protokollid
 quota	filemanager	et	Kvoot
 quota exceeded	filemanager	et	Kvoot ületatud
+read & write access	filemanager	et	Lugemis- ja kirjutamisjuurdepääs
+read access only	filemanager	et	Ainult lugemisjuurdepääs
+readonly share link	filemanager	et	Ainult lugemiseks Jaga link
 recalculate	filemanager	et	Arvutage uuesti
+recalculate directory sizes	filemanager	et	Kataloogi suuruse ümberarvutamine
 recalculated %1 directories in %2 iterations and %3 seconds	filemanager	et	Arvutati %1 kataloogi %2 korduse ja %3 sekundi jooksul uuesti.
+reload	filemanager	et	Laadige uuesti
+rename of %1 to %2 failed!	filemanager	et	%1 ümbernimetamine %2-ks ebaõnnestus!
+rename, change permissions or ownership	filemanager	et	Ümbernimetamine, õiguste või omandiõiguse muutmine
+renamed %1 to %2	filemanager	et	Ümbernimetamine %1 ümber %2-ks
+renamed %1 to %2.	filemanager	et	Ümbernimetamine %1 ümber %2-ks
 save changes	filemanager	et	Salvesta muudatused
 show	filemanager	et	Näita
 size	filemanager	et	suurus

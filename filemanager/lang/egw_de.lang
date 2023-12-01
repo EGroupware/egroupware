@@ -249,6 +249,7 @@ read & write access	filemanager	de	Lese- und Schreibzugriff
 read access only	filemanager	de	Nur Lesezugriff
 readonly share link	filemanager	de	Nur lesende Freigabe - Link
 recalculate	filemanager	de	Neuberechnung Speicherplatz
+recalculate directory sizes	filemanager	de	Neuberechnung der Verzeichnisgrößen
 recalculated %1 directories in %2 iterations and %3 seconds	filemanager	de	Neuberechnung Speicherplatz von %1 Verzeichnissen in %2 Iterationen und %3 Sekunden
 reload	filemanager	de	Aktualisieren
 rename of %1 to %2 failed!	filemanager	de	Umbenennung von %1 nach %2 schlug fehl!

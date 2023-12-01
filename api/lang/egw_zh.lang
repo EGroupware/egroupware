@@ -1110,6 +1110,7 @@ title	common	zh	标题
 to	common	zh	到
 to correct this error for the future you will need to properly set the	common	zh	为今后更正该错误，您需要适当地设置
 to disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty	common	zh	禁用：[! = not]<value>[=<check>]，例如：'!@data' 如果数据内容为空则禁用
+to examine or reinstate inactived files, you might need to turn versioning on.	admin	zh	要检查或恢复未激活的文件，您可能需要打开版本控制。
 to go back to the msg list, click <a href= %1 >here</a>	common	zh	点击<a href="%1">此处</a>返回邮件列表
 to start the db-tools	common	zh	开始数据库工具
 to start the etemplate editor	common	zh	开始模板编辑器
@@ -1119,12 +1120,15 @@ todays date, eg. "%1"	common	zh	当前日期，例如："%1"
 togo	common	zh	多哥
 tokelau	common	zh	托克劳群岛
 tonga	common	zh	汤加
+too many rows selected.<br />select all, or less than %1 rows	common	zh	选择的行数太多。<br />选择全部或少于 %1 行
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	zh	登录失败次数过多：用户"%2" %1次，IP地址"%4" %3次
 top	common	zh	顶部
 total	common	zh	总计
+total: %1 successful: %2 failed: %3 skipped: %4	common	zh	总计：%1 成功：%2 失败：%3 跳过：%4
 transparant bg for the icons?	common	zh	图标背景透明
 tree	common	zh	树
 trinidad and tobago	common	zh	特立尼达和多巴哥
+tu	common	zh	Tu
 tuesday	common	zh	星期二
 tunisia	common	zh	突尼斯
 turkey	common	zh	土耳其

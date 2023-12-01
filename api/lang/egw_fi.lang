@@ -1193,6 +1193,7 @@ title	common	fi	Otsikko
 titles of any entries linked to the current record, excluding attached files	preferences	fi	Linkitettyjen merkintöjen otsikot/aiheet, possulkien tiedostot
 to	common	fi	To
 to correct this error for the future you will need to properly set the	common	fi	Korjataksesi tämän virheen jatkossa sinun täytyy määritellä
+to examine or reinstate inactived files, you might need to turn versioning on.	admin	fi	Jos haluat tutkia tai palauttaa käytöstä poistettuja tiedostoja, sinun on ehkä otettava versionhallinta käyttöön.
 to go back to the msg list, click <a href= %1 >here</a>	common	fi	Siirtyäksesi takaisin viestiluetteloon napsauta <a href="%1">tästä</a>
 to start the db-tools	common	fi	Käynnistääksesi Tietokantatyökalut
 to start the etemplate editor	common	fi	Käynnistääksesi eMallipohjan muokkauksen
@@ -1202,12 +1203,15 @@ todays date, eg. "%1"	common	fi	Tämä päivämäärä, esim. "%1"
 togo	common	fi	TOGO
 tokelau	common	fi	TOKELAU
 tonga	common	fi	TONGA
+too many rows selected.<br />select all, or less than %1 rows	common	fi	Liian monta riviä valittu.<br />Valitse kaikki tai vähemmän kuin %1 riviä.
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	fi	Liian monta epäonnistunutta sisäänkirjautumista: %1 käyttäjällä '%2', %3 IP-osoitteesta %4
 top	common	fi	Ylälaita
 total	common	fi	Yhteensä
+total: %1 successful: %2 failed: %3 skipped: %4	common	fi	Yhteensä: %1 Onnistunut: %2 Epäonnistunut: %3 Ohitettu: %4
 transparant bg for the icons?	common	fi	Kuvakkeille läpinäkyvä tausta
 tree	common	fi	Puu/runko
 trinidad and tobago	common	fi	TRINIDAD JA TOBAGO
+tu	common	fi	Tu
 tuesday	common	fi	Tiistai
 tunisia	common	fi	TUNISIA
 turkey	common	fi	TURKKI

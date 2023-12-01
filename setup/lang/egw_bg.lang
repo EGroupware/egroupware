@@ -83,9 +83,19 @@ possible solutions	setup	bg	Възможни решения
 re-check my database	setup	bg	Проверка отново на базата данни
 re-check my installation	setup	bg	Проверка отново на инсталацията
 re-enter password	setup	bg	Въведете отново паролата
+refusing to delete dn "%1"!	setup	bg	Отказвам да изтрия DN "%1"!
 registered	setup	bg	регистрирано
+regular expression to filter by dn	setup	bg	Редовен израз за филтриране по DN
+rejected lines	setup	bg	Отхвърлени редове
 remove	setup	bg	Премахване
 remove all	setup	bg	Премахване на всички
+rename	setup	bg	Преименуване на
+replace username and email	setup	bg	Замяна на потребителско име и имейл
+replace username and keep email	setup	bg	Заменете потребителското име и запазете имейла
+required to change passwords	setup	bg	изисква се промяна на паролите
+requires "reset password" privilege, to change passwords!	setup	bg	Изисква се привилегия "Reset Password", за да се променят паролите!
+requires reinstall or manual repair	setup	bg	Изисква преинсталиране или ръчен ремонт
+requires saml optional on login page and user to specify username and password	setup	bg	Изисква SAML по избор на страницата за вход и потребителят да посочи потребителско име и парола
 requires upgrade	setup	bg	Има нужда от обновяване
 save	setup	bg	Запис
 select one...	setup	bg	изберете едно...

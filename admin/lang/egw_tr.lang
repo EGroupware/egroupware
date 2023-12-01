@@ -9,7 +9,9 @@
 2-factor-authentication for interactive login	admin	tr	Etkileşimli oturum açma için 2 Faktörlü Kimlik Doğrulama
 3 month	admin	tr	3 ay
 6 month	admin	tr	6 ay
+access token revoked.	admin	tr	Erişim Belirteci iptal edildi.
 accesslog and bruteforce defense	admin	tr	Erişim kayıtları ve BruteForce Koruması
+account	admin	tr	Hesap
 account active	admin	tr	Hesap aktif
 account has been created	common	tr	Hesap oluşturuldu
 account has been deleted	common	tr	Hesap silindi
@@ -17,6 +19,7 @@ account has been updated	common	tr	Hesap güncellendi
 account list	admin	tr	Hesap listesi
 account permissions	admin	tr	Hesap hakları
 account preferences	admin	tr	Hesap ayarları
+acl csv export	admin	tr	ACL CSV dışa aktarma
 acl manager	admin	tr	ACL Yöneticisi
 acl rights	common	tr	ACL Hakları
 action	admin	tr	Eylem
@@ -89,6 +92,9 @@ country	admin	tr	Ülke
 country selection	admin	tr	Ülke seçimi
 create group	admin	tr	Grup oluştur
 crontab only (recomended)	admin	tr	crontab sadece (önerilir)
+custom 1	admin	tr	Özel 1
+custom 2	admin	tr	Özel 2
+custom 3	admin	tr	Özel 3
 custom fields	admin	tr	Özel Alanlar
 data	admin	tr	Veri
 day	admin	tr	Gün
@@ -157,7 +163,7 @@ enter the background color for the site title	admin	tr	Site başlığı için ar
 enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	tr	Geçici dosyalar için tam yol giriniz. <br>Örnekler: /tmp, C:\TEMP
 enter the full path for users and group files.<br>examples: /files, e:\files	admin	tr	Kullanıcı ve grup dosyaları için tam yol giriniz.<br>Örnekler: /files, E:\FILES
 enter the hostname of the machine on which this server is running	admin	tr	Bu sunucunun çalıştığı makinanın hostadı'nı giriniz.
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	tr	eGroupware URL'sini giriniz.<br>Örnek: http://www.domain.com/egroupware yada   /egroupware<br><b>Sonda bölü işareti kullanmayınız.</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	tr	EGroupware URL'sini giriniz.<br>Örnek: http://www.domain.com/egroupware yada   /egroupware<br><b>Sonda bölü işareti kullanmayınız.</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	tr	Aranacak ifadeyi giriniz. Bütün girdileri göstermek için, bu alanı boş bırakınız ve GÖNDER (Submit) butonuna basınız.
 enter the site password for peer servers	admin	tr	Peer sunucular için site şifresi giriniz.
 enter the site username for peer servers	admin	tr	Peer sunucular için site kullanıcı adı giriniz.
@@ -214,6 +220,7 @@ last %1 logins for %2	admin	tr	Son %1 giriş [Toplam: %2]
 last login	admin	tr	son giriş
 last login from	admin	tr	son giriş yeri
 last time read	admin	tr	Son okunan zaman
+last updated	admin	tr	Son güncelleme
 ldap accounts context	admin	tr	LDAP hesap içeriği
 ldap default homedirectory prefix (e.g. /home for /home/username)	admin	tr	LDAP varsayılan ev dizini öneki ( ör: /home/username için /home )
 ldap default shell (e.g. /bin/bash)	admin	tr	LDAP varsayılan kabul (ör: /bin/bash)
@@ -222,6 +229,8 @@ ldap groups context	admin	tr	LDAP grup içeriği
 ldap host	admin	tr	LDAP hostları
 ldap root password	admin	tr	LDAP yönetici şifresi
 ldap rootdn	admin	tr	LDAP rootdn
+leave empty for no quota	admin	tr	Kota olmaması için boş bırakın
+leave empty to use oauth, if supported	admin	tr	Destekleniyorsa OAuth kullanmak için boş bırakın
 leave the category untouched and return back to the list	admin	tr	kategoriye dokunmadan listeye geri dön
 leave the group untouched and return back to the list	admin	tr	Gruba dokunmadan listeye geri dön
 list config settings	admin	tr	Ayarları listele
@@ -326,8 +335,8 @@ soap	admin	tr	SOAP
 sorry, that group name has already been taken.	admin	tr	Üzgünüm, o group ismi kullanımda
 sorry, the above users are still a member of the group %1	admin	tr	Üzgünüm, yukarıdaki kullanıcılar hala %1 grubunun üyeleridir.
 sorry, the follow users are still a member of the group %1	admin	tr	Üzgünüm, şu kullanıcılar hala %1 grubunun üyeleridir.
-sort the entries	admin	tr	girdileri sırala
-ssl	admin	tr	ssl
+sort the entries	admin	tr	Girdileri sırala
+ssl	admin	tr	SSL
 standard	admin	tr	standart
 start testjob!	admin	tr	Test görevini başlat!
 submit changes	admin	tr	Değişiklikleri gönder!
@@ -379,9 +388,9 @@ view sessions	admin	tr	Oturumları görüntüle
 view this user	admin	tr	bu kullanıcıyı görüntüle
 view user account	admin	tr	Kullanıcı hesabını görüntüle
 who would you like to transfer all records owned by the deleted user to?	admin	tr	Silinen kullanıcıya ait kayıtları kime taşımak istesiniz?
-would you like egroupware to cache the egw info array ?	admin	tr	eGroupWare'in egw bilgi array'ini önbelleklemesini ister misiniz?
-would you like egroupware to check for a new version<br>when admins login ?	admin	tr	eGroupWare'in yönetici hesabı etkin olduğunda yeni sürüm denetlemesi yapmasını ister misiniz?
-would you like egroupware to check for new application versions when admins login ?	admin	tr	eGroupWare'in yönetici hesabı etkin olduğunda uygulamalar için yeni sürüm denetlemesi yapmasını ister misiniz?
+would you like egroupware to cache the egw info array ?	admin	tr	EGroupware bilgi dizisini önbelleğe alır.
+would you like egroupware to check for a new version<br>when admins login ?	admin	tr	Yöneticiler oturum açtığında sürüm güncellemelerini kontrol edin.
+would you like egroupware to check for new application versions when admins login ?	admin	tr	Yöneticiler oturum açtığında uygulama güncellemelerini kontrol edin.
 would you like to automaticaly load new langfiles (at login-time) ?	admin	tr	Yeni dil dosyalarını otomatik olarak yüklemek ister misiniz (sistem giriş anında)?
 would you like to show each application's upgrade status ?	admin	tr	Her uygulamanın güncelleme durumunu görüntülemek ister misiniz?
 xml-rpc	admin	tr	XML-RPC

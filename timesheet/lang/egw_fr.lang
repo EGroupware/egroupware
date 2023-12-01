@@ -14,14 +14,13 @@ by	timesheet	fr	par
 category for 'working time'	admin	fr	Catégorie pour "Temps de travail"
 change category	timesheet	fr	Changer la catégorie
 change owner when updating	timesheet	fr	Changer le propriétaire lors de la mise à jour
-change time	timesheet	fr	Date de modification
 changed category to %1	timesheet	fr	Changer la catégorie en %1
 changed status	timesheet	fr	Statut modifié.
 check all	timesheet	fr	Vérifier tout
 choose 'creator' of imported data	timesheet	fr	Choisir le "créateur" des données importées.
 comment by %1 at %2:	timesheet	fr	Commentaire par %1 à %2:
+create a single 'working time' timesheet per	timesheet	fr	Créer une "Feuille de temps" unique par
 create new links	timesheet	fr	Créer de nouveaux liens
-created by timesheet configuration	timesheet	fr	Configuration de feuille de temps créée
 creates a new field	timesheet	fr	Créer un nouveau champ
 creating new entry	timesheet	fr	nouvelle entrée en création
 custom fields	timesheet	fr	Champs personnalisés
@@ -32,6 +31,7 @@ deletes this field	timesheet	fr	Supprimer ce champ
 determines the order the fields are displayed	timesheet	fr	Détermine l'ordre d'afficahge des champs
 directory with documents to insert entries	timesheet	fr	Répertoire avec les documents pour insérer les entrées
 disable timers	timesheet	fr	Désactiver les timers
+do you want to associate it with the selected %1 entry?	common	fr	Voulez-vous l'associer avec l'entrée sélectionnée %1 ?
 do you want to start your working time?	common	fr	Souhaitez-vous lancer votre temps de travail ?
 do you want to stop your working time?	common	fr	Souhaitez-vous arrêter votre temps de travail ?
 each value is a line like <id>[=<label>]	timesheet	fr	Chaque valeur est une ligne comme <id>[=<label>]
@@ -43,7 +43,12 @@ entry deleted	timesheet	fr	Entrée supprimée
 entry saved	timesheet	fr	Entrée enregistrée
 error deleting the entry!!!	timesheet	fr	Erreur lors de la suppression de l'entrée !!!
 error saving the entry!!!	timesheet	fr	Erreur lors de l'enregistrement de l'entrée !!!
+error storing working time	timesheet	fr	Erreur de stockage du temps travaillé
 events	timesheet	fr	Evénements
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	timesheet	fr	Exemple {{IF  n_prefix~Mr~Bonjour M.~Bonjour Mme}} - chercher "Mr" dans le champs "n_prefix", s'il est trouvé, écrire Bonjour M., sinon écrire Bonjour Mme
+example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	timesheet	fr	Exemple {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Exemple: Mr Dr. James Miller
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	timesheet	fr	xample {{NELF role}} - si le champs role n'est pas vide, vous aurez une nouvelle ligne avec la valeur du champs role
+example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	timesheet	fr	Example {{nenvlf role}} - si le champs role n'est pas vide, ajouter une nouvelle ligne sans aucune valeur du champs
 existing links	timesheet	fr	Liens existants
 exists	timesheet	fr	Existe
 export definition to use for nextmatch export	timesheet	fr	Définition de l'export à utiliser pour l'export "nextmatch"
@@ -53,6 +58,7 @@ exports entries from your timesheet into a csv file. csv means 'comma separated 
 favorites	timesheet	fr	Favoris
 field must not be empty !!!	timesheet	fr	Le champ ne doit pas être vide !!!
 for serial letter use this tag. put the content, you want to repeat between two tags.	timesheet	fr	Pour les lettres en série utiliser cette balise. Placer le contenu que vous voulez répéter entre deux balises.
+forgot to switch off working time?	common	fr	Avez-vous oublié d'arrêter votre compteur de temps de travail?
 full: use only projectmanager	admin	fr	Complet: utiliser seulement le Gestionnaire de projets
 general fields:	timesheet	fr	Champs généraux :
 global categories	timesheet	fr	Catégorie globale
@@ -60,6 +66,7 @@ history	timesheet	fr	Historique
 history logging	admin	fr	Enregistrement de l'historique
 html link to the current record	timesheet	fr	Lien HTML vers l'enregistrement courant
 id	timesheet	fr	Id
+if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	timesheet	fr	Si vous spécifiez ici un dossier (chemin vfs complet), %1 affiche une action pour chaque document. Cette action permet de télécharger le document correspondant avec les données %1 insérées.
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	timesheet	fr	Si vous spécifiez un répertoire (chemin vfs complet), %1 affiche une icône de document supplémentaire pour chaque entrée. Cette icône autorise le téléchargement du document spécifié avec les données insérée
 if you specify an export definition, it will be used when you export	timesheet	fr	Si vous spécifier un format d'export, il sera utilisé à l'export.
 ignore	timesheet	fr	Ignorer
@@ -69,7 +76,6 @@ insert	timesheet	fr	Insérer
 invalid field: %1 = %2, it needs to be a number.	timesheet	fr	Champ invalide :  %1 = %2, cela doit être un nombre.
 invalid input	common	fr	Input invalide
 invalid owner id: %1.  might be a bad field translation.  used %2 instead.	timesheet	fr	Id de propriétaire invalide: %1. %2 utilisé à la place.
-kanban	timesheet	fr	Kanban
 last modified	timesheet	fr	Dernière modification
 last month	timesheet	fr	Le mois dernier
 last week	timesheet	fr	La semaine dernière
@@ -98,7 +104,10 @@ only admin	admin	fr	Seulement les administrateurs
 only admin can edit this status	admin	fr	Seulement les administrateurs peuvent modifier les feuilles de temps avec ce statut
 or endtime	timesheet	fr	ou Date de fin
 order	timesheet	fr	Ordre
+overwrite time	common	fr	Surcharger le temps
+overwriting start or stop time	timesheet	fr	Surcharger le temps de début ou de fin
 parent	admin	fr	Parent
+pause	common	fr	Pause
 permission denied!!!	timesheet	fr	Autorisation refusée!!!
 permissions error - %1 could not %2	timesheet	fr	Error de permission - %1 ne peut %2
 prevent deleting	admin	fr	Empêcher la suppression
@@ -106,11 +115,11 @@ price	timesheet	fr	Prix
 project fields	timesheet	fr	Champs du projet
 projectmanager integration	admin	fr	Intégration au Gestionnaire de projets
 quantity	timesheet	fr	Quantité
+recorded	timesheet	fr	Enregistré
 recovered	timesheet	fr	Récupéré
 replacements for inserting entries into documents	timesheet	fr	Remplacements pour insertion d'entrées dans des documents
 restore this entry	timesheet	fr	Restaurer cette entrée
 save & new	timesheet	fr	Enregistrer & Nouveau
-save &amp; new	timesheet	fr	Enregistrer & Nouveau
 saves the changes made	timesheet	fr	Enregistrer les modifications
 saves the changes made and leaves	timesheet	fr	Enregistrer les modifications et quitter
 saves this entry and add a new one	timesheet	fr	Enregistrer cette entrée et en ajouter une nouvelle
@@ -126,6 +135,7 @@ skip record	timesheet	fr	Ignorer l'enregistrement
 start	timesheet	fr	Début
 start & stop timer	common	fr	Lancer et arrêter le timer
 start timer	common	fr	Lancer le timer
+start-time can not be before last stop- or pause-time %1!	common	fr	L'heure de début ne peut pas être après l'heure de fin ou de pause %1!
 starttime	timesheet	fr	Heure de début
 starttime has to be before endtime !!!	timesheet	fr	L'heure de début doit être avant l'heure de fin !!!
 status	timesheet	fr	Statut
@@ -133,8 +143,11 @@ status deleted.	timesheet	fr	Statut supprimé.
 status of created timesheets	timesheet	fr	Statut des feuilles de temps créés.
 status updated.	timesheet	fr	Statut mis à jour.
 stop	common	fr	Arrêter
+stop- or pause-time can not be before the start-time %1!	common	fr	L'heure de fin ou de pause ne peut pas être avant l'heure de début %1!
+sum	timesheet	fr	Somme
 sum %1:	timesheet	fr	Somme %1 :
 tag to mark positions for address labels	timesheet	fr	Balise pour marquer les positions des étiquettes d'adresses
+the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	timesheet	fr	Le document peut contenir des variables comme {{%3}}, qui seront remplacées par leurs valeurs (%1 liste de toutes les variables%2).
 the following document-types are supported:	timesheet	fr	Les documents types suivants sont supportés :
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	timesheet	fr	Nom utilisé en interne (<= 20 caractères), le changer rendra certaines données inaccessibles.
 the text displayed to the user	timesheet	fr	le texte montré à l'utilisateur
@@ -159,16 +172,19 @@ titles of any entries linked to the current record, excluding attached files	tim
 unable to convert "%1" to account id.  using plugin setting (%2) for %3.	timesheet	fr	Incapable de convertir "%1" vers un compte ID. Utilisation du paramètre de plugin (%2) pour %3.
 undelete	timesheet	fr	Restaurer
 unitprice	timesheet	fr	Prix à l'unité
-unsaved changes	timesheet	fr	Changements non enregistrés
 use field from csv if possible	timesheet	fr	Utiliser le champs du CSV si possible
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	timesheet	fr	Utiliser cette balise pour les étiquettes d'adresse. Placer le contenu que vous voulez répéter entre deux balises.
 values for selectbox	timesheet	fr	Valeurs des boîtes de sélection
 view this entry	timesheet	fr	Voir cette entrée
 week	timesheet	fr	Semaine
 what should be done with unknown values?	timesheet	fr	Que faire avec les valeurs inconnues ?
+when you merge entries into documents, they will be stored here.  if no directory is provided, they will be stored in your home directory (/home/ralf)	timesheet	fr	Quand vous fusionnez les entrées dans les documents, elles seront stockées ici. Si aucun dossier n'est indiqué, elles seront stockées dans votre dossier personnel (/home/ralf)
 will be created when saving ...	common	fr	Sera créé à l'enregistrement...
 working time	common	fr	Heures de travail
 working time and timer	timesheet	fr	Heures de travail et timer
+working time from %1	timesheet	fr	Heures de travail depuis %1
+working time of %1 hours stored	timesheet	fr	Heures de travail depuis %1 heures stockées
+would you like to be asked, to start and stop working time, when login in or off	timesheet	fr	Voulez-vous que le début ou la fin du temps de travail vous soit demandé lorsque vous vous connectez ou déconnectez
 yes, only admins can purge deleted items	admin	fr	Oui, les administrateurs seuls peuvent purger les éléménts supprimés
 yes, users can purge their deleted items	admin	fr	Oui, les utilisateurs  peuvent purger leurs éléments supprimés
 yesterday	timesheet	fr	Hier

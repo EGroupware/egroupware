@@ -123,17 +123,27 @@ preview	filemanager	pt	Pré-visualização
 preview %1	filemanager	pt	Pré-visualizar %1
 preview of %1	filemanager	pt	Pré-visualização de %1
 projectmanager	filemanager	pt	Gestor de projectos
+protocol to use	filemanager	pt	Protocolo a utilizar
+protocols	filemanager	pt	Protocolos
 quick jump to	filemanager	pt	Saltar para
 quota	filemanager	pt	Quota
 quota exceeded	filemanager	pt	Quota excedida
+read & write access	filemanager	pt	Acesso de leitura e escrita
+read access only	filemanager	pt	Apenas acesso de leitura
+readonly share link	filemanager	pt	Apenas leitura Partilhar ligação
 recalculate	filemanager	pt	Recalcular
+recalculate directory sizes	filemanager	pt	Recalcular o tamanho dos directórios
 recalculated %1 directories in %2 iterations and %3 seconds	filemanager	pt	Recalculou %1 directórios em %2 iterações e %3 segundos
 reload	filemanager	pt	Recarregar
+rename of %1 to %2 failed!	filemanager	pt	A mudança de nome de %1 para %2 falhou!
+rename, change permissions or ownership	filemanager	pt	Mudar o nome, alterar as permissões ou a propriedade
 renamed %1 to %2	filemanager	pt	Renomeado de %1 para %2
+renamed %1 to %2.	filemanager	pt	Renomeado de %1 para %2
 replaced %1	filemanager	pt	Substituído %1
 replacements for inserting entries into documents	filemanager	pt	Substitutos para a inserção de entradas em documentos
 save %1	filemanager	pt	Guardar %1
 save %1, and go back to file listing	filemanager	pt	Guardar %1, e voltar à lista de ficheiros
+save as zip	filemanager	pt	Guardar como ZIP
 save changes	filemanager	pt	Guardar alterações
 saved %1	filemanager	pt	%1 guardado
 select file(s) from vfs	common	pt	Selecione o arquivo (s) a partir de VFS

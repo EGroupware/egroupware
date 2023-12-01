@@ -76,8 +76,21 @@ open	filemanager	uk	відкрито
 password for webdav and smb, use $pass for password of logged in user	filemanager	uk	Пароль для WebDAV і SMB, використовуйте $pass як пароль користувача, що увійшов до системи
 path and query-parameters, smb: share and optional path (with /)	filemanager	uk	Шлях і параметри запиту, SMB: ресурс і необов'язковий шлях (з /)
 permissions	filemanager	uk	Дозволи
+protocol to use	filemanager	uk	Протокол для використання
+protocols	filemanager	uk	Протоколи
 quota	filemanager	uk	Квота
 quota exceeded	filemanager	uk	Перевищено квоту
+read & write access	filemanager	uk	Доступ для читання та запису
+read access only	filemanager	uk	Доступ тільки для читання
+readonly share link	filemanager	uk	Тільки для читання Поділитися посиланням
 recalculate	filemanager	uk	Перерахувати
+recalculate directory sizes	filemanager	uk	Перерахувати розміри каталогів
 recalculated %1 directories in %2 iterations and %3 seconds	filemanager	uk	Перераховано %1 каталогів за %2 ітерації та %3 секунди
+reload	filemanager	uk	Перезавантажити
+rename of %1 to %2 failed!	filemanager	uk	Перейменування %1 на %2 не вдалося!
+rename, change permissions or ownership	filemanager	uk	Перейменування, зміна дозволів або права власності
+renamed %1 to %2	filemanager	uk	Перейменовано %1 на %2
+renamed %1 to %2.	filemanager	uk	Перейменовано %1 на %2
+replacements for inserting entries into documents	filemanager	uk	Заміни для вставки записів у документи
+save as zip	filemanager	uk	Зберегти як ZIP
 you need to become root, to enable or disable versioning on a directory!	filemanager	uk	Вам необхідно стати суперкористувачем, щоб увімкнути або вимкнути версійність теки!

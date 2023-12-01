@@ -13,7 +13,9 @@
 2-factor-authentication for interactive login	admin	pt	2-Factor-Autenticação para login interactivo
 3 month	admin	pt	3 meses
 6 month	admin	pt	6 meses
+access token revoked.	admin	pt	Token de acesso revogado.
 accesslog and bruteforce defense	admin	pt	Registo de acesso e defesa de ataque de força bruta
+account	admin	pt	Conta
 account active	admin	pt	Conta activa
 account has been created	common	pt	A conta foi criada
 account has been deleted	common	pt	A conta foi eliminada
@@ -21,6 +23,7 @@ account has been updated	common	pt	A conta foi actualizada
 account list	admin	pt	Lista de contas
 account permissions	admin	pt	Permissões da conta
 account preferences	admin	pt	Preferências da conta
+acl csv export	admin	pt	Exportação ACL CSV
 acl manager	admin	pt	Administração de regras de acesso
 acl rights	common	pt	Permissões de acesso
 action	admin	pt	Acção
@@ -120,6 +123,9 @@ create new account	admin	pt	criar nova conta
 created	admin	pt	Criado
 creates a new field	admin	pt	cria um novo campo
 crontab only (recomended)	admin	pt	Apenas crontab (recomendado)
+custom 1	admin	pt	Personalizado 1
+custom 2	admin	pt	Personalizado 2
+custom 3	admin	pt	Personalizado 3
 custom fields	admin	pt	Campos personalizados
 cyrus imap server	admin	pt	Servidor IMAP Cyrus
 cyrus imap server administration	admin	pt	Administração do servidor IMAP Cyrus
@@ -295,6 +301,7 @@ last %1 logins for %2	admin	pt	Últimos %1 acessos a %2
 last login	admin	pt	último acesso
 last login from	admin	pt	último acesso de
 last time read	admin	pt	Última vez lido
+last updated	admin	pt	Última atualização
 ldap accounts context	admin	pt	contexto de contas LDAP
 ldap basedn	admin	pt	Base DN LDAP
 ldap default homedirectory prefix (e.g. /home for /home/username)	admin	pt	prefixo de diretório home padrão LDAP (Exemplo: /home para /home/username)
@@ -311,6 +318,7 @@ ldap server admin password	admin	pt	Senha do administrador de servidor LDAP
 ldap server hostname or ip address	admin	pt	Nome do servidor ou endereço IP do servidor LDAP
 ldap settings	admin	pt	Configurações do LDAP
 leave empty for no quota	admin	pt	Deixar vazio para quota sem limites
+leave empty to use oauth, if supported	admin	pt	Deixar vazio para usar OAuth, se suportado
 leave the category untouched and return back to the list	admin	pt	Deixa a categoria e volta para a lista
 leave the group untouched and return back to the list	admin	pt	Deixa o grupo e volta para a lista
 leave without saveing the entry	admin	pt	Continua sem guardar o registo
@@ -458,7 +466,7 @@ sorry, that group name has already been taken.	admin	pt	Desculpe, mas já existe
 sorry, the above users are still a member of the group %1	admin	pt	Desculpe, mas os utilizadores em cima ainda são membros do grupo %1
 sorry, the follow users are still a member of the group %1	admin	pt	Desculpe, mas os seguintes utilizadores ainda são membros do grupo %1
 sort the entries	admin	pt	Apresentar os registos
-ssl	admin	pt	ssl
+ssl	admin	pt	SSL
 standard	admin	pt	Por omissão
 standard imap server	admin	pt	Servidor IMAP por omissão
 standard pop3 server	admin	pt	Servidor POP3 por omissão
@@ -486,7 +494,7 @@ the name used internaly (<= 20 chars), changeing it makes existing data unavaili
 the testjob sends you a mail everytime it is called.	admin	pt	O "trabalho de teste" envia-lhe uma mensagem sempre que for chamado.
 the text displayed to the user	admin	pt	o texto apresentado ao utilizador
 the two passwords are not the same	admin	pt	As senhas não coincidem
-the users bellow are still members of group %1	admin	pt	os seguintes utilizadores ainda são membros do grupo %1
+the users bellow are still members of group %1	admin	pt	Os seguintes utilizadores ainda são membros do grupo %1
 there already is a group with this name. userid's can not have the same name as a groupid	admin	pt	Já existe um grupo com este nome. O ID do utilizador não pode ter o mesmo nome que o ID de um grupo
 they must be removed before you can continue	admin	pt	Devem ser removidos antes de continuar
 this application is current	admin	pt	Esta aplicação está actualizada
@@ -502,7 +510,7 @@ translation	admin	pt	Tradução
 true	admin	pt	Verdadeiro
 trust level	admin	pt	Nível de confiança
 trust relationship	admin	pt	Relação de confiança
-two weeks	admin	pt	duas semanas
+two weeks	admin	pt	Duas semanas
 type '%1' already exists !!!	admin	pt	O tipo '%1' já existe !!!
 type of customfield	admin	pt	Tipo de campo personalizado
 under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	pt	No windowz é necessário instalar o asyncservice %1manualmente%2 ou utilizar o modo Fallback. Este modo significa que as tarefas só serão verificadas depois de cada visualização de página.

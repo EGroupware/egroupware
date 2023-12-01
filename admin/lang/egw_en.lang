@@ -40,7 +40,7 @@
 access by	admin	en	Access by
 access control	admin	en	Access control
 access to %1 data by others	admin	en	Access to %1 data by others
-access token revoked.	admin	en	Access Token revoked.
+access token revoked.	admin	en	Access token revoked.
 accesslog and bruteforce defense	admin	en	AccessLog and BruteForce defense
 account	admin	en	Account
 account "%1" has no email address --> not notified!	admin	en	Account "%1" has no email address --> not notified!
@@ -188,7 +188,7 @@ blocking after wrong password	admin	en	Blocking after wrong password
 bottom	admin	en	Bottom
 bulk password reset	admin	en	Bulk password reset
 by	admin	en	By
-by selecting a user or group you effectively delete the mail account for all other users!\n\nare you really sure you want to do that?	admin	en	By selecting a user or group you effectively delete the mail account for all other users!\n\nAre you really sure you want to do that?
+by selecting a user or group you effectively delete the mail account for all other users!\n\nare you really sure you want to do that?	admin	en	By selecting a user or group you effectively delete the mail account for all other users!<br>Are you really sure you want to do that?
 calculate next run	admin	en	Calculate next run
 calendar recurrence horizont in days (default 1000)	admin	en	Calendar recurrence horizon in days. Default = 1000.
 can be used by application	admin	en	Can be used by application
@@ -513,7 +513,7 @@ group list	admin	en	Group list
 group manager	admin	en	Group manager
 group name	admin	en	Group name
 hash	admin	en	Hash
-hide php information	admin	en	Hide php information
+hide php information	admin	en	Hide PHP information
 hide sidebox video tutorials	admin	en	Hide sidebox video tutorials
 home directory	admin	en	Home directory
 home screen message	admin	en	Home screen message
@@ -539,7 +539,7 @@ if using ldap, do you want to manage homedirectory and loginshell attributes?	ad
 if using ssl or tls, you must have the php openssl extension loaded.	admin	en	If using SSL or TLS, you must have the PHP openssl extension loaded.
 if you delete the user without selecting an account to move the data to, all entries get deleted!	admin	en	If you delete the user without selecting an account to move the data to, all entries get deleted!
 if you ignore that error as admin, you should check "%1"!	admin	en	If you ignore that error as admin, you should check "%1"!
-if you specify port 5190 as sieve server port, you enforce ssl for sieve (server must support that)	admin	en	if you specify port 5190 as Sieve server port, you enforce ssl for Sieve (server must support that)
+if you specify port 5190 as sieve server port, you enforce ssl for sieve (server must support that)	admin	en	if you specify port 5190 as Sieve server port, you enforce SSL for Sieve (server must support that)
 if you wish to have randomly selected images you may upload multiple images.	admin	en	If you wish to have randomly selected images you may upload multiple images.
 imap admin password	admin	en	IMAP admin password
 imap admin user	admin	en	IMAP admin user
@@ -589,6 +589,7 @@ last login from	admin	en	Last login from
 last password change	admin	en	Last password change
 last submission:	admin	en	Last submission:
 last time read	admin	en	Last time read
+last updated	admin	en	Last updated
 ldap accounts context	admin	en	LDAP accounts context
 ldap basedn	admin	en	LDAP basedn
 ldap default homedirectory prefix (e.g. /home for /home/username)	admin	en	LDAP default home directory prefix (e.g. /home for /home/username)
@@ -871,7 +872,7 @@ sorry, the above users are still a member of the group %1	admin	en	Sorry, the ab
 sorry, the follow users are still a member of the group %1	admin	en	Sorry, the follow users are still a member of the group %1 .
 sort the entries	admin	en	Sort the entries
 source account #%1 does not exist!	admin	en	Source account #%1 does NOT exist!
-ssl	admin	en	ssl
+ssl	admin	en	SSL
 standard	admin	en	Standard
 standard identity	admin	en	Standard identity
 standard imap server	admin	en	Standard IMAP server
@@ -926,7 +927,7 @@ this application requires an upgrade	admin	en	This application requires an upgra
 this category is currently being used by applications as a parent category	admin	en	This category is currently being used by applications as a parent category.
 this controls exports and merging.	admin	en	This controls exports and merge prints.
 this is a mail account for all users!	admin	en	This is a mail account for ALL users!
-this is not a personal mail account!\n\naccount will be deleted for all users!\n\nare you really sure you want to do that?	admin	en	This is NOT a personal mail account!\n\nAccount will be deleted for ALL users!\n\nAre you really sure you want to do that?
+this is not a personal mail account!\n\naccount will be deleted for all users!\n\nare you really sure you want to do that?	admin	en	This is NOT a personal mail account!<br>Account will be deleted for ALL users!<br>Are you really sure you want to do that?
 this key used in the html code your site serves to users.	admin	en	This key used in the HTML code your site serves to users.
 this php has no imap support compiled in!!	admin	en	This PHP has no IMAP support compiled in!!
 this secret key used for communication between your site and google. be sure to keep it a secret.	admin	en	This secret key used for communication between your site and Google. Be sure to keep it a secret.

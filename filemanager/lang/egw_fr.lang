@@ -249,6 +249,7 @@ read & write access	filemanager	fr	Accès en lecture-écriture
 read access only	filemanager	fr	Accès en lecture seule
 readonly share link	filemanager	fr	Lien de partage en lecture seule
 recalculate	filemanager	fr	Recalculer
+recalculate directory sizes	filemanager	fr	Recalculer la taille des répertoires
 recalculated %1 directories in %2 iterations and %3 seconds	filemanager	fr	Recalculé %1 répertoires en %2 itérations et %3 secondes
 reload	filemanager	fr	Recharger
 rename of %1 to %2 failed!	filemanager	fr	Renommage de %1 en %2 en échec !

@@ -1373,6 +1373,7 @@ todays date, eg. "%1"	common	sl	Današnji datum, npr. "%1"
 togo	common	sl	TOGO
 tokelau	common	sl	TOKELAU
 tonga	common	sl	TONGA
+too many rows selected.<br />select all, or less than %1 rows	common	sl	Izbranih je preveč vrstic.<br />Izberite vse ali manj kot %1 vrstic
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	sl	Preveč neuspešnih poskusov prijave: %1 za uporabnika %2, %3 za IP %4.
 top	common	sl	Na vrh
 total	common	sl	Skupaj

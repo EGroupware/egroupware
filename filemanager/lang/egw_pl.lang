@@ -181,12 +181,16 @@ preview %1	filemanager	pl	Podgląd %1
 preview of %1	filemanager	pl	Podgląd %1
 projectmanager	filemanager	pl	Menedżer Projektów
 properties saved.	filemanager	pl	Zapisano właściwości
+protocol to use	filemanager	pl	Protokół do użycia
+protocols	filemanager	pl	Protokoły
 quick jump to	filemanager	pl	Szybki skok do
 quota	filemanager	pl	Limit
 quota exceeded	filemanager	pl	Przekroczono limit
 read & write access	filemanager	pl	Dostęp do odczytu i zapisu
 read access only	filemanager	pl	Tylko do odczytu
+readonly share link	filemanager	pl	Tylko do odczytu Łącze udostępniania
 recalculate	filemanager	pl	Przelicz
+recalculate directory sizes	filemanager	pl	Ponowne obliczanie rozmiarów katalogów
 recalculated %1 directories in %2 iterations and %3 seconds	filemanager	pl	Przeliczono %1 katalogów w %2 iteracjach i %3 sekundach.
 reload	filemanager	pl	odśwież
 rename of %1 to %2 failed!	filemanager	pl	Zmiana nazwy %1 na %2 nie powiodła się!
@@ -194,12 +198,14 @@ rename, change permissions or ownership	filemanager	pl	Zmień nazwę, zmień upr
 renamed %1 to %2	filemanager	pl	Zmieniono nazwę %1 na %2
 renamed %1 to %2.	filemanager	pl	Zmieniono nazwę %1 na %2.
 replaced %1	filemanager	pl	Zastąpiono %1
+replacements for inserting entries into documents	filemanager	pl	Zamienniki do wstawiania wpisów do dokumentów
 rights	filemanager	pl	Prawa
 root	filemanager	pl	root
 root access granted.	filemanager	pl	Przyznano dostęp na prawach roota.
 root access stopped.	filemanager	pl	Zatrzymano dostęp na prawach roota.
 save %1	filemanager	pl	Zapisz %1
 save %1, and go back to file listing	filemanager	pl	Zapisz %1 i przejdź do listy plików
+save as zip	filemanager	pl	Zapisz jako ZIP
 save changes	filemanager	pl	Zapisz zmiany
 saved %1	filemanager	pl	Zapisano %1
 saving properties failed!	filemanager	pl	Błąd zapisu właściwości!

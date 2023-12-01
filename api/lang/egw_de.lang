@@ -1436,6 +1436,7 @@ todays date, eg. "%1"	common	de	heutiges Datum, z.B. "%1"
 togo	common	de	TOGO
 tokelau	common	de	TOKELAU
 tonga	common	de	TONGA
+too many rows selected.<br />select all, or less than %1 rows	common	de	Zu viele Zeilen ausgewählt.<br />Wählen Sie alle, oder weniger als %1 Zeilen
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	de	Zu viele ungültige Anmeldeversuche: %1 für den Benutzer '%2', %3 für die IP %4
 top	common	de	Oben
 total	common	de	Gesamt

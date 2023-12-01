@@ -527,6 +527,7 @@ error create parent directory %1!	common	fr	Errreur à la création du dossier p
 error creating %1 %2 directory	common	fr	Erreur à la création du répertoire %1 %2
 error deleting %1 %2 directory	common	fr	Erreur à la suppression du répertoire %1 %2
 error deleting %1!	common	fr	Erreur à la suppression de %1 !
+error enabling push	common	fr	Erreur à l'activation de push
 error renaming %1 %2 directory	common	fr	Erreur au renommage du répertoire %1 %2
 error uploading file!	filemanager	fr	Erreur à l'upload du fichier !
 error: template not found !!!	common	fr	Erreur : Template non trouvé !
@@ -957,6 +958,7 @@ no filters	common	fr	Pas de filtre
 no history for this record	common	fr	Pas d'historique pour cet enregistrement
 no key for recipient:	common	fr	Pas de clé pour le destinataire :
 no matches found	common	fr	Aucune occurrence trouvée.
+no response from server: your data is probably not saved	common	fr	Pas de réponse du serveur: vos données ne sont probablement PAS sauvegardées
 no results match	common	fr	Aucun résultat
 no rights to export more than %1 entries!	common	fr	Pas de droits pour exporter plus que %1 éléments !
 no row to swap with !!!	common	fr	Aucune ligne à échanger !
@@ -1020,6 +1022,7 @@ order to navigating by tab key through the form	common	fr	Ordre pour la navigati
 ordered list	common	fr	Liste ordonnées (numéros)
 original	common	fr	Original
 other	common	fr	Autre
+outdent	common	fr	Retrait
 overflow	common	fr	Débordement
 overview	common	fr	Vue d'ensemble
 owner	common	fr	Propriétaire
@@ -1138,6 +1141,7 @@ repeat password	common	fr	Répéter le mot de passe
 replace	common	fr	Remplacer
 replace with	common	fr	Remplacer par
 request could not be processed, please reload your window (press f5 or cmd r)!	common	fr	La requête n'a pas pu être traitée, veuillez recharger la page (appui sur F5 our [CTRL]+R) !
+requested resource '%1' does not exist or has expired	common	fr	La ressource nécessaire '%1' n'existe pas ou est expirée
 requests and full responses to files directory	common	fr	Requêtes et réponses complète sur les répertoires de fichiers
 requests and truncated responses to apache error-log	groupdav	fr	Requêtes et réponses tronquées vers les logs d'erreur Apache
 required	common	fr	Nécessaire
@@ -1419,17 +1423,18 @@ title	common	fr	Titre
 titles of any entries linked to the current record, excluding attached files	preferences	fr	Titres de toutes les entrées liées à l'enregistrement courant, à l'exception des fichiers
 to	common	fr	Pour
 to correct this error for the future you will need to properly set the	common	fr	Pour corriger cette erreur dans le futur vous devrez définir correctement le/la
-to disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty	common	fr	pour désactiver: [! = not]<value>[=<vérification>] p.ex.: '!@data' désactive si les données sont vides
+to disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty	common	fr	Pour désactiver: [! = not]<value>[=<vérification>] p.ex.: '!@data' désactive si les données sont vides
 to examine or reinstate inactived files, you might need to turn versioning on.	admin	fr	Pour examiner ou ré-instancier les fichiers inactifs, vous devez activer le suivi des versions.
 to go back to the msg list, click <a href= %1 >here</a>	common	fr	Pour revenir à la liste des messages, cliquez <a href="%1">ici</a>
 to start the db-tools	common	fr	Pour lancer les outils base de données
 to start the etemplate editor	common	fr	Pour lancer l'éditeur d'eTemplate
 to start the search	common	fr	Pour démarrer la recherche
 today	common	fr	Aujourd'hui
-todays date, eg. "%1"	common	fr	date d'aujourd'hui, p.ex. "%1"
+todays date, eg. "%1"	common	fr	Date d'aujourd'hui, p.ex. "%1"
 togo	common	fr	TOGO
 tokelau	common	fr	TOKELAU
 tonga	common	fr	TONGA
+too many rows selected.<br />select all, or less than %1 rows	common	fr	Too many rows selected.<br />Select all, or less than %1 rows
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	fr	Trop de tentatives de connexion infructueuses: %1 pour l'utilisateur '%2', %3 pour l'IP %4
 top	common	fr	Sommet
 total	common	fr	Total
@@ -1475,6 +1480,8 @@ upload new photo	common	fr	Uploader une nouvelle photo
 upload requires the directory to be writable by the webserver!	common	fr	L'upload nécessite que le répertoire soit en écriture sur le serveur web !
 uppercase letters	common	fr	lettres majuscules
 url	common	fr	Url
+url of current record	common	fr	URL de l'enregistrement courant
+urls of any entries linked to the current record, excluding attached files	common	fr	URLs de toutes les entrées reliées à l'enregistrement courant, en excluant les fichiers joints
 uruguay	common	fr	URUGUAY
 use button to search for	common	fr	Utilisez le bouton pour rechercher
 use button to search for address	common	fr	Utilisez le bouton pour rechercher une adresse
@@ -1566,6 +1573,7 @@ you have not entered participants	common	fr	Vous n'avez pas entré de participan
 you have selected an invalid date	common	fr	Vous avez sélectionné une date invalide !
 you have selected an invalid main category	common	fr	Vous avez sélectionné une catégorie principale invalide !
 you have successfully logged out	common	fr	Vous vous êtes correctement déconnecté
+you may drag files out to your desktop	common	fr	Vous pouvez glisser les fichiers vers votre bureau
 you need to %1set your timezone preference%2.	common	fr	Vous devez %1 définir votre préférence de fuseau horaire %2.
 you need to add the webserver user '%1' to the group '%2'.	common	fr	Vous devez ajouter l'utilisateur du serveur web '%1' au groupe '%2'.
 you need to be an egroupware administrator to access this functionality!	common	fr	Vous devez être administrateur d'EGroupware pour accéder à cette fonction !

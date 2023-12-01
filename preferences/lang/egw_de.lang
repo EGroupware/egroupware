@@ -147,7 +147,7 @@ reset qrcode	preferences	de	QR-Code zurücksetzen
 revoke	preferences	de	Zurückziehen
 revoke this token	preferences	de	Diese(s) Token(s) zurückziehen
 rich text editor theme	preferences	de	Farbschema des Editors
-scan qrcode with a time-based one-time password (totp) app:	preferences	de	QR-Code mit einer App für zeitbasierende Einmalpasswörter (TOTP Time-based One-time Password) abscannen:
+scan qrcode with a time-based one-time password (totp) app:	preferences	de	QR-Code mit einer App für zeitbasierende Einmalpasswörter (TOTP Time-based One-Time Password) abscannen:
 secret deleted, two factor authentication disabled.	preferences	de	Schlüssel gelöscht, die Zweifaktor Authentifizierung ist jetzt abgeschaltet.
 select additional lines in lists by	preferences	de	Zusätzliche Zeilen in Listen auswählen durch
 select different theme	preferences	de	Anderes Schema wählen

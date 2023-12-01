@@ -261,18 +261,24 @@ leave without saveing the entry	infolog	nl	weggaan zonder op te slaan
 leaves without saveing	infolog	nl	Weggaan zonder op te slaan
 length	infolog	nl	Lengte
 limit list to last n month, if ordering by last-modified and not searching.	admin	nl	Beperk lijst tot laatste N maanden, indien gerangschikt op laatst gewijzigd en niet gezocht.
+limit number of description lines (default 5, 0 for no limit)	infolog	nl	Beperk het aantal beschrijvingsregels. Standaard = 5, 0 = geen limiet.
+limit width of description column ((effective only if lines limit is set), 0 for no limit)	infolog	nl	Beperk de breedte van de beschrijvingskolom. Alleen effectief als de limiet voor regels is ingesteld. 0 = geen limiet.
 link	infolog	nl	Link
+linked to %1	infolog	nl	Gelinkt aan %1
 links	infolog	nl	Links
 links and attached files	infolog	nl	Link naar bijgesloten bestand
 links of this entry	infolog	nl	Links van deze infolog
 links to specified application.  example: {{links/infolog}}	infolog	nl	Verwijst naar een specifieke applicatie. Voorbeeld: {{links/infolog}}
+links wrapped in an href tag with download link	infolog	nl	Koppelingen verpakt in een HREF-tag met downloadlink
 list all categories	infolog	nl	Toon alle categorieën
 list of files linked to the current record	infolog	nl	Lijs van bestanden gelinkt aan huidig record
+load custom fields in index, if filtered by selected types (eg. to display them in a type-specific index template)	infolog	nl	Laad aangepaste velden in index, indien gefilterd op geselecteerde types (bv. om ze weer te geven in een typespecifiek indexsjabloon)
 location	infolog	nl	Locatie
 longer textual description	infolog	nl	langere tekstuele beschrijving
 low	infolog	nl	laag
 manage mapping	infolog	nl	Beheer de mappings
 max length of the input [, length of the inputfield (optional)]	infolog	nl	maximale lengte van de invoer [lengte van het invoerveld (optioneel)]
+modifier	infolog	nl	Gewijzigd door
 modifierer	infolog	nl	Gewijzigd door
 name must not be empty !!!	infolog	nl	Naam mag niet leeg zijn !!!
 name of current user, all other contact fields are valid too	infolog	nl	Naam van de huidige gebruiker, alle andere contactvelden zijn ook geldig
@@ -283,6 +289,7 @@ new %1 created by %2 at %3	infolog	nl	Nieuw %1 aangemaakt door %2 op %3
 new name	infolog	nl	nieuwe naam
 new search	infolog	nl	Nieuwe zoekopdracht
 no - cancel	infolog	nl	Nee - Annuleren
+no custom field "%1" for %2.	infolog	nl	Geen aangepast veld "%1" voor %2.
 no describtion, links or attachments	infolog	nl	geen beschrijving, links of bijlagen
 no details	infolog	nl	geen details
 no entries found, try again ...	infolog	nl	Geen items gevonden, probeer het nogmaals ...

@@ -106,18 +106,27 @@ preview	filemanager	id	Preview
 preview %1	filemanager	id	Preview %1
 projectmanager	filemanager	id	Manajer Proyek
 properties saved.	filemanager	id	Properties saved.
+protocol to use	filemanager	id	Protokol yang digunakan
+protocols	filemanager	id	Protokol
 quick jump to	filemanager	id	Loncat ke
 quota	filemanager	id	Kuota
 quota exceeded	filemanager	id	Kuota terlampaui
 read & write access	filemanager	id	Akses Baca & Tulis
 read access only	filemanager	id	Hanya akses baca
+readonly share link	filemanager	id	Hanya baca Tautan berbagi
 recalculate	filemanager	id	Hitung ulang
+recalculate directory sizes	filemanager	id	Menghitung ulang ukuran direktori
 recalculated %1 directories in %2 iterations and %3 seconds	filemanager	id	Menghitung ulang%1 direktori dalam%2 iterasi dan%3 detik
-reload	filemanager	id	muat ulang
+reload	filemanager	id	Muat ulang
+rename of %1 to %2 failed!	filemanager	id	Pengubahan nama dari %1 ke %2 gagal!
+rename, change permissions or ownership	filemanager	id	Ganti nama, ubah izin atau kepemilikan
+renamed %1 to %2	filemanager	id	Mengganti nama %1 menjadi %2
+renamed %1 to %2.	filemanager	id	Mengganti nama %1 menjadi %2
 replaced %1	filemanager	id	%1 digantikan
 rights	filemanager	id	Hak
 root	filemanager	id	root
 save %1	filemanager	id	Simpan %1
+save as zip	filemanager	id	Simpan sebagai ZIP
 save changes	filemanager	id	Simpan perubahan
 saved %1	filemanager	id	%1 disimpan
 search for '%1'	filemanager	id	Mencari '%1'

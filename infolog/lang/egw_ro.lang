@@ -101,6 +101,20 @@ infolog encryption requires epl subscription	infolog	ro	Criptarea InfoLog necesi
 infolog ical export	infolog	ro	Export InfoLog iCal
 infolog ical import	infolog	ro	Import InfoLog iCal
 insert timestamp into description field	infolog	ro	Inserarea datei și a orei în câmpul de descriere
+limit number of description lines (default 5, 0 for no limit)	infolog	ro	Limitarea numărului de linii de descriere. Valoarea implicită = 5, 0 = fără limită.
+limit width of description column ((effective only if lines limit is set), 0 for no limit)	infolog	ro	Limitarea lățimii coloanei de descriere. Eficientă numai dacă este setată limita de linii. 0 = fără limită.
+linked to %1	infolog	ro	Legat de %1
+links and attached files	infolog	ro	Legături și fișiere atașate
+links of this entry	infolog	ro	Legături ale acestei intrări
+links to specified application.  example: {{links/infolog}}	infolog	ro	Legături către aplicația specificată. Exemplu: {{links/infolog}}
+links wrapped in an href tag with download link	infolog	ro	Legături încadrate într-o etichetă HREF cu link de descărcare
+list all categories	infolog	ro	Lista tuturor categoriilor
+list of files linked to the current record	infolog	ro	Listă de fișiere legate de înregistrarea curentă
+load custom fields in index, if filtered by selected types (eg. to display them in a type-specific index template)	infolog	ro	Încărcarea câmpurilor personalizate în index, dacă sunt filtrate în funcție de tipurile selectate (de exemplu, pentru a le afișa într-un șablon de index specific tipului)
+modifier	infolog	ro	Modificator
+modifierer	infolog	ro	Modificator
+name of current user, all other contact fields are valid too	infolog	ro	Numele utilizatorului curent, toate celelalte câmpuri de contact sunt de asemenea valabile
+no custom field "%1" for %2.	infolog	ro	Nu există niciun câmp personalizat "%1" pentru %2.
 print this infolog	infolog	ro	Tipăriți acest InfoLog
 printing...	infolog	ro	Imprimarea...
 respect timesheet run and read permissions for time totals	infolog	ro	Respectați permisiunile de execuție și de citire a foii de pontaj pentru totalurile de timp

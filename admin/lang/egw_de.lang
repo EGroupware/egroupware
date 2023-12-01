@@ -264,6 +264,9 @@ current certificate	admin	de	Aktuelles Zertifikat
 current default	admin	de	Aktuelle Vorgabe
 current hash	admin	de	Aktueller Schlüssel:
 currently:	admin	de	Aktuell:
+custom 1	admin	de	Benutzerdefiniert 1
+custom 2	admin	de	Benutzerdefiniert 2
+custom 3	admin	de	Benutzerdefiniert 3
 custom fields	admin	de	Benutzerdefinierte Felder
 custom translation	admin	de	Eigene Übersetzung
 customfield '%1' added	admin	de	Benutzerdefiniertes Feld '%1' hinzugefügt
@@ -586,6 +589,7 @@ last login from	admin	de	Letzter Login von
 last password change	admin	de	Letzte Passwortänderung
 last submission:	admin	de	Letzte Absendung:
 last time read	admin	de	Zuletzt gelesen
+last updated	admin	de	Zuletzt aktualisiert
 ldap accounts context	admin	de	LDAP-Kontext für Benutzerkonten
 ldap basedn	admin	de	LDAP BaseDN
 ldap default homedirectory prefix (e.g. /home for /home/username)	admin	de	LDAP-Vorgabewert für Benutzerverzeichnisse (z.B. /home für /home/username)

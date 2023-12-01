@@ -39,7 +39,7 @@ ldap encryption type	setup	el	LDAP τύπος απόκρυψης
 ldap groups context	setup	el	LDAP περιβάλον ομάδων
 ldap host	setup	el	LDAP host
 ldap root password	setup	el	LDAP root συνθηματικό
-ldap rootdn	setup	el	LDAP rootdn
+ldap rootdn	setup	el	LDAP Root DN
 mail server login type	setup	el	Τύπος εισόδου μηνύματος server
 maximum account id (e.g. 65535 or 1000000)	setup	el	Μέγιστος αριθμός id  λογαριασμών (π.χ. 65535 ή 1000000)
 min backup count	setup	el	Μέγιστος αριθμός διατηρούμενων αντιγράφων ασφαλείας (μηδέν: όλα)
@@ -58,14 +58,25 @@ or	setup	el	ή
 password for smtp-authentication	setup	el	Κωδικός για την SMTP-πιστοποίηση
 path information	setup	el	Πλητοφορία path
 re-enter password	setup	el	Ξανα-εισάγετε το συνθηματικό
-remove	setup	el	αφαίρεση
+refusing to delete dn "%1"!	setup	el	Άρνηση διαγραφής του dn "%1"!
+regular expression to filter by dn	setup	el	Κανονική έκφραση για φιλτράρισμα με DN
+rejected lines	setup	el	Απορριφθείσες γραμμές
+remove	setup	el	Αφαίρεση
+remove all	setup	el	Αφαίρεση όλων
+rename	setup	el	Μετονομασία
+replace username and email	setup	el	Αντικατάσταση ονόματος χρήστη και email
+replace username and keep email	setup	el	Αντικατάσταση ονόματος χρήστη και διατήρηση email
+required to change passwords	setup	el	Απαιτείται αλλαγή κωδικών πρόσβασης
+requires "reset password" privilege, to change passwords!	setup	el	Απαιτείται το προνόμιο "Επαναφορά κωδικού πρόσβασης", για να αλλάξετε τους κωδικούς πρόσβασης!
+requires reinstall or manual repair	setup	el	Απαιτεί επανεγκατάσταση ή χειροκίνητη επισκευή
+requires saml optional on login page and user to specify username and password	setup	el	Απαιτεί προαιρετικό SAML στη σελίδα σύνδεσης και ο χρήστης να καθορίσει όνομα χρήστη και κωδικό πρόσβασης
 select where you want to store/retrieve user accounts	setup	el	Επιλέξτε πού θέλετε να αποθηκεύονται/ανακτώνται οι λογαριασμοί του χρήστη
 selectbox	setup	el	Κουτί επιλογής
 show 'powered by' logo on	setup	el	Εμφάνηση λογότυπου 'powered by'
 size	setup	el	Μέγεθος
 text entry	setup	el	Είσοδος κειμένου
 two weeks	setup	el	δύο εβδομάδες
-use cookies to pass sessionid	setup	el	Χρησημοποίηση cookies για να περάσεις την sessionid
+use cookies to pass sessionid	setup	el	Χρησημοποίηση cookies για να περάσεις την session ID
 use pure html compliant code (not fully working yet)	setup	el	Χρήση κανονικού συμβατού HTML κώδικα (δέν παίζει σωστά ακόμα)
 user for smtp-authentication (leave it empty if no auth required)	setup	el	Χρήστης για την SMTP-πιστοποίηση (να μείνει κενό αν δεν χρειάζεται πιστοποίηση)
 would you like to show each application's upgrade status ?	setup	el	Θέλετε να εμφανίζεται καθε κατάσταση αναβάθμησης τηε εφαρμογής ?

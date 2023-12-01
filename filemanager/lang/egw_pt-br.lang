@@ -210,14 +210,18 @@ preview %1	filemanager	pt-br	Pré-visualizar %1
 preview of %1	filemanager	pt-br	Pré-visualização de %1
 projectmanager	filemanager	pt-br	Gerenciador de Projetos
 properties saved.	filemanager	pt-br	Propriedades salvas.
+protocol to use	filemanager	pt-br	Protocolo a ser usado
+protocols	filemanager	pt-br	Protocolos
 quick jump to	filemanager	pt-br	Saltar para
 quota	filemanager	pt-br	Cota
 quota exceeded	filemanager	pt-br	Cota excedida
 read & write access	filemanager	pt-br	Acesso de leitura e gravação
 read access only	filemanager	pt-br	Somente acesso de leitura
+readonly share link	filemanager	pt-br	Somente leitura Compartilhar link
 recalculate	filemanager	pt-br	Recalcular
+recalculate directory sizes	filemanager	pt-br	Recalcular o tamanho dos diretórios
 recalculated %1 directories in %2 iterations and %3 seconds	filemanager	pt-br	Recalculou %1 diretórios em %2 iterações e %3 segundos
-reload	filemanager	pt-br	recarregar
+reload	filemanager	pt-br	Recarregar
 rename of %1 to %2 failed!	filemanager	pt-br	Falha ao renomar %1 para %2
 rename, change permissions or ownership	filemanager	pt-br	Renomear, alterar permissões e propriedade
 renamed %1 to %2	filemanager	pt-br	%1 renomeado para %2
@@ -225,18 +229,18 @@ renamed %1 to %2.	filemanager	pt-br	%1 renomeado para %2.
 replaced %1	filemanager	pt-br	%1 trocado
 replacements for inserting entries into documents	filemanager	pt-br	Substitutos para a inserção de entradas em documentos
 rights	filemanager	pt-br	Direitos
-root	filemanager	pt-br	raiz
+root	filemanager	pt-br	Root
 root access granted.	filemanager	pt-br	Acesso Root concedido.
 root access stopped.	filemanager	pt-br	Acesso Root parado.
 save %1	filemanager	pt-br	Salvar %1
 save %1, and go back to file listing	filemanager	pt-br	Salvar %1 e voltar à lista de arquivos
-save as zip	filemanager	pt-br	Salvar como Zip
+save as zip	filemanager	pt-br	Salvar como ZIP
 save changes	filemanager	pt-br	Salvar alterações
 saved %1	filemanager	pt-br	%1 salvo
 saving properties failed!	filemanager	pt-br	Falha ao salvar propriedades!
 saving setting for document merge failed!	filemanager	pt-br	Salvar configuração para documento de mesclagem falhou!
 search for '%1'	filemanager	pt-br	Procurar por '%1'
-searchstring	filemanager	pt-br	parâmetro de pesquisa
+searchstring	filemanager	pt-br	Parâmetro de pesquisa
 select action...	filemanager	pt-br	Selecionar ação...
 select file to upload in current directory	filemanager	pt-br	Selecionar arquivo para upload no diretório atual
 select file(s) from vfs	common	pt-br	Selecione o arquivo (s) a partir de VFS

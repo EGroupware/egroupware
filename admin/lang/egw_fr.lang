@@ -40,6 +40,7 @@
 access by	admin	fr	Accès par
 access control	admin	fr	Contrôle d'accès
 access to %1 data by others	admin	fr	Accès aux données de %1  par d'autres
+access token revoked.	admin	fr	Token d'accès révoqué.
 accesslog and bruteforce defense	admin	fr	Protection contre les attaques par accès aux logs et force brute
 account	admin	fr	Compte
 account "%1" has no email address --> not notified!	admin	fr	Le compte "%1" n'a pas d'adresse email --> pas notifié !
@@ -73,8 +74,10 @@ actions	admin	fr	Actions
 activate	admin	fr	Activer
 activate wysiwyg-editor	admin	fr	Activer l'éditeur WYSIWYG
 activated	admin	fr	activé
+activated again	admin	fr	ré-activé
 active mail accounts	admin	fr	Comptes emails actifs
 active templates	admin	fr	Modèles actifs
+active this token again	admin	fr	Ré-activez ce token
 add a category	admin	fr	Ajouter une catégorie
 add a group	admin	fr	Ajouter un groupe
 add a new account.	admin	fr	Ajouter un nouveau compte.
@@ -112,6 +115,7 @@ aliases	admin	fr	Alias
 all accounts	admin	fr	Tous les comptes
 all acls	admin	fr	Tous les ACLs
 all applications	admin	fr	Toutes les applications
+all applications of the user	admin	fr	Toutes les applications de l'utilisateur
 all categories	admin	fr	Toutes les catégories
 all groups	admin	fr	Tous les groupes
 all records and account information will be lost!	admin	fr	Tous les enregistrements et informations sur les comptes vont être perdus!
@@ -137,11 +141,13 @@ appearance	admin	fr	Apparence
 application	admin	fr	Application
 application '%1' not found (maybe not installed or misspelled)!	admin	fr	L'application '%1' n'a pas été trouvée. Peut-être est-elle non installée ou mal orthographiée !
 application name	admin	fr	Nom d'application
+application passwords	admin	fr	Mots de passe de l'application
 application title	admin	fr	Titre d'application
 applications	admin	fr	Applications
 applications available on mobile devices	admin	fr	Applications disponibles sur les mobiles
 applications list	admin	fr	Liste des applications
 applications run rights updated.	admin	fr	Droits d'execution de l'application mis à jour
+applications this group can use	admin	fr	Applications que ce groupe peut utiliser
 applies the changes	admin	fr	Appliquer les changements
 apply changes	admin	fr	Appliquer les changements
 apply the changes	admin	fr	Appliquer les changements
@@ -181,6 +187,8 @@ bi-directional	admin	fr	bidirectionnel
 blocking after wrong password	admin	fr	Blocage après mauvais mot de passe
 bottom	admin	fr	Bas
 bulk password reset	admin	fr	Reset des mots de passe
+by	admin	fr	Par
+by selecting a user or group you effectively delete the mail account for all other users!\n\nare you really sure you want to do that?	admin	fr	En sélectionnant un utilisateur ou un groupe, vous effacez le compte mail pour tous les autres utilisateurs!<br>Êtes-vous sûrs de vouloir le faire ?
 calculate next run	admin	fr	Calculer la prochaine exécution
 calendar recurrence horizont in days (default 1000)	admin	fr	Horizon de la récurrence des calendrier en jours. Défaut = 1000.
 can be used by application	admin	fr	Peut être utilisée par application
@@ -431,12 +439,14 @@ error connecting to imap server. %s : %s.	admin	fr	Erreur de connexion avec le s
 error connecting to imap server: [%s] %s.	admin	fr	Erreur de connexion avec le serveur IMAP. [%s] %s.
 error deleting entry!	admin	fr	Erreur à la suppression de l'entrée !
 error deleting log entry!	admin	fr	Erreur à la suppression des entrées de journaux  !
+error revoking token!	admin	fr	Erreur lors de la révocation du token !
 error saving	admin	fr	Erreur lors de l'enregistrement !
 error saving account!	admin	fr	Erreur lors de l'enregistrement du compte !
 error saving the command!	admin	fr	Erreur lors de l'enregistrement de la commande !
 error saving the entry!!!	admin	fr	Erreur à l'enregistrement de l'entrée !
 error saving to db:	admin	fr	Erreur lors de l'enregistrement dans la bd :
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	fr	Erreur en créant le timer, erreur de syntaxe ou peut-être il y en a déjà un qui tourne !!!
+error storing token!	admin	fr	Erreur lors du stockage du token !
 error! no appname found	admin	fr	Erreur : aucun nom d'application trouvé !
 error, no username!	admin	fr	Erreur, pas de code utilisateur !
 error: %1 not found or other error !!!	admin	fr	Erreur : %1 introuvable ou autre erreur !
@@ -449,6 +459,7 @@ export certificate as p12	admin	fr	Exporter le certificat en p12
 exports groups into a csv file.	admin	fr	Exporter les groupes dans un fichier CSV.
 exports permission settings into a csv file.	admin	fr	Exporter les permissions dans un fichier CSV.
 exports users into a csv file.	admin	fr	Exporter les utilisateurs dans un fichier CSV.
+failed	admin	fr	échec
 failed to change password for account "%1"!	admin	fr	Echec du changement de mot de passe pour le compte "%1" !
 failed to change password.	admin	fr	Erreur lors du changement de mot de passe.
 failed to delete account!	admin	fr	Erreur à la suppression du compte !
@@ -461,6 +472,7 @@ field '%1' already exists !!!	admin	fr	Le champ '%1'  existe déjà !
 file rejected, no %2. is:%1	admin	fr	Fichier rejeté, pas de %2.  Fichiers permis : %1
 file space	admin	fr	Espace fichiers
 file space must be an integer	admin	fr	La valeur Espace fichiers doit être un entier
+filesystem quota	admin	fr	Quota du système de fichiers
 filtered by account	admin	fr	Filtrage par compte
 filtered by group	admin	fr	Filtrage par groupe
 folder acl	admin	fr	ACL sur le dossier
@@ -477,6 +489,7 @@ forward only disables imap mailbox / storing of mails and just forwards them to 
 full name	admin	fr	Nom complet
 general	admin	fr	Général
 generate certificate	admin	fr	Générer le Certificat
+generate new token and display it once after saving	admin	fr	Générer un nouveau token et l'afficher une seule fois après l'avoir sauvegardé
 git clone	admin	fr	Git clone
 global categories	common	fr	Catégories globales
 global options	admin	fr	Options globales
@@ -576,6 +589,7 @@ last login from	admin	fr	Dernière connexion depuis
 last password change	admin	fr	Dernier changement de mot de passe
 last submission:	admin	fr	Dernière soumission :
 last time read	admin	fr	Dernière lecture
+last updated	admin	fr	Ultimo aggiornamento
 ldap accounts context	admin	fr	Contexte comptes LDAP
 ldap basedn	admin	fr	LDAP basedn
 ldap default homedirectory prefix (e.g. /home for /home/username)	admin	fr	Préfixe par défaut des répertoires d'accueil LDAP (p.ex. /home pour /home/utilisateur)
@@ -592,6 +606,7 @@ ldap server admin password	admin	fr	LDAP Mot de passe administateur
 ldap server hostname or ip address	admin	fr	LDAP Nom du serveur ou adresse IP
 ldap settings	admin	fr	LDAP Paramètres
 leave empty for no quota	admin	fr	Laisser vide pour ne pas avoir de quota
+leave empty to use oauth, if supported	admin	fr	Laisser vide pour utiliser OAuth, si compatible
 leave the category untouched and return back to the list	admin	fr	Laisser la catégorie telle quelle et retourner à la liste
 leave the group untouched and return back to the list	admin	fr	Laisser le groupe tel quel et retourner à la liste
 leave unchanged	admin	fr	Laisser inchangé
@@ -660,6 +675,7 @@ no login history exists for this user	admin	fr	Aucun historique de connexion n'e
 no matches found	admin	fr	Aucune occurrence trouvée !
 no message returned.	admin	fr	Aucun message n'est retourné.
 no modes available	admin	fr	Pas de modes disponibles !
+no oauth client secret for provider '%1'!	admin	fr	Pas de secret client OAuth  pour le fournisseur '%1'!
 no permission to add groups	admin	fr	Aucune permission pour ajouter des groupes !
 no permission to add users	admin	fr	Aucune permission pour ajouter des utilisateurs !
 no permission to create groups	admin	fr	Aucune permission pour créer des groupes !
@@ -754,6 +770,7 @@ read this list of methods.	admin	fr	Lisez cette liste de méthodes.
 register application hooks	admin	fr	Inscrire les dépendances
 reject passwords containing part of username or full name (3 or more characters long)	admin	fr	Rejeter les mots de passe contenant une partie du nom complet ou du login (3 caractères ou plus)
 relay access checked	admin	fr	Accès au relais vérifié
+remark	admin	fr	Remarque
 remote administration instances	admin	fr	Instances administrées à distance
 remote administration need to be enabled in the remote instance under admin &gt; site configuration!	admin	fr	L'administration à distance doit être activée dans l'instance distante sous Admin > Configuration du site !
 remote administration need to be enabled in the remote instance under admin > site configuration!	admin	fr	Administration à distance doit être activé dans l'instance à distance sous Admin > Configuration du site !
@@ -768,12 +785,16 @@ required pear class mail/mimedecode.php not found.	admin	fr	Classe PEAR class Ma
 required to embed egroupware via iframe eg. for lti	admin	fr	nécessaire pour intégrer EGroupware via un iframe, par exemple pour le LTI
 requires 'openid / oauth2 server' app.	admin	fr	Nécessite une application "OpenID / OAuth2.
 reset filter	admin	fr	Réinitialiser le filtre
+revoke	admin	fr	Révoquer
+revoke this token	admin	fr	Révoquer ce token
+revoked	admin	fr	révoqué
 rights	admin	fr	Droits
 route all mails to	admin	fr	Livrer tous les emails à
 rows	admin	fr	Lignes
 rpm or debian package	admin	fr	Paquet RPM ou Debian
 run	admin	fr	exécuter
 run asynchronous services	admin	fr	Exécuter les Services asynchrones
+run rights for applications	admin	fr	exécuter les permissions pour ls applications
 samesite cookie attribute (send cookie if browser addressbar show a different domain)	admin	fr	Attribut de cookie SameSite (envoie un cookie si la barre d'adresse du navigateur montre un domaine différent)
 save as default	admin	fr	Sauvegarder comme défaut
 save changes	admin	fr	Sauvegarder les modifications
@@ -788,6 +809,7 @@ search accounts	admin	fr	Chercher des comptes
 search categories	admin	fr	Chercher des catégories
 search groups	admin	fr	Chercher des groupes
 search peer servers	admin	fr	Chercher des serveurs Pairs
+secret deleted, two factor authentication disabled.	admin	fr	Secret effacé, authentification à double facteur désactivée.
 secure connection	admin	fr	Connexion sécurisée
 security	admin	fr	Sécurité
 select accounts for which the custom field should be visible	admin	fr	Sélectionner les comptes pour lesquels le champ personnalisé devrait être visible.
@@ -796,6 +818,7 @@ select language to define language based message. language 'english' is default 
 select multiple	admin	fr	Sélectionner plusieurs
 select owner	admin	fr	Sélectionner le propriétaire
 select permissions this group will have	admin	fr	Choisissez les permissions que ce groupe va avoir
+select the applications you want the token to be limited to, or leave the default of all applications.	admin	fr	Sélectionnez les applications pour lesquelles vous voulez accéder grâce au token, ou laissez par défaut pour toutes les applications.
 select the parent category. if this is a main category select no category	admin	fr	Choisissez la catégorie parente. Si ceci est une catégorie principale choisissez PAS DE CATEGORIE
 select type of imap server	admin	fr	Sélectionner le type de serveur IMAP
 select type of imap/pop3 server	admin	fr	Sélectionner le type de serveur IMAP/POP3
@@ -869,6 +892,7 @@ subtype	admin	fr	Sous-type
 subversion checkout	admin	fr	Check out subversion
 success	admin	fr	Réussi
 successful connected to %1 server%2.	admin	fr	Connexion réussie sur %1 serveur%2.
+successfull, but no refresh-token received!	admin	fr	Réussi, mais AUCUN refresh-token reçu!
 switch back to standard identity to save account.	admin	fr	Revenir à l'identité standard pour sauvegarder le compte.
 switch back to standard identity to save other account data.	admin	fr	Revenez à l'identité standard pour sauvegarder les autres données du compte.
 switch it off, if users are randomly thrown out	admin	fr	Décocher si des utilisateurs sont déconnectés par hasard
@@ -902,7 +926,8 @@ this application is current	admin	fr	Cette application est à jour
 this application requires an upgrade	admin	fr	Cette application nécessite une mise à jour
 this category is currently being used by applications as a parent category	admin	fr	Cette catégorie est actuellement utilisée par des applications comme une catégorie parente
 this controls exports and merging.	admin	fr	Ceci contrôle les exports et les fusion d'impressions
-this is not a personal mail account!\n\naccount will be deleted for all users!\n\nare you really sure you want to do that?	admin	fr	Ce n'est PAS un compte de messagerie personnel!\n\nLe compte sera supprimé pour TOUS les utilisateurs!\n\nVous êtes vraiment sûr de vouloir faire ça ?
+this is a mail account for all users!	admin	fr	Ceci est un compte mail pour TOUS les utilisateurs!
+this is not a personal mail account!\n\naccount will be deleted for all users!\n\nare you really sure you want to do that?	admin	fr	Ce n'est PAS un compte de messagerie personnel!<br>Le compte sera supprimé pour TOUS les utilisateurs!<br>Vous êtes vraiment sûr de vouloir faire ça ?
 this key used in the html code your site serves to users.	admin	fr	Cette clé est utilisée dans le code HTML que votre site sert aux utilisateurs.
 this php has no imap support compiled in!!	admin	fr	Ce PHP n'est pas compilé avec le support de l'IMAP !!
 this secret key used for communication between your site and google. be sure to keep it a secret.	admin	fr	Cette clé secrète est utilisée pour la communication entre votre site et Google. Veillez à ce qu'elle reste secrète.
@@ -911,6 +936,10 @@ timeout for sessions in seconds (default 14400 = 4 hours)	admin	fr	Expiration po
 times	admin	fr	Heures
 to allow us to track the growth of your individual installation use this submit id, otherwise delete it:	admin	fr	Pour nous permettre de tracer la croissance de votre installation individuelle, utiliser cette ID soumise, sinon effacer la:
 to use a tls connection, you must be running a version of php 5.1.0 or higher.	admin	fr	Pour utiliser une connexion TLS, vous devez utiliser une version PHP 5.1.0 ou supérieure.
+token created.	admin	fr	Token créé.
+token not found!	admin	fr	Token non trouvé!
+token revoked.	admin	fr	Token révoqué.
+token saved.	admin	fr	Token sauvegardé.
 top	admin	fr	Haut
 total of %1 accounts deleted.	admin	fr	Total de %1 compte(s) supprimé(s)
 total of %1 id's changed.	admin	fr	Total de %1 id changés
@@ -947,11 +976,13 @@ upload your logo or enter the url	admin	fr	Uploader votre logo ou entrer l'URL
 uppercase, lowercase, number, special char	admin	fr	Majuscule, minuscule, nombre, caractère spécial
 url of the egroupware installation, eg. http://domain.com/egroupware	admin	fr	URL de l'installation d'EGroupware, ex. http://domaine.com/egroupware
 usage	admin	fr	Usage
+use admin credentials to connect without a session-password, e.g. for sso	admin	fr	Utiliser les authentifiants admin pour vous connecter à une session sans mot de passe, par exemple pour SSO
 use cookies to pass sessionid	admin	fr	Utiliser les cookies pour passer l'ID de session
 use default	admin	fr	Utiliser le défaut
 use ldap defaults	admin	fr	Utiliser les paramètres LDAP par défaut
 use predefined username and password defined below	admin	fr	Utiliser les login/mots de passe pré-définis ci-dessous
 use pure html compliant code (not fully working yet)	admin	fr	Utiliser du code HTML standard (ne fonctionne pas encore complètement)
+use save or apply to store the received oauth token!	admin	fr	Utilisez sauvegarder ou appliquer pour stocker le token OAuth reçu!
 use secure cookies (transmitted only via https)	admin	fr	Utiliser des cookies sécurisés (transmis seulement par https)
 use smtp auth	admin	fr	Utiliser l'authentification SMTP
 use theme	admin	fr	Utiliser le thème
@@ -979,8 +1010,10 @@ users can define their own signatures	admin	fr	les utilisateurs peuvent définir
 users can utilize these stationery templates	admin	fr	Les utilisateurs peuvent utiliser ces modèles de papiers
 users choice	admin	fr	Choix de l'utilisateur
 using data from mozilla ispdb for provider %1	admin	fr	Utilisation des données de Mozilla ISPDB pour le fournisseur %1
+using imap:%1, smtp:%2, oauth:%3:	admin	fr	Utilisation de IMAP:%1, SMTP:%2, OAUTH:%3:
 vacation messages with start- and end-date require an admin account to be set	admin	fr	Les messages d'absence avec date de début et de fin doivent être définis par un administrateur !
 vacation notice	admin	fr	Message d'absence
+valid for	admin	fr	Valide pour
 value for column %1 is not unique!	admin	fr	La valeur pour la colonne %1 n'est pas unique !
 vfs directory "%1" not found!	admin	fr	Répertoire VFS  "%1" non trouvé !
 view access log	admin	fr	Afficher le journal d'accès

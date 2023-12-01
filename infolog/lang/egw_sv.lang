@@ -246,14 +246,24 @@ last modified	infolog	sv	Senast ändrad
 leave it empty	infolog	sv	Lämnas tomt
 leave without saveing the entry	infolog	sv	Lämna utan att spara post
 leaves without saveing	infolog	sv	Lämnar utan att spara
+limit number of description lines (default 5, 0 for no limit)	infolog	sv	Begränsa antalet beskrivningsrader. Standard = 5, 0 = ingen begränsning.
+limit width of description column ((effective only if lines limit is set), 0 for no limit)	infolog	sv	Begränsa bredden på beskrivningskolumnen. Gäller endast om gränsen för antal rader är satt. 0 = ingen begränsning.
 link	infolog	sv	Länk
+linked to %1	infolog	sv	Länkad till %1
 links	infolog	sv	Länkar
+links and attached files	infolog	sv	Länkar och bifogade filer
 links of this entry	infolog	sv	Postens länkar
+links to specified application.  example: {{links/infolog}}	infolog	sv	Länkar till angiven applikation. Exempel: {{links/infolog}}
+links wrapped in an href tag with download link	infolog	sv	Länkar inslagna i en HREF-tagg med nedladdningslänk
 list all categories	infolog	sv	Lista alla kategorier
+list of files linked to the current record	infolog	sv	Lista över filer som är länkade till den aktuella posten
+load custom fields in index, if filtered by selected types (eg. to display them in a type-specific index template)	infolog	sv	Ladda egna fält i index, om de filtreras av valda typer (t.ex. för att visa dem i en typspecifik indexmall)
 location	infolog	sv	Placering
 longer textual description	infolog	sv	Längre beskrivning
 low	infolog	sv	Låg
 max length of the input [, length of the inputfield (optional)]	infolog	sv	Max längd på indatafältet
+modifier	infolog	sv	Modifierare
+modifierer	infolog	sv	Modifierare
 name must not be empty !!!	infolog	sv	Namnet får inte vara tomt!
 name of new type to create	infolog	sv	Skapa typ med namnet
 never hide search and filters	infolog	sv	Göm aldrig sök eller filter
@@ -261,6 +271,7 @@ new %1	infolog	sv	Nytt %1
 new name	infolog	sv	Nytt namn
 new search	infolog	sv	Ny sökning
 no - cancel	infolog	sv	Nej - Avbryt
+no custom field "%1" for %2.	infolog	sv	Inget anpassat fält "%1" för %2.
 no describtion, links or attachments	infolog	sv	Ingen beskrivning, länk eller bilaga
 no details	infolog	sv	Inga detaljer
 no entries found, try again ...	infolog	sv	Inga poster hittade, försök igen

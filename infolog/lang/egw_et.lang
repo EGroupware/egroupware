@@ -224,15 +224,28 @@ leave without saveing the entry	infolog	et	Jäta kanne salvestamata
 leaves without saveing	infolog	et	lahkub ilma salvestamatta
 length	infolog	et	Pikkus
 limit list to last n month, if ordering by last-modified and not searching.	admin	et	Piirake nimekiri viimase N kuuga, kui järjestatakse viimase muudetud ja ei otsita.
+limit number of description lines (default 5, 0 for no limit)	infolog	et	Piirake kirjelduse ridade arvu. Vaikimisi = 5, 0 = piirangut ei ole.
+limit width of description column ((effective only if lines limit is set), 0 for no limit)	infolog	et	Kirjeldussamba laiuse piiramine. Toimib ainult siis, kui on seatud ridade piirang. 0 = piirang puudub.
 link	infolog	et	Link
+linked to %1	infolog	et	Lingitud %1-ga
 links	infolog	et	Lingid
+links and attached files	infolog	et	Lingid ja lisatud failid
+links of this entry	infolog	et	Selle kirje lingid
+links to specified application.  example: {{links/infolog}}	infolog	et	Lingid määratud rakendusele. Näide: {{links/infolog}}
+links wrapped in an href tag with download link	infolog	et	Lingid, mis on ümbritsetud HREF-tähega koos allalaadimislingiga
+list all categories	infolog	et	Loetelu kõikidest kategooriatest
+list of files linked to the current record	infolog	et	Praeguse kirjega seotud failide loetelu
+load custom fields in index, if filtered by selected types (eg. to display them in a type-specific index template)	infolog	et	Laadige kohandatud väljad indeksisse, kui neid filtreeritakse valitud tüüpide järgi (nt nende kuvamiseks tüübispetsiifilises indeksimustris).
 location	infolog	et	Asukoht
-low	infolog	et	madal
+low	infolog	et	Madal
+modifier	infolog	et	Modifikaator
+modifierer	infolog	et	Modifikaator
 name must not be empty !!!	infolog	et	Nimi eo tohi olla tühi !!!
 new %1	infolog	et	Uus %1
-new name	infolog	et	uus nimi
+new name	infolog	et	Uus nimi
 new search	infolog	et	Uus otsing
 no - cancel	infolog	et	Ei -Tühista
+no custom field "%1" for %2.	infolog	et	Puudub kohandatud väli "%1" %2 jaoks.
 no details	infolog	et	mitte detailselt
 no filter	infolog	et	Filtrita
 none	infolog	et	Puudub

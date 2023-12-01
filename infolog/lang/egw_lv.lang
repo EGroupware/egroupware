@@ -224,31 +224,42 @@ leave without saveing the entry	infolog	lv	Aiziet, nesaglabājot ierakstu
 leaves without saveing	infolog	lv	Aiziet bez saglabāšanas
 length	infolog	lv	Garums
 limit list to last n month, if ordering by last-modified and not searching.	admin	lv	Ierobežojiet sarakstu līdz pēdējam N mēnesim, ja sakārtojat pēc pēdējās izmaiņas un nemeklējat.
+limit number of description lines (default 5, 0 for no limit)	infolog	lv	Ierobežot aprakstu rindu skaitu. Noklusējuma iestatījums = 5, 0 = nav ierobežojuma.
+limit width of description column ((effective only if lines limit is set), 0 for no limit)	infolog	lv	Ierobežot apraksta slejas platumu. Spēkā tikai tad, ja ir iestatīts rindu ierobežojums. 0 = nav ierobežojuma.
 link	infolog	lv	Saite
+linked to %1	infolog	lv	Saistīts ar %1
 links	infolog	lv	Saites
+links and attached files	infolog	lv	Saites un pievienotie faili
 links of this entry	infolog	lv	Ierakstu saites
+links to specified application.  example: {{links/infolog}}	infolog	lv	Saites uz norādīto lietojumprogrammu. Piemērs: {{links/infolog}}
+links wrapped in an href tag with download link	infolog	lv	Saites, kas ietītas HREF tagā ar lejupielādes saiti
 list all categories	infolog	lv	Kategoriju saraksts
+list of files linked to the current record	infolog	lv	Ar pašreizējo ierakstu saistīto failu saraksts
+load custom fields in index, if filtered by selected types (eg. to display them in a type-specific index template)	infolog	lv	Uzlādēt pielāgotos laukus indeksā, ja tie filtrēti pēc izvēlētajiem tipiem (piemēram, lai tos parādītu tipam specifiskā indeksa šablonā).
 location	infolog	lv	Novietojums
 longer textual description	infolog	lv	garāksts teksta apraksts
 low	infolog	lv	zems
 max length of the input [, length of the inputfield (optional)]	infolog	lv	ievades datu maksimālais garums[, ievades lauka garums (pēc izvēles)]
+modifier	infolog	lv	Modifikators
+modifierer	infolog	lv	Modifikators
 name must not be empty !!!	infolog	lv	Nosaukums nedrīkst būt tukšs
-name of new type to create	infolog	lv	veidojamā tipa nosaukums
-new name	infolog	lv	jaunais nosaukums
+name of new type to create	infolog	lv	Veidojamā tipa nosaukums
+new name	infolog	lv	Jaunais nosaukums
 new search	infolog	lv	Jauna meklēšana
 no - cancel	infolog	lv	Nē- Atcelt
-no entries found, try again ...	infolog	lv	ieraksti netika atrasti, mēģini vēlreiz...
+no custom field "%1" for %2.	infolog	lv	%2 nav pielāgotā lauka "%1".
+no entries found, try again ...	infolog	lv	Ieraksti netika atrasti, mēģini vēlreiz...
 no filter	infolog	lv	Nav filtra
-no links or attachments	infolog	lv	nav saites vai pielikumu
+no links or attachments	infolog	lv	Nav saites vai pielikumu
 nonactive	infolog	lv	Neaktīvs
 none	infolog	lv	Neviens
-normal	infolog	lv	normāls
-not	infolog	lv	ne
-not assigned	infolog	lv	nav noteikts
+normal	infolog	lv	Normāls
+not	infolog	lv	Ne
+not assigned	infolog	lv	Nav noteikts
 note	infolog	lv	Piezīme
 number of records to read (%1)	infolog	lv	Lasāmo ierakstu skaits(%1)
-offer	infolog	lv	piedāvā
-ongoing	infolog	lv	notiekošs
+offer	infolog	lv	Piedāvā
+ongoing	infolog	lv	Notiekošs
 only the attachments	infolog	lv	tikai pielikumi
 only the links	infolog	lv	tikai saites
 open(status)	infolog	lv	atvērt

@@ -178,12 +178,16 @@ preview %1	filemanager	hu	Előnézet %1
 preview of %1	filemanager	hu	%1 előnézete
 projectmanager	filemanager	hu	Projektmanager
 properties saved.	filemanager	hu	Tulajdosnágok elmentve.
+protocol to use	filemanager	hu	Használandó protokoll
+protocols	filemanager	hu	Jegyzőkönyvek
 quick jump to	filemanager	hu	Gyors ugrás ide
 quota	filemanager	hu	Kvóta
 quota exceeded	filemanager	hu	Kvóta túllépése
 read & write access	filemanager	hu	Olvasás és írási hozzáférés
 read access only	filemanager	hu	Csak olvasási hozzáférés
+readonly share link	filemanager	hu	Csak olvasható Megosztási link
 recalculate	filemanager	hu	Újraszámítás
+recalculate directory sizes	filemanager	hu	Könyvtárméretek újraszámítása
 recalculated %1 directories in %2 iterations and %3 seconds	filemanager	hu	%1 könyvtár újraszámítása %2 ismétlés és %3 másodperc alatt.
 reload	filemanager	hu	Újratölt
 rename of %1 to %2 failed!	filemanager	hu	%1 átnevezése %2-re nem sikerült!
@@ -191,12 +195,14 @@ rename, change permissions or ownership	filemanager	hu	Átnevezés, hozzáféré
 renamed %1 to %2	filemanager	hu	%1 átnevezve erre: %2
 renamed %1 to %2.	filemanager	hu	%1 átnevezve erre: %2
 replaced %1	filemanager	hu	%1 cserélve
+replacements for inserting entries into documents	filemanager	hu	A bejegyzések dokumentumba való beillesztésének helyettesítése
 rights	filemanager	hu	Hozzáférés
 root	filemanager	hu	root
 root access granted.	filemanager	hu	Adminisztrátor hozzáférés megadva.
 root access stopped.	filemanager	hu	Adminisztrátor hozzáférés leállítva.
 save %1	filemanager	hu	Mentés %1
 save %1, and go back to file listing	filemanager	hu	%1 mentése és visszatérés az állománylistához
+save as zip	filemanager	hu	Mentés ZIP-ként
 save changes	filemanager	hu	Változások mentése
 saved %1	filemanager	hu	%1 elmentve
 saving properties failed!	filemanager	hu	Tulajdonságok mentése nem sikerült.

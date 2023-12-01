@@ -109,16 +109,26 @@ preview	filemanager	lv	Priekšskatījums
 preview %1	filemanager	lv	Priekšskatīt %1
 preview of %1	filemanager	lv	%1 priekšskatījums
 projectmanager	filemanager	lv	Projekta Vadītājs
+protocol to use	filemanager	lv	Izmantojamais protokols
+protocols	filemanager	lv	Protokoli
 quick jump to	filemanager	lv	Ātri pārlekt uz
 quota	filemanager	lv	Kvota
 quota exceeded	filemanager	lv	Pārsniegta kvota
+read & write access	filemanager	lv	Piekļuve lasīšanai un rakstīšanai
+read access only	filemanager	lv	Tikai lasīšanas piekļuve
+readonly share link	filemanager	lv	Tikai lasīšanai Koplietošanas saite
 recalculate	filemanager	lv	Pārrēķināt
+recalculate directory sizes	filemanager	lv	Pārrēķiniet direktoriju izmērus
 recalculated %1 directories in %2 iterations and %3 seconds	filemanager	lv	Pārrēķināts %1 direktoriju %2 iterācijās un %3 sekundēs.
-reload	filemanager	lv	pārlādēt
-renamed %1 to %2	filemanager	lv	%1 pārsaukts par %2
+reload	filemanager	lv	Pārlādēt
+rename of %1 to %2 failed!	filemanager	lv	Pārdēvēt %1 uz %2 neizdevās!
+rename, change permissions or ownership	filemanager	lv	Pārdēvēt, mainīt atļaujas vai īpašumtiesības
+renamed %1 to %2	filemanager	lv	Pārdēvēts %1 uz %2
+renamed %1 to %2.	filemanager	lv	Pārdēvēts %1 uz %2
 replaced %1	filemanager	lv	Aizvietots
 save %1	filemanager	lv	Saglabāt %1
 save %1, and go back to file listing	filemanager	lv	Saglabā %1 un atgriezies datņu apskatē
+save as zip	filemanager	lv	Saglabāt kā ZIP
 save changes	filemanager	lv	Saglabāt izmaiņas
 saved %1	filemanager	lv	Saglabāts %1
 show	filemanager	lv	Parādīt

@@ -139,19 +139,26 @@ preview	filemanager	zh	预览
 preview %1	filemanager	zh	预览%1
 preview of %1	filemanager	zh	%1的预览
 projectmanager	filemanager	zh	项目管理
+protocol to use	filemanager	zh	使用协议
+protocols	filemanager	zh	协议
 quick jump to	filemanager	zh	快速跳转到
 quota	filemanager	zh	配额
 quota exceeded	filemanager	zh	超出配额
 read & write access	filemanager	zh	读写访问
 read access only	filemanager	zh	只读访问
+readonly share link	filemanager	zh	只读 共享链接
 recalculate	filemanager	zh	重新计算
+recalculate directory sizes	filemanager	zh	重新计算目录大小
 recalculated %1 directories in %2 iterations and %3 seconds	filemanager	zh	在 %2 次迭代和 %3 秒内重新计算 %1 目录
 reload	filemanager	zh	重新载入
+rename of %1 to %2 failed!	filemanager	zh	将 %1 重命名为 %2 失败！
+rename, change permissions or ownership	filemanager	zh	重命名、更改权限或所有权
 renamed %1 to %2	filemanager	zh	%1已重命名为%2
 renamed %1 to %2.	filemanager	zh	%1已重命名为%2。
 replaced %1	filemanager	zh	%1已替换
 save %1	filemanager	zh	保存%1
 save %1, and go back to file listing	filemanager	zh	保存%1并返回文件列表
+save as zip	filemanager	zh	保存为 ZIP
 save changes	filemanager	zh	保存更改
 saved %1	filemanager	zh	%1已保存
 search for '%1'	filemanager	zh	搜索'%1'

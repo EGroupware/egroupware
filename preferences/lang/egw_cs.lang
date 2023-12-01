@@ -1,18 +1,21 @@
 %1 - preferences	preferences	cs	Předvolby pro %1
 %1 hours	preferences	cs	%1 hodin
-%1 is no existing vfs directory!	preferences	cs	Složka %1 neexistuje (ve vfs)!
-%1 is no existing vfs file!	preferences	cs	Soubor %1 neexistuje (ve vfs)!
+%1 is no existing vfs directory!	preferences	cs	Složka %1 neexistuje (ve VFS)!
+%1 is no existing vfs file!	preferences	cs	Soubor %1 neexistuje (ve VFS)!
 12 hour	preferences	cs	12 hodinový
 24 hour	preferences	cs	24 hodinový
 a template defines the layout of egroupware and it contains icons for each application.	preferences	cs	Šablona definuje vzhled eGroupWaru a obsahuje ikony pro každou aplikaci.
 a theme defines the colors and fonts used by the template.	preferences	cs	Téma definuje barvy a fonty použité šablonou.
+access token revoked.	preferences	cs	Přístupový token byl zrušen.
 acl grants have been updated	preferences	cs	ACL práva byla aktualizována
 any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	cs	Každý výpis v eGroupWaru zobrazí tento počet položek na stránku.<br>Příliš velká hodnota zpomalí zobrazování stránky, příliš malá Vám znesnadní přehled.
+applications list scroll area	preferences	cs	Rolovací plocha seznamu aplikací
 are you sure you want to delete this category ?	preferences	cs	Určitě chcete smazat tuto kategorii ?
 audio effect	preferences	cs	Zvukové efekty
 audio effect enables|disables sound effects used in the theme	preferences	cs	Povolí, nebo zakáže použití zvukových efektů použitých v tématu.
 automatically start with this font	preferences	cs	Automaticky začínat s tímto typem písma
 automatically start with this font size	preferences	cs	Automaticky začínat s touto velikostí písma
+automatically start with this format block. small paragraph adds less line space between new lines.	preferences	cs	Automatically start with this format block.<br/><b>Small Paragraph</b> adds less line space between new lines.
 br	preferences	cs	br
 change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	cs	Mění uživatelské heslo po zadání starého a nového hesla. Vrací TRUE je-li vše v pořádku, FALSE při chybě.
 change password	preferences	cs	Změna hesla
@@ -21,9 +24,13 @@ change your profile	preferences	cs	Změna profilu
 change your settings	preferences	cs	Změna nastavení
 charset for the csv export	addressbook	cs	Znaková sada pro export do CSV
 charset for the csv export/import	preferences	cs	Znaková sada
+click to install	preferences	cs	Klepnutím na tlačítko nainstalujete
 click to select a color	preferences	cs	Klikněte pro výběr barvy
+close after selection	preferences	cs	Zavřít po výběru
+code is invalid	preferences	cs	Kód je neplatný
 color	preferences	cs	Barva
 country	preferences	cs	Země
+current password	preferences	cs	Aktuální heslo
 custom login box color, defaults to above color darkened	preferences	cs	Uživatelská barva přihlašovacího okna, přednastavená je tmavý odstín výše uvedené barvy
 custom sidebar menu active color, defaults to above color darkened	preferences	cs	Uživatelská barva postranní nabídky, přednastavená je tmavý odstín výše uvedené barvy
 dark mode theme	preferences	cs	Tmavý režim motivu
@@ -34,29 +41,40 @@ default	preferences	cs	výchozí
 default application	preferences	cs	Výchozí aplikace
 default font	preferences	cs	Výchozí písmo
 default font size	preferences	cs	Výchozí velikost písma
+default format block	preferences	cs	Výchozí blok formátu
 default preferences	preferences	cs	Výchozí předvolby
 delete categories	preferences	cs	Vymazat kategorie
 deny following groups access to acl (grant access)	admin	cs	Zakázat těmto skupinám přístup do ACL (přidělit oprávnění)
+deny following groups access to application passwords	preferences	cs	Zakázat následujícím skupinám přístup k heslům aplikací
 deny following groups access to edit categories	admin	cs	Zakázat těmto skupinám přístup pro úpravy kategorií
 deny following groups access to preferences	admin	cs	Zakázat těmto skupinám přístup k předvolbám
+deny following groups access to security popup	admin	cs	Zakázat následujícím skupinám přístup k vyskakovacímu oknu zabezpečení
 description can not exceed 255 characters in length !	preferences	cs	Popis nemůže být delší jak 255 znaků!
 disable	preferences	cs	Zakázat
+disable two factor auth	preferences	cs	Zakázat dvoufaktorové ověřování
+disabling allows to again log in without a second factor.	preferences	cs	Zakázání umožňuje opětovné přihlášení bez druhého faktoru.
 display thumbnails for linked images	preferences	cs	Zobrazovat náhledy pro odkazované obrázky
 div	preferences	cs	div
 do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	cs	Preferujete 24ti hodinový formát času nebo 12ti hodinový s dodatkem am/pm.
-edit custom fields	preferences	cs	editovat uživatelsky definované položky
-enable	preferences	cs	povolit
+edit custom fields	preferences	cs	Editovat uživatelsky definované položky
+enable	preferences	cs	Povolit
 enable drag and drop functionality (experimental)	preferences	cs	Povolit funkcionalitu táhni a pusť (experimentální)
+enable menubar	preferences	cs	Povolení panelu nabídek
 enable selectbox dropdown resizing for ie (experimental)	preferences	cs	Povolit změnu velikosti rozbalovacích nabídek pro IE (experimentální)
+enable/disable menubar from top of the editor.	preferences	cs	Povolení/zakázání panelu v horní části editoru.
+enabled features in toolbar	preferences	cs	Povolené funkce na panelu nástrojů
 enables or disables drag and drop functions in all applications. if the browser does not support drag and drop, it will be disabled automatically. this feature is experimental at the moment.	preferences	cs	Povoluje nebo zakazuje funkce táhni a pusť ve všech aplikacích. Pokud webový prohlížeč ovládání způsobem táhni a pusť nepodporuje, bude automaticky zakázáno. Tato vlastnost je v současnosti v experimentálním stádiu.
 enables or disables dropdown selectbox resizing for ie in all applications. if the browser is not an ie , the option will not apply. this feature is experimental at the moment.	preferences	cs	Povoluje nebo zakazuje změnu velikosti rozbalovacích nabídek v IE pro všechny aplikace. Ostatních prohlížečů se tato volba nedotkne. V současné době se jedná o experimentální funkci.
 enables or disables selectbox dropdown resizing for ie in all applications. if the browser is not an ie , the option will not apply. this feature is experimental at the moment.	preferences	cs	Povolí nebo zakáže změnu velikosti rozbalovacích nabídek pro všechny aplikace eGroupWaru v Internet Exploreru. Ostatních internetových prohlížečů se tato volba nedotkne. Pamatujte prosím, že funkce je v tomto okamžiku experimentální.
 enables or disables selectbox dropdown resizing for ie in all applications. if the browser is not an ie, the option will not apply. this feature is experimental at the moment.	preferences	cs	Povolí nebo zakáže změnu velikosti rozbalovacích nabídek pro všechny aplikace eGroupWaru v Internet Exploreru. Ostatních internetových prohlížečů se tato volba nedotkne. Pamatujte prosím, že funkce je v tomto okamžiku experimentální.
 encrypted ldap connection is required to change passwords, but it is not configured in your installation.	preferences	cs	Pro změnu hesla je vyžadováno zabezpečené připojení k LDAP, ale to nebylo v průběhu instalace nakonfigurováno.
+enter code to verify correct setup	preferences	cs	Zadejte kód pro ověření správného nastavení
 enter your new password	preferences	cs	Zadejte Vaše nové heslo
 enter your old password	preferences	cs	Zadejte Vaše staré heslo
 error	preferences	cs	Chyba
 failed to change password.	preferences	cs	Nepodařilo se změnit heslo.
+failed to delete secret!	preferences	cs	Nepodařilo se odstranit tajemství!
+failed to store secret!	preferences	cs	Nepodařilo se uložit tajemství!
 fast	preferences	cs	Rychlý
 fast update add new entries always top of the list and updates existing ones in place, unless list is sorted by last modified. exact updates do a full refresh, if the list is not sorted by last modified.	preferences	cs	Rychlá aktualizace přidává nové záznamy vždy na začátek seznamu a aktualizuje stávající na místě, pokud není seznam seřazen podle poslední změny. Přesné aktualizace provedou úplnou aktualizaci, pokud není seznam seřazen podle poslední změny.
 features of the editor	preferences	cs	Vlastnosti editoru
@@ -64,9 +82,13 @@ font size unit	preferences	cs	Jednotka velikosti písma
 forced preferences	preferences	cs	Vynucené předvolby
 formatting & general settings	preferences	cs	Formáty a obecné nastavení
 general settings	preferences	cs	Obecné nastavení
+generate new qrcode to disable existing one, after enabling the new one!	preferences	cs	Vygenerujte nový QRCode pro deaktivaci stávajícího, po povolení nového!
+google authenticator for android	preferences	cs	Google Authenticator pro Android
+google authenticator for ios	preferences	cs	Google Authenticator pro iOS
+heading %1	preferences	cs	Hlavička %1
 help off	preferences	cs	Vypnout nápovědu
 holding ctrl/cmd key and click on the line	preferences	cs	stisknutím a držením klávesy Ctrl a kliknutím na řádek
-hours	preferences	cs	hodiny
+hours	preferences	cs	Hodiny
 how do you like to display accounts	preferences	cs	Zobrazení účtů
 how do you like to select accounts	preferences	cs	Výběr účtů
 how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	cs	O kolik hodin dopředu nebo dozadu je posunuto Vaše časové pásmo vůči časovému pásmu serveru?<br>Pokud jste ve stejném časovém pásmu, vyberte 0 hodin, v opačném případě zvolte Váše lokální datum a čas.
@@ -82,8 +104,9 @@ images linked to an entry can be displayed as thumbnails.  you can turn this off
 in which country are you. this is used to set certain defaults for you.	preferences	cs	V jaké se nacházíte zemi. Dle této informace Vám budou nastaveny některé výchozí hodnoty.
 interface/template selection	preferences	cs	Výběr rozhranní/šablony
 it sets content size (text only) according to selected size.	preferences	cs	Nastaví velikost obsahu (pouze textu) podle zvolené velikosti.
-just clicking on the line, like a checkbox	preferences	cs	pouze klikáním na řádek, jako u zaškrtávacího políčka
+just clicking on the line, like a checkbox	preferences	cs	Pouze klikáním na řádek, jako u zaškrtávacího políčka
 kama theme	preferences	cs	téma Kama
+keep list open for selecting multiple	preferences	cs	Ponechání otevřeného seznamu pro výběr více
 language	preferences	cs	Jazyk
 look & feel	preferences	cs	Vzhled
 lowercase letters	preferences	cs	malá písmena
@@ -92,6 +115,7 @@ max matches per page	preferences	cs	Maximální počet zobrazených výsledků n
 max number of icons in navbar	preferences	cs	Maximální počet ikon v navigační liště
 moono color theme	preferences	cs	téma barevný měsíc
 moono theme (default)	preferences	cs	téma měsíc (výchozí)
+new secret generated, you need to save it to disable the old one!	preferences	cs	Vygenerována nová tajenka, je třeba ji uložit, aby se ta stará deaktivovala!
 no default	preferences	cs	Není výchozí
 no user-selection at all	common	cs	Žádný výběr uživatelem
 note: this feature does *not* change your email password. this will	preferences	cs	Poznámka: Tato funkce NEZMĚNÍ Vaše heslo pro e-mail. To bude
@@ -100,10 +124,13 @@ notification settings	preferences	cs	Nastavení upozornění
 number format	preferences	cs	Formát čísel
 numbers	preferences	cs	čísla
 old password and new password are the same. this is invalid. you must enter a new password	preferences	cs	Původní a nové heslo jsou stejné. Musíte zadat nové heslo!
+or other compatible apps	preferences	cs	Nebo jiné kompatibilní aplikace
 p: paragraph	preferences	cs	p: Odstavec
+paragraph	preferences	cs	Odstavec
 password changed	preferences	cs	Heslo bylo změněno.
 password contains only %1 of required %2 character classes: no %3	preferences	cs	heslo obsahuje pouze %1 z %2 požadovaných druhů znaků: neobsahuje %3
 password contains with "%1" a parts of your user- or full-name (3 or more characters long)	preferences	cs	heslo spolu s "%1" obsahuje část uživatelského nebo skutečného jména uživatele (3 nebo více znaků)
+password is invalid	preferences	cs	Heslo je neplatné
 password must have at least %1 characters	preferences	cs	Heslo musí mít nejméně %1 znaků
 permanent time zone selection	preferences	cs	Trvalá volba časové zóny
 please select timezones, you want to be able to quickly switch between. switch is not shown, if less then two are selected.	preferences	cs	Vyberte prosím časové zóny, mezi kterými chcete mít možnost rychle přepínat. Přepínač se nezobrazuje, pokud nejsou vybrány alespoň dvě zóny.
@@ -111,11 +138,17 @@ please select your timezone.	preferences	cs	Vyberte prosím svou časovou zónu.
 please, select a new theme	preferences	cs	Vyberte prosím nové téma
 popup with search	preferences	cs	Překryvné okno s hledáním
 preferences saved.	preferences	cs	Předvolby byly uloženy.
+preformatted	preferences	cs	Předformátovaný
 pt: points (1/72 inch)	preferences	cs	pt: body (1/72 palce)
 px: display pixels	preferences	cs	px: pixely
 re-enter your password	preferences	cs	Zadejte znovu své heslo
 read prefs for the specified application.	preferences	cs	Načíst předvolby pro vybranou aplikaci.
+reset qrcode	preferences	cs	Obnovení kódu QRCode
+revoke	preferences	cs	Odvolat
+revoke this token	preferences	cs	Odvolat tento token
 rich text editor theme	preferences	cs	Téma richtext editoru
+scan qrcode with a time-based one-time password (totp) app:	preferences	cs	Naskenujte QRCode pomocí aplikace TOTP (Time-based One-Time Password):
+secret deleted, two factor authentication disabled.	preferences	cs	Vymazání tajemství, dvoufaktorové ověřování zakázáno.
 select additional lines in lists by	preferences	cs	Další řádky v seznamu vybrat
 select different theme	preferences	cs	Vybrat jiné téma
 select one	preferences	cs	Vybrat jeden
@@ -128,16 +161,23 @@ selectbox with primary group and search	preferences	cs	Rozbalovací nabídka s p
 server is unwilling to perform.	preferences	cs	Server si nepřeje provést.
 set content size	preferences	cs	Nastavení velikosti obsahu
 set this to your convenience. for security reasons, you might not want to show your loginname in public.	preferences	cs	Nastavte dle své chuti. Z bezpečnostních důvodů však nemusí být žádoucí zobrazovat veřejně Vaše uživatelské jméno.
+settings	preferences	cs	Nastavení
+setup two factor authentication	preferences	cs	Nastavení dvoufaktorového ověřování
 should the number of active sessions be displayed for you all the time.	preferences	cs	Chcete neustále zobrazovat počet aktivních relací?
 should this help messages shown up always, when you enter the preferences or only on request.	preferences	cs	Mají být tyto pomocné texty zobrazeny vždy při úpravě předvoleb nebo jen na vyžádání.
 show helpmessages by default	preferences	cs	Standardně zobrazovat pomocné texty
 show links between egroupware aps as	common	cs	Zobrazovat odkazy mezi EGroupware aplikacemi jako
 show navigation bar as	preferences	cs	Zobrazovat navigační lištu jako
 show number of current users	preferences	cs	Zobrazovat počet připojených uživatelů
+show qrcode	preferences	cs	Zobrazit QRCode
+show qrcode to enable on an additional device.	preferences	cs	Zobrazit QRCode pro povolení na dalším zařízení.
 show text on navigation icons	preferences	cs	Zobrazovat text u navigačních ikon
 show_more_apps	common	cs	Zobrazit více aplikací
+small paragraph	preferences	cs	Malý odstavec
 special characters	preferences	cs	zvláštní znaky
 spellchecker language	addressbook	cs	Jazyk kontroly pravopisu
+stay open	preferences	cs	Zůstat otevřený
+stay open, but not for email	preferences	cs	Zůstaňte otevření, ale ne pro e-mail
 text editor settings	preferences	cs	Nastavení textového editoru
 text only	preferences	cs	Jen text
 the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	cs	Výchozí aplikace bude spuštěna když se přihlásíte do eGroupWaru nebo kliknete na ikonu hlavní strany.<br>Také můžete na hlavní straně zobrazit více aplikací, pokud zde žádnou konkrétní nevyberete (lze nakonfigurovat v předvolbách každé aplikace).
@@ -151,10 +191,14 @@ theme (colors/fonts) selection	preferences	cs	Výběr tématu (barev/fontů)
 this server is located in the %1 timezone	preferences	cs	Server se nachází v časové zóně %1
 thousands separator is only used for displaying and not for editing numbers.	preferences	cs	Oddělovač tisíců se používá jen pro zobrazování čísel, ne pro jejich editaci.
 time format	preferences	cs	Formát času
+two factor auth	preferences	cs	Ověřování dvěma faktory
+two factor auth enabled.	preferences	cs	Dvoufaktorové ověřování je povoleno.
+two factor auth is already setup.	preferences	cs	Dvoufaktorová autentizace je již nastavena.
 unit of displayed font sizes: either "px" as used eg. for web-pages or "pt" as used in text processing.	preferences	cs	Jednotka pro velikost písma: px: jako pixely používané např. v internetových stránkách, nebo pt: jako body, které se používají při zpracování textu.
 uppercase letters	preferences	cs	velká písmena
 use default	preferences	cs	Použít výchozí
 users choice	preferences	cs	Uživatelská volba
+when you can select multiple options, should the option list stay open until you close it, or close after you pick an option.	preferences	cs	Když můžete vybrat více možností, měl by seznam možností zůstat otevřený, dokud ho nezavřete, nebo se zavřít po výběru možnosti.
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	cs	Pokud odpovíte kladně, tlačítka pro hlavní stranu a odhlášení budou zobrazena stejně jako aplikace v navigační liště.
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	cs	Jaká znaková sada má být použita pro export do CSV souboru. Výchozí znakovou sadou systému je ta, která byla použita při instalaci eGroupWaru.
 which currency symbol or name should be used in egroupware.	preferences	cs	Jaký název nebo symbol měny má EGroupware používat.
@@ -162,7 +206,9 @@ write prefs for the specified application.	preferences	cs	Uložit předvolby pro
 you can show the applications as icons only, icons with app-name or both.	preferences	cs	Můžete aplikace zobrazovat jen jako ikony, ikony s názvem aplikace nebo obojí.
 you can show the linked entries with icons only, icons with app-name or both.	common	cs	Můžete zobrazovat odkazované záznamy jen ikonami, ikonami s názvem aplikace nebo jen názvem aplikace.
 you do not have permission to set acl's in this mode!	preferences	cs	Nemáte oprávnění nastavovat ACL v tomto režimu!
+you may select features to be enabled in toolbar. selecting any of the tools from here means seleted "feature of the editor" preference would be ignored.	preferences	cs	Na panelu nástrojů můžete vybrat funkce, které mají být povoleny.
 you must enter a password	preferences	cs	Musíte zadat heslo
+you need to enter your password to make any security changes!	preferences	cs	Chcete-li provést jakékoli změny zabezpečení, musíte zadat své heslo!
 your current theme is: %1	preferences	cs	Vaše aktuální téma je: %1
 your password does not have required strength:	preferences	cs	Vaše heslo nesplňuje stanovené požadavky:
 your password might not match the password policy.	preferences	cs	Vaše heslo nesplňuje stanovené požadavky.

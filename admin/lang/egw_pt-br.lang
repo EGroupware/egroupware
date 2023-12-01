@@ -19,7 +19,9 @@
 2-factor-authentication for interactive login	admin	pt-br	2-Fator-Autenticação para login interativo
 3 month	admin	pt-br	3 meses
 6 month	admin	pt-br	6 meses
+access token revoked.	admin	pt-br	Token de acesso revogado.
 accesslog and bruteforce defense	admin	pt-br	Registro de acesso e defesa de Força Bruta
+account	admin	pt-br	Conta
 account %1 %2	admin	pt-br	Conta %1 %2
 account '%1' deleted.	admin	pt-br	Conta '%1' removida.
 account '%1' not found !!!	admin	pt-br	Conta '%1' não encontrada !!!
@@ -35,6 +37,7 @@ account preferences	admin	pt-br	Preferências da conta
 account saved.	admin	pt-br	Conta salvo.
 account-id's have to be integers!	admin	pt-br	Id da conta deve ser número inteiro!
 acl added.	admin	pt-br	ACL adicionada
+acl csv export	admin	pt-br	Exportação de ACL CSV
 acl deleted.	admin	pt-br	ACL removida.
 acl manager	admin	pt-br	Administração de Regras de Acesso (ACL)
 acl rights	common	pt-br	Permissões de Acesso
@@ -164,6 +167,9 @@ created	admin	pt-br	Criado
 created with id #%1	admin	pt-br	criado com id #%1
 creates a new field	admin	pt-br	criar um novo campo
 crontab only (recomended)	admin	pt-br	somente crontab (recomendado)
+custom 1	admin	pt-br	Personalizada 1
+custom 2	admin	pt-br	Personalizada 2
+custom 3	admin	pt-br	Personalizada 3
 custom fields	admin	pt-br	Campos personalizados
 cyrus imap server	admin	pt-br	Servidor Cyrus IMAP
 cyrus imap server administration	admin	pt-br	Administração do Servidor Cyrus IMAP
@@ -383,6 +389,7 @@ last %1 logins for %2	admin	pt-br	Últimas %1 conexões para %2
 last login	admin	pt-br	última conexão
 last login from	admin	pt-br	última conexão de
 last time read	admin	pt-br	Última vez lido
+last updated	admin	pt-br	Última atualização
 ldap accounts context	admin	pt-br	contexto de contas LDAP
 ldap basedn	admin	pt-br	DN Base do LDAP
 ldap default homedirectory prefix (e.g. /home for /home/username)	admin	pt-br	prefixo de diretório home padrão LDAP (Exemplo: /home para /home/username)
@@ -398,7 +405,8 @@ ldap server admin dn	admin	pt-br	Administrador DN de servidor LDAP
 ldap server admin password	admin	pt-br	Senha do administrador DN de servidor LDAP
 ldap server hostname or ip address	admin	pt-br	Nome ou endereço IP do servidor LDAP
 ldap settings	admin	pt-br	Configurações do LDAP
-leave empty for no quota	admin	pt-br	deixe em branco para nenhuma quota
+leave empty for no quota	admin	pt-br	Deixe em branco para nenhuma quota
+leave empty to use oauth, if supported	admin	pt-br	Deixar vazio para usar o OAuth, se suportado
 leave the category untouched and return back to the list	admin	pt-br	deixar a categoria intocada e retornar à lista
 leave the group untouched and return back to the list	admin	pt-br	deixar o grupo intocado e retornar à lista
 leave without saveing the entry	admin	pt-br	Sair sem salvar o registro

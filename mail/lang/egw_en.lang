@@ -37,7 +37,7 @@ all	mail	en	all
 all adresses:	mail	en	All addresses:
 all available info	admin	en	all available info
 all filtered	mail	en	all filtered
-all messages in the folder will be lost	mail	en	All messages in the folder will be lost
+all messages in the folder will be lost	mail	en	<br>All messages in the folder will be lost.
 all my email addresses	mail	en	all my email addresses
 all of	mail	en	all of
 all subfolders will be deleted too, and all messages in all affected folders will be lost	mail	en	All subfolders will be deleted too, and all messages in all affected folders will be lost
@@ -206,7 +206,7 @@ enabled!	mail	en	enabled!
 encrypt	mail	en	Encrypt
 encrypt your message with smime certificate	mail	en	Encrypt your message with S/MIME certificate
 encryption	mail	en	Encryption
-enter the name for the new folder:	mail	en	Enter the name for the new Folder:
+enter the name for the new folder:	mail	en	Name for the new folder:
 error saving %1!	mail	en	Error saving %1!
 error while setting acl for folder %1!	mail	en	Error while setting ACL for folder %1!
 error while setting folder	mail	en	Error while setting folder
@@ -504,7 +504,7 @@ rights	mail	en	Rights
 row order style	mail	en	row order style
 rule priority position	mail	en	Rule priority position
 rule with priority	mail	en	rule with priority
-rules	mail	en	rules
+rules	mail	en	Rules
 s/mime encryption failed because no certificate has been found for sender address: %1	mail	en	S/MIME Encryption failed because no certificate has been found for sender address: %1
 save all	mail	en	Save all
 save all attachments to filemanager	mail	en	Save all to File Manager
@@ -660,7 +660,7 @@ unsubscribe folder	mail	en	Unsubscribe folder
 unsubscribe from folder %1	mail	en	Unsubscribe from Folder %1
 upload files...	mail	en	Upload files...
 use default timeout (20 seconds)	mail	en	use default timeout (20 seconds)
-use regular expressions (see wikipedia for information on posix regular expressions)	mail	en	Use regular expressions (see <a href="https://en.wikipedia.org/wiki/Regular_expression" target="_blank">Wikipedia: Regular expression</a>)
+use regular expressions (see wikipedia for information on posix regular expressions)	mail	en	Use regular expressions (see https://en.wikipedia.org/wiki/Regular_expression)
 use source as displayed, if applicable	mail	en	use source as displayed, if applicable
 use username+password from current user	mail	en	Use username+password from current user
 use wizard to detect or verify configuration	mail	en	Use wizard to detect or verify configuration

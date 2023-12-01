@@ -3,7 +3,7 @@
 %1 does not exist !!!	setup	et	%1 ei eksisteeri !!!
 13 (ntp)	setup	et	13 (ntp)
 80 (http)	setup	et	80 (http)
-<b>charset to use</b> (use utf-8 if you plan to use languages with different charsets):	setup	et	<b>millist charset kasutame</b> (kasuta utf-8 kui plaanid kasutada keeli millel on erinevad charset-id):
+<b>charset to use</b> (use utf-8 if you plan to use languages with different charsets):	setup	et	<b>millist charset kasutame</b> (kasuta UTF-8 kui plaanid kasutada keeli millel on erinevad charset-id):
 actions	setup	et	Tegevused
 add auto-created users to this group ('default' will be attempted if this is empty.)	setup	et	Lisa automaatselt tehtud kasutajad sellesse gruppi (selleks on 'Default' kui väli on tühi.)
 additional settings	setup	et	Täiendavad seadistused
@@ -13,7 +13,7 @@ admin first name	setup	et	Admin eesnimi
 admin last name	setup	et	Admin perekonnanimi
 admin password	setup	et	Admin parool
 admin username	setup	et	Admin kasutajanimi
-all applications	setup	et	kõik rakendused
+all applications	setup	et	Kõik rakendused
 all users	setup	et	Kõik kasutajad
 application list	setup	et	Rakenduste nimekiri
 application management	setup	et	Rakenduste Manageerimine
@@ -27,22 +27,22 @@ auto login anonymous user	setup	et	Auto logi sisse anonymous kasutaja
 auto-created user accounts expire	setup	et	Automaatselt tehtud kasutajate kontod aeguvad
 available version	setup	et	Saadaolev Versioon
 back to user login	setup	et	Tagasi kasutaja sisselogimise juurde
-backup '%1' deleted	setup	et	tagavarakoopia '%1' kustutatud
-backup '%1' renamed to '%2'	setup	et	tagavarakoopia '%1' on ümber nimetatud '%2'
-backup '%1' restored	setup	et	tagavarakoopia '%1' taastatud
-backup and restore	setup	et	tagavarakoopia ja taastamine
+backup '%1' deleted	setup	et	Tagavarakoopia '%1' kustutatud
+backup '%1' renamed to '%2'	setup	et	Tagavarakoopia '%1' on ümber nimetatud '%2'
+backup '%1' restored	setup	et	Tagavarakoopia '%1' taastatud
+backup and restore	setup	et	Tagavarakoopia ja taastamine
 backup failed	setup	et	Tagavarakoopia ebaõnnestus
 backup finished	setup	et	Tagavarakoopia tehtud
-backup now	setup	et	tee tagavarakoopia nüüd
+backup now	setup	et	Tee tagavarakoopia nüüd
 backup started, this might take a few minutes ...	setup	et	Tagavarakoopia tegemine alustatud. see võib võtta mõne minuti ...
-because it is not a user application, or access is controlled via acl	setup	et	sellepärast, et see pole kasutaja rakendus, või ligipääs on kontrollitud acl abil
-because it requires manual table installation, <br />or the table definition was incorrect	setup	et	sellepärast, et see nõuab käsitsi tabeli installeerimist, <br />või tabeli definitsioon pole korrektne
-because it was manually disabled	setup	et	sellepärast, et see oli käsitsi välja lülitatud
+because it is not a user application, or access is controlled via acl	setup	et	Sellepärast, et see pole kasutaja rakendus, või ligipääs on kontrollitud acl abil
+because it requires manual table installation, <br />or the table definition was incorrect	setup	et	Sellepärast, et see nõuab käsitsi tabeli installeerimist, <br />või tabeli definitsioon pole korrektne
+because it was manually disabled	setup	et	Sellepärast, et see oli käsitsi välja lülitatud
 cancel	setup	et	Tühista
 change system-charset	setup	et	Muuda süsteemi charset
-charset	setup	et	utf-8
+charset	setup	et	charset
 charset to convert to	setup	et	Charset millesse konvertida
-charsets used by the different languages	setup	et	charset-id kasutatud erinevatel keeltel
+charsets used by the different languages	setup	et	Charset-id kasutatud erinevatel keeltel
 checking if php.ini setting session.save_path='%1' is writable by the webserver	setup	et	Kontrollin kas php.ini seadistus session.save_path='%1' on kirjutatav veebiserveri jaoks
 checking php.ini	setup	et	Kontrollin php.ini
 click here	setup	et	Vajuta siia
@@ -50,7 +50,7 @@ completed	setup	et	Lõpetatud
 configuration	setup	et	Konfiguratsioon
 configure now	setup	et	Konfigureeri nüüd
 confirm to delete this backup?	setup	et	Kinnitad selle tagavarakoopia kustutamise?
-contain	setup	et	sisaldab
+contain	setup	et	Sisaldab
 continue	setup	et	Jätka
 country selection	setup	et	Riigi Valik
 create	setup	et	Loo
@@ -63,7 +63,7 @@ create or edit the egroupware configuration file: header.inc.php:	setup	et	Loo v
 create the empty database -	setup	et	Loo tühi andmebaas -
 create the empty database and grant user permissions -	setup	et	Loo tühi andmebaas ja võimalda kasutaja õigused -
 create your header.inc.php	setup	et	Loo oma header.inc.php
-created	setup	et	loodud
+created	setup	et	Loodud
 created header.inc.php!	setup	et	Tehtud header.inc.php!
 creating tables	setup	et	Loon Tabeleid
 current configuration:	setup	et	Käesolev konfiguratsioon
@@ -72,7 +72,7 @@ current version	setup	et	Käesolev Versioon
 currently installed languages: %1 <br />	setup	et	Käesolevalt installeeritud keeled:  %1 <br />
 cyrus imap: admin user,password	setup	et	Cyrus IMAP: Admin kasutaja,Parool
 database	setup	et	Andmebaas
-day	setup	et	päev
+day	setup	et	Päev
 db backup and restore	setup	et	DB tagavara ja taastamine
 default	setup	et	Vaikimisi
 delete	setup	et	Kustuta
@@ -100,17 +100,17 @@ error in group-creation !!!	setup	et	Viga grupi-tegemisel !!!
 export has been completed!	setup	et	Eksportimine on lõpetatud !!!
 failed writing configuration file header.inc.php, check the permissions !!!	setup	et	Ebaõnnestus konfig faili header.inc.php kirjutamine, kontrolli õigusi !!!
 file	setup	et	FAIL
-file type, size, version, etc.	setup	et	faili tüüp, suurus, versijoon, jne.
-filename	setup	et	failinimi
+file type, size, version, etc.	setup	et	Faili tüüp, suurus, versijoon, jne.
+filename	setup	et	Failinimi
 filesystem	setup	et	Failisüsteem
 give admin access to all installed apps	setup	et	Luba admin ligipääs kõigile installeeritud rakendustele
 go back	setup	et	Mine tagasi
 grant access	setup	et	Luba Ligipääs
-group	setup	et	grupp
+group	setup	et	Grupp
 host information	setup	et	Hosti informatsioon
 hostname/ip of database server	setup	et	Hostinimi/IP või andmebaasi server
-if using ads (active directory)	setup	et	kui kasutad ADS (Active Directory) audentimist
-if using ldap	setup	et	kui kasutad LDAP
+if using ads (active directory)	setup	et	Kui kasutad ADS (Active Directory) audentimist
+if using ldap	setup	et	Kui kasutad LDAP
 image type selection order	setup	et	Piltide tüübi sisestamise järjekord
 import has been completed!	setup	et	Importimine on lõpetatud!
 install	setup	et	Installeri
@@ -131,30 +131,30 @@ languages updated.	setup	et	Keeled uuendatud.
 ldap accounts configuration	setup	et	LDAP Kontode Konfiguratsioon
 ldap encryption type	setup	et	LDAP krüptimise tüüp
 ldap root password	setup	et	LDAP root parool
-ldap rootdn	setup	et	LDAP rootdn
+ldap rootdn	setup	et	LDAP Root DN
 logout	setup	et	Logi välja
 mail server login type	setup	et	Mail serveri sisselogimise tüüp
 mail server protocol	setup	et	Mail serveri protokol
 manage applications	setup	et	Manageeri Rakendusi
 manage languages	setup	et	Manageeri Keeli
 manual / help	setup	et	Manual / Abi
-may be broken	setup	et	võibolla katki
+may be broken	setup	et	Võibolla katki
 mcrypt algorithm (default tripledes)	setup	et	Mcrypt algoritm (vaikimisi TRIPLEDES)
 mcrypt settings (requires mcrypt php extension)	setup	et	Mcrypt Seadistused (nõutav mcrypt PHP laiendus)
 min backup count	setup	et	Säilitatavate varukoopiate maksimaalne arv (null: kõik)
 modified	setup	et	Muudetud
 modify	setup	et	Muuda
-month	setup	et	kuu
+month	setup	et	Kuu
 name of database	setup	et	Andmebaasi nimi
-never	setup	et	mittekunagi
+never	setup	et	Mittekunagi
 new	setup	et	Uus
 no	setup	et	Ei
-not	setup	et	pole
+not	setup	et	Pole
 not completed	setup	et	Pole Lõpetatud
-not set	setup	et	pole seatud
+not set	setup	et	Pole seatud
 ok	setup	et	OK
-one month	setup	et	üks kuu
-one week	setup	et	üks nädal
+one month	setup	et	Üks kuu
+one week	setup	et	Üks nädal
 only add languages that are not in the database already	setup	et	Lisa ainult keeled mis pole veel andmebaasis
 only add new phrases	setup	et	Lsa ainult uued fraasid
 or	setup	et	või
@@ -173,22 +173,30 @@ problem resolution	setup	et	Probleemi lahendus
 re-check my database	setup	et	Kontrolli uuesti minu andmebaasi
 re-check my installation	setup	et	Kontrolli uuesti minu installatsiooni
 re-enter password	setup	et	Sisesta parool uuesti
-readable by the webserver	setup	et	loetav veebiserveri jaoks
-registered	setup	et	registreeritud
+readable by the webserver	setup	et	Loetav veebiserveri jaoks
+refusing to delete dn "%1"!	setup	et	Keeldub DN "%1" kustutamisest!
+registered	setup	et	Registreeritud
+regular expression to filter by dn	setup	et	Regulaaravaldis DN-i järgi filtreerimiseks
+rejected lines	setup	et	Tagasilükatud read
 remove	setup	et	Eemalda
 remove all	setup	et	Eemalda Kõik
-rename	setup	et	nimeta ümber
+rename	setup	et	Nimeta ümber
+replace username and email	setup	et	Asendage kasutajanimi ja e-posti aadress
+replace username and keep email	setup	et	Asenda kasutajanimi ja säilita e-posti aadress
+required to change passwords	setup	et	nõutav paroolide muutmine
+requires "reset password" privilege, to change passwords!	setup	et	Nõuab "Reset Password" õigust, et muuta paroole!
 requires reinstall or manual repair	setup	et	Nõuab uut installeerimist või parandamist käsitsi
-restore	setup	et	taasta
+requires saml optional on login page and user to specify username and password	setup	et	Nõuab SAMLi valikulist sisselogimislehte ja kasutaja kasutajanime ja parooli määramist.
+restore	setup	et	Taasta
 restore failed	setup	et	Taastamine ebaõnnestus
-restore finished	setup	et	taastamine lõpetatud
-restore started, this might take a few minutes ...	setup	et	taastamine alustatud,see võib võtta mõne minuti ...
+restore finished	setup	et	Taastamine lõpetatud
+restore started, this might take a few minutes ...	setup	et	Taastamine alustatud,see võib võtta mõne minuti ...
 restoring a backup will delete/replace all content in your database. are you sure?	setup	et	Taastamine tagavarast kustutab/asendab kogu andmebaasi sisu. Oled kindel?
 run installation tests	setup	et	Jooksuta installeerimise teste
 save	setup	et	Salvesta
-schedule	setup	et	ajastatud
-scheduled backups	setup	et	ajastatud tagavarad
-select one...	setup	et	vali üks...
+schedule	setup	et	Ajastatud
+scheduled backups	setup	et	Ajastatud tagavarad
+select one...	setup	et	Vali üks...
 select where you want to store/retrieve user accounts	setup	et	Vali kuhu sa tahad salvestada kasutaja kontosid
 select which group(s) will be exported	setup	et	Vali milli(ne)(sed) grupp(id) eksporditakse
 select which languages you would like to use	setup	et	Vali milliseid keeli soovid kasutada
@@ -201,19 +209,19 @@ select which user(s) will have admin privileges	setup	et	Vali milli(ne)(sed) kas
 select your old version	setup	et	Vali oma vana versioon
 server root	setup	et	Serveri Root
 settings	setup	et	Seadistused
-size	setup	et	suurus
+size	setup	et	Suurus
 skip the installation tests (not recommended)	setup	et	Jäta vahele installeerimise testid (pole soovitatav)
 smtp server hostname or ip address	setup	et	SMTP serveri hostinimi või IP aadress
 smtp server port	setup	et	SMTP serveri port
 some or all of its tables are missing	setup	et	Mõni või kõik tabelid puuduvad
 sql encryption type	setup	et	SQL krüpteeringu tüüp paroolidejaoks (vaikimisi - md5)
-standard (login-name identical to egroupware user-name)	setup	et	standartne (sisselogimise nimi identne EGroupware kasutaja nimega)
+standard (login-name identical to egroupware user-name)	setup	et	Standartne (sisselogimise nimi identne EGroupware kasutaja nimega)
 standard mailserver settings (used for mail authentication too)	setup	et	Standard mailserver seadistused (kautatakse samuti Mail audentimiseks)
 status	setup	et	Staatus
-succesfully uploaded file %1	setup	et	täielikult üleslaetud fail %1
-tables dropped	setup	et	tabelid hävitatud
+succesfully uploaded file %1	setup	et	Täielikult üleslaetud fail %1
+tables dropped	setup	et	Tabelid hävitatud
 tables installed, unless there are errors printed above	setup	et	tabelid installeeritud, kui siin pole vigu kirjeldatud
-tables upgraded	setup	et	tabelid uuendatud
+tables upgraded	setup	et	Tabelid uuendatud
 target version	setup	et	Siht Versioon
 tcp port number of database server	setup	et	Andmebaasi serveri TCP pordi number
 text entry	setup	et	Järgmine Kirje
@@ -223,12 +231,12 @@ this might take a while, please wait ...	setup	et	See võib võtta aega, palun o
 this program lets you backup your database, schedule a backup or restore it.	setup	et	See programm võimaldab teha andmebaasi tagavara, ajastatud tagavara või taastada seda.
 translations added	setup	et	Tõlked Lisatud
 translations removed	setup	et	Tõlked Eemaldatud
-two weeks	setup	et	kaks nädalat
-user	setup	et	kasutaja
+two weeks	setup	et	Kaks nädalat
+user	setup	et	Kasutaja
 user for smtp-authentication (leave it empty if no auth required)	setup	et	Kasutajanimi SMTP-autentimiseks (jäta see tühjaks kui pole nõutav)
 usernames are casesensitive	setup	et	Kasutajanimed on tõusutundlikud
 users choice	setup	et	Kasutajate Valik
-version	setup	et	versioon
+version	setup	et	Versioon
 write	setup	et	Kirjuta
 year	setup	et	Aasta
 yes	setup	et	Jah

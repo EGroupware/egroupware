@@ -237,35 +237,46 @@ leave it empty	infolog	pl	zostaw puste
 leave it empty for a full week	infolog	pl	Pozostaw pusty na cały tydzień
 leave without saveing the entry	infolog	pl	Cofnij bez zapisywania wpisu
 leaves without saveing	infolog	pl	cofnij bez zapisywania
+limit number of description lines (default 5, 0 for no limit)	infolog	pl	Ograniczenie liczby linii opisu. Domyślnie = 5, 0 = brak limitu.
+limit width of description column ((effective only if lines limit is set), 0 for no limit)	infolog	pl	Ograniczenie szerokości kolumny opisu. Działa tylko wtedy, gdy ustawiony jest limit wierszy. 0 = brak limitu.
 link	infolog	pl	Podłącz
+linked to %1	infolog	pl	Link do %1
 links	infolog	pl	Linki
+links and attached files	infolog	pl	Linki i załączone pliki
 links of this entry	infolog	pl	Linki do tego wpisu
+links to specified application.  example: {{links/infolog}}	infolog	pl	Linki do określonej aplikacji. Przykład: {{links/infolog}}
+links wrapped in an href tag with download link	infolog	pl	Linki zawinięte w tag HREF z linkiem do pobrania
 list all categories	infolog	pl	Lista wszystkich kategorii
+list of files linked to the current record	infolog	pl	Lista plików powiązanych z bieżącym rekordem
+load custom fields in index, if filtered by selected types (eg. to display them in a type-specific index template)	infolog	pl	Załaduj niestandardowe pola w indeksie, jeśli są filtrowane według wybranych typów (np. w celu wyświetlenia ich w szablonie indeksu specyficznym dla typu)
 location	infolog	pl	Lokalizacja
-longer textual description	infolog	pl	dłuższy opis tekstowy
-low	infolog	pl	niski
+longer textual description	infolog	pl	Dłuższy opis tekstowy
+low	infolog	pl	Niski
 manage mapping	infolog	pl	Zarządzaj mapowaniem
 max length of the input [, length of the inputfield (optional)]	infolog	pl	maksymalna długość wprowadzanego tekstu [, długość pola (opcjonalnie)]
+modifier	infolog	pl	Modyfikator
+modifierer	infolog	pl	Modyfikator
 name must not be empty !!!	infolog	pl	Nazwa nie może być pusta!!!
 name of current user, all other contact fields are valid too	infolog	pl	Nazwa aktualnego użytkownika, wszystkie pozostałe pola kontaktu są prawidłowe
-name of new type to create	infolog	pl	nazwa nowego tworzonego typu
+name of new type to create	infolog	pl	Nazwa nowego tworzonego typu
 never hide search and filters	infolog	pl	Nigdy nie ukrywaj pól wyszukiwania i filtrów
 new %1	infolog	pl	Nowy %1
-new name	infolog	pl	nowa nazwa
+new name	infolog	pl	Nowa nazwa
 new search	infolog	pl	Nowe wyszukiwanie
 no - cancel	infolog	pl	Nie - Anuluj
-no describtion, links or attachments	infolog	pl	brak opisu, odnośników lub załączników
-no details	infolog	pl	bez szczegółów
-no entries found, try again ...	infolog	pl	nie znaleziono wpisów, spróbuj jeszcze raz
+no custom field "%1" for %2.	infolog	pl	Brak niestandardowego pola "%1" dla %2.
+no describtion, links or attachments	infolog	pl	Brak opisu, odnośników lub załączników
+no details	infolog	pl	Bez szczegółów
+no entries found, try again ...	infolog	pl	Nie znaleziono wpisów, spróbuj jeszcze raz
 no filter	infolog	pl	Bez filtra
-no links or attachments	infolog	pl	brak linków lub załączników
+no links or attachments	infolog	pl	Brak linków lub załączników
 no project	infolog	pl	Żaden projekt
 nonactive	infolog	pl	Nieaktywny
 none	infolog	pl	Brak
-normal	infolog	pl	normalny
+normal	infolog	pl	Normalny
 not	infolog	pl	Nie
 not assigned	infolog	pl	Nie przypisano
-not-started	infolog	pl	nie rozpoczęty
+not-started	infolog	pl	Nie rozpoczęty
 note	infolog	pl	Notatka
 number of records to read (%1)	infolog	pl	Liczba rekordów do wczytania (%1)
 number of row for a multiline inputfield or line of a multi-select-box	infolog	pl	ilość wierszy dla pól składających się z wielu linijek lub zespołu boksów wielokrotnego wyboru

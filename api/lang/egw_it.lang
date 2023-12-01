@@ -1408,14 +1408,15 @@ to correct this error for the future you will need to properly set the	common	it
 to disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty	common	it	Per disabilitare: [! = not]<valore>[=<prova>] p.es.'!@data' disabilita se il contenuto di "data" è vuoto
 to examine or reinstate inactived files, you might need to turn versioning on.	admin	it	Per esaminare o reistanziare file disattivati, bisognerà attivare la registrazione delle versioni dei file
 to go back to the msg list, click <a href= %1 >here</a>	common	it	Per tornare alla lista dei messaggi, clicca <a href="%1">qui</a>
-to start the db-tools	common	it	to start the DB-Tools
-to start the etemplate editor	common	it	to start the eTemplate editor
-to start the search	common	it	to start the search
+to start the db-tools	common	it	Per avviare il DB-Tools
+to start the etemplate editor	common	it	Per avviare l'editor di eTemplate
+to start the search	common	it	Per avviare la ricerca
 today	common	it	Oggi
 todays date, eg. "%1"	common	it	Data di oggi, es. "%1"
 togo	common	it	TOGO
 tokelau	common	it	TOKELAU
 tonga	common	it	TONGA
+too many rows selected.<br />select all, or less than %1 rows	common	it	Troppe righe selezionate.<br />Seleziona tutto, o meno di %1 righe
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	it	Troppi tentativi di login falliti: %1 per l'utente '%2', %3 dall'IP %4
 top	common	it	In cima
 total	common	it	Totale
@@ -1431,7 +1432,7 @@ turkmenistan	common	it	TURKMENISTAN
 turks and caicos islands	common	it	ISOLE TURKS E CAICOS
 tuvalu	common	it	TUVALU
 type	common	it	Tipo
-type of the column	common	it	tipo di colonna
+type of the column	common	it	Tipo di colonna
 type of the field (select label if field should be empty)	common	it	type of the field (select Label if field should be empty)
 uganda	common	it	UGANDA
 ukraine	common	it	UCRAINA

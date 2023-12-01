@@ -7,6 +7,7 @@
 - subprojects from	infolog	uk	- з субпроектів
 0%	infolog	uk	0%
 10%	infolog	uk	10%
+100%	infolog	uk	100%
 20%	infolog	uk	20%
 30%	infolog	uk	30%
 40%	infolog	uk	40%
@@ -80,21 +81,36 @@ customfields	infolog	uk	Власні поля
 datecreated	infolog	uk	Дата створення
 dates, status, access	infolog	uk	Дати, Статуси, Доступи
 days	infolog	uk	дні
+default category for new infolog entries	infolog	uk	Категорія за замовчуванням для нових записів Інфожурналу
+default document to insert entries	infolog	uk	Документ за замовчуванням для вставки записів
 default filter for infolog	infolog	uk	Типовий фільтр для Записок
 default status for a new log entry	infolog	uk	Типовий статус нового запису
+delegated	infolog	uk	Делегований
+delegated open	infolog	uk	Делеговані відкриті
+delegated open and upcoming	infolog	uk	Делеговані відкриті та майбутні
+delegated overdue	infolog	uk	Делегований прострочений
+delegated upcomming	infolog	uk	Делегований на підході
 delegation	infolog	uk	Делегування
 delete	infolog	uk	Видалити
+delete selected entries?	infolog	uk	Видалити вибрані записи?
+delete this entry and all listed sub-entries	infolog	uk	Видалити цей запис і всі перелічені підзаписи
 deleted	infolog	uk	Видалено
 deletes the selected typ	infolog	uk	видаляє вибраний тип
 deletes this field	infolog	uk	видаляє це поле
 deletes this status	infolog	uk	видаляє цей статус
 description	infolog	uk	Опис
 determines the order the fields are displayed	infolog	uk	визначає послідовність показу полів
+directory with documents to insert entries	infolog	uk	Папка з документами для вставки записів
 disables a status without deleting it	infolog	uk	відключає статус без його видалення
 do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	uk	Чи потрібне Вам підтвердження від Відповідального у випадках прийняття та/або закінчення
+do you want a notification if items owned by groups you are part of get updated ?	infolog	uk	Ви хочете отримувати сповіщення, якщо елементи, що належать групам, до яких ви належите, оновлюються?
 done	infolog	uk	виконано
 download	infolog	uk	Загрузити
+download url for links	infolog	uk	URL для завантаження посилань
+due %1	infolog	uk	До сплати %1
+due date	infolog	uk	Термін виконання
 duration	infolog	uk	Тривалість
+e-mail:	infolog	uk	Електронна пошта:
 each value is a line like <id>[=<label>]	infolog	uk	Кожне значення є рядком у вигляді <id>[=<label>]
 edit	infolog	uk	Редагувати
 edit or create categories for ingolog	infolog	uk	Редагувати або створити категорії для Записок
@@ -178,18 +194,31 @@ last changed	infolog	uk	Востаннє змінено
 last modified	infolog	uk	Востаннє змінено
 leave without saveing the entry	infolog	uk	вийти без збереження запису
 leaves without saveing	infolog	uk	вийти без збереження
+limit number of description lines (default 5, 0 for no limit)	infolog	uk	Обмежити кількість рядків опису. За замовчуванням = 5, 0 = без обмежень.
+limit width of description column ((effective only if lines limit is set), 0 for no limit)	infolog	uk	Обмеження ширини стовпця опису. Впливає лише якщо встановлено обмеження на кількість рядків. 0 = без обмежень.
 link	infolog	uk	Посилання
+linked to %1	infolog	uk	Пов'язано з %1
 links	infolog	uk	Посилання
+links and attached files	infolog	uk	Посилання та прикріплені файли
 links of this entry	infolog	uk	Посилання цього запису
+links to specified application.  example: {{links/infolog}}	infolog	uk	Посилання на вказану програму. Приклад: {{links/infolog}}
+links wrapped in an href tag with download link	infolog	uk	Посилання, загорнуті у HREF-тег з посиланням для завантаження
+list all categories	infolog	uk	Перерахувати всі категорії
+list of files linked to the current record	infolog	uk	Список файлів, пов'язаних з поточним записом
+load custom fields in index, if filtered by selected types (eg. to display them in a type-specific index template)	infolog	uk	Завантажувати користувацькі поля до індексу, якщо вони відфільтровані за вибраними типами (наприклад, для відображення їх у шаблоні індексу для конкретного типу)
 location	infolog	uk	Місце
 longer textual description	infolog	uk	довший текстовий опис
 low	infolog	uk	низький
 max length of the input [, length of the inputfield (optional)]	infolog	uk	максимальна довжина вводу[, видима довжина поля вводу (необов'язково)]
+modifier	infolog	uk	Модифікатор
+modifierer	infolog	uk	Модифікатор
 name must not be empty !!!	infolog	uk	Назва повинна бути непорожнім
+name of current user, all other contact fields are valid too	infolog	uk	Ім'я поточного користувача, всі інші поля контакту також дійсні
 name of new type to create	infolog	uk	Назва нового типу, що створюється
 new name	infolog	uk	нова назва
 new search	infolog	uk	Новий пошук
 no - cancel	infolog	uk	Ні - Відмовитись
+no custom field "%1" for %2.	infolog	uk	Немає кастомного поля "%1" для %2.
 no entries found, try again ...	infolog	uk	Записів не знайдено, спробуте ще...
 no filter	infolog	uk	Немає Фільтру
 no links or attachments	infolog	uk	без посилань або додатків

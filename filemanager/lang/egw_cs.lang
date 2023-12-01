@@ -249,6 +249,7 @@ read & write access	filemanager	cs	Přístup pro čtení i zápis
 read access only	filemanager	cs	Přístup jen pro čtení
 readonly share link	filemanager	cs	Pouze pro čtení Sdílet odkaz
 recalculate	filemanager	cs	Přepočítat
+recalculate directory sizes	filemanager	cs	Přepočítat velikosti adresářů
 recalculated %1 directories in %2 iterations and %3 seconds	filemanager	cs	Přepočítáno %1 adresářů v %2 iteracích a %3 sekundách
 reload	filemanager	cs	Načíst znovu
 rename of %1 to %2 failed!	filemanager	cs	Přejmenování %1 na %2 se nezdařilo!

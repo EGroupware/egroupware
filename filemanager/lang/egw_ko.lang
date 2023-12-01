@@ -62,7 +62,19 @@ password for webdav and smb, use $pass for password of logged in user	filemanage
 path and query-parameters, smb: share and optional path (with /)	filemanager	ko	경로 및 쿼리 매개변수, SMB: 공유 및 선택적 경로(/ 포함)
 permissions	filemanager	ko	권한
 preview	filemanager	ko	미리보기
+protocol to use	filemanager	ko	사용할 프로토콜
+protocols	filemanager	ko	프로토콜
 quota	filemanager	ko	할당량
 quota exceeded	filemanager	ko	할당량 초과
+read & write access	filemanager	ko	읽기 및 쓰기 액세스
+read access only	filemanager	ko	읽기 전용 액세스
+readonly share link	filemanager	ko	읽기 전용 공유 링크
 recalculate	filemanager	ko	다시 계산
+recalculate directory sizes	filemanager	ko	디렉토리 크기 다시 계산
 recalculated %1 directories in %2 iterations and %3 seconds	filemanager	ko	2번의 반복과 %3초 동안 %1 디렉터리를 다시 계산했습니다.
+reload	filemanager	ko	다시 로드
+rename of %1 to %2 failed!	filemanager	ko	%1의 이름을 %2로 바꾸지 못했습니다!
+rename, change permissions or ownership	filemanager	ko	이름 바꾸기, 사용 권한 또는 소유권 변경
+renamed %1 to %2	filemanager	ko	%1의 이름을 %2로 변경했습니다.
+renamed %1 to %2.	filemanager	ko	%1의 이름을 %2로 변경했습니다.
+save as zip	filemanager	ko	ZIP으로 저장

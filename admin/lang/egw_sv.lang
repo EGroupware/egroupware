@@ -20,7 +20,9 @@
 2-factor-authentication for interactive login	admin	sv	2-faktorsautentisering för interaktiv inloggning
 3 month	admin	sv	3 månader
 6 month	admin	sv	6 månader
+access token revoked.	admin	sv	Åtkomsttoken återkallad.
 accesslog and bruteforce defense	admin	sv	Accesslogg- och BruteForce försvar
+account	admin	sv	Konto
 account active	admin	sv	Kontot är aktivt
 account has been created	common	sv	Kontot har skapats
 account has been deleted	common	sv	Kontot har raderats
@@ -28,6 +30,7 @@ account has been updated	common	sv	Kontot har uppdaterats
 account list	admin	sv	Kontolista
 account permissions	admin	sv	Kontobehörigheter
 account preferences	admin	sv	Konto alternativ
+acl csv export	admin	sv	CSV-export av ACL
 acl manager	admin	sv	ACL hantering
 acl rights	common	sv	ACL behörigheter
 action	admin	sv	Åtgärd
@@ -128,6 +131,9 @@ create group	admin	sv	Skapa grupp
 created	admin	sv	Skapad
 creates a new field	admin	sv	Skapar nytt fält
 crontab only (recomended)	admin	sv	Enbart crontab (rekommenderas)
+custom 1	admin	sv	Anpassad 1
+custom 2	admin	sv	Anpassad 2
+custom 3	admin	sv	Anpassad 3
 custom fields	admin	sv	Anpassade fält
 cyrus imap server	admin	sv	Cyrus IMAP Server
 cyrus imap server administration	admin	sv	Cyrus IMAP server administration
@@ -306,6 +312,7 @@ last %1 logins for %2	admin	sv	Senaste %1 inloggningar av %2
 last login	admin	sv	Senaste inloggning
 last login from	admin	sv	Senaste inloggning från
 last time read	admin	sv	Senast läst
+last updated	admin	sv	Senast uppdaterad
 ldap accounts context	admin	sv	Kontext för LDAP konton
 ldap basedn	admin	sv	LDAP basedn
 ldap default homedirectory prefix (e.g. /home for /home/username)	admin	sv	Hemkatalogsprefix för LDAP (t ex: /home för /home/användarnamn
@@ -322,6 +329,7 @@ ldap server admin password	admin	sv	LDAP server admin lösenord
 ldap server hostname or ip address	admin	sv	LDAP server hostnamn eller IP adress
 ldap settings	admin	sv	LDAP alternativ
 leave empty for no quota	admin	sv	Lämna tomt för ingen kvot
+leave empty to use oauth, if supported	admin	sv	Lämna tomt för att använda OAuth, om det stöds
 leave the category untouched and return back to the list	admin	sv	Lämna kategorin orörd och återgå till listan
 leave the group untouched and return back to the list	admin	sv	Lämna gruppen orörd och återgår till listan
 leave without saveing the entry	admin	sv	Lämna utan att spara post
@@ -525,7 +533,7 @@ up	admin	sv	Upp
 updated	admin	sv	Uppdaterad
 use cookies to pass sessionid	admin	sv	Använd cookies för att lagra sessionid
 use default	admin	sv	Använd standard
-use ldap defaults	admin	sv	använd LDAP standarder
+use ldap defaults	admin	sv	Använd LDAP standarder
 use pure html compliant code (not fully working yet)	admin	sv	Använd fullständigt HTML kompatibel kod (fungerar inte fullständigt ännu).
 use smtp auth	admin	sv	Använd SMTP autentisering
 use theme	admin	sv	Använd tema
@@ -535,7 +543,7 @@ user accounts	admin	sv	Användarkonton
 user data	common	sv	Användardata
 user for smtp-authentication (leave it empty if no auth required)	admin	sv	Användare för SMTP autentisering (lämna tomt om autentisering ej krävs)
 user groups	admin	sv	Användargrupper
-userdata	admin	sv	användaradata
+userdata	admin	sv	Användaradata
 users can define their own emailaccounts	admin	sv	Användare kan definiera egna epost konton?
 users choice	admin	sv	Användares val
 view access log	admin	sv	Visa accesslogg

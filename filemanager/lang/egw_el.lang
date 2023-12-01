@@ -138,19 +138,27 @@ please select a file to delete.	filemanager	el	Παρακαλώ επιλέξτε
 preview	filemanager	el	Προεπισκόπηση
 preview %1	filemanager	el	Προεπισκόπηση %1
 preview of %1	filemanager	el	Προεπισκόπηση του %1
+protocol to use	filemanager	el	Πρωτόκολλο προς χρήση
+protocols	filemanager	el	Πρωτόκολλα
 quick jump to	filemanager	el	Γρήγορη μετάβαση στο
 quota	filemanager	el	Ποσοστό
 quota exceeded	filemanager	el	Υπέρβαση ποσόστωσης
+read & write access	filemanager	el	Πρόσβαση ανάγνωσης & εγγραφής
+read access only	filemanager	el	Μόνο πρόσβαση ανάγνωσης
+readonly share link	filemanager	el	Μόνο για ανάγνωση Σύνδεσμος κοινής χρήσης
 recalculate	filemanager	el	Επαναϋπολογισμός
+recalculate directory sizes	filemanager	el	Επαναϋπολογισμός μεγεθών καταλόγου
 recalculated %1 directories in %2 iterations and %3 seconds	filemanager	el	Επαναϋπολογισμός %1 καταλόγων σε %2 επαναλήψεις και %3 δευτερόλεπτα
 reload	filemanager	el	επαναφόρτωση
 rename of %1 to %2 failed!	filemanager	el	Η μετονομασία από  %1 σε %2 απέτυχε!
+rename, change permissions or ownership	filemanager	el	Μετονομασία, αλλαγή δικαιωμάτων ή ιδιοκτησίας
 renamed %1 to %2	filemanager	el	Μετονομάστηκε από %1 σε %2
 renamed %1 to %2.	filemanager	el	Μετονομάστηκε από %1 σε %2
 replaced %1	filemanager	el	Αντικαταστάθηκε %1
 rights	filemanager	el	Δικαιώματα
 save %1	filemanager	el	Αποθήκευση %1
 save %1, and go back to file listing	filemanager	el	Αποθήκευση %1, και επιστροφή στη  σύνταξη καταλόγου
+save as zip	filemanager	el	Αποθήκευση ως ZIP
 save changes	filemanager	el	Αποθήκευση αλλαγών
 saved %1	filemanager	el	Αποθηκεύθηκε %1
 search for '%1'	filemanager	el	Αναζήτηση για '%1'

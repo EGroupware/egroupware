@@ -235,6 +235,8 @@ preview %1	filemanager	bg	Преглед %1
 preview of %1	filemanager	bg	Преглед на %1
 projectmanager	filemanager	bg	Мениджър проекти (Project Manager)
 properties saved.	filemanager	bg	Свойствата са запазени.
+protocol to use	filemanager	bg	Протокол за използване
+protocols	filemanager	bg	Протоколи
 quick jump to	filemanager	bg	Бърз преход към
 quota	filemanager	bg	Квота
 quota exceeded	filemanager	bg	Превишена квота
@@ -242,6 +244,7 @@ read & write access	filemanager	bg	Достъп за четене и запис
 read access only	filemanager	bg	Достъп само за четене
 readonly share link	filemanager	bg	"Само за четене" линк за споделяне
 recalculate	filemanager	bg	Преизчисляване на
+recalculate directory sizes	filemanager	bg	Преизчисляване на размерите на директориите
 recalculated %1 directories in %2 iterations and %3 seconds	filemanager	bg	Преизчислява %1 директории за %2 итерации и %3 секунди
 reload	filemanager	bg	Презареди
 rename of %1 to %2 failed!	filemanager	bg	Преименуването на %1 в %2 неуспешно!

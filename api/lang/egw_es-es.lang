@@ -1401,14 +1401,14 @@ title	common	es-es	Título
 titles of any entries linked to the current record, excluding attached files	preferences	es-es	Títulos de las entradas vinculadas al registro actual, excluidos los archivos adjuntos
 to	common	es-es	Para
 to correct this error for the future you will need to properly set the	common	es-es	Para corregir este error para el futuro necesitará configurar adecuadamente el
-to disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty	common	es-es	para desactivar: [! = no]<valor>[=<comprobar>] p.ej: '!@data' desactiva si el contenido de 'data' está vacío
+to disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty	common	es-es	Para desactivar: [! = no]<valor>[=<comprobar>] p.ej: '!@data' desactiva si el contenido de 'data' está vacío
 to examine or reinstate inactived files, you might need to turn versioning on.	admin	es-es	Para examinar o restablecer archivos inactivos, es posible que deba activar el control de versiones.
 to go back to the msg list, click <a href= %1 >here</a>	common	es-es	Psra volver a la lista de mensajes, pulse <a href="%1">aquí</a>
-to start the db-tools	common	es-es	para iniciar las Herramientas de la base de datos
-to start the etemplate editor	common	es-es	para iniciar el editor de plantillas
-to start the search	common	es-es	para iniciar la búsqueda
+to start the db-tools	common	es-es	Para iniciar las Herramientas de la base de datos
+to start the etemplate editor	common	es-es	Para iniciar el editor de plantillas
+to start the search	common	es-es	Para iniciar la búsqueda
 today	common	es-es	Hoy
-todays date, eg. "%1"	common	es-es	fecha de hoy, p.ej. "%1"
+todays date, eg. "%1"	common	es-es	Fecha de hoy, p.ej. "%1"
 togo	common	es-es	TOGO
 tokelau	common	es-es	TOKELAU
 tonga	common	es-es	TONGA
@@ -1419,6 +1419,7 @@ total: %1 successful: %2 failed: %3 skipped: %4	common	es-es	Total: %1 Exitoso: 
 transparant bg for the icons?	common	es-es	¿Fondo transparente para los iconos?
 tree	common	es-es	Arbol
 trinidad and tobago	common	es-es	TRINIDAD AND TOBAGO
+tu	common	es-es	Tu
 tuesday	common	es-es	Martes
 tunisia	common	es-es	TUNEZ
 turkey	common	es-es	TURQUIA
@@ -1426,7 +1427,7 @@ turkmenistan	common	es-es	TURKMENISTAN
 turks and caicos islands	common	es-es	TURKS AND CAICOS ISLANDS
 tuvalu	common	es-es	TUVALU
 type	common	es-es	Tipo
-type of the column	common	es-es	tipo de la columna
+type of the column	common	es-es	Tipo de la columna
 type of the field (select label if field should be empty)	common	es-es	tipo del campo (seleccionar la etiqueta si el campo tiene que estar vacío)
 uganda	common	es-es	UGANDA
 ukraine	common	es-es	UCRANIA
