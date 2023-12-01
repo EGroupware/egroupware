@@ -265,6 +265,7 @@ class JsBase
 	 * Parse categories object
 	 *
 	 * @param array $categories category-name => true pairs
+	 * @param bool $multiple
 	 * @return ?string comma-separated cat_id's
 	 * @todo make that generic, so JsContact & JSCalendar have not to overwrite it
 	 */

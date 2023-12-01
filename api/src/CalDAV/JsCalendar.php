@@ -205,9 +205,10 @@ class JsCalendar extends JsBase
 	 * Parse categories object
 	 *
 	 * @param array $categories category-name => true pairs
+	 * @param bool $multiple
 	 * @return ?string comma-separated cat_id's
 	 */
-	protected static function parseCategories(array $categories)
+	protected static function parseCategories(array $categories, bool $multiple=true)
 	{
 		static $bo=null;
 		$cat_ids = [];
