@@ -1068,29 +1068,6 @@ class JsContact extends Api\CalDAV\JsBase
 	}
 
 	/**
-	 * Return a date-time value
-	 *
-	 * @link https://datatracker.ietf.org/doc/html/draft-ietf-jmap-jscontact-07#section-1.5.5
-	 * @param null|string|\DateTime $date
-	 * @return string|null
-	 */
-	protected static function UTCDateTime($date)
-	{
-		static $utc=null;
-		if (!isset($utc)) $utc = new \DateTimeZone('UTC');
-
-		if (!isset($date))
-		{
-			return null;
-		}
-		$date = Api\DateTime::to($date, 'object');
-		$date->setTimezone($utc);
-
-		// we need to use "Z", not "+00:00"
-		return substr($date->format(Api\DateTime::RFC3339), 0, -6).'Z';
-	}
-
-	/**
 	 * Get jsCardGroup for given group
 	 *
 	 * @param int|array $group
