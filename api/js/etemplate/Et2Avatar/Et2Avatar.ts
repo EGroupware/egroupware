@@ -127,7 +127,7 @@ export class Et2Avatar extends Et2Widget(SlAvatar) implements et2_IDetachedDOM
 		}
 		if (changedProperties.has("size"))
 		{
-			if(this.size)
+			if(this.size && this.size.match(/\d/))
 			{
 				this.getDOMNode().setAttribute('style', `--size:${this.size}`);
 			}
