@@ -56,16 +56,9 @@ export class Et2Favorites extends Et2DropdownButton implements et2_INextmatchHea
 			  }
 
 			  et2-image {
-				${egwIsMobile() ?
-				  css`
-					width: 6ex;
-					margin-top: 1.2ex;
-				  ` :
-				  css`
-					width: 20px;
-					margin-top: 4px;
-				  `
-				}
+				display: flex;
+				height: 100%;
+				width: ${egwIsMobile() ? css`4ex` : css`2ex`}
 			  }
 
 			  et2-image[src="trash"] {
