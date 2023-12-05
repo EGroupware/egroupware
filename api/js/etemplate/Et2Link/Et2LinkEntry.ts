@@ -340,7 +340,7 @@ export class Et2LinkEntry extends Et2InputWidget(FormControlMixin(SlotMixin(LitE
 	{
 		if(this.onlyApp)
 		{
-			return <string>this._searchNode?.value;
+			return <string>this._searchNode?.value ?? "";
 		}
 		return this._searchNode ? <LinkInfo>{
 			id: this._searchNode.value,
