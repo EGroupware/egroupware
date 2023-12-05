@@ -91,6 +91,24 @@ export const Et2StaticSelectMixin = <T extends Constructor<Et2WidgetWithSelect>>
 		}
 
 		/**
+		 * Override the parent _missingOption to wait for server-side options
+		 * to come back before we check to see if the value is not there.
+		 *
+		 * @param {string} newValueElement
+		 * @protected
+		 */
+		protected _missingOption(newValueElement : string)
+		{
+			this.fetchComplete.then(() =>
+			{
+				if(this.optionSearch(newValueElement) == null)
+				{
+					super._missingOption(newValueElement);
+				}
+			})
+		}
+
+		/**
 		 * Override the parent fix_bad_value() to wait for server-side options
 		 * to come back before we check to see if the value is not there.
 		 */
@@ -381,10 +399,10 @@ export const StaticOptions = new class StaticOptionsType
 		return this.cached_server_side(widget, 'select-country', options, return_promise);
 	}
 
-	state(widget : Et2SelectWidgets, attrs) : SelectOption[] | Promise<SelectOption[]>
+	state(widget : Et2SelectWidgets, attrs) : Promise<SelectOption[]>
 	{
 		var options = attrs.country_code ? attrs.country_code : 'de';
-		return this.cached_server_side(widget, 'select-state', options);
+		return <Promise<SelectOption[]>>this.cached_server_side(widget, 'select-state', options, true);
 	}
 
 	dow(widget : Et2SelectWidgets, attrs) : Promise<SelectOption[]>

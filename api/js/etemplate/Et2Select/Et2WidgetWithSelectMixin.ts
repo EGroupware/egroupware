@@ -168,6 +168,27 @@ export const Et2WidgetWithSelectMixin = <T extends Constructor<LitElement>>(supe
 		}
 
 		/**
+		 * Search options for a given value, returning the first matching option
+		 *
+		 * @return SelectOption | null
+		 */
+		public optionSearch(value : string, options : SelectOption[] = null) : SelectOption | null
+		{
+			let search = function(options, value)
+			{
+				return options.find((option) =>
+				{
+					if(Array.isArray(option.value))
+					{
+						return search(option.value, value);
+					}
+					return option.value == value;
+				});
+			}
+			return search(options ?? this.select_options, value);
+		}
+
+		/**
 		 * Render select_options as child DOM Nodes
 		 * @protected
 		 */
