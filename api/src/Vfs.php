@@ -1900,7 +1900,7 @@ class Vfs extends Vfs\Base
 		$start = '/home/'.$GLOBALS['egw_info']['user']['account_lid'];
 
 		// check if user specified a valid startpath in his prefs --> use it
-		if (($path = $GLOBALS['egw_info']['user']['preferences']['filemanager']['startfolder']) &&
+		if(($path = $GLOBALS['egw_info']['user']['preferences']['filemanager']['startfolder'] ?? '') &&
 			$path[0] == '/' && self::is_dir($path) && self::check_access($path, self::READABLE))
 		{
 			$start = $path;
