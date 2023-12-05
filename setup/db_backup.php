@@ -181,7 +181,7 @@ if (!empty($_POST['delete']) && ($msg = $db_backup->delete(key($_POST['delete'])
 	$setup_tpl->set_var('error_msg', $msg);
 }
 // rename a backup
-if (!empty($file=$_POST['rename']) && !empty($_POST['new_name'][$file]) &&
+if (!empty($_POST['rename']) && ($file = key($_POST['rename'])) && !empty($_POST['new_name'][$file]) &&
 	($msg = $db_backup->rename($file, $_POST['new_name'][$file])))
 {
 	$setup_tpl->set_var('error_msg', $msg);
