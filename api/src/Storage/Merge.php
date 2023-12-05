@@ -1863,11 +1863,11 @@ abstract class Merge
 	protected function prefix($prefix, $placeholder, $wrap = null)
 	{
 		$marker = ['', ''];
-		if($placeholder[0] == '{' && is_null($wrap) || $wrap[0] == '{')
+		if($placeholder && $placeholder[0] == '{' && is_null($wrap) || $wrap && $wrap[0] == '{')
 		{
 			$marker = ['{{', '}}'];
 		}
-		elseif($placeholder[0] == '$' && is_null($wrap) || $wrap[0] == '$')
+		elseif($placeholder && $placeholder[0] == '$' && is_null($wrap) || $wrap && $wrap[0] == '$')
 		{
 			$marker = ['$$', '$$'];
 		}
@@ -2883,7 +2883,7 @@ abstract class Merge
 		);
 
 		// Check for a configured preferred directory
-		if(!empty($pref = $GLOBALS['egw_info']['user']['preferences'][$this->get_app()][Merge::PREF_STORE_LOCATION]) && Vfs::is_writable($pref))
+		if(!empty($pref = $GLOBALS['egw_info']['user']['preferences'][$this->get_app()][Merge::PREF_STORE_LOCATION] ?? false) && Vfs::is_writable($pref))
 		{
 			$target = $pref;
 		}
