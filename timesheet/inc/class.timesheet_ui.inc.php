@@ -496,6 +496,13 @@ class timesheet_ui extends timesheet_bo
 			Events::OVERALL|Events::PAUSE => 'pause',
 		];
 		$sel_options['ts_owner']  = $edit_grants;
+		// Special handling for if you have a LOT of accounts - use a regular account widget
+		if(count($sel_options['ts_owner']) > Accounts::HUGE_LIMIT)
+		{
+			unset($sel_options['ts_owner']);
+			$etpl->setElementAttribute('ts_owner', 'type', 'et2-select-account');
+			$etpl->setElementAttribute('ts_owner', 'accountType', 'accounts');
+		}
 		$sel_options['ts_status']  = $this->get_status_labels($only_admin_edit);
 		if($this->config_data['history'] && $content['ts_status'] == self::DELETED_STATUS)
 		{
@@ -1036,6 +1043,13 @@ class timesheet_ui extends timesheet_bo
 								 array('value' => 0, 'label' => lang('None'))),
 			'ts_status' => $this->status_labels + array(lang('No status')),
 		);
+		// Special handling for if you have a LOT of accounts - use a regular account widget
+		if(count($sel_options['ts_owner']) > Accounts::HUGE_LIMIT)
+		{
+			unset($sel_options['ts_owner']);
+			$etpl->setElementAttribute('ts_owner', 'type', 'et2-nextmatch-header-account');
+			$etpl->setElementAttribute('ts_owner', 'accountType', 'accounts');
+		}
 		if($this->config_data['history'])
 		{
 			$sel_options['ts_status'][self::DELETED_STATUS] = 'Deleted';
