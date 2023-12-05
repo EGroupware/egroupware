@@ -121,8 +121,7 @@ export class Et2LinkSearch extends Et2Select
 			let item = this.select?.querySelector('[value="' + option.value + '"]');
 			if(item)
 			{
-				// Replace instead of changing the whole thing to preserve LitElement marker comments
-				item.innerHTML = item.innerHTML.replace(Et2Link.MISSING_TITLE, title);
+				this.requestUpdate();
 				this.select.requestUpdate("value");
 
 				item.classList.remove("loading");
