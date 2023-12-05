@@ -882,6 +882,7 @@ class Ldap
 						if (!$this->frontend->config['global_denied_users'][$test] && $allVals['uid'][0])
 						{
 							$account = array(
+								'account_dn' => $allVals['dn'],
 								'account_id' => $allVals['uidnumber'][0],
 								'account_lid' => Api\Translation::convert($allVals['uid'][0], 'utf-8'),
 								'account_type' => 'u',
@@ -949,6 +950,7 @@ class Ldap
 					if (!$this->frontend->config['global_denied_groups'][$test] && $allVals['cn'][0])
 					{
 						$accounts[(string)-$allVals['gidnumber'][0]] = Array(
+							'account_dn'        => $allVals['dn'],
 							'account_id'        => -$allVals['gidnumber'][0],
 							'account_lid'       => Api\Translation::convert($allVals['cn'][0],'utf-8'),
 							'account_type'      => 'g',
