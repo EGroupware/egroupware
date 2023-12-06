@@ -300,6 +300,7 @@ export class Et2LinkEntry extends Et2InputWidget(FormControlMixin(SlotMixin(LitE
 	protected _handleEntryClear(event)
 	{
 		this.classList.remove("hideApp")
+		this._searchNode.value = "";
 		this._searchNode.focus();
 
 		this.dispatchEvent(new Event("change"));
@@ -387,7 +388,7 @@ export class Et2LinkEntry extends Et2InputWidget(FormControlMixin(SlotMixin(LitE
 		}
 		else
 		{
-			this.app = value.app;
+			this.app = this._searchNode.app = value.app;
 			this._searchNode.value = value.id;
 		}
 		this.classList.toggle("hideApp", Boolean(value.id));
