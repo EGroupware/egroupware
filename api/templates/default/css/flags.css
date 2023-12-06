@@ -9,7 +9,7 @@ et2-select-country:not([open])::part(prefix), et2-select-country::part(flag) {
     margin-right: 10px;
 }
 /* No country selected*/
-et2-select-country[value=""]::part(prefix), et2-select-country::part(emptyLabel) {
+et2-select-country:not(.hasValue)::part(prefix), et2-select-country::part(emptyLabel) {
     background-image: url(../images/internet.svg);
     background-position: center;
     background-size: 20px;
