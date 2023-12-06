@@ -8,8 +8,9 @@
  */
 
 import {Et2Select} from "../Et2Select";
-import {css} from "lit";
+import {css, html, TemplateResult} from "lit";
 import {SelectOption} from "../FindSelectOptions";
+import {SlOption} from "@shoelace-style/shoelace";
 
 export class Et2SelectThumbnail extends Et2Select
 {
@@ -64,6 +65,7 @@ export class Et2SelectThumbnail extends Et2Select
 			});
 			this.requestUpdate('select_options');
 		}
+		this.requestUpdate();
 
 		// Make sure not to double-add
 		if(this.multiple && this.value.indexOf(text) == -1)
@@ -76,18 +78,6 @@ export class Et2SelectThumbnail extends Et2Select
 			return;
 		}
 
-		// Once added to options, add to value / tags
-		this.updateComplete.then(() =>
-		{
-			this.menuItems.forEach(o =>
-			{
-				if(o.value == text)
-				{
-					o.dispatchEvent(new Event("click"));
-				}
-			});
-			this.syncItemsFromValue();
-		});
 		return true;
 	}
 
@@ -97,25 +87,28 @@ export class Et2SelectThumbnail extends Et2Select
 	}
 
 	/**
-	 * Customise how tags are rendered.  This overrides what SlSelect
-	 * does in syncItemsFromValue().
-	 * This is a copy+paste from SlSelect.syncItemsFromValue().
+	 * Custom tag
 	 *
-	 * @param item
+	 * Override this to customise display when multiple=true.
+	 * There is no restriction on the tag used, unlike _optionTemplate()
+	 *
+	 * @param {Et2Option} option
+	 * @param {number} index
+	 * @returns {TemplateResult}
 	 * @protected
 	 */
-	protected _createTagNode(item)
+	protected _tagTemplate(option : SlOption, index : number) : TemplateResult
 	{
-		let tag = super._createTagNode(item);
-
 		// Different image - slot in just an image so we can have complete control over styling
-		tag.querySelector("[slot=prefix]")?.remove();
-		let img = document.createElement("img");
-		img.slot = "prefix";
-		img.src = item.value;
-		tag.append(img);
-
-		return tag;
+		return html`
+            <et2-thumbnail-tag>
+                <img
+                        part="image"
+                        slot="prefix"
+                        src="${option.value}"
+                />
+            </et2-thumbnail-tag>
+		`;
 	}
 }
 
