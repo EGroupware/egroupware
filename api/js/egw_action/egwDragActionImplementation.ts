@@ -157,12 +157,7 @@ export class EgwDragActionImplementation implements EgwActionImplementation {
                 }
             })
             node.addEventListener("mouseup", (event) => {
-                if (_context.isSelection(event) && document.getSelection().type === 'Range') {
-                    //let the draggable be reactivated by another click up as the range selection is
-                    // not working as expected in shadow-dom as expected in all browsers
-                } else {
-                    node.setAttribute("draggable", true);
-                }
+				node.setAttribute("draggable", true);
 
                 // Set cursor back to auto. Seems FF can't handle cursor reversion
                 document.body.style.cursor = 'auto'
