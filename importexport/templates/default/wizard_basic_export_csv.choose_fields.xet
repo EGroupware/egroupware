@@ -21,7 +21,7 @@
 								<et2-description  value="Field"></et2-description>
 								<et2-hbox>
                                     <et2-description  value="Export"></et2-description>
-                                    <et2-button  statustext="Check all" label="Check all" id="check_all" onclick="jQuery('input:checkbox').attr('checked', !jQuery('input:checkbox').attr('checked')); return false;" image="check" noSubmit="true"></et2-button>
+                                    <et2-button statustext="Check all" label="Check all" id="check_all" onclick="arguments.callee.check = !arguments.callee.check; widget.getRoot().getDOMNode().querySelectorAll('et2-checkbox').forEach((check) => { if(arguments.callee.check) {check.removeAttribute('checked');}else {check.setAttribute('checked', true)}}); return false;" image="check" noSubmit="true"></et2-button>
                                 </et2-hbox>
 							</row>
 							<row>
