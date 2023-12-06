@@ -112,7 +112,7 @@ export class Et2DateRange extends Et2InputWidget(FormControlMixin(LitElement))
                     ?readonly=${this.readonly}
                     ?required=${this.required}
                     placeholder=${ifDefined(this.placeholder)}
-                    emptyLabel=${ifDefined(this.emptyLabel)}
+                    .emptyLabel=${ifDefined(this.emptyLabel)}
                     .select_options=${Et2DateRange.relative_dates}></et2-select>`;
 	}
 

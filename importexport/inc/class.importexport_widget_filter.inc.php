@@ -84,7 +84,7 @@ class importexport_widget_filter extends Etemplate\Widget\Transformer
 					$type = $field['type'] = 'date-range';
 					$options = '';
 					$this->setElementAttribute($form_name.'['.self::$prefix.$lname.']', 'relative', $relative_dates);
-					$this->setElementAttribute($form_name.'['.self::$prefix.$lname.']', 'blur', $field['empty_label'] ? $field['empty_label'] : lang('All...'));
+				$this->setElementAttribute($form_name . '[' . self::$prefix . $lname . ']', 'emptyLabel', $field['empty_label'] ? $field['empty_label'] : lang('All...'));
 					break;
 				case 'ajax_select' :
 					// Set some reasonable defaults for the widget
