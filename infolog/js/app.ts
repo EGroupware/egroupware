@@ -262,11 +262,11 @@ class InfologApp extends EgwApp
 	 * either 'all' for details or 'no_description' for no details
 	 *
 	 * @param {Event} event Change event
-	 * @param {et2_nextmatch} nm The nextmatch widget that owns the filter
+	 * @param {Et2Select} filter2 The filter widget
 	 */
-	filter2_change(event, nm)
+	filter2_change(event, filter2)
 	{
-		var filter2 = nm.getWidgetById('filter2');
+		let nm = filter2.getParent().getParent();
 
 		if (nm && filter2)
 		{
@@ -278,6 +278,12 @@ class InfologApp extends EgwApp
 		// favorites
 		if (nm && filter2 && !nm.update_in_progress)
 		{
+			// Update page - set update_in_progress to true to avoid triggering
+			// the change handler and looping if the user has a custom field
+			// column change
+			let in_progress = nm.update_in_progress;
+			nm.update_in_progress = true;
+
 			// Store selection as implicit preference
 			egw.set_preference('infolog', nm.options.settings.columnselection_pref.replace('-details','')+'-details-pref', filter2.get_value());
 
@@ -302,16 +308,14 @@ class InfologApp extends EgwApp
 			}
 			nm.dataview.getColumnMgr().updated();
 
-			// Update page - set update_in_progress to true to avoid triggering
-			// the change handler and looping if the user has a custom field
-			// column change
-			var in_progress = nm.update_in_progress;
-			nm.update_in_progress = true;
 			// Set the actual filter value here
 			nm.activeFilters.filter2 = filter2.get_value();
 			nm.dataview.updateColumns();
 			nm.update_in_progress = in_progress;
 		}
+
+		// Already handled everything here and the column change probably triggered a reload
+		// Return false to skip nm doing the filter value change
 		return false;
 	}
 
