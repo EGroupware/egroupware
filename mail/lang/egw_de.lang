@@ -50,6 +50,7 @@ allow users to create further identities	mail	de	Anwender dürfen weitere Identi
 allways a new window	mail	de	immer in einem neuen Fenster
 always	mail	de	Immer
 always allow external sources from %1	mail	de	Erlaube externe Bildquellen von %1
+always respond / auto-responder	mail	de	Immer antworten / Auto-Responder
 always show html emails	mail	de	HTML-E-Mails immer anzeigen
 always show notifiction	mail	de	Benachrichtigungen immer anzeigen
 an error happend while trying to remove acl rights from the account %1!	mail	de	Ein Fehler trat auf beim Versuch die Zugriffskontrollrechte vom Konto %1 zu entfernen!
@@ -218,6 +219,7 @@ error: could not send message.	mail	de	FEHLER: Die Nachricht konnte nicht versen
 error: message could not be displayed.	mail	de	FEHLER: Die Nachricht kann nicht angezeigt werden.
 esync will fail without a working email configuration!	mail	de	eSync steht Ihnen nicht zur Verfügung, weil kein gültiges Mailkonto eingestellt wurde!
 event details follow	mail	de	Details zum Termin folgen
+every %1. day	mail	de	Jeden %1. Tag
 everyone	mail	de	Alle Anwender
 examine namespace to retrieve folders in others and shared	mail	de	Den Namensraum untersuchen, um Ordner in anderen und gemeinsam genutzten Ordnern abzurufen
 extended	mail	de	Erweitert
@@ -408,6 +410,7 @@ notify when new mails arrive in these folders	mail	de	Benachrichtigung, sobald n
 on	mail	de	am
 on behalf of	mail	de	Im Namen von
 on vacation	mail	de	Abwesenheit
+once per day	mail	de	Einmal pro Tag
 one address is not valid	mail	de	Eine Adresse ist ungültig
 only email	mail	de	Nur E-Mail
 only if currently in an other app	mail	de	Nur anzeigen wenn aktuell in einer anderen Anwendung

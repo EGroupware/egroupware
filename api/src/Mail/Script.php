@@ -77,6 +77,7 @@ class Script
 	{
 		$this->extensions = [
 			'vacation' => $connection->hasExtension('vacation'),
+			'vacation-seconds' => $connection->hasExtension('vacation-seconds'),
 			'regex' => $connection->hasExtension('regex'),
 			'enotify' => $connection->hasExtension('enotify'),
 			'body' => $connection->hasExtension('body'),
@@ -434,7 +435,7 @@ class Script
 
 		if ($this->vacation) {
 			$vacation = $this->vacation;
-			if (!$vacation['days']) $vacation['days'] = $default->vacation_days ?: '';
+			if ((string)$vacation['days'] === '' || $vacation['days'] < 0) $vacation['days'] = $default->vacation_days ?: 3;
 			if (!$vacation['text']) $vacation['text'] = $default->vacation_text ?: '';
 			if (!$vacation['status']) $vacation['status'] = 'on';
 
@@ -489,7 +490,14 @@ class Script
 				}
 				if (!isset($vacation['modus']) || $vacation['modus'] !== 'store')
 				{
-					$vac_rule .= "vacation :days " . $vacation['days'];
+					if ($vacation['days'])
+					{
+						$vac_rule .= "vacation :days " . $vacation['days'];
+					}
+					else
+					{
+						$vac_rule .= "vacation :seconds 1";
+					}
 					$first = 1;
 					if (!empty($vacation['addresses'][0]))
 					{
@@ -589,7 +597,7 @@ class Script
 			if ($this->extensions['regex'] && $regexused) $newscripthead .= ",\"regex\"";
 			if ($rejectused) $newscripthead .= ",\"reject\"";
 			if ($this->vacation && $vacation_active) {
-				$newscripthead .= ",\"vacation\"";
+				$newscripthead .= (string)$this->vacation['days'] === '0' ? ',"vacation-seconds"' : ',"vacation"';
 			}
 			if ($this->extensions['body']) $newscripthead .= ",\"body\"";
 			if ($this->extensions['date']) $newscripthead .= ",\"date\"";
@@ -604,7 +612,7 @@ class Script
 			$closeRequired = false;
 			if ($this->vacation)
 			{
-				$newscripthead .= "require [\"vacation\"";
+				$newscripthead .= (string)$this->vacation['days'] === '0' ? ',"vacation-seconds"' : ',"vacation"';
 				if ($this->extensions['variables']) $newscripthead .= ',"variables"';
 				if ($this->extensions['regex'] && $regexused) $newscripthead .= ",\"regex\"";
 				if ($this->extensions['date']) $newscripthead .= ",\"date\"";

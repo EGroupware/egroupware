@@ -50,7 +50,7 @@
 				</row>
 				<row>
 					<et2-description  value="Resend after how many days?"></et2-description>
-					<et2-number  id="days" min="1" max="31" precision="0"></et2-number>
+					<et2-select id="days"></et2-select>
 				</row>
 				<row>
 					<et2-description  value="Set it as default:" disabled="@is_not_admin_user"></et2-description>

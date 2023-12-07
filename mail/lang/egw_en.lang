@@ -50,6 +50,7 @@ allow users to create further identities	mail	en	Allow users to create further i
 allways a new window	mail	en	Allways a new window
 always	mail	en	Always
 always allow external sources from %1	mail	en	Always allow external sources from %1
+always respond / auto-responder	mail	en	Always respond / auto-responder
 always show html emails	mail	en	Always show HTML emails
 always show notifiction	mail	en	Always show notification
 an error happend while trying to remove acl rights from the account %1!	mail	en	An error happend while trying to remove ACL rights from the account %1!
@@ -218,6 +219,7 @@ error: could not send message.	mail	en	Error: Could not send Message.
 error: message could not be displayed.	mail	en	ERROR: Message could not be displayed.
 esync will fail without a working email configuration!	mail	en	eSync will FAIL without a working email configuration!
 event details follow	mail	en	Event Details follow
+every %1. day	mail	en	Every %1. day
 everyone	mail	en	Everyone
 examine namespace to retrieve folders in others and shared	mail	en	Examine namespace to retrieve folders in others and shared
 extended	mail	en	Extended
@@ -408,6 +410,7 @@ notify when new mails arrive in these folders	mail	en	notify when new emails arr
 on	mail	en	on
 on behalf of	mail	en	On behalf of
 on vacation	mail	en	On vacation
+once per day	mail	en	Once per day
 one address is not valid	mail	en	One address is not valid
 only email	mail	en	Only email
 only if currently in an other app	mail	en	Only if currently in an other app
