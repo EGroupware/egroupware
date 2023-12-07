@@ -2,11 +2,11 @@
 /**
  * EGroupware API - Timed Asynchron Services
  *
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @copyright Ralf Becker <RalfBecker-AT-outdoor-training.de>
  *
- * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @license https://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package api
  * @access public
  */
@@ -47,10 +47,16 @@ class Asyncservice
 
 	/**
 	 * constructor of the class
+	 *
+	 * @param ?Db $db
 	 */
-	function __construct()
+	function __construct(Db $db=null)
 	{
-		if (is_object($GLOBALS['egw']->db))
+		if (isset($db))
+		{
+			$this->db = $db;
+		}
+		elseif (is_object($GLOBALS['egw']->db))
 		{
 			$this->db = $GLOBALS['egw']->db;
 		}
