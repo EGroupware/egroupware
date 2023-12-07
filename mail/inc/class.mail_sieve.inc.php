@@ -590,7 +590,8 @@ class mail_sieve
 						Framework::refresh_opener($msg, 'mail');
 					}
 					//Set default value for days new entry
-					if (empty($content['days']))
+					if ((string)$content['days'] === '' || $content['days'] < 0 ||
+						!$content['days'] && !in_array('VACATION-SECONDS', $icServer->getExtensions()))
 					{
 						$content['days'] = '3';
 					}
@@ -709,6 +710,14 @@ class mail_sieve
 					),
 					'addresses' => array_combine($vacRules['aliases'],$vacRules['aliases']),
 				);
+				if (in_array('VACATION-SECONDS', $icServer->getExtensions()))
+				{
+					$sel_options['days']['0'] = lang('Always respond / auto-responder');
+				}
+				for($d=1; $d <= 31; ++$d)
+				{
+					$sel_options['days'][(string)$d] = $d === 1 ? lang('Once per day') : lang('Every %1. day', $d);
+				}
 				if (!isset($account_id))
 				{
 					$readonlys['acc_id'] = true;
@@ -849,7 +858,7 @@ class mail_sieve
 			$this->errorStack['text'] = lang('Please supply the message to send with auto-responses').'!	';
 		}
 
-		if (!$_vacation['days'])
+		if ((string)$_vacation['days'] === '' || $_vacation['days'] < 0)
 		{
 			$this->errorStack['days'] = lang('Please select the number of days to wait between responses').'!';
 		}
