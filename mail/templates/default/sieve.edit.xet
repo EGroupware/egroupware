@@ -119,7 +119,7 @@
 					</et2-hbox>
 				</row>
 				<row>
-					<et2-tabbox  id="tabs" class="et2_nowrap" width="100%" span="all" tabHeight="440">
+					<et2-tabbox  id="tabs" class="et2_nowrap" width="100%" span="all" tabHeight="450">
 						<tabs>
 							<tab id="condition" label="Condition"/>
 							<tab id="action" label="Action"/>
