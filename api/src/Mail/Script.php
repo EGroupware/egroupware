@@ -612,7 +612,7 @@ class Script
 			$closeRequired = false;
 			if ($this->vacation)
 			{
-				$newscripthead .= (string)$this->vacation['days'] === '0' ? ',"vacation-seconds"' : ',"vacation"';
+				$newscripthead .= 'require['.((string)$this->vacation['days'] === '0' ? '"vacation-seconds"' : '"vacation"');
 				if ($this->extensions['variables']) $newscripthead .= ',"variables"';
 				if ($this->extensions['regex'] && $regexused) $newscripthead .= ",\"regex\"";
 				if ($this->extensions['date']) $newscripthead .= ",\"date\"";
