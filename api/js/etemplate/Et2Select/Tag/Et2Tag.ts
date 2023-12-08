@@ -108,6 +108,7 @@ export class Et2Tag extends Et2Widget(SlTag)
                 <et2-button-icon
                         label=${this.egw().lang("edit")}
                         image="pencil"
+                        noSubmit="true"
                         @click=${this.startEdit}
                 ></et2-button-icon>` : ''
             }
@@ -205,6 +206,10 @@ export class Et2Tag extends Et2Widget(SlTag)
 	stopEdit()
 	{
 		this.isEditing = false;
+		let event = new Event("change", {
+			bubbles: true
+		});
+		event.originalValue = this.value;
 		this.dataset.original_value = this.value;
 		if(!this.editable)
 		{
@@ -214,9 +219,6 @@ export class Et2Tag extends Et2Widget(SlTag)
 		this.requestUpdate();
 		this.updateComplete.then(() =>
 		{
-			let event = new Event("change", {
-				bubbles: true
-			})
 			this.dispatchEvent(event);
 		})
 	}
@@ -234,6 +236,11 @@ export class Et2Tag extends Et2Widget(SlTag)
 		if(["Tab", "Enter"].indexOf(event.key) !== -1)
 		{
 			this._editNode.blur();
+		}
+		else if(["Escape"].includes(event.key))
+		{
+			this._editNode.value = this.value;
+			this.stopEdit();
 		}
 	}
 
