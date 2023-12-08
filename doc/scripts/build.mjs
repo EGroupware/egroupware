@@ -26,7 +26,7 @@ const execPromise = util.promisify(exec);
 let childProcess;
 let buildResults;
 
-const bundleDirectories = [outdir];
+const bundleDirectories = [outdir, 'doc/etemplate2/_data'];
 let packageData = JSON.parse(readFileSync(path.join(process.cwd(), 'package.json'), 'utf-8'));
 const egwVersion = JSON.stringify(packageData.version.toString());
 
