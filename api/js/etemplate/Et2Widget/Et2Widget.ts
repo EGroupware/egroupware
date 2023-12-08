@@ -620,7 +620,9 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 			return true;
 		}
 
-		/** et2_widget compatability **/
+		/** et2_widget compatability
+		 * @deprecated
+		 **/
 		destroy()
 		{
 			// Not really needed, use the disconnectedCallback() and let the browser handle it

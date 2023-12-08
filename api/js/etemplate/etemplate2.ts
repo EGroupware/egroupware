@@ -50,6 +50,7 @@ import './Et2Date/Et2DateTimeToday';
 import './Et2Description/Et2Description';
 import './Et2Dialog/Et2Dialog';
 import './Et2DropdownButton/Et2DropdownButton';
+import './Et2Email/Et2Email';
 import './Expose/Et2ImageExpose';
 import './Expose/Et2DescriptionExpose';
 import './Et2Favorites/Et2Favorites';
