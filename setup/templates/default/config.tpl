@@ -467,8 +467,9 @@
 
    <tr class="th">
     <td colspan="2">
-        <b>{lang_If_using_OpenIDConnect_(authentication as client agains an other OID IdP)}:</b><br/>
-        {lang_The_OIC_IdP_must_support_autoconfiguration_under_the_above_given_URL (.well-known/openid-configuration).}
+        <b>{lang_If_using_OpenIDConnect_(authentication as client agains an other OIDC IdP)}:</b><br/>
+        {lang_The_OIDC_IdP_must_support_autoconfiguration_under_the_below_given_URL}: /.well-known/openid-configuration<br/>
+        {lang_EGroupware's_callback_URL_is_the_one_of_the_login_page}: <a href="{value_webserver_url}/login.php">{lang_Callback_URL}</a>
     </td>
    </tr>
    <tr class="row_off">

@@ -133,6 +133,7 @@ by redirecting to https	setup	en	By redirecting to https
 by rewriting links to https (allows eg. sitemgr to run on http)	setup	en	By rewriting links to https (allows eg. SiteMgr to run on http)
 ca certificate	setup	en	CA certificate
 cached cleared	setup	en	Cached cleared
+callback url	setup	en	Callback URL
 can not connect to %1 database %2 on host %3 using user %4!	setup	en	Can not connect to %1 database %2 on host %3 using user %4!
 can not connect to ldap server on host %1 using dn %2!	setup	en	Can not connect to LDAP server on host %1 using DN %2!
 can not create %1 database %2 on %3 for user %4!	setup	en	Can not create %1 database %2 on %3 for user %4!
@@ -171,6 +172,8 @@ clear cache and register hooks	setup	en	Clear cache and register hooks
 click <a href="index.php">here</a> to return to setup.	setup	en	Click <a href="index.php">here</a> to return to setup.
 click here	setup	en	Click here
 click here to re-run the installation tests	setup	en	Click here to re-run the installation tests
+client id	setup	en	Client ID
+client secret	setup	en	Client secret
 comma separated ip-addresses or host-names, default access to setup from everywhere	setup	en	Comma separated IP addresses or host names, default access to setup from everywhere
 comma-separated provider names or json	setup	en	Comma-separated provider names or JSON
 commercial support	setup	en	Commercial support
@@ -288,6 +291,7 @@ egroupware domain/instance %1(%2):	setup	en	EGroupware domain/instance %1(%2):
 egroupware is already installed!	setup	en	EGroupware is already installed!
 egroupware requires several dependencies installed via: %1	setup	en	EGroupware requires several dependencies installed via: %1
 egroupware sources in '%1' are not complete, file '%2' missing !!!	setup	en	EGroupware sources in '%1' are not complete, file '%2' missing !!!
+egroupware's callback url is the one of the login page	setup	en	EGroupware's callback URL is the one of the login page
 email (standard maildomain should be set)	setup	en	Email (Standard Maildomain should be set)
 email-address	setup	en	EMail-address
 emailadmin mail account saved:	setup	en	EMailAdmin mail account saved:
@@ -381,6 +385,7 @@ if using ldap	setup	en	If using LDAP
 if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	en	If using LDAP, do you want to manage home directory and login shell attributes?
 if using mail authentication	setup	en	If using Mail authentication
 if using multiple authentication providers:	setup	en	If using Multiple authentication providers:
+if using openidconnect (authentication as client agains an other oidc idp)	setup	en	If using OpenIDConnect (authentication as client agains an other OIDC IdP)
 if using saml 2.0 / shibboleth / simplesamlphp	setup	en	If using SAML 2.0 / Shibboleth / SimpleSAML
 if you can only access the docroot choose <b>database</b> for where to store the file content and use same path as for temporary files.	setup	en	If you can only access the docroot choose <b>Database</b> for where to store the file content AND use same path as for temporary files.
 if you did not receive any errors, your applications have been	setup	en	If you did not receive any errors, your applications have been
@@ -687,6 +692,7 @@ the ldap extension is needed, if you use ldap as account or contact storage, aut
 the mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	en	The mbstring extension is needed to fully support unicode (UTF-8) or other multibyte-charsets.
 the mbstring.func_overload = 7 is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	en	The mbstring.func_overload = 7 is needed to fully support unicode (UTF-8) or other multibyte-charsets.
 the mcrypt extension is used, to store etemplate form state on the client, which is the prefered way to store it.	setup	en	The mcrypt extension is used, to store eTemplate form state on the client, which is the prefered way to store it.
+the oidc idp must support autoconfiguration under the below given url	setup	en	The OIDC IdP must support autoconfiguration under the below given URL
 the pdo extension plus a database specific driver is needed by the vfs (virtual file system)!	setup	en	The PDO extension plus a database specific driver is needed by the VFS (virtual file system)!
 the session extension is needed to use php sessions (db-sessions work without).	setup	en	The session extension is needed to use php sessions (db-sessions work without).
 the session extension is required!	setup	en	The session extension is required!
@@ -734,6 +740,7 @@ upgrading tables	setup	en	Upgrading tables.
 upload backup	setup	en	Upload backup
 uploads a backup and installs it on your db	setup	en	Uploads a backup and installs it on your DB
 uploads a backup to the backup-dir, from where you can restore it	setup	en	Uploads a backup to the backup-dir, from where you can restore it
+url of the idp (without path)	setup	en	URL of the IdP (without path)
 usage: %1 command [additional options]	setup	en	Usage: %1 command [additional options]
 use %u for username, leave empty to no set	setup	en	use %u for username, leave empty to no set
 use --create-header to create the configuration file (--usage gives more options).	setup	en	Use --create-header to create the configuration file (--usage gives more options).

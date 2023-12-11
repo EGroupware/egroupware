@@ -133,6 +133,7 @@ by redirecting to https	setup	de	Durch weiterleiten auf https
 by rewriting links to https (allows eg. sitemgr to run on http)	setup	de	Durch umschreiben der Links auf https (erlaubt zB. SiteMgr unter http zu verwenden)
 ca certificate	setup	de	CA Zertifikat
 cached cleared	setup	de	Cache gelöscht
+callback url	setup	de	Rückgabe (Callback) URL
 can not connect to %1 database %2 on host %3 using user %4!	setup	de	Kann nicht zur %1 Datenbank %2 auf Rechner %3 als Benutzer %4 verbinden!
 can not connect to ldap server on host %1 using dn %2!	setup	de	Kann nicht zu LDAP Server auf Rechner %1 als DN %2 verbinden!
 can not create %1 database %2 on %3 for user %4!	setup	de	Kann keine %1 Datenbank %2 auf Rechner %3 für Benutzer %4 anlegen!
@@ -171,6 +172,8 @@ clear cache and register hooks	setup	de	Cache löschen und Hooks registrieren
 click <a href="index.php">here</a> to return to setup.	setup	de	<a href="index.php">Hier klicken</a> um zu Setup zurück zu kehren.
 click here	setup	de	Hier klicken
 click here to re-run the installation tests	setup	de	Zum Wiederholen der Installationstests hier klicken
+client id	setup	de	Klient ID
+client secret	setup	de	Klient Geheimnis (Secret)
 comma separated ip-addresses or host-names, default access to setup from everywhere	setup	de	Komma getrennte IP-Adressen oder Hostnamen, Vorgabe Zugriff von überall
 comma-separated provider names or json	setup	de	Komma-getrennte Authentifizierungstypen oder JSON
 commercial support	setup	de	Kommerzieller Support
@@ -288,6 +291,7 @@ egroupware domain/instance %1(%2):	setup	de	EGroupware Domain/Instanz %1(%2):
 egroupware is already installed!	setup	de	EGroupware ist bereits installiert!
 egroupware requires several dependencies installed via: %1	setup	de	EGroupware hängt von diversen Paketen ab, die installiert werden müssen mit: %1
 egroupware sources in '%1' are not complete, file '%2' missing !!!	setup	de	EGroupware Quellen in '%1' sind nicht komplett, Datei '%2' fehlt !!!
+egroupware's callback url is the one of the login page	setup	de	EGroupware's Rückgabe (Callback) URL ist die der Login Seite
 email (standard maildomain should be set)	setup	de	E-Mail (Standard Mail-Domain muss gesetzt sein)
 email-address	setup	de	E-Mail Adresse
 emailadmin mail account saved:	setup	de	EMailAdmin Mailkonto gespeichert:
@@ -381,6 +385,7 @@ if using ldap	setup	de	Wenn Sie LDAP verwenden
 if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	de	Wenn Sie LDAP verwenden, wollen Sie Benutzerverzeichnisse und Shell verwalten?
 if using mail authentication	setup	de	Wenn Sie Mail-Authentifizierung verwenden
 if using multiple authentication providers:	setup	de	Wenn mehrere Authentifizierungtypen verwenden werden sollen:
+if using openidconnect (authentication as client agains an other oidc idp)	setup	de	Wenn Sie OpenID Connect benutzen (Authentifizierung als Klient gegen einen anderen OIDC IdP)
 if using saml 2.0 / shibboleth / simplesamlphp	setup	de	Wenn Sie SAML 2.0 / Shibboleth / SimpleSAML benutzen
 if you can only access the docroot choose <b>database</b> for where to store the file content and use same path as for temporary files.	setup	de	Wenn Sie nur die Documentroot erreichen können, wählen Sie bei Inhalt von Dateien speichern <b>Datenbank</b> UND benutzen Sie hier den Pfad für temporäre Dateien.
 if you did not receive any errors, your applications have been	setup	de	Wenn Sie keine Fehlermeldungen erhalten, wurden Ihre Anwendungen
@@ -687,6 +692,7 @@ the ldap extension is needed, if you use ldap as account or contact storage, aut
 the mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	de	Die mbstring Erweiterung (php extension) ist notwendig um Unicode (UTF-8) oder andere mehr-byte (multibyte) Zeichensätze vollständig zu unterstützen.
 the mbstring.func_overload = 7 is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	de	Die Einstellung mbstring.func_overload = 7 ist notwendig um Unicode (UTF-8) oder andere mehr-byte (multibyte) Zeichensätze vollständig zu unterstützen.
 the mcrypt extension is used, to store etemplate form state on the client, which is the prefered way to store it.	setup	de	Die mycrypt PHP Erweiterung wird benötigt um den Zustand von eTemplate Formularen sicher auf dem Klient zu speichern. Das ist die empfohlene Art sie zu speichern.
+the oidc idp must support autoconfiguration under the below given url	setup	de	Der OIDC IdP muss die automatische Konfiguration unter der darunter angegeben URL unterstützen
 the pdo extension plus a database specific driver is needed by the vfs (virtual file system)!	setup	de	Die PDO Erweiterung plus ein Datenbank spezifischer Treiber werden vom VFS (virtuelem Datei System) benötigt!
 the session extension is needed to use php sessions (db-sessions work without).	setup	de	Die Session Erweiterung (PHP extension) ist notwendig für PHP Sessions (Datenbank Sessions arbeiten ohne diese).
 the session extension is required!	setup	de	Die session Erweiterung wird unbedingt benötigt!
@@ -734,6 +740,7 @@ upgrading tables	setup	de	aktualisiere Tabellen
 upload backup	setup	de	Datensicherung hochladen
 uploads a backup and installs it on your db	setup	de	lädt eine Datensicherung hoch und installiert sie auf Ihrer DB
 uploads a backup to the backup-dir, from where you can restore it	setup	de	Laden Sie eine Datensicherung in das Datensicherungsverzeichnis, von wo sie diese zurücksichern können
+url of the idp (without path)	setup	de	URL die IdP (ohne Pfad)
 usage: %1 command [additional options]	setup	de	Aufruf: %1 Kommando [zusätzliche Optionen]
 use %u for username, leave empty to no set	setup	de	Benutzer %u für den Benutzernamen, leer lassen um nichts zu setzen
 use --create-header to create the configuration file (--usage gives more options).	setup	de	Benutzen Sie --create-header um die Konfigurationsdatei anzulegen (--usage gibt mehr Optionen).
