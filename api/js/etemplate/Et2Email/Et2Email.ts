@@ -19,6 +19,10 @@ import {Et2EmailTag} from "../Et2Select/Tag/Et2EmailTag";
 import {waitForEvent} from "../Et2Widget/event";
 import styles from "./Et2Email.styles";
 import {SelectOption} from "../Et2Select/FindSelectOptions";
+import {SearchMixinInterface} from "../Et2Select/SearchMixin";
+import {IsEmail} from "../Validators/IsEmail";
+import {Validator} from "@lion/form-core";
+import Sortable from "sortablejs/modular/sortable.complete.esm.js";
 
 /**
  * @summary Enter email addresses, offering suggestions from contacts
@@ -58,7 +62,7 @@ import {SelectOption} from "../Et2Select/FindSelectOptions";
  * @csspart tag__remove-button - The tag's remove button.
  * @csspart tag__remove-button__base - The tag's remove button base part.
  */
-export class Et2Email extends Et2InputWidget(LitElement)
+export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinInterface
 {
 	static shadowRootOptions = {...LitElement.shadowRootOptions, delegatesFocus: true};
 
@@ -159,7 +163,13 @@ export class Et2Email extends Et2InputWidget(LitElement)
 	 * @type {number}
 	 * @protected
 	 */
-	protected static SEARCH_TIMEOUT = 500;
+	public static SEARCH_TIMEOUT = 500;
+
+	/**
+	 * Typing these characters will end the email address and start a new one
+	 * @type {string[]}
+	 */
+	public static TAG_BREAK : string[] = ["Tab", "Enter", ","];
 
 	protected readonly hasSlotController = new HasSlotController(this, 'help-text', 'label');
 
@@ -170,11 +180,14 @@ export class Et2Email extends Et2InputWidget(LitElement)
 	protected _searchPromise : Promise<SelectOption[]> = Promise.resolve([]);
 	protected _selectOptions : SelectOption[] = [];
 
+	protected _sortable : Sortable;
 
 	constructor(...args : any[])
 	{
 		// @ts-ignore
 		super(...args);
+
+		this.defaultValidators.push(new IsEmail(this.allowPlaceholder));
 
 		// Additional option for select email, per ticket #79694
 		this._close_on_select = this.egw().preference("select_multiple_close") != "open";
@@ -189,6 +202,17 @@ export class Et2Email extends Et2InputWidget(LitElement)
 		this.open = false;
 	}
 
+	willUpdate(changedProperties : PropertyValues)
+	{
+		super.willUpdate(changedProperties);
+
+		if(changedProperties.has('allowPlaceholder'))
+		{
+			this.defaultValidators = (<Array<Validator>>this.defaultValidators).filter(v => !(v instanceof IsEmail));
+			this.defaultValidators.push(new IsEmail(this.allowPlaceholder));
+		}
+	}
+
 	update(changedProperties : PropertyValues)
 	{
 		super.update(changedProperties)
@@ -196,6 +220,17 @@ export class Et2Email extends Et2InputWidget(LitElement)
 		if(changedProperties.has("open"))
 		{
 			this.handleOpenChange();
+		}
+	}
+
+	updated(changedProperties : PropertyValues)
+	{
+		super.updated(changedProperties);
+
+		// Re-set sorting / drag & drop
+		if(changedProperties.has("value"))
+		{
+			this.makeSortable();
 		}
 	}
 
@@ -211,6 +246,93 @@ export class Et2Email extends Et2InputWidget(LitElement)
 		document.removeEventListener('mousedown', this.handleLostFocus);
 	}
 
+	protected makeSortable()
+	{
+		// TODO
+	}
+
+	/**
+	 * Sets the current suggestion, which is the option the user is currently interacting with (e.g. via keyboard).
+	 * Only one option may be "current" at a time.
+	 */
+	private setCurrentOption(option : SlOption | null)
+	{
+		// Clear selection
+		this._suggestions.forEach(el =>
+		{
+			el.current = false;
+			el.tabIndex = -1;
+		});
+
+		// Select the target option
+		if(option)
+		{
+			this.currentOption = option;
+			option.current = true;
+			option.tabIndex = 0;
+			option.focus();
+		}
+	}
+
+	private setCurrentTag(tag : Et2EmailTag)
+	{
+		this._tags.forEach(t =>
+		{
+			t.tabIndex = -1;
+			if(t.current)
+			{
+				t.current = false;
+				t.requestUpdate();
+			}
+		});
+		this.currentTag = tag;
+		if(tag)
+		{
+			this.currentTag.tabIndex = 0;
+			this.currentTag.current = true;
+			this.currentTag.requestUpdate();
+			this.currentTag.focus();
+		}
+	}
+
+	/**
+	 * Create an entry that is not in the options and add it to the value
+	 *
+	 * @param {string} text Used as both value and label
+	 */
+	public addAddress(text : string) : boolean
+	{
+		if(!text || !this.validateAddress(text))
+		{
+			return false;
+		}
+		// Make sure not to double-add
+		if(!this.value.includes(text.replace(/'/g, "\\\'")))
+		{
+			this.value.push(text.trim());
+			this.requestUpdate('value');
+		}
+
+		this.dispatchEvent(new Event("change", {bubbles: true}));
+
+		return true;
+	}
+
+	/**
+	 * Check if a free entry value is acceptable.
+	 * We use validators directly using the proposed value
+	 *
+	 * @param text
+	 * @returns {boolean}
+	 */
+	public validateAddress(text) : boolean
+	{
+		let validators = [...this.validators, ...this.defaultValidators];
+		let result = validators.filter(v =>
+			v.execute(text, v.param, {node: this}),
+		);
+		return validators.length > 0 && result.length == 0 || validators.length == 0;
+	}
 
 	/** Sets focus on the control. */
 	focus(options? : FocusOptions)
@@ -286,7 +408,7 @@ export class Et2Email extends Et2InputWidget(LitElement)
 		return this._searchPromise.then(async() =>
 		{
 			this.searching = false;
-			if(!this.open)
+			if(!this.open && this.hasFocus)
 			{
 				this.show();
 			}
@@ -334,12 +456,11 @@ export class Et2Email extends Et2InputWidget(LitElement)
 	 */
 	protected processRemoteResults(entries)
 	{
-		if(!entries?.length)
-		{
-			return [];
-		}
-
 		this._selectOptions = entries;
+		this.updateComplete.then(() =>
+		{
+			this.currentOption = this._suggestions[0];
+		});
 
 		this.requestUpdate();
 
@@ -366,8 +487,7 @@ export class Et2Email extends Et2InputWidget(LitElement)
 		if(this.open && !this.disabled)
 		{
 			// Reset the current option
-			// TODO
-			//this.setCurrentOption(this._suggestions[0]);
+			this.setCurrentOption(this._suggestions[0]);
 
 			// Show
 			this.dispatchEvent(new CustomEvent('sl-show', {bubbles: true}));
@@ -385,8 +505,7 @@ export class Et2Email extends Et2InputWidget(LitElement)
 			// Make sure the current option is scrolled into view (required for Safari)
 			if(this.currentOption)
 			{
-				// TODO
-				//scrollIntoView(this.currentOption, this._listbox, 'vertical', 'auto');
+				this.currentOption.scrollIntoView();
 			}
 
 			this.dispatchEvent(new CustomEvent('sl-after-show', {bubbles: true}));
@@ -411,8 +530,7 @@ export class Et2Email extends Et2InputWidget(LitElement)
 		this.requestUpdate("hasFocus");
 
 		// Reset tags to not take focus
-		this._tags.forEach(t => t.tabIndex = -1);
-		this.currentTag = null;
+		this.setCurrentTag(null);
 
 		this._search.setSelectionRange(0, 0);
 	}
@@ -433,8 +551,10 @@ export class Et2Email extends Et2InputWidget(LitElement)
 		{
 			this.hide();
 			this._tags.forEach(t => t.tabIndex = 0);
-			this.currentTag = this._tags[this._tags.length - 1];
-			this.currentTag.focus();
+			if(this._tags.length > 0)
+			{
+				this.setCurrentTag(this._tags[this._tags.length - 1]);
+			}
 			event.stopPropagation();
 			return;
 		}
@@ -446,13 +566,34 @@ export class Et2Email extends Et2InputWidget(LitElement)
 			return;
 		}
 		// Up / Down navigates options
-		if(['ArrowDown', 'ArrowUp', 'Home', 'End'].includes(event.key))
+		if(['ArrowDown', 'ArrowUp'].includes(event.key) && this._suggestions.length)
 		{
-			// TODO - pass focus to list
-			this.show();
+			if(!this.open)
+			{
+				this.show();
+			}
+			event.stopPropagation();
+			this.setCurrentOption(this._suggestions[0]);
 			return;
 		}
 		// Tab or enter checks current value
+		else if(Et2Email.TAG_BREAK.indexOf(event.key) !== -1)
+		{
+			if(!this.validateAddress(this._search.value.trim()) && this.currentOption)
+			{
+				this._search.value = this.currentOption.value.replaceAll("___", " ");
+			}
+			if(this.addAddress(this._search.value.trim()))
+			{
+				this.open = false;
+				this._search.value = "";
+			}
+			if(event.key == "Tab")
+			{
+				this.blur();
+			}
+		}
+		// Start search immediately
 		else if(event.key == "Enter")
 		{
 			event.preventDefault();
@@ -461,7 +602,7 @@ export class Et2Email extends Et2InputWidget(LitElement)
 		}
 		else if(event.key == "Escape")
 		{
-			this.handleSearchAbort(event);
+			this._selectOptions = [];
 			this.hide();
 			return;
 		}
@@ -510,10 +651,7 @@ export class Et2Email extends Et2InputWidget(LitElement)
 			nextTagIndex = Math.max(0, nextTagIndex);
 			if(nextTagIndex < tagCount && this._tags[nextTagIndex])
 			{
-				this._tags.forEach(t => t.tabIndex = -1);
-				this.currentTag = this._tags[nextTagIndex];
-				this.currentTag.tabIndex = 0;
-				this.currentTag.focus();
+				this.setCurrentTag(this._tags[nextTagIndex]);
 			}
 			else
 			{
@@ -526,12 +664,109 @@ export class Et2Email extends Et2InputWidget(LitElement)
 		// Remove tag
 		if(event.target instanceof Et2EmailTag && ["Delete", "Backspace"].includes(event.key))
 		{
+			const tags = this._tags;
+			let index = tags.indexOf(event.target);
 			event.target.dispatchEvent(new CustomEvent('sl-remove', {bubbles: true}));
+			index += event.key == "Delete" ? 1 : -1;
+			if(index >= 0 && index < tags.length)
+			{
+				this.setCurrentTag(this._tags[index]);
+			}
+			else
+			{
+				this._search.focus();
+			}
 		}
 		// Edit tag
 		else if(event.target instanceof Et2EmailTag && ["Enter"].includes(event.key))
 		{
 			event.target.startEdit();
+		}
+	}
+
+	/**
+	 * Keyboard events from the suggestion list
+	 *
+	 * @param {KeyboardEvent} event
+	 */
+	handleSuggestionsKeyDown(event : KeyboardEvent)
+	{
+		// Select the option
+		const value = (<string>this.currentOption.value).replaceAll("___", " ");
+		if(this.currentOption && ["ArrowRight", " ", ...Et2Email.TAG_BREAK].includes(event.key) && this.addAddress(value))
+		{
+			event.preventDefault();
+			this._search.value = "";
+			this.open = false;
+			if(this._close_on_select)
+			{
+				this.blur();
+			}
+			else
+			{
+				this._search.focus();
+			}
+			event.stopPropagation();
+			return;
+		}
+		// Navigate options
+		if(["ArrowUp", "ArrowDown", "Home", "End"].includes(event.key))
+		{
+			event.stopPropagation()
+			const suggestions = this._suggestions;
+			const currentIndex = suggestions.indexOf(this.currentOption);
+			let newIndex = Math.max(0, currentIndex);
+
+			// Prevent scrolling
+			event.preventDefault();
+
+			if(event.key === "ArrowDown")
+			{
+				newIndex = currentIndex + 1;
+				if(newIndex > suggestions.length - 1)
+				{
+					newIndex = 0;
+				}
+			}
+			else if(event.key === "ArrowUp")
+			{
+				newIndex = currentIndex - 1;
+				if(newIndex < 0)
+				{
+					newIndex = suggestions.length - 1;
+				}
+			}
+			else if(event.key === "Home")
+			{
+				newIndex = 0;
+			}
+			else if(event.key === "End")
+			{
+				newIndex = suggestions.length - 1;
+			}
+
+			this.setCurrentOption(suggestions[newIndex]);
+		}
+	}
+
+	/**
+	 * Mouse up from the suggestion list
+	 * @param event
+	 */
+	handleSuggestionsMouseUp(event : MouseEvent)
+	{
+		const value = ((<SlOption>event.target).value).replaceAll("___", " ");
+		this.value.push(value);
+		this.open = false;
+		this._search.value = "";
+		this.requestUpdate("value");
+		if(this._close_on_select)
+		{
+			this.blur();
+		}
+		else
+		{
+			this._search.focus();
 		}
 	}
 
@@ -545,12 +780,16 @@ export class Et2Email extends Et2InputWidget(LitElement)
 			this.value[index] = event.target.value;
 			this.requestUpdate();
 		}
+		if(event.target.current)
+		{
+			this.setCurrentTag(event.target);
+			;
+		}
 	}
 
 	handleTagRemove(event : SlRemoveEvent, value : string)
 	{
 		// Find the tag value and remove it from current value
-		debugger;
 		const index = this.value.indexOf(value);
 		this.value.splice(index, 1);
 		this.requestUpdate("value");
@@ -585,6 +824,7 @@ export class Et2Email extends Et2InputWidget(LitElement)
                     ?readonly=${readonly}
                     ?editable=${isEditable}
                     @mousedown=${(e) => {this._cancelOpen = true;}}
+                    @dblclick=${(e) => {e.target.startEdit();}}
                     @change=${this.handleTagChange}
             >
             </et2-email-tag>`;
@@ -597,7 +837,8 @@ export class Et2Email extends Et2InputWidget(LitElement)
                    class="email__search"
                    exportparts="base:search__base"
                    autocomplete="off"
-                   placeholder="${this.hasFocus ? "" : this.placeholder}"
+                   placeholder="${this.hasFocus || this.value.length > 0 ? "" : this.placeholder}"
+                   tabindex="0"
                    @keydown=${this.handleSearchKeyDown}
                    @blur=${this.handleSearchBlur}
                    @focus=${this.handleSearchFocus}
@@ -633,7 +874,7 @@ export class Et2Email extends Et2InputWidget(LitElement)
                     .option=${option}
                     ?disabled=${option.disabled}
             >
-                <et2-lavatar slot="prefix" part="icon"
+                <et2-lavatar slot="prefix" part="icon" size="1.8em"
                              lname=${option.lname || nothing}
                              fname=${option.fname || nothing}
                              image=${option.icon || nothing}
@@ -699,7 +940,6 @@ export class Et2Email extends Et2InputWidget(LitElement)
                                 class="email__combobox"
                                 slot="anchor"
                                 @keydown=${this.handleComboboxKeyDown}
-                                @mousedown=${this.handleComboboxMouseDown}
                         >
                             <slot part="prefix" name="prefix" class="email__prefix"></slot>
                             ${this.tagsTemplate()}
@@ -714,7 +954,8 @@ export class Et2Email extends Et2InputWidget(LitElement)
                                 part="listbox"
                                 class="email__listbox"
                                 tabindex="-1"
-                                @mouseup=${this.handleOptionClick}
+                                @keydown=${this.handleSuggestionsKeyDown}
+                                @mouseup=${this.handleSuggestionsMouseUp}
                         >
                             ${this.suggestionsTemplate()}
                         </div>
