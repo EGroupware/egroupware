@@ -710,7 +710,7 @@ class mail_sieve
 					),
 					'addresses' => array_combine($vacRules['aliases'],$vacRules['aliases']),
 				);
-				if (in_array('VACATION-SECONDS', $icServer->getExtensions()))
+				if ($icServer->acc_imap_administration || in_array('VACATION-SECONDS', $icServer->getExtensions()))
 				{
 					$sel_options['days']['0'] = lang('Always respond / auto-responder');
 				}
