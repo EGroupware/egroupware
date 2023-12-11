@@ -11,6 +11,7 @@ import {SlTag} from "@shoelace-style/shoelace";
 import {css, html, TemplateResult} from "lit";
 import {classMap} from "lit/directives/class-map.js";
 import shoelace from "../../Styles/shoelace";
+import {state} from "lit/decorators/state.js";
 
 /**
  * Tag is usually used in a Select with multiple=true, but there's no reason it can't go anywhere
@@ -77,6 +78,8 @@ export class Et2Tag extends Et2Widget(SlTag)
 		}
 	}
 
+	@state() current = false; // the user has keyed into the tag (focused), but hasn't done anything yet (shows a highlight)
+
 	constructor(...args : [])
 	{
 		super(...args);
@@ -137,9 +140,9 @@ export class Et2Tag extends Et2Widget(SlTag)
                         'tag--editable': this.editable,
                         'tag--editing': this.isEditing,
                         // Types
-                        'tag--primary': this.variant === 'primary',
+                        'tag--primary': this.variant === 'primary' || this.current,
                         'tag--success': this.variant === 'success',
-                        'tag--neutral': this.variant === 'neutral',
+                        'tag--neutral': this.variant === 'neutral' && !this.current,
                         'tag--warning': this.variant === 'warning',
                         'tag--danger': this.variant === 'danger',
                         'tag--text': this.variant === 'text',

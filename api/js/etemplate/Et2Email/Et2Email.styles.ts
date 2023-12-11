@@ -1,6 +1,18 @@
 import {css} from 'lit';
 
 export default css`
+	:host([open]) {
+		/* Handles z-index issues with toolbar of html editor on the page*/
+		position: relative;
+		z-index: 2;
+	}
+
+	.form-control-input {
+		/* This allows the dropdown to show over other inputs */
+		position: relative;
+		z-index: 1;
+	}
+
 	.email .email__combobox {
 		flex: 1;
 		display: flex;
@@ -39,8 +51,13 @@ export default css`
 
 	/* Tags */
 
+	.email .email__combobox > div {
+		margin: auto 0px;
+	}
 	.email et2-email-tag {
 		--icon-width: 1.8em;
+
+		outline: none;
 	}
 
 	/* Search box */
@@ -78,7 +95,8 @@ export default css`
 		max-width: var(--auto-size-available-width);
 		max-height: var(--auto-size-available-height);
 
-		--icon-width: 1.8em;
+		/* This doesn't work for some reason, it's overwritten somewhere */
+		--size: 1.8em;
 	}
 
 	.email__listbox ::slotted(sl-divider) {
