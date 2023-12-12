@@ -49,12 +49,13 @@ export default css`
 		box-shadow: 0 0 0 var(--sl-focus-ring-width) var(--sl-input-focus-ring-color);
 	}
 
-	/* Tags */
-
-	.email .email__combobox > div {
-		margin: auto 0px;
+	.email .email__prefix {
+		order: 1;
 	}
+	/* Tags */
 	.email et2-email-tag {
+		order: 2;
+		margin: auto 0px;
 		--icon-width: 1.8em;
 
 		outline: none;
@@ -64,6 +65,7 @@ export default css`
 
 	.email__search {
 		flex: 1 1 auto;
+		order: 10;
 		min-width: 10em;
 		border: none;
 		outline: none;
@@ -74,6 +76,9 @@ export default css`
 		padding-inline: var(--sl-input-spacing-medium);
 	}
 
+	.email .email__suffix {
+		order: 20;
+	}
 	/* Listbox */
 
 	.email__listbox {

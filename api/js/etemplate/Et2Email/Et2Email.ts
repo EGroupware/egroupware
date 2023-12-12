@@ -11,6 +11,9 @@ import {html, LitElement, nothing, PropertyValues, TemplateResult} from "lit";
 import {property} from "lit/decorators/property.js";
 import {state} from "lit/decorators/state.js";
 import {classMap} from "lit/directives/class-map.js";
+import {keyed} from "lit/directives/keyed.js";
+import {live} from "lit/directives/live.js";
+import {map} from "lit/directives/map.js";
 import {repeat} from "lit/directives/repeat.js";
 import {HasSlotController} from "../Et2Widget/slot";
 import {SlOption, SlPopup, SlRemoveEvent} from "@shoelace-style/shoelace";
@@ -34,12 +37,12 @@ import Sortable from "sortablejs/modular/sortable.complete.esm.js";
  * @dependency et2-email-tag
  * @dependency et2-textbox
  *
- * @slot - The suggestion options. Must be `<sl-option>` elements. You can use `<sl-divider>` to group items visually.
  * @slot label - The input's label. Alternatively, you can use the `label` attribute.
  * @slot prefix - Used to prepend a presentational icon or similar element to the combobox.
+ * @slot suffix - Like prefix, but after
  * @slot help-text - Text that describes how to use the input. Alternatively, you can use the `help-text` attribute.
  *
- * @event sl-change - Emitted when the control's value changes.
+ * @event change - Emitted when the control's value changes.
  * @event sl-input - Emitted when the control receives input.
  * @event sl-focus - Emitted when the control gains focus.
  * @event sl-blur - Emitted when the control loses focus.
@@ -47,20 +50,18 @@ import Sortable from "sortablejs/modular/sortable.complete.esm.js";
  * @event sl-after-show - Emitted after the suggestion menu opens and all animations are complete.
  * @event sl-hide - Emitted when the suggestion menu closes.
  * @event sl-after-hide - Emitted after the suggestion menu closes and all animations are complete.
- * @event sl-invalid - Emitted when the form control has been checked for validity and its constraints aren't satisfied.
  *
  * @csspart form-control - The form control that wraps the label, input, and help text.
  * @csspart form-control-label - The label's wrapper.
  * @csspart form-control-input - The textbox's wrapper.
  * @csspart form-control-help-text - The help text's wrapper.
+ * @csspart combobox - The visible part of the control that is not the listbox - tags, input, prefix & suffix
  * @csspart prefix - The container that wraps the prefix slot.
- * @csspart listbox - The listbox container where options are slotted.
- * @csspart tags - The container that houses email tags
+ * @csspart suffix - The container that wraps the suffix slot.
+ * @csspart listbox - The listbox container where suggestions are slotted.
+ * @csspart input - The input element
+ * @csspart option - Each matching email address suggestion
  * @csspart tag - The individual tags that represent each email address.
- * @csspart tag__base - The tag's base part.
- * @csspart tag__content - The tag's content part.
- * @csspart tag__remove-button - The tag's remove button.
- * @csspart tag__remove-button__base - The tag's remove button base part.
  */
 export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinInterface
 {
@@ -76,7 +77,8 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 	}
 
 	/**
-	 * The current value of the component, an array of valid email addresses
+	 * The current value of the component, an array of valid email addresses.
+	 * If allowPlaceholder=true, placeholders are also allowed
 	 */
 	@property({
 		converter: {
@@ -108,7 +110,7 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 
 	/** Allow drag and drop tags between two or more Et2Email widgets */
 	@property({type: Boolean})
-	allowDragAndDrop? : boolean;
+	allowDragAndDrop? : boolean = true;
 
 	/** Allow placeholders like {{email}}, as well as real email-addresses */
 	@property({type: Boolean})
@@ -162,25 +164,34 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 	 * When user is typing, we wait this long for them to be finished before we start the search
 	 * @type {number}
 	 * @protected
+	 * @internal
 	 */
-	public static SEARCH_TIMEOUT = 500;
+	public static SEARCH_TIMEOUT : number = 500;
 
 	/**
 	 * Typing these characters will end the email address and start a new one
 	 * @type {string[]}
+	 *
+	 * @internal
 	 */
 	public static TAG_BREAK : string[] = ["Tab", "Enter", ","];
 
 	protected readonly hasSlotController = new HasSlotController(this, 'help-text', 'label');
 
-	/** User preference to immediately close the search results after selecting a match */
+	/** User preference to immediately close the search results after selecting a match
+	 * @internal
+	 */
 	protected _close_on_select = true;
 
 	protected _searchTimeout : number;
 	protected _searchPromise : Promise<SelectOption[]> = Promise.resolve([]);
 	protected _selectOptions : SelectOption[] = [];
 
+	// Drag / drop / sort
 	protected _sortable : Sortable;
+
+	// UID to force Lit to re-draw tags after sort
+	private _valueUID : string;
 
 	constructor(...args : any[])
 	{
@@ -194,12 +205,26 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 
 		this.handleOpenChange = this.handleOpenChange.bind(this);
 		this.handleLostFocus = this.handleLostFocus.bind(this);
+
+		this.handleSortEnd = this.handleSortEnd.bind(this);
 	}
 
 	connectedCallback()
 	{
 		super.connectedCallback();
 		this.open = false;
+		this._valueUID = this.egw().uid();
+		this.updateComplete.then(() => this.makeSortable());
+	}
+
+	disconnectedCallback()
+	{
+		super.disconnectedCallback();
+
+		if(this._sortable)
+		{
+			this._sortable.destroy();
+		}
 	}
 
 	willUpdate(changedProperties : PropertyValues)
@@ -248,7 +273,33 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 
 	protected makeSortable()
 	{
-		// TODO
+		if(this._sortable)
+		{
+			this._sortable.destroy();
+		}
+
+		if(!this.allowDragAndDrop)
+		{
+			this.classList.remove("et2-sortable-email");
+			return;
+		}
+		console.log(this, " is sortable");
+		this.classList.add("et2-sortable-email");
+		let pull : boolean | string = !this.disabled && !this.readonly;
+		if(this.readonly && !this.disabled)
+		{
+			pull = 'clone';
+		}
+
+		this._sortable = Sortable.create(this.shadowRoot.querySelector('.email__combobox'), {
+			draggable: "et2-email-tag",
+			group: {
+				name: "email",
+				pull: pull,
+				put: !(this.readonly || this.disabled)
+			},
+			onEnd: this.handleSortEnd
+		});
 	}
 
 	/**
@@ -296,7 +347,7 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 	}
 
 	/**
-	 * Create an entry that is not in the options and add it to the value
+	 * Create an entry that is not in the suggestions and add it to the value
 	 *
 	 * @param {string} text Used as both value and label
 	 */
@@ -391,10 +442,7 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 
 
 	/**
-	 * Start searching
-	 *
-	 * If we have local options, we'll search & display any matches.
-	 * If serverUrl is set, we'll ask the server for results as well.
+	 * Start searching for contacts matching what has been typed
 	 */
 	public async startSearch()
 	{
@@ -431,6 +479,7 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 	 * @param {object} options
 	 * @returns Promise<SelectOption[]>
 	 * @protected
+	 * @internal
 	 */
 	protected remoteSearch(search : string, options : object) : Promise<SelectOption[]>
 	{
@@ -453,6 +502,7 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 	 *
 	 * @param results
 	 * @protected
+	 * @internal
 	 */
 	protected processRemoteResults(entries)
 	{
@@ -467,6 +517,66 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 		return entries;
 	}
 
+	/**
+	 * The end of a sort, either internal or between widgets that deal with email
+	 *
+	 * @param event
+	 * @protected
+	 * @internal
+	 */
+	protected handleSortEnd(event)
+	{
+		if(this.disabled || this.readonly || !event.item?.value || !this.validateAddress(event.item.value) ||
+			// No real change
+			event.from === event.to && event.oldDraggableIndex == event.newDraggableIndex
+		)
+		{
+			return;
+		}
+		const tag = <Et2EmailTag>event.item;
+		const from = Sortable.utils.closest(event.from, "et2-email, .et2-sortable-email");
+		const to = Sortable.utils.closest(event.to, "et2-email, .et2-sortable-email");
+
+		if(from == this)
+		{
+			const index = this.value.indexOf(tag.value);
+
+			if(index > -1)
+			{
+				this.value.splice(index, 1);
+			}
+
+			// Reset focus
+			/*
+			if(typeof from.focus == "function")
+			{
+				this.updateComplete.then(() =>
+				{
+					from.focus();
+				});
+			}
+			 */
+			// Update key to force Lit to redraw tags
+			this._valueUID = this.egw()?.uid() ?? new Date().toISOString();
+		}
+		if(to === this)
+		{
+			let targetIndex = typeof event.newDraggableIndex == "number" ? event.newDraggableIndex : this.value.length;
+			this.value.splice(targetIndex, 0, tag.value);
+
+			// Update key to force Lit to redraw tags
+			this._valueUID = this.egw()?.uid() ?? new Date().toISOString();
+		}
+		else if(typeof to.handleSortEnd == "function")
+		{
+			to.handleSortEnd(event);
+		}
+		// Remove tag to avoid occasional duplication
+		tag.remove();
+
+		this.requestUpdate("value");
+	}
+
 
 	/**
 	 * Focus has gone somewhere else
@@ -474,6 +584,7 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 	 */
 	private handleLostFocus = (event : MouseEvent | KeyboardEvent) =>
 	{
+		console.log(this, "lost focus");
 		// Close when clicking outside of the component
 		const path = event.composedPath();
 		if(this && !path.includes(this))
@@ -797,14 +908,7 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 
 	tagsTemplate()
 	{
-		return this.value.map((value, index) =>
-		{
-			// Wrap so we can handle the remove
-			return html`
-                <div @sl-remove=${(e : SlRemoveEvent) => this.handleTagRemove(e, value)}>
-                    ${this.tagTemplate(value)}
-                </div>`;
-		});
+		return html`${keyed(this._valueUID, map(this.value, (value, index) => this.tagTemplate(value)))}`;
 	}
 
 	tagTemplate(value)
@@ -814,15 +918,17 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 
 		return html`
             <et2-email-tag
+                    part="tag"
                     class=${classMap({
                         "et2-select-draggable": !this.readonly && this.allowDragAndDrop,
                     })}
                     .fullEmail=${this.fullEmail}
                     .onlyEmail=${this.onlyEmail}
-                    .value=${value}
+                    .value=${live(value)}
                     ?removable=${!readonly}
                     ?readonly=${readonly}
                     ?editable=${isEditable}
+                    @sl-remove=${(e : SlRemoveEvent) => this.handleTagRemove(e, value)}
                     @mousedown=${(e) => {this._cancelOpen = true;}}
                     @dblclick=${(e) => {e.target.startEdit();}}
                     @change=${this.handleTagChange}
@@ -904,6 +1010,14 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
                         'form-control--has-help-text': hasHelpText
                     })}
                     @click=${this.handleLabelClick}
+                    @mousedown=${() =>
+                    {
+                        if(!this.hasFocus)
+                        {
+                            // Helps Sortable work every time
+                            this.focus();
+                        }
+                    }}
             >
                 <label
                         id="label"
