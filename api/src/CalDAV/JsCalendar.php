@@ -94,6 +94,7 @@ class JsCalendar extends JsBase
 	 * @param array $old=[] existing contact for patch
 	 * @param ?string $content_type=null application/json no strict parsing and automatic patch detection, if method not 'PATCH' or 'PUT'
 	 * @param string $method='PUT' 'PUT', 'POST' or 'PATCH'
+	 * @param ?int $calendar_owner owner of the collection
 	 * @return array
 	 */
 	public static function parseJsEvent(string $json, array $old=[], string $content_type=null, $method='PUT', int $calendar_owner=null)
@@ -160,7 +161,11 @@ class JsCalendar extends JsBase
 						break;
 
 					case 'alerts':
-						throw new \Exception('Creating or modifying alerts is NOT (yet) implemented!');
+					case 'useDefaultAlerts':
+						if (!isset($event['alarm']))
+						{
+							$event['alarm'] = self::parseAlerts($data, $strict, $calendar_owner);
+						}
 						break;
 
 					case 'recurrenceRules':
@@ -195,7 +200,7 @@ class JsCalendar extends JsBase
 		// if no participant given add current user as CHAIR to the event
 		if (empty($event['participants']))
 		{
-			$event['participants'][$GLOBALS['egw_info']['user']['account_id']] = 'ACHAIR';
+			$event['participants'][$calendar_owner ?? $GLOBALS['egw_info']['user']['account_id']] = 'ACHAIR';
 		}
 
 		return $event;
@@ -327,16 +332,10 @@ class JsCalendar extends JsBase
 		{
 			throw new \InvalidArgumentException("Invalid or missing start: ".json_encode($data['start']));
 		}
-		else
-		{
-			$parsed['start'] = new Api\DateTime($data['start'], !empty($data['timeZone']) ? new \DateTimeZone($data['timeZone']) : null);
-			$parsed['tzid'] = $data['timeZone'] ?? null;
-		}
-		if (empty($data['duration']) || !preg_match('/^(-)?P(\d+W)?(\d+D)?(T(\d+H)?(\d+M)?(\d+S)?)?$/', $data['duration'], $matches))
-		{
-			throw new \InvalidArgumentException("Invalid or missing duration: ".json_encode($data['duration']));
-		}
-		$duration = new \DateInterval($data['duration']);
+		$parsed['start'] = new Api\DateTime($data['start'], !empty($data['timeZone']) ? new \DateTimeZone($data['timeZone']) : null);
+		$parsed['tzid'] = $data['timeZone'] ?? null;
+
+		$duration = self::parseSignedDuration($data['duration'] ?? null);
 		$parsed['end'] = new Api\DateTime($parsed['start']);
 		$parsed['end']->add($duration);
 		if (($parsed['whole_day'] = !empty($data['showWithoutTime'])))
@@ -344,6 +343,31 @@ class JsCalendar extends JsBase
 			$parsed['end']->sub(\DateInterval::createFromDateString('1 sec'));
 		}
 		return $parsed;
+	}
+
+	/**
+	 * Parse a signed duration
+	 *
+	 * @param string $duration
+	 * @param bool $return_secs true: return seconds as integer, false/default: return \DateInterval
+	 * @return \DateInterval|int
+	 * @throws \Exception
+	 */
+	protected static function parseSignedDuration(string $duration, bool $return_secs=false)
+	{
+		if (empty($duration) || !preg_match('/^(-)?P(\d+W)?(\d+D)?(T(\d+H)?(\d+M)?(\d+S)?)?$/', $duration))
+		{
+			throw new \InvalidArgumentException("Invalid or missing duration: ".json_encode($duration));
+		}
+		$interval = new \DateInterval($duration);
+
+		if ($return_secs)
+		{
+			$reference = new \DateTimeImmutable('now');
+			$endtime = $reference->add($interval);
+			return $endtime->getTimestamp() - $reference->getTimestamp();
+		}
+		return $interval;
 	}
 
 	const TYPE_PARTICIPANT = 'Participant';
@@ -544,6 +568,23 @@ class JsCalendar extends JsBase
 		return $priority_egw2jscal[$priority];
 	}
 
+	/**
+	 * Parse priority
+	 *
+	 * @param int $priority
+	 * @return int
+	 */
+	protected static function parsePriority(int $priority)
+	{
+		static $priority_jscal2egw = [
+			9 => 1, 8 => 1, 7 => 1, // low
+			6 => 2, 5 => 2, 4 => 2, // normal
+			3 => 3, 2 => 3, 1 => 3, // high
+			0 => 0, // undefined
+		];
+		return $priority_jscal2egw[$priority] ?? throw new \InvalidArgumentException("Priority must be between 0 and 9");
+	}
+
 	const TYPE_RECURRENCE_RULE = 'RecurrenceRule';
 	const TYPE_NDAY = 'NDay';
 
@@ -656,6 +697,7 @@ class JsCalendar extends JsBase
 
 	const TYPE_ALERT = 'Alert';
 	const TYPE_OFFSET_TRIGGER = 'OffsetTrigger';
+	const TYPE_ABSOLUTE_TRIGGER = 'AbsoluteTrigger';
 
 	/**
 	 * Return alerts object
@@ -676,13 +718,83 @@ class JsCalendar extends JsBase
 				self::AT_TYPE => self::TYPE_ALERT,
 				'trigger' => [
 					self::AT_TYPE => self::TYPE_OFFSET_TRIGGER,
-					'offset' => $alarm['offset'],
+					'offset' => self::Duration(0, $alarm['offset'], false),
 				],
 				'acknowledged' => empty($alarm['attrs']['ACKNOWLEDGED']['value']) ? null :
 					self::UTCDateTime(new Api\DateTime($alarm['attrs']['ACKNOWLEDGED']['value'])),
 			]);
 		}
 		return $alerts;
+	}
+
+	/**
+	 * Parse alerts object / $data['alerts']
+	 *
+	 * @param array $data full JsCalendar object, not just alerts and useDefaultAlerts attribute
+	 * @param bool $strict true: require JsCalendar @type, false: relaxed parsing
+	 * @return array of alerts
+	 * @throws Api\Exception
+	 */
+	protected static function parseAlerts(array $data, bool $strict=false, int $calendar_owner=null)
+	{
+		$alarms = [];
+		if (!empty($data['useDefaultAlerts']))
+		{
+			$alarm_pref = !empty($data['showWithoutTime']) ? 'default-alarm-wholeday' : 'default-alarm';
+			$cal_prefs = $GLOBALS['egw_info']['user']['preferences']['calendar'];
+			// if default alarm set in prefs --> add it
+			// we assume here that user does NOT have a whole-day but no regular default-alarm, no whole-day!
+			if(isset($cal_prefs[$alarm_pref]) && (string)$cal_prefs[$alarm_pref] !== '')
+			{
+				$alarms[] = [
+					'default' => 1,
+					'offset'  => 60 * $cal_prefs[$alarm_pref],
+					'all'     => $cal_prefs['default-alarm-for'] === 'all',
+					'owner'   => $calendar_owner ?? $GLOBALS['egw_info']['user']['account_id'],
+				];
+			}
+		}
+		foreach($data['alerts'] ?? [] as $uid => $alert)
+		{
+			$alarm = [
+				'uid' => $uid,
+				'owner' => $calendar_owner ?? $GLOBALS['egw_info']['user']['account_id'],
+			];
+			if ($strict && ($alert[self::AT_TYPE] ?? null) !== self::TYPE_ALERT)
+			{
+				throw new \InvalidArgumentException("Missing @type: Alert");
+			}
+			if (empty($alert['trigger']) || $strict && empty($alert['trigger'][self::AT_TYPE]))
+			{
+				throw new \InvalidArgumentException("Missing or invalid Alert trigger without @type: ".json_encode($alert['trigger'] ?? null));
+			}
+			switch ($alert['trigger'][self::AT_TYPE] ?? ($strict || !isset($alert['trigger']['offset']) ? null : self::TYPE_OFFSET_TRIGGER))
+			{
+				case self::TYPE_OFFSET_TRIGGER:
+					$alarm['offset'] = self::parseSignedDuration($alert['trigger']['offset'] ?? null, true);
+					if (isset($alert['trigger']['relativeTo']) && $alert['trigger']['relativeTo'] === 'end')
+					{
+						$alarm['offset'] += self::parseSignedDuration($data['duration'], true);
+					}
+					break;
+
+				case self::TYPE_ABSOLUTE_TRIGGER:
+					if (!empty($alert['trigger']['when']))
+					{
+						$alarm['offset'] = (new Api\DateTime($alert['trigger']['when']))->getTimestamp() - self::parseStartDuration($data)['start']->getTimeStamp();
+						break;
+					}
+					// fall through
+				default:
+					throw new \InvalidArgumentException("Invalid Alert trigger: ".json_encode($alert['trigger'] ?? null));
+			}
+			if (isset($alert['acknowledged']))
+			{
+				$alarm['attrs'] = ['ACKNOWLEDGED' => ['value' => (new Api\DateTime($alert['acknowledged']))->getTimestamp()]];
+			}
+			$alarms[] = $alarm;
+		}
+		return $alarms;
 	}
 
 	/**
