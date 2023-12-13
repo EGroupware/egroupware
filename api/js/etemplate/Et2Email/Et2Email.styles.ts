@@ -18,6 +18,7 @@ export default css`
 		display: flex;
 		flex-direction: row;
 		flex-wrap: wrap;
+		align-items: center;
 		gap: 0.1rem 0.5rem;
 
 		background-color: var(--sl-input-background-color);
@@ -55,6 +56,7 @@ export default css`
 	/* Tags */
 	.email et2-email-tag {
 		order: 2;
+		flex-grow: 0;
 		margin: auto 0px;
 		--icon-width: 1.8em;
 
@@ -62,7 +64,6 @@ export default css`
 	}
 
 	/* Search box */
-
 	.email__search {
 		flex: 1 1 auto;
 		order: 10;
@@ -76,9 +77,13 @@ export default css`
 		padding-inline: var(--sl-input-spacing-medium);
 	}
 
+	.email .email__loading {
+		order: 19;
+	}
 	.email .email__suffix {
 		order: 20;
 	}
+
 	/* Listbox */
 
 	.email__listbox {
