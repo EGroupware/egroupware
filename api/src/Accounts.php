@@ -67,11 +67,11 @@ class Accounts
 	 * @var array
 	 */
 	static public $config_vars = array(
-		'account_repository', 'auth_type',	// auth_type if fallback if account_repository is not set
+		'account_repository', 'auth_type', 'auth_fallback',	// auth_type is fallback, if account_repository is not set
 		'install_id',	// instance-specific caching
-		'auto_create_expire', 'default_group_lid',	// auto-creation of accounts
-		'ldap_host','ldap_root_dn','ldap_root_pw','ldap_context','ldap_group_context','ldap_search_filter',	// ldap backend
-		'ads_domain', 'ads_host', 'ads_admin_user', 'ads_admin_passwd', 'ads_connection', 'ads_context',	// ads backend
+		'auto_create_acct', 'auto_create_expire', 'default_group_lid',	// auto-creation of accounts
+		'ldap_host','ldap_root_dn','ldap_root_pw','ldap_context','ldap_group_context','ldap_search_filter','ldap_group_filter',	// ldap backend
+		'ads_domain', 'ads_host', 'ads_admin_user', 'ads_admin_passwd', 'ads_connection', 'ads_context', 'ads_user_filter', 'ads_group_filter',	// ads backend
 	);
 
 	/**
