@@ -300,6 +300,7 @@ export class Et2SelectEmail extends Et2Select
 
 		return html`
             <et2-email-tag
+                    exportparts="image"
                     class=${classMap({
                         ...option.classList,
                         "et2-select-draggable": !this.readonly && this.allowFreeEntries && this.allowDragAndDrop,

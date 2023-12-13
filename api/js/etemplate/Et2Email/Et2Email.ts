@@ -932,6 +932,7 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 
 		return html`
             <et2-email-tag
+                    exportparts="image"
                     part="tag"
                     class=${classMap({
                         "et2-select-draggable": !this.readonly && this.allowDragAndDrop,
@@ -985,7 +986,7 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 		return html`
             <sl-option
                     part="option"
-                    exportparts="prefix:tag__prefix, suffix:tag__suffix"
+                    exportparts="prefix:tag__prefix, suffix:tag__suffix, image"
                     title="${!option.title || this.noLang ? option.title : this.egw().lang(option.title)}"
                     class=${classMap({
                         ...classes
@@ -994,7 +995,7 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
                     .option=${option}
                     ?disabled=${option.disabled}
             >
-                <et2-lavatar slot="prefix" part="icon" size="1.8em"
+                <et2-lavatar slot="prefix" exportparts="image" part="icon" size="1.8em"
                              lname=${option.lname || nothing}
                              fname=${option.fname || nothing}
                              image=${option.icon || nothing}
