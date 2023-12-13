@@ -29,6 +29,8 @@ export default css`
 		min-height: var(--sl-input-height-medium);
 		padding-block: 0;
 		padding-inline: var(--sl-input-spacing-medium);
+		padding-top: 0.1rem;
+		padding-bottom: 0.1rem;
 
 		transition: var(--sl-transition-fast) color, var(--sl-transition-fast) border, var(--sl-transition-fast) box-shadow,
 		var(--sl-transition-fast) background-color;
@@ -72,9 +74,13 @@ export default css`
 		outline: none;
 
 		font-size: var(--sl-input-font-size-medium);
-		min-height: var(--sl-input-height-medium);
 		padding-block: 0;
 		padding-inline: var(--sl-input-spacing-medium);
+	}
+
+	.form-control--medium .email__search {
+		/* Input same size as tags */
+		height: calc(var(--sl-input-height-medium) * 0.8);
 	}
 
 	.email .email__loading {
