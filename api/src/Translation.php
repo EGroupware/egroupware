@@ -1106,6 +1106,10 @@ class Translation
 	 */
 	static function get_message_id($translation,$app=null,$lang=null)
 	{
+		if (!isset(self::$db))
+		{
+			self::init();
+		}
 		$where = array('content '.self::$db->capabilities[Db::CAPABILITY_CASE_INSENSITIV_LIKE].' '.self::$db->quote($translation));
 		if ($app) $where['app_name'] = $app;
 		if ($lang) $where['lang'] = $lang;
