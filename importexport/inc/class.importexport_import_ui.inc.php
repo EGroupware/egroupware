@@ -150,8 +150,13 @@ use EGroupware\Api\Etemplate;
 						}
 						else
 						{
+							// Disable push so we don't overload or spend time notifying
+							EGroupware\Swoolepush\Hooks::pushDisabled(true);
+
 							importexport_helper_functions::$dry_run = false;
 							$count = $plugin->import($file, $definition_obj);
+
+							EGroupware\Swoolepush\Hooks::pushDisabled(false);
 							
 							// Close preview
 							EGroupware\Api\Json\Response::get()->call('app.importexport.closePreview');
