@@ -264,7 +264,7 @@ export class Et2EmailTag extends Et2Tag
 			const option = Et2EmailTag.email_cache[this.value];
 
 			button_or_avatar = html`
-                <et2-lavatar slot="prefix" part="icon" tabindex="-1"
+                <et2-lavatar slot="prefix" exportparts="image" part="icon" tabindex="-1"
                              @mousedown=${this.handleContactMouseDown}
                              .size=${style.getPropertyValue("--icon-width")}
                              lname=${option.lname || nothing}
