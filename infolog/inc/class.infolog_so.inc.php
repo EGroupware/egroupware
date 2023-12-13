@@ -688,8 +688,11 @@ class infolog_so
 		// update attendees/delegates
 		if (array_key_exists('info_responsible', $values) || array_key_exists('info_cc', $values))
 		{
-			$users = empty($values['info_responsible']) ? array() :
-				array_combine($values['info_responsible'], array_fill(0, count($values['info_responsible']), null));
+			if (!is_array($values['info_responsible']))
+			{
+				$values['info_responsible'] = empty($values['info_responsible']) ? [] : explode(',', $values['info_responsible']);
+			}
+			$users = array_combine($values['info_responsible'], array_fill(0, count($values['info_responsible']), null));
 
 			foreach(!empty($values['info_cc']) ? explode(',', $values['info_cc']) : array() as $email)
 			{
