@@ -1274,13 +1274,14 @@ export class et2_vfsSelect extends et2_inputWidget
 		});
 		document.body.appendChild(<HTMLElement><unknown>this.dialog);
 
-		this.dialog.addEventListener('open', function(e)
+		// Wait for dialog to finish loading
+		this.dialog.updateComplete.then(() =>
 		{
 			app.vfsSelectUI.et2 = self.dialog.template.widgetContainer;
 			app.vfsSelectUI.vfsSelectWidget = self;
 			app.vfsSelectUI.et2_ready(app.vfsSelectUI.et2, 'api.vfsSelectUI');
 			app.vfsSelectUI.et2.getInstanceManager().app_obj['vfsSelectUI'] = app.vfsSelectUI;
-		});
+		})
 		this.dialog.addEventListener("close", () =>
 		{
 			self.dialog = undefined;
