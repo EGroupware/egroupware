@@ -283,7 +283,6 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 			this.classList.remove("et2-sortable-email");
 			return;
 		}
-		console.log(this, " is sortable");
 		this.classList.add("et2-sortable-email");
 		let pull : boolean | string = !this.disabled && !this.readonly;
 		if(this.readonly && !this.disabled)
@@ -450,12 +449,14 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 		clearTimeout(this._searchTimeout);
 
 		this.searching = true;
+		this.requestUpdate("searching");
 
 		// Start the searches
 		this._searchPromise = this.remoteSearch(this._search.value, this.searchOptions);
 		return this._searchPromise.then(async() =>
 		{
 			this.searching = false;
+			this.requestUpdate("searching", true);
 			if(!this.open && this.hasFocus)
 			{
 				this.show();
@@ -584,7 +585,6 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 	 */
 	private handleLostFocus = (event : MouseEvent | KeyboardEvent) =>
 	{
-		console.log(this, "lost focus");
 		// Close when clicking outside of the component
 		const path = event.composedPath();
 		if(this && !path.includes(this))
@@ -690,6 +690,11 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 		// Tab or enter checks current value
 		else if(Et2Email.TAG_BREAK.indexOf(event.key) !== -1)
 		{
+			// Don't want the key to do its normal ting
+			event.stopPropagation();
+			event.preventDefault();
+
+			// Check for valid email or current selection
 			if(!this.validateAddress(this._search.value.trim()) && this.currentOption)
 			{
 				this._search.value = this.currentOption.value.replaceAll("___", " ");
@@ -1058,6 +1063,8 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
                             <slot part="prefix" name="prefix" class="email__prefix"></slot>
                             ${this.tagsTemplate()}
                             ${this.inputTemplate()}
+                            ${this.searching ? html`
+                                <sl-spinner class="email__loading"></sl-spinner>` : nothing}
                             <slot part="suffix" name="suffix" class="email__suffix"></slot>
                         </div>
                         <div
@@ -1071,7 +1078,7 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
                                 @keydown=${this.handleSuggestionsKeyDown}
                                 @mouseup=${this.handleSuggestionsMouseUp}
                         >
-                            ${this.suggestionsTemplate()}
+                            ${(this._selectOptions && this._selectOptions.length) ? this.suggestionsTemplate() : this.egw().lang("no matches found")}
                         </div>
                     </sl-popup>
                 </div>
