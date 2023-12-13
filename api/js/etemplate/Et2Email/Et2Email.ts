@@ -607,12 +607,6 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 			this._listbox.hidden = false;
 			this._popup.active = true;
 
-			// Select the appropriate option based on value after the listbox opens
-			requestAnimationFrame(() =>
-			{
-				this.setCurrentOption(this.currentOption);
-			});
-
 			// Make sure the current option is scrolled into view (required for Safari)
 			if(this.currentOption)
 			{
@@ -643,7 +637,7 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 		// Reset tags to not take focus
 		this.setCurrentTag(null);
 
-		this._search.setSelectionRange(0, 0);
+		this._search.setSelectionRange(this._search.value.length, this._search.value.length);
 	}
 
 	private handleSearchBlur()
@@ -690,10 +684,6 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 		// Tab or enter checks current value
 		else if(Et2Email.TAG_BREAK.indexOf(event.key) !== -1)
 		{
-			// Don't want the key to do its normal ting
-			event.stopPropagation();
-			event.preventDefault();
-
 			// Check for valid email or current selection
 			if(!this.validateAddress(this._search.value.trim()) && this.currentOption)
 			{
@@ -707,6 +697,13 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 			if(event.key == "Tab")
 			{
 				this.blur();
+				// Allow tab to change the focus
+			}
+			else
+			{
+				// Don't want the key to do its normal thing
+				event.stopPropagation();
+				event.preventDefault();
 			}
 		}
 		// Start search immediately
@@ -841,7 +838,7 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 				newIndex = currentIndex + 1;
 				if(newIndex > suggestions.length - 1)
 				{
-					newIndex = 0;
+					newIndex = suggestions.length - 1;
 				}
 			}
 			else if(event.key === "ArrowUp")
@@ -849,7 +846,8 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 				newIndex = currentIndex - 1;
 				if(newIndex < 0)
 				{
-					newIndex = suggestions.length - 1;
+					this.setCurrentOption(null);
+					this._search.focus();
 				}
 			}
 			else if(event.key === "Home")
