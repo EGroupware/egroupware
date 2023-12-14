@@ -808,18 +808,17 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 		const value = (<string>this.currentOption.value).replaceAll("___", " ");
 		if(this.currentOption && ["ArrowRight", " ", ...Et2Email.TAG_BREAK].includes(event.key) && this.addAddress(value))
 		{
-			event.preventDefault();
-			this._search.value = "";
-			this.open = false;
 			if(this._close_on_select)
 			{
-				this.blur();
+				this.open = false;
 			}
-			else
+			this._search.focus();
+			this._search.value = "";
+			if(event.key !== "Tab")
 			{
-				this._search.focus();
+				event.stopPropagation();
+				event.preventDefault();
 			}
-			event.stopPropagation();
 			return;
 		}
 		// Navigate options
@@ -861,6 +860,11 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 
 			this.setCurrentOption(suggestions[newIndex]);
 		}
+		else if(["Escape"])
+		{
+			this.open = false;
+			this._search.focus();
+		}
 	}
 
 	/**
@@ -870,24 +874,19 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 	handleSuggestionsMouseUp(event : MouseEvent)
 	{
 		const value = ((<SlOption>event.target).value).replaceAll("___", " ");
-		this.value.push(value);
-		this.open = false;
+		this.addAddress(value);
 		this._search.value = "";
+		this._search.focus();
 		this.requestUpdate("value");
 		if(this._close_on_select)
 		{
-			this.blur();
-		}
-		else
-		{
-			this._search.focus();
+			this.open = false;
 		}
 	}
 
 	handleTagChange(event)
 	{
 		// Need to update our value, or it will just redo the tag with the old value
-		debugger;
 		if(event.originalValue && this.value.indexOf(event.originalValue))
 		{
 			let index = this.value.indexOf(event.originalValue);
@@ -897,7 +896,6 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 		if(event.target.current)
 		{
 			this.setCurrentTag(event.target);
-			;
 		}
 	}
 
