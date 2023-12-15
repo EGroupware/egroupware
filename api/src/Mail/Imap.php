@@ -67,7 +67,7 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\PushIface
 	 * @var array
 	 */
 	static public $default_params = array(
-		'debug' => '/var/lib/egroupware/imap.log', // uncomment to log communication with IMAP server
+		//'debug' => '/var/lib/egroupware/imap.log', // uncomment to log communication with IMAP server
 		//'debug_literal' => true,    // uncomment to log mail contents returned by IMAP server
 		'cache' => true,              // default caching via Cache / Api\Cache
 	);
