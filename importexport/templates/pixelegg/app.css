@@ -11,7 +11,8 @@
  * @package projectmanager
  * @version $Id$
  */
-.preview {
+.preview,
+.import_progress {
   position: absolute;
   top: 0px;
   left: 0px;
@@ -24,10 +25,22 @@
   border: 1px solid black;
   margin: 1.5%;
 }
-.preview .content {
+.import_progress {
+  display: initial;
+}
+/* Not sure why these are missing */
+.import_progress sl-progress-bar {
+  --track-color: hsl(240, 5.9%, 90%);
+  --indicator-color: hsl(200.4, 98%, 39.4%);
+  --label-color: var(--label-color);
+  --sl-border-radius-pill: 9999px;
+}
+.preview .content,
+.import_progress .log {
   overflow: auto;
   max-height: 99%;
   display: block;
+  flex: 1 1 auto;
 }
 .preview_box .header,
 .preview .header {
@@ -38,9 +51,6 @@
 }
 .preview tr {
   vertical-align: top;
-}
-.preview [id$='buttons'] {
-  margin-left: 50%;
 }
 .wizard_content > div > table {
   width: 100%;

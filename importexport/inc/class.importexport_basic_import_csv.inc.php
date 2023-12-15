@@ -148,6 +148,12 @@ abstract class importexport_basic_import_csv implements importexport_iface_impor
 		// set FieldConversion
 		$import_csv->conversion = $_definition->plugin_options['field_conversion'];
 
+		if(!$this->dry_run)
+		{
+			// This needs to scan the whole file, so it can take a while
+			$record_count = $import_csv->get_num_of_records();
+		}
+
 		//check if file has a header lines
 		if ( isset( $_definition->plugin_options['num_header_lines'] ) && $_definition->plugin_options['num_header_lines'] > 0) {
 			$import_csv->skip_records($_definition->plugin_options['num_header_lines']);
@@ -190,7 +196,19 @@ abstract class importexport_basic_import_csv implements importexport_iface_impor
 			{
 				$this->set_overrides($_definition, $egw_record);
 			}
-			$success = $this->import_record($egw_record, $import_csv);
+			try
+			{
+				$success = $this->import_record($egw_record, $import_csv);
+			}
+			catch (Exception $e)
+			{
+				$this->errors[] = $e->getMessage();
+				$success = false;
+				if(!$this->dry_run)
+				{
+					importexport_import_ui::sendUpdate("", get_class($e), $e->getMessage());
+				}
+			}
 
 			if($success)
 			{
@@ -202,6 +220,13 @@ abstract class importexport_basic_import_csv implements importexport_iface_impor
 			if($success && $import_csv->get_current_position() > 0 && $import_csv->get_current_position() % 100 == 0)
 			{
 				set_time_limit(10);
+			}
+
+			// Send an update to client
+			if(!$this->dry_run)
+			{
+				$complete = $record_count ? (int)(100 * ($import_csv->get_current_position() / $record_count)) : false;
+				$this->sendUpdate($complete, $egw_record);
 			}
 
 			// Keep a few records for preview, but process the whole file
@@ -733,6 +758,27 @@ error_log("Searching for $custom_field = $value");
 	*/
 	public function get_results() {
 			return $this->results;
+	}
+
+	/**
+	 * Send some progress so the UI doesn't look frozen
+	 *
+	 * @param integer $complete 0-100 or false for indeterminate
+	 * @param importexport_iface_egw_record $record
+	 * @return void
+	 * @throws Api\Json\Exception
+	 */
+	protected function sendUpdate($complete, $record)
+	{
+		$label = "";
+		try
+		{
+			$label = $record->get_title() ?: "";
+		}
+		catch (Exception $e)
+		{
+		}
+		importexport_import_ui::sendUpdate($complete, $label, substr(array2string($record->get_record_array()), 0, 120) . '...');
 	}
 } // end of iface_export_plugin
 ?>

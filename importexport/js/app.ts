@@ -74,6 +74,13 @@ class ImportExportApp extends EgwApp
 				jQuery('div.filters').hide();
 			}
 		}
+		else if(_name == "importexport.import_dialog")
+		{
+			// Store popup so we can find it from parent
+			// Using _name only allows one import (at a time) to be updated
+			this.egw.window.name = _name;
+			this.egw.window.opener.egw.storeWindow(this.appname, this.egw.window);
+		}
 	}
 
 	/**
@@ -147,6 +154,70 @@ class ImportExportApp extends EgwApp
 
 		// TD gets the class too
 		preview.parent().hide();
+	}
+
+	progressUpdate(progress : ProgressUpdate)
+	{
+		const dialog = window.open('', "importexport.import_dialog");
+
+		if(!dialog || !dialog.app?.importexport?.et2)
+		{
+			this.egw.message(this.egw.lang("Lost the dialog, no progress updates"), "warning");
+			if(dialog)
+			{
+				dialog.close();
+			}
+			return;
+		}
+		// Find the template in the dialog and do the update there
+		const et2 = dialog.app.importexport.et2;
+		if(progress !== null)
+		{
+			dialog.app.importexport._doProgressUpdate(progress);
+		}
+		else
+		{
+			dialog.app.importexport._closeProgress();
+		}
+	}
+
+	_doProgressUpdate(progress : ProgressUpdate)
+	{
+		const progress_box = this.et2.getDOMWidgetById("progress_box")
+		progress_box.classList.remove("hideme");
+		// Get the td too
+		progress_box.parentNode.classList.remove("hideme");
+		const preview_box = this.et2.getDOMWidgetById("preview_box").parentNode
+		preview_box.classList.add("hideme");
+
+		const record = progress_box.getWidgetById("progress_record");
+		record.value = progress.label || "";
+
+		// sl-progress-bar is not an etemplate widget and chokes the server processing if we put it in the xet
+		let bar = progress_box.querySelector("sl-progress-bar");
+		if(!bar)
+		{
+			bar = document.createElement("sl-progress-bar");
+			progress_box.insertBefore(bar, record.nextSibling);
+		}
+
+		bar.indeterminate = !Number.isInteger(progress.progress);
+		bar.value = progress.progress || 0;
+
+		if(progress.log)
+		{
+			const log = this.et2.getDOMWidgetById("import_log")
+			log.value = log.value + "\n" + progress.log;
+			// Try to scroll to bottom
+			const text = log.shadowRoot.querySelector("textarea");
+			text.scrollTop = text.scrollHeight + 200;
+		}
+	}
+
+	_closeProgress()
+	{
+		const progress_box = this.et2.getDOMWidgetById("progress_box")
+		progress_box.parentNode.classList.add("hideme");
 	}
 
 	/**
@@ -242,3 +313,13 @@ class ImportExportApp extends EgwApp
 }
 
 app.classes.importexport = ImportExportApp;
+
+interface ProgressUpdate
+{
+	// Update the progress bar
+	progress : number | false;
+	// Set label in progress bar
+	label? : string;
+	// Add something to the log
+	log? : string;
+}
