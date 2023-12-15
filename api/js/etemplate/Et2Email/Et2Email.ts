@@ -141,7 +141,7 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 	 */
 	@property({type: Boolean, reflect: true}) open = false;
 
-	@property({type: Object}) searchOptions = {};
+	@property({type: Object}) searchOptions = {includeLists: true};
 	@property({type: String}) searchUrl = "EGroupware\\Api\\Etemplate\\Widget\\Taglist::ajax_email";
 
 	@state() searching = false;
