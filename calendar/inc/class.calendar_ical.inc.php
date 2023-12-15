@@ -2529,7 +2529,12 @@ class calendar_ical extends calendar_boupdate
 		// Remove videoconference link appended to description in calendar_groupdav->iCal()
 		if (!empty($event['description']) && class_exists('EGroupware\Status\Videoconference\Call'))
 		{
-			$regex = "/^(\r?\n)?(Videoconference|" . lang('Videoconference') . "):\r?\n" . str_replace('/','\/',EGroupware\Status\Videoconference\Call::getMeetingRegex()) ."(\r?\n)*/im";
+			static $regex = "";
+			if(!$regex)
+			{
+				$regex = "/^(\r?\n)?(Videoconference|" . lang('Videoconference') . "):\r?\n" . str_replace('/', '\/', EGroupware\Status\Videoconference\Call::getMeetingRegex()) . "(\r?\n)*/im";
+			}
+
 			$event['description'] = preg_replace($regex, '', $event['description']);
 		}
 
