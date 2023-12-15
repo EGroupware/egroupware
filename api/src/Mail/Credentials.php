@@ -336,6 +336,10 @@ class Credentials
 				$username = 'u'.$GLOBALS['egw_info']['user']['account_id'].'@'.$data['acc_domain'];
 				break;
 
+			case 'domain/username':
+				$username = $data['acc_domain'].'/'.$GLOBALS['egw_info']['user']['account_lid'];
+				break;
+
 			case 'admin':
 				// data should have been stored in credentials table
 				throw new Api\Exception\AssertionFailed('data[acc_imap_logintype]=admin and no stored username/password for data[acc_id]='.$data['acc_id'].'!');

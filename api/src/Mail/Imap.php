@@ -47,7 +47,7 @@ use Horde_Imap_Client_Mailbox_List;
  * @property-read string $acc_folder_template template folder
  * @property-read string $acc_folder_junk junk/spam folder
  * @property-read string $acc_imap_type imap class to use, default Imap
- * @property-read string $acc_imap_logintype how to construct login-name standard, vmailmgr, admin, uidNumber
+ * @property-read string $acc_imap_logintype how to construct login-name standard, vmailmgr, admin, uidNumber, domain/username
  * @property-read string $acc_domain domain name
  * @property-read boolean $acc_imap_administration enable administration
  * @property-read string $acc_imap_admin_username
@@ -67,7 +67,7 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\PushIface
 	 * @var array
 	 */
 	static public $default_params = array(
-		//'debug' => '/tmp/imap.log', // uncomment to log communication with IMAP server
+		'debug' => '/var/lib/egroupware/imap.log', // uncomment to log communication with IMAP server
 		//'debug_literal' => true,    // uncomment to log mail contents returned by IMAP server
 		'cache' => true,              // default caching via Cache / Api\Cache
 	);
@@ -100,7 +100,7 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\PushIface
 	protected $mbAvailable;
 
 	/**
-	 * Login type: 'uid', 'vmailmgr', 'uidNumber', 'email'
+	 * Login type: 'uid', 'vmailmgr', 'uidNumber', 'email', 'domain/username'
 	 *
 	 * @var string
 	 */
@@ -1162,6 +1162,10 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\PushIface
 
 			case 'uidNumber':
 				$_username = 'u'.$accountID;
+				break;
+
+			case 'domain/username':
+				$_username = $this->acc_domain.'/'.$_username;
 				break;
 
 			default:

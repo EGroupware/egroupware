@@ -129,6 +129,7 @@ class admin_mail
 		//'admin'		=> 'Username/Password defined by admin',
 		'uidNumber' => 'UserId@domain eg. u1234@domain',
 		'email'	    => 'EMail-address from account',
+		'domain/username' => 'Exchange: domain/username',
 	);
 
 	/**
