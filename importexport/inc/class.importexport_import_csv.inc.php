@@ -175,7 +175,9 @@ class importexport_import_csv implements importexport_iface_import_record { //, 
 				break;
 				
 			case 'last' :
-				while ($this->get_raw_record()) {}
+				while($this->get_raw_record() !== false)
+				{
+				}
 				break;
 				
 			default: //somenumber
@@ -207,7 +209,7 @@ class importexport_import_csv implements importexport_iface_import_record { //, 
 			return $this->num_of_records;
 		}
 		$current_position = $this->current_position;
-		while ($this->get_raw_record()) {}
+		$this->get_raw_record('last');
 		$this->num_of_records = $this->current_position;
 		$this->get_record($current_position);
 		return $this->num_of_records;

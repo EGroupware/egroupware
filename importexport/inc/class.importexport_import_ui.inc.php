@@ -137,19 +137,21 @@ use EGroupware\Api\Etemplate;
 						{
 							$this->message .= implode("<br />\n", $check_message) . "<br />\n";
 						}
+						// Clear first, to prevent request from being collected if the result is the same
+						$template->setElementAttribute('preview', 'value', '');
 						if($content['dry-run'])
 						{
 							$preview = $this->preview($plugin, $file, $definition_obj);
 
 							$template->setElementAttribute('message', 'value', $this->message);
-							
-							// Clear first, to prevent request from being collected if the result is the same
-							$template->setElementAttribute('preview', 'value', '');
 							$template->setElementAttribute('preview', 'value', $preview);
 							return;
 						}
 						else
 						{
+							// Set up feedback area
+							$this->feedback($template, $content['definition'] . ': ' . $content['file']['name']);
+
 							// Disable push so we don't overload or spend time notifying
 							EGroupware\Swoolepush\Hooks::pushDisabled(true);
 
@@ -157,9 +159,9 @@ use EGroupware\Api\Etemplate;
 							$count = $plugin->import($file, $definition_obj);
 
 							EGroupware\Swoolepush\Hooks::pushDisabled(false);
-							
-							// Close preview
-							EGroupware\Api\Json\Response::get()->call('app.importexport.closePreview');
+
+							// Don't close progress, leave it open so they can see
+							//static::sendUpdate(null);
 						}
 					}
 					else
@@ -180,21 +182,24 @@ use EGroupware\Api\Etemplate;
 					}
 					$total_processed = 0;
 					foreach($plugin->get_results() as $action => $a_count) {
-						$this->message .= "<br />\n" . lang($action) . ": $a_count";
+						$this->message .= "\n" . lang($action) . ": $a_count";
 						$total_processed += $a_count;
 					}
 					if(count($plugin->get_warnings())) {
-						$this->message .= "<br />\n".lang('Warnings').':';
+						$this->message .= "\n" . lang('Warnings') . ':';
 						foreach($plugin->get_warnings() as $record => $message) {
-							$this->message .= "<br />\n$record: $message";
+							$this->message .= "\n$record: $message";
 						}
 					}
 					if(count($plugin->get_errors())) {
-						$this->message .= "<br />\n".lang('Problems during import:');
+						$this->message .= "\n" . lang('Problems during import:');
 						foreach($plugin->get_errors() as $record => $message) {
-							$this->message .= "<br />\n$record: $message";
+							$this->message .= "\n$record: $message";
 						}
-						if($count != $total_processed) $this->message .= "<br />\n".lang('Some records may not have been imported');
+						if($count != $total_processed)
+						{
+							$this->message .= "\n" . lang('Some records may not have been imported');
+						}
 					}
 					if ($dst_file && $content['file']['tmp_name'] == $dst_file) {
 						// Remove file
@@ -207,6 +212,11 @@ use EGroupware\Api\Etemplate;
 					$this->message .= lang('Database error');
 				} catch (Exception $e) {
 					$this->message .= $e->getMessage();
+					$this->sendUpdate(false, get_class($e), $e->getMessage());
+				}
+				if($file && !$content['dry-run'] && $count)
+				{
+					static::sendUpdate(100, lang('%1 records processed', $count), $this->message);
 				}
 			}
 			elseif($content['cancel'])
@@ -377,6 +387,52 @@ use EGroupware\Api\Etemplate;
 				$this->message .= "<br />\n";
 			}
 			return '<div class="header">' . lang('Preview') . ' - ' . $plugin->get_name() . '</div>' . $preview;
+		}
+
+		/**
+		 * Setup progress feedback area
+		 * This includes sending the response, but not returning.  Progress is sent via Push.
+		 */
+		protected function feedback($template, $title)
+		{
+			$template->setElementAttribute('progress_title', 'value', $title);
+			EGroupware\Api\Json\Response::get()->call('app.importexport.progressUpdate', false);
+			// Send response
+			EGroupware\Api\Json\Response::sendResult();
+			@ob_flush();
+			flush();
+			fastcgi_finish_request();
+		}
+
+		/**
+		 * Send some feedback to the client about how the import is going
+		 *
+		 * @param $complete numeric | null Send null to close the progress
+		 * @param $label
+		 * @param $log
+		 * @return void
+		 * @throws Api\Json\Exception
+		 */
+		public static function sendUpdate($complete, $label = '', $log = '')
+		{        // No real push, no updates
+			if(EGroupware\Api\Json\Push::onlyFallback())
+			{
+				error_log($complete . "% $label\t" . $log);
+				return;
+			}
+			$update = [
+				'progress' => $complete,
+				'label'    => $label,
+				'log'      => $log
+			];
+			// Close the progress
+			if($complete === null)
+			{
+				$update = null;
+			}
+
+			$p = new Api\Json\Push();
+			$p->call('app.importexport.progressUpdate', $update);
 		}
 
 		/**

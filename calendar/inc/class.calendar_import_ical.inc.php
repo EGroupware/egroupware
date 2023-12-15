@@ -99,6 +99,8 @@ class calendar_import_ical implements importexport_iface_import_plugin  {
 	*/
 	protected $results = array();
 
+	protected $record_count = 0;
+
 	/**
 	 * imports entries according to given definition object.
 	 * @param resource $_stream
@@ -131,6 +133,15 @@ class calendar_import_ical implements importexport_iface_import_plugin  {
 			// No real dry run for iCal
 			echo lang("No preview for iCal");
 			return;
+		}
+		else
+		{
+			// Estimate event count
+			while(($line = fgets($_stream)) !== false)
+			{
+				$this->record_count += preg_match_all("/^BEGIN:VEVENT/i", $line, $matches);
+			}
+			rewind($_stream);
 		}
 		// switch off notifications by default
 		$plugin_options = $_definition->plugin_options;
@@ -180,6 +191,8 @@ class calendar_import_ical implements importexport_iface_import_plugin  {
 			$this->results['imported'] += $calendar_ical->events_imported;
 		}
 
+		importexport_import_ui::sendUpdate(100, $this->results['imported'], print_r($this->results, true));
+
 		return $calendar_ical->events_imported;
 	}
 
@@ -188,11 +201,16 @@ class calendar_import_ical implements importexport_iface_import_plugin  {
 	 */
 	public function event_callback(&$event)
 	{
+		static $event_count = 0;
+
 		// Check & apply value overrides
 		foreach((array)$this->definition->plugin_options['override_values'] as $field => $settings)
 		{
 			$event[$field] = $settings['value'];
 		}
+		// Update UI with progress
+		$progress = $this->record_count ? (int)(100 * (++$event_count / $this->record_count)) : false;
+		importexport_import_ui::sendUpdate($progress, $this->bo->link_title($event), $this->bo->link_title($event));
 		return true;
 	}
 

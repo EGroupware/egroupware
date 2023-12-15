@@ -52,7 +52,17 @@
                             <et2-button  align="center" label="OK" onclick="jQuery(this).parents('.preview').css('display','none'); return false;" noSubmit="true"></et2-button>
                         </et2-box>
                     </et2-vbox>
-					<et2-description></et2-description>
+                </row>
+                <row>
+                    <et2-vbox id="progress_box" span="all" class="import_progress hideme">
+                        <et2-description id="progress_title"></et2-description>
+                        <et2-description id="progress_record"></et2-description>
+                        <!--<sl-progress-bar id="progress" indeterminate="true"></sl-progress-bar>-->
+                        <et2-box class="log">
+                            <et2-textarea id="import_log"></et2-textarea>
+                        </et2-box>
+                        <et2-button label="OK" onclick="app.importexport._closeProgress"></et2-button>
+                    </et2-vbox>
 				</row>
 				<row>
 					<et2-hbox  span="all">
