@@ -589,6 +589,11 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 		const path = event.composedPath();
 		if(this && !path.includes(this))
 		{
+			// If they had something OK typed, use it
+			if(this.addAddress(this._search.value.trim()))
+			{
+				this._search.value = "";
+			}
 			this.hide();
 		}
 	};
