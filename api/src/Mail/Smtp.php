@@ -229,7 +229,7 @@ class Smtp
 	 *
 	 * @param int|array $account account_id or whole account array with values for keys
 	 * @param string $domain=null domain, default use $this->defaultDomain
-	 * @param string $mail_login_type=null standard(uid), vmailmgr(uid@domain), email or uidNumber,
+	 * @param string $mail_login_type=null standard(uid), vmailmgr(uid@domain), email, uidNumber or domain/username,
 	 * 	default use $this->loginType
 	 * @return string
 	 */
@@ -245,7 +245,7 @@ class Smtp
 	 *
 	 * @param int|array $account account_id or whole account array with values for keys
 	 * @param string $domain|null domain
-	 * @param string $mail_login_type=null standard(uid), vmailmgr(uid@domain), email or uidNumber
+	 * @param string $mail_login_type=null standard(uid), vmailmgr(uid@domain), email, uidNumber or domain/username
 	 * @return string|null null if no domain given but required by $mail_login_type
 	 */
 	static public function mailbox_address($account, string $domain=null, string $mail_login_type=null)
@@ -264,6 +264,10 @@ class Smtp
 
 			case 'standard':
 				$mbox = is_array($account) ? $account['account_lid'] : $GLOBALS['egw']->accounts->id2name($account);
+				break;
+
+			case 'domain/username':
+				$mbox = $domain.'/'.(is_array($account) ? $account['account_lid'] : $GLOBALS['egw']->accounts->id2name($account));
 				break;
 
 			case 'vmailmgr':

@@ -60,7 +60,7 @@ use Horde_Mail_Transport_Smtphorde;
  * @property-read string $acc_smtp_pw_enc Credentials::(CLEARTEXT|USER|SYSTEM)
  * @property-read string $acc_smtp_type smtp class to use, default Smtp
  * @property-read string $acc_imap_type imap class to use, default Imap
- * @property-read string $acc_imap_logintype how to construct login-name standard, vmailmgr, admin, uidNumber
+ * @property-read string $acc_imap_logintype how to construct login-name standard, vmailmgr, admin, uidNumber, domain/username
  * @property-read string $acc_domain domain name
  * @property-read boolean $acc_imap_administration enable administration
  * @property-read string $acc_imap_admin_username
