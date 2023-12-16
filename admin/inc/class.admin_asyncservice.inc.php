@@ -29,6 +29,7 @@ class admin_asyncservice
 		}
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('Admin').' - '.lang('Asynchronous timed services');
 
+		Api\Framework::bodyClass('scrollVertical');
 		echo $GLOBALS['egw']->framework->header();
 
 		$async = new Api\Asyncservice();	// use an own instance, as we might set debug=True
