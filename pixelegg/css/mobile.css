@@ -4225,6 +4225,12 @@ span.overlayContainer img.overlay {
   overflow-x: hidden;
 }
 /**
+ * allow to use Api\Framework::bodyClass('scrollVertical'); to enable scrolling of body
+ */
+body.scrollVertical {
+  overflow-y: auto;
+}
+/**
  * EGroupware: Stylite Pixelegg template
  *
  * Definitions for layout and raster
