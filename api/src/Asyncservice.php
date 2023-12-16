@@ -422,7 +422,7 @@ class Asyncservice
 		{
 			return False;	// cant obtain semaphore
 		}
-		// mark enviroment as async-service, check with isset()!
+		// mark environment as async-service, check with isset()!
 		$GLOBALS['egw_info']['flags']['async-service'] = $run_by;
 
 		if (($jobs = $this->read()))
@@ -527,17 +527,18 @@ class Asyncservice
 	}
 
 	/**
-	 * reads all matching db-rows / jobs
+	 * Reads all matching db-rows / jobs
 	 *
-	 * @param string $id =0 reads all expired rows / jobs ready to run\
-	 * 	!= 0 reads all rows/jobs matching $id (sql-wildcards '%' and '_' can be used)
-	 * @param array|string $cols ='*' string or array of column-names / select-expressions
+	 * @param string|string[] $id =null !$id reads all expired rows / jobs ready to run,
+	 * 	$id reads all rows/jobs matching $id (sql-wildcards '%' and '_' can be used)
+	 * @param string|string[] $cols ='*' string or array of column-names / select-expressions
 	 * @param int|bool $offset =False offset for a limited query or False (default)
-	 * @param string $append ='ORDER BY async_next' string to append to the end of the query
+	 * @param string $append =null string to append to the end of the query,
+	 *  ORDER BY job-priority: highest calendar alarms, lowest db_backup and S3-sync, rest medium
 	 * @param int $num_rows =0 number of rows to return if offset set, default 0 = use default in user prefs
 	 * @return array/boolean db-rows / jobs as array or False if no matches
 	 */
-	function read($id=0,$cols='*',$offset=False,$append='ORDER BY async_next',$num_rows=0)
+	function read($id=null, $cols='*', $offset=False, $append=null, $num_rows=0)
 	{
 		if (!is_a($this->db, 'EGroupware\\Api\\Db')) return false;
 
@@ -545,7 +546,7 @@ class Asyncservice
 		{
 			$where = "async_id != '##last-check-run##'";
 		}
-		elseif (!is_array($id) && (strpos($id,'%') !== False || strpos($id,'_') !== False))
+		elseif (is_string($id) && (strpos($id,'%') !== False || strpos($id,'_') !== False))
 		{
 			$id = $this->db->quote($id);
 			$where = "async_id LIKE $id AND async_id != '##last-check-run##'";
@@ -557,6 +558,15 @@ class Asyncservice
 		else
 		{
 			$where = array('async_id' => $id);
+		}
+		if (empty($append))
+		{
+			$append = 'ORDER BY async_next';
+			// prioritize async jobs: highest: calendar alarms, lowest: db_backup or S3-sync, rest medium
+			$append .= ", CASE WHEN async_id LIKE 'cal:%' THEN 1".
+				// we need 8=2^3 backslashes: 1. PHP string, 2. LIKE expression and 3. SQL string literal
+				" WHEN async_id LIKE 'db_backup-%' OR async_id LIKE 'EGroupware\\\\\\\\Stylite\\\\\\\\Vfs\\\\\\\\S3%' THEN 3".
+				" ELSE 2 END";
 		}
 		$jobs = array();
 		foreach($this->db->select($this->db_table,$cols,$where,__LINE__,__FILE__,$offset,$append,False,$num_rows) as $row)
