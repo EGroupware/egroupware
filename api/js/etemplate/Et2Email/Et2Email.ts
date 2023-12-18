@@ -215,6 +215,7 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 		this.open = false;
 		this._valueUID = this.egw().uid();
 		this.updateComplete.then(() => this.makeSortable());
+		document.addEventListener('focusin', this.handleLostFocus);
 	}
 
 	disconnectedCallback()
@@ -225,6 +226,7 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 		{
 			this._sortable.destroy();
 		}
+		document.removeEventListener('focusin', this.handleLostFocus);
 	}
 
 	willUpdate(changedProperties : PropertyValues)
@@ -261,13 +263,11 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 
 	private addOpenListeners()
 	{
-		document.addEventListener('focusin', this.handleLostFocus);
 		document.addEventListener('mousedown', this.handleLostFocus);
 	}
 
 	private removeOpenListeners()
 	{
-		document.removeEventListener('focusin', this.handleLostFocus);
 		document.removeEventListener('mousedown', this.handleLostFocus);
 	}
 
@@ -593,6 +593,15 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 			if(this.addAddress(this._search.value.trim()))
 			{
 				this._search.value = "";
+			}
+			else if(this._search.value)
+			{
+				// Invalid input, show message
+				// Can't just call this.validate() since the input is not part of the value
+				let currentValue = this.value;
+				this.value = [this._search.value];
+				this.validate();
+				this.value = currentValue;
 			}
 			this.hide();
 		}
