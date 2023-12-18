@@ -448,6 +448,9 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 		// Stop timeout timer
 		clearTimeout(this._searchTimeout);
 
+		// Clear current option, it's probably going to go away
+		this.setCurrentOption(null);
+
 		this.searching = true;
 		this.requestUpdate("searching");
 
@@ -699,7 +702,8 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 		else if(Et2Email.TAG_BREAK.indexOf(event.key) !== -1)
 		{
 			// Check for valid email or current selection
-			if(!this.validateAddress(this._search.value.trim()) && this.currentOption)
+			if(!this.validateAddress(this._search.value.trim()) &&
+				this.currentOption && this.currentOption.value.toLowerCase().includes(this._search.value.toLowerCase()))
 			{
 				this._search.value = this.currentOption.value.replaceAll("___", " ");
 			}
