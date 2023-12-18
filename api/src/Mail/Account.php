@@ -1489,7 +1489,7 @@ class Account implements \ArrayAccess
 	{
 		//error_log(__METHOD__."($only_current_user, $just_name, '$order_by', $offset, $num_rows)");
 		$where = array();
-		if ($only_current_user)
+		if ($only_current_user !== false)
 		{
 			$account_id = $only_current_user === true ? $GLOBALS['egw_info']['user']['account_id'] : $only_current_user;
 			// no account_id happens eg. for notifications during login
