@@ -297,6 +297,7 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 				pull: pull,
 				put: !(this.readonly || this.disabled)
 			},
+			//	filter: "[isEditing],.et2-no-drag",
 			onEnd: this.handleSortEnd
 		});
 	}
@@ -905,7 +906,7 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 	handleTagChange(event)
 	{
 		// Need to update our value, or it will just redo the tag with the old value
-		if(event.originalValue && this.value.indexOf(event.originalValue))
+		if(event.originalValue && this.value.includes(event.originalValue))
 		{
 			let index = this.value.indexOf(event.originalValue);
 			this.value[index] = event.target.value;
