@@ -297,7 +297,6 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 				pull: pull,
 				put: !(this.readonly || this.disabled)
 			},
-			//	filter: "[isEditing],.et2-no-drag",
 			onEnd: this.handleSortEnd
 		});
 	}
@@ -935,6 +934,7 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 	{
 		const readonly = (this.readonly);
 		const isEditable = !readonly;
+		const isValid = this.validateAddress(value);
 
 		return html`
             <et2-email-tag
@@ -943,6 +943,7 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
                     class=${classMap({
                         "et2-select-draggable": !this.readonly && this.allowDragAndDrop,
                     })}
+                    variant=${this.isValid ? nothing : "danger"}
                     .fullEmail=${this.fullEmail}
                     .onlyEmail=${this.onlyEmail}
                     .value=${live(value)}
