@@ -200,10 +200,14 @@ export class Et2Tag extends Et2Widget(SlTag)
 		}
 		this.getRootNode().host.hide()
 		this.isEditing = true;
-		this.setAttribute("isEditing", "");
+		this.setAttribute("contenteditable", "true");
+
 		this.requestUpdate();
 		this.updateComplete.then(() =>
 		{
+			// This stops drag and drop from interfereing with mouse edits
+			this._editNode.input.setAttribute("contenteditable", "true");
+
 			this._editNode.focus();
 		})
 	}
@@ -211,7 +215,7 @@ export class Et2Tag extends Et2Widget(SlTag)
 	stopEdit()
 	{
 		this.isEditing = false;
-		this.removeAttribute("isEditing");
+		this.removeAttribute("contenteditable");
 		let event = new Event("change", {
 			bubbles: true
 		});
