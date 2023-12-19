@@ -141,7 +141,18 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 	 */
 	@property({type: Boolean, reflect: true}) open = false;
 
+	/**
+	 * Custom search options, passed to the searchUrl along with the search text
+	 *
+	 * @type {{includeLists : boolean}}
+	 */
 	@property({type: Object}) searchOptions = {includeLists: true};
+
+	/**
+	 * Server-side search for suggested email addresses.
+	 * Set to "" to cancel searching.
+	 * @type {string}
+	 */
 	@property({type: String}) searchUrl = "EGroupware\\Api\\Etemplate\\Widget\\Taglist::ajax_email";
 
 	@state() searching = false;
@@ -450,6 +461,12 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 
 		// Clear current option, it's probably going to go away
 		this.setCurrentOption(null);
+
+		// If no searchUrl, no search
+		if(!this.searchUrl)
+		{
+			return;
+		}
 
 		this.searching = true;
 		this.requestUpdate("searching");
