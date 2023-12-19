@@ -49,7 +49,6 @@
   html[data-darkmode='1'] #blueimp-gallery ol,
   html[data-darkmode='1'] et2-select-account::part(icon),
   html[data-darkmode='1'] et2-select-email::part(icon),
-  html[data-darkmode='1'] et2-calendar-owner::part(icon),
   html[data-darkmode='1'] sl-menu-item [slot="prefix"],
   html[data-darkmode='1'] iframe,
   html[data-darkmode='1'] et2-lavatar[image=""]::part(base),
@@ -9501,3 +9500,4 @@ table.egwGridView_grid img.et2_appicon {
     border-radius: 0;
   }
 }
+/*# sourceMappingURL=fw_mobile.css.map */

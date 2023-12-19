@@ -73,7 +73,7 @@ export class CalendarOwner extends Et2StaticSelectMixin(Et2Select)
 		return html`
             <sl-option
                     part="option"
-                    exportparts="prefix:tag__prefix, suffix:tag__suffix"
+                    exportparts="prefix:tag__prefix, suffix:tag__suffix, image"
                     value="${value}"
                     title="${!option.title || this.noLang ? option.title : this.egw().lang(option.title)}"
                     class=${classMap({
@@ -183,7 +183,7 @@ export class CalendarOwner extends Et2StaticSelectMixin(Et2Select)
 		// lavatar uses a size property, not a CSS variable
 		let style = getComputedStyle(this);
 		return html`
-            <et2-lavatar slot="prefix" part="icon" .size=${style.getPropertyValue("--icon-width")}
+            <et2-lavatar slot="prefix" part="icon" exportparts="image" .size=${style.getPropertyValue("--icon-width")}
                          lname=${option.lname || nothing}
                          fname=${option.fname || nothing}
                          image=${option.icon || nothing}

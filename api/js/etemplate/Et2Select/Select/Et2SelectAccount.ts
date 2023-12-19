@@ -146,7 +146,7 @@ export class Et2SelectAccount extends SelectAccountMixin(Et2StaticSelectMixin(Et
 		let style = getComputedStyle(this);
 
 		return html`
-            <et2-lavatar slot="prefix" part="icon" .size=${style.getPropertyValue("--icon-width")}
+            <et2-lavatar slot="prefix" part="icon" exportparts="image" .size=${style.getPropertyValue("--icon-width")}
                          lname=${option.lname || nothing}
                          fname=${option.fname || nothing}
                          image=${option.icon || nothing}
