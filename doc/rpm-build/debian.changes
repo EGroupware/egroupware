@@ -1,3 +1,18 @@
+egroupware-docker (23.1.20231219) hardy; urgency=low
+
+  * Mail: new fully keyboard navigatable email-address entry, also allowing to sort recipients via drag-n-drop  
+  * Mail: implement Exchange login-type "domain/username" 
+  * Mail: allow to configure an auto-responder, if Sieve supports the vacation-seconds extension 
+  * Importexport: Progress updates pushed to browser when importing 
+  * Calendar/REST API: implement specifying alerts, useDefaultAlerts and priority attributes in POST or PUT requests 
+  * LDAP/Import: fix groups never matched regular expression dn-filter in import 
+  * Infolog: Take group add ACL into account for type on new entries 
+  * OpenIDConnect: implement email_aliases scope&claim to support passing all valid email addresses of a user to a mail archive 
+  * OpenIDConnect: add required "end_session_endpoint" to OID discovery document (/.well-known/openid-configuration) 
+  * EPL/S3: allow to reset/retry failed uploads and specify a bandwidth used to calculate longer timeouts for huge files
+
+ -- Ralf Becker <rb@egroupware.org>  Tue, 19 Dec 2023 13:25:42 +0100
+
 egroupware-docker (23.1.20231201) hardy; urgency=low
 
   * Api: more fixes around select-widgets
