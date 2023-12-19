@@ -176,6 +176,7 @@ export class Et2Tag extends Et2Widget(SlTag)
 				<et2-textbox value="${this.value}"
                              @sl-change=${this.handleChange}
                              @blur=${this.stopEdit}
+                             @mousedown=${e => e.stopPropagation()}
                              @click=${e => e.stopPropagation()}
                              @keydown=${this.handleKeyDown}
                 ></et2-textbox>
@@ -199,6 +200,7 @@ export class Et2Tag extends Et2Widget(SlTag)
 		}
 		this.getRootNode().host.hide()
 		this.isEditing = true;
+		this.setAttribute("isEditing", "");
 		this.requestUpdate();
 		this.updateComplete.then(() =>
 		{
@@ -209,6 +211,7 @@ export class Et2Tag extends Et2Widget(SlTag)
 	stopEdit()
 	{
 		this.isEditing = false;
+		this.removeAttribute("isEditing");
 		let event = new Event("change", {
 			bubbles: true
 		});
