@@ -52,7 +52,7 @@
 	</template>
 	<template id="filemanager.index.header_left" template="" lang="" group="0" version="1.9.002">
         <!-- Anonymous view has some extras - logo & button -->
-        <et2-image  src="logo" disabled="!@show_refresh" hideOnReadonly="true" width="150px"></et2-image>
+        <et2-image id="logo" disabled="!@show_refresh" hideOnReadonly="true" width="150px"></et2-image>
         <et2-button  id="reload" statustext="Reload" onclick="app.filemanager.et2.getInstanceManager().refresh()" disabled="!@show_refresh" hideOnReadonly="true" image="reload" noSubmit="true"></et2-button>
         <file label="Upload" statustext="Select file to upload in current directory" id="upload"
               progress_dropdownlist="true" drop_target="filemanager-index" multiple="true"

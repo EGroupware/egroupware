@@ -60,6 +60,12 @@ class AnonymousList extends filemanager_ui
 		$content['nm']['no_filter'] = true;
 		$content['nm']['favorites'] = false;
 
+		$logo = !empty($GLOBALS['egw_info']['server']['login_logo_header']) ? Api\Framework::get_login_logo_or_bg_url('login_logo_header', 'logo')
+			: Api\Framework::get_login_logo_or_bg_url('login_logo_file', 'logo');
+		if($logo)
+		{
+			$this->etemplate->setElementAttribute("nm[logo]", "src", $logo);
+		}
 		if(!Vfs::is_writable($content['nm']['path']))
 		{
 			// share is read-only, we can just hide everything
