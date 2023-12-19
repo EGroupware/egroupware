@@ -4198,3 +4198,8 @@ button.shortcut-buttons-flatpickr-button {
 .tox-tinymce-aux {
     z-index: 790 !important;
 }
+
+/* Fix tinemce toolbar z-index is way higher (safari only) */
+.tox .tox-editor-container .tox-editor-header {
+	z-index: auto;
+}
