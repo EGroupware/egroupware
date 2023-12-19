@@ -11,6 +11,7 @@ automatically check 'do not notify' for these types	infolog	ro	Bifați automat "
 can not return an exact number of rows and therefore hides the count.	admin	ro	Nu poate returna un număr exact de rânduri și, prin urmare, ascunde numărul.
 change	infolog	ro	Modificare
 change responsible	infolog	ro	Schimbare responsabilă
+check to set startday	infolog	ro	Verificați pentru a seta ziua de început
 colon (:) separated list of field names to use if value is empty or to sum up	infolog	ro	listă de nume de câmpuri separate prin două puncte (:) care trebuie utilizate dacă valoarea este goală sau pentru a însuma
 contact cf	infolog	ro	Contact CF
 convert to a ticket	infolog	ro	Conversia într-un bilet
@@ -115,10 +116,84 @@ modifier	infolog	ro	Modificator
 modifierer	infolog	ro	Modificator
 name of current user, all other contact fields are valid too	infolog	ro	Numele utilizatorului curent, toate celelalte câmpuri de contact sunt de asemenea valabile
 no custom field "%1" for %2.	infolog	ro	Nu există niciun câmp personalizat "%1" pentru %2.
+notification settings	infolog	ro	Setări de notificare
+old fixed definition	infolog	ro	Vechea definiție fixă
+one day after	infolog	ro	O zi după
+one day in advance	infolog	ro	Cu o zi înainte
+only show them if there is a filter	infolog	ro	Afișează-le doar dacă există un filtru
+only show them while searching	infolog	ro	Afișează-le numai în timpul căutării
+open(status)	infolog	ro	Deschis
+other configurations	infolog	ro	Alte configurații
+owner, responsible	infolog	ro	Proprietar, Responsabil
+participants for scheduling an appointment	infolog	ro	Participanți pentru programarea unei întâlniri
+pattern for search in addressbook	infolog	ro	Model de căutare în agenda de adrese
+pattern for search in projects	infolog	ro	Model de căutare în proiecte
+performance optimization for huge infolog tables	admin	ro	Optimizarea performanței pentru tabelele InfoLog uriașe
+permissions error - %1 could not %2	infolog	ro	Eroare de permisiune - %1 nu a putut %2
+prefix for sub-entries (default: re:)	infolog	ro	Prefix pentru subînscrieri (implicit: Re:)
+primary link	infolog	ro	Legătură primară
 print this infolog	infolog	ro	Tipăriți acest InfoLog
 printing...	infolog	ro	Imprimarea...
+project id	infolog	ro	ID-ul proiectului
+project name	infolog	ro	Numele proiectului
+projectmanager	infolog	ro	Manager de proiect
+re-planned	infolog	ro	Replanificat
+re-planned time	infolog	ro	Timp replanificat
+receive notifications about items of type owned by groups you are part of	infolog	ro	Primiți notificări despre elementele de tip deținute de grupurile din care faceți parte
+regular expression	infolog	ro	Expresie regulată
+removed	infolog	ro	Eliminat.
+removed category	infolog	ro	categoria eliminat
+replacement	infolog	ro	Înlocuire
+replacements for inserting entries into documents	infolog	ro	Înlocuitori pentru inserarea de intrări în documente
 respect timesheet run and read permissions for time totals	infolog	ro	Respectați permisiunile de execuție și de citire a foii de pontaj pentru totalurile de timp
+responsible open and upcoming	infolog	ro	Răspundeți de situațiile deschise și viitoare
+responsible overdue	infolog	ro	Responsabil întârziat
+rights for the responsible	infolog	ro	Drepturile pentru responsabilul
+rows	infolog	ro	Rânduri
+same day	infolog	ro	Aceeași zi
+schedule appointment	infolog	ro	Programare programare
+second parameter for preg_replace	infolog	ro	Al doilea parametru pentru preg_replace
+select a price	infolog	ro	Selectați un preț
+select a project	infolog	ro	Selectați un proiect
+select an action	infolog	ro	Selectați o acțiune
+select an action...	infolog	ro	Selectați o acțiune...
+select new category	infolog	ro	Selectați o nouă categorie
+select users or groups	infolog	ro	Selectați utilizatori sau grupuri
+selected calendars	infolog	ro	Calendare selectate
+selection cf	infolog	ro	Selecție CF
+sender	infolog	ro	Expeditor
+set status to done	infolog	ro	Setați statusul pe făcut
+set status to done for all entries	infolog	ro	Setați statusul la făcut pentru toate intrările
+sets the status of this entry to done	infolog	ro	Setează statusul acestei intrări la făcut pentru toate intrările
+show a x if content equals this compare value, otherwise show nothing	infolog	ro	Afișează un X dacă conținutul este egal cu această valoare de comparație, altfel nu afișează nimic
+show full usernames	infolog	ro	Afișați numele de utilizator complet
+show last modified	infolog	ro	Afișează ultima modificare
+show status and percent done separate	infolog	ro	Afișează starea și procentul de realizare separat
+show sub-entries	infolog	ro	Afișați subînregistrările
+show ticket id	infolog	ro	Afișați ID-ul biletului
+show times	infolog	ro	Afișează timpii
+start	infolog	ro	Start
+startdate for new entries	infolog	ro	Data de începere pentru intrările noi
+startdate must be before enddate!!!	infolog	ro	Data de începere trebuie să fie înainte de data scadentă!
+starting %1	infolog	ro	Începând cu %1
+status, percent and date completed are always allowed.	infolog	ro	Statutul, procentul și data finalizării sunt întotdeauna permise.
+sub	infolog	ro	Sub
+sub-entries become subs of the parent or main entries, if there's no parent	infolog	ro	Intrările secundare devin subsecvente ale intrărilor părinte sau principale, dacă nu există un părinte
+sub-entries will not be closed	infolog	ro	Subînregistrările nu vor fi închise
+sub-entry	infolog	ro	Subînregistrare
+sum	infolog	ro	Suma
+tag to mark positions for address labels	infolog	ro	Etichetă pentru a marca pozițiile pentru etichetele de adresă
+tasks of	infolog	ro	Sarcini de
 the document can contain placeholder like {{%1}}, to be replaced with the data.	infolog	ro	Documentul poate conține caractere de subsol, cum ar fi {{%1}}, care vor fi înlocuite cu datele.
+the following document-types are supported:	infolog	ro	Sunt acceptate următoarele tipuri de documente:
+type of field	infolog	ro	Tipul de câmp
+type of the log-entry: note, phonecall or todo	infolog	ro	Tipul de intrare în InfoLog
+unable to link to %3 by custom field "%1": "%4".  %2 matches.	infolog	ro	Nu se poate face legătura cu %3 prin câmpul personalizat "%1": "%4". %2 se potrivește.
+unknown type: %1	infolog	ro	Tip necunoscut: %1
+unlinked from %1	infolog	ro	Fără legătură cu %1
+use custom notification message	infolog	ro	Utilizați un mesaj de notificare personalizat
+use this tag for addresslabels. put the content, you want to repeat, between two tags.	infolog	ro	Utilizați această etichetă pentru etichete de adresă. Așezați conținutul pe care doriți să îl repetați între două etichete.
+view parent with children	infolog	ro	Vizualizare părinte cu copii
 which implicit acl rights should the responsible get	infolog	ro	Ce drepturi ACL implicite ar trebui să primească responsabilul
 which participants should be preselected when scheduling an appointment.	infolog	ro	Ce participanți ar trebui să fie preselectați la programarea unei întâlniri.
 which types should the calendar show	infolog	ro	Ce tipuri ar trebui să afișeze calendarul
@@ -128,6 +203,10 @@ yes - close	infolog	ro	Da - Închide
 yes - close including sub-entries	infolog	ro	Da - Închidere, inclusiv subînregistrări
 yes - delete	infolog	ro	Da - Șterge
 yes - delete including sub-entries	infolog	ro	Da - Șterge, inclusiv subînregistrările
+yes, noone can purge deleted items	infolog	ro	Da, nimeni nu poate șterge elementele șterse
+yes, only admins can purge deleted items	infolog	ro	Da, numai administratorii pot șterge elementele șterse
+yes, with larger fontsize	infolog	ro	Da, cu caractere de dimensiuni mai mari
+yes, with purging of deleted items possible	infolog	ro	Da, cu posibilitatea de epurare a elementelor șterse
 you can choose a categorie to be preselected, when you create a new infolog entry	infolog	ro	Puteți alege o categorie care să fie preselectată, atunci când creați o nouă intrare InfoLog.
 you can't delete one of the stock types !!!	infolog	ro	Nu puteți șterge unul dintre tipurile de stoc!
 you have to enter a name, to create a new type!	infolog	ro	Trebuie să introduceți un nume, pentru a crea un nou tip!

@@ -12,8 +12,8 @@
 (select mails by clicking on the line, like a checkbox)	mail	de	(Auswählen von E-Mails durch anklicken der Zeile)
 (with checkbox enforced)	mail	de	(mit Checkbox)
 account editable by user	mail	de	Anwender darf dieses Konto bearbeiten
-acl rights retrieve failed, seems there are no rights set!	mail	de	Die Zugriffskontrollrechte konnten nicht gelesen werden!
-acl rights retrieved successfully	mail	de	Zugriffskontrollrechte erfolgreich gelesen
+acl rights retrieve failed, seems there are no rights set!	mail	de	Die Zugriffsrechte konnten nicht gelesen werden!
+acl rights retrieved successfully	mail	de	Zugriffsrechte erfolgreich gelesen
 action	mail	de	Aktion
 activating by date requires a start- and end-date!	mail	de	Die Aktivierung nach Datum erfordert ein Start- UND Enddatum!
 add "%1" into blacklisted domains	mail	de	Domain "%1" zu Blacklist hinzufügen
@@ -53,7 +53,7 @@ always allow external sources from %1	mail	de	Erlaube externe Bildquellen von %1
 always respond / auto-responder	mail	de	Immer antworten / Auto-Responder
 always show html emails	mail	de	HTML-E-Mails immer anzeigen
 always show notifiction	mail	de	Benachrichtigungen immer anzeigen
-an error happend while trying to remove acl rights from the account %1!	mail	de	Ein Fehler trat auf beim Versuch die Zugriffskontrollrechte vom Konto %1 zu entfernen!
+an error happend while trying to remove acl rights from the account %1!	mail	de	Ein Fehler trat auf beim Versuch die Zugriffsrechte vom Konto %1 zu entfernen!
 and the rule with priority %1, now got the priority %2	mail	de	Die Regel mit Priorität %1 hat jetzt die Priorität %2
 answered	mail	de	Beantwortet
 any of	mail	de	mit einem
@@ -107,7 +107,7 @@ configured values will be set automatically on compose dialog for respected fiel
 confirm	mail	de	Bestätigen
 confirm attach message	mail	de	Bestätigung beim Anhängen von E-Mails
 confirm move to folder	mail	de	Bestätigung vor dem Verschieben
-connect to profile %1	mail	de	Verbunden zu dem Profil :%1
+connect to profile %1	mail	de	Verbunden zu dem Profil: %1
 connection status	mail	de	Verbindungsstatus
 contact label	mail	de	Anzeige Kontakt
 contains	mail	de	beinhaltet
@@ -118,7 +118,7 @@ convert only mail to item (ignore possible attachments)	mail	de	Konvertiere nur 
 copied %1 message(s) from %2 to %3	mail	de	%1 Nachricht(en) wurden von %2 nach %3 kopiert
 copy to	mail	de	Kopieren
 could not append message:	mail	de	Konnte die Nachricht nicht hinzufügen:
-could not save the acl because some names are empty	mail	de	Konnte die Zugriffskontrollrechte nicht speichern! Grund: einige Bezeichnungen waren leer!
+could not save the acl because some names are empty	mail	de	Konnte die Zugriffsrechte nicht speichern! Grund: einige Bezeichnungen waren leer!
 create new account	mail	de	Konto hinzufügen
 cross account forward attachment is not allowed!	mail	de	Weiterleitung als Anhang ist nicht E-Mail-Konto-übergreifend möglich!
 current folder	mail	de	Aktueller Ordner
@@ -157,7 +157,7 @@ display only when no plain text is available	mail	de	Nur anzeigen wenn kein Plai
 displaying html messages is disabled	mail	de	Die Anzeige von HTML-E-Mails ist deaktiviert
 displaying plain messages is disabled	mail	de	Die Anzeige von reinen Text-E-Mails ist deaktiviert
 do not auto create folders	mail	de	Automatische Ordnererstellung verhindern für
-do not forward	mail	de	nicht weiterleiten
+do not forward	mail	de	Nicht weiterleiten
 do you really want to apply %1 to all messages in the current view?	mail	de	Wollen Sie wirklich %1 auf alle Nachrichten in der aktuellen Ansicht anwenden?
 do you really want to delete folder %1 ?	mail	de	Wollen Sie den Ordner %1 wirklich löschen?
 do you really want to delete this rule	mail	de	Wollen Sie diese Regel wirklich löschen?
@@ -168,7 +168,7 @@ do you really want to toggle flag %1 for all messages in the current view?	mail	
 do you really want to toggle label %1 for all messages in the current view?	mail	de	Wollen Sie wirklich den Wert für das Schlagwort %1 für alle Nachrichten in der aktuellen Ansicht umschalten?
 do you want to be asked for confirmation before attaching selected messages to new mail?	mail	de	Möchten Sie vor dem Anhängen von einer oder mehreren (ausgewählten) E-Mails an eine neue E-Mail gefragt werden?
 do you want to be asked for confirmation before moving selected messages to another folder?	mail	de	Möchten Sie vor dem Verschieben von E-Mails in andere Ordner gefragt werden?
-do you want to prevent the editing/setup of filter rules (, even if sieve is enabled)?	mail	de	Möchten Sie das Editieren/Einstellen von Filterregeln (via Sieve) unterbinden?
+do you want to prevent the editing/setup of filter rules (, even if sieve is enabled)?	mail	de	Möchten Sie das Editieren/Einstellen von Filter (via Sieve) unterbinden?
 do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	mail	de	Möchten Sie das Editieren/Einstellen von Benachrichtigungen per E-Mail (via Sieve), wenn neue Nachrichten eintreffen, unterbinden?
 do you want to prevent the editing/setup of the absent/vacation notice (, even if sieve is enabled)?	mail	de	Möchten Sie das Editieren/Einstellen einer Abwesenheitsnotiz (via Sieve) unterbinden?
 do you want to prevent the managing of folders (creation, accessrights and subscribtion)?	mail	de	Möchten Sie die Verwaltung von Ordnern verhindern (anlegen, abonnieren, Zugriffsrechte)?
@@ -212,7 +212,7 @@ error saving %1!	mail	de	Fehler beim Speichern von %1!
 error while setting acl for folder %1!	mail	de	Fehler beim Speichern von Zugriffsrechten für den Ordner %1!
 error while setting folder	mail	de	Fehler beim Speichern eines Ordners
 error:	mail	de	FEHLER:
-error: could not save acl	mail	de	FEHLER: Zugriffskontrollrechte konnten nicht gespeichert werden
+error: could not save acl	mail	de	FEHLER: Zugriffsrechte konnten nicht gespeichert werden
 error: could not save message as draft	mail	de	FEHLER: Die Nachricht konnte nicht als Entwurf gespeichert werden.
 error: could not save rule	mail	de	FEHLER: Die Regel konnte nicht gespeichert werden.
 error: could not send message.	mail	de	FEHLER: Die Nachricht konnte nicht versendet werden.
@@ -270,7 +270,7 @@ from(a->z)	mail	de	Von (A->Z)
 from(z->a)	mail	de	Von (Z->A)
 general	admin	de	Allgemein
 general settings	mail	de	Allgemeine Einstellungen
-get acl rights failed from imap server!	mail	de	Die Zugriffskontrollrechte konnten auf dem IMAP Server nicht gelesen werden!
+get acl rights failed from imap server!	mail	de	Die Zugriffsrechte konnten auf dem IMAP Server nicht gelesen werden!
 greater than	mail	de	größer als
 ham folder	mail	de	Ordner für nicht Spam-Nachrichten
 handling of external http images / mixed content in mails	mail	de	Behandlung von externen Bilder per http / gemischter Inhalt in E-Mails
@@ -295,7 +295,7 @@ if	mail	de	Wenn
 if authentication required	mail	de	Wenn Benutzeranmeldung erforderlich ist
 if different from email address	mail	de	Falls abweichend zur E-Mailadresse
 if from contains:(*)	mail	de	wenn Von enthält:(*)
-if mail body content / attachment type	mail	de	wenn E-Mail Text enthält/<br>Anhang Type
+if mail body content / attachment type	mail	de	wenn E-Mail Text enthält/Anhang Type
 if mail body message type	mail	de	wenn E-Mail Text
 if mail header	mail	de	wenn E-Mail-Header
 if message size	mail	de	wenn Nachrichtengröße
@@ -505,7 +505,7 @@ respond to mail sent to:	mail	de	Benachrichtigung für
 restrict acl management	admin	de	ACL-Verwaltung beschränken
 rights	mail	de	Zugriffsrechte
 row order style	mail	de	Spaltenanordnung
-rule priority position	mail	de	Priorität der Filterregel
+rule priority position	mail	de	Priorität/Reihenfolge
 rule with priority	mail	de	Regel mit Priorität
 rules	mail	de	Regeln
 s/mime encryption failed because no certificate has been found for sender address: %1	mail	de	Die S/MIME-Verschlüsselung ist fehlgeschlagen, weil kein Zertifikat für die Absenderadresse gefunden wurde: %1
@@ -530,7 +530,7 @@ save to filemanager	mail	de	Im Dateimanager speichern
 save:	mail	de	Speichern
 saves subscription changes	mail	de	Änderungen speichern
 saves this acl	mail	de	Zugriffsrechte speichern
-saves this rule	mail	de	Filter-Regel speichern
+saves this rule	mail	de	Filter speichern
 saving of message %1 failed. destination folder %2 does not exist.	mail	de	Speichern der Nachricht %1 ist fehlgeschlagen. Ziel Ordner %2 existiert nicht.
 saving of message %1 succeeded. check folder %2.	mail	de	Speichern der Nachricht %1 war erfolgreich. Prüfen Sie den Ziel Ordner %2
 saving the rule failed:	mail	de	Speichern der Regel ist fehlgeschlagen:
@@ -631,17 +631,17 @@ test connection and display basic information about the selected profile	mail	de
 text	mail	de	Text
 text mode	mail	de	Text-Modus
 text/plain	mail	de	Text
-the %1 's acl removed from the %2	mail	de	Die Zugriffskontrollrechte von %1 wurden von %2 entfernt
-the %1 's acl, including its subfolders, removed from the %2	mail	de	Die Zugriffskontrollrechte inkl. Unterordner von %1 wurden von %2 entfernt
+the %1 's acl removed from the %2	mail	de	Die Zugriffsrechte von %1 wurden von %2 entfernt
+the %1 's acl, including its subfolders, removed from the %2	mail	de	Die Zugriffsrechte inkl. Unterordner von %1 wurden von %2 entfernt
 the entered passphrase is not correct! please try again.	mail	de	Das eingegebene Passwort ist nicht korrekt. Bitte versuchen Sie es erneut.
-the folder %1 's acls saved	mail	de	Die Zugriffskontrollrechte des Ordners %1 wurden gespeichert
+the folder %1 's acls saved	mail	de	Die Zugriffsrechte des Ordners %1 wurden gespeichert
 the folder <b>%1</b> will be used, if there is nothing set here, and no valid predefine given.	mail	de	Der Ordner <b>%1</b> wird verwendet, wenn hier nichts gesetzt ist und kein gültiger Vorgabewert eingetragen ist.
 the imap server need to meet certain requirements and be configured for it:	mail	de	Der IMAP Server muss verschiedene Vorraussetzungen erfüllen UND dafür konfiguriert sein:
-the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	mail	de	Der Absender hat eine Empfangsbestätigung angefordert, um sicher zu stellen, dass Sie diese E-Mail gelesen haben.<br>Möchten Sie eine Empfangsbestätigung senden?
-the mimeparser can not parse this message.	mail	de	Der MIME Parser versteht diese Nachricht nicht.
+the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	mail	de	Der Absender hat eine Empfangsbestätigung angefordert, um sicher zu stellen, dass Sie diese E-Mail gelesen haben.Möchten Sie eine Empfangsbestätigung senden?
+the mimeparser can not parse this message.	mail	de	Der MIME-Parser versteht diese Nachricht nicht.
 the rule with priority %1 successfully saved!	mail	de	Die Regel mit Priorität %1 wurde erfolgreich gespeichert!
 then	mail	de	dann
-there is no imap server configured.	mail	de	Es ist kein IMAP-Server Konfiguriert
+there is no imap server configured.	mail	de	Es ist kein IMAP-Server konfiguriert
 there is no space left to store sieve script, please check sieve_maxscriptsize option on your mailserver's config.	mail	de	Es ist kein Platz mehr vorhanden, um das Sieve Skript zu speichern, bitte Sie Ihren Administrator die Option sieve_maxscriptsize in der Konfiguration Ihres Mailservers zu prüfen.
 this mail contains external images served via insecure http protocol. be aware showing or allowing them can compromise your security!	mail	de	Diese Mail enthält externe Bilder die über das unsichere HTTP-Protokoll ausgeliefert werden. Bitte seien Sie sich bewusst, dass Anzeigen oder Erlauben Ihre Sicherheit beeinträchtigen kann!
 this message is smime encrypted and password protected.	mail	de	Diese Nachricht ist S/MIME-Verschlüsselt und mit Passwort geschützt.

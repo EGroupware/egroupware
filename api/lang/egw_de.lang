@@ -359,7 +359,7 @@ css-styles	common	de	CSS Stile
 ctrl	common	de	Strg
 cuba	common	de	KUBA
 currency	common	de	Währung
-current	common	de	derzeit
+current	common	de	Derzeit
 current users	common	de	Aktive Benutzersitzungen
 custom	common	de	Benutzerdefiniert
 custom fields	common	de	Benutzerdefinierte Felder
@@ -959,7 +959,7 @@ no filters	common	de	Keine Filter
 no history for this record	common	de	Keine Historie für diesen Datensatz
 no key for recipient:	common	de	Keinen Schlüssel für Empfänger:
 no matches found	common	de	Keine Treffer gefunden
-no response from server: your data is probably not saved	common	de	Keine Antwort vom Server: Ihre Daten sind wahrscheinlich NICHT gespeichert
+no response from server: your data is probably not saved	common	de	Keine Antwort vom Server: Ihre Daten sind vermutlich NICHT gespeichert
 no results match	common	de	Kein Fund für
 no rights to export more than %1 entries!	common	de	Sie haben keine Rechte mehr als %1 Einträge zu exportieren!
 no row to swap with !!!	common	de	Keine Zeile um damit zu tauschen !!!

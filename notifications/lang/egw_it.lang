@@ -55,6 +55,7 @@ last month	notifications	it	Ultimo mese
 linked entries:	common	it	Voci collegate:
 login aborted, application exit?	notifications	it	Accesso rigettato, uscita da applicazione?
 login in egroupware:	notifications	it	login in EGroupware
+mail account to use for notifications	admin	it	Account di posta elettronica da utilizzare per le notifiche
 mail backend	admin	it	Backend email
 mark all as read	notifications	it	segna tutte come lette
 mark as read	notifications	it	segna come letta

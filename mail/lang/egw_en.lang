@@ -4,14 +4,14 @@
 %1 has been removed from blacklisted email addresses	mail	en	%1 has been removed from blacklisted email addresses
 %1 has been removed from whiltelisted email addresses	mail	en	%1 has been removed from whiltelisted email addresses
 %1 is not writable by you!	mail	en	%1 is NOT writable by you!
-%1 mails selected	mail	en	%1 Mails selected
+%1 mails selected	mail	en	%1 emails selected
 (*) please consider, forward to multiple addresses will not work if number of addresses exceeds the limit. for most mail servers the limit is 4 by default, please contact your mail server administrator for further info.	mail	en	(*) Please consider, forward to multiple addresses will not work if number of addresses exceeds the Limit. For most mail Servers the limit is 4 by default, please contact your mail server administrator for further info.
 (leave empty for no quota)	mail	en	(Leave empty for no quota)
 (no subject)	mail	en	(no subject)
 (not connected)	mail	en	(not connected)
 (select mails by clicking on the line, like a checkbox)	mail	en	(select emails by clicking on the line, like a checkbox)
 (with checkbox enforced)	mail	en	(with checkbox enforced)
-account editable by user	mail	en	account editable by user
+account editable by user	mail	en	Account editable by user
 acl rights retrieve failed, seems there are no rights set!	mail	en	ACL rights retrieve failed, seems there are no rights set!
 acl rights retrieved successfully	mail	en	ACL rights retrieved successfully
 action	mail	en	Action
@@ -20,14 +20,14 @@ add "%1" into blacklisted domains	mail	en	Add "%1" into blacklisted domains
 add "%1" into blacklisted emails	mail	en	Add "%1" into blacklisted emails
 add "%1" into whiltelisted domains	mail	en	Add "%1" into whiltelisted domains
 add "%1" into whitelisted emails	mail	en	Add "%1" into whitelisted emails
-add a new folder to %1:	mail	en	Add a new Folder to %1:
+add a new folder to %1:	mail	en	Add a new folder to %1:
 add all my aliases	mail	en	Add all my aliases
 add as new	mail	en	Add as new
 add files as %1	mail	en	Add files as %1
-add folder	mail	en	Add Folder
+add folder	mail	en	Add folder
 add raw message, ignore mail attachments	mail	en	Convert email to item, add raw message text (ignore email attachments)
 add this certificate into contact	mail	en	Add this certificate into contact
-add to addressbook	mail	en	add to addressbook
+add to addressbook	mail	en	Add to addressbook
 add your domain as "%1" in options to list of email providers and enable api.	mail	en	Add your domain as "%1" in options to list of email providers and enable API.
 adding %1 to blacklisted email addresses failed because of %2	mail	en	Adding %1 to blacklisted email addresses failed because of %2
 adding %1 to whiltelisted email addresses failed because of %2	mail	en	Adding %1 to whiltelisted email addresses failed because of %2
@@ -61,7 +61,7 @@ any status	mail	en	any status
 append	mail	en	append
 appended after reply before sending	mail	en	Appended after reply before sending
 application mail expected but got: %1	mail	en	Application email expected but got: %1
-archive folder	mail	en	Archive folder
+archive folder	mail	en	Archive Folder
 are you sure you want to delete all selected folders?	mail	en	Are you sure you want to delete all selected folders?
 are you sure you want to move folder %1 to folder %2?	mail	en	Are you sure you want to move folder %1 to folder %2?
 arrival	mail	en	Received
@@ -75,7 +75,7 @@ attachments	mail	en	Attachments
 attachments, ...	mail	en	attachments, ...
 authentication	mail	en	Authentication
 available personal email-accounts/profiles	mail	en	available personal EMail-Accounts/Profiles
-be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	en	Be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. \n \n Would you like to proceed?
+be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	en	Be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well.<br>Would you like to proceed?
 be aware that all attachments will be sent as %1!	mail	en	Be aware that all attachments will be sent as %1!
 before reply, visible during compose	mail	en	Before reply, visible during compose
 blacklisted mails are marked as spam	mail	en	Blacklisted emails are marked as spam
@@ -112,16 +112,16 @@ connection status	mail	en	Connection Status
 contact label	mail	en	Contact label
 contains	mail	en	contains
 contains(*)	mail	en	Contains(*)
-convert mail to item and attach its attachments to this item (standard)	mail	en	Convert Mail to item and attach its attachments to this item (standard)
-convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	en	Convert Mail to item, attach its attachments and add raw message (.eml) as attachment
-convert only mail to item (ignore possible attachments)	mail	en	Convert only Mail to item (ignore possible attachments)
-copied %1 message(s) from %2 to %3	mail	en	copied %1 message(s) from %2 to %3
+convert mail to item and attach its attachments to this item (standard)	mail	en	Convert email to item and attach its attachments to this item (standard)
+convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	en	Convert email to item, attach its attachments and add raw message (.eml) as attachment
+convert only mail to item (ignore possible attachments)	mail	en	Convert only email to item (ignore possible attachments)
+copied %1 message(s) from %2 to %3	mail	en	Copied %1 message(s) from %2 to %3
 copy to	mail	en	Copy to
 could not append message:	mail	en	Could not append Message:
 could not save the acl because some names are empty	mail	en	Could not save the ACL because some names are empty
-create new account	mail	en	create new account
+create new account	mail	en	Create new account
 cross account forward attachment is not allowed!	mail	en	Cross account forward attachment is not allowed!
-current folder	mail	en	current Folder
+current folder	mail	en	current folder
 current subject	mail	en	Current subject
 currently:	mail	en	Currently:
 date(newest first)	mail	en	date(newest first)
@@ -133,8 +133,8 @@ default value for remembering s/mime passphrase in minutes	mail	en	Default value
 default your name and email	common	en	default your name and email
 defines what to show as contact label for added contact into to/cc/bcc when composing an email. default is firstname lastname and empty means include eveything available.	mail	en	Defines what to show as contact label for added contact into To/Cc/Bcc when composing an email. Default is firstname lastname and empty means include eveything available.
 defines what to show as identity label on mail folder header	common	en	Defines what to show as identity label on email folder header. The labels refer to the fields in the email account.
-delete folder	mail	en	Delete Folder
-delete folder %1 ?	mail	en	DELETE Folder %1 ?
+delete folder	mail	en	Delete folder
+delete folder %1 ?	mail	en	DELETE folder %1 ?
 delete this acl	mail	en	Delete this ACL
 deleted	mail	en	deleted
 deleted %1 messages in %2	mail	en	deleted %1 messages in %2
@@ -145,7 +145,7 @@ deny certain groups access to following features	mail	en	Deny certain groups acc
 directories have to be shared.	mail	en	Folder have to be shared.
 disable	mail	en	Disable
 disable caching of flags	mail	en	Disable caching of flags
-disable horizontal rule for separation of mail body from signature	mail	en	disable horizontal rule for separation of email body from signature
+disable horizontal rule for separation of mail body from signature	mail	en	Disable horizontal rule for separation of email body from signature
 disable use of flowed lines in plain text mails (rfc3676)	mail	en	Disable use of flowed lines in text emails (RFC3676)
 disabled!	mail	en	disabled!
 discard	mail	en	discard
@@ -159,32 +159,32 @@ displaying plain messages is disabled	mail	en	displaying plain text messages is 
 do not auto create folders	mail	en	do not auto create folders
 do not forward	mail	en	Do not forward
 do you really want to apply %1 to all messages in the current view?	mail	en	Do you really want to apply %1 to ALL messages in the current view?
-do you really want to delete folder %1 ?	mail	en	Do you really want to DELETE Folder %1 ?
+do you really want to delete folder %1 ?	mail	en	Do you really want to DELETE folder %1 ?
 do you really want to delete this rule	mail	en	Do you really want to DELETE this Rule
-do you really want to mark all messages as read in the current folder?	mail	en	Do you really want to mark ALL messages as read in the current folder?
-do you really want to remove all labels from all messages in the current folder?	mail	en	Do you really want to remove ALL labels from ALL messages in the current folder?
+do you really want to mark all messages as read in the current folder?	mail	en	Do you really want to mark <b>all</b> messages as read in the current folder?
+do you really want to remove all labels from all messages in the current folder?	mail	en	Do you really want to remove <b>all</b> labels from ALL messages in the current folder?
 do you really want to remove all rights from this account?	mail	en	Do you really want to remove all rights from this account?
-do you really want to toggle flag %1 for all messages in the current view?	mail	en	Do you really want to toggle flag %1 for ALL messages in the current view?
-do you really want to toggle label %1 for all messages in the current view?	mail	en	Do you really want to toggle the label %1 for ALL messages in the current view?
+do you really want to toggle flag %1 for all messages in the current view?	mail	en	Do you really want to toggle flag %1 for <b>all</b> messages in the current view?
+do you really want to toggle label %1 for all messages in the current view?	mail	en	Do you really want to toggle the label %1 for <b>all</b> messages in the current view?
 do you want to be asked for confirmation before attaching selected messages to new mail?	mail	en	Do you want to be asked for confirmation before attaching selected messages to new email?
 do you want to be asked for confirmation before moving selected messages to another folder?	mail	en	Do you want to be asked for confirmation before moving selected messages to another folder?
 do you want to prevent the editing/setup of filter rules (, even if sieve is enabled)?	mail	en	Do you want to prevent the editing/setup of filter rules (, even if Sieve is enabled)?
 do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	mail	en	Do you want to prevent the editing/setup of notification by email to other email addresses if emails arrive (, even if Sieve is enabled)?
 do you want to prevent the editing/setup of the absent/vacation notice (, even if sieve is enabled)?	mail	en	Do you want to prevent the editing/setup of the absent/vacation notice (, even if Sieve is enabled)?
-do you want to prevent the managing of folders (creation, accessrights and subscribtion)?	mail	en	Do you want to prevent the managing of folders (creation, accessrights AND subscribtion)?
+do you want to prevent the managing of folders (creation, accessrights and subscribtion)?	mail	en	Do you want to prevent the managing of folders (creation, access rights AND subscribtion)?
 does not contain	mail	en	does not contain
 does not exist on imap server.	mail	en	does not exist on IMAP Server.
 does not match	mail	en	does not match
 does not match regexp	mail	en	does not match regexp
 don't use draft folder	mail	en	Don't use draft folder
 don't use sent	mail	en	Don't use Sent
-don't use template folder	mail	en	Don't use template folder
+don't use template folder	mail	en	Don't use Template Folder
 don't use trash	mail	en	Don't use Trash
 download attachments	mail	en	Download attachments
 draft	mail	en	Draft
-draft folder	mail	en	draft folder
+draft folder	mail	en	Draft Folder
 drafts	mail	en	Drafts
-drafts folder	mail	en	Drafts folder
+drafts folder	mail	en	Drafts Folder
 edit account	mail	en	Edit Account
 edit account ...	mail	en	Edit account ...
 edit folder acl	mail	en	Edit folder ACL
@@ -194,7 +194,7 @@ effective only if server supports acl at all	admin	en	effective only if server s
 email notification successfully updated!	mail	en	email notification successfully updated!
 email notification update failed	mail	en	email notification update failed
 email notification update failed! you need to set an email address!	mail	en	email notification update failed! You need to set an email address!
-emailaddress	admin	en	emailaddress
+emailaddress	admin	en	email address
 emailadmin: profilemanagement	mail	en	EmailAdmin: Profilemanagement
 emails in blacklisted domains are marked as spam	mail	en	Emails in blacklisted domains are marked as spam
 emails in whitelisted domains are not marked as spam	mail	en	Emails in whitelisted domains are not marked as spam
@@ -215,18 +215,18 @@ error:	mail	en	Error:
 error: could not save acl	mail	en	Error: Could not save ACL
 error: could not save message as draft	mail	en	Error: Could not save Message as Draft
 error: could not save rule	mail	en	Error: Could not save rule
-error: could not send message.	mail	en	Error: Could not send Message.
+error: could not send message.	mail	en	Error: Could not send message.
 error: message could not be displayed.	mail	en	ERROR: Message could not be displayed.
 esync will fail without a working email configuration!	mail	en	eSync will FAIL without a working email configuration!
-event details follow	mail	en	Event Details follow
 every %1. day	mail	en	Every %1. day
+event details follow	mail	en	Event details follow
 everyone	mail	en	Everyone
 examine namespace to retrieve folders in others and shared	mail	en	Examine namespace to retrieve folders in others and shared
 extended	mail	en	Extended
-extra sent folders	mail	en	Extra sent folders
+extra sent folders	mail	en	Extra Sent Folders
 failed to delete %1	mail	en	Failed to delete %1
 failed to delete %1 ! reason: %2	mail	en	Failed to delete %1 ! Reason: %2
-failed to delete %1. server responded:	mail	en	Failed to delete %1. Server responded:
+failed to delete %1. server responded:	mail	en	Failed to delete %1 ! Server responded:
 failed to move %1 ! reason: %2	mail	en	Failed to move %1 ! Reason: %2
 failed to rename %1 ! reason: %2	mail	en	Failed to rename %1 ! Reason: %2
 failed to subscribe folder %1!	mail	en	Failed to subscribe folder %1!
@@ -271,29 +271,29 @@ from(z->a)	mail	en	from(Z->A)
 general	admin	en	General
 general settings	mail	en	General settings
 get acl rights failed from imap server!	mail	en	Get ACL rights failed from IMAP server!
-greater than	mail	en	greater than
+greater than	mail	en	Greater than
 ham folder	mail	en	Ham folder
-handling of external http images / mixed content in mails	mail	en	Handling of external http images / mixed content in emails
+handling of external http images / mixed content in mails	mail	en	Handling of external images / mixed content in emails
 header	mail	en	Header
 header lines	mail	en	Header lines
-high	mail	en	high
+high	mail	en	High
 hold %1 to drag files to your computer	mail	en	Hold %1 to drag files to your computer
 home page folders	mail	en	home page folders
 hostname or ip	mail	en	Hostname or IP
 how often to check with the server for new mail	mail	en	How often to check with the server for new email
-how should the available information on identities be displayed	admin	en	how should the available information on identities be displayed
-how to forward messages	mail	en	how to forward messages
+how should the available information on identities be displayed	admin	en	How should the available information on identities be displayed
+how to forward messages	mail	en	How to forward messages
 html	mail	en	HTML
 html mode	mail	en	HTML mode
 ident name	mail	en	Ident name
 ident name email	mail	en	Ident name [Email]
-ident name organization email	mail	en	Ident name Organization [Email]
+ident name organization email	mail	en	Ident name Organisation [Email]
 identity	mail	en	Identity
 identity label	mail	en	Identity label
 identity+signature	mail	en	Identity+Signature
 if	mail	en	IF
 if authentication required	mail	en	If authentication required
-if different from email address	mail	en	If different from EMail address
+if different from email address	mail	en	If different from email address
 if from contains:(*)	mail	en	If from contains:(*)
 if mail body content / attachment type	mail	en	If email body content / attachment type
 if mail body message type	mail	en	If email body message type
@@ -307,18 +307,18 @@ if you would like to select multiple folders in one action, you can hold ctrl ke
 imap	mail	en	IMAP
 imap - incoming mail	mail	en	IMAP - incoming email
 imap administration	mail	en	IMAP administration
-imap server	mail	en	IMAP Server
+imap server	mail	en	IMAP server
 imap timeout	mail	en	IMAP timeout
-import message	mail	en	import message
+import message	mail	en	Import message
 import of message %1 failed. could not save message to folder %2 due to: %3	mail	en	Import of message %1 failed. Could not save message to folder %2 due to: %3
-import of message %1 failed. destination folder %2 does not exist.	mail	en	Import of message %1 failed. Destination Folder %2 does not exist.
-import of message %1 failed. destination folder not set.	mail	en	Import of message %1 failed. Destination Folder not set.
+import of message %1 failed. destination folder %2 does not exist.	mail	en	Import of message %1 failed. Destination folder %2 does not exist.
+import of message %1 failed. destination folder not set.	mail	en	Import of message %1 failed. Destination folder not set.
 import of message %1 failed. no contacts to merge and send to specified.	mail	en	Import of message %1 failed. No Contacts to merge and send to specified.
 importance	mail	en	importance
 important	mail	en	Important
 in mailbox: %1, with id: %2, and partid: %3	mail	en	In Mailbox: %1, with ID: %2, and PartID: %3
 in order to protect your privacy all external sources within this email are blocked.	mail	en	In order to protect your privacy all external sources within this email are blocked.
-inbox	mail	en	INBOX
+inbox	mail	en	Inbox
 information to show on email tag	mail	en	Information to show on email tag
 initialization of mail failed. please use the wizard to cope with the problem.	mail	en	The initialisation of the E-Mail module failed. Please use the configuration wizard to correct the configuration.
 inline	mail	en	Forward
@@ -331,12 +331,12 @@ kilobytes	mail	en	kilobytes
 later	mail	en	Later
 learning as ham (not spam) failed because of %1	mail	en	Learning as ham (not spam) failed because of %1
 learning as spam failed because of %1	mail	en	Learning as spam failed because of %1
-less than	mail	en	less than
+less than	mail	en	Less than
 limit mailing list results when searching for addresses	mail	en	Limit mailing list results when searching for addresses
-list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	en	List of actions to be switched/activated on by default (eg. Mail compose save as InfoLog action)
+list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	en	List of actions to be switched/activated on by default (eg. email compose save as InfoLog action)
 mail	common	en	Mail
 mail acl	mail	en	Mail ACL
-mail filter	mail	en	Mail filter
+mail filter	mail	en	Filter
 mail filter rule	mail	en	Mail filter rule
 mail settings	mail	en	Mail settings
 mail source	mail	en	Mail Source
@@ -344,7 +344,7 @@ mail-address	mail	en	Mail-Address
 mailaccount	mail	en	Mail account
 mailinglist	mail	en	Mailinglist
 mails	common	en	Mails
-mails can be copied to that folder via context menu, if folder is configured.	mail	en	Mails can be copied to that folder via context menu, if folder is configured.
+mails can be copied to that folder via context menu, if folder is configured.	mail	en	Emails can be copied to that folder via context menu, if folder is configured.
 mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	en	Mailserver reported:\n%1 \nDo you want to proceed by deleting the selected messages immediately (click ok)?\nIf not, please try to empty your trashfolder before continuing. (click cancel)
 mark all as read	mail	en	Mark all as read
 mark all messages in folder as read	mail	en	Mark all messages in folder as read
@@ -353,7 +353,7 @@ match:	mail	en	Match:
 matches	mail	en	matches
 matches regexp	mail	en	matches regexp
 mbstring.func_overload=0 is required for correct mail processing!	mail	en	mbstring.func_overload=0 is required for correct email processing!
-message body	mail	en	message body
+message body	mail	en	Message body
 message learned as ham (not spam) and moved back to inbox	mail	en	Message learned as ham (not spam) and moved back to inbox
 message learned as spam and moved to spam folder	mail	en	Message learned as spam and moved to spam folder
 message preview area	mail	en	Message preview area
@@ -366,7 +366,7 @@ miscellaneous	mail	en	Miscellaneous
 modify subject	mail	en	Modify subject
 modify subject of this message	mail	en	Modify subject of this message
 move	mail	en	Move
-move folder	mail	en	Move Folder
+move folder	mail	en	Move folder
 move selected mails to archive	mail	en	Move selected emails to archive
 move selected to	mail	en	Move selected to
 move to	mail	en	Move to
@@ -387,7 +387,7 @@ new subject	mail	en	New subject
 no (valid) send folder set in preferences	mail	en	No (valid) Send Folder set in preferences
 no access	mail	en	no access
 no action defined!	mail	en	No action defined!
-no address to/cc/bcc supplied, and no folder to save message to provided.	mail	en	No Address TO/CC/BCC supplied, and no folder to save message to provided.
+no address to/cc/bcc supplied, and no folder to save message to provided.	mail	en	No address TO/CC/BCC supplied, and no folder to save message to provided.
 no adress, to send this mail to, supplied	mail	en	no address was supplied to whom to send this email
 no folder destination supplied, and no folder to save message or other measure to store the mail (save to infolog/tracker) provided, but required.	mail	en	No folder destination supplied, and no folder to save message or other measure to store the email (save to InfoLog/Tracker) provided, but required.
 no folders	mail	en	no folders
@@ -418,14 +418,14 @@ only makes sense, if you transport password through a different channel / outsid
 only name	mail	en	Only name
 only needed for some servers, that do not return all folders on root level queries to retrieve all folders for that level	mail	en	Only needed for some servers, that do not return all folders on root level queries to retrieve all folders for that level
 only one window	mail	en	only one window
-only send message, do not copy a version of the message to the configured sent folder	mail	en	only send message, do not copy a version of the message to the configured sent folder
-only store message in inbox, do not send vacation notice	mail	en	Only store message in INBOX, do NOT send vacation notice
+only send message, do not copy a version of the message to the configured sent folder	mail	en	Only send message, do not copy a version of the message to the configured Sent Folder
+only store message in inbox, do not send vacation notice	mail	en	Only store message in Inbox, do NOT send vacation notice
 open in html mode	mail	en	Open in HTML mode
 open in text mode	mail	en	Open in Text mode
 open with collabora office	mail	en	Open with Collabora Online
 organisation	admin	en	Organisation
-organization	mail	en	organization
-organization | real name email	mail	en	Organization | Real name [Email]
+organization	mail	en	Organisation
+organization | real name email	mail	en	Organisation | Real name [Email]
 original message	mail	en	Original message
 outbox	mail	en	Outbox
 password protect	mail	en	password protect
@@ -462,16 +462,16 @@ read / unread	mail	en	Read / Unread
 readable	mail	en	readable
 real name	mail	en	Real name
 real name email	mail	en	Real name [Email]
-real name organization email	mail	en	Real name Organization [Email]
+real name organization email	mail	en	Real name Organisation [Email]
 reason!	mail	en	reason!
 receive notification	mail	en	Receive notification
 recursively	mail	en	Recursively
 refresh time in minutes	mail	en	Refresh time in minutes
-refused to delete folder inbox	mail	en	refused to delete folder INBOX
+refused to delete folder inbox	mail	en	refused to delete folder Inbox
 refused to delete folder with subfolders	mail	en	refused to delete folder with subfolders
 reject with	mail	en	reject with
-reloaded account %1	mail	en	Reloaded Account %1
-reloaded folder %1	mail	en	Reloaded Folder %1
+reloaded account %1	mail	en	Reloaded account %1
+reloaded folder %1	mail	en	Reloaded folder %1
 remember the password for	mail	en	Remember the password for
 remove "%1" from blacklisted domains	mail	en	Remove "%1" from blacklisted domains
 remove "%1" from blacklisted emails	mail	en	Remove "%1" from blacklisted emails
@@ -479,13 +479,13 @@ remove "%1" from whiltelisted domains	mail	en	Remove "%1" from whiltelisted doma
 remove "%1" from whiltelisted emails	mail	en	Remove "%1" from whiltelisted emails
 remove all	mail	en	Remove all
 remove immediately	mail	en	Remove immediately
-removed folder %1	mail	en	Removed Folder %1
+removed folder %1	mail	en	Removed folder %1
 removing %1 from blacklisted email addresses failed because of %2	mail	en	Removing %1 from blacklisted email addresses failed because of %2
 removing %1 from whiltelisted email addresses failed because of %2	mail	en	Removing %1 from whiltelisted email addresses failed because of %2
-rename folder	mail	en	Rename Folder
-rename folder %1 ?	mail	en	Rename Folder %1 ?
-rename folder %1 to:	mail	en	Rename Folder %1 to:
-renamed folder %1 to %2	mail	en	Renamed Folder %1 to %2
+rename folder	mail	en	Rename folder
+rename folder %1 ?	mail	en	Rename folder %1 ?
+rename folder %1 to:	mail	en	Rename folder %1 to:
+renamed folder %1 to %2	mail	en	Renamed folder %1 to %2
 replace 'http://' in image urls with (trailing / required!)	mail	en	Replace 'http://' in image urls with (trailing / required!)
 replied	mail	en	replied
 reply	mail	en	Reply
@@ -550,15 +550,15 @@ selected	mail	en	selected
 selected date range (with quicksearch)	mail	en	Selected date range (with quicksearch)
 send a reject message:	mail	en	Send a reject message:
 send files as	mail	en	Send files as
-send message and move to send folder (if configured)	mail	en	send message and move to send folder (if configured)
+send message and move to send folder (if configured)	mail	en	Send message and move to send folder (if configured)
 send message pgp encrypted: requires keys from all recipients!	mail	en	Send message PGP encrypted: requires keys from all recipients!
-send only a vacation notice, do not store message in inbox	mail	en	Send only a vacation notice, do NOT store message in INBOX
-send vacation notice and store message in inbox	mail	en	Send vacation notice and store message in INBOX
+send only a vacation notice, do not store message in inbox	mail	en	Send only a vacation notice, do NOT store message in Inbox
+send vacation notice and store message in inbox	mail	en	Send vacation notice and store message in Inbox
 sender	mail	en	sender
 sent	mail	en	Sent
-sent folder	mail	en	sent folder
+sent folder	mail	en	Sent Folder
 server supports special-use folders	mail	en	Server supports special-use folders
-serverside filterrules (sieve) are not activated	mail	en	Serverside filterrules (Sieve) are not activated
+serverside filterrules (sieve) are not activated	mail	en	Serverside filter rules (Sieve) are not activated
 serverside vacationnotice (via sieve) are not activated	mail	en	Serverside absent notice messages (via Sieve) are not activated
 set / remove flags	mail	en	Set / Remove flags
 set / remove labels	mail	en	Set / Remove labels
@@ -570,11 +570,11 @@ should signature be inserted after (standard) or before a reply or inline forwar
 show	mail	en	show
 show all addresses	mail	en	Show all addresses
 show all attachments	mail	en	Show all attachments
-show all folders	mail	en	show all Folders
-show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	en	show all folders, (subscribed AND unsubscribed) in main screen folder pane
-show horizontal	mail	en	show horizontal
-show horizontal, hide if none selected	mail	en	show horizontal, hide if none selected
-show new messages on home page	mail	en	show new messages on home page
+show all folders	mail	en	Show all folders
+show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	en	Show all folders, (subscribed AND unsubscribed) in main screen folder pane.
+show horizontal	mail	en	Show horizontal
+show horizontal, hide if none selected	mail	en	Show horizontal, hide if none selected
+show new messages on home page	mail	en	show new messages on Home page
 show notification for new arriving mails	mail	en	Show notification for new arriving emails
 show test connection section and control the level of info displayed?	mail	en	Show test connection section and control the level of info displayed?
 show test connection section and control the level of info displayed??	mail	en	Show test connection section and control the level of info displayed??
@@ -588,7 +588,7 @@ sieve connection status	mail	en	Sieve Connection Status
 sieve not activated	mail	en	Sieve not activated
 sieve script name	mail	en	Sieve script name
 sieve server	mail	en	Sieve server
-sieve_edit_instructions	mail	en	(*) wildcards (*,?) may be used. If you are trying to match * or ? itself, you must escape them with a backslash (\). If you check "Use regular expressions" you must use valid regular expressions. In order to escape of exclamation mark (!) at the begining not being used as "NOT", use regex and backslash (\) (e.g. \!)
+sieve_edit_instructions	mail	en	(*) Wildcards (*,?) may be used. If you are trying to match * or ? itself, you must escape them with a backslash (\). If you check "Use regular expressions" you must use valid regular expressions. In order to escape of exclamation mark (!) at the beginning not being used as "NOT", use regex and backslash (\) (e.g. \!)
 sign your message with smime certificate	mail	en	Sign your message with S/MIME certificate
 signature	mail	en	Signature
 signature at top	mail	en	signature at top
@@ -606,65 +606,65 @@ source	mail	en	Source
 sources	mail	en	Sources
 spamtitan api url	mail	en	SpamTitan API URL
 spamtitan integration requires epl version	mail	en	SpamTitan integration requires EPL version
-start new messages with mime type plain/text or html?	mail	en	Start new messages with MIME-type text or HTML?
+start new messages with mime type plain/text or html?	mail	en	Start new messages with Text or HTML?
 start reply messages with mime type plain/text or html or try to use the displayed format (default)?	mail	en	Reply to and forward emails in text format, in HTML format, or according to the format in which the email was originally composed by the sender (default).
 step 1: imap - incoming mail	mail	en	Step 1: IMAP - incoming email
 step 2: folder	mail	en	Step 2: Folder
 step 3: sieve - server side mail filtering	mail	en	Step 3: Sieve - server side email filtering
 step 4: smtp - outgoing mail	mail	en	Step 4: SMTP - outgoing email
-store to folder	mail	en	Store to Folder
+store to folder	mail	en	Store to folder
 subject(a->z)	mail	en	subject(A->Z)
 subject(z->a)	mail	en	subject(Z->A)
 subscribe folder	mail	en	Subscribe folder
 subscribe folder ...	mail	en	Subscribe folder ...
-subscribe to folder %1	mail	en	Subscribe to Folder %1
+subscribe to folder %1	mail	en	Subscribe to folder %1
 subscription folders	mail	en	Subscription folders
 subscription successfully saved.	mail	en	Subscription successfully saved.
 succeeded on %1 folders, failed on %2	mail	en	Succeeded on %1 folders, failed on %2
 successfully connected	mail	en	Successfully connected
 switch off encryption?	mail	en	Switch off encryption?
-template folder	mail	en	template folder
+template folder	mail	en	Template Folder
 templates	mail	en	Templates
-templates folder	mail	en	Templates folder
+templates folder	mail	en	Templates Folder
 test connection	mail	en	Test connection
-test connection and display basic information about the selected profile	mail	en	Test Connection and display basic information about the selected profile
+test connection and display basic information about the selected profile	mail	en	Test connection and display basic information about the selected profile
 text	mail	en	Text
 text mode	mail	en	Text mode
 text/plain	mail	en	Text
 the %1 's acl removed from the %2	mail	en	The %1 's ACL removed from the %2
 the %1 's acl, including its subfolders, removed from the %2	mail	en	The %1 's ACL, including its subfolders, removed from the %2
 the entered passphrase is not correct! please try again.	mail	en	The entered passphrase is not correct! Please try again.
-the folder %1 's acls saved	mail	en	The Folder %1 's ACLs saved
+the folder %1 's acls saved	mail	en	The folder %1 's ACLs saved
 the folder <b>%1</b> will be used, if there is nothing set here, and no valid predefine given.	mail	en	The folder <b>%1</b> will be used, if there is nothing set here, and no valid predefine given.
 the imap server need to meet certain requirements and be configured for it:	mail	en	The IMAP server need to meet certain requirements AND be configured for it:
 the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	mail	en	The message sender has requested a response to indicate that you have read this message. Would you like to send a receipt?
 the mimeparser can not parse this message.	mail	en	The mimeparser can not parse this message.
 the rule with priority %1 successfully saved!	mail	en	The rule with priority %1 successfully saved!
 then	mail	en	THEN
-there is no imap server configured.	mail	en	There is no IMAP Server configured.
+there is no imap server configured.	mail	en	There is no IMAP server configured.
 there is no space left to store sieve script, please check sieve_maxscriptsize option on your mailserver's config.	mail	en	There is no space left to store Sieve script, please check sieve_maxscriptsize option on your mailserver's config.
 this mail contains external images served via insecure http protocol. be aware showing or allowing them can compromise your security!	mail	en	This email contains external images served via insecure HTTP protocol. Be aware showing or allowing them can compromise your security!
 this message is smime encrypted and password protected.	mail	en	This message is S/MIME encrypted and password protected.
 timeout on connections to your imap server	mail	en	Timeout on connections to your IMAP Server
 to do	mail	en	To do
-toggle all folders view for %1	mail	en	Toggle all Folders view for %1
+toggle all folders view for %1	mail	en	Toggle all folders view for %1
 toggled on actions	mail	en	Toggled on actions
 trash	mail	en	Trash
 trash folder	mail	en	Trash folder
-trust servers seen / unseen info	mail	en	trust servers SEEN / UNSEEN info
+trust servers seen / unseen info	mail	en	Trust servers SEEN / UNSEEN info
 trust the server when retrieving the folder status. if you select no, we will search for the unseen messages and count them ourselves	mail	en	Trust the server when retrieving the folder status. if you select no, we will search for the UNSEEN messages and count them ourselves
 trying to recover from session data	mail	en	Trying to recover from session data
-turn off horizontal line between signature and composed message (this is not according to rfc).<br>if you use templates, this option is only applied to the text part of the message.	mail	en	Turn off horizontal line between signature and composed message (this is not according to RFC).<br>If you use templates, this option is only applied to the text part of the message.
+turn off horizontal line between signature and composed message (this is not according to rfc).<br>if you use templates, this option is only applied to the text part of the message.	mail	en	Turn off horizontal line between signature and composed message.<br>If you use templates, this option is only applied to the text part of the message.
 unable to fetch vacation!	mail	en	Unable to fetch vacation!
 undelete	mail	en	Undelete
 unflagged	mail	en	Unflagged
 unread	mail	en	unread
 unsubscribe folder	mail	en	Unsubscribe folder
-unsubscribe from folder %1	mail	en	Unsubscribe from Folder %1
+unsubscribe from folder %1	mail	en	Unsubscribe from folder %1
 upload files...	mail	en	Upload files...
 use default timeout (20 seconds)	mail	en	use default timeout (20 seconds)
 use regular expressions (see wikipedia for information on posix regular expressions)	mail	en	Use regular expressions (see https://en.wikipedia.org/wiki/Regular_expression)
-use source as displayed, if applicable	mail	en	use source as displayed, if applicable
+use source as displayed, if applicable	mail	en	Use source as displayed, if applicable
 use username+password from current user	mail	en	Use username+password from current user
 use wizard to detect or verify configuration	mail	en	Use wizard to detect or verify configuration
 vacation messages with start and end date require an admin account to be set!	mail	en	Vacation messages with start and end date require an admin account to be set!
@@ -678,21 +678,21 @@ vacation update failed	mail	en	vacation update failed
 valid for	mail	en	Valid for
 validate addresses on submit:	mail	en	Validate addresses on submit:
 validate selected addresses on submit:	mail	en	Validate selected addresses on submit:
-view full mail source	mail	en	View full Mail Source
+view full mail source	mail	en	View full email source
 view header lines	mail	en	View header lines
 what do do with html email	mail	en	What do do with HTML email
 what order the list columns are in	mail	en	What order the list columns are in
-what to do when you delete a message	mail	en	what to do when you delete a message
-what to do when you send a message	mail	en	what to do when you send a message
-when deleting messages	mail	en	when deleting messages
+what to do when you delete a message	mail	en	What to do when you delete a message
+what to do when you send a message	mail	en	What to do when you send a message
+when deleting messages	mail	en	When deleting messages
 when displaying messages in a popup, re-use the same popup for all or open a new popup for each message	mail	en	When displaying messages in a popup, re-use the same popup for all or open a new popup for each message
-when saving messages as item of a different app	mail	en	when saving messages as item of a different app
-when sending messages	mail	en	when sending messages
-which folders (additional to the sent folder) should be displayed using the sent folder view schema	mail	en	which folders (additional to the Sent Folder) should be displayed using the Sent Folder View Schema
+when saving messages as item of a different app	mail	en	When saving messages as item of a different EGroupware app
+when sending messages	mail	en	When sending messages
+which folders (additional to the sent folder) should be displayed using the sent folder view schema	mail	en	which folders (additional to the Sent Folder) should be displayed using the Sent Folder view schema
 which folders - in general - should not be automatically created, if not existing	mail	en	which folders - in general - should NOT be automatically created, if not existing
 which method to use when forwarding a message	mail	en	Which method to use when forwarding a message
 whitelisted mails are not marked as spam	mail	en	Whitelisted emails are not marked as spam
-whole message	mail	en	whole message
+whole message	mail	en	Whole message
 with message:	mail	en	With message:
 wizard	mail	en	Wizard
 writable sharing requires epl version!	mail	en	Writable sharing requires EPL version!
@@ -700,7 +700,7 @@ write	mail	en	write
 wrote	mail	en	wrote
 yes, but mask all passwords	mail	en	yes, but mask all passwords
 yes, but mask all usernames and passwords	mail	en	yes, but mask all usernames and passwords
-yes, offer copy option	mail	en	yes, offer copy option
+yes, offer copy option	mail	en	Yes, offer copy option
 yes, only trigger connection reset	mail	en	yes, only trigger connection reset
 yes, show all debug information available for the user	mail	en	yes, show all debug information available for the user
 yes, show basic info only	mail	en	yes, show basic info only

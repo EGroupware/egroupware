@@ -330,6 +330,8 @@ one day in advance	infolog	ru	За один день до
 ongoing	infolog	ru	В работе
 only for details	infolog	ru	Только для подробностей
 only if i get assigned or removed	infolog	ru	Только если Я  присоединен или отсоединен
+only show them if there is a filter	infolog	ru	Показывать их только при наличии фильтра
+only show them while searching	infolog	ru	Показывать их только во время поиска
 only the attachments	infolog	ru	Только вложения
 only the links	infolog	ru	Только ссылки
 open and upcoming	infolog	ru	Открытые и наступающие
@@ -345,6 +347,7 @@ own open and upcoming	infolog	ru	Свои открытые и наступающ
 own overdue	infolog	ru	Свои просроченные
 own upcoming	infolog	ru	Свои ожидаемые
 owner does not have edit rights	infolog	ru	Владелец не имеет прав на редактирование
+owner, responsible	infolog	ru	Владелец, ответственный
 parent	infolog	ru	Родитель
 parent infolog	infolog	ru	Родительская запись ИнфоЖурнала
 participants for scheduling an appointment	infolog	ru	Участники для расписания встречи
@@ -353,6 +356,7 @@ path to user and group files has to be outside of the webservers document-root!!
 pattern for search in addressbook	infolog	ru	Шаблон поиска в Адресной книге
 pattern for search in projects	infolog	ru	Шаблон для поиска в Проектах
 percent completed	infolog	ru	Завершено процентов
+performance optimization for huge infolog tables	admin	ru	Оптимизация производительности для огромных таблиц InfoLog
 permission denied	infolog	ru	Доступ запрещен!
 permissions error - %1 could not %2	infolog	ru	Ошибка доступа - %1 не может %2
 phone	infolog	ru	Телефонный Звонок
@@ -448,6 +452,7 @@ show full usernames	infolog	ru	Показывать полные имена по
 show in the infolog list	infolog	ru	Показывать в списке Журнала
 show last modified	infolog	ru	Показывать последнее изменение
 show status and percent done separate	infolog	ru	Показывать состояние и процент выполнения отдельно
+show sub-entries	infolog	ru	Показать подзаписи
 show ticket id	infolog	ru	Показывать идентификатор талона
 show times	infolog	ru	Показывать количество раз (времена?)
 small view	infolog	ru	Мелкий вид
@@ -456,6 +461,7 @@ start a new search, cancel this link	infolog	ru	начать новый поис
 startdate	infolog	ru	Дата Начала
 startdate enddate	infolog	ru	Дата Начала До Даты
 startdate for new entries	infolog	ru	Дата начала для новых записей
+startdate must be before enddate!!!	infolog	ru	Дата начала должна быть раньше даты исполнения!
 starting %1	infolog	ru	Начиная с %1
 startrecord	infolog	ru	Начальная запись
 status	infolog	ru	Состояние
@@ -491,6 +497,7 @@ typ '%1' already exists !!!	infolog	ru	Тип '%1' уже существует !
 type	infolog	ru	Тип
 type ...	infolog	ru	Тип ...
 type of customfield	infolog	ru	Тип пользовательского поля
+type of field	infolog	ru	Тип поля
 type of the log-entry: note, phonecall or todo	infolog	ru	Тип записи: Заметка, Телефонный звонок или Задание
 unable to link to %3 by custom field "%1": "%4".  %2 matches.	infolog	ru	Невозможно связать %3 по пользовательскому полю "%1": "%4". %2 входит.
 unknown type: %1	infolog	ru	Неизвестный тип: %1
@@ -509,6 +516,7 @@ values for selectbox	infolog	ru	Значения для списка выбор�
 view all subs of this entry	infolog	ru	Смотреть все дочерние записи этой записи
 view other subs	infolog	ru	Смотреть другие дочерние записи
 view parent	infolog	ru	Смотреть родительскую запись
+view parent with children	infolog	ru	Просмотр родителя с детьми
 view subs	infolog	ru	Смотреть дочерние записи
 view the parent of this entry and all his subs	infolog	ru	Показать родительскую запись данной записи и всех подзаписей
 view this linked entry in its application	infolog	ru	Показать данную запись в ее приложении

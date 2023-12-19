@@ -490,7 +490,7 @@ titles of any entries linked to the current record, excluding attached files	inf
 to many might exceed your execution-time-limit	infolog	it	troppi potrebbero superare il tuo limite di tempo di esecuzione
 to what should the startdate of new entries be set.	infolog	it	A quando deve essere impostata la data inizio delle nuove voci.
 today	infolog	it	Oggi
-todays date	infolog	it	data odierna
+todays date	infolog	it	Data odierna
 todo	infolog	it	ToDo
 typ	infolog	it	Tipo
 typ '%1' already exists !!!	infolog	it	Il tipo '%1' esiste già !!!
@@ -511,7 +511,7 @@ use custom notification message	infolog	it	Utilizza un messaggio di notifica per
 use field from csv if possible	infolog	it	Usa i campi del CSV se possibile
 use search results	infolog	it	Usa i risultati della ricerca
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	infolog	it	Usa questo tag per le etichette di indirizzo. Posiziona il contenuto da ripetere, tra due tag.
-used time	infolog	it	tempo effettivo
+used time	infolog	it	Tempo effettivo
 values for selectbox	infolog	it	Valori per la selectbox
 view all subs of this entry	infolog	it	Visualizza tutti le sub voci
 view other subs	infolog	it	visualizza altri sub
@@ -520,7 +520,7 @@ view parent with children	infolog	it	Visualizza genitore con figli
 view subs	infolog	it	Visualizza sotto-attività
 view the parent of this entry and all his subs	infolog	it	Visualizza i padri di queste voci e tutte i suoi subs
 view this linked entry in its application	infolog	it	Visualizza le voci linkate nella sua applicazione
-when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	it	quando i ToDo e le Chiamate Telefoniche iniziano, vengono visualizzati dalla data impostata sul filtro aperti o propri aperti (pagina iniziale)
+when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	it	Quando i ToDo e le Chiamate Telefoniche iniziano, vengono visualizzati dalla data impostata sul filtro aperti o propri aperti (pagina iniziale)
 which additional fields should the responsible be allowed to edit without having edit rights?	infolog	it	Che campi aggiuntivi sarà permesso modificare al responsabile senza avere diritti di modifica?
 which implicit acl rights should the responsible get	infolog	it	Quale ACL implicita deve essere fornita al responsabile
 which participants should be preselected when scheduling an appointment.	infolog	it	Quali partecipanti dovrebbero essere preselezionati quando si programma un appuntamento?

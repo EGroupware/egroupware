@@ -172,6 +172,7 @@ done	infolog	fi	Valmis
 download	infolog	fi	Lataa
 download url for links	infolog	fi	Linkkien URL
 due %1	infolog	fi	Erääntyy %1
+due date	infolog	fi	Eräpäivä
 duration	infolog	fi	Kesto
 e-mail:	infolog	fi	Sähköposti:
 each value is a line like <id>[=<label>]	infolog	fi	Jokainen arvo on rivillä kuten <id>[=<label>]
@@ -248,14 +249,14 @@ infolog - import csv-file	infolog	fi	Tehtävienhallinta - Tuo CSV-tiedosto
 infolog - new	infolog	fi	Tehtävä - Uusi
 infolog - new subproject	infolog	fi	Tehtävienhallinta - Uusi aliprojekti
 infolog - subprojects from	infolog	fi	Tehtävienhallinta - Aliprojektit kohteesta
-infolog csv export	infolog	fi	InfoLog CSV-vienti
+infolog csv export	infolog	fi	InfoLog CSV vienti
 infolog csv import	infolog	fi	InfoLog CSV tuonti
 infolog encryption requires epl subscription	infolog	fi	InfoLog-salaus vaatii EPL-tilauksen.
 infolog entry deleted	infolog	fi	Merkintä poistettu
 infolog entry saved	infolog	fi	Merkintä tallennettu
 infolog fields:	infolog	fi	Kentät:
 infolog filter for the home screen	infolog	fi	Tehtävienhallinnan suodatin etusivulle
-infolog ical export	infolog	fi	InfoLog iCal -vienti
+infolog ical export	infolog	fi	InfoLog iCal vienti
 infolog ical import	infolog	fi	InfoLog iCal tuonti
 infolog id	infolog	fi	Tehtävän ID
 infolog list	infolog	fi	Tehtävienhallinnan lista
@@ -315,10 +316,11 @@ no project	infolog	fi	Ei projektia
 nonactive	infolog	fi	Aktivoimaton
 none	infolog	fi	Ei mitään
 normal	infolog	fi	Normaali
-not	infolog	fi	ei
+not	infolog	fi	Ei
 not assigned	infolog	fi	Kohdistamattomat
 not-started	infolog	fi	Aloittamatta olevat
 note	infolog	fi	Muistiinpano
+notification settings	infolog	fi	Ilmoitusasetukset
 number of records to read (%1)	infolog	fi	(%1) tietuetta luettu
 number of row for a multiline inputfield or line of a multi-select-box	infolog	fi	Rivien määrä monenrivisessä tekstikentässä tai monivalintalaatikosta
 offer	infolog	fi	Tarjous
@@ -328,6 +330,8 @@ one day in advance	infolog	fi	Päivä etukäteen
 ongoing	infolog	fi	Meneillään oleva
 only for details	infolog	fi	Vain lisätiedot
 only if i get assigned or removed	infolog	fi	Vain jos minulle delegoidaan tai minut poistetaan vastuusta
+only show them if there is a filter	infolog	fi	Näyttää ne vain, jos on olemassa suodatin
+only show them while searching	infolog	fi	Näytä ne vain haun aikana
 only the attachments	infolog	fi	Vain liitteet
 only the links	infolog	fi	Vain linkit
 open and upcoming	infolog	fi	Avoimet ja tulevat
@@ -335,6 +339,7 @@ open(status)	infolog	fi	Avoimet
 optional note to the link	infolog	fi	Vapaaehtoinen muistiinpano linkkiin
 order	infolog	fi	Järjestä
 organization	infolog	fi	Organisaatio
+other configurations	infolog	fi	Muut asetukset
 overdue	infolog	fi	Myöhästynyt
 own	infolog	fi	Omat
 own open	infolog	fi	Omat avoimet
@@ -342,13 +347,16 @@ own open and upcoming	infolog	fi	Omat avoimet ja tulevat
 own overdue	infolog	fi	Omat myöhästyneet
 own upcoming	infolog	fi	Omat tulevat
 owner does not have edit rights	infolog	fi	Omistajalla ei ole muokkausoikeuksia
+owner, responsible	infolog	fi	Omistaja, vastuuhenkilö
 parent	infolog	fi	Päämerkintä
 parent infolog	infolog	fi	Päämerkintä
+participants for scheduling an appointment	infolog	fi	Osallistujat ajanvarauksen suunnitteluun
 path on (web-)serverside<br>eg. /var/samba/share	infolog	fi	Polku (web-)palvelimella<br>esim. /var/samba/Share
 path to user and group files has to be outside of the webservers document-root!!!	infolog	fi	Polku käyttäjän ja ryhmän tiedostoihin pitää olla palvelimen tiedostojuuren ULKOPUOLELLA!!!
-pattern for search in addressbook	infolog	fi	Merkkijonohaku osoitekirjasta
-pattern for search in projects	infolog	fi	Merkkijonohaku projekteista
+pattern for search in addressbook	infolog	fi	Osoitekirjan hakukuvio
+pattern for search in projects	infolog	fi	Kuvio hakua varten projekteissa
 percent completed	infolog	fi	Prosenttia valmistunut
+performance optimization for huge infolog tables	admin	fi	Suorituskyvyn optimointi suurille InfoLog-taulukoille
 permission denied	infolog	fi	Pääsy estetty
 permissions error - %1 could not %2	infolog	fi	Käyttöoikeus virhe - %1 ei voinut %2
 phone	infolog	fi	Puhelinsoitto
@@ -356,6 +364,7 @@ phone/email	infolog	fi	Puhelin/Sähköposti
 phonecall	infolog	fi	Puhelinsoitto
 planned	infolog	fi	Suunniteltu
 planned time	infolog	fi	Suunniteltu aikataulu
+prefix for sub-entries (default: re:)	infolog	fi	Alamerkintöjen etuliite (oletus: Re:)
 price	infolog	fi	Hinta
 pricelist	infolog	fi	Hinnasto
 primary link	infolog	fi	Ensisijainen linkki
@@ -371,11 +380,12 @@ projectmanager	infolog	fi	Projektinhallinta
 re-planned	infolog	fi	Uudelleen suunniteltu
 re-planned time	infolog	fi	Uudelleen suunniteltu aikataulu
 re:	infolog	fi	Re:
-read one record by passing its id.	infolog	fi	Lue yksi tietue ohittaen sen id.
+read one record by passing its id.	infolog	fi	Lue yksi tietue ohittaen sen ID.
 read rights (default)	infolog	fi	Lukuoikeudet (oletus)
 receive notifications about due entries you are responsible for	infolog	fi	Vastaanota muistutusviestejä eräpäivää lähestyvistä merkinnöistä/tehtävistä, joissa olet vastuuhenkilönä.
 receive notifications about due entries you delegated	infolog	fi	Vastaanota muistutusviestejä delegoimistasi eräpäivää lähestyvistä merkinnöistä/tehtävistä.
 receive notifications about items assigned to you	infolog	fi	Vastaanota muistutusviestejä sinulle delegoiduista merkinnöistä/tehtävistä.
+receive notifications about items of type owned by groups you are part of	infolog	fi	Ilmoitusten vastaanottaminen sellaisten kohteiden tyyppisistä kohteista, jotka ovat sellaisten ryhmien omistuksessa, joihin kuulut.
 receive notifications about own items	infolog	fi	Vastaanota muistutusviestejä omista merkinnöistä/tehtävistä.
 receive notifications about starting entries you are responsible for	infolog	fi	Vastaanota muistutusviestejä alkamassa olevista merkinnöistä/tehtävistä, joissa olet vastuuhenkilönä.
 receive notifications about starting entries you delegated	infolog	fi	Vastaanota muistutusviestejä delegoimistasi alkamassa olevista merkinnöistä/tehtävistä.
@@ -384,6 +394,7 @@ regular expression	infolog	fi	Yleisilmaisu
 remark	infolog	fi	Merkitse uudelleen
 remove this link (not the entry itself)	infolog	fi	Poista tämä linkki (ei poista itse merkintää)
 removed	infolog	fi	Poistettu.
+removed category	infolog	fi	Poistettu luokka
 replacement	infolog	fi	Sijaismerkintä
 replacements for inserting entries into documents	infolog	fi	Asiakirjoihin syötettävät sijaismerkinnät
 respect timesheet run and read permissions for time totals	infolog	fi	Kunnioita työaikataulujen ajo- ja lukuoikeuksia aikasummia varten.
@@ -400,8 +411,10 @@ same day	infolog	fi	Samana päivänä
 save	infolog	fi	Tallenna
 saves the changes made and leaves	infolog	fi	Tallenna muutokset ja poistu
 saves this entry	infolog	fi	Tallenna tämä merkintä
+schedule appointment	infolog	fi	Ajanvaraus
 search	infolog	fi	Etsi
 search for:	infolog	fi	Etsi:
+second parameter for preg_replace	infolog	fi	Toinen parametri preg_replace
 select	infolog	fi	Valitse
 select a category for this entry	infolog	fi	Valitse kategoria merkinnälle
 select a price	infolog	fi	Valitse hinta
@@ -418,6 +431,8 @@ select new category	infolog	fi	Valitse kategoria
 select to filter by owner	infolog	fi	Suodata omistajan mukaan
 select to filter by responsible	infolog	fi	Suodata vastuuhenkilön mukaan
 select users or groups	infolog	fi	Valitse käyttäjät tai ryhmät
+selected calendars	infolog	fi	Valitut kalenterit
+selection cf	infolog	fi	Valinta CF
 sender	infolog	fi	Lähettäjä
 set status to done	infolog	fi	Aseta tilaksi "Valmis"
 set status to done for all entries	infolog	fi	Aseta kaikkien merkintöjen tilaksi "Valmis"
@@ -432,10 +447,12 @@ should the infolog list show the column "last modified".	infolog	fi	Näyttääk�
 should the infolog list show the percent done only for status ongoing or two separate icons.	infolog	fi	Näyttääkö Tehtävienhallinta listauksessa montako prosenttia tehtävästä on tehty vai näytetäänkö kaksi erillistä kuvaketta?
 should this entry only be visible to you and people you grant privat access via the acl	infolog	fi	Pitäisikö tämän merkinnän näkyä vain sinulle ja niille joille olet antanut oikeudet ACL:ssä?
 show a column for used and planned times in the list.	infolog	fi	Näytä listalla sarakkeet käytetystä ja suunnitellusta ajankäytöstä.
+show a x if content equals this compare value, otherwise show nothing	infolog	fi	Näytä X, jos sisältö on yhtä suuri kuin tämä vertailuarvo, muuten ei näytä mitään.
 show full usernames	infolog	fi	Näytä koko käyttäjänimet
 show in the infolog list	infolog	fi	Näytä Tehtävienhallinnan listassa
 show last modified	infolog	fi	Näytä viimeksi muokattu
 show status and percent done separate	infolog	fi	Näytä tila ja prosenttia tehty, erillisinä kohtina.
+show sub-entries	infolog	fi	Näytä alatunnukset
 show ticket id	infolog	fi	Näytä merkinnän id
 show times	infolog	fi	Näytä ajat
 small view	infolog	fi	Pieni näkymä
@@ -444,6 +461,7 @@ start a new search, cancel this link	infolog	fi	Aloita uusi haku
 startdate	infolog	fi	Aloituspäivä
 startdate enddate	infolog	fi	Aloituspäivä, Erääntymispäivä
 startdate for new entries	infolog	fi	Aloituspäivä uusille merkinnöille
+startdate must be before enddate!!!	infolog	fi	Aloituspäivän on oltava ennen eräpäivää!
 starting %1	infolog	fi	Alkaa %1
 startrecord	infolog	fi	Startrecord
 status	infolog	fi	Tila
@@ -479,7 +497,10 @@ typ '%1' already exists !!!	infolog	fi	Tyyppi %1 on jo olemassa
 type	infolog	fi	Tyyppi
 type ...	infolog	fi	Tyyppi...
 type of customfield	infolog	fi	Lisäkentän tyyppi
+type of field	infolog	fi	Kentän tyyppi
 type of the log-entry: note, phonecall or todo	infolog	fi	Tehtävätyyppi: Muistio, Soitto, Tehtävä
+unable to link to %3 by custom field "%1": "%4".  %2 matches.	infolog	fi	Ei voida linkittää %3:een mukautetulla kentällä "%1": "%4". %2 vastaa.
+unknown type: %1	infolog	fi	Tuntematon tyyppi: %1
 unlink	infolog	fi	Poista linkki
 unlinked from %1	infolog	fi	%1 linkki poistettu
 upcoming	infolog	fi	Tuleva
@@ -495,6 +516,7 @@ values for selectbox	infolog	fi	Valintalaatikon arvot
 view all subs of this entry	infolog	fi	Näytä kaikki tämän merkinnän alamerkinnät
 view other subs	infolog	fi	Näytä muut alamerkinnät
 view parent	infolog	fi	Näytä päämerkintä
+view parent with children	infolog	fi	Näytä vanhempi ja lapset
 view subs	infolog	fi	Näytä alamerkinnät
 view the parent of this entry and all his subs	infolog	fi	Näytä tämän merkinnän päämerkintä ja kaikki sen alimerkinnät
 view this linked entry in its application	infolog	fi	Näytä tämä linkitetty merkintä sovelluksessa

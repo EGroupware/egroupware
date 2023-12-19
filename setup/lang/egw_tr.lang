@@ -3,11 +3,11 @@ add auto-created users to this group ('default' will be attempted if this is emp
 admins	setup	tr	Yöneticiler
 all users	setup	tr	Tüm Kullanıcılar
 application title	setup	tr	Uygulama Başlığı
-attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	setup	tr	FTP için 'application/octet-stream' yerine doğru mimetype kullanınız.
+attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	setup	tr	FTP için 'application/octet-stream' yerine doğru MIME type kullanınız.
 authentication / accounts	setup	tr	Doğrulama / Hesaplar
 auto create account records for authenticated users	setup	tr	Giriş yapan kullanıcılar için kayıt tut.
-bottom	setup	tr	taban
-cancel	setup	tr	İptal
+bottom	setup	tr	Taban
+cancel	setup	tr	Iptal
 check ip address of all sessions	setup	tr	Bütün oturumların IP'leri kontrol et
 configuration	setup	tr	Ayarlar
 country selection	setup	tr	Ülke seçimi
@@ -15,7 +15,7 @@ day	setup	tr	Gün
 default	setup	tr	Varsayılan
 default file system space per user/group ?	setup	tr	(Varsayılan) Kullanıcı/Grup disk alanı
 deny all users access to grant other users access to their entries ?	setup	tr	Bütün kullanıcıların diğer kullanıcıların girdilerine erişimini engelle ?
-download	setup	tr	?ndir
+download	setup	tr	İndir
 enter the hostname of the machine on which this server is running	setup	tr	Bu sunucunun çalıştığı makinanın hostadı'nı giriniz.
 enter the site password for peer servers	setup	tr	Peer sunucular için site şifresi giriniz.
 enter the site username for peer servers	setup	tr	Peer sunucular için site kullanıcı adı giriniz.
@@ -42,15 +42,23 @@ modified	setup	tr	Değiştirilmiş
 month	setup	tr	Ay
 new	setup	tr	Yeni
 next run	setup	tr	Sıradaki çalıştırma
-no algorithms available	setup	tr	mevcut hiç algoritma yok
-no modes available	setup	tr	mevcut hiç mod yok
+no algorithms available	setup	tr	Mevcut hiç algoritma yok
+no modes available	setup	tr	Mevcut hiç mod yok
 ok	setup	tr	Tamam
 or	setup	tr	ya da
 password for smtp-authentication	setup	tr	SMTP doğrulaması için şifre
 path information	setup	tr	Yol bilgisi
 preferences	setup	tr	Ayarlar
 re-enter password	setup	tr	Şifreyi yeniden giriniz
+regular expression to filter by dn	setup	tr	DN'ye göre filtrelemek için düzenli ifade
+rejected lines	setup	tr	Reddedilen hatlar
 remove	setup	tr	Kaldır
+remove all	setup	tr	Tümünü kaldırın
+rename	setup	tr	Yeniden Adlandır
+replace username and email	setup	tr	Kullanıcı adı ve e-postayı değiştirin
+replace username and keep email	setup	tr	Kullanıcı adını değiştirin ve e-postayı saklayın
+required to change passwords	setup	tr	Şifreleri değiştirmek için gerekli
+requires "reset password" privilege, to change passwords!	setup	tr	Şifreleri değiştirmek için "Şifreyi Sıfırla" ayrıcalığı gerekir!
 select where you want to store/retrieve user accounts	setup	tr	Kullanıcı hesaplarını saklamak istediğiniz yeri seçiniz
 selectbox	setup	tr	Seçim kutusu
 show 'powered by' logo on	setup	tr	'Powered by' logosunun gösterileceği yer

@@ -353,9 +353,10 @@ parent infolog	infolog	ja	親インフォログ
 participants for scheduling an appointment	infolog	ja	約束の参加者
 path on (web-)serverside<br>eg. /var/samba/share	infolog	ja	サーバーサイドのパス<br>例 /var/samba/Share
 path to user and group files has to be outside of the webservers document-root!!!	infolog	ja	ユーザ,グループ・ファイルのパスはドキュメント・ルートの外側にすべきです!
-pattern for search in addressbook	infolog	ja	アドレス帳の検索パターン
-pattern for search in projects	infolog	ja	プロジェクトの検索パターン
+pattern for search in addressbook	infolog	ja	住所録検索パターン
+pattern for search in projects	infolog	ja	プロジェクト内検索のパターン
 percent completed	infolog	ja	パーセント完了
+performance optimization for huge infolog tables	admin	ja	巨大なInfoLogテーブルのパフォーマンス最適化
 permission denied	infolog	ja	権限が拒否されました!
 permissions error - %1 could not %2	infolog	ja	権限エラー - %1 は %2 をできません。
 phone	infolog	ja	電話
@@ -396,6 +397,7 @@ removed	infolog	ja	削除されました。
 removed category	infolog	ja	削除済みカテゴリ
 replacement	infolog	ja	置換
 replacements for inserting entries into documents	infolog	ja	ドキュメントに項目挿入時に用いる置換
+respect timesheet run and read permissions for time totals	infolog	ja	タイムシートの実行と時間合計の読み取り権限の尊重
 responsible	infolog	ja	責任者
 responsible open	infolog	ja	責任者 オープン
 responsible open and upcoming	infolog	ja	責任者 オープン 直近
@@ -446,6 +448,7 @@ should the infolog list show the percent done only for status ongoing or two sep
 should this entry only be visible to you and people you grant privat access via the acl	infolog	ja	この項目を閲覧できる人を、あなた自身と、ACLを通じて許可した人のみに制限します。
 show a column for used and planned times in the list.	infolog	ja	計画時間と消費時間のカラムを表示します。
 show a x if content equals this compare value, otherwise show nothing	infolog	ja	内容が、この比較対象値と一致する場合は X を表示します。そうでない場合は何も表示しません。
+show full usernames	infolog	ja	完全なユーザー名を表示
 show in the infolog list	infolog	ja	インフォログ一覧で表示
 show last modified	infolog	ja	最終更新日時を表示
 show status and percent done separate	infolog	ja	状態と進捗％を別々に表示

@@ -39,7 +39,7 @@ add a new note	infolog	et	Lisa uus Märkus
 add a new phonecall	infolog	et	Lisa uus Telefonikõne
 add a new todo	infolog	et	Lisa uus ToDo
 add file	infolog	et	Lisa fail
-add sub	infolog	et	lisa alam
+add sub	infolog	et	Lisa alam
 add timesheet entry	infolog	et	Lisa Timesheet kirje
 add:	infolog	et	Lisa:
 added	infolog	et	Lisatud
@@ -56,12 +56,12 @@ attach a file	infolog	et	Kaasa fail
 attach file	infolog	et	Kaasa fail
 automatically check 'do not notify' for these types	infolog	et	Kontrollida automaatselt "Ära teavita" nende tüüpide puhul
 back to main list	infolog	et	Tagasi pealisti
-billed	infolog	et	makstud
-both	infolog	et	mõlemad
-call	infolog	et	helista
+billed	infolog	et	Makstud
+both	infolog	et	Mõlemad
+call	infolog	et	Helista
 can not return an exact number of rows and therefore hides the count.	admin	et	Ei saa tagastada ridade täpset arvu ja seetõttu peidab loendi.
 cancel	infolog	et	Tühista
-cancelled	infolog	et	tühistatud
+cancelled	infolog	et	Tühistatud
 categories	infolog	et	Kategooriad
 category	infolog	et	Kategooria
 change	infolog	et	Muuda
@@ -81,8 +81,8 @@ contact cf	infolog	et	Kontakt CF
 convert to a ticket	infolog	et	Teisendada piletiks
 create new links	infolog	et	Tee uued lingid
 created	infolog	et	Loodud
-creates a new field	infolog	et	teeb uue välja
-creation	infolog	et	tegemine
+creates a new field	infolog	et	Teeb uue välja
+creation	infolog	et	Tegemine
 csv-fieldname	infolog	et	CSV-Väljanimi
 csv-filename	infolog	et	CSV-Failinimi
 csv-import	common	et	CSV-Impirt
@@ -130,14 +130,14 @@ due %1	infolog	et	Kohustuslik %1
 due date	infolog	et	Tähtaeg
 duration	infolog	et	Kestvus
 e-mail:	infolog	et	E-post:
-each value is a line like <id>[=<label>]	infolog	et	iga väärtus on rida nagu <id>[=<label>]
+each value is a line like <id>[=<label>]	infolog	et	Iga väärtus on rida nagu <id>[=<label>]
 edit	infolog	et	Muuda
 edit or create categories for ingolog	infolog	et	Muuda või tee InfoLog katekooriaid
-edit rights (full edit rights incl. making someone else responsible!)	infolog	et	muuda õigusi (täis muutmise õigused koos õigusega teha keegi teine vastutavaks!)
+edit rights (full edit rights incl. making someone else responsible!)	infolog	et	Töötlemisõigused. Täielikud redigeerimisõigused, sh kellegi teise vastutavaks tegemine!
 edit status	infolog	et	Muuda staatust
 edit the entry	infolog	et	Muuda kirjet
 edit this entry	infolog	et	Muuda seda kirjet
-empty for all	infolog	et	tühi kõigijaoks
+empty for all	infolog	et	Tühi kõigijaoks
 encrypt description	infolog	et	Krüpteeri kirjeldus
 end	infolog	et	Lõpp
 enddate	infolog	et	Tähtaja kuupäev
@@ -162,7 +162,7 @@ field must not be empty !!!	infolog	et	Väli ei tohi jääda tühjaks !!!
 fields to exclude when copying an infolog:	infolog	et	Väljad, mis jäetakse välja InfoLogi kopeerimisel:
 fields to exclude when creating a sub-entry:	infolog	et	Väljad, mida välistada alamkande loomisel:
 fieldseparator	infolog	et	Väljaeraldaja
-finish	infolog	et	lõpp
+finish	infolog	et	Lõpp
 first argument for preg_replace	infolog	et	Esimene argument preg_replace jaoks
 for infolog type %1, %2 is required	infolog	et	InfoLogi tüübi %1 puhul on %2 nõutav.
 for serial letter use this tag. put the content, you want to repeat between two tags.	infolog	et	Seerianumbrite puhul kasutage seda sildi. Asetage sisu, mida soovite korrata, kahe sildi vahele.
@@ -170,7 +170,7 @@ full list of placeholder names	infolog	et	Täielik loetelu paigutussalvestiste n
 general settings	infolog	et	Üldised seaded
 global categories	infolog	et	Globaalsed Kategooriad
 group owner for	infolog	et	Rühma omanik
-high	infolog	et	kõrge
+high	infolog	et	Kõrge
 history	infolog	et	Ajalugu
 history logging	infolog	et	Ajaloo logimine
 history logging and deleting of items	infolog	et	Ajaloo logimine ja objektide kustutamine
@@ -190,19 +190,19 @@ imports entries into the infolog from a csv file. csv means 'comma separated val
 imports todos into infolog from an ical file.	infolog	et	Impordib TODOd InfoLogi iCal-failist.
 info log	common	et	InfoLog
 infolog	common	et	InfoLog
-infolog - delete	infolog	et	Info Log - Kustuta
+infolog - delete	infolog	et	InfoLog - Kustuta
 infolog - edit	infolog	et	InfoLog - Muuda
 infolog - import csv-file	infolog	et	InfoLog - Impordi CSV-Fail
 infolog - new	infolog	et	InfoLog - Uus
 infolog - new subproject	infolog	et	InfoLog - Uus Alamprojekt
 infolog - subprojects from	infolog	et	InfoLog - Alamprojektid alates
-infolog csv export	infolog	et	InfoLogi iCal-iCal-i eksport
-infolog csv import	infolog	et	InfoLog iCal import
-infolog encryption requires epl subscription	infolog	et	InfoLogi krüpteerimine nõuab EPL tellimust
+infolog csv export	infolog	et	InfoLog CSV eksport
+infolog csv import	infolog	et	InfoLog CSV import
+infolog encryption requires epl subscription	infolog	et	InfoLog krüpteerimine nõuab EPL tellimust
 infolog entry deleted	infolog	et	InfoLog kirje kustutatud
 infolog entry saved	infolog	et	InfoLog kirje salvestatud
-infolog fields:	infolog	et	InfoLogi väljad:
-infolog filter for the home screen	infolog	et	InfoLogi filter avakuva jaoks
+infolog fields:	infolog	et	InfoLog väljad:
+infolog filter for the home screen	infolog	et	InfoLog filter avakuva jaoks
 infolog ical export	infolog	et	InfoLog iCal eksport
 infolog ical import	infolog	et	InfoLog iCal import
 infolog id	infolog	et	InfoLog ID
@@ -221,7 +221,7 @@ last modified	infolog	et	Viimati muudetud
 leave it empty	infolog	et	Jäta see tühjaks
 leave it empty for a full week	infolog	et	Jäta tühjaks terve nädala jaoks
 leave without saveing the entry	infolog	et	Jäta kanne salvestamata
-leaves without saveing	infolog	et	lahkub ilma salvestamatta
+leaves without saveing	infolog	et	Lahkub ilma salvestamatta
 length	infolog	et	Pikkus
 limit list to last n month, if ordering by last-modified and not searching.	admin	et	Piirake nimekiri viimase N kuuga, kui järjestatakse viimase muudetud ja ei otsita.
 limit number of description lines (default 5, 0 for no limit)	infolog	et	Piirake kirjelduse ridade arvu. Vaikimisi = 5, 0 = piirangut ei ole.
@@ -246,72 +246,129 @@ new name	infolog	et	Uus nimi
 new search	infolog	et	Uus otsing
 no - cancel	infolog	et	Ei -Tühista
 no custom field "%1" for %2.	infolog	et	Puudub kohandatud väli "%1" %2 jaoks.
-no details	infolog	et	mitte detailselt
+no details	infolog	et	Mitte detailselt
 no filter	infolog	et	Filtrita
 none	infolog	et	Puudub
-normal	infolog	et	normaalne
-not-started	infolog	et	pole alustatud
+normal	infolog	et	Normaalne
+not-started	infolog	et	Pole alustatud
 note	infolog	et	Märkus
-offer	infolog	et	pakkumine
-one day after	infolog	et	üks päev pärast
-one day in advance	infolog	et	üks päev enne
-ongoing	infolog	et	käimasolev
-open(status)	infolog	et	avatud
-own	infolog	et	endaoma
-own open	infolog	et	endaoma avatud
+notification settings	infolog	et	Teavituse seaded
+offer	infolog	et	Pakkumine
+old fixed definition	infolog	et	Vana fikseeritud määratlus
+one day after	infolog	et	Üks päev pärast
+one day in advance	infolog	et	Üks päev enne
+ongoing	infolog	et	Käimasolev
+only show them if there is a filter	infolog	et	Näitab neid ainult siis, kui on olemas filter
+only show them while searching	infolog	et	Näita neid ainult otsingu ajal
+open(status)	infolog	et	Avatud
+other configurations	infolog	et	Muud seadistused
+own	infolog	et	Endaoma
+own open	infolog	et	Endaoma avatud
+owner, responsible	infolog	et	Omanik, vastutav isik
+participants for scheduling an appointment	infolog	et	Osalejad kohtumise planeerimiseks
+pattern for search in addressbook	infolog	et	Otsingu muster aadressiraamatus
+pattern for search in projects	infolog	et	Projektiotsingu muster
 percent completed	infolog	et	Protsent valmis
+performance optimization for huge infolog tables	admin	et	Suurte InfoLog tabelite jõudluse optimeerimine
 permission denied	infolog	et	Ligipääs keelatud
 phone	infolog	et	Telefonikõne
 phone/email	infolog	et	Telefon/Email
 phonecall	infolog	et	Telefoni Kõne
-planned	infolog	et	kavandatud
-planned time	infolog	et	kavandatud aeg
+planned	infolog	et	Kavandatud
+planned time	infolog	et	Kavandatud aeg
+prefix for sub-entries (default: re:)	infolog	et	Alamrubriikide eesliide (vaikimisi: Re:)
 price	infolog	et	Hind
 print this infolog	infolog	et	Trükkida see InfoLog
 printing...	infolog	et	Trükkimine...
 priority	infolog	et	Prioriteet
 private	infolog	et	Privaatne
 project	infolog	et	Projekt
+project id	infolog	et	Projekti ID
+project name	infolog	et	Projekti nimi
 project settings: price, times	infolog	et	Projekti seaded: hind, ajad
-respect timesheet run and read permissions for time totals	infolog	et	Arvestada tööajatabelite käivitamise ja lugemisõigustega ajasummade puhul
-responsible	infolog	et	vastutav
-responsible open	infolog	et	vastutav avatud
-same day	infolog	et	sama päev
+receive notifications about due entries you are responsible for	infolog	et	Saate teateid selliste objektide kohta, mille omanikuks on rühmad, kuhu te kuulute.
+regular expression	infolog	et	Regulaaravaldis
+removed	infolog	et	Eemaldatud.
+removed category	infolog	et	eemaldatud kategooria
+replacement	infolog	et	Asendamine
+replacements for inserting entries into documents	infolog	et	Asendused kirjete sisestamiseks dokumentidesse
+respect timesheet run and read permissions for time totals	infolog	et	Ajakirjanduse jooksva tööaja ja loe aja kogusummade lugemisõigust austama
+responsible	infolog	et	Vastutav
+responsible open	infolog	et	Vastutav avatud
+responsible open and upcoming	infolog	et	Vastutav avatud ja eelseisev
+responsible overdue	infolog	et	Vastutab üle tähtaja
+rows	infolog	et	Rid
+same day	infolog	et	Sama päev
 save	infolog	et	Salvesta
+schedule appointment	infolog	et	Plaani kohtumine
 search	infolog	et	Otsi
 search for:	infolog	et	Otsi:
+second parameter for preg_replace	infolog	et	Teine parameeter preg_replace jaoks
 select	infolog	et	Märgi
 select a price	infolog	et	Vali hind
 select a project	infolog	et	Vali Projekt
+select an action	infolog	et	Valige tegevus
+select an action...	infolog	et	Valige tegevus...
+select new category	infolog	et	Valige uus kategooria
+select users or groups	infolog	et	Valige kasutajad või rühmad
+selected calendars	infolog	et	Valitud kalendrid
+selection cf	infolog	et	Valik CF
+sender	infolog	et	Saatja
+set status to done	infolog	et	Seadistage staatus valmis
+set status to done for all entries	infolog	et	Määrake kõigi kirjete staatuseks "valmis".
+sets the status of this entry to done	infolog	et	Seadistab selle kirje staatuse valmis
+show a x if content equals this compare value, otherwise show nothing	infolog	et	Näita X, kui sisu on võrdne selle võrdlusväärtusega, muidu ei näita midagi.
+show full usernames	infolog	et	Täielike kasutajanimede kuvamine
 show in the infolog list	infolog	et	Näita InfoLog listis
 show last modified	infolog	et	Näita viimati muudetud
+show sub-entries	infolog	et	Näita alamkandeid
+show ticket id	infolog	et	Näita pileti ID-d
 show times	infolog	et	Näita aegu
-small view	infolog	et	väike vaade
+small view	infolog	et	Väike vaade
 start	infolog	et	Start
 startdate	infolog	et	Algus kuupäev
+startdate for new entries	infolog	et	Uute kannete alguskuupäev
+startdate must be before enddate!!!	infolog	et	Alguskuupäev peab olema enne tähtaega!
+starting %1	infolog	et	Algus %1
 status	infolog	et	Staatus
 status ...	infolog	et	Staatus ...
+status, percent and date completed are always allowed.	infolog	et	Staatus, protsent ja lõpetamise kuupäev on alati lubatud.
 sub	infolog	et	Alam
+sub-entries will not be closed	infolog	et	Alamkandeid ei suleta
+sub-entry	infolog	et	Alamkanne
 subject	infolog	et	Subjekt
+sum	infolog	et	Summa
+tag to mark positions for address labels	infolog	et	Silt aadressimärkide positsioonide tähistamiseks
 the document can contain placeholder like {{%1}}, to be replaced with the data.	infolog	et	Dokument võib sisaldada paigutussätteid nagu {{%1}}, mis asendatakse andmetega.
 today	infolog	et	Täna
 typ	infolog	et	Tüüp
 typ '%1' already exists !!!	infolog	et	Tüüp '%1' eksisteerib juba !!!
 type	infolog	et	Tüüp
 type ...	infolog	et	Tüüp ...
-upcoming	infolog	et	kavandatav
-urgency	infolog	et	kiireloomulisus
-urgent	infolog	et	kiire
-used time	infolog	et	kasutauud aeg
-view other subs	infolog	et	näita teisi alam
+type of field	infolog	et	Põllu tüüp
+type of the log-entry: note, phonecall or todo	infolog	et	InfoLog kande tüüp
+unable to link to %3 by custom field "%1": "%4".  %2 matches.	infolog	et	Ei ole võimalik luua linki %3 kohandatud väljaga "%1": "%4". %2 vastab.
+unknown type: %1	infolog	et	Tundmatu tüüp: %1
+unlinked from %1	infolog	et	Ei ole lingitud %1-st
+upcoming	infolog	et	Kavandatav
+urgency	infolog	et	Kiireloomulisus
+urgent	infolog	et	Kiire
+use custom notification message	infolog	et	Kasutage kohandatud teavitussõnumit
+used time	infolog	et	Kasutauud aeg
+view other subs	infolog	et	Näita teisi alam
 view parent	infolog	et	Näita ülem
-view subs	infolog	et	näita Alam
+view parent with children	infolog	et	Vaadake vanem koos lastega
+view subs	infolog	et	Näita Alam
 which types should the calendar show	infolog	et	Milliseid tüüpe peaks kalender näitama
 which types should the calendar show like events?	infolog	et	Milliseid tüüpe peaks kalender näitama nagu sündmused?
 yes - close	infolog	et	Jah - Sulge
 yes - close including sub-entries	infolog	et	Jah - Sulge, sealhulgas alamkanded
 yes - delete	infolog	et	Jah - Kustuta
 yes - delete including sub-entries	infolog	et	Jah - Kustuta koos alam-kirjetega
+yes, noone can purge deleted items	infolog	et	Jah, keegi ei saa kustutada kustutatud kirjeid
+yes, only admins can purge deleted items	infolog	et	Jah, ainult administraatorid saavad kustutatud objekte kustutada
+yes, with larger fontsize	infolog	et	Jah, suurema kirjasuurusega
+yes, with purging of deleted items possible	infolog	et	Jah, kustutatud kirjete kustutamine võimalik
 you can choose a categorie to be preselected, when you create a new infolog entry	infolog	et	Uue InfoLogi kande loomisel saate valida eelvaliku kategooria.
 you can't delete one of the stock types !!!	infolog	et	Te ei saa kustutada ühte laotüüpi!
 you have to enter a name, to create a new type!	infolog	et	Uue tüübi loomiseks peate sisestama nime!

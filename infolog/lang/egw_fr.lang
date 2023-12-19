@@ -455,7 +455,7 @@ show status and percent done separate	infolog	fr	Montrer les statuts et pourcent
 show sub-entries	infolog	fr	Afficher les sous-éléments
 show ticket id	infolog	fr	Montrer le numéro de ticket
 show times	infolog	fr	Montrer les heures
-small view	infolog	fr	vue réduite
+small view	infolog	fr	Vue réduite
 start	infolog	fr	Début
 start a new search, cancel this link	infolog	fr	Démarre une nouvelle recherche, annule ce lien
 startdate	infolog	fr	Date de départ
@@ -481,16 +481,16 @@ test import (show importable records <u>only</u> in browser)	infolog	fr	Tester l
 the document can contain placeholder like {{%1}}, to be replaced with the data.	infolog	fr	Le document peut contenir des caractères génériques tels que {{%1}}, qui seront remplacés par les données.
 the following document-types are supported:	infolog	fr	Les types de documents suivants sont autorisés :
 the name used internaly (<= 10 chars), changeing it makes existing data unavailible	infolog	fr	le nom utilisé en interne (<= 10 caractères), le modifier rend les données indisponible
-the name used internaly (<= 20 chars), changeing it makes existing data unavailible	infolog	fr	le nom est utilisé en interne (<= 20 caractères), si vous le modifiez vous rendez les données indisponibles
-the text displayed to the user	infolog	fr	le texte affiché pour l´utilisateur
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	infolog	fr	Le nom est utilisé en interne (<= 20 caractères), si vous le modifiez vous rendez les données indisponibles
+the text displayed to the user	infolog	fr	Le texte affiché pour l´utilisateur
 this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	fr	Ceci est le filtre qu'InfoLog utilise quand vous entrez dans l'application. Les filtres limitent les entrées à montrer dans la  vue actuelle. Il y a des filtres pour montrer seulement ceux temrminés, encore ouverts ou les futures entrées de vous-même ou de tous les utilisateurs.
 til when should the todo or phonecall be finished	infolog	fr	Quand la tâche ou l'appel téléphonique devrait être terminé
 times	infolog	fr	Heures
 titles of any entries linked to the current record, excluding attached files	infolog	fr	Titres de toutes les entrées liées à l'enregistrement courant, à l'exception des fichiers
-to many might exceed your execution-time-limit	infolog	fr	trop peut excéder votre temps limite d´exécution.
+to many might exceed your execution-time-limit	infolog	fr	Trop peut excéder votre temps limite d´exécution.
 to what should the startdate of new entries be set.	infolog	fr	A quoi devrait être fixée la date de départ de la nouvelle entrée.
 today	infolog	fr	Aujourd'hui
-todays date	infolog	fr	date du jour
+todays date	infolog	fr	Date du jour
 todo	infolog	fr	Tâche
 typ	infolog	fr	Type
 typ '%1' already exists !!!	infolog	fr	Le type '%1' existe déjà !

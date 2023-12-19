@@ -5,13 +5,13 @@
 %1 is %2%3 !!!	setup	sv	%1 är %2%3 !
 %1 the configuration file.	setup	sv	%1 konfigurations filen.
 '%1' is not allowed as %2. arguments of option %3 !!!	setup	sv	'%1' tillåts inte som %2 argument till %3!
-(searching accounts and changing passwords)	setup	sv	(söker konton och ändrar lösenord)
+(searching accounts and changing passwords)	setup	sv	Söka konton och ändra lösenord.
 *** do not update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your db in an unrecoverable state (your data is lost) !!!	setup	sv	Uppdatera *INTE* databasen via installationen. Uppdateringen kan avbrytas av max_execution_time vilket förstör databasen oåterkallerligt!!
 *** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	sv	***Du måste uppdatera php.ini manuellt (finns vanligtvis i /etc på Linux och i windows-mappen på Windows) för att EGw ska fungera.
 00 (disable)	setup	sv	00 (stäng av/rekomenderat)
 13 (ntp)	setup	sv	13 (ntp)
 80 (http)	setup	sv	80 (http)
-<b>charset to use</b> (use utf-8 if you plan to use languages with different charsets):	setup	sv	<b>teckentabell som skall användas</b> (använd utf-8 om du skall ha stöd för språk med olika teckentabeller)
+<b>charset to use</b> (use utf-8 if you plan to use languages with different charsets):	setup	sv	<b>teckentabell som skall användas</b> (använd UTF-8 om du skall ha stöd för språk med olika teckentabeller)
 access denied: wrong username or password for manage-header !!!	setup	sv	Åtkomst nekas: fel användarnamn eller lösenord för att hantera header!
 access denied: wrong username or password to configure the domain '%1(%2)' !!!	setup	sv	Åtkomst nekas: fel användarnamn eller lösenord för att hantera domänen '%1(%2)'!
 account repository{sql(default) | ldap},[authentication{sql | ldap | mail | ads | http | ...}],[sql encrypttion{md5 | blowfish_crypt | md5_crypt | crypt}],[check save password{ (default)|true}],[allow cookie auth{ (default)|true}]	setup	sv	Kontodatabasen {sql(standard) | ldap},[autenticering{sql | ldap | mail | ads | http | ...}],[sql kryptering{md5 | blowfish_crypt | md5_crypt | crypt}],[check spara lösenord{ (standard)|True}],[tillåt cookie auth{ (standard)|True}]
@@ -84,20 +84,20 @@ backup now	setup	sv	Backa upp nu
 backup sets	setup	sv	Backup-set
 backup skipped!	setup	sv	Backup ignorerad
 backup started, this might take a few minutes ...	setup	sv	Backup har påbörjats, kan ta några minuter
-because an application it depends upon was upgraded	setup	sv	på grund av att en applikation som den var beroende av har uppgraderats
-because it depends upon	setup	sv	eftersom den är beroende av
-because it is not a user application, or access is controlled via acl	setup	sv	eftersom det inte är en användarapplikation, eller för att åtkomst kontrolleras med en ACL
-because it requires manual table installation, <br />or the table definition was incorrect	setup	sv	eftersom den kräver manuell installation av tabeller, <br />eller att  tabelldefinitionen var inkorrekt
-because it was manually disabled	setup	sv	eftersom den inaktiverats manuellt
-because of a failed upgrade or install	setup	sv	eftersom uppgradering eller installation misslyckats
-because of a failed upgrade, or the database is newer than the installed version of this app	setup	sv	eftersom uppgradering misslyckats, eller att databasen är nyare än den installerade versionen av denna applikation
-because the enable flag for this app is set to 0, or is undefined	setup	sv	eftersom påkopplad-flaggan för denna applikation är satt till 0 eller är odefinerad
+because an application it depends upon was upgraded	setup	sv	På grund av att en applikation som den var beroende av har uppgraderats
+because it depends upon	setup	sv	Eftersom den är beroende av
+because it is not a user application, or access is controlled via acl	setup	sv	Eftersom det inte är en användarapplikation, eller för att åtkomst kontrolleras med en ACL
+because it requires manual table installation, <br />or the table definition was incorrect	setup	sv	Eftersom den kräver manuell installation av tabeller, <br />eller att  tabelldefinitionen var inkorrekt
+because it was manually disabled	setup	sv	Eftersom den inaktiverats manuellt
+because of a failed upgrade or install	setup	sv	Eftersom uppgradering eller installation misslyckats
+because of a failed upgrade, or the database is newer than the installed version of this app	setup	sv	Eftersom uppgradering misslyckats, eller att databasen är nyare än den installerade versionen av denna applikation
+because the enable flag for this app is set to 0, or is undefined	setup	sv	Eftersom påkopplad-flaggan för denna applikation är satt till 0 eller är odefinerad
 bottom	setup	sv	Nederst
 but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br /><strong>these automated scripts can easily destroy your data.</strong>	setup	sv	Men vi <u> rekommenderar starkt att du backar upp</u> dina tabeller ifall att installationen skulle råka förstöra data. <br /> <strong>Dessa automatiserade skript kan med lätthet förstöra data i dina tabeller!</strong>
 cancel	setup	sv	Avbryt
 cannot create the header.inc.php due to file permission restrictions.<br /> instead you can %1 or %2 the file.	setup	sv	Kunde inte skapa header.inc.php pga filrättigheter.<br /> Du kan %1 eller %2 filen.
 change system-charset	setup	sv	Ändra system-teckentabell
-charset	setup	sv	utf-8
+charset	setup	sv	Charset
 charset to convert to	setup	sv	Teckenuppsättning att konvertera till
 charsets used by the different languages	setup	sv	Teckenuppsättning som används av olika länder
 check can only be performed, if called via a webserver, as the user-id/-name of the webserver is not known.	setup	sv	Kontrollen kan endast genomföras om den anropas via webserver, eftersom webserverns användarkonto inte är känt.
@@ -187,7 +187,7 @@ details for admin account	setup	sv	Detaljer för Adminkontot
 did not find any valid db support!	setup	sv	Kunde inte hitta något giltigt databasstöd
 do you want persistent connections (higher performance, but consumes more resources)	setup	sv	Vill du använda persistent connections? (bättre prestanda men använder fler systemresurser)
 do you want to manage homedirectory and loginshell attributes?	setup	sv	Vill du hantera attribut för hemkatalog och skalprogram?
-does not exist	setup	sv	existerar inte
+does not exist	setup	sv	Existerar inte
 domain	setup	sv	Domän
 domain '%1' does not exist !!!	setup	sv	Domänen '%1' finns inte
 domain name	setup	sv	Domän
@@ -306,7 +306,7 @@ ldap groups context	setup	sv	LDAP grupp kontext
 ldap host	setup	sv	LDAP värd (server)
 ldap import	setup	sv	LDAP import
 ldap root password	setup	sv	LDAP root lösenord
-ldap rootdn	setup	sv	LDAP root dn
+ldap rootdn	setup	sv	LDAP Root DN
 ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setup	sv	LDAP sökfilter för konton, standard: "(uid=%user)", %domain=EGw-domain
 leave empty to keep current.	setup	sv	Lämnas tomt för att behålla befintligt
 limit access	setup	sv	Begränsa åtkomst
@@ -356,7 +356,7 @@ no header admin password set! use --edit-header <password>[,<user>] to set one (
 no modes available	setup	sv	Inga lägen tillgängliga
 no update necessary, domain %1(%2) is up to date.	setup	sv	Ingen uppdatering behövs, domänen %1(%2) är klar
 no xml support found. disabling	setup	sv	Inget stöd för XML. Inaktiverar
-not	setup	sv	inte
+not	setup	sv	Inte
 not all mcrypt algorithms and modes work with egroupware. if you experience problems try switching it off.	setup	sv	Inte alla mcrypt algoritmer och lägen fungerar med EGroupware. Om du upplever problem bör du testa att inaktivera stödet.
 not complete	setup	sv	Inte färdigt
 not completed	setup	sv	Inte avslutat
@@ -413,11 +413,16 @@ read translations from	setup	sv	Läs in översättningar från
 readable by the webserver	setup	sv	läsbar av webservern
 really uninstall all applications	setup	sv	Vill du verkligen avinstallera samtliga installationer
 register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	sv	register_globals är PÅslagen, EGroupware kräver inte det och det är säkrare med det AVslaget.
-registered	setup	sv	registrerad
+registered	setup	sv	Registrerad
+regular expression to filter by dn	setup	sv	Reguljärt uttryck för att filtrera efter DN
 rejected lines	setup	sv	Ej godtagna rader
 remove	setup	sv	Radera
 remove all	setup	sv	Radera samtliga
 rename	setup	sv	Byt namn
+replace username and email	setup	sv	Ersätt användarnamn och e-post
+replace username and keep email	setup	sv	Byt ut användarnamn och behåll e-postadressen
+required to change passwords	setup	sv	Krävs för att ändra lösenord
+requires "reset password" privilege, to change passwords!	setup	sv	Kräver behörigheten "Återställ lösenord" för att ändra lösenord!
 requires reinstall or manual repair	setup	sv	Kräver ominstallation eller manuell reparation
 requires upgrade	setup	sv	Kräver uppgradering
 resolve	setup	sv	Lös
@@ -454,8 +459,8 @@ select which user(s) will have admin privileges	setup	sv	Välj vilka användare 
 select your old version	setup	sv	Välj den gamla versionen
 selectbox	setup	sv	Listruta
 server root	setup	sv	Server root
-set	setup	sv	ställ in
-setting the system-charset to utf-8 (unicode) allows the coexistens of data from languages of different charsets.	setup	sv	Sättande av systemteckentabell till UTF-8(Unicode) tillåter samexeistens av data med flera olika språk.
+set	setup	sv	Ställ in
+setting the system-charset to utf-8 (unicode) allows the coexistens of data from languages of different charsets.	setup	sv	Sättande av systemteckentabell till UTF-8 (Unicode) tillåter samexeistens av data med flera olika språk.
 settings	setup	sv	Inställningar
 setup	setup	sv	Installation
 setup main menu	setup	sv	Installation huvudmeny
@@ -468,7 +473,7 @@ skip the installation tests (not recommended)	setup	sv	Hoppa över installations
 smtp server hostname or ip address	setup	sv	SMTP server värdnamn eller IP adress
 smtp server port	setup	sv	SMTP server port
 some or all of its tables are missing	setup	sv	Några eller samtliga av dess tabeller saknas
-sql encryption type	setup	sv	SQL kryptering för lösenord (standard: SSHA)
+sql encryption type	setup	sv	SQL kryptering för lösenord
 standard (login-name identical to egroupware user-name)	setup	sv	Standard (inloggningsnamn identiskt med EGroupware användarnamn)
 standard mailserver settings (used for mail authentication too)	setup	sv	Standard e-postserver inställningar (används även för e-post autenticering
 start the postmaster	setup	sv	Starta postmaster
@@ -485,14 +490,14 @@ succesfully uploaded file %1	setup	sv	Uppladdning av filen %1 lyckades
 table change messages	setup	sv	Tabellförändringsmeddelanden
 tables dropped	setup	sv	Tabeller borttagna
 tables installed, unless there are errors printed above	setup	sv	Tabeller färdiginstallerade, om det inte meddelades fel ovan
-tables upgraded	setup	sv	tabeller uppgraderade
+tables upgraded	setup	sv	Tabeller uppgraderade
 target version	setup	sv	Målversion
 tcp port number of database server	setup	sv	TCP port för databasserver
 text entry	setup	sv	Textfält
 the %1 extension is needed from: %2.	setup	sv	Utökningen %1 behövs av: %2
 the %1 extension is needed, if you plan to use a %2 database.	setup	sv	Utökningen %1 behövs om du vill använda en %2 databas
 the db_type in defaults (%1) is not supported on this server. using first supported type.	setup	sv	db_type i defaults (%1) supporteras inte av servern. Använder den först supportade
-the file	setup	sv	filen
+the file	setup	sv	Filen
 the first step in installing egroupware is to ensure your environment has the necessary settings to correctly run the application.	setup	sv	Det första steget i en installation av EGroupware är att försäkra sig att allt är rätt inställt för EGroupware
 the following applications need to be upgraded:	setup	sv	Följande applikationer behöver uppgraderas:
 the function %1 is needed from: %2.	setup	sv	Fuktionen %1 behövs av: %2
