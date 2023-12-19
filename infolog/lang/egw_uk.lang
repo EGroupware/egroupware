@@ -227,70 +227,131 @@ normal	infolog	uk	нормальний
 not	infolog	uk	не треба
 not assigned	infolog	uk	не призначено
 note	infolog	uk	Нотатка
+notification settings	infolog	uk	Налаштування сповіщень
 number of records to read (%1)	infolog	uk	Кількість записів для читання (%1)
 number of row for a multiline inputfield or line of a multi-select-box	infolog	uk	кількість рядків для багаторядкового поля вводу або рядків віконця вибору множини
 offer	infolog	uk	пропозиція
+old fixed definition	infolog	uk	Старе фіксоване визначення
+one day after	infolog	uk	Через день після
+one day in advance	infolog	uk	За день до
 ongoing	infolog	uk	в роботі
+only show them if there is a filter	infolog	uk	Показувати лише за наявності фільтра
+only show them while searching	infolog	uk	Показувати тільки під час пошуку
 only the attachments	infolog	uk	тільки додатки
 only the links	infolog	uk	тільки посилання
 open(status)	infolog	uk	відкрито
 optional note to the link	infolog	uk	необов'язкова примітка до Посилання
 order	infolog	uk	Послідовність
+other configurations	infolog	uk	Інші конфігурації
 overdue	infolog	uk	прострочено
 own	infolog	uk	власні
 own open	infolog	uk	власні відкриті
 own overdue	infolog	uk	власні прострочені
 own upcoming	infolog	uk	власні майбутні
+owner, responsible	infolog	uk	Власник, Відповідальний
+participants for scheduling an appointment	infolog	uk	Учасники для планування зустрічі
 path on (web-)serverside<br>eg. /var/samba/share	infolog	uk	шлях на стороні вебсерверу<br>наприклад /var/samba/Share
 path to user and group files has to be outside of the webservers document-root!!!	infolog	uk	Шлях до файлів користувачів та груп МАЄ БУТИ ЗАВНІШНІМ відносно корню документів вебсервера
-pattern for search in addressbook	infolog	uk	зразок пошуку в Адресній книзі
-pattern for search in projects	infolog	uk	зразок пошуку в проектах
+pattern for search in addressbook	infolog	uk	Шаблон для пошуку в адресній книзі
+pattern for search in projects	infolog	uk	Шаблон для пошуку в проектах
+performance optimization for huge infolog tables	admin	uk	Оптимізація продуктивності для великих таблиць InfoLog
 permission denied	infolog	uk	Заборонено
+permissions error - %1 could not %2	infolog	uk	Помилка дозволів - %1 не зміг %2
 phone	infolog	uk	Телефонний дзвінок
 phone/email	infolog	uk	Телефон/Email
 phonecall	infolog	uk	Телефонний дзвінок
+prefix for sub-entries (default: re:)	infolog	uk	Префікс для підзаписів (за замовчуванням: Re:)
 print this infolog	infolog	uk	Надрукувати цей інфолог
 printing...	infolog	uk	Друк...
 priority	infolog	uk	Пріоритет
 private	infolog	uk	Особисте
 project	infolog	uk	Проект
+project id	infolog	uk	Ідентифікатор проекту
+project name	infolog	uk	Назва проекту
+projectmanager	infolog	uk	Керівник проекту
+re-planned	infolog	uk	Переплановано
+re-planned time	infolog	uk	Перепланований час
 re:	infolog	uk	Re:
+receive notifications about items of type owned by groups you are part of	infolog	uk	Отримувати сповіщення про елементи типу, що належать групам, до яких ви належите
+regular expression	infolog	uk	Регулярний вираз
 remark	infolog	uk	Ремарка
 remove this link (not the entry itself)	infolog	uk	Видалити це посилання (не сам запис)
+removed	infolog	uk	Видалено.
+removed category	infolog	uk	видалена категорія
+replacement	infolog	uk	Заміна
+replacements for inserting entries into documents	infolog	uk	Заміни для вставки записів у документи
 respect timesheet run and read permissions for time totals	infolog	uk	Поважати дозволи на запуск та читання табеля для підсумків часу
 responsible	infolog	uk	Відповідальний
+responsible open and upcoming	infolog	uk	Відповідальні відкриті та майбутні
+rights for the responsible	infolog	uk	Права для відповідальних
+rows	infolog	uk	Рядки
+same day	infolog	uk	У той самий день
 save	infolog	uk	Зберегти
 saves the changes made and leaves	infolog	uk	зберігає зроблені зміни та виходить
 saves this entry	infolog	uk	Зберігає цей запис
+schedule appointment	infolog	uk	Запланувати зустріч
 search	infolog	uk	Шукати
 search for:	infolog	uk	Шукати:
+second parameter for preg_replace	infolog	uk	Другий параметр для preg_replace
 select	infolog	uk	Вибрати
 select a category for this entry	infolog	uk	виберіть категорію запису
+select a price	infolog	uk	Виберіть ціну
 select a priority for this task	infolog	uk	виберіть приоритет завдання
+select a project	infolog	uk	Виберіть проект
 select a responsible user: a person you want to delegate this task	infolog	uk	визначте відповідального: людину, якій Ви хочете делегувати це завдання
 select a typ to edit it's status-values or delete it	infolog	uk	виберіть тип для редагування його статусів або видалення
+select an action	infolog	uk	Виберіть дію
+select an action...	infolog	uk	Виберіть дію...
 select an app to search in	infolog	uk	Виберіть приложення в якому шукати
 select an entry to link with	infolog	uk	Виберіть запис для Посилання
+select new category	infolog	uk	Вибрати нову категорію
+select users or groups	infolog	uk	Вибрати користувачів або групи
+selected calendars	infolog	uk	Вибрані календарі
+selection cf	infolog	uk	Вибір CF
+sender	infolog	uk	Відправник
+set status to done	infolog	uk	Встановити статус "виконано
+set status to done for all entries	infolog	uk	Встановити статус виконано для всіх записів
+sets the status of this entry to done	infolog	uk	Встановлює статус цього запису як виконаний
 should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	uk	Чи повинні Записки показувати Під-завдання, -дзвінки, -нотатки у нормальному вигляді. Ви завжди можете переглянути їх через "батька".
 should infolog use full names (surname and familyname) or just the loginnames.	infolog	uk	Чи повиннні Записки використовувати повні імена (Ім'я та Прізвище) чи тільки Ім'я входу.
 should this entry only be visible to you and people you grant privat access via the acl	infolog	uk	Чи повинее цей запис бути видимим тільки Вам та людям, яким Ви надали доступ за допомогою ACL
+show a x if content equals this compare value, otherwise show nothing	infolog	uk	Показати X, якщо вміст дорівнює порівнянному значенню, інакше нічого не показувати
 show full usernames	infolog	uk	Показувати повні імена
 show in the infolog list	infolog	uk	Показувати в переліку Записок
+show last modified	infolog	uk	Показати останні зміни
+show status and percent done separate	infolog	uk	Показувати статус і відсоток виконання окремо
+show sub-entries	infolog	uk	Показати підзаписи
+show ticket id	infolog	uk	Показати ID квитка
+show times	infolog	uk	Показати час
 small view	infolog	uk	маленький вигляд
+start	infolog	uk	Почати
 start a new search, cancel this link	infolog	uk	Розпочати новий пошук, покинути це посилання
 startdate	infolog	uk	Дата початку
 startdate enddate	infolog	uk	Дата Початку Дата Закінчення
+startdate for new entries	infolog	uk	Дата початку для нових заявок
+startdate must be before enddate!!!	infolog	uk	Дата старту повинна бути раніше дедлайну!
+starting %1	infolog	uk	Початок %1
 startrecord	infolog	uk	Початковий запис
 status	infolog	uk	Статус
 status ...	infolog	uk	Статус...
+status, percent and date completed are always allowed.	infolog	uk	Статус, відсоток і дата завершення завжди дозволені.
 sub	infolog	uk	Підзапис
+sub-entries become subs of the parent or main entries, if there's no parent	infolog	uk	Дочірні записи стають підзаписами батьківських або головних записів, якщо вони не мають батьківських записів
+sub-entries will not be closed	infolog	uk	Підзаписи не будуть закриті
+sub-entry	infolog	uk	Підзапис
 subject	infolog	uk	Тема
+sum	infolog	uk	Сума
+tag to mark positions for address labels	infolog	uk	Тег для позначення позицій для адресних міток
 task	infolog	uk	Завдання
+tasks of	infolog	uk	Завдання з
+template	infolog	uk	Шаблон
 test import (show importable records <u>only</u> in browser)	infolog	uk	Тестувати Імпорт (лише показувати записи, що можуть бути імпортовані)
 the document can contain placeholder like {{%1}}, to be replaced with the data.	infolog	uk	Документ може містити заповнювач на кшталт {{%1}}, який буде замінено даними.
+the following document-types are supported:	infolog	uk	Підтримуються наступні типи документів:
 the text displayed to the user	infolog	uk	текст, що показуються користувачу
 this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	uk	Це фільтр, який використовується Записками зразу після входу в приложення. Фільтри обмежують перелік записів, які мають показуватись в поточному вигляді. Існують фільтри для показу тільки виконаних, відкритих або майбутніх записів - Ваших, чи всіх користувачів.
 times	infolog	uk	Раз
+titles of any entries linked to the current record, excluding attached files	infolog	uk	Назви будь-яких записів, пов'язаних з поточним записом, за винятком прикріплених файлів
 to many might exceed your execution-time-limit	infolog	uk	надто багато може перевищити Ваш ліміт часу
 today	infolog	uk	Сьогодні
 todo	infolog	uk	Завдання
@@ -298,15 +359,21 @@ typ	infolog	uk	Тип
 typ '%1' already exists !!!	infolog	uk	Тип '%1' вже існує !
 type	infolog	uk	Тип
 type ...	infolog	uk	Тип ...
-type of the log-entry: note, phonecall or todo	infolog	uk	Тип запису: Нотатка, Телефонний дзвінок або Завдання
+type of field	infolog	uk	Тип поля
+type of the log-entry: note, phonecall or todo	infolog	uk	Тип запису в InfoLog
+unable to link to %3 by custom field "%1": "%4".  %2 matches.	infolog	uk	Неможливо зв'язати %3 з користувацьким полем "%1": "%4". %2 збігається.
+unknown type: %1	infolog	uk	Невідомий тип: %1
 unlink	infolog	uk	Викинути
+unlinked from %1	infolog	uk	Від'єднано від %1
 upcoming	infolog	uk	майбутні
 urgency	infolog	uk	терміновість
 urgent	infolog	uk	терміновий
+use custom notification message	infolog	uk	Використовувати кастомне повідомлення
 values for selectbox	infolog	uk	Значення для selectbox
 view all subs of this entry	infolog	uk	Переглянути всі підзаписи цього запису
 view other subs	infolog	uk	переглянути інші підзаписи
 view parent	infolog	uk	Переглянути батьківський запис
+view parent with children	infolog	uk	Переглянути батьків з дітьми
 view subs	infolog	uk	переглянути підзаписи
 view the parent of this entry and all his subs	infolog	uk	Переглянути батьківський запис та всі його підзаписи
 view this linked entry in its application	infolog	uk	переглянути посилання в відповідному приложенні
@@ -320,6 +387,10 @@ yes - close	infolog	uk	Так - Закрити
 yes - close including sub-entries	infolog	uk	Так - Закрити, включаючи підзаписи
 yes - delete	infolog	uk	Так - Видалити
 yes - delete including sub-entries	infolog	uk	Так - Видалити разом з підзаписами
+yes, noone can purge deleted items	infolog	uk	Так, ніхто не може видаляти видалені елементи
+yes, only admins can purge deleted items	infolog	uk	Так, тільки адміністратори можуть очищати видалені елементи
+yes, with larger fontsize	infolog	uk	Так, з більшим розміром шрифту
+yes, with purging of deleted items possible	infolog	uk	Так, з можливістю очищення видалених елементів
 you can choose a categorie to be preselected, when you create a new infolog entry	infolog	uk	Ви можете вибрати категорію, яка буде попередньо вибрана при створенні нового запису інфо-журналу.
 you can't delete one of the stock types !!!	infolog	uk	Ви не можете видалити один з вбудованих типів
 you have entered an invalid ending date	infolog	uk	Ви ввели невірну дату закінчення

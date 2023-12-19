@@ -1,1 +1,10 @@
 min backup count	setup	lt	Didžiausias saugomų atsarginių kopijų skaičius (nulis: visos)
+regular expression to filter by dn	setup	lt	Reguliarioji išraiška filtruoti pagal DN
+rejected lines	setup	lt	Atmestos eilutės
+remove	setup	lt	Pašalinti
+remove all	setup	lt	Pašalinti visus
+rename	setup	lt	Pervadinti
+replace username and email	setup	lt	Pakeiskite vartotojo vardą ir el. pašto adresą
+replace username and keep email	setup	lt	Pakeisti vartotojo vardą ir palikti el. paštą
+required to change passwords	setup	lt	reikalaujama pakeisti slaptažodžius
+requires "reset password" privilege, to change passwords!	setup	lt	Norint pakeisti slaptažodžius, reikia "Reset Password" privilegijos!

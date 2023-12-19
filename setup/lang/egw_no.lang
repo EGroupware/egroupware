@@ -6,10 +6,10 @@
 00 (disable)	setup	no	00 (steng av/ anbefalt)
 13 (ntp)	setup	no	13 (ntp)
 80 (http)	setup	no	80 (http)
-<b>charset to use</b> (use utf-8 if you plan to use languages with different charsets):	setup	no	<b>tegntabell som skal anvendes</b> (anvend utf-8 om du skal ha støtte for språk med ulike tegntabeller)
+<b>charset to use</b> (use utf-8 if you plan to use languages with different charsets):	setup	no	<b>tegntabell som skal anvendes</b> (anvend UTF-8 om du skal ha støtte for språk med ulike tegntabeller)
 accounts existing	setup	no	Eksisterende konti
 actions	setup	no	Aksjoner
-add auto-created users to this group ('default' will be attempted if this is empty.)	setup	no	legg til automatiskt skapte brukere til denne gruppen ('Default' kommer til å benyttes om denne er tom)
+add auto-created users to this group ('default' will be attempted if this is empty.)	setup	no	Legg til automatiskt skapte brukere til denne gruppen ('Default' kommer til å benyttes om denne er tom)
 additional settings	setup	no	Øvrige innstillinger
 admin first name	setup	no	Admin. fornavn
 admin last name	setup	no	Admin. etternavn
@@ -18,7 +18,7 @@ admin password to header manager	setup	no	Admin.passord til header hanager
 admin user for header manager	setup	no	Admin.konto for header manager
 admin username	setup	no	Admin. brukernavn
 admins	setup	no	Administratorer
-after backing up your tables first.	setup	no	etter å ha tatt backup av dine tabeller
+after backing up your tables first.	setup	no	Etter å ha tatt backup av dine tabeller
 after retrieving the file, put it into place as the header.inc.php.  then, click "continue".	setup	no	Når du har hentet filen, lagre den som header.inc.php Trykk deretter "Fortsett"
 all applications	setup	no	Samtlige programmer
 all core tables and the admin and preferences applications	setup	no	Alla hovedtabeller samt "admin" og "alternativ"-programmene
@@ -59,21 +59,21 @@ backup and restore	setup	no	Sikkerhetskopiering og tilbakelesing
 backup failed	setup	no	Sikkerhetskopi lyktes ikke
 backup finished	setup	no	Sikkerhetskopiering ferdig
 backup now	setup	no	Ta sikkerhetskopi nå
-backup sets	setup	no	backup-set
+backup sets	setup	no	Backup-set
 backup started, this might take a few minutes ...	setup	no	Backup har påbörjats, kan ta några minuter
-because an application it depends upon was upgraded	setup	no	på grund av att en applikation som den var beroende av uppgraderats
-because it depends upon	setup	no	eftersom den är beroende av
-because it is not a user application, or access is controlled via acl	setup	no	eftersom det inte är en användarapplikation, eller för att åtkomst kontrolleras med en ACL
-because it requires manual table installation, <br />or the table definition was incorrect	setup	no	eftersom den kräver manuell installation av tabeller, <br />eller att  tabelldefinitionen var inkorrekt
-because it was manually disabled	setup	no	eftersom den stängts av  manuellt
-because of a failed upgrade or install	setup	no	eftersom uppgradering eller installation misslyckats
-because of a failed upgrade, or the database is newer than the installed version of this app	setup	no	eftersom uppgradering misslyckats, eller att databasen är nyare än den installerade versionen av denna applikation
-because the enable flag for this app is set to 0, or is undefined	setup	no	eftersom påkopplad-flaggan för denna applikation är satt till 0 eller är odefinerad
+because an application it depends upon was upgraded	setup	no	På grund av att en applikation som den var beroende av uppgraderats
+because it depends upon	setup	no	Eftersom den är beroende av
+because it is not a user application, or access is controlled via acl	setup	no	Eftersom det inte är en användarapplikation, eller för att åtkomst kontrolleras med en ACL
+because it requires manual table installation, <br />or the table definition was incorrect	setup	no	Eftersom den kräver manuell installation av tabeller, <br />eller att  tabelldefinitionen var inkorrekt
+because it was manually disabled	setup	no	Eftersom den stängts av  manuellt
+because of a failed upgrade or install	setup	no	Eftersom uppgradering eller installation misslyckats
+because of a failed upgrade, or the database is newer than the installed version of this app	setup	no	Eftersom uppgradering misslyckats, eller att databasen är nyare än den installerade versionen av denna applikation
+because the enable flag for this app is set to 0, or is undefined	setup	no	Eftersom påkopplad-flaggan för denna applikation är satt till 0 eller är odefinerad
 bottom	setup	no	bunn
 but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br /><strong>these automated scripts can easily destroy your data.</strong>	setup	no	Men vi <u> rekommenderar starkt att du backar upp</u> dina tabeller utifall att installationen skulle råka förstöra data. <br /> <strong>Dessa automatiserade skript kan med lätthet förstöra data i dina tabeller!</strong>
 cancel	setup	no	Avbryt
 change system-charset	setup	no	Ändra system-teckentabell
-charset	setup	no	utf-8
+charset	setup	no	UTF-8
 charset to convert to	setup	no	Teckentabell att konvertera till
 check can only be performed, if called via a webserver, as the user-id/-name of the webserver is not known.	setup	no	Kontrollen kan endast genomföras om den anropas via webserver, eftersom webserverns användarkonto inte är känt.
 check installation	setup	no	Kontrollere installasjonen
@@ -95,7 +95,7 @@ configuration password	setup	no	Konfigurationslösenord
 configuration user	setup	no	Konfigurationsanvändarnamn
 configure now	setup	no	Konfigurer nå
 confirm to delete this backup?	setup	no	Bekräfta borrtagning av backup?
-contain	setup	no	innehåller
+contain	setup	no	Innehåller
 continue	setup	no	Fortsette
 continue to the header admin	setup	no	Fortsett till Header Admin
 convert	setup	no	Konvertere
@@ -118,8 +118,8 @@ current version	setup	no	Aktuell versjon
 currently installed languages: %1 <br />	setup	no	Installerte språk: %1 <br />
 database successfully converted from '%1' to '%2'	setup	no	Database konvertert fra '%1' till '%2'
 datetime port.<br />if using port 13, please set firewall rules appropriately before submitting this page.<br />(port: 13 / host: 129.6.15.28)	setup	no	Datetime-port.<br />Om du använder port 13, sätt brandväggsreglerna korrekt innan du trycker på Klar<br />(Port: 13 / Host 129.6.15.28)
-day	setup	no	dag
-day of week<br />(0-6, 0=sunday)	setup	no	ukedag<br />(0-6, 0=søndag)
+day	setup	no	Dag
+day of week<br />(0-6, 0=sunday)	setup	no	Ukedag<br />(0-6, 0=søndag)
 db backup and restore	setup	no	DB backup och restore
 db host	setup	no	DB tjener
 db name	setup	no	DB navn
@@ -140,13 +140,13 @@ demo server setup	setup	no	Oppsett for demotjener
 deny access	setup	no	Nekte adgang
 deny all users access to grant other users access to their entries ?	setup	no	Neka samtliga användare möjlighet att ge andra användare åtkomst till deras poster?
 dependency failure	setup	no	Avhengighetsfeil
-deregistered	setup	no	avregistrert
-details for admin account	setup	no	detaljer for Adminkonto
+deregistered	setup	no	Avregistrert
+details for admin account	setup	no	Detaljer for Adminkonto
 developers' table schema toy	setup	no	Utviklernes Tabell skjema verktøy
 did not find any valid db support!	setup	no	Kunde inte hitta något giltigt databasstöd
 do you want persistent connections (higher performance, but consumes more resources)	setup	no	Vill du använda persistent connections? (bättre prestanda men använder fler systemresurser)
 do you want to manage homedirectory and loginshell attributes?	setup	no	Vill du hantera attribut för hemkatalog och skalprogram?
-does not exist	setup	no	eksisterer ikke
+does not exist	setup	no	Eksisterer ikke
 domain	setup	no	Domene
 domain name	setup	no	Domenenavn
 domain select box on login	setup	no	Domenevalg ved pålogging
@@ -156,7 +156,7 @@ edit current configuration	setup	no	Rediger nåværende konfiguration
 edit your existing header.inc.php	setup	no	Rediger din eksisterende header.inc.php
 edit your header.inc.php	setup	no	Rediger din header.inc.php
 egroupware administration manual	setup	no	EGroupware administrasjonsmanual
-enable for extra debug-messages	setup	no	visa extra debug-meddelanden
+enable for extra debug-messages	setup	no	Visa extra debug-meddelanden
 enable mcrypt	setup	no	Muliggjør MCrypt
 enter some random text for app session encryption	setup	no	Skriv in lite slumpmässig text för kryptering av sessionsinformation
 enter some random text for app_session <br />encryption (requires mcrypt)	setup	no	Skriv in lite slumpmässig text för<br />kryptering av sessionsinformation (kräver MCrypt)
@@ -183,13 +183,13 @@ force selectbox	setup	no	Listerute
 go back	setup	no	Tilbake
 go to	setup	no	Gå till
 grant access	setup	no	Gi tilgang
-has a version mismatch	setup	no	har versionsdifferanse
+has a version mismatch	setup	no	Har versionsdifferanse
 header admin login	setup	no	Header Admin pålogging
 header password	setup	no	Header passord
 header username	setup	no	Header brukernavn
 historylog removed	setup	no	Historiklogg fjernet
 hooks deregistered	setup	no	hooks avregistrert
-hooks registered	setup	no	hooks registrerte
+hooks registered	setup	no	Hooks registrerte
 host information	setup	no	Tjener-informasjon
 host/ip domain controler	setup	no	Tjener/IP Domenekontroller
 hostname/ip of database server	setup	no	Tjenernavn/IP for databaseserver
@@ -232,7 +232,7 @@ ldap groups context	setup	no	LDAP Gruppekontekst
 ldap host	setup	no	LDAP tjener (server)
 ldap import	setup	no	LDAP import
 ldap root password	setup	no	LDAP root passord
-ldap rootdn	setup	no	LDAP rootdn
+ldap rootdn	setup	no	LDAP Root DN
 ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setup	no	LDAP sökfilter för konton, default: "(uid=%user)", %domain=EGw-domain
 limit access to setup to the following addresses, networks or hostnames (e.g. 127.0.0.1,10.1.1,myhost.dnydns.org)	setup	no	Begränsa åtkomst till följande adresser, nätverk eller hostnamn (dvs 127.0.0.1,192.168.1,frodo.mydomain.org
 login to mysql -	setup	no	login till mysql -
@@ -254,10 +254,10 @@ minute	setup	no	Minutt
 modifications have been completed!	setup	no	Förändringarna genomförda
 modified	setup	no	Endret
 modify	setup	no	Förändra
-month	setup	no	måned
+month	setup	no	Måned
 multi-language support setup	setup	no	Multispråksstöd
 name of database	setup	no	Navn på database
-name of db user egroupware uses to connect	setup	no	Namnet på det användarkonto EgroupWare skall använda för att ansluta till databasen
+name of db user egroupware uses to connect	setup	no	Namnet på det användarkonto EGroupware skall använda för att ansluta till databasen
 never	setup	no	Aldri
 new	setup	no	Ny
 next run	setup	no	Neste kjøring
@@ -267,7 +267,7 @@ no accounts existing	setup	no	Det finnes ingen konti
 no algorithms available	setup	no	Det finnes ingen algoritmer
 no modes available	setup	no	Inga lägen tillgängliga
 no xml support found. disabling	setup	no	Ikke støtte for XML, kobler fra
-not	setup	no	ikke
+not	setup	no	Ikke
 not all mcrypt algorithms and modes work with egroupware. if you experience problems try switching it off.	setup	no	Inte alla mcrypt-algoritmer och lägen fungerar med EGroupware. Om du upplever problem bör du testa att inaktivera stödet.
 not complete	setup	no	Ikke ferdig
 not completed	setup	no	Ikke ferdigstilt
@@ -277,8 +277,8 @@ note: you will be able to customize this later	setup	no	Note: Du kan forandre de
 now guessing better values for defaults...	setup	no	Gissar nu bättre värden för default...
 ok	setup	no	OK
 once the database is setup correctly	setup	no	När väl databasen är korrekt inställd
-one month	setup	no	en måned
-one week	setup	no	en uke
+one month	setup	no	En måned
+one week	setup	no	En uke
 only add languages that are not in the database already	setup	no	Legg bare til språk som ikke finnes i databasen allerede.
 only add new phrases	setup	no	Legg bare til nye fraser
 or	setup	no	eller
@@ -313,21 +313,26 @@ re-check my database	setup	no	Kontroller databasen på nytt
 re-check my installation	setup	no	Kontroller installasjonen på nytt
 re-enter password	setup	no	Skriv inn passord igen
 read translations from	setup	no	Läs översättningar från
-readable by the webserver	setup	no	läsbar av webservern
+readable by the webserver	setup	no	Läsbar av webservern
 really uninstall all applications	setup	no	Vill du verkligen avinstallera samtliga installationer
 register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	no	register_globals är PÅslagen, EGroupware kräver inte det och det är säkrare med det AVslaget.
-registered	setup	no	registrert
+registered	setup	no	Registrert
+regular expression to filter by dn	setup	no	Regulært uttrykk for å filtrere etter DN
 rejected lines	setup	no	Ej godtagna rader
 remove	setup	no	Fjerne
 remove all	setup	no	Fjern alle
 rename	setup	no	Gi nytt navn
+replace username and email	setup	no	Erstatt brukernavn og e-post
+replace username and keep email	setup	no	Erstatt brukernavn og behold e-postadressen
+required to change passwords	setup	no	Kreves for å endre passord
+requires "reset password" privilege, to change passwords!	setup	no	Krever "Tilbakestill passord"-rettighet for å endre passord!
 requires reinstall or manual repair	setup	no	Kräver ominstallation eller manuell reparation
 requires upgrade	setup	no	Krever oppgradering
 resolve	setup	no	Løser
 restore	setup	no	Tilbakestille
 restore failed	setup	no	Återställning misslyckades
 restore finished	setup	no	Återställning klar
-restore started, this might take a few minutes ...	setup	no	återställning startad, detta kan ta några minuter...
+restore started, this might take a few minutes ...	setup	no	Gjenoppretting startet, dette kan ta noen minutter ...
 restoring a backup will delete/replace all content in your database. are you sure?	setup	no	Återställning av backup kommer att radera/ersätta allt innehåll i databasen. Är du säker?
 return to setup	setup	no	Gå tilbake til Setup
 run installation tests	setup	no	Start installasjonstester
@@ -355,7 +360,7 @@ select which user(s) will have admin privileges	setup	no	Välj vilka användare 
 select your old version	setup	no	Välj den gamla versionen
 selectbox	setup	no	Listerute
 server root	setup	no	Server root
-set	setup	no	ställ in
+set	setup	no	Ställ in
 setting the system-charset to utf-8 (unicode) allows the coexistens of data from languages of different charsets.	setup	no	Sättande av systemteckentabell till UTF-8(Unicode) tillåter samexeistens av data med flera olika språk.
 settings	setup	no	Innstillinger
 setup	setup	no	Oppsett
@@ -363,9 +368,9 @@ setup main menu	setup	no	Oppsett hovedmeny
 setup the database	setup	no	Databasekonfigurasjon
 setup/config admin login	setup	no	Sätt upp/Konfigurera Admin login
 show 'powered by' logo on	setup	no	Vis "Powered by"-logo
-size	setup	no	Str.
+size	setup	no	Størrelse
 some or all of its tables are missing	setup	no	Några eller samtliga av dess tabeller saknas
-sql encryption type	setup	no	SQL krypteringstyp för Lösenord (default: SSHA)
+sql encryption type	setup	no	SQL krypteringstyp för Lösenord
 start the postmaster	setup	no	Starta postmaster
 status	setup	no	Status
 step %1 - admin account	setup	no	Steg %1 - Adminkontot
@@ -378,13 +383,13 @@ succesfully uploaded file %1	setup	no	Uppladdning av filen %1 lyckades
 table change messages	setup	no	Tabellförändringsmeddelanden
 tables dropped	setup	no	Tabeller fjernet
 tables installed, unless there are errors printed above	setup	no	Tabeller färdiginstallerade, om det inte meddelades fel ovan
-tables upgraded	setup	no	tabeller oppgraderte
+tables upgraded	setup	no	Tabeller oppgraderte
 target version	setup	no	Målversion
 tcp port number of database server	setup	no	TCP-port för databasserver
 text entry	setup	no	Tekstfelt
 the %1 extension is needed, if you plan to use a %2 database.	setup	no	%1 utökningen behövs, om du vill använda en %2 databas
 the db_type in defaults (%1) is not supported on this server. using first supported type.	setup	no	db_type i defaults (%1) supportas inte på denna server. Använder den första supportade typen
-the file	setup	no	filen
+the file	setup	no	Filen
 the first step in installing egroupware is to ensure your environment has the necessary settings to correctly run the application.	setup	no	Det första steget i en installation av EGroupware är att försäkra sig att allt är rätt inställt för EGroupware
 the following applications need to be upgraded:	setup	no	Följande applikationer behöver uppgraderas:
 the mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	no	mbstring-utökningen behövs för att fullt ut kunna stödja Unicode (UTF-8) eller andra multi-byte teckenuppsättningar
@@ -401,14 +406,14 @@ this program will help you upgrade or install different languages for egroupware
 this should be around 30 bytes in length.<br />note: the default has been randomly generated.	setup	no	Detta bör vara ca 30 bytes i längd. <br />Not: Default är slumpmässigt genererat.
 this stage is completed<br />	setup	no	Dette stadiet er klart
 to a version it does not know about	setup	no	til en ukjent versjon
-to setup 1 admin account and 3 demo accounts.	setup	no	för att skapa ett adminkonto och tre demokonton
+to setup 1 admin account and 3 demo accounts.	setup	no	För att skapa ett adminkonto och tre demokonton
 top	setup	no	Topp
 translations added	setup	no	Översättningar tillagda
 translations removed	setup	no	Översättningar borttagna
 translations upgraded	setup	no	Översättningar uppgraderade
 true	setup	no	Sant
 try to configure your php to support one of the above mentioned dbms, or install egroupware by hand.	setup	no	Försök konfigurera php att stödja någon av databaserna ovan, eller installera EGroupware för hand.
-two weeks	setup	no	to uker
+two weeks	setup	no	To uker
 uninstall	setup	no	Avinstallere
 uninstall all applications	setup	no	Avinstallera samtliga applikationer
 uninstalled	setup	no	Avinstallerte
@@ -416,17 +421,17 @@ upgrade	setup	no	Oppgradere
 upgrade all	setup	no	Oppgradere alle
 upgraded	setup	no	Oppgarderte
 upgrading tables	setup	no	Oppgraderer tabeller
-upload backup	setup	no	ladda upp backup
-uploads a backup and installs it on your db	setup	no	laddar upp en backup och installerar den i din databas
+upload backup	setup	no	Ladda upp backup
+uploads a backup and installs it on your db	setup	no	Laddar upp en backup och installerar den i din databas
 uploads a backup to the backup-dir, from where you can restore it	setup	no	Laddar upp backupen till backup-katalogen, från vilken du kan återställa den.
 use cookies to pass sessionid	setup	no	Använd cookies för att lagra sessionid
 use pure html compliant code (not fully working yet)	setup	no	Använd ren HTML compliant kod (fungerar inte korrekt ännu)
-user account prefix	setup	no	användarkontoprefix
+user account prefix	setup	no	Användarkontoprefix
 user for smtp-authentication (leave it empty if no auth required)	setup	no	Brukes for SMTP autentisering (la det stå tomt dersom aut. ikke er nødvendig)
 usernames are casesensitive	setup	no	Användarnamn är skiftläges-känsliga
 users choice	setup	no	Brukervalg
 utf-8 (unicode)	setup	no	UTF-8 (Unicode)
-version	setup	no	versjon
+version	setup	no	Versjon
 version mismatch	setup	no	Versjonsfeil
 view	setup	no	Vis
 warning!	setup	no	Advarsel!
@@ -467,7 +472,7 @@ your backup directory '%1' %2	setup	no	Din backupkatalog '%1' %2
 your database does not exist	setup	no	Databasen din finnes ikke
 your database is not working!	setup	no	Databasen din fungerer ikke!
 your database is working, but you dont have any applications installed	setup	no	Din database fungerer men du har ingen installerte program.
-your files directory '%1' %2	setup	no	din filkatalog '%1' %2
+your files directory '%1' %2	setup	no	Din filkatalog '%1' %2
 your header admin password is not set. please set it now!	setup	no	Ditt header admin-lösenord är inte satt. Skriv in det nu!
 your header.inc.php needs upgrading.	setup	no	Din header.inc.php må oppgraderes.
 your header.inc.php needs upgrading.<br /><blink><b class="msg">warning!</b></blink><br /><b>make backups!</b>	setup	no	Din header.inc.php behöver uppgraderas<br /><blink><b class="msg">VARNING!</b></blink><br /><b>TA BACKUP!</b>

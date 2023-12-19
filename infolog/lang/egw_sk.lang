@@ -353,8 +353,8 @@ parent infolog	infolog	sk	Rodičovský Záznamník
 participants for scheduling an appointment	infolog	sk	Účastníci pre naplánovanie pozvania
 path on (web-)serverside<br>eg. /var/samba/share	infolog	sk	Cesta na strane (web-)servera <br>napr. /var/samba/Share
 path to user and group files has to be outside of the webservers document-root!!!	infolog	sk	Cesta k súborom používateľa a skupiny MUSÍ BYŤ MIMO document-root webservera!
-pattern for search in addressbook	infolog	sk	Výraz pre hľadanie v Adresári
-pattern for search in projects	infolog	sk	Výraz pre hľadanie v Projektoch
+pattern for search in addressbook	infolog	sk	Vzor pre vyhľadávanie v adresári
+pattern for search in projects	infolog	sk	Vzor pre vyhľadávanie v projektoch
 percent completed	infolog	sk	Na koľko percent vyriešené
 performance optimization for huge infolog tables	admin	sk	Vyladenie výkonu pre obrovské tabuľky Záznamníka
 permission denied	infolog	sk	Prístup bol odmietnutý

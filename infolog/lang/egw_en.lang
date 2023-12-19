@@ -2,7 +2,7 @@
 %1 deleted	infolog	en	%1 deleted.
 %1 deleted by %2 at %3	infolog	en	%1 deleted by %2 at %3
 %1 entries %2	infolog	en	%1 entries %2
-%1 entries %2, %3 failed because of insufficent rights !!!	infolog	en	%1 entries %2, %3 failed because of insufficient rights !!!
+%1 entries %2, %3 failed because of insufficent rights !!!	infolog	en	%1 entries %2, %3 failed because of insufficient rights!
 %1 entries %2, %3 failed.	infolog	en	%1 entries %2, %3 failed.
 %1 modified	infolog	en	%1 modified
 %1 modified by %2 at %3	infolog	en	%1 modified by %2 at %3
@@ -57,7 +57,7 @@ allows to set the status of an entry, eg. set a todo to done if it's finished (v
 alternatives	infolog	en	Alternatives
 always show them	infolog	en	Always show them
 application mail expected but got: %1	infolog	en	Application email expected but got: %1
-apply the action on the whole query, not only the shown entries!!!	infolog	en	Apply the action on the whole query, NOT only the shown entries!!!
+apply the action on the whole query, not only the shown entries!!!	infolog	en	Apply the action on the whole query, NOT only the shown entries!
 apply the changes	infolog	en	Apply the changes
 archive	infolog	en	Archive
 are you shure you want to close this entry ?	infolog	en	Are you sure you want to close this entry ?
@@ -240,7 +240,7 @@ if you specify an export definition, it will be used when you export	infolog	en	
 import next set	infolog	en	Import next set
 importance	infolog	en	Importance
 imports entries into the infolog from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	infolog	en	Imports entries into the InfoLog from a CSV file. CSV means 'Comma Separated Values'. In the options tab you can also choose other separators.
-imports todos into infolog from an ical file.	infolog	en	Imports TODOs into InfoLog from an iCal File.
+imports todos into infolog from an ical file.	infolog	en	Imports TODOs into InfoLog from an iCal file.
 info log	common	en	InfoLog
 infolog	common	en	InfoLog
 infolog - delete	infolog	en	InfoLog - Delete
@@ -353,8 +353,8 @@ parent infolog	infolog	en	Parent InfoLog
 participants for scheduling an appointment	infolog	en	Participants for scheduling an appointment
 path on (web-)serverside<br>eg. /var/samba/share	infolog	en	Path on (web-)serverside<br>eg. /var/samba/Share
 path to user and group files has to be outside of the webservers document-root!!!	infolog	en	Path to user and group files HAS TO BE OUTSIDE of the web servers document root!
-pattern for search in addressbook	infolog	en	Pattern for search in Address book
-pattern for search in projects	infolog	en	Pattern for search in Projects
+pattern for search in addressbook	infolog	en	Pattern for search in addressbook
+pattern for search in projects	infolog	en	Pattern for search in projects
 percent completed	infolog	en	Percent completed
 performance optimization for huge infolog tables	admin	en	Performance optimization for huge InfoLog tables
 permission denied	infolog	en	Permission denied!
@@ -461,7 +461,7 @@ start a new search, cancel this link	infolog	en	Start a new search, cancel this 
 startdate	infolog	en	Start date
 startdate enddate	infolog	en	Start date, Due date
 startdate for new entries	infolog	en	Start date for new entries
-startdate must be before enddate!!!	infolog	en	Startdate must be before due date!!!
+startdate must be before enddate!!!	infolog	en	Startdate must be before due date!
 starting %1	infolog	en	Starting %1
 startrecord	infolog	en	Start record
 status	infolog	en	Status

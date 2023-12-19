@@ -44,9 +44,17 @@ no modes available	setup	uk	Немає режимів
 not	setup	uk	не треба
 path information	setup	uk	Інформація шляху
 re-enter password	setup	uk	Перевведіть пароль
+regular expression to filter by dn	setup	uk	Регулярний вираз для фільтрації за DN
+rejected lines	setup	uk	Відхилені рядки
 remove	setup	uk	Видалити
+remove all	setup	uk	Видалити все
+rename	setup	uk	Перейменувати
+replace username and email	setup	uk	Замінити ім'я користувача та email
+replace username and keep email	setup	uk	Замінити ім'я користувача та залишити email
+required to change passwords	setup	uk	Потрібен для зміни паролів
+requires "reset password" privilege, to change passwords!	setup	uk	Для зміни пароля потрібен привілей "Скинути пароль"!
 select where you want to store/retrieve user accounts	setup	uk	Визначте де зберігати рахунки користувачів
-selectbox	setup	uk	Selectbox
+selectbox	setup	uk	Виберіть поле
 show 'powered by' logo on	setup	uk	Показувати логотип 'powered by'
 text entry	setup	uk	Текстовий запис
 top	setup	uk	зверху

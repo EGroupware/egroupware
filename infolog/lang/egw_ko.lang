@@ -238,68 +238,114 @@ not	infolog	ko	아니(not)
 not assigned	infolog	ko	지정안됨
 not-started	infolog	ko	시작안됨
 note	infolog	ko	노트
+notification settings	infolog	ko	알림 설정
 number of records to read (%1)	infolog	ko	%1 개의 레코드를 읽었습니다.
 offer	infolog	ko	제안
+old fixed definition	infolog	ko	기존 고정 정의
 ongoing	infolog	ko	진행중
+only show them if there is a filter	infolog	ko	필터가 있는 경우에만 표시
+only show them while searching	infolog	ko	검색하는 동안에만 표시
 open(status)	infolog	ko	개설
+other configurations	infolog	ko	기타 구성
 overdue	infolog	ko	만기초과
 own	infolog	ko	소유
 own open	infolog	ko	소유 개설
 own overdue	infolog	ko	소유 만기초과
 own upcoming	infolog	ko	소유 예정
+owner, responsible	infolog	ko	소유자, 책임자
+participants for scheduling an appointment	infolog	ko	약속 예약을 위한 참가자
 path to user and group files has to be outside of the webservers document-root!!!	infolog	ko	사용자와 그룹파일의 경로는 반드시 웹서버 DocumentRoot 설정 외부에 있어야 합니다!!!
-pattern for search in addressbook	infolog	ko	주소록 검색을 위한 패턴
-pattern for search in projects	infolog	ko	프로젝트 검색을 위한 패턴
+pattern for search in addressbook	infolog	ko	주소록에서 검색 패턴
+pattern for search in projects	infolog	ko	프로젝트에서 검색 패턴
 percent completed	infolog	ko	퍼센트 완료
+performance optimization for huge infolog tables	admin	ko	대용량 정보 로그 테이블에 대한 성능 최적화
 permission denied	infolog	ko	권한 거절
+permissions error - %1 could not %2	infolog	ko	권한 오류 - %1이(가) %2을(가) 할 수 없습니다.
 phone	infolog	ko	통화
 phone/email	infolog	ko	전화/메일
 phonecall	infolog	ko	통화
 planned	infolog	ko	기획
 planned time	infolog	ko	기획기간
+prefix for sub-entries (default: re:)	infolog	ko	하위 항목의 접두사(기본값: Re:)
 price	infolog	ko	가격
 priority	infolog	ko	중요도
 private	infolog	ko	개인
 project	infolog	ko	프로젝트
+project id	infolog	ko	프로젝트 ID
+project name	infolog	ko	프로젝트 이름
+projectmanager	infolog	ko	프로젝트 관리자
+re-planned	infolog	ko	다시 계획됨
+re-planned time	infolog	ko	다시 계획된 시간
 re:	infolog	ko	회신:
+receive notifications about items of type owned by groups you are part of	infolog	ko	내가 속한 그룹이 소유한 유형의 항목에 대한 알림을 받습니다.
+regular expression	infolog	ko	정규식
+removed	infolog	ko	제거됨
+removed category	infolog	ko	제거된 카테고리
+replacement	infolog	ko	대체
+replacements for inserting entries into documents	infolog	ko	문서에 항목 삽입을 위한 대체 기능
 respect timesheet run and read permissions for time totals	infolog	ko	작업표 실행 및 시간 총계에 대한 읽기 권한 존중
 responsible	infolog	ko	응답대상
 responsible open	infolog	ko	응답자 개설
+responsible open and upcoming	infolog	ko	책임감 있는 공개 및 예정
 responsible overdue	infolog	ko	응답자 만기초과
 responsible upcoming	infolog	ko	응답자 예정
 responsible user, priority	infolog	ko	응답대상,중요도
 rights for the responsible	infolog	ko	응답자에 대한 권한
 rows	infolog	ko	줄
+same day	infolog	ko	같은 날
 save	infolog	ko	저장
 saves the changes made and leaves	infolog	ko	저장하고 나가기
 saves this entry	infolog	ko	이 엔트리를 저장함
+schedule appointment	infolog	ko	약속 예약
 search	infolog	ko	검색
 search for:	infolog	ko	찾기 :
+second parameter for preg_replace	infolog	ko	preg_replace의 두 번째 매개변수
 select	infolog	ko	선택
 select a category for this entry	infolog	ko	이 엔트리의 카테고리를 선택하세요
 select a price	infolog	ko	가격을 선택하세요
 select a priority for this task	infolog	ko	이 엔트리의 중요도를 선택하세요
 select a project	infolog	ko	프로젝트를 선택하세요
 select a responsible user: a person you want to delegate this task	infolog	ko	응답자를 선택하세요 (이업무를 위임할 사람)
+select an action	infolog	ko	작업 선택
+select an action...	infolog	ko	작업 선택...
+select new category	infolog	ko	새 카테고리 선택
 select to filter by owner	infolog	ko	소유자에 따른 정렬
 select to filter by responsible	infolog	ko	응답에 따른 정렬
+select users or groups	infolog	ko	사용자 또는 그룹 선택
+selected calendars	infolog	ko	선택된 캘린더
+selection cf	infolog	ko	선택 CF
+sender	infolog	ko	발신자
+set status to done	infolog	ko	상태를 완료로 설정
+set status to done for all entries	infolog	ko	모든 항목의 상태를 완료로 설정
+sets the status of this entry to done	infolog	ko	이 항목의 상태를 완료로 설정합니다.
+show a x if content equals this compare value, otherwise show nothing	infolog	ko	콘텐츠가 이 비교 값과 같으면 X를 표시하고, 그렇지 않으면 아무것도 표시하지 않습니다.
 show full usernames	infolog	ko	긴 사용자명 표기
 show in the infolog list	infolog	ko	인포로그 목록에 표기
 show last modified	infolog	ko	마지막 수정일 표기
 show status and percent done separate	infolog	ko	상태 및 완료도 개별 표기
+show sub-entries	infolog	ko	하위 항목 표시
 show ticket id	infolog	ko	티켓ID 표기
+show times	infolog	ko	시간 표시
 small view	infolog	ko	미니뷰
 start	infolog	ko	시작
 start a new search, cancel this link	infolog	ko	이 링크를 취소하고 새로 검색
 startdate	infolog	ko	시작일
 startdate enddate	infolog	ko	시작일 만기일
 startdate for new entries	infolog	ko	새 엔트리를 위한 시작일
+startdate must be before enddate!!!	infolog	ko	시작 날짜는 마감일 이전이어야 합니다!
+starting %1	infolog	ko	시작 중 %1
 startrecord	infolog	ko	시작레코드
 status	infolog	ko	상태
 status ...	infolog	ko	상태 ...
+status, percent and date completed are always allowed.	infolog	ko	상태, 백분율 및 완료 날짜는 항상 허용됩니다.
 sub	infolog	ko	하위
+sub-entries will not be closed	infolog	ko	하위 항목은 닫히지 않습니다.
+sub-entry	infolog	ko	하위 항목
 subject	infolog	ko	제목
+sum	infolog	ko	합계
+tag to mark positions for address labels	infolog	ko	주소 라벨의 위치를 표시하는 태그
 task	infolog	ko	할일
+tasks of	infolog	ko	작업
 test import (show importable records <u>only</u> in browser)	infolog	ko	가져오기 테스트 (가져올수 있는 레코드 <u>오직</u> 브라우저에서만 보여줍니다)
 the document can contain placeholder like {{%1}}, to be replaced with the data.	infolog	ko	문서에 데이터로 대체할 {{%1}}과 같은 자리 표시자를 포함할 수 있습니다.
 times	infolog	ko	시간
@@ -311,14 +357,20 @@ typ	infolog	ko	형식
 typ '%1' already exists !!!	infolog	ko	%1 형식은 이미 있습니다.
 type	infolog	ko	형식
 type ...	infolog	ko	형식 ..
+type of field	infolog	ko	필드 유형
+unable to link to %3 by custom field "%1": "%4".  %2 matches.	infolog	ko	사용자 지정 필드 "%1"로 %3에 연결할 수 없습니다: "%4". %2가 일치합니다.
+unknown type: %1	infolog	ko	알 수 없는 유형: %1
 unlink	infolog	ko	삭제
+unlinked from %1	infolog	ko	%1에서 연결 해제됨
 upcoming	infolog	ko	예정
 urgency	infolog	ko	긴급
 urgent	infolog	ko	긴급
+use custom notification message	infolog	ko	사용자 지정 알림 메시지 사용
 used time	infolog	ko	사용한 시간
 view all subs of this entry	infolog	ko	이 엔트리의 모든 하위보기
 view other subs	infolog	ko	다른 하위보기
 view parent	infolog	ko	상위보기
+view parent with children	infolog	ko	자녀가 있는 부모 보기
 view subs	infolog	ko	하위보기
 view the parent of this entry and all his subs	infolog	ko	이 상위에 속한 모든 하위보기
 which implicit acl rights should the responsible get	infolog	ko	책임자에게 어떤 묵시적 ACL 권한이 부여되어야 하나요?
@@ -330,6 +382,10 @@ yes - close	infolog	ko	예 - 닫기
 yes - close including sub-entries	infolog	ko	예 - 하위 항목을 포함하여 닫기
 yes - delete	infolog	ko	예 - 삭제
 yes - delete including sub-entries	infolog	ko	예 - 하위 엔트리 포함삭제
+yes, noone can purge deleted items	infolog	ko	예, 누구도 삭제된 항목을 지울 수 없음
+yes, only admins can purge deleted items	infolog	ko	예, 관리자만 삭제된 항목을 지울 수 있음
+yes, with larger fontsize	infolog	ko	예, 더 큰 글꼴 크기 사용
+yes, with purging of deleted items possible	infolog	ko	예, 삭제된 항목 제거 가능
 you can choose a categorie to be preselected, when you create a new infolog entry	infolog	ko	새 정보 로그 항목을 만들 때 미리 선택할 카테고리를 선택할 수 있습니다.
 you can't delete one of the stock types !!!	infolog	ko	기본형식을 삭제할 수 없습니다.
 you have entered an invalid ending date	infolog	ko	만기일을 잘못입력하였습니다.

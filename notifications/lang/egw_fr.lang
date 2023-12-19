@@ -9,6 +9,7 @@ cancal?	notifications	fr	Annuler ?
 certification-information:	notifications	fr	Information sur le certificat
 check both (first try (active) user defined account, if none use emailadmin profile)	admin	fr	Cocher les deux. D'abord essayer le compte de utilisateur actif, puis le profil eMailAdmin
 choose from mailsettings used for notification	admin	fr	Utiliser les paramètres email utilisés pour la notification
+common chains	notifications	fr	Chaînes communes
 connection error.	notifications	fr	Erreur de connexion
 connection error. please check connection to server.	notifications	fr	Erreur de connexion. Veuillez vérifier la connectivité au serveur.
 continue to connect?	notifications	fr	Continuer la connexion ?
@@ -45,11 +46,14 @@ folder	notifications	fr	Dossier
 from	notifications	fr	Depuis
 host:	notifications	fr	Hôte :
 if set, embedded links get rendered special for external clients	notifications	fr	Si coché, les liens sont spécialement adaptés aux clients externes
+info on load config file: create config file.	notifications	fr	Info sur le chargement du fichier de configuration : créer le fichier de configuration.
+issuer dn:	notifications	fr	DN de l'émetteur :
 java desktop notification app	preferences	fr	Application java de notification
 last month	notifications	fr	Dernier mois
 linked entries:	common	fr	Entrées liées :
 login aborted, application exit?	notifications	fr	Login échoué, sortir de l'application ?
 login in egroupware:	notifications	fr	login EGroupware
+mail account to use for notifications	admin	fr	Compte de messagerie à utiliser pour les notifications
 mail backend	admin	fr	Backend email
 mark all as read	notifications	fr	tout marquer comme lu
 mark as read	notifications	fr	marquer comme lu
@@ -65,6 +69,7 @@ page not found, please check serveraddress.	notifications	fr	Page non trouvée, 
 password:	notifications	fr	Mot de passe :
 permission	notifications	fr	permission
 permission denied for notifications application.	notifications	fr	Permission refusée pour l'applications de notification
+placeholders with user/ prefix	admin	fr	caractères de remplacement avec le préfixe user/
 please contact your egroupware admin.	notifications	fr	Veuillez contacter votre admin EGroupware
 please enter the url of your egroupware.	notifications	fr	Veuillez entrer l'URL de votre EGroupware
 please enter your egroupware username.	notifications	fr	Veuillez entrer votre nom d'utilisateur EGroupware

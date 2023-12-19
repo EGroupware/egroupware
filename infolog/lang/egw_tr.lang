@@ -18,6 +18,7 @@ can not return an exact number of rows and therefore hides the count.	admin	tr	T
 cancel	infolog	tr	İptal
 change	infolog	tr	Değiştir
 change responsible	infolog	tr	Sorumlu değişikliği
+check to set startday	infolog	tr	Başlangıç gününü ayarlamak için kontrol edin
 configuration	infolog	tr	Ayarlar
 contact	infolog	tr	?leti?im
 contact cf	infolog	tr	İletişim CF
@@ -124,21 +125,95 @@ modifier	infolog	tr	Değiştirici
 modifierer	infolog	tr	Değiştirici
 name of current user, all other contact fields are valid too	infolog	tr	Mevcut kullanıcının adı, diğer tüm iletişim alanları da geçerlidir
 no custom field "%1" for %2.	infolog	tr	%2 için "%1" özel alanı yok.
+notification settings	infolog	tr	Bildirim ayarları
 number of records to read (%1)	infolog	tr	Okunacak kay?t say?s? (1%)
+old fixed definition	infolog	tr	Eski sabit tanım
+one day after	infolog	tr	Bir gün sonra
+one day in advance	infolog	tr	Bir gün önceden
+only show them if there is a filter	infolog	tr	Yalnızca filtre varsa gösterin
+only show them while searching	infolog	tr	Sadece arama yaparken gösterin
+open(status)	infolog	tr	Açık
 order	infolog	tr	Sıralama
+other configurations	infolog	tr	Diğer konfigürasyonlar
+owner, responsible	infolog	tr	Sahibi, Sorumlusu
+participants for scheduling an appointment	infolog	tr	Randevu almak için katılımcılar
+pattern for search in addressbook	infolog	tr	Adres defterinde arama için kalıp
+pattern for search in projects	infolog	tr	Projelerde arama için kalıp
+performance optimization for huge infolog tables	admin	tr	Büyük InfoLog tabloları için performans optimizasyonu
 permission denied	infolog	tr	İzin verilmedi
+permissions error - %1 could not %2	infolog	tr	İzin hatası - %1 %2 yapamadı
+prefix for sub-entries (default: re:)	infolog	tr	Alt girişler için önek (varsayılan: Re:)
+primary link	infolog	tr	Birincil bağlantı
 print this infolog	infolog	tr	Bu InfoLog'u yazdırın
 printing...	infolog	tr	Baskı...
 project	infolog	tr	Proje
+project id	infolog	tr	Proje Kimliği
+project name	infolog	tr	Proje adı
+projectmanager	infolog	tr	Proje Yöneticisi
+re-planned	infolog	tr	Yeniden planlandı
+re-planned time	infolog	tr	Yeniden planlanan zaman
+receive notifications about items of type owned by groups you are part of	infolog	tr	Parçası olduğunuz grupların sahip olduğu türdeki öğeler hakkında bildirimler alın
+regular expression	infolog	tr	Düzenli ifade
+removed	infolog	tr	Kaldırıldı.
+removed category	infolog	tr	kaldırıldı kategorisi
+replacement	infolog	tr	Değiştirme
+replacements for inserting entries into documents	infolog	tr	Belgelere giriş eklemek için değiştirmeler
 respect timesheet run and read permissions for time totals	infolog	tr	Zaman toplamları için zaman çizelgesi çalıştırma ve okuma izinlerine saygı gösterin
+responsible open and upcoming	infolog	tr	Sorumlu açık ve yaklaşan
+rights for the responsible	infolog	tr	Sorumlular için haklar
+rows	infolog	tr	Sıralar
+same day	infolog	tr	Aynı gün
+schedule appointment	infolog	tr	Randevu planlayın
 search for:	infolog	tr	Arama yap:
+second parameter for preg_replace	infolog	tr	preg_replace için ikinci parametre
+select a price	infolog	tr	Bir fiyat seçin
+select a project	infolog	tr	Bir proje seçin
+select an action	infolog	tr	Bir eylem seçin
+select an action...	infolog	tr	Bir eylem seçin...
+select new category	infolog	tr	Yeni kategori seçin
+select users or groups	infolog	tr	Kullanıcıları veya grupları seçme
+selected calendars	infolog	tr	Seçilen takvimler
+selection cf	infolog	tr	Seçim CF
+sender	infolog	tr	Gönderen
+set status to done	infolog	tr	Durumu tamamlandı olarak ayarla
+set status to done for all entries	infolog	tr	Tüm girişler için durumu tamamlandı olarak ayarlayın
+sets the status of this entry to done	infolog	tr	Bu girdinin durumunu tamamlandı olarak ayarlar
+show a x if content equals this compare value, otherwise show nothing	infolog	tr	İçerik bu karşılaştırma değerine eşitse bir X göster, aksi takdirde hiçbir şey gösterme
+show full usernames	infolog	tr	Tam kullanıcı adlarını göster
+show last modified	infolog	tr	Son değişikliği göster
+show status and percent done separate	infolog	tr	Durumu ve tamamlanma yüzdesini ayrı ayrı göster
+show sub-entries	infolog	tr	Alt girişleri göster
+show ticket id	infolog	tr	Bilet kimliğini göster
+show times	infolog	tr	Gösteri saatleri
+start	infolog	tr	Başlangıç
 startdate	infolog	tr	Başlangıç tarihi
+startdate for new entries	infolog	tr	Yeni girişler için başlangıç tarihi
+startdate must be before enddate!!!	infolog	tr	Başlangıç tarihi son tarihten önce olmalıdır!
+starting %1	infolog	tr	Başlangıç %1
 startrecord	infolog	tr	Kaydetmeye ba?la
+status, percent and date completed are always allowed.	infolog	tr	Durum, yüzde ve tamamlanma tarihine her zaman izin verilir.
+sub	infolog	tr	Alt
+sub-entries become subs of the parent or main entries, if there's no parent	infolog	tr	Alt girişler, üst giriş yoksa üst veya ana girişlerin altları olur
+sub-entries will not be closed	infolog	tr	Alt girişler kapatılmayacaktır
+sub-entry	infolog	tr	Alt giriş
+sum	infolog	tr	Toplam
+tag to mark positions for address labels	infolog	tr	Adres etiketlerinin konumlarını işaretlemek için etiket
+tasks of	infolog	tr	Görevleri
 test import (show importable records <u>only</u> in browser)	infolog	tr	?thal test (?thal edilebilecek ba?lant?lar? <u>sadece</u> görüntüle.
 the document can contain placeholder like {{%1}}, to be replaced with the data.	infolog	tr	Belge, verilerle değiştirilmek üzere {{%1}} gibi yer tutucu içerebilir.
+the following document-types are supported:	infolog	tr	Aşağıdaki belge türleri desteklenmektedir:
 times	infolog	tr	Kere
+titles of any entries linked to the current record, excluding attached files	infolog	tr	Ekli dosyalar hariç olmak üzere, geçerli kayda bağlı tüm girişlerin başlıkları
 to many might exceed your execution-time-limit	infolog	tr	çok fazlas? execution-time-limit'inizi a?abilir!
 today	infolog	tr	Bugün
+type of field	infolog	tr	Alan türü
+unable to link to %3 by custom field "%1": "%4".  %2 matches.	infolog	tr	"%1" özel alanı ile %3'e bağlantı kurulamıyor: "%4". 2 eşleşiyor.
+unknown type: %1	infolog	tr	Bilinmeyen tür: %1
+unlinked from %1	infolog	tr	%1'den bağlantısı kaldırılmış
+use custom notification message	infolog	tr	Özel bildirim mesajı kullanma
+use this tag for addresslabels. put the content, you want to repeat, between two tags.	infolog	tr	Bu etiketi adres etiketleri için kullanın. Tekrarlamak istediğiniz içeriği iki etiket arasına yerleştirin.
+used time	infolog	tr	Kullanılan zaman
+view parent with children	infolog	tr	Ebeveyni çocuklarla birlikte görüntüleme
 which implicit acl rights should the responsible get	infolog	tr	Sorumlu hangi örtük ACL haklarını almalıdır
 which participants should be preselected when scheduling an appointment.	infolog	tr	Bir randevu planlanırken hangi katılımcılar önceden seçilmelidir.
 which types should the calendar show	infolog	tr	Takvim hangi türleri göstermelidir
@@ -148,6 +223,10 @@ yes - close	infolog	tr	Evet - Kapat
 yes - close including sub-entries	infolog	tr	Evet - Alt girişler dahil kapat
 yes - delete	infolog	tr	Evet - Sil
 yes - delete including sub-entries	infolog	tr	Evet - Alt girişler dahil silme
+yes, noone can purge deleted items	infolog	tr	Evet, kimse silinen öğeleri temizleyemez
+yes, only admins can purge deleted items	infolog	tr	Evet, silinen öğeleri yalnızca yöneticiler temizleyebilir
+yes, with larger fontsize	infolog	tr	Evet, daha büyük yazı tipi boyutuyla
+yes, with purging of deleted items possible	infolog	tr	Evet, silinen öğelerin temizlenmesi mümkün
 you can choose a categorie to be preselected, when you create a new infolog entry	infolog	tr	Yeni bir InfoLog girişi oluşturduğunuzda, önceden seçilecek bir kategori seçebilirsiniz.
 you can't delete one of the stock types !!!	infolog	tr	Stok tiplerinden birini silemezsiniz!
 you have to enter a name, to create a new type!	infolog	tr	Yeni bir tür oluşturmak için bir isim girmeniz gerekir!

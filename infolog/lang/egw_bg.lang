@@ -300,43 +300,54 @@ not	infolog	bg	не е
 not assigned	infolog	bg	не назначен
 not-started	infolog	bg	не започнат
 note	infolog	bg	Бележка
+notification settings	infolog	bg	Настройки на известията
 number of records to read (%1)	infolog	bg	Брой записи за четене (%1)
 number of row for a multiline inputfield or line of a multi-select-box	infolog	bg	Брой редове за многоредово текстово поле или множествен избор
 offer	infolog	bg	оферта
+old fixed definition	infolog	bg	Старо фиксирано определение
 one day after	infolog	bg	един ден по-късно
 one day in advance	infolog	bg	един ден предварително
 ongoing	infolog	bg	състоящ се
 only for details	infolog	bg	Само за детайлите
 only if i get assigned or removed	infolog	bg	Само ако бъда включен или изключен
+only show them if there is a filter	infolog	bg	Показвайте ги само ако има филтър
+only show them while searching	infolog	bg	Показвайте ги само при търсене
 only the attachments	infolog	bg	само приложенията
 only the links	infolog	bg	само връзките
 open(status)	infolog	bg	отвори
 optional note to the link	infolog	bg	бележка към връзката
 order	infolog	bg	Ред
 organization	infolog	bg	организация
+other configurations	infolog	bg	Други конфигурации
 overdue	infolog	bg	просрочен
 own	infolog	bg	собствен
 own open	infolog	bg	отворен от собственика
 own overdue	infolog	bg	просрочен от собственика
 own upcoming	infolog	bg	предстоящ за собственика
+owner, responsible	infolog	bg	Собственик, Отговорник
 parent	infolog	bg	Родителски
+participants for scheduling an appointment	infolog	bg	Участници за насрочване на среща
 path on (web-)serverside<br>eg. /var/samba/share	infolog	bg	път от страна на (web-)сървъра<br>напр. /var/samba/Share
 path to user and group files has to be outside of the webservers document-root!!!	infolog	bg	Пътят до файловете на потребителите и групите ТРЯБВА ДА БЪДЕ ИЗВЪН document-root на WEB сървъра!!!
-pattern for search in addressbook	infolog	bg	низ за търсене в Адр. указател
-pattern for search in projects	infolog	bg	низ за търсене в Проектите
+pattern for search in addressbook	infolog	bg	Модел за търсене в адресната книга
+pattern for search in projects	infolog	bg	Модел за търсене в проекти
 percent completed	infolog	bg	Степен на изпълнение
+performance optimization for huge infolog tables	admin	bg	Оптимизиране на производителността за огромни таблици на InfoLog
 permission denied	infolog	bg	Достъпът отказан
 phone	infolog	bg	Телефонен разговор
 phone/email	infolog	bg	Телефон/E-Mail
 phonecall	infolog	bg	Телефонен разговор
 planned	infolog	bg	планиран
 planned time	infolog	bg	планирано време
+prefix for sub-entries (default: re:)	infolog	bg	Префикс за подвъпросите (по подразбиране: Re:)
 price	infolog	bg	Цена
 pricelist	infolog	bg	Ценова листа
 primary link	infolog	bg	основна връзка
 priority	infolog	bg	Приоритет
 private	infolog	bg	Личен
 project	infolog	bg	Проект
+project id	infolog	bg	Идентификатор на проекта
+project name	infolog	bg	Име на проекта
 project settings: price, times	infolog	bg	Параметри на проекта: цена, срокове
 re:	infolog	bg	Отг:
 read one record by passing its id.	infolog	bg	Прочита един запис чрез предаване на ИД №
@@ -344,26 +355,36 @@ read rights (default)	infolog	bg	право за четене (по подраз
 receive notifications about due entries you are responsible for	infolog	bg	Известяване за срока на задачи, за които сте отговорни
 receive notifications about due entries you delegated	infolog	bg	Известяване за срока на задачи, които сте делегирали
 receive notifications about items assigned to you	infolog	bg	Известяване за срока на задачи, назначени на Вас
+receive notifications about items of type owned by groups you are part of	infolog	bg	Получаване на известия за елементи от тип, притежавани от групи, от които сте част
 receive notifications about own items	infolog	bg	Известяване за срока на собствени задачи
 receive notifications about starting entries you are responsible for	infolog	bg	Известяване за началото на задачи, за които сте отговорни
 receive notifications about starting entries you delegated	infolog	bg	Известяване за началото на задачи, които сте делегирали
 receive notifications as html-mails	infolog	bg	Получаване на известия във вид на HTML E-mail-и
+regular expression	infolog	bg	Редовен израз
 remark	infolog	bg	Забележка
 remove this link (not the entry itself)	infolog	bg	Премахване на връзката (не и на записа)
+removed	infolog	bg	Премахнати.
+removed category	infolog	bg	Отстранена категория
+replacement	infolog	bg	Замяна
+replacements for inserting entries into documents	infolog	bg	Заместители за вмъкване на записи в документи
 respect timesheet run and read permissions for time totals	infolog	bg	Спазвайте правата за стартиране и четене на таблицата за работното време за общите суми
 responsible	infolog	bg	отговорен
 responsible open	infolog	bg	отворен от отговорника
+responsible open and upcoming	infolog	bg	Отговаря за отворени и предстоящи
 responsible overdue	infolog	bg	просрочен от отговорника
 responsible upcoming	infolog	bg	предстоящ за отговорника
 responsible user, priority	infolog	bg	отговорен потребител, приоритет
 returns a list / search for records.	infolog	bg	Връща списък / търси записи.
 rights for the responsible	infolog	bg	Права на отговорника
+rows	infolog	bg	Редове
 same day	infolog	bg	същия ден
 save	infolog	bg	запис
 saves the changes made and leaves	infolog	bg	запазва направените промени и излиза
 saves this entry	infolog	bg	Запазва записа
+schedule appointment	infolog	bg	Насрочете среща
 search	infolog	bg	Търсене
 search for:	infolog	bg	Търсене за:
+second parameter for preg_replace	infolog	bg	Избрани календари
 select	infolog	bg	Избор
 select a category for this entry	infolog	bg	избор на категория за този запис
 select a price	infolog	bg	Избор на цена
@@ -371,12 +392,22 @@ select a priority for this task	infolog	bg	приоритет на задача�
 select a project	infolog	bg	Изберете проект
 select a responsible user: a person you want to delegate this task	infolog	bg	избор на отговорник: потребител, на който да делегирате тази задача
 select a typ to edit it's status-values or delete it	infolog	bg	изберете тип за да редактирате статуса или да го изтриете
+select an action	infolog	bg	Избор на действие
+select an action...	infolog	bg	Изберете действие...
 select an app to search in	infolog	bg	Изберете приложение, в което да се търси
 select an entry to link with	infolog	bg	Изберете запис, с който да се свърже
 select multiple contacts for a further action	infolog	bg	Избор на множество контакти
+select new category	infolog	bg	Изберете нова категория
 select to filter by owner	infolog	bg	филтър по собственик
 select to filter by responsible	infolog	bg	филтър по отговорни
+select users or groups	infolog	bg	Изберете потребители или групи
+selected calendars	infolog	bg	Избрани календари
+selection cf	infolog	bg	Избор на CF
+sender	infolog	bg	Изпращач
+set status to done	infolog	bg	Задаване на статус на готово
+set status to done for all entries	infolog	bg	Задаване на статус на готово за всички записи
 sets the status of this entry and its subs to done	infolog	bg	Маркира записа заедно с под-зап. като Изпълнени
+sets the status of this entry to done	infolog	bg	Задаване на статуса на този запис на готов
 should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	bg	Дневникът да показва ли Под-задачите, -обажданията -бележките в стандартния изглед или не. Тези елементи винаги могат да бъдат показани чрез "родителите" им.
 should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	bg	Дневникът да показва ли връзките към други приложения и/или приложените файлове в "Дневник-списък" (стандартния изглед при влизане в Дневник)?
 should infolog show up on the home screen and with which filter. works only if you dont selected an application for the home screen (in your preferences).	infolog	bg	Да се показва ли Дневникът на главния екран и с какъв филтър. Работи само, ако не сте избрали приложение за главния екран (в настройките)?
@@ -386,10 +417,12 @@ should the infolog list show the column "last modified".	infolog	bg	Да се п
 should the infolog list show the percent done only for status ongoing or two separate icons.	infolog	bg	Да показва ли в списъка на Дневника степента на изпълнение само за състоящите се в момента, или две отделни икони?
 should this entry only be visible to you and people you grant privat access via the acl	infolog	bg	да бъде ли този запис видим само за Вас и хората, на които сте дали достъп до Лични чрез ACL-списъка (за контрол на достъпа)
 show a column for used and planned times in the list.	infolog	bg	Показва колона за използваното и планираното време в списъка.
+show a x if content equals this compare value, otherwise show nothing	infolog	bg	Покажете X, ако съдържанието е равно на тази стойност за сравнение, в противен случай не показвайте нищо
 show full usernames	infolog	bg	Показва пълните имена на потребители
 show in the infolog list	infolog	bg	Показва списък на Дневника
 show last modified	infolog	bg	Последно променени
 show status and percent done separate	infolog	bg	Статус и степен на изпълнение отделно
+show sub-entries	infolog	bg	Показване на подпозиции
 show ticket id	infolog	bg	Показва No. на етикет
 show times	infolog	bg	Показва времената
 small view	infolog	bg	умален изглед
@@ -398,13 +431,19 @@ start a new search, cancel this link	infolog	bg	Започва ново търс
 startdate	infolog	bg	Начална дата
 startdate enddate	infolog	bg	Начална дата дата за прикл.
 startdate for new entries	infolog	bg	Начална дата за новите записи
+startdate must be before enddate!!!	infolog	bg	Началната дата трябва да е преди датата на плащане!
+starting %1	infolog	bg	Започва от %1
 startrecord	infolog	bg	Начален запис
 status	infolog	bg	Статус
 status ...	infolog	bg	Статус...
 status, percent and date completed are always allowed.	infolog	bg	Статус, степен на изпълнение и датата на приключване винаги са достъпни.
 sub	infolog	bg	Под-
 sub-entries become subs of the parent or main entries, if there's no parent	infolog	bg	Под-записите са такива за "родителските" или главните записи, ако няма "родителски"
+sub-entries will not be closed	infolog	bg	Допълнителните записи няма да бъдат затворени
+sub-entry	infolog	bg	Допълнителен запис
 subject	infolog	bg	Тема
+sum	infolog	bg	Сума
+tag to mark positions for address labels	infolog	bg	Етикет за маркиране на позиции за етикети за адреси
 task	infolog	bg	Предстоящо
 template	infolog	bg	Шаблон
 test import (show importable records <u>only</u> in browser)	infolog	bg	Тестов импорт (показва импортируемите записи <u>само</u> в браузъра)
@@ -425,16 +464,22 @@ typ '%1' already exists !!!	infolog	bg	Тип '%1' вече съществува
 type	infolog	bg	Тип
 type ...	infolog	bg	Тип ...
 type of customfield	infolog	bg	Тип на полето по избор
+type of field	infolog	bg	Вид поле
 type of the log-entry: note, phonecall or todo	infolog	bg	Тип на записа: Бележка, Тел.обаждане или Предстоящо
+unable to link to %3 by custom field "%1": "%4".  %2 matches.	infolog	bg	Невъзможно е да се направи връзка към %3 чрез потребителско поле "%1": "%4". %2 съвпада.
+unknown type: %1	infolog	bg	Неизвестен тип: %1
 unlink	infolog	bg	Премахва връзка
+unlinked from %1	infolog	bg	Няма връзка от %1
 upcoming	infolog	bg	предстоящ
 urgency	infolog	bg	спешност
 urgent	infolog	bg	спешно
+use custom notification message	infolog	bg	Използвайте персонализирано съобщение за уведомяване
 used time	infolog	bg	използвано време
 values for selectbox	infolog	bg	Стойности за избор
 view all subs of this entry	infolog	bg	Показва всички под- на записа
 view other subs	infolog	bg	показва другите Под-
 view parent	infolog	bg	Показва "Родителя"
+view parent with children	infolog	bg	Преглед на родител с деца
 view subs	infolog	bg	показва Под-
 view the parent of this entry and all his subs	infolog	bg	Показва Родителя на записа и всичките му под-
 view this linked entry in its application	infolog	bg	показва свързания запис в съотв. приложение

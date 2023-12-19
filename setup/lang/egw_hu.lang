@@ -13,23 +13,23 @@ attempt to use correct mimetype for ftp instead of default 'application/octet-st
 authentication / accounts	setup	hu	Azonosítás / Azonosítók
 auto create account records for authenticated users	setup	hu	Hitelesített felhasználóknak automatikus hozzáférés generálása.
 back to user login	setup	hu	Vissza a felhasználói bejelentkezéshez
-bottom	setup	hu	legalsó
+bottom	setup	hu	Legalsó
 cancel	setup	hu	Mégsem
-charset	setup	hu	utf-8
+charset	setup	hu	Betűkészlet
 check installation	setup	hu	Telepítés ellenőrzése
 check ip address of all sessions	setup	hu	Összes session IP cím ellenőrzése
 completed	setup	hu	Teljesítve
 configuration	setup	hu	Konfiguráció
-contain	setup	hu	tartalmaz
+contain	setup	hu	Tartalmaz
 continue	setup	hu	Folytat
 convert	setup	hu	Konvertál
 country selection	setup	hu	Ország kiválasztása
 create	setup	hu	Létrehoz
 created	setup	hu	Létrehozva
 current version	setup	hu	Aktuális verzió
-day	setup	hu	nap
+day	setup	hu	Nap
 db backup and restore	setup	hu	Adatbázis mentés és helyreállítás
-default	setup	hu	alapértelmezett
+default	setup	hu	Alapértelmezett
 default file system space per user/group ?	setup	hu	Az alapértelmezett fájlrendszerméret felhasználónként ?
 delete	setup	hu	Törlés
 deny all users access to grant other users access to their entries ?	setup	hu	Minden felhasználó esetén tiltsa a más felhasználóknak kiadható jogosultság beállítást? Ez esetben pl. nem oszthatja meg a saját naptárát más felhasználóval (ez csak az egyedi engedélyezést befolyásolja, a csoport jogosultságra nincs hatással!)
@@ -66,21 +66,29 @@ month	setup	hu	Hónap
 new	setup	hu	Új
 next run	setup	hu	Következő futtatás
 no algorithms available	setup	hu	nincsenek elérhető algoritmusok
-no modes available	setup	hu	nincs elérhetó mód
-not set	setup	hu	nincs megadva
-one month	setup	hu	egy hónap
-one week	setup	hu	egy hét
+no modes available	setup	hu	Nincs elérhetó mód
+not set	setup	hu	Nincs megadva
+one month	setup	hu	Egy hónap
+one week	setup	hu	Egy hét
 or	setup	hu	vagy
 password for smtp-authentication	setup	hu	Jelszó az SMTP-azonosításhoz
 path information	setup	hu	Útvonal-információ
 re-enter password	setup	hu	Jelszó újra
-remove	setup	hu	eltávolítás
+regular expression to filter by dn	setup	hu	Szabályos kifejezés a DN szerinti szűréshez
+rejected lines	setup	hu	Elutasított sorok
+remove	setup	hu	Eltávolítás
+remove all	setup	hu	Összes eltávolítása
+rename	setup	hu	Átnevezés
+replace username and email	setup	hu	Felhasználónév és e-mail cím cseréje
+replace username and keep email	setup	hu	Felhasználónév cseréje és email megtartása
+required to change passwords	setup	hu	Jelszavak megváltoztatásához szükséges
+requires "reset password" privilege, to change passwords!	setup	hu	"Jelszó visszaállítása" jogosultság szükséges a jelszavak megváltoztatásához!
 select where you want to store/retrieve user accounts	setup	hu	Válassza ki, hol kívánja tárolni a felhasználói hozzáféréseket
 selectbox	setup	hu	Kiválasztó doboz
 show 'powered by' logo on	setup	hu	'Powered by' logó megjelenítése
 size	setup	hu	Méret
 text entry	setup	hu	Szöveges bejegyzés
-two weeks	setup	hu	két hét
+two weeks	setup	hu	Két hét
 use cookies to pass sessionid	setup	hu	Használjon sütiket a session azonosító átadásához
 use pure html compliant code (not fully working yet)	setup	hu	Használjon tiszta HTML kódot (nem teljesen működik egyelőre)
 user for smtp-authentication (leave it empty if no auth required)	setup	hu	Felhasználó az SMTP hitelesítéshez (hagyja üresen, ha nem szükséges hitelesíteni)

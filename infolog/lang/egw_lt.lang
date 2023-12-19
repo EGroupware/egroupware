@@ -120,10 +120,80 @@ leave it empty	infolog	lt	Palikite tuščią
 leave it empty for a full week	infolog	lt	Palikite jį tuščią visai savaitei
 length	infolog	lt	Ilgis
 limit list to last n month, if ordering by last-modified and not searching.	admin	lt	Apriboti sąrašą iki paskutinio N mėnesio, jei eiliškumas nustatomas pagal paskutinį pakeitimą ir neieškoma.
+notification settings	infolog	lt	Pranešimų nustatymai
+old fixed definition	infolog	lt	Senas fiksuotas apibrėžimas
+one day after	infolog	lt	Viena diena po
+one day in advance	infolog	lt	Viena diena iš anksto
+only show them if there is a filter	infolog	lt	Rodyti juos tik tada, jei yra filtras
+only show them while searching	infolog	lt	Rodyti juos tik atliekant paiešką
+open(status)	infolog	lt	Atviras
+other configurations	infolog	lt	Kitos konfigūracijos
+owner, responsible	infolog	lt	Savininkas, Atsakingas
+participants for scheduling an appointment	infolog	lt	Paskyros planavimo dalyviai
+pattern for search in addressbook	infolog	lt	Paieškos adresų knygoje šablonas
+pattern for search in projects	infolog	lt	Paieškos projektuose šablonas
+performance optimization for huge infolog tables	admin	lt	Didžiulių InfoLog lentelių našumo optimizavimas
+permissions error - %1 could not %2	infolog	lt	Leidimų klaida - %1 negalėjo %2
+prefix for sub-entries (default: re:)	infolog	lt	subįrašų priešdėlis (numatytoji reikšmė: Re:)
 print this infolog	infolog	lt	Spausdinti šį informacinį žurnalą
 printing...	infolog	lt	Spausdinti...
+project id	infolog	lt	Projekto ID
+project name	infolog	lt	Projekto pavadinimas
+projectmanager	infolog	lt	Projekto vadovas
+re-planned	infolog	lt	Pakartotinai suplanuota
+re-planned time	infolog	lt	Pakartotinai suplanuotas laikas
+receive notifications about items of type owned by groups you are part of	infolog	lt	Gauti pranešimus apie tipo elementus, priklausančius grupėms, kurioms priklausote
+regular expression	infolog	lt	Reguliarioji išraiška
+removed	infolog	lt	Pašalinta.
+removed category	infolog	lt	pašalinta kategorija
+replacement	infolog	lt	Pakeitimas
+replacements for inserting entries into documents	infolog	lt	Įrašų įterpimo į dokumentus pakaitalai
 respect timesheet run and read permissions for time totals	infolog	lt	Laikykitės darbo laiko apskaitos žiniaraščio paleidimo ir skaitymo leidimų laiko sumoms
+responsible open and upcoming	infolog	lt	Atsakingi atviri ir būsimi
+responsible overdue	infolog	lt	Atsakingas už vėlavimą
+rows	infolog	lt	Eilutės
+same day	infolog	lt	Ta pati diena
+schedule appointment	infolog	lt	Suplanuoti susitikimą
+second parameter for preg_replace	infolog	lt	Antrasis preg_replace parametras
+select a price	infolog	lt	Pasirinkite kainą
+select a project	infolog	lt	Pasirinkite projektą
+select an action	infolog	lt	Pasirinkite veiksmą
+select an action...	infolog	lt	Pasirinkite veiksmą...
+select new category	infolog	lt	Pasirinkite naują kategoriją
+select users or groups	infolog	lt	Pasirinkite naudotojus arba grupes
+selected calendars	infolog	lt	Pasirinkti kalendoriai
+selection cf	infolog	lt	Pasirinkimas CF
+sender	infolog	lt	Siuntėjas
+set status to done	infolog	lt	Nustatyti būseną į Atlikta
+set status to done for all entries	infolog	lt	Nustatyti visų įrašų būseną į baigta
+sets the status of this entry to done	infolog	lt	Nustato šio įrašo būseną į atlikta
+show a x if content equals this compare value, otherwise show nothing	infolog	lt	Rodyti X, jei turinys lygus šiai lyginamajai vertei, priešingu atveju nerodoma nieko
+show full usernames	infolog	lt	Rodyti visus naudotojų vardus
+show last modified	infolog	lt	Rodyti paskutinį kartą pakeistą
+show status and percent done separate	infolog	lt	Rodyti būseną ir atliktų darbų procentą atskirai
+show sub-entries	infolog	lt	Rodyti subįrašus
+show ticket id	infolog	lt	Rodyti bilieto ID
+show times	infolog	lt	Rodyti laikus
+start	infolog	lt	Pradėti
+startdate for new entries	infolog	lt	Naujų įrašų pradžios data
+startdate must be before enddate!!!	infolog	lt	Pradžios data turi būti ankstesnė už terminą!
+starting %1	infolog	lt	Pradžios %1
+status, percent and date completed are always allowed.	infolog	lt	Visada leidžiama nurodyti būseną, procentus ir užbaigimo datą.
+sub	infolog	lt	Papildoma
+sub-entries become subs of the parent or main entries, if there's no parent	infolog	lt	Papildomi įrašai tampa patronuojančio arba pagrindinio įrašo antriniais įrašais, jei nėra patronuojančio įrašo
+sub-entries will not be closed	infolog	lt	Papildomi įrašai nebus uždaromi
+sub-entry	infolog	lt	Papildomas įrašas
+sum	infolog	lt	Suma
+tag to mark positions for address labels	infolog	lt	Žyma, skirta adresų etikečių pozicijoms žymėti
+tasks of	infolog	lt	Užduotys
 the document can contain placeholder like {{%1}}, to be replaced with the data.	infolog	lt	Dokumente gali būti tokios pakaitinės žymos kaip {{%1}}, kurios bus pakeistos duomenimis.
+type of field	infolog	lt	Lauko tipas
+type of the log-entry: note, phonecall or todo	infolog	lt	Informacijos žurnalo įrašo tipas
+unable to link to %3 by custom field "%1": "%4".  %2 matches.	infolog	lt	Nepavyksta susieti su %3 pagal pasirinktinį lauką "%1": "%4". %2 atitinka.
+unknown type: %1	infolog	lt	Nežinomas tipas: %1
+unlinked from %1	infolog	lt	Nesusieta su %1
+use custom notification message	infolog	lt	Naudokite pasirinktinį pranešimo pranešimą
+view parent with children	infolog	lt	Peržiūrėti tėvus su vaikais
 which implicit acl rights should the responsible get	infolog	lt	Kokias numanomas ACL teises turėtų gauti atsakingas asmuo
 which participants should be preselected when scheduling an appointment.	infolog	lt	Kurie dalyviai turėtų būti iš anksto pasirinkti planuojant susitikimą.
 which types should the calendar show	infolog	lt	Kokius tipus turėtų rodyti kalendorius
@@ -133,6 +203,10 @@ yes - close	infolog	lt	Taip - Uždaryti
 yes - close including sub-entries	infolog	lt	Taip - Uždaryti, įskaitant papildomus įrašus
 yes - delete	infolog	lt	Taip - Ištrinti
 yes - delete including sub-entries	infolog	lt	Taip - Ištrinti, įskaitant subįrašus
+yes, noone can purge deleted items	infolog	lt	Taip, niekas negali ištrinti ištrintų elementų
+yes, only admins can purge deleted items	infolog	lt	Taip, ištrintus elementus gali išvalyti tik administratoriai
+yes, with larger fontsize	infolog	lt	Taip, su didesniu šriftu
+yes, with purging of deleted items possible	infolog	lt	Taip, galima ištrintus elementus išvalyti
 you can choose a categorie to be preselected, when you create a new infolog entry	infolog	lt	Galite pasirinkti kategoriją, kuri bus iš anksto parinkta, kai kursite naują InfoLog įrašą.
 you can't delete one of the stock types !!!	infolog	lt	Negalima ištrinti vieno iš atsargų tipų!
 you have to enter a name, to create a new type!	infolog	lt	Norėdami sukurti naują tipą, turite įvesti pavadinimą!

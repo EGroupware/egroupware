@@ -68,8 +68,8 @@ backup sets	setup	pt	Definições da cópia de segurança
 backup started, this might take a few minutes ...	setup	pt	A cópia de segurança começou. Pode demorar alguns minutos...
 because an application it depends upon was upgraded	setup	pt	porque uma aplicação de que depende foi actualizada
 because it depends upon	setup	pt	Porque depende de
-because it is not a user application, or access is controlled via acl	setup	pt	porque não é uma aplicação de utilizador ou o acesso é controlado através das regras de acesso
-because it requires manual table installation, <br />or the table definition was incorrect	setup	pt	porque requer instalação das tabelas  manualmente, <br />ou a definição da tabela está incorrecta
+because it is not a user application, or access is controlled via acl	setup	pt	Porque não é uma aplicação de utilizador ou o acesso é controlado através das regras de acesso
+because it requires manual table installation, <br />or the table definition was incorrect	setup	pt	Porque requer instalação das tabelas  manualmente, <br />ou a definição da tabela está incorrecta
 because it was manually disabled	setup	pt	Porque foi desactivado manualmente
 because of a failed upgrade or install	setup	pt	Devido a uma falha na actualização ou instalação
 because of a failed upgrade, or the database is newer than the installed version of this app	setup	pt	Devido a uma falha na actualização, ou a base de dados é mais recente do que a versão instalada desta aplicação
@@ -150,7 +150,7 @@ demo server setup	setup	pt	Configuração de demonstração do servidor
 deny access	setup	pt	Negar acesso
 deny all users access to grant other users access to their entries ?	setup	pt	Não permitir aos utilizadores a possibilidade de conceder, a outros utilizadores, o acesso aos seus registos ?
 dependency failure	setup	pt	Falha de dependência
-deregistered	setup	pt	não registado
+deregistered	setup	pt	Não registado
 details for admin account	setup	pt	Detalhes da conta do administrador
 developers' table schema toy	setup	pt	Table Schema Toy - Desenvolvimento
 did not find any valid db support!	setup	pt	Não foi possível encontrar nenhum suporte de base de dados válido!
@@ -190,7 +190,7 @@ file	setup	pt	Ficheiro
 file type, size, version, etc.	setup	pt	ficheiro: tipo, tamanho, versão, etc.
 file uploads are switched off: you can not use any of the filemanagers, nor can you attach files in several applications!	setup	pt	O envio de ficheiros não está activado. NÃO pode utilizar nenhum dos gestores de ficheiros, nem anexar ficheiros nas diversas aplicações!
 filename	setup	pt	Nome do ficheiro
-filesystem	setup	pt	sistema de ficheiros
+filesystem	setup	pt	Sistema de ficheiros
 force selectbox	setup	pt	Forçar caixa de selecção
 go back	setup	pt	Voltar
 go to	setup	pt	Ir para
@@ -297,8 +297,8 @@ now guessing better values for defaults...	setup	pt	A verificar os melhores valo
 odbc / maxdb: dsn (data source name) to use	setup	pt	ODBC / MaxDB: DSN (data source name) a utilizar
 ok	setup	pt	OK
 once the database is setup correctly	setup	pt	Quando a base de dados estiver configurada corretamente
-one month	setup	pt	um mês
-one week	setup	pt	uma semana
+one month	setup	pt	Um mês
+one week	setup	pt	Uma semana
 only add languages that are not in the database already	setup	pt	Somente adicionar idiomas que ainda não estão na base de dados
 only add new phrases	setup	pt	Somente adicionar novas frases
 or	setup	pt	ou
@@ -428,7 +428,7 @@ this program will convert your database to a new system-charset.	setup	pt	Este p
 this program will help you upgrade or install different languages for egroupware	setup	pt	Este programa irá ajudá-lo a actualizar ou instalar diferentes idiomas para o EGroupware
 this should be around 30 bytes in length.<br />note: the default has been randomly generated.	setup	pt	Deve ter cerca de 30 bytes de comprimentos.<br />Nota: Os valores por omissão foram gerados ao acaso.
 this stage is completed<br />	setup	pt	Este passo está completo<br />
-to a version it does not know about	setup	pt	para uma versão sobre a qual nada sabe
+to a version it does not know about	setup	pt	Para uma versão sobre a qual nada sabe
 to allow password authentification add the following line to your pg_hba.conf (above all others) and restart postgres:	setup	pt	Para permitir a autenticação de senhas, adicione a linha seguinte ao seu ficheiro pg_hba.conf (por cima de todos os outros) e reinicie o PostgreSQL:
 to change the charset: back up your database, deinstall all applications and re-install the backup with "convert backup to charset selected" checked.	setup	pt	Para alterar o charset: faça uma cópia de segurança da sua base de dados; desinstale todas as aplicações; e reinstale a cópia de segurança com a opção "Converter a cópia de segurança para o charset seleccionado" marcada.
 to setup 1 admin account and 3 demo accounts.	setup	pt	Para configurar 1 conta de administrador e 3 contas de demonstração.

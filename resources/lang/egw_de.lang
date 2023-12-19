@@ -1,10 +1,10 @@
-%1 accessories now resources	resources	de	%1 Zubehör ist jetzt  eine Ressource
+%1 accessories now resources	resources	de	%1 Zubehör ist jetzt eine Ressource
 %1 accessories restored	resources	de	%1 Zubehör wiederhergestellt
 %1 resource(s) %2	resources	de	%1 Ressource(n) %2
 %1 resource(s) %2, %3 failed	resources	de	%1 Ressource(n) %2, %3 fehlgeschlagen
 %1 resource(s) %2, %3 failed because of insufficent rights !!!	resources	de	%1 Ressource(n) %2, %3 fehlgeschlagen wegen fehlender Rechte!
 %1 resource(s) booked	resources	de	%1 Ressource(n) gebucht
-%1 resource(s) view calendar	resources	de	Kalender Anzeigen von %1 Ressourcen
+%1 resource(s) view calendar	resources	de	Kalender anzeigen von %1 Ressourcen
 accessories	resources	de	Zubehör
 accessories of	resources	de	Zubehör von
 accessories:	resources	de	Zubehör:
@@ -27,7 +27,7 @@ booked	resources	de	gebucht
 booking requests	resources	de	Buchungsanfragen
 buy this article	resources	de	Diesen Artikel kaufen
 buy this resource	resources	de	Diese Ressource kaufen
-buyable	resources	de	käuflich
+buyable	resources	de	Käuflich
 category admin	resources	de	Verwalter der Kategorie
 category saved.	resources	de	Kategorie gespeichert.
 category:	resources	de	Kategorie:
@@ -36,7 +36,7 @@ choose category admin	resources	de	Wählen Sie einen Verwalter für diese Katego
 clear selection	resources	de	Auswahl löschen
 configure access permissions	admin	de	Zugriffsrechte konfigurieren
 confirmation email text	resources	de	Text der Bestätigungsmail
-confirmed addressbook.	resources	de	Adressbucheintrag bestätigt.
+confirmed addressbook.	resources	de	Adressbucheintrag bestätigt
 conflict	resources	de	Konflikt
 create new accessory for this resource	resources	de	Neues Zubehör zu dieser Ressource hinzufügen
 create new links	resources	de	Neue Verknüpfung erstellen
@@ -68,7 +68,7 @@ hours	resources	de	Stunden
 how many of the resources are useable?	resources	de	Anzahl nutzbarer Ressourcen
 how many of them are useable?	resources	de	Anzahl nutzbarer Ressourcen
 how many of this resource are usable	resources	de	Anzahl nutzbarer Ressourcen
-how many of this resource exists	resources	de	Anzahl existierende Ressourcen
+how many of this resource exists	resources	de	Anzahl existierender Ressourcen
 icon	resources	de	Symbol
 if you specify an export definition, it will be used when you export	resources	de	Wählen Sie eine Export Definition für den Export.
 implies booking permission	resources	de	Impliziert Buchungsberechtigung
@@ -134,7 +134,7 @@ resources list	resources	de	Ressourcen Liste
 responsible:	resources	de	Verantwortlich:
 restored	resources	de	wiederhergestellt
 saves entry and exits	resources	de	Speichern und Schließen
-select a category	resources	de	Wählen sie eine Kategorie
+select a category	resources	de	Wählen Sie eine Kategorie
 select resource	resources	de	Ressource auswählen
 select resources	common	de	Ressourcen auswählen
 select/deselect all	resources	de	Alle auswählen / Auswahl aufheben

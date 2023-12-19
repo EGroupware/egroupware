@@ -353,9 +353,10 @@ parent infolog	infolog	sl	Nadrejen InfoLog
 participants for scheduling an appointment	infolog	sl	Udeleženci za načrtovanje sestanka
 path on (web-)serverside<br>eg. /var/samba/share	infolog	sl	Pot na (web-)stran strežnika<br>npr. /var/samba/Share
 path to user and group files has to be outside of the webservers document-root!!!	infolog	sl	Pot do uporabnikov in skupine datotek MORA BITI ZUNAJ glavnega direktorija spletnega strežnika!
-pattern for search in addressbook	infolog	sl	Vzorec za iskanje po adresarju
-pattern for search in projects	infolog	sl	Vzorec za iskanje po Projektih
+pattern for search in addressbook	infolog	sl	Vzorec za iskanje v imeniku
+pattern for search in projects	infolog	sl	Vzorec za iskanje v projektih
 percent completed	infolog	sl	Odstotek končanega
+performance optimization for huge infolog tables	admin	sl	Optimizacija zmogljivosti za velike tabele InfoLog
 permission denied	infolog	sl	Dostop zavrnjen
 permissions error - %1 could not %2	infolog	sl	Dovoljena napaka - %1 ni mogla %2
 phone	infolog	sl	Telefonski klic

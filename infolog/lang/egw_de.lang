@@ -332,20 +332,20 @@ only for details	infolog	de	Nur bei Details
 only if i get assigned or removed	infolog	de	Nur wenn ich zugewiesen oder entfernt werde
 only show them if there is a filter	infolog	de	Nur anzeigen wenn gefiltert wird
 only show them while searching	infolog	de	Nur bei einer Suche anzeigen
-only the attachments	infolog	de	nur die Anhänge
-only the links	infolog	de	nur die Verknüpfungen
-open and upcoming	infolog	de	zukünftige und offene
-open(status)	infolog	de	offen
+only the attachments	infolog	de	Nur die Anhänge
+only the links	infolog	de	Nur die Verknüpfungen
+open and upcoming	infolog	de	Zukünftige und offene
+open(status)	infolog	de	Offen
 optional note to the link	infolog	de	zusätzliche Notiz zur Verknüpfung
 order	infolog	de	Reihenfolge
 organization	infolog	de	Organisation
 other configurations	infolog	de	Weitere Konfigurationen
-overdue	infolog	de	überfällig
-own	infolog	de	eigene
-own open	infolog	de	eigene offen
-own open and upcoming	infolog	de	eigene offene und zukünftige
-own overdue	infolog	de	eigene überfällig
-own upcoming	infolog	de	eigene zukünftig
+overdue	infolog	de	Überfällig
+own	infolog	de	Eigene
+own open	infolog	de	Eigene offen
+own open and upcoming	infolog	de	Eigene offene und zukünftige
+own overdue	infolog	de	Eigene überfällig
+own upcoming	infolog	de	Eigene zukünftig
 owner does not have edit rights	infolog	de	Der Besitzer dieses Datensatzes benötigt Bearbeitungsrechte
 owner, responsible	infolog	de	Besitzer, Verantwortlicher
 parent	infolog	de	Elterneintrag
@@ -354,15 +354,15 @@ participants for scheduling an appointment	infolog	de	Teilnehmer für Termin pla
 path on (web-)serverside<br>eg. /var/samba/share	infolog	de	Pfad auf (Web-)Server<br>z.B. /var/samba/Share
 path to user and group files has to be outside of the webservers document-root!!!	infolog	de	Pfad zu Benutzer- und Gruppen-Dateien MUSS AUSSERHALB des Wurzelverzeichnisses des Webservers (document-root) liegen!!!
 pattern for search in addressbook	infolog	de	Muster für Suche im Adressbuch
-pattern for search in projects	infolog	de	Muster für Suche des Projekts
+pattern for search in projects	infolog	de	Muster für Suche in Projekten
 percent completed	infolog	de	Prozent erledigt
-performance optimization for huge infolog tables	admin	de	Performance-Optimierung für sehr große InfoLog Tabellen
+performance optimization for huge infolog tables	admin	de	Performance-Optimierung für sehr große InfoLog-Tabellen
 permission denied	infolog	de	Zugriff verweigert
 permissions error - %1 could not %2	infolog	de	Fehler in den Zugriffsberechtigungen - %1 nicht möglich %2
 phone	infolog	de	Anruf
 phone/email	infolog	de	Telefon/E-Mail
 phonecall	infolog	de	Telefonanruf
-planned	infolog	de	geplant
+planned	infolog	de	Geplant
 planned time	infolog	de	Geplante Zeit
 prefix for sub-entries (default: re:)	infolog	de	Präfix für Untereinträge (Vorgabe: Re:)
 price	infolog	de	Preis
@@ -497,13 +497,13 @@ typ '%1' already exists !!!	infolog	de	Typ '%1' existiert bereits !!!
 type	infolog	de	Typ
 type ...	infolog	de	Typ ...
 type of customfield	infolog	de	Typ des benutzerdefinierten Feldes
-type of field	infolog	de	Art des Feldes
+type of field	infolog	de	Typ des Feldes
 type of the log-entry: note, phonecall or todo	infolog	de	Typ des InfoLog-Eintrages
 unable to link to %3 by custom field "%1": "%4".  %2 matches.	infolog	de	Verknüpfung zu  %3 eines Benutzerdefinierten Feldes "%1": "%4" nicht möglich. %2 würde passen
 unknown type: %1	infolog	de	Unbekannter Typ %1
 unlink	infolog	de	Verknüpfung lösen
 unlinked from %1	infolog	de	Verknüpfung entfernt von %1
-upcoming	infolog	de	zukünftig
+upcoming	infolog	de	Zukünftig
 urgency	infolog	de	Priorität
 urgent	infolog	de	Dringend
 use all	infolog	de	Alle Einträge
@@ -513,23 +513,23 @@ use search results	infolog	de	Verwendet die Suchergebnisse
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	infolog	de	Benutzern Sie diesen Platzhalter für Adressetiketten. Fügen Sie den Inhalt, den Sie wiederholen möchten zwischen zwei Platzhalter ein.
 used time	infolog	de	Benötigte Zeit
 values for selectbox	infolog	de	Werte für die Auswahlbox
-view all subs of this entry	infolog	de	alle Untereinträge dieses Eintrag anzeigen
-view other subs	infolog	de	andere Untereinträge anzeigen
+view all subs of this entry	infolog	de	Alle Untereinträge dieses Eintrag anzeigen
+view other subs	infolog	de	Andere Untereinträge anzeigen
 view parent	infolog	de	Elterneintrag anzeigen
 view parent with children	infolog	de	Elterneintrag mit Untereinträgen anzeigen
 view subs	infolog	de	Untereinträge anzeigen
-view the parent of this entry and all his subs	infolog	de	übergeordneter Eintrag mit allen seinen Untereinträgen anzeigen
-view this linked entry in its application	infolog	de	diesen verknüpfen Eintrag in seiner Anwendung anzeigen
+view the parent of this entry and all his subs	infolog	de	Übergeordneter Eintrag mit allen seinen Untereinträgen anzeigen
+view this linked entry in its application	infolog	de	Diesen verknüpfen Eintrag in seiner Anwendung anzeigen
 when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	de	Wann soll mit der Aufgabe oder dem Anruf begonnen werden, ab diesem Datum wird er beim Filter offen oder eigene offen angezeigt (Startseite).
 which additional fields should the responsible be allowed to edit without having edit rights?	infolog	de	Welche zusätzlichen Felder soll der Verantwortliche bearbeiten können ohne Bearbeitungsrechte zu haben?
 which implicit acl rights should the responsible get	infolog	de	Welche impliziten Zugriffsrechte soll der Verantwortliche bekommen?
 which participants should be preselected when scheduling an appointment.	infolog	de	Welche Teilnehmer sollen als Vorgabe ausgewählt sein bei Termin planen.
 which types should the calendar show	infolog	de	Welche Typen soll der Kalender anzeigen
 which types should the calendar show like events?	infolog	de	Welche Typen soll der Kalender wie Termine anzeigen?
-will-call	infolog	de	ruft zurück
+will-call	infolog	de	Ruft zurück
 write (add or update) a record by passing its fields.	infolog	de	Schreiben (zufügen oder aktualisieren) eines Datensatzes durch Angabe seiner Felder.
-yes - close	infolog	de	Ja schließen
-yes - close including sub-entries	infolog	de	Ja- schließen inklusive Untereinträge
+yes - close	infolog	de	Ja - schließen
+yes - close including sub-entries	infolog	de	Ja - schließen inklusive Untereinträge
 yes - delete	infolog	de	Ja - Löschen
 yes - delete including sub-entries	infolog	de	Ja - Löschen einschließlich Untereinträge
 yes, noone can purge deleted items	infolog	de	Ja, niemand darf gelöschte Einträge bereinigen

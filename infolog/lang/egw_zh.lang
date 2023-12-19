@@ -283,31 +283,40 @@ normal	infolog	zh	普通
 not	infolog	zh	not
 not assigned	infolog	zh	未指定
 note	infolog	zh	备注
+notification settings	infolog	zh	通知设置
 number of records to read (%1)	infolog	zh	待读取记录数(%1)
 number of row for a multiline inputfield or line of a multi-select-box	infolog	zh	文本框或多选框的高度
 offer	infolog	zh	等待回应
+old fixed definition	infolog	zh	旧的固定定义
 ongoing	infolog	zh	正在进行
+only show them if there is a filter	infolog	zh	仅在有过滤器时显示
+only show them while searching	infolog	zh	仅在搜索时显示
 only the attachments	infolog	zh	仅显示关联文件
 only the links	infolog	zh	仅显示关联条目
 open(status)	infolog	zh	待决事项
 optional note to the link	infolog	zh	该关联的说明
 order	infolog	zh	顺序
 organization	infolog	zh	组织
+other configurations	infolog	zh	其他配置
 overdue	infolog	zh	延误事项
 own	infolog	zh	个人事项
 own open	infolog	zh	待决的个人事项
 own overdue	infolog	zh	延误的个人事项
 own upcoming	infolog	zh	临近的个人事项
+owner, responsible	infolog	zh	所有者、负责人
 parent	infolog	zh	上一层
+participants for scheduling an appointment	infolog	zh	安排预约的参与者
 path on (web-)serverside<br>eg. /var/samba/share	infolog	zh	(Web)服务器端的路径<br>例如. /var/samba/Share
 path to user and group files has to be outside of the webservers document-root!!!	infolog	zh	存放用户和组文件的路径不能在Web服务器的根目录内!!!
-pattern for search in addressbook	infolog	zh	查找通讯录的模式
-pattern for search in projects	infolog	zh	查找项目的模式
+pattern for search in addressbook	infolog	zh	在通讯录中搜索的模式
+pattern for search in projects	infolog	zh	项目中的搜索模式
+performance optimization for huge infolog tables	admin	zh	针对庞大的信息日志表的性能优化
 permission denied	infolog	zh	没有权限
 phone	infolog	zh	函电
 phone/email	infolog	zh	电话号码/EMail地址
 phonecall	infolog	zh	函电
 planned	infolog	zh	计划
+prefix for sub-entries (default: re:)	infolog	zh	子条目前缀（默认：Re:)
 price	infolog	zh	价格
 pricelist	infolog	zh	价格表
 print this infolog	infolog	zh	打印此信息日志
@@ -316,20 +325,30 @@ priority	infolog	zh	优先级
 private	infolog	zh	私有事项
 project	infolog	zh	项目
 project id	infolog	zh	项目编号
+project name	infolog	zh	项目名称
 projectmanager	infolog	zh	项目管理
 re:	infolog	zh	回复:
 read one record by passing its id.	infolog	zh	通过事项ID来读取记录
+receive notifications about due entries you are responsible for	infolog	zh	接收关于您所属组拥有的类型项目的通知
+regular expression	infolog	zh	正则表达式
 remark	infolog	zh	注释
 remove this link (not the entry itself)	infolog	zh	取消关联
+removed	infolog	zh	已删除。
+removed category	infolog	zh	已删除类别
+replacement	infolog	zh	替换
+replacements for inserting entries into documents	infolog	zh	在文档中插入条目的替换
 respect timesheet run and read permissions for time totals	infolog	zh	尊重时间表运行和读取时间总数的权限
 responsible	infolog	zh	委派给
+responsible open and upcoming	infolog	zh	负责开放和即将开放
 returns a list / search for records.	infolog	zh	返回一个清单 / 搜索记录
 rows	infolog	zh	行
 save	infolog	zh	确定
 saves the changes made and leaves	infolog	zh	保存更改, 返回上一级页面
 saves this entry	infolog	zh	保存该条目
+schedule appointment	infolog	zh	预约时间
 search	infolog	zh	搜索
 search for:	infolog	zh	查找:
+second parameter for preg_replace	infolog	zh	preg_replace 的第二个参数
 select	infolog	zh	指定
 select a category for this entry	infolog	zh	指定该事项的类别
 select a price	infolog	zh	选择一个价格
@@ -337,24 +356,46 @@ select a priority for this task	infolog	zh	指定该任务的优先级
 select a project	infolog	zh	选择一个项目
 select a responsible user: a person you want to delegate this task	infolog	zh	请指定受委派的用户, 将该事项委派给此人.
 select a typ to edit it's status-values or delete it	infolog	zh	选定一个类型以编辑其状态值或删除
+select an action	infolog	zh	选择一项操作
+select an action...	infolog	zh	选择一项操作...
 select an app to search in	infolog	zh	选定要查找的应用程序
 select an entry to link with	infolog	zh	选定要链接的条目
 select multiple contacts for a further action	infolog	zh	为下一步操作选择多个联系人
+select new category	infolog	zh	选择新类别
+select users or groups	infolog	zh	选择用户或组
+selected calendars	infolog	zh	选择日历
+selection cf	infolog	zh	选择 CF
+sender	infolog	zh	发送
+set status to done	infolog	zh	将状态设置为已完成
+set status to done for all entries	infolog	zh	将所有条目的状态设置为已完成
+sets the status of this entry to done	infolog	zh	将此条目设置为已完成
 should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	zh	浏览事项时是否显示子事项? 无论该选项如何设定, 用户总可以经由父事项来查看子事项.
 should infolog use full names (surname and familyname) or just the loginnames.	infolog	zh	在记事薄中显示姓名还是登录名.
 should this entry only be visible to you and people you grant privat access via the acl	infolog	zh	是否仅所有者本人及其授权的用户可以访问该事项?
+show a x if content equals this compare value, otherwise show nothing	infolog	zh	如果内容等于该比较值，则显示 X，否则不显示任何内容
 show full usernames	infolog	zh	显示完整的用户名
 show in the infolog list	infolog	zh	浏览事项时是否显示关联?
+show sub-entries	infolog	zh	显示子条目
+show ticket id	infolog	zh	显示票据 ID
+show times	infolog	zh	显示次数
 small view	infolog	zh	小视图查看
 start	infolog	zh	开始
 start a new search, cancel this link	infolog	zh	不关联该条目, 重新开始搜索
 startdate	infolog	zh	起始日期
 startdate enddate	infolog	zh	起始日期 终止日期
+startdate for new entries	infolog	zh	新条目开始日期
+startdate must be before enddate!!!	infolog	zh	开始日期必须在到期日期之前！
+starting %1	infolog	zh	开始 %1
 startrecord	infolog	zh	起始记录
 status	infolog	zh	状态
 status ...	infolog	zh	(状态)
+status, percent and date completed are always allowed.	infolog	zh	状态、百分比和完成日期总是允许的。
 sub	infolog	zh	子类别
+sub-entries will not be closed	infolog	zh	子条目不会关闭
+sub-entry	infolog	zh	子条目
 subject	infolog	zh	标题
+sum	infolog	zh	总和
+tag to mark positions for address labels	infolog	zh	标记地址标签位置的标签
 task	infolog	zh	任务
 template	infolog	zh	模板
 test import (show importable records <u>only</u> in browser)	infolog	zh	测试导入 (在浏览器中仅显示可导入的记录)
@@ -373,15 +414,21 @@ typ '%1' already exists !!!	infolog	zh	类型'%1'已存在!!!
 type	infolog	zh	类型
 type ...	infolog	zh	(类型)
 type of customfield	infolog	zh	自定义字段类型
+type of field	infolog	zh	字段类型
 type of the log-entry: note, phonecall or todo	infolog	zh	请选择该事项的类型: 任务, 函电或备注
+unable to link to %3 by custom field "%1": "%4".  %2 matches.	infolog	zh	无法通过自定义字段"%1 "链接到 %3： "%4". %2 匹配。
+unknown type: %1	infolog	zh	未知类型：%1
 unlink	infolog	zh	取消关联
+unlinked from %1	infolog	zh	未从 %1 链接
 upcoming	infolog	zh	临近事项
 urgency	infolog	zh	紧急
 urgent	infolog	zh	最高
+use custom notification message	infolog	zh	使用自定义通知信息
 values for selectbox	infolog	zh	预设选项
 view all subs of this entry	infolog	zh	查看该条目的所有子任务
 view other subs	infolog	zh	查看其他子任务
 view parent	infolog	zh	查看父任务
+view parent with children	infolog	zh	查看父代和子代
 view subs	infolog	zh	查看子任务
 view the parent of this entry and all his subs	infolog	zh	查看该条目的父任务及所有子任务
 view this linked entry in its application	infolog	zh	查看该关联
@@ -391,7 +438,11 @@ write (add or update) a record by passing its fields.	infolog	zh	通过事项的
 yes - close	infolog	zh	是 - 关闭
 yes - close including sub-entries	infolog	zh	是 - 关闭，包括子条目
 yes - delete	infolog	zh	是 - 删除
+yes - delete including sub-entries	infolog	zh	是 - 删除包括子条目
+yes, noone can purge deleted items	infolog	zh	是，任何人都不能清除已删除的项目
+yes, only admins can purge deleted items	infolog	zh	是，只有管理员可以清除已删除的项目
 yes, with larger fontsize	infolog	zh	是，使用较大的字体
+yes, with purging of deleted items possible	infolog	zh	是，可清除已删除条目
 you can choose a categorie to be preselected, when you create a new infolog entry	infolog	zh	创建新的信息记录条目时，您可以选择一个预选类别。
 you can't delete one of the stock types !!!	infolog	zh	无法删除stock类型!!!
 you have entered an invalid ending date	infolog	zh	输入的终止日期无效

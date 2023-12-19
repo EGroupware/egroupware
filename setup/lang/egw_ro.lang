@@ -1,0 +1,9 @@
+regular expression to filter by dn	setup	ro	Expresie regulată pentru a filtra după DN
+rejected lines	setup	ro	Linii respinse
+remove	setup	ro	Eliminați
+remove all	setup	ro	Eliminați toate
+rename	setup	ro	Redenumiți
+replace username and email	setup	ro	Înlocuiți numele de utilizator și adresa de e-mail
+replace username and keep email	setup	ro	Înlocuiește numele de utilizator și păstrează adresa de e-mail
+required to change passwords	setup	ro	Necesar pentru a schimba parolele
+requires "reset password" privilege, to change passwords!	setup	ro	Necesită privilegiul "Reset Password", pentru a schimba parolele!

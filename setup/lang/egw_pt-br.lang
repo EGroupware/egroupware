@@ -436,11 +436,16 @@ read translations from	setup	pt-br	Ler as traduções de
 readable by the webserver	setup	pt-br	Leitura pelo servidor web
 really uninstall all applications	setup	pt-br	REALMENTE desinstalar todas aplicações
 register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	pt-br	A variável register_globais está ligada. O EGroupware não necessita desse recurso e geralmente é mais seguro manter essa variável desligada.
-registered	setup	pt-br	registrado
+registered	setup	pt-br	Registrado
+regular expression to filter by dn	setup	pt-br	Expressão regular para filtrar por DN
 rejected lines	setup	pt-br	Linhas rejeitadas.
 remove	setup	pt-br	Remover
 remove all	setup	pt-br	Remover todos
 rename	setup	pt-br	Renomear
+replace username and email	setup	pt-br	Substituir nome de usuário e e-mail
+replace username and keep email	setup	pt-br	Substituir o nome de usuário e manter o e-mail
+required to change passwords	setup	pt-br	Necessário para alterar as senhas
+requires "reset password" privilege, to change passwords!	setup	pt-br	Requer o privilégio "Redefinir senha" para alterar as senhas!
 requires reinstall or manual repair	setup	pt-br	Requer reinstalação ou reparo manual
 requires upgrade	setup	pt-br	Requer atualização
 resolve	setup	pt-br	Resolver
