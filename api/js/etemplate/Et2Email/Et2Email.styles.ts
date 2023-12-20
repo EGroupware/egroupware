@@ -83,6 +83,14 @@ export default css`
 		height: calc(var(--sl-input-height-medium) * 0.8);
 	}
 
+	.email--disabled .email__search {
+		cursor: not-allowed;
+	}
+
+	.email--readonly .email__search {
+		cursor: default;
+	}
+
 	.email .email__loading {
 		order: 19;
 	}

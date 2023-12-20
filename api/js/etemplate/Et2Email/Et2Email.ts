@@ -648,6 +648,46 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 		}
 	}
 
+
+	/**
+	 * Sometimes users paste multiple comma separated values at once.  Split them then handle normally.
+	 * Overridden here to handle email addresses that may have commas using the regex from the validator.
+	 *
+	 * @param {ClipboardEvent} event
+	 * @protected
+	 */
+	protected handlePaste(event : ClipboardEvent)
+	{
+		event.preventDefault();
+
+		let paste = event.clipboardData.getData('text');
+		if(!paste)
+		{
+			return;
+		}
+		const selection = window.getSelection();
+		if(selection.rangeCount)
+		{
+			selection.deleteFromDocument();
+		}
+
+		let preg = this.allowPlaceholder ? IsEmail.EMAIL_PLACEHOLDER_PREG : IsEmail.EMAIL_PREG;
+		// Trim line start / end anchors off validation regex, make global
+		let regex = new RegExp(preg.toString().substring(2, preg.toString().length - 3), 'g');
+		let values = paste.match(regex);
+		if(values)
+		{
+			values.forEach(v =>
+			{
+				this.addAddress(v.trim());
+			});
+			this.hide();
+
+			// Update key to force Lit to redraw tags
+			this._valueUID = this.egw()?.uid() ?? new Date().toISOString();
+		}
+	}
+
 	private handleSearchFocus()
 	{
 		// Clear any manual message (errors on invalid search text)
@@ -959,7 +999,7 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 
 	tagTemplate(value)
 	{
-		const readonly = (this.readonly);
+		const readonly = (this.readonly || this.disabled);
 		const isEditable = !readonly;
 		const isValid = this.validateAddress(value);
 
@@ -992,11 +1032,14 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
                    class="email__search"
                    exportparts="base:search__base"
                    autocomplete="off"
-                   placeholder="${this.hasFocus || this.value.length > 0 ? "" : this.placeholder}"
+                   ?disabled=${this.disabled}
+                   ?readonly=${this.readonly}
+                   placeholder="${this.hasFocus || this.value.length > 0 || this.disabled || this.readonly ? "" : this.placeholder}"
                    tabindex="0"
                    @keydown=${this.handleSearchKeyDown}
                    @blur=${this.handleSearchBlur}
                    @focus=${this.handleSearchFocus}
+                   @paste=${this.handlePaste}
             />
 		`;
 	}
@@ -1045,7 +1088,7 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 		const hasHelpTextSlot = this.hasSlotController.test('help-text');
 		const hasLabel = this.label ? true : !!hasLabelSlot;
 		const hasHelpText = this.helpText ? true : !!hasHelpTextSlot;
-		const isPlaceholderVisible = this.placeholder && this.value.length === 0;
+		const isPlaceholderVisible = this.placeholder && this.value.length === 0 && !this.disabled && !this.readonly;
 
 		// TODO Don't forget required & disabled
 
@@ -1084,6 +1127,7 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
                                 input: true,
                                 'email--open': this.open,
                                 'email--disabled': this.disabled,
+                                'email--readonly': this.readonly,
                                 'email--focused': this.hasFocus,
                                 'email--placeholder-visible': isPlaceholderVisible,
                                 'email--top': this.placement === 'top',
