@@ -89,16 +89,7 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 				// Parse string into array
 				if(typeof value === 'string' && value.indexOf(',') !== -1)
 				{
-					let val = value.split(',');
-					for(let n = 0; n < val.length - 1; n++)
-					{
-						while(val[n].indexOf('@') === -1 && n < val.length - 1)
-						{
-							val[n] += ',' + val[n + 1];
-							val.splice(n + 1, 1);
-						}
-					}
-					return val;
+					return parseEmailsString(value, false);
 				}
 				return value;
 			},
@@ -676,6 +667,47 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 		}
 	}
 
+<<<<<<< HEAD
+=======
+
+	/**
+	 * Sometimes users paste multiple comma separated values at once.  Split them then handle normally.
+	 * Overridden here to handle email addresses that may have commas using the regex from the validator.
+	 *
+	 * @param {ClipboardEvent} event
+	 * @protected
+	 */
+	protected handlePaste(event : ClipboardEvent)
+	{
+		event.preventDefault();
+
+		let paste = event.clipboardData.getData('text');
+		if(!paste)
+		{
+			return;
+		}
+		const selection = window.getSelection();
+		if(selection.rangeCount)
+		{
+			selection.deleteFromDocument();
+		}
+		let values = parseEmailsString(paste, this.allowPlaceholder);
+
+		if(values)
+		{
+			values.forEach(v =>
+			{
+				this.addAddress(v.trim());
+			});
+			this.hide();
+
+			// Update key to force Lit to redraw tags
+			this._valueUID = this.egw()?.uid() ?? new Date().toISOString();
+			this.dispatchEvent(new Event("change", {bubbles: true}));
+		}
+	}
+
+>>>>>>> f68faa7941 (Et2Email: Some automatic tests)
 	private handleSearchFocus()
 	{
 		this.hasFocus = true;
@@ -693,6 +725,26 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 		this.hasFocus = false;
 		// Should not be needed, but not firing the update
 		this.requestUpdate("hasFocus");
+<<<<<<< HEAD
+=======
+
+		// If they had something OK typed, use it, but only if focus went outside Et2Email
+		// because maybe they clicked an option which took focus
+		if(event.composedPath().includes(this))
+		{
+			if(this.addAddress(this._search.value.trim()))
+			{
+				this._search.value = "";
+				this.dispatchEvent(new Event("change", {bubbles: true}));
+			}
+			else if(this._search.value)
+			{
+				// Invalid input, show message.  Not part of the value, so normal validation doesn't apply
+				// Can't just call this.validate(), it will get cleared immediately
+				this.set_validation_error(this.egw().lang("Invalid email") + ' "' + this._search.value + '"')
+			}
+		}
+>>>>>>> f68faa7941 (Et2Email: Some automatic tests)
 	}
 
 	handleSearchKeyDown(event)
@@ -742,6 +794,7 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 			{
 				this.open = false;
 				this._search.value = "";
+				this.dispatchEvent(new Event("change", {bubbles: true}));
 			}
 			if(event.key == "Tab")
 			{
@@ -927,6 +980,7 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 		this._search.value = "";
 		this._search.focus();
 		this.requestUpdate("value");
+		this.dispatchEvent(new Event("change", {bubbles: true}));
 		if(this._close_on_select)
 		{
 			this.open = false;
@@ -941,6 +995,7 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 			let index = this.value.indexOf(event.originalValue);
 			this.value[index] = event.target.value;
 			this.requestUpdate();
+			this.dispatchEvent(new Event("change", {bubbles: true}));
 		}
 		if(event.target.current)
 		{
@@ -954,6 +1009,7 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 		const index = this.value.indexOf(value);
 		this.value.splice(index, 1);
 		this.requestUpdate("value");
+		this.dispatchEvent(new Event("change", {bubbles: true}));
 	}
 
 	tagsTemplate()
@@ -1143,6 +1199,7 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 	}
 }
 
+// @ts-ignore TypeScript is not recognizing that this widget is a LitElement
 customElements.define("et2-email", Et2Email);
 
 /**

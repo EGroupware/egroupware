@@ -76,7 +76,8 @@ describe('Et2EmailTag', () =>
 				assert.equal(extra['presets[email]'], 'test@example.com');
 			}
 		};
-		component.handleMouseDown(new MouseEvent('click'));
+		debugger;
+		component.shadowRoot.querySelector("et2-button-icon").dispatchEvent(new MouseEvent('click'));
 	});
 
 	it('should open addressbook CRM on avatar click', async() =>
