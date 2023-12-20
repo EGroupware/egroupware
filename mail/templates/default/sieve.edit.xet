@@ -78,7 +78,7 @@
 				<row disabled="@no_forward">
 					<radio label="Forward to address (*):" id="action" set_value="address" />
 					<et2-hbox>
-						<et2-select-email  allowFreeEntries="true" id="action_address_text" onfocus="app.mail.sieve_focus_radioBtn" multiple="true" searchUrl="EGroupware\Api\Etemplate\Widget\Taglist::ajax_email"></et2-select-email>
+						<et2-email  allowFreeEntries="true" id="action_address_text" onfocus="app.mail.sieve_focus_radioBtn" multiple="true" searchUrl="EGroupware\Api\Etemplate\Widget\Taglist::ajax_email"></et2-email>
 					</et2-hbox>
 				</row>
 				<row>
