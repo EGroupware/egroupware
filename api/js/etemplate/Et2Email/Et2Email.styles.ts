@@ -72,7 +72,7 @@ export default css`
 	.email__search {
 		flex: 1 1 auto;
 		order: 10;
-		min-width: 10em;
+		min-width: 7em;
 		border: none;
 		outline: none;
 
