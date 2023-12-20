@@ -87,16 +87,7 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 				// Parse string into array
 				if(typeof value === 'string' && value.indexOf(',') !== -1)
 				{
-					let val = value.split(',');
-					for(let n = 0; n < val.length - 1; n++)
-					{
-						while(val[n].indexOf('@') === -1 && n < val.length - 1)
-						{
-							val[n] += ',' + val[n + 1];
-							val.splice(n + 1, 1);
-						}
-					}
-					return val;
+					return parseEmailsString(value, false);
 				}
 				return value;
 			},
@@ -670,11 +661,8 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 		{
 			selection.deleteFromDocument();
 		}
+		let values = parseEmailsString(paste, this.allowPlaceholder);
 
-		let preg = this.allowPlaceholder ? IsEmail.EMAIL_PLACEHOLDER_PREG : IsEmail.EMAIL_PREG;
-		// Trim line start / end anchors off validation regex, make global
-		let regex = new RegExp(preg.toString().substring(2, preg.toString().length - 3), 'g');
-		let values = paste.match(regex);
 		if(values)
 		{
 			values.forEach(v =>
@@ -685,6 +673,7 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 
 			// Update key to force Lit to redraw tags
 			this._valueUID = this.egw()?.uid() ?? new Date().toISOString();
+			this.dispatchEvent(new Event("change", {bubbles: true}));
 		}
 	}
 
@@ -716,6 +705,7 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 			if(this.addAddress(this._search.value.trim()))
 			{
 				this._search.value = "";
+				this.dispatchEvent(new Event("change", {bubbles: true}));
 			}
 			else if(this._search.value)
 			{
@@ -773,6 +763,7 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 			{
 				this.open = false;
 				this._search.value = "";
+				this.dispatchEvent(new Event("change", {bubbles: true}));
 			}
 			if(event.key == "Tab")
 			{
@@ -963,6 +954,7 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 		this._search.value = "";
 		this._search.focus();
 		this.requestUpdate("value");
+		this.dispatchEvent(new Event("change", {bubbles: true}));
 		if(this._close_on_select)
 		{
 			this.open = false;
@@ -977,6 +969,7 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 			let index = this.value.indexOf(event.originalValue);
 			this.value[index] = event.target.value;
 			this.requestUpdate();
+			this.dispatchEvent(new Event("change", {bubbles: true}));
 		}
 		if(event.target.current)
 		{
@@ -990,6 +983,7 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 		const index = this.value.indexOf(value);
 		this.value.splice(index, 1);
 		this.requestUpdate("value");
+		this.dispatchEvent(new Event("change", {bubbles: true}));
 	}
 
 	tagsTemplate()
@@ -1185,3 +1179,18 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 
 // @ts-ignore TypeScript is not recognizing that this widget is a LitElement
 customElements.define("et2-email", Et2Email);
+
+/**
+ * Parse string that may contain multiple comma separated email addresses into an array
+ *
+ * @param {string} value
+ * @returns {string[]}
+ * @protected
+ */
+function parseEmailsString(value : string, allowPlaceholder = false) : string[]
+{
+	let preg = allowPlaceholder ? IsEmail.EMAIL_PLACEHOLDER_PREG : IsEmail.EMAIL_PREG;
+	// Trim line start / end anchors off validation regex, make global
+	let regex = new RegExp(preg.toString().substring(2, preg.toString().length - 3), 'g');
+	return value.match(regex);
+}

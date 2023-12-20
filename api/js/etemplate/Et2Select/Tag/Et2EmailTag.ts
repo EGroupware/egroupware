@@ -181,7 +181,7 @@ export class Et2EmailTag extends Et2Tag
 		e.stopPropagation();
 
 		let extra = {
-			'presets[email]': this.value
+			'presets[email]': this.value ?? ""
 		};
 
 		this.egw().open('', 'addressbook', 'add', extra);
