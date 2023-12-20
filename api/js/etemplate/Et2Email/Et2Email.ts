@@ -440,13 +440,13 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 	/** Hides the listbox. */
 	async hide()
 	{
-		this.open = false;
-		this.requestUpdate("open");
 		if(!this.open || this.disabled)
 		{
 			return undefined;
 		}
 
+		this.open = false;
+		this.requestUpdate("open");
 		return waitForEvent(this, 'sl-after-hide');
 	}
 
@@ -609,20 +609,6 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 		const path = event.composedPath();
 		if(this && !path.includes(this))
 		{
-			// If they had something OK typed, use it
-			if(this.addAddress(this._search.value.trim()))
-			{
-				this._search.value = "";
-			}
-			else if(this._search.value)
-			{
-				// Invalid input, show message
-				// Can't just call this.validate() since the input is not part of the value
-				let currentValue = this.value;
-				this.value = [this._search.value];
-				this.validate();
-				this.value = currentValue;
-			}
 			this.hide();
 		}
 	};
@@ -664,6 +650,9 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 
 	private handleSearchFocus()
 	{
+		// Clear any manual message (errors on invalid search text)
+		this.set_validation_error(false);
+
 		this.hasFocus = true;
 		// Should not be needed, but not firing the update
 		this.requestUpdate("hasFocus");
@@ -674,11 +663,27 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 		this._search.setSelectionRange(this._search.value.length, this._search.value.length);
 	}
 
-	private handleSearchBlur()
+	private handleSearchBlur(event : FocusEvent)
 	{
 		this.hasFocus = false;
 		// Should not be needed, but not firing the update
 		this.requestUpdate("hasFocus");
+
+		// If they had something OK typed, use it, but only if focus went outside Et2Email
+		// because maybe they clicked an option which took focus
+		if(event.composedPath().includes(this))
+		{
+			if(this.addAddress(this._search.value.trim()))
+			{
+				this._search.value = "";
+			}
+			else if(this._search.value)
+			{
+				// Invalid input, show message.  Not part of the value, so normal validation doesn't apply
+				// Can't just call this.validate(), it will get cleared immediately
+				this.set_validation_error(this.egw().lang("Invalid email") + ' "' + this._search.value + '"')
+			}
+		}
 	}
 
 	handleSearchKeyDown(event)
@@ -908,6 +913,11 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 	 */
 	handleSuggestionsMouseUp(event : MouseEvent)
 	{
+		if(typeof event.target.value == "undefined")
+		{
+			return;
+		}
+
 		const value = ((<SlOption>event.target).value).replaceAll("___", " ");
 		this.addAddress(value);
 		this._search.value = "";
