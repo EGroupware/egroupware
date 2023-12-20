@@ -1,3 +1,12 @@
+egroupware-docker (23.1.20231220) hardy; urgency=low
+
+  * Mail: fix regressions with new email widget selecting from search result with mouse
+  * all apps: use new email widget in all apps as it fixes problems with iOS version 17.1+
+  * all apps: fix editing email addresses did not take the new value and mouse usage for editing
+  * Filemanager: Fix missing site icon in anonymous file share
+
+ -- Ralf Becker <rb@egroupware.org>  Wed, 20 Dec 2023 09:38:04 +0100
+
 egroupware-docker (23.1.20231219) hardy; urgency=low
 
   * Mail: new fully keyboard navigatable email-address entry, also allowing to sort recipients via drag-n-drop  
