@@ -14,7 +14,7 @@
 					</row>
 					<row>
 						<et2-description  value="Reply to"></et2-description>
-						<et2-select-email  id="replyto" width="100%" multiple="true" searchUrl="EGroupware\Api\Etemplate\Widget\Taglist::ajax_email"></et2-select-email>
+						<et2-email  id="replyto" width="100%" multiple="true" searchUrl="EGroupware\Api\Etemplate\Widget\Taglist::ajax_email"></et2-email>
 					</row>
 					<row>
 						<et2-description  value="Folder"></et2-description>
@@ -22,11 +22,11 @@
 					</row>
 					<row>
 						<et2-description  value="Cc"></et2-description>
-						<et2-select-email  id="cc" allowFreeEntries="true" multiple="true" searchUrl="EGroupware\Api\Etemplate\Widget\Taglist::ajax_email" includeLists="true"></et2-select-email>
+						<et2-email  id="cc" allowFreeEntries="true" multiple="true" searchUrl="EGroupware\Api\Etemplate\Widget\Taglist::ajax_email" includeLists="true"></et2-email>
 					</row>
 					<row>
 						<et2-description  value="Bcc"></et2-description>
-						<et2-select-email  id="bcc" allowFreeEntries="true" multiple="true" searchUrl="EGroupware\Api\Etemplate\Widget\Taglist::ajax_email" includeLists="true"></et2-select-email>
+						<et2-email  id="bcc" allowFreeEntries="true" multiple="true" searchUrl="EGroupware\Api\Etemplate\Widget\Taglist::ajax_email" includeLists="true"></et2-email>
 					</row>
 				</rows>
 			</grid>

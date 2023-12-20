@@ -35,7 +35,7 @@
 				</row>
 				<row>
 					<et2-vbox>
-						<et2-select-email  id="addresses" class="et2_required" allowFreeEntries="true" span="2" multiple="true" searchUrl="EGroupware\Api\Etemplate\Widget\Taglist::ajax_email" placeholder="all my email addresses" required="true"></et2-select-email>
+						<et2-email  id="addresses" class="et2_required" allowFreeEntries="true" span="2" multiple="true" searchUrl="EGroupware\Api\Etemplate\Widget\Taglist::ajax_email" placeholder="all my email addresses" required="true"></et2-email>
 						<et2-button  class="$cont[hideIfSieveDisabled]" label="Add all my aliases" id="AllAddresses" onclick="app.mail.sieve_vac_all_aliases()"></et2-button>
 					</et2-vbox>
 				</row>
@@ -43,7 +43,7 @@
 					<et2-description  value="Forward messages to:"></et2-description>
 				</row>
 				<row>
-					<et2-select-email  id="forwards" allowFreeEntries="true" width="100%" multiple="true" searchUrl="EGroupware\Api\Etemplate\Widget\Taglist::ajax_email" placeholder="do not forward"></et2-select-email>
+					<et2-email  id="forwards" allowFreeEntries="true" width="100%" multiple="true" searchUrl="EGroupware\Api\Etemplate\Widget\Taglist::ajax_email" placeholder="do not forward"></et2-email>
 				</row>
 				<row>
 					<et2-hbox>

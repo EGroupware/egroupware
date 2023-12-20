@@ -49,7 +49,7 @@
 					</row>
 					<row class="mailComposeHeaders mailComposeJQueryReplyto">
 						<et2-description  value="Reply to"></et2-description>
-						<et2-select-email  id="replyto" width="100%" onclick="app.mail.address_click" searchUrl="EGroupware\Api\Etemplate\Widget\Taglist::ajax_email"></et2-select-email>
+						<et2-email  id="replyto" width="100%" onclick="app.mail.address_click" searchUrl="EGroupware\Api\Etemplate\Widget\Taglist::ajax_email"></et2-email>
 						<et2-description></et2-description>
 					</row>
 					<row class="mailComposeHeaders mailComposeJQueryFolder">

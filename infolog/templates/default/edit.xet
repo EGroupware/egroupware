@@ -85,7 +85,7 @@
                 </row>
                 <row valign="top">
                     <et2-vbox>
-                        <et2-select-email  id="info_cc" class="et2-label-fixed" label="CC" multiple="true" searchUrl="EGroupware\Api\Etemplate\Widget\Taglist::ajax_email"></et2-select-email>
+                        <et2-email  id="info_cc" class="et2-label-fixed" label="CC" multiple="true" searchUrl="EGroupware\Api\Etemplate\Widget\Taglist::ajax_email"></et2-email>
 
                         <et2-select-account  label="Responsible" statustext="select a responsible user: a person you want to delegate this task" id="info_responsible" rows="6" multiple="1" class="et2-label-fixed" onchange="app.infolog.onchangeResponsible" placeholder="Select users or groups" noLang="1" accountType="both"></et2-select-account>
                     </et2-vbox>
