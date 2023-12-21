@@ -497,7 +497,7 @@ class timesheet_ui extends timesheet_bo
 		];
 		$sel_options['ts_owner']  = $edit_grants;
 		// Special handling for if you have a LOT of accounts - use a regular account widget
-		if(count($sel_options['ts_owner']) > Accounts::HUGE_LIMIT)
+		if(count($sel_options['ts_owner']) > Api\Accounts::HUGE_LIMIT)
 		{
 			unset($sel_options['ts_owner']);
 			$etpl->setElementAttribute('ts_owner', 'type', 'et2-select-account');
@@ -1044,7 +1044,7 @@ class timesheet_ui extends timesheet_bo
 			'ts_status' => $this->status_labels + array(lang('No status')),
 		);
 		// Special handling for if you have a LOT of accounts - use a regular account widget
-		if(count($sel_options['ts_owner']) > Accounts::HUGE_LIMIT)
+		if(count($sel_options['ts_owner']) > Api\Accounts::HUGE_LIMIT)
 		{
 			unset($sel_options['ts_owner']);
 			$etpl->setElementAttribute('ts_owner', 'type', 'et2-nextmatch-header-account');
