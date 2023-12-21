@@ -487,7 +487,7 @@ class ApiHandler extends Api\CalDAV\Handler
 				{
 					$files['files'][] = [
 						'path' => $path.$ident_id,
-						'props' => ['name' => ['val' => $identity]],
+						'props' => ['data' => ['val' => $identity]],
 					];
 				}
 			}
