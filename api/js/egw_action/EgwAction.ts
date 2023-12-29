@@ -540,7 +540,7 @@ export class EgwAction {
                 // check if we have all rows selected
                 const obj_manager = egw_getObjectManager(this.getManager().parent.id, false);
                 if (obj_manager && obj_manager.getAllSelected()) {
-                    msg += "\n\n" + window.egw.lang('Attention: action will be applied to all rows, not only visible ones!');
+                    msg += "\n\n" + window.egw.lang('attention: action will be applied to all rows, not only visible ones!');
                 }
             }
             //no longer needed because of '=>' notation
