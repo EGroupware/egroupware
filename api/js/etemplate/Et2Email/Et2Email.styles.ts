@@ -27,6 +27,8 @@ export default css`
 		border-radius: var(--sl-input-border-radius-medium);
 		font-size: var(--sl-input-font-size-medium);
 		min-height: var(--sl-input-height-medium);
+		max-height: calc(var(--height, 2.5) * var(--sl-input-height-medium));
+		overflow-y: auto;
 		padding-block: 0;
 		padding-inline: var(--sl-input-spacing-medium);
 		padding-top: 0.1rem;

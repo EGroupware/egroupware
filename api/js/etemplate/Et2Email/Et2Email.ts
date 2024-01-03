@@ -62,6 +62,8 @@ import Sortable from "sortablejs/modular/sortable.complete.esm.js";
  * @csspart input - The input element
  * @csspart option - Each matching email address suggestion
  * @csspart tag - The individual tags that represent each email address.
+ *
+ * @cssproperty [--height=2.5] - The maximum height of the widget, to limit size when you have a lot of addresses.
  */
 export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinInterface
 {
