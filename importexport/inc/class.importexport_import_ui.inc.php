@@ -152,13 +152,8 @@ use EGroupware\Api\Etemplate;
 							// Set up feedback area
 							$this->feedback($template, $content['definition'] . ': ' . $content['file']['name']);
 
-							// Disable push so we don't overload or spend time notifying
-							EGroupware\Swoolepush\Hooks::pushDisabled(true);
-
 							importexport_helper_functions::$dry_run = false;
 							$count = $plugin->import($file, $definition_obj);
-
-							EGroupware\Swoolepush\Hooks::pushDisabled(false);
 
 							// Don't close progress, leave it open so they can see
 							//static::sendUpdate(null);
