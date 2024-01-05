@@ -7,6 +7,7 @@
  * @author Nathan Gray
  */
 import {css, html, nothing, PropertyValues, TemplateResult} from "lit";
+import {property} from "lit/decorators/property.js";
 import {classMap} from "lit/directives/class-map.js";
 import shoelace from "../../Styles/shoelace";
 import {Et2Tag} from "./Et2Tag";
@@ -69,40 +70,25 @@ export class Et2EmailTag extends Et2Tag
 			`];
 	}
 
-	static get properties()
-	{
-		return {
-			...super.properties,
-			/**
-			 * Check if the email is associated with an existing contact, and if it is not show a button to create
-			 * a new contact with this email address.
-			 */
-			contactPlus: {
-				type: Boolean,
-				reflect: true,
-			},
+	@property({type: Boolean, reflect: true})
+	contactPlus = true;
 
-			/**
-			 * If the email is a contact, we normally show the contact name instead of the email.
-			 * Set to true to turn this off and always show just the email
-			 * Mutually exclusive with fullEmail!
-			 */
-			onlyEmail: {type: Boolean},
-
-			/**
-			 * If the email is a contact, we normally show the contact name instead of the email.
-			 * Set to true to turn this off and always show the email
-			 */
-			fullEmail: {type: Boolean}
-		}
-	}
+	/**
+	 * What to display for the selected email addresses
+	 *
+	 *	- full: "Mr Test User <test@example.com>
+	 *	- name: "Mr Test User"
+	 *	- domain: "Mr Test User (example.com)"
+	 *	- email: "test@example.com"
+	 *
+	 * If name is unknown, we'll use the email instead.
+	 */
+	@property({type: String})
+	emailDisplay : "full" | "email" | "name" | "domain" = "domain";
 
 	constructor(...args : [])
 	{
 		super(...args);
-		this.contactPlus = true;
-		this.fullEmail = false;
-		this.onlyEmail = false;
 		this.handleMouseEnter = this.handleMouseEnter.bind(this);
 		this.handleMouseLeave = this.handleMouseLeave.bind(this);
 		this.handleMouseClick = this.handleMouseClick.bind(this);
@@ -225,23 +211,29 @@ export class Et2EmailTag extends Et2Tag
 
 	public _contentTemplate() : TemplateResult
 	{
+		const split = Et2EmailTag.splitEmail(this.value);
+
 		let content = this.value;
-		// If there's a name, just show the name, otherwise show the email
-		if(!this.onlyEmail && Et2EmailTag.email_cache[content])
+		if(split.name)
 		{
-			// Append current value as email, data may have work & home email in it
-			content = (Et2EmailTag.email_cache[content]?.n_fn || "") + " <" + (Et2EmailTag.splitEmail(content)?.email || content) + ">"
+			switch(this.emailDisplay)
+			{
+				case "full":
+					content = split.name + " <" + split.email + ">";
+					break;
+				case "email":
+					content = split.email;
+					break;
+				case "name":
+				default:
+					content = split.name;
+					break;
+				case "domain":
+					content = split.name + " (" + split.email.split("@").pop() + ")";
+					break;
+			}
 		}
-		if (this.onlyEmail)
-		{
-			const split = Et2EmailTag.splitEmail(content);
-			content = split.email || content;
-		}
-		else if(!this.fullEmail)
-		{
-			const split = Et2EmailTag.splitEmail(content);
-			content = split.name || split.email;
-		}
+
 		return html`
             <span part="content" class="tag__content" title="${this.value}">
           ${content}
