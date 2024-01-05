@@ -1179,7 +1179,6 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 	}
 }
 
-// @ts-ignore TypeScript is not recognizing that this widget is a LitElement
 customElements.define("et2-email", Et2Email);
 
 /**

@@ -1,5 +1,6 @@
 const customElementsManifest = require('../../dist/custom-elements.json');
 const fs = require('fs');
+const path = require('path');
 
 //
 // Export it here so we can import it elsewhere and use the same version
@@ -73,6 +74,19 @@ module.exports.getAllComponents = function ()
 
 		component.dependencies = dependencies.sort();
 	});
+
+	// Add custom docs - not monitored for file changes
+	allComponents.forEach(component =>
+	{
+		// Check for custom docs
+		const docPath = path.join('..', '..', path.dirname(component.path), component.name + ".md");
+
+		// Stick it in a variable so we can use the content filters
+		if (fs.existsSync(path.resolve(docPath)))
+		{
+			fs.readFile(docPath, (err, data) => component.content = data.toString());
+		}
+	})
 
 	// Sort by name
 	return allComponents.sort((a, b) =>

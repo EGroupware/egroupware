@@ -31,7 +31,7 @@ const l10n = [
 	'mn', 'ms', 'my', 'nl', 'no', 'pa', 'pl', 'pt', 'ro', 'ru', 'si', 'sk', 'sl', 'sq', 'sr-cyr', 'sr', 'sv', 'th', 'tr',
 	'uk', 'uz', 'uz_latn', 'vn', 'zh-tw', 'zh',
 ];
-const lang = egw ? <string>egw.preference('lang') || "" : "";
+const lang = egw && egw.preference ? <string>egw.preference('lang') || "" : "";
 // only load localization, if we have one
 if (l10n.indexOf(lang) >= 0)
 {

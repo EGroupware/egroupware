@@ -282,7 +282,7 @@ window.app = {classes: {}};
 		if (!gen_time_div.length) gen_time_div = jQuery('.pageGenTime');
 		var gen_time_async = jQuery('.asyncIncludeTime').length > 0 ? jQuery('.asyncIncludeTime'):
 				gen_time_div.append('<span class="asyncIncludeTime"></span>').find('.asyncIncludeTime');
-		gen_time_async.text(egw.lang('async includes took %1s', (end_time-start_time)/1000));
+		gen_time_async.text(egw.lang ? egw.lang('async includes took %1s', (end_time - start_time) / 1000) : 'async includes took ' + (end_time - start_time) / 1000);
 
 		// Make sure opener knows when we close - start a heartbeat
 		try {

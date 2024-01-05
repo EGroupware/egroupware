@@ -48,7 +48,9 @@
   </p>
 
   {# Markdown content #}
-  {{ content | safe }}
+  {% if component.content %}
+  {{ component.content | markdown | safe }}
+  {% endif %}
 
   {# Slots #}
   {% if component.slots.length %}

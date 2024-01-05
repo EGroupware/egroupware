@@ -59,7 +59,7 @@ markdown.use(markdownItContainer, 'details', {
 markdownItReplaceIt.replacements.push({
   name: 'github-issues',
   re: /\[#([0-9]+)\]/gs,
-  sub: '<a href="https://github.com/shoelace-style/shoelace/issues/$1">#$1</a>',
+	sub: '<a href="https://github.com/egroupware/egroupware/issues/$1">#$1</a>',
   html: true,
   default: true
 });
