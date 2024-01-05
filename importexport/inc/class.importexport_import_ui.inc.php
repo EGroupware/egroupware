@@ -409,8 +409,9 @@ use EGroupware\Api\Etemplate;
 		 * @throws Api\Json\Exception
 		 */
 		public static function sendUpdate($complete, $label = '', $log = '')
-		{        // No real push, no updates
-			if(EGroupware\Api\Json\Push::onlyFallback())
+		{
+			// No real push, no updates
+			if(EGroupware\Api\Json\Push::onlyFallback() || !\EGroupware\Api\Json\Request::isJSONRequest())
 			{
 				error_log($complete . "% $label\t" . $log);
 				return;
