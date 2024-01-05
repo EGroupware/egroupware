@@ -54,14 +54,9 @@ describe('Et2EmailTag', () =>
 		assert.isTrue(component.contactPlus);
 	});
 
-	it('should have an onlyEmail property', () =>
+	it('should have an emailDisplay property', () =>
 	{
-		assert.isFalse(component.onlyEmail);
-	});
-
-	it('should have a fullEmail property', () =>
-	{
-		assert.isFalse(component.fullEmail);
+		assert.exists(component.emailDisplay);
 	});
 
 	it('should open addressbook with email preset on (+) click', () =>

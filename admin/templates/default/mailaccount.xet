@@ -259,12 +259,12 @@
 				</row>
 				<row>
 					<et2-description for="mailAlternateAddress" value="Alternate email address"></et2-description>
-					<et2-email id="mailAlternateAddress" multiple="true" searchUrl="" onlyEmail="true"></et2-email>
+                    <et2-email id="mailAlternateAddress" multiple="true" searchUrl="" emailDisplay="email"></et2-email>
 					<et2-description></et2-description>
 				</row>
 				<row disabled="@no_forward_available">
 					<et2-description for="mailForwardingAddress" value="Forward email's to"></et2-description>
-					<et2-email id="mailForwardingAddress" multiple="true" searchUrl="" onlyEmail="true"></et2-email>
+                    <et2-email id="mailForwardingAddress" multiple="true" searchUrl="" emailDisplay="email"></et2-email>
 					<et2-vbox>
 						<et2-checkbox label="Forward only" id="deliveryMode" onchange="if (widget.getValue()) et2_dialog.alert('Forward only disables IMAP mailbox / storing of mails and just forwards them to given address.','Forward only');" selectedValue="forwardOnly"></et2-checkbox>
 						<et2-checkbox label="Allow users to change forwards" id="acc_user_forward"></et2-checkbox>

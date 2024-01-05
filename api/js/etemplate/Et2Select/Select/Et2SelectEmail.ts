@@ -79,16 +79,11 @@ export class Et2SelectEmail extends Et2Select
 			includeLists: {type: Boolean},
 
 			/**
-			 * If the email is a contact, we normally show the contact name instead of the email.
-			 * Set to true to turn this off and always show just the email
-			 * Mutually exclusive with fullEmail!
+			 * What to display for the selected email addresses
+			 *
+			 * {@link Et2EmailTag#emailDisplay}
 			 */
-			onlyEmail: {type: Boolean},
-
-			/**
-			 * Show the full, original value email address under all circumstances, rather than the contact name for known contacts
-			 */
-			fullEmail: {type: Boolean}
+			emailDisplay: {type: String}, //"full" | "email" | "name" | "domain";
 		}
 	}
 

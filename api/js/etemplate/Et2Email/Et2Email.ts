@@ -115,16 +115,12 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 	includeLists : boolean;
 
 	/**
-	 * If the email is a contact, we normally show the contact name instead of the email.
-	 * Set to true to turn this off and always show just the email
-	 * Mutually exclusive with fullEmail!
+	 * What to display for the selected email addresses
+	 *
+	 * {@link Et2EmailTag#emailDisplay}
 	 */
-	@property({type: Boolean})
-	onlyEmail : boolean;
-
-	/** Show the full, original value email address under all circumstances, rather than the contact name for known contacts  */
-	@property({type: Boolean})
-	fullEmail : boolean;
+	@property({type: String})
+	emailDisplay : "full" | "email" | "name" | "domain";
 
 	/** The component's help text. If you need to display HTML, use the `help-text` slot instead. */
 	@property({attribute: 'help-text'}) helpText = '';
@@ -1170,8 +1166,7 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
                         "et2-select-draggable": !this.readonly && this.allowDragAndDrop,
                     })}
                     variant=${this.isValid ? nothing : "danger"}
-                    .fullEmail=${this.fullEmail}
-                    .onlyEmail=${this.onlyEmail}
+                    .emailDisplay=${this.emailDisplay ?? nothing}
                     .value=${live(value)}
                     ?removable=${!readonly}
                     ?readonly=${readonly}
