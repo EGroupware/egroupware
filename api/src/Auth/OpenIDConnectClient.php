@@ -15,11 +15,6 @@ namespace EGroupware\Api\Auth;
 use EGroupware\Api;
 use Jumbojett\OpenIDConnectClientException;
 
-if (!empty($GLOBALS['egw_info']['server']['cookie_samesite_attribute']) && $GLOBALS['egw_info']['server']['cookie_samesite_attribute'] === 'Strict')
-{
-	throw new Api\Exception("OAuth/OpenIDConnect requires SameSite cookie attribute other then 'Strict' set in Admin > Site configuration > Security > Cookies!");
-}
-
 /**
  * Extended OpenIDConnect client allowing to authenticate via some kind of promise, see authenticateThen method.
  *
@@ -71,6 +66,11 @@ class OpenIDConnectClient extends \Jumbojett\OpenIDConnectClient
 
 	public function __construct($provider_url = null, $client_id = null, $client_secret = null, $issuer = null)
 	{
+		if (!empty($GLOBALS['egw_info']['server']['cookie_samesite_attribute']) && $GLOBALS['egw_info']['server']['cookie_samesite_attribute'] === 'Strict')
+		{
+			throw new Api\Exception("OAuth/OpenIDConnect requires SameSite cookie attribute other then 'Strict' set in Admin > Site configuration > Security > Cookies!");
+		}
+
 		parent::__construct($provider_url, $client_id, $client_secret, $issuer);
 
 		// set https://proxy.egroupware.org/oauth as redirect URL, which redirects to host and path given in nonce parameter plus /api/oauth.php
