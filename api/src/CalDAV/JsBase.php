@@ -236,10 +236,10 @@ class JsBase
 				$contact['#'.$name] = null;
 			}
 		}
-		// report not existing cfs to log
+		// error not existing cfs
 		if (($not_existing=array_diff(array_keys($cfs), array_keys($definitions))))
 		{
-			error_log(__METHOD__."() not existing/ignored custom fields: ".implode(', ', $not_existing));
+			throw new JsParseException("Trying to update not existing custom field(s): ".implode(', ', $not_existing));
 		}
 		return $contact;
 	}

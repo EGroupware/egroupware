@@ -104,7 +104,7 @@ class JsContact extends Api\CalDAV\JsBase
 			}))
 			{
 				// apply patch on JsCard of contact
-				$data = self::patch($data, $old ? self::getJsCard($old, false) : [], !$old);
+				$data = self::patch($data, $old ? self::getJsCard($old, false) : [], !$old || !$strict);
 			}
 
 			if (!isset($data['uid'])) $data['uid'] = null;  // to fail below, if it does not exist
@@ -188,7 +188,7 @@ class JsContact extends Api\CalDAV\JsBase
 						break;
 
 					case 'egroupware.org:customfields':
-						$contact += self::parseCustomfields($value, $strict);
+						$contact += self::parseCustomfields($value);
 						break;
 
 					case 'egroupware.org:assistant':

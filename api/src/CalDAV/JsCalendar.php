@@ -110,8 +110,8 @@ class JsCalendar extends JsBase
 				return strpos($key, '/') !== false;
 			}))
 			{
-				// apply patch on JsCard of contact
-				$data = self::patch($data, $old ? self::getJsCalendar($old, false) : [], !$old);
+				// apply patch on JsEvent
+				$data = self::patch($data, $old ? self::getJsCalendar($old, false) : [], !$old || !$strict);
 			}
 
 			if (!isset($data['uid'])) $data['uid'] = null;  // to fail below, if it does not exist
