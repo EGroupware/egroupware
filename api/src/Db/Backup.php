@@ -1239,18 +1239,30 @@ class Backup
 	 * Move uploaded file to backup-directory
 	 *
 	 * @param array $file values for keys "tmp_name", "name", "size"
-	 * @return ?string success message or null on error
+	 * @return string success or error message
 	 */
-	public function upload(array $file) : ?string
+	public function upload(array $file) : string
 	{
-		if (move_uploaded_file($file['tmp_name'], $filename = $this->backup_dir . '/' . basename($file['name'])))
+		if (is_uploaded_file($file['tmp_name']) && ($src=fopen($file['tmp_name'], 'r')) &&
+			($dst=fopen($filename = $this->backup_dir . '/' . basename($file['name']), 'w')) &&
+			stream_copy_to_stream($src, $dst) !== false && fclose($dst))
 		{
 			$msg = lang("succesfully uploaded file %1", $filename . ', ' .
 					sprintf('%3.1f MB (%d)', $file['size'] / (1024 * 1024), $file['size'])) .
 				', md5=' . md5_file($file['tmp_name']) . ', sha1=' . sha1_file($file['tmp_name']);
-			$this->log($filename, $msg);
 		}
-		return $msg ?? null;
+		else
+		{
+			$msg = lang('Error uploading your backup!');
+		}
+
+		if (isset($src))
+		{
+			fclose($src);
+		}
+		$this->log($filename, $msg);
+
+		return $msg;
 	}
 
 	/**

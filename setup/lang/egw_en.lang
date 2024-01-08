@@ -324,6 +324,7 @@ error in group-creation !!!	setup	en	Error in group creation!
 error listing "dn=%1"!	setup	en	Error listing "DN=%1"!
 error modifying dn=%1: %2='%3'!	setup	en	Error modifying DN=%1: %2='%3'!
 error searching "dn=%1" for "%2"!	setup	en	Error searching "DN=%1" for "%2"!
+error uploading your backup!	setup	en	Error uploading your backup!
 every	setup	en	Every
 export has been completed!	setup	en	Export has been completed!
 failed to mount backup directory!	setup	en	Failed to mount Backup directory!
