@@ -196,7 +196,7 @@ class JsBase
 	protected static function parseCustomfields(array $cfs)
 	{
 		$contact = [];
-		$definitions = Api\Storage\Customfields::get(self::APP);
+		$definitions = Api\Storage\Customfields::get(static::APP);
 
 		foreach($definitions as $name => $definition)
 		{
