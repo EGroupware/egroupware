@@ -324,6 +324,7 @@ error in group-creation !!!	setup	de	Fehler beim Anlegen der Gruppen !!!
 error listing "dn=%1"!	setup	de	Fehler beim Auflisten von "DN=%1"!
 error modifying dn=%1: %2='%3'!	setup	de	Fehler beim Ändern von DN=%1: %2='%3'!
 error searching "dn=%1" for "%2"!	setup	de	Fehler beim Suchen von "DN=%1" nach "%2"!
+error uploading your backup!	setup	de	Fehler beim Hochladen Ihres Backups!
 every	setup	de	Alle
 export has been completed!	setup	de	Export ist abgeschlossen!
 failed to mount backup directory!	setup	de	Konnte Datensicherungsverzeichnis nicht mounten!
