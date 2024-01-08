@@ -445,15 +445,17 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 
 		protected async _moreResultsTemplate()
 		{
-			await this.updateComplete;
-			const moreCount = this._total_result_count - this.select?.querySelectorAll("sl-option.match").length;
-			if(this._total_result_count <= 0 || moreCount == 0 || !this.select)
+			if(this._total_result_count <= 0 || !this.select || !this._searchPromise)
 			{
 				return nothing;
 			}
-			const more = this.egw().lang("%1 more...", moreCount);
+			return this._searchPromise.then(() =>
+			{
+				const moreCount = this._total_result_count - this.select?.querySelectorAll("sl-option.match").length;
+				const more = this.egw().lang("%1 more...", moreCount);
 
-			return html`<span class="more">${more}</span>`;
+				return html`<span class="more">${more}</span>`;
+			});
 		}
 
 		protected _searchInputTemplate()

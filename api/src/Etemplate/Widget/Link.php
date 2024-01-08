@@ -112,7 +112,7 @@ class Link extends Etemplate\Widget
 
 		$response = Api\Json\Response::get();
 		// convert associative array to a real array with value attribute, to preserve the order of numeric keys
-		$response->data(array_values(array_map(static function($key, $value)
+		$result = array_values(array_map(static function ($key, $value)
 		{
 			if (is_array($value))
 			{
@@ -122,7 +122,12 @@ class Link extends Etemplate\Widget
 				'value' => $key,
 				'label' => $value,
 			];
-		}, array_keys($links), $links)));
+		}, array_keys($links), $links));
+		if(array_key_exists('total', $options))
+		{
+			$result['total'] = $options['total'];
+		}
+		$response->data($result);
 	}
 
 	/**
