@@ -69,24 +69,24 @@ export class Et2Favorites extends Et2DropdownButton implements et2_INextmatchHea
 				min-width: 15em;
 			  }
 
-			  sl-option:hover et2-image[src="trash"] {
+				sl-menu-item:hover et2-image[src="trash"] {
 				display: initial;
 			  }
 
 			  /* Add star icons - radio button is already in prefix */
 
-			  sl-option::part(base) {
+				sl-menu-item::part(base) {
 				background-image: ${cssImage("fav_filter")};
 				background-repeat: no-repeat;
 				background-size: 16px 16px;
 				background-position: 5px center;
 			  }
 
-			  sl-option[checked]::part(base) {
+				sl-menu-item[checked]::part(base) {
 				background-image: ${cssImage("favorites")};
 			  }
 
-			  sl-option:last-child::part(base) {
+				sl-menu-item:last-child::part(base) {
 				background-image: none;
 			  }
 			`,
@@ -173,16 +173,16 @@ export class Et2Favorites extends Et2DropdownButton implements et2_INextmatchHea
 		//@ts-ignore TS doesn't know about window.app
 		let is_admin = (typeof this.egw().app('admin') != "undefined");
 		//@ts-ignore option.group does not exist
-		let icon = (option.group !== false && !is_admin || option.value == 'blank') ? "" : html`
+		let icon = (option.group !== false && !is_admin || ['blank', '~add~'].includes(option.value)) ? "" : html`
             <et2-image slot="suffix" src=${"trash"} icon @click=${this._handleDelete}
                        statustext="${this.egw().lang("Delete")}"></et2-image>`;
 
 		return html`
-            <sl-option value="${option.value}" ?checked="${option.value == this._preferred}">
+            <sl-menu-item value="${option.value}" ?checked="${option.value == this._preferred}">
                 ${option.value !== Et2Favorites.ADD_VALUE ? radio : ""}
                 ${icon}
                 ${option.label}
-            </sl-option>`;
+            </sl-menu-item>`;
 	}
 
 
@@ -353,6 +353,17 @@ export class Et2Favorites extends Et2DropdownButton implements et2_INextmatchHea
 	}
 
 	/**
+	 * Handle the click from the main button
+	 *
+	 * @param {MouseEvent} event
+	 * @protected
+	 */
+	protected _handleClick(event : MouseEvent)
+	{
+		this._apply_favorite(this.preferred);
+	}
+
+	/**
 	 * Clicked a radio button
 	 *
 	 * @param _ev
@@ -438,7 +449,7 @@ export class Et2Favorites extends Et2DropdownButton implements et2_INextmatchHea
 	 * @returns {boolean}
 	 * @protected
 	 */
-	_handleClick(_ev : MouseEvent) : boolean
+	_handleSelect(_ev : MouseEvent) : boolean
 	{
 		// Apply preferred filter - make sure it's an object, and not a reference
 		if(this._preferred && this.favoriteByID(this._preferred))
