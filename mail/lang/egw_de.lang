@@ -374,6 +374,7 @@ move to archive	mail	de	Verschiebe in Archivordner
 move to trash	mail	de	Verschiebe in Papierkorb
 moved %1 message(s) from %2 to %3	mail	de	%1 Nachrichten wurden von %2 nach %3 verschoben
 moving folders from one mailaccount to another is not supported	mail	de	Verschieben von Ordnern von einem Mailkonto zu einem anderen wird nicht unterstützt
+name and domain	mail	de	Name und Domain
 name and email	mail	de	Name und E-Mail
 name of account	mail	de	Konten-Bezeichnung
 name of imap servers (space separated host or host:port)	mail	de	Name der IMAP Server (Leerzeichen getrennt Host oder Host:Port)

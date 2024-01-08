@@ -374,6 +374,7 @@ move to archive	mail	en	Move to archive folder
 move to trash	mail	en	Move to trash
 moved %1 message(s) from %2 to %3	mail	en	Moved %1 message(s) from %2 to %3
 moving folders from one mailaccount to another is not supported	mail	en	Moving folders from one email account to another is not supported
+name and domain	mail	en	Name and domain
 name and email	mail	en	Name and email
 name of account	mail	en	Name of account
 name of imap servers (space separated host or host:port)	mail	en	Name of IMAP servers (space separated host or host:port)
