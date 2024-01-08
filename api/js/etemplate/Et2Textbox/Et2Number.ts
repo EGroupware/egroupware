@@ -185,7 +185,9 @@ export class Et2Number extends Et2Textbox
 	private handleScroll(e)
 	{
 		const old_value = this.value;
-		this.value = "" + (this.valueAsNumber + e.detail * (parseFloat(this.step) || 1));
+		const min = parseFloat(this.min ?? Number.MIN_SAFE_INTEGER);
+		const max = parseFloat(this.max ?? Number.MAX_SAFE_INTEGER);
+		this.value = "" + Math.min(Math.max(this.valueAsNumber + e.detail * (parseFloat(this.step) || 1), min), max);
 		this.dispatchEvent(new CustomEvent("sl-change", {bubbles: true}));
 		this.requestUpdate("value", old_value);
 	}
