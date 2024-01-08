@@ -257,6 +257,8 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 
 		private _total_result_count = 0;
 
+		protected _searchPromise = null;
+
 		/**
 		 * These characters will end a free tag
 		 * @type {string[]}
@@ -491,8 +493,26 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 				return nothing;
 			}
 
-			return html`
+			const noSuggestions = html`
                 <div class="no-results">${this.egw().lang("no suggestions")}</div>`;
+
+			if(!this._searchPromise)
+			{
+				return noSuggestions;
+			}
+
+			let noResults = this._searchPromise.then(() =>
+			{
+				return this._total_result_count == 0 ?
+					   noSuggestions :
+					   nothing;
+			});
+
+			return html`${until(
+				noResults,
+				html`
+                    <sl-spinner></sl-spinner>`
+			)}`;
 		}
 
 		/**
@@ -1058,11 +1078,6 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 
 			this.setAttribute("searching", "");
 
-			// Show a spinner
-			let spinner = document.createElement("sl-spinner");
-			spinner.slot = "expand-icon";
-			this.select.appendChild(spinner);
-
 			// Hide clear button
 			let clear_button = <HTMLElement>this._searchInputNode?.shadowRoot?.querySelector(".input__clear");
 			if(clear_button)
@@ -1073,17 +1088,14 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 			// Clear previous results
 			this._total_result_count = 0;
 			this._clearResults();
-			await this.updateComplete;
 
 			// Start the searches
-			return Promise.all([
+			this._searchPromise = Promise.all([
 				this.localSearch(this._searchInputNode.value, this.searchOptions),
 				this.remoteSearch(this._searchInputNode.value, this.searchOptions)
 			]).then(async() =>
 			{
 				this.removeAttribute("searching");
-				// Remove spinner
-				spinner.remove();
 
 				// Restore clear button
 				if(clear_button)
@@ -1091,7 +1103,13 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 					clear_button.style.display = "";
 				}
 				await this.updateComplete;
+
+				this._searchPromise = null;
 			});
+
+			this.requestUpdate();
+
+			return this._searchPromise;
 		}
 
 		/**
