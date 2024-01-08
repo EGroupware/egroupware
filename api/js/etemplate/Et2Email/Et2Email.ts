@@ -200,6 +200,9 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 
 		this.defaultValidators.push(new IsEmail(this.allowPlaceholder));
 
+		// Set email display to preference, will be overridden by template attribute
+		this.emailDisplay = this._getEmailDisplayPreference();
+
 		// Additional option for select email, per ticket #79694
 		this._close_on_select = this.egw().preference("select_multiple_close") != "open";
 
@@ -258,6 +261,23 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 		if(changedProperties.has("value"))
 		{
 			this.makeSortable();
+		}
+	}
+
+	private _getEmailDisplayPreference()
+	{
+		const pref = this.egw().preference("emailTag", "mail") ?? "";
+		switch(pref)
+		{
+			case "fullemail":
+				return "full"
+			default:
+			case "onlyname":
+				return "name";
+			case "onlyemail":
+				return "email";
+			case "domain":
+				return "domain";
 		}
 	}
 

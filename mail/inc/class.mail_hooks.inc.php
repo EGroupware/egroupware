@@ -370,6 +370,7 @@ class mail_hooks
 					'onlyname' => lang('only name'),
 					'fullemail' => lang('name and email'),
 					'onlyemail' => lang('only email'),
+					'domain' => lang("Name and domain")
 				],
 				'xmlrpc' => True,
 				'admin'  => False,
