@@ -253,6 +253,15 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 		}
 	}
 
+	firstUpdated(changedProperties : PropertyValues)
+	{
+		super.firstUpdated(changedProperties);
+
+		// Make sure validators reflect allowPlaceholder, in case it's not caught by willUpdate()
+		this.defaultValidators = (<Array<Validator>>this.defaultValidators).filter(v => !(v instanceof IsEmail));
+		this.defaultValidators.push(new IsEmail(this.allowPlaceholder));
+	}
+
 	updated(changedProperties : PropertyValues)
 	{
 		super.updated(changedProperties);
