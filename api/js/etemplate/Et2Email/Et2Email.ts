@@ -11,6 +11,7 @@ import {html, LitElement, nothing, PropertyValues, TemplateResult} from "lit";
 import {property} from "lit/decorators/property.js";
 import {state} from "lit/decorators/state.js";
 import {classMap} from "lit/directives/class-map.js";
+import {styleMap} from "lit/directives/style-map.js";
 import {keyed} from "lit/directives/keyed.js";
 import {live} from "lit/directives/live.js";
 import {map} from "lit/directives/map.js";
@@ -63,7 +64,7 @@ import Sortable from "sortablejs/modular/sortable.complete.esm.js";
  * @csspart option - Each matching email address suggestion
  * @csspart tag - The individual tags that represent each email address.
  *
- * @cssproperty [--height=2.5] - The maximum height of the widget, to limit size when you have a lot of addresses.
+ * @cssproperty [--height=5] - The maximum height of the widget, to limit size when you have a lot of addresses.  Set by rows property, when set.
  */
 export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinInterface
 {
@@ -144,10 +145,20 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 	 */
 	@property({type: String}) searchUrl = "EGroupware\\Api\\Etemplate\\Widget\\Taglist::ajax_email";
 
+	/**
+	 * Limit the maximum height of the widget, for when you have a lot of addresses.
+	 * Set it to 1 for special single-line styling, 0 to disable
+	 * @type {number}
+	 */
+	@property({type: Number, reflect: true}) rows;
+
 	@state() searching = false;
 	@state() hasFocus = false;
 	@state() currentOption : SlOption;
 	@state() currentTag : Et2EmailTag;
+
+	/** If the select is limited to 1 row, we show the number of tags not visible */
+	@state() _tagsHidden = 0;
 
 
 	get _popup() : SlPopup { return this.shadowRoot.querySelector("sl-popup");}
@@ -187,6 +198,9 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 	protected _searchPromise : Promise<SelectOption[]> = Promise.resolve([]);
 	protected _selectOptions : SelectOption[] = [];
 
+	// Overflow Observer for +# display
+	protected tagOverflowObserver : IntersectionObserver = null;
+
 	// Drag / drop / sort
 	protected _sortable : Sortable;
 
@@ -208,8 +222,10 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 
 		this.handleOpenChange = this.handleOpenChange.bind(this);
 		this.handleLostFocus = this.handleLostFocus.bind(this);
-
 		this.handleSortEnd = this.handleSortEnd.bind(this);
+		this.handleTagOverflow = this.handleTagOverflow.bind(this);
+		this.handleMouseEnter = this.handleMouseEnter.bind(this);
+		this.handleMouseLeave = this.handleMouseLeave.bind(this);
 	}
 
 	connectedCallback()
@@ -271,6 +287,7 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 		{
 			this.makeSortable();
 		}
+		this.checkTagOverflow();
 	}
 
 	private _getEmailDisplayPreference()
@@ -373,6 +390,35 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 			this.currentTag.focus();
 		}
 	}
+
+	protected checkTagOverflow()
+	{
+		// Create / destroy intersection observer
+		if(this.readonly && this.rows == "1" && this.tagOverflowObserver == null)
+		{
+			this.tagOverflowObserver = new IntersectionObserver(this.handleTagOverflow, {
+				root: this.shadowRoot.querySelector(".email__combobox"),
+				threshold: 0.1
+			});
+		}
+		else if((!this.readonly || this.rows !== 1) && this.tagOverflowObserver !== null)
+		{
+			this.tagOverflowObserver.disconnect();
+			this.tagOverflowObserver = null;
+		}
+
+		if(this.tagOverflowObserver)
+		{
+			this.updateComplete.then(() =>
+			{
+				for(const tag of Array.from(this.shadowRoot.querySelectorAll(".email__combobox et2-email-tag")))
+				{
+					this.tagOverflowObserver.observe(tag);
+				}
+			});
+		}
+	}
+
 
 	/**
 	 * Create an entry that is not in the suggestions and add it to the value
@@ -668,6 +714,56 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 
 
 	/**
+	 * Callback for the intersection observer so we know when tags don't fit
+	 *
+	 * Here we set the flag to show how many more tags are hidden, but this only happens
+	 * when there are more tags than space.
+	 *
+	 * @param entries
+	 * @protected
+	 */
+	protected handleTagOverflow(entries : IntersectionObserverEntry[])
+	{
+		const oldCount = this._tagsHidden;
+		let visibleTagCount = this.value.length - this._tagsHidden;
+		let update = false;
+		// If we have all tags, start from 0, otherwise it's just a change
+		if(entries.length == this.value.length)
+		{
+			visibleTagCount = 0;
+		}
+		else
+		{
+			update = true;
+		}
+		for(const tag of entries)
+		{
+			if(tag.isIntersecting)
+			{
+				visibleTagCount++;
+			}
+			else if(update && !tag.isIntersecting)
+			{
+				visibleTagCount--;
+			}
+			else
+			{
+				break;
+			}
+		}
+		if(visibleTagCount && visibleTagCount < this.value.length)
+		{
+			this._tagsHidden = this.value.length - visibleTagCount;
+		}
+		else
+		{
+			this._tagsHidden = 0;
+		}
+		this.requestUpdate("_tagsHidden", oldCount);
+	}
+
+
+	/**
 	 * Sometimes users paste multiple comma separated values at once.  Split them then handle normally.
 	 * Overridden here to handle email addresses that may have commas using the regex from the validator.
 	 *
@@ -896,6 +992,36 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 	}
 
 	/**
+	 * If rows=1 and multiple=true, when they put the mouse over the widget show all tags
+	 * @param {MouseEvent} e
+	 * @private
+	 */
+	protected handleMouseEnter(e : MouseEvent)
+	{
+		if(this.rows == "1" && this.value.length > 1)
+		{
+			e.stopPropagation();
+
+			// Bind to turn this all off
+			this.addEventListener("mouseleave", this.handleMouseLeave);
+
+			this.classList.add("hover");
+			this.requestUpdate();
+		}
+	}
+
+	/**
+	 * If we're showing all rows because of _handleMouseEnter, reset when mouse leaves
+	 * @param {MouseEvent} e
+	 * @private
+	 */
+	protected handleMouseLeave(e : MouseEvent)
+	{
+		this.classList.remove("hover");
+		this.requestUpdate();
+	}
+
+	/**
 	 * Keyboard events from the suggestion list
 	 *
 	 * @param {KeyboardEvent} event
@@ -1013,6 +1139,31 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 		this.dispatchEvent(new Event("change", {bubbles: true}));
 	}
 
+	/* Sub-template when [readonly][rows=1] to show all tags in current value in popup */
+	readonlyHoverTemplate()
+	{
+		if(!this.classList.contains("hover"))
+		{
+			return nothing;
+		}
+
+		// Offset distance to open _over_ the rest
+		let distance = (-1 * parseInt(getComputedStyle(this).height));
+		return html`
+            <sl-popup
+                    active
+                    anchor=${this}
+                    auto-size="both"
+                    class="hover__popup details hoist details__body"
+                    distance=${distance}
+                    placement="bottom"
+                    sync="width"
+            >
+                ${this.tagsTemplate()}
+            </sl-popup>
+		`;
+	}
+
 	tagsTemplate()
 	{
 		return html`${keyed(this._valueUID, map(this.value, (value, index) => this.tagTemplate(value)))}`;
@@ -1043,6 +1194,21 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
                     @change=${this.handleTagChange}
             >
             </et2-email-tag>`;
+	}
+
+	protected tagLimitTemplate() : TemplateResult | typeof nothing
+	{
+		if(this._tagsHidden == 0)
+		{
+			return nothing;
+		}
+		return html`
+            <sl-tag
+                    part="tag__limit"
+                    class="tag_limit"
+                    slot="expand-icon"
+            >+${this._tagsHidden}
+            </sl-tag>`;
 	}
 
 	inputTemplate()
@@ -1110,6 +1276,13 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 		const hasHelpText = this.helpText ? true : !!hasHelpTextSlot;
 		const isPlaceholderVisible = this.placeholder && this.value.length === 0 && !this.disabled && !this.readonly;
 
+		let styles = {};
+
+		if(this.rows !== 0)
+		{
+			styles["--height"] = this.rows;
+		}
+
 		// TODO Don't forget required & disabled
 
 		return html`
@@ -1121,7 +1294,9 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
                         'form-control--has-label': hasLabel,
                         'form-control--has-help-text': hasHelpText
                     })}
+                    style=${styleMap(styles)}
                     @click=${this.handleLabelClick}
+                    @mouseenter=${this.handleMouseEnter}
                     @mousedown=${() =>
                     {
                         if(!this.hasFocus)
@@ -1141,6 +1316,7 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
                     <slot name="label">${this.label}</slot>
                 </label>
                 <div part="form-control-input" class="form-control-input">
+                    ${this.readonlyHoverTemplate()}
                     <sl-popup
                             class=${classMap({
                                 email: true,
@@ -1171,6 +1347,7 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
                             <slot part="prefix" name="prefix" class="email__prefix"></slot>
                             ${this.tagsTemplate()}
                             ${this.inputTemplate()}
+                            ${this.tagLimitTemplate()}
                             ${this.searching ? html`
                                 <sl-spinner class="email__loading"></sl-spinner>` : nothing}
                             <slot part="suffix" name="suffix" class="email__suffix"></slot>

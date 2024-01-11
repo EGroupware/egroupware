@@ -27,7 +27,7 @@ export default css`
 		border-radius: var(--sl-input-border-radius-medium);
 		font-size: var(--sl-input-font-size-medium);
 		min-height: var(--sl-input-height-medium);
-		max-height: calc(var(--height, 2.5) * var(--sl-input-height-medium));
+		max-height: calc(var(--height, 5) * var(--sl-input-height-medium));
 		overflow-y: auto;
 		padding-block: 0;
 		padding-inline: var(--sl-input-spacing-medium);
@@ -58,7 +58,8 @@ export default css`
 		order: 1;
 	}
 	/* Tags */
-	.email et2-email-tag {
+
+	et2-email-tag {
 		order: 2;
 		flex-grow: 0;
 		margin: auto 0px;
@@ -137,4 +138,70 @@ export default css`
 		padding-inline: var(--sl-spacing-x-large);
 	}
 
+	/**
+	 * Readonly
+	 */
+
+	:host([readonly]) .email .email__combobox {
+		border: none;
+		box-shadow: none;
+		max-height: calc(var(--height, 5) * (var(--sl-input-height-medium) * 0.8))
+	}
+
+	:host([readonly])::part(expand-icon) {
+		display: none;
+	}
+
+	:host([readonly]) .email__search {
+		display: none;
+	}
+
+	/** 
+	* Style for tag count if readonly and rows=1 
+	*/
+
+	:host([readonly][rows="1"]) .email__combobox {
+		overflow: hidden;
+		min-height: auto;
+		max-height: calc(var(--sl-input-height-medium) * 0.8);
+	}
+
+	.tag_limit {
+		position: absolute;
+		right: 0px;
+		top: 0px;
+		bottom: 0px;
+		box-shadow: rgb(0 0 0/50%) -1.5ex 0px 1ex -1ex, rgb(0 0 0 / 0%) 0px 0px 0px 0px;
+		z-index: 1;
+	}
+
+	.tag_limit::part(base) {
+		height: 100%;
+		background-color: var(--sl-input-background-color);
+		border-top-left-radius: 0;
+		border-bottom-left-radius: 0;
+		font-weight: bold;
+		min-width: 3em;
+		justify-content: center;
+	}
+
+	/* Show all rows on hover if readonly rows=1 */
+
+	:host([ readonly ][ rows ]) .hover__popup {
+		width: -webkit-fill-available;
+		width: -moz-fill-available;
+		width: fill-available;
+	}
+
+	:host([readonly][rows]) .hover__popup::part(popup) {
+		z-index: var(--sl-z-index-dropdown);
+		background-color: white;
+		display: flex;
+		flex-wrap: wrap;
+
+		/* Same as .email__combobox */
+		gap: 0.1rem 0.5rem;
+	}
+
+	/* End styles for [readonly][rows=1] */
 `;
