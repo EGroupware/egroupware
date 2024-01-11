@@ -152,7 +152,7 @@ export default css`
 	* Style for tag count if readonly and rows=1 
 	*/
 
-	:host([readonly][rows="1"]) .email__combobox {
+	:host([readonly][rows='1']) .email__combobox {
 		overflow: hidden;
 		min-height: auto;
 		max-height: calc(var(--sl-input-height-medium) * 0.8);
@@ -192,6 +192,7 @@ export default css`
 		flex-wrap: wrap;
 
 		/* Same as .email__combobox */
+		padding-inline: var(--sl-input-spacing-medium);
 		gap: 0.1rem 0.5rem;
 	}
 
