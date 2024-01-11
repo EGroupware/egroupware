@@ -1196,7 +1196,14 @@ class Ads
 			case 'g':
 				/** @noinspection SuspiciousAssignmentsInspection */
 				$type_filter = '(|(samaccounttype=' . adLDAP::ADLDAP_SECURITY_GLOBAL_GROUP .
-					')(samaccounttype=' . adLDAP::ADLDAP_SECURITY_LOCAL_GROUP . '))';
+					')(samaccounttype=' . adLDAP::ADLDAP_SECURITY_LOCAL_GROUP;
+				// should we also consider distribution-lists
+				if (!empty($this->frontend->config['ads_group_extra_types']) && $this->frontend->config['ads_group_extra_types'] === 'distributionlists')
+				{
+					$type_filter .= ')(samaccounttype=' . adLDAP::ADLDAP_DISTRIBUTION_GROUP.
+						')(samaccounttype=' . adLDAP::ADLDAP_DISTRIBUTION_LOCAL_GROUP;
+				}
+				$type_filter .=	'))';
 				if (!empty($this->frontend->config['ads_group_filter']))
 				{
 					$type_filter = '(&' . $type_filter . $this->frontend->config['ads_group_filter'] . ')';

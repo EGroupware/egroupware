@@ -430,7 +430,11 @@
      <td>
      	{lang_Group_context}: ({lang_leave_empty_to_use_default})
      </td>
-     <td><input name="newsettings[ads_group_context]" value="{value_ads_group_context}" size="80" /></td>
+     <td>
+        <input name="newsettings[ads_group_context]" value="{value_ads_group_context}" size="80" />
+        <label><input type="checkbox" value="distributionlists" {checked_ads_group_extra_types_distributionlists} name="newsettings[ads_group_extra_types]"/>
+            {lang_distribution-lists too}</label>
+     </td>
    </tr>
    <tr class="row_on">
      <td>{lang_Additional_user_filter_(optional)}:</td>

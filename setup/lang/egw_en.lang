@@ -258,6 +258,7 @@ deregistered	setup	en	De-registered
 details for admin account	setup	en	Details for Admin account
 developers' table schema toy	setup	en	Developers' Table Schema Toy
 did not find any valid db support!	setup	en	Did not find any valid DB support!
+distribution-lists too	setup	en	distribution-lists too
 do not check for deleted user	setup	en	Do NOT check for deleted user
 do you want persistent connections (higher performance, but consumes more resources)	setup	en	Do you want persistent connections (higher performance, but consumes more resources)
 do you want to manage homedirectory and loginshell attributes?	setup	en	Do you want to manage home directory and login shell attributes?
