@@ -258,6 +258,7 @@ deregistered	setup	de	nicht registriert
 details for admin account	setup	de	Details des Admin-Kontos
 developers' table schema toy	setup	de	Entwickler Tabellen Schema "Spielzeug"
 did not find any valid db support!	setup	de	Konnte keine gültige Datenbankunterstützung finden!
+distribution-lists too	setup	de	auch Verteilerlisten
 do not check for deleted user	setup	de	Nicht auf gelöschte Benutzer prüfen
 do you want persistent connections (higher performance, but consumes more resources)	setup	de	Wollen Sie eine permanente Datenbankverbindung verwenden?<br>(höhere Performance, braucht aber mehr Ressourcen)
 do you want to manage homedirectory and loginshell attributes?	setup	de	Wollen Sie Benutzerverzeichnisse und Login-Shell Attribute verwalten?
