@@ -1141,7 +1141,7 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 		}
 
 		// Offset distance to open _over_ the rest
-		let distance = (-1 * parseInt(getComputedStyle(this).height));
+		let distance = (-1 * parseInt(getComputedStyle(this).height)) + 1;
 		return html`
             <sl-popup
                     active
@@ -1306,8 +1306,8 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
                 >
                     <slot name="label">${this.label}</slot>
                 </label>
+                ${this.readonlyHoverTemplate()}
                 <div part="form-control-input" class="form-control-input">
-                    ${this.readonlyHoverTemplate()}
                     <sl-popup
                             class=${classMap({
                                 email: true,
