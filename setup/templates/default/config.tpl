@@ -274,7 +274,7 @@
 
    <tr class="row_off">
     <td>{lang_Add_auto-created_users_to_this_group_('Default'_will_be_attempted_if_this_is_empty.)}:</td>
-    <td><input name="newsettings[default_group_lid]" value="{value_default_group_lid}" /></td>
+    <td><input name="newsettings[default_group_lid]" value="{value_default_group_lid}" placeholder="Default" /></td>
    </tr>
 
    <tr class="row_on">
@@ -475,6 +475,10 @@
         {lang_The_OIDC_IdP_must_support_autoconfiguration_under_the_below_given_URL}: /.well-known/openid-configuration<br/>
         {lang_EGroupware's_callback_URL_is_the_one_of_the_login_page}: <a href="{value_webserver_url}/login.php">{lang_Callback_URL}</a>
     </td>
+   </tr>
+   <tr class="row_on">
+    <td>{lang_Label_to_display_as_option_on_login_page}:<br/>{lang_or_leave_empty_and_select_OpenIDConnect_as_authentication_type_above_for_single_sign_on}</td>
+    <td><input name="newsettings[openidconnect_discovery]" placeholder="{lang_OpenIDConnect_Login}" value="{value_openidconnect_discovery}" size="20" /></td>
    </tr>
    <tr class="row_off">
      <td>{lang_URL_of_the_IdP_(without_path)}:</td>

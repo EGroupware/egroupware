@@ -28,6 +28,9 @@ class Openidconnect implements BackendSSO
 		$this->client = new OpenIDConnectClient($GLOBALS['egw_info']['server']['oic_provider'],
 			$GLOBALS['egw_info']['server']['oic_client_id'],
 			$GLOBALS['egw_info']['server']['oic_client_secret']);
+
+		// add scopes we are processing ('openid' is added automatic)
+		$this->client->addScope(['email', 'profile']);
 	}
 
 	/**
@@ -53,9 +56,9 @@ class Openidconnect implements BackendSSO
 				try {
 					$user_info = $this->client->requestUserInfo();
 					$GLOBALS['auto_create_acct'] = [
-						'firstname' => $user_info['given_name'],
-						'lastname' => $user_info['family_name'],
-						'email' => $user_info['email'],
+						'firstname' => $user_info->given_name,
+						'lastname' => $user_info->family_name,
+						'email' => $user_info->email,
 						// not (yet) used supported keys
 						//'primary_group' => '',
 						//'add_group' => '',
@@ -75,6 +78,22 @@ class Openidconnect implements BackendSSO
 			$GLOBALS['egw']->session->cd_reason = 'OpenIDConnect Error: '.$e->getMessage();
 			return null;
 		}
+	}
+
+	/**
+	 * Display a IdP selection / discovery
+	 *
+	 * Will be displayed if IdP(s) are added in setup and a discovery label is specified.
+	 *
+	 * @return string|null html to display in login page or null to disable the selection
+	 */
+	static public function discovery()
+	{
+		if (empty($GLOBALS['egw_info']['server']['openidconnect_discovery']))
+		{
+			return null;
+		}
+		return Api\Html::input('auth=openidconnect', $GLOBALS['egw_info']['server']['openidconnect_discovery'], 'submit', 'formmethod="get"');
 	}
 
 	/**
