@@ -71,7 +71,7 @@ $setup_info['api']['hooks']['vfs_rmdir'] = 'EGroupware\\Api\\Vfs\\Sharing::vfsUp
 
 // hook to update SimpleSAMLphp config
 $setup_info['api']['hooks']['setup_config'] = [\EGroupware\Api\Auth\Saml::class.'::setupConfig', \EGroupware\Api\Accounts\Import::class.'::setupConfig'];
-$setup_info['api']['hooks']['login_discovery'] = \EGroupware\Api\Auth\Saml::class.'::discovery';
+$setup_info['api']['hooks']['login_discovery'] = [\EGroupware\Api\Auth\Saml::class.'::discovery', \EGroupware\Api\Auth\Openidconnect::class.'::discovery'];
 
 // installation checks
 $setup_info['api']['check_install'] = array(

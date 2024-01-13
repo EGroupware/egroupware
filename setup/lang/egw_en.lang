@@ -523,6 +523,7 @@ optional, if only authentication and anonymous search is enabled	setup	en	option
 or	setup	en	or
 or %1continue to the header admin%2	setup	en	or %1Continue to the Header Admin%2
 or http://webdav.domain.com (webdav)	setup	en	or http://webdav.domain.com (WebDAV)
+or leave empty and select openidconnect as authentication type above for single sign on	setup	en	or leave empty and select OpenIDConnect as authentication type above for single sign on
 or leave empty and select saml as authentication type above for single sign on	setup	en	or leave empty and select SAML as authentication type above for single sign on
 or we can attempt to create the database for you:	setup	en	Or attempt to create the database:
 or you can install a previous backup.	setup	en	Or install a previous backup.

@@ -21,7 +21,8 @@ catch (exception){
 }
 
 // listen to egw-is-created object to make sure egw object is ready
-document.addEventListener('egw-is-created', function(){
+//document.addEventListener('egw-is-created', function(){
+window.setTimeout(() => {
 	egw_ready.then(function()
 	{
 		jQuery(document).ready(function()
@@ -73,9 +74,9 @@ document.addEventListener('egw-is-created', function(){
 				}
 			});
 			// or optional SAML login with a button for a single IdP
-			jQuery('input[type="submit"][name="auth=saml"]').on('click', function(){
+			jQuery('input[type="submit"][name^="auth="]').on('click', function(){
 				this.form.method = 'get';
-				jQuery(this.form).append('<input type="hidden" name="auth" value="saml"/>');
+				jQuery(this.form).append('<input type="hidden" name="auth" value="'+this.name.split('=')[1]+'"/>');
 			});
 			// prefer [Login] button below over maybe existing SAML login button above
 			jQuery('input').on('keypress', function(e)
@@ -104,4 +105,4 @@ document.addEventListener('egw-is-created', function(){
 				console.log('Service worker registration failed, error:', error);
 			});
 	}
-});
+}, 500);

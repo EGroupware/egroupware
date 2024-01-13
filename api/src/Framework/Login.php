@@ -86,7 +86,10 @@ class Login
 		$discovery = '';
 		foreach(Api\Hooks::process('login_discovery', [], true) as $app => $data)
 		{
-			if (!empty($data)) $discovery .= $data;
+			foreach((array)$data as $d)
+			{
+				if (!empty($d)) $discovery .= $d;
+			}
 		}
 		if (!empty($discovery))
 		{

@@ -523,6 +523,7 @@ optional, if only authentication and anonymous search is enabled	setup	de	option
 or	setup	de	oder
 or %1continue to the header admin%2	setup	de	oder %1mit der Headerverwaltung weiter machen%2
 or http://webdav.domain.com (webdav)	setup	de	oder http://webdav.domain.com (für WebDAV)
+or leave empty and select openidconnect as authentication type above for single sign on	setup	de	oder leer lassen und für SingleSignOn oberhalb OpenIDConnect als Art der Authentifizierung auswählen
 or leave empty and select saml as authentication type above for single sign on	setup	de	oder leer lassen und für SingleSignOn oberhalb SAML als Art der Authentifizierung auswählen
 or we can attempt to create the database for you:	setup	de	Oder wir können versuchen die Datenbank für Sie anzulegen:
 or you can install a previous backup.	setup	de	Oder Sie können eine vorherige Datensicherung installieren.
