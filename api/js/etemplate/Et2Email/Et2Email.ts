@@ -248,6 +248,18 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 		document.removeEventListener('focusin', this.handleLostFocus);
 	}
 
+	set_value(_value)
+	{
+		if (!Array.isArray(_value))
+		{
+			this.value = parseEmailsString(_value, this.allowPlaceholder);
+		}
+		else
+		{
+			this.value = _value;
+		}
+	}
+
 	willUpdate(changedProperties : PropertyValues)
 	{
 		super.willUpdate(changedProperties);
@@ -1391,6 +1403,7 @@ customElements.define("et2-email", Et2Email);
  */
 function parseEmailsString(value : string, allowPlaceholder = false) : string[]
 {
+	if (!value) return [];
 	let preg = allowPlaceholder ? IsEmail.EMAIL_PLACEHOLDER_PREG : IsEmail.EMAIL_PREG;
 	// Trim line start / end anchors off validation regex, make global
 	let regex = new RegExp(preg.toString().substring(2, preg.toString().length - 3), 'g');
