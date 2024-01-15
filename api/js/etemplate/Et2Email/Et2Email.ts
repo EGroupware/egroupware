@@ -667,8 +667,6 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 		}
 	}
 
-<<<<<<< HEAD
-=======
 
 	/**
 	 * Sometimes users paste multiple comma separated values at once.  Split them then handle normally.
@@ -707,7 +705,6 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 		}
 	}
 
->>>>>>> f68faa7941 (Et2Email: Some automatic tests)
 	private handleSearchFocus()
 	{
 		this.hasFocus = true;
@@ -725,8 +722,6 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 		this.hasFocus = false;
 		// Should not be needed, but not firing the update
 		this.requestUpdate("hasFocus");
-<<<<<<< HEAD
-=======
 
 		// If they had something OK typed, use it, but only if focus went outside Et2Email
 		// because maybe they clicked an option which took focus
@@ -744,7 +739,6 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 				this.set_validation_error(this.egw().lang("Invalid email") + ' "' + this._search.value + '"')
 			}
 		}
->>>>>>> f68faa7941 (Et2Email: Some automatic tests)
 	}
 
 	handleSearchKeyDown(event)
