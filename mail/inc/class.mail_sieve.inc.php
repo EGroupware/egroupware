@@ -581,7 +581,7 @@ class mail_sieve
 					}
 					else
 					{
-						$content['forwards'] = '';
+						$content['forwards'] = [];
 					}
 					if (strlen(trim($vacation['text']))==0 && $this->mailConfig['default_vacation_text']) $content['text'] = $this->mailConfig['default_vacation_text'];
 					if (strlen(trim($content['text']))==0)
