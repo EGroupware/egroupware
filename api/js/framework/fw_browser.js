@@ -251,11 +251,14 @@ window.fw_browser = (function(){ "use strict"; return Class.extend(
 				self.iframe.setAttribute('allow', 'fullscreen');
 				self.iframe.setAttribute('allowfullscreen', true); // for older browsers
 
-				// bind load handler to set overflow-y: auto on body of contentDocument to allow vertical scrolling
-				self.iframe.addEventListener('load', (ev) => {
-					const body = self.iframe.contentDocument.getElementsByTagName('body')[0];
-					body.style.overflowY = 'auto';
-				});
+				// for own origin: bind load handler to set overflow-y: auto on body of contentDocument to allow vertical scrolling
+				if (_url[0] === '/' || top.location.origin === _url.replace(/^(https?:\/\/[^/]+)\/.*$/, '$1'))
+				{
+					self.iframe.addEventListener('load', (ev) => {
+						const body = self.iframe.contentDocument.getElementsByTagName('body')[0];
+						body.style.overflowY = 'auto';
+					});
+				}
 
 				//Load the iframe content
 				self.iframe.src = _url;
