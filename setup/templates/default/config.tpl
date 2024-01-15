@@ -432,6 +432,7 @@
      </td>
      <td>
         <input name="newsettings[ads_group_context]" value="{value_ads_group_context}" size="80" />
+        <input type="hidden" value="" name="newsettings[ads_group_extra_types]"/>
         <label><input type="checkbox" value="distributionlists" {checked_ads_group_extra_types_distributionlists} name="newsettings[ads_group_extra_types]"/>
             {lang_distribution-lists too}</label>
      </td>
