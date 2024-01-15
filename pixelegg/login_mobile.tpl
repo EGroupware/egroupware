@@ -1,6 +1,3 @@
-<script src="./api/js/login.js" type="text/javascript"></script>
-
-
 <div id="loginMainDiv" style="background-image:url({background_file})" class="{stock_background_class}">
 	<div class="egw_message_wrapper">
 		<div id="egw_message" class="{cd_class}">{cd}
