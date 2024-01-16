@@ -11,68 +11,33 @@
 import {IsEmail} from "../Validators/IsEmail";
 import {Et2UrlEmail} from "./Et2UrlEmail";
 import {Et2UrlReadonly} from "./Et2UrlReadonly";
+import {property} from "lit/decorators/property.js";
+import {formatEmailAddress, splitEmail} from "../Et2Email/utils";
 
 /**
  * @customElement et2-url-email_ro
  */
 export class Et2UrlEmailReadonly extends Et2UrlReadonly
 {
-	/** @type {any} */
-	static get properties()
-	{
-		return {
-			...super.properties,
-			/**
-			 * Show full email address if true otherwise show only name and put full address as statustext/tooltip
-			 */
-			fullEmail: {
-				type: Boolean,
-			},
-			/**
-			 * Show icon to add email as contact to addressbook
-			 * @ToDo
-			 */
-			contactPlus: {
-				type: Boolean,
-			},
-			/**
-			 * set to true to always show just the email
-			 * Mutually exclusive with fullEmail!
-			 */
-			onlyEmail: {
-				type: Boolean
-			}
-		};
-	}
+	/**
+	 * What to display for the selected email addresses
+	 *
+	 *	- full: "Mr Test User <test@example.com>
+	 *	- name: "Mr Test User"
+	 *	- domain: "Mr Test User (example.com)"
+	 *	- email: "test@example.com"
+	 *
+	 * If name is unknown, we'll use the email instead.
+	 */
+	@property({type: String})
+	emailDisplay : "full" | "email" | "name" | "domain";
 
 	set value(val : string)
 	{
 		this._value = val;
-		// check if we have a "name <email>" value and only show name
-		if (!this.fullEmail && val && val.indexOf('<') !== -1)
-		{
-			const parts = val.split('<');
-			if (parts[0] && !this.onlyEmail)
-			{
-				super.statustext = parts[1].substring(0, parts[1].length-1);
-				val = parts[0].trim();
-				// remove quotes
-				if ((val[0] === '"' || val[0] === "'" ) && val[0] === val.substr(-1))
-				{
-					val = val.substring(1, val.length-1);
-				}
-			}
-			else	// <email> --> email
-			{
-				super.statustext = '';
-				val = parts[1].substring(0, val.length-1);
-			}
-		}
-		else
-		{
-			super.statustext = '';
-		}
-		super.value = val;
+		const split = splitEmail(this._value);
+		super.statustext = split.name ? split.email : "";
+		formatEmailAddress(val, this.emailDisplay).then((value) => super.value = value);
 	}
 
 	get value()
