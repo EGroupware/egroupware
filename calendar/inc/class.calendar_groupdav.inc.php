@@ -1115,7 +1115,14 @@ class calendar_groupdav extends Api\CalDAV\Handler
 					(!$oldEvent['recur_type'] || !($series = self::get_series($oldEvent['uid'], $this->bo))))
 				{
 					if ($this->debug) error_log(__METHOD__."(,,$user) user $user is NOT an attendee!");
-					return '403 Forbidden';
+					$ignore_acl = !empty($GLOBALS['egw_info']['server']['caldav_party_crasher_regexp']) &&
+						preg_match($GLOBALS['egw_info']['server']['caldav_party_crasher_regexp'], $email=Api\Accounts::id2name($user, 'account_email'));
+					if (!$ignore_acl)
+					{
+						$this->caldav->log("Returning '403 Forbidden' as #$user is NOT a participant of the event!");
+						return '403 Forbidden';
+					}
+					$this->caldav->log("Allowing user #$user because email '$email' matches '{$GLOBALS['egw_info']['server']['caldav_party_crasher_regexp']}'");
 				}
 				// update only participant status and alarms of current user
 				if (($events = $handler->icaltoegw($vCalendar)))
@@ -1124,7 +1131,7 @@ class calendar_groupdav extends Api\CalDAV\Handler
 					$master = null;
 					foreach($events as $n => $event)
 					{
-						// for recurrances of event series, we need to read correct recurrence (or if series master is no first event)
+						// for recurrences of event series, we need to read correct recurrence (or if series master is no first event)
 						if ($event['recurrence'] || $n && !$event['recurrence'] || isset($series))
 						{
 							// first try reading (virtual and real) exceptions
@@ -1156,7 +1163,8 @@ class calendar_groupdav extends Api\CalDAV\Handler
 						{
 							if (!$this->bo->set_status($oldEvent['id'], $user, $event['participants'][$user],
 								// real (not virtual) exceptions use recurrence 0 in egw_cal_user.cal_recurrence!
-								$recurrence = $eventId == $oldEvent['id'] ? $event['recurrence'] : 0))
+								$recurrence = $eventId == $oldEvent['id'] ? $event['recurrence'] : 0,
+								$ignore_acl))
 							{
 								if ($this->debug) error_log(__METHOD__."(,,$user) failed to set_status($oldEvent[id], $user, '{$event['participants'][$user]}', $recurrence=".Api\DateTime::to($recurrence).')');
 								return '403 Forbidden';
@@ -1189,6 +1197,11 @@ class calendar_groupdav extends Api\CalDAV\Handler
 					$this->put_response_headers($eventId, $options['path'], '204 No Content', self::$path_attr == 'caldav_name');
 
 					return '204 No Content';
+				}
+				else
+				{
+					$this->caldav->log("Could NOT parse any event(s) from iCal --> returning 400 Bad Request!");
+					return '400 Bad Request';
 				}
 				if ($this->debug && !isset($events)) error_log(__METHOD__."(,,$user) only schedule-tag given for event without participants (only calendar owner) --> handle as regular PUT");
 			}

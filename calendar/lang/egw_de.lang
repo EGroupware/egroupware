@@ -17,6 +17,7 @@
 , stati of participants reset	calendar	de	, Status der Teilnehmer zurückgesetzt
 a list of email addresses of all participants who have not declined	calendar	de	Eine Liste der E-Mail-Adressen aller Teilnehmer, die nicht abgelehnt haben.
 a non blocking event will not conflict with other events	calendar	de	Ein nicht blockierender Termin ergibt keinen Terminkonflikt mit anderen Terminen
+a party crasher in someone who is not invited to the meeting but somehow got the invitation.	calendar	de	Ein Partycrasher ist jemand, der NICHT zu dem Treffen eingeladen ist, aber irgendwie die Einladung bekommen hat.
 accept	calendar	de	Zusagen
 accept or reject an invitation	calendar	de	Einladung zusagen oder ablehnen
 accepted	calendar	de	Zugesagt
@@ -53,6 +54,7 @@ all future	calendar	de	Alle zukünftigen
 all incl. rejected	calendar	de	Alle einschl. abgelehnte
 all participants	calendar	de	Alle Teilnehmer
 allow booking requests from any user when creating events?	calendar	de	Erlaube Buchungsanfragen von beliebigen Benutzern bei der Erstellung von Terminen?
+allow party crashers with email that match the following regular expression	calendar	de	Erlaube Partycrasher mit E-Mails, die dem folgenden regulären Ausdruck entsprechen
 allow users to prevent change notifications ('do not notify')	calendar	de	Erlaube Benutzern Benachrichtigungen über Änderungen zu unterdrücken ('Nicht benachrichtigen')
 allows to edit the event again	calendar	de	Erlaubt den Termin erneut zu bearbeiten
 always	calendar	de	Immer
@@ -79,6 +81,7 @@ birthdays only	calendar	de	Nur Geburtstage
 both, holidays and birthdays	calendar	de	Beide, Feier- und Geburtstage
 busy	calendar	de	belegt
 by	calendar	de	von
+by default (nothing is set here) egroupware allows only the organizer/owner to add them.	calendar	de	Standardmäßig (hier ist nichts eingestellt) erlaubt EGroupware nur dem Organisator/Besitzer, sie hinzuzufügen.
 calendar - list	calendar	de	Kalender - Listenansicht
 calendar - multi-weekly	calendar	de	Kalender - Mehrwochenansicht
 calendar - planner	calendar	de	Kalender - Planeransicht

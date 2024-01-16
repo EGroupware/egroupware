@@ -49,6 +49,16 @@
 					</et2-select>
 				</row>
 				<row>
+					<et2-description value="Allow party crashers with email that match the following regular expression" label="%s:"></et2-description>
+					<et2-textbox id="newsettings[caldav_party_crasher_regexp]" placeholder="/^(someone@else.com|.*@(example.org|other.net))$/i"></et2-textbox>
+				</row>
+				<row>
+					<et2-vbox span="all">
+						<et2-description value="A party crasher in someone who is NOT invited to the meeting but somehow got the invitation."/>
+						<et2-description value="By default (nothing is set here) EGroupware allows only the organizer/owner to add them."/>
+					</et2-vbox>
+				</row>
+				<row>
 					<et2-description  value="Security" span="all" class="subHeader"></et2-description>
 				</row>
 				<row>
