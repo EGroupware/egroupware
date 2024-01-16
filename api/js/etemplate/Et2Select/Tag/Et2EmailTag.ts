@@ -302,7 +302,7 @@ export class Et2EmailTag extends Et2Tag
 				split.email = parts[1].substring(0, parts[1].length - 1).trim();
 				split.name = parts[0].trim();
 				// remove quotes
-				if((split.name[0] === '"' || split.name[0] === "'") && split.name[0] === split.name.substr(-1))
+				while((split.name[0] === '"' || split.name[0] === "'") && split.name[0] === split.name.substr(-1))
 				{
 					split.name = split.name.substring(1, split.name.length - 1);
 				}
