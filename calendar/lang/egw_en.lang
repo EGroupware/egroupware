@@ -17,6 +17,7 @@
 , stati of participants reset	calendar	en	, status of participants reset
 a list of email addresses of all participants who have not declined	calendar	en	A list of email addresses of all participants who have not declined
 a non blocking event will not conflict with other events	calendar	en	A non blocking event will not conflict with other events
+a party crasher in someone who is not invited to the meeting but somehow got the invitation.	calendar	en	A party crasher in someone who is NOT invited to the meeting but somehow got the invitation.
 accept	calendar	en	Accept
 accept or reject an invitation	calendar	en	Accept or reject an invitation
 accepted	calendar	en	Accepted
@@ -53,6 +54,7 @@ all future	calendar	en	All future
 all incl. rejected	calendar	en	All incl. rejected
 all participants	calendar	en	All participants
 allow booking requests from any user when creating events?	calendar	en	Allow booking requests from any user when creating events?
+allow party crashers with email that match the following regular expression	calendar	en	Allow party crashers with email that match the following regular expression
 allow users to prevent change notifications ('do not notify')	calendar	en	Allow users to prevent change notifications 'Do not notify'
 allows to edit the event again	calendar	en	Allows to edit the event again
 always	calendar	en	Always
@@ -79,6 +81,7 @@ birthdays only	calendar	en	Birthdays only
 both, holidays and birthdays	calendar	en	Both, holidays and birthdays
 busy	calendar	en	Busy
 by	calendar	en	by
+by default (nothing is set here) egroupware allows only the organizer/owner to add them.	calendar	en	By default (nothing is set here) EGroupware allows only the organizer/owner to add them.
 calendar - list	calendar	en	Calendar - List
 calendar - multi-weekly	calendar	en	Calendar - Multi week
 calendar - planner	calendar	en	Calendar - Planner
