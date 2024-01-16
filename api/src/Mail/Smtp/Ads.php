@@ -89,7 +89,7 @@ class Ads extends Ldap
 	/**
 	 * Attribute to only forward mail, OR false if not available
 	 */
-	const FORWARD_ONLY_ATTR = 'proxyaddresses';
+	const FORWARD_ONLY_ATTR = false;
 
 	/**
 	 * Value of forward-only attribute, if not set any value will switch forward only on (checked with =*)
