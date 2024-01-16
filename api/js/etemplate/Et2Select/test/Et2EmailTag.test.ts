@@ -71,7 +71,6 @@ describe('Et2EmailTag', () =>
 				assert.equal(extra['presets[email]'], 'test@example.com');
 			}
 		};
-		debugger;
 		component.shadowRoot.querySelector("et2-button-icon").dispatchEvent(new MouseEvent('click'));
 	});
 
@@ -96,5 +95,83 @@ describe('Et2EmailTag', () =>
 			}
 		};
 		await component.handleContactMouseDown(new MouseEvent('click'));
+	});
+});
+
+/**
+ * Check a bunch of email addresses for correct formatting according to emailDisplay
+ */
+describe("Email formatting", function()
+{
+	const runs = [
+		// @formatter:off
+
+		// FULL
+		{emailDisplay: "full", email: "test@example.com", expected: "test@example.com"},
+		{emailDisplay: "full", email: "\"Mr. Test Guy\" <test@example.com>", expected: "Mr. Test Guy <test@example.com>"},
+
+		// No <angle brackets> around email
+		{emailDisplay: "full", email: "\"Mr Test Guy\" test@example.com", expected: "\"Mr Test Guy\" test@example.com"},
+
+		// Multiple quotes
+		{emailDisplay: "full", email: "\"'EGroupware GmbH | Birgit Becker'\" <bb@egroupware.org>", expected: "EGroupware GmbH | Birgit Becker <bb@egroupware.org>"},
+
+		// EMAIL
+		{emailDisplay: "email", email: "test@example.com", expected: "test@example.com"},
+		{emailDisplay: "email", email: "\"Mr. Test Guy\" <test@example.com>", expected: "test@example.com"},
+
+		// No <angle brackets> around email
+		{emailDisplay: "email", email: "\"Mr Test Guy\" test@example.com", expected: "\"Mr Test Guy\" test@example.com"},
+
+		// Multiple quotes
+		{emailDisplay: "email", email: "\"'EGroupware GmbH | Birgit Becker'\" <bb@egroupware.org>", expected: "bb@egroupware.org"},
+
+		// NAME
+		{emailDisplay: "name", email: "test@example.com", expected: "test@example.com"},
+		{emailDisplay: "name", email: "\"Mr. Test Guy\" <test@example.com>", expected: "Mr. Test Guy"},
+
+		// No <angle brackets> around email
+		{emailDisplay: "name", email: "\"Mr Test Guy\" test@example.com", expected: "\"Mr Test Guy\" test@example.com"},
+
+		// Multiple quotes
+		{emailDisplay: "name", email: "\"'EGroupware GmbH | Birgit Becker'\" <bb@egroupware.org>", expected: "EGroupware GmbH | Birgit Becker"},
+
+
+		// DOMAIN
+		{emailDisplay: "domain", email: "test@example.com", expected: "test@example.com"},
+		{emailDisplay: "domain", email: "\"Mr. Test Guy\" <test@example.com>", expected: "Mr. Test Guy (example.com)"},
+
+		// No <angle brackets> around email
+		{emailDisplay: "domain", email: "\"Mr Test Guy\" test@example.com", expected: "\"Mr Test Guy\" test@example.com"},
+
+		// Multiple quotes
+		{emailDisplay: "domain", email: "\"'EGroupware GmbH | Birgit Becker'\" <bb@egroupware.org>", expected: "EGroupware GmbH | Birgit Becker (egroupware.org)"},
+
+		// @formatter:on
+	];
+
+	// Create component for testing
+	let getComponent = async(display, value) =>
+	{
+		let component = await fixture<Et2EmailTag>(html`
+            <et2-email-tag value="${value}" .emailDisplay="${display}"></et2-email-tag>`);
+		// Stub egw()
+		// @ts-ignore
+		sinon.stub(component, "egw").returns(window.egw);
+		await component.updateComplete;
+
+		// Asserting this instanceOf forces class loading
+		assert.instanceOf(component, Et2EmailTag);
+		return component;
+	}
+
+	runs.forEach(function(run)
+	{
+		it(run.emailDisplay + ": " + run.email, async() =>
+		{
+			const component = await getComponent(run.emailDisplay, run.email);
+			const actual = component.shadowRoot.querySelector("[part='content']")?.innerText ?? "*missing*";
+			assert.equal(actual, run.expected);
+		});
 	});
 });
