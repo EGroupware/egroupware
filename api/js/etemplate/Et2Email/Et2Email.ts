@@ -495,7 +495,6 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 		this._search.blur();
 
 		clearTimeout(this._searchTimeout);
-		l
 	}
 
 
