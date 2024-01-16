@@ -56,13 +56,13 @@ export declare class SearchMixinInterface
 	/**
 	 * Search local options
 	 */
-	localSearch(search : string, options : object) : Promise<void>
+	localSearch(search : string, options : object) : Promise<any[]>
 
 	/**
 	 * Search remote options.
 	 * If searchUrl is not set, it will return very quickly with no results
 	 */
-	remoteSearch(search : string, options : object) : Promise<void>
+	remoteSearch(search : string, options : object) : Promise<any[]>
 
 	/**
 	 * Check a [local] item to see if it matches

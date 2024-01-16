@@ -30,7 +30,6 @@ import Sortable from "sortablejs/modular/sortable.complete.esm.js";
 
 /**
  * @summary Enter email addresses, offering suggestions from contacts
- * @documentation https://shoelace.style/components/select
  * @since 23.1
  *
  * @dependency sl-icon
@@ -68,6 +67,7 @@ import Sortable from "sortablejs/modular/sortable.complete.esm.js";
  */
 export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinInterface
 {
+	// Solves some issues with focus
 	static shadowRootOptions = {...LitElement.shadowRootOptions, delegatesFocus: true};
 
 	static get styles()
@@ -495,6 +495,7 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 		this._search.blur();
 
 		clearTimeout(this._searchTimeout);
+		l
 	}
 
 

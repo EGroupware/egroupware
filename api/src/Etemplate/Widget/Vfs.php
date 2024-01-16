@@ -603,6 +603,61 @@ class Vfs extends File
 	}
 
 	/**
+	 * Get a list of files that match the given parameters
+	 *
+	 * @param $search
+	 * @param $content
+	 * @return void
+	 * @throws Json\Exception
+	 */
+	public static function ajax_vfsSelectFiles($search, $content)
+	{
+		$pathIn = $options['path'] ?? '~';
+		if($pathIn == '~')
+		{
+			$pathIn = Api\Vfs::get_home_dir();
+		}
+		$content = [];
+		if(!($files = Api\Vfs::find($pathIn, array(
+			'dirsontop' => true,
+			'order'     => 'name',
+			'sort'      => 'ASC',
+			'maxdepth'  => 1,
+		))))
+		{
+			$content['message'] = lang("Can't open directory %1!", $pathIn);
+		}
+		else
+		{
+			$n = 0;
+			foreach($files as $path)
+			{
+				if($path == $pathIn)
+				{
+					continue;
+				}    // remove directory itself
+
+				$name = Api\Vfs::basename($path);
+				$is_dir = Api\Vfs::is_dir($path);
+				$mime = Api\Vfs::mime_content_type($path);
+				if($content['mime'] && !$is_dir && $mime != $content['mime'])
+				{
+					continue;    // does not match mime-filter --> ignore
+				}
+				$content['files'][$n] = array(
+					'name'   => $name,
+					'path'   => $path,
+					'mime'   => $mime,
+					'is_dir' => $is_dir
+				);
+				++$n;
+			}
+		}
+		$response = Json\Response::get();
+		$response->data($content);
+	}
+
+	/**
 	 * function to create directory in the given path
 	 *
 	 * @param type $dir name of the directory
