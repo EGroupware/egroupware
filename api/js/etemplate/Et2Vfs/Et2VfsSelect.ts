@@ -8,7 +8,7 @@
  */
 
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
-import {html, LitElement, nothing, TemplateResult} from "lit";
+import {html, LitElement, nothing, PropertyValues, TemplateResult} from "lit";
 import shoelace from "../Styles/shoelace";
 import styles from "./Et2VfsSelect.styles";
 import {property} from "lit/decorators/property.js";
@@ -22,6 +22,7 @@ import {DialogButton, Et2Dialog} from "../Et2Dialog/Et2Dialog";
 import {HasSlotController} from "../Et2Widget/slot";
 import {IegwAppLocal} from "../../jsapi/egw_global";
 import {Et2Select} from "../Et2Select/Et2Select";
+import {Et2VfsSelectRow} from "./Et2VfsSelectRow";
 
 /**
  * @summary Select files (including directories) from the VFS
@@ -29,6 +30,7 @@ import {Et2Select} from "../Et2Select/Et2Select";
  *
  * @dependency et2-dialog
  * @dependency et2-select
+ * @dependency et2-vfs-select-row
  *
  * @slot title - Optional additions to title.  Works best with `et2-button-icon`.
  * @slot toolbar - Toolbar containing controls for search & navigation
@@ -70,10 +72,10 @@ export class Et2VfsSelect extends Et2InputWidget(LitElement) implements SearchMi
 	 * Dialog mode
 	 * Quickly sets button label, multiple, selection and for "select-dir", mime-type
 	 **/
-	@property() mode : "open" | "open-multiple" | "saveas" | "select-dir" = "open";
+	@property({type: String}) mode : "open" | "open-multiple" | "saveas" | "select-dir";
 
 	/** Button label */
-	@property() buttonLabel : string = "Select";
+	@property({type: String}) buttonLabel : string = "Select";
 
 	/** Provide a suggested filename for saving */
 	@property() filename : string = "";
@@ -95,7 +97,9 @@ export class Et2VfsSelect extends Et2InputWidget(LitElement) implements SearchMi
 
 	@state() searching = false;
 	@state() open : boolean = false;
-	@state() currentFile;
+	@state() currentFile : Et2VfsSelectRow;
+	@state() selectedFiles : Et2VfsSelectRow[] = [];
+
 
 	// SearchMixinInterface //
 	@property() searchUrl : string = "EGroupware\\Api\\Etemplate\\Widget\\Vfs::ajax_vfsSelectFiles";
@@ -117,14 +121,16 @@ export class Et2VfsSelect extends Et2InputWidget(LitElement) implements SearchMi
 
 	protected readonly hasSlotController = new HasSlotController(this, 'help-text', 'toolbar', 'footer');
 
-	protected _fileList = [];
+	protected _fileList : FileInfo[] = [];
+	// @ts-ignore different types
+	protected _appList : SelectOption[] = this.egw().link_app_list("query") ?? [];
 
 	// Internal accessors
 	get _dialog() : Et2Dialog { return this.shadowRoot.querySelector("et2-dialog");}
 
 	get _filenameNode() : HTMLInputElement { return this.shadowRoot.querySelector("#filename");}
 
-	get _fileNodes() : HTMLElement[] { return Array.from(this.shadowRoot.querySelectorAll(".vfs_select__file"));}
+	get _fileNodes() : Et2VfsSelectRow[] { return Array.from(this.shadowRoot.querySelectorAll("et2-vfs-select-row"));}
 
 	get _searchNode() : HTMLInputElement { return this.shadowRoot.querySelector("#search");}
 
@@ -191,7 +197,7 @@ export class Et2VfsSelect extends Et2InputWidget(LitElement) implements SearchMi
 
 		if(this.path == "")
 		{
-			this.path = "~";
+			this.path = <string>this.egw()?.preference("startfolder", "filemanager") || "~";
 		}
 		// Get file list
 		this.startSearch();
@@ -205,6 +211,27 @@ export class Et2VfsSelect extends Et2InputWidget(LitElement) implements SearchMi
 		await this._serverContent;
 
 		return result;
+	}
+
+	protected firstUpdated(changedProperties : PropertyValues)
+	{
+		super.firstUpdated(changedProperties);
+		debugger;
+	}
+
+	protected willUpdate(changedProperties : PropertyValues)
+	{
+		super.willUpdate(changedProperties);
+
+		if(changedProperties.has("mode"))
+		{
+			this.multiple = this.mode == "open-multiple";
+		}
+
+		if(changedProperties.has("path"))
+		{
+			this.startSearch();
+		}
 	}
 
 	public setPath(path)
@@ -244,6 +271,7 @@ export class Et2VfsSelect extends Et2InputWidget(LitElement) implements SearchMi
 			this.startSearch();
 		}
 		return Promise.all([
+			this.updateComplete,
 			this._searchPromise,
 			this._dialog.show()
 		]);
@@ -256,6 +284,14 @@ export class Et2VfsSelect extends Et2InputWidget(LitElement) implements SearchMi
 	{
 		this.open = false;
 		return this._dialog.hide();
+	}
+
+	getComplete() : Promise<string[]>
+	{
+		return this._dialog.getComplete().then(() =>
+		{
+			return this.value;
+		});
 	}
 
 	startSearch() : Promise<void>
@@ -285,8 +321,8 @@ export class Et2VfsSelect extends Et2InputWidget(LitElement) implements SearchMi
 	{
 		// Include a limit, even if options don't, to avoid massive lists breaking the UI
 		let sendOptions = {
-			path: this._pathNode?.value ?? this.path,
-			mime: this._mimeNode?.value ?? this.mime,
+			path: this.path,
+			mime: this.mime,
 			num_rows: 100,
 			...options
 		}
@@ -298,10 +334,7 @@ export class Et2VfsSelect extends Et2InputWidget(LitElement) implements SearchMi
 
 	processRemoteResults(results) : FileInfo[]
 	{
-		if(results.message)
-		{
-			this.helpText = results.message;
-		}
+		this.helpText = results.message ?? "";
 		this._fileList = results.files ?? [];
 
 		return this._fileList;
@@ -338,22 +371,178 @@ export class Et2VfsSelect extends Et2InputWidget(LitElement) implements SearchMi
 		}
 	}
 
+	/**
+	 * Sets the selected files
+	 * @param {Et2VfsSelectRow | Et2VfsSelectRow[]} file
+	 * @private
+	 */
+	private setSelectedFiles(file : Et2VfsSelectRow | Et2VfsSelectRow[])
+	{
+		const newSelectedOptions = Array.isArray(file) ? file : [file];
+
+		// Clear existing selection
+		this._fileNodes.forEach(el =>
+		{
+			el.selected = false;
+			el.requestUpdate("selected");
+		});
+
+		// Set the new selection
+		if(newSelectedOptions.length)
+		{
+			newSelectedOptions.forEach(el =>
+			{
+				el.selected = true;
+				el.requestUpdate("selected");
+			});
+		}
+
+		// Update selection, value, and display label
+		this.selectionChanged();
+	}
+
+	/**
+	 * Toggles a file's selected state
+	 */
+	private toggleFileSelection(file : Et2VfsSelectRow, force? : boolean)
+	{
+		if(force === true || force === false)
+		{
+			file.selected = force;
+		}
+		else
+		{
+			file.selected = !file.selected;
+		}
+
+		file.requestUpdate("selected");
+		this.selectionChanged();
+	}
+
+	/**
+	 * This method must be called whenever the selection changes. It will update the selected file cache, the current
+	 * value, and the display value
+	 */
+	private selectionChanged()
+	{
+		// Update selected files cache
+		this.selectedFiles = this._fileNodes.filter(el => el.selected);
+
+		// Update the value
+		if(this.multiple)
+		{
+			this.value = this.selectedFiles.map(el => el.value.path);
+
+			// TODO - show how many are selected?
+			/*
+			if(this.value.length === 0)
+			{
+				// When no items are selected, keep the value empty so the placeholder shows
+				this.displayLabel = '';
+			}
+			else
+			{
+				this.displayLabel = this.localize.term('numOptionsSelected', this.selectedFiles.length);
+			}
+
+			 */
+		}
+		else
+		{
+			this.value = [this.selectedFiles[0]?.value.path] ?? [];
+		}
+	}
+
 	protected handleButtonClick(event : MouseEvent)
 	{
-		if(event.target.id !== "cancel")
-		{
-
-			throw new Error("Method not implemented.");
-		}
 		this.open = false;
 		this.requestUpdate("open", true);
 	}
 
-	protected handleCreateDirectory(event : MouseEvent | KeyboardEvent)
+	/**
+	 * Create a new directory in the current one
+	 * @param {MouseEvent | KeyboardEvent} event
+	 * @returns {Promise<void>}
+	 * @protected
+	 */
+	protected async handleCreateDirectory(event : MouseEvent | KeyboardEvent)
 	{
-		throw new Error("Method not implemented.");
+		// Get new directory name
+		let [button, value] = await Et2Dialog.show_prompt(
+			null, this.egw().lang('New directory'), this.egw().lang('Create directory')
+		).getComplete();
+		let dir = value.value;
+
+		if(button && dir)
+		{
+			this.egw().request('EGroupware\\Api\\Etemplate\\Widget\\Vfs::ajax_create_dir', [dir, this.path])
+				.then((msg) =>
+				{
+					this.egw().message(msg);
+					this.setPath(this.path + '/' + dir);
+				});
+		}
 	}
 
+	handleFileClick(event : MouseEvent)
+	{
+		const target = event.target as HTMLElement;
+		const file : Et2VfsSelectRow = target.closest('et2-vfs-select-row');
+		const oldValue = this.value;
+
+		if(file && !file.disabled)
+		{
+			// Can't select a directory normally
+			if(file.value.isDir && this.mode != "select-dir")
+			{
+				return;
+			}
+			if(this.multiple)
+			{
+				this.toggleFileSelection(file);
+			}
+			else
+			{
+				this.setSelectedFiles(file);
+			}
+
+			// Set focus after updating so the value is announced by screen readers
+			//this.updateComplete.then(() => this.displayInput.focus({ preventScroll: true }));
+
+			if(this.value !== oldValue)
+			{
+				// Emit after updating
+				this.updateComplete.then(() =>
+				{
+					this.dispatchEvent(new Event('change', {bubbles: true}));
+				});
+			}
+		}
+	}
+
+	handleFileDoubleClick(event : MouseEvent)
+	{
+		const target = event.target as HTMLElement;
+		const file : Et2VfsSelectRow = target.closest('et2-vfs-select-row');
+
+		if(file.value.isDir)
+		{
+			this.toggleFileSelection(file, false);
+			const oldPath = this.path;
+			this.setPath(file.value.path);
+		}
+		else
+		{
+			// Not a dir, just select it
+			this.handleFileClick(event);
+
+			// If we only want one, we've got it.  Close.
+			if(!this.multiple)
+			{
+				this.hide();
+			}
+		}
+	}
 	handleSearchKeyDown(event)
 	{
 		clearTimeout(this._searchTimeout);
@@ -362,7 +551,7 @@ export class Et2VfsSelect extends Et2InputWidget(LitElement) implements SearchMi
 		if(['ArrowDown', 'ArrowUp'].includes(event.key) && this._fileList.length)
 		{
 			event.stopPropagation();
-			this.setCurrentOption(this._fileNodes[0]);
+			this.setCurrentFile(this._fileNodes[0]);
 			return;
 		}
 		// Start search immediately
@@ -374,8 +563,10 @@ export class Et2VfsSelect extends Et2InputWidget(LitElement) implements SearchMi
 		}
 		else if(event.key == "Escape")
 		{
+			event.stopPropagation();
+			event.preventDefault();
 			this.value = [];
-			this.close();
+			this.hide();
 			return;
 		}
 
@@ -408,7 +599,11 @@ export class Et2VfsSelect extends Et2InputWidget(LitElement) implements SearchMi
                             image="filemanager/fav_filter" noSubmit="true"
                             @click=${() => this.setPath("/apps/favorites")}
                 ></et2-button>
-                <et2-select-app id="app" emptyLabel="Applications" noLang="1"></et2-select-app>
+                <et2-select id="app" emptyLabel="Applications" noLang="1"
+                            .select_options=${this.appList}
+                            @change=${(e) => this.setPath("/apps/" + e.target.value)}
+                >
+                </et2-select>
                 <et2-button statustext="Create directory" id="createdir" class="createDir"
                             arial-label=${this.egw().lang("Create directory")}
                             noSubmit="true"
@@ -417,9 +612,10 @@ export class Et2VfsSelect extends Et2InputWidget(LitElement) implements SearchMi
                             @click=${this.handleCreateDirectory}
                 ></et2-button>
                 <file id="upload_file" statustext="upload file" progress_dropdownlist="true" multiple="true"
-                      onFinish="app.vfsSelectUI.storeFile"/>
+                      onFinish="app.vfsSelectUI.storeFile"></file>
                 <et2-searchbox id="search"
                                @keydown=${this.handleSearchKeyDown}
+                               @sl-clear=${this.startSearch}
                 ></et2-searchbox>
             </et2-box>
 		`;
@@ -428,28 +624,38 @@ export class Et2VfsSelect extends Et2InputWidget(LitElement) implements SearchMi
 	protected filesTemplate()
 	{
 		const empty = this._fileList.length == 0;
-		const noFilesTemplate = html`
-                                     <div class="vfs_select__empty">
-                                         <et2-image src="filemanager"></et2-image>
-                                         ${this.egw().lang("no files in this directory.")}
-                                     </div>`;
+
 		const promise = this._searchPromise.then(() =>
 		{
 			return html`
-				${empty ? noFilesTemplate : html`
+                ${empty ? this.noFilesTemplate() : html`
 				${repeat(this._fileList, (file) => file.path, (file, index) =>
 				{
 					return html`
-						   <et2-vfs-mime
-								   .value=${file}
-						   ></et2-vfs-mime>
-						   ${file.name}`;
+                        <et2-vfs-select-row
+                                ?disabled=${file.disabled || this.mode == "select-dir" && !file.isDir}
+                                .value=${file}
+                                @mouseup=${this.handleFileClick}
+                                @dblclick=${this.handleFileDoubleClick}
+                        ></et2-vfs-select-row>`;
 				}
 			)}`
 			}`;
 		});
 		return html`
-			${until(promise, html`<sl-spinner></sl-spinner>`)}`;
+            ${until(promise, html`
+                <div class="vfs_select__loading">
+                    <sl-spinner></sl-spinner>
+                </div>`)}`;
+	}
+
+	protected noFilesTemplate() : TemplateResult
+	{
+		return html`
+            <div class="vfs_select__empty">
+                <et2-image src="filemanager"></et2-image>
+                ${this.egw().lang("no files in this directory.")}
+            </div>`;
 	}
 
 	protected mimeOptionsTemplate()
@@ -502,8 +708,8 @@ export class Et2VfsSelect extends Et2InputWidget(LitElement) implements SearchMi
 
 		return html`
             <et2-dialog
-                    .isModal="true"
-                    .destroyOnClose="false"
+                    .isModal=${true}
+                    .destroyOnClose=${false}
                     .title=${this.title}
                     .open=${this.open}
             >
@@ -562,7 +768,6 @@ export class Et2VfsSelect extends Et2InputWidget(LitElement) implements SearchMi
             </et2-dialog>
 		`;
 	}
-
 }
 
 customElements.define("et2-vfs-select", Et2VfsSelect);
@@ -573,4 +778,6 @@ export interface FileInfo
 	mime : string,
 	isDir : boolean,
 	path? : string,
+	// We want to show it, but not act with it.  File is disabled for the UI
+	disabled? : boolean
 }

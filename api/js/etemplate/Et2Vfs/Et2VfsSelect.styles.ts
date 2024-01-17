@@ -8,6 +8,7 @@ export default css`
 	et2-dialog::part(body) {
 		display: flex;
 		flex-direction: column;
+		max-height: 40em;
 	}
 
 	.vfs_select__listbox {
@@ -19,6 +20,7 @@ export default css`
 	.vfs_select__listbox .vfs_select__empty {
 		height: 100%;
 		min-height: 5em;
+		min-width: 20em;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
@@ -26,6 +28,18 @@ export default css`
 		user-select: none;
 	}
 
+	.vfs_select__file_row {
+		display: table-row;
+	}
+
+	.vfs_select__listbox .vfs_select__loading {
+		text-align: center;
+		line-height: 15em; // 3 * listbox min height
+	}
+
+	.vfs_select__listbox sl-spinner {
+		font-size: 4rem;
+	}
 	.vfs_select__listbox .vfs_select__empty et2-image {
 		margin-top: auto;
 	}

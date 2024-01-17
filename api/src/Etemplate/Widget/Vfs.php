@@ -612,49 +612,129 @@ class Vfs extends File
 	 */
 	public static function ajax_vfsSelectFiles($search, $content)
 	{
-		$pathIn = $options['path'] ?? '~';
-		if($pathIn == '~')
+		$response = [];
+		$content['path'] = $content['path'] ?? '~';
+		if($content['path'] == '~')
 		{
-			$pathIn = Api\Vfs::get_home_dir();
+			$content['path'] = Api\Vfs::get_home_dir();
 		}
-		$content = [];
-		if(!($files = Api\Vfs::find($pathIn, array(
+
+		// Filemanager favorites as directories
+		if(substr($content['path'], 0, strlen('/apps/favorites')) == '/apps/favorites')
+		{
+			$files = static::filesFromFavorites($search, $content);
+		}
+		else
+		{
+			$files = static::filesFromVfs($search, $content);
+			if(is_string($files))
+			{
+				$response['message'] = $files;
+				$files = [];
+			}
+		}
+		foreach($files as $path)
+		{
+			if(is_string($path) && $path == $content['path'] || is_array($path) && $path['path'] == $content['path'])
+			{
+				// remove directory itself
+				continue;
+			}
+			$name = $path['name'] ?? Api\Vfs::basename($path);
+			$is_dir = $path['isDir'] ?? Api\Vfs::is_dir($path);
+			$mime = $path['mime'] ?? Api\Vfs::mime_content_type($path);
+			if($content['mime'] && !$is_dir && $mime != $content['mime'])
+			{
+				continue;    // does not match mime-filter --> ignore
+			}
+			$response['files'][] = array(
+				'name'  => $name,
+				'path'  => $path,
+				'mime'  => $mime,
+				'isDir' => $is_dir
+			);
+		}
+		Json\Response::get()->data($response);
+	}
+
+	private static function filesFromVfs($search, $params)
+	{
+		$vfs_options = array(
 			'dirsontop' => true,
 			'order'     => 'name',
 			'sort'      => 'ASC',
 			'maxdepth'  => 1,
-		))))
+		);
+		if($search)
 		{
-			$content['message'] = lang("Can't open directory %1!", $pathIn);
+			$vfs_options['name_preg'] = '/' . str_replace(array('\\?', '\\*'),
+														  array('.{1}', '.*'),
+														  preg_quote($search)) . '/i';
 		}
-		else
+		if($params['num_rows'])
 		{
-			$n = 0;
-			foreach($files as $path)
-			{
-				if($path == $pathIn)
-				{
-					continue;
-				}    // remove directory itself
+			$vfs_options['limit'] = (int)$params['num_rows'];
+		}
+		if(!($files = Api\Vfs::find($params['path'], $vfs_options)))
+		{
+			return lang("Can't open directory %1!", $params['path']);
+		}
+		return $files;
+	}
 
-				$name = Api\Vfs::basename($path);
-				$is_dir = Api\Vfs::is_dir($path);
-				$mime = Api\Vfs::mime_content_type($path);
-				if($content['mime'] && !$is_dir && $mime != $content['mime'])
-				{
-					continue;    // does not match mime-filter --> ignore
-				}
-				$content['files'][$n] = array(
-					'name'   => $name,
-					'path'   => $path,
+	/**
+	 * Get favorites as if they were folders
+	 *
+	 * @return array
+	 */
+	private static function filesFromFavorites($search, $params)
+	{
+
+		// Display favorites as if they were folders
+		$files = array();
+		$favorites = Api\Framework\Favorites::get_favorites('filemanager');
+
+		//check for recent paths and add them to the top of favorites list
+		if(is_array($params['recentPaths']))
+		{
+			foreach($params['recentPaths'] as $p)
+			{
+				$mime = Api\Vfs::mime_content_type($p);
+				$files[] = array(
+					'name'   => $p,
+					'path'   => $p,
 					'mime'   => $mime,
-					'is_dir' => $is_dir
+					'is_dir' => true
 				);
-				++$n;
 			}
 		}
-		$response = Json\Response::get();
-		$response->data($content);
+
+		foreach($favorites as $favorite)
+		{
+			$path = $favorite['state']['path'];
+			if(!$path)
+			{
+				continue;
+			}
+			// Search
+			if($search && !(str_contains($favorite['name'], $search) || str_contains($path, $search)))
+			{
+				continue;
+			}
+			if(!Api\Vfs::is_readable($path))
+			{
+				continue;
+			}
+
+			$mime = Api\Vfs::mime_content_type($path);
+			$files[] = array(
+				'name'  => $favorite['name'],
+				'path'  => $path,
+				'mime'  => $mime,
+				'isDir' => true
+			);
+		}
+		return $files;
 	}
 
 	/**

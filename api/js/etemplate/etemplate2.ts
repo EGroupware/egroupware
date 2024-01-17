@@ -98,6 +98,7 @@ import "./Layout/Et2Split/Et2Split";
 import "./Layout/RowLimitedMixin";
 import "./Et2Vfs/Et2VfsMime";
 import "./Et2Vfs/Et2VfsSelect";
+import "./Et2Vfs/Et2VfsSelectRow";
 import "./Et2Vfs/Et2VfsUid";
 import "./Et2Textbox/Et2Password";
 import './Et2Textbox/Et2Searchbox';
