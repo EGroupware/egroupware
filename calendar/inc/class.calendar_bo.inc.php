@@ -1930,7 +1930,8 @@ class calendar_bo
 		$holidays = calendar_holidays::read(
 				!empty($GLOBALS['egw_info']['server']['ical_holiday_url']) ?
 				$GLOBALS['egw_info']['server']['ical_holiday_url'] :
-				$GLOBALS['egw_info']['user']['preferences']['common']['country'], $year);
+				$GLOBALS['egw_info']['user']['preferences']['common']['country'], $year,
+				$GLOBALS['egw_info']['user']['preferences']['common']['lang']);
 
 		// search for birthdays
 		if ($GLOBALS['egw_info']['server']['hide_birthdays'] != 'yes')

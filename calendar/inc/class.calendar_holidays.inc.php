@@ -17,7 +17,8 @@ use EGroupware\Api;
  *
  * Holidays are read from:
  * - a given iCal URL or
- * - json file with 2-digit iso country-code: URL pairs is read from https://community.egroupware.org or
+ * - json file with 2-digit uppercase iso country-code and 2-digit lowercase iso language-code: URL pairs is read from https://community.egroupware.org or
+ * - json file with 2-digit uppercase iso country-code: URL pairs is read from https://community.egroupware.org or
  * - json file is read from /calendar/setup/ical_holiday_urls.json
  *
  * Holidays are cached on tree or instance level, later for custom urls.
@@ -25,8 +26,8 @@ use EGroupware\Api;
  * from previous (requested) year until next 5 years.
  *
  * Holiday urls are from Mozilla Calendar project:
- * @link https://www.mozilla.org/en-US/projects/calendar/holidays/
- * @link https://www.mozilla.org/media/caldata/calendars.json (json from which above page is generated)
+ * @link https://www.thunderbird.net/en-US/calendar/holidays/
+ * @link https://www.thunderbird.net/media/caldata/calendars.json (json from which above page is generated)
  * @link https://github.com/mozilla/bedrock/tree/master/media/caldata
  */
 class calendar_holidays
@@ -42,21 +43,25 @@ class calendar_holidays
 	 *
 	 * @param string $country 2-digit iso country code or URL
 	 * @param int $year =null default current year
+	 * @param ?string $lang s-digit is language code
 	 * @return array of Ymd => array of array with values for keys 'occurence','month','day','name', (commented out) 'title'
 	 */
-	public static function read($country, $year=null)
+	public static function read($country, $year=null, $lang=null)
 	{
 		if (!$year) $year = (int)Api\DateTime::to('now', 'Y');
 		$level = self::is_url($country) ? Api\Cache::INSTANCE : Api\Cache::TREE;
 
-		$holidays = Api\Cache::getCache($level, __CLASS__, $country.':'.$year);
+		if (empty($lang) || !($holidays = Api\Cache::getCache($level, __CLASS__, $country.':'.$year.':'.$lang)))
+		{
+			$holidays = Api\Cache::getCache($level, __CLASS__, $country.':'.$year);
+		}
 
-		// if we dont find holidays in cache, we render from previous year until next 5 years
-		if (!isset($holidays) && ($years = self::render($country, $year-1, $year+5)))
+		// if we don't find holidays in cache, we render from previous year until next 5 years
+		if (!isset($holidays) && ($years = self::render($country, $year-1, $year+5, $lang)))
 		{
 			foreach($years as $y => $data)
 			{
-				Api\Cache::setCache($level, __CLASS__, $country.':'.$y, $data, self::HOLIDAY_CACHE_TIME);
+				Api\Cache::setCache($level, __CLASS__, $country.':'.$y.($lang?':'.$lang:''), $data, self::HOLIDAY_CACHE_TIME);
 			}
 			$holidays = $years[$year];
 		}
@@ -69,15 +74,16 @@ class calendar_holidays
 	 * @param string $country 2-digit iso country code or URL
 	 * @param int $year =null default current year
 	 * @param int $until_year =null default, fetch only one year, if given result is indexed additional by year
+	 * @param ?string $lang =null 2-digit iso language code
 	 * @return array of Ymd => array of array with values for keys 'occurence','month','day','name', (commented out) 'title'
 	 */
-	public static function render($country, $year=null, $until_year=null)
+	public static function render($country, $year=null, $until_year=null, $lang=null)
 	{
 		if (!$year) $year = (int)Api\DateTime::to('now', 'Y');
 		$end_year = $until_year && $year < $until_year ? $until_year : $year;
 
 		$starttime = microtime(true);
-		if (!($holidays = self::fetch($country)))
+		if (!($holidays = self::fetch($country, $lang)) && !($holidays = self::fetch($country)))
 		{
 			return array();
 		}
@@ -149,11 +155,12 @@ class calendar_holidays
 	 * Fetch iCal for given country
 	 *
 	 * @param string $country 2-digit iso country code or URL
+	 * @param ?string $lang 2-digit iso language code or NULL
 	 * @return array|Iterator parsed events
 	 */
-	protected static function fetch($country)
+	protected static function fetch($country, $lang=null)
 	{
-		if (!($url = self::is_url($country) ? $country : self::ical_url($country)))
+		if (!($url = self::is_url($country) ? $country : self::ical_url($country, $lang)))
 		{
 			error_log("No holiday iCal for '$country'!");
 			return array();
@@ -188,9 +195,10 @@ class calendar_holidays
 	 * We first try to fetch urls from https://community.egroupware.org and if that fails we use the local one.
 	 *
 	 * @param string $country
+	 * @param ?string $lang
 	 * @return string|boolean|null string with url, false if we cant load urls, NULL if $country is not included
 	 */
-	protected static function ical_url($country)
+	protected static function ical_url($country, $lang=null)
 	{
 		$urls = Api\Cache::getTree(__CLASS__, 'ical_holiday_urls');
 
@@ -208,7 +216,7 @@ class calendar_holidays
 			}
 			Api\Cache::setTree(__CLASS__, 'ical_holiday_urls', $urls, $urls ? self::URL_CACHE_TIME : self::URL_FAIL_CACHE_TIME);
 		}
-		return $urls[$country];
+		return $urls[$country.'_'.$lang] ?? $urls[$country];
 	}
 
 }

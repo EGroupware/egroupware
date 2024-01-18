@@ -11,7 +11,7 @@
 				<row>
 					<et2-vbox>
 						<et2-description  value="Custom URL for iCal with holidays for all users" label="%s:"></et2-description>
-						<et2-description  label="(Without a custom URL we use nation of user preference to load holidays from %s)" href="https://www.mozilla.org/en-US/projects/calendar/holidays/" value="Mozilla Holiday Calendars" extraLinkTarget="_blank"></et2-description>
+						<et2-description  label="(Without a custom URL we use nation of user preference to load holidays from %s)" href="https://www.thuderbird.net/en-US/calendar/holidays/" value="Mozilla Holiday Calendars" extraLinkTarget="_blank"></et2-description>
 					</et2-vbox>
 					<et2-url  id="newsettings[ical_holiday_url]"></et2-url>
 				</row>
