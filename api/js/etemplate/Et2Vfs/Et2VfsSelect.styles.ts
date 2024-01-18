@@ -5,10 +5,12 @@ export default css`
 		flex: 0 0;
 	}
 
+	et2-dialog::part(panel) {
+		height: 40em;
+	}
 	et2-dialog::part(body) {
 		display: flex;
 		flex-direction: column;
-		max-height: 40em;
 	}
 
 	.vfs_select__listbox {
@@ -18,7 +20,7 @@ export default css`
 	}
 
 	.vfs_select__listbox .vfs_select__empty {
-		height: 100%;
+		height: 50%;
 		min-height: 5em;
 		min-width: 20em;
 		display: flex;
@@ -42,5 +44,9 @@ export default css`
 	}
 	.vfs_select__listbox .vfs_select__empty et2-image {
 		margin-top: auto;
+	}
+
+	.vfs_select__mimefilter {
+		flex: 0 0;
 	}
 `;

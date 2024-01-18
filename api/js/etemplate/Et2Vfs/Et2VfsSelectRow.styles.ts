@@ -65,6 +65,7 @@ export default css`
 	.file et2-vfs-mime {
 		/* line-height-normal has no unit */
 		height: calc(var(--sl-line-height-normal) * 1em);
+		width: var(--sl-input-height-medium);
 		padding-inline-end: var(--sl-spacing-medium);
 	}
 

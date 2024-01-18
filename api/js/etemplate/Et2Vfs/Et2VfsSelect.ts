@@ -213,12 +213,6 @@ export class Et2VfsSelect extends Et2InputWidget(LitElement) implements SearchMi
 		return result;
 	}
 
-	protected firstUpdated(changedProperties : PropertyValues)
-	{
-		super.firstUpdated(changedProperties);
-		debugger;
-	}
-
 	protected willUpdate(changedProperties : PropertyValues)
 	{
 		super.willUpdate(changedProperties);
