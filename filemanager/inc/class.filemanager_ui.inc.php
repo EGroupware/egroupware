@@ -1365,8 +1365,8 @@ class filemanager_ui
 						{
 							static $name2cmd = array('uid' => 'chown','gid' => 'chgrp','perms' => 'chmod');
 							$cmd = array('EGroupware\\Api\\Vfs',$name2cmd[$name]);
-							$value = $name == 'perms' ? static::perms2mode($content['perms']) : $content[$name];
-							if(!$value) continue;
+							$value = $name == 'perms' ? static::perms2mode($content['perms']) : ($content[$name] ?? '');
+							if($value === '') continue;
 							if ($content['modify_subs'])
 							{
 								if ($name == 'perms')
