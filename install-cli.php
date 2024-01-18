@@ -312,7 +312,7 @@ if ($npm)
 }
 
 // if docs site directory exists, keep it updated
-if ($npm && file_exists(__DIR__.'/docs/dist/site'))
+if ($npm && file_exists(__DIR__.'/doc/dist/site'))
 {
  	run_cmd($npm .' run docs', 'build docs (npm run docs)');
 }
