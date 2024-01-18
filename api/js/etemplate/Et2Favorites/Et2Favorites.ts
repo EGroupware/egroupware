@@ -178,7 +178,7 @@ export class Et2Favorites extends Et2DropdownButton implements et2_INextmatchHea
                        statustext="${this.egw().lang("Delete")}"></et2-image>`;
 
 		return html`
-            <sl-menu-item value="${option.value}" ?checked="${option.value == this._preferred}">
+            <sl-menu-item value="${option.value}">
                 ${option.value !== Et2Favorites.ADD_VALUE ? radio : ""}
                 ${icon}
                 ${option.label}
@@ -439,24 +439,6 @@ export class Et2Favorites extends Et2DropdownButton implements et2_INextmatchHea
 		Et2Dialog.show_dialog(do_delete, (this.egw().lang("Delete") + " " + fav.name + "?"),
 			"Delete", null, Et2Dialog.BUTTONS_YES_NO, Et2Dialog.QUESTION_MESSAGE);
 
-		return false;
-	}
-
-	/**
-	 * Clicked the main button
-	 *
-	 * @param {MouseEvent} _ev
-	 * @returns {boolean}
-	 * @protected
-	 */
-	_handleSelect(_ev : MouseEvent) : boolean
-	{
-		// Apply preferred filter - make sure it's an object, and not a reference
-		if(this._preferred && this.favoriteByID(this._preferred))
-		{
-			this._apply_favorite(this._preferred);
-		}
-		_ev.stopImmediatePropagation();
 		return false;
 	}
 
