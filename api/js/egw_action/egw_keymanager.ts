@@ -253,6 +253,8 @@ export function egw_keyHandler(_keyCode, _shift, _ctrl, _alt)
 			// If the current application doesn't have a focused object,
 			// check whether the application object manager contains an object
 			// with the EGW_AO_FLAG_DEFAULT_FOCUS flag set.
+			//We should never do this for the delete key(keyCode === 46 ; idx === __46__ ) as one might delete an unselected mail by mistake
+			if(idx !== "__46__") {
 			let egwActionObject:EgwActionObject = null;
 			for (const child of appMgr.children)
 			{
@@ -269,6 +271,7 @@ export function egw_keyHandler(_keyCode, _shift, _ctrl, _alt)
 			{
 				egwActionObject.children[0].setFocused(true);
 				focusedObject = egwActionObject.children[0];
+			}
 			}
 		}
 	}
