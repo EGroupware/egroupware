@@ -311,6 +311,12 @@ if ($npm)
 	run_cmd($npm .' run build', 'rollup (npm run build)');
 }
 
+// if docs site directory exists, keep it updated
+if ($npm && file_exists(__DIR__.'/docs/dist/site'))
+{
+ 	run_cmd($npm .' run docs', 'build docs (npm run docs)');
+}
+
 echo "\n$succeeded tasks successful run".
 	($failed ? ', '.count($failed).' failed: '.implode(', ', $failed) : '')."\n\n";
 exit(count($failed));
