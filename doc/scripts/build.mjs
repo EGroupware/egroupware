@@ -24,11 +24,15 @@ const sitedir = 'doc/dist/site';
 const spinner = ora({hideCursor: false}).start();
 const execPromise = util.promisify(exec);
 let childProcess;
-let buildResults;
+let buildResults = [];
 
 const bundleDirectories = [outdir, 'doc/etemplate2/_data'];
 let packageData = JSON.parse(readFileSync(path.join(process.cwd(), 'package.json'), 'utf-8'));
 const egwVersion = JSON.stringify(packageData.version.toString());
+
+// Cleanup on exit
+process.on('SIGINT', handleCleanup);
+process.on('SIGTERM', handleCleanup);
 
 //
 // Runs 11ty and builds the docs. The returned promise resolves after the initial publish has completed. The child
@@ -53,6 +57,7 @@ async function buildTheDocs(watch = false)
 
 		// To debug use this in terminal: DEBUG=Eleventy* npx @11ty/eleventy
 		const child = spawn('npx', args, {
+			timeout: 60000, // 60s
 			stdio: 'pipe',
 			cwd: 'doc/etemplate2',
 			shell: true // for Windows
@@ -400,8 +405,5 @@ if (!serve)
 	{
 		console.log('\n' + result.output.join('\n'));
 	}
+	process.exit(0);
 }
-
-// Cleanup on exit
-process.on('SIGINT', handleCleanup);
-process.on('SIGTERM', handleCleanup);
