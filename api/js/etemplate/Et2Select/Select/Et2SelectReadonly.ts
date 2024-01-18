@@ -152,7 +152,7 @@ li {
 	set value(new_value : string | string[])
 	{
 		// Split anything that is still a CSV
-		if(typeof new_value == "string" && new_value.indexOf(",") > 0)
+		if(typeof new_value == "string" && new_value.indexOf(",") != -1)
 		{
 			new_value = new_value.split(",");
 		}
