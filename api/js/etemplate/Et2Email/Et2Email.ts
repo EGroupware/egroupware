@@ -30,7 +30,6 @@ import Sortable from "sortablejs/modular/sortable.complete.esm.js";
 
 /**
  * @summary Enter email addresses, offering suggestions from contacts
- * @documentation https://shoelace.style/components/select
  * @since 23.1
  *
  * @dependency sl-icon
@@ -68,6 +67,7 @@ import Sortable from "sortablejs/modular/sortable.complete.esm.js";
  */
 export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinInterface
 {
+	// Solves some issues with focus
 	static shadowRootOptions = {...LitElement.shadowRootOptions, delegatesFocus: true};
 
 	static get styles()
@@ -279,6 +279,15 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 		{
 			this.handleOpenChange();
 		}
+	}
+
+	firstUpdated(changedProperties : PropertyValues)
+	{
+		super.firstUpdated(changedProperties);
+
+		// Make sure validators reflect allowPlaceholder, in case it's not caught by willUpdate()
+		this.defaultValidators = (<Array<Validator>>this.defaultValidators).filter(v => !(v instanceof IsEmail));
+		this.defaultValidators.push(new IsEmail(this.allowPlaceholder));
 	}
 
 	updated(changedProperties : PropertyValues)
@@ -1174,7 +1183,7 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 
 	tagTemplate(value)
 	{
-		const readonly = (this.readonly);
+		const readonly = (this.readonly || this.disabled);
 		const isEditable = !readonly;
 		const isValid = this.validateAddress(value);
 
@@ -1221,11 +1230,14 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
                    class="email__search"
                    exportparts="base:search__base"
                    autocomplete="off"
-                   placeholder="${this.hasFocus || this.value.length > 0 ? "" : this.placeholder}"
+                   ?disabled=${this.disabled}
+                   ?readonly=${this.readonly}
+                   placeholder="${this.hasFocus || this.value.length > 0 || this.disabled || this.readonly ? "" : this.placeholder}"
                    tabindex="0"
                    @keydown=${this.handleSearchKeyDown}
                    @blur=${this.handleSearchBlur}
                    @focus=${this.handleSearchFocus}
+                   @paste=${this.handlePaste}
             />
 		`;
 	}
@@ -1274,7 +1286,7 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 		const hasHelpTextSlot = this.hasSlotController.test('help-text');
 		const hasLabel = this.label ? true : !!hasLabelSlot;
 		const hasHelpText = this.helpText ? true : !!hasHelpTextSlot;
-		const isPlaceholderVisible = this.placeholder && this.value.length === 0;
+		const isPlaceholderVisible = this.placeholder && this.value.length === 0 && !this.disabled && !this.readonly;
 
 		let styles = {};
 
@@ -1323,6 +1335,7 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
                                 input: true,
                                 'email--open': this.open,
                                 'email--disabled': this.disabled,
+                                'email--readonly': this.readonly,
                                 'email--focused': this.hasFocus,
                                 'email--placeholder-visible': isPlaceholderVisible,
                                 'email--top': this.placement === 'top',
@@ -1379,7 +1392,6 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 	}
 }
 
-// @ts-ignore TypeScript is not recognizing that this widget is a LitElement
 customElements.define("et2-email", Et2Email);
 
 /**
