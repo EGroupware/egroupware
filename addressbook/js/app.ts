@@ -881,11 +881,11 @@ class AddressbookApp extends EgwApp
 		var lists = this.et2.getWidgetById('filter2');
 		var list = lists.getValue() || 0;
 		var value = null;
-		for(var i = 0; i < lists.options.select_options.length; i++)
+		for(var i = 0; i < lists.select_options.length; i++)
 		{
-			if(lists.options.select_options[i].value == list)
+			if(lists.select_options[i].value == list)
 			{
-				value = lists.options.select_options[i];
+				value = lists.select_options[i];
 			}
 		}
 		Et2Dialog.show_prompt(
@@ -904,7 +904,7 @@ class AddressbookApp extends EgwApp
 							if(result)
 							{
 								value.label = name;
-								lists.set_select_options(lists.options.select_options);
+								lists.select_options = lists.select_options;
 							}
 						}
 					).sendRequest(true);
