@@ -32,7 +32,14 @@ export class Et2Description extends Et2Widget(LitElement) implements et2_IDetach
 				justify-content: space-evenly;
 				flex: 0 1 auto !important;
 			}
-			label {display: contents;}
+
+				label {
+					padding-inline-end: 1ex;
+				}
+
+				.split-label label {
+					display: contents;
+				}
 			::slotted(a) {
 				cursor: pointer;
 				color: #26537c;
@@ -200,7 +207,7 @@ export class Et2Description extends Et2Widget(LitElement) implements et2_IDetach
 		}
 		// Turn off IDE reformatting, or it will add an extra line break into the template
 		// @formatter:off
-		return html`<slot part="form-control-label" name="label">${label}</slot><slot part="form-control-value"></slot>${after}`;
+		return html`<slot part="form-control-label" name="label" class=${after ? "split-label" : ""}><label>${label}</label></slot><slot part="form-control-value"></slot>${after}`;
 		// @formatter:on
 	}
 
