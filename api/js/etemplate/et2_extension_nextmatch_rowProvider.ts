@@ -296,11 +296,11 @@ export class et2_nextmatch_rowProvider
 
 		// N.B. cloneNode widget is missing its unreflected properties and we need to get them from original
 		let widget_class = window.customElements.get(widget.localName);
-		let properties = widget_class ? widget_class.properties : [];
-		for(let key in properties)
+		let properties = widget_class ? widget_class.elementProperties : [];
+		properties.forEach((v, key) =>
 		{
 			widget[key] = original[key];
-		}
+		});
 
 		if(!widget || widget.localName !== entry.widget.localName)
 		{

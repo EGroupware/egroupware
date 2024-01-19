@@ -1196,11 +1196,11 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 			}
 
 			let widget_class = window.customElements.get(this.localName);
-			let properties = widget_class ? widget_class.properties : [];
-			for(let key in properties)
+			let properties = widget_class ? widget_class.elementProperties : [];
+			properties.forEach((v, key) =>
 			{
 				copy[key] = this[key];
-			}
+			});
 
 			// Keep the deferred properties
 			copy._deferred_properties = this._deferred_properties;
