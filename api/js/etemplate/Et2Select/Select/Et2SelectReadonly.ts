@@ -214,6 +214,7 @@ li {
 	{
 		const value = this.getValueAsArray();
 		return html`
+            <label part="label">${this.label}
             <ul>
                 ${repeat(
                         this.getValueAsArray(),
@@ -227,6 +228,7 @@ li {
                     return this._readonlyRender(option);
                 })}
             </ul>
+            </label>
 		`;
 	}
 
