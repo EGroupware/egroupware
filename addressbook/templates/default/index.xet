@@ -146,8 +146,8 @@
                     </et2-vbox>
                     <et2-vbox>
                         <et2-url id="${row}[url]" readonly="true" class="fixedHeight"></et2-url>
-                        <et2-url-email id="${row}[email]" readonly="true" class="fixedHeight"></et2-url-email>
-                        <et2-url-email id="${row}[email_home]" readonly="true" class="fixedHeight"></et2-url-email>
+                        <et2-url-email id="${row}[email]" readonly="true" class="fixedHeight" emailDisplay="email"></et2-url-email>
+                        <et2-url-email id="${row}[email_home]" readonly="true" class="fixedHeight" emailDisplay="email"></et2-url-email>
                     </et2-vbox>
                     <et2-description id="${row}[room]"></et2-description>
                     <customfields-list id="$row" class="customfields"/>
