@@ -28,8 +28,8 @@ export class Et2Description extends Et2Widget(LitElement) implements et2_IDetach
 			}
 			:host {
 				display:flex;
-				flex-direction: column;
-				justify-content: space-evenly;
+				flex-direction: row;
+				justify-content: flex-start;
 				flex: 0 1 auto !important;
 			}
 
