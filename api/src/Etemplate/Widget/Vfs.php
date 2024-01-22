@@ -643,10 +643,7 @@ class Vfs extends File
 			$name = $path['name'] ?? Api\Vfs::basename($path);
 			$is_dir = $path['isDir'] ?? Api\Vfs::is_dir($path);
 			$mime = $path['mime'] ?? Api\Vfs::mime_content_type($path);
-			if($content['mime'] && !$is_dir && $mime != $content['mime'])
-			{
-				continue;    // does not match mime-filter --> ignore
-			}
+
 			$response['files'][] = array(
 				'name'  => $name,
 				'path'  => $path,
@@ -671,15 +668,21 @@ class Vfs extends File
 														  array('.{1}', '.*'),
 														  preg_quote($search)) . '/i';
 		}
+		$dirs = [];
+		if($params['mime'])
+		{
+			// Always get dirs
+			$vfs_options['type'] = 'd';
+			$dirs = Api\Vfs::find($params['path'], $vfs_options);
+			$vfs_options['type'] = 'f';
+			$vfs_options['mime'] = $params['mime'];
+		}
 		if($params['num_rows'])
 		{
 			$vfs_options['limit'] = (int)$params['num_rows'];
 		}
-		if(!($files = Api\Vfs::find($params['path'], $vfs_options)))
-		{
-			return lang("Can't open directory %1!", $params['path']);
-		}
-		return $files;
+		$files = Api\Vfs::find($params['path'], $vfs_options);
+		return array_merge($dirs, $files);
 	}
 
 	/**

@@ -90,7 +90,18 @@ export class Et2VfsSelect extends Et2InputWidget(LitElement) implements SearchMi
 	@property() mime : string | string[] | RegExp = "";
 
 	/** List of mimetypes to allow user to filter.  */
-	@property() mimeList : SelectOption[] = [];
+	@property() mimeList : SelectOption[] = [
+		{
+			value: "/(application\\/vnd.oasis.opendocument.text|application\\/vnd.openxmlformats-officedocument.wordprocessingml.document)/i",
+			label: "Documents"
+		},
+		{
+			value: "/(application\\/vnd.oasis.opendocument.spreadsheet|application\\/vnd.openxmlformats-officedocument.spreadsheetml.sheet)/i",
+			label: "Spreadsheets"
+		},
+		{value: "image/", label: "Images"},
+		{value: "video/", label: "Videos"}
+	];
 
 	/** The select's help text. If you need to display HTML, use the `help-text` slot instead. */
 	@property({attribute: 'help-text'}) helpText = '';
@@ -699,6 +710,8 @@ export class Et2VfsSelect extends Et2InputWidget(LitElement) implements SearchMi
 		const hasToolbar = !!hasToolbarSlot;
 
 		const hasFilename = this.mode == "saveas";
+		const mime = this.mimeList.length == 1 ? this.mimeList[0].value :
+					 (typeof this.mime == "string" ? this.mime : "");
 
 		return html`
             <et2-dialog
@@ -744,8 +757,15 @@ export class Et2VfsSelect extends Et2InputWidget(LitElement) implements SearchMi
                         id="mimeFilter"
                         part="mimefilter"
                         class="vfs_select__mimefilter"
-                        emptyLabel=${this.egw().lang("All files")}
                         ?readonly=${this.mimeList.length == 1}
+                        .emptyLabel=${this.egw().lang("All files")}
+                        .select_options=${this.mimeList}
+                        .value=${mime}
+                        @change=${(e) =>
+                        {
+                            this.mime = e.target.value;
+                            this.startSearch();
+                        }}
                 >
                     ${this.mimeOptionsTemplate()}
                 </et2-select>
