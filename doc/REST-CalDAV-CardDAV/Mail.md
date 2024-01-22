@@ -41,6 +41,7 @@ The content of the POST request is a JSON encoded object with following attribut
 - ```subject```: string with subject
 - ```body```: string plain text body (optional)
 - ```bodyHtml```: string with html body (optional)
+- ```replyEml```: string returned from uploaded eml file to reply to (optional)
 - ```attachments```: array of strings returned from uploaded attachments (see below) or VFS path ```["/mail/attachments/<token>", "/home/<user>/<filename>", ...]```
 - ```attachmentType```: one of the following strings (optional, default "attach")
   - "attach" send as attachment

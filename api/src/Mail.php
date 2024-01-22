@@ -6209,7 +6209,7 @@ class Mail
 	 * @param string _body body part of message, only used if _header is NO resource
 	 * @param string _flags = '\\Recent'the imap flags to set for the saved message
 	 *
-	 * @return the id of the message appended or exception
+	 * @return int id of the message appended or exception
 	 * @throws Exception\WrongUserinput
 	 */
 	function appendMessage($_folderName, $_header, $_body, $_flags='\\Recent')
