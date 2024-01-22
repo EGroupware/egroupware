@@ -44,9 +44,9 @@
                         <et2-date-time align="center" id="${row}[date]" readonly="true"></et2-date-time>
                     </et2-hbox>
                     <et2-date-time-today align="center" id="${row}[modified]" readonly="true"></et2-date-time-today>
-                    <et2-url-email id="${row}[address]" readonly="true" fullEmail="$row_cont[emailTag]=fullemail" onlyEmail="$row_cont[emailTag]=onlyemail"></et2-url-email>
-                    <et2-url-email id="${row}[toaddress]" readonly="true" fullEmail="$row_cont[emailTag]=fullemail" onlyEmail="$row_cont[emailTag]=onlyemail"></et2-url-email>
-                    <et2-url-email id="${row}[fromaddress]" readonly="true" fullEmail="$row_cont[emailTag]=fullemail" onlyEmail="$row_cont[emailTag]=onlyemail"></et2-url-email>
+                    <et2-url-email id="${row}[address]" readonly="true" emailDisplay="preference"></et2-url-email>
+                    <et2-url-email id="${row}[toaddress]" readonly="true" emailDisplay="preference"></et2-url-email>
+                    <et2-url-email id="${row}[fromaddress]" readonly="true" emailDisplay="preference"></et2-url-email>
                     <vfs-size align="right" id="${row}[size]" no_lang="1" readonly="true"/>
                     <et2-image src="$row_cont[smime]"></et2-image>
                 </row>
