@@ -17,7 +17,7 @@
                         <et2-lavatar contactId="email:$row_cont[address]" fname="$row_cont[lavatar][fname]"
                                      lname="$row_cont[lavatar][lname]" shape="rounded"></et2-lavatar>
                         <et2-vbox>
-                            <et2-url-email  id="${row}[address]" class="$row_cont[class]" readonly="true"></et2-url-email>
+                            <et2-url-email  id="${row}[address]" class="$row_cont[class]" readonly="true" emailDisplay="preference"></et2-url-email>
                             <et2-hbox>
                                 <et2-description  id="${row}[subject]" class="$row_cont[class]" noLang="1"></et2-description>
                             </et2-hbox>
