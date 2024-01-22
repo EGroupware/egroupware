@@ -75,7 +75,7 @@ class ApiHandler extends Api\CalDAV\Handler
 			}
 			elseif (preg_match('#^/mail(/(\d+))?(/compose)?#', $path, $matches))
 			{
-				$ident_id = $matches[2] ?? self::defaultIdentity($user);
+				$ident_id = $matches[2] ?? null ?: self::defaultIdentity($user);
 				$do_compose = (bool)($matches[3] ?? false);
 				if (!($data = json_decode($options['content'], true)))
 				{
@@ -83,7 +83,33 @@ class ApiHandler extends Api\CalDAV\Handler
 				}
 				// ToDo: check required attributes
 
-				$preset = array_filter(array_intersect_key($data, array_flip(['to', 'cc', 'bcc', 'replyto', 'subject', 'priority']))+[
+				$params = [];
+
+				// should we reply to an eml file
+				if (!empty($data['replyEml']))
+				{
+					if (preg_match('#^/mail/attachments/(([^/]+)--[^/.-]{6,})$#', $data['replyEml'], $matches) &&
+						file_exists($eml=$GLOBALS['egw_info']['server']['temp_dir'].'/attach--'.$matches[1]))
+					{
+						// import mail into drafts folder
+						$acc_id = Api\Mail\Account::read_identity($ident_id)['acc_id'];
+						$mail = Api\Mail::getInstance(false, $acc_id);
+						$folder = $mail->getDraftFolder();
+						$mailer = new Api\Mailer();
+						$mail->parseFileIntoMailObject($mailer, $eml);
+						$mail->openConnection();
+						$uid = $mail->appendMessage($folder, $mailer->getRaw(), null, '\\Seen');
+						// and generate row-id from it to pass as reply_id to compose
+						$params['reply_id'] = \mail_ui::generateRowID($acc_id, $folder, $uid, true);
+						$params['from'] = 'reply';
+					}
+					else
+					{
+						throw new \Exception("Reply message eml '{$data['reply_eml']}' NOT found", 400);
+					}
+				}
+
+				$preset = array_filter(array_intersect_key($data, array_flip(['to', 'cc', 'bcc', 'replyto', 'subject', 'priority', 'reply_id']))+[
 					'body' => $data['bodyHtml'] ?? null ?: $data['body'] ?? '',
 					'mimeType' => !empty($data['bodyHtml']) ? 'html' : 'plain',
 					'identity' => $ident_id,
@@ -99,7 +125,7 @@ class ApiHandler extends Api\CalDAV\Handler
 						throw new \Exception("User '$account_lid' (#$user) is NOT online", 404);
 					}
 					$push = new Api\Json\Push($user);
-					$push->call('egw.open', '', 'mail', 'add', ['preset' => $preset], '_blank', 'mail');
+					$push->call('egw.open', '', 'mail', 'add', $params+['preset' => $preset], '_blank', 'mail');
 					echo json_encode([
 						'status' => 200,
 						'message' => 'Request to open compose window sent',
@@ -107,7 +133,7 @@ class ApiHandler extends Api\CalDAV\Handler
 					], self::JSON_RESPONSE_OPTIONS);
 					return true;
 				}
-				$acc_id = Api\Mail\Account::read_identity($ident_id)['acc_id'];
+				$acc_id = $acc_id ?? Api\Mail\Account::read_identity($ident_id)['acc_id'];
 				$mail_account = Api\Mail\Account::read($acc_id);
 				// check if the mail-account requires a user-context / password and then just send the mail with an smtp-only account NOT saving to Sent folder
 				if (empty($mail_account->acc_imap_password) || $mail_account->acc_smtp_auth_session && empty($mail_account->acc_smtp_password))

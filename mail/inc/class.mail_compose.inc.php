@@ -1014,9 +1014,31 @@ class mail_compose
 						$_content[$name]=$content[$name]=$_REQUEST['preset'][$name];
 					}
 					//skip if already processed by "preset Routines"
-					if ($alreadyProcessed[$name]) continue;
-					//error_log(__METHOD__.__LINE__.':'.$name.'->'. $_REQUEST['preset'][$name]);
-					if (!empty($_REQUEST['preset'][$name])) $content[$name] = $_REQUEST['preset'][$name];
+					if ($alreadyProcessed[$name] || empty($_REQUEST['preset'][$name]))
+					{
+						continue;
+					}
+					if ($name === 'body' && !empty($content['body']))
+					{
+						// if preset body has different mimeType the (reply-)body --> convert all to html
+						if ($content['mimeType'] !== $_REQUEST['preset']['mimeType'])
+						{
+							if ($_REQUEST['preset']['mimeType'] === 'plain')
+							{
+								$_REQUEST['preset']['body'] = '<p>'.nl2br($_REQUEST['preset']['body'])."</p>\n";
+							}
+							else
+							{
+								$content['body'] = '<pre>'.$content['body']."</pre>\n";
+							}
+							$content['mimeType'] = $_REQUEST['preset']['mimeType'] = 'html';
+						}
+						$content['body'] = $_REQUEST['preset']['body'].$content['body'];
+					}
+					else
+					{
+						$content[$name] = $_REQUEST['preset'][$name];
+					}
 				}
 				// if we preset the body, we always want the signature below (independent of user preference for replay or forward!)
 				if (!empty($_REQUEST['preset']['body']))
