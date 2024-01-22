@@ -22,22 +22,25 @@ export class Et2UrlEmailReadonly extends Et2UrlReadonly
 	/**
 	 * What to display for the selected email addresses
 	 *
+	 *  - email: "test@example.com" (default)
 	 *	- full: "Mr Test User <test@example.com>
 	 *	- name: "Mr Test User"
 	 *	- domain: "Mr Test User (example.com)"
-	 *	- email: "test@example.com"
+	 *  - preference: use the users preference, like et2-email does
 	 *
 	 * If name is unknown, we'll use the email instead.
 	 */
 	@property({type: String})
-	emailDisplay : "full" | "email" | "name" | "domain";
+	emailDisplay : "email" | "full" | "name" | "domain" | "preference";
 
 	set value(val : string)
 	{
 		this._value = val;
 		const split = splitEmail(this._value);
 		super.statustext = split.name ? split.email : "";
-		formatEmailAddress(val, this.emailDisplay).then((value) => super.value = value);
+		formatEmailAddress(val, !this.emailDisplay ? "email" :
+			(this.emailDisplay === 'preference' ? null : this.emailDisplay)).then(
+				(value) => super.value = value);
 	}
 
 	get value()
@@ -52,8 +55,8 @@ export class Et2UrlEmailReadonly extends Et2UrlReadonly
 			attrs.onclick = () =>
 			{
 				let email;
-				if (IsEmail.EMAIL_PREG.exec(email=this.value) ||
-					IsEmail.EMAIL_PREG.exec(email = '"' + this.value + '" <' + this.statustext + '>'))
+				if (IsEmail.EMAIL_PREG.exec(email=this._value) ||
+					IsEmail.EMAIL_PREG.exec(email = '"' + this._value + '" <' + this.statustext + '>'))
 				{
 					Et2UrlEmail.action(email);
 				}

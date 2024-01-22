@@ -138,7 +138,7 @@ export async function formatEmailAddress(address : string, emailDisplayFormat? :
 	const split = splitEmail(address);
 	let content = address;
 	let contact;
-	if(!split.name && (contact = await checkContact(address)))
+	if(emailDisplayFormat !== 'email' && !split.name && (contact = await checkContact(address)))
 	{
 		split.name = contact.n_fn;
 	}
