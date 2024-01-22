@@ -54,9 +54,18 @@ export class Et2UrlEmailReadonly extends Et2UrlReadonly
 		{
 			attrs.onclick = () =>
 			{
-				let email;
-				if (IsEmail.EMAIL_PREG.exec(email=this._value) ||
-					IsEmail.EMAIL_PREG.exec(email = '"' + this._value + '" <' + this.statustext + '>'))
+				let email=this._value;
+				if (!IsEmail.EMAIL_PREG.exec(email))
+				{
+					let name = this._value;
+					// do we need to remove the domain in brackets again?
+					if ((this.emailDisplay === 'preference' ? window.egw.preference("emailTag", "mail") : this.emailDisplay) === 'domain')
+					{
+						name = this._value.replace(/ \([^@. ]+\.[^@ )]+\)$/, '');
+					}
+					email = '"' + name + '" <' + this.statustext + '>'
+				}
+				if (IsEmail.EMAIL_PREG.exec(email))
 				{
 					Et2UrlEmail.action(email);
 				}
