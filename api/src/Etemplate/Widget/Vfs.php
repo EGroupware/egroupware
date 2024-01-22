@@ -641,6 +641,7 @@ class Vfs extends File
 				continue;
 			}
 			$name = $path['name'] ?? Api\Vfs::basename($path);
+			$path = $path['path'] ?? $path;
 			$is_dir = $path['isDir'] ?? Api\Vfs::is_dir($path);
 			$mime = $path['mime'] ?? Api\Vfs::mime_content_type($path);
 

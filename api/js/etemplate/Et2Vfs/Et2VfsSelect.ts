@@ -339,8 +339,8 @@ export class Et2VfsSelect extends Et2InputWidget(LitElement) implements SearchMi
 
 	processRemoteResults(results) : FileInfo[]
 	{
-		this.helpText = results.message ?? "";
-		this._fileList = results.files ?? [];
+		this.helpText = results?.message ?? "";
+		this._fileList = results?.files ?? [];
 
 		return this._fileList;
 	}
