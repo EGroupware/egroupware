@@ -507,12 +507,16 @@ export class et2_htmlarea extends et2_editableWidget implements et2_IResizeable
 		this.htmlNode = null;
 		super.destroy();
 	}
+
 	set_value(_value)
 	{
 		this._oldValue = _value;
 		if (this.editor)
 		{
 			this.editor.setContent(_value);
+
+			// need to defer a little, so TinyMCE does its modifications we want to counter
+			window.setTimeout(() => this.wrapTextNodes(), 1);
 		}
 		else
 		{
@@ -528,6 +532,18 @@ export class et2_htmlarea extends et2_editableWidget implements et2_IResizeable
 		this.value = _value;
 	}
 
+	/**
+	 * Overwrite isValid to first "fix" the TinyMCE content, see wrapTextNodes
+	 *
+	 * @param _values
+	 */
+	isValid(_messages)
+	{
+		this.wrapTextNodes();
+
+		return super.isValid(_messages);
+	}
+
 	getValue()
 	{
 		if (this.editor)
@@ -538,12 +554,57 @@ export class et2_htmlarea extends et2_editableWidget implements et2_IResizeable
 	}
 
 	/**
+	 * Wrap text-nodes and other non-block elements with <p></p> as TinyMCE produces them, if we use small paragraphs
+	 *
+	 * This is done to create valid HTML and allow to set our default font, see applyDefaultFont(),
+	 * which can NOT set a font on text-nodes or br!
+	 */
+	wrapTextNodes()
+	{
+		const body : HTMLBodyElement = this.editor?.editorContainer.querySelector('iframe').contentDocument.querySelector('body');
+		if (!body) return false;
+
+		let toWrap : ChildNode[] = [];
+		body.childNodes.forEach((node) =>
+		{
+			const text_non_block_node = node.nodeType === node.TEXT_NODE ||
+				node.nodeType === node.ELEMENT_NODE && typeof node.computedStyleMap !== 'undefined' && node.computedStyleMap().get('display')?.value !== 'block';
+			if (text_non_block_node)
+			{
+				toWrap.push(node);
+			}
+			if ((!text_non_block_node || node === body.lastChild) && toWrap.length)
+			{
+				const wrap = body.ownerDocument.createElement('p');
+				toWrap.forEach((node) =>
+				{
+					wrap.appendChild(node === toWrap[0] ?
+						body.replaceChild(wrap, node) :
+						body.removeChild(node));
+				});
+				toWrap = [];
+			}
+		});
+		// TinyMCE inserts a BR in the first P --> remove it, if it's not the only child, as it is not wanted (moves the text down on each submit)
+		const firstChild = body.firstChild;
+		if (firstChild.nodeName === 'P' && firstChild.firstChild !== firstChild.lastChild && firstChild.firstChild.nodeName === 'BR')
+		{
+			firstChild.removeChild(firstChild.firstChild);
+		}
+		return true;
+	}
+
+	/**
 	 * Apply default font and -size
 	 */
 	applyDefaultFont()
 	{
 		const edit_area = this.editor?.editorContainer.querySelector('iframe').contentDocument;
 		if (!edit_area) return false;
+
+		// we first need to wrap all text and non-block elements in p, to be able to set a font
+		this.wrapTextNodes();
+
 		const font_family = egw.preference('rte_font', 'common') || 'arial, helvetica, sans-serif';
 		edit_area.querySelectorAll('h1:not([style*="font-family"]),h2:not([style*="font-family"]),h3:not([style*="font-family"]),h4:not([style*="font-family"]),h5:not([style*="font-family"]),h6:not([style*="font-family"]),' +
 			'div:not([style*="font-family"]),li:not([style*="font-family"]),p:not([style*="font-family"]),blockquote:not([style*="font-family"]),' +
