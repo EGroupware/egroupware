@@ -1184,7 +1184,7 @@ class mail_compose
 			}
 			if ($content['mimeType'] === 'html')
 			{
-				$start = "<br/>\n";
+				$start = "<p><br/></p>\n";
 				$before = $disableRuler ? '' : '<hr class="ruler" style="border:1px dotted silver; width:100%;">';
 				$inbetween = '';
 			}
@@ -2583,7 +2583,7 @@ class mail_compose
 						($disableRuler ? "\r\n" : "\r\n-- \r\n").
 						$this->convertHTMLToText($signature, true, true));
 
-					$body .= ($disableRuler ?'<br>':'<hr style="border:1px dotted silver; width:90%;">').$signature;
+					$body .= ($disableRuler ?'<p><br/></p>':'<hr style="border:1px dotted silver; width:90%;">').$signature;
 				}
 				else
 				{
