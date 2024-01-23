@@ -275,7 +275,11 @@ export class et2_toolbar extends et2_DOMWidget implements et2_IInput
 		}
 
 		let pref = (!egwIsMobile())? egw.preference(this.options.preference_id, this.options.preference_app): undefined;
-		if (pref && !jQuery.isArray(pref)) this.preference = pref;
+		// check pref has a reasonable value: is a real object (not an array), strings e.g. stall the whole widget
+		if (pref && typeof pref === 'object' && !Array.isArray(pref))
+		{
+			this.preference = pref;
+		}
 
 		//Set the default actions for the first time
 		if (typeof pref === 'undefined' && !isDefault)
