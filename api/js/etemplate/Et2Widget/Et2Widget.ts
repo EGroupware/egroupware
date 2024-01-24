@@ -1632,7 +1632,7 @@ function transformAttributes(widget, mgr : et2_arrayMgr, attributes)
 						attrValue = widget.egw().lang(attrValue);
 					}
 				}
-				else if(attrValue && [Object, Array].indexOf(typeof property === "object" ? property.type : property) != -1)
+				else if(attrValue && [Object, Array, Number].indexOf(typeof property === "object" ? property.type : property) != -1)
 				{
 					// Value was not supposed to be a string, but was run through here for expandName
 					try
