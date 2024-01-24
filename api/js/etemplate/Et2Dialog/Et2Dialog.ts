@@ -27,6 +27,7 @@ import {Et2Button} from "../Et2Button/Et2Button";
 import shoelace from "../Styles/shoelace";
 import {SlDialog} from "@shoelace-style/shoelace";
 import {egwIsMobile} from "../../egw_action/egw_action_common";
+import {waitForEvent} from "../Et2Widget/event";
 
 export interface DialogButton
 {
@@ -562,7 +563,10 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 
 		this.addOpenListeners();
 		this._button_id = null;
-		this._complete_promise = this._complete_promise || new Promise<[number, Object]>((resolve) => this._completeResolver);
+		this._complete_promise = this._complete_promise || new Promise<[number, Object]>((resolve) =>
+		{
+			this._completeResolver = value => resolve(value);
+		});
 
 		// Now consumers can listen for "open" event, though getUpdateComplete().then(...) also works
 		this.dispatchEvent(new Event('open'));
@@ -581,19 +585,23 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 
 		this.removeOpenListeners();
 		this._completeResolver([this._button_id, this.value]);
-		this._button_id = null;
-		this._complete_promise = undefined;
 
 		this.dispatchEvent(new Event('close'));
 
-		if(this.destroyOnClose)
+		waitForEvent(this, 'sl-after-hide').then(() =>
 		{
-			if(this._template_widget)
+			this._button_id = null;
+
+			this._complete_promise = undefined;
+			if(this.destroyOnClose)
 			{
-				this._template_widget.clear();
+				if(this._template_widget)
+				{
+					this._template_widget.clear();
+				}
+				this.remove();
 			}
-			this.remove();
-		}
+		});
 	}
 
 	/**
