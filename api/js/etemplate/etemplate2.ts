@@ -97,6 +97,7 @@ import './Et2Url/Et2UrlFaxReadonly';
 import "./Layout/Et2Split/Et2Split";
 import "./Layout/RowLimitedMixin";
 import "./Et2Vfs/Et2VfsMime";
+import "./Et2Vfs/Et2VfsPath";
 import "./Et2Vfs/Et2VfsSelect";
 import "./Et2Vfs/Et2VfsSelectRow";
 import "./Et2Vfs/Et2VfsUid";
