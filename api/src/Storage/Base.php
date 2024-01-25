@@ -304,9 +304,9 @@ class Base
 		$check_already_included = !empty($this->timestamps);
 		foreach($this->table_def['fd'] as $name => $data)
 		{
-			if ($data['type'] == 'timestamp' && (!$check_already_included || !in_array($name,$this->timestamps)))
+			if (($data['type'] === 'timestamp' || $data['meta'] === 'timestamp') && (!$check_already_included || !in_array($name,$this->timestamps)))
 			{
-				$this->timestamps[] = $name;
+				$this->timestamps[] = $this->db_cols[$name] ?? $name;
 			}
 		}
 	}
